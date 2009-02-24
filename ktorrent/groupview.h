@@ -24,10 +24,11 @@
 #include <ksharedconfig.h>
 
 class KMenu;
-
+class KActionCollection;
 
 namespace kt
 {
+	class GUI;
 	class View;
 	class Group;
 	class GroupView;
@@ -58,7 +59,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		GroupView(GroupManager* gman,ViewManager* view,GUI* gui);
+		GroupView(GroupManager* gman,ViewManager* view,GUI* gui,QWidget* parent);
 		virtual ~GroupView();
 		
 		/// Get the current group

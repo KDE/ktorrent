@@ -22,13 +22,15 @@
 #define ACTIVITY_H
 
 #include <QWidget>
+#include <ksharedconfig.h>
+#include <ktcore_export.h>
 
 namespace kt
 {
 	/**
 	 * Base class for all activities
 	 */
-	class Activity : public QWidget
+	class KTCORE_EXPORT Activity : public QWidget
 	{
 		Q_OBJECT
 	public:
@@ -40,6 +42,12 @@ namespace kt
 		
 		void setName(const QString & name);
 		void setIcon(const QString & icon);
+		
+		/// Load the state of the activity
+		virtual void loadState(KSharedConfigPtr cfg) = 0;
+		
+		/// Save the state of the activity
+		virtual void saveState(KSharedConfigPtr cfg) = 0;
 		
 	signals:
 		void nameChanged(Activity* a,const QString & name);

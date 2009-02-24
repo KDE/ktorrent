@@ -38,12 +38,15 @@
 #include "core.h"
 #include "groupview.h"
 #include "settings.h"
+#include "torrentactivity.h"
+#include "speedlimitsdlg.h"
 
 using namespace bt;
 
 namespace kt
 {
-	ViewManager::ViewManager(Group* all_group,GUI* gui,Core* core) : QObject(gui),gui(gui),core(core),current(0),all_group(all_group)
+	ViewManager::ViewManager(Group* all_group,GUI* gui,Core* core,TorrentActivity* ta) 
+		: QObject(ta),gui(gui),core(core),current(0),all_group(all_group),ta(ta)
 	{
 		view_menu = 0;
 	}
@@ -89,10 +92,10 @@ namespace kt
 		cv = g.readEntry("current_views",cv);
 
 		foreach (const QString &s,cv)
-			gui->openView(s,true);
+			ta->openView(s,true);
 
 		if (views.count() == 0)
-			gui->openNewView(all_group);
+			ta->openNewView(all_group);
 
 		int idx = 0;
 		foreach (View* v,views)
@@ -244,22 +247,16 @@ namespace kt
 		}
 	}
 
-	bool ViewManager::closeAllowed(QWidget* )
-	{
-		return views.count() > 1;
-	}
-
-	void ViewManager::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)
+	void ViewManager::removeView(View* view)
 	{
 		if (views.count() <= 1)
 			return;
 
 		foreach (View* v,views)
 		{
-			if (v == tab)
+			if (v == view)
 			{
 				views.removeAll(v);
-				gui->removeTabPage(v);				
 				v->deleteLater();
 				break;
 			}
@@ -271,9 +268,7 @@ namespace kt
 		if (current && current->getGroup() != g)
 		{
 			current->setGroup(g);
-			gui->changeTabIcon(current,g->groupIconName());
-			gui->changeTabText(current,current->caption(false));
-			gui->changeTabToolTip(current,current->caption(true));
+			ta->setTabProperties(current,current->caption(false),g->groupIconName(),current->caption(true));
 		}
 	}
 
@@ -283,13 +278,11 @@ namespace kt
 		{
 			if (v->getGroup() == g)
 			{
-				gui->changeTabIcon(v,g->groupIconName());
-				gui->changeTabText(v,v->caption(false));
-				gui->changeTabToolTip(v,v->caption(true));
+				ta->setTabProperties(v,v->caption(false),g->groupIconName(),v->caption(true));
 			}
 		}
 		
-		QMap<Group*,QAction*>::iterator j = group_actions.find(g);
+		QMap<Group*,KAction*>::iterator j = group_actions.find(g);
 		if (j != group_actions.end())
 			j.value()->setText(g->groupName());
 	}
@@ -305,7 +298,7 @@ namespace kt
 				if (views.count() > 1)
 				{
 					// remove the view 
-					gui->removeTabPage(v);
+					ta->removeView(v);
 					i = views.erase(i);
 					v->deleteLater();
 					if (current == v)
@@ -315,9 +308,7 @@ namespace kt
 				{
 					// change the current view to the all group
 					v->setGroup(all_group);
-					gui->changeTabIcon(v,all_group->groupIconName());
-					gui->changeTabText(v,v->caption(false));
-					gui->changeTabToolTip(v,v->caption(true));
+					ta->setTabProperties(v,v->caption(false),g->groupIconName(),v->caption(true));
 					i++;
 				}
 			}
@@ -326,13 +317,23 @@ namespace kt
 		}
 		
 		gui->unplugActionList("view_groups_list");
-		QMap<Group*,QAction*>::iterator j = group_actions.find(g);
-		if (j != group_actions.end())
+		QList<QAction*> actions;
+		QMap<Group*,KAction*>::iterator j = group_actions.begin();
+		while (j != group_actions.end())
 		{
-			delete j.value();
-			group_actions.erase(j);
+			if (j.key() == g)
+			{
+				delete j.value();
+				j = group_actions.erase(j);
+			}
+			else
+			{
+				actions.append(j.value());
+				j++;
+			}
 		}
-		gui->plugActionList("view_groups_list",group_actions.values());
+		
+		gui->plugActionList("view_groups_list",actions);
 	}
 	
 	void ViewManager::onGroupAdded(kt::Group* g)
@@ -341,13 +342,22 @@ namespace kt
 		KAction* act = new KAction(KIcon("application-x-bittorrent"),g->groupName(),this);
 		connect(act,SIGNAL(triggered()),this,SLOT(addToGroupItemTriggered()));
 		group_actions.insert(g,act);
-		gui->plugActionList("view_groups_list",group_actions.values());
+		
+		QList<QAction*> actions;
+		QMap<Group*,KAction*>::iterator j = group_actions.begin();
+		while (j != group_actions.end())
+		{
+			actions.append(j.value());
+			j++;
+		}
+		
+		gui->plugActionList("view_groups_list",actions);
 	}
 
 	void ViewManager::onCurrentTorrentChanged(View* v,bt::TorrentInterface* tc)
 	{
 		if (v == current)
-			gui->currentTorrentChanged(tc);
+			ta->currentTorrentChanged(tc);
 	}
 
 	void ViewManager::onSelectionChaged(View* v)
@@ -494,8 +504,7 @@ namespace kt
 		{
 			if (v->needToUpdateCaption())
 			{
-				gui->changeTabText(v,v->caption(false));
-				gui->changeTabToolTip(v,v->caption(true));
+				ta->setTabProperties(v,v->caption(false),v->getGroup()->groupIconName(),v->caption(true));
 			}
 		}
 	}
@@ -503,12 +512,37 @@ namespace kt
 	void ViewManager::setupActions()
 	{
 		KActionCollection* ac = gui->actionCollection();
+		KStandardAction::selectAll(this,SLOT(selectAll()),ac);
 		
-		start_torrent = ac->action("start");
-		stop_torrent = ac->action("stop");
-		remove_torrent = ac->action("remove");
-		start_all = ac->action("start_all");
-		stop_all = ac->action("stop_all");
+		start_torrent = new KAction(KIcon("kt-start"),i18n("Start"), this);
+		start_torrent->setToolTip(i18n("Start all selected torrents in the current tab"));
+		start_torrent->setShortcut(KShortcut(Qt::CTRL + Qt::Key_S));
+		connect(start_torrent,SIGNAL(triggered()),this,SLOT(startTorrents()));
+		ac->addAction("start",start_torrent);
+		
+		stop_torrent = new KAction(KIcon("kt-stop"),i18n("Stop"),this);
+		stop_torrent->setToolTip(i18n("Stop all selected torrents in the current tab"));
+		stop_torrent->setShortcut(KShortcut(Qt::CTRL + Qt::Key_H));
+		connect(stop_torrent,SIGNAL(triggered()),this,SLOT(stopTorrents()));
+		ac->addAction("stop",stop_torrent);
+		
+		remove_torrent = new KAction(KIcon("kt-remove"),i18n("Remove"),this);
+		remove_torrent->setToolTip(i18n("Remove all selected torrents in the current tab"));
+		remove_torrent->setShortcut(KShortcut(Qt::Key_Delete));
+		connect(remove_torrent,SIGNAL(triggered()),this,SLOT(removeTorrents()));
+		ac->addAction("remove",remove_torrent);
+		
+		start_all = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
+		start_all->setToolTip(i18n("Start all torrents in the current tab"));
+		start_all->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_S));
+		connect(start_all,SIGNAL(triggered()),this,SLOT(startAllTorrents()));
+		ac->addAction("start_all",start_all);
+		
+		stop_all = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
+		stop_all->setToolTip(i18n("Stop all torrents in the current tab"));
+		stop_all->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_H));
+		connect(stop_all,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
+		ac->addAction("stop_all",stop_all);
 		
 		remove_torrent_and_data = new KAction(KIcon("kt-remove"),i18n("Remove Torrent and Data"),this);
 		remove_torrent_and_data->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Delete));
@@ -568,7 +602,11 @@ namespace kt
 		connect(add_to_new_group,SIGNAL(triggered()),this,SLOT(addToNewGroup()));
 		ac->addAction("view_add_to_new_group",add_to_new_group);
 		
-		check_data = ac->action("check_data");
+		check_data = new KAction(KIcon("kt-check-data"),i18n("Check Data"),this);
+		check_data->setToolTip(i18n("Check all the data of a torrent"));
+		check_data->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_C));
+		connect(check_data,SIGNAL(triggered()),this,SLOT(checkData()));
+		ac->addAction("check_data",check_data);
 		
 		GroupManager* gman = core->getGroupManager();
 		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
@@ -587,6 +625,12 @@ namespace kt
 		copy_url = new KAction(KIcon("edit-copy"),i18n("Copy Torrent URL"),this);
 		connect(copy_url,SIGNAL(triggered()),this,SLOT(copyTorrentURL()));
 		ac->addAction("view_copy_url",copy_url);
+		
+		speed_limits = new KAction(KIcon("kt-speed-limits"),i18n("Speed Limits"),this);
+		speed_limits->setToolTip(i18n("Set the speed limits of individual torrents"));
+		connect(speed_limits,SIGNAL(triggered()),this,SLOT(speedLimits()));
+		speed_limits->setShortcut(KShortcut(Qt::CTRL + Qt::Key_L));
+		ac->addAction("speed_limits",speed_limits);
 	}
 	
 	void ViewManager::addToGroupItemTriggered()
@@ -594,9 +638,9 @@ namespace kt
 		if (!current)
 			return;
 		
-		QAction* s = (QAction*)sender();
+		KAction* s = (KAction*)sender();
 		Group* g = 0;
-		QMap<Group*,QAction*>::iterator j = group_actions.begin();
+		QMap<Group*,KAction*>::iterator j = group_actions.begin();
 		while (j != group_actions.end() && !g)
 		{
 			if (j.value() == s)
@@ -619,7 +663,7 @@ namespace kt
 	
 	void ViewManager::addToNewGroup()
 	{
-		GroupView* gv = gui->getGroupView();
+		GroupView* gv = ta->getGroupView();
 		Group* g = gv->addNewGroup();
 		if (g && current)
 		{
@@ -657,6 +701,14 @@ namespace kt
 			current->selectAll();
 	}
 	
+	void ViewManager::speedLimits()
+	{
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		SpeedLimitsDlg dlg(sel.count() > 0 ? sel.front() : 0,core,gui->getMainWindow());
+		dlg.exec();
+	}
+	
 	void ViewManager::showViewMenu(View* v,const QPoint & pos)
 	{
 		if (!v)
@@ -670,7 +722,16 @@ namespace kt
 				Out(SYS_GEN|LOG_NOTICE) << "Failed to create ViewMenu" << endl;
 				return;
 			}
-			gui->plugActionList("view_groups_list",group_actions.values());
+			
+			QList<QAction*> actions;
+			QMap<Group*,KAction*>::iterator j = group_actions.begin();
+			while (j != group_actions.end())
+			{
+				actions.append(j.value());
+				j++;
+			}
+			
+			gui->plugActionList("view_groups_list",actions);
 		}
 		
 	

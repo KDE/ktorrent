@@ -1,7 +1,7 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 #  set(kt4_SRC app.cpp mainwindow.cpp core.cpp view.cpp viewmodel.cpp main.cpp)
-set(ktorrent_SRC 
+set(ktorrent_SRC torrentactivity.cpp 
 	main.cpp 
 	fileselectdlg.cpp 
 	core.cpp 
@@ -10,6 +10,7 @@ set(ktorrent_SRC
 	view.cpp 
 	viewmodel.cpp
 	viewmanager.cpp 
+	torrentactivity.cpp
 	viewselectionmodel.cpp
 	groupfiltermodel.cpp
 	prefdialog.cpp 

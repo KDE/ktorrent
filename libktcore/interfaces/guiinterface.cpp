@@ -30,37 +30,4 @@ namespace kt
 
 	GUIInterface::~GUIInterface()
 	{}
-
-
-	void GUIInterface::notifyViewListeners(bt::TorrentInterface* tc)
-	{	
-		foreach (ViewListener* vl,listeners)
-			vl->currentTorrentChanged(tc);
-	}
-	
-	void GUIInterface::addViewListener(ViewListener* vl)
-	{
-		listeners.append(vl);
-	}
-
-	void GUIInterface::removeViewListener(ViewListener* vl)
-	{
-		listeners.removeAll(vl);
-	}
-	
-	void GUIInterface::addCurrentTabPageListener(CurrentTabPageListener* ctpl)
-	{
-		ctp_listeners.append(ctpl);
-	}
-
-	void GUIInterface::removeCurrentTabPageListener(CurrentTabPageListener* ctpl)
-	{
-		ctp_listeners.removeAll(ctpl);
-	}
-	
-	void GUIInterface::notifyCurrentTabPageListeners(QWidget* page)
-	{
-		foreach (CurrentTabPageListener* ctpl,ctp_listeners)
-			ctpl->currentTabPageChanged(page);
-	}
 }

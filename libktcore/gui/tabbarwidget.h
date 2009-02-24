@@ -17,59 +17,70 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QVBoxLayout>
-#include <klocale.h>
-#include <interfaces/activity.h>
-#include "activitybar.h"
-#include "activitylistwidget.h"
+
+#ifndef TABBARWIDGET_H
+#define TABBARWIDGET_H
+
+#include <QList>
+#include <QStackedWidget>
+#include <kmultitabbar.h>
+#include <ksharedconfig.h>
+#include "ktcore_export.h"
 
 namespace kt
 {
-	ActivityBar::ActivityBar(QStackedWidget* stack,QWidget* parent) : QDockWidget(i18n("Activities"),parent),stack(stack)
+	class KTCORE_EXPORT TabBarWidget : public QWidget
 	{
-		setAllowedAreas(Qt::AllDockWidgetAreas);
-		setObjectName("ActivityBar");
-		alw = new ActivityListWidget(this);
-		setWidget(alw);
-		connect(alw,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(itemClicked(QListWidgetItem*)));
-	}
-
-	ActivityBar::~ActivityBar()
-	{
-	}
-	
-	void ActivityBar::addActivity(Activity* act)
-	{
-		stack->addWidget(act);
-		activities.append(act);
-		alw->addActivity(act);
-	}
-	
-	void ActivityBar::removeActivity(Activity* act)
-	{
-		int idx = stack->indexOf(act);
-		if (idx >= 0)
+		Q_OBJECT
+	public:
+		struct Tab
 		{
-			stack->removeWidget(act);
-			activities.removeAll(act);
-			alw->removeActivity(idx);
-		}
-	}
+			QWidget* widget;
+			int id;
+			QString text;
+			QString icon;
+		};
+			
+		typedef QList<Tab>::iterator TabItr;
 	
-	void ActivityBar::setCurrentActivity(Activity* act)
-	{
-		stack->setCurrentWidget(act);
-		alw->setCurrentRow(activities.indexOf(act));
-	}
-	
-	Activity* ActivityBar::currentActivity()
-	{
-		return (Activity*)stack->currentWidget();
-	}
-	
-	void ActivityBar::itemClicked(QListWidgetItem* it)
-	{
-		ActivityListWidgetItem* item = (ActivityListWidgetItem*)it;
-		stack->setCurrentWidget(item->activity);
-	}
+		TabBarWidget(QWidget* parent);
+		virtual ~TabBarWidget();
+		
+		/// Add a tab to the TabBarWidget
+		void addTab(QWidget* w,const QString & text,const QString & icon,const QString & tooltip);
+		
+		/// Remove a tab from the TabBarWidget
+		void removeTab(QWidget* w);
+		
+		/// Save current status of sidebar, called at exit
+		void saveState(KSharedConfigPtr cfg,const QString & group);
+		
+		/// Restore status from config, called at startup
+		void loadState(KSharedConfigPtr cfg,const QString & group);
+		
+		/// Change the text of a tab
+		void changeTabText(QWidget* w,const QString & text);
+		
+		/// Change the icon of a tab
+		void changeTabIcon(QWidget* w,const QString & icon);
+		
+	private slots:
+		void onTabClicked(int id);
+		
+	private:
+		void shrink();
+		void unshrink();
+		TabItr findByWidget(QWidget* w);
+		TabItr findById(int id);
+		TabItr findByText(const QString & text);
+		
+	private:
+		KMultiTabBar* tab_bar;
+		QStackedWidget* widget_stack;
+		QList<Tab> tabs;
+		int next_id;
+		bool shrunken;
+	};
 }
+
+#endif // TABBARWIDGET_H

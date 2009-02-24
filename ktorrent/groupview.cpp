@@ -95,8 +95,8 @@ namespace kt
 	}
 	*/
 
-	GroupView::GroupView(GroupManager* gman,ViewManager* view,GUI* gui)
-	: QTreeWidget(gui),gui(gui),view(view),custom_root(0),gman(gman)
+	GroupView::GroupView(GroupManager* gman,ViewManager* view,GUI* gui,QWidget* parent)
+	: QTreeWidget(parent),gui(gui),view(view),custom_root(0),gman(gman)
 	{
 		setColumnCount(1);
 		setRootIsDecorated(false);

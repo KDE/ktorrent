@@ -24,10 +24,11 @@
 #include <QList>
 #include <interfaces/guiinterface.h>
 #include <ksharedconfig.h>
-
 #include <torrent/queuemanager.h>
 
 class QWidget;
+class KMenu;
+class KAction;
 
 
 namespace kt
@@ -36,12 +37,13 @@ namespace kt
 	class Core;
 	class GUI;
 	class Group;
+	class TorrentActivity;
 
-	class ViewManager : public QObject,public CloseTabListener
+	class ViewManager : public QObject
 	{
 		Q_OBJECT
 	public:
-		ViewManager(Group* all_group,GUI* gui,Core* core);
+		ViewManager(Group* all_group,GUI* gui,Core* core,TorrentActivity* ta);
 		virtual ~ViewManager();
 		
 		/// Create a new view
@@ -76,6 +78,9 @@ namespace kt
 		
 		/// Update enabled or disabled state of all actions
 		void updateActions();
+		
+		/// Remove a view
+		void removeView(View* view);
 
 	public slots:
 		void onCurrentTabChanged(QWidget* tab);
@@ -156,10 +161,9 @@ namespace kt
 		/// Copy the torrent URL to the clipboard
 		void copyTorrentURL();
 		
-	private:
-		virtual bool closeAllowed(QWidget* w);
-		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
-
+		/// Show the speed limits dialog
+		void speedLimits();
+		
 	private:
 		GUI* gui;
 		Core* core;
@@ -167,32 +171,34 @@ namespace kt
 		QList<View*> views;
 		Group* all_group; 
 		KMenu* view_menu;
+		TorrentActivity* ta;
 		
 		// actions for the view menu 
-		QAction* start_torrent;
-		QAction* start_all;
-		QAction* stop_torrent;
-		QAction* stop_all;
-		QAction* remove_torrent;
+		KAction* start_torrent;
+		KAction* start_all;
+		KAction* stop_torrent;
+		KAction* stop_all;
+		KAction* remove_torrent;
 		KAction* remove_torrent_and_data;
-		QAction* add_peers;
-		QAction* dht_enabled;
-		QAction* pex_enabled;
+		KAction* add_peers;
+		KAction* dht_enabled;
+		KAction* pex_enabled;
 		KAction* manual_announce;
-		QAction* do_scrape;
-		QAction* preview;
-		QAction* data_dir;
-		QAction* tor_dir;
-		QAction* move_data;
-		QAction* rename_torrent;
-		QAction* remove_from_group;
-		QMap<Group*,QAction*> group_actions;
-		QAction* add_to_new_group;
-		QAction* check_data;
-		QAction* open_dir_menu;
-		QAction* groups_menu;
-		QAction* copy_url;
-		QList<QAction*> configure_columns_list;
+		KAction* do_scrape;
+		KAction* preview;
+		KAction* data_dir;
+		KAction* tor_dir;
+		KAction* move_data;
+		KAction* rename_torrent;
+		KAction* remove_from_group;
+		QMap<Group*,KAction*> group_actions;
+		KAction* add_to_new_group;
+		KAction* check_data;
+		KAction* open_dir_menu;
+		KAction* groups_menu;
+		KAction* copy_url;
+		QList<KAction*> configure_columns_list;
+		KAction* speed_limits;
 	};
 }
 

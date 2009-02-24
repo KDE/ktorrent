@@ -29,6 +29,18 @@ namespace kt
 	ActivityListWidget::ActivityListWidget(QWidget* parent) : QListWidget(parent)
 	{
 		setItemDelegate(new ActivityListDelegate(this));
+		setMouseTracking(true);
+		viewport()->setAttribute(Qt::WA_Hover);
+		setUniformItemSizes(true);
+		setSelectionMode(QAbstractItemView::SingleSelection);
+		int iconsize = 48; // TODO: SETTINGS
+		setIconSize(QSize(iconsize, iconsize));
+		setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+		setContextMenuPolicy(Qt::CustomContextMenu);
+		QPalette pal = palette();
+		pal.setBrush(QPalette::Base, pal.brush(QPalette::Window));
+		setPalette(pal);
 	}
 
 	ActivityListWidget::~ActivityListWidget() 

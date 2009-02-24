@@ -24,6 +24,7 @@
 #include <QList>
 #include <QDockWidget>
 #include <QStackedWidget>
+#include "ktcore_export.h"
 
 class QListWidgetItem;
 
@@ -35,7 +36,7 @@ namespace kt
 	/**
 	 * Bar to switch between activities
 	 */
-	class ActivityBar : public QDockWidget
+	class KTCORE_EXPORT ActivityBar : public QDockWidget
 	{
 		Q_OBJECT
 	public:

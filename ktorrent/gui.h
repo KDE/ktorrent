@@ -22,7 +22,8 @@
 #define KT_GUI_HH
 
 #include <QTimer>
-#include <ideal/mainwindow.h>
+#include <QStackedWidget>
+#include <KXmlGuiWindow>
 #include <util/constants.h>
 #include <interfaces/guiinterface.h>
 
@@ -34,19 +35,16 @@ class KUrl;
 namespace kt
 {
 	class Core;
-	class Group;
-	class ViewManager;
 	class PrefDialog;
 	class StatusBar;
-	class GroupView;
 	class TrayIcon;
 	class DBus;
-	class View;
-	class QueueManagerWidget;
+	class TorrentActivity;
+	class ActivityBar;
 	
 	
 
-	class GUI : public ideal::MainWindow,public GUIInterface
+	class GUI : public KXmlGuiWindow,public GUIInterface
 	{
 		Q_OBJECT
 	public:
@@ -57,58 +55,33 @@ namespace kt
 		
 		// Stuff implemented from GUIInterface
 		virtual KMainWindow* getMainWindow() {return this;}
-		virtual void addTabPage(QWidget* page,const QString & icon,const QString & caption,const QString & tooltip,CloseTabListener* ctl);
-		virtual void removeTabPage(QWidget* page);
 		virtual void addPrefPage(PrefPageInterface* page);
 		virtual void removePrefPage(PrefPageInterface* page);
 		virtual void mergePluginGui(Plugin* p);
 		virtual void removePluginGui(Plugin* p);
-		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,const QString & tooltip,ToolDock dock);
-		virtual void removeToolWidget(QWidget* w);
-		virtual const bt::TorrentInterface* getCurrentTorrent() const;
-		virtual bt::TorrentInterface* getCurrentTorrent();
 		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption);
 		virtual bool selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check);
 		virtual void errorMsg(const QString & err);
 		virtual void errorMsg(KIO::Job* j);
 		virtual void infoMsg(const QString & info);
-		virtual void currentTabPageChanged(QWidget* page);
 		virtual StatusBarInterface* getStatusBar();
-		virtual void setTabIcon(QWidget* tab,const QString & icon);
-		virtual void setTabText(QWidget* tab,const QString & text);
-		virtual void setCurrentTab(QWidget* tab);
-		virtual QWidget* getCurrentTab();
+		virtual void addActivty(Activity* act);
+		virtual void removeActivity(Activity* act);
+		
+		/**
+		* Create a XML GUI container (menu or toolbar)
+		* @param name The name of the item
+		* @return The widget
+		*/
+		QWidget* container(const QString & name);
 
 		/// load a torrent
 		void load(const KUrl & url);
 		
 		/// load a torrent silently
 		void loadSilently(const KUrl & url);
-
-		/**
-		 * Open a view
-		 * @param group_name Name of group to show in view
-		 * @param starting_up Wether or not we are starting up (and thus are loading existing views)
-		 */
-		void openView(const QString & group_name,bool starting_up);
-
-		/**
-		 * Called by the ViewManager when the current torrent has changed
-		 * @param tc The torrent 
-		 * */
-		void currentTorrentChanged(bt::TorrentInterface* tc);
-		
-		/// Get the group view
-		GroupView* getGroupView() {return group_view;}
-		
 		
 	public slots:
-		/**
-		 * Open a view
-		 * @param g The group to show in the view
-		 * */
-		void openNewView(kt::Group* g);
-		
 		/**
 		 * The paused state has changed
 		 * @param paused 
@@ -130,9 +103,7 @@ namespace kt
 		void openTorrentSilently();
 		void pauseQueue(bool pause);
 		void startAllTorrents();
-		void startAllTorrentsCV();
 		void stopAllTorrents();
-		void stopAllTorrentsCV();
 		void pasteURL();
 		void paste();
 		void showPrefDialog();
@@ -146,16 +117,13 @@ namespace kt
 		void update();
 		/// apply gui specific settings
 		void applySettings();
-		void closeTab();
-		void newView();
-		void speedLimits();
 		void showOrHide();
 		void configureNotifications();		
 		
 		
 	private:
 		void setupActions();
-		View* newView(kt::Group* g);
+		
 		virtual void loadState(KSharedConfigPtr cfg);
 		virtual void saveState(KSharedConfigPtr cfg);
 		virtual bool queryExit();
@@ -163,36 +131,27 @@ namespace kt
 
 	private:
 		Core* core;
-		ViewManager* view_man; 
 		QTimer timer;
 		kt::StatusBar* status_bar;
-		GroupView* group_view;
 		TrayIcon* tray_icon;
 		DBus* dbus_iface;
-		QueueManagerWidget* qm;
-
+		TorrentActivity* torrent_activity;
+		QStackedWidget* widget_stack;
+		ActivityBar* activity_bar;
+		PrefDialog* pref_dlg;
+		
 		KToggleAction* show_status_bar_action;
 		KToggleAction* show_menu_bar_action;
 		KAction* open_silently_action;
-		KAction* start_action;
-		KAction* stop_action;
-		KAction* remove_action;
 		KAction* start_all_action;
-		KAction* start_all_cv_action;
 		KAction* stop_all_action;
-		KAction* stop_all_cv_action;
 		KAction* paste_url_action;
 		KToggleAction* queue_pause_action;
 		KAction* ipfilter_action;
-		KAction* data_check_action;
 		KAction* import_action;
 		KAction* import_kde3_torrents_action;
-		KAction* speed_limits_action;
 		KAction* show_kt_action;
 		KAction* paste_action;
-
-		PrefDialog* pref_dlg;
-		QMap<QWidget*,CloseTabListener*> close_tab_map;
 	};
 }
 
