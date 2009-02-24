@@ -31,6 +31,7 @@ set(libktorrent_SRC
 	
 	gui/activitybar.cpp
 	gui/activitylistwidget.cpp
+	gui/activitylistdelegate.cpp
 
 	ktorrent.kcfg
 	pluginmanager.cpp

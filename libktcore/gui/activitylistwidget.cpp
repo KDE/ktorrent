@@ -21,12 +21,14 @@
 #include <KIcon>
 #include <interfaces/activity.h>
 #include "activitylistwidget.h"
+#include "activitylistdelegate.h"
 
 
 namespace kt
 {
 	ActivityListWidget::ActivityListWidget(QWidget* parent) : QListWidget(parent)
 	{
+		setItemDelegate(new ActivityListDelegate(this));
 	}
 
 	ActivityListWidget::~ActivityListWidget() 
@@ -35,43 +37,43 @@ namespace kt
 	
 	void ActivityListWidget::mouseDoubleClickEvent(QMouseEvent* event)
 	{
-		QModelIndex index = indexAt( event->pos() );
-		if ( index.isValid() && !( index.flags() & Qt::ItemIsSelectable ) )
+		QModelIndex index = indexAt(event->pos());
+		if (index.isValid() && !(index.flags() & Qt::ItemIsSelectable))
 			return;
 		
-		QListWidget::mouseDoubleClickEvent( event );
+		QListWidget::mouseDoubleClickEvent(event);
 	}
 	
 	void ActivityListWidget::mouseMoveEvent(QMouseEvent* event)
 	{
-		QModelIndex index = indexAt( event->pos() );
-		if ( index.isValid() && !( index.flags() & Qt::ItemIsSelectable ) )
+		QModelIndex index = indexAt(event->pos());
+		if (index.isValid() && !(index.flags() & Qt::ItemIsSelectable))
 			return;
 		
-		QListWidget::mouseMoveEvent( event );
+		QListWidget::mouseMoveEvent(event);
 	}
 	
 	void ActivityListWidget::mousePressEvent(QMouseEvent* event)
 	{
-		QModelIndex index = indexAt( event->pos() );
-		if ( index.isValid() && !( index.flags() & Qt::ItemIsSelectable ) )
+		QModelIndex index = indexAt(event->pos());
+		if (index.isValid() && !(index.flags() & Qt::ItemIsSelectable))
 			return;
 		
-		QListWidget::mousePressEvent( event );
+		QListWidget::mousePressEvent(event);
 	}
 	
 	void ActivityListWidget::mouseReleaseEvent(QMouseEvent* event)
 	{
-		QModelIndex index = indexAt( event->pos() );
-		if ( index.isValid() && !( index.flags() & Qt::ItemIsSelectable ) )
+		QModelIndex index = indexAt(event->pos());
+		if (index.isValid() && !(index.flags() & Qt::ItemIsSelectable))
 			return;
 		
-		QListWidget::mouseReleaseEvent( event );
+		QListWidget::mouseReleaseEvent(event);
 	}
 	
 	QModelIndex ActivityListWidget::moveCursor(QAbstractItemView::CursorAction cursorAction,Qt::KeyboardModifiers modifiers)
 	{
-		Q_UNUSED( modifiers )
+		Q_UNUSED(modifiers)
 		QModelIndex oldindex = currentIndex();
 		QModelIndex newindex = oldindex;
 		switch ( cursorAction )
@@ -80,9 +82,10 @@ namespace kt
 			case MovePrevious:
 			{
 				int row = oldindex.row() - 1;
-				while ( row > -1 && !( model()->index( row, 0 ).flags() & Qt::ItemIsSelectable ) ) --row;
-				if ( row > -1 )
-					newindex = model()->index( row, 0 );
+				while (row > -1 && !(model()->index(row, 0).flags() & Qt::ItemIsSelectable)) 
+					--row;
+				if (row > -1)
+					newindex = model()->index(row, 0);
 				break;
 			}
 			case MoveDown:
@@ -90,27 +93,30 @@ namespace kt
 			{
 				int row = oldindex.row() + 1;
 				int max = model()->rowCount();
-				while ( row < max && !( model()->index( row, 0 ).flags() & Qt::ItemIsSelectable ) ) ++row;
-				if ( row < max )
-					newindex = model()->index( row, 0 );
+				while (row < max && !(model()->index(row,0).flags() & Qt::ItemIsSelectable))
+					++row;
+				if (row < max)
+					newindex = model()->index(row,0);
 				break;
 			}
 			case MoveHome:
 			case MovePageUp:
 			{
 				int row = 0;
-				while ( row < oldindex.row() && !( model()->index( row, 0 ).flags() & Qt::ItemIsSelectable ) ) ++row;
-				if ( row < oldindex.row() )
-					newindex = model()->index( row, 0 );
+				while (row < oldindex.row() && !(model()->index(row,0).flags() & Qt::ItemIsSelectable)) 
+					++row;
+				if (row < oldindex.row())
+					newindex = model()->index(row,0);
 				break;
 			}
 			case MoveEnd:
 			case MovePageDown:
 			{
 				int row = model()->rowCount() - 1;
-				while ( row > oldindex.row() && !( model()->index( row, 0 ).flags() & Qt::ItemIsSelectable ) ) --row;
-				if ( row > oldindex.row() )
-					newindex = model()->index( row, 0 );
+				while (row > oldindex.row() && !(model()->index(row,0).flags() & Qt::ItemIsSelectable)) 
+					--row;
+				if (row > oldindex.row())
+					newindex = model()->index(row,0);
 				break;
 			}
 			// no navigation possible for these
@@ -120,9 +126,9 @@ namespace kt
 		}
 		
 		// dirty hack to change item when the key cursor changes item
-		if ( oldindex != newindex )
+		if (oldindex != newindex)
 		{
-			emit itemClicked( itemFromIndex( newindex ) );
+			emit itemClicked(itemFromIndex(newindex));
 		}
 		return newindex;
 	}
