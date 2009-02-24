@@ -55,8 +55,8 @@ namespace kt
 		hsplit->addWidget(group_view);
 		hsplit->addWidget(tabs);
 		vsplit->addWidget(hsplit);
-		tool_views = new TabBarWidget(vsplit);
-		vsplit->addWidget(tool_views);
+		tool_views = new TabBarWidget(vsplit,this);
+		layout->addWidget(tool_views);
 		
 		
 		qm = new QueueManagerWidget(core->getQueueManager(),this);

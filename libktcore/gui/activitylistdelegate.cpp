@@ -90,29 +90,43 @@ namespace kt
 			painter->drawPixmap(iconpos, icon.pixmap( option.decorationSize, iconmode));
 		}
 		
-		if (true)
+		
+		QString text = index.data(Qt::DisplayRole).toString();
+		QStringList splitted = text.split("\n");
+		int y = ITEM_MARGIN_TOP + option.decorationSize.height() + ITEM_PADDING;
+		foreach (const QString & s,splitted)
 		{
-			QString text = index.data(Qt::DisplayRole).toString();
-			QRect font_bounds = QFontMetrics(option.font).boundingRect(text);
+			QFontMetrics fm(option.font);
+			QRect font_bounds = fm.boundingRect(s);
 			int x = ITEM_MARGIN_LEFT + (option.rect.width() - ITEM_MARGIN_LEFT - ITEM_MARGIN_RIGHT - font_bounds.width()) / 2;
-			QPoint textPos(x,ITEM_MARGIN_TOP + option.decorationSize.height() + ITEM_PADDING);
+			QPoint textPos(x,y);
+			y += fm.height();
 			font_bounds.translate(-font_bounds.topLeft());
 			font_bounds.translate(textPos);
 			font_bounds.translate(option.rect.topLeft());
 			painter->setPen(fore_color);
-			painter->drawText(font_bounds, Qt::AlignCenter, text);
+			painter->drawText(font_bounds, Qt::AlignCenter, s);
 		}
 	}
 
 	QSize ActivityListDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const 
 	{
 		QSize base_size(option.decorationSize.width(), option.decorationSize.height());
-		if (true)
+		QString text = index.data(Qt::DisplayRole).toString();
+		QStringList splitted = text.split("\n");
+
+		int w = 0;
+		int h = 0;
+		foreach (const QString & s,splitted)
 		{
-			QRect font_bounds = QFontMetrics(option.font).boundingRect(index.data(Qt::DisplayRole).toString());
-			base_size.setWidth(qMax(font_bounds.width(),base_size.width()));
-			base_size.setHeight(base_size.height() + font_bounds.height() + ITEM_PADDING);
+			QFontMetrics fm(option.font);
+			h += fm.height();
+			int nw = fm.width(s);
+			if (nw > w)
+				w = nw;
 		}
+		base_size.setWidth(qMax(w,base_size.width()));
+		base_size.setHeight(base_size.height() + h + ITEM_PADDING);
 		return base_size + QSize(ITEM_MARGIN_LEFT + ITEM_MARGIN_RIGHT, ITEM_MARGIN_TOP + ITEM_MARGIN_BOTTOM);
 	}
 

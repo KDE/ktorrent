@@ -90,7 +90,7 @@ namespace kt
 		virtual KMainWindow* getMainWindow() = 0;
 		
 		/// Add an activity
-		virtual void addActivty(Activity* act) = 0;
+		virtual void addActivity(Activity* act) = 0;
 		
 		/// Remove an activity
 		virtual void removeActivity(Activity* act) = 0;

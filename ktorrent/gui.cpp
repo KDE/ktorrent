@@ -83,7 +83,7 @@ namespace kt
 		widget_stack = new QStackedWidget(this);
 		torrent_activity = new TorrentActivity(core,this,widget_stack);
 		activity_bar = new ActivityBar(widget_stack,this);
-		addActivty(torrent_activity);
+		addActivity(torrent_activity);
 		setCentralWidget(widget_stack);
 		addDockWidget(Qt::LeftDockWidgetArea,activity_bar);
 		createGUI("ktorrentui.rc");
@@ -121,7 +121,7 @@ namespace kt
 		delete core;
 	}
 	
-	void GUI::addActivty(Activity* act)
+	void GUI::addActivity(Activity* act)
 	{
 		activity_bar->addActivity(act);
 	}

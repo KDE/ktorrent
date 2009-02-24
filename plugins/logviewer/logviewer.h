@@ -21,6 +21,7 @@
 #define KTLOGVIEWER_H
 
 #include <QTextBrowser>
+#include <interfaces/activity.h>
 #include <interfaces/logmonitorinterface.h>
 #include "logflags.h"
 
@@ -29,7 +30,7 @@ namespace kt
 	/**
 	 * @author Joris Guisson
 	*/
-	class LogViewer : public QTextBrowser, public bt::LogMonitorInterface
+	class LogViewer  : public Activity,public bt::LogMonitorInterface
 	{
 		Q_OBJECT
 	public:
@@ -44,6 +45,7 @@ namespace kt
 	private:
 		bool m_useRichText;
 		LogFlags* flags;
+		QTextBrowser* output;
 	};
 
 }

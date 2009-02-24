@@ -36,8 +36,10 @@ namespace kt
 {
 	
 
-	ScheduleEditor::ScheduleEditor(QWidget* parent) : QWidget(parent),schedule(0)
+	ScheduleEditor::ScheduleEditor(QWidget* parent) 
+		: Activity(i18n("Bandwidth\nSchedule"),"kt-bandwidth-scheduler",parent),schedule(0)
 	{
+		setToolTip(i18n("Edit the bandwidth schedule"));
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		view = new WeekView(this);
 		tool_bar = new KToolBar(this);

@@ -43,12 +43,6 @@ namespace kt
 		void setName(const QString & name);
 		void setIcon(const QString & icon);
 		
-		/// Load the state of the activity
-		virtual void loadState(KSharedConfigPtr cfg) = 0;
-		
-		/// Save the state of the activity
-		virtual void saveState(KSharedConfigPtr cfg) = 0;
-		
 	signals:
 		void nameChanged(Activity* a,const QString & name);
 		void iconChanged(Activity* a,const QString & icon);

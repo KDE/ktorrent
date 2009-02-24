@@ -23,7 +23,7 @@
 
 namespace kt
 {
-	TabBarWidget::TabBarWidget(QWidget* parent) 
+	TabBarWidget::TabBarWidget(QSplitter* splitter,QWidget* parent) 
 		: QWidget(parent),widget_stack(0),next_id(1),shrunken(false)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
@@ -31,8 +31,8 @@ namespace kt
 		layout->setMargin(0);
 		tab_bar = new KMultiTabBar(KMultiTabBar::Bottom,this);
 		tab_bar->setStyle(KMultiTabBar::KDEV3ICON);
-		widget_stack = new QStackedWidget(this);
-		layout->addWidget(widget_stack);
+		widget_stack = new QStackedWidget(splitter);
+		splitter->addWidget(widget_stack);
 		layout->addWidget(tab_bar);
 		
 		QSizePolicy tsp = sizePolicy();

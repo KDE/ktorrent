@@ -22,6 +22,7 @@
 #define TABBARWIDGET_H
 
 #include <QList>
+#include <QSplitter>
 #include <QStackedWidget>
 #include <kmultitabbar.h>
 #include <ksharedconfig.h>
@@ -43,7 +44,7 @@ namespace kt
 			
 		typedef QList<Tab>::iterator TabItr;
 	
-		TabBarWidget(QWidget* parent);
+		TabBarWidget(QSplitter* splitter,QWidget* parent);
 		virtual ~TabBarWidget();
 		
 		/// Add a tab to the TabBarWidget

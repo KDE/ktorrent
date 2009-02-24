@@ -63,8 +63,6 @@ namespace kt
 	BWSchedulerPlugin::BWSchedulerPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
 	{
 		Q_UNUSED(args);
-	//	setXMLFile("ktbwschedulerpluginui.rc");
-		m_bws_action = 0;
 		connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerTriggered()));
 		m_editor = 0;
 		m_pref = 0;
@@ -79,11 +77,6 @@ namespace kt
 	{
 		LogSystemManager::instance().registerSystem(i18n("Bandwidth Scheduler"),SYS_SCD);
 		m_schedule = new Schedule();
-		m_tool_bar = new KToolBar("scheduler",getGUI()->getMainWindow(),Qt::TopToolBarArea,false,true,true);
-		m_bws_action = new KToggleAction(KIcon("kt-bandwidth-scheduler"),i18n("Bandwidth Scheduler"), this);
-		connect(m_bws_action,SIGNAL(toggled(bool)),this,SLOT(onToggled(bool)));
-		m_tool_bar->addAction(m_bws_action);
-		
 		m_pref = new BWPrefPage(0);
 		connect(m_pref,SIGNAL(colorsChanged()),this,SLOT(colorsChanged()));
 		getGUI()->addPrefPage(m_pref);
@@ -100,10 +93,11 @@ namespace kt
 			m_schedule->clear();
 		}
 		
-		KConfigGroup g = KGlobal::config()->group("BWScheduler");
-		bool on = g.readEntry("show_scheduler",true);
-		onToggled(on);
-		m_bws_action->setChecked(on);
+		m_editor = new ScheduleEditor(0);
+		connect(m_editor,SIGNAL(loaded(Schedule*)),this,SLOT(onLoaded(Schedule*)));
+		connect(m_editor,SIGNAL(scheduleChanged()),this,SLOT(timerTriggered()));
+		getGUI()->addActivity(m_editor);
+		m_editor->setSchedule(m_schedule);
 		
 		// make sure that schedule gets applied again if the settings change
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(timerTriggered()));
@@ -113,19 +107,11 @@ namespace kt
 	void BWSchedulerPlugin::unload()
 	{
 		LogSystemManager::instance().unregisterSystem(i18n("Bandwidth Scheduler"));
-		KConfigGroup g = KGlobal::config()->group("BWScheduler");
-		g.writeEntry("show_scheduler",m_editor != 0);
-		KGlobal::config()->sync();
-		
 		m_timer.stop();
-		delete m_tool_bar;
-		m_tool_bar = 0;
-		
-		if (m_editor)
-		{
-			getGUI()->removeTabPage(m_editor);
-			m_editor = 0;
-		}
+	
+		getGUI()->removeActivity(m_editor);
+		delete m_editor;
+		m_editor = 0;
 		
 		getGUI()->removePrefPage(m_pref);
 		m_pref = 0;
@@ -141,8 +127,6 @@ namespace kt
 		
 		delete m_schedule;
 		m_schedule = 0;
-		delete m_bws_action;
-		m_bws_action = 0;
 	}
 	
 	void BWSchedulerPlugin::timerTriggered()
@@ -218,41 +202,6 @@ namespace kt
 			wait_time = 1000;
 		m_timer.stop();
 		m_timer.start(wait_time);
-	}
-	
-	void BWSchedulerPlugin::onToggled(bool on)
-	{
-		if (on)
-		{
-			if (!m_editor)
-			{
-				m_editor = new ScheduleEditor(0);
-				connect(m_editor,SIGNAL(loaded(Schedule*)),this,SLOT(onLoaded(Schedule*)));
-				connect(m_editor,SIGNAL(scheduleChanged()),this,SLOT(timerTriggered()));
-				getGUI()->addTabPage(m_editor,"kt-bandwidth-scheduler",i18n("Bandwidth Schedule"),
-					   i18n("Tab to edit the bandwidth schedule"),this);
-				m_editor->setSchedule(m_schedule);
-				timerTriggered(); // trigger timer so that status text is updated
-			}
-		}
-		else
-		{
-			if (m_editor)
-			{
-				getGUI()->removeTabPage(m_editor);
-				m_editor = 0;
-			}
-		}
-	}
-	
-	void BWSchedulerPlugin::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)
-	{
-		if (tab != m_editor)
-			return;
-		
-		getGUI()->removeTabPage(m_editor);
-		m_editor = 0;
-		m_bws_action->setChecked(false);
 	}
 	
 	void BWSchedulerPlugin::onLoaded(Schedule* ns)

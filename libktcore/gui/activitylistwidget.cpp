@@ -31,7 +31,6 @@ namespace kt
 		setItemDelegate(new ActivityListDelegate(this));
 		setMouseTracking(true);
 		viewport()->setAttribute(Qt::WA_Hover);
-		setUniformItemSizes(true);
 		setSelectionMode(QAbstractItemView::SingleSelection);
 		int iconsize = 48; // TODO: SETTINGS
 		setIconSize(QSize(iconsize, iconsize));
@@ -162,7 +161,7 @@ namespace kt
 		setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		setIcon(KIcon(activity->icon()));
 		setText(activity->name());
-		setToolTip(activity->name());
+		setToolTip(activity->toolTip());
 	}
 
 }

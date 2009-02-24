@@ -21,7 +21,7 @@
 #ifndef KTSCHEDULEEDITOR_H
 #define KTSCHEDULEEDITOR_H
 
-#include <QWidget>
+#include <interfaces/activity.h>
 
 class KToolBar;
 
@@ -34,7 +34,7 @@ namespace kt
 	/**
 		@author
 	*/
-	class ScheduleEditor : public QWidget
+	class ScheduleEditor : public Activity
 	{
 		Q_OBJECT
 	public:

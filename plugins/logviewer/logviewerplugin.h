@@ -21,7 +21,7 @@
 #define KTLOGVIEWERPLUGIN_H
 
 #include <interfaces/plugin.h>
-
+#include <interfaces/activity.h>
 
 
 namespace kt

@@ -65,7 +65,7 @@ namespace kt
 		virtual void errorMsg(KIO::Job* j);
 		virtual void infoMsg(const QString & info);
 		virtual StatusBarInterface* getStatusBar();
-		virtual void addActivty(Activity* act);
+		virtual void addActivity(Activity* act);
 		virtual void removeActivity(Activity* act);
 		
 		/**

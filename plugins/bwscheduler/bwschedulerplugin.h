@@ -26,7 +26,6 @@
 #include <interfaces/guiinterface.h>
 
 class QString;
-class KToolBar;
 
 
 namespace kt
@@ -40,7 +39,7 @@ namespace kt
 	 * @brief KTorrent scheduler plugin.
 	 *
 	 */
-	class BWSchedulerPlugin : public Plugin,public CloseTabListener
+	class BWSchedulerPlugin : public Plugin
 	{
 		Q_OBJECT
 	public:
@@ -50,19 +49,14 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
-		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
-		
 		
 	public slots:
 		void timerTriggered();
 		void onLoaded(Schedule* ns);
-		void onToggled(bool on);
 		void colorsChanged();
 	
 	private:
 		QTimer m_timer;
-		KAction* m_bws_action;
-		KToolBar* m_tool_bar;
 		ScheduleEditor* m_editor;
 		Schedule* m_schedule;
 		BWPrefPage* m_pref;
