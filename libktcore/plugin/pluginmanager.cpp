@@ -29,7 +29,7 @@
 #include <torrent/globals.h>
 #include <interfaces/guiinterface.h>
 #include "pluginmanager.h"
-#include "pluginmanagerprefpage.h"
+#include "pluginactivity.h"
 
 using namespace bt;
 

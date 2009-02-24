@@ -17,40 +17,53 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTPLUGINMANAGERPREFPAGE_H
-#define KTPLUGINMANAGERPREFPAGE_H
+#include <QVBoxLayout>
+#include <klocale.h>
+#include <kpushbutton.h>
+#include <qtreewidget.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <kpluginselector.h>
+#include <util/constants.h>
+#include <util/log.h>
+#include "pluginmanager.h"
+#include "pluginactivity.h"
+#include "settings.h"
 
-#include <qwidget.h>
-#include <interfaces/activity.h>
-
-class KPluginSelector;
+using namespace bt;
 
 namespace kt
 {
-	class PluginManager;
-
-	/**
-	 * @author Joris Guisson
-	 *
-	 * Pref page which allows to load and unload plugins.
-	*/
-	class PluginActivity : public Activity 
+	PluginActivity::PluginActivity(PluginManager* pman) 
+		: Activity(i18n("Plugins"),"preferences-plugin",5,0),pman(pman)
 	{
-		Q_OBJECT
-	public:
-		PluginActivity(PluginManager* pman);
-		virtual ~PluginActivity();
+		QVBoxLayout* layout = new QVBoxLayout(this);
+		layout->setMargin(0);
+		pmw = new KPluginSelector(this);
+		connect(pmw,SIGNAL(changed(bool)),this,SLOT(changed()));
+		connect(pmw,SIGNAL(configCommitted(const QByteArray &)),this,SLOT(changed()));
+		layout->addWidget(pmw);
+	}
 
-		void updatePluginList();
-		void update();
-	private slots:
-		void changed();
+
+	PluginActivity::~PluginActivity()
+	{
+	}
+
+	void PluginActivity::updatePluginList()
+ 	{
+		pmw->addPlugins(pman->pluginInfoList(),KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
+	}
 		
-	private:
-		PluginManager* pman;
-		KPluginSelector* pmw;
-	};
-
+	void PluginActivity::update()
+	{
+		pmw->updatePluginsState();
+		pman->loadPlugins();
+	}
+	
+	void PluginActivity::changed()
+	{
+		update();
+	}
 }
 
-#endif

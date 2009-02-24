@@ -38,7 +38,7 @@ set(libktorrent_SRC
 	gui/tabbarwidget.cpp
 	
 	plugin/pluginmanager.cpp
-	plugin/pluginmanagerprefpage.cpp
+	plugin/pluginactivity.cpp
 
 	ktorrent.kcfg
 )
