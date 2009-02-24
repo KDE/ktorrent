@@ -21,12 +21,9 @@
 #ifndef ACTIVITYBAR_H
 #define ACTIVITYBAR_H
 
-#include <QList>
-#include <QDockWidget>
+#include <KSharedConfig>
 #include <QStackedWidget>
 #include "ktcore_export.h"
-
-class QListWidgetItem;
 
 namespace kt
 {
@@ -36,7 +33,7 @@ namespace kt
 	/**
 	 * Bar to switch between activities
 	 */
-	class KTCORE_EXPORT ActivityBar : public QDockWidget
+	class KTCORE_EXPORT ActivityBar : public QWidget
 	{
 		Q_OBJECT
 	public:
@@ -48,15 +45,17 @@ namespace kt
 		void setCurrentActivity(Activity* act);
 		Activity* currentActivity();
 		
+		void loadState(KSharedConfigPtr cfg);
+		void saveState(KSharedConfigPtr cfg);
+		
 	signals:
 		void currentActivityChanged(Activity* act);
 		
 	private slots:
-		void itemClicked(QListWidgetItem* it);
+		void currentChanged(Activity* act);
 		
 	private:
 		QStackedWidget* stack;
-		QList<Activity*> activities;
 		ActivityListWidget* alw;
 	};
 }

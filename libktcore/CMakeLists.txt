@@ -31,6 +31,7 @@ set(libktorrent_SRC
 	dbus/dbusgroup.cpp
 	
 	gui/activitybar.cpp
+	gui/activitylistmodel.cpp
 	gui/activitylistwidget.cpp
 	gui/activitylistdelegate.cpp
 	gui/tabbarwidget.cpp

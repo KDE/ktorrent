@@ -21,41 +21,69 @@
 #ifndef ACTIVITYLISTWIDGET_H
 #define ACTIVITYLISTWIDGET_H
 
-#include <QListWidget>
-#include <QListWidgetItem>
+#include <QListView>
+#include <KSharedConfig>
+
+class KMenu;
+class QAction;
 
 namespace kt
 {
 	class Activity;
+	class ActivityListModel;
+	class ActivityListDelegate;
+	
+	enum ActivityListDisplayMode
+	{
+		ICONS_AND_TEXT,
+		ICONS_ONLY,
+		TEXT_ONLY
+	};
+	
 	
 	/**
 	 * List widget to display the activity list.
 	 */
-	class ActivityListWidget : public QListWidget
+	class ActivityListWidget : public QListView
 	{
 		Q_OBJECT
 	public:
 		ActivityListWidget(QWidget* parent);
 		virtual ~ActivityListWidget();
 		
-		virtual void mouseDoubleClickEvent(QMouseEvent* event);
-		virtual void mouseMoveEvent(QMouseEvent* event);
-		virtual void mousePressEvent(QMouseEvent* event);
-		virtual void mouseReleaseEvent(QMouseEvent* event);
-		//virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction,Qt::KeyboardModifiers modifiers);
-		
+		ActivityListDisplayMode displayMode() const {return mode;}
 		void addActivity(Activity* a);
-		void removeActivity(int idx);
-	};
-	
-	const int ActivityListWidgetItemType = QListWidgetItem::UserType + 1;
-	
-	class ActivityListWidgetItem : public QListWidgetItem
-	{
-	public:
-		ActivityListWidgetItem(Activity* a);
+		void removeActivity(Activity* act);
+		void setCurrentActivity(Activity* act);
+		void loadState(KSharedConfigPtr cfg);
+		void saveState(KSharedConfigPtr cfg);
 		
-		Activity* activity;
+		virtual QSize sizeHint() const;
+	private slots:
+		void showConfigMenu(QPoint pos);
+		void iconSizeActionTriggered(QAction* act);
+		void modeActionTriggered(QAction* act);
+		void updateParentSize();
+		void currentItemChanged(const QModelIndex & sel,const QModelIndex & old);
+		
+	signals:
+		void currentActivityChanged(Activity* act);
+		
+	private:
+		void showEvent(QShowEvent* event);
+		
+	private:
+		KMenu* menu;
+		QAction* little_icons;
+		QAction* normal_icons;
+		QAction* big_icons;
+		QAction* show_icons_only;
+		QAction* show_text_only;
+		QAction* show_icons_and_text;
+		ActivityListModel* model;
+		ActivityListDelegate* delegate;
+		int icon_size;
+		ActivityListDisplayMode mode;
 	};
 }
 

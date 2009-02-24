@@ -29,11 +29,16 @@ namespace kt
 	class ActivityListDelegate : public QStyledItemDelegate
 	{
 	public:
-		ActivityListDelegate(QObject* parent);
+		ActivityListDelegate(int icon_size,QObject* parent);
 		virtual ~ActivityListDelegate();
 		
 		virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 		virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+		void setIconSize(int size) {icon_size = size;}
+		void setShowIcons(bool icons) {show_icons = icons;}
+	private:
+		int icon_size;
+		bool show_icons;
 	};
 }
 

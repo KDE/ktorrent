@@ -19,19 +19,25 @@
  ***************************************************************************/
 #include <QVBoxLayout>
 #include <klocale.h>
+#include <util/log.h>
 #include <interfaces/activity.h>
 #include "activitybar.h"
 #include "activitylistwidget.h"
 
+using namespace bt;
+
 namespace kt
 {
-	ActivityBar::ActivityBar(QStackedWidget* stack,QWidget* parent) : QDockWidget(i18n("Activities"),parent),stack(stack)
+	
+	
+	ActivityBar::ActivityBar(QStackedWidget* stack,QWidget* parent) : QWidget(parent),stack(stack)
 	{
-		setAllowedAreas(Qt::AllDockWidgetAreas);
-		setObjectName("ActivityBar");
+		QHBoxLayout* layout = new QHBoxLayout(this);
+		layout->setSpacing(0);
+		layout->setMargin(0);
 		alw = new ActivityListWidget(this);
-		setWidget(alw);
-		connect(alw,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(itemClicked(QListWidgetItem*)));
+		layout->addWidget(alw);
+		connect(alw,SIGNAL(currentActivityChanged(Activity*)),this,SLOT(currentChanged(Activity*)));
 	}
 
 	ActivityBar::~ActivityBar()
@@ -41,7 +47,6 @@ namespace kt
 	void ActivityBar::addActivity(Activity* act)
 	{
 		stack->addWidget(act);
-		activities.append(act);
 		alw->addActivity(act);
 	}
 	
@@ -51,15 +56,14 @@ namespace kt
 		if (idx >= 0)
 		{
 			stack->removeWidget(act);
-			activities.removeAll(act);
-			alw->removeActivity(idx);
+			alw->removeActivity(act);
 		}
 	}
 	
 	void ActivityBar::setCurrentActivity(Activity* act)
 	{
 		stack->setCurrentWidget(act);
-		alw->setCurrentRow(activities.indexOf(act));
+		alw->setCurrentActivity(act);
 	}
 	
 	Activity* ActivityBar::currentActivity()
@@ -67,9 +71,18 @@ namespace kt
 		return (Activity*)stack->currentWidget();
 	}
 	
-	void ActivityBar::itemClicked(QListWidgetItem* it)
+	void ActivityBar::currentChanged(Activity* act)
 	{
-		ActivityListWidgetItem* item = (ActivityListWidgetItem*)it;
-		stack->setCurrentWidget(item->activity);
+		stack->setCurrentWidget(act);
+	}
+	
+	void ActivityBar::loadState(KSharedConfigPtr cfg)
+	{
+		alw->loadState(cfg);
+	}
+	
+	void ActivityBar::saveState(KSharedConfigPtr cfg)
+	{
+		alw->saveState(cfg);
 	}
 }

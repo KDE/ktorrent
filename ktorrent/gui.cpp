@@ -85,8 +85,15 @@ namespace kt
 		torrent_activity = new TorrentActivity(core,this,widget_stack);
 		activity_bar = new ActivityBar(widget_stack,this);
 		addActivity(torrent_activity);
-		setCentralWidget(widget_stack);
-		addDockWidget(Qt::LeftDockWidgetArea,activity_bar);
+		
+		QWidget* central = new QWidget(this);
+		QHBoxLayout* layout = new QHBoxLayout(central);
+		layout->setMargin(0);
+		layout->setSpacing(0);
+		layout->addWidget(activity_bar);
+		layout->addWidget(widget_stack);
+		setCentralWidget(central);
+		
 		createGUI("ktorrentui.rc");
 		
 		status_bar = new kt::StatusBar(this);
@@ -485,6 +492,7 @@ namespace kt
 	void GUI::loadState(KSharedConfigPtr cfg)
 	{
 		setAutoSaveSettings("MainWindow",true);
+		activity_bar->loadState(cfg);
 		torrent_activity->loadState(cfg);
 		
 		KConfigGroup g = cfg->group("MainWindow");
@@ -527,6 +535,7 @@ namespace kt
 		g.writeEntry("hidden_on_exit",isHidden());
 		g.writeEntry("current_activity",widget_stack->currentIndex());
 		torrent_activity->saveState(cfg);
+		activity_bar->saveState(cfg);
 		cfg->sync();
 	}
 
