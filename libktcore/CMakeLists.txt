@@ -36,10 +36,11 @@ set(libktorrent_SRC
 	gui/activitylistwidget.cpp
 	gui/activitylistdelegate.cpp
 	gui/tabbarwidget.cpp
+	
+	plugin/pluginmanager.cpp
+	plugin/pluginmanagerprefpage.cpp
 
 	ktorrent.kcfg
-	pluginmanager.cpp
-	pluginmanagerprefpage.cpp
 )
 
 # set(libktorrent_UI pluginmanagerwidget.ui )

@@ -48,7 +48,7 @@
 #include <dht/dhtbase.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
-#include <pluginmanager.h>
+#include <plugin/pluginmanager.h>
 #include <settings.h>
 #include "gui.h"
 #include "core.h"

@@ -61,7 +61,7 @@ namespace kt
 		
 		if (!prefpage)
 		{
-			prefpage = new PluginManagerPrefPage(this);
+			prefpage = new PluginActivity(this);
 			gui->addActivity(prefpage);
 		}
 		

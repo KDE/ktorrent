@@ -48,7 +48,7 @@
 #include <util/fileops.h>
 #include <util/functions.h>
 #include <util/waitjob.h>
-
+#include <plugin/pluginmanager.h>
 #include <groups/groupmanager.h>
 #include <groups/group.h>
 
@@ -57,7 +57,6 @@
 #endif
 
 #include "settings.h"
-#include "pluginmanager.h"
 #include "core.h"
 #include "fileselectdlg.h"
 #include "missingfilesdlg.h"
