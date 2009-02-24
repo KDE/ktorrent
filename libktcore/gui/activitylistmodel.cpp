@@ -107,4 +107,11 @@ namespace kt
 	{
 		emit layoutChanged();
 	}
+	
+	void ActivityListModel::sort(int column, Qt::SortOrder order) 
+	{
+		qSort(activities.begin(),activities.end(),Activity::lessThan);
+		emitLayoutChanged();
+	}
+
 }

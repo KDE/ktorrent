@@ -28,20 +28,31 @@
 namespace kt
 {
 	/**
-	 * Base class for all activities
+	 * Base class for all activities.
 	 */
 	class KTCORE_EXPORT Activity : public QWidget
 	{
 		Q_OBJECT
 	public:
-		Activity(const QString & name,const QString & icon,QWidget* parent);
+		Activity(const QString & name,const QString & icon,int weight,QWidget* parent);
 		virtual ~Activity();
 		
+		/// Get the name of the activity
 		const QString & name() const {return activity_name;}
+		
+		/// Get the icon name
 		const QString & icon() const {return activity_icon;}
 		
+		/// Set the name
 		void setName(const QString & name);
+		
+		/// Set the icon
 		void setIcon(const QString & icon);
+		
+		/// Get the weight
+		int weight() const {return activity_weight;}
+		
+		static bool lessThan(Activity* l,Activity* r);
 		
 	signals:
 		void nameChanged(Activity* a,const QString & name);
@@ -50,6 +61,7 @@ namespace kt
 	private:
 		QString activity_name;
 		QString activity_icon;
+		int activity_weight;
 	};
 }
 

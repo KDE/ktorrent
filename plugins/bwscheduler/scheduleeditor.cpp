@@ -37,7 +37,7 @@ namespace kt
 	
 
 	ScheduleEditor::ScheduleEditor(QWidget* parent) 
-		: Activity(i18n("Bandwidth\nSchedule"),"kt-bandwidth-scheduler",parent),schedule(0)
+		: Activity(i18n("Bandwidth\nSchedule"),"kt-bandwidth-scheduler",2,parent),schedule(0)
 	{
 		setToolTip(i18n("Edit the bandwidth schedule"));
 		QVBoxLayout* layout = new QVBoxLayout(this);

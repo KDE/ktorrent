@@ -38,31 +38,6 @@ namespace kt
 	const int LITTLE_ICON_SIZE = 22;
 	const int NORMAL_ICON_SIZE = 32;
 	const int BIG_ICON_SIZE = 48;
-/*	
-	class SortFilterProxyModel : public QSortFilterProxyModel
-	{
-	public:
-		SortFilterProxyModel(QObject* parent) : QSortFilterProxyModel(parent)
-		{
-			setDynamicSortFilter(true);
-			sort(0);
-		}
-		
-	protected:
-		bool lessThan(const QModelIndex & left,const QModelIndex & right) const
-		{
-			Kontact::Plugin *leftPlugin = static_cast<Kontact::Plugin*>( left.internalPointer() );
-			Kontact::Plugin *rightPlugin = static_cast<Kontact::Plugin*>( right.internalPointer() );
-			
-			if ( leftPlugin->weight() == rightPlugin->weight() ) {
-				return KStringHandler::naturalCompare( leftPlugin->title(), rightPlugin->title() ) < 0;
-			}
-			
-			return leftPlugin->weight() < rightPlugin->weight();
-		}
-	};
-	*/
-
 	
 	ActivityListWidget::ActivityListWidget(QWidget* parent)
 		: QListView(parent),icon_size(NORMAL_ICON_SIZE),mode(ICONS_AND_TEXT)
@@ -70,6 +45,8 @@ namespace kt
 		setFocusPolicy(Qt::NoFocus);
 		delegate = new ActivityListDelegate(icon_size,this);
 		setItemDelegate(delegate);
+		
+		
 		model = new ActivityListModel(this);
 		setModel(model);
 		setViewMode(ListMode);
@@ -144,6 +121,7 @@ namespace kt
 	void ActivityListWidget::addActivity(Activity* a)
 	{
 		model->addActivity(a);
+		model->sort(0,Qt::AscendingOrder);
 	}
 	
 	void ActivityListWidget::removeActivity(Activity* a)

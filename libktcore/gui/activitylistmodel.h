@@ -40,9 +40,11 @@ namespace kt
 		void removeActivity(Activity* act);
 		QModelIndex indexOf(Activity* act) const;
 		void emitLayoutChanged();
+		
 		virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 		virtual QVariant data(const QModelIndex& index, int role) const;
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
+		virtual void sort(int column,Qt::SortOrder order);
 	private:
 		ActivityListWidget* widget;
 		QList<Activity*> activities;

@@ -23,7 +23,7 @@
 namespace kt
 {
 	TorrentActivityInterface::TorrentActivityInterface(const QString & name,const QString & icon,QWidget* parent)
-		: Activity(name,icon,parent)
+		: Activity(name,icon,0,parent)
 	{
 	}
 	

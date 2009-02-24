@@ -18,13 +18,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
+#include <KStringHandler>
 #include "activity.h"
 
 namespace kt
 {
-	Activity::Activity(const QString& name, const QString& icon, QWidget* parent) 
-		: QWidget(parent),activity_name(name),activity_icon(icon)
+	Activity::Activity(const QString& name, const QString& icon, int weight, QWidget* parent) 
+		: QWidget(parent),activity_name(name),activity_icon(icon),activity_weight(weight)
 	{
 	}
 
@@ -44,5 +44,11 @@ namespace kt
 		iconChanged(this,icon);
 	}
 
-
+	bool Activity::lessThan(Activity* l,Activity* r)
+	{
+		if (l->weight() == r->weight())
+			return KStringHandler::naturalCompare(l->name(),r->name()) < 0;
+		else
+			return l->weight() < r->weight();
+	}
 }
