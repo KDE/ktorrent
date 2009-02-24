@@ -140,6 +140,16 @@ namespace kt
 		tabs->setTabText(idx,name);
 	}
 	
+	void TorrentActivity::addToolWidget(QWidget* widget,const QString & text,const QString & icon,const QString & tooltip)
+	{
+		tool_views->addTab(widget,text,icon,tooltip);
+	}
+	
+	void TorrentActivity::removeToolWidget(QWidget* widget)
+	{
+		tool_views->removeTab(widget);
+	}
+	
 	void TorrentActivity::loadState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("TorrentActivitySplitters");

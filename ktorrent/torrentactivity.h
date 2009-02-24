@@ -58,6 +58,8 @@ namespace kt
 		virtual const bt::TorrentInterface* getCurrentTorrent() const;
 		virtual bt::TorrentInterface* getCurrentTorrent();
 		virtual void updateActions();
+		virtual void addToolWidget(QWidget* widget,const QString & text,const QString & icon,const QString & tooltip);
+		virtual void removeToolWidget(QWidget* widget);
 		
 		/// Update the activity
 		void update();

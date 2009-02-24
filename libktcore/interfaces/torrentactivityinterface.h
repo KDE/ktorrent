@@ -69,6 +69,12 @@ namespace kt
 		/// Update all actions
 		virtual void updateActions() = 0;
 		
+		/// Add a tool widget to the activity
+		virtual void addToolWidget(QWidget* widget,const QString & text,const QString & icon,const QString & tooltip) = 0;
+		
+		/// Remove a tool widget
+		virtual void removeToolWidget(QWidget* widget) = 0;
+		
 	protected:
 		/**
 		* Notifies all view listeners of the change in the current downloading TorrentInterface

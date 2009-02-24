@@ -29,6 +29,7 @@
 #include "upnpplugin.h"
 #include "upnpmcastsocket.h"
 #include "upnpwidget.h"
+#include <interfaces/torrentactivityinterface.h>
 
 
 K_EXPORT_COMPONENT_FACTORY(ktupnpplugin,KGenericFactory<kt::UPnPPlugin>("ktupnpplugin"))
@@ -55,8 +56,9 @@ namespace kt
 		LogSystemManager::instance().registerSystem(i18n("UPnP"),SYS_PNP);
 		sock = new UPnPMCastSocket();
 		upnp_tab = new UPnPWidget(sock,0);
-		getGUI()->addToolWidget(upnp_tab,"kt-upnp",i18n("UPnP"),
-			   i18n("Shows the status of the UPnP plugin"),GUIInterface::DOCK_BOTTOM);
+		GUIInterface* gui = getGUI();
+		gui->getTorrentActivity()->addToolWidget(upnp_tab,i18n("UPnP"),"kt-upnp",
+			   i18n("Shows the status of the UPnP plugin"));
 		// load the routers list
 		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
 		if (bt::Exists(routers_file))
@@ -69,7 +71,7 @@ namespace kt
 		LogSystemManager::instance().unregisterSystem(i18n("UPnP"));
 		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
 		sock->saveRouters(routers_file);
-		getGUI()->removeToolWidget(upnp_tab);
+		getGUI()->getTorrentActivity()->removeToolWidget(upnp_tab);
 		sock->close();
 		delete upnp_tab;
 		upnp_tab = 0;
