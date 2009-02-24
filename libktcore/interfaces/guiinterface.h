@@ -95,6 +95,9 @@ namespace kt
 		/// Remove an activity
 		virtual void removeActivity(Activity* act) = 0;
 		
+		/// Set the current activity
+		virtual void setCurrentActivity(Activity* act) = 0;
+		
 		/**
 		 * Add a page to the preference dialog.
 		 * @param page The page

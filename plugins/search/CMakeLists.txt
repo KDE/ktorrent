@@ -1,4 +1,4 @@
-set(ktsearchplugin_SRC 
+set(ktsearchplugin_SRC searchactivity.cpp 
 	searchenginelist.cpp 
 	htmlpart.cpp 
 	searchprefpage.cpp 
@@ -6,7 +6,8 @@ set(ktsearchplugin_SRC
 	searchtoolbar.cpp 
 	searchplugin.cpp 
 	searchengine.cpp 
-	opensearchdownloadjob.cpp)
+	opensearchdownloadjob.cpp
+	searchactivity.cpp)
 
 kde4_add_ui_files(ktsearchplugin_SRC searchpref.ui)
 kde4_add_kcfg_files(ktsearchplugin_SRC searchpluginsettings.kcfgc)

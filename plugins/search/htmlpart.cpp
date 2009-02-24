@@ -28,6 +28,7 @@
 #include <kparts/browserextension.h>
 #include <util/constants.h>
 #include <khtmlview.h>
+#include <dom/html_document.h>
 #include "htmlpart.h"
 
 using namespace bt;
@@ -55,6 +56,11 @@ namespace kt
 	
 	HTMLPart::~HTMLPart()
 	{}
+	
+	QString HTMLPart::title() const
+	{
+		return htmlDocument().title().string();
+	}
 	
 	void HTMLPart::copy()
 	{

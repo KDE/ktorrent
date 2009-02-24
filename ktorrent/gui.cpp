@@ -130,6 +130,11 @@ namespace kt
 	{
 		activity_bar->removeActivity(act);
 	}
+	
+	void GUI::setCurrentActivity(Activity* act)
+	{
+		activity_bar->setCurrentActivity(act);
+	}
 
 	void GUI::addPrefPage(PrefPageInterface* page)
 	{

@@ -45,7 +45,7 @@ namespace kt
 		virtual ~HTMLPart();
 		
 		bool backAvailable() const {return history.count() > 1;}
-		
+		QString title() const;
 	
 	public slots:
 		void back();

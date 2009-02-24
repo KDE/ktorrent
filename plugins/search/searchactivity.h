@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,59 +17,59 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSEARCHPLUGIN_H
-#define KTSEARCHPLUGIN_H
+
+#ifndef SEARCHACTIVITY_H
+#define SEARCHACTIVITY_H
 
 #include <QList>
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
-#include "searchenginelist.h"
+#include <kurl.h>
+#include <ktabwidget.h>
+#include <kaction.h>
+#include <interfaces/activity.h>
 
 namespace kt
 {
 	class SearchWidget;
-	class SearchPrefPage;
-	class SearchToolBar;
-	class SearchActivity;
+	class SearchEngineList;
+	class SearchPlugin;
 
-	/**
-	@author Joris Guisson
-	*/
-	class SearchPlugin : public Plugin
+	class SearchActivity : public kt::Activity
 	{
 		Q_OBJECT
 	public:
-		SearchPlugin(QObject* parent, const QStringList& args);
-		virtual ~SearchPlugin();
-
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
+		SearchActivity(SearchPlugin* sp,QWidget* parent);
+		virtual ~SearchActivity();
 		
-		SearchEngineList* getSearchEngineList() const {return engines;}
-		KAction* getBackAction() {return back_action;}
-		int currentSearchEngine() const;
-	private slots:
-		void search(const QString & text,int engine,bool external);
-		void preferencesUpdated();
-
+		/// Add a SearchWidget
+		void search(const QString & text,int engine);
+		
+		/// Save all current searches
+		void saveCurrentSearches();
+		
+		/// Load current searches
+		void loadCurrentSearches();
+		
+	public slots:
+		void find();
+		void back();
+		void reload();
+		void search();
+		void copy();
+		void home();
+		void openNewTab(const KUrl & url);
+		void currentTabChanged(int idx);
+		void closeTab();
+		void openTab();
+		void setTabTitle(SearchWidget* sw,const QString & title);
+		
 	private:
-		void setupActions();
+		SearchWidget* newSearchWidget(const QString & text);
 		
 	private:
-		SearchActivity* activity;
-		SearchPrefPage* pref;
-		SearchToolBar* toolbar;
-		SearchEngineList* engines;
-		
-		KAction* find_action;
-		KAction* back_action;
-		KAction* reload_action;
-		KAction* search_action;
-		KAction* copy_action;
-		KAction* home_action;
+		KTabWidget* tabs;
+		QList<SearchWidget*> searches;
+		SearchPlugin* sp;
 	};
-
 }
 
-#endif
+#endif // SEARCHACTIVITY_H

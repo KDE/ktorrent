@@ -167,6 +167,7 @@ namespace kt
 		qm->loadState(cfg);
 		tool_views->loadState(cfg,"TorrentActivityBottomTabBar");
 		notifyViewListeners(view_man->getCurrentTorrent());
+		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(tabs->count() > 1);
 	}
 	
 	void TorrentActivity::saveState(KSharedConfigPtr cfg)
@@ -214,6 +215,7 @@ namespace kt
 		QWidget* page = tabs->widget(idx);
 		view_man->onCurrentTabChanged(page);
 		notifyViewListeners(view_man->getCurrentTorrent());
+		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(tabs->count() > 1);
 	}
 	
 	void TorrentActivity::updateActions()
