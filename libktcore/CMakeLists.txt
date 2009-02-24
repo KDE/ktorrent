@@ -30,6 +30,7 @@ set(libktorrent_SRC
 	dbus/dbustorrent.cpp
 	dbus/dbusgroup.cpp
 	
+	gui/centralwidget.cpp
 	gui/activitybar.cpp
 	gui/activitylistmodel.cpp
 	gui/activitylistwidget.cpp

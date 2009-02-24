@@ -69,6 +69,7 @@
 #include <util/timer.h>
 #include <gui/activitybar.h>
 #include "torrentactivity.h"
+#include <gui/centralwidget.h>
 
 
 namespace kt
@@ -80,19 +81,10 @@ namespace kt
 		tray_icon = new TrayIcon(core,this);
 		setupActions();
 		
-		widget_stack = new QStackedWidget(this);
-		connect(widget_stack,SIGNAL(currentChanged(int)),this,SLOT(currentActivityChanged(int)));
-		torrent_activity = new TorrentActivity(core,this,widget_stack);
-		activity_bar = new ActivityBar(widget_stack,this);
-		addActivity(torrent_activity);
-		
-		QWidget* central = new QWidget(this);
-		QHBoxLayout* layout = new QHBoxLayout(central);
-		layout->setMargin(0);
-		layout->setSpacing(0);
-		layout->addWidget(activity_bar);
-		layout->addWidget(widget_stack);
+		central = new CentralWidget(this);
 		setCentralWidget(central);
+		torrent_activity = new TorrentActivity(core,this,0);
+		addActivity(torrent_activity);
 		
 		createGUI("ktorrentui.rc");
 		
@@ -129,24 +121,19 @@ namespace kt
 		delete core;
 	}
 	
-	void GUI::currentActivityChanged(int idx)
-	{
-		//Out(SYS_GEN|LOG_DEBUG) << "GUI::currentActivityChanged " << idx << endl;
-	}
-	
 	void GUI::addActivity(Activity* act)
 	{
-		activity_bar->addActivity(act);
+		central->activityBar()->addActivity(act);
 	}
 	
 	void GUI::removeActivity(Activity* act)
 	{
-		activity_bar->removeActivity(act);
+		central->activityBar()->removeActivity(act);
 	}
 	
 	void GUI::setCurrentActivity(Activity* act)
 	{
-		activity_bar->setCurrentActivity(act);
+		central->activityBar()->setCurrentActivity(act);
 	}
 
 	void GUI::addPrefPage(PrefPageInterface* page)
@@ -492,7 +479,7 @@ namespace kt
 	void GUI::loadState(KSharedConfigPtr cfg)
 	{
 		setAutoSaveSettings("MainWindow",true);
-		activity_bar->loadState(cfg);
+		central->loadState(cfg);
 		torrent_activity->loadState(cfg);
 		
 		KConfigGroup g = cfg->group("MainWindow");
@@ -503,9 +490,6 @@ namespace kt
 		bool menubar_hidden = g.readEntry("menubar_hidden",false);
 		menuBar()->setHidden(menubar_hidden);
 		show_menu_bar_action->setChecked(!menubar_hidden);
-		
-		int idx = g.readEntry("current_activity",0);
-		activity_bar->setCurrentActivity((Activity*)widget_stack->widget(idx));
 		
 		bool hidden_on_exit = g.readEntry("hidden_on_exit",false);
 		if (Settings::showSystemTrayIcon())
@@ -533,9 +517,8 @@ namespace kt
 		g.writeEntry("statusbar_hidden",status_bar->isHidden());
 		g.writeEntry("menubar_hidden",menuBar()->isHidden());
 		g.writeEntry("hidden_on_exit",isHidden());
-		g.writeEntry("current_activity",widget_stack->currentIndex());
 		torrent_activity->saveState(cfg);
-		activity_bar->saveState(cfg);
+		central->saveState(cfg);
 		cfg->sync();
 	}
 

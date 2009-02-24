@@ -30,14 +30,8 @@ namespace kt
 {
 	
 	
-	ActivityBar::ActivityBar(QStackedWidget* stack,QWidget* parent) : QWidget(parent),stack(stack)
+	ActivityBar::ActivityBar(QStackedWidget* stack,QWidget* parent) : ActivityListWidget(parent),stack(stack)
 	{
-		QHBoxLayout* layout = new QHBoxLayout(this);
-		layout->setSpacing(0);
-		layout->setMargin(0);
-		alw = new ActivityListWidget(this);
-		layout->addWidget(alw);
-		connect(alw,SIGNAL(currentActivityChanged(Activity*)),this,SLOT(currentChanged(Activity*)));
 	}
 
 	ActivityBar::~ActivityBar()
@@ -47,7 +41,7 @@ namespace kt
 	void ActivityBar::addActivity(Activity* act)
 	{
 		stack->addWidget(act);
-		alw->addActivity(act);
+		ActivityListWidget::addActivity(act);
 	}
 	
 	void ActivityBar::removeActivity(Activity* act)
@@ -56,14 +50,14 @@ namespace kt
 		if (idx >= 0)
 		{
 			stack->removeWidget(act);
-			alw->removeActivity(act);
+			ActivityListWidget::removeActivity(act);
 		}
 	}
 	
 	void ActivityBar::setCurrentActivity(Activity* act)
 	{
 		stack->setCurrentWidget(act);
-		alw->setCurrentActivity(act);
+		ActivityListWidget::setCurrentActivity(act);
 	}
 	
 	Activity* ActivityBar::currentActivity()
@@ -71,18 +65,8 @@ namespace kt
 		return (Activity*)stack->currentWidget();
 	}
 	
-	void ActivityBar::currentChanged(Activity* act)
+	void ActivityBar::currentActivityChanged(Activity* act)
 	{
 		stack->setCurrentWidget(act);
-	}
-	
-	void ActivityBar::loadState(KSharedConfigPtr cfg)
-	{
-		alw->loadState(cfg);
-	}
-	
-	void ActivityBar::saveState(KSharedConfigPtr cfg)
-	{
-		alw->saveState(cfg);
 	}
 }

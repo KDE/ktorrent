@@ -41,7 +41,7 @@ namespace kt
 	class DBus;
 	class TorrentActivity;
 	class ActivityBar;
-	
+	class CentralWidget;
 	
 
 	class GUI : public KXmlGuiWindow,public GUIInterface
@@ -121,8 +121,6 @@ namespace kt
 		void applySettings();
 		void showOrHide();
 		void configureNotifications();
-		void currentActivityChanged(int idx);
-		
 		
 	private:
 		void setupActions();
@@ -139,8 +137,7 @@ namespace kt
 		TrayIcon* tray_icon;
 		DBus* dbus_iface;
 		TorrentActivity* torrent_activity;
-		QStackedWidget* widget_stack;
-		ActivityBar* activity_bar;
+		CentralWidget* central;
 		PrefDialog* pref_dlg;
 		
 		KToggleAction* show_status_bar_action;

@@ -30,6 +30,7 @@
 #include "activitylistdelegate.h"
 #include "activitylistmodel.h"
 #include <kconfiggroup.h>
+#include "activitybar.h"
 
 
 namespace kt
@@ -110,9 +111,28 @@ namespace kt
 		show_icons_and_text->setCheckable(true);
 		show_icons_and_text->setChecked(true);
 		icon_mode->addAction(show_icons_and_text);
+		menu->addSeparator();
+		
+		QActionGroup* bar_pos = new QActionGroup(this);
+		pos_left = menu->addAction(i18n("Left"));
+		pos_left->setCheckable(true);
+		bar_pos->addAction(pos_left);
+		
+		pos_right = menu->addAction(i18n("Right"));
+		pos_right->setCheckable(true);
+		bar_pos->addAction(pos_right);
+		
+		pos_top = menu->addAction(i18n("Top"));
+		pos_top->setCheckable(true);
+		bar_pos->addAction(pos_top);
+		
+		pos_bottom = menu->addAction(i18n("Bottom"));
+		pos_bottom->setCheckable(true);
+		bar_pos->addAction(pos_bottom);
 		
 		connect(icon_size,SIGNAL(triggered(QAction*)),this,SLOT(iconSizeActionTriggered(QAction*)));
 		connect(icon_mode,SIGNAL(triggered(QAction*)),this,SLOT(modeActionTriggered(QAction*)));
+		connect(bar_pos,SIGNAL(triggered(QAction*)),this,SLOT(barPosTriggered(QAction*)));
 		connect(selectionModel(),SIGNAL(currentChanged(QModelIndex,QModelIndex)),
 				 this,SLOT(currentItemChanged(QModelIndex,QModelIndex)));
 	}
@@ -133,23 +153,35 @@ namespace kt
 	
 	QSize ActivityListWidget::sizeHint() const
 	{
-		int max_width = 0;
-		for ( int i = 0; i < model->rowCount(); i++) 
+		if (pos_bottom->isChecked() || pos_top->isChecked())
 		{
-			const QModelIndex index = model->index(i,0);
-			max_width = qMax(max_width, sizeHintForIndex(index).width());
+			int max_height = 0;
+			for ( int i = 0; i < model->rowCount(); i++) 
+			{
+				const QModelIndex index = model->index(i,0);
+				max_height = qMax(max_height, sizeHintForIndex(index).height());
+			}
+			
+			int view_width = QListView::sizeHint().width();
+			return QSize(view_width,max_height + rect().height() - contentsRect().height());
 		}
-		
-		int view_height = QListView::sizeHint().height();
-		
-		return QSize(max_width + rect().width() - contentsRect().width(),view_height);
+		else
+		{
+			int max_width = 0;
+			for ( int i = 0; i < model->rowCount(); i++) 
+			{
+				const QModelIndex index = model->index(i,0);
+				max_width = qMax(max_width, sizeHintForIndex(index).width());
+			}
+			
+			int view_height = QListView::sizeHint().height();
+			return QSize(max_width + rect().width() - contentsRect().width(),view_height);
+		}
 	}
 
 	void ActivityListWidget::showEvent(QShowEvent* event)
 	{
-		parentWidget()->setMaximumWidth(sizeHint().width());
-		parentWidget()->setMinimumWidth(sizeHint().width());
-		
+		updateSize();
 		QListView::showEvent(event);
 	}
 	
@@ -175,7 +207,7 @@ namespace kt
 		}
 		
 		model->emitLayoutChanged();
-		QTimer::singleShot(0,this,SLOT(updateParentSize()));
+		QTimer::singleShot(0,this,SLOT(updateSize()));
 	}
 	
 	void ActivityListWidget::modeActionTriggered(QAction* act)
@@ -188,13 +220,38 @@ namespace kt
 			mode = ICONS_AND_TEXT;
 		
 		model->emitLayoutChanged();
-		QTimer::singleShot(0,this,SLOT(updateParentSize()));
+		QTimer::singleShot(0,this,SLOT(updateSize()));
 	}
 	
-	void ActivityListWidget::updateParentSize()
+	void ActivityListWidget::barPosTriggered(QAction* act)
 	{
-		parentWidget()->setMaximumWidth(sizeHint().width());
-		parentWidget()->setMinimumWidth(sizeHint().width());
+		if (act == pos_bottom)
+			changePosition(BOTTOM);
+		else if (act == pos_left)
+			changePosition(LEFT);
+		else if (act == pos_right)
+			changePosition(RIGHT);
+		else
+			changePosition(TOP);
+		
+		updateSize();
+	}
+	
+	void ActivityListWidget::updateSize()
+	{
+		QSize s = sizeHint();
+		if (pos_bottom->isChecked() || pos_top->isChecked())
+		{
+			setMaximumHeight(s.height());
+			setMinimumHeight(s.height());
+			setMaximumWidth(32000);
+		}
+		else
+		{
+			setMaximumWidth(s.width());
+			setMinimumWidth(s.width());
+			setMaximumHeight(32000);
+		}
 	}
 	
 	void ActivityListWidget::currentItemChanged(const QModelIndex & sel,const QModelIndex & old)
@@ -257,5 +314,24 @@ namespace kt
 		KConfigGroup g = cfg->group("ActivityListWidget");
 		g.writeEntry("mode",(int)mode);
 		g.writeEntry("icon_size",icon_size);
+	}
+	
+	void ActivityListWidget::setPosition(ActivityListPosition pos)
+	{
+		switch (pos)
+		{
+			case TOP:
+				pos_top->setChecked(true);
+				break;
+			case BOTTOM:
+				pos_bottom->setChecked(true);
+				break;
+			case LEFT:
+				pos_left->setChecked(true);
+				break;
+			case RIGHT:
+				pos_right->setChecked(true);
+				break;
+		}
 	}
 }

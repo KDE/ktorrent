@@ -23,40 +23,33 @@
 
 #include <KSharedConfig>
 #include <QStackedWidget>
+#include "activitylistwidget.h"
 #include "ktcore_export.h"
 
 namespace kt
 {
 	class Activity;
-	class ActivityListWidget;
 	
 	/**
 	 * Bar to switch between activities
 	 */
-	class KTCORE_EXPORT ActivityBar : public QWidget
+	class KTCORE_EXPORT ActivityBar : public ActivityListWidget
 	{
 		Q_OBJECT
 	public:
 		ActivityBar(QStackedWidget* stack,QWidget* parent);
 		virtual ~ActivityBar();
 		
-		void addActivity(Activity* act);
-		void removeActivity(Activity* act);
-		void setCurrentActivity(Activity* act);
+		virtual void addActivity(Activity* act);
+		virtual void removeActivity(Activity* act);
+		virtual void setCurrentActivity(Activity* act);
 		Activity* currentActivity();
 		
-		void loadState(KSharedConfigPtr cfg);
-		void saveState(KSharedConfigPtr cfg);
-		
-	signals:
-		void currentActivityChanged(Activity* act);
-		
-	private slots:
-		void currentChanged(Activity* act);
+	protected:
+		virtual void currentActivityChanged(Activity* act);
 		
 	private:
 		QStackedWidget* stack;
-		ActivityListWidget* alw;
 	};
 }
 

@@ -40,6 +40,11 @@ namespace kt
 		TEXT_ONLY
 	};
 	
+	enum ActivityListPosition
+	{
+		LEFT,RIGHT,TOP,BOTTOM
+	};
+	
 	
 	/**
 	 * List widget to display the activity list.
@@ -52,22 +57,27 @@ namespace kt
 		virtual ~ActivityListWidget();
 		
 		ActivityListDisplayMode displayMode() const {return mode;}
-		void addActivity(Activity* a);
-		void removeActivity(Activity* act);
-		void setCurrentActivity(Activity* act);
-		void loadState(KSharedConfigPtr cfg);
-		void saveState(KSharedConfigPtr cfg);
-		
+		virtual void addActivity(Activity* a);
+		virtual void removeActivity(Activity* act);
+		virtual void setCurrentActivity(Activity* act);
+		virtual void loadState(KSharedConfigPtr cfg);
+		virtual void saveState(KSharedConfigPtr cfg);
 		virtual QSize sizeHint() const;
+		
+		void setPosition(ActivityListPosition pos);
 	private slots:
 		void showConfigMenu(QPoint pos);
 		void iconSizeActionTriggered(QAction* act);
 		void modeActionTriggered(QAction* act);
-		void updateParentSize();
+		void barPosTriggered(QAction* act);
+		void updateSize();
 		void currentItemChanged(const QModelIndex & sel,const QModelIndex & old);
 		
+	protected:
+		virtual void currentActivityChanged(Activity* act) = 0;
+		
 	signals:
-		void currentActivityChanged(Activity* act);
+		void changePosition(ActivityListPosition pos);
 		
 	private:
 		void showEvent(QShowEvent* event);
@@ -80,6 +90,10 @@ namespace kt
 		QAction* show_icons_only;
 		QAction* show_text_only;
 		QAction* show_icons_and_text;
+		QAction* pos_left;
+		QAction* pos_right;
+		QAction* pos_top;
+		QAction* pos_bottom;
 		ActivityListModel* model;
 		ActivityListDelegate* delegate;
 		int icon_size;
