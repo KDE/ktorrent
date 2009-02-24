@@ -22,6 +22,7 @@
 #define KTSYNDICATIONTAB_H
 
 #include <QWidget>
+#include <kconfiggroup.h>
 
 class QSplitter;
 class KToolBar;
@@ -47,6 +48,8 @@ namespace kt
 
 		FeedListView* feedView() {return feed_view;}
 		FilterListView* filterView() {return filter_view;}
+		void loadState(KConfigGroup & g);
+		void saveState(KConfigGroup & g);
 		
 	private slots:
 		void showFeedViewMenu(const QPoint & pos);

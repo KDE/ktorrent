@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,51 +17,64 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTFEEDLIST_H
-#define KTFEEDLIST_H
 
-#include <QAbstractListModel>
-#include <QList>
+#ifndef SYNDICATIONACTIVITY_H
+#define SYNDICATIONACTIVITY_H
+
+#include <QSplitter>
+#include <ktabwidget.h>
+#include <interfaces/activity.h>
+#include <syndication/loader.h>
 
 namespace kt
 {
+	class Feed;
 	class Filter;
 	class FilterList;
-	class Feed;
-	class SyndicationActivity;
-
-	/**
-		List model which keeps track of all feeds
-	*/
-	class FeedList : public QAbstractListModel
+	class FeedList;
+	class SyndicationTab;
+	class FeedWidget;
+	class SyndicationPlugin;
+	
+	
+	class SyndicationActivity : public kt::Activity
 	{
 		Q_OBJECT
 	public:
-		FeedList(const QString & data_dir,QObject* parent);
-		virtual ~FeedList();
-
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		SyndicationActivity(SyndicationPlugin* sp,QWidget* parent);
+		virtual ~SyndicationActivity();
 		
-		void addFeed(Feed* f);
-		void loadFeeds(FilterList* filters,SyndicationActivity* activity);
-		Feed* feedForIndex(const QModelIndex & idx);
-		Feed* feedForDirectory(const QString & dir);
-		void removeFeeds(const QModelIndexList & idx);
-		void filterRemoved(Filter* f);
-		void filterEdited(Filter* f);
-		void importOldFeeds();
+		void loadState(KSharedConfigPtr cfg);
+		void saveState(KSharedConfigPtr cfg);
+		Filter* addNewFilter();
 		
 	private slots:
-		void feedUpdated();
+		void addFeed();
+		void removeFeed();
+		void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
+		void activateFeedWidget(Feed* f);
+		void downloadLink(const KUrl & url,const QString & group,const QString & location,bool silently);
+		void updateTabText(QWidget* w,const QString & text);
+		void showFeed();
+		void addFilter();
+		void removeFilter();
+		void editFilter();
+		void editFilter(Filter* f);
+		void manageFilters();
+		void closeTab();
 		
 	private:
-		QList<Feed*> feeds;
-		QString data_dir;
+		FeedWidget* feedWidget(Feed* f);
+		
+	private:
+		FeedList* feed_list;
+		FilterList* filter_list;
+		SyndicationTab* tab;
+		KTabWidget* tabs;
+		QSplitter* splitter;
+		QMap<Syndication::Loader*,KUrl> downloads;
+		SyndicationPlugin* sp;
 	};
-
 }
 
-#endif
+#endif // SYNDICATIONACTIVITY_H

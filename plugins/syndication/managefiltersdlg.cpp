@@ -23,12 +23,12 @@
 #include "filterlistmodel.h"
 #include "filterlist.h"
 #include "feed.h"
-#include "syndicationplugin.h"
+#include "syndicationactivity.h"
 
 namespace kt
 {
 
-	ManageFiltersDlg::ManageFiltersDlg(Feed* feed,FilterList* filters,SyndicationPlugin* plugin,QWidget* parent) : KDialog(parent),feed(feed),filters(filters),plugin(plugin)
+	ManageFiltersDlg::ManageFiltersDlg(Feed* feed,FilterList* filters,SyndicationActivity* act,QWidget* parent) : KDialog(parent),feed(feed),filters(filters),act(act)
 	{
 		setWindowTitle(i18n("Add/Remove Filters"));
 		setupUi(mainWidget());
@@ -158,7 +158,7 @@ namespace kt
 	
 	void ManageFiltersDlg::newFilter()
 	{
-		Filter* f = plugin->addNewFilter();
+		Filter* f = act->addNewFilter();
 		if (f)
 		{
 			available->addFilter(f);

@@ -108,4 +108,13 @@ namespace kt
 		filter_view_menu->popup(filter_view->mapToGlobal(pos));
 	}
 
+	void SyndicationTab::loadState(KConfigGroup & g)
+	{
+		splitter->restoreState(g.readEntry("ver_splitter",QByteArray()));
+	}
+	
+	void SyndicationTab::saveState(KConfigGroup & g)
+	{
+		g.writeEntry("ver_splitter",splitter->saveState());
+	}
 }

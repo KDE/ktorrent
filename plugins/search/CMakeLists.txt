@@ -1,4 +1,4 @@
-set(ktsearchplugin_SRC searchactivity.cpp 
+set(ktsearchplugin_SRC 
 	searchenginelist.cpp 
 	htmlpart.cpp 
 	searchprefpage.cpp 

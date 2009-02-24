@@ -6,6 +6,7 @@ include_directories(${KDEPIMLIBS_INCLUDE_DIR})
 
 set(ktsyndicationplugin_SRC 
 	syndicationplugin.cpp 
+	syndicationactivity.cpp
 	syndicationtab.cpp
 	feedlistview.cpp 
 	feedlist.cpp 

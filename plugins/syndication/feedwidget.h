@@ -29,7 +29,7 @@ namespace kt
 	class Feed;
 	class FeedWidgetModel;
 	class FilterList;
-	class SyndicationPlugin;
+	class SyndicationActivity;
 
 	/**
 		@author
@@ -38,8 +38,10 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		FeedWidget(Feed* feed,FilterList* filters,SyndicationPlugin* plugin,QWidget* parent);
+		FeedWidget(Feed* feed,FilterList* filters,SyndicationActivity* act,QWidget* parent);
 		virtual ~FeedWidget();
+		
+		Feed* getFeed() {return feed;}
 
 	private slots:
 		void downloadClicked();
@@ -55,7 +57,7 @@ namespace kt
 		Feed* feed;
 		FeedWidgetModel* model;
 		FilterList* filters;
-		SyndicationPlugin* plugin;
+		SyndicationActivity* act;
 	};
 
 }

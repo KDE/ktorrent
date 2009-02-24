@@ -54,8 +54,12 @@ namespace kt
 		
 		hsplit->addWidget(group_view);
 		hsplit->addWidget(tabs);
+		hsplit->setStretchFactor(0,1);
+		hsplit->setStretchFactor(1,3);
 		vsplit->addWidget(hsplit);
 		tool_views = new TabBarWidget(vsplit,this);
+		vsplit->setStretchFactor(0,3);
+		vsplit->setStretchFactor(1,1);
 		layout->addWidget(tool_views);
 		
 		

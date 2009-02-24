@@ -29,8 +29,8 @@
 namespace kt
 {
 
-	FeedWidget::FeedWidget(Feed* feed,FilterList* filters,SyndicationPlugin* plugin,QWidget* parent)
-			: QWidget(parent),feed(feed),filters(filters),plugin(plugin)
+	FeedWidget::FeedWidget(Feed* feed,FilterList* filters,SyndicationActivity* act,QWidget* parent)
+			: QWidget(parent),feed(feed),filters(filters),act(act)
 	{
 		setupUi(this);
 		connect(feed,SIGNAL(updated()),this,SLOT(updated()));
@@ -74,7 +74,7 @@ namespace kt
 	
 	void FeedWidget::filtersClicked()
 	{
-		ManageFiltersDlg dlg(feed,filters,plugin,this);
+		ManageFiltersDlg dlg(feed,filters,act,this);
 		if (dlg.exec() == QDialog::Accepted)
 		{
 			feed->save();

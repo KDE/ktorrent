@@ -22,24 +22,20 @@
 #define KTSYNDICATIONPLUGIN_H
 
 #include <interfaces/plugin.h>
-#include <syndication/loader.h>
-#include <interfaces/guiinterface.h>
 
 class KAction;
 
 namespace kt
 {
 	class Feed;
-	class FeedList;
-	class SyndicationTab;
-	class FeedWidget;
 	class Filter;
-	class FilterList;
+	class SyndicationActivity;
+	
 
 	/**
 		@author
 	*/
-	class SyndicationPlugin : public Plugin,public CloseTabListener
+	class SyndicationPlugin : public Plugin
 	{
 		Q_OBJECT
 	public:
@@ -49,27 +45,10 @@ namespace kt
 		virtual bool versionCheck(const QString& version) const;
 		virtual void load();
 		virtual void unload();
-		Filter* addNewFilter();
-		
-	private slots:
-		void addFeed();
-		void removeFeed();
-		void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
-		void activateFeedWidget(Feed* f);
-		void downloadLink(const KUrl & url,const QString & group,const QString & location,bool silently);
-		void updateTabText(QWidget* w,const QString & text);
-		void showFeed();
-		void addFilter();
-		void removeFilter();
-		void editFilter();
-		void editFilter(Filter* f);
-		void manageFilters();
-						
+	
 	private:
 		void setupActions();
-		void loadTabs();
-		virtual void tabCloseRequest(kt::GUIInterface* gui, QWidget* tab);
-		
+	
 	private:
 		KAction* add_feed;
 		KAction* remove_feed;
@@ -78,11 +57,9 @@ namespace kt
 		KAction* remove_filter;
 		KAction* edit_filter;
 		KAction* manage_filters;
-		FeedList* feed_list;
-		FilterList* filter_list;
-		SyndicationTab* tab;
-		QMap<Syndication::Loader*,KUrl> downloads;
-		QMap<Feed*,FeedWidget*> tabs;
+		SyndicationActivity* activity;
+		
+		friend class SyndicationActivity;
 	};
 
 }
