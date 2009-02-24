@@ -82,6 +82,7 @@ namespace kt
 		QListWidget::mouseReleaseEvent(event);
 	}
 	
+#if 0
 	QModelIndex ActivityListWidget::moveCursor(QAbstractItemView::CursorAction cursorAction,Qt::KeyboardModifiers modifiers)
 	{
 		Q_UNUSED(modifiers)
@@ -143,7 +144,8 @@ namespace kt
 		}
 		return newindex;
 	}
-	
+#endif
+
 	void ActivityListWidget::addActivity(Activity* a)
 	{
 		ActivityListWidgetItem* item = new ActivityListWidgetItem(a);

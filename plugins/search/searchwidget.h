@@ -60,8 +60,10 @@ namespace kt
 		KUrl getCurrentUrl() const;
 		QString getSearchBarText() const;
 		int getSearchBarEngine() const;
+		void setSearchBarEngine(int engine);
 		
 		bool backAvailable() const;
+		bool atHome() const {return at_home;}
 		
 	signals:
 		void enableBack(bool on);
@@ -104,6 +106,7 @@ namespace kt
 		KLineEdit* search_text;
 		QAction* open_url_action;
 		KUrl url_to_open;
+		bool at_home;
 	};
 
 }

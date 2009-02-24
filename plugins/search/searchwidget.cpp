@@ -169,8 +169,13 @@ namespace kt
 	{
 		if (html_part)
 		{
-			html_part->openUrl(url);
-			html_part->addToHistory(url);
+			if (url.protocol() == "home")
+				home();
+			else
+			{
+				html_part->openUrl(url);
+				html_part->addToHistory(url);
+			}
 		}
 	
 		search_text->setText(sb_text);
@@ -193,7 +198,13 @@ namespace kt
 		statusBarMsg(i18n("Searching for %1...",text));
 		//html_part->openURL(url);
  		html_part->openUrlRequest(url,KParts::OpenUrlArguments(),KParts::BrowserArguments());
-	}	
+		at_home = false;
+	}
+	
+	void SearchWidget::setSearchBarEngine(int engine)
+	{
+		search_engine->setCurrentIndex(engine);
+	}
 	
 	void SearchWidget::onUrlHover(const QString & url)
 	{
@@ -313,9 +324,9 @@ namespace kt
 	void SearchWidget::home() 
 	{
 		html_part->begin();
-		html_part->write("<html><head></head><body><h1>KTorrent Search Plugin</h1></body></html>");
 		html_part->end();
 		changeTitle(this,i18n("Home"));
+		at_home = true;
 	}
 
 	

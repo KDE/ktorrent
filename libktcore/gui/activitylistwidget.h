@@ -42,7 +42,7 @@ namespace kt
 		virtual void mouseMoveEvent(QMouseEvent* event);
 		virtual void mousePressEvent(QMouseEvent* event);
 		virtual void mouseReleaseEvent(QMouseEvent* event);
-		virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction,Qt::KeyboardModifiers modifiers);
+		//virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction,Qt::KeyboardModifiers modifiers);
 		
 		void addActivity(Activity* a);
 		void removeActivity(int idx);

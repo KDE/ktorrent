@@ -57,6 +57,16 @@ namespace kt
 	
 	void SearchActivity::search(const QString & text,int engine)
 	{
+		foreach (SearchWidget* s,searches)
+		{
+			if (s->atHome())
+			{
+				s->search(text,engine);
+				tabs->setCurrentWidget(s);
+				return;
+			}
+		}
+		
 		SearchWidget* sw = newSearchWidget(text);
 		sw->search(text,engine);
 		tabs->setCurrentWidget(sw);
@@ -72,7 +82,10 @@ namespace kt
 		foreach (SearchWidget* w,searches)
 		{
 			out << "TEXT: " << w->getSearchText() << ::endl;
-			out << "URL: " << w->getCurrentUrl().prettyUrl() << ::endl;
+			if (!w->atHome())
+				out << "URL: " << w->getCurrentUrl().prettyUrl() << ::endl;
+			else
+				out << "URL: home://" << ::endl;
 			out << "SBTEXT: " << w->getSearchBarText() << ::endl;
 			out << "ENGINE:" << w->getSearchBarEngine() << ::endl;
 		}
@@ -90,6 +103,7 @@ namespace kt
 			QString text,sbtext;
 			int engine = 0;
 			KUrl url;
+		
 			if (s.startsWith("TEXT:"))
 				text = s.mid(5).trimmed();
 			else
@@ -205,6 +219,7 @@ namespace kt
 		connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
 		connect(search,SIGNAL(changeTitle(SearchWidget*,QString)),this,SLOT(setTabTitle(SearchWidget*,QString)));
 		searches.append(search);
+		search->setSearchBarEngine(sp->currentSearchEngine());
 		return search;
 	}
 	

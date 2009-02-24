@@ -81,6 +81,7 @@ namespace kt
 		setupActions();
 		
 		widget_stack = new QStackedWidget(this);
+		connect(widget_stack,SIGNAL(currentChanged(int)),this,SLOT(currentActivityChanged(int)));
 		torrent_activity = new TorrentActivity(core,this,widget_stack);
 		activity_bar = new ActivityBar(widget_stack,this);
 		addActivity(torrent_activity);
@@ -119,6 +120,11 @@ namespace kt
 	GUI:: ~GUI()
 	{
 		delete core;
+	}
+	
+	void GUI::currentActivityChanged(int idx)
+	{
+		//Out(SYS_GEN|LOG_DEBUG) << "GUI::currentActivityChanged " << idx << endl;
 	}
 	
 	void GUI::addActivity(Activity* act)
@@ -489,6 +495,9 @@ namespace kt
 		menuBar()->setHidden(menubar_hidden);
 		show_menu_bar_action->setChecked(!menubar_hidden);
 		
+		int idx = g.readEntry("current_activity",0);
+		activity_bar->setCurrentActivity((Activity*)widget_stack->widget(idx));
+		
 		bool hidden_on_exit = g.readEntry("hidden_on_exit",false);
 		if (Settings::showSystemTrayIcon())
 		{
@@ -515,6 +524,7 @@ namespace kt
 		g.writeEntry("statusbar_hidden",status_bar->isHidden());
 		g.writeEntry("menubar_hidden",menuBar()->isHidden());
 		g.writeEntry("hidden_on_exit",isHidden());
+		g.writeEntry("current_activity",widget_stack->currentIndex());
 		torrent_activity->saveState(cfg);
 		cfg->sync();
 	}

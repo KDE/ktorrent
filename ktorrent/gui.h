@@ -119,7 +119,8 @@ namespace kt
 		/// apply gui specific settings
 		void applySettings();
 		void showOrHide();
-		void configureNotifications();		
+		void configureNotifications();
+		void currentActivityChanged(int idx);
 		
 		
 	private:
