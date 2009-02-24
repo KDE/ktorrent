@@ -466,6 +466,7 @@ namespace kt
 
 		tray_icon->updateStats(stats);
 		core->updateGuiPlugins();
+		torrent_activity->update();
 	}
 
 	void GUI::applySettings()
