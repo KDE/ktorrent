@@ -35,9 +35,10 @@ using namespace bt;
 namespace kt
 {
 	PluginManagerPrefPage::PluginManagerPrefPage(PluginManager* pman) 
-		: PrefPageInterface(Settings::self(),i18n("Plugins"),"preferences-plugin",0),pman(pman)
+		: Activity(i18n("Plugins"),"preferences-plugin",5,0),pman(pman)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
+		layout->setMargin(0);
 		pmw = new KPluginSelector(this);
 		connect(pmw,SIGNAL(changed(bool)),this,SLOT(changed()));
 		connect(pmw,SIGNAL(configCommitted(const QByteArray &)),this,SLOT(changed()));
@@ -54,7 +55,7 @@ namespace kt
 		pmw->addPlugins(pman->pluginInfoList(),KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
 	}
 		
-	void PluginManagerPrefPage::updateSettings()
+	void PluginManagerPrefPage::update()
 	{
 		pmw->updatePluginsState();
 		pman->loadPlugins();
@@ -62,7 +63,7 @@ namespace kt
 	
 	void PluginManagerPrefPage::changed()
 	{
-		updateSettings();
+		update();
 	}
 }
 

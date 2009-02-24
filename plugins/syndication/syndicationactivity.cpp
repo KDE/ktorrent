@@ -44,7 +44,7 @@
 namespace kt
 {
 	SyndicationActivity::SyndicationActivity(SyndicationPlugin* sp,QWidget* parent) 
-		: Activity(i18n("Syndication"),"application-rss+xml",3,parent),sp(sp)
+		: Activity(i18n("Syndication"),"application-rss+xml",30,parent),sp(sp)
 	{
 		QString ddir = kt::DataDir() + "syndication/";
 		if (!bt::Exists(ddir))

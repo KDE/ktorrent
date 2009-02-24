@@ -42,6 +42,7 @@ namespace kt
 	ActivityListWidget::ActivityListWidget(QWidget* parent)
 		: QListView(parent),icon_size(NORMAL_ICON_SIZE),mode(ICONS_AND_TEXT)
 	{
+		setFrameShape(QFrame::NoFrame);
 		setFocusPolicy(Qt::NoFocus);
 		delegate = new ActivityListDelegate(icon_size,this);
 		setItemDelegate(delegate);

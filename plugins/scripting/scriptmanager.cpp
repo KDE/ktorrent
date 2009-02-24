@@ -38,7 +38,7 @@ namespace kt
 {
 
 	ScriptManager::ScriptManager(ScriptModel* model,KActionCollection* ac,QWidget* parent)
-	: Activity(i18n("Scripting"),"text-x-script",4,parent),model(model)
+	: Activity(i18n("Scripts"),"text-x-script",40,parent),model(model)
 	{
 		setToolTip(i18n("Widget to start, stop and manage scripts"));
 		QVBoxLayout* layout = new QVBoxLayout(this);

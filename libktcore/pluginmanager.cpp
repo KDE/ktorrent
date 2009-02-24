@@ -62,11 +62,12 @@ namespace kt
 		if (!prefpage)
 		{
 			prefpage = new PluginManagerPrefPage(this);
-			gui->addPrefPage(prefpage);
+			gui->addActivity(prefpage);
 		}
-		prefpage->updatePluginList();
 		
-		loadPlugins();		
+		prefpage->updatePluginList();
+		loadPlugins();
+		prefpage->update();
 	}
 	
 	void PluginManager::loadPlugins()

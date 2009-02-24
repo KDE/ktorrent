@@ -21,7 +21,7 @@
 #define KTPLUGINMANAGERPREFPAGE_H
 
 #include <qwidget.h>
-#include <interfaces/prefpageinterface.h>
+#include <interfaces/activity.h>
 
 class KPluginSelector;
 
@@ -34,7 +34,7 @@ namespace kt
 	 *
 	 * Pref page which allows to load and unload plugins.
 	*/
-	class PluginManagerPrefPage : public PrefPageInterface 
+	class PluginManagerPrefPage : public Activity 
 	{
 		Q_OBJECT
 	public:
@@ -42,7 +42,7 @@ namespace kt
 		virtual ~PluginManagerPrefPage();
 
 		void updatePluginList();
-		virtual void updateSettings();
+		void update();
 	private slots:
 		void changed();
 		
