@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include <StatsPlugin.h>
+#include <interfaces/torrentactivityinterface.h>
 
 K_EXPORT_COMPONENT_FACTORY(ktstatsplugin,KGenericFactory<kt::StatsPlugin>("ktstatsplugin"))
 
@@ -46,8 +47,9 @@ void StatsPlugin::load()
 	pmDispSett = new DisplaySettingsPage(0);
 	pmTmr.reset(new QTimer(this));
 	
-	getGUI() -> addToolWidget(pmUiSpd.get(), "view-statistics", i18n("Speed charts"), i18n("Displays charts about download and upload speed"),GUIInterface::DOCK_BOTTOM);
-	getGUI() -> addToolWidget(pmUiConns.get(), "view-statistics", i18n("Connections charts"), i18n("Displays charts about connections"), GUIInterface::DOCK_BOTTOM);
+	TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+	ta->addToolWidget(pmUiSpd.get(), i18n("Speed charts"), "view-statistics", i18n("Displays charts about download and upload speed"));
+	ta->addToolWidget(pmUiConns.get(), i18n("Connections charts"), "view-statistics", i18n("Displays charts about connections"));
 	
 	getGUI() -> addPrefPage(pmUiSett);
 	getGUI() -> addPrefPage(pmDispSett);
@@ -61,8 +63,9 @@ void StatsPlugin::load()
 
 void StatsPlugin::unload()
 {
-	getGUI() -> removeToolWidget(pmUiSpd.get());
-	getGUI() -> removeToolWidget(pmUiConns.get());
+	TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+	ta -> removeToolWidget(pmUiSpd.get());
+	ta -> removeToolWidget(pmUiConns.get());
 	
 	getGUI() -> removePrefPage(pmUiSett);
 	getGUI() -> removePrefPage(pmDispSett);
