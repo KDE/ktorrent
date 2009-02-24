@@ -68,6 +68,7 @@ namespace kt
 		virtual void addActivity(Activity* act);
 		virtual void removeActivity(Activity* act);
 		virtual void setCurrentActivity(Activity* act);
+		virtual TorrentActivityInterface* getTorrentActivity(); 
 		
 		/**
 		* Create a XML GUI container (menu or toolbar)

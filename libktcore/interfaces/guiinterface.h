@@ -44,6 +44,7 @@ namespace kt
 	class Plugin;
 	class GUIInterface;
 	class Activity;
+	class TorrentActivityInterface;
 
 	enum Position
 	{
@@ -140,6 +141,9 @@ namespace kt
 
 		/// Get the status bar
 		virtual StatusBarInterface* getStatusBar() = 0;
+		
+		/// Get the torrent activity
+		virtual TorrentActivityInterface* getTorrentActivity() = 0;
 	};
 
 }

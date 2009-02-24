@@ -586,6 +586,11 @@ namespace kt
 	{
 		return guiFactory()->container(name, this);
 	}
+	
+	TorrentActivityInterface* GUI::getTorrentActivity()
+	{
+		return torrent_activity;
+	}
 }
 
 #include "gui.moc"

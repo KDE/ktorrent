@@ -22,7 +22,7 @@
 #define KTDOWNLOADORDERPLUGIN_H
 
 #include <util/ptrmap.h>
-#include <interfaces/guiinterface.h>
+#include <interfaces/torrentactivityinterface.h>
 #include <interfaces/plugin.h>
 
 namespace kt

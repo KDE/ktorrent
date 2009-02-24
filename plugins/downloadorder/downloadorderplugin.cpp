@@ -63,10 +63,11 @@ namespace kt
 
 	void DownloadOrderPlugin::load()
 	{
-		getGUI()->addViewListener(this);
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity(); 
+		ta->addViewListener(this);
 		connect(getCore(),SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
 		connect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
-		currentTorrentChanged(getGUI()->getCurrentTorrent());
+		currentTorrentChanged(ta->getCurrentTorrent());
 		
 		kt::QueueManager* qman = getCore()->getQueueManager();
 		for (kt::QueueManager::iterator i = qman->begin();i != qman->end();i++)
@@ -75,7 +76,8 @@ namespace kt
 
 	void DownloadOrderPlugin::unload()
 	{
-		getGUI()->removeViewListener(this);
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity(); 
+		ta->removeViewListener(this);
 		disconnect(getCore(),SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
 		disconnect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
 		managers.clear();
@@ -83,7 +85,7 @@ namespace kt
 
 	void DownloadOrderPlugin::showDownloadOrderDialog()
 	{
-		bt::TorrentInterface* tor = getGUI()->getCurrentTorrent();
+		bt::TorrentInterface* tor = getGUI()->getTorrentActivity()->getCurrentTorrent();
 		if (!tor || !tor->getStats().multi_file_torrent)
 			return;
 		
