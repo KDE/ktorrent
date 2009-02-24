@@ -76,16 +76,17 @@ namespace kt
 		connect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),file_view,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 
 		pref = new IWPrefPage(0);
-		getGUI()->addViewListener(this);
-		getGUI()->addToolWidget(status_tab,"dialog-information",i18n("Status"),
-			   i18n("Displays status information about a torrent"),GUIInterface::DOCK_BOTTOM);
-		getGUI()->addToolWidget(file_view,"folder",i18n("Files"),
-			   i18n("Shows all the files in a torrent"),GUIInterface::DOCK_BOTTOM);
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+		ta->addViewListener(this);
+		ta->addToolWidget(status_tab,i18n("Status"),"dialog-information",
+			   i18n("Displays status information about a torrent"));
+		ta->addToolWidget(file_view,i18n("Files"),"folder",
+			   i18n("Shows all the files in a torrent"));
 	
 		applySettings();
 				
 		getGUI()->addPrefPage(pref);
-		currentTorrentChanged(const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
+		currentTorrentChanged(const_cast<bt::TorrentInterface*>(ta->getCurrentTorrent()));
 	}
 
 	void InfoWidgetPlugin::unload()
@@ -103,18 +104,19 @@ namespace kt
 			webseeds_tab->saveState(KGlobal::config());
 		KGlobal::config()->sync();
 		
-		getGUI()->removeViewListener(this);
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+		ta->removeViewListener(this);
 		getGUI()->removePrefPage(pref);
-		getGUI()->removeToolWidget(status_tab);
-		getGUI()->removeToolWidget(file_view);
+		ta->removeToolWidget(status_tab);
+		ta->removeToolWidget(file_view);
 		if (cd_view)
-			getGUI()->removeToolWidget(cd_view);
+			ta->removeToolWidget(cd_view);
 		if (tracker_view)
-			getGUI()->removeToolWidget(tracker_view); 
+			ta->removeToolWidget(tracker_view); 
 		if (peer_view)
-			getGUI()->removeToolWidget(peer_view);
+			ta->removeToolWidget(peer_view);
 		if (webseeds_tab)
-			getGUI()->removeToolWidget(webseeds_tab);
+			ta->removeToolWidget(webseeds_tab);
 
 		delete monitor;
 		monitor = 0;
@@ -212,20 +214,21 @@ namespace kt
 	
 	void InfoWidgetPlugin::showPeerView(bool show)
 	{
-		bt::TorrentInterface* tc = const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent());
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+		bt::TorrentInterface* tc = ta->getCurrentTorrent();
 		
 		if (show && !peer_view)
 		{
 			peer_view = new PeerView(0);
-			getGUI()->addToolWidget(peer_view,"system-users",i18n("Peers"),
-				   i18n("Displays all the peers you are connected to for a torrent"),GUIInterface::DOCK_BOTTOM);
+			ta->addToolWidget(peer_view,i18n("Peers"),"system-users",
+				   i18n("Displays all the peers you are connected to for a torrent"));
 			peer_view->loadState(KGlobal::config());
 			createMonitor(tc);
 		}
 		else if (!show && peer_view)
 		{
 			peer_view->saveState(KGlobal::config());
-			getGUI()->removeToolWidget(peer_view);
+			ta->removeToolWidget(peer_view);
 			delete peer_view; peer_view = 0;
 			createMonitor(tc);
 		}
@@ -233,13 +236,14 @@ namespace kt
 	
 	void InfoWidgetPlugin::showChunkView(bool show)
 	{
-		bt::TorrentInterface* tc = const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent());
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+		bt::TorrentInterface* tc = ta->getCurrentTorrent();
 		
 		if (show && !cd_view)
 		{
 			cd_view = new ChunkDownloadView(0);
-			getGUI()->addToolWidget(cd_view,"kt-chunks",i18n("Chunks"),
-				   i18n("Displays all the chunks you are downloading, of a torrent"),GUIInterface::DOCK_BOTTOM);
+			ta->addToolWidget(cd_view,i18n("Chunks"),"kt-chunks",
+				   i18n("Displays all the chunks you are downloading, of a torrent"));
 			
 			cd_view->loadState(KGlobal::config());
 			cd_view->changeTC(tc);
@@ -248,7 +252,7 @@ namespace kt
 		else if (!show && cd_view)
 		{
 			cd_view->saveState(KGlobal::config());
-			getGUI()->removeToolWidget(cd_view);
+			ta->removeToolWidget(cd_view);
 			delete cd_view; cd_view = 0;
 			createMonitor(tc);
 		}
@@ -256,34 +260,36 @@ namespace kt
 	
 	void InfoWidgetPlugin::showTrackerView(bool show)
 	{
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
 		if (show && !tracker_view)
 		{
 			tracker_view = new TrackerView(0);
-			getGUI()->addToolWidget(tracker_view,"network-server",i18n("Trackers"),
-					i18n("Displays information about all the trackers of a torrent"),GUIInterface::DOCK_BOTTOM);
-			tracker_view->changeTC(const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
+			ta->addToolWidget(tracker_view,i18n("Trackers"),"network-server",
+					i18n("Displays information about all the trackers of a torrent"));
+			tracker_view->changeTC(ta->getCurrentTorrent());
 		}
 		else if (!show && tracker_view)
 		{
-			getGUI()->removeToolWidget(tracker_view);
+			ta->removeToolWidget(tracker_view);
 			delete tracker_view; tracker_view = 0;
 		}
 	}
 	
 	void InfoWidgetPlugin::showWebSeedsTab(bool show)
 	{
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
 		if (show && !webseeds_tab)
 		{
 			webseeds_tab = new WebSeedsTab(0);
-			getGUI()->addToolWidget(webseeds_tab,"network-server",i18n("Webseeds"),
-				   i18n("Displays all the webseeds of a torrent"),GUIInterface::DOCK_BOTTOM);
+			ta->addToolWidget(webseeds_tab,i18n("Webseeds"),"network-server",
+				   i18n("Displays all the webseeds of a torrent"));
 			webseeds_tab->loadState(KGlobal::config());
-			webseeds_tab->changeTC(const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
+			webseeds_tab->changeTC(ta->getCurrentTorrent());
 		}
 		else if (!show && webseeds_tab)
 		{
 			webseeds_tab->saveState(KGlobal::config());
-			getGUI()->removeToolWidget(webseeds_tab);
+			ta->removeToolWidget(webseeds_tab);
 			delete webseeds_tab; webseeds_tab = 0;
 		}
 	}

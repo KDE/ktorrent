@@ -9,7 +9,7 @@ endif (${_option})
 ENDMACRO (MACRO_KT_PLUGIN)
 
 macro_kt_plugin(ENABLE_LOGVIEWER_PLUGIN logviewer logviewer)
-#macro_kt_plugin(ENABLE_INFOWIDGET_PLUGIN infowidget infowidget)
+macro_kt_plugin(ENABLE_INFOWIDGET_PLUGIN infowidget infowidget)
 macro_kt_plugin(ENABLE_UPNP_PLUGIN upnp upnp)
 macro_kt_plugin(ENABLE_SEARCH_PLUGIN search search)
 #macro_kt_plugin(ENABLE_WEBINTERFACE_PLUGIN webinterface webinterface)

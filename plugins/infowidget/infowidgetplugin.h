@@ -22,6 +22,7 @@
 
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
+#include <interfaces/torrentactivityinterface.h>
 
 namespace bt
 {
