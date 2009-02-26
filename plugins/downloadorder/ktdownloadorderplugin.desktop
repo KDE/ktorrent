@@ -22,6 +22,7 @@ Name[zh_CN]=下载顺序插件
 Name[zh_TW]=下載順序外掛程式
 Comment=Plugin to specify the download order of a multifile torrent for KTorrent
 Comment[ca]=Connector del KTorrent per a indicar l'ordre de baixada d'un torrent multifitxer
+Comment[cs]=Plugin pro specifikaci pořadí stahováných souborů v KTorrentu u torrentů obsahujících více souborů
 Comment[da]=Plugin til KTorrent til at angive downloadrækkefølgen for en torrent med flere filer
 Comment[de]=Download-Reihenfolge bei Torrents, die aus mehreren Dateien bestehen, festlegen
 Comment[el]=Πρόσθετο για τον καθορισμό της σειράς λήψης ενός πολλαπλού αρχείου torrent για το KTorrent

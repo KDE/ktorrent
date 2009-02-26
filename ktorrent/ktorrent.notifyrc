@@ -9,7 +9,7 @@ Comment[x-test]=xxKTorrentxx
 [Event/TorrentStoppedByError]
 Name=Torrent stopped by error
 Name[ca]=El torrent s'ha aturat per un error
-Name[cs]=Torrent zastavil kvůli chybě
+Name[cs]=Torrent byl zastaven kvůli chybě
 Name[da]=Torrent stoppet af fejl
 Name[de]=Torrent aufgrund eines Fehlers gestoppt
 Name[el]=Το torrent σταμάτησε με σφάλμα
