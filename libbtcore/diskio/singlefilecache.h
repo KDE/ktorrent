@@ -50,7 +50,9 @@ namespace bt
 		virtual void close();
 		virtual void open();
 		virtual void changeTmpDir(const QString & ndir);
+		using Cache::moveDataFiles;
 		virtual KJob* moveDataFiles(const QString & ndir);
+		using Cache::moveDataFilesFinished;
 		virtual void moveDataFilesFinished(KJob* job);
 		virtual void changeOutputPath(const QString& outputpath);
 		virtual QString getOutputPath() const {return output_file;}
