@@ -239,13 +239,18 @@ namespace bt
 	
 	QString NetworkInterfaceIPAddress(const QString & iface)
 	{
+#ifdef Q_WS_WIN
+		QString any = QHostAddress(QHostAddress::Any).toString();
+#else
+		QString any = QHostAddress(QHostAddress::AnyIPv6).toString();
+#endif
 		QNetworkInterface ni = QNetworkInterface::interfaceFromName(iface);
 		if (!ni.isValid())
-			return QString("::");
+			return any;
 
 		QList<QNetworkAddressEntry> addr_list = ni.addressEntries();
 		if (addr_list.count() == 0)
-			return QString("::");
+			return any;
 		else
 			return addr_list.front().ip().toString();
 	}	

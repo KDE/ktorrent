@@ -59,7 +59,9 @@ THE SOFTWARE.
 // #define EINPROGRESS     WSAEINPROGRESS
 // #define EISCONN         WSAEISCONN
 
-#if ( ( defined(_WIN32_WINNT) && (_WIN32_WINNT < 0x0600) ) || ( defined(_MSC_VER) && (_MSC_VER < 1500 ) ) ) // If VC++ 8.0 or older OR Windows older than Vista
+
+
+#if (_WIN32_WINNT < 0x0600) // If VC++ 8.0 or older OR Windows older than Vista
 
 /* winsock doesn't feature poll(), so there is a version implemented
  * in terms of select() in win32.cpp. The following definitions

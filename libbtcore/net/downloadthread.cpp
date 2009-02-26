@@ -182,7 +182,7 @@ namespace net
 #ifndef Q_WS_WIN
 		return poll(&fd_vec[0],i,-1);
 #else
-		return mingw_poll(&fd_vec[0],i,-1);
+		return mingw_poll(&fd_vec[0],i,1000);
 #endif
 	}
 	
