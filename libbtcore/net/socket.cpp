@@ -305,6 +305,10 @@ namespace net
 	
 	bool Socket::setTOS(unsigned char type_of_service)
 	{
+		// If type of service is 0, do nothing
+		if (type_of_service == 0)
+			return true;
+
 		if (m_ip_version == 4)
 		{
 #if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined(Q_OS_NETBSD) || defined(Q_OS_BSD4)
