@@ -71,8 +71,6 @@ namespace kt
 		void aboutToFinishPlaying();
 		void showVideo(bool on);
 		void closeTab();
-		void clearPlayList();
-		void addMedia();
 		void currentTabChanged(int idx);
 		
 	private:

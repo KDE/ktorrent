@@ -23,6 +23,8 @@
 #include <QVBoxLayout>
 #include <ktoolbar.h>
 #include <klocale.h>
+#include <kicon.h>
+#include <kfiledialog.h>
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
 #include "mediaplayer.h"
@@ -34,7 +36,7 @@
 
 namespace kt
 {
-	PlayListWidget::PlayListWidget(MediaPlayer* player,QWidget* parent) : QWidget(parent),player(player),cnt(0)
+	PlayListWidget::PlayListWidget(MediaPlayer* player,QWidget* parent) : QWidget(parent),player(player),menu(0)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
@@ -48,6 +50,9 @@ namespace kt
 		play_list_view->setAcceptDrops(true);
 		play_list_view->setAlternatingRowColors(true);
 		play_list_view->setRootIsDecorated(false);
+		play_list_view->setContextMenuPolicy(Qt::CustomContextMenu);
+		play_list_view->setSelectionMode(QAbstractItemView::ExtendedSelection);
+		connect(play_list_view,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(showContextMenu(QPoint)));
 		layout->addWidget(play_list_view);
 		
 		info_label = new QLabel(this);
@@ -92,6 +97,12 @@ namespace kt
 		connect(play_list_view->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
 				 this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
 		connect(play_list_view,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
+		
+		menu = new KMenu(this);
+		menu->addAction(KIcon("list-remove"),i18n("Remove"),this,SLOT(removeFiles()));
+		menu->addSeparator();
+		menu->addAction(KIcon("document-open"),i18n("Add Media"),this,SLOT(addMedia()));
+		menu->addAction(KIcon("edit-clear-list"),i18n("Clear Playlist"),this,SLOT(clearPlayList()));
 	}
 	
 	PlayListWidget::~PlayListWidget() 
@@ -137,7 +148,6 @@ namespace kt
 		}
 		else
 		{
-			cnt++;
 			current_file = file;
 			metaDataChanged();
 		}
@@ -145,14 +155,8 @@ namespace kt
 
 	void PlayListWidget::stopped()
 	{
-		if (cnt > 0)
-			cnt--;
-		
-		if (cnt == 0)
-		{
-			info_label->setText(i18n("Ready to play"));
-			current_file = QString();
-		}
+		info_label->setText(i18n("Ready to play"));
+		current_file = QString();
 	}
 
 	void PlayListWidget::metaDataChanged()
@@ -224,5 +228,36 @@ namespace kt
 		QByteArray d = g.readEntry("play_list_state",QByteArray());
 		if (!d.isNull())
 			play_list_view->header()->restoreState(d);
+	}
+	
+	void PlayListWidget::showContextMenu(QPoint pos) 
+	{
+		menu->popup(mapToGlobal(pos));
+	}
+	
+	void PlayListWidget::clearPlayList()
+	{
+		play_list->clear();
+	}
+
+	void PlayListWidget::addMedia() 
+	{
+		QString filter;
+		QStringList files = KFileDialog::getOpenFileNames(KUrl("kfiledialog:///add_media"),filter,this);
+		foreach (const QString & file,files)
+		{
+			play_list->addFile(file);
+		}
+	}
+	
+	void PlayListWidget::removeFiles()
+	{
+		QStringList files;
+		QModelIndexList indexes = play_list_view->selectionModel()->selectedRows();
+		foreach (const QModelIndex & idx,indexes)
+			files.append(play_list->fileForIndex(idx));
+		
+		foreach (const QString & f,files)
+			play_list->removeFile(f);
 	}
 }

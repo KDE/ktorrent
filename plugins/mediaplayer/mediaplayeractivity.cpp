@@ -23,7 +23,6 @@
 #include <kaction.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
-#include <kfiledialog.h>
 
 #include <util/log.h>
 #include <util/fileops.h>
@@ -121,11 +120,11 @@ namespace kt
 		ac->addAction("show_video",show_video_action);
 		
 		add_media_action = new KAction(KIcon("document-open"),i18n("Add Media"),this);
-		connect(add_media_action,SIGNAL(triggered()),this,SLOT(addMedia()));
+		connect(add_media_action,SIGNAL(triggered()),play_list,SLOT(addMedia()));
 		ac->addAction("add_media",add_media_action); 
 		
 		clear_action = new KAction(KIcon("edit-clear-list"),i18n("Clear Playlist"),this);
-		connect(clear_action,SIGNAL(triggered()),this,SLOT(clearPlayList()));
+		connect(clear_action,SIGNAL(triggered()),play_list,SLOT(clearPlayList()));
 		ac->addAction("clear_play_list",clear_action);
 		
 		QToolBar* tb = play_list->mediaToolBar();
@@ -395,22 +394,6 @@ namespace kt
 		play_list->loadState(cfg);
 		if (bt::Exists(kt::DataDir() + "playlist"))
 			play_list->playList()->load(kt::DataDir() + "playlist");
-	}
-	
-	void MediaPlayerActivity::clearPlayList()
-	{
-		play_list->playList()->clear();
-	}
-	
-	void MediaPlayerActivity::addMedia() 
-	{
-		QString filter;
-		QStringList files = KFileDialog::getOpenFileNames(KUrl("kfiledialog:///add_media"),filter,this);
-		PlayList* pl = play_list->playList();
-		foreach (const QString & file,files)
-		{
-			pl->addFile(file);
-		}
 	}
 
 	void MediaPlayerActivity::currentTabChanged(int idx)

@@ -30,7 +30,7 @@
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
 #include <KSharedConfig>
-
+#include <KMenu>
 
 namespace kt
 {
@@ -60,12 +60,16 @@ namespace kt
 		QModelIndex play();
 		void playing(const QString & file);
 		void stopped();
+		void addMedia();
+		void clearPlayList();
 		
 	private slots:
 		void modeActivated(int idx);
 		void metaDataChanged();
 		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
 		void doubleClicked(const QModelIndex & index);
+		void showContextMenu(QPoint pos);
+		void removeFiles();
 		
 	signals:
 		void randomModeActivated();
@@ -81,8 +85,8 @@ namespace kt
 		Phonon::SeekSlider* play_slider;
 		QComboBox* queue_mode;
 		QLabel* info_label;
-		unsigned int cnt;
 		QString current_file;
+		KMenu* menu;
 	};
 }
 
