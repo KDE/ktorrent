@@ -18,78 +18,45 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
 
-#ifndef KT_MEDIAPLAYERACTIVITY_H
-#define KT_MEDIAPLAYERACTIVITY_H
+#ifndef PLAYLIST_H
+#define PLAYLIST_H
 
-#include <QModelIndex>
-#include <QSplitter>
-#include <KTabWidget>
-#include <interfaces/activity.h>
+#include <QAbstractItemModel>
+#include <QStringList>
 
-class QToolBar;
-class KAction;
-class KActionCollection;
-
-namespace kt 
+namespace kt
 {
-	class MediaView;
-	class MediaPlayer;
-	class MediaModel;
-	class CoreInterface;
-	class VideoWidget;
-	class PlayListWidget;
-	
+
 	/**
-	 * Activity for the media player plugin.
+	 * PlayList containing a list of files to play.
 	 */
-	class MediaPlayerActivity : public Activity
+	class PlayList : public QAbstractItemModel
 	{
 		Q_OBJECT
 	public:
-		MediaPlayerActivity(CoreInterface* core,QWidget* parent);
-		virtual ~MediaPlayerActivity();
+		PlayList(QObject* parent);
+		virtual ~PlayList();
 		
-		void setupActions(KActionCollection* ac);
+		void addFile(const QString & file);
+		void removeFile(const QString & file);
 		
-	public slots:
-		void play();
-		void pause();
-		void stop();
-		void prev();
-		void next();
-		void enableActions(unsigned int flags);
-		void onSelectionChanged(const QModelIndex & idx);
-		void openVideo();
-		void closeVideo();
-		void setVideoFullScreen(bool on);
-		void onDoubleClicked(const QModelIndex & idx);
-		void randomPlayActivated();
-		void aboutToFinishPlaying();
-		void showVideo(bool on);
-		void closeTab();
-		
+		virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
+		virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+		virtual QModelIndex parent(const QModelIndex& child) const;
+		virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+		virtual Qt::DropActions supportedDropActions() const;
+		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
+		virtual QStringList mimeTypes() const;
+		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
+		virtual bool dropMimeData(const QMimeData *data,Qt::DropAction action, int row, int column, const QModelIndex &parent);
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 	private:
-		QSplitter* splitter;
-		MediaModel* media_model;
-		MediaPlayer* media_player;
-		MediaView* media_view;
-		KTabWidget* tabs;
-		int action_flags;
-		VideoWidget* video;
-		bool video_shown;
-		bool fullscreen_mode;
-		QDialog* fs_dialog;
-		QModelIndex curr_item;
-		PlayListWidget* play_list;
-		
-		KAction* play_action;
-		KAction* pause_action;
-		KAction* stop_action;
-		KAction* prev_action;
-		KAction* next_action;
-		KAction* show_video_action;
+		QStringList files;
+		mutable QList<int> dragged_rows;
 	};
-
 }
 
-#endif // KT_MEDIAPLAYERACTIVITY_H
+#endif // PLAYLIST_H

@@ -21,20 +21,14 @@
 #ifndef KTMEDIAVIEW_H
 #define KTMEDIAVIEW_H
 
-#include <QLabel>
+
 #include <QTreeView>
-#include <QToolBar>
-#include <QComboBox>
-#include <QCheckBox>
-#include <Phonon/SeekSlider>
-#include <Phonon/VolumeSlider>
 
 class QItemSelection;
 
 namespace kt
 {
 	class MediaModel;
-	class MediaPlayer;
 
 	/**
 		@author
@@ -43,42 +37,22 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		MediaView(MediaPlayer* player,MediaModel* model,QWidget* parent);
+		MediaView(MediaModel* model,QWidget* parent);
 		virtual ~MediaView();
-		
-		/// Get the media tool bar
-		QToolBar* mediaToolBar() {return tool_bar;}
 		
 		/// Get the current selected item
 		QModelIndex selectedItem() const;
 		
-	public slots:
-		void playing(const QModelIndex & index);
-		void stopped();
-		
 	private slots:
 		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
-		void metaDataChanged();
-		void skipIncompleteChecked(bool on);
-		void modeActivated(int idx);
 		
 	signals:
 		void selectionChanged(const QModelIndex & idx);
 		void doubleClicked(const QModelIndex & idx);
-		void randomModeActivated();
 
 	private:
-		MediaPlayer* player;
 		MediaModel* model;
-		QToolBar* tool_bar;
 		QTreeView* media_tree;
-		Phonon::VolumeSlider* volume;
-		Phonon::SeekSlider* play_slider;
-		QComboBox* queue_mode;
-		QCheckBox* skip_incomplete;
-		QLabel* info_label;
-		unsigned int cnt;
-		QString current_file;
 	};
 
 }

@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QVBoxLayout>
+#include <QLabel>
 #include <QSpacerItem>
 #include <ktoolbar.h>
 #include <klocale.h>
@@ -29,73 +30,29 @@
 #include "mediaplayer.h"
 #include "mediaplayerpluginsettings.h"
 
+
 using namespace bt;
 
 namespace kt
 {
 
-	MediaView::MediaView(MediaPlayer* player,MediaModel* model,QWidget* parent)
-			: QWidget(parent),player(player),model(model),cnt(0)
+	MediaView::MediaView(MediaModel* model,QWidget* parent)
+			: QWidget(parent),model(model)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		
-		tool_bar = new KToolBar(this);
-		tool_bar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		layout->addWidget(tool_bar);
-		
-		play_slider = new Phonon::SeekSlider(this);
-		play_slider->setMediaObject(player->media0bject());
-		layout->addWidget(play_slider);
-		
-		info_label = new QLabel(this);
-		info_label->setMargin(5);
-		info_label->setFrameShadow(QFrame::Sunken);
-		info_label->setFrameShape(QFrame::StyledPanel);
-		info_label->setBackgroundRole(QPalette::Base);
-		info_label->setAutoFillBackground(true);
-		info_label->setWordWrap(true);
-		layout->addWidget(info_label);
-		info_label->setText(i18n("Ready to play"));
-		
+		layout->addWidget(new QLabel(i18n("Collection:")));
 		media_tree = new QTreeView(this);
 		media_tree->setModel(model);
 		media_tree->header()->hide();
+		media_tree->setDragEnabled(true);
 		layout->addWidget(media_tree);
-		
-		QHBoxLayout* hlayout = new QHBoxLayout(0);
-		hlayout->addWidget(new QLabel(i18n("Mode:"),this));
-		
-		queue_mode = new QComboBox(this);
-		queue_mode->addItem(i18n("Single File"));
-		queue_mode->addItem(i18n("All Files"));
-		queue_mode->addItem(i18n("Random Files"));
-		queue_mode->setCurrentIndex(MediaPlayerPluginSettings::playMode());
-		hlayout->addWidget(queue_mode);
-		
-		QSpacerItem* s = new QSpacerItem(5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-		hlayout->addItem(s);
-		
-		layout->addLayout(hlayout);
-		
-		skip_incomplete = new QCheckBox(i18n("Skip incomplete files"),this);
-		skip_incomplete->setChecked(MediaPlayerPluginSettings::skipIncomplete());
-		layout->addWidget(skip_incomplete);
-		
-		volume = new Phonon::VolumeSlider(this);
-		volume->setAudioOutput(player->output());
-		layout->addWidget(volume);
-		
-		
 		
 		connect(media_tree->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
 				this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
 		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
-		connect(player,SIGNAL(stopped()),this,SLOT(stopped()));
-		connect(player->media0bject(),SIGNAL(metaDataChanged()),this,SLOT(metaDataChanged()));
-		connect(skip_incomplete,SIGNAL(toggled(bool)),this,SLOT(skipIncompleteChecked(bool)));
-		connect(queue_mode,SIGNAL(activated(int)),this,SLOT(modeActivated(int)));
 	}
 
 
@@ -122,79 +79,6 @@ namespace kt
 			return QModelIndex();
 	}
 
-	void MediaView::playing(const QModelIndex & index)
-	{
-		if (!index.isValid())
-			stopped();
-		else
-		{
-			cnt++;
-			current_file = model->data(index,Qt::DisplayRole).toString();
-			info_label->setText(i18n("Playing: <b>%1</b>",current_file));
-		}
-	}
 	
-	void MediaView::stopped()
-	{
-		if (cnt > 0)
-			cnt--;
-		
-		if (cnt == 0)
-		{
-			info_label->setText(i18n("Ready to play"));
-			current_file = QString();
-		}
-	}
-	
-	void MediaView::metaDataChanged()
-	{
-		QString extra_data;
-		QStringList artist = player->media0bject()->metaData(Phonon::ArtistMetaData);
-		QStringList title = player->media0bject()->metaData(Phonon::TitleMetaData);
-		QStringList album = player->media0bject()->metaData(Phonon::AlbumMetaData);
-		
-		bool has_artist = artist.count() > 0 && artist[0].length() > 0;
-		bool has_title = title.count() > 0 && title[0].length() > 0;
-		bool has_album = album.count() > 0 && album[0].length() > 0;
-		
-		if (has_artist && has_title && has_album)
-		{
-			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b><br/>Album: <b>%3</b>",title[0],artist[0],album[0]);
-		}
-		else if (has_title && has_artist)
-		{
-			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b>",title[0],artist[0]);
-		}
-		else if (has_title)
-		{
-			extra_data = i18n("Title: <b>%1</b>",title[0]);
-		}
-		
-		if (cnt > 0)
-		{
-		/*	Uint32 secs = player->media0bject()->totalTime() / 1000;
-			QString time;
-			if (secs < 3600)
-				time = QString("%1:%2").arg(secs / 60).arg(secs % 60);
-			else
-				time = QString("%1:%2:%3").arg(secs / 3600).arg((secs % 3600) / 60).arg(secs % 60);
-		*/	
-			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
-		}
-	}
-	
-	void MediaView::skipIncompleteChecked(bool on)
-	{
-		MediaPlayerPluginSettings::setSkipIncomplete(on);
-		MediaPlayerPluginSettings::self()->writeConfig();
-	}
-	
-	void MediaView::modeActivated(int idx)
-	{
-		MediaPlayerPluginSettings::setPlayMode(idx);
-		MediaPlayerPluginSettings::self()->writeConfig();
-		if (idx == 2)
-			randomModeActivated();
-	}
 
 }

@@ -29,6 +29,7 @@
 #include <interfaces/torrentfileinterface.h>
 #include <torrent/queuemanager.h>
 #include "mediamodel.h"
+#include <QMimeData>
 
 using namespace bt;
 
@@ -402,5 +403,67 @@ namespace kt
 		{
 			return randomNext(idx,complete_only);
 		}
+	}
+	
+	Qt::ItemFlags MediaModel::flags(const QModelIndex & index) const
+	{
+		Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+		
+		if (index.isValid())
+			return Qt::ItemIsDragEnabled | defaultFlags;
+		else
+			return defaultFlags;
+	}
+	
+	QStringList MediaModel::mimeTypes() const
+	{
+		QStringList types;
+		types << "text/uri-list";
+		return types;
+	}
+	
+	QMimeData* MediaModel::mimeData(const QModelIndexList & indexes) const
+	{
+		QMimeData* data = new QMimeData();
+		QList<QUrl> urls;
+		foreach (const QModelIndex & idx,indexes)
+		{
+			if (!idx.isValid())
+				continue;
+			
+			Item* item = (Item*)idx.internalPointer();
+			if (item)
+			{
+				int r = idx.row();
+				if (r >= 0 && r < item->multimedia_files.count())
+				{
+					r = item->multimedia_files.at(r);
+					if (r >= 0 && r < (int)item->tc->getNumFiles())
+						urls.append(item->tc->getTorrentFile(r).getPathOnDisk());
+				}
+			}
+			else
+			{
+				int r = idx.row();
+				if (r < 0 || r >= items.count())
+					continue;
+				
+				item = items.at(r);	
+				bt::TorrentInterface* tc = item->tc;
+				if (!tc->getStats().multi_file_torrent)
+				{
+					urls.append(QUrl(tc->getStats().output_path));
+				}
+				else
+				{
+					foreach (int file,item->multimedia_files)
+					{
+						urls.append(item->tc->getTorrentFile(file).getPathOnDisk());
+					}
+				}
+			}
+		}
+		data->setUrls(urls);
+		return data;
 	}
 }

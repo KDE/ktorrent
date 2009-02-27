@@ -1,4 +1,16 @@
-set(ktmediaplayerplugin_SRC mediaplayeractivity.cpp mediaplayerplugin.cpp mediaview.cpp mediamodel.cpp mediaplayer.cpp videowidget.cpp)
+find_package(Taglib REQUIRED)
+include_directories(${TAGLIB_INCLUDES})
+
+set(ktmediaplayerplugin_SRC 
+	playlist.cpp 
+	playlistwidget.cpp 
+	mediaplayeractivity.cpp 
+	mediaplayerplugin.cpp 
+	mediaview.cpp 
+	mediamodel.cpp 
+	mediaplayer.cpp 
+	videowidget.cpp
+)
 
 #kde4_add_ui_files(ktmediaplayerplugin_SRC mediaplayerpref.ui)
 kde4_add_kcfg_files(ktmediaplayerplugin_SRC mediaplayerpluginsettings.kcfgc)
@@ -8,6 +20,7 @@ target_link_libraries(
     ktmediaplayerplugin
     ktcore
     btcore
+	${TAGLIB_LIBRARIES}
     ${KDE4_KDECORE_LIBS}
     ${KDE4_KDEUI_LIBS}
     ${KDE4_KPARTS_LIBS}

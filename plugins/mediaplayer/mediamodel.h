@@ -51,6 +51,9 @@ namespace kt
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
 		virtual QModelIndex parent(const QModelIndex & index) const;
+		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
+		virtual QStringList mimeTypes() const;
+		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
 		
 		/// Get the full path of the model index
 		QString pathForIndex(const QModelIndex & idx) const;

@@ -18,78 +18,59 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
 
-#ifndef KT_MEDIAPLAYERACTIVITY_H
-#define KT_MEDIAPLAYERACTIVITY_H
+#ifndef PLAYLISTWIDGET_H
+#define PLAYLISTWIDGET_H
 
-#include <QModelIndex>
-#include <QSplitter>
-#include <KTabWidget>
-#include <interfaces/activity.h>
+#include <QWidget>
+#include <QLabel>
+#include <QTreeView>
+#include <QToolBar>
+#include <QComboBox>
+#include <QCheckBox>
+#include <Phonon/SeekSlider>
+#include <Phonon/VolumeSlider>
 
-class QToolBar;
-class KAction;
-class KActionCollection;
 
-namespace kt 
+namespace kt
 {
-	class MediaView;
+	class PlayList;
 	class MediaPlayer;
-	class MediaModel;
-	class CoreInterface;
-	class VideoWidget;
-	class PlayListWidget;
 	
-	/**
-	 * Activity for the media player plugin.
-	 */
-	class MediaPlayerActivity : public Activity
+	class PlayListWidget : public QWidget
 	{
 		Q_OBJECT
 	public:
-		MediaPlayerActivity(CoreInterface* core,QWidget* parent);
-		virtual ~MediaPlayerActivity();
+		PlayListWidget(MediaPlayer* player,QWidget* parent);
+		virtual ~PlayListWidget();
 		
-		void setupActions(KActionCollection* ac);
+		/// Get the media tool bar
+		QToolBar* mediaToolBar() {return tool_bar;}
 		
 	public slots:
-		void play();
-		void pause();
-		void stop();
-		void prev();
-		void next();
-		void enableActions(unsigned int flags);
-		void onSelectionChanged(const QModelIndex & idx);
-		void openVideo();
-		void closeVideo();
-		void setVideoFullScreen(bool on);
-		void onDoubleClicked(const QModelIndex & idx);
-		void randomPlayActivated();
-		void aboutToFinishPlaying();
-		void showVideo(bool on);
-		void closeTab();
+		void playing(const QString & file);
+		void stopped();
+		
+	private slots:
+		void skipIncompleteChecked(bool on);
+		void modeActivated(int idx);
+		void metaDataChanged();
+		
+	signals:
+		void randomModeActivated();
 		
 	private:
-		QSplitter* splitter;
-		MediaModel* media_model;
-		MediaPlayer* media_player;
-		MediaView* media_view;
-		KTabWidget* tabs;
-		int action_flags;
-		VideoWidget* video;
-		bool video_shown;
-		bool fullscreen_mode;
-		QDialog* fs_dialog;
-		QModelIndex curr_item;
-		PlayListWidget* play_list;
-		
-		KAction* play_action;
-		KAction* pause_action;
-		KAction* stop_action;
-		KAction* prev_action;
-		KAction* next_action;
-		KAction* show_video_action;
+		MediaPlayer* player;
+		QTreeView* play_list_view;
+		PlayList* play_list;
+		QToolBar* tool_bar;
+		Phonon::VolumeSlider* volume;
+		Phonon::SeekSlider* play_slider;
+		QComboBox* queue_mode;
+		QCheckBox* skip_incomplete;
+		QLabel* info_label;
+		unsigned int cnt;
+		QString current_file;
 	};
-
 }
 
-#endif // KT_MEDIAPLAYERACTIVITY_H
+#endif // PLAYLISTWIDGET_H

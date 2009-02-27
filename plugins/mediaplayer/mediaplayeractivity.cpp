@@ -35,6 +35,7 @@
 #include "mediaplayerpluginsettings.h"
 #include "mediaplayeractivity.h"
 #include <QToolButton>
+#include "playlistwidget.h"
 
 using namespace bt;
 
@@ -58,7 +59,7 @@ namespace kt
 		
 		splitter = new QSplitter(Qt::Horizontal,this);
 		layout->addWidget(splitter);
-		media_view = new MediaView(media_player,media_model,splitter);
+		media_view = new MediaView(media_model,splitter);
 		tabs = new KTabWidget(splitter);
 		splitter->addWidget(media_view);
 		splitter->addWidget(tabs);
@@ -67,6 +68,9 @@ namespace kt
 		tabs->setCornerWidget(rc,Qt::TopRightCorner);
 		rc->setIcon(KIcon("tab-close"));
 		connect(rc,SIGNAL(clicked()),this,SLOT(closeTab()));
+		
+		play_list = new PlayListWidget(media_player,tabs);
+		tabs->addTab(play_list,KIcon("audio-x-generic"),i18n("Play List"));
 		
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
@@ -111,7 +115,7 @@ namespace kt
 		connect(show_video_action,SIGNAL(toggled(bool)),this,SLOT(showVideo(bool)));
 		ac->addAction("show_video",show_video_action);
 		
-		QToolBar* tb = media_view->mediaToolBar();
+		QToolBar* tb = play_list->mediaToolBar();
 		tb->addAction(play_action);
 		tb->addAction(pause_action);
 		tb->addAction(stop_action);
@@ -194,7 +198,6 @@ namespace kt
 				bool random = MediaPlayerPluginSettings::playMode() == 2;
 				QModelIndex next = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
 				next_action->setEnabled(next.isValid());
-				media_view->playing(curr_item);
 			}
 		}
 	}
@@ -211,12 +214,7 @@ namespace kt
 
 	void MediaPlayerActivity::prev()
 	{
-		QString s = media_player->prev();
-		if (s.isNull())
-			return;
-		
-		curr_item = media_model->indexForPath(s);
-		media_view->playing(curr_item);
+		media_player->prev();
 	}
 
 	void MediaPlayerActivity::next()
@@ -233,7 +231,6 @@ namespace kt
 			curr_item = n;
 			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
 			next_action->setEnabled(n.isValid());
-			media_view->playing(curr_item);
 		}
 	}
 
@@ -298,7 +295,6 @@ namespace kt
 			curr_item = n;
 			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
 			next_action->setEnabled(n.isValid());
-			media_view->playing(curr_item);
 		}
 	}
 

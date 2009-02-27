@@ -104,6 +104,11 @@ namespace kt
 		 * Emitted when the player is about to finish
 		 */
 		void aboutToFinish();
+		
+		/**
+		* Emitted when the player starts playing
+		*/
+		void playing(const QString & file);
 
 	private:
 		Phonon::MediaObject* media;
