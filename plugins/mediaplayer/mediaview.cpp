@@ -50,24 +50,12 @@ namespace kt
 		media_tree->setDragEnabled(true);
 		layout->addWidget(media_tree);
 		
-		connect(media_tree->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
-				this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
 		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
 	}
 
 
 	MediaView::~MediaView()
 	{
-	}
-	
-	void MediaView::onSelectionChanged(const QItemSelection & s, const QItemSelection & d)
-	{
-		Q_UNUSED(d);
-		QModelIndexList idx = s.indexes();
-		if (idx.count() > 0)
-			selectionChanged(idx.front());
-		else
-			selectionChanged(QModelIndex());
 	}
 	
 	QModelIndex MediaView::selectedItem() const

@@ -54,6 +54,57 @@ namespace kt
 			removeRow(i);
 	}
 	
+	QString PlayList::fileForIndex(const QModelIndex& index) const
+	{
+		if (!index.isValid())
+			return QString();
+		else
+			return files.at(index.row());
+	}
+	
+	QModelIndex PlayList::next(const QModelIndex & idx,bool random) const
+	{
+		if (files.count() == 0)
+			return QModelIndex();
+		
+		if (!idx.isValid())
+		{
+			if (!random)
+			{
+				return index(0,0,QModelIndex());
+			}
+			else
+			{
+				return randomNext(QModelIndex());
+			}
+		}
+		else if (!random)
+		{
+			return next(idx);
+		}
+		else
+		{
+			return randomNext(idx);
+		}
+	}
+	
+	QModelIndex PlayList::next(const QModelIndex & idx) const
+	{
+		return idx.sibling(idx.row()+1,0); // take a look at the next sibling
+	}
+	
+	QModelIndex PlayList::randomNext(const QModelIndex & idx) const
+	{
+		if (files.count() <= 1)
+			return QModelIndex();
+		
+		int r = qrand() % files.count();
+		while (r == idx.row())
+			r = qrand() % files.count();
+		
+		return index(r,0,QModelIndex());
+	}
+	
 	QVariant PlayList::headerData(int section, Qt::Orientation orientation, int role) const 
 	{
 		if (orientation == Qt::Vertical || role != Qt::DisplayRole)
@@ -69,7 +120,6 @@ namespace kt
 			default: return QVariant();
 		}
 	}
-
 
 	QVariant PlayList::data(const QModelIndex& index, int role) const
 	{

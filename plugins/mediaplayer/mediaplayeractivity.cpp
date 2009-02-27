@@ -36,6 +36,7 @@
 #include "mediaplayeractivity.h"
 #include <QToolButton>
 #include "playlistwidget.h"
+#include "playlist.h"
 
 using namespace bt;
 
@@ -78,9 +79,9 @@ namespace kt
 		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
 		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
 		connect(media_player,SIGNAL(aboutToFinish()),this,SLOT(aboutToFinishPlaying()));
-		connect(media_view,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
+		connect(play_list,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
 		connect(media_view,SIGNAL(doubleClicked(const QModelIndex&)),this,SLOT(onDoubleClicked(const QModelIndex&)));
-		connect(media_view,SIGNAL(randomModeActivated()),this,SLOT(randomPlayActivated()));
+		connect(play_list,SIGNAL(randomModeActivated()),this,SLOT(randomPlayActivated()));
 	}
 
 	MediaPlayerActivity::~MediaPlayerActivity() 
@@ -180,9 +181,19 @@ namespace kt
 	void MediaPlayerActivity::play()
 	{
 		if (media_player->paused())
+		{
 			media_player->resume();
+		}
 		else
-			onDoubleClicked(media_view->selectedItem());
+		{
+			curr_item = play_list->play();
+			if (curr_item.isValid())
+			{
+				bool random = MediaPlayerPluginSettings::playMode() == 2;
+				QModelIndex n = play_list->playList()->next(curr_item,random);
+				next_action->setEnabled(n.isValid());
+			}
+		}
 	}
 
 	void MediaPlayerActivity::onDoubleClicked(const QModelIndex & idx)
@@ -192,12 +203,13 @@ namespace kt
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
 			{
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing " << path << endl;
-				media_player->play(path);
+			/*	media_player->play(path);
+				
 				curr_item = idx;
 				bool random = MediaPlayerPluginSettings::playMode() == 2;
 				QModelIndex next = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
 				next_action->setEnabled(next.isValid());
+				*/
 			}
 		}
 	}
@@ -220,16 +232,17 @@ namespace kt
 	void MediaPlayerActivity::next()
 	{
 		bool random = MediaPlayerPluginSettings::playMode() == 2;
-		QModelIndex n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+		PlayList* pl = play_list->playList();
+		QModelIndex n = pl->next(curr_item,random);
 		if (!n.isValid())
 			return;
 		
-		QString path = media_model->pathForIndex(n);
+		QString path = pl->fileForIndex(n);
 		if (bt::Exists(path))
 		{
 			media_player->play(path);
 			curr_item = n;
-			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+			n = pl->next(curr_item,random);
 			next_action->setEnabled(n.isValid());
 		}
 	}
@@ -238,13 +251,13 @@ namespace kt
 	{
 		pause_action->setEnabled(flags & kt::MEDIA_PAUSE);
 		stop_action->setEnabled(flags & kt::MEDIA_STOP);
-		
 		play_action->setEnabled(false);
 		
-		QModelIndex idx = media_view->selectedItem();
+		QModelIndex idx = play_list->selectedItem();
 		if (idx.isValid())
 		{
-			QString path = media_model->pathForIndex(idx);
+			PlayList* pl = play_list->playList();
+			QString path = pl->fileForIndex(idx);
 			if (bt::Exists(path))
 				play_action->setEnabled((flags & kt::MEDIA_PLAY) || path != media_player->getCurrentSource());
 			else
@@ -254,7 +267,6 @@ namespace kt
 			play_action->setEnabled(flags & kt::MEDIA_PLAY);
 		
 		prev_action->setEnabled(flags & kt::MEDIA_PREV);
-		
 		action_flags = flags;
 	}
 
@@ -262,7 +274,8 @@ namespace kt
 	{
 		if (idx.isValid())
 		{
-			QString path = media_model->pathForIndex(idx);
+			PlayList* pl = play_list->playList();
+			QString path = pl->fileForIndex(idx);
 			if (bt::Exists(path))
 				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || path != media_player->getCurrentSource());
 			else
@@ -274,7 +287,8 @@ namespace kt
 
 	void MediaPlayerActivity::randomPlayActivated()
 	{
-		QModelIndex next = media_model->next(curr_item,true,MediaPlayerPluginSettings::skipIncomplete());
+		PlayList* pl = play_list->playList();
+		QModelIndex next = pl->next(curr_item,true);
 		next_action->setEnabled(next.isValid());
 	}
 
@@ -283,17 +297,18 @@ namespace kt
 		if (MediaPlayerPluginSettings::playMode() == 0)
 			return;
 		
+		PlayList* pl = play_list->playList();
 		bool random = MediaPlayerPluginSettings::playMode() == 2;
-		QModelIndex n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+		QModelIndex n = pl->next(curr_item,random);
 		if (!n.isValid())
 			return;
 		
-		QString path = media_model->pathForIndex(n);
+		QString path = pl->fileForIndex(n);
 		if (bt::Exists(path))
 		{
 			media_player->queue(path);
 			curr_item = n;
-			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+			n = pl->next(curr_item,random);
 			next_action->setEnabled(n.isValid());
 		}
 	}
@@ -338,5 +353,6 @@ namespace kt
 			fullscreen_mode = false;
 		}
 	}
+
 }
 

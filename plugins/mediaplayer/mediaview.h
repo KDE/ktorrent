@@ -43,11 +43,7 @@ namespace kt
 		/// Get the current selected item
 		QModelIndex selectedItem() const;
 		
-	private slots:
-		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
-		
-	signals:
-		void selectionChanged(const QModelIndex & idx);
+	signals:;
 		void doubleClicked(const QModelIndex & idx);
 
 	private:

@@ -61,16 +61,9 @@ namespace kt
 		/// Get the index of a full path
 		QModelIndex indexForPath(const QString & path) const;
 		
-		/// Get the next item to play, if idx is invalid return the first playable item
-		QModelIndex next(const QModelIndex & idx,bool random,bool complete_only) const;
-		
 	public slots:
 		void onTorrentAdded(bt::TorrentInterface* t);
 		void onTorrentRemoved(bt::TorrentInterface* t);
-		
-	private:
-		QModelIndex next(const QModelIndex & idx) const;
-		QModelIndex randomNext(const QModelIndex & idx,bool complete_only) const;
 		
 	private:
 		struct Item

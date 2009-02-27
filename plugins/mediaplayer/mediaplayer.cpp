@@ -42,6 +42,8 @@ namespace kt
 				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
 		connect(media,SIGNAL(hasVideoChanged(bool)),this,SLOT(hasVideoChanged(bool)));
 		connect(media,SIGNAL(aboutToFinish()),this,SIGNAL(aboutToFinish()));
+		connect(media,SIGNAL(currentSourceChanged(Phonon::MediaSource)),
+				 this,SLOT(currentSourceChanged(Phonon::MediaSource)));
 		media->setTickInterval(1000);
 	}
 
@@ -139,7 +141,7 @@ namespace kt
 				stopped();
 				break;
 			case Phonon::PlayingState:
-				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: playing" << endl;
+				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: playing " << getCurrentSource() << endl;
 				flags = MEDIA_PAUSE|MEDIA_STOP;
 				if (history.count() > 1)
 					flags |= MEDIA_PREV;
@@ -181,5 +183,11 @@ namespace kt
 			openVideo();
 		else
 			closeVideo();
+	}
+	
+	
+	void MediaPlayer::currentSourceChanged(Phonon::MediaSource src)
+	{
+		playing(src.fileName());
 	}
 }

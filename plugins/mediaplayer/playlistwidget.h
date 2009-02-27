@@ -46,7 +46,14 @@ namespace kt
 		/// Get the media tool bar
 		QToolBar* mediaToolBar() {return tool_bar;}
 		
+		/// Get the play list
+		PlayList* playList() {return play_list;}
+		
+		/// Get the current selected item
+		QModelIndex selectedItem() const;
+		
 	public slots:
+		QModelIndex play();
 		void playing(const QString & file);
 		void stopped();
 		
@@ -54,9 +61,11 @@ namespace kt
 		void skipIncompleteChecked(bool on);
 		void modeActivated(int idx);
 		void metaDataChanged();
+		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
 		
 	signals:
 		void randomModeActivated();
+		void selectionChanged(const QModelIndex & idx);
 		
 	private:
 		MediaPlayer* player;

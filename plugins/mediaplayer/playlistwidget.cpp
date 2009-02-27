@@ -97,11 +97,44 @@ namespace kt
 		connect(player,SIGNAL(playing(QString)),this,SLOT(playing(QString)));
 		connect(skip_incomplete,SIGNAL(toggled(bool)),this,SLOT(skipIncompleteChecked(bool)));
 		connect(queue_mode,SIGNAL(activated(int)),this,SLOT(modeActivated(int)));
+		connect(play_list_view->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
+				 this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
 	}
 	
 	PlayListWidget::~PlayListWidget() 
 	{
 	}
+	
+	QModelIndex PlayListWidget::selectedItem() const
+	{
+		QModelIndexList rows = play_list_view->selectionModel()->selectedRows();
+		if (rows.count() > 0)
+			return rows.front();
+		else
+			return QModelIndex();
+	}
+	
+	void PlayListWidget::onSelectionChanged(const QItemSelection & s, const QItemSelection & d)
+	{
+		Q_UNUSED(d);
+		QModelIndexList idx = s.indexes();
+		if (idx.count() > 0)
+			selectionChanged(idx.front());
+		else
+			selectionChanged(QModelIndex());
+	}
+	
+	QModelIndex PlayListWidget::play() 
+	{
+		QModelIndex idx = play_list_view->currentIndex();
+		QString file = play_list->fileForIndex(idx);
+		if (!file.isEmpty())
+		{
+			player->play(file);
+		}
+		return idx;
+	}
+
 
 	void PlayListWidget::playing(const QString & file)
 	{
@@ -146,8 +179,8 @@ namespace kt
 		QString album = tag->album().toCString(true);
 		
 		bool has_artist = !artist.isEmpty();
-		bool has_title = !title.count();
-		bool has_album = !album.count();
+		bool has_title = !title.isEmpty();
+		bool has_album = !album.isEmpty();
 		
 		if (has_artist && has_title && has_album)
 		{
