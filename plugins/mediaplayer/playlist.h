@@ -23,6 +23,8 @@
 
 #include <QAbstractItemModel>
 #include <QStringList>
+#include <taglib/fileref.h>
+#include <util/ptrmap.h>
 
 namespace kt
 {
@@ -67,6 +69,7 @@ namespace kt
 			
 	private:
 		QStringList files;
+		bt::PtrMap<QString,TagLib::FileRef> tags;
 		mutable QList<int> dragged_rows;
 	};
 }

@@ -24,7 +24,6 @@
 #include <QUrl>
 #include <QMimeData>
 #include <QStringList>
-#include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include <klocale.h>
 #include <QFileInfo>
@@ -37,6 +36,7 @@ namespace kt
 {
 	PlayList::PlayList(QObject* parent) : QAbstractItemModel(parent)
 	{
+		tags.setAutoDelete(true);
 	}
 	
 	PlayList::~PlayList() 
@@ -46,12 +46,15 @@ namespace kt
 	void PlayList::addFile(const QString & file)
 	{
 		files.append(file);
+		TagLib::FileRef* ref = new TagLib::FileRef(QFile::encodeName(file).data(),true,TagLib::AudioProperties::Fast);
+		tags.insert(file,ref);
 		insertRow(files.count() - 1);
 	}
 	
 	void PlayList::removeFile(const QString & file)
 	{
 		int i = files.indexOf(file);
+		tags.erase(file);
 		if (i >= 0)
 			removeRow(i);
 	}
@@ -67,6 +70,7 @@ namespace kt
 	void PlayList::clear() 
 	{
 		files.clear();
+		tags.clear();
 		reset();
 	}
 
@@ -136,8 +140,8 @@ namespace kt
 			return QVariant();
 		
 		QString file = files.at(index.row());
-		TagLib::FileRef ref(QFile::encodeName(file).data(),true,TagLib::AudioProperties::Fast);
-		if (ref.isNull())
+		const TagLib::FileRef* ref = tags.find(file);
+		if (!ref || ref->isNull())
 		{
 			if (index.column() == 0)
 				return QFileInfo(file).fileName();
@@ -145,7 +149,7 @@ namespace kt
 				return QVariant();
 		}
 		
-		TagLib::Tag* tag = ref.tag();
+		TagLib::Tag* tag = ref->tag();
 		if (!tag)
 		{
 			if (index.column() == 0)
@@ -162,7 +166,7 @@ namespace kt
 			case 3: 
 			{
 				QTime t(0,0);
-				t = t.addSecs(ref.audioProperties()->length());
+				t = t.addSecs(ref->audioProperties()->length());
 				return t.toString("m:ss");
 			}
 			case 4: return tag->year() == 0 ? QVariant() : tag->year();
@@ -318,7 +322,10 @@ namespace kt
 		QTextStream in(&fptr);
 		while (!in.atEnd())
 		{
-			files.append(in.readLine());
+			QString file = in.readLine();
+			TagLib::FileRef* ref = new TagLib::FileRef(QFile::encodeName(file).data(),true,TagLib::AudioProperties::Fast);
+			files.append(file);
+			tags.insert(file,ref);
 		}
 	}
 }
