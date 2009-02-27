@@ -29,6 +29,7 @@
 #include <QCheckBox>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
+#include <KSharedConfig>
 
 
 namespace kt
@@ -52,20 +53,24 @@ namespace kt
 		/// Get the current selected item
 		QModelIndex selectedItem() const;
 		
+		void saveState(KSharedConfigPtr cfg);
+		void loadState(KSharedConfigPtr cfg);
+		
 	public slots:
 		QModelIndex play();
 		void playing(const QString & file);
 		void stopped();
 		
 	private slots:
-		void skipIncompleteChecked(bool on);
 		void modeActivated(int idx);
 		void metaDataChanged();
 		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
+		void doubleClicked(const QModelIndex & index);
 		
 	signals:
 		void randomModeActivated();
 		void selectionChanged(const QModelIndex & idx);
+		void doubleClicked(const QString & file);
 		
 	private:
 		MediaPlayer* player;
@@ -75,7 +80,6 @@ namespace kt
 		Phonon::VolumeSlider* volume;
 		Phonon::SeekSlider* play_slider;
 		QComboBox* queue_mode;
-		QCheckBox* skip_incomplete;
 		QLabel* info_label;
 		unsigned int cnt;
 		QString current_file;

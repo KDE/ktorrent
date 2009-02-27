@@ -25,6 +25,7 @@
 #include <QSplitter>
 #include <KTabWidget>
 #include <interfaces/activity.h>
+#include <QToolButton>
 
 class QToolBar;
 class KAction;
@@ -50,9 +51,12 @@ namespace kt
 		virtual ~MediaPlayerActivity();
 		
 		void setupActions(KActionCollection* ac);
+		void saveState(KSharedConfigPtr cfg);
+		void loadState(KSharedConfigPtr cfg);
 		
 	public slots:
 		void play();
+		void play(const QString & file);
 		void pause();
 		void stop();
 		void prev();
@@ -67,6 +71,9 @@ namespace kt
 		void aboutToFinishPlaying();
 		void showVideo(bool on);
 		void closeTab();
+		void clearPlayList();
+		void addMedia();
+		void currentTabChanged(int idx);
 		
 	private:
 		QSplitter* splitter;
@@ -78,9 +85,9 @@ namespace kt
 		VideoWidget* video;
 		bool video_shown;
 		bool fullscreen_mode;
-		QDialog* fs_dialog;
 		QModelIndex curr_item;
 		PlayListWidget* play_list;
+		QToolButton* close_button;
 		
 		KAction* play_action;
 		KAction* pause_action;
@@ -88,6 +95,8 @@ namespace kt
 		KAction* prev_action;
 		KAction* next_action;
 		KAction* show_video_action;
+		KAction* clear_action;
+		KAction* add_media_action;
 	};
 
 }

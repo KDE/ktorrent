@@ -29,6 +29,7 @@
 #include "mediaplayerpluginsettings.h"
 #include "playlist.h"
 #include <QFile>
+#include <QHeaderView>
 
 
 namespace kt
@@ -49,6 +50,16 @@ namespace kt
 		play_list_view->setRootIsDecorated(false);
 		layout->addWidget(play_list_view);
 		
+		info_label = new QLabel(this);
+		info_label->setMargin(5);
+		info_label->setFrameShadow(QFrame::Sunken);
+		info_label->setFrameShape(QFrame::StyledPanel);
+		info_label->setBackgroundRole(QPalette::Base);
+		info_label->setAutoFillBackground(true);
+		info_label->setWordWrap(true);
+		layout->addWidget(info_label);
+		info_label->setText(i18n("Ready to play"));
+		
 		QHBoxLayout* hbox = new QHBoxLayout(0);
 		layout->addLayout(hbox);
 		
@@ -60,33 +71,15 @@ namespace kt
 		play_slider->setMediaObject(player->media0bject());
 		hbox->addWidget(play_slider);
 		
-		info_label = new QLabel(this);
-		info_label->setMargin(5);
-		info_label->setFrameShadow(QFrame::Sunken);
-		info_label->setFrameShape(QFrame::StyledPanel);
-		info_label->setBackgroundRole(QPalette::Base);
-		info_label->setAutoFillBackground(true);
-		info_label->setWordWrap(true);
-		layout->addWidget(info_label);
-		info_label->setText(i18n("Ready to play"));
-		
 		QHBoxLayout* hlayout = new QHBoxLayout(0);
 		hlayout->addWidget(new QLabel(i18n("Mode:"),this));
-		
 		queue_mode = new QComboBox(this);
 		queue_mode->addItem(i18n("Single File"));
-		queue_mode->addItem(i18n("All Files"));
-		queue_mode->addItem(i18n("Random Files"));
+		queue_mode->addItem(i18n("Playlist"));
+		queue_mode->addItem(i18n("Random"));
 		queue_mode->setCurrentIndex(MediaPlayerPluginSettings::playMode());
 		hlayout->addWidget(queue_mode);
 		hbox->addLayout(hlayout);
-		
-		QSpacerItem* s = new QSpacerItem(5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-		hlayout->addItem(s);
-		
-		skip_incomplete = new QCheckBox(i18n("Skip incomplete files"),this);
-		skip_incomplete->setChecked(MediaPlayerPluginSettings::skipIncomplete());
-		hbox->addWidget(skip_incomplete);
 		
 		volume = new Phonon::VolumeSlider(this);
 		volume->setAudioOutput(player->output());
@@ -95,10 +88,10 @@ namespace kt
 		
 		connect(player,SIGNAL(stopped()),this,SLOT(stopped()));
 		connect(player,SIGNAL(playing(QString)),this,SLOT(playing(QString)));
-		connect(skip_incomplete,SIGNAL(toggled(bool)),this,SLOT(skipIncompleteChecked(bool)));
 		connect(queue_mode,SIGNAL(activated(int)),this,SLOT(modeActivated(int)));
 		connect(play_list_view->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
 				 this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
+		connect(play_list_view,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
 	}
 	
 	PlayListWidget::~PlayListWidget() 
@@ -203,12 +196,6 @@ namespace kt
 		}
 	}
 
-	void PlayListWidget::skipIncompleteChecked(bool on)
-	{
-		MediaPlayerPluginSettings::setSkipIncomplete(on);
-		MediaPlayerPluginSettings::self()->writeConfig();
-	}
-
 	void PlayListWidget::modeActivated(int idx)
 	{
 		MediaPlayerPluginSettings::setPlayMode(idx);
@@ -217,4 +204,25 @@ namespace kt
 			randomModeActivated();
 	}
 
+	void PlayListWidget::doubleClicked(const QModelIndex & index)
+	{
+		QString file = play_list->fileForIndex(index);
+		if (!file.isEmpty())
+			doubleClicked(file);
+	}
+	
+	void PlayListWidget::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("PlayListWidget");
+		QHeaderView* v = play_list_view->header();
+		g.writeEntry("play_list_state",v->saveState());
+	}
+	
+	void PlayListWidget::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("PlayListWidget");
+		QByteArray d = g.readEntry("play_list_state",QByteArray());
+		if (!d.isNull())
+			play_list_view->header()->restoreState(d);
+	}
 }

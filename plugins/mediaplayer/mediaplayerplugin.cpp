@@ -53,11 +53,13 @@ namespace kt
 		getGUI()->addActivity(act);
 		setXMLFile("ktmediaplayerpluginui.rc");
 		act->enableActions(0);
+		act->loadState(KGlobal::config());
 	}
 	
 	void MediaPlayerPlugin::unload()
 	{
 		LogSystemManager::instance().unregisterSystem(i18n("Media Player"));
+		act->saveState(KGlobal::config());
 		act->setVideoFullScreen(false);
 		getGUI()->removeActivity(act);
 		delete act;

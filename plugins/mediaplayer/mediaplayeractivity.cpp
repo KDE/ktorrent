@@ -23,6 +23,7 @@
 #include <kaction.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
+#include <kfiledialog.h>
 
 #include <util/log.h>
 #include <util/fileops.h>
@@ -37,6 +38,7 @@
 #include <QToolButton>
 #include "playlistwidget.h"
 #include "playlist.h"
+#include <interfaces/functions.h>
 
 using namespace bt;
 
@@ -48,8 +50,6 @@ namespace kt
 		action_flags = 0;
 		video = 0;
 		video_shown = false;
-		fullscreen_mode = false;
-		fs_dialog = 0;
 		play_action = pause_action = stop_action = prev_action = next_action = 0;
 		
 		media_model = new MediaModel(core,this);
@@ -65,13 +65,15 @@ namespace kt
 		splitter->addWidget(media_view);
 		splitter->addWidget(tabs);
 		
-		QToolButton* rc = new QToolButton(tabs);
-		tabs->setCornerWidget(rc,Qt::TopRightCorner);
-		rc->setIcon(KIcon("tab-close"));
-		connect(rc,SIGNAL(clicked()),this,SLOT(closeTab()));
+		close_button = new QToolButton(tabs);
+		tabs->setCornerWidget(close_button,Qt::TopRightCorner);
+		close_button->setIcon(KIcon("tab-close"));
+		close_button->setEnabled(false);
+		connect(close_button,SIGNAL(clicked()),this,SLOT(closeTab()));
 		
 		play_list = new PlayListWidget(media_player,tabs);
 		tabs->addTab(play_list,KIcon("audio-x-generic"),i18n("Play List"));
+		tabs->setTabBarHidden(true);
 		
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
@@ -82,6 +84,8 @@ namespace kt
 		connect(play_list,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
 		connect(media_view,SIGNAL(doubleClicked(const QModelIndex&)),this,SLOT(onDoubleClicked(const QModelIndex&)));
 		connect(play_list,SIGNAL(randomModeActivated()),this,SLOT(randomPlayActivated()));
+		connect(play_list,SIGNAL(doubleClicked(QString)),this,SLOT(play(QString)));
+		connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(currentTabChanged(int)));
 	}
 
 	MediaPlayerActivity::~MediaPlayerActivity() 
@@ -116,12 +120,24 @@ namespace kt
 		connect(show_video_action,SIGNAL(toggled(bool)),this,SLOT(showVideo(bool)));
 		ac->addAction("show_video",show_video_action);
 		
+		add_media_action = new KAction(KIcon("document-open"),i18n("Add Media"),this);
+		connect(add_media_action,SIGNAL(triggered()),this,SLOT(addMedia()));
+		ac->addAction("add_media",add_media_action); 
+		
+		clear_action = new KAction(KIcon("edit-clear-list"),i18n("Clear Playlist"),this);
+		connect(clear_action,SIGNAL(triggered()),this,SLOT(clearPlayList()));
+		ac->addAction("clear_play_list",clear_action);
+		
 		QToolBar* tb = play_list->mediaToolBar();
+		tb->addAction(add_media_action);
+		tb->addAction(clear_action);
+		tb->addSeparator();
 		tb->addAction(play_action);
 		tb->addAction(pause_action);
 		tb->addAction(stop_action);
 		tb->addAction(prev_action);
 		tb->addAction(next_action);
+		tb->addSeparator();
 		tb->addAction(show_video_action);
 	}
 
@@ -139,12 +155,17 @@ namespace kt
 		{
 			if (video_shown)
 			{
-				tabs->setTabText(tabs->indexOf(video),path);
+				int idx = tabs->indexOf(video);
+				tabs->setTabText(idx,path);
+				tabs->setCurrentIndex(idx);
+				tabs->setTabBarHidden(false);
 			}
 			else
 			{
 				int idx = tabs->addTab(video,KIcon("video-x-generic"),path);
 				tabs->setTabToolTip(idx,i18n("Movie player"));
+				tabs->setCurrentIndex(idx);
+				tabs->setTabBarHidden(false);
 			}
 		}
 		else
@@ -153,6 +174,8 @@ namespace kt
 			connect(video,SIGNAL(toggleFullScreen(bool)),this,SLOT(setVideoFullScreen(bool)));
 			int idx = tabs->addTab(video,KIcon("video-x-generic"),path);
 			tabs->setTabToolTip(idx,i18n("Movie player"));
+			tabs->setCurrentIndex(idx);
+			tabs->setTabBarHidden(false);
 		}
 		video_shown = true;
 		if (show_video_action->isChecked() != video_shown)
@@ -167,6 +190,7 @@ namespace kt
 			video_shown = false;
 			if (show_video_action->isChecked() != video_shown)
 				show_video_action->setChecked(video_shown);
+			tabs->setTabBarHidden(true);
 		}
 	}
 
@@ -195,6 +219,11 @@ namespace kt
 			}
 		}
 	}
+	
+	void MediaPlayerActivity::play(const QString & file)
+	{
+		media_player->play(file);
+	}
 
 	void MediaPlayerActivity::onDoubleClicked(const QModelIndex & idx)
 	{
@@ -203,13 +232,7 @@ namespace kt
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
 			{
-			/*	media_player->play(path);
-				
-				curr_item = idx;
-				bool random = MediaPlayerPluginSettings::playMode() == 2;
-				QModelIndex next = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
-				next_action->setEnabled(next.isValid());
-				*/
+				play(path);
 			}
 		}
 	}
@@ -354,5 +377,46 @@ namespace kt
 		}
 	}
 
+	void MediaPlayerActivity::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("MediaPlayerActivity");
+		g.writeEntry("splitter_state",splitter->saveState());
+		play_list->saveState(cfg);
+		play_list->playList()->save(kt::DataDir() + "playlist");
+	}
+	
+	void MediaPlayerActivity::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("MediaPlayerActivity");
+		QByteArray d = g.readEntry("splitter_state",QByteArray());
+		if (!d.isNull())
+			splitter->restoreState(d);
+		
+		play_list->loadState(cfg);
+		if (bt::Exists(kt::DataDir() + "playlist"))
+			play_list->playList()->load(kt::DataDir() + "playlist");
+	}
+	
+	void MediaPlayerActivity::clearPlayList()
+	{
+		play_list->playList()->clear();
+	}
+	
+	void MediaPlayerActivity::addMedia() 
+	{
+		QString filter;
+		QStringList files = KFileDialog::getOpenFileNames(KUrl("kfiledialog:///add_media"),filter,this);
+		PlayList* pl = play_list->playList();
+		foreach (const QString & file,files)
+		{
+			pl->addFile(file);
+		}
+	}
+
+	void MediaPlayerActivity::currentTabChanged(int idx)
+	{
+		close_button->setEnabled(idx != 0);
+	}
+	
 }
 

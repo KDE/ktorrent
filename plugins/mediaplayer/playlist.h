@@ -40,6 +40,9 @@ namespace kt
 		void addFile(const QString & file);
 		void removeFile(const QString & file);
 		QString fileForIndex(const QModelIndex& index) const;
+		void save(const QString & file);
+		void load(const QString & file);
+		void clear();
 		
 		/// Get the next item to play, if idx is invalid return the first playable item
 		QModelIndex next(const QModelIndex & idx,bool random) const;

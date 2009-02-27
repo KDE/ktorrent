@@ -28,13 +28,15 @@
 #include <taglib/tag.h>
 #include <klocale.h>
 #include <QFileInfo>
+#include <util/log.h>
+#include <qtextstream.h>
 
+using namespace bt;
 
 namespace kt
 {
 	PlayList::PlayList(QObject* parent) : QAbstractItemModel(parent)
 	{
-
 	}
 	
 	PlayList::~PlayList() 
@@ -61,6 +63,13 @@ namespace kt
 		else
 			return files.at(index.row());
 	}
+	
+	void PlayList::clear() 
+	{
+		files.clear();
+		reset();
+	}
+
 	
 	QModelIndex PlayList::next(const QModelIndex & idx,bool random) const
 	{
@@ -152,9 +161,9 @@ namespace kt
 			case 2: return QString(tag->album().toCString(true));
 			case 3: 
 			{
-				QTime t;
-				t.addSecs(ref.audioProperties()->length());
-				return t.toString("mm:ss");
+				QTime t(0,0);
+				t = t.addSecs(ref.audioProperties()->length());
+				return t.toString("m:ss");
 			}
 			case 4: return tag->year() == 0 ? QVariant() : tag->year();
 			default: return QVariant();
@@ -281,5 +290,35 @@ namespace kt
 			files.removeAt(i + row);
 		endRemoveRows();
 		return true;
+	}
+	
+	void PlayList::save(const QString & file)
+	{
+		QFile fptr(file);
+		if (!fptr.open(QIODevice::WriteOnly))
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Failed to open file " << file << endl;
+			return;
+		}
+		
+		QTextStream out(&fptr);
+		foreach (const QString & f,files)
+			out << f << endl;
+	}
+	
+	void PlayList::load(const QString & file)
+	{
+		QFile fptr(file);
+		if (!fptr.open(QIODevice::ReadOnly))
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Failed to open file " << file << endl;
+			return;
+		}
+		
+		QTextStream in(&fptr);
+		while (!in.atEnd())
+		{
+			files.append(in.readLine());
+		}
 	}
 }
