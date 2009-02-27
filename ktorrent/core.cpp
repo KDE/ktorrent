@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QNetworkInterface>
 #include <klocale.h>
 #include <kio/job.h>
 #include <kmessagebox.h>
@@ -64,6 +65,7 @@
 #include "gui.h"
 #include "torrentmigratordlg.h"
 
+
 using namespace bt;
 
 namespace kt
@@ -107,6 +109,19 @@ namespace kt
 			port = 6881;
 			Settings::setPort(6881);
 		}
+		
+		// Make sure network interface is set properly before server is initialized
+		if (Settings::networkInterface() != 0)
+		{
+			QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
+			int iface = Settings::networkInterface();
+			if (iface > iface_list.count())
+				SetNetworkInterface(QString::null);
+			else
+				SetNetworkInterface(iface_list[iface - 1].name());
+		}
+		
+		
 		Uint16 i = 0;
 		do
 		{
