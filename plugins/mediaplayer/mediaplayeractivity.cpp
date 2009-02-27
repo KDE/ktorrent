@@ -1,0 +1,346 @@
+/***************************************************************************
+*   Copyright (C) 2009 by Joris Guisson                                   *
+*   joris.guisson@gmail.com                                               *
+*                                                                         *
+*   This program is free software; you can redistribute it and/or modify  *
+*   it under the terms of the GNU General Public License as published by  *
+*   the Free Software Foundation; either version 2 of the License, or     *
+*   (at your option) any later version.                                   *
+*                                                                         *
+*   This program is distributed in the hope that it will be useful,       *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+*   GNU General Public License for more details.                          *
+*                                                                         *
+*   You should have received a copy of the GNU General Public License     *
+*   along with this program; if not, write to the                         *
+*   Free Software Foundation, Inc.,                                       *
+*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+***************************************************************************/
+#include <QBoxLayout>
+#include <kicon.h>
+#include <klocale.h>
+#include <kaction.h>
+#include <ktoggleaction.h>
+#include <kactioncollection.h>
+
+#include <util/log.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <interfaces/coreinterface.h>
+#include "mediaview.h"
+#include "mediamodel.h"
+#include "mediaplayer.h"
+#include "videowidget.h"
+#include "mediaplayerpluginsettings.h"
+#include "mediaplayeractivity.h"
+#include <QToolButton>
+
+using namespace bt;
+
+namespace kt
+{
+	MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core,QWidget* parent) 
+		: Activity(i18n("Media Player"),"applications-multimedia",90,parent)
+	{
+		action_flags = 0;
+		video = 0;
+		video_shown = false;
+		fullscreen_mode = false;
+		fs_dialog = 0;
+		play_action = pause_action = stop_action = prev_action = next_action = 0;
+		
+		media_model = new MediaModel(core,this);
+		media_player = new MediaPlayer(this);
+		
+		QHBoxLayout* layout = new QHBoxLayout(this);
+		layout->setMargin(0);
+		
+		splitter = new QSplitter(Qt::Horizontal,this);
+		layout->addWidget(splitter);
+		media_view = new MediaView(media_player,media_model,splitter);
+		tabs = new KTabWidget(splitter);
+		splitter->addWidget(media_view);
+		splitter->addWidget(tabs);
+		
+		QToolButton* rc = new QToolButton(tabs);
+		tabs->setCornerWidget(rc,Qt::TopRightCorner);
+		rc->setIcon(KIcon("tab-close"));
+		connect(rc,SIGNAL(clicked()),this,SLOT(closeTab()));
+		
+		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
+		connect(media_player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
+		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
+		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
+		connect(media_player,SIGNAL(aboutToFinish()),this,SLOT(aboutToFinishPlaying()));
+		connect(media_view,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
+		connect(media_view,SIGNAL(doubleClicked(const QModelIndex&)),this,SLOT(onDoubleClicked(const QModelIndex&)));
+		connect(media_view,SIGNAL(randomModeActivated()),this,SLOT(randomPlayActivated()));
+	}
+
+	MediaPlayerActivity::~MediaPlayerActivity() 
+	{
+		if (fullscreen_mode)
+			setVideoFullScreen(false);
+	}
+	
+	void MediaPlayerActivity::setupActions(KActionCollection* ac)
+	{
+		play_action = new KAction(KIcon("media-playback-start"),i18n("Play"),this);
+		connect(play_action,SIGNAL(triggered()),this,SLOT(play()));
+		ac->addAction("media_play",play_action);
+		
+		pause_action = new KAction(KIcon("media-playback-pause"),i18n("Pause"),this);
+		connect(pause_action,SIGNAL(triggered()),this,SLOT(pause()));
+		ac->addAction("media_pause",pause_action);
+		
+		stop_action = new KAction(KIcon("media-playback-stop"),i18n("Stop"),this);
+		connect(stop_action,SIGNAL(triggered()),this,SLOT(stop()));
+		ac->addAction("media_stop",stop_action);
+		
+		prev_action = new KAction(KIcon("media-skip-backward"),i18n("Previous"),this);
+		connect(prev_action,SIGNAL(triggered()),this,SLOT(prev()));
+		ac->addAction("media_prev",prev_action);
+		
+		next_action = new KAction(KIcon("media-skip-forward"),i18n("Next"),this);
+		connect(next_action,SIGNAL(triggered()),this,SLOT(next()));
+		ac->addAction("media_next",next_action);
+		
+		show_video_action = new KToggleAction(KIcon("video-x-generic"),i18n("Show Video"),this);
+		connect(show_video_action,SIGNAL(toggled(bool)),this,SLOT(showVideo(bool)));
+		ac->addAction("show_video",show_video_action);
+		
+		QToolBar* tb = media_view->mediaToolBar();
+		tb->addAction(play_action);
+		tb->addAction(pause_action);
+		tb->addAction(stop_action);
+		tb->addAction(prev_action);
+		tb->addAction(next_action);
+		tb->addAction(show_video_action);
+	}
+
+	void MediaPlayerActivity::openVideo()
+	{
+		QString path = media_player->media0bject()->currentSource().fileName();
+		int idx = path.lastIndexOf(bt::DirSeparator());
+		if (idx >= 0)
+			path = path.mid(idx+1);
+		
+		if (path.isNull())
+			path = i18n("Media Player");
+		
+		if (video)
+		{
+			if (video_shown)
+			{
+				tabs->setTabText(tabs->indexOf(video),path);
+			}
+			else
+			{
+				int idx = tabs->addTab(video,KIcon("video-x-generic"),path);
+				tabs->setTabToolTip(idx,i18n("Movie player"));
+			}
+		}
+		else
+		{
+			video = new VideoWidget(media_player,0);
+			connect(video,SIGNAL(toggleFullScreen(bool)),this,SLOT(setVideoFullScreen(bool)));
+			int idx = tabs->addTab(video,KIcon("video-x-generic"),path);
+			tabs->setTabToolTip(idx,i18n("Movie player"));
+		}
+		video_shown = true;
+		if (show_video_action->isChecked() != video_shown)
+			show_video_action->setChecked(video_shown);
+	}
+
+	void MediaPlayerActivity::closeVideo()
+	{
+		if (video)
+		{
+			tabs->removePage(video);
+			video_shown = false;
+			if (show_video_action->isChecked() != video_shown)
+				show_video_action->setChecked(video_shown);
+		}
+	}
+
+	void MediaPlayerActivity::showVideo(bool on)
+	{
+		if (on)
+			openVideo();
+		else
+			closeVideo();
+	}
+
+	void MediaPlayerActivity::play()
+	{
+		if (media_player->paused())
+			media_player->resume();
+		else
+			onDoubleClicked(media_view->selectedItem());
+	}
+
+	void MediaPlayerActivity::onDoubleClicked(const QModelIndex & idx)
+	{
+		if (idx.isValid())
+		{
+			QString path = media_model->pathForIndex(idx);
+			if (bt::Exists(path))
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing " << path << endl;
+				media_player->play(path);
+				curr_item = idx;
+				bool random = MediaPlayerPluginSettings::playMode() == 2;
+				QModelIndex next = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+				next_action->setEnabled(next.isValid());
+				media_view->playing(curr_item);
+			}
+		}
+	}
+
+	void MediaPlayerActivity::pause()
+	{
+		media_player->pause();
+	}
+
+	void MediaPlayerActivity::stop()
+	{
+		media_player->stop();
+	}
+
+	void MediaPlayerActivity::prev()
+	{
+		QString s = media_player->prev();
+		if (s.isNull())
+			return;
+		
+		curr_item = media_model->indexForPath(s);
+		media_view->playing(curr_item);
+	}
+
+	void MediaPlayerActivity::next()
+	{
+		bool random = MediaPlayerPluginSettings::playMode() == 2;
+		QModelIndex n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+		if (!n.isValid())
+			return;
+		
+		QString path = media_model->pathForIndex(n);
+		if (bt::Exists(path))
+		{
+			media_player->play(path);
+			curr_item = n;
+			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+			next_action->setEnabled(n.isValid());
+			media_view->playing(curr_item);
+		}
+	}
+
+	void MediaPlayerActivity::enableActions(unsigned int flags)
+	{
+		pause_action->setEnabled(flags & kt::MEDIA_PAUSE);
+		stop_action->setEnabled(flags & kt::MEDIA_STOP);
+		
+		play_action->setEnabled(false);
+		
+		QModelIndex idx = media_view->selectedItem();
+		if (idx.isValid())
+		{
+			QString path = media_model->pathForIndex(idx);
+			if (bt::Exists(path))
+				play_action->setEnabled((flags & kt::MEDIA_PLAY) || path != media_player->getCurrentSource());
+			else
+				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
+		}
+		else
+			play_action->setEnabled(flags & kt::MEDIA_PLAY);
+		
+		prev_action->setEnabled(flags & kt::MEDIA_PREV);
+		
+		action_flags = flags;
+	}
+
+	void MediaPlayerActivity::onSelectionChanged(const QModelIndex & idx)
+	{
+		if (idx.isValid())
+		{
+			QString path = media_model->pathForIndex(idx);
+			if (bt::Exists(path))
+				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || path != media_player->getCurrentSource());
+			else
+				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
+		}
+		else
+			play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
+	}
+
+	void MediaPlayerActivity::randomPlayActivated()
+	{
+		QModelIndex next = media_model->next(curr_item,true,MediaPlayerPluginSettings::skipIncomplete());
+		next_action->setEnabled(next.isValid());
+	}
+
+	void MediaPlayerActivity::aboutToFinishPlaying()
+	{
+		if (MediaPlayerPluginSettings::playMode() == 0)
+			return;
+		
+		bool random = MediaPlayerPluginSettings::playMode() == 2;
+		QModelIndex n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+		if (!n.isValid())
+			return;
+		
+		QString path = media_model->pathForIndex(n);
+		if (bt::Exists(path))
+		{
+			media_player->queue(path);
+			curr_item = n;
+			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+			next_action->setEnabled(n.isValid());
+			media_view->playing(curr_item);
+		}
+	}
+
+	void MediaPlayerActivity::closeTab()
+	{
+		if (video != tabs->currentWidget())
+			return;
+		
+		stop();
+		tabs->removePage(video);
+		video_shown = false;
+		if (show_video_action->isChecked() != video_shown)
+			show_video_action->setChecked(video_shown);
+	}
+
+	void MediaPlayerActivity::setVideoFullScreen(bool on)
+	{
+		if (!video)
+			return;
+		
+		if (on && !fullscreen_mode)
+		{
+			tabs->removePage(video);
+			video->setParent(0);
+			video->setFullScreen(true);
+			video->show();
+			fullscreen_mode = true;
+		}
+		else if (!on && fullscreen_mode)
+		{
+			video->hide();
+			video->setFullScreen(false);
+			
+			QString path = media_player->media0bject()->currentSource().fileName();
+			int idx = path.lastIndexOf(bt::DirSeparator());
+			if (idx >= 0)
+				path = path.mid(idx+1);
+			
+			idx = tabs->addTab(video,KIcon("video-x-generic"),path);
+			tabs->setTabToolTip(idx,i18n("Movie player"));
+			fullscreen_mode = false;
+		}
+	}
+}
+

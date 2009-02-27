@@ -30,15 +30,13 @@ class KAction;
 
 namespace kt
 {
-	class MediaView;
-	class MediaModel;
-	class MediaPlayer;
+	class MediaPlayerActivity;
 	class VideoWidget;
 
 	/**
 		@author
 	*/
-	class MediaPlayerPlugin : public Plugin,public CloseTabListener
+	class MediaPlayerPlugin : public Plugin
 	{
 		Q_OBJECT
 	public:
@@ -48,42 +46,9 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
+
 	private:
-		void setupActions();
-		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
-		
-	private slots:
-		void play();
-		void pause();
-		void stop();
-		void prev();
-		void next();
-		void enableActions(unsigned int flags);
-		void onSelectionChanged(const QModelIndex & idx);
-		void openVideo();
-		void closeVideo();
-		void setVideoFullScreen(bool on);
-		void onDoubleClicked(const QModelIndex & idx);
-		void randomPlayActivated();
-		void aboutToFinishPlaying();
-		void showVideo(bool on);
-		
-	private:
-		MediaView* media_view;
-		MediaModel* media_model;
-		MediaPlayer* media_player;
-		KAction* play_action;
-		KAction* pause_action;
-		KAction* stop_action;
-		KAction* prev_action;
-		KAction* next_action;
-		KAction* show_video_action;
-		int action_flags;
-		VideoWidget* video;
-		bool video_shown;
-		bool fullscreen_mode;
-		QDialog* fs_dialog;
-		QModelIndex curr_item;
+		MediaPlayerActivity* act;	
 	};
 
 }
