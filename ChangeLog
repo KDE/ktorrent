@@ -6,6 +6,8 @@ Changes in 3.3 :
 - Add i18n to scripts, so that they get translated to
 - Trackers folder becomes Trackers in tracker_groups.py (183416)
 - WebSeeds can now be disabled and enabled individually and globally
+- Redesigned GUI with kontact like sidebar to switch between activities
+- Added playlist to mediaplayer
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
