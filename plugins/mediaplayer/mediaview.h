@@ -43,7 +43,7 @@ namespace kt
 		/// Get the current selected item
 		QModelIndex selectedItem() const;
 		
-	signals:;
+	signals:
 		void doubleClicked(const QModelIndex & idx);
 
 	private:
