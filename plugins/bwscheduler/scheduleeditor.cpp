@@ -43,7 +43,7 @@ namespace kt
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		view = new WeekView(this);
 		tool_bar = new KToolBar(this);
-		
+
 		layout->addWidget(tool_bar);
 		layout->addWidget(view);
 		

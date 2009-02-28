@@ -8,6 +8,7 @@ Changes in 3.3 :
 - WebSeeds can now be disabled and enabled individually and globally
 - Redesigned GUI with kontact like sidebar to switch between activities
 - Added playlist to mediaplayer
+- Update size when activities are added or removed (185759)
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed

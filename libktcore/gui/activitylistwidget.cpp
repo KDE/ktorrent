@@ -123,11 +123,13 @@ namespace kt
 	{
 		model->addActivity(a);
 		model->sort(0,Qt::AscendingOrder);
+		updateSize();
 	}
 	
 	void ActivityListWidget::removeActivity(Activity* a)
 	{
 		model->removeActivity(a);
+		updateSize();
 	}
 	
 	QSize ActivityListWidget::sizeHint() const
