@@ -77,6 +77,7 @@ namespace kt
 	private slots:
 		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void hasVideoChanged(bool hasVideo);
+		void currentSourceChanged(Phonon::MediaSource src);
 		
 	signals:
 		/**
