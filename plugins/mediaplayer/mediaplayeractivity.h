@@ -81,7 +81,6 @@ namespace kt
 		KTabWidget* tabs;
 		int action_flags;
 		VideoWidget* video;
-		bool video_shown;
 		bool fullscreen_mode;
 		QModelIndex curr_item;
 		PlayListWidget* play_list;

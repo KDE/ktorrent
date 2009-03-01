@@ -48,7 +48,6 @@ namespace kt
 	{
 		action_flags = 0;
 		video = 0;
-		video_shown = false;
 		play_action = pause_action = stop_action = prev_action = next_action = 0;
 		
 		media_model = new MediaModel(core,this);
@@ -152,20 +151,10 @@ namespace kt
 		
 		if (video)
 		{
-			if (video_shown)
-			{
-				int idx = tabs->indexOf(video);
-				tabs->setTabText(idx,path);
-				tabs->setCurrentIndex(idx);
-				tabs->setTabBarHidden(false);
-			}
-			else
-			{
-				int idx = tabs->addTab(video,KIcon("video-x-generic"),path);
-				tabs->setTabToolTip(idx,i18n("Movie player"));
-				tabs->setCurrentIndex(idx);
-				tabs->setTabBarHidden(false);
-			}
+			int idx = tabs->indexOf(video);
+			tabs->setTabText(idx,path);
+			tabs->setCurrentIndex(idx);
+			tabs->setTabBarHidden(false);
 		}
 		else
 		{
@@ -176,9 +165,9 @@ namespace kt
 			tabs->setCurrentIndex(idx);
 			tabs->setTabBarHidden(false);
 		}
-		video_shown = true;
-		if (show_video_action->isChecked() != video_shown)
-			show_video_action->setChecked(video_shown);
+		
+		if (!show_video_action->isChecked())
+			show_video_action->setChecked(true);
 	}
 
 	void MediaPlayerActivity::closeVideo()
@@ -186,10 +175,11 @@ namespace kt
 		if (video)
 		{
 			tabs->removePage(video);
-			video_shown = false;
-			if (show_video_action->isChecked() != video_shown)
-				show_video_action->setChecked(video_shown);
+			if (show_video_action->isChecked())
+				show_video_action->setChecked(false);
 			tabs->setTabBarHidden(true);
+			video->deleteLater();
+			video = 0;
 		}
 	}
 
@@ -341,10 +331,7 @@ namespace kt
 			return;
 		
 		stop();
-		tabs->removePage(video);
-		video_shown = false;
-		if (show_video_action->isChecked() != video_shown)
-			show_video_action->setChecked(video_shown);
+		closeVideo();
 	}
 
 	void MediaPlayerActivity::setVideoFullScreen(bool on)
