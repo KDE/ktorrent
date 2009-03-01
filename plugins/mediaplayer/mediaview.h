@@ -53,7 +53,7 @@ namespace kt
 		QModelIndex selectedItem() const;
 		
 	public slots:
-		void playing(const QModelIndex & index);
+		void playing(const QString & file);
 		void stopped();
 		
 	private slots:
@@ -77,7 +77,6 @@ namespace kt
 		QComboBox* queue_mode;
 		QCheckBox* skip_incomplete;
 		QLabel* info_label;
-		unsigned int cnt;
 		QString current_file;
 	};
 

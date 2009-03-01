@@ -80,7 +80,6 @@ namespace kt
 		KAction* show_video_action;
 		int action_flags;
 		VideoWidget* video;
-		bool video_shown;
 		bool fullscreen_mode;
 		QDialog* fs_dialog;
 		QModelIndex curr_item;

@@ -56,7 +56,6 @@ namespace kt
 		action_flags = 0;
 		play_action = pause_action = stop_action = prev_action = next_action = 0;
 		video = 0;
-		video_shown = false;
 		fullscreen_mode = false;
 		fs_dialog = 0;
 	}
@@ -119,6 +118,7 @@ namespace kt
 		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
 		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
 		connect(media_player,SIGNAL(aboutToFinish()),this,SLOT(aboutToFinishPlaying()));
+		connect(media_player,SIGNAL(playing(QString)),media_view,SLOT(playing(QString)));
 		connect(media_view,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
 		connect(media_view,SIGNAL(doubleClicked(const QModelIndex&)),this,SLOT(onDoubleClicked(const QModelIndex&)));
 		connect(media_view,SIGNAL(randomModeActivated()),this,SLOT(randomPlayActivated()));
@@ -135,8 +135,6 @@ namespace kt
 			setVideoFullScreen(false);
 		
 		closeVideo();
-		delete video;
-		video = 0;
 		
 		getGUI()->removeToolWidget(media_view);
 		delete media_view;
@@ -145,7 +143,6 @@ namespace kt
 		media_model = 0;
 		delete media_player;
 		media_player = 0;
-		video_shown = false;
 	}
 	
 	bool MediaPlayerPlugin::versionCheck(const QString& version) const
@@ -165,10 +162,7 @@ namespace kt
 		
 		if (video)
 		{
-			if (video_shown)
-				getGUI()->setTabText(video,path);
-			else
-				getGUI()->addTabPage(video,"video-x-generic",path,i18n("Movie player"),this);
+			getGUI()->setTabText(video,path);
 		}
 		else
 		{
@@ -176,9 +170,9 @@ namespace kt
 			connect(video,SIGNAL(toggleFullScreen(bool)),this,SLOT(setVideoFullScreen(bool)));
 			getGUI()->addTabPage(video,"video-x-generic",path,i18n("Movie player"),this);
 		}
-		video_shown = true;
-		if (show_video_action->isChecked() != video_shown)
-			show_video_action->setChecked(video_shown);
+		
+		if (!show_video_action->isChecked())
+			show_video_action->setChecked(true);
 	}
 	
 	void MediaPlayerPlugin::closeVideo()
@@ -186,9 +180,9 @@ namespace kt
 		if (video)
 		{
 			getGUI()->removeTabPage(video);
-			video_shown = false;
-			if (show_video_action->isChecked() != video_shown)
-				show_video_action->setChecked(video_shown);
+			show_video_action->setChecked(false);
+			video->deleteLater();
+			video = 0;
 		}
 	}
 	
@@ -221,7 +215,6 @@ namespace kt
 				bool random = MediaPlayerPluginSettings::playMode() == 2;
 				QModelIndex next = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
 				next_action->setEnabled(next.isValid());
-				media_view->playing(curr_item);
 			}
 		}
 	}
@@ -243,7 +236,6 @@ namespace kt
 			return;
 		
 		curr_item = media_model->indexForPath(s);
-		media_view->playing(curr_item);
 	}
 	
 	void MediaPlayerPlugin::next()
@@ -260,7 +252,6 @@ namespace kt
 			curr_item = n;
 			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
 			next_action->setEnabled(n.isValid());
-			media_view->playing(curr_item);
 		}
 	}
 	
@@ -325,7 +316,6 @@ namespace kt
 			curr_item = n;
 			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
 			next_action->setEnabled(n.isValid());
-			media_view->playing(curr_item);
 		}
 	}
 	
@@ -335,10 +325,7 @@ namespace kt
 			return;
 		
 		stop();
-		gui->removeTabPage(video);
-		video_shown = false;
-		if (show_video_action->isChecked() != video_shown)
-			show_video_action->setChecked(video_shown);
+		closeVideo();
 	}
 	
 	void MediaPlayerPlugin::setVideoFullScreen(bool on)

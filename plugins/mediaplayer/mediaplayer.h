@@ -101,6 +101,11 @@ namespace kt
 		void stopped();
 		
 		/**
+		* Emitted when a file is being played
+		*/
+		void playing(const QString & file);
+		
+		/**
 		 * Emitted when the player is about to finish
 		 */
 		void aboutToFinish();

@@ -21,9 +21,12 @@
 #include <QHeaderView>
 #include <QVBoxLayout>
 #include <QSpacerItem>
+#include <QFile>
 #include <ktoolbar.h>
 #include <klocale.h>
 #include <util/log.h>
+#include <taglib/tag.h>
+#include <taglib/fileref.h>
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
@@ -35,7 +38,7 @@ namespace kt
 {
 
 	MediaView::MediaView(MediaPlayer* player,MediaModel* model,QWidget* parent)
-			: QWidget(parent),player(player),model(model),cnt(0)
+			: QWidget(parent),player(player),model(model)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
@@ -93,7 +96,6 @@ namespace kt
 				this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
 		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
 		connect(player,SIGNAL(stopped()),this,SLOT(stopped()));
-		connect(player->media0bject(),SIGNAL(metaDataChanged()),this,SLOT(metaDataChanged()));
 		connect(skip_incomplete,SIGNAL(toggled(bool)),this,SLOT(skipIncompleteChecked(bool)));
 		connect(queue_mode,SIGNAL(activated(int)),this,SLOT(modeActivated(int)));
 	}
@@ -122,64 +124,64 @@ namespace kt
 			return QModelIndex();
 	}
 
-	void MediaView::playing(const QModelIndex & index)
+	void MediaView::playing(const QString & file)
 	{
-		if (!index.isValid())
+		if (file.isEmpty())
+		{
 			stopped();
+		}
 		else
 		{
-			cnt++;
-			current_file = model->data(index,Qt::DisplayRole).toString();
+			current_file = file;
 			info_label->setText(i18n("Playing: <b>%1</b>",current_file));
+			metaDataChanged();
 		}
 	}
 	
 	void MediaView::stopped()
 	{
-		if (cnt > 0)
-			cnt--;
-		
-		if (cnt == 0)
-		{
-			info_label->setText(i18n("Ready to play"));
-			current_file = QString();
-		}
+		info_label->setText(i18n("Ready to play"));
+		current_file = QString();
 	}
 	
 	void MediaView::metaDataChanged()
 	{
 		QString extra_data;
-		QStringList artist = player->media0bject()->metaData(Phonon::ArtistMetaData);
-		QStringList title = player->media0bject()->metaData(Phonon::TitleMetaData);
-		QStringList album = player->media0bject()->metaData(Phonon::AlbumMetaData);
+		QByteArray encoded = QFile::encodeName(current_file);
+		TagLib::FileRef ref(encoded,true,TagLib::AudioProperties::Fast);
+		if (ref.isNull())
+			return;
 		
-		bool has_artist = artist.count() > 0 && artist[0].length() > 0;
-		bool has_title = title.count() > 0 && title[0].length() > 0;
-		bool has_album = album.count() > 0 && album[0].length() > 0;
+		TagLib::Tag* tag = ref.tag();
+		if (!tag)
+			return;
+		
+		QString artist = tag->artist().toCString(true);
+		QString title =  tag->title().toCString(true);
+		QString album = tag->album().toCString(true);
+		
+		bool has_artist = !artist.isEmpty();
+		bool has_title = !title.isEmpty();
+		bool has_album = !album.isEmpty();
 		
 		if (has_artist && has_title && has_album)
 		{
-			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b><br/>Album: <b>%3</b>",title[0],artist[0],album[0]);
+			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b><br/>Album: <b>%3</b>",title,artist,album);
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
 		}
 		else if (has_title && has_artist)
 		{
-			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b>",title[0],artist[0]);
+			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b>",title,artist);
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
 		}
 		else if (has_title)
 		{
-			extra_data = i18n("Title: <b>%1</b>",title[0]);
-		}
-		
-		if (cnt > 0)
-		{
-		/*	Uint32 secs = player->media0bject()->totalTime() / 1000;
-			QString time;
-			if (secs < 3600)
-				time = QString("%1:%2").arg(secs / 60).arg(secs % 60);
-			else
-				time = QString("%1:%2:%3").arg(secs / 3600).arg((secs % 3600) / 60).arg(secs % 60);
-		*/	
+			extra_data = i18n("Title: <b>%1</b>",title);
 			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
+		}
+		else
+		{
+			info_label->setText(i18n("Playing: <b>%1</b>",current_file));
 		}
 	}
 	

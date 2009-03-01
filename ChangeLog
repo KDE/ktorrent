@@ -7,6 +7,8 @@ Changes in 3.2.1 :
 - Use IPv6 :: (all interfaces) address to bind to when interface is not specified
 - Make sure QM can be edited when queue is paused
 - Fix bug causing network interface not to be set when server was initialized
+- Backport fix for ktorrent hogging XVideo port
+- Backport fix for displaying song information not working properly 
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
