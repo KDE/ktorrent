@@ -51,7 +51,7 @@ namespace kt
 		void updateFlags();
 		
 		///Makes line rich text according to arg level.
-		QString& getFormattedMessage(unsigned int arg, QString& line);
+		QString getFormattedMessage(unsigned int arg,const QString& line);
 		
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual int columnCount(const QModelIndex & parent) const;

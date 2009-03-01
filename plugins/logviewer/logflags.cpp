@@ -74,16 +74,14 @@ namespace kt
 		}
 	}
 	
-	QString& LogFlags::getFormattedMessage(unsigned int arg, QString& line)
+	QString LogFlags::getFormattedMessage(unsigned int arg,const QString& line)
 	{		
 		if ((arg & LOG_ALL) == LOG_ALL)
 			return line;
 		
 		if (arg & 0x04) // Debug
 		{
-			line.prepend("<font color=\"#646464\">");
-			line.append("</font>");
-			return line;
+			return QString("<font color=\"#646464\">%1</font>").arg(line);
 		}
 		
 		if (arg & 0x02) // Notice 
@@ -91,9 +89,7 @@ namespace kt
 		
 		if (arg & 0x01) // Important
 		{
-			line.prepend("<b>");
-			line.append("</b>");
-			return line;
+			return QString("<b>%1</b>").arg(line);
 		}
 			
 		return line;

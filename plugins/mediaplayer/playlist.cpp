@@ -141,6 +141,12 @@ namespace kt
 		
 		QString file = files.at(index.row());
 		const TagLib::FileRef* ref = tags.find(file);
+		if (!ref)
+		{
+			tags.insert(file,new TagLib::FileRef(QFile::encodeName(file).data(),true,TagLib::AudioProperties::Fast));
+			ref = tags.find(file);
+		}
+		
 		if (!ref || ref->isNull())
 		{
 			if (index.column() == 0)

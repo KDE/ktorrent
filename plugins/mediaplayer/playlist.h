@@ -69,7 +69,7 @@ namespace kt
 			
 	private:
 		QStringList files;
-		bt::PtrMap<QString,TagLib::FileRef> tags;
+		mutable bt::PtrMap<QString,TagLib::FileRef> tags;
 		mutable QList<int> dragged_rows;
 	};
 }
