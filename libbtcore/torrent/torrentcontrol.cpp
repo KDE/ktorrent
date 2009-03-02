@@ -441,10 +441,13 @@ namespace bt
 		// stop preallocation thread if necesarry
 		if (prealloc_thread)
 		{
+			disconnect(prealloc_thread,SIGNAL(finished()),this,SLOT(preallocThreadDone()));
 			prealloc_thread->stop();
 			prealloc_thread->wait();
 			if (prealloc_thread->errorHappened() || prealloc_thread->isNotFinished())
 				saveStats(); // save stats, so that we will start preallocating the next time
+			prealloc_thread->deleteLater();
+			prealloc_thread = 0;
 		}
 	
 		if (stats.running)
@@ -1918,6 +1921,9 @@ namespace bt
 	
 	void TorrentControl::preallocThreadDone()
 	{
+		if (!prealloc_thread)
+			return;
+		
 		// thread done
 		if (prealloc_thread->errorHappened())
 		{
