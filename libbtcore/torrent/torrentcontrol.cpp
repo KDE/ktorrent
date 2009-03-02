@@ -1464,7 +1464,7 @@ namespace bt
 			case ALLOCATING_DISKSPACE:
 				return i18n("Allocating diskspace");
 			case QUEUED:
-				return i18n("Queued");
+				return stats.completed ? i18n("Queued for seeding") : i18n("Queued for downloading");
 			case CHECKING_DATA:
 				return i18n("Checking data");
 			case NO_SPACE_LEFT:
