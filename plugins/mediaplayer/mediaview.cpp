@@ -148,7 +148,7 @@ namespace kt
 	{
 		QString extra_data;
 		QByteArray encoded = QFile::encodeName(current_file);
-		TagLib::FileRef ref(encoded,true,TagLib::AudioProperties::Fast);
+		TagLib::FileRef ref(encoded.data(),true,TagLib::AudioProperties::Fast);
 		if (ref.isNull())
 			return;
 		

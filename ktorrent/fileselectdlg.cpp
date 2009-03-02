@@ -56,7 +56,7 @@ namespace kt
 		connect(m_collapse_all,SIGNAL(clicked()),m_file_view,SLOT(collapseAll()));
 		connect(m_expand_all,SIGNAL(clicked()),m_file_view,SLOT(expandAll()));
 		
-		m_downloadLocation->setMode(KFile::File|KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
+		m_downloadLocation->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
 		
 		encodings = QTextCodec::availableMibs();
 		foreach (int mib,encodings)
