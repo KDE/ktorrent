@@ -11,6 +11,7 @@ Changes in 3.3 :
 - Update size when activities are added or removed (185759)
 - Destroy VideoWidget completely when video is closed, to prevent ktorrent from hogging XVideo port (185846)
 - Status queued can now result in status strings "Queued for downloading" or "Queued for seeding" (181096)
+- Make logviewer widget position configurable
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed

@@ -7,85 +7,15 @@
 	<kcfgfile name="ktlogviewerpluginrc"/>
 	<group name="general">
 	
-		<entry name = "useRichText" type ="Bool">
+		<entry name="useRichText" type="Bool">
 			<label>Use rich log text</label>
 			<default>true</default>
 		</entry>
 		
-		<entry name="sysGEN" type="UInt">
-			<label>General info messages flag</label>
+		<entry name="logWidgetPosition" type="Int">
 			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysCON" type="UInt">
-			<label>Connections messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysDHT" type="UInt">
-			<label>DHT messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysTRK" type="UInt">
-			<label>Tracker info messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysDIO" type="UInt">
-			<label>Disk IO info messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysIPF" type="UInt">
-			<label>IPFilter plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysSRC" type="UInt">
-			<label>Search plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysMPL" type="UInt">
-			<label>Media player plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysINW" type="UInt">
-			<label>InfoWidget plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysPNP" type="UInt">
-			<label>UPnP plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysSNF" type="UInt">
-			<label>ScanFolder plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysSCD" type="UInt">
-			<label>Scheduler plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysBTF" type="UInt">
-			<label>BitFinder plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysWEB" type="UInt">
-			<label>WebInterface plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
-		</entry>
-		<entry name="sysZCO" type="UInt">
-			<label>Zeroconf plugin messages flag</label>
-			<default>0</default>
-			<max>4</max>
+			<min>0</min>
+			<max>2</max>
 		</entry>
 	</group>
 </kcfg>

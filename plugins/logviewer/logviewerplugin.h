@@ -23,6 +23,7 @@
 #include <interfaces/plugin.h>
 #include <interfaces/activity.h>
 
+class QDockWidget;
 
 namespace kt
 {
@@ -30,6 +31,13 @@ namespace kt
 	class LogPrefPage;
 	class LogFlags;
 
+	enum LogViewerPosition
+	{
+		SEPARATE_ACTIVITY = 0,
+		DOCKABLE_WIDGET = 1,
+		TORRENT_ACTIVITY = 2
+	};
+	
 	/**
 	 * @author Joris Guisson
 	*/
@@ -43,13 +51,20 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
+		
 	private slots:
 		void applySettings();
+		
+	private:
+		void addLogViewerToGUI();
+		void removeLogViewerFromGUI();
 
 	private:
 		LogViewer* lv;
 		LogPrefPage* pref;
 		LogFlags* flags;
+		LogViewerPosition pos;
+		QDockWidget* dock;
 	};
 
 }

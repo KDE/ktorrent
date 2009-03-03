@@ -5,11 +5,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
-    <height>287</height>
+    <width>456</width>
+    <height>394</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
    <item>
     <widget class="QTreeView" name="m_logging_flags" >
      <property name="toolTip" >
@@ -38,7 +38,7 @@ p, li { white-space: pre-wrap; }
      <property name="title" >
       <string>Options</string>
      </property>
-     <layout class="QHBoxLayout" >
+     <layout class="QVBoxLayout" name="verticalLayout" >
       <item>
        <widget class="QCheckBox" name="kcfg_useRichText" >
         <property name="toolTip" >
@@ -48,6 +48,55 @@ p, li { white-space: pre-wrap; }
          <string>Use rich text for logging output</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout" >
+        <item>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>Log widget position:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="kcfg_logWidgetPosition" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <item>
+           <property name="text" >
+            <string>Separate activity</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Dockable widget</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Torrent activity</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer" >
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
