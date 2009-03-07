@@ -20,17 +20,37 @@
 #include <kjob.h>
 #include <kgenericfactory.h>
 #include <kworkspace.h>
+#include <ktoggleaction.h>
+#include <kactioncollection.h>
+#include <kmessagebox.h>
 #include <solid/control/powermanager.h>
+#include <util/log.h>
+#include <interfaces/functions.h>
 #include "shutdownplugin.h"
 #include "screensaver_interface.h"
+#include "shutdowndlg.h"
+#include "shutdownruleset.h"
 
 K_EXPORT_COMPONENT_FACTORY(ktshutdownplugin,KGenericFactory<kt::ShutdownPlugin>("ktshutdownplugin"))
+
+using namespace bt;
 
 namespace kt
 {
 	ShutdownPlugin::ShutdownPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
 	{
 		Q_UNUSED(args);
+		
+		KActionCollection* ac = actionCollection();
+		shutdown_enabled = new KToggleAction(KIcon("system-shutdown"),i18n("Shutdown Enabled"),this);
+		connect(shutdown_enabled,SIGNAL(toggled(bool)),this,SLOT(shutdownToggled(bool)));
+		ac->addAction("shutdown_enabled",shutdown_enabled);
+		
+		configure_shutdown = new KAction(KIcon("preferences-other"),i18n("Configure Shutdown"),this);
+		connect(configure_shutdown,SIGNAL(triggered()),this,SLOT(configureShutdown()));
+		ac->addAction("shutdown_settings",configure_shutdown);
+		
+		setXMLFile("ktshutdownpluginui.rc");
 	}
 	
 	ShutdownPlugin::~ShutdownPlugin()
@@ -44,19 +64,34 @@ namespace kt
 
 	void ShutdownPlugin::unload() 
 	{
+		rules->save(kt::DataDir() + "shutdown_rules");
+		delete rules;
+		rules = 0;
 	}
 
 	void ShutdownPlugin::load() 
 	{
+		rules = new ShutdownRuleSet(getCore(),this);
+		rules->load(kt::DataDir() + "shutdown_rules");
+		if (rules->enabled())
+			shutdown_enabled->setChecked(true);
+		connect(rules,SIGNAL(shutdown()),this,SLOT(shutdownComputer()));
+		connect(rules,SIGNAL(lock()),this,SLOT(lock()));
+		connect(rules,SIGNAL(standby()),this,SLOT(standby()));
+		connect(rules,SIGNAL(suspendToDisk()),this,SLOT(suspendToDisk()));
+		connect(rules,SIGNAL(suspendToRAM()),this,SLOT(suspendToRam()));
+		updateAction();
 	}
 	
 	void ShutdownPlugin::shutdownComputer() 
 	{
-		KWorkSpace::requestShutDown(KWorkSpace::ShutdownConfirmNo,KWorkSpace::ShutdownTypeHalt);
+		Out(SYS_GEN|LOG_NOTICE) << "Shutting down computer ..." << endl;
+		KWorkSpace::requestShutDown(KWorkSpace::ShutdownConfirmYes,KWorkSpace::ShutdownTypeHalt);
 	}
 	
 	void ShutdownPlugin::lock() 
 	{
+		Out(SYS_GEN|LOG_NOTICE) << "Locking screen ..." << endl;
 		QString interface("org.freedesktop.ScreenSaver");
 		org::freedesktop::ScreenSaver screensaver(interface, "/ScreenSaver",QDBusConnection::sessionBus());
 		screensaver.Lock();
@@ -64,6 +99,7 @@ namespace kt
 	
 	void ShutdownPlugin::suspendToDisk() 
 	{
+		Out(SYS_GEN|LOG_NOTICE) << "Suspending to disk ..." << endl;
 		Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::ToDisk;
 		KJob *job = Solid::Control::PowerManager::suspend(spdMethod);
 		if (job != 0)
@@ -72,6 +108,7 @@ namespace kt
 
 	void ShutdownPlugin::suspendToRam() 
 	{
+		Out(SYS_GEN|LOG_NOTICE) << "Suspending to RAM ..." << endl;
 		Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::ToRam;
 		KJob *job = Solid::Control::PowerManager::suspend(spdMethod);
 		if (job != 0)
@@ -80,12 +117,53 @@ namespace kt
 	
 	void ShutdownPlugin::standby() 
 	{
+		Out(SYS_GEN|LOG_NOTICE) << "Suspending to standby ..." << endl;
 		Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::Standby;
 		KJob *job = Solid::Control::PowerManager::suspend(spdMethod);
 		if (job != 0)
 			job->start();
 	}
 
+	void ShutdownPlugin::shutdownToggled(bool on) 
+	{
+		rules->setEnabled(on);
+	}
 
+	void ShutdownPlugin::configureShutdown() 
+	{
+		ShutdownDlg dlg(rules,getCore(),0);
+		if (dlg.exec() == QDialog::Accepted)
+		{
+			rules->save(kt::DataDir() + "shutdown_rules");
+			updateAction();
+		}
+	}
+	
+	void ShutdownPlugin::updateAction() 
+	{
+		switch (rules->currentAction())
+		{
+			case SHUTDOWN:
+				shutdown_enabled->setIcon(KIcon("system-shutdown"));
+				shutdown_enabled->setText(i18n("Shutdown"));
+				break;
+			case LOCK:
+				shutdown_enabled->setIcon(KIcon("system-lock-screen"));
+				shutdown_enabled->setText(i18n("Lock"));
+				break;
+			case STANDBY:
+				shutdown_enabled->setIcon(KIcon("system-suspend"));
+				shutdown_enabled->setText(i18n("Standby"));
+				break;
+			case SUSPEND_TO_RAM:
+				shutdown_enabled->setIcon(KIcon("system-suspend"));
+				shutdown_enabled->setText(i18n("Sleep (suspend to RAM)"));
+				break;
+			case SUSPEND_TO_DISK:
+				shutdown_enabled->setIcon(KIcon("system-suspend-hibernate"));
+				shutdown_enabled->setText(i18n("Hibernate (suspend to disk)"));
+				break;
+		}
+	}
 
 }

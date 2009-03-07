@@ -17,48 +17,41 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+#ifndef KT_SHUTDOWNDLG_H
+#define KT_SHUTDOWNDLG_H
 
+#include <kdialog.h>
+#include "ui_shutdowndlg.h"
+#include "shutdownruleset.h"
 
-#ifndef KT_SHUTDOWNPLUGIN_H
-#define KT_SHUTDOWNPLUGIN_H
-
-#include <interfaces/plugin.h>
-
-class KToggleAction;
-
-namespace kt 
+namespace kt
 {
-	class ShutdownRuleSet;
-	
-	class ShutdownPlugin : public kt::Plugin
+	class CoreInterface;
+	class ShutdownTorrentModel;
+
+
+	class ShutdownDlg : public KDialog,public Ui_ShutdownDlg
 	{
 		Q_OBJECT
 	public:
-		ShutdownPlugin(QObject* parent,const QStringList& args);
-		virtual ~ShutdownPlugin();
+		ShutdownDlg(ShutdownRuleSet* rules,CoreInterface* core,QWidget* parent);
+		virtual ~ShutdownDlg();
 		
-		virtual bool versionCheck(const QString& version) const;
-		virtual void unload();
-		virtual void load();
-		
-	public slots:
-		void shutdownComputer();
-		void lock();
-		void standby();
-		void suspendToDisk();
-		void suspendToRam();
+		virtual void accept();
+		virtual void reject();
 		
 	private slots:
-		void shutdownToggled(bool on);
-		void configureShutdown();
-		void updateAction();
+		void timeToExecuteChanged(int idx);
 		
 	private:
-		KToggleAction* shutdown_enabled;
-		KAction* configure_shutdown;
+		Action indexToAction(int idx);
+		int actionToIndex(Action act);
+		
+	private:
 		ShutdownRuleSet* rules;
+		ShutdownTorrentModel* model;
 	};
 
 }
 
-#endif // KT_SHUTDOWNPLUGIN_H
+#endif // KT_SHUTDOWNDLG_H

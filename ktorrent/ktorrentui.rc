@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="ktorrent" version="14">
+<kpartgui name="ktorrent" version="15">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
 	  <Action name="file_new"/>
@@ -27,6 +27,7 @@
 	<Separator/>
 	<Action name="speed_limits"/>
   </Menu>
+  <Merge/>
 </MenuBar>
 
 <Menu name="GroupsMenu"><text>GroupsMenu</text>
