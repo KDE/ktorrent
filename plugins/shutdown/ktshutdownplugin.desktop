@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Shutdown
+Comment=Allows you to shutdown your computer when torrents finish
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktshutdownplugin
+X-KDE-PluginInfo-Author=Joris Guisson
+X-KDE-PluginInfo-Email=joris.guisson@gmail.com
+X-KDE-PluginInfo-Name=ShutdownPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+Icon=system-shutdown
