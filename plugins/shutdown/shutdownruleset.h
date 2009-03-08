@@ -47,7 +47,7 @@ namespace kt
 		LOCK,
 		STANDBY,
 		SUSPEND_TO_DISK,
-		SUSPEND_TO_RAM,
+		SUSPEND_TO_RAM
 	};
 	
 	struct ShutdownRule
