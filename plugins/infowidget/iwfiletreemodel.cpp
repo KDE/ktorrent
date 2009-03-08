@@ -37,11 +37,11 @@ namespace kt
 	IWFileTreeModel::IWFileTreeModel(bt::TorrentInterface* tc,QObject* parent)
 			: TorrentFileTreeModel(tc,KEEP_FILES,parent)
 	{
-		mmfile = IsMultimediaFile(tc->getStats().output_path);
+		mmfile = tc ? IsMultimediaFile(tc->getStats().output_path) : 0;
 		preview = false;
 		percentage = 0;
 
-		if (root)
+		if (root && tc)
 		{
 			BitSet d = tc->downloadedChunksBitSet();
 			d -= tc->onlySeedChunksBitSet();
@@ -53,6 +53,22 @@ namespace kt
 	IWFileTreeModel::~IWFileTreeModel()
 	{
 	}
+	
+	void IWFileTreeModel::changeTorrent(bt::TorrentInterface* tc) 
+	{
+		kt::TorrentFileTreeModel::changeTorrent(tc);
+		mmfile = tc ? IsMultimediaFile(tc->getStats().output_path) : 0;
+		preview = false;
+		percentage = 0;
+		
+		if (root && tc)
+		{
+			BitSet d = tc->downloadedChunksBitSet();
+			d -= tc->onlySeedChunksBitSet();
+			root->initPercentage(tc,d);
+		}
+	}
+
 
 	int IWFileTreeModel::columnCount(const QModelIndex & /*parent*/) const
 	{
@@ -97,7 +113,7 @@ namespace kt
 		if (index.column() < 2 && role != Qt::ForegroundRole)
 			return TorrentFileTreeModel::data(index,role);
 		
-		if (!index.isValid() || !(n = (Node*)index.internalPointer()))
+		if (!tc || !index.isValid() || !(n = (Node*)index.internalPointer()))
 			return QVariant();
 		
 		if (role == Qt::ForegroundRole && index.column() == 2 && tc->getStats().multi_file_torrent && n->file)
@@ -236,7 +252,7 @@ namespace kt
 		if (role == Qt::CheckStateRole)
 			return TorrentFileTreeModel::setData(index,value,role);
 		
-		if (!index.isValid() || role != Qt::UserRole)
+		if (!tc || !index.isValid() || role != Qt::UserRole)
 			return false;
 	
 		Node* n = static_cast<Node*>(index.internalPointer());
@@ -273,17 +289,22 @@ namespace kt
 	void IWFileTreeModel::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
 	{
 		Q_UNUSED(percentage);
-		update(index(0,0,QModelIndex()),file,4);
+		if (tc)
+			update(index(0,0,QModelIndex()),file,4);
 	}
 	
 	void IWFileTreeModel::filePreviewChanged(bt::TorrentFileInterface* file,bool preview)
 	{
 		Q_UNUSED(preview);
-		update(index(0,0,QModelIndex()),file,3);
+		if (tc)
+			update(index(0,0,QModelIndex()),file,3);
 	}
 	
 	void IWFileTreeModel::update(const QModelIndex & idx,bt::TorrentFileInterface* file,int col)
 	{
+		if (!tc)
+			return;
+		
 		Node* n = (Node*)idx.internalPointer();
 		if (n->file && n->file == file)
 		{
@@ -321,6 +342,9 @@ namespace kt
 	
 	void IWFileTreeModel::update()
 	{
+		if (!tc)
+			return;
+		
 		if (!tc->getStats().multi_file_torrent)
 		{
 			bool changed = false;

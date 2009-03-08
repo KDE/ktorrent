@@ -47,7 +47,7 @@ namespace kt
 		FileView(QWidget *parent);
 		virtual ~FileView();
 
-		void changeTC(bt::TorrentInterface* tc,KSharedConfigPtr cfg);
+		void changeTC(bt::TorrentInterface* tc);
 		void setShowListOfFiles(bool on,KSharedConfigPtr cfg);
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);

@@ -39,6 +39,7 @@ namespace kt
 		IWFileTreeModel(bt::TorrentInterface* tc,QObject* parent);
 		virtual ~IWFileTreeModel();
 
+		virtual void changeTorrent(bt::TorrentInterface* tc);
 		virtual int columnCount(const QModelIndex & parent) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
 		virtual QVariant data(const QModelIndex & index, int role) const;

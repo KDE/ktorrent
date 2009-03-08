@@ -43,9 +43,16 @@ namespace kt
 	TorrentFileListModel::~TorrentFileListModel()
 	{}
 	
+	void TorrentFileListModel::changeTorrent(bt::TorrentInterface* tc) 
+	{
+		this->tc = tc;
+		reset();
+	}
+
+	
 	int TorrentFileListModel::rowCount(const QModelIndex & parent) const
 	{	
-		if (!parent.isValid())
+		if (tc && !parent.isValid())
 			return tc->getStats().multi_file_torrent ? tc->getNumFiles() : 1;
 		else
 			return 0;
@@ -75,7 +82,7 @@ namespace kt
 	
 	QVariant TorrentFileListModel::data(const QModelIndex & index, int role) const
 	{
-		if (!index.isValid())
+		if (!index.isValid() || !tc)
 			return QVariant();
 			
 			
@@ -145,7 +152,7 @@ namespace kt
 	
 	QModelIndex TorrentFileListModel::index(int row,int column,const QModelIndex & parent) const
 	{
-		if (!hasIndex(row, column, parent))
+		if (!tc || !hasIndex(row, column, parent))
 			return QModelIndex();
 		else
 		{
@@ -156,7 +163,7 @@ namespace kt
 	
 	bool TorrentFileListModel::setData(const QModelIndex & index, const QVariant & value, int role) 
 	{
-		if (!index.isValid())
+		if (!tc || !index.isValid())
 			return false;
 		
 		if (role == Qt::CheckStateRole)
@@ -207,7 +214,7 @@ namespace kt
 
 	void TorrentFileListModel::checkAll()
 	{
-		if (tc->getStats().multi_file_torrent)
+		if (tc && tc->getStats().multi_file_torrent)
 		{
 			for (Uint32 i = 0;i < tc->getNumFiles();i++)
 				setData(index(i,0,QModelIndex()),Qt::Checked,Qt::CheckStateRole);
@@ -216,7 +223,7 @@ namespace kt
 
 	void TorrentFileListModel::uncheckAll()
 	{
-		if (tc->getStats().multi_file_torrent)
+		if (tc && tc->getStats().multi_file_torrent)
 		{
 			for (Uint32 i = 0;i < tc->getNumFiles();i++)
 				setData(index(i,0,QModelIndex()),Qt::Unchecked,Qt::CheckStateRole);
@@ -225,7 +232,7 @@ namespace kt
 
 	void TorrentFileListModel::invertCheck()
 	{
-		if (!tc->getStats().multi_file_torrent)
+		if (!tc || !tc->getStats().multi_file_torrent)
 			return;
 
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
@@ -234,6 +241,9 @@ namespace kt
 
 	void TorrentFileListModel::invertCheck(const QModelIndex & idx)
 	{
+		if (!tc)
+			return;
+		
 		if (tc->getTorrentFile(idx.row()).doNotDownload())
 			setData(idx,Qt::Checked,Qt::CheckStateRole);
 		else
@@ -242,6 +252,9 @@ namespace kt
 
 	bt::Uint64 TorrentFileListModel::bytesToDownload()
 	{
+		if (!tc)
+			return 0;
+		
 		if (tc->getStats().multi_file_torrent)
 		{
 			bt::Uint64 ret = 0;
@@ -259,7 +272,7 @@ namespace kt
 
 	bt::TorrentFileInterface* TorrentFileListModel::indexToFile(const QModelIndex & idx)
 	{
-		if (!idx.isValid())
+		if (!tc || !idx.isValid())
 			return 0;
 		
 		int r = idx.row();
@@ -271,7 +284,7 @@ namespace kt
 	
 	QString TorrentFileListModel::dirPath(const QModelIndex & idx)
 	{
-		if (!idx.isValid())
+		if (!tc || !idx.isValid())
 			return QString();
 		
 		int r = idx.row();
@@ -283,7 +296,7 @@ namespace kt
 	
 	void TorrentFileListModel::changePriority(const QModelIndexList & indexes,bt::Priority newpriority)
 	{
-		foreach (const QModelIndex &idx,indexes)
+		foreach (const QModelIndex & idx,indexes)
 		{
 			setData(idx,newpriority,Qt::UserRole);
 		}
