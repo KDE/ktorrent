@@ -312,10 +312,13 @@ namespace kt
 	TorrentFileTreeModel::TorrentFileTreeModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent) 
 	: TorrentFileModel(tc,mode,parent),root(0),emit_check_state_change(true)
 	{
-		if (tc->getStats().multi_file_torrent)
-			constructTree();
-		else
-			root = new Node(0,tc->getStats().torrent_name,tc->getStats().total_chunks);
+		if (tc)
+		{
+			if (tc->getStats().multi_file_torrent)
+				constructTree();
+			else
+				root = new Node(0,tc->getStats().torrent_name,tc->getStats().total_chunks);
+		}
 	}
 
 
@@ -323,6 +326,22 @@ namespace kt
 	{
 		delete root;
 	}
+	
+	void TorrentFileTreeModel::changeTorrent(bt::TorrentInterface* tc) 
+	{
+		this->tc = tc;
+		delete root;
+		root = 0;
+		if (tc)
+		{
+			if (tc->getStats().multi_file_torrent)
+				constructTree();
+			else
+				root = new Node(0,tc->getStats().torrent_name,tc->getStats().total_chunks);
+		}
+		reset();
+	}
+
 	
 	void TorrentFileTreeModel::constructTree()
 	{
@@ -346,7 +365,10 @@ namespace kt
 	}
 
 	int TorrentFileTreeModel::rowCount(const QModelIndex & parent) const
-	{	
+	{
+		if (!tc)
+			return 0;
+		
 		if (!parent.isValid())
 		{
 			return 1;
@@ -382,7 +404,7 @@ namespace kt
 	
 	QVariant TorrentFileTreeModel::data(const QModelIndex & index, int role) const
 	{
-		if (!index.isValid())
+		if (!tc || !index.isValid())
 			return QVariant();
 			
 		Node* n = (Node*)index.internalPointer();
@@ -435,7 +457,7 @@ namespace kt
 	
 	QModelIndex TorrentFileTreeModel::parent(const QModelIndex & index) const
 	{
-		if (!index.isValid())
+		if (!tc || !index.isValid())
 			return QModelIndex();
 
 		Node* child = static_cast<Node*>(index.internalPointer());
@@ -451,7 +473,7 @@ namespace kt
 	
 	QModelIndex TorrentFileTreeModel::index(int row,int column,const QModelIndex & parent) const
 	{
-		if (!hasIndex(row, column, parent))
+		if (!tc || !hasIndex(row, column, parent))
 			return QModelIndex();
 
 		Node* p = 0;
@@ -471,6 +493,9 @@ namespace kt
 	
 	bool TorrentFileTreeModel::setCheckState(const QModelIndex & index, Qt::CheckState state)
 	{
+		if (!tc)
+			return false;
+		
 		Node* n = static_cast<Node*>(index.internalPointer());
 		if (!n)
 			return false;
@@ -524,6 +549,9 @@ namespace kt
 	
 	void TorrentFileTreeModel::modifyPathOfFiles(Node* n,const QString & path)
 	{
+		if (!tc)
+			return;
+		
 		for (int i = 0;i < n->children.count();i++)
 		{
 			Node* c = n->children.at(i);
@@ -536,6 +564,9 @@ namespace kt
 	
 	bool TorrentFileTreeModel::setName(const QModelIndex & index,const QString & name)
 	{
+		if (!tc)
+			return false;
+		
 		Node* n = static_cast<Node*>(index.internalPointer());
 		if (!n || name.isEmpty() || name.contains(bt::DirSeparator()))
 			return false;
@@ -575,7 +606,7 @@ namespace kt
 	
 	bool TorrentFileTreeModel::setData(const QModelIndex & index, const QVariant & value, int role) 
 	{
-		if (!index.isValid())
+		if (!tc || !index.isValid())
 			return false;
 		
 		if (role == Qt::CheckStateRole)
@@ -588,19 +619,19 @@ namespace kt
 	
 	void TorrentFileTreeModel::checkAll()
 	{
-		if (tc->getStats().multi_file_torrent)
+		if (tc && tc->getStats().multi_file_torrent)
 			setData(index(0,0,QModelIndex()),Qt::Checked,Qt::CheckStateRole);
 	}
 		
 	void TorrentFileTreeModel::uncheckAll()
 	{
-		if (tc->getStats().multi_file_torrent)
+		if (tc && tc->getStats().multi_file_torrent)
 			setData(index(0,0,QModelIndex()),Qt::Unchecked,Qt::CheckStateRole);
 	}
 	
 	void TorrentFileTreeModel::invertCheck()
 	{
-		if (!tc->getStats().multi_file_torrent)
+		if (!tc || !tc->getStats().multi_file_torrent)
 			return;
 		
 		invertCheck(index(0,0,QModelIndex()));
@@ -608,6 +639,9 @@ namespace kt
 	
 	void TorrentFileTreeModel::invertCheck(const QModelIndex & idx)
 	{
+		if (!tc)
+			return;
+		
 		Node* n = static_cast<Node*>(idx.internalPointer());
 		if (!n)
 			return;
@@ -631,6 +665,9 @@ namespace kt
 	
 	bt::Uint64 TorrentFileTreeModel::bytesToDownload()
 	{
+		if (!tc)
+			return 0;
+		
 		if (tc->getStats().multi_file_torrent)
 			return root->bytesToDownload(tc);
 		else
@@ -639,7 +676,7 @@ namespace kt
 	
 	QByteArray TorrentFileTreeModel::saveExpandedState(QSortFilterProxyModel* pm,QTreeView* tv)
 	{
-		if (!tc->getStats().multi_file_torrent)
+		if (!tc || !tc->getStats().multi_file_torrent)
 			return QByteArray();
 		
 		QByteArray data;
@@ -653,7 +690,7 @@ namespace kt
 		
 	void TorrentFileTreeModel::loadExpandedState(QSortFilterProxyModel* pm,QTreeView* tv,const QByteArray & state)
 	{
-		if (!tc->getStats().multi_file_torrent)
+		if (!tc || !tc->getStats().multi_file_torrent)
 			return;
 		
 		BDecoder dec(state,false,0);
@@ -667,7 +704,7 @@ namespace kt
 	
 	bt::TorrentFileInterface* TorrentFileTreeModel::indexToFile(const QModelIndex & idx)
 	{
-		if (!idx.isValid())
+		if (!tc || !idx.isValid())
 			return 0;
 		
 		Node* n = (Node*)idx.internalPointer();
@@ -679,7 +716,7 @@ namespace kt
 	
 	QString TorrentFileTreeModel::dirPath(const QModelIndex & idx)
 	{
-		if (!idx.isValid())
+		if (!tc || !idx.isValid())
 			return QString();
 		
 		Node* n = (Node*)idx.internalPointer();
@@ -699,6 +736,9 @@ namespace kt
 	
 	void TorrentFileTreeModel::changePriority(const QModelIndexList & indexes,bt::Priority newpriority)
 	{
+		if (!tc)
+			return;
+		
 		foreach (const QModelIndex &idx,indexes)
 		{
 			Node* n = (Node*)idx.internalPointer();

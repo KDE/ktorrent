@@ -72,7 +72,7 @@ namespace kt
 		
 		status_tab = new StatusTab(0);
 		file_view = new FileView(0);
-		
+		file_view->loadState(KGlobal::config());
 		connect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),file_view,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 
 		pref = new IWPrefPage(0);
@@ -161,7 +161,7 @@ namespace kt
 		if (status_tab)
 			status_tab->changeTC(tc);
 		if (file_view)
-			file_view->changeTC(tc,KGlobal::config());
+			file_view->changeTC(tc);
 		if (cd_view)
 			cd_view->changeTC(tc);
 		if (tracker_view)

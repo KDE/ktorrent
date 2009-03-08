@@ -37,7 +37,7 @@ namespace kt
 	IWFileListModel::IWFileListModel(bt::TorrentInterface* tc,QObject* parent)
 			: TorrentFileListModel(tc,KEEP_FILES,parent)
 	{
-		mmfile = IsMultimediaFile(tc->getStats().output_path);
+		mmfile = tc ? IsMultimediaFile(tc->getStats().output_path) : 0;
 		preview = false;
 		percentage = 0;
 	}
@@ -46,6 +46,15 @@ namespace kt
 	IWFileListModel::~IWFileListModel()
 	{
 	}
+	
+	void IWFileListModel::changeTorrent(bt::TorrentInterface* tc) 
+	{
+		kt::TorrentFileListModel::changeTorrent(tc);
+		mmfile = tc ? IsMultimediaFile(tc->getStats().output_path) : 0;
+		preview = false;
+		percentage = 0;
+	}
+
 
 	int IWFileListModel::columnCount(const QModelIndex & parent) const
 	{
@@ -78,7 +87,7 @@ namespace kt
 		switch(file->getPriority())
 		{
 			case FIRST_PRIORITY: return i18nc("Download first", "First");
-			case LAST_PRIORITY:	return i18nc("Download last", "Last");
+			case LAST_PRIORITY: return i18nc("Download last", "Last");
 			case ONLY_SEED_PRIORITY: 
 			case EXCLUDED: 
 			case PREVIEW_PRIORITY: 
@@ -92,7 +101,7 @@ namespace kt
 		if (index.column() < 2 && role != Qt::ForegroundRole)
 			return TorrentFileListModel::data(index,role);
 		
-		if (!index.isValid() || index.row() < 0 || index.row() >= rowCount(QModelIndex()))
+		if (!tc || !index.isValid() || index.row() < 0 || index.row() >= rowCount(QModelIndex()))
 			return QVariant();
 		
 		if (role == Qt::ForegroundRole && index.column() == 2 && tc->getStats().multi_file_torrent)
@@ -224,7 +233,7 @@ namespace kt
 		if (role == Qt::CheckStateRole)
 			return TorrentFileListModel::setData(index,value,role);
 		
-		if (!index.isValid() || role != Qt::UserRole)
+		if (!tc || !index.isValid() || role != Qt::UserRole)
 			return false;
 	
 		int r = index.row();
@@ -247,6 +256,9 @@ namespace kt
 	void IWFileListModel::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
 	{
 		Q_UNUSED(percentage);
+		if (!tc)
+			return;
+		
 		QModelIndex idx = createIndex(file->getIndex(),4,file);
 		emit dataChanged(idx,idx);
 	}
@@ -254,12 +266,18 @@ namespace kt
 	void IWFileListModel::filePreviewChanged(bt::TorrentFileInterface* file,bool preview)
 	{
 		Q_UNUSED(preview);
+		if (!tc)
+			return;
+		
 		QModelIndex idx = createIndex(file->getIndex(),3,file);
 		emit dataChanged(idx,idx);
 	}
 
 	void IWFileListModel::update()
 	{
+		if (!tc)
+			return;
+		
 		if (!tc->getStats().multi_file_torrent)
 		{
 			bool changed = false;

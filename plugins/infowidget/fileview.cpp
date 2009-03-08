@@ -61,6 +61,11 @@ namespace kt
 		
 		proxy_model = new QSortFilterProxyModel(this);
 		proxy_model->setSortRole(Qt::UserRole);
+		if (show_list_of_files)
+			model = new IWFileListModel(0,this);
+		else 
+			model = new IWFileTreeModel(0,this);
+		proxy_model->setSourceModel(model);
 		setModel(proxy_model);
 		
 		context_menu = new KMenu(this);
@@ -92,45 +97,28 @@ namespace kt
 	FileView::~FileView()
 	{}
 
-	void FileView::changeTC(bt::TorrentInterface* tc,KSharedConfigPtr cfg)
+	void FileView::changeTC(bt::TorrentInterface* tc)
 	{
 		if (tc == curr_tc)
 			return;
 	
-		if (model)
-		{
-			saveState(cfg);
-			if (curr_tc)
-				expanded_state_map[curr_tc] = model->saveExpandedState(proxy_model,this);
-		}
-		proxy_model->setSourceModel(0);
-		delete model;
-		model = 0;
+		if (curr_tc)
+			expanded_state_map[curr_tc] = model->saveExpandedState(proxy_model,this);
+		
 		curr_tc = tc;
 		setEnabled(tc != 0);
+		model->changeTorrent(tc);
 		if (tc)
 		{
 			connect(tc,SIGNAL(missingFilesMarkedDND( bt::TorrentInterface* )),
 					this,SLOT(onMissingFileMarkedDND(bt::TorrentInterface*)));
 			
-			if (show_list_of_files)
-				model = new IWFileListModel(tc,this);
-			else 
-				model = new IWFileTreeModel(tc,this);
-			
-			proxy_model->setSourceModel(model);
 			setRootIsDecorated(tc->getStats().multi_file_torrent);
-			loadState(cfg);
 			QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(tc);
 			if (i != expanded_state_map.end())
 				model->loadExpandedState(proxy_model,this,i.value());
 			else
 				expandAll();
-		}
-		else
-		{
-			proxy_model->setSourceModel(0);
-			model = 0;
 		}
 	}
 	

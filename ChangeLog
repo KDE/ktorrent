@@ -26,6 +26,7 @@ Changes in 3.2.1 :
 - Backport fix for ktorrent hogging XVideo port
 - Backport fix for displaying song information not working properly 
 - Fix bug causing url requester in fileselect dialog not to allow you to select directories on windows (185739)
+- Don't throw away model of FileView, when switching torrents (186031)
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)

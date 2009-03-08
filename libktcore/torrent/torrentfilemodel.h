@@ -48,6 +48,10 @@ namespace kt
 		TorrentFileModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent);
 		virtual ~TorrentFileModel();
 
+		/**
+		 * Change the current torrent
+		 */
+		virtual void changeTorrent(bt::TorrentInterface* tc) = 0;
 		
 		/**
 		 * Check all the files in the torrent.
