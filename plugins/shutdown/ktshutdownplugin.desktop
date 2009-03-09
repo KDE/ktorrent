@@ -1,6 +1,18 @@
 [Desktop Entry]
 Name=Shutdown
+Name[de]=Herunterfahren
+Name[ga]=Múchadh
+Name[pt]=Encerramento
+Name[pt_BR]=Encerramento
+Name[sv]=Stäng av
+Name[uk]=Вимкнути
 Comment=Allows you to shutdown your computer when torrents finish
+Comment[de]=Ermöglicht es, den Rechner herunterzufahren, wenn die Torrents abgeschlossen wurden
+Comment[ga]=Ceadaíonn sé duit do ríomhaire a mhúchadh nuair a bheidh na torrents críochnaithe
+Comment[pt]=Permite-lhe encerrar o seu computador quando terminarem as torrentes
+Comment[pt_BR]=Permite-lhe encerrar o seu computador quando terminarem as torrentes
+Comment[sv]=Låter dig stänga av datorn när dataflöden är klara
+Comment[uk]=Надає вам змогу вимкнути комп’ютер після завершення звантаження торента
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktshutdownplugin
