@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=KTorrent Plasma Applet
+Name=KTorrent
 Name[ca]=Miniaplicació plasma del KTorrent
 Name[cs]=Plasma applet pro KTorrent
 Name[da]=KTorrent Plasma-applet
@@ -33,6 +33,7 @@ Name[x-test]=xxKTorrent Plasma Appletxx
 Name[zh_CN]=KTorrent Plasma 小程序
 Name[zh_TW]=KTorrent Plasma 小程式
 Icon=ktorrent
+Comment=Plasmoid to keep track of a single torrent
 Type=Service
 X-Plasma-DropMimeTypes=application/x-ktorrent-drag-object
 X-KDE-ServiceTypes=Plasma/Applet

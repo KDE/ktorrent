@@ -13,6 +13,7 @@ Changes in 3.3 :
 - Status queued can now result in status strings "Queued for downloading" or "Queued for seeding" (181096)
 - Make logviewer widget position configurable
 - Added shutdown plugin (182050)
+- Add comment to applet desktop file and rename the applet to just KTorrent (183825)
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed

@@ -54,8 +54,6 @@ namespace ktplasma
 	{
 		KLocale::setMainCatalog("ktorrent");
 		setAspectRatioMode(Plasma::ConstrainedSquare);
-		int iconSize = IconSize(KIconLoader::Desktop);
-		resize(iconSize * 6, iconSize * 3);
 		engine = 0;
 		root_layout = 0;
 		connected_to_app = false;
@@ -70,6 +68,7 @@ namespace ktplasma
 				s >> current_source;
 			}
 		}
+		setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 	}
 
 
@@ -156,6 +155,9 @@ namespace ktplasma
 		}
 
 		engine->connectSource("core",this);
+		QSizeF s = root_layout->sizeHint(Qt::PreferredSize);
+		s.setWidth(s.width() * 1.25);
+		resize(s);
 	}
 	
 	QString Applet::selectTorrent()
@@ -197,7 +199,7 @@ namespace ktplasma
 		QWidget *widget = new QWidget();
 		ui.setupUi(widget);
 		parent->setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Apply );
-		parent->addPage(widget, parent->windowTitle(), "ktorrent");
+		parent->addPage(widget,i18n("Applet"), "ktorrent");
 		connect(parent, SIGNAL(applyClicked()), this, SLOT(configUpdated()));
 		connect(parent, SIGNAL(okClicked()), this, SLOT(configUpdated()));
 		updateTorrentCombo();
@@ -223,7 +225,9 @@ namespace ktplasma
 		{
 			current_source = selectTorrent();
 			if (!current_source.isNull())
+			{
 				engine->connectSource(current_source,this,1000);
+			}
 			else
 				clearData();
 		}
