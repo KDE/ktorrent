@@ -242,7 +242,6 @@ namespace kt
 		void rollback(const QList<bt::TorrentInterface*> & success);
 		void connectSignals(bt::TorrentInterface* tc);
 		bool init(bt::TorrentControl* tc,const QString & group,bool silently);
-		void applySettings(bool change_port);
 
 	public:
 		void loadTorrents();

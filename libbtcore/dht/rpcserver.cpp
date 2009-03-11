@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "rpcserver.h"
+#include <QHostAddress>
 #include <unistd.h>
 #include <string.h>
 #include <net/portlist.h>
@@ -34,6 +35,7 @@
 #include "kbucket.h"
 #include "node.h"
 #include "dht.h"
+
 
 using namespace KNetwork;
 using namespace bt;
@@ -64,13 +66,27 @@ namespace dht
 	void RPCServer::start()
 	{
 		sock->setBlocking(true);
-		if (!sock->bind(NetworkInterfaceIPAddress(NetworkInterface()),QString::number(port)))
+		QString ip = NetworkInterfaceIPAddress(NetworkInterface());
+		
+		QStringList possible;
+		if (!ip.isEmpty())
+			possible << ip;
+		
+		// If the first address doesn't work try AnyIPv6 and Any
+		possible << QHostAddress(QHostAddress::AnyIPv6).toString() << QHostAddress(QHostAddress::Any).toString();
+		
+		foreach (const QString & addr,possible)
 		{
-			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Failed to bind to UDP port " << port << " for DHT" << endl;
-		}
-		else
-		{
-			bt::Globals::instance().getPortList().addNewPort(port,net::UDP,true);
+			if (!sock->bind(addr,QString::number(port)))
+			{
+				Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Failed to bind to " << addr << ":" << port << endl;
+			}
+			else
+			{
+				Out(SYS_DHT|LOG_NOTICE) << "DHT: Bound to " << addr << ":" << port << endl;
+				bt::Globals::instance().getPortList().addNewPort(port,net::UDP,true);
+				break;
+			}
 		}
 		sock->setBlocking(false);
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readPacket()));
