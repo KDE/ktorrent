@@ -120,9 +120,9 @@ namespace kt
 		virtual CurrentStats getStats() = 0;
 
 		/**
-		 * Switch the port when no torrents are running.
+		 * Switch the port
 		 * @param port The new port
-		 * @return true if we can, false if there are torrents running
+		 * @return true if we can, false otherwise
 		 */
 		virtual bool changePort(bt::Uint16 port) = 0;
 

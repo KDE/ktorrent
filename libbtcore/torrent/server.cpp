@@ -18,6 +18,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "server.h"
+#include <QStringList>
+#include <QHostAddress>
 #include <qsocketnotifier.h>
 #include <net/socket.h>
 #include <mse/streamsocket.h>
@@ -33,6 +35,7 @@
 
 #include "globals.h"
 #include "torrent.h"
+
 
 
 
@@ -75,13 +78,32 @@ namespace bt
 		sn = 0;
 		
 		QString iface = NetworkInterface();
-		QString ip = NetworkInterfaceIPAddress(iface);	
-		if (ip.contains(":")) // IPv6
-			sock = new net::Socket(true,6);
-		else
-			sock = new net::Socket(true,4);
+		QString ip = NetworkInterfaceIPAddress(iface);
+		QStringList possible;
+		if (!ip.isEmpty())
+			possible << ip;
 		
-		if (sock->bind(ip,port,true))
+		// If the first address doesn't work try AnyIPv6 and Any
+		possible << QHostAddress(QHostAddress::AnyIPv6).toString() << QHostAddress(QHostAddress::Any).toString();
+		
+		foreach (const QString & addr,possible)
+		{
+			if (addr.contains(":")) // IPv6
+				sock = new net::Socket(true,6);
+			else
+				sock = new net::Socket(true,4);
+			
+			if (sock->bind(addr,port,true))
+			{
+				Out(SYS_GEN|LOG_NOTICE) << "Bound to " << addr << ":" << port << endl;
+				break;
+			}
+			
+			delete sock;
+			sock = 0;
+		}
+		
+		if (sock)
 		{
 			sock->setNonBlocking();
 			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Read,this);
