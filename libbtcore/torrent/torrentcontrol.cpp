@@ -151,7 +151,7 @@ namespace bt
 	
 	bool TorrentControl::updateNeeded() const
 	{
-		return stats.running || moving_files || prealloc_thread || dcheck_thread || stats.completed != cman->completed();
+		return stats.running;
 	}
 
 	void TorrentControl::update()
@@ -1547,6 +1547,7 @@ namespace bt
 			lst->stop();
 		}
 		
+		bool completed = stats.completed;
 		if (lst && !lst->isStopped())
 		{
 			downloader->dataChecked(dc->getResult());
@@ -1556,8 +1557,7 @@ namespace bt
 			{
 				downloader->recalcDownloaded();
 				stats.imported_bytes = downloader->bytesDownloaded();
-				if (cman->haveAllChunks())
-					stats.completed = true;
+				stats.completed = cman->completed();
 			}
 			else
 			{
@@ -1567,8 +1567,7 @@ namespace bt
 				if (stats.bytes_downloaded > downloaded)
 					stats.imported_bytes = stats.bytes_downloaded - downloaded;
 				 
-				if (cman->haveAllChunks())
-					stats.completed = true;
+				stats.completed = cman->completed();
 			}
 		}
 			
@@ -1582,6 +1581,14 @@ namespace bt
 			lst->finished();
 		
 		dataCheckFinished();
+	
+		if (stats.completed != completed)
+		{
+			// Tell QM to redo queue 
+			// seeder might have become downloader, so 
+			// queue might need to be redone
+			updateQueue();
+		}
 	}
 	
 	bool TorrentControl::isCheckingData(bool & finished) const
