@@ -30,6 +30,7 @@ Changes in 3.2.1 :
 - Don't throw away model of FileView, when switching torrents (186031)
 - Fix bug causing infinite emission of the stoppedByError signal when corrupted chunks are found in a not started completed torrent 
 - Port switching no longer requires a restart
+- Fix bug in time estimation algorithm causing imported bytes not to be included in average speed calculation
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
