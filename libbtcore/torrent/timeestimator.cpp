@@ -135,7 +135,10 @@ namespace bt
 
 		if (m_tc->getRunningTimeDL() > 0 && s.bytes_downloaded > 0)
 		{
-			double avg_speed = (double) s.bytes_downloaded / (double) m_tc->getRunningTimeDL();
+			Uint64 d = s.bytes_downloaded;
+			if (s.imported_bytes <= s.bytes_downloaded)
+				d -= s.imported_bytes;
+			double avg_speed = (double) d / (double) m_tc->getRunningTimeDL();
 			return (Uint32) floor((double) bytesLeft() / avg_speed);
 		}
 
