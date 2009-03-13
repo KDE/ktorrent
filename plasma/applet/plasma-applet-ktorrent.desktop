@@ -10,6 +10,7 @@ Name[th]=โปรแกรม KTorrent
 Name[x-test]=xxKTorrentxx
 Icon=ktorrent
 Comment=Plasmoid to keep track of a single torrent
+Comment[de]=Plasmoid zum Überwachen eines einzelnen Torrents
 Comment[ga]=Plasmóid a choinníonn tuairisc ar torrent amháin
 Comment[nds]=Plasma-Lüttprogramm, dat op een Enkeltorrent kiekt
 Comment[sv]=Plasmoid för att hålla reda på ett enstaka dataflöde
