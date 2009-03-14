@@ -31,6 +31,7 @@ Changes in 3.2.1 :
 - Fix bug causing infinite emission of the stoppedByError signal when corrupted chunks are found in a not started completed torrent 
 - Port switching no longer requires a restart
 - Fix bug in time estimation algorithm causing imported bytes not to be included in average speed calculation
+- Fix bug causing torrents to move around when being sorted on floating point numbers and number is equal (186770)
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
