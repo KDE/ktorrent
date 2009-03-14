@@ -658,7 +658,7 @@ namespace kt
 			else if (order == Qt::AscendingOrder)
 				return a->lessThan(col,b);
 			else
-				return !a->lessThan(col,b);
+				return b->lessThan(col,a);
 		}
 	
 		int col;
