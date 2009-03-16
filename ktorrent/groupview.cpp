@@ -598,6 +598,15 @@ namespace kt
 		view->onGroupRemoved(g);
 		remove(0,g->groupPath(),g);
 	}
+	
+	void GroupView::keyPressEvent(QKeyEvent* event) 
+	{
+		if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+			onItemActivated(currentItem(),0);
+		else
+			QTreeView::keyPressEvent(event);
+	}
+
 }
 
 #include "groupview.moc"
