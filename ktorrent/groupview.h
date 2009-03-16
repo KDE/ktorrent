@@ -101,7 +101,8 @@ namespace kt
 		virtual bool dropMimeData(QTreeWidgetItem *parent, int index, 
 					  const QMimeData *data,Qt::DropAction action);    
 		virtual QStringList mimeTypes() const;
-		virtual Qt::DropActions supportedDropActions () const;
+		virtual Qt::DropActions supportedDropActions() const;
+		virtual void keyPressEvent(QKeyEvent* event);
 
 	private:
 		GUI* gui;
