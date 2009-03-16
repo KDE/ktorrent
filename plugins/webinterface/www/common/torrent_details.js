@@ -2,8 +2,21 @@ var current_torrent = 0;
 
 function show_torrent_details(tor)
 {
+	clear_torrent_details();
 	update_torrent_details(tor);
 	show_div("torrent_details");
+}
+
+function clear_torrent_details()
+{
+	var newtable = document.createElement('table');
+	newtable.setAttribute('id', 'torrent_details_table');
+	newtable.className='list_table';
+	
+	file_header(newtable.insertRow(0));
+	
+	var oldtable = document.getElementById('torrent_details_table');
+	oldtable.parentNode.replaceChild(newtable, oldtable);
 }
 
 function update_torrent_details(tor)
