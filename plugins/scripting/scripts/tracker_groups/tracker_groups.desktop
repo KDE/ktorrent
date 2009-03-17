@@ -35,6 +35,7 @@ Comment[ca]=Script per a crear grups automàtics basats en els URL dels seguidor
 Comment[da]=Script til at oprette grupper automatisk baseret på tracker-URL'er
 Comment[de]=Skript zum automatischen Gruppieren anhand der Tracker-Adressen
 Comment[el]=Σενάριο αυτόματης ομαδοποίησης ανιχνευτών με βάση το URL τους
+Comment[en_GB]=Script to create automatic groups based upon tracker URLs
 Comment[es]=Guion para crear grupos automáticos basándose en los URL de los localizadores
 Comment[et]=Skript automaatsete rühmade loomiseks tracker'ite URL-ide järgi
 Comment[fr]=Script pour créer des groupes automatiques utilisant des URL de traqueurs
