@@ -274,7 +274,6 @@ set (util_HDR
 set (download_HDR
 	./download/chunkdownload.h
 	./download/downloader.h
-	./download/httpdownloader.h
 	./download/request.h
 	./download/piece.h
 	./download/packet.h
