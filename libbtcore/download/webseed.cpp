@@ -288,6 +288,12 @@ namespace bt
 			Out(SYS_CON|LOG_DEBUG) << "WebSeed: connection not OK" << endl;
 			// shit happened delete connection
 			status = conn->getStatusString();
+			if (conn->responseCode() == 404)
+			{
+				// if not found then retire this webseed
+				num_failures = 3;
+				status = i18n("Not in use");
+			}
 			delete conn;
 			conn = 0;
 			chunkStopped();
