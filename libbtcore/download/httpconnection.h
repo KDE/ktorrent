@@ -82,9 +82,17 @@ namespace bt
 		QTimer reply_timer;
 		Uint32 up_gid,down_gid;
 		bool close_when_finished;
+		bool redirected;
+		KUrl redirected_url;
 	public:
 		HttpConnection();
 		virtual ~HttpConnection();
+		
+		/// Is this connection redirected
+		bool isRedirected() const {return redirected;}
+		
+		/// Get the redirected url
+		KUrl redirectedUrl() const {return redirected_url;}
 		
 		/**
 		 * Set the group ID's of the socket
@@ -147,9 +155,6 @@ namespace bt
 		void hostResolved(KNetwork::KResolverResults res);
 		void connectTimeout();
 		void replyTimeout();
-		
-	private:
-		void redirected(const KUrl & url);
 	};
 }
 

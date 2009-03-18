@@ -79,7 +79,7 @@ namespace bt
 		Uint32 len;
 		Uint8* ptr;
 		CacheFile* file;
-		Uint32 ref_count;
+		int ref_count;
 	};
 
 }

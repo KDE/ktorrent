@@ -55,6 +55,12 @@ namespace bt
 		/// Check if a chunk lies in the current range we are downloading
 		bool inCurrentRange(Uint32 chunk) const {return chunk >= first_chunk && chunk <= last_chunk;}
 		
+		/// Steal a part of the range from this webseed
+		bool stealRange(Uint32 & first,Uint32 & last);
+		
+		/// Get the current active range
+		bool getCurrentRange(Uint32 & first,Uint32 & last);
+		
 		/**
 		 * Download a range of chunks
 		 * @param first The first chunk
@@ -118,6 +124,9 @@ namespace bt
 		
 		virtual void setEnabled(bool on);
 		
+		/// Get the number of failed attempts
+		Uint32 failedAttempts() const {return num_failures;}
+		
 	signals:
 		/**
 		 * Emitted when a chunk is downloaded
@@ -145,7 +154,7 @@ namespace bt
 		void chunkDownloadFinished(WebSeedChunkDownload* cd,Uint32 chunk);
 		
 	private slots:
-		void retry();
+		void redirected(const KUrl & to_url);
 		
 	private:
 		struct Range
@@ -177,6 +186,7 @@ namespace bt
 		WebSeedChunkDownload* current;
 		Uint32 up_gid,down_gid;
 		QList<Range> range_queue;
+		KUrl redirected_url;
 		
 		static QString proxy_host;
 		static Uint16 proxy_port;

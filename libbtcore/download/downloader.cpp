@@ -84,6 +84,21 @@ namespace bt
 						this,SLOT(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)));
 			}
 		}
+		
+		if (webseeds.count() > 0)
+		{
+			webseed_range_size = tor.getNumChunks() / webseeds.count();
+			if (webseed_range_size == 0)
+				webseed_range_size = 1;
+			
+			// make sure the range is not to big
+			if (webseed_range_size > tor.getNumChunks() / 10)
+				webseed_range_size = tor.getNumChunks() / 10;
+		}
+		else
+		{
+			webseed_range_size = 1;
+		}
 	}
 
 
@@ -187,6 +202,14 @@ namespace bt
 				downloaded += ws->update();
 			}
 		}
+		
+		if (isFinished() && webseeds_on)
+		{
+			foreach (WebSeed* ws,webseeds)
+			{
+				ws->reset();
+			}
+		}
 	}
 
 	
@@ -226,7 +249,7 @@ namespace bt
 		{
 			foreach (WebSeed* ws,webseeds)
 			{
-				if (!ws->busy() && ws->isEnabled())
+				if (!ws->busy() && ws->isEnabled() && ws->failedAttempts() < 3)
 				{
 					downloadFrom(ws);
 				}
@@ -348,7 +371,7 @@ namespace bt
 	{
 		Uint32 first = 0;
 		Uint32 last = 0;
-		if (chunk_selector->selectRange(first,last))
+		if (chunk_selector->selectRange(first,last,webseed_range_size))
 		{
 			ws->download(first,last);
 		}
@@ -357,15 +380,18 @@ namespace bt
 
 	bool Downloader::areWeDownloading(Uint32 chunk) const
 	{
-		return current_chunks.find(chunk) != 0 || webseeds_chunks.find(chunk) != 0;
+		return current_chunks.find(chunk) != 0;
 	}
 	
 	bool Downloader::canDownloadFromWebSeed(Uint32 chunk) const
 	{
-		if (cman.chunksLeft() <= current_chunks.count() + webseeds_chunks.count())
-			return true;
-		else
-			return !areWeDownloading(chunk);
+		foreach (WebSeed* ws,webseeds)
+		{
+			if (ws->busy() && ws->inCurrentRange(chunk))
+				return false;
+		}
+		
+		return !areWeDownloading(chunk);
 	}
 	
 	Uint32 Downloader::numDownloadersForChunk(Uint32 chunk) const

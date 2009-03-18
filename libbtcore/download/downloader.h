@@ -286,6 +286,7 @@ namespace bt
 		PtrMap<Uint32,WebSeed> webseeds_chunks;
 		Uint32 active_webseed_downloads;
 		bool webseeds_on;
+		Uint32 webseed_range_size;
 		
 		static bool use_webseeds;
 	};

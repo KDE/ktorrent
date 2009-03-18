@@ -33,7 +33,7 @@ namespace bt
 	{
 	}
 	
-	bool ChunkSelectorInterface::selectRange(Uint32 & from,Uint32 & to)
+	bool ChunkSelectorInterface::selectRange(Uint32 & from,Uint32 & to,Uint32 max_len)
 	{
 		return false;
 	}

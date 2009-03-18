@@ -60,9 +60,10 @@ namespace bt
 		 * Select a range of chunks to download from a webseeder.
 		 * @param from First chunk of the range
 		 * @param to Last chunk of the range
+		 * @param max_len Maximum length of range
 		 * @return true if everything is OK
 		 */
-		virtual bool selectRange(Uint32 & from,Uint32 & to);
+		virtual bool selectRange(Uint32 & from,Uint32 & to,Uint32 max_len);
 		
 		/**
 		 * Data has been checked, and these chunks are OK.

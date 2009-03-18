@@ -263,8 +263,8 @@ namespace bt
 				return false;
 			
 			// we have the content so we can redirect the connection
-			KUrl u = g->redirected_to;
-			redirected(u);
+			redirected_url = g->redirected_to;
+			redirected = true;
 			return false;
 		}
 		
@@ -326,38 +326,6 @@ namespace bt
 		status = i18n("Error: request timed out");
 		state = ERROR;
 		reply_timer.stop();
-	}
-	
-	void HttpConnection::redirected(const KUrl & url)
-	{
-		// Note: mutex is locked in onDataReady
-		bt::Uint64 start = request->start;
-		bt::Uint64 len = request->len;
-		QString host = request->host;
-		
-		// if we are using a proxy or the host hasn't changed, just send another request with the new path
-		if (using_proxy || url.host() == host)
-		{
-			delete request;
-			request = new HttpGet(url.host(),url.path(),start,len,using_proxy);
-			net::SocketMonitor::instance().signalPacketReady();
-		}
-		else
-		{
-			 // reset socket for new connection 
-			sock->reset();
-			// delete request
-			delete request;
-			request = 0;
-			// reset state to IDLE
-			state = IDLE;
-			reply_timer.stop();
-			// connect new location
-			connectTo(url);
-			// do a new get
-			get(url.host(),url.path(),start,len);
-			close_when_finished = true; // we have been redirected to a new host, so close connectin when finished
-		}
 	}
 	
 	////////////////////////////////////////////
