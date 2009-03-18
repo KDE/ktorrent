@@ -287,6 +287,7 @@ namespace bt
 		Uint32 active_webseed_downloads;
 		bool webseeds_on;
 		Uint32 webseed_range_size;
+		bool webseed_endgame_mode;
 		
 		static bool use_webseeds;
 	};

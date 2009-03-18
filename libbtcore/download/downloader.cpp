@@ -50,7 +50,7 @@ namespace bt
 	bool Downloader::use_webseeds = true;
 	
 	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorFactoryInterface* fac) 
-	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0),chunk_selector(0)
+	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0),chunk_selector(0),webseed_endgame_mode(false)
 	{
 		webseeds_on = use_webseeds;
 		pman.setPieceHandler(this);
@@ -199,7 +199,7 @@ namespace bt
 		{
 			foreach (WebSeed* ws,webseeds)
 			{
-				downloaded += ws->update();
+				ws->update();
 			}
 		}
 		
@@ -207,7 +207,7 @@ namespace bt
 		{
 			foreach (WebSeed* ws,webseeds)
 			{
-				ws->reset();
+				ws->cancel();
 			}
 		}
 	}
@@ -263,7 +263,7 @@ namespace bt
 			{
 				if (ws->busy() && ws->isEnabled())
 				{
-					ws->reset();
+					ws->cancel();
 				}
 			}
 		}
@@ -330,7 +330,7 @@ namespace bt
 	}
 
 	bool Downloader::downloadFrom(PieceDownloader* pd)
-	{	
+	{
 		// first see if we can use an existing dowload
 		if (findDownloadForPD(pd))
 			return true;
@@ -371,9 +371,17 @@ namespace bt
 	{
 		Uint32 first = 0;
 		Uint32 last = 0;
+		webseed_endgame_mode = false;
 		if (chunk_selector->selectRange(first,last,webseed_range_size))
 		{
 			ws->download(first,last);
+		}
+		else
+		{
+			// go to endgame mode
+			webseed_endgame_mode = true;
+			if (chunk_selector->selectRange(first,last,webseed_range_size))
+				ws->download(first,last);
 		}
 	}
 	
@@ -385,6 +393,9 @@ namespace bt
 	
 	bool Downloader::canDownloadFromWebSeed(Uint32 chunk) const
 	{
+		if (webseed_endgame_mode)
+			return true;
+		
 		foreach (WebSeed* ws,webseeds)
 		{
 			if (ws->busy() && ws->inCurrentRange(chunk))
@@ -434,6 +445,13 @@ namespace bt
 			// hash ok so save it
 			try
 			{
+				foreach (WebSeed* ws,webseeds)
+				{
+					// tell all webseeds a chunk is downloaded
+					if (ws->inCurrentRange(c->getIndex()))
+						ws->chunkDownloaded(c->getIndex());
+				}
+				
 				cman.chunkDownloaded(c->getIndex());
 				Out(SYS_GEN|LOG_IMPORTANT) << "Chunk " << c->getIndex() << " downloaded " << endl;
 				// tell everybody we have the Chunk
@@ -486,7 +504,7 @@ namespace bt
 		piece_downloaders.clear();
 		
 		foreach (WebSeed* ws,webseeds)
-			ws->reset();
+			ws->cancel();
 	}
 	
 	Uint32 Downloader::downloadRate() const
@@ -738,14 +756,24 @@ namespace bt
 			chunk_selector->reinsert(c->getIndex());
 			return;
 		}
-		piece->unref();
+		
 
 		SHA1Hash h = SHA1Hash::generate(piece->data(),c->getSize());
+		piece->unref();
 		if (tor.verifyHash(h,c->getIndex()))
 		{
 			// hash ok so save it
 			try
 			{
+				downloaded += c->getSize();
+				
+				foreach (WebSeed* ws,webseeds)
+				{
+					// tell all webseeds a chunk is downloaded
+					if (ws->inCurrentRange(c->getIndex()))
+						ws->chunkDownloaded(c->getIndex());
+				}
+				
 				ChunkDownload* cd = current_chunks.find(c->getIndex());
 				if (cd)
 				{

@@ -55,12 +55,6 @@ namespace bt
 		/// Check if a chunk lies in the current range we are downloading
 		bool inCurrentRange(Uint32 chunk) const {return chunk >= first_chunk && chunk <= last_chunk;}
 		
-		/// Steal a part of the range from this webseed
-		bool stealRange(Uint32 & first,Uint32 & last);
-		
-		/// Get the current active range
-		bool getCurrentRange(Uint32 & first,Uint32 & last);
-		
 		/**
 		 * Download a range of chunks
 		 * @param first The first chunk
@@ -92,6 +86,11 @@ namespace bt
 		 * Reset the webseed (kills the connection)
 		 */
 		void reset();
+		
+		/**
+		* Cancel the current download and kill the connection
+		*/
+		void cancel();
 		
 		/// Get the current download rate
 		Uint32 getDownloadRate() const;

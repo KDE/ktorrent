@@ -91,6 +91,12 @@ namespace bt
 		num_failures = 0;
 		status = i18n("Not connected");
 	}
+	
+	void WebSeed::cancel() 
+	{
+		reset();
+	}
+
 
 	bool WebSeed::busy() const
 	{
@@ -467,21 +473,27 @@ namespace bt
 	void WebSeed::onExcluded(Uint32 from,Uint32 to)
 	{
 		if (from <= first_chunk && first_chunk <= to && from <= last_chunk && last_chunk <= to)
+		{
 			reset();
+		}
 	}
 	
 	void WebSeed::chunkDownloaded(Uint32 chunk)
 	{
 		// reset if chunk downloaded is in the range we are currently downloading
 		if (chunk >= cur_chunk) 
+		{
 			reset();
+		}
 	}
 	
 	void WebSeed::setEnabled(bool on)
 	{
 		WebSeedInterface::setEnabled(on);
 		if (!on)
+		{
 			reset();
+		}
 	}
 	
 	void WebSeed::redirected(const KUrl & to_url)
@@ -500,30 +512,6 @@ namespace bt
 			status = i18n("Not in use");
 			cur_chunk = last_chunk = first_chunk = tor.getNumChunks() + 1;
 		}
-	}
-	
-	bool WebSeed::stealRange(Uint32 & first,Uint32 & last)
-	{
-		if (!busy() || last_chunk == cur_chunk)
-			return false;
-		
-		// Steal half of the range
-		first = (last_chunk - cur_chunk) / 2 + cur_chunk;
-		last = last_chunk;
-		
-		// modify the last chunk
-		last_chunk = first - 1;
-		return true;
-	}
-	
-	bool WebSeed::getCurrentRange(bt::Uint32& first, bt::Uint32& last) 
-	{
-		if (!busy())
-			return false;
-		
-		first = cur_chunk;
-		last = last_chunk;
-		return true;
 	}
 
 	
