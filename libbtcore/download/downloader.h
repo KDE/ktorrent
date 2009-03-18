@@ -279,6 +279,8 @@ namespace bt
 		QList<WebSeed*> webseeds;
 		PtrMap<Uint32,WebSeed> webseeds_chunks;
 		Uint32 active_webseed_downloads;
+		Uint32 webseed_range_size;
+		bool webseed_endgame_mode;
 	};
 	
 

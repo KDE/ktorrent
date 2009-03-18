@@ -17,6 +17,8 @@ Changes in 3.2.1 :
 - Fix bug causing torrents to move around when being sorted on floating point numbers and number is equal (186770)
 - Improve keyboard navigation of GroupView by activating the current item when pressing enter
 - In webinterface clear torrent details before updating the table to prevent an old file list being shown
+- Fix webseeding crash (184986)
+- Fix several webseeding bugs
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)

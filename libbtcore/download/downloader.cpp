@@ -48,7 +48,7 @@ namespace bt
 {
 
 	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorFactoryInterface* fac) 
-	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0),chunk_selector(0)
+	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0),chunk_selector(0),webseed_endgame_mode(false)
 	{
 		pman.setPieceHandler(this);
 		
@@ -80,6 +80,21 @@ namespace bt
 				connect(ws,SIGNAL(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)),
 						this,SLOT(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)));
 			}
+		}
+		
+		if (webseeds.count() > 0)
+		{
+			webseed_range_size = tor.getNumChunks() / webseeds.count();
+			if (webseed_range_size == 0)
+				webseed_range_size = 1;
+			
+			// make sure the range is not to big
+			if (webseed_range_size > tor.getNumChunks() / 10)
+				webseed_range_size = tor.getNumChunks() / 10;
+		}
+		else
+		{
+			webseed_range_size = 1;
 		}
 	}
 
@@ -180,7 +195,15 @@ namespace bt
 		
 		foreach (WebSeed* ws,webseeds)
 		{
-			downloaded += ws->update();
+			ws->update();
+		}
+		
+		if (isFinished())
+		{
+			foreach (WebSeed* ws,webseeds)
+			{
+				ws->cancel();
+			}
 		}
 	}
 
@@ -219,7 +242,7 @@ namespace bt
 		
 		foreach (WebSeed* ws,webseeds)
 		{
-			if (!ws->busy())
+			if (!ws->busy() && ws->failedAttempts() < 3)
 			{
 				downloadFrom(ws);
 			}
@@ -287,7 +310,7 @@ namespace bt
 	}
 
 	bool Downloader::downloadFrom(PieceDownloader* pd)
-	{	
+	{
 		// first see if we can use an existing dowload
 		if (findDownloadForPD(pd))
 			return true;
@@ -328,24 +351,38 @@ namespace bt
 	{
 		Uint32 first = 0;
 		Uint32 last = 0;
-		if (chunk_selector->selectRange(first,last))
+		webseed_endgame_mode = false;
+		if (chunk_selector->selectRange(first,last,webseed_range_size))
 		{
 			ws->download(first,last);
+		}
+		else
+		{
+			// go to endgame mode
+			webseed_endgame_mode = true;
+			if (chunk_selector->selectRange(first,last,webseed_range_size))
+				ws->download(first,last);
 		}
 	}
 	
 
 	bool Downloader::areWeDownloading(Uint32 chunk) const
 	{
-		return current_chunks.find(chunk) != 0 || webseeds_chunks.find(chunk) != 0;
+		return current_chunks.find(chunk) != 0;
 	}
 	
 	bool Downloader::canDownloadFromWebSeed(Uint32 chunk) const
 	{
-		if (cman.chunksLeft() <= current_chunks.count() + webseeds_chunks.count())
+		if (webseed_endgame_mode)
 			return true;
-		else
-			return !areWeDownloading(chunk);
+		
+		foreach (WebSeed* ws,webseeds)
+		{
+			if (ws->busy() && ws->inCurrentRange(chunk))
+				return false;
+		}
+		
+		return !areWeDownloading(chunk);
 	}
 	
 	Uint32 Downloader::numDownloadersForChunk(Uint32 chunk) const
@@ -388,6 +425,13 @@ namespace bt
 			// hash ok so save it
 			try
 			{
+				foreach (WebSeed* ws,webseeds)
+				{
+					// tell all webseeds a chunk is downloaded
+					if (ws->inCurrentRange(c->getIndex()))
+						ws->chunkDownloaded(c->getIndex());
+				}
+				
 				cman.chunkDownloaded(c->getIndex());
 				Out(SYS_GEN|LOG_IMPORTANT) << "Chunk " << c->getIndex() << " downloaded " << endl;
 				// tell everybody we have the Chunk
@@ -440,7 +484,7 @@ namespace bt
 		piece_downloaders.clear();
 		
 		foreach (WebSeed* ws,webseeds)
-			ws->reset();
+			ws->cancel();
 	}
 	
 	Uint32 Downloader::downloadRate() const
@@ -692,14 +736,24 @@ namespace bt
 			chunk_selector->reinsert(c->getIndex());
 			return;
 		}
-		piece->unref();
+		
 
 		SHA1Hash h = SHA1Hash::generate(piece->data(),c->getSize());
+		piece->unref();
 		if (tor.verifyHash(h,c->getIndex()))
 		{
 			// hash ok so save it
 			try
 			{
+				downloaded += c->getSize();
+				
+				foreach (WebSeed* ws,webseeds)
+				{
+					// tell all webseeds a chunk is downloaded
+					if (ws->inCurrentRange(c->getIndex()))
+						ws->chunkDownloaded(c->getIndex());
+				}
+				
 				ChunkDownload* cd = current_chunks.find(c->getIndex());
 				if (cd)
 				{

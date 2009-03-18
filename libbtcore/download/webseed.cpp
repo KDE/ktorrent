@@ -91,6 +91,12 @@ namespace bt
 		num_failures = 0;
 		status = i18n("Not connected");
 	}
+	
+	void WebSeed::cancel() 
+	{
+		reset();
+	}
+
 
 	bool WebSeed::busy() const
 	{
@@ -107,11 +113,15 @@ namespace bt
 	
 	void WebSeed::connectToServer()
 	{
+		KUrl dst = url;
+		if (redirected_url.isValid())
+			dst = redirected_url;
+		
 		if (!proxy_enabled)
 		{
-			QString proxy = KProtocolManager::proxyForUrl(url); // Use KDE settings
+			QString proxy = KProtocolManager::proxyForUrl(dst); // Use KDE settings
 			if (proxy.isNull() || proxy == "DIRECT")
-				conn->connectTo(url); // direct connection 
+				conn->connectTo(dst); // direct connection 
 			else
 			{
 				KUrl proxy_url(proxy);
@@ -121,7 +131,7 @@ namespace bt
 		else 
 		{
 			if (proxy_host.isNull())
-				conn->connectTo(url); // direct connection 
+				conn->connectTo(dst); // direct connection 
 			else
 				conn->connectToProxy(proxy_host,proxy_port); // via a proxy
 		}
@@ -130,7 +140,7 @@ namespace bt
 		
 	void WebSeed::download(Uint32 first,Uint32 last)
 	{
-		Out(SYS_CON|LOG_DEBUG) << "WebSeed::download " << first << "-" << last << endl;
+		Out(SYS_CON|LOG_DEBUG) << "WebSeed: downloading " << first << "-" << last << " from " << url.prettyUrl() << endl;
 		// open connection and connect if needed
 		if (!conn)
 		{
@@ -174,7 +184,8 @@ namespace bt
 				Range r = range_queue[0];
 				range_queue.pop_front();
 				const TorrentFile & tf = tor.getFile(r.file);
-				conn->get(url.host(),path + '/' + tf.getPath(),r.off,r.len);
+				QString host = redirected_url.isValid() ? redirected_url.host() : url.host();
+				conn->get(host,path + '/' + tf.getPath(),r.off,r.len);
 			}
 		}
 		else
@@ -186,7 +197,8 @@ namespace bt
 			else
 				len += tor.getChunkSize(); 
 			
-			conn->get(url.host(),path,first_chunk * tor.getChunkSize(),len);
+			QString host = redirected_url.isValid() ? redirected_url.host() : url.host();
+			conn->get(host,path,first_chunk * tor.getChunkSize(),len);
 		}
 	}
 	
@@ -216,7 +228,8 @@ namespace bt
 				if (length >= bytes_of_cur_chunk)
 				{
 					const TorrentFile & tf = tor.getFile(r.file);
-					conn->get(url.host(),path + '/' + tf.getPath(),r.off,r.len);
+					QString host = redirected_url.isValid() ? redirected_url.host() : url.host();
+					conn->get(host,path + '/' + tf.getPath(),r.off,r.len);
 					break;
 				}
 				length += r.len;
@@ -231,7 +244,8 @@ namespace bt
 			else
 				len += tor.getChunkSize(); 
 			
-			conn->get(url.host(),path,first_chunk * tor.getChunkSize() + bytes_of_cur_chunk,len - bytes_of_cur_chunk);
+			QString host = redirected_url.isValid() ? redirected_url.host() : url.host();
+			conn->get(host,path,first_chunk * tor.getChunkSize() + bytes_of_cur_chunk,len - bytes_of_cur_chunk);
 		}
 		chunkStarted(cur_chunk);
 	}
@@ -265,15 +279,6 @@ namespace bt
 			current = 0;
 		}
 	}
-	
-	void WebSeed::retry()
-	{
-		if (!busy())
-			return;
-		
-		// lets try this again
-		download(cur_chunk,last_chunk);
-	}
 		
 	Uint32 WebSeed::update()
 	{
@@ -286,16 +291,17 @@ namespace bt
 			Out(SYS_CON|LOG_DEBUG) << "WebSeed: connection not OK" << endl;
 			// shit happened delete connection
 			status = conn->getStatusString();
+			if (conn->responseCode() == 404)
+			{
+				// if not found then retire this webseed
+				num_failures = 3;
+				status = i18n("Not in use");
+			}
 			delete conn;
 			conn = 0;
 			chunkStopped();
-			
+			first_chunk = last_chunk = cur_chunk = tor.getNumChunks() + 1;
 			num_failures++;
-			if (num_failures < 3) // try again in 10 seconds
-				QTimer::singleShot(10*1000,this,SLOT(retry()));
-			else // try again but with a longer interval (2 minutes)
-				QTimer::singleShot(120*1000,this,SLOT(retry()));
-	
 			return 0;
 		}
 		else if (conn->closed())
@@ -313,7 +319,13 @@ namespace bt
 			download(cur_chunk,last_chunk);
 			status = conn->getStatusString();
 		}
-		else
+		else if (conn->isRedirected())
+		{
+			// Make sure we handle all data
+			readData();
+			redirected(conn->redirectedUrl());
+		}
+		else 
 		{
 			readData();
 			if (range_queue.count() > 0 && conn->ready())
@@ -336,7 +348,8 @@ namespace bt
 				Range r = range_queue[0];
 				range_queue.pop_front();
 				const TorrentFile & tf = tor.getFile(r.file);
-				conn->get(url.host(),path + '/' + tf.getPath(),r.off,r.len);
+				QString host = redirected_url.isValid() ? redirected_url.host() : url.host();
+				conn->get(host,path + '/' + tf.getPath(),r.off,r.len);
 			}
 			status = conn->getStatusString();
 		}
@@ -385,7 +398,7 @@ namespace bt
 				PieceData* p = c->getPiece(0,c->getSize(),false); 
 				if (p)
 					memcpy(p->data() + bytes_of_cur_chunk,tmp.data() + off,bl);
-
+				
 				downloaded += bl;
 			}
 			off += bl;
@@ -398,7 +411,9 @@ namespace bt
 				bytes_of_cur_chunk = 0;
 				cur_chunk++;
 				if (c->getStatus() != Chunk::ON_DISK)
+				{
 					chunkReady(c);
+				}
 				
 				chunkStopped();
 				if (cur_chunk <= last_chunk)
@@ -455,15 +470,40 @@ namespace bt
 	void WebSeed::onExcluded(Uint32 from,Uint32 to)
 	{
 		if (from <= first_chunk && first_chunk <= to && from <= last_chunk && last_chunk <= to)
+		{
 			reset();
+		}
 	}
 	
 	void WebSeed::chunkDownloaded(Uint32 chunk)
 	{
 		// reset if chunk downloaded is in the range we are currently downloading
 		if (chunk >= cur_chunk) 
+		{
 			reset();
+		}
 	}
+	
+	void WebSeed::redirected(const KUrl & to_url)
+	{
+		delete conn;
+		conn = 0;
+		if (to_url.isValid() && to_url.protocol() == "http")
+		{
+			redirected_url = to_url;
+			download(cur_chunk,last_chunk);
+			status = conn->getStatusString();
+		}
+		else
+		{
+			num_failures = 3;
+			status = i18n("Not in use");
+			cur_chunk = last_chunk = first_chunk = tor.getNumChunks() + 1;
+		}
+	}
+
+	
+	////////////////////////////////////////////
 	
 	WebSeedChunkDownload::WebSeedChunkDownload(WebSeed* ws,const QString & url,Uint32 index,Uint32 total) 
 	: ws(ws),url(url),chunk(index),total_pieces(total),pieces_downloaded(0)

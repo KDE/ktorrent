@@ -64,6 +64,7 @@ namespace bt
 			bool redirected;
 			KUrl redirected_to;
 			bt::Uint64 content_length;
+			int response_code;
 			
 			HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy);
 			virtual ~HttpGet();
@@ -82,9 +83,21 @@ namespace bt
 		QTimer reply_timer;
 		Uint32 up_gid,down_gid;
 		bool close_when_finished;
+		bool redirected;
+		KUrl redirected_url;
+		int response_code;
 	public:
 		HttpConnection();
 		virtual ~HttpConnection();
+		
+		/// Get the last http response code 
+		int responseCode() const {return response_code;}
+		
+		/// Is this connection redirected
+		bool isRedirected() const {return redirected;}
+		
+		/// Get the redirected url
+		KUrl redirectedUrl() const {return redirected_url;}
 		
 		/**
 		 * Set the group ID's of the socket
@@ -147,9 +160,6 @@ namespace bt
 		void hostResolved(KNetwork::KResolverResults res);
 		void connectTimeout();
 		void replyTimeout();
-		
-	private:
-		void redirected(const KUrl & url);
 	};
 }
 

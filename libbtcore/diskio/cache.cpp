@@ -151,6 +151,7 @@ namespace bt
 			}
 			else
 			{
+			//	Out(SYS_GEN|LOG_DEBUG) << "PieceCache: " << i.key()->getIndex() << " " << cp->offset() << " " << cp->length() << " " << cp->ref_count <<  endl;
 				mem += cp->length();
 				i++;
 			}

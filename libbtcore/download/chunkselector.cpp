@@ -305,9 +305,9 @@ namespace bt
 		Uint32 len;
 	};
 	
-	bool ChunkSelector::selectRange(Uint32 & from,Uint32 & to)
+	bool ChunkSelector::selectRange(Uint32 & from,Uint32 & to,Uint32 max_len)
 	{
-		Uint32 max_range_len = MAX_RANGE_SIZE / pman.getTorrent().getChunkSize();
+		Uint32 max_range_len = max_len;
 		
 		const BitSet & bs = cman.getBitSet();
 		Uint32 num_chunks = cman.getNumChunks();

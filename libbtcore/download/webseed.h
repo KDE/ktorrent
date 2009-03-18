@@ -87,6 +87,11 @@ namespace bt
 		 */
 		void reset();
 		
+		/**
+		* Cancel the current download and kill the connection
+		*/
+		void cancel();
+		
 		/// Get the current download rate
 		Uint32 getDownloadRate() const;
 		
@@ -116,6 +121,9 @@ namespace bt
 		/// Get the current webseed download
 		WebSeedChunkDownload* currentChunkDownload() {return current;}
 		
+		/// Get the number of failed attempts
+		Uint32 failedAttempts() const {return num_failures;}
+		
 	signals:
 		/**
 		 * Emitted when a chunk is downloaded
@@ -143,7 +151,7 @@ namespace bt
 		void chunkDownloadFinished(WebSeedChunkDownload* cd,Uint32 chunk);
 		
 	private slots:
-		void retry();
+		void redirected(const KUrl & to_url);
 		
 	private:
 		struct Range
@@ -175,6 +183,7 @@ namespace bt
 		WebSeedChunkDownload* current;
 		Uint32 up_gid,down_gid;
 		QList<Range> range_queue;
+		KUrl redirected_url;
 		
 		static QString proxy_host;
 		static Uint16 proxy_port;

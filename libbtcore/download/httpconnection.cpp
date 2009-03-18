@@ -32,7 +32,7 @@
 namespace bt
 {
 
-	HttpConnection::HttpConnection() : sock(0),state(IDLE),mutex(QMutex::Recursive),request(0),using_proxy(false)
+	HttpConnection::HttpConnection() : sock(0),state(IDLE),mutex(QMutex::Recursive),request(0),using_proxy(false),response_code(0)
 	{
 		status = i18n("Not connected");
 		connect(&reply_timer,SIGNAL(timeout()),this,SLOT(replyTimeout()));
@@ -130,6 +130,7 @@ namespace bt
 				{
 					state = ERROR;
 					status = i18n("Error: request failed: %1",request->failure_reason);
+					response_code = request->response_code;
 				}
 				else if (request->response_header_received)
 					reply_timer.stop();
@@ -263,8 +264,8 @@ namespace bt
 				return false;
 			
 			// we have the content so we can redirect the connection
-			KUrl u = g->redirected_to;
-			redirected(u);
+			redirected_url = g->redirected_to;
+			redirected = true;
 			return false;
 		}
 		
@@ -328,41 +329,10 @@ namespace bt
 		reply_timer.stop();
 	}
 	
-	void HttpConnection::redirected(const KUrl & url)
-	{
-		// Note: mutex is locked in onDataReady
-		bt::Uint64 start = request->start;
-		bt::Uint64 len = request->len;
-		QString host = request->host;
-		
-		// if we are using a proxy or the host hasn't changed, just send another request with the new path
-		if (using_proxy || url.host() == host)
-		{
-			delete request;
-			request = new HttpGet(url.host(),url.path(),start,len,using_proxy);
-			net::SocketMonitor::instance().signalPacketReady();
-		}
-		else
-		{
-			 // reset socket for new connection 
-			sock->reset();
-			// delete request
-			delete request;
-			request = 0;
-			// reset state to IDLE
-			state = IDLE;
-			reply_timer.stop();
-			// connect new location
-			connectTo(url);
-			// do a new get
-			get(url.host(),url.path(),start,len);
-			close_when_finished = true; // we have been redirected to a new host, so close connectin when finished
-		}
-	}
-	
 	////////////////////////////////////////////
 	
-	HttpConnection::HttpGet::HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy) : host(host),path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)
+	HttpConnection::HttpGet::HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy) 
+		: host(host),path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false),response_code(0)
 	{
 		QHttpRequestHeader request("GET",!using_proxy ? path : QString("http://%1/%2").arg(host).arg(path));
 		request.setValue("Host",host);
@@ -409,6 +379,7 @@ namespace bt
 			
 //			Out(SYS_CON|LOG_DEBUG) << "HttpConnection: http reply header received" << endl;
 //			Out(SYS_CON|LOG_DEBUG) << hdr.toString() << endl;
+			response_code = hdr.statusCode();
 			if ((hdr.statusCode() >= 300 && hdr.statusCode() <= 303) || hdr.statusCode() == 307)
 			{
 				// we got redirected to somewhere else

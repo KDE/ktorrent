@@ -148,6 +148,17 @@ namespace kt
 				case 3: return ws->getStatus();
 			}
 		}
+		else if (role == Qt::UserRole)
+		{
+			const bt::WebSeedInterface* ws = curr_tc->getWebSeed(index.row());
+			switch (index.column())
+			{
+				case 0: return ws->getUrl().prettyUrl();
+				case 1: return ws->getDownloadRate();
+				case 2: return ws->getTotalDownloaded();
+				case 3: return ws->getStatus();
+			}
+		}
 		return QVariant();
 	}
 
