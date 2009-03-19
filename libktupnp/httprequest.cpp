@@ -77,7 +77,7 @@ namespace kt
 		if (ba == 0)
 		{
 			if (!finished)
-				error(this,i18n("Connection closed unexpectedly !"));
+				error(this,i18n("Connection closed unexpectedly."));
 			sock->close();
 			return;
 		}

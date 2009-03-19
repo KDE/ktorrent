@@ -316,10 +316,10 @@ namespace kt
 		switch (reason)
 		{
 			case bt::MAX_RATIO_REACHED:
-				msg = i18n("Maximum share ratio reached !");
+				msg = i18n("Maximum share ratio reached.");
 				break;
 			case bt::MAX_SEED_TIME_REACHED:
-				msg = i18n("Maximum seed time reached !");
+				msg = i18n("Maximum seed time reached.");
 				break;
 		}
 		emit seedingAutoStopped(this,msg);

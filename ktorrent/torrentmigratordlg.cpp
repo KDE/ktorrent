@@ -107,7 +107,7 @@ namespace kt
 			m_progress_bar->setValue(++idx);
 		}
 		
-		m_text_output->append(i18n("Finished import !"));
+		m_text_output->append(i18n("Finished import."));
 		m_progress_bar->setRange(0,100);
 		m_progress_bar->setValue(100);
 		m_close_button->setEnabled(true);
@@ -142,7 +142,7 @@ namespace kt
 				bt::TorrentInterface* ti = *i;
 				if (info_hash == ti->getInfoHash())
 				{
-					m_text_output->append(i18n("Torrent <b>%1</b> already loaded !",tor));
+					m_text_output->append(i18n("Torrent <b>%1</b> already loaded.",tor));
 					return;
 				}
 			}

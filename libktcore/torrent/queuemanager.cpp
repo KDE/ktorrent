@@ -121,11 +121,11 @@ namespace kt
 			
 			QString msg; 
 			if (max_ratio_reached && max_seed_time_reached)
-				msg = i18n("The torrent \"%1\" has reached it's maximum share ratio and it's maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
+				msg = i18n("The torrent \"%1\" has reached its maximum share ratio and its maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
 			else if (max_ratio_reached && !max_seed_time_reached)
-				msg = i18n("The torrent \"%1\" has reached it's maximum share ratio. Ignore the limit and start seeding anyway?",s.torrent_name);
+				msg = i18n("The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?",s.torrent_name);
 			else if (max_seed_time_reached && !max_ratio_reached)
-				msg = i18n("The torrent \"%1\" has reached it's maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
+				msg = i18n("The torrent \"%1\" has reached its maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
 				
 			if (KMessageBox::questionYesNo(0, msg, i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
 			{

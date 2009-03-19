@@ -219,7 +219,7 @@ namespace kt
 		
 		if (url.protocol() != "http")
 		{
-			KMessageBox::error(this,i18n("Only HTTP is supported for webseeding!"));
+			KMessageBox::error(this,i18n("Only HTTP is supported for webseeding."));
 			return;
 		}
 		

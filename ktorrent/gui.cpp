@@ -392,7 +392,7 @@ namespace kt
 		connect(stop_all_action,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
 		
 		paste_url_action = new KAction(KIcon(open_action->icon()),i18n("Open URL"),this);
-		paste_url_action->setToolTip(i18n("Open an URL which points to a torrent"));
+		paste_url_action->setToolTip(i18n("Open a URL which points to a torrent"));
 		paste_url_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);

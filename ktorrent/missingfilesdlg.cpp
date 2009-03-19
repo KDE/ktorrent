@@ -88,9 +88,9 @@ namespace kt
 			{
 				int ans = KMessageBox::No;
 				if ((bt::Uint32)dummy.count() == tc->getNumFiles())
-					ans = KMessageBox::questionYesNo(this,i18n("The data files are not present in the location you selected! Do you want to create all the files in the selected directory ?"));
+					ans = KMessageBox::questionYesNo(this,i18n("The data files are not present in the location you selected. Do you want to create all the files in the selected directory?"));
 				else
-					ans = KMessageBox::questionYesNo(this,i18n("Not all files were found in the new location; some are still missing! Do you want to create the missing files in the selected directory ?"));
+					ans = KMessageBox::questionYesNo(this,i18n("Not all files were found in the new location; some are still missing. Do you want to create the missing files in the selected directory?"));
 				
 				if (ans == KMessageBox::Yes)
 				{
@@ -119,7 +119,7 @@ namespace kt
 			QStringList dummy;
 			if (tc->hasMissingFiles(dummy))
 			{
-				if (KMessageBox::questionYesNo(this,i18n("The data file is not present in the location you selected! Do you want to create the file in the selected directory ?")) == KMessageBox::Yes)
+				if (KMessageBox::questionYesNo(this,i18n("The data file is not present in the location you selected. Do you want to create the file in the selected directory?")) == KMessageBox::Yes)
 				{
 					tc->recreateMissingFiles();
 					ret = NEW_LOCATION_SELECTED;

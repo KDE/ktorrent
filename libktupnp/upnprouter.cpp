@@ -149,7 +149,7 @@ namespace kt
 		bool ret = desc_parse.parse(st->data(),this);
 		if (!ret)
 		{
-			error = i18n("Error parsing router description !");
+			error = i18n("Error parsing router description.");
 		}
 		else
 		{
@@ -273,7 +273,7 @@ namespace kt
 		
 		if (!found)
 		{
-			error = i18n("Forwarding failed: \nDevice does not have a WANIPConnection or WANPPPConnection !");
+			error = i18n("Forwarding failed: \nDevice does not have a WANIPConnection or WANPPPConnection.");
 			Out(SYS_PNP|LOG_IMPORTANT) << error << endl;
 			updateGUI();
 		}

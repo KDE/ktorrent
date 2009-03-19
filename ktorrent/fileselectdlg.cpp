@@ -161,7 +161,7 @@ namespace kt
 			if (completed_files_found)
 			{
 				QString msg = i18n("Files of the torrent have been found in the completed downloads directory. "
-						"Do you want to use them, and download to the completed downloads directory ?");
+						"Do you want to use them, and download to the completed downloads directory?");
 			// better ask the user if (s)he wants to delete the already existing data
 				int ret = KMessageBox::questionYesNoList(0,msg,cf,QString::null);
 				if (ret == KMessageBox::Yes)
@@ -177,7 +177,7 @@ namespace kt
 		{
 			try
 			{
-				if (KMessageBox::questionYesNo(this,i18n("The directory %1 does not exist, do you want to create it ?",dn)) == KMessageBox::Yes)
+				if (KMessageBox::questionYesNo(this,i18n("The directory %1 does not exist, do you want to create it?",dn)) == KMessageBox::Yes)
 					MakePath(dn);	
 				else
 					return;
@@ -211,7 +211,7 @@ namespace kt
 		if (pe_ex.count() > 0)
 		{
 			QString msg = i18n("You have deselected the following existing files. "
-					"You will lose all data in these files, are you sure you want to do this ?");
+					"You will lose all data in these files, are you sure you want to do this?");
 			// better ask the user if (s)he wants to delete the already existing data
 			int ret = KMessageBox::warningYesNoList(0,msg,pe_ex,QString::null,
 								KGuiItem(i18n("Yes, delete the files")),

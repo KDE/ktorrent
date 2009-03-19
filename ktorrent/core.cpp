@@ -1179,7 +1179,7 @@ namespace kt
 		Uint32 num = mig.findTorrentsToBeMigrated();
 		if (num > 0)
 		{
-			if (KMessageBox::questionYesNo(gui,i18n("KTorrent has found %1 torrents from the KDE3 version of KTorrent, do you want to import them ?",num)) == KMessageBox::Yes)
+			if (KMessageBox::questionYesNo(gui,i18np("KTorrent has found a torrent from the KDE3 version of KTorrent, do you want to import it?", "KTorrent has found %1 torrents from the KDE3 version of KTorrent, do you want to import them?",num)) == KMessageBox::Yes)
 			{
 				mig.migrateFoundTorrents(qman);
 				foreach (const QString & s,mig.getSuccessFullImports())
@@ -1201,7 +1201,7 @@ namespace kt
 		}
 		else
 		{
-			KMessageBox::information(gui,i18n("No torrents from the KDE3 version were found !"));
+			KMessageBox::information(gui,i18n("No torrents from the KDE3 version were found."));
 		}
 	}
 	

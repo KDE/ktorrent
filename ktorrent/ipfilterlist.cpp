@@ -92,12 +92,12 @@ namespace kt
 		bt::Uint32 ip;
 		bt::Uint32 mask;
 		if (!decodeIP(str,ip,mask))
-			throw Error(i18n("Invalid IP address %1 !",str));
+			throw Error(i18n("Invalid IP address %1",str));
 		
 		foreach (const Entry & e,ip_list)
 		{
 			if (ip == e.ip && mask == e.mask)
-				throw Error(i18n("Duplicate IP address %1 !",str));
+				throw Error(i18n("Duplicate IP address %1",str));
 		}
 		
 		Entry e = {str,ip,mask};

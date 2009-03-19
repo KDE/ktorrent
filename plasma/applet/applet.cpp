@@ -149,9 +149,9 @@ namespace ktplasma
 		{
 			connected_to_app = engine->query("core").value("connected").toBool();
 			if (!connected_to_app)
-				title->setText(i18n("KTorrent is not running !"));
+				title->setText(i18n("KTorrent is not running."));
 			else
-				title->setText(i18n("No torrents loaded !"));
+				title->setText(i18n("No torrents loaded."));
 		}
 
 		engine->connectSource("core",this);
@@ -274,7 +274,7 @@ namespace ktplasma
 				}
 				else
 				{
-					title->setText(i18n("No torrents loaded !"));
+					title->setText(i18n("No torrents loaded."));
 					clearData();
 				}
 			}
@@ -282,7 +282,7 @@ namespace ktplasma
 			{
 				connected_to_app = false;
 				current_source = QString();
-				title->setText(i18n("KTorrent is not running !"));
+				title->setText(i18n("KTorrent is not running."));
 				clearData();
 			}
 		}

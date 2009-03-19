@@ -186,7 +186,7 @@ p, li { white-space: pre-wrap; }
            <string>Because rechecking big chunks can take a lot of time, the recheck can be disabled when the chunks are bigger then a certain size.</string>
           </property>
           <property name="text" >
-           <string>Don't recheck when chunks are bigger than</string>
+           <string>Do not recheck when chunks are bigger than</string>
           </property>
          </widget>
         </item>
