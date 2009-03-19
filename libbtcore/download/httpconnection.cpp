@@ -385,7 +385,7 @@ namespace bt
 				// we got redirected to somewhere else
 				if (!hdr.hasKey("Location"))
 				{
-					failure_reason = i18n("Redirected without a new location !");
+					failure_reason = i18n("Redirected without a new location.");
 					return false;
 				}
 				else

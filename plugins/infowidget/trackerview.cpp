@@ -98,7 +98,7 @@ namespace kt
 		// check for dupes
 		if (model->hasTracker(url))
 		{
-			KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b> !",m_tracker_to_add->text()));
+			KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b>.",m_tracker_to_add->text()));
 			return;
 		}
 		

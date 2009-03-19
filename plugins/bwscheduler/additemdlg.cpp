@@ -69,7 +69,7 @@ namespace kt
 		QList<int> cd = model->checkedDays();
 		if (cd.count() == 0)
 		{
-			KMessageBox::error(this,i18n("No day has been selected !"));
+			KMessageBox::error(this,i18n("No day has been selected."));
 			return;
 		}
 		
@@ -97,12 +97,12 @@ namespace kt
 		
 		if (failures == cd.count())
 		{
-			KMessageBox::error(this,i18n("Failed to add item, because it conflicts with another item on the schedule !"));	
+			KMessageBox::error(this,i18n("Failed to add item, because it conflicts with another item on the schedule."));	
 			QDialog::reject();
 		}
 		else if (failures > 0)
 		{
-			KMessageBox::sorry(this,i18n("This item could not be added to all selected days, because it conflicts with another item on the schedule !"));
+			KMessageBox::sorry(this,i18n("This item could not be added to all selected days, because it conflicts with another item on the schedule."));
 			QDialog::accept();
 		}
 		else

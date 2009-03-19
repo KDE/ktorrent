@@ -190,11 +190,11 @@ namespace kt
 		QDate last_updated = g.readEntry("last_updated",QDate());
 		
 		if (last_updated.isNull())
-			m_last_updated->setText(i18n("No update done yet!"));
+			m_last_updated->setText(i18n("No update done yet."));
 		else if (ok)
 			m_last_updated->setText(last_updated.toString());
 		else
-			m_last_updated->setText(i18n("%1 (Last update attempt failed!)",last_updated.toString()));
+			m_last_updated->setText(i18n("%1 (Last update attempt failed.)",last_updated.toString()));
 		
 		if (kcfg_autoUpdate->isChecked())
 		{

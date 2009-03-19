@@ -147,7 +147,7 @@ namespace kt
 			{
 				if (!url.contains("{searchTerms}"))
 				{
-					KMessageBox::error(this,i18n("The URL %s, does not contain {searchTerms} !",url));
+					KMessageBox::error(this,i18n("The URL %s, does not contain {searchTerms}.",url));
 				}
 				else
 				{

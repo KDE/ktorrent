@@ -155,7 +155,7 @@ namespace kt
 		{
 			Out(SYS_SYN|LOG_DEBUG) << "Couldn't find a valid link to a torrent on " << url.prettyUrl() << endl;
 			if (verbose)
-				KMessageBox::error(0,i18n("Couldn't find a valid link to a torrent on %1",url.prettyUrl()));
+				KMessageBox::error(0,i18n("Could not find a valid link to a torrent on %1",url.prettyUrl()));
 			
 			finished(false);
 			deleteLater();

@@ -196,7 +196,7 @@ namespace kt
 		Filter* tmp = filters->filterByName(m_name->text());
 		if (tmp && tmp != filter)
 		{
-			KMessageBox::error(this,i18n("There already is a filter named %1, filter names must be unique !",m_name->text()));
+			KMessageBox::error(this,i18n("There already is a filter named %1, filter names must be unique.",m_name->text()));
 			return;
 		}
 		applyOnFilter(filter);

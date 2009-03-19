@@ -141,7 +141,7 @@ namespace kt
 	{
 		if (status != Syndication::Success)
 		{
-			KMessageBox::error(tab,i18n("Failed to load feed %1 !",downloads[loader].prettyUrl()));
+			KMessageBox::error(tab,i18n("Failed to load feed %1.",downloads[loader].prettyUrl()));
 			downloads.remove(loader);
 			return;
 		}
