@@ -268,6 +268,22 @@ namespace bt
 		}
 	}
 	
+	
+#ifdef Q_WS_WIN
+	static QString NameForWindows(const QString & name)
+	{
+		QString ret = name;
+		char invalid[] = {'<','>',':','"','/','\\','|','?','*'};
+		for (int i = 0;i < 9;i++)
+		{
+			if (ret.contains(invalid[i]))
+				ret = ret.replace(invalid[i],'_');
+		}
+		
+		return ret;
+	}
+#endif
+
 	void Torrent::loadName(BValueNode* node)
 	{
 		if (!node || node->data().getType() != Value::STRING)
@@ -275,6 +291,9 @@ namespace bt
 		
 		unencoded_name = node->data().toByteArray();
 		name_suggestion = text_codec->toUnicode(unencoded_name);
+#ifdef Q_WS_WIN
+		name_suggestion = NameForWindows(name_suggestion);
+#endif
 	}
 	
 	void Torrent::loadAnnounceList(BNode* node)
