@@ -37,6 +37,20 @@
 
 namespace bt
 {
+#ifdef Q_WS_WIN
+	static QString NameForWindows(const QString & name)
+	{
+		QString ret = name;
+		char invalid[] = {'<','>',':','"','/','\\','|','?','*'};
+		for (int i = 0;i < 9;i++)
+		{
+			if (ret.contains(invalid[i]))
+				ret = ret.replace(invalid[i],'_');
+		}
+		
+		return ret;
+	}
+#endif
 
 	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0),tmon(0)
 	{
@@ -141,6 +155,9 @@ namespace bt
 		loadHash(dict);
 		unencoded_name = dict->getByteArray("name");
 		name_suggestion = text_codec->toUnicode(unencoded_name);
+#ifdef Q_WS_WIN
+		name_suggestion = NameForWindows(name_suggestion);
+#endif
 		BValueNode* n = dict->getValue("private");
 		if (n && n->data().toInt() == 1)
 			priv_torrent = true;
@@ -225,7 +242,7 @@ namespace bt
 			hash_pieces.append(hash);
 		}
 	}
-	
+
 	void Torrent::loadAnnounceList(BNode* node)
 	{
 		if (!node)
@@ -358,8 +375,6 @@ namespace bt
 		}
 		return count;
 	}
-	
-	
 
 	void Torrent::calcChunkPos(Uint32 chunk,QList<Uint32> & file_list) const
 	{
@@ -469,6 +484,9 @@ namespace bt
 			f.changeTextCodec(codec);
 		}
 		name_suggestion = text_codec->toUnicode(unencoded_name);
+#ifdef Q_WS_WIN
+		name_suggestion = NameForWindows(name_suggestion);
+#endif
 	}
 	
 	void Torrent::downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority)

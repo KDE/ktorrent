@@ -103,4 +103,10 @@ namespace net
 
 }
 
+#ifdef Q_CC_MSVC
+#include <QHash>
+inline uint qHash(const net::Port & port) {return qHash((uint)port.number);}
+#endif
+
+
 #endif
