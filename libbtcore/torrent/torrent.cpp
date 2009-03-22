@@ -560,6 +560,9 @@ namespace bt
 			f.changeTextCodec(codec);
 		}
 		name_suggestion = text_codec->toUnicode(unencoded_name);
+#ifdef Q_WS_WIN
+		name_suggestion = NameForWindows(name_suggestion);
+#endif
 	}
 	
 	void Torrent::downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority)
