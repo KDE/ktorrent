@@ -188,10 +188,11 @@ namespace kt
 			if (node->getType() != BNode::LIST)
 				throw bt::Error("Toplevel node not a list");
 			
-			BListNode* l = (BListNode*)node;
-			for (int i = 0;i < l->getNumChildren() - 1;i++)
+			BListNode* const l = (BListNode*)node;
+			const int lNumChildrenMinusOne = l->getNumChildren() - 1;
+			for (int i = 0;i < lNumChildrenMinusOne;++i)
 			{
-				BDictNode* d = l->getDict(i);
+				BDictNode* const d = l->getDict(i);
 				ShutdownRule rule;
 				rule.action = (Action)d->getInt("Action");
 				rule.target = (Target)d->getInt("Target");
@@ -199,8 +200,8 @@ namespace kt
 				rule.tc = 0;
 				if (d->getValue("Torrent"))
 				{
-					QByteArray hash = d->getByteArray("Torrent");
-					bt::TorrentInterface* tc = torrentForHash(hash);
+					const QByteArray hash = d->getByteArray("Torrent");
+					bt::TorrentInterface* const tc = torrentForHash(hash);
 					if (tc)
 						rule.tc = tc;
 					else
@@ -209,7 +210,7 @@ namespace kt
 				rules.append(rule);
 			}
 			
-			on = l->getInt(l->getNumChildren() - 1) == 1;
+			on = (l->getInt(lNumChildrenMinusOne) == 1);
 		}
 		catch (bt::Error & err)
 		{
