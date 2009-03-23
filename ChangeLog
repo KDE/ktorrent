@@ -36,7 +36,8 @@ Changes in 3.2.1 :
 - In webinterface clear torrent details before updating the table to prevent an old file list being shown
 - Fix webseeding crash (184986)
 - Fix several webseeding bugs
-- Check for invalid characters (for windows that is) in torrent name on windows (187373)
+- Check for invalid characters (for windows that is) in torrent name on windows (187373) 
+- Fix webseeding crash caused by wrong chunk range (187882)
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
