@@ -315,9 +315,12 @@ namespace bt
 			
 			status = i18n("Connection closed");
 			chunkStopped();
-			// lets try this again
-			download(cur_chunk,last_chunk);
-			status = conn->getStatusString();
+			if (last_chunk < tor.getNumChunks())
+			{
+				// lets try this again if we have not yet got the full range
+				download(cur_chunk,last_chunk);
+				status = conn->getStatusString();
+			}
 		}
 		else if (conn->isRedirected())
 		{
