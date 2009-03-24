@@ -1,4 +1,5 @@
 #!/usr/bin/env kross
+# -*- coding: utf-8 -*-
 import KTorrent
 import KTScriptingPlugin
 import Kross
@@ -51,7 +52,7 @@ class AutoResume:
 		dialog = forms.createDialog("Auto Resume Settings")
 		dialog.setButtons("Ok|Cancel")
 		page = dialog.addPage("Auto Resume","Auto Resume","kt-bandwidth-scheduler")
-		widget = forms.createWidgetFromUIFile(page,KTScriptingPlugin.scriptsDir() + "auto_resume/auto_resume.ui")
+		widget = forms.createWidgetFromUIFile(page,KTScriptingPlugin.scriptDir("auto_resume") + "auto_resume.ui")
 		widget["auto_resume"].checked = self.auto_resume
 		widget["hours"].value = self.hours
 		widget["minutes"].value = self.minutes

@@ -44,6 +44,9 @@ namespace kt
 		/// Get the scripts directory
 		QString scriptsDir() const;
 		
+		/// Get the data directory of a script
+		QString scriptDir(const QString & script) const;
+		
 		/// Read a config entry
 		QString readConfigEntry(const QString & group,const QString & name,const QString & default_value);
 		int readConfigEntryInt(const QString & group,const QString & name,int default_value);
