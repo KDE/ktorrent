@@ -55,6 +55,19 @@ namespace kt
 		return ret;
 	}
 	
+	QString ScriptingModule::scriptDir(const QString & script) const
+	{
+		QStringList dirs = KGlobal::dirs()->findDirs("data", "ktorrent/scripts/" + script);
+		if (dirs.count() == 0)
+			return QString();
+		
+		QString ret = dirs.front();
+		if (!ret.endsWith(bt::DirSeparator()))
+			ret += bt::DirSeparator();
+		
+		return ret;
+	}
+	
 	QString ScriptingModule::readConfigEntry(const QString & group,const QString & name,const QString & default_value)
 	{
 		KConfigGroup g = KGlobal::config()->group(group);

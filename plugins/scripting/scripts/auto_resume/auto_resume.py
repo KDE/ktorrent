@@ -53,7 +53,7 @@ class AutoResume:
 		dialog = forms.createDialog(t.i18n("Auto Resume Settings"))
 		dialog.setButtons("Ok|Cancel")
 		page = dialog.addPage(t.i18n("Auto Resume"),t.i18n("Auto Resume"),"kt-bandwidth-scheduler")
-		widget = forms.createWidgetFromUIFile(page,KTScriptingPlugin.scriptsDir() + "auto_resume/auto_resume.ui")
+		widget = forms.createWidgetFromUIFile(page,KTScriptingPlugin.scriptDir("auto_resume") + "auto_resume.ui")
 		widget["auto_resume"].checked = self.auto_resume
 		widget["hours"].value = self.hours
 		widget["minutes"].value = self.minutes

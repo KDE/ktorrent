@@ -105,7 +105,7 @@ class EMailNotifier:
 		dialog = forms.createDialog(t.i18n("E-Mail Script Settings"))
 		dialog.setButtons("Ok|Cancel")
 		page = page = dialog.addPage(t.i18n("E-Mail Settings"),t.i18n("E-Mail Settings"),"mail-send")
-		widget = forms.createWidgetFromUIFile(page,KTScriptingPlugin.scriptsDir() + "email_notifications/emailconfig.ui")
+		widget = forms.createWidgetFromUIFile(page,KTScriptingPlugin.scriptDir("email_notifications") + "emailconfig.ui")
 		widget["username"].text = self.mail_user
 		widget["password"].text = self.mail_pwd
 		widget["server"].text = self.mail_server
