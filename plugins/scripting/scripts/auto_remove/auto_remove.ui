@@ -1,0 +1,41 @@
+<ui version="4.0" >
+ <class>AutoRemoveConfig</class>
+ <widget class="QWidget" name="AutoRemoveConfig" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>366</width>
+    <height>81</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Auto Resume Settings</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>Auto remove a torrent when:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="finish_downloading" >
+     <property name="text" >
+      <string>The torrent finishes downloading</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="finish_seeding" >
+     <property name="text" >
+      <string>The torrent finishes seeding</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
