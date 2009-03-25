@@ -27,6 +27,7 @@ Name[zh_TW]=ZeroConf 外掛程式
 Comment=Plugin to discover peers on the local network using the zeroconf protocol
 Comment[bg]=Откриване на потребители в локалната мрежа чрез протокола "zeroconf"
 Comment[ca]=Connector per a descobrir parells a la xarxa local usant el protocol zeroconf
+Comment[cs]=Modul pro hledání protějšků na lokální síti s pomocí protokolu zeroconf
 Comment[da]=Plugin til at finde peers på lokalnetværket ved brug af zeroconf-protokollen
 Comment[de]=Gegenstellen im lokalen Netzwerk unter Verwendung des Zeroconf-Protokolls auffinden
 Comment[el]=Πρόσθετο για τον εντοπισμό υπολογιστών στο τοπικό δίκτυο με χρήση του πρωτοκόλλου zeroconf

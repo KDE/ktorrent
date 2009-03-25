@@ -7,6 +7,7 @@ Name[sv]=Ktorrent
 Name[x-test]=xxKTorrentxx
 Comment=KTorrent data engine, for getting information from ktorrent
 Comment[ca]=Motor de dades del KTorrent, per obtenir informació del ktorrent
+Comment[cs]=Datový nástroj KTorrentu pro získání informací z ktorrentu
 Comment[da]=KTorrrent datamotor, til at hente information fra KTorrent
 Comment[de]=KTorrent-Datenmodul zum Abrufen von Informationen von KTorrent
 Comment[el]=Μηχανή δεδομένων KTorrent, για τη λήψη πληροφοριών από το ktorrent
