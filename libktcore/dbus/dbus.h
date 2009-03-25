@@ -78,6 +78,9 @@ namespace kt
 		/// Remove a torrent
 		Q_SCRIPTABLE void remove(const QString & info_hash,bool data_to);
 		
+		/// Remove a torrent delayed (should be used from signal handlers)
+		Q_SCRIPTABLE void removeDelayed(const QString & info_hash,bool data_to);
+		
 		/// Set the paused state
 		Q_SCRIPTABLE void setPaused(bool pause);
 		
@@ -121,6 +124,7 @@ namespace kt
 		void torrentStoppedByError(bt::TorrentInterface* tc, QString msg);
 		void groupAdded(Group* g);
 		void groupRemoved(Group* g);
+		void delayedTorrentRemoval();
 
 	 Q_SIGNALS: 
 		/// DBus signal emitted when a torrent has been added
@@ -147,6 +151,7 @@ namespace kt
 		CoreInterface* core;
 		bt::PtrMap<QString,DBusTorrent> torrent_map;
 		bt::PtrMap<Group*,DBusGroup> group_map;
+		QMap<QString,bool> delayed_removal_map;
 		
 		typedef bt::PtrMap<QString,DBusTorrent>::iterator DBusTorrentItr;
 		typedef bt::PtrMap<Group*,DBusGroup>::iterator DBusGroupItr;

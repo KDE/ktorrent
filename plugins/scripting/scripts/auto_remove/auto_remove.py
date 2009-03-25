@@ -13,34 +13,25 @@ class AutoRemove:
 		self.remove_on_finish_downloading = False
 		self.remove_on_finish_seeding = False
 		self.timer = KTScriptingPlugin.createTimer(True)
-		self.timer.connect('timeout()',self.timerFired)
-		self.to_remove = []
 		KTorrent.connect("torrentAdded(const QString &)",self.torrentAdded)
 		tors = KTorrent.torrents()
 		# bind to signals for each torrent
 		for t in tors:
 			self.torrentAdded(t)
 		
-	def timerFired(self):
-		for ih in self.to_remove:
-			KTorrent.remove(ih,False)
-		self.to_remove = []
-		
 		
 	def torrentFinished(self,tor):
 		KTorrent.log("Torrent finished %s" % tor.name())
 		if self.remove_on_finish_downloading:
 			KTorrent.log("Removing %s" % tor.name())
-			self.to_remove.append(tor.infoHash())
-			self.timer.start(500)
+			KTorrent.removeDelayed(tor.infoHash(),False)
 			
 			
 	def seedingAutoStopped(self,tor,reason):
 		KTorrent.log("Torrent finished seeding %s" % tor.name())
 		if self.remove_on_finish_seeding:
 			KTorrent.log("Removing %s" % tor.name())
-			self.to_remove.append(tor.infoHash())
-			self.timer.start(500)
+			KTorrent.removeDelayed(tor.infoHash(),False)
 	
 	def torrentAdded(self,ih):
 		tor = KTorrent.torrent(ih)
@@ -69,8 +60,6 @@ class AutoRemove:
 			self.remove_on_finish_seeding = widget["finish_seeding"].checked 
 			self.remove_on_finish_downloading = widget["finish_downloading"].checked
 			self.save()
-			if self.auto_resume and KTorrent.paused():
-				self.startTimer()
 
 
 ar = AutoRemove()

@@ -30,6 +30,7 @@
 #include <interfaces/guiinterface.h>
 #include "dbustorrent.h"
 #include "dbusgroup.h"
+#include <QTimer>
 
 using namespace bt;
 
@@ -234,6 +235,20 @@ namespace kt
 			return;
 
 		core->remove(tc->torrent(),data_to);
+	}
+	
+	void DBus::removeDelayed(const QString& info_hash, bool data_to) 
+	{
+		delayed_removal_map.insert(info_hash,data_to);
+		QTimer::singleShot(500,this,SLOT(delayedTorrentRemoval()));
+	}
+	
+	void DBus::delayedTorrentRemoval() 
+	{
+		for (QMap<QString,bool>::iterator i = delayed_removal_map.begin();i != delayed_removal_map.end();i++)
+			remove(i.key(),i.value());
+		
+		delayed_removal_map.clear();
 	}
 	
 	void DBus::setPaused(bool pause)
