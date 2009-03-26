@@ -28,6 +28,7 @@ Comment[cs]=Plugin pro specifikaci pořadí stahováných souborů v KTorrentu u
 Comment[da]=Plugin til KTorrent til at angive downloadrækkefølgen for en torrent med flere filer
 Comment[de]=Download-Reihenfolge bei Torrents, die aus mehreren Dateien bestehen, festlegen
 Comment[el]=Πρόσθετο για τον καθορισμό της σειράς λήψης ενός πολλαπλού αρχείου torrent για το KTorrent
+Comment[en_GB]=Plugin to specify the download order of a multi-file torrent for KTorrent
 Comment[es]=Complemento de KTorrent para indicar el orden de descarga de un torrent de varios archivos
 Comment[et]=Plugin mitmest failist koosneva torrenti failide allalaadimiseks kasutaja määratud järjekorras
 Comment[gl]=Unha extensión para KTorrent que especifica a orden na que se obterá un torrente con varios ficheiros
