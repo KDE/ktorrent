@@ -15,6 +15,7 @@ Changes in 3.3 :
 - Added shutdown plugin (182050)
 - Add comment to applet desktop file and rename the applet to just KTorrent (183825)
 - Added automatic torrent removal script
+- The scripting plugin now supports script packages
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed

@@ -24,7 +24,10 @@
 #include <kross/core/manager.h>
 #include <kross/core/actioncollection.h>
 #include <util/fileops.h>
+#include <util/log.h>
 #include "script.h"
+
+using namespace bt;
 
 namespace kt
 {
@@ -46,7 +49,7 @@ namespace kt
 	{
 		KDesktopFile df(dir + desktop_file);
 		// check if everything is OK
-		if (df.readType() != "KTorrentScript")
+		if (df.readType().trimmed() != "KTorrentScript")
 			return false;
 		
 		info.name = df.readName();

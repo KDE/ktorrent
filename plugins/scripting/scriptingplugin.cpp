@@ -24,6 +24,7 @@
 #include <kfiledialog.h>
 #include <kmainwindow.h>
 #include <kstandarddirs.h>
+#include <kmessagebox.h>
 #include <kio/copyjob.h>
 #include <kross/core/manager.h>
 #include <kross/core/interpreter.h>
@@ -99,6 +100,11 @@ namespace kt
 
 	void ScriptingPlugin::load()
 	{
+		// make sure script dir exists
+		QString script_dir = kt::DataDir() + "scripts" + bt::DirSeparator();
+		if (!bt::Exists(script_dir))
+			bt::MakeDir(script_dir,true);
+		
 		LogSystemManager::instance().registerSystem(i18n("Scripting"),SYS_SCR);
 		model = new ScriptModel(this);
 		connect(model,SIGNAL(showPropertiesDialog(Script*)),this,SLOT(showProperties(Script*)));
@@ -140,9 +146,13 @@ namespace kt
 			{
 				if (sdir != ".." && sdir != ".")
 				{
-					Script* s = loadScriptDir(d.absoluteFilePath(sdir));
+					QString absolute_path = d.absoluteFilePath(sdir);
+					Script* s = loadScriptDir(absolute_path);
 					if (s)
-						s->setRemoveable(false);
+					{
+						// Scripts in the home directory can be deleted
+						s->setRemoveable(absolute_path.startsWith(kt::DataDir()));
+					}
 				}
 			}
 		}
@@ -154,7 +164,16 @@ namespace kt
 		{
 			Out(SYS_SCR|LOG_DEBUG) << "Loading script " << s << endl;
 			if (bt::Exists(s))
-				model->addScript(s);
+			{
+				try
+				{
+					model->addScript(s);
+				}
+				catch (bt::Error & err)
+				{
+					getGUI()->errorMsg(err.toString());
+				}
+			}
 		}
 		
 		// Start scripts which where running the previous time
@@ -194,31 +213,30 @@ namespace kt
 	
 	void ScriptingPlugin::addScript()
 	{
-		QString filter = "*.rb *.py *.js | " + i18n("Scripts") + "\n* |" + i18n("All files");
+		QString filter = "*.tar.gz *.tar.bz2 *.zip | " + i18n("KTorrent Script Packages") + 
+			"\n *.rb *.py *.js | " + i18n("Scripts") + 
+			"\n* |" + i18n("All files");
+			
 		KUrl url = KFileDialog::getOpenUrl(KUrl("kfiledialog:///addScript"),filter,getGUI()->getMainWindow());
 		if (!url.isValid())
 			return;
 
-		if (url.isLocalFile())
+		try
 		{
-			model->addScript(url.pathOrUrl());
-		}
-		else
-		{
-			try
+			if (url.isLocalFile())
 			{
-				// make sure script dir exists
+				model->addScript(url.pathOrUrl());
+			}
+			else
+			{
 				QString script_dir = kt::DataDir() + "scripts" + bt::DirSeparator();
-				if (!bt::Exists(script_dir))
-					bt::MakeDir(script_dir);
-
 				KIO::CopyJob* j = KIO::copy(url,KUrl(script_dir + url.fileName()));
 				connect(j,SIGNAL(result(KJob*)),this,SLOT(scriptDownloadFinished( KJob* )));
 			}
-			catch (bt::Error & err)
-			{
-				getGUI()->errorMsg(err.toString());
-			}
+		}
+		catch (bt::Error & err)
+		{
+			getGUI()->errorMsg(err.toString());
 		}
 	}
 	
@@ -231,14 +249,38 @@ namespace kt
 		}
 		else
 		{
-			QString script_dir = kt::DataDir() + "scripts" + bt::DirSeparator();
-			model->addScript(script_dir + j->destUrl().fileName());
+			try
+			{
+				QString script_dir = kt::DataDir() + "scripts" + bt::DirSeparator();
+				model->addScript(script_dir + j->destUrl().fileName());
+			}
+			catch (bt::Error & err)
+			{
+				getGUI()->errorMsg(err.toString());
+			}
 		}
 	}
 	
 	void ScriptingPlugin::removeScript()
 	{
-		model->removeScripts(sman->selectedScripts());
+		QStringList scripts_to_delete;
+		QModelIndexList indices = sman->selectedScripts();
+		foreach (const QModelIndex & idx,indices)
+		{
+			Script* s = model->scriptForIndex(idx);
+			if (s && !s->packageDirectory().isEmpty())
+				scripts_to_delete.append(s->name());
+		}
+		
+		if (scripts_to_delete.count() > 0)
+		{
+			QString msg = i18n("Removing these scripts will fully delete them from your disk. "
+								"Are you sure you want to do this ?");
+			if (KMessageBox::questionYesNoList(getGUI()->getMainWindow(),msg,scripts_to_delete) != KMessageBox::Yes)
+				return;
+		}
+		
+		model->removeScripts(indices);
 		saveScripts();
 		sman->updateActions(sman->selectedScripts());
 	}

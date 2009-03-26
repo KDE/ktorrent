@@ -20,8 +20,17 @@
  ***************************************************************************/
 #include <kicon.h>
 #include <klocale.h>
+#include <kmimetype.h>
+#include <ktar.h>
+#include <kzip.h>
+#include <util/error.h>
+#include <util/log.h>
+#include <interfaces/functions.h>
 #include "scriptmodel.h"
 #include "script.h"
+#include <util/fileops.h>
+
+using namespace bt;
 
 namespace kt
 {
@@ -38,14 +47,38 @@ namespace kt
 	
 	void ScriptModel::addScript(const QString & file)
 	{
-		// make sure we don't add dupes
-		foreach (Script* s,scripts)
-			if (s->scriptFile() == file)
-				return;
+		Out(SYS_SCR|LOG_NOTICE) << "Adding script from " << file << endl;
+		KMimeType::Ptr ptr = KMimeType::findByPath(file);
+		if (!ptr)
+			return;
 		
-		Script* s = new Script(file,this);
-		scripts.append(s);
-		insertRow(scripts.count());
+		bool is_tar = ptr->name() == "application/x-compressed-tar" || ptr->name() == "application/x-bzip-compressed-tar";
+		bool is_zip = ptr->name() == "application/zip";
+		if (is_tar || is_zip)
+		{
+			// It's a package
+			if (is_tar)
+			{
+				KTar tar(file);
+				addScriptFromArchive(&tar);
+			}
+			else
+			{
+				KZip zip(file);
+				addScriptFromArchive(&zip);
+			}
+		}
+		else
+		{
+			// make sure we don't add dupes
+			foreach (Script* s,scripts)
+				if (s->scriptFile() == file)
+					return;
+			
+			Script* s = new Script(file,this);
+			scripts.append(s);
+			insertRow(scripts.count() - 1);
+		}
 	}
 	
 	Script* ScriptModel::addScriptFromDesktopFile(const QString & dir,const QString & desktop_file)
@@ -67,10 +100,60 @@ namespace kt
 			}
 		}
 		
+		s->setPackageDirectory(dir);
 		scripts.append(s);
-		insertRow(scripts.count());
+		insertRow(scripts.count() - 1);
 		return s;
 	}
+	
+	void ScriptModel::addScriptFromArchive(KArchive* archive) 
+	{
+		if (!archive->open(QIODevice::ReadOnly))
+			throw bt::Error(i18n("Cannot open archive for reading !"));
+			
+		const KArchiveDirectory* dir = archive->directory();
+		if (!dir)
+			throw bt::Error(i18n("Invalid archive !"));
+		
+		QStringList entries = dir->entries();
+		foreach (const QString & e,entries)
+		{
+			const KArchiveEntry* entry = dir->entry(e);
+			if (entry && entry->isDirectory())
+			{
+				addScriptFromArchiveDirectory((const KArchiveDirectory*)entry);
+			}
+		}
+	}
+	
+	void ScriptModel::addScriptFromArchiveDirectory(const KArchiveDirectory* dir) 
+	{
+		QStringList files = dir->entries();
+		foreach (const QString & file,files)
+		{
+			// look for the desktop file
+			if (!file.endsWith(".desktop") && !file.endsWith(".DESKTOP"))
+				continue;
+			
+			// check for duplicate packages
+			QString dest_dir = kt::DataDir() + "scripts/" + dir->name() + "/";
+			foreach (Script* s,scripts)
+			{
+				if (s->packageDirectory() == dest_dir)
+					throw bt::Error(i18n("There is already a script package named %1 installed.",dir->name()));
+			}
+			
+			// extract to the scripts dir
+			dir->copyTo(dest_dir,true);
+			if (!addScriptFromDesktopFile(dest_dir,file))
+				throw bt::Error(i18n("Failed to load script from archive. There is something wrong with the desktop file."));
+			
+			return;
+		}
+		
+		throw bt::Error(i18n("No script found in archive !"));
+	}
+
 	
 	int ScriptModel::rowCount(const QModelIndex & parent) const
 	{
@@ -216,6 +299,8 @@ namespace kt
 		
 		foreach (Script* s,to_remove)
 		{
+			if (!s->packageDirectory().isEmpty())
+				bt::Delete(s->packageDirectory(),true);
 			scripts.removeAll(s);
 			s->stop();
 			s->deleteLater();

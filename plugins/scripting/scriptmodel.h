@@ -1,3 +1,4 @@
+class KArchiveDirectory;
 /***************************************************************************
  *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
@@ -23,6 +24,8 @@
 
 #include <QAbstractListModel>
 
+class KArchive;
+class KArchiveDirectory;
 
 namespace kt
 {
@@ -81,6 +84,9 @@ namespace kt
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+	private:
+		void addScriptFromArchive(KArchive* archive);
+		void addScriptFromArchiveDirectory(const KArchiveDirectory* dir);
 		
 	signals:
 		void showPropertiesDialog(Script* s);

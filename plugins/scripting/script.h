@@ -93,6 +93,12 @@ namespace kt
 		/// Get the file
 		QString scriptFile() const {return file;}
 		
+		/// Get the package directory, this returns an empty string if the script is just a file
+		QString packageDirectory() const {return package_directory;}
+		
+		/// Set the package directory
+		void setPackageDirectory(const QString & dir) {package_directory = dir;}
+		
 		/// Get the meta info of the script
 		const MetaInfo & metaInfo() const {return info;}
 		
@@ -114,6 +120,7 @@ namespace kt
 		bool executing;
 		MetaInfo info;
 		bool can_be_removed;
+		QString package_directory;
 	};
 
 }
