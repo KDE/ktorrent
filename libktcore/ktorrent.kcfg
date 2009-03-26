@@ -42,7 +42,7 @@
 			<min>0</min>
 		</entry>
 		<entry name="maxRatio" type="Double">
-         		<label>Maximum share ratio(0 = no limit)</label>
+         		<label>Maximum share ratio (0 = no limit)</label>
 		        <default>0</default>
          		<min>0</min>
       		</entry>
@@ -242,7 +242,7 @@
 			<default>false</default>
 		</entry>
 		<entry name="minDiskSpace" type="Int">
- 			<label>When there's no space left to complete download and free diskspace is less than minDiskSpace, torrent will be stopped.</label>
+ 			<label>When there is no space left to complete download, and the available disk space is less than this value, the torrent will be stopped.</label>
  			<default>100</default>
  			<min>10</min>
  			<max>10000</max>
