@@ -17,7 +17,7 @@
 
 <div id="header">
 	<div id="logout">
-		<img src="/icon?name=system-log-out&size=1" alt="logout" /> <a href="/logout">Sign out</a>
+		<img src="icon?name=system-log-out&size=1" alt="logout" /> <a href="logout">Sign out</a>
 	</div>
 
 	<a href="coldmilk.html">
@@ -26,20 +26,20 @@
 
 	<ul>
 		<li>
-			<img src="/icon?name=folder&size=1" alt="icon" /> 
+			<img src="icon?name=folder&size=1" alt="icon" /> 
 			<a href="javascript:show('torrent_list');">Torrents</a>
 		</li>
 		<li>
-			<img src="/icon?name=preferences-other&size=1" alt="icon" /> 
+			<img src="icon?name=preferences-other&size=1" alt="icon" /> 
 			<a href="javascript:show('preferences');">Preferences</a>
 		</li>
 		
 		<li>
-			<img src="/icon?name=document-open&size=1" alt="icon" /> 
+			<img src="icon?name=document-open&size=1" alt="icon" /> 
 			<a href="javascript:show('torrent_add');">Add torrent</a>
 		</li>
 		<li>
-			<img src="/icon?name=system-shutdown&size=1" alt="exit" />
+			<img src="icon?name=system-shutdown&size=1" alt="exit" />
 			<a href="javascript:show('action');">Leave</a>
 		</li>
 	</ul>
@@ -59,13 +59,13 @@
 	<div id="bottom-menu">
 	<ul>
 		<li>
-			<img src="/icon?name=kt-start-all&size=1" alt="" />
+			<img src="icon?name=kt-start-all&size=1" alt="" />
 			<span>
 				<a href="javascript:do_action('startall=true')">Start All</a>
 			</span> 
 		</li>
 		<li>
-			<img src="/icon?name=kt-stop-all&size=1" alt="" />
+			<img src="icon?name=kt-stop-all&size=1" alt="" />
 			<span>
 				<a href="javascript:do_action('stopall=true')">Stop All</a>
 			</span> 
@@ -92,7 +92,7 @@
 	<h2>Preferences</h2>
 	<div class="simple_form">
 	<form method="get" action="javascript:submit_settings(redirect_to_login); update_settings(redirect_to_login);" id="settings_form">
-		<img src="/icon?name=preferences-other&size=5" alt="" />
+		<img src="icon?name=preferences-other&size=5" alt="" />
 
 		<h2>Downloads</h2>
 
@@ -161,7 +161,7 @@
 	<h2>Add a torrent</h2>
 
 	<div class="simple_form">
-		<img src="/icon?name=document-open&size=5" alt="" />
+		<img src="icon?name=document-open&size=5" alt="" />
 		<h3>Load a torrent</h3>
 
 		<form action="javascript:load_url(); update_all(); show('torrent_list');" method="get">
@@ -180,7 +180,7 @@
 
 		<h3 style="margin-top : 6em;">Upload a torrent</h3>
 
-		<form action="/torrent/load?page=coldmilk.html" method="post" enctype="multipart/form-data">
+		<form action="torrent/load?page=coldmilk.html" method="post" enctype="multipart/form-data">
 		<div class="item" style="min-height : 5em;">
 			File path:
 			<div class="option">
@@ -204,13 +204,13 @@
 	<h2 style="margin-top : 0; padding-top : 0;">Leave</h2>
 	<ul>
 		<li>
-			<img src="/icon?name=system-log-out&size=5" alt="sign out" />
+			<img src="icon?name=system-log-out&size=5" alt="sign out" />
 			<span style="margin-left : 52px;">
 			<a href="login.html">Sign out</a></span>
 		</li>
 
 		<li>
-			<img src="/icon?name=application-exit&size=5" alt="quit" />
+			<img src="icon?name=application-exit&size=5" alt="quit" />
 			<span style="margin-left : 52px;">
 				<a href="javascript:shutdown();" onclick="return validate('quit_program')">
 					Quit program

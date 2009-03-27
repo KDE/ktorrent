@@ -22,7 +22,7 @@ function clear_torrent_details()
 function update_torrent_details(tor)
 {
 	current_torrent = tor;
-	fetch_xml("/data/torrent/files.xml?torrent=" + tor,update_torrent_details_table,show_error);
+	fetch_xml("data/torrent/files.xml?torrent=" + tor,update_torrent_details_table,show_error);
 }
 
 function update_torrent_details_table(xmldoc)
@@ -62,16 +62,16 @@ function file_row(element,table,i)
 	var file_status = element.getElementsByTagName('priority')[0].firstChild.data;
 	var command = '';
 	command = (file_status==20 || file_status==10) ? '' : "file_stop=" + current_torrent + "-" +i;
-	actions.appendChild(create_priority_button("Only Seed","/only_seed.png",command));
+	actions.appendChild(create_priority_button("Only Seed","only_seed.png",command));
 	
 	command = (file_status==30) ? '' : "file_lp=" + current_torrent + "-" +i;
-	actions.appendChild(create_priority_button("Low Priority","/low_priority.png",command));
+	actions.appendChild(create_priority_button("Low Priority","low_priority.png",command));
 	
 	command = (file_status==40) ? '' : "file_np=" + current_torrent + "-" +i;
-	actions.appendChild(create_priority_button("Normal Priority","/normal_priority.png",command));
+	actions.appendChild(create_priority_button("Normal Priority","normal_priority.png",command));
 	
 	command = (file_status==50) ? '' : "file_hp=" + current_torrent + "-" +i;
-	actions.appendChild(create_priority_button("High Priority","/high_priority.png",command));
+	actions.appendChild(create_priority_button("High Priority","high_priority.png",command));
 	
 	actions.setAttribute("align","center");
 	file.appendChild(get_text(element,"path"));

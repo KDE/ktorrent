@@ -37,8 +37,8 @@ function redirect_to_login()
 
 function update_all() 
 {
-	fetch_xml("/data/global.xml",update_status_bar_and_title,redirect_to_login);
-	fetch_xml("/data/torrents.xml",update_torrent_table,redirect_to_login);
+	fetch_xml("data/global.xml",update_status_bar_and_title,redirect_to_login);
+	fetch_xml("data/torrents.xml",update_torrent_table,redirect_to_login);
 	update_settings(redirect_to_login);
 }
 
@@ -132,9 +132,9 @@ function _torrent_table_row(torrent, table, i)
 		var cell = row.insertCell(0);
 		var can_start = (_get_text(torrent, 'running').data == "1") ? 0 : 1; //if torrent is running we can't start it
 		var can_stop = (can_start==1) ? 0 : 1; //opposite of can_start
-		var start_button  = _create_action_button('Start', '/icon?name=kt-start&size=1', (can_start==1) ? 'start='+i : '');
-		var stop_button   = _create_action_button('Stop', '/icon?name=kt-stop&size=1', (can_stop==1) ? 'stop='+i : '');
-		var remove_button = _create_action_button('Remove', '/icon?name=kt-remove&size=1', 'remove='+i);
+		var start_button  = _create_action_button('Start', 'icon?name=kt-start&size=1', (can_start==1) ? 'start='+i : '');
+		var stop_button   = _create_action_button('Stop', 'icon?name=kt-stop&size=1', (can_stop==1) ? 'stop='+i : '');
+		var remove_button = _create_action_button('Remove', 'icon?name=kt-remove&size=1', 'remove='+i);
 		remove_button.setAttribute("onclick", "return validate('remove_torrent')");
 		
 		cell.appendChild(start_button);
@@ -157,7 +157,7 @@ function _torrent_table_row(torrent, table, i)
 			file.onclick = function()
 			{
 				show('torrents_details');
-				fetch_xml("/data/torrent/files.xml?torrent="+i, get_torrents_details,redirect_to_login);
+				fetch_xml("data/torrent/files.xml?torrent="+i, get_torrents_details,redirect_to_login);
 				details_of_torrent = i;
 			};
 			cell.appendChild(file);
@@ -223,7 +223,7 @@ function _torrent_table_row(torrent, table, i)
 function just_refresh_details(xmldoc) 
 {
 	if (details_of_torrent!=null)
-		fetch_xml("/data/torrent/files.xml?torrent="+details_of_torrent,get_torrents_details,redirect_to_login);
+		fetch_xml("data/torrent/files.xml?torrent="+details_of_torrent,get_torrents_details,redirect_to_login);
 }
 
 function get_torrents_details(xmldoc) 
@@ -244,19 +244,19 @@ function get_torrents_details(xmldoc)
 		var command; //we call ?file_xx - this call is detected by server and priority is being changed
 
 		command = (file_status==50)?'':"javascript:do_action('file_hp=" + id + "-" + i + "');";
-		var high_prior = _create_file_action_button('/high_priority.png', 'High Priority', command);
+		var high_prior = _create_file_action_button('high_priority.png', 'High Priority', command);
 		cell.appendChild(high_prior);
 
 		command = (file_status==40)?'':"javascript:do_action('file_np=" + id + "-" + i + "');";
-		var normal_prior = _create_file_action_button('/normal_priority.png', 'Normal Priority', command);
+		var normal_prior = _create_file_action_button('normal_priority.png', 'Normal Priority', command);
 		cell.appendChild(normal_prior);
 
 		command = (file_status==30)?'':"javascript:do_action('file_lp=" + id + "-" + i + "');";
-		var low_prior = _create_file_action_button('/low_priority.png', 'Low Priority', command);
+		var low_prior = _create_file_action_button('low_priority.png', 'Low Priority', command);
 		cell.appendChild(low_prior);
 
 		command = (file_status==20 || file_status==10)?'':"javascript:do_action('file_stop=" + id + "-" + i + "');";
-		var dnd = _create_file_action_button('/only_seed.png', 'Stop downloading (Only Seed Priority)', command);
+		var dnd = _create_file_action_button('only_seed.png', 'Stop downloading (Only Seed Priority)', command);
 		cell.appendChild(dnd);
 
 		var cell = row.insertCell(-1);

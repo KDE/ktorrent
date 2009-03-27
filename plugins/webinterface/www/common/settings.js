@@ -1,6 +1,6 @@
 function update_settings(err_function)
 {
-	fetch_xml("/data/settings.xml",update_settings_div,err_function);
+	fetch_xml("data/settings.xml",update_settings_div,err_function);
 }
 
 function update_settings_div(xmldoc)
@@ -52,5 +52,5 @@ function submit_settings(err_function)
 			post_data += input.name + "=" + encodeURI(input.value);
 	}
 	
-	fetch_xml_post("/data/settings.xml",post_data,update_settings_div,err_function);
+	fetch_xml_post("data/settings.xml",post_data,update_settings_div,err_function);
 }

@@ -13,7 +13,7 @@ function refresh()
 
 function redirect_to_login(msg)
 {
-	window.location = "/login.html";
+	window.location = "login.html";
 }
 
 function show_div(div)
@@ -51,12 +51,12 @@ function show_error(msg)
 function update_status_bar()
 {
 	clear_error();
-	fetch_xml("/data/global.xml",update_status_bar_table,show_error);
+	fetch_xml("data/global.xml",update_status_bar_table,show_error);
 }
 
 function redirect_to_login()
 {
-	window.location = "/login.html";
+	window.location = "login.html";
 }
 
 function update_status_bar_table(xmldoc) 

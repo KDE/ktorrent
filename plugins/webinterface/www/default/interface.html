@@ -31,14 +31,14 @@
 <div id="container">
 	<div id="header">
 		<div id="logoWrapper">
-			<div id="logo"><a href="/interface.html" title="Home"><img src="icon.png" alt="Home" /></a></div>
-			<div id="siteName"><a href="/interface.html" title="Home">KTorrent Web Interface</a></div>                  
+			<div id="logo"><a href="interface.html" title="Home"><img src="icon.png" alt="Home" /></a></div>
+			<div id="siteName"><a href="interface.html" title="Home">KTorrent Web Interface</a></div>                  
 		</div>
 		<div id="nav">
 			<a href="javascript:show_div('content')">Torrents</a>
 			<a href="javascript:show_div('torrent_load')">Load Torrent</a>
 			<a href="javascript:show_div('settings')">Settings</a>
-			<a href="/logout" title="Logout">Logout</a>
+			<a href="logout" title="Logout">Logout</a>
 			<a href="javascript:shutdown()" title="Shutdown">Shutdown</a>
 		</div>
 	</div>
@@ -50,15 +50,15 @@
 	<div id="content" class="block">
 		<div class="action_bar">
 			<div class="action_bar_item">
-				<img src="/icon?name=view-refresh&size=1" alt="Refresh"/>
+				<img src="icon?name=view-refresh&size=1" alt="Refresh"/>
 				<a href="javascript:refresh();" title="Refresh">Refresh</a>
 			</div>
 			<div class="action_bar_item">
-				<img src="/icon?name=kt-start-all&size=1" alt="Start All"/>
+				<img src="icon?name=kt-start-all&size=1" alt="Start All"/>
 				<a href="javascript:do_action('startall=true'); refresh();">Start All</a>
 			</div>
 			<div class="action_bar_item">				
-				<img src="/icon?name=kt-stop-all&size=1" alt="Stop All" />
+				<img src="icon?name=kt-stop-all&size=1" alt="Stop All" />
 				<a href="javascript:do_action('stopall=true'); refresh();">Stop All</a>
 			</div>
 		</div>
@@ -76,11 +76,11 @@
 	<div id="torrent_details" style="display:none;" class="block">
 		<div class="action_bar">
 			<div class="action_bar_item">
-				<img src="/icon?name=go-previous&size=1" alt="Back"/>
+				<img src="icon?name=go-previous&size=1" alt="Back"/>
 				<a href="javascript:show_div('content')">Back</a>
 			</div>
 			<div class="action_bar_item">
-				<img src="/icon?name=view-refresh&size=1" alt="Refresh"/>
+				<img src="icon?name=view-refresh&size=1" alt="Refresh"/>
 				<a href="javascript:clear_error(); update_torrent_details(current_torrent);" title="Refresh">Refresh</a>
 			</div>	
 		</div>
@@ -106,7 +106,7 @@
 	
 		<h3 class="title">Upload a torrent</h3>
 
-		<form action="/torrent/load?page=interface.html" method="post" enctype="multipart/form-data">
+		<form action="torrent/load?page=interface.html" method="post" enctype="multipart/form-data">
 			<div class="item" style="min-height : 5em;">
 				File path:
 				<div class="option">
@@ -146,11 +146,11 @@
 		</div>
 		<div class="action_bar" id="settings_buttons">
 			<div class="action_bar_item">
-				<img src="/icon?name=dialog-ok-apply&size=1" alt="Submit"/>
+				<img src="icon?name=dialog-ok-apply&size=1" alt="Submit"/>
 				<a href="javascript:clear_error(); submit_settings(show_error);" title="Submit">Submit Settings</a>
 			</div>
 			<div class="action_bar_item">
-				<img src="/icon?name=view-refresh&size=1" alt="Refresh"/>
+				<img src="icon?name=view-refresh&size=1" alt="Refresh"/>
 				<a href="javascript:clear_error();  update_settings(show_error);" title="Refresh">Refresh</a>
 			</div>
 		</div>

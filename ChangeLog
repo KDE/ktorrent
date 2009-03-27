@@ -16,6 +16,8 @@ Changes in 3.3 :
 - Add comment to applet desktop file and rename the applet to just KTorrent (183825)
 - Added automatic torrent removal script
 - The scripting plugin now supports script packages
+- Use relative URL's in webinterface (188134)
+- Don't send body of login page when redirecting to login page (188209)
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed

@@ -1,7 +1,7 @@
 
 function update_torrents()
 {
-	fetch_xml("/data/torrents.xml",update_data_table,show_error)
+	fetch_xml("data/torrents.xml",update_data_table,show_error)
 }
 
 function update_data_table(xmldoc)
@@ -38,9 +38,9 @@ function torrent_table_row(torrent, table, i)
 		var cell = row.insertCell(0);
 		var can_start = (get_text(torrent, 'running').data == "1") ? 0 : 1; //if torrent is running we can't start it
 		var can_stop = (can_start==1) ? 0 : 1; //opposite of can_start
-		var start_button  = create_action_button('Start', '/icon?name=kt-start&size=1', (can_start==1) ? 'start='+i : '');
-		var stop_button   = create_action_button('Stop', '/icon?name=kt-stop&size=1', (can_stop==1) ? 'stop='+i : '');
-		var remove_button = create_action_button('Remove', '/icon?name=kt-remove&size=1', 'remove='+i);
+		var start_button  = create_action_button('Start', 'icon?name=kt-start&size=1', (can_start==1) ? 'start='+i : '');
+		var stop_button   = create_action_button('Stop', 'icon?name=kt-stop&size=1', (can_stop==1) ? 'stop='+i : '');
+		var remove_button = create_action_button('Remove', 'icon?name=kt-remove&size=1', 'remove='+i);
 		remove_button.setAttribute("onclick", "return validate('remove_torrent')");
 		
 		cell.appendChild(start_button);

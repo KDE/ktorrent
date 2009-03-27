@@ -22,7 +22,7 @@ function show_div(div)
 
 function redirect_to_login()
 {
-	window.location = "/login.html";
+	window.location = "login.html";
 }
 
 function clear_error()
@@ -44,7 +44,7 @@ function show_error(msg)
 function update_torrents()
 {
 	clear_error();
-	fetch_xml("/data/torrents.xml",update_torrent_list,show_error);
+	fetch_xml("data/torrents.xml",update_torrent_list,show_error);
 }
 
 function update_torrent_list(xmldoc)
@@ -74,9 +74,9 @@ function torrent_item_div(torrent,i)
 	var actions = document.createElement('div');
 	actions.setAttribute('class','line_item');
 	actions.innerHTML = 
-		"<a href=\"javascript:do_action('start=" + i + "')\"><img src=\"/icon?name=kt-start&size=1\" /></a>" +
-		"<a href=\"javascript:do_action('stop=" + i + "')\"><img src=\"/icon?name=kt-stop&size=1\" /></a>" +
-		"<a href=\"javascript:do_action('remove=" + i + "')\"><img src=\"/icon?name=kt-remove&size=1\" /></a>";
+		"<a href=\"javascript:do_action('start=" + i + "')\"><img src=\"icon?name=kt-start&size=1\" /></a>" +
+		"<a href=\"javascript:do_action('stop=" + i + "')\"><img src=\"icon?name=kt-stop&size=1\" /></a>" +
+		"<a href=\"javascript:do_action('remove=" + i + "')\"><img src=\"icon?name=kt-remove&size=1\" /></a>";
 	var title = document.createElement('div');
 	title.setAttribute('class','torrent_name');
 	if (get_text_data(torrent,'num_files') == '0')

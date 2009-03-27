@@ -280,7 +280,9 @@ namespace kt
 	{
 		hdr.setValue("Server","KTorrent/" KT_VERSION_MACRO);
 		hdr.setValue("Date",DateTimeToString(QDateTime::currentDateTime().toUTC(),false));
-		hdr.setValue("Content-Type",content_type);
+		if (!content_type.isEmpty())
+			hdr.setValue("Content-Type",content_type);
+		
 		hdr.setValue("Connection","keep-alive");
 		if (with_session_info && session.sessionId && session.logged_in)
 		{
@@ -290,16 +292,11 @@ namespace kt
 	
 	void HttpServer::redirectToLoginPage(HttpClientHandler* hdlr)
 	{
-		HttpResponseHeader rhdr(301);
+		HttpResponseHeader rhdr(302);
 		setDefaultResponseHeaders(rhdr,"text/html",false);
-		rhdr.setValue("Location","/login.html");
-		QString path = skinDir() + "/login.html";
-		if (!hdlr->sendFile(rhdr,path))
-		{
-			HttpResponseHeader nhdr(404);
-			setDefaultResponseHeaders(nhdr,"text/html",false);
-			hdlr->send404(nhdr,path);
-		}
+		rhdr.setValue("Location","login.html");
+		rhdr.setValue("Content-Length","0");
+		hdlr->sendResponse(rhdr);
 		Out(SYS_WEB|LOG_NOTICE) << "Redirecting to /login.html" << endl;
 	}
 	

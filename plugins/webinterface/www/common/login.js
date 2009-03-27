@@ -13,7 +13,7 @@ function encrypt_pwd()
 // get the challenge field
 function get_challenge()
 {
-	fetch_xml("/login/challenge.xml",set_challenge,show_error)
+	fetch_xml("login/challenge.xml",set_challenge,show_error)
 }
 
 function set_challenge(xmldoc)
