@@ -109,11 +109,11 @@ namespace kt
 	void ScriptModel::addScriptFromArchive(KArchive* archive) 
 	{
 		if (!archive->open(QIODevice::ReadOnly))
-			throw bt::Error(i18n("Cannot open archive for reading !"));
+			throw bt::Error(i18n("Cannot open archive for reading."));
 			
 		const KArchiveDirectory* dir = archive->directory();
 		if (!dir)
-			throw bt::Error(i18n("Invalid archive !"));
+			throw bt::Error(i18n("Invalid archive."));
 		
 		QStringList entries = dir->entries();
 		foreach (const QString & e,entries)
@@ -151,7 +151,7 @@ namespace kt
 			return;
 		}
 		
-		throw bt::Error(i18n("No script found in archive !"));
+		throw bt::Error(i18n("No script found in archive."));
 	}
 
 	
