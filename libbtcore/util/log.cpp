@@ -88,20 +88,13 @@ namespace bt
 				QString prev = QString("%1-%2.gz").arg(file).arg(i - 1);
 				QString curr = QString("%1-%2.gz").arg(file).arg(i);
 				if (bt::Exists(prev))
-				{
-					KIO::CopyJob *mv = KIO::move(KUrl(prev),KUrl(curr),KIO::HideProgressInfo|KIO::Overwrite); 
-					mv->exec();
-					delete mv;
-				}
+					QFile::rename(prev,curr);
 			}
 			
 			// move current log to 1 and zip it
-			KIO::CopyJob *mv = KIO::move(KUrl(file),KUrl(file + "-1"), KIO::HideProgressInfo|KIO::Overwrite);
-			mv->exec();
-			delete mv; 
+			QFile::rename(file,file + "-1");
 			CompressFileJob* gzip = new CompressFileJob(file + "-1");
-			gzip->exec();
-			delete gzip;
+			gzip->start();
 		}
 
 		void setOutputFile(const QString & file,bool rotate)
@@ -165,8 +158,8 @@ namespace bt
 				QString file = fptr->fileName();
 				fptr->close(); // close the log file
 				out->setDevice(0);
-				// start the rotate job
-				rotate_job = new AutoRotateLogJob(file,parent);
+				rotateLogs(file);
+				logRotateDone();
 			}
 		}
 
