@@ -43,6 +43,7 @@ Changes in 3.2.1 :
 - Check for invalid characters (for windows that is) in torrent name on windows (187373) 
 - Fix webseeding crash caused by wrong chunk range (187882)
 - Expanded scripting API with scriptDir function
+- Use QFile::rename instead of KIO jobs to do log rotation (188225)
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
