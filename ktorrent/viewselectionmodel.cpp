@@ -26,85 +26,12 @@ using namespace bt;
 namespace kt
 {
 
-	ViewSelectionModel::ViewSelectionModel(ViewModel* vm,QObject* parent)
-			: QItemSelectionModel(vm,parent),vm(vm)
+	ViewSelectionModel::ViewSelectionModel(ViewModel* vm,QObject* parent) : ItemSelectionModel(vm,parent)
 	{
 	}
 
 
 	ViewSelectionModel::~ViewSelectionModel()
 	{
-	}
-
-	void ViewSelectionModel::select(const QModelIndex & index,QItemSelectionModel::SelectionFlags command)
-	{
-		QItemSelection sel(index,index);
-		select(sel,command);
-	}
-	
-	void ViewSelectionModel::select(const QItemSelection & sel,QItemSelectionModel::SelectionFlags command)
-	{
-		if (command == NoUpdate)
-			return;
-		
-		if (command & QItemSelectionModel::Clear)
-			selection.clear();
-		
-		foreach (const QItemSelectionRange r,sel)
-		{
-			for (int i = r.topLeft().row();i <= r.bottomRight().row();i++)
-			{
-				bt::TorrentInterface* tor = vm->torrentFromRow(i);
-				if (!tor)
-					continue;
-				
-				if (command & QItemSelectionModel::Select)
-				{
-					selection.insert(tor);
-				}
-				else if (command & QItemSelectionModel::Deselect)
-				{
-					selection.remove(tor);
-				}
-				else if (command & QItemSelectionModel::Toggle)
-				{
-					if (selection.contains(tor))
-						selection.remove(tor);
-					else
-						selection.insert(tor);
-				}
-			}
-		}
-		QItemSelectionModel::select(sel,command);
-	}
-	
-	void ViewSelectionModel::clear()
-	{
-		selection.clear();
-		QItemSelectionModel::clear();
-	}
-	
-	void ViewSelectionModel::reset()
-	{
-		selection.clear();
-		QItemSelectionModel::reset();
-	}
-	
-	void ViewSelectionModel::sorted()
-	{
-		QItemSelection ns;
-		int rows = vm->rowCount(QModelIndex());
-		int cols = vm->columnCount(QModelIndex());
-		for (int i = 0;i < rows;i++)
-		{
-			QModelIndex idx = vm->index(i,0,QModelIndex());
-			bt::TorrentInterface* tc = vm->torrentFromIndex(idx);
-			if (tc && selection.contains(tc))
-			{
-				ns.select(idx,vm->index(i,cols - 1,QModelIndex()));
-			}
-		}
-		
-		select(ns,QItemSelectionModel::ClearAndSelect);
 	}
 }

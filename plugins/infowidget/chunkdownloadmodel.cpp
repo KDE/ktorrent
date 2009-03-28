@@ -289,5 +289,6 @@ namespace kt
 		emit layoutAboutToBeChanged();
 		qStableSort(items.begin(),items.end(),ChunkDownloadModelItemCmp(col,order));
 		emit layoutChanged();
+		emit sorted();
 	}
 }

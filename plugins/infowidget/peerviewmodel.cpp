@@ -470,5 +470,6 @@ namespace kt
 		emit layoutAboutToBeChanged();
 		qStableSort(items.begin(),items.end(),PeerViewModelItemCmp(col,order));
 		emit layoutChanged();
+		emit sorted();
 	}
 }
