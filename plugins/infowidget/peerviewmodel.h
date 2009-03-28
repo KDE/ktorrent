@@ -66,6 +66,8 @@ namespace kt
 	public slots:
 		void sort(int col, Qt::SortOrder order);
 		
+	signals:
+		void sorted();
 	
 	public:	
 		struct Item

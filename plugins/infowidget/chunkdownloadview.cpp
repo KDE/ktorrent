@@ -28,6 +28,7 @@
 #include <interfaces/chunkdownloadinterface.h>
 #include <util/functions.h>
 #include <util/log.h>
+#include <util/itemselectionmodel.h>
 #include "chunkdownloadmodel.h"
 
 using namespace bt;
@@ -40,7 +41,11 @@ namespace kt
 	{
 		setupUi(this);
 		model = new ChunkDownloadModel(this);
+		ItemSelectionModel* sm = new ItemSelectionModel(model,this);
 		m_chunk_view->setModel(model);
+		m_chunk_view->setSelectionModel(sm);
+		connect(model,SIGNAL(sorted()),sm,SLOT(sorted()));
+		
 		m_chunk_view->setRootIsDecorated(false);
 		m_chunk_view->setSortingEnabled(true);
 		m_chunk_view->setAlternatingRowColors(true);

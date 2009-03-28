@@ -2,7 +2,8 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(libktorrent_SRC 
-	util/mmapfile.cpp	
+	util/mmapfile.cpp
+	util/itemselectionmodel.cpp
 	
 	interfaces/functions.cpp
 	interfaces/plugin.cpp

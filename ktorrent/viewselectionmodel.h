@@ -21,7 +21,7 @@
 #define KTVIEWSELECTIONMODEL_H
 
 #include <QSet>
-#include <QItemSelectionModel>
+#include <util/itemselectionmodel.h>
 
 namespace bt
 {
@@ -35,25 +35,12 @@ namespace kt
 	/**
 		Custom selection model for View
 	*/
-	class ViewSelectionModel : public QItemSelectionModel
+	class ViewSelectionModel : public ItemSelectionModel
 	{
 		Q_OBJECT
 	public:
 		ViewSelectionModel(ViewModel* vm,QObject* parent);
 		virtual ~ViewSelectionModel();
-		
-		virtual void select(const QModelIndex & index,QItemSelectionModel::SelectionFlags command);
-		virtual void select(const QItemSelection & selection,QItemSelectionModel::SelectionFlags command);
-		virtual void clear();
-		virtual void reset();
-		
-	public slots:
-		/// Called by view whenever the model is sorted
-		void sorted();
-		
-	private:
-		ViewModel* vm;
-		QSet<bt::TorrentInterface*> selection;
 	};
 
 }

@@ -29,6 +29,7 @@
 #include <interfaces/peerinterface.h>
 #include <peer/accessmanager.h>
 #include <util/functions.h>
+#include <util/itemselectionmodel.h>
 #include "peerviewmodel.h"
 
 using namespace bt;
@@ -46,7 +47,10 @@ namespace kt
 		setUniformRowHeights(true);
 		
 		model = new PeerViewModel(this);
+		ItemSelectionModel* sm = new ItemSelectionModel(model,this);
 		setModel(model);
+		setSelectionModel(sm);
+		connect(model,SIGNAL(sorted()),sm,SLOT(sorted()));
 		
 		context_menu = new KMenu(this);
 		context_menu->addAction(KIcon("list-remove-user"),i18n("Kick Peer"),this,SLOT(kickPeer()));
