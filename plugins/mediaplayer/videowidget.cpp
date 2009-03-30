@@ -31,14 +31,18 @@
 #include <Phonon/Global>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
+#include <util/log.h>
 #include "videowidget.h"
 #include "mediaplayer.h"
+#include "screensaver_interface.h"
+
+using namespace bt;
 
 namespace kt
 {
 
 	VideoWidget::VideoWidget(MediaPlayer* player,QWidget* parent)
-		: QWidget(parent),player(player),fullscreen(false)
+		: QWidget(parent),player(player),fullscreen(false),screensaver_cookie(0)
 	{
 		QVBoxLayout* vlayout = new QVBoxLayout(this);
 		vlayout->setMargin(0);
@@ -78,11 +82,14 @@ namespace kt
 		connect(player->media0bject(),SIGNAL(stateChanged(Phonon::State,Phonon::State)),
 				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
 		onStateChanged(player->media0bject()->state(),Phonon::StoppedState);
+		
+		inhibitScreenSaver(true);
 	}
 
 
 	VideoWidget::~VideoWidget()
 	{
+		inhibitScreenSaver(false);
 	}
 
 	void VideoWidget::play()
@@ -179,4 +186,21 @@ namespace kt
 				break;
 		}
 	}
+	
+	void VideoWidget::inhibitScreenSaver(bool on) 
+	{
+		QString interface("org.freedesktop.ScreenSaver");
+		org::freedesktop::ScreenSaver screensaver(interface, "/ScreenSaver",QDBusConnection::sessionBus());
+		if (on)
+		{
+			screensaver_cookie = screensaver.Inhibit("ktorrent",i18n("KTorrent is playing a video !"));
+			Out(SYS_MPL|LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
+		}
+		else
+		{
+			screensaver.UnInhibit(screensaver_cookie);
+			Out(SYS_MPL|LOG_NOTICE) << "Screensaver uninhibited" << endl;
+		}
+	}
+
 }

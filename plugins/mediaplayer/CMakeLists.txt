@@ -12,6 +12,9 @@ set(ktmediaplayerplugin_SRC
 	videowidget.cpp
 )
 
+set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
+QT4_ADD_DBUS_INTERFACE(ktmediaplayerplugin_SRC ${screensaver_xml} screensaver_interface)
+
 #kde4_add_ui_files(ktmediaplayerplugin_SRC mediaplayerpref.ui)
 kde4_add_kcfg_files(ktmediaplayerplugin_SRC mediaplayerpluginsettings.kcfgc)
 kde4_add_plugin(ktmediaplayerplugin ${ktmediaplayerplugin_SRC})

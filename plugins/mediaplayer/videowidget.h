@@ -62,6 +62,9 @@ namespace kt
 		
 	signals:
 		void toggleFullScreen(bool on);
+		
+	private:
+		void inhibitScreenSaver(bool on);
 
 	private:
 		Phonon::VideoWidget* video;
@@ -73,6 +76,7 @@ namespace kt
 		QAction* stop_act;
 		Phonon::VolumeSlider* volume;
 		bool fullscreen;
+		uint screensaver_cookie;
 	};
 
 }
