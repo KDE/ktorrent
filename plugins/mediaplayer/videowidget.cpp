@@ -193,7 +193,7 @@ namespace kt
 		org::freedesktop::ScreenSaver screensaver(interface, "/ScreenSaver",QDBusConnection::sessionBus());
 		if (on)
 		{
-			screensaver_cookie = screensaver.Inhibit("ktorrent",i18n("KTorrent is playing a video !"));
+			screensaver_cookie = screensaver.Inhibit("ktorrent",i18n("KTorrent is playing a video."));
 			Out(SYS_MPL|LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
 		}
 		else
