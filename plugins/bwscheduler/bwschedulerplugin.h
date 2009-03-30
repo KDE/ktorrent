@@ -24,6 +24,7 @@
 #include <KAction>
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
+#include "screensaver_interface.h"
 
 class QString;
 
@@ -54,12 +55,18 @@ namespace kt
 		void timerTriggered();
 		void onLoaded(Schedule* ns);
 		void colorsChanged();
-	
+		void screensaverActivated(bool on);
+		
+	private:
+		void setNormalLimits();
+		
 	private:
 		QTimer m_timer;
 		ScheduleEditor* m_editor;
 		Schedule* m_schedule;
 		BWPrefPage* m_pref;
+		org::freedesktop::ScreenSaver* screensaver;
+		bool screensaver_on;
 	};
 
 }

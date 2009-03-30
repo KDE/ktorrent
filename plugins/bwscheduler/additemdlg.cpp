@@ -34,8 +34,10 @@ namespace kt
 	AddItemDlg::AddItemDlg(Schedule* schedule,QWidget* parent) : KDialog(parent),schedule(schedule)
 	{
 		setupUi(mainWidget());
-		connect(m_paused,SIGNAL(toggled(bool)),m_upload_limit,SLOT(setDisabled(bool)));
-		connect(m_paused,SIGNAL(toggled(bool)),m_download_limit,SLOT(setDisabled(bool)));
+		connect(m_paused,SIGNAL(toggled(bool)),this,SLOT(pausedChanged(bool)));
+		connect(m_screensaver_limits,SIGNAL(toggled(bool)),this,SLOT(screensaverLimitsToggled(bool)));
+		m_ss_download_limit->setEnabled(false);
+		m_ss_upload_limit->setEnabled(false);
 		model = new WeekDayModel(this);
 		m_day_list->setModel(model);
 		
@@ -86,6 +88,9 @@ namespace kt
 			item->global_conn_limit = m_max_conn_global->value();
 			item->torrent_conn_limit = m_max_conn_per_torrent->value();
 			item->set_conn_limits = m_set_connection_limits->isChecked();
+			item->screensaver_limits = m_screensaver_limits->isChecked();
+			item->ss_download_limit = m_ss_download_limit->value();
+			item->ss_upload_limit = m_ss_upload_limit->value();
 			if (!schedule->addItem(item))
 			{
 				failures++;
@@ -149,6 +154,20 @@ namespace kt
 			int day = ((cal->weekStartDay() - 1) + i) % 7;
 			model->setData(model->index(day,0),Qt::Checked,Qt::CheckStateRole);
 		}
+	}
+	
+	void AddItemDlg::pausedChanged(bool on) 
+	{
+		m_upload_limit->setDisabled(on);
+		m_download_limit->setDisabled(on);
+		m_screensaver_limits->setDisabled(on);
+		screensaverLimitsToggled(m_screensaver_limits->isChecked());
+	}
+	
+	void AddItemDlg::screensaverLimitsToggled(bool on) 
+	{
+		m_ss_download_limit->setEnabled(!m_paused->isChecked() && on);
+		m_ss_upload_limit->setEnabled(!m_paused->isChecked() && on);
 	}
 }
 

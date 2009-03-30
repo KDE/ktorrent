@@ -52,6 +52,7 @@
 
 #include <torrent/globals.h>
 #include <peer/peermanager.h>
+#include <bwschedulerpluginsettings.h>
 
 using namespace bt;
 
@@ -66,6 +67,10 @@ namespace kt
 		connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerTriggered()));
 		m_editor = 0;
 		m_pref = 0;
+		QString interface("org.freedesktop.ScreenSaver");
+		screensaver = new org::freedesktop::ScreenSaver(interface, "/ScreenSaver",QDBusConnection::sessionBus(),this);
+		connect(screensaver,SIGNAL(ActiveChanged(bool)),this,SLOT(screensaverActivated(bool)));
+		screensaver_on = screensaver->GetActive();
 	}
 
 
@@ -129,25 +134,41 @@ namespace kt
 		m_schedule = 0;
 	}
 	
+	void BWSchedulerPlugin::setNormalLimits() 
+	{
+		int ulim = Settings::maxUploadRate();
+		int dlim = Settings::maxDownloadRate();
+		if (screensaver_on && SchedulerPluginSettings::screensaverLimits())
+		{
+			ulim = SchedulerPluginSettings::screensaverUploadLimit();
+			dlim = SchedulerPluginSettings::screensaverDownloadLimit();
+		}
+		
+		Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to normal values : %1 down, %2 up")
+		.arg(dlim).arg(ulim) << endl;
+		// set normal limits
+		getCore()->setPausedState(false);
+		net::SocketMonitor::setDownloadCap(1024 * dlim);
+		net::SocketMonitor::setUploadCap(1024 * ulim);
+		if (m_editor)
+			m_editor->updateStatusText(ulim,dlim,false);
+		
+		PeerManager::setMaxConnections(Settings::maxConnections());
+		PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+	}
+
+	
 	void BWSchedulerPlugin::timerTriggered()
 	{
 		QDateTime now = QDateTime::currentDateTime();
 		ScheduleItem* item = m_schedule->getCurrentItem(now);
 		if (!item)
 		{
-			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to normal values : %1 down, %2 up")
-					.arg(Settings::maxDownloadRate()).arg(Settings::maxUploadRate()) << endl;
-			// set normal limits
-			getCore()->setPausedState(false);
-			net::SocketMonitor::setDownloadCap(1024 * Settings::maxDownloadRate());
-			net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
-			if (m_editor)
-				m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),false);
-			
-			PeerManager::setMaxConnections(Settings::maxConnections());
-			PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+			setNormalLimits();
+			return;
 		}
-		else if (item->paused)
+		
+		if (item->paused)
 		{
 			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : PAUSED") << endl;
 			if (!getCore()->getPausedState())
@@ -158,42 +179,38 @@ namespace kt
 				if (m_editor)
 					m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),true);
 			}
-			
-			if (item->set_conn_limits)
-			{
-				Out(SYS_SCD|LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
-						.arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
-				PeerManager::setMaxConnections(item->torrent_conn_limit);
-				PeerManager::setMaxTotalConnections(item->global_conn_limit);
-			}
-			else
-			{
-				PeerManager::setMaxConnections(Settings::maxConnections());
-				PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
-			}
 		}
 		else
 		{
-			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : %1 down, %2 up")
-					.arg(item->download_limit).arg(item->upload_limit) << endl;
-			getCore()->setPausedState(false);
-			net::SocketMonitor::setDownloadCap(1024 * item->download_limit);
-			net::SocketMonitor::setUploadCap(1024 * item->upload_limit);
-			if (m_editor)
-				m_editor->updateStatusText(item->upload_limit,item->download_limit,false);
+			int ulim = item->upload_limit;
+			int dlim = item->download_limit;
+			if (screensaver_on && SchedulerPluginSettings::screensaverLimits())
+			{
+				ulim = item->ss_upload_limit;
+				dlim = item->ss_download_limit;
+			}
 			
-			if (item->set_conn_limits)
-			{
-				Out(SYS_SCD|LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
-						.arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
-				PeerManager::setMaxConnections(item->torrent_conn_limit);
-				PeerManager::setMaxTotalConnections(item->global_conn_limit);
-			}
-			else
-			{
-				PeerManager::setMaxConnections(Settings::maxConnections());
-				PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
-			}
+			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : %1 down, %2 up")
+					.arg(dlim).arg(ulim) << endl;
+			getCore()->setPausedState(false);
+			
+			net::SocketMonitor::setDownloadCap(1024 * dlim);
+			net::SocketMonitor::setUploadCap(1024 * ulim);
+			if (m_editor)
+				m_editor->updateStatusText(ulim,dlim,false);
+		}
+		
+		if (item->set_conn_limits)
+		{
+			Out(SYS_SCD|LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
+			.arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
+			PeerManager::setMaxConnections(item->torrent_conn_limit);
+			PeerManager::setMaxTotalConnections(item->global_conn_limit);
+		}
+		else
+		{
+			PeerManager::setMaxConnections(Settings::maxConnections());
+			PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
 		}
 		
 		// now calculate the new interval
@@ -226,4 +243,11 @@ namespace kt
 			m_editor->colorsChanged();
 		}
 	}
+	
+	void BWSchedulerPlugin::screensaverActivated(bool on) 
+	{
+		screensaver_on = on;
+		timerTriggered();
+	}
+
 }

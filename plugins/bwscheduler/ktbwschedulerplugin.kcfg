@@ -18,5 +18,16 @@
 		<entry name="scheduleLineColor" type="Color">
 			<default code="true">QColor(Qt::blue)</default>
 		</entry>
+		<entry name="screensaverLimits" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="screensaverUploadLimit" type="Int">
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="screensaverDownloadLimit" type="Int">
+			<default>0</default>
+			<min>0</min>
+		</entry>
 	</group>
 </kcfg>

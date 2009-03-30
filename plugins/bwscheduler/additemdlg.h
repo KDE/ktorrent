@@ -52,6 +52,8 @@ namespace kt
 		void selectEntireWeek();
 		void selectWeekDays();
 		void selectWeekend();
+		void pausedChanged(bool on);
+		void screensaverLimitsToggled(bool on);
 		
 	private:
 		WeekDayModel* model;

@@ -5,11 +5,109 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>186</height>
+    <width>473</width>
+    <height>385</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
+   <item>
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="title" >
+      <string>Special Limits</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_screensaverLimits" >
+        <property name="toolTip" >
+         <string>Use these global limits when the screensaver is activated, instead of the ones configured in the network settings.</string>
+        </property>
+        <property name="text" >
+         <string>Use different speed limts when the screensaver is activated</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout" >
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>Maximum upload speed:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="kcfg_screensaverUploadLimit" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip" >
+             <string>Global upload limit when the screensaver is activated.</string>
+            </property>
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KiB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>100000000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>Maximum download speed:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="kcfg_screensaverDownloadLimit" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip" >
+             <string>Global download limit when the screensaver is activated.</string>
+            </property>
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KiB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>100000000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer" >
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
@@ -98,5 +196,38 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>kcfg_screensaverLimits</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_screensaverUploadLimit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>101</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>159</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_screensaverLimits</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_screensaverDownloadLimit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>70</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>131</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

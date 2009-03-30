@@ -5,14 +5,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>321</width>
-    <height>334</height>
+    <width>584</width>
+    <height>326</height>
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Add a new item to the schedule</string>
+   <string>Edit an item</string>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout_3" >
    <property name="margin" >
     <number>0</number>
    </property>
@@ -21,7 +21,7 @@
      <property name="title" >
       <string>Time</string>
      </property>
-     <layout class="QVBoxLayout" >
+     <layout class="QHBoxLayout" name="horizontalLayout" >
       <item>
        <layout class="QHBoxLayout" >
         <item>
@@ -68,116 +68,206 @@
         </item>
        </layout>
       </item>
+      <item>
+       <spacer name="horizontalSpacer" >
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0" >
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
-      <string>Limits</string>
-     </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" >
-         <widget class="QLabel" name="label" >
+    <layout class="QHBoxLayout" name="horizontalLayout_2" >
+     <item>
+      <widget class="QGroupBox" name="groupBox" >
+       <property name="title" >
+        <string>Limits</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2" >
+        <item>
+         <widget class="QCheckBox" name="m_paused" >
           <property name="text" >
-           <string>Download limit:</string>
+           <string>Stop all torrents</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1" >
-         <widget class="QSpinBox" name="m_download_limit" >
-          <property name="specialValueText" >
-           <string>No limit</string>
-          </property>
-          <property name="suffix" >
-           <string> KiB/s</string>
-          </property>
-          <property name="maximum" >
-           <number>10000000</number>
-          </property>
-         </widget>
+        <item>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>Download limit:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="m_download_limit" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KiB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>10000000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>Upload limit:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="m_upload_limit" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KiB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>10000000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="1" column="0" >
-         <widget class="QLabel" name="label_2" >
+        <item>
+         <widget class="QCheckBox" name="m_screensaver_limits" >
           <property name="text" >
-           <string>Upload limit:</string>
+           <string>When screensaver is activated:</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1" >
-         <widget class="QSpinBox" name="m_upload_limit" >
-          <property name="specialValueText" >
-           <string>No limit</string>
-          </property>
-          <property name="suffix" >
-           <string> KiB/s</string>
-          </property>
-          <property name="maximum" >
-           <number>10000000</number>
-          </property>
-         </widget>
+        <item>
+         <layout class="QGridLayout" name="_2" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_8" >
+            <property name="text" >
+             <string>Download limit:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="m_ss_download_limit" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KiB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>10000000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_9" >
+            <property name="text" >
+             <string>Upload limit:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="m_ss_upload_limit" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KiB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>10000000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="m_paused" >
-        <property name="text" >
-         <string>Stop all torrents</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="m_set_connection_limits" >
-        <property name="text" >
-         <string>Set connection limits</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" >
-         <widget class="QLabel" name="label_7" >
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_3" >
+       <property name="title" >
+        <string>Connection Limits</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout" >
+        <item>
+         <widget class="QCheckBox" name="m_set_connection_limits" >
           <property name="text" >
-           <string>Maximum connections per torrent:</string>
+           <string>Set connection limits</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1" >
-         <widget class="QSpinBox" name="m_max_conn_per_torrent" >
-          <property name="specialValueText" >
-           <string>No limit</string>
-          </property>
-          <property name="maximum" >
-           <number>99999</number>
-          </property>
-         </widget>
+        <item>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_7" >
+            <property name="text" >
+             <string>Maximum connections per torrent:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="m_max_conn_per_torrent" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="maximum" >
+             <number>99999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>Global connection limit:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="m_max_conn_global" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="maximum" >
+             <number>99999</number>
+            </property>
+            <property name="value" >
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="1" column="0" >
-         <widget class="QLabel" name="label_6" >
-          <property name="text" >
-           <string>Global connection limit:</string>
+        <item>
+         <spacer name="verticalSpacer" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="1" >
-         <widget class="QSpinBox" name="m_max_conn_global" >
-          <property name="specialValueText" >
-           <string>No limit</string>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
           </property>
-          <property name="maximum" >
-           <number>99999</number>
-          </property>
-          <property name="value" >
-           <number>0</number>
-          </property>
-         </widget>
+         </spacer>
         </item>
        </layout>
-      </item>
-     </layout>
-    </widget>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="Line" name="line" >
@@ -197,12 +287,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>134</x>
-     <y>242</y>
+     <x>381</x>
+     <y>59</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>235</x>
-     <y>277</y>
+     <x>547</x>
+     <y>93</y>
     </hint>
    </hints>
   </connection>
@@ -213,12 +303,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>80</x>
-     <y>247</y>
+     <x>327</x>
+     <y>59</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>249</x>
-     <y>315</y>
+     <x>547</x>
+     <y>126</y>
     </hint>
    </hints>
   </connection>

@@ -40,6 +40,9 @@ namespace kt
 		bt::Uint32 upload_limit;
 		bt::Uint32 download_limit;
 		bool paused;
+		bool screensaver_limits;
+		bt::Uint32 ss_upload_limit;
+		bt::Uint32 ss_download_limit;
 		bool set_conn_limits;
 		bt::Uint32 global_conn_limit;
 		bt::Uint32 torrent_conn_limit;

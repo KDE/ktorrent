@@ -37,10 +37,14 @@ namespace kt
 
 	void BWPrefPage::loadDefaults()
 	{
+		kcfg_screensaverDownloadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
+		kcfg_screensaverUploadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
 	}
 
 	void BWPrefPage::loadSettings()
 	{
+		kcfg_screensaverDownloadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
+		kcfg_screensaverUploadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
 	}
 
 	void BWPrefPage::updateSettings()

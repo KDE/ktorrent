@@ -36,6 +36,8 @@ namespace kt
 	ScheduleItem::ScheduleItem() 
 		: day(0),upload_limit(0),download_limit(0),paused(false),set_conn_limits(false),global_conn_limit(0),torrent_conn_limit(0)
 	{
+		screensaver_limits = false;
+		ss_download_limit = ss_upload_limit = 0;
 	}
 	
 	ScheduleItem::ScheduleItem(const ScheduleItem & item)
@@ -71,6 +73,9 @@ namespace kt
 		upload_limit = item.upload_limit;
 		download_limit = item.download_limit;
 		paused = item.paused;
+		screensaver_limits = item.screensaver_limits;
+		ss_download_limit = item.ss_download_limit;
+		ss_upload_limit = item.ss_upload_limit;
 		set_conn_limits = item.set_conn_limits;
 		global_conn_limit = item.global_conn_limit;
 		torrent_conn_limit = item.torrent_conn_limit;
@@ -87,7 +92,10 @@ namespace kt
 				paused == item.paused && 
 				set_conn_limits == item.set_conn_limits &&
 				global_conn_limit == item.global_conn_limit &&
-				torrent_conn_limit == item.torrent_conn_limit;
+				torrent_conn_limit == item.torrent_conn_limit &&
+				screensaver_limits == item.screensaver_limits &&
+				ss_download_limit == item.ss_download_limit &&
+				ss_upload_limit == item.ss_upload_limit;
 	}
 	
 	
@@ -184,6 +192,20 @@ namespace kt
 				item->set_conn_limits = true;
 			}
 		}
+		
+		BValueNode* ss_limits = dict->getValue(QString("screensaver_limits"));
+		if (ss_limits)
+		{
+			item->screensaver_limits = ss_limits->data().toInt() == 1;
+			item->ss_download_limit = dict->getInt("ss_download_limit");
+			item->ss_upload_limit = dict->getInt("ss_upload_limit");
+		}
+		else
+		{
+			item->screensaver_limits = false;
+			item->ss_download_limit = item->ss_upload_limit = 0;
+		}
+		
 		return true;
 	}
 		
@@ -217,6 +239,9 @@ namespace kt
 				enc.write("per_torrent"); enc.write((Uint32)i->torrent_conn_limit);
 				enc.end();
 			}
+			enc.write("screensaver_limits",(Uint32)i->screensaver_limits);
+			enc.write("ss_upload_limit",i->ss_upload_limit);
+			enc.write("ss_download_limit",i->ss_download_limit);
 			enc.end();
 		}
 		enc.end();

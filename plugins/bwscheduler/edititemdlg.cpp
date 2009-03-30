@@ -30,8 +30,8 @@ namespace kt
 	EditItemDlg::EditItemDlg(QWidget* parent) : KDialog(parent)
 	{
 		setupUi(mainWidget());
-		connect(m_paused,SIGNAL(toggled(bool)),m_upload_limit,SLOT(setDisabled(bool)));
-		connect(m_paused,SIGNAL(toggled(bool)),m_download_limit,SLOT(setDisabled(bool)));
+		connect(m_paused,SIGNAL(toggled(bool)),this,SLOT(pausedChanged(bool)));
+		connect(m_screensaver_limits,SIGNAL(toggled(bool)),this,SLOT(screensaverLimitsToggled(bool)));
 		
 		const KCalendarSystem* cal = KGlobal::locale()->calendar();
 		for (int i = 1;i <= 7;i++)
@@ -59,6 +59,21 @@ namespace kt
 		// ensure that from is always smaller then to
 		m_from->setMaximumTime(time.addSecs(-60));
 	}
+	
+	void EditItemDlg::pausedChanged(bool on) 
+	{
+		m_upload_limit->setDisabled(on);
+		m_download_limit->setDisabled(on);
+		m_screensaver_limits->setDisabled(on);
+		screensaverLimitsToggled(m_screensaver_limits->isChecked());
+	}
+
+	void EditItemDlg::screensaverLimitsToggled(bool on) 
+	{
+		m_ss_download_limit->setEnabled(!m_paused->isChecked() && on);
+		m_ss_upload_limit->setEnabled(!m_paused->isChecked() && on);
+	}
+
 
 	bool EditItemDlg::execute(ScheduleItem* item)
 	{
@@ -73,6 +88,12 @@ namespace kt
 		m_max_conn_per_torrent->setValue(item->torrent_conn_limit);
 		m_max_conn_global->setValue(item->global_conn_limit);
 		m_max_conn_global->setEnabled(item->set_conn_limits);
+		m_screensaver_limits->setChecked(item->screensaver_limits);
+		m_screensaver_limits->setEnabled(!item->paused);
+		m_ss_download_limit->setValue(item->ss_download_limit);
+		m_ss_upload_limit->setValue(item->ss_upload_limit);
+		m_ss_download_limit->setEnabled(!item->paused && item->screensaver_limits);
+		m_ss_upload_limit->setEnabled(!item->paused && item->screensaver_limits);
 		if (exec() == QDialog::Accepted)
 		{
 			item->start = m_from->time();
@@ -86,6 +107,9 @@ namespace kt
 			item->global_conn_limit = m_max_conn_global->value();
 			item->torrent_conn_limit = m_max_conn_per_torrent->value();
 			item->set_conn_limits = m_set_connection_limits->isChecked();
+			item->screensaver_limits = m_screensaver_limits->isChecked();
+			item->ss_download_limit = m_ss_download_limit->value();
+			item->ss_upload_limit = m_ss_upload_limit->value();
 			return true;
 		}
 		return false;
