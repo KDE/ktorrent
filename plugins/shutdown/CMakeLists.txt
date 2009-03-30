@@ -8,7 +8,7 @@ if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 	include_directories(${KWORKSPACE_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 	set(ktshutdownplugin_SRC shutdownruleset.cpp shutdowntorrentmodel.cpp shutdowndlg.cpp shutdownplugin.cpp)
 
-	set(screensaver_xml org.freedesktop.ScreenSaver.xml)
+	set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
 	QT4_ADD_DBUS_INTERFACE(ktshutdownplugin_SRC ${screensaver_xml} screensaver_interface)
 	kde4_add_ui_files(ktshutdownplugin_SRC shutdowndlg.ui)
 	#kde4_add_kcfg_files(ktshutdownplugin_SRC logviewerpluginsettings.kcfgc)
