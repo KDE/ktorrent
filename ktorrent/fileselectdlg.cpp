@@ -366,7 +366,7 @@ namespace kt
 		lblRequired->setText(bt::BytesToString(bytes_to_download));
 
 		if (bytes_to_download > bytes_free)
-			lblStatus->setText("<font color=\"#ff0000\">" + i18n("%1 short!", bt::BytesToString(-1*(long long)(bytes_free - bytes_to_download))));
+			lblStatus->setText("<font color=\"#ff0000\">" + i18nc("We are %1 bytes short of what we need", "%1 short", bt::BytesToString(-1*(long long)(bytes_free - bytes_to_download))));
 		else
 			lblStatus->setText(bt::BytesToString(bytes_free - bytes_to_download));
 	}

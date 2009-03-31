@@ -199,7 +199,7 @@ namespace bt
 		// move pos to the first part of the string
 		pos++;
 		if (pos + len > (Uint32)data.size())
-			throw Error(i18n("Torrent is incomplete!"));
+			throw Error(i18n("Torrent is incomplete."));
 			
 		QByteArray arr(data.constData() + pos,len);
 		pos += len;

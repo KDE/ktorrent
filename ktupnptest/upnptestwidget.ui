@@ -36,7 +36,7 @@
           <enum>QFrame::Panel</enum>
          </property>
          <property name="text" >
-          <string>No routers found !</string>
+          <string>No routers found.</string>
          </property>
         </widget>
        </item>

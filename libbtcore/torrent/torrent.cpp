@@ -76,7 +76,7 @@ namespace bt
 			node = decoder.decode();
 			BDictNode* dict = dynamic_cast<BDictNode*>(node);
 			if (!dict)
-				throw Error(i18n("Corrupted torrent!"));
+				throw Error(i18n("Corrupted torrent."));
 
 			// see if we can find an encoding node
 			if (dict->getValue("encoding"))
@@ -143,7 +143,7 @@ namespace bt
 	void Torrent::loadInfo(BDictNode* dict)
 	{
 		if (!dict)
-			throw Error(i18n("Corrupted torrent!"));
+			throw Error(i18n("Corrupted torrent."));
 		
 		piece_length = dict->getInt64("piece length");
 		BListNode* files = dict->getList("files");
@@ -170,14 +170,14 @@ namespace bt
 		if (num_chunks != (Uint32)hash_pieces.count())
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "File sizes and number of hashes do not match for " << name_suggestion << endl;
-			throw Error(i18n("Corrupted torrent!"));
+			throw Error(i18n("Corrupted torrent."));
 		}
 	}
 	
 	void Torrent::loadFiles(BListNode* node)
 	{
 		if (!node)
-			throw Error(i18n("Corrupted torrent!"));
+			throw Error(i18n("Corrupted torrent."));
 		
 		Uint32 idx = 0;
 		BListNode* fl = node;
@@ -185,11 +185,11 @@ namespace bt
 		{
 			BDictNode* d = fl->getDict(i);
 			if (!d)
-				throw Error(i18n("Corrupted torrent!"));
+				throw Error(i18n("Corrupted torrent."));
 			
 			BListNode* ln = d->getList("path");
 			if (!ln)
-				throw Error(i18n("Corrupted torrent!"));
+				throw Error(i18n("Corrupted torrent."));
 
 			QString path;
 			QList<QByteArray> unencoded_path;
@@ -208,7 +208,7 @@ namespace bt
 				continue;
 
 			if (!checkPathForDirectoryTraversal(path))
-				throw Error(i18n("Corrupted torrent!"));
+				throw Error(i18n("Corrupted torrent."));
 
 			Uint64 s = d->getInt64("length");
 			TorrentFile file(this,idx,path,file_length,s,piece_length);
@@ -279,7 +279,7 @@ namespace bt
 		{
 			BListNode* c = node->getList(i);
 			if (!c || c->getNumChildren() != 2)
-				throw Error(i18n("Corrupted torrent!"));
+				throw Error(i18n("Corrupted torrent."));
 			
 			// first child is the IP, second the port
 			// add the DHT node

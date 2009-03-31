@@ -431,7 +431,7 @@ namespace kt
 		// first find the right service
 		QList<UPnPService>::iterator i = findPortForwardingService();
 		if (i == services.end())
-			throw Error(i18n("Cannot find port forwarding service in the device's description!"));
+			throw Error(i18n("Cannot find port forwarding service in the device's description."));
 		
 		UPnPService & s = *i;
 		QString action = "GetExternalIPAddress";
@@ -444,7 +444,7 @@ namespace kt
 		// first find the right service
 		QList<UPnPService>::iterator i = findPortForwardingService();
 		if (i == services.end())
-			throw Error(i18n("Cannot find port forwarding service in the device's description!"));
+			throw Error(i18n("Cannot find port forwarding service in the device's description."));
 		
 		// add all the arguments for the command
 		QList<SOAP::Arg> args;

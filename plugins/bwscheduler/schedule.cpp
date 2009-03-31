@@ -131,13 +131,13 @@ namespace kt
 		{
 			delete node;
 			Out(SYS_SCD|LOG_NOTICE) << "Decoding " << file << " failed : " << err.toString() << endl;
-			throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file !"));
+			throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file."));
 		}
 		
 		if (!node)
 		{
 			Out(SYS_SCD|LOG_NOTICE) << "Decoding " << file << " failed !" << endl;
-			throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file !"));
+			throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file."));
 		}
 		
 		if (node->getType() == BNode::LIST)

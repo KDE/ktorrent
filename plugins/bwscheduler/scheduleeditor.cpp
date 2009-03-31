@@ -161,7 +161,7 @@ namespace kt
 			if (schedule->conflicts(item))
 			{
 				*item = tmp; // restore old values
-				KMessageBox::error(this,i18n("This item conflicts with another item in the schedule, we cannot change it !"));
+				KMessageBox::error(this,i18n("This item conflicts with another item in the schedule, we cannot change it."));
 			}
 			else
 			{
