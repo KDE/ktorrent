@@ -22,7 +22,7 @@
          <string>Use these global limits when the screensaver is activated, instead of the ones configured in the network settings.</string>
         </property>
         <property name="text" >
-         <string>Use different speed limts when the screensaver is activated</string>
+         <string>Use different speed limits when the screensaver is activated</string>
         </property>
        </widget>
       </item>
