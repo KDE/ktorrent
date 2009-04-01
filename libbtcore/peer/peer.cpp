@@ -30,7 +30,7 @@
 #include <bcodec/bdecoder.h>
 #include <bcodec/bnode.h>
 #include <torrent/server.h>
-
+#include <torrent/torrent.h>
 #include "packetreader.h"
 #include "packetwriter.h"
 #include "peerdownloader.h"
@@ -538,7 +538,17 @@ namespace bt
 
 	float Peer::percentAvailable() const
 	{
-		return (float)pieces.numOnBits() / (float)pieces.getNumBits() * 100.0;
+		// calculation needs to use bytes, instead of chunks, because
+		// the last chunk can have a different size
+		const Torrent & tor = pman->getTorrent();
+		Uint64 bytes = 0; 
+		if (pieces.get(tor.getNumChunks() - 1))
+			bytes = tor.getChunkSize() * (pieces.numOnBits() - 1) + tor.getLastChunkSize();
+		else
+			bytes = tor.getChunkSize() * pieces.numOnBits();
+		
+		Uint64 tbytes = tor.getChunkSize() * (pieces.getNumBits() - 1) + tor.getLastChunkSize();
+		return (float)bytes / (float)tbytes * 100.0;
 	}
 
 	const PeerInterface::Stats & Peer::getStats() const

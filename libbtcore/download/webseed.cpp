@@ -195,8 +195,8 @@ namespace bt
 		{
 			Uint64 len = (last_chunk - first_chunk) * tor.getChunkSize();
 			// last chunk can have a different size
-			if (last_chunk == tor.getNumChunks() - 1 && tor.getFileLength() % tor.getChunkSize() > 0)
-				len += tor.getFileLength() % tor.getChunkSize();
+			if (last_chunk == tor.getNumChunks() - 1)
+				len += tor.getLastChunkSize();
 			else
 				len += tor.getChunkSize(); 
 			
@@ -242,8 +242,8 @@ namespace bt
 		{
 			Uint64 len = (last_chunk - first_chunk) * tor.getChunkSize();
 			// last chunk can have a different size
-			if (last_chunk == tor.getNumChunks() - 1 && tor.getFileLength() % tor.getChunkSize() > 0)
-				len += tor.getFileLength() % tor.getChunkSize();
+			if (last_chunk == tor.getNumChunks() - 1)
+				len += tor.getLastChunkSize();
 			else
 				len += tor.getChunkSize(); 
 			

@@ -338,9 +338,7 @@ namespace kt
 	Uint64 ImportDialog::calcImportedBytes(const bt::BitSet & chunks,const Torrent & tor)
 	{
 		Uint64 nb = 0;
-		Uint64 ls = tor.getFileLength() % tor.getChunkSize();
-		if (ls == 0)
-			ls = tor.getChunkSize();
+		Uint64 ls = tor.getLastChunkSize();
 
 		for (Uint32 i = 0;i < chunks.getNumBits();i++)
 		{

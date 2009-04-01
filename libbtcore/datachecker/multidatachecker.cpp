@@ -65,7 +65,7 @@ namespace bt
 		
 		for (cur_chunk = 0;cur_chunk < num_chunks;cur_chunk++)
 		{
-			Uint32 cs = (cur_chunk == num_chunks - 1) ? tor.getFileLength() % chunk_size : chunk_size;
+			Uint32 cs = (cur_chunk == num_chunks - 1) ? tor.getLastChunkSize() : chunk_size;
 			if (cs == 0)
 				cs = chunk_size;
 			if (!loadChunk(cur_chunk,cs,tor))

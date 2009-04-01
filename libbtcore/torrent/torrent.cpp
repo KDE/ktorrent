@@ -52,7 +52,7 @@ namespace bt
 	}
 #endif
 
-	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0),tmon(0)
+	Torrent::Torrent() : chunk_size(0),total_size(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0),tmon(0)
 	{
 		text_codec = QTextCodec::codecForName("utf-8");
 		trackers = 0;
@@ -145,12 +145,12 @@ namespace bt
 		if (!dict)
 			throw Error(i18n("Corrupted torrent."));
 		
-		piece_length = dict->getInt64("piece length");
+		chunk_size = dict->getInt64("piece length");
 		BListNode* files = dict->getList("files");
 		if (files)
 			loadFiles(files);
 		else
-			file_length = dict->getInt64("length");
+			total_size = dict->getInt64("length");
 		
 		loadHash(dict);
 		unencoded_name = dict->getByteArray("name");
@@ -163,9 +163,12 @@ namespace bt
 			priv_torrent = true;
 		
 		// do a safety check to see if the number of hashes matches the file_length
-		Uint32 num_chunks = (file_length / this->piece_length);
-		if (file_length % piece_length > 0)
+		Uint32 num_chunks = (total_size / chunk_size);
+		last_chunk_size = total_size % chunk_size;
+		if (last_chunk_size > 0)
 			num_chunks++;
+		else
+			last_chunk_size = chunk_size;
 		
 		if (num_chunks != (Uint32)hash_pieces.count())
 		{
@@ -211,11 +214,11 @@ namespace bt
 				throw Error(i18n("Corrupted torrent."));
 
 			Uint64 s = d->getInt64("length");
-			TorrentFile file(this,idx,path,file_length,s,piece_length);
+			TorrentFile file(this,idx,path,total_size,s,chunk_size);
 			file.setUnencodedPath(unencoded_path);
 
 			// update file_length
-			file_length += s;
+			total_size += s;
 			files.append(file);
 			idx++;
 		}
@@ -307,7 +310,7 @@ namespace bt
 //		for (KUrl::List::iterator i = tracker_urls.begin();i != tracker_urls.end();i++)
 //			Out(SYS_GEN|LOG_DEBUG) << "Tracker URL : " << *i << endl;
 		
-		Out(SYS_GEN|LOG_DEBUG) << "Piece Length : " << piece_length << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Piece Length : " << chunk_size << endl;
 		if (this->isMultiFile())
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "Files : " << endl;
@@ -326,7 +329,7 @@ namespace bt
 		}
 		else
 		{
-			Out(SYS_GEN|LOG_DEBUG) << "File Length : " << file_length << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "File Length : " << total_size << endl;
 		}
 		Out(SYS_GEN|LOG_DEBUG) << "Pieces : " << hash_pieces.size() << endl;
 	}

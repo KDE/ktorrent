@@ -242,7 +242,7 @@ namespace bt
 		try
 		{
 			fd = new CacheFile();
-			fd->open(output_file,tor.getFileLength());
+			fd->open(output_file,tor.getTotalSize());
 		}
 		catch (...)
 		{

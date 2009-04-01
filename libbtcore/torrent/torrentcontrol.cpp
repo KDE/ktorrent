@@ -604,7 +604,7 @@ namespace bt
 		stats.running = false;
 		stats.torrent_name = tor->getNameSuggestion();
 		stats.multi_file_torrent = tor->isMultiFile();
-		stats.total_bytes = tor->getFileLength();
+		stats.total_bytes = tor->getTotalSize();
 		stats.priv_torrent = tor->isPrivate();
 		
 		// check the stats file for the custom_output_name variable
@@ -1230,7 +1230,7 @@ namespace bt
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
 		stats.chunk_size = tor ? tor->getChunkSize() : 0;
 		stats.num_chunks_left = cman ? cman->chunksLeft() : 0;
-		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
+		stats.total_bytes_to_download = (tor && cman) ? tor->getTotalSize() - cman->bytesExcluded() : 0;
 		
 		
 		

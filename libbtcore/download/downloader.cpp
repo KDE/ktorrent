@@ -60,7 +60,7 @@ namespace bt
 		else
 			chunk_selector = fac->createChunkSelector(cman,*this,pman);
 		
-		Uint64 total = tor.getFileLength();
+		Uint64 total = tor.getTotalSize();
 		downloaded = (total - cman.bytesLeft());
 		curr_chunks_downloaded = 0;
 		unnecessary_data = 0;
@@ -582,7 +582,7 @@ namespace bt
 			return;
 
 		// recalculate downloaded bytes
-		downloaded = (tor.getFileLength() - cman.bytesLeft());
+		downloaded = (tor.getTotalSize() - cman.bytesLeft());
 
 		CurrentChunksHeader chdr;
 		fptr.read(&chdr,sizeof(CurrentChunksHeader));
@@ -738,7 +738,7 @@ namespace bt
 	
 	void Downloader::recalcDownloaded()
 	{
-		Uint64 total = tor.getFileLength();
+		Uint64 total = tor.getTotalSize();
 		downloaded = (total - cman.bytesLeft());
 	}
 	

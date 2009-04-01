@@ -20,6 +20,7 @@ Changes in 3.3 :
 - Don't send body of login page when redirecting to login page (188209)
 - VideoWidget now inhibits screensaver
 - Add feature to support a different speed limit when the screensaver is activated (172660)
+- Use bytes to calculate availability percentage of a peer (188575)
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
