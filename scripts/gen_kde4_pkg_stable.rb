@@ -14,7 +14,7 @@ addDocs    = []
 addPo      = []
 remove     = ""
 
-version    = "3.1.6"
+version    = "3.2.1"
 svnbase    = "svn+ssh://guisson@svn.kde.org/home/kde"
 svnroot    = "#{svnbase}/branches/stable"
 svntags    = "#{svnbase}/tags/#{name}"
