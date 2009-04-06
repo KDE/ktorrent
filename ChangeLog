@@ -1,3 +1,6 @@
+Changes in 3.2.2 :
+- Fix crash when changing speed limits using system tray menu (188447)
+
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
 - Fix bug causing torrents to get stuck when data checking and move to completed dir are done when a torrent has finished

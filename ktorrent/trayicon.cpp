@@ -360,8 +360,6 @@ namespace kt
 			net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
 		}
 		Settings::self()->writeConfig();
-
-		update();
 	}
 }
 
