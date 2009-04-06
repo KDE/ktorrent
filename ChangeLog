@@ -22,6 +22,9 @@ Changes in 3.3 :
 - Add feature to support a different speed limit when the screensaver is activated (172660)
 - Use bytes to calculate availability percentage of a peer (188575)
 
+Changes in 3.2.2 :
+- Fix crash when changing speed limits using system tray menu (188447)
+
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
 - Fix bug causing torrents to get stuck when data checking and move to completed dir are done when a torrent has finished
