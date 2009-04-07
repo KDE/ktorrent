@@ -56,6 +56,7 @@ namespace bt
 		interval = 5 * 60; // default interval 5 minutes
 		failures = 0;
 		seeders = leechers = 0;
+		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 	}
 
 
@@ -379,12 +380,12 @@ namespace bt
 	
 	void HTTPTracker::onAnnounceResult(KJob* j)
 	{
+		timer.stop();
+		KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)j;
+		KUrl u = st->url();
+		active_job = 0;
 		if (j->error())
 		{
-			KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)j;
-			KUrl u = st->url();
-			active_job = 0;
-			
 			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << st->errorString() << endl;
 			if (u.queryItem("event") != "stopped")
 			{
@@ -398,10 +399,6 @@ namespace bt
 		}
 		else
 		{
-			KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)j;
-			KUrl u = st->url();
-			active_job = 0;
-			
 			if (u.queryItem("event") != "stopped")
 			{
 				try
@@ -483,8 +480,16 @@ namespace bt
 		connect(j,SIGNAL(result(KJob* )),this,SLOT(onAnnounceResult( KJob* )));
 		
 		active_job = j;
+		timer.start(60*1000);
 		requestPending();
 	}
+	
+	void HTTPTracker::onTimeout() 
+	{
+		if (active_job)
+			active_job->kill(KJob::EmitResult);
+	}
+
 	
 	void HTTPTracker::setProxy(const QString & p,const bt::Uint16 port) 
 	{

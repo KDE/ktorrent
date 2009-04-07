@@ -20,7 +20,7 @@
 #ifndef BTHTTPTRACKER_H
 #define BTHTTPTRACKER_H
 
-#include <qtimer.h>
+#include <QTimer>
 #include <btcore_export.h>
 #include "tracker.h"
 
@@ -62,6 +62,7 @@ namespace bt
 		void onAnnounceResult(KJob* j);
 		void onScrapeResult(KJob* j);
 		void emitInvalidURLFailure();
+		void onTimeout();
 
 	private:
 		void doRequest(WaitJob* wjob = 0);
@@ -75,6 +76,7 @@ namespace bt
 		KUrl::List announce_queue;
 		QString event;
 		Uint32 failures;
+		QTimer timer;
 		
 		static bool proxy_on;
 		static QString proxy;
