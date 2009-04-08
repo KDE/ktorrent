@@ -473,7 +473,7 @@ namespace kt
 	
 	QModelIndex TorrentFileTreeModel::index(int row,int column,const QModelIndex & parent) const
 	{
-		if (!tc || !hasIndex(row, column, parent))
+		if (!tc || row < 0 || row >= rowCount(parent) || column < 0 || column >= columnCount(parent))
 			return QModelIndex();
 
 		Node* p = 0;
