@@ -35,6 +35,7 @@ Comment[nl]=Filter IP-adressen met behulp van een zwarte lijst
 Comment[pt]=Filtra os endereços IP através de uma lista de bloqueios
 Comment[pt_BR]=Filtra os endereços IP através de uma lista de bloqueios
 Comment[ro]=Filtrează adresele IP printr-o listă de blocare
+Comment[ru]=Позволяет фильтровать нежелательные IP-адресы 
 Comment[sr]=Филтрирајте ИП адресе кроз листу блокирања
 Comment[sr@latin]=Filtrirajte IP adrese kroz listu blokiranja
 Comment[sv]=Filtrera IP-adresser med en blockeringslista

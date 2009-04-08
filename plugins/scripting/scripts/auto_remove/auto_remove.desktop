@@ -1,18 +1,22 @@
 [Desktop Entry]
 Name=Automatic Remove
 Name[de]=Automatisch entfernen
+Name[et]=Automaatne eemaldamine
 Name[ga]=Baint Uathoibríoch
 Name[pt]=Remoção Automática
 Name[pt_BR]=Remoção Automática
+Name[ru]=Автоматическое удаление
 Name[sv]=Automatisk borttagning
 Name[uk]=Автоматичне вилучення
 Name[x-test]=xxAutomatic Removexx
 Name[zh_TW]=自動移除
 Comment=Script to automatically remove torrents when they finish downloading or seeding
 Comment[de]=Skript zum automatischen Entfernen von Torrents, wenn sie vollständig hoch- oder heruntergeladen sind
+Comment[et]=Skript torrentite automaatseks eemaldamiseks, kui allalaadimine või levitamine on lõpetatud
 Comment[ga]=Script a bhaineann torrents nuair atá an t-íosluchtú nó an síolú críochnaithe
 Comment[pt]=Um programa para remover automaticamente as torrentes quando terminar a sua transferência ou publicação
 Comment[pt_BR]=Um programa para remover automaticamente as torrentes quando terminar a sua transferência ou publicação
+Comment[ru]=Сценарий для автоматического удаления торрентов после окончания их загрузки или отдачи
 Comment[sv]=Skript för att automatiskt ta bort dataflöden när nerladdning är klar eller de inte erbjuds längre
 Comment[uk]=Скрипт для автоматичного вилучення торентів після завершення їх звантаження або поширення.
 Comment[x-test]=xxScript to automatically remove torrents when they finish downloading or seedingxx
