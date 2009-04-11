@@ -577,7 +577,10 @@ namespace kt
 	
 	void Core::start(QList<bt::TorrentInterface*> & todo)
 	{
-		if (todo.count() == 0)
+		if (todo.isEmpty())
+			return;
+		
+		if (todo.count() == 1)
 		{
 			start(todo.front());
 		}
