@@ -179,9 +179,6 @@ namespace bt
 		 */
 		Uint32 getRunningTimeUL() const;
 
-		/// Get the time to the next tracker update in seconds.
-		Uint32 getTimeToNextTrackerUpdate() const;
-
 		/// Get a short error message
 		QString getShortErrorMessage() const {return error_msg;}
 		
@@ -310,13 +307,6 @@ namespace bt
 		 * Scrape the tracker.
 		 * */
 		void scrapeTracker();
-
-		/**
-		 * The tracker status has changed.
-		 * @param s The tracker status
-		 * @param ns New status
-		 */
-		void trackerStatusChanged(TrackerStatus s,const QString & ns);
 
 		/**
 		 * A scrape has finished on the tracker.

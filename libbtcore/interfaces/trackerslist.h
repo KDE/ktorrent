@@ -26,6 +26,7 @@
 namespace bt
 {
 	struct TrackerTier;
+	class TrackerInterface;
 
 	/**
 	 * @author Ivan Vasić <ivasic@gmail.com>
@@ -34,65 +35,72 @@ namespace bt
 	*/
 	class BTCORE_EXPORT TrackersList
 	{
-		public:
-			TrackersList();
-			virtual ~TrackersList();
-			
-			/**
-			 * Get the current tracker URL.
-			 */
-			virtual KUrl getTrackerURL() const = 0;
-			
-			/**
-			 * Gets a list of available trackers.
-			 */
-			virtual KUrl::List getTrackerURLs() = 0;
+	public:
+		TrackersList();
+		virtual ~TrackersList();
 		
-			/**
-			 * Adds a tracker URL to the list.
-			 * @param url The URL
-			 * @param custom Is it a custom tracker
-			 * @param tier Which tier (or priority) the tracker has, tier 1 are 
-			 * the main trackers, tier 2 are backups ...
-			 */
-			virtual void addTracker(const KUrl &url, bool custom = true,int tier = 1) = 0;
+		/**
+		 * Get the current tracker (for non private torrents this returns 0, seeing that
+		 * all trackers are used at the same time)
+		 */
+		virtual TrackerInterface* getCurrentTracker() const = 0;
 		
-			/**
-			 * Removes the tracker from the list.
-			 * @param url - Tracker url.
-			 */
-			virtual bool removeTracker(const KUrl &url) = 0;
+		/**
+		* Sets the current tracker and does the announce. For non private torrents, this
+		* does nothing.
+		* @param t The Tracker
+		*/
+		virtual void setCurrentTracker(TrackerInterface* t) = 0;
 		
-			/**
-			 * Sets the current tracker and does the announce.
-			 * @param url - Tracker url.
-			 */
-			virtual void setTracker(const KUrl &url) = 0;
-			
-			/**
-			 * Restores the default tracker and does the announce.
-			 */
-			virtual void restoreDefault() = 0;
-			
-			/**
-			 * Enable or disable a tracker
-			 * @param url The url 
-			 * @param enabled True to enable, false to disable
-			 */
-			virtual void setTrackerEnabled(const KUrl & url,bool enabled) = 0;
-			
-			/**
-			 * See if a tracker is enabled
-			 * @param url The tracker url
-			 * @return true if it is, false if it isn't
-			 */
-			virtual bool isTrackerEnabled(const KUrl & url) const = 0;
-			
-			/**
-			 * Merge an other tracker list.
-			 * @param first The first TrackerTier
-			 */
-			void merge(const bt::TrackerTier* first);
+		/**
+		* Sets the current tracker and does the announce. For non private torrents, this
+		* does nothing.
+		* @param url Url of the tracker
+		*/
+		virtual void setCurrentTracker(const KUrl & url) = 0;
+		
+		/**
+		 * Gets a list of all available trackers. 
+		 */
+		virtual QList<TrackerInterface*> getTrackers() = 0;
+	
+		/**
+		 * Adds a tracker URL to the list.
+		 * @param url The URL
+		 * @param custom Is it a custom tracker
+		 * @param tier Which tier (or priority) the tracker has, tier 1 are 
+		 * the main trackers, tier 2 are backups ...
+		 * @return The Tracker
+		 */
+		virtual TrackerInterface* addTracker(const KUrl &url, bool custom = true,int tier = 1) = 0;
+	
+		/**
+		 * Removes the tracker from the list.
+		 * @param t The Tracker
+		 */
+		virtual bool removeTracker(TrackerInterface* t) = 0;
+		
+		/**
+		 * Removes the tracker from the list.
+		 * @param url The tracker url
+		 */
+		virtual bool removeTracker(const KUrl & url) = 0;
+		
+		/**
+		 * Restores the default tracker and does the announce.
+		 */
+		virtual void restoreDefault() = 0;
+		
+		/**
+		 * Set a tracker enabled or not
+		 */
+		virtual void setTrackerEnabled(const KUrl & url,bool on) = 0;
+		
+		/**
+		 * Merge an other tracker list.
+		 * @param first The first TrackerTier
+		 */
+		void merge(const bt::TrackerTier* first);
 
 	};
 

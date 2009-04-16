@@ -100,11 +100,9 @@ namespace bt
 		stats.priv_torrent = false;
 		stats.seeders_connected_to = stats.seeders_total = 0;
 		stats.leechers_connected_to = stats.leechers_total = 0;
-		stats.total_times_downloaded = 0;
 		stats.max_share_ratio = 0.00f;
 		stats.max_seed_time = 0;
 		stats.last_download_activity_time = stats.last_upload_activity_time = 0;
-		stats.tracker_status = TRACKER_OK;
 		istats.running_time_dl = istats.running_time_ul = 0;
 		istats.prev_bytes_dl = 0;
 		istats.prev_bytes_ul = 0;
@@ -625,8 +623,6 @@ namespace bt
 		pman = new PeerManager(*tor);
 		//Out() << "Tracker url " << url << " " << url.protocol() << " " << url.prettyURL() << endl;
 		psman = new PeerSourceManager(this,pman);
-		connect(psman,SIGNAL(statusChanged(TrackerStatus , const QString& )),
-				this,SLOT(trackerStatusChanged(TrackerStatus , const QString& )));
 
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
@@ -1207,14 +1203,6 @@ namespace bt
 		return !tor->isMultiFile() && tor->isMultimedia();
 	}
 
-	Uint32 TorrentControl::getTimeToNextTrackerUpdate() const
-	{
-		if (psman)
-			return psman->getTimeToNextUpdate();
-		else
-			return 0;
-	}
-
 	void TorrentControl::updateStats()
 	{
 		stats.num_chunks_downloading = downloader ? downloader->numActiveDownloads() : 0;
@@ -1260,7 +1248,6 @@ namespace bt
 		
 		getSeederInfo(stats.seeders_total,stats.seeders_connected_to);
 		getLeecherInfo(stats.leechers_total,stats.leechers_connected_to);
-		stats.total_times_downloaded = psman ? psman->getTotalTimesDownloaded() : 0;
 	}
 
 	void TorrentControl::trackerScrapeDone()
@@ -1662,12 +1649,6 @@ namespace bt
 		istats.trk_prev_bytes_ul = stats.bytes_uploaded,
 		stats.trk_bytes_downloaded = 0;
 		stats.trk_bytes_uploaded = 0;
-	}
-	
-	void TorrentControl::trackerStatusChanged(TrackerStatus s,const QString & ns)
-	{
-		stats.tracker_status = s;
-		stats.tracker_status_string = ns;
 	}
 	
 	void TorrentControl::addPeerSource(PeerSource* ps)

@@ -21,12 +21,14 @@
 #ifndef KTTRACKERMODEL_H
 #define KTTRACKERMODEL_H
 
+#include <QList>
 #include <KUrl>
-#include <QAbstractListModel>
+#include <QAbstractTableModel>
 
 namespace bt
 {
 	class TorrentInterface;
+	class TrackerInterface;
 }
 
 namespace kt
@@ -35,7 +37,7 @@ namespace kt
 	/**
 		@author
 	*/
-	class TrackerModel : public QAbstractListModel
+	class TrackerModel : public QAbstractTableModel
 	{
 		Q_OBJECT
 	public:
@@ -45,6 +47,7 @@ namespace kt
 		void changeTC(bt::TorrentInterface* tc);
 
 		virtual int rowCount(const QModelIndex &parent) const;
+		virtual int columnCount(const QModelIndex &parent) const;
 		virtual QVariant data(const QModelIndex &index, int role) const;
 		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
@@ -52,15 +55,15 @@ namespace kt
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 		
-		/// Check if the model contains a tracker
-		bool hasTracker(const KUrl & url) const;
-		
 		/// Get a tracker url given a model index
 		KUrl trackerUrl(const QModelIndex & idx);
 		
+		/// Get a tracker given a model index
+		bt::TrackerInterface* tracker(const QModelIndex & idx);
+		
 	private:
 		bt::TorrentInterface* tc;
-		KUrl::List trackers;
+		QList<bt::TrackerInterface*> trackers;
 	};
 
 }

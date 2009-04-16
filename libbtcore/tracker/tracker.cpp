@@ -38,15 +38,11 @@ namespace bt
 	static QString custom_ip_resolved;
 	
 	Tracker::Tracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier) 
-	: url(url),tier(tier),peer_id(id),tor(tor)
+	: TrackerInterface(url),tier(tier),peer_id(id),tor(tor)
 	{
-		// default 5 minute interval
-		interval = 5 * 60 * 1000;
-		seeders = leechers = total_downloaded = 0;
 		srand(time(0));
 		key = rand();
 		started = false;
-		enabled = true;
 	}
 	
 	Tracker::~Tracker()

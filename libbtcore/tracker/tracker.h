@@ -23,6 +23,7 @@
 #include <kurl.h>
 #include <util/sha1hash.h>
 #include <interfaces/peersource.h>
+#include <interfaces/trackerinterface.h>
 #include <peer/peerid.h>
 #include <btcore_export.h>
 
@@ -35,7 +36,7 @@ namespace bt
 	/**
 	 * Base class for all tracker classes.
 	*/
-	class BTCORE_EXPORT Tracker : public PeerSource
+	class BTCORE_EXPORT Tracker : public PeerSource,public TrackerInterface
 	{
 		Q_OBJECT
 	public:
@@ -75,32 +76,10 @@ namespace bt
 		/// Get the trackers tier
 		int getTier() const {return tier;}
 		
-		/**
-		 * Get the update interval in ms
-		 * @return interval
-		 */
-		Uint32 getInterval() const {return interval;}
-		
-		/// Set the interval
-		void setInterval(Uint32 i) {interval = i;}
-		
-		/// Get the number of seeders
-		Uint32 getNumSeeders() const {return seeders;}
-		
-		/// Get the number of leechers
-		Uint32 getNumLeechers() const {return leechers;}
-		
-		/// Get the number of times the torrent was downloaded
-		Uint32 getTotalTimesDownloaded() const {return total_downloaded;}
 		
 		/// Get the custom ip to use, null if none is set
 		static QString getCustomIP();
 		
-		/// Enable or disable the tracker
-		void setEnabled(bool on) {enabled = on;}
-		
-		/// Is the tracker enabled
-		bool isEnabled() const {return enabled;}
 	signals:
 		/**
 		 * Emitted when an error happens.
@@ -129,13 +108,11 @@ namespace bt
 		void scrapeDone();
 		
 	protected:
-		KUrl url;
 		int tier;
 		PeerID peer_id;
 		TorrentInterface* tor;
-		Uint32 interval,seeders,leechers,key,total_downloaded;
+		Uint32 key;
 		bool started;
-		bool enabled;
 	};
 	
 }

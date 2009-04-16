@@ -102,6 +102,8 @@ namespace kt
 			file_view->saveState(KGlobal::config());
 		if (webseeds_tab)
 			webseeds_tab->saveState(KGlobal::config());
+		if (tracker_view)
+			tracker_view->saveState(KGlobal::config());
 		KGlobal::config()->sync();
 		
 		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
@@ -266,10 +268,12 @@ namespace kt
 			tracker_view = new TrackerView(0);
 			ta->addToolWidget(tracker_view,i18n("Trackers"),"network-server",
 					i18n("Displays information about all the trackers of a torrent"));
+			tracker_view->loadState(KGlobal::config());
 			tracker_view->changeTC(ta->getCurrentTorrent());
 		}
 		else if (!show && tracker_view)
 		{
+			tracker_view->saveState(KGlobal::config());
 			ta->removeToolWidget(tracker_view);
 			delete tracker_view; tracker_view = 0;
 		}

@@ -30,6 +30,7 @@
 #include <interfaces/webseedinterface.h>
 #include <bcodec/bencoder.h>
 #include "dbustorrent.h"
+#include <interfaces/trackerinterface.h>
 
 using namespace bt;
 
@@ -152,23 +153,23 @@ namespace kt
 	
 	QString DBusTorrent::currentTracker() const
 	{
-		return ti->getTrackersList()->getTrackerURL().prettyUrl();
+		bt::TrackerInterface* t = ti->getTrackersList()->getCurrentTracker();
+		return t ? t->trackerURL().prettyUrl() : QString();
 	}
 	
 	QStringList DBusTorrent::trackers() const
 	{
-		TrackersList* tlist = ti->getTrackersList();
-		KUrl::List urls = tlist->getTrackerURLs();
+		QList<bt::TrackerInterface*> trackers = ti->getTrackersList()->getTrackers();
 		QStringList ret;
-		foreach (const KUrl& u,urls)
-			ret << u.prettyUrl();
+		foreach (bt::TrackerInterface* t,trackers)
+			ret << t->trackerURL().prettyUrl();
 		return ret;
 	}
 	
 	void DBusTorrent::changeTracker(const QString & tracker_url)
 	{
 		KUrl url(tracker_url);
-		ti->getTrackersList()->setTracker(url);
+		ti->getTrackersList()->setCurrentTracker(url);
 	}
 	
 	void DBusTorrent::announce()
@@ -272,9 +273,7 @@ namespace kt
 		enc.write("seeders_connected_to",s.seeders_connected_to);
 		enc.write("leechers_total",s.leechers_total);
 		enc.write("leechers_connected_to",s.leechers_connected_to);
-		enc.write("total_times_downloaded", s.total_times_downloaded);
 		enc.write("status",ti->statusToString());
-		enc.write("tracker_status", s.tracker_status_string);
 		enc.write("session_bytes_downloaded", s.session_bytes_downloaded);
 		enc.write("session_bytes_uploaded", s.session_bytes_uploaded);
 		enc.write("trk_bytes_downloaded", s.trk_bytes_downloaded);

@@ -20,13 +20,15 @@
  ***************************************************************************/
 #include "trackermodel.h"
 #include <QList>
+#include <klocale.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/trackerinterface.h>
 
 namespace kt
 {
 
 	TrackerModel::TrackerModel(QObject* parent)
-			: QAbstractListModel(parent),tc(0)
+			: QAbstractTableModel(parent),tc(0)
 	{
 	}
 
@@ -40,7 +42,7 @@ namespace kt
 		trackers.clear();
 		this->tc = tc;
 		if (tc)
-			trackers = tc->getTrackersList()->getTrackerURLs();
+			trackers = tc->getTrackersList()->getTrackers();
 		
 		reset();
 	}
@@ -53,18 +55,39 @@ namespace kt
 			return trackers.count();
 	}
 	
+	int TrackerModel::columnCount(const QModelIndex& parent) const 
+	{
+		if (parent.isValid())
+			return 0;
+		else
+			return 6;
+	}
+
+	
 	QVariant TrackerModel::data(const QModelIndex &index, int role) const
 	{
 		if (!tc || !index.isValid() ||  index.row() < 0 || index.row() >= trackers.count())
 			return QVariant();
 		
-		KUrl url = trackers.at(index.row());
+		bt::TrackerInterface* trk = trackers.at(index.row());
+		if (role == Qt::CheckStateRole && index.column() == 0)
+			return trk->isEnabled() ? Qt::Checked : Qt::Unchecked;
+		
 		if (role == Qt::DisplayRole)
-			return url.prettyUrl();
-		else if (role == Qt::CheckStateRole)
-			return tc->getTrackersList()->isTrackerEnabled(url) ? Qt::Checked : Qt::Unchecked;
-		else
-			return QVariant();
+		{
+			switch (index.column())
+			{
+			case 0: return trk->trackerURL().prettyUrl();
+			case 1: return trk->trackerStatusString();
+			case 2: return trk->getNumSeeders();
+			case 3: return trk->getNumLeechers();
+			case 4: return trk->getTotalTimesDownloaded();
+			case 5: return QTime().addSecs(trk->timeToNextUpdate()).toString("mm:ss");
+			}
+			
+		}
+		
+		return QVariant();
 	}
 	
 	bool TrackerModel::setData(const QModelIndex & index,const QVariant & value,int role)
@@ -74,7 +97,7 @@ namespace kt
 		
 		if (role == Qt::CheckStateRole)
 		{
-			KUrl url = trackers.at(index.row());
+			KUrl url = trackers.at(index.row())->trackerURL();
 			tc->getTrackersList()->setTrackerEnabled(url,(Qt::CheckState)value.toUInt() == Qt::Checked);
 			return true;
 		}
@@ -83,9 +106,21 @@ namespace kt
 	
 	QVariant TrackerModel::headerData(int section, Qt::Orientation orientation,int role) const
 	{
-		Q_UNUSED(section);
-		Q_UNUSED(orientation);
-		Q_UNUSED(role);
+		if (orientation != Qt::Horizontal)
+			return QVariant();
+		
+		if (role == Qt::DisplayRole)
+		{
+			switch (section)
+			{
+				case 0: return i18n("Url");
+				case 1: return i18n("Status");
+				case 2: return i18n("Seeders");
+				case 3: return i18n("Leechers");
+				case 4: return i18n("Times Downloaded");
+				case 5: return i18n("Next Update");
+			}
+		}
 		return QVariant();
 	}
 	
@@ -94,7 +129,7 @@ namespace kt
 		Q_UNUSED(parent);
 		beginInsertRows(QModelIndex(),row,row + count - 1);
 		if (tc)
-			trackers = tc->getTrackersList()->getTrackerURLs();
+			trackers = tc->getTrackersList()->getTrackers();
 		endInsertRows();
 		return true;
 	}
@@ -104,22 +139,17 @@ namespace kt
 		Q_UNUSED(parent);
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
 		if (tc)
-			trackers = tc->getTrackersList()->getTrackerURLs();
+			trackers = tc->getTrackersList()->getTrackers();
 		endRemoveRows();
 		return true;
 	}
 	
 	Qt::ItemFlags TrackerModel::flags(const QModelIndex & index) const
 	{
-		if (!tc || !index.isValid() || index.row() >= trackers.count() || index.row() < 0)
+		if (!tc || !index.isValid() || index.row() >= trackers.count() || index.row() < 0 || index.column() != 0)
 			return QAbstractItemModel::flags(index);
 		else
 			return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
-	}
-	
-	bool TrackerModel::hasTracker(const KUrl & url) const
-	{
-		return trackers.indexOf(url) != -1;
 	}
 	
 	KUrl TrackerModel::trackerUrl(const QModelIndex & index)
@@ -127,6 +157,15 @@ namespace kt
 		if (!tc || !index.isValid() ||  index.row() < 0 || index.row() >= trackers.count())
 			return KUrl();
 		
+		return trackers.at(index.row())->trackerURL();
+	}
+	
+	bt::TrackerInterface* TrackerModel::tracker(const QModelIndex & index) 
+	{
+		if (!tc || !index.isValid() ||  index.row() < 0 || index.row() >= trackers.count())
+			return 0;
+		
 		return trackers.at(index.row());
 	}
+
 }

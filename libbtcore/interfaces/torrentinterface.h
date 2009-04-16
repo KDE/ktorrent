@@ -39,7 +39,6 @@ namespace bt
 	class MonitorInterface;
 	class TorrentFileInterface;
 	class PeerSource;
-	class TrackersList;
 	class SHA1Hash;
 	class WebSeedInterface;
 	
@@ -75,10 +74,6 @@ namespace bt
 		MAX_SEED_TIME_REACHED
 	};
 	
-	enum TrackerStatus
-	{
-		TRACKER_OK,TRACKER_ANNOUNCING,TRACKER_ERROR,TRACKER_STOPPED
-	};
 
 	struct TorrentStats
 	{
@@ -122,14 +117,8 @@ namespace bt
 		Uint32 leechers_total;
 		/// Num leechers connected to
 		Uint32 leechers_connected_to;
-		/// The number of times the torrent was downloaded
-		Uint32 total_times_downloaded;
 		/// Status of the download
 		TorrentStatus status;
-		/// The status of the tracker
-		TrackerStatus tracker_status;
-		/// The status of the tracker
-		QString tracker_status_string;
 		/// The number of bytes downloaded in this session
 		Uint64 session_bytes_downloaded;
 		/// The number of bytes uploaded in this session
@@ -219,7 +208,7 @@ namespace bt
 		/**
 		 * Stop the download, closes all connections.
 		 * @param wjob WaitJob, used when KT is shutting down, 
-		 * 	so that we can wait for all stopped events to reach the tracker
+		 * so that we can wait for all stopped events to reach the tracker
 		 */
 		virtual void stop(bt::WaitJob* wjob = 0) = 0;
 		
@@ -228,8 +217,9 @@ namespace bt
 		 * We leave it public so that the user can do a manual announce.
 		 */
 		virtual void updateTracker() = 0;
+		
 		/**
-		 * Scrape the tracker
+		 * Scrape all or one tracker (private torrents)
 		 */
 		virtual void scrapeTracker() = 0;
 
@@ -320,9 +310,6 @@ namespace bt
 
 		/// Set the monitor
 		virtual void setMonitor(MonitorInterface* tmo) = 0;
-
-		/// Get the time to the next tracker update in seconds.
-		virtual Uint32 getTimeToNextTrackerUpdate() const = 0;
 
 		/// Get the number of files in a multifile torrent (0 if we do not have a multifile torrent)
 		virtual Uint32 getNumFiles() const = 0;
