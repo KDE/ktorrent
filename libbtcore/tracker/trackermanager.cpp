@@ -264,12 +264,18 @@ namespace bt
 		{
 			if (curr)
 				curr->stop(wjob);
+			
+			for (PtrMap<KUrl,Tracker>::iterator i = trackers.begin();i != trackers.end();i++)
+			{
+				i->second->reset();
+			}
 		}
 		else
 		{
 			for (PtrMap<KUrl,Tracker>::iterator i = trackers.begin();i != trackers.end();i++)
 			{
 				i->second->stop(wjob);
+				i->second->reset();
 			}
 		}
 	}
@@ -442,7 +448,10 @@ namespace bt
 				{
 					curr->stop();
 					switchTracker(trk);
-					curr->start();
+					if (curr->failureCount() > 0)
+						curr->handleFailure();
+					else
+						curr->start();
 				}
 			}
 			else
@@ -478,11 +487,17 @@ namespace bt
 	Uint32 TrackerManager::getNumSeeders() const 
 	{
 		if (tor->getStats().priv_torrent)
-			return curr ? curr->getNumSeeders() : 0;
+		{
+			return curr && curr->getNumSeeders() > 0 ? curr->getNumSeeders() : 0;
+		}
 		
 		Uint32 r = 0;
 		for (PtrMap<KUrl,Tracker>::const_iterator i = trackers.begin();i != trackers.end();i++)
-			r += i->second->getNumSeeders();
+		{
+			int v = i->second->getNumSeeders();
+			if (v > 0)
+				r += v;
+		}
 		
 		return r;
 	}
@@ -490,11 +505,15 @@ namespace bt
 	Uint32 TrackerManager::getNumLeechers() const 
 	{
 		if (tor->getStats().priv_torrent)
-			return curr ? curr->getNumLeechers() : 0;
+			return curr && curr->getNumLeechers() > 0 ? curr->getNumLeechers() : 0;
 		
 		Uint32 r = 0;
 		for (PtrMap<KUrl,Tracker>::const_iterator i = trackers.begin();i != trackers.end();i++)
-			r += i->second->getNumLeechers();
+		{
+			int v = i->second->getNumLeechers();
+			if (v > 0)
+				r += v;
+		}
 		
 		return r;
 	}

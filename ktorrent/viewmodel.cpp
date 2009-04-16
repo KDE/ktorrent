@@ -33,6 +33,7 @@
 #include <groups/group.h>
 #include "viewmodel.h"
 #include "core.h"
+#include <interfaces/trackerinterface.h>
 
 using namespace bt;
 
@@ -495,22 +496,19 @@ namespace kt
 			return item->tc->getDisplayName();
 		else if (role == Qt::DecorationRole && index.column() == 1)
 		{
-			#warning TODO
-		/*	bt::TorrentInterface* tc = item->tc;
-			if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
+			bt::TorrentInterface* tc = item->tc;
+			bt::TrackerInterface* trk = tc->getTrackersList()->getCurrentTracker();
+			if (trk && trk->trackerStatus() == bt::TRACKER_ERROR)
 				return KIcon("dialog-warning");
-			*/
 		} 
 		else if (role == Qt::ToolTipRole)
 		{
 			if (index.column() == 1)
 			{
-				#warning TODO
-				/*
 				bt::TorrentInterface* tc = item->tc;
-				if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
-					return i18n("There is a problem with the tracker: <br><b>%1</b>",tc->getStats().tracker_status_string);
-				*/
+				bt::TrackerInterface* trk = tc->getTrackersList()->getCurrentTracker();
+				if (trk && trk->trackerStatus() == bt::TRACKER_ERROR)
+					return trk->trackerStatusString();
 			}
 			else if (index.column() == 0)
 			{

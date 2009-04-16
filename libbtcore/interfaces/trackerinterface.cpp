@@ -26,15 +26,22 @@ namespace bt
 	{
 		// default 5 minute interval
 		interval = 5 * 60 * 1000;
-		seeders = leechers = total_downloaded = 0;
+		seeders = leechers = total_downloaded = -1;
 		enabled = true;
 		started = false;
-		status = TRACKER_STOPPED;
+		status = TRACKER_IDLE;
 	}
 	
 	TrackerInterface::~TrackerInterface() 
 	{
 	}
+	
+	void TrackerInterface::reset() 
+	{
+		interval = 5 * 60 * 1000;
+		status = TRACKER_IDLE;
+	}
+
 
 	Uint32 TrackerInterface::timeToNextUpdate() const
 	{
@@ -51,7 +58,7 @@ namespace bt
 			case TRACKER_OK: return i18n("OK");
 			case TRACKER_ANNOUNCING: return i18n("Announcing");
 			case TRACKER_ERROR: return i18n("Error: %1",error);
-			case TRACKER_STOPPED: return i18n("Stopped");
+			case TRACKER_IDLE:
 			default: return QString();
 		}
 	}

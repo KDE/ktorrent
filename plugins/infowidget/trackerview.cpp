@@ -46,14 +46,16 @@ namespace kt
 	{
 		setupUi(this);
 		model = new TrackerModel(this);
-		m_tracker_list->setModel(model);
+		proxy_model = new QSortFilterProxyModel(this);
+		proxy_model->setSortRole(Qt::UserRole);
+		proxy_model->setSourceModel(model);
+		m_tracker_list->setModel(proxy_model);
 		m_tracker_list->setAllColumnsShowFocus(true);
 		m_tracker_list->setRootIsDecorated(false);
 		m_tracker_list->setAlternatingRowColors(true);
+		m_tracker_list->setSortingEnabled(true);
 		connect(m_add_tracker,SIGNAL(clicked()),this,SLOT(addClicked()));
 		connect(m_remove_tracker,SIGNAL(clicked()),this,SLOT(removeClicked()));
-		//connect(m_announce,SIGNAL(clicked()),this,SLOT(updateClicked()));
-		//connect(m_scrape,SIGNAL(clicked()),this,SLOT(scrapeClicked()));
 		connect(m_change_tracker,SIGNAL(clicked()),this,SLOT(changeClicked()));
 		connect(m_restore_defaults,SIGNAL(clicked()),this,SLOT(restoreClicked()));
 		connect(m_tracker_list->selectionModel(),SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
@@ -112,14 +114,11 @@ namespace kt
 
 	void TrackerView::removeClicked()
 	{
-		QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
+		QModelIndex current = proxy_model->mapToSource(m_tracker_list->selectionModel()->currentIndex());
 		if (!current.isValid())
 			return;
 		
-		if (tc->getTrackersList()->removeTracker(model->trackerUrl(current)))
-			model->removeRow(current.row());
-		else
-			KMessageBox::sorry(0, i18n("Cannot remove torrent default tracker."));
+		model->removeRow(current.row());
 	}
 
 	void TrackerView::changeClicked()
@@ -129,7 +128,7 @@ namespace kt
 			return;
 		
 		bt::TrackersList* tlist = tc->getTrackersList();
-		bt::TrackerInterface* trk = model->tracker(current);
+		bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
 		if (trk && trk->isEnabled())
 			tlist->setCurrentTracker(trk);
 	}
@@ -217,7 +216,7 @@ namespace kt
 		
 		const TorrentStats & s = tc->getStats();
 	
-		bt::TrackerInterface* trk = model->tracker(current);
+		bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
 		bool enabled = trk ? trk->isEnabled() : false;
 		m_change_tracker->setEnabled(s.running && model->rowCount(QModelIndex()) > 1 && enabled);
 		m_remove_tracker->setEnabled(trk && tc->getTrackersList()->canRemoveTracker(trk));

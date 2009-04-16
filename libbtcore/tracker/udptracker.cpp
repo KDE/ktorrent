@@ -168,7 +168,7 @@ namespace bt
 		else
 		{
 			stopDone();
-			status = TRACKER_STOPPED;
+			status = TRACKER_IDLE;
 			requestOK();
 		}
 		request_time = QDateTime::currentDateTime();
@@ -286,7 +286,7 @@ namespace bt
 				sendConnect();
 			else
 			{
-				status = TRACKER_STOPPED;
+				status = TRACKER_IDLE;
 				stopDone();
 			}
 		}

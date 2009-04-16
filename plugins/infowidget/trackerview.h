@@ -22,6 +22,7 @@
 #define TRACKERVIEW_H
 
 #include "ui_trackerview.h"
+#include <QSortFilterProxyModel>
 
 namespace bt
 {
@@ -62,6 +63,7 @@ namespace kt
 	private:
 		bt::TorrentInterface* tc;
 		TrackerModel* model;
+		QSortFilterProxyModel* proxy_model;
 	};
 }
 #endif

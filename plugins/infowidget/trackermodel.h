@@ -24,11 +24,11 @@
 #include <QList>
 #include <KUrl>
 #include <QAbstractTableModel>
+#include <interfaces/trackerinterface.h>
 
 namespace bt
 {
 	class TorrentInterface;
-	class TrackerInterface;
 }
 
 namespace kt
@@ -55,6 +55,7 @@ namespace kt
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
+		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
 		
 		/// Get a tracker url given a model index
 		KUrl trackerUrl(const QModelIndex & idx);
@@ -63,8 +64,23 @@ namespace kt
 		bt::TrackerInterface* tracker(const QModelIndex & idx);
 		
 	private:
+		struct Item
+		{
+			bt::TrackerInterface* trk;
+			bt::TrackerStatus status;
+			int seeders;
+			int leechers;
+			int times_downloaded;
+			int time_to_next_update;
+			
+			Item(bt::TrackerInterface* tracker);
+			bool update();
+			QVariant displayData(int column) const;
+			QVariant sortData(int column) const;
+		};
+		
 		bt::TorrentInterface* tc;
-		QList<bt::TrackerInterface*> trackers;
+		QList<Item*> trackers;
 		bool running;
 	};
 

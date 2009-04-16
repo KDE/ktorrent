@@ -36,14 +36,22 @@ namespace kt
 
 	TrackerModel::~TrackerModel()
 	{
+		qDeleteAll(trackers);
 	}
 
 	void TrackerModel::changeTC(bt::TorrentInterface* tc)
 	{
+		qDeleteAll(trackers);
 		trackers.clear();
 		this->tc = tc;
 		if (tc)
-			trackers = tc->getTrackersList()->getTrackers();
+		{
+			QList<bt::TrackerInterface*> tracker_list = tc->getTrackersList()->getTrackers();
+			foreach (bt::TrackerInterface* trk,tracker_list)
+			{
+				trackers.append(new Item(trk));
+			}
+		}
 		
 		reset();
 	}
@@ -54,9 +62,9 @@ namespace kt
 			return;
 		
 		int idx = 0;
-		foreach (bt::TrackerInterface* t,trackers)
+		foreach (Item* t,trackers)
 		{
-			if ((t->isEnabled() && t->isStarted()) || running != tc->getStats().running)
+			if (t->update())
 				emit dataChanged(index(idx,1),index(idx,5));
 			idx++;
 		}
@@ -87,41 +95,27 @@ namespace kt
 		if (!tc || !index.isValid() ||  index.row() < 0 || index.row() >= trackers.count())
 			return QVariant();
 		
-		bt::TrackerInterface* trk = trackers.at(index.row());
-		if (role == Qt::CheckStateRole && index.column() == 0)
-			return trk->isEnabled() ? Qt::Checked : Qt::Unchecked;
+		Item* item = (Item*)index.internalPointer();
+		if (!item)
+			return QVariant();
 		
-		if (role == Qt::DisplayRole)
+		bt::TrackerInterface* trk = item->trk;
+		
+		if (role == Qt::CheckStateRole && index.column() == 0)
 		{
-			switch (index.column())
-			{
-				case 0: return trk->trackerURL().prettyUrl();
-				case 1: return trk->trackerStatusString();
-				case 2: 
-				{
-					int ret = trk->getNumSeeders();
-					return ret > 0 || trk->trackerStatus() == bt::TRACKER_OK ? ret : QVariant();
-				}
-				case 3: 
-				{
-					int ret = trk->getNumLeechers();
-					return ret > 0 || trk->trackerStatus() == bt::TRACKER_OK ? ret : QVariant();
-				}
-				case 4:
-				{
-					int ret = trk->getTotalTimesDownloaded();
-					return ret > 0 || trk->trackerStatus() == bt::TRACKER_OK ? ret : QVariant();
-				}
-				case 5: 
-				{
-					int secs = trk->timeToNextUpdate();
-					if (secs)
-						return QTime().addSecs(secs).toString("mm:ss");
-					else
-						return QVariant();
-				}
-			}
-			
+			return trk->isEnabled() ? Qt::Checked : Qt::Unchecked;
+		}
+		else if (role == Qt::DisplayRole)
+		{
+			return item->displayData(index.column());
+		}
+		else if (role == Qt::UserRole)
+		{
+			return item->sortData(index.column());
+		}
+		else if (role == Qt::ForegroundRole && index.column() == 1 && trk->trackerStatus() == bt::TRACKER_ERROR)
+		{
+			return Qt::red;
 		}
 		
 		return QVariant();
@@ -134,7 +128,7 @@ namespace kt
 		
 		if (role == Qt::CheckStateRole)
 		{
-			KUrl url = trackers.at(index.row())->trackerURL();
+			KUrl url = trackers.at(index.row())->trk->trackerURL();
 			tc->getTrackersList()->setTrackerEnabled(url,(Qt::CheckState)value.toUInt() == Qt::Checked);
 			return true;
 		}
@@ -166,7 +160,21 @@ namespace kt
 		Q_UNUSED(parent);
 		beginInsertRows(QModelIndex(),row,row + count - 1);
 		if (tc)
-			trackers = tc->getTrackersList()->getTrackers();
+		{
+			QList<bt::TrackerInterface*> tracker_list = tc->getTrackersList()->getTrackers();
+			QList<Item*>::iterator i = trackers.begin();
+			foreach (bt::TrackerInterface* trk,tracker_list)
+			{
+				if (i != trackers.end())
+				{
+					Item* item = *i;
+					item->trk = trk;
+				}
+				else
+					trackers.append(new Item(trk));
+				i++;
+			}
+		}
 		endInsertRows();
 		return true;
 	}
@@ -176,7 +184,15 @@ namespace kt
 		Q_UNUSED(parent);
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
 		if (tc)
-			trackers = tc->getTrackersList()->getTrackers();
+		{
+			for (int i = 0;i < count;i++)
+			{
+				Item* item = trackers.takeAt(row);
+				KUrl url = item->trk->trackerURL();
+				tc->getTrackersList()->removeTracker(url);
+				delete item;
+			}
+		}
 		endRemoveRows();
 		return true;
 	}
@@ -189,12 +205,21 @@ namespace kt
 			return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
 	}
 	
+	QModelIndex TrackerModel::index(int row, int column, const QModelIndex& parent) const 
+	{
+		if (parent.isValid() || row < 0 || row >= trackers.count() || column < 0 || column >= 6)
+			return QModelIndex();
+		else
+			return createIndex(row,column,trackers.at(row));
+	}
+
+	
 	KUrl TrackerModel::trackerUrl(const QModelIndex & index)
 	{
 		if (!tc || !index.isValid() ||  index.row() < 0 || index.row() >= trackers.count())
 			return KUrl();
 		
-		return trackers.at(index.row())->trackerURL();
+		return ((Item*)index.internalPointer())->trk->trackerURL();
 	}
 	
 	bt::TrackerInterface* TrackerModel::tracker(const QModelIndex & index) 
@@ -202,7 +227,88 @@ namespace kt
 		if (!tc || !index.isValid() ||  index.row() < 0 || index.row() >= trackers.count())
 			return 0;
 		
-		return trackers.at(index.row());
+		return ((Item*)index.internalPointer())->trk;
+	}
+	
+	//////////////////////////////////////////
+	
+	TrackerModel::Item::Item(bt::TrackerInterface* tracker) : trk(tracker)
+	{
+		seeders = leechers = -1;
+		times_downloaded = -1;
+		time_to_next_update = 0;
+		status = tracker->trackerStatus();
+	}
+	
+	bool TrackerModel::Item::update()
+	{
+		bool ret = false;
+		if (status != trk->trackerStatus())
+		{
+			status = trk->trackerStatus();
+			ret = true;
+		}
+		
+		if (seeders != trk->getNumSeeders())
+		{
+			seeders = trk->getNumSeeders();
+			ret = true;
+		}
+		
+		if (leechers != trk->getNumLeechers())
+		{
+			leechers = trk->getNumLeechers();
+			ret = true;
+		}
+		
+		if (times_downloaded != trk->getTotalTimesDownloaded())
+		{
+			times_downloaded = trk->getTotalTimesDownloaded();
+			ret = true;
+		}
+		
+		if (time_to_next_update != trk->timeToNextUpdate())
+		{
+			time_to_next_update = trk->timeToNextUpdate();
+			ret = true;
+		}
+		
+		return ret;
+	}
+	
+	QVariant TrackerModel::Item::displayData(int column) const
+	{
+		switch (column)
+		{
+			case 0: return trk->trackerURL().prettyUrl();
+			case 1: return trk->trackerStatusString();
+			case 2: return seeders >= 0 ? seeders : QVariant();
+			case 3: return leechers >= 0 ? leechers : QVariant();
+			case 4: return times_downloaded >= 0 ? times_downloaded : QVariant();
+			case 5: 
+			{
+				int secs = time_to_next_update;
+				if (secs)
+					return QTime().addSecs(secs).toString("mm:ss");
+				else
+					return QVariant();
+			}
+			default: return QVariant();
+		}
+	}
+	
+	QVariant TrackerModel::Item::sortData(int column) const
+	{
+		switch (column)
+		{
+			case 0: return trk->trackerURL().prettyUrl();
+			case 1: return status;
+			case 2: return seeders;
+			case 3: return leechers;
+			case 4: return times_downloaded;
+			case 5: return time_to_next_update;
+			default: return QVariant();
+		}
 	}
 
 }

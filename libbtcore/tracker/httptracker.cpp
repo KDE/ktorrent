@@ -55,7 +55,6 @@ namespace bt
 		
 		interval = 5 * 60; // default interval 5 minutes
 		failures = 0;
-		seeders = leechers = 0;
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 	}
 
@@ -175,6 +174,11 @@ namespace bt
 					catch (...)
 					{}
 					scrapeDone();
+					if (status == bt::TRACKER_ERROR)
+					{
+						status = bt::TRACKER_OK;
+						failures = 0;
+					}
 				}
 			}
 		}
@@ -396,7 +400,7 @@ namespace bt
 			}
 			else
 			{
-				status = TRACKER_STOPPED;
+				status = TRACKER_IDLE;
 				stopDone();
 			}
 		}
@@ -428,7 +432,7 @@ namespace bt
 			}
 			else
 			{
-				status = TRACKER_STOPPED;
+				status = TRACKER_IDLE;
 				failures = 0;
 				stopDone();
 			}

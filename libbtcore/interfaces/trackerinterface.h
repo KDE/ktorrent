@@ -29,7 +29,7 @@ namespace bt
 {
 	enum TrackerStatus
 	{
-		TRACKER_OK,TRACKER_ANNOUNCING,TRACKER_ERROR,TRACKER_STOPPED
+		TRACKER_OK,TRACKER_ANNOUNCING,TRACKER_ERROR,TRACKER_IDLE
 	};
 	
 	/**
@@ -63,13 +63,13 @@ namespace bt
 		void setInterval(Uint32 i) {interval = i;}
 		
 		/// Get the number of seeders
-		Uint32 getNumSeeders() const {return seeders;}
+		int getNumSeeders() const {return seeders;}
 		
 		/// Get the number of leechers
-		Uint32 getNumLeechers() const {return leechers;}
+		int getNumLeechers() const {return leechers;}
 		
 		/// Get the number of times the torrent was downloaded
-		Uint32 getTotalTimesDownloaded() const {return total_downloaded;}
+		int getTotalTimesDownloaded() const {return total_downloaded;}
 		
 		/// Enable or disable the tracker
 		void setEnabled(bool on) {enabled = on;}
@@ -80,12 +80,15 @@ namespace bt
 		/// Get the time in seconds to the next tracker update
 		Uint32 timeToNextUpdate() const;
 		
+		/// Reset the tracker 
+		virtual void reset();
+		
 	protected:
 		KUrl url;
 		Uint32 interval;
-		Uint32 seeders;
-		Uint32 leechers;
-		Uint32 total_downloaded;
+		int seeders;
+		int leechers;
+		int total_downloaded;
 		bool enabled;
 		TrackerStatus status;
 		QDateTime request_time;
