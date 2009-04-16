@@ -428,7 +428,6 @@ namespace bt
 			Uint16 port;
 			int priority;
 			bool dht_on;
-			TimeStamp last_announce;
 			bool diskspace_warning_emitted;
 		};
 		

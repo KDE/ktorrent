@@ -83,7 +83,6 @@ namespace bt
 	{
 		custom_selector_factory = 0;
 		cache_factory = 0;
-		istats.last_announce = 0;
 		stats.imported_bytes = 0;
 		stats.running = false;
 		stats.started = false;
@@ -220,7 +219,6 @@ namespace bt
 					psman->start();
 				else
 					psman->manualUpdate();
-				istats.last_announce = bt::GetCurrentTime();
 				istats.time_started_dl = QDateTime::currentDateTime();
 				// Tell QM to redo queue
 				updateQueue();
@@ -418,7 +416,6 @@ namespace bt
 		
 		stalled_timer.update();
 		psman->start();
-		istats.last_announce = bt::GetCurrentTime();
 		stalled_timer.update();
 	}
 		
@@ -704,21 +701,14 @@ namespace bt
 
 	bool TorrentControl::announceAllowed()
 	{
-		if(istats.last_announce == 0)
-			return true;
-		
-		if (psman)
-			return bt::GetCurrentTime() - istats.last_announce >= 60 * 1000;
-		else
-			return true;
+		return psman != 0 && stats.running;
 	}
 	
 	void TorrentControl::updateTracker()
 	{
-		if (stats.running && announceAllowed())
+		if (announceAllowed())
 		{
 			psman->manualUpdate();
-			istats.last_announce = bt::GetCurrentTime();
 		}
 	}
 	
