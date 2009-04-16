@@ -67,6 +67,7 @@ namespace bt
 	void HTTPTracker::start()
 	{
 		event = "started";
+		resetTrackerStats();
 		doRequest();
 	}
 	
@@ -90,8 +91,9 @@ namespace bt
 	void HTTPTracker::manualUpdate()
 	{
 		if (!started)
-			event = "started";
-		doRequest();
+			start();
+		else
+			doRequest();
 	}
 	
 	void HTTPTracker::scrape()
@@ -196,8 +198,8 @@ namespace bt
 		
 		u.addQueryItem("peer_id",peer_id.toString());
 		u.addQueryItem("port",QString::number(port));
-		u.addQueryItem("uploaded",QString::number(s.trk_bytes_uploaded));
-		u.addQueryItem("downloaded",QString::number(s.trk_bytes_downloaded));
+		u.addQueryItem("uploaded",QString::number(bytesUploaded()));
+		u.addQueryItem("downloaded",QString::number(bytesDownloaded()));
 		
 		if (event == "completed")
 			u.addQueryItem("left","0"); // need to send 0 when we are completed
@@ -257,7 +259,7 @@ namespace bt
 		if (i == data.size())
 		{
 			failures++;
-			requestFailed(i18n("Invalid response from tracker"));
+			failed(i18n("Invalid response from tracker"));
 			return false;
 		}
 		
@@ -270,14 +272,14 @@ namespace bt
 		catch (...)
 		{
 			failures++;
-			requestFailed(i18n("Invalid data from tracker"));
+			failed(i18n("Invalid data from tracker"));
 			return false;
 		}
 			
 		if (!n || n->getType() != BNode::DICT)
 		{
 			failures++;
-			requestFailed(i18n("Invalid response from tracker"));
+			failed(i18n("Invalid response from tracker"));
 			return false;
 		}
 			
@@ -285,10 +287,10 @@ namespace bt
 		if (dict->getData("failure reason"))
 		{
 			BValueNode* vn = dict->getValue("failure reason");
-			QString msg = vn->data().toString();
+			error = vn->data().toString();
 			delete n;
 			failures++;
-			requestFailed(msg);
+			failed(error);
 			return false;
 		}
 			
@@ -317,7 +319,7 @@ namespace bt
 			{
 				delete n;
 				failures++;
-				requestFailed(i18n("Invalid response from tracker"));
+				failed(i18n("Invalid response from tracker"));
 				return false;
 			}
 
@@ -390,10 +392,11 @@ namespace bt
 			if (u.queryItem("event") != "stopped")
 			{
 				failures++;
-				requestFailed(j->errorString());
+				failed(j->errorString());
 			}
 			else
 			{
+				status = TRACKER_STOPPED;
 				stopDone();
 			}
 		}
@@ -407,20 +410,25 @@ namespace bt
 					{
 						failures = 0;
 						peersReady(this);
+						request_time = QDateTime::currentDateTime();
+						status = TRACKER_OK;
 						requestOK();
 						if (u.queryItem("event") == "started")
 							started = true;
+						if (started)
+							reannounce_timer.start(interval * 1000);
 					}
 				}
 				catch (bt::Error & err)
 				{
 					failures++;
-					requestFailed(i18n("Invalid response from tracker"));
+					failed(i18n("Invalid response from tracker"));
 				}
 				event = QString();
 			}
 			else
 			{
+				status = TRACKER_STOPPED;
 				failures = 0;
 				stopDone();
 			}
@@ -431,7 +439,7 @@ namespace bt
 	void HTTPTracker::emitInvalidURLFailure()
 	{
 		failures++;
-		requestFailed(i18n("Invalid tracker URL"));
+		failed(i18n("Invalid tracker URL"));
 	}
 	
 	void HTTPTracker::setupMetaData(KIO::MetaData & md)
@@ -481,6 +489,7 @@ namespace bt
 		
 		active_job = j;
 		timer.start(60*1000);
+		status = TRACKER_ANNOUNCING;
 		requestPending();
 	}
 	

@@ -75,7 +75,6 @@ namespace bt
 		if (started)
 			return;
 		
-		started = true;
 		QList<PeerSource*>::iterator i = additional.begin();
 		while (i != additional.end())
 		{
@@ -91,7 +90,6 @@ namespace bt
 		if (!started)
 			return;
 		
-		started = false;
 		QList<PeerSource*>::iterator i = additional.begin();
 		while (i != additional.end())
 		{
@@ -100,7 +98,6 @@ namespace bt
 		}
 		
 		TrackerManager::stop(wjob);
-		timer.stop();
 	}
 		
 	void PeerSourceManager::completed()

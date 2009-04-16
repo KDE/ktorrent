@@ -44,6 +44,14 @@ namespace kt
 		hdr_chunks->setBackgroundRole(QPalette::Mid);
 		hdr_sharing->setBackgroundRole(QPalette::Mid);
 		
+		QFont f = font();
+		f.setBold(true);
+		share_ratio->setFont(f);
+		avg_down_speed->setFont(f);
+		avg_up_speed->setFont(f);
+		type->setFont(f);
+		comments->setFont(f);
+		
 		ratio_limit->setMinimum(0.0f);
 		ratio_limit->setMaximum(100.0f);
 		ratio_limit->setSingleStep(0.1f);
@@ -67,10 +75,8 @@ namespace kt
 		setEnabled(false);
 		ratio_limit->setValue(0.00f);
 		share_ratio->clear();
-		tracker_status->clear();
-		seeders->clear();
-		leechers->clear();
-		next_update_in->clear();
+		type->clear();
+		comments->clear();
 		avg_up_speed->clear();
 		avg_down_speed->clear();
 	}
@@ -91,6 +97,8 @@ namespace kt
 		
 		if (curr_tc)
 		{
+			type->setText(tc->getStats().priv_torrent ? i18n("Private") : i18n("Public"));
+			comments->setText(tc->getComments());
 			float ratio = curr_tc->getMaxShareRatio();
 			if(ratio > 0)
 			{
@@ -124,10 +132,8 @@ namespace kt
 			ratio_limit->setValue(0.00f);
 			time_limit->setValue(0.0);
 			share_ratio->clear();
-			tracker_status->clear();
-			seeders->clear();
-			leechers->clear();
-			next_update_in->clear();
+			type->clear();
+			comments->clear();
 			avg_up_speed->clear();
 			avg_down_speed->clear();
 		}
@@ -144,27 +150,6 @@ namespace kt
 		
 		downloaded_bar->updateBar();
 		availability_bar->updateBar();
-		#warning TODO
-		/*
-		if (s.running)
-		{
-			QTime t;
-			t = t.addSecs(curr_tc->getTimeToNextTrackerUpdate());
-			next_update_in->setText(t.toString("mm:ss"));
-		}
-		else
-		{
-			next_update_in->clear();
-		}
-		*/
-		
-		//tracker_status->setText(s.tracker_status_string);
-		
-		seeders->setText(QString("%1 (%2)")
-				.arg(s.seeders_connected_to).arg(s.seeders_total));
-	
-		leechers->setText(QString("%1 (%2)")
-				.arg(s.leechers_connected_to).arg(s.leechers_total));
 	
 		float ratio = bt::ShareRatio(s);
 		if(!ratio_limit->hasFocus())

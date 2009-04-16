@@ -92,7 +92,7 @@ namespace bt
 		double sp = 0.0; // snubbing penalty
 		double lb = s.local ? 10.0 : 0.0; // local peers get a bonus of 10
 		double bd = s.bytes_downloaded; // bytes downloaded
-		double tbd = stats.trk_bytes_downloaded; // total bytes downloaded
+		double tbd = stats.session_bytes_downloaded; // total bytes downloaded
 		double ds = s.download_rate; // current download rate
 		double tds = stats.download_rate; // total download speed
 		

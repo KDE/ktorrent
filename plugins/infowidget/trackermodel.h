@@ -45,6 +45,7 @@ namespace kt
 		virtual ~TrackerModel();
 		
 		void changeTC(bt::TorrentInterface* tc);
+		void update();
 
 		virtual int rowCount(const QModelIndex &parent) const;
 		virtual int columnCount(const QModelIndex &parent) const;
@@ -64,6 +65,7 @@ namespace kt
 	private:
 		bt::TorrentInterface* tc;
 		QList<bt::TrackerInterface*> trackers;
+		bool running;
 	};
 
 }

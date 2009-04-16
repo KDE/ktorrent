@@ -87,6 +87,12 @@ namespace bt
 		virtual bool removeTracker(const KUrl & url) = 0;
 		
 		/**
+		 * Return true if a tracker can be removed
+		 * @param t The tracker
+		 */
+		virtual bool canRemoveTracker(TrackerInterface* t) = 0;
+		
+		/**
 		 * Restores the default tracker and does the announce.
 		 */
 		virtual void restoreDefault() = 0;

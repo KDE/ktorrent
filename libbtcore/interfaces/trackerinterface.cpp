@@ -28,6 +28,7 @@ namespace bt
 		interval = 5 * 60 * 1000;
 		seeders = leechers = total_downloaded = 0;
 		enabled = true;
+		started = false;
 		status = TRACKER_STOPPED;
 	}
 	
@@ -37,7 +38,10 @@ namespace bt
 
 	Uint32 TrackerInterface::timeToNextUpdate() const
 	{
-		return interval - request_time.secsTo(QDateTime::currentDateTime());
+		if (!enabled || !isStarted())
+			return 0;
+		else
+			return interval - request_time.secsTo(QDateTime::currentDateTime());
 	}
 	
 	QString TrackerInterface::trackerStatusString() const 

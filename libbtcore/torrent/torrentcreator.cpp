@@ -152,7 +152,7 @@ namespace bt
 		
 		if (comments.length() > 0)
 		{
-			enc.write("comments");
+			enc.write("comment");
 			enc.write(comments);
 		}
 		enc.write("created by");enc.write(bt::GetVersionString());

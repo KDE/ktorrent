@@ -85,8 +85,6 @@ namespace bt
 		cache_factory = 0;
 		istats.last_announce = 0;
 		stats.imported_bytes = 0;
-		stats.trk_bytes_downloaded = 0;
-		stats.trk_bytes_uploaded = 0;
 		stats.running = false;
 		stats.started = false;
 		stats.queued = false;
@@ -106,7 +104,6 @@ namespace bt
 		istats.running_time_dl = istats.running_time_ul = 0;
 		istats.prev_bytes_dl = 0;
 		istats.prev_bytes_ul = 0;
-		istats.trk_prev_bytes_dl = istats.trk_prev_bytes_ul = 0;
 		istats.io_error = false;
 		istats.priority = 0;
 		istats.custom_output_name = false;
@@ -369,7 +366,6 @@ namespace bt
 		}
 		
 		istats.time_started_ul = istats.time_started_dl = QDateTime::currentDateTime();
-		resetTrackerStats();
 		
 		if (prealloc)
 		{
@@ -481,8 +477,6 @@ namespace bt
 		saveStats();
 		updateStatus();
 		updateStats();
-		stats.trk_bytes_downloaded = 0;
-		stats.trk_bytes_uploaded = 0;
 
 		emit torrentStopped(this);
 	}
@@ -713,7 +707,7 @@ namespace bt
 		if(istats.last_announce == 0)
 			return true;
 		
-		if (psman && psman->getNumFailures() == 0)
+		if (psman)
 			return bt::GetCurrentTime() - istats.last_announce >= 60 * 1000;
 		else
 			return true;
@@ -1231,20 +1225,7 @@ namespace bt
 			stats.session_bytes_uploaded = (stats.bytes_uploaded - istats.prev_bytes_ul) + istats.session_bytes_uploaded;
 		else
 			stats.session_bytes_uploaded = istats.session_bytes_uploaded;
-		/*
-			Safety check, it is possible that stats.bytes_downloaded gets subtracted in Downloader.
-			Which can cause stats.bytes_downloaded to be smaller the istats.trk_prev_bytes_dl.
-			This can screw up your download ratio.
-		*/
-		if (stats.bytes_downloaded >= istats.trk_prev_bytes_dl)
-			stats.trk_bytes_downloaded = stats.bytes_downloaded - istats.trk_prev_bytes_dl;
-		else
-			stats.trk_bytes_downloaded = 0;
-		
-		if (stats.bytes_uploaded >= istats.trk_prev_bytes_ul)
-			stats.trk_bytes_uploaded = stats.bytes_uploaded - istats.trk_prev_bytes_ul;
-		else
-			stats.trk_bytes_uploaded = 0;
+
 		
 		getSeederInfo(stats.seeders_total,stats.seeders_connected_to);
 		getLeecherInfo(stats.leechers_total,stats.leechers_connected_to);
@@ -1540,7 +1521,6 @@ namespace bt
 		dcheck_thread->deleteLater();
 		dcheck_thread = 0;
 		Out(SYS_GEN|LOG_NOTICE) << "Data check finished" << endl;
-		resetTrackerStats();
 		updateStatus();
 		if (lst)
 			lst->finished();
@@ -1641,14 +1621,6 @@ namespace bt
 	const bt::SHA1Hash & TorrentControl::getInfoHash() const
 	{
 		return tor->getInfoHash();
-	}
-	
-	void TorrentControl::resetTrackerStats()
-	{
-		istats.trk_prev_bytes_dl = stats.bytes_downloaded,
-		istats.trk_prev_bytes_ul = stats.bytes_uploaded,
-		stats.trk_bytes_downloaded = 0;
-		stats.trk_bytes_uploaded = 0;
 	}
 	
 	void TorrentControl::addPeerSource(PeerSource* ps)
@@ -2016,6 +1988,11 @@ namespace bt
 	{
 		stats.queued = queued;
 		updateStatus();
+	}
+	
+	QString TorrentControl::getComments() const
+	{
+		return tor->getComments();
 	}
 
 }

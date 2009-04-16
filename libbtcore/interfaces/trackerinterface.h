@@ -41,6 +41,9 @@ namespace bt
 		TrackerInterface(const KUrl & url);
 		virtual ~TrackerInterface();
 		
+		/// See if a start request succeeded
+		bool isStarted() const {return started;}
+		
 		/// get the tracker url
 		KUrl trackerURL() const {return url;}
 		
@@ -87,6 +90,7 @@ namespace bt
 		TrackerStatus status;
 		QDateTime request_time;
 		QString error;
+		bool started;
 	};
 
 }

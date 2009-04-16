@@ -237,11 +237,7 @@ namespace bt
 		virtual void deleteDataFiles();
 		virtual const bt::PeerID & getOwnPeerID() const;
 		virtual bool updateNeeded() const;
-		
-		/**
-		 * Called by the PeerSourceManager when it is going to start a new tracker.
-		 */
-		void resetTrackerStats();
+		virtual QString getComments() const;
 		
 		/**
 		 * Returns estimated time left for finishing download. Returned value is in seconds.
@@ -426,8 +422,6 @@ namespace bt
 			Uint32 running_time_ul;
 			Uint64 prev_bytes_dl;
 			Uint64 prev_bytes_ul;
-			Uint64 trk_prev_bytes_dl;
-			Uint64 trk_prev_bytes_ul;
 			Uint64 session_bytes_uploaded;
 			bool io_error;
 			bool custom_output_name;

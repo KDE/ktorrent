@@ -37,6 +37,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="m_scrape" >
+       <property name="text" >
+        <string>Update Trackers</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer>
        <property name="orientation" >
         <enum>Qt::Vertical</enum>

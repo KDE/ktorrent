@@ -37,12 +37,18 @@ namespace bt
 	static QString custom_ip;
 	static QString custom_ip_resolved;
 	
+	const Uint32 INITIAL_WAIT_TIME = 30; 
+	const Uint32 LONGER_WAIT_TIME = 300; 
+	const Uint32 FINAL_WAIT_TIME = 1800;
+	
 	Tracker::Tracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier) 
 	: TrackerInterface(url),tier(tier),peer_id(id),tor(tor)
 	{
 		srand(time(0));
 		key = rand();
-		started = false;
+		connect(&reannounce_timer,SIGNAL(timeout()),this,SLOT(manualUpdate()));
+		reannounce_timer.setSingleShot(true);
+		bytes_downloaded_at_start = bytes_uploaded_at_start = 0;
 	}
 	
 	Tracker::~Tracker()
@@ -83,6 +89,65 @@ namespace bt
 		connect(this,SIGNAL(stopDone()),this,SLOT(deleteLater()));
 	}
 	
+	void Tracker::failed(const QString& err) 
+	{
+		error = err;
+		status = TRACKER_ERROR;
+		requestFailed(err);
+	}
+
+	
+	void Tracker::handleFailure() 
+	{
+		if (failureCount() > 5)
+		{
+			// we failed to contact the tracker 5 times in a row, so try again in 
+			// 30 minutes
+			setInterval(FINAL_WAIT_TIME);
+			reannounce_timer.start(FINAL_WAIT_TIME * 1000);
+			request_time = QDateTime::currentDateTime();
+		}
+		else if (failureCount() > 2)
+		{
+			// we failed to contact the only tracker 3 times in a row, so try again in 
+			// a minute or 5, no need for hammering every 30 seconds
+			setInterval(LONGER_WAIT_TIME);
+			reannounce_timer.start(LONGER_WAIT_TIME * 1000);
+			request_time = QDateTime::currentDateTime();
+		}
+		else
+		{
+			// lets not hammer and wait 30 seconds
+			setInterval(INITIAL_WAIT_TIME);
+			reannounce_timer.start(INITIAL_WAIT_TIME * 1000);
+			request_time = QDateTime::currentDateTime();
+		}
+	}
+
+	void Tracker::resetTrackerStats() 
+	{
+		bytes_downloaded_at_start = tor->getStats().bytes_downloaded;
+		bytes_uploaded_at_start = tor->getStats().bytes_uploaded;
+	}
+	
+	Uint64 Tracker::bytesDownloaded() const 
+	{
+		Uint64 bd = tor->getStats().bytes_downloaded;
+		if (bd > bytes_downloaded_at_start)
+			return bd - bytes_downloaded_at_start;
+		else
+			return 0;
+	}
+
+	Uint64 Tracker::bytesUploaded() const 
+	{
+		Uint64 bu = tor->getStats().bytes_uploaded;
+		if (bu > bytes_uploaded_at_start)
+			return bu - bytes_uploaded_at_start;
+		else
+			return 0;
+	}
+
 }
 
 #include "tracker.moc"

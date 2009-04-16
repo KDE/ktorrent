@@ -51,7 +51,6 @@ namespace bt
 		virtual void start();
 		virtual void stop(WaitJob* wjob = 0);
 		virtual void completed();
-		virtual void manualUpdate();
 		virtual Uint32 failureCount() const {return failures;}
 		virtual void scrape();
 		
@@ -63,6 +62,7 @@ namespace bt
 		void onScrapeResult(KJob* j);
 		void emitInvalidURLFailure();
 		void onTimeout();
+		virtual void manualUpdate();
 
 	private:
 		void doRequest(WaitJob* wjob = 0);

@@ -50,6 +50,15 @@ namespace kt
 		m_chunk_view->setSortingEnabled(true);
 		m_chunk_view->setAlternatingRowColors(true);
 		m_chunk_view->setUniformRowHeights(true);
+		
+		QFont f = font();
+		f.setBold(true);
+		m_chunks_downloaded->setFont(f);
+		m_chunks_downloading->setFont(f);
+		m_chunks_left->setFont(f);
+		m_excluded_chunks->setFont(f);
+		m_size_chunks->setFont(f);
+		m_total_chunks->setFont(f);
 	}
 
 	ChunkDownloadView::~ChunkDownloadView()

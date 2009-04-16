@@ -276,8 +276,6 @@ namespace kt
 		enc.write("status",ti->statusToString());
 		enc.write("session_bytes_downloaded", s.session_bytes_downloaded);
 		enc.write("session_bytes_uploaded", s.session_bytes_uploaded);
-		enc.write("trk_bytes_downloaded", s.trk_bytes_downloaded);
-		enc.write("trk_bytes_uploaded", s.trk_bytes_uploaded);
 		enc.write("output_path", s.output_path);
 		enc.write("running",s.running);
 		enc.write("started", s.started);

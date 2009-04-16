@@ -53,6 +53,7 @@ namespace bt
 		virtual TrackerInterface* addTracker(const KUrl &url, bool custom = true,int tier = 1);
 		virtual bool removeTracker(TrackerInterface* t);
 		virtual bool removeTracker(const KUrl & url);
+		virtual bool canRemoveTracker(TrackerInterface* t);
 		virtual void restoreDefault();
 		virtual void setTrackerEnabled(const KUrl & url,bool on);
 		
@@ -111,11 +112,6 @@ namespace bt
 		void onTrackerOK();
 		
 		/**
-		* Tracker is doing a request.  
-		*/
-		void onTrackerRequestPending();
-		
-		/**
 		* Update the current tracker manually
 		*/
 		void updateCurrentManually();
@@ -127,11 +123,7 @@ namespace bt
 		PeerManager* pman;
 		Tracker* curr;
 		KUrl::List custom_trackers;
-		QTimer timer;
 		bool started;
-		bool pending;
-		QDateTime request_time;
-		Uint32 failures;
 	};
 
 }

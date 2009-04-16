@@ -31,18 +31,14 @@
 
 namespace bt
 {
-	const Uint32 INITIAL_WAIT_TIME = 30; 
-	const Uint32 LONGER_WAIT_TIME = 300; 
-	const Uint32 FINAL_WAIT_TIME = 1800;
+
 	
 	TrackerManager::TrackerManager(bt::TorrentControl* tor,PeerManager* pman) 
-		: tor(tor),pman(pman),curr(0),started(false),pending(false)
+		: tor(tor),pman(pman),curr(0),started(false)
 	{
 		trackers.setAutoDelete(true);
 		no_save_custom_trackers = false;
-		connect(&timer,SIGNAL(timeout()),this,SLOT(updateCurrentManually()));
-		timer.setSingleShot(true);
-		
+	
 		const TrackerTier* t = tor->getTorrent().getTrackerList();
 		int tier = 1;
 		while (t)
@@ -65,8 +61,8 @@ namespace bt
 		// Load status of each tracker
 		loadTrackerStatus();
 		
-		failures = 0;
-		switchTracker(selectTracker());
+		if (tor->getStats().priv_torrent)
+			switchTracker(selectTracker());
 	}
 
 	TrackerManager::~TrackerManager() 
@@ -82,6 +78,9 @@ namespace bt
 	
 	void TrackerManager::setCurrentTracker(bt::TrackerInterface* t) 
 	{
+		if (!tor->getStats().priv_torrent)
+			return;
+		
 		Tracker* trk = (Tracker*)t;
 		if (!trk)
 			return;
@@ -91,7 +90,6 @@ namespace bt
 			if (curr)
 				curr->stop();
 			switchTracker(trk);
-			tor->resetTrackerStats();
 			trk->start();
 		}
 	}
@@ -99,17 +97,8 @@ namespace bt
 	void TrackerManager::setCurrentTracker(const KUrl& url) 
 	{
 		Tracker* trk = trackers.find(url);
-		if (!trk)
-			return;
-		
-		if (curr != trk)
-		{
-			if (curr)
-				curr->stop();
-			switchTracker(trk);
-			tor->resetTrackerStats();
-			trk->start();
-		}
+		if (trk)
+			setCurrentTracker(trk);
 	}
 
 	
@@ -161,7 +150,7 @@ namespace bt
 		
 		custom_trackers.removeAll(url);
 		Tracker* trk = trackers.find(url);
-		if (curr == trk)
+		if (curr == trk && tor->getStats().priv_torrent)
 		{
 			// do a timed delete on the tracker, so the stop signal
 			// has plenty of time to reach it
@@ -174,7 +163,6 @@ namespace bt
 			if (trackers.count() > 0)
 			{
 				switchTracker(selectTracker());
-				tor->resetTrackerStats();
 				if (curr)
 					curr->start();
 			}
@@ -188,6 +176,11 @@ namespace bt
 		return true;
 	}
 
+	bool TrackerManager::canRemoveTracker(bt::TrackerInterface* t) 
+	{
+		return custom_trackers.contains(t->trackerURL());
+	}
+
 	
 	void TrackerManager::restoreDefault() 
 	{
@@ -197,22 +190,13 @@ namespace bt
 			Tracker* t = trackers.find(*i);
 			if (t)
 			{
-				if (curr == t)
+				if (t->isStarted())
+					t->stop();
+				
+				if (curr == t && tor->getStats().priv_torrent)
 				{
-					if (t->isStarted())
-						t->stop();
-					
 					curr = 0;
 					trackers.erase(*i);
-					if (trackers.count() > 0)
-					{
-						switchTracker(trackers.begin()->second);
-						if (started)
-						{
-							tor->resetTrackerStats();
-							curr->start();
-						}
-					}
 				}
 				else
 				{
@@ -224,6 +208,8 @@ namespace bt
 		
 		custom_trackers.clear();
 		saveCustomURLs();
+		if (tor->getStats().priv_torrent && curr == 0)
+			switchTracker(selectTracker());
 	}
 	
 	void TrackerManager::addTracker(Tracker* trk)
@@ -232,51 +218,101 @@ namespace bt
 		connect(trk,SIGNAL(peersReady( PeerSource* )),
 				 pman,SLOT(peerSourceReady( PeerSource* )));
 		connect(trk,SIGNAL(scrapeDone()),tor,SLOT(trackerScrapeDone()));
+		connect(trk,SIGNAL(requestOK()),this,SLOT(onTrackerOK()));
+		connect(trk,SIGNAL(requestFailed( const QString& )),this,SLOT(onTrackerError( const QString& )));
 	}
 	
 	void TrackerManager::start() 
 	{
-		if (!curr)
+		if (started)
+			return;
+		
+		if (tor->getStats().priv_torrent)
 		{
-			if (trackers.count() > 0)
+			if (!curr)
 			{
-				switchTracker(selectTracker());
-				tor->resetTrackerStats();
-				if (curr)
-					curr->start();
+				if (trackers.count() > 0)
+				{
+					switchTracker(selectTracker());
+					if (curr)
+						curr->start();
+				}
+			}
+			else
+			{
+				curr->start();
 			}
 		}
 		else
 		{
-			tor->resetTrackerStats();
-			curr->start();
+			for (PtrMap<KUrl,Tracker>::iterator i = trackers.begin();i != trackers.end();i++)
+			{
+				i->second->start();
+			}
 		}
+		
+		started = true;
 	}
 	
 	void TrackerManager::stop(bt::WaitJob* wjob) 
 	{
-		if (curr)
-			curr->stop(wjob);
+		if (!started)
+			return;
+		
+		started = false;
+		if (tor->getStats().priv_torrent)
+		{
+			if (curr)
+				curr->stop(wjob);
+		}
+		else
+		{
+			for (PtrMap<KUrl,Tracker>::iterator i = trackers.begin();i != trackers.end();i++)
+			{
+				i->second->stop(wjob);
+			}
+		}
 	}
 
 	void TrackerManager::completed() 
 	{
-		if (curr)
-			curr->completed();
+		if (tor->getStats().priv_torrent)
+		{
+			if (curr)
+				curr->completed();
+		}
+		else
+		{
+			for (PtrMap<KUrl,Tracker>::iterator i = trackers.begin();i != trackers.end();i++)
+			{
+				i->second->completed();
+			}
+		}
 	}
 
 	void TrackerManager::scrape()
 	{
-		if (curr)
-			curr->scrape();
+		for (PtrMap<KUrl,Tracker>::iterator i = trackers.begin();i != trackers.end();i++)
+		{
+			i->second->scrape();
+		}
 	}
 	
 	void TrackerManager::manualUpdate() 
 	{
-		if (curr)
+		if (tor->getStats().priv_torrent)
 		{
-			timer.stop();
-			curr->manualUpdate();
+			if (curr)
+			{
+				curr->manualUpdate();
+			}
+		}
+		else
+		{
+			for (PtrMap<KUrl,Tracker>::iterator i = trackers.begin();i != trackers.end();i++)
+			{
+				i->second->manualUpdate();
+			}
 		}
 	}
 	
@@ -382,99 +418,49 @@ namespace bt
 	
 	void TrackerManager::onTrackerError(const QString & err)
 	{
-		failures++;
-		pending = false;
-		
+		Q_UNUSED(err);
 		if (!started)
 			return;
 		
-		// select an other tracker
-		Tracker* trk = selectTracker();
-		
-		if (!trk || trk == curr)
+		if (!tor->getStats().priv_torrent)
 		{
-			if (curr->failureCount() > 5)
-			{
-				// we failed to contact the only tracker 5 times in a row, so try again in 
-				// 30 minutes
-				curr->setInterval(FINAL_WAIT_TIME);
-				timer.start(FINAL_WAIT_TIME * 1000);
-				request_time = QDateTime::currentDateTime();
-			}
-			else if (curr->failureCount() > 2)
-			{
-				// we failed to contact the only tracker 3 times in a row, so try again in 
-				// a minute or 5, no need for hammering every 30 seconds
-				curr->setInterval(LONGER_WAIT_TIME);
-				timer.start(LONGER_WAIT_TIME * 1000);
-				request_time = QDateTime::currentDateTime();
-			}
-			else
-			{
-				// lets not hammer and wait 30 seconds
-				curr->setInterval(INITIAL_WAIT_TIME);
-				timer.start(INITIAL_WAIT_TIME * 1000);
-				request_time = QDateTime::currentDateTime();
-			}
+			Tracker* trk = (Tracker*)sender();
+			trk->handleFailure();
 		}
-		else
+		else 
 		{
-			curr->stop();
-			// switch to another one
-			switchTracker(trk);
-			if (trk->failureCount() == 0)
+			Tracker* trk = (Tracker*)sender();
+			if (trk == curr)
 			{
-				tor->resetTrackerStats();
-				curr->start();
-			}
-			else if (trk->failureCount() > 5)
-			{
-				curr->setInterval(FINAL_WAIT_TIME);
-				timer.start(FINAL_WAIT_TIME * 1000);
-				request_time = QDateTime::currentDateTime();
-			}
-			else if (trk->failureCount() > 2)
-			{
-				// we tried everybody 3 times and it didn't work
-				// wait 5 minutes and try again
-				curr->setInterval(LONGER_WAIT_TIME);
-				timer.start(LONGER_WAIT_TIME * 1000);
-				request_time = QDateTime::currentDateTime();
+				// select an other tracker
+				trk = selectTracker();
+				if (trk == curr) // if we can't find another handle the failure
+				{
+					trk->handleFailure();
+				}
+				else
+				{
+					curr->stop();
+					switchTracker(trk);
+					curr->start();
+				}
 			}
 			else
-			{
-				// wait 30 seconds and try again
-				curr->setInterval(INITIAL_WAIT_TIME);
-				timer.start(INITIAL_WAIT_TIME * 1000);
-				request_time = QDateTime::currentDateTime();
-			}
+				trk->handleFailure();
 		}
 	}
 	
 	void TrackerManager::onTrackerOK()
 	{
-		failures = 0;
-		if (started)
-		{
-			timer.start(curr->getInterval() * 1000);
-			curr->scrape();
-		}
-		pending = false;
-		request_time = QDateTime::currentDateTime();
-	}
-	
-	void TrackerManager::onTrackerRequestPending()
-	{
-		pending = true;
+		Tracker* tracker = (Tracker*)sender();
+		if (tracker->isStarted())
+			tracker->scrape();
 	}
 	
 	void TrackerManager::updateCurrentManually()
 	{
 		if (!curr)
 			return;
-		
-		if (!curr->isStarted())
-			tor->resetTrackerStats();
 		
 		curr->manualUpdate();
 	}
@@ -484,23 +470,9 @@ namespace bt
 		if (curr == trk)
 			return;
 		
-		if (curr)
-		{
-			disconnect(curr,SIGNAL(requestFailed( const QString& )),
-						this,SLOT(onTrackerError( const QString& )));
-			disconnect(curr,SIGNAL(requestOK()),this,SLOT(onTrackerOK()));
-			disconnect(curr,SIGNAL(requestPending()),this,SLOT(onTrackerRequestPending()));
-			curr = 0;
-		}
-		
 		curr = trk;
 		if (curr)
-		{
 			Out(SYS_TRK|LOG_NOTICE) << "Switching to tracker " << trk->trackerURL() << endl;
-			connect(curr,SIGNAL(requestFailed( const QString& )),this,SLOT(onTrackerError( const QString& )));
-			connect(curr,SIGNAL(requestOK()),this,SLOT(onTrackerOK()));
-			connect(curr,SIGNAL(requestPending()),this,SLOT(onTrackerRequestPending()));
-		}
 	}
 	
 	Uint32 TrackerManager::getNumSeeders() const 
@@ -526,11 +498,6 @@ namespace bt
 		
 		return r;
 	}
-
-
-	/*
-	
-	*/
 	
 	void TrackerManager::setTrackerEnabled(const KUrl & url,bool enabled)
 	{
@@ -543,7 +510,6 @@ namespace bt
 		{
 			curr->stop();
 			switchTracker(selectTracker());
-			tor->resetTrackerStats();
 			if (curr)
 				curr->start();
 		}

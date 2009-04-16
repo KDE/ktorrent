@@ -30,6 +30,7 @@ namespace kt
 	TrackerModel::TrackerModel(QObject* parent)
 			: QAbstractTableModel(parent),tc(0)
 	{
+		running = false;
 	}
 
 
@@ -46,6 +47,23 @@ namespace kt
 		
 		reset();
 	}
+	
+	void TrackerModel::update() 
+	{
+		if (!tc)
+			return;
+		
+		int idx = 0;
+		foreach (bt::TrackerInterface* t,trackers)
+		{
+			if ((t->isEnabled() && t->isStarted()) || running != tc->getStats().running)
+				emit dataChanged(index(idx,1),index(idx,5));
+			idx++;
+		}
+		
+		running = tc->getStats().running;
+	}
+
 
 	int TrackerModel::rowCount(const QModelIndex &parent) const
 	{
@@ -77,12 +95,31 @@ namespace kt
 		{
 			switch (index.column())
 			{
-			case 0: return trk->trackerURL().prettyUrl();
-			case 1: return trk->trackerStatusString();
-			case 2: return trk->getNumSeeders();
-			case 3: return trk->getNumLeechers();
-			case 4: return trk->getTotalTimesDownloaded();
-			case 5: return QTime().addSecs(trk->timeToNextUpdate()).toString("mm:ss");
+				case 0: return trk->trackerURL().prettyUrl();
+				case 1: return trk->trackerStatusString();
+				case 2: 
+				{
+					int ret = trk->getNumSeeders();
+					return ret > 0 || trk->trackerStatus() == bt::TRACKER_OK ? ret : QVariant();
+				}
+				case 3: 
+				{
+					int ret = trk->getNumLeechers();
+					return ret > 0 || trk->trackerStatus() == bt::TRACKER_OK ? ret : QVariant();
+				}
+				case 4:
+				{
+					int ret = trk->getTotalTimesDownloaded();
+					return ret > 0 || trk->trackerStatus() == bt::TRACKER_OK ? ret : QVariant();
+				}
+				case 5: 
+				{
+					int secs = trk->timeToNextUpdate();
+					if (secs)
+						return QTime().addSecs(secs).toString("mm:ss");
+					else
+						return QVariant();
+				}
 			}
 			
 		}

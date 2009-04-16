@@ -129,6 +129,9 @@ namespace bt
 		
 		void debugPrintInfo();
 		
+		/// Return the comments in the torrent
+		QString getComments() const {return comments;}
+		
 		/// Get the number of chunks.
 		Uint32 getNumChunks() const {return hash_pieces.size();}
 		
@@ -275,6 +278,7 @@ namespace bt
 		mutable Uint32 pos_cache_chunk;
 		mutable Uint32 pos_cache_file;
 		MonitorInterface* tmon;
+		QString comments;
 	};
 
 }

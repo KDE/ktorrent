@@ -21,6 +21,7 @@ Changes in 3.3 :
 - VideoWidget now inhibits screensaver
 - Add feature to support a different speed limit when the screensaver is activated (172660)
 - Use bytes to calculate availability percentage of a peer (188575)
+- Make support for using multiple trackers at the same time for non public torrents (175255)
 
 Changes in 3.2.2 :
 - Fix crash when changing speed limits using system tray menu (188447)

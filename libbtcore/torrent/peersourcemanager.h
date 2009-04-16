@@ -82,9 +82,6 @@ namespace bt
 		virtual void completed();
 		virtual void manualUpdate();
 		
-		/// Get the number of failures
-		Uint32 getNumFailures() const {return failures;}
-		
 		///Adds DHT as PeerSource for this torrent
 		void addDHT();
 		///Removes DHT from PeerSourceManager for this torrent.

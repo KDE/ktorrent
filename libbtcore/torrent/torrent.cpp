@@ -89,6 +89,10 @@ namespace bt
 					text_codec = tc;
 				}
 			}
+			
+			BValueNode* c = dict->getValue("comment");
+			if (c)
+				comments = c->data().toString(text_codec);
 
 			BValueNode* announce = dict->getValue("announce");
 			BListNode* nodes = dict->getList("nodes");

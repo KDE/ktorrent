@@ -123,10 +123,6 @@ namespace bt
 		Uint64 session_bytes_downloaded;
 		/// The number of bytes uploaded in this session
 		Uint64 session_bytes_uploaded;
-		/// The number of bytes downloaded since the last started event, this gets sent to the tracker
-		Uint64 trk_bytes_downloaded;
-		/// The number of bytes upload since the last started event, this gets sent to the tracker
-		Uint64 trk_bytes_uploaded;
 		/// Name of the torrent
 		QString torrent_name;
 		/// Path of the dir or file where the data will get saved
@@ -361,6 +357,9 @@ namespace bt
 
 		/// Make a string of the current status
 		virtual QString statusToString() const = 0;
+		
+		/// Get the comments
+		virtual QString getComments() const = 0;
 		
 		/// Update the status
 		virtual void updateStatus() = 0;
