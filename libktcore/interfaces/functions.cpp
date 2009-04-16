@@ -123,7 +123,6 @@ namespace kt
 		bt::WebSeed::setProxyEnabled(!Settings::useKDEProxySettings() && Settings::useProxyForWebSeeds());
 		bt::Cache::setPreallocationEnabled(Settings::diskPrealloc());
 		bt::Cache::setPreallocateFully(Settings::fullDiskPrealloc());
-		bt::Cache::setUseFSSpecificPreallocMethod(Settings::fullDiskPreallocMethod() == 1);
 		
 		if (Settings::useCompletedDir())
 			bt::TorrentControl::setMoveWhenCompletedDir(Settings::completedDir());

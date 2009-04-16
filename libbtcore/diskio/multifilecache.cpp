@@ -805,12 +805,12 @@ namespace bt
 		{
 			bool res = false;
 			
-			#ifdef HAVE_XFS_XFS_H
-				if( (! res) && Cache::useFSSpecificPreallocMethod() )
-				{
-					res = XfsPreallocate(output_file, tf->getSize()) );
-				}
-			#endif
+#ifdef HAVE_XFS_XFS_H
+			if (Cache::preallocateFully())
+			{
+				res = XfsPreallocate(output_file, tf->getSize()) );
+			}
+#endif
 			
 			if(! res)
 			{

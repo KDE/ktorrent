@@ -500,12 +500,12 @@ namespace bt
 		{
 			bool res = false;
 			
-			#ifdef HAVE_XFS_XFS_H
-				if( !res && Cache::preallocateFully() && Cache::useFSSpecificPreallocMethod())
-				{
-					res = XfsPreallocate(fd, max_size);
-				}
-			#endif
+#ifdef HAVE_XFS_XFS_H
+			if(Cache::preallocateFully())
+			{
+				res = XfsPreallocate(fd, max_size);
+			}
+#endif
 			
 			if(! res)
 			{

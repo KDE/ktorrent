@@ -28,6 +28,7 @@
 #include "networkpref.h"
 #include "proxypref.h"
 #include "qmpref.h"
+#include "btpref.h"
 #include "recommendedsettingsdlg.h"
 
 namespace kt

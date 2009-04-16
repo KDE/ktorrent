@@ -19,6 +19,7 @@ set(ktorrent_SRC
 	proxypref.cpp
 	qmpref.cpp
 	generalpref.cpp
+	btpref.cpp
 	statusbar.cpp 
 	groupview.cpp
 	scandlg.cpp
@@ -65,7 +66,7 @@ kde4_add_ui_files(ktorrent_SRC
 
 kde4_add_app_icon(ktorrent_SRC "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-ktorrent.png")
 
-kde4_add_executable(ktorrent ${ktorrent_SRC})
+kde4_add_executable(ktorrent btpref.cpp ${ktorrent_SRC})
 
 target_link_libraries(ktorrent btcore ktideal ktcore ${KDE4_SOLID_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS})
 install(TARGETS ktorrent ${INSTALL_TARGETS_DEFAULT_ARGS})

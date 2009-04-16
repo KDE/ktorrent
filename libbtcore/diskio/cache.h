@@ -222,18 +222,6 @@ namespace bt
 		static bool preallocateFully() {return preallocate_fully;}
 		
 		/**
-		 * Enable or disable FS specific preallocation methods.
-		 * @param on 
-		 */
-		static void setUseFSSpecificPreallocMethod(bool on) {preallocate_fs_specific = on;}
-		
-		/**
-		 * Check if FS specific preallocation is enabled
-		 * @return true if it is
-		 */
-		static bool useFSSpecificPreallocMethod() {return preallocate_fs_specific;}
-		
-		/**
 		 * Check memory usage and free all PieceData objects which are no longer needed.
 		 */
 		void checkMemoryUsage();
@@ -252,7 +240,6 @@ namespace bt
 	private:
 		static bool preallocate_files;
 		static bool preallocate_fully;
-		static bool preallocate_fs_specific;	
 	};
 
 }

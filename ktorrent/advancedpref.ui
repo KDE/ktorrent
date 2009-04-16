@@ -35,59 +35,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="label_7" >
-          <property name="text" >
-           <string>Disk space reservation method:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="kcfg_fullDiskPreallocMethod" >
-          <property name="minimumSize" >
-           <size>
-            <width>150</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="toolTip" >
-           <string>&lt;html>Which method to use for reserving diskspace.
-&lt;ul>&lt;li>
-&lt;b>Basic:&lt;/b> Will work on all filesystems, but is slow.
-&lt;/li>&lt;li>
-&lt;b>Filesystem Specific:&lt;/b> Will use special methods provided by some filesystems, which are faster than the basic method.
-&lt;/li>&lt;/ul>
-&lt;/html></string>
-          </property>
-          <item>
-           <property name="text" >
-            <string>Basic</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Filesystem Specific</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0" >
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
      </layout>
     </widget>
    </item>
@@ -332,22 +279,5 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>kcfg_fullDiskPrealloc</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_fullDiskPreallocMethod</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>291</x>
-     <y>466</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>295</x>
-     <y>495</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

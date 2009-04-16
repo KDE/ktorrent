@@ -247,9 +247,6 @@
  			<min>10</min>
  			<max>10000</max>
 		</entry>
-		<entry name="fullDiskPreallocMethod" type="Int">
- 			<default>0</default>
- 		</entry>
 		<entry name="cpuUsage" type="Int">
 			<default>50</default>
 			<min>1</min>

@@ -30,7 +30,6 @@ namespace bt
 {
 	bool Cache::preallocate_files = true;
 	bool Cache::preallocate_fully = false;
-	bool Cache::preallocate_fs_specific = true;
 
 	Cache::Cache(Torrent & tor,const QString & tmpdir,const QString & datadir)
 	: tor(tor),tmpdir(tmpdir),datadir(datadir),mmap_failures(0)

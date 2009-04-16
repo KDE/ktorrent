@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,30 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_ADVNACEDPREF_HH
-#define KT_ADVNACEDPREF_HH
+#ifndef KT_BTPREF_H
+#define KT_BTPREF_H
 
 #include <interfaces/prefpageinterface.h>
-#include "ui_advancedpref.h"
+#include "ui_btpref.h"
 
-
-namespace kt
+namespace kt 
 {
-	class AdvancedPref : public PrefPageInterface,public Ui_AdvancedPref
+
+	class BTPref : public PrefPageInterface,public Ui_BTPref
 	{
 		Q_OBJECT
 	public:
-		AdvancedPref(QWidget* parent);
-		/*virtual */~AdvancedPref();
-
+		BTPref(QWidget* parent);
+		virtual ~BTPref();
+		
 		void loadSettings();
-		void loadDefaults();
-
-	public slots:
-		void onDiskPreallocToggled(bool on);
+	public Q_SLOTS:
+		void onUploadDataCheckToggled(bool on);
 	};
 }
 
-#endif
-
-// kate: space-indent on; indent-width 8; replace-tabs off; mixed-indent off;
+#endif // KT_BTPREF_H
