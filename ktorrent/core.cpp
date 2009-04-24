@@ -233,6 +233,17 @@ namespace kt
 			}
 		}
 		
+		if (qman->alreadyLoaded(tc->getInfoHash()))
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Torrent " << tc->getDisplayName() << " already loaded" << endl;
+			// Cleanup tor dir
+			QString dir = tc->getTorDir();
+			if (bt::Exists(dir))
+				bt::Delete(dir,true);
+			delete tc;
+			return false;
+		}
+		
 		connectSignals(tc);
 		qman->append(tc);
 	
