@@ -1410,7 +1410,7 @@ namespace bt
 			case SEEDING_COMPLETE :
 				return i18n("Seeding completed");
 			case SEEDING :
-				return i18n("Seeding");
+				return i18nc("Status of a torrent file", "Seeding");
 			case DOWNLOADING:
 				return i18n("Downloading");
 			case STALLED:

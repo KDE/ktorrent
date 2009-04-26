@@ -190,7 +190,7 @@ p, li { white-space: pre-wrap; }
    <item>
     <widget class="QGroupBox" name="groupBox_2" >
      <property name="title" >
-      <string>Seeding</string>
+      <string comment="@title:group Options regarging Seeding">Seeding</string>
      </property>
      <layout class="QGridLayout" >
       <item row="0" column="0" >
