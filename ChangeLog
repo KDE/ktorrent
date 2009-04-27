@@ -29,6 +29,7 @@ Changes in 3.2.2 :
 - Fix bug with displaying directory trees in infowidget FileView
 - Fix crash caused by calling front on empty QList
 - Make sure paths in webseed http requests are URL encoded (189477)
+- Prevent torrent from being loaded twice when loading torrents via commandline or external program (190434)
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
