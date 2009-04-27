@@ -866,38 +866,45 @@ namespace kt
 
 	void Core::update()
 	{
-		bt::UpdateCurrentTime();
-		AuthenticationMonitor::instance().update();
-		
-		QList<bt::TorrentInterface *>::iterator i = qman->begin();
-		bool updated = false;
-		while (i != qman->end())
+		try
 		{
-			bt::TorrentInterface* tc = *i;
-			if (tc->updateNeeded())
+			bt::UpdateCurrentTime();
+			AuthenticationMonitor::instance().update();
+			
+			QList<bt::TorrentInterface *>::iterator i = qman->begin();
+			bool updated = false;
+			while (i != qman->end())
 			{
-				tc->update();
-				updated = true;
+				bt::TorrentInterface* tc = *i;
+				if (tc->updateNeeded())
+				{
+					tc->update();
+					updated = true;
+				}
+				i++;
 			}
-			i++;
-		}
-		
-		if (!updated)
-		{
-			Out(SYS_GEN|LOG_DEBUG) << "Stopped update timer" << endl;
-			update_timer.stop(); // stop timer when not necessary
-			if (sleep_suppression_cookie != -1)
+			
+			if (!updated)
 			{
-				Solid::PowerManagement::stopSuppressingSleep(sleep_suppression_cookie);
-				Out(SYS_GEN|LOG_DEBUG) << "Stopped suppressing sleep" << endl;
-				sleep_suppression_cookie = -1;
+				Out(SYS_GEN|LOG_DEBUG) << "Stopped update timer" << endl;
+				update_timer.stop(); // stop timer when not necessary
+				if (sleep_suppression_cookie != -1)
+				{
+					Solid::PowerManagement::stopSuppressingSleep(sleep_suppression_cookie);
+					Out(SYS_GEN|LOG_DEBUG) << "Stopped suppressing sleep" << endl;
+					sleep_suppression_cookie = -1;
+				}
+			}
+			else
+			{
+				// check if the priority of stalled torrents must be decreased
+				if (Settings::decreasePriorityOfStalledTorrents())
+					qman->checkStalledTorrents(bt::GetCurrentTime(),Settings::stallTimer());
 			}
 		}
-		else
+		catch (bt::Error & err)
 		{
-			// check if the priority of stalled torrents must be decreased
-			if (Settings::decreasePriorityOfStalledTorrents())
-				qman->checkStalledTorrents(bt::GetCurrentTime(),Settings::stallTimer());
+			Out(SYS_GEN|LOG_IMPORTANT) << "Caught bt::Error: " << err.toString() << endl;
 		}
 	}
 
