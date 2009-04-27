@@ -79,6 +79,7 @@ namespace kt
 
 	void QueueManager::clear()
 	{
+		exiting = true;
 		Uint32 nd = downloads.count();
 		paused_torrents.clear();
 		
@@ -517,8 +518,11 @@ namespace kt
 	
 	void QueueManager::orderQueue()
 	{
+		if (ordering || !downloads.count() || exiting)
+			return;
+		
 		downloads.sort(); // sort downloads, even when paused so that the QM widget is updated
-		if (ordering || !downloads.count() || paused_state || exiting)
+		if (paused_state)
 			return;
 		
 		ordering = true; // make sure that recursive entering of this function is not possible
