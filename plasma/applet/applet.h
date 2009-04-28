@@ -22,7 +22,7 @@
 #define KTPLASMAAPPLET_H
 
 #include <plasma/version.h>
-#include <plasma/applet.h>
+#include <plasma/popupapplet.h>
 #include <plasma/dataengine.h>
 #include "ui_appletconfig.h"
 
@@ -46,7 +46,7 @@ namespace ktplasma
 	/**
 		Plasma applet for ktorrent
 	*/	
-	class Applet : public Plasma::Applet
+	class Applet : public Plasma::PopupApplet
 	{
 		Q_OBJECT
 
@@ -55,9 +55,9 @@ namespace ktplasma
 		virtual ~Applet();
 		
 		virtual void init();
-		virtual void constraintsEvent(Plasma::Constraints constraints);
 		virtual void createConfigurationInterface(KConfigDialog *parent);
 		virtual void saveState(KConfigGroup & config) const;
+		virtual QGraphicsWidget *graphicsWidget();
 
 	private slots:
 		void dataUpdated(const QString &name,const Plasma::DataEngine::Data &data);
@@ -84,6 +84,7 @@ namespace ktplasma
 		Plasma::DataEngine* engine;
 		QString current_source;
 		QGraphicsLinearLayout* root_layout;
+		QGraphicsWidget* desktop_widget;
 		bool connected_to_app;
 		ChunkBar* chunk_bar;
 	};
