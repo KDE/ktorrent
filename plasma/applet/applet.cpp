@@ -47,15 +47,14 @@ using namespace bt;
 
 namespace ktplasma
 {
-
 	
-
-	Applet::Applet(QObject *parent, const QVariantList &args) : Plasma::Applet(parent, args),icon(0)
+	Applet::Applet(QObject *parent, const QVariantList &args) : Plasma::PopupApplet(parent, args),icon(0)
 	{
 		KLocale::setMainCatalog("ktorrent");
 		setAspectRatioMode(Plasma::ConstrainedSquare);
 		engine = 0;
 		root_layout = 0;
+		desktop_widget = 0;
 		connected_to_app = false;
 
 		// drop data!
@@ -69,8 +68,8 @@ namespace ktplasma
 			}
 		}
 		setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+		setPopupIcon("ktorrent");
 	}
-
 
 	Applet::~Applet()
 	{
@@ -84,39 +83,11 @@ namespace ktplasma
 		connect(engine,SIGNAL(sourceRemoved(const QString &)),this,SLOT(sourceRemoved(const QString&)));
 
 		setHasConfigurationInterface(true);
-		
-		root_layout = new QGraphicsLinearLayout(this);
-		root_layout->setContentsMargins(0, 0, 0, 0);
-		root_layout->setSpacing(0);
-		root_layout->setOrientation(Qt::Vertical);
-		
-		QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
-		
-#if (PLASMA_VERSION_MAJOR < 3)
-		icon = new Plasma::Icon(KIcon("ktorrent"),QString(),this);
-#else
-		icon = new Plasma::IconWidget(KIcon("ktorrent"),QString(),this);
-#endif
-		int icon_size = IconSize(KIconLoader::Desktop);
-		icon->setMaximumSize(icon_size,icon_size);
-		icon->setMinimumSize(icon_size,icon_size);
-		icon->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-		connect(icon, SIGNAL(clicked()), this, SLOT(iconClicked()));
-		
-		title = new Plasma::Label(this);
-		title->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-		line->addItem(icon);
-		line->addItem(title);
-		root_layout->addItem(line);
-		
-		chunk_bar = new ChunkBar(this);
-		root_layout->addItem(chunk_bar);
 
-		misc = new Plasma::Label(this);
-		root_layout->addItem(misc);
+		desktop_widget = graphicsWidget();
 		
 		clearData();
-		
+
 		current_source = config().readEntry("current_source",QString());
 		if (current_source.isNull()) 
 		{
@@ -155,9 +126,46 @@ namespace ktplasma
 		}
 
 		engine->connectSource("core",this);
-		QSizeF s = root_layout->sizeHint(Qt::PreferredSize);
-		s.setWidth(s.width() * 1.25);
-		resize(s);
+	}
+
+	QGraphicsWidget *Applet::graphicsWidget() {
+		if (desktop_widget)
+			return desktop_widget;
+
+		root_layout = new QGraphicsLinearLayout(Qt::Vertical);
+		root_layout->setContentsMargins(0, 0, 0, 0);
+		root_layout->setSpacing(0);
+		root_layout->setOrientation(Qt::Vertical);
+		
+		QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
+		
+#if (PLASMA_VERSION_MAJOR < 3)
+		icon = new Plasma::Icon(KIcon("ktorrent"),QString(),this);
+#else
+		icon = new Plasma::IconWidget(KIcon("ktorrent"),QString(),this);
+#endif
+		int icon_size = IconSize(KIconLoader::Desktop);
+		icon->setMaximumSize(icon_size,icon_size);
+		icon->setMinimumSize(icon_size,icon_size);
+		icon->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+		connect(icon, SIGNAL(clicked()), this, SLOT(iconClicked()));
+		
+		title = new Plasma::Label(this);
+		title->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+		line->addItem(icon);
+		line->addItem(title);
+		root_layout->addItem(line);
+		
+		chunk_bar = new ChunkBar(this);
+		root_layout->addItem(chunk_bar);
+
+		misc = new Plasma::Label(this);
+		misc->setPreferredSize(440,100);
+		root_layout->addItem(misc);
+
+		desktop_widget = new QGraphicsWidget(this);
+		desktop_widget->setLayout(root_layout);
+		return desktop_widget;
 	}
 	
 	QString Applet::selectTorrent()
@@ -173,25 +181,6 @@ namespace ktplasma
 	void Applet::saveState(KConfigGroup & config) const
 	{
 		Q_UNUSED(config);
-	}
-	
-	void Applet::constraintsEvent(Plasma::Constraints constraints)
-	{
-		if (constraints & Plasma::FormFactorConstraint) 
-		{
-			if (formFactor() == Plasma::Vertical) 
-			{
-				
-			} 
-			else if (formFactor() == Plasma::Horizontal) 
-			{
-
-			}
-		}
-
-		if (constraints & (Plasma::SizeConstraint | Plasma::FormFactorConstraint)) 
-		{
-		}
 	}
 	
 	void Applet::createConfigurationInterface(KConfigDialog *parent)
@@ -225,9 +214,7 @@ namespace ktplasma
 		{
 			current_source = selectTorrent();
 			if (!current_source.isNull())
-			{
 				engine->connectSource(current_source,this,1000);
-			}
 			else
 				clearData();
 		}
@@ -269,21 +256,16 @@ namespace ktplasma
 					current_source = selectTorrent();
 				
 				if (!current_source.isEmpty())
-				{
 					engine->connectSource(current_source,this,1000);
-				}
 				else
-				{
-					title->setText(i18n("No torrents loaded."));
 					clearData();
-				}
 			}
 			else if (connected_to_app && !data.value("connected").toBool())
 			{
 				connected_to_app = false;
 				current_source = QString();
-				title->setText(i18n("KTorrent is not running."));
 				clearData();
+				title->setText(i18n("KTorrent is not running."));
 			}
 		}
 		else if (name == current_source)
@@ -314,8 +296,6 @@ namespace ktplasma
 				</table>",
 	 			sc,st,cc,ct,BytesPerSecToString(ds),BytesPerSecToString(us),
 				BytesToString(downloaded),BytesToString(size),BytesToString(uploaded)));
-		
-		
 		
 		QString t = i18n("<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)",
 						data.value("name").toString(),
@@ -384,6 +364,7 @@ namespace ktplasma
 				</table>",
 				0,0,0,0,BytesPerSecToString(0),BytesPerSecToString(0),
 				BytesToString(0),BytesToString(0),BytesToString(0)));
+		title->setText(i18n("No torrents loaded."));
 	}
 }
 

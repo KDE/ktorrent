@@ -129,6 +129,7 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("Lee Olson"),ki18n("New set of icons"),"leetolson@gmail.com");
 	about.addCredit(ki18n("Aaron J. Seigo"),ki18n("Drag and drop support for plasma applet"),"aseigo@kde.org");
 	about.addCredit(ki18n("Ian Higginson"),ki18n("Patch to cleanup the plugin list"),"xeriouxi@fastmail.fm");
+	about.addCredit(ki18n("Amichai Rothman"),ki18n("Patch to make the plasma applet a popup applet"),"amichai@amichais.net");
 	KCmdLineArgs::init(argc, argv, &about);
 
 	KCmdLineOptions options;
