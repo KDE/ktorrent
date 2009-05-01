@@ -138,7 +138,7 @@ end
 
 # Remove cruft 
 `find -name ".svn" | xargs rm -rf`
-`find -name "Messages.sh" | xargs rm -rf`
+#`find -name "Messages.sh" | xargs rm -rf`
 if ( remove != "")
    `/bin/rm #{remove}`
 end
