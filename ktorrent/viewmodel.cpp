@@ -33,6 +33,7 @@
 #include <groups/group.h>
 #include "viewmodel.h"
 #include "core.h"
+#include <util/sha1hash.h>
 
 using namespace bt;
 
@@ -564,15 +565,25 @@ namespace kt
 		QByteArray encoded_data;
 
 		QDataStream stream(&encoded_data, QIODevice::WriteOnly);
-
+		QStringList hashes;
 		foreach (const QModelIndex &index, indexes) 
 		{
-			if (index.isValid()) 
+			if (!index.isValid()) 
+				continue;
+			
+			const bt::TorrentInterface* ti = torrentFromIndex(index);
+			if (ti)
 			{
-				QString text = data(createIndex(index.row(),0), Qt::DisplayRole).toString();
-				stream << text;
+				QString hash = ti->getInfoHash().toString();
+				if (!hashes.contains(hash))
+				{
+					hashes.append(hash);
+				}
 			}
 		}
+		
+		foreach (const QString & s,hashes)
+			stream << s;
 
 		mime_data->setData( "application/x-ktorrent-drag-object", encoded_data);
 		return mime_data;

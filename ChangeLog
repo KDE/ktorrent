@@ -7,6 +7,7 @@ Changes in 3.2.2 :
 - Fix crash caused by uncaught exception (190317)
 - Fix crash caused by sorting list of torrent in QM when the list is being cleared (190759)
 - Added patch from amichai which makes the plasma applet a popup applet and which fixes some other things (190822)
+- Fix bug causing drag and drop of torrent on to plasma desktop not to work
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
