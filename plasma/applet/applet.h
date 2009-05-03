@@ -21,10 +21,10 @@
 #ifndef KTPLASMAAPPLET_H
 #define KTPLASMAAPPLET_H
 
-#include <plasma/version.h>
 #include <plasma/popupapplet.h>
 #include <plasma/dataengine.h>
 #include "ui_appletconfig.h"
+#include "fadingnavigationwidget.h"
 
 class QGraphicsLinearLayout;
 
@@ -58,6 +58,7 @@ namespace ktplasma
 		virtual void createConfigurationInterface(KConfigDialog *parent);
 		virtual void saveState(KConfigGroup & config) const;
 		virtual QGraphicsWidget *graphicsWidget();
+		virtual void constraintsEvent(Plasma::Constraints constraints);
 
 	private slots:
 		void dataUpdated(const QString &name,const Plasma::DataEngine::Data &data);
@@ -65,14 +66,23 @@ namespace ktplasma
 		void sourceAdded(const QString & s);
 		void sourceRemoved(const QString & s);
 		void iconClicked();
+		void selectPrev();
+		void selectNext();
 		
 	private:
 		void updateTorrentCombo();
 		void updateCurrent(const Plasma::DataEngine::Data &data);
-		QString selectTorrent();
+		void setSource(QString source);
+		void initSource();
 		void clearData();
+		void updateSources();
+		void updateConnection(bool connected);
+		void updateNavigation();
 
 	private:
+		Ui_AppletConfig ui;
+		QGraphicsWidget* desktop_widget;
+		QGraphicsLinearLayout* root_layout;
 #if (PLASMA_VERSION_MAJOR < 3)
 		Plasma::Icon* icon;
 #else 
@@ -80,13 +90,13 @@ namespace ktplasma
 #endif
 		Plasma::Label* title;
 		Plasma::Label* misc;
-		Ui_AppletConfig ui;
-		Plasma::DataEngine* engine;
-		QString current_source;
-		QGraphicsLinearLayout* root_layout;
-		QGraphicsWidget* desktop_widget;
-		bool connected_to_app;
 		ChunkBar* chunk_bar;
+		FadingNavigationWidget *navigation;
+	
+		Plasma::DataEngine* engine;
+		bool connected_to_app;
+		QString current_source;
+		QStringList sources;
 	};
 
 }

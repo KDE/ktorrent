@@ -19,13 +19,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "applet.h"
-#include <math.h>
 #include <QFile>
 #include <QGraphicsLinearLayout>
-#include <QGraphicsGridLayout>
-#include <QGraphicsProxyWidget>
-#include <KIcon>
-#include <KIconLoader>
 #include <KConfigDialog>
 #include <KLocale>
 #include <KRun>
@@ -35,29 +30,26 @@
 #else
 #include <Plasma/IconWidget>
 #endif
-#include <Plasma/Meter>
 #include <Plasma/Label>
 #include <taskmanager/taskmanager.h>
 #include <taskmanager/task.h>
 #include <util/functions.h>
 #include "chunkbar.h"
-
+#include "fadingnavigationwidget.h"
 
 using namespace bt;
 
 namespace ktplasma
 {
 	
-	Applet::Applet(QObject *parent, const QVariantList &args) : Plasma::PopupApplet(parent, args),icon(0)
+	Applet::Applet(QObject *parent, const QVariantList &args) : Plasma::PopupApplet(parent, args), icon(0)
 	{
-		KLocale::setMainCatalog("ktorrent");
-		setAspectRatioMode(Plasma::ConstrainedSquare);
 		engine = 0;
 		root_layout = 0;
 		desktop_widget = 0;
 		connected_to_app = false;
 
-		// drop data!
+		// drop data (dragged from ktorrent)
 		if (!args.isEmpty()) 
 		{
 			QFile f(args[0].toString());
@@ -67,6 +59,10 @@ namespace ktplasma
 				s >> current_source;
 			}
 		}
+
+		KLocale::setMainCatalog("ktorrent");
+		setHasConfigurationInterface(true);
+		setAspectRatioMode(Plasma::IgnoreAspectRatio);
 		setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 		setPopupIcon("ktorrent");
 	}
@@ -77,55 +73,18 @@ namespace ktplasma
 	
 	void Applet::init()
 	{
-		engine = dataEngine("ktorrent");
-		
-		connect(engine,SIGNAL(sourceAdded(const QString &)),this,SLOT(sourceAdded(const QString&)));
-		connect(engine,SIGNAL(sourceRemoved(const QString &)),this,SLOT(sourceRemoved(const QString&)));
-
-		setHasConfigurationInterface(true);
+		// note: counterintuitively, this method may be called more than once
+		// (such as when moving the applet from panel to desktop)
 
 		desktop_widget = graphicsWidget();
-		
 		clearData();
-
-		current_source = config().readEntry("current_source",QString());
-		if (current_source.isNull()) 
+		if (!engine)
 		{
-			current_source = selectTorrent();
-		} 
-		else 
-		{
-			QStringList sources = engine->sources();
-			bool found = false;
-			foreach (const QString & s,sources)
-			{
-				QString name = engine->query(s).value("name").toString();
-				if (name == current_source) {
-					current_source = s;
-					found = true;
-					break;
-				}
-			}
-
-			if (!found)
-			    current_source = selectTorrent();
+			engine = dataEngine("ktorrent");
+			connect(engine,SIGNAL(sourceAdded(const QString &)),this,SLOT(sourceAdded(const QString&)));
+			connect(engine,SIGNAL(sourceRemoved(const QString &)),this,SLOT(sourceRemoved(const QString&)));
+			engine->connectSource("core",this);
 		}
-		
-		if (!current_source.isNull())
-		{
-			connected_to_app = true;
-			engine->connectSource(current_source,this,1000);
-		}
-		else
-		{
-			connected_to_app = engine->query("core").value("connected").toBool();
-			if (!connected_to_app)
-				title->setText(i18n("KTorrent is not running."));
-			else
-				title->setText(i18n("No torrents loaded."));
-		}
-
-		engine->connectSource("core",this);
 	}
 
 	QGraphicsWidget *Applet::graphicsWidget() {
@@ -133,8 +92,6 @@ namespace ktplasma
 			return desktop_widget;
 
 		root_layout = new QGraphicsLinearLayout(Qt::Vertical);
-		root_layout->setContentsMargins(0, 0, 0, 0);
-		root_layout->setSpacing(0);
 		root_layout->setOrientation(Qt::Vertical);
 		
 		QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
@@ -152,6 +109,7 @@ namespace ktplasma
 		
 		title = new Plasma::Label(this);
 		title->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+		title->setAcceptedMouseButtons(0); // enable moving applet by dragging it
 		line->addItem(icon);
 		line->addItem(title);
 		root_layout->addItem(line);
@@ -160,22 +118,106 @@ namespace ktplasma
 		root_layout->addItem(chunk_bar);
 
 		misc = new Plasma::Label(this);
-		misc->setPreferredSize(440,100);
+		misc->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+		misc->setAcceptedMouseButtons(0); // enable moving applet by dragging it
+		misc->setMinimumWidth(330); // to prevent table from breaking up
+		misc->setPreferredHeight(80);
 		root_layout->addItem(misc);
 
 		desktop_widget = new QGraphicsWidget(this);
 		desktop_widget->setLayout(root_layout);
+		desktop_widget->adjustSize(); // necessary for arrow location calculation
+
+		// parent is widget (not applet), prevents show/hide flickering
+		navigation = new FadingNavigationWidget(desktop_widget);
+		connect(navigation, SIGNAL(prevClicked()), this, SLOT(selectPrev()));
+		connect(navigation, SIGNAL(nextClicked()), this, SLOT(selectNext()));
+
 		return desktop_widget;
 	}
-	
-	QString Applet::selectTorrent()
+
+	void Applet::selectPrev()
 	{
-		QStringList sources = engine->sources();
-		foreach (const QString & s,sources)
-			if (s != "core")
-				return s;
-		
-		return QString();
+		if (sources.empty())
+		{
+			clearData();
+		}
+		else
+		{
+			int i = sources.indexOf(current_source) - 1 + sources.count();
+			setSource(sources[i % sources.count()]);
+		}
+	}
+
+	void Applet::selectNext()
+	{
+		if (sources.empty())
+		{
+			clearData();
+		}
+		else
+		{
+			int i = sources.indexOf(current_source) + 1;
+			setSource(sources[i % sources.count()]);
+		}
+	}
+
+	void Applet::constraintsEvent(Plasma::Constraints constraints)
+	{
+		Plasma::PopupApplet::constraintsEvent(constraints);
+		if (constraints & Plasma::SizeConstraint)
+		{
+			// reposition arrows relative to widget (not applet)
+			QPointF pos((desktop_widget->size().width() - navigation->frame()->size().width()) / 2,
+					desktop_widget->contentsRect().bottom() - navigation->frame()->size().height() - 5);
+			navigation->frame()->setPos(pos);
+		}
+	}
+
+	void Applet::updateNavigation() {
+		navigation->setEnabled(connected_to_app && !sources.empty()
+			&& (sources.count() > 1 || !sources.contains(current_source)));
+	}
+
+	void Applet::updateConnection(bool connected)
+	{
+		connected_to_app = connected;
+		clearData();
+		updateNavigation();
+		if (connected)
+		{
+			if (current_source.isNull()) // don't override dragged item
+				current_source = config().readEntry("current_source",QString());
+			initSource();
+			// addSource will be called for each sorce if reconnected
+		}
+	}
+	
+	void Applet::updateSources() {
+		sources = engine->sources();
+		sources.removeOne("core");
+	}
+
+	void Applet::setSource(QString source) {
+		if (!current_source.isEmpty())
+			engine->disconnectSource(current_source,this);
+		clearData();
+		current_source = source;
+		engine->connectSource(current_source,this,1000);
+		config().writeEntry("current_source",current_source);
+		config().sync();
+		updateNavigation();
+	}
+
+	void Applet::initSource()
+	{
+		updateSources();
+		if (sources.contains(current_source))
+			setSource(current_source);
+		else if (!sources.empty())
+			setSource(sources[0]);
+		else
+			clearData();
 	}
 	
 	void Applet::saveState(KConfigGroup & config) const
@@ -187,58 +229,35 @@ namespace ktplasma
 	{
 		QWidget *widget = new QWidget();
 		ui.setupUi(widget);
+		updateTorrentCombo(); // must come before addPage for size to be correct
 		parent->setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Apply );
 		parent->addPage(widget,i18n("Applet"), "ktorrent");
 		connect(parent, SIGNAL(applyClicked()), this, SLOT(configUpdated()));
 		connect(parent, SIGNAL(okClicked()), this, SLOT(configUpdated()));
-		updateTorrentCombo();
 	}
-	
+
 	void Applet::updateTorrentCombo()
 	{	
-		QStringList sources = engine->sources();
+		updateSources();
 		ui.torrent_to_display->clear();
-		ui.torrent_to_display->setEnabled(sources.count() > 0);
-		if (sources.count() == 0)
+		ui.torrent_to_display->setEnabled(!sources.empty());
+		if (sources.empty())
 			return;
-		
 		QStringList names;
 		foreach (const QString & s,sources)
-		{
-			if (s != "core")
-				names << engine->query(s).value("name").toString();
-		}
+			names << engine->query(s).value("name").toString();
 		ui.torrent_to_display->addItems(names);
-		
 		if (current_source.isNull())
-		{
-			current_source = selectTorrent();
-			if (!current_source.isNull())
-				engine->connectSource(current_source,this,1000);
-			else
-				clearData();
-		}
+			initSource();
 	}
 	
 	void Applet::configUpdated()
 	{
 		QString name = ui.torrent_to_display->currentText();
-		if (!current_source.isNull())
-		{
-			engine->disconnectSource(current_source,this);
-			current_source = QString();
-			clearData();
-		}
-		
-		QStringList sources = engine->sources();
 		foreach (const QString & s,sources)
 		{
-			if (s != "core" && engine->query(s).value("name").toString() == name)
-			{
-				current_source = s;
-				engine->connectSource(current_source,this,1000);
-				config().writeEntry("current_source",current_source);
-				config().sync();
+			if (engine->query(s).value("name").toString() == name) {
+				setSource(s);
 				break;
 			}
 		}
@@ -248,25 +267,9 @@ namespace ktplasma
 	{
 		if (name == "core")
 		{
-			if (!connected_to_app && data.value("connected").toBool())
-			{
-				connected_to_app = true;
-				current_source = config().readEntry("current_source",QString());
-				if (current_source.isEmpty())
-					current_source = selectTorrent();
-				
-				if (!current_source.isEmpty())
-					engine->connectSource(current_source,this,1000);
-				else
-					clearData();
-			}
-			else if (connected_to_app && !data.value("connected").toBool())
-			{
-				connected_to_app = false;
-				current_source = QString();
-				clearData();
-				title->setText(i18n("KTorrent is not running."));
-			}
+			bool connected = data.value("connected").toBool();
+			if (connected_to_app != connected)
+				updateConnection(connected);
 		}
 		else if (name == current_source)
 		{
@@ -278,33 +281,36 @@ namespace ktplasma
 	{
 		double ds = data.value("download_rate").toDouble();
 		double us = data.value("upload_rate").toDouble();
-		int uploaded = data.value("bytes_uploaded").toInt();
-		int downloaded = data.value("bytes_downloaded").toInt();
-		int size = data.value("total_bytes_to_download").toInt();		
+		qlonglong uploaded = data.value("bytes_uploaded").toLongLong();
+		qlonglong downloaded = data.value("bytes_downloaded").toLongLong();
+		qlonglong size = data.value("total_bytes_to_download").toLongLong();
 		int st = data.value("seeders_total").toInt();
 		int sc = data.value("seeders_connected_to").toInt();
-		int ct = data.value("leechers_total").toInt();
-		int cc = data.value("leechers_connected_to").toInt();
+		int lt = data.value("leechers_total").toInt();
+		int lc = data.value("leechers_connected_to").toInt();
+		int cd = data.value("num_chunks_downloaded").toInt();
+		int ct = data.value("total_chunks").toInt();
 		KLocale* loc = KGlobal::locale();
 		float share_ratio = (downloaded == 0) ? 0 : (float)uploaded/downloaded;
+		float percent = 100.0 * cd/ct;
 		misc->setText(
 			i18n(
 				 "<table>\
 				<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
-				<tr><td>Upload Speed:</td><td>%6 </td><td>Leechers: </td><td>%3 (%4)</td></tr>\
-				<tr><td>Downloaded:</td><td>%7 / %8 </td><td>Uploaded: </td><td>%9</td></tr>\
+				<tr><td>Upload Speed:</td><td>%6 </td><td>Leechers: </td><td>%3 (%4)</td></tr>",
+				sc,st,lc,lt,BytesPerSecToString(ds),BytesPerSecToString(us)) +
+			i18n(
+				"<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\
+				<tr><td>Uploaded:</td><td>%3 </td><td>Complete: </td><td>%4 %</td></tr>\
 				</table>",
-	 			sc,st,cc,ct,BytesPerSecToString(ds),BytesPerSecToString(us),
-				BytesToString(downloaded),BytesToString(size),BytesToString(uploaded)));
-		
-		QString t = i18n("<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)",
-						data.value("name").toString(),
-						data.value("status").toString(),
-						loc->formatNumber(share_ratio,2),
-						share_ratio <= 0.8 ? "#ff0000" : "#1c9a1c");
-		
-		title->setText(t);
-		
+				BytesToString(downloaded),BytesToString(size),BytesToString(uploaded),
+				loc->formatNumber(percent,2)));
+		title->setText(
+			i18n("<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)",
+				data.value("name").toString(),
+				data.value("status").toString(),
+				loc->formatNumber(share_ratio,2),
+				share_ratio <= 0.8 ? "#ff0000" : "#1c9a1c"));
 		chunk_bar->updateBitSets(
 			data.value("total_chunks").toInt(),
 			data.value("downloaded_chunks").toByteArray(),
@@ -313,27 +319,23 @@ namespace ktplasma
 	
 	void Applet::sourceAdded(const QString & s)
 	{
-		Q_UNUSED(s);
-		if (current_source.isNull())
-		{
-			current_source = selectTorrent();
-			if (!current_source.isNull())
-				engine->connectSource(current_source,this,1000);
-			else
-				clearData();
-		}
+		// note: we get this event for each source also when app reconnects
+		if (!sources.contains(s))
+		    sources.append(s);
+		if (current_source.isNull() || current_source == s)
+			initSource();
+		else if (!sources.contains(current_source))
+			clearData();
+		updateNavigation();
 	}
 	
 	void Applet::sourceRemoved(const QString & s)
 	{
+		// note: we get this event for each source also when app disconnects
+		sources.removeOne(s);
 		if (current_source == s)
-		{
-			current_source = selectTorrent();
-			if (!current_source.isNull())
-				engine->connectSource(current_source,this,1000);
-			else
-				clearData();
-		}
+			clearData();
+		updateNavigation();
 	}
 
 	void Applet::iconClicked()
@@ -355,16 +357,28 @@ namespace ktplasma
 
 	void Applet::clearData()
 	{		
+		KLocale* loc = KGlobal::locale();
 		misc->setText(
 			i18n(
-				"<table>\
+				 "<table>\
 				<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
-				<tr><td>Upload Speed:</td><td>%6 </td><td>Leechers: </td><td>%3 (%4)</td></tr>\
-				<tr><td>Downloaded:</td><td>%7 / %8 </td><td>Uploaded: </td><td>%9</td></tr>\
+				<tr><td>Upload Speed:</td><td>%6 </td><td>Leechers: </td><td>%3 (%4)</td></tr>",
+				0,0,0,0,BytesPerSecToString(0),BytesPerSecToString(0)) +
+			i18n(
+				"<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\
+				<tr><td>Uploaded:</td><td>%3 </td><td>Complete: </td><td>%4 %</td></tr>\
 				</table>",
-				0,0,0,0,BytesPerSecToString(0),BytesPerSecToString(0),
-				BytesToString(0),BytesToString(0),BytesToString(0)));
-		title->setText(i18n("No torrents loaded."));
+				BytesToString(0),BytesToString(0),BytesToString(0),
+				loc->formatNumber(0,2)));
+		if (!connected_to_app)
+			title->setText(i18n("KTorrent is not running."));
+		else if (sources.empty())
+			title->setText(i18n("No torrents loaded."));
+		else if (!sources.contains(current_source))
+			title->setText(i18n("Selected torrent is unavailable."));
+		else
+			title->setText(QString());
+		chunk_bar->updateBitSets(1,QByteArray(1,0),QByteArray(1,0)); // no chunks
 	}
 }
 

@@ -35,7 +35,6 @@ namespace ktplasma
 		setMinimumHeight(fm.height());
 	}
 
-
 	ChunkBar::~ChunkBar()
 	{
 	}
@@ -45,44 +44,33 @@ namespace ktplasma
 		bt::BitSet dc((const bt::Uint8*)downloaded.data(),num_chunks);
 		bt::BitSet ec((const bt::Uint8*)excluded.data(),num_chunks);
 		
-		bool modified = false;
-		if (!(downloaded_chunks == dc))
-		{
+		if (downloaded_chunks != dc || excluded_chunks != ec) {
 			downloaded_chunks = dc;
-			modified = true;
-		}
-		
-		if (!(excluded_chunks == ec))
-		{
 			excluded_chunks = ec;
-			modified = true;
-		}
-		
-		if (modified)
 			update();
+		}
+	}
+
+	void ChunkBar::paintChunks(QPainter* p, const QStyleOptionGraphicsItem * option,
+				   const QColor & color, const bt::BitSet & chunks) {
+		Uint32 w = option->rect.width();
+		if (chunks.allOn())
+			drawAllOn(p,color,option->rect);
+		else if (chunks.getNumBits() > w)
+			drawMoreChunksThenPixels(p,chunks,color,option->rect);
+		else
+			drawEqual(p,chunks,color,option->rect);
 	}
 	
 	void ChunkBar::paint(QPainter* p,const QStyleOptionGraphicsItem * option, QWidget * widget)
 	{
 		Q_UNUSED(widget);
-		Uint32 w = option->rect.width();
 		QColor highlight_color = palette().color(QPalette::Active,QPalette::Highlight);
-		if (downloaded_chunks.allOn())
-			drawAllOn(p,highlight_color,option->rect);
-		else if (downloaded_chunks.getNumBits() > w)
-			drawMoreChunksThenPixels(p,downloaded_chunks,highlight_color,option->rect);
-		else
-			drawEqual(p,downloaded_chunks,highlight_color,option->rect);
-		
+		paintChunks(p, option, highlight_color, downloaded_chunks);
 		if (excluded_chunks.numOnBits() > 0)
 		{
 			QColor excluded_color = palette().color(QPalette::Active,QPalette::Mid);
-			if (excluded_chunks.allOn())
-				drawAllOn(p,excluded_color,option->rect);
-			else if (excluded_chunks.getNumBits() > w)
-				drawMoreChunksThenPixels(p,excluded_chunks,excluded_color,option->rect);
-			else
-				drawEqual(p,excluded_chunks,excluded_color,option->rect);
+			paintChunks(p, option, excluded_color, excluded_chunks);
 		}
 	}
 }

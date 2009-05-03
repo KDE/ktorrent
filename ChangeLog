@@ -23,6 +23,7 @@ Changes in 3.3 :
 - Use bytes to calculate availability percentage of a peer (188575)
 - Add support for using multiple trackers at the same time for non private torrents (175255)
 - Remove config option to select between basic and filesystem specific preallocation method (189784)
+- Add patch from amichai which adds easier navigation between torrents in plasma applet (183826)
 
 Changes in 3.2.2 :
 - Fix crash when changing speed limits using system tray menu (188447)

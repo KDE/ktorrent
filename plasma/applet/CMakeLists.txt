@@ -6,7 +6,7 @@ if(TASKMANAGER_INCLUDE_DIR AND TASKMANAGER_LIBRARY)
 	set(TASKMANAGER_FOUND TRUE)
 	message(STATUS "Found libtaskmanager: ${TASKMANAGER_LIBRARY} ")
 	include_directories(${TASKMANAGER_INCLUDE_DIR})
-	set(ktapplet_SRCS applet.cpp chunkbar.cpp)
+	set(ktapplet_SRCS applet.cpp chunkbar.cpp fadingitem.cpp fadingnavigationwidget.cpp)
 	
 	kde4_add_ui_files(ktapplet_SRCS appletconfig.ui)
 	

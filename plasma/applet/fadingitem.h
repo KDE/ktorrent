@@ -1,7 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
- *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
+ *   Copyright (C) 2008 by Petri Damstén <damu@iki.fi>                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,39 +14,37 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
-#ifndef KTPLASMACHUNKBAR_H
-#define KTPLASMACHUNKBAR_H
 
-#include <QGraphicsWidget>
-#include <torrent/chunkbarrenderer.h>
-#include <util/bitset.h>
+#ifndef FADINGITEM_H
+#define FADINGITEM_H
 
-namespace ktplasma
+#include <QtGui/QGraphicsItem>
+
+class FadingItem : public QObject, public QGraphicsItem
 {
+        Q_OBJECT
+    public:
+        FadingItem( QGraphicsItem *parent );
 
-	/**
-		ChunkBar for the plasma applet
-	*/
-	class ChunkBar : public QGraphicsWidget,public kt::ChunkBarRenderer
-	{
-	public:
-		ChunkBar(QGraphicsItem* parent);
-		virtual ~ChunkBar();
-			
-		void updateBitSets(int num_chunks,const QByteArray & downloaded,const QByteArray & excluded);
-		virtual void paint(QPainter* painter,const QStyleOptionGraphicsItem * option, QWidget * widget);
+        void updatePixmap();
+        virtual QRectF boundingRect() const;
+        virtual void paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
+                             QWidget *widget = 0 );
+        void showItem();
+        void hideItem();
+        bool isVisible() const;
 
-	private:
-		void paintChunks(QPainter* p, const QStyleOptionGraphicsItem * option,
-						 const QColor & color, const bt::BitSet & chunks);
-		
-	private:
-		bt::BitSet downloaded_chunks;
-		bt::BitSet excluded_chunks;
-	};
+    protected slots:
+        void updateFade( qreal progress );
+        void animFinished( int animId );
 
-}
+    private:
+        QPixmap mParent;
+        qreal mOpacity;
+        int mAnimId;
+        bool mShowing;
+};
 
 #endif
