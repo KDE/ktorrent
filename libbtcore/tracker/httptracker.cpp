@@ -216,7 +216,7 @@ namespace bt
 		
 		u.addQueryItem("compact","1");
 		if (event != "stopped")
-			u.addQueryItem("numwant","100");
+			u.addQueryItem("numwant","200");
 		else
 			u.addQueryItem("numwant","0");
 		

@@ -191,7 +191,7 @@ namespace bt
 	
 	void PeerManager::addPotentialPeer(const PotentialPeer & pp)
 	{
-		if (potential_peers.size() > 150)
+		if (potential_peers.size() > 500)
 			return;
 		
 		KIpAddress addr;
