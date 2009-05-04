@@ -25,13 +25,7 @@
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
 #include "flagdb.h"
-#include <kdebug.h>
-
-#ifdef USE_SYSTEM_GEOIP
-#include <GeoIP.h>
-#else
-#include "GeoIP.h"
-#endif
+#include "geoipmanager.h"
 
 using namespace bt;
 
@@ -39,13 +33,10 @@ namespace kt
 {
 	static KIcon yes,no;
 	static bool icons_loaded = false;
-	static GeoIP* geo_ip = 0;
 	static FlagDB flagDB(22, 18);
-	static bool geoip_db_exists = true;
-	static QString geoip_data_file;
 	
 
-	PeerViewModel::Item::Item(bt::PeerInterface* peer) : peer(peer)
+	PeerViewModel::Item::Item(bt::PeerInterface* peer,GeoIPManager* geo_ip) : peer(peer)
 	{
 		stats = peer->getStats();
 		if (!icons_loaded)
@@ -55,76 +46,19 @@ namespace kt
 			icons_loaded = true;
 			flagDB.addFlagSource("data",  QString("ktorrent/%1.png"));
 			flagDB.addFlagSource("locale", QString("l10n/%1/flag.png"));
-#ifdef USE_SYSTEM_GEOIP
-			geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
-			geoip_db_exists = (geo_ip != NULL);
-#else
-			geoip_db_exists = !KStandardDirs::locate("data", "ktorrent/geoip.dat").isNull();
-			if(geoip_db_exists) 
-			{
-				geoip_data_file = "ktorrent/geoip.dat";
-			} 
-			else 
-			{
-				geoip_db_exists = !KStandardDirs::locate("data", "ktorrent/GeoIP.dat").isNull();
-				if (geoip_db_exists)
-					geoip_data_file = "ktorrent/GeoIP.dat";
-			}
-#endif
-		}
-		
-		// open GeoIP if necessaryt
-		if (!geo_ip && geoip_db_exists) 
-		{
-#ifdef USE_SYSTEM_GEOIP
-			geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
-#else
-			geo_ip = GeoIP_open(KStandardDirs::locate("data", geoip_data_file).toLocal8Bit(),0);
-#endif
 		}
 		
 		if (geo_ip)
 		{
-			int country_id = GeoIP_id_by_name(geo_ip, stats.ip_address.toAscii());
-			// fixed case where the ip wasn't found in the database
-			// may be usefull for unix too 
-#ifdef Q_WS_WIN
-			if (country_id >= sizeof(GeoIP_country_name)/sizeof(char *))
+			int country_id = geo_ip->findCountry(stats.ip_address);
+			if (country_id > 0)
 			{
-				kWarning() << "ip" << stats.ip_address << "not found in GeoIP database";
-				country_id = sizeof(GeoIP_country_name)/sizeof(char *)-1;	
+				country = geo_ip->countryName(country_id);
+				flag = KIcon(flagDB.getFlag(geo_ip->countryCode(country_id)));
 			}
-#endif
-			country = GeoIP_country_name[country_id];
-			flag = KIcon(flagDB.getFlag(GeoIP_country_code[country_id]));
 		}
-	}
-		/*	
-	bool PeerViewModel::Item::changed() const
-	{
-		const PeerInterface::Stats & s = peer->getStats();
-		
+	}	
 
-		if (s.download_rate != stats.download_rate || 
-			s.upload_rate != stats.upload_rate || 
-			s.choked != stats.choked || 
-			s.snubbed != stats.snubbed || 
-			s.perc_of_file != stats.perc_of_file || 
-			s.aca_score != stats.aca_score || 
-			s.has_upload_slot != stats.has_upload_slot || 
-			s.num_down_requests != stats.num_down_requests || 
-			s.num_up_requests != stats.num_up_requests || 
-			s.bytes_downloaded != stats.bytes_downloaded || 
-			s.bytes_uploaded != stats.bytes_uploaded ||
-			s.interested != stats.interested ||
-			s.am_interested != stats.am_interested)
-		{
-			stats = s;
-			return true;
-		}
-		return false;
-	}
-	*/
 	bool PeerViewModel::Item::changed(int col,bool & modified) const
 	{
 		const PeerInterface::Stats & s = peer->getStats();
@@ -268,10 +202,11 @@ namespace kt
 	/////////////////////////////////////////////////////////////
 
 	PeerViewModel::PeerViewModel ( QObject* parent )
-	: QAbstractTableModel(parent)
+	: QAbstractTableModel(parent),geo_ip(0)
 	{
 		sort_column = 0;
 		sort_order = Qt::AscendingOrder;
+		geo_ip = new GeoIPManager(this);
 	}
 
 
@@ -282,7 +217,7 @@ namespace kt
 	
 	void PeerViewModel::peerAdded(bt::PeerInterface* peer)
 	{
-		items.append(new Item(peer));
+		items.append(new Item(peer,geo_ip));
 		insertRow(items.count() - 1);
 		sort(sort_column,sort_order);
 	}

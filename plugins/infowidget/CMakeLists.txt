@@ -43,6 +43,7 @@ set(ktinfowidgetplugin_SRC
 	trackerview.cpp
 	trackermodel.cpp
 	${geoip_src}
+	geoipmanager.cpp
 	flagdb.cpp
 	iwfiletreemodel.cpp
 	iwfilelistmodel.cpp

@@ -37,6 +37,7 @@
 #include "infowidgetpluginsettings.h"
 #include "monitor.h"
 #include "webseedstab.h"
+#include "geoipmanager.h"
 
 
 

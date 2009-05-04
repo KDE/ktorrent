@@ -28,6 +28,7 @@
 
 namespace kt
 {
+	class GeoIPManager;
 
 	/**
 		@author Joris Guisson
@@ -77,7 +78,7 @@ namespace kt
 			QString country;
 			KIcon flag;
 			
-			Item(bt::PeerInterface* peer);
+			Item(bt::PeerInterface* peer,GeoIPManager* geo_ip);
 			
 			bool changed(int col,bool & modified) const;
 			QVariant data(int col) const;
@@ -88,6 +89,7 @@ namespace kt
 		QList<Item*> items;
 		int sort_column;
 		Qt::SortOrder sort_order;
+		GeoIPManager* geo_ip;
 	};
 
 }
