@@ -543,6 +543,7 @@ namespace kt
 		{
 			saveState(KGlobal::config());
 			timer.stop();
+			ScanDlg::cancelAllScans();
 			hide();
 			tray_icon->hide();
 			core->onExit();

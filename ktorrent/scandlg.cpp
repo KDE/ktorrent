@@ -64,10 +64,12 @@ namespace kt
 		num_failed = 0;
 		m_progress->setMaximum(100);
 		m_progress->setValue(0);
+		active_scans.append(this);
 	}
 	
 	ScanDlg::~ScanDlg()
 	{
+		active_scans.removeAll(this);
 	}
 
 	void ScanDlg::scan()
@@ -196,7 +198,15 @@ namespace kt
 		m_chunks_downloaded->setText(QString::number(num_downloaded));
 		m_chunks_not_downloaded->setText(QString::number(num_not_downloaded));
 	}
-		
+	
+	QList<ScanDlg*> ScanDlg::active_scans;
+
+	void ScanDlg::cancelAllScans()
+	{
+		foreach (ScanDlg* sd,active_scans)
+			sd->stop();
+	}
+
 }
 
 #include "scandlg.moc"
