@@ -723,6 +723,7 @@ namespace kt
 		{
 			timer.stop();
 			ideal::MainWindow::queryExit();
+			ScanDlg::cancelAllScans();
 			hide();
 			tray_icon->hide();
 			core->onExit();
