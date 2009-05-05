@@ -139,7 +139,10 @@ namespace kt
 	void GUI::addPrefPage(PrefPageInterface* page)
 	{
 		if (!pref_dlg)
+		{
 			pref_dlg = new PrefDialog(this,core);
+			pref_dlg->loadState(KGlobal::config());
+		}
 
 		pref_dlg->addPrefPage(page);
 	}
@@ -519,6 +522,8 @@ namespace kt
 		g.writeEntry("hidden_on_exit",isHidden());
 		torrent_activity->saveState(cfg);
 		central->saveState(cfg);
+		if (pref_dlg)
+			pref_dlg->saveState(cfg);
 		cfg->sync();
 	}
 

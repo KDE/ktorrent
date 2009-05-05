@@ -21,7 +21,8 @@
 #ifndef KT_PREFDIALOG_HH
 #define KT_PREFDIALOG_HH
 
-#include <QMap>
+#include <QList>
+#include <QScrollArea>
 #include <kconfigdialog.h>
 
 namespace kt
@@ -30,6 +31,7 @@ namespace kt
 	class PrefPageInterface;
 	class NetworkPref;
 	class QMPref;
+	class PrefPageScrollArea;
 
 	/**
 	 * KTorrent's preferences dialog, this uses the new KConfigDialog class which should make our live much easier.
@@ -60,6 +62,16 @@ namespace kt
 		 * Update the widgets and show
 		 */
 		void updateWidgetsAndShow();
+		
+		/**
+		 * Load the state of the dialog
+		 */
+		void loadState(KSharedConfigPtr cfg);
+		
+		/**
+		 * Save the state of the dialog
+		 */
+		void saveState(KSharedConfigPtr cfg);
 
 	protected:
 		virtual void updateWidgets();
@@ -70,9 +82,19 @@ namespace kt
 		void calculateRecommendedSettings();
 		
 	private:
-		QMap<PrefPageInterface*,KPageWidgetItem*> pages;
+		QList<PrefPageScrollArea*> pages;
 		NetworkPref* net_pref;
 		QMPref* qm_pref;
+	};
+	
+	class PrefPageScrollArea : public QScrollArea
+	{
+	public:
+		PrefPageScrollArea(PrefPageInterface* page,QWidget* parent = 0);
+		virtual ~PrefPageScrollArea();
+		
+		PrefPageInterface* page;
+		KPageWidgetItem* page_widget_item;
 	};
 }
 

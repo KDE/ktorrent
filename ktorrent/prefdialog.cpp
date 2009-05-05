@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <klocale.h>
 #include <kconfigdialogmanager.h>
 #include "settings.h"
@@ -34,7 +35,6 @@
 namespace kt
 {
 	
-
 	
 	
 	PrefDialog::PrefDialog(QWidget* parent,Core* core) : KConfigDialog(parent,"settings",Settings::self())
@@ -60,19 +60,26 @@ namespace kt
 
 	void PrefDialog::addPrefPage(PrefPageInterface* page)
 	{
-		KPageWidgetItem* p = addPage(page,page->config(),page->pageName(),page->pageIcon());
-		pages.insert(page,p);
+		PrefPageScrollArea* area = new PrefPageScrollArea(page,this);
+			
+		KPageWidgetItem* p = addPage(area,page->config(),page->pageName(),page->pageIcon());
+		area->page_widget_item = p;
+		pages.append(area);
 		if (!isHidden())
 			page->loadSettings();
 	}
 
 	void PrefDialog::removePrefPage(PrefPageInterface* page)
 	{
-		KPageWidgetItem* p = pages.value(page);
-		if (p)
+		foreach (PrefPageScrollArea* area,pages)
 		{
-			removePage(p);
-			pages.remove(page);
+			if (area->page == page)
+			{
+				area->takeWidget();
+				pages.removeAll(area);
+				removePage(area->page_widget_item);
+				break;
+			}
 		}
 	}
 	
@@ -84,20 +91,20 @@ namespace kt
 
 	void PrefDialog::updateWidgets()
 	{
-		foreach (PrefPageInterface* p,pages.keys())
-			p->loadSettings();
+		foreach (PrefPageScrollArea* area,pages)
+			area->page->loadSettings();
 	}
 
 	void PrefDialog::updateWidgetsDefault()
 	{
-		foreach (PrefPageInterface* p,pages.keys())
-			p->loadDefaults();
+		foreach (PrefPageScrollArea* area,pages)
+			area->page->loadDefaults();
 	}
 	
 	void PrefDialog::updateSettings()
 	{
-		foreach (PrefPageInterface* p,pages.keys())
-			p->updateSettings();
+		foreach (PrefPageScrollArea* area,pages)
+			area->page->updateSettings();
 	}
 	
 	void PrefDialog::calculateRecommendedSettings()
@@ -114,6 +121,34 @@ namespace kt
 			net_pref->kcfg_maxTotalConnections->setValue(dlg.max_conn_glob);
 		}
 	}
+	
+	void PrefDialog::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("PrefDialog");
+		QSize s = g.readEntry("size",sizeHint());
+		resize(s);
+	}
+	
+	void PrefDialog::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("PrefDialog");
+		g.writeEntry("size",size());
+	}
+
+	///////////////////////////////////////
+	
+	PrefPageScrollArea::PrefPageScrollArea(kt::PrefPageInterface* page, QWidget* parent) : QScrollArea(parent),page(page),page_widget_item(0)
+	{
+		setWidget(page);
+		setWidgetResizable(true);
+		setFrameStyle(QFrame::NoFrame);
+		viewport()->setAutoFillBackground(false);
+	}
+
+	PrefPageScrollArea::~PrefPageScrollArea()
+	{
+	}
+
 
 }
 
