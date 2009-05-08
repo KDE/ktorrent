@@ -25,11 +25,44 @@
 
 namespace kt
 {
+	static QString ValidDBusName(const QString & s,int extra_digit)
+	{
+		if (s.isEmpty())
+			return s;
+		
+		QString ret = s;
+		if (ret[0].isDigit())
+			ret[0] = '_';
+		
+		for (int i = 0;i < s.length();i++)
+		{
+			QChar c = ret[i];
+			if (!c.isLetterOrNumber() && c != '_')
+				ret[i] = '_';
+		}
+		
+		if (extra_digit > 0)
+			return ret + QString::number(extra_digit);
+		else
+			return ret;
+	}
 
 	DBusGroup::DBusGroup(Group* g,GroupManager* gman,QObject* parent)
 			: QObject(parent),group(g),gman(gman)
 	{
-		QDBusConnection::sessionBus().registerObject("/group/" + g->groupName(), this,
+		QString name = ValidDBusName(g->groupName(),0);
+		if (name != g->groupName())
+		{
+			// check for dupes if the name has been changed
+			int i = 2;
+			while (gman->find(name) != 0)
+			{
+				name = ValidDBusName(g->groupName(),i);
+				i++;
+			}
+		}
+		QString path = "/group/" + name;
+		QDBusConnection::sessionBus().registerObject(path, this,
 									QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals);
 	}
 

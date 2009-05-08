@@ -39,6 +39,7 @@ Changes in 3.2.2 :
 - Increase numwant to 200 and the maximum number of potential peers to 500
 - Cancel all scan dialogs before exiting, this fixes a crash (191487)
 - Config dialog now embeds pages in scroll areas, so that the dialog also is useable on small screens
+- Make sure dbus names are valid, this fixes an assert (192007)
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
