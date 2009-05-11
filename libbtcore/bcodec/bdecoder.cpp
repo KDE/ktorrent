@@ -192,7 +192,7 @@ namespace bt
 		bool ok = true;
 		int len = 0;
 		len = n.toInt(&ok);
-		if (!ok)
+		if (!ok || len < 0)
 		{
 			throw Error(i18n("Cannot convert %1 to an int",n));
 		}
