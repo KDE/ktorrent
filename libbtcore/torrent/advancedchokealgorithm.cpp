@@ -89,7 +89,7 @@ namespace bt
 		
 		double nb = 0.0; // newbie bonus
 		double cp = 0.0; // choke penalty
-		double sp = 0.0; // snubbing penalty
+		double sp = s.snubbed ? SNUB_PENALTY : 0.0; // snubbing penalty
 		double lb = s.local ? 10.0 : 0.0; // local peers get a bonus of 10
 		double bd = s.bytes_downloaded; // bytes downloaded
 		double tbd = stats.session_bytes_downloaded; // total bytes downloaded
@@ -105,12 +105,6 @@ namespace bt
 		if (p->isChoked())
 		{
 			cp = NEWBIE_BONUS; // cp cancels out newbie bonus
-		}
-		
-		// if the evil bit is on (!choked, snubbed and requests have timed out)
-		if (s.evil)
-		{
-			sp = SNUB_PENALTY;
 		}
 		
 		// NB + K * (BD/TBD) - CP - SP + L * (DS / TDS)

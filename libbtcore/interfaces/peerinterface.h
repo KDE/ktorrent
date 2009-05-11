@@ -63,9 +63,6 @@ namespace bt
 			bt::Uint64 bytes_downloaded;
 			/// Advanced choke algorithm score
 			double aca_score;
-			/// The evil flag is on when the peer has not choked us, 
-			/// but has snubbed us and requests have timedout
-			bool evil;
 			/// Flag to indicate if this peer has an upload slot
 			bool has_upload_slot;
 			/// Is the peer interested
