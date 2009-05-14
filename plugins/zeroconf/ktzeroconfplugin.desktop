@@ -19,7 +19,6 @@ Comment[fr]=Module externe pour découvrir les pairs sur le réseau local à l'a
 Comment[ga]=Breiseán a aimsíonn comhghleacaithe ar an líonra logánta tríd an bprótacal zeroconf
 Comment[ja]=Zeroconf プロトコルを使ってローカルネットワークでピアを見つけます
 Comment[nds]=Partners in't lokale Nett över't zeroconf-Protokoll opdecken
-Comment[nl]=Ontdek peers op een lokaal netwerk met behulp van het zeroconf-protocol
 Comment[pt]=Descobrir pontos na rede local com o protocolo Zeroconf
 Comment[pt_BR]=Descobre pares na rede local, usando o protocolo Zeroconf
 Comment[ro]=Descoperirea partenerilor în rețeaua locală utilizînd protocolul Zeroconf
