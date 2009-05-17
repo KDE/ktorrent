@@ -37,6 +37,24 @@
 
 namespace bt
 {
+	static QString SanityzeName(const QString & name)
+	{
+#ifdef Q_WS_WIN
+		QString ret = name;
+		char invalid[] = {'<','>',':','"','/','\\','|','?','*'};
+		for (int i = 0;i < 9;i++)
+		{
+			if (ret.contains(invalid[i]))
+				ret = ret.replace(invalid[i],'_');
+		}
+		
+		return ret;
+#else
+		if (name.endsWith("/"))
+			return name.left(name.length() - 1);
+		return name;
+#endif
+	}
 
 	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0),tmon(0)
 	{
@@ -178,6 +196,8 @@ namespace bt
 	
 				unencoded_path.append(v->data().toByteArray());
 				QString sd = v->data().toString(text_codec);
+				if (sd.contains("\n"))
+					sd = sd.remove("\n");
 				path += sd;
 				if (j + 1 < ln->getNumChildren())
 					path += bt::DirSeparator();
@@ -291,9 +311,7 @@ namespace bt
 		
 		unencoded_name = node->data().toByteArray();
 		name_suggestion = text_codec->toUnicode(unencoded_name);
-#ifdef Q_WS_WIN
-		name_suggestion = NameForWindows(name_suggestion);
-#endif
+		name_suggestion = SanityzeName(name_suggestion);
 	}
 	
 	void Torrent::loadAnnounceList(BNode* node)
@@ -560,9 +578,7 @@ namespace bt
 			f.changeTextCodec(codec);
 		}
 		name_suggestion = text_codec->toUnicode(unencoded_name);
-#ifdef Q_WS_WIN
-		name_suggestion = NameForWindows(name_suggestion);
-#endif
+		name_suggestion = SanityzeName(name_suggestion);
 	}
 	
 	void Torrent::downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority)

@@ -13,6 +13,7 @@ Changes in 3.2.2 :
 - Config dialog now embeds pages in scroll areas, so that the dialog also is useable on small screens
 - Make sure dbus names are valid, this fixes an assert (192007)
 - Fix crash when parsing DHT packets (190107)
+- Remove newlines from path names of files when present in torrent file (192652)
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
