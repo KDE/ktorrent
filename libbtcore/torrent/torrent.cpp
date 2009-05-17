@@ -37,9 +37,9 @@
 
 namespace bt
 {
-#ifdef Q_WS_WIN
-	static QString NameForWindows(const QString & name)
+	static QString SanityzeName(const QString & name)
 	{
+#ifdef Q_WS_WIN
 		QString ret = name;
 		char invalid[] = {'<','>',':','"','/','\\','|','?','*'};
 		for (int i = 0;i < 9;i++)
@@ -49,8 +49,12 @@ namespace bt
 		}
 		
 		return ret;
-	}
+#else
+		if (name.endsWith("/"))
+			return name.left(name.length() - 1);
+		return name;
 #endif
+	}
 
 	Torrent::Torrent() : chunk_size(0),total_size(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0),tmon(0)
 	{
@@ -159,9 +163,7 @@ namespace bt
 		loadHash(dict);
 		unencoded_name = dict->getByteArray("name");
 		name_suggestion = text_codec->toUnicode(unencoded_name);
-#ifdef Q_WS_WIN
-		name_suggestion = NameForWindows(name_suggestion);
-#endif
+		name_suggestion = SanityzeName(name_suggestion);
 		BValueNode* n = dict->getValue("private");
 		if (n && n->data().toInt() == 1)
 			priv_torrent = true;
@@ -205,6 +207,8 @@ namespace bt
 				QByteArray v = ln->getByteArray(j);
 				unencoded_path.append(v);
 				QString sd = text_codec ? text_codec->toUnicode(v) : QString(v);
+				if (sd.contains("\n"))
+					sd = sd.remove("\n");
 				path += sd;
 				if (j + 1 < ln->getNumChildren())
 					path += bt::DirSeparator();
@@ -491,9 +495,7 @@ namespace bt
 			f.changeTextCodec(codec);
 		}
 		name_suggestion = text_codec->toUnicode(unencoded_name);
-#ifdef Q_WS_WIN
-		name_suggestion = NameForWindows(name_suggestion);
-#endif
+		name_suggestion = SanityzeName(name_suggestion);
 	}
 	
 	void Torrent::downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority)
