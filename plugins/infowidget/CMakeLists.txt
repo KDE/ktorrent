@@ -4,23 +4,23 @@ option(WITH_SYSTEM_GEOIP
 	OFF)
 
 if (WITH_SYSTEM_GEOIP)
-	include(CheckIncludeFile)
-	check_include_file("GeoIP.h" have_geoip_include)
-	find_library(SYSTEM_GEOIP_LIBRARY "GeoIP")
-	check_library_exists("GeoIP" "GeoIP_open_type" ${SYSTEM_GEOIP_LIBRARY} have_geoip_library)
-	if (NOT have_geoip_include OR NOT have_geoip_library)
+	find_path(GEOIP_INCLUDE_DIR NAMES GeoIP.h PATHS ${KDE4_INCLUDE_DIR}/ ${INCLUDE_INSTALL_DIR}/)
+	find_library(GEOIP_LIBRARY NAMES GeoIP PATHS ${KDE4_LIB_DIR} ${LIB_INSTALL_DIR})
+	
+	if (NOT GEOIP_INCLUDE_DIR OR NOT GEOIP_LIBRARY)
 		set(WITH_SYSTEM_GEOIP OFF CACHE BOOL
 		  "GeoIP development files could not be found on this system. Forcing this option to OFF"
 		  FORCE)
 		message(SEND_ERROR
 		  "GeoIP library development files could not be found on your system. Embedding a local copy of GeoIP instead")
-	endif(NOT have_geoip_include OR NOT have_geoip_library)
+	endif(NOT GEOIP_INCLUDE_DIR OR NOT GEOIP_LIBRARY)
 endif(WITH_SYSTEM_GEOIP)
 
 if (WITH_SYSTEM_GEOIP)
 	message(STATUS "   Linking InfoWidget against system GeoIP library")
 	add_definitions( -DUSE_SYSTEM_GEOIP )
-	set(geoip_link "GeoIP")
+	include_directories(GEOIP_INCLUDE_DIR)
+	set(geoip_link ${GEOIP_LIBRARY})
 else(WITH_SYSTEM_GEOIP)
 	message(STATUS "   Compiling GeoIP support directly into InfoWidget plugin")
 	set(geoip_src GeoIP.c)
