@@ -247,7 +247,8 @@ namespace bt
 		{
 			for (PtrMap<KUrl,Tracker>::iterator i = trackers.begin();i != trackers.end();i++)
 			{
-				i->second->start();
+				if (i->second->isEnabled())
+					i->second->start();
 			}
 		}
 		
