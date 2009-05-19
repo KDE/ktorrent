@@ -14,6 +14,7 @@ Changes in 3.2.2 :
 - Make sure dbus names are valid, this fixes an assert (192007)
 - Fix crash when parsing DHT packets (190107)
 - Remove newlines from path names of files when present in torrent file (192652)
+- Properly check for GeoIP system library (193117)
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
