@@ -127,7 +127,11 @@ namespace bt
 	TorrentControl::~TorrentControl()
 	{
 		if (stats.running)
+		{
+			// block all signals to prevent crash at exit
+			blockSignals(true);
 			stop(false);
+		}
 		
 		if (tmon)
 			tmon->destroyed();
