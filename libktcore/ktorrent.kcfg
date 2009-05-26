@@ -302,5 +302,8 @@
 		<entry name="webseedsEnabled" type="Bool">
 			<default>true</default>
 		</entry>
+		<entry name="useQHttpAnnounce" type="Bool">
+			<default>false</default>
+		</entry>
 	</group>
 </kcfg>

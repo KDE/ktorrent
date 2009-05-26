@@ -509,12 +509,14 @@ namespace bt
 		{
 			tor->load(torrent,false);
 		}
-		catch (...)
+		catch (bt::Error & err)
 		{
+			Out(SYS_GEN|LOG_NOTICE) << "Failed to load torrent: " << err.toString() << endl;
 			delete tor;
 			tor = 0;
-			throw Error(i18n("An error occurred while loading the torrent <b>%1</b>\n"
-					"The torrent is probably corrupt or is not a torrent file.",torrent));
+			throw Error(i18n("An error occurred while loading the torrent <b>%1</b>:<br/>"
+					"<b>%2</b><br/>"
+					"The torrent is probably corrupt or is not a valid torrent file.",torrent,err.toString()));
 		}
 		
 		initInternal(qman,tmpdir,ddir,default_save_dir,torrent.startsWith(tmpdir));
@@ -537,12 +539,14 @@ namespace bt
 		{
 			tor->load(data,false);
 		}
-		catch (...)
+		catch (bt::Error & err)
 		{
+			Out(SYS_GEN|LOG_NOTICE) << "Failed to load torrent: " << err.toString() << endl;
 			delete tor;
 			tor = 0;
-			throw Error(i18n("An error occurred while loading the torrent.\n"
-					"The torrent is probably corrupt or is not a torrent file."));
+			throw Error(i18n("An error occurred while loading the torrent:<br/>"
+				"<b>%1</b><br/>"
+				"The torrent is probably corrupt or is not a valid torrent file.",err.toString()));
 		}
 		
 		initInternal(qman,tmpdir,ddir,default_save_dir,true);
