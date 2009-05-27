@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Shutdown
 Name[de]=Herunterfahren
+Name[es]=Apagar
 Name[et]=Seiskamine
 Name[ga]=Múchadh
 Name[nds]=Utmaken
@@ -16,6 +17,7 @@ Name[x-test]=xxShutdownxx
 Name[zh_TW]=關機
 Comment=Allows you to shutdown your computer when torrents finish
 Comment[de]=Ermöglicht es, den Rechner herunterzufahren, wenn die Torrents abgeschlossen wurden
+Comment[es]=Le permite apagar su equipo cuando finalicen los torrents
 Comment[et]=Võimaldab arvuti seisata pärat torrenti lõpetamist
 Comment[ga]=Ceadaíonn sé duit do ríomhaire a mhúchadh nuair a bheidh na torrents críochnaithe
 Comment[nds]=Maakt den Reekner ut, wenn de Torrents afslaten sünd.
