@@ -96,8 +96,8 @@ namespace bt
 
 			BValueNode* announce = dict->getValue("announce");
 			BListNode* nodes = dict->getList("nodes");
-			if (!announce && !nodes)
-				throw Error(i18n("Torrent has no announce or nodes field"));
+			//if (!announce && !nodes)
+			//	throw Error(i18n("Torrent has no announce or nodes field."));
 				
 			if (announce)
 				loadTrackerURL(announce);

@@ -16,6 +16,7 @@ Changes in 3.2.2 :
 - Remove newlines from path names of files when present in torrent file (192652)
 - Properly check for GeoIP system library (193117)
 - Fix crash at exit caused by stopping torrent in it's destructor (193585)
+- No longer check if a torrent has to have an announce or a nodes key
 
 Changes in 3.2.1 :
 - Resort torrents if display name is changed
