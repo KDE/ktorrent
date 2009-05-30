@@ -39,6 +39,8 @@
 #include <torrent/server.h>
 #include <torrent/globals.h>
 #include "btversion.h"
+#include "httpannouncejob.h"
+#include <kprotocolmanager.h>
 
 
 
@@ -47,6 +49,7 @@ namespace bt
 	bool HTTPTracker::proxy_on = false;
 	QString HTTPTracker::proxy = QString();
 	Uint16 HTTPTracker::proxy_port = 8080;
+	bool HTTPTracker::use_qhttp = false;
 
 	HTTPTracker::HTTPTracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier)
 		: Tracker(url,tor,id,tier)
@@ -56,8 +59,8 @@ namespace bt
 		interval = 5 * 60; // default interval 5 minutes
 		failures = 0;
 		seeders = leechers = 0;
+		
 	}
-
 
 	HTTPTracker::~HTTPTracker()
 	{
@@ -256,7 +259,7 @@ namespace bt
 		Out(SYS_TRK|LOG_DEBUG) << QString(data) << endl;
 #endif
 		// search for dictionary, there might be random garbage infront of the data
-		Uint32 i = 0;
+		int i = 0;
 		while (i < data.size())
 		{
 			if (data[i] == 'd')
@@ -332,7 +335,7 @@ namespace bt
 			}
 
 			QByteArray arr = vn->data().toByteArray();
-			for (Uint32 i = 0;i < arr.size();i+=6)
+			for (int i = 0;i < arr.size();i+=6)
 			{
 				Uint8 buf[6];
 				for (int j = 0;j < 6;j++)
@@ -372,7 +375,7 @@ namespace bt
 		if (vn && vn->data().getType() == Value::STRING)
 		{
 			QByteArray arr = vn->data().toByteArray();
-			for (Uint32 i = 0;i < arr.size();i+=18)
+			for (int i = 0;i < arr.size();i+=18)
 			{
 				Uint8 buf[18];
 				for (int j = 0;j < 18;j++)
@@ -387,18 +390,29 @@ namespace bt
 		delete n;
 		return true;
 	}
-
 	
-	void HTTPTracker::onAnnounceResult(KJob* j)
+	void HTTPTracker::onKIOAnnounceResult(KJob* j)
 	{
-		if (j->error())
+		KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)j;
+		KUrl u = st->url();
+		onAnnounceResult(u,st->data(),j);
+	}
+
+	void HTTPTracker::onQHttpAnnounceResult(KJob* j)
+	{
+		HTTPAnnounceJob* st = (HTTPAnnounceJob*)j;
+		KUrl u = st->announceUrl();
+		onAnnounceResult(u,st->replyData(),j);
+	}
+
+	void HTTPTracker::onAnnounceResult(const KUrl& url, const QByteArray& data,KJob* j)
+	{
+		timer.stop();
+		active_job = 0;
+		if (j->error() && data.size() == 0)
 		{
-			KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)j;
-			KUrl u = st->url();
-			active_job = 0;
-			
-			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << st->errorString() << endl;
-			if (u.queryItem("event") != "stopped")
+			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << j->errorString() << endl;
+			if (url.queryItem("event") != "stopped")
 			{
 				failures++;
 				requestFailed(j->errorString());
@@ -410,20 +424,16 @@ namespace bt
 		}
 		else
 		{
-			KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)j;
-			KUrl u = st->url();
-			active_job = 0;
-			
-			if (u.queryItem("event") != "stopped")
+			if (url.queryItem("event") != "stopped")
 			{
 				try
 				{
-					if (updateData(st->data()))
+					if (updateData(data))
 					{
 						failures = 0;
 						peersReady(this);
 						requestOK();
-						if (u.queryItem("event") == "started")
+						if (url.queryItem("event") == "started")
 							started = true;
 					}
 				}
@@ -484,17 +494,40 @@ namespace bt
 	
 	void HTTPTracker::doAnnounce(const KUrl & u)
 	{
-		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url : " << u.prettyUrl() << endl;
-		KIO::MetaData md;
-		setupMetaData(md);
-		KIO::StoredTransferJob* j = KIO::storedGet(u, KIO::NoReload, KIO::HideProgressInfo);
-		// set the meta data
-		j->setMetaData(md);
-		KIO::Scheduler::scheduleJob(j);
+		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url (via " << (use_qhttp ? "QHttp" : "KIO") << "): " << u.prettyUrl() << endl;
 		
-		connect(j,SIGNAL(result(KJob* )),this,SLOT(onAnnounceResult( KJob* )));
+		if (!use_qhttp)
+		{
+			KIO::MetaData md;
+			setupMetaData(md);
+			KIO::StoredTransferJob* j = KIO::storedGet(u, KIO::NoReload, KIO::HideProgressInfo);
+			// set the meta data
+			j->setMetaData(md);
+			connect(j,SIGNAL(result(KJob* )),this,SLOT(onKIOAnnounceResult( KJob* )));
+			KIO::Scheduler::scheduleJob(j);
+			active_job = j;
+		}
+		else
+		{
+			HTTPAnnounceJob* j = new HTTPAnnounceJob(u);
+			connect(j,SIGNAL(result(KJob* )),this,SLOT(onQHttpAnnounceResult(KJob*)));
+			if (!proxy_on)
+			{
+				QString proxy = KProtocolManager::proxyForUrl(u); // Use KDE settings
+				if (!proxy.isNull() && proxy != "DIRECT")
+				{
+					KUrl proxy_url(proxy);
+					j->setProxy(proxy_url.host(),proxy_url.port() <= 0 ? 80 : proxy_url.port());
+				}
+			}
+			else if (!proxy.isNull()) 
+			{
+				j->setProxy(proxy,proxy_port);
+			}
+			active_job = j;
+			j->start();
+		}
 		
-		active_job = j;
 		requestPending();
 	}
 	
@@ -508,5 +541,12 @@ namespace bt
 	{
 		proxy_on = on;
 	}
+	
+	
+	void HTTPTracker::setUseQHttp(bool on)
+	{
+		use_qhttp = on;
+	}
+
 }
 #include "httptracker.moc"

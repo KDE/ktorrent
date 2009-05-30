@@ -118,6 +118,7 @@ namespace kt
 	;
 		bt::HTTPTracker::setProxyEnabled(!Settings::useKDEProxySettings() && Settings::useProxyForTracker());
 		bt::HTTPTracker::setProxy(proxy,Settings::httpProxyPort());
+		bt::HTTPTracker::setUseQHttp(Settings::useQHttpAnnounce());
 		bt::WebSeed::setProxy(proxy,Settings::httpProxyPort());
 		bt::WebSeed::setProxyEnabled(!Settings::useKDEProxySettings() && Settings::useProxyForWebSeeds());
 		bt::Cache::setPreallocationEnabled(Settings::diskPrealloc());
