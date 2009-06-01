@@ -27,11 +27,11 @@ namespace kt
 {
 	const bt::Uint32 MAJOR = 3;
 	const bt::Uint32 MINOR = 2;
-	const bt::Uint32 RELEASE = 1;
+	const bt::Uint32 RELEASE = 2;
 	const bt::VersionType VERSION_TYPE = bt::NORMAL;
-	const char VERSION_STRING[] = "3.2.1";
+	const char VERSION_STRING[] = "3.2.2";
 }
 
-#define KT_VERSION_MACRO "3.2.1"
+#define KT_VERSION_MACRO "3.2.2"
 
 #endif
