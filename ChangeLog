@@ -45,6 +45,7 @@ Changes in 3.2.2 :
 - Properly check for GeoIP system library (193117)
 - Fix crash at exit caused by stopping torrent in it's destructor (193585)
 - No longer check if a torrent has to have an announce or a nodes key
+- Added experimental option which replaces KIO to announce with a QHttp based solution, this fixes connection to host broken errors
 - Make sure http post works properly in search plugin (194037)
 
 Changes in 3.2.1 :
