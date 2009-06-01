@@ -35,7 +35,7 @@ namespace bt
 
 	void HTTPAnnounceJob::start()
 	{
-		http->setHost(url.host(),url.protocol() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp,url.port());
+		http->setHost(url.host(),url.protocol() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp,url.port(80));
 		if (!proxy_host.isEmpty() && proxy_port > 0)
 			http->setProxy(proxy_host,proxy_port);
 		
