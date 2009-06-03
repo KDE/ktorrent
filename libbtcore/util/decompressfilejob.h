@@ -22,7 +22,7 @@
 #define DECOMPRESSFILEJOB_H
 
 #include <QThread>
-#include <kio/jobclasses.h>
+#include <kio/job.h>
 #include <btcore_export.h>
 
 namespace bt
@@ -58,6 +58,7 @@ namespace bt
 	*/
 	class BTCORE_EXPORT DecompressFileJob : public KIO::Job
 	{
+		Q_OBJECT
 	public:
 		DecompressFileJob(const QString & file,const QString & dest);
 		virtual ~DecompressFileJob();

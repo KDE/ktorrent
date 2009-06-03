@@ -26,9 +26,11 @@
 #include <util/functions.h>
 #include <util/fileops.h>
 #include <util/error.h>
+#include <util/decompressfilejob.h>
 #include <interfaces/functions.h>
 #include "convertdialog.h"
 #include "downloadandconvertjob.h"
+
 
 namespace kt
 {
@@ -45,11 +47,11 @@ namespace kt
 
 	void DownloadAndConvertJob::start()
 	{
-		QString temp = kt::DataDir() + "level1.tmp";
+		QString temp = kt::DataDir() + "tmp-" + url.fileName();
 		if (bt::Exists(temp))
 			bt::Delete(temp,true);
 		
-		active_job = KIO::file_copy(url,temp,-1,KIO::HideProgressInfo|KIO::Overwrite);
+		active_job = KIO::file_copy(url,temp,-1,KIO::Overwrite);
 		connect(active_job,SIGNAL(result(KJob*)),this,SLOT(downloadFileFinished(KJob*)));
 	}
 	
@@ -87,7 +89,7 @@ namespace kt
 			return;
 		}
 		
-		QString temp = kt::DataDir() + "level1.tmp";
+		QString temp = kt::DataDir() + "tmp-" + url.fileName();
 		
 		//now determine if it's ZIP or TXT file
 		KMimeType::Ptr ptr = KMimeType::findByPath(temp);
@@ -95,6 +97,12 @@ namespace kt
 		{
 			active_job = KIO::file_move(temp,kt::DataDir() + "level1.zip",-1,KIO::HideProgressInfo|KIO::Overwrite);
 			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(extract(KJob*)));
+		}
+		else if (ptr->name() == "application/x-gzip" || ptr->name() == "application/x-bzip")
+		{
+			active_job = new bt::DecompressFileJob(temp,kt::DataDir() + "level1.txt");
+			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(convert(KJob*)));
+			active_job->start();
 		}
 		else
 		{
