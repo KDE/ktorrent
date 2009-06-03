@@ -35,14 +35,17 @@ namespace bt
 
 	void HTTPAnnounceJob::start()
 	{
-		http->setHost(url.host(),url.protocol() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp,url.port(80));
+		QHttp::ConnectionMode mode = url.protocol() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
+		quint16 port = url.port() < 0 ? 0 : url.port();
+		quint16 default_port = mode == QHttp::ConnectionModeHttps ? 443 : 80;
+		http->setHost(url.host(),mode,port);
 		if (!proxy_host.isEmpty() && proxy_port > 0)
 			http->setProxy(proxy_host,proxy_port);
 		
 		QHttpRequestHeader hdr("GET",url.encodedPathAndQuery(),1,1);
 		hdr.setValue("User-Agent",bt::GetVersionString());
 		hdr.setValue("Connection","close");
-		hdr.setValue("Host",QString("%1:%2").arg(url.host()).arg(url.port(80)));
+		hdr.setValue("Host",QString("%1:%2").arg(url.host()).arg(url.port(default_port)));
 		get_id = http->request(hdr,0,&output);
 	}
 	
