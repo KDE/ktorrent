@@ -19,10 +19,9 @@
  ***************************************************************************/
 #include <QFile>
 #include <kstandarddirs.h>
-#include <kio/job.h>
 #include <kio/copyjob.h>
-#include <kfilterdev.h>
 #include <util/log.h>
+#include <util/decompressfilejob.h>
 #include <interfaces/functions.h>
 #include <util/fileops.h>
 #include "geoipmanager.h"
@@ -138,7 +137,7 @@ namespace kt
 		{
 			Out(SYS_INW|LOG_NOTICE) << "GeoIP database downloaded, decompressing ...  " << endl;
 			// decompress the file
-			decompress_thread = new DecompressThread(download_destination,kt::DataDir() + "geoip.dat");
+			decompress_thread = new bt::DecompressThread(download_destination,kt::DataDir() + "geoip.dat");
 			connect(decompress_thread,SIGNAL(finished()),this,SLOT(decompressFinished()),Qt::QueuedConnection);
 			decompress_thread->start(QThread::IdlePriority);
 		}
@@ -173,67 +172,7 @@ namespace kt
 	
 	///////////////////////////////////
 	
-	DecompressThread::DecompressThread(const QString & file,const QString & dest_file) 
-		: file(file),dest_file(dest_file),canceled(false),err(0)
-	{
-	}
 	
-	DecompressThread::~DecompressThread()
-	{}
-	
-	void DecompressThread::run()
-	{
-		QFile out(dest_file);
-		
-		// open input file readonly
-		if (!out.open(QIODevice::WriteOnly))
-		{
-			err = KIO::ERR_CANNOT_OPEN_FOR_WRITING;
-			Out(SYS_INW|LOG_NOTICE) << "Failed to open " << dest_file << " : " << out.errorString() << endl;
-			return;
-		}
-		
-		// open output file 
-		QIODevice* dev = KFilterDev::deviceForFile(file);
-		if (!dev || !dev->open(QIODevice::ReadOnly))
-		{
-			err = KIO::ERR_CANNOT_OPEN_FOR_READING;
-			if (dev)
-				Out(SYS_INW|LOG_NOTICE) << "Failed to open " << file << " : " << dev->errorString() << endl;
-			else
-				Out(SYS_INW|LOG_NOTICE) << "Failed to open " << file << endl;
-			return;
-		}
-		
-		// copy the data
-		char buf[4096];
-		while (!canceled && !dev->atEnd())
-		{
-			int len = dev->read(buf,4096);
-			if (len == 0)
-				break;
-			
-			out.write(buf,len);
-		}
-		
-		delete dev;
-		out.close();
-		if (canceled)
-		{
-			// delete output file when canceled
-			bt::Delete(dest_file,true);
-		}
-		else
-		{
-			// delete the input file upon success
-			bt::Delete(file,true);
-		}
-	}
-	
-	void DecompressThread::cancel()
-	{
-		canceled = true;
-	}
 
 
 }

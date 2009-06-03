@@ -23,10 +23,11 @@
 
 #include <QThread>
 #include <kio/job.h>
+#include <btcore_export.h>
 
 namespace bt
 {
-	class CompressThread : public QThread
+	class BTCORE_EXPORT CompressThread : public QThread
 	{
 	public:
 		CompressThread(const QString & file);
@@ -50,7 +51,7 @@ namespace bt
 	/**
 		Compress a file using gzip and remove it when completed successfully.
 	*/
-	class CompressFileJob : public KIO::Job
+	class BTCORE_EXPORT CompressFileJob : public KIO::Job
 	{
 		Q_OBJECT
 	public:

@@ -18,83 +18,61 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef KT_GEOIPMANAGER_H
-#define KT_GEOIPMANAGER_H
+#ifndef DECOMPRESSFILEJOB_H
+#define DECOMPRESSFILEJOB_H
 
-#include <QObject>
 #include <QThread>
-#include <KUrl>
-
-#ifdef USE_SYSTEM_GEOIP
-#include <GeoIP.h>
-#else
-#include "GeoIP.h"
-#endif
-
-class KJob;
+#include <kio/jobclasses.h>
+#include <btcore_export.h>
 
 namespace bt
 {
-	class DecompressThread;
-}
-
-namespace kt 
-{
-	
 	
 	/**
-	 * Manages GeoIP database. Downloads it from the internet and handles all queries to it.
-	 */
-	class GeoIPManager : public QObject
+	* Thread which decompresses a single file
+	*/
+	class BTCORE_EXPORT DecompressThread : public QThread
 	{
-		Q_OBJECT
 	public:
-		GeoIPManager(QObject* parent = 0);
-		virtual ~GeoIPManager();
+		DecompressThread(const QString & file,const QString & dest_file);
+		virtual ~DecompressThread();
 		
-		/**
-		 * Find the country given an IP address
-		 * @param addr The IP address
-		 * @return The country ID
-		 */
-		int findCountry(const QString & addr);
+		/// Run the decompression thread
+		virtual void run();
 		
-		/**
-		 * Get the name of the country
-		 * @param country_id The country ID
-		 * @return The name
-		 */
-		QString countryName(int country_id);
+		/// Cancel the thread, things should be cleaned up properly
+		void cancel();
 		
-		/**
-		 * Get the code of the country
-		 * @param country_id The country ID
-		 * @return The name
-		 */
-		QString countryCode(int country_id);
+		/// Get the error which happened (0 means no error)
+		int error() const {return err;}
 		
-		/// Get the database URL
-		static KUrl geoIPUrl() {return geoip_url;}
+	private:
+		QString file;
+		QString dest_file;
+		bool canceled;
+		int err;
+	};
+
+	/**
+		Decompress a file and remove it when completed successfully.
+	*/
+	class BTCORE_EXPORT DecompressFileJob : public KIO::Job
+	{
+	public:
+		DecompressFileJob(const QString & file,const QString & dest);
+		virtual ~DecompressFileJob();
 		
-		/// Set the database URL
-		static void setGeoIPUrl(const KUrl & url);
-		
-		/// Download the database
-		void downloadDataBase();
+		virtual void start();
+		virtual void kill(bool quietly=true);
 		
 	private slots:
-		void databaseDownloadFinished(KJob* job);
-		void decompressFinished();
-	
+		void decompressThreadFinished();
+		
 	private:
-		GeoIP* geo_ip;
-		QString geoip_data_file;
-		QString download_destination;
-		bt::DecompressThread* decompress_thread;
-		static KUrl geoip_url;
+		QString file;
+		QString dest;
+		DecompressThread* decompress_thread;
 	};
-	
-	
 }
 
-#endif // KT_GEOIPMANAGER_H
+#endif // DECOMPRESSFILEJOB_H
