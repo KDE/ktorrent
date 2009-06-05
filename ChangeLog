@@ -27,6 +27,9 @@ Changes in 3.3 :
 - GeoIP database will now get downloaded automatically (and updated every 30 days), so it is no longer distributed with ktorrent
 - Added support for gzip and bzip2 compressed ipfilter files
 
+Changes in 3.2.3:
+- Make sure View gets focus back when you are finished editing the name of a torrent
+
 Changes in 3.2.2 :
 - Fix crash when changing speed limits using system tray menu (188447)
 - Fix bug with displaying directory trees in infowidget FileView
