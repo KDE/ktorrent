@@ -4,6 +4,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 set(libktorrent_SRC 
 	util/mmapfile.cpp
 	util/itemselectionmodel.cpp
+	util/stringcompletionmodel.cpp
 	
 	interfaces/functions.cpp
 	interfaces/plugin.cpp

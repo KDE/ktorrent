@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QCompleter>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kprogressdialog.h>
@@ -25,9 +26,12 @@
 #include <torrent/globals.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
+#include <util/stringcompletionmodel.h>
+#include <interfaces/functions.h>
 #include "core.h"
 #include "gui.h"
 #include "torrentcreatordlg.h"
+
 
 using namespace bt;
 
@@ -35,6 +39,7 @@ namespace kt
 {
 	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : KDialog(parent),core(core),gui(gui)
 	{
+		tracker_completion = webseeds_completion = nodes_completion = 0;
 		setWindowTitle(i18n("Create A Torrent"));
 		setupUi(mainWidget());
 		adjustSize();
@@ -86,10 +91,15 @@ namespace kt
 		connect(m_webseed_list,SIGNAL(itemSelectionChanged()),this,SLOT(webSeedSelectionChanged()));
 		m_add_webseed->setEnabled(false);
 		m_remove_webseed->setEnabled(false);
+		
+		loadCompleterData();
 	}
 	
 	TorrentCreatorDlg::~TorrentCreatorDlg()
 	{
+		tracker_completion->save();
+		webseeds_completion->save();
+		nodes_completion->save();
 	}
 	
 	void TorrentCreatorDlg::loadGroups()
@@ -113,10 +123,29 @@ namespace kt
 	}
 		
 	
+	void TorrentCreatorDlg::loadCompleterData()
+	{
+		QString file = kt::DataDir() + "torrent_creator_known_trackers";
+		tracker_completion = new StringCompletionModel(file,this);
+		tracker_completion->load();
+		m_tracker->setCompleter(new QCompleter(tracker_completion,this));
+		
+		file = kt::DataDir() + "torrent_creator_known_webseeds";
+		webseeds_completion = new StringCompletionModel(file,this);
+		webseeds_completion->load();
+		m_webseed->setCompleter(new QCompleter(webseeds_completion,this));
+		
+		file = kt::DataDir() + "torrent_creator_known_nodes";
+		nodes_completion = new StringCompletionModel(file,this);
+		nodes_completion->load();
+		m_node->setCompleter(new QCompleter(nodes_completion,this));
+	}
+	
 	void TorrentCreatorDlg::addTrackerPressed()
 	{
 		if (m_tracker->text().length() > 0)
 		{
+			tracker_completion->addString(m_tracker->text());
 			m_tracker_list->addItem(m_tracker->text());
 			m_tracker->clear();
 		}
@@ -164,6 +193,7 @@ namespace kt
 		if (m_node->text().length() > 0)
 		{
 			QTreeWidgetItem* twi = new QTreeWidgetItem(m_node_list);
+			nodes_completion->addString(m_node->text());
 			twi->setText(0,m_node->text());
 			twi->setText(1,QString::number(m_port->value()));
 			m_node_list->addTopLevelItem(twi);
@@ -223,6 +253,7 @@ namespace kt
 			return;
 		}
 		
+		webseeds_completion->addString(m_webseed->text());
 		m_webseed_list->addItem(m_webseed->text());
 		m_webseed->clear();
 	}

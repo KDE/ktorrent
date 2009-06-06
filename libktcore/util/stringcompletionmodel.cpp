@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,66 +17,71 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_TORRENTCREATORDLG_HH
-#define KT_TORRENTCREATORDLG_HH 
 
-#include <KDialog>
-#include "ui_torrentcreatordlg.h"
+#include "stringcompletionmodel.h"
+
+#include <QFile>
+#include <QTextStream>
+#include <util/log.h>
+
+using namespace bt;
 
 namespace kt
 {
-	class StringCompletionModel;
-	class Core;
-	class GUI;
 	
-	/**
-	 * Dialog to create torrents with
-	 */
-	class TorrentCreatorDlg : public KDialog,public Ui_TorrentCreatorDlg
+	StringCompletionModel::StringCompletionModel(const QString& file, QObject* parent): QStringListModel(parent),file(file)
 	{
-		Q_OBJECT
-	public:
-		TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent);
-		virtual ~TorrentCreatorDlg();
+	}
+
+	
+	StringCompletionModel::~StringCompletionModel()
+	{
+	}
+	
+	void StringCompletionModel::load()
+	{
+		QFile fptr(file);
+		if (!fptr.open(QIODevice::ReadOnly))
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
+			return;
+		}
 		
-	private slots:
-		void addTrackerPressed();
-		void removeTrackerPressed();
-		void moveUpPressed();
-		void moveDownPressed();
+		QSet<QString> strings;
+		while (!fptr.atEnd())
+		{
+			QString line = fptr.readLine().trimmed();
+			if (line.length() > 0)
+				strings.insert(line);
+		}
 		
-		void addWebSeedPressed();
-		void removeWebSeedPressed();
+		setStringList(strings.toList());
+	}
+	
+	void StringCompletionModel::save()
+	{
+		QFile fptr(file);
+		if (!fptr.open(QIODevice::WriteOnly))
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
+			return;
+		}
 		
-		void addNodePressed();
-		void removeNodePressed();
-		
-		void dhtToggled(bool on);
-		
-		void nodeTextChanged(const QString & str);
-		void nodeSelectionChanged();
-		
-		void trackerTextChanged(const QString & str);
-		void trackerSelectionChanged();
-		
-		void webSeedTextChanged(const QString & str);
-		void webSeedSelectionChanged();
-		
-		virtual void accept();
-		virtual void reject();
-		
-	private:
-		void loadGroups();
-		void loadCompleterData();
-		
-	private:
-		Core* core;
-		GUI* gui;
-		StringCompletionModel* tracker_completion;
-		StringCompletionModel* webseeds_completion;
-		StringCompletionModel* nodes_completion;
-	};
+		QTextStream out(&fptr);
+		QStringList sl = stringList();
+		foreach (const QString & s,sl)
+			out << s << endl;
+	}
+
+	void StringCompletionModel::addString(const QString& s)
+	{
+		QStringList curr = stringList();
+		if (!curr.contains(s))
+		{
+			curr.append(s);
+			setStringList(curr);
+		}
+	}
+
 }
 
-
-#endif

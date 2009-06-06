@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,66 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_TORRENTCREATORDLG_HH
-#define KT_TORRENTCREATORDLG_HH 
 
-#include <KDialog>
-#include "ui_torrentcreatordlg.h"
+#ifndef KT_STRINGCOMPLETIONMODEL_H
+#define KT_STRINGCOMPLETIONMODEL_H
 
-namespace kt
+#include <QStringListModel>
+#include <ktcore_export.h>
+
+
+namespace kt 
 {
-	class StringCompletionModel;
-	class Core;
-	class GUI;
-	
 	/**
-	 * Dialog to create torrents with
-	 */
-	class TorrentCreatorDlg : public KDialog,public Ui_TorrentCreatorDlg
+		Model for a QCompleter which works with a list of unique strings loaded from a file.
+	*/
+	class KTCORE_EXPORT StringCompletionModel : public QStringListModel
 	{
 		Q_OBJECT
 	public:
-		TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent);
-		virtual ~TorrentCreatorDlg();
+		StringCompletionModel(const QString & file,QObject* parent);
+		virtual ~StringCompletionModel();
 		
-	private slots:
-		void addTrackerPressed();
-		void removeTrackerPressed();
-		void moveUpPressed();
-		void moveDownPressed();
+		/**
+			Load the list of strings.
+		*/
+		void load();
 		
-		void addWebSeedPressed();
-		void removeWebSeedPressed();
+		/**
+			Save the list of strings to the file
+		*/
+		void save();
 		
-		void addNodePressed();
-		void removeNodePressed();
-		
-		void dhtToggled(bool on);
-		
-		void nodeTextChanged(const QString & str);
-		void nodeSelectionChanged();
-		
-		void trackerTextChanged(const QString & str);
-		void trackerSelectionChanged();
-		
-		void webSeedTextChanged(const QString & str);
-		void webSeedSelectionChanged();
-		
-		virtual void accept();
-		virtual void reject();
-		
+		/**
+			Add a string to the list, automatically saves it.
+		*/
+		void addString(const QString & s);
 	private:
-		void loadGroups();
-		void loadCompleterData();
-		
-	private:
-		Core* core;
-		GUI* gui;
-		StringCompletionModel* tracker_completion;
-		StringCompletionModel* webseeds_completion;
-		StringCompletionModel* nodes_completion;
+		QString file;
 	};
+
 }
 
-
-#endif
+#endif // KT_STRINGCOMPLETIONMODEL_H
