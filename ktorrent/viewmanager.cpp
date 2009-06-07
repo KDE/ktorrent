@@ -40,6 +40,8 @@
 #include "settings.h"
 #include "torrentactivity.h"
 #include "speedlimitsdlg.h"
+#include <kfiledialog.h>
+#include <kio/job.h>
 
 using namespace bt;
 
@@ -471,6 +473,7 @@ namespace kt
 		open_dir_menu->setEnabled(sel.count() == 1);
 		add_to_new_group->setEnabled(sel.count() > 0);
 		copy_url->setEnabled(sel.count() == 1 && sel.front()->loadUrl().isValid());
+		export_torrent->setEnabled(sel.count() == 1);
 		
 		if (qm_enabled)
 		{
@@ -626,6 +629,10 @@ namespace kt
 		connect(copy_url,SIGNAL(triggered()),this,SLOT(copyTorrentURL()));
 		ac->addAction("view_copy_url",copy_url);
 		
+		export_torrent = new KAction(KIcon("document-export"),i18n("Export Torrent"),this);
+		connect(export_torrent,SIGNAL(triggered()),this,SLOT(exportTorrent()));
+		ac->addAction("view_export_torrent",export_torrent);
+		
 		speed_limits = new KAction(KIcon("kt-speed-limits"),i18n("Speed Limits"),this);
 		speed_limits->setToolTip(i18n("Set the speed limits of individual torrents"));
 		connect(speed_limits,SIGNAL(triggered()),this,SLOT(speedLimits()));
@@ -707,6 +714,20 @@ namespace kt
 		getSelection(sel);
 		SpeedLimitsDlg dlg(sel.count() > 0 ? sel.front() : 0,core,gui->getMainWindow());
 		dlg.exec();
+	}
+	
+	void ViewManager::exportTorrent()
+	{
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		if (sel.count() == 1)
+		{
+			bt::TorrentInterface* tc = sel.front();
+			QString filter = "*.torrent|" + i18n("Torrents (*.torrent)");
+			QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///exportTorrent"),filter);
+			if (!fn.isEmpty())
+				KIO::file_copy(tc->getTorDir() + "torrent",fn);
+		}
 	}
 	
 	void ViewManager::showViewMenu(View* v,const QPoint & pos)

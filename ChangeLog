@@ -27,6 +27,7 @@ Changes in 3.3 :
 - GeoIP database will now get downloaded automatically (and updated every 30 days), so it is no longer distributed with ktorrent
 - Added support for gzip and bzip2 compressed ipfilter files
 - Added support for auto completion in tracker, webseed and nodes QLineEdit's of torrent creation dialog (194972)
+- Added option to export the torrent file of a torrent 
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent

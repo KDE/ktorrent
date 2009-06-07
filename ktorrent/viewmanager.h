@@ -164,6 +164,9 @@ namespace kt
 		/// Show the speed limits dialog
 		void speedLimits();
 		
+		/// Export a torrent
+		void exportTorrent();
+		
 	private:
 		GUI* gui;
 		Core* core;
@@ -197,6 +200,7 @@ namespace kt
 		KAction* open_dir_menu;
 		KAction* groups_menu;
 		KAction* copy_url;
+		KAction* export_torrent;
 		QList<KAction*> configure_columns_list;
 		KAction* speed_limits;
 	};
