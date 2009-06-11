@@ -229,7 +229,7 @@ p, li { white-space: pre-wrap; }
       <item row="2" column="0" >
        <widget class="QLabel" name="label_8" >
         <property name="text" >
-         <string>Maximum share ratio:</string>
+         <string>Default maximum share ratio:</string>
         </property>
        </widget>
       </item>
@@ -258,7 +258,7 @@ p, li { white-space: pre-wrap; }
       <item row="3" column="0" >
        <widget class="QLabel" name="label_9" >
         <property name="text" >
-         <string>Maximum seed time:</string>
+         <string>Default maximum seed time:</string>
         </property>
        </widget>
       </item>
