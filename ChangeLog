@@ -1,3 +1,7 @@
+Changes in 3.2.3:
+- Make sure View gets focus back when you are finished editing the name of a torrent
+- Fix bug causing sizes > 4GB not being displayed properly plasma applet
+
 Changes in 3.2.2 :
 - Fix crash when changing speed limits using system tray menu (188447)
 - Fix bug with displaying directory trees in infowidget FileView

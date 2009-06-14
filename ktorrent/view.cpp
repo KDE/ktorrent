@@ -503,6 +503,7 @@ namespace kt
 	{
 		QTreeView::closeEditor(editor,hint);
 		editingItem(false);
+		setFocus();
 	}
 	
 	bool View::edit(const QModelIndex & index,EditTrigger trigger,QEvent* event)

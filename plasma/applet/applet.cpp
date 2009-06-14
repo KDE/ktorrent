@@ -278,9 +278,9 @@ namespace ktplasma
 	{
 		double ds = data.value("download_rate").toDouble();
 		double us = data.value("upload_rate").toDouble();
-		int uploaded = data.value("bytes_uploaded").toInt();
-		int downloaded = data.value("bytes_downloaded").toInt();
-		int size = data.value("total_bytes_to_download").toInt();		
+		qlonglong uploaded = data.value("bytes_uploaded").toLongLong();
+		qlonglong downloaded = data.value("bytes_downloaded").toLongLong();
+		qlonglong size = data.value("total_bytes_to_download").toLongLong();		
 		int st = data.value("seeders_total").toInt();
 		int sc = data.value("seeders_connected_to").toInt();
 		int ct = data.value("leechers_total").toInt();
