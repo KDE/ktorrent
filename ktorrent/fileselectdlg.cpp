@@ -31,6 +31,7 @@
 #include <util/fileops.h>
 #include <util/log.h>
 #include <util/error.h>
+#include <util/treefiltermodel.h>
 #include <interfaces/functions.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
@@ -48,7 +49,7 @@ namespace kt
 	{
 		setupUi(mainWidget());
 		m_file_view->setAlternatingRowColors(true);
-		filter_model = new QSortFilterProxyModel(this);
+		filter_model = new TreeFilterModel(this);
 		m_file_view->setModel(filter_model);
 		model = 0;
 		//root = 0;

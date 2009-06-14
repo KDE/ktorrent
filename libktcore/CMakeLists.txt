@@ -6,6 +6,7 @@ set(libktorrent_SRC
 	util/itemselectionmodel.cpp
 	util/stringcompletionmodel.cpp
 	util/hintlineedit.cpp
+	util/treefiltermodel.cpp
 	
 	interfaces/functions.cpp
 	interfaces/plugin.cpp
