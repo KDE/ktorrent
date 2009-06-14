@@ -37,6 +37,7 @@ namespace bt
 namespace kt
 {
 	class TorrentFileModel;
+	class HintLineEdit;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
@@ -82,6 +83,7 @@ namespace kt
 		void expandTree();
 		void showTree();
 		void showList();
+		void setFilter(const QString& f);
 
 	private:
 		bt::TorrentInterface* curr_tc;
@@ -99,6 +101,7 @@ namespace kt
 		QAction* expand_action;
 		QAction* show_tree_action;
 		QAction* show_list_action;
+		QAction* show_filter_action;
 
 		QString preview_path;
 		bool show_list_of_files;
@@ -107,6 +110,7 @@ namespace kt
 		
 		QTreeView* view;
 		QToolBar* toolbar;
+		HintLineEdit* filter;
 	};
 
 }

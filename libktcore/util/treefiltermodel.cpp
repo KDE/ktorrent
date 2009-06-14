@@ -46,7 +46,7 @@ namespace kt
 		int child = 0;
 		while (idx.child(child,0).isValid())
 		{
-			if (QSortFilterProxyModel::filterAcceptsRow(child, idx))
+			if (filterAcceptsRow(child, idx))
 				return true;
 			child++;
 		}

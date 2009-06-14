@@ -30,6 +30,7 @@ Changes in 3.3 :
 - Added option to export the torrent file of a torrent 
 - Choice between file tree or list has been moved from settings to individual views (177401)
 - Add filter box in FileSelectDlg (179980)
+- Add filter box in FileView (173887)
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent

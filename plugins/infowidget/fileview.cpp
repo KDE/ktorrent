@@ -21,7 +21,6 @@
 
 #include <QHeaderView>
 #include <QItemSelectionModel>
-#include <QSortFilterProxyModel>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kglobal.h>
@@ -35,6 +34,8 @@
 #include <util/bitset.h>
 #include <util/error.h>
 #include <util/functions.h>
+#include <util/treefiltermodel.h>
+#include <util/hintlineedit.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
@@ -56,12 +57,24 @@ namespace kt
 		QHBoxLayout* layout = new QHBoxLayout(this);
 		layout->setMargin(0);
 		layout->setSpacing(0);
+		QVBoxLayout* vbox = new QVBoxLayout();
+		vbox->setMargin(0);
+		vbox->setSpacing(0);
 		view = new QTreeView(this);
 		toolbar = new QToolBar(this);
 		toolbar->setOrientation(Qt::Vertical);
 		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		layout->addWidget(toolbar);
-		layout->addWidget(view);
+		
+		filter = new HintLineEdit(this);
+		filter->setHintText(i18n("Filter"));
+		filter->setClearButtonShown(true);
+		filter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+		connect(filter,SIGNAL(textChanged(QString)),this,SLOT(setFilter(QString)));
+		filter->hide();
+		vbox->addWidget(filter);
+		vbox->addWidget(view);
+		layout->addItem(vbox);
 		
 		view->setContextMenuPolicy(Qt::CustomContextMenu);
 		view->setRootIsDecorated(false);
@@ -71,7 +84,7 @@ namespace kt
 		view->setSelectionBehavior(QAbstractItemView::SelectRows);
 		view->setUniformRowHeights(true);
 		
-		proxy_model = new QSortFilterProxyModel(this);
+		proxy_model = new TreeFilterModel(this);
 		proxy_model->setSortRole(Qt::UserRole);
 		if (show_list_of_files)
 			model = new IWFileListModel(0,this);
@@ -124,6 +137,11 @@ namespace kt
 		show_tree_action->setCheckable(true);
 		toolbar->addAction(show_tree_action);
 		toolbar->addAction(show_list_action);
+		
+		show_filter_action = new QAction(KIcon("view-filter"),i18n("Show Filter"),this);
+		show_filter_action->setCheckable(true);
+		connect(show_filter_action,SIGNAL(toggled(bool)),filter,SLOT(setShown(bool)));
+		toolbar->addAction(show_filter_action);
 	}
 
 	void FileView::changeTC(bt::TorrentInterface* tc)
@@ -501,6 +519,14 @@ namespace kt
 		if (model)
 			model->filePreviewChanged(file,preview);
 	}
+	
+	
+	void FileView::setFilter(const QString& f)
+	{
+		Q_UNUSED(f);
+		proxy_model->setFilterFixedString(filter->typedText());
+	}
+
 
 }
 
