@@ -23,6 +23,7 @@
 
 #include <KDialog>
 #include "ui_fileselectdlg.h"
+#include <QSortFilterProxyModel>
 
 namespace bt
 {
@@ -33,6 +34,7 @@ namespace kt
 {
 	class GroupManager;
 	class TorrentFileModel;
+	class Group;
 
 	/**
 	 * @author Joris Guisson
@@ -50,11 +52,23 @@ namespace kt
 		bool* skip_check;
 		QList<int> encodings;
 		kt::Group* initial_group;
+		bool show_file_tree;
+		QSortFilterProxyModel* filter_model;
 	public:
 		FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent);
 		virtual ~FileSelectDlg();
 		
 		int execute(bt::TorrentInterface* tc, bool* start,bool* skip_check);
+		
+		/**
+		 * Load the state of the dialog
+		 */
+		void loadState(KSharedConfigPtr cfg);
+		
+		/**
+		 * Save the state of the dialog
+		 */
+		void saveState(KSharedConfigPtr cfg);
 		
 	protected slots:
 		virtual void reject();
@@ -65,6 +79,10 @@ namespace kt
 		void updateSizeLabels();
 		void onCodecChanged(const QString & text);
 		void groupActivated(int idx);
+		void fileTree(bool on);
+		void fileList(bool on);
+		void setShowFileTree(bool on);
+		void setFilter(const QString & filter);
 
 	private:
 		void populateFields();

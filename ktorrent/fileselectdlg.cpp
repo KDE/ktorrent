@@ -44,10 +44,12 @@ using namespace bt;
 namespace kt
 {
 
-	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent) : KDialog(parent),gman(gman),initial_group(0)
+	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent) : KDialog(parent),gman(gman),initial_group(0),show_file_tree(true)
 	{
 		setupUi(mainWidget());
-
+		m_file_view->setAlternatingRowColors(true);
+		filter_model = new QSortFilterProxyModel(this);
+		m_file_view->setModel(filter_model);
 		model = 0;
 		//root = 0;
 		connect(m_select_all,SIGNAL(clicked()),this,SLOT(selectAll()));
@@ -66,6 +68,23 @@ namespace kt
 		
 		if (!group_hint.isNull())
 			initial_group = gman->find(group_hint);
+		
+		QButtonGroup* bg = new QButtonGroup(this);
+		m_tree->setIcon(KIcon("view-list-tree"));
+		m_tree->setToolTip(i18n("Show a file tree"));
+		connect(m_tree,SIGNAL(clicked(bool)),this,SLOT(fileTree(bool)));
+		m_list->setIcon(KIcon("view-list-text"));
+		m_list->setToolTip(i18n("Show a file list"));
+		connect(m_list,SIGNAL(clicked(bool)),this,SLOT(fileList(bool)));
+		m_tree->setCheckable(true);
+		m_list->setCheckable(true);
+		bg->addButton(m_tree);
+		bg->addButton(m_list);
+		bg->setExclusive(true);
+		
+		m_filter->setClearButtonShown(true);
+		m_filter->setHintText(i18n("Filter"));
+		connect(m_filter,SIGNAL(textChanged(QString)),this,SLOT(setFilter(QString)));
 	}
 
 	FileSelectDlg::~FileSelectDlg()
@@ -91,16 +110,16 @@ namespace kt
 			}
 			
 			populateFields();
-			if (Settings::useFileList())
-				model = new TorrentFileListModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
-			else
+			if (show_file_tree)
 				model = new TorrentFileTreeModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
+			else
+				model = new TorrentFileListModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
 			
 			model->setFileNamesEditable(true);
 			
 			connect(model,SIGNAL(checkStateChanged()),this,SLOT(updateSizeLabels()));
 			connect(m_downloadLocation, SIGNAL(textChanged (const QString &)), this, SLOT(updateSizeLabels()));
-			m_file_view->setModel(model);
+			filter_model->setSourceModel(model);
 			m_file_view->expandAll();
 			
 			updateSizeLabels();
@@ -115,12 +134,12 @@ namespace kt
 			}
 			else
 			{
-				m_collapse_all->setEnabled(!Settings::useFileList());
-				m_expand_all->setEnabled(!Settings::useFileList());
+				m_collapse_all->setEnabled(show_file_tree);
+				m_expand_all->setEnabled(show_file_tree);
 			}
 
 			m_file_view->setAlternatingRowColors(false);
-			m_file_view->setRootIsDecorated(tc->getStats().multi_file_torrent);
+			m_file_view->setRootIsDecorated(show_file_tree && tc->getStats().multi_file_torrent);
 			m_file_view->resizeColumnToContents(0);
 			m_file_view->resizeColumnToContents(1);
 			return exec();
@@ -379,6 +398,69 @@ namespace kt
 			tc->changeTextCodec(codec);
 			model->onCodecChange();
 		}
+	}
+	
+	
+	void FileSelectDlg::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("FileSelectDlg");
+		QSize s = g.readEntry("size",sizeHint());
+		resize(s);
+		show_file_tree = g.readEntry("show_file_tree",true);
+		m_tree->setChecked(show_file_tree);
+		m_list->setChecked(!show_file_tree);
+	}
+	
+	
+	void FileSelectDlg::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("FileSelectDlg");
+		g.writeEntry("size",size());
+		g.writeEntry("show_file_tree",show_file_tree);
+	}
+
+	void FileSelectDlg::fileTree(bool)
+	{
+		setShowFileTree(true);
+	}
+	
+	void FileSelectDlg::fileList(bool)
+	{
+		setShowFileTree(false);
+	}
+	
+	void FileSelectDlg::setShowFileTree(bool on)
+	{
+		if (show_file_tree == on)
+			return;
+		
+		show_file_tree = on;
+		QByteArray hs = m_file_view->header()->saveState();
+		
+		filter_model->setSourceModel(0);
+		delete model;
+		if (show_file_tree)
+			model = new TorrentFileTreeModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
+		else
+			model = new TorrentFileListModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
+		
+		model->setFileNamesEditable(true);
+		connect(model,SIGNAL(checkStateChanged()),this,SLOT(updateSizeLabels()));
+		
+		filter_model->setSourceModel(model);
+		m_file_view->header()->restoreState(hs);
+		m_file_view->expandAll();
+		m_file_view->setRootIsDecorated(show_file_tree && tc->getStats().multi_file_torrent);
+		
+		m_collapse_all->setEnabled(show_file_tree);
+		m_expand_all->setEnabled(show_file_tree);
+	}
+
+	void FileSelectDlg::setFilter(const QString & f)
+	{
+		Q_UNUSED(f);
+		// use typedText so we don't filter on the hint
+		filter_model->setFilterFixedString(m_filter->typedText());
 	}
 }
 

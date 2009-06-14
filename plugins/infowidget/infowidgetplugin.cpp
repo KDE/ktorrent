@@ -212,7 +212,6 @@ namespace kt
 		showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		showChunkView( InfoWidgetPluginSettings::showChunkView() );
 		showTrackerView( InfoWidgetPluginSettings::showTrackersView() );
-		file_view->setShowListOfFiles( Settings::useFileList(),KGlobal::config());
 	}
 	
 	void InfoWidgetPlugin::showPeerView(bool show)

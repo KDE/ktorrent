@@ -181,8 +181,10 @@ namespace kt
 	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check)
 	{
 		FileSelectDlg dlg(core->getGroupManager(),group_hint,this);
-
-		return dlg.execute(tc,start_torrent,skip_check) == QDialog::Accepted;
+		dlg.loadState(KGlobal::config());
+		bool ret = dlg.execute(tc,start_torrent,skip_check) == QDialog::Accepted;
+		dlg.saveState(KGlobal::config());
+		return ret;
 	}
 
 	void GUI::errorMsg(const QString & err)
