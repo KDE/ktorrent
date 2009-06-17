@@ -22,8 +22,10 @@ else(BTCORE_INCLUDE_DIR AND BTCORE_LIBRARIES)
     NAMES
     btcore_export.h
     PATHS 
-    ${KDE4_INCLUDE_DIR}/libbtcore
-    ${INCLUDE_INSTALL_DIR}/libbtcore
+    ${KDE4_INCLUDE_DIR}
+    ${INCLUDE_INSTALL_DIR}
+    PATH_SUFFIXES
+    libbtcore
     )
   
   FIND_LIBRARY(BTCORE_LIBRARIES 
