@@ -34,6 +34,7 @@ Changes in 3.3 :
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent
+- Fix bug in sleep suppression feature causing it to not work when torrents get started at startup (195991)
 
 Changes in 3.2.2 :
 - Fix crash when changing speed limits using system tray menu (188447)

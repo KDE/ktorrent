@@ -114,6 +114,7 @@ namespace kt
 		
 		//markk.update();
 		updateActions();
+		core->startUpdateTimer();
 	}
 
 	GUI:: ~GUI()
