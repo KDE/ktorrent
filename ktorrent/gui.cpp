@@ -128,6 +128,7 @@ namespace kt
 		notifyViewListeners(view_man->getCurrentTorrent());
 		//markk.update();
 		updateActions();
+		core->startUpdateTimer();
 	}
 
 	GUI:: ~GUI()

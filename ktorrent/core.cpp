@@ -101,7 +101,6 @@ namespace kt
 			data_dir += bt::DirSeparator();
 
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
-		update_timer.start(CORE_UPDATE_INTERVAL);
 		
 		Uint16 port = Settings::port();
 		if (port == 0)
@@ -761,14 +760,11 @@ namespace kt
 	{
 		try
 		{
-			update_timer.stop();
 			// do nothing if new and old dir are the same
 			if (KUrl(data_dir) == KUrl(new_dir) || data_dir == (new_dir + bt::DirSeparator()))
-			{
-				update_timer.start(CORE_UPDATE_INTERVAL);
 				return true;
-			}
 
+			update_timer.stop();
 			// safety check
 			if (!bt::Exists(new_dir))
 				bt::MakeDir(new_dir);
