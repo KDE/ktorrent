@@ -205,7 +205,7 @@ namespace kt
 		{
 			fw = new FeedWidget(f,filter_list,this,tabs);
 			connect(fw,SIGNAL(updateCaption(QWidget*, const QString&)),this,SLOT(updateTabText(QWidget*, const QString&)));
-			tabs->addTab(fw,KIcon("application-rss+xml"),f->title());
+			tabs->addTab(fw,KIcon("application-rss+xml"),f->displayName());
 			if (tabs->count() == 1)
 			{
 				tabs->show();

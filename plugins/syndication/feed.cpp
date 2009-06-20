@@ -393,8 +393,12 @@ namespace kt
 	
 	void Feed::setDisplayName(const QString& dname)
 	{
-		custom_name = dname;
-		save();
+		if (custom_name != dname)
+		{
+			custom_name = dname;
+			save();
+			feedRenamed(this);
+		}
 	}
 	
 	//////////////////////////////////

@@ -124,6 +124,9 @@ namespace kt
 		/// Emitted when a link must de downloaded
 		void downloadLink(const KUrl & link,const QString & group,const QString & location,bool silently);
 		
+		/// A feed has been renamed
+		void feedRenamed(Feed* f);
+		
 	public slots:
 		/// Update the feed
 		void refresh();

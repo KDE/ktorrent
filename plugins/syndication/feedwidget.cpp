@@ -34,6 +34,7 @@ namespace kt
 	{
 		setupUi(this);
 		connect(feed,SIGNAL(updated()),this,SLOT(updated()));
+		connect(feed,SIGNAL(feedRenamed(Feed*)),this,SLOT(onFeedRenamed(Feed*)));
 		connect(m_download,SIGNAL(clicked()),this,SLOT(downloadClicked()));
 		connect(m_refresh,SIGNAL(clicked()),this,SLOT(refreshClicked()));
 		connect(m_filters,SIGNAL(clicked()),this,SLOT(filtersClicked()));
@@ -107,4 +108,11 @@ namespace kt
 		}
 		updateCaption(this,feed->title());
 	}
+	
+	
+	void FeedWidget::onFeedRenamed(kt::Feed* f)
+	{
+		updateCaption(this,f->displayName());
+	}
+
 }
