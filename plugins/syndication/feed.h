@@ -27,6 +27,7 @@
 #include <kurl.h>
 #include <syndication/feed.h>
 #include <syndication/loader.h>
+#include <util/constants.h>
 
 namespace kt
 {
@@ -45,6 +46,8 @@ namespace kt
 		bool operator == (const SeasonEpisodeItem & item) const;
 		SeasonEpisodeItem & operator = (const SeasonEpisodeItem & item);
 	};
+	
+	
 
 	/**
 		Class to keep track of a feed.
@@ -120,6 +123,12 @@ namespace kt
 		/// Get the number of filters
 		int numFilters() const {return filters.count();}
 		
+		/// Get the refresh rate (in minutes) of the feed
+		bt::Uint32 refreshRate() const {return refresh_rate;}
+		
+		/// Set the refresh rate of the feed
+		void setRefreshRate(bt::Uint32 r);
+		
 	signals:
 		/// Emitted when a link must de downloaded
 		void downloadLink(const KUrl & link,const QString & group,const QString & location,bool silently);
@@ -153,6 +162,7 @@ namespace kt
 		QStringList loaded;
 		QMap<Filter*,QList<SeasonEpisodeItem> > downloaded_se_items;
 		QString custom_name;
+		bt::Uint32 refresh_rate;
 	};
 
 }

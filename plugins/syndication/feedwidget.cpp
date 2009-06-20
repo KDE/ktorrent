@@ -38,6 +38,7 @@ namespace kt
 		connect(m_download,SIGNAL(clicked()),this,SLOT(downloadClicked()));
 		connect(m_refresh,SIGNAL(clicked()),this,SLOT(refreshClicked()));
 		connect(m_filters,SIGNAL(clicked()),this,SLOT(filtersClicked()));
+		connect(m_refresh_rate,SIGNAL(valueChanged(int)),this,SLOT(refreshRateChanged(int)));
 		
 		model = new FeedWidgetModel(feed,this);
 		m_item_list->setModel(model);
@@ -49,6 +50,7 @@ namespace kt
 				this,SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
 		m_download->setEnabled(false);
 		m_url->setText(QString("<b>%1</b>").arg(feed->feedUrl().prettyUrl()));
+		m_refresh_rate->setValue(feed->refreshRate());
 		updated();
 	}
 
@@ -71,6 +73,12 @@ namespace kt
 	void FeedWidget::refreshClicked()
 	{
 		feed->refresh();
+	}
+	
+	void FeedWidget::refreshRateChanged(int v)
+	{
+		if (v > 0)
+			feed->setRefreshRate(v);
 	}
 	
 	void FeedWidget::filtersClicked()

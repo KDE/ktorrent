@@ -32,6 +32,7 @@ Changes in 3.3 :
 - Add filter box in FileSelectDlg (179980)
 - Add filter box in FileView (173887)
 - Make names of syndication feeds editable (191878)
+- Make refresh interval of syndication feeds configurable (193978)
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent
