@@ -63,6 +63,12 @@ namespace kt
 			UNLOADED, OK, FAILED_TO_DOWNLOAD, DOWNLOADING
 		};
 		
+		/// Get the display name of the feed 
+		QString displayName() const;
+		
+		/// Set the display name
+		void setDisplayName(const QString & dname);
+		
 		/// Get the libsyndication feed 
 		Syndication::FeedPtr feedData() {return feed;}
 		
@@ -143,6 +149,7 @@ namespace kt
 		QList<Filter*> filters;
 		QStringList loaded;
 		QMap<Filter*,QList<SeasonEpisodeItem> > downloaded_se_items;
+		QString custom_name;
 	};
 
 }

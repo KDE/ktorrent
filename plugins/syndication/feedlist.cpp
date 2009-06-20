@@ -164,21 +164,11 @@ namespace kt
 		Feed* f = feeds.at(index.row());
 		switch (role)
 		{
+			case Qt::EditRole:
 			case Qt::DisplayRole:
-				if (f->ok())
-					return f->feedData()->title();
-				else
-					return f->feedUrl().prettyUrl();
+				return f->displayName();
 			case Qt::UserRole:
-			{
-				QString title;
-				if (f->ok())
-					title = f->feedData()->title();
-				else
-					title = f->feedUrl().prettyUrl();
-				
-				return i18np("%2\n1 active filter", "%2\n%1 active filters", f->numFilters(), title);
-			}
+				return i18np("%2\n1 active filter", "%2\n%1 active filters", f->numFilters(), f->displayName());
 			case Qt::DecorationRole:
 				return KIcon("application-rss+xml");
 			case Qt::ToolTipRole:
@@ -188,6 +178,25 @@ namespace kt
 		}
 		
 		return QVariant();
+	}
+	
+	bool FeedList::setData(const QModelIndex& index, const QVariant& value, int role)
+	{
+		if (!index.isValid() || role != Qt::EditRole || !value.canConvert<QString>())
+			return false;
+		
+		Feed* f = feeds.at(index.row());
+		f->setDisplayName(value.toString());
+		emit dataChanged(index,index);
+		return true;
+	}
+	
+	Qt::ItemFlags FeedList::flags(const QModelIndex& index) const
+	{
+		if (!index.isValid())
+			return 0;
+		
+		return Qt::ItemIsSelectable | Qt::ItemIsEnabled |= Qt::ItemIsEditable;
 	}
 	
 	Feed* FeedList::feedForIndex(const QModelIndex & idx)

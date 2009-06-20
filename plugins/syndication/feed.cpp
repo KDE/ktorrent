@@ -99,6 +99,8 @@ namespace kt
 			i++;
 		}
 		enc.end();
+		if (!custom_name.isEmpty())
+			enc.write("custom_name",custom_name);
 		enc.end();
 	}
 	
@@ -126,6 +128,7 @@ namespace kt
 		try
 		{
 			url = KUrl(dict->getString("url",0));
+			custom_name = dict->getValue("custom_name") ? dict->getString("custom_name",0) : QString();
 			
 			BListNode* fl = dict->getList("filters");
 			if (fl)
@@ -371,9 +374,27 @@ namespace kt
 			save();
 	}
 	
-	bool  Feed::downloaded(Syndication::ItemPtr item) const
+	bool Feed::downloaded(Syndication::ItemPtr item) const
 	{
 		return loaded.contains(item->id());
+	}
+	
+	
+	QString Feed::displayName() const
+	{
+		if (!custom_name.isEmpty())
+			return custom_name;
+		else if (ok())
+			return feed->title();
+		else
+			return url.prettyUrl();
+	}
+	
+	
+	void Feed::setDisplayName(const QString& dname)
+	{
+		custom_name = dname;
+		save();
 	}
 	
 	//////////////////////////////////
