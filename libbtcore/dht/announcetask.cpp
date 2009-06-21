@@ -85,14 +85,14 @@ namespace dht
 				returned_items.append(*i);
 			}
 			
-			// add the peer who responded to the answered list, so we can do an announce
-			KBucketEntry e(rsp->getOrigin(),rsp->getID());
-			if (!answered.contains(KBucketEntryAndToken(e,gpr->getToken())) && !answered_visited.contains(e))
-			{
-				answered.append(KBucketEntryAndToken(e,gpr->getToken()));
-			}
-			
 			emitDataReady();
+		}
+		
+		// add the peer who responded to the answered list, so we can do an announce
+		KBucketEntry e(rsp->getOrigin(),rsp->getID());
+		if (!answered.contains(KBucketEntryAndToken(e,gpr->getToken())) && !answered_visited.contains(e))
+		{
+			answered.append(KBucketEntryAndToken(e,gpr->getToken()));
 		}
 	}
 
@@ -114,6 +114,7 @@ namespace dht
 			{
 				AnnounceReq* anr = new AnnounceReq(node->getOurID(),info_hash,port,e.getToken());
 				anr->setOrigin(e.getAddress());
+				//Out(SYS_DHT|LOG_DEBUG) << "DHT: Announcing to " << e.getAddress().toString() << endl;
 				rpcCall(anr);
 				answered_visited.append(e);
 			}
