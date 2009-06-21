@@ -277,6 +277,18 @@ This is experimental and should only be used if you are getting a lot of connect
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_lookUpHostnameOfPeers">
+        <property name="toolTip">
+         <string>Resolve the hostname of each peer. This will result in the hostname of a peer being displayed instead of the IP address. 
+
+It can be disabled if you do not like the additional network traffic it generates</string>
+        </property>
+        <property name="text">
+         <string>Resolve hostnames of peers</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

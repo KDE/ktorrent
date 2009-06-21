@@ -163,6 +163,7 @@ namespace kt
 		bt::ChunkManager::setPreviewSizes(Settings::previewSizeAudio() * 1024,Settings::previewSizeVideo() * 1024);
 		bt::QueueManagerInterface::setQueueManagerEnabled(!Settings::manuallyControlTorrents());
 		bt::Downloader::setUseWebSeeds(Settings::webseedsEnabled());
+		bt::Peer::setResolveHostnames(Settings::lookUpHostnameOfPeers());
 	}
 
 

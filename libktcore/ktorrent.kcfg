@@ -302,5 +302,8 @@
 		<entry name="useQHttpAnnounce" type="Bool">
 			<default>false</default>
 		</entry>
+		<entry name="lookUpHostnameOfPeers" type="Bool">
+			<default>true</default>
+		</entry>
 	</group>
 </kcfg>

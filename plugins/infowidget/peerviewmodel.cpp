@@ -66,6 +66,9 @@ namespace kt
 		
 		switch (col)
 		{
+			case 0:
+				ret = s.address() != stats.address();
+				break;
 			case 3: 
 				ret = s.download_rate != stats.download_rate;
 				break;
@@ -128,7 +131,7 @@ namespace kt
 	{
 		switch (col)
 		{
-			case 0: return stats.ip_address;
+			case 0: return stats.address();
 			case 1: return country;
 			case 2: return stats.client;
 			case 3: 
@@ -161,7 +164,7 @@ namespace kt
 	{
 		switch (col)
 		{
-			case 0: return stats.ip_address < other->stats.ip_address;
+			case 0: return stats.address() < other->stats.address();
 			case 1: return QString::localeAwareCompare(country,other->country) < 0;
 			case 2: return QString::localeAwareCompare(stats.client,other->stats.client) < 0;
 			case 3: return stats.download_rate < other->stats.download_rate;
@@ -298,7 +301,7 @@ namespace kt
 		{
 			switch (section)
 			{
-				case 0: return i18n("IP Address");
+				case 0: return i18n("Address");
 				case 1: return i18n("Country");
 				case 2: return i18n("Client");
 				case 3: return i18n("Down Speed");

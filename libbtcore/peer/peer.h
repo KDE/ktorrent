@@ -20,11 +20,13 @@
 #ifndef BTPEER_H
 #define BTPEER_H
 
-#include <qobject.h>
-#include <qdatetime.h>
+#include <QObject>
+#include <QDateTime>
+#include <QHostInfo>
 #include <util/timer.h>
 #include <interfaces/peerinterface.h>
 #include <util/bitset.h>
+#include <btcore_export.h>
 #include "peerid.h"
 
 namespace net
@@ -62,7 +64,7 @@ namespace bt
 	 * It provides functions for sending packets. Packets it receives
 	 * get relayed to the outside world using a bunch of signals.
 	*/
-	class Peer : public QObject, public PeerInterface
+	class BTCORE_EXPORT Peer : public QObject, public PeerInterface
 	{
 		Q_OBJECT
 	public:
@@ -237,8 +239,12 @@ namespace bt
 		 */
 		void setGroupIDs(Uint32 up_gid,Uint32 down_gid);
 		
+		/// Enable or disable hostname resolving
+		static void setResolveHostnames(bool on);
+		
 	private slots:
 		void dataWritten(int bytes);
+		void resolved(const QHostInfo & hinfo);
 
 	signals:		
 		/**
@@ -272,6 +278,8 @@ namespace bt
 		bool pex_allowed;
 		Uint32 utorrent_pex_id;
 		PeerManager* pman;
+		
+		static bool resolve_hostname;
 
 		friend class PacketWriter;
 		friend class PacketReader;

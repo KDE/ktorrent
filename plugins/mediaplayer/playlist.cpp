@@ -61,7 +61,7 @@ namespace kt
 	
 	QString PlayList::fileForIndex(const QModelIndex& index) const
 	{
-		if (!index.isValid())
+		if (!index.isValid() || index.row() < 0 || index.row() >= files.count())
 			return QString();
 		else
 			return files.at(index.row());

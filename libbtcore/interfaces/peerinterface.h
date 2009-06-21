@@ -43,6 +43,8 @@ namespace bt
 		{
 			/// IP address of peer (dotted notation)
 			QString ip_address;
+			/// Host name of the peer
+			QString hostname;
 			/// The client (Azureus, BitComet, ...)
 			QString client;
 			/// Download rate (bytes/s)
@@ -81,6 +83,9 @@ namespace bt
 			bool local;
 			/// Whether or not the peer supports the extension protocol
 			bool extension_protocol;
+			
+			/// Get the address of the peer (hostname if it is valid, IP otherwise)
+			QString address() const {return hostname.isEmpty() ? ip_address : hostname;}
 		};
 
 		virtual const Stats & getStats() const = 0;
