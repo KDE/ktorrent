@@ -40,6 +40,7 @@ Changes in 3.2.3:
 - Fix bug causing sizes > 4GB not being displayed properly in plasma applet
 - Fix bug in sleep suppression feature causing it to not work when torrents get started at startup (195991)
 - Also announce to DHT node when we get back a GetPeers with nodes (194366)
+- Use deleteLater when removing torrents this should prevent a crash (197421)
 
 Changes in 3.2.2 :
 - Fix crash when changing speed limits using system tray menu (188447)

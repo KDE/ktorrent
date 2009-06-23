@@ -74,7 +74,7 @@ namespace kt
 		paused_torrents.erase(tc);
 		int index = downloads.indexOf(tc);
 		if (index != -1)
-			delete downloads.takeAt(index);
+			downloads.takeAt(index)->deleteLater();
 	}
 
 	void QueueManager::clear()
