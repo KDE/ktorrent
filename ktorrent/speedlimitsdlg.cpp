@@ -19,8 +19,8 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
+#include <KPushButton>
 #include <klocale.h>
-#include <kstandardguiitem.h>
 #include <util/constants.h>
 #include <util/log.h>
 #include <interfaces/functions.h>
@@ -42,10 +42,12 @@ namespace kt
 	
 	
 	SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface* current,Core* core,QWidget* parent)
-			: QDialog(parent),core(core),current(current)
+			: KDialog(parent),core(core),current(current)
 	{
-		setupUi(this);
+		setButtons(KDialog::Ok|KDialog::Apply|KDialog::Cancel);
+		setupUi(mainWidget());
 		setWindowIcon(KIcon("kt-speed-limits"));
+		setWindowTitle(i18n("Speed Limits"));
 		
 		model = new SpeedLimitsModel(core,this);
 		QSortFilterProxyModel* pm = new QSortFilterProxyModel(this);
@@ -61,23 +63,17 @@ namespace kt
 		m_speed_limits_view->header()->setClickable(true);
 		m_speed_limits_view->setAlternatingRowColors(true);
 		
+		connect(this,SIGNAL(applyClicked()),this,SLOT(apply()));
 		
-		m_ok->setGuiItem(KStandardGuiItem::ok());
-		m_apply->setGuiItem(KStandardGuiItem::apply());
-		m_cancel->setGuiItem(KStandardGuiItem::cancel());
-		
-		connect(m_ok,SIGNAL(clicked()),this,SLOT(accept()));
-		connect(m_apply,SIGNAL(clicked()),this,SLOT(apply()));
-		connect(m_cancel,SIGNAL(clicked()),this,SLOT(reject()));
-		
-		m_apply->setEnabled(false);
-		connect(model,SIGNAL(enableApply(bool)),m_apply,SLOT(setEnabled(bool)));
+		KPushButton* apply_btn = button(KDialog::Apply);
+		apply_btn->setEnabled(false);
+		connect(model,SIGNAL(enableApply(bool)),apply_btn,SLOT(setEnabled(bool)));
 		
 		m_upload_rate->setValue(Settings::maxUploadRate());
 		m_download_rate->setValue(Settings::maxDownloadRate());
 		connect(m_upload_rate,SIGNAL(valueChanged(int)),this,SLOT(spinBoxValueChanged(int)));
 		connect(m_download_rate,SIGNAL(valueChanged(int)),this,SLOT(spinBoxValueChanged(int)));
-		
+		connect(m_filter,SIGNAL(textChanged(QString)),pm,SLOT(setFilterFixedString(QString)));
 		loadState();
 		
 		// if current is specified, select it and scroll to it
@@ -148,7 +144,7 @@ namespace kt
 	void SpeedLimitsDlg::apply()
 	{
 		model->apply();
-		m_apply->setEnabled(false);
+		button(KDialog::Apply)->setEnabled(false);
 		
 		bool apply = false;
 		if (Settings::maxUploadRate() != m_upload_rate->value())
@@ -172,7 +168,7 @@ namespace kt
 	
 	void SpeedLimitsDlg::spinBoxValueChanged(int)
 	{
-		m_apply->setEnabled(true);
+		button(KDialog::Apply)->setEnabled(true);
 	}
 
 }

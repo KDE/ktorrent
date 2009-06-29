@@ -34,6 +34,7 @@ Changes in 3.3 :
 - Make names of syndication feeds editable (191878)
 - Make refresh interval of syndication feeds configurable (193978)
 - Add hostname lookup for peers (145760)
+- Add filter box to speed limits dialog
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent
