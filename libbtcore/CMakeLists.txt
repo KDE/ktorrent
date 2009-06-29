@@ -48,6 +48,7 @@ set(libbtcore_SRC
 	util/autorotatelogjob.cpp
 	util/compressfilejob.cpp
 	util/decompressfilejob.cpp
+	util/extractfilejob.cpp
 	util/logsystemmanager.cpp
 	
 	bcodec/bdecoder.cpp  
@@ -276,6 +277,7 @@ set (util_HDR
 	./util/logsystemmanager.h
 	./util/compressfilejob.h
 	./util/decompressfilejob.h
+	./util/extractfilejob.h
 )
 	
 set (download_HDR
