@@ -169,7 +169,6 @@ namespace kt
 		View* current;
 		QList<View*> views;
 		Group* all_group; 
-		KMenu* view_menu;
 		
 		// actions for the view menu 
 		QAction* start_torrent;

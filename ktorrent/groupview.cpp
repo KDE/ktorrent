@@ -116,7 +116,6 @@ namespace kt
 		connect(gman,SIGNAL(defaultGroupAdded(Group*)),this,SLOT(defaultGroupAdded(Group*)));
 
 		current_item = 0;
-		menu = 0;
 		setupActions(gui->actionCollection());
 		
 		
@@ -416,9 +415,8 @@ namespace kt
 		
 		open_in_new_tab->setEnabled(g != 0);
 		
-		if (!menu)
-			menu = (KMenu*)gui->container("GroupsMenu");
-		
+
+		KMenu* menu = qobject_cast<KMenu*>(gui->container("GroupsMenu"));
 		if (menu)
 			menu->popup(mapToGlobal(p));
 	}
