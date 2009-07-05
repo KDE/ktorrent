@@ -50,7 +50,6 @@ namespace kt
 	ViewManager::ViewManager(Group* all_group,GUI* gui,Core* core,TorrentActivity* ta) 
 		: QObject(ta),gui(gui),core(core),current(0),all_group(all_group),ta(ta)
 	{
-		view_menu = 0;
 	}
 
 	ViewManager::~ViewManager()
@@ -735,27 +734,19 @@ namespace kt
 		if (!v)
 			return;
 		
+		KMenu* view_menu = qobject_cast<KMenu*>(gui->container("ViewMenu"));
 		if (!view_menu)
-		{
-			view_menu = (KMenu*)gui->container("ViewMenu");
-			if (!view_menu)
-			{
-				Out(SYS_GEN|LOG_NOTICE) << "Failed to create ViewMenu" << endl;
-				return;
-			}
-			
-			QList<QAction*> actions;
-			QMap<Group*,KAction*>::iterator j = group_actions.begin();
-			while (j != group_actions.end())
-			{
-				actions.append(j.value());
-				j++;
-			}
-			
-			gui->plugActionList("view_groups_list",actions);
-		}
+			return;
 		
-	
+		QList<QAction*> actions;
+		QMap<Group*,KAction*>::iterator j = group_actions.begin();
+		while (j != group_actions.end())
+		{
+			actions.append(j.value());
+			j++;
+		}
+			
+		gui->plugActionList("view_groups_list",actions);
 		
 		gui->unplugActionList("view_columns_list");
 		gui->plugActionList("view_columns_list",v->columnActionList());

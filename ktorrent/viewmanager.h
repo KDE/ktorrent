@@ -173,7 +173,6 @@ namespace kt
 		View* current;
 		QList<View*> views;
 		Group* all_group; 
-		KMenu* view_menu;
 		TorrentActivity* ta;
 		
 		// actions for the view menu 

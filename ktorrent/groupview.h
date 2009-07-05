@@ -114,7 +114,6 @@ namespace kt
 		Group* current;
 		GroupViewItem* current_item;
 
-		KMenu* menu;
 		KAction* new_group;
 		KAction* edit_group;
 		KAction* remove_group;
