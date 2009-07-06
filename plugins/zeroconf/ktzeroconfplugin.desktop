@@ -2,6 +2,7 @@
 Name=Zeroconf
 Name[de]=ZeroConf
 Name[et]=ZeroConf
+Name[gl]=ZeroConf
 Name[pt]=ZeroConf
 Name[ro]=ZeroConf
 Name[sr]=Зироконф
@@ -17,6 +18,7 @@ Comment[es]=Descubre compañeros en la red local usando el protocolo Zeroconf
 Comment[et]=Masinate tuvastamine kohtvõrgus Zeroconfi protokolli abil
 Comment[fr]=Module externe pour découvrir les pairs sur le réseau local à l'aide du protocole zeroconf
 Comment[ga]=Breiseán a aimsíonn comhghleacaithe ar an líonra logánta tríd an bprótacal zeroconf
+Comment[gl]=Descobrir parceiros na rede local usando o protocolo Zeroconf
 Comment[ja]=Zeroconf プロトコルを使ってローカルネットワークでピアを見つけます
 Comment[km]=កម្មវិធី​ជំនួយ​ដែល​ត្រូវ​រក​ម៉ាស៊ីន​ដូចគ្នា​នៅលើ​បណ្ដាញ​មូលដ្ឋាន ដោយប្រើ​ពិធីការ Zeroconf
 Comment[nds]=Partners in't lokale Nett över't zeroconf-Protokoll opdecken
