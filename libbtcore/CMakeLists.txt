@@ -131,6 +131,8 @@ set(libbtcore_SRC
 	torrent/torrentcontrol.cpp
 	torrent/torrentcreator.cpp
 	torrent/torrentstats.cpp
+	torrent/jobqueue.cpp
+	torrent/job.cpp
 
 	dht/announcetask.cpp  
 	dht/dht.cpp                
@@ -173,6 +175,7 @@ set(libbtcore_SRC
 	datachecker/singledatachecker.cpp
 	datachecker/datacheckerlistener.cpp  
 	datachecker/multidatachecker.cpp
+	datachecker/datacheckerjob.cpp
 	
 	migrate/cachemigrate.cpp  
 	migrate/ccmigrate.cpp  
@@ -330,6 +333,8 @@ set (torrent_HDR
 	./torrent/statsfile.h
 	./torrent/globals.h
 	./torrent/stats.h
+	./torrent/job.h
+	./torrent/jobqueue.h
 )
 	
 set (tracker_HDR
@@ -346,6 +351,7 @@ set (datachecker_HDR
 	./datachecker/singledatachecker.h
 	./datachecker/datacheckerlistener.h
 	./datachecker/multidatachecker.h
+	./datachecker/datacheckerjob.h
 )
 
 set (dht_HDR

@@ -35,6 +35,8 @@
 #include <interfaces/trackerslist.h>
 #include <interfaces/monitorinterface.h>
 #include <interfaces/cachefactory.h>
+#include <interfaces/queuemanagerinterface.h>
+#include <interfaces/chunkselectorinterface.h>
 #include <datachecker/singledatachecker.h>
 #include <datachecker/multidatachecker.h>
 #include <datachecker/datacheckerlistener.h>
@@ -42,30 +44,27 @@
 #include <migrate/ccmigrate.h>
 #include <migrate/cachemigrate.h>
 #include <dht/dhtbase.h>
-
 #include <download/downloader.h>
 #include <download/webseed.h>
-#include "uploader.h"
-#include "peersourcemanager.h"
 #include <diskio/cache.h>
 #include <diskio/chunkmanager.h>
-#include "torrent.h"
-#include <peer/peermanager.h>
-
-#include "torrentfile.h"
-
+#include <diskio/preallocationthread.h>
 #include <peer/peer.h>
+#include <peer/peermanager.h>
+#include <peer/packetwriter.h>
+#include <net/socketmonitor.h>
+#include "torrentfile.h"
+#include "torrent.h"
 #include "choker.h"
-
 #include "globals.h"
 #include "server.h"
-#include <peer/packetwriter.h>
-#include <interfaces/queuemanagerinterface.h>
-#include <interfaces/chunkselectorinterface.h>
+#include "uploader.h"
+#include "peersourcemanager.h"
 #include "statsfile.h"
-#include <diskio/preallocationthread.h>
 #include "timeestimator.h"
-#include <net/socketmonitor.h>
+#include "jobqueue.h"
+#include <datachecker/datacheckerjob.h>
+
 
 namespace bt
 {
@@ -81,6 +80,7 @@ namespace bt
 	TorrentControl::TorrentControl()
 	: tor(0),psman(0),cman(0),pman(0),downloader(0),uploader(0),choke(0),tmon(0),prealloc(false)
 	{
+		job_queue = new JobQueue(this);
 		custom_selector_factory = 0;
 		cache_factory = 0;
 		istats.session_bytes_uploaded = 0;
@@ -96,7 +96,6 @@ namespace bt
 		istats.dht_on = false;
 		updateStats();
 		prealloc_thread = 0;
-		dcheck_thread = 0;
 		
 		m_eta = new TimeEstimator(this);
 		// by default no torrent limits
@@ -136,7 +135,7 @@ namespace bt
 	void TorrentControl::update()
 	{
 		UpdateCurrentTime();
-		if (moving_files || dcheck_thread || prealloc_thread)
+		if (moving_files || job_queue->runningJobs()|| prealloc_thread)
 			return;
 		
 		if (istats.io_error)
@@ -913,8 +912,6 @@ namespace bt
 		TorrentStatus old = stats.status;
 		if (stats.stopped_by_error)
 			stats.status = ERROR;
-		else if (dcheck_thread)
-			stats.status = CHECKING_DATA;
 		else if (stats.queued)
 			stats.status = QUEUED;
 		else if (stats.completed && (overMaxRatio() || overMaxSeedTime()))
@@ -1317,46 +1314,33 @@ namespace bt
 	
 	void TorrentControl::startDataCheck(bt::DataCheckerListener* lst)
 	{
-		if (stats.status == ALLOCATING_DISKSPACE)
-			return;
-		
-		DataChecker* dc = 0;
-		stats.status = CHECKING_DATA;
-		stats.num_corrupted_chunks = 0; // reset the number of corrupted chunks found
-		if (stats.multi_file_torrent)
-			dc = new MultiDataChecker();
-		else
-			dc = new SingleDataChecker();
-	
-		dc->setListener(lst);
-		
-		dcheck_thread = new DataCheckerThread(dc,cman->getBitSet(),stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
-		connect(dcheck_thread,SIGNAL(finished()),this,SLOT(afterDataCheck()),Qt::QueuedConnection);
-		
-		// dc->check(stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
-		dcheck_thread->start(QThread::IdlePriority);
-		statusChanged(this);
+		job_queue->enqueue(new DataCheckerJob(lst,this));
 	}
 	
-	void TorrentControl::afterDataCheck()
+	void TorrentControl::beforeDataCheck()
 	{
-		DataChecker* dc = dcheck_thread->getDataChecker();
-		DataCheckerListener* lst = dc->getListener();
-		
-		bool err = !dcheck_thread->getError().isNull();
+		stats.status = CHECKING_DATA;
+		stats.num_corrupted_chunks = 0; // reset the number of corrupted chunks found
+		statusChanged(this);
+	}
+
+	
+	void TorrentControl::afterDataCheck(DataCheckerListener* lst,const BitSet & result,const QString & error)
+	{
+		bool err = !error.isNull();
 		if (err)
 		{
 			// show a queued error message when an error has occurred
-			KMessageBox::queuedMessageBox(0,KMessageBox::Error,dcheck_thread->getError());
+			KMessageBox::queuedMessageBox(0,KMessageBox::Error,error);
 			lst->stop();
 		}
 		
 		bool completed = stats.completed;
 		if (lst && !lst->isStopped())
 		{
-			downloader->dataChecked(dc->getResult());
+			downloader->dataChecked(result);
 			// update chunk manager
-			cman->dataChecked(dc->getResult());
+			cman->dataChecked(result);
 			if (lst->isAutoImport())
 			{
 				downloader->recalcDownloaded();
@@ -1376,8 +1360,6 @@ namespace bt
 		}
 			
 		updateStats();
-		dcheck_thread->deleteLater();
-		dcheck_thread = 0;
 		Out(SYS_GEN|LOG_NOTICE) << "Data check finished" << endl;
 		updateStatus();
 		if (lst)
@@ -1396,9 +1378,9 @@ namespace bt
 	
 	bool TorrentControl::isCheckingData(bool & finished) const
 	{
-		if (dcheck_thread)
+		if (stats.status == CHECKING_DATA)
 		{
-			finished = !dcheck_thread->isRunning();
+			finished = false;
 			return true;
 		}
 		return false;

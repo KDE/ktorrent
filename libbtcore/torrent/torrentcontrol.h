@@ -55,6 +55,7 @@ namespace bt
 	class MonitorInterface;
 	class ChunkSelectorFactoryInterface;
 	class CacheFactory;
+	class JobQueue;
 	
 	/**
 	 * @author Joris Guisson
@@ -328,6 +329,11 @@ namespace bt
 		 */
 		static void setNumCorruptedForRecheck(Uint32 m) {num_corrupted_for_recheck = m;}
 		
+	protected:
+		/// Called when a data check is finished by DataCheckerJob
+		void afterDataCheck(DataCheckerListener* lst,const BitSet & result,const QString & error);
+		void beforeDataCheck();
+		
 	private slots:
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
@@ -338,7 +344,6 @@ namespace bt
 		void corrupted(Uint32 chunk);
 		void moveDataFilesFinished(KJob* j);
 		void downloaded(Uint32 chunk);
-		void afterDataCheck();
 		void preallocThreadDone();
 		void moveToCompletedDir();
 		
@@ -363,10 +368,12 @@ namespace bt
 		void setUploadProps(Uint32 limit,Uint32 rate);
 		void setDownloadProps(Uint32 limit,Uint32 rate);
 		
+		
 	signals:
 		void dataCheckFinished();
 		
 	private:
+		JobQueue* job_queue;
 		Torrent* tor;
 		PeerSourceManager* psman;
 		ChunkManager* cman;
@@ -394,7 +401,6 @@ namespace bt
 		
 		bool prealloc;
 		PreallocationThread* prealloc_thread;
-		DataCheckerThread* dcheck_thread;
 		TimeStamp last_diskspace_check;
 		bool moving_files;
 		
@@ -430,6 +436,8 @@ namespace bt
 		static Uint32 min_diskspace;
 		static bool auto_recheck;
 		static Uint32 num_corrupted_for_recheck;
+		
+		friend class DataCheckerJob;
 	};
 	
 	
