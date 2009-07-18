@@ -17,38 +17,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include "job.h"
-#include "torrentcontrol.h"
+
+#include "preallocationjob.h"
+#include "preallocationthread.h"
+#include <torrent/torrentcontrol.h>
 
 namespace bt
 {
 	
-	Job::Job(TorrentControl* tc) : tc(tc)
+	PreallocationJob::PreallocationJob(ChunkManager* cman, TorrentControl* tc): Job(tc),cman(cman)
 	{
+		prealloc_thread = 0;
 	}
-	
-	Job::~Job()
+
+	PreallocationJob::~PreallocationJob()
 	{
 	}
 
-	void Job::start()
+	void PreallocationJob::start()
 	{
+		prealloc_thread = new PreallocationThread(cman);
+		connect(prealloc_thread,SIGNAL(finished()),this,SLOT(finished()),Qt::QueuedConnection);
 	}
-	
-	void Job::kill(bool quietly)
+
+	void PreallocationJob::kill(bool quietly)
 	{
-		if (!quietly)
+		if (prealloc_thread)
 		{
-			setError(KIO::ERR_USER_CANCELED);
-			emitResult();
+			prealloc_thread->stop();
+			prealloc_thread->wait();
+			prealloc_thread->deleteLater();
+			prealloc_thread = 0;
 		}
+		bt::Job::kill(quietly);
 	}
 	
 	
-	TorrentStatus Job::torrentStatus() const
+	void PreallocationJob::finished()
 	{
-		return INVALID_STATUS;
+		torrent()->preallocFinished(prealloc_thread->errorMessage(),prealloc_thread->isStopped());
+		prealloc_thread->deleteLater();
+		prealloc_thread = 0;
 	}
 
 }
-

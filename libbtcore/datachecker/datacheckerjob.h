@@ -37,6 +37,7 @@ namespace bt
 		
 		virtual void start();
 		virtual void kill(bool quietly = true);
+		virtual TorrentStatus torrentStatus() const {return CHECKING_DATA;}
 		
 	private slots:
 		void finished();

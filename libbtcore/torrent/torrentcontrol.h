@@ -333,6 +333,7 @@ namespace bt
 		/// Called when a data check is finished by DataCheckerJob
 		void afterDataCheck(DataCheckerListener* lst,const BitSet & result,const QString & error);
 		void beforeDataCheck();
+		void preallocFinished(const QString & error,bool completed);
 		
 	private slots:
 		void onNewPeer(Peer* p);
@@ -344,7 +345,6 @@ namespace bt
 		void corrupted(Uint32 chunk);
 		void moveDataFilesFinished(KJob* j);
 		void downloaded(Uint32 chunk);
-		void preallocThreadDone();
 		void moveToCompletedDir();
 		
 	private:	
@@ -400,7 +400,7 @@ namespace bt
 		QString error_msg;
 		
 		bool prealloc;
-		PreallocationThread* prealloc_thread;
+		
 		TimeStamp last_diskspace_check;
 		bool moving_files;
 		
@@ -438,6 +438,7 @@ namespace bt
 		static Uint32 num_corrupted_for_recheck;
 		
 		friend class DataCheckerJob;
+		friend class PreallocationJob;
 	};
 	
 	

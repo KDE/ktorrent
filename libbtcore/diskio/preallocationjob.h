@@ -17,38 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include "job.h"
-#include "torrentcontrol.h"
+#ifndef BT_PREALLOCATIONJOB_H
+#define BT_PREALLOCATIONJOB_H
 
-namespace bt
+#include <torrent/job.h>
+
+
+namespace bt 
 {
-	
-	Job::Job(TorrentControl* tc) : tc(tc)
-	{
-	}
-	
-	Job::~Job()
-	{
-	}
+	class PreallocationThread;
+	class ChunkManager;
 
-	void Job::start()
+	class BTCORE_EXPORT PreallocationJob : public bt::Job
 	{
-	}
-	
-	void Job::kill(bool quietly)
-	{
-		if (!quietly)
-		{
-			setError(KIO::ERR_USER_CANCELED);
-			emitResult();
-		}
-	}
-	
-	
-	TorrentStatus Job::torrentStatus() const
-	{
-		return INVALID_STATUS;
-	}
+		Q_OBJECT
+	public:
+		PreallocationJob(ChunkManager* cman,TorrentControl* tc);
+		virtual ~PreallocationJob();
+		
+		virtual void start();
+		virtual void kill(bool quietly = true);
+		virtual TorrentStatus torrentStatus() const {return ALLOCATING_DISKSPACE;}
+		
+	private slots:
+		void finished();
+		
+	private:
+		ChunkManager* cman;
+		PreallocationThread* prealloc_thread;
+	};
 
 }
 
+#endif // BT_PREALLOCATIONJOB_H

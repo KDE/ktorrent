@@ -23,6 +23,7 @@
 
 #include <kio/job.h>
 #include <btcore_export.h>
+#include "torrentstats.h"
 
 namespace bt 
 {
@@ -40,6 +41,9 @@ namespace bt
 		
 		virtual void start();
 		virtual void kill(bool quietly=true);
+		
+		/// Return the status of the torrent during the job (default implementation returns INVALID_STATUS)
+		virtual TorrentStatus torrentStatus() const;
 		
 		TorrentControl* torrent() {return tc;}
 	private:

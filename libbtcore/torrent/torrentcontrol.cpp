@@ -64,6 +64,7 @@
 #include "timeestimator.h"
 #include "jobqueue.h"
 #include <datachecker/datacheckerjob.h>
+#include <diskio/preallocationjob.h>
 
 
 namespace bt
@@ -95,7 +96,6 @@ namespace bt
 		istats.diskspace_warning_emitted = false;
 		istats.dht_on = false;
 		updateStats();
-		prealloc_thread = 0;
 		
 		m_eta = new TimeEstimator(this);
 		// by default no torrent limits
@@ -135,7 +135,7 @@ namespace bt
 	void TorrentControl::update()
 	{
 		UpdateCurrentTime();
-		if (moving_files || job_queue->runningJobs()|| prealloc_thread)
+		if (moving_files || job_queue->runningJobs())
 			return;
 		
 		if (istats.io_error)
@@ -351,12 +351,9 @@ namespace bt
 			if (Cache::preallocationEnabled() && !cman->haveAllChunks())
 			{
 				Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
-				prealloc_thread = new PreallocationThread(cman);
-				connect(prealloc_thread,SIGNAL(finished()),this,SLOT(preallocThreadDone()),Qt::QueuedConnection);
 				stats.running = true;
-				stats.status = ALLOCATING_DISKSPACE;
-				prealloc_thread->start();
-				statusChanged(this);
+				job_queue->enqueue(new PreallocationJob(cman,this));
+				updateStatus();
 				return;
 			}
 			else
@@ -408,17 +405,9 @@ namespace bt
 		istats.running_time_ul += istats.time_started_ul.secsTo(now);
 		istats.time_started_ul = istats.time_started_dl = now;
 		
-		// stop preallocation thread if necesarry
-		if (prealloc_thread)
-		{
-			disconnect(prealloc_thread,SIGNAL(finished()),this,SLOT(preallocThreadDone()));
-			prealloc_thread->stop();
-			prealloc_thread->wait();
-			if (prealloc_thread->errorHappened() || prealloc_thread->isNotFinished())
-				saveStats(); // save stats, so that we will start preallocating the next time
-			prealloc_thread->deleteLater();
-			prealloc_thread = 0;
-		}
+		// stop preallocation
+		if (job_queue->currentJob() && job_queue->currentJob()->torrentStatus() == ALLOCATING_DISKSPACE)
+			job_queue->currentJob()->kill(false);
 	
 		if (stats.running)
 		{
@@ -912,6 +901,8 @@ namespace bt
 		TorrentStatus old = stats.status;
 		if (stats.stopped_by_error)
 			stats.status = ERROR;
+		else if (job_queue->currentJob() && job_queue->currentJob()->torrentStatus() != INVALID_STATUS)
+			stats.status = job_queue->currentJob()->torrentStatus();
 		else if (stats.queued)
 			stats.status = QUEUED;
 		else if (stats.completed && (overMaxRatio() || overMaxSeedTime()))
@@ -1697,25 +1688,18 @@ namespace bt
 		return pman;
 	}
 	
-	void TorrentControl::preallocThreadDone()
+	void TorrentControl::preallocFinished(const QString & error,bool completed)
 	{
-		if (!prealloc_thread)
-			return;
-		
-		// thread done
-		if (prealloc_thread->errorHappened())
+		if (!error.isEmpty() || !completed)
 		{
 			// upon error just call onIOError and return
-			onIOError(prealloc_thread->errorMessage());
-			prealloc_thread->deleteLater();
-			prealloc_thread = 0;
+			if (!error.isEmpty())
+				onIOError(error);
 			prealloc = true; // still need to do preallocation
 		}
 		else
 		{
 			// continue the startup of the torrent
-			prealloc_thread->deleteLater();
-			prealloc_thread = 0;
 			prealloc = false;
 			stats.status = NOT_STARTED;
 			saveStats();

@@ -48,6 +48,12 @@ namespace bt
 		/// Enqueue a job
 		void enqueue(Job* job);
 		
+		/// Get the current job
+		Job* currentJob();
+		
+		/// Kill all jobs
+		void killAll();
+		
 	private slots:
 		void jobDone(KJob* job);
 		

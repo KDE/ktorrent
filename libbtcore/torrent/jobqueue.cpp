@@ -33,11 +33,7 @@ namespace bt
 	
 	JobQueue::~JobQueue()
 	{
-		foreach (Job* j,queue)
-		{
-			j->kill(true);
-			delete j;
-		}
+		killAll();
 	}
 	
 	void JobQueue::enqueue(Job* job)
@@ -50,6 +46,11 @@ namespace bt
 	bool JobQueue::runningJobs() const
 	{
 		return queue.count() > 0;
+	}
+	
+	Job* JobQueue::currentJob()
+	{
+		return queue.isEmpty() ? 0 : queue.front();
 	}
 
 	void JobQueue::startNextJob()
@@ -74,5 +75,16 @@ namespace bt
 		queue.pop_front();
 		startNextJob();
 	}
+	
+	
+	void JobQueue::killAll()
+	{
+		if (queue.isEmpty())
+			return;
+		
+		queue.front()->kill();
+		qDeleteAll(queue);
+	}
+
 }
 

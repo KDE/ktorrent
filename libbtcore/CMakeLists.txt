@@ -157,6 +157,7 @@ set(libbtcore_SRC
 	diskio/singlefilecache.cpp
 	diskio/multifilecache.cpp
 	diskio/preallocationthread.cpp
+	diskio/preallocationjob.cpp
 	diskio/movedatafilesjob.cpp
 	diskio/deletedatafilesjob.cpp
 	diskio/piecedata.cpp
@@ -310,6 +311,7 @@ set (diskio_HDR
 	./diskio/cachefile.h
 	./diskio/singlefilecache.h
 	./diskio/preallocationthread.h
+	./diskio/preallocationjob.h
 	./diskio/movedatafilesjob.h
 	./diskio/deletedatafilesjob.h
 	./diskio/chunkmanager.h

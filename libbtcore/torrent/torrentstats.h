@@ -40,7 +40,8 @@ namespace bt
 		ERROR,
 		QUEUED,
 		CHECKING_DATA,
-		NO_SPACE_LEFT
+		NO_SPACE_LEFT,
+		INVALID_STATUS
 	};
 
 	struct BTCORE_EXPORT TorrentStats
