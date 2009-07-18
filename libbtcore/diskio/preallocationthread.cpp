@@ -60,7 +60,7 @@ namespace bt
 		mutex.lock();
 		done = true;
 		mutex.unlock();
-		Out(SYS_GEN|LOG_NOTICE) << "PreallocationThread has finished" << endl;
+		Out(SYS_DIO|LOG_NOTICE) << "PreallocationThread has finished" << endl;
 	}
 	
 	void PreallocationThread::stop() 

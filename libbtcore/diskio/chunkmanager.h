@@ -31,7 +31,6 @@
 #include "chunk.h"
 
 
-class KJob;
 class QStringList;
 
 namespace bt
@@ -41,6 +40,7 @@ namespace bt
 	class PreallocationThread;
 	class TorrentFileInterface;
 	class CacheFactory;
+	class Job;
 
 	struct NewChunkHeader
 	{
@@ -108,19 +108,19 @@ namespace bt
 		 * Move the data files of the torrent.
 		 * @param ndir The new directory
 		 */
-		KJob* moveDataFiles(const QString & ndir);
+		Job* moveDataFiles(const QString & ndir);
 		
 		/**
 		 * A move of data files has finished
 		 * @param job The job doing the move
 		 */
-		void moveDataFilesFinished(KJob* job);
+		void moveDataFilesFinished(Job* job);
 		
 		/**
 		 * Move some data files to a new location
 		 * @param files Map of files and their new location
 		 */
-		KJob* moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
+		Job* moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
 		
 		
 		/**
@@ -128,7 +128,7 @@ namespace bt
 		 * @param files Map of files and their new location
 		 * @param job The job doing the move
 		 */
-		void moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job);
+		void moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,Job* job);
 		
 		/**
 		 * Loads the index file.
@@ -297,7 +297,7 @@ namespace bt
 		void dndMissingFiles();
 		
 		/// Delete all data files 
-		KJob* deleteDataFiles();
+		Job* deleteDataFiles();
 		
 		/// Are all not deselected chunks downloaded.
 		bool completed() const;

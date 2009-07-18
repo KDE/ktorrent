@@ -10,6 +10,7 @@ set(ktorrent_SRC
 	view.cpp 
 	viewmodel.cpp
 	viewmanager.cpp 
+	viewdelegate.cpp
 	torrentactivity.cpp
 	viewselectionmodel.cpp
 	groupfiltermodel.cpp
@@ -23,6 +24,7 @@ set(ktorrent_SRC
 	statusbar.cpp 
 	groupview.cpp
 	scandlg.cpp
+	scanextender.cpp
 	trayicon.cpp
 	pastedialog.cpp
 	ipfilterlist.cpp
@@ -47,6 +49,7 @@ kde4_add_ui_files(ktorrent_SRC
 	qmpref.ui 
 	btpref.ui
 	scandlg.ui 
+	scanextender.ui
 	generalpref.ui 
 	advancedpref.ui 
 	networkpref.ui

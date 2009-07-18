@@ -64,13 +64,13 @@ namespace bt
 #endif
 	}
 	
-	KJob* Cache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	Job* Cache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
 	{
 		Q_UNUSED(files);
 		return 0;
 	}
 	
-	void Cache::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job)
+	void Cache::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,Job* job)
 	{
 		Q_UNUSED(files);
 		Q_UNUSED(job);

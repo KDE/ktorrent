@@ -18,15 +18,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "movedatafilesjob.h"
+#include <QFileInfo>
+#include <kio/jobuidelegate.h>
 #include <util/log.h>
 #include <util/fileops.h>
-#include <kio/jobuidelegate.h>
+#include <util/functions.h>
+#include <interfaces/torrentfileinterface.h>
 
 namespace bt
 {
 
-	MoveDataFilesJob::MoveDataFilesJob() : err(false),active_job(0),running_recovery_jobs(0)
+	MoveDataFilesJob::MoveDataFilesJob() : Job(true,0),err(false),active_job(0),running_recovery_jobs(0)
 	{}
+
+	
+	MoveDataFilesJob::MoveDataFilesJob(const QMap< TorrentFileInterface*, QString >& fmap) 
+		: Job(true,0),err(false),active_job(0),running_recovery_jobs(0)
+	{
+		file_map = fmap;
+		QMap<TorrentFileInterface*,QString>::const_iterator i = file_map.begin();
+		while (i != file_map.end())
+		{
+			TorrentFileInterface* tf = i.key();
+			QString dest = i.value();
+			if (QFileInfo(dest).isDir())
+			{
+				QString path = tf->getUserModifiedPath();
+				if (!dest.endsWith(bt::DirSeparator()))
+					dest += bt::DirSeparator();
+				
+				int last = path.lastIndexOf(bt::DirSeparator());
+				QString dst = dest + path.mid(last+1);
+				if (QFileInfo(tf->getPathOnDisk()).canonicalPath() != QFileInfo(dst).canonicalPath())
+					addMove(tf->getPathOnDisk(),dst);
+			}
+			else if (QFileInfo(tf->getPathOnDisk()).canonicalPath() != QFileInfo(i.value()).canonicalPath())
+			{
+				addMove(tf->getPathOnDisk(),i.value());
+			}
+			i++;
+		}
+	}
 
 
 	MoveDataFilesJob::~MoveDataFilesJob()
@@ -74,6 +106,14 @@ namespace bt
 	{
 		startMoving();
 	}
+	
+	
+	void MoveDataFilesJob::kill(bool quietly)
+	{
+		Q_UNUSED(quietly);
+		// don't do anything we cannot abort in the middle of this operation
+	}
+
 	
 	void MoveDataFilesJob::startMoving()
 	{

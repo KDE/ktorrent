@@ -27,6 +27,7 @@
 #include <interfaces/guiinterface.h>
 #include <ksharedconfig.h>
 
+class KExtendableItemDelegate;
 class KMenu;
 
 namespace kt
@@ -34,8 +35,10 @@ namespace kt
 	class Core;
 	class ViewModel;
 	class ViewSelectionModel;
+	class ViewDelegate;
 	class Group;
-	class TorrentInterface;	
+	class TorrentInterface;
+	class ScanExtender;
 	
 	class View : public QTreeView
 	{
@@ -124,6 +127,7 @@ namespace kt
 		void onHeaderMenuItemTriggered(QAction* act);
 		void onCurrentItemChanged(const QModelIndex & current,const QModelIndex & previous);
 		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
+		
 
 	signals:
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
@@ -141,6 +145,7 @@ namespace kt
 		bt::Uint32 num_running;
 		ViewModel* model;
 		ViewSelectionModel* selection_model;
+		ViewDelegate* delegate;
 	};
 }
 

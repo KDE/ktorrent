@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2009 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,64 +17,62 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTMOVEDATAFILESJOB_H
-#define BTMOVEDATAFILESJOB_H
 
-#include <torrent/job.h>
+#ifndef KT_VIEWDELEGATE_H
+#define KT_VIEWDELEGATE_H
+
+#include <QMap>
+#include <QStyledItemDelegate>
 
 namespace bt
 {
-	class TorrentFileInterface;
+	class TorrentInterface;
+}
+
+namespace kt 
+{
+	class ViewModel;
+	class View;
+	class Core;
+	class ScanExtender;
 
 	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * KIO::Job to move all the files of a torrent.
+		Item delegate which keeps track of of ScanExtenders
 	*/
-	class MoveDataFilesJob : public Job
+	class ViewDelegate : public QStyledItemDelegate
 	{
 		Q_OBJECT
 	public:
-		MoveDataFilesJob();
+		ViewDelegate(Core* core,ViewModel* model,View* parent);
+		virtual ~ViewDelegate();
 		
 		/**
-			Constructor with a file map.
-			@param fmap Map of files and their destinations
+			Create a ScanExtender and start checking data.
 		*/
-		MoveDataFilesJob(const QMap<TorrentFileInterface*,QString> & fmap);
-		virtual ~MoveDataFilesJob();
+		void checkData(const QModelIndex & index);
+		
+		virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+		virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		
 		/**
-		 * Add a move to the todo list.
-		 * @param src File to move
-		 * @param dst Where to move it to
-		 */
-		void addMove(const QString & src,const QString & dst);
-		
-		virtual void start();
-		virtual void kill(bool quietly = true);
-		
-		/// Get the file map (could be empty)
-		const QMap<TorrentFileInterface*,QString> & fileMap() const {return file_map;}
+		* Close all extenders and delete all extender widgets.
+		*/
+		void contractAll();
 		
 	private slots:
-		void onJobDone(KJob* j);
-		void onCanceled(KJob* j);
-		void onRecoveryJobDone(KJob* j);
+		void closeExtender();
+		void torrentRemoved(bt::TorrentInterface* tc);
 		
 	private:
-		void recover(bool delete_active);
-		void startMoving();
-
+		QSize maybeExtendedSize(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+		QRect extenderRect(QWidget *extender, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+		void scheduleUpdateViewLayout();
+		
 	private:
-		bool err;
-		KIO::Job* active_job;
-		QString active_src,active_dst;
-		QMap<QString,QString> todo;
-		QMap<QString,QString> success;
-		int running_recovery_jobs;	
-		QMap<TorrentFileInterface*,QString> file_map;
+		ViewModel* model;
+		QMap<bt::TorrentInterface*,ScanExtender*> extenders;
 	};
 
 }
 
-#endif
+#endif // KT_VIEWDELEGATE_H

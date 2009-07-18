@@ -36,8 +36,11 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		Job(TorrentControl* tc);
+		Job(bool stop_torrent,TorrentControl* tc);
 		virtual ~Job();
+		
+		/// Do we need to stop the torrent when the job is running
+		bool stopTorrent() const {return stop_torrent;}
 		
 		virtual void start();
 		virtual void kill(bool quietly=true);
@@ -48,6 +51,7 @@ namespace bt
 		TorrentControl* torrent() {return tc;}
 	private:
 		TorrentControl* tc;
+		bool stop_torrent;
 	};
 
 }

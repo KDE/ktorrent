@@ -51,9 +51,6 @@ namespace bt
 
 		// initialize the bitset
 		result = BitSet(num_chunks);
-		
-		TimeStamp last_update_time = bt::GetCurrentTime();
-		
 		// loop over all chunks
 		Array<Uint8> buf(chunk_size);
 		for (Uint32 i = 0;i < num_chunks;i++)
@@ -63,13 +60,6 @@ namespace bt
 				listener->progress(i,num_chunks);
 				if (listener->needToStop()) // if we need to stop just return
 					return;
-			}
-			
-			TimeStamp now = bt::GetCurrentTime();
-			if (now - last_update_time > 1000)
-			{
-				Out(SYS_DIO|LOG_DEBUG) << "Checked " << i << " chunks" << endl;
-				last_update_time = now;
 			}
 	
 			if (!fptr.eof())

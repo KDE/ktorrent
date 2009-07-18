@@ -1168,9 +1168,7 @@ namespace kt
 	void Core::doDataCheck(bt::TorrentInterface* tc)
 	{
 		bool dummy = false;
-		if (tc->isCheckingData(dummy))
-			return;
-		
+		#warning TODO
 		gui->dataScan(tc,false,false,i18n("Checking Data Integrity"));
 	}
 

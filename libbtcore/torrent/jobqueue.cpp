@@ -20,12 +20,13 @@
 #include <util/log.h>
 #include "jobqueue.h"
 #include "job.h"
+#include "torrentcontrol.h"
 
 
 namespace bt
 {
 	
-	JobQueue::JobQueue(QObject* parent): QObject(parent)
+	JobQueue::JobQueue(bt::TorrentControl* parent): QObject(parent),tc(parent),restart(false)
 	{
 
 	}
@@ -60,6 +61,12 @@ namespace bt
 		
 		Job* j = queue.front();
 		connect(j,SIGNAL(result(KJob*)),this,SLOT(jobDone(KJob*)));
+		if (j->stopTorrent() && tc->getStats().running)
+		{
+			// stop the torrent if the job requires it
+			tc->stop(0);
+			restart = true;
+		}
 		j->start();
 	}
 
@@ -73,7 +80,19 @@ namespace bt
 		
 		// remove the job and start the next
 		queue.pop_front();
-		startNextJob();
+		if (!queue.isEmpty())
+		{
+			startNextJob();
+		}
+		else 
+		{
+			tc->allJobsDone();
+			if (restart)
+			{
+				tc->start();
+				restart = false;
+			}
+		}
 	}
 	
 	

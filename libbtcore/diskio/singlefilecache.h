@@ -51,14 +51,14 @@ namespace bt
 		virtual void open();
 		virtual void changeTmpDir(const QString & ndir);
 		using Cache::moveDataFiles;
-		virtual KJob* moveDataFiles(const QString & ndir);
+		virtual Job* moveDataFiles(const QString & ndir);
 		using Cache::moveDataFilesFinished;
-		virtual void moveDataFilesFinished(KJob* job);
+		virtual void moveDataFilesFinished(Job* job);
 		virtual void changeOutputPath(const QString& outputpath);
 		virtual QString getOutputPath() const {return output_file;}
 		virtual void preallocateDiskSpace(PreallocationThread* prealloc);
 		virtual bool hasMissingFiles(QStringList & sl);
-		virtual KJob* deleteDataFiles();
+		virtual Job* deleteDataFiles();
 		virtual Uint64 diskUsage();
 		virtual void loadFileMap();
 		virtual void saveFileMap();

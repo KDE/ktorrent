@@ -32,7 +32,7 @@ namespace bt
 	
 
 	DeleteDataFilesJob::DeleteDataFilesJob(const QString & base)
-			: base(base),directory_tree(0)
+			: Job(true,0),base(base),directory_tree(0)
 	{
 	}
 
@@ -76,6 +76,13 @@ namespace bt
 		setError(0);
 		emitResult();
 	}
+	
+	
+	void DeleteDataFilesJob::kill(bool quietly)
+	{
+		Q_UNUSED(quietly);
+	}
+
 	
 	DeleteDataFilesJob::DirTree::DirTree(const QString & name) : name(name)
 	{

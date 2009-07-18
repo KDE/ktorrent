@@ -32,11 +32,12 @@
 #include <torrent/globals.h>
 #include <torrent/torrent.h>
 #include <torrent/torrentcontrol.h>
+#include <torrent/jobqueue.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerslist.h>
 #include <settings.h>
-
 #include <climits>
+
 
 using namespace bt;
 
@@ -155,9 +156,8 @@ namespace kt
 		{
 			tc->setAllowedToStart(true);
 			bool start_tc = false;
-			bool check_done = false;
-			if (tc->isCheckingData(check_done) && !check_done)
-				return BUSY_WITH_DATA_CHECK;
+			if (tc->getJobQueue()->runningJobs())
+				return BUSY_WITH_JOB;
 			
 			const TorrentStats & s = tc->getStats();
 			if (!s.completed && !tc->checkDiskSpace(false)) //no need to check diskspace for seeding torrents
@@ -194,7 +194,7 @@ namespace kt
 	void QueueManager::stop(bt::TorrentInterface* tc)
 	{
 		bool check_done = false;
-		if (tc->isCheckingData(check_done) && !check_done)
+		if (tc->getJobQueue()->runningJobs())
 			return;
 		
 		const TorrentStats & s = tc->getStats();
@@ -344,8 +344,7 @@ namespace kt
 			if (s.running)
 				continue;
 			
-			bool check_done = false;
-			if (tc->isCheckingData(check_done) && !check_done)
+			if (tc->getJobQueue()->runningJobs())
 				continue;
 			
 			if (enabled())
@@ -377,8 +376,7 @@ namespace kt
 				if (s.running)
 					continue;
 				
-				bool check_done = false;
-				if (tc->isCheckingData(check_done) && !check_done)
+				if (tc->getJobQueue()->runningJobs())
 					continue;
 				
 				todo.append(tc);
@@ -540,7 +538,7 @@ namespace kt
 		{
 			const TorrentStats & s = tc->getStats();
 			bool dummy;
-			if (tc->isAllowedToStart() && !tc->isMovingFiles() && !s.stopped_by_error && !tc->isCheckingData(dummy))
+			if (tc->isAllowedToStart() && !s.stopped_by_error && !tc->getJobQueue()->runningJobs())
 			{
 				if (s.completed)
 				{

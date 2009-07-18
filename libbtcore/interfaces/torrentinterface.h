@@ -42,7 +42,7 @@ namespace bt
 	class PeerSource;
 	class SHA1Hash;
 	class WebSeedInterface;
-	
+	class JobQueue;
 
 	
 	enum TorrentStartResponse
@@ -51,7 +51,7 @@ namespace bt
 		USER_CANCELED,
 		NOT_ENOUGH_DISKSPACE, 
 		MAX_SHARE_RATIO_REACHED, 
-		BUSY_WITH_DATA_CHECK, 
+		BUSY_WITH_JOB, 
 		QM_LIMITS_REACHED // Max seeds or downloads reached
 	};
 
@@ -279,12 +279,6 @@ namespace bt
 		virtual void startDataCheck(bt::DataCheckerListener* lst) = 0;
 		
 		/**
-		 * Are we doing a data check on this torrent.
-		 * @param finished This will be set to true if the data check is finished
-		 */
-		virtual bool isCheckingData(bool & finished) const = 0;
-		
-		/**
 		 * Test all files and see if they are not missing.
 		 * If so put them in a list
 		 */
@@ -357,14 +351,8 @@ namespace bt
 		/// Get the assured speeds
 		virtual void getAssuredSpeeds(Uint32 & up,Uint32 & down) = 0;
 		
-		
-		
 		/// Check if there is enough diskspace available for this torrent
 		virtual bool checkDiskSpace(bool emit_sig = true) = 0;
-		
-		/// Are we in the process of moving files
-		virtual bool isMovingFiles() const = 0;
-	
 		
 		/// Get the text codec used in the torrent
 		virtual const QTextCodec* getTextCodec() const = 0;
@@ -415,6 +403,9 @@ namespace bt
 		 * Set whether the torrent is queued or not
 		 */
 		virtual void setQueued(bool queued) = 0;
+		
+		/// Get the JobQueue of the torrent
+		virtual const JobQueue* getJobQueue() const = 0;
 	signals:
 		/**
 		 * Emitted when we have finished downloading.

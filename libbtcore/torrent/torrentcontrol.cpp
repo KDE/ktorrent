@@ -49,6 +49,9 @@
 #include <diskio/cache.h>
 #include <diskio/chunkmanager.h>
 #include <diskio/preallocationthread.h>
+#include <diskio/preallocationjob.h>
+#include <diskio/movedatafilesjob.h>
+#include <datachecker/datacheckerjob.h>
 #include <peer/peer.h>
 #include <peer/peermanager.h>
 #include <peer/packetwriter.h>
@@ -63,15 +66,11 @@
 #include "statsfile.h"
 #include "timeestimator.h"
 #include "jobqueue.h"
-#include <datachecker/datacheckerjob.h>
-#include <diskio/preallocationjob.h>
+
 
 
 namespace bt
 {
-
-	
-
 	KUrl TorrentControl::completed_dir;
 	bool TorrentControl::completed_datacheck = false;
 	Uint32 TorrentControl::min_diskspace = 100;
@@ -102,7 +101,6 @@ namespace bt
 		upload_gid = download_gid = 0;
 		upload_limit = download_limit = 0;
 		assured_upload_speed = assured_download_speed = 0;
-		moving_files = false;
 	}
 
 	TorrentControl::~TorrentControl()
@@ -135,7 +133,7 @@ namespace bt
 	void TorrentControl::update()
 	{
 		UpdateCurrentTime();
-		if (moving_files || job_queue->runningJobs())
+		if (job_queue->runningJobs())
 			return;
 		
 		if (istats.io_error)
@@ -280,19 +278,9 @@ namespace bt
 			if (checkOnCompletion || (auto_recheck && stats.num_corrupted_chunks >= num_corrupted_for_recheck))
 				needDataCheck(this);
 			
-			//Move completed files if needed:
+			// Move completed files if needed:
 			if (moveCompleted)
-			{
-				if (stats.status == CHECKING_DATA)
-				{
-					// wait for dcheck_thread to finish before moving the files
-					connect(this,SIGNAL(dataCheckFinished()),this,SLOT(moveToCompletedDir()));
-				}
-				else
-				{
-					moveToCompletedDir();
-				}
-			}
+				moveToCompletedDir();
 		}
 		catch (Error & e)
 		{
@@ -312,8 +300,8 @@ namespace bt
 
 	void TorrentControl::start()
 	{	
-		// do not start running torrents
-		if (stats.running || stats.status == ALLOCATING_DISKSPACE || moving_files)
+		// do not start running torrents or when there is a job running
+		if (stats.running || job_queue->runningJobs())
 			return;
 
 		stats.stopped_by_error = false;
@@ -751,18 +739,10 @@ namespace bt
 	bool TorrentControl::changeOutputDir(const QString & ndir,int flags)
 	{
 		//check if torrent is running and stop it before moving data
-		restart_torrent_after_move_data_files = false;
-		if(stats.running)
-		{
-			restart_torrent_after_move_data_files = true;
-			this->stop(false);
-		}
-		
 		QString new_dir = ndir;
 		if (!new_dir.endsWith(bt::DirSeparator()))
 			new_dir += bt::DirSeparator();
 		
-		moving_files = true;
 		try
 		{
 			QString nd;
@@ -786,7 +766,7 @@ namespace bt
 			if (stats.output_path != nd)
 			{
 				move_data_files_destination_path = nd;
-				KJob* j = 0;
+				Job* j = 0;
 				if (flags & bt::TorrentInterface::MOVE_FILES)
 				{
 					if (stats.multi_file_torrent)
@@ -797,6 +777,7 @@ namespace bt
 				
 				if (j)
 				{
+					job_queue->enqueue(j);
 					connect(j,SIGNAL(result(KJob*)),this,SLOT(moveDataFilesFinished(KJob*)));
 					return true;
 				}
@@ -813,19 +794,15 @@ namespace bt
 		catch (Error& err)
 		{			
 			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << stats.output_path << " to " << new_dir << ". Exception: " << endl;
-			moving_files = false;
 			return false;
 		}
-		
-		moving_files = false;
-		if(restart_torrent_after_move_data_files)
-			this->start();
 		
 		return true;
 	}
 	
-	void TorrentControl::moveDataFilesFinished(KJob* job)
+	void TorrentControl::moveDataFilesFinished(KJob* kj)
 	{
+		Job* job = (Job*)kj;
 		if (job)
 			cman->moveDataFilesFinished(job);
 		
@@ -842,45 +819,39 @@ namespace bt
 		{
 			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << stats.output_path << " to " << move_data_files_destination_path << endl;
 		}
-
-		moving_files = false;
-		if (restart_torrent_after_move_data_files)
-		{
-			this->start();
-		}
 	}
 
 	bool TorrentControl::moveTorrentFiles(const QMap<TorrentFileInterface*,QString> & files)
 	{
-		bool start = false;
-		
-		// check if torrent is running and stop it before moving data
-		if(stats.running)
-		{
-			start = true;
-			this->stop(false);
-		}
-	
-		moving_files = true;
 		try
 		{
-			KJob* j = cman->moveDataFiles(files);
-			if (j && j->exec())
-				cman->moveDataFilesFinished(files,j);
-			Out(SYS_GEN|LOG_NOTICE) << "Move of data files completed " << endl;
+			Job* j = cman->moveDataFiles(files);
+			if (j)
+			{
+				connect(j,SIGNAL(result(KJob*)),this,SLOT(moveDataFilesWithMapFinished(KJob*)));
+				job_queue->enqueue(j);
+			}
+			
 		}
 		catch (Error& err)
-		{			
-			moving_files = false;
+		{
 			return false;
 		}
 	
-		moving_files = false;
-		if(start)
-			this->start();
-		
 		return true;
 	}
+	
+	
+	void TorrentControl::moveDataFilesWithMapFinished(KJob* j)
+	{
+		if (!j)
+			return;
+		
+		MoveDataFilesJob* job = (MoveDataFilesJob*)j;
+		cman->moveDataFilesFinished(job->fileMap(),job);
+		Out(SYS_GEN|LOG_NOTICE) << "Move of data files completed " << endl;
+	}
+
 
 	void TorrentControl::rollback()
 	{
@@ -1367,16 +1338,6 @@ namespace bt
 		}
 	}
 	
-	bool TorrentControl::isCheckingData(bool & finished) const
-	{
-		if (stats.status == CHECKING_DATA)
-		{
-			finished = false;
-			return true;
-		}
-		return false;
-	}
-	
 	void TorrentControl::markExistingFilesAsDownloaded()
 	{
 		cman->markExistingFilesAsDownloaded();
@@ -1446,7 +1407,9 @@ namespace bt
 
 	void TorrentControl::deleteDataFiles()
 	{
-		cman->deleteDataFiles();
+		Job* job = cman->deleteDataFiles();
+		if (job)
+			job->start(); // don't use queue, this is only done when removing the torrent
 	}
 	
 	const bt::SHA1Hash & TorrentControl::getInfoHash() const
@@ -1690,6 +1653,7 @@ namespace bt
 	
 	void TorrentControl::preallocFinished(const QString & error,bool completed)
 	{
+		Out(SYS_GEN|LOG_DEBUG) << "preallocFinished "<< error << " " << completed << endl;
 		if (!error.isEmpty() || !completed)
 		{
 			// upon error just call onIOError and return
@@ -1788,13 +1752,6 @@ namespace bt
 	
 	void TorrentControl::moveToCompletedDir()
 	{
-		disconnect(this,SIGNAL(dataCheckFinished()),this,SLOT(moveToCompletedDir()));
-		
-		// it is possible that the user might have disabled moving to the completed dir during the data check
-		// so double check before we start the move
-		if (completed_dir.path().isNull() || !stats.completed)
-			return;
-			
 		QString outdir = completed_dir.path();
 		if (!outdir.endsWith(bt::DirSeparator()))
 			outdir += bt::DirSeparator();
@@ -1818,6 +1775,13 @@ namespace bt
 	{
 		return tor->getComments();
 	}
+	
+	
+	void TorrentControl::allJobsDone()
+	{
+		updateStatus();
+	}
+
 
 }
 

@@ -28,7 +28,6 @@
 #include <QMultiMap>
 
 class QStringList;
-class KJob;
 
 namespace bt
 {
@@ -37,6 +36,7 @@ namespace bt
 	class PreallocationThread;
 	class TorrentFileInterface;
 	class PieceData;
+	class Job;
 
 	/**
 	 * @author Joris Guisson
@@ -98,13 +98,13 @@ namespace bt
 		 * @param ndir The directory
 		 * @return The job doing the move
 		 */
-		virtual KJob* moveDataFiles(const QString & ndir) = 0;
+		virtual Job* moveDataFiles(const QString & ndir) = 0;
 		
 		/**
 		 * A move of a bunch of data files has finished
 		 * @param job The job doing the move
 		 */
-		virtual void moveDataFilesFinished(KJob* job) = 0;
+		virtual void moveDataFilesFinished(Job* job) = 0;
 		
 		/**
 		 * Load a piece into memory. If something goes wrong,
@@ -170,21 +170,21 @@ namespace bt
 		 * empty directories should also be deleted.
 		 * @return The job doing the delete
 		 */
-		virtual KJob* deleteDataFiles() = 0;
+		virtual Job* deleteDataFiles() = 0;
 		
 		/**
 		 * Move some files to a new location
 		 * @param files Map of files to move and their new location
-		 * @return KJob The job doing the move
+		 * @return Job The job doing the move
 		 */
-		virtual KJob* moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
+		virtual Job* moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
 		
 		/**
 		 * The job doing moveDataFiles (with the map parameter) has finished
 		 * @param files The files map with all the moves
 		 * @param job The job doing the move
 		 */
-		virtual void moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job);
+		virtual void moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,Job* job);
 		
 		/** 
 		 * See if we are allowed to use mmap, when loading chunks.

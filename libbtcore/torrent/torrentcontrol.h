@@ -228,6 +228,7 @@ namespace bt
 		virtual void deleteDataFiles();
 		virtual const bt::PeerID & getOwnPeerID() const;
 		virtual QString getComments() const;
+		virtual const JobQueue* getJobQueue() const {return job_queue;}
 		
 		/**
 		 * Returns estimated time left for finishing download. Returned value is in seconds.
@@ -256,9 +257,6 @@ namespace bt
 	
 		/// Get the PeerManager
 		const PeerManager * getPeerMgr() const;
-
-		/// Are we in the process of moving files
-		bool isMovingFiles() const {return moving_files;}
 		
 		/// Set a custom chunk selector factory (needs to be done for init is called)
 		void setChunkSelectorFactory(ChunkSelectorFactoryInterface* csfi);
@@ -334,6 +332,7 @@ namespace bt
 		void afterDataCheck(DataCheckerListener* lst,const BitSet & result,const QString & error);
 		void beforeDataCheck();
 		void preallocFinished(const QString & error,bool completed);
+		void allJobsDone();
 		
 	private slots:
 		void onNewPeer(Peer* p);
@@ -344,6 +343,7 @@ namespace bt
 		void updateStats();
 		void corrupted(Uint32 chunk);
 		void moveDataFilesFinished(KJob* j);
+		void moveDataFilesWithMapFinished(KJob* j);
 		void downloaded(Uint32 chunk);
 		void moveToCompletedDir();
 		
@@ -363,8 +363,6 @@ namespace bt
 		void setupDirs(const QString & tmpdir,const QString & ddir);
 		void setupStats();
 		void setupData();
-		virtual bool isCheckingData(bool & finished) const;
-		
 		void setUploadProps(Uint32 limit,Uint32 rate);
 		void setDownloadProps(Uint32 limit,Uint32 rate);
 		
@@ -385,24 +383,17 @@ namespace bt
 		MonitorInterface* tmon;
 		ChunkSelectorFactoryInterface* custom_selector_factory;
 		CacheFactory* cache_factory;
-		
 		QString move_data_files_destination_path;
-		bool restart_torrent_after_move_data_files;
-		
 		Timer choker_update_timer;
 		Timer stats_save_timer;
 		Timer stalled_timer;
 		Timer wanted_update_timer;
-		
 		QString tordir;
 		QString old_tordir;
 		QString outputdir;
 		QString error_msg;
-		
 		bool prealloc;
-		
 		TimeStamp last_diskspace_check;
-		bool moving_files;
 		
 		struct InternalStats
 		{
@@ -439,6 +430,7 @@ namespace bt
 		
 		friend class DataCheckerJob;
 		friend class PreallocationJob;
+		friend class JobQueue;
 	};
 	
 	

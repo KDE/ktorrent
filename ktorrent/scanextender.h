@@ -17,52 +17,67 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KT_SCANEXTENDER_H
+#define KT_SCANEXTENDER_H
 
-#ifndef BT_JOBQUEUE_H
-#define BT_JOBQUEUE_H
+#include <QWidget>
+#include <QMutex>
+#include <QTimer>
+#include <datachecker/datacheckerlistener.h>
+#include "ui_scanextender.h"
 
-#include <QObject>
-#include <btcore_export.h>
-#include <torrent/job.h>
-
-namespace bt 
+namespace bt
 {
-	class Job;
-	
-	/**
-		A job queue handles all jobs running on a torrent in a sequential order
-	*/
-	class BTCORE_EXPORT JobQueue : public QObject
+	class TorrentInterface;
+}
+
+
+namespace kt 
+{
+	class ScanExtender : public QWidget,public Ui_ScanExtender,public bt::DataCheckerListener
 	{
 		Q_OBJECT
 	public:
-		JobQueue(TorrentControl* parent);
-		virtual ~JobQueue();
+		ScanExtender(bt::TorrentInterface* tc,QWidget* parent);
+		virtual ~ScanExtender();
 		
-		/// Are there running jobs
-		bool runningJobs() const;
+		/// Update progress info, runs in scan thread
+		virtual void progress(bt::Uint32 num,bt::Uint32 total);
 		
-		/// Start the next job
-		void startNextJob();
+		/// Update status info, runs in scan thread
+		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_found,bt::Uint32 num_downloaded,bt::Uint32 num_not_downloaded);
 		
-		/// Enqueue a job
-		void enqueue(Job* job);
+		/// Scan finished, runs in app thread
+		virtual void finished();
 		
-		/// Get the current job
-		Job* currentJob();
+		bt::TorrentInterface* torrent() {return tc;}
 		
-		/// Kill all jobs
-		void killAll();
+		/// Restart the scan
+		void restart();
+		
+		/// Is the scan finished ?
+		bool scanFinished() const {return done;}
 		
 	private slots:
-		void jobDone(KJob* job);
+		void update();
+		void cancelPressed();
+		
+	signals:
+		/// Emitted when the close button is pressed
+		void closeRequested();
 		
 	private:
-		QList<Job*> queue;
-		TorrentControl* tc;
-		bool restart;
+		QMutex mutex;
+		QTimer timer;
+		bt::Uint32 num_chunks;
+		bt::Uint32 total_chunks;
+		bt::Uint32 num_found;
+		bt::Uint32 num_downloaded;
+		bt::Uint32 num_not_downloaded;
+		bt::Uint32 num_failed;
+		bt::TorrentInterface* tc;
+		bool done;
 	};
-
 }
 
-#endif // BT_JOBQUEUE_H
+#endif // KT_SCANEXTENDER_H

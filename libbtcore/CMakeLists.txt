@@ -334,7 +334,7 @@ set (torrent_HDR
 	./torrent/torrentfile.h
 	./torrent/statsfile.h
 	./torrent/globals.h
-	./torrent/stats.h
+	./torrent/torrentstats.h
 	./torrent/job.h
 	./torrent/jobqueue.h
 )

@@ -23,7 +23,7 @@
 namespace bt
 {
 	
-	Job::Job(TorrentControl* tc) : tc(tc)
+	Job::Job(bool stop_torrent, bt::TorrentControl* tc) : tc(tc),stop_torrent(stop_torrent)
 	{
 	}
 	

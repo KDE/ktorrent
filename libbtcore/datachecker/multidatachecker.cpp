@@ -59,8 +59,6 @@ namespace bt
 		
 		Uint64 chunk_size = tor.getChunkSize();
 		Uint32 cur_chunk = 0;
-		TimeStamp last_update_time = bt::GetCurrentTime();
-		
 		buf = new Uint8[chunk_size];
 		
 		for (cur_chunk = 0;cur_chunk < num_chunks;cur_chunk++)
@@ -94,14 +92,6 @@ namespace bt
 				listener->progress(cur_chunk,num_chunks);
 				if (listener->needToStop())
 					return;
-			}
-			
-			TimeStamp now = bt::GetCurrentTime();
-			if (now - last_update_time > 1000)
-			{
-				Out(SYS_GEN|LOG_DEBUG) << "Checked " << cur_chunk << " chunks" << endl;
-			//	KApplication::kApplication()->processEvents();
-				last_update_time = now;
 			}
 		}	
 	}

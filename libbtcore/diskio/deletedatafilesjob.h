@@ -23,7 +23,7 @@
 
 #include <util/ptrmap.h>
 #include <QString>
-#include <kio/job.h>
+#include <torrent/job.h>
 #include <kurl.h>
 
 namespace bt
@@ -33,7 +33,7 @@ namespace bt
 	 * @author Joris Guisson <joris.guisson@gmail.com>
 	 * KIO::Job to delete all the files of a torrent.
 	 */
-	class DeleteDataFilesJob : public KIO::Job
+	class DeleteDataFilesJob : public Job
 	{
 		Q_OBJECT
 	public:
@@ -58,6 +58,9 @@ namespace bt
 		
 		/// Start the job
 		virtual void start();
+		
+		/// Kill the job
+		virtual void kill(bool quietly);
 		
 	private slots:
 		void onDeleteJobDone(KJob* j);

@@ -31,6 +31,7 @@
 #include <groups/group.h>
 #include <util/log.h>
 #include <groups/groupmanager.h>
+#include <torrent/jobqueue.h>
 #include "gui.h"
 #include "view.h"
 #include "viewmodel.h"
@@ -385,7 +386,6 @@ namespace kt
 		bool en_announce = false;
 		bool en_add_peer = false;
 		bool en_peer_sources = false;
-		bool dummy = false;
 
 		foreach (bt::TorrentInterface* tc,sel)
 		{
@@ -394,7 +394,7 @@ namespace kt
 			if (tc->readyForPreview() && !s.multi_file_torrent)
 				en_prev = true;
 			
-			if (tc->isCheckingData(dummy))
+			if (tc->getJobQueue()->runningJobs())
 				continue;
 			
 			en_remove = true;
@@ -451,7 +451,7 @@ namespace kt
 			
 			TorrentInterface* tc = sel.front();
 			// no data check when we are preallocating diskspace
-			check_data->setEnabled(tc->getStats().status != bt::ALLOCATING_DISKSPACE && !tc->isCheckingData(dummy));
+			check_data->setEnabled(tc->getStats().status != bt::ALLOCATING_DISKSPACE);
 			
 			if (en_peer_sources)
 			{
@@ -482,7 +482,7 @@ namespace kt
 			stop_all->setEnabled(false);
 			foreach (bt::TorrentInterface* tc,all)
 			{
-				if (tc->isCheckingData(dummy))
+				if (tc->getJobQueue()->runningJobs())
 					continue;
 				
 				const TorrentStats & s = tc->getStats();

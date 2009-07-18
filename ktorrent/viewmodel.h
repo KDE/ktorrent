@@ -61,8 +61,8 @@ namespace kt
 		/// Is a column a default column for a download view
 		bool defaultColumnForDownload(int column);
 		
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual int columnCount(const QModelIndex & parent) const;
+		virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
+		virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
 		virtual QVariant data(const QModelIndex & index, int role) const;
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);

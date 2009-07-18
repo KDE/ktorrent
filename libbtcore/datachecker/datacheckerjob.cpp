@@ -29,7 +29,7 @@
 namespace bt
 {
 	
-	DataCheckerJob::DataCheckerJob(bt::DataCheckerListener* lst, bt::TorrentControl* tc): Job(tc),listener(lst)
+	DataCheckerJob::DataCheckerJob(bt::DataCheckerListener* lst, bt::TorrentControl* tc): Job(true,tc),listener(lst)
 	{
 		dcheck_thread = 0;
 		killed = false;

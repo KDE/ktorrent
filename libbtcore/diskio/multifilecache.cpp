@@ -252,7 +252,7 @@ namespace bt
 		saveFileMap();
 	}
 	
-	KJob* MultiFileCache::moveDataFiles(const QString & ndir)
+	Job* MultiFileCache::moveDataFiles(const QString & ndir)
 	{
 		if ( !bt::Exists ( ndir ) )
 			bt::MakeDir ( ndir );
@@ -290,12 +290,11 @@ namespace bt
 		}
 		else
 		{
-			job->startMoving();
 			return job;
 		}
 	}
 	
-	void MultiFileCache::moveDataFilesFinished(KJob* job)
+	void MultiFileCache::moveDataFilesFinished(Job* job)
 	{
 		if (job->error())
 			return;
@@ -312,53 +311,16 @@ namespace bt
 		}
 	}
 	
-	KJob* MultiFileCache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	Job* MultiFileCache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
 	{
 		if (files.count() == 0)
 			return 0;
 		
-		MoveDataFilesJob* job = new MoveDataFilesJob();
-		int nmoves = 0;
-		QMap<TorrentFileInterface*,QString>::const_iterator i = files.begin();
-		while (i != files.end())
-		{
-			TorrentFileInterface* tf = i.key();
-			QString dest = i.value();
-			if (QFileInfo(dest).isDir())
-			{
-				QString path = tf->getUserModifiedPath();
-				if (!dest.endsWith(bt::DirSeparator()))
-					dest += bt::DirSeparator();
-			
-				int last = path.lastIndexOf(bt::DirSeparator());
-				QString dst = dest + path.mid(last+1);
-				if (QFileInfo(tf->getPathOnDisk()).canonicalPath() != QFileInfo(dst).canonicalPath())
-				{
-					job->addMove(tf->getPathOnDisk(),dst);
-					nmoves++;
-				}
-			}
-			else if (QFileInfo(tf->getPathOnDisk()).canonicalPath() != QFileInfo(i.value()).canonicalPath())
-			{
-				job->addMove(tf->getPathOnDisk(),i.value());
-				nmoves++;
-			}
-			i++;
-		}
-		
-		if (nmoves)
-		{
-			job->startMoving();
-			return job;
-		}
-		else
-		{
-			delete job;
-			return 0;
-		}
+		MoveDataFilesJob* job = new MoveDataFilesJob(files);
+		return job;
 	}
 		
-	void MultiFileCache::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & fmap,KJob* job)
+	void MultiFileCache::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & fmap,Job* job)
 	{
 		if (job->error())
 			return;
@@ -944,7 +906,7 @@ namespace bt
 		}
 	}
 	
-	KJob* MultiFileCache::deleteDataFiles()
+	Job* MultiFileCache::deleteDataFiles()
 	{
 		DeleteDataFilesJob* job = new DeleteDataFilesJob(output_dir);
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
@@ -961,7 +923,6 @@ namespace bt
 			job->addEmptyDirectoryCheck(tf.getUserModifiedPath());
 		}
 		
-		job->start();
 		return job;
 	}
 	

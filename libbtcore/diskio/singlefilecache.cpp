@@ -37,6 +37,7 @@
 #include "piecedata.h"
 #include "preallocationthread.h"
 #include "deletedatafilesjob.h"
+#include "movedatafilesjob.h"
 
 
 namespace bt
@@ -99,7 +100,7 @@ namespace bt
 		saveFileMap();
 	}
 	
-	KJob* SingleFileCache::moveDataFiles(const QString & ndir)
+	Job* SingleFileCache::moveDataFiles(const QString & ndir)
 	{
 		QString dst = ndir;
 		if (!dst.endsWith(bt::DirSeparator()))
@@ -110,10 +111,12 @@ namespace bt
 			return 0;
 		
 		move_data_files_dst = dst;
-		return KIO::move(output_file,dst);
+		MoveDataFilesJob* job = new MoveDataFilesJob();
+		job->addMove(output_file,dst);
+		return job;
 	}
 	
-	void SingleFileCache::moveDataFilesFinished(KJob* job)
+	void SingleFileCache::moveDataFilesFinished(Job* job)
 	{
 		if (job->error() == KIO::ERR_USER_CANCELED)
 		{
@@ -274,11 +277,10 @@ namespace bt
 		return false;
 	}
 
-	KJob* SingleFileCache::deleteDataFiles()
+	Job* SingleFileCache::deleteDataFiles()
 	{
 		DeleteDataFilesJob* job = new DeleteDataFilesJob("");
 		job->addFile(output_file);
-		job->start();
 		return job;
 	}
 

@@ -145,22 +145,22 @@ namespace bt
 		cache->changeOutputPath(output_path);
 	}
 	
-	KJob* ChunkManager::moveDataFiles(const QString & ndir)
+	Job* ChunkManager::moveDataFiles(const QString & ndir)
 	{
 		return cache->moveDataFiles(ndir);
 	}
 	
-	void ChunkManager::moveDataFilesFinished(KJob* job)
+	void ChunkManager::moveDataFilesFinished(Job* job)
 	{
 		cache->moveDataFilesFinished(job);
 	}
 	
-	KJob* ChunkManager::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	Job* ChunkManager::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
 	{
 		return cache->moveDataFiles(files);
 	}
 	
-	void ChunkManager::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job)
+	void ChunkManager::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,Job* job)
 	{
 		cache->moveDataFilesFinished(files,job);
 	}
@@ -1090,7 +1090,7 @@ namespace bt
 		chunksLeft();
 	}
 	
-	KJob* ChunkManager::deleteDataFiles()
+	Job* ChunkManager::deleteDataFiles()
 	{
 		return cache->deleteDataFiles();
 	}

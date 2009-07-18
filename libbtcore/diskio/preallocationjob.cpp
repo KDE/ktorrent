@@ -20,12 +20,13 @@
 
 #include "preallocationjob.h"
 #include "preallocationthread.h"
+#include <util/log.h>
 #include <torrent/torrentcontrol.h>
 
 namespace bt
 {
 	
-	PreallocationJob::PreallocationJob(ChunkManager* cman, TorrentControl* tc): Job(tc),cman(cman)
+	PreallocationJob::PreallocationJob(ChunkManager* cman, TorrentControl* tc): Job(false,tc),cman(cman)
 	{
 		prealloc_thread = 0;
 	}
@@ -38,6 +39,7 @@ namespace bt
 	{
 		prealloc_thread = new PreallocationThread(cman);
 		connect(prealloc_thread,SIGNAL(finished()),this,SLOT(finished()),Qt::QueuedConnection);
+		prealloc_thread->start(QThread::IdlePriority);
 	}
 
 	void PreallocationJob::kill(bool quietly)
@@ -55,9 +57,11 @@ namespace bt
 	
 	void PreallocationJob::finished()
 	{
-		torrent()->preallocFinished(prealloc_thread->errorMessage(),prealloc_thread->isStopped());
+		torrent()->preallocFinished(prealloc_thread->errorMessage(),!prealloc_thread->isStopped());
 		prealloc_thread->deleteLater();
 		prealloc_thread = 0;
+		setError(0);
+		emitResult();
 	}
 
 }
