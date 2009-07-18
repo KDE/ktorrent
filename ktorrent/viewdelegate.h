@@ -49,7 +49,7 @@ namespace kt
 		/**
 			Create a ScanExtender and start checking data.
 		*/
-		void checkData(const QModelIndex & index);
+		void checkData(bt::TorrentInterface* tc);
 		
 		virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;

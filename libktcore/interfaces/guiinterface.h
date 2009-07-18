@@ -115,7 +115,7 @@ namespace kt
 		virtual void removePluginGui(Plugin* p) = 0;
 	
 		/// Show a scan dialog, and start the data scan
-		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption) = 0;
+		virtual void dataScan(bt::TorrentInterface* tc,bool silently,const QString & dlg_caption) = 0;
 
 		/// Select the files to download, return false if users cancels
 		virtual bool selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check) = 0;

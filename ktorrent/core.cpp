@@ -261,7 +261,7 @@ namespace kt
 		if (tc->hasExistingFiles())
 		{
 			if (!skip_check)
-				gui->dataScan(tc,false,true,QString::null);
+				gui->dataScan(tc,true,QString::null);
 			else
 				tc->markExistingFilesAsDownloaded();
 		}
@@ -1162,14 +1162,12 @@ namespace kt
 		Out(SYS_GEN|LOG_IMPORTANT) << "Doing an automatic data check on " 
 					<< tc->getStats().torrent_name << endl;
 		
-		gui->dataScan(tc,false,true,QString::null);
+		gui->dataScan(tc,true,QString::null);
 	}
 
 	void Core::doDataCheck(bt::TorrentInterface* tc)
 	{
-		bool dummy = false;
-		#warning TODO
-		gui->dataScan(tc,false,false,i18n("Checking Data Integrity"));
+		gui->dataScan(tc,false,i18n("Checking Data Integrity"));
 	}
 
 	void Core::onLowDiskSpace(bt::TorrentInterface * tc, bool stopped)

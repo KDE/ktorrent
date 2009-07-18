@@ -59,7 +59,7 @@ namespace kt
 		virtual void removePrefPage(PrefPageInterface* page);
 		virtual void mergePluginGui(Plugin* p);
 		virtual void removePluginGui(Plugin* p);
-		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption);
+		virtual void dataScan(bt::TorrentInterface* tc,bool silently,const QString & dlg_caption);
 		virtual bool selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check);
 		virtual void errorMsg(const QString & err);
 		virtual void errorMsg(KIO::Job* j);

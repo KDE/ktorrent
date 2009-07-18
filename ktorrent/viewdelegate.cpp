@@ -36,9 +36,8 @@ namespace kt
 		contractAll();
 	}
 	
-	void ViewDelegate::checkData(const QModelIndex& index)
+	void ViewDelegate::checkData(bt::TorrentInterface* ti)
 	{
-		bt::TorrentInterface* ti = model->torrentFromIndex(index);
 		if (!ti)
 			return;
 		

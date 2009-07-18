@@ -1334,7 +1334,8 @@ namespace bt
 			// Tell QM to redo queue 
 			// seeder might have become downloader, so 
 			// queue might need to be redone
-			updateQueue();
+			// use QTimer because we need to ensure this is run after the JobQueue removes the job
+			QTimer::singleShot(0,this,SIGNAL(updateQueue()));
 		}
 	}
 	

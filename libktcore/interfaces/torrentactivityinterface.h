@@ -31,6 +31,8 @@ namespace bt
 
 namespace kt
 {
+	class View;
+	
 	/**
 	* Small interface for classes who want to know when
 	* current torrent in the gui changes.
@@ -74,6 +76,9 @@ namespace kt
 		
 		/// Remove a tool widget
 		virtual void removeToolWidget(QWidget* widget) = 0;
+		
+		/// Get the current view
+		virtual View* getCurrentView() = 0;
 		
 	protected:
 		/**

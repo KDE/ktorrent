@@ -243,4 +243,11 @@ namespace kt
 		if (qm->isVisible())
 			qm->update();
 	}
+	
+	
+	View* TorrentActivity::getCurrentView()
+	{
+		return view_man->getCurrentView();
+	}
+
 }

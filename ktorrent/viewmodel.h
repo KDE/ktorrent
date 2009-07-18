@@ -27,6 +27,7 @@
 
 namespace kt
 {
+	class View;
 	class ViewDelegate;
 	class Core;
 	class Group;
@@ -40,7 +41,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		ViewModel(Core* core,QObject* parent);
+		ViewModel(Core* core,View* parent);
 		virtual ~ViewModel();
 		
 		/**
@@ -176,6 +177,7 @@ namespace kt
 			
 	private:
 		Core* core;
+		View* view;
 		QList<Item*> torrents;
 		int sort_column;
 		Qt::SortOrder sort_order;

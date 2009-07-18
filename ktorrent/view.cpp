@@ -394,12 +394,19 @@ namespace kt
 	
 	void View::checkData()
 	{
-		QModelIndexList indices = selectionModel()->selectedRows();
-		if (indices.count() > 0)
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		if (sel.count() > 0)
 		{
-			delegate->checkData(indices.front());
+			delegate->checkData(sel.front());
 			core->startUpdateTimer(); // make sure update timer of core is running
 		}
+	}
+	
+	void View::checkData(TorrentInterface* tc)
+	{
+		delegate->checkData(tc);
+		core->startUpdateTimer(); // make sure update timer of core is running
 	}
 
 	void View::showMenu(const QPoint & pos)

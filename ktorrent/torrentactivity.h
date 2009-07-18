@@ -60,7 +60,7 @@ namespace kt
 		virtual void updateActions();
 		virtual void addToolWidget(QWidget* widget,const QString & text,const QString & icon,const QString & tooltip);
 		virtual void removeToolWidget(QWidget* widget);
-		
+		virtual View* getCurrentView();
 		/// Update the activity
 		void update();
 		

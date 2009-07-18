@@ -99,6 +99,12 @@ namespace kt
 		
 		virtual void closeEditor(QWidget* editor,QAbstractItemDelegate::EndEditHint hint);
 		virtual bool edit(const QModelIndex & index,EditTrigger trigger,QEvent* event);
+		
+		/// Check data on a torrent
+		void checkData(bt::TorrentInterface* tc);
+		
+		/// Get the ViewDelegate
+		ViewDelegate* viewDelegate() {return delegate;}
 	public slots:
 		/**
 		 * Update all items in the view

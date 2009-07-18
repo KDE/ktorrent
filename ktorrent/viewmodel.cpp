@@ -36,6 +36,7 @@
 #include <interfaces/trackerinterface.h>
 #include <util/sha1hash.h>
 #include "viewdelegate.h"
+#include "view.h"
 
 using namespace bt;
 
@@ -298,7 +299,7 @@ namespace kt
 			return group->isMember(tc);
 	}
 
-	ViewModel::ViewModel(Core* core,QObject* parent) : QAbstractTableModel(parent),core(core)
+	ViewModel::ViewModel(Core* core,View* parent) : QAbstractTableModel(parent),core(core),view(parent)
 	{
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(addTorrent(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(removeTorrent(bt::TorrentInterface*)));
@@ -329,6 +330,7 @@ namespace kt
 	void ViewModel::addTorrent(bt::TorrentInterface* ti)
 	{
 		torrents.append(new Item(ti));
+		update(view->viewDelegate(),true);
 	}
 	
 	void ViewModel::removeTorrent(bt::TorrentInterface* ti)
@@ -340,6 +342,7 @@ namespace kt
 			if (item->tc == ti)
 			{
 				removeRow(idx);
+				update(view->viewDelegate(),true);
 				break;
 			}
 			idx++;
