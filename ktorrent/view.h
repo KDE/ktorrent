@@ -38,7 +38,6 @@ namespace kt
 	class ViewDelegate;
 	class Group;
 	class TorrentInterface;
-	class ScanExtender;
 	
 	class View : public QTreeView
 	{
@@ -100,8 +99,11 @@ namespace kt
 		virtual void closeEditor(QWidget* editor,QAbstractItemDelegate::EndEditHint hint);
 		virtual bool edit(const QModelIndex & index,EditTrigger trigger,QEvent* event);
 		
-		/// Check data on a torrent
-		void checkData(bt::TorrentInterface* tc);
+		/// A data scan was started
+		void dataScanStarted(ScanListener* listener);
+		
+		/// A data scan was closed
+		void dataScanClosed(ScanListener* listener);
 		
 		/// Get the ViewDelegate
 		ViewDelegate* viewDelegate() {return delegate;}

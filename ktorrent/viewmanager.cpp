@@ -65,7 +65,7 @@ namespace kt
 		connect(v,SIGNAL(currentTorrentChanged(View* ,bt::TorrentInterface* )),
 			this,SLOT(onCurrentTorrentChanged(View* ,bt::TorrentInterface* )));
 		connect(v,SIGNAL(torrentSelectionChanged(View*)),
-				this,SLOT(onSelectionChaged(View*)));
+				this,SLOT(onSelectionChanged(View*)));
 		connect(v,SIGNAL(showMenu(View*, const QPoint&)),this,SLOT(showViewMenu(View*, const QPoint&)));
 		return v;
 	}
@@ -362,12 +362,25 @@ namespace kt
 			ta->currentTorrentChanged(tc);
 	}
 
-	void ViewManager::onSelectionChaged(View* v)
+	void ViewManager::onSelectionChanged(View* v)
 	{
 		if (v != current)
 			return;
 			
 		updateActions();
+	}
+	
+	
+	void ViewManager::dataScanStarted(ScanListener* listener)
+	{
+		foreach (View* v,views)
+			v->dataScanStarted(listener);
+	}
+	
+	void ViewManager::dataScanClosed(ScanListener* listener)
+	{
+		foreach (View* v,views)
+			v->dataScanClosed(listener);
 	}
 	
 	void ViewManager::updateActions()

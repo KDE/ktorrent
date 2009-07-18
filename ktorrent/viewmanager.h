@@ -81,7 +81,13 @@ namespace kt
 		
 		/// Remove a view
 		void removeView(View* view);
+		
+		/// A data scan was started
+		void dataScanStarted(ScanListener* listener);
 
+		/// A data scan was closed
+		void dataScanClosed(ScanListener* listener);
+		
 	public slots:
 		void onCurrentTabChanged(QWidget* tab);
 		void onCurrentGroupChanged(kt::Group* g);
@@ -89,7 +95,7 @@ namespace kt
 		void onGroupRemoved(kt::Group* g);
 		void onGroupAdded(kt::Group* g);
 		void onCurrentTorrentChanged(View* v,bt::TorrentInterface* tc);
-		void onSelectionChaged(View* v);
+		void onSelectionChanged(View* v);
 		
 		/// Start all selected downloads in the current view
 		void startTorrents();
@@ -114,6 +120,7 @@ namespace kt
 		
 		/// Select all torrents in the current view
 		void selectAll();
+		
 		
 	private slots:
 		/// Remove selected downloads and data in the current view
@@ -206,3 +213,4 @@ namespace kt
 }
 
 #endif
+

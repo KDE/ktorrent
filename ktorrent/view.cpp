@@ -44,6 +44,7 @@
 #include "addpeersdlg.h"
 #include "viewselectionmodel.h"
 #include "viewdelegate.h"
+#include "scanextender.h"
 
 
 using namespace bt;
@@ -398,16 +399,27 @@ namespace kt
 		getSelection(sel);
 		if (sel.count() > 0)
 		{
-			delegate->checkData(sel.front());
+			core->doDataCheck(sel.front());
 			core->startUpdateTimer(); // make sure update timer of core is running
 		}
 	}
-	
-	void View::checkData(TorrentInterface* tc)
+
+	void View::dataScanStarted(ScanListener* listener)
 	{
-		delegate->checkData(tc);
-		core->startUpdateTimer(); // make sure update timer of core is running
+		if (delegate->extended(listener->torrent()))
+			return;
+		
+		bt::TorrentInterface* tc = listener->torrent();
+		ScanExtender* ext = new ScanExtender(listener,tc,0);
+		ext->hide();
+		delegate->extend(tc,ext);
 	}
+	
+	void View::dataScanClosed(ScanListener* listener)
+	{
+		delegate->closeExtender(listener->torrent());
+	}
+
 
 	void View::showMenu(const QPoint & pos)
 	{

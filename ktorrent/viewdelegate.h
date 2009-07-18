@@ -31,10 +31,10 @@ namespace bt
 
 namespace kt 
 {
+	class ScanListener;
 	class ViewModel;
 	class View;
 	class Core;
-	class ScanExtender;
 
 	/**
 		Item delegate which keeps track of of ScanExtenders
@@ -47,9 +47,9 @@ namespace kt
 		virtual ~ViewDelegate();
 		
 		/**
-			Create a ScanExtender and start checking data.
+			Extend a torrent with a widget
 		*/
-		void checkData(bt::TorrentInterface* tc);
+		void extend(bt::TorrentInterface* tc,QWidget* widget);
 		
 		virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -65,8 +65,11 @@ namespace kt
 		/// Hide the extender for a torrent
 		void hideExtender(bt::TorrentInterface* tc);
 		
+	public slots:
+		/// Close the extender of a torrent
+		void closeExtender(bt::TorrentInterface* tc);
+		
 	private slots:
-		void closeExtender();
 		void torrentRemoved(bt::TorrentInterface* tc);
 		
 	private:
@@ -76,9 +79,10 @@ namespace kt
 		
 	private:
 		ViewModel* model;
-		QMap<bt::TorrentInterface*,ScanExtender*> extenders;
+		QMap<bt::TorrentInterface*,QWidget*> extenders;
 		
-		typedef QMap<bt::TorrentInterface*,ScanExtender*>::iterator ExtItr;
+		typedef QMap<bt::TorrentInterface*,QWidget*>::iterator ExtItr;
+		typedef QMap<bt::TorrentInterface*,QWidget*>::const_iterator ExtCItr;
 	};
 
 }

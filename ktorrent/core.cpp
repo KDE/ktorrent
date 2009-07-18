@@ -63,6 +63,7 @@
 #include "missingfilesdlg.h"
 #include "gui.h"
 #include "torrentmigratordlg.h"
+#include "scanlistener.h"
 
 
 using namespace bt;
@@ -261,7 +262,7 @@ namespace kt
 		if (tc->hasExistingFiles())
 		{
 			if (!skip_check)
-				gui->dataScan(tc,true,QString::null);
+				doDataCheck(tc);
 			else
 				tc->markExistingFilesAsDownloaded();
 		}
@@ -692,6 +693,11 @@ namespace kt
 			{
 				gui->errorMsg(e.toString());
 			}
+			
+			// cleanup potential data scans
+			QMap<bt::TorrentInterface*,ScanListener*>::iterator i = active_scans.find(tc);
+			if (i != active_scans.end())
+				closeScanListener(i.value());
 			
 			torrentRemoved(tc);
 			gman->torrentRemoved(tc);
@@ -1162,13 +1168,36 @@ namespace kt
 		Out(SYS_GEN|LOG_IMPORTANT) << "Doing an automatic data check on " 
 					<< tc->getStats().torrent_name << endl;
 		
-		gui->dataScan(tc,true,QString::null);
+		doDataCheck(tc);
 	}
 
 	void Core::doDataCheck(bt::TorrentInterface* tc)
 	{
-		gui->dataScan(tc,false,i18n("Checking Data Integrity"));
+		QMap<bt::TorrentInterface*,ScanListener*>::iterator itr = active_scans.find(tc);
+		if (itr == active_scans.end())
+		{
+			ScanListener* listener = new ScanListener(tc);
+			connect(listener,SIGNAL(closeRequested(ScanListener*)),this,SLOT(closeScanListener(ScanListener*)));
+			active_scans.insert(tc,listener);
+			gui->dataScanStarted(listener);
+			tc->startDataCheck(listener);
+		}
+		else
+		{
+			ScanListener* listener = itr.value();
+			if (listener->isFinished())
+				listener->restart();
+		}
 	}
+	
+	
+	void Core::closeScanListener(ScanListener* sl)
+	{
+		gui->dataScanClosed(sl);
+		active_scans.remove(sl->torrent());
+		sl->deleteLater();
+	}
+
 
 	void Core::onLowDiskSpace(bt::TorrentInterface * tc, bool stopped)
 	{

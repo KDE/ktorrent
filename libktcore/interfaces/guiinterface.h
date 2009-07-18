@@ -40,6 +40,7 @@ namespace bt
 
 namespace kt
 {
+	class ScanListener;
 	class PrefPageInterface;
 	class Plugin;
 	class GUIInterface;
@@ -114,8 +115,11 @@ namespace kt
 		 */
 		virtual void removePluginGui(Plugin* p) = 0;
 	
-		/// Show a scan dialog, and start the data scan
-		virtual void dataScan(bt::TorrentInterface* tc,bool silently,const QString & dlg_caption) = 0;
+		/// A data scan was started, show in the gui
+		virtual void dataScanStarted(ScanListener* listener) = 0;
+		
+		/// A data scan was closed, remove it from the gui
+		virtual void dataScanClosed(ScanListener* listener) = 0;
 
 		/// Select the files to download, return false if users cancels
 		virtual bool selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check) = 0;

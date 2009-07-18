@@ -17,47 +17,68 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_SCANEXTENDER_H
-#define KT_SCANEXTENDER_H
+#ifndef KT_SCANLISTENER_H
+#define KT_SCANLISTENER_H
 
-#include <QWidget>
-#include <QTimer>
-#include "scanlistener.h"
-#include "ui_scanextender.h"
-
-namespace bt
-{
-	class TorrentInterface;
-}
-
+#include <QMutex>
+#include <QObject>
+#include <datachecker/datacheckerlistener.h>
+#include <interfaces/torrentinterface.h>
 
 namespace kt 
 {
+	class ScanExtender;
 	
 	/**
-		Extender widget which displays the results of a data scan
+		DataCheckerListener for KT which keeps track of the progress of a datascan
 	*/
-	class ScanExtender : public QWidget,public Ui_ScanExtender
+	class ScanListener : public QObject,public bt::DataCheckerListener
 	{
 		Q_OBJECT
 	public:
-		ScanExtender(ScanListener* lst,bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~ScanExtender();
+		ScanListener(bt::TorrentInterface* tc);
+		virtual ~ScanListener();
 		
-		bt::TorrentInterface* torrent() {return tc;}
-
-	private slots:
-		void update();
-		void cancelPressed();
-		void finished();
+		/// Update progress info, runs in scan thread
+		virtual void progress(bt::Uint32 num,bt::Uint32 total);
+		
+		/// Update status info, runs in scan thread
+		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_found,bt::Uint32 num_downloaded,bt::Uint32 num_not_downloaded);
+		
+		/// Scan finished, runs in app thread
+		virtual void finished();
+		
+		/// Reset the listener
 		void restart();
-		void closeRequested();
+		
+		/// Is the scan finished ?
+		bool isFinished() const {return done;}
+		
+		/// Emit the close requested signal
+		void emitCloseRequested();
+		
+		/// Get the torrent 
+		bt::TorrentInterface* torrent() {return tc;}
+	
+	signals:
+		void scanFinished();
+		void restarted();
+		void closeRequested(ScanListener* me);
+		
+	public:
+		bt::Uint32 num_chunks;
+		bt::Uint32 total_chunks;
+		bt::Uint32 num_found;
+		bt::Uint32 num_downloaded;
+		bt::Uint32 num_not_downloaded;
+		bt::Uint32 num_failed;
+		QMutex mutex;
 		
 	private:
-		QTimer timer;
+		bool done;
 		bt::TorrentInterface* tc;
-		ScanListener* listener;
 	};
+
 }
 
-#endif // KT_SCANEXTENDER_H
+#endif // KT_SCANLISTENER_H

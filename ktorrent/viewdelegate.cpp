@@ -18,7 +18,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "viewdelegate.h"
-#include "scanextender.h"
 #include "viewmodel.h"
 #include "core.h"
 #include "view.h"
@@ -36,43 +35,39 @@ namespace kt
 		contractAll();
 	}
 	
-	void ViewDelegate::checkData(bt::TorrentInterface* ti)
+	
+	void ViewDelegate::extend(bt::TorrentInterface* tc, QWidget* widget)
 	{
-		if (!ti)
-			return;
-		
-		QMap<bt::TorrentInterface*,ScanExtender*>::iterator itr = extenders.find(ti);
-		ScanExtender* ext = itr == extenders.end() ? 0 : itr.value();
+		ExtItr itr = extenders.find(tc);
+		QWidget* ext = itr == extenders.end() ? 0 : itr.value();
 		if (!ext)
 		{
-			ext = new ScanExtender(ti,0);
-			connect(ext,SIGNAL(closeRequested()),this,SLOT(closeExtender()));
-			extenders.insert(ti,ext);
+			ext = widget;
+			extenders.insert(tc,ext);
 			QAbstractItemView *aiv = qobject_cast<QAbstractItemView *>(parent());
 			if (aiv) 
 				ext->setParent(aiv->viewport());
 			
-			ti->startDataCheck(ext);
 			scheduleUpdateViewLayout();
-		}
-		else if (ext->scanFinished())
-		{
-			ext->restart();
 		}
 	}
 	
-	void ViewDelegate::closeExtender()
+	void ViewDelegate::closeExtender(bt::TorrentInterface* tc)
 	{
-		ScanExtender* ext = (ScanExtender*)sender();
-		extenders.remove(ext->torrent());
-		ext->hide();
-		ext->deleteLater();
-		scheduleUpdateViewLayout();
+		ExtItr itr = extenders.find(tc);
+		QWidget* ext = itr == extenders.end() ? 0 : itr.value();
+		if (ext)
+		{
+			extenders.remove(tc);
+			ext->hide();
+			ext->deleteLater();
+			scheduleUpdateViewLayout();
+		}
 	}
 
 	void ViewDelegate::torrentRemoved(bt::TorrentInterface* tc)
 	{
-		QMap<bt::TorrentInterface*,ScanExtender*>::iterator itr = extenders.find(tc);
+		ExtItr itr = extenders.find(tc);
 		if (itr != extenders.end())
 			extenders.erase(itr);
 	}
@@ -97,8 +92,8 @@ namespace kt
 		if (!tc)
 			return size;
 		
-		QMap<bt::TorrentInterface*,ScanExtender*>::const_iterator itr = extenders.find(tc);
-		const ScanExtender* ext = itr == extenders.end() ? 0 : itr.value();
+		ExtCItr itr = extenders.find(tc);
+		const QWidget* ext = itr == extenders.end() ? 0 : itr.value();
 		if (!ext)
 			return size;
 		
@@ -152,7 +147,7 @@ namespace kt
 			return;
 		}
 		
-		ScanExtender* extender = extenders[tc];
+		QWidget* extender = extenders[tc];
 		int extenderHeight = extender->sizeHint().height();
 		
 		
@@ -211,7 +206,7 @@ namespace kt
 
 	void ViewDelegate::contractAll()
 	{
-		for (QMap<bt::TorrentInterface*,ScanExtender*>::iterator i = extenders.begin();i != extenders.end();i++)
+		for (ExtItr i = extenders.begin();i != extenders.end();i++)
 		{
 			i.value()->hide();
 			i.value()->deleteLater();

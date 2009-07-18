@@ -249,5 +249,17 @@ namespace kt
 	{
 		return view_man->getCurrentView();
 	}
+	
+	
+	void TorrentActivity::dataScanStarted(ScanListener* listener)
+	{
+		view_man->dataScanStarted(listener);
+	}
+
+	void TorrentActivity::dataScanClosed(ScanListener* listener)
+	{
+		view_man->dataScanClosed(listener);
+	}
+
 
 }

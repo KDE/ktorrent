@@ -169,11 +169,18 @@ namespace kt
 		guiFactory()->removeClient(p);
 	}
 	
-	void GUI::dataScan(bt::TorrentInterface* tc,bool silently,const QString & dlg_caption)
+	
+	void GUI::dataScanStarted(ScanListener* listener)
 	{
-		torrent_activity->getCurrentView()->checkData(tc);
+		torrent_activity->dataScanStarted(listener);
 		core->startUpdateTimer(); // make sure update timer is running
 	}
+	
+	void GUI::dataScanClosed(ScanListener* listener)
+	{
+		torrent_activity->dataScanClosed(listener);
+	}
+
 
 	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check)
 	{

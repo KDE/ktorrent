@@ -17,47 +17,68 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_SCANEXTENDER_H
-#define KT_SCANEXTENDER_H
-
-#include <QWidget>
-#include <QTimer>
 #include "scanlistener.h"
-#include "ui_scanextender.h"
 
-namespace bt
+namespace kt
 {
-	class TorrentInterface;
-}
-
-
-namespace kt 
-{
-	
-	/**
-		Extender widget which displays the results of a data scan
-	*/
-	class ScanExtender : public QWidget,public Ui_ScanExtender
+	ScanListener::ScanListener(bt::TorrentInterface* tc) : QObject(tc),bt::DataCheckerListener(false),done(false),tc(tc)
 	{
-		Q_OBJECT
-	public:
-		ScanExtender(ScanListener* lst,bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~ScanExtender();
+		num_chunks = 0;
+		total_chunks = 0;
+		num_downloaded = 0;
+		num_failed = 0;
+		num_found = 0;
+		num_not_downloaded = 0;
+	}
+	
+	
+	ScanListener::~ScanListener()
+	{
 		
-		bt::TorrentInterface* torrent() {return tc;}
+	}
+	
+	void ScanListener::progress(bt::Uint32 num, bt::Uint32 total)
+	{
+		QMutexLocker lock(&mutex);
+		num_chunks = num;
+		total_chunks = total;
+	}
+	
+	void ScanListener::status(bt::Uint32 num_failed, bt::Uint32 num_found, bt::Uint32 num_downloaded, bt::Uint32 num_not_downloaded)
+	{
+		QMutexLocker lock(&mutex);
+		this->num_downloaded = num_downloaded;
+		this->num_failed = num_failed;
+		this->num_found = num_found;
+		this->num_not_downloaded = num_not_downloaded;
+	}
 
-	private slots:
-		void update();
-		void cancelPressed();
-		void finished();
-		void restart();
-		void closeRequested();
-		
-	private:
-		QTimer timer;
-		bt::TorrentInterface* tc;
-		ScanListener* listener;
-	};
+	void ScanListener::restart()
+	{
+		num_chunks = 0;
+		total_chunks = 0;
+		num_downloaded = 0;
+		num_failed = 0;
+		num_found = 0;
+		num_not_downloaded = 0;
+		done = false;
+		restarted();
+		tc->startDataCheck(this);
+	}
+	
+	void ScanListener::finished()
+	{
+		done = true;
+		scanFinished();
+	}
+	
+	
+	void ScanListener::emitCloseRequested()
+	{
+		emit closeRequested(this);
+	}
+
+
+	
 }
 
-#endif // KT_SCANEXTENDER_H

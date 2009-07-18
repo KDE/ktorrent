@@ -25,6 +25,7 @@ set(ktorrent_SRC
 	groupview.cpp
 	scandlg.cpp
 	scanextender.cpp
+	scanlistener.cpp
 	trayicon.cpp
 	pastedialog.cpp
 	ipfilterlist.cpp
