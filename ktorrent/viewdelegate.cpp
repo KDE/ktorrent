@@ -219,6 +219,22 @@ namespace kt
 		}
 		extenders.clear();
 	}
+	
+	
+	bool ViewDelegate::extended(bt::TorrentInterface* tc) const
+	{
+		return extenders.contains(tc);
+	}
+	
+	
+	void ViewDelegate::hideExtender(bt::TorrentInterface* tc)
+	{
+		ExtItr i = extenders.find(tc);
+		if (i != extenders.end())
+			i.value()->hide();
+	}
+
+
 
 }
 

@@ -134,7 +134,7 @@ namespace kt
 
 	void View::update()
 	{
-		model->update();
+		model->update(delegate);
 	}
 
 	bool View::needToUpdateCaption()

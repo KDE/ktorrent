@@ -27,6 +27,7 @@
 
 namespace kt
 {
+	class ViewDelegate;
 	class Core;
 	class Group;
 	
@@ -50,10 +51,11 @@ namespace kt
 		
 		/**
 		 * Update the model, checks if data has changed.
+		 $ @param delegate The ViewDelegate, so we don't hide extended items
 		 * @param force_resort Force a resort
 		 * @return true if the model got resorted
 		 */
-		bool update(bool force_resort = false);
+		bool update(ViewDelegate* delegate,bool force_resort = false);
 		
 		/// Is a column a default column for an upload view
 		bool defaultColumnForUpload(int column);

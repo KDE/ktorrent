@@ -59,6 +59,12 @@ namespace kt
 		*/
 		void contractAll();
 		
+		/// Is an extender being shown for a torrent
+		bool extended(bt::TorrentInterface* tc) const;
+		
+		/// Hide the extender for a torrent
+		void hideExtender(bt::TorrentInterface* tc);
+		
 	private slots:
 		void closeExtender();
 		void torrentRemoved(bt::TorrentInterface* tc);
@@ -71,6 +77,8 @@ namespace kt
 	private:
 		ViewModel* model;
 		QMap<bt::TorrentInterface*,ScanExtender*> extenders;
+		
+		typedef QMap<bt::TorrentInterface*,ScanExtender*>::iterator ExtItr;
 	};
 
 }

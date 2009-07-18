@@ -35,6 +35,7 @@
 #include "core.h"
 #include <interfaces/trackerinterface.h>
 #include <util/sha1hash.h>
+#include "viewdelegate.h"
 
 using namespace bt;
 
@@ -323,13 +324,11 @@ namespace kt
 	void ViewModel::setGroup(Group* g)
 	{
 		group = g;
-		update();
 	}
 	
 	void ViewModel::addTorrent(bt::TorrentInterface* ti)
 	{
 		torrents.append(new Item(ti));
-		update(true);
 	}
 	
 	void ViewModel::removeTorrent(bt::TorrentInterface* ti)
@@ -341,7 +340,6 @@ namespace kt
 			if (item->tc == ti)
 			{
 				removeRow(idx);
-				update(true);
 				break;
 			}
 			idx++;
@@ -355,7 +353,7 @@ namespace kt
 		//emit dataChanged(createIndex(row,0),createIndex(row,14));
 	}
 
-	bool ViewModel::update(bool force_resort)
+	bool ViewModel::update(ViewDelegate* delegate,bool force_resort)
 	{
 		bool resort = force_resort;
 		Uint32 idx=0;
@@ -366,11 +364,14 @@ namespace kt
 			if (i->update(sort_column,modified))
 				resort = true;
 			
-			bool hidden = !i->member(group);
+			bool hidden = !i->member(group)/* && !delegate->extended(i->tc) */;
 			if (hidden != i->hidden)
 			{
 				i->hidden = hidden;
 				resort = true;
+				// hide the extender if there is one shown
+				if (hidden && delegate->extended(i->tc))
+					delegate->hideExtender(i->tc);
 			}
 			
 			if (!i->hidden)
