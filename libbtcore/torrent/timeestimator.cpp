@@ -62,7 +62,7 @@ namespace bt
 		{
 			if (s.max_share_ratio >= 0.01f)
 			{
-				float ratio = bt::ShareRatio(s);
+				float ratio = s.shareRatio();
 				float delta = s.max_share_ratio - ratio;
 				if (delta <= 0.0f)
 					return -1;

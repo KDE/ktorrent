@@ -151,7 +151,7 @@ namespace kt
 		downloaded_bar->updateBar();
 		availability_bar->updateBar();
 	
-		float ratio = bt::ShareRatio(s);
+		float ratio = s.shareRatio();
 		if(!ratio_limit->hasFocus())
 			maxRatioUpdate();
 		
@@ -216,7 +216,7 @@ namespace kt
 				ratio_limit->setValue(1.00f);
 			}
 			
-			float sr = bt::ShareRatio(curr_tc->getStats());
+			float sr = curr_tc->getStats().shareRatio();
 			if(sr >= 1.00f)
 			{
 				//always add 1 to max share ratio to prevent stopping if torrent is running.

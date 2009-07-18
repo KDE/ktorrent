@@ -166,12 +166,6 @@ namespace bt
 		Uint32 bytesAvailable() const;
 		
 		/**
-		 * See if all previously written data, has been sent.
-		 */
-		bool readyToSend() const;
-		
-		
-		/**
 		 * Close the peers connection.
 		 */
 		void closeConnection();
@@ -243,16 +237,7 @@ namespace bt
 		static void setResolveHostnames(bool on);
 		
 	private slots:
-		void dataWritten(int bytes);
 		void resolved(const QHostInfo & hinfo);
-
-	signals:		
-		/**
-		 * Got a port packet from this peer.
-		 * @param ip The IP
-		 * @param port The port
-		 */
-		void gotPortPacket(const QString & ip,Uint16 port);
 		
 	private:
 		void packetReady(const Uint8* packet,Uint32 size);

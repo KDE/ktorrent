@@ -130,6 +130,7 @@ set(libbtcore_SRC
 	torrent/advancedchokealgorithm.cpp
 	torrent/torrentcontrol.cpp
 	torrent/torrentcreator.cpp
+	torrent/torrentstats.cpp
 
 	dht/announcetask.cpp  
 	dht/dht.cpp                
@@ -328,6 +329,7 @@ set (torrent_HDR
 	./torrent/torrentfile.h
 	./torrent/statsfile.h
 	./torrent/globals.h
+	./torrent/stats.h
 )
 	
 set (tracker_HDR

@@ -65,7 +65,7 @@ namespace kt
 			out.writeStartElement("torrent");
 			writeElement(out,"name",ti->getDisplayName());
 			writeElement(out,"info_hash",ti->getInfoHash().toString());
-			writeElement(out,"status",ti->statusToString());
+			writeElement(out,"status",s.statusToString());
 			writeElement(out,"bytes_downloaded",BytesToString(s.bytes_downloaded));
 			writeElement(out,"bytes_uploaded",BytesToString(s.bytes_uploaded));
 			writeElement(out,"total_bytes",BytesToString(s.total_bytes));

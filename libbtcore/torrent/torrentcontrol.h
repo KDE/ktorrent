@@ -98,14 +98,12 @@ namespace bt
 		 * @param tmpdir The directory to store temporary data
 		 * @param datadir The directory to store the actual file(s)
 		 * 		(only used the first time we load a torrent)
-		 * @param default_save_dir Default save directory (null if not set)
 		 * @throw Error when something goes wrong
 		 */
 		void init(QueueManagerInterface* qman,
 				const QString & torrent,
 				const QString & tmpdir,
-				const QString & datadir,
-				const QString & default_save_dir);
+				const QString & datadir);
 		
 		/**
 		 * Initialize the TorrentControl. 
@@ -114,14 +112,12 @@ namespace bt
 		 * @param tmpdir The directory to store temporary data
 		 * @param datadir The directory to store the actual file(s)
 		 * 		(only used the first time we load a torrent)
-		 * @param default_save_dir Default save directory (null if not set)
 		 * @throw Error when something goes wrong
 		 */
 		void init(QueueManagerInterface* qman,
 				  const QByteArray & data,
 				  const QString & tmpdir,
-				  const QString & datadir,
-				  const QString & default_save_dir);
+				  const QString & datadir);
 
 		/**
 		 * Change to a new data dir. If this fails
@@ -178,9 +174,6 @@ namespace bt
 		 * @return Uint32 - time in seconds
 		 */
 		Uint32 getRunningTimeUL() const;
-
-		/// Get a short error message
-		QString getShortErrorMessage() const {return error_msg;}
 		
 		virtual Uint32 getNumFiles() const;
 		virtual TorrentFileInterface & getTorrentFile(Uint32 index);
@@ -214,9 +207,6 @@ namespace bt
 		/// Tell the TorrentControl obj to preallocate diskspace in the next update
 		void setPreallocateDiskSpace(bool pa) {prealloc = pa;}
 		
-		/// Make a string out of the status message
-		virtual QString statusToString() const;
-		
 		/// Checks if tracker announce is allowed (minimum interval 60 seconds)
 		bool announceAllowed();
 		
@@ -236,7 +226,6 @@ namespace bt
 		virtual const DHTNode & getDHTNode(Uint32 i) const;
 		virtual void deleteDataFiles();
 		virtual const bt::PeerID & getOwnPeerID() const;
-		virtual bool updateNeeded() const;
 		virtual QString getComments() const;
 		
 		/**
@@ -344,7 +333,6 @@ namespace bt
 		void onPeerRemoved(Peer* p);
 		void doChoking();
 		void onIOError(const QString & msg);
-		void onPortPacket(const QString & ip,Uint16 port);
 		/// Update the stats of the torrent.
 		void updateStats();
 		void corrupted(Uint32 chunk);
@@ -363,13 +351,9 @@ namespace bt
 		void loadEncoding();
 		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
 		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
-		void migrateTorrent(const QString & default_save_dir);
 		void continueStart();
 		virtual void handleError(const QString & err);
-
-		void initInternal(QueueManagerInterface* qman,const QString & tmpdir,
-						  const QString & ddir,const QString & default_save_dir,bool first_time);
-		
+		void initInternal(QueueManagerInterface* qman,const QString & tmpdir,const QString & ddir);
 		void checkExisting(QueueManagerInterface* qman);
 		void setupDirs(const QString & tmpdir,const QString & ddir);
 		void setupStats();

@@ -241,6 +241,9 @@ namespace bt
 		/// A PEX message was received
 		void pex(const QByteArray & arr);
 		
+		/// A port packet was received
+		void portPacketReceived(const QString & ip,Uint16 port);
+		
 		/// A Piece was received
 		void pieceReceived(const Piece & p);
 		

@@ -32,6 +32,8 @@
 #include <mse/encryptedauthenticate.h>
 #include <klocale.h>
 #include <peer/accessmanager.h>
+#include <torrent/globals.h>
+#include <dht/dhtbase.h>
 #include "packetwriter.h"
 #include "chunkcounter.h"
 #include "authenticationmonitor.h"
@@ -661,6 +663,12 @@ namespace bt
 			Peer* p = i->second;
 			p->setGroupIDs(up,down);
 		}
+	}
+		
+	void PeerManager::portPacketReceived(const QString& ip, Uint16 port)
+	{
+		if (Globals::instance().getDHT().isRunning() && !tor.isPrivate())
+			Globals::instance().getDHT().portReceived(ip,port);
 	}
 	
 	void PeerManager::pieceReceived(const Piece & p)

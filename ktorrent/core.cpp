@@ -301,8 +301,7 @@ namespace kt
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Loading torrent from data " << endl;
 			tc = new TorrentControl();
-			tc->init(qman, data, tdir, dir, 
-					 Settings::useSaveDir() ? Settings::saveDir().path() : QString());
+			tc->init(qman, data, tdir, dir);
 			tc->setLoadUrl(url);
 			
 			if(!init(tc,group,silently))
@@ -342,8 +341,7 @@ namespace kt
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Loading file " << target << endl;
 			tc = new TorrentControl();
-			tc->init(qman, target, tdir, dir, 
-				 Settings::useSaveDir() ? Settings::saveDir().path() : QString());
+			tc->init(qman, target, tdir, dir);
 			tc->setLoadUrl(KUrl(target));
 			
 			init(tc,group,silently);
@@ -641,8 +639,7 @@ namespace kt
 		try
 		{
 			tc = new TorrentControl();
-			tc->init(qman,idir + "torrent",idir,QString::null,
-				 Settings::useSaveDir() ? Settings::saveDir().path() : QString());
+			tc->init(qman,idir + "torrent",idir,QString::null);
 				
 			qman->append(tc);
 			connectSignals(tc);
@@ -876,7 +873,7 @@ namespace kt
 			while (i != qman->end())
 			{
 				bt::TorrentInterface* tc = *i;
-				if (tc->updateNeeded())
+				if (tc->getStats().running)
 				{
 					tc->update();
 					updated = true;

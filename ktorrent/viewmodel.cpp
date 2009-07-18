@@ -57,7 +57,7 @@ namespace kt
 		leechers_total = s.leechers_total;
 		leechers_connected_to = s.leechers_connected_to;
 		percentage = Percentage(s);
-		share_ratio = ShareRatio(s);
+		share_ratio = s.shareRatio();
 		runtime_dl = tc->getRunningTimeDL();
 		runtime_ul = tc->getRunningTimeUL() - tc->getRunningTimeDL();
 		hidden = false;
@@ -152,7 +152,7 @@ namespace kt
 				ret = true;
 		}
 		
-		float ratio = ShareRatio(s);
+		float ratio = s.shareRatio();
 		if (fabsf(share_ratio - ratio) > 0.01)
 		{
 			modified = true;
@@ -188,7 +188,7 @@ namespace kt
 		switch (col)
 		{
 			case 0: return tc->getDisplayName();
-			case 1: return tc->statusToString();
+			case 1: return s.statusToString();
 			case 2: return BytesToString(bytes_downloaded);
 			case 3: return BytesToString(total_bytes_to_download);
 			case 4: return BytesToString(bytes_uploaded);
@@ -229,7 +229,7 @@ namespace kt
 		switch (col)
 		{
 			case 0: return QString::localeAwareCompare(tc->getDisplayName(),other->tc->getDisplayName()) < 0;
-			case 1: return tc->statusToString() < other->tc->statusToString();
+			case 1: return tc->getStats().statusToString() < other->tc->getStats().statusToString();
 			case 2: return bytes_downloaded < other->bytes_downloaded;
 			case 3: return total_bytes_to_download < other->total_bytes_to_download;
 			case 4: return bytes_uploaded < other->bytes_uploaded;
