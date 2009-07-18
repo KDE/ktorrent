@@ -294,6 +294,7 @@ namespace bt
 		stats.stopped_by_error = true;
 		stats.status = ERROR;
 		stats.error_msg = msg;
+		stats.running = false;
 		istats.io_error = true;
 		statusChanged(this);
 	}
@@ -1763,6 +1764,11 @@ namespace bt
 	void TorrentControl::setAllowedToStart(bool on)
 	{
 		stats.qm_can_start = on;
+		if (on && stats.stopped_by_error)
+		{
+			// clear the error so user can restart the torrent
+			stats.stopped_by_error = false;
+		}
 		saveStats();
 	}
 	
@@ -1781,6 +1787,8 @@ namespace bt
 	void TorrentControl::allJobsDone()
 	{
 		updateStatus();
+		// update the QM to be sure
+		updateQueue();
 	}
 
 

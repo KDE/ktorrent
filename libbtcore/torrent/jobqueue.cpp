@@ -86,12 +86,14 @@ namespace bt
 		}
 		else 
 		{
-			tc->allJobsDone();
 			if (restart)
 			{
 				tc->start();
+				tc->allJobsDone();
 				restart = false;
 			}
+			else
+				tc->allJobsDone();
 		}
 	}
 	

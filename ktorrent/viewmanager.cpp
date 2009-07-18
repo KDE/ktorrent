@@ -403,7 +403,7 @@ namespace kt
 				if (qm_enabled)
 				{
 					// Queued torrents can be stopped, and not started
-					if (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime())
+					if (s.queued)
 						en_stop = true;
 					else
 						en_start = true;
