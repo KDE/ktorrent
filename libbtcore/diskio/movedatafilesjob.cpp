@@ -36,8 +36,8 @@ namespace bt
 		: Job(true,0),err(false),active_job(0),running_recovery_jobs(0)
 	{
 		file_map = fmap;
-		QMap<TorrentFileInterface*,QString>::const_iterator i = file_map.begin();
-		while (i != file_map.end())
+		QMap<TorrentFileInterface*,QString>::const_iterator i = file_map.constBegin();
+		while (i != file_map.constEnd())
 		{
 			TorrentFileInterface* tf = i.key();
 			QString dest = i.value();
