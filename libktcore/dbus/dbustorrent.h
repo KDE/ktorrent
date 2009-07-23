@@ -62,9 +62,11 @@ namespace kt
 		Q_SCRIPTABLE qulonglong bytesLeft() const;
 		Q_SCRIPTABLE qulonglong bytesToDownload() const;
 		
-		// Priority
+		// Priority and QM
 		Q_SCRIPTABLE int priority() const;
 		Q_SCRIPTABLE void setPriority(int p);
+		Q_SCRIPTABLE void setAllowedToStart(bool on);
+		Q_SCRIPTABLE bool isAllowedToStart() const;
 		
 		// Chunks
 		Q_SCRIPTABLE uint chunks() const;

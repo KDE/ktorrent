@@ -428,6 +428,17 @@ namespace kt
 	void DBusTorrent::setPriority(int p)
 	{
 		ti->setPriority(p);
+	}	
+	
+	void DBusTorrent::setAllowedToStart(bool on)
+	{
+		ti->setAllowedToStart(on);
 	}
+
+	bool DBusTorrent::isAllowedToStart() const
+	{
+		return ti->isAllowedToStart();
+	}
+
 }
 
