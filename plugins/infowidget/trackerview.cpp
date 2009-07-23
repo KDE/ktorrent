@@ -79,12 +79,6 @@ namespace kt
 	{
 		if (!tc)
 			return;
-		
-		if (tc->getStats().priv_torrent)
-		{
-			KMessageBox::sorry(0, i18n("Cannot add a tracker to a private torrent."));
-			return;
-		}
 
 		bool ok = false;
 		QClipboard* clipboard = QApplication::clipboard();
@@ -183,25 +177,16 @@ namespace kt
 			m_change_tracker->setEnabled(false);
 			m_scrape->setEnabled(false);
 			model->changeTC(0);
-			return;
-		}
-		
-		const TorrentStats & s = tc->getStats();
-		if (s.priv_torrent)
-		{
-			m_add_tracker->setEnabled(false);
-			m_remove_tracker->setEnabled(false);
-			m_restore_defaults->setEnabled(false);
 		}
 		else
 		{
 			m_add_tracker->setEnabled(true);
 			m_remove_tracker->setEnabled(true);
 			m_restore_defaults->setEnabled(true);
+			m_scrape->setEnabled(true);
+			model->changeTC(tc);
+			currentChanged(m_tracker_list->selectionModel()->currentIndex(),QModelIndex());
 		}
-		m_scrape->setEnabled(true);
-		model->changeTC(tc);
-		currentChanged(m_tracker_list->selectionModel()->currentIndex(),QModelIndex());
 	}
 	
 	void TrackerView::currentChanged(const QModelIndex & current,const QModelIndex & previous)
