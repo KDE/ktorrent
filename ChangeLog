@@ -37,6 +37,7 @@ Changes in 3.3 :
 - Add filter box to speed limits dialog
 - Add jobsystem to each torrent
 - Data check progress is now shown inside the View
+- Make settings accessible to dbus and scripting engine
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent

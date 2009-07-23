@@ -31,6 +31,7 @@
 #include "dbustorrent.h"
 #include "dbusgroup.h"
 #include <QTimer>
+#include "dbussettings.h"
 
 using namespace bt;
 
@@ -70,6 +71,8 @@ namespace kt
 			groupAdded(i->second);
 			i++;
 		}
+		
+		dbus_settings = new DBusSettings(core,this);
 	}
 
 	DBus::~DBus()
@@ -281,5 +284,10 @@ namespace kt
 		core->getQueueManager()->orderQueue();
 	}
 	
+	QObject* DBus::settings()
+	{
+		return dbus_settings;
+	}
+
 }
 

@@ -39,7 +39,7 @@ namespace kt
 	class GUIInterface;
 	class CoreInterface;
 	class Group;
-	
+	class DBusSettings;
 
 	/**
 	 * Class which handles DBus calls
@@ -105,6 +105,9 @@ namespace kt
 		/// Get a group (this is for scripting)
 		Q_SCRIPTABLE QObject* group(const QString & name);
 		
+		/// Get the settings (this is for scripting)
+		Q_SCRIPTABLE QObject* settings();
+		
 		/// Write something to the log
 		Q_SCRIPTABLE void log(const QString & line);
 		
@@ -152,6 +155,7 @@ namespace kt
 		bt::PtrMap<QString,DBusTorrent> torrent_map;
 		bt::PtrMap<Group*,DBusGroup> group_map;
 		QMap<QString,bool> delayed_removal_map;
+		DBusSettings* dbus_settings;
 		
 		typedef bt::PtrMap<QString,DBusTorrent>::iterator DBusTorrentItr;
 		typedef bt::PtrMap<Group*,DBusGroup>::iterator DBusGroupItr;
