@@ -21,6 +21,9 @@
 #include "viewmodel.h"
 #include "core.h"
 #include "view.h"
+#include <QApplication>
+#include <QRect>
+
 
 namespace kt
 {
@@ -165,8 +168,30 @@ namespace kt
 		//tricky:make sure that the modified options' rect really has the
 		//same height as the unchanged option.rect if no extender is present
 		//(seems to work OK)
+		
 		QStyledItemDelegate::paint(painter, itemOption, index);
 	}
+	
+	
+	void ViewDelegate::updateEditorGeometry(QWidget* editor,const QStyleOptionViewItem& option,const QModelIndex& index) const
+	{
+		bt::TorrentInterface* tc = model->torrentFromIndex(index);
+		if (!tc || !extenders.contains(tc))
+		{
+			QStyledItemDelegate::updateEditorGeometry(editor,option,index);
+		}
+		else
+		{
+			QWidget* extender = extenders[tc];
+			int extenderHeight = extender->sizeHint().height();
+			
+			QStyleOptionViewItemV4 itemOption(option);
+			initStyleOption(&itemOption, index);
+			itemOption.rect.setHeight(option.rect.height() - extenderHeight);
+			editor->setGeometry(itemOption.rect);
+		}
+	}
+
 	
 	QRect ViewDelegate::extenderRect(QWidget *extender, const QStyleOptionViewItem &option, const QModelIndex &index) const
 	{

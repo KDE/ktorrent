@@ -53,6 +53,7 @@ namespace kt
 		
 		virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+		virtual void updateEditorGeometry(QWidget* editor,const QStyleOptionViewItem & option,const QModelIndex & index) const;
 		
 		/**
 		* Close all extenders and delete all extender widgets.
