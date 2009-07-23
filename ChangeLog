@@ -35,6 +35,8 @@ Changes in 3.3 :
 - Make refresh interval of syndication feeds configurable (193978)
 - Add hostname lookup for peers (145760)
 - Add filter box to speed limits dialog
+- Add jobsystem to each torrent
+- Data check progress is now shown inside the View
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent
