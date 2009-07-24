@@ -215,6 +215,7 @@ namespace kt
 		else
 			changePosition(TOP);
 		
+		delegate->setVertical(act == pos_left || act == pos_right);
 		updateSize();
 	}
 	
@@ -314,5 +315,6 @@ namespace kt
 				pos_right->setChecked(true);
 				break;
 		}
+		delegate->setVertical(pos == LEFT || pos == RIGHT);
 	}
 }

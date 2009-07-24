@@ -26,7 +26,7 @@
 namespace kt
 {
 	ActivityListDelegate::ActivityListDelegate(int icon_size,QObject* parent) 
-		: QStyledItemDelegate(parent),icon_size(icon_size),show_icons(true)
+		: QStyledItemDelegate(parent),icon_size(icon_size),show_icons(true),vertical(true)
 	{
 	}
 	
@@ -40,7 +40,7 @@ namespace kt
 			return;
 		
 		QStyleOptionViewItemV4 optionCopy(*static_cast<const QStyleOptionViewItemV4*>(&option));
-		optionCopy.decorationPosition = QStyleOptionViewItem::Top;
+		optionCopy.decorationPosition = vertical ? QStyleOptionViewItem::Top : QStyleOptionViewItem::Left;
 		optionCopy.decorationSize = QSize(icon_size,icon_size);
 		optionCopy.textElideMode = Qt::ElideNone;
 		QStyledItemDelegate::paint(painter,optionCopy,index);
@@ -52,7 +52,7 @@ namespace kt
 			return QStyledItemDelegate::sizeHint(option,index);
 		
 		QStyleOptionViewItemV4 optionCopy(*static_cast<const QStyleOptionViewItemV4*>(&option));
-		optionCopy.decorationPosition = QStyleOptionViewItem::Top;
+		optionCopy.decorationPosition = vertical ? QStyleOptionViewItem::Top : QStyleOptionViewItem::Left;
 		optionCopy.decorationSize = show_icons ? QSize(icon_size,icon_size) : QSize();
 		optionCopy.textElideMode = Qt::ElideNone;
 		return QStyledItemDelegate::sizeHint(optionCopy,index);

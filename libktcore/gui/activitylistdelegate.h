@@ -36,9 +36,11 @@ namespace kt
 		virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 		void setIconSize(int size) {icon_size = size;}
 		void setShowIcons(bool icons) {show_icons = icons;}
+		void setVertical(bool on) {vertical = on;}
 	private:
 		int icon_size;
 		bool show_icons;
+		bool vertical;
 	};
 }
 
