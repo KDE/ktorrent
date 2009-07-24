@@ -39,6 +39,7 @@ Changes in 3.3 :
 - Data check progress is now shown inside the View
 - Make settings accessible to dbus and scripting engine
 - Allow to add tracker to private torrents (198444)
+- Make it possible to suspend output of logviewer (200730)
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent

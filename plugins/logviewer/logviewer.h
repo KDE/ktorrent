@@ -42,10 +42,17 @@ namespace kt
 		
 		void setRichText(bool val);
 		
+	public slots:
+		void showMenu(const QPoint & pos);
+		void pause(bool on);
+		
 	private:
-		bool m_useRichText;
+		bool use_rich_text;
 		LogFlags* flags;
 		QTextBrowser* output;
+		bool paused;
+		QMenu* menu;
+		QAction* pause_action;
 	};
 
 }
