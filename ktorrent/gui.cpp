@@ -539,7 +539,8 @@ namespace kt
 		
 		show_kt_action = new KAction(KIcon("kt-show-hide"),i18n("Show/Hide KTorrent"),this);
 		connect(show_kt_action,SIGNAL(triggered()),this,SLOT(showOrHide()));
-		show_kt_action->setGlobalShortcut(KShortcut(Qt::ALT+ Qt::CTRL + Qt::Key_T), 
+		show_kt_action->setObjectName("ktorrent-show-hide-action");
+		show_kt_action->setGlobalShortcut(KShortcut(Qt::ALT+ Qt::SHIFT + Qt::Key_T), 
 										  KAction::ActiveShortcut | KAction::DefaultShortcut,KAction::Autoloading);
 		show_kt_action->setShortcut(show_kt_action->globalShortcut());
 		ac->addAction("show_kt",show_kt_action);
