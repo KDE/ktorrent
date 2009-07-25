@@ -40,6 +40,8 @@ Changes in 3.3 :
 - Make settings accessible to dbus and scripting engine
 - Allow to add tracker to private torrents (198444)
 - Make it possible to suspend output of logviewer (200730)
+- Add paused overlay on tray icon when queue is paused (174542)
+- Add global shortcut to pause the QM
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent

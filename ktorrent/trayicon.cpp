@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <QPainter>
 #include <QtAlgorithms>
+#include <KIcon>
 #include <klocale.h>
 #include <kapplication.h>
 #include <qtooltip.h>
@@ -31,7 +32,7 @@
 #include <util/log.h>
 #include <settings.h>
 #include <interfaces/torrentinterface.h>
-//#include "trayhoverpopup.h"
+#include <torrent/queuemanager.h>
 #include "core.h"
 #include "trayicon.h"
 
@@ -40,35 +41,37 @@ using namespace bt;
 
 namespace kt
 {
-
-	TrayIcon::TrayIcon(Core* core, QWidget *parent)	: KSystemTrayIcon(parent),m_kt_pix("ktorrent"),mwnd(parent)
+	
+	
+	TrayIcon::TrayIcon(Core* core, QWidget *parent)	: KSystemTrayIcon(parent),core(core),icon("ktorrent"),mwnd(parent)
 	{
-		m_core = core;
-		setIcon(m_kt_pix);
+		setIcon(icon);
 		
 		previousDownloadHeight=0;
 		previousUploadHeight=0;
 		
 
 		connect(this,SIGNAL(quitSelected()),kapp,SLOT(quit()));
-		connect(m_core, SIGNAL(finished(bt::TorrentInterface* )),
+		connect(core, SIGNAL(finished(bt::TorrentInterface* )),
 			this, SLOT(finished(bt::TorrentInterface* )));
-		connect(m_core,SIGNAL(torrentStoppedByError(bt::TorrentInterface*, QString )),
+		connect(core,SIGNAL(torrentStoppedByError(bt::TorrentInterface*, QString )),
 			this,SLOT(torrentStoppedByError(bt::TorrentInterface*, QString )));
-		connect(m_core,SIGNAL(maxShareRatioReached( bt::TorrentInterface* )),
+		connect(core,SIGNAL(maxShareRatioReached( bt::TorrentInterface* )),
 				this,SLOT(maxShareRatioReached( bt::TorrentInterface* )));
-		connect(m_core,SIGNAL(maxSeedTimeReached(bt::TorrentInterface*)),
+		connect(core,SIGNAL(maxSeedTimeReached(bt::TorrentInterface*)),
 				this, SLOT(maxSeedTimeReached(bt::TorrentInterface*)));
-		connect(m_core,SIGNAL(corruptedData( bt::TorrentInterface* )),
+		connect(core,SIGNAL(corruptedData( bt::TorrentInterface* )),
 				this,SLOT(corruptedData( bt::TorrentInterface* )));
-		connect(m_core, SIGNAL(queuingNotPossible( bt::TorrentInterface* )),
+		connect(core, SIGNAL(queuingNotPossible( bt::TorrentInterface* )),
 				this, SLOT(queuingNotPossible( bt::TorrentInterface* )));
-		connect(m_core,SIGNAL(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)),
+		connect(core,SIGNAL(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)),
 				this,SLOT(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)));
-		connect(m_core, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
+		connect(core, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
 				this, SLOT(lowDiskSpace(bt::TorrentInterface*, bool)));
-		connect(m_core,SIGNAL(canNotLoadSilently(const QString&)),
+		connect(core,SIGNAL(canNotLoadSilently(const QString&)),
 				this,SLOT(cannotLoadTorrentSilently(const QString&)));
+		connect(core->getQueueManager(),SIGNAL(pauseStateChanged(bool)),
+				this,SLOT(pauseStateChanged(bool))); 
 		
 		KMenu* m = new KMenu(parent);
 		setContextMenu(m);
@@ -79,6 +82,8 @@ namespace kt
 		m->addMenu(max_download_rate);
 		m->addMenu(max_upload_rate);
 		m->addSeparator();
+		
+		paused_overlay = KIcon("media-playback-pause").pixmap(10,10);
 	}
 
 	TrayIcon::~TrayIcon()
@@ -104,7 +109,7 @@ namespace kt
 
 	void TrayIcon::showPassivePopup(const QString & msg,const QString & title)
 	{
-		KPassivePopup* p = KPassivePopup::message(KPassivePopup::Boxed,title,msg,m_kt_pix.pixmap(100,QIcon::Normal,QIcon::On),this);
+		KPassivePopup* p = KPassivePopup::message(KPassivePopup::Boxed,title,msg,icon.pixmap(100,QIcon::Normal,QIcon::On),this);
 		p->setPalette(QToolTip::palette());
 		p->setLineWidth(1);
 	}
@@ -361,6 +366,26 @@ namespace kt
 		}
 		Settings::self()->writeConfig();
 	}
+		
+	void TrayIcon::pauseStateChanged(bool paused)
+	{
+		if (!paused || paused_overlay.isNull())
+		{
+			setIcon(icon);
+		}
+		else
+		{
+			QPixmap paused_icon = icon.pixmap(geometry().size());
+			// draw overlay at bottom right
+			const int x = geometry().size().width() - paused_overlay.size().width();
+			const int y = geometry().size().height() - paused_overlay.size().width();
+			QPainter p(&paused_icon);
+			p.drawPixmap(x,y,paused_overlay);
+			p.end();
+			setIcon(paused_icon);
+		}
+	}
+
 }
 
 #include "trayicon.moc"

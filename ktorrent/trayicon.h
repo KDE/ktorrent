@@ -26,11 +26,17 @@
 #include <ksystemtrayicon.h>
 #include <util/constants.h>
 
+namespace bt
+{
+	class TorrentInterface;
+}
+
 using namespace bt;
 class QString;
 
 namespace kt
 {
+	class CurrentStats;
 	class Core;
 	class SetMaxRate;
 	class TorrentInterface;
@@ -116,11 +122,16 @@ namespace kt
 		 */
 		void cannotLoadTorrentSilently(const QString & msg);
 		
+		/**
+			The QM changes paused state.
+		*/
+		void pauseStateChanged(bool paused);
 	private:
-		Core* m_core;
+		Core* core;
 		int previousDownloadHeight;
 		int previousUploadHeight;
-		KIcon m_kt_pix;
+		KIcon icon;
+		QPixmap paused_overlay;
 		SetMaxRate* max_upload_rate;
 		SetMaxRate* max_download_rate;
 		QWidget* mwnd;
