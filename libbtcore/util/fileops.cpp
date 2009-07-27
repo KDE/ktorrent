@@ -365,16 +365,16 @@ namespace bt
 #else
 				if (ftruncate(fd,size) == -1)
 #endif
-					throw Error(i18n("Cannot expand file : %1",strerror(errno)));
+					throw Error(i18n("Cannot expand file: %1",strerror(errno)));
 		}
 		else
 		{
 #ifdef HAVE_POSIX_FALLOCATE64
 			if (posix_fallocate64(fd,0,size) != 0)
-				throw Error(i18n("Cannot expand file : %1",strerror(errno)));
+				throw Error(i18n("Cannot expand file: %1",strerror(errno)));
 #elif HAVE_POSIX_FALLOCATE
 			if (posix_fallocate(fd,0,size) != 0)
-				throw Error(i18n("Cannot expand file : %1",strerror(errno)));
+				throw Error(i18n("Cannot expand file: %1",strerror(errno)));
 #else
 			SeekFile(fd,0,SEEK_SET);
 			bt::Array<Uint8> buf(4096);
