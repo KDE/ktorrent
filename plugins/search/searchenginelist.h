@@ -94,6 +94,7 @@ namespace kt
 		
 	private:
 		void convertSearchEnginesFile();
+		void loadDefault();
 		
 	private slots:
 		void openSearchDownloadJobFinished(KJob* j);

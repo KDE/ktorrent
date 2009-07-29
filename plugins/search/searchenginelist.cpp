@@ -93,6 +93,9 @@ namespace kt
 						engines.append(se);
 				}
 			}
+			
+			// check if new engines have been added
+			loadDefault();
 		}
 	}
 	
@@ -266,31 +269,39 @@ namespace kt
 			}
 		}
 			
-			// also add the engines which don't have an opensearch description
+		// also add the engines which don't have an opensearch description
+		loadDefault();
+	}
+	
+	
+	void SearchEngineList::loadDefault()
+	{
 		QStringList dir_list = KGlobal::dirs()->findDirs("data", "ktorrent/opensearch");
 		foreach (const QString & dir,dir_list)
 		{
 			QStringList subdirs = QDir(dir).entryList(QDir::Dirs);
 			foreach (const QString & sd,subdirs)
 			{
-				if (sd != ".." && sd != "." && !bt::Exists(data_dir + sd + "/"))
+				if (sd == ".." || sd == ".")
+					continue;
+				
+				QString user_dir = data_dir + sd + "/";
+				if (!bt::Exists(user_dir))
 				{
-					Out(SYS_SRC|LOG_DEBUG) << "Copying " << sd << endl;
-					// copy directory into data_dir
-					KIO::Job* j = KIO::copy(KUrl(dir + "/" + sd),KUrl(data_dir),KIO::HideProgressInfo);
-					if (j->exec())
-					{
-						SearchEngine* se = new SearchEngine(data_dir + sd + "/");
-						if (!se->load(data_dir + sd + "/opensearch.xml"))
-							delete se;
-						else
-							engines.append(se);
-					}
-					delete j;
+					// create directory to store icons
+					bt::MakeDir(data_dir + sd + "/");
 				}
+				
+				SearchEngine* se = new SearchEngine(user_dir);
+				if (!se->load(dir + sd + "/opensearch.xml"))
+					delete se;
+				else
+					engines.append(se);
 			}
+			
 		}
 	}
+
 	
 	int SearchEngineList::rowCount(const QModelIndex &parent) const
 	{

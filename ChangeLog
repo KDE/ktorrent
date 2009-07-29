@@ -42,6 +42,7 @@ Changes in 3.3 :
 - Make it possible to suspend output of logviewer (200730)
 - Add paused overlay on tray icon when queue is paused (174542)
 - Add global shortcut to pause the QM
+- Add legit torrents search engine (174873)
 
 Changes in 3.2.3:
 - Make sure View gets focus back when you are finished editing the name of a torrent
