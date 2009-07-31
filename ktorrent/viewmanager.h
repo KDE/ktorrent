@@ -27,7 +27,6 @@
 #include <torrent/queuemanager.h>
 
 class QWidget;
-class KMenu;
 class KAction;
 
 

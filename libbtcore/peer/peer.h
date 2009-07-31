@@ -42,9 +42,7 @@ namespace mse
 
 namespace bt
 {
-	class Chunk;
 	class Peer;
-	class Request;
 	class Piece;
 	class PacketReader;
 	class PacketWriter;

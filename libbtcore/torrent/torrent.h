@@ -37,7 +37,6 @@ class QTextCodec;
 namespace bt
 {
 	class BNode;
-	class BValueNode;
 	class BDictNode;
 	class BListNode;
 

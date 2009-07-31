@@ -48,9 +48,7 @@ namespace bt
 	class Peer;
 	class BitSet;
 	class QueueManagerInterface;
-	class PreallocationThread;
 	class TimeEstimator;
-	class DataCheckerThread;
 	class WaitJob;
 	class MonitorInterface;
 	class ChunkSelectorFactoryInterface;

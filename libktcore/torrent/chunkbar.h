@@ -33,7 +33,6 @@ class QPainter;
 namespace bt
 {
 	class BitSet;
-	class TorrentInterface;
 }
 
 namespace kt

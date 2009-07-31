@@ -24,7 +24,6 @@
 
 #include <QTreeView>
 
-class QItemSelection;
 
 namespace kt
 {

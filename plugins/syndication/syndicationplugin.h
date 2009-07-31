@@ -27,8 +27,6 @@ class KAction;
 
 namespace kt
 {
-	class Feed;
-	class Filter;
 	class SyndicationActivity;
 	
 

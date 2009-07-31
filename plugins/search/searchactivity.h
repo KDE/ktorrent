@@ -30,7 +30,6 @@
 namespace kt
 {
 	class SearchWidget;
-	class SearchEngineList;
 	class SearchPlugin;
 
 	class SearchActivity : public kt::Activity

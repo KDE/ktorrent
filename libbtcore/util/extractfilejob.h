@@ -25,7 +25,6 @@
 #include <btcore_export.h>
 #include <karchive.h>
 
-class QThread;
 
 namespace bt 
 {

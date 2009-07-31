@@ -40,7 +40,6 @@ namespace kt
 	class TrayIcon;
 	class DBus;
 	class TorrentActivity;
-	class ActivityBar;
 	class CentralWidget;
 	
 

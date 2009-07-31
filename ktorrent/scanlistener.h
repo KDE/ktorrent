@@ -27,7 +27,6 @@
 
 namespace kt 
 {
-	class ScanExtender;
 	
 	/**
 		DataCheckerListener for KT which keeps track of the progress of a datascan

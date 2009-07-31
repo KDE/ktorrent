@@ -39,7 +39,6 @@ namespace kt
 	class HTMLPart;
 	class SearchWidget;
 	class SearchPlugin;
-	class SearchEngineList;
 	
 	
 	/**

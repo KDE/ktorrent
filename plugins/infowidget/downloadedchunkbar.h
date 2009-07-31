@@ -21,6 +21,10 @@
 #define DOWNLOADEDCHUNKBAR_H
 
 #include <torrent/chunkbar.h>
+namespace bt
+{
+	class TorrentInterface;
+}
 
 namespace kt
 {

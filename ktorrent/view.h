@@ -27,7 +27,6 @@
 #include <interfaces/guiinterface.h>
 #include <ksharedconfig.h>
 
-class KExtendableItemDelegate;
 class KMenu;
 
 namespace kt

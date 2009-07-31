@@ -25,13 +25,11 @@
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
 
-class KAction;
 
 
 namespace kt
 {
 	class MediaPlayerActivity;
-	class VideoWidget;
 
 	/**
 		@author

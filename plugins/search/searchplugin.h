@@ -27,7 +27,6 @@
 
 namespace kt
 {
-	class SearchWidget;
 	class SearchPrefPage;
 	class SearchToolBar;
 	class SearchActivity;

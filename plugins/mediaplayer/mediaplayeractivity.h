@@ -27,7 +27,6 @@
 #include <interfaces/activity.h>
 #include <QToolButton>
 
-class QToolBar;
 class KAction;
 class KActionCollection;
 

@@ -23,7 +23,6 @@
 #include <QTreeWidget>
 #include <ksharedconfig.h>
 
-class KMenu;
 class KActionCollection;
 
 namespace kt

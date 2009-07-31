@@ -31,7 +31,6 @@ namespace bt
 
 namespace kt 
 {
-	class ScanListener;
 	class ViewModel;
 	class View;
 	class Core;

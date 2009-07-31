@@ -23,7 +23,6 @@
 #include <qlist.h>
 #include <ktcore_export.h>
 
-class QWidget;
 class QString;
 class QProgressBar;
 class KMainWindow;
