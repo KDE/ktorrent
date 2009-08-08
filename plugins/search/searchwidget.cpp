@@ -52,6 +52,7 @@
 
 
 
+
 using namespace bt;
 
 namespace kt
@@ -327,7 +328,7 @@ namespace kt
 	void SearchWidget::home() 
 	{
 		html_part->begin();
-		html_part->write("<html><head></head><body>TODO: make cool search page</body></html>");
+		html_part->write("<html><head></head><body></body></html>");
 		html_part->end();
 		changeTitle(this,i18n("Home"));
 		at_home = true;

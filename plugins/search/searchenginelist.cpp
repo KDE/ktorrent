@@ -83,7 +83,11 @@ namespace kt
 			QStringList subdirs = QDir(data_dir).entryList(QDir::Dirs);
 			foreach (const QString & sd,subdirs)
 			{
-				if (sd != ".." && sd != "." && bt::Exists(data_dir + sd + "/opensearch.xml"))
+				if (sd == ".." || sd == ".")
+					continue;
+				
+				// Load only if there is an opensearch.xml file and not a removed file
+				if (bt::Exists(data_dir + sd + "/opensearch.xml") && !bt::Exists(data_dir + sd + "/removed"))
 				{
 					Out(SYS_SRC|LOG_DEBUG) << "Loading " << sd << endl;
 					SearchEngine* se = new SearchEngine(data_dir + sd + "/");
@@ -95,7 +99,7 @@ namespace kt
 			}
 			
 			// check if new engines have been added
-			loadDefault();
+			loadDefault(false);
 		}
 	}
 	
@@ -227,8 +231,9 @@ namespace kt
 		
 		foreach (SearchEngine* se,to_remove)
 		{
-			bt::Delete(se->engineDir(),true);
+			bt::Touch(se->engineDir() + "removed");
 			engines.removeAll(se);
+			delete se;
 		}
 		
 		reset();
@@ -236,10 +241,7 @@ namespace kt
 	
 	void SearchEngineList::removeAllEngines()
 	{
-		foreach (SearchEngine* se,engines)
-		{
-			bt::Delete(se->engineDir(),true);
-		}
+		removeRows(0,engines.count(),QModelIndex());
 		engines.clear();
 		reset();
 	}
@@ -267,14 +269,46 @@ namespace kt
 				connect(j,SIGNAL(result(KJob*)),this,SLOT(openSearchDownloadJobFinished(KJob*)));
 				j->start();
 			}
+			else
+			{
+				loadEngine(dir,dir,true);
+			}
 		}
 			
 		// also add the engines which don't have an opensearch description
-		loadDefault();
+		loadDefault(true);
+		reset();
 	}
 	
+	void SearchEngineList::loadEngine(const QString& global_dir, const QString& user_dir,bool load_removed)
+	{
+		if (!bt::Exists(user_dir))
+		{
+			// create directory to store icons
+			bt::MakeDir(user_dir);
+		}
+		
+		if (bt::Exists(user_dir + "removed"))
+		{
+			// if the removed file is there don't load, if we are not allowed
+			if (!load_removed)
+				return;
+			else
+				bt::Delete(user_dir + "removed");
+		}
+		
+		if (!alreadyLoaded(user_dir))
+		{
+			SearchEngine* se = new SearchEngine(user_dir);
+			if (!se->load(global_dir + "opensearch.xml"))
+				delete se;
+			else
+				engines.append(se);
+		}
+	}
+
 	
-	void SearchEngineList::loadDefault()
+	void SearchEngineList::loadDefault(bool removed_to)
 	{
 		QStringList dir_list = KGlobal::dirs()->findDirs("data", "ktorrent/opensearch");
 		foreach (const QString & dir,dir_list)
@@ -285,23 +319,21 @@ namespace kt
 				if (sd == ".." || sd == ".")
 					continue;
 				
-				QString user_dir = data_dir + sd + "/";
-				if (!bt::Exists(user_dir))
-				{
-					// create directory to store icons
-					bt::MakeDir(data_dir + sd + "/");
-				}
-				
-				SearchEngine* se = new SearchEngine(user_dir);
-				if (!se->load(dir + sd + "/opensearch.xml"))
-					delete se;
-				else
-					engines.append(se);
+				loadEngine(dir + sd + "/",data_dir + sd + "/",removed_to);
 			}
-			
 		}
 	}
 
+	bool SearchEngineList::alreadyLoaded(const QString& user_dir)
+	{
+		foreach (const SearchEngine* se,engines)
+		{
+			if (se->engineDir() == user_dir)
+				return true;
+		}
+		
+		return false;
+	}
 	
 	int SearchEngineList::rowCount(const QModelIndex &parent) const
 	{
@@ -351,7 +383,7 @@ namespace kt
 		for (int i = 0;i < count;i++)
 		{
 			SearchEngine* se = engines.takeAt(row);
-			bt::Delete(se->engineDir());
+			bt::Touch(se->engineDir() + "removed");
 			delete se;
 		}
 		endRemoveRows();
