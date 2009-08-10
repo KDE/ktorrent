@@ -302,8 +302,8 @@ namespace kt
 				n++;
 		} 
 			
-		QString msg = n > 1 ? i18n("You will lose all data in this file, are you sure you want to do this ?") :
-				i18n("You will lose all data in these files, are you sure you want to do this ?");
+		QString msg = i18np("You will lose all data in this file, are you sure you want to do this?",
+				    "You will lose all data in these files, are you sure you want to do this?", n);
 					
 		if (KMessageBox::warningYesNo(0,msg) == KMessageBox::Yes)
 			changePriority(EXCLUDED);
