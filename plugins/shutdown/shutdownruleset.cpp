@@ -185,7 +185,7 @@ namespace kt
 		{
 			clear();
 			node = dec.decode();
-			if (node->getType() != BNode::LIST)
+			if (!node || node->getType() != BNode::LIST)
 				throw bt::Error("Toplevel node not a list");
 			
 			BListNode* const l = (BListNode*)node;
