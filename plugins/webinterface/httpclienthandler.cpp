@@ -21,9 +21,11 @@
 #include <qhttp.h> 
 #include <util/log.h>
 #include <util/mmapfile.h>
+#include <klocalizedstring.h>
 #include "httpserver.h"
 #include "httpclienthandler.h"
 #include "httpresponseheader.h"
+
 		
 using namespace bt;
 
@@ -180,7 +182,7 @@ namespace kt
 	}
 	
 #define HTTP_404_ERROR "<html><head><title>404 Not Found</title></head><body>The requested file %1 was not found !</body></html>"
-#define HTTP_500_ERROR "<html><head><title>HTTP/1.1 500 Internal Server Error</title></head><body>HTTP/1.1 Internal Server Error<br>%1</body></html>"
+#define HTTP_500_ERROR "<html><head><title>HTTP/1.1 500 Internal Server Error</title></head><body><h1>Internal Server Error</h1><p>%1</p></body></html>"
 
 	
 	void HttpClientHandler::send404(HttpResponseHeader & hdr,const QString & path)
@@ -194,10 +196,11 @@ namespace kt
 		sendOutputBuffer();
 	}
 	
-	void HttpClientHandler::send500(HttpResponseHeader & hdr)
+	void HttpClientHandler::send500(HttpResponseHeader & hdr,const QString & error)
 	{
 	//	Out(SYS_WEB|LOG_DEBUG) << "Sending 500 " << endl;
-		QString data = QString(HTTP_500_ERROR).arg("An internal server error occurred !");
+		QString err = i18n("An internal server error occurred: %1",error);
+		QString data = QString(HTTP_500_ERROR).arg(err);
 		hdr.setValue("Content-Length",QString::number(data.length()));
 
 		output_buffer.append(hdr.toString().toUtf8());

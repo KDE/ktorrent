@@ -83,8 +83,11 @@ namespace kt
 		addContentGenerator(new SettingsGenerator(core,this));
 
 		QStringList dirList = KGlobal::dirs()->findDirs("data", "ktorrent/www");
-		rootDir = dirList.front();
-		Out(SYS_WEB|LOG_DEBUG) << "WWW Root Directory "<< rootDir <<endl;
+		if (!dirList.empty())
+		{
+			rootDir = dirList.front();
+			Out(SYS_WEB|LOG_DEBUG) << "WWW Root Directory "<< rootDir <<endl;
+		}
 		session.logged_in = false;
 		
 		ok = sock->bind(QString::null,port,true);
@@ -94,12 +97,15 @@ namespace kt
 			connect(notifier,SIGNAL(activated(int)),this,SLOT(slotAccept(int)));
 		}
 
-		skin_list = QDir(rootDir).entryList(QDir::Dirs);
-		skin_list.removeAll("common");
-		skin_list.removeAll(".");
-		skin_list.removeAll("..");
-		foreach (QString s,skin_list)
-			Out(SYS_WEB|LOG_DEBUG) << "skin: " << s << endl;
+		if (!rootDir.isEmpty())
+		{
+			skin_list = QDir(rootDir).entryList(QDir::Dirs);
+			skin_list.removeAll("common");
+			skin_list.removeAll(".");
+			skin_list.removeAll("..");
+			foreach (QString s,skin_list)
+				Out(SYS_WEB|LOG_DEBUG) << "skin: " << s << endl;
+		}
 	}
 	
 	HttpServer::~HttpServer()
@@ -304,6 +310,14 @@ namespace kt
 	
 	void HttpServer::handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr)
 	{
+		if (rootDir.isEmpty())
+		{
+			HttpResponseHeader rhdr(500);
+			setDefaultResponseHeaders(rhdr,"text/html",false);
+			hdlr->send500(rhdr,i18n("Cannot find webinterface skins!"));
+			return;
+		}
+		
 		QString file = hdr.path();
 		if (file == "/")
 			file = "/login.html";
@@ -461,7 +475,7 @@ namespace kt
 	{
 		HttpResponseHeader rhdr(500);
 		setDefaultResponseHeaders(rhdr,"text/html",false);
-		hdlr->send500(rhdr);
+		hdlr->send500(rhdr,i18n("Unsupported HTTP method"));
 	}
 	
 	void HttpServer::slotConnectionClosed()

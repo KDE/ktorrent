@@ -42,14 +42,17 @@ namespace kt
 		setupUi(this);
 	
 		QStringList dirList =KGlobal::dirs()->findDirs("data", "ktorrent/www");
-		QDir d(*(dirList.begin()));
-		
-		QStringList skinList = d.entryList(QDir::Dirs);
-		foreach (const QString& skin,skinList)
+		if (!dirList.isEmpty())
 		{
-			if (skin =="." || skin == ".." || skin == "common")
-				continue;
-			kcfg_skin->addItem(skin);
+			QDir d(*(dirList.begin()));
+			
+			QStringList skinList = d.entryList(QDir::Dirs);
+			foreach (const QString& skin,skinList)
+			{
+				if (skin =="." || skin == ".." || skin == "common")
+					continue;
+				kcfg_skin->addItem(skin);
+			}
 		}
 	}
 	

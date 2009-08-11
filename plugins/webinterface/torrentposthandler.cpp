@@ -26,6 +26,7 @@
 #include "httpresponseheader.h"
 #include "httpclienthandler.h"
 #include "httpserver.h"
+#include <klocalizedstring.h>
 
 using namespace bt;
 
@@ -48,7 +49,7 @@ namespace kt
 		// Send internal server error
 		HttpResponseHeader rhdr(500);
 		server->setDefaultResponseHeaders(rhdr,"text/html",false);
-		hdlr->send500(rhdr);
+		hdlr->send500(rhdr,i18n("HTTP Get not supported when uploading a torrent"));
 	}
 	
 	void TorrentPostHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
@@ -61,7 +62,7 @@ namespace kt
 		{
 			HttpResponseHeader rhdr(500);
 			server->setDefaultResponseHeaders(rhdr,"text/html",false);
-			hdlr->send500(rhdr);
+			hdlr->send500(rhdr,i18n("Invalid data received"));
 			return;
 		}
 		
@@ -73,7 +74,7 @@ namespace kt
 		{
 			HttpResponseHeader rhdr(500);
 			server->setDefaultResponseHeaders(rhdr,"text/html",false);
-			hdlr->send500(rhdr);
+			hdlr->send500(rhdr,i18n("Failed to open temporary file"));
 			return;
 		}
 		
