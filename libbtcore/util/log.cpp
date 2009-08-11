@@ -289,12 +289,15 @@ namespace bt
 				break;
 			case QtWarningMsg:
 				Out(SYS_GEN|LOG_NOTICE) << "Qt Warning: " << msg << endl;
+				fprintf(stderr,"Warning: %s\n",msg);
 				break;
 			case QtCriticalMsg:
 				Out(SYS_GEN|LOG_IMPORTANT) << "Qt Critical: " << msg << endl;
+				fprintf(stderr,"Critical: %s\n",msg);
 				break;
 			case QtFatalMsg:
-				Out(SYS_GEN|LOG_IMPORTANT) << "Qt Fatal: " << msg << endl;;
+				Out(SYS_GEN|LOG_IMPORTANT) << "Qt Fatal: " << msg << endl;
+				fprintf(stderr,"Fatal: %s\n",msg);
 				abort();
 				break;
 		}
