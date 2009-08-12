@@ -36,7 +36,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="kcfg_dhtPort" >
+         <widget class="KIntSpinBox" name="kcfg_dhtPort" >
           <property name="toolTip" >
            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
@@ -220,7 +220,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="2" column="1" >
-         <widget class="QSpinBox" name="kcfg_maxCorruptedBeforeRecheck" >
+         <widget class="KIntSpinBox" name="kcfg_maxCorruptedBeforeRecheck" >
           <property name="sizePolicy" >
            <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
             <horstretch>0</horstretch>
@@ -235,9 +235,6 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="toolTip" >
            <string>The number of corrupted chunks before a full data check is done</string>
-          </property>
-          <property name="suffix" >
-           <string> corrupted chunks</string>
           </property>
           <property name="minimum" >
            <number>1</number>
@@ -293,6 +290,13 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

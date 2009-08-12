@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <kdeversion.h>
 #include <klocale.h>
 #include "btpref.h"
 #include "settings.h"
@@ -26,6 +27,11 @@ namespace kt
 	BTPref::BTPref(QWidget* parent): PrefPageInterface(Settings::self(),i18n("BitTorrent"),"application-x-bittorrent",parent)
 	{
 		setupUi(this);
+#if KDE_IS_VERSION(4, 2, 80)
+		kcfg_maxCorruptedBeforeRecheck->setSuffix(ki18np(" corrupted chunk", " corrupted chunks"));
+#else
+		kcfg_maxCorruptedBeforeRecheck->setSuffix(i18n(" corrupted chunks"));
+#endif
 		connect(kcfg_doUploadDataCheck,SIGNAL(toggled(bool)),this,SLOT(onUploadDataCheckToggled(bool)));
 	}
 	
