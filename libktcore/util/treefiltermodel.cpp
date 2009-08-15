@@ -25,6 +25,7 @@ namespace kt
 	
 	TreeFilterModel::TreeFilterModel(QObject* parent): QSortFilterProxyModel(parent)
 	{
+		setFilterCaseSensitivity(Qt::CaseInsensitive);
 	}
 	
 	
