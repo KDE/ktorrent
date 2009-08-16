@@ -217,7 +217,7 @@ namespace kt
 			case 8: return QString("%1 (%2)").arg(QString::number(seeders_connected_to)).arg(QString::number(seeders_total));
 			case 9: return QString("%1 (%2)").arg(QString::number(leechers_connected_to)).arg(QString::number(leechers_total));
 			// xgettext: no-c-format
-			case 10: return i18n("%1 %",KGlobal::locale()->formatNumber(percentage,2));
+			case 10: return percentage;
 			case 11: return KGlobal::locale()->formatNumber(share_ratio,2);
 			case 12: return DurationToString(runtime_dl);
 			case 13: return DurationToString(runtime_ul);

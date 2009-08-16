@@ -23,6 +23,9 @@
 #include "view.h"
 #include <QApplication>
 #include <QRect>
+#include <KGlobal>
+#include <KLocale>
+#include <KApplication>
 
 
 namespace kt
@@ -146,7 +149,7 @@ namespace kt
 		bt::TorrentInterface* tc = model->torrentFromIndex(index);
 		if (!tc || !extenders.contains(tc))
 		{
-			QStyledItemDelegate::paint(painter, itemOption, index);
+			normalPaint(painter, itemOption, index);
 			return;
 		}
 		
@@ -169,7 +172,7 @@ namespace kt
 		//same height as the unchanged option.rect if no extender is present
 		//(seems to work OK)
 		
-		QStyledItemDelegate::paint(painter, itemOption, index);
+		normalPaint(painter, itemOption, index);
 	}
 	
 	
@@ -253,7 +256,30 @@ namespace kt
 			i.value()->hide();
 	}
 
+	
+	void ViewDelegate::paintProgressBar(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+	{
+		double progress = index.data().toDouble();
+		
+		QStyleOptionProgressBar progressBarOption;
+		progressBarOption.rect = option.rect;
+		progressBarOption.minimum = 0;
+		progressBarOption.maximum = 100;
+		progressBarOption.progress = (int)progress;
+		progressBarOption.text = KGlobal::locale()->formatNumber(progress,2) + "%";
+		progressBarOption.textVisible = true;
+		
+		KApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
+	}
 
+	
+	void ViewDelegate::normalPaint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+	{
+		if (index.column() == ViewModel::PERCENTAGE)
+			paintProgressBar(painter,option,index);
+		else
+			QStyledItemDelegate::paint(painter,option,index);
+	}
 
 }
 

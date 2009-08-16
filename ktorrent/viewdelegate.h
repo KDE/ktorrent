@@ -76,6 +76,8 @@ namespace kt
 		QSize maybeExtendedSize(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		QRect extenderRect(QWidget *extender, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		void scheduleUpdateViewLayout();
+		void paintProgressBar(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+		void normalPaint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		
 	private:
 		ViewModel* model;

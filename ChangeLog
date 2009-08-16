@@ -2,6 +2,7 @@ Changes in 3.3:
 - Make sure Qt's warnings, critical and fatal messages are printed to stderr in QtMessageOutput (203423)
 - Fix crash by handling missing webinterface skins propperly (203430)
 - Make TreeFilterModel use case insensitive filtering (203886)
+- Draw progressbar in percentage column of view (190875)
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)
