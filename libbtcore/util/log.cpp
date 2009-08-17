@@ -180,6 +180,7 @@ namespace bt
 	
 	Log::~Log()
 	{
+		qInstallMsgHandler(0);
 		delete priv;
 	}
 	
