@@ -59,6 +59,7 @@ namespace kt
 		
 	private:
 		void setNormalLimits();
+		void restartTimer();
 		
 	private:
 		QTimer m_timer;

@@ -165,6 +165,7 @@ namespace kt
 		if (!item)
 		{
 			setNormalLimits();
+			restartTimer();
 			return;
 		}
 		
@@ -213,8 +214,15 @@ namespace kt
 			PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
 		}
 		
+		restartTimer();
+	}
+	
+	void BWSchedulerPlugin::restartTimer()
+	{
+		QDateTime now = QDateTime::currentDateTime();
 		// now calculate the new interval
 		int wait_time = m_schedule->getTimeToNextScheduleEvent(now) * 1000;
+		Out(SYS_SCD|LOG_NOTICE) << "Timer will fire in " << wait_time << " ms" << endl;
 		if (wait_time < 1000)
 			wait_time = 1000;
 		m_timer.stop();

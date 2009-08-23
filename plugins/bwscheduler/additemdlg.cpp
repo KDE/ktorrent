@@ -81,7 +81,7 @@ namespace kt
 			ScheduleItem* item = new ScheduleItem();
 			item->day = day;
 			item->start = m_from->time();
-			item->end = m_to->time().addSecs(59 - m_to->time().second());
+			item->end = m_to->time();
 			item->upload_limit = m_upload_limit->value();
 			item->download_limit = m_download_limit->value();
 			item->paused = m_paused->isChecked();
@@ -91,6 +91,7 @@ namespace kt
 			item->screensaver_limits = m_screensaver_limits->isChecked();
 			item->ss_download_limit = m_ss_download_limit->value();
 			item->ss_upload_limit = m_ss_upload_limit->value();
+			item->checkTimes();
 			if (!schedule->addItem(item))
 			{
 				failures++;

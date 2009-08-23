@@ -75,6 +75,9 @@ namespace kt
 		
 		/// Whether or not a QDateTime is falls within this item
 		bool contains(const QDateTime & dt) const;
+		
+		/// Check if start and end time are OK
+		void checkTimes();
 	};
 
 	/**

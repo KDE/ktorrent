@@ -220,8 +220,6 @@ namespace kt
 		QTime start = yToTime(np.y());		
 		int d = item->start.secsTo(item->end); // duration in seconds
 		QTime end = start.addSecs(d);
-		end = end.addSecs(59 - end.second()); // make sure end seconds is 59
-		
 		itemMoved(item,start,end,1 + floor((np.x() + day_width * 0.5 - xoff) / day_width));
 	}
 	
