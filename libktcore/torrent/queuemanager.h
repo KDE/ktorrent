@@ -140,6 +140,12 @@ namespace kt
 		 */
 		void startNext();
 		
+		/**
+			If the QM is disabled this function needs to be called to start
+			all the torrents which were running at the time of the previous exit.
+		*/
+		void startAutoStartTorrents();
+		
 		typedef QList<bt::TorrentInterface *>::iterator iterator;
 		
 		iterator begin();

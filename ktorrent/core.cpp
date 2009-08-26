@@ -670,7 +670,10 @@ namespace kt
 			Out(SYS_GEN|LOG_NOTICE) << "Loading " << idir << endl;
 			loadExistingTorrent(idir);
 		}
-		qman->orderQueue();
+		if (!kt::QueueManager::enabled())
+			qman->startAutoStartTorrents();
+		else
+			qman->orderQueue();
 	}
 
 	void Core::remove(bt::TorrentInterface* tc,bool data_to)

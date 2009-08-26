@@ -373,7 +373,6 @@ namespace bt
 		loadStats();
 		stats.running = true;
 		stats.started = true;
-		stats.autostart = true;
 		stats.queued = false;
 		stats.last_download_activity_time = stats.last_upload_activity_time = GetCurrentTime();
 		choker_update_timer.update();
@@ -427,7 +426,7 @@ namespace bt
 		cman->stop();
 		
 		stats.running = false;
-		stats.autostart = false;
+		stats.autostart = wjob != 0;
 		stats.queued = false;
 		saveStats();
 		updateStatus();

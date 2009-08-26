@@ -391,6 +391,27 @@ namespace kt
 		stop(downloads);
 	}
 	
+	
+	void QueueManager::startAutoStartTorrents()
+	{
+		if (enabled()) 
+			return;
+		
+		// first get the list of torrents which need to be started
+		QList<bt::TorrentInterface*> todo;
+		foreach (bt::TorrentInterface* tc,downloads)
+		{
+			const TorrentStats & s = tc->getStats();
+			if (s.running || tc->getJobQueue()->runningJobs() || !s.autostart)
+				continue;
+			
+			todo.append(tc);
+		}
+		
+		start(todo);
+	}
+
+	
 	void QueueManager::onExit(WaitJob* wjob)
 	{
 		exiting = true;
