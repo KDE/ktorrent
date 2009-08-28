@@ -98,6 +98,11 @@ namespace kt
 		* */
 		void currentTorrentChanged(bt::TorrentInterface* tc);
 		
+		/**
+			Hide or show the group view
+		*/
+		void setGroupViewVisible(bool visible);
+		
 		
 	private slots:
 		void newView();

@@ -34,6 +34,7 @@
 
 namespace kt
 {
+	
 	TorrentActivity::TorrentActivity(Core* core,GUI* gui,QWidget* parent) 
 		: TorrentActivityInterface(i18n("Torrents"),"ktorrent",parent),core(core),gui(gui)
 	{
@@ -261,5 +262,10 @@ namespace kt
 		view_man->dataScanClosed(listener);
 	}
 
+	
+	void TorrentActivity::setGroupViewVisible(bool visible)
+	{
+		group_view->setVisible(visible);
+	}
 
 }

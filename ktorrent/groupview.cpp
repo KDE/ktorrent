@@ -542,6 +542,7 @@ namespace kt
 				
 			++it;
 		}
+		g.writeEntry("visible",isVisible());
 	}
 
 
@@ -558,6 +559,7 @@ namespace kt
 				
 			++it;
 		}
+		setVisible(g.readEntry("visible",true));
 	}
 	
 	void GroupView::defaultGroupAdded(Group* g)

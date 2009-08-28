@@ -152,6 +152,7 @@ namespace kt
 		KAction* import_kde3_torrents_action;
 		KAction* show_kt_action;
 		KAction* paste_action;
+		KAction* show_group_view_action;
 	};
 }
 
