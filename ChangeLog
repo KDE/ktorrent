@@ -6,6 +6,7 @@ Changes in 3.3:
 - Unset Qt message handler when Log is destroyed (197944)
 - Fix bug causing scheduler to not restart the schedule timer
 - Make sure running torrents at exit are restarted when KT starts up when the QM is disabled (204988)
+- Fix bug causing disabled trackers to be announced in a manual announce
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)
