@@ -44,7 +44,7 @@ namespace dht
 	class Node;
 	class Task;
 	
-	const Uint32 K = 8;
+	const Uint32 K = 20;
 	const Uint32 BUCKET_MAGIC_NUMBER = 0xB0C4B0C4;
 	const Uint32 BUCKET_REFRESH_INTERVAL = 15 * 60 * 1000;
 //	const Uint32 BUCKET_REFRESH_INTERVAL = 120 * 1000;

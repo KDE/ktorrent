@@ -41,7 +41,7 @@ namespace dht
 
 	void NodeLookup::callFinished(RPCCall* ,MsgBase* rsp)
 	{
-	//	Out(SYS_DHT|LOG_DEBUG) << "NodeLookup::callFinished" << endl;
+		//Out(SYS_DHT|LOG_DEBUG) << "NodeLookup::callFinished" << endl;
 		if (isFinished())
 			return;
 		
@@ -100,7 +100,5 @@ namespace dht
 		
 		if (todo.empty() && getNumOutstandingRequests() == 0 && !isFinished())
 			done();
-		else if (num_nodes_rsp > 50)
-			done(); // quit after 50 nodes responses
 	}
 }

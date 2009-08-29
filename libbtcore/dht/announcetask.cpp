@@ -39,7 +39,7 @@ namespace dht
 
 	void AnnounceTask::callFinished(RPCCall* c, MsgBase* rsp)
 	{
-	//	Out(SYS_DHT|LOG_DEBUG) << "AnnounceTask::callFinished" << endl;
+		//Out(SYS_DHT|LOG_DEBUG) << "AnnounceTask::callFinished" << endl;
 		// if we do not have a get peers response, return
 		// announce_peer's response are just empty anyway
 		if (c->getMsgMethod() != dht::GET_PEERS)
@@ -61,6 +61,7 @@ namespace dht
 				if (!todo.contains(e) && !visited.contains(e) && todo.count() < 100)
 				{
 					todo.append(e);
+				//	Out(SYS_DHT|LOG_DEBUG) << "DHT: GetPeers returned node " << e.getAddress().toString() << endl;
 				}
 			}
 			
@@ -71,6 +72,7 @@ namespace dht
 				if (!todo.contains(e) && !visited.contains(e) && todo.count() < 100)
 				{
 					todo.append(e);
+				//	Out(SYS_DHT|LOG_DEBUG) << "DHT: GetPeers returned node " << e.getAddress().toString() << endl;
 				}
 			}
 		}
@@ -80,6 +82,7 @@ namespace dht
 			const DBItemList & items = gpr->getItemList();
 			for (DBItemList::const_iterator i = items.begin();i != items.end();i++)
 			{
+			//	Out(SYS_DHT|LOG_DEBUG) << "DHT: GetPeers returned item " << i->getAddress().toString() << endl;
 				db->store(info_hash,*i);
 				// also add the items to the returned_items list
 				returned_items.append(*i);
@@ -103,7 +106,7 @@ namespace dht
 
 	void AnnounceTask::update()
 	{
-/*		Out(SYS_DHT|LOG_DEBUG) << "AnnounceTask::update " << endl;
+	/*	Out(SYS_DHT|LOG_DEBUG) << "AnnounceTask::update " << endl;
 		Out(SYS_DHT|LOG_DEBUG) << "todo " << todo.count() << " ; answered " << answered.count() << endl;
 		Out(SYS_DHT|LOG_DEBUG) << "visited " << visited.count() << " ; answered_visited " << answered_visited.count() << endl;
 	*/
@@ -114,7 +117,7 @@ namespace dht
 			{
 				AnnounceReq* anr = new AnnounceReq(node->getOurID(),info_hash,port,e.getToken());
 				anr->setOrigin(e.getAddress());
-				//Out(SYS_DHT|LOG_DEBUG) << "DHT: Announcing to " << e.getAddress().toString() << endl;
+		//		Out(SYS_DHT|LOG_DEBUG) << "DHT: Announcing to " << e.getAddress().toString() << endl;
 				rpcCall(anr);
 				answered_visited.append(e);
 			}
@@ -130,6 +133,7 @@ namespace dht
 			if (!visited.contains(e))
 			{
 				// send a findNode to the node
+		//		Out(SYS_DHT|LOG_DEBUG) << "DHT: Sending GetPeers to " << e.getAddress().toString() << endl;
 				GetPeersReq* gpr = new GetPeersReq(node->getOurID(),info_hash);
 				gpr->setOrigin(e.getAddress());
 				rpcCall(gpr);
@@ -141,12 +145,6 @@ namespace dht
 		
 		if (todo.empty() && answered.empty() && getNumOutstandingRequests() == 0 && !isFinished())
 		{
-			Out(SYS_DHT|LOG_NOTICE) << "DHT: AnnounceTask done" << endl;
-			done();
-		}
-		else if (answered_visited.count() >= (int) dht::K)
-		{
-			// if K announces have occurred stop
 			Out(SYS_DHT|LOG_NOTICE) << "DHT: AnnounceTask done" << endl;
 			done();
 		}

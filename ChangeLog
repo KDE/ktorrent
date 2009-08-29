@@ -8,6 +8,7 @@ Changes in 3.3:
 - Make sure running torrents at exit are restarted when KT starts up when the QM is disabled (204988)
 - Fix bug causing disabled trackers to be announced in a manual announce
 - Add action to menu and toolbar to show or hide the GroupView
+- Improved DHT's ability to find peers (205346)
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)

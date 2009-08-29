@@ -76,6 +76,8 @@ namespace dht
 		node->loadTable(table);
 		update_timer.start(1000);
 		started();
+		// refresh the DHT table by looking for our own ID
+		findNode(node->getOurID());
 	}
 		
 		
