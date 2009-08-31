@@ -777,8 +777,8 @@ namespace bt
 				
 				if (j)
 				{
-					job_queue->enqueue(j);
 					connect(j,SIGNAL(result(KJob*)),this,SLOT(moveDataFilesFinished(KJob*)));
+					job_queue->enqueue(j);
 					return true;
 				}
 				else
