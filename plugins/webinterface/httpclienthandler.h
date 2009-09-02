@@ -41,8 +41,7 @@ namespace kt
 		enum State
 		{
 			WAITING_FOR_REQUEST,
-			WAITING_FOR_CONTENT,
-			PROCESSING_PHP
+			WAITING_FOR_CONTENT
 		};
 	public:
 		HttpClientHandler(HttpServer* srv,int sock);

@@ -56,9 +56,6 @@ namespace kt
 
 	void HttpClientHandler::readyToRead(int )
 	{
-		if (state == PROCESSING_PHP)
-			return; 
-
 		Uint32 ba = client->bytesAvailable();
 		if (ba == 0)
 		{
