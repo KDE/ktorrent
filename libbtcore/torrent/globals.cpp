@@ -21,8 +21,9 @@
 
 #include <net/portlist.h>
 #include <dht/dht.h>
-
+#include <net/reverseresolver.h>
 #include "server.h"
+
 
 namespace bt
 {	
@@ -38,6 +39,8 @@ namespace bt
 
 	Globals::~ Globals()
 	{
+		// shutdown the reverse resolver thread
+		net::ReverseResolver::shutdown();
 		delete server;
 		delete dh_table;
 		delete plist;

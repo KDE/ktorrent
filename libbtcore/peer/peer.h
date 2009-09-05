@@ -22,7 +22,6 @@
 
 #include <QObject>
 #include <QDateTime>
-#include <QHostInfo>
 #include <util/timer.h>
 #include <interfaces/peerinterface.h>
 #include <util/bitset.h>
@@ -235,7 +234,7 @@ namespace bt
 		static void setResolveHostnames(bool on);
 		
 	private slots:
-		void resolved(const QHostInfo & hinfo);
+		void resolved(const QString & hinfo);
 		
 	private:
 		void packetReady(const Uint8* packet,Uint32 size);

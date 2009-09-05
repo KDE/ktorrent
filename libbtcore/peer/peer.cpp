@@ -37,6 +37,7 @@
 #include "peeruploader.h"
 #include "utpex.h"
 #include "peermanager.h"
+#include <net/reverseresolver.h>
 
 using namespace net;
 
@@ -101,7 +102,11 @@ namespace bt
 		utorrent_pex_id = 0;
 		
 		if (resolve_hostname)
-			QHostInfo::lookupHost(stats.ip_address,this,SLOT(resolved(QHostInfo)));
+		{
+			net::ReverseResolver* res = new net::ReverseResolver();
+			connect(res,SIGNAL(resolved(QString)),this,SLOT(resolved(QString)),Qt::QueuedConnection);
+			res->resolveAsync(sock->getRemoteAddress());
+		}
 	}
 
 
@@ -599,12 +604,9 @@ namespace bt
 		sock->setGroupIDs(up_gid,down_gid);
 	}
 		
-	void Peer::resolved(const QHostInfo& hinfo)
+	void Peer::resolved(const QString & hinfo)
 	{
-		if (hinfo.error() != QHostInfo::NoError)
-			return;
-		
-		stats.hostname = hinfo.hostName();
+		stats.hostname = hinfo;
 	}
 	
 	void Peer::setResolveHostnames(bool on)

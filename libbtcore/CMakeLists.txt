@@ -68,6 +68,7 @@ set(libbtcore_SRC
 	net/socketgroup.cpp
 	net/socks.cpp
 	net/wakeuppipe.cpp
+	net/reverseresolver.cpp
 	
 	mse/bigint.cpp  
 	mse/functions.cpp  
@@ -215,6 +216,7 @@ set(net_HDR
 	./net/speed.h
 	./net/uploadthread.h
 	./net/socketmonitor.h
+	./net/reverseresolver.h
 )
 
 set (mse_HDR 
