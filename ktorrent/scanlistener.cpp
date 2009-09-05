@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "scanlistener.h"
+#include "scanextender.h"
 
 namespace kt
 {
@@ -78,6 +79,11 @@ namespace kt
 		emit closeRequested(this);
 	}
 
+
+	QWidget* ScanListener::createExtender() 
+	{
+		return new ScanExtender(this,tc,0);
+	}
 
 	
 }

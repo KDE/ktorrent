@@ -58,6 +58,9 @@ namespace kt
 		
 		/// Get the torrent 
 		bt::TorrentInterface* torrent() {return tc;}
+		
+		/// Create an extender for the job
+		QWidget* createExtender();
 	
 	signals:
 		void scanFinished();
