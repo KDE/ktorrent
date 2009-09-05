@@ -83,6 +83,7 @@ namespace kt
 		void fileList(bool on);
 		void setShowFileTree(bool on);
 		void setFilter(const QString & filter);
+		void updateExistingFiles();
 
 	private:
 		void populateFields();

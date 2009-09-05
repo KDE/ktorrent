@@ -104,6 +104,7 @@ namespace kt
 			m_encoding->setCurrentIndex(idx);
 			connect(m_encoding,SIGNAL(currentIndexChanged(const QString &)),this,SLOT(onCodecChanged(const QString&)));
 			
+			
 			for (Uint32 i = 0;i < tc->getNumFiles();i++)
 			{
 				bt::TorrentFileInterface & file = tc->getTorrentFile(i);
@@ -119,12 +120,14 @@ namespace kt
 			model->setFileNamesEditable(true);
 			
 			connect(model,SIGNAL(checkStateChanged()),this,SLOT(updateSizeLabels()));
-			connect(m_downloadLocation, SIGNAL(textChanged (const QString &)), this, SLOT(updateSizeLabels()));
+			connect(m_downloadLocation,SIGNAL(textChanged(QString)),this,SLOT(updateSizeLabels()));
+			connect(m_downloadLocation,SIGNAL(textChanged(QString)),this,SLOT(updateExistingFiles()));
 			filter_model->setSourceModel(model);
 			m_file_view->expandAll();
 			
 			updateSizeLabels();
-
+			updateExistingFiles();
+			
 			if (!tc->getStats().multi_file_torrent)
 			{
 				m_select_all->setEnabled(false);
@@ -163,14 +166,15 @@ namespace kt
 		
 		QString tld = tc->getUserModifiedFileName();
 		// If the move on completion is on, check completed dir for files of the torrent
-		if (Settings::useCompletedDir())
+		// but only if the completed directory is not selected
+		if (Settings::useCompletedDir() && dn != Settings::completedDir().path(KUrl::AddTrailingSlash))
 		{
 			bool completed_files_found = false;
 			QStringList cf;
 			for (Uint32 i = 0;i < tc->getNumFiles();i++)
 			{
 				bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-				QString path = Settings::completedDir().path() + bt::DirSeparator() + tld + bt::DirSeparator() + file.getUserModifiedPath();
+				QString path = Settings::completedDir().path(KUrl::AddTrailingSlash) + tld + bt::DirSeparator() + file.getUserModifiedPath();
 				if (bt::Exists(path))
 				{
 					completed_files_found = true;
@@ -389,6 +393,36 @@ namespace kt
 			lblStatus->setText("<font color=\"#ff0000\">" + i18nc("We are %1 bytes short of what we need", "%1 short", bt::BytesToString(-1*(long long)(bytes_free - bytes_to_download))));
 		else
 			lblStatus->setText(bt::BytesToString(bytes_free - bytes_to_download));
+	}
+	
+	void FileSelectDlg::updateExistingFiles()
+	{
+		if (tc->getStats().multi_file_torrent)
+		{
+			bt::Uint32 found = 0;
+			QString path = m_downloadLocation->url().path(KUrl::AddTrailingSlash) + tc->getDisplayName() + '/';
+			for (bt::Uint32 i = 0;i < tc->getNumFiles();i++)
+			{
+				const bt::TorrentFileInterface & file = tc->getTorrentFile(i);
+				if (bt::Exists(path + file.getPath()))
+					found++;
+			}
+			
+			if (found == 0)
+				m_existing_found->setText(i18n("Existing files: <b>None</b>"));
+			else if (found == tc->getNumFiles())
+				m_existing_found->setText(i18n("Existing files: <b>All</b>"));
+			else
+				m_existing_found->setText(i18n("Existing files: <b>%1</b> of <b>%2</b>",found,tc->getNumFiles()));
+		}
+		else
+		{
+			QString path = m_downloadLocation->url().path(KUrl::AddTrailingSlash) + tc->getDisplayName();
+			if (bt::Exists(path))
+				m_existing_found->setText(i18n("Existing file: <b>No</b>"));
+			else
+				m_existing_found->setText(i18n("Existing file: <b>Yes</b>"));
+		}
 	}
 	
 	void FileSelectDlg::onCodecChanged(const QString & text)

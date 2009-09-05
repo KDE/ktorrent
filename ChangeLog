@@ -10,6 +10,7 @@ Changes in 3.3:
 - Add action to menu and toolbar to show or hide the GroupView
 - Improved DHT's ability to find peers (205346)
 - Make sure file locations are updated before torrent is restarted after data file move
+- FileSelectDlg now displays if existing files are found
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)
