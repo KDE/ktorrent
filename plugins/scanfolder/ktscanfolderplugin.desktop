@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Scan Folder
+Name[bg]=Претърсване на директория
 Name[de]=Ordner durchsuchen
 Name[el]=Σάρωση φακέλου
 Name[es]=Búsqueda de carpetas
@@ -26,6 +27,7 @@ Name[x-test]=xxScan Folderxx
 Name[zh_CN]=扫描文件夹
 Name[zh_TW]=掃描資料夾
 Comment=Scan folders for torrent files and load them
+Comment[bg]=Претърсване на директории за торент-файлове за добавяне
 Comment[de]=Ordner nach Torrent-Dateien durchsuchen und diese laden
 Comment[el]=Σάρωση φακέλων για αρχεία torrent και φόρτωσή τους
 Comment[es]=Busca archivos torrent en carpetas y los carga

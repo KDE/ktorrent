@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Scripting
+Name[bg]=Скриптиране
 Name[de]=Skripte
 Name[el]=Σενάρια
 Name[es]=Programación
@@ -24,6 +25,7 @@ Name[x-test]=xxScriptingxx
 Name[zh_CN]=脚本
 Name[zh_TW]=文稿
 Comment=Enables Kross scripting support
+Comment[bg]=Включване на поддръжка на скриптиране на Kross
 Comment[de]=Aktiviert die Unterstützung für Kross-Skripte
 Comment[el]=Ενεργοποίηση υποστήριξης σεναρίων Kross
 Comment[es]=Habilita la programación con Kross

@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Media Player
+Name[bg]=Медиен плеър
 Name[de]=Mediaplayer
 Name[el]=Αναπαραγωγή πολυμέσων
 Name[es]=Reproductor multimedia
@@ -26,6 +27,7 @@ Name[x-test]=xxMedia Playerxx
 Name[zh_CN]=媒体播放器
 Name[zh_TW]=媒體播放器
 Comment=Phonon-based media player
+Comment[bg]=Програма за преглед на мултимедия на основата на Phonon
 Comment[de]=Phonon-basierter Mediaplayer für KTorrent
 Comment[el]=Αναπαραγωγή πολυμέσων με βάση το Phonon
 Comment[es]=Reproductor multimedia basado en Phonon

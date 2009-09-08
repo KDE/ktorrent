@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Log Viewer
+Name[bg]=Преглед на дневника
 Name[de]=Protokollbetrachter
 Name[el]=Προβολή καταγραφής
 Name[es]=Visor del registro
@@ -27,6 +28,7 @@ Name[x-test]=xxLog Viewerxx
 Name[zh_CN]=日志查看器
 Name[zh_TW]=紀錄檢視器
 Comment=Displays the logging output
+Comment[bg]=Показване на изхода от дневника
 Comment[de]=Zeigt die Protokollausgaben
 Comment[el]=Εμφάνιση εξόδου της καταγραφής
 Comment[es]=Muestra la salida del registro

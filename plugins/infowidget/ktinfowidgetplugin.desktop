@@ -27,6 +27,7 @@ Name[x-test]=xxInformation Widgetxx
 Name[zh_CN]=信息部件
 Name[zh_TW]=資訊元件
 Comment=Displays general information about a torrent in several tabs
+Comment[bg]=Показване на различни данни за торентите в няколко подпрозореца
 Comment[de]=Anzeige von allgemeinen Informationen über einen Torrent in mehreren Unterfenstern
 Comment[el]=Εμφάνιση γενικών πληροφοριών για ένα torrent σε διάφορες καρτέλες
 Comment[es]=Muestra información general sobre un torrent en varias solapas
