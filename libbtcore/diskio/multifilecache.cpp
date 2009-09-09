@@ -597,6 +597,13 @@ namespace bt
 		}
 		
 		Uint8* data = piece->data();
+		if (!data) // this should not happen but just in case
+		{
+			if (!piece->inUse())
+				clearPiece(piece);
+			return;
+		}
+		
 		Chunk* c = piece->parentChunk();
 		QList<Uint32> tflist;
 		tor.calcChunkPos(c->getIndex(),tflist);
