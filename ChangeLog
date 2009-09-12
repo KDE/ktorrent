@@ -12,6 +12,7 @@ Changes in 3.3:
 - Make sure file locations are updated before torrent is restarted after data file move
 - FileSelectDlg now displays if existing files are found
 - Fix very rare crash caused by 0 pointer (206689)
+- Fix bug in TorrentFileListModel causing wrong checkstate to be shown
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)
