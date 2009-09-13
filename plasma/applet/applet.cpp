@@ -60,7 +60,7 @@ namespace ktplasma
 			}
 		}
 
-		KLocale::setMainCatalog("ktorrent");
+                KGlobal::locale()->insertCatalog("ktorrent");
 		setHasConfigurationInterface(true);
 		setAspectRatioMode(Plasma::IgnoreAspectRatio);
 		setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
