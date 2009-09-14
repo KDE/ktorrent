@@ -35,5 +35,9 @@
 			<label>password</label>
 			<default>ktorrent</default>
 		</entry>
+		
+		<entry name="automaticRefresh" type="Bool">
+			<default>true</default>
+		</entry>
 	</group>
 </kcfg>

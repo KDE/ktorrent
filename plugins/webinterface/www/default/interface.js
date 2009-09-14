@@ -1,10 +1,6 @@
-function start_update_timer(time)
-{
-	var seconds = time * 1000;
-	window.setInterval(refresh, seconds);
-}
+var interval_timer = null;
 
-function refresh()
+function refresh(force)
 {
 	clear_error();
 	// Only update torrent list when content is visible
@@ -13,6 +9,42 @@ function refresh()
 	{
 		update_torrents(); 
 		update_status_bar();
+	}
+	
+	if (automatic_refresh() || force)
+	{
+		if (!interval_timer)
+			interval_timer = window.setInterval(refresh, 5000, false);
+	}
+	else if (interval_timer)
+	{
+		// stop the interval timer
+		clearInterval(interval_timer);
+		interval_timer = null;
+	}
+}
+
+function automatic_refresh()
+{
+	var element = document.getElementById('webgui_automatic_refresh');
+	return element && element.checked;
+}
+
+function automatic_refresh_changed(value)
+{
+	if (value)
+	{
+		if (!interval_timer)
+			interval_timer = window.setInterval(refresh, 5000, false);
+	}
+	else
+	{
+		if (interval_timer)
+		{
+			// stop the interval timer
+			clearInterval(interval_timer);
+			interval_timer = null;
+		}
 	}
 }
 

@@ -14,6 +14,7 @@ Changes in 3.3:
 - Fix very rare crash caused by 0 pointer (206689)
 - Fix bug in TorrentFileListModel causing wrong checkstate to be shown
 - Only do automatic update in webinterface of visible sections
+- Make it possible to disable automatic update in webinterface
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)

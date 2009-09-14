@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="settings.js"></script>
 	<script type="text/javascript" src="fetch_xml.js"></script>
 </head>
-<body onload="update_interval(5);">
+<body onload="update_all(true);">
 
 
 <div id="header">
@@ -68,6 +68,12 @@
 			<img src="icon?name=kt-stop-all&size=1" alt="" />
 			<span>
 				<a href="javascript:do_action('stopall=true')">Stop All</a>
+			</span> 
+		</li>
+		<li>
+			<img src="icon?name=view-refresh&size=1" alt="" />
+			<span>
+				<a href="javascript:update_all(false)">Refresh</a>
 			</span> 
 		</li>
 	</ul>
@@ -142,6 +148,14 @@
 		
 		<div class ="item">
 			<input type="checkbox" name="pexEnabled"> Use peer exchange
+		</div>
+		
+		<h2 style="margin-top: 1em;">Web Interface</h2>
+		<div class="item">
+			<input type="checkbox" 
+				name="webgui_automatic_refresh" 
+				id="webgui_automatic_refresh"
+				onchange="automatic_refresh_changed(this.value)"> Refresh interface automatically</input>
 		</div>
 	
 		<div style="margin-top : 1em; float : left; clear : both;">

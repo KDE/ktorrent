@@ -27,7 +27,7 @@
 	}
 </script>
 </head>
-		<body onload="javascript:update_torrents(); update_status_bar(); update_settings(show_error); start_update_timer(5);">	
+<body onload="javascript:update_settings(show_error); refresh(true);">	
 <div id="container">
 	<div id="header">
 		<div id="logoWrapper">
@@ -51,7 +51,7 @@
 		<div class="action_bar">
 			<div class="action_bar_item">
 				<img src="icon?name=view-refresh&size=1" alt="Refresh"/>
-				<a href="javascript:refresh();" title="Refresh">Refresh</a>
+				<a href="javascript:refresh(false);" title="Refresh">Refresh</a>
 			</div>
 			<div class="action_bar_item">
 				<img src="icon?name=kt-start-all&size=1" alt="Start All"/>
@@ -143,6 +143,12 @@
 			<tr><td><input type="checkbox" name="dhtSupport"> Use DHT</td></tr>
 			<tr><td><input type="checkbox" name="pexEnabled"> Use peer exchange</td></tr>
 			</table>
+		</div>
+		<div class="settings_group">
+			<input type="checkbox" 
+				name="webgui_automatic_refresh" 
+				id="webgui_automatic_refresh"
+				onchange="automatic_refresh_changed(this.value)"> Refresh interface automatically</input>
 		</div>
 		<div class="action_bar" id="settings_buttons">
 			<div class="action_bar_item">

@@ -26,6 +26,7 @@
 #include "httpresponseheader.h"
 #include "settingsgenerator.h"
 #include "settings.h"
+#include "webinterfacepluginsettings.h"
 
 using namespace bt;
 
@@ -61,6 +62,12 @@ namespace kt
 			out.writeCharacters(item->property().toString());
 			out.writeEndElement();
 		}
+		
+		// special webinterface settings 
+		out.writeStartElement("webgui_automatic_refresh");
+		out.writeCharacters(WebInterfacePluginSettings::automaticRefresh() ? "true" : "false");
+		out.writeEndElement();
+		
 		out.writeEndElement();
 		out.writeEndDocument();
 		hdlr->send(rhdr,output_data);
@@ -80,9 +87,15 @@ namespace kt
 			QString cfg_value = items.at(1);
 			KConfigSkeletonItem* item = Settings::self()->findItem(cfg_param);
 			if (!item)
-				continue;
-			
-			item->setProperty(cfg_value);
+			{
+				if (cfg_param == "webgui_automatic_refresh")
+				{
+					WebInterfacePluginSettings::setAutomaticRefresh(cfg_value == "1");
+					WebInterfacePluginSettings::self()->writeConfig();
+				}
+			}
+			else
+				item->setProperty(cfg_value);
 		}
 		core->applySettings();
 		Settings::self()->writeConfig();

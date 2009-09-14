@@ -18,28 +18,54 @@
  ***************************************************************************/
 
 var details_of_torrent = null; //id of torrent which details are displayed
-
-function update_interval(time)
-{
-	update_all();
-	if (!time) {
-		return;
-	}
-	var seconds = time * 1000;
-	window.setInterval(update_all, seconds);
-}
+var interval_timer = null;
 
 function redirect_to_login()
 {
 	window.location = "/login.html";
 }
 
+function automatic_refresh()
+{
+	var element = document.getElementById('webgui_automatic_refresh');
+	return element && element.checked;
+}
 
-function update_all() 
+function automatic_refresh_changed(value)
+{
+	if (value)
+	{
+		if (!interval_timer)
+			interval_timer = window.setInterval(update_all, 5000, false);
+	}
+	else
+	{
+		if (interval_timer)
+		{
+			// stop the interval timer
+			clearInterval(interval_timer);
+			interval_timer = null;
+		}
+	}
+}
+
+function update_all(force) 
 {
 	fetch_xml("data/global.xml",update_status_bar_and_title,redirect_to_login);
 	if (div_visible('torrent_list'))
 		fetch_xml("data/torrents.xml",update_torrent_table,redirect_to_login);
+	
+	if (automatic_refresh() || force)
+	{
+		if (!interval_timer)
+			interval_timer = window.setInterval(update_all, 5000, false);
+	}
+	else if (interval_timer)
+	{
+		// stop the interval timer
+		clearInterval(interval_timer);
+		interval_timer = null;
+	}
 }
 
 function update_status_bar_and_title(xmldoc)
