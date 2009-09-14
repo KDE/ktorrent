@@ -38,8 +38,8 @@ function redirect_to_login()
 function update_all() 
 {
 	fetch_xml("data/global.xml",update_status_bar_and_title,redirect_to_login);
-	fetch_xml("data/torrents.xml",update_torrent_table,redirect_to_login);
-	update_settings(redirect_to_login);
+	if (div_visible('torrent_list'))
+		fetch_xml("data/torrents.xml",update_torrent_table,redirect_to_login);
 }
 
 function update_status_bar_and_title(xmldoc)

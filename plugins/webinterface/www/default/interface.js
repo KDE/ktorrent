@@ -7,8 +7,13 @@ function start_update_timer(time)
 function refresh()
 {
 	clear_error();
-	update_torrents(); 
-	update_status_bar();
+	// Only update torrent list when content is visible
+	var element = document.getElementById('content');
+	if (element && element.style.display != 'none')
+	{
+		update_torrents(); 
+		update_status_bar();
+	}
 }
 
 function redirect_to_login(msg)
