@@ -5,6 +5,7 @@ Name[cs]=Automatické pokračování
 Name[da]=Genoptag automatisk
 Name[de]=Automatisch fortsetzen
 Name[el]=Αυτόματη συνέχιση
+Name[en_GB]=Automatic Resume
 Name[es]=Reanudación automática
 Name[et]=Automaatne taasalustamine
 Name[fr]=Reprise automatique
@@ -37,6 +38,7 @@ Comment[cs]=Skript, který automaticky po určité době spustí stahování, po
 Comment[da]=Script til at genoptage automatisk efter et stykke tid, når pausetilstand er aktiveret
 Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
+Comment[en_GB]=Script to automatically resume after some time, when the paused state is enabled
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está habilitado el estado de pausa
 Comment[et]=Skript automaatseks taasalustamiseks mõne aja pärast, kui sisse on lülitatud paus
 Comment[fr]=Script pour reprendre automatiquement après un certain temps, lorsque l'état de pause est activé
