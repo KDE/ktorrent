@@ -2,6 +2,7 @@
 Name=Shutdown
 Name[bg]=Изключване
 Name[de]=Herunterfahren
+Name[en_GB]=Shutdown
 Name[es]=Apagar
 Name[et]=Seiskamine
 Name[fr]=Arrêt
@@ -24,6 +25,7 @@ Name[x-test]=xxShutdownxx
 Name[zh_TW]=關機
 Comment=Allows you to shutdown your computer when torrents finish
 Comment[de]=Ermöglicht es, den Rechner herunterzufahren, wenn die Torrents abgeschlossen wurden
+Comment[en_GB]=Allows you to shutdown your computer when torrents finish
 Comment[es]=Le permite apagar su equipo cuando finalicen los torrents
 Comment[et]=Võimaldab arvuti seisata pärat torrenti lõpetamist
 Comment[fr]=Permet d'arrêter votre ordinateur lorsque les torrents ont terminé

@@ -2,6 +2,7 @@
 Name=Automatic Remove
 Name[bg]=Автоматично премахване
 Name[de]=Automatisch entfernen
+Name[en_GB]=Automatic Remove
 Name[es]=Eliminación automática
 Name[et]=Automaatne eemaldamine
 Name[fr]=Suppression automatique
@@ -24,6 +25,7 @@ Name[x-test]=xxAutomatic Removexx
 Name[zh_TW]=自動移除
 Comment=Script to automatically remove torrents when they finish downloading or seeding
 Comment[de]=Skript zum automatischen Entfernen von Torrents, wenn sie vollständig hoch- oder heruntergeladen sind
+Comment[en_GB]=Script to automatically remove torrents when they finish downloading or seeding
 Comment[es]=Script para eliminar automáticamente los torrents cuando se acaben de descargar o sembrar
 Comment[et]=Skript torrentite automaatseks eemaldamiseks, kui allalaadimine või levitamine on lõpetatud
 Comment[fr]=Script pour supprimer automatiquement des torrents lorsqu'ils ont fini de télécharger ou de semer
