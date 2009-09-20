@@ -59,6 +59,18 @@ namespace kt
 				.arg((ip & 0x000000FF));
 	}
 	
+	IPBlock::IPBlock() : ip1(0),ip2(0)
+	{}
+	
+	IPBlock::IPBlock(const IPBlock & block) : ip1(block.ip1),ip2(block.ip2)
+	{}
+	
+	IPBlock::IPBlock(const QString & start,const QString & end)
+	{
+		ip1 = StringToUint32(start);
+		ip2 = StringToUint32(end);
+	}
+	
 	AntiP2P::AntiP2P()
 	{
 		header_loaded = false;

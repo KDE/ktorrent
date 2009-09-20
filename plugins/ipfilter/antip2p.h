@@ -30,19 +30,23 @@
 
 namespace kt
 {
-	typedef struct
+	struct HeaderBlock
 	{
 		bt::Uint32 ip1;
 		bt::Uint32 ip2;
 		bt::Uint64 offset;
 		bt::Uint32 nrEntries;
-	} HeaderBlock;
+	};
 	
-	typedef struct
+	struct IPBlock
 	{
 		bt::Uint32 ip1;
 		bt::Uint32 ip2;
-	} IPBlock;
+		
+		IPBlock();
+		IPBlock(const IPBlock & block);
+		IPBlock(const QString & start,const QString & end);
+	};
 	
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
