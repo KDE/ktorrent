@@ -1,6 +1,7 @@
 Changes in 3.2.4 :
 - Improve flexibility of IP blocklist parsing to support more formats
 - Fix bug in TorrentFileListModel causing wrong checkstate to be shown
+- Fix very rare crash caused by 0 pointer (206689)
 
 Changes in 3.2.3 :
 - Make sure View gets focus back when you are finished editing the name of a torrent

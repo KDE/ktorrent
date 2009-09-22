@@ -198,7 +198,8 @@ namespace bt
 		if (!piece->mapped())
 		{
 			Uint64 off = piece->parentChunk()->getIndex() * tor.getChunkSize() + piece->offset();
-			fd->write(piece->data(),piece->length(),off);
+			if (piece->data())
+				fd->write(piece->data(),piece->length(),off);
 		}
 		
 		if (!piece->inUse()) // get rid of piece if we can
