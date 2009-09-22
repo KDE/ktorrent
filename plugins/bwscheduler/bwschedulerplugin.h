@@ -60,6 +60,9 @@ namespace kt
 		void colorsChanged();
 	
 	private:
+		void restartTimer();
+		
+	private:
 		QTimer m_timer;
 		KAction* m_bws_action;
 		KToolBar* m_tool_bar;

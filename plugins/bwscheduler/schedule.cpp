@@ -90,6 +90,12 @@ namespace kt
 				torrent_conn_limit == item.torrent_conn_limit;
 	}
 	
+	void ScheduleItem::checkTimes()
+	{
+		start.setHMS(start.hour(),start.minute(),0);
+		end.setHMS(end.hour(),end.minute(),59);
+	}
+	
 	
 	/////////////////////////////////////////
 
@@ -184,6 +190,7 @@ namespace kt
 				item->set_conn_limits = true;
 			}
 		}
+		item->checkTimes();
 		return true;
 	}
 		
@@ -256,7 +263,7 @@ namespace kt
 		ScheduleItem* item = getCurrentItem(now);
 		// when we are in the middle of a ScheduleItem, we need to trigger again at the end of it
 		if (item) 
-			return now.time().secsTo(item->end) + 1; // change the schedule one second after it expires
+			return now.time().secsTo(item->end) + 5; // change the schedule 5 seconds after it expires
 		
 		// lets look at all schedule items on the same day
 		// and find the next one
@@ -271,10 +278,10 @@ namespace kt
 		}
 		
 		if (item)
-			return now.time().secsTo(item->start);
+			return now.time().secsTo(item->start) + 5;
 		
 		QTime end_of_day(23,59,59);
-		return now.time().secsTo(end_of_day) + 1;
+		return now.time().secsTo(end_of_day) + 5;
 	}
 	
 	bool Schedule::modify(ScheduleItem* item,const QTime & start,const QTime & end,int day)
@@ -286,6 +293,7 @@ namespace kt
 		item->start = start;
 		item->end = end;
 		item->day = day;
+		item->checkTimes();
 		if (conflicts(item))
 		{
 			// restore old start and end time

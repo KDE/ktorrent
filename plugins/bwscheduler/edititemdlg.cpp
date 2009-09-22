@@ -76,9 +76,7 @@ namespace kt
 		if (exec() == QDialog::Accepted)
 		{
 			item->start = m_from->time();
-			item->start = item->start.addSecs(-item->start.second()); // seconds must be 0
 			item->end = m_to->time(); 
-			item->end = item->end.addSecs(59 - item->end.second()); // seconds must be 59
 			item->day = m_day->currentIndex() + 1;
 			item->upload_limit = m_upload_limit->value();
 			item->download_limit = m_download_limit->value();
@@ -86,6 +84,7 @@ namespace kt
 			item->global_conn_limit = m_max_conn_global->value();
 			item->torrent_conn_limit = m_max_conn_per_torrent->value();
 			item->set_conn_limits = m_set_connection_limits->isChecked();
+			item->checkTimes();
 			return true;
 		}
 		return false;

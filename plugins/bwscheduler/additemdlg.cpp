@@ -79,13 +79,14 @@ namespace kt
 			ScheduleItem* item = new ScheduleItem();
 			item->day = day;
 			item->start = m_from->time();
-			item->end = m_to->time().addSecs(59 - m_to->time().second());
+			item->end = m_to->time();
 			item->upload_limit = m_upload_limit->value();
 			item->download_limit = m_download_limit->value();
 			item->paused = m_paused->isChecked();
 			item->global_conn_limit = m_max_conn_global->value();
 			item->torrent_conn_limit = m_max_conn_per_torrent->value();
 			item->set_conn_limits = m_set_connection_limits->isChecked();
+			item->checkTimes();
 			if (!schedule->addItem(item))
 			{
 				failures++;
