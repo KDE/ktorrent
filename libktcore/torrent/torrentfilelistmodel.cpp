@@ -135,10 +135,10 @@ namespace kt
 			else
 				return KIcon(KMimeType::findByPath(s.torrent_name)->iconName());
 		}
-		else if (role == Qt::CheckStateRole && index.column() == 0)
+		else if (role == Qt::CheckStateRole && index.column() == 0 && multi)
 		{
-			if (multi)
-				return tc->getTorrentFile(r).doNotDownload() ? Qt::Unchecked : Qt::Checked;;
+			const TorrentFileInterface & file = tc->getTorrentFile(r);
+			return file.doNotDownload() || file.getPriority() == ONLY_SEED_PRIORITY ? Qt::Unchecked : Qt::Checked;
 		}
 		
 		return QVariant();
