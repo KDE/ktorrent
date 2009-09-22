@@ -1,4 +1,7 @@
-Changes in 3.2.3:
+Changes in 3.2.4 :
+- Improve flexibility of IP blocklist parsing to support more formats
+
+Changes in 3.2.3 :
 - Make sure View gets focus back when you are finished editing the name of a torrent
 - Fix bug causing sizes > 4GB not being displayed properly in plasma applet
 - Fix bug in sleep suppression feature causing it to not work when torrents get started at startup (195991)

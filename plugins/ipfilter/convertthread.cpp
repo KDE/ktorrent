@@ -38,32 +38,7 @@ using namespace bt;
 
 namespace kt
 {
-
-
-	Uint32 toUint32(const QString& ip)
-	{
-		bool test;
-		Uint32 ret = ip.section('.',0,0).toULongLong(&test);
-		ret <<= 8;
-		ret |= ip.section('.',1,1).toULong(&test);
-		ret <<= 8;
-		ret |= ip.section('.',2,2).toULong(&test);
-		ret <<= 8;
-		ret |= ip.section('.',3,3).toULong(&test);
-
-		return ret;
-	}
-
-	IPBlock IPRangeToBlock(const QString & range)
-	{
-		IPBlock block;
-		QStringList ls = range.split('-');
-		block.ip1 = toUint32(ls[0]);
-		block.ip2 = toUint32(ls[1]);
-		return block;
-	}
 	
-
 	ConvertThread::ConvertThread(ConvertDialog* dlg) : dlg(dlg),abort(false)
 	{
 		txt_file = kt::DataDir() + "level1.txt";
@@ -85,7 +60,6 @@ namespace kt
 	void ConvertThread::readInput()
 	{
 		/*    READ INPUT FILE  */
-		int counter = 0;
 		QFile source(txt_file);
 		if (!source.open(QIODevice::ReadOnly))
 		{
@@ -101,10 +75,8 @@ namespace kt
 		QTextStream stream( &source );
 				
 		int i = 0;
-		QRegExp rx( "([0-9]{1,3}\\.){3}[0-9]{1,3}-([0-9]{1,3}\\.){3}[0-9]{1,3}" );
-		QRegExpValidator v( rx, 0 );
-		int poz = 0;
-
+		QRegExp rx( "([0-9]{1,3}\\.){3}[0-9]{1,3}");
+		
 		while (!stream.atEnd() && !abort)
 		{
 			QString line = stream.readLine();
@@ -112,11 +84,19 @@ namespace kt
 			dlg->progress(i,source_size);
 			++i;
 			
-			QString ip_part = line.section( ':' , -1 ).trimmed();
-			if ( v.validate( ip_part, poz ) != QValidator::Acceptable )
-				continue;
-			else
-				input += IPRangeToBlock(ip_part);
+			QStringList addresses;
+			int pos = 0;
+			while ((pos = rx.indexIn(line, pos)) != -1) 
+			{
+				addresses << rx.cap(0);
+				pos += rx.matchedLength();
+			}
+			
+			// if we have found two addresses, create a block out of it 
+			if (addresses.count() == 2)
+			{
+				input += IPBlock(addresses[0],addresses[1]);
+			}
 		}
 		source.close();
 		Out(SYS_IPF|LOG_NOTICE) << "Loaded " << input.count() << " lines"  << endl;
@@ -131,16 +111,6 @@ namespace kt
 			return false;
 		else
 			return a.ip1 < b.ip1;// a and b intersect 
-	}
-	
-		
-	static QString IPToString(Uint32 ip)
-	{
-		return QString("%1.%2.%3.%4")
-				.arg((ip & 0xFF000000) >> 24)
-				.arg((ip & 0x00FF0000) >> 16)
-				.arg((ip & 0x0000FF00) >> 8)
-				.arg((ip & 0x000000FF));
 	}
 	
 	void ConvertThread::sort()
