@@ -3,6 +3,7 @@ Changes in 3.2.4 :
 - Fix bug in TorrentFileListModel causing wrong checkstate to be shown
 - Fix very rare crash caused by 0 pointer (206689)
 - Fix bug causing scheduler to not restart the schedule timer
+- Unset Qt message handler when Log is destroyed (197944)
 
 Changes in 3.2.3 :
 - Make sure View gets focus back when you are finished editing the name of a torrent
