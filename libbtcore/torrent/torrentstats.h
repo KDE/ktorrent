@@ -25,6 +25,10 @@
 #include <util/constants.h>
 #include <btcore_export.h>
 
+#if defined ERROR
+#undef ERROR
+#endif
+
 namespace bt 
 {
 	enum TorrentStatus
