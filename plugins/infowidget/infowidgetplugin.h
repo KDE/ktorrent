@@ -71,6 +71,7 @@ namespace kt
 
 	private slots:
 		void applySettings();
+		void torrentRemoved(bt::TorrentInterface* tc);
 		
 	private:
 		PeerView* peer_view;

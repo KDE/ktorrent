@@ -74,7 +74,8 @@ namespace kt
 		status_tab = new StatusTab(0);
 		file_view = new FileView(0);
 		file_view->loadState(KGlobal::config());
-		connect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),file_view,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
+		connect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),
+				this,SLOT(torrentRemoved(bt::TorrentInterface*)));
 
 		pref = new IWPrefPage(0);
 		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
@@ -94,7 +95,8 @@ namespace kt
 	{
 		LogSystemManager::instance().unregisterSystem(i18n("Bandwidth Scheduler"));
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(applySettings()));
-		disconnect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),file_view,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
+		disconnect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),
+				   this,SLOT(torrentRemoved(bt::TorrentInterface*)));
 		if (cd_view)
 			cd_view->saveState(KGlobal::config()); 
 		if (peer_view)
@@ -314,6 +316,17 @@ namespace kt
 		if (tc && (peer_view || cd_view))
 			monitor = new Monitor(tc,peer_view,cd_view,file_view);
 	}
+	
+	
+	void InfoWidgetPlugin::torrentRemoved(bt::TorrentInterface* tc)
+	{
+		file_view->onTorrentRemoved(tc);
+		// for some reason currentTorrentChanged doesn't always get called
+		// when the current torrent is removed, this leads to crashes
+		// so manually call it here, to prevent crashes
+		currentTorrentChanged(getGUI()->getCurrentTorrent());
+	}
+
 }
 
 #include "infowidgetplugin.moc"
