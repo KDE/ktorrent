@@ -324,7 +324,7 @@ namespace kt
 		// for some reason currentTorrentChanged doesn't always get called
 		// when the current torrent is removed, this leads to crashes
 		// so manually call it here, to prevent crashes
-		currentTorrentChanged(getGUI()->getCurrentTorrent());
+		currentTorrentChanged(getGUI()->getTorrentActivity()->getCurrentTorrent());
 	}
 
 }
