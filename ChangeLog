@@ -4,6 +4,7 @@ Changes in 3.2.4 :
 - Fix very rare crash caused by 0 pointer (206689)
 - Fix bug causing scheduler to not restart the schedule timer
 - Unset Qt message handler when Log is destroyed (197944)
+- Fix crash caused by dangling pointer to TorrentControl when removing torrent and torrent list is changing a lot (208385)
 
 Changes in 3.2.3 :
 - Make sure View gets focus back when you are finished editing the name of a torrent
