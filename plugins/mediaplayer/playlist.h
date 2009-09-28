@@ -46,8 +46,7 @@ namespace kt
 		void load(const QString & file);
 		void clear();
 		
-		/// Get the next item to play, if idx is invalid return the first playable item
-		QModelIndex next(const QModelIndex & idx,bool random) const;
+		
 		
 		virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
@@ -63,9 +62,6 @@ namespace kt
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
-	private:
-		QModelIndex next(const QModelIndex & idx) const;
-		QModelIndex randomNext(const QModelIndex & idx) const;
 			
 	private:
 		QStringList files;

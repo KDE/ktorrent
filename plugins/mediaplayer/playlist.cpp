@@ -75,48 +75,6 @@ namespace kt
 	}
 
 	
-	QModelIndex PlayList::next(const QModelIndex & idx,bool random) const
-	{
-		if (files.count() == 0)
-			return QModelIndex();
-		
-		if (!idx.isValid())
-		{
-			if (!random)
-			{
-				return index(0,0,QModelIndex());
-			}
-			else
-			{
-				return randomNext(QModelIndex());
-			}
-		}
-		else if (!random)
-		{
-			return next(idx);
-		}
-		else
-		{
-			return randomNext(idx);
-		}
-	}
-	
-	QModelIndex PlayList::next(const QModelIndex & idx) const
-	{
-		return idx.sibling(idx.row()+1,0); // take a look at the next sibling
-	}
-	
-	QModelIndex PlayList::randomNext(const QModelIndex & idx) const
-	{
-		if (files.count() <= 1)
-			return QModelIndex();
-		
-		int r = qrand() % files.count();
-		while (r == idx.row())
-			r = qrand() % files.count();
-		
-		return index(r,0,QModelIndex());
-	}
 	
 	QVariant PlayList::headerData(int section, Qt::Orientation orientation, int role) const 
 	{
@@ -136,7 +94,7 @@ namespace kt
 
 	QVariant PlayList::data(const QModelIndex& index, int role) const
 	{
-		if (!index.isValid() || role != Qt::DisplayRole)
+		if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::UserRole))
 			return QVariant();
 		
 		QString file = files.at(index.row());
@@ -164,20 +122,30 @@ namespace kt
 				return QVariant();
 		}
 		
-		switch (index.column())
+		if (role == Qt::DisplayRole || role == Qt::UserRole)
 		{
-			case 0: return QString(tag->title().toCString(true));
-			case 1: return QString(tag->artist().toCString(true));
-			case 2: return QString(tag->album().toCString(true));
-			case 3: 
+			switch (index.column())
 			{
-				QTime t(0,0);
-				t = t.addSecs(ref->audioProperties()->length());
-				return t.toString("m:ss");
+				case 0: return QString(tag->title().toCString(true));
+				case 1: return QString(tag->artist().toCString(true));
+				case 2: return QString(tag->album().toCString(true));
+				case 3: 
+					if (role == Qt::UserRole)
+					{
+						return ref->audioProperties()->length();
+					}
+					else
+					{
+						QTime t(0,0);
+						t = t.addSecs(ref->audioProperties()->length());
+						return t.toString("m:ss");
+					}
+				case 4: return tag->year() == 0 ? QVariant() : tag->year();
+				default: return QVariant();
 			}
-			case 4: return tag->year() == 0 ? QVariant() : tag->year();
-			default: return QVariant();
 		}
+		
+		return QVariant();
 	}
 
 	int PlayList::columnCount(const QModelIndex& parent) const 
@@ -333,5 +301,7 @@ namespace kt
 			files.append(file);
 			tags.insert(file,ref);
 		}
+		
+		emit reset();
 	}
 }

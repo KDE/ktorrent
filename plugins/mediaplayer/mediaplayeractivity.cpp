@@ -203,7 +203,7 @@ namespace kt
 			if (curr_item.isValid())
 			{
 				bool random = MediaPlayerPluginSettings::playMode() == 2;
-				QModelIndex n = play_list->playList()->next(curr_item,random);
+				QModelIndex n = play_list->next(curr_item,random);
 				next_action->setEnabled(n.isValid());
 			}
 		}
@@ -212,6 +212,14 @@ namespace kt
 	void MediaPlayerActivity::play(const QString & file)
 	{
 		media_player->play(file);
+		QModelIndex idx = play_list->indexForFile(file);
+		if (idx.isValid())
+		{
+			curr_item = idx;
+			bool random = MediaPlayerPluginSettings::playMode() == 2;
+			QModelIndex n = play_list->next(curr_item,random);
+			next_action->setEnabled(n.isValid());
+		}
 	}
 
 	void MediaPlayerActivity::onDoubleClicked(const QModelIndex & idx)
@@ -244,17 +252,16 @@ namespace kt
 	void MediaPlayerActivity::next()
 	{
 		bool random = MediaPlayerPluginSettings::playMode() == 2;
-		PlayList* pl = play_list->playList();
-		QModelIndex n = pl->next(curr_item,random);
+		QModelIndex n = play_list->next(curr_item,random);
 		if (!n.isValid())
 			return;
 		
-		QString path = pl->fileForIndex(n);
+		QString path = play_list->fileForIndex(n);
 		if (bt::Exists(path))
 		{
 			media_player->play(path);
 			curr_item = n;
-			n = pl->next(curr_item,random);
+			n = play_list->next(curr_item,random);
 			next_action->setEnabled(n.isValid());
 		}
 	}
@@ -299,8 +306,7 @@ namespace kt
 
 	void MediaPlayerActivity::randomPlayActivated()
 	{
-		PlayList* pl = play_list->playList();
-		QModelIndex next = pl->next(curr_item,true);
+		QModelIndex next = play_list->next(curr_item,true);
 		next_action->setEnabled(next.isValid());
 	}
 
@@ -309,18 +315,17 @@ namespace kt
 		if (MediaPlayerPluginSettings::playMode() == 0)
 			return;
 		
-		PlayList* pl = play_list->playList();
 		bool random = MediaPlayerPluginSettings::playMode() == 2;
-		QModelIndex n = pl->next(curr_item,random);
+		QModelIndex n = play_list->next(curr_item,random);
 		if (!n.isValid())
 			return;
 		
-		QString path = pl->fileForIndex(n);
+		QString path = play_list->fileForIndex(n);
 		if (bt::Exists(path))
 		{
 			media_player->queue(path);
 			curr_item = n;
-			n = pl->next(curr_item,random);
+			n = play_list->next(curr_item,random);
 			next_action->setEnabled(n.isValid());
 		}
 	}

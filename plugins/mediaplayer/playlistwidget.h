@@ -32,6 +32,8 @@
 #include <KSharedConfig>
 #include <KMenu>
 
+class QSortFilterProxyModel;
+
 namespace kt
 {
 	class PlayList;
@@ -56,6 +58,15 @@ namespace kt
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
 		
+		/// Get the next item to play, if idx is invalid return the first playable item
+		QModelIndex next(const QModelIndex & idx,bool random) const;
+		
+		/// Get the file of a given index
+		QString fileForIndex(const QModelIndex& index) const;
+		
+		/// Get the index of a file
+		QModelIndex indexForFile(const QString & file) const;
+		
 	public slots:
 		QModelIndex play();
 		void playing(const QString & file);
@@ -77,6 +88,10 @@ namespace kt
 		void doubleClicked(const QString & file);
 		
 	private:
+		QModelIndex next(const QModelIndex & idx) const;
+		QModelIndex randomNext(const QModelIndex & idx) const;
+		
+	private:
 		MediaPlayer* player;
 		QTreeView* play_list_view;
 		PlayList* play_list;
@@ -87,6 +102,7 @@ namespace kt
 		QLabel* info_label;
 		QString current_file;
 		KMenu* menu;
+		QSortFilterProxyModel* proxy_model;
 	};
 }
 

@@ -11,6 +11,7 @@ Changes in 3.3:
 - FileSelectDlg now displays if existing files are found
 - Only do automatic update in webinterface of visible sections
 - Make it possible to disable automatic update in webinterface
+- Make playlist sortable in media player plugin
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)

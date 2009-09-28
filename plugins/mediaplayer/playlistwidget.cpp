@@ -32,6 +32,7 @@
 #include "playlist.h"
 #include <QFile>
 #include <QHeaderView>
+#include <QSortFilterProxyModel>
 
 
 namespace kt
@@ -44,7 +45,10 @@ namespace kt
 		
 		play_list_view = new QTreeView(this);
 		play_list = new PlayList(this);
-		play_list_view->setModel(play_list);
+		proxy_model = new QSortFilterProxyModel(this);
+		proxy_model->setSourceModel(play_list);
+		proxy_model->setSortRole(Qt::UserRole);
+		play_list_view->setModel(proxy_model);
 		play_list_view->setDragEnabled(true);
 		play_list_view->setDropIndicatorShown(true);
 		play_list_view->setAcceptDrops(true);
@@ -52,6 +56,7 @@ namespace kt
 		play_list_view->setRootIsDecorated(false);
 		play_list_view->setContextMenuPolicy(Qt::CustomContextMenu);
 		play_list_view->setSelectionMode(QAbstractItemView::ExtendedSelection);
+		play_list_view->setSortingEnabled(true);
 		connect(play_list_view,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(showContextMenu(QPoint)));
 		layout->addWidget(play_list_view);
 		
@@ -113,7 +118,7 @@ namespace kt
 	{
 		QModelIndexList rows = play_list_view->selectionModel()->selectedRows();
 		if (rows.count() > 0)
-			return rows.front();
+			return proxy_model->mapToSource(rows.front());
 		else
 			return QModelIndex();
 	}
@@ -123,20 +128,21 @@ namespace kt
 		Q_UNUSED(d);
 		QModelIndexList idx = s.indexes();
 		if (idx.count() > 0)
-			selectionChanged(idx.front());
+			selectionChanged(proxy_model->mapToSource(idx.front()));
 		else
 			selectionChanged(QModelIndex());
 	}
 	
 	QModelIndex PlayListWidget::play() 
 	{
-		QModelIndex idx = play_list_view->currentIndex();
+		QModelIndex pidx = play_list_view->currentIndex();
+		QModelIndex idx = proxy_model->mapToSource(pidx);
 		QString file = play_list->fileForIndex(idx);
 		if (!file.isEmpty())
 		{
 			player->play(file);
 		}
-		return idx;
+		return pidx;
 	}
 
 
@@ -210,7 +216,7 @@ namespace kt
 
 	void PlayListWidget::doubleClicked(const QModelIndex & index)
 	{
-		QString file = play_list->fileForIndex(index);
+		QString file = play_list->fileForIndex(proxy_model->mapToSource(index));
 		if (!file.isEmpty())
 			doubleClicked(file);
 	}
@@ -228,6 +234,8 @@ namespace kt
 		QByteArray d = g.readEntry("play_list_state",QByteArray());
 		if (!d.isNull())
 			play_list_view->header()->restoreState(d);
+		
+		play_list_view->header()->setSortIndicatorShown(true);
 	}
 	
 	void PlayListWidget::showContextMenu(QPoint pos) 
@@ -260,4 +268,71 @@ namespace kt
 		foreach (const QString & f,files)
 			play_list->removeFile(f);
 	}
+	
+	
+	QModelIndex PlayListWidget::next(const QModelIndex & idx,bool random) const
+	{
+		if (play_list->rowCount() == 0)
+			return QModelIndex();
+		
+		if (!idx.isValid())
+		{
+			if (!random)
+			{
+				return proxy_model->index(0,0,QModelIndex());
+			}
+			else
+			{
+				return randomNext(QModelIndex());
+			}
+		}
+		else if (!random)
+		{
+			return next(idx);
+		}
+		else
+		{
+			return randomNext(idx);
+		}
+	}
+	
+	QModelIndex PlayListWidget::next(const QModelIndex & idx) const
+	{
+		return idx.sibling(idx.row()+1,0); // take a look at the next sibling
+	}
+	
+	QModelIndex PlayListWidget::randomNext(const QModelIndex & idx) const
+	{
+		int count = play_list->rowCount(); 
+		if (count <= 1)
+			return QModelIndex();
+		
+		int r = qrand() % count;
+		while (r == idx.row())
+			r = qrand() % count;
+		
+		return proxy_model->index(r,0,QModelIndex());
+	}
+	
+	
+	QString PlayListWidget::fileForIndex(const QModelIndex& index) const
+	{
+		return play_list->fileForIndex(proxy_model->mapToSource(index));
+	}
+	
+	
+	QModelIndex PlayListWidget::indexForFile(const QString& file) const
+	{
+		int count = proxy_model->rowCount(); 
+		for (int i = 0;i < count;i++)
+		{
+			QModelIndex idx = proxy_model->index(i,0);
+			if (fileForIndex(idx) == file)
+				return idx;
+		}
+		
+		return QModelIndex();
+	}
+
+
 }
