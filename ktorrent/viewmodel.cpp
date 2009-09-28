@@ -550,9 +550,9 @@ namespace kt
 	Qt::ItemFlags ViewModel::flags(const QModelIndex & index) const
 	{
 		if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0)
-			return QAbstractTableModel::flags(index);
+			return QAbstractTableModel::flags(index) | Qt::ItemIsDropEnabled;
 		
-		Qt::ItemFlags flags = QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled;
+		Qt::ItemFlags flags = QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 		if (index.column() == 0 )
 			flags |= Qt::ItemIsEditable;
 		
@@ -563,6 +563,7 @@ namespace kt
 	{
 		QStringList types;
 		types << "application/x-ktorrent-drag-object";
+		types << "text/uri-list";
 		return types;
 	}
 	
@@ -594,6 +595,31 @@ namespace kt
 
 		mime_data->setData( "application/x-ktorrent-drag-object", encoded_data);
 		return mime_data;
+	}
+		
+	bool ViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent)
+	{
+		Q_UNUSED(row);
+		Q_UNUSED(column);
+		Q_UNUSED(parent);
+		if (action == Qt::IgnoreAction)
+			return true;
+		
+		if (!data->hasUrls())
+			return false;
+		
+		QList<QUrl> files = data->urls();
+		foreach (QUrl file,files)
+		{
+			core->load(file,QString());
+		}
+		
+		return true;
+	}
+	
+	Qt::DropActions ViewModel::supportedDropActions() const
+	{
+		return Qt::CopyAction | Qt::MoveAction;
 	}
 	
 	void ViewModel::torrentsFromIndexList(const QModelIndexList & idx,QList<bt::TorrentInterface*> & tlist)

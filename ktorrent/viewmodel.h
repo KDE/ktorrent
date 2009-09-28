@@ -75,7 +75,8 @@ namespace kt
 		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
 		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
-				
+		virtual bool dropMimeData(const QMimeData *data,Qt::DropAction action,int row,int column,const QModelIndex &parent);
+		virtual Qt::DropActions supportedDropActions() const;
 		/**
 		 * Emit the data changed signal
 		 * @param row The row 

@@ -141,6 +141,7 @@ namespace kt
 		void torrentSelectionChanged(View* v);
 		void showMenu(View* v,const QPoint & pos);
 		void editingItem(bool on);
+	
 		
 	private:
 		Core* core;

@@ -20,6 +20,8 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QFileInfo>
+#include <QDropEvent>
+#include <QDragEnterEvent>
 #include <QSortFilterProxyModel>
 #include <krun.h>
 #include <kmenu.h>
@@ -64,6 +66,8 @@ namespace kt
 		setDragEnabled(true);
 		setSelectionMode(QAbstractItemView::ExtendedSelection);
 		setSelectionBehavior(QAbstractItemView::SelectRows);
+		setAcceptDrops(true);
+		setDragDropMode(DragDrop);
 //		setUniformRowHeights(true);
 		
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showMenu( const QPoint& )));
@@ -514,8 +518,7 @@ namespace kt
 		
 		return ret;
 	}
-	
-	
+
 	
 }
 
