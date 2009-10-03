@@ -207,14 +207,11 @@ namespace dht
 		
 		Uint8 mtid = (Uint8)ba.at(0);
 		// find the call
-		const RPCCall* c = srv->findCall(mtid);
-		if (!c)
-		{
-			Out(SYS_DHT|LOG_DEBUG) << "Cannot find RPC call" << endl;
+		Method method = srv->findMethod(mtid);
+		if (method == NONE)
 			return 0;
-		}
-	
-		return ParseRsp(dict,c->getMsgMethod(),mtid);
+		else
+			return ParseRsp(dict,method,mtid);
 	}
 	
 	MsgBase* ParseErr(bt::BDictNode* dict)

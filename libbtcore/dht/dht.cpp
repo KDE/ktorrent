@@ -311,6 +311,7 @@ namespace dht
 			expire_timer.update();
 		}
 		
+		srv->handlePackets();
 		node->refreshBuckets(this);
 		tman->removeFinishedTasks(this);
 		stats.num_tasks = tman->getNumTasks() + tman->getNumQueuedTasks();
@@ -327,7 +328,7 @@ namespace dht
 		if (!running)
 			return;
 		
-		KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults)),host,QString::number(port));
+		KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults)),host,QString::number(hport));
 	}
 	
 	void DHT::onResolverResults(KNetwork::KResolverResults res)
@@ -337,7 +338,7 @@ namespace dht
 		
 		if (res.count() > 0)
 		{
-			srv->ping(node->getOurID(),res.front().address());
+			srv->ping(node->getOurID(),net::Address(res.front().address()));
 		}
 	}
 	

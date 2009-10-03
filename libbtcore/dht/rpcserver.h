@@ -20,23 +20,29 @@
 #ifndef DHTRPCSERVER_H
 #define DHTRPCSERVER_H
 
-#include <qlist.h>
-#include <k3datagramsocket.h>
+#include <QList>
+#include <QObject>
+#include <dht/rpcmsg.h>
+#include <net/address.h>
 #include <util/constants.h>
 #include <util/ptrmap.h>
+#include <QMutex>
 
+namespace net
+{
+	class Socket;
+}
 
-using KNetwork::KDatagramSocket;
 using bt::Uint32;
 using bt::Uint16;
 using bt::Uint8;
 
 namespace dht
 {
+	class RPCServerThread;
 	class Key;
 	class RPCCall;
 	class DHT;
-	class MsgBase;
 
 	/**
 	 * @author Joris Guisson
@@ -81,31 +87,30 @@ namespace dht
 		 * Ping a node, we don't care about the MTID.
 		 * @param addr The address
 		 */
-		void ping(const dht::Key & our_id,const KNetwork::KSocketAddress & addr);
-		
-		/**
-		 * Find a RPC call, based on the mtid
-		 * @param mtid The mtid
-		 * @return The call
-		 */
-		const RPCCall* findCall(Uint8 mtid) const;
+		void ping(const dht::Key & our_id,const net::Address & addr);
 		
 		/// Get the number of active calls
 		Uint32 getNumActiveRPCCalls() const {return calls.count();}
-	private slots:
-		void readPacket();
+	
+		/// Handle all incoming packets
+		void handlePackets();
+		
+		/// Find the method given an mtid
+		Method findMethod(Uint8 mtid);
 		
 	private:
-		void send(const KNetwork::KSocketAddress & addr,const QByteArray & msg);
+		void send(const net::Address & addr,const QByteArray & msg);
 		void doQueuedCalls();
 			
 	private:
-		KDatagramSocket* sock;
+		RPCServerThread* listener_thread;
+		net::Socket* sock;
 		DHT* dh_table;
 		bt::PtrMap<bt::Uint8,RPCCall> calls;
 		QList<RPCCall*> call_queue;
 		bt::Uint8 next_mtid;
 		bt::Uint16 port;
+		QMutex mutex;
 	};
 
 }
