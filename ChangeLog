@@ -1,3 +1,6 @@
+Changes in 3.2.5 :
+- Fix crash caused by dangling pointer to already destroyed view (209338)
+
 Changes in 3.2.4 :
 - Improve flexibility of IP blocklist parsing to support more formats
 - Fix bug in TorrentFileListModel causing wrong checkstate to be shown
