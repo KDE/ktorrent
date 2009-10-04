@@ -237,6 +237,7 @@ namespace kt
 		
 	void ViewManager::onCurrentTabChanged(QWidget* tab)
 	{
+		current = 0;
 		foreach (View* v,views)
 		{
 			if (v == tab)
