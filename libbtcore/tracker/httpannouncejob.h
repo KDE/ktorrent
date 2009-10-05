@@ -54,12 +54,15 @@ namespace bt
 		
 	private slots:
 		void requestFinished(int id,bool err);
+		void sendRequest();
+		
+	private:
+		void handleRedirect(const QHttpResponseHeader & hdr);
 		
 	private:
 		KUrl url;
 		QHttp* http;
 		QByteArray reply_data;
-		QBuffer output;
 		int get_id;
 		
 		QString proxy_host;

@@ -14,6 +14,7 @@ Changes in 3.3:
 - Make playlist sortable in media player plugin
 - Add URL drop support to view (208739)
 - DHT packet receiving and parsing moved to separate thread (208801)
+- Handle redirection in QHttp based announce job properly
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)

@@ -18,13 +18,15 @@
 
 #include "httpannouncejob.h"
 #include <btversion.h>
+#include <KLocalizedString>
+#include <util/log.h>
+#include <QTimer>
 
 namespace bt
 {
 
 	HTTPAnnounceJob::HTTPAnnounceJob(const KUrl& url) : url(url),get_id(0),proxy_port(-1)
 	{
-		output.setBuffer(&reply_data);
 		http = new QHttp(this);
 		connect(http,SIGNAL(requestFinished(int,bool)),this,SLOT(requestFinished(int,bool)));
 	}
@@ -34,6 +36,11 @@ namespace bt
 	}
 
 	void HTTPAnnounceJob::start()
+	{
+		sendRequest();
+	}
+	
+	void HTTPAnnounceJob::sendRequest()
 	{
 		QHttp::ConnectionMode mode = url.protocol() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
 		quint16 port = url.port() < 0 ? 0 : url.port();
@@ -46,7 +53,8 @@ namespace bt
 		hdr.setValue("User-Agent",bt::GetVersionString());
 		hdr.setValue("Connection","close");
 		hdr.setValue("Host",QString("%1:%2").arg(url.host()).arg(url.port(default_port)));
-		get_id = http->request(hdr,0,&output);
+		get_id = http->request(hdr);
+		Out(SYS_TRK|LOG_DEBUG) << "Request sent" << endl;
 	}
 	
 	void HTTPAnnounceJob::kill(bool quietly)
@@ -64,26 +72,38 @@ namespace bt
 		if (err)
 		{
 			setErrorText(http->errorString());
+			emitResult();
 		}
 		else
 		{
+			reply_data = http->readAll();
 			switch (http->lastResponse().statusCode())
 			{
+				case 300:
+				case 301:
+				case 302:
+				case 303:
+				case 307:
+					handleRedirect(http->lastResponse());
+					break;
 				case 403:
 					setError(KIO::ERR_ACCESS_DENIED);
+					emitResult();
 					break;
 				case 404:
 					setError(KIO::ERR_DOES_NOT_EXIST);
+					emitResult();
 					break;
 				case 500:
 					setError(KIO::ERR_INTERNAL_SERVER);
+					emitResult();
+					break;
+				default:
+					emitResult();
 					break;
 			}
 		}
-		
-		emitResult();
 	}
-	
 	
 	void HTTPAnnounceJob::setProxy(const QString& host, int port)
 	{
@@ -92,5 +112,19 @@ namespace bt
 	}
 
 
-
+	void HTTPAnnounceJob::handleRedirect(const QHttpResponseHeader& hdr)
+	{
+		if (!hdr.hasKey("Location"))
+		{
+			setErrorText(i18n("Redirect without a redirect location"));
+			emitResult();
+		}
+		else
+		{
+			reply_data.clear();
+			url = hdr.value("Location");
+			Out(SYS_TRK|LOG_DEBUG) << "Redirected to " << hdr.value("Location") << endl;
+			sendRequest();
+		}
+	}
 }
