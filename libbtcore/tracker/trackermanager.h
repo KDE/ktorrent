@@ -26,13 +26,13 @@
 #include <btcore_export.h>
 #include <util/ptrmap.h>
 #include <util/constants.h>
+#include <tracker/tracker.h>
 #include <interfaces/trackerslist.h>
 
 
 namespace bt 
 {
 	class TorrentControl;
-	class Tracker;
 	class WaitJob;
 	class PeerManager;
 	
