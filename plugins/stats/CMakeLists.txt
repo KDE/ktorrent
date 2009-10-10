@@ -1,6 +1,5 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${CMAKE_SOURCE_DIR}/libktorrent)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/drawer)
 
 set(Drawer_SRC

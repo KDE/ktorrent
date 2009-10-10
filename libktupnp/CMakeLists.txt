@@ -1,5 +1,3 @@
-include_directories(${KTORRENT_SOURCE_DIR}/libktorrent)
-include_directories(${CMAKE_KTORRENT_BINARY_DIR}/libktorrent)
 
 set(libktupnp_SRC httprequest.cpp soap.cpp upnpdescriptionparser.cpp upnpmcastsocket.cpp upnprouter.cpp)
 
