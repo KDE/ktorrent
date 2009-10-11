@@ -124,7 +124,7 @@ namespace kt
 			history.pop_back();
 			KUrl u = history.back();
 			openUrl(u);
-			searchFinished();
+			completed();
 			backAvailable(history.count() > 1 ? true : false);
 		}
 	}
@@ -141,7 +141,7 @@ namespace kt
 	{
 		add_to_history = false;
 		openUrl(url());
-		searchFinished();
+		completed();
 	}
 	
 	void HTMLPart::dataReceived(KIO::Job* job,const QByteArray & data)
@@ -208,7 +208,7 @@ namespace kt
 				write(curr_data.data(),curr_data.size());
 				end();
 				view()->ensureVisible(0,0);
-				searchFinished();
+				completed();
 			}
 		}
 		else

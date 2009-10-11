@@ -107,7 +107,7 @@ namespace kt
 				this,SLOT(onOpenTorrent(const KUrl& )));
 		connect(html_part,SIGNAL(popupMenu(const QString&, const QPoint& )),
 				this,SLOT(showPopupMenu(const QString&, const QPoint& )));
-		connect(html_part,SIGNAL(searchFinished()),this,SLOT(onFinished()));
+		connect(html_part,SIGNAL(completed()),this,SLOT(onFinished()));
 		connect(html_part,SIGNAL(saveTorrent(const KUrl& )),
 				this,SLOT(onSaveTorrent(const KUrl& )));
 		connect(html_part,SIGNAL(searchRequested(QString)),this,SLOT(onSearchRequested(QString)));

@@ -53,9 +53,9 @@ namespace kt
 	bool HomePage::openUrl(const KUrl& url)
 	{
 		if (url.url() == "about:ktorrent")
-		{
 			home();
-		}
+		else
+			KHTMLPart::openUrl(url);
 		return true;
 	}
 	
