@@ -29,6 +29,7 @@
 #include <util/constants.h>
 #include <khtmlview.h>
 #include <dom/html_document.h>
+#include <util/log.h>
 #include "htmlpart.h"
 
 using namespace bt;
@@ -36,8 +37,7 @@ using namespace bt;
 namespace kt
 {
 	
-	HTMLPart::HTMLPart(QWidget *parent)
-			: KHTMLPart(parent,parent)
+	HTMLPart::HTMLPart(QWidget *parent) : HomePage(parent,parent)
 	{
 		setJScriptEnabled(true);
 		setJavaEnabled(true);
@@ -51,6 +51,7 @@ namespace kt
 		ext->enableAction("copy",true);
 		ext->enableAction("paste",true);
 		active_job = 0;
+		add_to_history = true;
 	}
 	
 	
@@ -79,6 +80,15 @@ namespace kt
 			active_job = 0;
 		}
 		
+		Out(SYS_SRC|LOG_DEBUG) << "Opening " << u.prettyUrl() << endl;
+		if (u.url().startsWith("about:ktorrent"))
+		{
+			if (u.hasQueryItem("search_text"))
+				searchRequested(u.queryItem("search_text"));
+			else
+				home();
+			return;
+		}
 		
 		KIO::TransferJob* j = 0;
 		if (barg.doPost())
@@ -110,24 +120,28 @@ namespace kt
 		}
 		else
 		{
+			add_to_history = false;
 			history.pop_back();
 			KUrl u = history.back();
 			openUrl(u);
+			searchFinished();
 			backAvailable(history.count() > 1 ? true : false);
-			
 		}
 	}
 	
 	void HTMLPart::addToHistory(const KUrl & url)
 	{
-		history.append(url);
-		if (history.count() > 1)
-			backAvailable(true);
+		if (add_to_history)
+			history.append(url);
+		backAvailable(history.count() > 1);
+		add_to_history = true;
 	}
 	
 	void HTMLPart::reload()
 	{
+		add_to_history = false;
 		openUrl(url());
+		searchFinished();
 	}
 	
 	void HTMLPart::dataReceived(KIO::Job* job,const QByteArray & data)

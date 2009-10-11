@@ -62,7 +62,6 @@ namespace kt
 		void setSearchBarEngine(int engine);
 		
 		bool backAvailable() const;
-		bool atHome() const {return at_home;}
 		
 	signals:
 		void enableBack(bool on);
@@ -79,6 +78,7 @@ namespace kt
 		void onShutDown();
 		void home();
 		void restore(const KUrl & url,const QString & text,const QString & sb_text,int engine);
+		void onSearchRequested(const QString & text);
 	
 	private slots:
 		void onUrlHover(const QString & url);
@@ -105,7 +105,6 @@ namespace kt
 		KLineEdit* search_text;
 		QAction* open_url_action;
 		KUrl url_to_open;
-		bool at_home;
 	};
 
 }

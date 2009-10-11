@@ -59,7 +59,7 @@ namespace kt
 	{
 		foreach (SearchWidget* s,searches)
 		{
-			if (s->atHome())
+			if (s->getCurrentUrl() == KUrl("about:ktorrent"))
 			{
 				s->search(text,engine);
 				tabs->setCurrentWidget(s);
@@ -82,10 +82,7 @@ namespace kt
 		foreach (SearchWidget* w,searches)
 		{
 			out << "TEXT: " << w->getSearchText() << ::endl;
-			if (!w->atHome())
-				out << "URL: " << w->getCurrentUrl().prettyUrl() << ::endl;
-			else
-				out << "URL: home://" << ::endl;
+			out << "URL: " << w->getCurrentUrl().prettyUrl() << ::endl;
 			out << "SBTEXT: " << w->getSearchBarText() << ::endl;
 			out << "ENGINE:" << w->getSearchBarEngine() << ::endl;
 		}

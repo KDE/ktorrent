@@ -1,4 +1,5 @@
 set(ktsearchplugin_SRC 
+	homepage.cpp 
 	searchenginelist.cpp 
 	htmlpart.cpp 
 	searchprefpage.cpp 
@@ -25,3 +26,4 @@ install(FILES ktsearchplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install(FILES ktsearchpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 
 add_subdirectory(opensearch)
+add_subdirectory(home)

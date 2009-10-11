@@ -49,6 +49,7 @@
 #include "htmlpart.h"
 #include "searchplugin.h"
 #include "searchenginelist.h"
+#include "homepage.h"
 
 
 
@@ -109,6 +110,7 @@ namespace kt
 		connect(html_part,SIGNAL(searchFinished()),this,SLOT(onFinished()));
 		connect(html_part,SIGNAL(saveTorrent(const KUrl& )),
 				this,SLOT(onSaveTorrent(const KUrl& )));
+		connect(html_part,SIGNAL(searchRequested(QString)),this,SLOT(onSearchRequested(QString)));
 	
 		KParts::PartManager* pman = html_part->partManager();
 		connect(pman,SIGNAL(partAdded(KParts::Part*)),this,SLOT(onFrameAdded(KParts::Part* )));
@@ -173,10 +175,7 @@ namespace kt
 			if (url.protocol() == "home")
 				home();
 			else
-			{
 				html_part->openUrl(url);
-				html_part->addToHistory(url);
-			}
 		}
 	
 		search_text->setText(sb_text);
@@ -198,9 +197,15 @@ namespace kt
 	
 		statusBarMsg(i18n("Searching for %1...",text));
 		//html_part->openURL(url);
+		html_part->show();
  		html_part->openUrlRequest(url,KParts::OpenUrlArguments(),KParts::BrowserArguments());
-		at_home = false;
 	}
+	
+	void SearchWidget::onSearchRequested(const QString & text)
+	{
+		search(text,search_engine->currentIndex());
+	}
+
 	
 	void SearchWidget::setSearchBarEngine(int engine)
 	{
@@ -314,10 +319,7 @@ namespace kt
 	
 	void SearchWidget::reload()
 	{
-		if (atHome())
-			home();
-		else
-			html_part->reload();
+		html_part->reload();
 	}
 	
 	void SearchWidget::openNewTab()
@@ -327,11 +329,7 @@ namespace kt
 	
 	void SearchWidget::home() 
 	{
-		html_part->begin();
-		html_part->write("<html><head></head><body></body></html>");
-		html_part->end();
-		changeTitle(this,i18n("Home"));
-		at_home = true;
+		html_part->home();
 	}
 
 	
