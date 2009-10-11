@@ -15,7 +15,9 @@ Changes in 3.3:
 - Add URL drop support to view (208739)
 - DHT packet receiving and parsing moved to separate thread (208801)
 - Handle redirection in QHttp based announce job properly
-- Make sure saving torrent in search plugin to existing file is works
+- Make sure saving torrent in search plugin to existing file works
+- Add home page for search plugin like the one in konqueror
+- Clarify message when checking for files in completed downloads directory (208992)
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)

@@ -170,22 +170,44 @@ namespace kt
 		if (Settings::useCompletedDir() && dn != Settings::completedDir().path(KUrl::AddTrailingSlash))
 		{
 			bool completed_files_found = false;
+			bool all_found = true;
 			QStringList cf;
-			for (Uint32 i = 0;i < tc->getNumFiles();i++)
+			if (tc->getStats().multi_file_torrent)
 			{
-				bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-				QString path = Settings::completedDir().path(KUrl::AddTrailingSlash) + tld + bt::DirSeparator() + file.getUserModifiedPath();
-				if (bt::Exists(path))
+				for (Uint32 i = 0;i < tc->getNumFiles();i++)
 				{
-					completed_files_found = true;
-					cf.append(file.getUserModifiedPath());
+					bt::TorrentFileInterface & file = tc->getTorrentFile(i);
+					QString path = Settings::completedDir().path(KUrl::AddTrailingSlash) + tld + bt::DirSeparator() + file.getUserModifiedPath();
+					if (bt::Exists(path))
+					{
+						completed_files_found = true;
+						cf.append(file.getUserModifiedPath());
+					}
+					else
+						all_found = false;
 				}
+			}
+			else
+			{
+				QString path = Settings::completedDir().path(KUrl::AddTrailingSlash) + tld;
+				completed_files_found = bt::Exists(path);
 			}
 			
 			if (completed_files_found)
 			{
-				QString msg = i18n("Files of the torrent have been found in the completed downloads directory. "
-						"Do you want to use them, and download to the completed downloads directory?");
+				QString msg;
+				if (tc->getStats().multi_file_torrent)
+				{
+					if (!all_found)
+						msg = i18n("Some files of this torrent have been found in the completed downloads directory. "
+							"Do you want to import these files and use the completed downloads directory as the location ?");
+					else
+						msg = i18n("All files of this torrent have been found in the completed downloads directory. "
+							"Do you want to import these files and use the completed downloads directory as the location ?");
+				}
+				else
+					msg = i18n("The file <b>%1</b> was found in the completed downloads directory. Do you want to import this file ?",tld);
+						
 			// better ask the user if (s)he wants to delete the already existing data
 				int ret = KMessageBox::questionYesNoList(0,msg,cf,QString::null);
 				if (ret == KMessageBox::Yes)
