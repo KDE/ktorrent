@@ -229,7 +229,7 @@ namespace kt
 		{
 			KUrl save_url = KUrl(fn);
 			// start a copy job
-			KIO::file_copy(url,save_url);
+			KIO::file_copy(url,save_url,-1,KIO::Overwrite);
 		}
 	}
 	
