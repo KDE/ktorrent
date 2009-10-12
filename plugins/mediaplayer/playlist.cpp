@@ -245,7 +245,7 @@ namespace kt
 		
 		foreach (const QUrl & url,urls)
 		{
-			files.insert(row,url.path());
+			files.insert(row,url.toLocalFile());
 		}
 		insertRows(row,urls.count(),QModelIndex());
 		dragged_rows.clear();

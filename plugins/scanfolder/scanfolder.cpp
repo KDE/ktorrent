@@ -76,7 +76,6 @@ namespace kt
 
 	ScanFolder::~ScanFolder()
 	{
-// 		Out() << "UNLOADING SCANFOLDER: " << m_dir->url().path() << endl;
 		delete m_dir;
 	}
 
@@ -87,7 +86,7 @@ namespace kt
 		foreach (const KFileItem &file, items)
 		{
 			QString name = file.name();
-			QString filename = file.url().path();
+			QString filename = file.url().toLocalFile();
 			
 			if (file.isDir() && name != i18n("loaded") && rec)
 			{
@@ -172,7 +171,7 @@ namespace kt
 		m_pendingURLs.removeAll(url);
 		
 		QString name = url.fileName();
-		QString dirname = QFileInfo(url.path()).absolutePath();
+		QString dirname = QFileInfo(url.toLocalFile()).absolutePath();
 		if (!dirname.endsWith(bt::DirSeparator()))
 			dirname += bt::DirSeparator();
 		
@@ -210,7 +209,7 @@ namespace kt
 	{
 		m_loadedAction = theValue;
 
-		QString path = m_dir->url().path();
+		QString path = m_dir->url().toLocalFile();
 		if (!path.endsWith(bt::DirSeparator()))
 			path += bt::DirSeparator();
 		
@@ -228,7 +227,7 @@ namespace kt
 	bool ScanFolder::incomplete(const KUrl & src)
 	{
 		// try to decode file, if it is syntactically correct, we can try to load it
-		QFile fptr(src.path());
+		QFile fptr(src.toLocalFile());
 		if (!fptr.open(QIODevice::ReadOnly))
 			return false;
 		
@@ -264,7 +263,7 @@ namespace kt
 		for (QList<KUrl>::iterator i = m_incompleteURLs.begin(); i != m_incompleteURLs.end();)
 		{
 			KUrl source = *i;
-			if (!bt::Exists(source.path()))
+			if (!bt::Exists(source.toLocalFile()))
 			{
 				// doesn't exist anymore, so throw out of list
 				i = m_incompleteURLs.erase(i);

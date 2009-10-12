@@ -181,7 +181,7 @@ namespace bt
 				finished(this);
 
 				//Move completed download to specified directory if needed
-				if (!completed_dir.path().isNull())
+				if (!completed_dir.toLocalFile().isNull())
 					moveCompleted = true;
 				
 				// See if we need to do a data check
@@ -1753,7 +1753,7 @@ namespace bt
 	
 	void TorrentControl::moveToCompletedDir()
 	{
-		QString outdir = completed_dir.path();
+		QString outdir = completed_dir.toLocalFile();
 		if (!outdir.endsWith(bt::DirSeparator()))
 			outdir += bt::DirSeparator();
 					

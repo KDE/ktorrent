@@ -39,25 +39,25 @@ namespace kt
 
 	void GeneralPref::loadSettings()
 	{
-		if (Settings::tempDir().path().length() == 0)
+		if (Settings::tempDir().toLocalFile().length() == 0)
 			kcfg_tempDir->setUrl(kt::DataDir());
 		else
 			kcfg_tempDir->setUrl(Settings::tempDir());
 
 		kcfg_saveDir->setEnabled(Settings::useSaveDir());
-		if (Settings::saveDir().path().length() == 0)
+		if (Settings::saveDir().toLocalFile().length() == 0)
 			kcfg_saveDir->setUrl(QDir::homePath());
 		else
 			kcfg_saveDir->setUrl(Settings::saveDir());
 
 		kcfg_torrentCopyDir->setEnabled(Settings::useTorrentCopyDir());
-		if (Settings::torrentCopyDir().path().length() == 0)
+		if (Settings::torrentCopyDir().toLocalFile().length() == 0)
 			kcfg_torrentCopyDir->setUrl(QDir::homePath());
 		else
 			kcfg_torrentCopyDir->setUrl(Settings::torrentCopyDir());
 
 		kcfg_completedDir->setEnabled(Settings::useCompletedDir());
-		if (Settings::completedDir().path().length() == 0)
+		if (Settings::completedDir().toLocalFile().length() == 0)
 			kcfg_completedDir->setUrl(QDir::homePath());
 		else
 			kcfg_completedDir->setUrl(Settings::completedDir());

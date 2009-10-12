@@ -36,7 +36,7 @@ class QString;
 
 namespace kt
 {
-	class CurrentStats;
+	struct CurrentStats;
 	class Core;
 	class SetMaxRate;
 	class TorrentInterface;

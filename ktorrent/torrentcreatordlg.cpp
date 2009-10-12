@@ -351,7 +351,7 @@ namespace kt
 		dlg->setAllowCancel(false);
 		dlg->show();
 		bt::TorrentInterface* tc = core->makeTorrent(
-			url.path(),trackers,webseeds,chunk_size,name,m_comments->text(),
+			url.toLocalFile(),trackers,webseeds,chunk_size,name,m_comments->text(),
 			m_start_seeding->isChecked(),s,m_private->isChecked(),
 			dlg->progressBar(),
 			m_dht->isChecked());

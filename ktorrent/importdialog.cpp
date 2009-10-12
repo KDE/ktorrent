@@ -96,7 +96,7 @@ namespace kt
 		if (tor.isMultiFile())
 		{
 			dc = new MultiDataChecker();
-			QString path = data_url.path();
+			QString path = data_url.toLocalFile();
 			if (!path.endsWith(bt::DirSeparator()))
 				path += bt::DirSeparator();
 
@@ -114,7 +114,7 @@ namespace kt
 			BitSet bs(tor.getNumChunks());
 			bs.setAll(false);
 			dc->setListener(this);
-			dc->check(data_url.path(),tor,QString::null,bs);
+			dc->check(data_url.toLocalFile(),tor,QString::null,bs);
 		}
 		catch (Error & e)
 		{
@@ -152,7 +152,7 @@ namespace kt
 				if (!bt::Exists(dnd_dir))
 					MakeDir(dnd_dir);
 
-				QString ddir = data_url.path();
+				QString ddir = data_url.toLocalFile();
 				if (!ddir.endsWith(bt::DirSeparator()))
 					ddir += bt::DirSeparator();
 
@@ -165,7 +165,7 @@ namespace kt
 
 				saveFileMap(tor,tor_dir);
 
-				QString durl = data_url.path();
+				QString durl = data_url.toLocalFile();
 				if (durl.endsWith(bt::DirSeparator()))
 					durl = durl.left(durl.length() - 1);
 				int ds = durl.lastIndexOf(bt::DirSeparator());
@@ -183,11 +183,11 @@ namespace kt
 			else
 			{
 				// single file, just symlink the data_url to tor_dir/cache
-				QString durl = data_url.path();
+				QString durl = data_url.toLocalFile();
 				int ds = durl.lastIndexOf(bt::DirSeparator());
 				durl = durl.left(ds);
 				saveStats(tor_dir + "stats",durl,imported,false);
-				saveFileMap(tor_dir,data_url.path());
+				saveFileMap(tor_dir,data_url.toLocalFile());
 			}
 
 			// everything went OK, so load the whole shabang and start downloading
@@ -256,7 +256,7 @@ namespace kt
 			// try to load the torrent
 			try
 			{
-				tor.load(tor_url.path(),false);
+				tor.load(tor_url.toLocalFile(),false);
 			}
 			catch (Error & e)
 			{
@@ -294,7 +294,7 @@ namespace kt
 		QStringList sl = fpath.split(bt::DirSeparator());
 
 		// create all necessary subdirs
-		QString otmp = data_url.path();
+		QString otmp = data_url.toLocalFile();
 		if (!otmp.endsWith(bt::DirSeparator()))
 			otmp += bt::DirSeparator();
 
@@ -322,7 +322,7 @@ namespace kt
 		}
 
 		QTextStream out(&fptr);
-		out << "OUTPUTDIR=" << data_url.path() << ::endl;
+		out << "OUTPUTDIR=" << data_url.toLocalFile() << ::endl;
 		out << "UPLOADED=0" << ::endl;
 		out << "RUNNING_TIME_DL=0" << ::endl;
 		out << "RUNNING_TIME_UL=0" << ::endl;

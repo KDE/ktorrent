@@ -176,7 +176,7 @@ namespace kt
 			f->setGroup(QString());
 
 		if (m_use_custom_download_location->isChecked())
-			f->setDownloadLocation(m_custom_download_location->url().path());
+			f->setDownloadLocation(m_custom_download_location->url().toLocalFile());
 		else
 			f->setDownloadLocation(QString());
 	

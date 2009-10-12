@@ -160,7 +160,7 @@ namespace kt
 	{
 		QStringList pe_ex;
 		
-		QString dn = m_downloadLocation->url().path();
+		QString dn = m_downloadLocation->url().toLocalFile();
 		if (!dn.endsWith(bt::DirSeparator()))
 			dn += bt::DirSeparator();
 		
@@ -212,7 +212,7 @@ namespace kt
 				int ret = KMessageBox::questionYesNoList(0,msg,cf,QString::null);
 				if (ret == KMessageBox::Yes)
 				{
-					dn = Settings::completedDir().path();
+					dn = Settings::completedDir().toLocalFile();
 					if (!dn.endsWith(bt::DirSeparator()))
 						dn += bt::DirSeparator();
 				}
@@ -328,7 +328,7 @@ namespace kt
 
 	void FileSelectDlg::populateFields()
 	{
-		QString dir = Settings::saveDir().path();
+		QString dir = Settings::saveDir().toLocalFile();
 		if (!Settings::useSaveDir() || dir.isNull())
 		{
 			dir = Settings::lastSaveDir();
@@ -395,13 +395,13 @@ namespace kt
 		
 		//calculate free disk space
 		KUrl sdir = KUrl(m_downloadLocation -> url());
-		while( sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty())  && (! QDir(sdir.path()).exists()) ) 
+		while( sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty())  && (! QDir(sdir.toLocalFile()).exists()) ) 
 		{
 			sdir = sdir.upUrl();
 		}
 		
 		Uint64 bytes_free = 0;
-		if (!FreeDiskSpace(sdir.path(),bytes_free))
+		if (!FreeDiskSpace(sdir.toLocalFile(),bytes_free))
 		{
 			FreeDiskSpace(tc->getDataDir(),bytes_free);
 		}

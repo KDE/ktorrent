@@ -106,7 +106,7 @@ namespace kt
 		KUrl dir = KFileDialog::getExistingDirectoryUrl(KUrl("kfiledialog:///openTorrent"),this);
 		if (dir.isValid())
 		{
-			QString p = dir.path();
+			QString p = dir.toLocalFile();
 			if (!p.endsWith(bt::DirSeparator()))
 				p += bt::DirSeparator();
 			m_folders->addItem(new QListWidgetItem(KIcon("folder"),p));

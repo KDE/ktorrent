@@ -83,7 +83,7 @@ namespace kt
 		connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
 				this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
 		
-		data_dir = Settings::tempDir().path();
+		data_dir = Settings::tempDir().toLocalFile();
 		bool dd_not_exist = !bt::Exists(data_dir);
 		if (data_dir == QString::null || dd_not_exist)
 		{
@@ -171,7 +171,7 @@ namespace kt
 		setMaxSeeds(Settings::maxSeeds());
 		setKeepSeeding(Settings::keepSeeding());
 		
-		QString tmp = Settings::tempDir().path();
+		QString tmp = Settings::tempDir().toLocalFile();
 		if (tmp.isEmpty())
 			tmp = kt::DataDir();
 		
@@ -284,7 +284,7 @@ namespace kt
 				torFile += bt::DirSeparator();
 			
 			torFile += "torrent";
-			QString destination = Settings::torrentCopyDir().path();
+			QString destination = Settings::torrentCopyDir().toLocalFile();
 			if(!destination.endsWith(bt::DirSeparator()))
 				destination += bt::DirSeparator();
 			
@@ -385,7 +385,7 @@ namespace kt
 		else
 		{
 			// load in the file (target is always local)
-			QString dir = Settings::saveDir().path();
+			QString dir = Settings::saveDir().toLocalFile();
 			if (!Settings::useSaveDir() ||  dir.isNull())
 				dir = QDir::homePath();
 			
@@ -407,8 +407,8 @@ namespace kt
 	{
 		if (url.isLocalFile())
 		{
-			QString path = url.path(); 
-			QString dir = Settings::saveDir().path();
+			QString path = url.toLocalFile();
+			QString dir = Settings::saveDir().toLocalFile();
 			if (!Settings::useSaveDir()  || dir.isNull())
 				dir =  QDir::homePath();
 		
@@ -444,7 +444,7 @@ namespace kt
 			if (custom_save_locations.contains(j))
 			{
 				// we have a custom save location so save to that
-				dir = custom_save_locations[j].path();
+				dir = custom_save_locations[j].toLocalFile();
 				custom_save_locations.remove(j);
 			}
 			else if (!Settings::useSaveDir())
@@ -456,7 +456,7 @@ namespace kt
 			}
 			else
 			{
-				dir = Settings::saveDir().path();
+				dir = Settings::saveDir().toLocalFile();
 			}
 			
 			QString group;
@@ -478,8 +478,8 @@ namespace kt
 	{
 		if (url.isLocalFile())
 		{
-			QString path = url.path(); 
-			QString dir = Settings::saveDir().path();
+			QString path = url.toLocalFile(); 
+			QString dir = Settings::saveDir().toLocalFile();
 			if (!Settings::useSaveDir())
 			{
 				Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << path << " silently, default save location not set !" << endl;
@@ -507,7 +507,7 @@ namespace kt
 		QString dir;
 		if (savedir.isEmpty() || !bt::Exists(savedir))
 		{
-			dir = Settings::saveDir().path();
+			dir = Settings::saveDir().toLocalFile();
 			if (!Settings::useSaveDir()  || dir.isNull())
 				dir =  QDir::homePath();
 		}
@@ -525,7 +525,7 @@ namespace kt
 		QString dir;
 		if (savedir.isEmpty() || !bt::Exists(savedir))
 		{
-			dir = Settings::saveDir().path();
+			dir = Settings::saveDir().toLocalFile();
 			if (!Settings::useSaveDir())
 			{
 				Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << url.prettyUrl() << " silently, default save location not set !" << endl;
@@ -547,8 +547,8 @@ namespace kt
 	{
 		if (url.isLocalFile())
 		{
-			QString path = url.path(); 
-			QString dir = savedir.path();
+			QString path = url.toLocalFile(); 
+			QString dir = savedir.toLocalFile();
 			QFileInfo fi(dir);
 			if (!fi.exists() || !fi.isWritable() || !fi.isDir())
 			{
