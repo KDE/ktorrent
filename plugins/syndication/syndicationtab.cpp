@@ -77,6 +77,7 @@ namespace kt
 		feed_view_menu = new KMenu(this);
 		feed_view_menu->addAction(ac->action("show_feed"));
 		feed_view_menu->addAction(ac->action("manage_filters"));
+		feed_view_menu->addAction(ac->action("edit_feed_name"));
 		feed_view_menu->addSeparator();
 		feed_view_menu->addAction(ac->action("add_feed"));
 		feed_view_menu->addAction(ac->action("remove_feed"));

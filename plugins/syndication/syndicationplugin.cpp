@@ -62,6 +62,7 @@ namespace kt
 		connect(add_filter,SIGNAL(triggered()),activity,SLOT(addFilter()));
 		connect(remove_filter,SIGNAL(triggered()),activity,SLOT(removeFilter()));
 		connect(edit_filter,SIGNAL(triggered()),activity,SLOT(editFilter()));
+		connect(edit_feed_name,SIGNAL(triggered()),activity,SLOT(editFeedName()));
 		getGUI()->addActivity(activity);
 		activity->loadState(KGlobal::config());
 	}
@@ -93,6 +94,9 @@ namespace kt
 		
 		manage_filters = new KAction(KIcon("view-filter"),i18n("Add/Remove Filters"),this);
 		ac->addAction("manage_filters",manage_filters);
+		
+		edit_feed_name = new KAction(KIcon("edit-rename"),i18n("Rename"),this);
+		ac->addAction("edit_feed_name",edit_feed_name);
 		
 		add_filter = new KAction(KIcon("kt-add-filters"),i18n("Add Filter"),this);
 		ac->addAction("add_filter",add_filter);

@@ -19,6 +19,7 @@ Changes in 3.3:
 - Add home page for search plugin like the one in konqueror
 - Clarify message when checking for files in completed downloads directory (208992)
 - Use KUrl::toLocalFile instead of KUrl::path, path prepends / on windows, which breaks things
+- Improve editing of feed name
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)

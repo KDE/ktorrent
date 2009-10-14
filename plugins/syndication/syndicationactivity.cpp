@@ -342,4 +342,11 @@ namespace kt
 			f->runFilters();
 		}
 	}
+	
+	void SyndicationActivity::editFeedName()
+	{
+		QModelIndexList idx = tab->feedView()->selectedFeeds();
+		if (idx.count())
+			tab->feedView()->edit(idx.front());
+	}
 }

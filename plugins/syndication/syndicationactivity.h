@@ -62,6 +62,7 @@ namespace kt
 		void editFilter(Filter* f);
 		void manageFilters();
 		void closeTab();
+		void editFeedName();
 		
 	private:
 		FeedWidget* feedWidget(Feed* f);

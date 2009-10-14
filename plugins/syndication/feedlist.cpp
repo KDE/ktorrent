@@ -196,7 +196,7 @@ namespace kt
 		if (!index.isValid())
 			return 0;
 		
-		return Qt::ItemIsSelectable | Qt::ItemIsEnabled |= Qt::ItemIsEditable;
+		return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 	}
 	
 	Feed* FeedList::feedForIndex(const QModelIndex & idx)

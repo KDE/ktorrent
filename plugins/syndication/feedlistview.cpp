@@ -35,6 +35,7 @@ namespace kt
 		setModel(feeds);
 		setItemDelegate(new FeedListDelegate(this));
 		setAlternatingRowColors(true);
+		setEditTriggers(QAbstractItemView::SelectedClicked|QAbstractItemView::EditKeyPressed);
 		connect(this,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(itemActivated(const QModelIndex&)));
 		connect(this->selectionModel(),SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
 				this,SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
