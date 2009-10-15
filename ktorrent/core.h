@@ -133,7 +133,7 @@ namespace kt
 		 * @param group Group to add torrent to
 		 * @param silently Whether or not to do this silently
 		 */
-		bool load(const QString & file,const QString & dir,const QString & group,bool silently);
+		bool loadFromFile(const QString & file,const QString & dir,const QString & group,bool silently);
 		
 		/**
 		 * Load a torrent file. Pops up an error dialog
@@ -142,7 +142,7 @@ namespace kt
 		 * @param dir Directory to save the data
 		 * @param silently Whether or not to do this silently
 		 */
-		bool load(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url);
+		bool loadFromData(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url);
 		
 		/**
 		 * Update all torrents.
@@ -242,7 +242,7 @@ namespace kt
 	private:
 		void rollback(const QList<bt::TorrentInterface*> & success);
 		void connectSignals(bt::TorrentInterface* tc);
-		bool init(bt::TorrentControl* tc,const QString & group,bool silently);
+		bool init(bt::TorrentControl* tc,const QString & group,const QString & location,bool silently);
 
 	public:
 		void loadTorrents();

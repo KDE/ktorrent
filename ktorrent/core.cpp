@@ -188,14 +188,14 @@ namespace kt
 		pman->loadPluginList();
 	}
 
-	bool Core::init(TorrentControl* tc,const QString & group,bool silently)
+	bool Core::init(TorrentControl* tc,const QString & group,const QString & location,bool silently)
 	{
 		bool start_torrent = false;
 		bool skip_check = false;
 
 		if (!silently)
 		{
-			if (!gui->selectFiles(tc,&start_torrent,group,&skip_check))
+			if (!gui->selectFiles(tc,&start_torrent,group,location,&skip_check))
 			{
 				// Cleanup tor dir
 				QString dir = tc->getTorDir();
@@ -294,7 +294,7 @@ namespace kt
 		return true;
 	}
 	
-	bool Core::load(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url)
+	bool Core::loadFromData(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url)
 	{
 		QString tdir = findNewTorrentDir();
 		TorrentControl* tc = 0;
@@ -305,7 +305,7 @@ namespace kt
 			tc->init(qman, data, tdir, dir);
 			tc->setLoadUrl(url);
 			
-			if(!init(tc,group,silently))
+			if(!init(tc,group,dir,silently))
 				loadingFinished(url, false, true);
 			else
 				loadingFinished(url, true, false);
@@ -334,7 +334,7 @@ namespace kt
 		}
 	}
 
-	bool Core::load(const QString & target,const QString & dir,const QString & group,bool silently)
+	bool Core::loadFromFile(const QString & target,const QString & dir,const QString & group,bool silently)
 	{
 		QString tdir = findNewTorrentDir();
 		TorrentControl* tc = 0;
@@ -345,7 +345,7 @@ namespace kt
 			tc->init(qman, target, tdir, dir);
 			tc->setLoadUrl(KUrl(target));
 			
-			init(tc,group,silently);
+			init(tc,group,dir,silently);
 			startUpdateTimer();
 			return true;
 		}
@@ -396,7 +396,7 @@ namespace kt
 				add_to_groups.remove(j);
 			}
 		
-			if (dir != QString::null && load(j->data(),dir,group,false, j->url()))
+			if (dir != QString::null && loadFromData(j->data(),dir,group,false, j->url()))
 				loadingFinished(j->url(),true,false);
 			else
 				loadingFinished(j->url(),false,true);
@@ -412,7 +412,7 @@ namespace kt
 			if (!Settings::useSaveDir()  || dir.isNull())
 				dir =  QDir::homePath();
 		
-			if (dir != QString::null && load(path,dir,group,false))
+			if (dir != QString::null && loadFromFile(path,dir,group,false))
 				loadingFinished(url,true,false);
 			else
 				loadingFinished(url,false,true);
@@ -467,7 +467,7 @@ namespace kt
 			}
 				
 			
-			if (dir != QString::null && load(j->data(),dir,group,true,j->url()))
+			if (dir != QString::null && loadFromData(j->data(),dir,group,true,j->url()))
 				loadingFinished(j->url(),true,false);
 			else
 				loadingFinished(j->url(),false,false);
@@ -487,7 +487,7 @@ namespace kt
 				dir = QDir::homePath();
 			}
 		
-			if (dir != QString::null && load(path,dir,group,true))
+			if (dir != QString::null && loadFromFile(path,dir,group,true))
 				loadingFinished(url,true,false);
 			else
 				loadingFinished(url,false,true);
@@ -514,7 +514,7 @@ namespace kt
 		else
 			dir = savedir;
 		
-		if (dir != QString::null && load(data,dir,group,false,url))
+		if (dir != QString::null && loadFromData(data,dir,group,false,url))
 			loadingFinished(url,true,false);
 		else
 			loadingFinished(url,false,true);
@@ -536,45 +536,11 @@ namespace kt
 		else
 			dir = savedir;
 		
-		if (dir != QString::null && load(data,dir,group,true,url))
+		if (dir != QString::null && loadFromData(data,dir,group,true,url))
 			loadingFinished(url,true,false);
 		else
 			loadingFinished(url,false,true);
 	}
-
-	/*
-	void Core::loadSilentlyDir(const KUrl& url, const KUrl& savedir)
-	{
-		if (url.isLocalFile())
-		{
-			QString path = url.toLocalFile(); 
-			QString dir = savedir.toLocalFile();
-			QFileInfo fi(dir);
-			if (!fi.exists() || !fi.isWritable() || !fi.isDir())
-			{
-				Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << path << " silently, destination directory is not OK ! Using default save directory." << endl;
-				dir = Settings::saveDir().path();
-				if (!Settings::useSaveDir())
-				{
-					Out(SYS_GEN|LOG_NOTICE) << "Default save directory not set, using home directory !" << endl;
-					dir = QDir::homePath();
-				}
-			}
-			
-			if (dir != QString::null && load(path,dir,QString(),true))
-				loadingFinished(url,true,false);
-			else
-				loadingFinished(url,false,true);
-		}
-		else
-		{
-			// download to a random file in tmp
-			KIO::Job* j = KIO::storedGet(url);
-			custom_save_locations.insert(j,savedir); // keep track of save location
-			connect(j,SIGNAL(result(KJob*)),this,SLOT(downloadFinishedSilently( KJob* )));
-		}
-	}
-*/
 	
 	void Core::start(bt::TorrentInterface* tc)
 	{

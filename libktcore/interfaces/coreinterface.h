@@ -131,16 +131,6 @@ namespace kt
 
 		/**
 		 * Load a torrent file. Pops up an error dialog
-		 * if something goes wrong.
-		 * @param file The torrent file
-		 * @param savedir Dir to save the data
-		 * @param group Group to add torrent to
-		 * @param silently Whether or not to do this silently
-		 */
-		virtual bool load(const QString & file,const QString & savedir,const QString & group,bool silently) = 0;
-
-		/**
-		 * Load a torrent file. Pops up an error dialog
 		 * if something goes wrong. Will ask the user for a save location, or use
 		 * the default.
 		 * @param url The torrent file

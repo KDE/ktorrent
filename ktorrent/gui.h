@@ -60,7 +60,7 @@ namespace kt
 		virtual void removePluginGui(Plugin* p);
 		virtual void dataScanStarted(ScanListener* listener);
 		virtual void dataScanClosed(ScanListener* listener);
-		virtual bool selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check);
+		virtual bool selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,const QString & location_hint,bool* skip_check);
 		virtual void errorMsg(const QString & err);
 		virtual void errorMsg(KIO::Job* j);
 		virtual void infoMsg(const QString & info);

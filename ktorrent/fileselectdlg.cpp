@@ -91,7 +91,7 @@ namespace kt
 	FileSelectDlg::~FileSelectDlg()
 	{}
 
-	int FileSelectDlg::execute(bt::TorrentInterface* tc,bool* start,bool* skip_check)
+	int FileSelectDlg::execute(bt::TorrentInterface* tc,bool* start,bool* skip_check,const QString & location_hint)
 	{
 		setWindowTitle(i18n("Opening %1",tc->getDisplayName()));
 		this->tc = tc;
@@ -111,7 +111,7 @@ namespace kt
 				file.setEmitDownloadStatusChanged(false);
 			}
 			
-			populateFields();
+			populateFields(location_hint);
 			if (show_file_tree)
 				model = new TorrentFileTreeModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
 			else
@@ -326,14 +326,22 @@ namespace kt
 		model->invertCheck();
 	}
 
-	void FileSelectDlg::populateFields()
+	void FileSelectDlg::populateFields(const QString & location_hint)
 	{
-		QString dir = Settings::saveDir().toLocalFile();
-		if (!Settings::useSaveDir() || dir.isNull())
+		QString dir;
+		if (!location_hint.isEmpty() && QDir(location_hint).exists())
 		{
-			dir = Settings::lastSaveDir();
-			if (dir.isNull())
-				dir = QDir::homePath();
+			dir = location_hint;
+		}
+		else
+		{
+			dir = Settings::saveDir().toLocalFile();
+			if (!Settings::useSaveDir() || dir.isNull())
+			{
+				dir = Settings::lastSaveDir();
+				if (dir.isNull())
+					dir = QDir::homePath();
+			}
 		}
 		
 		m_downloadLocation->setUrl(dir);
