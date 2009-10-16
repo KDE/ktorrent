@@ -59,7 +59,7 @@ namespace bt
 		interval = 5 * 60; // default interval 5 minutes
 		failures = 0;
 		seeders = leechers = 0;
-		
+		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 	}
 
 	HTTPTracker::~HTTPTracker()
@@ -528,8 +528,16 @@ namespace bt
 			j->start();
 		}
 		
+		timer.start(60*1000);
 		requestPending();
 	}
+	
+	void HTTPTracker::onTimeout() 
+	{
+		if (active_job)
+			active_job->kill(KJob::EmitResult);
+	}
+
 	
 	void HTTPTracker::setProxy(const QString & p,const bt::Uint16 port) 
 	{

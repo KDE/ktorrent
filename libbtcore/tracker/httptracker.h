@@ -20,7 +20,7 @@
 #ifndef BTHTTPTRACKER_H
 #define BTHTTPTRACKER_H
 
-#include <qtimer.h>
+#include <QTimer>
 #include <btcore_export.h>
 #include "tracker.h"
 
@@ -65,6 +65,7 @@ namespace bt
 		void onQHttpAnnounceResult(KJob* j);
 		void onScrapeResult(KJob* j);
 		void emitInvalidURLFailure();
+		void onTimeout();
 
 	private:
 		void doRequest(WaitJob* wjob = 0);
