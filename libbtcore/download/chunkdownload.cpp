@@ -40,18 +40,24 @@ namespace bt
 
 	void DownloadStatus::add(Uint32 p)
 	{
-		insert(p);
+		status.insert(p);
 	}
 		
 	void DownloadStatus::remove(Uint32 p)
 	{
-		erase(p);
+		status.remove(p);
 	}
 		
 	bool DownloadStatus::contains(Uint32 p)
 	{
-		return count(p) > 0;
+		return status.contains(p);
 	}
+	
+	void DownloadStatus::clear()
+	{
+		status.clear();
+	}
+
 
 	////////////////////////////////////////////////////
 	
@@ -193,9 +199,9 @@ namespace bt
 			else
 			{
 				pd->cancel(r); // cancel request
-				ds->timeouts++;
+				ds->timeout();
 				// if we have more then one PieceDownloader and there are timeouts, release it
-				if (ds->timeouts > 0 && pdown.count() > 0)
+				if (ds->numTimeouts() > 0 && pdown.count() > 0)
 				{
 					pd->release();
 					sendCancels(pd);

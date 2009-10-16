@@ -20,6 +20,7 @@ Changes in 3.3rc1:
 - Clarify message when checking for files in completed downloads directory (208992)
 - Use KUrl::toLocalFile instead of KUrl::path, path prepends / on windows, which breaks things
 - Improve editing of feed name
+- Fix crash in ChunkDownload (196417)
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)

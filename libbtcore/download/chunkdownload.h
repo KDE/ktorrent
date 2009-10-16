@@ -20,9 +20,9 @@
 #ifndef BTCHUNKDOWNLOAD_H
 #define BTCHUNKDOWNLOAD_H
 
-#include <set>
-#include <qobject.h>
-#include <qlist.h>
+#include <QSet>
+#include <QObject>
+#include <QList>
 #include <util/timer.h>
 #include <util/ptrmap.h>
 #include <util/sha1hashgen.h>
@@ -55,17 +55,27 @@ namespace bt
 		Uint32 mapped;
 	};
 
-	class DownloadStatus : public std::set<Uint32>
+	class DownloadStatus
 	{
-	public:		
+	public:
 		DownloadStatus();
 		~DownloadStatus();
 
 		void add(Uint32 p);
 		void remove(Uint32 p);
 		bool contains(Uint32 p);
+		void clear();
 		
+		void timeout() {timeouts++;}
+		Uint32 numTimeouts() const {return timeouts;}
+		
+		typedef QSet<Uint32>::iterator iterator;
+		iterator begin() {return status.begin();}
+		iterator end() {return status.end();}
+		
+	private:
 		Uint32 timeouts;
+		QSet<Uint32> status;
 	};
 	
 	
@@ -205,7 +215,7 @@ namespace bt
 		Timer timer;
 		QList<PieceDownloader*> pdown;
 		PtrMap<PieceDownloader*,DownloadStatus> dstatus;
-		std::set<PieceDownloader*> piece_providers;
+		QSet<PieceDownloader*> piece_providers;
 		PieceData** piece_data;
 		SHA1HashGen hash_gen;
 		Uint32 num_pieces_in_hash;
