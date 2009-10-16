@@ -21,6 +21,7 @@ Changes in 3.3rc1:
 - Use KUrl::toLocalFile instead of KUrl::path, path prepends / on windows, which breaks things
 - Improve editing of feed name
 - Fix crash in ChunkDownload (196417)
+- Remove quit button from MissingFilesDlg (207388)
 
 Changes in 3.3beta1:
 - Cleanup plugin list (180402)

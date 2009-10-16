@@ -36,12 +36,10 @@ namespace kt
 		
 		m_text->setText(text);
 		connect(m_cancel,SIGNAL(clicked()),this,SLOT(cancelPressed()));
-		connect(m_quit,SIGNAL(clicked()),this,SLOT(quitPressed()));
 		connect(m_recreate,SIGNAL(clicked()),this,SLOT(recreatePressed()));
 		connect(m_dnd,SIGNAL(clicked()),this,SLOT(dndPressed()));
 		connect(m_select_new,SIGNAL(clicked()),this,SLOT(selectNewPressed()));
 		
-		m_quit->setGuiItem(KStandardGuiItem::quit());
 		m_cancel->setGuiItem(KStandardGuiItem::cancel());
 		
 		foreach (const QString &s,missing)
@@ -59,12 +57,6 @@ namespace kt
 
 	MissingFilesDlg::~MissingFilesDlg()
 	{}
-	
-	void MissingFilesDlg::quitPressed()
-	{
-		ret = QUIT;
-		accept();
-	}
 	
 	void MissingFilesDlg::dndPressed()
 	{

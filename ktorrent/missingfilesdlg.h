@@ -52,7 +52,7 @@ namespace kt
 		
 		enum ReturnCode 
 		{
-			QUIT,RECREATE,DO_NOT_DOWNLOAD,CANCEL,NEW_LOCATION_SELECTED
+			RECREATE,DO_NOT_DOWNLOAD,CANCEL,NEW_LOCATION_SELECTED
 		};
 		
 		/**
@@ -62,7 +62,6 @@ namespace kt
 		ReturnCode execute();
 		
 	private slots:
-		void quitPressed();
 		void dndPressed();
 		void recreatePressed();
 		void cancelPressed();

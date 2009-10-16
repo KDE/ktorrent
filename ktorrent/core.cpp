@@ -1050,10 +1050,6 @@ namespace kt
 						ret = false;
 					}
 					break;
-				case MissingFilesDlg::QUIT:
-					ret = false;
-					QTimer::singleShot(500,kapp,SLOT(quit()));
-					break;
 				case MissingFilesDlg::NEW_LOCATION_SELECTED:
 					ret = true;
 					break;
@@ -1082,10 +1078,6 @@ namespace kt
 						tc->handleError(i18n("Data file is missing"));
 						ret = false;
 					}
-					break;
-				case MissingFilesDlg::QUIT:
-					ret = false;
-					QTimer::singleShot(500,kapp,SLOT(quit()));
 					break;
 				case MissingFilesDlg::DO_NOT_DOWNLOAD:
 					ret = false;
