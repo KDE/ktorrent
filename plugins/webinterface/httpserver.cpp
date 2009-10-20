@@ -314,7 +314,7 @@ namespace kt
 		{
 			HttpResponseHeader rhdr(500);
 			setDefaultResponseHeaders(rhdr,"text/html",false);
-			hdlr->send500(rhdr,i18n("Cannot find webinterface skins!"));
+			hdlr->send500(rhdr,i18n("Cannot find web interface skins."));
 			return;
 		}
 		

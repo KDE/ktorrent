@@ -200,13 +200,13 @@ namespace kt
 				{
 					if (!all_found)
 						msg = i18n("Some files of this torrent have been found in the completed downloads directory. "
-							"Do you want to import these files and use the completed downloads directory as the location ?");
+							"Do you want to import these files and use the completed downloads directory as the location?");
 					else
 						msg = i18n("All files of this torrent have been found in the completed downloads directory. "
-							"Do you want to import these files and use the completed downloads directory as the location ?");
+							"Do you want to import these files and use the completed downloads directory as the location?");
 				}
 				else
-					msg = i18n("The file <b>%1</b> was found in the completed downloads directory. Do you want to import this file ?",tld);
+					msg = i18n("The file <b>%1</b> was found in the completed downloads directory. Do you want to import this file?",tld);
 						
 			// better ask the user if (s)he wants to delete the already existing data
 				int ret = KMessageBox::questionYesNoList(0,msg,cf,QString::null);
