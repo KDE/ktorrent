@@ -78,6 +78,7 @@ namespace bt
 		if (!started)
 			return;
 		
+		reannounce_timer.stop();
 		event = "stopped";
 		doRequest(wjob);
 		started = false;

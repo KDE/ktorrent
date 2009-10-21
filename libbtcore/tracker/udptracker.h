@@ -57,7 +57,7 @@ namespace bt
 		virtual void start();
 		virtual void stop(WaitJob* wjob = 0);
 		virtual void completed();
-		virtual Uint32 failureCount() const {return n;}
+		virtual Uint32 failureCount() const {return failures;}
 		virtual void scrape();
 
 	private slots:
@@ -87,7 +87,7 @@ namespace bt
 		Int64 connection_id;
 
 		Uint32 data_read;
-		int n;
+		int failures;
 		QTimer conn_timer;
 		Event event;
 		bool resolved;

@@ -88,6 +88,7 @@ namespace bt
 			return;
 		
 		event = STOPPED;
+		reannounce_timer.stop();
 		conn_timer.stop();
 		doRequest();
 		started = false;
@@ -115,7 +116,7 @@ namespace bt
 			return;
 		
 		connection_id = cid;
-		n = 0;
+		failures = 0;
 		sendAnnounce();
 	}
 	
@@ -194,12 +195,13 @@ namespace bt
 		}
 		else if (connection_id == 0)
 		{
-			n = 0;
+			failures = 0;
 			sendConnect();
 		}
 		else
 			sendAnnounce();
 
+		status = TRACKER_ANNOUNCING;
 		requestPending();
 		return true;
 	}
@@ -213,7 +215,7 @@ namespace bt
 		transaction_id = socket->newTransactionID();
 		socket->sendConnect(transaction_id,address);
 		int tn = 1;
-		for (int i = 0;i < n;i++)
+		for (int i = 0;i < failures;i++)
 			tn *= 2;
 		conn_timer.start(60000 * tn);
 	}
@@ -281,9 +283,9 @@ namespace bt
 		if (connection_id)
 		{
 			connection_id = 0;
-			n++;
+			failures++;
 			if (event != STOPPED)
-				sendConnect();
+				onError(transaction_id,i18n("Timeout contacting tracker %1",url.prettyUrl()));
 			else
 			{
 				status = TRACKER_IDLE;
@@ -292,7 +294,8 @@ namespace bt
 		}
 		else
 		{
-			doRequest();
+			failures++;
+			onError(transaction_id,i18n("Timeout contacting tracker %1",url.prettyUrl()));
 		}
 	}
 
@@ -305,7 +308,7 @@ namespace bt
 			// continue doing request
 			if (connection_id == 0)
 			{
-				n = 0;
+				failures = 0;
 				sendConnect();
 			}
 			else
@@ -313,7 +316,7 @@ namespace bt
 		}
 		else 
 		{
-			n++;
+			failures++;
 			failed(i18n("Unable to resolve hostname %1",url.host()));
 		}
 	}
