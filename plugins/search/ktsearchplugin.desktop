@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Search
 Name[bg]=Търсене
+Name[cs]=Hledat
 Name[de]=Suche
 Name[el]=Αναζήτηση
 Name[en_GB]=Search
@@ -28,6 +29,7 @@ Name[zh_CN]=搜索
 Name[zh_TW]=搜尋
 Comment=Search for torrents
 Comment[bg]=Търсене на торенти
+Comment[cs]=Hledat torrenty
 Comment[de]=Nach Torrents suchen
 Comment[el]=Αναζήτηση για torrents
 Comment[en_GB]=Search for torrents

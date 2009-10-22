@@ -2,6 +2,7 @@
 Type=Service
 Name=Statistics
 Name[bg]=Статистики
+Name[cs]=Statistiky
 Name[de]=Statistiken
 Name[el]=Στατιστικά
 Name[en_GB]=Statistics
@@ -29,6 +30,7 @@ Name[zh_CN]=统计
 Name[zh_TW]=統計
 Comment=Shows statistics about torrents in several graphs
 Comment[bg]=Показване на статистика на торентите в няколко графики
+Comment[cs]=Zobrazení statistiky o torrentech v několika grafech
 Comment[de]=Zeigt Statistiken über Torrents in mehreren Diagrammen
 Comment[el]=Εμφάνιση στατιστικών σχετικά με τα torrent σε διάφορα γραφήματα
 Comment[en_GB]=Shows statistics about torrents in several graphs

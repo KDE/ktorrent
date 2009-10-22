@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Automatic Remove
 Name[bg]=Автоматично премахване
+Name[cs]=Automatické odstranění
 Name[de]=Automatisch entfernen
 Name[en_GB]=Automatic Remove
 Name[es]=Eliminación automática
@@ -24,6 +25,7 @@ Name[tr]=Otomatik Silme
 Name[uk]=Автоматичне вилучення
 Name[zh_TW]=自動移除
 Comment=Script to automatically remove torrents when they finish downloading or seeding
+Comment[cs]=Skript, který automaticky odstraní torrenty pokud dokončily stahování nebo sdílení
 Comment[de]=Skript zum automatischen Entfernen von Torrents, wenn sie vollständig hoch- oder heruntergeladen sind
 Comment[en_GB]=Script to automatically remove torrents when they finish downloading or seeding
 Comment[es]=Script para eliminar automáticamente los torrents cuando se acaben de descargar o sembrar
