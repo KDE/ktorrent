@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=IP Filter
 Name[bg]=Филтър по IP
+Name[ca]=Filtre d'IP
 Name[de]=IP-Filter
 Name[el]=Φίλτρο IP
 Name[en_GB]=IP Filter
@@ -30,6 +31,7 @@ Name[x-test]=xxIP Filterxx
 Name[zh_CN]=IP 过滤
 Name[zh_TW]=IP 過濾
 Comment=Filter IP addresses through a blocklist
+Comment[ca]=Filtra adreces IP a través d'una llista de bloqueig
 Comment[de]=IP-Adressen mit einer Blockliste filtern
 Comment[el]=Φίλτρο διευθύνσεων IP μέσω μιας λίστας αποκλεισμού
 Comment[en_GB]=Filter IP addresses through a blocklist
