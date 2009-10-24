@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Download Order
 Name[bg]=Ред на изтегляне
+Name[ca]=Ordre de baixada
 Name[cs]=Pořadí stahování
 Name[de]=Download-Reihenfolge
 Name[el]=Σειρά λήψης
@@ -29,6 +30,8 @@ Name[uk]=Порядок звантаження
 Name[zh_CN]=下载顺序
 Name[zh_TW]=下載順序
 Comment=Specify the download order of a multi-file torrent
+Comment[ca]=Especifica l'ordre de baixada d'un torrent multi-fitxer
+Comment[cs]=Zvolení pořadí stahovaných souborů u torrentů obsahujících více souborů
 Comment[de]=Download-Reihenfolge bei Torrents, die aus mehreren Dateien bestehen, festlegen
 Comment[el]=Καθορισμός της σειράς λήψης ενός torrent  πολλαπλών αρχείων
 Comment[en_GB]=Specify the download order of a multi-file torrent

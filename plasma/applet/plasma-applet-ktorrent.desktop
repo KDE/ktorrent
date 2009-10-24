@@ -45,6 +45,7 @@ Name[zh_CN]=KTorrent
 Name[zh_TW]=KTorrent
 Icon=ktorrent
 Comment=Plasmoid to keep track of a single torrent
+Comment[ca]=Estri per mantenir el seguiment d'un sol torrent
 Comment[cs]=Plasmoid pro sledování jednoho torrentu
 Comment[de]=Plasmoid zum Überwachen eines einzelnen Torrents
 Comment[en_GB]=Plasmoid to keep track of a single torrent

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=UPnP
 Name[bg]=UPnP
+Name[ca]=UPnP
 Name[cs]=UPnP
 Name[de]=UPnP
 Name[el]=UPnP
@@ -29,6 +30,7 @@ Name[zh_CN]=UPnP
 Name[zh_TW]=UPnP
 Comment=Forward ports using UPnP
 Comment[bg]=Пренасочване на портове с UPnP
+Comment[ca]=Redirecció de ports usant UPnP
 Comment[cs]=Předávání portů pomocí UPnP
 Comment[de]=Port-Weiterleitung unter Verwendung von UPnP
 Comment[el]=Προώθηση θυρών με χρήση του UPnP
