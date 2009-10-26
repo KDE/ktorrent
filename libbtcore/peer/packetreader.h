@@ -59,7 +59,7 @@ namespace bt
 		Uint32 newPacket(Uint8* buf,Uint32 size);
 		Uint32 readPacket(Uint8* buf,Uint32 size);
 		virtual void onDataReady(Uint8* buf,Uint32 size);
-		
+		IncomingPacket* dequeuePacket();
 	};
 
 }
