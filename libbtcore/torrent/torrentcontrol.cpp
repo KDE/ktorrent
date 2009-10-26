@@ -294,7 +294,6 @@ namespace bt
 		stats.stopped_by_error = true;
 		stats.status = ERROR;
 		stats.error_msg = msg;
-		stats.running = false;
 		istats.io_error = true;
 		statusChanged(this);
 	}

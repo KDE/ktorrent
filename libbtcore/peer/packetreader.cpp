@@ -115,30 +115,33 @@ namespace bt
 	}
 	
 	
+	IncomingPacket* PacketReader::dequeuePacket()
+	{
+		QMutexLocker lock(&mutex);
+		if (packet_queue.count() == 0)
+			return 0;
+		
+		IncomingPacket* pck = packet_queue.front();
+		if (pck->read != pck->size)
+			return 0;
+		
+		packet_queue.pop_front();
+		return pck;
+	}
+
+	
 	void PacketReader::update()
 	{
 		if (error)
 			return;
 		
-		mutex.lock();
-		// pass packets to peer
-		while (packet_queue.count() > 0)
+		IncomingPacket* pck = 0;
+		while ((pck = dequeuePacket()) != 0)
 		{
-			IncomingPacket* pck = packet_queue.first();
-			if (pck->read == pck->size)
-			{
-				// full packet is read pass it to peer
-				peer->packetReady(pck->data,pck->size);
-				packet_queue.removeFirst();
-				delete pck;
-			}
-			else
-			{
-				// packet is not yet full, break out of loop
-				break;
-			}
+			peer->packetReady(pck->data,pck->size);
+			delete pck;
+			pck = 0;
 		}
-		mutex.unlock();
 	}
 	
 	Uint32 PacketReader::newPacket(Uint8* buf,Uint32 size)
