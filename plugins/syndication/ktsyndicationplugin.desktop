@@ -27,6 +27,7 @@ Name[sr]=Синдикација
 Name[sv]=Syndikering
 Name[tr]=Dayanışma
 Name[uk]=Синдикація
+Name[x-test]=xxSyndicationxx
 Name[zh_CN]=同步
 Name[zh_TW]=Syndication
 Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
