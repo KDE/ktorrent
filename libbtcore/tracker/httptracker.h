@@ -81,6 +81,7 @@ namespace bt
 		QString event;
 		Uint32 failures;
 		QTimer timer;
+		QString error;
 		
 		
 		static bool proxy_on;

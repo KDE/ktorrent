@@ -76,12 +76,23 @@ namespace bt
 	void HTTPTracker::stop(WaitJob* wjob)
 	{
 		if (!started)
-			return;
-		
-		reannounce_timer.stop();
-		event = "stopped";
-		doRequest(wjob);
-		started = false;
+		{
+			announce_queue.clear();
+			if (active_job)
+			{
+				active_job->kill();
+				active_job = 0;
+				status = TRACKER_IDLE;
+				requestOK();
+			}
+		}
+		else
+		{
+			reannounce_timer.stop();
+			event = "stopped";
+			doRequest(wjob);
+			started = false;
+		}
 	}
 	
 	void HTTPTracker::completed()
@@ -407,11 +418,16 @@ namespace bt
 		active_job = 0;
 		if (j->error() && data.size() == 0)
 		{
-			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << j->errorString() << endl;
+			QString err = error;
+			error.clear();
+			if (err.isEmpty())
+				err = j->errorString();
+			
+			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << err << endl;
 			if (url.queryItem("event") != "stopped")
 			{
 				failures++;
-				failed(j->errorString());
+				failed(err);
 			}
 			else
 			{
@@ -538,7 +554,10 @@ namespace bt
 	void HTTPTracker::onTimeout() 
 	{
 		if (active_job)
+		{
+			error = i18n("Timeout contacting tracker %1",url.prettyUrl());
 			active_job->kill(KJob::EmitResult);
+		}
 	}
 
 	

@@ -85,13 +85,23 @@ namespace bt
 	void UDPTracker::stop(WaitJob* )
 	{
 		if (!started)
-			return;
-		
-		event = STOPPED;
-		reannounce_timer.stop();
-		conn_timer.stop();
-		doRequest();
-		started = false;
+		{
+			if (transaction_id) 
+			{
+				socket->cancelTransaction(transaction_id);
+				transaction_id = 0;
+				status = TRACKER_IDLE;
+				requestOK();
+			}
+		}
+		else
+		{
+			event = STOPPED;
+			reannounce_timer.stop();
+			conn_timer.stop();
+			doRequest();
+			started = false;
+		}
 	}
 	
 	void UDPTracker::completed()

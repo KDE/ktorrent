@@ -527,13 +527,23 @@ namespace bt
 			return;
 		
 		trk->setEnabled(enabled);
-		if (!enabled && curr == trk) // if the current tracker is disabled, switch to another one
+		if (!enabled) 
 		{
-			curr->stop();
-			switchTracker(selectTracker());
-			if (curr)
-				curr->start();
+			trk->stop();
+			if (curr == trk) // if the current tracker is disabled, switch to another one
+			{
+				switchTracker(selectTracker());
+				if (curr)
+					curr->start();
+			}
 		}
+		else
+		{
+			// start tracker if necessary
+			if (!tor->getStats().priv_torrent && started)
+				trk->start();
+		}
+		
 		saveTrackerStatus();
 	}
 
