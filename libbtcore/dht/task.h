@@ -20,8 +20,8 @@
 #ifndef DHTTASK_H
 #define DHTTASK_H
 
-#include <qlist.h>
 #include "rpccall.h"
+#include "kbucket.h"
 
 namespace KNetwork
 {
@@ -33,7 +33,6 @@ namespace dht
 	class Node;
 	class Task;
 	class KClosestNodesSearch;
-	class KBucketEntry;
 	
 	const Uint32 MAX_CONCURRENT_REQS = 16;
 
@@ -156,8 +155,8 @@ namespace dht
 		void onResolverResults(KNetwork::KResolverResults res);
 				
 	protected:	
-		QList<KBucketEntry> visited; // nodes visited
-		QList<KBucketEntry> todo; // nodes todo
+		dht::KBucketEntrySet visited; // nodes visited
+		dht::KBucketEntrySet todo; // nodes todo
 		Node* node;
 		
 	private:

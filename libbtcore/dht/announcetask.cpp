@@ -23,6 +23,7 @@
 #include "node.h"
 #include "pack.h"
 
+
 using namespace bt;
 
 namespace dht
@@ -58,9 +59,9 @@ namespace dht
 			{
 				// add node to todo list
 				KBucketEntry e = UnpackBucketEntry(n,i*26,4);
-				if (!todo.contains(e) && !visited.contains(e) && todo.count() < 100)
+				if (!visited.contains(e) && todo.size() < 100)
 				{
-					todo.append(e);
+					todo.insert(e);
 				//	Out(SYS_DHT|LOG_DEBUG) << "DHT: GetPeers returned node " << e.getAddress().toString() << endl;
 				}
 			}
@@ -69,9 +70,9 @@ namespace dht
 			{
 				const QByteArray & ba = *itr;
 				KBucketEntry e = UnpackBucketEntry(ba,0,6);
-				if (!todo.contains(e) && !visited.contains(e) && todo.count() < 100)
+				if (!visited.contains(e) && todo.size() < 100)
 				{
-					todo.append(e);
+					todo.insert(e);
 				//	Out(SYS_DHT|LOG_DEBUG) << "DHT: GetPeers returned node " << e.getAddress().toString() << endl;
 				}
 			}
@@ -93,9 +94,9 @@ namespace dht
 		
 		// add the peer who responded to the answered list, so we can do an announce
 		KBucketEntry e(rsp->getOrigin(),rsp->getID());
-		if (!answered.contains(KBucketEntryAndToken(e,gpr->getToken())) && !answered_visited.contains(e))
+		if (!answered_visited.contains(e))
 		{
-			answered.append(KBucketEntryAndToken(e,gpr->getToken()));
+			answered.insert(KBucketEntryAndToken(e,gpr->getToken()));
 		}
 	}
 
@@ -112,35 +113,35 @@ namespace dht
 	*/
 		while (!answered.empty() && canDoRequest())
 		{
-			KBucketEntryAndToken & e = answered.first();
-			if (!answered_visited.contains(e))
+			std::set<KBucketEntryAndToken>::iterator itr = answered.begin();
+			if (!answered_visited.contains(*itr))
 			{
-				AnnounceReq* anr = new AnnounceReq(node->getOurID(),info_hash,port,e.getToken());
-				anr->setOrigin(e.getAddress());
+				AnnounceReq* anr = new AnnounceReq(node->getOurID(),info_hash,port,itr->getToken());
+				anr->setOrigin(itr->getAddress());
 		//		Out(SYS_DHT|LOG_DEBUG) << "DHT: Announcing to " << e.getAddress().toString() << endl;
 				rpcCall(anr);
-				answered_visited.append(e);
+				answered_visited.insert(*itr);
 			}
-			answered.pop_front();
+			answered.erase(itr);
 		}
 		
 		// go over the todo list and send get_peers requests
 		// until we have nothing left
 		while (!todo.empty() && canDoRequest())
 		{
-			KBucketEntry e = todo.first();
+			KBucketEntrySet::iterator itr = todo.begin();
 			// onLy send a findNode if we haven't allrready visited the node
-			if (!visited.contains(e))
+			if (!visited.contains(*itr))
 			{
 				// send a findNode to the node
 		//		Out(SYS_DHT|LOG_DEBUG) << "DHT: Sending GetPeers to " << e.getAddress().toString() << endl;
 				GetPeersReq* gpr = new GetPeersReq(node->getOurID(),info_hash);
-				gpr->setOrigin(e.getAddress());
+				gpr->setOrigin(itr->getAddress());
 				rpcCall(gpr);
-				visited.append(e);
+				visited.insert(*itr);
 			}
 			// remove the entry from the todo list
-			todo.pop_front();
+			todo.erase(itr);
 		}
 		
 		if (todo.empty() && answered.empty() && getNumOutstandingRequests() == 0 && !isFinished())

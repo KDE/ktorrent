@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "kbucket.h"
 #include <QtAlgorithms>
+#include <QHash>
 #include <k3socketaddress.h>
 #include <util/file.h>
 #include <util/log.h>
@@ -27,7 +28,11 @@
 #include "kclosestnodessearch.h"
 #include "rpcserver.h"
 #include "node.h"
+#include "task.h"
+
+
 #undef GetCurrentTime
+
 using namespace KNetwork;
 using namespace bt;
 
@@ -104,6 +109,11 @@ namespace dht
 		questionable_pings = 0;
 	}
 	
+	bool KBucketEntry::operator<(const dht::KBucketEntry& entry) const
+	{
+		return node_id < entry.node_id;
+	}
+
 
 	//////////////////////////////////////////////////////////
 	

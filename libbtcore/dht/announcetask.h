@@ -20,8 +20,9 @@
 #ifndef DHTANNOUNCETASK_H
 #define DHTANNOUNCETASK_H
 
-#include "task.h"
+
 #include "kbucket.h"
+#include "task.h"
 
 namespace dht
 {
@@ -62,8 +63,8 @@ namespace dht
 	private:
 		dht::Key info_hash;
 		bt::Uint16 port;
-		QList<KBucketEntryAndToken> answered; // nodes which have answered with values
-		QList<KBucketEntry> answered_visited; // nodes which have answered with values which have been visited
+		std::set<KBucketEntryAndToken> answered; // nodes which have answered with values
+		KBucketEntrySet answered_visited; // nodes which have answered with values which have been visited
 		Database* db;
 		DBItemList returned_items;
 		

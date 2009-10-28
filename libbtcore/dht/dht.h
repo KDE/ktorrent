@@ -102,6 +102,9 @@ namespace dht
 		 */
 		NodeLookup* findNode(const dht::Key & id);
 		
+		/// Do a findNode for our node id
+		NodeLookup* findOwnNode();
+		
 		/// See if it is possible to start a task
 		bool canStartTask() const;
 		
@@ -119,6 +122,7 @@ namespace dht
 	private slots:
 		void update();
 		void onResolverResults(KNetwork::KResolverResults res);
+		void ownNodeLookupFinished(Task* t);
 		
 	private:
 		Node* node;
@@ -128,6 +132,7 @@ namespace dht
 		bt::Timer expire_timer;
 		QString table_file;
 		QTimer update_timer;
+		NodeLookup* our_node_lookup;
 	};
 
 }

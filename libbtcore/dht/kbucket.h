@@ -20,12 +20,12 @@
 #ifndef DHTKBUCKET_H
 #define DHTKBUCKET_H
 
-#include <qlist.h>
+#include <set>
+#include <QList>
 #include <util/constants.h>
 #include <k3socketaddress.h>
 #include "key.h"
 #include "rpccall.h"
-#include "task.h"
 
 using bt::Uint32;
 using bt::Uint16;
@@ -129,6 +129,21 @@ namespace dht
 		
 		/// The null entry
 		static KBucketEntry null; 
+		
+		/// < operator
+		bool operator < (const KBucketEntry & entry) const;
+	};
+	
+	class KBucketEntrySet : public std::set<KBucketEntry>
+	{
+	public:
+		KBucketEntrySet() {}
+		virtual ~KBucketEntrySet() {}
+		
+		bool contains(const KBucketEntry & entry) const 
+		{
+			return find(entry) != end();
+		}
 	};
 	
 	
@@ -207,6 +222,12 @@ namespace dht
 	private slots:
 		void onFinished(Task* t);
 	};
+}
+
+template <class T>
+inline uint qHash(const T & e)
+{
+	return e.hash();
 }
 
 #endif

@@ -43,7 +43,7 @@ namespace dht
 	
 
 
-	DHT::DHT() : node(0),srv(0),db(0),tman(0)
+	DHT::DHT() : node(0),srv(0),db(0),tman(0),our_node_lookup(0)
 	{
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 	}
@@ -76,8 +76,11 @@ namespace dht
 		node->loadTable(table);
 		update_timer.start(1000);
 		started();
-		// refresh the DHT table by looking for our own ID
-		findNode(node->getOurID());
+		if (node->getNumEntriesInRoutingTable() > 0)
+		{
+			// refresh the DHT table by looking for our own ID
+			findOwnNode();
+		}
 	}
 		
 		
@@ -137,6 +140,23 @@ namespace dht
 		kns.pack(&fnr);
 		fnr.setOrigin(r->getOrigin());
 		srv->sendMsg(&fnr);
+	}
+
+	NodeLookup* DHT::findOwnNode()
+	{
+		if (our_node_lookup)
+			return our_node_lookup;
+		
+		our_node_lookup = findNode(node->getOurID());
+		if (our_node_lookup)
+			connect(our_node_lookup,SIGNAL(finished(Task*)),this,SLOT(ownNodeLookupFinished(Task*)));
+		return our_node_lookup;
+	}
+
+	void DHT::ownNodeLookupFinished(Task* t)
+	{
+		if (our_node_lookup == t)
+			our_node_lookup = 0;
 	}
 
 	
