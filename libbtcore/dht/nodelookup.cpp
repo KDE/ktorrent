@@ -23,6 +23,7 @@
 #include "rpcmsg.h"
 #include "node.h"
 #include "pack.h"
+#include "kbucket.h"
 
 using namespace bt;
 
@@ -57,7 +58,7 @@ namespace dht
 				KBucketEntry e = UnpackBucketEntry(nodes,j*26,4);
 				// lets not talk to ourself
 				if (e.getID() != node->getOurID() && !todo.contains(e) && !visited.contains(e))
-					todo.append(e);
+					todo.insert(e);
 			}
 			
 			for (PackedNodeContainer::CItr i = fnr->begin();i != fnr->end();i++)
@@ -65,7 +66,7 @@ namespace dht
 				KBucketEntry e = UnpackBucketEntry(*i,0,6);
 				// lets not talk to ourself
 				if (e.getID() != node->getOurID() && !todo.contains(e) && !visited.contains(e))
-					todo.append(e);
+					todo.insert(e);
 			}
 			num_nodes_rsp++;
 		}
@@ -84,18 +85,18 @@ namespace dht
 		// until we have nothing left
 		while (!todo.empty() && canDoRequest())
 		{
-			KBucketEntry e = todo.first();
+			KBucketEntrySet::iterator itr = todo.begin();
 			// only send a findNode if we haven't allrready visited the node
-			if (!visited.contains(e))
+			if (!visited.contains(*itr))
 			{
 				// send a findNode to the node
 				FindNodeReq* fnr = new FindNodeReq(node->getOurID(),node_id);
-				fnr->setOrigin(e.getAddress());
+				fnr->setOrigin(itr->getAddress());
 				rpcCall(fnr);
-				visited.append(e);
+				visited.insert(*itr);
 			}
 			// remove the entry from the todo list
-			todo.pop_front();
+			todo.erase(itr);
 		}
 		
 		if (todo.empty() && getNumOutstandingRequests() == 0 && !isFinished())

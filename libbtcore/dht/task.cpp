@@ -21,7 +21,6 @@
 #include <k3resolver.h>
 #include "kclosestnodessearch.h"
 #include "rpcserver.h"
-#include "kbucket.h"
 
 using namespace KNetwork;
 
@@ -43,7 +42,7 @@ namespace dht
 	{
 		// fill the todo list
 		for (KClosestNodesSearch::CItr i = kns.begin(); i != kns.end();i++)
-			todo.append(i->second);
+			todo.insert(i->second);
 		this->queued = queued;
 		if (!queued)
 			update();
@@ -126,7 +125,7 @@ namespace dht
 		if (res.count() == 0)
 			return;
 		
-		todo.append(KBucketEntry(res.front().address(),dht::Key()));
+		todo.insert(KBucketEntry(res.front().address(),dht::Key()));
 	}
 
 }

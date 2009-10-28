@@ -147,7 +147,7 @@ namespace dht
 		{
 			// do a node lookup upon our own id 
 			// when we insert the first entry in the table
-			dh_table->findNode(our_id);
+			dh_table->findOwnNode();
 		}
 		
 		num_entries = 0;
