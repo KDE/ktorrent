@@ -2,6 +2,7 @@
 Name=Scan Folder
 Name[bg]=Претърсване на директория
 Name[ca]=Exploració de carpetes
+Name[da]=Scan mappe
 Name[de]=Ordner durchsuchen
 Name[el]=Σάρωση φακέλου
 Name[en_GB]=Scan Folder
@@ -33,6 +34,7 @@ Name[zh_TW]=掃描資料夾
 Comment=Scan folders for torrent files and load them
 Comment[bg]=Претърсване на директории за торент-файлове за добавяне
 Comment[ca]=Explora les carpetes per fitxers torrent i els carrega
+Comment[da]=Scan mapper efter torrent-filer og indlæs dem
 Comment[de]=Ordner nach Torrent-Dateien durchsuchen und diese laden
 Comment[el]=Σάρωση φακέλων για αρχεία torrent και φόρτωσή τους
 Comment[en_GB]=Scan folders for torrent files and load them

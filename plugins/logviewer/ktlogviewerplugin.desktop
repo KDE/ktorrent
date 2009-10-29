@@ -2,6 +2,7 @@
 Name=Log Viewer
 Name[bg]=Преглед на дневника
 Name[ca]=Visor del registre
+Name[da]=Logfremviser
 Name[de]=Protokollbetrachter
 Name[el]=Προβολή καταγραφής
 Name[en_GB]=Log Viewer
@@ -33,6 +34,7 @@ Name[zh_TW]=紀錄檢視器
 Comment=Displays the logging output
 Comment[bg]=Показване на изхода от дневника
 Comment[ca]=Mostra la sortida del registre
+Comment[da]=Viser log-outputtet
 Comment[de]=Zeigt die Protokollausgaben
 Comment[el]=Εμφάνιση εξόδου της καταγραφής
 Comment[en_GB]=Displays the logging output

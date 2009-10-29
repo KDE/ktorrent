@@ -2,6 +2,7 @@
 Name=Scripting
 Name[bg]=Скриптиране
 Name[ca]=Scripting
+Name[da]=Scripting
 Name[de]=Skripte
 Name[el]=Σενάρια
 Name[en_GB]=Scripting
@@ -32,6 +33,7 @@ Name[zh_TW]=文稿
 Comment=Enables Kross scripting support
 Comment[bg]=Включване на поддръжка на скриптиране на Kross
 Comment[ca]=Habilita l'ús d'scripts Kross 
+Comment[da]=Aktiverer understøttelse af Kross-scripting
 Comment[de]=Aktiviert die Unterstützung für Kross-Skripte
 Comment[el]=Ενεργοποίηση υποστήριξης σεναρίων Kross
 Comment[en_GB]=Enables Kross scripting support

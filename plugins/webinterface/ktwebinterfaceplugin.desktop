@@ -2,6 +2,7 @@
 Name=Web Interface
 Name[bg]=Уеб-интефейс
 Name[ca]=Interfície web
+Name[da]=Webgrænseflade
 Name[de]=Web-Oberfläche
 Name[el]=Περιβάλλον ιστού
 Name[en_GB]=Web Interface
@@ -32,6 +33,7 @@ Name[zh_TW]=網頁介面
 Comment=Allows control of KTorrent via a web interface
 Comment[bg]=Включване на управление на KTorrent през уеб-интерфейс
 Comment[ca]=Permet controlar el KTorrent via una interfície web
+Comment[da]=Muliggør styring af KTorrent via en webgrænseflade
 Comment[de]=Ermöglicht die Kontrolle von KTorrent über eine Web-Oberfläche
 Comment[el]=Επιτρέπει τον έλεγχο του KTorrent μέσω μιας ιστοσελίδας
 Comment[en_GB]=Allows control of KTorrent via a web interface
