@@ -561,7 +561,11 @@ namespace bt
 			PieceData* piece = piece_data[i];
 			Uint32 len = i == num - 1 ? last_size : MAX_PIECE_LEN;
 			if (!piece)
+			{
 				piece = chunk->getPiece(i*MAX_PIECE_LEN,len,true);
+				if (piece)
+					piece->ref();
+			}
 			
 			if (piece)
 			{

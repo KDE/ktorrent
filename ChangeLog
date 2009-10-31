@@ -3,6 +3,7 @@ Changes in 3.3:
 - Fix bug causing torrent not to get stopped properly when an IO error occurs
 - Stop or start trackers when they get disabled or enabled
 - Fix CPU consumption bug in DHT NodeLookup and AnnounceTask
+- Fix crashes caused by reference count error in piece handling (204227, 186621)
 
 Changes in 3.3rc1:
 - Make sure Qt's warnings, critical and fatal messages are printed to stderr in QtMessageOutput (203423)
