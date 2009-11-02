@@ -19,12 +19,14 @@
  ***************************************************************************/
 #include "job.h"
 #include "torrentcontrol.h"
+#include <kio/jobuidelegate.h>
 
 namespace bt
 {
 	
 	Job::Job(bool stop_torrent, bt::TorrentControl* tc) : tc(tc),stop_torrent(stop_torrent)
 	{
+		setUiDelegate(new KIO::JobUiDelegate());
 	}
 	
 	Job::~Job()

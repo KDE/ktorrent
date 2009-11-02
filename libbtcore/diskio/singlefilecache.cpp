@@ -123,10 +123,6 @@ namespace bt
 			if (bt::Exists(move_data_files_dst))
 				bt::Delete(move_data_files_dst,true);
 		}
-		else if (job->error())
-		{
-			((KIO::Job*)job)->ui()->showErrorMessage();
-		}
 		move_data_files_dst = QString();
 	}
 	
