@@ -31,6 +31,7 @@
 #include <Phonon/Global>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
+#include <solid/powermanagement.h>
 #include <util/log.h>
 #include "videowidget.h"
 #include "mediaplayer.h"
@@ -42,7 +43,7 @@ namespace kt
 {
 
 	VideoWidget::VideoWidget(MediaPlayer* player,QWidget* parent)
-		: QWidget(parent),player(player),fullscreen(false),screensaver_cookie(0)
+		: QWidget(parent),player(player),fullscreen(false),screensaver_cookie(0),powermanagement_cookie(0)
 	{
 		QVBoxLayout* vlayout = new QVBoxLayout(this);
 		vlayout->setMargin(0);
@@ -193,13 +194,18 @@ namespace kt
 		org::freedesktop::ScreenSaver screensaver(interface, "/ScreenSaver",QDBusConnection::sessionBus());
 		if (on)
 		{
-			screensaver_cookie = screensaver.Inhibit("ktorrent",i18n("KTorrent is playing a video."));
+			QString msg = i18n("KTorrent is playing a video.");
+			screensaver_cookie = screensaver.Inhibit("ktorrent",msg);
 			Out(SYS_MPL|LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
+			powermanagement_cookie = Solid::PowerManagement::beginSuppressingSleep(msg);
+			Out(SYS_MPL|LOG_NOTICE) << "PowerManagement inhibited (cookie " << powermanagement_cookie << ")" << endl;
 		}
 		else
 		{
 			screensaver.UnInhibit(screensaver_cookie);
+			powermanagement_cookie = Solid::PowerManagement::stopSuppressingSleep(powermanagement_cookie);
 			Out(SYS_MPL|LOG_NOTICE) << "Screensaver uninhibited" << endl;
+			Out(SYS_MPL|LOG_NOTICE) << "PowerManagement uninhibited" << endl;
 		}
 	}
 

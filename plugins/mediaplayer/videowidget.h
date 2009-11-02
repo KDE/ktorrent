@@ -77,6 +77,7 @@ namespace kt
 		Phonon::VolumeSlider* volume;
 		bool fullscreen;
 		uint screensaver_cookie;
+		int powermanagement_cookie;
 	};
 
 }
