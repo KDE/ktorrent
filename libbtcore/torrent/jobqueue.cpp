@@ -75,9 +75,6 @@ namespace bt
 		if (queue.front() != job)
 			return;
 		
-		if (job->error())
-			Out(SYS_GEN|LOG_NOTICE) << "Job failed: " << job->errorString();
-		
 		// remove the job and start the next
 		queue.pop_front();
 		if (!queue.isEmpty())
