@@ -28,6 +28,7 @@ target_link_libraries(
     ${KDE4_KDEUI_LIBS}
     ${KDE4_KPARTS_LIBS}
     ${KDE4_PHONON_LIBS}
+	${KDE4_SOLID_LIBS}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTGUI_LIBRARY}
     )
