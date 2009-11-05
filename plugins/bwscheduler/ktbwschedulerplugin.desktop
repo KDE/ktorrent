@@ -2,6 +2,7 @@
 Name=Bandwidth Scheduler
 Name[bg]=Разчет на скоростта
 Name[ca]=Planificador d'amplada de banda
+Name[cs]=Plánovač pásma
 Name[da]=Skemalægning af båndbredde
 Name[de]=Bandbreitenplaner
 Name[el]=Προγραμματιστής εύρους δικτύου
@@ -34,6 +35,7 @@ Name[zh_TW]=頻寬排程
 Comment=Schedule upload and download limits over a period of a week
 Comment[bg]=Приставка за разчет на качването и свалянето през седмицата
 Comment[ca]=Planificació dels límits de pujada i baixada durant un període setmanal
+Comment[cs]=Naplánování odesílacích a stahovacích limitů během týdne
 Comment[da]=Skemalæg up- og downloadgrænser over en periode på en uge
 Comment[de]=Upload- und Downloadbegrenzungen über den Zeitraum von einer Woche planen
 Comment[el]=Προγραμματισμός των ορίων αποστολής και λήψης για περίοδο μιας εβδομάδας

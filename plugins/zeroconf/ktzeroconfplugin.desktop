@@ -2,6 +2,7 @@
 Name=Zeroconf
 Name[bg]=Zeroconf
 Name[ca]=Zeroconf
+Name[cs]=Zeroconf
 Name[da]=Zeroconf
 Name[de]=ZeroConf
 Name[el]=Zeroconf
@@ -33,6 +34,7 @@ Name[zh_TW]=ZeroConf
 Comment=Discover peers on the local network using the Zeroconf protocol
 Comment[bg]=Откриване на потребители в локалната мрежа чрез протокола "Zeroconf"
 Comment[ca]=Descobriment de parells a la xarxa local usant el protocol Zeroconf
+Comment[cs]=Hledání protějšků na lokální síti s pomocí protokolu Zeroconf
 Comment[da]=Find peers på lokalnetværket via zeroconf-protokollen
 Comment[de]=Gegenstellen im lokalen Netzwerk unter Verwendung des Zeroconf-Protokolls auffinden
 Comment[el]=Εντοπισμός υπολογιστών στο τοπικό δίκτυο με χρήση του πρωτοκόλλου Zeroconf

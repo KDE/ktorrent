@@ -2,6 +2,7 @@
 Name=Search
 Name[bg]=Търсене
 Name[ca]=Cerca
+Name[cs]=Hledat
 Name[da]=Søg
 Name[de]=Suche
 Name[el]=Αναζήτηση
@@ -33,6 +34,7 @@ Name[zh_TW]=搜尋
 Comment=Search for torrents
 Comment[bg]=Търсене на торенти
 Comment[ca]=Cerca de torrents
+Comment[cs]=Hledat torrenty
 Comment[da]=Søg efter torrents
 Comment[de]=Nach Torrents suchen
 Comment[el]=Αναζήτηση για torrents

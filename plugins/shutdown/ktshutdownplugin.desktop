@@ -2,6 +2,7 @@
 Name=Shutdown
 Name[bg]=Изключване
 Name[ca]=Aturada
+Name[cs]=Vypnout
 Name[da]=Nedlukning
 Name[de]=Herunterfahren
 Name[en_GB]=Shutdown
@@ -30,6 +31,7 @@ Name[x-test]=xxShutdownxx
 Name[zh_TW]=關機
 Comment=Allows you to shutdown your computer when torrents finish
 Comment[ca]=Permet aturar l'ordinador en finalitzar els torrents
+Comment[cs]=Umožní vypnutí počítače po dokončení stahování torrentu
 Comment[da]=Lader dig lukke din computer ned når torrents er færdige
 Comment[de]=Ermöglicht es, den Rechner herunterzufahren, wenn die Torrents abgeschlossen wurden
 Comment[en_GB]=Allows you to shutdown your computer when torrents finish
