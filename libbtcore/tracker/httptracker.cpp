@@ -78,6 +78,7 @@ namespace bt
 		if (!started)
 		{
 			announce_queue.clear();
+			reannounce_timer.stop();
 			if (active_job)
 			{
 				active_job->kill();
