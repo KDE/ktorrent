@@ -1,3 +1,6 @@
+Changes in 4.0:
+- Make adding multiple trackers at once possible (213194)
+
 Changes in 3.3:
 - Fix deadlock in PacketReader
 - Fix bug causing torrent not to get stopped properly when an IO error occurs

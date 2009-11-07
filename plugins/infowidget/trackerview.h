@@ -40,7 +40,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		TrackerView(QWidget *parent);			
+		TrackerView(QWidget *parent);
 		virtual ~TrackerView();
 			
 		void update();
@@ -53,7 +53,7 @@ namespace kt
 		virtual void restoreClicked();
 		virtual void changeClicked();
 		virtual void removeClicked();
-		virtual void addClicked();
+		virtual void addClicked();        
 		virtual void scrapeClicked();
 		void currentChanged(const QModelIndex & current,const QModelIndex & previous);
 			

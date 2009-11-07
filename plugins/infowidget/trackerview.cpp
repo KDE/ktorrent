@@ -1,8 +1,8 @@
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Joris Guisson, Ivan Vasic                  *
+ *   Copyright (C) 2006-2009 by Joris Guisson, Ivan Vasic                  *
  *   joris.guisson@gmail.com                                               *
- *	 ivasic@gmail.com                                                  *
- *									   *
+ *   ivasic@gmail.com                                                      *
+ *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
@@ -66,6 +66,7 @@ namespace kt
 		m_remove_tracker->setIcon(KIcon("list-remove"));
 		m_restore_defaults->setIcon(KIcon("kt-restore-defaults"));
 		m_change_tracker->setIcon(KIcon("kt-change-tracker"));
+
 		
 		setEnabled(false);
 		torrentChanged(0);
@@ -79,30 +80,49 @@ namespace kt
 	{
 		if (!tc)
 			return;
-
+		
 		bool ok = false;
 		QClipboard* clipboard = QApplication::clipboard();
-		QString text = KInputDialog::getText(
-				i18n("Add Tracker"),i18n("Enter the URL of the tracker:"),clipboard->text(),&ok,this);
+		QString text = KInputDialog::getMultiLineText(
+				i18n("Add Trackers"),
+				i18n("Enter the URL's of the trackers, one per line:"),
+				clipboard->text(),&ok,this);
 				
+		QStringList list = text.split(QChar('\n'));
 		if (!ok)
 			return;
-				
-		KUrl url(text);
-		if (!url.isValid())
+		
+		KUrl::List urls;
+		QStringList invalid;
+		// check for invalid urls
+		foreach (const QString & line,list)
 		{
-			KMessageBox::error(0, i18n("Malformed URL."));
-			return;
+			if (line.isEmpty())
+				continue;
+			
+			KUrl url(line.trimmed());
+			if (!url.isValid())
+				invalid.append(line);
+			else
+				urls.append(url);
+		}
+		
+		if (!invalid.isEmpty())
+		{
+			KMessageBox::errorList(this, i18n("Several URL's could not be added because they are malformed:"),invalid);
 		}
 			
-		// check for dupes
-		if (!tc->getTrackersList()->addTracker(url,true))
+		foreach (const KUrl & url,urls)
 		{
-			KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b>.",text));
-		}
-		else
-		{
-			model->insertRow(model->rowCount(QModelIndex()));
+			// check for dupes
+			if (!tc->getTrackersList()->addTracker(url,true))
+			{
+				KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b>.",url.prettyUrl()));
+			}
+			else
+			{
+				model->insertRow(model->rowCount(QModelIndex()));
+			}
 		}
 	}
 
