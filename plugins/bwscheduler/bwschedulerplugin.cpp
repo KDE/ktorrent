@@ -111,6 +111,7 @@ namespace kt
 
 	void BWSchedulerPlugin::unload()
 	{
+		setNormalLimits();
 		LogSystemManager::instance().unregisterSystem(i18n("Bandwidth Scheduler"));
 		m_timer.stop();
 	
