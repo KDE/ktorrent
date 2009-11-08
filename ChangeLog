@@ -8,6 +8,7 @@ Changes in 3.3:
 - Fix crash caused by 0 pointer (jobuidelegate not set) (212580)
 - Fix deadlock caused by missing endl in JobQueue
 - Stopped reannounce timer in HTTPTracker when tracker is stopped after start request failed
+- Restore normal limits when unloading bwscheduler plugin
 
 Changes in 3.3rc1:
 - Make sure Qt's warnings, critical and fatal messages are printed to stderr in QtMessageOutput (203423)
