@@ -22,6 +22,7 @@
 #include <k3resolver.h>
 #include <util/log.h>
 #include <util/array.h>
+#include <util/error.h>
 #include <util/functions.h>
 #include <bcodec/bnode.h>
 #include <k3socketaddress.h>
@@ -325,17 +326,24 @@ namespace dht
 		if (!running)
 			return;
 		
-		if (expire_timer.getElapsedSinceUpdate() > 5*60*1000)
+		try
 		{
-			db->expire(bt::GetCurrentTime());
-			expire_timer.update();
+			if (expire_timer.getElapsedSinceUpdate() > 5*60*1000)
+			{
+				db->expire(bt::GetCurrentTime());
+				expire_timer.update();
+			}
+			
+			srv->handlePackets();
+			node->refreshBuckets(this);
+			tman->removeFinishedTasks(this);
+			stats.num_tasks = tman->getNumTasks() + tman->getNumQueuedTasks();
+			stats.num_peers = node->getNumEntriesInRoutingTable();
 		}
-		
-		srv->handlePackets();
-		node->refreshBuckets(this);
-		tman->removeFinishedTasks(this);
-		stats.num_tasks = tman->getNumTasks() + tman->getNumQueuedTasks();
-		stats.num_peers = node->getNumEntriesInRoutingTable();
+		catch (bt::Error & e)
+		{
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Error: " << e.toString() << endl;
+		}
 	}
 	
 	void DHT::timeout(const MsgBase* r)
