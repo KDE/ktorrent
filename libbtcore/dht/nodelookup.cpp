@@ -55,18 +55,32 @@ namespace dht
 			for (Uint32 j = 0;j < nnodes;j++)
 			{
 				// unpack an entry and add it to the todo list
-				KBucketEntry e = UnpackBucketEntry(nodes,j*26,4);
-				// lets not talk to ourself
-				if (e.getID() != node->getOurID() && !todo.contains(e) && !visited.contains(e))
-					todo.insert(e);
+				try
+				{
+					KBucketEntry e = UnpackBucketEntry(nodes,j*26,4);
+					// lets not talk to ourself
+					if (e.getID() != node->getOurID() && !todo.contains(e) && !visited.contains(e))
+						todo.insert(e);
+				}
+				catch (...)
+				{
+					// bad data, just ignore it
+				}
 			}
 			
 			for (PackedNodeContainer::CItr i = fnr->begin();i != fnr->end();i++)
 			{
-				KBucketEntry e = UnpackBucketEntry(*i,0,6);
-				// lets not talk to ourself
-				if (e.getID() != node->getOurID() && !todo.contains(e) && !visited.contains(e))
-					todo.insert(e);
+				try
+				{
+					KBucketEntry e = UnpackBucketEntry(*i,0,6);
+					// lets not talk to ourself
+					if (e.getID() != node->getOurID() && !todo.contains(e) && !visited.contains(e))
+						todo.insert(e);
+				}
+				catch (...)
+				{
+					// bad data, just ignore it
+				}
 			}
 			num_nodes_rsp++;
 		}
