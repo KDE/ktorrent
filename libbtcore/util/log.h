@@ -103,7 +103,7 @@ namespace bt
 		void addMonitor(LogMonitorInterface* m);
 
 		/**
-		 * Remove a log monitor.
+		 * Remove a log monitor. It will not be deleted.
 		 * @param m The log monitor
 		 */
 		void removeMonitor(LogMonitorInterface* m);

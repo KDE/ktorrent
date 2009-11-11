@@ -70,6 +70,7 @@ namespace kt
 	{
 		LogSystemManager::instance().unregisterSystem(i18n("Scan Folder"));
 		getGUI()->removePrefPage(pref);
+		delete pref;
 		pref = 0;
 		
 		m_sf_map.clear();

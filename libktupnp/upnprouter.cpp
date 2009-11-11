@@ -377,7 +377,6 @@ namespace kt
 		
 		updateGUI();
 		active_reqs.removeAll(r);
-		r->deleteLater();
 	}
 	
 	void UPnPRouter::onReplyOK(HTTPRequest* r,const QString &)
