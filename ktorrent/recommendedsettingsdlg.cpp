@@ -97,6 +97,9 @@ namespace kt
 		m_slots->setValue(g.readEntry("slots",3));
 		m_chk_sim_torrents->setChecked(g.readEntry("sim_torrents_enabled",false));
 		m_sim_torrents->setValue(g.readEntry("sim_torrents",2));
+
+		uploadBWChanged(m_upload_bw->value());
+		downloadBWChanged(m_download_bw->value());
 	}
 	
 	void RecommendedSettingsDlg::calculate()
@@ -239,12 +242,12 @@ namespace kt
 	void RecommendedSettingsDlg::uploadBWChanged(int val)
 	{
 		KLocale* loc = KGlobal::locale();
-		m_upload_bw_display->setText(i18n("(= %1/s)",loc->formatByteSize(val * 0.125)));
+		m_upload_bw_display->setText(i18n("(= %1/s)",loc->formatByteSize(val * 128 )));
 	}
 	
 	void RecommendedSettingsDlg::downloadBWChanged(int val)
 	{
 		KLocale* loc = KGlobal::locale();
-		m_download_bw_display->setText(i18n("(= %1/s)",loc->formatByteSize(val * 0.125)));
+		m_download_bw_display->setText(i18n("(= %1/s)",loc->formatByteSize(val * 128)));
 	}
 }
