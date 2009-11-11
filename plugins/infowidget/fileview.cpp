@@ -52,7 +52,7 @@ using namespace bt;
 namespace kt
 {
 
-	FileView::FileView(QWidget *parent) : QWidget(parent),curr_tc(0),model(0)
+	FileView::FileView(QWidget *parent) : QWidget(parent),curr_tc(0),model(0),show_list_of_files(false)
 	{
 		QHBoxLayout* layout = new QHBoxLayout(this);
 		layout->setMargin(0);
@@ -101,7 +101,7 @@ namespace kt
 				this,SLOT(onDoubleClicked(const QModelIndex & )));
 		
 		setEnabled(false);
-		show_list_of_files = false;
+		
 	}
 	
 	FileView::~FileView()
