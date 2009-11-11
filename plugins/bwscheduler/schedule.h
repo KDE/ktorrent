@@ -28,6 +28,7 @@
 namespace bt
 {
 	class BDictNode;
+	class BListNode;
 }
 
 namespace kt
@@ -138,9 +139,21 @@ namespace kt
 		 * @param item The item 
 		 */
 		bool conflicts(ScheduleItem* item);
+		
+		/**
+		 * Disable or enabled the schedule
+		 */
+		void setEnabled(bool on);
+		
+		/// Is the schedule enabled
+		bool isEnabled() const {return enabled;}
 	
 	private:
 		bool parseItem(ScheduleItem* item,bt::BDictNode* dict);
+		void parseItems(bt::BListNode* items);
+		
+	private:
+		bool enabled;
 	};
 
 }

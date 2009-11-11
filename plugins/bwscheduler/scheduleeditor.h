@@ -23,6 +23,7 @@
 
 #include <interfaces/activity.h>
 
+class QCheckBox;
 class KToolBar;
 
 namespace kt
@@ -52,8 +53,9 @@ namespace kt
 		 * @param up Up speed
 		 * @param down Down speed
 		 * @param paused Paused or not
+		 * @param enabled Enabled or not
 		 */
-		void updateStatusText(int up,int down,bool paused);
+		void updateStatusText(int up,int down,bool paused,bool enabled);
 		
 		/**
 		 * The color settings have changed
@@ -70,6 +72,7 @@ namespace kt
 		void onSelectionChanged();
 		void editItem(ScheduleItem* item);
 		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day);
+		void enableChecked(bool on);
 		
 	signals:
 		/**
@@ -94,6 +97,7 @@ namespace kt
 		QAction* remove_item_action;
 		QAction* edit_item_action;
 		QAction* clear_action;
+		QCheckBox* enable_schedule;
 	};
 
 }

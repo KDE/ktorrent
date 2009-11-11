@@ -153,7 +153,7 @@ namespace kt
 		net::SocketMonitor::setDownloadCap(1024 * dlim);
 		net::SocketMonitor::setUploadCap(1024 * ulim);
 		if (m_editor)
-			m_editor->updateStatusText(ulim,dlim,false);
+			m_editor->updateStatusText(ulim,dlim,false,m_schedule->isEnabled());
 		
 		PeerManager::setMaxConnections(Settings::maxConnections());
 		PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
@@ -164,7 +164,7 @@ namespace kt
 	{
 		QDateTime now = QDateTime::currentDateTime();
 		ScheduleItem* item = m_schedule->getCurrentItem(now);
-		if (!item)
+		if (!item || !m_schedule->isEnabled())
 		{
 			setNormalLimits();
 			restartTimer();
@@ -180,7 +180,7 @@ namespace kt
 				net::SocketMonitor::setDownloadCap(1024 * Settings::maxDownloadRate());
 				net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
 				if (m_editor)
-					m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),true);
+					m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),true,m_schedule->isEnabled());
 			}
 		}
 		else
@@ -200,7 +200,7 @@ namespace kt
 			net::SocketMonitor::setDownloadCap(1024 * dlim);
 			net::SocketMonitor::setUploadCap(1024 * ulim);
 			if (m_editor)
-				m_editor->updateStatusText(ulim,dlim,false);
+				m_editor->updateStatusText(ulim,dlim,false,m_schedule->isEnabled());
 		}
 		
 		if (item->set_conn_limits)

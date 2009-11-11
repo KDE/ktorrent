@@ -65,18 +65,26 @@ namespace kt
 		return wd;
 	}
 	
-	void WeekScene::updateStatusText(int up,int down,bool paused)
+	void WeekScene::updateStatusText(int up,int down,bool paused,bool enabled)
 	{
+		KLocale* loc = KGlobal::locale();
+		QString msg;
 		if (paused)
-			status->setPlainText(i18n("Current schedule: paused"));
+			msg = i18n("Current schedule: paused");
 		else if (up > 0 && down > 0)
-			status->setPlainText(i18n("Current schedule: %1 KiB/s download, %2 KiB/s upload",down,up));
+			msg = i18n("Current schedule: %1/s download, %2/s upload",
+				 loc->formatByteSize(down * 1024),loc->formatByteSize(up * 1024));
 		else if (up > 0)
-			status->setPlainText(i18n("Current schedule: unlimited download, %1 KiB/s upload",up));
+			msg = i18n("Current schedule: unlimited download, %1/s upload",loc->formatByteSize(up * 1024));
 		else if (down > 0)
-			status->setPlainText(i18n("Current schedule: %1 KiB/s download, unlimited upload",down));
+			msg = i18n("Current schedule: %1/s download, unlimited upload",loc->formatByteSize(down * 1024));
 		else
-			status->setPlainText(i18n("Current schedule: unlimited upload and download"));
+			msg = i18n("Current schedule: unlimited upload and download");
+		
+		if (!enabled)
+			msg += i18n(" (scheduler disabled)");
+		
+		status->setPlainText(msg);
 	}
 
 	void WeekScene::addCalendar()

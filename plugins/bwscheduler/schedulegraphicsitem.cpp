@@ -44,6 +44,7 @@ namespace kt
 		setAcceptHoverEvents(true);
 		setPen(QPen(Qt::black));
 		setZValue(3);
+		setHandlesChildEvents(true);
 		
 		if (item->paused)
 		{

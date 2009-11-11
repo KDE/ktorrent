@@ -107,7 +107,7 @@ namespace kt
 	
 	/////////////////////////////////////////
 
-	Schedule::Schedule()
+	Schedule::Schedule() : enabled(true)
 	{}
 
 
@@ -148,22 +148,43 @@ namespace kt
 		
 		if (node->getType() == BNode::LIST)
 		{
-			BListNode* ln = (BListNode*)node;
-			for (Uint32 i = 0;i < ln->getNumChildren();i++)
+			// Old format
+			parseItems((BListNode*)node);
+		}
+		else if (node->getType() == BNode::DICT)
+		{
+			BDictNode* dict = (BDictNode*)node;
+			BListNode* items = dict->getList("items");
+			if (items)
+				parseItems(items);
+			
+			try
 			{
-				BDictNode* dict = ln->getDict(i);
-				if (!dict)
-					continue;
-				
-				ScheduleItem* item = new ScheduleItem();
-				if (parseItem(item,dict))
-					addItem(item);
-				else
-					delete item;
+				enabled = dict->getInt("enabled") == 1;
+			}
+			catch (...)
+			{
+				enabled = true;
 			}
 		}
 		
 		delete node;
+	}
+	
+	void Schedule::parseItems(BListNode* items)
+	{
+		for (Uint32 i = 0;i < items->getNumChildren();i++)
+		{
+			BDictNode* dict = items->getDict(i);
+			if (!dict)
+				continue;
+			
+			ScheduleItem* item = new ScheduleItem();
+			if (parseItem(item,dict))
+				addItem(item);
+			else
+				delete item;
+		}
 	}
 	
 	bool Schedule::parseItem(ScheduleItem* item,bt::BDictNode* dict)
@@ -227,6 +248,9 @@ namespace kt
 		}
 
 		BEncoder enc(&fptr);
+		enc.beginDict();
+		enc.write("enabled",enabled);
+		enc.write("items");
 		enc.beginList();
 		for (iterator itr = begin();itr != end();itr++)
 		{
@@ -251,6 +275,7 @@ namespace kt
 			enc.write("ss_download_limit",i->ss_download_limit);
 			enc.end();
 		}
+		enc.end();
 		enc.end();
 	}
 	
@@ -341,4 +366,10 @@ namespace kt
 		}
 		return false;
 	}
+	
+	void Schedule::setEnabled(bool on)
+	{
+		enabled = on;
+	}
+
 }

@@ -55,6 +55,10 @@ namespace kt
 		edit_item_action = tool_bar->addAction(KIcon("edit-select-all"),i18n("Edit Item"),this,SLOT(editItem()));
 		tool_bar->addSeparator();
 		clear_action = tool_bar->addAction(KIcon("edit-clear"),i18n("Clear Schedule"),this,SLOT(clear()));
+		enable_schedule = new QCheckBox(i18n("Scheduler Active"),tool_bar);
+		enable_schedule->setToolTip(i18n("Activate or deactivate the scheduler"));
+		tool_bar->addWidget(enable_schedule);
+		connect(enable_schedule,SIGNAL(toggled(bool)),this,SLOT(enableChecked(bool)));
 		
 		clear_action->setEnabled(false);
 		edit_item_action->setEnabled(false);
@@ -82,6 +86,7 @@ namespace kt
 		schedule = s;
 		view->setSchedule(s);
 		onSelectionChanged();
+		enable_schedule->setChecked(s->isEnabled());
 		clear_action->setEnabled(s->count() > 0);
 	}
 		
@@ -184,9 +189,9 @@ namespace kt
 		remove_item_action->setEnabled(on);
 	}
 	
-	void ScheduleEditor::updateStatusText(int up,int down,bool paused)
+	void ScheduleEditor::updateStatusText(int up,int down,bool paused,bool enabled)
 	{
-		view->updateStatusText(up,down,paused);
+		view->updateStatusText(up,down,paused,enabled);
 	}
 	
 	void ScheduleEditor::itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day)
@@ -200,6 +205,13 @@ namespace kt
 	{
 		view->colorsChanged();
 	}
+	
+	void ScheduleEditor::enableChecked(bool on)
+	{
+		schedule->setEnabled(on);
+		scheduleChanged();
+	}
+
 }
 
 #include "scheduleeditor.moc"

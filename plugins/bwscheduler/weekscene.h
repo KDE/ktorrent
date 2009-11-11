@@ -49,8 +49,9 @@ namespace kt
 		 * @param up Up speed
 		 * @param down Down speed
 		 * @param paused Paused or not
+		 * @param enabled Enabled or not
 		 */
-		void updateStatusText(int up,int down,bool paused);
+		void updateStatusText(int up,int down,bool paused,bool enabled);
 		
 		/**
 		 * A schedule item has been moved by the user. 
