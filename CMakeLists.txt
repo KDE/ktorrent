@@ -65,6 +65,7 @@ add_subdirectory(ktupnptest)
 if( PLASMA_FOUND )
     add_subdirectory(plasma)
 endif(PLASMA_FOUND)
+add_subdirectory(ktutpd)
 
 # --- show log ---
 macro_display_feature_log()
