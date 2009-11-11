@@ -33,7 +33,10 @@ namespace bt
 
 
 	WaitJob::~WaitJob()
-	{}
+	{
+		foreach (ExitOperation* op,exit_ops)
+			delete op;
+	}
 
 	void WaitJob::kill(bool)
 	{

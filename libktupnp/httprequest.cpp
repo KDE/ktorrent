@@ -104,6 +104,7 @@ namespace kt
 		}
 		finished = true;
 		operationFinished(this);
+		deleteLater();
 	}
 	
 	void HTTPRequest::onError(QAbstractSocket::SocketError err)
@@ -112,6 +113,7 @@ namespace kt
 		error(this,sock->errorString());
 		sock->close();
 		operationFinished(this);
+		deleteLater();
 	}
 	
 	void HTTPRequest::onTimeout()
@@ -120,6 +122,7 @@ namespace kt
 		error(this,i18n("Timeout occurred"));
 		sock->close();
 		operationFinished(this);
+		deleteLater();
 	}
 
 

@@ -30,7 +30,7 @@ namespace kt
 	/**
 	 * @author Joris Guisson
 	*/
-	class LogViewer  : public Activity,public bt::LogMonitorInterface
+	class LogViewer : public Activity,public bt::LogMonitorInterface
 	{
 		Q_OBJECT
 	public:

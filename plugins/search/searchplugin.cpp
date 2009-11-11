@@ -93,6 +93,7 @@ namespace kt
 		toolbar->deleteLater();
 		
 		getGUI()->removePrefPage(pref);
+		delete pref;
 		pref = 0;
 		toolbar = 0;
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(preferencesUpdated()));

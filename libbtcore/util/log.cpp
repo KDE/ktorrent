@@ -198,8 +198,8 @@ namespace bt
 	void Log::removeMonitor(LogMonitorInterface* m)
 	{
 		int index = priv->monitors.indexOf(m);
-    		if (index != -1)
-         		delete priv->monitors.takeAt(index);		
+		if (index != -1)
+			priv->monitors.takeAt(index);
 	}
 
 	void Log::setOutputToConsole(bool on)

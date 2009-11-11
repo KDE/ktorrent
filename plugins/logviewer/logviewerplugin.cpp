@@ -76,9 +76,11 @@ namespace kt
 		pref->saveState();
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(applySettings()));
 		getGUI()->removePrefPage(pref);
-		getGUI()->removeActivity(lv);
+		removeLogViewerFromGUI();
 		RemoveLogMonitor(lv);
+		delete lv;
 		lv = 0;
+		delete pref;
 		pref = 0;
 		delete flags;
 		flags = 0;

@@ -72,6 +72,7 @@ namespace kt
 	{	
 		LogSystemManager::instance().unregisterSystem(i18n("IP Filter"));
 		getGUI()->removePrefPage(pref);
+		delete pref;
 		pref = 0;
 		if (level1)
 		{

@@ -71,6 +71,7 @@ namespace kt
 		}
 		
 		getGUI()->removePrefPage(pref);
+		delete pref;
 		pref = 0;
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(preferencesUpdated()));
 	}

@@ -1,5 +1,6 @@
 Changes in 3.3.1:
 - Make sure exceptions in DHT code are caught, fixes a crash (213819)
+- Fix several memory leaks at exit
 
 Changes in 3.3:
 - Fix deadlock in PacketReader

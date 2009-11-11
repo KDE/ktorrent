@@ -120,6 +120,7 @@ namespace kt
 		m_editor = 0;
 		
 		getGUI()->removePrefPage(m_pref);
+		delete m_pref;
 		m_pref = 0;
 		
 		try
