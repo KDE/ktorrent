@@ -113,6 +113,7 @@ namespace kt
 	{
 		sock->close();
 		delete sock;
+		qDeleteAll(clients);
 	}
 
 	QString HttpServer::skinDir() const
@@ -151,6 +152,7 @@ namespace kt
 		HttpClientHandler* handler = new HttpClientHandler(this,socket);
 		connect(handler,SIGNAL(closed()),this,SLOT(slotConnectionClosed()));
 		Out(SYS_WEB|LOG_NOTICE) << "connection from "<< addr.toString()  << endl;
+		clients.append(handler);
 	}
 
 	bool HttpServer::checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data)
@@ -482,6 +484,7 @@ namespace kt
 	void HttpServer::slotConnectionClosed()
 	{
 		HttpClientHandler* client = (HttpClientHandler*)sender();
+		clients.removeAll(client);
 		client->deleteLater();
 	}
 
