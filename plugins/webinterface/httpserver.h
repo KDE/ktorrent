@@ -108,6 +108,7 @@ namespace kt
 		QStringList skin_list;
 		QString challenge;
 		bt::PtrMap<QString,WebContentGenerator> content_generators;
+		QList<HttpClientHandler*> clients;
 	};
 
 	

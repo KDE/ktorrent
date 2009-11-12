@@ -6,6 +6,7 @@ Changes in 3.3.1:
 - Make sure exceptions in DHT code are caught, fixes a crash (213819)
 - Fix several memory leaks at exit
 - Fix bug in edge detection of items on the bandwidth schedule
+- Fix crash when webinterface plugin is removed and there are active connections to the webserver (214187)
 
 Changes in 3.3:
 - Fix deadlock in PacketReader
