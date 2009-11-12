@@ -27,7 +27,7 @@ namespace bt
 {
 
 	/**
-	@author Joris Guisson
+		@author Joris Guisson
 	*/
 	class BTCORE_EXPORT Error
 	{
@@ -37,9 +37,17 @@ namespace bt
 		virtual ~Error();
 		
 		QString toString() const {return msg;}
-
 	};
 
+	class BTCORE_EXPORT Warning
+	{
+		QString msg;
+	public:
+		Warning(const QString & msg);
+		virtual ~Warning();
+		
+		QString toString() const {return msg;}
+	};
 }
 
 #endif

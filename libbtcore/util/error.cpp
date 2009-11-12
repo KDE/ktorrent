@@ -21,13 +21,15 @@
 
 namespace bt
 {
-
 	Error::Error(const QString & msg) : msg(msg)
 	{}
-
 
 	Error::~Error()
 	{}
 
+	Warning::Warning(const QString& msg) : msg(msg)
+	{}
 
+	Warning::~Warning()
+	{}
 }

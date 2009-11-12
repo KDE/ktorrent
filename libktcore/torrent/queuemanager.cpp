@@ -193,7 +193,6 @@ namespace kt
 
 	void QueueManager::stop(bt::TorrentInterface* tc)
 	{
-		bool check_done = false;
 		if (tc->getJobQueue()->runningJobs())
 			return;
 		
@@ -558,7 +557,6 @@ namespace kt
 		foreach (TorrentInterface* tc,downloads)
 		{
 			const TorrentStats & s = tc->getStats();
-			bool dummy;
 			if (tc->isAllowedToStart() && !s.stopped_by_error && !tc->getJobQueue()->runningJobs())
 			{
 				if (s.completed)

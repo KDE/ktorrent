@@ -313,25 +313,31 @@ namespace kt
 			startUpdateTimer();
 			return true;
 		}
+		catch (bt::Warning & warning)
+		{
+			bt::Out(SYS_GEN|LOG_NOTICE) << warning.toString() << endl;
+			if (!silently)
+				gui->infoMsg(warning.toString());
+			else
+				canNotLoadSilently(warning.toString());
+		}
 		catch (bt::Error & err)
 		{
+			bt::Out(SYS_GEN|LOG_IMPORTANT) << err.toString() << endl;
 			if (!silently)
 				gui->errorMsg(err.toString());
 			else
 				canNotLoadSilently(err.toString());
-			
-			bt::Out(SYS_GEN|LOG_IMPORTANT) << err.toString() << endl;
-			
-			delete tc;
-			tc = 0;
-			// delete tdir if necesarry
-			if (bt::Exists(tdir))
-				bt::Delete(tdir,true);
-			
-			loadingFinished(url, false, false);
-			
-			return false;
 		}
+		
+		delete tc;
+		tc = 0;
+		// delete tdir if necesarry
+		if (bt::Exists(tdir))
+			bt::Delete(tdir,true);
+		
+		loadingFinished(url, false, false);
+		return false;
 	}
 
 	bool Core::loadFromFile(const QString & target,const QString & dir,const QString & group,bool silently)
@@ -349,22 +355,29 @@ namespace kt
 			startUpdateTimer();
 			return true;
 		}
+		catch (bt::Warning & warning)
+		{
+			bt::Out(SYS_GEN|LOG_NOTICE) << warning.toString() << endl;
+			if (!silently)
+				gui->infoMsg(warning.toString());
+			else
+				canNotLoadSilently(warning.toString());
+		}
 		catch (bt::Error & err)
 		{
+			bt::Out(SYS_GEN|LOG_IMPORTANT) << err.toString() << endl;
 			if (!silently)
 				gui->errorMsg(err.toString());
 			else
 				canNotLoadSilently(err.toString());
-			
-			bt::Out(SYS_GEN|LOG_IMPORTANT) << err.toString() << endl;
-			
-			delete tc;
-			tc = 0;
-			// delete tdir if necesarry
-			if (bt::Exists(tdir))
-				bt::Delete(tdir,true);
-			return false;
 		}
+		
+		delete tc;
+		tc = 0;
+		// delete tdir if necesarry
+		if (bt::Exists(tdir))
+			bt::Delete(tdir,true);
+		return false;
 	}
 
 	void Core::downloadFinished(KJob *job)
