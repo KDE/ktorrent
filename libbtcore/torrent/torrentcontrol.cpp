@@ -520,7 +520,7 @@ namespace bt
 				qman->mergeAnnounceList(tor->getInfoHash(),tor->getTrackerList());
 				throw Warning(i18n(
 					"You are already downloading the torrent <b>%1</b>. "
-					"The trackerlists from both torrents have been merged.",tor->getNameSuggestion()));
+					"The tracker lists from both torrents have been merged.",tor->getNameSuggestion()));
 			}
 			else
 			{
