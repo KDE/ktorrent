@@ -101,12 +101,12 @@ namespace kt
 
 	void SyndicationTab::showFeedViewMenu(const QPoint & pos)
 	{
-		feed_view_menu->popup(feed_view->mapToGlobal(pos));
+		feed_view_menu->popup(feed_view->viewport()->mapToGlobal(pos));
 	}
 	
 	void SyndicationTab::showFilterViewMenu(const QPoint & pos)
 	{
-		filter_view_menu->popup(filter_view->mapToGlobal(pos));
+		filter_view_menu->popup(filter_view->viewport()->mapToGlobal(pos));
 	}
 
 	void SyndicationTab::loadState(KConfigGroup & g)

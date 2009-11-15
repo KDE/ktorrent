@@ -120,7 +120,7 @@ namespace kt
 			QAction* sep = menu->insertSeparator(first);
 			menu->insertAction(sep,pause_action);
 		}
-		menu->popup(output->mapToGlobal(pos));
+		menu->popup(output->viewport()->mapToGlobal(pos));
 	}
 	
 	void LogViewer::pause(bool on)

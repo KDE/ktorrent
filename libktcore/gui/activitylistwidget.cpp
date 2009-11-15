@@ -245,7 +245,7 @@ namespace kt
 	
 	void ActivityListWidget::showConfigMenu(QPoint pos)
 	{
-		menu->popup(mapToGlobal(pos));
+		menu->popup(viewport()->mapToGlobal(pos));
 	}
 	
 	void ActivityListWidget::setCurrentActivity(Activity* act)
