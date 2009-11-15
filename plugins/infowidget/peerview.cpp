@@ -68,7 +68,7 @@ namespace kt
 		if (selectionModel()->selectedRows().count() == 0)
 			return;
 	
-		context_menu->popup(mapToGlobal(pos));
+		context_menu->popup(viewport()->mapToGlobal(pos));
 	}
 	
 	void PeerView::banPeer()

@@ -194,7 +194,7 @@ namespace kt
 			open_action->setEnabled(false);
 			dnd_action->setEnabled(true);
 			delete_action->setEnabled(true);
-			context_menu->popup(mapToGlobal(p));
+			context_menu->popup(view->viewport()->mapToGlobal(p));
 			move_files_action->setEnabled(true);
 			collapse_action->setEnabled(!show_list_of_files);
 			expand_action->setEnabled(!show_list_of_files);
@@ -253,7 +253,7 @@ namespace kt
 			expand_action->setEnabled(!show_list_of_files);
 		}
 
-		context_menu->popup(mapToGlobal(p));
+		context_menu->popup(view->viewport()->mapToGlobal(p));
 	}
 	
 	void FileView::open()

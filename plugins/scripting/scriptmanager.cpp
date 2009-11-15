@@ -160,7 +160,7 @@ namespace kt
 
 	void ScriptManager::showContextMenu(const QPoint& p)
 	{
-		context_menu->popup(view->mapToGlobal(p));
+		context_menu->popup(view->viewport()->mapToGlobal(p));
 	}
 	
 	void ScriptManager::dataChanged(const QModelIndex & from,const QModelIndex & to)

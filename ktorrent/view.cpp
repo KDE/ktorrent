@@ -428,7 +428,7 @@ namespace kt
 
 	void View::showMenu(const QPoint & pos)
 	{
-		showMenu(this,mapToGlobal(pos));
+		showMenu(this,viewport()->mapToGlobal(pos));
 	}
 	
 	void View::showHeaderMenu(const QPoint& pos)

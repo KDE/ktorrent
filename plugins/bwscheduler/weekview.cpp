@@ -132,7 +132,7 @@ namespace kt
 	
 	void WeekView::showContextMenu(const QPoint& pos)
 	{
-		menu->popup(mapToGlobal(pos));
+		menu->popup(viewport()->mapToGlobal(pos));
 	}
 	
 	void WeekView::itemChanged(ScheduleItem* item)

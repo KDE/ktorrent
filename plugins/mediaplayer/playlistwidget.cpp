@@ -240,7 +240,7 @@ namespace kt
 	
 	void PlayListWidget::showContextMenu(QPoint pos) 
 	{
-		menu->popup(mapToGlobal(pos));
+		menu->popup(play_list_view->viewport()->mapToGlobal(pos));
 	}
 	
 	void PlayListWidget::clearPlayList()
