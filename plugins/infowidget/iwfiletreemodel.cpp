@@ -28,6 +28,7 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include "infowidgetpluginsettings.h"
+#include <QApplication>
 
 using namespace bt;
 
@@ -126,7 +127,7 @@ namespace kt
 				case LAST_PRIORITY:	
 					return InfoWidgetPluginSettings::lastColor();
 				case NORMAL_PRIORITY:
-					return InfoWidgetPluginSettings::normalColor();
+					return QVariant();
 				case ONLY_SEED_PRIORITY: 
 				case EXCLUDED: 
 				case PREVIEW_PRIORITY: 

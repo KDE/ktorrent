@@ -27,8 +27,5 @@
 		<entry name="lastColor" type="Color">
 			<default code="true">QColor()</default>
 		</entry>
-		<entry name="normalColor" type="Color">
-			<default code="true">QColor()</default>
-		</entry>
 	</group>
 </kcfg>

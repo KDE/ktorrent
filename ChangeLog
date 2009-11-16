@@ -9,6 +9,7 @@ Changes in 3.3.1:
 - Fix bug in edge detection of items on the bandwidth schedule
 - Fix crash when webinterface plugin is removed and there are active connections to the webserver (214187)
 - Fix bugs causing context menus to be shown in wrong location (214657)
+- Don't store the color for normal file priority in FileView, use system default (214748)
 
 Changes in 3.3:
 - Fix deadlock in PacketReader

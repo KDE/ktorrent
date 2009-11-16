@@ -196,12 +196,6 @@ namespace kt
 			InfoWidgetPluginSettings::setFirstColor(Qt::green);
 		}
 		
-		if (!InfoWidgetPluginSettings::normalColor().isValid())
-		{
-			save = true;
-			InfoWidgetPluginSettings::setNormalColor(QPalette().color(QPalette::Text));
-		}
-		
 		if (!InfoWidgetPluginSettings::lastColor().isValid())
 		{
 			save = true;
