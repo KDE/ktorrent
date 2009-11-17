@@ -6,6 +6,7 @@ Changes in 3.3.1:
 - Fix bugs causing context menus to be shown in wrong location (214657)
 - Don't store the color for normal file priority in FileView, use system default (214748)
 - Fix bug causing current tab in TorrentActivity not to be restored (214959)
+- Fix IP filter download going wrong in some cases, by specifying mimetype in KFilterDev::deviceForFile
 
 Changes in 3.3:
 - Fix deadlock in PacketReader
