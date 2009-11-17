@@ -97,8 +97,11 @@ namespace bt
 			gzip->start();
 		}
 
-		void setOutputFile(const QString & file,bool rotate)
+		void setOutputFile(const QString & file,bool rotate,bool handle_qt_messages)
 		{
+			if (handle_qt_messages)
+				qInstallMsgHandler(QtMessageOutput);
+
 			cleanup();
 			
 			if (bt::Exists(file) && rotate)
@@ -174,7 +177,6 @@ namespace bt
 	Log::Log() 
 	{
 		priv = new Private(this);
-		qInstallMsgHandler(QtMessageOutput);
 	}
 	
 	
@@ -185,9 +187,9 @@ namespace bt
 	}
 	
 	
-	void Log::setOutputFile(const QString & file,bool rotate)
+	void Log::setOutputFile(const QString & file,bool rotate,bool handle_qt_messages)
 	{
-		priv->setOutputFile(file,rotate);
+		priv->setOutputFile(file,rotate,handle_qt_messages);
 	}
 
 	void Log::addMonitor(LogMonitorInterface* m)
@@ -266,9 +268,9 @@ namespace bt
 		return global_log;
 	}
 
-	void InitLog(const QString & file,bool rotate)
+	void InitLog(const QString & file,bool rotate,bool handle_qt_messages)
 	{
-		global_log.setOutputFile(file,rotate);
+		global_log.setOutputFile(file,rotate,handle_qt_messages);
 	}
 
 	void AddLogMonitor(LogMonitorInterface* m)
