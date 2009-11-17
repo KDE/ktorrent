@@ -172,12 +172,13 @@ namespace kt
 			hsplit->restoreState(data);
 		}
 		
+		view_man->loadState(cfg);
+		
 		g = cfg->group("MainTabWidget");
 		int ct = g.readEntry("current_tab",0);
 		if (ct >= 0 && ct < tabs->count())
 			tabs->setCurrentIndex(ct);
 		
-		view_man->loadState(cfg);
 		group_view->loadState(cfg);
 		qm->loadState(cfg);
 		tool_views->loadState(cfg,"TorrentActivityBottomTabBar");
