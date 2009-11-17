@@ -23,6 +23,7 @@
 #include <util/log.h>
 #include <util/fileops.h>
 #include "decompressfilejob.h"
+#include <kmimetype.h>
 
 namespace bt
 {
@@ -47,7 +48,8 @@ namespace bt
 		}
 		
 		// open output file 
-		QIODevice* dev = KFilterDev::deviceForFile(file);
+		QString mime = KMimeType::findByPath(file)->name();
+		QIODevice* dev = KFilterDev::deviceForFile(file,mime);
 		if (!dev || !dev->open(QIODevice::ReadOnly))
 		{
 			err = KIO::ERR_CANNOT_OPEN_FOR_READING;
