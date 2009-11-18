@@ -179,8 +179,12 @@ namespace dht
 				break;
 			}
 		}
-		listener_thread = new RPCServerThread(sock,this);
-		listener_thread->start(QThread::IdlePriority);
+		
+		if (sock)
+		{
+			listener_thread = new RPCServerThread(sock,this);
+			listener_thread->start(QThread::IdlePriority);
+		}
 	}
 		
 	void RPCServer::stop()
