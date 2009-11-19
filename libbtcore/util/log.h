@@ -112,9 +112,10 @@ namespace bt
 		* Set the output logfile.
 		* @param file The name of the file
 		* @param rotate Whether or not to rotate the logs
+		* @param bool handle_qt_messages Whether or not handle Qt messages
 		* @throw Exception if the file can't be opened
 		*/
-		void setOutputFile(const QString & file,bool rotate);
+		void setOutputFile(const QString & file,bool rotate,bool handle_qt_messages);
 		
 		/**
 		* Write a number to the log file.
@@ -203,10 +204,11 @@ namespace bt
 	inline Log & ConOut(unsigned int arg) {return Out(SYS_CON|arg);}
 	inline Log & TrkOut(unsigned int arg) {return Out(SYS_TRK|arg);}
 
+
 	/**
 	 * Initialize the global log.
 	 * */
-	BTCORE_EXPORT void InitLog(const QString & file,bool rotate_logs = false);
+	BTCORE_EXPORT void InitLog(const QString & file,bool rotate_logs = false,bool handle_qt_messages = true);
 
 	/// Add a monitor to the global log
 	BTCORE_EXPORT void AddLogMonitor(LogMonitorInterface* m);

@@ -8,6 +8,7 @@ Changes in 3.3.1:
 - Fix bug causing current tab in TorrentActivity not to be restored (214959)
 - Fix IP filter download going wrong in some cases, by specifying mimetype in KFilterDev::deviceForFile
 - Fix crash when not able to bind for DHT socket (215079)
+- Make it optional to intercept Qt debug messages in InitLog call
 
 Changes in 3.3:
 - Fix deadlock in PacketReader
