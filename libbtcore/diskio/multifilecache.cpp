@@ -78,6 +78,7 @@ namespace bt
 		else
 			output_dir = this->datadir;
 		files.setAutoDelete(true);
+		dnd_files.setAutoDelete(true);
 	}
 
 
