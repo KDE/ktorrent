@@ -31,6 +31,7 @@ using namespace bt;
 namespace kt
 {
 
+
 	IPFilterList::IPFilterList()
 			: bt::BlockListInterface()
 	{
@@ -49,8 +50,16 @@ namespace kt
 		bt::Uint32 ip = ntohl(addr.ipAddress().IPv4Addr());
 		foreach (const Entry & e,ip_list)
 		{
-			if ((e.ip | e.mask) == (ip | e.mask))
-				return true;
+			if (e.is_range)
+			{
+				if ((ip >= e.ip) && (ip <= e.mask))
+					return true;
+			}
+			else
+			{
+				if ((e.ip | e.mask) == (ip | e.mask))
+					return true;
+			}
 		}
 		
 		return false;
@@ -61,8 +70,53 @@ namespace kt
 		return isBlockedIP(net::Address(addr,7777));
 	}
 	
+	bool IPFilterList::str2ip(const QString &addr, bt::Uint32 &ip)
+	{
+		QStringList ip_comps = addr.split(".");
+		if (ip_comps.count() != 4)
+			return false;
+		
+		ip = 0;
+		for (int i = 0;i < 4;i++)
+		{
+			bool ok = false;
+			bt::Uint32 n = ip_comps[i].toUInt(&ok);
+			if (!ok || n > 255)
+				return false;
+			ip |= (n & 0x000000FF) << (8*(3 - i));
+		}
+		
+		return true;
+	}
+	
+	bool IPFilterList::decodeIPRange(const QString &str, bt::Uint32 &start, bt::Uint32 &end)
+	{
+		QStringList range = str.split("-");
+		bt::Uint32 addr_start = 0;
+		bt::Uint32 addr_end = 0;
+		
+		if (range.count() != 2)
+			return false;
+		if (!str2ip(range[0], addr_start))
+			return false;
+		if (!str2ip(range[1], addr_end))
+			return false;
+		if (addr_start > addr_end)
+		{
+			bt::Uint32 addr_temp = addr_start;
+			addr_start = addr_end;
+			addr_end = addr_temp;
+			// or maybe just
+			// return false;
+		}
+		start = addr_start;
+		end = addr_end;
+		return true;
+	}
+	
 	bool IPFilterList::decodeIP(const QString & str,bt::Uint32 & ip,bt::Uint32 & mask)
 	{
+
 		QStringList ip_comps = str.split(".");
 		if (ip_comps.count() != 4)
 			return false;
@@ -91,6 +145,16 @@ namespace kt
 	{
 		bt::Uint32 ip;
 		bt::Uint32 mask;
+		
+		// Try to treat string as range
+		if (decodeIPRange(str, ip, mask))
+		{
+			Entry e = {str, ip, mask, true}; // creating range entry
+			ip_list.append(e);
+			insertRow(ip_list.count());
+			return;
+		}
+		
 		if (!decodeIP(str,ip,mask))
 			throw Error(i18n("Invalid IP address %1",str));
 		
@@ -100,7 +164,7 @@ namespace kt
 				throw Error(i18n("Duplicate IP address %1",str));
 		}
 		
-		Entry e = {str,ip,mask};
+		Entry e = {str, ip, mask, false};
 		ip_list.append(e);
 		insertRow(ip_list.count());
 	}
@@ -151,13 +215,25 @@ namespace kt
 		QString nip = value.toString();
 		bt::Uint32 ip;
 		bt::Uint32 mask;
+		
+		if (decodeIPRange(nip, ip, mask))
+		{
+			Entry &e = ip_list[index.row()];
+			e.ip = ip;
+			e.mask = mask;
+			e.is_range = true;
+			e.string_rep = nip;
+			emit dataChanged(index, index);
+			return true;
+		}
+		
 		if (!decodeIP(nip,ip,mask))
 			return false;
 		
 		int idx = 0;
 		foreach (const Entry & e,ip_list)
 		{
-			if (idx != index.row() && ip == e.ip && mask == e.mask)
+			if (idx != index.row() && ip == e.ip && mask == e.mask && !e.is_range)
 				return false;
 			idx++;
 		}
@@ -165,6 +241,7 @@ namespace kt
 		Entry & e = ip_list[index.row()];
 		e.ip = ip;
 		e.mask = mask;
+		e.is_range = false;
 		e.string_rep = nip;
 		emit dataChanged(index,index);
 		return true;

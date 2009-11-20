@@ -37,9 +37,11 @@ namespace kt
 		struct Entry
 		{
 			QString string_rep;
-			bt::Uint32 ip;
-			bt::Uint32 mask;
+			bt::Uint32 ip;   // start_ip if is_range == true
+			bt::Uint32 mask; // end_ip if is_range == false;
+			bool is_range;
 		};
+		
 	public:
 		IPFilterList();
 		virtual ~IPFilterList();
@@ -64,7 +66,8 @@ namespace kt
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 	private:
 		bool decodeIP(const QString & str,bt::Uint32 & ip,bt::Uint32 & mask);
-		
+		bool decodeIPRange(const QString &str, bt::Uint32 &start, bt::Uint32 &end);
+		bool str2ip(const QString &addr, bt::Uint32 &ip);
 	private:
 		QList<Entry> ip_list;
 	};
