@@ -127,13 +127,14 @@ namespace kt
 		
 		QString zipfile = kt::DataDir() + "level1.zip";
 		KZip* zip = new KZip(zipfile);
-		if (!zip->open(QIODevice::ReadOnly))
+		if (!zip->open(QIODevice::ReadOnly) || !zip->directory())
 		{
 			if (mode == Verbose)
 				KMessageBox::error(0,i18n("Cannot open zip file %1.",zipfile));
 			setError(UNZIP_FAILED);
 			emitResult();
 			delete zip;
+			return;
 		}
 		
 		QString destination = kt::DataDir() + "level1.txt";

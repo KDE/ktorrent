@@ -49,6 +49,7 @@ namespace kt
 		action_flags = 0;
 		video = 0;
 		play_action = pause_action = stop_action = prev_action = next_action = 0;
+		fullscreen_mode = false;
 		
 		media_model = new MediaModel(core,this);
 		media_player = new MediaPlayer(this);
