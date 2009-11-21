@@ -197,26 +197,6 @@ namespace bt
 		}
 	}
 	
-	void PacketWriter::sendExtProtHandshake(Uint16 port,bool pex_on)
-	{
-		QByteArray arr;
-		BEncoder enc(new BEncoderBufferOutput(arr));
-		enc.beginDict();
-		enc.write(QString("m")); 
-		// supported messages
-		enc.beginDict();
-		enc.write(QString("ut_pex"));enc.write((Uint32)(pex_on ? 1 : 0));
-		enc.end();
-		if (port > 0)
-		{
-			enc.write(QString("p")); 
-			enc.write((Uint32)port);
-		}
-		enc.write(QString("v")); enc.write(bt::GetVersionString());
-		enc.end();
-		sendExtProtMsg(0,arr);
-	}
-	
 	void PacketWriter::sendExtProtMsg(Uint8 id,const QByteArray & data)
 	{
 		queuePacket(new Packet(id,data));

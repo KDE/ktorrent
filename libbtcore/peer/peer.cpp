@@ -20,6 +20,7 @@
 #include "peer.h"
 
 #include <math.h>
+#include <btversion.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include <net/address.h>
@@ -28,6 +29,7 @@
 #include <download/piece.h>
 #include <download/request.h>
 #include <bcodec/bdecoder.h>
+#include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
 #include <torrent/server.h>
 #include <torrent/torrent.h>
@@ -38,6 +40,8 @@
 #include "utpex.h"
 #include "peermanager.h"
 #include <net/reverseresolver.h>
+#include "utmetadata.h"
+
 
 using namespace net;
 
@@ -55,7 +59,7 @@ namespace bt
 		id = peer_id_counter;
 		peer_id_counter++;
 		
-		ut_pex = 0;
+		ut_pex_id = 0;
 		preader = new PacketReader(this);
 		stats.choked = true;
 		stats.interested = stats.am_interested = false;
@@ -99,7 +103,7 @@ namespace bt
 			sock->startMonitoring(preader,pwriter);
 		}
 		pex_allowed = stats.extension_protocol;
-		utorrent_pex_id = 0;
+		extensions.setAutoDelete(true);
 		
 		if (resolve_hostname)
 		{
@@ -112,7 +116,6 @@ namespace bt
 
 	Peer::~Peer()
 	{
-		delete ut_pex;
 		delete uploader;
 		delete downloader;
 		delete sock;
@@ -349,48 +352,76 @@ namespace bt
 	
 	void Peer::handleExtendedPacket(const Uint8* packet,Uint32 size)
 	{
-		if (size <= 2 || packet[1] > 1)
+		if (size <= 2)
 			return;
 		
-		if (packet[1] == 1)
+		PeerProtocolExtension* ext = extensions.find(packet[1]);
+		if (ext)
 		{
-			if (ut_pex)
-				ut_pex->handlePexPacket(packet,size);
-			return;
+			ext->handlePacket(packet,size);
 		}
-		
+		else if (packet[1] == 0)
+		{
+			handleExtendedHandshake(packet,size);
+		}
+	}
+	
+	void Peer::handleExtendedHandshake(const Uint8* packet,Uint32 size)
+	{
 		QByteArray tmp = QByteArray::fromRawData((const char*)packet,size);
 		BNode* node = 0;
 		try
 		{
 			BDecoder dec(tmp,false,2);
 			node = dec.decode();
-			if (node && node->getType() == BNode::DICT)
+			if (!node || !node->getType() == BNode::DICT)
 			{
-				BDictNode* dict = (BDictNode*)node;
-				
-				// handshake packet, so just check if the peer supports ut_pex
-				dict = dict->getDict(QString("m"));
-				BValueNode* val = 0;
-				if (dict && (val = dict->getValue("ut_pex")) && UTPex::isEnabled())
+				delete node;
+				return;
+			}
+			
+			BDictNode* dict = (BDictNode*)node;
+			BDictNode* mdict = dict->getDict(QString("m"));
+			if (!mdict)
+			{
+				delete node;
+				return;
+			}
+			
+			BValueNode* val = 0;
+			
+			if ((val = mdict->getValue("ut_pex")) && UTPex::isEnabled())
+			{
+				// ut_pex packet
+				ut_pex_id = val->data().toInt();
+				if (ut_pex_id == 0)
 				{
-					utorrent_pex_id = val->data().toInt();
-					if (ut_pex)
-					{
-						if (utorrent_pex_id > 0)
-							ut_pex->changeID(utorrent_pex_id);
-						else
-						{
-							// id 0 means disabled
-							delete ut_pex;
-							ut_pex = 0;
-						}
-					}
-					else if (!ut_pex && utorrent_pex_id != 0 && pex_allowed) 
-					{
-						// Don't create  it when the id is 0
-						ut_pex = new UTPex(this,utorrent_pex_id);
-					}
+					extensions.erase(UT_PEX_ID);
+				}
+				else
+				{
+					PeerProtocolExtension* ext = extensions.find(UT_METADATA_ID);
+					if (ext)
+						ext->changeID(ut_pex_id);
+					else if (pex_allowed)
+						extensions.insert(UT_PEX_ID,new UTPex(this,ut_pex_id));
+				}
+			}
+			else if ((val = mdict->getValue("ut_metadata")))
+			{
+				// meta data
+				Uint32 ut_metadata_id = val->data().toInt();
+				if (ut_metadata_id == 0) // disabled by other side
+				{
+					extensions.erase(UT_METADATA_ID);
+				}
+				else
+				{
+					PeerProtocolExtension* ext = extensions.find(UT_METADATA_ID);
+					if (ext)
+						ext->changeID(id);
+					else
+						extensions.insert(UT_METADATA_ID,new UTMetaData(pman->getTorrent(),ut_metadata_id,this));
 				}
 			}
 		}
@@ -469,9 +500,14 @@ namespace bt
 			uploader->addUploadedBytes(data_bytes);
 		}
 		
-		if (ut_pex && ut_pex->needsUpdate())
-			ut_pex->update(pman);
-
+		PtrMap<Uint32,PeerProtocolExtension>::iterator i = extensions.begin();
+		while (i != extensions.end())
+		{
+			if (i->second->needsUpdate())
+				i->second->update();
+			i++;
+		}
+		
 		// if no data is being sent or recieved, and there are pending requests
 		// increment the connection stalled timer
 		if (getUploadRate() > 100 || getDownloadRate() > 100 || 
@@ -579,25 +615,45 @@ namespace bt
 		if (!stats.extension_protocol)
 			return;
 		
-		// send extension protocol handshake
-		bt::Uint16 port = Globals::instance().getServer().getPortInUse();
-		
-		if (ut_pex && (!on || !UTPex::isEnabled()))
+		PeerProtocolExtension* ext = extensions.find(UT_PEX_ID);
+		if (ext && (!on || !UTPex::isEnabled()))
 		{
-			delete ut_pex;
-			ut_pex = 0;
-			
+			extensions.erase(UT_PEX_ID);
 		}
-		else if (!ut_pex && on && utorrent_pex_id > 0 && UTPex::isEnabled())
+		else if (!ext && on && ut_pex_id > 0 && UTPex::isEnabled())
 		{
 			// if the other side has enabled it to, create a new UTPex object
-			ut_pex = new UTPex(this,utorrent_pex_id);
+			extensions.insert(UT_PEX_ID,new UTPex(this,ut_pex_id));
 		}
-		
-		pwriter->sendExtProtHandshake(port,on);
 		
 		pex_allowed = on;
 	}
+	
+	void Peer::sendExtProtHandshake(Uint16 port, Uint32 metadata_size)
+	{
+		if (!stats.extension_protocol)
+			return;
+		
+		QByteArray arr;
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		enc.write(QString("m")); 
+		// supported messages
+		enc.beginDict();
+		enc.write(QString("ut_pex"));enc.write((Uint32)(pex_allowed ? UT_PEX_ID : 0));
+		enc.write(QString("ut_metadata")); enc.write(UT_METADATA_ID);
+		enc.end();
+		if (port > 0)
+		{
+			enc.write(QString("p")); 
+			enc.write((Uint32)port);
+		}
+		enc.write(QString("v")); enc.write(bt::GetVersionString());
+		enc.write(QString("metadata_size")); enc.write(metadata_size);
+		enc.end();
+		pwriter->sendExtProtMsg(0,arr);
+	}
+
 	
 	void Peer::setGroupIDs(Uint32 up_gid,Uint32 down_gid)
 	{

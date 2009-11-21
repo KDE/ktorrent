@@ -355,6 +355,9 @@ namespace bt
 		total_connections++;
 		newPeer(peer);
 		peer->setPexEnabled(pex_on);
+		// send extension protocol handshake
+		bt::Uint16 port = Globals::instance().getServer().getPortInUse();
+		peer->sendExtProtHandshake(port,tor.getMetaData().size());
 	}
 		
 	bool PeerManager::connectedTo(const PeerID & peer_id)
@@ -650,7 +653,11 @@ namespace bt
 		{
 			Peer* p = *i;
 			if (!p->isKilled())
+			{
 				p->setPexEnabled(on);
+				bt::Uint16 port = Globals::instance().getServer().getPortInUse();
+				p->sendExtProtHandshake(port,tor.getMetaData().size());
+			}
 			i++;
 		}
 		pex_on = on;

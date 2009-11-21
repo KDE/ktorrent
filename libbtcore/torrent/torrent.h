@@ -247,6 +247,9 @@ namespace bt
 		
 		/// Set the monitor
 		void setMonitor(MonitorInterface* m) {tmon = m;}
+		
+		/// Get the metadata
+		const QByteArray & getMetaData() const {return metadata;}
 
 	private:
 		void loadInfo(BDictNode* node);
@@ -278,6 +281,7 @@ namespace bt
 		mutable Uint32 pos_cache_file;
 		MonitorInterface* tmon;
 		QString comments;
+		QByteArray metadata;
 	};
 
 }

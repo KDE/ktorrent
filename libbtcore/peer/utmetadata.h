@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,63 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTUTPEX_H
-#define BTUTPEX_H
-		
-#include <map>
-#include <btcore_export.h>
-#include <net/address.h>
-#include <util/constants.h>
-#include "peerprotocolextension.h"
+
+#ifndef BT_UTMETADATA_H
+#define BT_UTMETADATA_H
+
+#include <peer/peerprotocolextension.h>
 
 namespace bt
 {
+	class BDictNode;
 	class Peer;
-	class PeerManager;
-	class BEncoder;
-
+	class Torrent;
+	
 	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * 
-	 * Class which handles µTorrent's peer exchange
+		Handles ut_metadata extension
 	*/
-	class BTCORE_EXPORT UTPex : public PeerProtocolExtension
+	class BTCORE_EXPORT UTMetaData : public PeerProtocolExtension
 	{
 	public:
-		UTPex(Peer* peer,Uint32 id);
-		virtual ~UTPex();
-
+		UTMetaData(const Torrent & tor,bt::Uint32 id,Peer* peer);
+		virtual ~UTMetaData();
+		
 		/**
-		 * Handle a PEX packet
-		 * @param packet The packet 
-		 * @param size The size of the packet
-		 */
-		void handlePacket(const Uint8* packet,Uint32 size);
-		
-		/// Do we need to update PEX (should happen every minute)
-		bool needsUpdate() const;
-		
-		/// Send a new PEX packet to the Peer
-		void update();
-		
-		/// Change the ID used in the extended packets
-		void changeID(Uint32 nid) {id = nid;}
-		
-		/// Globally disable or enabled PEX
-		static void setEnabled(bool on) {pex_enabled = on;}
-		
-		/// Is PEX enabled globally
-		static bool isEnabled() {return pex_enabled;}
-	private:
-		void encode(BEncoder & enc,const std::map<Uint32,net::Address> & ps);
-		void encodeFlags(BEncoder & enc,const std::map<Uint32,Uint8> & flags);
+			Handle a metadata packet
+		*/
+		void handlePacket(const bt::Uint8* packet, Uint32 size);
 		
 	private:
-		std::map<Uint32,net::Address> peers; 
-		TimeStamp last_updated;
-		static bool pex_enabled;
+		void request(BDictNode* dict);
+		void reject(BDictNode* dict);
+		void data(BDictNode* dict);
+		void sendReject(int piece);
+		void sendData(int piece,int total_size,const QByteArray & data);
+
+	private:
+		const Torrent & tor;
+		Peer* peer;
 	};
 
 }
 
-#endif
+#endif // BT_UTMETADATA_H

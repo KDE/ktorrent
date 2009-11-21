@@ -140,9 +140,6 @@ namespace bt
 		 */
 		void sendSuggestPiece(Uint32 index);
 		
-		/// Send the extension protocol handshake
-		void sendExtProtHandshake(Uint16 port,bool pex_on = true);
-		
 		/// Send an extended protocol message
 		void sendExtProtMsg(Uint8 id,const QByteArray & data);
 

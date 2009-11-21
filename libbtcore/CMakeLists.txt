@@ -89,7 +89,9 @@ set(libbtcore_SRC
 	peer/peeruploader.cpp
 	peer/packetwriter.cpp
 	peer/packetreader.cpp
+	peer/peerprotocolextension.cpp
 	peer/utpex.cpp
+	peer/utmetadata.cpp
 	peer/accessmanager.cpp
 	peer/badpeerslist.cpp
 
@@ -254,7 +256,9 @@ set (peer_HDR
 	./peer/peermanager.h
 	./peer/authenticatebase.h
 	./peer/authenticate.h
+	./peer/peerprotocolextension.h
 	./peer/utpex.h
+	./peer/utmetadata.h
 	./peer/packetreader.h
 	./peer/authenticationmonitor.h
 	./peer/peerid.h

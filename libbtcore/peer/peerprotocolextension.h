@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,63 +17,49 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTUTPEX_H
-#define BTUTPEX_H
-		
-#include <map>
+
+#ifndef BT_PEERPROTOCOLEXTENSION_H
+#define BT_PEERPROTOCOLEXTENSION_H
+
 #include <btcore_export.h>
-#include <net/address.h>
 #include <util/constants.h>
-#include "peerprotocolextension.h"
 
 namespace bt
 {
 	class Peer;
-	class PeerManager;
-	class BEncoder;
 
+	const Uint32 UT_PEX_ID = 1;
+	const Uint32 UT_METADATA_ID = 2;
+	
 	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * 
-	 * Class which handles µTorrent's peer exchange
+		Base class for protocol extensions
 	*/
-	class BTCORE_EXPORT UTPex : public PeerProtocolExtension
+	class BTCORE_EXPORT PeerProtocolExtension
 	{
 	public:
-		UTPex(Peer* peer,Uint32 id);
-		virtual ~UTPex();
-
-		/**
-		 * Handle a PEX packet
-		 * @param packet The packet 
-		 * @param size The size of the packet
-		 */
-		void handlePacket(const Uint8* packet,Uint32 size);
+		PeerProtocolExtension(bt::Uint32 id,Peer* peer);
+		virtual ~PeerProtocolExtension();
 		
-		/// Do we need to update PEX (should happen every minute)
-		bool needsUpdate() const;
+		/// Virtual update function does nothing, needs to be overriden if update
+		virtual void update();
 		
-		/// Send a new PEX packet to the Peer
-		void update();
+		/// Does this needs to be update
+		virtual bool needsUpdate() const {return false;}
 		
-		/// Change the ID used in the extended packets
-		void changeID(Uint32 nid) {id = nid;}
+		/// Handle a packet
+		virtual void handlePacket(const bt::Uint8* packet, Uint32 size) = 0;
 		
-		/// Globally disable or enabled PEX
-		static void setEnabled(bool on) {pex_enabled = on;}
+		/// Send an extension protocol packet 
+		void sendPacket(const QByteArray & data);
 		
-		/// Is PEX enabled globally
-		static bool isEnabled() {return pex_enabled;}
-	private:
-		void encode(BEncoder & enc,const std::map<Uint32,net::Address> & ps);
-		void encodeFlags(BEncoder & enc,const std::map<Uint32,Uint8> & flags);
+		/// Change the ID
+		void changeID(Uint32 id);
 		
-	private:
-		std::map<Uint32,net::Address> peers; 
-		TimeStamp last_updated;
-		static bool pex_enabled;
+	protected:
+		bt::Uint32 id;
+		Peer* peer;
 	};
 
 }
 
-#endif
+#endif // BT_PEERPROTOCOLEXTENSION_H

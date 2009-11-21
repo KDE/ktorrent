@@ -25,8 +25,10 @@
 #include <util/timer.h>
 #include <interfaces/peerinterface.h>
 #include <util/bitset.h>
+#include <util/ptrmap.h>
 #include <btcore_export.h>
 #include "peerid.h"
+#include "peerprotocolextension.h"
 
 namespace net
 {
@@ -48,10 +50,9 @@ namespace bt
 	class PeerDownloader;
 	class PeerUploader;
 	class PeerManager;
-	class UTPex;
 	
 
-	
+
 
 	/**
 	 * @author Joris Guisson
@@ -142,6 +143,9 @@ namespace bt
 		/// Get the PeerUploader.
 		PeerUploader* getPeerUploader() {return uploader;}
 		
+		/// Get the PeerManager
+		PeerManager* getPeerManager() {return pman;}
+		
 		/**
 		 * Send a chunk of data.
 		 * @param data The data
@@ -223,6 +227,9 @@ namespace bt
 		/// Disable or enable pex
 		void setPexEnabled(bool on);
 		
+		/// Send an extended protocol handshake
+		void sendExtProtHandshake(Uint16 port,Uint32 metadata_size);
+		
 		/**
 		 * Set the peer's group IDs for traffic 
 		 * @param up_gid The upload gid
@@ -239,6 +246,7 @@ namespace bt
 	private:
 		void packetReady(const Uint8* packet,Uint32 size);
 		void handleExtendedPacket(const Uint8* packet,Uint32 size);
+		void handleExtendedHandshake(const Uint8* packet,Uint32 size);
 
 	private:
 		mse::StreamSocket* sock;
@@ -256,10 +264,10 @@ namespace bt
 		PeerUploader* uploader;
 		mutable PeerInterface::Stats stats;
 		QTime connect_time;
-		UTPex* ut_pex;
 		bool pex_allowed;
-		Uint32 utorrent_pex_id;
 		PeerManager* pman;
+		PtrMap<Uint32,PeerProtocolExtension> extensions;
+		Uint32 ut_pex_id;
 		
 		static bool resolve_hostname;
 

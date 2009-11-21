@@ -34,16 +34,14 @@ namespace bt
 	
 	bool UTPex::pex_enabled = true;
 
-	UTPex::UTPex(Peer* peer,Uint32 id) : peer(peer),id(id),last_updated(0)
+	UTPex::UTPex(Peer* peer,Uint32 id) : PeerProtocolExtension(id,peer),last_updated(0)
 	{}
 
 
 	UTPex::~UTPex()
 	{}
 	
-	
-	
-	void UTPex::handlePexPacket(const Uint8* packet,Uint32 size)
+	void UTPex::handlePacket(const Uint8* packet,Uint32 size)
 	{
 		if (size <= 2 || packet[1] != 1)
 			return;
@@ -80,8 +78,9 @@ namespace bt
 		return bt::GetCurrentTime() - last_updated >= 60*1000;
 	}
 	
-	void UTPex::update(PeerManager* pman)
+	void UTPex::update()
 	{
+		PeerManager* pman = peer->getPeerManager();
 		last_updated = bt::GetCurrentTime();
 		
 		std::map<Uint32,net::Address> added;

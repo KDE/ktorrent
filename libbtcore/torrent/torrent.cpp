@@ -127,8 +127,9 @@ namespace bt
 			
 			BNode* n = dict->getData("info");
 			SHA1HashGen hg;
-			Uint8* info = (Uint8*)data.data();
-			info_hash = hg.generate(info + n->getOffset(),n->getLength());
+			// save info dict
+			metadata = data.mid(n->getOffset(),n->getLength());
+			info_hash = hg.generate((const Uint8*)metadata.data(),metadata.size());
 			delete node;
 		}
 		catch (...)
