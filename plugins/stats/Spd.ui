@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Speed</string>
+   <string comment="@title:window">Speed</string>
   </property>
   <layout class="QHBoxLayout" >
    <item>

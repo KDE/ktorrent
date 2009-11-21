@@ -26,7 +26,7 @@ namespace kt
 	ShutdownDlg::ShutdownDlg(ShutdownRuleSet* rules,CoreInterface* core,QWidget* parent) : KDialog(parent),rules(rules)
 	{
 		setupUi(mainWidget());
-		setWindowTitle(i18n("Configure Shutdown"));
+		setWindowTitle(i18nc("@title:window", "Configure Shutdown"));
 		model = new ShutdownTorrentModel(core,this);
 		
 		m_action->addItem(KIcon("system-shutdown"),i18n("Shutdown"));

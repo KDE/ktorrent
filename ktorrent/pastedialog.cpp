@@ -56,7 +56,7 @@ namespace kt
 		}
 		else
 		{
-			KMessageBox::error(this,i18n("Invalid URL: ",m_url->text()) );
+			KMessageBox::error(this,i18n("Invalid URL: %1",m_url->text()) );
 		}
 	}
 }

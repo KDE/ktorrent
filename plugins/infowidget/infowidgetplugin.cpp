@@ -80,9 +80,9 @@ namespace kt
 		pref = new IWPrefPage(0);
 		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
 		ta->addViewListener(this);
-		ta->addToolWidget(status_tab,i18n("Status"),"dialog-information",
+		ta->addToolWidget(status_tab,i18nc("@title:tab", "Status"),"dialog-information",
 			   i18n("Displays status information about a torrent"));
-		ta->addToolWidget(file_view,i18n("Files"),"folder",
+		ta->addToolWidget(file_view,i18nc("@title:tab", "Files"),"folder",
 			   i18n("Shows all the files in a torrent"));
 	
 		applySettings();
