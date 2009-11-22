@@ -114,6 +114,15 @@ namespace dht
 		}
 		
 		if (todo.empty() && getNumOutstandingRequests() == 0 && !isFinished())
+		{
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: NodeLookup done" << endl;
 			done();
+		}
+		else if (visited.size() > 200)
+		{
+			// don't let the task run forever
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: NodeLookup done" << endl;
+			done();
+		}
 	}
 }

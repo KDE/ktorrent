@@ -30,7 +30,7 @@ namespace bt
 {
 	SHA1Hash::SHA1Hash()
 	{
-		std::fill(hash,hash+20,'\0');
+		std::fill(hash,hash+20,0);
 	}
 
 	SHA1Hash::SHA1Hash(const SHA1Hash & other)

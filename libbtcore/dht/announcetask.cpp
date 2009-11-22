@@ -158,8 +158,15 @@ namespace dht
 			todo.erase(itr);
 		}
 		
+		
 		if (todo.empty() && answered.empty() && getNumOutstandingRequests() == 0 && !isFinished())
 		{
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: AnnounceTask done" << endl;
+			done();
+		}
+		else if (answered_visited.size() > 50 || visited.size() > 200)
+		{
+			// don't let the task run forever
 			Out(SYS_DHT|LOG_NOTICE) << "DHT: AnnounceTask done" << endl;
 			done();
 		}
