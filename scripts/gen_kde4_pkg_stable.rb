@@ -1,11 +1,16 @@
 #!/usr/bin/env ruby
 #
-# Ruby script for generating amaroK tarball releases from KDE SVN
+# Ruby script for generating ktorrent tarball releases from KDE SVN, based on script for amaroK
 #
 # (c) 2005 Mark Kretschmann <markey@web.de>
 # (c) 2006-2007 Tom Albers <tomalbers@kde.nl>
 # Some parts of this code taken from cvs2dist
 # License: GNU General Public License V2
+
+if ARGV.length != 1
+	puts "Usage: gen_kde4_pkg_stable.rb <version>"
+	exit
+end
 
 egmodule   = "network"
 name       = "ktorrent"
@@ -14,11 +19,13 @@ addDocs    = []
 addPo      = []
 remove     = ""
 
-version    = "3.2.3"
+
+version    = ARGV[0]
 svnbase    = "svn+ssh://guisson@svn.kde.org/home/kde"
 svnroot    = "#{svnbase}/branches/stable"
 svntags    = "#{svnbase}/tags/#{name}"
 
+puts "Generating package for #{version}"
 #----------------------------------------------------------------
 
 folder     = name + "-" + version
