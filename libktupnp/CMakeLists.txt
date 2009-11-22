@@ -9,6 +9,6 @@ target_link_libraries(
     btcore
     ${KDE4_KIO_LIBS}
     ${QT_QTCORE_LIBRARY})
-set_target_properties(ktupnp PROPERTIES VERSION 4.0.0 SOVERSION 4 )
+set_target_properties(ktupnp PROPERTIES VERSION 4.1.0 SOVERSION 4 )
 install(TARGETS ktupnp  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
