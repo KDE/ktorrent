@@ -38,7 +38,7 @@ namespace kt
 		{
 			QString string_rep;
 			bt::Uint32 ip;   // start_ip if is_range == true
-			bt::Uint32 mask; // end_ip if is_range == false;
+			bt::Uint32 mask; // end_ip if is_range == true;
 			bool is_range;
 		};
 		

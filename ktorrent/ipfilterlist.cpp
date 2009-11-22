@@ -103,11 +103,10 @@ namespace kt
 			return false;
 		if (addr_start > addr_end)
 		{
+            // swap addresses if ip_start > ip_end 
 			bt::Uint32 addr_temp = addr_start;
 			addr_start = addr_end;
 			addr_end = addr_temp;
-			// or maybe just
-			// return false;
 		}
 		start = addr_start;
 		end = addr_end;

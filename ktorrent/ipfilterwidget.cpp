@@ -100,8 +100,9 @@ namespace kt
 	
 		if (v.validate(ip, var) != QValidator::Acceptable)
 		{
-			KMessageBox::sorry(this, i18n ("Invalid IP address %1. You must enter an IP address in the format 'XXX.XXX.XXX.XXX'."
-					" You can also use wildcards for ranges like '127.0.0.*'.",ip ) );
+			KMessageBox::sorry(this, i18n ("Invalid IP address <b>%1</b>. IP addresses must be in the format 'XXX.XXX.XXX.XXX'."
+					"<br/><br/>You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-200.10.10.40'.").arg(ip));	
+					
 			return;
 		}
 		
