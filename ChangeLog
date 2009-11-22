@@ -10,6 +10,7 @@ Changes in 3.3.1:
 - Fix crash when not able to bind for DHT socket (215079)
 - Make it optional to intercept Qt debug messages in InitLog call
 - Fix crash when trying to unzip broken zip file in ipfilter download (215353)
+- Add some limits so DHT tasks don't run for to long and eat up to much memory
 
 Changes in 3.3:
 - Fix deadlock in PacketReader
