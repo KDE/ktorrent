@@ -26,8 +26,6 @@ else(WITH_SYSTEM_GEOIP)
 	set(geoip_src GeoIP.c)
 endif(WITH_SYSTEM_GEOIP)    
 
-add_subdirectory(geoip)
-
 set(ktinfowidgetplugin_SRC 
 	infowidgetplugin.cpp 
 	iwprefpage.cpp 

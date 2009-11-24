@@ -4,6 +4,7 @@ Changes in 4.0:
 - Show information message instead of error when trackerlists are merged (213772)
 - Add patch from Leo Trubach which adds support for IP rangs to the IP filter dialog
 - Add support for metadata extension
+- Remove own flags, now using exclusively those from KDE
 
 Changes in 3.3.1:
 - Make sure exceptions in DHT code are caught, fixes a crash (213819)

@@ -44,7 +44,6 @@ namespace kt
 			yes = KIcon("dialog-ok");
 			no = KIcon("dialog-cancel");
 			icons_loaded = true;
-			flagDB.addFlagSource("data",  QString("ktorrent/%1.png"));
 			flagDB.addFlagSource("locale", QString("l10n/%1/flag.png"));
 		}
 		
