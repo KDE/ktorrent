@@ -185,6 +185,9 @@ set(libbtcore_SRC
 	migrate/ccmigrate.cpp  
 	migrate/migrate.cpp
 	
+	magnet/magnetdownloader.cpp
+	magnet/magnetlink.cpp
+	
 	btversion.cpp
 )
 
@@ -387,6 +390,8 @@ set (migrate_HDR
 	./migrate/cachemigrate.h
 )
 
+
+
 install(FILES ${tracker_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/tracker COMPONENT Devel)
 install(FILES ${torrent_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/torrent COMPONENT Devel)
 install(FILES ${diskio_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/diskio COMPONENT Devel)
@@ -402,3 +407,4 @@ install(FILES ${migrate_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/migrat
 install(FILES ${download_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/download COMPONENT Devel)
 install(FILES ${btcore_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore COMPONENT Devel)
 
+add_subdirectory(magnet)

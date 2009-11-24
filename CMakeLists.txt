@@ -16,6 +16,8 @@ endif(NOT KDE_VERSION_OK)
 
 # set some default settings
 include(KDE4Defaults)
+enable_testing()
+set(BUILD_TESTING ON)
 
 # make some more macros available
 include (MacroLibrary)
