@@ -144,7 +144,7 @@ set(libbtcore_SRC
 	dht/rpcmsg.cpp     
 	dht/taskmanager.cpp
 	dht/database.cpp      
-	dht/dhttrackerbackend.cpp  
+	dht/dhtpeersource.cpp 
 	dht/key.cpp                  
 	dht/pack.cpp        
 	dht/rpcserver.cpp
@@ -371,7 +371,7 @@ set (dht_HDR
 	./dht/key.h
 	./dht/pack.h
 	./dht/rpcmsg.h
-	./dht/dhttrackerbackend.h
+	./dht/dhtpeersource.h
 	./dht/announcetask.h
 	./dht/rpccall.h
 	./dht/kclosestnodessearch.h

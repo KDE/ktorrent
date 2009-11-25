@@ -31,7 +31,7 @@
 
 namespace dht
 {
-	class DHTTrackerBackend;
+	class DHTPeerSource;
 }
 
 namespace bt
@@ -50,7 +50,7 @@ namespace bt
 		Q_OBJECT
 		
 		QList<PeerSource*> additional;
-		dht::DHTTrackerBackend* m_dht;
+		dht::DHTPeerSource* m_dht;
 		
 	public:
 		PeerSourceManager(TorrentControl* tor,PeerManager* pman);

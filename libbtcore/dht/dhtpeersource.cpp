@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "dhttrackerbackend.h"
+#include "dhtpeersource.h"
 #include <kurl.h>
 #include <qhostaddress.h>
 #include <util/log.h>
@@ -33,8 +33,8 @@ using namespace bt;
 namespace dht
 {
 
-	DHTTrackerBackend::DHTTrackerBackend(DHTBase & dh_table,TorrentInterface* tor) 
-		: dh_table(dh_table),curr_task(0),tor(tor)
+	DHTPeerSource::DHTPeerSource(DHTBase & dh_table,const bt::SHA1Hash & info_hash,const QString & torrent_name) 
+		: dh_table(dh_table),curr_task(0),info_hash(info_hash),torrent_name(torrent_name)
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		connect(&dh_table,SIGNAL(started()),this,SLOT(manualUpdate()));
@@ -44,26 +44,26 @@ namespace dht
 	}
 
 
-	DHTTrackerBackend::~DHTTrackerBackend()
+	DHTPeerSource::~DHTPeerSource()
 	{
 		if (curr_task)
 			curr_task->kill();
 	}
 	
-	void DHTTrackerBackend::start()
+	void DHTPeerSource::start()
 	{
 		started = true;
 		if (dh_table.isRunning())
 			doRequest();
 	}
 	
-	void DHTTrackerBackend::dhtStopped()
+	void DHTPeerSource::dhtStopped()
 	{
 		stop(0);
 		curr_task = 0;
 	}
 	
-	void DHTTrackerBackend::stop(bt::WaitJob*)
+	void DHTPeerSource::stop(bt::WaitJob*)
 	{
 		started = false;
 		if (curr_task)
@@ -73,14 +73,14 @@ namespace dht
 		}
 	}
 	
-	void DHTTrackerBackend::manualUpdate()
+	void DHTPeerSource::manualUpdate()
 	{
 		if (dh_table.isRunning() && started)
 			doRequest();
 	}
 
 
-	bool DHTTrackerBackend::doRequest()
+	bool DHTPeerSource::doRequest()
 	{
 		if (!dh_table.isRunning())
 			return false;
@@ -88,26 +88,22 @@ namespace dht
 		if (curr_task)
 			return true;
 		
-		const SHA1Hash & info_hash = tor->getInfoHash();
 		Uint16 port = bt::Globals::instance().getServer().getPortInUse();
 		curr_task = dh_table.announce(info_hash,port);
 		if (curr_task)
 		{
-			for (Uint32 i = 0;i < tor->getNumDHTNodes();i++)
-			{
-				const DHTNode & n = tor->getDHTNode(i);
+			foreach (const bt::DHTNode & n,nodes)
 				curr_task->addDHTNode(n.ip,n.port);
-			}
+
 			connect(curr_task,SIGNAL(dataReady( Task* )),this,SLOT(onDataReady( Task* )));
 			connect(curr_task,SIGNAL(finished( Task* )),this,SLOT(onFinished( Task* )));
-
 			return true;
 		}
 		
 		return false;
 	}
 	
-	void DHTTrackerBackend::onFinished(Task* t)
+	void DHTPeerSource::onFinished(Task* t)
 	{
 		if (curr_task == t)
 		{
@@ -118,7 +114,7 @@ namespace dht
 		}
 	}
 	
-	void DHTTrackerBackend::onDataReady(Task* t)
+	void DHTPeerSource::onDataReady(Task* t)
 	{
 		if (curr_task == t)
 		{
@@ -138,18 +134,22 @@ namespace dht
 			{
 				Out(SYS_DHT|LOG_NOTICE) << 
 						QString("DHT: Got %1 potential peers for torrent %2")
-						.arg(cnt).arg(tor->getStats().torrent_name) << endl;
+						.arg(cnt).arg(torrent_name) << endl;
 				peersReady(this);
 			}
 		}
 	}
 	
-	void DHTTrackerBackend::onTimeout()
+	void DHTPeerSource::onTimeout()
 	{
 		if (dh_table.isRunning() && started)
 			doRequest();
 	}
 	
+	void DHTPeerSource::addDHTNode(const bt::DHTNode& node)
+	{
+		nodes.append(node);
+	}
+
 }
 
-#include "dhttrackerbackend.moc"

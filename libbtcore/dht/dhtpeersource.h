@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTDHTTRACKERBACKEND_H
-#define DHTDHTTRACKERBACKEND_H
+#ifndef DHTDHTPEERSOURCE_H
+#define DHTDHTPEERSOURCE_H
 
 #include <qtimer.h>
 #include <interfaces/peersource.h>
@@ -28,7 +28,7 @@
 namespace bt
 {
 	class WaitJob;
-	class TorrentInterface;
+	struct DHTNode;
 }
 
 
@@ -42,16 +42,18 @@ namespace dht
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DHTTrackerBackend : public bt::PeerSource
+	class BTCORE_EXPORT DHTPeerSource : public bt::PeerSource
 	{
 		Q_OBJECT
 	public:
-		DHTTrackerBackend(DHTBase & dh_table,bt::TorrentInterface* tor);
-		virtual ~DHTTrackerBackend();
+		DHTPeerSource(DHTBase & dh_table,const bt::SHA1Hash & info_hash,const QString & torrent_name);
+		virtual ~DHTPeerSource();
 
 		virtual void start();
 		virtual void stop(bt::WaitJob* wjob = 0);
 		virtual void manualUpdate();
+		
+		void addDHTNode(const bt::DHTNode & node);
 	
 	private slots:
 		void onTimeout();
@@ -63,9 +65,11 @@ namespace dht
 	private:
 		DHTBase & dh_table;
 		AnnounceTask* curr_task;
-		bt::TorrentInterface* tor;
+		bt::SHA1Hash info_hash;
 		QTimer timer;
 		bool started;
+		QList<bt::DHTNode> nodes;
+		QString torrent_name;
 	};
 
 }

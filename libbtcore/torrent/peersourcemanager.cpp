@@ -26,7 +26,7 @@
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <dht/dhtbase.h>
-#include <dht/dhttrackerbackend.h>
+#include <dht/dhtpeersource.h>
 #include <tracker/tracker.h>
 #include "torrentcontrol.h"
 #include "torrent.h"
@@ -134,7 +134,9 @@ namespace bt
 			delete m_dht;
 		}
 		
-		m_dht = new dht::DHTTrackerBackend(Globals::instance().getDHT(),tor);
+		m_dht = new dht::DHTPeerSource(Globals::instance().getDHT(),tor->getInfoHash(),tor->getStats().torrent_name);
+		for (Uint32 i = 0;i < tor->getNumDHTNodes();i++)
+			m_dht->addDHTNode(tor->getDHTNode(i));
 		
 		// add the DHT source
 		addPeerSource(m_dht);
