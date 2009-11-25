@@ -25,7 +25,6 @@
 #include <util/functions.h>
 #include <util/log.h>
 #include <torrent/globals.h>
-#include <interfaces/torrentinterface.h>
 #include <torrent/server.h>
 #include "udptracker.h"
 #include "httptracker.h"
@@ -41,8 +40,8 @@ namespace bt
 	const Uint32 LONGER_WAIT_TIME = 300; 
 	const Uint32 FINAL_WAIT_TIME = 1800;
 	
-	Tracker::Tracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier) 
-	: TrackerInterface(url),tier(tier),peer_id(id),tor(tor)
+	Tracker::Tracker(const KUrl & url,TrackerDataSource* tds,const PeerID & id,int tier) 
+	: TrackerInterface(url),tier(tier),peer_id(id),tds(tds)
 	{
 		srand(time(0));
 		key = rand();
@@ -126,13 +125,13 @@ namespace bt
 
 	void Tracker::resetTrackerStats() 
 	{
-		bytes_downloaded_at_start = tor->getStats().bytes_downloaded;
-		bytes_uploaded_at_start = tor->getStats().bytes_uploaded;
+		bytes_downloaded_at_start = tds->bytesDownloaded();
+		bytes_uploaded_at_start = tds->bytesUploaded();
 	}
 	
 	Uint64 Tracker::bytesDownloaded() const 
 	{
-		Uint64 bd = tor->getStats().bytes_downloaded;
+		Uint64 bd = tds->bytesDownloaded();
 		if (bd > bytes_downloaded_at_start)
 			return bd - bytes_downloaded_at_start;
 		else
@@ -141,7 +140,7 @@ namespace bt
 
 	Uint64 Tracker::bytesUploaded() const 
 	{
-		Uint64 bu = tor->getStats().bytes_uploaded;
+		Uint64 bu = tds->bytesUploaded();
 		if (bu > bytes_uploaded_at_start)
 			return bu - bytes_uploaded_at_start;
 		else

@@ -32,7 +32,20 @@ class KUrl;
 
 namespace bt
 {
-	class TorrentInterface;
+	/**
+		Interface used by the Tracker to obtain the data it needs to know
+		when announcing.
+	*/
+	class BTCORE_EXPORT TrackerDataSource
+	{
+	public:
+		virtual ~TrackerDataSource() {}
+		
+		virtual Uint64 bytesDownloaded() const = 0;
+		virtual Uint64 bytesUploaded() const = 0;
+		virtual Uint64 bytesLeft() const = 0;
+		virtual const SHA1Hash & infoHash() const = 0;
+	};
 	
 	/**
 	 * Base class for all tracker classes.
@@ -41,7 +54,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		Tracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier);
+		Tracker(const KUrl & url,TrackerDataSource* tds,const PeerID & id,int tier);
 		virtual ~Tracker();
 		
 		/**
@@ -125,7 +138,7 @@ namespace bt
 	protected:
 		int tier;
 		PeerID peer_id;
-		TorrentInterface* tor;
+		TrackerDataSource* tds;
 		Uint32 key;
 		QTimer reannounce_timer;
 		Uint64 bytes_downloaded_at_start;

@@ -39,7 +39,7 @@ namespace bt
 	/**
 	 * Manages all trackers
 	 */
-	class BTCORE_EXPORT TrackerManager : public QObject,public bt::TrackersList
+	class BTCORE_EXPORT TrackerManager : public QObject,public bt::TrackersList,public TrackerDataSource
 	{
 		Q_OBJECT
 	public:
@@ -97,6 +97,11 @@ namespace bt
 		void addTracker(Tracker* trk);
 		void switchTracker(Tracker* trk);
 		Tracker* selectTracker();
+		
+		virtual Uint64 bytesDownloaded() const;
+		virtual Uint64 bytesUploaded() const;
+		virtual Uint64 bytesLeft() const;
+		virtual const SHA1Hash & infoHash() const;
 		
 	private slots:
 		/**

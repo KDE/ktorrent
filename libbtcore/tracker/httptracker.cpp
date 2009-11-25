@@ -51,8 +51,8 @@ namespace bt
 	Uint16 HTTPTracker::proxy_port = 8080;
 	bool HTTPTracker::use_qhttp = false;
 
-	HTTPTracker::HTTPTracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier)
-		: Tracker(url,tor,id,tier)
+	HTTPTracker::HTTPTracker(const KUrl & url,TrackerDataSource* tds,const PeerID & id,int tier)
+		: Tracker(url,tds,id,tier)
 	{
 		active_job = 0;
 		
@@ -129,7 +129,7 @@ namespace bt
 		scrape_url.setFileName(url.fileName().replace("announce","scrape"));
 		
 		QString epq = scrape_url.encodedPathAndQuery();
-		const SHA1Hash & info_hash = tor->getInfoHash();
+		const SHA1Hash & info_hash = tds->infoHash();
 		if (scrape_url.queryItems().count() > 0)
 			epq += "&info_hash=" + info_hash.toURLString();
 		else
@@ -176,7 +176,7 @@ namespace bt
 			d = d->getDict(QString("files"));
 			if (d)
 			{
-				d = d->getDict(tor->getInfoHash().toByteArray());
+				d = d->getDict(tds->infoHash().toByteArray());
 				if (d)
 				{
 					try
@@ -203,9 +203,7 @@ namespace bt
 	}
 	
 	void HTTPTracker::doRequest(WaitJob* wjob)
-	{	
-		const TorrentStats & s = tor->getStats();
-		
+	{
 		KUrl u = url;
 		if (!url.isValid())
 		{
@@ -224,7 +222,7 @@ namespace bt
 		if (event == "completed")
 			u.addQueryItem("left","0"); // need to send 0 when we are completed
 		else
-			u.addQueryItem("left",QString::number(s.bytes_left));
+			u.addQueryItem("left",QString::number(tds->bytesLeft()));
 		
 		u.addQueryItem("compact","1");
 		if (event != "stopped")
@@ -240,7 +238,7 @@ namespace bt
 		if (event != QString())
 			u.addQueryItem("event",event);
 		QString epq = u.encodedPathAndQuery();
-		const SHA1Hash & info_hash = tor->getInfoHash();
+		const SHA1Hash & info_hash = tds->infoHash();
 		epq += "&info_hash=" + info_hash.toURLString();
 
 

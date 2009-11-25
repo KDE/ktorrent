@@ -40,8 +40,8 @@ namespace bt
 	Uint32 UDPTracker::num_instances = 0;
 	
 
-	UDPTracker::UDPTracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier) 
-	: Tracker(url,tor,id,tier)
+	UDPTracker::UDPTracker(const KUrl & url,TrackerDataSource* tds,const PeerID & id,int tier) 
+	: Tracker(url,tds,id,tier)
 	{
 		num_instances++;
 		if (!socket)
@@ -252,20 +252,19 @@ namespace bt
 		*/
 
 		Uint32 ev = event;
-		const TorrentStats & s = tor->getStats();
 		Uint16 port = Globals::instance().getServer().getPortInUse();
 		Uint8 buf[98];
 		WriteInt64(buf,0,connection_id);
 		WriteInt32(buf,8,UDPTrackerSocket::ANNOUNCE);
 		WriteInt32(buf,12,transaction_id);
-		const SHA1Hash & info_hash = tor->getInfoHash();
+		const SHA1Hash & info_hash = tds->infoHash();
 		memcpy(buf+16,info_hash.getData(),20);
 		memcpy(buf+36,peer_id.data(),20);
 		WriteInt64(buf,56,bytesDownloaded());
 		if (ev == COMPLETED)
 			WriteInt64(buf,64,0);
 		else
-			WriteInt64(buf,64,s.bytes_left);
+			WriteInt64(buf,64,tds->bytesLeft());
 		WriteInt64(buf,72,bytesUploaded());
 		WriteInt32(buf,80,ev);
 		QString cip = Tracker::getCustomIP();

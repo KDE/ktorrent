@@ -120,9 +120,9 @@ namespace bt
 		
 		Tracker* trk = 0;
 		if (url.protocol() == "udp")
-			trk = new UDPTracker(url,tor,tor->getTorrent().getPeerID(),tier);
+			trk = new UDPTracker(url,this,tor->getTorrent().getPeerID(),tier);
 		else
-			trk = new HTTPTracker(url,tor,tor->getTorrent().getPeerID(),tier);
+			trk = new HTTPTracker(url,this,tor->getTorrent().getPeerID(),tier);
 		
 		addTracker(trk);
 		if (custom)
@@ -546,5 +546,26 @@ namespace bt
 		
 		saveTrackerStatus();
 	}
+
+	Uint64 TrackerManager::bytesDownloaded() const
+	{
+		return tor->getStats().bytes_downloaded;
+	}
+
+	Uint64 TrackerManager::bytesUploaded() const
+	{
+		return tor->getStats().bytes_uploaded;
+	}
+	
+	Uint64 TrackerManager::bytesLeft() const
+	{
+		return tor->getStats().bytes_left;
+	}
+	
+	const bt::SHA1Hash& TrackerManager::infoHash() const
+	{
+		return tor->getInfoHash();
+	}
+
 
 }
