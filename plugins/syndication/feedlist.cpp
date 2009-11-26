@@ -68,12 +68,13 @@ namespace kt
 				connect(feed,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, bool)),
 						activity,SLOT(downloadLink(const KUrl&, const QString&, const QString&, bool)));
 				feed->load(filter_list);
+				addFeed(feed);
+
 			}
 			catch (...)
 			{
 				delete feed;
 			}
-			addFeed(feed);
 		}
 	}
 	

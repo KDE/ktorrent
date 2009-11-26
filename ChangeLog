@@ -1,3 +1,6 @@
+Changes in 3.3.2:
+- Fix crash when loading Feed in syndication plugin at startup (216207)
+
 Changes in 3.3.1:
 - Make sure exceptions in DHT code are caught, fixes a crash (213819)
 - Fix several memory leaks at exit
