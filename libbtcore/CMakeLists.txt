@@ -187,6 +187,7 @@ set(libbtcore_SRC
 	
 	magnet/magnetdownloader.cpp
 	magnet/magnetlink.cpp
+	magnet/metadatadownload.cpp
 	
 	btversion.cpp
 )

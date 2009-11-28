@@ -25,6 +25,7 @@
 
 namespace bt
 {
+	class MetadataDownload;
 	class BDictNode;
 	class Peer;
 	class Torrent;
@@ -43,16 +44,23 @@ namespace bt
 		*/
 		void handlePacket(const bt::Uint8* packet, Uint32 size);
 		
+		/**
+			Set the reported metadata size
+		*/
+		void setReportedMetadataSize(Uint32 metadata_size);
+		
 	private:
 		void request(BDictNode* dict);
 		void reject(BDictNode* dict);
-		void data(BDictNode* dict);
+		void data(BDictNode* dict,const QByteArray & piece_data);
 		void sendReject(int piece);
 		void sendData(int piece,int total_size,const QByteArray & data);
+		void startDownload();
 
 	private:
 		const Torrent & tor;
-		Peer* peer;
+		Uint32 reported_metadata_size;
+		MetadataDownload* download;
 	};
 
 }

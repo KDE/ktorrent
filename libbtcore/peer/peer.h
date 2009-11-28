@@ -227,6 +227,11 @@ namespace bt
 		/// Disable or enable pex
 		void setPexEnabled(bool on);
 		
+		/**
+		 * Emit the metadataDownloaded signal
+		 */
+		void emitMetadataDownloaded(const QByteArray & data);
+		
 		/// Send an extended protocol handshake
 		void sendExtProtHandshake(Uint16 port,Uint32 metadata_size);
 		
@@ -247,6 +252,12 @@ namespace bt
 		void packetReady(const Uint8* packet,Uint32 size);
 		void handleExtendedPacket(const Uint8* packet,Uint32 size);
 		void handleExtendedHandshake(const Uint8* packet,Uint32 size);
+		
+	signals:
+		/**
+			Emitted when metadata has been downloaded from the Peer
+		*/
+		void metadataDownloaded(const QByteArray & data);
 
 	private:
 		mse::StreamSocket* sock;

@@ -29,6 +29,7 @@ namespace bt
 	BDecoder::BDecoder(const QByteArray & data,bool verbose,Uint32 off)
 	: data(data),pos(off),verbose(verbose)
 	{
+		level = 0;
 	}
 
 
@@ -68,12 +69,13 @@ namespace bt
 		// we're now entering a dictionary
 		BDictNode* curr = new BDictNode(off);
 		pos++;
-		if (verbose) Out(SYS_GEN|LOG_DEBUG) << "DICT" << endl;
+		debugMsg(QString("DICT"));
+		level++;
 		try
 		{
 			while (pos < (Uint32)data.size() && data[pos] != 'e')
 			{
-				if (verbose) Out(SYS_GEN|LOG_DEBUG) << "Key : " << endl;
+				debugMsg(QString("Key : "));
 				BNode* kn = decode(); 
 				BValueNode* k = dynamic_cast<BValueNode*>(kn);
 				if (!k || k->data().getType() != Value::STRING)
@@ -95,7 +97,8 @@ namespace bt
 			delete curr;
 			throw;
 		}
-		if (verbose) Out(SYS_GEN|LOG_DEBUG) << "END" << endl;
+		level--;
+		debugMsg(QString("END"));
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -103,7 +106,8 @@ namespace bt
 	BListNode* BDecoder::parseList()
 	{
 		Uint32 off = pos;
-		if (verbose) Out(SYS_GEN|LOG_DEBUG) << "LIST" << endl;
+		debugMsg(QString("LIST"));
+		level++;
 		BListNode* curr = new BListNode(off);
 		pos++;
 		try
@@ -120,7 +124,8 @@ namespace bt
 			delete curr;
 			throw;
 		}
-		if (verbose) Out(SYS_GEN|LOG_DEBUG) << "END" << endl;
+		level--;
+		debugMsg(QString("END"));
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -150,7 +155,7 @@ namespace bt
 		if (ok)
 		{
 			pos++;
-			if (verbose) Out(SYS_GEN|LOG_DEBUG) << "INT = " << val << endl;
+			debugMsg(QString("INT = %1").arg(val));
 			BValueNode* vn = new BValueNode(Value(val),off);
 			vn->setLength(pos - off);
 			return vn;
@@ -163,7 +168,7 @@ namespace bt
 				throw Error(i18n("Cannot convert %1 to an int",n));
 
 			pos++;
-			if (verbose) Out(SYS_GEN|LOG_DEBUG) << "INT64 = " << n << endl;
+			debugMsg(QString("INT64 = %1").arg(n));
 			BValueNode* vn = new BValueNode(Value(bi),off);
 			vn->setLength(pos - off);
 			return vn;
@@ -211,11 +216,25 @@ namespace bt
 		if (verbose)
 		{
 			if (arr.size() < 200)
-				Out(SYS_GEN|LOG_DEBUG) << "STRING " << QString(arr) << endl;
+				debugMsg("STRING " + QString(arr));
 			else
-				Out(SYS_GEN|LOG_DEBUG) << "STRING " << "really long string" << endl;
+				debugMsg("STRING really long string");
 		}
 		return vn;
 	}
+	
+	
+	void BDecoder::debugMsg(const QString& msg)
+	{
+		if (!verbose)
+			return;
+		
+		Log & log = Out(SYS_GEN|LOG_DEBUG);
+		for (int i = 0;i < level;i++)
+			log << "-";
+		
+		log << msg << endl;
+	}
+
 }
 

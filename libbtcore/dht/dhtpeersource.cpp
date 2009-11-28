@@ -41,6 +41,7 @@ namespace dht
 		connect(&dh_table,SIGNAL(stopped()),this,SLOT(dhtStopped()));
 		started = false;
 		timer.setSingleShot(true);
+		request_interval = 5 * 60 * 1000;
 	}
 
 
@@ -109,8 +110,7 @@ namespace dht
 		{
 			onDataReady(curr_task);
 			curr_task = 0;
-			// do another announce in 5 minutes or so
-			timer.start(5 * 60 * 1000);
+			timer.start(request_interval);
 		}
 	}
 	
@@ -149,6 +149,11 @@ namespace dht
 	void DHTPeerSource::addDHTNode(const bt::DHTNode& node)
 	{
 		nodes.append(node);
+	}
+
+	void DHTPeerSource::setRequestInterval(Uint32 interval)
+	{
+		request_interval = interval;
 	}
 
 }

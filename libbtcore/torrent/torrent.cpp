@@ -61,8 +61,17 @@ namespace bt
 		text_codec = QTextCodec::codecForName("utf-8");
 		trackers = 0;
 		file_prio_listener = 0;
+		loaded = false;
 	}
 
+	Torrent::Torrent(const bt::SHA1Hash & hash) : chunk_size(0),total_size(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0),tmon(0)
+	{
+		text_codec = QTextCodec::codecForName("utf-8");
+		trackers = 0;
+		file_prio_listener = 0;
+		loaded = false;
+		info_hash = hash;
+	}
 
 	Torrent::~Torrent()
 	{
@@ -131,6 +140,8 @@ namespace bt
 			metadata = data.mid(n->getOffset(),n->getLength());
 			info_hash = hg.generate((const Uint8*)metadata.data(),metadata.size());
 			delete node;
+			
+			loaded = true;
 		}
 		catch (...)
 		{

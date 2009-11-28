@@ -68,7 +68,9 @@ if( PLASMA_FOUND )
     add_subdirectory(plasma)
 endif(PLASMA_FOUND)
 add_subdirectory(ktutpd)
+add_subdirectory(ktmagnetdownloader)
 
 # --- show log ---
 macro_display_feature_log()
+
 

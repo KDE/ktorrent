@@ -68,7 +68,7 @@ namespace bt
 		catch (...)
 		{
 			// just ignore invalid packets
-			Out(SYS_CON|LOG_DEBUG) << "Invalid extended packet" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Invalid ut_pex packet" << endl;
 		}
 		delete node;
 	}

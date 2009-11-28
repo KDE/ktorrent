@@ -54,6 +54,7 @@ namespace dht
 		virtual void manualUpdate();
 		
 		void addDHTNode(const bt::DHTNode & node);
+		void setRequestInterval(bt::Uint32 interval);
 	
 	private slots:
 		void onTimeout();
@@ -70,6 +71,7 @@ namespace dht
 		bool started;
 		QList<bt::DHTNode> nodes;
 		QString torrent_name;
+		bt::Uint32 request_interval;
 	};
 
 }

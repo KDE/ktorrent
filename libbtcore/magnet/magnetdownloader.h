@@ -23,23 +23,72 @@
 
 #include <QObject>
 #include <btcore_export.h>
+#include <torrent/torrent.h>
+#include <tracker/tracker.h>
 #include "magnetlink.h"
+
+
+namespace dht
+{
+	class DHTPeerSource;
+}
 
 
 namespace bt
 {
+	class Peer;
+	class PeerManager;
+	
 	/**
 		Class which tries to download the metadata associated to a MagnetLink
+		It basically has a Tracker (optional), a DHTPeerSource and a PeerManager.
+		With these it tries to find peers, connect to them and download the metadata.
 	*/
-	class BTCORE_EXPORT MagnetDownloader : public QObject
+	class BTCORE_EXPORT MagnetDownloader : public QObject, public TrackerDataSource
 	{
 		Q_OBJECT
 	public:
 		MagnetDownloader(const MagnetLink & mlink,QObject* parent);
 		virtual ~MagnetDownloader();
 		
+		/**
+			Start the MagnetDownloader, this will enable DHT.
+		*/
+		void start();
+		
+		/**
+			Stop the MagnetDownloader
+		*/
+		void stop();
+		
+		/**
+			Update the MagnetDownloader
+		*/
+		void update();
+		
+	signals:
+		/**
+			Emitted when downloading the metadata was succesfull.
+		*/
+		void foundMetaData(bt::MagnetDownloader* self,const QByteArray & metadata);
+		
+	private slots:
+		void onNewPeer(Peer* p);
+		void onMetadataDownloaded(const QByteArray & data);
+		
+	private:
+		virtual Uint64 bytesDownloaded() const;
+		virtual Uint64 bytesUploaded() const;
+		virtual Uint64 bytesLeft() const;
+		virtual const SHA1Hash & infoHash() const;
+		
 	private:
 		MagnetLink mlink;
+		Tracker* tracker;
+		PeerManager* pman;
+		dht::DHTPeerSource* dht_ps;
+		QByteArray metadata;
+		Torrent tor;
 	};
 
 }

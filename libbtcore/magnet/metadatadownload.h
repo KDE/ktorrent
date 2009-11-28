@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,64 +15,56 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTBDECODER_H
-#define BTBDECODER_H
 
-#include <qstring.h>
+
+#ifndef BT_METADATADOWNLOAD_H
+#define BT_METADATADOWNLOAD_H
+
+
 #include <util/constants.h>
-#include <btcore_export.h>
+#include <util/bitset.h>
+#include <QByteArray>
 
 namespace bt
 {
-
-	class BNode;
-	class BListNode;
-	class BDictNode;
-	class BValueNode;
+	class UTMetaData;
+	
+	const int METADATA_PIECE_SIZE = 16 * 1024;
 	
 	/**
-	 * @author Joris Guisson
-	 * @brief Decodes b-encoded data
-	 *
-	 * Class to decode b-encoded data.
-	 */
-	class BTCORE_EXPORT BDecoder
+		Handles the metadatadownload
+	*/
+	class MetadataDownload
 	{
-		const QByteArray & data;
-		Uint32 pos;
-		bool verbose;
-		int level;
 	public:
-		/**
-		 * Constructor, passes in the data to decode.
-		 * @param data The data
-		 * @param verbose Verbose output to the log
-		 * @param off Offset to start parsing
-		 */
-		BDecoder(const QByteArray & data,bool verbose,Uint32 off = 0);
-		virtual ~BDecoder();
-
-		/**
-		 * Decode the data, the root node gets
-		 * returned. (Note that the caller must delete this node)
-		 * @return The root node
-		 */
-		BNode* decode();
+		MetadataDownload(UTMetaData* ext,Uint32 size);
+		virtual ~MetadataDownload();
 		
-		/// Get the current position in the data
-		Uint32 position() const {return pos;}
-	private:
-		void debugMsg(const QString & msg);
+		/// A reject of a piece was received
+		void reject(Uint32 piece);
+		
+		/**
+			A piece was received
+			@return true if all the data has been received
+		*/
+		bool data(Uint32 piece,const QByteArray & piece_data);
+		
+		/// Get the result
+		const QByteArray & result() const {return metadata;}
 		
 	private:
-		BDictNode* parseDict();
-		BListNode* parseList();
-		BValueNode* parseInt();
-		BValueNode* parseString();
+		void download(Uint32 piece);
+		void downloadNext();
+		
+	private:
+		UTMetaData* ext;
+		BitSet pieces;
+		QByteArray metadata;
+		Uint32 total_size;
 	};
 
 }
 
-#endif
+#endif // BT_METADATADOWNLOAD_H

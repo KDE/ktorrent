@@ -58,7 +58,6 @@ namespace bt
 	{
 		id = peer_id_counter;
 		peer_id_counter++;
-		
 		ut_pex_id = 0;
 		preader = new PacketReader(this);
 		stats.choked = true;
@@ -212,7 +211,7 @@ namespace bt
 						pman->have(this,ch);
 						pieces.set(ch,true);
 					}
-					else
+					else if (pman->getTorrent().isLoaded())
 					{
 						Out(SYS_CON|LOG_NOTICE) << "Received invalid have value, kicking peer" << endl;
 						kill();
@@ -222,8 +221,11 @@ namespace bt
 			case BITFIELD:
 				if (len != 1 + pieces.getNumBytes())
 				{
-					Out(SYS_CON|LOG_DEBUG) << "len err BITFIELD" << endl;
-					kill();
+					if (pman->getTorrent().isLoaded())
+					{
+						Out(SYS_CON|LOG_DEBUG) << "len err BITFIELD" << endl;
+						kill();
+					}
 					return;
 				}
 				
@@ -374,7 +376,7 @@ namespace bt
 		{
 			BDecoder dec(tmp,false,2);
 			node = dec.decode();
-			if (!node || !node->getType() == BNode::DICT)
+			if (!node || node->getType() != BNode::DICT)
 			{
 				delete node;
 				return;
@@ -400,14 +402,15 @@ namespace bt
 				}
 				else
 				{
-					PeerProtocolExtension* ext = extensions.find(UT_METADATA_ID);
+					PeerProtocolExtension* ext = extensions.find(UT_PEX_ID);
 					if (ext)
 						ext->changeID(ut_pex_id);
 					else if (pex_allowed)
 						extensions.insert(UT_PEX_ID,new UTPex(this,ut_pex_id));
 				}
 			}
-			else if ((val = mdict->getValue("ut_metadata")))
+				
+			if ((val = mdict->getValue("ut_metadata")))
 			{
 				// meta data
 				Uint32 ut_metadata_id = val->data().toInt();
@@ -419,9 +422,19 @@ namespace bt
 				{
 					PeerProtocolExtension* ext = extensions.find(UT_METADATA_ID);
 					if (ext)
-						ext->changeID(id);
+					{
+						ext->changeID(ut_metadata_id);
+					}
 					else
-						extensions.insert(UT_METADATA_ID,new UTMetaData(pman->getTorrent(),ut_metadata_id,this));
+					{
+						int metadata_size = 0;
+						if (dict->getValue("metadata_size"))
+							metadata_size = dict->getInt("metadata_size");
+						
+						UTMetaData* md = new UTMetaData(pman->getTorrent(),ut_metadata_id,this);
+						md->setReportedMetadataSize(metadata_size);
+						extensions.insert(UT_METADATA_ID,md);
+					}
 				}
 			}
 		}
@@ -649,7 +662,11 @@ namespace bt
 			enc.write((Uint32)port);
 		}
 		enc.write(QString("v")); enc.write(bt::GetVersionString());
-		enc.write(QString("metadata_size")); enc.write(metadata_size);
+		if (metadata_size)
+		{
+			enc.write(QString("metadata_size")); 
+			enc.write(metadata_size);
+		}
 		enc.end();
 		pwriter->sendExtProtMsg(0,arr);
 	}
@@ -669,7 +686,11 @@ namespace bt
 	{
 		resolve_hostname = on;
 	}
-
+	
+	void Peer::emitMetadataDownloaded(const QByteArray& data)
+	{
+		emit metadataDownloaded(data);
+	}
 
 }
 
