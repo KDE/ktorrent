@@ -64,7 +64,7 @@ namespace kt
 
 	void SearchPlugin::load()
 	{
-		LogSystemManager::instance().registerSystem(i18n("Search"),SYS_SRC);
+		LogSystemManager::instance().registerSystem(i18nc("plugin name","Search"),SYS_SRC);
 		engines = new SearchEngineList(kt::DataDir() + "searchengines/");
 		engines->loadEngines();
 	
@@ -86,7 +86,7 @@ namespace kt
 
 	void SearchPlugin::unload()
 	{
-		LogSystemManager::instance().unregisterSystem(i18n("Search"));
+		LogSystemManager::instance().unregisterSystem(i18nc("plugin name","Search"));
 		getGUI()->removeActivity(activity);
 		activity->saveCurrentSearches();
 		toolbar->saveSettings();

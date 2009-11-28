@@ -59,7 +59,7 @@ namespace kt
 
 	void ScanFolderPlugin::load()
 	{
-		LogSystemManager::instance().registerSystem(i18n("Scan Folder"),SYS_SNF);
+		LogSystemManager::instance().registerSystem(i18nc("plugin name","Scan Folder"),SYS_SNF);
 		pref = new ScanFolderPrefPage(this,0);
 		getGUI()->addPrefPage(pref);
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(updateScanFolders()));
@@ -68,7 +68,7 @@ namespace kt
 
 	void ScanFolderPlugin::unload()
 	{
-		LogSystemManager::instance().unregisterSystem(i18n("Scan Folder"));
+		LogSystemManager::instance().unregisterSystem(i18nc("plugin name","Scan Folder"));
 		getGUI()->removePrefPage(pref);
 		delete pref;
 		pref = 0;

@@ -55,7 +55,7 @@ using namespace bt;
 namespace kt
 {
 	SearchPrefPage::SearchPrefPage(SearchPlugin* plugin,SearchEngineList* sl,QWidget* parent)
-		: PrefPageInterface(SearchPluginSettings::self(),i18n("Search"), "edit-find",parent), plugin(plugin),engines(sl)
+		: PrefPageInterface(SearchPluginSettings::self(),i18nc("plugin name","Search"), "edit-find",parent), plugin(plugin),engines(sl)
 	{
 		setupUi(this);
 		m_engines->setModel(sl);

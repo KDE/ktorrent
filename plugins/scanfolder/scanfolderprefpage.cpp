@@ -34,7 +34,7 @@ namespace kt
 {
 
 	ScanFolderPrefPage::ScanFolderPrefPage(ScanFolderPlugin* plugin,QWidget* parent)
-	: PrefPageInterface(ScanFolderPluginSettings::self(),i18n("Scan Folder"), "folder-open",parent), m_plugin(plugin)
+	: PrefPageInterface(ScanFolderPluginSettings::self(),i18nc("plugin name","Scan Folder"), "folder-open",parent), m_plugin(plugin)
 	{
 		setupUi(this);
 		connect(kcfg_actionDelete,SIGNAL(toggled(bool)),kcfg_actionMove,SLOT(setDisabled(bool)));

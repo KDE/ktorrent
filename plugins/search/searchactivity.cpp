@@ -32,7 +32,7 @@
 namespace kt
 {
 	SearchActivity::SearchActivity(SearchPlugin* sp,QWidget* parent)
-		: Activity(i18n("Search"),"edit-find",10,parent),sp(sp)
+		: Activity(i18nc("plugin name","Search"),"edit-find",10,parent),sp(sp)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
