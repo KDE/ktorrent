@@ -92,6 +92,7 @@ namespace bt
 		stats.num_up_requests = stats.num_down_requests = 0;
 		stats.encrypted = sock->encrypted();
 		stats.local = local;
+		stats.max_request_queue = 0;
 		if (stats.ip_address == "0.0.0.0")
 		{
 			Out(SYS_CON|LOG_DEBUG) << "No more 0.0.0.0" << endl;
@@ -437,6 +438,11 @@ namespace bt
 					}
 				}
 			}
+			
+			if ((val = dict->getValue("reqq")))
+			{
+				stats.max_request_queue = val->data().toInt();
+			}
 		}
 		catch (...)
 		{
@@ -661,12 +667,15 @@ namespace bt
 			enc.write(QString("p")); 
 			enc.write((Uint32)port);
 		}
-		enc.write(QString("v")); enc.write(bt::GetVersionString());
+		enc.write("reqq");
+		enc.write((bt::Uint32)250);
 		if (metadata_size)
 		{
 			enc.write(QString("metadata_size")); 
 			enc.write(metadata_size);
 		}
+		
+		enc.write(QString("v")); enc.write(bt::GetVersionString());
 		enc.end();
 		pwriter->sendExtProtMsg(0,arr);
 	}

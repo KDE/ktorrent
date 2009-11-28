@@ -260,11 +260,13 @@ namespace bt
 	}
 	
 	void PeerDownloader::update()
-	{
+	{ 
 		// modify the interval if necessary
-		double pieces_per_sec = (double)peer->getDownloadRate() / MAX_PIECE_LEN;
-		
+		double pieces_per_sec = (double)peer->getDownloadRate() / MAX_PIECE_LEN;	
 		int max_reqs = 1 + (int)ceil(10*pieces_per_sec);
+		// cap if client has supplied a reqq in extended protocol handshake
+		if (peer->getStats().max_request_queue > max_reqs)
+			max_reqs = peer->getStats().max_request_queue;
 		
 		while (wait_queue.count() > 0 && reqs.count() < max_reqs)
 		{

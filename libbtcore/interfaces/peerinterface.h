@@ -83,6 +83,8 @@ namespace bt
 			bool local;
 			/// Whether or not the peer supports the extension protocol
 			bool extension_protocol;
+			/// Max number of outstanding requests (reqq in extended protocol handshake)
+			bt::Uint32 max_request_queue;
 			
 			/// Get the address of the peer (hostname if it is valid, IP otherwise)
 			QString address() const {return hostname.isEmpty() ? ip_address : hostname;}

@@ -4,7 +4,8 @@ Changes in 4.0:
 - Show information message instead of error when trackerlists are merged (213772)
 - Add patch from Leo Trubach which adds support for IP rangs to the IP filter dialog
 - Add support for metadata extension
-- Remove own flags, now using exclusively those from KDE
+- Remove own flags, now using exclusively those from KDE 
+- Add support for reqq parameter in extended handshake
 
 Changes in 3.3.2:
 - Fix crash when loading Feed in syndication plugin at startup (216207)
