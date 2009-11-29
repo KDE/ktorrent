@@ -37,10 +37,10 @@
 #include "viewmodel.h"
 #include "viewmanager.h"
 #include "core.h"
-#include "groupview.h"
+#include "groups/groupview.h"
 #include "settings.h"
 #include "torrentactivity.h"
-#include "speedlimitsdlg.h"
+#include "dialogs/speedlimitsdlg.h"
 #include <kfiledialog.h>
 #include <kio/job.h>
 

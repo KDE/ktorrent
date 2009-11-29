@@ -28,7 +28,7 @@
 #include "gui.h"
 #include "core.h"
 #include "view/view.h"
-#include "groupview.h"
+#include "groups/groupview.h"
 #include "queuemanagerwidget.h"
 
 

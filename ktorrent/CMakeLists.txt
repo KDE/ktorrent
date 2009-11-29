@@ -3,32 +3,33 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 #  set(kt4_SRC app.cpp mainwindow.cpp core.cpp view.cpp viewmodel.cpp main.cpp)
 set(ktorrent_SRC 
 	main.cpp 
-	fileselectdlg.cpp 
 	core.cpp 
 	gui.cpp 
 	app.cpp 
 	torrentactivity.cpp
-	groupfiltermodel.cpp
 	statusbar.cpp 
-	groupview.cpp
 	scandlg.cpp
-	
 	scanlistener.cpp
 	trayicon.cpp
-	pastedialog.cpp
 	ipfilterlist.cpp
 	ipfilterwidget.cpp
-	speedlimitsdlg.cpp
-	speedlimitsmodel.cpp
-	spinboxdelegate.cpp
-	torrentcreatordlg.cpp
-	missingfilesdlg.cpp
-	importdialog.cpp
-	addpeersdlg.cpp
 	queuemanagerwidget.cpp
 	queuemanagermodel.cpp
-	grouppolicydlg.cpp
-	torrentmigratordlg.cpp
+	
+	groups/grouppolicydlg.cpp
+	groups/groupfiltermodel.cpp
+	groups/groupview.cpp
+	
+	dialogs/pastedialog.cpp
+	dialogs/speedlimitsdlg.cpp
+	dialogs/speedlimitsmodel.cpp
+	dialogs/spinboxdelegate.cpp
+	dialogs/torrentcreatordlg.cpp
+	dialogs/missingfilesdlg.cpp
+	dialogs/importdialog.cpp
+	dialogs/addpeersdlg.cpp
+	dialogs/torrentmigratordlg.cpp
+	dialogs/fileselectdlg.cpp 
 	
 	pref/prefdialog.cpp 
 	pref/advancedpref.cpp
@@ -49,18 +50,20 @@ set(ktorrent_SRC
 	
 
 kde4_add_ui_files(ktorrent_SRC 
-	fileselectdlg.ui 
 	scandlg.ui 
-	pastedlgbase.ui 
-	ipfilterwidget.ui 
-	speedlimitsdlg.ui 
-	torrentcreatordlg.ui 
-	missingfilesdlg.ui
-	importdialog.ui
-	addpeersdlg.ui
 	queuemanagerwidget.ui
-	grouppolicydlg.ui
-	torrentmigratordlg.ui
+	ipfilterwidget.ui 
+	
+	dialogs/speedlimitsdlg.ui 
+	dialogs/pastedlgbase.ui 
+	dialogs/torrentcreatordlg.ui 
+	dialogs/missingfilesdlg.ui
+	dialogs/importdialog.ui
+	dialogs/addpeersdlg.ui
+	dialogs/torrentmigratordlg.ui
+	dialogs/fileselectdlg.ui 
+	
+	groups/grouppolicydlg.ui
 	
 	pref/qmpref.ui 
 	pref/btpref.ui

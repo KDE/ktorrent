@@ -59,10 +59,10 @@
 
 #include "settings.h"
 #include "core.h"
-#include "fileselectdlg.h"
-#include "missingfilesdlg.h"
+#include "dialogs/fileselectdlg.h"
+#include "dialogs/missingfilesdlg.h"
 #include "gui.h"
-#include "torrentmigratordlg.h"
+#include "dialogs/torrentmigratordlg.h"
 #include "scanlistener.h"
 
 
