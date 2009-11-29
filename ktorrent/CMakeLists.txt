@@ -14,13 +14,6 @@ set(ktorrent_SRC
 	torrentactivity.cpp
 	viewselectionmodel.cpp
 	groupfiltermodel.cpp
-	prefdialog.cpp 
-	advancedpref.cpp
-	networkpref.cpp
-	proxypref.cpp
-	qmpref.cpp
-	generalpref.cpp
-	btpref.cpp
 	statusbar.cpp 
 	groupview.cpp
 	scandlg.cpp
@@ -41,20 +34,22 @@ set(ktorrent_SRC
 	queuemanagermodel.cpp
 	grouppolicydlg.cpp
 	torrentmigratordlg.cpp
-	recommendedsettingsdlg.cpp
+	
+	pref/prefdialog.cpp 
+	pref/advancedpref.cpp
+	pref/networkpref.cpp
+	pref/proxypref.cpp
+	pref/qmpref.cpp
+	pref/generalpref.cpp
+	pref/recommendedsettingsdlg.cpp
+	pref/btpref.cpp
 )
 	
 
 kde4_add_ui_files(ktorrent_SRC 
 	fileselectdlg.ui 
-	qmpref.ui 
-	btpref.ui
 	scandlg.ui 
 	scanextender.ui
-	generalpref.ui 
-	advancedpref.ui 
-	networkpref.ui
-	proxypref.ui
 	pastedlgbase.ui 
 	ipfilterwidget.ui 
 	speedlimitsdlg.ui 
@@ -65,7 +60,14 @@ kde4_add_ui_files(ktorrent_SRC
 	queuemanagerwidget.ui
 	grouppolicydlg.ui
 	torrentmigratordlg.ui
-	recommendedsettingsdlg.ui
+	
+	pref/qmpref.ui 
+	pref/btpref.ui
+	pref/generalpref.ui 
+	pref/advancedpref.ui 
+	pref/networkpref.ui
+	pref/proxypref.ui
+	pref/recommendedsettingsdlg.ui
 )
 
 kde4_add_app_icon(ktorrent_SRC "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-ktorrent.png")

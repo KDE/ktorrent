@@ -55,7 +55,7 @@
 #include "view.h"
 #include "viewmanager.h"
 #include "fileselectdlg.h"
-#include "prefdialog.h"
+#include "pref/prefdialog.h"
 #include "statusbar.h"
 #include "groupview.h"
 #include "scandlg.h"
