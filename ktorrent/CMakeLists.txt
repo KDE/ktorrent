@@ -8,7 +8,6 @@ set(ktorrent_SRC
 	app.cpp 
 	torrentactivity.cpp
 	statusbar.cpp 
-	scandlg.cpp
 	scanlistener.cpp
 	trayicon.cpp
 	ipfilterlist.cpp
@@ -50,7 +49,6 @@ set(ktorrent_SRC
 	
 
 kde4_add_ui_files(ktorrent_SRC 
-	scandlg.ui 
 	queuemanagerwidget.ui
 	ipfilterwidget.ui 
 	

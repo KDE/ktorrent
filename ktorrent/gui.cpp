@@ -58,7 +58,6 @@
 #include "pref/prefdialog.h"
 #include "statusbar.h"
 #include "groups/groupview.h"
-#include "scandlg.h"
 #include "trayicon.h"
 #include "dbus/dbus.h"
 #include "dialogs/pastedialog.h"
@@ -559,7 +558,6 @@ namespace kt
 		{
 			saveState(KGlobal::config());
 			timer.stop();
-			ScanDlg::cancelAllScans();
 			hide();
 			tray_icon->hide();
 			core->onExit();
