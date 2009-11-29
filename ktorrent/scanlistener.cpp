@@ -18,7 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "scanlistener.h"
-#include "scanextender.h"
+#include "view/scanextender.h"
 
 namespace kt
 {

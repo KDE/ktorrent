@@ -12,7 +12,7 @@ set(ktorrent_SRC
 	statusbar.cpp 
 	groupview.cpp
 	scandlg.cpp
-	scanextender.cpp
+	
 	scanlistener.cpp
 	trayicon.cpp
 	pastedialog.cpp
@@ -44,13 +44,13 @@ set(ktorrent_SRC
 	view/viewmanager.cpp 
 	view/viewdelegate.cpp
 	view/viewselectionmodel.cpp
+	view/scanextender.cpp
 )
 	
 
 kde4_add_ui_files(ktorrent_SRC 
 	fileselectdlg.ui 
 	scandlg.ui 
-	scanextender.ui
 	pastedlgbase.ui 
 	ipfilterwidget.ui 
 	speedlimitsdlg.ui 
@@ -69,6 +69,8 @@ kde4_add_ui_files(ktorrent_SRC
 	pref/networkpref.ui
 	pref/proxypref.ui
 	pref/recommendedsettingsdlg.ui
+	
+	view/scanextender.ui
 )
 
 kde4_add_app_icon(ktorrent_SRC "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-ktorrent.png")
