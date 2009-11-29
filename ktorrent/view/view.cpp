@@ -41,7 +41,6 @@
 #include "view.h"
 #include "core.h"
 #include "viewmodel.h"
-#include "scandlg.h"
 #include "dialogs/speedlimitsdlg.h"
 #include "dialogs/addpeersdlg.h"
 #include "viewselectionmodel.h"
