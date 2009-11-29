@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <groups/group.h>
 #include "groupfiltermodel.h"
-#include "viewmodel.h"
+#include "view/viewmodel.h"
 
 namespace kt
 {

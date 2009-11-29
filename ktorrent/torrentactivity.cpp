@@ -24,10 +24,10 @@
 #include <gui/tabbarwidget.h>
 #include <groups/groupmanager.h>
 #include "torrentactivity.h"
-#include "viewmanager.h"
+#include "view/viewmanager.h"
 #include "gui.h"
 #include "core.h"
-#include "view.h"
+#include "view/view.h"
 #include "groupview.h"
 #include "queuemanagerwidget.h"
 

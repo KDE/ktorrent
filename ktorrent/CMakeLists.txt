@@ -7,12 +7,7 @@ set(ktorrent_SRC
 	core.cpp 
 	gui.cpp 
 	app.cpp 
-	view.cpp 
-	viewmodel.cpp
-	viewmanager.cpp 
-	viewdelegate.cpp
 	torrentactivity.cpp
-	viewselectionmodel.cpp
 	groupfiltermodel.cpp
 	statusbar.cpp 
 	groupview.cpp
@@ -43,6 +38,12 @@ set(ktorrent_SRC
 	pref/generalpref.cpp
 	pref/recommendedsettingsdlg.cpp
 	pref/btpref.cpp
+	
+	view/view.cpp 
+	view/viewmodel.cpp
+	view/viewmanager.cpp 
+	view/viewdelegate.cpp
+	view/viewselectionmodel.cpp
 )
 	
 

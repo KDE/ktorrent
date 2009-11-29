@@ -52,8 +52,8 @@
 #include <settings.h>
 #include "gui.h"
 #include "core.h"
-#include "view.h"
-#include "viewmanager.h"
+#include "view/view.h"
+#include "view/viewmanager.h"
 #include "fileselectdlg.h"
 #include "pref/prefdialog.h"
 #include "statusbar.h"

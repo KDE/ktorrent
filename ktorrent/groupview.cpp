@@ -34,8 +34,8 @@
 #include <groups/group.h>
 #include <groups/groupmanager.h>
 #include <groups/torrentgroup.h>
-#include "viewmanager.h"
-#include "view.h"
+#include "view/viewmanager.h"
+#include "view/view.h"
 #include "groupview.h"
 #include "grouppolicydlg.h"
 #include "gui.h"
