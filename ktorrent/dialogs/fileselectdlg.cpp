@@ -411,18 +411,24 @@ namespace kt
 		Uint64 bytes_free = 0;
 		if (!FreeDiskSpace(sdir.toLocalFile(),bytes_free))
 		{
-			FreeDiskSpace(tc->getDataDir(),bytes_free);
+			lblRequired->setText(bt::BytesToString(model->bytesToDownload()));
+			lblFree->setText(i18n("<b>Unable to determine free space</b>"));
+			lblStatus->clear();
 		}
-		
-		Uint64 bytes_to_download = model->bytesToDownload();
-
-		lblFree->setText(bt::BytesToString(bytes_free));
-		lblRequired->setText(bt::BytesToString(bytes_to_download));
-
-		if (bytes_to_download > bytes_free)
-			lblStatus->setText("<font color=\"#ff0000\">" + i18nc("We are %1 bytes short of what we need", "%1 short", bt::BytesToString(-1*(long long)(bytes_free - bytes_to_download))));
 		else
-			lblStatus->setText(bt::BytesToString(bytes_free - bytes_to_download));
+		{
+			Uint64 bytes_to_download = model->bytesToDownload();
+	
+			lblFree->setText(bt::BytesToString(bytes_free));
+			lblRequired->setText(bt::BytesToString(bytes_to_download));
+
+			if (bytes_to_download > bytes_free)
+				lblStatus->setText(
+						"<font color=\"#ff0000\">" + i18nc("We are %1 bytes short of what we need", "%1 short", 
+						bt::BytesToString(-1*(long long)(bytes_free - bytes_to_download))));
+			else
+				lblStatus->setText(bt::BytesToString(bytes_free - bytes_to_download));
+		}
 	}
 	
 	void FileSelectDlg::updateExistingFiles()
