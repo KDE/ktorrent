@@ -98,7 +98,14 @@ namespace kt
 		if (curr_tc)
 		{
 			type->setText(tc->getStats().priv_torrent ? i18n("Private") : i18n("Public"));
-			comments->setText(tc->getComments());
+
+			// Don't allow multiple lines in the comments field
+			QString text = tc->getComments();
+			if (text.contains("\n"))
+				comments->setText(text.replace("\n"," "));
+			else
+				comments->setText(text);
+
 			float ratio = curr_tc->getMaxShareRatio();
 			if(ratio > 0)
 			{
