@@ -12,7 +12,7 @@
 		</entry>
 		
 		<entry name="DataGatherIval" type="UInt">
-			<label>Interval in miliseconds between data gathering</label>
+			<label>Interval in milliseconds between data gathering</label>
 			<default>750</default>
 		</entry>
 		
