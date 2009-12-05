@@ -223,7 +223,6 @@ namespace kt
 	
 	bool ActionHandler::dht(const QString & arg)
 	{
-#ifdef ENABLE_DHT_SUPPORT
 		if (arg =="start")
 		{
 			Settings::setDhtSupport(true);
@@ -250,7 +249,7 @@ namespace kt
 			ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 			return true;
 		}
-#endif
+
 		return false;
 	}
 	

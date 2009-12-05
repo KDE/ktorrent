@@ -29,7 +29,8 @@
 #include "core.h"
 #include "view/view.h"
 #include "groups/groupview.h"
-#include "queuemanagerwidget.h"
+#include "tools/queuemanagerwidget.h"
+#include "tools/magnetview.h"
 
 
 namespace kt
@@ -68,6 +69,10 @@ namespace kt
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),qm,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),qm,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 		tool_views->addTab(qm,i18n("Queue Manager"),"kt-queue-manager",i18n("Widget to manage the torrent queue"));
+		
+		magnet_view = new MagnetView(core->getMagnetModel(),this);
+		tool_views->addTab(magnet_view,i18n("Magnet"),"kt-magnet",
+						   i18n("Displays the currently downloading magnet links"));
 		
 		QToolButton* lc = new QToolButton(tabs);
 		tabs->setCornerWidget(lc,Qt::TopLeftCorner);
@@ -184,6 +189,7 @@ namespace kt
 		tool_views->loadState(cfg,"TorrentActivityBottomTabBar");
 		notifyViewListeners(view_man->getCurrentTorrent());
 		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(tabs->count() > 1);
+		magnet_view->loadState(cfg);
 	}
 	
 	void TorrentActivity::saveState(KSharedConfigPtr cfg)
@@ -192,6 +198,7 @@ namespace kt
 		group_view->saveState(cfg);
 		qm->saveState(cfg);
 		tool_views->saveState(cfg,"TorrentActivityBottomTabBar");
+		magnet_view->saveState(cfg);
 		
 		KConfigGroup g = cfg->group("TorrentActivitySplitters");
 		if (vsplit)

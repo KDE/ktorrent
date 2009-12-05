@@ -38,6 +38,7 @@ namespace bt
 
 namespace kt
 {
+	class MagnetModel;
 	class ScanListener;
 	class GUI;
 	class PluginManager;
@@ -66,6 +67,8 @@ namespace kt
 		virtual void load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir);
 		virtual void loadSilently(const KUrl& url,const QString & group);
 		virtual void loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir);
+		virtual void load(const bt::MagnetLink & mlink);
+		virtual void loadSilently(const bt::MagnetLink & mlink);
 		virtual QString findNewTorrentDir() const;
 		virtual void loadExistingTorrent(const QString & tor_dir);
 		virtual void setPausedState(bool pause);
@@ -78,6 +81,9 @@ namespace kt
 
 		/// Get the group manager
 		kt::GroupManager* getGroupManager() {return gman;}
+	
+		/// Get the magnet model
+		kt::MagnetModel* getMagnetModel() {return magnet;}
 
 		/**
 		 * Make a torrent file
@@ -187,6 +193,9 @@ namespace kt
 		
 		/// Handle status changes
 		void onStatusChanged(bt::TorrentInterface* tc);
+		
+		/// Handle the download of meta data
+		void onMetadataDownloaded(const bt::MagnetLink & mlink,const QByteArray & data,bool silently);
 
 	signals:
 		/**
@@ -238,6 +247,11 @@ namespace kt
 		 * @param msg Error message
 		 */
 		void canNotLoadSilently(const QString & msg);
+		
+		/**
+		 * Emitted when DHT is not enabled and a MagnetLink is being downloaded
+		*/
+		void dhtNotEnabled(const QString & msg);
 
 	private:
 		void rollback(const QList<bt::TorrentInterface*> & success);
@@ -267,6 +281,7 @@ namespace kt
 		kt::PluginManager* pman;
 		kt::QueueManager* qman;
 		kt::GroupManager* gman;
+		kt::MagnetModel* magnet;
 		QMap<KJob*,KUrl> custom_save_locations; // map to store save locations
 		QMap<KJob*,QString> add_to_groups; // Map to keep track of which group to add a torrent to
 		int sleep_suppression_cookie;

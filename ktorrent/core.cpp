@@ -49,14 +49,11 @@
 #include <util/fileops.h>
 #include <util/functions.h>
 #include <util/waitjob.h>
+#include <bcodec/bencoder.h>
 #include <plugin/pluginmanager.h>
 #include <groups/groupmanager.h>
 #include <groups/group.h>
-
-#ifdef ENABLE_DHT_SUPPORT
 #include <dht/dht.h>
-#endif
-
 #include "settings.h"
 #include "core.h"
 #include "dialogs/fileselectdlg.h"
@@ -64,6 +61,8 @@
 #include "gui.h"
 #include "dialogs/torrentmigratordlg.h"
 #include "scanlistener.h"
+#include "tools/magnetmodel.h"
+
 
 
 using namespace bt;
@@ -145,16 +144,21 @@ namespace kt
 			Out(SYS_GEN|LOG_IMPORTANT) << "Cannot find free port" << endl;
 		}
 
-		
+		magnet = new kt::MagnetModel(this);
 		pman = new kt::PluginManager(this,gui);
 		gman = new kt::GroupManager();
 		applySettings();
 		gman->loadGroups();
+		
 		connect(qman,SIGNAL(queueOrdered()),this,SLOT(startUpdateTimer()));
 		connect(qman,SIGNAL(pauseStateChanged(bool)),gui,SLOT(onPausedStateChanged(bool)));
+		connect(magnet,SIGNAL(metadataFound(bt::MagnetLink,QByteArray,bool)),
+				this,SLOT(onMetadataDownloaded(bt::MagnetLink,QByteArray,bool)));
 		
 		if (!Settings::oldTorrentsImported()) // check for old torrents if this hasn't happened yet
 			QTimer::singleShot(1000,this,SLOT(checkForKDE3Torrents()));
+		
+		magnet->loadMagnets(kt::DataDir() + "magnets");
 	}
 	
 	Core::~Core()
@@ -418,7 +422,11 @@ namespace kt
 
 	void Core::load(const KUrl& url,const QString & group)
 	{
-		if (url.isLocalFile())
+		if (url.protocol() == "magnet")
+		{
+			load(bt::MagnetLink(url.prettyUrl()));
+		}
+		else if (url.isLocalFile())
 		{
 			QString path = url.toLocalFile();
 			QString dir = Settings::saveDir().toLocalFile();
@@ -450,6 +458,7 @@ namespace kt
 		else if (err)
 		{
 			loadingFinished(j->url(),false,false);
+			canNotLoadSilently(j->errorString());
 		}
 		else
 		{
@@ -489,7 +498,11 @@ namespace kt
 
 	void Core::loadSilently(const KUrl& url,const QString & group)
 	{
-		if (url.isLocalFile())
+		if (url.protocol() == "magnet")
+		{
+			loadSilently(bt::MagnetLink(url.prettyUrl()));
+		}
+		else if (url.isLocalFile())
 		{
 			QString path = url.toLocalFile(); 
 			QString dir = Settings::saveDir().toLocalFile();
@@ -720,10 +733,9 @@ namespace kt
 
 	void Core::onExit()
 	{
-#ifdef ENABLE_DHT_SUPPORT
+		magnet->saveMagnets(kt::DataDir() + "magnets");
 		// make sure DHT is stopped
 		Globals::instance().getDHT().stop();
-#endif
 		// stop timer to prevent updates during wait
 		update_timer.stop();
 		// stop all authentications going on
@@ -869,7 +881,7 @@ namespace kt
 				i++;
 			}
 			
-			if (!updated)
+			if (!updated && magnet->rowCount() == 0)
 			{
 				Out(SYS_GEN|LOG_DEBUG) << "Stopped update timer" << endl;
 				update_timer.stop(); // stop timer when not necessary
@@ -882,6 +894,7 @@ namespace kt
 			}
 			else
 			{
+				magnet->updateMagnetDownloaders();
 				// check if the priority of stalled torrents must be decreased
 				if (Settings::decreasePriorityOfStalledTorrents())
 					qman->checkStalledTorrents(bt::GetCurrentTime(),Settings::stallTimer());
@@ -1228,6 +1241,62 @@ namespace kt
 		Q_UNUSED(tc);
 		gui->updateActions();
 	}
+	
+	void Core::load(const bt::MagnetLink& mlink)
+	{
+		if (!mlink.isValid())
+		{
+			gui->errorMsg(i18n("Invalid magnet bittorrent link: %1",mlink.toString()));
+		}
+		else
+		{
+			if (!Globals::instance().getDHT().isRunning())
+				dhtNotEnabled(i18n("You are attempting to download a magnet link, and DHT is not enabled. "
+						"For optimum results enable DHT."));
+			magnet->download(mlink,false);
+			startUpdateTimer();
+		}
+	}
+	
+	void Core::loadSilently(const bt::MagnetLink& mlink)
+	{
+		if (!mlink.isValid())
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Invalid magnet bittorrent link: " << mlink.toString() << endl;
+			canNotLoadSilently(i18n("Invalid magnet bittorrent link: %1",mlink.toString()));
+		}
+		else
+		{
+			if (!Globals::instance().getDHT().isRunning())
+				dhtNotEnabled(i18n("You are attempting to download a magnet link, and DHT is not enabled. "
+							"For optimum results enable DHT."));
+			magnet->download(mlink,true);
+			startUpdateTimer();
+		}
+	}
+
+	void Core::onMetadataDownloaded(const bt::MagnetLink& mlink, const QByteArray& data,bool silently)
+	{
+		QByteArray tmp;
+		BEncoderBufferOutput* out = new BEncoderBufferOutput(tmp);
+		BEncoder enc(out);
+		enc.beginDict();
+		if (!mlink.tracker().isEmpty())
+		{
+			enc.write("announce");
+			enc.write(mlink.tracker());
+		}
+		enc.write("info");
+		out->write(data.data(),data.size());
+		enc.end();
+		
+		if (silently)
+			loadSilently(data,KUrl(mlink.toString()),QString(),QString());
+		else
+			load(tmp,KUrl(mlink.toString()),QString(),QString());
+		
+	}
+
 }
 
 #include "core.moc"

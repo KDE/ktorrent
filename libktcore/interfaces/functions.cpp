@@ -80,7 +80,6 @@ namespace kt
 		UDPTrackerSocket::setPort(Settings::udpTrackerPort());
 		Choker::setNumUploadSlots(Settings::numUploadSlots());
 
-#ifdef ENABLE_DHT_SUPPORT
 		dht::DHTBase & ht = Globals::instance().getDHT();
 		if (Settings::dhtSupport() && !ht.isRunning())
 		{
@@ -96,7 +95,6 @@ namespace kt
 			ht.stop();
 			ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 		}
-#endif
 		
 		UTPex::setEnabled(Settings::pexEnabled());
 		

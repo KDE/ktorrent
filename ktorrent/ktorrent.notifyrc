@@ -383,3 +383,6 @@ Name[zh_CN]=种子无法静默装入
 Name[zh_TW]=Torrent 無法安靜地被載入
 Action=Sound|Popup
 
+[Event/DHTNotEnabled]
+Name=DHT is not enabled
+Action=Sound|Popup

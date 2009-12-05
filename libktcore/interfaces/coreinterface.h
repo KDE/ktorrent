@@ -28,6 +28,7 @@
 namespace bt
 {
 	class TorrentInterface;
+	class MagnetLink;
 }
 
 namespace kt
@@ -209,6 +210,11 @@ namespace kt
 		/// Apply all settings
 		virtual void applySettings() = 0;
 		
+		/// Load a magnet link
+		virtual void load(const bt::MagnetLink & mlink) = 0;
+		
+		/// Load a magnet link silently
+		virtual void loadSilently(const bt::MagnetLink & mlink) = 0;
 	signals:
 		/**
 		 * Seeing that when load returns the loading process may not have finished yet,

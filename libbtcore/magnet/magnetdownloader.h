@@ -66,15 +66,26 @@ namespace bt
 		*/
 		void update();
 		
+		/// Is the magnet download running
+		bool running() const;
+		
+		/// How many peers are we connected to
+		Uint32 numPeers() const;
+		
+		/// Get the MagnetLink
+		const MagnetLink & magnetLink() const {return mlink;}
+		
 	signals:
 		/**
 			Emitted when downloading the metadata was succesfull.
 		*/
-		void foundMetaData(bt::MagnetDownloader* self,const QByteArray & metadata);
+		void foundMetadata(bt::MagnetDownloader* self,const QByteArray & metadata);
 		
 	private slots:
 		void onNewPeer(Peer* p);
 		void onMetadataDownloaded(const QByteArray & data);
+		void dhtStarted();
+		void dhtStopped();
 		
 	private:
 		virtual Uint64 bytesDownloaded() const;

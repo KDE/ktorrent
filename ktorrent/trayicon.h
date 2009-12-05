@@ -126,6 +126,12 @@ namespace kt
 			The QM changes paused state.
 		*/
 		void pauseStateChanged(bool paused);
+		
+		/**
+			Show a warning message
+		*/
+		void dhtNotEnabled(const QString & msg);
+		
 	private:
 		Core* core;
 		int previousDownloadHeight;

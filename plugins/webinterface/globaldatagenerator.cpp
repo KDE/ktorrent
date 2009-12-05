@@ -60,11 +60,7 @@ namespace kt
 		writeElement(out,"transferred_up",BytesToString(s.bytes_uploaded));
 		writeElement(out,"speed_down",BytesPerSecToString(s.download_speed));
 		writeElement(out,"speed_up",BytesPerSecToString(s.upload_speed));
-#ifdef ENABLE_DHT_SUPPORT
 		writeElement(out,"dht",Settings::dhtSupport() ? "1" : "0");
-#else
-		writeElement(out,"dht","0");
-#endif
 		writeElement(out,"encryption",Settings::useEncryption() ? "1" : "0");
 		out.writeEndElement();
 		out.writeEndDocument();

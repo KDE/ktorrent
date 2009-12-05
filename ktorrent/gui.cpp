@@ -64,7 +64,7 @@
 #include "ipfilterwidget.h"
 #include "dialogs/torrentcreatordlg.h"
 #include "dialogs/importdialog.h"
-#include "queuemanagerwidget.h"
+#include "tools/queuemanagerwidget.h"
 #include <util/timer.h>
 #include <gui/activitybar.h>
 #include "torrentactivity.h"
@@ -399,8 +399,8 @@ namespace kt
 		stop_all_action->setToolTip(i18n("Stop all torrents"));
 		connect(stop_all_action,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
 		
-		paste_url_action = new KAction(KIcon(open_action->icon()),i18n("Open URL"),this);
-		paste_url_action->setToolTip(i18n("Open a URL which points to a torrent"));
+		paste_url_action = new KAction(KIcon("document-open-remote"),i18n("Open URL"),this);
+		paste_url_action->setToolTip(i18n("Open a URL which points to a torrent, magnet links are supported"));
 		paste_url_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);

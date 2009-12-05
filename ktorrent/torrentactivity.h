@@ -27,6 +27,7 @@
 
 namespace kt
 {
+	class MagnetView;
 	class ScanListener;
 	class GUI;
 	class Core;
@@ -122,6 +123,7 @@ namespace kt
 		QSplitter* hsplit;
 		QSplitter* vsplit;
 		TabBarWidget* tool_views;
+		MagnetView* magnet_view;
 	};
 }
 

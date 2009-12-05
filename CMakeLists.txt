@@ -33,17 +33,6 @@ include(CheckTypeSize) #XFS
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 add_definitions( ${KDE4_DEFINITIONS} )
 
-option(ENABLE_DHT_SUPPORT "Whether to build KTorrent with DHT support or not" true)
-if (ENABLE_DHT_SUPPORT)
-  message(STATUS "Building KTorrent with DHT support (-DENABLE_DHT_SUPPORT=false to disable)")
-  add_definitions(-DENABLE_DHT_SUPPORT)
-endif (ENABLE_DHT_SUPPORT)
-
-# option(ENABLE_GEOIP "Wether or not to enable support for the GeoIP library" true)
-#if (ENABLE_GEOIP)
-#  message(STATUS "Building KTorrent with GeoIP support")
-#endif (ENABLE_GEOIP)
-
 set (KTORRENT_DBUS_XML_DIR ${KTORRENT_SOURCE_DIR}/dbus_xml)
 
 include_directories( ${KDE4_INCLUDES} 

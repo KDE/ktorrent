@@ -32,14 +32,22 @@ namespace bt
 	MagnetDownloader::MagnetDownloader(const bt::MagnetLink& mlink, QObject* parent)
 		: QObject(parent),mlink(mlink),tracker(0),pman(0),dht_ps(0),tor(mlink.infoHash())
 	{
+		dht::DHTBase & dht_table = Globals::instance().getDHT();
+		connect(&dht_table,SIGNAL(started()),this,SLOT(dhtStarted()));
+		connect(&dht_table,SIGNAL(stopped()),this,SLOT(dhtStopped()));
 	}
 
 	MagnetDownloader::~MagnetDownloader()
 	{
+		if (running())
+			stop();
 	}
 
 	void MagnetDownloader::start()
 	{
+		if (running())
+			return;
+		
 		pman = new PeerManager(tor);
 		connect(pman,SIGNAL(newPeer(Peer*)),this,SLOT(onNewPeer(Peer*)));
 		
@@ -68,6 +76,9 @@ namespace bt
 
 	void MagnetDownloader::stop()
 	{
+		if (!running())
+			return;
+		
 		if (tracker)
 		{
 			tracker->stop();
@@ -94,6 +105,16 @@ namespace bt
 			pman->connectToPeers();
 			pman->update();
 		}
+	}
+	
+	bool MagnetDownloader::running() const
+	{
+		return pman != 0;
+	}
+
+	Uint32 MagnetDownloader::numPeers() const
+	{
+		return pman ? pman->getNumConnectedPeers() : 0;
 	}
 		
 	void MagnetDownloader::onNewPeer(Peer* p)
@@ -140,7 +161,29 @@ namespace bt
 		}
 		
 		Out(SYS_GEN|LOG_IMPORTANT) << "Metadata downloaded" << endl;
-		foundMetaData(this,data);
+		foundMetadata(this,data);
+	}
+
+	void MagnetDownloader::dhtStarted()
+	{
+		if (running() && !dht_ps)
+		{
+			dht::DHTBase & dht_table = Globals::instance().getDHT();
+			dht_ps = new dht::DHTPeerSource(dht_table,mlink.infoHash(),mlink.displayName());
+			dht_ps->setRequestInterval(0); // Do not wait if the announce task finishes
+			connect(dht_ps,SIGNAL(peersReady(PeerSource*)),pman,SLOT(peerSourceReady(PeerSource*)));
+			dht_ps->start();
+		}
+	}
+
+	void MagnetDownloader::dhtStopped()
+	{
+		if (running() && dht_ps)
+		{
+			dht_ps->stop();
+			delete dht_ps;
+			dht_ps = 0;
+		}
 	}
 
 }

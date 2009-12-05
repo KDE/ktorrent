@@ -70,6 +70,8 @@ namespace kt
 				this, SLOT(lowDiskSpace(bt::TorrentInterface*, bool)));
 		connect(core,SIGNAL(canNotLoadSilently(const QString&)),
 				this,SLOT(cannotLoadTorrentSilently(const QString&)));
+		connect(core,SIGNAL(dhtNotEnabled(QString)),
+				this,SLOT(dhtNotEnabled(QString)));
 		connect(core->getQueueManager(),SIGNAL(pauseStateChanged(bool)),
 				this,SLOT(pauseStateChanged(bool))); 
 		
@@ -120,6 +122,14 @@ namespace kt
 			return;
 		
 		KNotification::event("CannotLoadSilently",msg,QPixmap(),mwnd);
+	}
+
+	void TrayIcon::dhtNotEnabled(const QString& msg)
+	{
+		if (!Settings::showPopups())
+			return;
+		
+		KNotification::event("DHTNotEnabled",msg,QPixmap(),mwnd);
 	}
 
 	void TrayIcon::finished(bt::TorrentInterface* tc)

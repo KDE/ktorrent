@@ -12,8 +12,11 @@ set(ktorrent_SRC
 	trayicon.cpp
 	ipfilterlist.cpp
 	ipfilterwidget.cpp
-	queuemanagerwidget.cpp
-	queuemanagermodel.cpp
+	
+	tools/queuemanagerwidget.cpp
+	tools/queuemanagermodel.cpp
+	tools/magnetmodel.cpp
+	tools/magnetview.cpp
 	
 	groups/grouppolicydlg.cpp
 	groups/groupfiltermodel.cpp
@@ -49,7 +52,6 @@ set(ktorrent_SRC
 	
 
 kde4_add_ui_files(ktorrent_SRC 
-	queuemanagerwidget.ui
 	ipfilterwidget.ui 
 	
 	dialogs/speedlimitsdlg.ui 
@@ -62,6 +64,8 @@ kde4_add_ui_files(ktorrent_SRC
 	dialogs/fileselectdlg.ui 
 	
 	groups/grouppolicydlg.ui
+	
+	tools/queuemanagerwidget.ui
 	
 	pref/qmpref.ui 
 	pref/btpref.ui
