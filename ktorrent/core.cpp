@@ -645,6 +645,12 @@ namespace kt
 			gui->errorMsg(err.toString());
 			delete tc;
 		}
+		catch (bt::Warning & warning)
+		{
+			bt::Out(SYS_GEN|LOG_NOTICE) << warning.toString() << endl;
+			gui->infoMsg(warning.toString());
+			bt::Delete(tor_dir,true);
+		}
 	}
 
 	void Core::loadTorrents()
