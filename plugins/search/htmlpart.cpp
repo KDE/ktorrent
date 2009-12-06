@@ -89,6 +89,13 @@ namespace kt
 				home();
 			return;
 		}
+		else if (u.protocol() == "magnet")
+		{
+			int ret = KMessageBox::questionYesNo(0,i18n("Do you want to download this magnet link ?"));
+			if (ret == KMessageBox::Yes)
+				openTorrent(u);
+			return;
+		}
 		
 		KIO::TransferJob* j = 0;
 		if (barg.doPost())
