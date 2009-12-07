@@ -138,7 +138,7 @@ namespace kt
 			writeIndex(tor_dir + "index",dc->getResult());
 
 			// copy the torrent file
-			bt::CopyFile(tor_url.prettyUrl(),tor_dir + "torrent");
+			bt::CopyFile(tor_url.url(),tor_dir + "torrent");
 
 			Uint64 imported = calcImportedBytes(dc->getResult(),tor);
 
