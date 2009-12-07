@@ -211,7 +211,11 @@ namespace bt
 		for (QStringList::iterator i = files.begin(); i != files.end();i++)
 		{
 			QString file = d.absoluteFilePath(*i);
-			if (!QFile::remove(file))
+			QFile fp(file);
+			if (!QFileInfo(file).isWritable() && !fp.setPermissions(QFile::ReadUser | QFile::WriteUser))
+				return false;
+
+			if (!fp.remove())
 				return false;	
 		}
 
