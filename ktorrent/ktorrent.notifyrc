@@ -385,4 +385,8 @@ Action=Sound|Popup
 
 [Event/DHTNotEnabled]
 Name=DHT is not enabled
+Name[en_GB]=DHT is not enabled
+Name[sv]=DHT är inte aktiverat
+Name[uk]=DHT не увімкнено
+Name[x-test]=xxDHT is not enabledxx
 Action=Sound|Popup
