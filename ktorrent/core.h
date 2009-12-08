@@ -67,8 +67,8 @@ namespace kt
 		virtual void load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir);
 		virtual void loadSilently(const KUrl& url,const QString & group);
 		virtual void loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir);
-		virtual void load(const bt::MagnetLink & mlink);
-		virtual void loadSilently(const bt::MagnetLink & mlink);
+		virtual void load(const bt::MagnetLink & mlink,const QString & group);
+		virtual void loadSilently(const bt::MagnetLink & mlink,const QString & group);
 		virtual QString findNewTorrentDir() const;
 		virtual void loadExistingTorrent(const QString & tor_dir);
 		virtual void setPausedState(bool pause);
@@ -283,7 +283,7 @@ namespace kt
 		kt::GroupManager* gman;
 		kt::MagnetModel* magnet;
 		QMap<KJob*,KUrl> custom_save_locations; // map to store save locations
-		QMap<KJob*,QString> add_to_groups; // Map to keep track of which group to add a torrent to
+		QMap<KUrl,QString> add_to_groups; // Map to keep track of which group to add a torrent to
 		int sleep_suppression_cookie;
 		QMap<bt::TorrentInterface*,ScanListener*> active_scans;
 	};

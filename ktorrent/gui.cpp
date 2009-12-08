@@ -292,7 +292,9 @@ namespace kt
 	void GUI::pasteURL()
 	{
 		PasteDialog dlg(core, this);
+		dlg.loadState(KGlobal::config());
 		dlg.exec();
+		dlg.saveState(KGlobal::config());
 	}
 	
 	void GUI::paste()

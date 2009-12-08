@@ -10,6 +10,7 @@ Changes in 4.0:
 - DHT can no longer be disabled at compile time
 - Add support for magnet URL's (214375)
 - Fix crash due to uncaught warning 
+- Expand open url dialog, it is now possible to open silently and to select the group
 
 Changes in 3.3.2:
 - Fix crash when loading Feed in syndication plugin at startup (216207)

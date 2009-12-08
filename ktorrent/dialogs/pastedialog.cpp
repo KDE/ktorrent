@@ -27,23 +27,62 @@
 #include <KMessageBox>
 #include <KLocale>
 #include <KStandardGuiItem>
+#include <groups/groupmanager.h>
 
 namespace kt
 {
-	PasteDialog::PasteDialog ( Core* core, QWidget* parent, Qt::WFlags fl )
-			:KDialog ( parent, fl )
+	PasteDialog::PasteDialog(Core* core, QWidget* parent, Qt::WFlags fl)
+			:KDialog(parent, fl)
 	{
-		setupUi ( mainWidget() );
+		setupUi(mainWidget());
 		setWindowTitle(i18n("Open an URL"));
 		
 		m_core = core;
 		QClipboard *cb = QApplication::clipboard();
-		QString text = cb->text ( QClipboard::Clipboard );
+		QString text = cb->text(QClipboard::Clipboard);
 
 		KUrl url = KUrl(text);
 
-		if ( url.isValid() )
-			m_url->setText ( text );
+		if (url.isValid())
+			m_url->setText(text);
+		
+		loadGroups();
+	}
+	
+	PasteDialog::~PasteDialog()
+	{
+	}
+
+	void PasteDialog::loadGroups()
+	{
+		GroupManager* gman = m_core->getGroupManager();
+		GroupManager::iterator it = gman->begin();
+		QStringList grps;
+		//First default group
+		grps << i18n("All Torrents");
+		
+		//now custom ones
+		while(it != gman->end())
+		{
+			grps << it->first;
+			++it;
+		}
+		
+		m_groups->addItems(grps);
+	}
+
+	void PasteDialog::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("PasteDlg");
+		m_silently->setChecked(g.readEntry("silently",false));
+		m_groups->setCurrentIndex(g.readEntry("group",0));
+	}
+
+	void PasteDialog::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("PasteDlg");
+		g.writeEntry("silently",m_silently->isChecked());
+		g.writeEntry("group",m_groups->currentIndex());
 	}
 
 	void PasteDialog::accept()
@@ -51,7 +90,14 @@ namespace kt
 		KUrl url = KUrl( m_url->text() );
 		if ( url.isValid() )
 		{
-			m_core->load(url,QString());
+			QString group;
+			if (m_groups->currentIndex() > 0)
+				group = m_groups->currentText();
+			
+			if (m_silently->isChecked())
+				m_core->loadSilently(url,group);
+			else
+				m_core->load(url,group);
 			QDialog::accept();
 		}
 		else

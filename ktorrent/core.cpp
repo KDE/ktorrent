@@ -407,10 +407,11 @@ namespace kt
 				dir = QDir::homePath();
 			
 			QString group;
-			if (add_to_groups.contains(j))
+			QMap<KUrl,QString>::iterator i = add_to_groups.find(j->url());
+			if (i != add_to_groups.end())
 			{
-				group = add_to_groups[j];
-				add_to_groups.remove(j);
+				group = i.value();
+				add_to_groups.erase(i);
 			}
 		
 			if (dir != QString::null && loadFromData(j->data(),dir,group,false, j->url()))
@@ -424,7 +425,7 @@ namespace kt
 	{
 		if (url.protocol() == "magnet")
 		{
-			load(bt::MagnetLink(url.prettyUrl()));
+			load(bt::MagnetLink(url.prettyUrl()),group);
 		}
 		else if (url.isLocalFile())
 		{
@@ -443,7 +444,7 @@ namespace kt
 			KIO::Job* j = KIO::storedGet(url);
 			connect(j,SIGNAL(result(KJob*)),this,SLOT(downloadFinished( KJob* )));
 			if (!group.isNull())
-				add_to_groups.insert(j,group);
+				add_to_groups.insert(url,group);
 		}
 	}
 
@@ -482,10 +483,11 @@ namespace kt
 			}
 			
 			QString group;
-			if (add_to_groups.contains(j))
+			QMap<KUrl,QString>::iterator i = add_to_groups.find(j->url());
+			if (i != add_to_groups.end())
 			{
-				group = add_to_groups[j];
-				add_to_groups.remove(j);
+				group = i.value();
+				add_to_groups.erase(i);
 			}
 				
 			
@@ -500,7 +502,7 @@ namespace kt
 	{
 		if (url.protocol() == "magnet")
 		{
-			loadSilently(bt::MagnetLink(url.prettyUrl()));
+			loadSilently(bt::MagnetLink(url.prettyUrl()),group);
 		}
 		else if (url.isLocalFile())
 		{
@@ -524,7 +526,7 @@ namespace kt
 			KIO::Job* j = KIO::storedGet(url);
 			connect(j,SIGNAL(result(KJob*)),this,SLOT(downloadFinishedSilently( KJob* )));
 			if (!group.isNull())
-				add_to_groups.insert(j,group);
+				add_to_groups.insert(url,group);
 		}
 	}
 	
@@ -1248,7 +1250,7 @@ namespace kt
 		gui->updateActions();
 	}
 	
-	void Core::load(const bt::MagnetLink& mlink)
+	void Core::load(const bt::MagnetLink& mlink,const QString & group)
 	{
 		if (!mlink.isValid())
 		{
@@ -1261,10 +1263,12 @@ namespace kt
 						"For optimum results enable DHT."));
 			magnet->download(mlink,false);
 			startUpdateTimer();
+			if (!group.isNull())
+				add_to_groups.insert(KUrl(mlink.toString()),group);
 		}
 	}
 	
-	void Core::loadSilently(const bt::MagnetLink& mlink)
+	void Core::loadSilently(const bt::MagnetLink& mlink,const QString & group)
 	{
 		if (!mlink.isValid())
 		{
@@ -1278,6 +1282,8 @@ namespace kt
 							"For optimum results enable DHT."));
 			magnet->download(mlink,true);
 			startUpdateTimer();
+			if (!group.isNull())
+				add_to_groups.insert(KUrl(mlink.toString()),group);
 		}
 	}
 
@@ -1296,10 +1302,19 @@ namespace kt
 		out->write(data.data(),data.size());
 		enc.end();
 		
+		KUrl url = mlink.toString();
+		QString group;
+		QMap<KUrl,QString>::iterator i = add_to_groups.find(url);
+		if (i != add_to_groups.end())
+		{
+			group = i.value();
+			add_to_groups.erase(i);
+		}
+		
 		if (silently)
-			loadSilently(data,KUrl(mlink.toString()),QString(),QString());
+			loadSilently(tmp,url,group,QString());
 		else
-			load(tmp,KUrl(mlink.toString()),QString(),QString());
+			load(tmp,url,group,QString());
 		
 	}
 
