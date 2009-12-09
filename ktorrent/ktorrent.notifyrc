@@ -387,6 +387,7 @@ Action=Sound|Popup
 Name=DHT is not enabled
 Name[en_GB]=DHT is not enabled
 Name[et]=DHT pole lubatud
+Name[pt]=O DHT não está activo
 Name[sv]=DHT är inte aktiverat
 Name[uk]=DHT не увімкнено
 Name[x-test]=xxDHT is not enabledxx
