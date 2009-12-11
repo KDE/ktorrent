@@ -52,16 +52,6 @@ namespace bt
 		virtual ~MagnetDownloader();
 		
 		/**
-			Start the MagnetDownloader, this will enable DHT.
-		*/
-		void start();
-		
-		/**
-			Stop the MagnetDownloader
-		*/
-		void stop();
-		
-		/**
 			Update the MagnetDownloader
 		*/
 		void update();
@@ -74,6 +64,17 @@ namespace bt
 		
 		/// Get the MagnetLink
 		const MagnetLink & magnetLink() const {return mlink;}
+		
+	public slots:
+		/**
+		Start the MagnetDownloader, this will enable DHT.
+		*/
+		void start();
+		
+		/**
+		Stop the MagnetDownloader
+		*/
+		void stop();
 		
 	signals:
 		/**
@@ -100,6 +101,7 @@ namespace bt
 		dht::DHTPeerSource* dht_ps;
 		QByteArray metadata;
 		Torrent tor;
+		bool found;
 	};
 
 }

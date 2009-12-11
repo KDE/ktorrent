@@ -30,7 +30,7 @@ namespace bt
 {
 	
 	MagnetDownloader::MagnetDownloader(const bt::MagnetLink& mlink, QObject* parent)
-		: QObject(parent),mlink(mlink),tracker(0),pman(0),dht_ps(0),tor(mlink.infoHash())
+		: QObject(parent),mlink(mlink),tracker(0),pman(0),dht_ps(0),tor(mlink.infoHash()),found(false)
 	{
 		dht::DHTBase & dht_table = Globals::instance().getDHT();
 		connect(&dht_table,SIGNAL(started()),this,SLOT(dhtStarted()));
@@ -153,6 +153,9 @@ namespace bt
 
 	void MagnetDownloader::onMetadataDownloaded(const QByteArray& data)
 	{
+		if (found)
+			return;
+		
 		bt::SHA1Hash hash = bt::SHA1Hash::generate((const Uint8*)data.data(),data.size());
 		if (hash != mlink.infoHash())
 		{
@@ -160,8 +163,10 @@ namespace bt
 			return;
 		}
 		
+		found = true;
 		Out(SYS_GEN|LOG_IMPORTANT) << "Metadata downloaded" << endl;
 		foundMetadata(this,data);
+		QTimer::singleShot(0,this,SLOT(stop()));
 	}
 
 	void MagnetDownloader::dhtStarted()
