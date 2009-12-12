@@ -1,4 +1,4 @@
-Changes in 4.0:
+Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 
 - Bandwidth scheduler can now be deactivated temporarely
 - Show information message instead of error when trackerlists are merged (213772)
