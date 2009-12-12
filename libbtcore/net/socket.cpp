@@ -388,4 +388,27 @@ namespace net
 		}
 	}
 
+	Address Socket::getSockName() const
+	{
+		struct sockaddr_storage ss;           /* Where the peer adr goes. */
+		socklen_t sslen = sizeof(ss);
+		
+		if (getsockname(m_fd,(struct sockaddr*)&ss,&sslen) == 0)
+		{
+			// If it is a IPv6 mapped address convert to IPv4
+			KNetwork::KInetSocketAddress tmp((struct sockaddr*)&ss,sslen);
+			if (tmp.ipVersion() == 6 && tmp.ipAddress().isV4Mapped())
+				tmp.setHost(KNetwork::KIpAddress(tmp.ipAddress().IPv4Addr(true)));
+			return tmp;
+		}
+
+		return Address();
+	}
+
+	int Socket::take()
+	{
+		int ret = m_fd;
+		m_fd = -1;
+		return ret;
+	}
 }

@@ -302,4 +302,22 @@ namespace bt
 			}
 		}
 	}
+
+#ifdef Q_WS_WIN
+	bool InitWindowsSocketsAPI()
+	{
+		static bool initialized = false;
+		if (initialized)
+			return true;
+
+		WSADATA wsaData;
+		WORD wVersionRequested = MAKEWORD(2, 2);
+		int err = WSAStartup( wVersionRequested, &wsaData );
+		if (err != 0) 
+			return false;
+
+		initialized = true;
+		return true;
+	}
+#endif
 }

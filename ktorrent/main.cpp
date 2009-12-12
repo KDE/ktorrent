@@ -38,6 +38,7 @@
 #include "ktversion.h"
 #include <kdebug.h>
 #include <torrent/globals.h>
+#include <util/functions.h>
 
 #ifndef Q_WS_WIN
 bool GrabPIDLock()
@@ -156,10 +157,7 @@ int main(int argc, char **argv)
 #endif
 
 #ifdef Q_WS_WIN
-	WSADATA wsaData;
-	WORD wVersionRequested = MAKEWORD(2, 2);
-	int err = WSAStartup( wVersionRequested, &wsaData );
-	if (err != 0) 
+	if (!bt::InitWindowsSocketsAPI())
 	{
 		kError()<< "Couldn't load winsock dll";
 		return 0;

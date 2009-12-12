@@ -94,6 +94,10 @@ namespace bt
 		else
 			return 0;
 	}
+
+#ifdef Q_WS_WIN
+	BTCORE_EXPORT bool InitWindowsSocketsAPI();
+#endif
 }
 
 #endif

@@ -54,13 +54,11 @@ namespace net
 		{
 			bool group_limits = false;
 			sm->lock();
-#ifndef Q_WS_WIN
 			if (fd_vec[0].revents & POLLIN)
 			{
 				// wake up was triggered
 				wake_up.handleData();
 			}
-#endif
 			
 			TimeStamp now = bt::Now();
 			Uint32 num_ready = 0;
@@ -129,7 +127,6 @@ namespace net
 		unsigned int i = 0;
 		sm->lock();
 		
-#ifndef Q_WS_WIN
 		// Add the wake up pipe
 		if (fd_vec.size() >= 1)
 		{
@@ -147,7 +144,6 @@ namespace net
 			fd_vec.push_back(wfd);
 		}
 		i++;
-#endif
 		
 		// fill the poll vector with all sockets
 		SocketMonitor::Itr itr = sm->begin();
@@ -187,7 +183,7 @@ namespace net
 #ifndef Q_WS_WIN
 		return poll(&fd_vec[0],i,-1);
 #else
-		return mingw_poll(&fd_vec[0],i,1000);
+		return mingw_poll(&fd_vec[0],i,-1);
 #endif
 	}
 	

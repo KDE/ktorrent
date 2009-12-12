@@ -76,6 +76,12 @@ namespace net
 		 * @param addr The address
 		 */
 		void setRemoteAddress(const Address & a) {addr = a;}
+
+		/// Get the sockets local address
+		Address getSockName() const;
+
+		/// Take the filedescriptor from the socket
+		int take();
 	private:
 		void cacheAddress();
 		
