@@ -87,8 +87,11 @@ namespace bt
 				QByteArray key = k->data().toByteArray();
 				delete kn;
 				
-				BNode* data = decode();
-				curr->insert(key,data);
+				BNode* value = decode();
+				if (!value)
+					throw Error(i18n("Decode error"));
+				
+				curr->insert(key,value);
 			}
 			pos++;
 		}
@@ -115,7 +118,8 @@ namespace bt
 			while (pos < (Uint32)data.size() && data[pos] != 'e')
 			{
 				BNode* n = decode();
-				curr->append(n);
+				if (n)
+					curr->append(n);
 			}
 			pos++;
 		}

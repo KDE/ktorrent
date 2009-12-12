@@ -242,7 +242,11 @@ namespace kt
 			return;
 		}
 		
-		BDecoder decoder(fptr.readAll(),0,false);
+		QByteArray magnet_data = fptr.readAll();
+		if (magnet_data.size() == 0)
+			return;
+		
+		BDecoder decoder(magnet_data,0,false);
 		BNode* node = 0;
 		try
 		{
