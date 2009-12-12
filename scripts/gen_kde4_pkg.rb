@@ -6,6 +6,10 @@
 # (c) 2006-2007 Tom Albers <tomalbers@kde.nl>
 # Some parts of this code taken from cvs2dist
 # License: GNU General Public License V2
+if ARGV.length != 1
+	puts "Usage: gen_kde4_pkg_stable.rb <version>"
+	exit
+end
 
 egmodule   = "network"
 name       = "ktorrent"
@@ -14,7 +18,7 @@ addDocs    = []
 addPo      = []
 remove     = ""
 
-version    = "3.3beta1"
+version    = ARGV[0]
 svnbase    = "svn+ssh://guisson@svn.kde.org/home/kde"
 svnroot    = "#{svnbase}/trunk"
 svntags    = "#{svnbase}/tags/#{name}"
