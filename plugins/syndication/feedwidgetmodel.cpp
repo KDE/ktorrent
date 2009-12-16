@@ -19,8 +19,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QDateTime>
-#include <kicon.h>
-#include <klocale.h>
+#include <KIcon>
+#include <KGlobal>
+#include <KLocale>
 #include <syndication/item.h>
 #include <syndication/enclosure.h>
 #include "feedwidgetmodel.h"
@@ -100,7 +101,7 @@ namespace kt
 			switch (index.column())
 			{
 				case 0: return item->title();
-				case 1: return QDateTime::fromTime_t(item->datePublished());
+				case 1: return KGlobal::locale()->formatDateTime(QDateTime::fromTime_t(item->datePublished()));
 				case 2: return TorrentUrlFromItem(item);
 				default:
 					return QVariant();
