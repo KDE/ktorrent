@@ -71,6 +71,7 @@ namespace kt
 	public slots:
 		void search(const QString & text,int engine = 0);
 		void copy();
+		void copyUrl();
 		void find();
 		void search();
 		void back();
@@ -104,6 +105,7 @@ namespace kt
 		KComboBox* search_engine;
 		KLineEdit* search_text;
 		QAction* open_url_action;
+		QAction* copy_url_action;
 		KUrl url_to_open;
 	};
 

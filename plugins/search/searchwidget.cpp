@@ -50,6 +50,7 @@
 #include "searchplugin.h"
 #include "searchenginelist.h"
 #include "homepage.h"
+#include <QClipboard>
 
 
 
@@ -95,6 +96,7 @@ namespace kt
 		right_click_menu->addAction(ac->action("search_tab_reload"));
 		right_click_menu->addSeparator();
 		right_click_menu->addAction(ac->action("search_tab_copy"));
+		copy_url_action = right_click_menu->addAction(KIcon("edit-copy"),i18n("Copy URL"),this,SLOT(copyUrl()));
 		
 
 		search_text->setClearButtonShown(true);
@@ -149,6 +151,12 @@ namespace kt
 		if (!html_part)
 			return;
 		html_part->copy();
+	}
+	
+	void SearchWidget::copyUrl()
+	{
+		QClipboard* cb = QApplication::clipboard();
+		cb->setText(url_to_open.prettyUrl());
 	}
 	
 	KUrl SearchWidget::getCurrentUrl() const
@@ -241,7 +249,7 @@ namespace kt
 	void SearchWidget::showPopupMenu(const QString & url,const QPoint & p)
 	{
 		open_url_action->setEnabled(!url.isEmpty());
-		right_click_menu->popup(p);
+		copy_url_action->setEnabled(!url.isEmpty());
 		if (!url.isEmpty())
 		{
 			if (!url.startsWith("/"))
@@ -254,6 +262,8 @@ namespace kt
 				url_to_open.setPath(url);
 			}
 		}
+		
+		right_click_menu->popup(p);
 	}
 	
 	KMenu* SearchWidget::rightClickMenu()
