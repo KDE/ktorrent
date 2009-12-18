@@ -211,9 +211,7 @@ namespace kt
 			else
 			{
 				addToHistory(curr_url);
-				begin(curr_url);
-				write(curr_data.data(),curr_data.size());
-				end();
+				openUrl(curr_url);
 				view()->ensureVisible(0,0);
 				completed();
 			}
