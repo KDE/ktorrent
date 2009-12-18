@@ -81,11 +81,11 @@ namespace kt
 		/// Remove a torrent delayed (should be used from signal handlers)
 		Q_SCRIPTABLE void removeDelayed(const QString & info_hash,bool data_to);
 		
-		/// Set the paused state
-		Q_SCRIPTABLE void setPaused(bool pause);
+		/// Set the suspended state
+		Q_SCRIPTABLE void setSuspended(bool suspend);
 		
-		/// Gets the globla paused state
-		Q_SCRIPTABLE bool paused();
+		/// Gets the globla suspended state
+		Q_SCRIPTABLE bool suspended();
 		
 		/// Order the Queue
 		Q_SCRIPTABLE void orderQueue();
@@ -145,8 +145,8 @@ namespace kt
 		/// Emitted when settings are changed in settings dialog
 		Q_SCRIPTABLE void settingsChanged();
 		
-		/// Emitted when paused state changes
-		Q_SCRIPTABLE void pauseStateChanged(bool paused);
+		/// Emitted when suspended state changes
+		Q_SCRIPTABLE void suspendStateChanged(bool suspended);
 		
 
 	private:

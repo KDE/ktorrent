@@ -46,9 +46,9 @@ namespace kt
 		setZValue(3);
 		setHandlesChildEvents(true);
 		
-		if (item->paused)
+		if (item->suspended)
 		{
-			setBrush(QBrush(SchedulerPluginSettings::pausedColor()));
+			setBrush(QBrush(SchedulerPluginSettings::suspendedColor()));
 		}
 		else
 		{
@@ -72,10 +72,10 @@ namespace kt
 		setRect(r);
 		setPos(QPointF(0,0));
 		QString text;
-		if (item->paused)
+		if (item->suspended)
 		{
-			setBrush(QBrush(SchedulerPluginSettings::pausedColor()));
-			text = i18n("Paused");
+			setBrush(QBrush(SchedulerPluginSettings::suspendedColor()));
+			text = i18n("Suspended");
 		}
 		else
 		{

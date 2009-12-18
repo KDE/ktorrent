@@ -189,9 +189,9 @@ namespace kt
 		remove_item_action->setEnabled(on);
 	}
 	
-	void ScheduleEditor::updateStatusText(int up,int down,bool paused,bool enabled)
+	void ScheduleEditor::updateStatusText(int up,int down,bool suspended,bool enabled)
 	{
-		view->updateStatusText(up,down,paused,enabled);
+		view->updateStatusText(up,down,suspended,enabled);
 	}
 	
 	void ScheduleEditor::itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day)

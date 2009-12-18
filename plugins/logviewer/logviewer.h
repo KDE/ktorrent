@@ -44,15 +44,15 @@ namespace kt
 		
 	public slots:
 		void showMenu(const QPoint & pos);
-		void pause(bool on);
+		void suspend(bool on);
 		
 	private:
 		bool use_rich_text;
 		LogFlags* flags;
 		QTextBrowser* output;
-		bool paused;
+		bool suspended;
 		QMenu* menu;
-		QAction* pause_action;
+		QAction* suspend_action;
 	};
 
 }

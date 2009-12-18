@@ -51,9 +51,9 @@ namespace kt
 	{
 	}
 	
-	void WeekView::updateStatusText(int up,int down,bool paused,bool enabled)
+	void WeekView::updateStatusText(int up,int down,bool suspended,bool enabled)
 	{
-		scene->updateStatusText(up,down,paused,enabled);
+		scene->updateStatusText(up,down,suspended,enabled);
 	}
 	
 	void WeekView::onSelectionChanged()

@@ -9,7 +9,7 @@
 		<entry name="itemColor" type="Color">
 			<default code="true">QColor(0,255,0,255)</default>
 		</entry>
-		<entry name="pausedColor" type="Color">
+		<entry name="suspendedColor" type="Color">
 			<default code="true">QColor(255,0,0,255)</default>
 		</entry>
 		<entry name="scheduleBackgroundColor" type="Color">

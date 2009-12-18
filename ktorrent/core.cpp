@@ -151,7 +151,7 @@ namespace kt
 		gman->loadGroups();
 		
 		connect(qman,SIGNAL(queueOrdered()),this,SLOT(startUpdateTimer()));
-		connect(qman,SIGNAL(pauseStateChanged(bool)),gui,SLOT(onPausedStateChanged(bool)));
+		connect(qman,SIGNAL(suspendStateChanged(bool)),gui,SLOT(onSuspendedStateChanged(bool)));
 		connect(magnet,SIGNAL(metadataFound(bt::MagnetLink,QByteArray,bool)),
 				this,SLOT(onMetadataDownloaded(bt::MagnetLink,QByteArray,bool)));
 		
@@ -786,7 +786,7 @@ namespace kt
 
 			Out(SYS_GEN|LOG_DEBUG) << "Switching to datadir " << nd << endl;
 			
-			qman->setPausedState(true);
+			qman->setSuspendedState(true);
 			
 			QList<bt::TorrentInterface*> succes;
 
@@ -801,7 +801,7 @@ namespace kt
 					// set back the old data_dir in Settings
 					Settings::setTempDir(data_dir);
 					Settings::self()->writeConfig();
-					qman->setPausedState(false);
+					qman->setSuspendedState(false);
 					update_timer.start(CORE_UPDATE_INTERVAL);
 					return false;
 				}
@@ -812,7 +812,7 @@ namespace kt
 				i++;
 			}
 			data_dir = nd;
-			qman->setPausedState(false);
+			qman->setSuspendedState(false);
 			update_timer.start(CORE_UPDATE_INTERVAL);
 			return true;
 		}
@@ -1022,16 +1022,16 @@ namespace kt
 		startUpdateTimer();
 	}
 
-	void Core::setPausedState(bool pause)
+	void Core::setSuspendedState(bool suspend)
 	{
-		qman->setPausedState(pause);
-		if (!pause)
+		qman->setSuspendedState(suspend);
+		if (!suspend)
 			startUpdateTimer();
 	}
 	
-	bool Core::getPausedState()
+	bool Core::getSuspendedState()
 	{
-		return qman->getPausedState();
+		return qman->getSuspendedState();
 	}
 
 	void Core::aboutToBeStarted(bt::TorrentInterface* tc,bool & ret)

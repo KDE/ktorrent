@@ -65,12 +65,12 @@ namespace kt
 		return wd;
 	}
 	
-	void WeekScene::updateStatusText(int up,int down,bool paused,bool enabled)
+	void WeekScene::updateStatusText(int up,int down,bool suspended,bool enabled)
 	{
 		KLocale* loc = KGlobal::locale();
 		QString msg;
-		if (paused)
-			msg = i18n("Current schedule: paused");
+		if (suspended)
+			msg = i18n("Current schedule: suspended");
 		else if (up > 0 && down > 0)
 			msg = i18n("Current schedule: %1/s download, %2/s upload",
 				 loc->formatByteSize(down * 1024),loc->formatByteSize(up * 1024));

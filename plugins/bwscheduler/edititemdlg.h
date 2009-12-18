@@ -48,7 +48,7 @@ namespace kt
 	private slots:
 		void fromChanged(const QTime & time);
 		void toChanged(const QTime & time);
-		void pausedChanged(bool on);
+		void suspendedChanged(bool on);
 		void screensaverLimitsToggled(bool on);
 	};
 

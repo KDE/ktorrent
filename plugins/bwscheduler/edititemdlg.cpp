@@ -30,7 +30,7 @@ namespace kt
 	EditItemDlg::EditItemDlg(QWidget* parent) : KDialog(parent)
 	{
 		setupUi(mainWidget());
-		connect(m_paused,SIGNAL(toggled(bool)),this,SLOT(pausedChanged(bool)));
+		connect(m_suspended,SIGNAL(toggled(bool)),this,SLOT(suspendedChanged(bool)));
 		connect(m_screensaver_limits,SIGNAL(toggled(bool)),this,SLOT(screensaverLimitsToggled(bool)));
 		
 		const KCalendarSystem* cal = KGlobal::locale()->calendar();
@@ -60,7 +60,7 @@ namespace kt
 		m_from->setMaximumTime(time.addSecs(-60));
 	}
 	
-	void EditItemDlg::pausedChanged(bool on) 
+	void EditItemDlg::suspendedChanged(bool on) 
 	{
 		m_upload_limit->setDisabled(on);
 		m_download_limit->setDisabled(on);
@@ -70,8 +70,8 @@ namespace kt
 
 	void EditItemDlg::screensaverLimitsToggled(bool on) 
 	{
-		m_ss_download_limit->setEnabled(!m_paused->isChecked() && on);
-		m_ss_upload_limit->setEnabled(!m_paused->isChecked() && on);
+		m_ss_download_limit->setEnabled(!m_suspended->isChecked() && on);
+		m_ss_upload_limit->setEnabled(!m_suspended->isChecked() && on);
 	}
 
 
@@ -80,7 +80,7 @@ namespace kt
 		m_from->setTime(item->start);
 		m_to->setTime(item->end);
 		m_day->setCurrentIndex(item->day - 1);
-		m_paused->setChecked(item->paused);
+		m_suspended->setChecked(item->suspended);
 		m_upload_limit->setValue(item->upload_limit);
 		m_download_limit->setValue(item->download_limit);
 		m_set_connection_limits->setChecked(item->set_conn_limits);
@@ -89,11 +89,11 @@ namespace kt
 		m_max_conn_global->setValue(item->global_conn_limit);
 		m_max_conn_global->setEnabled(item->set_conn_limits);
 		m_screensaver_limits->setChecked(item->screensaver_limits);
-		m_screensaver_limits->setEnabled(!item->paused);
+		m_screensaver_limits->setEnabled(!item->suspended);
 		m_ss_download_limit->setValue(item->ss_download_limit);
 		m_ss_upload_limit->setValue(item->ss_upload_limit);
-		m_ss_download_limit->setEnabled(!item->paused && item->screensaver_limits);
-		m_ss_upload_limit->setEnabled(!item->paused && item->screensaver_limits);
+		m_ss_download_limit->setEnabled(!item->suspended && item->screensaver_limits);
+		m_ss_upload_limit->setEnabled(!item->suspended && item->screensaver_limits);
 		if (exec() == QDialog::Accepted)
 		{
 			item->start = m_from->time();
@@ -101,7 +101,7 @@ namespace kt
 			item->day = m_day->currentIndex() + 1;
 			item->upload_limit = m_upload_limit->value();
 			item->download_limit = m_download_limit->value();
-			item->paused = m_paused->isChecked();
+			item->suspended = m_suspended->isChecked();
 			item->global_conn_limit = m_max_conn_global->value();
 			item->torrent_conn_limit = m_max_conn_per_torrent->value();
 			item->set_conn_limits = m_set_connection_limits->isChecked();

@@ -72,8 +72,8 @@ namespace kt
 				this,SLOT(cannotLoadTorrentSilently(const QString&)));
 		connect(core,SIGNAL(dhtNotEnabled(QString)),
 				this,SLOT(dhtNotEnabled(QString)));
-		connect(core->getQueueManager(),SIGNAL(pauseStateChanged(bool)),
-				this,SLOT(pauseStateChanged(bool))); 
+		connect(core->getQueueManager(),SIGNAL(suspendStateChanged(bool)),
+				this,SLOT(suspendStateChanged(bool))); 
 		
 		KMenu* m = new KMenu(parent);
 		setContextMenu(m);
@@ -85,7 +85,7 @@ namespace kt
 		m->addMenu(max_upload_rate);
 		m->addSeparator();
 		
-		paused_overlay = KIcon("media-playback-pause").pixmap(10,10);
+		suspended_overlay = KIcon("media-playback-pause").pixmap(10,10);
 	}
 
 	TrayIcon::~TrayIcon()
@@ -377,22 +377,22 @@ namespace kt
 		Settings::self()->writeConfig();
 	}
 		
-	void TrayIcon::pauseStateChanged(bool paused)
+	void TrayIcon::suspendStateChanged(bool suspended)
 	{
-		if (!paused || paused_overlay.isNull())
+		if (!suspended || suspended_overlay.isNull())
 		{
 			setIcon(icon);
 		}
 		else
 		{
-			QPixmap paused_icon = icon.pixmap(geometry().size());
+			QPixmap suspended_icon = icon.pixmap(geometry().size());
 			// draw overlay at bottom right
-			const int x = geometry().size().width() - paused_overlay.size().width();
-			const int y = geometry().size().height() - paused_overlay.size().width();
-			QPainter p(&paused_icon);
-			p.drawPixmap(x,y,paused_overlay);
+			const int x = geometry().size().width() - suspended_overlay.size().width();
+			const int y = geometry().size().height() - suspended_overlay.size().width();
+			QPainter p(&suspended_icon);
+			p.drawPixmap(x,y,suspended_overlay);
 			p.end();
-			setIcon(paused_icon);
+			setIcon(suspended_icon);
 		}
 	}
 

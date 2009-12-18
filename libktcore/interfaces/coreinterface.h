@@ -190,13 +190,13 @@ namespace kt
 		virtual void loadExistingTorrent(const QString & tor_dir) = 0;
 		
 		/**
-		 * Sets global paused state for all torrents (QueueManager) and stopps all torrents.
+		 * Sets global suspended state for all torrents (QueueManager) and stopps all torrents.
 		 * No torrents will be automatically started/stopped.
 		 */
-		virtual void setPausedState(bool pause) = 0;
+		virtual void setSuspendedState(bool suspend) = 0;
 		
-		/// Gets the globla paused state
-		virtual bool getPausedState() = 0;
+		/// Gets the globla suspended state
+		virtual bool getSuspendedState() = 0;
 		
 		/// Get the QueueManager
 		virtual kt::QueueManager* getQueueManager() = 0;

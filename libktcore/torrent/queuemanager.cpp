@@ -50,7 +50,7 @@ namespace kt
 		max_seeds = 0; //for testing. Needs to be added to Settings::
 		
 		keep_seeding = true; //test. Will be passed from Core
-		paused_state = false;
+		suspended_state = false;
 		exiting = false;
 		ordering = false;
 	}
@@ -72,7 +72,7 @@ namespace kt
 
 	void QueueManager::remove(bt::TorrentInterface* tc)
 	{
-		paused_torrents.erase(tc);
+		suspended_torrents.erase(tc);
 		int index = downloads.indexOf(tc);
 		if (index != -1)
 			downloads.takeAt(index)->deleteLater();
@@ -82,7 +82,7 @@ namespace kt
 	{
 		exiting = true;
 		Uint32 nd = downloads.count();
-		paused_torrents.clear();
+		suspended_torrents.clear();
 		
 		// wait for a second to allow all http jobs to send the stopped event
 		if (nd > 0)
@@ -545,8 +545,8 @@ namespace kt
 		if (ordering || !downloads.count() || exiting)
 			return;
 		
-		downloads.sort(); // sort downloads, even when paused so that the QM widget is updated
-		if (Settings::manuallyControlTorrents() || paused_state)
+		downloads.sort(); // sort downloads, even when suspended so that the QM widget is updated
+		if (Settings::manuallyControlTorrents() || suspended_state)
 			return;
 		
 		ordering = true; // make sure that recursive entering of this function is not possible
@@ -669,24 +669,24 @@ namespace kt
 		orderQueue();
 	}
 	
-	void QueueManager::setPausedState(bool pause)
+	void QueueManager::setSuspendedState(bool suspend)
 	{
-		if (paused_state == pause)
+		if (suspended_state == suspend)
 			return;
 		
-		paused_state = pause;	
-		if(!pause)
+		suspended_state = suspend;	
+		if(!suspend)
 		{
 			UpdateCurrentTime();
-			std::set<bt::TorrentInterface*>::iterator it = paused_torrents.begin();
-			while (it != paused_torrents.end())
+			std::set<bt::TorrentInterface*>::iterator it = suspended_torrents.begin();
+			while (it != suspended_torrents.end())
 			{
 				TorrentInterface* tc = *it;
 				startSafely(tc);
 				it++;
 			}
 			
-			paused_torrents.clear();
+			suspended_torrents.clear();
 			orderQueue();
 		}
 		else
@@ -696,12 +696,12 @@ namespace kt
 				const TorrentStats & s = tc->getStats();
 				if (s.running)
 				{
-					paused_torrents.insert(tc);
+					suspended_torrents.insert(tc);
 					stopSafely(tc,false);
 				}
 			}
 		}
-		emit pauseStateChanged(paused_state);
+		emit suspendStateChanged(suspended_state);
 	}
 	
 	void QueueManager::rearrangeQueue()

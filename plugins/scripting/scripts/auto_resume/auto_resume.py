@@ -13,15 +13,15 @@ class AutoResume:
 		self.hours = 0
 		self.minutes = 5
 		self.seconds = 0
-		KTorrent.connect("pauseStateChanged(bool)",self.pausedStateChanged)
+		KTorrent.connect("suspendStateChanged(bool)",self.suspendedStateChanged)
 		self.timer = KTScriptingPlugin.createTimer(True)
 		self.timer.connect('timeout()',self.timerFired)
 		
 
 	def timerFired(self):
-		if KTorrent.paused():
-			KTorrent.log("AutoResumeScript: resuming paused torrents")
-			KTorrent.setPaused(False)
+		if KTorrent.suspended():
+			KTorrent.log("AutoResumeScript: resuming suspended torrents")
+			KTorrent.setSuspended(False)
 		
 	def startTimer(self):
 		self.timer.start((self.hours * 3600 + self.minutes * 60 + self.seconds)*1000)
@@ -38,12 +38,12 @@ class AutoResume:
 		self.hours = KTScriptingPlugin.readConfigEntryInt("AutoResumeScript","hours",self.hours)
 		self.minutes = KTScriptingPlugin.readConfigEntryInt("AutoResumeScript","minutes",self.minutes)
 		self.seconds = KTScriptingPlugin.readConfigEntryInt("AutoResumeScript","seconds",self.seconds)
-		if self.auto_resume and KTorrent.paused():
+		if self.auto_resume and KTorrent.suspended():
 			self.startTimer()
 			
-	def pausedStateChanged(self,on):
+	def suspendedStateChanged(self,on):
 		if on and self.auto_resume:
-			KTorrent.log("AutoResumeScript: torrents paused, starting timer")
+			KTorrent.log("AutoResumeScript: torrents suspended, starting timer")
 			self.startTimer()
 		else:
 			self.timer.stop()
@@ -67,7 +67,7 @@ class AutoResume:
 			self.minutes = widget["minutes"].value
 			self.seconds = widget["seconds"].value
 			self.save()
-			if self.auto_resume and KTorrent.paused():
+			if self.auto_resume and KTorrent.suspended():
 				self.startTimer()
 
 

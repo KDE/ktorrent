@@ -159,14 +159,14 @@
       <item row="3" column="0" >
        <widget class="QLabel" name="label_5" >
         <property name="text" >
-         <string>Paused schedule item color:</string>
+         <string>Suspended schedule item color:</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1" >
-       <widget class="KColorButton" name="kcfg_pausedColor" >
+       <widget class="KColorButton" name="kcfg_suspendedColor" >
         <property name="toolTip" >
-         <string>Color of each paused item on the schedule.</string>
+         <string>Color of each suspended item on the schedule.</string>
         </property>
        </widget>
       </item>

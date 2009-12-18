@@ -199,13 +199,13 @@ namespace kt
 		void setKeepSeeding(bool ks);
 
 		/**
-		 * Sets global paused state for QueueManager and stopps all running torrents.
+		 * Sets global suspended state for QueueManager and stopps all running torrents.
 		 * No torrents will be automatically started/stopped with QM.
 		 */
-		void setPausedState(bool pause);
+		void setSuspendedState(bool suspend);
 
-		/// Get the paused state
-		bool getPausedState() const {return paused_state;}
+		/// Get the suspended state
+		bool getSuspendedState() const {return suspended_state;}
 		
 	public slots:
 		/**
@@ -235,10 +235,10 @@ namespace kt
 		void queueOrdered();
 		
 		/**
-		 * Emitted when the paused state changes.
-		 * @param paused The paused state
+		 * Emitted when the suspended state changes.
+		 * @param suspended The suspended state
 		 */
-		void pauseStateChanged(bool paused);
+		void suspendStateChanged(bool suspended);
 
 	public slots:
 		void torrentFinished(bt::TorrentInterface* tc);
@@ -258,10 +258,10 @@ namespace kt
 
 	private:
 		QueuePtrList downloads;
-		std::set<bt::TorrentInterface*> paused_torrents;
+		std::set<bt::TorrentInterface*> suspended_torrents;
 		int max_downloads;
 		int max_seeds;
-		bool paused_state;
+		bool suspended_state;
 		bool keep_seeding;
 		bool exiting;
 		bool ordering;

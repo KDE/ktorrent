@@ -123,9 +123,9 @@ namespace kt
 		void cannotLoadTorrentSilently(const QString & msg);
 		
 		/**
-			The QM changes paused state.
+			The QM changes suspended state.
 		*/
-		void pauseStateChanged(bool paused);
+		void suspendStateChanged(bool suspended);
 		
 		/**
 			Show a warning message
@@ -137,7 +137,7 @@ namespace kt
 		int previousDownloadHeight;
 		int previousUploadHeight;
 		KIcon icon;
-		QPixmap paused_overlay;
+		QPixmap suspended_overlay;
 		SetMaxRate* max_upload_rate;
 		SetMaxRate* max_download_rate;
 		QWidget* mwnd;

@@ -34,7 +34,7 @@ namespace kt
 {
 	
 	ScheduleItem::ScheduleItem() 
-		: day(0),upload_limit(0),download_limit(0),paused(false),set_conn_limits(false),global_conn_limit(0),torrent_conn_limit(0)
+		: day(0),upload_limit(0),download_limit(0),suspended(false),set_conn_limits(false),global_conn_limit(0),torrent_conn_limit(0)
 	{
 		screensaver_limits = false;
 		ss_download_limit = ss_upload_limit = 0;
@@ -72,7 +72,7 @@ namespace kt
 		end = item.end;
 		upload_limit = item.upload_limit;
 		download_limit = item.download_limit;
-		paused = item.paused;
+		suspended = item.suspended;
 		screensaver_limits = item.screensaver_limits;
 		ss_download_limit = item.ss_download_limit;
 		ss_upload_limit = item.ss_upload_limit;
@@ -89,7 +89,7 @@ namespace kt
 				end == item.end &&
 				upload_limit == item.upload_limit &&
 				download_limit == item.download_limit &&
-				paused == item.paused && 
+				suspended == item.suspended && 
 				set_conn_limits == item.set_conn_limits &&
 				global_conn_limit == item.global_conn_limit &&
 				torrent_conn_limit == item.torrent_conn_limit &&
@@ -194,9 +194,9 @@ namespace kt
 		BValueNode* end = dict->getValue("end");
 		BValueNode* upload_limit = dict->getValue("upload_limit");
 		BValueNode* download_limit = dict->getValue("download_limit");
-		BValueNode* paused = dict->getValue("paused");
+		BValueNode* suspended = dict->getValue("suspended");
 		
-		if (!day || !start || !end || !upload_limit || !download_limit || !paused)
+		if (!day || !start || !end || !upload_limit || !download_limit || !suspended)
 			return false;
 		
 		item->day = day->data().toInt();
@@ -204,7 +204,7 @@ namespace kt
 		item->end = QTime::fromString(end->data().toString());
 		item->upload_limit = upload_limit->data().toInt();
 		item->download_limit = download_limit->data().toInt();
-		item->paused = paused->data().toInt() == 1;
+		item->suspended = suspended->data().toInt() == 1;
 		item->set_conn_limits = false;
 		
 		BDictNode* conn_limits = dict->getDict(QString("conn_limits"));
@@ -261,7 +261,7 @@ namespace kt
 			enc.write("end"); enc.write(i->end.toString());
 			enc.write("upload_limit"); enc.write(i->upload_limit);
 			enc.write("download_limit"); enc.write(i->download_limit);
-			enc.write("paused"); enc.write((Uint32) (i->paused ? 1 : 0));
+			enc.write("suspended"); enc.write((Uint32) (i->suspended ? 1 : 0));
 			if (i->set_conn_limits)
 			{
 				enc.write("conn_limits"); 

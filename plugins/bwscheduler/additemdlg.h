@@ -52,7 +52,7 @@ namespace kt
 		void selectEntireWeek();
 		void selectWeekDays();
 		void selectWeekend();
-		void pausedChanged(bool on);
+		void suspendedChanged(bool on);
 		void screensaverLimitsToggled(bool on);
 		
 	private:

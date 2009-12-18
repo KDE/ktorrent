@@ -71,8 +71,8 @@ namespace kt
 		virtual void loadSilently(const bt::MagnetLink & mlink,const QString & group);
 		virtual QString findNewTorrentDir() const;
 		virtual void loadExistingTorrent(const QString & tor_dir);
-		virtual void setPausedState(bool pause);
-		virtual bool getPausedState();
+		virtual void setSuspendedState(bool suspend);
+		virtual bool getSuspendedState();
 		virtual float getGlobalMaxShareRatio() const;
 		virtual DBus* getExternalInterface();
 

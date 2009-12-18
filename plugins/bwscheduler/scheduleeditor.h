@@ -52,10 +52,10 @@ namespace kt
 		 * Update the text of the status line
 		 * @param up Up speed
 		 * @param down Down speed
-		 * @param paused Paused or not
+		 * @param suspended Suspended or not
 		 * @param enabled Enabled or not
 		 */
-		void updateStatusText(int up,int down,bool paused,bool enabled);
+		void updateStatusText(int up,int down,bool suspended,bool enabled);
 		
 		/**
 		 * The color settings have changed

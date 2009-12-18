@@ -40,7 +40,7 @@ namespace kt
 		QTime end;
 		bt::Uint32 upload_limit;
 		bt::Uint32 download_limit;
-		bool paused;
+		bool suspended;
 		bool screensaver_limits;
 		bt::Uint32 ss_upload_limit;
 		bt::Uint32 ss_download_limit;

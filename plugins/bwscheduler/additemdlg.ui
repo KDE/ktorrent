@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>AddItemDlg</class>
- <widget class="QWidget" name="AddItemDlg" >
-  <property name="geometry" >
+ <widget class="QWidget" name="AddItemDlg">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,47 +10,47 @@
     <height>411</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Add a new item to the schedule</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5" >
-   <property name="margin" >
+  <layout class="QVBoxLayout" name="verticalLayout_5">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" >
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QGroupBox" name="groupBox_2" >
-       <property name="title" >
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
         <string>Time</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3" >
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <layout class="QHBoxLayout" >
+         <layout class="QHBoxLayout">
           <item>
-           <widget class="QLabel" name="label_3" >
-            <property name="text" >
+           <widget class="QLabel" name="label_3">
+            <property name="text">
              <string>From:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTimeEdit" name="m_from" >
-            <property name="displayFormat" >
+           <widget class="QTimeEdit" name="m_from">
+            <property name="displayFormat">
              <string>hh:mm</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_4" >
-            <property name="text" >
+           <widget class="QLabel" name="label_4">
+            <property name="text">
              <string>To:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTimeEdit" name="m_to" >
-            <property name="displayFormat" >
+           <widget class="QTimeEdit" name="m_to">
+            <property name="displayFormat">
              <string>hh:mm</string>
             </property>
            </widget>
@@ -57,46 +58,46 @@
          </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label_5" >
-          <property name="text" >
+         <widget class="QLabel" name="label_5">
+          <property name="text">
            <string>Days:</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout" >
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QListView" name="m_day_list" />
+           <widget class="QListView" name="m_day_list"/>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout" >
+           <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QPushButton" name="m_entire_week" >
-              <property name="text" >
+             <widget class="QPushButton" name="m_entire_week">
+              <property name="text">
                <string>Entire Week</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="m_weekdays_only" >
-              <property name="text" >
+             <widget class="QPushButton" name="m_weekdays_only">
+              <property name="text">
                <string>Weekdays Only</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="m_weekend" >
-              <property name="text" >
+             <widget class="QPushButton" name="m_weekend">
+              <property name="text">
                <string>Weekend</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_2" >
-              <property name="orientation" >
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
                 <height>40</height>
@@ -112,56 +113,56 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox" >
-       <property name="title" >
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
         <string>Limits</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4" >
+       <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QCheckBox" name="m_paused" >
-          <property name="text" >
-           <string>Stop all torrents</string>
+         <widget class="QCheckBox" name="m_suspended">
+          <property name="text">
+           <string>Suspend all running torrents</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QLabel" name="label" >
-            <property name="text" >
+         <layout class="QGridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
              <string>Download limit:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1" >
-           <widget class="QSpinBox" name="m_download_limit" >
-            <property name="specialValueText" >
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="m_download_limit">
+            <property name="specialValueText">
              <string>No limit</string>
             </property>
-            <property name="suffix" >
+            <property name="suffix">
              <string> KiB/s</string>
             </property>
-            <property name="maximum" >
+            <property name="maximum">
              <number>10000000</number>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="label_2" >
-            <property name="text" >
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
              <string>Upload limit:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" >
-           <widget class="QSpinBox" name="m_upload_limit" >
-            <property name="specialValueText" >
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="m_upload_limit">
+            <property name="specialValueText">
              <string>No limit</string>
             </property>
-            <property name="suffix" >
+            <property name="suffix">
              <string> KiB/s</string>
             </property>
-            <property name="maximum" >
+            <property name="maximum">
              <number>10000000</number>
             </property>
            </widget>
@@ -169,50 +170,50 @@
          </layout>
         </item>
         <item>
-         <widget class="QCheckBox" name="m_screensaver_limits" >
-          <property name="text" >
+         <widget class="QCheckBox" name="m_screensaver_limits">
+          <property name="text">
            <string>When screensaver is activated:</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QGridLayout" name="_2" >
-          <item row="0" column="0" >
-           <widget class="QLabel" name="label_8" >
-            <property name="text" >
+         <layout class="QGridLayout" name="_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
              <string>Download limit:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1" >
-           <widget class="QSpinBox" name="m_ss_download_limit" >
-            <property name="specialValueText" >
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="m_ss_download_limit">
+            <property name="specialValueText">
              <string>No limit</string>
             </property>
-            <property name="suffix" >
+            <property name="suffix">
              <string> KiB/s</string>
             </property>
-            <property name="maximum" >
+            <property name="maximum">
              <number>10000000</number>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="label_9" >
-            <property name="text" >
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
              <string>Upload limit:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" >
-           <widget class="QSpinBox" name="m_ss_upload_limit" >
-            <property name="specialValueText" >
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="m_ss_upload_limit">
+            <property name="specialValueText">
              <string>No limit</string>
             </property>
-            <property name="suffix" >
+            <property name="suffix">
              <string> KiB/s</string>
             </property>
-            <property name="maximum" >
+            <property name="maximum">
              <number>10000000</number>
             </property>
            </widget>
@@ -220,11 +221,11 @@
          </layout>
         </item>
         <item>
-         <spacer name="verticalSpacer" >
-          <property name="orientation" >
+         <spacer name="verticalSpacer">
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeHint" stdset="0" >
+          <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
             <height>12</height>
@@ -238,53 +239,53 @@
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_3" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
       <string>Connection Limits</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2" >
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QCheckBox" name="m_set_connection_limits" >
-        <property name="text" >
+       <widget class="QCheckBox" name="m_set_connection_limits">
+        <property name="text">
          <string>Set connection limits</string>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" >
-         <widget class="QLabel" name="label_7" >
-          <property name="text" >
+       <layout class="QGridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
            <string>Maximum connections per torrent:</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1" >
-         <widget class="QSpinBox" name="m_max_conn_per_torrent" >
-          <property name="specialValueText" >
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="m_max_conn_per_torrent">
+          <property name="specialValueText">
            <string>No limit</string>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>99999</number>
           </property>
          </widget>
         </item>
-        <item row="1" column="0" >
-         <widget class="QLabel" name="label_6" >
-          <property name="text" >
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
            <string>Global connection limit:</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1" >
-         <widget class="QSpinBox" name="m_max_conn_global" >
-          <property name="specialValueText" >
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="m_max_conn_global">
+          <property name="specialValueText">
            <string>No limit</string>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>99999</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>0</number>
           </property>
          </widget>
@@ -295,8 +296,8 @@
     </widget>
    </item>
    <item>
-    <widget class="Line" name="line" >
-     <property name="orientation" >
+    <widget class="Line" name="line">
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
@@ -311,11 +312,11 @@
    <receiver>m_max_conn_per_torrent</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>134</x>
      <y>242</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>235</x>
      <y>277</y>
     </hint>
@@ -327,11 +328,11 @@
    <receiver>m_max_conn_global</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>80</x>
      <y>247</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>249</x>
      <y>315</y>
     </hint>

@@ -34,7 +34,7 @@ namespace kt
 	AddItemDlg::AddItemDlg(Schedule* schedule,QWidget* parent) : KDialog(parent),schedule(schedule)
 	{
 		setupUi(mainWidget());
-		connect(m_paused,SIGNAL(toggled(bool)),this,SLOT(pausedChanged(bool)));
+		connect(m_suspended,SIGNAL(toggled(bool)),this,SLOT(suspendedChanged(bool)));
 		connect(m_screensaver_limits,SIGNAL(toggled(bool)),this,SLOT(screensaverLimitsToggled(bool)));
 		m_ss_download_limit->setEnabled(false);
 		m_ss_upload_limit->setEnabled(false);
@@ -52,7 +52,7 @@ namespace kt
 		m_from->setTime(QTime(10,0,0));
 		m_to->setTime(QTime(11,59,59));
 	
-		m_paused->setChecked(false);
+		m_suspended->setChecked(false);
 		m_upload_limit->setValue(0);
 		m_download_limit->setValue(0);
 		m_set_connection_limits->setChecked(false);
@@ -84,7 +84,7 @@ namespace kt
 			item->end = m_to->time();
 			item->upload_limit = m_upload_limit->value();
 			item->download_limit = m_download_limit->value();
-			item->paused = m_paused->isChecked();
+			item->suspended = m_suspended->isChecked();
 			item->global_conn_limit = m_max_conn_global->value();
 			item->torrent_conn_limit = m_max_conn_per_torrent->value();
 			item->set_conn_limits = m_set_connection_limits->isChecked();
@@ -157,7 +157,7 @@ namespace kt
 		}
 	}
 	
-	void AddItemDlg::pausedChanged(bool on) 
+	void AddItemDlg::suspendedChanged(bool on) 
 	{
 		m_upload_limit->setDisabled(on);
 		m_download_limit->setDisabled(on);
@@ -167,8 +167,8 @@ namespace kt
 	
 	void AddItemDlg::screensaverLimitsToggled(bool on) 
 	{
-		m_ss_download_limit->setEnabled(!m_paused->isChecked() && on);
-		m_ss_upload_limit->setEnabled(!m_paused->isChecked() && on);
+		m_ss_download_limit->setEnabled(!m_suspended->isChecked() && on);
+		m_ss_upload_limit->setEnabled(!m_suspended->isChecked() && on);
 	}
 }
 

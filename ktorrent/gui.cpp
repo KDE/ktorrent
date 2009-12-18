@@ -267,16 +267,16 @@ namespace kt
 		}
 	}
 	
-	void GUI::pauseQueue(bool pause)
+	void GUI::suspendQueue(bool suspend)
 	{
-		Out(SYS_GEN|LOG_NOTICE) << "Setting paused state to " << pause << endl;
-		core->setPausedState(pause);
+		Out(SYS_GEN|LOG_NOTICE) << "Setting suspended state to " << suspend << endl;
+		core->setSuspendedState(suspend);
 		torrent_activity->updateActions();
 	}
 	
-	void GUI::onPausedStateChanged(bool paused)
+	void GUI::onSuspendedStateChanged(bool suspended)
 	{
-		queue_pause_action->setChecked(paused);
+		queue_suspend_action->setChecked(suspended);
 	}
 	
 	void GUI::startAllTorrents()
@@ -407,14 +407,14 @@ namespace kt
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);
 		
-		queue_pause_action = new KToggleAction(KIcon("kt-pause"),i18n("Pause KTorrent"),this);
-		ac->addAction("queue_pause",queue_pause_action);
-		queue_pause_action->setToolTip(i18n("Pause all running torrents"));
-		queue_pause_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_P));
-		queue_pause_action->setGlobalShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_P));
-		connect(queue_pause_action,SIGNAL(toggled(bool)),this,SLOT(pauseQueue(bool)));
-		queue_pause_action->setCheckedState(KGuiItem(i18n("Resume KTorrent"),"media-playback-start",
-											i18n("Resume paused torrents")));
+		queue_suspend_action = new KToggleAction(KIcon("kt-pause"),i18n("Suspend KTorrent"),this);
+		ac->addAction("queue_suspend",queue_suspend_action);
+		queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
+		queue_suspend_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_P));
+		queue_suspend_action->setGlobalShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_P));
+		connect(queue_suspend_action,SIGNAL(toggled(bool)),this,SLOT(suspendQueue(bool)));
+		queue_suspend_action->setCheckedState(KGuiItem(i18n("Resume KTorrent"),"media-playback-start",
+											i18n("Resume suspended torrents")));
 		
 		ipfilter_action = new KAction(KIcon("view-filter"),i18n("IP Filter"),this);
 		ipfilter_action->setToolTip(i18n("Show the list of blocked IP addresses"));
@@ -454,7 +454,7 @@ namespace kt
 		QMenu* m = tray_icon->contextMenu();
 		m->addAction(start_all_action);
 		m->addAction(stop_all_action);
-		m->addAction(queue_pause_action);
+		m->addAction(queue_suspend_action);
 		m->addSeparator();
 		m->addAction(paste_url_action);
 		m->addAction(open_action);
@@ -572,7 +572,7 @@ namespace kt
 	{
 		torrent_activity->updateActions();
 		Uint32 nr = core->getNumTorrentsRunning();
-		queue_pause_action->setEnabled(core->getPausedState() || nr > 0);
+		queue_suspend_action->setEnabled(core->getSuspendedState() || nr > 0);
 		start_all_action->setEnabled(core->getNumTorrentsNotRunning() > 0);
 		stop_all_action->setEnabled(nr > 0);
 	}

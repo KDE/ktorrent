@@ -85,10 +85,10 @@ namespace kt
 		
 	public slots:
 		/**
-		 * The paused state has changed
-		 * @param paused 
+		 * The suspended state has changed
+		 * @param suspended 
 		 */
-		void onPausedStateChanged(bool paused);
+		void onSuspendedStateChanged(bool suspended);
 		
 		/// Update all actions
 		void updateActions();
@@ -103,7 +103,7 @@ namespace kt
 		void createTorrent();
 		void openTorrent();
 		void openTorrentSilently();
-		void pauseQueue(bool pause);
+		void suspendQueue(bool suspend);
 		void startAllTorrents();
 		void stopAllTorrents();
 		void pasteURL();
@@ -146,7 +146,7 @@ namespace kt
 		KAction* start_all_action;
 		KAction* stop_all_action;
 		KAction* paste_url_action;
-		KToggleAction* queue_pause_action;
+		KToggleAction* queue_suspend_action;
 		KAction* ipfilter_action;
 		KAction* import_action;
 		KAction* import_kde3_torrents_action;

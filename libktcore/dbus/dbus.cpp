@@ -60,7 +60,7 @@ namespace kt
 			torrentAdded(*i);
 		}
 		
-		connect(qm,SIGNAL(pauseStateChanged(bool)),this,SIGNAL(pauseStateChanged(bool)));
+		connect(qm,SIGNAL(suspendStateChanged(bool)),this,SIGNAL(suspendStateChanged(bool)));
 		
 		kt::GroupManager* gman = core->getGroupManager();
 		connect(gman,SIGNAL(customGroupAdded(Group*)),this,SLOT(groupAdded(Group*)));
@@ -254,14 +254,14 @@ namespace kt
 		delayed_removal_map.clear();
 	}
 	
-	void DBus::setPaused(bool pause)
+	void DBus::setSuspended(bool suspend)
 	{
-		core->setPausedState(pause);
+		core->setSuspendedState(suspend);
 	}
 		
-	bool DBus::paused()
+	bool DBus::suspended()
 	{
-		return core->getPausedState();
+		return core->getSuspendedState();
 	}
 	
 	uint DBus::numTorrentsRunning() const

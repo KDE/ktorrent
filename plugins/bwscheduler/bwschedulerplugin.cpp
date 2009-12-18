@@ -149,7 +149,7 @@ namespace kt
 		Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to normal values : %1 down, %2 up")
 		.arg(dlim).arg(ulim) << endl;
 		// set normal limits
-		getCore()->setPausedState(false);
+		getCore()->setSuspendedState(false);
 		net::SocketMonitor::setDownloadCap(1024 * dlim);
 		net::SocketMonitor::setUploadCap(1024 * ulim);
 		if (m_editor)
@@ -171,12 +171,12 @@ namespace kt
 			return;
 		}
 		
-		if (item->paused)
+		if (item->suspended)
 		{
 			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : PAUSED") << endl;
-			if (!getCore()->getPausedState())
+			if (!getCore()->getSuspendedState())
 			{
-				getCore()->setPausedState(true);
+				getCore()->setSuspendedState(true);
 				net::SocketMonitor::setDownloadCap(1024 * Settings::maxDownloadRate());
 				net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
 				if (m_editor)
@@ -195,7 +195,7 @@ namespace kt
 			
 			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : %1 down, %2 up")
 					.arg(dlim).arg(ulim) << endl;
-			getCore()->setPausedState(false);
+			getCore()->setSuspendedState(false);
 			
 			net::SocketMonitor::setDownloadCap(1024 * dlim);
 			net::SocketMonitor::setUploadCap(1024 * ulim);
