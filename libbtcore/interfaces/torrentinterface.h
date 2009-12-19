@@ -491,6 +491,13 @@ namespace bt
 		 * Emitted when the torrent thinks the QM should update the queue
 		 */
 		void updateQueue();
+		
+		/**
+		 * Emitted when all running jobs are done.
+		 * @param me the torrent
+		 */
+		void runningJobsDone(bt::TorrentInterface* me);
+		
 	protected:
 		TorrentStats stats;
 		QString user_modified_name;

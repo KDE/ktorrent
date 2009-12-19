@@ -102,6 +102,7 @@ namespace bt
 		
 		queue.front()->kill();
 		qDeleteAll(queue);
+		queue.clear();
 	}
 
 }

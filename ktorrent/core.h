@@ -271,6 +271,7 @@ namespace kt
 		void autoCheckData(bt::TorrentInterface* tc);
 		void checkForKDE3Torrents();
 		void closeScanListener(ScanListener* sl);
+		void delayedRemove(bt::TorrentInterface* tc);
 
 	private:
 		GUI* gui;
@@ -286,6 +287,7 @@ namespace kt
 		QMap<KUrl,QString> add_to_groups; // Map to keep track of which group to add a torrent to
 		int sleep_suppression_cookie;
 		QMap<bt::TorrentInterface*,ScanListener*> active_scans;
+		QMap<bt::TorrentInterface*,bool> delayed_removal;
 	};
 }
 

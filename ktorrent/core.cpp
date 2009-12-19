@@ -54,6 +54,7 @@
 #include <groups/groupmanager.h>
 #include <groups/group.h>
 #include <dht/dht.h>
+#include <torrent/jobqueue.h>
 #include "settings.h"
 #include "core.h"
 #include "dialogs/fileselectdlg.h"
@@ -62,6 +63,7 @@
 #include "dialogs/torrentmigratordlg.h"
 #include "scanlistener.h"
 #include "tools/magnetmodel.h"
+
 
 
 
@@ -680,6 +682,15 @@ namespace kt
 	{
 		try
 		{
+			if (tc->getJobQueue()->runningJobs())
+			{
+				// if there are running jobs, schedule delete when they finish
+				delayed_removal.insert(tc,data_to);
+				connect(tc,SIGNAL(runningJobsDone(bt::TorrentInterface*)),
+						this,SLOT(delayedRemove(bt::TorrentInterface*)));
+				return;
+			}
+			
 			const bt::TorrentStats & s = tc->getStats();
 			removed_bytes_up += s.session_bytes_uploaded;
 			removed_bytes_down += s.session_bytes_downloaded;
@@ -707,11 +718,20 @@ namespace kt
 			qman->torrentRemoved(tc);
 			gui->updateActions();
 			bt::Delete(dir,false);
+			delayed_removal.remove(tc);
 		}
 		catch (Error & e)
 		{
 			gui->errorMsg(e.toString());
 		}
+	}
+	
+	void Core::delayedRemove(bt::TorrentInterface* tc)
+	{
+		if (!delayed_removal.contains(tc))
+			return;
+		
+		remove(tc,delayed_removal[tc]);
 	}
 
 	void Core::setMaxDownloads(int max)
