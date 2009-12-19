@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Statistics
+Name[ast]=Estadístiques
 Name[bg]=Статистики
 Name[ca]=Estadístiques
 Name[cs]=Statistiky
@@ -35,6 +36,7 @@ Name[x-test]=xxStatisticsxx
 Name[zh_CN]=统计
 Name[zh_TW]=統計
 Comment=Shows statistics about torrents in several graphs
+Comment[ast]=Amosar estadístiques sobro torrents en delles gráfiques
 Comment[bg]=Показване на статистика на торентите в няколко графики
 Comment[ca]=Mostra les estadístiques sobre els torrents en diverses gràfiques
 Comment[cs]=Zobrazení statistiky o torrentech v několika grafech

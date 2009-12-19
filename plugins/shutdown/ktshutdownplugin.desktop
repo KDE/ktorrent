@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Shutdown
+Name[ast]=Apagar
 Name[bg]=Изключване
 Name[ca]=Aturada
 Name[cs]=Vypnout
@@ -31,6 +32,7 @@ Name[uk]=Вимкнути
 Name[x-test]=xxShutdownxx
 Name[zh_TW]=關機
 Comment=Allows you to shutdown your computer when torrents finish
+Comment[ast]=Permite apagar el PC cuando finen los torrents
 Comment[ca]=Permet aturar l'ordinador en finalitzar els torrents
 Comment[cs]=Umožní vypnutí počítače po dokončení stahování torrentu
 Comment[da]=Lader dig lukke din computer ned når torrents er færdige

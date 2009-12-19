@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=KTorrent
+Name[ast]=KTorrent
 Name[be]=KTorrent
 Name[bg]=KTorrent
 Name[ca]=KTorrent
@@ -44,6 +45,7 @@ Name[x-test]=xxKTorrentxx
 Name[zh_CN]=KTorrent
 Name[zh_TW]=KTorrent
 GenericName=BitTorrent Client
+GenericName[ast]=Veceru de BitTorrent
 GenericName[be]=Кліент BitTorrent
 GenericName[bg]=Клиент за торент
 GenericName[ca]=Client de BitTorrent
@@ -95,6 +97,7 @@ MimeType=application/x-bittorrent;application/x-torrent;
 X-DBUS-StartupType=Unique
 X-DBUS-ServiceName=org.ktorrent.ktorrent
 Comment=A BitTorrent program for KDE
+Comment[ast]=Un programa de BitTorrent pa KDE
 Comment[be]=Кліент BitTorrent для KDE
 Comment[bg]=Торент клиент за KDE
 Comment[ca]=Un programa de BitTorrent per al KDE

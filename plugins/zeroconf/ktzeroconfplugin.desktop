@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Zeroconf
+Name[ast]=Zeroconf
 Name[bg]=Zeroconf
 Name[ca]=Zeroconf
 Name[cs]=Zeroconf
@@ -33,6 +34,7 @@ Name[x-test]=xxZeroconfxx
 Name[zh_CN]=ZeroConf
 Name[zh_TW]=ZeroConf
 Comment=Discover peers on the local network using the Zeroconf protocol
+Comment[ast]=Descubrir collacios na rede llocal usando'l protocolu Zeroconf
 Comment[bg]=Откриване на потребители в локалната мрежа чрез протокола "Zeroconf"
 Comment[ca]=Descobriment de parells a la xarxa local usant el protocol Zeroconf
 Comment[cs]=Hledání protějšků na lokální síti s pomocí protokolu Zeroconf

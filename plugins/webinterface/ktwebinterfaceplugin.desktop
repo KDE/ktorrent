@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Web Interface
+Name[ast]=Interface web
 Name[bg]=Уеб-интефейс
 Name[ca]=Interfície web
 Name[cs]=Webové rozhraní
@@ -33,6 +34,7 @@ Name[x-test]=xxWeb Interfacexx
 Name[zh_CN]=Web 界面
 Name[zh_TW]=網頁介面
 Comment=Allows control of KTorrent via a web interface
+Comment[ast]=Permite remanar KTorrent per aciu d'una interface web
 Comment[bg]=Включване на управление на KTorrent през уеб-интерфейс
 Comment[ca]=Permet controlar el KTorrent via una interfície web
 Comment[cs]=Ovládání ktorrentu přes webové rozhraní

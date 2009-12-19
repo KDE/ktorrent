@@ -1,6 +1,7 @@
 [Global]
 IconName=ktorrent
 Comment=KTorrent
+Comment[ast]=KTorrent
 Comment[bg]=KTorrent
 Comment[ca]=KTorrent
 Comment[cs]=KTorrent
@@ -43,6 +44,7 @@ Comment[zh_TW]=KTorrent
 
 [Event/TorrentStoppedByError]
 Name=Torrent stopped by error
+Name[ast]=Torrent paráu por fallos
 Name[ca]=El torrent s'ha aturat per un error
 Name[cs]=Torrent byl zastaven kvůli chybě
 Name[da]=Torrent stoppet af fejl
@@ -81,6 +83,7 @@ Action=Sound|Popup
 
 [Event/TorrentFinished]
 Name=Torrent has finished downloading
+Name[ast]=El torrent finó de baxase
 Name[ca]=El torrent ha finalitzat la baixada
 Name[cs]=Torrent dokončil stahování
 Name[da]=Torrent er færdig med at downloade
@@ -119,6 +122,7 @@ Action=Sound|Popup
 
 [Event/MaxShareRatioReached]
 Name=Maximum share ratio reached
+Name[ast]=Algamóse la proporción máxima de compartición
 Name[ca]=S'ha arribat a la velocitat màxima de compartició
 Name[cs]=Bylo dosaženo maximálního sdílecího poměru
 Name[da]=Maksimalt delingsforhold nået
@@ -157,6 +161,7 @@ Action=Sound|Popup
 
 [Event/MaxSeedTimeReached]
 Name=Maximum seed time reached
+Name[ast]=Algamóse'l tiempu máximu de siembra
 Name[ca]=S'ha arribat al temps màxim de sembrat
 Name[cs]=Bylo dosaženo maximální doby sdílení
 Name[da]=Maksimal seed-tid nået
@@ -195,6 +200,7 @@ Action=Sound|Popup
 
 [Event/LowDiskSpace]
 Name=Disk space is running low
+Name[ast]=Va quedando poco espaciu en discu
 Name[ca]=Queda poc espai en disc
 Name[cs]=Dochází místo na disku
 Name[da]=Diskplads er ved at løbe tør
@@ -233,6 +239,7 @@ Action=Sound|Popup
 
 [Event/CorruptedData]
 Name=Corrupted data has been found
+Name[ast]=Atoparónse datos frayaos
 Name[ca]=S'han trobat dades corruptes
 Name[cs]=Byla nalezena vadná data
 Name[da]=Defekt data er blevet fundet
@@ -271,6 +278,7 @@ Action=Sound|Popup
 
 [Event/QueueNotPossible]
 Name=Torrent cannot be enqueued
+Name[ast]=Nun puede encolase'l torrent
 Name[ca]=No es pot encuar el torrent
 Name[cs]=Torrent nelze zařadit do fronty
 Name[da]=Torrent kan ikke sættes i kø
@@ -309,6 +317,7 @@ Action=Sound|Popup
 
 [Event/CannotStart]
 Name=Torrent cannot be started
+Name[ast]=Nun puede aniciase'l torrent
 Name[ca]=No es pot engegar el torrent
 Name[cs]=Torrent nemůže být spuštěn
 Name[da]=Torrent kan ikke startes
@@ -347,6 +356,7 @@ Action=Sound|Popup
 
 [Event/CannotLoadSilently]
 Name=Torrent cannot be loaded silently
+Name[ast]=Nun puede cargase silenciosamente'l torrent
 Name[ca]=No s'ha pogut carregar silenciosament el torrent
 Name[cs]=Torrent nemůže být tiše spuštěn
 Name[da]=Torrent kan ikke indlæses tavst

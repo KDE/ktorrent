@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Syndication
+Name[ast]=Redifusión
 Name[bg]=Синдикиране
 Name[ca]=Sindicació
 Name[da]=Syndikering
@@ -32,6 +33,7 @@ Name[x-test]=xxSyndicationxx
 Name[zh_CN]=同步
 Name[zh_TW]=Syndication
 Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
+Comment[ast]=Complementu de redifusión pa KTorrent, qu'almite fontes RSS y Atom
 Comment[ca]=Connector de sindicació per al KTorrent, que permet canals RSS i Atom
 Comment[cs]=Modul pro publikování pro KTorrent podporující RSS a kanály Atom
 Comment[da]=Syndikeringsplugin til KTorrent, understøtter RSS- og Atom-feeds

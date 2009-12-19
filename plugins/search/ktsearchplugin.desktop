@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Search
+Name[ast]=Guetar
 Name[bg]=Търсене
 Name[ca]=Cerca
 Name[cs]=Hledat
@@ -34,6 +35,7 @@ Name[x-test]=xxSearchxx
 Name[zh_CN]=搜索
 Name[zh_TW]=搜尋
 Comment=Search for torrents
+Comment[ast]=Guetar torrents
 Comment[bg]=Търсене на торенти
 Comment[ca]=Cerca de torrents
 Comment[cs]=Hledat torrenty

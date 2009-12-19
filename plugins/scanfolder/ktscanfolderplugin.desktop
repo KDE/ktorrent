@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Scan Folder
+Name[ast]=Gueta de carpetes
 Name[bg]=Претърсване на директория
 Name[ca]=Exploració de carpetes
 Name[cs]=Procházení složek
@@ -34,6 +35,7 @@ Name[x-test]=xxScan Folderxx
 Name[zh_CN]=扫描文件夹
 Name[zh_TW]=掃描資料夾
 Comment=Scan folders for torrent files and load them
+Comment[ast]=Escanear carpetes con ficheros torrent y descargalos.
 Comment[bg]=Претърсване на директории за торент-файлове за добавяне
 Comment[ca]=Explora les carpetes per fitxers torrent i els carrega
 Comment[cs]=Vyhledávat ve složkách a načítat torrenty

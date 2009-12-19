@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Bandwidth Scheduler
+Name[ast]=Planificador del anchor de banda
 Name[bg]=Разчет на скоростта
 Name[ca]=Planificador d'amplada de banda
 Name[cs]=Plánovač pásma
@@ -34,6 +35,7 @@ Name[x-test]=xxBandwidth Schedulerxx
 Name[zh_CN]=带宽调度
 Name[zh_TW]=頻寬排程
 Comment=Schedule upload and download limits over a period of a week
+Comment[ast]=Planificar los llímites d'unvíu y baxada durante un periodu d'una selmana
 Comment[bg]=Приставка за разчет на качването и свалянето през седмицата
 Comment[ca]=Planificació dels límits de pujada i baixada durant un període setmanal
 Comment[cs]=Naplánování odesílacích a stahovacích limitů během týdne

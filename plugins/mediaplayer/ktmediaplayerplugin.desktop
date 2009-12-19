@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Media Player
+Name[ast]=Reproductor Multimedia
 Name[bg]=Медиен плеър
 Name[ca]=Reproductor de suports
 Name[cs]=Přehrávač médií
@@ -34,6 +35,7 @@ Name[x-test]=xxMedia Playerxx
 Name[zh_CN]=媒体播放器
 Name[zh_TW]=媒體播放器
 Comment=Phonon-based media player
+Comment[ast]=Reproductor multimedia basáu en Phonon
 Comment[bg]=Програма за преглед на мултимедия на основата на Phonon
 Comment[ca]=Reproductor de medis basat en Phonon
 Comment[cs]=Přehrávač médií založený na Phononu
