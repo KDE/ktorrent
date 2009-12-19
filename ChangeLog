@@ -1,3 +1,7 @@
+Changes in 3.3.3:
+- Fix crash caused by 0 pointer in Downloader::saveDownloads (219019)
+- Don't remove torrent when jobs are running, wait until they are done, this fixes a crash (218853)
+
 Changes in 3.3.2:
 - Fix crash when loading Feed in syndication plugin at startup (216207)
 - Replace newlines with spaces when displaying multiline comments in statustab (216683)

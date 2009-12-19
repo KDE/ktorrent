@@ -1787,6 +1787,7 @@ namespace bt
 		updateStatus();
 		// update the QM to be sure
 		updateQueue();
+		runningJobsDone(this);
 	}
 
 

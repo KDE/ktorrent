@@ -113,17 +113,7 @@ namespace bt
 		if (cman.completed())
 			return;
 		
-		ChunkDownload* cd = 0;
-		
-		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
-		{
-			if (p.getIndex() != j->first)
-				continue;
-			
-			cd = j->second;
-			break;
-		}
-		
+		ChunkDownload* cd = current_chunks.find(p.getIndex());
 		if (!cd)
 		{
 			unnecessary_data += p.getLength();
@@ -553,6 +543,16 @@ namespace bt
 		if (!fptr.open(file,"wb"))
 			return;
 
+		// See bug 219019, don't know why, but it is possible that we get 0 pointers in the map
+		// so get rid of them before we save
+		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();)
+		{
+			if (!i->second)
+				i = current_chunks.erase(i);
+			else
+				i++;
+		}
+		
 		// Save all the current downloads to a file
 		CurrentChunksHeader hdr;
 		hdr.magic = CURRENT_CHUNK_MAGIC;
@@ -560,13 +560,12 @@ namespace bt
 		hdr.minor = bt::MINOR;
 		hdr.num_chunks = current_chunks.count();
 		fptr.write(&hdr,sizeof(CurrentChunksHeader));
-
-//		Out(SYS_GEN|LOG_DEBUG) << "sizeof(CurrentChunksHeader)" << sizeof(CurrentChunksHeader) << endl;
+		
 		Out(SYS_GEN|LOG_DEBUG) << "Saving " << current_chunks.count() << " chunk downloads" << endl;
-		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
+		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();i++)
 		{
 			ChunkDownload* cd = i->second;
-			cd->save(fptr);
+			cd->save(fptr); 
 		}
 	}
 
@@ -605,37 +604,35 @@ namespace bt
 				return;
 			}
 			
-			if (!cman.getChunk(hdr.index) || current_chunks.contains(hdr.index))
+			Chunk* c = cman.getChunk(hdr.index);
+			if (!c || current_chunks.contains(hdr.index))
 			{
 				Out(SYS_GEN|LOG_DEBUG) << "Illegal chunk " << hdr.index << endl;
 				return;
 			}
-			Chunk* c = cman.getChunk(hdr.index);
-			if (!c->isExcluded())
-			{
-				ChunkDownload* cd = new ChunkDownload(c);
-				bool ret = false;
-				try
-				{
-					ret = cd->load(fptr,hdr);
-				}
-				catch (...)
-				{
-					ret = false;
-				}
-				
-				if (!ret || c->getStatus() == Chunk::ON_DISK)
-				{
-					delete cd;
-				}
-				else
-				{
-					current_chunks.insert(hdr.index,cd);
-					downloaded += cd->bytesDownloaded();
 			
-					if (tmon)
-						tmon->downloadStarted(cd);
-				}
+			ChunkDownload* cd = new ChunkDownload(c);
+			bool ret = false;
+			try
+			{
+				ret = cd->load(fptr,hdr);
+			}
+			catch (...)
+			{
+				ret = false;
+			}
+			
+			if (!ret || c->getStatus() == Chunk::ON_DISK || c->isExcluded())
+			{
+				delete cd;
+			}
+			else
+			{
+				current_chunks.insert(hdr.index,cd);
+				downloaded += cd->bytesDownloaded();
+		
+				if (tmon)
+					tmon->downloadStarted(cd);
 			}
 		}
 		
