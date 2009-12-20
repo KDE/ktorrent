@@ -574,9 +574,17 @@ namespace kt
 	
 	void Core::start(bt::TorrentInterface* tc)
 	{
-		TorrentStartResponse reason = qman->start(tc);
-		if (reason == NOT_ENOUGH_DISKSPACE || reason == QM_LIMITS_REACHED)
-			canNotStart(tc,reason);
+		if (tc->getStats().paused)
+		{
+			tc->unpause();
+		}
+		else
+		{
+			TorrentStartResponse reason = qman->start(tc);
+			if (reason == NOT_ENOUGH_DISKSPACE || reason == QM_LIMITS_REACHED)
+				canNotStart(tc,reason);
+		}
+		
 		startUpdateTimer(); // restart update timer
 	}
 	
@@ -585,6 +593,18 @@ namespace kt
 		if (todo.isEmpty())
 			return;
 		
+		// unpause paused torrents
+		for (QList<bt::TorrentInterface*>::iterator i = todo.begin();i != todo.end();)
+		{
+			if ((*i)->getStats().paused)
+			{
+				(*i)->unpause();
+				i = todo.erase(i);
+			}
+			else
+				i++;
+		}
+		
 		if (todo.count() == 1)
 		{
 			start(todo.front());
@@ -592,8 +612,9 @@ namespace kt
 		else
 		{
 			qman->start(todo);
-			startUpdateTimer(); // restart update timer
 		}
+		
+		startUpdateTimer(); // restart update timer
 	}
 
 	void Core::stop(bt::TorrentInterface* tc)
@@ -604,6 +625,19 @@ namespace kt
 	void Core::stop(QList<bt::TorrentInterface*> & todo)
 	{
 		qman->stop(todo);
+	}
+	
+	void Core::pause(TorrentInterface* tc)
+	{
+		tc->pause();
+	}
+
+	void Core::pause(QList<bt::TorrentInterface*>& todo)
+	{
+		foreach (bt::TorrentInterface* tc,todo)
+		{
+			tc->pause();
+		}
 	}
 
 	QString Core::findNewTorrentDir() const

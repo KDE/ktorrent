@@ -128,6 +128,12 @@ namespace kt
 			current->stopAllTorrents();
 	}
 		
+	void ViewManager::pauseTorrents()
+	{
+		if (current)
+			current->pauseTorrents();
+	}
+
 	void ViewManager::removeTorrents()
 	{
 		if (current)
@@ -400,6 +406,7 @@ namespace kt
 		bool en_announce = false;
 		bool en_add_peer = false;
 		bool en_peer_sources = false;
+		bool en_pause = false;
 
 		foreach (bt::TorrentInterface* tc,sel)
 		{
@@ -432,6 +439,11 @@ namespace kt
 				en_stop = true;
 				if (tc->announceAllowed())
 					en_announce = true;
+				
+				if (!s.paused)
+					en_pause = true;
+				else
+					en_start = true;
 			}
 			
 			if (!s.priv_torrent)
@@ -447,6 +459,7 @@ namespace kt
 		stop_torrent->setEnabled(en_stop);
 		remove_torrent->setEnabled(en_remove);
 		remove_torrent_and_data->setEnabled(en_remove);
+		pause_torrent->setEnabled(en_pause);
 		preview->setEnabled(en_prev);
 		add_peers->setEnabled(en_add_peer);
 		manual_announce->setEnabled(en_announce);
@@ -541,6 +554,11 @@ namespace kt
 		stop_torrent->setShortcut(KShortcut(Qt::CTRL + Qt::Key_H));
 		connect(stop_torrent,SIGNAL(triggered()),this,SLOT(stopTorrents()));
 		ac->addAction("stop",stop_torrent);
+		
+		pause_torrent = new KAction(KIcon("media-playback-pause"),i18n("Pause"),this);
+		pause_torrent->setToolTip(i18n("Pause all selected torrents in the current tab"));
+		connect(pause_torrent,SIGNAL(triggered()),this,SLOT(pauseTorrents()));
+		ac->addAction("pause",pause_torrent);
 		
 		remove_torrent = new KAction(KIcon("kt-remove"),i18n("Remove"),this);
 		remove_torrent->setToolTip(i18n("Remove all selected torrents in the current tab"));

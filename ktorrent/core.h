@@ -160,6 +160,8 @@ namespace kt
 		virtual void stop(bt::TorrentInterface* tc);
 		virtual void stop(QList<bt::TorrentInterface*> & todo);
 		virtual void remove(bt::TorrentInterface* tc,bool data_to);
+		virtual void pause(bt::TorrentInterface* tc);
+		virtual void pause(QList<bt::TorrentInterface*> & todo);
 		
 		/**
 		 * A torrent is about to be started. We will do some file checks upon this signal.

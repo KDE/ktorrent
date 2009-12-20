@@ -41,6 +41,7 @@ namespace bt
 		last_download_activity_time = last_upload_activity_time = 0;
 		num_corrupted_chunks = 0;
 		qm_can_start = false;
+		paused = false;
 	}
 	
 	
@@ -89,6 +90,8 @@ namespace bt
 				return i18n("Checking data");
 			case NO_SPACE_LEFT:
 				return i18n("Stopped. No space left on device.");
+			case PAUSED:
+				return i18n("Paused");
 			default:
 				return QString();
 		}

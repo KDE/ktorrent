@@ -143,6 +143,14 @@ namespace bt
 			return;
 		}
 		
+		if(stats.paused)
+		{
+			stalled_timer.update();
+			pman->update();
+			updateStatus();
+			updateStats();
+			return;
+		}
 
 		try
 		{
@@ -297,13 +305,75 @@ namespace bt
 		istats.io_error = true;
 		statusChanged(this);
 	}
+	
+	void TorrentControl::pause()
+	{
+		if (!stats.running || stats.paused)
+			return;
+		
+		pman->pause();
+	
+		try
+		{
+			downloader->saveDownloads(tordir + "current_chunks");
+		}
+		catch (Error & e)
+		{
+			// print out warning in case of failure
+			// it doesn't corrupt the data, so just a couple of lost chunks
+			Out(SYS_GEN|LOG_NOTICE) << "Warning : " << e.toString() << endl;
+		}
+	
+		downloader->pause();
+		downloader->saveWebSeeds(tordir + "webseeds");
+		downloader->removeAllWebSeeds();
+		cman->stop();
+		stats.paused = true;
+		saveStats();
+		statusChanged(this);
+		
+		Out(SYS_GEN|LOG_NOTICE) << "Paused " << tor->getNameSuggestion() << endl;
+	}
+	
+	void TorrentControl::unpause()
+	{
+		if (!stats.running || !stats.paused || job_queue->runningJobs())
+			return;
+	
+		cman->start();
+	
+		try
+		{
+			downloader->loadDownloads(tordir + "current_chunks");
+		}
+		catch (Error & e)
+		{
+			// print out warning in case of failure
+			// we can still continue the download
+			Out(SYS_GEN|LOG_NOTICE) << "Warning : " << e.toString() << endl;
+		}
+	
+		downloader->loadWebSeeds(tordir + "webseeds");
+		pman->unpause();
+		loadStats();
+		stats.paused = false;
+		statusChanged(this);
+		Out(SYS_GEN|LOG_NOTICE) << "Unpaused " << tor->getNameSuggestion() << endl;
+	}
 
 	void TorrentControl::start()
 	{	
+		if(stats.running && stats.paused)
+		{
+			unpause();
+			return;
+		}
+		
 		// do not start running torrents or when there is a job running
 		if (stats.running || job_queue->runningJobs())
 			return;
 
+		stats.paused = false;
 		stats.stopped_by_error = false;
 		istats.io_error = false;
 		istats.diskspace_warning_emitted = false;
@@ -427,6 +497,7 @@ namespace bt
 		stats.running = false;
 		stats.autostart = wjob != 0;
 		stats.queued = false;
+		stats.paused = false;
 		saveStats();
 		updateStatus();
 		updateStats();
@@ -674,7 +745,7 @@ namespace bt
 			p->getPacketWriter().sendBitSet(cman->getBitSet());
 		}
 		
-		if (!stats.completed)
+		if (!stats.completed && !stats.paused)
 			p->getPacketWriter().sendInterested();
 		
 		if (!stats.priv_torrent)
@@ -882,6 +953,8 @@ namespace bt
 			stats.status = NOT_STARTED;
 		else if (!stats.running)
 			stats.status = STOPPED;
+		else if (stats.running && stats.paused)
+			stats.status = PAUSED;
 		else if (stats.running && stats.completed)
 			stats.status = SEEDING;
 		else if (stats.running) 

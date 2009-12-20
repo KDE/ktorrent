@@ -65,6 +65,7 @@ namespace bt
 		num_pending = 0;
 		pex_on = !tor.isPrivate();
 		piece_handler = 0;
+		paused = false;
 	}
 
 
@@ -80,6 +81,32 @@ namespace bt
 		
 		qDeleteAll(peer_list.begin(),peer_list.end());
 		peer_list.clear();
+	}
+
+	void PeerManager::pause()
+	{
+		if (paused)
+			return;
+		
+		foreach (Peer* p,peer_list)
+		{
+			p->pause();
+		}
+		paused = true;
+	}
+
+	void PeerManager::unpause()
+	{
+		if (!paused)
+			return;
+		
+		foreach (Peer* p,peer_list)
+		{
+			p->unpause();
+			if (p->hasWantedChunks(wanted_chunks)) // send interested when it has wanted chunks
+				p->getPacketWriter().sendInterested();
+		}
+		paused = false;
 	}
 
 	void PeerManager::update()
@@ -122,24 +149,9 @@ namespace bt
 		}
 		if (wanted_changed)
 		{
-			i = peer_list.begin();
-			while (i != peer_list.end())
+			foreach (Peer* p,peer_list)
 			{
-				Peer* p = *i;
-				const BitSet & peer_bitset = p->getBitSet();
-				Uint32 index = 0;
-				Uint32 num_bits = peer_bitset.getNumBits();
-				bool interested = false;
-				while (index < num_bits)
-				{
-					if(wanted_chunks.get(index) && peer_bitset.get(index))
-					{
-						interested = true;
-						break;
-					}
-					index++;
-				}
-				if (interested)
+				if (p->hasWantedChunks(wanted_chunks))
 					p->getPacketWriter().sendInterested();
 				else
 					p->getPacketWriter().sendNotInterested();
@@ -266,7 +278,7 @@ namespace bt
 
 	void PeerManager::have(Peer* p,Uint32 index)
 	{
-		if (wanted_chunks.get(index))
+		if (wanted_chunks.get(index) && !paused)
 			p->getPacketWriter().sendInterested();
 		available_chunks.set(index,true);
 		cnt->inc(index);
@@ -285,7 +297,7 @@ namespace bt
 				cnt->inc(i);
 			}
 		}
-		if (interested)
+		if (interested && !paused)
 			p->getPacketWriter().sendInterested();
 	}
 	
@@ -391,6 +403,9 @@ namespace bt
 	
 	void PeerManager::connectToPeers()
 	{
+		if(paused)
+			return;
+		
 		if (potential_peers.size() == 0)
 			return;
 		
@@ -548,6 +563,7 @@ namespace bt
 	void PeerManager::start()
 	{
 		started = true;
+		unpause();
 		Globals::instance().getServer().addPeerManager(this);
 	}
 		

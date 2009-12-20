@@ -113,6 +113,7 @@ namespace kt
 		void update();
 		void startTorrents();
 		void stopTorrents();
+		void pauseTorrents();
 		void removeTorrents();
 		void removeTorrentsAndData();
 		void startAllTorrents();

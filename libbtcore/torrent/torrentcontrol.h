@@ -269,6 +269,16 @@ namespace bt
 		void update();
 		
 		/**
+		 * Pause the torrent.
+		 */
+		void pause();
+		
+		/**
+		 * Unpause the torrent.
+		 */
+		void unpause();
+		
+		/**
 		 * Start the download of the torrent.
 		 */
 		void start();

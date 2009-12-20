@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="ktorrent" version="18">
+<kpartgui name="ktorrent" version="19">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
 	  <Action name="file_new"/>
@@ -18,6 +18,7 @@
   </Menu>
   <Menu name="Downloads"><text>Downloads</text>
 	<Action name="start" />
+	<Action name="pause" />
 	<Action name="stop" />
 	<Action name="remove" />
 	<Separator/>
@@ -47,6 +48,7 @@
 
 <Menu name="ViewMenu"><text>ViewMenu</text>
 	<Action name="start" />
+	<Action name="pause" />
 	<Action name="stop" />
 	<Action name="remove" />
 	<Action name="view_remove_torrent_and_data" />
@@ -96,6 +98,7 @@
 	<Action name="show_group_view" />
 	<Separator/>
 	<Action name="start"/>
+	<Action name="pause" />
 	<Action name="stop"/>
 	<Action name="remove"/>
 	<Action name="start_all"/>

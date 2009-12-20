@@ -163,7 +163,7 @@ namespace bt
 		wait_queue.clear();
 		reqs.clear();
 	}
-		
+
 	void PeerDownloader::piece(const Piece & p)
 	{
 		Request r(p);
@@ -214,7 +214,6 @@ namespace bt
 		while (!reqs.isEmpty() && (now - reqs.first().time_stamp > MAX_INTERVAL))
 			timedout(reqs.takeFirst().req);
 	}
-	
 	
 	Uint32 PeerDownloader::getMaxChunkDownloads() const
 	{

@@ -113,6 +113,18 @@ namespace kt
 		 * @param todo The list of torrents
 		 */
 		virtual void stop(QList<bt::TorrentInterface*> & todo) = 0;
+		
+		/**
+		 * Pause a torrent
+		 * @param tc The torrent
+		 */
+		virtual void pause(bt::TorrentInterface* tc) = 0;
+		
+		/**
+		 * Pause a list of torrents.
+		 * @param todo The list of torrents
+		 */
+		virtual void pause(QList<bt::TorrentInterface*> & todo) = 0;
 
 		/// Get CurrentStats structure
 		virtual CurrentStats getStats() = 0;

@@ -101,6 +101,16 @@ namespace bt
 		virtual void update() = 0;
 		
 		/**
+		 * Pause the torrent.
+		 */
+		virtual void pause() = 0;
+		
+		/**
+		 * Unpause the torrent.
+		 */
+		virtual void unpause() = 0;
+		
+		/**
 		 * Start the download of the torrent.
 		 */
 		virtual void start() = 0;

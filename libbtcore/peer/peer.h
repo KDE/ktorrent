@@ -117,7 +117,7 @@ namespace bt
 		bool areWeInterested() const {return stats.am_interested;}
 
 		/// Are we choked for the Peer
-		bool areWeChoked() const {return !stats.has_upload_slot;}
+		bool areWeChoked() const {return !stats.has_upload_slot || paused;}
 
 		/// Are we being snubbed by the Peer
 		bool isSnubbed() const;
@@ -136,6 +136,12 @@ namespace bt
 
 		/// Update the up- and down- speed and handle incoming packets
 		void update();
+
+		/// Pause the peer connection
+		void pause();
+		
+		/// Unpause the peer connection
+		void unpause();
 
 		/// Get the PeerDownloader.
 		PeerDownloader* getPeerDownloader() {return downloader;}
@@ -245,6 +251,9 @@ namespace bt
 		/// Enable or disable hostname resolving
 		static void setResolveHostnames(bool on);
 		
+		/// Check if the peer has wanted chunks
+		bool hasWantedChunks(const BitSet & wanted_chunks) const;
+		
 	private slots:
 		void resolved(const QString & hinfo);
 		
@@ -279,6 +288,7 @@ namespace bt
 		PeerManager* pman;
 		PtrMap<Uint32,PeerProtocolExtension> extensions;
 		Uint32 ut_pex_id;
+		bool paused;
 		
 		static bool resolve_hostname;
 
@@ -289,3 +299,4 @@ namespace bt
 }
 
 #endif
+

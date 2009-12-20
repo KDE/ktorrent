@@ -45,6 +45,7 @@ namespace bt
 		QUEUED,
 		CHECKING_DATA,
 		NO_SPACE_LEFT,
+		PAUSED,
 		INVALID_STATUS
 	};
 
@@ -128,6 +129,8 @@ namespace bt
 		TimeStamp last_upload_activity_time;
 		/// Whether or not the QM can start this torrent
 		bool qm_can_start;
+		/// See if this torrent is paused
+		bool paused;
 		/// Error message for the user
 		QString error_msg;
 		

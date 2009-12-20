@@ -91,6 +91,16 @@ namespace bt
 		void update();
 		
 		/**
+		 * Pause the peer connections
+		 */
+		void pause();
+		
+		/**
+		 * Unpause the peer connections 
+		 */
+		void unpause();
+		
+		/**
 		 * Remove dead peers.
 		 * @return The number of dead ones removed
 		 */
@@ -282,6 +292,7 @@ namespace bt
 		bool pex_on;
 		bool wanted_changed;
 		PieceHandler* piece_handler;
+		bool paused;
 		
 		static Uint32 max_connections;
 		static Uint32 max_total_connections;

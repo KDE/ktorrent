@@ -103,6 +103,9 @@ namespace bt
 		/// Remove a webseed
 		bool removeWebSeed(const KUrl & url);
 		
+		/// Remove all webseeds
+		void removeAllWebSeeds();
+		
 		/// Save the user created webseeds
 		void saveWebSeeds(const QString & file);
 		
@@ -125,6 +128,11 @@ namespace bt
 		 * Clear all downloads. Deletes all active downloads.
 		 */
 		void clearDownloads();
+		
+		/**
+		 * Pause the download
+		 */
+		void pause();
 		
 		CurChunkCItr beginDownloads() const {return current_chunks.begin();}
 		CurChunkCItr endDownloads() const {return current_chunks.end();}

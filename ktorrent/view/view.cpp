@@ -193,6 +193,14 @@ namespace kt
 			core->stop(sel);
 	}
 
+	void View::pauseTorrents()
+	{
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		if (sel.count() > 0)
+			core->pause(sel);
+	}
+	
 	void View::removeTorrents()
 	{
 		QList<bt::TorrentInterface*> sel;

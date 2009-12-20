@@ -497,6 +497,22 @@ namespace bt
 			ws->cancel();
 	}
 	
+	void Downloader::pause()
+	{
+		if (tmon)
+		{
+			for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
+			{
+				ChunkDownload* cd = i->second;
+				tmon->downloadRemoved(cd);
+			}
+		}
+		
+		current_chunks.clear();
+		foreach (WebSeed* ws,webseeds)
+			ws->reset();
+	}
+	
 	Uint32 Downloader::downloadRate() const
 	{
 		// sum of the download rate of each peer
@@ -868,6 +884,12 @@ namespace bt
 		return false;
 	}
 	
+	void Downloader::removeAllWebSeeds()
+	{
+		webseeds.clear();
+		webseeds_chunks.clear();
+	}
+
 	void Downloader::saveWebSeeds(const QString & file)
 	{
 		QFile fptr(file);
