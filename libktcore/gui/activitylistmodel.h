@@ -45,6 +45,7 @@ namespace kt
 		virtual QVariant data(const QModelIndex& index, int role) const;
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
 		virtual void sort(int column,Qt::SortOrder order);
+		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 	private:
 		ActivityListWidget* widget;
 		QList<Activity*> activities;

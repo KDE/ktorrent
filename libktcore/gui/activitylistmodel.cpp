@@ -114,4 +114,12 @@ namespace kt
 		emitLayoutChanged();
 	}
 
+	Qt::ItemFlags ActivityListModel::flags(const QModelIndex& index) const
+	{
+		if (!index.isValid())
+			return 0;
+		
+		return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+	}
+
 }
