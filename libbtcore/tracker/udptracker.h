@@ -64,6 +64,7 @@ namespace bt
 		void onConnTimeout();
 		void connectReceived(Int32 tid,Int64 connection_id);
 		void announceReceived(Int32 tid,const QByteArray & buf);
+		void scrapeReceived(Int32 tid,const QByteArray & buf);
 		void onError(Int32 tid,const QString & error_string);
 		void onResolverResults(KNetwork::KResolverResults res);
 		virtual void manualUpdate();
@@ -71,6 +72,7 @@ namespace bt
 	private:
 		void sendConnect();
 		void sendAnnounce();
+		void sendScrape();
 		bool doRequest();
 
 		enum Event
@@ -80,17 +82,26 @@ namespace bt
 			STARTED = 2,
 			STOPPED = 3
 		};
+		
+		enum Todo
+		{
+			NOTHING = 0,
+			SCRAPE_REQUEST = 1,
+			ANNOUNCE_REQUEST = 2
+		};
 
 	private:
 		KNetwork::KSocketAddress address;
 		Int32 transaction_id;
 		Int64 connection_id;
+		Int32 scrape_transaction_id;
 
 		Uint32 data_read;
 		int failures;
 		QTimer conn_timer;
 		Event event;
 		bool resolved;
+		Uint32 todo;
 
 		static UDPTrackerSocket* socket;
 		static Uint32 num_instances;

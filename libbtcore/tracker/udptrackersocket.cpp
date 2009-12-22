@@ -98,6 +98,13 @@ namespace bt
 		transactions.insert(tid,ANNOUNCE);
 	}
 
+	void UDPTrackerSocket::sendScrape(Int32 tid, const bt::Uint8* data, const KNetwork::KSocketAddress& addr)
+	{
+		KDatagramPacket packet((const char*)data,36,addr);
+		sock->send(packet);
+		transactions.insert(tid,SCRAPE);
+	}
+
 	void UDPTrackerSocket::cancelTransaction(Int32 tid)
 	{
 		transactions.remove(tid);
@@ -168,6 +175,28 @@ namespace bt
 		error(tid,msg);
 	}
 
+	void UDPTrackerSocket::handleScrape(const QByteArray& buf)
+	{
+		// Read the transaction_id and check it
+		Int32 tid = ReadInt32((Uint8*)buf.data(),4);
+		QMap<Int32,Action>::iterator i = transactions.find(tid);
+		// if we can't find the transaction, just return
+		if (i == transactions.end())
+			return;
+		
+		// check whether the transaction is a SCRAPE
+		if (i.value() != SCRAPE)
+		{
+			transactions.erase(i);
+			error(tid,QString());
+			return;
+		}
+		
+		// everything ok, emit signal
+		transactions.erase(i);
+		scrapeReceived(tid,buf);
+	}
+
 	void UDPTrackerSocket::dataReceived()
 	{
 		if (sock->bytesAvailable() == 0)
@@ -194,6 +223,9 @@ namespace bt
 				break;
 			case ERROR:
 				handleError(packet.data());
+				break;
+			case SCRAPE:
+				handleScrape(packet.data());
 				break;
 		}
 	}

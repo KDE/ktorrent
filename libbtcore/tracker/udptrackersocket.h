@@ -76,6 +76,16 @@ namespace bt
 		 * @param addr The address to send to
 		 */
 		void sendAnnounce(Int32 tid,const Uint8* data,const KNetwork::KSocketAddress & addr);
+		
+		/**
+		* Send a scrape message. As a response to this, the scrapeReceived
+		* signal will be emitted, classes recieving this signal should check if
+		* the transaction_id is the same.
+		* @param tid The transaction_id
+		* @param data The data to send (connect input structure, in UDP Tracker specifaction)
+		* @param addr The address to send to
+		*/
+		void sendScrape(Int32 tid,const Uint8* data,const KNetwork::KSocketAddress & addr);
 
 		/**
 		 * If a transaction times out, this should be used to cancel it.
@@ -115,6 +125,13 @@ namespace bt
 		 * @param buf The data
 		 */
 		void announceReceived(Int32 tid,const QByteArray & buf);
+		
+		/**
+		* Emitted when a scrape message is received.
+		* @param tid The transaction_id
+		* @param buf The data
+		*/
+		void scrapeReceived(Int32 tid,const QByteArray & buf);
 
 		/**
 		 * Signal emitted, when an error occurs during a transaction.
@@ -127,6 +144,7 @@ namespace bt
 		void handleConnect(const QByteArray & buf);
 		void handleAnnounce(const QByteArray & buf);
 		void handleError(const QByteArray & buf);
+		void handleScrape(const QByteArray & buf);
 		
 	private:
 		Uint16 udp_port;

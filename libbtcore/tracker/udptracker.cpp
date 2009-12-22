@@ -50,6 +50,8 @@ namespace bt
 		connection_id = 0;
 		transaction_id = 0;
 		interval = 0;
+		scrape_transaction_id = 0;
+		todo = NOTHING;
 		
 		conn_timer.setSingleShot(true);
 		connect(&conn_timer,SIGNAL(timeout()),this,SLOT(onConnTimeout()));
@@ -59,6 +61,8 @@ namespace bt
 				this,SLOT(connectReceived(Int32, Int64 )));
 		connect(socket,SIGNAL(error(Int32, const QString& )),
 				this,SLOT(onError(Int32, const QString& )));
+		connect(socket,SIGNAL(scrapeReceived(Int32,QByteArray)),
+				this,SLOT(scrapeReceived(Int32,QByteArray)));
 		
 		resolved = false;
 	}
@@ -128,12 +132,15 @@ namespace bt
 		
 		connection_id = cid;
 		failures = 0;
-		sendAnnounce();
+		if (todo & ANNOUNCE_REQUEST)
+			sendAnnounce();
+		if (todo & SCRAPE_REQUEST)
+			sendScrape();
 	}
 	
 	void UDPTracker::announceReceived(Int32 tid,const QByteArray & b)
 	{
-		if (tid != transaction_id)
+		if (tid != transaction_id || b.size() < 20)
 			return;
 
 		Uint8* buf = (Uint8*)b.data();
@@ -201,16 +208,20 @@ namespace bt
 		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url : " << url << endl;
 		if (!resolved)
 		{
+			todo |= ANNOUNCE_REQUEST;
 			KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
 									url.host(),QString::number(url.port(80)));
 		}
 		else if (connection_id == 0)
 		{
+			todo |= ANNOUNCE_REQUEST;
 			failures = 0;
 			sendConnect();
 		}
 		else
+		{
 			sendAnnounce();
+		}
 
 		status = TRACKER_ANNOUNCING;
 		requestPending();
@@ -219,6 +230,44 @@ namespace bt
 	
 	void UDPTracker::scrape()
 	{
+		Out(SYS_TRK|LOG_NOTICE) << "Doing scrape request to url : " << url << endl;
+		if (!resolved)
+		{
+			todo |= SCRAPE_REQUEST;
+			KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
+									url.host(),QString::number(url.port(80)));
+		}
+		else if (connection_id == 0)
+		{
+			todo |= SCRAPE_REQUEST;
+			failures = 0;
+			sendConnect();
+		}
+		else
+		{
+			sendScrape();
+		}
+	}
+
+	void UDPTracker::scrapeReceived(Int32 tid, const QByteArray& b)
+	{
+		/*
+		0				32-bit integer	action	2
+		4				32-bit integer	transaction_id
+		8 + 12 * n		32-bit integer	seeders
+		12 + 12 * n		32-bit integer	completed
+		16 + 12 * n		32-bit integer	leechers
+		8 + 12 * N 
+		*/
+		if (tid != scrape_transaction_id || b.size() < 20)
+			return;
+		
+		Uint8* buf = (Uint8*)b.data();
+		seeders = ReadInt32(buf,8);
+		total_downloaded = ReadInt32(buf,12);
+		leechers = ReadInt32(buf,16);
+		Out(SYS_TRK|LOG_DEBUG) << "Scrape : leechers = " << leechers 
+		<< ", seeders = " << seeders << ", downloaded = " << total_downloaded << endl;
 	}
 
 	void UDPTracker::sendConnect()
@@ -233,6 +282,7 @@ namespace bt
 
 	void UDPTracker::sendAnnounce()
 	{		
+		todo &= ~ANNOUNCE_REQUEST;
 	//	Out(SYS_TRK|LOG_NOTICE) << "UDPTracker::sendAnnounce()" << endl;
 		transaction_id = socket->newTransactionID();
 		/*
@@ -287,6 +337,29 @@ namespace bt
 
 		socket->sendAnnounce(transaction_id,buf,address);
 	}
+	
+	
+	void UDPTracker::sendScrape()
+	{
+		todo &= ~SCRAPE_REQUEST;
+		/*
+		0				64-bit integer	connection_id
+		8				32-bit integer	action	2
+		12				32-bit integer	transaction_id
+		16 + 20 * n		20-byte string	info_hash
+		16 + 20 * N 
+		*/
+		scrape_transaction_id = socket->newTransactionID();
+		Uint8 buf[36];
+		WriteInt64(buf,0,connection_id);
+		WriteInt32(buf,8,UDPTrackerSocket::SCRAPE);
+		WriteInt32(buf,12,scrape_transaction_id);
+		const SHA1Hash & info_hash = tds->infoHash();
+		memcpy(buf+16,info_hash.getData(),20);
+		
+		socket->sendScrape(scrape_transaction_id,buf,address);
+	}
+
 
 	void UDPTracker::onConnTimeout()
 	{
@@ -322,7 +395,12 @@ namespace bt
 				sendConnect();
 			}
 			else
-				sendAnnounce();
+			{
+				if (todo & ANNOUNCE_REQUEST)
+					sendAnnounce();
+				if (todo & SCRAPE_REQUEST)
+					sendScrape();
+			}
 		}
 		else 
 		{
