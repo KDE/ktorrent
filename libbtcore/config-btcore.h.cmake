@@ -3,7 +3,9 @@
 
 #cmakedefine HAVE_FOPEN64 1
 #cmakedefine HAVE_FSEEKO64 1
+#cmakedefine HAVE_FSEEKO 1
 #cmakedefine HAVE_FTELLO64 1
+#cmakedefine HAVE_FTELLO 1
 #cmakedefine HAVE_FSTAT64 1
 #cmakedefine HAVE_FTRUNCATE64 1
 #cmakedefine HAVE_LSEEK64 1
