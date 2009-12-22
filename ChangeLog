@@ -26,6 +26,7 @@ Changes in 3.3.3:
 - Don't remove torrent when jobs are running, wait until they are done, this fixes a crash (218853)
 - Disable editing of items in ActivityListModel (219355)
 - Make sure checks for ftello and fseeko are done, fixes a problem with large file sizes on BSD (217523)
+- Make sure reannounce timer in UDPTracker is always stopped in the stop call (219663)
 
 Changes in 3.3.2:
 - Fix crash when loading Feed in syndication plugin at startup (216207)
