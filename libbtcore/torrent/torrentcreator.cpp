@@ -46,7 +46,7 @@ namespace bt
 								   const QString & name,
 								   const QString & comments,bool priv, bool decentralized)
 	: target(tar),trackers(track),webseeds(webseeds),chunk_size(cs),
-	name(name),comments(comments),cur_chunk(0),priv(priv),tot_size(0), decentralized(decentralized)
+	name(name),comments(comments),cur_chunk(0),priv(priv),tot_size(0), decentralized(decentralized),stopped(false)
 	{
 		this->chunk_size *= 1024;
 		QFileInfo fi(target);
@@ -239,10 +239,6 @@ namespace bt
 
 	void TorrentCreator::savePieces(BEncoder & enc)
 	{
-		if (hashes.empty())
-			while (!calculateHash())
-				;
-
 		Array<Uint8> big_hash(num_chunks*20);
 		for (Uint32 i = 0;i < num_chunks;++i)
 		{
@@ -261,7 +257,6 @@ namespace bt
 
 		Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
 		fptr.seek(File::BEGIN,(Int64)cur_chunk*chunk_size);
-			
 		fptr.read(buf,s);
 		SHA1Hash h = SHA1Hash::generate(buf,s);
 		hashes.append(h);
@@ -341,6 +336,13 @@ namespace bt
 			return calcHashMulti();
 	}
 	
+	void TorrentCreator::run()
+	{
+		if (hashes.empty())
+			while (!stopped && !calculateHash())
+				;
+	}
+
 	TorrentControl* TorrentCreator::makeTC(const QString & data_dir)
 	{
 		QString dd = data_dir;

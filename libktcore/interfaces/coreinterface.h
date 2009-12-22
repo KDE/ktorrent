@@ -29,6 +29,7 @@ namespace bt
 {
 	class TorrentInterface;
 	class MagnetLink;
+	class TorrentCreator;
 }
 
 namespace kt
@@ -227,6 +228,9 @@ namespace kt
 		
 		/// Load a magnet link silently
 		virtual void loadSilently(const bt::MagnetLink & mlink,const QString & group) = 0;
+		
+		/// Create a torrent (Note: hash calculation should be finished, and torrent should have been saved)
+		virtual bt::TorrentInterface* createTorrent(bt::TorrentCreator* tc,bool seed) = 0;
 	signals:
 		/**
 		 * Seeing that when load returns the loading process may not have finished yet,

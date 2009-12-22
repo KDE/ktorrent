@@ -37,7 +37,7 @@ using namespace bt;
 
 namespace kt
 {
-	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : KDialog(parent),core(core),gui(gui)
+	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : KDialog(parent),core(core),gui(gui),mktor(0)
 	{
 		tracker_completion = webseeds_completion = nodes_completion = 0;
 		setWindowTitle(i18n("Create A Torrent"));
@@ -92,7 +92,9 @@ namespace kt
 		m_add_webseed->setEnabled(false);
 		m_remove_webseed->setEnabled(false);
 		
+		connect(&update_timer,SIGNAL(timeout()),this,SLOT(updateProgressBar()));
 		loadCompleterData();
+		m_progress->setValue(0);
 	}
 	
 	TorrentCreatorDlg::~TorrentCreatorDlg()
@@ -100,6 +102,8 @@ namespace kt
 		tracker_completion->save();
 		webseeds_completion->save();
 		nodes_completion->save();
+		
+		delete mktor;
 	}
 	
 	void TorrentCreatorDlg::loadGroups()
@@ -333,29 +337,37 @@ namespace kt
 			QListWidgetItem* item = m_webseed_list->item(i);
 			webseeds.append(KUrl(item->text()));
 		}
+		
+		mktor = new bt::TorrentCreator(url.toLocalFile(),trackers,webseeds,chunk_size,name,
+									   m_comments->text(),m_private->isChecked(),m_dht->isChecked());
+		
+		connect(mktor,SIGNAL(finished()),this,SLOT(hashCalculationDone()),Qt::QueuedConnection);
+		mktor->start();
+		setProgressBarEnabled(true);
+		update_timer.start(1000);
+		m_progress->setMaximum(mktor->getNumChunks());
+	}
 
-		QString s = KFileDialog::getSaveFileName(
-				KUrl("kfiledialog:///openTorrent"),"*.torrent|" + i18n("Torrent Files (*.torrent)"),
-				this,i18n("Choose a file to save the torrent"));
-
+	void TorrentCreatorDlg::hashCalculationDone()
+	{
+		setProgressBarEnabled(false);
+		update_timer.stop();
+		
+		QString filter = "*.torrent|" + i18n("Torrent Files (*.torrent)");
+		QString s = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"),filter,
+						this,i18n("Choose a file to save the torrent"));
+															   
 		if (s.isNull())
+		{
+			QDialog::reject();
 			return;
-	
+		}
+		
 		if (!s.endsWith(".torrent"))
 			s += ".torrent";
-
-		KProgressDialog* dlg = new KProgressDialog(this,0);
-		dlg->setWindowTitle(i18n("Creating Torrent"));
-		dlg->setLabelText(i18n("Creating %1...",s));
-		dlg->setModal(true);
-		dlg->setAllowCancel(false);
-		dlg->show();
-		bt::TorrentInterface* tc = core->makeTorrent(
-			url.toLocalFile(),trackers,webseeds,chunk_size,name,m_comments->text(),
-			m_start_seeding->isChecked(),s,m_private->isChecked(),
-			dlg->progressBar(),
-			m_dht->isChecked());
 		
+		mktor->saveTorrent(s);
+		bt::TorrentInterface* tc = core->createTorrent(mktor,m_start_seeding->isChecked());
 		if (m_group->currentIndex() > 0 && tc)
 		{
 			QString groupName = m_group->currentText();
@@ -369,14 +381,35 @@ namespace kt
 			}
 		}
 		
-		delete dlg;
 		QDialog::accept();
 	}
 	
 	void TorrentCreatorDlg::reject()
 	{
+		if (mktor && mktor->isRunning())
+		{
+			disconnect(mktor,SIGNAL(finished()),this,SLOT(hashCalculationDone()));
+			mktor->stop();
+			mktor->wait();
+		}
 		QDialog::reject();
 	}
+		
+	void TorrentCreatorDlg::setProgressBarEnabled(bool on)
+	{
+		m_progress->setEnabled(on);
+		m_options->setEnabled(!on);
+		m_url->setEnabled(!on);
+		m_tabs->setEnabled(!on);
+		m_comments->setEnabled(!on);
+		button(Ok)->setEnabled(!on);
+	}
+
+	void TorrentCreatorDlg::updateProgressBar()
+	{
+		m_progress->setValue(mktor->getCurrentChunk());
+	}
+
 }
 
 #include "torrentcreatordlg.moc"

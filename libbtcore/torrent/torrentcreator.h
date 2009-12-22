@@ -20,7 +20,8 @@
 #ifndef BTTORRENTCREATOR_H
 #define BTTORRENTCREATOR_H
 
-#include <qstringlist.h>
+#include <QThread>
+#include <QStringList>
 #include <util/sha1hash.h>
 #include <btcore_export.h>
 #include "torrent.h"
@@ -38,8 +39,10 @@ namespace bt
 	 * It also allows to create a TorrentControl object, so
 	 * that we immediately can start to share the torrent.
 	 */
-	class BTCORE_EXPORT TorrentCreator
+	class BTCORE_EXPORT TorrentCreator : public QThread
 	{
+		Q_OBJECT
+		
 		// input values
 		QString target;
 		QStringList trackers;
@@ -56,6 +59,7 @@ namespace bt
 		bool priv;
 		Uint64 tot_size;
 		bool decentralized;
+		bool stopped;
 	public:
 		/**
 		 * Constructor.
@@ -72,17 +76,10 @@ namespace bt
 					   const QString & comments,bool priv,bool decentralized);
 		virtual ~TorrentCreator();
 
-		
-		/**
-		 * Calculate the hash of a chunk, this function should be called
-		 * until it returns true. We do it this way so that the calling
-		 * function can display a progress dialog. 
-		 * @return true if all hashes are calculated, false otherwise
-		 */
-		bool calculateHash();
-
 		/// Get the number of chunks
 		Uint32 getNumChunks() const {return num_chunks;}
+		
+		Uint32 getCurrentChunk() const {return cur_chunk;}
 		
 		/**
 		 * Save the torrent file.
@@ -102,6 +99,9 @@ namespace bt
 		 * @return The newly created object
 		 */
 		TorrentControl* makeTC(const QString & data_dir);
+		
+		/// Stop the thread
+		void stop() {stopped = true;}
 
 	private:
 		void saveInfo(BEncoder & enc);
@@ -110,6 +110,8 @@ namespace bt
 		void buildFileList(const QString & dir);
 		bool calcHashSingle();
 		bool calcHashMulti();
+		virtual void run();
+		bool calculateHash();
 	};
 
 }

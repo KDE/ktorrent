@@ -967,32 +967,14 @@ namespace kt
 			Out(SYS_GEN|LOG_IMPORTANT) << "Caught bt::Error: " << err.toString() << endl;
 		}
 	}
-
-	bt::TorrentInterface* Core::makeTorrent(const QString & file,const QStringList & trackers,const KUrl::List & webseeds,
-				int chunk_size,const QString & name,
-				const QString & comments,bool seed,
-				const QString & output_file,bool priv_tor,QProgressBar* prog, bool decentralized)
+	
+	bt::TorrentInterface* Core::createTorrent(bt::TorrentCreator* mktor,bool seed)
 	{
 		QString tdir;
 		try
 		{
-			if (chunk_size < 0)
-				chunk_size = 256;
-
-			bt::TorrentCreator mktor(file,trackers,webseeds,chunk_size,name,comments,priv_tor, decentralized);
-			prog->setMaximum(mktor.getNumChunks());
-			Uint32 ns = 0;
-			while (!mktor.calculateHash())
-			{
-				prog->setValue(ns);
-				ns++;
-				if (ns % 10 == 0)
-					KApplication::kApplication()->processEvents();
-			}
-
-			mktor.saveTorrent(output_file);
 			tdir = findNewTorrentDir();
-			bt::TorrentInterface* tc = mktor.makeTC(tdir);
+			bt::TorrentControl* tc = mktor->makeTC(tdir);
 			if (tc)
 			{
 				connectSignals(tc);
@@ -1008,12 +990,13 @@ namespace kt
 			// cleanup if necessary
 			if (bt::Exists(tdir))
 				bt::Delete(tdir,true);
-
+			
 			// Show error message
 			gui->errorMsg(i18n("Cannot create torrent: %1",e.toString()));
 		}
 		return 0;
 	}
+
 
 	CurrentStats Core::getStats()
 	{

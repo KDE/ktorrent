@@ -23,6 +23,7 @@
 
 #include <KDialog>
 #include "ui_torrentcreatordlg.h"
+#include <torrent/torrentcreator.h>
 
 namespace kt
 {
@@ -63,12 +64,16 @@ namespace kt
 		void webSeedTextChanged(const QString & str);
 		void webSeedSelectionChanged();
 		
+		void hashCalculationDone();
+		void updateProgressBar();
+		
 		virtual void accept();
 		virtual void reject();
 		
 	private:
 		void loadGroups();
 		void loadCompleterData();
+		void setProgressBarEnabled(bool on);
 		
 	private:
 		Core* core;
@@ -76,6 +81,8 @@ namespace kt
 		StringCompletionModel* tracker_completion;
 		StringCompletionModel* webseeds_completion;
 		StringCompletionModel* nodes_completion;
+		bt::TorrentCreator* mktor;
+		QTimer update_timer;
 	};
 }
 
