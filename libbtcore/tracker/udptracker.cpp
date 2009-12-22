@@ -93,6 +93,7 @@ namespace bt
 				status = TRACKER_IDLE;
 				requestOK();
 			}
+			reannounce_timer.stop();
 		}
 		else
 		{
