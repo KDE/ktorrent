@@ -4,6 +4,7 @@ Changes in 4.0beta2:
 - Add copy URL item to popupmenu in search plugin view
 - Pause becomes suspend
 - Revamp torrent creation code
+- Avoid unnecessary memcpy when generating hash
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

@@ -235,7 +235,8 @@ namespace bt
 	{
 		if (hash)
 		{
-			hash->update(QCA::MemoryRegion(QByteArray((const char*)data,len)));
+			QCA::MemoryRegion mr(QByteArray::fromRawData((const char*)data,len));
+			hash->update(mr);
 			return;
 		}
 		
