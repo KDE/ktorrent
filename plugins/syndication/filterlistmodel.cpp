@@ -43,9 +43,9 @@ namespace kt
 	
 	void FilterListModel::removeFilter(Filter* f)
 	{
-		filters.removeAll(f);
 		int idx = filters.indexOf(f);
-		if (idx < 0)
+		filters.removeAll(f);
+		if (idx >= 0)
 			removeRow(idx);
 		else
 			reset();
