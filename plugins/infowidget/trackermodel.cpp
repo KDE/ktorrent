@@ -155,26 +155,19 @@ namespace kt
 		return QVariant();
 	}
 	
+	void TrackerModel::addTrackers(QList<bt::TrackerInterface*> & tracker_list)
+	{
+		int row = trackers.count();
+		foreach (bt::TrackerInterface* trk,tracker_list)
+			trackers.append(new Item(trk));
+		
+		insertRows(row,tracker_list.count(),QModelIndex());
+	}
+
 	bool TrackerModel::insertRows(int row,int count,const QModelIndex & parent)
 	{
 		Q_UNUSED(parent);
 		beginInsertRows(QModelIndex(),row,row + count - 1);
-		if (tc)
-		{
-			QList<bt::TrackerInterface*> tracker_list = tc->getTrackersList()->getTrackers();
-			QList<Item*>::iterator i = trackers.begin();
-			foreach (bt::TrackerInterface* trk,tracker_list)
-			{
-				if (i != trackers.end())
-				{
-					Item* item = *i;
-					item->trk = trk;
-				}
-				else
-					trackers.append(new Item(trk));
-				i++;
-			}
-		}
 		endInsertRows();
 		return true;
 	}

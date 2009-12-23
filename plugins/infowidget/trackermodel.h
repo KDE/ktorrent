@@ -63,6 +63,8 @@ namespace kt
 		/// Get a tracker given a model index
 		bt::TrackerInterface* tracker(const QModelIndex & idx);
 		
+		/// Add trackers to the model
+		void addTrackers(QList<bt::TrackerInterface*> & tracker_list);
 	private:
 		struct Item
 		{

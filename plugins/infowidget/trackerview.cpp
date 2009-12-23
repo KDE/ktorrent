@@ -112,18 +112,22 @@ namespace kt
 			KMessageBox::errorList(this, i18n("Several URL's could not be added because they are malformed:"),invalid);
 		}
 			
+		QList<bt::TrackerInterface*> tl;
 		foreach (const KUrl & url,urls)
 		{
 			// check for dupes
-			if (!tc->getTrackersList()->addTracker(url,true))
+			bt::TrackerInterface* trk = tc->getTrackersList()->addTracker(url,true);
+			if (!trk)
 			{
 				KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b>.",url.prettyUrl()));
 			}
 			else
 			{
-				model->insertRow(model->rowCount(QModelIndex()));
+				tl.append(trk);
 			}
 		}
+		
+		model->addTrackers(tl);
 	}
 
 	void TrackerView::removeClicked()
