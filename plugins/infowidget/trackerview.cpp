@@ -96,13 +96,16 @@ namespace kt
 		}
 			
 		// check for dupes
-		if (!tc->getTrackersList()->addTracker(url,true))
+		bt::TrackerInterface* trk = tc->getTrackersList()->addTracker(url,true);
+		if (!trk)
 		{
 			KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b>.",text));
 		}
 		else
 		{
-			model->insertRow(model->rowCount(QModelIndex()));
+			QList<bt::TrackerInterface*> tl;
+			tl.append(trk);
+			model->addTrackers(tl);
 		}
 	}
 
