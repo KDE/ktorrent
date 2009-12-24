@@ -259,6 +259,7 @@ namespace kt
 	
 	void ScanFolder::onIncompletePollingTimeout()
 	{
+		QMap<KUrl,QString> todo;
 		bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : checking incomplete files" << endl; 
 		for (QList<KUrl>::iterator i = m_incompleteURLs.begin(); i != m_incompleteURLs.end();)
 		{
@@ -278,12 +279,8 @@ namespace kt
 				if (ScanFolderPluginSettings::addToGroup())
 					group = ScanFolderPluginSettings::group();
 				
-				//Load torrent
-				if (ScanFolderPluginSettings::openSilently())
-					m_core->loadSilently(source,group);
-				else
-					m_core->load(source,group);
-				
+				// don't load directly to avoid nested eventloops
+				todo.insert(source,group);
 				// remove from incomplete list
 				i = m_incompleteURLs.erase(i);
 			}
@@ -297,6 +294,16 @@ namespace kt
 		// stop timer when no incomple URL's are left
 		if (m_incompleteURLs.count() == 0)
 			m_incomplePollingTimer.stop();
+		
+		QMap<KUrl,QString>::iterator i = todo.begin();
+		while (i != todo.end())
+		{
+			if (ScanFolderPluginSettings::openSilently())
+				m_core->loadSilently(i.key(),i.value());
+			else
+				m_core->load(i.key(),i.value());
+			i++;
+		}
 	}
 }
 
