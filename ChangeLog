@@ -30,6 +30,7 @@ Changes in 3.3.3:
 - Make sure reannounce timer in UDPTracker is always stopped in the stop call (219663)
 - Fix broken FilterListModel::removeFilter fixes a crash (219760)
 - Revamp adding trackers to TrackerListModel, should fix a crash (218738)
+- Don't allow nested event loops when iterating over the incomplete url list in scanfolder plugin, fixes a crash (219885)
 
 Changes in 3.3.2:
 - Fix crash when loading Feed in syndication plugin at startup (216207)
