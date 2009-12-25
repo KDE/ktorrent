@@ -175,29 +175,31 @@ namespace bt
 			return;
 		}
 		
-		char tmp[21];
-		tmp[20] = '\0';
-		memcpy(tmp,hs+48,20);
-		peer_id = PeerID(tmp);
-		
-		if (our_peer_id == peer_id /*|| peer_id.startsWith("Yoda")*/)
-		{
-			Out(SYS_CON|LOG_DEBUG) << "Lets not connect to our selves " << endl;
-			onFinish(false);
-			return;
-		}
-		
-		// check if we aren't already connected to the client
-		if (pman->connectedTo(peer_id))
-		{
-			Out(SYS_CON|LOG_NOTICE) << "Already connected to " << peer_id.toString() << endl;
-			onFinish(false);
-			return;
-		}
-		
-		// only finish when the handshake was fully received
 		if (full)
+		{
+			char tmp[21];
+			tmp[20] = '\0';
+			memcpy(tmp,hs+48,20);
+			peer_id = PeerID(tmp);
+			
+			if (our_peer_id == peer_id)
+			{
+				Out(SYS_CON|LOG_DEBUG) << "Lets not connect to our selves " << endl;
+				onFinish(false);
+				return;
+			}
+			
+			// check if we aren't already connected to the client
+			if (pman->connectedTo(peer_id))
+			{
+				Out(SYS_CON|LOG_NOTICE) << "Already connected to " << peer_id.toString() << endl;
+				onFinish(false);
+				return;
+			}
+			
+			// only finish when the handshake was fully received
 			onFinish(true);
+		}
 	}
 
 

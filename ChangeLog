@@ -6,6 +6,7 @@ Changes in 4.0beta2:
 - Revamp torrent creation code
 - Avoid unnecessary memcpy when generating hash
 - Add UDP tracker scraping
+- Improve handling of incomplete handshakes (218875)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 
