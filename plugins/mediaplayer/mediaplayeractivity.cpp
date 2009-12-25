@@ -365,6 +365,7 @@ namespace kt
 			
 			idx = tabs->addTab(video,KIcon("video-x-generic"),path);
 			tabs->setTabToolTip(idx,i18n("Movie player"));
+			tabs->setCurrentIndex(idx);
 			fullscreen_mode = false;
 		}
 	}

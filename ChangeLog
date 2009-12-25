@@ -7,6 +7,7 @@ Changes in 4.0beta2:
 - Avoid unnecessary memcpy when generating hash
 - Add UDP tracker scraping
 - Improve handling of incomplete handshakes (218875)
+- When switching back from fullscreen video make sure the tab shown is the video tab
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 
