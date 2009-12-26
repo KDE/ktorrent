@@ -23,6 +23,7 @@
 #include <btcore_export.h>
 #include <util/file.h>
 
+class QIODevice;
 
 namespace bt
 {
@@ -70,6 +71,14 @@ namespace bt
 		void write(const char* str,Uint32 len);
 	};
 
+	class BTCORE_EXPORT BEncoderIODeviceOutput : public BEncoderOutput
+	{
+		QIODevice* dev;
+	public:
+		BEncoderIODeviceOutput(QIODevice* dev);
+			
+		void write(const char* str,Uint32 len);
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -96,6 +105,13 @@ namespace bt
 		 * @param out The BEncoderOutput
 		 */
 		BEncoder(BEncoderOutput* out);
+		
+		/**
+		* Constructor, output gets written to a QIODevice object.
+		* @param dev The QIODevice
+		*/
+		BEncoder(QIODevice* dev);
+		
 		virtual ~BEncoder();
 
 		/**
@@ -138,12 +154,6 @@ namespace bt
 		 * @param val
 		 */
 		void write(Uint64 val);
-		
-		/**
-		 * Write a string
-		 * @param str 
-		 */
-		void write(const char* str);
 		
 		/**
 		 * Write a string

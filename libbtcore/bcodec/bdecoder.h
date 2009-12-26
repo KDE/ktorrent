@@ -61,6 +61,20 @@ namespace bt
 		 */
 		BNode* decode();
 		
+		/**
+		 * Decode the data, the root list node gets
+		 * returned. (Note that the caller must delete this node)
+		 * @return The root node
+		 */
+		BListNode* decodeList();
+		
+		/**
+		 * Decode the data, the root dict node gets
+		 * returned. (Note that the caller must delete this node)
+		 * @return The root node
+		 */
+		BDictNode* decodeDict();
+		
 		/// Get the current position in the data
 		Uint32 position() const {return pos;}
 	private:

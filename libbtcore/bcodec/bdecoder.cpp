@@ -62,6 +62,47 @@ namespace bt
 			throw Error(i18n("Illegal token: %1",data[pos]));
 		}
 	}
+	
+	
+	BDictNode* BDecoder::decodeDict()
+	{
+		BNode* n = 0;
+		try
+		{
+			n = decode();
+			if (n && n->getType() == BNode::DICT)
+				return (BDictNode*)n;
+			
+			delete n;
+		}
+		catch (...)
+		{
+			delete n;
+			throw;
+		}
+		
+		return 0;
+	}
+
+	BListNode* BDecoder::decodeList()
+	{
+		BNode* n = 0;
+		try
+		{
+			n = decode();
+			if (n && n->getType() == BNode::LIST)
+				return (BListNode*)n;
+			
+			delete n;
+		}
+		catch (...)
+		{
+			delete n;
+			throw;
+		}
+		
+		return 0;
+	}
 
 	BDictNode* BDecoder::parseDict()
 	{

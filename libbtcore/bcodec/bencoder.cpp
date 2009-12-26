@@ -20,6 +20,7 @@
 #include "bencoder.h"
 #include <util/file.h>
 #include <QByteArray>
+#include <QIODevice>
 
 namespace bt
 {
@@ -51,6 +52,19 @@ namespace bt
 		for (Uint32 i = 0;i < len;i++)
 			data[ptr++] = str[i];
 	}
+	
+	////////////////////////////////////
+	
+	
+	BEncoderIODeviceOutput::BEncoderIODeviceOutput(QIODevice* dev) : dev(dev)
+	{
+	}
+
+	void BEncoderIODeviceOutput::write(const char* str, Uint32 len)
+	{
+		dev->write(str,len);
+	}
+
 
 	////////////////////////////////////
 
@@ -61,6 +75,11 @@ namespace bt
 
 	BEncoder::BEncoder(BEncoderOutput* out) : out(out),del(true)
 	{
+	}
+
+	BEncoder::BEncoder(QIODevice* dev) : out(0),del(true)
+	{
+		out = new BEncoderIODeviceOutput(dev);
 	}
 
 
@@ -112,14 +131,6 @@ namespace bt
 		if (!out) return;
 		
 		QByteArray s = QString("i%1e").arg(val).toUtf8();
-		out->write(s,s.length());
-	}
-	
-	void BEncoder::write(const char* str)
-	{
-		if (!out) return;
-		
-		QByteArray s = QString("%1:%2").arg(strlen(str)).arg(str).toUtf8();
 		out->write(s,s.length());
 	}
 	

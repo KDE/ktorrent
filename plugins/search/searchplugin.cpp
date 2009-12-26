@@ -82,6 +82,7 @@ namespace kt
 		getGUI()->addActivity(activity);
 		setupActions();
 		activity->loadCurrentSearches();
+		activity->loadState(KGlobal::config());
 	}
 
 	void SearchPlugin::unload()
@@ -89,6 +90,7 @@ namespace kt
 		LogSystemManager::instance().unregisterSystem(i18nc("plugin name","Search"));
 		getGUI()->removeActivity(activity);
 		activity->saveCurrentSearches();
+		activity->saveState(KGlobal::config());
 		toolbar->saveSettings();
 		toolbar->deleteLater();
 		

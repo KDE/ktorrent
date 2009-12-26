@@ -26,6 +26,7 @@
 #include <ksharedconfig.h>
 #include <torrent/queuemanager.h>
 
+class QTabWidget;
 class QWidget;
 class KAction;
 
@@ -49,7 +50,7 @@ namespace kt
 		View* newView(Core* core,QWidget* parent);
 		
 		/// Save all views
-		void saveState(KSharedConfigPtr cfg);
+		void saveState(KSharedConfigPtr cfg,QTabWidget* tabs);
 		
 		/// Restore all views from configuration
 		void loadState(KSharedConfigPtr cfg);

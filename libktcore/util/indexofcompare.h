@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   Copyright (C) 2005 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,61 +17,24 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-
-#ifndef SEARCHACTIVITY_H
-#define SEARCHACTIVITY_H
-
-#include <QList>
-#include <kurl.h>
-#include <ktabwidget.h>
-#include <kaction.h>
-#include <interfaces/activity.h>
+#ifndef KT_INDEXOFCOMPARE_HH
+#define KT_INDEXOFCOMPARE_HH
 
 namespace kt
 {
-	class SearchWidget;
-	class SearchPlugin;
-
-	class SearchActivity : public kt::Activity
+	template <class Container,class Item>
+	struct IndexOfCompare
 	{
-		Q_OBJECT
-	public:
-		SearchActivity(SearchPlugin* sp,QWidget* parent);
-		virtual ~SearchActivity();
+		IndexOfCompare(Container* container) : container(container)
+		{}
 		
-		/// Add a SearchWidget
-		void search(const QString & text,int engine);
+		bool operator() (Item* a,Item* b)
+		{
+			return container->indexOf(a) < container->indexOf(b);
+		}
 		
-		/// Save all current searches
-		void saveCurrentSearches();
-		
-		/// Load current searches
-		void loadCurrentSearches();
-		
-		void loadState(KSharedConfigPtr cfg);
-		void saveState(KSharedConfigPtr cfg);
-		
-	public slots:
-		void find();
-		void back();
-		void reload();
-		void search();
-		void copy();
-		void home();
-		void openNewTab(const KUrl & url);
-		void currentTabChanged(int idx);
-		void closeTab();
-		void openTab();
-		void setTabTitle(SearchWidget* sw,const QString & title);
-		
-	private:
-		SearchWidget* newSearchWidget(const QString & text);
-		
-	private:
-		KTabWidget* tabs;
-		QList<SearchWidget*> searches;
-		SearchPlugin* sp;
+		Container* container;
 	};
 }
 
-#endif // SEARCHACTIVITY_H
+#endif

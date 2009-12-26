@@ -30,6 +30,7 @@
 #include <kshortcut.h>
 #include <groups/group.h>
 #include <util/log.h>
+#include <util/indexofcompare.h>
 #include <groups/groupmanager.h>
 #include <torrent/jobqueue.h>
 #include "gui.h"
@@ -69,10 +70,13 @@ namespace kt
 		connect(v,SIGNAL(showMenu(View*, const QPoint&)),this,SLOT(showViewMenu(View*, const QPoint&)));
 		return v;
 	}
+	
 		
 	/// Save all views
-	void ViewManager::saveState(KSharedConfigPtr cfg)
+	void ViewManager::saveState(KSharedConfigPtr cfg,QTabWidget* tabs)
 	{
+		// Sort so that they are in the same order as in the tab widget
+		qSort(views.begin(),views.end(),IndexOfCompare<QTabWidget,View>(tabs));
 		int idx = 0;
 		foreach (View* v,views)
 			v->saveState(cfg,idx++);

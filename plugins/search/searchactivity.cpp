@@ -17,16 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "searchactivity.h"
+
 #include <QFile>
 #include <QTextStream>
 #include <QVBoxLayout>
 #include <QToolButton>
-#include <klocale.h>
-#include <kicon.h>
-#include "searchactivity.h"
+#include <KLocale>
+#include <KIcon>
+#include <KConfigGroup>
+#include <interfaces/functions.h>
+#include <util/indexofcompare.h>
+#include <bcodec/bencoder.h>
+#include <bcodec/bdecoder.h>
+#include <bcodec/bnode.h>
+
 #include "searchwidget.h"
 #include "searchplugin.h"
-#include <interfaces/functions.h>
 
 
 namespace kt
@@ -38,6 +45,7 @@ namespace kt
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		tabs = new KTabWidget(this);
+		tabs->setMovable(true);
 		layout->addWidget(tabs);
 		connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(currentTabChanged(int)));
 		
@@ -78,14 +86,20 @@ namespace kt
 		if (!fptr.open(QIODevice::WriteOnly))
 			return;
 		
-		QTextStream out(&fptr);
+		// Sort by order in tab widget so that they are restored in the proper order
+		qSort(searches.begin(),searches.end(),IndexOfCompare<KTabWidget,SearchWidget>(tabs));
+		bt::BEncoder enc(&fptr);
+		enc.beginList();
 		foreach (SearchWidget* w,searches)
 		{
-			out << "TEXT: " << w->getSearchText() << ::endl;
-			out << "URL: " << w->getCurrentUrl().prettyUrl() << ::endl;
-			out << "SBTEXT: " << w->getSearchBarText() << ::endl;
-			out << "ENGINE:" << w->getSearchBarEngine() << ::endl;
+			enc.beginDict();
+			enc.write("TEXT",w->getSearchText());
+			enc.write("URL",w->getCurrentUrl().prettyUrl());
+			enc.write("SBTEXT",w->getSearchBarText());
+			enc.write("ENGINE",(bt::Uint32)w->getSearchBarEngine());
+			enc.end();
 		}
+		enc.end();
 	}
 	
 	void SearchActivity::loadCurrentSearches()
@@ -94,44 +108,34 @@ namespace kt
 		if (!fptr.open(QIODevice::ReadOnly))
 			return;
 		
-		while (!fptr.atEnd())
+		QByteArray data = fptr.readAll();
+		bt::BDecoder dec(data,false,0);
+		bt::BListNode* search_list = 0;
+		try
 		{
-			QString s = QString(fptr.readLine());
-			QString text,sbtext;
-			int engine = 0;
-			KUrl url;
-		
-			if (s.startsWith("TEXT:"))
-				text = s.mid(5).trimmed();
-			else
-				continue;
-			
-			s = QString(fptr.readLine());
-			if (!s.startsWith("URL:"))
-				continue;
-			
-			url = KUrl(s.mid(4).trimmed());
-			
-			s = QString(fptr.readLine());
-			if (!s.startsWith("SBTEXT:"))
-				continue;
-			
-			sbtext = s.mid(7).trimmed();
-			
-			s = QString(fptr.readLine());
-			if (!s.startsWith("ENGINE:"))
-				continue;
-			
-			bool ok = false;
-			engine = s.mid(7).trimmed().toInt(&ok);
-			
-			if (url.isValid() && ok)
+			search_list = dec.decodeList();
+			for (bt::Uint32 i = 0;i < search_list->getNumChildren();i++)
 			{
+				bt::BDictNode* dict = search_list->getDict(i);
+				if (!dict)
+					continue;
+				
+				QString text = dict->getString("TEXT",0);
+				QString sbtext = dict->getString("SBTEXT",0);
+				int engine = dict->getInt("ENGINE");
+				KUrl url = dict->getString("URL",0);
+				
 				SearchWidget* search = newSearchWidget(text);
 				search->restore(url,text,sbtext,engine);
 			}
+			
+			delete search_list;
 		}
-		
+		catch (...)
+		{
+			delete search_list;
+		}
+	
 		if (searches.count() == 0)
 		{
 			SearchWidget* search = newSearchWidget(QString());
@@ -139,6 +143,19 @@ namespace kt
 		}
 	}
 	
+	void SearchActivity::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("SearchActivity");
+		g.writeEntry("current_search",tabs->currentIndex());
+	}
+
+	void SearchActivity::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("SearchActivity");
+		int idx = g.readEntry("current_search",0);
+		tabs->setCurrentIndex(idx);
+	}
+
 	void SearchActivity::find()
 	{
 		QWidget* w = tabs->currentWidget();
