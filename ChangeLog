@@ -8,6 +8,7 @@ Changes in 4.0beta2:
 - Add UDP tracker scraping
 - Improve handling of incomplete handshakes (218875)
 - When switching back from fullscreen video make sure the tab shown is the video tab
+- Replace KMultiTabBar by QToolBar, because it handles not enough space better (214524)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

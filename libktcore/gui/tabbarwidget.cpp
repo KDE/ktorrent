@@ -17,20 +17,64 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "tabbarwidget.h"
+
 #include <kconfiggroup.h>
 #include <kiconloader.h>
-#include "tabbarwidget.h"
+#include <QVBoxLayout>
+#include <KIcon>
+#include <QAction>
 
 namespace kt
 {
+	
+	ActionGroup::ActionGroup(QObject* parent) : QObject(parent)
+	{}
+	
+	ActionGroup::~ActionGroup()
+	{}
+	
+	void ActionGroup::addAction(QAction* act)
+	{
+		actions.append(act);
+		connect(act,SIGNAL(toggled(bool)),this,SLOT(toggled(bool)));
+	}
+	
+	void ActionGroup::removeAction(QAction* act)
+	{
+		actions.removeAll(act);
+		disconnect(act,SIGNAL(toggled(bool)),this,SLOT(toggled(bool)));
+	}
+	
+	
+	void ActionGroup::toggled(bool on)
+	{
+		QAction* act = qobject_cast<QAction*>(sender());
+		if (!act)
+			return;
+		
+		foreach (QAction* a,actions)
+		{
+			if (a != act)
+				a->setChecked(false);
+		}
+		
+		act->setChecked(on);
+		emit actionTriggered(act);
+	}
+	
+	
+	
 	TabBarWidget::TabBarWidget(QSplitter* splitter,QWidget* parent) 
-		: QWidget(parent),widget_stack(0),next_id(1),shrunken(false)
+		: QWidget(parent),widget_stack(0),shrunken(false)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
-		tab_bar = new KMultiTabBar(KMultiTabBar::Bottom,this);
-		tab_bar->setStyle(KMultiTabBar::KDEV3ICON);
+		tab_bar = new QToolBar(this);
+		tab_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+		action_group = new ActionGroup(this);
+		connect(action_group,SIGNAL(actionTriggered(QAction*)),this,SLOT(onActionTriggered(QAction*)));
 		widget_stack = new QStackedWidget(splitter);
 		splitter->addWidget(widget_stack);
 		layout->addWidget(tab_bar);
@@ -53,48 +97,39 @@ namespace kt
 	
 	void TabBarWidget::addTab(QWidget* ti,const QString & text,const QString & icon,const QString & tooltip)
 	{
-		// get the next ID number
-		int id = next_id++;
-		
-		Tab t = {ti,id,text,icon};
-		tabs.append(t);
-		// add the tab
-		QPixmap pix = SmallIcon(icon);
-		
-		tab_bar->appendTab(pix,id,text);
+		QAction* act = tab_bar->addAction(KIcon(icon),text);
+		act->setCheckable(true);
+		act->setToolTip(tooltip);
+		act->setChecked(false);
 		widget_stack->addWidget(ti);
-		connect(tab_bar->tab(id),SIGNAL(clicked(int)),this,SLOT(onTabClicked(int)));
-		
-		tab_bar->setTab(id,false);
+		action_group->addAction(act);
+		widget_to_action.insert(ti,act);
 		show();
-		tab_bar->tab(id)->setToolTip(tooltip);
 	}
 	
 	
 	void TabBarWidget::removeTab(QWidget* ti)
 	{
-		TabItr t = findByWidget(ti);
-		if (t == tabs.end())
+		QMap<QWidget*,QAction*>::iterator itr = widget_to_action.find(ti);
+		if (itr == widget_to_action.end())
 			return;
 		
-		int id = t->id;
-		
+		tab_bar->removeAction(itr.value());
+		action_group->removeAction(itr.value());
+		itr.value()->deleteLater();
 		if (widget_stack->currentWidget() == ti)
 		{
-			tab_bar->removeTab(id);
-			tabs.erase(t);
 			ti->hide();
 			widget_stack->removeWidget(ti);
 			ti->setParent(0);
 		}
 		else
 		{
-			tab_bar->removeTab(id);
-			tabs.erase(t);
+			widget_stack->removeWidget(ti);
 			ti->setParent(0);
 		}
 		
-		if (tabs.count() == 0)
+		if (widget_stack->count() == 0)
 		{
 			widget_stack->hide();
 			hide();
@@ -103,22 +138,20 @@ namespace kt
 	
 	void TabBarWidget::changeTabIcon(QWidget* ti,const QString & icon)
 	{
-		TabItr i = findByWidget(ti);
-		if (i == tabs.end())
+		QMap<QWidget*,QAction*>::iterator itr = widget_to_action.find(ti);
+		if (itr == widget_to_action.end())
 			return;
 		
-		tab_bar->tab(i->id)->setIcon(icon);
-		i->icon = icon;
+		itr.value()->setIcon(KIcon(icon));
 	}
 	
 	void TabBarWidget::changeTabText(QWidget* ti,const QString & text)
 	{
-		TabItr i = findByWidget(ti);
-		if (i == tabs.end())
+		QMap<QWidget*,QAction*>::iterator itr = widget_to_action.find(ti);
+		if (itr == widget_to_action.end())
 			return;
 		
-		tab_bar->tab(i->id)->setText(text);
-		i->text = text;
+		itr.value()->setText(text);
 	}
 	
 	void TabBarWidget::shrink()
@@ -133,34 +166,30 @@ namespace kt
 		shrunken = false;
 	}
 	
-	void TabBarWidget::onTabClicked(int id)
+	void TabBarWidget::onActionTriggered(QAction* act)
 	{
-		TabItr i = findById(id);
-		if (i == tabs.end())
+		QWidget* ti = 0;
+		QMap<QWidget*,QAction*>::iterator i = widget_to_action.begin();
+		while (i != widget_to_action.end() && !ti)
+		{
+			if (i.value() == act)
+				ti = i.key();
+			i++;
+		}
+		
+		if (!ti)
 			return;
 		
-		QWidget* ti = i->widget;
 		if (ti == widget_stack->currentWidget())
 		{
-			// it is the current tab, so just toggle the visible property of the widget_stack
-			if (!widget_stack->isVisible())
-			{
-				tab_bar->setTab(id,true);
+			// it is the current tab
+			if (act->isChecked())
 				unshrink();
-			}
 			else
-			{
-				tab_bar->setTab(id,false);
 				shrink();
-			}
 		}
 		else
 		{
-			// update tab
-			QWidget* current = widget_stack->currentWidget();
-			
-			tab_bar->setTab(findByWidget(current)->id,false);
-			tab_bar->setTab(id,true);
 			// change the current in stack
 			widget_stack->setCurrentWidget(ti);
 			if (shrunken)
@@ -176,7 +205,7 @@ namespace kt
 		KConfigGroup g = cfg->group(group);
 		g.writeEntry("shrunken",shrunken);
 		if (current)
-			g.writeEntry("current_tab",findByWidget(current)->text);
+			g.writeEntry("current_tab",widget_to_action[current]->text());
 	}
 	
 	void TabBarWidget::loadState(KSharedConfigPtr cfg,const QString & group)
@@ -193,52 +222,17 @@ namespace kt
 		}
 		
 		QString ctab = g.readPathEntry("current_tab", QString());
-		TabItr i = findByText(ctab);
-		if (i == tabs.end())
-			return;
-		
-		bool shrunken_tmp = shrunken;
-		onTabClicked(i->id);
-		if (shrunken_tmp)
+		for (QMap<QWidget*,QAction*>::iterator i = widget_to_action.begin();i != widget_to_action.end();i++)
 		{
-			tab_bar->setTab(i->id,false);
-			shrink();
+			if (i.value()->text() == ctab)
+			{
+				i.value()->setChecked(true);
+				bool shrunken_tmp = shrunken;
+				onActionTriggered(i.value());
+				if (shrunken_tmp)
+					shrink();
+				break;
+			}
 		}
-	}
-	
-	TabBarWidget::TabItr TabBarWidget::findByWidget(QWidget* w)
-	{
-		TabItr i = tabs.begin();
-		while (i != tabs.end())
-		{
-			if (i->widget == w)
-				return i;
-			i++;
-		}
-		return i;
-	}
-	
-	TabBarWidget::TabItr TabBarWidget::findById(int id)
-	{
-		TabItr i = tabs.begin();
-		while (i != tabs.end())
-		{
-			if (i->id == id)
-				return i;
-			i++;
-		}
-		return i;
-	}
-	
-	TabBarWidget::TabItr TabBarWidget::findByText(const QString & text)
-	{
-		TabItr i = tabs.begin();
-		while (i != tabs.end())
-		{
-			if (i->text == text)
-				return i;
-			i++;
-		}
-		return i;
 	}
 }

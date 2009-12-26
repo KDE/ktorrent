@@ -24,26 +24,21 @@
 #include <QList>
 #include <QSplitter>
 #include <QStackedWidget>
-#include <kmultitabbar.h>
+#include <QToolBar>
+#include <QActionGroup>
 #include <ksharedconfig.h>
 #include "ktcore_export.h"
 
+
+
 namespace kt
 {
+	class ActionGroup;
+	
 	class KTCORE_EXPORT TabBarWidget : public QWidget
 	{
 		Q_OBJECT
 	public:
-		struct Tab
-		{
-			QWidget* widget;
-			int id;
-			QString text;
-			QString icon;
-		};
-			
-		typedef QList<Tab>::iterator TabItr;
-	
 		TabBarWidget(QSplitter* splitter,QWidget* parent);
 		virtual ~TabBarWidget();
 		
@@ -66,21 +61,38 @@ namespace kt
 		void changeTabIcon(QWidget* w,const QString & icon);
 		
 	private slots:
-		void onTabClicked(int id);
+		void onActionTriggered(QAction* act);
 		
 	private:
 		void shrink();
 		void unshrink();
-		TabItr findByWidget(QWidget* w);
-		TabItr findById(int id);
-		TabItr findByText(const QString & text);
 		
 	private:
-		KMultiTabBar* tab_bar;
+		QToolBar* tab_bar;
+		ActionGroup* action_group;
 		QStackedWidget* widget_stack;
-		QList<Tab> tabs;
-		int next_id;
 		bool shrunken;
+		QMap<QWidget*,QAction*> widget_to_action;
+	};
+	
+	class ActionGroup : public QObject
+	{
+		Q_OBJECT
+	public:
+		ActionGroup(QObject* parent = 0);
+		virtual ~ActionGroup();
+		
+		void addAction(QAction* act);
+		void removeAction(QAction* act);
+		
+	private slots:
+		void toggled(bool on);
+		
+	signals:
+		void actionTriggered(QAction* a);
+		
+	private:
+		QList<QAction*> actions;
 	};
 }
 
