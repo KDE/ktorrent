@@ -20,13 +20,15 @@
  ***************************************************************************/
 #include <QColor>
 #include <QMimeData>
-#include <klocale.h>
+#include <KIcon>
+#include <KLocale>
 #include <util/log.h>
 #include <util/functions.h>
 #include <torrent/queuemanager.h>
 #include <interfaces/torrentinterface.h>
 #include "queuemanagermodel.h"
 #include "settings.h"
+
 
 using namespace bt;
 
@@ -179,6 +181,14 @@ namespace kt
 		{
 			return i18n("Order of a torrent in the queue.\n"
 					"Use drag and drop or the move up and down buttons on the right to change the order.");
+		}
+		else if (role == Qt::DecorationRole && index.column() == 1)
+		{
+			const bt::TorrentInterface* tc = qman->getTorrent(index.row());
+			if (!tc->getStats().completed)
+				return KIcon("arrow-down");
+			else
+				return KIcon("arrow-up");
 		}
 		
 		return QVariant();

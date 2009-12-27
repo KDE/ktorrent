@@ -10,6 +10,7 @@ Changes in 4.0beta2:
 - When switching back from fullscreen video make sure the tab shown is the video tab
 - Replace KMultiTabBar by QToolBar, because it handles not enough space better (214524)
 - Make tab moving possible in TorrentActivity and SearchActivity (215053)
+- Show arrows in qm widget to indicate if a torrent is a seed or a download
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 
@@ -35,6 +36,8 @@ Changes in 3.3.3:
 - Fix broken FilterListModel::removeFilter fixes a crash (219760)
 - Revamp adding trackers to TrackerListModel, should fix a crash (218738)
 - Don't allow nested event loops when iterating over the incomplete url list in scanfolder plugin, fixes a crash (219885)
+- Fix crash due to uncaught exception in TorrentFileTreeModel::loadExpandedState 
+- Fix bug causing error message that the QM limits are reached to be shown instead of a torrent to be enqueued (220171)
 
 Changes in 3.3.2:
 - Fix crash when loading Feed in syndication plugin at startup (216207)
