@@ -177,16 +177,7 @@ namespace kt
 				}
 			}
 			
-			if (s.completed)
-				start_tc = (max_seeds == 0 || getNumRunning(SEEDS) < max_seeds);
-			else
-				start_tc = (max_downloads == 0 || getNumRunning(DOWNLOADS) < max_downloads);
-
-			if (start_tc)
-				orderQueue();
-			else
-				return QM_LIMITS_REACHED;
-			
+			orderQueue();
 			return START_OK;
 		}
 	}

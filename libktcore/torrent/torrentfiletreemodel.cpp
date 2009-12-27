@@ -32,6 +32,7 @@
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
 #include <util/log.h>
+#include <util/error.h>
 
 using namespace bt;
 
@@ -694,10 +695,18 @@ namespace kt
 			return;
 		
 		BDecoder dec(state,false,0);
-		BNode* n = dec.decode();
-		if (n && n->getType() == BNode::DICT)
+		BNode* n = 0;
+		try
 		{
-			root->loadExpandedState(index(0,0,QModelIndex()),pm,tv,n);
+			n = dec.decode();
+			if (n && n->getType() == BNode::DICT)
+			{
+				root->loadExpandedState(index(0,0,QModelIndex()),pm,tv,n);
+			}
+		}
+		catch (bt::Error & err)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Failed to load expanded state" << endl;
 		}
 		delete n;
 	}
