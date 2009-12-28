@@ -406,4 +406,5 @@ Name[pt_BR]=O DHT não está habilitado
 Name[sv]=DHT är inte aktiverat
 Name[uk]=DHT не увімкнено
 Name[x-test]=xxDHT is not enabledxx
+Name[zh_TW]=DHT 未開啟
 Action=Sound|Popup
