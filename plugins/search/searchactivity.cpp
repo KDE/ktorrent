@@ -28,6 +28,7 @@
 #include <KConfigGroup>
 #include <interfaces/functions.h>
 #include <util/indexofcompare.h>
+#include <util/error.h>
 #include <bcodec/bencoder.h>
 #include <bcodec/bdecoder.h>
 #include <bcodec/bnode.h>
@@ -114,6 +115,9 @@ namespace kt
 		try
 		{
 			search_list = dec.decodeList();
+			if (!search_list) 
+				throw bt::Error("Invalid current searches");
+
 			for (bt::Uint32 i = 0;i < search_list->getNumChildren();i++)
 			{
 				bt::BDictNode* dict = search_list->getDict(i);
