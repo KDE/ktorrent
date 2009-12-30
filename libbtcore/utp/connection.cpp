@@ -18,43 +18,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef UTP_UTPDAEMON_H
-#define UTP_UTPDAEMON_H
-
-#include <QObject>
-#include <QUdpSocket>
-
+#include "connection.h"
 
 namespace utp
 {
-	/**
-		Class which implements the UTPDaemon dbus interface
-	*/
-	class UTPDaemon : public QObject
-	{
-		Q_OBJECT
-		Q_CLASSINFO("D-Bus Interface", "org.ktorrent.UTPDaemon")
-	public:
-		UTPDaemon(quint16 port,QObject* parent = 0);
-		virtual ~UTPDaemon();
-		
-		/// Start the daemon
-		bool start();
-		
-	public Q_SLOTS:
-		Q_SCRIPTABLE QString connectToPeer(const QString & ip,int port);
-		
-	Q_SIGNALS:
-		Q_SCRIPTABLE void acceptedPeer(const QString & fifo,const QString & ip,int port);
-		
-	private Q_SLOTS:
-		void handlePacket();
-		
-	private:
-		quint16 port;
-		QUdpSocket* socket;
-	};
-
 }
 
-#endif // UTP_UTPDAEMON_H

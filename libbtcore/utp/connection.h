@@ -18,51 +18,18 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <QDBusConnection>
-#include "utpdaemon.h"
-#include "utpdaemonadaptor.h"
+#ifndef UTP_CONNECTION_H
+#define UTP_CONNECTION_H
+
+#include <btcore_export.h>
 
 namespace utp
 {
-	UTPDaemon::UTPDaemon(quint16 port,QObject* parent): QObject(parent),port(port),socket(0)
-	{
-		new UTPDaemonAdaptor(this);
-		QDBusConnection dbus = QDBusConnection::sessionBus();
-		dbus.registerObject("/UTPDaemon", this);
-		dbus.registerService("org.ktorrent.UTPDaemon");
-		socket = new QUdpSocket(this);
-		connect(socket,SIGNAL(readyRead()),this,SLOT(handlePacket()));
-	}
-	
-	UTPDaemon::~UTPDaemon()
-	{
-	}
 
-	bool UTPDaemon::start()
+	class BTCORE_EXPORT Connection
 	{
-		if (!socket->bind(port,QUdpSocket::ShareAddress|QUdpSocket::ReuseAddressHint))
-		{
-			qWarning() << "Failed to bind to port " << port << ": " << socket->errorString();
-			return false;
-		}
-		
-		return true;
-	}
-		
-	void UTPDaemon::handlePacket()
-	{
-		int ba = socket->bytesAvailable();
-		QByteArray packet(ba,0);
-		QHostAddress addr;
-		quint16 packet_port = 0;
-		if (socket->readDatagram(packet.data(),ba,&addr,&packet_port) == ba)
-		{
-		}
-	}
-
-	QString UTPDaemon::connectToPeer(const QString& ip, int port)
-	{
-		return QString();
-	}
+	};
 
 }
+
+#endif // UTP_CONNECTION_H

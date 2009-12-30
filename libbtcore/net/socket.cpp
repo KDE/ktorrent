@@ -206,6 +206,34 @@ namespace net
 		return true;
 	}
 	
+	bool Socket::bind(const net::Address& addr, bool also_listen)
+	{
+		int val = 1;
+#ifndef Q_WS_WIN
+		if (setsockopt(m_fd,SOL_SOCKET,SO_REUSEADDR,&val,sizeof(int)) < 0)
+#else
+		if (setsockopt(m_fd,SOL_SOCKET,SO_REUSEADDR,(char *)&val,sizeof(int)) < 0)
+#endif 
+		{
+			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set the reuseaddr option : %1").arg(strerror(errno)) << endl;
+		}
+		
+		if (::bind(m_fd,addr.address(),addr.length()) != 0)
+		{
+			Out(SYS_CON|LOG_IMPORTANT) << QString("Cannot bind to port %1:%2 : %3").arg(addr.ipAddress().toString()).arg(addr.port()).arg(strerror(errno)) << endl;
+			return false;
+		}
+		
+		if (also_listen && listen(m_fd,5) < 0)
+		{
+			Out(SYS_CON|LOG_IMPORTANT) << QString("Cannot listen to port %1:%2 : %3").arg(addr.ipAddress().toString()).arg(addr.port()).arg(strerror(errno)) << endl;
+			return false;
+		}
+		
+		m_state = BOUND;
+		return true;
+	}
+
 	int Socket::send(const bt::Uint8* buf,int len)
 	{
 #ifndef Q_WS_WIN        

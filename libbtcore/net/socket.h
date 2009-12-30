@@ -51,6 +51,7 @@ namespace net
 		/// See if a connectTo was succesfull in non blocking mode
 		bool connectSuccesFull();
 		bool bind(const QString & ip,Uint16 port,bool also_listen);
+		bool bind(const Address & addr,bool also_listen);
 		int send(const bt::Uint8* buf,int len);
 		int recv(bt::Uint8* buf,int max_len);
 		int sendTo(const bt::Uint8* buf,int size,const Address & addr);

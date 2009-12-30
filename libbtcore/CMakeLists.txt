@@ -189,6 +189,9 @@ set(libbtcore_SRC
 	magnet/magnetlink.cpp
 	magnet/metadatadownload.cpp
 	
+	utp/utpserver.cpp
+	utp/connection.cpp
+	
 	btversion.cpp
 )
 
@@ -409,3 +412,4 @@ install(FILES ${download_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/downl
 install(FILES ${btcore_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore COMPONENT Devel)
 
 add_subdirectory(magnet)
+add_subdirectory(utp)
