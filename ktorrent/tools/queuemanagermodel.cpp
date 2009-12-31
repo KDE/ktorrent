@@ -28,6 +28,7 @@
 #include <interfaces/torrentinterface.h>
 #include "queuemanagermodel.h"
 #include "settings.h"
+#include <QApplication>
 
 
 using namespace bt;
@@ -190,6 +191,15 @@ namespace kt
 			else
 				return KIcon("arrow-up");
 		}
+		else if (role == Qt::FontRole && !search_text.isEmpty())
+		{
+			const bt::TorrentInterface* tc = qman->getTorrent(index.row());
+			QFont f = QApplication::font();
+			if (tc->getDisplayName().contains(search_text,Qt::CaseInsensitive))
+				f.setBold(true);
+			
+			return f;
+		}
 		
 		return QVariant();
 	}
@@ -242,7 +252,7 @@ namespace kt
 		if (!data->hasFormat("application/vnd.text.list"))
 			return false;
 		
-		int begin_row;
+		int begin_row = row;
 		if (row != -1)
 			begin_row = row;
 		else if (parent.isValid())
@@ -256,36 +266,34 @@ namespace kt
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 			torrents.append(*i);
 		
-		// put the dragged ones in a new list
-		QList<bt::TorrentInterface*> tcs;
-		foreach (int r,dragged_items)
+		int dragged_row = dragged_items.front();
+		int count = dragged_items.count();
+		
+		QList<bt::TorrentInterface*> middle;
+		for (int i = 0;i < count;i++)
 		{
-			bt::TorrentInterface* tc = qman->getTorrent(r);
-			if (tc)
-			{
-				tcs.append(tc);
-				if (r < begin_row) // begin row will decrease when we remove this one in the next loop
-					begin_row--;
-			}
+			middle.append(torrents.takeAt(dragged_row));
+			if (begin_row >= dragged_row && begin_row > 0)
+				begin_row--;
 		}
 		
-		// remove the dragged ones
-		foreach (bt::TorrentInterface* tc,tcs)
-			torrents.removeAll(tc);
-		
-		// reinsert them at the correct location
-		foreach (bt::TorrentInterface* tc,tcs)
-			torrents.insert(begin_row,tc);
+		int cnt = 0;
+		foreach (bt::TorrentInterface* tc,middle)
+		{
+			torrents.insert(begin_row + cnt,tc);
+			cnt++;
+		}
 		
 		int prio = torrents.count();
-		// redo the priorities
-		foreach (bt::TorrentInterface* t,torrents)
+		//redo priorites
+		foreach (bt::TorrentInterface* tc,torrents)
 		{
-			t->setPriority(prio);
-			prio--;
+			tc->setPriority(prio--);
 		}
 		
+		// reorder the queue
 		qman->orderQueue();
+		reset();
 		return true;
 	}
 
@@ -305,7 +313,7 @@ namespace kt
 		return true;
 	}
 	
-	void QueueManagerModel::moveUp(int row)
+	void QueueManagerModel::moveUp(int row,int count)
 	{
 		if (row <= 0 || row > qman->count())
 			return;
@@ -314,7 +322,8 @@ namespace kt
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 			torrents.append(*i);
 		
-		torrents.swap(row,row - 1);
+		for (int i = row;i < row + count;i++)
+			torrents.swap(i,i - 1);
 			
 		int prio = torrents.count();
 		//redo priorites
@@ -325,9 +334,10 @@ namespace kt
 		
 		// reorder the queue
 		qman->orderQueue();
+		reset();
 	}
 	
-	void QueueManagerModel::moveDown(int row)
+	void QueueManagerModel::moveDown(int row,int count)
 	{
 		if (row < 0 || row >= qman->count() - 1)
 			return;
@@ -336,8 +346,17 @@ namespace kt
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 			torrents.append(*i);
 		
-		torrents.swap(row,row + 1);
+		QList<bt::TorrentInterface*> middle;
+		for (int i = 0;i < count;i++)
+			middle.append(torrents.takeAt(row));
 			
+		int cnt = 0;
+		foreach (bt::TorrentInterface* tc,middle)
+		{
+			torrents.insert(row + 1 + cnt,tc);
+			cnt++;
+		}
+		
 		int prio = torrents.count();
 		//redo priorites
 		foreach (bt::TorrentInterface* tc,torrents)
@@ -347,9 +366,10 @@ namespace kt
 		
 		// reorder the queue
 		qman->orderQueue();
+		reset();
 	}
 	
-	void QueueManagerModel::moveTop(int row)
+	void QueueManagerModel::moveTop(int row,int count)
 	{
 		if (row < 0 || row >= qman->count())
 			return;
@@ -358,7 +378,11 @@ namespace kt
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 			torrents.append(*i);
 		
-		torrents.prepend(torrents.takeAt(row));
+		QList<bt::TorrentInterface*> front;
+		for (int i = 0;i < count;i++)
+			front.append(torrents.takeAt(row));
+		
+		torrents = front + torrents;
 			
 		int prio = torrents.count();
 		//redo priorites
@@ -368,9 +392,10 @@ namespace kt
 		}
 		// reorder the queue
 		qman->orderQueue();
+		reset();
 	}
 	
-	void QueueManagerModel::moveBottom(int row)
+	void QueueManagerModel::moveBottom(int row,int count)
 	{
 		if (row < 0 || row >= qman->count())
 			return;
@@ -379,7 +404,11 @@ namespace kt
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 			torrents.append(*i);
 		
-		torrents.append(torrents.takeAt(row));
+		QList<bt::TorrentInterface*> back;
+		for (int i = 0;i < count;i++)
+			back.append(torrents.takeAt(row));
+		
+		torrents = torrents + back;
 			
 		int prio = torrents.count();
 		//redo priorites
@@ -389,6 +418,7 @@ namespace kt
 		}
 		// reorder the queue
 		qman->orderQueue();
+		reset();
 	}
 	
 	void QueueManagerModel::update()
@@ -423,6 +453,33 @@ namespace kt
 			r++;
 		}
 	}
+	
+	
+	QModelIndex QueueManagerModel::find(const QString& text)
+	{
+		search_text = text;
+		if (text.isEmpty())
+		{
+			reset();
+			return QModelIndex();
+		}
+		
+		int idx = 0;
+		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
+		{
+			bt::TorrentInterface* tc = *i;
+			if (tc->getDisplayName().contains(text,Qt::CaseInsensitive))
+			{
+				reset();
+				return index(idx,0);
+			}
+			idx++;
+		}
+		
+		reset();
+		return QModelIndex();
+	}
+
 }
 
 #include "queuemanagermodel.moc"

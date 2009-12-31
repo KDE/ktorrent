@@ -63,6 +63,7 @@ namespace kt
 		void moveDownClicked();
 		void moveTopClicked();
 		void moveBottomClicked();
+		void searchTextChanged(const QString & t);
 
 	private:
 		QueueManagerModel* model;

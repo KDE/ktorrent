@@ -12,6 +12,8 @@ Changes in 4.0beta2:
 - Make tab moving possible in TorrentActivity and SearchActivity (215053)
 - Show arrows in qm widget to indicate if a torrent is a seed or a download
 - Fix crash caused by not checking for 0 pointer (220442)
+- Add search line in QM widget which highlights and scrolls to found items (220428)
+- Moving multiple items in QM widget is now possible (220428)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

@@ -56,6 +56,10 @@ namespace kt
 		m_torrents->setDragEnabled(true);
 		m_torrents->setAcceptDrops(true);
 		m_torrents->setDropIndicatorShown(true);
+		
+		m_torrents->setSelectionMode(QAbstractItemView::ContiguousSelection);
+		
+		connect(m_search,SIGNAL(textChanged(QString)),this,SLOT(searchTextChanged(QString)));
 	}
 
 
@@ -74,51 +78,78 @@ namespace kt
 
 	void QueueManagerWidget::moveUpClicked()
 	{
-		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
-		if (cur.isValid())
-		{
-			int r = cur.row();
-			model->moveUp(r);
-			if (r > 0)
-				r--;
-			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
-		}
+		QModelIndexList sel = m_torrents->selectionModel()->selectedRows();
+		QList<int> rows;
+		foreach (const QModelIndex & idx,sel)
+			rows.append(idx.row());
+		
+		if (rows.front() == 0)
+			return;
+		
+		model->moveUp(rows.front(),rows.count());
+		
+		QItemSelection nsel;
+		int cols = model->columnCount(QModelIndex());
+		nsel.select(model->index(rows.front() - 1,0),model->index(rows.back() - 1,cols - 1));
+		m_torrents->selectionModel()->select(nsel,QItemSelectionModel::Select);
 	}
 	
 	void QueueManagerWidget::moveDownClicked()
 	{
-		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
-		if (cur.isValid())
-		{
-			int r = cur.row();
-			model->moveDown(r);
-			if (r < model->rowCount(QModelIndex()) - 1)
-				r++;
-			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
-		}
+		QModelIndexList sel = m_torrents->selectionModel()->selectedRows();
+		QList<int> rows;
+		foreach (const QModelIndex & idx,sel)
+			rows.append(idx.row());
+		
+		int rowcount = model->rowCount(QModelIndex());
+		if (rows.back() == rowcount - 1)
+			return;
+		
+		model->moveDown(rows.front(),rows.count());
+		
+		QItemSelection nsel;
+		int cols = model->columnCount(QModelIndex());
+		nsel.select(model->index(rows.front() + 1,0),model->index(rows.back() + 1,cols - 1));
+		m_torrents->selectionModel()->select(nsel,QItemSelectionModel::Select);
 	}
 	
 	void QueueManagerWidget::moveTopClicked()
 	{
-		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
-		if (cur.isValid())
-		{
-			int r = cur.row();
-			model->moveTop(r);
-			m_torrents->selectionModel()->setCurrentIndex(model->index(0,0),QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
-		}
+		QModelIndexList sel = m_torrents->selectionModel()->selectedRows();
+		QList<int> rows;
+		foreach (const QModelIndex & idx,sel)
+			rows.append(idx.row());
+		
+		if (rows.front() == 0)
+			return;
+		
+		model->moveTop(rows.front(),rows.count());
+		
+		QItemSelection nsel;
+		int cols = model->columnCount(QModelIndex());
+		nsel.select(model->index(0,0),model->index(rows.count() - 1,cols - 1));
+		m_torrents->selectionModel()->select(nsel,QItemSelectionModel::Select);
+		m_torrents->scrollToTop();
 	}
 	
 	void QueueManagerWidget::moveBottomClicked()
 	{
-		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
-		if (cur.isValid())
-		{
-			int r = cur.row();
-			model->moveBottom(r);
-			r = model->rowCount(QModelIndex()) - 1;
-			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
-		}
+		QModelIndexList sel = m_torrents->selectionModel()->selectedRows();
+		QList<int> rows;
+		foreach (const QModelIndex & idx,sel)
+			rows.append(idx.row());
+		
+		int rowcount = model->rowCount(QModelIndex());
+		if (rows.back() == rowcount - 1)
+			return;
+		
+		model->moveBottom(rows.front(),rows.count());
+		
+		QItemSelection nsel;
+		int cols = model->columnCount(QModelIndex());
+		nsel.select(model->index(rowcount - rows.count(),0),model->index(rowcount - 1,cols - 1));
+		m_torrents->selectionModel()->select(nsel,QItemSelectionModel::Select);
+		m_torrents->scrollToBottom();
 	}
 	
 	void QueueManagerWidget::saveState(KSharedConfigPtr cfg)
@@ -126,6 +157,7 @@ namespace kt
 		KConfigGroup g = cfg->group("QueueManagerWidget");
 		QByteArray s = m_torrents->header()->saveState();
 		g.writeEntry("view_state",s.toBase64());
+		g.writeEntry("search_text",m_search->text());
 	}
 	
 	void QueueManagerWidget::loadState(KSharedConfigPtr cfg)
@@ -134,12 +166,26 @@ namespace kt
 		QByteArray s = QByteArray::fromBase64(g.readEntry("view_state",QByteArray()));
 		if (!s.isNull())
 			m_torrents->header()->restoreState(s);
+		
+		QString st = g.readEntry("search_text",QString());
+		if (!st.isEmpty())
+			m_search->setText(st);
 	}
 	
 	void QueueManagerWidget::update()
 	{
 		model->update();
 	}
+	
+	void QueueManagerWidget::searchTextChanged(const QString& t)
+	{
+		QModelIndex idx = model->find(t);
+		if (idx.isValid())
+		{
+			m_torrents->scrollTo(idx,QAbstractItemView::PositionAtCenter);
+		}
+	}
+
 }
 
 #include "queuemanagerwidget.moc"

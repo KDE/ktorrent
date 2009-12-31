@@ -61,33 +61,42 @@ namespace kt
 		virtual bool dropMimeData(const QMimeData *data,Qt::DropAction action, int row, int column, const QModelIndex &parent);
 		
 		/**
-		 * Move an item one row up
+		 * Move items one row up
 		 * @param row The row of the item
+		 * @param count The number of items to move
 		 */
-		void moveUp(int row);
+		void moveUp(int row,int count);
 		
 		/**
-		 * Move an item one row down
+		 * Move items one row down
 		 * @param row The row of the item
+		 * @param count The number of items to move
 		 */
-		void moveDown(int row);
+		void moveDown(int row,int count);
 		
 		/**
-		 * Move an item to the top
+		 * Move items to the top
 		 * @param row The row of the item
+		 * @param count The number of items to move
 		 */
-		void moveTop(int row);
+		void moveTop(int row,int count);
 		
 		/**
-		 * Move an item to the bottom
+		 * Move items to the bottom
 		 * @param row The row of the item
+		 * @param count The number of items to move
 		 */
-		void moveBottom(int row);
+		void moveBottom(int row,int count);
 		
 		/**
 		 * Update the model
 		 */
 		void update();
+		
+		/**
+			Given a search text find a matching torrent
+		*/
+		QModelIndex find(const QString & text);
 		
 	public slots:
 		void onTorrentAdded(bt::TorrentInterface* tc);
@@ -99,6 +108,7 @@ namespace kt
 		QueueManager* qman;
 		QMap<const bt::TorrentInterface*,bt::Int64> stalled_times;
 		mutable QList<int> dragged_items;
+		QString search_text;
 	};
 
 }
