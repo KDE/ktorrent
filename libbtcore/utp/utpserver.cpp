@@ -22,6 +22,10 @@
 #include <util/constants.h>
 #include "utpprotocol.h"
 
+#ifdef Q_WS_WIN
+#include <util/win32.h>
+#endif
+
 namespace utp
 {
 	UTPServer::UTPServer(QObject* parent) : QThread(parent),sock(0),running(false)
