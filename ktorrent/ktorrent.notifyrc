@@ -395,6 +395,7 @@ Action=Sound|Popup
 
 [Event/DHTNotEnabled]
 Name=DHT is not enabled
+Name[ca]=El DHT no està actiu
 Name[de]=VHT ist nicht aktiviert
 Name[en_GB]=DHT is not enabled
 Name[es]=DHT no está habilitado
