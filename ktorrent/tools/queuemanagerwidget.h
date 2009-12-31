@@ -23,7 +23,10 @@
 
 #include <QWidget>
 #include <ksharedconfig.h>
-#include "ui_queuemanagerwidget.h"
+
+class QModelIndex;
+class QToolBar;
+class QTreeView;
 
 namespace bt
 {
@@ -32,6 +35,7 @@ namespace bt
 
 namespace kt
 {
+	class HintLineEdit;
 	class QueueManager;
 	class QueueManagerModel;
 	
@@ -40,7 +44,7 @@ namespace kt
 	 * 
 	 * Widget for the QueueManager
 	*/
-	class QueueManagerWidget : public QWidget, public Ui_QueueManagerWidget
+	class QueueManagerWidget : public QWidget
 	{
 		Q_OBJECT
 	public:
@@ -64,10 +68,23 @@ namespace kt
 		void moveTopClicked();
 		void moveBottomClicked();
 		void searchTextChanged(const QString & t);
+		void showSearch(bool on);
 
+	private:
+		bool indexVisible(const QModelIndex & idx);
+		
 	private:
 		QueueManagerModel* model;
 		QueueManager* qman;
+		QTreeView* view;
+		QToolBar* toolbar;
+		HintLineEdit* search;
+		
+		QAction* show_search;
+		QAction* move_top;
+		QAction* move_up;
+		QAction* move_down;
+		QAction* move_bottom;
 	};
 }
 

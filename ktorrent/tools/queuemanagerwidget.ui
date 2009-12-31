@@ -13,62 +13,47 @@
   <property name="windowTitle">
    <string>Queue Manager</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="margin">
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Search:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="KLineEdit" name="m_search">
-         <property name="showClearButton" stdset="0">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QTreeView" name="m_torrents"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QVBoxLayout">
-     <item>
-      <widget class="KPushButton" name="m_move_top">
+      <widget class="QToolButton" name="m_show_search">
        <property name="text">
-        <string/>
+        <string>...</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_move_up">
+      <widget class="QToolButton" name="m_move_top">
        <property name="text">
-        <string/>
+        <string>...</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_move_down">
+      <widget class="QToolButton" name="m_move_up">
        <property name="text">
-        <string/>
+        <string>...</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_move_bottom">
+      <widget class="QToolButton" name="m_move_down">
        <property name="text">
-        <string/>
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="m_move_bottom">
+       <property name="text">
+        <string>...</string>
        </property>
       </widget>
      </item>
@@ -87,14 +72,23 @@
      </item>
     </layout>
    </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="KLineEdit" name="m_search">
+       <property name="showClearButton" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeView" name="m_torrents"/>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>

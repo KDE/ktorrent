@@ -18,9 +18,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QBoxLayout>
+#include <QToolBar>
+#include <QTreeView>
 #include <QToolButton>
-#include <klocale.h>
-#include <kicon.h>
+#include <KConfigGroup>
+#include <KLocale>
+#include <KIcon>
 #include <gui/tabbarwidget.h>
 #include <groups/groupmanager.h>
 #include "torrentactivity.h"
