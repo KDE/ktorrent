@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <ksharedconfig.h>
 
+class QItemSelection;
 class QModelIndex;
 class QToolBar;
 class QTreeView;
@@ -69,9 +70,11 @@ namespace kt
 		void moveBottomClicked();
 		void searchTextChanged(const QString & t);
 		void showSearch(bool on);
+		void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 
 	private:
 		bool indexVisible(const QModelIndex & idx);
+		void updateButtons();
 		
 	private:
 		QueueManagerModel* model;

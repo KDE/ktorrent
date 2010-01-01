@@ -91,6 +91,11 @@ namespace kt
 		view->setDropIndicatorShown(true);
 		view->setAutoScroll(true);
 		view->setSelectionMode(QAbstractItemView::ContiguousSelection);
+		
+		connect(view->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+				this,SLOT(selectionChanged(QItemSelection,QItemSelection)));
+				
+		updateButtons();
 	}
 
 
@@ -127,6 +132,8 @@ namespace kt
 		view->selectionModel()->select(nsel,QItemSelectionModel::Select);
 		if (!indexVisible(top_left))
 			view->scrollTo(top_left,QAbstractItemView::PositionAtCenter);
+		
+		updateButtons();
 	}
 	
 	void QueueManagerWidget::moveDownClicked()
@@ -150,6 +157,8 @@ namespace kt
 		view->selectionModel()->select(nsel,QItemSelectionModel::Select);
 		if (!indexVisible(top_left))
 			view->scrollTo(top_left,QAbstractItemView::PositionAtCenter);
+		
+		updateButtons();
 	}
 	
 	void QueueManagerWidget::moveTopClicked()
@@ -169,6 +178,8 @@ namespace kt
 		nsel.select(model->index(0,0),model->index(rows.count() - 1,cols - 1));
 		view->selectionModel()->select(nsel,QItemSelectionModel::Select);
 		view->scrollToTop();
+		
+		updateButtons();
 	}
 	
 	void QueueManagerWidget::moveBottomClicked()
@@ -189,6 +200,8 @@ namespace kt
 		nsel.select(model->index(rowcount - rows.count(),0),model->index(rowcount - 1,cols - 1));
 		view->selectionModel()->select(nsel,QItemSelectionModel::Select);
 		view->scrollToBottom();
+		
+		updateButtons();
 	}
 	
 	void QueueManagerWidget::saveState(KSharedConfigPtr cfg)
@@ -240,6 +253,34 @@ namespace kt
 	{
 		QRect r = view->visualRect(idx);
 		return view->viewport()->rect().contains(r);
+	}
+
+	void QueueManagerWidget::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+	{
+		Q_UNUSED(selected);
+		Q_UNUSED(deselected);
+		updateButtons();
+	}
+
+	void QueueManagerWidget::updateButtons()
+	{
+		QModelIndexList idx = view->selectionModel()->selectedRows();
+		if (idx.count() == 0)
+		{
+			move_top->setEnabled(false);
+			move_up->setEnabled(false);
+			move_down->setEnabled(false);
+			move_bottom->setEnabled(false);
+		}
+		else
+		{
+			move_top->setEnabled(idx.front().row() != 0);
+			move_up->setEnabled(idx.front().row() != 0);
+			
+			int rows = model->rowCount(QModelIndex());
+			move_down->setEnabled(idx.back().row() != rows - 1);
+			move_bottom->setEnabled(idx.back().row() != rows - 1);
+		}
 	}
 
 }
