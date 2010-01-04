@@ -259,28 +259,28 @@ namespace bt
 		priv->mutex.lock();
 	}
 
-	static Log global_log;
+	K_GLOBAL_STATIC(Log, global_log)
 	
 	Log & Out(unsigned int arg)
 	{
-		global_log.setFilter(arg);
-		global_log.lock();
-		return global_log;
+		global_log->setFilter(arg);
+		global_log->lock();
+		return *global_log;
 	}
 
 	void InitLog(const QString & file,bool rotate,bool handle_qt_messages)
 	{
-		global_log.setOutputFile(file,rotate,handle_qt_messages);
+		global_log->setOutputFile(file,rotate,handle_qt_messages);
 	}
 
 	void AddLogMonitor(LogMonitorInterface* m)
 	{
-		global_log.addMonitor(m);
+		global_log->addMonitor(m);
 	}
 
 	void RemoveLogMonitor(LogMonitorInterface* m)
 	{
-		global_log.removeMonitor(m);
+		global_log->removeMonitor(m);
 	}
 	
 	static void QtMessageOutput(QtMsgType type, const char *msg)
