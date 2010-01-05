@@ -41,6 +41,7 @@ Changes in 3.3.3:
 - Don't allow nested event loops when iterating over the incomplete url list in scanfolder plugin, fixes a crash (219885)
 - Fix crash due to uncaught exception in TorrentFileTreeModel::loadExpandedState 
 - Fix bug causing error message that the QM limits are reached to be shown instead of a torrent to be enqueued (220171)
+- Fix crash caused by not checking for 0 pointer (221333)
 
 Changes in 3.3.2:
 - Fix crash when loading Feed in syndication plugin at startup (216207)
