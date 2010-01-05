@@ -57,9 +57,15 @@ namespace bt
 	
 	void PreallocationJob::finished()
 	{
-		torrent()->preallocFinished(prealloc_thread->errorMessage(),!prealloc_thread->isStopped());
-		prealloc_thread->deleteLater();
-		prealloc_thread = 0;
+		if (prealloc_thread)
+		{
+			torrent()->preallocFinished(prealloc_thread->errorMessage(),!prealloc_thread->isStopped());
+			prealloc_thread->deleteLater();
+			prealloc_thread = 0;
+		}
+		else
+			torrent()->preallocFinished(QString(),false);
+		
 		setError(0);
 		emitResult();
 	}
