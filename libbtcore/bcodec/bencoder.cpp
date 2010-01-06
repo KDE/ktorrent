@@ -133,6 +133,14 @@ namespace bt
 		QByteArray s = QString("i%1e").arg(val).toUtf8();
 		out->write(s,s.length());
 	}
+
+	void BEncoder::write(const char* str)	        
+	{
+		if (!out) return;
+
+		QByteArray s = QString("%1:%2").arg(strlen(str)).arg(str).toUtf8();
+		out->write(s,s.length());
+	}
 	
 	void BEncoder::write(const QString & str)
 	{

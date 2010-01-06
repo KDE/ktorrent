@@ -154,7 +154,13 @@ namespace bt
 		 * @param val
 		 */
 		void write(Uint64 val);
-		
+	
+		/**
+		 * Write a string
+		 * @param str 
+		 */
+		void write(const char* str);
+
 		/**
 		 * Write a string
 		 * @param str 
