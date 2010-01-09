@@ -190,13 +190,20 @@ namespace dht
 	void RPCServer::stop()
 	{
 		bt::Globals::instance().getPortList().removePort(port,net::UDP);
-		sock->close();
-		listener_thread->stop();
-		listener_thread->wait();
-		delete listener_thread;
-		listener_thread = 0;
-		delete sock;
-		sock = 0;
+		if (listener_thread)
+		{
+			listener_thread->stop();
+			listener_thread->wait();
+			delete listener_thread;
+			listener_thread = 0;
+		}
+		
+		if (sock)
+		{
+			sock->close();
+			delete sock;
+			sock = 0;
+		}
 	}
 	
 #if 0
@@ -218,6 +225,9 @@ namespace dht
 
 	void RPCServer::handlePackets()
 	{
+		if (!listener_thread)
+			return; 
+		
 		// lock the thread
 		QMutexLocker lock(&listener_thread->mutex);
 		
