@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Information Widget
 Name[ca]=Estri d'informació
+Name[ca@valencia]=Estri d'informació
 Name[cs]=Informační widget
 Name[da]=Informations-widget
 Name[de]=Informationen
@@ -38,6 +39,7 @@ Comment=Displays general information about a torrent in several tabs
 Comment[ast]=Amuesa información xeneral sobro un torrent en delles llingüetes
 Comment[bg]=Показване на различни данни за торентите в няколко подпрозореца
 Comment[ca]=Mostra informació general quant a un torrent en diverses pestanyes
+Comment[ca@valencia]=Mostra informació general quant a un torrent en diverses pestanyes
 Comment[cs]=Zobrazuje v kartách obecné informace o torrentu
 Comment[da]=Viser generel information om en torrent i flere faneblade
 Comment[de]=Anzeige von allgemeinen Informationen über einen Torrent in mehreren Unterfenstern
