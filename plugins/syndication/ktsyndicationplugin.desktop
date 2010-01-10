@@ -2,6 +2,7 @@
 Name=Syndication
 Name[bg]=Синдикиране
 Name[ca]=Sindicació
+Name[ca@valencia]=Sindicació
 Name[da]=Syndikering
 Name[de]=Syndizierung
 Name[el]=Syndication
@@ -35,6 +36,7 @@ Name[zh_CN]=同步
 Name[zh_TW]=Syndication
 Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
 Comment[ca]=Connector de sindicació per al KTorrent, que permet canals RSS i Atom
+Comment[ca@valencia]=Connector de sindicació per al KTorrent, que permet canals RSS i Atom
 Comment[cs]=Modul pro publikování pro KTorrent podporující RSS a kanály Atom
 Comment[da]=Syndikeringsplugin til KTorrent, understøtter RSS- og Atom-feeds
 Comment[de]=Syndizierungsmodul für KTorrent mit Unterstützung für RSS- und Atom-Nachrichtenquellen

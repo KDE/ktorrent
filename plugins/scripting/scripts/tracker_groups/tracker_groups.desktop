@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Tracker Grouping
 Name[ca]=Agrupació de seguidors
+Name[ca@valencia]=Agrupació de seguidors
 Name[cs]=Seskupování trackerů
 Name[da]=Tracker-gruppering
 Name[de]=Tracker-Gruppierung
@@ -37,6 +38,7 @@ Name[zh_CN]=Tracker 分组
 Name[zh_TW]=追蹤器分組
 Comment=Script to create automatic groups based upon tracker URL's
 Comment[ca]=Script per a crear grups automàtics basats en els URL dels seguidors
+Comment[ca@valencia]=Script per a crear grups automàtics basats en els URL dels seguidors
 Comment[cs]=Skript pro automatické vytvoření skupin podle URL adres trackerů
 Comment[da]=Script til at oprette grupper automatisk baseret på tracker-URL'er
 Comment[de]=Skript zum automatischen Gruppieren anhand der Tracker-Adressen

@@ -2,6 +2,7 @@
 Name=Media Player
 Name[bg]=Медиен плеър
 Name[ca]=Reproductor de suports
+Name[ca@valencia]=Reproductor de suports
 Name[cs]=Přehrávač médií
 Name[da]=Medieafspiller
 Name[de]=Mediaplayer
@@ -38,6 +39,7 @@ Name[zh_TW]=媒體播放器
 Comment=Phonon-based media player
 Comment[bg]=Програма за преглед на мултимедия на основата на Phonon
 Comment[ca]=Reproductor de medis basat en Phonon
+Comment[ca@valencia]=Reproductor de medis basat en Phonon
 Comment[cs]=Přehrávač médií založený na Phononu
 Comment[da]=Phonon-baseret medieafspiller
 Comment[de]=Phonon-basierter Mediaplayer für KTorrent
