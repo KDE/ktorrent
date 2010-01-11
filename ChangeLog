@@ -43,6 +43,7 @@ Changes in 3.3.3:
 - Fix bug causing error message that the QM limits are reached to be shown instead of a torrent to be enqueued (220171)
 - Fix crash caused by not checking for 0 pointer (221333)
 - Fix crashes when DHT socket could not be bound (221872)
+- Fix bug causing files to be created which are to big in some rare circumstances (222036)
 
 Changes in 3.3.2:
 - Fix crash when loading Feed in syndication plugin at startup (216207)
