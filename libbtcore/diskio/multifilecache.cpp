@@ -809,8 +809,12 @@ namespace bt
 		
 		try
 		{
-			dnd.readFirstChunk(tmp,0,cs - tf->getFirstChunkOffset());
-			fptr.write(tmp,cs - tf->getFirstChunkOffset());
+			Uint32 to_read = cs - tf->getFirstChunkOffset();
+			if (to_read > tf->getSize()) // check for files which are smaller then a chunk
+				to_read = tf->getSize();
+			
+			dnd.readFirstChunk(tmp,0,to_read);
+			fptr.write(tmp,to_read);
 			
 			if (tf->getFirstChunk() != tf->getLastChunk())
 			{
