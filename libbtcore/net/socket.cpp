@@ -59,7 +59,7 @@ using namespace bt;
 namespace net
 {
 
-	Socket::Socket(int fd,int ip_version) : m_fd(fd),m_ip_version(ip_version),m_state(IDLE)
+	Socket::Socket(int fd,int ip_version) : m_fd(fd),m_ip_version(ip_version)
 	{
 		// check if the IP version is 4 or 6
 		if (m_ip_version != 4 && m_ip_version != 6)
@@ -75,7 +75,7 @@ namespace net
 		cacheAddress();
 	}
 	
-	Socket::Socket(bool tcp,int ip_version) : m_fd(-1),m_ip_version(ip_version),m_state(IDLE)
+	Socket::Socket(bool tcp,int ip_version) : m_fd(-1),m_ip_version(ip_version)
 	{
 		// check if the IP version is 4 or 6
 		if (m_ip_version != 4 && m_ip_version != 6)

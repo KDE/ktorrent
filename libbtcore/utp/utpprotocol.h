@@ -76,6 +76,12 @@ namespace utp
 		quint8 extension_bitmask[8];
 	};
 	
+	struct UnknownExtension
+	{
+		quint8 extension;
+		quint8 length;
+	};
+	
 	// type field values
 	const quint8 ST_DATA = 0;
 	const quint8 ST_FIN = 1;
@@ -86,24 +92,10 @@ namespace utp
 	
 	enum ConnectionState
 	{
+		CS_IDLE,
 		CS_SYN_SENT,
 		CS_CONNECTED
 	};
-	
-	struct Connection
-	{
-		quint16 remote_connection_id;
-		quint32 wnd_size;
-		quint32 reply_micro;
-		
-		quint16 local_connection_id;
-		quint32 max_window; // maximum number of bytes in flight
-		quint32 cur_window; // number of bytes in flight 
-		
-		quint16 seq_nr;
-		quint16 ack_nr;
-	};
-	
 }
 
 #endif // UTP_UTPPROTOCOL_H

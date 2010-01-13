@@ -17,35 +17,78 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <util/log.h>
-#include <util/functions.h>
-#include "net/wakeuppipe.h"
 
-using namespace bt;
+#include "localwindow.h"
+#include <string.h>
 
-namespace net
+namespace utp
 {
 
-	WakeUpPipe::WakeUpPipe() 
+	
+	LocalWindow::LocalWindow(bt::Uint32 cap) : window(0),capacity(cap),start(0),size(0)
 	{
+		window = new bt::Uint8[capacity];
 	}
 
-
-	WakeUpPipe::~WakeUpPipe()
+	LocalWindow::~LocalWindow()
 	{
+		delete [] window;
 	}
 
-	void WakeUpPipe::wakeUp()
+	bt::Uint32 LocalWindow::read(bt::Uint8* data, bt::Uint32 max_len)
 	{
-		char dummy[] = "dummy";
-		if (bt::Pipe::write((const bt::Uint8*)dummy,5) != 5)
-			Out(SYS_GEN|LOG_DEBUG) << "WakeUpPipe: wake up failed " << endl;
-	}
+		if (size == 0)
+			return 0;
 		
-	void WakeUpPipe::handleData()
-	{
-		bt::Uint8 buf[20];
-		if (bt::Pipe::read(buf,20) < 0)
-			Out(SYS_GEN|LOG_DEBUG) << "WakeUpPipe: read failed" << endl;
+		bt::Uint32 to_read = size < max_len ? size : max_len;
+		if (start + to_read < capacity)
+		{
+			// we are not going past the end of the data
+			memcpy(data,window + start,to_read);
+			start += to_read;
+			size -= to_read;
+			return to_read;
+		}
+		else
+		{
+			// read until the end of the window
+			memcpy(data,window + start,capacity - start);
+			bt::Uint32 ar = capacity - start;
+			if (to_read > ar) // read the rest
+				memcpy(data + ar,window,to_read - ar);
+			
+			start = ar;
+			size -= to_read;
+			return to_read;
+		}
 	}
+
+	bt::Uint32 LocalWindow::write(const bt::Uint8* data, bt::Uint32 len)
+	{
+		if (size == capacity)
+			return 0;
+		
+		bt::Uint32 free_space = capacity - size;
+		bt::Uint32 to_write = free_space < len ? free_space : len;
+		bt::Uint32 off = (start + size) % capacity;
+		if (off + to_write < capacity)
+		{
+			// everything will go in one go
+			memcpy(window + off,data,to_write);
+			size += to_write;
+			return to_write;
+		}
+		else
+		{
+			memcpy(window + off,data,capacity - off);
+			bt::Uint32 aw = capacity - off;
+			if (to_write > aw)
+				memcpy(window,data + aw,to_write - aw);
+			
+			size += to_write;
+			return to_write;
+		}
+	}
+
 }
+

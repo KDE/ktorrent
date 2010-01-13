@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,65 +15,56 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
 
-#include <util/constants.h>
+
+#ifndef UTP_LOCALWINDOW_H
+#define UTP_LOCALWINDOW_H
+
 #include <btcore_export.h>
+#include <util/constants.h>
 
 namespace utp
 {
-	class UTPServer;
-}
-
-namespace net
-{
-	class PortList;
-}
-
-namespace dht
-{
-	class DHTBase;
-}
-
-namespace bt
-{
-	class Server;
-
+	const bt::Uint32 DEFAULT_CAPACITY = 64*1024;
 	
-
-	class BTCORE_EXPORT Globals
+	/**
+		Manages the local window of a UTP connection.
+		This is a circular buffer.
+	*/
+	class BTCORE_EXPORT LocalWindow
 	{
 	public:
-		virtual ~Globals();
+		LocalWindow(bt::Uint32 cap = DEFAULT_CAPACITY);
+		virtual ~LocalWindow();
 		
-		void initServer(Uint16 port);
-		void shutdownServer();
+		bt::Uint32 maxWindow() const {return capacity;}
+		bt::Uint32 currentWindow() const {return size;}
 		
-		void initUTPServer(Uint16 port);
-		void shutdownUTPServer();
+		/**
+			Read up to max_len bytes from the buffer and store it in data
+			@param data The place to store the data
+			@param max_len Maximum amount to read
+			@return The amount read
+		*/
+		bt::Uint32 read(bt::Uint8* data,bt::Uint32 max_len);
 		
-		bool isUTPEnabled() const {return utp_server != 0;}
-
-		Server & getServer() {return *server;}
-		dht::DHTBase & getDHT() {return *dh_table;}
-		net::PortList & getPortList() {return *plist;}
-		utp::UTPServer & getUTPServer() {return *utp_server;}
-				
-		static Globals & instance();
-		static void cleanup();
+		/**
+			Write up to len bytes from data and store it in the window.
+			@param data The data to copy
+			@param max_len Amount to write
+			@return The amount written
+		*/
+		bt::Uint32 write(const bt::Uint8* data,bt::Uint32 len);
+		
 	private:
-		Globals();
-		
-		Server* server;
-		dht::DHTBase* dh_table;
-		net::PortList* plist;
-		utp::UTPServer* utp_server;
-		
-		static Globals* inst;
+		bt::Uint8* window;
+		bt::Uint32 capacity;
+		bt::Uint32 start;
+		bt::Uint32 size;
 	};
+
 }
 
-#endif
+#endif // UTP_LOCALWINDOW_H

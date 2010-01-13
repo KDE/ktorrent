@@ -27,7 +27,7 @@ namespace net
 {
 #define OUTPUT_BUFFER_SIZE 16393
 
-	BufferedSocket::BufferedSocket(int fd,int ip_version) : Socket(fd,ip_version),rdr(0),wrt(0),up_gid(0),down_gid(0)
+	BufferedSocket::BufferedSocket(SocketDevice* sock) : rdr(0),wrt(0),up_gid(0),down_gid(0),sock(sock)
 	{
 		bytes_in_output_buffer = 0;
 		bytes_sent = 0;
@@ -36,9 +36,21 @@ namespace net
 		output_buffer = new Uint8[OUTPUT_BUFFER_SIZE];
 		poll_index = -1;
 	}
-	
-	BufferedSocket::BufferedSocket(bool tcp,int ip_version) : Socket(tcp,ip_version),rdr(0),wrt(0),up_gid(0),down_gid(0)
+
+	BufferedSocket::BufferedSocket(int fd,int ip_version) : rdr(0),wrt(0),up_gid(0),down_gid(0)
 	{
+		sock = new Socket(fd,ip_version);
+		bytes_in_output_buffer = 0;
+		bytes_sent = 0;
+		down_speed = new Speed();
+		up_speed = new Speed();
+		output_buffer = new Uint8[OUTPUT_BUFFER_SIZE];
+		poll_index = -1;
+	}
+	
+	BufferedSocket::BufferedSocket(bool tcp,int ip_version) : rdr(0),wrt(0),up_gid(0),down_gid(0)
+	{
+		sock = new Socket(tcp,ip_version);
 		bytes_in_output_buffer = 0;
 		bytes_sent = 0;
 		down_speed = new Speed();
@@ -53,6 +65,7 @@ namespace net
 		delete [] output_buffer;
 		delete up_speed;
 		delete down_speed;
+		delete sock;
 	}
 	
 	void BufferedSocket::setGroupID(Uint32 gid,bool upload)
@@ -85,22 +98,22 @@ namespace net
 	{	
 		Uint32 br = 0;
 		bool no_limit = (max_bytes_to_read == 0);
-		
-		if (bytesAvailable() == 0)
+		Uint32 ba = sock->bytesAvailable();
+		if (ba == 0)
 		{
-			close();
+			sock->close();
 			return 0;
 		}
 			
-		while ((br < max_bytes_to_read || no_limit)  && bytesAvailable() > 0)
+		while ((br < max_bytes_to_read || no_limit)  && ba > 0)
 		{
-			Uint32 tr = bytesAvailable();
+			Uint32 tr = ba;
 			if (tr > OUTPUT_BUFFER_SIZE)
 				tr = OUTPUT_BUFFER_SIZE;
 			if (!no_limit && tr + br > max_bytes_to_read)
 				tr = max_bytes_to_read - br;
 			
-			int ret = Socket::recv(input_buffer,tr);
+			int ret = sock->recv(input_buffer,tr);
 			if (ret != 0)
 			{
 				mutex.lock();
@@ -138,7 +151,7 @@ namespace net
 			off = bytes_sent;
 		}
 		
-		Uint32 ret = Socket::send(output_buffer + off,bw);
+		Uint32 ret = sock->send(output_buffer + off,bw);
 		if (ret > 0)
 		{
 			mutex.lock();

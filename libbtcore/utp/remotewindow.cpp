@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,65 +15,48 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
 
-#include <util/constants.h>
-#include <btcore_export.h>
+#include "remotewindow.h"
+#include "utpprotocol.h"
 
 namespace utp
 {
-	class UTPServer;
-}
-
-namespace net
-{
-	class PortList;
-}
-
-namespace dht
-{
-	class DHTBase;
-}
-
-namespace bt
-{
-	class Server;
-
 	
-
-	class BTCORE_EXPORT Globals
+	RemoteWindow::RemoteWindow() : cur_window(0),max_window(64 * 1024),wnd_size(0)
 	{
-	public:
-		virtual ~Globals();
-		
-		void initServer(Uint16 port);
-		void shutdownServer();
-		
-		void initUTPServer(Uint16 port);
-		void shutdownUTPServer();
-		
-		bool isUTPEnabled() const {return utp_server != 0;}
 
-		Server & getServer() {return *server;}
-		dht::DHTBase & getDHT() {return *dh_table;}
-		net::PortList & getPortList() {return *plist;}
-		utp::UTPServer & getUTPServer() {return *utp_server;}
-				
-		static Globals & instance();
-		static void cleanup();
-	private:
-		Globals();
+	}
+
+	RemoteWindow::~RemoteWindow()
+	{
+
+	}
+
+	void RemoteWindow::packetReceived(const utp::Header* hdr)
+	{
+		wnd_size = hdr->wnd_size;
 		
-		Server* server;
-		dht::DHTBase* dh_table;
-		net::PortList* plist;
-		utp::UTPServer* utp_server;
-		
-		static Globals* inst;
-	};
+		// everything up until the ack_nr in the header should now have been acked
+		QList<QByteArray>::iterator i = unacked_packets.begin();
+		while (i != unacked_packets.end())
+		{
+			if (((utp::Header*)i->data())->seq_nr <= hdr->ack_nr)
+			{
+				cur_window -= i->size();
+				i = unacked_packets.erase(i);
+			}
+			else
+				break;
+		}
+	}
+
+	void RemoteWindow::addPacket(const QByteArray& data)
+	{
+		cur_window += data.size();
+		unacked_packets.append(data);
+	}
+
 }
 
-#endif

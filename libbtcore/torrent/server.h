@@ -23,7 +23,9 @@
 #include <qlist.h>
 #include <qobject.h>
 #include <btcore_export.h>
+#include <interfaces/serverinterface.h>
 #include "globals.h"
+
 
 class QSocketNotifier;
 
@@ -48,16 +50,12 @@ namespace bt
 	 * All PeerManager's should register with this class when they
 	 * are created and should unregister when they are destroyed.
 	 */
-	class BTCORE_EXPORT Server : public QObject
+	class BTCORE_EXPORT Server : public ServerInterface
 	{
 		Q_OBJECT
 
-		QList<PeerManager*> peer_managers;
 		net::Socket* sock;
 		QSocketNotifier* sn;
-		Uint16 port;
-		bool encryption;
-		bool allow_unencrypted;
 
 	public:
 		Server(Uint16 port);
@@ -66,57 +64,7 @@ namespace bt
 		/// Check if everything is ok (are we successfully listening on the port)
 		bool isOK() const;
 		
-		/**
-		 * Change the port.
-		 * @param port The new port
-		 */
-		void changePort(Uint16 port);
-
-		/// Get the port in use
-		Uint16 getPortInUse() const;
-		
-		/**
-		 * Add a PeerManager.
-		 * @param pman The PeerManager
-		 */
-		void addPeerManager(PeerManager* pman);
-
-		/**
-		 * Remove a PeerManager.
-		 * @param pman The PeerManager
-		 */
-		void removePeerManager(PeerManager* pman);
-		
-		/**
-		 * Find the PeerManager given the info_hash of it's torrent.
-		 * @param hash The info_hash
-		 * @return The PeerManager or 0 if one can't be found
-		 */
-		PeerManager* findPeerManager(const SHA1Hash & hash);
-		
-		/**
-		 * Find the info_hash based on the skey hash. The skey hash is a hash
-		 * of 'req2' followed by the info_hash. This function finds the info_hash
-		 * which matches the skey hash.
-		 * @param skey HASH('req2',info_hash)
-		 * @param info_hash which matches
-		 * @return true If one was found
-		*/
-		bool findInfoHash(const SHA1Hash & skey,SHA1Hash & info_hash);
-		
-		/**
-		 * Enable encryption. 
-		 * @param allow_unencrypted Allow unencrypted connections (if encryption fails)
-		 */
-		void enableEncryption(bool allow_unencrypted);
-		
-		/**
-		 * Disable encrypted authentication.
-		 */
-		void disableEncryption();
-		
-		bool isEncryptionEnabled() const {return encryption;}
-		bool unencryptedConnectionsAllowed() const {return allow_unencrypted;}
+		virtual void changePort(Uint16 port);
 		
 		void close();
 

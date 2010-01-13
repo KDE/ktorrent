@@ -66,7 +66,7 @@ namespace net
 			while (itr != sm->end())
 			{
 				BufferedSocket* s = *itr;
-				if (!s->ok())
+				if (!s->socketDevice()->ok())
 				{
 					itr++;
 					continue;
@@ -77,7 +77,7 @@ namespace net
 				if (pi >= 0)
 					ready = fd_vec[pi].revents & POLLIN;
 				else
-					ready = s->bytesAvailable() > 0;
+					ready = s->socketDevice()->bytesAvailable() > 0;
 		
 				if (ready)
 				{
@@ -150,13 +150,13 @@ namespace net
 		while (itr != sm->end())
 		{
 			BufferedSocket* s = *itr;
-			if (s && s->ok() && s->fd() > 0)
+			if (s && s->socketDevice()->ok())
 			{
 				if (fd_vec.size() <= i)
 				{
 					// expand pollfd vector if necessary
 					struct pollfd pfd;
-					pfd.fd = s->fd();
+					pfd.fd = s->socketDevice()->fd();
 					pfd.revents = 0;
 					pfd.events = POLLIN;
 					fd_vec.push_back(pfd);
@@ -165,7 +165,7 @@ namespace net
 				{
 					// use existing slot
 					struct pollfd & pfd = fd_vec[i];
-					pfd.fd = s->fd();
+					pfd.fd = s->socketDevice()->fd();
 					pfd.revents = 0;
 					pfd.events = POLLIN;
 				}

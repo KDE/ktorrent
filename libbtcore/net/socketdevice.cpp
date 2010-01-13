@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,65 +15,23 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
 
-#include <util/constants.h>
-#include <btcore_export.h>
-
-namespace utp
-{
-	class UTPServer;
-}
+#include "socketdevice.h"
 
 namespace net
 {
-	class PortList;
-}
-
-namespace dht
-{
-	class DHTBase;
-}
-
-namespace bt
-{
-	class Server;
-
 	
-
-	class BTCORE_EXPORT Globals
+	SocketDevice::SocketDevice() : m_state(IDLE)
 	{
-	public:
-		virtual ~Globals();
-		
-		void initServer(Uint16 port);
-		void shutdownServer();
-		
-		void initUTPServer(Uint16 port);
-		void shutdownUTPServer();
-		
-		bool isUTPEnabled() const {return utp_server != 0;}
 
-		Server & getServer() {return *server;}
-		dht::DHTBase & getDHT() {return *dh_table;}
-		net::PortList & getPortList() {return *plist;}
-		utp::UTPServer & getUTPServer() {return *utp_server;}
-				
-		static Globals & instance();
-		static void cleanup();
-	private:
-		Globals();
-		
-		Server* server;
-		dht::DHTBase* dh_table;
-		net::PortList* plist;
-		utp::UTPServer* utp_server;
-		
-		static Globals* inst;
-	};
+	}
+
+	SocketDevice::~SocketDevice()
+	{
+
+	}
+
 }
 
-#endif

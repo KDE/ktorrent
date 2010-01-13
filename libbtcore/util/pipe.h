@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,65 +15,44 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
 
-#include <util/constants.h>
+#ifndef BT_PIPE_H
+#define BT_PIPE_H
+
 #include <btcore_export.h>
-
-namespace utp
-{
-	class UTPServer;
-}
-
-namespace net
-{
-	class PortList;
-}
-
-namespace dht
-{
-	class DHTBase;
-}
+#include <util/constants.h>
 
 namespace bt
 {
-	class Server;
 
-	
-
-	class BTCORE_EXPORT Globals
+	/**
+		Cross platform pipe implementation, uses socketpair on unix and a TCP connection over the localhost in windows.
+	*/
+	class Pipe
 	{
 	public:
-		virtual ~Globals();
+		Pipe();
+		virtual ~Pipe();
 		
-		void initServer(Uint16 port);
-		void shutdownServer();
+		/// Get the reader socket
+		int readerSocket() const {return reader;}
 		
-		void initUTPServer(Uint16 port);
-		void shutdownUTPServer();
+		/// Get the writer socket
+		int writerSocket() const {return writer;}
 		
-		bool isUTPEnabled() const {return utp_server != 0;}
-
-		Server & getServer() {return *server;}
-		dht::DHTBase & getDHT() {return *dh_table;}
-		net::PortList & getPortList() {return *plist;}
-		utp::UTPServer & getUTPServer() {return *utp_server;}
-				
-		static Globals & instance();
-		static void cleanup();
-	private:
-		Globals();
+		/// Write data to the write end of the pipe
+		int write(const Uint8* data,int len);
 		
-		Server* server;
-		dht::DHTBase* dh_table;
-		net::PortList* plist;
-		utp::UTPServer* utp_server;
+		/// Read data from the read end of the pipe
+		int read(Uint8* buffer,int max_len);
 		
-		static Globals* inst;
+	protected:
+		int reader;
+		int writer;
 	};
+
 }
 
-#endif
+#endif // BT_PIPE_H

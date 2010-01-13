@@ -44,11 +44,9 @@ namespace bt
 
 	
 
-	Server::Server(Uint16 port) : sock(0),sn(0),port(0)
+	Server::Server(Uint16 port) : sock(0),sn(0)
 	{
 		changePort(port);
-		encryption = false;
-		allow_unencrypted = true;
 	}
 
 
@@ -77,15 +75,7 @@ namespace bt
 		delete sn; 
 		sn = 0;
 		
-		QString iface = NetworkInterface();
-		QString ip = NetworkInterfaceIPAddress(iface);
-		QStringList possible;
-		if (!ip.isEmpty())
-			possible << ip;
-		
-		// If the first address doesn't work try AnyIPv6 and Any
-		possible << QHostAddress(QHostAddress::AnyIPv6).toString() << QHostAddress(QHostAddress::Any).toString();
-		
+		QStringList possible = bindAddresses();
 		foreach (const QString & addr,possible)
 		{
 			if (addr.contains(":")) // IPv6
@@ -110,16 +100,6 @@ namespace bt
 			connect(sn,SIGNAL(activated(int)),this,SLOT(readyToAccept(int)));
 			Globals::instance().getPortList().addNewPort(port,net::TCP,true);
 		}
-	}
-
-	void Server::addPeerManager(PeerManager* pman)
-	{
-		peer_managers.append(pman);
-	}
-	
-	void Server::removePeerManager(PeerManager* pman)
-	{
-		peer_managers.removeAll(pman);
 	}
 
 	void Server::readyToAccept(int )
@@ -164,63 +144,9 @@ namespace bt
 	void Server::close()
 	{
 		delete sock;
-		sock= 0;
+		sock = 0;
 		delete sn;
 		sn = 0;
-	}
-
-	Uint16 Server::getPortInUse() const
-	{
-		return port;
-	}
-
-	PeerManager* Server::findPeerManager(const SHA1Hash & hash)
-	{
-		QList<PeerManager*>::iterator i = peer_managers.begin();
-		while (i != peer_managers.end())
-		{
-			PeerManager* pm = *i;
-			if (pm && pm->getTorrent().getInfoHash() == hash)
-			{
-				if (!pm->isStarted())
-					return 0;
-				else
-					return pm;
-			}
-			i++;
-		}
-		return 0;
-	}
-	
-	bool Server::findInfoHash(const SHA1Hash & skey,SHA1Hash & info_hash)
-	{
-		Uint8 buf[24];
-		memcpy(buf,"req2",4);
-		QList<PeerManager*>::iterator i = peer_managers.begin();
-		while (i != peer_managers.end())
-		{
-			PeerManager* pm = *i;
-			memcpy(buf+4,pm->getTorrent().getInfoHash().getData(),20);
-			if (SHA1Hash::generate(buf,24) == skey)
-			{
-				info_hash = pm->getTorrent().getInfoHash();
-				return true;
-			}
-			i++;
-		}
-		return false;
-	}
-	
-	
-	void Server::enableEncryption(bool allow_unencrypted)
-	{
-		encryption = true;
-		this->allow_unencrypted = allow_unencrypted;
-	}	
-	
-	void Server::disableEncryption()
-	{
-		encryption = false;
 	}
 }
 

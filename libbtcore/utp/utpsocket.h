@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,65 +15,45 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
 
-#include <util/constants.h>
+#ifndef UTP_UTPSOCKET_H
+#define UTP_UTPSOCKET_H
+
 #include <btcore_export.h>
+#include <util/constants.h>
+#include <net/socketdevice.h>
 
 namespace utp
 {
-	class UTPServer;
-}
-
-namespace net
-{
-	class PortList;
-}
-
-namespace dht
-{
-	class DHTBase;
-}
-
-namespace bt
-{
-	class Server;
-
+	class Connection;
 	
-
-	class BTCORE_EXPORT Globals
+	/**
+		UTPSocket class serves as an interface for the networking code.
+	*/
+	class BTCORE_EXPORT UTPSocket : public net::SocketDevice
 	{
 	public:
-		virtual ~Globals();
+		UTPSocket();
+		virtual ~UTPSocket();
 		
-		void initServer(Uint16 port);
-		void shutdownServer();
-		
-		void initUTPServer(Uint16 port);
-		void shutdownUTPServer();
-		
-		bool isUTPEnabled() const {return utp_server != 0;}
-
-		Server & getServer() {return *server;}
-		dht::DHTBase & getDHT() {return *dh_table;}
-		net::PortList & getPortList() {return *plist;}
-		utp::UTPServer & getUTPServer() {return *utp_server;}
-				
-		static Globals & instance();
-		static void cleanup();
+		virtual int fd() const;
+		virtual bool ok() const;
+		virtual int send(const bt::Uint8* buf,int len);
+		virtual int recv(bt::Uint8* buf,int max_len);
+		virtual void close();
+		virtual void setNonBlocking();
+		virtual bt::Uint32 bytesAvailable() const;
+		virtual bool setTOS(unsigned char type_of_service);
+		virtual bool connectTo(const net::Address & addr);
+		virtual bool connectSuccesFull();
+		virtual const net::Address & getPeerName() const;
+		virtual net::Address getSockName() const;
+		virtual void reset();
 	private:
-		Globals();
-		
-		Server* server;
-		dht::DHTBase* dh_table;
-		net::PortList* plist;
-		utp::UTPServer* utp_server;
-		
-		static Globals* inst;
+		Connection* conn;
 	};
 }
 
-#endif
+#endif // UTPSOCKET_H

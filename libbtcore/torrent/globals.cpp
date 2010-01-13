@@ -22,6 +22,7 @@
 #include <net/portlist.h>
 #include <dht/dht.h>
 #include <net/reverseresolver.h>
+#include <utp/utpserver.h>
 #include "server.h"
 
 
@@ -34,6 +35,7 @@ namespace bt
 	{
 		plist = new net::PortList();
 		server = 0;
+		utp_server = 0;
 		dh_table = new dht::DHT();
 	}
 
@@ -41,6 +43,7 @@ namespace bt
 	{
 		// shutdown the reverse resolver thread
 		net::ReverseResolver::shutdown();
+		shutdownUTPServer();
 		delete server;
 		delete dh_table;
 		delete plist;
@@ -72,6 +75,26 @@ namespace bt
 		if (server)
 		{
 			server->close();
+		}
+	}
+
+	void Globals::initUTPServer(Uint16 port)
+	{
+		if (utp_server)
+			shutdownUTPServer();
+		
+		utp_server = new utp::UTPServer();
+		utp_server->changePort(port);
+		utp_server->start();
+	}
+
+	void Globals::shutdownUTPServer()
+	{
+		if (utp_server)
+		{
+			utp_server->stop();
+			delete utp_server;
+			utp_server = 0;
 		}
 	}
 

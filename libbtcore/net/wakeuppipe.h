@@ -20,7 +20,7 @@
 #ifndef KTWAKEUPPIPE_H
 #define KTWAKEUPPIPE_H
 
-
+#include <util/pipe.h>
 
 namespace net
 {
@@ -31,7 +31,7 @@ namespace net
 		One end needs to be part of the poll or select, and the other end will send dummy data to it.
 		Waking up the select or poll call.
 	*/
-	class WakeUpPipe
+	class WakeUpPipe : public bt::Pipe
 	{
 	public:
 		WakeUpPipe();
@@ -40,14 +40,8 @@ namespace net
 		/// Wake up the other socket
 		void wakeUp();
 		
-		/// Get the reader socket
-		int readerSocket() const {return reader;}
-		
 		/// Read all the dummy data
 		void handleData();
-	private:
-		int reader;
-		int writer;
 	};
 
 }

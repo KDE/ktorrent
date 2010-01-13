@@ -21,7 +21,7 @@
 #define NETSOCKET_H
 
 #include <btcore_export.h>
-#include <util/constants.h>
+#include <net/socketdevice.h>
 #include "address.h"
 
 namespace net
@@ -30,66 +30,49 @@ namespace net
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class BTCORE_EXPORT Socket
+	class BTCORE_EXPORT Socket : public SocketDevice
 	{
 	public:
-		enum State
-		{
-			IDLE,
-			CONNECTING,
-			CONNECTED,
-			BOUND,
-			CLOSED
-		};
-	
 		explicit Socket(int fd,int ip_version);
 		explicit Socket(bool tcp,int ip_version);
 		virtual ~Socket();
 		
-		void setNonBlocking();
-		bool connectTo(const Address & addr);
-		/// See if a connectTo was succesfull in non blocking mode
-		bool connectSuccesFull();
+		virtual void setNonBlocking();
+		virtual bool connectTo(const Address & addr);
+		virtual bool connectSuccesFull();
+		virtual void close();
+		virtual Uint32 bytesAvailable() const;
+		virtual int send(const bt::Uint8* buf,int len);
+		virtual int recv(bt::Uint8* buf,int max_len);
+		virtual bool ok() const {return m_fd >= 0;}
+		virtual int fd() const {return m_fd;}
+		virtual bool setTOS(unsigned char type_of_service);
+		virtual const Address & getPeerName() const {return addr;}
+		virtual Address getSockName() const;
+		virtual void setRemoteAddress(const Address & a) {addr = a;}
+		virtual void reset(); 
+		
 		bool bind(const QString & ip,Uint16 port,bool also_listen);
 		bool bind(const Address & addr,bool also_listen);
-		int send(const bt::Uint8* buf,int len);
-		int recv(bt::Uint8* buf,int max_len);
+		int accept(Address & a);
+		
 		int sendTo(const bt::Uint8* buf,int size,const Address & addr);
 		int recvFrom(bt::Uint8* buf,int max_size,Address & addr);
-		int accept(Address & a);
-		bool ok() const {return m_fd >= 0;}
-		int fd() const {return m_fd;}
-		bool setTOS(unsigned char type_of_service);
-		const Address & getPeerName() const {return addr;}
-		void close();
-		State state() const {return m_state;}
+		
 		bool isIPv4() const {return m_ip_version == 4;}
 		bool isIPv6() const {return m_ip_version == 6;}
-		
-		/// reset the socket (i.e. close it and create a new one)
-		void reset(); 
-		
-		
-		Uint32 bytesAvailable() const;
-		
-		/**
-		 * Set the remote address, used by Socks to set the actual address.
-		 * @param addr The address
-		 */
-		void setRemoteAddress(const Address & a) {addr = a;}
 
-		/// Get the sockets local address
-		Address getSockName() const;
+		
 
 		/// Take the filedescriptor from the socket
 		int take();
+		
 	private:
 		void cacheAddress();
 		
 	private:
 		int m_fd;
 		int m_ip_version;
-		State m_state;
 		Address addr;
 	};
 

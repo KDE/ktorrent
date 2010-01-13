@@ -50,6 +50,7 @@ set(libbtcore_SRC
 	util/decompressfilejob.cpp
 	util/extractfilejob.cpp
 	util/logsystemmanager.cpp
+	util/pipe.cpp
 	
 	bcodec/bdecoder.cpp  
 	bcodec/bencoder.cpp  
@@ -69,6 +70,7 @@ set(libbtcore_SRC
 	net/socks.cpp
 	net/wakeuppipe.cpp
 	net/reverseresolver.cpp
+	net/socketdevice.cpp
 	
 	mse/bigint.cpp  
 	mse/functions.cpp  
@@ -120,6 +122,7 @@ set(libbtcore_SRC
 	interfaces/cachefactory.cpp
 	interfaces/webseedinterface.cpp
 	interfaces/trackerinterface.cpp
+	interfaces/serverinterface.cpp
 
 	torrent/globals.cpp
 	torrent/server.cpp
@@ -190,7 +193,10 @@ set(libbtcore_SRC
 	magnet/metadatadownload.cpp
 	
 	utp/utpserver.cpp
+	utp/utpserverthread.cpp
 	utp/connection.cpp
+	utp/localwindow.cpp
+	utp/remotewindow.cpp
 	
 	btversion.cpp
 )
@@ -226,6 +232,7 @@ set(net_HDR
 	./net/uploadthread.h
 	./net/socketmonitor.h
 	./net/reverseresolver.h
+	./net/socketdevice.h
 )
 
 set (mse_HDR 
@@ -254,6 +261,7 @@ set (interfaces_HDR
 	./interfaces/cachefactory.h
 	./interfaces/webseedinterface.h
 	./interfaces/trackerinterface.h
+	./interfaces/serverinterface.h
 )
 
 set (peer_HDR
@@ -296,6 +304,7 @@ set (util_HDR
 	./util/compressfilejob.h
 	./util/decompressfilejob.h
 	./util/extractfilejob.h
+	./util/pipe.h
 )
 	
 set (download_HDR

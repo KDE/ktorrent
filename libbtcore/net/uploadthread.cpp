@@ -50,7 +50,7 @@ namespace net
 		while (itr != sm->end())
 		{
 			BufferedSocket* s = *itr;
-			if (s && s->ok() && s->bytesReadyToWrite())
+			if (s && s->socketDevice()->ok() && s->bytesReadyToWrite())
 			{
 				SocketGroup* g = groups.find(s->uploadGroupID());
 				if (!g)
