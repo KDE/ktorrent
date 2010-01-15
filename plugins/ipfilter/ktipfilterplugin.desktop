@@ -38,6 +38,7 @@ Name[zh_TW]=IP 過濾
 Comment=Filter IP addresses through a blocklist
 Comment[ca]=Filtra adreces IP a través d'una llista de bloqueig
 Comment[ca@valencia]=Filtra adreces IP a través d'una llista de bloqueig
+Comment[cs]=Filtrovat IP adresy podle seznamu blokovaných
 Comment[da]=Filtrér IP-adresser gennem en blokeringsliste
 Comment[de]=IP-Adressen mit einer Blockliste filtern
 Comment[el]=Φίλτρο διευθύνσεων IP μέσω μιας λίστας αποκλεισμού
