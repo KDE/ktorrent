@@ -404,10 +404,7 @@ namespace kt
 		else
 		{
 			// load in the file (target is always local)
-			QString dir = Settings::saveDir().toLocalFile();
-			if (!Settings::useSaveDir() ||  dir.isNull())
-				dir = QDir::homePath();
-			
+			QString dir = locationHint();
 			QString group;
 			QMap<KUrl,QString>::iterator i = add_to_groups.find(j->url());
 			if (i != add_to_groups.end())
@@ -432,10 +429,7 @@ namespace kt
 		else if (url.isLocalFile())
 		{
 			QString path = url.toLocalFile();
-			QString dir = Settings::saveDir().toLocalFile();
-			if (!Settings::useSaveDir()  || dir.isNull())
-				dir =  QDir::homePath();
-		
+			QString dir = locationHint();
 			if (dir != QString::null && loadFromFile(path,dir,group,false))
 				loadingFinished(url,true,false);
 			else
@@ -509,13 +503,7 @@ namespace kt
 		else if (url.isLocalFile())
 		{
 			QString path = url.toLocalFile(); 
-			QString dir = Settings::saveDir().toLocalFile();
-			if (!Settings::useSaveDir())
-			{
-				Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << path << " silently, default save location not set !" << endl;
-				Out(SYS_GEN|LOG_NOTICE) << "Using home directory instead !" << endl;
-				dir = QDir::homePath();
-			}
+			QString dir = locationHint();
 		
 			if (dir != QString::null && loadFromFile(path,dir,group,true))
 				loadingFinished(url,true,false);
@@ -536,11 +524,7 @@ namespace kt
 	{
 		QString dir;
 		if (savedir.isEmpty() || !bt::Exists(savedir))
-		{
-			dir = Settings::saveDir().toLocalFile();
-			if (!Settings::useSaveDir()  || dir.isNull())
-				dir =  QDir::homePath();
-		}
+			dir = locationHint();
 		else
 			dir = savedir;
 		
@@ -554,15 +538,7 @@ namespace kt
 	{
 		QString dir;
 		if (savedir.isEmpty() || !bt::Exists(savedir))
-		{
-			dir = Settings::saveDir().toLocalFile();
-			if (!Settings::useSaveDir())
-			{
-				Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << url.prettyUrl() << " silently, default save location not set !" << endl;
-				Out(SYS_GEN|LOG_NOTICE) << "Using home directory instead !" << endl;
-				dir = QDir::homePath();
-			}
-		}
+			dir = locationHint();
 		else
 			dir = savedir;
 		
@@ -1352,7 +1328,22 @@ namespace kt
 			loadSilently(tmp,url,group,QString());
 		else
 			load(tmp,url,group,QString());
+	}
+
+
+	QString Core::locationHint() const
+	{
+		QString dir;
+		if (Settings::useSaveDir())
+			dir = Settings::saveDir().toLocalFile();
+		else
+			dir = Settings::lastSaveDir();
 		
+		
+		if (dir.isEmpty() || !QDir(dir).exists())
+			dir = QDir::homePath();
+		
+		return dir;
 	}
 
 }
