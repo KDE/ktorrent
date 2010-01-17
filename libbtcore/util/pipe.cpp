@@ -41,7 +41,7 @@ namespace bt
 		if (!sock.bind("127.0.0.1",0,true))
 			return -1;
 		
-		Address local_addr = sock.getSockName();
+		net::Address local_addr = sock.getSockName();
 		net::Socket writer(true,4);
 		writer.setNonBlocking();
 		writer.connectTo(local_addr);
@@ -106,7 +106,7 @@ namespace bt
 #ifndef Q_WS_WIN
 		return ::write(writer,data,len);
 #else
-		return ::send(writer,data,len,0);
+		return ::send(writer,(char *)data,len,0);
 #endif
 	}
 
