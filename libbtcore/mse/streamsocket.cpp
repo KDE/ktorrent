@@ -50,7 +50,7 @@ namespace mse
 	StreamSocket::StreamSocket(int ip_version) : sock(0),enc(0),monitored(false)
 	{
 		sock = new BufferedSocket(true,ip_version);
-		sock->socketDevice()->setNonBlocking();
+		sock->socketDevice()->setBlocking(false);
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
@@ -60,7 +60,7 @@ namespace mse
 	StreamSocket::StreamSocket(int fd,int ip_version) : sock(0),enc(0),monitored(false)
 	{
 		sock = new BufferedSocket(fd,ip_version);
-		sock->socketDevice()->setNonBlocking();
+		sock->socketDevice()->setBlocking(false);
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
@@ -194,7 +194,7 @@ namespace mse
 	bool StreamSocket::connectTo(const net::Address & addr)
 	{
 		// we don't wanna block the current thread so set non blocking
-		sock->socketDevice()->setNonBlocking();
+		sock->socketDevice()->setBlocking(false);
 		if (sock->socketDevice()->connectTo(addr))
 		{
 			sock->socketDevice()->setTOS(tos);

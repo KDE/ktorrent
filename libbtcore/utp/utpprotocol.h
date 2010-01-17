@@ -94,7 +94,9 @@ namespace utp
 	{
 		CS_IDLE,
 		CS_SYN_SENT,
-		CS_CONNECTED
+		CS_CONNECTED,
+		CS_FINISHED,
+		CS_CLOSED
 	};
 }
 

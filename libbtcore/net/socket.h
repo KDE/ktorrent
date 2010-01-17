@@ -37,7 +37,7 @@ namespace net
 		explicit Socket(bool tcp,int ip_version);
 		virtual ~Socket();
 		
-		virtual void setNonBlocking();
+		virtual void setBlocking(bool on);
 		virtual bool connectTo(const Address & addr);
 		virtual bool connectSuccesFull();
 		virtual void close();

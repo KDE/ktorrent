@@ -201,7 +201,7 @@ namespace bt
 			if (!sock)
 			{
 				sock = new net::BufferedSocket(true,addr.ipVersion());
-				sock->socketDevice()->setNonBlocking();
+				sock->socketDevice()->setBlocking(false);
 				sock->setReader(this);
 				sock->setWriter(this);
 				sock->setGroupID(up_gid,true);

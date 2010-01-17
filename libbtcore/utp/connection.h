@@ -21,9 +21,13 @@
 #ifndef UTP_CONNECTION_H
 #define UTP_CONNECTION_H
 
+#include <QMutex>
+#include <QWaitCondition>
 #include <btcore_export.h>
 #include <net/address.h>
 #include "utpprotocol.h"
+
+
 
 namespace utp
 {
@@ -42,17 +46,47 @@ namespace utp
 			INCOMING,
 			OUTGOING
 		};
-		Connection(quint16 recv_connection_id,Type type,const net::Address & remote,UTPServer* srv);
+		Connection(bt::Uint16 recv_connection_id,Type type,const net::Address & remote,UTPServer* srv);
 		virtual ~Connection();
 		
 		/// Handle a single packet
-		void handlePacket(const QByteArray & packet);
+		ConnectionState handlePacket(const QByteArray & packet);
 		
 		/// Get the remote address
 		const net::Address & remoteAddress() const {return remote;}
 		
 		/// Get the receive connection id
-		quint16 receiveConnectionID() const {return recv_connection_id;}
+		bt::Uint16 receiveConnectionID() const {return recv_connection_id;}
+		
+		/// Send a packet, will return false if there is no room in the remote window
+		bool send(const QByteArray & packet);
+		
+		/// Send some data, returns the amount of bytes sent
+		bt::Uint32 send(const bt::Uint8* data,bt::Uint32 len);
+		
+		/// Read available data from local window, returns the amount of bytes read
+		bt::Uint32 recv(bt::Uint8* buf,bt::Uint32 max_len);
+		
+		/// Get the connection state
+		ConnectionState connectionState() const {return state;}
+		
+		/// Get the type of connection
+		Type connectionType() const {return type;}
+		
+		/// Send a reset packet
+		void sendReset();
+		
+		/// Get the number of bytes available
+		bt::Uint32 bytesAvailable() const;
+		
+		/// Wait until the connectTo call fails or succeeds
+		bool waitUntilConnected();
+		
+		/// Wait until there is data ready or the socket is closed
+		bool waitForData();
+		
+		/// Close the socket
+		void close();
 		
 	private:
 		void sendSYN();
@@ -76,16 +110,20 @@ namespace utp
 		net::Address remote;
 		
 		ConnectionState state;
-		quint16 send_connection_id;
-		quint32 reply_micro;
+		bt::Uint16 send_connection_id;
+		bt::Uint32 reply_micro;
 		
-		quint16 recv_connection_id;
+		bt::Uint16 recv_connection_id;
 		LocalWindow* local_wnd;
 		RemoteWindow* remote_wnd;
 		
-		quint16 seq_nr;
-		quint16 ack_nr;
+		bt::Uint16 seq_nr;
+		bt::Uint16 ack_nr;
 		int eof_seq_nr;
+		
+		mutable QMutex mutex;
+		QWaitCondition connected;
+		QWaitCondition data_ready;
 	};
 }
 

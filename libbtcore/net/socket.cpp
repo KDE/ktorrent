@@ -141,12 +141,16 @@ namespace net
 		}
 	}
 	
-	void Socket::setNonBlocking()
+	void Socket::setBlocking(bool on)
 	{
 #ifndef Q_WS_WIN
-		fcntl(m_fd, F_SETFL, O_NONBLOCK);
+		int flag = fcntl(m_fd, F_GETFL, 0);
+		if (!on)
+			fcntl(m_fd, F_SETFL, flag | O_NONBLOCK);
+		else
+			fcntl(m_fd, F_SETFL, flag & ~O_NONBLOCK);
 #else
-		u_long b = 1;
+		u_long b = on ? 1 : 0;
 		ioctlsocket(m_fd, FIONBIO, &b);
 #endif
 	}

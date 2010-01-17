@@ -24,6 +24,7 @@ using namespace KNetwork;
 
 namespace net
 {
+	Address Address::null;
 
 	Address::Address()
 	{

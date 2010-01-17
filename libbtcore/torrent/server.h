@@ -64,7 +64,7 @@ namespace bt
 		/// Check if everything is ok (are we successfully listening on the port)
 		bool isOK() const;
 		
-		virtual void changePort(Uint16 port);
+		virtual bool changePort(Uint16 port);
 		
 		void close();
 

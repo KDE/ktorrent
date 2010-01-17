@@ -62,12 +62,13 @@ namespace bt
 		inst = 0;
 	}
 
-	void Globals::initServer(Uint16 port)
+	bool Globals::initServer(Uint16 port)
 	{
 		delete server;
 		server = 0;
 		
 		server = new Server(port);
+		return server->isOK();
 	}
 	
 	void Globals::shutdownServer()
@@ -78,14 +79,17 @@ namespace bt
 		}
 	}
 
-	void Globals::initUTPServer(Uint16 port)
+	bool Globals::initUTPServer(Uint16 port)
 	{
 		if (utp_server)
 			shutdownUTPServer();
 		
 		utp_server = new utp::UTPServer();
-		utp_server->changePort(port);
+		if (!utp_server->changePort(port))
+			return false;
+		
 		utp_server->start();
+		return true;
 	}
 
 	void Globals::shutdownUTPServer()

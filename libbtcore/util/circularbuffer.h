@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,45 +18,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef UTP_UTPSOCKET_H
-#define UTP_UTPSOCKET_H
+#ifndef BT_CIRCULARBUFFER_H
+#define BT_CIRCULARBUFFER_H
 
 #include <btcore_export.h>
 #include <util/constants.h>
-#include <net/socketdevice.h>
 
-namespace utp
+namespace bt
 {
-	class Connection;
-	
+
 	/**
-		UTPSocket class serves as an interface for the networking code.
+		Circular buffer class
 	*/
-	class BTCORE_EXPORT UTPSocket : public net::SocketDevice
+	class BTCORE_EXPORT CircularBuffer
 	{
 	public:
-		UTPSocket();
-		UTPSocket(Connection* conn);
-		virtual ~UTPSocket();
+		CircularBuffer(bt::Uint32 cap);
+		virtual ~CircularBuffer();
 		
-		virtual int fd() const;
-		virtual bool ok() const;
-		virtual int send(const bt::Uint8* buf,int len);
-		virtual int recv(bt::Uint8* buf,int max_len);
-		virtual void close();
-		virtual void setBlocking(bool on);
-		virtual bt::Uint32 bytesAvailable() const;
-		virtual bool setTOS(unsigned char type_of_service);
-		virtual bool connectTo(const net::Address & addr);
-		virtual bool connectSuccesFull();
-		virtual const net::Address & getPeerName() const;
-		virtual net::Address getSockName() const;
-		virtual void reset();
-		virtual void setRemoteAddress(const net::Address & a);
-	private:
-		Connection* conn;
-		bool blocking;
+		/**
+			Read up to max_len bytes from the buffer and store it in data
+			@param data The place to store the data
+			@param max_len Maximum amount to read
+			@return The amount read
+		*/
+		bt::Uint32 read(bt::Uint8* data,bt::Uint32 max_len);
+		
+		/**
+			Write up to len bytes from data and store it in the window.
+			@param data The data to copy
+			@param max_len Amount to write
+			@return The amount written
+		*/
+		bt::Uint32 write(const bt::Uint8* data,bt::Uint32 len);
+		
+	protected:
+		bt::Uint8* window;
+		bt::Uint32 capacity;
+		bt::Uint32 start;
+		bt::Uint32 size;
 	};
+
 }
 
-#endif // UTPSOCKET_H
+#endif // BT_CIRCULARBUFFER_H

@@ -61,10 +61,10 @@ namespace bt
 		return sock && sock->ok();
 	}
 
-	void Server::changePort(Uint16 p)
+	bool Server::changePort(Uint16 p)
 	{
 		if (p == port)
-			return;
+			return true;
 
 		if (sock && sock->ok())
 			Globals::instance().getPortList().removePort(port,net::TCP);
@@ -95,11 +95,14 @@ namespace bt
 		
 		if (sock)
 		{
-			sock->setNonBlocking();
+			sock->setBlocking(false);
 			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Read,this);
 			connect(sn,SIGNAL(activated(int)),this,SLOT(readyToAccept(int)));
 			Globals::instance().getPortList().addNewPort(port,net::TCP,true);
+			return true;
 		}
+		
+		return false;
 	}
 
 	void Server::readyToAccept(int )

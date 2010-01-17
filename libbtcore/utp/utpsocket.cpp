@@ -19,36 +19,60 @@
  ***************************************************************************/
 
 #include "utpsocket.h"
+#include "connection.h"
+#include <torrent/globals.h>
+#include "utpserver.h"
 
 namespace utp
 {
-	UTPSocket::UTPSocket() : conn(0)
+	UTPSocket::UTPSocket() : conn(0),blocking(true)
 	{
 	}
 	
+	UTPSocket::UTPSocket(Connection* conn) : conn(conn),blocking(true)
+	{
+
+	}
+
 	UTPSocket::~UTPSocket()
 	{
+		close();
+		reset();
 	}
 	
 	
 	bt::Uint32 UTPSocket::bytesAvailable() const
 	{
-
+		return conn->bytesAvailable();
 	}
 
 	void UTPSocket::close()
 	{
-
+		if (conn)
+		{
+			
+		}
 	}
 
 	bool UTPSocket::connectSuccesFull()
 	{
-
+		return conn->connectionState() == CS_CONNECTED;
 	}
 
 	bool UTPSocket::connectTo(const net::Address& addr)
 	{
-
+		UTPServer & srv = bt::Globals::instance().getUTPServer();
+		if (conn)
+		{
+			srv.kill(conn);
+			conn = 0;
+		}
+		
+		conn = srv.connectTo(addr);
+		if (blocking)
+			return conn->waitUntilConnected();
+		
+		return true;
 	}
 
 	int UTPSocket::fd() const
@@ -58,12 +82,15 @@ namespace utp
 
 	const net::Address& UTPSocket::getPeerName() const
 	{
-
+		if (conn)
+			return conn->remoteAddress();
+		else
+			return net::Address::null;
 	}
 
 	net::Address UTPSocket::getSockName() const
 	{
-
+		return net::Address::null;
 	}
 
 	bool UTPSocket::ok() const
@@ -73,27 +100,55 @@ namespace utp
 
 	int UTPSocket::recv(bt::Uint8* buf, int max_len)
 	{
-
+		if (!conn || conn->connectionState() == CS_CLOSED)
+			return -1;
+		
+		if (conn->bytesAvailable() == 0 && blocking)
+		{
+			if (conn->waitForData())
+				return conn->recv(buf,max_len);
+			else
+				return -1; // connection should be closed now
+		}
+		else
+			return conn->recv(buf,max_len);
 	}
 
 	void UTPSocket::reset()
 	{
-
+		if (conn)
+		{
+			UTPServer & srv = bt::Globals::instance().getUTPServer();
+			srv.kill(conn);
+			conn = 0;
+		}
 	}
 
 	int UTPSocket::send(const bt::Uint8* buf, int len)
 	{
-
+		if (!conn)
+			return -1;
+		
+		bt::Uint32 ret = conn->send(buf,len);
+		if (!ret)
+			return -1;
+		
+		return ret;
 	}
 
-	void UTPSocket::setNonBlocking()
+	void UTPSocket::setBlocking(bool on)
 	{
-
+		blocking = on;
 	}
 
 	bool UTPSocket::setTOS(unsigned char type_of_service)
 	{
+		return false;
+	}
 
+	void UTPSocket::setRemoteAddress(const net::Address& a)
+	{
+		// TODO: implement this
 	}
 
 }

@@ -45,6 +45,8 @@ namespace net
 		Address(const Address & addr);
 		virtual ~Address();
 
+		
+		static Address null;
 	};
 
 }

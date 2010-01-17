@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <sys/select.h>
 #include <time.h>
+#include <util/log.h>
 #include <util/constants.h>
 #include "utpprotocol.h"
 #include "utpserverthread.h"
@@ -30,31 +31,33 @@
 #include <util/win32.h>
 #endif
 
+using namespace bt;
 
 namespace utp
 {
-	UTPServer::UTPServer(QObject* parent) : ServerInterface(parent),sock(0),running(false),utp_thread(0)
+	UTPServer::UTPServer(QObject* parent) : ServerInterface(parent),sock(0),running(false),utp_thread(0),mutex(QMutex::Recursive)
 	{
 		qsrand(time(0));
+		connections.setAutoDelete(true);
 	}
 
 	UTPServer::~UTPServer()
 	{
 		stop();
-		for (ConItr i = connections.begin();i != connections.end();i++)
-			delete i.value();
 	}
 	
 	
-	void UTPServer::changePort(bt::Uint16 port)
+	bool UTPServer::changePort(bt::Uint16 port)
 	{
 		QStringList possible = bindAddresses();
 		foreach (const QString & ip,possible)
 		{
 			net::Address addr(ip,port);
 			if (bind(addr))
-				return;
+				return true;
 		}
+		
+		return false;
 	}
 
 
@@ -68,6 +71,7 @@ namespace utp
 			return false;
 		}
 		
+		Out(SYS_CON|LOG_NOTICE) << "UTP: bound to " << addr.toString() << endl;
 		return true;
 	}
 
@@ -92,11 +96,14 @@ namespace utp
 	
 	void UTPServer::handlePacket()
 	{
+		QMutexLocker lock(&mutex);
+		
 		int ba = sock->bytesAvailable();
 		QByteArray packet(ba,0);
 		net::Address addr;
 		if (sock->recvFrom((bt::Uint8*)packet.data(),ba,addr) > 0)
 		{
+			Out(SYS_CON|LOG_NOTICE) << "UTP: received " << ba << " bytes packet from " << addr.toString() << endl;
 			// discard packets which are to small
 			if (ba < (int)sizeof(utp::Header))
 				return;
@@ -108,13 +115,15 @@ namespace utp
 			case ST_FIN:
 			case ST_STATE:
 				{
-					Connection* c = find(hdr->connection_id,addr);
+					Connection* c = find(hdr->connection_id);
 					if (c)
 						c->handlePacket(packet);
+					else
+						Out(SYS_CON|LOG_NOTICE) << "UTP: unkown connection " << hdr->connection_id << endl;
 				}
 				break;
 			case ST_RESET:
-				reset(hdr,addr);
+				reset(hdr);
 				break;
 			case ST_SYN:
 				syn(hdr,packet,addr);
@@ -123,69 +132,72 @@ namespace utp
 		}
 	}
 
-	void UTPServer::sendTo(const QByteArray& data, const net::Address& addr)
+	bool UTPServer::sendTo(const QByteArray& data, const net::Address& addr)
 	{
-		sock->sendTo((const bt::Uint8*)data.data(),data.size(),addr);
+		return sock->sendTo((const bt::Uint8*)data.data(),data.size(),addr) == data.size();
 	}
 	
-	void UTPServer::sendTo(const bt::Uint8* data, const bt::Uint32 size, const net::Address& addr)
+	bool UTPServer::sendTo(const bt::Uint8* data, const bt::Uint32 size, const net::Address& addr)
 	{
-		sock->sendTo(data,size,addr);
+		return sock->sendTo(data,size,addr) == (int)size;
 	}
 
 	Connection* UTPServer::connectTo(const net::Address& addr)
 	{
+		QMutexLocker lock(&mutex);
 		quint16 recv_conn_id = qrand() % 32535;
 		while (connections.contains(recv_conn_id))
 			recv_conn_id = qrand() % 32535;
 		
 		Connection* conn = new Connection(recv_conn_id,Connection::OUTGOING,addr,this);
 		connections.insert(recv_conn_id,conn);
+		
+		Out(SYS_CON|LOG_NOTICE) << "UTP: connecting to " << addr.toString() << endl;
 		return conn;
 	}
 
 	void UTPServer::syn(const utp::Header* hdr, const QByteArray& data, const net::Address & addr)
 	{
 		quint16 recv_conn_id = hdr->connection_id + 1;
-		Connection* conn = new Connection(recv_conn_id,Connection::INCOMING,addr,this);
-		connections.insert(recv_conn_id,conn);
-		conn->handlePacket(data);
+		if (connections.find(recv_conn_id))
+		{
+			// Send a reset packet if the ID is in use
+			Connection conn(recv_conn_id,Connection::INCOMING,addr,this);
+			conn.sendReset();
+		}
+		else
+		{
+			Connection* conn = new Connection(recv_conn_id,Connection::INCOMING,addr,this);
+			connections.insert(recv_conn_id,conn);
+			conn->handlePacket(data);
+			accepted(conn);
+		}
 	}
 
-	void UTPServer::reset(const utp::Header* hdr,const net::Address & addr)
+	void UTPServer::reset(const utp::Header* hdr)
 	{
-		Connection* c = find(hdr->connection_id,addr);
+		Connection* c = find(hdr->connection_id);
 		if (c)
 			kill(c);
 	}
 
-	Connection* UTPServer::find(quint16 conn_id, const net::Address& addr)
+	Connection* UTPServer::find(quint16 conn_id)
 	{
-		QList<Connection*> pc = connections.values(conn_id);
-		if (pc.isEmpty())
-			return 0;
-		
-		foreach (utp::Connection* c,pc)
-		{
-			if (c->remoteAddress() == addr)
-				return c;
-		}
-		
-		return 0;
+		return connections.find(conn_id);
 	}
 
 	void UTPServer::kill(Connection* conn)
 	{
+		QMutexLocker lock(&mutex);
 		dead_connections.append(conn);
 	}
 	
 	void UTPServer::clearDeadConnections()
 	{
+		QMutexLocker lock(&mutex);
 		foreach (utp::Connection* conn,dead_connections)
 		{
-			ConItr i = connections.find(conn->receiveConnectionID(),conn);
-			connections.erase(i);
-			delete conn;
+			connections.erase(conn->receiveConnectionID());
 		}
 		dead_connections.clear();
 	}

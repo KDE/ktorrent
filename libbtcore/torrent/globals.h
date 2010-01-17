@@ -49,10 +49,10 @@ namespace bt
 	public:
 		virtual ~Globals();
 		
-		void initServer(Uint16 port);
+		bool initServer(Uint16 port);
 		void shutdownServer();
 		
-		void initUTPServer(Uint16 port);
+		bool initUTPServer(Uint16 port);
 		void shutdownUTPServer();
 		
 		bool isUTPEnabled() const {return utp_server != 0;}

@@ -45,7 +45,7 @@ namespace bt
 		* Change the port.
 		* @param port The new port
 		*/
-		virtual void changePort(Uint16 port) = 0;
+		virtual bool changePort(Uint16 port) = 0;
 		
 		/// Get the port in use
 		Uint16 getPortInUse() const {return port;}

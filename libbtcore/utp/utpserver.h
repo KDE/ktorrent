@@ -22,8 +22,8 @@
 #define UTP_UTPSERVER_H
 
 #include <QThread>
-#include <QMultiMap>
 #include <net/socket.h>
+#include <util/ptrmap.h>
 #include <interfaces/serverinterface.h>
 #include <btcore_export.h>
 #include "connection.h"
@@ -41,15 +41,13 @@ namespace utp
 		UTPServer(QObject* parent = 0);
 		virtual ~UTPServer();
 		
-		virtual void changePort(bt::Uint16 port);
-		
-		
+		virtual bool changePort(bt::Uint16 port);
 		
 		/// Send a packet to some host
-		void sendTo(const QByteArray & data,const net::Address & addr);
+		bool sendTo(const QByteArray & data,const net::Address & addr);
 		
 		/// Send a packet to some host
-		void sendTo(const bt::Uint8* data,const bt::Uint32 size,const net::Address & addr);
+		bool sendTo(const bt::Uint8* data,const bt::Uint32 size,const net::Address & addr);
 		
 		/// Called by Connection when it needs to be killed
 		void kill(Connection* conn);
@@ -70,18 +68,22 @@ namespace utp
 		bool bind(const net::Address & addr);
 		void handlePacket();
 		void syn(const Header* hdr,const QByteArray & data,const net::Address & addr);
-		void reset(const Header* hdr,const net::Address & addr);
+		void reset(const Header* hdr);
 		void clearDeadConnections();
-		Connection* find(quint16 conn_id,const net::Address & addr);
+		Connection* find(quint16 conn_id);
+		
+	signals:
+		void accepted(Connection* conn);
 		
 	private:
 		net::Socket* sock;
 		bool running;
-		QMultiMap<quint16,Connection*> connections;
+		bt::PtrMap<quint16,Connection> connections;
 		QList<Connection*> dead_connections;
 		UTPServerThread* utp_thread;
+		QMutex mutex;
 		
-		typedef QMultiMap<quint16,Connection*>::iterator ConItr;
+		typedef bt::PtrMap<quint16,Connection>::iterator ConItr;
 	};
 
 }

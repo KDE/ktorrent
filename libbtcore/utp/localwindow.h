@@ -24,6 +24,7 @@
 
 #include <btcore_export.h>
 #include <util/constants.h>
+#include <util/circularbuffer.h>
 
 namespace utp
 {
@@ -33,7 +34,7 @@ namespace utp
 		Manages the local window of a UTP connection.
 		This is a circular buffer.
 	*/
-	class BTCORE_EXPORT LocalWindow
+	class BTCORE_EXPORT LocalWindow : public bt::CircularBuffer
 	{
 	public:
 		LocalWindow(bt::Uint32 cap = DEFAULT_CAPACITY);
@@ -42,27 +43,9 @@ namespace utp
 		bt::Uint32 maxWindow() const {return capacity;}
 		bt::Uint32 currentWindow() const {return size;}
 		
-		/**
-			Read up to max_len bytes from the buffer and store it in data
-			@param data The place to store the data
-			@param max_len Maximum amount to read
-			@return The amount read
-		*/
-		bt::Uint32 read(bt::Uint8* data,bt::Uint32 max_len);
 		
-		/**
-			Write up to len bytes from data and store it in the window.
-			@param data The data to copy
-			@param max_len Amount to write
-			@return The amount written
-		*/
-		bt::Uint32 write(const bt::Uint8* data,bt::Uint32 len);
 		
-	private:
-		bt::Uint8* window;
-		bt::Uint32 capacity;
-		bt::Uint32 start;
-		bt::Uint32 size;
+	
 	};
 
 }

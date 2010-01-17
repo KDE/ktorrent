@@ -23,7 +23,9 @@
 
 #include <QList>
 #include <QByteArray>
+#include <QMutex>
 #include <btcore_export.h>
+#include <util/constants.h>
 
 namespace utp
 {
@@ -44,15 +46,28 @@ namespace utp
 		void addPacket(const QByteArray & data);
 		
 		/// Are we allowed to send
-		bool allowedToSend(quint32 packet_size) const
+		bool allowedToSend(bt::Uint32 packet_size) const
 		{
 			return cur_window + packet_size <= qMin(wnd_size,max_window);
 		}
 		
+		/// Calculates how much window space is availabe
+		bt::Uint32 availableSpace() const
+		{
+			bt::Uint32 m = qMin(wnd_size,max_window);
+			if (cur_window > m)
+				return 0;
+			else
+				return m - cur_window;
+		}
+		
+		/// See if all packets are acked
+		bool allPacketsAcked() const {return unacked_packets.isEmpty();}
+		
 	private:
-		quint32 cur_window;
-		quint32 max_window;
-		quint32 wnd_size; // advertised window size from the other side
+		bt::Uint32 cur_window;
+		bt::Uint32 max_window;
+		bt::Uint32 wnd_size; // advertised window size from the other side
 		QList<QByteArray> unacked_packets;
 	};
 

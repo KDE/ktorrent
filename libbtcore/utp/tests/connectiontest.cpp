@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,45 +18,71 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef UTP_UTPSOCKET_H
-#define UTP_UTPSOCKET_H
+#include <QtTest>
+#include <QObject>
+#include <util/log.h>
+#include <utp/utpserver.h>
+#include <utp/connection.h>
 
-#include <btcore_export.h>
-#include <util/constants.h>
-#include <net/socketdevice.h>
+using namespace utp;
 
-namespace utp
+class ConnectionTest : public QEventLoop
 {
-	class Connection;
+	Q_OBJECT
+public:
 	
-	/**
-		UTPSocket class serves as an interface for the networking code.
-	*/
-	class BTCORE_EXPORT UTPSocket : public net::SocketDevice
+public slots:
+	void accepted(Connection* conn)
 	{
-	public:
-		UTPSocket();
-		UTPSocket(Connection* conn);
-		virtual ~UTPSocket();
+		accepted_conn = conn;
+		exit();
+	}
+	
+	void endEventLoop()
+	{
+		exit();
+	}
+	
+private slots:
+	void initTestCase()
+	{
+		bt::InitLog("connectiontest.log");
+	
+		accepted_conn = 0;
+		port = 50000;
+		while (port < 60000)
+		{
+			if (!srv.changePort(port))
+				port++;
+			else
+				break;
+		}
 		
-		virtual int fd() const;
-		virtual bool ok() const;
-		virtual int send(const bt::Uint8* buf,int len);
-		virtual int recv(bt::Uint8* buf,int max_len);
-		virtual void close();
-		virtual void setBlocking(bool on);
-		virtual bt::Uint32 bytesAvailable() const;
-		virtual bool setTOS(unsigned char type_of_service);
-		virtual bool connectTo(const net::Address & addr);
-		virtual bool connectSuccesFull();
-		virtual const net::Address & getPeerName() const;
-		virtual net::Address getSockName() const;
-		virtual void reset();
-		virtual void setRemoteAddress(const net::Address & a);
-	private:
-		Connection* conn;
-		bool blocking;
-	};
-}
+		srv.start();
+	}
+	
+	void cleanupTestCase()
+	{
+		srv.stop();
+	}
+	
+	void testConnect()
+	{
+		net::Address addr("127.0.0.1",port);
+		connect(&srv,SIGNAL(accepted(Connection*)),this,SLOT(accepted(Connection*)),Qt::QueuedConnection);
+		Connection* out = srv.connectTo(addr);
+		QVERIFY(out != 0);
+		QTimer::singleShot(5000,this,SLOT(endEventLoop())); // use a 5 second timeout
+		exec();
+		QVERIFY(accepted_conn != 0);
+	}
+	
+private:
+	utp::UTPServer srv;
+	int port;
+	utp::Connection* accepted_conn;
+};
 
-#endif // UTPSOCKET_H
+QTEST_MAIN(ConnectionTest)
+
+#include "connectiontest.moc"

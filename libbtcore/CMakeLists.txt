@@ -51,6 +51,7 @@ set(libbtcore_SRC
 	util/extractfilejob.cpp
 	util/logsystemmanager.cpp
 	util/pipe.cpp
+	util/circularbuffer.cpp
 	
 	bcodec/bdecoder.cpp  
 	bcodec/bencoder.cpp  
@@ -197,6 +198,7 @@ set(libbtcore_SRC
 	utp/connection.cpp
 	utp/localwindow.cpp
 	utp/remotewindow.cpp
+	utp/utpsocket.cpp
 	
 	btversion.cpp
 )
@@ -305,6 +307,7 @@ set (util_HDR
 	./util/decompressfilejob.h
 	./util/extractfilejob.h
 	./util/pipe.h
+	./util/circularbuffer.h
 )
 	
 set (download_HDR
