@@ -43,7 +43,7 @@ namespace bt
 		
 		net::Address local_addr = sock.getSockName();
 		net::Socket writer(true,4);
-		writer.setNonBlocking();
+		writer.setBlocking(false);
 		writer.connectTo(local_addr);
 		
 		net::Address dummy;
