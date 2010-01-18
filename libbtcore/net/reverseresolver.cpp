@@ -54,6 +54,9 @@ namespace net
 
 	QString ReverseResolver::resolve(const net::Address& addr)
 	{
+		if (!addr.address())
+			return QString();
+		
 		char host[200];
 		char service[200];
 		memset(host,0,200);
