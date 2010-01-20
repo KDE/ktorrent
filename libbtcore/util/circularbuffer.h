@@ -26,14 +26,14 @@
 
 namespace bt
 {
-
+	
 	/**
 		Circular buffer class
 	*/
 	class BTCORE_EXPORT CircularBuffer
 	{
 	public:
-		CircularBuffer(bt::Uint32 cap);
+		CircularBuffer(bt::Uint32 cap = 64 * 1024);
 		virtual ~CircularBuffer();
 		
 		/**
@@ -52,9 +52,15 @@ namespace bt
 		*/
 		bt::Uint32 write(const bt::Uint8* data,bt::Uint32 len);
 		
+		/// Get the buffer capacity
+		bt::Uint32 capacity() const {return buffer_capacity;}
+		
+		/// Get how much is used
+		bt::Uint32 fill() const {return size;}
+		
 	protected:
 		bt::Uint8* window;
-		bt::Uint32 capacity;
+		bt::Uint32 buffer_capacity;
 		bt::Uint32 start;
 		bt::Uint32 size;
 	};

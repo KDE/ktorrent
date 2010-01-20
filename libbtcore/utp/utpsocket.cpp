@@ -129,11 +129,7 @@ namespace utp
 		if (!conn)
 			return -1;
 		
-		bt::Uint32 ret = conn->send(buf,len);
-		if (!ret)
-			return -1;
-		
-		return ret;
+		return conn->send(buf,len);
 	}
 
 	void UTPSocket::setBlocking(bool on)

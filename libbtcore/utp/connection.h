@@ -26,6 +26,7 @@
 #include <btcore_export.h>
 #include <net/address.h>
 #include "utpprotocol.h"
+#include <util/circularbuffer.h>
 
 
 
@@ -58,11 +59,8 @@ namespace utp
 		/// Get the receive connection id
 		bt::Uint16 receiveConnectionID() const {return recv_connection_id;}
 		
-		/// Send a packet, will return false if there is no room in the remote window
-		bool send(const QByteArray & packet);
-		
-		/// Send some data, returns the amount of bytes sent
-		bt::Uint32 send(const bt::Uint8* data,bt::Uint32 len);
+		/// Send some data, returns the amount of bytes sent (or -1 on error)
+		int send(const bt::Uint8* data,bt::Uint32 len);
 		
 		/// Read available data from local window, returns the amount of bytes read
 		bt::Uint32 recv(bt::Uint8* buf,bt::Uint32 max_len);
@@ -88,12 +86,18 @@ namespace utp
 		/// Close the socket
 		void close();
 		
+		/// Update the RTT time
+		void updateRTT(const Header* hdr,bt::Uint32 packet_rtt);
+		
 	private:
 		void sendSYN();
 		void waitForSYN();
 		void sendState();
 		void sendFIN();
 		void updateDelayMeasurement(const Header* hdr);
+		void sendStateOrData();
+		int doSend(const QByteArray & packet);
+		void sendPackets();
 		
 		/** 
 			Parses the packet, and retrieves pointer to the header, the SelectiveAck extension (if present)
@@ -116,10 +120,17 @@ namespace utp
 		bt::Uint16 recv_connection_id;
 		LocalWindow* local_wnd;
 		RemoteWindow* remote_wnd;
+		bt::CircularBuffer output_buffer;
 		
 		bt::Uint16 seq_nr;
 		bt::Uint16 ack_nr;
+		bt::Uint16 last_ack_nr;
 		int eof_seq_nr;
+		bt::Uint32 timeout;
+		
+		bt::Uint32 rtt;
+		bt::Uint32 rtt_var;
+		bt::Uint32 packet_size;
 		
 		mutable QMutex mutex;
 		QWaitCondition connected;

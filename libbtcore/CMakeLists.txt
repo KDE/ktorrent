@@ -200,6 +200,7 @@ set(libbtcore_SRC
 	utp/localwindow.cpp
 	utp/remotewindow.cpp
 	utp/utpsocket.cpp
+	utp/timevalue.cpp
 	
 	btversion.cpp
 )

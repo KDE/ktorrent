@@ -98,6 +98,8 @@ namespace utp
 		CS_FINISHED,
 		CS_CLOSED
 	};
+	
+	const quint32 MIN_PACKET_SIZE = 150;
 }
 
 #endif // UTP_UTPPROTOCOL_H

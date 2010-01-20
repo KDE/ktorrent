@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,32 +18,49 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
-#ifndef UTP_LOCALWINDOW_H
-#define UTP_LOCALWINDOW_H
-
-#include <btcore_export.h>
-#include <util/constants.h>
-#include <util/circularbuffer.h>
+#include "timevalue.h"
+#include <sys/time.h>
 
 namespace utp
 {
-	const bt::Uint32 DEFAULT_CAPACITY = 64*1024;
 	
-	/**
-		Manages the local window of a UTP connection.
-		This is a circular buffer.
-	*/
-	class BTCORE_EXPORT LocalWindow : public bt::CircularBuffer
+	TimeValue::TimeValue()
 	{
-	public:
-		LocalWindow(bt::Uint32 cap = DEFAULT_CAPACITY);
-		virtual ~LocalWindow();
+		struct timeval tv;
+		gettimeofday(&tv,0);
+		seconds = tv.tv_sec;
+		microseconds = tv.tv_usec;
+	}
+	
+	TimeValue::TimeValue(bt::Uint64 secs,bt::Uint64 usecs) : seconds(secs),microseconds(usecs)
+	{
+	}
+
+	TimeValue::TimeValue(const utp::TimeValue& tv) : seconds(tv.seconds),microseconds(tv.microseconds)
+	{
+	}
+
+
+	TimeValue& TimeValue::operator=(const utp::TimeValue& tv)
+	{
+		seconds = tv.seconds;
+		microseconds = tv.microseconds;
+		return *this;
+	}
+
+	bt::Int64 operator - (const utp::TimeValue& a, const utp::TimeValue& b)
+	{
+		bt::Int64 seconds = b.seconds - a.seconds;
+		bt::Int64 microseconds = b.microseconds - a.microseconds;
 		
-		bt::Uint32 maxWindow() const {return buffer_capacity;}
-		bt::Uint32 currentWindow() const {return size;}
-	};
+		while (microseconds < 0)
+		{
+			microseconds += 1000000;
+			seconds -= 1;
+		}
+		
+		return (1000000LL * seconds + microseconds) / 1000;
+	}
 
 }
 
-#endif // UTP_LOCALWINDOW_H

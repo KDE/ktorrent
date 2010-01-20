@@ -25,9 +25,9 @@
 namespace bt
 {
 	
-	CircularBuffer::CircularBuffer(Uint32 cap) : window(0),capacity(cap),start(0),size(0)
+	CircularBuffer::CircularBuffer(Uint32 cap) : window(0),buffer_capacity(cap),start(0),size(0)
 	{
-		window = new bt::Uint8[capacity];
+		window = new bt::Uint8[buffer_capacity];
 	}
 
 	CircularBuffer::~CircularBuffer()
@@ -41,7 +41,7 @@ namespace bt
 			return 0;
 		
 		bt::Uint32 to_read = size < max_len ? size : max_len;
-		if (start + to_read < capacity)
+		if (start + to_read < buffer_capacity)
 		{
 			// we are not going past the end of the data
 			memcpy(data,window + start,to_read);
@@ -52,8 +52,8 @@ namespace bt
 		else
 		{
 			// read until the end of the window
-			memcpy(data,window + start,capacity - start);
-			bt::Uint32 ar = capacity - start;
+			memcpy(data,window + start,buffer_capacity - start);
+			bt::Uint32 ar = buffer_capacity - start;
 			if (to_read > ar) // read the rest
 				memcpy(data + ar,window,to_read - ar);
 			
@@ -65,13 +65,13 @@ namespace bt
 	
 	bt::Uint32 CircularBuffer::write(const bt::Uint8* data, bt::Uint32 len)
 	{
-		if (size == capacity)
+		if (size == buffer_capacity)
 			return 0;
 		
-		bt::Uint32 free_space = capacity - size;
+		bt::Uint32 free_space = buffer_capacity - size;
 		bt::Uint32 to_write = free_space < len ? free_space : len;
-		bt::Uint32 off = (start + size) % capacity;
-		if (off + to_write < capacity)
+		bt::Uint32 off = (start + size) % buffer_capacity;
+		if (off + to_write < buffer_capacity)
 		{
 			// everything will go in one go
 			memcpy(window + off,data,to_write);
@@ -80,8 +80,8 @@ namespace bt
 		}
 		else
 		{
-			memcpy(window + off,data,capacity - off);
-			bt::Uint32 aw = capacity - off;
+			memcpy(window + off,data,buffer_capacity - off);
+			bt::Uint32 aw = buffer_capacity - off;
 			if (to_write > aw)
 				memcpy(window,data + aw,to_write - aw);
 			

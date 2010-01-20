@@ -26,10 +26,23 @@
 #include <QMutex>
 #include <btcore_export.h>
 #include <util/constants.h>
+#include <utp/timevalue.h>
 
 namespace utp
 {
+	class Connection;
 	struct Header;
+	
+	struct UnackedPacket
+	{
+		UnackedPacket(const QByteArray & data,bt::Uint16 seq_nr,const TimeValue & send_time);
+		~UnackedPacket();
+					  
+		QByteArray data;
+		bt::Uint16 seq_nr;
+		TimeValue send_time;
+	};
+	
 	/**
 		Keeps track of the remote sides window including all packets inflight.
 	*/
@@ -40,10 +53,10 @@ namespace utp
 		virtual ~RemoteWindow();
 		
 		/// A packet was received (update window size and check for acks)
-		void packetReceived(const Header* hdr);
+		void packetReceived(const Header* hdr,Connection* conn);
 		
 		/// Add a packet to the remote window (should include headers)
-		void addPacket(const QByteArray & data);
+		void addPacket(const QByteArray & data,bt::Uint16 seq_nr,const TimeValue & send_time);
 		
 		/// Are we allowed to send
 		bool allowedToSend(bt::Uint32 packet_size) const
@@ -68,7 +81,7 @@ namespace utp
 		bt::Uint32 cur_window;
 		bt::Uint32 max_window;
 		bt::Uint32 wnd_size; // advertised window size from the other side
-		QList<QByteArray> unacked_packets;
+		QList<UnackedPacket*> unacked_packets;
 	};
 
 }

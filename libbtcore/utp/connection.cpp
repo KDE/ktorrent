@@ -36,6 +36,11 @@ namespace utp
 		eof_seq_nr = -1;
 		local_wnd = new LocalWindow();
 		remote_wnd = new RemoteWindow();
+		rtt = 100;
+		rtt_var = 0;
+		last_ack_nr = 0;
+		timeout = 1000;
+		packet_size = 1400;
 		if (type == OUTGOING)
 		{
 			send_connection_id = recv_connection_id + 1;
@@ -80,8 +85,9 @@ namespace utp
 		DumpHeader(*hdr);
 		
 		updateDelayMeasurement(hdr);
-		remote_wnd->packetReceived(hdr);
+		remote_wnd->packetReceived(hdr,this);
 		ack_nr = hdr->seq_nr;
+		last_ack_nr = hdr->ack_nr;
 		switch (state)
 		{
 			case CS_SYN_SENT:
@@ -121,8 +127,8 @@ namespace utp
 					local_wnd->write((const bt::Uint8*)packet.data() + data_off,s);
 					data_ready.wakeAll();
 					
-					// send back an ACK
-					sendState();
+					// send back an ACK 
+					sendStateOrData();
 				}
 				else if (hdr->type == ST_STATE)
 				{
@@ -163,6 +169,16 @@ namespace utp
 		
 		return state;
 	}
+	
+	
+	void Connection::updateRTT(const utp::Header* hdr,bt::Uint32 packet_rtt)
+	{
+		int delta = rtt - packet_rtt;
+		rtt_var += (qAbs(delta) - rtt_var) / 4;
+		rtt += (packet_rtt - rtt) / 8;
+		timeout = qMin(rtt + rtt_var * 4, (bt::Uint32)500);
+	}
+
 
 	void Connection::sendSYN()
 	{
@@ -185,7 +201,6 @@ namespace utp
 		hdr->seq_nr = seq_nr;
 		hdr->ack_nr = ack_nr;
 		
-		remote_wnd->addPacket(ba);
 		srv->sendTo((const bt::Uint8*)ba.data(),ba.size(),remote);
 	}
 	
@@ -206,7 +221,6 @@ namespace utp
 		hdr->seq_nr = seq_nr;
 		hdr->ack_nr = ack_nr;
 		
-		remote_wnd->addPacket(ba);
 		srv->sendTo((const bt::Uint8*)ba.data(),ba.size(),remote);
 	}
 
@@ -227,7 +241,6 @@ namespace utp
 		hdr->seq_nr = seq_nr;
 		hdr->ack_nr = ack_nr;
 		
-		remote_wnd->addPacket(ba);
 		srv->sendTo((const bt::Uint8*)ba.data(),ba.size(),remote);
 	}
 
@@ -289,14 +302,45 @@ namespace utp
 		return data_off;
 	}
 
-	bool Connection::send(const QByteArray & packet)
+	int Connection::send(const bt::Uint8* data, Uint32 len)
 	{
 		QMutexLocker lock(&mutex);
-		if (state != CS_CONNECTED || !remote_wnd->allowedToSend(packet.size()))
-			return false;
+		if (state != CS_CONNECTED)
+			return -1;
 		
-		struct timeval tv;
-		gettimeofday(&tv,NULL);
+		// first put data in the output buffer then send packets
+		bt::Uint32 ret = output_buffer.write(data,len);
+		sendPackets();
+		return ret;
+	}
+	
+	void Connection::sendPackets()
+	{
+		// chop output_buffer data in packets and keep sending
+		// until we are no longer allowed or the buffer is empty
+		while (output_buffer.fill() > 0 && remote_wnd->availableSpace() > 0)
+		{
+			bt::Uint32 to_read = qMin(output_buffer.fill(),remote_wnd->availableSpace());
+			to_read = qMin(to_read,packet_size);
+			
+			QByteArray packet(to_read,0);
+			output_buffer.read((bt::Uint8*)packet.data(),to_read);
+			doSend(packet);
+		}
+	}
+
+	void Connection::sendStateOrData()
+	{
+		if (output_buffer.fill() > 0 && remote_wnd->availableSpace() > 0)
+			sendPackets();
+		else
+			sendState();
+	}
+
+	int Connection::doSend(const QByteArray& packet)
+	{
+		bt::Uint32 to_send = packet.size();
+		TimeValue now;
 		
 		QByteArray ba(sizeof(Header) + packet.size(),0);
 		Header* hdr = (Header*)ba.data();
@@ -304,53 +348,18 @@ namespace utp
 		hdr->type = ST_DATA;
 		hdr->extension = 0;
 		hdr->connection_id = send_connection_id;
-		hdr->timestamp_microseconds = tv.tv_usec;
+		hdr->timestamp_microseconds = now.microseconds;
 		hdr->timestamp_difference_microseconds = reply_micro;
 		hdr->wnd_size = local_wnd->maxWindow() - local_wnd->currentWindow();
 		hdr->seq_nr = seq_nr + 1;
 		hdr->ack_nr = ack_nr;
 		
-		memcpy(ba.data() + sizeof(Header),packet.data(),packet.size());
+		memcpy(ba.data() + sizeof(Header),packet.data(),to_send);
 		if (!srv->sendTo(ba,remote))
-			return false;
+			return -1;
 		
 		seq_nr++;
-		remote_wnd->addPacket(packet);
-		return true;
-	}
-	
-	Uint32 Connection::send(const bt::Uint8* data, Uint32 len)
-	{
-		QMutexLocker lock(&mutex);
-		if (state != CS_CONNECTED)
-			return 0;
-		
-		bt::Uint32 space = remote_wnd->availableSpace();
-		if (space == 0)
-			return 0;
-		
-		bt::Uint32 to_send = space <= len ? space : len;
-		struct timeval tv;
-		gettimeofday(&tv,NULL);
-		
-		QByteArray ba(sizeof(Header) + to_send,0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = ST_DATA;
-		hdr->extension = 0;
-		hdr->connection_id = send_connection_id;
-		hdr->timestamp_microseconds = tv.tv_usec;
-		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->maxWindow() - local_wnd->currentWindow();
-		hdr->seq_nr = seq_nr + 1;
-		hdr->ack_nr = ack_nr;
-		
-		memcpy(ba.data() + sizeof(Header),data,to_send);
-		if (!srv->sendTo(ba,remote))
-			return 0;
-		
-		seq_nr++;
-		remote_wnd->addPacket(QByteArray((const char*)data,to_send));
+		remote_wnd->addPacket(packet,seq_nr,now);
 		return to_send;
 	}
 

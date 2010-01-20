@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,32 +18,35 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#ifndef UTP_TIMEVALUE_H
+#define UTP_TIMEVALUE_H
 
-#ifndef UTP_LOCALWINDOW_H
-#define UTP_LOCALWINDOW_H
 
-#include <btcore_export.h>
 #include <util/constants.h>
-#include <util/circularbuffer.h>
 
 namespace utp
 {
-	const bt::Uint32 DEFAULT_CAPACITY = 64*1024;
-	
 	/**
-		Manages the local window of a UTP connection.
-		This is a circular buffer.
+		High precision time value
 	*/
-	class BTCORE_EXPORT LocalWindow : public bt::CircularBuffer
+	class TimeValue
 	{
 	public:
-		LocalWindow(bt::Uint32 cap = DEFAULT_CAPACITY);
-		virtual ~LocalWindow();
+		/// Default constructor, gets the current time
+		TimeValue();
+		TimeValue(bt::Uint64 secs,bt::Uint64 usecs);
+		TimeValue(const TimeValue & tv);
 		
-		bt::Uint32 maxWindow() const {return buffer_capacity;}
-		bt::Uint32 currentWindow() const {return size;}
+		TimeValue & operator = (const TimeValue & tv);
+		
+		/// Calculate the a - b in milliseconds
+		friend bt::Int64 operator - (const TimeValue & a,const TimeValue & b);
+		
+	public:
+		bt::Uint64 seconds;
+		bt::Uint64 microseconds;
 	};
 
 }
 
-#endif // UTP_LOCALWINDOW_H
+#endif // UTP_TIMEVALUE_H
