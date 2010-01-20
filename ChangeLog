@@ -16,6 +16,7 @@ Changes in 4.0beta2:
 - Moving multiple items in QM widget is now possible (220428)
 - Fix SHA1 hash generation crashes once and for all (222753)
 - Check for invalid addresses in reverse resolver, fixes a crash
+- Prevent trackers from sending back to much data (220684)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

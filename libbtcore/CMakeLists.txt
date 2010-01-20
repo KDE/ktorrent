@@ -177,6 +177,7 @@ set(libbtcore_SRC
 	tracker/udptrackersocket.cpp
 	tracker/trackermanager.cpp
 	tracker/httpannouncejob.cpp
+	tracker/kioannouncejob.cpp
 	
 	datachecker/datachecker.cpp          
 	datachecker/datacheckerthread.cpp  
@@ -370,6 +371,8 @@ set (tracker_HDR
 	./tracker/udptrackersocket.h
 	./tracker/httptracker.h
 	./tracker/trackermanager.h
+	./tracker/httpannouncejob.h
+	./tracker/kioannouncejob.h
 )
 
 set (datachecker_HDR

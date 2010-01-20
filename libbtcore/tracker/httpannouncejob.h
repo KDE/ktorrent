@@ -19,6 +19,7 @@
 #ifndef BT_HTTPANNOUNCEJOB_H
 #define BT_HTTPANNOUNCEJOB_H
 
+#include <btcore_export.h>
 #include <kio/jobclasses.h>
 #include <QHttp>
 #include <QBuffer>
@@ -29,7 +30,7 @@ namespace bt
 		KIO::Job which uses QHttp to announce to a tracker.
 		This was added because KIO doesn't handle the (invalid)http of some trackers in a consistent manner.
 	*/
-	class HTTPAnnounceJob : public KIO::Job
+	class BTCORE_EXPORT HTTPAnnounceJob : public KIO::Job
 	{
 		Q_OBJECT
 	public:
@@ -47,13 +48,14 @@ namespace bt
 		KUrl announceUrl() const {return url;}
 		
 		/// Get the reply data
-		QByteArray replyData() const {return reply_data;}
+		const QByteArray & replyData() const {return reply_data;}
 		
 		virtual void start();
 		virtual void kill(bool quietly=true);
 		
 	private slots:
 		void requestFinished(int id,bool err);
+		void readData(const QHttpResponseHeader & hdr);
 		void sendRequest();
 		
 	private:

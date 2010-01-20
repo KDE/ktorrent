@@ -29,6 +29,7 @@ namespace bt
 	{
 		http = new QHttp(this);
 		connect(http,SIGNAL(requestFinished(int,bool)),this,SLOT(requestFinished(int,bool)));
+		connect(http,SIGNAL(readyRead(QHttpResponseHeader)),this,SLOT(readData(QHttpResponseHeader)));
 	}
 	
 	HTTPAnnounceJob::~HTTPAnnounceJob()
@@ -76,7 +77,6 @@ namespace bt
 		}
 		else
 		{
-			reply_data = http->readAll();
 			switch (http->lastResponse().statusCode())
 			{
 				case 300:
@@ -102,6 +102,27 @@ namespace bt
 					emitResult();
 					break;
 			}
+		}
+	}
+		
+	void HTTPAnnounceJob::readData(const QHttpResponseHeader& hdr)
+	{
+		const int MAX_REPLY_SIZE = 1024 * 1024;
+		
+		int ba = http->bytesAvailable();
+		int current_size = reply_data.size();
+		if (current_size + ba > MAX_REPLY_SIZE)
+		{
+			// If the reply is larger then a mega byte, the server
+			// has probably gone bonkers
+			abort();
+			Out(SYS_TRK|LOG_DEBUG) << "Tracker sending back to much data in announce reply, aborting ..." << endl;
+		}
+		else
+		{
+			// enlarge reply data and read data to it
+			reply_data.resize(current_size + ba);
+			http->read(reply_data.data() + current_size,ba);
 		}
 	}
 	
