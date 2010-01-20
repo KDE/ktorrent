@@ -42,7 +42,7 @@ namespace bt
 			@param max_len Maximum amount to read
 			@return The amount read
 		*/
-		bt::Uint32 read(bt::Uint8* data,bt::Uint32 max_len);
+		virtual bt::Uint32 read(bt::Uint8* data,bt::Uint32 max_len);
 		
 		/**
 			Write up to len bytes from data and store it in the window.
@@ -50,7 +50,7 @@ namespace bt
 			@param max_len Amount to write
 			@return The amount written
 		*/
-		bt::Uint32 write(const bt::Uint8* data,bt::Uint32 len);
+		virtual bt::Uint32 write(const bt::Uint8* data,bt::Uint32 len);
 		
 		/// Get the buffer capacity
 		bt::Uint32 capacity() const {return buffer_capacity;}

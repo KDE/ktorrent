@@ -19,22 +19,107 @@
  ***************************************************************************/
 
 #include "localwindow.h"
+#include "utpprotocol.h"
+#include <QtAlgorithms>
 
 namespace utp
 {
 
+	FuturePacket::FuturePacket(bt::Uint16 seq_nr, const bt::Uint8* data, bt::Uint32 size) 
+		: seq_nr(seq_nr),data((const char*)data,size)
+	{
+	}
+
+	FuturePacket::~FuturePacket()
+	{
+	}
 	
-	LocalWindow::LocalWindow(bt::Uint32 cap) : bt::CircularBuffer(cap)
+	LocalWindow::LocalWindow(bt::Uint32 cap) : bt::CircularBuffer(cap),window_space(cap)
 	{
 		
 	}
 
 	LocalWindow::~LocalWindow()
 	{
-		
+		qDeleteAll(future_packets);
+	}
+	
+	
+	void LocalWindow::setLastSeqNr(bt::Uint16 lsn)
+	{
+		last_seq_nr = lsn;
+	}
+
+	bt::Uint32 LocalWindow::read(bt::Uint8* data, bt::Uint32 max_len)
+	{
+		bt::Uint32 ret = CircularBuffer::read(data, max_len);
+		window_space += ret;
+		checkFuturePackets();
+		return ret;
+	}
+
+
+	void LocalWindow::checkFuturePackets()
+	{
+		QLinkedList<FuturePacket*>::iterator itr = future_packets.begin();
+		while (itr != future_packets.end())
+		{
+			FuturePacket* pkt = *itr;
+			if (pkt->seq_nr == last_seq_nr + 1)
+			{
+				last_seq_nr = pkt->seq_nr;
+				write((const bt::Uint8*)pkt->data.data(),pkt->data.size());
+				delete pkt;
+				itr = future_packets.erase(itr);
+			}
+			else
+				break;
+		}
 	}
 
 	
+	bool LocalWindow::packetReceived(const utp::Header* hdr,const bt::Uint8* data,bt::Uint32 size)
+	{
+		if (availableSpace() < size)
+			return false;
+		
+		if (window_space < size || hdr->seq_nr != last_seq_nr + 1)
+		{
+			// insert the packet into the future_packets list
+			QLinkedList<FuturePacket*>::iterator itr = future_packets.begin();
+			while (itr != future_packets.end())
+			{
+				FuturePacket* pkt = *itr;
+				if (pkt->seq_nr <= hdr->seq_nr)
+				{
+					itr++;
+				}
+				else
+				{
+					// we have found a packet with a higher sequence number
+					// so insert
+					future_packets.insert(itr,new FuturePacket(hdr->seq_nr,data,size));
+					break;
+				}
+			}
+			
+			// at the end and not inserted yet, so just append
+			if (itr == future_packets.end())
+				future_packets.append(new FuturePacket(hdr->seq_nr,data,size));
+		
+			window_space -= size;
+			checkFuturePackets();
+		}
+		else
+		{
+			last_seq_nr = hdr->seq_nr;
+			write(data,size);
+			window_space -= size;
+			checkFuturePackets();
+		}
+		
+		return true;
+	}
 
 }
 

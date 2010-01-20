@@ -25,6 +25,7 @@
 namespace utp
 {
 	
+	
 	UnackedPacket::UnackedPacket(const QByteArray& data, bt::Uint16 seq_nr, const TimeValue& send_time) 
 		: data(data),seq_nr(seq_nr),send_time(send_time)
 	{
@@ -45,7 +46,7 @@ namespace utp
 		qDeleteAll(unacked_packets);
 	}
 
-	void RemoteWindow::packetReceived(const utp::Header* hdr,Connection* conn)
+	void RemoteWindow::packetReceived(const utp::Header* hdr,const SelectiveAck* sack,Connection* conn)
 	{
 		wnd_size = hdr->wnd_size;
 		
@@ -64,6 +65,10 @@ namespace utp
 			}
 			else
 				break;
+		}
+		
+		if (sack)
+		{
 		}
 	}
 

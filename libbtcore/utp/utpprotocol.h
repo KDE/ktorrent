@@ -66,7 +66,7 @@ namespace utp
 	{
 		quint8 extension;
 		quint8 length;
-		quint32 bitmask;
+		quint8 bitmask[4];
 	};
 	
 	struct ExtensionBits

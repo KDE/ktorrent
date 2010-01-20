@@ -85,7 +85,7 @@ namespace utp
 		DumpHeader(*hdr);
 		
 		updateDelayMeasurement(hdr);
-		remote_wnd->packetReceived(hdr,this);
+		remote_wnd->packetReceived(hdr,sack,this);
 		ack_nr = hdr->seq_nr;
 		last_ack_nr = hdr->ack_nr;
 		switch (state)
@@ -96,6 +96,7 @@ namespace utp
 				{
 					// connection estabished
 					state = CS_CONNECTED;
+					local_wnd->setLastSeqNr(hdr->seq_nr);
 					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << remote.toString() << endl;
 					connected.wakeAll();
 				}
@@ -111,6 +112,7 @@ namespace utp
 					// Send back a state packet
 					sendState();
 					state = CS_CONNECTED;
+					local_wnd->setLastSeqNr(hdr->seq_nr);
 					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << remote.toString() << endl;
 				}
 				else
@@ -124,7 +126,7 @@ namespace utp
 				{
 					// push data into local window
 					int s = packet.size() - data_off;
-					local_wnd->write((const bt::Uint8*)packet.data() + data_off,s);
+					local_wnd->packetReceived(hdr,(const bt::Uint8*)packet.data() + data_off,s);
 					data_ready.wakeAll();
 					
 					// send back an ACK 
@@ -152,7 +154,7 @@ namespace utp
 					// Check if we need to go to the closed state
 					// We can do this if all our packets have been acked and the local window
 					// has been fully read
-					if (remote_wnd->allPacketsAcked() && local_wnd->currentWindow() == 0)
+					if (remote_wnd->allPacketsAcked() && local_wnd->isEmpty())
 					{
 						state = CS_CLOSED;
 						data_ready.wakeAll();
@@ -197,7 +199,7 @@ namespace utp
 		hdr->connection_id = recv_connection_id;
 		hdr->timestamp_microseconds = tv.tv_usec;
 		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->maxWindow() - local_wnd->currentWindow();
+		hdr->wnd_size = local_wnd->availableSpace();
 		hdr->seq_nr = seq_nr;
 		hdr->ack_nr = ack_nr;
 		
@@ -217,7 +219,7 @@ namespace utp
 		hdr->connection_id = send_connection_id;
 		hdr->timestamp_microseconds = tv.tv_usec;
 		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->maxWindow() - local_wnd->currentWindow();
+		hdr->wnd_size = local_wnd->availableSpace();
 		hdr->seq_nr = seq_nr;
 		hdr->ack_nr = ack_nr;
 		
@@ -237,7 +239,7 @@ namespace utp
 		hdr->connection_id = send_connection_id;
 		hdr->timestamp_microseconds = tv.tv_usec;
 		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->maxWindow() - local_wnd->currentWindow();
+		hdr->wnd_size = local_wnd->availableSpace();
 		hdr->seq_nr = seq_nr;
 		hdr->ack_nr = ack_nr;
 		
@@ -257,7 +259,7 @@ namespace utp
 		hdr->connection_id = send_connection_id;
 		hdr->timestamp_microseconds = tv.tv_usec;
 		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->maxWindow() - local_wnd->currentWindow();
+		hdr->wnd_size = local_wnd->availableSpace();
 		hdr->seq_nr = seq_nr;
 		hdr->ack_nr = ack_nr;
 		
@@ -350,7 +352,7 @@ namespace utp
 		hdr->connection_id = send_connection_id;
 		hdr->timestamp_microseconds = now.microseconds;
 		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->maxWindow() - local_wnd->currentWindow();
+		hdr->wnd_size = local_wnd->availableSpace();
 		hdr->seq_nr = seq_nr + 1;
 		hdr->ack_nr = ack_nr;
 		
@@ -366,7 +368,7 @@ namespace utp
 	bt::Uint32 Connection::bytesAvailable() const
 	{
 		QMutexLocker lock(&mutex);
-		return local_wnd->currentWindow();
+		return local_wnd->fill();
 	}
 
 	Uint32 Connection::recv(Uint8* buf, Uint32 max_len)
@@ -390,7 +392,7 @@ namespace utp
 	{
 		mutex.lock();
 		data_ready.wait(&mutex);
-		bool ret = local_wnd->currentWindow() > 0;
+		bool ret = local_wnd->fill() > 0;
 		mutex.unlock();
 		return ret;
 	}

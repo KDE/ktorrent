@@ -30,6 +30,7 @@
 
 namespace utp
 {
+	struct SelectiveAck;
 	class Connection;
 	struct Header;
 	
@@ -53,7 +54,7 @@ namespace utp
 		virtual ~RemoteWindow();
 		
 		/// A packet was received (update window size and check for acks)
-		void packetReceived(const Header* hdr,Connection* conn);
+		void packetReceived(const Header* hdr,const SelectiveAck* sack,Connection* conn);
 		
 		/// Add a packet to the remote window (should include headers)
 		void addPacket(const QByteArray & data,bt::Uint16 seq_nr,const TimeValue & send_time);

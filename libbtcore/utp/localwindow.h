@@ -25,10 +25,23 @@
 #include <btcore_export.h>
 #include <util/constants.h>
 #include <util/circularbuffer.h>
+#include <QLinkedList>
+#include <QByteArray>
 
 namespace utp
 {
+	struct Header;
+	
 	const bt::Uint32 DEFAULT_CAPACITY = 64*1024;
+	
+	struct FuturePacket
+	{
+		FuturePacket(bt::Uint16 seq_nr,const bt::Uint8* data,bt::Uint32 size);
+		~FuturePacket();
+		
+		bt::Uint16 seq_nr;
+		QByteArray data;
+	};
 	
 	/**
 		Manages the local window of a UTP connection.
@@ -40,8 +53,32 @@ namespace utp
 		LocalWindow(bt::Uint32 cap = DEFAULT_CAPACITY);
 		virtual ~LocalWindow();
 		
-		bt::Uint32 maxWindow() const {return buffer_capacity;}
-		bt::Uint32 currentWindow() const {return size;}
+		/// Get back the available space
+		bt::Uint32 availableSpace() const {return window_space;}
+		
+		/// Get back how large the window is
+		bt::Uint32 currentWindow() const {return capacity() - window_space;}
+	
+		/// A packet was received
+		bool packetReceived(const Header* hdr,const bt::Uint8* data,bt::Uint32 size);
+		
+		/// Set the last sequence number
+		void setLastSeqNr(bt::Uint16 lsn);
+		
+		/// Is the window empty
+		bool isEmpty() const {return future_packets.isEmpty() && fill() == 0;}
+		
+		virtual bt::Uint32 read(bt::Uint8* data,bt::Uint32 max_len);
+		
+	private:
+		void checkFuturePackets();
+		
+	private:
+		bt::Uint16 last_seq_nr;
+		// all the packets which have been received but we can yet write to the output buffer
+		// due to either missing packets or lack of space
+		QLinkedList<FuturePacket*> future_packets;
+		bt::Uint32 window_space;
 	};
 
 }
