@@ -204,6 +204,83 @@ private slots:
 		QVERIFY(wnd.availableSpace() == 0);
 		QVERIFY(wnd.currentWindow() == 500);
 	}
+	
+	void testSelectiveAck()
+	{
+		bt::Uint8 wdata[1000];
+		memset(wdata,0,1000);
+		
+		utp::Header hdr;
+		utp::LocalWindow wnd(1000);
+		wnd.setLastSeqNr(0);
+		
+		// first write first and last packet
+		bt::Uint32 step = 200;
+		hdr.seq_nr = 1;
+		QVERIFY(wnd.packetReceived(&hdr,wdata,step) == true);
+		QVERIFY(wnd.availableSpace() == wnd.capacity() - step);
+		QVERIFY(wnd.currentWindow() == step);
+		hdr.seq_nr = 5;
+		QVERIFY(wnd.packetReceived(&hdr,wdata,step) == true);
+		QVERIFY(wnd.availableSpace() == wnd.capacity() - 2*step);
+		QVERIFY(wnd.currentWindow() == 2*step);
+		QVERIFY(wnd.fill() == step);
+		
+		// Check SelectiveAck generation
+		QVERIFY(wnd.selectiveAckBits() == 3);
+		bt::Uint8 sack_data[6];
+		SelectiveAck* sack = (SelectiveAck*)sack_data;
+		sack->length = 4;
+		sack->extension = 0;
+		wnd.fillSelectiveAck(sack);
+		QVERIFY(sack_data[2] == 0x4);
+		QVERIFY(sack_data[3] == 0x0);
+		QVERIFY(sack_data[4] == 0x0);
+		QVERIFY(sack_data[5] == 0x0);
+		
+		// Now write 4
+		hdr.seq_nr = 4;
+		QVERIFY(wnd.packetReceived(&hdr,wdata,step) == true);
+		QVERIFY(wnd.availableSpace() == wnd.capacity() - 3*step);
+		QVERIFY(wnd.currentWindow() == 3*step);
+		QVERIFY(wnd.fill() == step);
+		
+		// Check selective ack again
+		QVERIFY(wnd.selectiveAckBits() == 3);
+		sack->length = 4;
+		sack->extension = 0;
+		wnd.fillSelectiveAck(sack);
+		QVERIFY(sack_data[2] == 0x6);
+		QVERIFY(sack_data[3] == 0x0);
+		QVERIFY(sack_data[4] == 0x0);
+		QVERIFY(sack_data[5] == 0x0);
+		
+		// Now write 3
+		hdr.seq_nr = 3;
+		QVERIFY(wnd.packetReceived(&hdr,wdata,step) == true);
+		QVERIFY(wnd.availableSpace() == wnd.capacity() - 4*step);
+		QVERIFY(wnd.currentWindow() == 4*step);
+		QVERIFY(wnd.fill() == step);
+		
+		// Check selective ack again
+		QVERIFY(wnd.selectiveAckBits() == 3);
+		sack->length = 4;
+		sack->extension = 0;
+		wnd.fillSelectiveAck(sack);
+		QVERIFY(sack_data[2] == 0x7);
+		QVERIFY(sack_data[3] == 0x0);
+		QVERIFY(sack_data[4] == 0x0);
+		QVERIFY(sack_data[5] == 0x0);
+		
+		// And then 2
+		hdr.seq_nr = 2;
+		QVERIFY(wnd.packetReceived(&hdr,wdata,step) == true);
+		QVERIFY(wnd.availableSpace() == wnd.capacity() - 5*step);
+		QVERIFY(wnd.currentWindow() == 5*step);
+		QVERIFY(wnd.fill() == 5*step);
+		// selective ack should now be unnecessary
+		QVERIFY(wnd.selectiveAckBits() == 0);
+	}
 
 private:
 	bt::Uint8 data[13];

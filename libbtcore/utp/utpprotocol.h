@@ -22,6 +22,7 @@
 #define UTP_UTPPROTOCOL_H
 
 #include <QtGlobal>
+#include <util/constants.h>
 
 namespace utp
 {
@@ -82,6 +83,9 @@ namespace utp
 		quint8 length;
 	};
 	
+	const bt::Uint8 SELECTIVE_ACK_ID = 1;
+	const bt::Uint8 EXTENSION_BITS_ID = 2;
+	
 	// type field values
 	const quint8 ST_DATA = 0;
 	const quint8 ST_FIN = 1;
@@ -100,6 +104,12 @@ namespace utp
 	};
 	
 	const quint32 MIN_PACKET_SIZE = 150;
+	
+	// Test if a bit is acked
+	bool Acked(const SelectiveAck* sack,bt::Uint16 bit);
+	
+	// Turn on a bit in the SelectiveAck
+	void Acked(SelectiveAck* sack,bt::Uint16 bit);
 }
 
 #endif // UTP_UTPPROTOCOL_H

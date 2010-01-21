@@ -17,74 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-
-#include "remotewindow.h"
 #include "utpprotocol.h"
-#include "connection.h"
 
 namespace utp
 {
+	/*
+	UTP standard:
+	The bitmask has reverse byte order. The first byte represents packets [ack_nr + 2, ack_nr + 2 + 7] in reverse order. The least significant bit in the byte represents ack_nr + 2, the most significant bit in the byte represents ack_nr + 2 + 7. The next byte in the mask represents [ack_nr + 2 + 8, ack_nr + 2 + 15] in reverse order, and so on. The bitmask is not limited to 32 bits but can be of any size.
 	
+	Here is the layout of a bitmask representing the first 32 packet acks represented in a selective ACK bitfield:
 	
-	UnackedPacket::UnackedPacket(const QByteArray& data, bt::Uint16 seq_nr, const TimeValue& send_time) 
-		: data(data),seq_nr(seq_nr),send_time(send_time)
-	{
-	}
-
-	UnackedPacket::~UnackedPacket()
-	{
-	}
-
+	0               8               16
+	+---------------+---------------+---------------+---------------+
+	| 9 8 ...   3 2 | 17   ...   10 | 25   ...   18 | 33   ...   26 |
+	+---------------+---------------+---------------+---------------+
 	
-	RemoteWindow::RemoteWindow() : cur_window(0),max_window(64 * 1024),wnd_size(0)
+	The number in the diagram maps the bit in the bitmask to the offset to add to ack_nr in order to calculate the sequence number that the bit is ACKing.
+	*/
+	bool Acked(const SelectiveAck* sack,bt::Uint16 bit)
 	{
-
-	}
-
-	RemoteWindow::~RemoteWindow()
-	{
-		qDeleteAll(unacked_packets);
-	}
-
-	void RemoteWindow::packetReceived(const utp::Header* hdr,const SelectiveAck* sack,Connection* conn)
-	{
-		wnd_size = hdr->wnd_size;
+		// check bounds
+		if (bit < 2 || bit > 8*sack->length + 1)
+			return false;
 		
-		TimeValue now;
-		QList<UnackedPacket*>::iterator i = unacked_packets.begin();
-		while (i != unacked_packets.end())
-		{
-			UnackedPacket* up = *i;
-			if (up->seq_nr <= hdr->ack_nr)
-			{
-				// everything up until the ack_nr in the header is acked
-				conn->updateRTT(hdr,now - up->send_time);
-				cur_window -= up->data.size();
-				delete up;
-				i = unacked_packets.erase(i);
-			}
-			else if (sack)
-			{
-				if (Acked(sack,up->seq_nr - hdr->ack_nr))
-				{
-					conn->updateRTT(hdr,now - up->send_time);
-					cur_window -= up->data.size();
-					delete up;
-					i = unacked_packets.erase(i);
-				}
-				else
-					i++;
-			}
-			else
-				break;
-		}
+		const bt::Uint8* bitset = (const bt::Uint8*)sack + 2;
+		int byte = (bit - 2) / 8;
+		int bit_off = (bit - 2) % 8;
+		return bitset[byte] & (0x01 << bit_off);
 	}
-
-	void RemoteWindow::addPacket(const QByteArray& data,bt::Uint16 seq_nr,const TimeValue & send_time)
+	
+	
+	void Acked(utp::SelectiveAck* sack, bt::Uint16 bit)
 	{
-		cur_window += data.size();
-		unacked_packets.append(new UnackedPacket(data,seq_nr,send_time));
+		// check bounds
+		if (bit < 2 || bit > 8*sack->length + 1)
+			return;
+		
+		bt::Uint8* bitset = (bt::Uint8*)sack + 2;
+		int byte = (bit - 2) / 8;
+		int bit_off = (bit - 2) % 8;
+		bitset[byte] |= (0x01 << bit_off);
 	}
 
 }
-

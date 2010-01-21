@@ -96,8 +96,9 @@ namespace utp
 		void sendFIN();
 		void updateDelayMeasurement(const Header* hdr);
 		void sendStateOrData();
-		int doSend(const QByteArray & packet);
 		void sendPackets();
+		int sendPacket(bt::Uint32 type,bt::Uint16 p_ack_nr);
+		int sendDataPacket(const QByteArray & packet);
 		
 		/** 
 			Parses the packet, and retrieves pointer to the header, the SelectiveAck extension (if present)
@@ -107,6 +108,7 @@ namespace utp
 			@return The offset of the data or -1 if there is no data
 		*/
 		int parsePacket(const QByteArray & packet,Header** hdr,SelectiveAck** selective_ack);
+		
 		
 	private:
 		Type type;

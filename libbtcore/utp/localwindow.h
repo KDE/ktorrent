@@ -30,6 +30,7 @@
 
 namespace utp
 {
+	struct SelectiveAck;
 	struct Header;
 	
 	const bt::Uint32 DEFAULT_CAPACITY = 64*1024;
@@ -65,10 +66,19 @@ namespace utp
 		/// Set the last sequence number
 		void setLastSeqNr(bt::Uint16 lsn);
 		
+		/// Get the last sequence number we can safely ack
+		bt::Uint16 lastSeqNr() const {return last_seq_nr;}
+		
 		/// Is the window empty
 		bool isEmpty() const {return future_packets.isEmpty() && fill() == 0;}
 		
 		virtual bt::Uint32 read(bt::Uint8* data,bt::Uint32 max_len);
+		
+		/// Get the number of selective ack bits needed when sending a packet
+		bt::Uint32 selectiveAckBits() const;
+		
+		/// Fill a SelectiveAck structure
+		void fillSelectiveAck(SelectiveAck* sack);
 		
 	private:
 		void checkFuturePackets();
@@ -76,7 +86,7 @@ namespace utp
 	private:
 		bt::Uint16 last_seq_nr;
 		// all the packets which have been received but we can yet write to the output buffer
-		// due to either missing packets or lack of space
+		// due to missing packets
 		QLinkedList<FuturePacket*> future_packets;
 		bt::Uint32 window_space;
 	};

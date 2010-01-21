@@ -110,9 +110,9 @@ namespace utp
 				if (hdr->type == ST_SYN)
 				{
 					// Send back a state packet
+					local_wnd->setLastSeqNr(hdr->seq_nr);
 					sendState();
 					state = CS_CONNECTED;
-					local_wnd->setLastSeqNr(hdr->seq_nr);
 					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << remote.toString() << endl;
 				}
 				else
@@ -127,7 +127,8 @@ namespace utp
 					// push data into local window
 					int s = packet.size() - data_off;
 					local_wnd->packetReceived(hdr,(const bt::Uint8*)packet.data() + data_off,s);
-					data_ready.wakeAll();
+					if (local_wnd->fill() > 0)
+						data_ready.wakeAll();
 					
 					// send back an ACK 
 					sendStateOrData();
@@ -181,89 +182,62 @@ namespace utp
 		timeout = qMin(rtt + rtt_var * 4, (bt::Uint32)500);
 	}
 
+	
+	int Connection::sendPacket(Uint32 type,Uint16 p_ack_nr)
+	{
+		struct timeval tv;
+		gettimeofday(&tv,NULL);
+		
+		bt::Uint32 extension_length = 0;
+		bt::Uint32 sack_bits = local_wnd->selectiveAckBits();
+		if (sack_bits > 0)
+			extension_length += 2 + qMin(sack_bits / 8,(bt::Uint32)4);
+		
+		QByteArray ba(sizeof(Header) + extension_length,0);
+		Header* hdr = (Header*)ba.data();
+		hdr->version = 1;
+		hdr->type = type;
+		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
+		hdr->connection_id = type == ST_SYN ? recv_connection_id : send_connection_id;
+		hdr->timestamp_microseconds = tv.tv_usec;
+		hdr->timestamp_difference_microseconds = reply_micro;
+		hdr->wnd_size = local_wnd->availableSpace();
+		hdr->seq_nr = seq_nr;
+		hdr->ack_nr = p_ack_nr;
+		
+		if (extension_length > 0)
+		{
+			SelectiveAck* sack = (SelectiveAck*)(ba.data() + sizeof(Header));
+			sack->extension = 0;
+			sack->length = extension_length - 2;
+			local_wnd->fillSelectiveAck(sack);
+		}
+		
+		return srv->sendTo((const bt::Uint8*)ba.data(),ba.size(),remote);
+	}
+
 
 	void Connection::sendSYN()
 	{
 		seq_nr = 1;
 		ack_nr = 0;
 		state = CS_SYN_SENT;
-		
-		struct timeval tv;
-		gettimeofday(&tv,NULL);
-		
-		QByteArray ba(sizeof(Header),0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = ST_SYN;
-		hdr->extension = 0;
-		hdr->connection_id = recv_connection_id;
-		hdr->timestamp_microseconds = tv.tv_usec;
-		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->availableSpace();
-		hdr->seq_nr = seq_nr;
-		hdr->ack_nr = ack_nr;
-		
-		srv->sendTo((const bt::Uint8*)ba.data(),ba.size(),remote);
+		sendPacket(ST_SYN,0);
 	}
 	
 	void Connection::sendState()
 	{
-		struct timeval tv;
-		gettimeofday(&tv,NULL);
-		
-		QByteArray ba(sizeof(Header),0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = ST_STATE;
-		hdr->extension = 0;
-		hdr->connection_id = send_connection_id;
-		hdr->timestamp_microseconds = tv.tv_usec;
-		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->availableSpace();
-		hdr->seq_nr = seq_nr;
-		hdr->ack_nr = ack_nr;
-		
-		srv->sendTo((const bt::Uint8*)ba.data(),ba.size(),remote);
+		sendPacket(ST_STATE,local_wnd->lastSeqNr());
 	}
 
 	void Connection::sendFIN()
 	{
-		struct timeval tv;
-		gettimeofday(&tv,NULL);
-		
-		QByteArray ba(sizeof(Header),0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = ST_FIN;
-		hdr->extension = 0;
-		hdr->connection_id = send_connection_id;
-		hdr->timestamp_microseconds = tv.tv_usec;
-		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->availableSpace();
-		hdr->seq_nr = seq_nr;
-		hdr->ack_nr = ack_nr;
-		
-		srv->sendTo((const bt::Uint8*)ba.data(),ba.size(),remote);
+		sendPacket(ST_FIN,local_wnd->lastSeqNr());
 	}
 
 	void Connection::sendReset()
 	{
-		struct timeval tv;
-		gettimeofday(&tv,NULL);
-		
-		QByteArray ba(sizeof(Header),0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = ST_RESET;
-		hdr->extension = 0;
-		hdr->connection_id = send_connection_id;
-		hdr->timestamp_microseconds = tv.tv_usec;
-		hdr->timestamp_difference_microseconds = reply_micro;
-		hdr->wnd_size = local_wnd->availableSpace();
-		hdr->seq_nr = seq_nr;
-		hdr->ack_nr = ack_nr;
-		
-		srv->sendTo(ba,remote);
+		sendPacket(ST_RESET,local_wnd->lastSeqNr());
 	}
 
 	void Connection::waitForSYN()
@@ -294,7 +268,7 @@ namespace utp
 		while (data_off < packet.size() && ptr->extension != 0)
 		{
 			ptr = (UnknownExtension*)packet.data() + data_off;
-			if (ext_id == 1)
+			if (ext_id == SELECTIVE_ACK_ID)
 				*selective_ack = (SelectiveAck*)ptr;
 				
 			data_off += 2 + ptr->length;
@@ -327,7 +301,7 @@ namespace utp
 			
 			QByteArray packet(to_read,0);
 			output_buffer.read((bt::Uint8*)packet.data(),to_read);
-			doSend(packet);
+			sendDataPacket(packet);
 		}
 	}
 
@@ -339,24 +313,37 @@ namespace utp
 			sendState();
 	}
 
-	int Connection::doSend(const QByteArray& packet)
+	int Connection::sendDataPacket(const QByteArray& packet)
 	{
 		bt::Uint32 to_send = packet.size();
 		TimeValue now;
 		
-		QByteArray ba(sizeof(Header) + packet.size(),0);
+		bt::Uint32 extension_length = 0;
+		bt::Uint32 sack_bits = local_wnd->selectiveAckBits();
+		if (sack_bits > 0)
+			extension_length += 2 + qMin(sack_bits / 8,(bt::Uint32)4);
+		
+		QByteArray ba(sizeof(Header) + extension_length + packet.size(),0);
 		Header* hdr = (Header*)ba.data();
 		hdr->version = 1;
 		hdr->type = ST_DATA;
-		hdr->extension = 0;
+		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
 		hdr->connection_id = send_connection_id;
 		hdr->timestamp_microseconds = now.microseconds;
 		hdr->timestamp_difference_microseconds = reply_micro;
 		hdr->wnd_size = local_wnd->availableSpace();
 		hdr->seq_nr = seq_nr + 1;
-		hdr->ack_nr = ack_nr;
+		hdr->ack_nr = local_wnd->lastSeqNr();
 		
-		memcpy(ba.data() + sizeof(Header),packet.data(),to_send);
+		if (extension_length > 0)
+		{
+			SelectiveAck* sack = (SelectiveAck*)(ba.data() + sizeof(Header));
+			sack->extension = 0;
+			sack->length = extension_length - 2;
+			local_wnd->fillSelectiveAck(sack);
+		}
+		
+		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),to_send);
 		if (!srv->sendTo(ba,remote))
 			return -1;
 		

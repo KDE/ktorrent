@@ -83,7 +83,7 @@ namespace utp
 		if (availableSpace() < size)
 			return false;
 		
-		if (window_space < size || hdr->seq_nr != last_seq_nr + 1)
+		if (hdr->seq_nr != last_seq_nr + 1)
 		{
 			// insert the packet into the future_packets list
 			QLinkedList<FuturePacket*>::iterator itr = future_packets.begin();
@@ -119,6 +119,30 @@ namespace utp
 		}
 		
 		return true;
+	}
+
+	
+	bt::Uint32 LocalWindow::selectiveAckBits() const
+	{
+		if (future_packets.isEmpty())
+			return 0;
+		else
+			return future_packets.last()->seq_nr - last_seq_nr - 1;
+	}
+
+
+	void LocalWindow::fillSelectiveAck(SelectiveAck* sack)
+	{
+		// First turn off all bits
+		bt::Uint8* bitset = (bt::Uint8*)sack + 2;
+		memset(bitset,0,sack->length);
+		
+		QLinkedList<FuturePacket*>::iterator itr = future_packets.begin();
+		while (itr != future_packets.end())
+		{
+			Acked(sack,(*itr)->seq_nr - last_seq_nr);
+			itr++;
+		}
 	}
 
 }
