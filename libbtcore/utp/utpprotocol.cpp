@@ -47,7 +47,7 @@ namespace utp
 	}
 	
 	
-	void Acked(utp::SelectiveAck* sack, bt::Uint16 bit)
+	void Ack(utp::SelectiveAck* sack, bt::Uint16 bit)
 	{
 		// check bounds
 		if (bit < 2 || bit > 8*sack->length + 1)

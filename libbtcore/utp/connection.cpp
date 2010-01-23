@@ -24,6 +24,7 @@
 #include <util/log.h>
 #include "localwindow.h"
 #include "remotewindow.h"
+#include <util/functions.h>
 
 using namespace bt;
 
@@ -38,7 +39,6 @@ namespace utp
 		remote_wnd = new RemoteWindow();
 		rtt = 100;
 		rtt_var = 0;
-		last_ack_nr = 0;
 		timeout = 1000;
 		packet_size = 1400;
 		if (type == OUTGOING)
@@ -49,7 +49,8 @@ namespace utp
 		else
 		{
 			send_connection_id = recv_connection_id - 1;
-			waitForSYN();
+			state = CS_IDLE;
+			seq_nr = 1;
 		}
 		
 		Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " << recv_connection_id << "|" << send_connection_id << endl;
@@ -78,6 +79,9 @@ namespace utp
 	ConnectionState Connection::handlePacket(const QByteArray& packet)
 	{
 		QMutexLocker lock(&mutex);
+		
+		timer.update();
+		
 		Header* hdr = 0;
 		SelectiveAck* sack = 0;
 		int data_off = parsePacket(packet,&hdr,&sack);
@@ -86,8 +90,6 @@ namespace utp
 		
 		updateDelayMeasurement(hdr);
 		remote_wnd->packetReceived(hdr,sack,this);
-		ack_nr = hdr->seq_nr;
-		last_ack_nr = hdr->ack_nr;
 		switch (state)
 		{
 			case CS_SYN_SENT:
@@ -176,6 +178,7 @@ namespace utp
 	
 	void Connection::updateRTT(const utp::Header* hdr,bt::Uint32 packet_rtt)
 	{
+		Q_UNUSED(hdr);
 		int delta = rtt - packet_rtt;
 		rtt_var += (qAbs(delta) - rtt_var) / 4;
 		rtt += (packet_rtt - rtt) / 8;
@@ -220,7 +223,6 @@ namespace utp
 	void Connection::sendSYN()
 	{
 		seq_nr = 1;
-		ack_nr = 0;
 		state = CS_SYN_SENT;
 		sendPacket(ST_SYN,0);
 	}
@@ -240,18 +242,38 @@ namespace utp
 		sendPacket(ST_RESET,local_wnd->lastSeqNr());
 	}
 
-	void Connection::waitForSYN()
-	{
-		state = CS_IDLE;
-		seq_nr = 1;
-		ack_nr = 0;
-	}
-
 	void Connection::updateDelayMeasurement(const utp::Header* hdr)
 	{
 		struct timeval tv;
 		gettimeofday(&tv,NULL);
 		reply_micro = qAbs((bt::Int64)tv.tv_usec - hdr->timestamp_microseconds);
+		
+		bt::TimeStamp now = bt::Now();
+		delay_window.append(QPair<bt::Uint32,bt::TimeStamp>(hdr->timestamp_difference_microseconds,now));
+		
+		bt::Uint32 base_delay = 0xFFFFFFFF;
+		// drop everything older then 2 minutes and update the base_delay
+		QList<QPair<bt::Uint32,bt::TimeStamp> >::iterator itr = delay_window.begin();
+		while (itr != delay_window.end())
+		{
+			if (now - itr->second > DELAY_WINDOW_SIZE)
+			{
+				itr = delay_window.erase(itr);
+			}
+			else
+			{
+				if (itr->first < base_delay)
+					base_delay = itr->first;
+				itr++;
+			}
+		}
+		
+		bt::Uint32 our_delay = hdr->timestamp_difference_microseconds - base_delay;
+		int off_target = (int)our_delay - (int)CCONTROL_TARGET;
+		double delay_factor = off_target / CCONTROL_TARGET;
+		double window_factor = remote_wnd->windowUsageFactor();
+		double scaled_gain = MAX_CWND_INCREASE_PACKETS_PER_RTT * delay_factor * window_factor;
+		remote_wnd->updateWindowSize(scaled_gain);
 	}
 		
 	int Connection::parsePacket(const QByteArray& packet, Header** hdr, SelectiveAck** selective_ack)
@@ -265,7 +287,7 @@ namespace utp
 		// go over all header extensions to increase the data offset and watch out for selective acks
 		int ext_id = (*hdr)->extension;
 		UnknownExtension* ptr = 0;
-		while (data_off < packet.size() && ptr->extension != 0)
+		while (data_off < packet.size())
 		{
 			ptr = (UnknownExtension*)packet.data() + data_off;
 			if (ext_id == SELECTIVE_ACK_ID)
@@ -273,6 +295,8 @@ namespace utp
 				
 			data_off += 2 + ptr->length;
 			ext_id = ptr->extension;
+			if (ptr->extension == 0)
+				break;
 		}
 		
 		return data_off;
@@ -303,6 +327,8 @@ namespace utp
 			output_buffer.read((bt::Uint8*)packet.data(),to_read);
 			sendDataPacket(packet);
 		}
+		
+		timer.update();
 	}
 
 	void Connection::sendStateOrData()
@@ -349,7 +375,42 @@ namespace utp
 		
 		seq_nr++;
 		remote_wnd->addPacket(packet,seq_nr,now);
+		timer.update();
 		return to_send;
+	}
+
+	int Connection::retransmit(const QByteArray& packet, Uint16 p_seq_nr)
+	{
+		TimeValue now;
+		
+		bt::Uint32 extension_length = 0;
+		bt::Uint32 sack_bits = local_wnd->selectiveAckBits();
+		if (sack_bits > 0)
+			extension_length += 2 + qMin(sack_bits / 8,(bt::Uint32)4);
+		
+		QByteArray ba(sizeof(Header) + extension_length + packet.size(),0);
+		Header* hdr = (Header*)ba.data();
+		hdr->version = 1;
+		hdr->type = ST_DATA;
+		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
+		hdr->connection_id = send_connection_id;
+		hdr->timestamp_microseconds = now.microseconds;
+		hdr->timestamp_difference_microseconds = reply_micro;
+		hdr->wnd_size = local_wnd->availableSpace();
+		hdr->seq_nr = p_seq_nr;
+		hdr->ack_nr = local_wnd->lastSeqNr();
+		
+		if (extension_length > 0)
+		{
+			SelectiveAck* sack = (SelectiveAck*)(ba.data() + sizeof(Header));
+			sack->extension = 0;
+			sack->length = extension_length - 2;
+			local_wnd->fillSelectiveAck(sack);
+		}
+		
+		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),packet.size());
+		timer.update();
+		return srv->sendTo(ba,remote);
 	}
 
 	bt::Uint32 Connection::bytesAvailable() const
@@ -390,6 +451,17 @@ namespace utp
 		QMutexLocker lock(&mutex);
 		if (state == CS_CONNECTED)
 		{
+		}
+	}
+
+	void Connection::checkTimeout()
+	{
+		QMutexLocker lock(&mutex);
+		if (timer.getElapsedSinceUpdate() > timeout)
+		{
+			packet_size = MIN_PACKET_SIZE;
+			remote_wnd->timeout();
+			timer.update();
 		}
 	}
 

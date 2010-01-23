@@ -21,12 +21,15 @@
 #ifndef UTP_CONNECTION_H
 #define UTP_CONNECTION_H
 
+#include <QPair>
 #include <QMutex>
 #include <QWaitCondition>
 #include <btcore_export.h>
 #include <net/address.h>
-#include "utpprotocol.h"
+#include <utp/utpprotocol.h>
 #include <util/circularbuffer.h>
+#include <util/timer.h>
+
 
 
 
@@ -89,9 +92,14 @@ namespace utp
 		/// Update the RTT time
 		void updateRTT(const Header* hdr,bt::Uint32 packet_rtt);
 		
+		/// Retransmit a packet
+		int retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr);
+		
+		/// Check for a timeout
+		void checkTimeout();
+		
 	private:
 		void sendSYN();
-		void waitForSYN();
 		void sendState();
 		void sendFIN();
 		void updateDelayMeasurement(const Header* hdr);
@@ -118,6 +126,7 @@ namespace utp
 		ConnectionState state;
 		bt::Uint16 send_connection_id;
 		bt::Uint32 reply_micro;
+		QList<QPair<bt::Uint32,bt::TimeStamp> > delay_window;
 		
 		bt::Uint16 recv_connection_id;
 		LocalWindow* local_wnd;
@@ -125,8 +134,6 @@ namespace utp
 		bt::CircularBuffer output_buffer;
 		
 		bt::Uint16 seq_nr;
-		bt::Uint16 ack_nr;
-		bt::Uint16 last_ack_nr;
 		int eof_seq_nr;
 		bt::Uint32 timeout;
 		
@@ -134,6 +141,7 @@ namespace utp
 		bt::Uint32 rtt_var;
 		bt::Uint32 packet_size;
 		
+		bt::Timer timer;
 		mutable QMutex mutex;
 		QWaitCondition connected;
 		QWaitCondition data_ready;

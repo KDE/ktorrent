@@ -70,6 +70,7 @@ namespace utp
 		void syn(const Header* hdr,const QByteArray & data,const net::Address & addr);
 		void reset(const Header* hdr);
 		void clearDeadConnections();
+		void checkTimeouts();
 		Connection* find(quint16 conn_id);
 		
 	signals:

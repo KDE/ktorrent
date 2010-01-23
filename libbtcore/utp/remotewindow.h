@@ -78,11 +78,26 @@ namespace utp
 		/// See if all packets are acked
 		bool allPacketsAcked() const {return unacked_packets.isEmpty();}
 		
+		/// A timeout occured
+		void timeout();
+		
+		/// Get the window usage factor 
+		double windowUsageFactor() const {return qMax((double)cur_window / max_window, 1.0);}
+		
+		/// Update the window size
+		void updateWindowSize(double scaled_gain);
+		
+	private:
+		void checkLostPackets(const Header* hdr,const SelectiveAck* sack,Connection* conn);
+		bool lost(const SelectiveAck* sack,bt::Uint16 seq_nr);
+		
 	private:
 		bt::Uint32 cur_window;
 		bt::Uint32 max_window;
 		bt::Uint32 wnd_size; // advertised window size from the other side
 		QList<UnackedPacket*> unacked_packets;
+		bt::Uint16 last_ack_nr;
+		bt::Uint32 last_ack_receive_count;
 	};
 
 }

@@ -54,44 +54,44 @@ namespace utp
 #else
 #error "Endiannes not defined"
 #endif
-		quint8 extension;
-		quint16 connection_id;
-		quint32 timestamp_microseconds;
-		quint32 timestamp_difference_microseconds;
-		quint32 wnd_size;
-		quint16 seq_nr;
-		quint16 ack_nr;
+		bt::Uint8 extension;
+		bt::Uint16 connection_id;
+		bt::Uint32 timestamp_microseconds;
+		bt::Uint32 timestamp_difference_microseconds;
+		bt::Uint32 wnd_size;
+		bt::Uint16 seq_nr;
+		bt::Uint16 ack_nr;
 	};
 	
 	struct SelectiveAck
 	{
-		quint8 extension;
-		quint8 length;
-		quint8 bitmask[4];
+		bt::Uint8 extension;
+		bt::Uint8 length;
+		bt::Uint8 bitmask[4];
 	};
 	
 	struct ExtensionBits
 	{
-		quint8 extension;
-		quint8 length;
-		quint8 extension_bitmask[8];
+		bt::Uint8 extension;
+		bt::Uint8 length;
+		bt::Uint8 extension_bitmask[8];
 	};
 	
 	struct UnknownExtension
 	{
-		quint8 extension;
-		quint8 length;
+		bt::Uint8 extension;
+		bt::Uint8 length;
 	};
 	
 	const bt::Uint8 SELECTIVE_ACK_ID = 1;
 	const bt::Uint8 EXTENSION_BITS_ID = 2;
 	
 	// type field values
-	const quint8 ST_DATA = 0;
-	const quint8 ST_FIN = 1;
-	const quint8 ST_STATE = 2;
-	const quint8 ST_RESET = 3;
-	const quint8 ST_SYN = 4;
+	const bt::Uint8 ST_DATA = 0;
+	const bt::Uint8 ST_FIN = 1;
+	const bt::Uint8 ST_STATE = 2;
+	const bt::Uint8 ST_RESET = 3;
+	const bt::Uint8 ST_SYN = 4;
 	
 	
 	enum ConnectionState
@@ -103,13 +103,17 @@ namespace utp
 		CS_CLOSED
 	};
 	
-	const quint32 MIN_PACKET_SIZE = 150;
+	const bt::Uint32 MIN_PACKET_SIZE = 150;
+	
+	const bt::Uint32 DELAY_WINDOW_SIZE = 2*60*1000; // 2 minutes
+	const bt::Uint32 CCONTROL_TARGET = 100;
+	const bt::Uint32 MAX_CWND_INCREASE_PACKETS_PER_RTT = 8;
 	
 	// Test if a bit is acked
 	bool Acked(const SelectiveAck* sack,bt::Uint16 bit);
 	
 	// Turn on a bit in the SelectiveAck
-	void Acked(SelectiveAck* sack,bt::Uint16 bit);
+	void Ack(SelectiveAck* sack,bt::Uint16 bit);
 }
 
 #endif // UTP_UTPPROTOCOL_H

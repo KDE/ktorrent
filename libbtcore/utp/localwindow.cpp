@@ -140,7 +140,7 @@ namespace utp
 		QLinkedList<FuturePacket*>::iterator itr = future_packets.begin();
 		while (itr != future_packets.end())
 		{
-			Acked(sack,(*itr)->seq_nr - last_seq_nr);
+			Ack(sack,(*itr)->seq_nr - last_seq_nr);
 			itr++;
 		}
 	}

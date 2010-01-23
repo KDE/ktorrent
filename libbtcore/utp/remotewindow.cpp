@@ -36,7 +36,7 @@ namespace utp
 	}
 
 	
-	RemoteWindow::RemoteWindow() : cur_window(0),max_window(64 * 1024),wnd_size(0)
+	RemoteWindow::RemoteWindow() : cur_window(0),max_window(64 * 1024),wnd_size(0),last_ack_nr(0),last_ack_receive_count(0)
 	{
 
 	}
@@ -48,6 +48,16 @@ namespace utp
 
 	void RemoteWindow::packetReceived(const utp::Header* hdr,const SelectiveAck* sack,Connection* conn)
 	{
+		if (hdr->ack_nr == last_ack_nr)
+		{
+			last_ack_receive_count++;
+		}
+		else
+		{
+			last_ack_nr = hdr->ack_nr;
+			last_ack_receive_count = 1;
+		}
+		
 		wnd_size = hdr->wnd_size;
 		
 		TimeValue now;
@@ -78,12 +88,72 @@ namespace utp
 			else
 				break;
 		}
+		
+		if (!unacked_packets.isEmpty())
+			checkLostPackets(hdr,sack,conn);
 	}
 
 	void RemoteWindow::addPacket(const QByteArray& data,bt::Uint16 seq_nr,const TimeValue & send_time)
 	{
 		cur_window += data.size();
 		unacked_packets.append(new UnackedPacket(data,seq_nr,send_time));
+	}
+
+	void RemoteWindow::checkLostPackets(const utp::Header* hdr, const utp::SelectiveAck* sack,Connection* conn)
+	{
+		bool lost_packets = false;
+		QList<UnackedPacket*>::iterator itr = unacked_packets.begin();
+		UnackedPacket* first_unacked = *itr;
+		if (last_ack_receive_count >= 3 && first_unacked->seq_nr == hdr->ack_nr + 1)
+		{
+			// packet has been lost
+			conn->retransmit(first_unacked->data,first_unacked->seq_nr);
+			first_unacked->send_time = TimeValue();
+			lost_packets = true;
+			itr++;
+		}
+		
+		
+		while (sack && itr != unacked_packets.end())
+		{
+			if (lost(sack,(*itr)->seq_nr - hdr->ack_nr))
+			{
+				conn->retransmit((*itr)->data,(*itr)->seq_nr);
+				(*itr)->send_time = TimeValue();
+				lost_packets = true;
+			}
+			itr++;
+		}
+		
+		if (lost_packets)
+			max_window = (bt::Uint32)qRound(0.78 * max_window);
+	}
+
+	bool RemoteWindow::lost(const utp::SelectiveAck* sack, bt::Uint16 seq_nr)
+	{
+		// A packet is lost if 3 packets have been acked after it
+		bt::Uint32 acked = 0;
+		for (bt::Uint16 i = seq_nr + 1;i < sack->length * 8 && acked < 3;i++)
+		{
+			if (Acked(sack,i))
+				acked++;
+		}
+		
+		return acked >= 3;
+	}
+
+	void RemoteWindow::timeout()
+	{
+		max_window = MIN_PACKET_SIZE;
+	}
+
+	void RemoteWindow::updateWindowSize(double scaled_gain)
+	{
+		int d = (int)qRound(scaled_gain);
+		if ((int)max_window + d < 0)
+			max_window = 0;
+		else
+			max_window += d;
 	}
 
 }

@@ -84,12 +84,13 @@ namespace utp
 		{
 			int fd = sock->fd();
 			FD_SET(fd,&fds);
-			struct timeval tv = {0,500000};
+			struct timeval tv = {0,100000};
 			if (select(fd + 1,&fds,0,0,&tv) > 0)
 			{
 				handlePacket();
 			}
 			
+			checkTimeouts();
 			clearDeadConnections();
 		}
 	}
@@ -220,6 +221,17 @@ namespace utp
 		{
 			utp_thread = new UTPServerThread(this);
 			utp_thread->start();
+		}
+	}
+
+	void UTPServer::checkTimeouts()
+	{
+		QMutexLocker lock(&mutex);
+		ConItr itr = connections.begin();
+		while (itr != connections.end())
+		{
+			(*itr).second->checkTimeout();
+			itr++;
 		}
 	}
 
