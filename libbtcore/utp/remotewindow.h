@@ -45,6 +45,21 @@ namespace utp
 	};
 	
 	/**
+		The Retransmitter provides is an interface class to retransmit packets
+	*/
+	class BTCORE_EXPORT Retransmitter
+	{
+	public:
+		virtual ~Retransmitter() {}
+		
+		/// Update the RTT time
+		virtual void updateRTT(const Header* hdr,bt::Uint32 packet_rtt) = 0;
+		
+		/// Retransmit a packet
+		virtual int retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr) = 0;
+	};
+	
+	/**
 		Keeps track of the remote sides window including all packets inflight.
 	*/
 	class BTCORE_EXPORT RemoteWindow
@@ -54,7 +69,7 @@ namespace utp
 		virtual ~RemoteWindow();
 		
 		/// A packet was received (update window size and check for acks)
-		void packetReceived(const Header* hdr,const SelectiveAck* sack,Connection* conn);
+		void packetReceived(const Header* hdr,const SelectiveAck* sack,Retransmitter* conn);
 		
 		/// Add a packet to the remote window (should include headers)
 		void addPacket(const QByteArray & data,bt::Uint16 seq_nr,const TimeValue & send_time);
@@ -78,6 +93,9 @@ namespace utp
 		/// See if all packets are acked
 		bool allPacketsAcked() const {return unacked_packets.isEmpty();}
 		
+		/// Get the number of unacked packets
+		bt::Uint32 numUnackedPackets() const {return unacked_packets.count();}
+		
 		/// A timeout occured
 		void timeout();
 		
@@ -87,8 +105,11 @@ namespace utp
 		/// Update the window size
 		void updateWindowSize(double scaled_gain);
 		
+		bt::Uint32 currentWindow() const {return cur_window;}
+		bt::Uint32 maxWindow() const {return max_window;}
+		
 	private:
-		void checkLostPackets(const Header* hdr,const SelectiveAck* sack,Connection* conn);
+		void checkLostPackets(const Header* hdr,const SelectiveAck* sack,Retransmitter* conn);
 		bool lost(const SelectiveAck* sack,bt::Uint16 seq_nr);
 		
 	private:

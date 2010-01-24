@@ -19,41 +19,44 @@
  ***************************************************************************/
 
 #include "connection.h"
-#include "utpserver.h"
 #include <sys/time.h>
 #include <util/log.h>
+#include <util/functions.h>
 #include "localwindow.h"
 #include "remotewindow.h"
-#include <util/functions.h>
+
 
 using namespace bt;
 
 namespace utp
 {
-	Connection::Connection(bt::Uint16 recv_connection_id, Type type, const net::Address& remote, UTPServer* srv) 
-		: type(type),srv(srv),remote(remote),recv_connection_id(recv_connection_id)
+	Connection::Connection(bt::Uint16 recv_connection_id, Type type, const net::Address& remote, Transmitter* transmitter) 
+		: transmitter(transmitter)
 	{
-		reply_micro = 0;
-		eof_seq_nr = -1;
+		stats.type = type;
+		stats.remote = remote;
+		stats.recv_connection_id = recv_connection_id;
+		stats.reply_micro = 0;
+		stats.eof_seq_nr = -1;
 		local_wnd = new LocalWindow();
 		remote_wnd = new RemoteWindow();
-		rtt = 100;
-		rtt_var = 0;
-		timeout = 1000;
-		packet_size = 1400;
+		stats.rtt = 100;
+		stats.rtt_var = 0;
+		stats.timeout = 1000;
+		stats.packet_size = 1400;
 		if (type == OUTGOING)
 		{
-			send_connection_id = recv_connection_id + 1;
+			stats.send_connection_id = recv_connection_id + 1;
 			sendSYN();
 		}
 		else
 		{
-			send_connection_id = recv_connection_id - 1;
-			state = CS_IDLE;
-			seq_nr = 1;
+			stats.send_connection_id = recv_connection_id - 1;
+			stats.state = CS_IDLE;
+			stats.seq_nr = 1;
 		}
 		
-		Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " << recv_connection_id << "|" << send_connection_id << endl;
+		Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " << recv_connection_id << "|" << stats.send_connection_id << endl;
 	}
 
 	Connection::~Connection()
@@ -62,18 +65,31 @@ namespace utp
 		delete remote_wnd;
 	}
 	
-	static void DumpHeader(const Header & hdr)
+	static void DumpPacket(const Header & hdr,const SelectiveAck* sack)
 	{
+		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
 		Out(SYS_CON|LOG_NOTICE) << "UTP: Packet Header: " << endl;
-		Out(SYS_CON|LOG_NOTICE) << "type: " << hdr.type << endl;
-		Out(SYS_CON|LOG_NOTICE) << "version: " << hdr.version << endl;
-		Out(SYS_CON|LOG_NOTICE) << "extension: " << hdr.extension << endl;
-		Out(SYS_CON|LOG_NOTICE) << "connection_id: " << hdr.connection_id << endl;
-		Out(SYS_CON|LOG_NOTICE) << "timestamp_microseconds: " << hdr.timestamp_microseconds << endl;
+		Out(SYS_CON|LOG_NOTICE) << "type:                              " << TypeToString(hdr.type) << endl;
+		Out(SYS_CON|LOG_NOTICE) << "version:                           " << hdr.version << endl;
+		Out(SYS_CON|LOG_NOTICE) << "extension:                         " << hdr.extension << endl;
+		Out(SYS_CON|LOG_NOTICE) << "connection_id:                     " << hdr.connection_id << endl;
+		Out(SYS_CON|LOG_NOTICE) << "timestamp_microseconds:            " << hdr.timestamp_microseconds << endl;
 		Out(SYS_CON|LOG_NOTICE) << "timestamp_difference_microseconds: " << hdr.timestamp_difference_microseconds << endl;
-		Out(SYS_CON|LOG_NOTICE) << "wnd_size: " << hdr.wnd_size << endl;
-		Out(SYS_CON|LOG_NOTICE) << "seq_nr: " << hdr.seq_nr << endl;
-		Out(SYS_CON|LOG_NOTICE) << "ack_nr: " << hdr.ack_nr << endl;
+		Out(SYS_CON|LOG_NOTICE) << "wnd_size:                          " << hdr.wnd_size << endl;
+		Out(SYS_CON|LOG_NOTICE) << "seq_nr:                            " << hdr.seq_nr << endl;
+		Out(SYS_CON|LOG_NOTICE) << "ack_nr:                            " << hdr.ack_nr << endl;
+		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
+		if (!sack)
+			return;
+		
+		Out(SYS_CON|LOG_NOTICE) << "SelectiveAck:                      " << endl;
+		Out(SYS_CON|LOG_NOTICE) << "extension:                         " << sack->extension << endl;
+		Out(SYS_CON|LOG_NOTICE) << "length:                            " << sack->length << endl;
+		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << sack->bitmask[0] << endl;
+		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << sack->bitmask[1] << endl;
+		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << sack->bitmask[2] << endl;
+		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << sack->bitmask[3] << endl;
+		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
 	}
 
 	ConnectionState Connection::handlePacket(const QByteArray& packet)
@@ -86,25 +102,25 @@ namespace utp
 		SelectiveAck* sack = 0;
 		int data_off = parsePacket(packet,&hdr,&sack);
 		
-		DumpHeader(*hdr);
+		DumpPacket(*hdr,sack);
 		
 		updateDelayMeasurement(hdr);
 		remote_wnd->packetReceived(hdr,sack,this);
-		switch (state)
+		switch (stats.state)
 		{
 			case CS_SYN_SENT:
 				// now we should have a state packet
 				if (hdr->type == ST_STATE)
 				{
 					// connection estabished
-					state = CS_CONNECTED;
+					stats.state = CS_CONNECTED;
 					local_wnd->setLastSeqNr(hdr->seq_nr);
-					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << remote.toString() << endl;
+					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
 					connected.wakeAll();
 				}
 				else
 				{
-					state = CS_CLOSED;
+					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
 				break;
@@ -114,12 +130,12 @@ namespace utp
 					// Send back a state packet
 					local_wnd->setLastSeqNr(hdr->seq_nr);
 					sendState();
-					state = CS_CONNECTED;
-					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << remote.toString() << endl;
+					stats.state = CS_CONNECTED;
+					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
 				}
 				else
 				{
-					state = CS_CLOSED;
+					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
 				break;
@@ -141,13 +157,13 @@ namespace utp
 				}
 				else if (hdr->type == ST_FIN)
 				{
-					eof_seq_nr = hdr->seq_nr;
+					stats.eof_seq_nr = hdr->seq_nr;
 					// other side now has closed the connection
-					state = CS_FINISHED; // state becomes finished
+					stats.state = CS_FINISHED; // state becomes finished
 				}
 				else
 				{
-					state = CS_CLOSED;
+					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
 				break;
@@ -159,30 +175,30 @@ namespace utp
 					// has been fully read
 					if (remote_wnd->allPacketsAcked() && local_wnd->isEmpty())
 					{
-						state = CS_CLOSED;
+						stats.state = CS_CLOSED;
 						data_ready.wakeAll();
 					}
 				}
 				else // TODO: make sure we handle packet loss and out of order packets
 				{
-					state = CS_CLOSED;
+					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
 			case CS_CLOSED:
 				break;
 		}
 		
-		return state;
+		return stats.state;
 	}
 	
 	
 	void Connection::updateRTT(const utp::Header* hdr,bt::Uint32 packet_rtt)
 	{
 		Q_UNUSED(hdr);
-		int delta = rtt - packet_rtt;
-		rtt_var += (qAbs(delta) - rtt_var) / 4;
-		rtt += (packet_rtt - rtt) / 8;
-		timeout = qMin(rtt + rtt_var * 4, (bt::Uint32)500);
+		int delta = stats.rtt - packet_rtt;
+		stats.rtt_var += (qAbs(delta) - stats.rtt_var) / 4;
+		stats.rtt += (packet_rtt - stats.rtt) / 8;
+		stats.timeout = qMin(stats.rtt + stats.rtt_var * 4, (bt::Uint32)500);
 	}
 
 	
@@ -201,11 +217,11 @@ namespace utp
 		hdr->version = 1;
 		hdr->type = type;
 		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
-		hdr->connection_id = type == ST_SYN ? recv_connection_id : send_connection_id;
+		hdr->connection_id = type == ST_SYN ? stats.recv_connection_id : stats.send_connection_id;
 		hdr->timestamp_microseconds = tv.tv_usec;
-		hdr->timestamp_difference_microseconds = reply_micro;
+		hdr->timestamp_difference_microseconds = stats.reply_micro;
 		hdr->wnd_size = local_wnd->availableSpace();
-		hdr->seq_nr = seq_nr;
+		hdr->seq_nr = stats.seq_nr;
 		hdr->ack_nr = p_ack_nr;
 		
 		if (extension_length > 0)
@@ -216,14 +232,14 @@ namespace utp
 			local_wnd->fillSelectiveAck(sack);
 		}
 		
-		return srv->sendTo((const bt::Uint8*)ba.data(),ba.size(),remote);
+		return transmitter->sendTo((const bt::Uint8*)ba.data(),ba.size(),stats.remote);
 	}
 
 
 	void Connection::sendSYN()
 	{
-		seq_nr = 1;
-		state = CS_SYN_SENT;
+		stats.seq_nr = 1;
+		stats.state = CS_SYN_SENT;
 		sendPacket(ST_SYN,0);
 	}
 	
@@ -246,7 +262,7 @@ namespace utp
 	{
 		struct timeval tv;
 		gettimeofday(&tv,NULL);
-		reply_micro = qAbs((bt::Int64)tv.tv_usec - hdr->timestamp_microseconds);
+		stats.reply_micro = qAbs((bt::Int64)tv.tv_usec - hdr->timestamp_microseconds);
 		
 		bt::TimeStamp now = bt::Now();
 		delay_window.append(QPair<bt::Uint32,bt::TimeStamp>(hdr->timestamp_difference_microseconds,now));
@@ -305,7 +321,7 @@ namespace utp
 	int Connection::send(const bt::Uint8* data, Uint32 len)
 	{
 		QMutexLocker lock(&mutex);
-		if (state != CS_CONNECTED)
+		if (stats.state != CS_CONNECTED)
 			return -1;
 		
 		// first put data in the output buffer then send packets
@@ -321,7 +337,7 @@ namespace utp
 		while (output_buffer.fill() > 0 && remote_wnd->availableSpace() > 0)
 		{
 			bt::Uint32 to_read = qMin(output_buffer.fill(),remote_wnd->availableSpace());
-			to_read = qMin(to_read,packet_size);
+			to_read = qMin(to_read,stats.packet_size);
 			
 			QByteArray packet(to_read,0);
 			output_buffer.read((bt::Uint8*)packet.data(),to_read);
@@ -354,11 +370,11 @@ namespace utp
 		hdr->version = 1;
 		hdr->type = ST_DATA;
 		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
-		hdr->connection_id = send_connection_id;
+		hdr->connection_id = stats.send_connection_id;
 		hdr->timestamp_microseconds = now.microseconds;
-		hdr->timestamp_difference_microseconds = reply_micro;
+		hdr->timestamp_difference_microseconds = stats.reply_micro;
 		hdr->wnd_size = local_wnd->availableSpace();
-		hdr->seq_nr = seq_nr + 1;
+		hdr->seq_nr = stats.seq_nr + 1;
 		hdr->ack_nr = local_wnd->lastSeqNr();
 		
 		if (extension_length > 0)
@@ -370,11 +386,11 @@ namespace utp
 		}
 		
 		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),to_send);
-		if (!srv->sendTo(ba,remote))
+		if (!transmitter->sendTo(ba,stats.remote))
 			return -1;
 		
-		seq_nr++;
-		remote_wnd->addPacket(packet,seq_nr,now);
+		stats.seq_nr++;
+		remote_wnd->addPacket(packet,stats.seq_nr,now);
 		timer.update();
 		return to_send;
 	}
@@ -393,9 +409,9 @@ namespace utp
 		hdr->version = 1;
 		hdr->type = ST_DATA;
 		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
-		hdr->connection_id = send_connection_id;
+		hdr->connection_id = stats.send_connection_id;
 		hdr->timestamp_microseconds = now.microseconds;
-		hdr->timestamp_difference_microseconds = reply_micro;
+		hdr->timestamp_difference_microseconds = stats.reply_micro;
 		hdr->wnd_size = local_wnd->availableSpace();
 		hdr->seq_nr = p_seq_nr;
 		hdr->ack_nr = local_wnd->lastSeqNr();
@@ -410,7 +426,7 @@ namespace utp
 		
 		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),packet.size());
 		timer.update();
-		return srv->sendTo(ba,remote);
+		return transmitter->sendTo(ba,stats.remote);
 	}
 
 	bt::Uint32 Connection::bytesAvailable() const
@@ -430,7 +446,7 @@ namespace utp
 	{
 		mutex.lock();
 		connected.wait(&mutex);
-		bool ret = state == CS_CONNECTED;
+		bool ret = stats.state == CS_CONNECTED;
 		mutex.unlock();
 		return ret;
 	}
@@ -449,7 +465,7 @@ namespace utp
 	void Connection::close()
 	{
 		QMutexLocker lock(&mutex);
-		if (state == CS_CONNECTED)
+		if (stats.state == CS_CONNECTED)
 		{
 		}
 	}
@@ -457,9 +473,9 @@ namespace utp
 	void Connection::checkTimeout()
 	{
 		QMutexLocker lock(&mutex);
-		if (timer.getElapsedSinceUpdate() > timeout)
+		if (timer.getElapsedSinceUpdate() > stats.timeout)
 		{
-			packet_size = MIN_PACKET_SIZE;
+			stats.packet_size = MIN_PACKET_SIZE;
 			remote_wnd->timeout();
 			timer.update();
 		}

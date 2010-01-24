@@ -34,7 +34,7 @@ namespace utp
 {
 	class UTPServerThread;
 
-	class BTCORE_EXPORT UTPServer : public bt::ServerInterface
+	class BTCORE_EXPORT UTPServer : public bt::ServerInterface,public Transmitter
 	{
 		Q_OBJECT
 	public:
@@ -44,10 +44,10 @@ namespace utp
 		virtual bool changePort(bt::Uint16 port);
 		
 		/// Send a packet to some host
-		bool sendTo(const QByteArray & data,const net::Address & addr);
+		virtual bool sendTo(const QByteArray & data,const net::Address & addr);
 		
 		/// Send a packet to some host
-		bool sendTo(const bt::Uint8* data,const bt::Uint32 size,const net::Address & addr);
+		virtual bool sendTo(const bt::Uint8* data,const bt::Uint32 size,const net::Address & addr);
 		
 		/// Called by Connection when it needs to be killed
 		void kill(Connection* conn);

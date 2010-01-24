@@ -46,11 +46,12 @@ namespace utp
 		qDeleteAll(unacked_packets);
 	}
 
-	void RemoteWindow::packetReceived(const utp::Header* hdr,const SelectiveAck* sack,Connection* conn)
+	void RemoteWindow::packetReceived(const utp::Header* hdr,const SelectiveAck* sack,Retransmitter* conn)
 	{
 		if (hdr->ack_nr == last_ack_nr)
 		{
-			last_ack_receive_count++;
+			if (hdr->type == ST_STATE)
+				last_ack_receive_count++;
 		}
 		else
 		{
@@ -99,7 +100,7 @@ namespace utp
 		unacked_packets.append(new UnackedPacket(data,seq_nr,send_time));
 	}
 
-	void RemoteWindow::checkLostPackets(const utp::Header* hdr, const utp::SelectiveAck* sack,Connection* conn)
+	void RemoteWindow::checkLostPackets(const utp::Header* hdr, const utp::SelectiveAck* sack,Retransmitter* conn)
 	{
 		bool lost_packets = false;
 		QList<UnackedPacket*>::iterator itr = unacked_packets.begin();

@@ -26,61 +26,106 @@
 
 using namespace utp;
 
-class ConnectionTest : public QEventLoop
+class ConnectionTest : public QEventLoop,public Transmitter
 {
 	Q_OBJECT
 public:
 	
-public slots:
-	void accepted(Connection* conn)
+	ConnectionTest(QObject* parent = 0) : QEventLoop(parent),remote("127.0.0.1",50000)
 	{
-		accepted_conn = conn;
-		exit();
 	}
 	
-	void endEventLoop()
+	virtual bool sendTo(const QByteArray & data,const net::Address & addr)
 	{
-		exit();
+		sent_packets.append(data);
+		Q_UNUSED(addr);
+		return true;
 	}
+	
+	virtual bool sendTo(const bt::Uint8* data,const bt::Uint32 size,const net::Address & addr)
+	{
+		QByteArray ba((const char*)data,size);
+		sent_packets.append(ba);
+		Q_UNUSED(addr);
+		return true;
+	}
+	
+	QByteArray buildPacket(bt::Uint32 type,bt::Uint32 recv_conn_id,bt::Uint32 send_conn_id,bt::Uint16 seq_nr,bt::Uint16 ack_nr)
+	{
+		TimeValue tv;
+		QByteArray ba(sizeof(Header),0);
+		Header* hdr = (Header*)ba.data();
+		hdr->version = 1;
+		hdr->type = type;
+		hdr->extension = 0;
+		hdr->connection_id = type == ST_SYN ? recv_conn_id : send_conn_id;
+		hdr->timestamp_microseconds = tv.microseconds;
+		hdr->timestamp_difference_microseconds = 0;
+		hdr->wnd_size = 6666;
+		hdr->seq_nr = seq_nr;
+		hdr->ack_nr = ack_nr;
+		return ba;
+	}
+	
+public slots:
+	
 	
 private slots:
 	void initTestCase()
 	{
 		bt::InitLog("connectiontest.log");
-	
-		accepted_conn = 0;
-		port = 50000;
-		while (port < 60000)
-		{
-			if (!srv.changePort(port))
-				port++;
-			else
-				break;
-		}
-		
-		srv.start();
 	}
 	
 	void cleanupTestCase()
 	{
-		srv.stop();
 	}
 	
-	void testConnect()
+	void init()
 	{
-		net::Address addr("127.0.0.1",port);
-		connect(&srv,SIGNAL(accepted(Connection*)),this,SLOT(accepted(Connection*)),Qt::QueuedConnection);
-		Connection* out = srv.connectTo(addr);
-		QVERIFY(out != 0);
-		QTimer::singleShot(5000,this,SLOT(endEventLoop())); // use a 5 second timeout
-		exec();
-		QVERIFY(accepted_conn != 0);
+		sent_packets.clear();
 	}
+	
+	void testConnID()
+	{
+		bt::Uint32 conn_id = 666;
+		Connection conn(conn_id,utp::Connection::INCOMING,remote,this);
+		QVERIFY(conn.connectionStats().recv_connection_id == conn_id);
+		QVERIFY(conn.connectionStats().send_connection_id == conn_id - 1);
+		
+		Connection conn2(conn_id,utp::Connection::OUTGOING,remote,this);
+		QVERIFY(conn2.connectionStats().recv_connection_id == conn_id);
+		QVERIFY(conn2.connectionStats().send_connection_id == conn_id + 1);
+	}
+	
+	void testOutgoingConnectionSetup()
+	{
+		bt::Uint32 conn_id = 666;
+		Connection conn(conn_id,utp::Connection::OUTGOING,remote,this);
+		const Connection::Stats & s = conn.connectionStats();
+		QVERIFY(s.state == utp::CS_SYN_SENT);
+		QVERIFY(s.seq_nr == 1);
+		
+		QByteArray pkt = buildPacket(ST_STATE,conn_id,conn_id + 1,1,1);
+		conn.handlePacket(pkt);
+		QVERIFY(s.state == CS_CONNECTED);
+		QVERIFY(sent_packets.count() == 1);
+	}
+	
+	void testIncomingConnectionSetup()
+	{
+		bt::Uint32 conn_id = 666;
+		Connection conn(conn_id,utp::Connection::INCOMING,remote,this);
+		const Connection::Stats & s = conn.connectionStats();
+		
+		QByteArray pkt = buildPacket(ST_SYN,conn_id - 1,conn_id,1,1);
+		conn.handlePacket(pkt);
+		QVERIFY(s.state == CS_CONNECTED);
+	}
+
 	
 private:
-	utp::UTPServer srv;
-	int port;
-	utp::Connection* accepted_conn;
+	net::Address remote;
+	QList<QByteArray> sent_packets;
 };
 
 QTEST_MAIN(ConnectionTest)

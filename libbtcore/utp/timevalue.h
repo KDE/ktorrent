@@ -21,7 +21,7 @@
 #ifndef UTP_TIMEVALUE_H
 #define UTP_TIMEVALUE_H
 
-
+#include <btcore_export.h>
 #include <util/constants.h>
 
 namespace utp
@@ -29,7 +29,7 @@ namespace utp
 	/**
 		High precision time value
 	*/
-	class TimeValue
+	class BTCORE_EXPORT TimeValue
 	{
 	public:
 		/// Default constructor, gets the current time

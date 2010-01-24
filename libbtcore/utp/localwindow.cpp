@@ -83,6 +83,10 @@ namespace utp
 		if (availableSpace() < size)
 			return false;
 		
+		// Drop duplicate data packets
+		if (hdr->seq_nr <= last_seq_nr) 
+			return true;
+		
 		if (hdr->seq_nr != last_seq_nr + 1)
 		{
 			// insert the packet into the future_packets list

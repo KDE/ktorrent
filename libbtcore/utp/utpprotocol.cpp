@@ -58,5 +58,18 @@ namespace utp
 		int bit_off = (bit - 2) % 8;
 		bitset[byte] |= (0x01 << bit_off);
 	}
+	
+	QString TypeToString(bt::Uint8 type)
+	{
+		switch (type)
+		{
+			case ST_DATA: return QString("DATA");
+			case ST_FIN: return QString("FIN");
+			case ST_STATE: return QString("STATE");
+			case ST_RESET: return QString("RESET");
+			case ST_SYN: return QString("SYN");
+			default: return QString("UNKNOWN");
+		}
+	}
 
 }

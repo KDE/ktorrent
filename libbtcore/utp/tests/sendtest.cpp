@@ -68,6 +68,8 @@ private slots:
 	
 	void testConnect()
 	{
+		bt::Out(SYS_GEN|LOG_DEBUG) << "testConnect" << bt::endl;
+		
 		net::Address addr("127.0.0.1",port);
 		utp::UTPServer & srv = bt::Globals::instance().getUTPServer();
 		connect(&srv,SIGNAL(accepted(Connection*)),this,SLOT(accepted(Connection*)),Qt::QueuedConnection);
@@ -78,24 +80,35 @@ private slots:
 		QTimer::singleShot(5000,this,SLOT(endEventLoop())); // use a 5 second timeout
 		exec();
 		QVERIFY(incoming != 0);
+		
+		// Wait until connection is complete
+		int times = 0;
+		while (!outgoing->connectSuccesFull() && times < 5)
+		{
+			sleep(1);
+			times++;
+		}
 	}
-	
+
 	void testSend()
 	{
+		bt::Out(SYS_GEN|LOG_DEBUG) << "testSend" << bt::endl;
 		outgoing->setBlocking(true);
-		char* test = "TEST";
+		char test[] = "TEST";
 		
-		outgoing->send((const bt::Uint8*)test,strlen(test));
+		int ret = outgoing->send((const bt::Uint8*)test,strlen(test));
+		QVERIFY(ret == strlen(test));
 		
 		char tmp[20];
 		memset(tmp,0,20);
-		int ret = incoming->recv((bt::Uint8*)tmp,20);
+		ret = incoming->recv((bt::Uint8*)tmp,20);
 		QVERIFY(ret == 4);
 		QVERIFY(memcmp(tmp,test,ret) == 0);
 	}
 	
 	void testSend2()
 	{
+		bt::Out(SYS_GEN|LOG_DEBUG) << "testSend2" << bt::endl;
 		bt::Uint8* sdata = new bt::Uint8[1000];
 		outgoing->send(sdata,1000);
 		
@@ -110,7 +123,8 @@ private slots:
 	
 	void testSend3()
 	{
-		char* test = "TEST";
+		bt::Out(SYS_GEN|LOG_DEBUG) << "testSend3" << bt::endl;
+		char test[] = "TEST";
 		
 		outgoing->send((const bt::Uint8*)test,strlen(test));
 		incoming->send((const bt::Uint8*)test,strlen(test));
@@ -125,6 +139,32 @@ private slots:
 		ret = outgoing->recv((bt::Uint8*)tmp,20);
 		QVERIFY(ret == 4);
 		QVERIFY(memcmp(tmp,test,ret) == 0);
+	}
+
+	void testSend4()
+	{
+		bt::Out(SYS_GEN|LOG_DEBUG) << "testSend4" << bt::endl;
+		char test[] = "TEST";
+		
+		outgoing->send((const bt::Uint8*)test,strlen(test));
+		outgoing->send((const bt::Uint8*)test,strlen(test));
+		
+		char tmp[20];
+		memset(tmp,0,20);
+		int ret = incoming->recv((bt::Uint8*)tmp,20);
+		QVERIFY(ret == 4 || ret == 8);
+		QVERIFY(memcmp(tmp,test,4) == 0);
+		if (ret != 8)
+		{
+			memset(tmp,0,20);
+			ret = incoming->recv((bt::Uint8*)tmp,20);
+			QVERIFY(ret == 4);
+			QVERIFY(memcmp(tmp,test,ret) == 0);
+		}
+		else
+		{
+			QVERIFY(memcmp(tmp+4,test,4) == 0);
+		}
 	}
 	
 private:

@@ -22,7 +22,10 @@
 #define UTP_UTPPROTOCOL_H
 
 #include <QtGlobal>
+#include <QString>
+#include <btcore_export.h>
 #include <util/constants.h>
+
 
 namespace utp
 {
@@ -93,6 +96,7 @@ namespace utp
 	const bt::Uint8 ST_RESET = 3;
 	const bt::Uint8 ST_SYN = 4;
 	
+	QString TypeToString(bt::Uint8 type);
 	
 	enum ConnectionState
 	{
@@ -110,10 +114,10 @@ namespace utp
 	const bt::Uint32 MAX_CWND_INCREASE_PACKETS_PER_RTT = 8;
 	
 	// Test if a bit is acked
-	bool Acked(const SelectiveAck* sack,bt::Uint16 bit);
+	BTCORE_EXPORT bool Acked(const SelectiveAck* sack,bt::Uint16 bit);
 	
 	// Turn on a bit in the SelectiveAck
-	void Ack(SelectiveAck* sack,bt::Uint16 bit);
+	BTCORE_EXPORT void Ack(SelectiveAck* sack,bt::Uint16 bit);
 }
 
 #endif // UTP_UTPPROTOCOL_H
