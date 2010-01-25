@@ -116,20 +116,15 @@ namespace bt
 		return true;
 	}
 	
-	static int ACACmp(Peer* a,Peer* b)
+	static bool ACAGreaterThan(Peer* a,Peer* b)
 	{
-		if (a->getStats().aca_score < b->getStats().aca_score)
-			return 1;
-		else if (a->getStats().aca_score > b->getStats().aca_score)
-			return -1;
-		else
-			return 0;
+		return a->getStats().aca_score > b->getStats().aca_score;
 	}
 	
 
 	void AdvancedChokeAlgorithm::doChokingLeechingState(PeerManager & pman,ChunkManager & cman,const TorrentStats & stats)
 	{
-		PeerPtrList ppl;
+		QList<Peer*> ppl;
 		Uint32 np = pman.getNumConnectedPeers();
 		// add all non seeders
 		for (Uint32 i = 0;i < np;i++)
@@ -146,13 +141,12 @@ namespace bt
 		}
 		
 		// sort list by ACA score
-		ppl.setCompareFunc(ACACmp); 
-		qSort(ppl.begin(), ppl.end());
+		qSort(ppl.begin(), ppl.end(),ACAGreaterThan);
 		
 		doUnchoking(ppl,updateOptimisticPeer(pman,ppl));
 	}
 	
-	void AdvancedChokeAlgorithm::doUnchoking(PeerPtrList & ppl,Peer* poup)
+	void AdvancedChokeAlgorithm::doUnchoking(QList<Peer*> & ppl,Peer* poup)
 	{
 		// Get the number of upload slots
 		Uint32 num_slots = Choker::getNumUploadSlots();
@@ -179,19 +173,14 @@ namespace bt
 		}
 	}
 	
-	static int UpRateCmp(Peer* a,Peer* b)
+	static bool UploadRateGreaterThan(Peer* a,Peer* b)
 	{
-		if (a->getStats().upload_rate < b->getStats().upload_rate)
-			return -1;
-		else if (a->getStats().upload_rate > b->getStats().upload_rate)
-			return 1;
-		else
-			return 0;
+		return a->getStats().upload_rate > b->getStats().upload_rate;
 	}
 
 	void AdvancedChokeAlgorithm::doChokingSeedingState(PeerManager & pman,ChunkManager & cman,const TorrentStats & stats)
 	{
-		PeerPtrList ppl;
+		QList<Peer*> ppl;
 		Uint32 np = pman.getNumConnectedPeers();
 		// add all non seeders
 		for (Uint32 i = 0;i < np;i++)
@@ -207,14 +196,12 @@ namespace bt
 					p->choke();  
 			}
 		}
-		
-		ppl.setCompareFunc(UpRateCmp);
-		qSort(ppl.begin(), ppl.end());
+		qSort(ppl.begin(), ppl.end(),UploadRateGreaterThan);
 		
 		doUnchoking(ppl,updateOptimisticPeer(pman,ppl));
 	}
 	
-	static Uint32 FindPlannedOptimisticUnchokedPeer(PeerManager& pman,const PeerPtrList & ppl)
+	static Uint32 FindPlannedOptimisticUnchokedPeer(PeerManager& pman,const QList<Peer*> & ppl)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
 		if (num_peers == 0)
@@ -235,7 +222,7 @@ namespace bt
 		return UNDEFINED_ID;
 	}
 	
-	Peer* AdvancedChokeAlgorithm::updateOptimisticPeer(PeerManager & pman,const PeerPtrList & ppl)
+	Peer* AdvancedChokeAlgorithm::updateOptimisticPeer(PeerManager & pman,const QList<Peer*> & ppl)
 	{
 		// get the planned optimistic unchoked peer and change it if necessary
 		Peer* poup = pman.findPeer(opt_unchoked_peer_id);

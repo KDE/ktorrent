@@ -25,7 +25,6 @@
 namespace bt
 {
 	class Peer;
-	class PeerPtrList;
 	struct TorrentStats;
 	
 
@@ -44,8 +43,8 @@ namespace bt
 		
 	private:
 		bool calcACAScore(Peer* p,ChunkManager & cman,const TorrentStats & stats);
-		Peer* updateOptimisticPeer(PeerManager & pman,const PeerPtrList & ppl);
-		void doUnchoking(PeerPtrList & ppl,Peer* poup);
+		Peer* updateOptimisticPeer(PeerManager & pman,const QList<Peer*> & ppl);
+		void doUnchoking(QList<Peer*> & ppl,Peer* poup);
 	};
 
 }

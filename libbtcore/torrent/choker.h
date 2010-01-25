@@ -34,21 +34,6 @@ namespace bt
 	class ChunkManager;
 	struct TorrentStats;
 	
-	
-	typedef int (*PeerCompareFunc)(Peer* a,Peer* b);
-	
-	class PeerPtrList : public QList<Peer *>
-	{
-		PeerCompareFunc pcmp;
-	public:
-		PeerPtrList(PeerCompareFunc pcmp = NULL);
-		virtual ~PeerPtrList();
-		
-		void setCompareFunc(PeerCompareFunc p) {pcmp = p;}
-		
-		virtual int compareItems(Peer* a, Peer* b);
-	};
-	
 	/**
 	 * Base class for all choke algorithms.
 	 */
