@@ -85,7 +85,7 @@ private slots:
 		int times = 0;
 		while (!outgoing->connectSuccesFull() && times < 5)
 		{
-			sleep(1);
+			QTest::qSleep(1000);
 			times++;
 		}
 	}
