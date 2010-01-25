@@ -21,6 +21,9 @@
 #include "remotewindow.h"
 #include "utpprotocol.h"
 #include "connection.h"
+#include <util/log.h>
+
+using namespace bt;
 
 namespace utp
 {
@@ -69,7 +72,7 @@ namespace utp
 			if (up->seq_nr <= hdr->ack_nr)
 			{
 				// everything up until the ack_nr in the header is acked
-				conn->updateRTT(hdr,now - up->send_time);
+				conn->updateRTT(hdr,now - up->send_time,up->data.size());
 				cur_window -= up->data.size();
 				delete up;
 				i = unacked_packets.erase(i);
@@ -78,7 +81,7 @@ namespace utp
 			{
 				if (Acked(sack,up->seq_nr - hdr->ack_nr))
 				{
-					conn->updateRTT(hdr,now - up->send_time);
+					conn->updateRTT(hdr,now - up->send_time,up->data.size());
 					cur_window -= up->data.size();
 					delete up;
 					i = unacked_packets.erase(i);
@@ -155,6 +158,7 @@ namespace utp
 			max_window = 0;
 		else
 			max_window += d;
+		Out(SYS_GEN|LOG_DEBUG) << "RemoteWindow::updateWindowSize " << scaled_gain << " " << max_window << endl;
 	}
 
 }

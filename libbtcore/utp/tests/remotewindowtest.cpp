@@ -39,18 +39,18 @@ public:
 	{
 	}
 	
-	virtual void updateRTT(const Header* hdr,bt::Uint32 packet_rtt)
+	virtual void updateRTT(const Header* hdr,bt::Uint32 packet_rtt,bt::Uint32 packet_size)
 	{
 		Q_UNUSED(hdr);
 		Q_UNUSED(packet_rtt);
+		Q_UNUSED(packet_size);
 		update_rtt_called = true;
 	}
 	
-	virtual int retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr)
+	virtual void retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr)
 	{
 		bt::Out(SYS_GEN|LOG_NOTICE) << "retransmit " << p_seq_nr << bt::endl;
 		retransmit_ok = retransmit_seq_nr.contains(p_seq_nr);
-		return packet.size();
 	}
 	
 	void reset()

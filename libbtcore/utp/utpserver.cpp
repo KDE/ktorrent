@@ -115,12 +115,18 @@ namespace utp
 			case ST_DATA:
 			case ST_FIN:
 			case ST_STATE:
+				try
 				{
 					Connection* c = find(hdr->connection_id);
 					if (c)
 						c->handlePacket(packet);
 					else
 						Out(SYS_CON|LOG_NOTICE) << "UTP: unkown connection " << hdr->connection_id << endl;
+				}
+				catch (Connection::TransmissionError & err)
+				{
+					Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
+					// TODO: kill connection
 				}
 				break;
 			case ST_RESET:
@@ -154,6 +160,7 @@ namespace utp
 		connections.insert(recv_conn_id,conn);
 		
 		Out(SYS_CON|LOG_NOTICE) << "UTP: connecting to " << addr.toString() << endl;
+		conn->startConnecting();
 		return conn;
 	}
 
@@ -169,9 +176,17 @@ namespace utp
 		else
 		{
 			Connection* conn = new Connection(recv_conn_id,Connection::INCOMING,addr,this);
-			connections.insert(recv_conn_id,conn);
-			conn->handlePacket(data);
-			accepted(conn);
+			try
+			{
+				conn->handlePacket(data);
+				connections.insert(recv_conn_id,conn);
+				accepted(conn);
+			}
+			catch (Connection::TransmissionError & err)
+			{
+				Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
+				delete conn;
+			}
 		}
 	}
 

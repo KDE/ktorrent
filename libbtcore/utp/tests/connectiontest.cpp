@@ -101,6 +101,7 @@ private slots:
 	{
 		bt::Uint32 conn_id = 666;
 		Connection conn(conn_id,utp::Connection::OUTGOING,remote,this);
+		conn.startConnecting();
 		const Connection::Stats & s = conn.connectionStats();
 		QVERIFY(s.state == utp::CS_SYN_SENT);
 		QVERIFY(s.seq_nr == 1);

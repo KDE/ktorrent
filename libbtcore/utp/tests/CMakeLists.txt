@@ -17,3 +17,7 @@ target_link_libraries( sendtest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore
 set(connecttest_SRCS connecttest.cpp)
 kde4_add_unit_test(connecttest TESTNAME connecttest ${connecttest_SRCS})
 target_link_libraries( connecttest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore)
+
+set(transmittest_SRCS transmittest.cpp)
+kde4_add_unit_test(transmittest TESTNAME transmittest ${transmittest_SRCS})
+target_link_libraries( transmittest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore)

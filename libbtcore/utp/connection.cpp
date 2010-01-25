@@ -44,10 +44,10 @@ namespace utp
 		stats.rtt_var = 0;
 		stats.timeout = 1000;
 		stats.packet_size = 1400;
+		stats.last_window_size_transmitted = 64*1024;
 		if (type == OUTGOING)
 		{
 			stats.send_connection_id = recv_connection_id + 1;
-			sendSYN();
 		}
 		else
 		{
@@ -55,6 +55,13 @@ namespace utp
 			stats.state = CS_IDLE;
 			stats.seq_nr = 1;
 		}
+		
+		stats.bytes_received = 0;
+		stats.bytes_sent = 0;
+		stats.packets_received = 0;
+		stats.packets_sent = 0;
+		stats.bytes_lost = 0;
+		stats.packets_lost = 0;
 		
 		Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " << recv_connection_id << "|" << stats.send_connection_id << endl;
 	}
@@ -65,6 +72,12 @@ namespace utp
 		delete remote_wnd;
 	}
 	
+	void Connection::startConnecting()
+	{
+		if (stats.type == OUTGOING)
+			sendSYN();
+	}
+
 	static void DumpPacket(const Header & hdr,const SelectiveAck* sack)
 	{
 		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
@@ -97,6 +110,7 @@ namespace utp
 		QMutexLocker lock(&mutex);
 		
 		timer.update();
+		stats.packets_received++;
 		
 		Header* hdr = 0;
 		SelectiveAck* sack = 0;
@@ -153,7 +167,8 @@ namespace utp
 				}
 				else if (hdr->type == ST_STATE)
 				{
-					// do nothing
+					// try to send more data packets
+					sendPackets();
 				}
 				else if (hdr->type == ST_FIN)
 				{
@@ -192,17 +207,18 @@ namespace utp
 	}
 	
 	
-	void Connection::updateRTT(const utp::Header* hdr,bt::Uint32 packet_rtt)
+	void Connection::updateRTT(const utp::Header* hdr,bt::Uint32 packet_rtt,bt::Uint32 packet_size)
 	{
 		Q_UNUSED(hdr);
 		int delta = stats.rtt - packet_rtt;
 		stats.rtt_var += (qAbs(delta) - stats.rtt_var) / 4;
 		stats.rtt += (packet_rtt - stats.rtt) / 8;
 		stats.timeout = qMin(stats.rtt + stats.rtt_var * 4, (bt::Uint32)500);
+		stats.bytes_sent += packet_size;
 	}
 
 	
-	int Connection::sendPacket(Uint32 type,Uint16 p_ack_nr)
+	void Connection::sendPacket(Uint32 type,Uint16 p_ack_nr)
 	{
 		struct timeval tv;
 		gettimeofday(&tv,NULL);
@@ -220,7 +236,7 @@ namespace utp
 		hdr->connection_id = type == ST_SYN ? stats.recv_connection_id : stats.send_connection_id;
 		hdr->timestamp_microseconds = tv.tv_usec;
 		hdr->timestamp_difference_microseconds = stats.reply_micro;
-		hdr->wnd_size = local_wnd->availableSpace();
+		hdr->wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
 		hdr->seq_nr = stats.seq_nr;
 		hdr->ack_nr = p_ack_nr;
 		
@@ -232,7 +248,10 @@ namespace utp
 			local_wnd->fillSelectiveAck(sack);
 		}
 		
-		return transmitter->sendTo((const bt::Uint8*)ba.data(),ba.size(),stats.remote);
+		if (!transmitter->sendTo((const bt::Uint8*)ba.data(),ba.size(),stats.remote))
+			throw TransmissionError(__FILE__,__LINE__);
+		
+		stats.packets_sent++;
 	}
 
 
@@ -284,11 +303,18 @@ namespace utp
 			}
 		}
 		
-		bt::Uint32 our_delay = hdr->timestamp_difference_microseconds - base_delay;
-		int off_target = (int)our_delay - (int)CCONTROL_TARGET;
-		double delay_factor = off_target / CCONTROL_TARGET;
+		int our_delay = hdr->timestamp_difference_microseconds / 1000 - base_delay;
+		int off_target = CCONTROL_TARGET - our_delay;
+		double delay_factor = (double)off_target / (double)CCONTROL_TARGET;
 		double window_factor = remote_wnd->windowUsageFactor();
 		double scaled_gain = MAX_CWND_INCREASE_PACKETS_PER_RTT * delay_factor * window_factor;
+		
+		Out(SYS_GEN|LOG_DEBUG) << "base_delay " << base_delay << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "our_delay " << our_delay << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "off_target " << off_target << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "delay_factor " << delay_factor << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "window_factor " << window_factor << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "scaled_gain " << scaled_gain << endl;
 		remote_wnd->updateWindowSize(scaled_gain);
 	}
 		
@@ -373,7 +399,7 @@ namespace utp
 		hdr->connection_id = stats.send_connection_id;
 		hdr->timestamp_microseconds = now.microseconds;
 		hdr->timestamp_difference_microseconds = stats.reply_micro;
-		hdr->wnd_size = local_wnd->availableSpace();
+		hdr->wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
 		hdr->seq_nr = stats.seq_nr + 1;
 		hdr->ack_nr = local_wnd->lastSeqNr();
 		
@@ -387,15 +413,16 @@ namespace utp
 		
 		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),to_send);
 		if (!transmitter->sendTo(ba,stats.remote))
-			return -1;
+			throw TransmissionError(__FILE__,__LINE__);
 		
+		stats.packets_sent++;
 		stats.seq_nr++;
 		remote_wnd->addPacket(packet,stats.seq_nr,now);
 		timer.update();
 		return to_send;
 	}
 
-	int Connection::retransmit(const QByteArray& packet, Uint16 p_seq_nr)
+	void Connection::retransmit(const QByteArray& packet, Uint16 p_seq_nr)
 	{
 		TimeValue now;
 		
@@ -412,7 +439,7 @@ namespace utp
 		hdr->connection_id = stats.send_connection_id;
 		hdr->timestamp_microseconds = now.microseconds;
 		hdr->timestamp_difference_microseconds = stats.reply_micro;
-		hdr->wnd_size = local_wnd->availableSpace();
+		hdr->wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
 		hdr->seq_nr = p_seq_nr;
 		hdr->ack_nr = local_wnd->lastSeqNr();
 		
@@ -426,7 +453,11 @@ namespace utp
 		
 		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),packet.size());
 		timer.update();
-		return transmitter->sendTo(ba,stats.remote);
+		
+		if (!transmitter->sendTo(ba,stats.remote))
+			throw TransmissionError(__FILE__,__LINE__);
+		
+		stats.packets_sent++;
 	}
 
 	bt::Uint32 Connection::bytesAvailable() const
@@ -438,7 +469,13 @@ namespace utp
 	Uint32 Connection::recv(Uint8* buf, Uint32 max_len)
 	{
 		QMutexLocker lock(&mutex);
-		return local_wnd->read(buf,max_len);
+		bt::Uint32 ret = local_wnd->read(buf,max_len);
+		// Update the window if there is room again
+		if (stats.last_window_size_transmitted == 0 && local_wnd->availableSpace() > 0)
+			sendState();
+		
+		stats.bytes_received += ret;
+		return ret;
 	}
 
 	
@@ -479,6 +516,23 @@ namespace utp
 			remote_wnd->timeout();
 			timer.update();
 		}
+	}
+
+	void Connection::dumpStats()
+	{
+		Out(SYS_GEN|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " stats:" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "bytes_received   = " << stats.bytes_received << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "bytes_sent       = " << stats.bytes_sent << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "packets_received = " << stats.packets_received << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "packets_sent     = " << stats.packets_sent << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "bytes_lost       = " << stats.bytes_lost << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "packets_lost     = " << stats.packets_lost << endl;
+	}
+
+	bool Connection::allDataSent() const
+	{
+		QMutexLocker lock(&mutex);
+		return remote_wnd->allPacketsAcked() && output_buffer.fill() == 0;
 	}
 
 }

@@ -65,6 +65,18 @@ namespace utp
 			OUTGOING
 		};
 		
+		/// Thrown when a transmission error occurs, server should kill the connection if it happens
+		class TransmissionError 
+		{
+		public:
+			TransmissionError(const char* file,int line) 
+			{
+				location = QString("TransmissionError in %1 at line %2\n").arg(file).arg(line);
+			}
+			
+			QString location;
+		};
+		
 		struct Stats
 		{
 			Type type;
@@ -79,10 +91,24 @@ namespace utp
 			bt::Uint32 rtt;
 			bt::Uint32 rtt_var;
 			bt::Uint32 packet_size;
+			bt::Uint32 last_window_size_transmitted;
+			
+			bt::Uint64 bytes_received;
+			bt::Uint64 bytes_sent;
+			bt::Uint32 packets_received;
+			bt::Uint32 packets_sent;
+			bt::Uint64 bytes_lost;
+			bt::Uint32 packets_lost;
 		};
 		
 		Connection(bt::Uint16 recv_connection_id,Type type,const net::Address & remote,Transmitter* transmitter);
 		virtual ~Connection();
+		
+		/// Dump connection stats
+		void dumpStats();
+		
+		/// Start connecting (OUTGOING only)
+		void startConnecting();
 		
 		/// Get the connection stats
 		const Stats & connectionStats() const {return stats;}
@@ -124,13 +150,16 @@ namespace utp
 		void close();
 		
 		/// Update the RTT time
-		virtual void updateRTT(const Header* hdr,bt::Uint32 packet_rtt);
+		virtual void updateRTT(const Header* hdr,bt::Uint32 packet_rtt,bt::Uint32 packet_size);
 		
 		/// Retransmit a packet
-		virtual int retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr);
+		virtual void retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr);
 		
 		/// Check for a timeout
 		void checkTimeout();
+		
+		/// Is all data sent
+		bool allDataSent() const;
 		
 	private:
 		void sendSYN();
@@ -139,7 +168,7 @@ namespace utp
 		void updateDelayMeasurement(const Header* hdr);
 		void sendStateOrData();
 		void sendPackets();
-		int sendPacket(bt::Uint32 type,bt::Uint16 p_ack_nr);
+		void sendPacket(bt::Uint32 type,bt::Uint16 p_ack_nr);
 		int sendDataPacket(const QByteArray & packet);
 		
 		/** 

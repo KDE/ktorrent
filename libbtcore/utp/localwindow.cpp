@@ -21,6 +21,9 @@
 #include "localwindow.h"
 #include "utpprotocol.h"
 #include <QtAlgorithms>
+#include <util/log.h>
+
+using namespace bt;
 
 namespace utp
 {
@@ -54,7 +57,6 @@ namespace utp
 	{
 		bt::Uint32 ret = CircularBuffer::read(data, max_len);
 		window_space += ret;
-		checkFuturePackets();
 		return ret;
 	}
 
@@ -81,7 +83,10 @@ namespace utp
 	bool LocalWindow::packetReceived(const utp::Header* hdr,const bt::Uint8* data,bt::Uint32 size)
 	{
 		if (availableSpace() < size)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived availableSpace() < " << size << endl;
 			return false;
+		}
 		
 		// Drop duplicate data packets
 		if (hdr->seq_nr <= last_seq_nr) 
@@ -122,6 +127,7 @@ namespace utp
 			checkFuturePackets();
 		}
 		
+		Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived " << fill() << " " << future_packets.count() << endl;
 		return true;
 	}
 

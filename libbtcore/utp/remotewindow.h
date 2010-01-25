@@ -53,10 +53,10 @@ namespace utp
 		virtual ~Retransmitter() {}
 		
 		/// Update the RTT time
-		virtual void updateRTT(const Header* hdr,bt::Uint32 packet_rtt) = 0;
+		virtual void updateRTT(const Header* hdr,bt::Uint32 packet_rtt,bt::Uint32 packet_size) = 0;
 		
 		/// Retransmit a packet
-		virtual int retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr) = 0;
+		virtual void retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr) = 0;
 	};
 	
 	/**
