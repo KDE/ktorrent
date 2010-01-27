@@ -100,7 +100,13 @@ namespace bt
 			if (piece)
 			{
 				piece->unref();
-				chunk->savePiece(piece);
+				try
+				{
+					chunk->savePiece(piece);
+				}
+				catch (...)
+				{
+				}
 				piece_data[i] = 0;
 			}
 		}
@@ -567,6 +573,7 @@ namespace bt
 					piece->ref();
 			}
 			
+			piece_data[i] = 0;
 			if (piece)
 			{
 				hash_gen.update(piece->data(),len);
@@ -574,7 +581,6 @@ namespace bt
 				piece->unref();
 				chunk->savePiece(piece);
 			}
-			piece_data[i] = 0;
 		}
 		num_pieces_in_hash = nn;
 	}
