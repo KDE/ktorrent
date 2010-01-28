@@ -70,7 +70,7 @@ namespace utp
 	{
 		bt::Uint8 extension;
 		bt::Uint8 length;
-		bt::Uint8 bitmask[4];
+		bt::Uint8* bitmask;
 	};
 	
 	struct ExtensionBits
@@ -112,12 +112,39 @@ namespace utp
 	const bt::Uint32 DELAY_WINDOW_SIZE = 2*60*1000; // 2 minutes
 	const bt::Uint32 CCONTROL_TARGET = 100;
 	const bt::Uint32 MAX_CWND_INCREASE_PACKETS_PER_RTT = 8;
+	const bt::Uint32 MAX_TIMEOUT = 10000;
 	
 	// Test if a bit is acked
 	BTCORE_EXPORT bool Acked(const SelectiveAck* sack,bt::Uint16 bit);
 	
 	// Turn on a bit in the SelectiveAck
 	BTCORE_EXPORT void Ack(SelectiveAck* sack,bt::Uint16 bit);
+	
+	/**
+		Helper class to parse packets
+	*/
+	class BTCORE_EXPORT PacketParser
+	{
+	public:
+		PacketParser(const bt::Uint8* packet,bt::Uint32 size);
+		~PacketParser();
+		
+		/// Parses the packet, returns false on error
+		bool parse();
+		
+		const Header* header() const;
+		const SelectiveAck* selectiveAck() const;
+		bt::Uint32 dataOffset() const {return data_off;}
+		bt::Uint32 dataSize() const {return data_size;}
+		
+	private:
+		const bt::Uint8* packet;
+		bt::Uint32 size;
+		bool sack_found;
+		SelectiveAck sack;
+		bt::Uint32 data_off;
+		bt::Uint32 data_size;
+	};
 }
 
 #endif // UTP_UTPPROTOCOL_H

@@ -229,10 +229,11 @@ private slots:
 		// Check SelectiveAck generation
 		QVERIFY(wnd.selectiveAckBits() == 3);
 		bt::Uint8 sack_data[6];
-		SelectiveAck* sack = (SelectiveAck*)sack_data;
-		sack->length = 4;
-		sack->extension = 0;
-		wnd.fillSelectiveAck(sack);
+		SelectiveAck sack;
+		sack.length = 4;
+		sack.extension = 0;
+		sack.bitmask = sack_data + 2;
+		wnd.fillSelectiveAck(&sack);
 		QVERIFY(sack_data[2] == 0x4);
 		QVERIFY(sack_data[3] == 0x0);
 		QVERIFY(sack_data[4] == 0x0);
@@ -247,9 +248,9 @@ private slots:
 		
 		// Check selective ack again
 		QVERIFY(wnd.selectiveAckBits() == 3);
-		sack->length = 4;
-		sack->extension = 0;
-		wnd.fillSelectiveAck(sack);
+		sack.length = 4;
+		sack.extension = 0;
+		wnd.fillSelectiveAck(&sack);
 		QVERIFY(sack_data[2] == 0x6);
 		QVERIFY(sack_data[3] == 0x0);
 		QVERIFY(sack_data[4] == 0x0);
@@ -264,9 +265,9 @@ private slots:
 		
 		// Check selective ack again
 		QVERIFY(wnd.selectiveAckBits() == 3);
-		sack->length = 4;
-		sack->extension = 0;
-		wnd.fillSelectiveAck(sack);
+		sack.length = 4;
+		sack.extension = 0;
+		wnd.fillSelectiveAck(&sack);
 		QVERIFY(sack_data[2] == 0x7);
 		QVERIFY(sack_data[3] == 0x0);
 		QVERIFY(sack_data[4] == 0x0);

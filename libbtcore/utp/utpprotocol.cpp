@@ -40,7 +40,7 @@ namespace utp
 		if (bit < 2 || bit > 8*sack->length + 1)
 			return false;
 		
-		const bt::Uint8* bitset = (const bt::Uint8*)sack + 2;
+		const bt::Uint8* bitset = sack->bitmask;
 		int byte = (bit - 2) / 8;
 		int bit_off = (bit - 2) % 8;
 		return bitset[byte] & (0x01 << bit_off);
@@ -53,7 +53,7 @@ namespace utp
 		if (bit < 2 || bit > 8*sack->length + 1)
 			return;
 		
-		bt::Uint8* bitset = (bt::Uint8*)sack + 2;
+		bt::Uint8* bitset = sack->bitmask;
 		int byte = (bit - 2) / 8;
 		int bit_off = (bit - 2) % 8;
 		bitset[byte] |= (0x01 << bit_off);
@@ -70,6 +70,55 @@ namespace utp
 			case ST_SYN: return QString("SYN");
 			default: return QString("UNKNOWN");
 		}
+	}
+
+	PacketParser::PacketParser(const bt::Uint8* packet, bt::Uint32 size) : packet(packet),size(size),sack_found(false),data_off(0),data_size(0)
+	{
+	}
+
+	PacketParser::~PacketParser()
+	{
+	}
+
+	bool PacketParser::parse()
+	{
+		if (size < sizeof(Header))
+			return false;
+		
+		Header* hdr = (Header*)packet;
+		data_off = sizeof(Header);
+		
+		// go over all header extensions to increase the data offset and watch out for selective acks
+		int ext_id = hdr->extension;
+		while (data_off < size && ext_id != 0)
+		{
+			const bt::Uint8* ptr = packet + data_off;
+			if (ext_id == SELECTIVE_ACK_ID)
+			{
+				sack_found = true;
+				sack.extension = ptr[0];
+				sack.length = ptr[1];
+				if (data_off + 2 + sack.length > size)
+					return false;
+				sack.bitmask = (bt::Uint8*)ptr + 2;
+			}
+			
+			data_off += ptr[1];
+			ext_id = ptr[0];
+		}
+		
+		data_size = size - data_off;
+		return true;
+	}
+
+	const utp::Header* PacketParser::header() const
+	{
+		return (utp::Header*)packet;
+	}
+
+	const utp::SelectiveAck* PacketParser::selectiveAck() const
+	{
+		return sack_found ? &sack : 0;
 	}
 
 }

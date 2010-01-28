@@ -87,7 +87,7 @@ namespace utp
 			struct timeval tv = {0,100000};
 			if (select(fd + 1,&fds,0,0,&tv) > 0)
 			{
-				handlePacket();
+				readPacket();
 			}
 			
 			checkTimeouts();
@@ -95,7 +95,7 @@ namespace utp
 		}
 	}
 	
-	void UTPServer::handlePacket()
+	void UTPServer::readPacket()
 	{
 		QMutexLocker lock(&mutex);
 		
@@ -109,9 +109,15 @@ namespace utp
 			if (ba < (int)sizeof(utp::Header))
 				return;
 			
-			Header* hdr = (Header*)packet.data();
-			switch (hdr->type)
-			{
+			handlePacket(packet,addr);
+		}
+	}
+	
+	void UTPServer::handlePacket(const QByteArray& packet, const net::Address& addr)
+	{
+		Header* hdr = (Header*)packet.data();
+		switch (hdr->type)
+		{
 			case ST_DATA:
 			case ST_FIN:
 			case ST_STATE:
@@ -135,9 +141,9 @@ namespace utp
 			case ST_SYN:
 				syn(hdr,packet,addr);
 				break;
-			}
 		}
 	}
+
 
 	bool UTPServer::sendTo(const QByteArray& data, const net::Address& addr)
 	{

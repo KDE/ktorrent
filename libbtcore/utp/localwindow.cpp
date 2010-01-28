@@ -144,8 +144,7 @@ namespace utp
 	void LocalWindow::fillSelectiveAck(SelectiveAck* sack)
 	{
 		// First turn off all bits
-		bt::Uint8* bitset = (bt::Uint8*)sack + 2;
-		memset(bitset,0,sack->length);
+		memset(sack->bitmask,0,sack->length);
 		
 		QLinkedList<FuturePacket*>::iterator itr = future_packets.begin();
 		while (itr != future_packets.end())

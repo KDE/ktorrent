@@ -66,7 +66,8 @@ namespace utp
 		
 	protected:
 		bool bind(const net::Address & addr);
-		void handlePacket();
+		void readPacket();
+		virtual void handlePacket(const QByteArray & packet,const net::Address & addr);
 		void syn(const Header* hdr,const QByteArray & data,const net::Address & addr);
 		void reset(const Header* hdr);
 		void clearDeadConnections();

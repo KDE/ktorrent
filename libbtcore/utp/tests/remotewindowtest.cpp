@@ -23,6 +23,7 @@
 #include <util/log.h>
 #include <utp/remotewindow.h>
 #include <utp/connection.h>
+#include <util/functions.h>
 
 using namespace utp;
 
@@ -59,6 +60,8 @@ public:
 		update_rtt_called = false;
 		retransmit_ok = false;
 	}
+	
+	virtual bt::Uint32 currentTimeout() const {return 1000;}
 		
 private slots:
 	void initTestCase()
@@ -80,14 +83,14 @@ private slots:
 		QByteArray pkt(200,0);
 		
 		RemoteWindow wnd;
-		wnd.addPacket(pkt,1,TimeValue());
+		wnd.addPacket(pkt,1,bt::Now());
 		QVERIFY(!wnd.allPacketsAcked());
 		QVERIFY(wnd.numUnackedPackets() == 1);
 		
-		wnd.addPacket(pkt,2,TimeValue());
+		wnd.addPacket(pkt,2,bt::Now());
 		QVERIFY(wnd.numUnackedPackets() == 2);
 		
-		wnd.addPacket(pkt,3,TimeValue());
+		wnd.addPacket(pkt,3,bt::Now());
 		QVERIFY(wnd.numUnackedPackets() == 3);
 		
 		Header hdr;
@@ -115,14 +118,14 @@ private slots:
 		QByteArray pkt(200,0);
 		
 		RemoteWindow wnd;
-		wnd.addPacket(pkt,1,TimeValue());
+		wnd.addPacket(pkt,1,bt::Now());
 		QVERIFY(!wnd.allPacketsAcked());
 		QVERIFY(wnd.numUnackedPackets() == 1);
 		
-		wnd.addPacket(pkt,2,TimeValue());
+		wnd.addPacket(pkt,2,bt::Now());
 		QVERIFY(wnd.numUnackedPackets() == 2);
 		
-		wnd.addPacket(pkt,3,TimeValue());
+		wnd.addPacket(pkt,3,bt::Now());
 		QVERIFY(wnd.numUnackedPackets() == 3);
 		
 		Header hdr;
@@ -138,27 +141,29 @@ private slots:
 		QByteArray pkt(200,0);
 		
 		RemoteWindow wnd;
-		wnd.addPacket(pkt,1,TimeValue());
+		wnd.addPacket(pkt,1,bt::Now());
 		QVERIFY(!wnd.allPacketsAcked());
 		QVERIFY(wnd.numUnackedPackets() == 1);
 		
-		wnd.addPacket(pkt,2,TimeValue());
+		wnd.addPacket(pkt,2,bt::Now());
 		QVERIFY(wnd.numUnackedPackets() == 2);
 		
-		wnd.addPacket(pkt,3,TimeValue());
+		wnd.addPacket(pkt,3,bt::Now());
 		QVERIFY(wnd.numUnackedPackets() == 3);
 		
 		// Selectively ack 3
 		bt::Uint8 sack_data[6];
 		memset(sack_data,0,6);
-		SelectiveAck* sack = (SelectiveAck*)sack_data;
-		sack->length = 4;
-		sack->extension = 0;
-		Ack(sack,3);
+		SelectiveAck sack;;
+		sack.length = 4;
+		sack.extension = 0;
+		sack.bitmask = sack_data + 2;
+		Ack(&sack,3);
+		
 		Header hdr;
 		hdr.ack_nr = 0;
 		hdr.wnd_size = 5000;
-		wnd.packetReceived(&hdr,sack,this);
+		wnd.packetReceived(&hdr,&sack,this);
 		QVERIFY(wnd.numUnackedPackets() == 2);
 		QVERIFY(update_rtt_called);
 		
@@ -179,7 +184,7 @@ private slots:
 		RemoteWindow wnd;
 		for (bt::Uint32 i = 0;i < 4;i++)
 		{
-			wnd.addPacket(pkt,i+1,TimeValue());
+			wnd.addPacket(pkt,i+1,bt::Now());
 			QVERIFY(!wnd.allPacketsAcked());
 			QVERIFY(wnd.numUnackedPackets() == i + 1);
 		}
@@ -187,17 +192,18 @@ private slots:
 		// Selectively ack the last 3 packets
 		bt::Uint8 sack_data[6];
 		memset(sack_data,0,6);
-		SelectiveAck* sack = (SelectiveAck*)sack_data;
-		sack->length = 4;
-		sack->extension = 0;
-		Ack(sack,2);
-		Ack(sack,3);
-		Ack(sack,4);
+		SelectiveAck sack;;
+		sack.length = 4;
+		sack.extension = 0;
+		sack.bitmask = sack_data + 2;
+		Ack(&sack,2);
+		Ack(&sack,3);
+		Ack(&sack,4);
 		Header hdr;
 		hdr.ack_nr = 0;
 		hdr.wnd_size = 5000;
 		retransmit_seq_nr.insert(1);
-		wnd.packetReceived(&hdr,sack,this);
+		wnd.packetReceived(&hdr,&sack,this);
 		QVERIFY(wnd.numUnackedPackets() == 1);
 		QVERIFY(update_rtt_called);
 		QVERIFY(retransmit_ok);
@@ -210,7 +216,7 @@ private slots:
 		RemoteWindow wnd;
 		for (bt::Uint32 i = 0;i < 4;i++)
 		{
-			wnd.addPacket(pkt,i+1,TimeValue());
+			wnd.addPacket(pkt,i+1,bt::Now());
 			QVERIFY(!wnd.allPacketsAcked());
 			QVERIFY(wnd.numUnackedPackets() == i + 1);
 		}
@@ -218,17 +224,18 @@ private slots:
 		// Selectively ack the last 3 packets
 		bt::Uint8 sack_data[6];
 		memset(sack_data,0,6);
-		SelectiveAck* sack = (SelectiveAck*)sack_data;
-		sack->length = 4;
-		sack->extension = 0;
-		Ack(sack,2);
-		Ack(sack,3);
-		Ack(sack,4);
+		SelectiveAck sack;;
+		sack.length = 4;
+		sack.extension = 0;
+		sack.bitmask = sack_data + 2;
+		Ack(&sack,2);
+		Ack(&sack,3);
+		Ack(&sack,4);
 		Header hdr;
 		hdr.ack_nr = 0;
 		hdr.wnd_size = 5000;
 		retransmit_seq_nr.insert(1);
-		wnd.packetReceived(&hdr,sack,this);
+		wnd.packetReceived(&hdr,&sack,this);
 		QVERIFY(wnd.numUnackedPackets() == 1);
 		QVERIFY(update_rtt_called);
 		QVERIFY(retransmit_ok);
@@ -241,7 +248,7 @@ private slots:
 		RemoteWindow wnd;
 		for (bt::Uint32 i = 0;i < 10;i++)
 		{
-			wnd.addPacket(pkt,i+1,TimeValue());
+			wnd.addPacket(pkt,i+1,bt::Now());
 			QVERIFY(!wnd.allPacketsAcked());
 			QVERIFY(wnd.numUnackedPackets() == i + 1);
 		}
@@ -249,18 +256,19 @@ private slots:
 		// Selectively ack the last 3 packets
 		bt::Uint8 sack_data[6];
 		memset(sack_data,0,6);
-		SelectiveAck* sack = (SelectiveAck*)sack_data;
-		sack->length = 4;
-		sack->extension = 0;
-		Ack(sack,8); 
-		Ack(sack,9);
-		Ack(sack,10); 
+		SelectiveAck sack;;
+		sack.length = 4;
+		sack.extension = 0;
+		sack.bitmask = sack_data + 2;
+		Ack(&sack,8); 
+		Ack(&sack,9);
+		Ack(&sack,10); 
 		Header hdr;
 		hdr.ack_nr = 0;
 		hdr.wnd_size = 5000;
 		for (int i = 1;i < 8;i++)
 			retransmit_seq_nr.insert(i);
-		wnd.packetReceived(&hdr,sack,this);
+		wnd.packetReceived(&hdr,&sack,this);
 		QVERIFY(wnd.numUnackedPackets() == 7);
 		QVERIFY(update_rtt_called);
 		QVERIFY(retransmit_ok);
@@ -273,7 +281,7 @@ private slots:
 		RemoteWindow wnd;
 		for (bt::Uint32 i = 0;i < 10;i++)
 		{
-			wnd.addPacket(pkt,i+1,TimeValue());
+			wnd.addPacket(pkt,i+1,bt::Now());
 			QVERIFY(!wnd.allPacketsAcked());
 			QVERIFY(wnd.numUnackedPackets() == i + 1);
 		}
@@ -281,18 +289,19 @@ private slots:
 		// Selectively ack 3 random packets
 		bt::Uint8 sack_data[6];
 		memset(sack_data,0,6);
-		SelectiveAck* sack = (SelectiveAck*)sack_data;
-		sack->length = 4;
-		sack->extension = 0;
-		Ack(sack,3); 
-		Ack(sack,6);
-		Ack(sack,10); 
+		SelectiveAck sack;;
+		sack.length = 4;
+		sack.extension = 0;
+		sack.bitmask = sack_data + 2;
+		Ack(&sack,3); 
+		Ack(&sack,6);
+		Ack(&sack,10); 
 		Header hdr;
 		hdr.ack_nr = 0;
 		hdr.wnd_size = 5000;
 		for (int i = 1;i <= 2;i++)
 			retransmit_seq_nr.insert(i);
-		wnd.packetReceived(&hdr,sack,this);
+		wnd.packetReceived(&hdr,&sack,this);
 		QVERIFY(wnd.numUnackedPackets() == 7);
 		QVERIFY(update_rtt_called);
 		QVERIFY(retransmit_ok);

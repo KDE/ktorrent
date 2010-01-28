@@ -88,8 +88,8 @@ namespace utp
 			bt::Uint16 seq_nr;
 			int eof_seq_nr;
 			bt::Uint32 timeout;
-			bt::Uint32 rtt;
-			bt::Uint32 rtt_var;
+			int rtt;
+			int rtt_var;
 			bt::Uint32 packet_size;
 			bt::Uint32 last_window_size_transmitted;
 			
@@ -161,6 +161,9 @@ namespace utp
 		/// Is all data sent
 		bool allDataSent() const;
 		
+		/// Get the current timeout
+		virtual bt::Uint32 currentTimeout() const {return stats.timeout;}
+		
 	private:
 		void sendSYN();
 		void sendState();
@@ -170,16 +173,6 @@ namespace utp
 		void sendPackets();
 		void sendPacket(bt::Uint32 type,bt::Uint16 p_ack_nr);
 		int sendDataPacket(const QByteArray & packet);
-		
-		/** 
-			Parses the packet, and retrieves pointer to the header, the SelectiveAck extension (if present)
-			@param packet The packet
-			@param hdr The header pointer
-			@param selective_ack The SelectiveAck pointer
-			@return The offset of the data or -1 if there is no data
-		*/
-		int parsePacket(const QByteArray & packet,Header** hdr,SelectiveAck** selective_ack);
-		
 		
 	private:
 		Transmitter* transmitter;

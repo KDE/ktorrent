@@ -36,12 +36,12 @@ namespace utp
 	
 	struct UnackedPacket
 	{
-		UnackedPacket(const QByteArray & data,bt::Uint16 seq_nr,const TimeValue & send_time);
+		UnackedPacket(const QByteArray & data,bt::Uint16 seq_nr,bt::TimeStamp send_time);
 		~UnackedPacket();
 					  
 		QByteArray data;
 		bt::Uint16 seq_nr;
-		TimeValue send_time;
+		bt::TimeStamp send_time;
 	};
 	
 	/**
@@ -57,6 +57,9 @@ namespace utp
 		
 		/// Retransmit a packet
 		virtual void retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr) = 0;
+		
+		/// Get the current timeout
+		virtual bt::Uint32 currentTimeout() const = 0;
 	};
 	
 	/**
@@ -72,7 +75,7 @@ namespace utp
 		void packetReceived(const Header* hdr,const SelectiveAck* sack,Retransmitter* conn);
 		
 		/// Add a packet to the remote window (should include headers)
-		void addPacket(const QByteArray & data,bt::Uint16 seq_nr,const TimeValue & send_time);
+		void addPacket(const QByteArray & data,bt::Uint16 seq_nr,bt::TimeStamp send_time);
 		
 		/// Are we allowed to send
 		bool allowedToSend(bt::Uint32 packet_size) const
@@ -97,7 +100,7 @@ namespace utp
 		bt::Uint32 numUnackedPackets() const {return unacked_packets.count();}
 		
 		/// A timeout occured
-		void timeout();
+		void timeout(Retransmitter* conn);
 		
 		/// Get the window usage factor 
 		double windowUsageFactor() const {return qMax((double)cur_window / max_window, 1.0);}

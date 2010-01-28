@@ -22,6 +22,7 @@
 #include "utpprotocol.h"
 #include "connection.h"
 #include <util/log.h>
+#include <util/functions.h>
 
 using namespace bt;
 
@@ -29,7 +30,7 @@ namespace utp
 {
 	
 	
-	UnackedPacket::UnackedPacket(const QByteArray& data, bt::Uint16 seq_nr, const TimeValue& send_time) 
+	UnackedPacket::UnackedPacket(const QByteArray& data, bt::Uint16 seq_nr, bt::TimeStamp send_time) 
 		: data(data),seq_nr(seq_nr),send_time(send_time)
 	{
 	}
@@ -64,7 +65,7 @@ namespace utp
 		
 		wnd_size = hdr->wnd_size;
 		
-		TimeValue now;
+		bt::TimeStamp now = bt::Now();
 		QList<UnackedPacket*>::iterator i = unacked_packets.begin();
 		while (i != unacked_packets.end())
 		{
@@ -97,7 +98,7 @@ namespace utp
 			checkLostPackets(hdr,sack,conn);
 	}
 
-	void RemoteWindow::addPacket(const QByteArray& data,bt::Uint16 seq_nr,const TimeValue & send_time)
+	void RemoteWindow::addPacket(const QByteArray& data,bt::Uint16 seq_nr,bt::TimeStamp send_time)
 	{
 		cur_window += data.size();
 		unacked_packets.append(new UnackedPacket(data,seq_nr,send_time));
@@ -111,8 +112,9 @@ namespace utp
 		if (last_ack_receive_count >= 3 && first_unacked->seq_nr == hdr->ack_nr + 1)
 		{
 			// packet has been lost
+			Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << first_unacked->seq_nr << " lost" << endl;
 			conn->retransmit(first_unacked->data,first_unacked->seq_nr);
-			first_unacked->send_time = TimeValue();
+			first_unacked->send_time = bt::Now();
 			lost_packets = true;
 			itr++;
 		}
@@ -122,8 +124,9 @@ namespace utp
 		{
 			if (lost(sack,(*itr)->seq_nr - hdr->ack_nr))
 			{
+				Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << (*itr)->seq_nr << " lost" << endl;
 				conn->retransmit((*itr)->data,(*itr)->seq_nr);
-				(*itr)->send_time = TimeValue();
+				(*itr)->send_time = bt::Now();
 				lost_packets = true;
 			}
 			itr++;
@@ -146,9 +149,21 @@ namespace utp
 		return acked >= 3;
 	}
 
-	void RemoteWindow::timeout()
+	void RemoteWindow::timeout(Retransmitter* conn)
 	{
 		max_window = MIN_PACKET_SIZE;
+		bt::TimeStamp now = bt::Now();
+		// When a timeout occurs retransmit packets which are lost longer then 
+		// the max timeout
+		foreach (UnackedPacket* pkt,unacked_packets)
+		{
+			if (now - pkt->send_time > conn->currentTimeout())
+			{
+				conn->retransmit(pkt->data,pkt->seq_nr);
+				pkt->send_time = bt::Now();
+				Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << pkt->seq_nr << " lost" << endl;
+			}
+		}
 	}
 
 	void RemoteWindow::updateWindowSize(double scaled_gain)

@@ -98,10 +98,10 @@ namespace utp
 		Out(SYS_CON|LOG_NOTICE) << "SelectiveAck:                      " << endl;
 		Out(SYS_CON|LOG_NOTICE) << "extension:                         " << sack->extension << endl;
 		Out(SYS_CON|LOG_NOTICE) << "length:                            " << sack->length << endl;
-		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << sack->bitmask[0] << endl;
-		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << sack->bitmask[1] << endl;
-		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << sack->bitmask[2] << endl;
-		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << sack->bitmask[3] << endl;
+		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[0]) << endl;
+		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[1]) << endl;
+		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[2]) << endl;
+		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[3]) << endl;
 		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
 	}
 
@@ -112,9 +112,14 @@ namespace utp
 		timer.update();
 		stats.packets_received++;
 		
-		Header* hdr = 0;
-		SelectiveAck* sack = 0;
-		int data_off = parsePacket(packet,&hdr,&sack);
+		
+		PacketParser parser((const bt::Uint8*)packet.data(),packet.size());
+		if (!parser.parse())
+			return stats.state;
+		
+		const Header* hdr = parser.header();
+		const SelectiveAck* sack = parser.selectiveAck();
+		int data_off = parser.dataOffset();
 		
 		DumpPacket(*hdr,sack);
 		
@@ -210,10 +215,12 @@ namespace utp
 	void Connection::updateRTT(const utp::Header* hdr,bt::Uint32 packet_rtt,bt::Uint32 packet_size)
 	{
 		Q_UNUSED(hdr);
-		int delta = stats.rtt - packet_rtt;
+		int delta = stats.rtt - (int)packet_rtt;
 		stats.rtt_var += (qAbs(delta) - stats.rtt_var) / 4;
-		stats.rtt += (packet_rtt - stats.rtt) / 8;
-		stats.timeout = qMin(stats.rtt + stats.rtt_var * 4, (bt::Uint32)500);
+		stats.rtt += ((int)packet_rtt - stats.rtt) / 8;
+		stats.timeout = qMax(stats.rtt + stats.rtt_var * 4, 500);
+		
+		//Out(SYS_GEN|LOG_DEBUG) << "RTT: " << packet_rtt << " " << stats.rtt_var << " " << stats.rtt << " " << stats.timeout << " " << delta << endl;
 		stats.bytes_sent += packet_size;
 	}
 
@@ -226,7 +233,7 @@ namespace utp
 		bt::Uint32 extension_length = 0;
 		bt::Uint32 sack_bits = local_wnd->selectiveAckBits();
 		if (sack_bits > 0)
-			extension_length += 2 + qMin(sack_bits / 8,(bt::Uint32)4);
+			extension_length += 2 + qMax(sack_bits / 8,(bt::Uint32)4);
 		
 		QByteArray ba(sizeof(Header) + extension_length,0);
 		Header* hdr = (Header*)ba.data();
@@ -242,16 +249,19 @@ namespace utp
 		
 		if (extension_length > 0)
 		{
-			SelectiveAck* sack = (SelectiveAck*)(ba.data() + sizeof(Header));
-			sack->extension = 0;
-			sack->length = extension_length - 2;
-			local_wnd->fillSelectiveAck(sack);
+			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + sizeof(Header));
+			SelectiveAck sack;
+			sack.extension = ptr[0] = 0;
+			sack.length = ptr[1] = extension_length - 2;
+			sack.bitmask = ptr + 2;
+			local_wnd->fillSelectiveAck(&sack);
 		}
 		
 		if (!transmitter->sendTo((const bt::Uint8*)ba.data(),ba.size(),stats.remote))
 			throw TransmissionError(__FILE__,__LINE__);
 		
 		stats.packets_sent++;
+		timer.update();
 	}
 
 
@@ -317,32 +327,6 @@ namespace utp
 		Out(SYS_GEN|LOG_DEBUG) << "scaled_gain " << scaled_gain << endl;
 		remote_wnd->updateWindowSize(scaled_gain);
 	}
-		
-	int Connection::parsePacket(const QByteArray& packet, Header** hdr, SelectiveAck** selective_ack)
-	{
-		*hdr = (Header*)packet.data();
-		*selective_ack = 0;
-		int data_off = sizeof(Header);
-		if ((*hdr)->extension == 0)
-			return data_off;
-		
-		// go over all header extensions to increase the data offset and watch out for selective acks
-		int ext_id = (*hdr)->extension;
-		UnknownExtension* ptr = 0;
-		while (data_off < packet.size())
-		{
-			ptr = (UnknownExtension*)packet.data() + data_off;
-			if (ext_id == SELECTIVE_ACK_ID)
-				*selective_ack = (SelectiveAck*)ptr;
-				
-			data_off += 2 + ptr->length;
-			ext_id = ptr->extension;
-			if (ptr->extension == 0)
-				break;
-		}
-		
-		return data_off;
-	}
 
 	int Connection::send(const bt::Uint8* data, Uint32 len)
 	{
@@ -369,8 +353,6 @@ namespace utp
 			output_buffer.read((bt::Uint8*)packet.data(),to_read);
 			sendDataPacket(packet);
 		}
-		
-		timer.update();
 	}
 
 	void Connection::sendStateOrData()
@@ -405,10 +387,12 @@ namespace utp
 		
 		if (extension_length > 0)
 		{
-			SelectiveAck* sack = (SelectiveAck*)(ba.data() + sizeof(Header));
-			sack->extension = 0;
-			sack->length = extension_length - 2;
-			local_wnd->fillSelectiveAck(sack);
+			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + sizeof(Header));
+			SelectiveAck sack;
+			sack.extension = ptr[0] = 0;
+			sack.length = ptr[1] = extension_length - 2;
+			sack.bitmask = ptr + 2;
+			local_wnd->fillSelectiveAck(&sack);
 		}
 		
 		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),to_send);
@@ -417,7 +401,7 @@ namespace utp
 		
 		stats.packets_sent++;
 		stats.seq_nr++;
-		remote_wnd->addPacket(packet,stats.seq_nr,now);
+		remote_wnd->addPacket(packet,stats.seq_nr,bt::Now());
 		timer.update();
 		return to_send;
 	}
@@ -445,10 +429,12 @@ namespace utp
 		
 		if (extension_length > 0)
 		{
-			SelectiveAck* sack = (SelectiveAck*)(ba.data() + sizeof(Header));
-			sack->extension = 0;
-			sack->length = extension_length - 2;
-			local_wnd->fillSelectiveAck(sack);
+			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + sizeof(Header));
+			SelectiveAck sack;
+			sack.extension = ptr[0] = 0;
+			sack.length = ptr[1] = extension_length - 2;
+			sack.bitmask = ptr + 2;
+			local_wnd->fillSelectiveAck(&sack);
 		}
 		
 		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),packet.size());
@@ -512,8 +498,12 @@ namespace utp
 		QMutexLocker lock(&mutex);
 		if (timer.getElapsedSinceUpdate() > stats.timeout)
 		{
+			Out(SYS_GEN|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " timeout" << endl;
 			stats.packet_size = MIN_PACKET_SIZE;
-			remote_wnd->timeout();
+			stats.timeout *= 2;
+			if (stats.timeout >= MAX_TIMEOUT) // timeout should not be to big
+				stats.timeout = MAX_TIMEOUT;
+			remote_wnd->timeout(this);
 			timer.update();
 		}
 	}
