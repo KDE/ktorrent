@@ -782,7 +782,7 @@ namespace kt
 			return;
 		
 		foreach (bt::TorrentInterface* tc,stalled)
-			Out(SYS_GEN | LOG_NOTICE) << "The torrent " << tc->getStats().torrent_name << " has stalled longer then " << min_stall_time << " minutes, decreasing its priority" << endl;
+			Out(SYS_GEN | LOG_NOTICE) << "The torrent " << tc->getStats().torrent_name << " has stalled longer than " << min_stall_time << " minutes, decreasing its priority" << endl;
 	
 		downloads.clear();
 		downloads += newlist;
