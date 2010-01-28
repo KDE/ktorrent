@@ -50,7 +50,7 @@ namespace utp
 	{
 		if (conn)
 		{
-			
+			conn->close();
 		}
 	}
 

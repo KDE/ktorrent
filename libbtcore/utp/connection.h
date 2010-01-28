@@ -126,7 +126,7 @@ namespace utp
 		int send(const bt::Uint8* data,bt::Uint32 len);
 		
 		/// Read available data from local window, returns the amount of bytes read
-		bt::Uint32 recv(bt::Uint8* buf,bt::Uint32 max_len);
+		int recv(bt::Uint8* buf,bt::Uint32 max_len);
 		
 		/// Get the connection state
 		ConnectionState connectionState() const {return stats.state;}
@@ -172,6 +172,7 @@ namespace utp
 		void sendStateOrData();
 		void sendPackets();
 		void sendPacket(bt::Uint32 type,bt::Uint16 p_ack_nr);
+		void checkIfClosed();
 		int sendDataPacket(const QByteArray & packet);
 		
 	private:
@@ -185,6 +186,7 @@ namespace utp
 		QWaitCondition connected;
 		QWaitCondition data_ready;
 		Stats stats;
+		bool fin_sent;
 	};
 }
 

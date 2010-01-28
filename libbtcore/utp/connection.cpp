@@ -40,6 +40,7 @@ namespace utp
 		stats.eof_seq_nr = -1;
 		local_wnd = new LocalWindow();
 		remote_wnd = new RemoteWindow();
+		fin_sent = false;
 		stats.rtt = 100;
 		stats.rtt_var = 0;
 		stats.timeout = 1000;
@@ -180,6 +181,8 @@ namespace utp
 					stats.eof_seq_nr = hdr->seq_nr;
 					// other side now has closed the connection
 					stats.state = CS_FINISHED; // state becomes finished
+					sendPackets();
+					checkIfClosed();
 				}
 				else
 				{
@@ -188,22 +191,41 @@ namespace utp
 				}
 				break;
 			case CS_FINISHED:
-				if (hdr->type == ST_STATE)
+				if (hdr->type == ST_DATA)
 				{
-					// Check if we need to go to the closed state
-					// We can do this if all our packets have been acked and the local window
-					// has been fully read
-					if (remote_wnd->allPacketsAcked() && local_wnd->isEmpty())
-					{
-						stats.state = CS_CLOSED;
+					// push data into local window
+					int s = packet.size() - data_off;
+					local_wnd->packetReceived(hdr,(const bt::Uint8*)packet.data() + data_off,s);
+					if (local_wnd->fill() > 0)
 						data_ready.wakeAll();
+					
+					// send back an ACK 
+					sendStateOrData();
+					if (stats.state == CS_FINISHED && !fin_sent && output_buffer.fill() == 0)
+					{
+						sendFIN();
+						fin_sent = true;
 					}
+					checkIfClosed();
+				}
+				else if (hdr->type == ST_STATE)
+				{
+					// try to send more data packets
+					sendPackets();
+					checkIfClosed();
+				}
+				else if (hdr->type == ST_FIN)
+				{
+					stats.eof_seq_nr = hdr->seq_nr;
+					sendPackets();
+					checkIfClosed();
 				}
 				else // TODO: make sure we handle packet loss and out of order packets
 				{
 					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
+				break;
 			case CS_CLOSED:
 				break;
 		}
@@ -211,6 +233,18 @@ namespace utp
 		return stats.state;
 	}
 	
+	void Connection::checkIfClosed()
+	{
+		// Check if we need to go to the closed state
+		// We can do this if all our packets have been acked and the local window
+		// has been fully read
+		if (remote_wnd->allPacketsAcked() && local_wnd->isEmpty())
+		{
+			stats.state = CS_CLOSED;
+			Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " closed " << endl;
+			data_ready.wakeAll();
+		}
+	}
 	
 	void Connection::updateRTT(const utp::Header* hdr,bt::Uint32 packet_rtt,bt::Uint32 packet_size)
 	{
@@ -353,6 +387,12 @@ namespace utp
 			output_buffer.read((bt::Uint8*)packet.data(),to_read);
 			sendDataPacket(packet);
 		}
+		
+		if (stats.state == CS_FINISHED && !fin_sent && output_buffer.fill() == 0)
+		{
+			sendFIN();
+			fin_sent = true;
+		}
 	}
 
 	void Connection::sendStateOrData()
@@ -452,9 +492,15 @@ namespace utp
 		return local_wnd->fill();
 	}
 
-	Uint32 Connection::recv(Uint8* buf, Uint32 max_len)
+	int Connection::recv(Uint8* buf, Uint32 max_len)
 	{
 		QMutexLocker lock(&mutex);
+		if (stats.state == CS_FINISHED)
+			checkIfClosed();
+		
+		if (local_wnd->fill() == 0 && stats.state == CS_CLOSED)
+			return -1;
+		
 		bt::Uint32 ret = local_wnd->read(buf,max_len);
 		// Update the window if there is room again
 		if (stats.last_window_size_transmitted == 0 && local_wnd->availableSpace() > 0)
@@ -490,6 +536,8 @@ namespace utp
 		QMutexLocker lock(&mutex);
 		if (stats.state == CS_CONNECTED)
 		{
+			stats.state = CS_FINISHED;
+			sendPackets();
 		}
 	}
 

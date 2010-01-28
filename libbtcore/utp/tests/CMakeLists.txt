@@ -25,3 +25,7 @@ target_link_libraries( transmittest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} bt
 set(packetlosstest_SRCS packetlosstest.cpp)
 kde4_add_unit_test(packetlosstest TESTNAME packetlosstest ${packetlosstest_SRCS})
 target_link_libraries( packetlosstest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore)
+
+set(fintest_SRCS fintest.cpp)
+kde4_add_unit_test(fintest TESTNAME fintest ${fintest_SRCS})
+target_link_libraries( fintest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore)
