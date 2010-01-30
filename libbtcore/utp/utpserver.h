@@ -28,11 +28,10 @@
 #include <btcore_export.h>
 #include "connection.h"
 
-
-
 namespace utp
 {
 	class UTPServerThread;
+	class UTPSocket;
 
 	class BTCORE_EXPORT UTPServer : public bt::ServerInterface,public Transmitter
 	{
@@ -49,11 +48,14 @@ namespace utp
 		/// Send a packet to some host
 		virtual bool sendTo(const bt::Uint8* data,const bt::Uint32 size,const net::Address & addr);
 		
-		/// Called by Connection when it needs to be killed
-		void kill(Connection* conn);
-		
 		/// Setup a connection to a remote address
 		Connection* connectTo(const net::Address & addr);
+		
+		/// Attach a socket to a Connection
+		void attach(UTPSocket* socket,Connection* conn);
+		
+		/// Detach a socket to a Connection
+		void detach(UTPSocket* socket,Connection* conn);
 		
 		/// Start the UTP server
 		void start();
@@ -82,8 +84,10 @@ namespace utp
 		bool running;
 		bt::PtrMap<quint16,Connection> connections;
 		QList<Connection*> dead_connections;
+		bt::PtrMap<Connection*,UTPSocket> alive_connections;
 		UTPServerThread* utp_thread;
 		QMutex mutex;
+		
 		
 		typedef bt::PtrMap<quint16,Connection>::iterator ConItr;
 	};

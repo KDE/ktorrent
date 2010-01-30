@@ -26,6 +26,7 @@
 #include <util/constants.h>
 #include "utpprotocol.h"
 #include "utpserverthread.h"
+#include "utpsocket.h"
 
 #ifdef Q_WS_WIN
 #include <util/win32.h>
@@ -38,12 +39,12 @@ namespace utp
 	UTPServer::UTPServer(QObject* parent) : ServerInterface(parent),sock(0),running(false),utp_thread(0),mutex(QMutex::Recursive)
 	{
 		qsrand(time(0));
-		connections.setAutoDelete(true);
 	}
 
 	UTPServer::~UTPServer()
 	{
-		stop();
+		if (running)
+			stop();
 	}
 	
 	
@@ -200,7 +201,9 @@ namespace utp
 	{
 		Connection* c = find(hdr->connection_id);
 		if (c)
-			kill(c);
+		{
+			c->reset();
+		}
 	}
 
 	Connection* UTPServer::find(quint16 conn_id)
@@ -208,20 +211,40 @@ namespace utp
 		return connections.find(conn_id);
 	}
 
-	void UTPServer::kill(Connection* conn)
-	{
-		QMutexLocker lock(&mutex);
-		dead_connections.append(conn);
-	}
-	
 	void UTPServer::clearDeadConnections()
 	{
 		QMutexLocker lock(&mutex);
-		foreach (utp::Connection* conn,dead_connections)
+		QList<Connection*>::iterator i = dead_connections.begin();
+		while (i != dead_connections.end())
 		{
-			connections.erase(conn->receiveConnectionID());
+			Connection* conn = *i;
+			if (conn->connectionState() == CS_CLOSED)
+			{
+				connections.erase(conn->receiveConnectionID());
+				i = dead_connections.erase(i);
+			}
+			else
+				i++;
 		}
-		dead_connections.clear();
+	}
+
+	void UTPServer::attach(UTPSocket* socket, Connection* conn)
+	{
+		QMutexLocker lock(&mutex);
+		alive_connections.insert(conn,socket);
+	}
+
+	void UTPServer::detach(UTPSocket* socket, Connection* conn)
+	{
+		QMutexLocker lock(&mutex);
+		UTPSocket* sock = alive_connections.find(conn);
+		if (sock == socket)
+		{
+			// given the fact that the socket is gone, we can close it
+			conn->close();
+			alive_connections.erase(conn);
+			dead_connections.append(conn);
+		}
 	}
 
 	void UTPServer::stop()
@@ -232,6 +255,31 @@ namespace utp
 			utp_thread->wait();
 			delete utp_thread;
 			utp_thread = 0;
+		}
+	
+		// Cleanup all connections
+		QList<UTPSocket*> sockets;
+		bt::PtrMap<Connection*,UTPSocket>::iterator i = alive_connections.begin();
+		while (i != alive_connections.end())
+		{
+			sockets.append(i->second);
+			i++;
+		}
+		
+		foreach (UTPSocket* s,sockets)
+			s->reset();
+		
+		alive_connections.clear();
+		connections.clear();
+		qDeleteAll(dead_connections);
+		dead_connections.clear();
+		
+		// Close the socket
+		if (sock)
+		{
+			sock->close();
+			delete sock;
+			sock = 0;
 		}
 	}
 	

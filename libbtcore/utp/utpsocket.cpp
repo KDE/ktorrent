@@ -31,7 +31,8 @@ namespace utp
 	
 	UTPSocket::UTPSocket(Connection* conn) : conn(conn),blocking(true)
 	{
-
+		UTPServer & srv = bt::Globals::instance().getUTPServer();
+		srv.attach(this,conn);
 	}
 
 	UTPSocket::~UTPSocket()
@@ -62,13 +63,10 @@ namespace utp
 	bool UTPSocket::connectTo(const net::Address& addr)
 	{
 		UTPServer & srv = bt::Globals::instance().getUTPServer();
-		if (conn)
-		{
-			srv.kill(conn);
-			conn = 0;
-		}
+		reset();
 		
 		conn = srv.connectTo(addr);
+		srv.attach(this,conn);
 		if (blocking)
 			return conn->waitUntilConnected();
 		
@@ -108,7 +106,7 @@ namespace utp
 			if (conn->waitForData())
 				return conn->recv(buf,max_len);
 			else
-				return -1; // connection should be closed now
+				return 0; // connection should be closed now
 		}
 		else
 			return conn->recv(buf,max_len);
@@ -119,7 +117,7 @@ namespace utp
 		if (conn)
 		{
 			UTPServer & srv = bt::Globals::instance().getUTPServer();
-			srv.kill(conn);
+			srv.detach(this,conn);
 			conn = 0;
 		}
 	}

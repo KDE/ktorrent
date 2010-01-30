@@ -111,6 +111,9 @@ namespace utp
 		bt::Uint32 currentWindow() const {return cur_window;}
 		bt::Uint32 maxWindow() const {return max_window;}
 		
+		/// Clear the window
+		void clear();
+		
 	private:
 		void checkLostPackets(const Header* hdr,const SelectiveAck* sack,Retransmitter* conn);
 		bool lost(const SelectiveAck* sack,bt::Uint16 seq_nr);

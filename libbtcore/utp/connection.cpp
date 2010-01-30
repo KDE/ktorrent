@@ -140,6 +140,7 @@ namespace utp
 				}
 				else
 				{
+					sendReset();
 					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
@@ -155,6 +156,7 @@ namespace utp
 				}
 				else
 				{
+					sendReset();
 					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
@@ -186,6 +188,7 @@ namespace utp
 				}
 				else
 				{
+					sendReset();
 					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
@@ -193,11 +196,14 @@ namespace utp
 			case CS_FINISHED:
 				if (hdr->type == ST_DATA)
 				{
-					// push data into local window
-					int s = packet.size() - data_off;
-					local_wnd->packetReceived(hdr,(const bt::Uint8*)packet.data() + data_off,s);
-					if (local_wnd->fill() > 0)
-						data_ready.wakeAll();
+					if (hdr->seq_nr <= stats.eof_seq_nr)
+					{
+						// push data into local window
+						int s = packet.size() - data_off;
+						local_wnd->packetReceived(hdr,(const bt::Uint8*)packet.data() + data_off,s);
+						if (local_wnd->fill() > 0)
+							data_ready.wakeAll();
+					}
 					
 					// send back an ACK 
 					sendStateOrData();
@@ -220,8 +226,9 @@ namespace utp
 					sendPackets();
 					checkIfClosed();
 				}
-				else // TODO: make sure we handle packet loss and out of order packets
+				else
 				{
+					sendReset();
 					stats.state = CS_CLOSED;
 					data_ready.wakeAll();
 				}
@@ -540,19 +547,49 @@ namespace utp
 			sendPackets();
 		}
 	}
+	
+	
+	void Connection::reset()
+	{
+		QMutexLocker lock(&mutex);
+		if (stats.state != CS_CLOSED)
+		{
+			sendReset();
+			stats.state = CS_CLOSED;
+			remote_wnd->clear();
+			data_ready.wakeAll();
+		}
+	}
 
 	void Connection::checkTimeout()
 	{
 		QMutexLocker lock(&mutex);
-		if (timer.getElapsedSinceUpdate() > stats.timeout)
+		switch (stats.state)
 		{
-			Out(SYS_GEN|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " timeout" << endl;
-			stats.packet_size = MIN_PACKET_SIZE;
-			stats.timeout *= 2;
-			if (stats.timeout >= MAX_TIMEOUT) // timeout should not be to big
-				stats.timeout = MAX_TIMEOUT;
-			remote_wnd->timeout(this);
-			timer.update();
+			case CS_SYN_SENT:
+				if (timer.getElapsedSinceUpdate() > CONNECT_TIMEOUT)
+				{
+					// No answer to SYN, so just close the connection
+					stats.state = CS_CLOSED;
+					connected.wakeAll();
+				}
+				break;
+			case CS_FINISHED:
+			case CS_CONNECTED:
+				if (timer.getElapsedSinceUpdate() > stats.timeout)
+				{
+					Out(SYS_GEN|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " timeout" << endl;
+					stats.packet_size = MIN_PACKET_SIZE;
+					stats.timeout *= 2;
+					if (stats.timeout >= MAX_TIMEOUT) // timeout should not be to big
+						stats.timeout = MAX_TIMEOUT;
+					remote_wnd->timeout(this);
+					timer.update();
+				}
+				break;
+			case CS_CLOSED:
+			case CS_IDLE:
+				break;
 		}
 	}
 

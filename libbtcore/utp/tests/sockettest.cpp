@@ -22,11 +22,12 @@
 #include <QObject>
 #include <util/log.h>
 #include <utp/utpserver.h>
-#include <utp/connection.h>
+#include <utp/utpsocket.h>
+#include <torrent/globals.h>
 
 using namespace utp;
 
-class ConnectTest : public QEventLoop
+class SocketTest : public QEventLoop
 {
 	Q_OBJECT
 public:
@@ -34,7 +35,7 @@ public:
 public slots:
 	void accepted(Connection* conn)
 	{
-		accepted_conn = conn;
+		incoming = new UTPSocket(conn);
 		exit();
 	}
 	
@@ -43,51 +44,88 @@ public slots:
 		exit();
 	}
 	
-	void startConnect()
-	{
-		net::Address addr("127.0.0.1",port);
-		srv.connectTo(addr);
-		QTimer::singleShot(5000,this,SLOT(endEventLoop())); // use a 5 second timeout
-	}
-	
 private slots:
 	void initTestCase()
 	{
-		bt::InitLog("connecttest.log");
+		bt::InitLog("sockettest.log");
+		incoming = outgoing = 0;
 		
-		accepted_conn = 0;
 		port = 50000;
 		while (port < 60000)
 		{
-			if (!srv.changePort(port))
-				port++;
-			else
+			if (bt::Globals::instance().initUTPServer(port))
 				break;
+			else
+				port++;
 		}
-		
-		srv.start();
-		QVERIFY(port < 60000);
 	}
 	
 	void cleanupTestCase()
 	{
-		srv.stop();
+		bt::Globals::instance().shutdownUTPServer();
+		delete incoming;
+		delete outgoing;
 	}
 	
 	void testConnect()
 	{
+		UTPServer & srv = bt::Globals::instance().getUTPServer();
+		net::Address addr("127.0.0.1",port);
 		connect(&srv,SIGNAL(accepted(Connection*)),this,SLOT(accepted(Connection*)),Qt::QueuedConnection);
-		QTimer::singleShot(0,this,SLOT(startConnect()));
+		outgoing = new UTPSocket();
+		outgoing->connectTo(addr);
+		QTimer::singleShot(5000,this,SLOT(endEventLoop())); // use a 5 second timeout
 		exec();
-		QVERIFY(accepted_conn != 0);
+		QVERIFY(incoming != 0);
+		QVERIFY(incoming->connectSuccesFull());
+		QVERIFY(outgoing->connectSuccesFull());
+	}
+	
+	void testSend()
+	{
+		outgoing->setBlocking(true);
+		incoming->setBlocking(true);
+		char test[] = "TEST";
+		
+		UTPSocket* a = incoming;
+		UTPSocket* b = outgoing;
+		for (int i = 0;i < 10;i++)
+		{
+			int ret = a->send((const bt::Uint8*)test,strlen(test));
+			QVERIFY(ret == strlen(test));
+			
+			char tmp[20];
+			memset(tmp,0,20);
+			ret = b->recv((bt::Uint8*)tmp,20);
+			QVERIFY(ret == 4);
+			QVERIFY(memcmp(tmp,test,ret) == 0);
+			std::swap(a,b);
+		}
+	}
+	
+	void testClose()
+	{
+		outgoing->setBlocking(true);
+		incoming->close();
+		bt::Uint8 tmp[20];
+		int ret = outgoing->recv(tmp,20);
+		QVERIFY(ret == 0);
+	}
+	
+	void testConnectionTimeout()
+	{
+		UTPSocket sock;
+		net::Address addr("127.0.0.1",port + 1);
+		sock.setBlocking(true);
+		QVERIFY(sock.connectTo(addr) == false);
 	}
 	
 private:
-	utp::UTPServer srv;
 	int port;
-	utp::Connection* accepted_conn;
+	utp::UTPSocket* incoming;
+	utp::UTPSocket* outgoing;
 };
 
-QTEST_MAIN(ConnectTest)
+QTEST_MAIN(SocketTest)
 
-#include "connecttest.moc"
+#include "sockettest.moc"

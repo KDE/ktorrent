@@ -134,9 +134,6 @@ namespace utp
 		/// Get the type of connection
 		Type connectionType() const {return stats.type;}
 		
-		/// Send a reset packet
-		void sendReset();
-		
 		/// Get the number of bytes available
 		bt::Uint32 bytesAvailable() const;
 		
@@ -148,6 +145,9 @@ namespace utp
 		
 		/// Close the socket
 		void close();
+		
+		/// Reset the connection
+		void reset();
 		
 		/// Update the RTT time
 		virtual void updateRTT(const Header* hdr,bt::Uint32 packet_rtt,bt::Uint32 packet_size);
@@ -168,6 +168,7 @@ namespace utp
 		void sendSYN();
 		void sendState();
 		void sendFIN();
+		void sendReset();
 		void updateDelayMeasurement(const Header* hdr);
 		void sendStateOrData();
 		void sendPackets();
@@ -187,6 +188,8 @@ namespace utp
 		QWaitCondition data_ready;
 		Stats stats;
 		bool fin_sent;
+		
+		friend class UTPServer;
 	};
 }
 
