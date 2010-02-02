@@ -45,6 +45,10 @@
 
 #include "limits.h"
 
+#ifndef NAME_MAX
+#define NAME_MAX 255
+#endif
+
 #ifdef HAVE_XFS_XFS_H
 
 #if !defined(HAVE___S64) || !defined(HAVE___U64)

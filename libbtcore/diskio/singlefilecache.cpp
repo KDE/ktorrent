@@ -211,10 +211,8 @@ namespace bt
 	void SingleFileCache::create()
 	{
 		// check for a to long path name
-		int lim = NAME_MAX > PATH_MAX ? PATH_MAX : NAME_MAX;
-		QByteArray path = QFile::encodeName(output_file);
-		if (path.length() > lim)
-			output_file = ShortenFileName(output_file,lim);
+		if (FileNameToLong(output_file))
+			output_file = ShortenFileName(output_file);
 			
 		if (!bt::Exists(output_file))
 			bt::Touch(output_file);
