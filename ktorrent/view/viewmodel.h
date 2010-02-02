@@ -143,7 +143,9 @@ namespace kt
 			SHARE_RATIO,
 			DOWNLOAD_TIME,
 			SEED_TIME,
-			DOWNLOAD_LOCATION	
+			DOWNLOAD_LOCATION,
+			TIME_ADDED,
+			_NUMBER_OF_COLUMNS
 		};
 		
 		struct Item
@@ -166,6 +168,7 @@ namespace kt
 			bt::Uint32 runtime_ul;
 			int eta;
 			bool hidden;
+			QDateTime time_added;
 			
 			Item(bt::TorrentInterface* tc);
 

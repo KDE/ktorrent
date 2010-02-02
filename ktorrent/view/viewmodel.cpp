@@ -63,6 +63,7 @@ namespace kt
 		runtime_dl = tc->getRunningTimeDL();
 		runtime_ul = tc->getRunningTimeUL() - tc->getRunningTimeDL();
 		hidden = false;
+		time_added = s.time_added;
 	}
 			
 	
@@ -222,6 +223,7 @@ namespace kt
 			case 12: return DurationToString(runtime_dl);
 			case 13: return DurationToString(runtime_ul);
 			case 14: return tc->getStats().output_path;
+			case 15: return KGlobal::locale()->formatDateTime(time_added);
 			default: return QVariant();
 		}
 	}
@@ -251,6 +253,7 @@ namespace kt
 			case 12: return runtime_dl < other->runtime_dl;
 			case 13: return runtime_ul < other->runtime_ul;
 			case 14: return tc->getStats().output_path < other->tc->getStats().output_path;
+			case 15: return time_added < other->time_added;
 			default: return false;
 		}
 	}
@@ -407,7 +410,7 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return 15;
+			return _NUMBER_OF_COLUMNS;
 	}
 	
 	bool ViewModel::defaultColumnForUpload(int column)
@@ -445,6 +448,7 @@ namespace kt
 				case 12: return i18n("Time Downloaded");
 				case 13: return i18n("Time Seeded");
 				case 14: return i18n("Location");
+				case 15: return i18n("Added");
 				default: return QVariant();
 			}
 		}
@@ -466,6 +470,7 @@ namespace kt
 				case 12: return i18n("How long we have been downloading the torrent");
 				case 13: return i18n("How long we have been seeding the torrent");
 				case 14: return i18n("The location of the torrent's data on disk");
+				case 15: return i18n("When this torrent was added");
 				default: return QVariant();
 			}
 		}

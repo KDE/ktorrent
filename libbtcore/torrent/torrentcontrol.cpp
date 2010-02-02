@@ -26,6 +26,7 @@
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <qtextstream.h>
+#include <qdatetime.h>
 #include <util/log.h>
 #include <util/error.h>
 #include <util/bitset.h>
@@ -571,6 +572,7 @@ namespace bt
 		}
 		
 		initInternal(qman,tmpdir,ddir);
+
 		// copy data into torrent file
 		QString tor_copy = tordir + "torrent";
 		QFile fptr(tor_copy);
@@ -633,6 +635,9 @@ namespace bt
 			istats.custom_output_name = true;
 		}
 		
+		if (stats.time_added.isNull())
+		  stats.time_added = QDateTime::currentDateTime();
+
 		// load outputdir if outputdir is null
 		if (outputdir.isNull() || outputdir.length() == 0)
 			loadOutputDir();
@@ -1045,6 +1050,9 @@ namespace bt
 			st.write("USER_MODIFIED_NAME",user_modified_name);
 		st.write("DISPLAY_NAME",display_name);
 		st.write("URL",url.prettyUrl());
+
+		st.write("TIME_ADDED", QString("%1").arg(stats.time_added.toTime_t()));
+
 		st.writeSync();
 	}
 
@@ -1125,6 +1133,11 @@ namespace bt
 		
 		if (!url.isValid())
 			url = KUrl(st.readString("URL"));
+
+		if (st.hasKey("TIME_ADDED"))
+			stats.time_added.setTime_t(st.readULong("TIME_ADDED"));
+		else
+			stats.time_added = QDateTime::currentDateTime();
 	}
 
 	void TorrentControl::loadOutputDir()
@@ -1192,8 +1205,6 @@ namespace bt
 		stats.chunk_size = tor ? tor->getChunkSize() : 0;
 		stats.num_chunks_left = cman ? cman->chunksLeft() : 0;
 		stats.total_bytes_to_download = (tor && cman) ? tor->getTotalSize() - cman->bytesExcluded() : 0;
-		
-		
 		
 		if (stats.bytes_downloaded >= istats.prev_bytes_dl)
 			stats.session_bytes_downloaded = stats.bytes_downloaded - istats.prev_bytes_dl;

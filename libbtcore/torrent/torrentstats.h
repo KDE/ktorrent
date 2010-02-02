@@ -24,6 +24,7 @@
 #include <QString>
 #include <util/constants.h>
 #include <btcore_export.h>
+#include <qdatetime.h>
 
 #if defined ERROR
 #undef ERROR
@@ -133,6 +134,8 @@ namespace bt
 		bool paused;
 		/// Error message for the user
 		QString error_msg;
+		/// QDateTime when the torrent was added
+		QDateTime time_added;
 		
 		TorrentStats();
 		
