@@ -14,13 +14,8 @@ Changes in 4.0beta2:
 - Fix crash caused by not checking for 0 pointer (220442)
 - Add search line in QM widget which highlights and scrolls to found items (220428)
 - Moving multiple items in QM widget is now possible (220428)
-- Fix SHA1 hash generation crashes once and for all (222753)
-- Check for invalid addresses in reverse resolver, fixes a crash
 - Prevent trackers from sending back to much data (220684)
 - Fix typo in in log message of QM (223888)
-- Fix sorting bug in choking algorithm
-- Fix crash caused by handling exceptions badly (224097)
-- Fix bug causing global max share ratio and seed time to override group policy (223745)
 - Added patch witch adds an additional column to a View showing the date and time a torrent was added
 - Fix compilation not working on solaris due to missing NAME_MAX define (222598)
 
@@ -38,6 +33,13 @@ Changes in 4.0beta1:
 - Fix crash due to uncaught warning 
 - Expand open url dialog, it is now possible to open silently and to select the group
 - Fix crash when loading magnets file (218227)
+
+Changes in 3.3.4:
+- Fix SHA1 hash generation crashes once and for all (222753
+- Check for invalid addresses in reverse resolver, fixes a crash
+- Fix sorting bug in choking algorithm
+- Fix crash caused by handling exceptions badly (224097)
+- Fix bug causing global max share ratio and seed time to override group policy (223745)
 
 Changes in 3.3.3:
 - Fix crash caused by 0 pointer in Downloader::saveDownloads (219019)
