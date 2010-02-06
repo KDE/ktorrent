@@ -2,7 +2,8 @@ Changes in 3.3.4:
 - Fix SHA1 hash generation crashes once and for all (222753)
 - Check for invalid addresses in reverse resolver, fixes a crash
 - Fix sorting bug in choking algorithm
-- Fix crash caused by handling exceptions badly
+- Fix crash caused by handling exceptions badly (224097)
+- Fix bug causing global max share ratio and seed time to override group policy (223745)
 
 Changes in 3.3.3:
 - Fix crash caused by 0 pointer in Downloader::saveDownloads (219019)

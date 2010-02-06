@@ -194,6 +194,11 @@ namespace kt
 	{
 		bool start_torrent = false;
 		bool skip_check = false;
+		
+		if (Settings::maxRatio() > 0)
+			tc->setMaxShareRatio(Settings::maxRatio());
+		if (Settings::maxSeedTime() > 0)
+			tc->setMaxSeedTime(Settings::maxSeedTime());
 
 		if (!silently)
 		{
@@ -270,11 +275,6 @@ namespace kt
 		}
 			
 		tc->setPreallocateDiskSpace(true);
-
-		if (Settings::maxRatio() > 0)
-			tc->setMaxShareRatio(Settings::maxRatio());
-		if (Settings::maxSeedTime() > 0)
-			tc->setMaxSeedTime(Settings::maxSeedTime());
 		
 		torrentAdded(tc);
 		qman->torrentAdded(tc,start_torrent);
