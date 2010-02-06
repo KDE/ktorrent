@@ -1,6 +1,7 @@
 Changes in 3.3.4:
 - Fix SHA1 hash generation crashes once and for all (222753)
 - Check for invalid addresses in reverse resolver, fixes a crash
+- Fix sorting bug in choking algorithm
 
 Changes in 3.3.3:
 - Fix crash caused by 0 pointer in Downloader::saveDownloads (219019)

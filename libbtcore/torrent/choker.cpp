@@ -25,22 +25,6 @@
 namespace bt
 {
 	
-	PeerPtrList::PeerPtrList(PeerCompareFunc pcmp) : pcmp(pcmp)
-	{}
-		
-	PeerPtrList::~PeerPtrList()
-	{}
-		
-	int PeerPtrList::compareItems(Peer *a, Peer* b)
-	{
-		if (pcmp)
-			return pcmp(a,b);
-		else
-			return CompareVal(a,b);
-	}
-	
-	////////////////////////////////////////////
-	
 	ChokeAlgorithm::ChokeAlgorithm() : opt_unchoked_peer_id(0)
 	{
 	}
