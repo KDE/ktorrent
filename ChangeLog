@@ -1,3 +1,6 @@
+Changes in 3.3.4:
+- Fix SHA1 hash generation crashes once and for all (222753)
+
 Changes in 3.3.3:
 - Fix crash caused by 0 pointer in Downloader::saveDownloads (219019)
 - Don't remove torrent when jobs are running, wait until they are done, this fixes a crash (218853)

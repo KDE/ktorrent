@@ -64,7 +64,8 @@ namespace bt
 	{
 		if (hash)
 		{
-			hash->update(QCA::MemoryRegion(QByteArray((const char*)data,len)));
+			QByteArray data = QByteArray::fromRawData((const char*)data,len);
+			hash->update(data);
 			return SHA1Hash((const Uint8*)hash->final().constData());
 		}
 		
@@ -235,7 +236,8 @@ namespace bt
 	{
 		if (hash)
 		{
-			hash->update(QCA::MemoryRegion(QByteArray((const char*)data,len)));
+			QByteArray data = QByteArray::fromRawData((const char*)data,len);
+			hash->update(data);
 			return;
 		}
 		
