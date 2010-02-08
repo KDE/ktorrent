@@ -454,7 +454,7 @@ namespace kt
 		else
 		{
 			QString path = m_downloadLocation->url().path(KUrl::AddTrailingSlash) + tc->getDisplayName();
-			if (bt::Exists(path))
+			if (!bt::Exists(path))
 				m_existing_found->setText(i18n("Existing file: <b>No</b>"));
 			else
 				m_existing_found->setText(i18n("Existing file: <b>Yes</b>"));

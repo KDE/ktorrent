@@ -413,8 +413,6 @@ namespace kt
 		queue_suspend_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_P));
 		queue_suspend_action->setGlobalShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_P));
 		connect(queue_suspend_action,SIGNAL(toggled(bool)),this,SLOT(suspendQueue(bool)));
-		queue_suspend_action->setCheckedState(KGuiItem(i18n("Resume KTorrent"),"media-playback-start",
-											i18n("Resume suspended torrents")));
 		
 		ipfilter_action = new KAction(KIcon("view-filter"),i18n("IP Filter"),this);
 		ipfilter_action->setToolTip(i18n("Show the list of blocked IP addresses"));

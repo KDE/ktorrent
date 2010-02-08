@@ -18,6 +18,7 @@ Changes in 4.0beta2:
 - Fix typo in in log message of QM (223888)
 - Added patch witch adds an additional column to a View showing the date and time a torrent was added
 - Fix compilation not working on solaris due to missing NAME_MAX define (222598)
+- Fix check for existing files for single file torrents in FileSelectDlg (225900)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 
