@@ -242,6 +242,11 @@ namespace kt
 		return ti->getDataDir();
 	}
 	
+	QString DBusTorrent::pathOnDisk() const
+	{
+		return ti->getStats().output_path;
+	}
+	
 	QString DBusTorrent::torDir() const
 	{
 		return ti->getTorDir();

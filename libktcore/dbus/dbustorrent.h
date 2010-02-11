@@ -99,6 +99,7 @@ namespace kt
 		Q_SCRIPTABLE uint numFiles() const;
 		Q_SCRIPTABLE QString dataDir() const;
 		Q_SCRIPTABLE QString torDir() const;
+		Q_SCRIPTABLE QString pathOnDisk() const;
 		Q_SCRIPTABLE QString filePath(uint file_index) const;
 		Q_SCRIPTABLE QString filePathOnDisk(uint file_index) const;
 		Q_SCRIPTABLE qulonglong fileSize(uint file_index) const;
