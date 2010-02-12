@@ -21,6 +21,7 @@ Changes in 4.0beta2:
 - Fix check for existing files for single file torrents in FileSelectDlg (225900)
 - Add pathOnDisk dbus call on a torrent to retrieve the output path
 - Fix crash in GroupView (226134)
+- Cleanup notifier before closing socket in webinterface plugin, fixes a crash (225956)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 
