@@ -84,16 +84,6 @@ namespace kt
 		setText(0,g->groupName());
 		setIcon(0,g->groupIcon());
 	}
-	
-	/*
-	int GroupViewItem::compare(QListViewItem* i,int ,bool ) const
-	{
-		if (text(1).isNull() && i->text(1).isNull())
-			return QString::compare(text(0),i->text(0));
-		else
-			return QString::compare(text(1),i->text(1));
-	}
-	*/
 
 	GroupView::GroupView(GroupManager* gman,ViewManager* view,GUI* gui,QWidget* parent)
 	: QTreeWidget(parent),gui(gui),view(view),custom_root(0),gman(gman)
@@ -355,7 +345,7 @@ namespace kt
 		if (!g)
 			return;
 		
-		gman->removeGroup(g);		
+		gman->removeGroup(g);
 		current_item = 0;
 		gman->saveGroups();
 	}
@@ -522,6 +512,9 @@ namespace kt
 	
 	void GroupView::editGroupPolicy()
 	{
+		if (!current_item)
+			return;
+		
 		Group* g = current_item->group();
 		if (g)
 		{
