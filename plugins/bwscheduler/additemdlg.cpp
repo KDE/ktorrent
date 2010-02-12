@@ -140,20 +140,26 @@ namespace kt
 	void AddItemDlg::selectWeekDays()
 	{
 		const KCalendarSystem* cal = KGlobal::locale()->calendar();
-		for (int i = 0;i < 5;i++)
+		for (int i = 0;i < 7;i++)
 		{
 			int day = ((cal->weekStartDay() - 1) + i) % 7;
-			model->setData(model->index(day,0),Qt::Checked,Qt::CheckStateRole);
+			if (day < 5)
+				model->setData(model->index(day,0),Qt::Checked,Qt::CheckStateRole);
+			else
+				model->setData(model->index(day,0),Qt::Unchecked,Qt::CheckStateRole);
 		}
 	}
 	
 	void AddItemDlg::selectWeekend()
 	{
 		const KCalendarSystem* cal = KGlobal::locale()->calendar();
-		for (int i = 5;i < 7;i++)
+		for (int i = 0;i < 7;i++)
 		{
 			int day = ((cal->weekStartDay() - 1) + i) % 7;
-			model->setData(model->index(day,0),Qt::Checked,Qt::CheckStateRole);
+			if (day < 5)
+				model->setData(model->index(day,0),Qt::Unchecked,Qt::CheckStateRole);
+			else
+				model->setData(model->index(day,0),Qt::Checked,Qt::CheckStateRole);
 		}
 	}
 	
