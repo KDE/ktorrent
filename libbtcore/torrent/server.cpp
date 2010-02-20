@@ -44,9 +44,8 @@ namespace bt
 
 	
 
-	Server::Server(Uint16 port) : sock(0),sn(0)
+	Server::Server() : sock(0),sn(0)
 	{
-		changePort(port);
 	}
 
 
@@ -55,21 +54,15 @@ namespace bt
 		delete sn;
 		delete sock;
 	}
-
-	bool Server::isOK() const
-	{
-		return sock && sock->ok();
-	}
-
+	
 	bool Server::changePort(Uint16 p)
 	{
-		if (p == port)
+		if (sock && p == port)
 			return true;
 
 		if (sock && sock->ok())
 			Globals::instance().getPortList().removePort(port,net::TCP);
 		
-		port = p;
 		delete sock;
 		sock = 0;
 		delete sn; 
@@ -83,9 +76,9 @@ namespace bt
 			else
 				sock = new net::Socket(true,4);
 			
-			if (sock->bind(addr,port,true))
+			if (sock->bind(addr,p,true))
 			{
-				Out(SYS_GEN|LOG_NOTICE) << "Bound to " << addr << ":" << port << endl;
+				Out(SYS_GEN|LOG_NOTICE) << "Bound to " << addr << ":" << p << endl;
 				break;
 			}
 			
@@ -98,7 +91,7 @@ namespace bt
 			sock->setBlocking(false);
 			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Read,this);
 			connect(sn,SIGNAL(activated(int)),this,SLOT(readyToAccept(int)));
-			Globals::instance().getPortList().addNewPort(port,net::TCP,true);
+			Globals::instance().getPortList().addNewPort(p,net::TCP,true);
 			return true;
 		}
 		
@@ -122,6 +115,7 @@ namespace bt
 		sock = 0;
 		delete sn;
 		sn = 0;
+		Globals::instance().getPortList().removePort(port,net::TCP);
 	}
 }
 

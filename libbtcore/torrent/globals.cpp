@@ -64,11 +64,14 @@ namespace bt
 
 	bool Globals::initTCPServer(Uint16 port)
 	{
-		delete tcp_server;
-		tcp_server = 0;
+		if (tcp_server)
+			shutdownTCPServer();
 		
-		tcp_server = new Server(port);
-		return tcp_server->isOK();
+		tcp_server = new Server();
+		if (!tcp_server->changePort(port))
+			return false;
+		
+		return true;
 	}
 	
 	void Globals::shutdownTCPServer()
@@ -76,6 +79,8 @@ namespace bt
 		if (tcp_server)
 		{
 			tcp_server->close();
+			delete tcp_server;
+			tcp_server = 0;
 		}
 	}
 

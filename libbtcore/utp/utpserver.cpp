@@ -97,7 +97,7 @@ namespace utp
 		}
 		
 		Out(SYS_CON|LOG_NOTICE) << "UTP: bound to " << addr.toString() << endl;
-		Globals::instance().getPortList().addNewPort(port,net::UDP,true);
+		Globals::instance().getPortList().addNewPort(addr.port(),net::UDP,true);
 		return true;
 	}
 

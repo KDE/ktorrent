@@ -56,7 +56,7 @@ namespace kt
 		kcfg_networkInterface->addItem(KIcon("network-wired"),i18n("All interfaces"));
 		
 		kcfg_onlyUseUtp->setEnabled(Settings::utpEnabled());
-		kcfg_primaryTransportProtocol->setEnabled(Settings::utpEnabled() && Settings::onlyUseUtp());
+		kcfg_primaryTransportProtocol->setEnabled(Settings::utpEnabled() && !Settings::onlyUseUtp());
 
 		// get all the network devices and add them to the combo box
 		QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
@@ -92,12 +92,12 @@ namespace kt
 	void NetworkPref::utpEnabled(bool on)
 	{
 		kcfg_onlyUseUtp->setEnabled(on);
-		kcfg_primaryTransportProtocol->setEnabled(on && kcfg_onlyUseUtp->isChecked());
+		kcfg_primaryTransportProtocol->setEnabled(on && !kcfg_onlyUseUtp->isChecked());
 	}
 
 	void NetworkPref::onlyUseUtpEnabled(bool on)
 	{
-		kcfg_primaryTransportProtocol->setEnabled(on && kcfg_utpEnabled->isCheckable());
+		kcfg_primaryTransportProtocol->setEnabled(!on && kcfg_utpEnabled->isChecked());
 	}
 
 	

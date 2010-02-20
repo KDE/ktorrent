@@ -196,24 +196,28 @@ namespace kt
 	void Core::applySettings()
 	{
 		bt::Uint16 port = Settings::port();
+		bt::Uint16 current_port = ServerInterface::getPort();
+		
 		bool utp_enabled = Settings::utpEnabled();
 		bool tcp_enabled = utp_enabled && Settings::onlyUseUtp() ? false : true;
+		
 		bt::Globals & globals = bt::Globals::instance();
 		
 		if (globals.isTCPEnabled() && !tcp_enabled)
 			globals.shutdownTCPServer();
 		else if (!globals.isTCPEnabled() && tcp_enabled)
 			startTCPServer(port);
-		else if (tcp_enabled && port != ServerInterface::getPort())
+		else if (tcp_enabled && port != current_port)
 			globals.getTCPServer().changePort(port);
 		
 		if (globals.isUTPEnabled() && !utp_enabled)
 			globals.shutdownUTPServer();
 		else if (!globals.isUTPEnabled() && utp_enabled)
 			startUTPServer(port);
-		else if (utp_enabled && port != ServerInterface::getPort())
+		else if (utp_enabled && port != current_port)
 			globals.getUTPServer().changePort(port);
 		
+		ServerInterface::setPort(port);
 		ServerInterface::setUtpEnabled(utp_enabled,Settings::onlyUseUtp());
 		ServerInterface::setPrimaryTransportProtocol((bt::TransportProtocol)Settings::primaryTransportProtocol());
 		ApplySettings();

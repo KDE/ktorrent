@@ -64,7 +64,6 @@ namespace kt
 	
 	void ApplySettings()
 	{
-		ServerInterface::setPort(Settings::port());
 		PeerManager::setMaxConnections(Settings::maxConnections());
 		PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
 		net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);

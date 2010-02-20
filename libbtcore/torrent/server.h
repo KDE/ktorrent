@@ -58,11 +58,8 @@ namespace bt
 		QSocketNotifier* sn;
 
 	public:
-		Server(Uint16 port);
+		Server();
 		virtual ~Server();
-
-		/// Check if everything is ok (are we successfully listening on the port)
-		bool isOK() const;
 		
 		virtual bool changePort(Uint16 port);
 		
