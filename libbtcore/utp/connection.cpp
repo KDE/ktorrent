@@ -428,7 +428,7 @@ namespace utp
 		// until we are no longer allowed or the buffer is empty
 		while (output_buffer.size() > 0 && remote_wnd->availableSpace() > 0)
 		{
-			bt::Uint32 to_read = qMin(output_buffer.size(),remote_wnd->availableSpace());
+			bt::Uint32 to_read = qMin((bt::Uint32)output_buffer.size(),remote_wnd->availableSpace());
 			to_read = qMin(to_read,stats.packet_size);
 			
 			QByteArray packet(to_read,0);
