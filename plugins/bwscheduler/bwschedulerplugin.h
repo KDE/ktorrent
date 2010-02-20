@@ -22,9 +22,11 @@
 
 #include <QTimer>
 #include <KAction>
+#include <solid/networking.h>
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
 #include "screensaver_interface.h"
+
 
 class QString;
 
@@ -56,6 +58,7 @@ namespace kt
 		void onLoaded(Schedule* ns);
 		void colorsChanged();
 		void screensaverActivated(bool on);
+		void networkStatusChanged(Solid::Networking::Status status);
 		
 	private:
 		void setNormalLimits();

@@ -25,6 +25,7 @@ Changes in 4.0beta2:
 - Make sure that weekdays deselects weekend, and weekend deselects weekdays in scheduler plugin (225952)
 - Don't show 0 KB/s when there is no limit in scheduler plugin (225943)
 - Make warning icon when no trackers can be reached, work for non private torrents (227670)
+- Reset bandwidth schedule when network comes up again (227423)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

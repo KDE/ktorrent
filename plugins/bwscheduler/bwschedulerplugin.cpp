@@ -43,12 +43,12 @@
 #include <kstdaction.h>
 #include <kiconloader.h>
 #include <kglobal.h>
+#include <solid/networking.h>
 
 #include "scheduleeditor.h"
 #include "schedule.h"
 #include "bwschedulerplugin.h"
 #include "bwprefpage.h"
-
 
 #include <torrent/globals.h>
 #include <peer/peermanager.h>
@@ -71,6 +71,10 @@ namespace kt
 		screensaver = new org::freedesktop::ScreenSaver(interface, "/ScreenSaver",QDBusConnection::sessionBus(),this);
 		connect(screensaver,SIGNAL(ActiveChanged(bool)),this,SLOT(screensaverActivated(bool)));
 		screensaver_on = screensaver->GetActive();
+		
+		Solid::Networking::Notifier* notifier = Solid::Networking::notifier();
+		connect(notifier,SIGNAL(statusChanged(Solid::Networking::Status)),
+				this,SLOT(networkStatusChanged(Solid::Networking::Status)));
 	}
 
 
@@ -258,6 +262,15 @@ namespace kt
 	{
 		screensaver_on = on;
 		timerTriggered();
+	}
+	
+	void BWSchedulerPlugin::networkStatusChanged(Solid::Networking::Status status)
+	{
+		if (status == Solid::Networking::Connected)
+		{
+			Out(SYS_SCD|LOG_NOTICE) << "Network is up, setting schedule" << endl;
+			timerTriggered();
+		}
 	}
 
 }

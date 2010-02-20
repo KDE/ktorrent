@@ -13,6 +13,7 @@ target_link_libraries(
     btcore
     ${KDE4_KDEUI_LIBS}
     ${KDE4_KPARTS_LIBS} 
+    ${KDE4_SOLID_LIBS}
     ${QT_QT3SUPPORT_LIBRARY}
     )
 install(TARGETS ktbwschedulerplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
