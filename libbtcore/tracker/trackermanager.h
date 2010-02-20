@@ -56,6 +56,7 @@ namespace bt
 		virtual bool canRemoveTracker(TrackerInterface* t);
 		virtual void restoreDefault();
 		virtual void setTrackerEnabled(const KUrl & url,bool on);
+		virtual bool noTrackersReachable() const;
 		
 		/// Get the number of seeders
 		Uint32 getNumSeeders() const;

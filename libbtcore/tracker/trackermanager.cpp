@@ -76,6 +76,33 @@ namespace bt
 		return curr;
 	}
 	
+	bool TrackerManager::noTrackersReachable() const
+	{
+		if (tor->getStats().priv_torrent)
+		{
+			return curr ? curr->trackerStatus() == TRACKER_ERROR : false;
+		}
+		else
+		{
+			int enabled = 0;
+			
+			// If all trackers have an ERROR status, and there is at least one
+			// enabled, we must return true;
+			for (PtrMap<KUrl,Tracker>::const_iterator i = trackers.begin();i != trackers.end();i++)
+			{
+				if (i->second->isEnabled())
+				{
+					if (i->second->trackerStatus() != TRACKER_ERROR)
+						return false;
+					enabled++;
+				}
+			}
+			
+			return enabled > 0;
+		}
+	}
+
+	
 	void TrackerManager::setCurrentTracker(bt::TrackerInterface* t) 
 	{
 		if (!tor->getStats().priv_torrent)

@@ -507,8 +507,7 @@ namespace kt
 		else if (role == Qt::DecorationRole && index.column() == 1)
 		{
 			bt::TorrentInterface* tc = item->tc;
-			bt::TrackerInterface* trk = tc->getTrackersList()->getCurrentTracker();
-			if (trk && trk->trackerStatus() == bt::TRACKER_ERROR)
+			if (tc->getTrackersList()->noTrackersReachable())
 				return KIcon("dialog-warning");
 		} 
 		else if (role == Qt::ToolTipRole)
@@ -516,9 +515,8 @@ namespace kt
 			if (index.column() == 1)
 			{
 				bt::TorrentInterface* tc = item->tc;
-				bt::TrackerInterface* trk = tc->getTrackersList()->getCurrentTracker();
-				if (trk && trk->trackerStatus() == bt::TRACKER_ERROR)
-					return trk->trackerStatusString();
+				if (tc->getTrackersList()->noTrackersReachable())
+					return i18n("Unable to contact a tracker.");
 			}
 			else if (index.column() == 0)
 			{

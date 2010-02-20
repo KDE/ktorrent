@@ -107,6 +107,11 @@ namespace bt
 		 * @param first The first TrackerTier
 		 */
 		void merge(const bt::TrackerTier* first);
+		
+		/**
+		 * Returns true if no tracker is reachable
+		 */
+		virtual bool noTrackersReachable() const = 0;
 
 	};
 
