@@ -90,6 +90,12 @@ namespace bt
 	const Uint32 DHT_SUPPORT = 0x01;
 	const Uint32 EXT_PROT_SUPPORT = 0x10;
 	const Uint32 FAST_EXT_SUPPORT = 0x04;
+	
+	enum TransportProtocol
+	{
+		TCP,
+		UTP
+	};
 }
 
 

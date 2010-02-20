@@ -113,35 +113,7 @@ namespace bt
 		net::Address addr;
 		int fd = sock->accept(addr);
 		if (fd > 0)
-			newConnection(fd);
-	}
-	
-	void Server::newConnection(int socket)
-	{
-		mse::StreamSocket* s = new mse::StreamSocket(socket,sock->isIPv4() ? 4 : 6);
-		if (peer_managers.count() == 0)
-		{
-			s->close();
-			delete s;
-		}
-		else
-		{
-			if (!AccessManager::instance().allowed(s->getRemoteAddress()))
-			{
-				Out(SYS_CON|LOG_DEBUG) << "A client with a blocked IP address ("<< s->getRemoteIPAddress() << ") tried to connect !" << endl;
-				delete s;
-				return;
-			}
-			
-			ServerAuthenticate* auth = 0;
-			
-			if (encryption)
-				auth = new mse::EncryptedServerAuthenticate(s,this);
-			else
-				auth = new ServerAuthenticate(s,this);
-			
-			AuthenticationMonitor::instance().add(auth);
-		}
+			newConnection(new mse::StreamSocket(fd,sock->isIPv4() ? 4 : 6));
 	}
 	
 	void Server::close()

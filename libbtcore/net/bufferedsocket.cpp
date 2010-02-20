@@ -34,7 +34,6 @@ namespace net
 		down_speed = new Speed();
 		up_speed = new Speed();
 		output_buffer = new Uint8[OUTPUT_BUFFER_SIZE];
-		poll_index = -1;
 	}
 
 	BufferedSocket::BufferedSocket(int fd,int ip_version) : rdr(0),wrt(0),up_gid(0),down_gid(0)
@@ -45,7 +44,6 @@ namespace net
 		down_speed = new Speed();
 		up_speed = new Speed();
 		output_buffer = new Uint8[OUTPUT_BUFFER_SIZE];
-		poll_index = -1;
 	}
 	
 	BufferedSocket::BufferedSocket(bool tcp,int ip_version) : rdr(0),wrt(0),up_gid(0),down_gid(0)
@@ -56,7 +54,6 @@ namespace net
 		down_speed = new Speed();
 		up_speed = new Speed();
 		output_buffer = new Uint8[OUTPUT_BUFFER_SIZE];
-		poll_index = -1;
 	}
 
 
@@ -95,7 +92,7 @@ namespace net
 	static Uint8 input_buffer[OUTPUT_BUFFER_SIZE];
 
 	Uint32 BufferedSocket::readBuffered(Uint32 max_bytes_to_read,bt::TimeStamp now)
-	{	
+	{
 		Uint32 br = 0;
 		bool no_limit = (max_bytes_to_read == 0);
 		Uint32 ba = sock->bytesAvailable();
@@ -114,7 +111,7 @@ namespace net
 				tr = max_bytes_to_read - br;
 			
 			int ret = sock->recv(input_buffer,tr);
-			if (ret != 0)
+			if (ret > 0)
 			{
 				mutex.lock();
 				down_speed->onData(ret,now);
@@ -123,9 +120,13 @@ namespace net
 					rdr->onDataReady(input_buffer,ret);
 				br += ret;
 			}
+			else if (ret < 0)
+			{
+				return br;
+			}
 			else
 			{
-				// connection closed, so just return the number of bytes read
+				sock->close();
 				return br;
 			}
 		}

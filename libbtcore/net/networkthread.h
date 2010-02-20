@@ -24,7 +24,8 @@
 #include <util/constants.h>
 #include <util/ptrmap.h>
 #include <net/socketgroup.h>
-		
+#include <net/poll.h>
+
 using bt::Uint32;
 
 namespace net
@@ -36,7 +37,7 @@ namespace net
 	
 		Base class for the 2 networking threads. Handles the socket groups.
 	*/
-	class NetworkThread : public QThread
+	class NetworkThread : public QThread, public Poll
 	{
 	protected:
 		SocketMonitor* sm;

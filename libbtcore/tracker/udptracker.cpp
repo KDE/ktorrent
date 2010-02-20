@@ -303,7 +303,7 @@ namespace bt
 		*/
 
 		Uint32 ev = event;
-		Uint16 port = Globals::instance().getServer().getPortInUse();
+		Uint16 port = ServerInterface::getPort();
 		Uint8 buf[98];
 		WriteInt64(buf,0,connection_id);
 		WriteInt32(buf,8,UDPTrackerSocket::ANNOUNCE);

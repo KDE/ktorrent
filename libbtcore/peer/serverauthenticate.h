@@ -24,7 +24,6 @@
 
 namespace bt
 {
-	class Server;
 		
 	/**
 	 * @author Joris Guisson
@@ -37,7 +36,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		ServerAuthenticate(mse::StreamSocket* sock,Server* server);
+		ServerAuthenticate(mse::StreamSocket* sock);
 		virtual ~ServerAuthenticate();
 
 		static bool isFirewalled();
@@ -47,11 +46,8 @@ namespace bt
 		void onFinish(bool succes);
 		void handshakeReceived(bool full);
 		
-	protected:
-		Server* server;
-		
 	private:
-        	static bool s_firewalled;
+		static bool s_firewalled;
 	};
 
 }

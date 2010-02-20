@@ -34,7 +34,7 @@ namespace bt
 	Globals::Globals()
 	{
 		plist = new net::PortList();
-		server = 0;
+		tcp_server = 0;
 		utp_server = 0;
 		dh_table = new dht::DHT();
 	}
@@ -44,7 +44,7 @@ namespace bt
 		// shutdown the reverse resolver thread
 		net::ReverseResolver::shutdown();
 		shutdownUTPServer();
-		delete server;
+		delete tcp_server;
 		delete dh_table;
 		delete plist;
 	}
@@ -62,20 +62,20 @@ namespace bt
 		inst = 0;
 	}
 
-	bool Globals::initServer(Uint16 port)
+	bool Globals::initTCPServer(Uint16 port)
 	{
-		delete server;
-		server = 0;
+		delete tcp_server;
+		tcp_server = 0;
 		
-		server = new Server(port);
-		return server->isOK();
+		tcp_server = new Server(port);
+		return tcp_server->isOK();
 	}
 	
-	void Globals::shutdownServer()
+	void Globals::shutdownTCPServer()
 	{
-		if (server)
+		if (tcp_server)
 		{
-			server->close();
+			tcp_server->close();
 		}
 	}
 

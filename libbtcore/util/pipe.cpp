@@ -20,12 +20,14 @@
 
 #include "pipe.h"
 
+#include <fcntl.h>
 #include <unistd.h>
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include "net/socket.h"
+
 
 namespace bt
 {
@@ -68,13 +70,19 @@ namespace bt
 		int sockets[2];
 #ifndef Q_WS_WIN
 		if (socketpair(AF_UNIX,SOCK_STREAM,0,sockets) == 0)
+		{
+			reader = sockets[1];
+			writer = sockets[0];
+			fcntl(writer,F_SETFL,O_NONBLOCK);
+			fcntl(reader,F_SETFL,O_NONBLOCK);
+		}
 #else
 		if (socketpair(sockets) == 0)
-#endif
 		{
 			reader = sockets[1];
 			writer = sockets[0];
 		}
+#endif
 		else
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "Cannot create wakeup pipe" << endl;

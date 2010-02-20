@@ -44,6 +44,7 @@ namespace KNetwork
 
 namespace bt
 {
+	class PeerConnector;
 	class Piece;
 	class Torrent;
 	class Authenticate;
@@ -211,9 +212,10 @@ namespace bt
 		/**
 		 * A peer has authenticated.
 		 * @param auth The Authenticate object
+		 * @param pcon The PeerConnector
 		 * @param ok Whether or not the attempt was succesfull
 		 */
-		void peerAuthenticated(Authenticate* auth,bool ok);
+		void peerAuthenticated(Authenticate* auth,PeerConnector* pcon,bool ok);
 		
 		/**
 		 * Save the IP's and port numbers of all peers.
@@ -293,6 +295,7 @@ namespace bt
 		bool wanted_changed;
 		PieceHandler* piece_handler;
 		bool paused;
+		QList<PeerConnector*> connectors;
 		
 		static Uint32 max_connections;
 		static Uint32 max_total_connections;

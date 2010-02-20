@@ -38,7 +38,6 @@ namespace bt
 		memset(handshake,0x00,68);
 		bytes_of_handshake_received = 0;
 		ext_support = 0;
-		poll_index = -1;
 	}
 
 

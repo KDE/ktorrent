@@ -22,7 +22,8 @@
 
 #include <qwaitcondition.h> 
 #include <qmutex.h>
-#include "networkthread.h"
+#include <net/networkthread.h>
+#include <net/wakeuppipe.h>
 
 
 namespace net
@@ -37,8 +38,7 @@ namespace net
 		static bt::Uint32 ucap;
 		static bt::Uint32 sleep_time;
 		
-		QWaitCondition data_ready;
-		QMutex mutex;
+		WakeUpPipe wake_up;
 	public:
 		UploadThread(SocketMonitor* sm);
 		virtual ~UploadThread();
@@ -54,6 +54,8 @@ namespace net
 	private: 
 		virtual void update();
 		virtual bool doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now);
+		
+		int waitForSocketsReady();
 	};
 
 }

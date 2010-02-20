@@ -70,7 +70,7 @@ namespace utp
 		bt::Uint16 lastSeqNr() const {return last_seq_nr;}
 		
 		/// Is the window empty
-		bool isEmpty() const {return future_packets.isEmpty() && fill() == 0;}
+		bool isEmpty() const {return future_packets.isEmpty() && empty();}
 		
 		virtual bt::Uint32 read(bt::Uint8* data,bt::Uint32 max_len);
 		

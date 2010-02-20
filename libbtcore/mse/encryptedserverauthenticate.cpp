@@ -31,7 +31,7 @@ using namespace bt;
 
 namespace mse
 {
-	EncryptedServerAuthenticate::EncryptedServerAuthenticate(mse::StreamSocket* sock, bt::Server* server): bt::ServerAuthenticate(sock, server)
+	EncryptedServerAuthenticate::EncryptedServerAuthenticate(mse::StreamSocket* sock): bt::ServerAuthenticate(sock)
 	{
 		mse::GeneratePublicPrivateKey(xb,yb);
 		state = WAITING_FOR_YA;
@@ -116,7 +116,7 @@ namespace mse
 		
 		// r = HASH('req2', SKEY) xor HASH('req3', S)
 		SHA1Hash r2 = r ^ r3; // now calculate HASH('req2', SKEY)
-		if (!server->findInfoHash(r2,info_hash))
+		if (!ServerInterface::findInfoHash(r2,info_hash))
 		{
 	//		Out(SYS_CON|LOG_DEBUG) << "Unknown info_hash" << endl;
 			onFinish(false);
@@ -233,7 +233,7 @@ namespace mse
 			sock->reinsert(buf + off,buf_size - off);
 		}
 		
-		bool allow_unenc = Globals::instance().getServer().unencryptedConnectionsAllowed();
+		bool allow_unenc = ServerInterface::unencryptedConnectionsAllowed();
 		
 		if (crypto_select & 0x0000002)
 		{
@@ -277,7 +277,7 @@ namespace mse
 		switch (state)
 		{
 		case WAITING_FOR_YA:
-			if (ba <= 68 && Globals::instance().getServer().unencryptedConnectionsAllowed())
+			if (ba <= 68 && ServerInterface::unencryptedConnectionsAllowed())
 			{
 				// this is most likely an unencrypted handshake, so if we can find a peer manager 
 				// for the info hash in it, add it to the list of potential peers of that peer manager

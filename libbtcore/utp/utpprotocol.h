@@ -108,12 +108,15 @@ namespace utp
 	};
 	
 	const bt::Uint32 MIN_PACKET_SIZE = 150;
+	const bt::Uint32 MAX_PACKET_SIZE = 16384;
 	
 	const bt::Uint32 DELAY_WINDOW_SIZE = 2*60*1000; // 2 minutes
 	const bt::Uint32 CCONTROL_TARGET = 100;
-	const bt::Uint32 MAX_CWND_INCREASE_PACKETS_PER_RTT = 8;
+	const bt::Uint32 MAX_CWND_INCREASE_PACKETS_PER_RTT = 500;
 	const bt::Uint32 MAX_TIMEOUT = 10000;
 	const bt::Uint32 CONNECT_TIMEOUT = 30000;
+	
+	const bt::Uint32 IP_AND_UDP_OVERHEAD = 28;
 	
 	// Test if a bit is acked
 	BTCORE_EXPORT bool Acked(const SelectiveAck* sack,bt::Uint16 bit);

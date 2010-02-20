@@ -58,6 +58,7 @@ private slots:
 				break;
 		}
 		
+		srv.setCreateSockets(false);
 		srv.start();
 	}
 	

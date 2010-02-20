@@ -57,6 +57,8 @@ private slots:
 			else
 				break;
 		}
+		
+		bt::Globals::instance().getUTPServer().setCreateSockets(false);
 	}
 	
 	void cleanupTestCase()

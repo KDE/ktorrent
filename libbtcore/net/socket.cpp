@@ -59,7 +59,7 @@ using namespace bt;
 namespace net
 {
 
-	Socket::Socket(int fd,int ip_version) : m_fd(fd),m_ip_version(ip_version)
+	Socket::Socket(int fd,int ip_version) : m_fd(fd),m_ip_version(ip_version),r_poll_index(-1),w_poll_index(-1)
 	{
 		// check if the IP version is 4 or 6
 		if (m_ip_version != 4 && m_ip_version != 6)
@@ -75,7 +75,7 @@ namespace net
 		cacheAddress();
 	}
 	
-	Socket::Socket(bool tcp,int ip_version) : m_fd(-1),m_ip_version(ip_version)
+	Socket::Socket(bool tcp,int ip_version) : m_fd(-1),m_ip_version(ip_version),r_poll_index(-1),w_poll_index(-1)
 	{
 		// check if the IP version is 4 or 6
 		if (m_ip_version != 4 && m_ip_version != 6)
@@ -298,6 +298,7 @@ namespace net
 			ns += ret;
 		}
 		return ns;
+#include "poll.h"
 	}
 	
 	int Socket::recvFrom(bt::Uint8* buf,int max_len,Address & a)
@@ -443,4 +444,19 @@ namespace net
 		m_fd = -1;
 		return ret;
 	}
+	
+	
+	void Socket::prepare(Poll* p,Poll::Mode mode)
+	{
+		if (mode == Poll::OUTPUT)
+			w_poll_index = p->add(m_fd,mode);
+		else
+			r_poll_index = p->add(m_fd,mode);
+	}
+
+	bool Socket::ready(const Poll* p,Poll::Mode mode) const
+	{
+		return p->ready(mode == Poll::OUTPUT ? w_poll_index : r_poll_index,mode);
+	}
+
 }

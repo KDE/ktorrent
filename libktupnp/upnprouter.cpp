@@ -202,7 +202,7 @@ namespace kt
 		
 		// the protocol
 		a.element = "NewProtocol";
-		a.value = port.proto == TCP ? "TCP" : "UDP";
+		a.value = port.proto == net::TCP ? "TCP" : "UDP";
 		args.append(a);
 		
 		// the local port
@@ -294,7 +294,7 @@ namespace kt
 		
 		// the protocol
 		a.element = "NewProtocol";
-		a.value = port.proto == TCP ? "TCP" : "UDP";
+		a.value = port.proto == net::TCP ? "TCP" : "UDP";
 		args.append(a);
 		
 		

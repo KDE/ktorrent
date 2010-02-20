@@ -22,22 +22,27 @@
 #include <mse/streamsocket.h>
 #include <peer/accessmanager.h>
 #include <net/socks.h>
-#include "peermanager.h"
+#include <utp/utpsocket.h>
+#include "peerconnector.h"
 
 namespace bt
 {
 
-	Authenticate::Authenticate(const QString & ip,Uint16 port,
-							   const SHA1Hash & info_hash,const PeerID & peer_id,PeerManager* pman) 
-	: info_hash(info_hash),our_peer_id(peer_id),pman(pman),socks(0)
+	Authenticate::Authenticate(const QString & ip,Uint16 port,TransportProtocol proto,
+							   const SHA1Hash & info_hash,const PeerID & peer_id,PeerConnector* pcon) 
+	: info_hash(info_hash),our_peer_id(peer_id),pcon(pcon),socks(0)
 	{
 		finished = succes = false;
 		net::Address addr(ip,port);
-		sock = new mse::StreamSocket(addr.ipVersion());
+		if (proto == TCP)
+			sock = new mse::StreamSocket(addr.ipVersion());
+		else
+			sock = new mse::StreamSocket(new utp::UTPSocket());
+		
 		host = ip;
 		this->port = port;
 
-		Out(SYS_CON|LOG_NOTICE) << "Initiating connection to " << host << endl;
+		Out(SYS_CON|LOG_NOTICE) << "Initiating connection to " << host << " via (" << (proto == TCP ? "TCP" : "UTP") << ")" << endl;
 		if (net::Socks::enabled())
 		{
 			socks = new net::Socks(sock,addr);
@@ -80,7 +85,6 @@ namespace bt
 	
 	void Authenticate::onReadyWrite()
 	{
-//		Out() << "Authenticate::onReadyWrite()" << endl;
 		if (socks)
 		{
 			switch (socks->onReadyToWrite())
@@ -153,8 +157,8 @@ namespace bt
 			sock = 0;
 		}
 		timer.stop();
-		if (pman)
-			pman->peerAuthenticated(this,succes);
+		if (pcon)
+			pcon->authenticationFinished(this,succes);
 	}
 	
 	void Authenticate::handshakeReceived(bool full)
@@ -189,14 +193,6 @@ namespace bt
 				return;
 			}
 			
-			// check if we aren't already connected to the client
-			if (pman->connectedTo(peer_id))
-			{
-				Out(SYS_CON|LOG_NOTICE) << "Already connected to " << peer_id.toString() << endl;
-				onFinish(false);
-				return;
-			}
-			
 			// only finish when the handshake was fully received
 			onFinish(true);
 		}
@@ -212,8 +208,6 @@ namespace bt
 	
 	void Authenticate::onPeerManagerDestroyed()
 	{
-	//	Out(SYS_CON|LOG_NOTICE) << "Authenticate::onPeerManagerDestroyed()" << endl;
-		pman = 0;
 		if (finished)
 			return;
 		

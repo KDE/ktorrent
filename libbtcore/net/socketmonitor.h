@@ -83,6 +83,11 @@ namespace net
  			UPLOAD_GROUP,
  			DOWNLOAD_GROUP
  		};
+		
+		/**
+		 * Shutdown the socketmonitor and all the networking threads.
+		 */
+		void shutdown();
  		
  
  		/**

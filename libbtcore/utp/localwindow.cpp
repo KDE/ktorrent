@@ -70,7 +70,8 @@ namespace utp
 			if (pkt->seq_nr == last_seq_nr + 1)
 			{
 				last_seq_nr = pkt->seq_nr;
-				write((const bt::Uint8*)pkt->data.data(),pkt->data.size());
+				if (write((const bt::Uint8*)pkt->data.data(),pkt->data.size()) != pkt->data.size())
+					Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived write failed " << endl;
 				delete pkt;
 				itr = future_packets.erase(itr);
 			}
@@ -122,12 +123,13 @@ namespace utp
 		else
 		{
 			last_seq_nr = hdr->seq_nr;
-			write(data,size);
+			if (write(data,size) != size)
+				Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived write failed " << endl;
 			window_space -= size;
 			checkFuturePackets();
 		}
 		
-		Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived " << fill() << " " << future_packets.count() << endl;
+	//	Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived " << fill() << " " << future_packets.count() << endl;
 		return true;
 	}
 

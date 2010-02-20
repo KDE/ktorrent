@@ -21,10 +21,8 @@
 #define NETDOWNLOADTHREAD_H
 
 #include <vector>
-#include "networkthread.h"
-#include "wakeuppipe.h"
-
-struct pollfd;
+#include <net/networkthread.h>
+#include <net/wakeuppipe.h>
 
 namespace net
 {
@@ -36,9 +34,6 @@ namespace net
 	 */
 	class DownloadThread : public NetworkThread
 	{
-		static bt::Uint32 dcap;
-		static bt::Uint32 sleep_time;
-		std::vector<struct pollfd> fd_vec;
 	public:
 		DownloadThread(SocketMonitor* sm);
 		virtual ~DownloadThread();
@@ -58,6 +53,9 @@ namespace net
 		
 	private:
 		WakeUpPipe wake_up;
+		
+		static bt::Uint32 dcap;
+		static bt::Uint32 sleep_time;
 	};
 
 }

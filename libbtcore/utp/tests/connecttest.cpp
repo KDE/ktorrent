@@ -65,6 +65,7 @@ private slots:
 				break;
 		}
 		
+		srv.setCreateSockets(false);
 		srv.start();
 		QVERIFY(port < 60000);
 	}

@@ -142,7 +142,6 @@ namespace bt
 		if (len == 0)
 			return;
 		const Uint8* tmp_buf = packet;
-		//Out(SYS_CON|LOG_DEBUG) << "Got packet : " << len << " type = " << type <<  endl;
 		Uint8 type = tmp_buf[0];
 		switch (type)
 		{

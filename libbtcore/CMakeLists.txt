@@ -72,6 +72,7 @@ set(libbtcore_SRC
 	net/wakeuppipe.cpp
 	net/reverseresolver.cpp
 	net/socketdevice.cpp
+	net/poll.cpp
 	
 	mse/bigint.cpp  
 	mse/functions.cpp  
@@ -97,6 +98,7 @@ set(libbtcore_SRC
 	peer/utmetadata.cpp
 	peer/accessmanager.cpp
 	peer/badpeerslist.cpp
+	peer/peerconnector.cpp
 
 	download/piece.cpp
 	download/request.cpp
@@ -202,6 +204,7 @@ set(libbtcore_SRC
 	utp/utpsocket.cpp
 	utp/timevalue.cpp
 	utp/utpprotocol.cpp
+	utp/pollpipe.cpp
 	
 	btversion.cpp
 )
@@ -224,21 +227,6 @@ endif(WIN32)
 set_target_properties(btcore PROPERTIES VERSION 13.0.0 SOVERSION 13 )
 install(TARGETS btcore  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
-set(net_HDR  
-	./net/socks.h
-	./net/bufferedsocket.h
-	./net/downloadthread.h
-	./net/address.h
-	./net/socketgroup.h
-	./net/portlist.h
-	./net/networkthread.h
-	./net/socket.h
-	./net/speed.h
-	./net/uploadthread.h
-	./net/socketmonitor.h
-	./net/reverseresolver.h
-	./net/socketdevice.h
-)
 
 set (mse_HDR 
 	./mse/encryptedserverauthenticate.h
@@ -286,32 +274,10 @@ set (peer_HDR
 	./peer/chunkcounter.h
 	./peer/serverauthenticate.h
 	./peer/accessmanager.h
+	./peer/peerconnector.h
 )
 	
-set (util_HDR
-	./util/autorotatelogjob.h
-	./util/fileops.h
-	./util/timer.h
-	./util/ptrmap.h
-	./util/log.h
-	./util/waitjob.h
-	./util/urlencoder.h
-	./util/array.h
-	./util/functions.h
-	./util/file.h
-	./util/constants.h
-	./util/bitset.h
-	./util/sha1hash.h
-	./util/sha1hashgen.h
-	./util/error.h
-	./util/win32.h
-	./util/logsystemmanager.h
-	./util/compressfilejob.h
-	./util/decompressfilejob.h
-	./util/extractfilejob.h
-	./util/pipe.h
-	./util/circularbuffer.h
-)
+
 	
 set (download_HDR
 	./download/chunkdownload.h
@@ -417,10 +383,8 @@ install(FILES ${tracker_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/tracke
 install(FILES ${torrent_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/torrent COMPONENT Devel)
 install(FILES ${diskio_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/diskio COMPONENT Devel)
 install(FILES ${bcodec_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/bcodec COMPONENT Devel)
-install(FILES ${net_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/net COMPONENT Devel)
 install(FILES ${mse_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/mse COMPONENT Devel)
 install(FILES ${interfaces_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/interfaces COMPONENT Devel)
-install(FILES ${util_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/util COMPONENT Devel)
 install(FILES ${peer_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/peer COMPONENT Devel)
 install(FILES ${datachecker_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/datachecker COMPONENT Devel)
 install(FILES ${dht_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/dht COMPONENT Devel)
@@ -428,5 +392,7 @@ install(FILES ${migrate_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/migrat
 install(FILES ${download_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/download COMPONENT Devel)
 install(FILES ${btcore_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore COMPONENT Devel)
 
+add_subdirectory(net)
 add_subdirectory(magnet)
+add_subdirectory(util)
 add_subdirectory(utp)

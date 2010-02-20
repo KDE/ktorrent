@@ -63,17 +63,17 @@ namespace bt
 		/// Flags indicating which extensions are supported
 		Uint32 supportedExtensions() const {return ext_support;}
 		
-		/// get teh socket
+		/// get the socket
 		const mse::StreamSocket* getSocket() const {return sock;}
+		
+		/// get the socket
+		mse::StreamSocket* getSocket() {return sock;}
 		
 		/// We can read from the socket
 		virtual void onReadyRead();
 		
 		/// We can write to the socket (used to detect a succesfull connection)
 		virtual void onReadyWrite();
-
-		void setPollIndex(int pi) {poll_index = pi;}
-		int getPollIndex() const {return poll_index;}
 		
 	protected:
 		/**
@@ -116,7 +116,6 @@ namespace bt
 		Uint32 bytes_of_handshake_received;
 		Uint32 ext_support;
 		bool local;
-		int poll_index;
 	};
 
 }

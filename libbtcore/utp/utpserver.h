@@ -23,10 +23,15 @@
 
 #include <QThread>
 #include <net/socket.h>
+#include <net/poll.h>
+#include <net/wakeuppipe.h>
 #include <util/ptrmap.h>
 #include <interfaces/serverinterface.h>
 #include <btcore_export.h>
 #include "connection.h"
+#include "pollpipe.h"
+
+
 
 namespace utp
 {
@@ -39,6 +44,9 @@ namespace utp
 	public:
 		UTPServer(QObject* parent = 0);
 		virtual ~UTPServer();
+		
+		/// Enabled creating sockets (tests need to have this disabled)
+		void setCreateSockets(bool on) {create_sockets = on;}
 		
 		virtual bool changePort(bt::Uint16 port);
 		
@@ -66,6 +74,9 @@ namespace utp
 		/// Run the UTPServer
 		void run();
 		
+		/// Prepare the server for polling
+		void preparePolling(net::Poll* p,net::Poll::Mode mode,Connection* conn);
+		
 	protected:
 		bool bind(const net::Address & addr);
 		void readPacket();
@@ -79,6 +90,20 @@ namespace utp
 	signals:
 		void accepted(Connection* conn);
 		
+	private slots:
+		void onAccepted(Connection* conn);
+		
+	private:
+		struct PollPipePair
+		{
+			PollPipe read_pipe;
+			PollPipe write_pipe;
+			
+			PollPipePair();
+			
+			void test(Connection* conn);
+		};
+		
 	private:
 		net::Socket* sock;
 		bool running;
@@ -87,9 +112,11 @@ namespace utp
 		bt::PtrMap<Connection*,UTPSocket> alive_connections;
 		UTPServerThread* utp_thread;
 		QMutex mutex;
-		
+		bt::PtrMap<net::Poll*,PollPipePair> poll_pipes;
+		bool create_sockets;
 		
 		typedef bt::PtrMap<quint16,Connection>::iterator ConItr;
+		typedef bt::PtrMap<net::Poll*,PollPipePair>::iterator PollPipePairItr;
 	};
 
 }

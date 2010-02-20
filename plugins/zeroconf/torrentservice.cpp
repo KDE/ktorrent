@@ -65,7 +65,7 @@ namespace kt
 	
 	void TorrentService::start()
 	{
-		bt::Uint16 port = bt::Globals::instance().getServer().getPortInUse();
+		bt::Uint16 port = bt::ServerInterface::getPort();
 		QString name = QString("%1__%2%3").arg(tc->getOwnPeerID().toString()).arg((rand() % 26) + 65).arg((rand() % 26) + 65);
 		QStringList subtypes;
 		subtypes << QString("_" + tc->getInfoHash().toString() + "._sub._bittorrent._tcp");

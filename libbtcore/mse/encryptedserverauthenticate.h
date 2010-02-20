@@ -37,7 +37,7 @@ namespace mse
 	{
 		Q_OBJECT
 	public:
-		EncryptedServerAuthenticate(mse::StreamSocket* sock, bt::Server* server);
+		EncryptedServerAuthenticate(mse::StreamSocket* sock);
 		virtual ~EncryptedServerAuthenticate();
 
 	private slots:

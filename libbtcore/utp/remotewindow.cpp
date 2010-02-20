@@ -173,7 +173,7 @@ namespace utp
 			max_window = 0;
 		else
 			max_window += d;
-		Out(SYS_GEN|LOG_DEBUG) << "RemoteWindow::updateWindowSize " << scaled_gain << " " << max_window << endl;
+	//	Out(SYS_GEN|LOG_DEBUG) << "RemoteWindow::updateWindowSize " << scaled_gain << " " << max_window << endl;
 	}
 
 	void RemoteWindow::clear()

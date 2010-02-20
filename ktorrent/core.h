@@ -244,6 +244,9 @@ namespace kt
 		void connectSignals(bt::TorrentInterface* tc);
 		bool init(bt::TorrentControl* tc,const QString & group,const QString & location,bool silently);
 		QString locationHint() const;
+		void startServers();
+		void startTCPServer(bt::Uint16 port);
+		void startUTPServer(bt::Uint16 port);
 
 	public:
 		void loadTorrents();

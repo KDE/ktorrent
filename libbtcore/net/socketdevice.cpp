@@ -23,7 +23,7 @@
 namespace net
 {
 	
-	SocketDevice::SocketDevice() : m_state(IDLE)
+	SocketDevice::SocketDevice() : m_state(IDLE),remote_addr_override(false)
 	{
 
 	}

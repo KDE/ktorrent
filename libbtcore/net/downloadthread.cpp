@@ -20,11 +20,6 @@
 #include "downloadthread.h"
 #include <math.h>
 #include <QtGlobal>
-#ifndef Q_WS_WIN
-#include <sys/poll.h>
-#else
-#include <util/win32.h>
-#endif
 #include <util/functions.h>
 #include <util/log.h>
 #include "socketgroup.h"
@@ -54,11 +49,6 @@ namespace net
 		{
 			bool group_limits = false;
 			sm->lock();
-			if (fd_vec[0].revents & POLLIN)
-			{
-				// wake up was triggered
-				wake_up.handleData();
-			}
 			
 			TimeStamp now = bt::Now();
 			Uint32 num_ready = 0;
@@ -72,14 +62,7 @@ namespace net
 					continue;
 				}
 				
-				int pi = s->getPollIndex();
-				bool ready = false;
-				if (pi >= 0)
-					ready = fd_vec[pi].revents & POLLIN;
-				else
-					ready = s->socketDevice()->bytesAvailable() > 0;
-		
-				if (ready)
+				if (s->socketDevice()->ready(this,Poll::INPUT))
 				{
 					// add to the correct group
 					Uint32 gid = s->downloadGroupID();
@@ -124,27 +107,12 @@ namespace net
 	
 	int DownloadThread::waitForSocketReady()
 	{
-		unsigned int i = 0;
 		sm->lock();
 		
+		reset();
 		// Add the wake up pipe
-		if (fd_vec.size() >= 1)
-		{
-			struct pollfd & wfd = fd_vec[0];
-			wfd.fd = wake_up.readerSocket();
-			wfd.revents = 0;
-			wfd.events = POLLIN;
-		}
-		else
-		{
-			struct pollfd wfd;
-			wfd.fd = wake_up.readerSocket();
-			wfd.revents = 0;
-			wfd.events = POLLIN;
-			fd_vec.push_back(wfd);
-		}
-		i++;
-		
+		add(&wake_up);
+	
 		// fill the poll vector with all sockets
 		SocketMonitor::Itr itr = sm->begin();
 		while (itr != sm->end())
@@ -152,39 +120,12 @@ namespace net
 			BufferedSocket* s = *itr;
 			if (s && s->socketDevice()->ok())
 			{
-				if (fd_vec.size() <= i)
-				{
-					// expand pollfd vector if necessary
-					struct pollfd pfd;
-					pfd.fd = s->socketDevice()->fd();
-					pfd.revents = 0;
-					pfd.events = POLLIN;
-					fd_vec.push_back(pfd);
-				}
-				else
-				{
-					// use existing slot
-					struct pollfd & pfd = fd_vec[i];
-					pfd.fd = s->socketDevice()->fd();
-					pfd.revents = 0;
-					pfd.events = POLLIN;
-				}
-				s->setPollIndex(i);
-				i++;
-			}
-			else
-			{
-				s->setPollIndex(-1);
+				s->socketDevice()->prepare(this,Poll::INPUT);
 			}
 			itr++;
 		}
 		sm->unlock();
-	
-#ifndef Q_WS_WIN
-		return poll(&fd_vec[0],i,-1);
-#else
-		return mingw_poll(&fd_vec[0],i,-1);
-#endif
+		return poll();
 	}
 	
 	void DownloadThread::wakeUp()

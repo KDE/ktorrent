@@ -43,6 +43,7 @@
 #include "httpannouncejob.h"
 #include "kioannouncejob.h"
 
+
 namespace bt
 {
 	bool HTTPTracker::proxy_on = false;
@@ -211,7 +212,7 @@ namespace bt
 			return;
 		}
 
-		Uint16 port = Globals::instance().getServer().getPortInUse();;
+		Uint16 port = ServerInterface::getPort();
 		
 		u.addQueryItem("peer_id",peer_id.toString());
 		u.addQueryItem("port",QString::number(port));

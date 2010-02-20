@@ -3,6 +3,7 @@ find_package(KDE4 REQUIRED)
 find_package(KDE4Internal REQUIRED)
 find_package(GMP REQUIRED)
 find_package(QCA2 REQUIRED)
+find_package(Boost REQUIRED)
 
 # backward compatibility to <= KDE 4.1
 MACRO_ENSURE_VERSION( "4.1.83" ${KDE_VERSION} KDE_VERSION_OK)

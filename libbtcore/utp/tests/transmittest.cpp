@@ -20,18 +20,65 @@
 
 #include <QtTest>
 #include <QObject>
+#include <QFile>
+#include <QTextStream>
 #include <util/log.h>
 #include <utp/connection.h>
 #include <utp/utpsocket.h>
 #include <utp/utpserver.h>
 #include <util/functions.h>
 #include <unistd.h>
-
+#include <util/sha1hash.h>
+#include <util/sha1hashgen.h>
 
 #define BYTES_TO_SEND 1024*1024
 
 using namespace utp;
 using namespace bt;
+
+static QByteArray Generate(int size)
+{
+	QByteArray ba(size,0);
+/*	for (int i = 0;i < size;i+=4)
+	{
+		ba[i] = 'A';
+		ba[i+1] = 'B';
+		ba[i+2] = 'C';
+		ba[i+3] = 'D';
+	}
+	*/
+	for (int i = 0;i < size;i++)
+	{
+		ba[i] = i % 256;
+	}
+	return ba;
+}
+
+static void Dump(const bt::Uint8* pkt, bt::Uint32 size,const QString & file)
+{
+	QFile fptr(file);
+	if (fptr.open(QIODevice::Text|QIODevice::WriteOnly))
+	{
+		QTextStream out(&fptr);
+		out << "Packet: " << size << ::endl;
+		out << "Hash:   " << bt::SHA1Hash::generate(pkt,size).toString() << ::endl;
+		
+		for (bt::Uint32 i = 0;i < size;i+=4)
+		{
+			if (i > 0 && i % 32 == 0)
+				out << ::endl;
+			
+			out << QString("%1%2%3%4 ")
+					.arg(pkt[i],2,16)
+					.arg(pkt[i+1],2,16)
+					.arg(pkt[i+2],2,16)
+					.arg(pkt[i+3],2,16);
+		}
+		
+		out << ::endl << ::endl << ::endl;
+	}
+}
+
 
 class SendThread : public QThread
 {
@@ -43,15 +90,21 @@ public:
 	
 	virtual void run()
 	{
-		QByteArray data(1024,0);
+		QByteArray data = Generate(1024);
+		bt::SHA1HashGen hgen;
+		
 		int sent = 0;
+		int off = 0;
 		while (sent < BYTES_TO_SEND)
 		{
-			int to_send = 1024;
-			int ret = outgoing->send((const bt::Uint8*)data.data(),to_send);
+			int to_send = 1024 - off;
+			int ret = outgoing->send((const bt::Uint8*)data.data() + off,to_send);
 			if (ret > 0)
 			{
+				hgen.update((const bt::Uint8*)data.data() + off,ret);
 				sent += ret;
+				off += ret;
+				off = off % 1024;
 			}
 			else
 			{
@@ -62,9 +115,11 @@ public:
 		sleep(2);
 		Out(SYS_GEN|LOG_DEBUG) << "Transmitted " << sent << endl;
 		outgoing->dumpStats();
+		sent_hash = hgen.get();
 	}
 	
 	Connection* outgoing;
+	bt::SHA1Hash sent_hash;
 };
 
 class TransmitTest : public QEventLoop
@@ -102,6 +157,7 @@ private slots:
 				break;
 		}
 		
+		srv.setCreateSockets(false);
 		srv.start();
 	}
 	
@@ -121,6 +177,8 @@ private slots:
 		QVERIFY(incoming != 0);
 	}
 	
+	
+	
 	void testThreaded()
 	{
 		bt::Out(SYS_GEN|LOG_DEBUG) << "testThreaded" << bt::endl;
@@ -130,18 +188,26 @@ private slots:
 			return;
 		}
 		
+		bt::SHA1HashGen hgen;
+		
 		SendThread st(outgoing);
 		st.start(); // The thread will start sending a whole bunch of data
 		int received = 0;
 		while (received < BYTES_TO_SEND)
 		{
 			bt::Uint32 ba = incoming->bytesAvailable();
+			Out(SYS_GEN|LOG_DEBUG) << "Available " << ba << endl;
 			if (ba > 0)
 			{
 				QByteArray data(ba,0);
-				int ret = incoming->recv((bt::Uint8*)data.data(),ba);
+				int to_read = ba;//;qMin<bt::Uint32>(1024,ba);
+				int ret = incoming->recv((bt::Uint8*)data.data(),to_read);
+				QVERIFY(ret == to_read);
 				if (ret > 0)
+				{
+					hgen.update((bt::Uint8*)data.data(),ret);
 					received += ret;
+				}
 			}
 			else
 			{
@@ -157,6 +223,11 @@ private slots:
 		QVERIFY(incoming->bytesAvailable() == 0);
 		QVERIFY(outgoing->allDataSent());
 		QVERIFY(received >= BYTES_TO_SEND);
+		
+		SHA1Hash rhash = hgen.get();
+		Out(SYS_GEN|LOG_DEBUG) << "Received data hash: " << rhash.toString() << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Sent data hash:     " << st.sent_hash.toString() << endl;
+		QVERIFY(rhash == st.sent_hash);
 		
 	}
 	

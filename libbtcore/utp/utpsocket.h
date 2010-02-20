@@ -52,10 +52,14 @@ namespace utp
 		virtual const net::Address & getPeerName() const;
 		virtual net::Address getSockName() const;
 		virtual void reset();
-		virtual void setRemoteAddress(const net::Address & a);
+		virtual void prepare(net::Poll* p, net::Poll::Mode mode);
+		virtual bool ready(const net::Poll* p, net::Poll::Mode mode) const;
+		
 	private:
 		Connection* conn;
 		bool blocking;
+		mutable bool polled_for_reading;
+		mutable bool polled_for_writing;
 	};
 }
 

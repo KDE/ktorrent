@@ -58,6 +58,8 @@ private slots:
 			else
 				port++;
 		}
+		
+		bt::Globals::instance().getUTPServer().setCreateSockets(false);
 	}
 	
 	void cleanupTestCase()

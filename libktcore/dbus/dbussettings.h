@@ -184,6 +184,12 @@ namespace kt
 		Q_SCRIPTABLE void setUseQHttpAnnounce(bool val);
 		Q_SCRIPTABLE bool lookUpHostnameOfPeers();
 		Q_SCRIPTABLE void setLookUpHostnameOfPeers(bool val);
+		Q_SCRIPTABLE bool utpEnabled();
+		Q_SCRIPTABLE void setUtpEnabled(bool val);
+		Q_SCRIPTABLE bool onlyUseUtp();
+		Q_SCRIPTABLE void setOnlyUseUtp(bool val);
+		Q_SCRIPTABLE int primaryTransportProtocol();
+		Q_SCRIPTABLE void setPrimaryTransportProtocol(int val);
 
 		Q_SCRIPTABLE void apply();
 	private:

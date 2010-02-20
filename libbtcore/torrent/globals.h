@@ -49,15 +49,16 @@ namespace bt
 	public:
 		virtual ~Globals();
 		
-		bool initServer(Uint16 port);
-		void shutdownServer();
+		bool initTCPServer(Uint16 port);
+		void shutdownTCPServer();
 		
 		bool initUTPServer(Uint16 port);
 		void shutdownUTPServer();
 		
 		bool isUTPEnabled() const {return utp_server != 0;}
+		bool isTCPEnabled() const {return tcp_server != 0;}
 
-		Server & getServer() {return *server;}
+		Server & getTCPServer() {return *tcp_server;}
 		dht::DHTBase & getDHT() {return *dh_table;}
 		net::PortList & getPortList() {return *plist;}
 		utp::UTPServer & getUTPServer() {return *utp_server;}
@@ -67,7 +68,7 @@ namespace bt
 	private:
 		Globals();
 		
-		Server* server;
+		Server* tcp_server;
 		dht::DHTBase* dh_table;
 		net::PortList* plist;
 		utp::UTPServer* utp_server;

@@ -26,7 +26,7 @@ using namespace bt;
 namespace net
 {
 
-	WakeUpPipe::WakeUpPipe() 
+	WakeUpPipe::WakeUpPipe() : woken_up(false)
 	{
 	}
 
@@ -37,15 +37,32 @@ namespace net
 
 	void WakeUpPipe::wakeUp()
 	{
+		QMutexLocker lock(&mutex);
+		if (woken_up)
+			return;
+		
 		char dummy[] = "dummy";
 		if (bt::Pipe::write((const bt::Uint8*)dummy,5) != 5)
 			Out(SYS_GEN|LOG_DEBUG) << "WakeUpPipe: wake up failed " << endl;
+		else
+			woken_up = true;
 	}
 		
 	void WakeUpPipe::handleData()
 	{
+		QMutexLocker lock(&mutex);
 		bt::Uint8 buf[20];
-		if (bt::Pipe::read(buf,20) < 0)
-			Out(SYS_GEN|LOG_DEBUG) << "WakeUpPipe: read failed" << endl;
+		int ret = bt::Pipe::read(buf,20);
+		if (ret < 0)
+			Out(SYS_GEN|LOG_DEBUG) << "WakeUpPipe: read failed " << endl;
+		
+		woken_up = false;
 	}
+	
+	
+	void WakeUpPipe::reset()
+	{
+		// Do nothing
+	}
+
 }

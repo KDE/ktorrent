@@ -20,6 +20,7 @@
 #ifndef MSEENCRYPTEDAUTHENTICATE_H
 #define MSEENCRYPTEDAUTHENTICATE_H
 
+#include <util/constants.h>
 #include <util/sha1hash.h>
 #include <peer/authenticate.h>
 #include "bigint.h"
@@ -40,7 +41,7 @@ namespace mse
 	{
 		Q_OBJECT
 	public:
-		EncryptedAuthenticate(const QString& ip, Uint16 port, const bt::SHA1Hash& info_hash, const bt::PeerID& peer_id, bt::PeerManager* pman);
+		EncryptedAuthenticate(const QString& ip, Uint16 port, bt::TransportProtocol proto, const bt::SHA1Hash& info_hash, const bt::PeerID& peer_id, bt::PeerConnector* pcon);
 		virtual ~EncryptedAuthenticate();
 		
 	private slots:

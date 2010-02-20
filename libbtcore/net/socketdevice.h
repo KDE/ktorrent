@@ -23,11 +23,11 @@
 
 #include <btcore_export.h>
 #include <util/constants.h>
-#include "address.h"
+#include <net/poll.h>
+#include <net/address.h>
 
 namespace net
 {
-
 	class SocketDevice
 	{
 	public:
@@ -61,15 +61,23 @@ namespace net
 		* Set the remote address, used by Socks to set the actual address.
 		* @param addr The address
 		*/
-		virtual void setRemoteAddress(const Address & a) = 0;
+		void setRemoteAddress(const Address & a) {addr = a; remote_addr_override = true;}
 		
 		/// reset the socket (i.e. close it and create a new one)
 		virtual void reset() = 0;
 		
 		State state() const {return m_state;}
 		
+		/// Prepare for polling
+		virtual void prepare(Poll* p,Poll::Mode mode) = 0;
+		
+		/// Check if the socket is ready according to the poll
+		virtual bool ready(const Poll* p,Poll::Mode mode) const = 0;
+		
 	protected:
 		State m_state;
+		Address addr;
+		bool remote_addr_override;
 	};
 
 }

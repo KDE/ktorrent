@@ -23,15 +23,24 @@
 #include <util/sha1hash.h>
 #include <util/functions.h>
 #include <peer/peermanager.h>
+#include <peer/authenticationmonitor.h>
+#include <peer/accessmanager.h>
+#include <peer/serverauthenticate.h>
 #include <torrent/torrent.h>
+#include <mse/streamsocket.h>
+#include <mse/encryptedserverauthenticate.h>
 
 namespace bt
 {
 	QList<PeerManager*> ServerInterface::peer_managers;
 	bool ServerInterface::encryption = false;
 	bool ServerInterface::allow_unencrypted = true;
+	Uint16 ServerInterface::port = 6881;
+	bool ServerInterface::utp_enabled = false;
+	bool ServerInterface::only_use_utp = false;
+	TransportProtocol ServerInterface::primary_transport_protocol = TCP;
 	
-	ServerInterface::ServerInterface(QObject* parent): QObject(parent),port(0)
+	ServerInterface::ServerInterface(QObject* parent): QObject(parent)
 	{
 
 	}
@@ -111,6 +120,48 @@ namespace bt
 		possible << QHostAddress(QHostAddress::AnyIPv6).toString() << QHostAddress(QHostAddress::Any).toString();
 		return possible;
 	}
+	
+	
+	void ServerInterface::newConnection(mse::StreamSocket* s)
+	{
+		if (peer_managers.count() == 0)
+		{
+			s->close();
+			delete s;
+		}
+		else
+		{
+			if (!AccessManager::instance().allowed(s->getRemoteAddress()))
+			{
+				Out(SYS_CON|LOG_DEBUG) << "A client with a blocked IP address ("<< s->getRemoteIPAddress() << ") tried to connect !" << endl;
+				delete s;
+				return;
+			}
+			
+			ServerAuthenticate* auth = 0;
+			
+			if (encryption)
+				auth = new mse::EncryptedServerAuthenticate(s);
+			else
+				auth = new ServerAuthenticate(s);
+			
+			AuthenticationMonitor::instance().add(auth);
+		}
+	}
+
+	void ServerInterface::setPrimaryTransportProtocol(TransportProtocol proto)
+	{
+		primary_transport_protocol = proto;
+	}
+	
+	
+	void ServerInterface::setUtpEnabled(bool on, bool only_utp)
+	{
+		utp_enabled = on;
+		only_use_utp = only_utp;
+	}
+
+
 
 }
 

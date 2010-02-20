@@ -33,3 +33,11 @@ target_link_libraries( fintest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore)
 set(sockettest_SRCS sockettest.cpp)
 kde4_add_unit_test(sockettest TESTNAME sockettest ${sockettest_SRCS})
 target_link_libraries( sockettest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore)
+
+set(utppolltest_SRCS utppolltest.cpp)
+kde4_add_unit_test(utppolltest TESTNAME utppolltest ${utppolltest_SRCS})
+target_link_libraries( utppolltest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore)
+
+#set(congestiontest_SRCS congestiontest.cpp)
+#kde4_add_unit_test(congestiontest TESTNAME congestiontest ${congestiontest_SRCS})
+#target_link_libraries( congestiontest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} btcore)

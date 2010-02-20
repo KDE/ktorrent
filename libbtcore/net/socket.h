@@ -49,8 +49,10 @@ namespace net
 		virtual bool setTOS(unsigned char type_of_service);
 		virtual const Address & getPeerName() const {return addr;}
 		virtual Address getSockName() const;
-		virtual void setRemoteAddress(const Address & a) {addr = a;}
-		virtual void reset(); 
+		
+		virtual void reset();
+		virtual void prepare(Poll* p,Poll::Mode mode);
+		virtual bool ready(const Poll* p,Poll::Mode mode) const;
 		
 		bool bind(const QString & ip,Uint16 port,bool also_listen);
 		bool bind(const Address & addr,bool also_listen);
@@ -73,7 +75,8 @@ namespace net
 	private:
 		int m_fd;
 		int m_ip_version;
-		Address addr;
+		int r_poll_index;
+		int w_poll_index;
 	};
 
 }

@@ -68,9 +68,6 @@ namespace bt
 		
 		void close();
 
-	private:
-		void newConnection(int sock);
-
 	private slots:
 		void readyToAccept(int fd);
 	};

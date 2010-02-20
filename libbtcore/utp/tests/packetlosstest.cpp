@@ -43,7 +43,9 @@ class PacketLossServer : public UTPServer
 	Q_OBJECT
 public:
 	PacketLossServer(QObject* parent = 0) : UTPServer(parent),packet_loss(false),loss_factor(0.5)
-	{}
+	{
+		setCreateSockets(false);
+	}
 	
 	virtual ~PacketLossServer()
 	{}

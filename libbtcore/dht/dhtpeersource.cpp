@@ -89,7 +89,7 @@ namespace dht
 		if (curr_task)
 			return true;
 		
-		Uint16 port = bt::Globals::instance().getServer().getPortInUse();
+		Uint16 port = ServerInterface::getPort();
 		curr_task = dh_table.announce(info_hash,port);
 		if (curr_task)
 		{

@@ -137,6 +137,9 @@ namespace utp
 		/// Get the number of bytes available
 		bt::Uint32 bytesAvailable() const;
 		
+		/// Can we write to this socket
+		bool isWriteable() const;
+		
 		/// Wait until the connectTo call fails or succeeds
 		bool waitUntilConnected();
 		

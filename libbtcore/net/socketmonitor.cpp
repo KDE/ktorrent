@@ -42,6 +42,11 @@ namespace net
 
 	SocketMonitor::~SocketMonitor()
 	{
+		shutdown();
+	}
+	
+	void SocketMonitor::shutdown()
+	{
 		if (ut && ut->isRunning())
 		{
 			ut->stop();
@@ -52,7 +57,7 @@ namespace net
 				ut->wait();
 			}
 		}
-			
+		
 		
 		if (dt && dt->isRunning())
 		{
@@ -67,7 +72,10 @@ namespace net
 		
 		delete ut;
 		delete dt;
+		ut = 0;
+		dt = 0;
 	}
+
 	
 	void SocketMonitor::lock()
 	{

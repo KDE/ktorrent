@@ -20,7 +20,10 @@
 #ifndef KTWAKEUPPIPE_H
 #define KTWAKEUPPIPE_H
 
+#include <btcore_export.h>
 #include <util/pipe.h>
+#include <net/poll.h>
+#include <QMutex>
 
 namespace net
 {
@@ -31,17 +34,24 @@ namespace net
 		One end needs to be part of the poll or select, and the other end will send dummy data to it.
 		Waking up the select or poll call.
 	*/
-	class WakeUpPipe : public bt::Pipe
+	class BTCORE_EXPORT WakeUpPipe : public bt::Pipe, public PollClient
 	{
 	public:
 		WakeUpPipe();
 		virtual ~WakeUpPipe();
 		
 		/// Wake up the other socket
-		void wakeUp();
+		virtual void wakeUp();
 		
 		/// Read all the dummy data
-		void handleData();
+		virtual void handleData();
+		
+		virtual int fd() const {return readerSocket();}
+		
+		virtual void reset();
+	private:
+		QMutex mutex;
+		bool woken_up;
 	};
 
 }

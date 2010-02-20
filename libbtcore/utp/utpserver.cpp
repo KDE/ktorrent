@@ -24,6 +24,9 @@
 #include <time.h>
 #include <util/log.h>
 #include <util/constants.h>
+#include <mse/streamsocket.h>
+#include <torrent/globals.h>
+#include <net/portlist.h>
 #include "utpprotocol.h"
 #include "utpserverthread.h"
 #include "utpsocket.h"
@@ -32,13 +35,24 @@
 #include <util/win32.h>
 #endif
 
+
+
 using namespace bt;
 
 namespace utp
 {
-	UTPServer::UTPServer(QObject* parent) : ServerInterface(parent),sock(0),running(false),utp_thread(0),mutex(QMutex::Recursive)
+
+	UTPServer::UTPServer(QObject* parent) 
+		: ServerInterface(parent),
+		sock(0),
+		running(false),
+		utp_thread(0),
+		mutex(QMutex::Recursive),
+		create_sockets(true)
 	{
 		qsrand(time(0));
+		connect(this,SIGNAL(accepted(Connection*)),this,SLOT(onAccepted(Connection*)),Qt::QueuedConnection);
+		poll_pipes.setAutoDelete(true);
 	}
 
 	UTPServer::~UTPServer()
@@ -48,12 +62,15 @@ namespace utp
 	}
 	
 	
-	bool UTPServer::changePort(bt::Uint16 port)
+	bool UTPServer::changePort(bt::Uint16 p)
 	{
+		if (sock && port == p)
+			return true;
+		
 		QStringList possible = bindAddresses();
 		foreach (const QString & ip,possible)
 		{
-			net::Address addr(ip,port);
+			net::Address addr(ip,p);
 			if (bind(addr))
 				return true;
 		}
@@ -64,7 +81,14 @@ namespace utp
 
 	bool UTPServer::bind(const net::Address& addr)
 	{
+		if (sock)
+		{
+			Globals::instance().getPortList().removePort(port,net::UDP);
+			delete sock;
+		}
+		
 		sock = new net::Socket(false,addr.ipVersion());
+		sock->setBlocking(false);
 		if (!sock->bind(addr,false))
 		{
 			delete sock;
@@ -73,6 +97,7 @@ namespace utp
 		}
 		
 		Out(SYS_CON|LOG_NOTICE) << "UTP: bound to " << addr.toString() << endl;
+		Globals::instance().getPortList().addNewPort(port,net::UDP,true);
 		return true;
 	}
 
@@ -105,7 +130,7 @@ namespace utp
 		net::Address addr;
 		if (sock->recvFrom((bt::Uint8*)packet.data(),ba,addr) > 0)
 		{
-			Out(SYS_CON|LOG_NOTICE) << "UTP: received " << ba << " bytes packet from " << addr.toString() << endl;
+		//	Out(SYS_CON|LOG_NOTICE) << "UTP: received " << ba << " bytes packet from " << addr.toString() << endl;
 			// discard packets which are to small
 			if (ba < (int)sizeof(utp::Header))
 				return;
@@ -280,6 +305,7 @@ namespace utp
 			sock->close();
 			delete sock;
 			sock = 0;
+			Globals::instance().getPortList().removePort(port,net::UDP);
 		}
 	}
 	
@@ -296,11 +322,61 @@ namespace utp
 	void UTPServer::checkTimeouts()
 	{
 		QMutexLocker lock(&mutex);
+	
 		ConItr itr = connections.begin();
 		while (itr != connections.end())
 		{
-			(*itr).second->checkTimeout();
+			itr->second->checkTimeout();
+			
+			for (PollPipePairItr p = poll_pipes.begin();p != poll_pipes.end();p++)
+				p->second->test(itr->second);
 			itr++;
+		}
+	}
+
+
+	void UTPServer::preparePolling(net::Poll* p, net::Poll::Mode mode,Connection* conn)
+	{
+		QMutexLocker lock(&mutex);
+		PollPipePair* pair = poll_pipes.find(p);
+		if (!pair)
+		{
+			pair = new PollPipePair();
+			poll_pipes.insert(p,pair);
+		}
+		
+		if (mode == net::Poll::INPUT)
+		{
+			pair->read_pipe.prepare(p,conn->receiveConnectionID());
+		}
+		else
+		{
+			pair->write_pipe.prepare(p,conn->receiveConnectionID());
+		}
+	}
+	
+	void UTPServer::onAccepted(Connection* conn)
+	{
+		if (create_sockets)
+			newConnection(new mse::StreamSocket(new UTPSocket(conn)));
+	}
+	
+	UTPServer::PollPipePair::PollPipePair() : read_pipe(net::Poll::INPUT),write_pipe(net::Poll::OUTPUT)
+	{
+		
+	}
+	
+	
+	void UTPServer::PollPipePair::test(Connection* conn)
+	{
+		if (read_pipe.readyToWakeUp(conn))
+		{
+			read_pipe.wakeUp();
+		}
+		
+		if (write_pipe.readyToWakeUp(conn))
+		{
+			write_pipe.wakeUp();
 		}
 	}
 

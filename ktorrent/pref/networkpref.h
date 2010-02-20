@@ -41,6 +41,10 @@ namespace kt
 		virtual void loadDefaults();
 	signals:
 		void calculateRecommendedSettings();
+		
+	private slots:
+		void utpEnabled(bool on);
+		void onlyUseUtpEnabled(bool on);
 	};
 
 }

@@ -30,7 +30,7 @@ namespace bt
 	/**
 		Cross platform pipe implementation, uses socketpair on unix and a TCP connection over the localhost in windows.
 	*/
-	class Pipe
+	class BTCORE_EXPORT Pipe
 	{
 	public:
 		Pipe();

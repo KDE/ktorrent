@@ -26,10 +26,40 @@
 #include "remotewindow.h"
 
 
+#include <QFile>
+#include <QTextStream>
+#include <util/sha1hash.h>
+
 using namespace bt;
 
 namespace utp
 {
+	/*
+	static void Dump(const bt::Uint8* pkt, bt::Uint32 size,const QString & file)
+	{
+		QFile fptr(file);
+		if (fptr.open(QIODevice::Text|QIODevice::Append))
+		{
+			QTextStream out(&fptr);
+			out << "Packet: " << size << ::endl;
+			out << "Hash:   " << bt::SHA1Hash::generate(pkt,size).toString() << ::endl;
+			
+			for (bt::Uint32 i = 0;i < size;i+=4)
+			{
+				if (i > 0 && i % 32 == 0)
+					out << ::endl;
+				
+				out << QString("%1%2%3%4 ")
+				.arg(pkt[i],2,16)
+				.arg(pkt[i+1],2,16)
+				.arg(pkt[i+2],2,16)
+				.arg(pkt[i+3],2,16);
+			}
+			
+			out << ::endl << ::endl << ::endl;
+		}
+	}*/
+	
 	Connection::Connection(bt::Uint16 recv_connection_id, Type type, const net::Address& remote, Transmitter* transmitter) 
 		: transmitter(transmitter)
 	{
@@ -44,7 +74,7 @@ namespace utp
 		stats.rtt = 100;
 		stats.rtt_var = 0;
 		stats.timeout = 1000;
-		stats.packet_size = 1400;
+		stats.packet_size = 1500 - IP_AND_UDP_OVERHEAD - sizeof(utp::Header);
 		stats.last_window_size_transmitted = 64*1024;
 		if (type == OUTGOING)
 		{
@@ -122,7 +152,7 @@ namespace utp
 		const SelectiveAck* sack = parser.selectiveAck();
 		int data_off = parser.dataOffset();
 		
-		DumpPacket(*hdr,sack);
+		//DumpPacket(*hdr,sack);
 		
 		updateDelayMeasurement(hdr);
 		remote_wnd->packetReceived(hdr,sack,this);
@@ -167,7 +197,7 @@ namespace utp
 					// push data into local window
 					int s = packet.size() - data_off;
 					local_wnd->packetReceived(hdr,(const bt::Uint8*)packet.data() + data_off,s);
-					if (local_wnd->fill() > 0)
+					if (local_wnd->size() > 0)
 						data_ready.wakeAll();
 					
 					// send back an ACK 
@@ -201,13 +231,13 @@ namespace utp
 						// push data into local window
 						int s = packet.size() - data_off;
 						local_wnd->packetReceived(hdr,(const bt::Uint8*)packet.data() + data_off,s);
-						if (local_wnd->fill() > 0)
+						if (local_wnd->size() > 0)
 							data_ready.wakeAll();
 					}
 					
 					// send back an ACK 
 					sendStateOrData();
-					if (stats.state == CS_FINISHED && !fin_sent && output_buffer.fill() == 0)
+					if (stats.state == CS_FINISHED && !fin_sent && output_buffer.size() == 0)
 					{
 						sendFIN();
 						fin_sent = true;
@@ -360,13 +390,24 @@ namespace utp
 		double window_factor = remote_wnd->windowUsageFactor();
 		double scaled_gain = MAX_CWND_INCREASE_PACKETS_PER_RTT * delay_factor * window_factor;
 		
+		remote_wnd->updateWindowSize(scaled_gain);
+		if (remote_wnd->maxWindow() <= MIN_PACKET_SIZE)
+			stats.packet_size = MIN_PACKET_SIZE;
+		else if (remote_wnd->maxWindow() <= 1000)
+			stats.packet_size = 500;
+		else if (remote_wnd->maxWindow() <= 5000)
+			stats.packet_size = 1000;
+		else
+			stats.packet_size = 1500 - IP_AND_UDP_OVERHEAD - sizeof(utp::Header);
+	
+		/*
 		Out(SYS_GEN|LOG_DEBUG) << "base_delay " << base_delay << endl;
 		Out(SYS_GEN|LOG_DEBUG) << "our_delay " << our_delay << endl;
 		Out(SYS_GEN|LOG_DEBUG) << "off_target " << off_target << endl;
 		Out(SYS_GEN|LOG_DEBUG) << "delay_factor " << delay_factor << endl;
 		Out(SYS_GEN|LOG_DEBUG) << "window_factor " << window_factor << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "scaled_gain " << scaled_gain << endl;
-		remote_wnd->updateWindowSize(scaled_gain);
+		Out(SYS_GEN|LOG_DEBUG) << "scaled_gain " << scaled_gain << endl; 
+		Out(SYS_GEN|LOG_DEBUG) << "packet_size " << stats.packet_size << endl;*/
 	}
 
 	int Connection::send(const bt::Uint8* data, Uint32 len)
@@ -385,17 +426,19 @@ namespace utp
 	{
 		// chop output_buffer data in packets and keep sending
 		// until we are no longer allowed or the buffer is empty
-		while (output_buffer.fill() > 0 && remote_wnd->availableSpace() > 0)
+		while (output_buffer.size() > 0 && remote_wnd->availableSpace() > 0)
 		{
-			bt::Uint32 to_read = qMin(output_buffer.fill(),remote_wnd->availableSpace());
+			bt::Uint32 to_read = qMin(output_buffer.size(),remote_wnd->availableSpace());
 			to_read = qMin(to_read,stats.packet_size);
 			
 			QByteArray packet(to_read,0);
-			output_buffer.read((bt::Uint8*)packet.data(),to_read);
+			if (output_buffer.read((bt::Uint8*)packet.data(),to_read) != to_read)
+				Out(SYS_CON|LOG_DEBUG) << "Output buffer read failed " << endl;
+		
 			sendDataPacket(packet);
 		}
 		
-		if (stats.state == CS_FINISHED && !fin_sent && output_buffer.fill() == 0)
+		if (stats.state == CS_FINISHED && !fin_sent && output_buffer.size() == 0)
 		{
 			sendFIN();
 			fin_sent = true;
@@ -404,7 +447,7 @@ namespace utp
 
 	void Connection::sendStateOrData()
 	{
-		if (output_buffer.fill() > 0 && remote_wnd->availableSpace() > 0)
+		if (output_buffer.size() > 0 && remote_wnd->availableSpace() > 0)
 			sendPackets();
 		else
 			sendState();
@@ -496,7 +539,13 @@ namespace utp
 	bt::Uint32 Connection::bytesAvailable() const
 	{
 		QMutexLocker lock(&mutex);
-		return local_wnd->fill();
+		return local_wnd->size();
+	}
+
+	bool Connection::isWriteable() const
+	{
+		QMutexLocker lock(&mutex);
+		return remote_wnd->availableSpace() > 0 && stats.state == CS_CONNECTED;
 	}
 
 	int Connection::recv(Uint8* buf, Uint32 max_len)
@@ -505,7 +554,7 @@ namespace utp
 		if (stats.state == CS_FINISHED)
 			checkIfClosed();
 		
-		if (local_wnd->fill() == 0 && stats.state == CS_CLOSED)
+		if (local_wnd->size() == 0 && stats.state == CS_CLOSED)
 			return -1;
 		
 		bt::Uint32 ret = local_wnd->read(buf,max_len);
@@ -532,7 +581,7 @@ namespace utp
 	{
 		mutex.lock();
 		data_ready.wait(&mutex);
-		bool ret = local_wnd->fill() > 0;
+		bool ret = local_wnd->size() > 0;
 		mutex.unlock();
 		return ret;
 	}
@@ -607,7 +656,7 @@ namespace utp
 	bool Connection::allDataSent() const
 	{
 		QMutexLocker lock(&mutex);
-		return remote_wnd->allPacketsAcked() && output_buffer.fill() == 0;
+		return remote_wnd->allPacketsAcked() && output_buffer.size() == 0;
 	}
 
 }

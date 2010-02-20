@@ -39,10 +39,11 @@ namespace mse
 	EncryptedAuthenticate::EncryptedAuthenticate(
 			const QString& ip, 
 			Uint16 port, 
+			TransportProtocol proto,
 			const SHA1Hash& info_hash, 
 			const PeerID& peer_id, 
-			PeerManager* pman)
-	: Authenticate(ip, port, info_hash, peer_id, pman)
+			PeerConnector* pcon)
+	: Authenticate(ip, port, proto, info_hash, peer_id, pcon)
 	{
 		mse::GeneratePublicPrivateKey(xa,ya);
 		state = NOT_CONNECTED;
@@ -130,7 +131,7 @@ namespace mse
 		
 		// now we must send ENCRYPT(VC, crypto_provide, len(PadC), PadC, len(IA))
 		memset(tmp_buf,0,16); // VC are 8 0x00's
-		if (Globals::instance().getServer().unencryptedConnectionsAllowed())
+		if (bt::ServerInterface::unencryptedConnectionsAllowed())
 			tmp_buf[11] = 0x03; // we support both plain text and rc4
 		else
 			tmp_buf[11] = 0x02;

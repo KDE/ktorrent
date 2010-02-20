@@ -768,4 +768,34 @@ namespace kt
 		Settings::setLookUpHostnameOfPeers(val);
 	}
 
+	bool DBusSettings::utpEnabled()
+	{
+		return Settings::utpEnabled();
+	}
+
+	void DBusSettings::setUtpEnabled(bool val)
+	{
+		Settings::setUtpEnabled(val);
+	}
+
+	bool DBusSettings::onlyUseUtp()
+	{
+		return Settings::onlyUseUtp();
+	}
+
+	void DBusSettings::setOnlyUseUtp(bool val)
+	{
+		Settings::setOnlyUseUtp(val);
+	}
+
+	int DBusSettings::primaryTransportProtocol()
+	{
+		return Settings::primaryTransportProtocol();
+	}
+
+	void DBusSettings::setPrimaryTransportProtocol(int val)
+	{
+		Settings::setPrimaryTransportProtocol(val);
+	}
+
 }

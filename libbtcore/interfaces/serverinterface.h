@@ -26,6 +26,11 @@
 #include <btcore_export.h>
 #include <util/constants.h>
 
+namespace mse
+{
+	class StreamSocket;
+}
+
 namespace bt
 {
 	class SHA1Hash;
@@ -41,14 +46,18 @@ namespace bt
 		ServerInterface(QObject* parent = 0);
 		virtual ~ServerInterface();
 		
+		
 		/**
 		* Change the port.
 		* @param port The new port
 		*/
 		virtual bool changePort(Uint16 port) = 0;
 		
+		/// Set the port to use
+		static void setPort(Uint16 p) {port = p;}
+		
 		/// Get the port in use
-		Uint16 getPortInUse() const {return port;}
+		static Uint16 getPort() {return port;}
 		
 		/**
 		 * Add a PeerManager.
@@ -98,11 +107,23 @@ namespace bt
 		*/
 		static QStringList bindAddresses();
 		
+		static void setUtpEnabled(bool on,bool only_use_utp);
+		static bool isUtpEnabled() {return utp_enabled;}
+		static bool onlyUseUtp() {return only_use_utp;}
+		static void setPrimaryTransportProtocol(TransportProtocol proto);
+		static TransportProtocol primaryTransportProtocol() {return primary_transport_protocol;}
+		
 	protected:
-		Uint16 port;
+		void newConnection(mse::StreamSocket* sock);
+		
+	protected:
+		static Uint16 port;
 		static QList<PeerManager*> peer_managers;
 		static bool encryption;
 		static bool allow_unencrypted;
+		static bool utp_enabled;
+		static bool only_use_utp;
+		static TransportProtocol primary_transport_protocol;
 	};
 
 }

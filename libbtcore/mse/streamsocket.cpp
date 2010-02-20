@@ -67,6 +67,16 @@ namespace mse
 		sock->socketDevice()->setTOS(tos);
 	}
 
+	StreamSocket::StreamSocket(net::SocketDevice* sd)  : sock(0),enc(0),monitored(false)
+	{
+		sock = new BufferedSocket(sd);
+		sd->setBlocking(false);
+		reinserted_data = 0;
+		reinserted_data_size = 0;
+		reinserted_data_read = 0;
+		sock->socketDevice()->setTOS(tos);
+	}
+
 	StreamSocket::~StreamSocket()
 	{
 		// make sure the number of connecting sockets is updated

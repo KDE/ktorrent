@@ -23,11 +23,8 @@
 #include <list>
 #include <vector>
 #include <btcore_export.h>
-#ifdef Q_WS_WIN
-#include <util/win32.h>
-#endif
+#include <net/poll.h>
 
-struct pollfd;
 
 namespace bt
 {
@@ -38,10 +35,9 @@ namespace bt
 	
 		Monitors ongoing authentication attempts. This class is a singleton.
 	*/
-	class BTCORE_EXPORT AuthenticationMonitor
+	class BTCORE_EXPORT AuthenticationMonitor : public net::Poll
 	{
 		std::list<AuthenticateBase*> auths;
-		std::vector<struct pollfd> fd_vec;
 		
 		static AuthenticationMonitor self;
 		

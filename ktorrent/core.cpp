@@ -54,6 +54,8 @@
 #include <groups/groupmanager.h>
 #include <groups/group.h>
 #include <dht/dht.h>
+#include <utp/utpserver.h>
+#include <net/socketmonitor.h>
 #include <torrent/jobqueue.h>
 #include "settings.h"
 #include "core.h"
@@ -63,8 +65,6 @@
 #include "dialogs/torrentmigratordlg.h"
 #include "scanlistener.h"
 #include "tools/magnetmodel.h"
-
-
 
 
 using namespace bt;
@@ -103,13 +103,6 @@ namespace kt
 
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 		
-		Uint16 port = Settings::port();
-		if (port == 0)
-		{
-			port = 6881;
-			Settings::setPort(6881);
-		}
-		
 		// Make sure network interface is set properly before server is initialized
 		if (Settings::networkInterface() != 0)
 		{
@@ -122,30 +115,8 @@ namespace kt
 		}
 		
 		
-		Uint16 i = 0;
-		do
-		{
-			Globals::instance().initServer(port + i);
-			i++;
-		}
-		while (!Globals::instance().getServer().isOK() && i < 10);
-
-		if (Globals::instance().getServer().isOK())
-		{
-			if (port != port + i - 1)
-				gui->infoMsg(i18n("Specified port (%1) is unavailable or in"
-						" use by another application. KTorrent is now using port %2.",
-						 port,QString::number(port + i - 1)));
-
-			Out(SYS_GEN|LOG_NOTICE) << "Bound to port " << (port + i - 1) << endl;
-		}
-		else
-		{
-			gui->errorMsg(i18n("KTorrent is unable to accept connections because the ports %1 to %2 are "
-				   "already in use by another program.",port,QString::number(port + i - 1)));
-			Out(SYS_GEN|LOG_IMPORTANT) << "Cannot find free port" << endl;
-		}
-
+		startServers();
+		
 		magnet = new kt::MagnetModel(this);
 		pman = new kt::PluginManager(this,gui);
 		gman = new kt::GroupManager();
@@ -169,9 +140,82 @@ namespace kt
 		delete pman;
 		delete gman;
 	}
+	
+	
+	void Core::startServers()
+	{
+		Uint16 port = Settings::port();
+		if (port == 0)
+		{
+			port = 6881;
+			Settings::setPort(6881);
+		}
+		
+		if (Settings::utpEnabled())
+		{
+			startUTPServer(port);
+			if (!Settings::onlyUseUtp())
+				startTCPServer(port);
+		}
+		else
+		{
+			startTCPServer(port);
+		}
+	}
+	
+	void Core::startTCPServer(bt::Uint16 port)
+	{
+		if (Globals::instance().initTCPServer(port))
+		{  
+			Out(SYS_GEN|LOG_NOTICE) << "Bound to TCP port " << port << endl;
+		}
+		else
+		{
+			gui->errorMsg(i18n("KTorrent is unable to accept connections because the TCP ports %1 is "
+							"already in use by another program.",port));
+			Out(SYS_GEN|LOG_IMPORTANT) << "Cannot find free TCP port" << endl;
+		}
+	}
+
+	void Core::startUTPServer(bt::Uint16 port)
+	{
+		if (Globals::instance().initUTPServer(port))
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Bound to UDP port " << port << endl;
+		}
+		else
+		{
+			gui->errorMsg(i18n("KTorrent is unable to accept connections because the UDP port %1 is "
+					"already in use by another program.",port));
+			Out(SYS_GEN|LOG_IMPORTANT) << "Cannot find free UDP port" << endl;
+		}
+	}
+
+
 
 	void Core::applySettings()
 	{
+		bt::Uint16 port = Settings::port();
+		bool utp_enabled = Settings::utpEnabled();
+		bool tcp_enabled = utp_enabled && Settings::onlyUseUtp() ? false : true;
+		bt::Globals & globals = bt::Globals::instance();
+		
+		if (globals.isTCPEnabled() && !tcp_enabled)
+			globals.shutdownTCPServer();
+		else if (!globals.isTCPEnabled() && tcp_enabled)
+			startTCPServer(port);
+		else if (tcp_enabled && port != ServerInterface::getPort())
+			globals.getTCPServer().changePort(port);
+		
+		if (globals.isUTPEnabled() && !utp_enabled)
+			globals.shutdownUTPServer();
+		else if (!globals.isUTPEnabled() && utp_enabled)
+			startUTPServer(port);
+		else if (utp_enabled && port != ServerInterface::getPort())
+			globals.getUTPServer().changePort(port);
+		
+		ServerInterface::setUtpEnabled(utp_enabled,Settings::onlyUseUtp());
+		ServerInterface::setPrimaryTransportProtocol((bt::TransportProtocol)Settings::primaryTransportProtocol());
 		ApplySettings();
 		setMaxDownloads(Settings::maxDownloads());
 		setMaxSeeds(Settings::maxSeeds());
@@ -182,8 +226,6 @@ namespace kt
 			tmp = kt::DataDir();
 		
 		changeDataDir(tmp);
-		changePort(Settings::port());
-		
 		//update QM
 		getQueueManager()->orderQueue();
 		settingsChanged();
@@ -771,15 +813,18 @@ namespace kt
 
 	void Core::onExit()
 	{
+		// stop timer to prevent updates during wait
+		update_timer.stop();
+		
+		net::SocketMonitor::instance().shutdown();
 		magnet->saveMagnets(kt::DataDir() + "magnets");
 		// make sure DHT is stopped
 		Globals::instance().getDHT().stop();
-		// stop timer to prevent updates during wait
-		update_timer.stop();
 		// stop all authentications going on
 		AuthenticationMonitor::instance().clear();
 		// shutdown the server
-		Globals::instance().shutdownServer();
+		Globals::instance().shutdownTCPServer();
+		Globals::instance().shutdownUTPServer();
 		
 		WaitJob* job = new WaitJob(5000);
 		qman->onExit(job);
@@ -1000,9 +1045,24 @@ namespace kt
 
 	bool Core::changePort(Uint16 port)
 	{
-		bt::Server & srv = Globals::instance().getServer();
-		srv.changePort(port);
-		return srv.isOK();
+		bool ok = false;
+		if (Settings::utpEnabled())
+		{
+			utp::UTPServer & utp_srv = Globals::instance().getUTPServer();
+			ok = utp_srv.changePort(port);
+			if (!Settings::onlyUseUtp())
+			{
+				bt::Server & srv = Globals::instance().getTCPServer();
+				ok = ok && srv.changePort(port);
+			}
+		}
+		else
+		{
+			bt::Server & srv = Globals::instance().getTCPServer();
+			ok = srv.changePort(port);
+		}
+		
+		return ok;
 	}
 
 	void Core::slotStoppedByError(bt::TorrentInterface* tc, QString msg)

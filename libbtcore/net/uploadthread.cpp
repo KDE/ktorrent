@@ -41,18 +41,32 @@ namespace net
 	
 	void UploadThread::update()
 	{
+		if (waitForSocketsReady() <= 0)
+			return;
+		
+		bool group_limits = false;
 		sm->lock();
-		bt::TimeStamp now = bt::Now();
-	
+		
+		TimeStamp now = bt::Now();
 		Uint32 num_ready = 0;
-		// loop over all sockets and see which ones have data ready
 		SocketMonitor::Itr itr = sm->begin();
 		while (itr != sm->end())
 		{
 			BufferedSocket* s = *itr;
-			if (s && s->socketDevice()->ok() && s->bytesReadyToWrite())
+			if (!s->socketDevice()->ok())
 			{
-				SocketGroup* g = groups.find(s->uploadGroupID());
+				itr++;
+				continue;
+			}
+			
+			if (s->socketDevice()->ready(this,Poll::OUTPUT))
+			{
+				// add to the correct group
+				Uint32 gid = s->uploadGroupID();
+				if (gid > 0)
+					group_limits = true;
+				
+				SocketGroup* g = groups.find(gid);
 				if (!g)
 					g = groups.find(0);
 				
@@ -64,22 +78,21 @@ namespace net
 		
 		if (num_ready > 0)
 			doGroups(num_ready,now,ucap);
-		prev_run_time = now;
 		sm->unlock();
 		
-		if (num_ready == 0) // nobody was ready so go to sleep
+		// to prevent huge CPU usage sleep a bit if we are limited (either by a global limit or a group limit)
+		if (ucap > 0 || group_limits)
 		{
-			mutex.lock();
-			data_ready.wait(&mutex); 
-			mutex.unlock();
+			TimeStamp diff = now - prev_run_time;
+			if (diff < sleep_time)
+				msleep(sleep_time - diff);
 		}
-		else
-			msleep(sleep_time);
+		prev_run_time = now;
 	}
 	
 	void UploadThread::signalDataReady()
 	{
-		data_ready.wakeOne();
+		wake_up.wakeUp();
 	}
 	
 	void UploadThread::setSleepTime(Uint32 stime)
@@ -91,4 +104,28 @@ namespace net
 	{
 		return g->upload(allowance,now);
 	}
+	
+	
+	int UploadThread::waitForSocketsReady()
+	{
+		sm->lock();
+		reset();
+		// Add the wake up pipe
+		add(&wake_up);
+		
+		// fill the poll vector with all sockets
+		SocketMonitor::Itr itr = sm->begin();
+		while (itr != sm->end())
+		{
+			BufferedSocket* s = *itr;
+			if (s && s->socketDevice()->ok() && s->bytesReadyToWrite())
+			{
+				s->socketDevice()->prepare(this,Poll::OUTPUT);
+			}
+			itr++;
+		}
+		sm->unlock();
+		return poll();
+	}
+
 }

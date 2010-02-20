@@ -64,6 +64,7 @@ namespace kt
 	
 	void ApplySettings()
 	{
+		ServerInterface::setPort(Settings::port());
 		PeerManager::setMaxConnections(Settings::maxConnections());
 		PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
 		net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
@@ -100,11 +101,11 @@ namespace kt
 		
 		if (Settings::useEncryption())
 		{
-			Globals::instance().getServer().enableEncryption(Settings::allowUnencryptedConnections());
+			ServerInterface::enableEncryption(Settings::allowUnencryptedConnections());
 		}
 		else
 		{
-			Globals::instance().getServer().disableEncryption();
+			ServerInterface::disableEncryption();
 		}
 	
 		if (Settings::useCustomIP())

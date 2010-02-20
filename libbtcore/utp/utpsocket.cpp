@@ -25,14 +25,16 @@
 
 namespace utp
 {
-	UTPSocket::UTPSocket() : conn(0),blocking(true)
+	UTPSocket::UTPSocket() : conn(0),blocking(true),polled_for_reading(false),polled_for_writing(false)
 	{
 	}
 	
-	UTPSocket::UTPSocket(Connection* conn) : conn(conn),blocking(true)
+	UTPSocket::UTPSocket(Connection* conn) : conn(conn),blocking(true),polled_for_reading(false),polled_for_writing(false)
 	{
 		UTPServer & srv = bt::Globals::instance().getUTPServer();
 		srv.attach(this,conn);
+		setRemoteAddress(conn->remoteAddress());
+		m_state = CONNECTED;
 	}
 
 	UTPSocket::~UTPSocket()
@@ -57,7 +59,14 @@ namespace utp
 
 	bool UTPSocket::connectSuccesFull()
 	{
-		return conn->connectionState() == CS_CONNECTED;
+		bool ret = conn->connectionState() == CS_CONNECTED;
+		if (ret)
+		{
+			setRemoteAddress(conn->remoteAddress());
+			m_state = CONNECTED;
+		}
+			
+		return ret;
 	}
 
 	bool UTPSocket::connectTo(const net::Address& addr)
@@ -67,10 +76,17 @@ namespace utp
 		
 		conn = srv.connectTo(addr);
 		srv.attach(this,conn);
+		m_state = CONNECTING;
 		if (blocking)
-			return conn->waitUntilConnected();
+		{
+			bool ret = conn->waitUntilConnected();
+			if (ret)
+				m_state = CONNECTED;
 		
-		return true;
+			return ret;
+		}
+		
+		return conn->connectionState() == CS_CONNECTED;
 	}
 
 	int UTPSocket::fd() const
@@ -80,7 +96,9 @@ namespace utp
 
 	const net::Address& UTPSocket::getPeerName() const
 	{
-		if (conn)
+		if (remote_addr_override)
+			return addr;
+		else if (conn)
 			return conn->remoteAddress();
 		else
 			return net::Address::null;
@@ -93,20 +111,25 @@ namespace utp
 
 	bool UTPSocket::ok() const
 	{
-		return conn != 0;
+		return conn != 0 && conn->connectionState() != CS_CLOSED;
 	}
 
 	int UTPSocket::recv(bt::Uint8* buf, int max_len)
 	{
 		if (!conn || conn->connectionState() == CS_CLOSED)
-			return -1;
+			return 0;
 		
-		if (conn->bytesAvailable() == 0 && blocking)
+		if (conn->bytesAvailable() == 0)
 		{
-			if (conn->waitForData())
-				return conn->recv(buf,max_len);
+			if (blocking)
+			{
+				if (conn->waitForData())
+					return conn->recv(buf,max_len);
+				else
+					return 0; // connection should be closed now
+			}
 			else
-				return 0; // connection should be closed now
+				return -1; // No data ready and not blocking so return -1
 		}
 		else
 			return conn->recv(buf,max_len);
@@ -140,9 +163,43 @@ namespace utp
 		return false;
 	}
 
-	void UTPSocket::setRemoteAddress(const net::Address& a)
+	void UTPSocket::prepare(net::Poll* p, net::Poll::Mode mode)
 	{
-		// TODO: implement this
+		if (conn)
+		{
+			UTPServer & srv = bt::Globals::instance().getUTPServer();
+			srv.preparePolling(p,mode,conn);
+			if (mode == net::Poll::OUTPUT)
+				polled_for_writing = true;
+			else
+				polled_for_reading = true;
+		}
+	}
+
+	bool UTPSocket::ready(const net::Poll* p, net::Poll::Mode mode) const
+	{
+		Q_UNUSED(p);
+		if (!conn)
+			return false;
+		
+		if (mode == net::Poll::OUTPUT)
+		{
+			if (polled_for_writing) 
+			{
+				polled_for_writing = false;
+				return conn->isWriteable();
+			}
+		}
+		else
+		{
+			if (polled_for_reading)
+			{
+				polled_for_reading = false;
+				return bytesAvailable() > 0 || conn->connectionState() == CS_CLOSED;
+			}
+		}
+		
+		return false;
 	}
 
 }

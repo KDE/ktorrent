@@ -6,6 +6,7 @@ set (utp_HDR
 	connection.h
 	localwindow.h
 	timevalue.h
+	pollpipe.h
 )
 
 install(FILES ${utp_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/utp COMPONENT Devel)

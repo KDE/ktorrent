@@ -34,8 +34,7 @@ namespace bt
 	bool ServerAuthenticate::s_firewalled = true;
 
 
-	ServerAuthenticate::ServerAuthenticate(mse::StreamSocket* sock,Server* server)
-	: AuthenticateBase(sock),server(server)
+	ServerAuthenticate::ServerAuthenticate(mse::StreamSocket* sock) : AuthenticateBase(sock)
 	{
 	}
 
@@ -75,7 +74,7 @@ namespace bt
 		
 		// try to find a PeerManager which has te right info hash
 		SHA1Hash rh(hs+28);
-		PeerManager* pman = server->findPeerManager(rh);
+		PeerManager* pman = ServerInterface::findPeerManager(rh);
 		if (!pman)
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "Cannot find PeerManager for hash : " << rh.toString() << endl;
