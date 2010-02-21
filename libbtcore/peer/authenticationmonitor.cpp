@@ -106,23 +106,24 @@ namespace bt
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
-			mse::StreamSocket* socket = ab->getSocket();
-			if (socket)
-			{
-				net::SocketDevice* dev = socket->socketDevice();
-				if (dev->ready(this,Poll::INPUT))
-					ab->onReadyRead();
-				if (dev->ready(this,Poll::OUTPUT))
-					ab->onReadyWrite();
-			}
-			
 			if (ab->isFinished())
 			{
 				ab->deleteLater();
 				itr = auths.erase(itr);
 			}
 			else
+			{
+				mse::StreamSocket* socket = ab->getSocket();
+				if (socket)
+				{
+					net::SocketDevice* dev = socket->socketDevice();
+					if (dev->ready(this,Poll::INPUT))
+						ab->onReadyRead();
+					if (dev->ready(this,Poll::OUTPUT))
+						ab->onReadyWrite();
+				}
 				itr++;
+			}
 		}
 	}
 	

@@ -270,8 +270,10 @@ namespace net
 			{
 			//	Out(SYS_CON|LOG_DEBUG) << "Receive error : " << QString(strerror(errno)) << endl;
 				close();
+				return 0;
 			}
-			return 0;
+			
+			return ret;
 		}
 		else if (ret == 0)
 		{

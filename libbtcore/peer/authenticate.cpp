@@ -85,6 +85,9 @@ namespace bt
 	
 	void Authenticate::onReadyWrite()
 	{
+		if (!sock)
+			return;
+		
 		if (socks)
 		{
 			switch (socks->onReadyToWrite())
@@ -114,6 +117,9 @@ namespace bt
 	
 	void Authenticate::onReadyRead()
 	{
+		if (!sock)
+			return;
+		
 		if (!socks)
 		{
 			AuthenticateBase::onReadyRead();

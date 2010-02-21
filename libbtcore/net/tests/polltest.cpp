@@ -23,6 +23,7 @@
 #include <util/log.h>
 #include <util/pipe.h>
 #include <net/poll.h>
+#include <net/socket.h>
 
 using namespace net;
 using namespace bt;
@@ -111,6 +112,41 @@ private slots:
 		QVERIFY(pipe.writerSocket() >= 0);
 		QVERIFY(p.add(pipe.readerSocket(),Poll::INPUT) == 0);
 		QVERIFY(p.poll(100) == 0);
+	}
+	
+	void testSocket()
+	{
+		net::Socket sock(true,4);
+		QVERIFY(sock.bind("127.0.0.1",0,true));
+		
+		net::Address local_addr = sock.getSockName();
+		net::Socket writer(true,4);
+		writer.setBlocking(false);
+		writer.connectTo(local_addr);
+		
+		net::Address dummy;
+		net::Poll poll;
+		sock.prepare(&poll,net::Poll::INPUT);
+		
+		QVERIFY(poll.poll(1000) > 0);
+		int fd = sock.accept(dummy);
+		QVERIFY(fd >= 0);
+		
+		poll.reset();
+		QVERIFY(writer.connectSuccesFull());
+		
+		net::Socket reader(fd,6);
+		
+		bt::Uint8 data[20];
+		memset(data,0xFF,20);
+		QVERIFY(writer.send(data,20) == 20);
+		reader.prepare(&poll,net::Poll::INPUT);
+		
+		QVERIFY(poll.poll(1000) > 0);
+		
+		bt::Uint8 tmp[20];
+		QVERIFY(reader.recv(tmp,20) == 20);
+		QVERIFY(memcmp(tmp,data,20) == 0);
 	}
 	
 private:
