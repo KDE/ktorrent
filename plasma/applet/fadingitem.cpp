@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "fadingitem.h"
+#include <QPropertyAnimation>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <KDebug>
@@ -26,11 +27,8 @@
 FadingItem::FadingItem( QGraphicsItem *parent )
     : QGraphicsItem( parent ),
       mOpacity( 0.0 ),
-      mAnimId( 0 ),
       mShowing( false )
 {
-    connect( Plasma::Animator::self(), SIGNAL( customAnimationFinished( int ) ),
-             this , SLOT( animFinished( int ) ));
 }
 
 void FadingItem::updatePixmap()
@@ -67,57 +65,66 @@ void FadingItem::paint( QPainter *painter, const QStyleOptionGraphicsItem *optio
     painter->drawPixmap( QPoint( 0, 0 ), temp );
 }
 
-void FadingItem::updateFade( qreal progress )
+qreal FadingItem::opacityValue() const
 {
-    if ( mShowing ) {
-        mOpacity = progress;
-    } else {
-        mOpacity = 1.0 - progress;
-    }
+    return mOpacity;
+}
+
+void FadingItem::setOpacityValue( qreal opacityValue )
+{
+    mOpacity = opacityValue;
     update();
 }
 
-void FadingItem::animFinished( int animId )
+void FadingItem::animationFinished()
 {
-    if ( animId != mAnimId ) {
-        return;
-    }
-
     if ( mShowing ) {
         parentItem()->show();
-        hide();
-    } else {
-        hide();
     }
+
+    hide();
 }
 
 void FadingItem::showItem()
 {
-    if ( mAnimId ) {
-        Plasma::Animator::self()->stopCustomAnimation( mAnimId );
+    QPropertyAnimation *animation = mAnimation.data();
+    if ( !animation ) {
+        animation = new QPropertyAnimation( this, "opacityValue" );
+        animation->setDuration( 100 );
+        animation->setEasingCurve( QEasingCurve::InQuad );
+        animation->setStartValue( 0.0 );
+        animation->setEndValue( 1.0 );
+        mAnimation = animation;
+        connect( animation, SIGNAL(finished()), this, SLOT(animationFinished()) );
+    } else if ( animation->state() == QAbstractAnimation::Running ) {
+        animation->pause();
     }
 
     mShowing = true;
     updatePixmap();
-    mOpacity = 0.0;
     show();
-    mAnimId = Plasma::Animator::self()->customAnimation( 25, 100, Plasma::Animator::EaseInCurve,
-                                                          this, "updateFade" );
+
+    animation->setDirection( QAbstractAnimation::Forward );
+    animation->start();
+
 }
 
 void FadingItem::hideItem()
 {
-    if ( mAnimId ) {
-        Plasma::Animator::self()->stopCustomAnimation( mAnimId );
+    QPropertyAnimation *animation = mAnimation.data();
+    if ( !animation ) {
+        return;
+    } else if ( animation->state() == QAbstractAnimation::Running ) {
+        animation->pause();
     }
 
     mShowing = false;
     updatePixmap();
-    mOpacity = 1.0;
     parentItem()->hide();
     show();
-    mAnimId = Plasma::Animator::self()->customAnimation( 25, 100, Plasma::Animator::EaseInCurve,
-                                                          this, "updateFade" );
+
+    animation->setDirection( QAbstractAnimation::Backward );
+    animation->start( QAbstractAnimation::DeleteWhenStopped );
 }
 
 bool FadingItem::isVisible() const

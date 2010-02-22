@@ -20,11 +20,15 @@
 #ifndef FADINGITEM_H
 #define FADINGITEM_H
 
+#include <QtCore/QWeakPointer>
 #include <QtGui/QGraphicsItem>
+
+class QPropertyAnimation;
 
 class FadingItem : public QObject, public QGraphicsItem
 {
         Q_OBJECT
+        Q_PROPERTY(qreal opacityValue READ opacityValue WRITE setOpacityValue)
         #if QT_VERSION >= 0x040600
         Q_INTERFACES(QGraphicsItem)
         #endif
@@ -38,15 +42,16 @@ class FadingItem : public QObject, public QGraphicsItem
         void showItem();
         void hideItem();
         bool isVisible() const;
+        qreal opacityValue() const;
 
     protected slots:
-        void updateFade( qreal progress );
-        void animFinished( int animId );
+        void setOpacityValue( qreal opacityValue );
+        void animationFinished();
 
     private:
         QPixmap mParent;
         qreal mOpacity;
-        int mAnimId;
+        QWeakPointer<QPropertyAnimation> mAnimation;
         bool mShowing;
 };
 
