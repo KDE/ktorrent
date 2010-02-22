@@ -103,7 +103,7 @@ namespace utp
 				sack.bitmask = (bt::Uint8*)ptr + 2;
 			}
 			
-			data_off += ptr[1];
+			data_off += 2 + ptr[1];
 			ext_id = ptr[0];
 		}
 		
