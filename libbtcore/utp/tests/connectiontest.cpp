@@ -54,16 +54,17 @@ public:
 	{
 		TimeValue tv;
 		QByteArray ba(sizeof(Header),0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = type;
-		hdr->extension = 0;
-		hdr->connection_id = type == ST_SYN ? recv_conn_id : send_conn_id;
-		hdr->timestamp_microseconds = tv.microseconds;
-		hdr->timestamp_difference_microseconds = 0;
-		hdr->wnd_size = 6666;
-		hdr->seq_nr = seq_nr;
-		hdr->ack_nr = ack_nr;
+		Header hdr;
+		hdr.version = 1;
+		hdr.type = type;
+		hdr.extension = 0;
+		hdr.connection_id = type == ST_SYN ? recv_conn_id : send_conn_id;
+		hdr.timestamp_microseconds = tv.microseconds;
+		hdr.timestamp_difference_microseconds = 0;
+		hdr.wnd_size = 6666;
+		hdr.seq_nr = seq_nr;
+		hdr.ack_nr = ack_nr;
+		hdr.write((bt::Uint8*)ba.data());
 		return ba;
 	}
 	
@@ -107,7 +108,9 @@ private slots:
 		QVERIFY(s.seq_nr == 1);
 		
 		QByteArray pkt = buildPacket(ST_STATE,conn_id,conn_id + 1,1,1);
-		conn.handlePacket(pkt);
+		PacketParser pp(pkt);
+		QVERIFY(pp.parse());
+		conn.handlePacket(pp,pkt);
 		QVERIFY(s.state == CS_CONNECTED);
 		QVERIFY(sent_packets.count() == 1);
 	}
@@ -119,7 +122,8 @@ private slots:
 		const Connection::Stats & s = conn.connectionStats();
 		
 		QByteArray pkt = buildPacket(ST_SYN,conn_id - 1,conn_id,1,1);
-		conn.handlePacket(pkt);
+		PacketParser pp(pkt);
+		conn.handlePacket(pp,pkt);
 		QVERIFY(s.state == CS_CONNECTED);
 	}
 

@@ -217,6 +217,9 @@ namespace kt
 		else if (utp_enabled && port != current_port)
 			globals.getUTPServer().changePort(port);
 		
+		if (utp_enabled)
+			globals.getUTPServer().setTOS(Settings::dscp() << 2);
+		
 		ServerInterface::setPort(port);
 		ServerInterface::setUtpEnabled(utp_enabled,Settings::onlyUseUtp());
 		ServerInterface::setPrimaryTransportProtocol((bt::TransportProtocol)Settings::primaryTransportProtocol());

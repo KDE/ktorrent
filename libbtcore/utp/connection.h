@@ -114,7 +114,7 @@ namespace utp
 		const Stats & connectionStats() const {return stats;}
 		
 		/// Handle a single packet
-		ConnectionState handlePacket(const QByteArray & packet);
+		ConnectionState handlePacket(const PacketParser & parser,const QByteArray & packet);
 		
 		/// Get the remote address
 		const net::Address & remoteAddress() const {return stats.remote;}

@@ -25,6 +25,7 @@
 
 namespace utp
 {
+	
 	UTPSocket::UTPSocket() : conn(0),blocking(true),polled_for_reading(false),polled_for_writing(false)
 	{
 	}
@@ -160,7 +161,8 @@ namespace utp
 
 	bool UTPSocket::setTOS(unsigned char type_of_service)
 	{
-		return false;
+		Q_UNUSED(type_of_service);
+		return true;
 	}
 
 	void UTPSocket::prepare(net::Poll* p, net::Poll::Mode mode)

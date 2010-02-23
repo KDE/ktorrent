@@ -46,17 +46,10 @@ namespace utp
 	+---------------+---------------+---------------+---------------+
 	*/
 	
-	struct Header
+	struct BTCORE_EXPORT Header
 	{
-#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-		unsigned int type:4;
-		unsigned int version:4;
-#elif Q_BYTE_ORDER == Q_BIG_ENDIAN
 		unsigned int version:4;
 		unsigned int type:4;
-#else
-#error "Endiannes not defined"
-#endif
 		bt::Uint8 extension;
 		bt::Uint16 connection_id;
 		bt::Uint32 timestamp_microseconds;
@@ -64,6 +57,9 @@ namespace utp
 		bt::Uint32 wnd_size;
 		bt::Uint16 seq_nr;
 		bt::Uint16 ack_nr;
+		
+		void read(const bt::Uint8* data);
+		void write(bt::Uint8* data);
 	};
 	
 	struct SelectiveAck
@@ -130,13 +126,14 @@ namespace utp
 	class BTCORE_EXPORT PacketParser
 	{
 	public:
+		PacketParser(const QByteArray & packet);
 		PacketParser(const bt::Uint8* packet,bt::Uint32 size);
 		~PacketParser();
 		
 		/// Parses the packet, returns false on error
 		bool parse();
 		
-		const Header* header() const;
+		const Header* header() const {return &hdr;}
 		const SelectiveAck* selectiveAck() const;
 		bt::Uint32 dataOffset() const {return data_off;}
 		bt::Uint32 dataSize() const {return data_size;}
@@ -144,6 +141,7 @@ namespace utp
 	private:
 		const bt::Uint8* packet;
 		bt::Uint32 size;
+		Header hdr;
 		bool sack_found;
 		SelectiveAck sack;
 		bt::Uint32 data_off;

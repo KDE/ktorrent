@@ -77,11 +77,14 @@ namespace utp
 		/// Prepare the server for polling
 		void preparePolling(net::Poll* p,net::Poll::Mode mode,Connection* conn);
 		
+		/// Set the TOS byte
+		void setTOS(bt::Uint8 type_of_service);
+		
 	protected:
 		bool bind(const net::Address & addr);
 		void readPacket();
 		virtual void handlePacket(const QByteArray & packet,const net::Address & addr);
-		void syn(const Header* hdr,const QByteArray & data,const net::Address & addr);
+		void syn(const PacketParser & parser,const QByteArray & data,const net::Address & addr);
 		void reset(const Header* hdr);
 		void clearDeadConnections();
 		void checkTimeouts();
@@ -114,6 +117,7 @@ namespace utp
 		QMutex mutex;
 		bt::PtrMap<net::Poll*,PollPipePair> poll_pipes;
 		bool create_sockets;
+		bt::Uint8 tos;
 		
 		typedef bt::PtrMap<quint16,Connection>::iterator ConItr;
 		typedef bt::PtrMap<net::Poll*,PollPipePair>::iterator PollPipePairItr;

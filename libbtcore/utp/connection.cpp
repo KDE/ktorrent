@@ -34,31 +34,7 @@ using namespace bt;
 
 namespace utp
 {
-	/*
-	static void Dump(const bt::Uint8* pkt, bt::Uint32 size,const QString & file)
-	{
-		QFile fptr(file);
-		if (fptr.open(QIODevice::Text|QIODevice::Append))
-		{
-			QTextStream out(&fptr);
-			out << "Packet: " << size << ::endl;
-			out << "Hash:   " << bt::SHA1Hash::generate(pkt,size).toString() << ::endl;
-			
-			for (bt::Uint32 i = 0;i < size;i+=4)
-			{
-				if (i > 0 && i % 32 == 0)
-					out << ::endl;
-				
-				out << QString("%1%2%3%4 ")
-				.arg(pkt[i],2,16)
-				.arg(pkt[i+1],2,16)
-				.arg(pkt[i+2],2,16)
-				.arg(pkt[i+3],2,16);
-			}
-			
-			out << ::endl << ::endl << ::endl;
-		}
-	}*/
+	
 	
 	Connection::Connection(bt::Uint16 recv_connection_id, Type type, const net::Address& remote, Transmitter* transmitter) 
 		: transmitter(transmitter)
@@ -136,19 +112,14 @@ namespace utp
 		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
 	}
 
-	ConnectionState Connection::handlePacket(const QByteArray& packet)
+	ConnectionState Connection::handlePacket(const PacketParser & parser,const QByteArray& packet)
 	{
 		QMutexLocker lock(&mutex);
 		
 		timer.update();
 		stats.packets_received++;
 		
-		
-		PacketParser parser((const bt::Uint8*)packet.data(),packet.size());
-		if (!parser.parse())
-			return stats.state;
-		
-		const Header* hdr = parser.header();
+		const Header * hdr = parser.header();
 		const SelectiveAck* sack = parser.selectiveAck();
 		int data_off = parser.dataOffset();
 		
@@ -307,16 +278,17 @@ namespace utp
 			extension_length += 2 + qMax(sack_bits / 8,(bt::Uint32)4);
 		
 		QByteArray ba(sizeof(Header) + extension_length,0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = type;
-		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
-		hdr->connection_id = type == ST_SYN ? stats.recv_connection_id : stats.send_connection_id;
-		hdr->timestamp_microseconds = tv.tv_usec;
-		hdr->timestamp_difference_microseconds = stats.reply_micro;
-		hdr->wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
-		hdr->seq_nr = stats.seq_nr;
-		hdr->ack_nr = p_ack_nr;
+		Header hdr;
+		hdr.version = 1;
+		hdr.type = type;
+		hdr.extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
+		hdr.connection_id = type == ST_SYN ? stats.recv_connection_id : stats.send_connection_id;
+		hdr.timestamp_microseconds = tv.tv_usec;
+		hdr.timestamp_difference_microseconds = stats.reply_micro;
+		hdr.wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
+		hdr.seq_nr = stats.seq_nr;
+		hdr.ack_nr = p_ack_nr;
+		hdr.write((bt::Uint8*)ba.data());
 		
 		if (extension_length > 0)
 		{
@@ -464,16 +436,17 @@ namespace utp
 			extension_length += 2 + qMin(sack_bits / 8,(bt::Uint32)4);
 		
 		QByteArray ba(sizeof(Header) + extension_length + packet.size(),0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = ST_DATA;
-		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
-		hdr->connection_id = stats.send_connection_id;
-		hdr->timestamp_microseconds = now.microseconds;
-		hdr->timestamp_difference_microseconds = stats.reply_micro;
-		hdr->wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
-		hdr->seq_nr = stats.seq_nr + 1;
-		hdr->ack_nr = local_wnd->lastSeqNr();
+		Header hdr;
+		hdr.version = 1;
+		hdr.type = ST_DATA;
+		hdr.extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
+		hdr.connection_id = stats.send_connection_id;
+		hdr.timestamp_microseconds = now.microseconds;
+		hdr.timestamp_difference_microseconds = stats.reply_micro;
+		hdr.wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
+		hdr.seq_nr = stats.seq_nr + 1;
+		hdr.ack_nr = local_wnd->lastSeqNr();
+		hdr.write((bt::Uint8*)ba.data());
 		
 		if (extension_length > 0)
 		{
@@ -506,16 +479,17 @@ namespace utp
 			extension_length += 2 + qMin(sack_bits / 8,(bt::Uint32)4);
 		
 		QByteArray ba(sizeof(Header) + extension_length + packet.size(),0);
-		Header* hdr = (Header*)ba.data();
-		hdr->version = 1;
-		hdr->type = ST_DATA;
-		hdr->extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
-		hdr->connection_id = stats.send_connection_id;
-		hdr->timestamp_microseconds = now.microseconds;
-		hdr->timestamp_difference_microseconds = stats.reply_micro;
-		hdr->wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
-		hdr->seq_nr = p_seq_nr;
-		hdr->ack_nr = local_wnd->lastSeqNr();
+		Header hdr;
+		hdr.version = 1;
+		hdr.type = ST_DATA;
+		hdr.extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
+		hdr.connection_id = stats.send_connection_id;
+		hdr.timestamp_microseconds = now.microseconds;
+		hdr.timestamp_difference_microseconds = stats.reply_micro;
+		hdr.wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
+		hdr.seq_nr = p_seq_nr;
+		hdr.ack_nr = local_wnd->lastSeqNr();
+		hdr.write((bt::Uint8*)ba.data());
 		
 		if (extension_length > 0)
 		{

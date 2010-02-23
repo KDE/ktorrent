@@ -48,7 +48,8 @@ namespace utp
 		running(false),
 		utp_thread(0),
 		mutex(QMutex::Recursive),
-		create_sockets(true)
+		create_sockets(true),
+		tos(0)
 	{
 		qsrand(time(0));
 		connect(this,SIGNAL(accepted(Connection*)),this,SLOT(onAccepted(Connection*)),Qt::QueuedConnection);
@@ -95,10 +96,20 @@ namespace utp
 			sock = 0;
 			return false;
 		}
-		
-		Out(SYS_CON|LOG_NOTICE) << "UTP: bound to " << addr.toString() << endl;
-		Globals::instance().getPortList().addNewPort(addr.port(),net::UDP,true);
-		return true;
+		else
+		{
+			Out(SYS_CON|LOG_NOTICE) << "UTP: bound to " << addr.toString() << endl;
+			sock->setTOS(tos);
+			Globals::instance().getPortList().addNewPort(addr.port(),net::UDP,true);
+			return true;
+		}
+	}
+	
+	void UTPServer::setTOS(Uint8 type_of_service)
+	{
+		tos = type_of_service;
+		if (sock)
+			sock->setTOS(tos);
 	}
 
 	void UTPServer::run()
@@ -139,9 +150,55 @@ namespace utp
 		}
 	}
 	
+	
+	static void Dump(const QByteArray & data, const net::Address& addr)
+	{
+		Out(SYS_CON|LOG_DEBUG) << QString("Received packet from %1 (%2 bytes)").arg(addr.toString()).arg(data.size()) << endl;
+		const bt::Uint8* pkt = (const bt::Uint8*)data.data();
+		
+		QString line;
+		for (int i = 0;i < data.size();i++)
+		{
+			if (i > 0 && i % 32 == 0)
+			{
+				Out(SYS_CON|LOG_DEBUG) << line << endl;
+				line = "";
+			}
+			
+			uint val = pkt[i];
+			line += QString("%1").arg(val,2,16,QChar('0'));
+			if (i + 1 % 4)
+				line += ' ';
+		}
+		Out(SYS_CON|LOG_DEBUG) << line << endl;
+	}
+	
+	static void DumpPacket(const Header & hdr)
+	{
+		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
+		Out(SYS_CON|LOG_NOTICE) << "UTP: Packet Header: " << endl;
+		Out(SYS_CON|LOG_NOTICE) << "type:                              " << TypeToString(hdr.type) << endl;
+		Out(SYS_CON|LOG_NOTICE) << "version:                           " << hdr.version << endl;
+		Out(SYS_CON|LOG_NOTICE) << "extension:                         " << hdr.extension << endl;
+		Out(SYS_CON|LOG_NOTICE) << "connection_id:                     " << hdr.connection_id << endl;
+		Out(SYS_CON|LOG_NOTICE) << "timestamp_microseconds:            " << hdr.timestamp_microseconds << endl;
+		Out(SYS_CON|LOG_NOTICE) << "timestamp_difference_microseconds: " << hdr.timestamp_difference_microseconds << endl;
+		Out(SYS_CON|LOG_NOTICE) << "wnd_size:                          " << hdr.wnd_size << endl;
+		Out(SYS_CON|LOG_NOTICE) << "seq_nr:                            " << hdr.seq_nr << endl;
+		Out(SYS_CON|LOG_NOTICE) << "ack_nr:                            " << hdr.ack_nr << endl;
+		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
+	}
+	
 	void UTPServer::handlePacket(const QByteArray& packet, const net::Address& addr)
 	{
-		Header* hdr = (Header*)packet.data();
+		PacketParser parser(packet);
+		if (!parser.parse())
+			return;
+		
+		const Header* hdr = parser.header();
+		//Dump(packet,addr);
+		//DumpPacket(*hdr);
+		
 		switch (hdr->type)
 		{
 			case ST_DATA:
@@ -151,7 +208,7 @@ namespace utp
 				{
 					Connection* c = find(hdr->connection_id);
 					if (c)
-						c->handlePacket(packet);
+						c->handlePacket(parser,packet);
 					else
 						Out(SYS_CON|LOG_NOTICE) << "UTP: unkown connection " << hdr->connection_id << endl;
 				}
@@ -165,7 +222,7 @@ namespace utp
 				reset(hdr);
 				break;
 			case ST_SYN:
-				syn(hdr,packet,addr);
+				syn(parser,packet,addr);
 				break;
 		}
 	}
@@ -196,8 +253,9 @@ namespace utp
 		return conn;
 	}
 
-	void UTPServer::syn(const utp::Header* hdr, const QByteArray& data, const net::Address & addr)
+	void UTPServer::syn(const PacketParser & parser, const QByteArray& data, const net::Address & addr)
 	{
+		const Header* hdr = parser.header();
 		quint16 recv_conn_id = hdr->connection_id + 1;
 		if (connections.find(recv_conn_id))
 		{
@@ -210,7 +268,7 @@ namespace utp
 			Connection* conn = new Connection(recv_conn_id,Connection::INCOMING,addr,this);
 			try
 			{
-				conn->handlePacket(data);
+				conn->handlePacket(parser,data);
 				connections.insert(recv_conn_id,conn);
 				accepted(conn);
 			}

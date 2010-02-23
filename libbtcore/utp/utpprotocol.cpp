@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "utpprotocol.h"
+#include <util/functions.h>
 
 namespace utp
 {
@@ -71,9 +72,43 @@ namespace utp
 			default: return QString("UNKNOWN");
 		}
 	}
-
-	PacketParser::PacketParser(const bt::Uint8* packet, bt::Uint32 size) : packet(packet),size(size),sack_found(false),data_off(0),data_size(0)
+	
+	void Header::read(const bt::Uint8* data)
 	{
+		version = (data[0] & 0xF0) >> 4;
+		type = data[0] & 0x0F;
+		extension = data[1];
+		connection_id = bt::ReadUint16(data,2);
+		timestamp_microseconds = bt::ReadUint32(data,4);
+		timestamp_difference_microseconds = bt::ReadUint32(data,8);
+		wnd_size = bt::ReadUint32(data,12);
+		seq_nr = bt::ReadUint16(data,16);
+		ack_nr = bt::ReadUint16(data,18);
+	}
+	
+	void Header::write(bt::Uint8* data)
+	{
+		data[0] = ((version << 4) & 0xF0) | (type & 0x0F);
+		data[1] = extension;
+		bt::WriteUint16(data,2,connection_id);
+		bt::WriteUint32(data,4,timestamp_microseconds);
+		bt::WriteUint32(data,8,timestamp_difference_microseconds);
+		bt::WriteUint32(data,12,wnd_size);
+		bt::WriteUint16(data,16,seq_nr);
+		bt::WriteUint16(data,18,ack_nr);
+	}
+	
+	
+	PacketParser::PacketParser(const QByteArray& pkt) 
+		: packet((const bt::Uint8*)pkt.data()),size(pkt.size()),sack_found(false),data_off(0),data_size(0)
+	{
+		hdr.read(packet);
+	}
+
+	PacketParser::PacketParser(const bt::Uint8* packet, bt::Uint32 size) 
+		: packet(packet),size(size),sack_found(false),data_off(0),data_size(0)
+	{
+		hdr.read(packet);
 	}
 
 	PacketParser::~PacketParser()
@@ -85,11 +120,10 @@ namespace utp
 		if (size < sizeof(Header))
 			return false;
 		
-		Header* hdr = (Header*)packet;
 		data_off = sizeof(Header);
 		
 		// go over all header extensions to increase the data offset and watch out for selective acks
-		int ext_id = hdr->extension;
+		int ext_id = hdr.extension;
 		while (data_off < size && ext_id != 0)
 		{
 			const bt::Uint8* ptr = packet + data_off;
@@ -109,11 +143,6 @@ namespace utp
 		
 		data_size = size - data_off;
 		return true;
-	}
-
-	const utp::Header* PacketParser::header() const
-	{
-		return (utp::Header*)packet;
 	}
 
 	const utp::SelectiveAck* PacketParser::selectiveAck() const
