@@ -300,7 +300,7 @@
 			<default>true</default>
 		</entry>
 		<entry name="useQHttpAnnounce" type="Bool">
-			<default>false</default>
+			<default>true</default>
 		</entry>
 		<entry name="lookUpHostnameOfPeers" type="Bool">
 			<default>true</default>
