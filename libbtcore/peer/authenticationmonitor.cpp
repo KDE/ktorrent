@@ -84,11 +84,14 @@ namespace bt
 			else
 			{
 				mse::StreamSocket* socket = ab->getSocket();
-				net::SocketDevice* dev = socket->socketDevice();
-				if (dev)
+				if (socket)
 				{
-					net::Poll::Mode m = socket->connecting() ? Poll::OUTPUT : Poll::INPUT;
-					dev->prepare(this,m);
+					net::SocketDevice* dev = socket->socketDevice();
+					if (dev)
+					{
+						net::Poll::Mode m = socket->connecting() ? Poll::OUTPUT : Poll::INPUT;
+						dev->prepare(this,m);
+					}
 				}
 				itr++;
 			}
@@ -106,9 +109,10 @@ namespace bt
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
-			if (ab->isFinished())
+			if (!ab || ab->isFinished())
 			{
-				ab->deleteLater();
+				if (ab)
+					ab->deleteLater();
 				itr = auths.erase(itr);
 			}
 			else
@@ -117,9 +121,11 @@ namespace bt
 				if (socket)
 				{
 					net::SocketDevice* dev = socket->socketDevice();
-					if (dev->ready(this,Poll::INPUT))
+					bool r = dev && dev->ready(this,Poll::INPUT);
+					bool w = dev && dev->ready(this,Poll::OUTPUT);
+					if (r)
 						ab->onReadyRead();
-					if (dev->ready(this,Poll::OUTPUT))
+					if (w)
 						ab->onReadyWrite();
 				}
 				itr++;
