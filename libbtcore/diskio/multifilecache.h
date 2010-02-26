@@ -48,9 +48,9 @@ namespace bt
 
 		virtual void changeTmpDir(const QString& ndir);
 		virtual void create();
-		virtual PieceData* loadPiece(Chunk* c,Uint32 off,Uint32 length);
-		virtual PieceData* preparePiece(Chunk* c,Uint32 off,Uint32 length);
-		virtual void savePiece(PieceData* piece);
+		virtual PieceDataPtr loadPiece(Chunk* c,Uint32 off,Uint32 length);
+		virtual PieceDataPtr preparePiece(Chunk* c,Uint32 off,Uint32 length);
+		virtual void savePiece(PieceDataPtr piece);
 		virtual void close();
 		virtual void open();
 		virtual Job* moveDataFiles(const QString & ndir);

@@ -76,16 +76,17 @@ namespace bt
 		Q_UNUSED(job);
 	}
 	
-	PieceData* Cache::findPiece(Chunk* c,Uint32 off,Uint32 len)
+	PieceDataPtr Cache::findPiece(Chunk* c,Uint32 off,Uint32 len)
 	{
 		QMultiMap<Chunk*,PieceData*>::iterator i = piece_cache.find(c);
 		while (i != piece_cache.end() && i.key() == c)
 		{
 			PieceData* cp = i.value();
 			if (cp->offset() == off && cp->length() == len)
-				return cp;
+				return PieceDataPtr(cp);
 			i++;
 		}
+		
 		return 0;
 	}
 	

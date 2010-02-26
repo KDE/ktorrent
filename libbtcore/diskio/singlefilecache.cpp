@@ -126,7 +126,7 @@ namespace bt
 		move_data_files_dst = QString();
 	}
 	
-	PieceData* SingleFileCache::createPiece(Chunk* c,Uint64 off,Uint32 length,bool read_only)
+	PieceDataPtr SingleFileCache::createPiece(Chunk* c,Uint64 off,Uint32 length,bool read_only)
 	{
 		if (!fd)
 			open();
@@ -138,7 +138,7 @@ namespace bt
 			buf = new Uint8[length];
 			PieceData* cp = new PieceData(c,off,length,buf,0);
 			insertPiece(c,cp);
-			return cp;
+			return PieceDataPtr(cp);
 		}
 		else
 		{
@@ -158,13 +158,13 @@ namespace bt
 				cp = new PieceData(c,off,length,buf,0);
 			}
 			insertPiece(c,cp);
-			return cp;
+			return PieceDataPtr(cp);
 		}
 	}
 	
-	PieceData* SingleFileCache::loadPiece(Chunk* c,Uint32 off,Uint32 length)
+	PieceDataPtr SingleFileCache::loadPiece(Chunk* c,Uint32 off,Uint32 length)
 	{
-		PieceData* cp = findPiece(c,off,length);
+		PieceDataPtr cp = findPiece(c,off,length);
 		if (cp)
 			return cp;
 		
@@ -179,16 +179,16 @@ namespace bt
 		return cp;
 	}
 	
-	PieceData* SingleFileCache::preparePiece(Chunk* c,Uint32 off,Uint32 length)
+	PieceDataPtr SingleFileCache::preparePiece(Chunk* c,Uint32 off,Uint32 length)
 	{
-		PieceData* cp = findPiece(c,off,length);
+		PieceDataPtr cp = findPiece(c,off,length);
 		if (cp)
 			return cp;
 		
 		return createPiece(c,off,length,false);
 	}
 	
-	void SingleFileCache::savePiece(PieceData* piece)
+	void SingleFileCache::savePiece(PieceDataPtr piece)
 	{
 		if (!fd)
 			open();
@@ -199,12 +199,6 @@ namespace bt
 			Uint64 off = piece->parentChunk()->getIndex() * tor.getChunkSize() + piece->offset();
 			if (piece->data())
 				fd->write(piece->data(),piece->length(),off);
-		}
-		
-		if (!piece->inUse()) // get rid of piece if we can
-		{
-			piece->unload();
-			clearPiece(piece);
 		}
 	}
 

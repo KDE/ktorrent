@@ -40,11 +40,7 @@ namespace bt
 		PieceData(Chunk* chunk,Uint32 off,Uint32 len,Uint8* ptr,CacheFile* file);
 		virtual ~PieceData();
 		
-		/// Increase the reference counter
-		void ref() {ref_count++;}
 		
-		/// Decrease the reference counter
-		void unref() {ref_count--;}
 		
 		/// Is this in use (i.e. can we unload it
 		bool inUse() const {return ref_count > 0;}
@@ -72,6 +68,12 @@ namespace bt
 
 	private:
 		virtual void unmapped();
+		
+		/// Increase the reference counter
+		void ref() {ref_count++;}
+		
+		/// Decrease the reference counter
+		void unref() {ref_count--;}
 
 	private:
 		Chunk* chunk;
@@ -80,6 +82,24 @@ namespace bt
 		Uint8* ptr;
 		CacheFile* file;
 		int ref_count;
+		
+		friend class PieceDataPtr;
+	};
+	
+	class BTCORE_EXPORT PieceDataPtr
+	{
+	public:
+		PieceDataPtr(PieceData* pdata = 0);
+		PieceDataPtr(const PieceDataPtr & pdata);
+		~PieceDataPtr();
+		
+		PieceData & operator * () const {return *pdata;}
+		PieceData* operator -> () const {return pdata;}
+		PieceDataPtr & operator = (const PieceDataPtr & pdata);
+		operator bool () const {return pdata != 0;}
+		
+	private:
+		PieceData* pdata;
 	};
 
 }

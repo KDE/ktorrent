@@ -401,10 +401,10 @@ namespace bt
 			// ignore data if we already have it
 			if (c->getStatus() != Chunk::ON_DISK)
 			{
-				PieceData* p = c->getPiece(0,c->getSize(),false); 
-				if (p)
-					memcpy(p->data() + bytes_of_cur_chunk,tmp.data() + off,bl);
-				
+				if (!cur_piece)
+					cur_piece = c->getPiece(0,c->getSize(),false);
+
+				memcpy(cur_piece->data() + bytes_of_cur_chunk,tmp.data() + off,bl);
 				downloaded += bl;
 			}
 			off += bl;
@@ -424,9 +424,7 @@ namespace bt
 				chunkStopped();
 				if (cur_chunk <= last_chunk)
 				{
-					PieceData* p = cman.getChunk(cur_chunk)->getPiece(0,c->getSize(),false);
-					if (p)
-						p->ref(); // reference will be released when chunk is ready
+					cur_piece = cman.getChunk(cur_chunk)->getPiece(0,c->getSize(),false);
 					chunkStarted(cur_chunk);
 				}
 			}

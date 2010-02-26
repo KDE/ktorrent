@@ -127,7 +127,7 @@ namespace mse
 		bool ok() const;
 		
 		/// Get the file descriptor
-		net::SocketDevice* socketDevice() {return sock->socketDevice();}
+		net::SocketDevice* socketDevice() {return sock ? sock->socketDevice() : 0;}
 		
 		/// Start monitoring of this socket by the monitor thread
 		void startMonitoring(net::SocketReader* rdr,net::SocketWriter* wrt);

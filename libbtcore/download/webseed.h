@@ -27,6 +27,7 @@
 #include <util/constants.h>
 #include <interfaces/webseedinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
+#include <diskio/piecedata.h>
 
 
 namespace bt
@@ -186,6 +187,7 @@ namespace bt
 		Uint32 up_gid,down_gid;
 		QList<Range> range_queue;
 		KUrl redirected_url;
+		PieceDataPtr cur_piece;
 		
 		static QString proxy_host;
 		static Uint16 proxy_port;

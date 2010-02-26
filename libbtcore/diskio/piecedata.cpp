@@ -55,4 +55,38 @@ namespace bt
 		ptr = 0;
 		Out(SYS_DIO|LOG_DEBUG) << QString("Piece %1 %2 %3 unmapped").arg(chunk->getIndex()).arg(off).arg(len) << endl;
 	}
+	
+	PieceDataPtr::PieceDataPtr(PieceData* pdata) : pdata(pdata)
+	{
+		if (pdata)
+			pdata->ref();
+	}
+
+	PieceDataPtr::PieceDataPtr(const bt::PieceDataPtr& other) : pdata(other.pdata)
+	{
+		if (pdata)
+			pdata->ref();
+	}
+
+	PieceDataPtr::~PieceDataPtr()
+	{
+		if (pdata)
+			pdata->unref();
+	}
+
+	PieceDataPtr& PieceDataPtr::operator=(const bt::PieceDataPtr& other)
+	{
+		if (pdata)
+			pdata->unref();
+		
+		pdata = other.pdata;
+		if (pdata)
+			pdata->ref();
+		
+		return *this;
+	}
+
+
+
+
 }

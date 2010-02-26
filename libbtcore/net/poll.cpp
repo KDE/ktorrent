@@ -78,7 +78,7 @@ namespace net
 
 	bool Poll::ready(int index, Poll::Mode mode) const
 	{
-		if (index < 0 && index >= num_sockets)
+		if (index < 0 || index >= num_sockets)
 			return false;
 		
 		return fd_vec[index].revents & (mode == INPUT ? POLLIN : POLLOUT);

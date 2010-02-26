@@ -757,7 +757,7 @@ namespace bt
 	
 	void Downloader::onChunkReady(Chunk* c)
 	{
-		PieceData* piece = c->getPiece(0,c->getSize(),false);
+		PieceDataPtr piece = c->getPiece(0,c->getSize(),false);
 		
 		webseeds_chunks.erase(c->getIndex());
 		if (!piece)
@@ -772,7 +772,6 @@ namespace bt
 		
 
 		SHA1Hash h = SHA1Hash::generate(piece->data(),c->getSize());
-		piece->unref();
 		if (tor.verifyHash(h,c->getIndex()))
 		{
 			// hash ok so save it

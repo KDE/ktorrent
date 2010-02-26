@@ -53,7 +53,7 @@ namespace net
 		while (itr != sm->end())
 		{
 			BufferedSocket* s = *itr;
-			if (!s->socketDevice()->ok())
+			if (!s->socketDevice() || !s->socketDevice()->ok())
 			{
 				itr++;
 				continue;

@@ -78,7 +78,7 @@ namespace bt
 		
 		pieces = BitSet(num);
 		pieces.clear();
-		piece_data = new PieceData* [num]; // array of pointers to the piece data
+		piece_data = new PieceDataPtr[num]; // array of pointers to the piece data
 		
 		for (Uint32 i = 0;i < num;i++)
 		{
@@ -93,23 +93,6 @@ namespace bt
 
 	ChunkDownload::~ChunkDownload()
 	{
-		// make sure we do not keep pieces into memory unnecesary
-		for (Uint32 i = 0;i < num;i++)
-		{
-			PieceData* piece = piece_data[i];
-			if (piece)
-			{
-				piece->unref();
-				try
-				{
-					chunk->savePiece(piece);
-				}
-				catch (...)
-				{
-				}
-				piece_data[i] = 0;
-			}
-		}
 		delete [] piece_data;
 	}
 
@@ -127,10 +110,9 @@ namespace bt
 		if (ds)
 			ds->remove(pp);
 		
-		PieceData* buf = chunk->getPiece(p.getOffset(),p.getLength(),false);
+		PieceDataPtr buf = chunk->getPiece(p.getOffset(),p.getLength(),false);
 		if (buf)
-		{
-			buf->ref(); 
+		{ 
 			piece_data[pp] = buf;
 			ok = true;
 			memcpy(buf->data(),p.getData(),p.getLength());	
@@ -428,7 +410,7 @@ namespace bt
 			if (!piece_data[i])
 				continue;
 			
-			PieceData* pd = piece_data[i];
+			PieceDataPtr pd = piece_data[i];
 			PieceHeader phdr;
 			phdr.piece = i;
 			phdr.size = pd->length();
@@ -465,16 +447,14 @@ namespace bt
 			if (phdr.piece >= num)
 				return false;
 			
-			PieceData* p = chunk->getPiece(phdr.piece * MAX_PIECE_LEN,phdr.size,false);
+			PieceDataPtr p = chunk->getPiece(phdr.piece * MAX_PIECE_LEN,phdr.size,false);
 			if (!p)
 				return false;
 			
-			p->ref();
 			if (!phdr.mapped)
 			{
 				if (file.read(p->data(),p->length()) != p->length())
 				{
-					p->unref();
 					return false;
 				}
 			}
@@ -564,21 +544,15 @@ namespace bt
 		
 		for (Uint32 i = num_pieces_in_hash;i < nn;i++)
 		{
-			PieceData* piece = piece_data[i];
+			PieceDataPtr piece = piece_data[i];
 			Uint32 len = i == num - 1 ? last_size : MAX_PIECE_LEN;
 			if (!piece)
-			{
 				piece = chunk->getPiece(i*MAX_PIECE_LEN,len,true);
-				if (piece)
-					piece->ref();
-			}
 			
 			piece_data[i] = 0;
 			if (piece)
 			{
 				hash_gen.update(piece->data(),len);
-				// save the piece and set it to 0, we no longer need it
-				piece->unref();
 				chunk->savePiece(piece);
 			}
 		}

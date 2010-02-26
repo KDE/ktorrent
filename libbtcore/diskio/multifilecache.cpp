@@ -454,9 +454,9 @@ namespace bt
 		return piece;
 	}
 	
-	PieceData* MultiFileCache::preparePiece(Chunk* c,Uint32 off,Uint32 length)
+	PieceDataPtr MultiFileCache::preparePiece(Chunk* c,Uint32 off,Uint32 length)
 	{
-		PieceData* piece = findPiece(c,off,length);
+		PieceDataPtr piece = findPiece(c,off,length);
 		if (piece)
 			return piece;
 		
@@ -494,9 +494,9 @@ namespace bt
 		}
 	}
 
-	PieceData* MultiFileCache::loadPiece(Chunk* c,Uint32 off,Uint32 length)
+	PieceDataPtr MultiFileCache::loadPiece(Chunk* c,Uint32 off,Uint32 length)
 	{
-		PieceData* piece = findPiece(c,off,length);
+		PieceDataPtr piece = findPiece(c,off,length);
 		if (piece)
 			return piece;
 
@@ -584,26 +584,15 @@ namespace bt
 		return piece;
 	}
 
-	void MultiFileCache::savePiece(PieceData* piece)
+	void MultiFileCache::savePiece(PieceDataPtr piece)
 	{
 		// in mapped mode unload the piece if not in use
 		if (piece->mapped())
-		{
-			if (piece->inUse())
-				return;
-			
-			piece->unload();
-			clearPiece(piece);
-			return; 
-		}
+			return;
 		
 		Uint8* data = piece->data();
 		if (!data) // this should not happen but just in case
-		{
-			if (!piece->inUse())
-				clearPiece(piece);
 			return;
-		}
 		
 		Chunk* c = piece->parentChunk();
 		QList<Uint32> tflist;
@@ -665,9 +654,6 @@ namespace bt
 			
 			chunk_off += cdata;
 		}
-		
-		if (!piece->inUse())
-			clearPiece(piece);
 	}
 	
 	void MultiFileCache::downloadStatusChanged(TorrentFile* tf, bool download)

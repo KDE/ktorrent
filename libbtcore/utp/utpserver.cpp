@@ -146,7 +146,14 @@ namespace utp
 			if (ba < (int)sizeof(utp::Header))
 				return;
 			
-			handlePacket(packet,addr);
+			try
+			{
+				handlePacket(packet,addr);
+			}
+			catch (utp::Connection::TransmissionError & err)
+			{
+				Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
+			}
 		}
 	}
 	

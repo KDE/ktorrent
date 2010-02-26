@@ -38,7 +38,7 @@ namespace bt
 		
 	bool Chunk::readPiece(Uint32 off,Uint32 len,Uint8* data)
 	{
-		PieceData* d = cache->loadPiece(this,off,len);
+		PieceDataPtr d = cache->loadPiece(this,off,len);
 		if (d)
 			memcpy(data,d->data(),len);
 		return d != 0;
@@ -49,14 +49,14 @@ namespace bt
 		if (status == NOT_DOWNLOADED)
 			return false;
 		
-		PieceData* d = getPiece(0,size,true);
+		PieceDataPtr d = getPiece(0,size,true);
 		if (!d)
 			return false;
 		
 		return SHA1Hash::generate(d->data(),size) == h;
 	}
 	
-	PieceData* Chunk::getPiece(Uint32 off,Uint32 len,bool read_only)
+	PieceDataPtr Chunk::getPiece(Uint32 off,Uint32 len,bool read_only)
 	{
 		if (read_only)
 			return cache->loadPiece(this,off,len);
@@ -64,7 +64,7 @@ namespace bt
 			return cache->preparePiece(this,off,len);
 	}
 	
-	void Chunk::savePiece(PieceData* piece)
+	void Chunk::savePiece(PieceDataPtr piece)
 	{
 		cache->savePiece(piece);
 	}

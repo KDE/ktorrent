@@ -40,6 +40,7 @@ namespace bt
 	class Request;
 	class PieceDownloader;
 	class PieceData;
+	class PieceDataPtr;
 	
 	struct ChunkDownloadHeader
 	{
@@ -216,7 +217,7 @@ namespace bt
 		QList<PieceDownloader*> pdown;
 		PtrMap<PieceDownloader*,DownloadStatus> dstatus;
 		QSet<PieceDownloader*> piece_providers;
-		PieceData** piece_data;
+		PieceDataPtr* piece_data;
 		SHA1HashGen hash_gen;
 		Uint32 num_pieces_in_hash;
 

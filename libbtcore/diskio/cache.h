@@ -36,6 +36,7 @@ namespace bt
 	class PreallocationThread;
 	class TorrentFileInterface;
 	class PieceData;
+	class PieceDataPtr;
 	class Job;
 
 	/**
@@ -114,7 +115,7 @@ namespace bt
 		 * @param length The length of the piece
 		 * @return Pointer to the data
 		 */
-		virtual PieceData* loadPiece(Chunk* c,Uint32 off,Uint32 length) = 0;
+		virtual PieceDataPtr loadPiece(Chunk* c,Uint32 off,Uint32 length) = 0;
 		
 		/**
 		 * Prepare a piece for writing. If something goes wrong,
@@ -124,13 +125,13 @@ namespace bt
 		 * @param length The length of the piece
 		 * @return Pointer to the data
 		 */
-		virtual PieceData* preparePiece(Chunk* c,Uint32 off,Uint32 length) = 0;
+		virtual PieceDataPtr preparePiece(Chunk* c,Uint32 off,Uint32 length) = 0;
 		
 		/**
-		 * Save a piece to disk, it's reference counter must be zero, otherwise it will not work./
+		 * Save a piece to disk, will only actually save in buffered mode
 		 * @param piece The piece
 		 */
-		virtual void savePiece(PieceData* piece) = 0;
+		virtual void savePiece(PieceDataPtr piece) = 0;
 		
 		/**
 		 * Create all the data files to store the data.
@@ -232,7 +233,7 @@ namespace bt
 		 * */
 		void clearPieces(Chunk* c);
 	protected:
-		PieceData* findPiece(Chunk* c,Uint32 off,Uint32 len);
+		PieceDataPtr findPiece(Chunk* c,Uint32 off,Uint32 len);
 		void insertPiece(Chunk* c,PieceData* p);
 		void clearPieceCache();
 		void clearPiece(PieceData* p);
