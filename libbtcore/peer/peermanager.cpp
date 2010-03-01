@@ -552,6 +552,8 @@ namespace bt
 		available_chunks.clear();
 		started = false;
 		ServerInterface::removePeerManager(this);
+		qDeleteAll(connectors);
+		connectors.clear();
 		stopped();
 		num_pending = 0;
 	}

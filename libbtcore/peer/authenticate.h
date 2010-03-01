@@ -79,10 +79,13 @@ namespace bt
 		const QString & getIP() const {return host;}
 		Uint16 getPort() const {return port;}
 		
+	public slots:
+		/// Stop the authentication
+		void stop();
+		
 	protected slots:
 		virtual void onReadyWrite();
 		virtual void onReadyRead();
-		void onPeerManagerDestroyed();
 		
 	protected:
 		void onFinish(bool succes);

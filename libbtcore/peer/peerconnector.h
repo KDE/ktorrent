@@ -62,6 +62,8 @@ namespace bt
 		Uint16 port;
 		bool local;
 		PeerManager* pman;
+		Authenticate* auth;
+		bool stopping;
 	};
 
 }

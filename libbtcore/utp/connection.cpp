@@ -567,6 +567,7 @@ namespace utp
 		if (stats.state == CS_CONNECTED)
 		{
 			stats.state = CS_FINISHED;
+			timer.update();
 			sendPackets();
 		}
 	}
@@ -598,6 +599,12 @@ namespace utp
 				}
 				break;
 			case CS_FINISHED:
+				if (timer.getElapsedSinceUpdate() > stats.timeout)
+				{
+					stats.state = CS_CLOSED;
+					data_ready.wakeAll();
+				}
+				break;
 			case CS_CONNECTED:
 				if (timer.getElapsedSinceUpdate() > stats.timeout)
 				{

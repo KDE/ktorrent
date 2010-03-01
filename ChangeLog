@@ -29,6 +29,7 @@ Changes in 4.0beta2:
 - Make sure TOS is set when setting up a connection
 - Fix crash in AuthenticationMonitor, caused by dangling pointer (228395)
 - Fix SHA1 hash generation crashes by using shared pointers to PieceData (227400)
+- Fix crash in PeerConnector cleanup (228955)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

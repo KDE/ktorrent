@@ -30,7 +30,7 @@ namespace bt
 {
 	
 	PeerConnector::PeerConnector(const QString & ip,Uint16 port,bool local,PeerManager* pman) 
-		: ip(ip),port(port),local(local),pman(pman)
+		: ip(ip),port(port),local(local),pman(pman),auth(0),stopping(false)
 	{
 		bool encryption = ServerInterface::isEncryptionEnabled();
 		bool utp = ServerInterface::isUtpEnabled();
@@ -53,10 +53,20 @@ namespace bt
 
 	PeerConnector::~PeerConnector()
 	{
+		if (auth)
+		{
+			stopping = true;
+			auth->stop();
+			stopping = false;
+		}
 	}
 
 	void PeerConnector::authenticationFinished(Authenticate* auth, bool ok)
 	{
+		this->auth = 0;
+		if (stopping)
+			return;
+		
 		if (ok)
 		{
 			pman->peerAuthenticated(auth,this,ok);
@@ -94,7 +104,6 @@ namespace bt
 	{
 		current_method = method;
 		Torrent & tor = pman->getTorrent();
-		AuthenticateBase* auth = 0;
 		TransportProtocol proto = (method == TCP_WITH_ENCRYPTION || method == TCP_WITHOUT_ENCRYPTION) ? TCP : UTP;
 		if (method == TCP_WITH_ENCRYPTION || method == UTP_WITH_ENCRYPTION)
 			auth = new mse::EncryptedAuthenticate(ip,port,proto,tor.getInfoHash(),tor.getPeerID(),this);
@@ -104,7 +113,7 @@ namespace bt
 		if (local)
 			auth->setLocal(true);
 		
-		QObject::connect(pman,SIGNAL(stopped()),auth,SLOT(onPeerManagerDestroyed()));
+		connect(pman,SIGNAL(stopped()),auth,SLOT(stop()));
 		AuthenticationMonitor::instance().add(auth);
 	}
 

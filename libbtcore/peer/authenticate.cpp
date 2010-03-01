@@ -212,13 +212,15 @@ namespace bt
 		return s;
 	}
 	
-	void Authenticate::onPeerManagerDestroyed()
+	void Authenticate::stop()
 	{
 		if (finished)
 			return;
 		
 		onFinish(false);
 	}
+	
+	
 	
 }
 #include "authenticate.moc"
