@@ -269,21 +269,19 @@ namespace utp
 	
 	void Connection::sendPacket(Uint32 type,Uint16 p_ack_nr)
 	{
-		struct timeval tv;
-		gettimeofday(&tv,NULL);
-		
 		bt::Uint32 extension_length = 0;
 		bt::Uint32 sack_bits = local_wnd->selectiveAckBits();
 		if (sack_bits > 0)
 			extension_length += 2 + qMax(sack_bits / 8,(bt::Uint32)4);
-		
+	
+		TimeValue tv;
 		QByteArray ba(sizeof(Header) + extension_length,0);
 		Header hdr;
 		hdr.version = 1;
 		hdr.type = type;
 		hdr.extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
 		hdr.connection_id = type == ST_SYN ? stats.recv_connection_id : stats.send_connection_id;
-		hdr.timestamp_microseconds = tv.tv_usec;
+		hdr.timestamp_microseconds = tv.timestampMicroSeconds();
 		hdr.timestamp_difference_microseconds = stats.reply_micro;
 		hdr.wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
 		hdr.seq_nr = stats.seq_nr;
@@ -441,7 +439,7 @@ namespace utp
 		hdr.type = ST_DATA;
 		hdr.extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
 		hdr.connection_id = stats.send_connection_id;
-		hdr.timestamp_microseconds = now.microseconds;
+		hdr.timestamp_microseconds = now.timestampMicroSeconds();
 		hdr.timestamp_difference_microseconds = stats.reply_micro;
 		hdr.wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
 		hdr.seq_nr = stats.seq_nr + 1;
@@ -484,7 +482,7 @@ namespace utp
 		hdr.type = ST_DATA;
 		hdr.extension = extension_length == 0 ? 0 : SELECTIVE_ACK_ID;
 		hdr.connection_id = stats.send_connection_id;
-		hdr.timestamp_microseconds = now.microseconds;
+		hdr.timestamp_microseconds = now.timestampMicroSeconds();
 		hdr.timestamp_difference_microseconds = stats.reply_micro;
 		hdr.wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
 		hdr.seq_nr = p_seq_nr;
@@ -615,6 +613,7 @@ namespace utp
 						stats.timeout = MAX_TIMEOUT;
 					remote_wnd->timeout(this);
 					timer.update();
+					sendPackets();
 				}
 				break;
 			case CS_CLOSED:

@@ -42,6 +42,12 @@ namespace utp
 		/// Calculate the a - b in milliseconds
 		friend bt::Int64 operator - (const TimeValue & a,const TimeValue & b);
 		
+		bt::Uint32 timestampMicroSeconds() const
+		{
+			bt::Uint64 microsecs = seconds * 1000000 + microseconds;
+			return microsecs & 0x00000000FFFFFFFF;
+		}
+		
 	public:
 		bt::Uint64 seconds;
 		bt::Uint64 microseconds;
