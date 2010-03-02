@@ -49,16 +49,12 @@ namespace bt
 
 	bool Downloader::use_webseeds = true;
 	
-	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorFactoryInterface* fac) 
+	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman) 
 	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0),chunk_selector(0),webseed_endgame_mode(false)
 	{
 		webseeds_on = use_webseeds;
 		pman.setPieceHandler(this);
-		
-		if (!fac) // check if a custom one was provided, if not create a default one
-			chunk_selector = new ChunkSelector(cman,*this,pman);
-		else
-			chunk_selector = fac->createChunkSelector(cman,*this,pman);
+		chunk_selector = new ChunkSelector(cman,*this,pman);
 		
 		Uint64 total = tor.getTotalSize();
 		downloaded = (total - cman.bytesLeft());
@@ -107,6 +103,18 @@ namespace bt
 		delete chunk_selector;
 		qDeleteAll(webseeds);
 	}
+	
+	void Downloader::setChunkSelector(ChunkSelectorInterface* csel)
+	{
+		if (chunk_selector)
+			delete chunk_selector;
+		
+		if (!csel) // check if a custom one was provided, if not create a default one
+			chunk_selector = new ChunkSelector(cman,*this,pman);
+		else
+			chunk_selector = csel;
+	}
+
 	
 	void Downloader::pieceReceived(const Piece & p)
 	{

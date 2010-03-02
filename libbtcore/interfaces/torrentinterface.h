@@ -43,6 +43,7 @@ namespace bt
 	class SHA1Hash;
 	class WebSeedInterface;
 	class JobQueue;
+	class ChunkSelectorInterface;
 
 	
 	enum TorrentStartResponse
@@ -416,6 +417,9 @@ namespace bt
 		
 		/// Get the JobQueue of the torrent
 		virtual const JobQueue* getJobQueue() const = 0;
+		
+		/// Set the ChunkSelector to use (0 resets to the default ChunkSelector)
+		virtual void setChunkSelector(ChunkSelectorInterface* csel) = 0;
 	signals:
 		/**
 		 * Emitted when we have finished downloading.

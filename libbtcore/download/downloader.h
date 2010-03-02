@@ -40,7 +40,6 @@ namespace bt
 	class Chunk;
 	class Piece;
 	class ChunkSelectorInterface;
-	class ChunkSelectorFactoryInterface;
 	class PieceDownloader;
 	class MonitorInterface;
 	class WebSeedChunkDownload;
@@ -75,10 +74,8 @@ namespace bt
 		 * @param tor The Torrent
 		 * @param pman The PeerManager
 		 * @param cman The ChunkManager
-		 * @param fac The ChunkSelectorFactory, if this is 0, a default one will be created 
-		 *            (note: Downloader will take control of this and delete it when it gets deleted)
 		 */
-		Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorFactoryInterface* fac);
+		Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman);
 		virtual ~Downloader();
 		
 		/**
@@ -193,6 +190,9 @@ namespace bt
 		 * @param chunk The chunk
 		 */
 		void corrupted(Uint32 chunk);
+		
+		/// Set the ChunkSelector, 0 means KT will reset to the default selector
+		void setChunkSelector(ChunkSelectorInterface* csel);
 		
 		/// Enable or disable the use of webseeds
 		static void setUseWebSeeds(bool on);

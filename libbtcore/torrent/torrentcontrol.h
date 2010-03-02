@@ -202,6 +202,7 @@ namespace bt
 		virtual float getMaxSeedTime() const {return stats.max_seed_time;}
 		virtual void setAllowedToStart(bool on);
 		virtual void setQueued(bool queued);
+		virtual void setChunkSelector(ChunkSelectorInterface* csel);
 	
 		/// Tell the TorrentControl obj to preallocate diskspace in the next update
 		void setPreallocateDiskSpace(bool pa) {prealloc = pa;}

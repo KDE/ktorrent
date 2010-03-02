@@ -661,7 +661,10 @@ namespace bt
 		stats.completed = cman->completed();
 
 		// create downloader,uploader and choker
-		downloader = new Downloader(*tor,*pman,*cman,custom_selector_factory);
+		downloader = new Downloader(*tor,*pman,*cman);
+		if (custom_selector_factory)
+			downloader->setChunkSelector(custom_selector_factory->createChunkSelector(*cman,*downloader,*pman));
+		
 		downloader->loadWebSeeds(tordir + "webseeds");
 		connect(downloader,SIGNAL(ioError(const QString& )),this,SLOT(onIOError(const QString& )));
 		connect(downloader,SIGNAL(chunkDownloaded(Uint32)),this,SLOT(downloaded(Uint32)));
@@ -1490,6 +1493,9 @@ namespace bt
 
 	void TorrentControl::deleteDataFiles()
 	{
+		if (!cman)
+			return;
+		
 		Job* job = cman->deleteDataFiles();
 		if (job)
 			job->start(); // don't use queue, this is only done when removing the torrent
@@ -1873,6 +1879,18 @@ namespace bt
 		runningJobsDone(this);
 	}
 
+	void TorrentControl::setChunkSelector(ChunkSelectorInterface* csel)
+	{
+		if (!downloader)
+			return;
+		
+		if (csel)
+			downloader->setChunkSelector(csel);
+		else if (custom_selector_factory)
+			downloader->setChunkSelector(custom_selector_factory->createChunkSelector(*cman,*downloader,*pman));
+		else
+			downloader->setChunkSelector(0);
+	}
 
 }
 
