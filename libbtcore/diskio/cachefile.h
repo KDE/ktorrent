@@ -128,6 +128,7 @@ namespace bt
 		void closeTemporary();
 		void openFile(Mode mode);
 		void unmapAll();
+		bool allocateBytes(bt::Uint64 off,bt::Uint64 size);
 
 	private slots:
 		void aboutToClose();

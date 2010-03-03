@@ -32,6 +32,7 @@ Changes in 4.0beta2:
 - Fix crash in PeerConnector cleanup (228955)
 - Make it possible to change the ChunkSelector at runtime
 - Make torrents reannounce and kill all stale peers, when network comes back up after some downtime (184766)
+- Before mapping a piece, use posix_fallocate to ensure that we can't get a SIGBUS when the disk is full (229081)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

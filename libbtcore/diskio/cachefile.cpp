@@ -127,6 +127,9 @@ namespace bt
 			return 0;
 		}
 		
+		if (!allocateBytes(off,size))
+			throw Error(i18n("Not enough free disk space for %1",path));
+		
 		int mmap_flag = 0;
 		switch (mode)
 		{
@@ -563,4 +566,16 @@ namespace bt
 
 		return ret;
 	}
+	
+	bool CacheFile::allocateBytes(Uint64 off, Uint64 size)
+	{
+#ifdef HAVE_POSIX_FALLOCATE64
+		return posix_fallocate64(fptr->handle(),off,size) == 0;
+#elif HAVE_POSIX_FALLOCATE
+		return posix_fallocate(fptr->handle(),off,size) == 0;
+#else
+		return true;
+#endif
+	}
+
 }
