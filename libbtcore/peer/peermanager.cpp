@@ -684,6 +684,16 @@ namespace bt
 	{
 		piece_handler = ph;
 	}
+	
+	void PeerManager::killStalePeers()
+	{
+		foreach (Peer* p,peer_list)
+		{
+			if (p->getDownloadRate() == 0 && p->getUploadRate() == 0)
+				p->kill();
+		}
+	}
+
 }
 
 #include "peermanager.moc"

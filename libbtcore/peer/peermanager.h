@@ -156,6 +156,11 @@ namespace bt
 		 */
 		void killChokedPeers(Uint32 older_then);
 		
+		/**
+		 * Kill all peers who appear to be stale
+		 */
+		void killStalePeers();
+		
 		Uint32 getNumConnectedPeers() const {return peer_list.count();}
 		Uint32 getNumPending() const {return num_pending;}
 		

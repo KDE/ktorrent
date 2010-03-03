@@ -203,6 +203,7 @@ namespace bt
 		virtual void setAllowedToStart(bool on);
 		virtual void setQueued(bool queued);
 		virtual void setChunkSelector(ChunkSelectorInterface* csel);
+		virtual void networkUp();
 	
 		/// Tell the TorrentControl obj to preallocate diskspace in the next update
 		void setPreallocateDiskSpace(bool pa) {prealloc = pa;}

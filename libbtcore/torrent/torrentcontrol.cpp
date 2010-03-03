@@ -1891,6 +1891,12 @@ namespace bt
 		else
 			downloader->setChunkSelector(0);
 	}
+	
+	void TorrentControl::networkUp()
+	{
+		psman->manualUpdate();
+		pman->killStalePeers();
+	}
 
 }
 

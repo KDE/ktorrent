@@ -53,6 +53,9 @@ namespace kt
 		suspended_state = false;
 		exiting = false;
 		ordering = false;
+		Solid::Networking::Notifier* notifier = Solid::Networking::notifier();
+		connect(notifier,SIGNAL(statusChanged(Solid::Networking::Status)),
+				this,SLOT(networkStatusChanged(Solid::Networking::Status)));
 	}
 
 
@@ -795,6 +798,33 @@ namespace kt
 		}
 		orderQueue();
 	}
+	
+	void QueueManager::networkStatusChanged(Solid::Networking::Status status)
+	{
+		if (status == Solid::Networking::Connected)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Network is up" << endl;
+			// if the network has gone down, longer then 2 minutes
+			// all the connections are probably stale, so tell all 
+			// running torrents, that they need to reannounce and kill stale peers
+			if (network_down_time.isValid() && network_down_time.secsTo(QDateTime::currentDateTime()) > 120)
+			{
+				foreach (bt::TorrentInterface* tc,downloads)
+				{
+					if (tc->getStats().running)
+						tc->networkUp();
+				}
+			}
+			
+			network_down_time = QDateTime();
+		}
+		else if (status == Solid::Networking::Unconnected)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Network is down" << endl;
+			network_down_time = QDateTime::currentDateTime();
+		}
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	

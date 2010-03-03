@@ -24,6 +24,7 @@
 #include <set>
 #include <qobject.h>
 #include <qlinkedlist.h>
+#include <solid/networking.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/queuemanagerinterface.h>
 #include <ktcore_export.h>
@@ -255,6 +256,9 @@ namespace kt
 		void checkMaxRatio(QList<bt::TorrentInterface*> & todo);
 		void rearrangeQueue();
 		bt::TorrentStartResponse startInternal(bt::TorrentInterface* tc);
+		
+	private slots:
+		void networkStatusChanged(Solid::Networking::Status status);
 
 	private:
 		QueuePtrList downloads;
@@ -265,6 +269,7 @@ namespace kt
 		bool keep_seeding;
 		bool exiting;
 		bool ordering;
+		QDateTime network_down_time;
 	};
 }
 #endif
