@@ -328,9 +328,8 @@ namespace kt
 		}
 			
 		tc->setPreallocateDiskSpace(true);
-		
-		torrentAdded(tc);
 		qman->torrentAdded(tc,start_torrent);
+		
 		//now copy torrent file to user specified dir if needed
 		if(Settings::useTorrentCopyDir())
 		{
@@ -346,6 +345,8 @@ namespace kt
 			destination += tc->getStats().torrent_name + ".torrent";
 			KIO::file_copy(torFile,destination,-1, KIO::HideProgressInfo);
 		}
+		
+		torrentAdded(tc);
 		return true;
 	}
 	
