@@ -60,6 +60,7 @@ namespace utp
 		
 		void read(const bt::Uint8* data);
 		void write(bt::Uint8* data);
+		static bt::Uint32 size();
 	};
 	
 	struct SelectiveAck

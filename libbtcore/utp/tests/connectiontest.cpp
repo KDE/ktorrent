@@ -53,7 +53,7 @@ public:
 	QByteArray buildPacket(bt::Uint32 type,bt::Uint32 recv_conn_id,bt::Uint32 send_conn_id,bt::Uint16 seq_nr,bt::Uint16 ack_nr)
 	{
 		TimeValue tv;
-		QByteArray ba(sizeof(Header),0);
+		QByteArray ba(Header::size(),0);
 		Header hdr;
 		hdr.version = 1;
 		hdr.type = type;

@@ -435,14 +435,10 @@ namespace utp
 	void UTPServer::PollPipePair::test(Connection* conn)
 	{
 		if (read_pipe.readyToWakeUp(conn))
-		{
 			read_pipe.wakeUp();
-		}
 		
 		if (write_pipe.readyToWakeUp(conn))
-		{
 			write_pipe.wakeUp();
-		}
 	}
 
 

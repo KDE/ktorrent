@@ -26,6 +26,7 @@
 #include <utp/utpsocket.h>
 #include <net/poll.h>
 #include <torrent/globals.h>
+#include <util/bitset.h>
 
 using namespace utp;
 using namespace net;
@@ -117,43 +118,53 @@ private slots:
 		Out(SYS_GEN|LOG_DEBUG) << "testPollInput " << endl;
 		char test[] = "test\n";
 		
-		for (int j = 0;j < 10;j++)
+		for (int i = 0;i < NUM_SOCKETS;i++)
 		{
-			for (int i = 0;i < NUM_SOCKETS;i++)
-			{
-				outgoing[i]->send((const bt::Uint8*)test,strlen(test));
-				incoming[i]->prepare(&poller,Poll::INPUT);
-			}
-			
-			sleep(1);
-			QVERIFY(poller.poll(1000) > 0);
-			for (int i = 0;i < NUM_SOCKETS;i++)
-			{
-				QVERIFY(incoming[i]->ready(&poller,net::Poll::INPUT));
-				bt::Uint8 tmp[20];
-				QVERIFY(incoming[i]->recv(tmp,20) == strlen(test));
-				QVERIFY(memcmp(tmp,test,strlen(test)) == 0);
-			}
-			poller.reset();
+			outgoing[i]->send((const bt::Uint8*)test,strlen(test));
 		}
+		
+		bt::BitSet bs(NUM_SOCKETS);
+		bs.setAll(false);
+		
+		while (!bs.allOn())
+		{
+			poller.reset();
+			for (int i = 0;i < NUM_SOCKETS;i++)
+				if (!bs.get(i))
+					incoming[i]->prepare(&poller,Poll::INPUT);
+			
+			QVERIFY(poller.poll() > 0);
+			for (int i = 0;i < NUM_SOCKETS;i++)
+			{
+				if (!bs.get(i) && incoming[i]->ready(&poller,net::Poll::INPUT))
+				{
+					bt::Uint8 tmp[20];
+					QVERIFY(incoming[i]->recv(tmp,20) == strlen(test));
+					QVERIFY(memcmp(tmp,test,strlen(test)) == 0);
+					bs.set(i,true);
+				}
+			}
+		}
+		
+		poller.reset();
+		QVERIFY(bs.allOn());
 	}
 	
 	void testPollOutput()
 	{
+		poller.reset();
 		Out(SYS_GEN|LOG_DEBUG) << "testPollOutput " << endl;
 		for (int i = 0;i < NUM_SOCKETS;i++)
 		{
 			incoming[i]->prepare(&poller,Poll::OUTPUT);
 		}
 		
-		int ret = poller.poll();
-		Out(SYS_GEN|LOG_DEBUG) << "ret = " << ret << endl;
+		QVERIFY(poller.poll(10000) > 0);
 		for (int i = 0;i < NUM_SOCKETS;i++)
 		{
 			QVERIFY(incoming[i]->ready(&poller,Poll::OUTPUT));
 		}
-		
-		QVERIFY(ret > 0);
+	
 		poller.reset();
 	}
 	

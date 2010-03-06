@@ -275,7 +275,7 @@ namespace utp
 			extension_length += 2 + qMax(sack_bits / 8,(bt::Uint32)4);
 	
 		TimeValue tv;
-		QByteArray ba(sizeof(Header) + extension_length,0);
+		QByteArray ba(Header::size() + extension_length,0);
 		Header hdr;
 		hdr.version = 1;
 		hdr.type = type;
@@ -290,7 +290,7 @@ namespace utp
 		
 		if (extension_length > 0)
 		{
-			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + sizeof(Header));
+			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + Header::size());
 			SelectiveAck sack;
 			sack.extension = ptr[0] = 0;
 			sack.length = ptr[1] = extension_length - 2;
@@ -433,7 +433,7 @@ namespace utp
 		if (sack_bits > 0)
 			extension_length += 2 + qMin(sack_bits / 8,(bt::Uint32)4);
 		
-		QByteArray ba(sizeof(Header) + extension_length + packet.size(),0);
+		QByteArray ba(Header::size() + extension_length + packet.size(),0);
 		Header hdr;
 		hdr.version = 1;
 		hdr.type = ST_DATA;
@@ -448,7 +448,7 @@ namespace utp
 		
 		if (extension_length > 0)
 		{
-			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + sizeof(Header));
+			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + Header::size());
 			SelectiveAck sack;
 			sack.extension = ptr[0] = 0;
 			sack.length = ptr[1] = extension_length - 2;
@@ -456,7 +456,7 @@ namespace utp
 			local_wnd->fillSelectiveAck(&sack);
 		}
 		
-		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),to_send);
+		memcpy(ba.data() + Header::size() + extension_length,packet.data(),to_send);
 		if (!transmitter->sendTo(ba,stats.remote))
 			throw TransmissionError(__FILE__,__LINE__);
 		
@@ -476,7 +476,7 @@ namespace utp
 		if (sack_bits > 0)
 			extension_length += 2 + qMin(sack_bits / 8,(bt::Uint32)4);
 		
-		QByteArray ba(sizeof(Header) + extension_length + packet.size(),0);
+		QByteArray ba(Header::size() + extension_length + packet.size(),0);
 		Header hdr;
 		hdr.version = 1;
 		hdr.type = ST_DATA;
@@ -491,7 +491,7 @@ namespace utp
 		
 		if (extension_length > 0)
 		{
-			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + sizeof(Header));
+			bt::Uint8* ptr = (bt::Uint8*)(ba.data() + Header::size());
 			SelectiveAck sack;
 			sack.extension = ptr[0] = 0;
 			sack.length = ptr[1] = extension_length - 2;
@@ -499,7 +499,7 @@ namespace utp
 			local_wnd->fillSelectiveAck(&sack);
 		}
 		
-		memcpy(ba.data() + sizeof(Header) + extension_length,packet.data(),packet.size());
+		memcpy(ba.data() + Header::size() + extension_length,packet.data(),packet.size());
 		timer.update();
 		
 		if (!transmitter->sendTo(ba,stats.remote))

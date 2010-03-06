@@ -98,6 +98,11 @@ namespace utp
 		bt::WriteUint16(data,18,ack_nr);
 	}
 	
+	bt::Uint32 Header::size()
+	{
+		return 20;
+	}
+
 	
 	PacketParser::PacketParser(const QByteArray& pkt) 
 		: packet((const bt::Uint8*)pkt.data()),size(pkt.size()),sack_found(false),data_off(0),data_size(0)
@@ -117,10 +122,10 @@ namespace utp
 
 	bool PacketParser::parse()
 	{
-		if (size < sizeof(Header))
+		if (size < Header::size())
 			return false;
 		
-		data_off = sizeof(Header);
+		data_off =  Header::size();
 		
 		// go over all header extensions to increase the data offset and watch out for selective acks
 		int ext_id = hdr.extension;
