@@ -191,6 +191,13 @@ namespace kt
 		virtual void remove(bt::TorrentInterface* tc,bool data_to) = 0;
 		
 		/**
+		 * Remove a list of downloads. 
+		 * @param todo The torrent list
+		 * @param data_to Whether or not to delete the file data to
+		 */
+		virtual void remove(QList<bt::TorrentInterface*> & todo,bool data_to) = 0; 
+		
+		/**
 		 * Find the next free torX dir.
 		 * @return Path to the dir (including the torX part)
 		 */

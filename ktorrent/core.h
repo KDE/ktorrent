@@ -144,6 +144,7 @@ namespace kt
 		virtual void stop(bt::TorrentInterface* tc);
 		virtual void stop(QList<bt::TorrentInterface*> & todo);
 		virtual void remove(bt::TorrentInterface* tc,bool data_to);
+		virtual void remove(QList<bt::TorrentInterface*> & todo,bool data_to);
 		virtual void pause(bt::TorrentInterface* tc);
 		virtual void pause(QList<bt::TorrentInterface*> & todo);
 		

@@ -38,6 +38,7 @@ class KJob;
 
 namespace bt
 {
+	class StatsFile;
 	class Choker;
 	class Torrent;
 	class PeerSourceManager;
@@ -431,6 +432,7 @@ namespace bt
 		Uint32 assured_upload_speed;
 		
 		InternalStats istats;
+		StatsFile* stats_file;
 		
 		static KUrl completed_dir;
 		static bool completed_datacheck;

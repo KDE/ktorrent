@@ -315,23 +315,7 @@ set (diskio_HDR
 	./diskio/piecedata.h
 )
 	
-set (torrent_HDR
-	./torrent/torrent.h
-	./torrent/advancedchokealgorithm.h
-	./torrent/peersourcemanager.h
-	./torrent/choker.h
-	./torrent/server.h
-	./torrent/torrentcontrol.h
-	./torrent/uploader.h
-	./torrent/torrentcreator.h
-	./torrent/timeestimator.h
-	./torrent/torrentfile.h
-	./torrent/statsfile.h
-	./torrent/globals.h
-	./torrent/torrentstats.h
-	./torrent/job.h
-	./torrent/jobqueue.h
-)
+
 	
 set (tracker_HDR
 	./tracker/tracker.h
@@ -380,7 +364,6 @@ set (migrate_HDR
 
 
 install(FILES ${tracker_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/tracker COMPONENT Devel)
-install(FILES ${torrent_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/torrent COMPONENT Devel)
 install(FILES ${diskio_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/diskio COMPONENT Devel)
 install(FILES ${bcodec_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/bcodec COMPONENT Devel)
 install(FILES ${mse_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/mse COMPONENT Devel)
@@ -392,6 +375,7 @@ install(FILES ${migrate_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/migrat
 install(FILES ${download_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/download COMPONENT Devel)
 install(FILES ${btcore_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore COMPONENT Devel)
 
+add_subdirectory(torrent)
 add_subdirectory(net)
 add_subdirectory(magnet)
 add_subdirectory(util)

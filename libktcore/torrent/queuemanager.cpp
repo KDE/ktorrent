@@ -158,7 +158,6 @@ namespace kt
 		else
 		{
 			tc->setAllowedToStart(true);
-			bool start_tc = false;
 			if (tc->getJobQueue()->runningJobs())
 				return BUSY_WITH_JOB;
 			
@@ -662,6 +661,15 @@ namespace kt
 		rearrangeQueue();
 		orderQueue();
 	}
+	
+	void QueueManager::torrentsRemoved(QList<bt::TorrentInterface*>& tors)
+	{
+		foreach (bt::TorrentInterface* tc,tors)
+			remove(tc);
+		rearrangeQueue();
+		orderQueue();
+	}
+
 	
 	void QueueManager::setSuspendedState(bool suspend)
 	{

@@ -245,6 +245,7 @@ namespace kt
 		void torrentFinished(bt::TorrentInterface* tc);
 		void torrentAdded(bt::TorrentInterface* tc,bool start_torrent);
 		void torrentRemoved(bt::TorrentInterface* tc);
+		void torrentsRemoved(QList<bt::TorrentInterface*> & tors);
 		void torrentStopped(bt::TorrentInterface* tc);
 		void onLowDiskSpace(bt::TorrentInterface* tc, bool toStop);
 

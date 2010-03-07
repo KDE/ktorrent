@@ -786,6 +786,58 @@ namespace kt
 		}
 	}
 	
+	void Core::remove(QList<bt::TorrentInterface*> & todo, bool data_to)
+	{
+		QList<bt::TorrentInterface*>::iterator i = todo.begin();
+		while (i != todo.end())
+		{
+			bt::TorrentInterface* tc = *i;
+			if (tc->getJobQueue()->runningJobs())
+			{
+				// if there are running jobs, schedule delete when they finish
+				delayed_removal.insert(tc,data_to);
+				connect(tc,SIGNAL(runningJobsDone(bt::TorrentInterface*)),
+						this,SLOT(delayedRemove(bt::TorrentInterface*)));
+				i = todo.erase(i);
+			}
+			else
+				i++;
+		}
+		
+		stop(todo);
+		
+		foreach (bt::TorrentInterface* tc,todo)
+		{
+			const bt::TorrentStats & s = tc->getStats();
+			removed_bytes_up += s.session_bytes_uploaded;
+			removed_bytes_down += s.session_bytes_downloaded;
+			
+			QString dir = tc->getTorDir();
+			
+			try
+			{
+				if (data_to)
+					tc->deleteDataFiles();
+			}
+			catch (Error & e)
+			{
+				gui->errorMsg(e.toString());
+			}
+			
+			// cleanup potential data scans
+			QMap<bt::TorrentInterface*,ScanListener*>::iterator i = active_scans.find(tc);
+			if (i != active_scans.end())
+				closeScanListener(i.value());
+			
+			torrentRemoved(tc);
+			gman->torrentRemoved(tc);
+			bt::Delete(dir,false);
+		}
+		
+		qman->torrentsRemoved(todo);
+		gui->updateActions();
+	}
+	
 	void Core::delayedRemove(bt::TorrentInterface* tc)
 	{
 		if (!delayed_removal.contains(tc))
