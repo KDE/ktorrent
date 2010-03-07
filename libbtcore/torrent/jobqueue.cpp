@@ -64,7 +64,7 @@ namespace bt
 		if (j->stopTorrent() && tc->getStats().running)
 		{
 			// stop the torrent if the job requires it
-			tc->stop(0);
+			tc->pause();
 			restart = true;
 		}
 		j->start();
@@ -85,7 +85,7 @@ namespace bt
 		{
 			if (restart)
 			{
-				tc->start();
+				tc->unpause();
 				tc->allJobsDone();
 				restart = false;
 			}
