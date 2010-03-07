@@ -34,8 +34,11 @@ namespace kt
 	{
 		int response_code;
 		QMap<QString,QString> fields;
+		int major;
+		int minor;
+		
 	public:
-		HttpResponseHeader(int response_code);
+		HttpResponseHeader(int response_code,int major = 1,int minor = 1);
 		HttpResponseHeader(const HttpResponseHeader & hdr);
 		virtual ~HttpResponseHeader();
 		

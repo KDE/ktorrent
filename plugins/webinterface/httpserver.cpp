@@ -294,7 +294,6 @@ namespace kt
 		if (!content_type.isEmpty())
 			hdr.setValue("Content-Type",content_type);
 		
-		hdr.setValue("Connection","keep-alive");
 		if (with_session_info && session.sessionId && session.logged_in)
 		{
 			hdr.setValue("Set-Cookie",QString("KT_SESSID=%1").arg(session.sessionId));
@@ -317,7 +316,7 @@ namespace kt
 	{
 		if (rootDir.isEmpty())
 		{
-			HttpResponseHeader rhdr(500);
+			HttpResponseHeader rhdr(500,hdr.majorVersion(),hdr.minorVersion());
 			setDefaultResponseHeaders(rhdr,"text/html",false);
 			hdlr->send500(rhdr,i18n("Cannot find web interface skins."));
 			return;
@@ -360,7 +359,7 @@ namespace kt
 		// check if the file exists (if not send 404)
 		if (!bt::Exists(path))
 		{
-			HttpResponseHeader rhdr(404);
+			HttpResponseHeader rhdr(404,hdr.majorVersion(),hdr.minorVersion());
 			setDefaultResponseHeaders(rhdr,"text/html",false);
 			hdlr->send404(rhdr,path);
 			return;
@@ -383,7 +382,7 @@ namespace kt
 				return;
 			}
 			
-			HttpResponseHeader rhdr(200);
+			HttpResponseHeader rhdr(200,hdr.majorVersion(),hdr.minorVersion());
 			setDefaultResponseHeaders(rhdr,"text/html",true);
 			if (path.endsWith("login.html"))
 			{
@@ -395,7 +394,7 @@ namespace kt
 			
 			if (!hdlr->sendFile(rhdr,path))
 			{
-				HttpResponseHeader nhdr(404);
+				HttpResponseHeader nhdr(404,hdr.majorVersion(),hdr.minorVersion());
 				setDefaultResponseHeaders(nhdr,"text/html",false);
 				hdlr->send404(nhdr,path);
 			}
@@ -406,7 +405,7 @@ namespace kt
 		}
 		else
 		{
-			HttpResponseHeader rhdr(404);
+			HttpResponseHeader rhdr(404,hdr.majorVersion(),hdr.minorVersion());
 			setDefaultResponseHeaders(rhdr,"text/html",false);
 			hdlr->send404(rhdr,file);
 		}
@@ -422,7 +421,7 @@ namespace kt
 			QDateTime dt = parseDate(hdr.value("If-Modified-Since"));
 			if (dt.isValid() && dt < fi.lastModified())
 			{	
-				HttpResponseHeader rhdr(304);
+				HttpResponseHeader rhdr(304,hdr.majorVersion(),hdr.minorVersion());
 				setDefaultResponseHeaders(rhdr,"text/html",true);
 				rhdr.setValue("Cache-Control","max-age=0");
 				rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
@@ -432,14 +431,14 @@ namespace kt
 			}
 		}
 			
-		HttpResponseHeader rhdr(200);
+		HttpResponseHeader rhdr(200,hdr.majorVersion(),hdr.minorVersion());
 		setDefaultResponseHeaders(rhdr,ExtensionToContentType(ext),true);
 		rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
 		rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime().toUTC().addSecs(3600),false));
 		rhdr.setValue("Cache-Control","private");
 		if (!hdlr->sendFile(rhdr,path))
 		{
-			HttpResponseHeader nhdr(404);
+			HttpResponseHeader nhdr(404,hdr.majorVersion(),hdr.minorVersion());
 			setDefaultResponseHeaders(nhdr,"text/html",false);
 			hdlr->send404(nhdr,path);
 		}
@@ -476,9 +475,9 @@ namespace kt
 		}
 	}
 	
-	void HttpServer::handleUnsupportedMethod(HttpClientHandler* hdlr)
+	void HttpServer::handleUnsupportedMethod(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr)
 	{
-		HttpResponseHeader rhdr(500);
+		HttpResponseHeader rhdr(500,hdr.majorVersion(),hdr.minorVersion());
 		setDefaultResponseHeaders(rhdr,"text/html",false);
 		hdlr->send500(rhdr,i18n("Unsupported HTTP method"));
 	}

@@ -73,7 +73,7 @@ namespace kt
 
 		void handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr);
 		void handlePost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data);
-		void handleUnsupportedMethod(HttpClientHandler* hdlr);
+		void handleUnsupportedMethod(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr);
 		bt::MMapFile* cacheLookup(const QString & name);
 		void insertIntoCache(const QString & name,bt::MMapFile* file);
 		QString challengeString();

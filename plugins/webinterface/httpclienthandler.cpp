@@ -130,7 +130,7 @@ namespace kt
 		}
 		else
 		{
-			srv->handleUnsupportedMethod(this);
+			srv->handleUnsupportedMethod(this,header);
 		}
 		
 		if (client->bytesAvailable() > 0)
@@ -149,6 +149,7 @@ namespace kt
 	bool HttpClientHandler::sendFile(HttpResponseHeader & hdr,const QString & full_path)
 	{
 	//	Out(SYS_WEB|LOG_DEBUG) << "Sending file " << full_path << endl;
+		setResponseHeaders(hdr);
 		// first look in cache
 		MMapFile* c = srv->cacheLookup(full_path);
 		
@@ -179,11 +180,12 @@ namespace kt
 	}
 	
 #define HTTP_404_ERROR "<html><head><title>404 Not Found</title></head><body>The requested file %1 was not found !</body></html>"
-#define HTTP_500_ERROR "<html><head><title>HTTP/1.1 500 Internal Server Error</title></head><body><h1>Internal Server Error</h1><p>%1</p></body></html>"
+#define HTTP_500_ERROR "<html><head><title>500 Internal Server Error</title></head><body><h1>Internal Server Error</h1><p>%1</p></body></html>"
 
 	
 	void HttpClientHandler::send404(HttpResponseHeader & hdr,const QString & path)
 	{
+		setResponseHeaders(hdr);
 	//	Out(SYS_WEB|LOG_DEBUG) << "Sending 404 " << path << endl;
 		QString data = QString(HTTP_404_ERROR).arg(path);
 		hdr.setValue("Content-Length",QString::number(data.length()));
@@ -195,6 +197,7 @@ namespace kt
 	
 	void HttpClientHandler::send500(HttpResponseHeader & hdr,const QString & error)
 	{
+		setResponseHeaders(hdr);
 	//	Out(SYS_WEB|LOG_DEBUG) << "Sending 500 " << endl;
 		QString err = i18n("An internal server error occurred: %1",error);
 		QString data = QString(HTTP_500_ERROR).arg(err);
@@ -205,8 +208,9 @@ namespace kt
 		sendOutputBuffer();
 	}
 	
-	void HttpClientHandler::sendResponse(const HttpResponseHeader & hdr)
+	void HttpClientHandler::sendResponse(HttpResponseHeader & hdr)
 	{
+		setResponseHeaders(hdr);
 	//	Out(SYS_WEB|LOG_DEBUG) << "Sending response " << hdr.toString() << endl;
 		output_buffer.append(hdr.toString().toUtf8());
 		sendOutputBuffer();
@@ -214,6 +218,7 @@ namespace kt
 	
 	void HttpClientHandler::send(HttpResponseHeader & hdr,const QByteArray & data)
 	{
+		setResponseHeaders(hdr);
 		hdr.setValue("Content-Length",QString::number(data.length()));
 		output_buffer.append(hdr.toString().toUtf8());
 		output_buffer.append(data);
@@ -238,12 +243,56 @@ namespace kt
 				output_buffer.resize(0);
 				write_notifier->setEnabled(false);
 				written = 0;
+				if (shouldClose())
+				{
+					Out(SYS_WEB|LOG_DEBUG) << "closing HttpClientHandler" << endl;
+					client->close();
+					closed();
+				}
 			}
 			else
 			{
 				// enable write_notifier, so we can send the rest later
 				write_notifier->setEnabled(true);
 			}
+		}
+	}
+
+	bool HttpClientHandler::shouldClose() const
+	{
+		if (!header.isValid())
+			return false;
+		
+		if (header.majorVersion() == 1 && header.minorVersion() == 0)
+		{
+			if (header.hasKey("Connection") && header.value("Connection").toLower() == "keep-alive")
+				return false;
+			else
+				return true;
+		}
+		else
+		{
+			return header.hasKey("Connection") && header.value("Connection").toLower() == "close";
+		}
+		
+		return false;
+	}
+	
+	void HttpClientHandler::setResponseHeaders(HttpResponseHeader& hdr)
+	{
+		if (shouldClose())
+		{
+			if (header.majorVersion() == 1 && header.minorVersion() == 0)
+				return;
+			else
+				hdr.setValue("Connection","close");
+		}
+		else
+		{
+			if (header.majorVersion() == 1 && header.minorVersion() == 0)
+				hdr.setValue("Connection","Keep-Alive");
+			else
+				return;
 		}
 	}
 

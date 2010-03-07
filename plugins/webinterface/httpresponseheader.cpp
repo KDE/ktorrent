@@ -33,8 +33,8 @@ namespace kt
 		return QString::null;
 	}
 	
-	HttpResponseHeader::HttpResponseHeader(int response_code) 
-		: response_code(response_code)
+	HttpResponseHeader::HttpResponseHeader(int response_code,int major,int minor) 
+		: response_code(response_code),major(major),minor(minor)
 	{
 	}
 	
@@ -42,6 +42,8 @@ namespace kt
 	{
 		response_code = hdr.response_code;
 		fields = hdr.fields;
+		major = hdr.major;
+		minor = hdr.minor;
 	}
 	
 	HttpResponseHeader::~HttpResponseHeader()
@@ -61,7 +63,7 @@ namespace kt
 	QString HttpResponseHeader::toString() const
 	{
 		QString str;
-		str += QString("HTTP/1.1 %1 %2\r\n").arg(response_code).arg(ResponseCodeToString(response_code));
+		str += QString("HTTP/%1.%2 %3 %4\r\n").arg(major).arg(minor).arg(response_code).arg(ResponseCodeToString(response_code));
 		
 		QMap<QString,QString>::const_iterator itr = fields.begin();
 		while (itr != fields.end())

@@ -49,14 +49,15 @@ namespace kt
 		
 		
 		bool sendFile(HttpResponseHeader & hdr,const QString & full_path);
-		void sendResponse(const HttpResponseHeader & hdr);
+		void sendResponse(HttpResponseHeader & hdr);
 		void send404(HttpResponseHeader & hdr,const QString & path);
 		void send500(HttpResponseHeader & hdr,const QString & error);
 		void send(HttpResponseHeader & hdr,const QByteArray & data);
+		bool shouldClose() const;
 		
 	private:
 		void handleRequest(int header_len);
-			
+		void setResponseHeaders(HttpResponseHeader & hdr);
 
 	private slots:
 		void readyToRead(int);
