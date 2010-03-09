@@ -178,6 +178,12 @@ namespace bt
 	 * @return The shortened path
 	 */
 	BTCORE_EXPORT QString ShortenFileName(const QString & path,int extra_number = -1);
+	
+	/// Calculate the amount of space a file is taking up (this is not the filesize!)
+	BTCORE_EXPORT Uint64 DiskUsage(const QString & filename);
+	
+	/// Calculate the amount of space a file is taking up (this is not the filesize!)
+	BTCORE_EXPORT Uint64 DiskUsage(int fd);
 }
 
 #endif

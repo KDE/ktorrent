@@ -587,4 +587,51 @@ namespace bt
 		
 		return assembled;
 	}
+	
+
+	Uint64 DiskUsage(const QString& filename)
+	{
+		Uint64 ret = 0;
+#ifndef Q_WS_WIN
+#ifdef HAVE_STAT64
+		struct stat64 sb;
+		if (stat64(QFile::encodeName(filename),&sb) == 0)
+#else
+		struct stat sb;
+		if (stat(QFile::encodeName(filename),&sb) == 0)
+#endif
+		{
+			ret = (Uint64)sb.st_blocks * 512;
+		}
+#else
+		DWORD high = 0;
+		DWORD low = GetCompressedFileSize(QFile::encodeName(filename),&high);
+		if (low != INVALID_FILE_SIZE)
+			ret = (high * MAXDWORD) + low;
+#endif
+		return ret;
+	}
+	
+	Uint64 DiskUsage(int fd)
+	{
+		Uint64 ret = 0;
+#ifndef Q_WS_WIN
+#ifdef HAVE_FSTAT64
+		struct stat64 sb;
+		if (fstat64(fd,&sb) == 0)
+#else
+		struct stat sb;
+		if (fstat(fd,&sb) == 0)
+#endif
+		{
+			ret = (Uint64)sb.st_blocks * 512;
+		}
+#else
+		struct _BY_HANDLE_FILE_INFORMATION info;
+		GetFileInformationByHandle((void *)&fd,&info);
+		ret = (info.nFileSizeHigh * MAXDWORD) + info.nFileSizeLow;
+#endif
+		return ret;
+	}
+
 }

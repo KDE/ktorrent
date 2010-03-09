@@ -535,36 +535,10 @@ namespace bt
 
 	Uint64 CacheFile::diskUsage()
 	{
-		Uint64 ret = 0;
-		bool close_again = false;
 		if (!fptr)
-		{
-			openFile(READ);
-			close_again = true;
-		}
-		
-		int fd = fptr->handle();
-#ifndef Q_WS_WIN
-#ifdef HAVE_FSTAT64
-		struct stat64 sb;
-		if (fstat64(fd,&sb) == 0)
-#else
-		struct stat sb;
-		if (fstat(fd,&sb) == 0)
-#endif
-		{
-			ret = (Uint64)sb.st_blocks * 512;
-		}
-#else
-		struct _BY_HANDLE_FILE_INFORMATION info;
-		GetFileInformationByHandle((void *)&fd,&info);
-		ret = (info.nFileSizeHigh * MAXDWORD) + info.nFileSizeLow;
-#endif
-	//	Out(SYS_DIO|LOG_NOTICE) << "CF: " << path << " is taking up " << BytesToString(ret) << " bytes" << endl;
-		if (close_again)
-			closeTemporary();
-
-		return ret;
+			return DiskUsage(path);
+		else
+			return DiskUsage(fptr->handle());
 	}
 	
 	bool CacheFile::allocateBytes(Uint64 off, Uint64 size)
