@@ -30,7 +30,7 @@ namespace bt
 {
 	
 	PeerConnector::PeerConnector(const QString & ip,Uint16 port,bool local,PeerManager* pman) 
-		: ip(ip),port(port),local(local),pman(pman),auth(0),stopping(false)
+		: QObject(pman),ip(ip),port(port),local(local),pman(pman),auth(0),stopping(false)
 	{
 		bool encryption = ServerInterface::isEncryptionEnabled();
 		bool utp = ServerInterface::isUtpEnabled();

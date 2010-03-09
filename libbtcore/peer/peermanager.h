@@ -20,9 +20,9 @@
 #ifndef BTPEERMANAGER_H
 #define BTPEERMANAGER_H
 
-#include <map>
-#include <qobject.h>
-#include <qlist.h>
+
+#include <QList>
+#include <QSet>
 #include <util/ptrmap.h>
 #include <peer/peer.h>
 #include <peer/peerid.h>
@@ -300,7 +300,7 @@ namespace bt
 		bool wanted_changed;
 		PieceHandler* piece_handler;
 		bool paused;
-		QList<PeerConnector*> connectors;
+		QSet<PeerConnector*> connectors;
 		
 		static Uint32 max_connections;
 		static Uint32 max_total_connections;

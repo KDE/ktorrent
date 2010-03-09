@@ -82,7 +82,6 @@ namespace bt
 		
 		qDeleteAll(peer_list.begin(),peer_list.end());
 		peer_list.clear();
-		qDeleteAll(connectors);
 	}
 
 	void PeerManager::pause()
@@ -328,7 +327,7 @@ namespace bt
 	{
 		if (!started)
 		{
-			connectors.removeAll(pcon);
+			connectors.remove(pcon);
 			pcon->deleteLater();
 			return;
 		}
@@ -337,15 +336,10 @@ namespace bt
 			total_connections--;
 		
 		num_pending--;
-		if (!ok || connectedTo(auth->getPeerID()))
-		{
-			connectors.removeAll(pcon);
-			pcon->deleteLater();
-			return;
-		}
-
-		createPeer(auth->takeSocket(),auth->getPeerID(),auth->supportedExtensions(),auth->isLocal());
-		connectors.removeAll(pcon);
+		if (ok && !connectedTo(auth->getPeerID()))
+			createPeer(auth->takeSocket(),auth->getPeerID(),auth->supportedExtensions(),auth->isLocal());
+		
+		connectors.remove(pcon);
 		pcon->deleteLater();
 	}
 	
@@ -439,7 +433,7 @@ namespace bt
 			{
 				const PotentialPeer & pp = itr->second;
 				PeerConnector* pcon = new PeerConnector(pp.ip,pp.port,pp.local,this);
-				connectors.append(pcon);
+				connectors.insert(pcon);
 				num_pending++;
 				total_connections++;
 			}
@@ -552,7 +546,8 @@ namespace bt
 		available_chunks.clear();
 		started = false;
 		ServerInterface::removePeerManager(this);
-		qDeleteAll(connectors);
+		foreach (PeerConnector* pcon,connectors)
+			pcon->deleteLater();
 		connectors.clear();
 		stopped();
 		num_pending = 0;
