@@ -37,6 +37,7 @@ Changes in 4.0beta2:
 - Use pause functionality instead of stopping and restarting a torrent when doing jobs (179456)
 - Fix handling of keep-alive in webinterface plugin (225167)
 - Don't open files to determine disk usage when files are not open
+- Change listen backlog to SOMAXCONN
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

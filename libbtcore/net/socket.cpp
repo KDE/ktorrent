@@ -200,7 +200,7 @@ namespace net
 			return false;
 		}
 
-		if (also_listen && listen(m_fd,5) < 0)
+		if (also_listen && listen(m_fd,SOMAXCONN) < 0)
 		{
 			Out(SYS_CON|LOG_IMPORTANT) << QString("Cannot listen to port %1:%2 : %3").arg(ip).arg(port).arg(strerror(errno)) << endl;
 			return false;
