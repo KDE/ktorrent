@@ -547,36 +547,36 @@ namespace kt
 		KActionCollection* ac = gui->actionCollection();
 		KStandardAction::selectAll(this,SLOT(selectAll()),ac);
 		
-		start_torrent = new KAction(KIcon("kt-start"),i18n("Start"), this);
+		start_torrent = new KAction(KIcon("kt-start"),i18nc("@action Start all selected torrents in the current tab", "Start"), this);
 		start_torrent->setToolTip(i18n("Start all selected torrents in the current tab"));
 		start_torrent->setShortcut(KShortcut(Qt::CTRL + Qt::Key_S));
 		connect(start_torrent,SIGNAL(triggered()),this,SLOT(startTorrents()));
 		ac->addAction("start",start_torrent);
 		
-		stop_torrent = new KAction(KIcon("kt-stop"),i18n("Stop"),this);
+		stop_torrent = new KAction(KIcon("kt-stop"),i18nc("@action Stop all selected torrents in the current tab", "Stop"),this);
 		stop_torrent->setToolTip(i18n("Stop all selected torrents in the current tab"));
 		stop_torrent->setShortcut(KShortcut(Qt::CTRL + Qt::Key_H));
 		connect(stop_torrent,SIGNAL(triggered()),this,SLOT(stopTorrents()));
 		ac->addAction("stop",stop_torrent);
 		
-		pause_torrent = new KAction(KIcon("media-playback-pause"),i18n("Pause"),this);
+		pause_torrent = new KAction(KIcon("media-playback-pause"),i18nc("@action Pause all selected torrents in the current tab", "Pause"),this);
 		pause_torrent->setToolTip(i18n("Pause all selected torrents in the current tab"));
 		connect(pause_torrent,SIGNAL(triggered()),this,SLOT(pauseTorrents()));
 		ac->addAction("pause",pause_torrent);
 		
-		remove_torrent = new KAction(KIcon("kt-remove"),i18n("Remove"),this);
+		remove_torrent = new KAction(KIcon("kt-remove"),i18nc("@action Remove all selected torrents in the current tab", "Remove"),this);
 		remove_torrent->setToolTip(i18n("Remove all selected torrents in the current tab"));
 		remove_torrent->setShortcut(KShortcut(Qt::Key_Delete));
 		connect(remove_torrent,SIGNAL(triggered()),this,SLOT(removeTorrents()));
 		ac->addAction("remove",remove_torrent);
 		
-		start_all = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
+		start_all = new KAction(KIcon("kt-start-all"),i18nc("@action Start all torrents in the current tab", "Start All"),this);
 		start_all->setToolTip(i18n("Start all torrents in the current tab"));
 		start_all->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_S));
 		connect(start_all,SIGNAL(triggered()),this,SLOT(startAllTorrents()));
 		ac->addAction("start_all",start_all);
 		
-		stop_all = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
+		stop_all = new KAction(KIcon("kt-stop-all"),i18nc("@action Stop all torrents in the current tab", "Stop All"),this);
 		stop_all->setToolTip(i18n("Stop all torrents in the current tab"));
 		stop_all->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_H));
 		connect(stop_all,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
