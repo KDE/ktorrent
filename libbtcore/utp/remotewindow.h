@@ -42,6 +42,7 @@ namespace utp
 		QByteArray data;
 		bt::Uint16 seq_nr;
 		bt::TimeStamp send_time;
+		bool retransmitted;
 	};
 	
 	/**
@@ -110,13 +111,14 @@ namespace utp
 		
 		bt::Uint32 currentWindow() const {return cur_window;}
 		bt::Uint32 maxWindow() const {return max_window;}
+		bt::Uint32 windowSize() const {return wnd_size;}
 		
 		/// Clear the window
 		void clear();
 		
 	private:
 		void checkLostPackets(const Header* hdr,const SelectiveAck* sack,Retransmitter* conn);
-		bool lost(const SelectiveAck* sack,bt::Uint16 seq_nr);
+		bt::Uint16 lost(const SelectiveAck* sack);
 		
 	private:
 		bt::Uint32 cur_window;

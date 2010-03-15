@@ -20,10 +20,13 @@
 
 #include <QtTest>
 #include <QObject>
+#include <util/log.h>
 #include <utp/localwindow.h>
 #include <utp/utpprotocol.h>
 
 using namespace utp;
+using namespace bt;
+
 
 class LocalWindowTest : public QObject
 {
@@ -31,15 +34,16 @@ class LocalWindowTest : public QObject
 public:
 	
 private slots:
-	void init()
+	void initTestCase()
 	{
-		
+		bt::InitLog("localwindowtest.log");
 	}
 	
 	
 	
 	void testLocalWindow()
 	{
+		Out(SYS_GEN|LOG_DEBUG) << "testLocalWindow" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		
@@ -67,6 +71,7 @@ private slots:
 	
 	void testPacketLoss()
 	{
+		Out(SYS_GEN|LOG_DEBUG) << "testPacketLoss" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		
@@ -103,6 +108,7 @@ private slots:
 	
 	void testPacketLoss2()
 	{
+		Out(SYS_GEN|LOG_DEBUG) << "testPacketLoss2" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		
@@ -146,6 +152,7 @@ private slots:
 	
 	void testToMuchData()
 	{
+		Out(SYS_GEN|LOG_DEBUG) << "testToMuchData" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		
@@ -168,6 +175,7 @@ private slots:
 	
 	void testSelectiveAck()
 	{
+		Out(SYS_GEN|LOG_DEBUG) << "testSelectiveAck" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		

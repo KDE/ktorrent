@@ -83,12 +83,6 @@ namespace utp
 	
 	bool LocalWindow::packetReceived(const utp::Header* hdr,const bt::Uint8* data,bt::Uint32 size)
 	{
-		if (availableSpace() < size)
-		{
-			Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived availableSpace() < " << size << endl;
-			return false;
-		}
-		
 		// Drop duplicate data packets
 		if (hdr->seq_nr <= last_seq_nr) 
 			return true;
@@ -100,9 +94,14 @@ namespace utp
 			while (itr != future_packets.end())
 			{
 				FuturePacket* pkt = *itr;
-				if (pkt->seq_nr <= hdr->seq_nr)
+				if (pkt->seq_nr < hdr->seq_nr)
 				{
 					itr++;
+				}
+				else if (pkt->seq_nr == hdr->seq_nr)
+				{
+					// Dupe, just return
+					return true;
 				}
 				else
 				{
@@ -116,12 +115,18 @@ namespace utp
 			// at the end and not inserted yet, so just append
 			if (itr == future_packets.end())
 				future_packets.append(new FuturePacket(hdr->seq_nr,data,size));
-		
+			
 			window_space -= size;
 			checkFuturePackets();
 		}
 		else
 		{
+			if (availableSpace() < size)
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Not enough space in local window " << availableSpace() << " " << size << endl;
+				return false;
+			}
+			
 			last_seq_nr = hdr->seq_nr;
 			if (write(data,size) != size)
 				Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived write failed " << endl;
@@ -129,7 +134,6 @@ namespace utp
 			checkFuturePackets();
 		}
 		
-	//	Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived " << fill() << " " << future_packets.count() << endl;
 		return true;
 	}
 

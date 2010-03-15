@@ -90,25 +90,31 @@ public:
 	
 	virtual void run()
 	{
-		QByteArray data = Generate(1024);
+		int step = 64*1024;
+		QByteArray data = Generate(step);
 		bt::SHA1HashGen hgen;
 		
 		int sent = 0;
 		int off = 0;
 		while (sent < BYTES_TO_SEND)
 		{
-			int to_send = 1024 - off;
+			int to_send = step - off;
 			int ret = outgoing->send((const bt::Uint8*)data.data() + off,to_send);
+			Out(SYS_GEN|LOG_DEBUG) << "Transmitted " << ret << endl;
 			if (ret > 0)
 			{
 				hgen.update((const bt::Uint8*)data.data() + off,ret);
 				sent += ret;
 				off += ret;
-				off = off % 1024;
+				off = off % step;
+			}
+			else if (ret == 0)
+			{
+				msleep(50);
 			}
 			else
 			{
-				msleep(50);
+				break;
 			}
 		}
 		
@@ -145,7 +151,7 @@ public slots:
 private slots:
 	void initTestCase()
 	{
-		bt::InitLog("transmittest.log");
+		bt::InitLog("transmittest.log",false,true);
 		
 		incoming = outgoing = 0;
 		port = 50000;
@@ -193,12 +199,14 @@ private slots:
 		SendThread st(outgoing);
 		st.start(); // The thread will start sending a whole bunch of data
 		int received = 0;
+		int failures = 0;
 		while (received < BYTES_TO_SEND)
 		{
 			bt::Uint32 ba = incoming->bytesAvailable();
 			Out(SYS_GEN|LOG_DEBUG) << "Available " << ba << endl;
 			if (ba > 0)
 			{
+				failures = 0;
 				QByteArray data(ba,0);
 				int to_read = ba;//;qMin<bt::Uint32>(1024,ba);
 				int ret = incoming->recv((bt::Uint8*)data.data(),to_read);
@@ -211,8 +219,12 @@ private slots:
 			}
 			else
 			{
-				usleep(50000);
+				usleep(100000);
 				if (st.isFinished())
+					break;
+				
+				failures++;
+				if (failures > 22)
 					break;
 			}
 		}

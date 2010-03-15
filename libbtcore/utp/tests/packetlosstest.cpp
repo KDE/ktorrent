@@ -45,6 +45,7 @@ public:
 	PacketLossServer(QObject* parent = 0) : UTPServer(parent),packet_loss(false),loss_factor(0.5)
 	{
 		setCreateSockets(false);
+		qsrand(time(0));
 	}
 	
 	virtual ~PacketLossServer()
@@ -102,7 +103,7 @@ public:
 			msleep(200);
 		}
 		
-		while (!outgoing->allDataSent())
+		while (!outgoing->allDataSent() && outgoing->connectionState() != CS_CLOSED)
 			sleep(1);
 	
 		Out(SYS_GEN|LOG_DEBUG) << "Transmitted " << sent << " packets " << endl;

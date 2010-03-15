@@ -31,7 +31,7 @@ namespace utp
 	
 	
 	UnackedPacket::UnackedPacket(const QByteArray& data, bt::Uint16 seq_nr, bt::TimeStamp send_time) 
-		: data(data),seq_nr(seq_nr),send_time(send_time)
+		: data(data),seq_nr(seq_nr),send_time(send_time),retransmitted(false)
 	{
 	}
 
@@ -95,72 +95,95 @@ namespace utp
 		}
 		
 		if (!unacked_packets.isEmpty())
+		{
 			checkLostPackets(hdr,sack,conn);
+		}
 	}
 
 	void RemoteWindow::addPacket(const QByteArray& data,bt::Uint16 seq_nr,bt::TimeStamp send_time)
 	{
 		cur_window += data.size();
+		wnd_size -= data.size();
 		unacked_packets.append(new UnackedPacket(data,seq_nr,send_time));
 	}
 
 	void RemoteWindow::checkLostPackets(const utp::Header* hdr, const utp::SelectiveAck* sack,Retransmitter* conn)
 	{
+		bt::TimeStamp now = bt::Now();
 		bool lost_packets = false;
 		QList<UnackedPacket*>::iterator itr = unacked_packets.begin();
 		UnackedPacket* first_unacked = *itr;
 		if (last_ack_receive_count >= 3 && first_unacked->seq_nr == hdr->ack_nr + 1)
 		{
 			// packet has been lost
-			Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << first_unacked->seq_nr << " lost" << endl;
-			conn->retransmit(first_unacked->data,first_unacked->seq_nr);
-			first_unacked->send_time = bt::Now();
-			lost_packets = true;
+			if (!first_unacked->retransmitted || now - first_unacked->send_time > conn->currentTimeout())
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << first_unacked->seq_nr << " lost" << endl;
+				conn->retransmit(first_unacked->data,first_unacked->seq_nr);
+				first_unacked->send_time = now;
+				first_unacked->retransmitted = true;
+				lost_packets = true;
+			}
+			
 			itr++;
 		}
 		
-		
-		while (sack && itr != unacked_packets.end())
+		if (sack)
 		{
-			if (lost(sack,(*itr)->seq_nr - hdr->ack_nr))
+			bt::Uint16 lost_index = lost(sack);
+			while (lost_index > 0 && itr != unacked_packets.end())
 			{
-				Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << (*itr)->seq_nr << " lost" << endl;
-				conn->retransmit((*itr)->data,(*itr)->seq_nr);
-				(*itr)->send_time = bt::Now();
-				lost_packets = true;
+				if ((*itr)->seq_nr - hdr->ack_nr < lost_index && 
+					(!(*itr)->retransmitted || now - (*itr)->send_time > conn->currentTimeout()))
+				{
+					Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << (*itr)->seq_nr << " lost" << endl;
+					conn->retransmit((*itr)->data,(*itr)->seq_nr);
+					(*itr)->send_time = now;
+					first_unacked->retransmitted = true;
+					lost_packets = true;
+				}
+				itr++;
 			}
-			itr++;
 		}
 		
 		if (lost_packets)
+		{
 			max_window = (bt::Uint32)qRound(0.78 * max_window);
+		}
 	}
 
-	bool RemoteWindow::lost(const utp::SelectiveAck* sack, bt::Uint16 seq_nr)
+	bt::Uint16 RemoteWindow::lost(const SelectiveAck* sack)
 	{
 		// A packet is lost if 3 packets have been acked after it
 		bt::Uint32 acked = 0;
-		for (bt::Uint16 i = seq_nr + 1;i < sack->length * 8 && acked < 3;i++)
+		bt::Int16 i = sack->length * 8 - 1;
+		while (i >= 0 && acked < 3)
 		{
 			if (Acked(sack,i))
+			{
 				acked++;
+				if (acked == 3)
+					return i;
+			}
+			
+			i--;
 		}
 		
-		return acked >= 3;
+		return 0;
 	}
 
 	void RemoteWindow::timeout(Retransmitter* conn)
 	{
 		max_window = MIN_PACKET_SIZE;
 		bt::TimeStamp now = bt::Now();
-		// When a timeout occurs retransmit packets which are lost longer then 
-		// the max timeout
+		// When a timeout occurs retransmit packets which are lost longer then the current timeout
 		foreach (UnackedPacket* pkt,unacked_packets)
 		{
-			if (now - pkt->send_time > conn->currentTimeout())
+			if (!pkt->retransmitted || now - pkt->send_time > conn->currentTimeout())
 			{
 				conn->retransmit(pkt->data,pkt->seq_nr);
 				pkt->send_time = bt::Now();
+				pkt->retransmitted = true;
 				Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << pkt->seq_nr << " lost" << endl;
 			}
 		}
@@ -173,7 +196,9 @@ namespace utp
 			max_window = MIN_PACKET_SIZE;
 		else
 			max_window += d;
-	//	Out(SYS_GEN|LOG_DEBUG) << "RemoteWindow::updateWindowSize " << scaled_gain << " " << max_window << endl;
+		
+		//if (scaled_gain > 1000)
+		//	Out(SYS_GEN|LOG_DEBUG) << "RemoteWindow::updateWindowSize " << scaled_gain << " " << max_window << endl;
 	}
 
 	void RemoteWindow::clear()

@@ -191,6 +191,7 @@ namespace utp
 		QWaitCondition data_ready;
 		Stats stats;
 		bool fin_sent;
+		TimeValue last_packet_sent;
 		
 		friend class UTPServer;
 	};

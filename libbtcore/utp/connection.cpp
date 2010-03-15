@@ -44,14 +44,14 @@ namespace utp
 		stats.recv_connection_id = recv_connection_id;
 		stats.reply_micro = 0;
 		stats.eof_seq_nr = -1;
-		local_wnd = new LocalWindow();
+		local_wnd = new LocalWindow(128*1024);
 		remote_wnd = new RemoteWindow();
 		fin_sent = false;
 		stats.rtt = 100;
 		stats.rtt_var = 0;
 		stats.timeout = 1000;
 		stats.packet_size = 1500 - IP_AND_UDP_OVERHEAD - sizeof(utp::Header);
-		stats.last_window_size_transmitted = 64*1024;
+		stats.last_window_size_transmitted = 128*1024;
 		if (type == OUTGOING)
 		{
 			stats.send_connection_id = recv_connection_id + 1;
@@ -115,7 +115,6 @@ namespace utp
 	ConnectionState Connection::handlePacket(const PacketParser & parser,const QByteArray& packet)
 	{
 		QMutexLocker lock(&mutex);
-		
 		timer.update();
 		stats.packets_received++;
 		
@@ -301,6 +300,7 @@ namespace utp
 		if (!transmitter->sendTo((const bt::Uint8*)ba.data(),ba.size(),stats.remote))
 			throw TransmissionError(__FILE__,__LINE__);
 		
+		last_packet_sent = tv;
 		stats.packets_sent++;
 		timer.update();
 	}
@@ -377,7 +377,8 @@ namespace utp
 		Out(SYS_GEN|LOG_DEBUG) << "delay_factor " << delay_factor << endl;
 		Out(SYS_GEN|LOG_DEBUG) << "window_factor " << window_factor << endl;
 		Out(SYS_GEN|LOG_DEBUG) << "scaled_gain " << scaled_gain << endl; 
-		Out(SYS_GEN|LOG_DEBUG) << "packet_size " << stats.packet_size << endl;*/
+		Out(SYS_GEN|LOG_DEBUG) << "packet_size " << stats.packet_size << endl;
+		*/
 	}
 
 	int Connection::send(const bt::Uint8* data, Uint32 len)
@@ -389,6 +390,17 @@ namespace utp
 		// first put data in the output buffer then send packets
 		bt::Uint32 ret = output_buffer.write(data,len);
 		sendPackets();
+	/*	if (output_buffer.full())
+		{
+			Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " 
+				<< stats.recv_connection_id << " " 
+				<< remote_wnd->windowSize() << " "
+				<< remote_wnd->maxWindow() << " "
+				<< remote_wnd->currentWindow() << " "
+				<< remote_wnd->availableSpace() << endl;
+			
+		}
+		*/
 		return ret;
 	}
 	
@@ -400,6 +412,8 @@ namespace utp
 		{
 			bt::Uint32 to_read = qMin((bt::Uint32)output_buffer.size(),remote_wnd->availableSpace());
 			to_read = qMin(to_read,stats.packet_size);
+			if (to_read == 0)
+				break;
 			
 			QByteArray packet(to_read,0);
 			if (output_buffer.read((bt::Uint8*)packet.data(),to_read) != to_read)
@@ -460,6 +474,7 @@ namespace utp
 		if (!transmitter->sendTo(ba,stats.remote))
 			throw TransmissionError(__FILE__,__LINE__);
 		
+		last_packet_sent = now;
 		stats.packets_sent++;
 		stats.seq_nr++;
 		remote_wnd->addPacket(packet,stats.seq_nr,bt::Now());
@@ -505,6 +520,7 @@ namespace utp
 		if (!transmitter->sendTo(ba,stats.remote))
 			throw TransmissionError(__FILE__,__LINE__);
 		
+		last_packet_sent = now;
 		stats.packets_sent++;
 	}
 
@@ -607,13 +623,23 @@ namespace utp
 				if (timer.getElapsedSinceUpdate() > stats.timeout)
 				{
 					Out(SYS_GEN|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " timeout" << endl;
+					remote_wnd->timeout(this);
 					stats.packet_size = MIN_PACKET_SIZE;
 					stats.timeout *= 2;
-					if (stats.timeout >= MAX_TIMEOUT) // timeout should not be to big
-						stats.timeout = MAX_TIMEOUT;
-					remote_wnd->timeout(this);
+					
+					if (stats.timeout >= MAX_TIMEOUT)
+					{
+						// If we have reached the max timeout, kill the connection
+						stats.state = CS_FINISHED;
+					}
 					timer.update();
 					sendPackets();
+				}
+				
+				if (TimeValue() - last_packet_sent > KEEP_ALIVE_TIMEOUT)
+				{
+					// Keep the connection alive
+					sendState();
 				}
 				break;
 			case CS_CLOSED:
@@ -631,6 +657,8 @@ namespace utp
 		Out(SYS_GEN|LOG_DEBUG) << "packets_sent     = " << stats.packets_sent << endl;
 		Out(SYS_GEN|LOG_DEBUG) << "bytes_lost       = " << stats.bytes_lost << endl;
 		Out(SYS_GEN|LOG_DEBUG) << "packets_lost     = " << stats.packets_lost << endl;
+		//Out(SYS_GEN|LOG_DEBUG) << "dinges           = " << local_wnd->availableSpace() << endl;
+		//Out(SYS_GEN|LOG_DEBUG) << "dinges2          = " << stats.last_window_size_transmitted << endl;
 	}
 
 	bool Connection::allDataSent() const
