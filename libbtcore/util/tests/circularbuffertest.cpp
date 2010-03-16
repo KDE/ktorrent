@@ -103,7 +103,7 @@ private slots:
 			bt::Uint8 ret[20];
 			memset(ret,0,20);
 			r = 1 + qrand() % 20;
-			expected = qMin(size_t(r),cbuf.size());
+			expected = qMin(r,cbuf.size());
 			QVERIFY(cbuf.read(ret,expected) == expected);
 		}
 	}
