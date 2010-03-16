@@ -75,8 +75,8 @@ namespace utp
 	
 	void Header::read(const bt::Uint8* data)
 	{
-		version = (data[0] & 0xF0) >> 4;
-		type = data[0] & 0x0F;
+		type = (data[0] & 0xF0) >> 4;
+		version = data[0] & 0x0F;
 		extension = data[1];
 		connection_id = bt::ReadUint16(data,2);
 		timestamp_microseconds = bt::ReadUint32(data,4);
@@ -88,7 +88,7 @@ namespace utp
 	
 	void Header::write(bt::Uint8* data)
 	{
-		data[0] = ((version << 4) & 0xF0) | (type & 0x0F);
+		data[0] = ((type << 4) & 0xF0) | (version & 0x0F);
 		data[1] = extension;
 		bt::WriteUint16(data,2,connection_id);
 		bt::WriteUint32(data,4,timestamp_microseconds);

@@ -44,9 +44,9 @@ namespace utp
 		
 		bt::Uint32 timestampMicroSeconds() const
 		{
-			//bt::Uint64 microsecs = seconds * 1000000 + microseconds;
+			bt::Uint64 microsecs = seconds * 1000000 + microseconds;
 			//return microsecs & 0x00000000FFFFFFFF;
-			return microseconds;
+			return microsecs;
 		}
 		
 	public:

@@ -105,7 +105,7 @@ private slots:
 		conn.startConnecting();
 		const Connection::Stats & s = conn.connectionStats();
 		QVERIFY(s.state == utp::CS_SYN_SENT);
-		QVERIFY(s.seq_nr == 1);
+		QVERIFY(s.seq_nr == 2);
 		
 		QByteArray pkt = buildPacket(ST_STATE,conn_id,conn_id + 1,1,1);
 		PacketParser pp(pkt);

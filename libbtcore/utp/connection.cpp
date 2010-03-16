@@ -60,7 +60,7 @@ namespace utp
 		{
 			stats.send_connection_id = recv_connection_id - 1;
 			stats.state = CS_IDLE;
-			stats.seq_nr = 1;
+			stats.seq_nr = 5;
 		}
 		
 		stats.bytes_received = 0;
@@ -134,7 +134,7 @@ namespace utp
 				{
 					// connection estabished
 					stats.state = CS_CONNECTED;
-					local_wnd->setLastSeqNr(hdr->seq_nr);
+					local_wnd->setLastSeqNr(hdr->seq_nr - 1);
 					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
 					connected.wakeAll();
 				}
@@ -297,6 +297,7 @@ namespace utp
 			local_wnd->fillSelectiveAck(&sack);
 		}
 		
+		
 		if (!transmitter->sendTo((const bt::Uint8*)ba.data(),ba.size(),stats.remote))
 			throw TransmissionError(__FILE__,__LINE__);
 		
@@ -311,6 +312,7 @@ namespace utp
 		stats.seq_nr = 1;
 		stats.state = CS_SYN_SENT;
 		sendPacket(ST_SYN,0);
+		stats.seq_nr++;
 	}
 	
 	void Connection::sendState()
@@ -456,7 +458,7 @@ namespace utp
 		hdr.timestamp_microseconds = now.timestampMicroSeconds();
 		hdr.timestamp_difference_microseconds = stats.reply_micro;
 		hdr.wnd_size = stats.last_window_size_transmitted = local_wnd->availableSpace();
-		hdr.seq_nr = stats.seq_nr + 1;
+		hdr.seq_nr = stats.seq_nr;
 		hdr.ack_nr = local_wnd->lastSeqNr();
 		hdr.write((bt::Uint8*)ba.data());
 		
@@ -476,8 +478,8 @@ namespace utp
 		
 		last_packet_sent = now;
 		stats.packets_sent++;
-		stats.seq_nr++;
 		remote_wnd->addPacket(packet,stats.seq_nr,bt::Now());
+		stats.seq_nr++;
 		timer.update();
 		return to_send;
 	}
