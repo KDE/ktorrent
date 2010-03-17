@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <KLocale>
 #include "torrentstats.h"
+#include <util/functions.h>
 
 namespace bt
 {
@@ -38,7 +39,7 @@ namespace bt
 		leechers_connected_to = leechers_total = 0;
 		max_share_ratio = 0.00f;
 		max_seed_time = 0;
-		last_download_activity_time = last_upload_activity_time = 0;
+		last_download_activity_time = last_upload_activity_time = bt::GetCurrentTime();
 		num_corrupted_chunks = 0;
 		qm_can_start = false;
 		paused = false;
