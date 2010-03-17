@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>UPnPTestWidget</class>
- <widget class="QWidget" name="UPnPTestWidget" >
-  <property name="geometry" >
+ <widget class="QWidget" name="UPnPTestWidget">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,33 +10,33 @@
     <height>418</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>UPnP Test Application</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" >
+    <layout class="QHBoxLayout">
      <item>
-      <layout class="QHBoxLayout" >
+      <layout class="QHBoxLayout">
        <item>
-        <widget class="QLabel" name="label_3" >
-         <property name="text" >
+        <widget class="QLabel" name="label_3">
+         <property name="text">
           <string>Router:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="m_router" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+        <widget class="QLabel" name="m_router">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="frameShape" >
+         <property name="frameShape">
           <enum>QFrame::Panel</enum>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>No routers found.</string>
          </property>
         </widget>
@@ -43,8 +44,8 @@
       </layout>
      </item>
      <item>
-      <widget class="QPushButton" name="m_find_routers" >
-       <property name="text" >
+      <widget class="QPushButton" name="m_find_routers">
+       <property name="text">
         <string>Find Routers</string>
        </property>
       </widget>
@@ -52,28 +53,28 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextBrowser" name="m_text_output" />
+    <widget class="QTextBrowser" name="m_text_output"/>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" >
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QHBoxLayout" >
+      <layout class="QHBoxLayout">
        <item>
-        <widget class="QLabel" name="label" >
-         <property name="text" >
+        <widget class="QLabel" name="label">
+         <property name="text">
           <string>Port:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="m_port" >
-         <property name="minimum" >
+        <widget class="QSpinBox" name="m_port">
+         <property name="minimum">
           <number>1</number>
          </property>
-         <property name="maximum" >
+         <property name="maximum">
           <number>65535</number>
          </property>
-         <property name="value" >
+         <property name="value">
           <number>4000</number>
          </property>
         </widget>
@@ -81,23 +82,23 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" >
+      <layout class="QHBoxLayout">
        <item>
-        <widget class="QLabel" name="label_2" >
-         <property name="text" >
+        <widget class="QLabel" name="label_2">
+         <property name="text">
           <string>Protocol:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="m_protocol" >
+        <widget class="QComboBox" name="m_protocol">
          <item>
-          <property name="text" >
+          <property name="text">
            <string>UDP</string>
           </property>
          </item>
          <item>
-          <property name="text" >
+          <property name="text">
            <string>TCP</string>
           </property>
          </item>
@@ -106,11 +107,11 @@
       </layout>
      </item>
      <item>
-      <spacer name="horizontalSpacer" >
-       <property name="orientation" >
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
          <height>20</height>
@@ -119,22 +120,22 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="m_forward" >
-       <property name="text" >
+      <widget class="QPushButton" name="m_forward">
+       <property name="text">
         <string>Forward</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="m_undo_forward" >
-       <property name="text" >
+      <widget class="QPushButton" name="m_undo_forward">
+       <property name="text">
         <string>Undo Forward</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="m_verbose" >
-       <property name="text" >
+      <widget class="QCheckBox" name="m_verbose">
+       <property name="text">
         <string>Verbose mode</string>
        </property>
       </widget>
@@ -142,9 +143,6 @@
     </layout>
    </item>
   </layout>
-  <zorder>m_text_output</zorder>
-  <zorder>horizontalSpacer</zorder>
-  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>
