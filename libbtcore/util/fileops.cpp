@@ -605,7 +605,7 @@ namespace bt
 		}
 #else
 		DWORD high = 0;
-		DWORD low = GetCompressedFileSize(QFile::encodeName(filename),&high);
+		DWORD low = GetCompressedFileSize((LPWSTR)filename.utf16(),&high);
 		if (low != INVALID_FILE_SIZE)
 			ret = (high * MAXDWORD) + low;
 #endif
