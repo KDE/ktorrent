@@ -115,16 +115,24 @@ namespace utp
 	void UTPServer::run()
 	{
 		running = true;
-		fd_set fds;
-		FD_ZERO(&fds);
+		fd_set rfds;
+		fd_set wfds;
+		FD_ZERO(&rfds);
+		FD_ZERO(&wfds);
 		while (running)
 		{
 			int fd = sock->fd();
-			FD_SET(fd,&fds);
-			struct timeval tv = {0,100000};
-			if (select(fd + 1,&fds,0,0,&tv) > 0)
+			FD_SET(fd,&rfds);
+			if (output_queue.size() > 0)
+				FD_SET(fd,&wfds);
+			
+			struct timeval tv = {0,10000};
+			if (select(fd + 1,&rfds,&wfds,0,&tv) > 0)
 			{
-				readPacket();
+				if (FD_ISSET(fd,&rfds))
+					readPacket();
+				if (FD_ISSET(fd,&wfds))
+					writePacket();
 			}
 			
 			try
@@ -161,6 +169,20 @@ namespace utp
 			{
 				Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
 			}
+		}
+	}
+	
+	void UTPServer::writePacket()
+	{
+		// Keep sending until the output queue is empty or the socket 
+		// can't handle the data anymore
+		while (!output_queue.empty())
+		{
+			QPair<QByteArray,net::Address> & packet = output_queue.front();
+			if (sock->sendTo((const bt::Uint8*)packet.first.data(),packet.first.size(),packet.second) == packet.first.size())
+				output_queue.pop_front();
+			else
+				break;
 		}
 	}
 	
@@ -244,12 +266,19 @@ namespace utp
 
 	bool UTPServer::sendTo(const QByteArray& data, const net::Address& addr)
 	{
-		return sock->sendTo((const bt::Uint8*)data.data(),data.size(),addr) == data.size();
-	}
-	
-	bool UTPServer::sendTo(const bt::Uint8* data, const bt::Uint32 size, const net::Address& addr)
-	{
-		return sock->sendTo(data,size,addr) == (int)size;
+		// if output_queue is not empty append to it, so that packet order is OK
+		// (when they are being sent anyway)
+		if (output_queue.empty())
+		{
+			// If we can't send kernel buffers are probably full,
+			// so wait until socket becomes writeable
+			if (sock->sendTo((const bt::Uint8*)data.data(),data.size(),addr) != data.size())
+				output_queue.append(qMakePair(data,addr));
+		}
+		else
+			output_queue.append(qMakePair(data,addr));
+		
+		return true;
 	}
 
 	Connection* UTPServer::connectTo(const net::Address& addr)

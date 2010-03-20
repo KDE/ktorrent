@@ -53,9 +53,6 @@ namespace utp
 		/// Send a packet to some host
 		virtual bool sendTo(const QByteArray & data,const net::Address & addr);
 		
-		/// Send a packet to some host
-		virtual bool sendTo(const bt::Uint8* data,const bt::Uint32 size,const net::Address & addr);
-		
 		/// Setup a connection to a remote address
 		Connection* connectTo(const net::Address & addr);
 		
@@ -83,6 +80,7 @@ namespace utp
 	protected:
 		bool bind(const net::Address & addr);
 		void readPacket();
+		void writePacket();
 		virtual void handlePacket(const QByteArray & packet,const net::Address & addr);
 		void syn(const PacketParser & parser,const QByteArray & data,const net::Address & addr);
 		void reset(const Header* hdr);
@@ -118,6 +116,7 @@ namespace utp
 		bt::PtrMap<net::Poll*,PollPipePair> poll_pipes;
 		bool create_sockets;
 		bt::Uint8 tos;
+		QList<QPair<QByteArray,net::Address> > output_queue;
 		
 		typedef bt::PtrMap<quint16,Connection>::iterator ConItr;
 		typedef bt::PtrMap<net::Poll*,PollPipePair>::iterator PollPipePairItr;

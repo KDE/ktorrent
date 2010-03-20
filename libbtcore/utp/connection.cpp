@@ -298,7 +298,7 @@ namespace utp
 		}
 		
 		
-		if (!transmitter->sendTo((const bt::Uint8*)ba.data(),ba.size(),stats.remote))
+		if (!transmitter->sendTo(ba,stats.remote))
 			throw TransmissionError(__FILE__,__LINE__);
 		
 		last_packet_sent = tv;
