@@ -127,8 +127,15 @@ namespace utp
 				readPacket();
 			}
 			
-			checkTimeouts();
-			clearDeadConnections();
+			try
+			{
+				checkTimeouts();
+				clearDeadConnections();
+			}
+			catch (utp::Connection::TransmissionError & err)
+			{
+				Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
+			}
 		}
 	}
 	
