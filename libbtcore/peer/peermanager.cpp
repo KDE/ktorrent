@@ -43,11 +43,6 @@
 #include "authenticate.h"
 #include "peerconnector.h"
 
-#ifdef GetCurrentTime
-#undef GetCurrentTime
-#endif
-
-
 using namespace KNetwork;
 
 namespace bt
@@ -165,7 +160,7 @@ namespace bt
 	void PeerManager::killChokedPeers(Uint32 older_then)
 	{
 		Out(SYS_CON|LOG_DEBUG) << "Getting rid of peers which have been choked for a long time" << endl;
-		TimeStamp now = bt::GetCurrentTime();
+		TimeStamp now = bt::CurrentTime();
 		QList<Peer*>::iterator i = peer_list.begin();
 		Uint32 num_killed = 0;
 		while (i != peer_list.end() && num_killed < 20)

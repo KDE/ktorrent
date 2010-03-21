@@ -69,7 +69,7 @@ namespace bt
 		
 		stalled_timer.update();
 		pwriter = new PacketWriter(this);
-		time_choked = GetCurrentTime();
+		time_choked = CurrentTime();
 		time_unchoked = 0;
 		
 		connect_time = QTime::currentTime();
@@ -155,7 +155,7 @@ namespace bt
 				
 				if (!stats.choked)
 				{
-					time_choked = GetCurrentTime();
+					time_choked = CurrentTime();
 				}
 				stats.choked = true;
 				downloader->choked();
@@ -169,7 +169,7 @@ namespace bt
 				}
 				
 				if (stats.choked)
-					time_unchoked = GetCurrentTime();
+					time_unchoked = CurrentTime();
 				stats.choked = false;
 				break;
 			case INTERESTED:

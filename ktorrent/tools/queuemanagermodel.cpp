@@ -423,7 +423,7 @@ namespace kt
 	
 	void QueueManagerModel::update()
 	{
-		TimeStamp now = bt::GetCurrentTime();
+		TimeStamp now = bt::CurrentTime();
 		int r = 0;
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 		{

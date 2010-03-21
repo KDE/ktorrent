@@ -30,9 +30,6 @@
 #include "node.h"
 #include "task.h"
 
-
-#undef GetCurrentTime
-
 using namespace KNetwork;
 using namespace bt;
 
@@ -40,7 +37,7 @@ namespace dht
 {
 	KBucketEntry::KBucketEntry()
 	{
-		last_responded = bt::GetCurrentTime();
+		last_responded = bt::CurrentTime();
 		failed_queries = 0;
 		questionable_pings = 0;
 	}
@@ -48,7 +45,7 @@ namespace dht
 	KBucketEntry::KBucketEntry(const KInetSocketAddress & addr,const Key & id)
 	: addr(addr),node_id(id)
 	{
-		last_responded = bt::GetCurrentTime();
+		last_responded = bt::CurrentTime();
 		failed_queries = 0;
 		questionable_pings = 0;
 	}
@@ -79,7 +76,7 @@ namespace dht
 	
 	bool KBucketEntry::isGood() const
 	{
-		if (bt::GetCurrentTime() - last_responded > 15 * 60 * 1000)
+		if (bt::CurrentTime() - last_responded > 15 * 60 * 1000)
 			return false;
 		else
 			return true;
@@ -87,7 +84,7 @@ namespace dht
 		
 	bool KBucketEntry::isQuestionable() const
 	{
-		if (bt::GetCurrentTime() - last_responded > 15 * 60 * 1000)
+		if (bt::CurrentTime() - last_responded > 15 * 60 * 1000)
 			return true;
 		else
 			return false;
@@ -104,7 +101,7 @@ namespace dht
 	
 	void KBucketEntry::hasResponded()
 	{
-		last_responded = bt::GetCurrentTime();
+		last_responded = bt::CurrentTime();
 		failed_queries = 0; // reset failed queries
 		questionable_pings = 0;
 	}
@@ -120,7 +117,7 @@ namespace dht
 	KBucket::KBucket(Uint32 idx,RPCServer* srv,Node* node) 
 		: idx(idx),srv(srv),node(node)
 	{
-		last_modified = bt::GetCurrentTime();
+		last_modified = bt::CurrentTime();
 		refresh_task = 0;
 	}
 	
@@ -137,7 +134,7 @@ namespace dht
 		{
 			KBucketEntry & e = *i;
 			e.hasResponded();
-			last_modified = bt::GetCurrentTime();
+			last_modified = bt::CurrentTime();
 			entries.erase(i);
 			entries.append(entry);
 			return;
@@ -147,7 +144,7 @@ namespace dht
 		if (i == entries.end() && entries.count() < (int) dht::K)
 		{
 			entries.append(entry);
-			last_modified = bt::GetCurrentTime();
+			last_modified = bt::CurrentTime();
 		}
 		else if (!replaceBadEntry(entry))
 		{
@@ -159,7 +156,7 @@ namespace dht
 	void KBucket::onResponse(RPCCall* c,MsgBase* rsp)
 	{
 		Q_UNUSED(rsp);
-		last_modified = bt::GetCurrentTime();
+		last_modified = bt::CurrentTime();
 		
 		if (!pending_entries_busy_pinging.contains(c))
 			return;
@@ -190,7 +187,7 @@ namespace dht
 			KBucketEntry & e = *i;
 			if (e.getAddress() == c->getRequest()->getOrigin())
 			{
-				last_modified = bt::GetCurrentTime();
+				last_modified = bt::CurrentTime();
 				entries.erase(i);
 				entries.append(entry);
 				break;
@@ -247,7 +244,7 @@ namespace dht
 			if (e.isBad())
 			{
 				// bad one get rid of it
-				last_modified = bt::GetCurrentTime();
+				last_modified = bt::CurrentTime();
 				entries.erase(i);
 				entries.append(entry);
 				return true;
@@ -289,7 +286,7 @@ namespace dht
 	
 	bool KBucket::needsToBeRefreshed() const
 	{
-		bt::TimeStamp now = bt::GetCurrentTime();
+		bt::TimeStamp now = bt::CurrentTime();
 		if (last_modified > now)
 		{
 			last_modified = now;
@@ -301,7 +298,7 @@ namespace dht
 	
 	void KBucket::updateRefreshTimer()
 	{
-		last_modified = bt::GetCurrentTime();
+		last_modified = bt::CurrentTime();
 	}
 	
 	

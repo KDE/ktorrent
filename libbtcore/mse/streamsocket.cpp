@@ -341,7 +341,7 @@ namespace mse
 	
 	void StreamSocket::updateSpeeds()
 	{
-		sock->updateSpeeds(bt::GetCurrentTime());
+		sock->updateSpeeds(bt::CurrentTime());
 	}
 }
 

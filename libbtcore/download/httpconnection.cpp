@@ -303,7 +303,7 @@ namespace bt
 		QMutexLocker locker(&mutex);
 		if (sock)
 		{
-			sock->updateSpeeds(bt::GetCurrentTime());
+			sock->updateSpeeds(bt::CurrentTime());
 			return sock->getDownloadRate();
 		}
 		else

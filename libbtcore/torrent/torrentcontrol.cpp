@@ -260,11 +260,11 @@ namespace bt
 			if (stats.download_rate > 100)
 			{
 				stalled_timer.update();
-				stats.last_download_activity_time = GetCurrentTime();
+				stats.last_download_activity_time = CurrentTime();
 			}
 			
 			if (stats.upload_rate > 100)
-				stats.last_upload_activity_time = GetCurrentTime();
+				stats.last_upload_activity_time = CurrentTime();
 			
 			// do a manual update if we are stalled for more then 2 minutes
 			// we do not do this for private torrents
@@ -283,7 +283,7 @@ namespace bt
 			}
 
 			//Update diskspace if needed (every 1 min)			
-			if (!stats.completed && stats.running && bt::GetCurrentTime() - last_diskspace_check >= 60 * 1000)
+			if (!stats.completed && stats.running && bt::CurrentTime() - last_diskspace_check >= 60 * 1000)
 			{
 				checkDiskSpace(true);
 			}
@@ -438,7 +438,7 @@ namespace bt
 		stats.running = true;
 		stats.started = true;
 		stats.queued = false;
-		stats.last_download_activity_time = stats.last_upload_activity_time = GetCurrentTime();
+		stats.last_download_activity_time = stats.last_upload_activity_time = CurrentTime();
 		choker_update_timer.update();
 		stats_save_timer.update();
 		wanted_update_timer.update();
@@ -1606,7 +1606,7 @@ namespace bt
 	
 	bool TorrentControl::checkDiskSpace(bool emit_sig)
 	{	
-		last_diskspace_check = bt::GetCurrentTime();
+		last_diskspace_check = bt::CurrentTime();
 		
 		//calculate free disk space
 		Uint64 bytes_free = 0;

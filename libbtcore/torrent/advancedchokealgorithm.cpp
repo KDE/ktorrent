@@ -226,7 +226,7 @@ namespace bt
 	{
 		// get the planned optimistic unchoked peer and change it if necessary
 		Peer* poup = pman.findPeer(opt_unchoked_peer_id);
-		TimeStamp now = GetCurrentTime();
+		TimeStamp now = CurrentTime();
 		if (now - last_opt_sel_time > OPT_SEL_INTERVAL || !poup)
 		{
 			opt_unchoked_peer_id = FindPlannedOptimisticUnchokedPeer(pman,ppl);

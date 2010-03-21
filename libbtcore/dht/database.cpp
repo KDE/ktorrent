@@ -30,12 +30,12 @@ namespace dht
 {
 	DBItem::DBItem()
 	{
-		time_stamp = bt::GetCurrentTime();
+		time_stamp = bt::CurrentTime();
 	}
 	
 	DBItem::DBItem(const KNetwork::KInetSocketAddress & addr) : addr(addr)
 	{
-		time_stamp = bt::GetCurrentTime();
+		time_stamp = bt::CurrentTime();
 	}
 	
 	DBItem::DBItem(const DBItem & it)
@@ -146,7 +146,7 @@ namespace dht
 		if (addr.ipVersion() == 4)
 		{
 			Uint8 tdata[14];
-			TimeStamp now = bt::GetCurrentTime();
+			TimeStamp now = bt::CurrentTime();
 			// generate a hash of the ip port and the current time
 			// should prevent anybody from crapping things up
 			bt::WriteUint32(tdata,0,ntohl(addr.ipAddress().IPv4Addr()));
@@ -161,7 +161,7 @@ namespace dht
 		else
 		{
 			Uint8 tdata[26];
-			TimeStamp now = bt::GetCurrentTime();
+			TimeStamp now = bt::CurrentTime();
 			// generate a hash of the ip port and the current time
 			// should prevent anybody from crapping things up
 			memcpy(tdata,addr.ipAddress().addr(),16);

@@ -114,8 +114,6 @@ namespace kt
 	
 	UPnPRouter::UPnPRouter(const QString & server,const KUrl & location,bool verbose) : server(server),location(location),verbose(verbose)
 	{
-		// make the tmp_file unique, current time * a random number should be enough
-		tmp_file = QDir::tempPath() + bt::DirSeparator() + QString("ktorrent_upnp_description-%1.xml").arg(bt::GetCurrentTime() * rand());
 	}
 	
 	

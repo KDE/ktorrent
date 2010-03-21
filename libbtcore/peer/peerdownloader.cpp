@@ -31,12 +31,12 @@ namespace bt
 {
 	TimeStampedRequest::TimeStampedRequest()
 	{
-		time_stamp = bt::GetCurrentTime();
+		time_stamp = bt::CurrentTime();
 	}
 			
 	TimeStampedRequest::TimeStampedRequest(const Request & r) : req(r)
 	{
-		time_stamp = bt::GetCurrentTime();
+		time_stamp = bt::CurrentTime();
 	}
 	
 	TimeStampedRequest::TimeStampedRequest(const TimeStampedRequest & t) 
@@ -59,7 +59,7 @@ namespace bt
 	
 	TimeStampedRequest & TimeStampedRequest::operator = (const Request & r)
 	{
-		time_stamp = bt::GetCurrentTime();
+		time_stamp = bt::CurrentTime();
 		req = r;
 		return *this;
 	}
@@ -204,7 +204,7 @@ namespace bt
 	
 	void PeerDownloader::checkTimeouts()
 	{
-		TimeStamp now = bt::GetCurrentTime(); 
+		TimeStamp now = bt::CurrentTime(); 
 		// we use a 60 second interval
 		const Uint32 MAX_INTERVAL = 60 * 1000;
 

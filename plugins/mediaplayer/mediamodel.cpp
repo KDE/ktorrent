@@ -57,7 +57,7 @@ namespace kt
 			else
 				delete item;
 		}
-		qsrand(bt::GetCurrentTime() / 1000); // initialize random number generator with the current time in seconds
+		qsrand(bt::CurrentTime() / 1000); // initialize random number generator with the current time in seconds
 	}
 
 

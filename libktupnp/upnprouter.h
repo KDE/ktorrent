@@ -113,7 +113,6 @@ namespace kt
 		};
 	private:	
 		QString server;
-		QString tmp_file;
 		KUrl location;
 		UPnPDeviceDescription desc;
 		QList<UPnPService> services;

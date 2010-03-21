@@ -75,13 +75,13 @@ namespace bt
 		
 	bool UTPex::needsUpdate() const
 	{
-		return bt::GetCurrentTime() - last_updated >= 60*1000;
+		return bt::CurrentTime() - last_updated >= 60*1000;
 	}
 	
 	void UTPex::update()
 	{
 		PeerManager* pman = peer->getPeerManager();
-		last_updated = bt::GetCurrentTime();
+		last_updated = bt::CurrentTime();
 		
 		std::map<Uint32,net::Address> added;
 		std::map<Uint32,Uint8> flags;

@@ -330,7 +330,7 @@ namespace dht
 		{
 			if (expire_timer.getElapsedSinceUpdate() > 5*60*1000)
 			{
-				db->expire(bt::GetCurrentTime());
+				db->expire(bt::CurrentTime());
 				expire_timer.update();
 			}
 			

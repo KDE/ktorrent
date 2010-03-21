@@ -55,7 +55,7 @@ namespace bt
 	
 	BTCORE_EXPORT extern TimeStamp global_time_stamp;
 	
-	inline TimeStamp GetCurrentTime() {return global_time_stamp;}
+	inline TimeStamp CurrentTime() {return global_time_stamp;}
 	
 	BTCORE_EXPORT TimeStamp Now();
 	

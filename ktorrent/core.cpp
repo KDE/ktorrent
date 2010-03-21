@@ -39,11 +39,6 @@
 #include <torrent/torrentcreator.h>
 #include <torrent/server.h>
 #include <peer/authenticationmonitor.h>
-
-#ifdef GetCurrentTime
-#undef GetCurrentTime // on windows this is a define to GetTickCount
-#endif 
-
 #include <util/log.h>
 #include <util/error.h>
 #include <util/fileops.h>
@@ -1040,7 +1035,7 @@ namespace kt
 				magnet->updateMagnetDownloaders();
 				// check if the priority of stalled torrents must be decreased
 				if (Settings::decreasePriorityOfStalledTorrents())
-					qman->checkStalledTorrents(bt::GetCurrentTime(),Settings::stallTimer());
+					qman->checkStalledTorrents(bt::CurrentTime(),Settings::stallTimer());
 			}
 		}
 		catch (bt::Error & err)

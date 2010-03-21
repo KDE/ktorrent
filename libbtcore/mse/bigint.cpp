@@ -70,7 +70,7 @@ namespace mse
 		static Uint32 rnd = 0;
 		if (rnd % 10 == 0)
 		{
-			TimeStamp now = bt::GetCurrentTime();
+			TimeStamp now = bt::CurrentTime();
 			srand(now);
 			rnd = 0;
 		}
