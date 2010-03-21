@@ -58,7 +58,7 @@ namespace bt
 	 * The chunks are stored in the cache file in the correct order. Eliminating
 	 * the need for a file reconstruction algorithm for single files.
 	 */
-	class BTCORE_EXPORT ChunkManager : public QObject,public FilePriorityListener
+	class BTCORE_EXPORT ChunkManager : public QObject
 	{
 		Q_OBJECT
 				
@@ -319,6 +319,10 @@ namespace bt
 		
 		/// Get the size in chunks of the preview range for a single file torrent
 		Uint32 previewChunkRangeSize() const;
+		
+		/// The download priority of a file has changed
+		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
+		
 	signals:
 		/**
 		 * Emitted when a range of chunks has been excluded
@@ -361,7 +365,6 @@ namespace bt
 		void createBorderChunkSet();
 		void dumpPriority(TorrentFile* tf);
 		void downloadStatusChanged(TorrentFile* tf,bool download);
-		virtual void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
 		
 	private:
 		static bool do_data_check;

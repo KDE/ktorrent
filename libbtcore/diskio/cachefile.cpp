@@ -517,14 +517,7 @@ namespace bt
 		}
 		catch (bt::Error & e)
 		{
-			// first attempt failed, must be fat so try that
-			if (!FatPreallocate(fd,max_size))
-			{
-				if (close_again)
-					closeTemporary();
-				
-				throw Error(i18n("Cannot preallocate diskspace : %1",strerror(errno)));
-			}
+			throw Error(i18n("Cannot preallocate diskspace : %1",strerror(errno)));
 		}
 
 		file_size = FileSize(fd);

@@ -756,31 +756,6 @@ namespace bt
 		MakeFilePath(output_file);
 		// create the output file
 		bt::Touch(output_file);
-		// truncate it
-		try
-		{
-			bool res = false;
-			
-#ifdef HAVE_XFS_XFS_H
-			if (Cache::preallocateFully())
-			{
-				res = XfsPreallocate(output_file, tf->getSize()) );
-			}
-#endif
-			
-			if(! res)
-			{
-				bt::TruncateFile(output_file,tf->getSize());
-			}
-		}
-		catch (bt::Error & e)
-		{
-			// first attempt failed, must be fat so try that
-			if (!FatPreallocate(output_file,tf->getSize()))
-			{	
-				throw Error(i18n("Cannot preallocate diskspace : %1",strerror(errno)));
-			}
-		}
 		
 		Uint32 cs = (tf->getFirstChunk() == tor.getNumChunks() - 1) ? tor.getLastChunkSize() : tor.getChunkSize();
 		
@@ -799,17 +774,20 @@ namespace bt
 			if (to_read > tf->getSize()) // check for files which are smaller then a chunk
 				to_read = tf->getSize();
 			
-			dnd.readFirstChunk(tmp,0,to_read);
-			fptr.write(tmp,to_read);
+			to_read = dnd.readFirstChunk(tmp,0,to_read);
+			if (to_read > 0)
+				fptr.write(tmp,to_read);
 			
 			if (tf->getFirstChunk() != tf->getLastChunk())
 			{
 				Uint64 off = FileOffset(tf->getLastChunk(),*tf,tor.getChunkSize());
 				fptr.seek(File::BEGIN,off);
-				dnd.readLastChunk(tmp,0,tf->getLastChunkSize());
-				fptr.write(tmp,tf->getLastChunkSize());
+				to_read = dnd.readLastChunk(tmp,0,tf->getLastChunkSize());
+				if (to_read > 0)
+					fptr.write(tmp,to_read);
 			}
 			delete [] tmp;
+			
 		}
 		catch (...)
 		{

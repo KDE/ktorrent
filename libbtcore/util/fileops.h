@@ -132,16 +132,6 @@ namespace bt
 	 * @throw Error if the file doesn't exist, or something else goes wrong
 	 */
 	BTCORE_EXPORT void TruncateFile(const QString & path,Uint64 size);
-	
-	/**
-	 * Special truncate for FAT file systems.
-	*/
-	BTCORE_EXPORT bool FatPreallocate(int fd,Uint64 size);
-	
-	/**
-	 * Special truncate for FAT file systems.
-	 */
-	BTCORE_EXPORT bool FatPreallocate(const QString & path,Uint64 size);
 
 #ifdef HAVE_XFS_XFS_H
 	/**

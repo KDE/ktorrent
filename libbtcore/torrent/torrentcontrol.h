@@ -25,11 +25,12 @@
 #include <qobject.h>
 #include <qtimer.h>
 #include <kurl.h>
-#include "globals.h"
 #include <util/timer.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerslist.h>
 #include <btcore_export.h>
+#include "torrent.h"
+#include "globals.h"
 
 class QStringList;
 class QString;
@@ -40,7 +41,6 @@ namespace bt
 {
 	class StatsFile;
 	class Choker;
-	class Torrent;
 	class PeerSourceManager;
 	class ChunkManager;
 	class PeerManager;
@@ -64,32 +64,15 @@ namespace bt
 	 * This class controls the uploading, downloading, choking,
 	 * updating the tracker and chunk management.
 	 */
-	class BTCORE_EXPORT TorrentControl : public TorrentInterface
+	class BTCORE_EXPORT TorrentControl : public TorrentInterface, public FilePriorityListener
 	{
 		Q_OBJECT
 	public:
 		TorrentControl();
 		virtual ~TorrentControl();
-
-		/**
-		 * Get a BitSet of the status of all Chunks
-		 */
-		const BitSet & downloadedChunksBitSet() const;
-
-		/**
-		 * Get a BitSet of the availability of all Chunks
-		 */
-		const BitSet & availableChunksBitSet() const;
-
-		/**
-		 * Get a BitSet of the excluded Chunks
-		 */
-		const BitSet & excludedChunksBitSet() const;
 		
-		/**
-		 * Get a BitSet of the only seed chunks 
-		 */
-		const BitSet & onlySeedChunksBitSet() const;
+		/// Get the Torrent.
+		const Torrent & getTorrent() const {return *tor;}
 		
 		/**
 		 * Initialize the TorrentControl. 
@@ -118,63 +101,29 @@ namespace bt
 				  const QByteArray & data,
 				  const QString & tmpdir,
 				  const QString & datadir);
-
-		/**
-		 * Change to a new data dir. If this fails
-		 * we will fall back on the old directory.
-		 * @param new_dir The new directory
-		 * @return true upon succes
-		 */
-		bool changeTorDir(const QString & new_dir);
+				  
+				  
+		/// Tell the TorrentControl obj to preallocate diskspace in the next update
+		void setPreallocateDiskSpace(bool pa) {prealloc = pa;}
 		
-		
-		/**
-		 * Change torrents output directory. If this fails we will fall back on the old directory.
-		 * @param new_dir The new directory
-		 * @param flags 
-		 * @return true upon success.
-		 */
-		bool changeOutputDir(const QString& new_dir,int flags);
+		/// Test if the torrent has existing files, only works the first time a torrent is loaded
+		bool hasExistingFiles() const;
 
-		/**
-		 * Roll back the previous changeDataDir call.
-		 * Does nothing if there was no previous changeDataDir call.
-		 */
-		void rollback();
-	
-		/// Change the display name of the torrent
-		void setDisplayName(const QString & n);
-
-		/// Gets the TrackersList interface
-		TrackersList* getTrackersList();
-		
-		/// Gets the TrackersList interface
-		const TrackersList* getTrackersList() const;
-	
-		/// Get the data directory of this torrent
-		QString getDataDir() const {return outputdir;}
-
-		/// Get the torX dir.
-		QString getTorDir() const {return tordir;}
-
-		/// Set the monitor
-		void setMonitor(MonitorInterface* tmo);
-
-		/// Get the Torrent.
-		const Torrent & getTorrent() const {return *tor;}
-		
-		/**
-		 * Get the download running time of this torrent in seconds
-		 * @return Uint32 - time in seconds
-		 */
-		Uint32 getRunningTimeDL() const;
-		
-		/**
-		 * Get the upload running time of this torrent in seconds
-		 * @return Uint32 - time in seconds
-		 */
-		Uint32 getRunningTimeUL() const;
-		
+		virtual const BitSet & downloadedChunksBitSet() const;
+		virtual const BitSet & availableChunksBitSet() const;
+		virtual const BitSet & excludedChunksBitSet() const;
+		virtual const BitSet & onlySeedChunksBitSet() const;
+		virtual bool changeTorDir(const QString & new_dir);
+		virtual bool changeOutputDir(const QString& new_dir,int flags);
+		virtual void rollback();
+		virtual void setDisplayName(const QString & n);
+		virtual TrackersList* getTrackersList();
+		virtual const TrackersList* getTrackersList() const;
+		virtual QString getDataDir() const {return outputdir;}
+		virtual QString getTorDir() const {return tordir;}
+		virtual void setMonitor(MonitorInterface* tmo);
+		virtual Uint32 getRunningTimeDL() const;
+		virtual Uint32 getRunningTimeUL() const;
 		virtual Uint32 getNumFiles() const;
 		virtual TorrentFileInterface & getTorrentFile(Uint32 index);
 		virtual const TorrentFileInterface & getTorrentFile(Uint32 index) const;
@@ -205,57 +154,29 @@ namespace bt
 		virtual void setQueued(bool queued);
 		virtual void setChunkSelector(ChunkSelectorInterface* csel);
 		virtual void networkUp();
-	
-		/// Tell the TorrentControl obj to preallocate diskspace in the next update
-		void setPreallocateDiskSpace(bool pa) {prealloc = pa;}
-		
-		/// Checks if tracker announce is allowed (minimum interval 60 seconds)
-		bool announceAllowed();
-		
-		void startDataCheck(bt::DataCheckerListener* lst);
-		
-		/// Test if the torrent has existing files, only works the first time a torrent is loaded
-		bool hasExistingFiles() const;
-		
-		/**
-		 * Test all files and see if they are not missing.
-		 * If so put them in a list
-		 */
-		bool hasMissingFiles(QStringList & sl);
-		
-		
+		virtual bool announceAllowed();
+		virtual void startDataCheck(bt::DataCheckerListener* lst);
+		virtual bool hasMissingFiles(QStringList & sl);
 		virtual Uint32 getNumDHTNodes() const;
 		virtual const DHTNode & getDHTNode(Uint32 i) const;
 		virtual void deleteDataFiles();
 		virtual const bt::PeerID & getOwnPeerID() const;
 		virtual QString getComments() const;
 		virtual const JobQueue* getJobQueue() const {return job_queue;}
-		
-		/**
-		 * Returns estimated time left for finishing download. Returned value is in seconds.
-		 * Uses TimeEstimator class to calculate this value.
-		 */
-		int getETA();
-
-		/// Is a feature enabled
-		bool isFeatureEnabled(TorrentFeature tf);
-		
-		/// Disable or enable a feature
-		void setFeatureEnabled(TorrentFeature tf,bool on);
-		
-		/// Create all the necessary files
-		void createFiles();
-		
-		///Checks if diskspace is low
-		bool checkDiskSpace(bool emit_sig = true);
-		
+		virtual bool isFeatureEnabled(TorrentFeature tf);
+		virtual void setFeatureEnabled(TorrentFeature tf,bool on);
+		virtual bool checkDiskSpace(bool emit_sig = true);
 		virtual void setTrafficLimits(Uint32 up,Uint32 down);
 		virtual void getTrafficLimits(Uint32 & up,Uint32 & down);
 		virtual void setAssuredSpeeds(Uint32 up,Uint32 down);
 		virtual void getAssuredSpeeds(Uint32 & up,Uint32 & down);
 		virtual const SHA1Hash & getInfoHash() const;
 		virtual void setUserModifiedFileName(const QString & n);
-	
+		virtual int getETA();
+		
+		/// Create all the necessary files
+		void createFiles();
+		
 		/// Get the PeerManager
 		const PeerManager * getPeerMgr() const;
 		
@@ -344,6 +265,7 @@ namespace bt
 		void beforeDataCheck();
 		void preallocFinished(const QString & error,bool completed);
 		void allJobsDone();
+		bool preallocate();
 		
 	private slots:
 		void onNewPeer(Peer* p);
@@ -376,7 +298,7 @@ namespace bt
 		void setupData();
 		void setUploadProps(Uint32 limit,Uint32 rate);
 		void setDownloadProps(Uint32 limit,Uint32 rate);
-		
+		virtual void downloadPriorityChanged(TorrentFile* tf, Priority newpriority, Priority oldpriority);
 		
 	signals:
 		void dataCheckFinished();

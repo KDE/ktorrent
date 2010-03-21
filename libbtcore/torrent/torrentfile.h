@@ -118,7 +118,7 @@ namespace bt
 		/// emits signal.
 		void emitDownloadStatusChanged();
 		
-		void setEmitDownloadStatusChanged(bool show) { m_emitDlStatusChanged = show; }
+		void setEmitDownloadStatusChanged(bool show) { emit_status_changed = show; }
 
 		/**
 		 * Assignment operator

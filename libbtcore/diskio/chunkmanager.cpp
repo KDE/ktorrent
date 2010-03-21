@@ -54,7 +54,6 @@ namespace bt
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks()),only_seed_chunks(tor.getNumChunks()),todo(tor.getNumChunks())
 	{
-		tor.setFilePriorityListener(this);
 		during_load = false;
 		only_seed_chunks.setAll(false);
 		todo.setAll(true);
@@ -117,7 +116,6 @@ namespace bt
 
 	ChunkManager::~ChunkManager()
 	{
-		tor.setFilePriorityListener(0);
 		for (Uint32 i = 0;i < (Uint32)chunks.size();i++)
 		{
 			Chunk* c = chunks[i];
@@ -759,7 +757,7 @@ namespace bt
 			if (first <= last)
 				exclude(first,last);
 		}
-		// alert the cache but first put things in critical operation mode
+	
 		cache->downloadStatusChanged(tf,download);
 		savePriorityInfo();
 		if (!during_load)

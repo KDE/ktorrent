@@ -146,7 +146,7 @@ namespace bt
 			return;
 		}
 		
-		if(stats.paused)
+		if (stats.paused)
 		{
 			stalled_timer.update();
 			pman->update();
@@ -154,6 +154,9 @@ namespace bt
 			updateStats();
 			return;
 		}
+		
+		if (prealloc && preallocate())
+			return;
 
 		try
 		{
@@ -408,19 +411,8 @@ namespace bt
 		
 		if (prealloc)
 		{
-			// only start preallocation if we are allowed by the settings
-			if (Cache::preallocationEnabled() && !cman->haveAllChunks())
-			{
-				Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
-				stats.running = true;
-				job_queue->enqueue(new PreallocationJob(cman,this));
-				updateStatus();
+			if (preallocate())
 				return;
-			}
-			else
-			{
-				prealloc = false;
-			}
 		}
 		
 		continueStart();
@@ -544,6 +536,7 @@ namespace bt
 					"The torrent is probably corrupt or is not a valid torrent file.",torrent,err.toString()));
 		}
 		
+		tor->setFilePriorityListener(this);
 		initInternal(qman,tmpdir,ddir);
 		
 		// copy torrent in tor dir
@@ -1908,6 +1901,35 @@ namespace bt
 	{
 		psman->manualUpdate();
 		pman->killStalePeers();
+	}
+	
+	bool TorrentControl::preallocate()
+	{
+		// only start preallocation if we are allowed by the settings
+		if (Cache::preallocationEnabled() && !cman->haveAllChunks())
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
+			stats.running = true;
+			job_queue->enqueue(new PreallocationJob(cman,this));
+			updateStatus();
+			return true;
+		}
+		else
+		{
+			prealloc = false;
+		}
+		
+		return false;
+	}
+
+	void TorrentControl::downloadPriorityChanged(TorrentFile* tf, Priority newpriority, Priority oldpriority)
+	{
+		if (cman)
+			cman->downloadPriorityChanged(tf,newpriority,oldpriority);
+		
+		// If a file has been reenabled, preallocate it
+		if (oldpriority == EXCLUDED)
+			prealloc = true;
 	}
 
 }

@@ -132,7 +132,7 @@ namespace bt
 		Uint32 num_chunks_downloaded;
 		Priority priority;
 		bool preexisting;
-		bool m_emitDlStatusChanged;
+		bool emit_status_changed;
 		bool preview;
 		QList<QByteArray> unencoded_path;
 	};

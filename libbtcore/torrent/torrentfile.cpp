@@ -73,22 +73,22 @@ namespace bt
 	{
 		if (priority != EXCLUDED && dnd)
 		{
-			if (m_emitDlStatusChanged)
+			if (emit_status_changed)
 				old_priority = priority;
 			
 			priority = EXCLUDED;
 			
-			if(m_emitDlStatusChanged)
+			if(emit_status_changed)
 				tor->downloadPriorityChanged(this,priority,old_priority);	
 		}
 		if (priority == EXCLUDED && (!dnd))
 		{
-			if (m_emitDlStatusChanged)
+			if (emit_status_changed)
 				old_priority = priority;
 			
 			priority = NORMAL_PRIORITY;
 			
-			if(m_emitDlStatusChanged)
+			if(emit_status_changed)
 				tor->downloadPriorityChanged(this,priority,old_priority);
 		}
 	}
