@@ -18,45 +18,58 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef UTP_TIMEVALUE_H
-#define UTP_TIMEVALUE_H
 
-#include <btcore_export.h>
-#include <util/constants.h>
+#ifndef UTP_DELAYWINDOW_H
+#define UTP_DELAYWINDOW_H
 
-namespace utp
+#include <QPair>
+#include <utp/utpprotocol.h>
+#include <deque>
+
+
+namespace utp 
 {
-	/**
-		High precision time value
-	*/
-	class BTCORE_EXPORT TimeValue
+	const bt::Uint32 MAX_DELAY = 0xFFFFFFFF;
+
+	class BTCORE_EXPORT DelayWindow
 	{
 	public:
-		/// Default constructor, gets the current time
-		TimeValue();
-		TimeValue(bt::Uint64 secs,bt::Uint64 usecs);
-		TimeValue(const TimeValue & tv);
+		DelayWindow();
+		virtual ~DelayWindow();
 		
-		TimeValue & operator = (const TimeValue & tv);
+		/// Update the window with a new packet, returns the base delay
+		bt::Uint32 update(const Header* hdr,bt::TimeStamp receive_time);
 		
-		/// Calculate the a - b in milliseconds
-		friend bt::Int64 operator - (const TimeValue & a,const TimeValue & b);
-		
-		bt::Uint32 timestampMicroSeconds() const
+		/// Get the current base delay
+		bt::Uint32 baseDelay() const 
 		{
-			bt::Uint64 microsecs = seconds * 1000000 + microseconds;
-			//return microsecs & 0x00000000FFFFFFFF;
-			return microsecs;
+			return lowest ? lowest->timestamp_difference_microseconds : MAX_DELAY;
 		}
 		
-		/// Convert to time stamp
-		bt::TimeStamp toTimeStamp() const {return seconds * 1000 + (bt::Uint64)microseconds * 0.001;}
+	private:
+		struct DelayEntry
+		{
+			bt::Uint32 timestamp_difference_microseconds;
+			bt::TimeStamp receive_time;
+			
+			DelayEntry() : timestamp_difference_microseconds(0),receive_time(0)
+			{}
+			
+			DelayEntry(bt::Uint32 tdm,bt::TimeStamp rt) : timestamp_difference_microseconds(tdm),receive_time(rt)
+			{}
+			
+			bool operator < (const DelayEntry & e) const {return receive_time < e.receive_time;}
+		};
 		
-	public:
-		bt::Uint64 seconds;
-		bt::Uint64 microseconds;
+		typedef std::deque<DelayEntry>::iterator DelayEntryItr;
+		
+		DelayEntry* findBaseDelay();
+		
+	private:
+		std::deque<DelayEntry> delay_window;
+		DelayEntry* lowest;
 	};
 
 }
 
-#endif // UTP_TIMEVALUE_H
+#endif // UTP_DELAYWINDOW_H

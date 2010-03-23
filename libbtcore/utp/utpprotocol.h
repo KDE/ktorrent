@@ -93,7 +93,7 @@ namespace utp
 	const bt::Uint8 ST_RESET = 3;
 	const bt::Uint8 ST_SYN = 4;
 	
-	QString TypeToString(bt::Uint8 type);
+	BTCORE_EXPORT QString TypeToString(bt::Uint8 type);
 	
 	enum ConnectionState
 	{

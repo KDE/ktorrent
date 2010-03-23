@@ -20,15 +20,14 @@
 
 #include "connection.h"
 #include <sys/time.h>
+#include <QFile>
+#include <QTextStream>
+#include <util/sha1hash.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include "localwindow.h"
 #include "remotewindow.h"
-
-
-#include <QFile>
-#include <QTextStream>
-#include <util/sha1hash.h>
+#include "delaywindow.h"
 
 using namespace bt;
 
@@ -46,6 +45,7 @@ namespace utp
 		stats.eof_seq_nr = -1;
 		local_wnd = new LocalWindow(128*1024);
 		remote_wnd = new RemoteWindow();
+		delay_window = new DelayWindow();
 		fin_sent = false;
 		stats.rtt = 100;
 		stats.rtt_var = 0;
@@ -77,6 +77,7 @@ namespace utp
 	{
 		delete local_wnd;
 		delete remote_wnd;
+		delete delay_window;
 	}
 	
 	void Connection::startConnecting()
@@ -332,29 +333,14 @@ namespace utp
 
 	void Connection::updateDelayMeasurement(const utp::Header* hdr)
 	{
-		struct timeval tv;
-		gettimeofday(&tv,NULL);
-		stats.reply_micro = qAbs((bt::Int64)tv.tv_usec - hdr->timestamp_microseconds);
+		TimeValue now;
+		bt::Uint32 tms = now.timestampMicroSeconds();
+		if (tms > hdr->timestamp_microseconds)
+			stats.reply_micro = tms - hdr->timestamp_microseconds;
+		else
+			stats.reply_micro = hdr->timestamp_difference_microseconds - tms;
 		
-		bt::TimeStamp now = bt::Now();
-		delay_window.append(QPair<bt::Uint32,bt::TimeStamp>(hdr->timestamp_difference_microseconds,now));
-		
-		bt::Uint32 base_delay = 0xFFFFFFFF;
-		// drop everything older then 2 minutes and update the base_delay
-		QList<QPair<bt::Uint32,bt::TimeStamp> >::iterator itr = delay_window.begin();
-		while (itr != delay_window.end())
-		{
-			if (now - itr->second > DELAY_WINDOW_SIZE)
-			{
-				itr = delay_window.erase(itr);
-			}
-			else
-			{
-				if (itr->first < base_delay)
-					base_delay = itr->first;
-				itr++;
-			}
-		}
+		bt::Uint32 base_delay = delay_window->update(hdr,now.toTimeStamp());
 		
 		int our_delay = hdr->timestamp_difference_microseconds / 1000 - base_delay;
 		int off_target = CCONTROL_TARGET - our_delay;
@@ -382,6 +368,9 @@ namespace utp
 		Out(SYS_GEN|LOG_DEBUG) << "packet_size " << stats.packet_size << endl;
 		*/
 	}
+	
+	
+	
 
 	int Connection::send(const bt::Uint8* data, Uint32 len)
 	{
@@ -549,7 +538,7 @@ namespace utp
 		
 		bt::Uint32 ret = local_wnd->read(buf,max_len);
 		// Update the window if there is room again
-		if (stats.last_window_size_transmitted == 0 && local_wnd->availableSpace() > 0)
+		if (stats.last_window_size_transmitted < 2000 && local_wnd->availableSpace() > 2000)
 			sendState();
 		
 		stats.bytes_received += ret;

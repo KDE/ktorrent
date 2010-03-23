@@ -35,8 +35,11 @@
 
 
 namespace utp
-{;
+{
+class DelayWindow;;
 	class LocalWindow;
+	
+	
 	
 	/**
 		Interface class for transmitting packets
@@ -180,7 +183,6 @@ namespace utp
 		Transmitter* transmitter;
 		LocalWindow* local_wnd;
 		RemoteWindow* remote_wnd;
-		QList<QPair<bt::Uint32,bt::TimeStamp> > delay_window;
 		bt::CircularBuffer output_buffer;
 		bt::Timer timer;
 		mutable QMutex mutex;
@@ -189,6 +191,7 @@ namespace utp
 		Stats stats;
 		bool fin_sent;
 		TimeValue last_packet_sent;
+		DelayWindow* delay_window;
 		
 		friend class UTPServer;
 	};

@@ -18,45 +18,73 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef UTP_TIMEVALUE_H
-#define UTP_TIMEVALUE_H
-
-#include <btcore_export.h>
-#include <util/constants.h>
+#include "delaywindow.h"
+#include <algorithm>
+#include <util/functions.h>
 
 namespace utp
 {
-	/**
-		High precision time value
-	*/
-	class BTCORE_EXPORT TimeValue
+	
+	DelayWindow::DelayWindow() : lowest(0)
 	{
-	public:
-		/// Default constructor, gets the current time
-		TimeValue();
-		TimeValue(bt::Uint64 secs,bt::Uint64 usecs);
-		TimeValue(const TimeValue & tv);
+	}
+	
+	DelayWindow::~DelayWindow()
+	{
+
+	}
+	
+	bt::Uint32 DelayWindow::update(const utp::Header* hdr,bt::TimeStamp receive_time)
+	{
+		bt::TimeStamp now = receive_time;
 		
-		TimeValue & operator = (const TimeValue & tv);
-		
-		/// Calculate the a - b in milliseconds
-		friend bt::Int64 operator - (const TimeValue & a,const TimeValue & b);
-		
-		bt::Uint32 timestampMicroSeconds() const
+		// drop everything older then 2 minutes
+		DelayEntryItr itr = delay_window.begin();
+		while (itr != delay_window.end())
 		{
-			bt::Uint64 microsecs = seconds * 1000000 + microseconds;
-			//return microsecs & 0x00000000FFFFFFFF;
-			return microsecs;
+			if (now - itr->receive_time > DELAY_WINDOW_SIZE)
+			{
+				if (lowest == &(*itr))
+					lowest = 0;
+				
+				itr = delay_window.erase(itr);
+			}
+			else
+				break;
 		}
 		
-		/// Convert to time stamp
-		bt::TimeStamp toTimeStamp() const {return seconds * 1000 + (bt::Uint64)microseconds * 0.001;}
+		if (!lowest)
+			lowest = findBaseDelay();
 		
-	public:
-		bt::Uint64 seconds;
-		bt::Uint64 microseconds;
-	};
+		// Add the new entry and check if it updates base delay
+		DelayEntry entry(hdr->timestamp_difference_microseconds,now);
+		delay_window.push_back(entry);
+		if (!lowest || entry.timestamp_difference_microseconds < lowest->timestamp_difference_microseconds)
+			lowest = &delay_window.back();
+		
+		return lowest->timestamp_difference_microseconds;
+	}
+	
+	DelayWindow::DelayEntry* DelayWindow::findBaseDelay()
+	{
+		bt::Uint32 base_delay = MAX_DELAY;
+		DelayEntryItr found = delay_window.end();
+		DelayEntryItr itr = delay_window.begin();
+		while (itr != delay_window.end())
+		{
+			if (itr->timestamp_difference_microseconds < base_delay)
+			{
+				base_delay = itr->timestamp_difference_microseconds;
+				found = itr;
+			}
+			itr++;
+		}
+		
+		if (found == delay_window.end())
+			return 0;
+		else
+			return &(*found);
+	}
 
 }
 
-#endif // UTP_TIMEVALUE_H

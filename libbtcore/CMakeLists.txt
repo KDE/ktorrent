@@ -205,6 +205,7 @@ set(libbtcore_SRC
 	utp/timevalue.cpp
 	utp/utpprotocol.cpp
 	utp/pollpipe.cpp
+	utp/delaywindow.cpp
 	
 	btversion.cpp
 )
