@@ -25,6 +25,7 @@
 #include <net/poll.h>
 #include <net/wakeuppipe.h>
 
+
 namespace utp
 {
 	class Connection;
@@ -51,6 +52,7 @@ namespace utp
 		net::Poll::Mode pollingMode() const {return mode;}
 		
 	private:
+		mutable QMutex mutex;
 		net::Poll::Mode mode;
 		int poll_index;
 		QSet<bt::Uint16> conn_ids;

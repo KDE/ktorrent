@@ -37,6 +37,7 @@ namespace utp
 
 	void PollPipe::prepare(net::Poll* p, bt::Uint16 conn_id)
 	{
+		QMutexLocker lock(&mutex);
 		conn_ids.insert(conn_id);
 		if (poll_index < 0)
 			poll_index = p->add(this);
@@ -45,6 +46,7 @@ namespace utp
 
 	bool PollPipe::readyToWakeUp(Connection* conn) const
 	{
+		QMutexLocker lock(&mutex);
 		if (poll_index < 0 || !conn_ids.contains(conn->receiveConnectionID()))
 			return false;
 		
@@ -56,6 +58,7 @@ namespace utp
 
 	void PollPipe::reset()
 	{
+		QMutexLocker lock(&mutex);
 		poll_index = -1;
 		conn_ids.clear();
 	}
