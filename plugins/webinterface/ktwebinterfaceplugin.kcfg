@@ -26,7 +26,9 @@
 			<label>interface skin</label>
 			<default>1</default>
 		</entry>
-
+		<entry name="authentication" type="Bool">
+			<default>true</default>
+		</entry>
 		<entry name="username" type ="String">
 			<label>username</label>
 			<default>ktorrent</default>

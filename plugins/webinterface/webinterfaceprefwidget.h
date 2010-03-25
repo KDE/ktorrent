@@ -34,6 +34,9 @@ namespace kt
 	public:
 		WebInterfacePrefWidget(QWidget *parent = 0);
 		virtual ~WebInterfacePrefWidget();
+
+	private slots:
+		void authenticationToggled(bool on);
 		
 	};
 

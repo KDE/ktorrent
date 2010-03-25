@@ -23,6 +23,7 @@
 #include "httpserver.h"
 #include "httpresponseheader.h"
 #include "httpclienthandler.h"
+#include "webinterfacepluginsettings.h"
 
 namespace kt 
 {
@@ -51,7 +52,7 @@ namespace kt
 
 		QString page = url.queryItem("page");
 		// there needs to be a page to send back
-		if (page.isEmpty())
+		if (page.isEmpty() && WebInterfacePluginSettings::authentication())
 		{
 			server->redirectToLoginPage(hdlr);
 			return;

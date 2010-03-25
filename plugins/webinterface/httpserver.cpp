@@ -159,6 +159,17 @@ namespace kt
 
 	bool HttpServer::checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data)
 	{
+		// Authentication is disabled
+		if (!WebInterfacePluginSettings::authentication())
+		{
+			session.logged_in = true;
+			session.sessionId = rand();
+			session.last_access = QTime::currentTime();
+			Out(SYS_WEB|LOG_NOTICE) << "Webgui login succesfull ! (auth disable)" << endl;
+			challenge = QString();
+			return true;
+		}
+
 		if (hdr.contentType() != "application/x-www-form-urlencoded")
 		{
 			Out(SYS_WEB|LOG_NOTICE) << "Webgui login failed ! 1" << endl;
@@ -323,8 +334,10 @@ namespace kt
 		}
 		
 		QString file = hdr.path();
-		if (file == "/")
+		if (file == "/" && WebInterfacePluginSettings::authentication())
 			file = "/login.html";
+		else if (file == "/")
+			file = "/interface.html";
 			
 		KUrl url;
 		url.setEncodedPathAndQuery(file);
@@ -333,7 +346,7 @@ namespace kt
 		WebContentGenerator* gen = content_generators.find(url.path());
 		if (gen)
 		{
-			if (gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr)))
+			if ((gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr))) && WebInterfacePluginSettings::authentication())
 			{
 				// redirect to login page
 				redirectToLoginPage(hdlr);
@@ -366,8 +379,10 @@ namespace kt
 		}
 		
 		QString file = hdr.path();
-		if (file == "/")
+		if (file == "/" && WebInterfacePluginSettings::authentication())
 			file = "/login.html";
+		else if (file == "/")
+			file = "/interface.html";
 		
 		QFileInfo fi(path);
 		QString ext = fi.suffix();;
@@ -375,7 +390,7 @@ namespace kt
 		if (ext == "html")
 		{
 			// html pages require a login unless it is the login.html page
-			if (file != "/login.html" && (!session.logged_in || !checkSession(hdr)))
+			if ((file != "/login.html" && (!session.logged_in || !checkSession(hdr))) && WebInterfacePluginSettings::authentication())
 			{
 				// redirect to login page
 				redirectToLoginPage(hdlr);
@@ -452,7 +467,7 @@ namespace kt
 		WebContentGenerator* gen = content_generators.find(url.path());
 		if (gen)
 		{
-			if (gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr)))
+			if ((gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr))) && WebInterfacePluginSettings::authentication())
 			{
 				// redirect to login page
 				redirectToLoginPage(hdlr);
