@@ -156,7 +156,7 @@ namespace bt
 			}
 			connect_timer.stop();
 		}
-		else if (state == ACTIVE)
+		else if (state == ACTIVE && request)
 		{
 			HttpGet* g = request;
 			if (g->request_sent)
