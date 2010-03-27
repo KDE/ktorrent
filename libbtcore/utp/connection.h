@@ -50,7 +50,7 @@ class DelayWindow;;
 		virtual ~Transmitter() {}
 		
 		/// Send a packet to some host
-		virtual bool sendTo(const QByteArray & data,const net::Address & addr) = 0;
+		virtual bool sendTo(const QByteArray & data,const net::Address & addr,quint16 conn_id) = 0;
 	};
 
 	/**

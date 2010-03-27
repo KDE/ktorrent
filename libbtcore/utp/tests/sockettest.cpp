@@ -24,6 +24,7 @@
 #include <utp/utpserver.h>
 #include <utp/utpsocket.h>
 #include <torrent/globals.h>
+#include <boost/concept_check.hpp>
 
 using namespace utp;
 
@@ -118,6 +119,14 @@ private slots:
 	{
 		UTPSocket sock;
 		net::Address addr("127.0.0.1",port + 1);
+		sock.setBlocking(true);
+		QVERIFY(sock.connectTo(addr) == false);
+	}
+	
+	void testInvalidAddress()
+	{
+		UTPSocket sock;
+		net::Address addr("127.0.0.1",0);
 		sock.setBlocking(true);
 		QVERIFY(sock.connectTo(addr) == false);
 	}

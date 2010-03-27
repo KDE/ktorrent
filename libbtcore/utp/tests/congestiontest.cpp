@@ -96,7 +96,7 @@ public:
 		while (!outgoing->allDataSent())
 			sleep(1);
 	
-		Out(SYS_GEN|LOG_DEBUG) << "Transmitted " << sent << " packets " << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Transmitted " << sent << " packets " << endl;
 		outgoing->dumpStats();
 	}
 	
@@ -160,7 +160,7 @@ private slots:
 	
 	void testCongestionTest()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testCongestionTest" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testCongestionTest" << bt::endl;
 		if (outgoing->connectionState() != CS_CONNECTED || incoming->connectionState() != CS_CONNECTED)
 		{
 			QSKIP("Not Connected",SkipAll);
@@ -192,8 +192,8 @@ private slots:
 		}
 		
 		st.wait();
-		Out(SYS_GEN|LOG_DEBUG) << "Received " << received << " bytes:" << endl;
-		Out(SYS_GEN|LOG_DEBUG) << received_data << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Received " << received << " bytes:" << endl;
+		Out(SYS_UTP|LOG_DEBUG) << received_data << endl;
 		incoming->dumpStats();
 		QVERIFY(incoming->bytesAvailable() == 0);
 		QVERIFY(received_data.count(TEST_DATA) == PACKETS_TO_SEND);

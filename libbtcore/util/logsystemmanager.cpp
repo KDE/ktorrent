@@ -35,6 +35,7 @@ namespace bt
 		registerSystem(i18n("Tracker"),SYS_TRK);
 		registerSystem(i18n("DHT"),SYS_DHT);
 		registerSystem(i18n("Disk Input/Output"),SYS_DIO);
+		registerSystem(i18n("UTP"),SYS_UTP);
 	}
 
 

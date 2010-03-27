@@ -38,6 +38,7 @@
 #define SYS_TRK 0x0040 // Tracker
 #define SYS_DHT 0x0080 // DHT
 #define SYS_DIO 0x0100 // Disk IO related stuff, saving and loading of chunks ...
+#define SYS_UTP 0x0200 // UTP
 
 //plugins
 #define SYS_IPF 0x1000  // IPFilter

@@ -44,7 +44,7 @@ public slots:
 	void accepted(Connection* conn)
 	{
 		incoming[num_accepted++] = new UTPSocket(conn);
-		Out(SYS_GEN|LOG_DEBUG) << "Accepted " << num_accepted << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Accepted " << num_accepted << endl;
 		if (num_accepted >= NUM_SOCKETS)
 			exit();
 	}
@@ -84,7 +84,7 @@ private slots:
 	void testPollConnect()
 	{
 		poller.reset();
-		Out(SYS_GEN|LOG_DEBUG) << "testPollConnect " << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testPollConnect " << endl;
 		utp::UTPSocket s;
 		s.setBlocking(false);
 		s.connectTo(net::Address("127.0.0.1",port));
@@ -97,7 +97,7 @@ private slots:
 
 	void testConnect()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "testConnect " << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testConnect " << endl;
 		for (int i = 0;i < NUM_SOCKETS;i++)
 		{
 			outgoing[i] = new UTPSocket(); 
@@ -115,7 +115,7 @@ private slots:
 	
 	void testPollInput()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "testPollInput " << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testPollInput " << endl;
 		char test[] = "test\n";
 		
 		for (int i = 0;i < NUM_SOCKETS;i++)
@@ -153,7 +153,7 @@ private slots:
 	void testPollOutput()
 	{
 		poller.reset();
-		Out(SYS_GEN|LOG_DEBUG) << "testPollOutput " << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testPollOutput " << endl;
 		for (int i = 0;i < NUM_SOCKETS;i++)
 		{
 			incoming[i]->prepare(&poller,Poll::OUTPUT);
@@ -170,7 +170,7 @@ private slots:
 	
 	void testPollClose()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "testPollClose " << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testPollClose " << endl;
 		for (int i = 0;i < NUM_SOCKETS;i++)
 		{
 			incoming[i]->close();

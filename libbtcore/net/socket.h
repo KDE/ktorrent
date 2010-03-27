@@ -26,7 +26,9 @@
 
 namespace net
 {
-
+	const int SEND_FAILURE = 0;
+	const int SEND_WOULD_BLOCK = -1;
+	
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/

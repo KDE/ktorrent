@@ -22,6 +22,7 @@
 #define UTP_UTPSERVER_H
 
 #include <QThread>
+#include <boost/tuple/tuple.hpp>
 #include <net/socket.h>
 #include <net/poll.h>
 #include <net/wakeuppipe.h>
@@ -51,7 +52,7 @@ namespace utp
 		virtual bool changePort(bt::Uint16 port);
 		
 		/// Send a packet to some host
-		virtual bool sendTo(const QByteArray & data,const net::Address & addr);
+		virtual bool sendTo(const QByteArray & data,const net::Address & addr,quint16 conn_id);
 		
 		/// Setup a connection to a remote address
 		Connection* connectTo(const net::Address & addr);
@@ -105,6 +106,8 @@ namespace utp
 			void test(Connection* conn);
 		};
 		
+		typedef boost::tuple<QByteArray,net::Address,quint16> OutputQueueEntry;
+		
 	private:
 		net::Socket* sock;
 		bool running;
@@ -116,7 +119,7 @@ namespace utp
 		bt::PtrMap<net::Poll*,PollPipePair> poll_pipes;
 		bool create_sockets;
 		bt::Uint8 tos;
-		QList<QPair<QByteArray,net::Address> > output_queue;
+		QList<OutputQueueEntry> output_queue;
 		
 		typedef bt::PtrMap<quint16,Connection>::iterator ConItr;
 		typedef bt::PtrMap<net::Poll*,PollPipePair>::iterator PollPipePairItr;

@@ -70,7 +70,7 @@ private slots:
 	
 	void testConnect()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testConnect" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testConnect" << bt::endl;
 		
 		net::Address addr("127.0.0.1",port);
 		utp::UTPServer & srv = bt::Globals::instance().getUTPServer();
@@ -94,7 +94,7 @@ private slots:
 
 	void testSend()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testSend" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testSend" << bt::endl;
 		outgoing->setBlocking(true);
 		char test[] = "TEST";
 		
@@ -110,7 +110,7 @@ private slots:
 	
 	void testSend2()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testSend2" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testSend2" << bt::endl;
 		bt::Uint8* sdata = new bt::Uint8[1000];
 		outgoing->send(sdata,1000);
 		
@@ -125,7 +125,7 @@ private slots:
 	
 	void testSend3()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testSend3" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testSend3" << bt::endl;
 		char test[] = "TEST";
 		
 		outgoing->send((const bt::Uint8*)test,strlen(test));
@@ -145,7 +145,7 @@ private slots:
 
 	void testSend4()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testSend4" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testSend4" << bt::endl;
 		char test[] = "TEST";
 		
 		outgoing->send((const bt::Uint8*)test,strlen(test));

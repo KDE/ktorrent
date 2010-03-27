@@ -286,21 +286,17 @@ namespace net
 	
 	int Socket::sendTo(const bt::Uint8* buf,int len,const Address & a)
 	{
-		int ns = 0;
-		while (ns < len)
+		int ret = ::sendto(m_fd,(char*)buf,len,0,a.address(),a.length());
+		if (ret < 0)
 		{
-			int left = len - ns;
-			int ret = ::sendto(m_fd,(char*)buf + ns,left,0,a.address(),a.length());
-			if (ret < 0)
-			{
-				Out(SYS_CON|LOG_DEBUG) << "Send error : " << QString(strerror(errno)) << endl;
-				return 0;
-			}
-
-			ns += ret;
+			if (errno == EAGAIN || errno == EWOULDBLOCK)
+				return SEND_WOULD_BLOCK;
+			
+			Out(SYS_CON|LOG_DEBUG) << "Send error : " << QString(strerror(errno)) << endl;
+			return SEND_FAILURE;
 		}
-		return ns;
-#include "poll.h"
+		
+		return ret;
 	}
 	
 	int Socket::recvFrom(bt::Uint8* buf,int max_len,Address & a)

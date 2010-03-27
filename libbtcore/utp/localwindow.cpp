@@ -71,7 +71,7 @@ namespace utp
 			{
 				last_seq_nr = pkt->seq_nr;
 				if (write((const bt::Uint8*)pkt->data.data(),pkt->data.size()) != pkt->data.size())
-					Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived write failed " << endl;
+					Out(SYS_UTP|LOG_DEBUG) << "LocalWindow::packetReceived write failed " << endl;
 				delete pkt;
 				itr = future_packets.erase(itr);
 			}
@@ -123,13 +123,13 @@ namespace utp
 		{
 			if (availableSpace() < size)
 			{
-				Out(SYS_GEN|LOG_DEBUG) << "Not enough space in local window " << availableSpace() << " " << size << endl;
+				Out(SYS_UTP|LOG_DEBUG) << "Not enough space in local window " << availableSpace() << " " << size << endl;
 				return false;
 			}
 			
 			last_seq_nr = hdr->seq_nr;
 			if (write(data,size) != size)
-				Out(SYS_GEN|LOG_DEBUG) << "LocalWindow::packetReceived write failed " << endl;
+				Out(SYS_UTP|LOG_DEBUG) << "LocalWindow::packetReceived write failed " << endl;
 			window_space -= size;
 			checkFuturePackets();
 		}

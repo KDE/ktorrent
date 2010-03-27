@@ -540,7 +540,10 @@ namespace kt
 		
 		downloads.sort(); // sort downloads, even when suspended so that the QM widget is updated
 		if (Settings::manuallyControlTorrents() || suspended_state)
+		{
+			emit queueOrdered();
 			return;
+		}
 		
 		ordering = true; // make sure that recursive entering of this function is not possible
 		

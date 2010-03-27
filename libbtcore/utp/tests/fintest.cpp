@@ -80,7 +80,7 @@ private slots:
 	
 	void testFin()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testFin" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testFin" << bt::endl;
 		if (outgoing->connectionState() != CS_CONNECTED || incoming->connectionState() != CS_CONNECTED)
 		{
 			QSKIP("Not Connected",SkipAll);

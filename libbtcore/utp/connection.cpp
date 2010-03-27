@@ -70,7 +70,7 @@ namespace utp
 		stats.bytes_lost = 0;
 		stats.packets_lost = 0;
 		
-		Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " << recv_connection_id << "|" << stats.send_connection_id << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "UTP: Connection " << recv_connection_id << "|" << stats.send_connection_id << endl;
 	}
 
 	Connection::~Connection()
@@ -86,32 +86,34 @@ namespace utp
 			sendSYN();
 	}
 
+#if 0
 	static void DumpPacket(const Header & hdr,const SelectiveAck* sack)
 	{
-		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
-		Out(SYS_CON|LOG_NOTICE) << "UTP: Packet Header: " << endl;
-		Out(SYS_CON|LOG_NOTICE) << "type:                              " << TypeToString(hdr.type) << endl;
-		Out(SYS_CON|LOG_NOTICE) << "version:                           " << hdr.version << endl;
-		Out(SYS_CON|LOG_NOTICE) << "extension:                         " << hdr.extension << endl;
-		Out(SYS_CON|LOG_NOTICE) << "connection_id:                     " << hdr.connection_id << endl;
-		Out(SYS_CON|LOG_NOTICE) << "timestamp_microseconds:            " << hdr.timestamp_microseconds << endl;
-		Out(SYS_CON|LOG_NOTICE) << "timestamp_difference_microseconds: " << hdr.timestamp_difference_microseconds << endl;
-		Out(SYS_CON|LOG_NOTICE) << "wnd_size:                          " << hdr.wnd_size << endl;
-		Out(SYS_CON|LOG_NOTICE) << "seq_nr:                            " << hdr.seq_nr << endl;
-		Out(SYS_CON|LOG_NOTICE) << "ack_nr:                            " << hdr.ack_nr << endl;
-		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "==============================================" << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "UTP: Packet Header: " << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "type:                              " << TypeToString(hdr.type) << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "version:                           " << hdr.version << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "extension:                         " << hdr.extension << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "connection_id:                     " << hdr.connection_id << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "timestamp_microseconds:            " << hdr.timestamp_microseconds << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "timestamp_difference_microseconds: " << hdr.timestamp_difference_microseconds << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "wnd_size:                          " << hdr.wnd_size << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "seq_nr:                            " << hdr.seq_nr << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "ack_nr:                            " << hdr.ack_nr << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "==============================================" << endl;
 		if (!sack)
 			return;
 		
-		Out(SYS_CON|LOG_NOTICE) << "SelectiveAck:                      " << endl;
-		Out(SYS_CON|LOG_NOTICE) << "extension:                         " << sack->extension << endl;
-		Out(SYS_CON|LOG_NOTICE) << "length:                            " << sack->length << endl;
-		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[0]) << endl;
-		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[1]) << endl;
-		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[2]) << endl;
-		Out(SYS_CON|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[3]) << endl;
-		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "SelectiveAck:                      " << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "extension:                         " << sack->extension << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "length:                            " << sack->length << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[0]) << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[1]) << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[2]) << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "bitmask:                           " << hex(sack->bitmask[3]) << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "==============================================" << endl;
 	}
+#endif
 
 	ConnectionState Connection::handlePacket(const PacketParser & parser,const QByteArray& packet)
 	{
@@ -136,7 +138,7 @@ namespace utp
 					// connection estabished
 					stats.state = CS_CONNECTED;
 					local_wnd->setLastSeqNr(hdr->seq_nr - 1);
-					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
+					Out(SYS_UTP|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
 					connected.wakeAll();
 				}
 				else
@@ -153,7 +155,7 @@ namespace utp
 					local_wnd->setLastSeqNr(hdr->seq_nr);
 					sendState();
 					stats.state = CS_CONNECTED;
-					Out(SYS_CON|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
+					Out(SYS_UTP|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
 				}
 				else
 				{
@@ -249,7 +251,7 @@ namespace utp
 		if (remote_wnd->allPacketsAcked() && local_wnd->isEmpty())
 		{
 			stats.state = CS_CLOSED;
-			Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " closed " << endl;
+			Out(SYS_UTP|LOG_NOTICE) << "UTP: Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " closed " << endl;
 			data_ready.wakeAll();
 		}
 	}
@@ -261,8 +263,6 @@ namespace utp
 		stats.rtt_var += (qAbs(delta) - stats.rtt_var) / 4;
 		stats.rtt += ((int)packet_rtt - stats.rtt) / 8;
 		stats.timeout = qMax(stats.rtt + stats.rtt_var * 4, 500);
-		
-		//Out(SYS_GEN|LOG_DEBUG) << "RTT: " << packet_rtt << " " << stats.rtt_var << " " << stats.rtt << " " << stats.timeout << " " << delta << endl;
 		stats.bytes_sent += packet_size;
 	}
 
@@ -299,7 +299,7 @@ namespace utp
 		}
 		
 		
-		if (!transmitter->sendTo(ba,stats.remote))
+		if (!transmitter->sendTo(ba,stats.remote,receiveConnectionID()))
 			throw TransmissionError(__FILE__,__LINE__);
 		
 		last_packet_sent = tv;
@@ -359,13 +359,13 @@ namespace utp
 			stats.packet_size = 1500 - IP_AND_UDP_OVERHEAD - sizeof(utp::Header);
 	
 		/*
-		Out(SYS_GEN|LOG_DEBUG) << "base_delay " << base_delay << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "our_delay " << our_delay << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "off_target " << off_target << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "delay_factor " << delay_factor << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "window_factor " << window_factor << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "scaled_gain " << scaled_gain << endl; 
-		Out(SYS_GEN|LOG_DEBUG) << "packet_size " << stats.packet_size << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "base_delay " << base_delay << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "our_delay " << our_delay << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "off_target " << off_target << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "delay_factor " << delay_factor << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "window_factor " << window_factor << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "scaled_gain " << scaled_gain << endl; 
+		Out(SYS_UTP|LOG_DEBUG) << "packet_size " << stats.packet_size << endl;
 		*/
 	}
 	
@@ -381,17 +381,6 @@ namespace utp
 		// first put data in the output buffer then send packets
 		bt::Uint32 ret = output_buffer.write(data,len);
 		sendPackets();
-	/*	if (output_buffer.full())
-		{
-			Out(SYS_CON|LOG_NOTICE) << "UTP: Connection " 
-				<< stats.recv_connection_id << " " 
-				<< remote_wnd->windowSize() << " "
-				<< remote_wnd->maxWindow() << " "
-				<< remote_wnd->currentWindow() << " "
-				<< remote_wnd->availableSpace() << endl;
-			
-		}
-		*/
 		return ret;
 	}
 	
@@ -408,7 +397,7 @@ namespace utp
 			
 			QByteArray packet(to_read,0);
 			if (output_buffer.read((bt::Uint8*)packet.data(),to_read) != to_read)
-				Out(SYS_CON|LOG_DEBUG) << "Output buffer read failed " << endl;
+				Out(SYS_UTP|LOG_DEBUG) << "Output buffer read failed " << endl;
 		
 			sendDataPacket(packet);
 		}
@@ -462,7 +451,7 @@ namespace utp
 		}
 		
 		memcpy(ba.data() + Header::size() + extension_length,packet.data(),to_send);
-		if (!transmitter->sendTo(ba,stats.remote))
+		if (!transmitter->sendTo(ba,stats.remote,receiveConnectionID()))
 			throw TransmissionError(__FILE__,__LINE__);
 		
 		last_packet_sent = now;
@@ -508,7 +497,7 @@ namespace utp
 		memcpy(ba.data() + Header::size() + extension_length,packet.data(),packet.size());
 		timer.update();
 		
-		if (!transmitter->sendTo(ba,stats.remote))
+		if (!transmitter->sendTo(ba,stats.remote,receiveConnectionID()))
 			throw TransmissionError(__FILE__,__LINE__);
 		
 		last_packet_sent = now;
@@ -613,7 +602,6 @@ namespace utp
 			case CS_CONNECTED:
 				if (timer.getElapsedSinceUpdate() > stats.timeout)
 				{
-					Out(SYS_GEN|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " timeout" << endl;
 					remote_wnd->timeout(this);
 					stats.packet_size = MIN_PACKET_SIZE;
 					stats.timeout *= 2;
@@ -621,6 +609,7 @@ namespace utp
 					if (stats.timeout >= MAX_TIMEOUT)
 					{
 						// If we have reached the max timeout, kill the connection
+						Out(SYS_UTP|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " max timeout reached, closing" << endl;
 						stats.state = CS_FINISHED;
 					}
 					timer.update();
@@ -641,15 +630,13 @@ namespace utp
 
 	void Connection::dumpStats()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " stats:" << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "bytes_received   = " << stats.bytes_received << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "bytes_sent       = " << stats.bytes_sent << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "packets_received = " << stats.packets_received << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "packets_sent     = " << stats.packets_sent << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "bytes_lost       = " << stats.bytes_lost << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "packets_lost     = " << stats.packets_lost << endl;
-		//Out(SYS_GEN|LOG_DEBUG) << "dinges           = " << local_wnd->availableSpace() << endl;
-		//Out(SYS_GEN|LOG_DEBUG) << "dinges2          = " << stats.last_window_size_transmitted << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " stats:" << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "bytes_received   = " << stats.bytes_received << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "bytes_sent       = " << stats.bytes_sent << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "packets_received = " << stats.packets_received << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "packets_sent     = " << stats.packets_sent << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "bytes_lost       = " << stats.bytes_lost << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "packets_lost     = " << stats.packets_lost << endl;
 	}
 
 	bool Connection::allDataSent() const

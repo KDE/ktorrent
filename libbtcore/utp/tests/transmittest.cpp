@@ -100,7 +100,7 @@ public:
 		{
 			int to_send = step - off;
 			int ret = outgoing->send((const bt::Uint8*)data.data() + off,to_send);
-			Out(SYS_GEN|LOG_DEBUG) << "Transmitted " << ret << endl;
+			Out(SYS_UTP|LOG_DEBUG) << "Transmitted " << ret << endl;
 			if (ret > 0)
 			{
 				hgen.update((const bt::Uint8*)data.data() + off,ret);
@@ -119,7 +119,7 @@ public:
 		}
 		
 		sleep(2);
-		Out(SYS_GEN|LOG_DEBUG) << "Transmitted " << sent << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Transmitted " << sent << endl;
 		outgoing->dumpStats();
 		sent_hash = hgen.get();
 	}
@@ -187,7 +187,7 @@ private slots:
 	
 	void testThreaded()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testThreaded" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testThreaded" << bt::endl;
 		if (outgoing->connectionState() != CS_CONNECTED || incoming->connectionState() != CS_CONNECTED)
 		{
 			QSKIP("Not Connected",SkipAll);
@@ -203,7 +203,7 @@ private slots:
 		while (received < BYTES_TO_SEND)
 		{
 			bt::Uint32 ba = incoming->bytesAvailable();
-			Out(SYS_GEN|LOG_DEBUG) << "Available " << ba << endl;
+			Out(SYS_UTP|LOG_DEBUG) << "Available " << ba << endl;
 			if (ba > 0)
 			{
 				failures = 0;
@@ -230,15 +230,15 @@ private slots:
 		}
 		
 		st.wait();
-		Out(SYS_GEN|LOG_DEBUG) << "Received " << received << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Received " << received << endl;
 		incoming->dumpStats();
 		QVERIFY(incoming->bytesAvailable() == 0);
 		QVERIFY(outgoing->allDataSent());
 		QVERIFY(received >= BYTES_TO_SEND);
 		
 		SHA1Hash rhash = hgen.get();
-		Out(SYS_GEN|LOG_DEBUG) << "Received data hash: " << rhash.toString() << endl;
-		Out(SYS_GEN|LOG_DEBUG) << "Sent data hash:     " << st.sent_hash.toString() << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Received data hash: " << rhash.toString() << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Sent data hash:     " << st.sent_hash.toString() << endl;
 		QVERIFY(rhash == st.sent_hash);
 		
 	}

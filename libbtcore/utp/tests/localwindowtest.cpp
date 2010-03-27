@@ -43,7 +43,7 @@ private slots:
 	
 	void testLocalWindow()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "testLocalWindow" << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testLocalWindow" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		
@@ -71,7 +71,7 @@ private slots:
 	
 	void testPacketLoss()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "testPacketLoss" << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testPacketLoss" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		
@@ -108,7 +108,7 @@ private slots:
 	
 	void testPacketLoss2()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "testPacketLoss2" << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testPacketLoss2" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		
@@ -152,7 +152,7 @@ private slots:
 	
 	void testToMuchData()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "testToMuchData" << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testToMuchData" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		
@@ -175,7 +175,7 @@ private slots:
 	
 	void testSelectiveAck()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "testSelectiveAck" << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "testSelectiveAck" << endl;
 		bt::Uint8 wdata[1000];
 		memset(wdata,0,1000);
 		

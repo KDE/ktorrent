@@ -35,18 +35,11 @@ public:
 	{
 	}
 	
-	virtual bool sendTo(const QByteArray & data,const net::Address & addr)
+	virtual bool sendTo(const QByteArray & data,const net::Address & addr,quint16 conn_id)
 	{
 		sent_packets.append(data);
 		Q_UNUSED(addr);
-		return true;
-	}
-	
-	virtual bool sendTo(const bt::Uint8* data,const bt::Uint32 size,const net::Address & addr)
-	{
-		QByteArray ba((const char*)data,size);
-		sent_packets.append(ba);
-		Q_UNUSED(addr);
+		Q_UNUSED(conn_id);
 		return true;
 	}
 	

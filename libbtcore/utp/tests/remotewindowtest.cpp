@@ -50,7 +50,7 @@ public:
 	
 	virtual void retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr)
 	{
-		bt::Out(SYS_GEN|LOG_NOTICE) << "retransmit " << p_seq_nr << bt::endl;
+		bt::Out(SYS_UTP|LOG_NOTICE) << "retransmit " << p_seq_nr << bt::endl;
 		retransmit_ok = retransmit_seq_nr.contains(p_seq_nr);
 	}
 	

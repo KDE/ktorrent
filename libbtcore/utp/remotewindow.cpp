@@ -118,7 +118,6 @@ namespace utp
 			// packet has been lost
 			if (!first_unacked->retransmitted || now - first_unacked->send_time > conn->currentTimeout())
 			{
-				Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << first_unacked->seq_nr << " lost" << endl;
 				conn->retransmit(first_unacked->data,first_unacked->seq_nr);
 				first_unacked->send_time = now;
 				first_unacked->retransmitted = true;
@@ -136,7 +135,6 @@ namespace utp
 				if ((*itr)->seq_nr - hdr->ack_nr < lost_index && 
 					(!(*itr)->retransmitted || now - (*itr)->send_time > conn->currentTimeout()))
 				{
-					Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << (*itr)->seq_nr << " lost" << endl;
 					conn->retransmit((*itr)->data,(*itr)->seq_nr);
 					(*itr)->send_time = now;
 					first_unacked->retransmitted = true;
@@ -148,6 +146,7 @@ namespace utp
 		
 		if (lost_packets)
 		{
+			Out(SYS_UTP|LOG_DEBUG) << "UTP: lost packets on connection " << hdr->connection_id << endl;
 			max_window = (bt::Uint32)qRound(0.78 * max_window);
 		}
 	}
@@ -184,7 +183,6 @@ namespace utp
 				conn->retransmit(pkt->data,pkt->seq_nr);
 				pkt->send_time = bt::Now();
 				pkt->retransmitted = true;
-				Out(SYS_GEN|LOG_DEBUG) << "Packet with sequence number " << pkt->seq_nr << " lost" << endl;
 			}
 		}
 	}
@@ -198,7 +196,7 @@ namespace utp
 			max_window += d;
 		
 		//if (scaled_gain > 1000)
-		//	Out(SYS_GEN|LOG_DEBUG) << "RemoteWindow::updateWindowSize " << scaled_gain << " " << max_window << endl;
+		//	Out(SYS_UTP|LOG_DEBUG) << "RemoteWindow::updateWindowSize " << scaled_gain << " " << max_window << endl;
 	}
 
 	void RemoteWindow::clear()

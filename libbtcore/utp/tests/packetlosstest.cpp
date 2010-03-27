@@ -60,7 +60,7 @@ public:
 			int r = qrand() % 100;
 			if (r <= (int)qRound(100 * loss_factor))
 			{
-				Out(SYS_GEN|LOG_DEBUG) << "Dropping packet " << endl;
+				Out(SYS_UTP|LOG_DEBUG) << "Dropping packet " << endl;
 				return;
 			}
 		}
@@ -106,7 +106,7 @@ public:
 		while (!outgoing->allDataSent() && outgoing->connectionState() != CS_CLOSED)
 			sleep(1);
 	
-		Out(SYS_GEN|LOG_DEBUG) << "Transmitted " << sent << " packets " << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Transmitted " << sent << " packets " << endl;
 		outgoing->dumpStats();
 	}
 	
@@ -169,7 +169,7 @@ private slots:
 	
 	void testPacketLoss()
 	{
-		bt::Out(SYS_GEN|LOG_DEBUG) << "testPacketLoss" << bt::endl;
+		bt::Out(SYS_UTP|LOG_DEBUG) << "testPacketLoss" << bt::endl;
 		if (outgoing->connectionState() != CS_CONNECTED || incoming->connectionState() != CS_CONNECTED)
 		{
 			QSKIP("Not Connected",SkipAll);
@@ -201,8 +201,8 @@ private slots:
 		}
 		
 		st.wait();
-		Out(SYS_GEN|LOG_DEBUG) << "Received " << received << " bytes:" << endl;
-		Out(SYS_GEN|LOG_DEBUG) << received_data << endl;
+		Out(SYS_UTP|LOG_DEBUG) << "Received " << received << " bytes:" << endl;
+		Out(SYS_UTP|LOG_DEBUG) << received_data << endl;
 		incoming->dumpStats();
 		QVERIFY(incoming->bytesAvailable() == 0);
 		QVERIFY(received_data.count(TEST_DATA) == PACKETS_TO_SEND);

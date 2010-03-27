@@ -54,7 +54,14 @@ namespace utp
 	{
 		if (conn)
 		{
-			conn->close();
+			try
+			{
+				conn->close();
+			}
+			catch (Connection::TransmissionError)
+			{
+				reset();
+			}
 		}
 	}
 
@@ -76,6 +83,9 @@ namespace utp
 		reset();
 		
 		conn = srv.connectTo(addr);
+		if (!conn)
+			return false;
+		
 		srv.attach(this,conn);
 		m_state = CONNECTING;
 		if (blocking)
@@ -120,20 +130,28 @@ namespace utp
 		if (!conn || conn->connectionState() == CS_CLOSED)
 			return 0;
 		
-		if (conn->bytesAvailable() == 0)
+		try
 		{
-			if (blocking)
+			if (conn->bytesAvailable() == 0)
 			{
-				if (conn->waitForData())
-					return conn->recv(buf,max_len);
+				if (blocking)
+				{
+					if (conn->waitForData())
+						return conn->recv(buf,max_len);
+					else
+						return 0; // connection should be closed now
+				}
 				else
-					return 0; // connection should be closed now
+					return -1; // No data ready and not blocking so return -1
 			}
 			else
-				return -1; // No data ready and not blocking so return -1
+				return conn->recv(buf,max_len);
 		}
-		else
-			return conn->recv(buf,max_len);
+		catch (Connection::TransmissionError & err)
+		{
+			close();
+			return -1;
+		}
 	}
 
 	void UTPSocket::reset()
@@ -151,7 +169,15 @@ namespace utp
 		if (!conn)
 			return -1;
 		
-		return conn->send(buf,len);
+		try
+		{
+			return conn->send(buf,len);
+		}
+		catch (Connection::TransmissionError & err)
+		{
+			close();
+			return -1;
+		}
 	}
 
 	void UTPSocket::setBlocking(bool on)

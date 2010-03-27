@@ -98,7 +98,7 @@ namespace utp
 		}
 		else
 		{
-			Out(SYS_CON|LOG_NOTICE) << "UTP: bound to " << addr.toString() << endl;
+			Out(SYS_UTP|LOG_NOTICE) << "UTP: bound to " << addr.toString() << endl;
 			sock->setTOS(tos);
 			Globals::instance().getPortList().addNewPort(addr.port(),net::UDP,true);
 			return true;
@@ -126,23 +126,23 @@ namespace utp
 			if (output_queue.size() > 0)
 				FD_SET(fd,&wfds);
 			
-			struct timeval tv = {0,10000};
-			if (select(fd + 1,&rfds,&wfds,0,&tv) > 0)
-			{
-				if (FD_ISSET(fd,&rfds))
-					readPacket();
-				if (FD_ISSET(fd,&wfds))
-					writePacket();
-			}
-			
 			try
 			{
+				struct timeval tv = {0,10000};
+				if (select(fd + 1,&rfds,&wfds,0,&tv) > 0)
+				{
+					if (FD_ISSET(fd,&rfds))
+						readPacket();
+					if (FD_ISSET(fd,&wfds))
+						writePacket();
+				}
+				
 				checkTimeouts();
 				clearDeadConnections();
 			}
 			catch (utp::Connection::TransmissionError & err)
 			{
-				Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
+				Out(SYS_UTP|LOG_NOTICE) << "UTP: " << err.location << endl;
 			}
 		}
 	}
@@ -156,7 +156,7 @@ namespace utp
 		net::Address addr;
 		if (sock->recvFrom((bt::Uint8*)packet.data(),ba,addr) > 0)
 		{
-		//	Out(SYS_CON|LOG_NOTICE) << "UTP: received " << ba << " bytes packet from " << addr.toString() << endl;
+		//	Out(SYS_UTP|LOG_NOTICE) << "UTP: received " << ba << " bytes packet from " << addr.toString() << endl;
 			// discard packets which are to small
 			if (ba < (int)sizeof(utp::Header))
 				return;
@@ -167,7 +167,7 @@ namespace utp
 			}
 			catch (utp::Connection::TransmissionError & err)
 			{
-				Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
+				Out(SYS_UTP|LOG_NOTICE) << "UTP: " << err.location << endl;
 			}
 		}
 	}
@@ -178,18 +178,30 @@ namespace utp
 		// can't handle the data anymore
 		while (!output_queue.empty())
 		{
-			QPair<QByteArray,net::Address> & packet = output_queue.front();
-			if (sock->sendTo((const bt::Uint8*)packet.first.data(),packet.first.size(),packet.second) == packet.first.size())
-				output_queue.pop_front();
-			else
+			OutputQueueEntry & packet = output_queue.front();
+			const QByteArray & data = packet.get<0>();
+			const net::Address & addr = packet.get<1>();
+			int ret = sock->sendTo((const bt::Uint8*)data.data(),data.size(),addr);
+			if (ret == net::SEND_WOULD_BLOCK)
 				break;
+			else if (ret == net::SEND_FAILURE)
+			{
+				// Kill the connection of this packet
+				Connection* conn = find(packet.get<2>());
+				if (conn)
+					conn->close();
+				
+				output_queue.pop_front();
+			}
+			else
+				output_queue.pop_front();
 		}
 	}
 	
-	
+#if 0
 	static void Dump(const QByteArray & data, const net::Address& addr)
 	{
-		Out(SYS_CON|LOG_DEBUG) << QString("Received packet from %1 (%2 bytes)").arg(addr.toString()).arg(data.size()) << endl;
+		Out(SYS_UTP|LOG_DEBUG) << QString("Received packet from %1 (%2 bytes)").arg(addr.toString()).arg(data.size()) << endl;
 		const bt::Uint8* pkt = (const bt::Uint8*)data.data();
 		
 		QString line;
@@ -197,7 +209,7 @@ namespace utp
 		{
 			if (i > 0 && i % 32 == 0)
 			{
-				Out(SYS_CON|LOG_DEBUG) << line << endl;
+				Out(SYS_UTP|LOG_DEBUG) << line << endl;
 				line = "";
 			}
 			
@@ -206,25 +218,26 @@ namespace utp
 			if (i + 1 % 4)
 				line += ' ';
 		}
-		Out(SYS_CON|LOG_DEBUG) << line << endl;
+		Out(SYS_UTP|LOG_DEBUG) << line << endl;
 	}
-	
+
 	static void DumpPacket(const Header & hdr)
 	{
-		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
-		Out(SYS_CON|LOG_NOTICE) << "UTP: Packet Header: " << endl;
-		Out(SYS_CON|LOG_NOTICE) << "type:                              " << TypeToString(hdr.type) << endl;
-		Out(SYS_CON|LOG_NOTICE) << "version:                           " << hdr.version << endl;
-		Out(SYS_CON|LOG_NOTICE) << "extension:                         " << hdr.extension << endl;
-		Out(SYS_CON|LOG_NOTICE) << "connection_id:                     " << hdr.connection_id << endl;
-		Out(SYS_CON|LOG_NOTICE) << "timestamp_microseconds:            " << hdr.timestamp_microseconds << endl;
-		Out(SYS_CON|LOG_NOTICE) << "timestamp_difference_microseconds: " << hdr.timestamp_difference_microseconds << endl;
-		Out(SYS_CON|LOG_NOTICE) << "wnd_size:                          " << hdr.wnd_size << endl;
-		Out(SYS_CON|LOG_NOTICE) << "seq_nr:                            " << hdr.seq_nr << endl;
-		Out(SYS_CON|LOG_NOTICE) << "ack_nr:                            " << hdr.ack_nr << endl;
-		Out(SYS_CON|LOG_NOTICE) << "==============================================" << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "==============================================" << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "UTP: Packet Header: " << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "type:                              " << TypeToString(hdr.type) << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "version:                           " << hdr.version << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "extension:                         " << hdr.extension << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "connection_id:                     " << hdr.connection_id << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "timestamp_microseconds:            " << hdr.timestamp_microseconds << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "timestamp_difference_microseconds: " << hdr.timestamp_difference_microseconds << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "wnd_size:                          " << hdr.wnd_size << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "seq_nr:                            " << hdr.seq_nr << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "ack_nr:                            " << hdr.ack_nr << endl;
+		Out(SYS_UTP|LOG_NOTICE) << "==============================================" << endl;
 	}
-	
+#endif
+
 	void UTPServer::handlePacket(const QByteArray& packet, const net::Address& addr)
 	{
 		PacketParser parser(packet);
@@ -246,11 +259,11 @@ namespace utp
 					if (c)
 						c->handlePacket(parser,packet);
 					else
-						Out(SYS_CON|LOG_NOTICE) << "UTP: unkown connection " << hdr->connection_id << endl;
+						Out(SYS_UTP|LOG_NOTICE) << "UTP: unkown connection " << hdr->connection_id << endl;
 				}
 				catch (Connection::TransmissionError & err)
 				{
-					Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
+					Out(SYS_UTP|LOG_NOTICE) << "UTP: " << err.location << endl;
 					// TODO: kill connection
 				}
 				break;
@@ -264,19 +277,20 @@ namespace utp
 	}
 
 
-	bool UTPServer::sendTo(const QByteArray& data, const net::Address& addr)
+	bool UTPServer::sendTo(const QByteArray& data, const net::Address& addr,quint16 conn_id)
 	{
 		// if output_queue is not empty append to it, so that packet order is OK
 		// (when they are being sent anyway)
 		if (output_queue.empty())
 		{
-			// If we can't send kernel buffers are probably full,
-			// so wait until socket becomes writeable
-			if (sock->sendTo((const bt::Uint8*)data.data(),data.size(),addr) != data.size())
-				output_queue.append(qMakePair(data,addr));
+			int ret = sock->sendTo((const bt::Uint8*)data.data(),data.size(),addr);
+			if (ret == net::SEND_WOULD_BLOCK)
+				output_queue.append(OutputQueueEntry(data,addr,conn_id));
+			else if (ret == net::SEND_FAILURE)
+				return false;
 		}
 		else
-			output_queue.append(qMakePair(data,addr));
+			output_queue.append(OutputQueueEntry(data,addr,conn_id));
 		
 		return true;
 	}
@@ -290,10 +304,18 @@ namespace utp
 		
 		Connection* conn = new Connection(recv_conn_id,Connection::OUTGOING,addr,this);
 		connections.insert(recv_conn_id,conn);
-		
-		Out(SYS_CON|LOG_NOTICE) << "UTP: connecting to " << addr.toString() << endl;
-		conn->startConnecting();
-		return conn;
+		try
+		{
+			Out(SYS_UTP|LOG_NOTICE) << "UTP: connecting to " << addr.toString() << endl;
+			conn->startConnecting();
+			return conn;
+		}
+		catch (Connection::TransmissionError & err)
+		{
+			connections.erase(recv_conn_id);
+			delete conn;
+			return 0;
+		}
 	}
 
 	void UTPServer::syn(const PacketParser & parser, const QByteArray& data, const net::Address & addr)
@@ -317,7 +339,7 @@ namespace utp
 			}
 			catch (Connection::TransmissionError & err)
 			{
-				Out(SYS_CON|LOG_NOTICE) << "UTP: " << err.location << endl;
+				Out(SYS_UTP|LOG_NOTICE) << "UTP: " << err.location << endl;
 				delete conn;
 			}
 		}
@@ -347,6 +369,7 @@ namespace utp
 			if (conn->connectionState() == CS_CLOSED)
 			{
 				connections.erase(conn->receiveConnectionID());
+				delete conn;
 				i = dead_connections.erase(i);
 			}
 			else
@@ -367,7 +390,13 @@ namespace utp
 		if (sock == socket)
 		{
 			// given the fact that the socket is gone, we can close it
-			conn->close();
+			try
+			{
+				conn->close();
+			}
+			catch (Connection::TransmissionError)
+			{
+			}
 			alive_connections.erase(conn);
 			dead_connections.append(conn);
 		}
