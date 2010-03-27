@@ -1,5 +1,5 @@
 set(coldmilk_data 
-	coldmilk.html    
+	interface.html    
 	login.html      
 	coldmilk.js  
 	page_update.js 

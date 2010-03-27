@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>ktorrent web interface</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<meta name="GENERATOR" content="Quanta Plus" />
+	<meta http-equiv="Content-Type" content="text/html"/>
+	<script type="text/javascript" src="page_update.js"></script>
+	<script type="text/javascript" src="coldmilk.js"></script>
+	<script type="text/javascript" src="action.js"></script>
+	<script type="text/javascript" src="settings.js"></script>
+	<script type="text/javascript" src="fetch_xml.js"></script>
+</head>
+<body onload="update_all(true);">
+
+
+<div id="header">
+	<div id="logout">
+		<img src="icon?name=system-log-out&size=1" alt="logout" /> <a href="logout">Sign out</a>
+	</div>
+
+	<a href="interface.html">
+		<img src="icon.png" alt="reload" title="reload" id="header_icon" />
+	</a>
+
+	<ul>
+		<li>
+			<img src="icon?name=folder&size=1" alt="icon" /> 
+			<a href="javascript:show('torrent_list');">Torrents</a>
+		</li>
+		<li>
+			<img src="icon?name=preferences-other&size=1" alt="icon" /> 
+			<a href="javascript:show('preferences');">Preferences</a>
+		</li>
+		
+		<li>
+			<img src="icon?name=document-open&size=1" alt="icon" /> 
+			<a href="javascript:show('torrent_add');">Add torrent</a>
+		</li>
+		<li>
+			<img src="icon?name=system-shutdown&size=1" alt="exit" />
+			<a href="javascript:show('action');">Leave</a>
+		</li>
+	</ul>
+
+	<div id="status_bar">
+		<table id="status_bar_table"><tr><td></td></tr></table>
+	</div>
+</div>
+
+
+<!-- Torrents -->
+<div id="torrent_list">
+	<table id="torrent_list_table" class="list_table">
+	<tr><td></td></tr><!--let's be XHTML valid-->
+	</table>
+
+	<div id="bottom-menu">
+	<ul>
+		<li>
+			<img src="icon?name=kt-start-all&size=1" alt="" />
+			<span>
+				<a href="javascript:do_action('startall=true')">Start All</a>
+			</span> 
+		</li>
+		<li>
+			<img src="icon?name=kt-stop-all&size=1" alt="" />
+			<span>
+				<a href="javascript:do_action('stopall=true')">Stop All</a>
+			</span> 
+		</li>
+		<li>
+			<img src="icon?name=view-refresh&size=1" alt="" />
+			<span>
+				<a href="javascript:update_all(false)">Refresh</a>
+			</span> 
+		</li>
+	</ul>
+	
+	</div>
+
+</div>
+<!-- end torrents -->
+
+
+<!-- Torrent's details -->
+<div id="torrents_details" style="display : none;">
+	<table id="torrents_details_files" class="list_table">
+	<tr><td></td></tr><!--let's be XHTML valid-->
+	</table>
+</div>
+<!-- end torrent's details -->
+
+
+<!-- Preferences -->
+<div id="preferences" style="display : none;">
+	<h2>Preferences</h2>
+	<div class="simple_form">
+	<form method="get" action="javascript:submit_settings(redirect_to_login); update_settings(redirect_to_login);" id="settings_form">
+		<img src="icon?name=preferences-other&size=5" alt="" />
+
+		<h2>Downloads</h2>
+
+		<div class="item" style="margin-top : 0em;">
+		Upload speed:
+		<div class="option">
+			<input type="text" name="maxUploadRate" size="20"/> KiB/s
+		</div>
+		</div>
+
+		<div class="item">
+		Download speed:
+		<div class="option">
+			<input type="text" name="maxDownloadRate" size="20"/> KiB/s
+		</div>
+		</div>
+
+		<div class="item">
+		Max downloads:
+		<div class="option">
+			<input type="text" name="maxDownloads" size="20"/>
+		</div>
+		</div>
+
+		<div class="item">
+		Max seeds
+		<div class="option">
+			<div style="display : inline;">
+				<input type="text" name="maxSeeds" size="20"/>
+			</div>
+		</div>
+		</div>
+		
+		<h2 style="margin-top: 1em;">Features</h2>
+		
+		<div class ="item">
+			<input type="checkbox" name="useEncryption"/> Use encryption
+		</div>
+		
+		<div class ="item">
+			<input type="checkbox" name="allowUnencryptedConnections"/> Allow unencrypted connections
+		</div>
+		
+		<div class ="item">
+			<input type="checkbox" name="dhtSupport"/> Use DHT
+		</div>
+		
+		<div class ="item">
+			<input type="checkbox" name="pexEnabled"> Use peer exchange
+		</div>
+		
+		<h2 style="margin-top: 1em;">Web Interface</h2>
+		<div class="item">
+			<input type="checkbox" 
+				name="webgui_automatic_refresh" 
+				id="webgui_automatic_refresh"
+				onchange="automatic_refresh_changed(this.value)"> Refresh interface automatically</input>
+		</div>
+	
+		<div style="margin-top : 1em; float : left; clear : both;">
+			<input type="submit" name="Submit Settings" value="Submit Settings" class="buttons"/>
+			<form action="javascript:update_settings(redirect_to_login);">
+				<input type="button" name="Refresh" value="Refresh" class="buttons"/>
+			</form>
+		</div>
+	</form>
+	</div>
+</div>
+<!-- end preferences -->
+
+
+<!-- Add Torrent -->
+<div id="torrent_add" style="display : none;">
+	<h2>Add a torrent</h2>
+
+	<div class="simple_form">
+		<img src="icon?name=document-open&size=5" alt="" />
+		<h3>Load a torrent</h3>
+
+		<form action="javascript:load_url(); update_all(); show('torrent_list');" method="get">
+		<div class="item">
+			URL:
+			<div class="option">
+			<input type="text" name="load_torrent" style="width : 240px;" id="torrent_url" />
+			<br /><span>Example: http://ktorrent.org/down/latest.torrent</span>
+			
+			<div style="margin-top : 1em;">
+				<input type="submit" value="Load Torrent" />
+			</div>
+			</div>
+		</div>
+		</form>
+
+		<h3 style="margin-top : 6em;">Upload a torrent</h3>
+
+		<form action="torrent/load?page=interface.html" method="post" enctype="multipart/form-data">
+		<div class="item" style="min-height : 5em;">
+			File path:
+			<div class="option">
+			<div style="display : inline;">
+				<input type="file" name="load_torrent" style="width:240px;" />
+			</div>
+
+			<div style="margin-top : 1em;">
+				<input type="submit" name="Upload Torrent" value="Upload Torrent" />
+			</div>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+<!-- end add torrent -->
+
+
+<!-- Action -->
+<div id="action" style="display : none;">
+	<h2 style="margin-top : 0; padding-top : 0;">Leave</h2>
+	<ul>
+		<li>
+			<img src="icon?name=system-log-out&size=5" alt="sign out" />
+			<span style="margin-left : 52px;">
+			<a href="login.html">Sign out</a></span>
+		</li>
+
+		<li>
+			<img src="icon?name=application-exit&size=5" alt="quit" />
+			<span style="margin-left : 52px;">
+				<a href="javascript:shutdown();" onclick="return validate('quit_program')">
+					Quit program
+				</a></span>
+		</li>
+
+	</ul>	
+
+</div>
+<!-- end action -->
+
+
+</body>
+</html>
