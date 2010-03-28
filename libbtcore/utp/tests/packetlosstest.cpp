@@ -92,7 +92,7 @@ public:
 	{
 		char test[] = TEST_DATA;
 		int sent = 0;
-		while (sent < PACKETS_TO_SEND)
+		while (sent < PACKETS_TO_SEND && outgoing->connectionState() != CS_CLOSED)
 		{
 			int ret = outgoing->send((const bt::Uint8*)test,strlen(test));
 			if (ret > 0)
@@ -193,6 +193,11 @@ private slots:
 					received_data.append(data);
 					received += ret;
 				}
+			}
+			else if (incoming->connectionState() == CS_CLOSED)
+			{
+				Out(SYS_UTP|LOG_DEBUG) << "Connection closed " << endl;
+				break;
 			}
 			else
 			{

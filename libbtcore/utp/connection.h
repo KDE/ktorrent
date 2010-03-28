@@ -24,6 +24,7 @@
 #include <QPair>
 #include <QMutex>
 #include <QWaitCondition>
+#include <QBasicTimer>
 #include <btcore_export.h>
 #include <net/address.h>
 #include <utp/utpprotocol.h>
@@ -36,7 +37,7 @@
 
 namespace utp
 {
-class DelayWindow;;
+	class DelayWindow;;
 	class LocalWindow;
 	
 	
@@ -56,8 +57,9 @@ class DelayWindow;;
 	/**
 		Keeps track of a single UTP connection
 	*/
-	class BTCORE_EXPORT Connection : public Retransmitter
+	class BTCORE_EXPORT Connection : public QObject, public Retransmitter
 	{
+		Q_OBJECT
 	public:
 		enum Type
 		{
@@ -158,9 +160,6 @@ class DelayWindow;;
 		/// Retransmit a packet
 		virtual void retransmit(const QByteArray & packet,bt::Uint16 p_seq_nr);
 		
-		/// Check for a timeout
-		void checkTimeout();
-		
 		/// Is all data sent
 		bool allDataSent() const;
 		
@@ -178,13 +177,22 @@ class DelayWindow;;
 		void sendPacket(bt::Uint32 type,bt::Uint16 p_ack_nr);
 		void checkIfClosed();
 		int sendDataPacket(const QByteArray & packet);
+		virtual void timerEvent(QTimerEvent* event);
+		void handleTimeout();
+		void startTimer();
+		
+	private slots:
+		void delayedStartTimer();
+		
+	signals:
+		void doDelayedStartTimer();
 		
 	private:
 		Transmitter* transmitter;
 		LocalWindow* local_wnd;
 		RemoteWindow* remote_wnd;
 		bt::CircularBuffer output_buffer;
-		bt::Timer timer;
+		//bt::Timer timer;
 		mutable QMutex mutex;
 		QWaitCondition connected;
 		QWaitCondition data_ready;
@@ -192,6 +200,7 @@ class DelayWindow;;
 		bool fin_sent;
 		TimeValue last_packet_sent;
 		DelayWindow* delay_window;
+		QBasicTimer timer;
 		
 		friend class UTPServer;
 	};

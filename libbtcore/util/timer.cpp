@@ -36,12 +36,13 @@ namespace bt
 	{}
 
 
-	void Timer::update()
+	TimeStamp Timer::update()
 	{
 		TimeStamp now = Now();
 		TimeStamp d = (now > last) ? now - last : 0;
 		elapsed = d;
 		last = now;
+		return last;
 	}
 	
 	TimeStamp Timer::getElapsedSinceUpdate() const

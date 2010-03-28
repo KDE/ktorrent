@@ -19,15 +19,19 @@
  ***************************************************************************/
 
 #include "connection.h"
-#include <sys/time.h>
+#include <time.h>
 #include <QFile>
+#include <QEvent>
 #include <QTextStream>
+#include <QThread>
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include "localwindow.h"
 #include "remotewindow.h"
 #include "delaywindow.h"
+
+
 
 using namespace bt;
 
@@ -70,6 +74,8 @@ namespace utp
 		stats.bytes_lost = 0;
 		stats.packets_lost = 0;
 		
+		connect(this,SIGNAL(doDelayedStartTimer()),this,SLOT(delayedStartTimer()),Qt::QueuedConnection);
+		startTimer();
 		Out(SYS_UTP|LOG_NOTICE) << "UTP: Connection " << recv_connection_id << "|" << stats.send_connection_id << endl;
 	}
 
@@ -118,7 +124,6 @@ namespace utp
 	ConnectionState Connection::handlePacket(const PacketParser & parser,const QByteArray& packet)
 	{
 		QMutexLocker lock(&mutex);
-		timer.update();
 		stats.packets_received++;
 		
 		const Header * hdr = parser.header();
@@ -138,8 +143,9 @@ namespace utp
 					// connection estabished
 					stats.state = CS_CONNECTED;
 					local_wnd->setLastSeqNr(hdr->seq_nr - 1);
-					Out(SYS_UTP|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
 					connected.wakeAll();
+					stats.timeout = 1000;
+					Out(SYS_UTP|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
 				}
 				else
 				{
@@ -155,6 +161,7 @@ namespace utp
 					local_wnd->setLastSeqNr(hdr->seq_nr);
 					sendState();
 					stats.state = CS_CONNECTED;
+					stats.timeout = 1000;
 					Out(SYS_UTP|LOG_NOTICE) << "UTP: established connection with " << stats.remote.toString() << endl;
 				}
 				else
@@ -240,6 +247,7 @@ namespace utp
 				break;
 		}
 		
+		startTimer();
 		return stats.state;
 	}
 	
@@ -264,6 +272,7 @@ namespace utp
 		stats.rtt += ((int)packet_rtt - stats.rtt) / 8;
 		stats.timeout = qMax(stats.rtt + stats.rtt_var * 4, 500);
 		stats.bytes_sent += packet_size;
+		startTimer();
 	}
 
 	
@@ -304,7 +313,7 @@ namespace utp
 		
 		last_packet_sent = tv;
 		stats.packets_sent++;
-		timer.update();
+		startTimer();
 	}
 
 
@@ -312,8 +321,10 @@ namespace utp
 	{
 		stats.seq_nr = 1;
 		stats.state = CS_SYN_SENT;
+		stats.timeout = CONNECT_TIMEOUT;
 		sendPacket(ST_SYN,0);
 		stats.seq_nr++;
+		startTimer();
 	}
 	
 	void Connection::sendState()
@@ -458,7 +469,7 @@ namespace utp
 		stats.packets_sent++;
 		remote_wnd->addPacket(packet,stats.seq_nr,bt::Now());
 		stats.seq_nr++;
-		timer.update();
+		startTimer();
 		return to_send;
 	}
 
@@ -495,8 +506,7 @@ namespace utp
 		}
 		
 		memcpy(ba.data() + Header::size() + extension_length,packet.data(),packet.size());
-		timer.update();
-		
+		startTimer();
 		if (!transmitter->sendTo(ba,stats.remote,receiveConnectionID()))
 			throw TransmissionError(__FILE__,__LINE__);
 		
@@ -561,7 +571,7 @@ namespace utp
 		if (stats.state == CS_CONNECTED)
 		{
 			stats.state = CS_FINISHED;
-			timer.update();
+			startTimer();
 			sendPackets();
 		}
 	}
@@ -579,43 +589,34 @@ namespace utp
 		}
 	}
 
-	void Connection::checkTimeout()
+	void Connection::handleTimeout()
 	{
+		Out(SYS_UTP|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " timeout " << endl;
 		QMutexLocker lock(&mutex);
 		switch (stats.state)
 		{
 			case CS_SYN_SENT:
-				if (timer.getElapsedSinceUpdate() > CONNECT_TIMEOUT)
-				{
-					// No answer to SYN, so just close the connection
-					stats.state = CS_CLOSED;
-					connected.wakeAll();
-				}
+				// No answer to SYN, so just close the connection
+				stats.state = CS_CLOSED;
+				connected.wakeAll();
 				break;
 			case CS_FINISHED:
-				if (timer.getElapsedSinceUpdate() > stats.timeout)
-				{
-					stats.state = CS_CLOSED;
-					data_ready.wakeAll();
-				}
+				stats.state = CS_CLOSED;
+				data_ready.wakeAll();
 				break;
 			case CS_CONNECTED:
-				if (timer.getElapsedSinceUpdate() > stats.timeout)
-				{
-					remote_wnd->timeout(this);
-					stats.packet_size = MIN_PACKET_SIZE;
-					stats.timeout *= 2;
-					
-					if (stats.timeout >= MAX_TIMEOUT)
-					{
-						// If we have reached the max timeout, kill the connection
-						Out(SYS_UTP|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " max timeout reached, closing" << endl;
-						stats.state = CS_FINISHED;
-					}
-					timer.update();
-					sendPackets();
-				}
+				remote_wnd->timeout(this);
+				stats.packet_size = MIN_PACKET_SIZE;
+				stats.timeout *= 2;
 				
+				if (stats.timeout >= MAX_TIMEOUT)
+				{
+					// If we have reached the max timeout, kill the connection
+					Out(SYS_UTP|LOG_DEBUG) << "Connection " << stats.recv_connection_id << "|" << stats.send_connection_id << " max timeout reached, closing" << endl;
+					stats.state = CS_FINISHED;
+				}
+				sendPackets();
+				startTimer();
 				if (TimeValue() - last_packet_sent > KEEP_ALIVE_TIMEOUT)
 				{
 					// Keep the connection alive
@@ -624,6 +625,7 @@ namespace utp
 				break;
 			case CS_CLOSED:
 			case CS_IDLE:
+				startTimer();
 				break;
 		}
 	}
@@ -643,6 +645,27 @@ namespace utp
 	{
 		QMutexLocker lock(&mutex);
 		return remote_wnd->allPacketsAcked() && output_buffer.size() == 0;
+	}
+
+	void Connection::startTimer()
+	{
+		// Timers can only be started from the same thread so if 
+		// we are being called from another use a signal
+		if (QThread::currentThread() != thread())
+			emit doDelayedStartTimer();
+		else
+			timer.start(stats.timeout,this);
+	}
+	
+	void Connection::delayedStartTimer()
+	{
+		timer.start(stats.timeout,this);
+	}
+
+	void Connection::timerEvent(QTimerEvent* event)
+	{
+		Q_UNUSED(event);
+		handleTimeout();
 	}
 
 }

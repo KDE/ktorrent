@@ -26,7 +26,7 @@ namespace utp
 
 	UTPServerThread::UTPServerThread(UTPServer* srv): srv(srv)
 	{
-
+		srv->moveToThread(this);
 	}
 
 	UTPServerThread::~UTPServerThread()
@@ -36,7 +36,8 @@ namespace utp
 
 	void UTPServerThread::run()
 	{
-		srv->run();
+		srv->threadStarted();
+		exec();
 	}
 
 }

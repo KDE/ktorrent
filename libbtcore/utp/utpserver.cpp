@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include "utpserver.h"
+#include <QEvent>
 #include <stdlib.h>
 #include <sys/select.h>
 #include <time.h>
@@ -37,6 +38,7 @@
 
 
 
+
 using namespace bt;
 
 namespace utp
@@ -49,7 +51,9 @@ namespace utp
 		utp_thread(0),
 		mutex(QMutex::Recursive),
 		create_sockets(true),
-		tos(0)
+		tos(0),
+		read_notifier(0),
+		write_notifier(0)
 	{
 		qsrand(time(0));
 		connect(this,SIGNAL(accepted(Connection*)),this,SLOT(onAccepted(Connection*)),Qt::QueuedConnection);
@@ -111,43 +115,25 @@ namespace utp
 		if (sock)
 			sock->setTOS(tos);
 	}
-
-	void UTPServer::run()
+	
+	void UTPServer::threadStarted()
 	{
-		running = true;
-		fd_set rfds;
-		fd_set wfds;
-		FD_ZERO(&rfds);
-		FD_ZERO(&wfds);
-		while (running)
+		if (!read_notifier)
 		{
-			int fd = sock->fd();
-			FD_SET(fd,&rfds);
-			if (output_queue.size() > 0)
-				FD_SET(fd,&wfds);
-			
-			try
-			{
-				struct timeval tv = {0,10000};
-				if (select(fd + 1,&rfds,&wfds,0,&tv) > 0)
-				{
-					if (FD_ISSET(fd,&rfds))
-						readPacket();
-					if (FD_ISSET(fd,&wfds))
-						writePacket();
-				}
-				
-				checkTimeouts();
-				clearDeadConnections();
-			}
-			catch (utp::Connection::TransmissionError & err)
-			{
-				Out(SYS_UTP|LOG_NOTICE) << "UTP: " << err.location << endl;
-			}
+			read_notifier = new QSocketNotifier(sock->fd(),QSocketNotifier::Read,this);
+			connect(read_notifier,SIGNAL(activated(int)),this,SLOT(readPacket(int)));
 		}
+		
+		if (!write_notifier)
+		{
+			write_notifier = new QSocketNotifier(sock->fd(),QSocketNotifier::Write,this);
+			connect(write_notifier,SIGNAL(activated(int)),this,SLOT(writePacket(int)));
+		}
+		
+		write_notifier->setEnabled(false);
 	}
 	
-	void UTPServer::readPacket()
+	void UTPServer::readPacket(int)
 	{
 		QMutexLocker lock(&mutex);
 		
@@ -156,24 +142,25 @@ namespace utp
 		net::Address addr;
 		if (sock->recvFrom((bt::Uint8*)packet.data(),ba,addr) > 0)
 		{
-		//	Out(SYS_UTP|LOG_NOTICE) << "UTP: received " << ba << " bytes packet from " << addr.toString() << endl;
-			// discard packets which are to small
-			if (ba < (int)sizeof(utp::Header))
-				return;
-			
+			//Out(SYS_UTP|LOG_NOTICE) << "UTP: received " << ba << " bytes packet from " << addr.toString() << endl;
 			try
 			{
-				handlePacket(packet,addr);
+				if (ba >= utp::Header::size()) // discard packets which are to small
+					handlePacket(packet,addr);
 			}
 			catch (utp::Connection::TransmissionError & err)
 			{
 				Out(SYS_UTP|LOG_NOTICE) << "UTP: " << err.location << endl;
 			}
 		}
+		
+		clearDeadConnections();
 	}
 	
-	void UTPServer::writePacket()
+	void UTPServer::writePacket(int)
 	{
+		QMutexLocker lock(&mutex);
+		
 		// Keep sending until the output queue is empty or the socket 
 		// can't handle the data anymore
 		while (!output_queue.empty())
@@ -196,6 +183,8 @@ namespace utp
 			else
 				output_queue.pop_front();
 		}
+		
+		write_notifier->setEnabled(!output_queue.empty());
 	}
 	
 #if 0
@@ -303,6 +292,7 @@ namespace utp
 			recv_conn_id = qrand() % 32535;
 		
 		Connection* conn = new Connection(recv_conn_id,Connection::OUTGOING,addr,this);
+		conn->moveToThread(utp_thread);
 		connections.insert(recv_conn_id,conn);
 		try
 		{
@@ -407,6 +397,7 @@ namespace utp
 		running = false;
 		if (utp_thread)
 		{
+			utp_thread->exit();
 			utp_thread->wait();
 			delete utp_thread;
 			utp_thread = 0;
@@ -448,20 +439,32 @@ namespace utp
 			utp_thread->start();
 		}
 	}
-
-	void UTPServer::checkTimeouts()
-	{
-		QMutexLocker lock(&mutex);
 	
-		ConItr itr = connections.begin();
-		while (itr != connections.end())
+	void UTPServer::timerEvent(QTimerEvent* event)
+	{
+		if (event->timerId() == timer.timerId())
+			wakeUpPollPipes();
+		else
+			QObject::timerEvent(event);
+	}
+
+	void UTPServer::wakeUpPollPipes()
+	{
+		bool restart_timer = false;
+		QMutexLocker lock(&mutex);
+		for (PollPipePairItr p = poll_pipes.begin();p != poll_pipes.end();p++)
 		{
-			itr->second->checkTimeout();
+			PollPipePair* pp = p->second;
+			if (pp->read_pipe.polling())
+				p->second->testRead(connections.begin(),connections.end());
+			if (pp->write_pipe.polling())
+				p->second->testWrite(connections.begin(),connections.end());
 			
-			for (PollPipePairItr p = poll_pipes.begin();p != poll_pipes.end();p++)
-				p->second->test(itr->second);
-			itr++;
+			restart_timer = restart_timer || pp->read_pipe.polling() || pp->write_pipe.polling();
 		}
+		
+		if (restart_timer)
+			timer.start(10,this);
 	}
 
 
@@ -483,6 +486,9 @@ namespace utp
 		{
 			pair->write_pipe.prepare(p,conn->receiveConnectionID());
 		}
+		
+		if (!timer.isActive())
+			timer.start(10,this);
 	}
 	
 	void UTPServer::onAccepted(Connection* conn)
@@ -495,16 +501,28 @@ namespace utp
 	{
 		
 	}
-	
-	
-	void UTPServer::PollPipePair::test(Connection* conn)
-	{
-		if (read_pipe.readyToWakeUp(conn))
-			read_pipe.wakeUp();
 		
-		if (write_pipe.readyToWakeUp(conn))
-			write_pipe.wakeUp();
+	void UTPServer::PollPipePair::testRead(utp::UTPServer::ConItr b, utp::UTPServer::ConItr e)
+	{
+		for (utp::UTPServer::ConItr i = b;i != e;i++)
+		{
+			if (read_pipe.readyToWakeUp(i->second))
+			{
+				read_pipe.wakeUp();
+				break;
+			}
+		}
 	}
 
-
+	void UTPServer::PollPipePair::testWrite(utp::UTPServer::ConItr b, utp::UTPServer::ConItr e)
+	{
+		for (utp::UTPServer::ConItr i = b;i != e;i++)
+		{
+			if (write_pipe.readyToWakeUp(i->second))
+			{
+				write_pipe.wakeUp();
+				break;
+			}
+		}
+	}
 }

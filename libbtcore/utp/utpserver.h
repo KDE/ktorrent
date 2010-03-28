@@ -22,6 +22,7 @@
 #define UTP_UTPSERVER_H
 
 #include <QThread>
+#include <QSocketNotifier>
 #include <boost/tuple/tuple.hpp>
 #include <net/socket.h>
 #include <net/poll.h>
@@ -31,7 +32,6 @@
 #include <btcore_export.h>
 #include "connection.h"
 #include "pollpipe.h"
-
 
 
 namespace utp
@@ -69,33 +69,36 @@ namespace utp
 		/// Stop the UTP server
 		void stop();
 		
-		/// Run the UTPServer
-		void run();
-		
 		/// Prepare the server for polling
 		void preparePolling(net::Poll* p,net::Poll::Mode mode,Connection* conn);
 		
 		/// Set the TOS byte
 		void setTOS(bt::Uint8 type_of_service);
 		
+		/// Thread has been started
+		void threadStarted();
+		
 	protected:
 		bool bind(const net::Address & addr);
-		void readPacket();
-		void writePacket();
 		virtual void handlePacket(const QByteArray & packet,const net::Address & addr);
 		void syn(const PacketParser & parser,const QByteArray & data,const net::Address & addr);
 		void reset(const Header* hdr);
 		void clearDeadConnections();
-		void checkTimeouts();
+		void wakeUpPollPipes();
 		Connection* find(quint16 conn_id);
+		virtual void timerEvent(QTimerEvent* event);
 		
 	signals:
 		void accepted(Connection* conn);
 		
 	private slots:
 		void onAccepted(Connection* conn);
+		void readPacket(int fd);
+		void writePacket(int fd);
 		
 	private:
+		typedef bt::PtrMap<quint16,Connection>::iterator ConItr;
+		
 		struct PollPipePair
 		{
 			PollPipe read_pipe;
@@ -103,9 +106,11 @@ namespace utp
 			
 			PollPipePair();
 			
-			void test(Connection* conn);
+			void testRead(ConItr b,ConItr e);
+			void testWrite(ConItr b,ConItr e);
 		};
 		
+		typedef bt::PtrMap<net::Poll*,PollPipePair>::iterator PollPipePairItr;
 		typedef boost::tuple<QByteArray,net::Address,quint16> OutputQueueEntry;
 		
 	private:
@@ -120,9 +125,9 @@ namespace utp
 		bool create_sockets;
 		bt::Uint8 tos;
 		QList<OutputQueueEntry> output_queue;
-		
-		typedef bt::PtrMap<quint16,Connection>::iterator ConItr;
-		typedef bt::PtrMap<net::Poll*,PollPipePair>::iterator PollPipePairItr;
+		QSocketNotifier* read_notifier;
+		QSocketNotifier* write_notifier;
+		QBasicTimer timer;
 	};
 
 }

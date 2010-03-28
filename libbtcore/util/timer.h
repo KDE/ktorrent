@@ -40,7 +40,8 @@ namespace bt
 		Timer(const Timer & t);
 		virtual ~Timer();
 
-		void update();
+		TimeStamp getLast() const {return last;}
+		TimeStamp update();
 		TimeStamp getElapsed() const {return elapsed;}
 		TimeStamp getElapsedSinceUpdate() const;
 		Timer & operator = (const Timer & t);

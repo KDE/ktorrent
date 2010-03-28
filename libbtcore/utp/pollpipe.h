@@ -39,6 +39,9 @@ namespace utp
 		PollPipe(net::Poll::Mode mode);
 		virtual ~PollPipe();
 		
+		/// Is the pipe being polled
+		bool polling() const {return poll_index >= 0;}
+		
 		/// Prepare the poll
 		void prepare(net::Poll* p,bt::Uint16 conn_id);
 		
@@ -52,7 +55,6 @@ namespace utp
 		net::Poll::Mode pollingMode() const {return mode;}
 		
 	private:
-		mutable QMutex mutex;
 		net::Poll::Mode mode;
 		int poll_index;
 		QSet<bt::Uint16> conn_ids;
