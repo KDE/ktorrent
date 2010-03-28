@@ -208,6 +208,11 @@ namespace kt
 		/// Get the suspended state
 		bool getSuspendedState() const {return suspended_state;}
 		
+		/**
+		 * Reindex the queue priorities.
+		 */
+		void reindexQueue();
+		
 	public slots:
 		/**
 		 * Places all torrents from downloads in the right order in queue.

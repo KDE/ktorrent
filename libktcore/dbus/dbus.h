@@ -90,6 +90,9 @@ namespace kt
 		/// Order the Queue
 		Q_SCRIPTABLE void orderQueue();
 		
+		/// Reindex the queue
+		Q_SCRIPTABLE void reindexQueue();
+		
 		/// Get all the custom groups
 		Q_SCRIPTABLE QStringList groups() const;
 		

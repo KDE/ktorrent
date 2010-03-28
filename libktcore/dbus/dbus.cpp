@@ -284,6 +284,11 @@ namespace kt
 		core->getQueueManager()->orderQueue();
 	}
 	
+	void DBus::reindexQueue()
+	{
+		core->getQueueManager()->reindexQueue();
+	}
+	
 	QObject* DBus::settings()
 	{
 		return dbus_settings;
