@@ -114,6 +114,12 @@ namespace kt
 		// Stats
 		Q_SCRIPTABLE QByteArray stats() const;
 		
+		// Max share ratio and seed time
+		Q_SCRIPTABLE void setMaxShareRatio(float ratio);
+		Q_SCRIPTABLE float getMaxShareRatio() const;
+		Q_SCRIPTABLE void setMaxSeedTime(float hours);
+		Q_SCRIPTABLE float getMaxSeedTime() const;
+		
 		
 	Q_SIGNALS:
 		Q_SCRIPTABLE void finished(QObject* tor);

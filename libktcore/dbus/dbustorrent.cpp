@@ -445,5 +445,25 @@ namespace kt
 		return ti->isAllowedToStart();
 	}
 
+	float DBusTorrent::getMaxSeedTime() const
+	{
+		return ti->getMaxSeedTime();
+	}
+	
+	float DBusTorrent::getMaxShareRatio() const
+	{
+		return ti->getMaxShareRatio();
+	}
+	
+	void DBusTorrent::setMaxSeedTime(float hours)
+	{
+		ti->setMaxSeedTime(hours);
+	}
+	
+	void DBusTorrent::setMaxShareRatio(float ratio)
+	{
+		ti->setMaxShareRatio(ratio);
+	}
+
 }
 
