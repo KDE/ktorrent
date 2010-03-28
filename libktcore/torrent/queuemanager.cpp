@@ -712,12 +712,7 @@ namespace kt
 	void QueueManager::rearrangeQueue()
 	{
 		downloads.sort();
-		int prio = downloads.count();
-		// make sure everybody has an unique priority
-		foreach (bt::TorrentInterface* tc,downloads)
-		{
-			tc->setPriority(prio--);
-		}
+		reindexQueue();
 	}
 	
 	void QueueManager::startSafely(bt::TorrentInterface* tc)
@@ -838,7 +833,12 @@ namespace kt
 	
 	void QueueManager::reindexQueue()
 	{
-		rearrangeQueue();
+		int prio = downloads.count();
+		// make sure everybody has an unique priority
+		foreach (bt::TorrentInterface* tc,downloads)
+		{
+			tc->setPriority(prio--);
+		}
 	}
 
 	
