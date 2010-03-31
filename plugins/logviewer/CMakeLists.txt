@@ -9,7 +9,6 @@ target_link_libraries(
     ktcore
     btcore
     ${KDE4_KPARTS_LIBS}
-    ${QT_QT3SUPPORT_LIBRARY}
     )
 install(TARGETS ktlogviewerplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktlogviewerplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

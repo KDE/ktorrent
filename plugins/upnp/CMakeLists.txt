@@ -12,7 +12,6 @@ target_link_libraries(
     ktupnp
     btcore
     ${KDE4_KPARTS_LIBS}
-    ${QT_QT3SUPPORT_LIBRARY}
     )
 install(TARGETS ktupnpplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktupnpplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

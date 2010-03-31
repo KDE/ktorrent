@@ -19,7 +19,6 @@ target_link_libraries(
     ktcore
     btcore
     ${KDE4_KHTML_LIBS}
-    ${QT_QT3SUPPORT_LIBRARY}
     )
 install(TARGETS ktsearchplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktsearchplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

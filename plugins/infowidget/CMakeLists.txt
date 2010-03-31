@@ -57,7 +57,6 @@ target_link_libraries(
     ktcore
     btcore
     ${KDE4_KPARTS_LIBS}
-    ${QT_QT3SUPPORT_LIBRARY}
     ${geoip_link}
     )
 install(TARGETS ktinfowidgetplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

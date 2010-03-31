@@ -23,7 +23,6 @@ target_link_libraries(
     ${KDE4_KROSSUI_LIBS}
     ${KDE4_KPARTS_LIBS}
     ${QT_QTCORE_LIBRARY}
-    ${QT_QT3SUPPORT_LIBRARY}
     )
 install(TARGETS ktscriptingplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktscriptingplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

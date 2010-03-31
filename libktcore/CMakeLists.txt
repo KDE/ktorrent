@@ -54,7 +54,7 @@ kde4_add_ui_files(libktorrent_SRC ${libktorrent_UI})
 kde4_add_kcfg_files(libktorrent_SRC settings.kcfgc)
 kde4_add_library(ktcore SHARED ${libktorrent_SRC})
 
-target_link_libraries(ktcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} btcore ${KDE4_SOLID_LIBS} ${GMP_LIBRARIES})
+target_link_libraries(ktcore ${QT_QT3SUPPORT_LIBRARY} ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} btcore ${KDE4_SOLID_LIBS} ${GMP_LIBRARIES})
 set_target_properties(ktcore PROPERTIES VERSION 11.0.0 SOVERSION 11 )
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
