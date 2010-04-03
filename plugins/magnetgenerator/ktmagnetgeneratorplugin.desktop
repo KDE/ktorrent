@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Magnet Generator
+Name[en_GB]=Magnet Generator
+Comment=Generates magnet links
+Comment[en_GB]=Generates magnet links
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktmagnetgeneratorplugin
+X-KDE-PluginInfo-Author=Jonas Lundqvist
+X-KDE-PluginInfo-Email=jonas@gannon.se
+X-KDE-PluginInfo-Name=MagnetGeneratorPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Icon=kt-magnet

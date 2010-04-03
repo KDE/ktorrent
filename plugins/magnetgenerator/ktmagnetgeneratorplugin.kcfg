@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+		
+	<kcfgfile name="ktmagnetgeneratorpluginrc"/>
+	<group name="general">
+		<entry name="tracker" type="Bool">
+			<label>Toggles tracker</label>
+			<default>true</default>
+		</entry>
+		<entry name="tr" type ="String">
+			<label>The default tracker</label>
+			<default>http://tracker.openbittorrent.com/announce</default>
+		</entry>
+		<entry name="dn" type="Bool">
+			<label>Show dn</label>
+			<default>true</default>
+		</entry>
+		<entry name="clipboard" type="Bool">
+			<label>Copy to clipboard</label>
+			<default>true</default>
+		</entry>
+		<entry name="popup" type="Bool">
+			<label>Show popup</label>
+			<default>false</default>
+		</entry>
+	</group>
+</kcfg>

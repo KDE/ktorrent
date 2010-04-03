@@ -1,0 +1,6 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui library="libktmagnetgeneratorplugin" name="magnetgeneratorplugin" version="1">
+	<Menu name="ViewMenu">
+		<Action name="generate_magnet"/>
+	</Menu>
+</kpartgui>
