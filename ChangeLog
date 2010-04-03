@@ -43,6 +43,7 @@ Changes in 4.0beta2:
 - Fix crash in HTTPConnection due to 0 pointer (231859)
 - Add patch to disable authentication in webinterface (226291)
 - Add plugin to generate magnet URI's
+- Fix crash in webseed downloading code (232971)
 
 Changes in 4.0beta1:
 - Make adding multiple trackers at once possible (213194) 

@@ -71,10 +71,7 @@ namespace utp
 		class TransmissionError 
 		{
 		public:
-			TransmissionError(const char* file,int line) 
-			{
-				location = QString("TransmissionError in %1 at line %2\n").arg(file).arg(line);
-			}
+			TransmissionError(const char* file,int line);
 			
 			QString location;
 		};

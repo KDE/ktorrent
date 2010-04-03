@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 		"ktorrent", 0, ki18n("KTorrent"),
 		kt::VERSION_STRING, ki18n("Bittorrent client for KDE"),
 		KAboutData::License_GPL, 
-		ki18n("(C) 2005 - 2008 Joris Guisson and Ivan Vasic"), 
+		ki18n("(C) 2005 - 2010 Joris Guisson and Ivan Vasic"), 
 		KLocalizedString(),
 		"http://www.ktorrent.org/");
 

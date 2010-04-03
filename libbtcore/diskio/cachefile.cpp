@@ -124,7 +124,7 @@ namespace bt
 		{
 			Out(SYS_DIO|LOG_DEBUG) << "Warning : writing past the end of " << path << endl;
 			Out(SYS_DIO|LOG_DEBUG) << (off + size) << " " << max_size << endl;
-			return 0;
+			throw Error(i18n("Attempting to write beyond the maximum size of %1",path));
 		}
 		
 		if (!allocateBytes(off,size))
@@ -250,6 +250,7 @@ namespace bt
 		{
 			Out(SYS_DIO|LOG_DEBUG) << "Warning : writing past the end of " << path << endl;
 			Out(SYS_DIO|LOG_DEBUG) << (file_size + to_write) << " " << max_size << endl;
+			throw Error(i18n("Cannot expand file %1 : attempting to grow the file beyond the maximum size",path));
 		}
 		
 		if (!fptr->resize(file_size + to_write))
@@ -435,6 +436,7 @@ namespace bt
 		{
 			Out(SYS_DIO|LOG_DEBUG) << "Warning : writing past the end of " << path << endl;
 			Out(SYS_DIO|LOG_DEBUG) << (off + size) << " " << max_size << endl;
+			throw Error(i18n("Attempting to write beyond the maximum size of %1",path));
 		}
 		
 		if (file_size < off)

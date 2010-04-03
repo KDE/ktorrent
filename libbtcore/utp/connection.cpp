@@ -37,7 +37,11 @@ using namespace bt;
 
 namespace utp
 {
-	
+
+	Connection::TransmissionError::TransmissionError(const char* file, int line)
+	{
+		location = QString("TransmissionError in %1 at line %2\n").arg(file).arg(line);
+	}
 	
 	Connection::Connection(bt::Uint16 recv_connection_id, Type type, const net::Address& remote, Transmitter* transmitter) 
 		: transmitter(transmitter)
