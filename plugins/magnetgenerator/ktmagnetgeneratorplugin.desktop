@@ -1,8 +1,6 @@
 [Desktop Entry]
 Name=Magnet Generator
-Name[en_GB]=Magnet Generator
 Comment=Generates magnet links
-Comment[en_GB]=Generates magnet links
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktmagnetgeneratorplugin
