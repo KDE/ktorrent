@@ -78,7 +78,7 @@ namespace bt
 		}
 		
 		QString ih = xt.mid(9);
-		if (ih.length() != 40)
+		if (ih.length() != 40 && ih.length() != 32)
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Invalid magnet link " << mlink << endl;
 			return;
@@ -86,6 +86,9 @@ namespace bt
 		
 		try
 		{
+			if (ih.length() == 32)
+				ih = base32ToHexString(ih);
+
 			Uint8 hash[20];
 			memset(hash,0,20);
 			for (int i = 0;i < 20;i++)
@@ -120,7 +123,43 @@ namespace bt
 			return 10 + ch.toAscii() - 'A';
 	}
 
-	
+	QString MagnetLink::base32ToHexString(const QString &s)
+	{
+		Uint32 part;
+		Uint32 tmp;
+		QString ret("");
+		QChar ch;
+		QString str = s.toUpper();
+		// 32 base32 chars -> 40 hex chars
+		// 4 base32 chars -> 5 hex chars
+		for (int i = 0; i < 8; i++)
+		{
+			part = 0;
+			for (int j = 0; j < 4; j++)
+			{
+				ch = str[i*4 + j];
+				if (ch.isDigit() && (ch.digitValue() < 2 || ch.digitValue() > 7))
+					throw bt::Error("Invalid char");
+
+				if (ch.isDigit())
+					 tmp = ch.digitValue() + 24;
+				else
+					tmp = ch.toAscii() - 'A';
+				part = part + (tmp << 5*(3-j));
+			}
+
+			// part is a Uint32 with 20 bits (5 hex)
+			for (int j = 0; j < 5; j++)
+			{
+				tmp = (part >> 4*(4-j)) & 0xf;
+				if (tmp >= 10)
+					ret.append(QChar((tmp-10) + 'a'));
+				else
+					ret.append(QChar(tmp + '0'));
+			}
+		}
+		return ret;
+	}
 
 }
 

@@ -65,7 +65,8 @@ namespace bt
 	private:
 		void parse(const QString & mlink);
 		Uint8 charToHex(const QChar & ch);
-	
+		QString base32ToHexString(const QString &s);
+
 	private:
 		QString magnet_string;
 		SHA1Hash info_hash;
