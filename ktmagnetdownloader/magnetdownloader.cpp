@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <QCoreApplication>
-#include <btversion.h>
+#include <version.h>
 #include <util/log.h>
 #include "magnettest.h"
 #include <KApplication>

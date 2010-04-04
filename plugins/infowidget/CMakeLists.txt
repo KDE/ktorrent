@@ -55,7 +55,7 @@ kde4_add_plugin(ktinfowidgetplugin ${ktinfowidgetplugin_SRC})
 target_link_libraries(
     ktinfowidgetplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
     ${geoip_link}
     )

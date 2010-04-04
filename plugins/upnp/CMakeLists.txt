@@ -10,7 +10,7 @@ target_link_libraries(
     ktupnpplugin
     ktcore
     ktupnp
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
     )
 install(TARGETS ktupnpplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

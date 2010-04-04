@@ -9,7 +9,7 @@ kde4_add_plugin(ktmagnetgeneratorplugin ${ktmagnetgeneratorplugin_SRC})
 target_link_libraries(
     ktmagnetgeneratorplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
 	${KDE4_KDEUI_LIBS}
     ${QT_QT3SUPPORT_LIBRARY}

@@ -30,7 +30,7 @@ kde4_add_plugin(ktstatsplugin ${ktstatsplugin_SRC})
 target_link_libraries(
     ktstatsplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
     )
 install(TARGETS ktstatsplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

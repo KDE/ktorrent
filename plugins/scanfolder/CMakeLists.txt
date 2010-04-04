@@ -7,7 +7,7 @@ kde4_add_plugin(ktscanfolderplugin ${ktscanfolderplugin_SRC})
 target_link_libraries(
     ktscanfolderplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
     )
 install(TARGETS ktscanfolderplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

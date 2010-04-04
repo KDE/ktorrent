@@ -18,7 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
-#include <config-btcore.h>
+#include <config-ktcore.h>
 
 
 #include <stdio.h>

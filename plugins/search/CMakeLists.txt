@@ -17,7 +17,7 @@ kde4_add_plugin(ktsearchplugin ${ktsearchplugin_SRC})
 target_link_libraries(
     ktsearchplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KHTML_LIBS}
     )
 install(TARGETS ktsearchplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

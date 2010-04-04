@@ -32,7 +32,7 @@
 #include <util/functions.h>
 #include <util/fileops.h>
 #include <util/waitjob.h>
-#include <btversion.h>
+#include <version.h>
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
 #include "soap.h"

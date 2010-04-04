@@ -34,7 +34,7 @@
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include "app.h"
-#include "btversion.h"
+#include "version.h"
 #include "ktversion.h"
 #include <kdebug.h>
 #include <torrent/globals.h>

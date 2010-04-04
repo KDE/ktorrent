@@ -4,6 +4,7 @@ find_package(KDE4Internal REQUIRED)
 find_package(GMP REQUIRED)
 find_package(QCA2 REQUIRED)
 find_package(Boost REQUIRED)
+find_package(KTorrent REQUIRED)
 
 # backward compatibility to <= KDE 4.1
 MACRO_ENSURE_VERSION( "4.1.83" ${KDE_VERSION} KDE_VERSION_OK)
@@ -40,15 +41,12 @@ include_directories( ${KDE4_INCLUDES}
    ${KTORRENT_BINARY_DIR}
    ${KTORRENT_BINARY_DIR}/libktcore
    ${KTORRENT_SOURCE_DIR}/libktcore
-   ${KTORRENT_BINARY_DIR}/libbtcore
-   ${KTORRENT_SOURCE_DIR}/libbtcore
+   ${LIBKTORRENT_INCLUDE_DIR}
    ${KTORRENT_SOURCE_DIR}
    ${GMP_INCLUDE_DIR}
    ${Boost_INCLUDE_DIR}
    )
 
-add_subdirectory(cmake)
-add_subdirectory(libbtcore)
 add_subdirectory(libktcore)
 add_subdirectory(libktupnp)
 add_subdirectory(plugins)

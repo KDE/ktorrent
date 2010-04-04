@@ -10,7 +10,7 @@ kde4_add_plugin(ktbwschedulerplugin ${ktbwschedulerplugin_SRC})
 target_link_libraries(
     ktbwschedulerplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KDEUI_LIBS}
     ${KDE4_KPARTS_LIBS} 
     ${KDE4_SOLID_LIBS}

@@ -7,7 +7,7 @@ kde4_add_plugin(ktdownloadorderplugin ${ktdownloadorderplugin_SRC})
 target_link_libraries(
     ktdownloadorderplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KDEUI_LIBS}
     ${KDE4_KPARTS_LIBS}
     )

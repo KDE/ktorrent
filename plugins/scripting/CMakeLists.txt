@@ -16,7 +16,7 @@ kde4_add_plugin(ktscriptingplugin ${ktscriptingplugin_SRC})
 target_link_libraries(
     ktscriptingplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KDECORE_LIBS}
     ${KDE4_KDEUI_LIBS}
     ${KDE4_KROSSCORE_LIBS}

@@ -7,7 +7,7 @@ kde4_add_plugin(ktlogviewerplugin ${ktlogviewerplugin_SRC})
 target_link_libraries(
     ktlogviewerplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
     )
 install(TARGETS ktlogviewerplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

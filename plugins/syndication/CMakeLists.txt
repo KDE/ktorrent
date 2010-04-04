@@ -30,7 +30,7 @@ kde4_add_plugin(ktsyndicationplugin ${ktsyndicationplugin_SRC})
 target_link_libraries(
     ktsyndicationplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
 	${KDE4_SYNDICATION_LIBS})
     

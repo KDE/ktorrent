@@ -7,7 +7,7 @@ kde4_add_plugin(ktipfilterplugin ${ktipfilterplugin_SRC})
 target_link_libraries(
     ktipfilterplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
     ${QT_QT3SUPPORT_LIBRARY}
     )

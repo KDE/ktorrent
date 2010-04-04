@@ -17,7 +17,7 @@ if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 	target_link_libraries(
 		ktshutdownplugin
 		ktcore
-		btcore
+		${LIBKTORRENT_LIBRARIES}
 		solidcontrol
 		kworkspace
 		${KDE4_KPARTS_LIBS}

@@ -22,7 +22,7 @@ kde4_add_plugin(ktmediaplayerplugin ${ktmediaplayerplugin_SRC})
 target_link_libraries(
     ktmediaplayerplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
 	${TAGLIB_LIBRARIES}
     ${KDE4_KDECORE_LIBS}
     ${KDE4_KDEUI_LIBS}

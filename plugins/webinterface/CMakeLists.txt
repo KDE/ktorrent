@@ -23,7 +23,7 @@ kde4_add_plugin(ktwebinterfaceplugin ${ktwebinterfaceplugin_SRC})
 target_link_libraries(
     ktwebinterfaceplugin
     ktcore
-    btcore
+    ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
     )
 install(TARGETS ktwebinterfaceplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
