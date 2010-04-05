@@ -91,7 +91,7 @@ namespace kt
 		}
 		else if (u.protocol() == "magnet")
 		{
-			int ret = KMessageBox::questionYesNo(0,i18n("Do you want to download this magnet link ?"));
+			int ret = KMessageBox::questionYesNo(0,i18n("Do you want to download this magnet link?"));
 			if (ret == KMessageBox::Yes)
 				openTorrent(u);
 			return;
