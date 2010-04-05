@@ -252,7 +252,10 @@ namespace kt
 	{
 		QModelIndex idx = model->indexOf(act);
 		if (idx.isValid())
+		{
+			selectionModel()->clearSelection();
 			selectionModel()->select(idx,QItemSelectionModel::Select);
+		}
 	}
 	
 	void ActivityListWidget::loadState(KSharedConfigPtr cfg)
