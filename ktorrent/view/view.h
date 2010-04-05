@@ -135,7 +135,7 @@ namespace kt
 		void onHeaderMenuItemTriggered(QAction* act);
 		void onCurrentItemChanged(const QModelIndex & current,const QModelIndex & previous);
 		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
-		
+		void onDoubleClicked(const QModelIndex & index);
 
 	signals:
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);

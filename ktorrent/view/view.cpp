@@ -99,6 +99,7 @@ namespace kt
 		connect(selectionModel(),SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection)),
 				this,SLOT(onSelectionChanged(const QItemSelection &,const QItemSelection)));
 		connect(model,SIGNAL(sorted()),selection_model,SLOT(sorted()));
+		connect(this,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(onDoubleClicked(QModelIndex)));
 		
 		delegate = new ViewDelegate(core,model,this);
 		setItemDelegate(delegate);
@@ -522,6 +523,20 @@ namespace kt
 		return ret;
 	}
 
+	void View::onDoubleClicked(const QModelIndex& index)
+	{
+		if (index.column() == 0) // double clicking on column 0 will change the name of a torrent
+			return;
+		
+		bt::TorrentInterface* tc = model->torrentFromIndex(index);
+		if (tc)
+		{
+			if (tc->getStats().multi_file_torrent)
+				new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
+			else
+				new KRun(KUrl(tc->getDataDir()), 0, 0, true, true);
+		}
+	}
 	
 }
 

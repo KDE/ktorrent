@@ -2,6 +2,7 @@ Changes in 4.0rc1:
 - Split of libbtcore as libktorrent
 - Make sure that QM handles max share ratio and max seed time a bit better
 - Clear selection of ActivityListWidget before selecting the current item (233289)
+- When a torrent row is double clicked open the data directory (230618)
 
 Changes in 4.0beta2:
 - Use proper KDE function to format date in syndication plugin
