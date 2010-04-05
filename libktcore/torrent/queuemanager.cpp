@@ -99,58 +99,94 @@ namespace kt
 	{
 		const TorrentStats & s = tc->getStats();
 		
-		if (!s.completed && !tc->checkDiskSpace(false)) //no need to check diskspace for seeding torrents
-		{
-			//we're short!
-			switch (Settings::startDownloadsOnLowDiskSpace())
-			{
-			case 0: //don't start!
-				return bt::NOT_ENOUGH_DISKSPACE;
-			case 1: //ask user
-				if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1",s.torrent_name)) == KMessageBox::No)
-					return bt::USER_CANCELED;
-				else
-					break;
-			case 2: //force start
-				break;
-			}
-		}
-
-		Out(SYS_GEN | LOG_NOTICE) << "Starting download " << s.torrent_name << endl;
-		bool max_ratio_reached = tc->overMaxRatio();
-		bool max_seed_time_reached = tc->overMaxSeedTime();
-		if (s.completed && (max_ratio_reached || max_seed_time_reached))
-		{
-			if (!enabled())
-				return QM_LIMITS_REACHED;
-			
-			QString msg; 
-			if (max_ratio_reached && max_seed_time_reached)
-				msg = i18n("The torrent \"%1\" has reached its maximum share ratio and its maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
-			else if (max_ratio_reached && !max_seed_time_reached)
-				msg = i18n("The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?",s.torrent_name);
-			else if (max_seed_time_reached && !max_ratio_reached)
-				msg = i18n("The torrent \"%1\" has reached its maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
-				
-			if (KMessageBox::questionYesNo(0, msg, i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
-			{
-				if (max_ratio_reached)
-					tc->setMaxShareRatio(0.00f);
-				if (max_seed_time_reached)
-					tc->setMaxSeedTime(0.0f);
-				startSafely(tc);
-			}
-			else
-				return USER_CANCELED;
-		}
-		else
-			startSafely(tc);
+		if (!s.completed && !checkDiskSpace(tc,false))
+			return bt::NOT_ENOUGH_DISKSPACE;
+		else if (s.completed && !checkLimits(tc,false))
+			return bt::MAX_SHARE_RATIO_REACHED;
 		
+			
+		Out(SYS_GEN | LOG_NOTICE) << "Starting download " << s.torrent_name << endl;
+		startSafely(tc);
 		return START_OK;
 	}
+	
+	bool QueueManager::checkLimits(TorrentInterface* tc,bool interactive)
+	{
+		QString msg; 
+		const TorrentStats & s = tc->getStats();
+		bool max_ratio_reached = tc->overMaxRatio();
+		bool max_seed_time_reached = tc->overMaxSeedTime();
+		
+		if (max_ratio_reached && max_seed_time_reached)
+			msg = i18n("The torrent \"%1\" has reached its maximum share ratio and its maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
+		else if (max_ratio_reached && !max_seed_time_reached)
+			msg = i18n("The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?",s.torrent_name);
+		else if (max_seed_time_reached && !max_ratio_reached)
+			msg = i18n("The torrent \"%1\" has reached its maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
+		else
+			return true;
+		
+		if (interactive && KMessageBox::questionYesNo(0, msg, i18n("Limits reached.")) == KMessageBox::Yes)
+		{
+			if (max_ratio_reached)
+				tc->setMaxShareRatio(0.00f);
+			if (max_seed_time_reached)
+				tc->setMaxSeedTime(0.0f);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	bool QueueManager::checkDiskSpace(TorrentInterface* tc,bool interactive)
+	{
+		if (tc->checkDiskSpace(false))
+			return true;
+		
+		//we're short!
+		switch (Settings::startDownloadsOnLowDiskSpace())
+		{
+			case 0: //don't start!
+				return false;
+			case 1: //ask user
+			{
+				const TorrentStats & s = tc->getStats();
+				QString msg = i18n(
+					"You don't have enough disk space to download this torrent. "
+					"Are you sure you want to continue?");
+				
+				QString caption = i18n("Insufficient disk space for %1",s.torrent_name);
+				if (!interactive || KMessageBox::questionYesNo(0, msg, caption) == KMessageBox::No)
+					return false;
+				else
+					break;
+			}
+			case 2: //force start
+				break;
+		}
+		
+		return true;
+	}
+
 
 	TorrentStartResponse QueueManager::start(bt::TorrentInterface* tc)
 	{
+		if (tc->getJobQueue()->runningJobs())
+		{
+			tc->setAllowedToStart(true);
+			return BUSY_WITH_JOB;
+		}
+		
+		const TorrentStats & s = tc->getStats();
+		if (!s.completed && !checkDiskSpace(tc,true))
+		{
+			return bt::NOT_ENOUGH_DISKSPACE;
+		}
+		else if (s.completed && !checkLimits(tc,true))
+		{
+			return bt::MAX_SHARE_RATIO_REACHED;
+		}
+		
 		if (!enabled())
 		{
 			return startInternal(tc);
@@ -158,27 +194,6 @@ namespace kt
 		else
 		{
 			tc->setAllowedToStart(true);
-			if (tc->getJobQueue()->runningJobs())
-				return BUSY_WITH_JOB;
-			
-			const TorrentStats & s = tc->getStats();
-			if (!s.completed && !tc->checkDiskSpace(false)) //no need to check diskspace for seeding torrents
-			{
-				//we're short!
-				switch (Settings::startDownloadsOnLowDiskSpace())
-				{
-					case 0: //don't start!
-						return bt::NOT_ENOUGH_DISKSPACE;
-					case 1: //ask user
-						if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1",s.torrent_name)) == KMessageBox::No)
-							return bt::USER_CANCELED;
-						else
-							break;
-					case 2: //force start
-						break;
-				}
-			}
-			
 			orderQueue();
 			return START_OK;
 		}

@@ -262,6 +262,8 @@ namespace kt
 		void checkMaxRatio(QList<bt::TorrentInterface*> & todo);
 		void rearrangeQueue();
 		bt::TorrentStartResponse startInternal(bt::TorrentInterface* tc);
+		bool checkLimits(bt::TorrentInterface* tc,bool interactive);
+		bool checkDiskSpace(bt::TorrentInterface* tc,bool interactive);
 		
 	private slots:
 		void networkStatusChanged(Solid::Networking::Status status);
