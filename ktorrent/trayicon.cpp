@@ -35,6 +35,8 @@
 #include <torrent/queuemanager.h>
 #include "core.h"
 #include "trayicon.h"
+#include "gui.h"
+#include <kactioncollection.h>
 
 
 using namespace bt;
@@ -43,19 +45,21 @@ namespace kt
 {
 	
 	
-	TrayIcon::TrayIcon(Core* core, QWidget *parent)	: KSystemTrayIcon(parent),core(core),icon("ktorrent"),mwnd(parent)
+	TrayIcon::TrayIcon(Core* core,GUI* parent) : QObject(parent),core(core),mwnd(parent)
 	{
-		setIcon(icon);
+		status_notifier_item = 0;
+		max_upload_rate = 0;
+		max_download_rate = 0;
+		previousDownloadHeight = 0;
+		previousUploadHeight = 0;
+		queue_suspended = false;
+		menu = 0;
 		
-		previousDownloadHeight=0;
-		previousUploadHeight=0;
 		
-
-		connect(this,SIGNAL(quitSelected()),kapp,SLOT(quit()));
 		connect(core, SIGNAL(finished(bt::TorrentInterface* )),
-			this, SLOT(finished(bt::TorrentInterface* )));
+				this, SLOT(finished(bt::TorrentInterface* )));
 		connect(core,SIGNAL(torrentStoppedByError(bt::TorrentInterface*, QString )),
-			this,SLOT(torrentStoppedByError(bt::TorrentInterface*, QString )));
+				this,SLOT(torrentStoppedByError(bt::TorrentInterface*, QString )));
 		connect(core,SIGNAL(maxShareRatioReached( bt::TorrentInterface* )),
 				this,SLOT(maxShareRatioReached( bt::TorrentInterface* )));
 		connect(core,SIGNAL(maxSeedTimeReached(bt::TorrentInterface*)),
@@ -75,45 +79,80 @@ namespace kt
 		connect(core->getQueueManager(),SIGNAL(suspendStateChanged(bool)),
 				this,SLOT(suspendStateChanged(bool))); 
 		
-		KMenu* m = new KMenu(parent);
-		setContextMenu(m);
-		max_upload_rate = new SetMaxRate(core,SetMaxRate::UPLOAD,m);
-		max_upload_rate->setTitle(i18n("Set max upload speed"));
-		max_download_rate = new SetMaxRate(core,SetMaxRate::DOWNLOAD,m);
-		max_download_rate->setTitle(i18n("Set max download speed"));
-		m->addMenu(max_download_rate);
-		m->addMenu(max_upload_rate);
-		m->addSeparator();
 		
-		suspended_overlay = KIcon("media-playback-pause").pixmap(10,10);
 	}
 
 	TrayIcon::~TrayIcon()
 	{}
+	
+	void TrayIcon::hide()
+	{
+		if (!status_notifier_item)
+			return;
+		
+		delete status_notifier_item;
+		status_notifier_item = 0;
+		menu = 0;
+		max_download_rate = max_upload_rate = 0;
+	}
+	
+	void TrayIcon::show()
+	{
+		if (status_notifier_item)
+			return;
+		
+		menu = new KMenu(0);
+		KActionCollection* ac = mwnd->actionCollection();
+		max_upload_rate = new SetMaxRate(core,SetMaxRate::UPLOAD,menu);
+		max_upload_rate->setTitle(i18n("Set max upload speed"));
+		max_download_rate = new SetMaxRate(core,SetMaxRate::DOWNLOAD,menu);
+		max_download_rate->setTitle(i18n("Set max download speed"));
+		menu->addMenu(max_download_rate);
+		menu->addMenu(max_upload_rate);
+		menu->addSeparator();
+		menu->addAction(ac->action("start_all"));
+		menu->addAction(ac->action("stop_all"));
+		menu->addAction(ac->action("queue_suspend"));
+		menu->addSeparator();
+		menu->addAction(ac->action("paste_url"));
+		menu->addAction(ac->action(KStandardAction::name(KStandardAction::Open)));
+		menu->addSeparator();
+		menu->addAction(ac->action(KStandardAction::name(KStandardAction::Preferences)));
+		menu->addSeparator();
+		
+		status_notifier_item = new KStatusNotifierItem(mwnd);
+		status_notifier_item->setIconByName("ktorrent");
+		status_notifier_item->setCategory(KStatusNotifierItem::ApplicationStatus);
+		status_notifier_item->setStatus(KStatusNotifierItem::Active);
+		status_notifier_item->setContextMenu(menu);
+		if (queue_suspended)
+			status_notifier_item->setOverlayIconByName("kt-pause");
+	}
+
 
 	void TrayIcon::updateStats(const CurrentStats & stats)
 	{
-		if (!Settings::showPopups())
-		{
-			setToolTip(QString());
-		}
-		else
-		{
-			QString tip = i18n("<table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>",
+		if (!status_notifier_item)
+			return;
+		
+		QString tip = i18n("<table>"
+				"<tr><td>Download&nbsp;speed:</td><td><font color='#1c9a1c'>%1</font></td></tr>"
+				"<tr><td>Upload&nbsp;speed:</td><td><font color='#990000'>%2</font></td></tr>"
+				"<tr><td>Received:</td><td><font color='#1c9a1c'>%3</font></td></tr>"
+				"<tr><td>Transmitted:</td><td><font color='#990000'>%4</font></td></tr>"
+				"</table>",
 				BytesPerSecToString((double)stats.download_speed),
 				BytesPerSecToString((double)stats.upload_speed),
 				BytesToString(stats.bytes_downloaded),
 				BytesToString(stats.bytes_uploaded));
 		
-			setToolTip(tip);
-		}
+		status_notifier_item->setToolTip("ktorrent",i18n("Status"),tip);
 	}
 
 	void TrayIcon::showPassivePopup(const QString & msg,const QString & title)
 	{
-		KPassivePopup* p = KPassivePopup::message(KPassivePopup::Boxed,title,msg,icon.pixmap(100,QIcon::Normal,QIcon::On),this);
-		p->setPalette(QToolTip::palette());
-		p->setLineWidth(1);
+		if (status_notifier_item)
+			status_notifier_item->showMessage(title,msg,"ktorrent");
 	}
 	
 	void TrayIcon::cannotLoadTorrentSilently(const QString & msg)
@@ -279,8 +318,11 @@ namespace kt
 	
 	void TrayIcon::updateMaxRateMenus()
 	{
-		max_upload_rate->update();
-		max_download_rate->update();
+		if (max_download_rate && max_upload_rate)
+		{
+			max_upload_rate->update();
+			max_download_rate->update();
+		}
 	}
 
 
@@ -379,20 +421,16 @@ namespace kt
 		
 	void TrayIcon::suspendStateChanged(bool suspended)
 	{
-		if (!suspended || suspended_overlay.isNull())
+		queue_suspended = queue_suspended;
+		if (!suspended)
 		{
-			setIcon(icon);
+			if (status_notifier_item)
+				status_notifier_item->setOverlayIconByName(QString());
 		}
 		else
 		{
-			QPixmap suspended_icon = icon.pixmap(geometry().size());
-			// draw overlay at bottom right
-			const int x = geometry().size().width() - suspended_overlay.size().width();
-			const int y = geometry().size().height() - suspended_overlay.size().width();
-			QPainter p(&suspended_icon);
-			p.drawPixmap(x,y,suspended_overlay);
-			p.end();
-			setIcon(suspended_icon);
+			if (status_notifier_item)
+				status_notifier_item->setOverlayIconByName("kt-pause");
 		}
 	}
 

@@ -383,7 +383,7 @@ namespace kt
 		connect(open_silently_action,SIGNAL(triggered()),this,SLOT(openTorrentSilently()));
 		ac->addAction("file_open_silently",open_silently_action);
 				
-		KAction* quit_action = KStandardAction::quit(kapp, SLOT(quit()), ac);
+		KStandardAction::quit(kapp, SLOT(quit()), ac);
 		show_status_bar_action = KStandardAction::showStatusbar(this, SLOT(showStatusBar()),ac);
 		show_status_bar_action->setIcon(KIcon("kt-show-statusbar"));
 		show_menu_bar_action = KStandardAction::showMenubar(this, SLOT(showMenuBar()),ac);
@@ -396,10 +396,12 @@ namespace kt
 		start_all_action = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
 		start_all_action->setToolTip(i18n("Start all torrents"));
 		connect(start_all_action,SIGNAL(triggered()),this,SLOT(startAllTorrents()));
+		ac->addAction("start_all",start_all_action);
 		
 		stop_all_action = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
 		stop_all_action->setToolTip(i18n("Stop all torrents"));
 		connect(stop_all_action,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
+		ac->addAction("stop_all",stop_all_action);
 		
 		paste_url_action = new KAction(KIcon("document-open-remote"),i18n("Open URL"),this);
 		paste_url_action->setToolTip(i18n("Open a URL which points to a torrent, magnet links are supported"));
@@ -449,18 +451,7 @@ namespace kt
 		
 		setStandardToolBarMenuEnabled(true);
 				
-		QMenu* m = tray_icon->contextMenu();
-		m->addAction(start_all_action);
-		m->addAction(stop_all_action);
-		m->addAction(queue_suspend_action);
-		m->addSeparator();
-		m->addAction(paste_url_action);
-		m->addAction(open_action);
-		m->addSeparator();
-		m->addAction(pref_action);
-		m->addAction(show_kt_action);
-		m->addSeparator();
-		m->addAction(quit_action);
+		
 	}
 
 	void GUI::update()

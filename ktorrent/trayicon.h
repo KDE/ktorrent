@@ -21,9 +21,9 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
-#include <kicon.h>
-#include <kmenu.h>
-#include <ksystemtrayicon.h>
+#include <KIcon>
+#include <KMenu>
+#include <KStatusNotifierItem>
 #include <util/constants.h>
 
 namespace bt
@@ -40,6 +40,7 @@ namespace kt
 	class Core;
 	class SetMaxRate;
 	class TorrentInterface;
+	class GUI;
 
 	struct TrayStats
 	{
@@ -53,11 +54,11 @@ namespace kt
 	 * @author Joris Guisson
 	 * @author Ivan Vasic
 	*/
-	class TrayIcon : public KSystemTrayIcon
+	class TrayIcon : public QObject
 	{
 		Q_OBJECT
 	public:
-		TrayIcon(Core* tc, QWidget *parent);
+		TrayIcon(Core* tc,GUI* parent);
 		virtual ~TrayIcon();
 
 		/// Update stats for system tray icon
@@ -65,6 +66,16 @@ namespace kt
 		
 		/// Update the max rate menus
 		void updateMaxRateMenus();
+		
+		/// Show the icon
+		void show();
+		
+		/// Hide the icon
+		void hide();
+		
+		/// Get the co
+		KMenu* contextMenu();
+		
 	private:
 		void showPassivePopup(const QString & msg,const QString & titile);
 
@@ -136,11 +147,12 @@ namespace kt
 		Core* core;
 		int previousDownloadHeight;
 		int previousUploadHeight;
-		KIcon icon;
-		QPixmap suspended_overlay;
 		SetMaxRate* max_upload_rate;
 		SetMaxRate* max_download_rate;
-		QWidget* mwnd;
+		GUI* mwnd;
+		KStatusNotifierItem* status_notifier_item;
+		bool queue_suspended;
+		KMenu* menu;
 	};
 
 	class SetMaxRate : public KMenu
