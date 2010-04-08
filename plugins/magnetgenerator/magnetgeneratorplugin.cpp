@@ -23,17 +23,19 @@
 #include <klocale.h>
 #include <qurl.h>
 #include <qclipboard.h>
+#include <qtooltip.h>
+#include <kpassivepopup.h>
+#include <KIcon>
 
 #include <interfaces/guiinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentactivityinterface.h>
-#include <util/log.h>
-#include <util/logsystemmanager.h>
+#include <tracker/tracker.h>
 #include <util/sha1hash.h>
+#include <ktorrent/gui.h>
 #include "magnetgeneratorprefwidget.h"
 #include "magnetgeneratorplugin.h"
 #include "magnetgeneratorpluginsettings.h"
-#include <iostream>
 
 K_EXPORT_COMPONENT_FACTORY(ktmagnetgeneratorplugin,KGenericFactory<kt::MagnetGeneratorPlugin>("ktmagnetgeneratorplugin"))
 
@@ -59,6 +61,9 @@ namespace kt
 	{
 		pref = new MagnetGeneratorPrefWidget(0);
 		getGUI()->addPrefPage(pref);
+		TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
+		ta->addViewListener(this);
+		currentTorrentChanged(ta->getCurrentTorrent());
 	}
 
 	bool MagnetGeneratorPlugin::versionCheck(const QString& version) const
@@ -71,6 +76,13 @@ namespace kt
 		getGUI()->removePrefPage(pref);
 		delete pref;
 		pref = 0;
+		TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
+		ta->removeViewListener(this);
+	}
+
+	void MagnetGeneratorPlugin::currentTorrentChanged(bt::TorrentInterface *tc)
+	{
+		generate_magnet_action->setEnabled(tc && (!tc->getStats().priv_torrent || !MagnetGeneratorPluginSettings::onlypublic()));
 	}
 
 	void MagnetGeneratorPlugin::generateMagnet()
@@ -91,21 +103,31 @@ namespace kt
 			uri.append(QUrl::toPercentEncoding(dn.toString(), "{}", NULL));
 		}
 
-		if(MagnetGeneratorPluginSettings::tracker() && MagnetGeneratorPluginSettings::tr().length() > 0)
+		if((MagnetGeneratorPluginSettings::customtracker() && MagnetGeneratorPluginSettings::tr().length() > 0) && !MagnetGeneratorPluginSettings::torrenttracker())
 		{
 			uri.append("&tr=");
 			QUrl tr(MagnetGeneratorPluginSettings::tr());
 			uri.append(QUrl::toPercentEncoding(tr.toString(), "{}", NULL));
 		}
 
-		if(MagnetGeneratorPluginSettings::clipboard())
+		if(MagnetGeneratorPluginSettings::torrenttracker())
 		{
-			addToClipboard(uri);
+			QList<bt::TrackerInterface*> trackers = tor->getTrackersList()->getTrackers();
+			if(!trackers.isEmpty())
+			{
+				Tracker *trk = (Tracker*)trackers.first();
+				QUrl tr(trk->trackerURL());
+
+				uri.append("&tr=");
+				uri.append(QUrl::toPercentEncoding(tr.toString(), "{}", NULL));
+			}
+
 		}
 
-		if(MagnetGeneratorPluginSettings::popup()) {
-			// TODO: Add to popup
-		}
+		addToClipboard(uri);
+
+		if(MagnetGeneratorPluginSettings::popup())
+			showPopup();
 
 	}
 
@@ -114,6 +136,12 @@ namespace kt
 		QClipboard *cb = QApplication::clipboard();
 		cb->setText(uri, QClipboard::Clipboard);
 		cb->setText(uri, QClipboard::Selection);
+	}
+
+	void MagnetGeneratorPlugin::showPopup()
+	{
+		KPassivePopup::message(i18n("Magnet"), i18n("Magnet link copied to clipboard"),
+							   KIcon("kt-magnet").pixmap(20, 20), getGUI()->getMainWindow(), 3000);
 	}
 
 }

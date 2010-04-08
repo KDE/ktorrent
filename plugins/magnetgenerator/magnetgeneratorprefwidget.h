@@ -36,7 +36,8 @@ namespace kt
 		virtual ~MagnetGeneratorPrefWidget();
 
 	private slots:
-		void trackerToggled(bool on);
+		void customTrackerToggled(bool on);
+		void torrentTrackerToggled(bool on);
 
 	};
 

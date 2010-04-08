@@ -23,12 +23,13 @@
 #define KT_MAGNETGENERATORPLUGIN_H
 
 #include <interfaces/plugin.h>
+#include <interfaces/torrentactivityinterface.h>
 
 namespace kt
 {
 	class MagnetGeneratorPrefWidget;
 
-	class MagnetGeneratorPlugin : public Plugin
+	class MagnetGeneratorPlugin : public Plugin, public ViewListener
 	{
 		Q_OBJECT
 	public:
@@ -38,6 +39,7 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
+		void currentTorrentChanged(bt::TorrentInterface *tc);
 
 	private slots:
 		void generateMagnet();
@@ -46,6 +48,7 @@ namespace kt
 		MagnetGeneratorPrefWidget *pref;
 		KAction *generate_magnet_action;
 		void addToClipboard(QString uri);
+		void showPopup();
 	};
 
 }

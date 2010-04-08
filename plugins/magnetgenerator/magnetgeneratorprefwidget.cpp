@@ -19,12 +19,7 @@
  ***************************************************************************/
 
 #include <Qt>
-
-#include <klocale.h>
-#include <kglobal.h>
-#include <kiconloader.h>
 #include <kstandarddirs.h>
-
 #include <torrent/globals.h>
 
 #include "magnetgeneratorprefwidget.h"
@@ -40,18 +35,30 @@ namespace kt
 		: PrefPageInterface(MagnetGeneratorPluginSettings::self(),i18n("Magnet Generator"),"kt-magnet",parent)
 	{
 		setupUi(this);
-		connect(kcfg_tracker,SIGNAL(toggled(bool)),this,SLOT(trackerToggled(bool)));
-		kcfg_tr->setEnabled(MagnetGeneratorPluginSettings::tracker());
+		connect(kcfg_customtracker,SIGNAL(toggled(bool)),this,SLOT(customTrackerToggled(bool)));
+		connect(kcfg_torrenttracker,SIGNAL(toggled(bool)),this,SLOT(torrentTrackerToggled(bool)));
+		kcfg_tr->setEnabled(MagnetGeneratorPluginSettings::customtracker());
 	}
 
 	MagnetGeneratorPrefWidget::~MagnetGeneratorPrefWidget()
 	{}
 
-	void MagnetGeneratorPrefWidget::trackerToggled(bool on)
+	void MagnetGeneratorPrefWidget::customTrackerToggled(bool on)
 	{
+		if(on)
+			kcfg_torrenttracker->setCheckState(Qt::Unchecked);
+
 		kcfg_tr->setEnabled(on);
 	}
 
+	void MagnetGeneratorPrefWidget::torrentTrackerToggled(bool on)
+	{
+		if(on)
+		{
+			kcfg_customtracker->setCheckState(Qt::Unchecked);
+			kcfg_tr->setEnabled(!on);
+		}
+	}
 
 }
 
