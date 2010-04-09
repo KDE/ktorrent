@@ -262,6 +262,7 @@ namespace kt
 		double progress = index.data().toDouble();
 		
 		QStyleOptionProgressBar progressBarOption;
+		progressBarOption.state = QStyle::State_Active;
 		progressBarOption.rect = option.rect;
 		progressBarOption.minimum = 0;
 		progressBarOption.maximum = 100;
