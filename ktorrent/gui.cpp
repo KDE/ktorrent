@@ -409,7 +409,7 @@ namespace kt
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);
 		
-		queue_suspend_action = new KToggleAction(KIcon("kt-pause"),i18n("Suspend KTorrent"),this);
+		queue_suspend_action = new KToggleAction(KIcon("kt-pause"),i18n("Suspend Torrents"),this);
 		ac->addAction("queue_suspend",queue_suspend_action);
 		queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
 		queue_suspend_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_P));
