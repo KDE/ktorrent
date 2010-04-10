@@ -41,11 +41,7 @@ namespace kt
 	bool ScriptableGroup::isMember(bt::TorrentInterface* tor)
 	{
 		QVariantList args;
-		QObject* obj = api->torrent(tor->getInfoHash().toString());
-		if (!obj)
-			return false;
-		
-		args << qVariantFromValue(obj);
+		args << tor->getInfoHash().toString();
 		QVariant ret = script->callMethod("isMember",args);
 		return ret.toBool();
 	}

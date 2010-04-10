@@ -11,8 +11,9 @@ class TrackerGroup:
 		self.url = url
 		self.ref_count = 0
 		
-	def isMember(self,torrent):
-		return self.url in torrent.trackers()
+	def isMember(self,info_hash):
+		tor = KTorrent.torrent(info_hash)
+		return self.url in tor.trackers()
 	
 	def ref(self):
 		self.ref_count += 1

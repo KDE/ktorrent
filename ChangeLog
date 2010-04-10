@@ -6,6 +6,7 @@ Changes in 4.0rc1:
 - Switch to new style tray icon (210811,233422)
 - Make sure that state is set to active when rendering progress bar in ViewDelegate (232727)
 - Suspend KTorrent -> Suspend Torrents to avoid confusion (233421)
+- Workaround memory leak in krosspython by not passing QObject pointers as arguments to callMethod (223885, 226924)
 
 Changes in 4.0beta2:
 - Use proper KDE function to format date in syndication plugin
