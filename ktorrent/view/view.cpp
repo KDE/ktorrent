@@ -345,7 +345,25 @@ namespace kt
 			tc->changeOutputDir(dir,bt::TorrentInterface::MOVE_FILES);
 		}
 	}
-	
+
+	void View::moveDataWhenCompleted()
+	{
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		if (sel.count() == 0)
+			return;
+
+		QString caption = i18n("Select the move when completed directory.");
+		QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///completedDir"),this,caption);
+		if (dir.isNull())
+			return;
+
+		foreach(bt::TorrentInterface *tc,sel)
+		{
+			tc->setMoveWhenCompletedDir(KUrl(dir));
+		}
+	}
+
 	void View::removeFromGroup()
 	{
 		if (!group || group->isStandardGroup())

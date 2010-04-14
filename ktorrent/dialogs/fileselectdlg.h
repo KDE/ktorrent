@@ -84,6 +84,7 @@ namespace kt
 		void setShowFileTree(bool on);
 		void setFilter(const QString & filter);
 		void updateExistingFiles();
+		void moveCompletedToggled(bool on);
 
 	private:
 		void populateFields(const QString & location_hint);

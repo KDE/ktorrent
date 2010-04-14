@@ -35,6 +35,23 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QCheckBox" name="m_moveCompleted">
+       <property name="toolTip">
+        <string>Moves the files to the specified location when the torrent finishes downloading.</string>
+       </property>
+       <property name="text">
+        <string>Move when completed to:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KUrlRequester" name="m_completedLocation"/>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="m_tree">

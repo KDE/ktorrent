@@ -248,6 +248,9 @@ namespace kt
 		if (Settings::maxSeedTime() > 0)
 			tc->setMaxSeedTime(Settings::maxSeedTime());
 
+		if (Settings::useCompletedDir())
+			tc->setMoveWhenCompletedDir(Settings::completedDir());
+
 		if (!silently)
 		{
 			if (!gui->selectFiles(tc,&start_torrent,group,location,&skip_check))
@@ -355,7 +358,7 @@ namespace kt
 			tc = new TorrentControl();
 			tc->init(qman, data, tdir, dir);
 			tc->setLoadUrl(url);
-			
+
 			if(!init(tc,group,dir,silently))
 				loadingFinished(url, false, true);
 			else
@@ -401,7 +404,7 @@ namespace kt
 			tc = new TorrentControl();
 			tc->init(qman, target, tdir, dir);
 			tc->setLoadUrl(KUrl(target));
-			
+
 			init(tc,group,dir,silently);
 			startUpdateTimer();
 			return true;

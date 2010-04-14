@@ -209,7 +209,13 @@ namespace kt
 		if (current)
 			current->moveData();
 	}
-		
+
+	void ViewManager::moveDataWhenCompleted()
+	{
+		if (current)
+			current->moveDataWhenCompleted();
+	}
+
 	void ViewManager::removeFromGroup()
 	{
 		if (current)
@@ -411,6 +417,7 @@ namespace kt
 		bool en_add_peer = false;
 		bool en_peer_sources = false;
 		bool en_pause = false;
+		bool en_completed = false;
 
 		foreach (bt::TorrentInterface* tc,sel)
 		{
@@ -455,6 +462,9 @@ namespace kt
 				en_add_peer = true;
 				en_peer_sources = true;
 			}
+
+			if (s.completed)
+				en_completed = true;
 		}
 
 		en_add_peer = en_add_peer && en_stop;
@@ -469,6 +479,7 @@ namespace kt
 		manual_announce->setEnabled(en_announce);
 		do_scrape->setEnabled(sel.count() > 0);
 		move_data->setEnabled(sel.count() > 0);
+		move_data_when_completed->setEnabled(!en_completed && sel.count() > 0);
 
 		const kt::Group* current_group = current->getGroup();
 		remove_from_group->setEnabled(current_group && !current_group->isStandardGroup());
@@ -630,8 +641,11 @@ namespace kt
 		move_data = new KAction(i18n("Move Data"),this);
 		connect(move_data,SIGNAL(triggered()),this,SLOT(moveData()));
 		ac->addAction("view_move_data",move_data);
-		
-		
+
+		move_data_when_completed = new KAction(i18n("Move Data When Completed"),this);
+		connect(move_data_when_completed,SIGNAL(triggered()),this,SLOT(moveDataWhenCompleted()));
+		ac->addAction("view_move_data_when_completed", move_data_when_completed);
+
 		remove_from_group = new KAction(i18n("Remove from Group"),this);
 		connect(remove_from_group,SIGNAL(triggered()),this,SLOT(removeFromGroup()));
 		ac->addAction("view_remove_from_group",remove_from_group);

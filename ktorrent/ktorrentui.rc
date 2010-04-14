@@ -69,6 +69,7 @@
 		<Action name="view_open_tmp_dir" />
 	</Menu>
 	<Action name="view_move_data" />
+	<Action name="view_move_data_when_completed" />
 	<Separator/>
 	<Action name="view_remove_from_group" />
 	<Menu name="GroupsSubMenu" icon="application-x-bittorrent"><text>Add to Group</text>

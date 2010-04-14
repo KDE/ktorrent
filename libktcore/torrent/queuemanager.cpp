@@ -560,7 +560,7 @@ namespace kt
 			return;
 		}
 		
-		ordering = true; // make sure that recursive entering of this function is not possible
+		RecursiveEntryGuard guard(&ordering); // make sure that recursive entering of this function is not possible
 		
 		QueuePtrList download_queue;
 		QueuePtrList seed_queue;
@@ -633,7 +633,6 @@ namespace kt
 			}
 		}
 		
-		ordering = false;
 		emit queueOrdered();
 	}
 	

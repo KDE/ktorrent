@@ -123,11 +123,6 @@ namespace kt
 		bt::Cache::setPreallocationEnabled(Settings::diskPrealloc());
 		bt::Cache::setPreallocateFully(Settings::fullDiskPrealloc());
 		
-		if (Settings::useCompletedDir())
-			bt::TorrentControl::setMoveWhenCompletedDir(Settings::completedDir());
-		else
-			bt::TorrentControl::setMoveWhenCompletedDir(KUrl());
-		
 		bt::TorrentControl::setDataCheckWhenCompleted(Settings::checkWhenFinished());
 		bt::TorrentControl::setMinimumDiskSpace(Settings::minDiskSpace());
 		bt::TorrentControl::setAutoRecheck(Settings::autoRecheck());

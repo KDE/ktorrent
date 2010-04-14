@@ -60,6 +60,8 @@ namespace kt
 		connect(m_expand_all,SIGNAL(clicked()),m_file_view,SLOT(expandAll()));
 		
 		m_downloadLocation->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
+		m_completedLocation->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
+
 		
 		encodings = QTextCodec::availableMibs();
 		foreach (int mib,encodings)
@@ -86,6 +88,14 @@ namespace kt
 		m_filter->setClearButtonShown(true);
 		m_filter->setHintText(i18n("Filter"));
 		connect(m_filter,SIGNAL(textChanged(QString)),this,SLOT(setFilter(QString)));
+
+		if (Settings::useCompletedDir())
+			m_moveCompleted->setCheckState(Qt::Checked);
+		else
+			m_moveCompleted->setCheckState(Qt::Unchecked);
+
+		m_completedLocation->setEnabled(Settings::useCompletedDir());
+		connect(m_moveCompleted,SIGNAL(toggled(bool)),this,SLOT(moveCompletedToggled(bool)));
 	}
 
 	FileSelectDlg::~FileSelectDlg()
@@ -160,14 +170,19 @@ namespace kt
 	{
 		QStringList pe_ex;
 		
+		QString cn = m_completedLocation->url().toLocalFile();
+		if (!cn.endsWith(bt::DirSeparator()))
+			cn += bt::DirSeparator();
+
 		QString dn = m_downloadLocation->url().toLocalFile();
 		if (!dn.endsWith(bt::DirSeparator()))
 			dn += bt::DirSeparator();
+
 		
 		QString tld = tc->getUserModifiedFileName();
 		// If the move on completion is on, check completed dir for files of the torrent
 		// but only if the completed directory is not selected
-		if (Settings::useCompletedDir() && dn != Settings::completedDir().path(KUrl::AddTrailingSlash))
+		if (m_moveCompleted->checkState() == Qt::Checked && dn != cn)
 		{
 			bool completed_files_found = false;
 			bool all_found = true;
@@ -177,7 +192,7 @@ namespace kt
 				for (Uint32 i = 0;i < tc->getNumFiles();i++)
 				{
 					bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-					QString path = Settings::completedDir().path(KUrl::AddTrailingSlash) + tld + bt::DirSeparator() + file.getUserModifiedPath();
+					QString path = cn + tld + bt::DirSeparator() + file.getUserModifiedPath();
 					if (bt::Exists(path))
 					{
 						completed_files_found = true;
@@ -189,7 +204,7 @@ namespace kt
 			}
 			else
 			{
-				QString path = Settings::completedDir().path(KUrl::AddTrailingSlash) + tld;
+				QString path = cn + tld;
 				completed_files_found = bt::Exists(path);
 			}
 			
@@ -212,9 +227,7 @@ namespace kt
 				int ret = KMessageBox::questionYesNoList(0,msg,cf,QString::null);
 				if (ret == KMessageBox::Yes)
 				{
-					dn = Settings::completedDir().toLocalFile();
-					if (!dn.endsWith(bt::DirSeparator()))
-						dn += bt::DirSeparator();
+					dn = cn;
 				}
 			}
 		}
@@ -235,7 +248,25 @@ namespace kt
 				return;
 			}
 		}
-		
+
+		if (!bt::Exists(cn))
+		{
+			try
+			{
+				if (KMessageBox::questionYesNo(this,i18n("The directory %1 does not exist, do you want to create it?",cn)) == KMessageBox::Yes)
+					MakePath(cn);
+				else
+					return;
+			}
+			catch (bt::Error & err)
+			{
+				KMessageBox::error(this,err.toString());
+				QDialog::reject();
+				return;
+			}
+		}
+
+
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
@@ -253,7 +284,7 @@ namespace kt
 			file.setPathOnDisk(path);
 			file.setEmitDownloadStatusChanged(true);
 		}
-		
+
 		if (pe_ex.count() > 0)
 		{
 			QString msg = i18n("You have deselected the following existing files. "
@@ -272,7 +303,7 @@ namespace kt
 				}
 			}
 		}
-		
+
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
@@ -288,6 +319,8 @@ namespace kt
 			tc->changeOutputDir(dn + tld,bt::TorrentInterface::FULL_PATH);
 		else if (dn != ddir)
 			tc->changeOutputDir(dn, 0);
+
+		tc->setMoveWhenCompletedDir(KUrl(cn));
 
 		//Make it user controlled if needed
 		*start = m_chkStartTorrent->isChecked();
@@ -329,6 +362,7 @@ namespace kt
 	void FileSelectDlg::populateFields(const QString & location_hint)
 	{
 		QString dir;
+		QString comp_dir;
 		if (!location_hint.isEmpty() && QDir(location_hint).exists())
 		{
 			dir = location_hint;
@@ -343,8 +377,15 @@ namespace kt
 					dir = QDir::homePath();
 			}
 		}
-		
+
+		comp_dir = Settings::completedDir().toLocalFile();
+		if (!Settings::useCompletedDir() || comp_dir.isNull())
+		{
+			comp_dir = dir;
+		}
+
 		m_downloadLocation->setUrl(dir);
+		m_completedLocation->setUrl(comp_dir);
 		loadGroups();
 	}
 
@@ -532,6 +573,11 @@ namespace kt
 		Q_UNUSED(f);
 		// use typedText so we don't filter on the hint
 		filter_model->setFilterFixedString(m_filter->typedText());
+	}
+
+	void FileSelectDlg::moveCompletedToggled(bool on)
+	{
+		m_completedLocation->setEnabled(on);
 	}
 }
 
