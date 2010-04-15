@@ -320,7 +320,8 @@ namespace kt
 		else if (dn != ddir)
 			tc->changeOutputDir(dn, 0);
 
-		tc->setMoveWhenCompletedDir(KUrl(cn));
+		if(m_moveCompleted->checkState() == Qt::Checked)
+			tc->setMoveWhenCompletedDir(KUrl(cn));
 
 		//Make it user controlled if needed
 		*start = m_chkStartTorrent->isChecked();

@@ -248,7 +248,7 @@ namespace kt
 		if (Settings::maxSeedTime() > 0)
 			tc->setMaxSeedTime(Settings::maxSeedTime());
 
-		if (Settings::useCompletedDir())
+		if (Settings::useCompletedDir() && silently)
 			tc->setMoveWhenCompletedDir(Settings::completedDir());
 
 		if (!silently)
