@@ -46,6 +46,7 @@
 #include "viewselectionmodel.h"
 #include "viewdelegate.h"
 #include "scanlistener.h"
+#include "propertiesextender.h"
 
 using namespace bt;
 
@@ -353,14 +354,9 @@ namespace kt
 		if (sel.count() == 0)
 			return;
 
-		QString caption = i18n("Select the move when completed directory.");
-		QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///completedDir"),this,caption);
-		if (dir.isNull())
-			return;
-
 		foreach(bt::TorrentInterface *tc,sel)
 		{
-			tc->setMoveWhenCompletedDir(KUrl(dir));
+			delegate->extend(tc,new PropertiesExtender(tc,0));
 		}
 	}
 
@@ -431,20 +427,23 @@ namespace kt
 
 	void View::dataScanStarted(ScanListener* listener)
 	{
-		if (delegate->extended(listener->torrent()))
-			return;
-		
-		QWidget* ext = listener->createExtender();
+		Extender* ext = listener->createExtender();
 		if (ext)
 		{
 			ext->hide();
 			delegate->extend(listener->torrent(),ext);
+			data_scan_extenders.insert(listener->torrent(),ext);
 		}
 	}
 	
 	void View::dataScanClosed(ScanListener* listener)
 	{
-		delegate->closeExtender(listener->torrent());
+		QMap<bt::TorrentInterface*,Extender*>::iterator itr = data_scan_extenders.find(listener->torrent());
+		if (itr != data_scan_extenders.end())
+		{
+			delegate->closeExtender(listener->torrent(),itr.value());
+			data_scan_extenders.erase(itr);
+		}
 	}
 
 

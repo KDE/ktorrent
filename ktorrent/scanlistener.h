@@ -27,6 +27,9 @@
 
 namespace kt 
 {
+
+	class Extender;
+
 	
 	/**
 		DataCheckerListener for KT which keeps track of the progress of a datascan
@@ -60,7 +63,7 @@ namespace kt
 		bt::TorrentInterface* torrent() {return tc;}
 		
 		/// Create an extender for the job
-		QWidget* createExtender();
+		Extender* createExtender();
 	
 	signals:
 		void scanFinished();

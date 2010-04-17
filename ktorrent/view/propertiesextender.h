@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2009 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,45 +17,40 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_SCANEXTENDER_H
-#define KT_SCANEXTENDER_H
+
+#ifndef KT_PROPERTIESEXTENDER_H
+#define KT_PROPERTIESEXTENDER_H
 
 #include <QWidget>
-#include <QTimer>
 #include <view/viewdelegate.h>
-#include "scanlistener.h"
-#include "ui_scanextender.h"
+#include "ui_propertiesextender.h"
+
 
 namespace bt
 {
 	class TorrentInterface;
 }
 
-
 namespace kt 
 {
-	
 	/**
-		Extender widget which displays the results of a data scan
+		Extender which shows properties about a torrent.
 	*/
-	class ScanExtender : public Extender,public Ui_ScanExtender
+	class PropertiesExtender : public Extender,public Ui_PropertiesExtender
 	{
 		Q_OBJECT
 	public:
-		ScanExtender(ScanListener* lst,bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~ScanExtender();
-
-	private slots:
-		void update();
-		void cancelPressed();
-		void finished();
-		void restart();
-		void closeRequested();
+		PropertiesExtender(bt::TorrentInterface* tc,QWidget* parent);
+		virtual ~PropertiesExtender();
+		
+	public slots:
+		void moveOnCompletionEnabled(bool on);
+		void buttonClicked(QAbstractButton*);
 		
 	private:
-		QTimer timer;
-		ScanListener* listener;
+		void apply();
 	};
+
 }
 
-#endif // KT_SCANEXTENDER_H
+#endif // KT_PROPERTIESEXTENDER_H

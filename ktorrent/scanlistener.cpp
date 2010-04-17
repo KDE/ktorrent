@@ -80,7 +80,7 @@ namespace kt
 	}
 
 
-	QWidget* ScanListener::createExtender() 
+	Extender* ScanListener::createExtender() 
 	{
 		return new ScanExtender(this,tc,0);
 	}

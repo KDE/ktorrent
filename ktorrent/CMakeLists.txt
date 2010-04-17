@@ -48,6 +48,7 @@ set(ktorrent_SRC
 	view/viewdelegate.cpp
 	view/viewselectionmodel.cpp
 	view/scanextender.cpp
+	view/propertiesextender.cpp
 )
 	
 
@@ -76,6 +77,7 @@ kde4_add_ui_files(ktorrent_SRC
 	pref/recommendedsettingsdlg.ui
 	
 	view/scanextender.ui
+	view/propertiesextender.ui
 )
 
 kde4_add_app_icon(ktorrent_SRC "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-ktorrent.png")

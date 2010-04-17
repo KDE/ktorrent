@@ -25,7 +25,7 @@ namespace kt
 {
 	
 	ScanExtender::ScanExtender(ScanListener* lst,bt::TorrentInterface* tc,QWidget* parent) 
-	: QWidget(parent),tc(tc),listener(lst)
+	: Extender(tc,parent),listener(lst)
 	{
 		setupUi(this);
 		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));

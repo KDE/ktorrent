@@ -24,6 +24,7 @@
 #include <QMap>
 #include <QStyledItemDelegate>
 
+class QVBoxLayout;
 namespace bt
 {
 	class TorrentInterface;
@@ -34,6 +35,53 @@ namespace kt
 	class ViewModel;
 	class View;
 	class Core;
+	
+	/**
+		Base class for all extender widgets
+	*/
+	class Extender : public QWidget
+	{
+		Q_OBJECT
+	public:
+		Extender(bt::TorrentInterface* tc,QWidget* parent);
+		virtual ~Extender();
+		
+		/// Get the torrent of this extender
+		bt::TorrentInterface* torrent() {return tc;}
+		
+	signals:
+		/// Should be emitted by an extender when it wants to close itself
+		void closeRequest(Extender* ext);
+		
+	protected:
+		bt::TorrentInterface* tc;
+	};
+	
+	/**
+		Box which contains all the extenders of a widget
+	*/
+	class ExtenderBox : public QWidget
+	{
+	public:
+		ExtenderBox(QWidget* widget);
+		virtual ~ExtenderBox();
+		
+		/// Add an Extender
+		void add(Extender* ext);
+		
+		/// Remove an Extender
+		void remove(Extender* ext);
+		
+		/// Clear all extenders
+		void clear();
+		
+		/// Get the number of extenders
+		int count() const {return extenders.count();}
+		
+	private:
+		QVBoxLayout* layout;
+		QList<Extender*> extenders;
+	};
 
 	/**
 		Item delegate which keeps track of of ScanExtenders
@@ -48,7 +96,7 @@ namespace kt
 		/**
 			Extend a torrent with a widget
 		*/
-		void extend(bt::TorrentInterface* tc,QWidget* widget);
+		void extend(bt::TorrentInterface* tc,Extender* widget);
 		
 		virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -66,11 +114,13 @@ namespace kt
 		void hideExtender(bt::TorrentInterface* tc);
 		
 	public slots:
-		/// Close the extender of a torrent
-		void closeExtender(bt::TorrentInterface* tc);
+		/// Close all the extenders of a torrent
+		void closeExtenders(bt::TorrentInterface* tc);
+		void closeExtender(bt::TorrentInterface* tc,Extender* ext);
 		
 	private slots:
 		void torrentRemoved(bt::TorrentInterface* tc);
+		void closeRequested(Extender* ext);
 		
 	private:
 		QSize maybeExtendedSize(const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -81,10 +131,10 @@ namespace kt
 		
 	private:
 		ViewModel* model;
-		QMap<bt::TorrentInterface*,QWidget*> extenders;
+		QMap<bt::TorrentInterface*,ExtenderBox*> extenders;
 		
-		typedef QMap<bt::TorrentInterface*,QWidget*>::iterator ExtItr;
-		typedef QMap<bt::TorrentInterface*,QWidget*>::const_iterator ExtCItr;
+		typedef QMap<bt::TorrentInterface*,ExtenderBox*>::iterator ExtItr;
+		typedef QMap<bt::TorrentInterface*,ExtenderBox*>::const_iterator ExtCItr;
 	};
 
 }

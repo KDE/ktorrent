@@ -1,0 +1,88 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
+
+
+#include "propertiesextender.h"
+#include <KUrl>
+#include <interfaces/torrentinterface.h>
+
+namespace kt
+{
+	PropertiesExtender::PropertiesExtender(bt::TorrentInterface* tc, QWidget* parent): Extender(tc,parent)
+	{
+		setupUi(this);
+		KUrl url = tc->getMoveWhenCompletedDir();
+		if (url.isValid())
+		{
+			move_on_completion_enabled->setChecked(true);
+			move_on_completion_url->setUrl(url);
+			move_on_completion_url->setEnabled(true);
+		}
+		else
+		{
+			move_on_completion_enabled->setChecked(false);
+			move_on_completion_url->setEnabled(false);
+		}
+		
+		connect(move_on_completion_enabled,SIGNAL(toggled(bool)),this,SLOT(moveOnCompletionEnabled(bool)));
+		connect(buttons,SIGNAL(clicked(QAbstractButton*)),this,SLOT(buttonClicked(QAbstractButton*)));
+	}
+
+	PropertiesExtender::~PropertiesExtender()
+	{
+	}
+
+	void PropertiesExtender::moveOnCompletionEnabled(bool on)
+	{
+		move_on_completion_url->setEnabled(on);
+	}
+	
+	void PropertiesExtender::buttonClicked(QAbstractButton* btn)
+	{
+		if (btn == buttons->button(QDialogButtonBox::Apply))
+		{
+			apply();
+		}
+		else if (btn == buttons->button(QDialogButtonBox::Ok))
+		{
+			apply();
+			closeRequest(this);
+		}
+		else if (btn == buttons->button(QDialogButtonBox::Cancel))
+		{
+			closeRequest(this);
+		}
+	}
+	
+	void PropertiesExtender::apply()
+	{
+		if (move_on_completion_enabled->isChecked())
+		{
+			tc->setMoveWhenCompletedDir(move_on_completion_url->url());
+		}
+		else
+		{
+			tc->setMoveWhenCompletedDir(KUrl());
+		}
+	}
+
+
+}
+

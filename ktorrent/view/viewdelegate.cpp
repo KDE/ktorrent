@@ -26,14 +26,63 @@
 #include <KGlobal>
 #include <KLocale>
 #include <KApplication>
+#include <QVBoxLayout>
 
 
 namespace kt
 {
+	Extender::Extender(bt::TorrentInterface* tc, QWidget* parent): QWidget(parent),tc(tc)
+	{
+	}
+
+	Extender::~Extender()
+	{
+	}
+	
+	//////////////////////////
+	
+	ExtenderBox::ExtenderBox(QWidget* widget): QWidget(widget)
+	{
+		layout = new QVBoxLayout(this);
+	}
+	
+	ExtenderBox::~ExtenderBox()
+	{
+		clear();
+	}
+	
+	void ExtenderBox::add(Extender* ext)
+	{
+		layout->addWidget(ext);
+		extenders.append(ext);
+	}
+	
+	void ExtenderBox::remove(Extender* ext)
+	{
+		layout->removeWidget(ext);
+		extenders.removeAll(ext);
+		ext->hide();
+		ext->deleteLater();
+	}
+	
+	void ExtenderBox::clear()
+	{
+		foreach (Extender* ext,extenders)
+		{
+			ext->hide();
+			ext->deleteLater();
+		}
+		
+		extenders.clear();
+	}
+
+
+	//////////////////////////
 	
 	ViewDelegate::ViewDelegate(Core* core,ViewModel* model,View* parent): QStyledItemDelegate(parent),model(model)
 	{
-		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),
+				this,SLOT(torrentRemoved(bt::TorrentInterface*)));
 	}
 
 	ViewDelegate::~ViewDelegate()
@@ -42,40 +91,70 @@ namespace kt
 	}
 	
 	
-	void ViewDelegate::extend(bt::TorrentInterface* tc, QWidget* widget)
+	void ViewDelegate::extend(bt::TorrentInterface* tc, Extender* widget)
 	{
+		ExtenderBox* ext = 0;
 		ExtItr itr = extenders.find(tc);
-		QWidget* ext = itr == extenders.end() ? 0 : itr.value();
-		if (!ext)
+		if (itr == extenders.end())
 		{
-			ext = widget;
-			extenders.insert(tc,ext);
 			QAbstractItemView *aiv = qobject_cast<QAbstractItemView *>(parent());
-			if (aiv) 
-				ext->setParent(aiv->viewport());
-			
-			scheduleUpdateViewLayout();
+			ext = new ExtenderBox(aiv->viewport());
+			extenders.insert(tc,ext);
 		}
+		else
+		{
+			ext = itr.value();
+		}
+		
+		ext->add(widget);
+		widget->setParent(ext);
+		widget->show();
+		
+		scheduleUpdateViewLayout();
+		connect(widget,SIGNAL(closeRequest(Extender*)),this,SLOT(closeRequested(Extender*)));
 	}
 	
-	void ViewDelegate::closeExtender(bt::TorrentInterface* tc)
+	void ViewDelegate::closeExtenders(bt::TorrentInterface* tc)
 	{
 		ExtItr itr = extenders.find(tc);
-		QWidget* ext = itr == extenders.end() ? 0 : itr.value();
-		if (ext)
+		if (itr != extenders.end())
 		{
-			extenders.remove(tc);
+			ExtenderBox* ext = itr.value();
+			ext->clear();
 			ext->hide();
 			ext->deleteLater();
-			scheduleUpdateViewLayout();
+			extenders.erase(itr);
 		}
+		
+		scheduleUpdateViewLayout();
+	}
+	
+	void ViewDelegate::closeExtender(bt::TorrentInterface* tc, Extender* ext)
+	{
+		ExtItr itr = extenders.find(tc);
+		if (itr != extenders.end())
+		{
+			ExtenderBox* box = itr.value();
+			box->remove(ext);
+			if (box->count() == 0)
+			{
+				box->hide();
+				box->deleteLater();
+				extenders.erase(itr);
+			}
+		}
+		
+		scheduleUpdateViewLayout();
+	}
+	
+	void ViewDelegate::closeRequested(Extender* ext)
+	{
+		closeExtender(ext->torrent(),ext);
 	}
 
 	void ViewDelegate::torrentRemoved(bt::TorrentInterface* tc)
 	{
-		ExtItr itr = extenders.find(tc);
-		if (itr != extenders.end())
-			extenders.erase(itr);
+		closeExtenders(tc);
 	}
 	
 	
@@ -236,6 +315,7 @@ namespace kt
 	{
 		for (ExtItr i = extenders.begin();i != extenders.end();i++)
 		{
+			i.value()->clear();
 			i.value()->hide();
 			i.value()->deleteLater();
 		}

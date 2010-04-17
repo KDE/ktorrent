@@ -31,6 +31,8 @@ class KMenu;
 
 namespace kt
 {
+
+	class Extender;
 	class Core;
 	class ViewModel;
 	class ViewSelectionModel;
@@ -156,6 +158,7 @@ namespace kt
 		ViewModel* model;
 		ViewSelectionModel* selection_model;
 		ViewDelegate* delegate;
+		QMap<bt::TorrentInterface*,Extender*> data_scan_extenders;
 	};
 }
 
