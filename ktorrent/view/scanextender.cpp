@@ -94,7 +94,11 @@ namespace kt
 		progress_bar->setValue(0);
 		progress_bar->setMaximum(tc->getStats().total_chunks);
 		error_msg->clear();
-		error_msg->hide();
+		if (!error_msg->isHidden())
+		{
+			error_msg->hide();
+			emit resized(this);
+		}
 		timer.start(500);
 	}
 	
@@ -102,7 +106,7 @@ namespace kt
 	{
 		error_msg->show();
 		error_msg->setText(i18n("<font color=\"red\">%1</font>").arg(err));
-		adjustSize();
+		emit resized(this);
 	}
 	
 	void ScanExtender::closeRequested()

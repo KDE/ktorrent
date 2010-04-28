@@ -112,6 +112,7 @@ namespace kt
 		
 		scheduleUpdateViewLayout();
 		connect(widget,SIGNAL(closeRequest(Extender*)),this,SLOT(closeRequested(Extender*)));
+		connect(widget,SIGNAL(resized(Extender*)),this,SLOT(resized(Extender*)));
 	}
 	
 	void ViewDelegate::closeExtenders(bt::TorrentInterface* tc)
@@ -157,6 +158,11 @@ namespace kt
 		closeExtenders(tc);
 	}
 	
+	void ViewDelegate::resized(Extender* ext)
+	{
+		scheduleUpdateViewLayout();
+	}
+
 	
 	QSize ViewDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 	{

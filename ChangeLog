@@ -9,6 +9,7 @@ Changes in 4.0rc1:
 - Workaround memory leak in krosspython by not passing QObject pointers as arguments to callMethod (223885, 226924)
 - Make move on completion a per torrent feature
 - Make compiling plasma applet dependant on Qt version 
+- Make sure extenders can be resized
 
 Changes in 4.0beta2:
 - Use proper KDE function to format date in syndication plugin

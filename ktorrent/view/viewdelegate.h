@@ -53,6 +53,9 @@ namespace kt
 		/// Should be emitted by an extender when it wants to close itself
 		void closeRequest(Extender* ext);
 		
+		/// Should be emitted when an extender is resized
+		void resized(Extender* ext);
+		
 	protected:
 		bt::TorrentInterface* tc;
 	};
@@ -121,6 +124,7 @@ namespace kt
 	private slots:
 		void torrentRemoved(bt::TorrentInterface* tc);
 		void closeRequested(Extender* ext);
+		void resized(Extender* ext);
 		
 	private:
 		QSize maybeExtendedSize(const QStyleOptionViewItem &option, const QModelIndex &index) const;
