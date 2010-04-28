@@ -51,6 +51,7 @@ namespace kt
 		void finished();
 		void restart();
 		void closeRequested();
+		void scanError(const QString & err);
 		
 	private:
 		QTimer timer;

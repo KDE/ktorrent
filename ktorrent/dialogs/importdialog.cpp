@@ -404,6 +404,12 @@ namespace kt
 		QTextStream out(&fptr);
 		out << ddir << ::endl;
 	}
+	
+	void ImportDialog::error(const QString& err)
+	{
+		KMessageBox::error(this,err);
+	}
+
 }
 
 

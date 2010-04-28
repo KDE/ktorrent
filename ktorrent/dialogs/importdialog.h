@@ -64,6 +64,7 @@ namespace kt
 		virtual void progress(bt::Uint32 num,bt::Uint32 total);
 		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_found,bt::Uint32 num_downloaded,bt::Uint32 num_not_downloaded);
 		virtual void finished();
+		virtual void error(const QString& err);
 		
 		void import(bt::Torrent & tor);
 		

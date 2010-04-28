@@ -50,6 +50,9 @@ namespace kt
 		/// Scan finished, runs in app thread
 		virtual void finished();
 		
+		/// Error happened, runs in app thread
+		virtual void error(const QString& err);
+		
 		/// Reset the listener
 		void restart();
 		
@@ -64,11 +67,12 @@ namespace kt
 		
 		/// Create an extender for the job
 		Extender* createExtender();
-	
+
 	signals:
 		void scanFinished();
 		void restarted();
 		void closeRequested(ScanListener* me);
+		void scanError(const QString & err);
 		
 	public:
 		bt::Uint32 num_chunks;

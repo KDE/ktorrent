@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "scanlistener.h"
 #include "view/scanextender.h"
+#include <KMessageBox>
 
 namespace kt
 {
@@ -72,7 +73,11 @@ namespace kt
 		done = true;
 		scanFinished();
 	}
-	
+		
+	void ScanListener::error(const QString& err)
+	{
+		emit scanError(err);
+	}
 	
 	void ScanListener::emitCloseRequested()
 	{

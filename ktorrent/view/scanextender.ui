@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>596</width>
-    <height>61</height>
+    <height>81</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -235,6 +235,13 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="error_msg">
+     <property name="text">
+      <string>Errors:</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
