@@ -445,12 +445,12 @@ namespace kt
 		return ti->isAllowedToStart();
 	}
 
-	double DBusTorrent::getMaxSeedTime() const
+	double DBusTorrent::maxSeedTime() const
 	{
 		return ti->getMaxSeedTime();
 	}
 	
-	double DBusTorrent::getMaxShareRatio() const
+	double DBusTorrent::maxShareRatio() const
 	{
 		return ti->getMaxShareRatio();
 	}
@@ -464,6 +464,17 @@ namespace kt
 	{
 		ti->setMaxShareRatio(ratio);
 	}
-
+		
+	double DBusTorrent::seedTime() const
+	{
+		Uint32 dl = ti->getRunningTimeDL();
+		Uint32 ul = ti->getRunningTimeUL();
+		return (double)(ul - dl) / 3600.0;
+	}
+	
+	double DBusTorrent::shareRatio() const
+	{
+		return ti->getStats().shareRatio();
+	}
 }
 

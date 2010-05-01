@@ -116,9 +116,11 @@ namespace kt
 		
 		// Max share ratio and seed time
 		Q_SCRIPTABLE void setMaxShareRatio(double ratio);
-		Q_SCRIPTABLE double getMaxShareRatio() const;
+		Q_SCRIPTABLE double maxShareRatio() const;
+		Q_SCRIPTABLE double shareRatio() const;
 		Q_SCRIPTABLE void setMaxSeedTime(double hours);
-		Q_SCRIPTABLE double getMaxSeedTime() const;
+		Q_SCRIPTABLE double maxSeedTime() const;
+		Q_SCRIPTABLE double seedTime() const;
 		
 		
 	Q_SIGNALS:
