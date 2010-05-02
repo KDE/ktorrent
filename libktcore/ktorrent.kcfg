@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+		
+	<kcfgfile name="ktorrentrc"/>
+	<group name="downloads">
+		<entry name="maxDownloads" type="Int">
+			<label>Maximum number of downloads (0 = no limit)</label>
+			<default>3</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxSeeds" type="Int">
+			<label>Maximum number of seeds (0 = no limit)</label>
+			<default>5</default>
+			<min>0</min>
+		</entry>
+		<entry name="startDownloadsOnLowDiskSpace" type="Int">
+			<label>Start downloads on low disk space?</label>
+			<default>0</default>
+		</entry>
+
+		<entry name="maxConnections" type="Int">
+			<label>Maximum number of connections per torrent (0 = no limit)</label>
+			<default>120</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxTotalConnections" type="Int">
+			<label>Maximum number of connections for all torrents (0 = no limit) </label>
+			<default>800</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxUploadRate" type="Int">
+			<label>Maximum upload speed in KiB/sec (0 = no limit)</label>
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxDownloadRate" type="Int">
+			<label>Maximum download speed in KiB/sec (0 = no limit)</label>
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxRatio" type="Double">
+         		<label>Maximum share ratio (0 = no limit)</label>
+		        <default>0</default>
+         		<min>0</min>
+      		</entry>
+		<entry name="port" type="Int">
+			<label>Port</label>
+			<default>6881</default>
+			<min>0</min>
+			<max>65535</max>
+		</entry>
+		<entry name="udpTrackerPort" type="Int">
+			<label>Port</label>
+			<default>4444</default>
+			<min>0</min>
+			<max>65535</max>
+		</entry>
+		<entry name="showSystemTrayIcon" type="Bool">
+			<label>Show a system tray icon</label>
+			<default>true</default>
+		</entry>
+		<entry name="showSpeedBarInTrayIcon" type="Bool">
+			<label>Show speed bar in tray icon</label>
+			<default>false</default>
+		</entry>
+		<entry name="downloadBandwidth" type="Int">
+			<label>Download bandwidth (in kb/s):</label>
+			<default>500</default>
+			<min>0</min>
+			<max>1000000</max>
+		</entry>
+		<entry name="uploadBandwidth" type="Int">
+			<label>Upload bandwidth (in kb/s):</label>
+			<default>500</default>
+			<min>0</min>
+			<max>1000000</max>
+		</entry>
+		<entry name="showPopups" type="Bool">
+			<label>Show popup messages when torrent is finished.</label>
+			<default>true</default>
+		</entry>
+		<entry name="keepSeeding" type="Bool">
+			<label>Keep seeding after download has finished</label>
+			<default>true</default>
+		</entry>
+		<entry name="tempDir" type="Url">
+			<label>Folder to store temporary files</label>
+		</entry>
+		<entry name="useSaveDir" type="Bool">
+			<label>Whether to automatically save downloads to saveDir</label>
+			<default>false</default>
+		</entry>
+		<entry name="saveDir" type="Url">
+			<label>Folder to store downloaded files</label>
+		</entry>
+		<entry name="useTorrentCopyDir" type="Bool">
+			<label>Whether to automatically copy .torrent files to torrentCopyDir</label>
+			<default>false</default>
+		</entry>
+		<entry name="torrentCopyDir" type="Url">
+			<label>Folder to copy .torrent files to</label>
+		</entry>
+		<entry name="useCustomIP" type="Bool">
+			<label>Whether to use a custom IP to pass to the tracker</label>
+			<default>false</default>
+		</entry>
+		<entry name="lastSaveDir" type="String">
+			<label>Directory which was used as the last save directory</label>
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="customIP" type="String">
+			<label>IP to pass to the tracker</label>
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="guiUpdateInterval" type="Int">
+			<label>GUI update interval</label>
+			<min>500</min>
+			<max>5000</max>
+			<default>1000</default>
+		</entry>
+		<entry name="dhtSupport" type="Bool">
+			<label>Support for DHT</label>
+			<default>false</default>
+		</entry>
+		<entry name="dhtPort" type="Int">
+		     <label>DHT port</label>
+			<default>6881</default>
+			<min>1</min>
+			<max>65535</max>
+		</entry>
+		<entry name="pexEnabled" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="numUploadSlots" type="Int">
+			<label>Number of upload slots</label>
+			<default>2</default>
+			<min>2</min>
+			<max>100</max>
+		</entry>
+		<entry name="useEncryption" type="Bool">
+			<label>Use protocol encryption</label>
+			<default>false</default>
+		</entry>
+		<entry name="allowUnencryptedConnections" type="Bool">
+			<label>Allow unencrypted connections</label>
+			<default>true</default>
+		</entry>
+		<entry name="doUploadDataCheck" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="useMaxSizeForUploadDataCheck" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="maxSizeForUploadDataCheck" type="Int">
+			<default>512</default>
+			<min>16</min>
+			<max>8192</max>
+		</entry>
+		<entry name="typeOfService" type="Int">
+			<default>8</default>
+			<min>0</min>
+			<max>255</max>
+		</entry>
+		<entry name="dscp" type="Int">
+			<default>0</default>
+			<min>0</min>
+			<max>63</max>
+		</entry>
+		<entry name="maxConnectingSockets" type="Int">
+			<default>50</default>
+			<min>10</min>
+			<max>500</max>
+		</entry>
+		<entry name="autoRecheck" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="checkWhenFinished" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="maxCorruptedBeforeRecheck" type="Int">
+			<default>3</default>
+			<min>1</min>
+		</entry>
+		<entry name="shownColumns" type="IntList">
+			<label>Columns shown in KTorrentView</label>
+		</entry>
+		<entry name="useKDEProxySettings" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="httpProxy" type="String">
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="httpProxyPort" type="Int">
+			<default>8080</default>
+			<min>1</min>
+			<max>65535</max>
+		</entry>
+		<entry name="useProxyForWebSeeds" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="useProxyForTracker" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="socksEnabled" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="socksProxy" type="String">
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="socksPort" type="Int">
+			<default>1080</default>
+			<min>1</min>
+			<max>65535</max>
+		</entry>
+		<entry name="socksVersion" type="Int">
+			<min>4</min>
+			<max>5</max>
+			<default>5</default>
+		</entry>
+		<entry name="socksUsePassword" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="socksUsername" type="String">
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="socksPassword" type="String">
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="eta" type="Int">
+			<label>Algorithm to estimate the time when a torrent is finished</label>
+			<default>0</default>
+			<min>0</min>
+			<max>4</max>
+		</entry>
+		<entry name="diskPrealloc" type="Bool">
+ 			<default>true</default>
+ 		</entry>
+		<entry name="fullDiskPrealloc" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="minDiskSpace" type="Int">
+ 			<label>When there is no space left to complete download, and the available disk space is less than this value, the torrent will be stopped.</label>
+ 			<default>100</default>
+ 			<min>10</min>
+ 			<max>10000</max>
+		</entry>
+		<entry name="cpuUsage" type="Int">
+			<default>50</default>
+			<min>1</min>
+			<max>250</max>
+		</entry>
+		<entry name="useCompletedDir" type="Bool">
+			<label>Whether to automatically move completed downloads to completedDir</label>
+			<default>false</default>
+		</entry>
+		<entry name="completedDir" type="Url">
+			<label>Folder to move completed downloaded files to</label>
+		</entry>
+		<entry name="maxSeedTime" type="Double">
+        		<label>Maximum seed time in hours (0 = no limit)</label>
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="networkInterface" type="Int">
+			<default>0</default>
+			<min>0</min>
+			<max>255</max>
+		</entry>
+		<entry name="openMultipleTorrentsSilently" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="decreasePriorityOfStalledTorrents" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="stallTimer" type="Int">
+			<min>1</min>
+			<default>15</default>
+		</entry>
+		<entry name="previewSizeAudio" type="Int">
+			<min>16</min>
+			<default>256</default>
+		</entry>
+		<entry name="previewSizeVideo" type="Int">
+			<min>16</min>
+			<default>2048</default>
+		</entry>
+		<entry name="suppressSleep" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="oldTorrentsImported" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="manuallyControlTorrents" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="webseedsEnabled" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="useQHttpAnnounce" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="lookUpHostnameOfPeers" type="Bool">
+			<default>true</default>
+		</entry>
+	</group>
+</kcfg>

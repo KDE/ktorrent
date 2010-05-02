@@ -1,0 +1,4 @@
+add_subdirectory(email_notifications)
+add_subdirectory(auto_resume)
+add_subdirectory(tracker_groups)
+add_subdirectory(auto_remove)

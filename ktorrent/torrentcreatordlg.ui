@@ -1,0 +1,400 @@
+<ui version="4.0" >
+ <class>TorrentCreatorDlg</class>
+ <widget class="QWidget" name="TorrentCreatorDlg" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>474</width>
+    <height>565</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Create a torrent</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="leftMargin" >
+    <number>0</number>
+   </property>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>File or directory to create torrent from:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="KUrlRequester" name="m_url" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Options</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_2" >
+          <property name="text" >
+           <string>Size of each chunk:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_chunk_size" >
+          <property name="currentIndex" >
+           <number>4</number>
+          </property>
+          <item>
+           <property name="text" >
+            <string>32 KiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>64 KiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>128 KiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>256 KiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>512 KiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>1 MiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>2 MiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>4 MiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>8 MiB</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="m_start_seeding" >
+        <property name="text" >
+         <string>Start seeding</string>
+        </property>
+        <property name="checked" >
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="m_private" >
+        <property name="text" >
+         <string>Private torrent (DHT not allowed)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="m_dht" >
+        <property name="text" >
+         <string>Decentralized (DHT only)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_6" >
+          <property name="text" >
+           <string>Add torrent to group:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_group" />
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="m_tracker_tab" >
+      <attribute name="title" >
+       <string>Trackers</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLineEdit" name="m_tracker" />
+       </item>
+       <item row="0" column="1" >
+        <widget class="KPushButton" name="m_add_tracker" >
+         <property name="text" >
+          <string>Add</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QListWidget" name="m_tracker_list" />
+       </item>
+       <item row="1" column="1" >
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="KPushButton" name="m_remove_tracker" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KPushButton" name="m_move_up" >
+           <property name="text" >
+            <string>Move Up</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KPushButton" name="m_move_down" >
+           <property name="text" >
+            <string>Move Down</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>91</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="m_dht_tab" >
+      <attribute name="title" >
+       <string>DHT Nodes</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <layout class="QHBoxLayout" >
+         <item>
+          <widget class="QLabel" name="label_3" >
+           <property name="text" >
+            <string>Node:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="m_node" />
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4" >
+           <property name="text" >
+            <string>Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="m_port" >
+           <property name="minimum" >
+            <number>1</number>
+           </property>
+           <property name="maximum" >
+            <number>65535</number>
+           </property>
+           <property name="value" >
+            <number>6881</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1" >
+        <widget class="KPushButton" name="m_add_node" >
+         <property name="text" >
+          <string>Add</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QTreeWidget" name="m_node_list" >
+         <property name="rootIsDecorated" >
+          <bool>false</bool>
+         </property>
+         <property name="allColumnsShowFocus" >
+          <bool>true</bool>
+         </property>
+         <column>
+          <property name="text" >
+           <string>IP or Hostname</string>
+          </property>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Port</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="KPushButton" name="m_remove_node" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Web Seeds</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLineEdit" name="m_webseed" />
+       </item>
+       <item row="0" column="1" >
+        <widget class="KPushButton" name="m_add_webseed" >
+         <property name="text" >
+          <string>Add</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QListWidget" name="m_webseed_list" />
+       </item>
+       <item row="1" column="1" >
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="KPushButton" name="m_remove_webseed" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QLabel" name="label_5" >
+       <property name="text" >
+        <string>Comments:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="m_comments" />
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

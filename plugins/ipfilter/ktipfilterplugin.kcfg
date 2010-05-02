@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+		
+	<kcfgfile name="ktipfilterpluginrc"/>
+	<group name="general">
+		<entry name="filterURL" type="Url">
+			<label>Level1 filter url</label>
+			<default code="true">KUrl("http://www.bluetack.co.uk/config/level1.gz")</default>
+		</entry>
+		<entry name="useLevel1" type="Bool">
+			<label>Use level1 filter?</label>
+			<default>false</default>
+		</entry>
+		<entry name="autoUpdate" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="autoUpdateInterval" type="Int">
+			<min>1</min>
+			<max>1000</max>
+			<default>7</default>
+		</entry>
+	</group>
+</kcfg>

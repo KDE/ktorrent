@@ -1,0 +1,233 @@
+<ui version="4.0" >
+ <class>BWPrefPage</class>
+ <widget class="QWidget" name="BWPrefPage" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>473</width>
+    <height>385</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
+   <item>
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="title" >
+      <string>Special Limits</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_screensaverLimits" >
+        <property name="toolTip" >
+         <string>Use these global limits when the screensaver is activated, instead of the ones configured in the network settings.</string>
+        </property>
+        <property name="text" >
+         <string>Use different speed limits when the screensaver is activated</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout" >
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>Maximum upload speed:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="kcfg_screensaverUploadLimit" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip" >
+             <string>Global upload limit when the screensaver is activated.</string>
+            </property>
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KiB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>100000000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>Maximum download speed:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="kcfg_screensaverDownloadLimit" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip" >
+             <string>Global download limit when the screensaver is activated.</string>
+            </property>
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KiB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>100000000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer" >
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Colors</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="label_2" >
+        <property name="text" >
+         <string>Schedule background color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="KColorButton" name="kcfg_scheduleBackgroundColor" >
+        <property name="toolTip" >
+         <string>Color of the schedule background.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QLabel" name="label_3" >
+        <property name="text" >
+         <string>Schedule line color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="KColorButton" name="kcfg_scheduleLineColor" >
+        <property name="toolTip" >
+         <string>Color of all lines on the schedule.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <widget class="QLabel" name="label_4" >
+        <property name="text" >
+         <string>Schedule Item color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" >
+       <widget class="KColorButton" name="kcfg_itemColor" >
+        <property name="toolTip" >
+         <string>Color of each normal item on the schedule.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" >
+       <widget class="QLabel" name="label_5" >
+        <property name="text" >
+         <string>Paused schedule item color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" >
+       <widget class="KColorButton" name="kcfg_pausedColor" >
+        <property name="toolTip" >
+         <string>Color of each paused item on the schedule.</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>46</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KColorButton</class>
+   <extends>QPushButton</extends>
+   <header>kcolorbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_screensaverLimits</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_screensaverUploadLimit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>101</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>159</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_screensaverLimits</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_screensaverDownloadLimit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>70</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>131</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

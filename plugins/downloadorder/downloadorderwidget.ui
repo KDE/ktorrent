@@ -1,0 +1,145 @@
+<ui version="4.0" >
+ <class>DownloadOrderWidget</class>
+ <widget class="QWidget" name="DownloadOrderWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>239</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>File Download Order</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="m_top_label" >
+     <property name="text" >
+      <string>File download order for:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="m_custom_order_enabled" >
+     <property name="toolTip" >
+      <string>Whether or not to enable a custom download order.</string>
+     </property>
+     <property name="text" >
+      <string>Custom file download order enabled</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" >
+     <item>
+      <widget class="QListView" name="m_order" >
+       <property name="toolTip" >
+        <string>Order in which to download the files of a torrent. The file at the top will be downloaded first, followed by the second, then the third ...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout" >
+       <item>
+        <widget class="KPushButton" name="m_move_up" >
+         <property name="text" >
+          <string>Move Up</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="m_move_down" >
+         <property name="text" >
+          <string>Move Down</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>m_custom_order_enabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_order</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>141</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>166</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_custom_order_enabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_move_up</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>257</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>307</x>
+     <y>61</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_custom_order_enabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_move_down</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>229</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>320</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

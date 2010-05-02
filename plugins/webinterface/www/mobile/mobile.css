@@ -1,0 +1,117 @@
+.block
+{
+	background-color: white;
+	border: 1px solid black;
+	padding: 10px;
+}
+
+#logo
+{
+	margin-bottom: 20px;
+}
+
+#login_form
+{
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 499px;
+}
+
+#container
+{
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 95%;
+}
+
+body 
+{
+	background-color: #E1E0E0;
+}
+
+img 
+{
+	border:none;
+}
+
+#nav
+{
+	background-color: #E1E0E0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#nav a
+{
+	text-decoration:none;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+#nav a:hover
+{
+	background-color: white;
+}
+
+.action_bar
+{
+	margin-top: 10px;
+}
+
+.action_bar a
+{
+	text-decoration:none;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.action_bar a:hover
+{
+	background-color: #E1E0E0;
+}
+
+#settings_buttons 
+{
+	display: inline;
+}
+
+.settings_group
+{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.torrent_list_item
+{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.torrent_name 
+{
+	font-size:150%;
+	display:inline;
+}
+
+.torrent_list_item_line
+{
+}
+
+.torrent_list_item_header
+{
+	background-color: #E1E0E0;
+}
+
+.line_item
+{
+	display: inline;
+	margin: 5px;
+}
+
+#error_text
+{
+	color: red;
+	font-size : large;
+}

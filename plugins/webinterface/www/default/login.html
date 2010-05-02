@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>KTorrent  WebInterface - Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<script type="text/javascript" src="sha1.js"></script>
+<script type="text/javascript" src="login.js"></script>
+<script type="text/javascript" src="fetch_xml.js"></script>
+<script type="text/javascript">
+	var was_focused = false;
+	function focus_login()
+	{
+		if (!was_focused)
+		{
+			document.forms["loginForm"].elements["username"].focus();
+			was_focused = true;
+		}
+	}
+</script>
+</head>
+<body onload="focus_login(); get_challenge();">
+	<div id="container">
+		<div id="header">
+			<div id="logoWrapper">
+				<div id="logo"><a href="/" title="Home"><img src="icon.png" alt="Home" /></a></div>
+				<div id="siteName"><a href="/" title="Home">KTorrent Web Interface</a></div>                  
+			</div>
+		</div>
+		
+		<div id="user-login-form" class="block">
+			<form action="login?page=interface.html" method="post" id="loginForm" onsubmit="encrypt_pwd();">	
+			<h3 class="title">Log in</h3>
+			<div class="item" style="margin-top : 0em;">
+				Username:
+				<div class="option">
+					<input type="text" name="username" id="username"/>
+				</div>
+			</div>
+			<div class="item" style="min-height : 6em;">
+				Password:
+				<div class="option">
+					<div style="display : inline;">
+						<input type="password" name="password" id="password"/>
+					</div>
+					<div style="margin-top : 1em;">
+						<input type="submit" name="Login" value="Sign in" />
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="challenge" id="challenge" value="" />
+			</form>
+		</div>
+	</div>
+	<div id="footer">&#169; 2006-2008 KTorrent WebInterface Plugin</div>
+</body>
+</html>

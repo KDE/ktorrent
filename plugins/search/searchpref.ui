@@ -1,0 +1,208 @@
+<ui version="4.0" >
+ <class>SearchPref</class>
+ <widget class="QWidget" name="SearchPref" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>569</width>
+    <height>364</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>500</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>Search Preferences</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QPushButton" name="m_clear_history" >
+       <property name="toolTip" >
+        <string>Clear the search history combo boxes.</string>
+       </property>
+       <property name="text" >
+        <string>Clear Search History</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="kcfg_openInExternal" >
+     <property name="toolTip" >
+      <string>Whether or not to open searches in an external browser.</string>
+     </property>
+     <property name="text" >
+      <string>Open searches in external browser</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="kcfg_useDefaultBrowser" >
+     <property name="toolTip" >
+      <string>Use the default browser configured in the system settings.</string>
+     </property>
+     <property name="text" >
+      <string>Use default browser</string>
+     </property>
+     <property name="shortcut" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QRadioButton" name="kcfg_useCustomBrowser" >
+       <property name="toolTip" >
+        <string>Use a custom browser.</string>
+       </property>
+       <property name="text" >
+        <string>Custom browser path:</string>
+       </property>
+       <property name="shortcut" >
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KLineEdit" name="kcfg_customBrowser" >
+       <property name="toolTip" >
+        <string>Path of the custom browser.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType" >
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox8" >
+     <property name="title" >
+      <string>Search Engines</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout" >
+      <item>
+       <widget class="QListView" name="m_engines" >
+        <property name="selectionMode" >
+         <enum>QAbstractItemView::ExtendedSelection</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout" >
+        <item>
+         <widget class="QPushButton" name="m_add" >
+          <property name="toolTip" >
+           <string>Add a new search engine.</string>
+          </property>
+          <property name="text" >
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_remove" >
+          <property name="toolTip" >
+           <string>Remove all selected search engines.</string>
+          </property>
+          <property name="text" >
+           <string>&amp;Remove</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_remove_all" >
+          <property name="toolTip" >
+           <string>Remove all search engines.</string>
+          </property>
+          <property name="text" >
+           <string>R&amp;emove All</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_add_default" >
+          <property name="toolTip" >
+           <string>Add all default search engines.</string>
+          </property>
+          <property name="text" >
+           <string>Add Defau&amp;lt</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <includes>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >kpushbutton.h</include>
+ </includes>
+ <resources/>
+ <connections/>
+</ui>

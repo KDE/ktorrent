@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>KTorrent WebInterface</title>
+	<link rel="stylesheet" type="text/css" href="mobile.css" />
+	<meta http-equiv="Content-Type" content="text/html" />
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="fetch_xml.js"></script>
+	<script type="text/javascript" src="action.js"></script>
+	<script type="text/javascript" src="settings.js"></script>
+	<script type="text/javascript" src="mobile.js"></script>
+	<script type="text/javascript" src="torrent_details.js"></script>
+</head>
+<body onload="javascript:update_settings(show_error); update_torrents();">
+<div id="container" class="block">
+	<div id="logo" align="center">
+		<img src="ktorrentwebinterfacelogo.png" border="0" alt="ktorrent"/>
+	</div>
+	<div id="nav">
+		<a href="javascript:show_div('content');">Torrents</a>
+		<a href="javascript:show_div('torrent_load');">Load Torrents</a>
+		<a href="javascript:show_div('settings');">Settings</a>
+		<a href="logout" title="Logout">Logout</a>
+		<a href="javascript:shutdown();">Shutdown</a>
+	</div>
+	
+	<div id="error" style="display:none;" >
+		<p id="error_text"></p>
+	</div>
+
+	<div id="content">
+		<div class="action_bar">
+			<a href="javascript:refresh();">Refresh</a>
+			<a href="javascript:do_action('startall=true');">Start All</a>
+			<a href="javascript:do_action('stopall=true');">Stop All</a>
+		</div>
+		<table id="torrent_list_table">
+		</table>
+	</div>
+	
+	<div id="torrent_load" style="display:none;">
+		<h3 class="title">Load a torrent</h3>
+	
+		<form action="javascript:load_url(); update_torrents(); show_div('content');" method="get">
+			<div class="item">
+				URL:
+				<div class="option">
+					<input id="torrent_url" type="text" name="load_torrent" style="width : 240px;" />
+					<br /><span>Example: http://ktorrent.org/down/latest.torrent</span>
+			
+					<div style="margin-top : 1em;">
+						<input type="submit" value="Load Torrent" />
+					</div>
+				</div>
+			</div>
+		</form>
+	
+		<h3 class="title">Upload a torrent</h3>
+
+		<form action="torrent/load?page=interface.html" method="post" enctype="multipart/form-data">
+			<div class="item" style="min-height : 5em;">
+				File path:
+				<div class="option">
+					<div style="display : inline;">
+					<input type="file" name="load_torrent" style="width:240px;" />
+					</div>
+
+					<div style="margin-top : 1em;">
+					<input type="submit" name="Upload Torrent" value="Upload Torrent" />
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<div id="settings" style="display:none;">
+		<h3 class="title" style="clear:both;">Settings</h3>	
+		<form id="settings_form" action="javascript:clear_error(); submit_settings(show_error);">
+		<div id="settings_net" class="settings_group">
+			<table>
+			<tr><td>Maximum upload speed:</td><td><input type="text" name="maxUploadRate" size="20"/> KiB/s</td></tr>
+			<tr><td>Maximum download speed:</td><td><input type="text" name="maxDownloadRate" size="20"/> KiB/s</td></tr>
+			<tr><td>Maximum downloads:</td><td><input type="text" name="maxDownloads" size="20"/></td></tr>
+			<tr><td>Maximum seeds:</td><td><input type="text" name="maxSeeds" size="20"/></td></tr>
+			</table>
+		</div>
+		
+		<div id="settings_bt" class="settings_group">
+			<table>
+			<tr><td><input type="checkbox" name="useEncryption"> Use encryption</td></tr>
+			<tr><td><input type="checkbox" name="allowUnencryptedConnections"> Allow unencrypted connections</td></tr>
+			<tr><td><input type="checkbox" name="dhtSupport"> Use DHT</td></tr>
+			<tr><td><input type="checkbox" name="pexEnabled"> Use peer exchange</td></tr>
+			</table>
+		</div>
+		
+		<div id="settings_buttons">
+			<input type="submit" name="Submit Settings" value="Submit Settings" />
+			<form action="javascript:clear_error(); update_settings(show_error);">
+			<input type="button" name="Refresh" value="Refresh" />
+			</form>
+		</div>
+		</form>
+	</div>
+	
+	<div id="torrent_details" style="display:none;">
+		<div class="action_bar">
+			<a href="javascript:show_div('content');">Back</a>
+			<a href="javascript:clear_error(); update_torrent_details(current_torrent);">Refresh</a>
+		</div>
+		<table id="torrent_details_table"></table>
+	</div>
+</div>
+</body>
+</html>
+

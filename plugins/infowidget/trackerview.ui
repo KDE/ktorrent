@@ -1,0 +1,79 @@
+<ui version="4.0" >
+ <class>TrackerView</class>
+ <widget class="QWidget" name="TrackerView" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>781</width>
+    <height>201</height>
+   </rect>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" >
+   <item>
+    <widget class="QTreeView" name="m_tracker_list" />
+   </item>
+   <item>
+    <layout class="QVBoxLayout" >
+     <item>
+      <widget class="KPushButton" name="m_add_tracker" >
+       <property name="text" >
+        <string>Add Tracker</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_remove_tracker" >
+       <property name="text" >
+        <string>Remove Tracker</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_change_tracker" >
+       <property name="text" >
+        <string>Change Tracker</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_scrape" >
+       <property name="text" >
+        <string>Update Trackers</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>20</width>
+         <height>81</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_restore_defaults" >
+       <property name="text" >
+        <string>Restore Defaults</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

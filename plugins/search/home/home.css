@@ -1,0 +1,20 @@
+#headerL {
+  background-image: url(ktorrent-icon.png);
+  top: 10px;
+}
+
+#boxCenter {
+  padding: 1em;
+}
+
+.sepTable {
+  border: 1px solid #BDBDBD;
+}
+
+.specTableTitle {
+  background-color: #909090;
+}
+
+.specTableSubTitle {
+  background-color: #444444;
+}

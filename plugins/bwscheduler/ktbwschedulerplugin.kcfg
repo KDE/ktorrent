@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+		
+	<kcfgfile name="ktbwschedulerpluginrc"/>
+	<group name="general">
+		<entry name="itemColor" type="Color">
+			<default code="true">QColor(0,255,0,255)</default>
+		</entry>
+		<entry name="pausedColor" type="Color">
+			<default code="true">QColor(255,0,0,255)</default>
+		</entry>
+		<entry name="scheduleBackgroundColor" type="Color">
+			<default code="true">QColor(Qt::yellow)</default>
+		</entry>
+		<entry name="scheduleLineColor" type="Color">
+			<default code="true">QColor(Qt::blue)</default>
+		</entry>
+		<entry name="screensaverLimits" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="screensaverUploadLimit" type="Int">
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="screensaverDownloadLimit" type="Int">
+			<default>0</default>
+			<min>0</min>
+		</entry>
+	</group>
+</kcfg>

@@ -1,0 +1,211 @@
+<ui version="4.0" >
+ <class>GroupPolicyDlg</class>
+ <widget class="QWidget" name="GroupPolicyDlg" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>240</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="leftMargin" >
+    <number>0</number>
+   </property>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QCheckBox" name="m_default_location_enabled" >
+       <property name="toolTip" >
+        <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Default save location for torrents from this group. &lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note:&lt;/span> This is only used in the file selection dialog, when you change the group, the download location in the dialog will be set to this. You can still override it, if you want to. &lt;/p>&lt;/body>&lt;/html></string>
+       </property>
+       <property name="text" >
+        <string>Default save location:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KUrlRequester" name="m_default_location" >
+       <property name="toolTip" >
+        <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Default save location for torrents from this group. &lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note: &lt;/span>This is only used in the file selection dialog, when you change the group, the download location in the dialog will be set to this. You can still override it, if you want to.&lt;/p>&lt;/body>&lt;/html></string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="toolTip" >
+      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Default settings for torrents which are added to the group.&lt;/p>&lt;/body>&lt;/html></string>
+     </property>
+     <property name="title" >
+      <string>Torrent Limits</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <layout class="QGridLayout" >
+        <item row="0" column="0" >
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>Maximum download rate:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QSpinBox" name="m_max_download_rate" >
+          <property name="specialValueText" >
+           <string>No limit</string>
+          </property>
+          <property name="suffix" >
+           <string> KiB/s</string>
+          </property>
+          <property name="maximum" >
+           <number>10000000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="label_2" >
+          <property name="text" >
+           <string>Maximum upload rate:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QSpinBox" name="m_max_upload_rate" >
+          <property name="specialValueText" >
+           <string>No limit</string>
+          </property>
+          <property name="suffix" >
+           <string> KiB/s</string>
+          </property>
+          <property name="maximum" >
+           <number>10000000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QLabel" name="label_3" >
+          <property name="text" >
+           <string>Maximum seed time:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" >
+         <widget class="QDoubleSpinBox" name="m_max_seed_time" >
+          <property name="specialValueText" >
+           <string>No limit</string>
+          </property>
+          <property name="suffix" >
+           <string> Hours</string>
+          </property>
+          <property name="maximum" >
+           <double>10000000.000000000000000</double>
+          </property>
+          <property name="singleStep" >
+           <double>0.010000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" >
+         <widget class="QLabel" name="label_4" >
+          <property name="text" >
+           <string>Maximum share ratio:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1" >
+         <widget class="QDoubleSpinBox" name="m_max_share_ratio" >
+          <property name="specialValueText" >
+           <string>No limit</string>
+          </property>
+          <property name="maximum" >
+           <double>10000000.000000000000000</double>
+          </property>
+          <property name="singleStep" >
+           <double>0.010000000000000</double>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="m_only_new" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">When this is enabled, these settings will only be applied when a torrent is added to the group in the file selection dialog or the torrent creation dialog.&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If this is not enabled, the settings will always be applied when you add a torrent to this group. &lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Apply settings only for newly opened or created torrents</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>m_default_location_enabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_default_location</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>90</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>199</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
