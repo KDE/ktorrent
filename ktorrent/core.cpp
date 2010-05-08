@@ -880,9 +880,6 @@ namespace kt
 		Globals::instance().getDHT().stop();
 		// stop all authentications going on
 		AuthenticationMonitor::instance().clear();
-		// shutdown the server
-		Globals::instance().shutdownTCPServer();
-		Globals::instance().shutdownUTPServer();
 		
 		WaitJob* job = new WaitJob(5000);
 		qman->onExit(job);
@@ -893,6 +890,10 @@ namespace kt
 		}
 		else
 			delete job;
+		
+		// shutdown the servers
+		Globals::instance().shutdownTCPServer();
+		Globals::instance().shutdownUTPServer();
 		
 		pman->unloadAll();
 		qman->clear();
