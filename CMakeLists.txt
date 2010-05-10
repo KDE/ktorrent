@@ -1,20 +1,7 @@
 project(KTORRENT)
-find_package(KDE4 REQUIRED)
-find_package(KDE4Internal REQUIRED)
-find_package(GMP REQUIRED)
-find_package(QCA2 REQUIRED)
-find_package(Boost REQUIRED)
+find_package(Qt4 4.6.0 REQUIRED)
+find_package(KDE4 4.4.0 REQUIRED)
 find_package(KTorrent REQUIRED)
-
-# backward compatibility to <= KDE 4.1
-MACRO_ENSURE_VERSION( "4.1.83" ${KDE_VERSION} KDE_VERSION_OK)
-if(NOT KDE_VERSION_OK)
-  macro_optional_find_package(Plasma)
-  macro_log_feature(PLASMA_FOUND "Plasma" "Plasma libraries and header files" "http://plasma.kde.org/" FALSE "" "Plasma is needed for KTorrent Plasmoid")
-else(NOT KDE_VERSION_OK)
-  set(PLASMA_FOUND true)
-  set(PLASMA_LIBS ${KDE4_PLASMA_LIBS})
-endif(NOT KDE_VERSION_OK)
 
 # set some default settings
 include(KDE4Defaults)
@@ -53,9 +40,7 @@ add_subdirectory(plugins)
 add_subdirectory(ideal)
 add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)
-if( PLASMA_FOUND )
-    add_subdirectory(plasma)
-endif(PLASMA_FOUND)
+add_subdirectory(plasma)
 add_subdirectory(ktmagnetdownloader)
 
 # --- show log ---
