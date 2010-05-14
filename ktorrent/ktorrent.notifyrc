@@ -461,6 +461,7 @@ Action=Sound|Popup
 [Event/DHTNotEnabled]
 Name=DHT is not enabled
 Name[ca]=El DHT no està actiu
+Name[ca@valencia]=El DHT no està actiu
 Name[cs]=DHT není povoleno
 Name[da]=DHT er ikke aktiveret
 Name[de]=VHT ist nicht aktiviert
@@ -484,5 +485,6 @@ Name[sl]=DHT ni omogočen
 Name[sr]=ДХТ није укључен
 Name[sv]=DHT är inte aktiverat
 Name[uk]=DHT не увімкнено
+Name[x-test]=xxDHT is not enabledxx
 Name[zh_TW]=DHT 未開啟
 Action=Sound|Popup
