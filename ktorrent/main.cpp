@@ -166,9 +166,9 @@ int main(int argc, char **argv)
 	}
 #endif
 
-	kt::App app;
 	try
 	{
+		kt::App app;
 		app.setQuitOnLastWindowClosed(false);
 		app.exec();
 	}
