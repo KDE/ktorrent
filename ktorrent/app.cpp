@@ -39,7 +39,6 @@ namespace kt
 
 	App::~App()
 	{
-		delete main_widget;
 	}
 	
 
