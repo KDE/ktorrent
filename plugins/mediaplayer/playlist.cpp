@@ -126,7 +126,11 @@ namespace kt
 		{
 			switch (index.column())
 			{
-				case 0: return QString(tag->title().toCString(true));
+				case 0: 
+				{
+					QString title = QString(tag->title().toCString(true));
+					return title.isEmpty() ? QFileInfo(file).fileName() : title;
+				}
 				case 1: return QString(tag->artist().toCString(true));
 				case 2: return QString(tag->album().toCString(true));
 				case 3: 

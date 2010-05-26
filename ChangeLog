@@ -1,5 +1,6 @@
 Changes in 4.0.1:
 - Make sure that the proper encoding is used when loading syndication filters
+- Display filename if TagLib doesn't know the title of a file in the mediaplayer plugin
 
 Changes in 4.0:
 - In Core::onExit shutdown TCP and UTP servers a bit later to prevent crashes
