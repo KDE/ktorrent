@@ -23,6 +23,7 @@
 #include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
 #include "filter.h"
+#include <qtextcodec.h>
 
 using namespace bt;
 
@@ -297,11 +298,12 @@ namespace kt
 	
 	bool Filter::load(bt::BDictNode* dict)
 	{
+		QTextCodec* codec = QTextCodec::codecForName("UTF-8");
 		BValueNode* vn = dict->getValue("name");
 		if (!vn)
 			return false;
 		
-		name = vn->data().toString();
+		name = vn->data().toString(codec);
 		
 		vn = dict->getValue("id");
 		if (vn)
@@ -327,7 +329,7 @@ namespace kt
 		{
 			vn = ln->getValue(i);
 			if (vn)
-				word_matches.append(QRegExp(vn->data().toString(),case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+				word_matches.append(QRegExp(vn->data().toString(codec),case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
 		}
 		
 		vn = dict->getValue("use_season_and_episode_matching");
@@ -346,13 +348,13 @@ namespace kt
 		if (!vn)
 			return false;
 		
-		setSeasons(vn->data().toString());
+		setSeasons(vn->data().toString(codec));
 		
 		vn = dict->getValue("episodes");
 		if (!vn)
 			return false;
 		
-		setEpisodes(vn->data().toString());
+		setEpisodes(vn->data().toString(codec));
 		
 		vn = dict->getValue("download_matching");
 		if (!vn)
@@ -368,11 +370,11 @@ namespace kt
 		
 		vn = dict->getValue("group");
 		if (vn)
-			setGroup(vn->data().toString());
+			setGroup(vn->data().toString(codec));
 		
 		vn = dict->getValue("download_location");
 		if (vn)
-			setDownloadLocation(vn->data().toString());
+			setDownloadLocation(vn->data().toString(codec));
 		
 		vn = dict->getValue("silently");
 		if (!vn)
