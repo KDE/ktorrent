@@ -95,5 +95,7 @@ namespace ktplasma
 		{
 			engine->setData(info_hash,"update_error",err.toString());
 		}
+		
+		delete node;
 	}
 }
