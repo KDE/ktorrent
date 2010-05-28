@@ -59,7 +59,7 @@ namespace ktplasma
 		try
 		{
 			node = dec.decode();
-			if (node->getType() != BNode::DICT)
+			if (!node || node->getType() != BNode::DICT)
 				throw bt::Error("Root not a dict !");
 			
 			BDictNode* dict = (BDictNode*)node;
