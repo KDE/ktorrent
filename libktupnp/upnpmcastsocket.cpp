@@ -99,9 +99,10 @@ namespace kt
 		else
 		{
 			// add it to the list and emit the signal
-			if (!routers.contains(r->getServer()))
+			QString location = r->getLocation().prettyUrl();
+			if (!routers.contains(location))
 			{
-				routers.insert(r->getServer(),r);
+				routers.insert(location,r);
 				discovered(r);
 			}
 			else
@@ -205,7 +206,7 @@ namespace kt
 			}
 		}
 		
-		if (routers.contains(server))
+		if (routers.contains(location.prettyUrl()))
 		{
 			return 0;
 		}
@@ -262,7 +263,7 @@ namespace kt
 			QString server, location;
 			server = fin.readLine();
 			location = fin.readLine();
-			if (!routers.contains(server))
+			if (!routers.contains(KUrl(location).prettyUrl()))
 			{
 				UPnPRouter* r = new UPnPRouter(server,location);
 				// download it's xml file
