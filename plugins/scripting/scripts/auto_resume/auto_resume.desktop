@@ -53,6 +53,7 @@ Comment[fi]=Skripti torrentin automaattiseen jatkamiseen, kun keskeytystila on k
 Comment[fr]=Script pour reprendre automatiquement après un certain temps, lorsque l'état suspendu est activé
 Comment[ga]=Script a leanann ar aghaidh go huathoibríoch tar éis tréimhse éigin, nó atá an clár curtha ar fionraí
 Comment[hu]=A szkript automatikusan folytatja bizonyos idő után, a felfüggesztett állapot engedélyezésekor
+Comment[it]=Script per riprendere automaticamente gli scaricamenti dopo un certo tempo se lo stato di sospensione è attivo
 Comment[nb]=Et skript som gjenopptar aktiviteten etter en stund hvis hvilefunksjonen er slått på
 Comment[nds]=Dat Skript maakt automaatsch na en wiss Tiet wieder, wenn de Anhollen-Status anmaakt is.
 Comment[nl]=Script voor het automatisch verdergaan na enige tijd, als de onderbreek-status is ingeschakeld
