@@ -27,6 +27,7 @@
 #include <sys/file.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <exception>
 #include <QDir>
 #include <QFile>
 #include <kurl.h>
@@ -38,7 +39,11 @@
 #include "ktversion.h"
 #include <kdebug.h>
 #include <torrent/globals.h>
+#include <util/error.h>
+#include <util/log.h>
 #include <util/functions.h>
+
+using namespace bt;
 
 #ifndef Q_WS_WIN
 bool GrabPIDLock()
@@ -67,8 +72,6 @@ bool GrabPIDLock()
 	return true;
 }
 #endif
-
-
 
 
 int main(int argc, char **argv)
@@ -172,9 +175,17 @@ int main(int argc, char **argv)
 		app.setQuitOnLastWindowClosed(false);
 		app.exec();
 	}
+	catch (bt::Error & err)
+	{
+		Out(SYS_GEN|LOG_IMPORTANT) << "Uncaught exception: " << err.toString() << endl;
+	}
+	catch (std::exception & err)
+	{
+		Out(SYS_GEN|LOG_IMPORTANT) << "Uncaught exception: " << err.what() << endl;
+	}
 	catch (...)
 	{
-	//	fprintf(stderr, "Aborted by error : %s\n",e.toString().ascii());
+		Out(SYS_GEN|LOG_IMPORTANT) << "Uncaught unknown exception " << endl;
 	}
 	bt::Globals::cleanup();
 	return 0;

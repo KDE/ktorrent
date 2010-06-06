@@ -35,6 +35,8 @@ namespace kt
 		virtual ~App();
 
 		virtual int newInstance();
+		virtual bool notify(QObject* receiver, QEvent* event);
+		
 	private:
 		static GUI* main_widget;
 	};

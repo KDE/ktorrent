@@ -18,9 +18,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <qtimer.h>
+
+#include <QTimer>
 #include <QClipboard>
-#include <QToolButton>
 #include <kconfig.h>
 #include <klocale.h>
 #include <kaction.h>
@@ -45,6 +45,7 @@
 #include <torrent/queuemanager.h>
 #include <torrent/torrentcontrol.h>
 #include <util/log.h>
+#include <util/error.h>
 #include <dht/dhtbase.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
@@ -69,6 +70,7 @@
 #include <gui/activitybar.h>
 #include "torrentactivity.h"
 #include <gui/centralwidget.h>
+
 
 
 namespace kt
@@ -456,14 +458,21 @@ namespace kt
 
 	void GUI::update()
 	{
-		CurrentStats stats = core->getStats();
-		status_bar->updateSpeed(stats.upload_speed,stats.download_speed);
-		status_bar->updateTransfer(stats.bytes_uploaded,stats.bytes_downloaded);
-		status_bar->updateDHTStatus(Globals::instance().getDHT().isRunning(),Globals::instance().getDHT().getStats());
+		try
+		{
+			CurrentStats stats = core->getStats();
+			status_bar->updateSpeed(stats.upload_speed,stats.download_speed);
+			status_bar->updateTransfer(stats.bytes_uploaded,stats.bytes_downloaded);
+			status_bar->updateDHTStatus(Globals::instance().getDHT().isRunning(),Globals::instance().getDHT().getStats());
 
-		tray_icon->updateStats(stats);
-		core->updateGuiPlugins();
-		torrent_activity->update();
+			tray_icon->updateStats(stats);
+			core->updateGuiPlugins();
+			torrent_activity->update();
+		}
+		catch (bt::Error & err)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Uncaught exception: " << err.toString() << endl;
+		}
 	}
 
 	void GUI::applySettings()
@@ -590,6 +599,7 @@ namespace kt
 	{
 		return torrent_activity;
 	}
+
 }
 
 #include "gui.moc"

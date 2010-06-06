@@ -25,9 +25,15 @@
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <util/functions.h>
+#include <util/error.h>
+#include <util/log.h>
 #include <interfaces/functions.h>
+#include <utp/connection.h>
 #include "app.h"
 #include "gui.h"
+
+
+using namespace bt;
 
 namespace kt
 {
@@ -72,6 +78,45 @@ namespace kt
 		args->clear();
 		return 0;
 	}
+	
+	bool App::notify(QObject* receiver, QEvent* event)
+	{
+		// This function is overriden so that we can catch our own exceptions
+		// If they are uncaught, you get a crash.
+		try
+		{
+			// We use QApplication::notify here because libkdeui is not compiled with exception support
+			// Thus any uncaught exception leads to a crash.
+			QEvent::Type t = event->type();
+			
+			// KApplication does special stuff in these circumstances, so best to keep doing that
+			// there should be no chance of exceptions with show events of widgets
+			if (t == QEvent::Show && receiver->isWidgetType())
+				return KApplication::notify(receiver, event);
+			else
+				return QApplication::notify(receiver, event);
+		}
+		catch (bt::Error & err)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Uncaught exception: " << err.toString() << endl;
+		}
+		catch (utp::Connection::TransmissionError & err)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Uncaught exception: " << err.location << endl;
+		}
+		catch (std::exception & err)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Uncaught exception: " << err.what() << endl;
+			throw; // Best to exit for std::bad_alloc and other standard exceptions
+		}
+		catch (...)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Uncaught unknown exception " << endl;
+		}
+		
+		return false;
+	}
+
 }
 
 #include "app.moc"
