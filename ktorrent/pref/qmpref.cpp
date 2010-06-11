@@ -26,6 +26,7 @@ namespace kt
 	{
 		setupUi(this);
 		connect(kcfg_manuallyControlTorrents,SIGNAL(toggled(bool)),this,SLOT(onControlTorrentsManuallyToggled(bool)));
+		kcfg_stallTimer->setSuffix(ki18np(" minute", " minutes"));
 	}
 
 	QMPref::~QMPref() 
