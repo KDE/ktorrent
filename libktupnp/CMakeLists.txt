@@ -9,6 +9,6 @@ target_link_libraries(
     ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KIO_LIBS}
     ${QT_QTCORE_LIBRARY})
-set_target_properties(ktupnp PROPERTIES VERSION 4.0.0 SOVERSION 4 )
+set_target_properties(ktupnp PROPERTIES VERSION 4.0.1 SOVERSION 4 )
 install(TARGETS ktupnp  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
