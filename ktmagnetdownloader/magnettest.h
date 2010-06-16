@@ -25,7 +25,7 @@
 #include <magnet/magnetlink.h>
 #include <magnet/magnetdownloader.h>
 
-namespace kt
+namespace bt
 {
 	class UPnPRouter;
 	class UPnPMCastSocket;
@@ -40,14 +40,14 @@ public:
 	virtual ~MagnetTest();
 	
 public slots:
-	void routerDiscovered(kt::UPnPRouter* router);
+	void routerDiscovered(bt::UPnPRouter* router);
 	void start();
 	void update();
 	void foundMetaData(bt::MagnetDownloader* md,const QByteArray & data);
 	
 private:
 	bt::MagnetLink mlink;
-	kt::UPnPMCastSocket* upnp;
+	bt::UPnPMCastSocket* upnp;
 	bt::MagnetDownloader* mdownloader;
 	QTimer timer;
 };

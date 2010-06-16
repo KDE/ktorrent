@@ -26,8 +26,8 @@
 #include <util/fileops.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
+#include <upnp/upnpmcastsocket.h>
 #include "upnpplugin.h"
-#include "upnpmcastsocket.h"
 #include "upnpwidget.h"
 #include <interfaces/torrentactivityinterface.h>
 

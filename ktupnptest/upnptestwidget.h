@@ -24,7 +24,7 @@
 #include <interfaces/logmonitorinterface.h>
 #include "ui_upnptestwidget.h"
 
-namespace kt
+namespace bt
 {
 	class UPnPMCastSocket;
 	class UPnPRouter;
@@ -44,12 +44,12 @@ private slots:
 	void doForward();
 	void undoForward();
 	void findRouters();
-	void discovered(kt::UPnPRouter* r);
+	void discovered(bt::UPnPRouter* r);
 	void verboseModeChecked(bool on);
 
 private:
-	kt::UPnPMCastSocket* mcast_socket;
-	kt::UPnPRouter* router;
+	bt::UPnPMCastSocket* mcast_socket;
+	bt::UPnPRouter* router;
 };
 
 #endif

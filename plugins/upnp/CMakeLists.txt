@@ -9,7 +9,6 @@ kde4_add_plugin(ktupnpplugin ${ktupnpplugin_SRC})
 target_link_libraries(
     ktupnpplugin
     ktcore
-    ktupnp
     ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
     )

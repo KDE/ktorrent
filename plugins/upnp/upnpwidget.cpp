@@ -25,9 +25,9 @@
 #include <torrent/globals.h>
 #include <util/log.h>
 #include <util/error.h>
+#include <upnp/upnprouter.h>
+#include <upnp/upnpmcastsocket.h>
 #include "upnpwidget.h"
-#include "upnprouter.h"
-#include "upnpmcastsocket.h"
 #include "upnppluginsettings.h"
 #include "routermodel.h"
 
@@ -47,7 +47,7 @@ namespace kt
 		connect(m_forward,SIGNAL(clicked()),this,SLOT(onForwardBtnClicked()));
 		connect(m_undo_forward,SIGNAL(clicked()),this,SLOT(onUndoForwardBtnClicked()));
 		connect(m_rescan,SIGNAL(clicked()),this,SLOT(onRescanClicked()));
-		connect(sock,SIGNAL(discovered(kt::UPnPRouter* )),this,SLOT(addDevice(kt::UPnPRouter* )));
+		connect(sock,SIGNAL(discovered(bt::UPnPRouter* )),this,SLOT(addDevice(bt::UPnPRouter* )));
 
 		bt::Globals::instance().getPortList().setListener(this);
 
@@ -94,9 +94,9 @@ namespace kt
 		}
 	}
 
-	void UPnPWidget::addDevice(UPnPRouter* r)
+	void UPnPWidget::addDevice(bt::UPnPRouter* r)
 	{
-		connect(r,SIGNAL(updateGUI()),this,SLOT(updatePortMappings()));
+		connect(r,SIGNAL(stateChanged()),this,SLOT(updatePortMappings()));
 		model->addRouter(r);
 
 		// if we have discovered the default device or there is none
@@ -231,7 +231,7 @@ namespace kt
 		Q_UNUSED(previous);
 		UPnPRouter* r = model->routerForIndex(current);
 		m_forward->setEnabled(r != 0);
-		m_undo_forward->setEnabled(r != 0 && r->getNumForwardedPorts() > 0);
+		m_undo_forward->setEnabled(r != 0 && model->rowCount(QModelIndex()) > 0);
 	}
 
 }

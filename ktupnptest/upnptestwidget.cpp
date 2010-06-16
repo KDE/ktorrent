@@ -19,12 +19,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <util/log.h>
-#include "upnpmcastsocket.h"
+#include <upnp/upnpmcastsocket.h>
+#include <upnp/upnprouter.h>
 #include "upnptestwidget.h"
-#include "upnprouter.h"
+
 
 using namespace bt;
-using namespace kt;
 
 UPnPTestWidget::UPnPTestWidget(QWidget* parent) : QWidget(parent)
 {
@@ -73,13 +73,13 @@ void UPnPTestWidget::findRouters()
 	if (!mcast_socket)
 	{
 		mcast_socket = new UPnPMCastSocket(m_verbose->isChecked());
-		connect(mcast_socket,SIGNAL(discovered(kt::UPnPRouter*)),this,SLOT(discovered(kt::UPnPRouter*)));
+		connect(mcast_socket,SIGNAL(discovered(bt::UPnPRouter*)),this,SLOT(discovered(bt::UPnPRouter*)));
 	}
 
 	mcast_socket->discover();
 }
 
-void UPnPTestWidget::discovered(kt::UPnPRouter* r)
+void UPnPTestWidget::discovered(bt::UPnPRouter* r)
 {
 	router = r;
 	m_router->setText(router->getServer());
@@ -92,6 +92,7 @@ void UPnPTestWidget::discovered(kt::UPnPRouter* r)
 
 void UPnPTestWidget::message(const QString & line, unsigned int arg)
 {
+	Q_UNUSED(arg);
 	m_text_output->append(line);
 }
 

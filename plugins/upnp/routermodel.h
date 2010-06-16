@@ -23,9 +23,13 @@
 
 #include <QAbstractTableModel>
 
-namespace kt 
+namespace bt
 {
 	class UPnPRouter;
+}
+
+namespace kt 
+{
 	
 	/**
 		Model for all the detected UPnP routers.
@@ -38,10 +42,10 @@ namespace kt
 		virtual ~RouterModel();
 		
 		/// Add a router tot the model
-		void addRouter(UPnPRouter* r);
+		void addRouter(bt::UPnPRouter* r);
 		
 		/// Get a router given an index
-		UPnPRouter* routerForIndex(const QModelIndex & index);
+		bt::UPnPRouter* routerForIndex(const QModelIndex & index);
 		
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual int columnCount(const QModelIndex & parent) const;
@@ -53,11 +57,11 @@ namespace kt
 		void update();
 		
 	private:
-		QString ports(const UPnPRouter* r) const;
-		QString connections(const UPnPRouter* r) const;
+		QString ports(const bt::UPnPRouter* r) const;
+		QString connections(const bt::UPnPRouter* r) const;
 		
 	private:
-		QList<UPnPRouter*> routers;
+		QList<bt::UPnPRouter*> routers;
 	};
 
 }

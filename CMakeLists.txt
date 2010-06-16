@@ -35,7 +35,6 @@ include_directories( ${KDE4_INCLUDES}
    )
 
 add_subdirectory(libktcore)
-add_subdirectory(libktupnp)
 add_subdirectory(plugins)
 add_subdirectory(ideal)
 add_subdirectory(ktorrent)

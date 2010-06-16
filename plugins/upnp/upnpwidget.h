@@ -21,19 +21,20 @@
 #define KTUPNPPREFPAGE_H
 
 
-#include <qmap.h>
-#include <qwidget.h>
+#include <QWidget>
+#include <net/portlist.h>
 #include "ui_upnpwidget.h"
-#include "upnprouter.h"
+
 
 namespace bt
 {
 	class WaitJob;
+	class UPnPRouter;
+	class UPnPMCastSocket;
 }
 
 namespace kt
 {
-	class UPnPMCastSocket;
 	class RouterModel;
 
 	/**
@@ -44,10 +45,8 @@ namespace kt
 	class UPnPWidget : public QWidget,public Ui_UPnPWidget,public net::PortListener
 	{
 		Q_OBJECT
-
-		UPnPMCastSocket* sock;
 	public:
-		UPnPWidget(UPnPMCastSocket* sock,QWidget* parent);
+		UPnPWidget(bt::UPnPMCastSocket* sock,QWidget* parent);
 		virtual ~UPnPWidget();
 
 		void shutdown(bt::WaitJob* job);
@@ -57,7 +56,7 @@ namespace kt
 		 * Add a device to the list. 
 		 * @param r The device
 		 */
-		void addDevice(kt::UPnPRouter* r);
+		void addDevice(bt::UPnPRouter* r);
 	
 	protected slots:
 		void onForwardBtnClicked();
@@ -71,8 +70,9 @@ namespace kt
 		virtual void portRemoved(const net::Port & port);
 		
 	private:
+		bt::UPnPMCastSocket* sock;
 		RouterModel* model;
-		UPnPRouter* def_router;
+		bt::UPnPRouter* def_router;
 	};
 }
 

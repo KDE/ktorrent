@@ -22,9 +22,13 @@
 
 #include <interfaces/plugin.h>
 
-namespace kt
+namespace bt
 {
 	class UPnPMCastSocket;
+}
+
+namespace kt
+{
 	class UPnPWidget;
 
 	/**
@@ -42,7 +46,7 @@ namespace kt
 		virtual void shutdown(bt::WaitJob* job);
 		virtual bool versionCheck(const QString& version) const;
 	private:
-		UPnPMCastSocket* sock;
+		bt::UPnPMCastSocket* sock;
 		UPnPWidget* upnp_tab;
 	};
 

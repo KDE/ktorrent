@@ -23,6 +23,7 @@
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
+#include <kstandarddirs.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <util/log.h>
@@ -37,14 +38,19 @@ using namespace bt;
 int main(int argc,char** argv)
 {
 	KAboutData about("ktupnp", 0, ki18n("KTUPnPTest"),
-			"3.0dev", ki18n("KTorrent's UPnP test application"),
+			"1.0", ki18n("KTorrent's UPnP test application"),
 			KAboutData::License_GPL,
 			ki18n("(C) 2005 - 2007 Joris Guisson and Ivan Vasic"),
 			KLocalizedString(),
 			"http://www.ktorrent.org/");
 	KCmdLineArgs::init(argc, argv,&about);
 	KApplication app;
-	bt::InitLog(kt::DataDir() + "ktupnptest.log");
+	
+	QString str = KGlobal::dirs()->saveLocation("data","ktorrent");
+	if (!str.endsWith(bt::DirSeparator()))
+		str += bt::DirSeparator();
+	
+	bt::InitLog(str + "ktupnptest.log");
 	UPnPTestWidget* mwnd = new UPnPTestWidget();
 
 	app.setTopWidget(mwnd);
