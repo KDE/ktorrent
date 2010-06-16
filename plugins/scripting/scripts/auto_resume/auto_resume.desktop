@@ -69,6 +69,7 @@ Comment[sr@ijekavian]=Скрипта за аутоматско наставља�
 Comment[sr@ijekavianlatin]=Skripta za automatsko nastavljanje nakon određenog vremena, kada se pređe u stanje suspendovanosti
 Comment[sr@latin]=Skripta za automatsko nastavljanje nakon određenog vremena, kada se pređe u stanje suspendovanosti
 Comment[sv]=Skript för att automatiskt fortsätta efter en viss tid, när vilotillståndet aktiveras
+Comment[tr]=Duraklatılmış bir torrent görevini, bir süre sonra otomatik olarak devam ettiren betik
 Comment[uk]=Скрипт для автоматичного поновлення через певний проміжок часу, якщо увімкнено стан присипляння.
 Comment[x-test]=xxScript to automatically resume after some time, when the suspended state is enabledxx
 Comment[zh_TW]=在暫停一段時間後自動回復的文稿
