@@ -24,25 +24,25 @@
 #include "routermodel.h"
 
 
-namespace kt 
+namespace kt
 {
 
 	RouterModel::RouterModel(QObject* parent)
 		: QAbstractTableModel(parent)
 	{
 	}
-	
-	
+
+
 	RouterModel::~RouterModel()
 	{
 	}
-	
+
 	void RouterModel::addRouter(bt::UPnPRouter* r)
 	{
 		routers.append(r);
 		insertRow(routers.count() - 1);
 	}
-	
+
 	int RouterModel::rowCount(const QModelIndex & parent) const
 	{
 		if (!parent.isValid())
@@ -50,7 +50,7 @@ namespace kt
 		else
 			return 0;
 	}
-	
+
 	int RouterModel::columnCount(const QModelIndex & parent) const
 	{
 		if (!parent.isValid())
@@ -58,12 +58,12 @@ namespace kt
 		else
 			return 0;
 	}
-	
+
 	QVariant RouterModel::headerData(int section, Qt::Orientation orientation,int role) const
 	{
 		if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
 			return QVariant();
-		 
+
 		switch (section)
 		{
 			case 0: return i18n("Device");
@@ -80,12 +80,12 @@ namespace kt
 		else
 			return routers.at(index.row());
 	}
-	
+
 	QVariant RouterModel::data(const QModelIndex & index, int role) const
 	{
 		if (!index.isValid())
 			return QVariant();
-		
+
 		const bt::UPnPRouter* r = routers.at(index.row());
 		if (role == Qt::DisplayRole)
 		{
@@ -119,10 +119,10 @@ namespace kt
 			else if (index.column() == 1 && !r->getError().isEmpty())
 				return r->getError();
 		}
-		
+
 		return QVariant();
 	}
-	
+
 	bool RouterModel::removeRows(int row,int count,const QModelIndex & parent)
 	{
 		Q_UNUSED(parent);
@@ -130,7 +130,7 @@ namespace kt
 		endRemoveRows();
 		return true;
 	}
-	
+
 	bool RouterModel::insertRows(int row,int count,const QModelIndex & parent)
 	{
 		Q_UNUSED(parent);
@@ -138,12 +138,12 @@ namespace kt
 		endInsertRows();
 		return true;
 	}
-	
+
 	class PortsVisitor : public bt::UPnPRouter::Visitor
 	{
 	public:
 		virtual ~PortsVisitor() {}
-		
+
 		virtual void forwarding(const net::Port& port, bool pending, const bt::UPnPService* service)
 		{
 			Q_UNUSED(service);
@@ -155,27 +155,27 @@ namespace kt
 				ports.append(ret);
 			}
 		}
-		
-		QString result() 
+
+		QString result()
 		{
 			return ports.join("\n");
 		}
-		
+
 		QStringList ports;
 	};
-	
+
 	QString RouterModel::ports(const bt::UPnPRouter* r) const
 	{
 		PortsVisitor pv;
-		r->visit(&pv);
+		const_cast<bt::UPnPRouter*>(r)->visit(&pv);
 		return pv.result();
 	}
-	
+
 	class ConnectionsVisitor : public bt::UPnPRouter::Visitor
 	{
 	public:
 		virtual ~ConnectionsVisitor() {}
-		
+
 		virtual void forwarding(const net::Port& port, bool pending, const bt::UPnPService* service)
 		{
 			Q_UNUSED(port);
@@ -187,19 +187,19 @@ namespace kt
 					connections.append("IP");
 			}
 		}
-		
-		QString result() 
+
+		QString result()
 		{
 			return connections.join("\n");
 		}
-		
+
 		QStringList connections;
 	};
-	
+
 	QString RouterModel::connections(const bt::UPnPRouter* r) const
 	{
 		ConnectionsVisitor cv;
-		r->visit(&cv);
+		const_cast<bt::UPnPRouter*>(r)->visit(&cv);
 		return cv.result();
 	}
 
