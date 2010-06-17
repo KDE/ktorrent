@@ -167,7 +167,7 @@ namespace kt
 	QString RouterModel::ports(const bt::UPnPRouter* r) const
 	{
 		PortsVisitor pv;
-		const_cast<bt::UPnPRouter*>(r)->visit(&pv);
+		r->visit(&pv);
 		return pv.result();
 	}
 
@@ -199,7 +199,7 @@ namespace kt
 	QString RouterModel::connections(const bt::UPnPRouter* r) const
 	{
 		ConnectionsVisitor cv;
-		const_cast<bt::UPnPRouter*>(r)->visit(&cv);
+		r->visit(&cv);
 		return cv.result();
 	}
 
