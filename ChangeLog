@@ -1,3 +1,6 @@
+Changes in 4.0.2:
+- Fix wrong X-KDE-PluginInfo-Name in ktzeroconfplugin.desktop
+
 Changes in 4.0.1:
 - Make sure that the proper encoding is used when loading syndication filters
 - Display filename if TagLib doesn't know the title of a file in the mediaplayer plugin
