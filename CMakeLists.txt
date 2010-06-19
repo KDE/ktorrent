@@ -2,6 +2,7 @@ project(KTORRENT)
 find_package(Qt4 4.6.0 REQUIRED)
 find_package(KDE4 4.4.0 REQUIRED)
 find_package(KTorrent REQUIRED)
+find_package(Boost REQUIRED)
 
 # set some default settings
 include(KDE4Defaults)
