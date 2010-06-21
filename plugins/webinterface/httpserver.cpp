@@ -111,8 +111,11 @@ namespace kt
 	
 	HttpServer::~HttpServer()
 	{
-		notifier->setEnabled(false);
-		delete notifier;
+		if (notifier)
+		{
+			notifier->setEnabled(false);
+			delete notifier;
+		}
 		sock->close();
 		delete sock;
 		qDeleteAll(clients);
