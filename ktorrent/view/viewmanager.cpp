@@ -161,19 +161,7 @@ namespace kt
 		if (current)
 			current->addPeers();
 	}
-
-	void ViewManager::toggleDHT()
-	{
-		if (current)
-			current->toggleDHT();
-	}
-		
-	void ViewManager::togglePEX()
-	{
-		if (current)
-			current->togglePEX();
-	}
-		
+	
 	void ViewManager::manualAnnounce()
 	{
 		if (current)
@@ -210,10 +198,10 @@ namespace kt
 			current->moveData();
 	}
 
-	void ViewManager::moveDataWhenCompleted()
+	void ViewManager::showProperties()
 	{
 		if (current)
-			current->moveDataWhenCompleted();
+			current->showProperties();
 	}
 
 	void ViewManager::removeFromGroup()
@@ -479,7 +467,6 @@ namespace kt
 		manual_announce->setEnabled(en_announce);
 		do_scrape->setEnabled(sel.count() > 0);
 		move_data->setEnabled(sel.count() > 0);
-		move_data_when_completed->setEnabled(!en_completed && sel.count() > 0);
 
 		const kt::Group* current_group = current->getGroup();
 		remove_from_group->setEnabled(current_group && !current_group->isStandardGroup());
@@ -487,25 +474,13 @@ namespace kt
 
 		if (sel.count() == 1)
 		{
-			//enable additional peer sources if torrent is not private
-			dht_enabled->setEnabled(en_peer_sources && Settings::dhtSupport());
-			pex_enabled->setEnabled(en_peer_sources && Settings::pexEnabled());
-			
 			TorrentInterface* tc = sel.front();
 			// no data check when we are preallocating diskspace
 			check_data->setEnabled(tc->getStats().status != bt::ALLOCATING_DISKSPACE);
-			
-			if (en_peer_sources)
-			{
-				dht_enabled->setChecked(tc->isFeatureEnabled(bt::DHT_FEATURE));
-				pex_enabled->setChecked(tc->isFeatureEnabled(bt::UT_PEX_FEATURE));
-			}
 		}
 		else
 		{
 			check_data->setEnabled(false);
-			dht_enabled->setEnabled(false);	
-			pex_enabled->setEnabled(false);	
 		}
 		
 		rename_torrent->setEnabled(sel.count() == 1);
@@ -605,17 +580,6 @@ namespace kt
 		add_peers = new KAction(KIcon("list-add"),i18n("Add Peers"),this);
 		connect(add_peers,SIGNAL(triggered()),this,SLOT(addPeers()));
 		ac->addAction("view_add_peers",add_peers);
-		
-		dht_enabled = new KAction(i18n("DHT"),this);
-		connect(dht_enabled,SIGNAL(triggered()),this,SLOT(toggleDHT()));
-		dht_enabled->setCheckable(true);
-		ac->addAction("view_dht_enabled",dht_enabled);
-		
-		
-		pex_enabled = new KAction(i18n("Peer Exchange"),this);
-		connect(pex_enabled,SIGNAL(triggered()),this,SLOT(togglePEX()));
-		pex_enabled->setCheckable(true);
-		ac->addAction("view_pex_enabled",pex_enabled);
 	
 		manual_announce = new KAction(i18n("Manual Announce"),this);
 		manual_announce->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_A));
@@ -642,9 +606,9 @@ namespace kt
 		connect(move_data,SIGNAL(triggered()),this,SLOT(moveData()));
 		ac->addAction("view_move_data",move_data);
 
-		move_data_when_completed = new KAction(i18n("Move Data When Completed"),this);
-		connect(move_data_when_completed,SIGNAL(triggered()),this,SLOT(moveDataWhenCompleted()));
-		ac->addAction("view_move_data_when_completed", move_data_when_completed);
+		torrent_properties = new KAction(i18n("Settings"),this);
+		connect(torrent_properties,SIGNAL(triggered()),this,SLOT(showProperties()));
+		ac->addAction("view_torrent_properties", torrent_properties);
 
 		remove_from_group = new KAction(i18n("Remove from Group"),this);
 		connect(remove_from_group,SIGNAL(triggered()),this,SLOT(removeFromGroup()));
@@ -797,17 +761,8 @@ namespace kt
 		}
 			
 		gui->plugActionList("view_groups_list",actions);
-		
 		gui->unplugActionList("view_columns_list");
 		gui->plugActionList("view_columns_list",v->columnActionList());
-
-		// disable DHT and PEX if they are globally disabled
-		if (!Settings::dhtSupport())
-			dht_enabled->setEnabled(false);
-		
-		if (!Settings::pexEnabled())
-			pex_enabled->setEnabled(false);
-		
 		view_menu->popup(pos);
 	}
 }

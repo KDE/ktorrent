@@ -131,12 +131,6 @@ namespace kt
 		
 		/// Show the add peers dialog for the selected torrent
 		void addPeers();
-
-		/// Toggle DHT on and off for the selected torrents
-		void toggleDHT();
-		
-		/// Toggle PEX for the selected torrents
-		void togglePEX();
 		
 		/// Do a manual announce for the selected torrents
 		void manualAnnounce();
@@ -156,8 +150,8 @@ namespace kt
 		/// Move data of the selected torrent
 		void moveData();
 
-		/// Move data of the selected torrent when it is completed
-		void moveDataWhenCompleted();
+		/// Show the properties extender
+		void showProperties();
 
 		/// Remove the selected torrent from the current group
 		void removeFromGroup();
@@ -198,15 +192,13 @@ namespace kt
 		KAction* remove_torrent;
 		KAction* remove_torrent_and_data;
 		KAction* add_peers;
-		KAction* dht_enabled;
-		KAction* pex_enabled;
 		KAction* manual_announce;
 		KAction* do_scrape;
 		KAction* preview;
 		KAction* data_dir;
 		KAction* tor_dir;
 		KAction* move_data;
-		KAction* move_data_when_completed;
+		KAction* torrent_properties;
 		KAction* rename_torrent;
 		KAction* remove_from_group;
 		QMap<Group*,KAction*> group_actions;

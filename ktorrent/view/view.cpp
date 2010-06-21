@@ -347,7 +347,7 @@ namespace kt
 		}
 	}
 
-	void View::moveDataWhenCompleted()
+	void View::showProperties()
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
@@ -373,34 +373,6 @@ namespace kt
 		update();
 		num_running++; // set these wrong so that the caption is updated on the next update
 		num_torrents++;
-	}
-
-	void View::toggleDHT()
-	{
-		QList<bt::TorrentInterface*> sel;
-		getSelection(sel);
-		foreach(bt::TorrentInterface* tc,sel)
-		{
-			if (tc)
-			{
-				bool on = tc->isFeatureEnabled(bt::DHT_FEATURE);
-				tc->setFeatureEnabled(bt::DHT_FEATURE,!on);
-			}
-		}
-	}
-
-	void View::togglePEX()
-	{
-		QList<bt::TorrentInterface*> sel;
-		getSelection(sel);
-		foreach(bt::TorrentInterface* tc,sel)
-		{
-			if (tc)
-			{
-				bool on = tc->isFeatureEnabled(bt::UT_PEX_FEATURE);
-				tc->setFeatureEnabled(bt::UT_PEX_FEATURE,!on);
-			}
-		}
 	}
 
 	void View::renameTorrent()

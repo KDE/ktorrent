@@ -127,11 +127,9 @@ namespace kt
 		void openDataDir();
 		void openTorDir();
 		void removeFromGroup();
-		void toggleDHT();
-		void togglePEX();
 		void scrape();
 		void moveData();
-		void moveDataWhenCompleted();
+		void showProperties();
 		void renameTorrent();
 		void showMenu(const QPoint & pos);
 		void showHeaderMenu(const QPoint& pos);

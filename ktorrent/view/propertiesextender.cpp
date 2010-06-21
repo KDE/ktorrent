@@ -22,6 +22,7 @@
 #include "propertiesextender.h"
 #include <KUrl>
 #include <interfaces/torrentinterface.h>
+#include <settings.h>
 
 namespace kt
 {
@@ -41,6 +42,14 @@ namespace kt
 			move_on_completion_url->setEnabled(false);
 		}
 		
+		// disable DHT and PEX if they are globally disabled
+		const bt::TorrentStats & s = tc->getStats();
+		dht->setEnabled(!s.priv_torrent);
+		pex->setEnabled(!s.priv_torrent);
+		dht->setChecked(!s.priv_torrent && tc->isFeatureEnabled(bt::DHT_FEATURE));
+		pex->setChecked(!s.priv_torrent && tc->isFeatureEnabled(bt::UT_PEX_FEATURE));
+		
+		superseeding->setChecked(s.superseeding);
 		connect(move_on_completion_enabled,SIGNAL(toggled(bool)),this,SLOT(moveOnCompletionEnabled(bool)));
 		connect(buttons,SIGNAL(clicked(QAbstractButton*)),this,SLOT(buttonClicked(QAbstractButton*)));
 	}
@@ -81,6 +90,10 @@ namespace kt
 		{
 			tc->setMoveWhenCompletedDir(KUrl());
 		}
+		
+		tc->setFeatureEnabled(bt::DHT_FEATURE,dht->isChecked());
+		tc->setFeatureEnabled(bt::UT_PEX_FEATURE,pex->isChecked());
+		tc->setSuperSeeding(superseeding->isChecked());
 	}
 
 

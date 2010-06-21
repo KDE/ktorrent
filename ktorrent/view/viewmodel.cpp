@@ -268,6 +268,7 @@ namespace kt
 			switch (status)
 			{
 				case bt::SEEDING :
+				case bt::SUPERSEEDING:
 				case bt::DOWNLOADING:
 				case bt::ALLOCATING_DISKSPACE :
 					return green;

@@ -1,5 +1,6 @@
 Changes in 4.1:
 - Remove libktupnp it is now part of libktorrent
+- Add support for superseeding (171661)
 
 Changes in 4.0.2:
 - Fix wrong X-KDE-PluginInfo-Name in ktzeroconfplugin.desktop

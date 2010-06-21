@@ -160,6 +160,7 @@ namespace kt
 	
 	void ViewDelegate::resized(Extender* ext)
 	{
+		Q_UNUSED(ext);
 		scheduleUpdateViewLayout();
 	}
 
