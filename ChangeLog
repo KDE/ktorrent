@@ -1,6 +1,7 @@
 Changes in 4.1:
 - Remove libktupnp it is now part of libktorrent
 - Add support for superseeding (171661)
+- Change from and to fields to always ensure that from is smaller then to in the bandwidth scheduler plugin (225951)
 
 Changes in 4.0.2:
 - Fix wrong X-KDE-PluginInfo-Name in ktzeroconfplugin.desktop

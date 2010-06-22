@@ -40,6 +40,8 @@ namespace kt
 		connect(m_from,SIGNAL(timeChanged(const QTime & )),this,SLOT(fromChanged(const QTime&)));
 		connect(m_to,SIGNAL(timeChanged(const QTime & )),this,SLOT(toChanged(const QTime&)));
 		
+		m_from->setMaximumTime(QTime(23,58,0));
+		m_to->setMinimumTime(QTime(0,1,0));
 	
 		setWindowTitle(i18n("Edit an item"));
 	}
@@ -51,13 +53,15 @@ namespace kt
 	void EditItemDlg::fromChanged(const QTime & time)
 	{
 		// ensure that from is always smaller then to
-		m_to->setMinimumTime(time.addSecs(60));
+		if (time >= m_to->time())
+			m_to->setTime(time.addSecs(60));
 	}
 	
 	void EditItemDlg::toChanged(const QTime & time)
 	{
 		// ensure that from is always smaller then to
-		m_from->setMaximumTime(time.addSecs(-60));
+		if (time <= m_from->time())
+			m_from->setTime(time.addSecs(-60));
 	}
 	
 	void EditItemDlg::suspendedChanged(bool on) 

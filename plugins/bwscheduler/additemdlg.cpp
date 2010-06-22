@@ -50,7 +50,9 @@ namespace kt
 		setWindowTitle(i18n("Add an item"));
 		
 		m_from->setTime(QTime(10,0,0));
+		m_from->setMaximumTime(QTime(23,58,0));
 		m_to->setTime(QTime(11,59,59));
+		m_to->setMinimumTime(QTime(0,1,0));
 	
 		m_suspended->setChecked(false);
 		m_upload_limit->setValue(0);
@@ -120,13 +122,15 @@ namespace kt
 	void AddItemDlg::fromChanged(const QTime & time)
 	{
 		// ensure that from is always smaller then to
-		m_to->setMinimumTime(time.addSecs(60));
+		if (time >= m_to->time())
+			m_to->setTime(time.addSecs(60));
 	}
 	
 	void AddItemDlg::toChanged(const QTime & time)
 	{
 		// ensure that from is always smaller then to
-		m_from->setMaximumTime(time.addSecs(-60));
+		if (time <= m_from->time())
+			m_from->setTime(time.addSecs(-60));
 	}
 	
 	void AddItemDlg::selectEntireWeek()
