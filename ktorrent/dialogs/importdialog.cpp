@@ -35,8 +35,10 @@
 #include <interfaces/coreinterface.h>
 #include <datachecker/singledatachecker.h>
 #include <datachecker/multidatachecker.h>
+#include <interfaces/functions.h>
 #include <settings.h>
 #include "importdialog.h"
+
 
 
 using namespace bt;
@@ -49,7 +51,7 @@ namespace kt
 		setupUi(this);
 		KUrlRequester* r = m_torrent_url;
 		r->setMode(KFile::File|KFile::LocalOnly);
-		r->setFilter("*.torrent|" + i18n("Torrent files") + "\n*|" + i18n("All files"));
+		r->setFilter(kt::TorrentFileFilter(true));
 
 		r = m_data_url;
 		r->setMode(KFile::File|KFile::Directory|KFile::LocalOnly);

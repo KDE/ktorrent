@@ -353,7 +353,7 @@ namespace kt
 		setProgressBarEnabled(false);
 		update_timer.stop();
 		
-		QString filter = "*.torrent|" + i18n("Torrent Files (*.torrent)");
+		QString filter = kt::TorrentFileFilter(false);
 		QString s = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"),filter,
 						this,i18n("Choose a file to save the torrent"));
 															   

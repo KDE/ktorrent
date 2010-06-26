@@ -33,6 +33,7 @@
 #include <util/indexofcompare.h>
 #include <groups/groupmanager.h>
 #include <torrent/jobqueue.h>
+#include <interfaces/functions.h>
 #include "gui.h"
 #include "view.h"
 #include "viewmodel.h"
@@ -44,6 +45,7 @@
 #include "dialogs/speedlimitsdlg.h"
 #include <kfiledialog.h>
 #include <kio/job.h>
+
 
 using namespace bt;
 
@@ -736,7 +738,7 @@ namespace kt
 		if (sel.count() == 1)
 		{
 			bt::TorrentInterface* tc = sel.front();
-			QString filter = "*.torrent|" + i18n("Torrents (*.torrent)");
+			QString filter = kt::TorrentFileFilter(false);
 			QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///exportTorrent"),filter);
 			if (!fn.isEmpty())
 				KIO::file_copy(tc->getTorDir() + "torrent",fn);

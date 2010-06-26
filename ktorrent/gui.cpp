@@ -70,6 +70,7 @@
 #include <gui/activitybar.h>
 #include "torrentactivity.h"
 #include <gui/centralwidget.h>
+#include <interfaces/functions.h>
 
 
 
@@ -227,7 +228,7 @@ namespace kt
 	
 	void GUI::openTorrentSilently()
 	{
-		QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All Files");
+		QString filter = kt::TorrentFileFilter(true);
 		KUrl::List urls = KFileDialog::getOpenUrls(KUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
 
 		if (urls.count() == 0)
@@ -242,7 +243,7 @@ namespace kt
 
 	void GUI::openTorrent()
 	{
-		QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All Files");
+		QString filter = kt::TorrentFileFilter(true);
 		KUrl::List urls = KFileDialog::getOpenUrls(KUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
 
 		if (urls.count() == 0)

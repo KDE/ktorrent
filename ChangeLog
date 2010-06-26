@@ -3,6 +3,7 @@ Changes in 4.1:
 - Add support for superseeding (171661)
 - Change from and to fields to always ensure that from is smaller then to in the bandwidth scheduler plugin (225951)
 - Show if a peer is using the µTP protocol or not 
+- Cleanup file dialog filters for torrents and make sure that files named torrent, are also seen by the filter (241259)
 
 Changes in 4.0.2:
 - Fix wrong X-KDE-PluginInfo-Name in ktzeroconfplugin.desktop

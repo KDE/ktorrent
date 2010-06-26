@@ -158,6 +158,14 @@ namespace kt
 		bt::Downloader::setUseWebSeeds(Settings::webseedsEnabled());
 		bt::Peer::setResolveHostnames(Settings::lookUpHostnameOfPeers());
 	}
+	
+	QString TorrentFileFilter(bool all_files_included)
+	{
+		QString ret = QString("*torrent|%1").arg(i18n("Torrents"));
+		if (all_files_included)
+			ret += "\n*|" + i18n("All files");
+		return ret;
+	}
 
 
 }

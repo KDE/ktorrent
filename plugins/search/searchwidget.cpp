@@ -45,6 +45,7 @@
 #include <torrent/globals.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
+#include <interfaces/functions.h>
 #include "searchwidget.h"
 #include "htmlpart.h"
 #include "searchplugin.h"
@@ -237,7 +238,8 @@ namespace kt
 	
 	void SearchWidget::onSaveTorrent(const KUrl & url)
 	{
-		QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"),"*.torrent | " + i18n("torrent files"),this);
+		QString fn = KFileDialog::getSaveFileName(
+						KUrl("kfiledialog:///openTorrent"),kt::TorrentFileFilter(false),this);
 		if (!fn.isNull())
 		{
 			KUrl save_url = KUrl(fn);

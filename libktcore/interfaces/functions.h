@@ -26,9 +26,14 @@
 
 namespace kt
 {
-	
+	/// Get the data directory of ktorrent (~/.kde/share/apps/ktorrent most of the time)
 	KTCORE_EXPORT QString DataDir();
+	
+	/// Apply all settings
 	KTCORE_EXPORT void ApplySettings();
+	
+	/// Get the filter string for torrent files used file dialogs 
+	KTCORE_EXPORT QString TorrentFileFilter(bool all_files_included);
 
 }
 
