@@ -182,7 +182,7 @@ namespace kt
 	private:
 		Core* core;
 		View* view;
-		QList<Item*> torrents;
+		QVector<Item*> torrents;
 		int sort_column;
 		Qt::SortOrder sort_order;
 		Group* group;

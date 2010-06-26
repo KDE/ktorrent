@@ -340,9 +340,8 @@ namespace kt
 	void ViewModel::removeTorrent(bt::TorrentInterface* ti)
 	{
 		int idx = 0;
-		for (QList<Item*>::iterator i = torrents.begin();i != torrents.end();i++)
+		foreach (Item* item,torrents)
 		{
-			Item* item = *i;
 			if (item->tc == ti)
 			{
 				removeRow(idx);
@@ -662,9 +661,8 @@ namespace kt
 	
 	void ViewModel::allTorrents(QList<bt::TorrentInterface*> & tlist) const
 	{
-		for (QList<Item*>::const_iterator i = torrents.begin();i != torrents.end();i++)
+		foreach (Item* item,torrents)
 		{
-			Item* item = *i;
 			if (item->member(group))
 				tlist.append(item->tc);
 		}
@@ -684,9 +682,10 @@ namespace kt
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
 		for (int i = 0;i < count;i++)
 		{
-			Item* item = torrents.takeAt(row);
+			Item* item = torrents[row + i];
 			delete item;
 		}
+		torrents.remove(row,count);
 		endRemoveRows();
 		return true;
 	}
