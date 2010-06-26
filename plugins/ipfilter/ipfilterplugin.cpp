@@ -141,8 +141,8 @@ namespace kt
 		if (now >= next_update)
 		{
 			Out(SYS_IPF|LOG_NOTICE) << "Doing ipfilter auto update !" << endl;
-			if (!pref->doAutoUpdate()) // if we cannot do it now, try again in a minute
-				auto_update_timer.start(60*1000);
+			if (!pref->doAutoUpdate()) // if we cannot do it now, try again in 15 minutes
+				auto_update_timer.start(15*60*1000);
 		}
 		else
 		{
