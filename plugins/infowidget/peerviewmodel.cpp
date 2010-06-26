@@ -130,7 +130,11 @@ namespace kt
 	{
 		switch (col)
 		{
-			case 0: return stats.address();
+			case 0: 
+				if (stats.transport_protocol == bt::UTP)
+					return stats.address() + i18n(" (µTP)");
+				else
+					return stats.address();
 			case 1: return country;
 			case 2: return stats.client;
 			case 3: 
