@@ -24,6 +24,7 @@
 #include <bcodec/bnode.h>
 #include <interfaces/torrentinterface.h>
 #include "torrentgroup.h"
+#include <torrent/queuemanager.h>
 
 using namespace bt;
 
@@ -44,21 +45,8 @@ namespace kt
 	{	
 		if (torrents.count(tor) > 0)
 			return true;
-		
-		
-		if (!hashes.empty())
-		{
-			if (hashes.count(tor->getInfoHash()))
-			{
-		/*		bt::Out(SYS_GEN|LOG_DEBUG) << 
-						QString("TG %1 : Torrent %2 from hashes list").arg(groupName()).arg(tor->getStats().torrent_name) << endl;
-		*/ 
-				hashes.erase(tor->getInfoHash());
-				torrents.insert(tor);
-				return true;
-			}
-		}
-		return false;
+		else
+			return false;
 	}
 
 	void TorrentGroup::add(TorrentInterface* tor)
@@ -187,4 +175,18 @@ namespace kt
 			i++;
 		}
 	}
+	
+	void TorrentGroup::loadTorrents(QueueManager* qman)
+	{
+		QueueManager::iterator i = qman->begin();
+		while (i != qman->end())
+		{
+			if (hashes.count((*i)->getInfoHash()) > 0)
+				torrents.insert(*i);
+			i++;
+		}
+		
+		hashes.clear();
+	}
+
 }

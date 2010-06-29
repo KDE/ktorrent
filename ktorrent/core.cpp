@@ -730,6 +730,8 @@ namespace kt
 			Out(SYS_GEN|LOG_NOTICE) << "Loading " << idir << endl;
 			loadExistingTorrent(idir);
 		}
+		
+		gman->torrentsLoaded(qman);
 		if (!kt::QueueManager::enabled())
 			qman->startAutoStartTorrents();
 		else

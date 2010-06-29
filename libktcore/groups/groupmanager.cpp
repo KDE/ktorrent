@@ -315,4 +315,15 @@ namespace kt
 		emit defaultGroupRemoved(g);
 		defaults.removeAll(g);
 	}
+	
+	void GroupManager::torrentsLoaded(QueueManager* qman)
+	{
+		for (iterator i = begin();i != end();i++)
+		{
+			TorrentGroup* tg = dynamic_cast<TorrentGroup*>(i->second);
+			if (tg)
+				tg->loadTorrents(qman);
+		}
+	}
+
 }

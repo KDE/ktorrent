@@ -2,6 +2,7 @@ Changes in 4.0.2:
 - Fix wrong X-KDE-PluginInfo-Name in ktzeroconfplugin.desktop
 - Fix crash caused by 0 pointer in webinterface plugin (242273)
 - Increase auto update retry interval of ipfilter plugin to 15 minutes
+- Fix bug causing groups file to grow very large over time (243182)
 
 Changes in 4.0.1:
 - Make sure that the proper encoding is used when loading syndication filters

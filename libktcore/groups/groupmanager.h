@@ -34,6 +34,9 @@ namespace bt
 namespace kt
 {
 
+	class QueueManager;
+
+
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
 	 * 
@@ -122,6 +125,12 @@ namespace kt
 		 */
 		void renameGroup(const QString & old_name,const QString & new_name); 
 	
+		/**
+			Torrents have been loaded update all custom groups.
+			@param qman The QueueManager
+		*/
+		void torrentsLoaded(QueueManager* qman);
+		
 	signals:
 		void customGroupsChanged(QString oldName=QString(), QString newName=QString());
 		void defaultGroupAdded(Group* g);
