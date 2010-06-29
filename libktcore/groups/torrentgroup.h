@@ -27,6 +27,8 @@
 
 namespace kt
 {
+
+	class QueueManager;
 	class TorrentInterface;
 
 	/**
@@ -50,6 +52,7 @@ namespace kt
 
 		void add(TorrentInterface* tor);
 		void remove(TorrentInterface* tor);
+		void loadTorrents(QueueManager* qman);
 	};
 
 }
