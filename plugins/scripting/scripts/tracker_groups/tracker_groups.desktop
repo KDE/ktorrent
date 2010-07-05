@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Tracker Grouping
 Name[ast]=Agrupación de llocalizadores
+Name[bg]=Групиране по сървъри
 Name[ca]=Agrupació de seguidors
 Name[ca@valencia]=Agrupació de seguidors
 Name[cs]=Seskupování trackerů
@@ -43,6 +44,7 @@ Name[zh_CN]=Tracker 分组
 Name[zh_TW]=追蹤器分組
 Comment=Script to create automatic groups based upon tracker URL's
 Comment[ast]=Guion pa criar grupos automáticos basándose nes URL de los llocalizadores
+Comment[bg]=Скрипт за автоматично групиране според адресите на следящите сървъри
 Comment[ca]=Script per a crear grups automàtics basats en els URL dels seguidors
 Comment[ca@valencia]=Script per a crear grups automàtics basats en els URL dels seguidors
 Comment[cs]=Skript pro automatické vytvoření skupin podle URL adres trackerů

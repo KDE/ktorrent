@@ -42,6 +42,7 @@ Name[x-test]=xxShutdownxx
 Name[zh_TW]=關機
 Comment=Allows you to shutdown your computer when torrents finish
 Comment[ast]=Permite apagar el PC cuando finen los torrents
+Comment[bg]=Позволява ви да изключите компютъра си след като приключат торентите
 Comment[ca]=Permet aturar l'ordinador en finalitzar els torrents
 Comment[ca@valencia]=Permet aturar l'ordinador en finalitzar els torrents
 Comment[cs]=Umožní vypnutí počítače po dokončení stahování torrentu

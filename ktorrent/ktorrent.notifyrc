@@ -52,6 +52,7 @@ Comment[zh_TW]=KTorrent
 [Event/TorrentStoppedByError]
 Name=Torrent stopped by error
 Name[ast]=Torrent paráu por fallos
+Name[bg]=Торентът е прекъснат от грешка
 Name[ca]=El torrent s'ha aturat per un error
 Name[ca@valencia]=El torrent s'ha aturat per un error
 Name[cs]=Torrent byl zastaven kvůli chybě
@@ -98,6 +99,7 @@ Action=Sound|Popup
 [Event/TorrentFinished]
 Name=Torrent has finished downloading
 Name[ast]=El torrent finó de baxase
+Name[bg]=Торентът завърши изтеглянето си
 Name[ca]=El torrent ha finalitzat la baixada
 Name[ca@valencia]=El torrent ha finalitzat la baixada
 Name[cs]=Torrent dokončil stahování
@@ -144,6 +146,7 @@ Action=Sound|Popup
 [Event/MaxShareRatioReached]
 Name=Maximum share ratio reached
 Name[ast]=Algamóse la proporción máxima de compartición
+Name[bg]=Достигнато е максималното съотношение
 Name[ca]=S'ha arribat a la velocitat màxima de compartició
 Name[ca@valencia]=S'ha arribat a la velocitat màxima de compartició
 Name[cs]=Bylo dosaženo maximálního sdílecího poměru
@@ -190,6 +193,7 @@ Action=Sound|Popup
 [Event/MaxSeedTimeReached]
 Name=Maximum seed time reached
 Name[ast]=Algamóse'l tiempu máximu de siembra
+Name[bg]=Достигнато е максималното време за разпръскване
 Name[ca]=S'ha arribat al temps màxim de sembrat
 Name[ca@valencia]=S'ha arribat al temps màxim de sembrat
 Name[cs]=Bylo dosaženo maximální doby sdílení
@@ -236,6 +240,7 @@ Action=Sound|Popup
 [Event/LowDiskSpace]
 Name=Disk space is running low
 Name[ast]=Va quedando poco espaciu en discu
+Name[bg]=Дисковото пространство намалява
 Name[ca]=Queda poc espai en disc
 Name[ca@valencia]=Queda poc espai en disc
 Name[cs]=Dochází místo na disku
@@ -282,6 +287,7 @@ Action=Sound|Popup
 [Event/CorruptedData]
 Name=Corrupted data has been found
 Name[ast]=Atoparónse datos frayaos
+Name[bg]=Открити са повредени данни
 Name[ca]=S'han trobat dades corruptes
 Name[ca@valencia]=S'han trobat dades corruptes
 Name[cs]=Byla nalezena vadná data
@@ -328,6 +334,7 @@ Action=Sound|Popup
 [Event/QueueNotPossible]
 Name=Torrent cannot be enqueued
 Name[ast]=Nun puede encolase'l torrent
+Name[bg]=Торентът не може да бъде поставен на опашка
 Name[ca]=No es pot encuar el torrent
 Name[ca@valencia]=No es pot encuar el torrent
 Name[cs]=Torrent nelze zařadit do fronty
@@ -374,6 +381,7 @@ Action=Sound|Popup
 [Event/CannotStart]
 Name=Torrent cannot be started
 Name[ast]=Nun puede aniciase'l torrent
+Name[bg]=Торентът не може да бъде пуснат
 Name[ca]=No es pot engegar el torrent
 Name[ca@valencia]=No es pot engegar el torrent
 Name[cs]=Torrent nemůže být spuštěn
@@ -420,6 +428,7 @@ Action=Sound|Popup
 [Event/CannotLoadSilently]
 Name=Torrent cannot be loaded silently
 Name[ast]=Nun puede cargase silenciosamente'l torrent
+Name[bg]=Торентът не може да бъде автоматично зареден
 Name[ca]=No s'ha pogut carregar silenciosament el torrent
 Name[ca@valencia]=No s'ha pogut carregar silenciosament el torrent
 Name[cs]=Torrent nemůže být tiše spuštěn
@@ -465,6 +474,7 @@ Action=Sound|Popup
 
 [Event/DHTNotEnabled]
 Name=DHT is not enabled
+Name[bg]=Не е включено DHT
 Name[ca]=El DHT no està actiu
 Name[ca@valencia]=El DHT no està actiu
 Name[cs]=DHT není povoleno

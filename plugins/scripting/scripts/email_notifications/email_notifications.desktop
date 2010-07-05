@@ -44,6 +44,7 @@ Name[zh_CN]=电子邮件通知
 Name[zh_TW]=電子郵件通知
 Comment=Script to notify you of events via e-mail
 Comment[ast]=Script pa notificate de socesos por mediu del corréu electrónicu
+Comment[bg]=Скрипт за уведомяване за събития по електронната поща
 Comment[ca]=Script per a notificar d'esdeveniments via correu electrònic
 Comment[ca@valencia]=Script per a notificar d'esdeveniments via correu electrònic
 Comment[cs]=Skript informující o událostech přes e-mail
