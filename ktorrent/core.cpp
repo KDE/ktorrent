@@ -156,6 +156,7 @@ namespace kt
 		{
 			startTCPServer(port);
 		}
+		ServerInterface::setPort(port);
 	}
 	
 	void Core::startTCPServer(bt::Uint16 port)
