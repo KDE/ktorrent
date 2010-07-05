@@ -23,7 +23,7 @@
 #include <qcache.h>
 #include <qhttp.h>
 #include <qdatetime.h>
-#include <net/socket.h>
+#include <net/serversocket.h>
 #include <util/ptrmap.h>
 #include "webcontentgenerator.h"
 
@@ -61,7 +61,7 @@ namespace kt
 	
 
 	
-	class HttpServer : public QObject
+	class HttpServer : public QObject,public net::ServerSocket::ConnectionHandler
 	{
 		Q_OBJECT
 	public:
@@ -85,7 +85,6 @@ namespace kt
 		void handleNormalFile(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QString & path);
 
 	protected slots:
-		void slotAccept(int fd);
 		void slotConnectionClosed();
 		
 	private:
@@ -94,10 +93,10 @@ namespace kt
 		QString skinDir() const;
 		QString commonDir() const;
 		void handleFile(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QString & path);
+		virtual void newConnection(int fd, const net::Address& addr);
 		
 	private:
-		net::Socket* sock;
-		QSocketNotifier* notifier;
+		QList<net::ServerSocket::Ptr> sockets;
 		QString rootDir;
 		int sessionTTL;
 		Session session;

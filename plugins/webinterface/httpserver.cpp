@@ -15,13 +15,17 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <time.h>
 #include <QDir>
 #include <QRegExp>
 #include <QSocketNotifier>
-#include <qtimer.h>
-#include <qdatetime.h>
+#include <QFileInfo>
+#include <QStringList>
+#include <QHostAddress>
+#include <QTimer>
+#include <QDateTime>
 #include <kcodecs.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
@@ -31,12 +35,8 @@
 #include <k3streamsocket.h>
 #include <k3resolver.h>
 
-#include <qfileinfo.h>
-#include <qstringlist.h>
-
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
-
 #include <util/log.h>		
 #include <util/fileops.h>
 #include <util/functions.h>
@@ -58,7 +58,7 @@
 #include "globaldatagenerator.h"
 #include "settingsgenerator.h"
 
-#include <time.h>
+
 
 using namespace bt;
 
@@ -67,10 +67,9 @@ namespace kt
 	QString DataDir();
 	
 
-	HttpServer::HttpServer(CoreInterface *core, bt::Uint16 port) : sock(0),notifier(0),core(core),cache(10),port(port)
+	HttpServer::HttpServer(CoreInterface *core, bt::Uint16 port) : core(core),cache(10),port(port)
 	{
 		qsrand(time(0));
-		sock = new net::Socket(true,4);
 		content_generators.setAutoDelete(true);
 		addContentGenerator(new TorrentListGenerator(core,this));
 		addContentGenerator(new ChallengeGenerator(this));
@@ -91,11 +90,15 @@ namespace kt
 		}
 		session.logged_in = false;
 		
-		ok = sock->bind(QString::null,port,true);
-		if (ok)
+
+		QStringList bind_addresses;
+		bind_addresses << QHostAddress(QHostAddress::Any).toString();
+		bind_addresses << QHostAddress(QHostAddress::AnyIPv6).toString();
+		foreach (const QString & addr,bind_addresses)
 		{
-			notifier = new QSocketNotifier(sock->fd(),QSocketNotifier::Read,this);
-			connect(notifier,SIGNAL(activated(int)),this,SLOT(slotAccept(int)));
+			net::ServerSocket::Ptr sock(new net::ServerSocket(this));
+			if (sock->bind(addr,port))
+				sockets.append(sock);
 		}
 
 		if (!rootDir.isEmpty())
@@ -111,13 +114,6 @@ namespace kt
 	
 	HttpServer::~HttpServer()
 	{
-		if (notifier)
-		{
-			notifier->setEnabled(false);
-			delete notifier;
-		}
-		sock->close();
-		delete sock;
 		qDeleteAll(clients);
 	}
 
@@ -146,19 +142,15 @@ namespace kt
 	{
 		return rootDir + bt::DirSeparator() + "common";
 	}
-
-	void HttpServer::slotAccept(int )
-	{
-		net::Address addr;
-		int socket = sock->accept(addr);
-		if (socket < 0)
-			return;
 	
-		HttpClientHandler* handler = new HttpClientHandler(this,socket);
+	void HttpServer::newConnection(int fd, const net::Address& addr)
+	{
+		HttpClientHandler* handler = new HttpClientHandler(this,fd);
 		connect(handler,SIGNAL(closed()),this,SLOT(slotConnectionClosed()));
 		Out(SYS_WEB|LOG_NOTICE) << "connection from "<< addr.toString()  << endl;
 		clients.append(handler);
 	}
+
 
 	bool HttpServer::checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data)
 	{
