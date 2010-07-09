@@ -6,6 +6,7 @@ Changes in 4.1:
 - Cleanup file dialog filters for torrents and make sure that files named torrent, are also seen by the filter (241259)
 - Improve performance of ViewModel when there are many torrents (216501)
 - Ensure that webinterface plugin works properly with bindv6only flag on (238688)
+- Add option to not restore the previous session of the search plugin (233288)
 
 Changes in 4.0.2:
 - Fix wrong X-KDE-PluginInfo-Name in ktzeroconfplugin.desktop

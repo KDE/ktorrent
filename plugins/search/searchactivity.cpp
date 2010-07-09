@@ -35,6 +35,7 @@
 
 #include "searchwidget.h"
 #include "searchplugin.h"
+#include <searchpluginsettings.h>
 
 
 namespace kt
@@ -105,9 +106,20 @@ namespace kt
 	
 	void SearchActivity::loadCurrentSearches()
 	{
+		if (!SearchPluginSettings::restorePreviousSession())
+		{
+			SearchWidget* search = newSearchWidget(QString());
+			search->home();
+			return;
+		}
+		
 		QFile fptr(kt::DataDir() + "current_searches");
 		if (!fptr.open(QIODevice::ReadOnly))
+		{
+			SearchWidget* search = newSearchWidget(QString());
+			search->home();
 			return;
+		}
 		
 		QByteArray data = fptr.readAll();
 		bt::BDecoder dec(data,false,0);

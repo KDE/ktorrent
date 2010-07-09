@@ -26,5 +26,8 @@
 		<entry name="openInExternal" type = "Bool">
 			<default>false</default>
 		</entry>
+		<entry name="restorePreviousSession" type="Bool">
+			<default>false</default>
+		</entry>
 	</group>
 </kcfg>
