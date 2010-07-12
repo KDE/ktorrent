@@ -95,6 +95,7 @@ namespace kt
 
 		//Marker mark("core->loadTorrents()");
 		core->loadTorrents();
+		queue_suspend_action->setChecked(core->getSuspendedState());
 		//mark.update();
 		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 		timer.start(Settings::guiUpdateInterval());

@@ -22,9 +22,9 @@
 #define KTQUEUEMANAGER_H
 
 #include <set>
-#include <qobject.h>
-#include <qlinkedlist.h>
+#include <QObject>
 #include <solid/networking.h>
+#include <KSharedConfig>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/queuemanagerinterface.h>
 #include <ktcore_export.h>
@@ -69,6 +69,18 @@ namespace kt
 		void append(bt::TorrentInterface* tc);
 		void remove(bt::TorrentInterface* tc);
 		void clear();
+		
+		/**
+			Save the state of the QueueManager
+			@param cfg The config
+		*/
+		void saveState(KSharedConfigPtr cfg);
+		
+		/**
+			Load the state of the QueueManager
+			@param cfg The config
+		*/
+		void loadState(KSharedConfigPtr cfg);
 		
 		/**
 		 * Check if we need to decrease the priority of stalled torrents

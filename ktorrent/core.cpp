@@ -733,6 +733,7 @@ namespace kt
 		}
 		
 		gman->torrentsLoaded(qman);
+		qman->loadState(KGlobal::config());
 		if (!kt::QueueManager::enabled())
 			qman->startAutoStartTorrents();
 		else
@@ -885,6 +886,7 @@ namespace kt
 		AuthenticationMonitor::instance().clear();
 		
 		WaitJob* job = new WaitJob(5000);
+		qman->saveState(KGlobal::config());
 		qman->onExit(job);
 		// wait for completion of stopped events
 		if (job->needToWait())

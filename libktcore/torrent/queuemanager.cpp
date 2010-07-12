@@ -401,7 +401,7 @@ namespace kt
 	
 	void QueueManager::startAutoStartTorrents()
 	{
-		if (enabled()) 
+		if (enabled() || suspended_state) 
 			return;
 		
 		// first get the list of torrents which need to be started
@@ -854,6 +854,39 @@ namespace kt
 			tc->setPriority(prio--);
 		}
 	}
+	
+	void QueueManager::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("QueueManager");
+		suspended_state = g.readEntry("suspended",false);
+		
+		if (suspended_state)
+		{
+			QStringList info_hash_list = g.readEntry("suspended_torrents",QStringList());
+			foreach (bt::TorrentInterface* t,downloads)
+			{
+				if (info_hash_list.contains(t->getInfoHash().toString()))
+					suspended_torrents.insert(t);
+			}
+		}
+	}
+	
+	void QueueManager::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("QueueManager");
+		g.writeEntry("suspended",suspended_state);
+		
+		if (suspended_state)
+		{
+			QStringList info_hash_list;
+			foreach (bt::TorrentInterface* t,suspended_torrents)
+			{
+				info_hash_list << t->getInfoHash().toString();
+			}
+			g.writeEntry("suspended_torrents",info_hash_list);
+		}
+	}
+
 
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
