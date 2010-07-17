@@ -9,6 +9,9 @@ Changes in 4.1:
 - Add option to not restore the previous session of the search plugin (233288)
 - Save suspended state on exit and restore on restart (241675)
 
+Changes in 4.0.3:
+- Fix bug causing wrong encoding to be used when the default save location of a group is read (244873)
+
 Changes in 4.0.2:
 - Fix wrong X-KDE-PluginInfo-Name in ktzeroconfplugin.desktop
 - Fix crash caused by 0 pointer in webinterface plugin (242273)
