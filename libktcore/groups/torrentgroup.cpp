@@ -116,7 +116,7 @@ namespace kt
 			// load the group policy
 			if (gp->getValue("default_save_location"))
 			{
-				policy.default_save_location = gp->getString("default_save_location",0);
+				policy.default_save_location = QString::fromUtf8(gp->getByteArray("default_save_location"));
 				if (policy.default_save_location.length() == 0)
 					policy.default_save_location = QString(); // make sure that 0 length strings are loaded as null strings
 			}
