@@ -119,7 +119,7 @@ namespace kt
 		foreach (const QModelIndex & idx,sel)
 			rows.append(idx.row());
 		
-		if (rows.front() == 0)
+		if (rows.isEmpty() || rows.front() == 0)
 			return;
 		
 		model->moveUp(rows.front(),rows.count());
@@ -144,7 +144,7 @@ namespace kt
 			rows.append(idx.row());
 		
 		int rowcount = model->rowCount(QModelIndex());
-		if (rows.back() == rowcount - 1)
+		if (rows.isEmpty() || rows.back() == rowcount - 1)
 			return;
 		
 		model->moveDown(rows.front(),rows.count());
@@ -168,7 +168,7 @@ namespace kt
 		foreach (const QModelIndex & idx,sel)
 			rows.append(idx.row());
 		
-		if (rows.front() == 0)
+		if (rows.isEmpty() || rows.front() == 0)
 			return;
 		
 		model->moveTop(rows.front(),rows.count());
@@ -190,7 +190,7 @@ namespace kt
 			rows.append(idx.row());
 		
 		int rowcount = model->rowCount(QModelIndex());
-		if (rows.back() == rowcount - 1)
+		if (rows.isEmpty() || rows.back() == rowcount - 1)
 			return;
 		
 		model->moveBottom(rows.front(),rows.count());
