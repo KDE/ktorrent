@@ -134,7 +134,7 @@ namespace kt
 			
 			if (!found)
 			{
-				Feed* f = new Feed(feed_url,Feed::newFeedDir(data_dir));
+				Feed* f = new Feed(feed_url.prettyUrl(),Feed::newFeedDir(data_dir));
 				addFeed(f);
 			}
 		}

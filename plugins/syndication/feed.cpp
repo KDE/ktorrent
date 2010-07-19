@@ -42,23 +42,39 @@ namespace kt
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(refresh()));
 	}
 	
-	Feed::Feed(const KUrl & url,const QString & dir) : url(url),dir(dir),status(UNLOADED),refresh_rate(DEFAULT_REFRESH_RATE)
+	Feed::Feed(const QString & feed_url,const QString & dir) 
+		: dir(dir),status(UNLOADED),refresh_rate(DEFAULT_REFRESH_RATE)
 	{
+		parseUrl(feed_url);
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(refresh()));
 		refresh();
 		save();
 	}
 	
-	Feed::Feed(const KUrl & url,Syndication::FeedPtr feed,const QString & dir) : url(url),feed(feed),dir(dir),status(OK),refresh_rate(DEFAULT_REFRESH_RATE)
+	Feed::Feed(const QString & feed_url,Syndication::FeedPtr feed,const QString & dir) 
+		: feed(feed),dir(dir),status(OK),refresh_rate(DEFAULT_REFRESH_RATE)
 	{
+		parseUrl(feed_url);
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(refresh()));
 		update_timer.start(refresh_rate * 60 * 1000);
 	}
 
-
 	Feed::~Feed()
 	{
 	}
+	
+	void Feed::parseUrl(const QString& feed_url)
+	{
+		QStringList sl = feed_url.split(":COOKIE:");
+		if (sl.size() == 2)
+		{
+			url = KUrl(sl.first());
+			cookie = sl.last();
+		}
+		else
+			url = KUrl(url);
+	}
+
 	
 	void Feed::save()
 	{
@@ -74,6 +90,11 @@ namespace kt
 		enc.beginDict();
 		enc.write("url");
 		enc.write(url.prettyUrl());
+		if (!cookie.isEmpty())
+		{
+			enc.write("cookie");
+			enc.write(cookie);
+		}
 		enc.write("filters");
 		enc.beginList();
 		foreach (Filter* f,filters)
@@ -132,6 +153,7 @@ namespace kt
 		try
 		{
 			url = KUrl(dict->getString("url",0));
+			cookie = dict->getValue("cookie") ? dict->getString("cookie",0) : QString();
 			custom_name = dict->getValue("custom_name") ? dict->getString("custom_name",0) : QString();
 			refresh_rate = dict->getValue("refresh_rate") ? dict->getInt("refresh_rate") : DEFAULT_REFRESH_RATE;
 			
@@ -222,7 +244,10 @@ namespace kt
 		status = DOWNLOADING;
 		update_timer.stop();
 		Syndication::Loader *loader = Syndication::Loader::create(this,SLOT(loadingComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
-		loader->loadFrom(url,new FeedRetriever(dir + "feed.xml"));
+		FeedRetriever* retr = new FeedRetriever(dir + "feed.xml");
+		if (!cookie.isEmpty())
+			retr->setAuthenticationCookie(cookie);
+		loader->loadFrom(url,retr);
 		updated();
 	}
 	

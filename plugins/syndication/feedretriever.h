@@ -36,19 +36,29 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		FeedRetriever(const QString & file_name);	
+		/// Constructor, does not save a backup copy
+		FeedRetriever();
+		
+		/// Constructor, does save a backup copy
+		FeedRetriever(const QString & file_name);
+		
 		virtual ~FeedRetriever();
+		
+		/// Set the authentication cookie
+		void setAuthenticationCookie(const QString & cookie);
 	
 		virtual void abort();
 		virtual int errorCode() const;
 		virtual void retrieveData(const KUrl &url);
+		
 	private slots:
 		void finished(KJob* j);
 		
 	private:
-		QFile fptr;
+		QString backup_file;
 		KJob* job;
 		int err;
+		QString cookie;
 	};
 
 }

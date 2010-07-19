@@ -73,7 +73,7 @@ namespace kt
 		SyndicationTab* tab;
 		KTabWidget* tabs;
 		QSplitter* splitter;
-		QMap<Syndication::Loader*,KUrl> downloads;
+		QMap<Syndication::Loader*,QString> downloads;
 		SyndicationPlugin* sp;
 	};
 }

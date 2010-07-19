@@ -19,12 +19,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QHeaderView>
+#include <kinputdialog.h>
 #include "feed.h"
 #include "feedwidget.h"
 #include "feedwidgetmodel.h"
 #include "managefiltersdlg.h"
 #include "filterlist.h"
 #include "syndicationplugin.h"
+
 
 namespace kt
 {
@@ -39,6 +41,13 @@ namespace kt
 		connect(m_refresh,SIGNAL(clicked()),this,SLOT(refreshClicked()));
 		connect(m_filters,SIGNAL(clicked()),this,SLOT(filtersClicked()));
 		connect(m_refresh_rate,SIGNAL(valueChanged(int)),this,SLOT(refreshRateChanged(int)));
+		connect(m_cookies,SIGNAL(clicked()),this,SLOT(cookiesClicked()));
+		
+		m_refresh->setIcon(KIcon("view-refresh"));
+		m_filters->setIcon(KIcon("view-filter"));
+		m_cookies->setIcon(KIcon("preferences-web-browser-cookies"));
+		m_download->setIcon(KIcon("ktorrent"));
+		
 		
 		model = new FeedWidgetModel(feed,this);
 		m_item_list->setModel(model);
@@ -88,6 +97,18 @@ namespace kt
 		{
 			feed->save();
 			feed->runFilters();
+		}
+	}
+	
+	void FeedWidget::cookiesClicked()
+	{
+		bool ok = false;
+		QString cookie = feed->authenticationCookie();
+		QString nc = KInputDialog::getText(i18n("Authentication Cookie"),i18n("Enter the new authentication cookie"),cookie,&ok);
+		if (ok)
+		{
+			feed->setAuthenticationCookie(nc);
+			feed->save();
 		}
 	}
 	

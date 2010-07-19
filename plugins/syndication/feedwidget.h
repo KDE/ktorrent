@@ -47,6 +47,7 @@ namespace kt
 		void downloadClicked();
 		void refreshClicked();
 		void filtersClicked();
+		void cookiesClicked();
 		void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 		void updated();
 		void onFeedRenamed(Feed* f);

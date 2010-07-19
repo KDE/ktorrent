@@ -19,12 +19,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <kio/job.h>
+#include <ktversion.h>
 #include "feedretriever.h"
+
 
 namespace kt
 {
+	FeedRetriever::FeedRetriever() : job(0),err(0)
+	{
+	}
 
-	FeedRetriever::FeedRetriever(const QString & file_name) : fptr(file_name),job(0),err(0)
+	FeedRetriever::FeedRetriever(const QString & file_name) : backup_file(file_name),job(0),err(0)
 	{
 	}
 	
@@ -33,8 +38,15 @@ namespace kt
 	{
 	}
 	
+	void FeedRetriever::setAuthenticationCookie(const QString& cookie)
+	{
+		this->cookie = cookie;
+	}
+	
 	void FeedRetriever::abort()
 	{
+		if (job)
+			job->kill(KJob::EmitResult);
 	}
 	
 	int FeedRetriever::errorCode() const
@@ -44,8 +56,15 @@ namespace kt
 	
 	void FeedRetriever::retrieveData(const KUrl &url)
 	{
-		job = KIO::storedGet(url,KIO::Reload,KIO::HideProgressInfo);
-		connect(job,SIGNAL(result(KJob*)),this,SLOT(finished(KJob*)));
+		KIO::StoredTransferJob* j = KIO::storedGet(url,KIO::Reload,KIO::HideProgressInfo);
+		j->addMetaData("UserAgent",bt::GetVersionString());
+		if (!cookie.isEmpty())
+		{
+			j->addMetaData("cookies","none");
+			j->addMetaData("customHTTPHeader",QString("Cookie: %1").arg(cookie));
+		}
+		connect(j,SIGNAL(result(KJob*)),this,SLOT(finished(KJob*)));
+		job = j;
 	}
 
 	void FeedRetriever::finished(KJob* j)
@@ -53,10 +72,14 @@ namespace kt
 		KIO::StoredTransferJob* stj = (KIO::StoredTransferJob*)j;
 		err = stj->error();
 		QByteArray data = stj->data();
-		if (!err && fptr.open(QIODevice::WriteOnly))
+		if (!err && !backup_file.isEmpty())
 		{
-			fptr.write(data);
-			fptr.close();
+			QFile fptr(backup_file);
+			if (fptr.open(QIODevice::WriteOnly))
+			{
+				fptr.write(data);
+				fptr.close();
+			}
 		}
 		dataRetrieved(data,err == 0);
 	}

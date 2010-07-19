@@ -153,6 +153,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="KPushButton" name="m_cookies">
+         <property name="text">
+          <string>Cookies</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>
@@ -161,14 +168,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
    <class>KSqueezedTextLabel</class>
    <extends>QLabel</extends>
    <header>ksqueezedtextlabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
