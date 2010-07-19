@@ -197,8 +197,20 @@ namespace kt
 			if (tc->getStats().multi_file_torrent)
 			{
 				bt::TorrentFileInterface & file = tc->getTorrentFile(index.row());
+				
+				// Check if we are not changing into somebody elses path
+				bt::Uint32 num_files = tc->getNumFiles();
+				for (bt::Uint32 i = 0;i < num_files;i++)
+				{
+					if ((int)i == index.row())
+						continue;
+					
+					if (path == tc->getTorrentFile(i).getUserModifiedPath())
+						return false;
+				}
+					
 				// keep track of modified paths
-				file.setUserModifiedPath(path);	
+				file.setUserModifiedPath(path);
 			}
 			else
 			{

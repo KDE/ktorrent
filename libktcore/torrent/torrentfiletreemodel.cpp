@@ -584,13 +584,22 @@ namespace kt
 		if (!n->file)
 		{
 			// we are in a directory
-			n->name = name;
 			if (!n->parent)
 			{
 				// toplevel directory name has changed
 				tc->setUserModifiedFileName(name);
 			}
+			else
+			{
+				// Check if there is a sibling with the same name
+				foreach (Node* sibling,n->parent->children)
+				{
+					if (sibling != n && sibling->name == name)
+						return false;
+				}
+			}
 			
+			n->name = name;
 			dataChanged(index,index);
 			// modify the path of all files
 			modifyPathOfFiles(n,n->path());
@@ -598,6 +607,13 @@ namespace kt
 		}
 		else
 		{
+			// Check if there is a sibling with the same name
+			foreach (Node* sibling,n->parent->children)
+			{
+				if (sibling != n && sibling->name == name)
+					return false;
+			}
+			
 			n->name = name;
 			n->file->setUserModifiedPath(n->path());
 			dataChanged(index,index);
