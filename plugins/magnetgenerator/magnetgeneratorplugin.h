@@ -39,6 +39,7 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
+		virtual QString parentPart() const {return "torrentactivity";}
 		void currentTorrentChanged(bt::TorrentInterface *tc);
 
 	private slots:

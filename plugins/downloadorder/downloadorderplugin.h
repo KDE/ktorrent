@@ -43,6 +43,7 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual void currentTorrentChanged(bt::TorrentInterface* tc);
+		virtual QString parentPart() const {return "torrentactivity";}
 		
 		/// Get the download order manager for a torrent (returns 0 if none exists)
 		DownloadOrderManager* manager(bt::TorrentInterface* tc);

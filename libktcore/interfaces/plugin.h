@@ -114,6 +114,9 @@ namespace kt
 		/// Check whether the plugin matches the version of KT
 		virtual bool versionCheck(const QString & version) const = 0;
 		
+		/// Returns the name of the parent part the GUI of the plugin should be created in
+		virtual QString parentPart() const {return "ktorrent";}
+		
 	private:
 		CoreInterface* core;
 		GUIInterface* gui;

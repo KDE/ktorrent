@@ -190,12 +190,42 @@ namespace kt
 
 	void GUI::mergePluginGui(Plugin* p)
 	{
-		guiFactory()->addClient(p);
+		if (p->parentPart() == "ktorrent")
+		{
+			guiFactory()->addClient(p);
+		}
+		else
+		{
+			QList<KParts::Part*> parts = part_manager->parts();
+			foreach (KParts::Part* part,parts)
+			{
+				if (part->domDocument().documentElement().attribute("name") == p->parentPart())
+				{
+					part->insertChildClient(p);
+					break;
+				}
+			}
+		}
 	}
 
 	void GUI::removePluginGui(Plugin* p)
 	{
-		guiFactory()->removeClient(p);
+		if (p->parentPart() == "ktorrent")
+		{
+			guiFactory()->removeClient(p);
+		}
+		else
+		{
+			QList<KParts::Part*> parts = part_manager->parts();
+			foreach (KParts::Part* part,parts)
+			{
+				if (part->domDocument().documentElement().attribute("name") == p->parentPart())
+				{
+					part->removeChildClient(p);
+					break;
+				}
+			}
+		}
 	}
 	
 	
