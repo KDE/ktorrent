@@ -18,7 +18,7 @@
 	<Separator/>
 	<ActionList name="activities_list" />
   </Menu>
-  <Menu name="Downloads"><text>Downloads</text>
+  <Menu name="Torrents"><text>Torrents</text>
 	<Action name="start" />
 	<Action name="pause" />
 	<Action name="stop" />
