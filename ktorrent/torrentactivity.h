@@ -25,6 +25,9 @@
 #include <KTabWidget>
 #include <interfaces/torrentactivityinterface.h>
 
+class KToggleAction;
+class KAction;
+
 namespace kt
 {
 	class MagnetView;
@@ -73,6 +76,9 @@ namespace kt
 		/// A data scan was closed
 		void dataScanClosed(ScanListener* listener);
 		
+		/// Setup all actions
+		void setupActions();
+		
 	public slots:
 		/**
 		* Open a view
@@ -104,11 +110,20 @@ namespace kt
 		*/
 		void setGroupViewVisible(bool visible);
 		
+		/**
+		 * The suspended state has changed
+		 * @param suspended 
+		 */
+		void onSuspendedStateChanged(bool suspended);
+		
 		
 	private slots:
 		void newView();
 		void closeTab();
 		void currentTabPageChanged(int idx);
+		void startAllTorrents();
+		void stopAllTorrents();
+		void suspendQueue(bool suspend);
 		
 	private:
 		View* newView(kt::Group* g);
@@ -124,6 +139,11 @@ namespace kt
 		QSplitter* vsplit;
 		TabBarWidget* tool_views;
 		MagnetView* magnet_view;
+		
+		KAction* start_all_action;
+		KAction* stop_all_action;
+		KToggleAction* queue_suspend_action;
+		KAction* show_group_view_action;
 	};
 }
 

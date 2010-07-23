@@ -73,6 +73,9 @@ namespace kt
 		/// Create a new group
 		Group* addNewGroup();
 		
+		/// Setup all the actions of the GroupView
+		void setupActions(KActionCollection* col);
+		
 	private slots:
 		void onItemActivated(QTreeWidgetItem* item,int col);
 		void onItemChanged(QTreeWidgetItem* item,int col);
@@ -94,7 +97,6 @@ namespace kt
 		void openNewTab(kt::Group* g);
 		
 	private:
-		void setupActions(KActionCollection* col);
 		GroupViewItem* addGroup(Group* g,QTreeWidgetItem* parent,const QString & name);
 		GroupViewItem* add(QTreeWidgetItem* parent,const QString & path,Group* g);
 		void remove(QTreeWidgetItem* parent,const QString & path,Group* g);

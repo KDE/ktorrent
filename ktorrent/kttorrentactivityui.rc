@@ -1,0 +1,90 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui library="torrentactivity" name="torrentactivity" version="1">
+<MenuBar>
+	<Menu name="view">
+		<Action name="show_group_view" />
+	</Menu>
+	<Menu name="Torrents"><text>Torrents</text>
+		<Action name="start" />
+		<Action name="pause" />
+		<Action name="stop" />
+		<Action name="remove" />
+		<Separator/>
+		<Action name="start_all"/>
+		<Action name="stop_all"/>
+		<Separator/>
+		<Action name="check_data"/>
+		<Separator/>
+		<Action name="queue_suspend" />
+		<Separator/>
+		<Action name="speed_limits"/>
+	</Menu>
+</MenuBar>
+
+<Menu name="GroupsMenu"><text>Groups</text>
+	<Action name="open_tab"/>
+	<Separator/>
+	<Action name="new_group" />
+	<Action name="edit_group_name" />
+	<Action name="remove_group" />
+	<Separator/>
+	<Action name="edit_group_policy" />
+	<Separator/>
+	<Merge/>
+</Menu>
+
+
+<Menu name="ViewMenu"><text>View</text>
+	<Action name="start" />
+	<Action name="pause" />
+	<Action name="stop" />
+	<Action name="remove" />
+	<Action name="view_remove_torrent_and_data" />
+	<Separator/>
+	<Action name="view_torrent_properties" />
+	<Action name="speed_limits" />
+	<Separator/>
+	<Action name="view_add_peers" />
+	<Action name="view_announce" />
+	<Action name="view_rename_torrent" />
+	<Action name="view_export_torrent" />
+	<Action name="view_copy_url" />
+	<Separator/>
+	<Action name="view_move_data" />
+	<Action name="check_data" />
+	<Action name="view_preview" />
+	<Menu name="OpenDirMenu" icon="folder-open"><text>Open Directory</text>
+		<Action name="view_open_data_dir" />
+		<Action name="view_open_tmp_dir" />
+	</Menu>
+	<Separator/>
+	<Action name="view_remove_from_group" />
+	<Menu name="GroupsSubMenu" icon="application-x-bittorrent"><text>Add to Group</text>
+		<ActionList name="view_groups_list" />
+		<Separator/>
+		<Action name="view_add_to_new_group" />
+	</Menu>
+	<Separator/>
+	<Menu name="ColumnsMenu">
+		<text>Configure Columns</text>
+		<title>Columns</title>
+		<ActionList name="view_columns_list" />
+	</Menu>
+	<Separator/>
+	<Merge/>
+</Menu>
+
+<ToolBar name="TorrentsToolBar" noMerge="1"><text>Torrents</text>
+	<Action name="show_group_view" />
+	<Separator/>
+	<Action name="start"/>
+	<Action name="pause" />
+	<Action name="stop"/>
+	<Action name="remove"/>
+	<Action name="start_all"/>
+	<Action name="stop_all"/>
+	<Separator/>
+	<Action name="queue_suspend" />
+</ToolBar>
+
+</kpartgui>

@@ -31,6 +31,7 @@
 #include <kconfiggroup.h>
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/torrentactivityinterface.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
 #include <groups/torrentgroup.h>
@@ -106,8 +107,6 @@ namespace kt
 		connect(gman,SIGNAL(defaultGroupAdded(Group*)),this,SLOT(defaultGroupAdded(Group*)));
 
 		current_item = 0;
-		setupActions(gui->actionCollection());
-		
 		
 		for (GroupManager::DefGroupItr i = gman->beginDefaults();i != gman->endDefaults();i++)
 		{
@@ -406,7 +405,7 @@ namespace kt
 		open_in_new_tab->setEnabled(g != 0);
 		
 
-		KMenu* menu = qobject_cast<KMenu*>(gui->container("GroupsMenu"));
+		KMenu* menu = gui->getTorrentActivity()->part()->menu("GroupsMenu");
 		if (menu)
 			menu->popup(viewport()->mapToGlobal(p));
 	}

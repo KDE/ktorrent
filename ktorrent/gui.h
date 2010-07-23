@@ -67,7 +67,6 @@ namespace kt
 		virtual StatusBarInterface* getStatusBar();
 		virtual void addActivity(Activity* act);
 		virtual void removeActivity(Activity* act);
-		virtual void setCurrentActivity(Activity* act);
 		virtual TorrentActivityInterface* getTorrentActivity(); 
 		
 		/**
@@ -84,12 +83,6 @@ namespace kt
 		void loadSilently(const KUrl & url);
 		
 	public slots:
-		/**
-		 * The suspended state has changed
-		 * @param suspended 
-		 */
-		void onSuspendedStateChanged(bool suspended);
-		
 		/// Update all actions
 		void updateActions();
 		
@@ -98,14 +91,14 @@ namespace kt
 		 * @param on Set on
 		 */
 		void setPasteDisabled(bool on);
+		
+		/// Set the current activity
+		virtual void setCurrentActivity(Activity* act);
 
 	private slots:
 		void createTorrent();
 		void openTorrent();
 		void openTorrentSilently();
-		void suspendQueue(bool suspend);
-		void startAllTorrents();
-		void stopAllTorrents();
 		void pasteURL();
 		void paste();
 		void showPrefDialog();
@@ -121,6 +114,7 @@ namespace kt
 		void applySettings();
 		void showOrHide();
 		void configureNotifications();
+		void activePartChanged(KParts::Part* p);
 		
 	private:
 		void setupActions();
@@ -139,20 +133,18 @@ namespace kt
 		TorrentActivity* torrent_activity;
 		CentralWidget* central;
 		PrefDialog* pref_dlg;
+		KParts::PartManager* part_manager;
 		
 		KToggleAction* show_status_bar_action;
 		KToggleAction* show_menu_bar_action;
 		KAction* open_silently_action;
-		KAction* start_all_action;
-		KAction* stop_all_action;
+		
 		KAction* paste_url_action;
-		KToggleAction* queue_suspend_action;
 		KAction* ipfilter_action;
 		KAction* import_action;
 		KAction* import_kde3_torrents_action;
 		KAction* show_kt_action;
 		KAction* paste_action;
-		KAction* show_group_view_action;
 	};
 }
 

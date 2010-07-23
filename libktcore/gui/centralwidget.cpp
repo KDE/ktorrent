@@ -107,7 +107,7 @@ namespace kt
 			Activity* act = (Activity*)widget(i);
 			if (action->data().value<QObject*>() == act)
 			{
-				setCurrentWidget(act);
+				changeActivity(act);
 				break;
 			}
 		}

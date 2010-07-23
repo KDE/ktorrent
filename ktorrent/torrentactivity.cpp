@@ -24,6 +24,9 @@
 #include <KConfigGroup>
 #include <KLocale>
 #include <KIcon>
+#include <KToggleAction>
+#include <KActionCollection>
+#include <util/log.h>
 #include <gui/tabbarwidget.h>
 #include <groups/groupmanager.h>
 #include "torrentactivity.h"
@@ -35,6 +38,8 @@
 #include "tools/queuemanagerwidget.h"
 #include "tools/magnetview.h"
 
+using namespace bt;
+
 
 namespace kt
 {
@@ -42,8 +47,9 @@ namespace kt
 	TorrentActivity::TorrentActivity(Core* core,GUI* gui,QWidget* parent) 
 		: TorrentActivityInterface(i18n("Torrents"),"ktorrent",parent),core(core),gui(gui)
 	{
+		setXMLGUIFile("kttorrentactivityui.rc");
 		view_man = new ViewManager(core->getGroupManager()->allGroup(),gui,core,this);
-		view_man->setupActions();
+		setupActions();
 		
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
@@ -56,6 +62,7 @@ namespace kt
 		tabs->setMovable(true);
 		connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(currentTabPageChanged(int)));
 		group_view = new GroupView(core->getGroupManager(),view_man,gui,hsplit);
+		group_view->setupActions(part()->actionCollection());
 		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openNewView(kt::Group*)));
 		
 		hsplit->addWidget(group_view);
@@ -86,11 +93,45 @@ namespace kt
 		connect(lc,SIGNAL(clicked()),this,SLOT(newView()));
 		rc->setIcon(KIcon("tab-close"));
 		connect(rc,SIGNAL(clicked()),this,SLOT(closeTab()));
+		
+		QueueManager* qman = core->getQueueManager();
+		connect(qman,SIGNAL(suspendStateChanged(bool)),this,SLOT(onSuspendedStateChanged(bool)));
+		
+		queue_suspend_action->setChecked(core->getSuspendedState());
 	}
 	
 	TorrentActivity::~TorrentActivity() 
 	{
 	}
+	
+	void TorrentActivity::setupActions()
+	{
+		KActionCollection* ac = part()->actionCollection();
+		start_all_action = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
+		start_all_action->setToolTip(i18n("Start all torrents"));
+		connect(start_all_action,SIGNAL(triggered()),this,SLOT(startAllTorrents()));
+		ac->addAction("start_all",start_all_action);
+		
+		stop_all_action = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
+		stop_all_action->setToolTip(i18n("Stop all torrents"));
+		connect(stop_all_action,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
+		ac->addAction("stop_all",stop_all_action);
+		
+		queue_suspend_action = new KToggleAction(KIcon("kt-pause"),i18n("Suspend Torrents"),this);
+		ac->addAction("queue_suspend",queue_suspend_action);
+		queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
+		queue_suspend_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_P));
+		queue_suspend_action->setGlobalShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_P));
+		connect(queue_suspend_action,SIGNAL(toggled(bool)),this,SLOT(suspendQueue(bool)));
+		
+		show_group_view_action = new KToggleAction(KIcon("view-list-tree"),i18n("Group View Visible"),this);
+		show_group_view_action->setToolTip(i18n("Show or hide the group view"));
+		connect(show_group_view_action,SIGNAL(toggled(bool)),this,SLOT(setGroupViewVisible(bool)));
+		ac->addAction("show_group_view",show_group_view_action);
+		
+		view_man->setupActions(ac);
+	}
+
 
 	void TorrentActivity::openNewView(kt::Group* g)
 	{
@@ -194,6 +235,8 @@ namespace kt
 		notifyViewListeners(view_man->getCurrentTorrent());
 		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(tabs->count() > 1);
 		magnet_view->loadState(cfg);
+		
+		show_group_view_action->setChecked(!group_view->isHidden());
 	}
 	
 	void TorrentActivity::saveState(KSharedConfigPtr cfg)
@@ -248,6 +291,10 @@ namespace kt
 	void TorrentActivity::updateActions()
 	{
 		view_man->updateActions();
+		bt::Uint32 nr = core->getNumTorrentsRunning();
+		queue_suspend_action->setEnabled(core->getSuspendedState() || nr > 0);
+		start_all_action->setEnabled(core->getNumTorrentsNotRunning() > 0);
+		stop_all_action->setEnabled(nr > 0);
 	}
 	
 	void TorrentActivity::update()
@@ -279,5 +326,28 @@ namespace kt
 	{
 		group_view->setVisible(visible);
 	}
+	
+	void TorrentActivity::startAllTorrents()
+	{
+		core->startAll();
+	}
+	
+	void TorrentActivity::stopAllTorrents()
+	{
+		core->stopAll();
+	}
+	
+	void TorrentActivity::suspendQueue(bool suspend)
+	{
+		Out(SYS_GEN|LOG_NOTICE) << "Setting suspended state to " << suspend << endl;
+		core->setSuspendedState(suspend);
+		updateActions();
+	}
+	
+	void TorrentActivity::onSuspendedStateChanged(bool suspended)
+	{
+		queue_suspend_action->setChecked(suspended);
+	}
+	
 
 }

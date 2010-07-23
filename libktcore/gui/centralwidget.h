@@ -65,6 +65,10 @@ namespace kt
 	private slots:
 		void switchActivity(QAction* action);
 		
+	signals:
+		/// Emitted when the current Activity needs to be changed
+		void changeActivity(Activity* act);
+		
 	private:
 		QActionGroup* activity_switching_group;
 	};

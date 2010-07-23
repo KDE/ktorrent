@@ -26,6 +26,7 @@
 #include <ksharedconfig.h>
 #include <torrent/queuemanager.h>
 
+class KActionCollection;
 class QTabWidget;
 class QWidget;
 class KAction;
@@ -74,7 +75,7 @@ namespace kt
 		bt::TorrentInterface* getCurrentTorrent();
 		
 		/// Setup the actions of the view manager
-		void setupActions();
+		void setupActions(KActionCollection* ac);
 		
 		/// Update enabled or disabled state of all actions
 		void updateActions();

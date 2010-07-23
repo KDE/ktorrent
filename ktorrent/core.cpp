@@ -119,7 +119,6 @@ namespace kt
 		gman->loadGroups();
 		
 		connect(qman,SIGNAL(queueOrdered()),this,SLOT(startUpdateTimer()));
-		connect(qman,SIGNAL(suspendStateChanged(bool)),gui,SLOT(onSuspendedStateChanged(bool)));
 		connect(magnet,SIGNAL(metadataFound(bt::MagnetLink,QByteArray,bool)),
 				this,SLOT(onMetadataDownloaded(bt::MagnetLink,QByteArray,bool)));
 		

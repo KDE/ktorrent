@@ -17,20 +17,50 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-
+#include <KMenu>
 #include <KStringHandler>
+#include <KXMLGUIFactory>
 #include "activity.h"
+
 
 namespace kt
 {
+	ActivityPart::ActivityPart(Activity* parent) : KParts::Part(parent)
+	{
+	}
+	
+	ActivityPart::~ActivityPart()
+	{
+	}
+	
+	void ActivityPart::setXMLGUIFile(const QString& xml_gui)
+	{
+		setXMLFile(xml_gui,true);
+	}
+	
+	KMenu* ActivityPart::menu(const QString& name)
+	{
+		return qobject_cast<KMenu*>(factory()->container(name, this));
+	}
+
+
 	Activity::Activity(const QString& name, const QString& icon, int weight, QWidget* parent) 
-		: QWidget(parent),activity_name(name),activity_icon(icon),activity_weight(weight)
+		: QWidget(parent),activity_name(name),activity_icon(icon),activity_weight(weight),activity_part(0)
 	{
 	}
 
 	Activity::~Activity() 
 	{
 	}
+	
+	void Activity::setXMLGUIFile(const QString& xml_file)
+	{
+		if (!activity_part)
+			activity_part = new ActivityPart(this);
+		
+		activity_part->setXMLGUIFile(xml_file);
+	}
+
 	
 	void Activity::setName(const QString& name) 
 	{

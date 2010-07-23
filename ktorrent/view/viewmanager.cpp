@@ -530,9 +530,8 @@ namespace kt
 		}
 	}
 	
-	void ViewManager::setupActions()
+	void ViewManager::setupActions(KActionCollection* ac)
 	{
-		KActionCollection* ac = gui->actionCollection();
 		KStandardAction::selectAll(this,SLOT(selectAll()),ac);
 		
 		start_torrent = new KAction(KIcon("kt-start"),i18nc("@action Start all selected torrents in the current tab", "Start"), this);
@@ -750,7 +749,7 @@ namespace kt
 		if (!v)
 			return;
 		
-		KMenu* view_menu = qobject_cast<KMenu*>(gui->container("ViewMenu"));
+		KMenu* view_menu = gui->getTorrentActivity()->part()->menu("ViewMenu");
 		if (!view_menu)
 			return;
 		

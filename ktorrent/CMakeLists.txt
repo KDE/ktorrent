@@ -91,6 +91,7 @@ install(FILES ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )
 install(FILES magnet.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install(FILES ktorrentui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+install(FILES kttorrentactivityui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 install(FILES ktorrent.notifyrc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 
 add_subdirectory(icons)

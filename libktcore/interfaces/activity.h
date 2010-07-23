@@ -24,9 +24,31 @@
 #include <QWidget>
 #include <ksharedconfig.h>
 #include <ktcore_export.h>
+#include <kparts/part.h>
+
+class KMenu;
 
 namespace kt
 {
+	class Activity;
+	
+	/**
+		Part of an Activity
+	*/
+	class KTCORE_EXPORT ActivityPart : public KParts::Part
+	{
+		Q_OBJECT
+	public:
+		ActivityPart(Activity* parent);
+		virtual ~ActivityPart();
+		
+		/// Set the XML GUI file of the part
+		void setXMLGUIFile(const QString & xml_gui);
+		
+		/// Get a menu described in the XML of the part
+		KMenu* menu(const QString & name);
+	};
+	
 	/**
 	 * Base class for all activities.
 	 */
@@ -43,6 +65,9 @@ namespace kt
 		/// Get the icon name
 		const QString & icon() const {return activity_icon;}
 		
+		/// Get the part
+		ActivityPart* part() const {return activity_part;}
+		
 		/// Set the name
 		void setName(const QString & name);
 		
@@ -54,6 +79,14 @@ namespace kt
 		
 		static bool lessThan(Activity* l,Activity* r);
 		
+	protected:
+		/**
+			Activities wishing to provide toolbar and menu entries, should
+			call this function to set the XML GUI description.
+			@param xml_file The XMLGUI file
+		*/
+		void setXMLGUIFile(const QString & xml_file);
+		
 	signals:
 		void nameChanged(Activity* a,const QString & name);
 		void iconChanged(Activity* a,const QString & icon);
@@ -62,6 +95,7 @@ namespace kt
 		QString activity_name;
 		QString activity_icon;
 		int activity_weight;
+		ActivityPart* activity_part;
 	};
 }
 
