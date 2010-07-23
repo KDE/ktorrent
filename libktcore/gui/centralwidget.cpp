@@ -17,23 +17,20 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+#include <QAction>
+#include <KIcon>
 #include <KConfigGroup>
 #include "centralwidget.h"
-#include "activitybar.h"
+#include <interfaces/activity.h>
+
+
 
 namespace kt
 {
-	CentralWidget::CentralWidget(QWidget* parent) : QWidget(parent),pos(LEFT)
+	CentralWidget::CentralWidget(QWidget* parent) : QStackedWidget(parent)
 	{
-		setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-		layout = new QBoxLayout(QBoxLayout::LeftToRight,this);
-		layout->setMargin(0);
-		layout->setSpacing(0);
-		stack = new QStackedWidget(this);
-		activity_bar = new ActivityBar(stack,this);
-		layout->addWidget(activity_bar);
-		layout->addWidget(stack);
-		connect(activity_bar,SIGNAL(changePosition(ActivityListPosition)),this,SLOT(setActivityBarPosition(ActivityListPosition)));
+		activity_switching_group = new QActionGroup(this);
+		connect(activity_switching_group,SIGNAL(triggered(QAction*)),this,SLOT(switchActivity(QAction*)));
 	}
 
 	CentralWidget::~CentralWidget() 
@@ -42,48 +39,78 @@ namespace kt
 
 	void CentralWidget::loadState(KSharedConfigPtr cfg)
 	{
-		activity_bar->loadState(cfg);
 		KConfigGroup g = cfg->group("MainWindow");
 		int idx = g.readEntry("current_activity",0);
-		activity_bar->setCurrentActivity((Activity*)stack->widget(idx));
-		setActivityBarPosition((ActivityListPosition)g.readEntry("activity_bar_pos",(int)LEFT));
-		activity_bar->setPosition(pos);
+		Activity* act = (Activity*)widget(idx);
+		if (act)
+			setCurrentActivity(act);
+		
+		QList<QAction*> actions = activity_switching_group->actions();
+		foreach (QAction* a,actions)
+		{
+			if (a->data().value<QObject*>() == act || act == 0)
+			{
+				a->setChecked(true);
+				break;
+			}
+		}
 	}
 	
 	void CentralWidget::saveState(KSharedConfigPtr cfg)
 	{
-		activity_bar->saveState(cfg);
 		KConfigGroup g = cfg->group("MainWindow");
-		g.writeEntry("current_activity",stack->currentIndex());
-		g.writeEntry("activity_bar_pos",(int)pos);
+		g.writeEntry("current_activity",currentIndex());
 	}
 	
-	void CentralWidget::setActivityBarPosition(kt::ActivityListPosition p) 
+	void CentralWidget::addActivity(Activity* act)
 	{
-		if (p == pos)
-			return;
-		
-		switch (p)
+		QAction* a = activity_switching_group->addAction(KIcon(act->icon()),act->name());
+		a->setCheckable(true);
+		a->setToolTip(act->toolTip());
+		a->setData(qVariantFromValue<QObject*>(act));
+		addWidget(act);
+	}
+	
+	void CentralWidget::removeActivity(Activity* act)
+	{
+		QList<QAction*> actions = activity_switching_group->actions();
+		foreach (QAction* a,actions)
 		{
-			case LEFT:
-				layout->setDirection(QBoxLayout::LeftToRight);
-				activity_bar->setFlow(QListView::TopToBottom);
+			if (a->data().value<QObject*>() == act)
+			{
+				activity_switching_group->removeAction(a);
 				break;
-			case RIGHT:
-				layout->setDirection(QBoxLayout::RightToLeft);
-				activity_bar->setFlow(QListView::TopToBottom);
-				break;
-			case TOP:
-				layout->setDirection(QBoxLayout::TopToBottom);
-				activity_bar->setFlow(QListView::LeftToRight);
-				break;
-			case BOTTOM:
-				layout->setDirection(QBoxLayout::BottomToTop);
-				activity_bar->setFlow(QListView::LeftToRight);
-				break;
+			}
 		}
-		
-		pos = p;
+		removeWidget(act);
+	}
+	
+	void CentralWidget::setCurrentActivity(Activity* act)
+	{
+		setCurrentWidget(act);
+	}
+	
+	Activity* CentralWidget::currentActivity()
+	{
+		return (Activity*)currentWidget();
+	}
+	
+	QList< QAction* > CentralWidget::activitySwitchingActions()
+	{
+		return activity_switching_group->actions();
+	}
+	
+	void CentralWidget::switchActivity(QAction* action)
+	{
+		for (int i = 0;i < count();i++)
+		{
+			Activity* act = (Activity*)widget(i);
+			if (action->data().value<QObject*>() == act)
+			{
+				setCurrentWidget(act);
+				break;
+			}
+		}
 	}
 
 }

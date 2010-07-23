@@ -88,7 +88,7 @@ namespace kt
 		addActivity(torrent_activity);
 		
 		setupActions();
-		createGUI("ktorrentui.rc");
+		setupGUI(Default,"ktorrentui.rc");
 		
 		status_bar = new kt::StatusBar(this);
 		setStatusBar(status_bar);
@@ -127,17 +127,21 @@ namespace kt
 	
 	void GUI::addActivity(Activity* act)
 	{
-		central->activityBar()->addActivity(act);
+		central->addActivity(act);
+		unplugActionList("activities_list");
+		plugActionList("activities_list",central->activitySwitchingActions());
 	}
 	
 	void GUI::removeActivity(Activity* act)
 	{
-		central->activityBar()->removeActivity(act);
+		central->removeActivity(act);
+		unplugActionList("activities_list");
+		plugActionList("activities_list",central->activitySwitchingActions());
 	}
 	
 	void GUI::setCurrentActivity(Activity* act)
 	{
-		central->activityBar()->setCurrentActivity(act);
+		central->setCurrentActivity(act);
 	}
 
 	void GUI::addPrefPage(PrefPageInterface* page)

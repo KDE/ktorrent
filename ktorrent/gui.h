@@ -23,9 +23,9 @@
 
 #include <QTimer>
 #include <QStackedWidget>
-#include <KXmlGuiWindow>
 #include <util/constants.h>
 #include <interfaces/guiinterface.h>
+#include <kparts/mainwindow.h>
 
 class KUrl;
 class KAction;
@@ -43,7 +43,7 @@ namespace kt
 	class CentralWidget;
 	
 
-	class GUI : public KXmlGuiWindow,public GUIInterface
+	class GUI : public KParts::MainWindow,public GUIInterface
 	{
 		Q_OBJECT
 	public:

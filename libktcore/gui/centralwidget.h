@@ -21,39 +21,52 @@
 #ifndef KT_CENTRALWIDGET_H
 #define KT_CENTRALWIDGET_H
 
-#include <QWidget>
 #include <QStackedWidget>
-#include <QBoxLayout>
+#include <QActionGroup>
 #include <KSharedConfig>
 #include <ktcore_export.h>
 #include "activitybar.h"
+
 
 namespace kt 
 {
 	
 	/**
-	 * The CentralWidget holds the ActivityBar and widget stack. The central widget can rearrange them, so
-	 * that the ActivityBar can be placed on the left, right, top or bottom edge.
+	 * The CentralWidget holds the widget stack. 
 	 */
-	class KTCORE_EXPORT CentralWidget : public QWidget
+	class KTCORE_EXPORT CentralWidget : public QStackedWidget
 	{
 		Q_OBJECT
 	public:
 		CentralWidget(QWidget* parent);
 		virtual ~CentralWidget();
 		
-		ActivityBar* activityBar() {return activity_bar;}
+		/// Add an Activity
+		void addActivity(Activity* act);
+		
+		/// Remove an Activity (doesn't delete it)
+		void removeActivity(Activity* act);
+		
+		/// Set the current activity
+		void setCurrentActivity(Activity* act);
+		
+		/// Get the current activity
+		Activity* currentActivity();
+		
+		/// Load the state of the widget
 		void loadState(KSharedConfigPtr cfg);
+		
+		/// Save the state of the widget
 		void saveState(KSharedConfigPtr cfg);
 		
+		/// Get the list of actions to switch between activities
+		QList<QAction*> activitySwitchingActions();
+		
 	private slots:
-		void setActivityBarPosition(ActivityListPosition p);
+		void switchActivity(QAction* action);
 		
 	private:
-		ActivityBar* activity_bar;
-		QStackedWidget* stack;
-		QBoxLayout* layout;
-		ActivityListPosition pos;
+		QActionGroup* activity_switching_group;
 	};
 
 }

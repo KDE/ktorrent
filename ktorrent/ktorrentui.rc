@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="ktorrent" version="20">
+<kpartgui name="ktorrent" version="21">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
 	  <Action name="file_new"/>
@@ -15,6 +15,8 @@
   </Menu>
   <Menu name="view"><text>&amp;View</text>
 	<Action name="show_group_view" />
+	<Separator/>
+	<ActionList name="activities_list" />
   </Menu>
   <Menu name="Downloads"><text>Downloads</text>
 	<Action name="start" />
@@ -86,11 +88,16 @@
 	<Merge/>
 </Menu>
 
-<ToolBar name="mainToolBar" noMerge="1"><text>Download Toolbar</text>
+<ToolBar name="mainToolBar" noMerge="1"><text>Main</text>
+	<ActionList name="activities_list" />
+	<Separator/>
 	<Action name="file_new"/>
     <Action name="file_open"/>
 	<Action name="paste_url"/>
 	<Action name="ipfilter_action"/>
+</ToolBar>
+
+<ToolBar name="TorrentsToolBar" noMerge="1"><text>Torrents</text>
 	<Action name="show_group_view" />
 	<Separator/>
 	<Action name="start"/>
