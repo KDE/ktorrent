@@ -38,10 +38,6 @@ set(libktorrent_SRC
 	dbus/dbussettings.cpp
 	
 	gui/centralwidget.cpp
-	gui/activitybar.cpp
-	gui/activitylistmodel.cpp
-	gui/activitylistwidget.cpp
-	gui/activitylistdelegate.cpp
 	gui/tabbarwidget.cpp
 	
 	plugin/pluginmanager.cpp
