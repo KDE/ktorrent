@@ -1,0 +1,26 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui library="libktscriptingplugin" name="ktscriptingplugin" version="1">
+	<ToolBar name="ScriptingToolbar">
+		<text>Scripting</text>
+		<Action name="add_script" />
+		<Action name="remove_script" />
+		<Separator/>
+		<Action name="run_script" />
+		<Action name="stop_script" />
+		<Separator/>
+		<Action name="configure_script" />
+	</ToolBar>
+	
+	<Menu name="ScriptingMenu">
+		<text>Scripting</text>
+		<Action name="add_script" />
+		<Action name="remove_script" />
+		<Separator/>
+		<Action name="run_script" />
+		<Action name="stop_script" />
+		<Action name="edit_script" />
+		<Separator/>
+		<Action name="script_properties" />
+		<Action name="configure_script" />
+	</Menu>
+</kpartgui>

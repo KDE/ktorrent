@@ -24,8 +24,7 @@
 #include <QListView>
 #include <interfaces/activity.h>
 
-class KToolBar;
-class KMenu;
+class KAction;
 class KActionCollection;
 
 namespace Kross
@@ -35,6 +34,7 @@ namespace Kross
 
 namespace kt
 {
+	class Script;
 	class ScriptModel;
 
 	/**
@@ -44,7 +44,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		ScriptManager(ScriptModel* model,KActionCollection* ac,QWidget* parent);
+		ScriptManager(ScriptModel* model,QWidget* parent);
 		virtual ~ScriptManager();
 		
 		/// Get all selected scripts
@@ -57,19 +57,31 @@ namespace kt
 		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
 		void showContextMenu(const QPoint& p);
 		void dataChanged(const QModelIndex & f,const QModelIndex & to);
+		void runScript();
+		void stopScript();
+		void editScript();
+		void showProperties();
+		void showProperties(Script* script);
+		void configureScript();
+		
+	private:
+		void setupActions();
 		
 	signals:
-		void enableRemoveScript(bool on);
-		void enableRunScript(bool on);
-		void enableStopScript(bool on);
-		void enableProperties(bool on);
-		void enableConfigure(bool on);
+		void addScript();
+		void removeScript();
 		
 	private:
 		ScriptModel* model;
 		QListView* view;
-		KToolBar* toolbar;
-		KMenu* context_menu;
+		
+		KAction* add_script;
+		KAction* remove_script;
+		KAction* run_script;
+		KAction* stop_script;
+		KAction* edit_script;
+		KAction* properties;
+		KAction* configure_script;
 	};
 
 }

@@ -21,15 +21,17 @@
 #include <QAction>
 #include <QVBoxLayout>
 #include <util/log.h>
-#include <klocale.h>
-#include <kmenu.h>
-#include <ktoolbar.h>
-#include <kactioncollection.h>
+#include <KRun>
+#include <KLocale>
+#include <KMenu>
+#include <KAction>
+#include <KActionCollection>
 #include <kross/core/manager.h>
 #include "scriptmanager.h"
 #include "scriptmodel.h"
 #include "script.h"
 #include "scriptdelegate.h"
+#include "ui_scriptproperties.h"
 
 using namespace Kross;
 using namespace bt;
@@ -37,37 +39,15 @@ using namespace bt;
 namespace kt
 {
 
-	ScriptManager::ScriptManager(ScriptModel* model,KActionCollection* ac,QWidget* parent)
+	ScriptManager::ScriptManager(ScriptModel* model,QWidget* parent)
 	: Activity(i18n("Scripts"),"text-x-script",40,parent),model(model)
 	{
+		setXMLGUIFile("ktscriptingpluginui.rc");
+		setupActions();
 		setToolTip(i18n("Widget to start, stop and manage scripts"));
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
-		
-		QAction* remove = ac->action("remove_script");
-		QAction* add = ac->action("add_script");
-		QAction* run = ac->action("run_script");
-		QAction* stop = ac->action("stop_script");
-		QAction* edit = ac->action("edit_script");
-		QAction* properties = ac->action("script_properties");
-		QAction* configure = ac->action("configure_script");
-		
-		toolbar = new KToolBar(this);
-		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		layout->addWidget(toolbar);
-		toolbar->addAction(add);
-		toolbar->addAction(remove);
-		toolbar->addAction(run);
-		toolbar->addAction(stop);
-		toolbar->addAction(configure);
-		connect(this,SIGNAL(enableRemoveScript(bool)),remove,SLOT(setEnabled(bool)));
-		connect(this,SIGNAL(enableRemoveScript(bool)),edit,SLOT(setEnabled(bool)));
-		connect(this,SIGNAL(enableStopScript(bool)),stop,SLOT(setEnabled(bool)));
-		connect(this,SIGNAL(enableRunScript(bool)),run,SLOT(setEnabled(bool)));
-		connect(this,SIGNAL(enableProperties(bool)),properties,SLOT(setEnabled(bool)));
-		connect(this,SIGNAL(enableConfigure(bool)),configure,SLOT(setEnabled(bool)));
-		remove->setEnabled(false);
 		
 		view = new QListView(this);
 		view->setItemDelegate(new ScriptDelegate(view));
@@ -88,30 +68,52 @@ namespace kt
 		connect(model,SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
 				this,SLOT(dataChanged(const QModelIndex&, const QModelIndex&)));
 		
-		context_menu = new KMenu(this);
-		context_menu->addAction(add);
-		context_menu->addAction(remove);
-		context_menu->addSeparator();
-		context_menu->addAction(run);
-		context_menu->addAction(stop);
-		context_menu->addSeparator();
-		context_menu->addAction(edit);
-		context_menu->addSeparator();
-		context_menu->addAction(properties);
-		context_menu->addAction(configure);
-		
-		add->setEnabled(true);
-		remove->setEnabled(false);
-		run->setEnabled(false);
-		stop->setEnabled(false);
-		edit->setEnabled(false);
+		add_script->setEnabled(true);
+		remove_script->setEnabled(false);
+		run_script->setEnabled(false);
+		stop_script->setEnabled(false);
+		edit_script->setEnabled(false);
 		properties->setEnabled(false);
-		configure->setEnabled(false);
+		configure_script->setEnabled(false);
 	}
 
 
 	ScriptManager::~ScriptManager()
 	{
+	}
+	
+	
+	void ScriptManager::setupActions()
+	{
+		KActionCollection* ac = part()->actionCollection();
+		
+		add_script = new KAction(KIcon("list-add"),i18n("Add Script"),this);
+		connect(add_script,SIGNAL(triggered()),this,SIGNAL(addScript()));
+		ac->addAction("add_script",add_script);
+		
+		remove_script = new KAction(KIcon("list-remove"),i18n("Remove Script"),this);
+		connect(remove_script,SIGNAL(triggered()),this,SIGNAL(removeScript()));
+		ac->addAction("remove_script",remove_script);
+		
+		run_script = new KAction(KIcon("system-run"),i18n("Run Script"),this);
+		connect(run_script,SIGNAL(triggered()),this,SLOT(runScript()));
+		ac->addAction("run_script",run_script);
+		
+		stop_script = new KAction(KIcon("media-playback-stop"),i18n("Stop Script"),this);
+		connect(stop_script,SIGNAL(triggered()),this,SLOT(stopScript()));
+		ac->addAction("stop_script",stop_script);
+		
+		edit_script = new KAction(KIcon("document-open"),i18n("Edit Script"),this);
+		connect(edit_script,SIGNAL(triggered()),this,SLOT(editScript()));
+		ac->addAction("edit_script",edit_script);
+		
+		properties = new KAction(KIcon("dialog-information"),i18n("Properties"),this);
+		connect(properties,SIGNAL(triggered()),this,SLOT(showProperties()));
+		ac->addAction("script_properties",properties);
+		
+		configure_script = new KAction(KIcon("preferences-other"),i18n("Configure"),this);
+		connect(configure_script,SIGNAL(triggered()),this,SLOT(configureScript()));
+		ac->addAction("configure_script",configure_script);
 	}
 
 	void ScriptManager::onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected)
@@ -142,15 +144,14 @@ namespace kt
 				num_not_running++;
 		}
 		
-		enableRemoveScript(num_removeable > 0);
-		
-		enableRunScript(selected.count() > 0 && num_not_running > 0);
-		enableStopScript(selected.count() > 0 && num_running > 0);
+		remove_script->setEnabled(num_removeable > 0);
+		run_script->setEnabled(selected.count() > 0 && num_not_running > 0);
+		stop_script->setEnabled(selected.count() > 0 && num_running > 0);
 		Script* s = 0;
 		if (selected.count() > 0)
 			s = model->scriptForIndex(selected.front());
-		enableProperties(selected.count() == 1 && s && s->metaInfo().valid());
-		enableConfigure(selected.count() == 1 && s && s->hasConfigure());
+		properties->setEnabled(selected.count() == 1 && s && s->metaInfo().valid());
+		configure_script->setEnabled(selected.count() == 1 && s && s->hasConfigure());
 	}
 	
 	QModelIndexList ScriptManager::selectedScripts()
@@ -160,7 +161,9 @@ namespace kt
 
 	void ScriptManager::showContextMenu(const QPoint& p)
 	{
-		context_menu->popup(view->viewport()->mapToGlobal(p));
+		KMenu* m = part()->menu("ScriptingMenu");
+		if (m)
+			m->popup(view->viewport()->mapToGlobal(p));
 	}
 	
 	void ScriptManager::dataChanged(const QModelIndex & from,const QModelIndex & to)
@@ -168,5 +171,84 @@ namespace kt
 		Q_UNUSED(from);
 		Q_UNUSED(to);
 		updateActions(selectedScripts());
+	}
+	
+	void ScriptManager::runScript()
+	{
+		QModelIndexList sel = selectedScripts();
+		foreach (const QModelIndex & idx,sel)
+		{
+			if (!model->setData(idx,Qt::Checked,Qt::CheckStateRole))
+				Out(SYS_SCR|LOG_DEBUG) << "setData failed" << endl;
+		}
+		updateActions(sel);
+	}
+	
+	void ScriptManager::stopScript()
+	{
+		QModelIndexList sel = selectedScripts();
+		foreach (const QModelIndex & idx,sel)
+		{
+			if (!model->setData(idx,Qt::Unchecked,Qt::CheckStateRole))
+				Out(SYS_SCR|LOG_DEBUG) << "setData failed" << endl;
+		}
+		updateActions(sel);
+	}
+	
+	void ScriptManager::editScript()
+	{
+		QModelIndexList sel = selectedScripts();
+		foreach (const QModelIndex & idx,sel)
+		{
+			Script* s = model->scriptForIndex(idx);
+			if (s)
+				new KRun(KUrl(s->scriptFile()), 0, 0, true, true);
+		}
+		
+	}
+	
+	void ScriptManager::showProperties()
+	{
+		QModelIndexList sel = selectedScripts();
+		if (sel.count() != 1)
+			return;
+		
+		Script* s = model->scriptForIndex(sel.front());
+		if (!s || !s->metaInfo().valid())
+			return;
+		
+		showProperties(s);
+	}
+	
+	void ScriptManager::showProperties(kt::Script* s) 
+	{
+		Ui_ScriptProperties prop;
+		KDialog* dialog = new KDialog(this);
+		dialog->setButtons(KDialog::Ok);
+		dialog->setWindowTitle(i18n("Script Properties"));
+		prop.setupUi(dialog->mainWidget());
+		prop.m_icon->setPixmap(DesktopIcon(s->iconName()));
+		prop.m_name->setText(s->name());
+		prop.m_description->setText(s->metaInfo().comment);
+		prop.m_author->setText(s->metaInfo().author);
+		prop.m_license->setText(s->metaInfo().license);
+		prop.m_email->setText(s->metaInfo().email);
+		prop.m_website->setText(s->metaInfo().website);
+		dialog->exec();
+		delete dialog;
+	}
+	
+	
+	void ScriptManager::configureScript()
+	{
+		QModelIndexList sel = selectedScripts();
+		if (sel.count() != 1)
+			return;
+		
+		Script* s = model->scriptForIndex(sel.front());
+		if (!s || !s->metaInfo().valid() || !s->hasConfigure())
+			return;
+		
+		s->configure();
 	}
 }

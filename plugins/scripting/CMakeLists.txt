@@ -25,4 +25,4 @@ target_link_libraries(
     )
 install(TARGETS ktscriptingplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktscriptingplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-#install(FILES ktscriptingpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+install(FILES ktscriptingpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )

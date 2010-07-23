@@ -18,7 +18,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <krun.h>
 #include <kgenericfactory.h>
 #include <kactioncollection.h>
 #include <kfiledialog.h>
@@ -44,7 +43,6 @@
 #include "scriptmanager.h"
 #include "scriptmodel.h"
 #include "script.h"
-#include "ui_scriptproperties.h"
 #include "api/scriptingmodule.h"
 
 K_EXPORT_COMPONENT_FACTORY(ktscriptingplugin,KGenericFactory<kt::ScriptingPlugin>("ktscriptingplugin"))
@@ -65,38 +63,7 @@ namespace kt
 	{
 	}
 	
-	void ScriptingPlugin::setupActions()
-	{
-		KActionCollection* ac = actionCollection();
-		
-		add_script = new KAction(KIcon("list-add"),i18n("Add Script"),this);
-		connect(add_script,SIGNAL(triggered()),this,SLOT(addScript()));
-		ac->addAction("add_script",add_script);
-		
-		remove_script = new KAction(KIcon("list-remove"),i18n("Remove Script"),this);
-		connect(remove_script,SIGNAL(triggered()),this,SLOT(removeScript()));
-		ac->addAction("remove_script",remove_script);
-		
-		run_script = new KAction(KIcon("system-run"),i18n("Run Script"),this);
-		connect(run_script,SIGNAL(triggered()),this,SLOT(runScript()));
-		ac->addAction("run_script",run_script);
-		
-		stop_script = new KAction(KIcon("media-playback-stop"),i18n("Stop Script"),this);
-		connect(stop_script,SIGNAL(triggered()),this,SLOT(stopScript()));
-		ac->addAction("stop_script",stop_script);
-		
-		edit_script = new KAction(KIcon("document-open"),i18n("Edit Script"),this);
-		connect(edit_script,SIGNAL(triggered()),this,SLOT(editScript()));
-		ac->addAction("edit_script",edit_script);
-		
-		properties = new KAction(KIcon("dialog-information"),i18n("Properties"),this);
-		connect(properties,SIGNAL(triggered()),this,SLOT(showProperties()));
-		ac->addAction("script_properties",properties);
-		
-		configure_script = new KAction(KIcon("preferences-other"),i18n("Configure"),this);
-		connect(configure_script,SIGNAL(triggered()),this,SLOT(configureScript()));
-		ac->addAction("configure_script",configure_script);
-	}
+	
 
 	void ScriptingPlugin::load()
 	{
@@ -107,7 +74,6 @@ namespace kt
 		
 		LogSystemManager::instance().registerSystem(i18n("Scripting"),SYS_SCR);
 		model = new ScriptModel(this);
-		connect(model,SIGNAL(showPropertiesDialog(Script*)),this,SLOT(showProperties(Script*)));
 		// add the KTorrent object
 		Kross::Manager::self().addObject(getCore()->getExternalInterface(),"KTorrent");
 		Kross::Manager::self().addObject(new ScriptingModule(getGUI(),getCore(),this),"KTScriptingPlugin");
@@ -118,8 +84,10 @@ namespace kt
 		foreach (const QString & s,interpreters)
 			Out(SYS_SCR|LOG_DEBUG) << s << endl;
 		
-		setupActions();
-		sman = new ScriptManager(model,actionCollection(),0);
+		sman = new ScriptManager(model,0);
+		connect(sman,SIGNAL(addScript()),this,SLOT(addScript()));
+		connect(sman,SIGNAL(removeScript()),this,SLOT(removeScript()));
+		connect(model,SIGNAL(showPropertiesDialog(Script*)),sman,SLOT(showProperties(Script*)));
 		getGUI()->addActivity(sman);
 	}
 
@@ -283,85 +251,6 @@ namespace kt
 		model->removeScripts(indices);
 		saveScripts();
 		sman->updateActions(sman->selectedScripts());
-	}
-	
-	void ScriptingPlugin::runScript()
-	{
-		QModelIndexList sel = sman->selectedScripts();
-		foreach (const QModelIndex & idx,sel)
-		{
-			if (!model->setData(idx,Qt::Checked,Qt::CheckStateRole))
-				Out(SYS_SCR|LOG_DEBUG) << "setData failed" << endl;
-		}
-		sman->updateActions(sel);
-	}
-	
-	void ScriptingPlugin::stopScript()
-	{
-		QModelIndexList sel = sman->selectedScripts();
-		foreach (const QModelIndex & idx,sel)
-		{
-			if (!model->setData(idx,Qt::Unchecked,Qt::CheckStateRole))
-				Out(SYS_SCR|LOG_DEBUG) << "setData failed" << endl;
-		}
-		sman->updateActions(sel);
-	}
-	
-	void ScriptingPlugin::editScript()
-	{
-		QModelIndexList sel = sman->selectedScripts();
-		foreach (const QModelIndex & idx,sel)
-		{
-			Script* s = model->scriptForIndex(idx);
-			if (s)
-				new KRun(KUrl(s->scriptFile()), 0, 0, true, true);
-		}
-		
-	}
-	
-	void ScriptingPlugin::showProperties()
-	{
-		QModelIndexList sel = sman->selectedScripts();
-		if (sel.count() != 1)
-			return;
-		
-		Script* s = model->scriptForIndex(sel.front());
-		if (!s || !s->metaInfo().valid())
-			return;
-			
-		showProperties(s);
-	}
-	
-	void ScriptingPlugin::showProperties(kt::Script* s) 
-	{
-		Ui_ScriptProperties prop;
-		KDialog* dialog = new KDialog(sman);
-		dialog->setButtons(KDialog::Ok);
-		dialog->setWindowTitle(i18n("Script Properties"));
-		prop.setupUi(dialog->mainWidget());
-		prop.m_icon->setPixmap(DesktopIcon(s->iconName()));
-		prop.m_name->setText(s->name());
-		prop.m_description->setText(s->metaInfo().comment);
-		prop.m_author->setText(s->metaInfo().author);
-		prop.m_license->setText(s->metaInfo().license);
-		prop.m_email->setText(s->metaInfo().email);
-		prop.m_website->setText(s->metaInfo().website);
-		dialog->exec();
-		delete dialog;
-	}
-
-	
-	void ScriptingPlugin::configureScript()
-	{
-		QModelIndexList sel = sman->selectedScripts();
-		if (sel.count() != 1)
-			return;
-		
-		Script* s = model->scriptForIndex(sel.front());
-		if (!s || !s->metaInfo().valid() || !s->hasConfigure())
-			return;
-		
-		s->configure();
 	}
 	
 	bool ScriptingPlugin::versionCheck(const QString & version) const
