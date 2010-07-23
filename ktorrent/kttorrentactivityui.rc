@@ -1,8 +1,8 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui library="torrentactivity" name="torrentactivity" version="1">
+<kpartgui name="torrentactivity" version="1">
 <MenuBar>
 	<Menu name="view">
-		<Action name="show_group_view" />
+		<Action name="show_group_view" group="view_menu_top"/>
 	</Menu>
 	<Menu name="Torrents"><text>Torrents</text>
 		<Action name="start" />

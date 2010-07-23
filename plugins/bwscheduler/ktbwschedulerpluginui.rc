@@ -1,12 +1,15 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="ktorrent" version="1">
-	<MenuBar>
-		<Menu name="file">
-			<Action name="bwscheduler"/>
-		</Menu>
-	</MenuBar>
-	
-	<ToolBar name="SchedulerToolbar" noMerge="1">
-		<Action name="bwscheduler"/>
+<kpartgui library="libktbwschedulerplugin" name="ktbwschedulerplugin" version="1">
+	<ToolBar name="SchedulerToolbar">
+		<text>Bandwidth Schedule</text>
+		<Action name="schedule_load" />
+		<Action name="schedule_save" />
+		<Action name="schedule_clear" />
+		<Separator/>
+		<Action name="new_schedule_item" />
+		<Action name="remove_schedule_item" />
+		<Action name="edit_schedule_item" />
+		<Separator/>
+		<Action name="schedule_active" />
 	</ToolBar>
 </kpartgui>

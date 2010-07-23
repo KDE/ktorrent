@@ -17,4 +17,5 @@ target_link_libraries(
     )
 install(TARGETS ktbwschedulerplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktbwschedulerplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install(FILES ktbwschedulerpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 

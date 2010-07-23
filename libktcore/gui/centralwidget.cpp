@@ -62,13 +62,15 @@ namespace kt
 		g.writeEntry("current_activity",currentIndex());
 	}
 	
-	void CentralWidget::addActivity(Activity* act)
+	KAction* CentralWidget::addActivity(Activity* act)
 	{
-		QAction* a = activity_switching_group->addAction(KIcon(act->icon()),act->name());
+		KAction* a = new KAction(KIcon(act->icon()),act->name(),this);
+		activity_switching_group->addAction(a);
 		a->setCheckable(true);
 		a->setToolTip(act->toolTip());
 		a->setData(qVariantFromValue<QObject*>(act));
 		addWidget(act);
+		return a;
 	}
 	
 	void CentralWidget::removeActivity(Activity* act)
@@ -79,6 +81,7 @@ namespace kt
 			if (a->data().value<QObject*>() == act)
 			{
 				activity_switching_group->removeAction(a);
+				a->deleteLater();
 				break;
 			}
 		}

@@ -23,13 +23,14 @@
 
 #include <QStackedWidget>
 #include <QActionGroup>
+#include <KAction>
 #include <KSharedConfig>
 #include <ktcore_export.h>
-#include "activitybar.h"
 
 
 namespace kt 
 {
+	class Activity;
 	
 	/**
 	 * The CentralWidget holds the widget stack. 
@@ -42,7 +43,7 @@ namespace kt
 		virtual ~CentralWidget();
 		
 		/// Add an Activity
-		void addActivity(Activity* act);
+		KAction* addActivity(Activity* act);
 		
 		/// Remove an Activity (doesn't delete it)
 		void removeActivity(Activity* act);

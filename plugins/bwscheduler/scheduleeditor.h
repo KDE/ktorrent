@@ -24,7 +24,6 @@
 #include <interfaces/activity.h>
 
 class QCheckBox;
-class KToolBar;
 
 namespace kt
 {
@@ -85,11 +84,14 @@ namespace kt
 		 * Emitted when something changes in the schedule.
 		 */
 		void scheduleChanged();
+		
+	private:
+		void setupActions();
+		QAction* addAction(const QString & icon,const QString & text,const QString & name,QObject* obj,const char* slot);
 
 	private:
 		WeekView* view;
 		Schedule* schedule;
-		KToolBar* tool_bar;
 		
 		QAction* load_action;
 		QAction* save_action;

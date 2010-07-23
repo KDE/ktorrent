@@ -40,17 +40,21 @@
 #include <KNotifyConfigWidget>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>
+#include <kparts/partmanager.h>
 
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <torrent/torrentcontrol.h>
 #include <util/log.h>
+#include <util/timer.h>
 #include <util/error.h>
 #include <dht/dhtbase.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
 #include <plugin/pluginmanager.h>
 #include <settings.h>
+
+#include <gui/centralwidget.h>
 #include "gui.h"
 #include "core.h"
 #include "view/view.h"
@@ -66,12 +70,13 @@
 #include "dialogs/torrentcreatordlg.h"
 #include "dialogs/importdialog.h"
 #include "tools/queuemanagerwidget.h"
-#include <util/timer.h>
-#include <gui/activitybar.h>
+
 #include "torrentactivity.h"
-#include <gui/centralwidget.h>
+
 #include <interfaces/functions.h>
-#include <kparts/partmanager.h>
+
+
+
 
 
 
@@ -132,19 +137,19 @@ namespace kt
 	
 	void GUI::addActivity(Activity* act)
 	{
+		unplugActionList("activities_list");
 		central->addActivity(act);
 		if (act->part())
-			part_manager->addPart(act->part());
-		unplugActionList("activities_list");
+			part_manager->addPart(act->part(),false);
 		plugActionList("activities_list",central->activitySwitchingActions());
 	}
 	
 	void GUI::removeActivity(Activity* act)
 	{
+		unplugActionList("activities_list");
 		central->removeActivity(act);
 		if (act->part())
 			part_manager->removePart(act->part());
-		unplugActionList("activities_list");
 		plugActionList("activities_list",central->activitySwitchingActions());
 	}
 	
@@ -156,8 +161,8 @@ namespace kt
 	
 	void GUI::activePartChanged(KParts::Part* p)
 	{
-		createGUI(p);
 		unplugActionList("activities_list");
+		createGUI(p);
 		plugActionList("activities_list",central->activitySwitchingActions());
 	}
 
@@ -393,7 +398,7 @@ namespace kt
 		show_status_bar_action = KStandardAction::showStatusbar(this, SLOT(showStatusBar()),ac);
 		show_status_bar_action->setIcon(KIcon("kt-show-statusbar"));
 		show_menu_bar_action = KStandardAction::showMenubar(this, SLOT(showMenuBar()),ac);
-		KAction* pref_action = KStandardAction::preferences(this, SLOT(showPrefDialog()),ac);
+		KStandardAction::preferences(this, SLOT(showPrefDialog()),ac);
 		KStandardAction::keyBindings(this, SLOT(configureKeys()),ac);
 		
 		KStandardAction::configureToolbars(this,SLOT(configureToolBars()),ac);

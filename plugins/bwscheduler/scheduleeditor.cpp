@@ -18,19 +18,21 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QAction>
+
 #include <QVBoxLayout>
-#include <ktoolbar.h>
-#include <kicon.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kfiledialog.h>
+#include <KAction>
+#include <KActionCollection>
+#include <KIcon>
+#include <KLocale>
+#include <KMessageBox>
+#include <KFileDialog>
 #include <util/error.h>
 #include "scheduleeditor.h"
 #include "weekview.h"
 #include "schedule.h"
 #include "additemdlg.h"
 #include "edititemdlg.h"
+
 
 namespace kt
 {
@@ -39,27 +41,16 @@ namespace kt
 	ScheduleEditor::ScheduleEditor(QWidget* parent) 
 		: Activity(i18n("Bandwidth Schedule"),"kt-bandwidth-scheduler",20,parent),schedule(0)
 	{
+		setXMLGUIFile("ktbwschedulerpluginui.rc");
 		setToolTip(i18n("Edit the bandwidth schedule"));
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		view = new WeekView(this);
-		tool_bar = new KToolBar(this);
-
-		layout->addWidget(tool_bar);
 		layout->addWidget(view);
+		layout->setMargin(0);
+		layout->setSpacing(0);
 		
-		load_action = tool_bar->addAction(KIcon("document-open"),i18n("Load Schedule"),this,SLOT(load()));
-		save_action = tool_bar->addAction(KIcon("document-save"),i18n("Save Schedule"),this,SLOT(save()));
-		tool_bar->addSeparator();
-		new_item_action = tool_bar->addAction(KIcon("list-add"),i18n("New Item"),this,SLOT(addItem()));
-		remove_item_action = tool_bar->addAction(KIcon("list-remove"),i18n("Remove Item"),this,SLOT(removeItem()));
-		edit_item_action = tool_bar->addAction(KIcon("edit-select-all"),i18n("Edit Item"),this,SLOT(editItem()));
-		tool_bar->addSeparator();
-		clear_action = tool_bar->addAction(KIcon("edit-clear"),i18n("Clear Schedule"),this,SLOT(clear()));
-		enable_schedule = new QCheckBox(i18n("Scheduler Active"),tool_bar);
-		enable_schedule->setToolTip(i18n("Activate or deactivate the scheduler"));
-		tool_bar->addWidget(enable_schedule);
-		connect(enable_schedule,SIGNAL(toggled(bool)),this,SLOT(enableChecked(bool)));
-		
+		setupActions();
+			
 		clear_action->setEnabled(false);
 		edit_item_action->setEnabled(false);
 		remove_item_action->setEnabled(false);
@@ -80,6 +71,35 @@ namespace kt
 	
 	ScheduleEditor::~ScheduleEditor()
 	{}
+	
+	QAction* ScheduleEditor::addAction(const QString& icon, const QString& text, const QString& name, 
+									   QObject* obj, const char* slot)
+	{
+		KActionCollection* ac = part()->actionCollection();
+		KAction* a = new KAction(KIcon(icon),text,this);
+		connect(a,SIGNAL(triggered(bool)),obj,slot);
+		ac->addAction(name,a);
+		return a;
+	}
+
+	
+	void ScheduleEditor::setupActions()
+	{
+		load_action = addAction("document-open",i18n("Load Schedule"),"schedule_load",this,SLOT(load()));
+		save_action = addAction("document-save",i18n("Save Schedule"),"schedule_save",this,SLOT(save()));
+		new_item_action = addAction("list-add",i18n("New Item"),"new_schedule_item",this,SLOT(addItem()));
+		remove_item_action = addAction("list-remove",i18n("Remove Item"),"remove_schedule_item",this,SLOT(removeItem()));
+		edit_item_action = addAction("edit-select-all",i18n("Edit Item"),"edit_schedule_item",this,SLOT(editItem()));
+		clear_action = addAction("edit-clear",i18n("Clear Schedule"),"schedule_clear",this,SLOT(clear()));
+		
+		KAction* act = new KAction(this);
+		enable_schedule = new QCheckBox(i18n("Scheduler Active"),this);
+		enable_schedule->setToolTip(i18n("Activate or deactivate the scheduler"));
+		act->setDefaultWidget(enable_schedule);
+		part()->actionCollection()->addAction("schedule_active",act);
+		connect(enable_schedule,SIGNAL(toggled(bool)),this,SLOT(enableChecked(bool)));
+	}
+
 
 	void ScheduleEditor::setSchedule(Schedule* s)
 	{
