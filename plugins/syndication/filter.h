@@ -136,6 +136,12 @@ namespace kt
 		/// Set the download location
 		void setDownloadLocation(const QString & dl) {download_location = dl;}
 		
+		/// Get the move on completion location (empty string means don't move on completion)
+		const QString & moveOnCompletionLocation() const {return move_on_completion_location;}
+		
+		/// Set the move on completion location (empty string means don't move on completion)
+		void setMoveOnCompletionLocation(const QString & loc) {move_on_completion_location = loc;}
+		
 		/// Open torrents silently or not
 		bool openSilently() const {return silent;}
 		
@@ -208,6 +214,7 @@ namespace kt
 		bool download_non_matching;
 		QString dest_group;
 		QString download_location;
+		QString move_on_completion_location;
 		bool silent;
 		bool case_sensitive;
 		bool all_word_matches_must_match;

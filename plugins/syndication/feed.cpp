@@ -349,7 +349,7 @@ namespace kt
 				if (needToDownload(item,f))
 				{
 					Out(SYS_SYN|LOG_NOTICE) << "Downloading item " << item->title() << " (filter: " << f->filterName() << ")" << endl;
-					downloadItem(item,f->group(),f->downloadLocation(),f->openSilently());
+					downloadItem(item,f->group(),f->downloadLocation(),f->moveOnCompletionLocation(),f->openSilently());
 				}
 			}
 		}
@@ -357,14 +357,14 @@ namespace kt
 	
 	QString TorrentUrlFromItem(Syndication::ItemPtr item);
 	
-	void Feed::downloadItem(Syndication::ItemPtr item,const QString & group,const QString & location,bool silently)
+	void Feed::downloadItem(Syndication::ItemPtr item, const QString& group, const QString& location, const QString& move_on_completion, bool silently)
 	{
 		loaded.append(item->id());
 		QString url = TorrentUrlFromItem(item);
 		if (!url.isEmpty())
-			downloadLink(KUrl(url),group,location,silently);
+			downloadLink(KUrl(url),group,location,move_on_completion,silently);
 		else
-			downloadLink(KUrl(item->link()),group,location,silently);
+			downloadLink(KUrl(item->link()),group,location,move_on_completion,silently);
 		save();
 	}
 		

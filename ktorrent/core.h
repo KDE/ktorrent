@@ -64,9 +64,9 @@ namespace kt
 		virtual bt::Uint32 getNumTorrentsRunning() const;
 		virtual bt::Uint32 getNumTorrentsNotRunning() const;
 		virtual void load(const KUrl& url,const QString & group);
-		virtual void load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir);
+		virtual bt::TorrentInterface* load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir);
 		virtual void loadSilently(const KUrl& url,const QString & group);
-		virtual void loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir);
+		virtual bt::TorrentInterface* loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir);
 		virtual void load(const bt::MagnetLink & mlink,const QString & group);
 		virtual void loadSilently(const bt::MagnetLink & mlink,const QString & group);
 		virtual QString findNewTorrentDir() const;
@@ -114,25 +114,6 @@ namespace kt
 		 * Start the update timer 
 		 */
 		void startUpdateTimer();
-		
-		/**
-		 * Load a torrent file. Pops up an error dialog
-		 * if something goes wrong.
-		 * @param file The torrent file (always a local file)
-		 * @param dir Directory to save the data
-		 * @param group Group to add torrent to
-		 * @param silently Whether or not to do this silently
-		 */
-		bool loadFromFile(const QString & file,const QString & dir,const QString & group,bool silently);
-		
-		/**
-		 * Load a torrent file. Pops up an error dialog
-		 * if something goes wrong.
-		 * @param data Byte array of the torrent file
-		 * @param dir Directory to save the data
-		 * @param silently Whether or not to do this silently
-		 */
-		bool loadFromData(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url);
 		
 		/**
 		 * Update all torrents.
@@ -248,6 +229,8 @@ namespace kt
 		void startServers();
 		void startTCPServer(bt::Uint16 port);
 		void startUTPServer(bt::Uint16 port);
+		bt::TorrentInterface* loadFromFile(const QString & file,const QString & dir,const QString & group,bool silently);
+		bt::TorrentInterface* loadFromData(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url);
 
 	public:
 		void loadTorrents();

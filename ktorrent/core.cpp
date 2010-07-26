@@ -348,7 +348,7 @@ namespace kt
 		return true;
 	}
 	
-	bool Core::loadFromData(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url)
+	bt::TorrentInterface* Core::loadFromData(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url)
 	{
 		QString tdir = findNewTorrentDir();
 		TorrentControl* tc = 0;
@@ -365,7 +365,7 @@ namespace kt
 				loadingFinished(url, true, false);
 			
 			startUpdateTimer();
-			return true;
+			return tc;
 		}
 		catch (bt::Warning & warning)
 		{
@@ -391,10 +391,10 @@ namespace kt
 			bt::Delete(tdir,true);
 		
 		loadingFinished(url, false, false);
-		return false;
+		return 0;
 	}
 
-	bool Core::loadFromFile(const QString & target,const QString & dir,const QString & group,bool silently)
+	bt::TorrentInterface* Core::loadFromFile(const QString & target,const QString & dir,const QString & group,bool silently)
 	{
 		QString tdir = findNewTorrentDir();
 		TorrentControl* tc = 0;
@@ -407,7 +407,7 @@ namespace kt
 
 			init(tc,group,dir,silently);
 			startUpdateTimer();
-			return true;
+			return tc;
 		}
 		catch (bt::Warning & warning)
 		{
@@ -431,7 +431,7 @@ namespace kt
 		// delete tdir if necesarry
 		if (bt::Exists(tdir))
 			bt::Delete(tdir,true);
-		return false;
+		return 0;
 	}
 
 	void Core::downloadFinished(KJob *job)
@@ -568,7 +568,7 @@ namespace kt
 		}
 	}
 	
-	void Core::load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir)
+	bt::TorrentInterface* Core::load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir)
 	{
 		QString dir;
 		if (savedir.isEmpty() || !bt::Exists(savedir))
@@ -576,13 +576,16 @@ namespace kt
 		else
 			dir = savedir;
 		
-		if (dir != QString::null && loadFromData(data,dir,group,false,url))
+		bt::TorrentInterface* tc = 0;
+		if (dir != QString::null && (tc = loadFromData(data,dir,group,false,url)))
 			loadingFinished(url,true,false);
 		else
 			loadingFinished(url,false,true);
+		
+		return tc;
 	}
 	
-	void Core::loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir)
+	bt::TorrentInterface* Core::loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir)
 	{
 		QString dir;
 		if (savedir.isEmpty() || !bt::Exists(savedir))
@@ -590,10 +593,13 @@ namespace kt
 		else
 			dir = savedir;
 		
-		if (dir != QString::null && loadFromData(data,dir,group,true,url))
+		bt::TorrentInterface* tc = 0;
+		if (dir != QString::null && (tc = loadFromData(data,dir,group,true,url)))
 			loadingFinished(url,true,false);
 		else
 			loadingFinished(url,false,true);
+		
+		return tc;
 	}
 	
 	void Core::start(bt::TorrentInterface* tc)

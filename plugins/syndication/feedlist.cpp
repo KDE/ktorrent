@@ -65,8 +65,8 @@ namespace kt
 			try
 			{
 				feed = new Feed(idir);
-				connect(feed,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, bool)),
-						activity,SLOT(downloadLink(const KUrl&, const QString&, const QString&, bool)));
+				connect(feed,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)),
+						activity,SLOT(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)));
 				feed->load(filter_list);
 				addFeed(feed);
 

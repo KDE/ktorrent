@@ -39,7 +39,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		LinkDownloader(const KUrl & url,CoreInterface* core,bool verbose,const QString & group,const QString & location);
+		LinkDownloader(const KUrl & url,CoreInterface* core,bool verbose,const QString & group,const QString & location,const QString & move_on_completion);
 		virtual ~LinkDownloader();
 		
 		/// Start the download proces
@@ -66,6 +66,7 @@ namespace kt
 		KUrl::List links;
 		QString group;
 		QString location;
+		QString move_on_completion;
 	};
 
 }

@@ -162,8 +162,8 @@ namespace kt
 		{
 			QString ddir = kt::DataDir() + "syndication/";
 			Feed* f = new Feed(downloads[loader],feed,Feed::newFeedDir(ddir));
-			connect(f,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, bool)),
-					this,SLOT(downloadLink(const KUrl&, const QString&, const QString&, bool)));
+			connect(f,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)),
+					this,SLOT(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)));
 			f->save();
 			feed_list->addFeed(f);
 		}
@@ -245,9 +245,13 @@ namespace kt
 		}
 	}
 	
-	void SyndicationActivity::downloadLink(const KUrl & url,const QString & group,const QString & location,bool silently)
+	void SyndicationActivity::downloadLink(const KUrl& url, 
+										   const QString& group, 
+										   const QString& location, 
+										   const QString& move_on_completion, 
+										   bool silently)
 	{
-		LinkDownloader* dlr = new LinkDownloader(url,sp->getCore(),!silently,group,location);
+		LinkDownloader* dlr = new LinkDownloader(url,sp->getCore(),!silently,group,location,move_on_completion);
 		dlr->start();
 	}
 	

@@ -168,8 +168,9 @@ namespace kt
 		 * @param url URL of the torrent
 		 * @param group Group to use
 		 * @param savedir Directory to save to
+		 * @return The loaded TorrentInterface or 0 on failure
 		 */
-		virtual void load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir) = 0;
+		virtual bt::TorrentInterface* load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir) = 0;
 		
 		/**
 		 * Load a torrent using a byte array silently
@@ -177,8 +178,9 @@ namespace kt
 		 * @param url URL of the torrent
 		 * @param group Group to use
 		 * @param savedir Directory to save to
+		 * @return The loaded TorrentInterface or 0 on failure
 		 */
-		virtual void loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir) = 0;
+		virtual bt::TorrentInterface* loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir) = 0;
 		
 		/**
 		 * Remove a download.This will delete all temp

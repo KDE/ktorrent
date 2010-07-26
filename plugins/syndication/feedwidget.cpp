@@ -75,7 +75,7 @@ namespace kt
 		{
 			Syndication::ItemPtr ptr = model->itemForIndex(idx);
 			if (ptr)
-				feed->downloadItem(ptr,QString(),QString(),false);
+				feed->downloadItem(ptr,QString(),QString(),QString(),false);
 		}
 	}
 	

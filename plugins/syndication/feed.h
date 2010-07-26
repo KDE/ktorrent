@@ -121,7 +121,7 @@ namespace kt
 		void clearFilters();
 		
 		/// Download an item from the feed
-		void downloadItem(Syndication::ItemPtr item,const QString & group,const QString & location,bool silently);
+		void downloadItem(Syndication::ItemPtr item,const QString & group,const QString & location,const QString & move_on_completion,bool silently);
 		
 		/// Check if an item is downloaded
 		bool downloaded(Syndication::ItemPtr item) const; 
@@ -137,7 +137,7 @@ namespace kt
 		
 	signals:
 		/// Emitted when a link must de downloaded
-		void downloadLink(const KUrl & link,const QString & group,const QString & location,bool silently);
+		void downloadLink(const KUrl & link,const QString & group,const QString & location,const QString & move_on_completion,bool silently);
 		
 		/// A feed has been renamed
 		void feedRenamed(Feed* f);

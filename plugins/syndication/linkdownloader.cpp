@@ -29,14 +29,21 @@
 #include <bcodec/bnode.h>
 #include <bcodec/bdecoder.h>
 #include "linkdownloader.h"
+#include <interfaces/torrentinterface.h>
 
 using namespace bt;
 
 namespace kt
 {
 
-	LinkDownloader::LinkDownloader(const KUrl & url,CoreInterface* core,bool verbose,const QString & group,const QString & location)
-			: url(url),core(core),verbose(verbose),group(group),location(location)
+	LinkDownloader::LinkDownloader(const KUrl& url, 
+								   kt::CoreInterface* core, 
+								   bool verbose, 
+								   const QString& group, 
+								   const QString& location, 
+								   const QString& move_on_completion)
+			: url(url),core(core),verbose(verbose),group(group),
+			location(location),move_on_completion(move_on_completion)
 	{
 	}
 
@@ -61,10 +68,14 @@ namespace kt
 		
 		if (isTorrent(job->data()))
 		{
+			bt::TorrentInterface* tc = 0;
 			if (verbose)
-				core->load(job->data(),url,group,location);
+				tc = core->load(job->data(),url,group,location);
 			else
-				core->loadSilently(job->data(),url,group,location);
+				tc = core->loadSilently(job->data(),url,group,location);
+			
+			if (tc && !move_on_completion.isEmpty())
+				tc->setMoveWhenCompletedDir(KUrl(move_on_completion));
 			
 			finished(true);
 			deleteLater();
@@ -188,10 +199,14 @@ namespace kt
 		}
 		else if (isTorrent(job->data()))
 		{
+			bt::TorrentInterface* tc = 0;
 			if (verbose)
-				core->load(job->data(),link_url,group,location);
+				tc = core->load(job->data(),link_url,group,location);
 			else
-				core->loadSilently(job->data(),link_url,group,location);
+				tc = core->loadSilently(job->data(),link_url,group,location);
+			
+			if (tc && !move_on_completion.isEmpty())
+				tc->setMoveWhenCompletedDir(KUrl(move_on_completion));
 				
 			finished(true);
 			deleteLater();

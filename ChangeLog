@@ -10,6 +10,7 @@ Changes in 4.1:
 - Save suspended state on exit and restore on restart (241675)
 - Add support for cookies in syndication plugin (244967)
 - Change GUI to use KParts
+- Add feature to set the move on completion directory in the syndication plugin filters
 
 Changes in 4.0.3:
 - Fix bug causing wrong encoding to be used when the default save location of a group is read (244873)

@@ -291,6 +291,8 @@ namespace kt
 			enc.write("group",dest_group);
 		if (!download_location.isEmpty())
 			enc.write("download_location",download_location);
+		if (!move_on_completion_location.isEmpty())
+			enc.write("move_on_completion_location",move_on_completion_location);
 		enc.write("silently",silent);
 		enc.write("use_regular_expressions",use_regular_expressions);
 		enc.end();
@@ -375,6 +377,10 @@ namespace kt
 		vn = dict->getValue("download_location");
 		if (vn)
 			setDownloadLocation(vn->data().toString(codec));
+		
+		vn = dict->getValue("move_on_completion_location");
+		if (vn)
+			setMoveOnCompletionLocation(vn->data().toString(codec));
 		
 		vn = dict->getValue("silently");
 		if (!vn)
