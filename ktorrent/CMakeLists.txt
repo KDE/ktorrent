@@ -85,7 +85,7 @@ kde4_add_app_icon(ktorrent_SRC "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-ktorre
 kde4_add_executable(ktorrent_app ${ktorrent_SRC})
 set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
 
-target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore ${KDE4_SOLID_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS})
+target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore ${KDE4_SOLID_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS})
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )
