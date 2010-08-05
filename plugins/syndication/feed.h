@@ -102,6 +102,9 @@ namespace kt
 		/// Get the tile of the feed
 		QString title() const;
 		
+		/// Get the update error string
+		QString errorString() const {return update_error;}
+		
 		/// Create a new feed directory
 		static QString newFeedDir(const QString & base);
 		
@@ -171,6 +174,7 @@ namespace kt
 		QString custom_name;
 		bt::Uint32 refresh_rate;
 		QString cookie;
+		QString update_error;
 	};
 
 }

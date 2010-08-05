@@ -56,7 +56,7 @@ namespace kt
 	
 	void FeedRetriever::retrieveData(const KUrl &url)
 	{
-		KIO::StoredTransferJob* j = KIO::storedGet(url,KIO::Reload,KIO::HideProgressInfo);
+		KIO::StoredTransferJob* j = KIO::storedGet(url,KIO::NoReload,KIO::HideProgressInfo);
 		j->addMetaData("UserAgent",bt::GetVersionString());
 		if (!cookie.isEmpty())
 		{

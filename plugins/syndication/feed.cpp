@@ -29,6 +29,7 @@
 #include "filter.h"
 #include "filterlist.h"
 #include "feedretriever.h"
+#include <kio/global.h>
 
 using namespace bt;
 
@@ -223,7 +224,8 @@ namespace kt
 		
 		if (status != Syndication::Success)
 		{
-			Out(SYS_SYN|LOG_NOTICE) << "Failed to load feed " << url.prettyUrl() << endl;
+			update_error = KIO::buildErrorString(loader->retrieverError(),QString());
+			Out(SYS_SYN|LOG_NOTICE) << "Failed to load feed " << url.prettyUrl() << ": " << update_error << endl;
 			this->status = FAILED_TO_DOWNLOAD;
 			update_timer.start(refresh_rate * 60 * 1000);
 			updated();
@@ -242,6 +244,7 @@ namespace kt
 	void Feed::refresh()
 	{
 		status = DOWNLOADING;
+		update_error.clear();
 		update_timer.stop();
 		Syndication::Loader *loader = Syndication::Loader::create(this,SLOT(loadingComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
 		FeedRetriever* retr = new FeedRetriever(dir + "feed.xml");

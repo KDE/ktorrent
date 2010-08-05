@@ -129,7 +129,7 @@ namespace kt
 				m_status->setText(i18n("<b>Not Loaded</b>"));
 				break;
 			case Feed::FAILED_TO_DOWNLOAD:
-				m_status->setText(i18n("<b>Download Failed</b>"));
+				m_status->setText(i18n("<b>Download Failed: %1</b>",feed->errorString()));
 				break;
 			case Feed::DOWNLOADING:
 				m_status->setText(i18n("<b>Downloading</b>"));

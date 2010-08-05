@@ -171,9 +171,14 @@ namespace kt
 			case Qt::UserRole:
 				return i18np("%2\n1 active filter", "%2\n%1 active filters", f->numFilters(), f->displayName());
 			case Qt::DecorationRole:
-				return KIcon("application-rss+xml");
+				if (f->feedStatus() == Feed::FAILED_TO_DOWNLOAD)
+					return KIcon("dialog-error");
+				else
+					return KIcon("application-rss+xml");
 			case Qt::ToolTipRole:
-				if (f->ok())
+				if (f->feedStatus() == Feed::FAILED_TO_DOWNLOAD)
+					return i18n("<b>%1</b><br/><br/>Download failed: <b>%2</b>",f->feedData()->link(),f->errorString());
+				else if (f->ok())
 					return i18n("<b>%1</b><br/><br/>%2",f->feedData()->link(),f->feedData()->description());
 				break;
 		}
