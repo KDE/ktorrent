@@ -21,10 +21,11 @@
 #define KT_PEERVIEW_HH
 
 
-#include <QTreeWidget>
+#include <QTreeView>
 #include <util/ptrmap.h>
 #include <interfaces/peerinterface.h>
 #include <ksharedconfig.h>
+#include <QSortFilterProxyModel>
 
 class KMenu;
 
@@ -64,6 +65,7 @@ namespace kt
 				
 	private:
 		KMenu* context_menu;
+		QSortFilterProxyModel* pm;
 		PeerViewModel* model;
 	};
 }

@@ -21,10 +21,12 @@
 #define KT_CHUNKDOWNLOADVIEW_HH
 
 
-#include <QTreeWidget>
+#include <QTreeView>
+#include <QSortFilterProxyModel>
 #include <ksharedconfig.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include "ui_chunkdownloadview.h"
+
 
 
 namespace bt
@@ -67,6 +69,7 @@ namespace kt
 	private:
 		bt::TorrentInterface* curr_tc;
 		ChunkDownloadModel* model;
+		QSortFilterProxyModel* pm;
 	};
 }
 

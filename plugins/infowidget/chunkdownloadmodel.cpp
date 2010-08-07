@@ -36,20 +36,12 @@ namespace kt
 		cd->getStats(stats);
 	}
 			
-	bool ChunkDownloadModel::Item::changed(int col,bool & modified) const
+	bool ChunkDownloadModel::Item::changed() const
 	{
 		ChunkDownloadInterface::Stats s;
 		cd->getStats(s);
-		bool ret = false;
-		switch (col)
-		{
-			case 1: ret = s.pieces_downloaded != stats.pieces_downloaded; break;
-			case 2: ret = s.current_peer_id != stats.current_peer_id; break;
-			case 3: ret = s.download_speed != stats.download_speed; break;
-			default: break;
-		}
-
-		modified = s.pieces_downloaded != stats.pieces_downloaded || 
+		bool ret = 
+			s.pieces_downloaded != stats.pieces_downloaded || 
 			s.download_speed != stats.download_speed || 
 			s.current_peer_id != stats.current_peer_id;
 		
@@ -70,17 +62,17 @@ namespace kt
 		return QVariant();
 	}
 	
-	bool ChunkDownloadModel::Item::lessThan(int col,const Item* other) const
+	QVariant ChunkDownloadModel::Item::sortData(int col) const
 	{
 		switch (col)
 		{
-			case 0: return stats.chunk_index < other->stats.chunk_index;
-			case 1: return stats.pieces_downloaded < other->stats.pieces_downloaded;
-			case 2: return stats.current_peer_id < other->stats.current_peer_id;
-			case 3: return stats.download_speed < other->stats.download_speed;
-			case 4: return files < other->files;
+			case 0: return stats.chunk_index;
+			case 1: return stats.pieces_downloaded;
+			case 2: return stats.current_peer_id;
+			case 3: return stats.download_speed;
+			case 4: return files;
+			default: return QVariant();
 		}
-		return false;
 	}
 	
 	/////////////////////////////////////////////////////////////
@@ -88,8 +80,6 @@ namespace kt
 	ChunkDownloadModel::ChunkDownloadModel ( QObject* parent )
 			: QAbstractTableModel(parent),tc(0)
 	{
-		sort_column = 0;
-		sort_order = Qt::AscendingOrder;
 	}
 
 
@@ -115,7 +105,7 @@ namespace kt
 				if (stats.chunk_index >= tf.getFirstChunk() && stats.chunk_index <= tf.getLastChunk())
 				{
 					if (n > 0)
-						files += '\n';
+						files += ", ";
 						
 					files += tf.getPath();
 					n++;
@@ -127,24 +117,19 @@ namespace kt
 		
 		Item* nitem = new Item(cd,files);
 		items.append(nitem);
-		insertRow(items.count() - 1);	
-		sort(sort_column,sort_order);
+		insertRow(items.count() - 1);
 	}
 	
 	void ChunkDownloadModel::downloadRemoved(bt::ChunkDownloadInterface* cd)
 	{
-		int idx = 0;
-		for (QList<Item*>::iterator i = items.begin();i != items.end();i++)
+		for (QVector<Item*>::iterator i = items.begin();i != items.end();i++)
 		{
 			const Item* item = *i;
 			if (item->cd == cd)
 			{
-				items.erase(i);
-				delete item;
-				removeRow(idx);
+				removeRow(i - items.begin());
 				break;
 			}
-			idx++;
 		}
 	}
 	
@@ -165,21 +150,24 @@ namespace kt
 	
 	void ChunkDownloadModel::update()
 	{
-		bool resort = false;
-		Uint32 idx=0;
+		int idx = 0;
+		int lowest = -1;
+		int highest = -1;
+		
 		foreach (Item* i,items)
 		{
-			bool modified = false;
-			if (i->changed(sort_column,modified))
-				resort = true;
-			
-			if (modified && !resort)
-				emit dataChanged(index(idx,1),index(idx,3));
+			if (i->changed())
+			{
+				if (lowest == -1)
+					lowest = idx;
+				highest = idx;
+			}
 			idx++;
 		}
-	
-		if (resort)
-			sort(sort_column,sort_order);
+		
+		// emit only one data changed signal
+		if (lowest != -1)
+			emit dataChanged(index(lowest,1),index(highest,3));
 	}
 
 	int ChunkDownloadModel::rowCount(const QModelIndex & parent) const
@@ -246,6 +234,8 @@ namespace kt
 		
 		if (role == Qt::DisplayRole)
 			return items[index.row()]->data(index.column());
+		else if (role == Qt::UserRole)
+			return items[index.row()]->sortData(index.column());
 				
 		return QVariant();
 	}
@@ -253,6 +243,9 @@ namespace kt
 	bool ChunkDownloadModel::removeRows(int row,int count,const QModelIndex & /*parent*/ )
 	{
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
+		for (int i = 0;i < count;i++)
+			delete items[row + i];
+		items.remove(row,count);
 		endRemoveRows();
 		return true;
 	}
@@ -262,33 +255,5 @@ namespace kt
 		beginInsertRows(QModelIndex(),row,row + count - 1);
 		endInsertRows();
 		return true;
-	}
-	
-	class ChunkDownloadModelItemCmp
-	{
-	public:
-		ChunkDownloadModelItemCmp(int col,Qt::SortOrder order) : col(col),order(order)
-		{}
-	
-		bool operator()(ChunkDownloadModel::Item* a,ChunkDownloadModel::Item* b)
-		{
-			if (order == Qt::AscendingOrder)
-				return a->lessThan(col,b);
-			else
-				return b->lessThan(col,a);
-		}
-	
-		int col;
-		Qt::SortOrder order;
-	};
-
-	void ChunkDownloadModel::sort(int col, Qt::SortOrder order)
-	{
-		sort_column = col;
-		sort_order = order;
-		emit layoutAboutToBeChanged();
-		qStableSort(items.begin(),items.end(),ChunkDownloadModelItemCmp(col,order));
-		emit layoutChanged();
-		emit sorted();
 	}
 }

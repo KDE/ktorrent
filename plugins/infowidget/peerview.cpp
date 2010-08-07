@@ -29,7 +29,6 @@
 #include <interfaces/peerinterface.h>
 #include <peer/accessmanager.h>
 #include <util/functions.h>
-#include <util/itemselectionmodel.h>
 #include "peerviewmodel.h"
 
 using namespace bt;
@@ -46,11 +45,12 @@ namespace kt
 		setAlternatingRowColors(true);
 		setUniformRowHeights(true);
 		
+		pm = new QSortFilterProxyModel(this);
+		pm->setSortRole(Qt::UserRole);
+		pm->setDynamicSortFilter(true);
 		model = new PeerViewModel(this);
-		ItemSelectionModel* sm = new ItemSelectionModel(model,this);
-		setModel(model);
-		setSelectionModel(sm);
-		connect(model,SIGNAL(sorted()),sm,SLOT(sorted()));
+		pm->setSourceModel(model);
+		setModel(pm);
 		
 		context_menu = new KMenu(this);
 		context_menu->addAction(KIcon("list-remove-user"),i18n("Kick Peer"),this,SLOT(kickPeer()));
@@ -78,7 +78,7 @@ namespace kt
 		QModelIndexList indices = selectionModel()->selectedRows();
 		foreach (const QModelIndex &idx,indices)
 		{
-			bt::PeerInterface* peer = model->indexToPeer(idx);
+			bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
 			if (peer)
 			{
 				aman.banPeer(peer->getStats().ip_address);
@@ -92,7 +92,7 @@ namespace kt
 		QModelIndexList indices = selectionModel()->selectedRows();
 		foreach (const QModelIndex &idx,indices)
 		{
-			bt::PeerInterface* peer = model->indexToPeer(idx);
+			bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
 			if (peer)
 				peer->kill();
 		}
@@ -134,7 +134,7 @@ namespace kt
 			QHeaderView* v = header();
 			v->restoreState(s);
 			sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
-			model->sort(v->sortIndicatorSection(),v->sortIndicatorOrder());
+			pm->sort(v->sortIndicatorSection(),v->sortIndicatorOrder());
 		}
 	}
 }

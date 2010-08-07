@@ -22,7 +22,7 @@
 #define KTPEERVIEWMODEL_H
 
 #include <kicon.h>
-#include <QList>
+#include <QVector>
 #include <QAbstractTableModel>
 #include <interfaces/peerinterface.h>
 
@@ -52,6 +52,9 @@ namespace kt
 		 */
 		void update();
 		
+		/**
+			Clear the model
+		*/
 		void clear();
 
 		virtual int rowCount(const QModelIndex & parent) const;
@@ -63,12 +66,6 @@ namespace kt
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
 		
 		bt::PeerInterface* indexToPeer(const QModelIndex & idx);
-		
-	public slots:
-		void sort(int col, Qt::SortOrder order);
-		
-	signals:
-		void sorted();
 	
 	public:	
 		struct Item
@@ -80,15 +77,13 @@ namespace kt
 			
 			Item(bt::PeerInterface* peer,GeoIPManager* geo_ip);
 			
-			bool changed(int col,bool & modified) const;
+			bool changed() const;
 			QVariant data(int col) const;
 			QVariant decoration(int col) const;
-			bool lessThan(int col,const Item* other) const;
+			QVariant sortData(int col) const;
 		};
 	private:
-		QList<Item*> items;
-		int sort_column;
-		Qt::SortOrder sort_order;
+		QVector<Item*> items;
 		GeoIPManager* geo_ip;
 	};
 

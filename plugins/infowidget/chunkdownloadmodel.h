@@ -21,6 +21,7 @@
 #ifndef KTCHUNKDOWNLOADMODEL_H
 #define KTCHUNKDOWNLOADMODEL_H
 
+#include <QVector>
 #include <QAbstractTableModel>
 #include <interfaces/chunkdownloadinterface.h>
 
@@ -57,6 +58,9 @@ namespace kt
 		 */
 		void update();
 		
+		/**
+			Clear the model
+		*/
 		void clear();
 
 		virtual int rowCount(const QModelIndex & parent) const;
@@ -67,12 +71,6 @@ namespace kt
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
 		
-	public slots:
-		void sort(int col, Qt::SortOrder order);
-		
-	signals:
-		void sorted();
-		
 	public:
 		struct Item
 		{
@@ -82,15 +80,13 @@ namespace kt
 			
 			Item(bt::ChunkDownloadInterface* cd,const QString & files);
 			
-			bool changed(int col,bool & modified) const;
+			bool changed() const;
 			QVariant data(int col) const;
-			bool lessThan(int col,const Item* other) const;
+			QVariant sortData(int col) const;
 		};
 	private:
-		QList<Item*> items;
+		QVector<Item*> items;
 		bt::TorrentInterface* tc;
-		int sort_column;
-		Qt::SortOrder sort_order;
 	};
 
 }

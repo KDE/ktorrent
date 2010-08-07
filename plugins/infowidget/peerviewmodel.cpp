@@ -58,58 +58,11 @@ namespace kt
 		}
 	}	
 
-	bool PeerViewModel::Item::changed(int col,bool & modified) const
+	bool PeerViewModel::Item::changed() const
 	{
 		const PeerInterface::Stats & s = peer->getStats();
-		bool ret = false;
-		
-		switch (col)
-		{
-			case 0:
-				ret = s.address() != stats.address();
-				break;
-			case 3: 
-				ret = s.download_rate != stats.download_rate;
-				break;
-			case 4: 
-				ret = s.upload_rate != stats.upload_rate;
-				break;
-			case 5: 
-				ret = s.choked != stats.choked;
-				break;
-			case 6: 
-				ret = s.snubbed != stats.snubbed;
-				break;
-			case 7: 
-				ret = s.perc_of_file != stats.perc_of_file;
-				break;
-			case 9: 
-				ret = s.aca_score != stats.aca_score;
-				break;
-			case 10: 
-				ret = s.has_upload_slot != stats.has_upload_slot;
-				break;
-			case 11:
-				ret = (s.num_down_requests != stats.num_down_requests || s.num_up_requests != stats.num_up_requests);
-				break;
-			case 12: 
-				ret = s.bytes_downloaded != stats.bytes_downloaded;
-				break;
-			case 13: 
-				ret = s.bytes_uploaded != stats.bytes_uploaded;
-				break;
-			case 14: 
-				ret = s.interested != stats.interested;
-				break;
-			case 15:
-				ret = s.am_interested != stats.am_interested;
-				break;
-			default: 
-				ret = false;
-				break;
-		}
-
-		modified = s.download_rate != stats.download_rate || 
+		bool ret = 
+				s.download_rate != stats.download_rate || 
 				s.upload_rate != stats.upload_rate || 
 				s.choked != stats.choked || 
 				s.snubbed != stats.snubbed || 
@@ -163,31 +116,30 @@ namespace kt
 		return QVariant();
 	}
 	
-	bool PeerViewModel::Item::lessThan(int col,const Item* other) const
+	QVariant PeerViewModel::Item::sortData(int col) const
 	{
 		switch (col)
 		{
-			case 0: return stats.address() < other->stats.address();
-			case 1: return QString::localeAwareCompare(country,other->country) < 0;
-			case 2: return QString::localeAwareCompare(stats.client,other->stats.client) < 0;
-			case 3: return stats.download_rate < other->stats.download_rate;
-			case 4: return stats.upload_rate < other->stats.upload_rate;
-			case 5: return stats.choked < other->stats.choked;
-			case 6: return stats.snubbed < other->stats.snubbed;
-			case 7: return stats.perc_of_file < other->stats.perc_of_file;
-			case 8: return stats.dht_support < other->stats.dht_support;
-			case 9: return stats.aca_score < other->stats.aca_score;
-			case 10: return stats.has_upload_slot < other->stats.has_upload_slot;
-			case 11: return stats.num_down_requests + stats.num_up_requests < 
-							other->stats.num_down_requests + other->stats.num_up_requests;
-			case 12: return stats.bytes_downloaded < other->stats.bytes_downloaded;
-			case 13: return stats.bytes_uploaded < other->stats.bytes_uploaded;
-			case 14: return stats.interested < other->stats.interested;
-			case 15: return stats.am_interested < other->stats.am_interested;
-			default: return false;
+			case 0: return stats.address();
+			case 1: return country;
+			case 2: return stats.client;
+			case 3: return stats.download_rate;
+			case 4: return stats.upload_rate;
+			case 5: return stats.choked;
+			case 6: return stats.snubbed;
+			case 7: return stats.perc_of_file;
+			case 8: return stats.dht_support;
+			case 9: return stats.aca_score;
+			case 10: return stats.has_upload_slot;
+			case 11: return stats.num_down_requests + stats.num_up_requests;
+			case 12: return stats.bytes_downloaded;
+			case 13: return stats.bytes_uploaded;
+			case 14: return stats.interested;
+			case 15: return stats.am_interested;
+			default: return QVariant();
 		}
-		return false;
 	}
+
 	
 	QVariant PeerViewModel::Item::decoration(int col) const
 	{
@@ -210,8 +162,6 @@ namespace kt
 	PeerViewModel::PeerViewModel ( QObject* parent )
 	: QAbstractTableModel(parent),geo_ip(0)
 	{
-		sort_column = 0;
-		sort_order = Qt::AscendingOrder;
 		geo_ip = new GeoIPManager(this);
 	}
 
@@ -225,23 +175,17 @@ namespace kt
 	{
 		items.append(new Item(peer,geo_ip));
 		insertRow(items.count() - 1);
-		sort(sort_column,sort_order);
 	}
 	
 	void PeerViewModel::peerRemoved(bt::PeerInterface* peer)
 	{
-		int idx = 0;
-		for (QList<Item*>::iterator i = items.begin();i != items.end();i++)
+		for (QVector<Item*>::iterator i = items.begin();i != items.end();i++)
 		{
-			Item* item = *i;
-			if (item->peer == peer)
+			if ((*i)->peer == peer)
 			{
-				items.erase(i);
-				delete item;
-				removeRow(idx);
+				removeRow(i - items.begin());
 				break;
 			}
-			idx++;
 		}
 	}
 	
@@ -254,21 +198,24 @@ namespace kt
 	
 	void PeerViewModel::update()
 	{
-		bool resort = false;
-		Uint32 idx=0;
+		int idx = 0;
+		int lowest = -1;
+		int highest = -1;
+		
 		foreach (Item* i,items)
 		{
-			bool modified = false;
-			if (i->changed(sort_column,modified))
-				resort = true;
-			
-			if (modified && !resort)
-				emit dataChanged(index(idx,3),index(idx,15));
+			if (i->changed())
+			{
+				if (lowest == -1)
+					lowest = idx;
+				highest = idx;
+			}
 			idx++;
 		}
-	
-		if (resort)
-			sort(sort_column,sort_order);
+		
+		// emit only one data changed signal
+		if (lowest != -1)
+			emit dataChanged(index(lowest,3),index(highest,15));
 	}
 	
 	QModelIndex PeerViewModel::index(int row,int column,const QModelIndex & parent) const
@@ -355,23 +302,28 @@ namespace kt
 		if (!index.isValid() || index.row() >= items.count() || index.row() < 0)
 			return QVariant(); 
 		
-		Item* item = (Item*)index.internalPointer();
+		Item* item = items[index.row()];
 		if (role == Qt::DisplayRole)
 			return item->data(index.column());
+		else if (role == Qt::UserRole)
+			return item->sortData(index.column());
 		else if (role == Qt::DecorationRole)
 			return item->decoration(index.column());
 		
 		return QVariant();
 	}
 	
-	bool PeerViewModel::removeRows ( int row,int count,const QModelIndex & /*parent*/ )
+	bool PeerViewModel::removeRows(int row,int count,const QModelIndex & /*parent*/)
 	{
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
+		for (int i = 0;i < count;i++)
+			delete items[row + i];
+		items.remove(row,count);
 		endRemoveRows();
 		return true;
 	}
 	
-	bool PeerViewModel::insertRows ( int row,int count,const QModelIndex & /*parent*/ )
+	bool PeerViewModel::insertRows(int row,int count,const QModelIndex & /*parent*/)
 	{
 		beginInsertRows(QModelIndex(),row,row + count - 1);
 		endInsertRows();
@@ -386,31 +338,5 @@ namespace kt
 			return ((Item*)index.internalPointer())->peer;
 	}
 	
-	class PeerViewModelItemCmp
-	{
-	public:
-		PeerViewModelItemCmp(int col,Qt::SortOrder order) : col(col),order(order)
-		{}
-		
-		bool operator()(PeerViewModel::Item* a,PeerViewModel::Item* b)
-		{
-			if (order == Qt::AscendingOrder)
-				return a->lessThan(col,b);
-			else
-				return b->lessThan(col,a);
-		}
-		
-		int col;
-		Qt::SortOrder order;
-	};
-
-	void PeerViewModel::sort(int col, Qt::SortOrder order)
-	{
-		sort_column = col;
-		sort_order = order;
-		emit layoutAboutToBeChanged();
-		qStableSort(items.begin(),items.end(),PeerViewModelItemCmp(col,order));
-		emit layoutChanged();
-		emit sorted();
-	}
+	
 }

@@ -12,6 +12,7 @@ Changes in 4.1:
 - Change GUI to use KParts
 - Add feature to set the move on completion directory in the syndication plugin filters
 - Improve display of errors in the syndication plugin when downloading a feed fails (246421)
+- Make ChunkDownloadView and PeerView use a QSortFilterProxyModel (246835)
 
 Changes in 4.0.3:
 - Fix bug causing wrong encoding to be used when the default save location of a group is read (244873)
