@@ -45,15 +45,6 @@ namespace kt
 	{
 		Q_OBJECT
 
-		bt::TorrentInterface* tc;
-		TorrentFileModel* model;
-		kt::GroupManager* gman;
-		bool* start;
-		bool* skip_check;
-		QList<int> encodings;
-		kt::Group* initial_group;
-		bool show_file_tree;
-		QSortFilterProxyModel* filter_model;
 	public:
 		FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent);
 		virtual ~FileSelectDlg();
@@ -85,10 +76,28 @@ namespace kt
 		void setFilter(const QString & filter);
 		void updateExistingFiles();
 		void moveCompletedToggled(bool on);
+		QMenu* createHistoryMenu(const QStringList & urls,const char* slot);
+		void clearDownloadLocationHistory();
+		void clearMoveOnCompletionLocationHistory();
+		void downloadLocationHistoryTriggered(QAction* act);
+		void moveOnCompletionLocationHistoryTriggered(QAction* act);
 
 	private:
 		void populateFields(const QString & location_hint);
 		void loadGroups();
+		
+	private:
+		bt::TorrentInterface* tc;
+		TorrentFileModel* model;
+		kt::GroupManager* gman;
+		bool* start;
+		bool* skip_check;
+		QList<int> encodings;
+		kt::Group* initial_group;
+		bool show_file_tree;
+		QSortFilterProxyModel* filter_model;
+		QStringList download_location_history;
+		QStringList move_on_completion_location_history;
 	};
 }
 

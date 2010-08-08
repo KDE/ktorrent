@@ -17,12 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <QMenu>
 #include <QTextCodec>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
-#include <qtreewidget.h>
 #include <kstandardguiitem.h>
 #include <kpushbutton.h>
 #include <interfaces/torrentfileinterface.h>
@@ -61,6 +61,11 @@ namespace kt
 		
 		m_downloadLocation->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
 		m_completedLocation->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
+		
+		m_download_location_history->setIcon(KIcon("view-history"));
+		m_download_location_history->setPopupMode(QToolButton::MenuButtonPopup);
+		m_move_when_completed_history->setIcon(KIcon("view-history"));
+		m_move_when_completed_history->setPopupMode(QToolButton::MenuButtonPopup);
 
 		
 		encodings = QTextCodec::availableMibs();
@@ -173,10 +178,16 @@ namespace kt
 		QString cn = m_completedLocation->url().toLocalFile();
 		if (!cn.endsWith(bt::DirSeparator()))
 			cn += bt::DirSeparator();
+		
+		if (m_moveCompleted->isChecked() && m_completedLocation->url().isValid())
+			move_on_completion_location_history.append(m_completedLocation->url().toLocalFile());
 
 		QString dn = m_downloadLocation->url().toLocalFile();
 		if (!dn.endsWith(bt::DirSeparator()))
 			dn += bt::DirSeparator();
+		
+		if (m_downloadLocation->url().isValid())
+			download_location_history.append(m_downloadLocation->url().toLocalFile());
 
 		
 		QString tld = tc->getUserModifiedFileName();
@@ -522,6 +533,27 @@ namespace kt
 		show_file_tree = g.readEntry("show_file_tree",true);
 		m_tree->setChecked(show_file_tree);
 		m_list->setChecked(!show_file_tree);
+		download_location_history = g.readEntry("download_location_history",QStringList());
+		move_on_completion_location_history = g.readEntry("move_on_completion_location_history",QStringList());
+		
+		if (download_location_history.count())
+		{
+			QMenu* m = createHistoryMenu(download_location_history,
+										 SLOT(downloadLocationHistoryTriggered(QAction*)));
+			m_download_location_history->setMenu(m); 
+		}
+		else
+			m_download_location_history->setEnabled(false);
+		
+		if (move_on_completion_location_history.count())
+		{
+			QMenu* m = createHistoryMenu(
+					move_on_completion_location_history,
+					SLOT(moveOnCompletionLocationHistoryTriggered(QAction*)));
+			m_move_when_completed_history->setMenu(m);
+		}
+		else
+			m_move_when_completed_history->setEnabled(false);
 	}
 	
 	
@@ -530,7 +562,51 @@ namespace kt
 		KConfigGroup g = cfg->group("FileSelectDlg");
 		g.writeEntry("size",size());
 		g.writeEntry("show_file_tree",show_file_tree);
+		g.writeEntry("download_location_history",download_location_history);
+		g.writeEntry("move_on_completion_location_history",move_on_completion_location_history);
 	}
+	
+	QMenu* FileSelectDlg::createHistoryMenu(const QStringList& urls, const char* slot)
+	{
+		QMenu* m = new QMenu(this);
+		foreach (const QString & url,urls)
+		{
+			QAction* a = m->addAction(url);
+			a->setData(url);
+		}
+		m->addSeparator();
+		m->addAction(i18n("Clear History"));
+		connect(m,SIGNAL(triggered(QAction*)),this,slot);
+		return m;
+	}
+	
+	void FileSelectDlg::clearDownloadLocationHistory()
+	{
+		download_location_history.clear();
+		m_download_location_history->setEnabled(false);
+	}
+	
+	void FileSelectDlg::clearMoveOnCompletionLocationHistory()
+	{
+		move_on_completion_location_history.clear();
+		m_move_when_completed_history->setEnabled(false);
+	}
+
+	void FileSelectDlg::downloadLocationHistoryTriggered(QAction* act)
+	{
+		if (!act->data().isNull())
+			m_downloadLocation->setUrl(act->data().toString());
+		else
+			clearDownloadLocationHistory();
+	}
+	void FileSelectDlg::moveOnCompletionLocationHistoryTriggered(QAction* act)
+	{
+		if (!act->data().isNull())
+			m_completedLocation->setUrl(act->data().toString());
+		else
+			clearMoveOnCompletionLocationHistory();
+	}
+
 
 	void FileSelectDlg::fileTree(bool)
 	{

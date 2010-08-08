@@ -32,6 +32,16 @@
      <item>
       <widget class="KUrlRequester" name="m_downloadLocation"/>
      </item>
+     <item>
+      <widget class="QToolButton" name="m_download_location_history">
+       <property name="toolTip">
+        <string>History of all recently used download locations</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -48,6 +58,16 @@
      </item>
      <item>
       <widget class="KUrlRequester" name="m_completedLocation"/>
+     </item>
+     <item>
+      <widget class="QToolButton" name="m_move_when_completed_history">
+       <property name="toolTip">
+        <string>History of all recently used move when completed locations</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
