@@ -364,6 +364,10 @@ namespace kt
 		bool resort = force_resort;
 		Uint32 idx=0;
 		num_visible = 0;
+		
+		int lowest = -1;
+		int highest = -1;
+		
 		foreach (Item* i,torrents)
 		{
 			bool modified = false;
@@ -383,8 +387,12 @@ namespace kt
 			if (!i->hidden)
 				num_visible++;
 			
-			if (modified && !resort)
-				emit dataChanged(index(idx,1),index(idx,14));
+			if (modified)
+			{
+				if (lowest == -1)
+					lowest = idx;
+				highest = idx;
+			}
 			idx++;
 		}
 	
@@ -393,6 +401,8 @@ namespace kt
 			sort(sort_column,sort_order);
 			return true;
 		}
+		else if (lowest != -1)
+			emit dataChanged(index(lowest,1),index(highest,14));
 		
 		return false;
 	}
