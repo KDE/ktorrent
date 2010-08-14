@@ -356,8 +356,9 @@ namespace kt
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Loading torrent from data " << endl;
 			tc = new TorrentControl();
-			tc->init(qman, data, tdir, dir);
 			tc->setLoadUrl(url);
+			tc->init(qman, data, tdir, dir);
+			
 
 			if(!init(tc,group,dir,silently))
 				loadingFinished(url, false, true);
