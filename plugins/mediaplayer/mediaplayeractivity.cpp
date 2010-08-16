@@ -70,7 +70,7 @@ namespace kt
 		close_button->setEnabled(false);
 		connect(close_button,SIGNAL(clicked()),this,SLOT(closeTab()));
 		
-		play_list = new PlayListWidget(media_player,tabs);
+		play_list = new PlayListWidget(media_model,media_player,tabs);
 		tabs->addTab(play_list,KIcon("audio-x-generic"),i18n("Play List"));
 		tabs->setTabBarHidden(true);
 		
@@ -81,9 +81,9 @@ namespace kt
 		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
 		connect(media_player,SIGNAL(aboutToFinish()),this,SLOT(aboutToFinishPlaying()));
 		connect(play_list,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
-		connect(media_view,SIGNAL(doubleClicked(const QModelIndex&)),this,SLOT(onDoubleClicked(const QModelIndex&)));
+		connect(media_view,SIGNAL(doubleClicked(const MediaFileRef&)),this,SLOT(onDoubleClicked(const MediaFileRef&)));
 		connect(play_list,SIGNAL(randomModeActivated()),this,SLOT(randomPlayActivated()));
-		connect(play_list,SIGNAL(doubleClicked(QString)),this,SLOT(play(QString)));
+		connect(play_list,SIGNAL(doubleClicked(MediaFileRef)),this,SLOT(play(MediaFileRef)));
 		connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(currentTabChanged(int)));
 	}
 
@@ -142,7 +142,7 @@ namespace kt
 
 	void MediaPlayerActivity::openVideo()
 	{
-		QString path = media_player->media0bject()->currentSource().fileName();
+		QString path = media_player->getCurrentSource().path();
 		int idx = path.lastIndexOf(bt::DirSeparator());
 		if (idx >= 0)
 			path = path.mid(idx+1);
@@ -210,10 +210,10 @@ namespace kt
 		}
 	}
 	
-	void MediaPlayerActivity::play(const QString & file)
+	void MediaPlayerActivity::play(const MediaFileRef & file)
 	{
 		media_player->play(file);
-		QModelIndex idx = play_list->indexForFile(file);
+		QModelIndex idx = play_list->indexForFile(file.path());
 		if (idx.isValid())
 		{
 			curr_item = idx;
@@ -223,15 +223,11 @@ namespace kt
 		}
 	}
 
-	void MediaPlayerActivity::onDoubleClicked(const QModelIndex & idx)
+	void MediaPlayerActivity::onDoubleClicked(const MediaFileRef & file)
 	{
-		if (idx.isValid())
+		if (bt::Exists(file.path()))
 		{
-			QString path = media_model->pathForIndex(idx);
-			if (bt::Exists(path))
-			{
-				play(path);
-			}
+			play(file);
 		}
 	}
 
@@ -277,9 +273,9 @@ namespace kt
 		if (idx.isValid())
 		{
 			PlayList* pl = play_list->playList();
-			QString path = pl->fileForIndex(idx);
-			if (bt::Exists(path))
-				play_action->setEnabled((flags & kt::MEDIA_PLAY) || path != media_player->getCurrentSource());
+			MediaFileRef file = pl->fileForIndex(idx);
+			if (bt::Exists(file.path()))
+				play_action->setEnabled((flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
 			else
 				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
 		}
@@ -295,9 +291,9 @@ namespace kt
 		if (idx.isValid())
 		{
 			PlayList* pl = play_list->playList();
-			QString path = pl->fileForIndex(idx);
-			if (bt::Exists(path))
-				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || path != media_player->getCurrentSource());
+			MediaFileRef file = pl->fileForIndex(idx);
+			if (bt::Exists(file.path()))
+				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
 			else
 				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
 		}

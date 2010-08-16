@@ -37,14 +37,15 @@
 
 namespace kt
 {
-	PlayListWidget::PlayListWidget(MediaPlayer* player,QWidget* parent) : QWidget(parent),player(player),menu(0)
+	PlayListWidget::PlayListWidget(MediaFileCollection* collection,MediaPlayer* player,QWidget* parent) 
+		: QWidget(parent),player(player),menu(0),collection(collection)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		
 		play_list_view = new QTreeView(this);
-		play_list = new PlayList(this);
+		play_list = new PlayList(collection,this);
 		proxy_model = new QSortFilterProxyModel(this);
 		proxy_model->setSourceModel(play_list);
 		proxy_model->setSortRole(Qt::UserRole);
@@ -97,7 +98,7 @@ namespace kt
 		
 		
 		connect(player,SIGNAL(stopped()),this,SLOT(stopped()));
-		connect(player,SIGNAL(playing(QString)),this,SLOT(playing(QString)));
+		connect(player,SIGNAL(playing(MediaFileRef)),this,SLOT(playing(MediaFileRef)));
 		connect(queue_mode,SIGNAL(activated(int)),this,SLOT(modeActivated(int)));
 		connect(play_list_view->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
 				 this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
@@ -137,8 +138,8 @@ namespace kt
 	{
 		QModelIndex pidx = play_list_view->currentIndex();
 		QModelIndex idx = proxy_model->mapToSource(pidx);
-		QString file = play_list->fileForIndex(idx);
-		if (!file.isEmpty())
+		MediaFileRef file = play_list->fileForIndex(idx);
+		if (!file.path().isEmpty())
 		{
 			player->play(file);
 		}
@@ -146,9 +147,9 @@ namespace kt
 	}
 
 
-	void PlayListWidget::playing(const QString & file)
+	void PlayListWidget::playing(const kt::MediaFileRef& file)
 	{
-		if (file.isEmpty())
+		if (file.path().isEmpty())
 		{
 			stopped();
 		}
@@ -162,13 +163,13 @@ namespace kt
 	void PlayListWidget::stopped()
 	{
 		info_label->setText(i18n("Ready to play"));
-		current_file = QString();
+		current_file = MediaFileRef(QString());
 	}
 
 	void PlayListWidget::metaDataChanged()
 	{
 		QString extra_data;
-		QByteArray encoded = QFile::encodeName(current_file);
+		QByteArray encoded = QFile::encodeName(current_file.path());
 		TagLib::FileRef ref(encoded.data(),true,TagLib::AudioProperties::Fast);
 		if (ref.isNull())
 			return;
@@ -188,21 +189,21 @@ namespace kt
 		if (has_artist && has_title && has_album)
 		{
 			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b><br/>Album: <b>%3</b>",title,artist,album);
-			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.path(),extra_data));
 		}
 		else if (has_title && has_artist)
 		{
 			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b>",title,artist);
-			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.path(),extra_data));
 		}
 		else if (has_title)
 		{
 			extra_data = i18n("Title: <b>%1</b>",title);
-			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.path(),extra_data));
 		}
 		else
 		{
-			info_label->setText(i18n("Playing: <b>%1</b>",current_file));
+			info_label->setText(i18n("Playing: <b>%1</b>",current_file.path()));
 		}
 	}
 
@@ -216,8 +217,8 @@ namespace kt
 
 	void PlayListWidget::doubleClicked(const QModelIndex & index)
 	{
-		QString file = play_list->fileForIndex(proxy_model->mapToSource(index));
-		if (!file.isEmpty())
+		MediaFileRef file = play_list->fileForIndex(proxy_model->mapToSource(index));
+		if (!file.path().isEmpty())
 			doubleClicked(file);
 	}
 	
@@ -254,18 +255,18 @@ namespace kt
 		QStringList files = KFileDialog::getOpenFileNames(KUrl("kfiledialog:///add_media"),filter,this);
 		foreach (const QString & file,files)
 		{
-			play_list->addFile(file);
+			play_list->addFile(collection->find(file));
 		}
 	}
 	
 	void PlayListWidget::removeFiles()
 	{
-		QStringList files;
+		QList<MediaFileRef> files;
 		QModelIndexList indexes = play_list_view->selectionModel()->selectedRows();
 		foreach (const QModelIndex & idx,indexes)
 			files.append(play_list->fileForIndex(idx));
 		
-		foreach (const QString & f,files)
+		foreach (const MediaFileRef & f,files)
 			play_list->removeFile(f);
 	}
 	
@@ -317,7 +318,7 @@ namespace kt
 	
 	QString PlayListWidget::fileForIndex(const QModelIndex& index) const
 	{
-		return play_list->fileForIndex(proxy_model->mapToSource(index));
+		return play_list->fileForIndex(proxy_model->mapToSource(index)).path();
 	}
 	
 	

@@ -21,22 +21,34 @@
 #ifndef KTMEDIAMODEL_H
 #define KTMEDIAMODEL_H
 
-#include <QAbstractItemModel>
+#include <QAbstractListModel>
 #include <util/constants.h>
+#include "mediafile.h"
 
-namespace bt
-{
-	class TorrentInterface;
-}
 
 namespace kt
 {
 	class CoreInterface;
+	
+	/**
+		Interface class to find MediaFileRef objects in the collection
+	*/
+	class MediaFileCollection
+	{
+	public:
+		virtual ~MediaFileCollection() {}
+		
+		/** 
+			Find a MediaFileRef given a path, if the path is not in the collection 
+			a simple file MediaFileRef will be constructed
+		*/
+		virtual MediaFileRef find(const QString & path) = 0;
+	};
 
 	/**
 		@author
 	*/
-	class MediaModel : public QAbstractItemModel
+	class MediaModel : public QAbstractListModel,public MediaFileCollection
 	{
 		Q_OBJECT
 	public:
@@ -49,33 +61,26 @@ namespace kt
 		virtual QVariant data(const QModelIndex & index, int role) const;
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
-		virtual QModelIndex parent(const QModelIndex & index) const;
 		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 		virtual QStringList mimeTypes() const;
 		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
+		virtual QModelIndex index(int row, int column = 0, const QModelIndex& parent = QModelIndex()) const;
 		
-		/// Get the full path of the model index
-		QString pathForIndex(const QModelIndex & idx) const;
+		/// Get the file given a model index
+		MediaFileRef fileForIndex(const QModelIndex & idx) const;
 		
 		/// Get the index of a full path
 		QModelIndex indexForPath(const QString & path) const;
+		
+		virtual MediaFileRef find(const QString & path);
 		
 	public slots:
 		void onTorrentAdded(bt::TorrentInterface* t);
 		void onTorrentRemoved(bt::TorrentInterface* t);
 		
 	private:
-		struct Item
-		{
-			bt::TorrentInterface* tc;
-			QList<int> multimedia_files;
-			
-			Item(bt::TorrentInterface* tc);
-		};
 		CoreInterface* core;
-		QList<Item*> items;
-		bt::Uint32 total_number_of_media_files;
+		QList<MediaFile::Ptr> items;
 	};
 
 }

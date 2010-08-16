@@ -25,6 +25,8 @@
 #include <QStringList>
 #include <taglib/fileref.h>
 #include <util/ptrmap.h>
+#include "mediafile.h"
+#include "mediamodel.h"
 
 namespace kt
 {
@@ -36,12 +38,12 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		PlayList(QObject* parent);
+		PlayList(MediaFileCollection* collection,QObject* parent);
 		virtual ~PlayList();
 		
-		void addFile(const QString & file);
-		void removeFile(const QString & file);
-		QString fileForIndex(const QModelIndex& index) const;
+		void addFile(const MediaFileRef & file);
+		void removeFile(const MediaFileRef & file);
+		MediaFileRef fileForIndex(const QModelIndex& index) const;
 		void save(const QString & file);
 		void load(const QString & file);
 		void clear();
@@ -64,9 +66,10 @@ namespace kt
 		
 			
 	private:
-		QStringList files;
-		mutable bt::PtrMap<QString,TagLib::FileRef> tags;
+		typedef QPair<MediaFileRef,TagLib::FileRef*> PlayListItem;
+		mutable QList<PlayListItem> files;
 		mutable QList<int> dragged_rows;
+		MediaFileCollection* collection;
 	};
 }
 

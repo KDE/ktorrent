@@ -22,8 +22,11 @@
 #define KTMEDIAVIEW_H
 
 
-#include <QTreeView>
+#include <QListView>
+#include <QSortFilterProxyModel>
+#include "mediafile.h"
 
+class KLineEdit;
 
 namespace kt
 {
@@ -39,15 +42,17 @@ namespace kt
 		MediaView(MediaModel* model,QWidget* parent);
 		virtual ~MediaView();
 		
-		/// Get the current selected item
-		QModelIndex selectedItem() const;
-		
 	signals:
-		void doubleClicked(const QModelIndex & idx);
+		void doubleClicked(const MediaFileRef & mf);
+		
+	private slots:
+		void onDoubleClicked(const QModelIndex & index);
 
 	private:
 		MediaModel* model;
-		QTreeView* media_tree;
+		QListView* media_tree;
+		KLineEdit* search_box;
+		QSortFilterProxyModel* filter;
 	};
 
 }

@@ -31,19 +31,22 @@
 #include <Phonon/VolumeSlider>
 #include <KSharedConfig>
 #include <KMenu>
+#include "mediafile.h"
 
 class QSortFilterProxyModel;
 
 namespace kt
 {
+
 	class PlayList;
 	class MediaPlayer;
+	class MediaFileCollection;
 	
 	class PlayListWidget : public QWidget
 	{
 		Q_OBJECT
 	public:
-		PlayListWidget(MediaPlayer* player,QWidget* parent);
+		PlayListWidget(MediaFileCollection* collection,MediaPlayer* player,QWidget* parent);
 		virtual ~PlayListWidget();
 		
 		/// Get the media tool bar
@@ -69,7 +72,7 @@ namespace kt
 		
 	public slots:
 		QModelIndex play();
-		void playing(const QString & file);
+		void playing(const MediaFileRef & file);
 		void stopped();
 		void addMedia();
 		void clearPlayList();
@@ -85,7 +88,7 @@ namespace kt
 	signals:
 		void randomModeActivated();
 		void selectionChanged(const QModelIndex & idx);
-		void doubleClicked(const QString & file);
+		void doubleClicked(const MediaFileRef & file);
 		
 	private:
 		QModelIndex next(const QModelIndex & idx) const;
@@ -100,9 +103,10 @@ namespace kt
 		Phonon::SeekSlider* play_slider;
 		QComboBox* queue_mode;
 		QLabel* info_label;
-		QString current_file;
+		MediaFileRef current_file;
 		KMenu* menu;
 		QSortFilterProxyModel* proxy_model;
+		MediaFileCollection* collection;
 	};
 }
 

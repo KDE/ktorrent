@@ -20,10 +20,9 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QVBoxLayout>
-#include <QLabel>
-#include <QSpacerItem>
-#include <ktoolbar.h>
-#include <klocale.h>
+#include <QSortFilterProxyModel>
+#include <KLineEdit>
+#include <KLocale>
 #include <util/log.h>
 #include "mediaview.h"
 #include "mediamodel.h"
@@ -31,26 +30,38 @@
 #include "mediaplayerpluginsettings.h"
 
 
+
 using namespace bt;
 
 namespace kt
 {
+	
 
 	MediaView::MediaView(MediaModel* model,QWidget* parent)
 			: QWidget(parent),model(model)
 	{
+		filter = new QSortFilterProxyModel(this);
+		filter->setSourceModel(model);
+		filter->setFilterRole(Qt::DisplayRole);
+		
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		
-		layout->addWidget(new QLabel(i18n("Collection:")));
-		media_tree = new QTreeView(this);
-		media_tree->setModel(model);
-		media_tree->header()->hide();
+		search_box = new KLineEdit(this);
+		search_box->setClearButtonShown(true);
+		search_box->setClickMessage(i18n("Search media files"));
+		connect(search_box,SIGNAL(textChanged(QString)),filter,SLOT(setFilterFixedString(QString)));
+		layout->addWidget(search_box);
+		
+		media_tree = new QListView(this);
+		media_tree->setModel(filter);
 		media_tree->setDragEnabled(true);
+		media_tree->setSelectionMode(QAbstractItemView::ContiguousSelection);
+		media_tree->setAlternatingRowColors(true);
 		layout->addWidget(media_tree);
 		
-		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
+		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(onDoubleClicked(QModelIndex)));
 	}
 
 
@@ -58,15 +69,16 @@ namespace kt
 	{
 	}
 	
-	QModelIndex MediaView::selectedItem() const
+	void MediaView::onDoubleClicked(const QModelIndex& index)
 	{
-		QModelIndexList rows = media_tree->selectionModel()->selectedRows();
-		if (rows.count() > 0)
-			return rows.front();
-		else
-			return QModelIndex();
+		if (!index.isValid())
+			return;
+		
+		QModelIndex idx = filter->mapToSource(index);
+		if (!idx.isValid())
+			return;
+		
+		doubleClicked(model->fileForIndex(idx));
 	}
-
-	
 
 }

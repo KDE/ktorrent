@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QMimeData>
 #include <kicon.h>
 #include <kmimetype.h>
 #include <klocale.h>
@@ -29,33 +30,20 @@
 #include <interfaces/torrentfileinterface.h>
 #include <torrent/queuemanager.h>
 #include "mediamodel.h"
-#include <QMimeData>
+
 
 using namespace bt;
 
 namespace kt
 {
 
-	MediaModel::MediaModel(CoreInterface* core,QObject* parent) : QAbstractItemModel(parent),core(core)
+	MediaModel::MediaModel(CoreInterface* core,QObject* parent) : QAbstractListModel(parent),core(core)
 	{
-		total_number_of_media_files = 0;
 		QueueManager* qman = core->getQueueManager();
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 		{
 			bt::TorrentInterface* tc = *i;
-			Item* item = new Item(*i);
-			if (tc->getStats().multi_file_torrent && item->multimedia_files.count() > 0)
-			{
-				total_number_of_media_files += item->multimedia_files.count();
-				items.append(item);
-			}
-			else if (!tc->getStats().multi_file_torrent && tc->isMultimedia())
-			{
-				total_number_of_media_files++;
-				items.append(item);
-			}
-			else
-				delete item;
+			onTorrentAdded(tc);
 		}
 		qsrand(bt::CurrentTime() / 1000); // initialize random number generator with the current time in seconds
 	}
@@ -63,27 +51,12 @@ namespace kt
 
 	MediaModel::~MediaModel()
 	{
-		qDeleteAll(items);
-	}
-	
-	MediaModel::Item::Item(bt::TorrentInterface* tc) : tc(tc)
-	{
-		if (tc->getStats().multi_file_torrent)
-		{
-			for (Uint32 i = 0;i < tc->getNumFiles();i++)
-			{
-				if (tc->getTorrentFile(i).isMultimedia())
-					multimedia_files.append(i);
-			}
-		}
 	}
 
 	int MediaModel::rowCount(const QModelIndex & parent) const
 	{
 		if (!parent.isValid())
 			return items.count();
-		else if (!parent.internalPointer() && parent.row() >= 0 && parent.row() < items.count())
-			return items.at(parent.row())->multimedia_files.count();
 		else
 			return 0;
 	}
@@ -104,64 +77,27 @@ namespace kt
 	
 	QVariant MediaModel::data(const QModelIndex & index, int role) const
 	{
-		if (index.column() != 0)
+		if (index.column() != 0 || index.row() < 0 || index.row() >= items.count())
 			return QVariant();
 		
-		Item* item = (Item*)index.internalPointer();
-		if (!item)
+		MediaFile::Ptr mf = items.at(index.row());
+		switch (role)
 		{
-			if (index.row() >= 0 && index.row() < items.count())
-				item = items.at(index.row());
-			else
-				return QVariant();
-			
-			bt::TorrentInterface* tc = item->tc;
-			const bt::TorrentStats & s = tc->getStats();
-			switch (role)
-			{
-				case Qt::ToolTipRole:
-					if (!s.multi_file_torrent)
-					{
-						QString preview = tc->readyForPreview() ? i18n("Available") : i18n("Pending");
-						return i18n("<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %",
-								tc->getDisplayName(),preview,bt::Percentage(s));
-					}
-					break;
-				case Qt::DisplayRole:
-					return tc->getDisplayName();
-				case Qt::DecorationRole:
-					return (item->multimedia_files.count() > 0) ? KIcon("folder") :  KIcon(KMimeType::findByPath(s.torrent_name)->iconName());
-				case Qt::UserRole: // user role is for finding out if a torrent is complete
-					return s.completed;
-				default:
-					return QVariant();
-			}
-		}
-		else if (index.row() >= 0 && index.row() < item->multimedia_files.count())
-		{
-			int idx = item->multimedia_files.at(index.row());
-			if (idx < 0 || idx >= (int)item->tc->getNumFiles())
-				return QVariant();
-			
-			const bt::TorrentFileInterface & tfi = item->tc->getTorrentFile(idx);
-			QString path = tfi.getPath();
-			switch (role)
-			{
-				case Qt::ToolTipRole:
+			case Qt::ToolTipRole:
 				{
-					QString preview = tfi.isPreviewAvailable() ? i18n("Available") : i18n("Pending");
+					QString preview = mf->previewAvailable() ? i18n("Available") : i18n("Pending");
 					return i18n("<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %",
-								path,preview,tfi.getDownloadPercentage());
+							mf->name(),preview,mf->downloadPercentage());
 				}
-				case Qt::DisplayRole:
-					return path;
-				case Qt::DecorationRole:
-					return KIcon(KMimeType::findByPath(path)->iconName());
-				case Qt::UserRole: // user role is for finding out if a torrent is complete
-					return (tfi.getDownloadPercentage() - 100.0f) >= -0.0001f;
-				default:
-					return QVariant();
-			}
+				break;
+			case Qt::DisplayRole:
+				return mf->name();
+			case Qt::DecorationRole:
+				return KIcon(KMimeType::findByPath(mf->path())->iconName());
+			case Qt::UserRole: // user role is for finding out if a torrent is complete
+				return mf->fullyAvailable();
+			default:
+				return QVariant();
 		}
 		
 		return QVariant();
@@ -177,9 +113,7 @@ namespace kt
 		{
 			if (row >= 0 && row < items.count())
 			{
-				Item* item = items[row];
 				items.removeAt(row);
-				delete item;
 			}
 		}
 		endRemoveRows();
@@ -195,130 +129,94 @@ namespace kt
 		endInsertRows();
 		return true;
 	}
-	
-	QModelIndex MediaModel::index(int row,int column,const QModelIndex & parent) const
-	{
-		if (column != 0)
-			return QModelIndex();
 		
-		if (!parent.isValid() && row >= 0 && row < items.count())
-		{
-			return createIndex(row,column); // it's a torrent
-		}
-		else if (parent.isValid() && parent.row() >= 0 && parent.row() < items.count() && !parent.internalPointer())
-		{
-			Item* item = items.at(parent.row());
-			if (row >= 0 && row < item->multimedia_files.count())
-				return createIndex(row,column,item);
-			else
-				return QModelIndex();
-		}
-		
-		return QModelIndex();
-	}
-	
-	QModelIndex MediaModel::parent(const QModelIndex & index) const
-	{
-		Item* item = (Item*)index.internalPointer();
-		if (!item)
-			return QModelIndex();
-		else
-			return createIndex(items.indexOf(item),0);
-	}
-	
 	void MediaModel::onTorrentAdded(bt::TorrentInterface* tc)
 	{
-		Item* item = new Item(tc);
-		if (tc->getStats().multi_file_torrent && item->multimedia_files.count() > 0)
+		if (tc->getStats().multi_file_torrent)
 		{
-			total_number_of_media_files += item->multimedia_files.count();
-			items.append(item);
-			insertRow(items.count() - 1);
+			int cnt = 0;
+			for (Uint32 i = 0;i < tc->getNumFiles();i++)
+			{
+				if (tc->getTorrentFile(i).isMultimedia())
+				{
+					MediaFile::Ptr p(new MediaFile(tc,i));
+					items.append(p);
+					cnt++;
+				}
+			}
+			
+			if (cnt)
+				insertRows(items.count() - 1,cnt,QModelIndex());
 		}
-		else if (!tc->getStats().multi_file_torrent && tc->isMultimedia())
+		else if (tc->isMultimedia())
 		{
-			total_number_of_media_files++;
-			items.append(item);
+			MediaFile::Ptr p(new MediaFile(tc));
+			items.append(p);
 			insertRow(items.count() - 1);
-		}
-		else
-		{
-			delete item;
 		}
 	}
 	
 	void MediaModel::onTorrentRemoved(bt::TorrentInterface* tc)
 	{
-		Uint32 idx = 0;
-		foreach (Item* i,items)
+		int start = -1;
+		int cnt = 0;
+		for (QList<MediaFile::Ptr>::iterator i = items.begin();i != items.end();i++)
 		{
-			if (i->tc == tc)
+			MediaFile::Ptr p = *i;
+			if (p->torrent() == tc)
 			{
-				if (!i->tc->getStats().multi_file_torrent)
-					total_number_of_media_files--;
+				if (start == -1)
+				{
+					// start of the range
+					start = i - items.begin();
+					cnt = 1;
+				}
 				else
-					total_number_of_media_files -= i->multimedia_files.count();
-				removeRow(idx);
-				return;
+					cnt++; // Still in the middle of the media files of this torrent
 			}
-			idx++;
+			else if (start != -1)
+			{
+				// We have found the end
+				break;
+			}
 		}
+		
+		if (cnt > 0)
+			removeRows(start,cnt,QModelIndex());
 	}
 	
-	QString MediaModel::pathForIndex(const QModelIndex & idx) const
+	MediaFileRef MediaModel::fileForIndex(const QModelIndex & idx) const
 	{
-		Item* item = (Item*)idx.internalPointer();
-		if (item)
-		{
-			int r = idx.row();
-			
-			if (r < 0 || r >= item->multimedia_files.count())
-				return QString();
-			
-			r = item->multimedia_files.at(r);
-			if (r < 0 || r >= (int)item->tc->getNumFiles())
-				return QString();
-			else
-				return item->tc->getTorrentFile(r).getPathOnDisk();
-		}
+		if (idx.row() < 0 || idx.row() >= items.count())
+			return MediaFileRef(QString());
 		else
-		{
-			int r = idx.row();
-			if (r < 0 || r >= items.count())
-				return QString();
-			
-			bt::TorrentInterface* tc = items.at(r)->tc;
-			if (!tc->getStats().multi_file_torrent)
-				return tc->getStats().output_path;
-			else
-				return QString(); // we can't play directories
-		}
+			return MediaFileRef(items.at(idx.row()));
 	}
 	
 	QModelIndex MediaModel::indexForPath(const QString & path) const
 	{
 		Uint32 idx = 0;
-		foreach (Item* i,items)
+		foreach (MediaFile::Ptr mf,items)
 		{
-			bt::TorrentInterface* tc = i->tc;
-			if (!tc->getStats().multi_file_torrent)
-			{
-				if (path == tc->getStats().output_path)
-					return index(idx,0,QModelIndex());
-			}
-			else
-			{
-				foreach (int j,i->multimedia_files)
-				{
-					if (tc->getTorrentFile(j).getPathOnDisk() == path)
-						return index(j,0,index(idx,0,QModelIndex()));
-				}
-			}
+			if (mf->path() == path)
+				return index(idx,0,QModelIndex());
 			idx++;
 		}
 		
 		return QModelIndex();
 	}
+	
+	MediaFileRef MediaModel::find(const QString& path)
+	{
+		foreach (MediaFile::Ptr mf,items)
+		{
+			if (mf->path() == path)
+				return MediaFileRef(mf);
+		}
+		
+		return MediaFileRef(path);
+	}
+
 	
 	Qt::ItemFlags MediaModel::flags(const QModelIndex & index) const
 	{
@@ -343,42 +241,22 @@ namespace kt
 		QList<QUrl> urls;
 		foreach (const QModelIndex & idx,indexes)
 		{
-			if (!idx.isValid())
+			if (!idx.isValid() || idx.row() < 0 || idx.row() >= items.count())
 				continue;
-			
-			Item* item = (Item*)idx.internalPointer();
-			if (item)
-			{
-				int r = idx.row();
-				if (r >= 0 && r < item->multimedia_files.count())
-				{
-					r = item->multimedia_files.at(r);
-					if (r >= 0 && r < (int)item->tc->getNumFiles())
-						urls.append(item->tc->getTorrentFile(r).getPathOnDisk());
-				}
-			}
-			else
-			{
-				int r = idx.row();
-				if (r < 0 || r >= items.count())
-					continue;
-				
-				item = items.at(r);	
-				bt::TorrentInterface* tc = item->tc;
-				if (!tc->getStats().multi_file_torrent)
-				{
-					urls.append(QUrl(tc->getStats().output_path));
-				}
-				else
-				{
-					foreach (int file,item->multimedia_files)
-					{
-						urls.append(item->tc->getTorrentFile(file).getPathOnDisk());
-					}
-				}
-			}
+		
+			MediaFile::Ptr p = items.at(idx.row());
+			urls.append(p->path());
 		}
 		data->setUrls(urls);
 		return data;
 	}
+	
+	QModelIndex MediaModel::index(int row, int column, const QModelIndex& parent) const
+	{
+		if (row < 0 || row >= items.count() || column != 0 || parent.isValid())
+			return QModelIndex();
+		
+		return createIndex(row, column);
+	}
+
 }

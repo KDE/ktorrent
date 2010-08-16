@@ -26,6 +26,7 @@
 #include <KTabWidget>
 #include <interfaces/activity.h>
 #include <QToolButton>
+#include "mediafile.h"
 
 class KAction;
 class KActionCollection;
@@ -55,7 +56,7 @@ namespace kt
 		
 	public slots:
 		void play();
-		void play(const QString & file);
+		void play(const MediaFileRef & file);
 		void pause();
 		void stop();
 		void prev();
@@ -65,7 +66,7 @@ namespace kt
 		void openVideo();
 		void closeVideo();
 		void setVideoFullScreen(bool on);
-		void onDoubleClicked(const QModelIndex & idx);
+		void onDoubleClicked(const MediaFileRef & file);
 		void randomPlayActivated();
 		void aboutToFinishPlaying();
 		void showVideo(bool on);

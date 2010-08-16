@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QStringList>
 #include <Phonon/MediaObject>
+#include "mediafile.h"
 
 namespace Phonon
 {
@@ -58,10 +59,10 @@ namespace kt
 		void resume(); 
 		
 		/// Play a file
-		void play(const QString & file);
+		void play(MediaFileRef file);
 		
 		/// Queue a file
-		void queue(const QString & file);
+		void queue(MediaFileRef file);
 		
 		/// Pause playing
 		void pause();
@@ -70,10 +71,11 @@ namespace kt
 		void stop();
 		
 		/// Get the current file we are playing
-		QString getCurrentSource() const;
+		MediaFileRef getCurrentSource() const;
 		
 		/// Play the previous song
-		QString prev();
+		MediaFileRef prev();
+		
 	private slots:
 		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void hasVideoChanged(bool hasVideo);
@@ -109,13 +111,12 @@ namespace kt
 		/**
 		* Emitted when the player starts playing
 		*/
-		void playing(const QString & file);
+		void playing(const MediaFileRef & file);
 
 	private:
 		Phonon::MediaObject* media;
 		Phonon::AudioOutput* audio;
-		QStringList history;
-		
+		QList<MediaFileRef> history;
 	};
 
 }

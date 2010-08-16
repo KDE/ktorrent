@@ -34,43 +34,48 @@ using namespace bt;
 
 namespace kt
 {
-	PlayList::PlayList(QObject* parent) : QAbstractItemModel(parent)
+	PlayList::PlayList(MediaFileCollection* collection,QObject* parent)
+		: QAbstractItemModel(parent),collection(collection)
 	{
-		tags.setAutoDelete(true);
 	}
 	
 	PlayList::~PlayList() 
 	{
 	}
 	
-	void PlayList::addFile(const QString & file)
+	void PlayList::addFile(const MediaFileRef & file)
 	{
-		files.append(file);
-		TagLib::FileRef* ref = new TagLib::FileRef(QFile::encodeName(file).data(),true,TagLib::AudioProperties::Fast);
-		tags.insert(file,ref);
+		QByteArray name = QFile::encodeName(file.path());
+		TagLib::FileRef* ref = new TagLib::FileRef(name.data(),true,TagLib::AudioProperties::Fast);
+		files.append(qMakePair(file,ref));
 		insertRow(files.count() - 1);
 	}
 	
-	void PlayList::removeFile(const QString & file)
+	void PlayList::removeFile(const MediaFileRef & file)
 	{
-		int i = files.indexOf(file);
-		tags.erase(file);
-		if (i >= 0)
-			removeRow(i);
+		int i = 0;
+		foreach (const PlayListItem & item,files)
+		{
+			if (item.first == file)
+			{
+				removeRow(i);
+				break;
+			}
+			i++;
+		}
 	}
 	
-	QString PlayList::fileForIndex(const QModelIndex& index) const
+	MediaFileRef PlayList::fileForIndex(const QModelIndex& index) const
 	{
 		if (!index.isValid() || index.row() < 0 || index.row() >= files.count())
-			return QString();
+			return MediaFileRef(QString());
 		else
-			return files.at(index.row());
+			return files.at(index.row()).first;
 	}
 	
 	void PlayList::clear() 
 	{
 		files.clear();
-		tags.clear();
 		reset();
 	}
 
@@ -97,18 +102,20 @@ namespace kt
 		if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::UserRole))
 			return QVariant();
 		
-		QString file = files.at(index.row());
-		const TagLib::FileRef* ref = tags.find(file);
+		const PlayListItem & item = files.at(index.row());
+		const MediaFileRef & file = item.first;
+		const TagLib::FileRef* ref = item.second;
 		if (!ref)
 		{
-			tags.insert(file,new TagLib::FileRef(QFile::encodeName(file).data(),true,TagLib::AudioProperties::Fast));
-			ref = tags.find(file);
+			QByteArray name = QFile::encodeName(file.path());
+			files[index.row()].second = new TagLib::FileRef(name.data(),true,TagLib::AudioProperties::Fast);
+			ref = item.second;
 		}
 		
 		if (!ref || ref->isNull())
 		{
 			if (index.column() == 0)
-				return QFileInfo(file).fileName();
+				return QFileInfo(file.path()).fileName();
 			else
 				return QVariant();
 		}
@@ -117,7 +124,7 @@ namespace kt
 		if (!tag)
 		{
 			if (index.column() == 0)
-				return QFileInfo(file).fileName();
+				return QFileInfo(file.path()).fileName();
 			else
 				return QVariant();
 		}
@@ -129,7 +136,7 @@ namespace kt
 				case 0: 
 				{
 					QString title = QString(tag->title().toCString(true));
-					return title.isEmpty() ? QFileInfo(file).fileName() : title;
+					return title.isEmpty() ? QFileInfo(file.path()).fileName() : title;
 				}
 				case 1: return QString(tag->artist().toCString(true));
 				case 2: return QString(tag->album().toCString(true));
@@ -210,7 +217,7 @@ namespace kt
 		{
 			if (index.isValid() && index.column() == 0) 
 			{
-				QString text = files.at(index.row());
+				QString text = files.at(index.row()).first.path();
 				urls.append(text);
 				dragged_rows.append(index.row());
 			}
@@ -249,7 +256,8 @@ namespace kt
 		
 		foreach (const QUrl & url,urls)
 		{
-			files.insert(row,url.toLocalFile());
+			PlayListItem item = qMakePair(collection->find(url.toLocalFile()),(TagLib::FileRef*)0);
+			files.insert(row,item);
 		}
 		insertRows(row,urls.count(),QModelIndex());
 		dragged_rows.clear();
@@ -284,8 +292,8 @@ namespace kt
 		}
 		
 		QTextStream out(&fptr);
-		foreach (const QString & f,files)
-			out << f << endl;
+		foreach (const PlayListItem & f,files)
+			out << f.first.path() << endl;
 	}
 	
 	void PlayList::load(const QString & file)
@@ -302,9 +310,9 @@ namespace kt
 		{
 			QString file = in.readLine();
 			TagLib::FileRef* ref = new TagLib::FileRef(QFile::encodeName(file).data(),true,TagLib::AudioProperties::Fast);
-			files.append(file);
-			tags.insert(file,ref);
+			files.append(qMakePair(collection->find(file),ref));
 		}
+		
 		
 		emit reset();
 	}

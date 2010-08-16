@@ -8,6 +8,7 @@ set(ktmediaplayerplugin_SRC
 	mediaplayerplugin.cpp 
 	mediaview.cpp 
 	mediamodel.cpp 
+	mediafile.cpp 
 	mediaplayer.cpp 
 	videowidget.cpp
 )
