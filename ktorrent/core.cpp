@@ -839,7 +839,14 @@ namespace kt
 			
 			torrentRemoved(tc);
 			gman->torrentRemoved(tc);
-			bt::Delete(dir,false);
+			try
+			{
+				bt::Delete(dir,false);
+			}
+			catch (Error & e)
+			{
+				gui->errorMsg(e.toString());
+			}
 		}
 		
 		qman->torrentsRemoved(todo);
