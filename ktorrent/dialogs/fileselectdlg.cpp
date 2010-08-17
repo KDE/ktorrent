@@ -138,6 +138,8 @@ namespace kt
 			connect(m_downloadLocation,SIGNAL(textChanged(QString)),this,SLOT(updateSizeLabels()));
 			connect(m_downloadLocation,SIGNAL(textChanged(QString)),this,SLOT(updateExistingFiles()));
 			filter_model->setSourceModel(model);
+			filter_model->setSortRole(Qt::UserRole);
+			m_file_view->setSortingEnabled(true);
 			m_file_view->expandAll();
 			
 			updateSizeLabels();
@@ -159,8 +161,6 @@ namespace kt
 
 			m_file_view->setAlternatingRowColors(false);
 			m_file_view->setRootIsDecorated(show_file_tree && tc->getStats().multi_file_torrent);
-			m_file_view->resizeColumnToContents(0);
-			m_file_view->resizeColumnToContents(1);
 			return exec();
 		}
 		return QDialog::Rejected;
@@ -554,6 +554,10 @@ namespace kt
 		}
 		else
 			m_move_when_completed_history->setEnabled(false);
+		
+		QByteArray state = g.readEntry("file_view",QByteArray());
+		if (state.size() > 0)
+			m_file_view->header()->restoreState(state);
 	}
 	
 	
@@ -564,6 +568,7 @@ namespace kt
 		g.writeEntry("show_file_tree",show_file_tree);
 		g.writeEntry("download_location_history",download_location_history);
 		g.writeEntry("move_on_completion_location_history",move_on_completion_location_history);
+		g.writeEntry("file_view",m_file_view->header()->saveState());
 	}
 	
 	QMenu* FileSelectDlg::createHistoryMenu(const QStringList& urls, const char* slot)
