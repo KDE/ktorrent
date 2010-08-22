@@ -46,6 +46,12 @@ int main(int argc,char** argv)
 	KCmdLineArgs::init(argc, argv,&about);
 	KApplication app;
 	
+	if (!bt::InitLibKTorrent())
+	{
+		fprintf(stderr,"Failed to initialize libktorrent\n");
+		return -1;
+	}
+	
 	QString str = KGlobal::dirs()->saveLocation("data","ktorrent");
 	if (!str.endsWith(bt::DirSeparator()))
 		str += bt::DirSeparator();

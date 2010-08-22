@@ -81,6 +81,12 @@ int main(int argc, char **argv)
 	signal(SIGPIPE,SIG_IGN);
 	signal(SIGXFSZ,SIG_IGN);
 #endif
+	
+	if (!bt::InitLibKTorrent())
+	{
+		fprintf(stderr,"Failed to initialize libktorrent\n");
+		return -1;
+	}
 
 	bt::SetClientInfo("KTorrent",kt::MAJOR,kt::MINOR,kt::RELEASE,kt::VERSION_TYPE,"KT");
 	
@@ -158,14 +164,6 @@ int main(int argc, char **argv)
 		fprintf(stderr, "ktorrent is already running !\n");
 		return 0;
 
-	}
-#endif
-
-#ifdef Q_WS_WIN
-	if (!bt::InitWindowsSocketsAPI())
-	{
-		kError()<< "Couldn't load winsock dll";
-		return 0;
 	}
 #endif
 

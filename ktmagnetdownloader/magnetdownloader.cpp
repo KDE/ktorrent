@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <version.h>
 #include <util/log.h>
+#include <util/functions.h>
 #include "magnettest.h"
 #include <KApplication>
 #include <KLocalizedString>
@@ -18,6 +19,12 @@ int main(int argc,char** argv)
 	{
 		fprintf(stderr,"Usage: ktmagnetdownloader <magnet-link>\n");
 		return 0;
+	}
+	
+	if (!bt::InitLibKTorrent())
+	{
+		fprintf(stderr,"Failed to initialize libktorrent\n");
+		return -1;
 	}
 	
 	bt::MagnetLink mlink(argv[1]);
