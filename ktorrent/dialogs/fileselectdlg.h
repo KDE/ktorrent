@@ -22,8 +22,10 @@
 #define FILESELECTDLG_H
 
 #include <KDialog>
-#include "ui_fileselectdlg.h"
+#include <QSet>
 #include <QSortFilterProxyModel>
+#include "ui_fileselectdlg.h"
+
 
 namespace bt
 {
@@ -76,7 +78,7 @@ namespace kt
 		void setFilter(const QString & filter);
 		void updateExistingFiles();
 		void moveCompletedToggled(bool on);
-		QMenu* createHistoryMenu(const QStringList & urls,const char* slot);
+		QMenu* createHistoryMenu(const QSet<QString> & urls,const char* slot);
 		void clearDownloadLocationHistory();
 		void clearMoveOnCompletionLocationHistory();
 		void downloadLocationHistoryTriggered(QAction* act);
@@ -96,8 +98,8 @@ namespace kt
 		kt::Group* initial_group;
 		bool show_file_tree;
 		QSortFilterProxyModel* filter_model;
-		QStringList download_location_history;
-		QStringList move_on_completion_location_history;
+		QSet<QString> download_location_history;
+		QSet<QString> move_on_completion_location_history;
 	};
 }
 

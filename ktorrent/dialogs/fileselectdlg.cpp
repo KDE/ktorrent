@@ -180,14 +180,14 @@ namespace kt
 			cn += bt::DirSeparator();
 		
 		if (m_moveCompleted->isChecked() && m_completedLocation->url().isValid())
-			move_on_completion_location_history.append(m_completedLocation->url().toLocalFile());
+			move_on_completion_location_history.insert(m_completedLocation->url().toLocalFile());
 
 		QString dn = m_downloadLocation->url().toLocalFile();
 		if (!dn.endsWith(bt::DirSeparator()))
 			dn += bt::DirSeparator();
 		
 		if (m_downloadLocation->url().isValid())
-			download_location_history.append(m_downloadLocation->url().toLocalFile());
+			download_location_history.insert(m_downloadLocation->url().toLocalFile());
 
 		
 		QString tld = tc->getUserModifiedFileName();
@@ -533,8 +533,10 @@ namespace kt
 		show_file_tree = g.readEntry("show_file_tree",true);
 		m_tree->setChecked(show_file_tree);
 		m_list->setChecked(!show_file_tree);
-		download_location_history = g.readEntry("download_location_history",QStringList());
-		move_on_completion_location_history = g.readEntry("move_on_completion_location_history",QStringList());
+		QStringList tmp = g.readEntry("download_location_history",QStringList());
+		download_location_history = QSet<QString>::fromList(tmp);
+		tmp = g.readEntry("move_on_completion_location_history",QStringList());
+		move_on_completion_location_history = QSet<QString>::fromList(tmp);
 		
 		if (download_location_history.count())
 		{
@@ -566,12 +568,12 @@ namespace kt
 		KConfigGroup g = cfg->group("FileSelectDlg");
 		g.writeEntry("size",size());
 		g.writeEntry("show_file_tree",show_file_tree);
-		g.writeEntry("download_location_history",download_location_history);
-		g.writeEntry("move_on_completion_location_history",move_on_completion_location_history);
+		g.writeEntry("download_location_history",download_location_history.toList());
+		g.writeEntry("move_on_completion_location_history",move_on_completion_location_history.toList());
 		g.writeEntry("file_view",m_file_view->header()->saveState());
 	}
 	
-	QMenu* FileSelectDlg::createHistoryMenu(const QStringList& urls, const char* slot)
+	QMenu* FileSelectDlg::createHistoryMenu(const QSet<QString> & urls, const char* slot)
 	{
 		QMenu* m = new QMenu(this);
 		foreach (const QString & url,urls)
