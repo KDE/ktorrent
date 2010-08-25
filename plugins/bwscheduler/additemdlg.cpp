@@ -41,6 +41,8 @@ namespace kt
 		model = new WeekDayModel(this);
 		m_day_list->setModel(model);
 		
+		connect(m_day_list,SIGNAL(clicked(QModelIndex)),this,SLOT(dayClicked(QModelIndex)));
+		
 		connect(m_from,SIGNAL(timeChanged(const QTime & )),this,SLOT(fromChanged(const QTime&)));
 		connect(m_to,SIGNAL(timeChanged(const QTime & )),this,SLOT(toChanged(const QTime&)));
 		connect(m_entire_week,SIGNAL(clicked()),this,SLOT(selectEntireWeek()));
@@ -180,6 +182,15 @@ namespace kt
 		m_ss_download_limit->setEnabled(!m_suspended->isChecked() && on);
 		m_ss_upload_limit->setEnabled(!m_suspended->isChecked() && on);
 	}
+	
+	void AddItemDlg::dayClicked(const QModelIndex& idx)
+	{
+		if (model->data(idx,Qt::CheckStateRole) != Qt::Checked)
+			model->setData(idx,Qt::Checked,Qt::CheckStateRole);
+		else
+			model->setData(idx,Qt::Unchecked,Qt::CheckStateRole);
+	}
+
 }
 
 #include "additemdlg.moc"

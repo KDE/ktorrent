@@ -54,6 +54,7 @@ namespace kt
 		void selectWeekend();
 		void suspendedChanged(bool on);
 		void screensaverLimitsToggled(bool on);
+		void dayClicked(const QModelIndex & idx);
 		
 	private:
 		WeekDayModel* model;
