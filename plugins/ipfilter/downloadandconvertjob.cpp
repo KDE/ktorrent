@@ -152,6 +152,13 @@ namespace kt
 			unzip = true;
 			active_job->start();
 		}
+		else if (zip->directory()->entries().contains("ipfilter.dat"))
+		{
+			active_job = new bt::ExtractFileJob(zip,"ipfilter.dat",destination);
+			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(convert(KJob*)));
+			unzip = true;
+			active_job->start();
+		}
 		else
 		{
 			if (mode == Verbose)
@@ -224,17 +231,6 @@ namespace kt
 	{
 		if (bt::Exists(kt::DataDir() + "level1.dat"))
 		{
-			if (mode == Verbose) 
-			{
-				QString msg = i18n("Filter file (level1.dat) already exists, do you want to convert it again?");
-				if (KMessageBox::questionYesNo(0,msg,i18n("File Exists")) == KMessageBox::No)
-				{
-					setError(CANCELED);
-					emitResult();
-					return;
-				}
-			}
-			
 			// make backup of data file, if stuff fails we can always go back
 			QString dat_file = kt::DataDir() + "level1.dat";
 			QString tmp_file = kt::DataDir() + "level1.dat.tmp";
