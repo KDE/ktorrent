@@ -17,6 +17,7 @@ Changes in 4.1:
 - Make file view of FileSelectDlg sortable (248090)
 - Clicking item in day list of AddItemDlg of bwscheduler plugin now toggles it (225953)
 - Add support for emule blocklists (194915)
+- Add option to configure the number of log lines shown in the logviewer (223887)
 
 Changes in 4.0.3:
 - Fix bug causing wrong encoding to be used when the default save location of a group is read (244873)

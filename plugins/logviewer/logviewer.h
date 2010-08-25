@@ -41,6 +41,7 @@ namespace kt
 		virtual void customEvent(QEvent* ev);
 		
 		void setRichText(bool val);
+		void setMaxBlockCount(int max);
 		
 	public slots:
 		void showMenu(const QPoint & pos);

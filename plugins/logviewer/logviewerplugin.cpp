@@ -89,6 +89,7 @@ namespace kt
 	void LogViewerPlugin::applySettings()
 	{
 		lv->setRichText(LogViewerPluginSettings::useRichText());
+		lv->setMaxBlockCount(LogViewerPluginSettings::maxBlockCount());
 		LogViewerPosition p = (LogViewerPosition)LogViewerPluginSettings::logWidgetPosition();
 		if (pos != p)
 		{

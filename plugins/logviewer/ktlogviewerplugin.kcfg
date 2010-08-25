@@ -17,5 +17,10 @@
 			<min>0</min>
 			<max>2</max>
 		</entry>
+		<entry name="maxBlockCount" type="Int">
+			<default>200</default>
+			<min>50</min>
+			<max>500000</max>
+		</entry>
 	</group>
 </kcfg>

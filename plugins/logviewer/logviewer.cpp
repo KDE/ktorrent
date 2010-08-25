@@ -110,6 +110,12 @@ namespace kt
 	{
 		use_rich_text = val;
 	}
+	
+	void LogViewer::setMaxBlockCount(int max)
+	{
+		output->document()->setMaximumBlockCount(max);
+	}
+
 		
 	void LogViewer::showMenu(const QPoint& pos)
 	{
