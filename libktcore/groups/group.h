@@ -57,6 +57,7 @@ namespace kt
 		struct KTCORE_EXPORT Policy
 		{
 			QString default_save_location;
+			QString default_move_on_completion_location;
 			float max_share_ratio;
 			float max_seed_time;
 			bt::Uint32 max_upload_rate;

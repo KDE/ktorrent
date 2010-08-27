@@ -95,6 +95,20 @@ namespace kt
 		gman->saveGroups();
 	}
 	
+	QString DBusGroup::defaultMoveOnCompletionLocation() const
+	{
+		const Group::Policy & p = group->groupPolicy();
+		return p.default_move_on_completion_location;
+	}
+	
+	void DBusGroup::setDefaultMoveOnCompletionLocation(const QString& dir)
+	{
+		Group::Policy p = group->groupPolicy();
+		p.default_move_on_completion_location = dir;
+		group->setGroupPolicy(p);
+		gman->saveGroups();
+	}
+	
 	double DBusGroup::maxShareRatio() const
 	{
 		const Group::Policy & p = group->groupPolicy();

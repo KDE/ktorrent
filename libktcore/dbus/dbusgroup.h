@@ -45,6 +45,8 @@ namespace kt
 		Q_SCRIPTABLE QString icon() const;
 		Q_SCRIPTABLE QString defaultSaveLocation() const;
 		Q_SCRIPTABLE void setDefaultSaveLocation(const QString & dir);
+		Q_SCRIPTABLE QString defaultMoveOnCompletionLocation() const;
+		Q_SCRIPTABLE void setDefaultMoveOnCompletionLocation(const QString & dir);
 		Q_SCRIPTABLE double maxShareRatio() const;
 		Q_SCRIPTABLE void setMaxShareRatio(double ratio);
 		Q_SCRIPTABLE double maxSeedTime() const;

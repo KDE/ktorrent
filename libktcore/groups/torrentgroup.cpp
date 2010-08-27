@@ -25,6 +25,7 @@
 #include <interfaces/torrentinterface.h>
 #include "torrentgroup.h"
 #include <torrent/queuemanager.h>
+#include <util/fileops.h>
 
 using namespace bt;
 
@@ -89,6 +90,8 @@ namespace kt
 		enc->write(QString("max_download_rate")); enc->write(policy.max_download_rate);
 		enc->write(QString("only_apply_on_new_torrents")); 
 		enc->write((bt::Uint32) (policy.only_apply_on_new_torrents ? 1 : 0));
+		enc->write(QString("default_move_on_completion_location")); 
+		enc->write(policy.default_move_on_completion_location);
 		enc->end();
 		enc->end();
 	}
@@ -119,6 +122,13 @@ namespace kt
 				policy.default_save_location = gp->getString("default_save_location",0);
 				if (policy.default_save_location.length() == 0)
 					policy.default_save_location = QString(); // make sure that 0 length strings are loaded as null strings
+			}
+			
+			if (gp->getValue("default_move_on_completion_location"))
+			{
+				policy.default_move_on_completion_location = gp->getString("default_move_on_completion_location",0);
+				if (policy.default_move_on_completion_location.length() == 0)
+					policy.default_move_on_completion_location = QString(); // make sure that 0 length strings are loaded as null strings
 			}
 			
 			if (gp->getValue("max_share_ratio"))
@@ -155,6 +165,8 @@ namespace kt
 		if (policy.only_apply_on_new_torrents && !new_torrent)
 			return;
 		
+		if (bt::Exists(policy.default_move_on_completion_location))
+			tor->setMoveWhenCompletedDir(policy.default_move_on_completion_location);
 		tor->setMaxShareRatio(policy.max_share_ratio);
 		tor->setMaxSeedTime(policy.max_seed_time);
 		tor->setTrafficLimits(policy.max_upload_rate * 1024,policy.max_download_rate * 1024);

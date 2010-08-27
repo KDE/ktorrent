@@ -331,9 +331,6 @@ namespace kt
 		else if (dn != ddir)
 			tc->changeOutputDir(dn, 0);
 
-		if(m_moveCompleted->checkState() == Qt::Checked)
-			tc->setMoveWhenCompletedDir(KUrl(cn));
-
 		//Make it user controlled if needed
 		*start = m_chkStartTorrent->isChecked();
 		*skip_check = m_skip_data_check->isChecked();
@@ -350,6 +347,14 @@ namespace kt
 				gman->saveGroups();
 			}
 		}
+		
+		// Set this value after the group policy is applied, 
+		// so that the user selection in the dialog is not
+		// overwritten by the group policy
+		if (m_moveCompleted->checkState() == Qt::Checked)
+			tc->setMoveWhenCompletedDir(KUrl(cn));
+		else
+			tc->setMoveWhenCompletedDir(KUrl());
 
 		// update the last save directory
 		Settings::setLastSaveDir(dn);
@@ -431,6 +436,10 @@ namespace kt
 			QString dir = initial_group->groupPolicy().default_save_location;
 			if (!dir.isNull() && bt::Exists(dir))
 				m_downloadLocation->setUrl(KUrl(dir));
+			
+			dir = initial_group->groupPolicy().default_move_on_completion_location;
+			if (!dir.isNull() && bt::Exists(dir))
+				m_completedLocation->setUrl(KUrl(dir));
 		}
 	}
 	
@@ -447,6 +456,17 @@ namespace kt
 		QString dir = g->groupPolicy().default_save_location;
 		if (!dir.isNull() && bt::Exists(dir))
 			m_downloadLocation->setUrl(KUrl(dir));
+		
+		dir = g->groupPolicy().default_move_on_completion_location;
+		if (!dir.isNull() && bt::Exists(dir))
+		{
+			m_moveCompleted->setChecked(true);
+			m_completedLocation->setUrl(KUrl(dir));
+		}
+		else
+		{
+			m_moveCompleted->setChecked(false);
+		}
 	}
 
 	void FileSelectDlg::updateSizeLabels()
