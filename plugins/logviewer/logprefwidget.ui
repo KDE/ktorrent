@@ -104,7 +104,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Maximum nuber of visible lines:</string>
+           <string>Maximum number of visible lines:</string>
           </property>
          </widget>
         </item>
