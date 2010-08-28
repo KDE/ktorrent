@@ -325,7 +325,7 @@ namespace kt
 				i++;
 		}
 		
-		gui->unplugActionList("view_groups_list");
+		gui->getTorrentActivity()->part()->unplugActionList("view_groups_list");
 		QList<QAction*> actions;
 		QMap<Group*,KAction*>::iterator j = group_actions.begin();
 		while (j != group_actions.end())
@@ -342,12 +342,12 @@ namespace kt
 			}
 		}
 		
-		gui->plugActionList("view_groups_list",actions);
+		gui->getTorrentActivity()->part()->plugActionList("view_groups_list",actions);
 	}
 	
 	void ViewManager::onGroupAdded(kt::Group* g)
 	{
-		gui->unplugActionList("view_groups_list");
+		gui->getTorrentActivity()->part()->unplugActionList("view_groups_list");
 		KAction* act = new KAction(KIcon("application-x-bittorrent"),g->groupName(),this);
 		connect(act,SIGNAL(triggered()),this,SLOT(addToGroupItemTriggered()));
 		group_actions.insert(g,act);
@@ -360,7 +360,7 @@ namespace kt
 			j++;
 		}
 		
-		gui->plugActionList("view_groups_list",actions);
+		gui->getTorrentActivity()->part()->plugActionList("view_groups_list",actions);
 	}
 
 	void ViewManager::onCurrentTorrentChanged(View* v,bt::TorrentInterface* tc)
@@ -761,9 +761,9 @@ namespace kt
 			j++;
 		}
 			
-		gui->plugActionList("view_groups_list",actions);
-		gui->unplugActionList("view_columns_list");
-		gui->plugActionList("view_columns_list",v->columnActionList());
+		gui->getTorrentActivity()->part()->plugActionList("view_groups_list",actions);
+		gui->getTorrentActivity()->part()->unplugActionList("view_columns_list");
+		gui->getTorrentActivity()->part()->plugActionList("view_columns_list",v->columnActionList());
 		view_menu->popup(pos);
 	}
 }
