@@ -35,6 +35,7 @@
 #include <interfaces/functions.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
+#include <torrent/queuemanager.h>
 #include <torrent/torrentfiletreemodel.h>
 #include <torrent/torrentfilelistmodel.h>
 #include "fileselectdlg.h"
@@ -45,7 +46,8 @@ using namespace bt;
 namespace kt
 {
 
-	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent) : KDialog(parent),gman(gman),initial_group(0),show_file_tree(true)
+	FileSelectDlg::FileSelectDlg(kt::QueueManager* qman,kt::GroupManager* gman,const QString & group_hint,QWidget* parent) 
+		: KDialog(parent),qman(qman),gman(gman),initial_group(0),show_file_tree(true)
 	{
 		setupUi(mainWidget());
 		m_file_view->setAlternatingRowColors(true);
@@ -315,12 +317,6 @@ namespace kt
 			}
 		}
 
-		for (Uint32 i = 0;i < tc->getNumFiles();i++)
-		{
-			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-			file.setEmitDownloadStatusChanged(true);
-		}
-
 		//Setup custom download location
 		QString ddir = tc->getDataDir();
 		if (!ddir.endsWith(bt::DirSeparator()))
@@ -330,6 +326,23 @@ namespace kt
 			tc->changeOutputDir(dn + tld,bt::TorrentInterface::FULL_PATH);
 		else if (dn != ddir)
 			tc->changeOutputDir(dn, 0);
+		
+		QStringList conflicting;
+		if (qman->checkFileConflicts(tc,conflicting))
+		{
+			QString err = i18n("Opening the torrent <b>%1</b>, "
+							   "would share one or more files with the following torrents. "
+							   "Torrents are not allowed to write to the same files. "
+							   "Please select a different location.", tc->getDisplayName());
+			KMessageBox::errorList(this,err,conflicting);
+			return;
+		}
+		
+		for (Uint32 i = 0;i < tc->getNumFiles();i++)
+		{
+			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
+			file.setEmitDownloadStatusChanged(true);
+		}
 
 		//Make it user controlled if needed
 		*start = m_chkStartTorrent->isChecked();

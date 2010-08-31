@@ -250,6 +250,17 @@ namespace kt
 
 		if (Settings::useCompletedDir() && silently)
 			tc->setMoveWhenCompletedDir(Settings::completedDir());
+		
+		if (qman->alreadyLoaded(tc->getInfoHash()))
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Torrent " << tc->getDisplayName() << " already loaded" << endl;
+			// Cleanup tor dir
+			QString dir = tc->getTorDir();
+			if (bt::Exists(dir))
+				bt::Delete(dir,true);
+			delete tc;
+			return false;
+		}
 
 		if (!silently)
 		{
@@ -259,7 +270,7 @@ namespace kt
 				QString dir = tc->getTorDir();
 				if (bt::Exists(dir))
 					bt::Delete(dir,true);
-				delete tc;	
+				delete tc;
 				return false;
 			}
 		}
@@ -290,9 +301,18 @@ namespace kt
 			}
 		}
 		
-		if (qman->alreadyLoaded(tc->getInfoHash()))
+		QStringList conflicting;
+		if (qman->checkFileConflicts(tc,conflicting))
 		{
-			Out(SYS_GEN|LOG_IMPORTANT) << "Torrent " << tc->getDisplayName() << " already loaded" << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Torrent " << tc->getDisplayName() << " conflicts with the following torrents: " << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << conflicting.join(", ") << endl;
+			if (!silently)
+			{
+				QString err = i18n("Opening the torrent <b>%1</b>, "
+								   "would share one or more files with the following torrents. ."
+								   "Torrents are not allowed to write to the same files. ", tc->getDisplayName());
+				KMessageBox::errorList(gui,err,conflicting);
+			}
 			// Cleanup tor dir
 			QString dir = tc->getTorDir();
 			if (bt::Exists(dir))

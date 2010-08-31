@@ -887,7 +887,45 @@ namespace kt
 		}
 	}
 
-
+	bool QueueManager::checkFileConflicts(TorrentInterface* tc, QStringList & conflicting) const
+	{
+		conflicting.clear();
+		
+		// First get a set off all files of tc
+		QSet<QString> files;
+		if (tc->getStats().multi_file_torrent)
+		{
+			for (bt::Uint32 i = 0;i < tc->getNumFiles();i++)
+				files.insert(tc->getTorrentFile(i).getPathOnDisk());
+		}
+		else
+			files.insert(tc->getStats().output_path);
+		
+		foreach (bt::TorrentInterface* t, downloads)
+		{
+			if (t == tc)
+				continue;
+			
+			if (t->getStats().multi_file_torrent)
+			{
+				for (bt::Uint32 i = 0;i < t->getNumFiles();i++)
+				{
+					if (files.contains(t->getTorrentFile(i).getPathOnDisk()))
+					{
+						conflicting.append(t->getDisplayName());
+						break;
+					}
+				}
+			}
+			else
+			{
+				if (files.contains(t->getStats().output_path))
+					conflicting.append(t->getDisplayName());
+			}
+		}
+		
+		return !conflicting.isEmpty();
+	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 

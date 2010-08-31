@@ -225,6 +225,14 @@ namespace kt
 		 */
 		void reindexQueue();
 		
+		/**
+		 * Check if a torrent has file conflicts with other torrents.
+		 * If conflicting are found, a list of names of the conflicting torrents is filled in.
+		 * @param tc The torrent 
+		 * @param conflicting List of conflicting torrents
+		 */
+		bool checkFileConflicts(bt::TorrentInterface* tc, QStringList & conflicting) const;
+		
 	public slots:
 		/**
 		 * Places all torrents from downloads in the right order in queue.

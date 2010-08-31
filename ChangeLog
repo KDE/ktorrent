@@ -19,6 +19,7 @@ Changes in 4.1:
 - Add support for emule blocklists (194915)
 - Add option to configure the number of log lines shown in the logviewer (223887)
 - Add default move on completion location to group policy (248092)
+- Prevent torrents from sharing the same files (228220)
 
 Changes in 4.0.3:
 - Fix bug causing wrong encoding to be used when the default save location of a group is read (244873)

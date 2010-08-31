@@ -35,6 +35,7 @@ namespace bt
 namespace kt
 {
 	class GroupManager;
+	class QueueManager;
 	class TorrentFileModel;
 	class Group;
 
@@ -48,7 +49,7 @@ namespace kt
 		Q_OBJECT
 
 	public:
-		FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent);
+		FileSelectDlg(kt::QueueManager* qman,kt::GroupManager* gman,const QString & group_hint,QWidget* parent);
 		virtual ~FileSelectDlg();
 		
 		int execute(bt::TorrentInterface* tc, bool* start,bool* skip_check,const QString & location_hint);
@@ -91,6 +92,7 @@ namespace kt
 	private:
 		bt::TorrentInterface* tc;
 		TorrentFileModel* model;
+		kt::QueueManager* qman;
 		kt::GroupManager* gman;
 		bool* start;
 		bool* skip_check;
