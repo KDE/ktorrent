@@ -272,6 +272,9 @@
 		<entry name="openMultipleTorrentsSilently" type="Bool">
 			<default>false</default>
 		</entry>
+		<entry name="openAllTorrentsSilently" type="Bool">
+			<default>false</default>
+		</entry>
 		<entry name="decreasePriorityOfStalledTorrents" type="Bool">
 			<default>false</default>
 		</entry>

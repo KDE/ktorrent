@@ -262,7 +262,7 @@ namespace kt
 			return false;
 		}
 
-		if (!silently)
+		if (!silently && !Settings::openAllTorrentsSilently())
 		{
 			if (!gui->selectFiles(tc,&start_torrent,group,location,&skip_check))
 			{
