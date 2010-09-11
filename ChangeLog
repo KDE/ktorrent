@@ -22,6 +22,9 @@ Changes in 4.1:
 - Prevent torrents from sharing the same files (228220)
 - Add option to open all torrents silently
 
+Changes in 4.0.4:
+- Make sure that syndication filter save location overrides group save location (250116)
+
 Changes in 4.0.3:
 - Fix bug causing wrong encoding to be used when the default save location of a group is read (244873)
 - Fix crash in QueueManagerWidget when moving torrents in the queue
