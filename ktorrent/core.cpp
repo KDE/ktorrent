@@ -273,21 +273,6 @@ namespace kt
 			{
 				g->addTorrent(tc,true);
 				gman->saveGroups();
-				
-				// check if we need to use the default save location of the group
-				QString dn = g->groupPolicy().default_save_location;
-				if (!dn.isNull() && bt::Exists(dn))
-				{
-					if (!dn.endsWith(bt::DirSeparator()))
-						dn += bt::DirSeparator();
-					
-					QString ddir = tc->getDataDir();
-					if (!ddir.endsWith(bt::DirSeparator()))
-						ddir += bt::DirSeparator();
-
-					if (dn != ddir) // only change when really needed
-						tc->changeOutputDir(dn, 0);
-				}
 			}
 		}
 		
@@ -453,7 +438,6 @@ namespace kt
 		else
 		{
 			// load in the file (target is always local)
-			QString dir = locationHint();
 			QString group;
 			QMap<KUrl,QString>::iterator i = add_to_groups.find(j->url());
 			if (i != add_to_groups.end())
@@ -462,6 +446,7 @@ namespace kt
 				add_to_groups.erase(i);
 			}
 		
+			QString dir = locationHint(group);
 			if (dir != QString::null && loadFromData(j->data(),dir,group,false, j->url()))
 				loadingFinished(j->url(),true,false);
 			else
@@ -478,7 +463,7 @@ namespace kt
 		else if (url.isLocalFile())
 		{
 			QString path = url.toLocalFile();
-			QString dir = locationHint();
+			QString dir = locationHint(group);
 			if (dir != QString::null && loadFromFile(path,dir,group,false))
 				loadingFinished(url,true,false);
 			else
@@ -552,7 +537,7 @@ namespace kt
 		else if (url.isLocalFile())
 		{
 			QString path = url.toLocalFile(); 
-			QString dir = locationHint();
+			QString dir = locationHint(group);
 		
 			if (dir != QString::null && loadFromFile(path,dir,group,true))
 				loadingFinished(url,true,false);
@@ -573,7 +558,7 @@ namespace kt
 	{
 		QString dir;
 		if (savedir.isEmpty() || !bt::Exists(savedir))
-			dir = locationHint();
+			dir = locationHint(group);
 		else
 			dir = savedir;
 		
@@ -587,7 +572,7 @@ namespace kt
 	{
 		QString dir;
 		if (savedir.isEmpty() || !bt::Exists(savedir))
-			dir = locationHint();
+			dir = locationHint(group);
 		else
 			dir = savedir;
 		
@@ -1460,16 +1445,22 @@ namespace kt
 	}
 
 
-	QString Core::locationHint() const
+	QString Core::locationHint(const QString & group) const
 	{
 		QString dir;
-		if (Settings::useSaveDir())
+		
+		// First see if we can use the group settings
+		Group* g = gman->find(group);
+		QString group_save_location = g != 0 ? g->groupPolicy().default_save_location : QString();
+		if (!group_save_location.isEmpty() && bt::Exists(group_save_location))
+			dir = g->groupPolicy().default_save_location;
+		else if (Settings::useSaveDir())
 			dir = Settings::saveDir().toLocalFile();
 		else
 			dir = Settings::lastSaveDir();
 		
 		
-		if (dir.isEmpty() || !QDir(dir).exists())
+		if (dir.isEmpty() || !bt::Exists(dir))
 			dir = QDir::homePath();
 		
 		return dir;
