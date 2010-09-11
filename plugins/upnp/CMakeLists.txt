@@ -1,5 +1,3 @@
-include_directories(${KTORRENT_SOURCE_DIR}/libktupnp)
-
 set(ktupnpplugin_SRC upnpplugin.cpp upnpwidget.cpp routermodel.cpp)
 
 kde4_add_ui_files(ktupnpplugin_SRC upnpwidget.ui)
