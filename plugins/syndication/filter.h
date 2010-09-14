@@ -74,12 +74,24 @@ namespace kt
 		/// Remove a word match
 		void removeWordMatch(const QRegExp & exp);
 		
+		/// Add a word match
+		void addExclusionPattern(const QRegExp & exp);
+
+		/// Remove a word match
+		void removeExclusionPattern(const QRegExp & exp);
+
 		/// Get all word matches
 		QList<QRegExp> wordMatches() const {return word_matches;}
 		
+		/// Get all word matches
+		QList<QRegExp> exclusionPatterns() const {return exclusion_patterns;}
+
 		/// Clear the list of word matches
 		void clearWordMatches() {word_matches.clear();}
 		
+		/// Clear the list of word matches
+		void clearExclusionPatterns() {exclusion_patterns.clear();}
+
 		/// Is season and episode matching enabled
 		bool useSeasonAndEpisodeMatching() const {return use_season_and_episode_matching;}
 		
@@ -160,6 +172,18 @@ namespace kt
 		/// Set wether or not all word matches must match
 		void setAllWordMatchesMustMatch(bool on) {all_word_matches_must_match = on;}
 		
+		/// Are the word matches case sensitive
+		bool exclusionCaseSensitive() const {return exclusion_case_sensitive;}
+
+		/// Set case sensitivity of word matches
+		void setExclusionCaseSensitive(bool on) {exclusion_case_sensitive = on;}
+
+		/// Return wether or not all word matches must match
+		bool exclusionAllMustMatch() const {return exclusion_all_must_match;}
+
+		/// Set wether or not all word matches must match
+		void setExclusionAllMustMatch(bool on) {exclusion_all_must_match = on;}
+
 		/// Save the filter
 		void save(bt::BEncoder & enc);
 		
@@ -172,6 +196,12 @@ namespace kt
 		/// Enable or disable regular expressions
 		void setUseRegularExpressions(bool on) {use_regular_expressions = on;}
 		
+		/// Wether or not the string matches are regular expressions
+		bool exclusionUseRegularExpressions() const {return exclusion_reg_exp;}
+
+		/// Enable or disable regular expressions
+		void setExclusionUseRegularExpressions(bool on) {exclusion_reg_exp = on;}
+
 		/// Is a string a valid seasons or episode string
 		static bool validSeasonOrEpisodeString(const QString & s);
 		
@@ -204,6 +234,7 @@ namespace kt
 		QString id;
 		QString name;
 		QList<QRegExp> word_matches;
+		QList<QRegExp> exclusion_patterns;;
 		bool use_season_and_episode_matching;
 		bool no_duplicate_se_matches;
 		QList<Range> seasons;
@@ -219,6 +250,9 @@ namespace kt
 		bool case_sensitive;
 		bool all_word_matches_must_match;
 		bool use_regular_expressions;
+		bool exclusion_case_sensitive;
+		bool exclusion_all_must_match;
+		bool exclusion_reg_exp;
 		
 		QList<MatchedSeasonAndEpisode> se_matches;
 	};

@@ -144,6 +144,7 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("Andrei Barbu"),ki18n("Feature which adds the date a torrent was added"),"andrei@0xab.com");
 	KCmdLineArgs::init(argc, argv, &about);
 	about.addCredit(ki18n("Jonas Lundqvist"),ki18n("Feature to disable authentication in the webinterface"),"jonas@gannon.se"); 
+	about.addCredit(ki18n("Jaroslaw Swierczynski"),ki18n("Exclusion patterns in the syndication plugin"),"swiergot@gmail.com");
 
 	KCmdLineOptions options;
 	options.add("+[Url]", ki18n("Document to open"));

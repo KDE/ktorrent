@@ -48,6 +48,9 @@ namespace kt
 		case_sensitive = false;
 		all_word_matches_must_match = false;
 		use_regular_expressions = false;
+		exclusion_case_sensitive = false;
+		exclusion_all_must_match = false;
+		exclusion_reg_exp = false;
 		no_duplicate_se_matches = true;
 	}
 
@@ -61,6 +64,9 @@ namespace kt
 		case_sensitive = false;
 		all_word_matches_must_match = false;
 		use_regular_expressions = false;
+		exclusion_case_sensitive = false;
+		exclusion_all_must_match = false;
+		exclusion_reg_exp = false;
 		no_duplicate_se_matches = true;
 	}
 
@@ -132,6 +138,29 @@ namespace kt
 		if (!found_match)
 			return false;
 		
+		found_match = false;
+		foreach (const QRegExp & exp,exclusion_patterns)
+		{
+			QRegExp tmp = exp;
+			tmp.setCaseSensitivity(exclusion_case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+			tmp.setPatternSyntax(exclusion_reg_exp ? QRegExp::RegExp : QRegExp::Wildcard);
+			if (exclusion_all_must_match)
+			{
+				if (!match(item->title(),tmp))
+				{
+					found_match = false;
+					break;
+				}
+				else
+					found_match = true;
+			}
+			else if (match(item->title(),tmp))
+				return false;
+		}
+
+		if (found_match)
+			return false;
+
 		if (use_season_and_episode_matching)
 		{
 			int season = 0;
@@ -188,6 +217,16 @@ namespace kt
 		word_matches.removeAll(exp);
 	}
 	
+	void Filter::addExclusionPattern(const QRegExp & exp)
+	{
+		exclusion_patterns.append(exp);
+	}
+
+	void Filter::removeExclusionPattern(const QRegExp & exp)
+	{
+		exclusion_patterns.removeAll(exp);
+	}
+
 	bool Filter::stringToRange(const QString & s,Range & r)
 	{
 		QString tmp = s.trimmed(); // Get rid of whitespace
@@ -276,9 +315,16 @@ namespace kt
 		enc.write("name",name);
 		enc.write("case_sensitive",case_sensitive);
 		enc.write("all_word_matches_must_match",all_word_matches_must_match);
+		enc.write("exclusion_case_sensitive",exclusion_case_sensitive);
+		enc.write("exclusion_all_must_match",exclusion_all_must_match);
 		enc.write("word_matches"); 
 		enc.beginList();
 		foreach (const QRegExp & exp,word_matches)
+			enc.write(exp.pattern());
+		enc.end();
+		enc.write("exclusion_patterns");
+		enc.beginList();
+		foreach (const QRegExp & exp,exclusion_patterns)
 			enc.write(exp.pattern());
 		enc.end();
 		enc.write("use_season_and_episode_matching",use_season_and_episode_matching);
@@ -295,6 +341,7 @@ namespace kt
 			enc.write("move_on_completion_location",move_on_completion_location);
 		enc.write("silently",silent);
 		enc.write("use_regular_expressions",use_regular_expressions);
+		enc.write("exclusion_reg_exp",exclusion_reg_exp);
 		enc.end();
 	}
 	
@@ -323,6 +370,14 @@ namespace kt
 		
 		all_word_matches_must_match = vn->data().toInt() == 1;
 		
+		vn = dict->getValue("exclusion_case_sensitive");
+		if (vn)
+			exclusion_case_sensitive = vn->data().toInt() == 1;
+
+		vn = dict->getValue("exclusion_all_must_match");
+		if (vn)
+			exclusion_all_must_match = vn->data().toInt() == 1;
+
 		BListNode* ln = dict->getList("word_matches");
 		if (!ln)
 			return false;
@@ -334,6 +389,17 @@ namespace kt
 				word_matches.append(QRegExp(vn->data().toString(codec),case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
 		}
 		
+		ln = dict->getList("exclusion_patterns");
+		if (ln)
+		{
+			for (Uint32 i = 0;i < ln->getNumChildren();i++)
+			{
+				vn = ln->getValue(i);
+				if (vn)
+					exclusion_patterns.append(QRegExp(vn->data().toString(codec),exclusion_case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+			}
+		}
+
 		vn = dict->getValue("use_season_and_episode_matching");
 		if (!vn)
 			return false;
@@ -392,6 +458,10 @@ namespace kt
 		if (vn)
 			use_regular_expressions = vn->data().toInt() == 1;
 		
+		vn = dict->getValue("exclusion_reg_exp");
+		if (vn)
+			exclusion_reg_exp = vn->data().toInt() == 1;
+
 		return true;
 	}
 	

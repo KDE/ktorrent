@@ -43,6 +43,8 @@ namespace kt
 		m_name->setText(filter->filterName());
 		m_match_case_sensitive->setChecked(filter->caseSensitive());
 		m_all_words_must_match->setChecked(filter->allWordMatchesMustMatch());
+		m_exclusion_case_sensitive->setChecked(filter->exclusionCaseSensitive());
+		m_exclusion_all_must_match->setChecked(filter->exclusionAllMustMatch());
 		m_use_se_matching->setChecked(filter->useSeasonAndEpisodeMatching());
 		m_seasons->setEnabled(filter->useSeasonAndEpisodeMatching());
 		m_seasons->setText(filter->seasonsToString());
@@ -91,6 +93,16 @@ namespace kt
 		m_word_matches->setItems(items);
 		m_reg_exp_syntax->setChecked(filter->useRegularExpressions());
 		
+		re = filter->exclusionPatterns();
+		items.clear();
+		foreach (const QRegExp & r,re)
+		{
+			items.append(r.pattern());
+		}
+
+		m_exclusion_patterns->setItems(items);
+		m_exclusion_reg_exp->setChecked(filter->exclusionUseRegularExpressions());
+
 		connect(m_name,SIGNAL(textChanged(const QString & )),this,SLOT(checkOKButton()));
 		connect(m_seasons,SIGNAL(textChanged(const QString & )),this,SLOT(checkOKButton()));
 		connect(m_episodes,SIGNAL(textChanged(const QString & )),this,SLOT(checkOKButton()));
@@ -168,6 +180,8 @@ namespace kt
 		f->setFilterName(m_name->text());
 		f->setCaseSensitive(m_match_case_sensitive->isChecked());
 		f->setAllWordMatchesMustMatch(m_all_words_must_match->isChecked());
+		f->setExclusionCaseSensitive(m_exclusion_case_sensitive->isChecked());
+		f->setExclusionAllMustMatch(m_exclusion_all_must_match->isChecked());
 		
 		f->setSeasonAndEpisodeMatching(m_use_se_matching->isChecked());
 		f->setSeasons(m_seasons->text());
@@ -201,6 +215,14 @@ namespace kt
 			f->addWordMatch(QRegExp(p,filter->caseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive));
 		}
 		f->setUseRegularExpressions(m_reg_exp_syntax->isChecked());
+
+		f->clearExclusionPatterns();
+		for (int i = 0;i < m_exclusion_patterns->count();i++)
+		{
+			QString p = m_exclusion_patterns->text(i);
+			f->addExclusionPattern(QRegExp(p,filter->exclusionCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive));
+		}
+		f->setExclusionUseRegularExpressions(m_exclusion_reg_exp->isChecked());
 	}
 	
 	void FilterEditor::onOK()
