@@ -339,9 +339,8 @@ namespace kt
 	void ViewModel::removeTorrent(bt::TorrentInterface* ti)
 	{
 		int idx = 0;
-		for (QList<Item*>::iterator i = torrents.begin();i != torrents.end();i++)
+		foreach (Item* item,torrents)
 		{
-			Item* item = *i;
 			if (item->tc == ti)
 			{
 				removeRow(idx);
@@ -364,6 +363,10 @@ namespace kt
 		bool resort = force_resort;
 		Uint32 idx=0;
 		num_visible = 0;
+		
+		int lowest = -1;
+		int highest = -1;
+		
 		foreach (Item* i,torrents)
 		{
 			bool modified = false;
@@ -383,8 +386,12 @@ namespace kt
 			if (!i->hidden)
 				num_visible++;
 			
-			if (modified && !resort)
-				emit dataChanged(index(idx,1),index(idx,14));
+			if (modified)
+			{
+				if (lowest == -1)
+					lowest = idx;
+				highest = idx;
+			}
 			idx++;
 		}
 	
@@ -393,6 +400,8 @@ namespace kt
 			sort(sort_column,sort_order);
 			return true;
 		}
+		else if (lowest != -1)
+			emit dataChanged(index(lowest,1),index(highest,14));
 		
 		return false;
 	}
@@ -661,9 +670,8 @@ namespace kt
 	
 	void ViewModel::allTorrents(QList<bt::TorrentInterface*> & tlist) const
 	{
-		for (QList<Item*>::const_iterator i = torrents.begin();i != torrents.end();i++)
+		foreach (Item* item,torrents)
 		{
-			Item* item = *i;
 			if (item->member(group))
 				tlist.append(item->tc);
 		}
@@ -683,9 +691,10 @@ namespace kt
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
 		for (int i = 0;i < count;i++)
 		{
-			Item* item = torrents.takeAt(row);
+			Item* item = torrents[row + i];
 			delete item;
 		}
+		torrents.remove(row,count);
 		endRemoveRows();
 		return true;
 	}
