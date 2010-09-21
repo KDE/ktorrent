@@ -39,6 +39,7 @@
 #include <kactioncollection.h>
 
 
+
 using namespace bt;
 
 namespace kt
@@ -342,7 +343,7 @@ namespace kt
 
 	void SetMaxRate::makeMenu()
 	{
-		int rate=(type==UPLOAD) ? Settings::maxUploadRate() : Settings::maxDownloadRate();
+		int rate = (type==UPLOAD) ? net::SocketMonitor::getUploadCap() / 1024 : net::SocketMonitor::getDownloadCap() / 1024;
 		int maxBandwidth=(rate > 0) ? rate : (type==UPLOAD) ? 0 : 20 ;
 		int delta = 0;
 		int maxBandwidthRounded;
