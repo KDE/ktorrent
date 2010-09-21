@@ -22,6 +22,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcalendarsystem.h>
+#include <QPalette>
 #include <QFontMetricsF>
 #include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
@@ -36,6 +37,7 @@
 #include "bwschedulerpluginsettings.h"
 #include "guidanceline.h"
 
+
 using namespace bt;
 
 namespace kt
@@ -44,7 +46,6 @@ namespace kt
 	WeekScene::WeekScene(QObject* parent)
 			: QGraphicsScene(parent)
 	{
-		setBackgroundBrush(Qt::white);
 		addCalendar();
 	}
 
