@@ -710,8 +710,6 @@ namespace kt
 				
 			qman->append(tc);
 			connectSignals(tc);
-			if (tc->getStats().autostart && !bt::QueueManagerInterface::enabled() && !tc->overMaxRatio() && !tc->overMaxSeedTime())
-				start(tc);
 			torrentAdded(tc);
 		}
 		catch (bt::Error & err)
@@ -745,11 +743,17 @@ namespace kt
 		
 		gman->torrentsLoaded(qman);
 		qman->loadState(KGlobal::config());
+		QTimer::singleShot(0,this,SLOT(delayedStart()));
+	}
+	
+	void Core::delayedStart()
+	{
 		if (!kt::QueueManager::enabled())
 			qman->startAutoStartTorrents();
 		else
 			qman->orderQueue();
 	}
+
 
 	void Core::remove(bt::TorrentInterface* tc,bool data_to)
 	{
