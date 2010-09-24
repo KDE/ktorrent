@@ -19,6 +19,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kgenericfactory.h>
+#include <knotification.h>
+#include <kmainwindow.h>
 #include <QTimer>
 
 #include <interfaces/coreinterface.h>
@@ -129,26 +131,41 @@ namespace kt
 			return;
 		
 		KConfigGroup g = KGlobal::config()->group("IPFilterAutoUpdate");
-		QDate last_updated = g.readEntry("last_updated",QDate());
-		
-		QDateTime next_update;
+		bool ok = g.readEntry("last_update_ok",false);
 		QDateTime now = QDateTime::currentDateTime();
-		if (last_updated.isNull())
-			next_update = now.addDays(IPBlockingPluginSettings::autoUpdateInterval());
-		else
-			next_update = QDateTime(last_updated).addDays(IPBlockingPluginSettings::autoUpdateInterval());
-			
-		if (now >= next_update)
+		if (!ok)
 		{
-			Out(SYS_IPF|LOG_NOTICE) << "Doing ipfilter auto update !" << endl;
-			if (!pref->doAutoUpdate()) // if we cannot do it now, try again in 15 minutes
-				auto_update_timer.start(15*60*1000);
+			QDateTime last_update_attempt = g.readEntry("last_update_attempt",now);
+			// if we cannot do it now, or the last attempt was less then 15 minute ago, try again in 15 minutes
+			if (last_update_attempt.secsTo(now) < AUTO_UPDATE_RETRY_INTERVAL || !pref->doAutoUpdate()) 
+				auto_update_timer.start(AUTO_UPDATE_RETRY_INTERVAL * 1000);
 		}
 		else
 		{
-			// schedule an auto update
-			auto_update_timer.start(1000 * (now.secsTo(next_update) + 5));
-			Out(SYS_IPF|LOG_NOTICE) << "Scheduling ipfilter auto update on " << next_update.toString() << endl;
+			QDateTime last_updated = g.readEntry("last_updated",QDateTime());
+			QDateTime next_update;
+			if (last_updated.isNull())
+				next_update = now.addDays(IPBlockingPluginSettings::autoUpdateInterval());
+			else
+				next_update = QDateTime(last_updated).addDays(IPBlockingPluginSettings::autoUpdateInterval());
+				
+			if (now >= next_update)
+			{
+				if (!pref->doAutoUpdate()) // if we cannot do it now, try again in 15 minutes
+					auto_update_timer.start(AUTO_UPDATE_RETRY_INTERVAL * 1000);
+			}
+			else
+			{
+				// schedule an auto update
+				auto_update_timer.start(1000 * (now.secsTo(next_update) + 5));
+				Out(SYS_IPF|LOG_NOTICE) << "Scheduling ipfilter auto update on " << next_update.toString() << endl;
+			}
 		}
 	}
+	
+	void IPFilterPlugin::notification(const QString& msg)
+	{
+		KNotification::event("PluginEvent",msg,QPixmap(),getGUI()->getMainWindow());
+	}
+
 }

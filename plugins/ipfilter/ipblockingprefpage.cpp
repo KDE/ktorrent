@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <klocale.h>
+#include <util/log.h>
 #include "ipblockingprefpage.h"
 #include "ipfilterpluginsettings.h"
 #include "ipfilterplugin.h"
@@ -123,6 +124,7 @@ namespace kt
 		m_plugin->unloadAntiP2P();
 		m_job = new DownloadAndConvertJob(url,m_verbose ? DownloadAndConvertJob::Verbose : DownloadAndConvertJob::Quietly);
 		connect(m_job,SIGNAL(result(KJob*)),this,SLOT(downloadAndConvertFinished(KJob*)));
+		connect(m_job,SIGNAL(notification(QString)),m_plugin,SLOT(notification(QString)));
 		m_job->start();
 	}
 	
@@ -137,6 +139,7 @@ namespace kt
 		}
 		
 		m_verbose = false;
+		Out(SYS_IPF|LOG_NOTICE) << "Doing ipfilter auto update !" << endl;
 		downloadClicked();
 		m_verbose = true;
 		return true;
@@ -162,11 +165,14 @@ namespace kt
 		KConfigGroup g = KGlobal::config()->group("IPFilterAutoUpdate");
 		if (!j->error())
 		{
-			g.writeEntry("last_updated",QDate::currentDate());
+			g.writeEntry("last_updated",QDateTime::currentDateTime());
 			g.writeEntry("last_update_ok",true);
 		}
 		else
+		{
+			g.writeEntry("last_update_attempt",QDateTime::currentDateTime()); 
 			g.writeEntry("last_update_ok",false);
+		}
 		
 		g.sync();
 		

@@ -33,6 +33,8 @@
 #include "convertdialog.h"
 #include "downloadandconvertjob.h"
 
+using namespace bt;
+
 
 namespace kt
 {
@@ -70,8 +72,16 @@ namespace kt
 		active_job = 0;
 		if (j->error())
 		{
+			Out(SYS_IPF|LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
 			if (mode == Verbose)
+			{
 				((KIO::Job*)j)->ui()->showErrorMessage();
+			}
+			else
+			{
+				QString msg = i18n("Automatic update of IP filter failed: %1", j->errorString());
+				notification(msg);
+			}
 			setError(unzip ? UNZIP_FAILED : MOVE_FAILED);
 			emitResult();
 		}
@@ -84,8 +94,17 @@ namespace kt
 		active_job = 0;
 		if (j->error())
 		{
+			Out(SYS_IPF|LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
 			if (mode == Verbose)
+			{
 				((KIO::Job*)j)->ui()->showErrorMessage();
+			}
+			else
+			{
+				QString msg = i18n("Automatic update of IP filter failed: %1", j->errorString());
+				notification(msg);
+			}
+			
 			setError(DOWNLOAD_FAILED); 
 			emitResult();
 			return;
@@ -118,8 +137,16 @@ namespace kt
 		active_job = 0;
 		if (j->error())
 		{
+			Out(SYS_IPF|LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
 			if (mode == Verbose)
+			{
 				((KIO::Job*)j)->ui()->showErrorMessage();
+			}
+			else
+			{
+				QString msg = i18n("Automatic update of IP filter failed: %1", j->errorString());
+				notification(msg);
+			}
 			setError(MOVE_FAILED);
 			emitResult();
 			return;
@@ -129,8 +156,17 @@ namespace kt
 		KZip* zip = new KZip(zipfile);
 		if (!zip->open(QIODevice::ReadOnly) || !zip->directory())
 		{
+			Out(SYS_IPF|LOG_NOTICE) << "IP filter update failed: cannot open zip file " << zipfile << endl;
 			if (mode == Verbose)
+			{
 				KMessageBox::error(0,i18n("Cannot open zip file %1.",zipfile));
+			}
+			else
+			{
+				QString msg = i18n("Automatic update of IP filter failed: cannot open zipfile %1", zipfile);
+				notification(msg);
+			}
+			
 			setError(UNZIP_FAILED);
 			emitResult();
 			delete zip;
@@ -161,8 +197,16 @@ namespace kt
 		}
 		else
 		{
+			Out(SYS_IPF|LOG_NOTICE) << "IP filter update failed: no blocklist found in zipfile " << zipfile << endl;
 			if (mode == Verbose)
+			{
 				KMessageBox::error(0,i18n("Cannot find blocklist in zip file %1.",zipfile));
+			}
+			else
+			{
+				QString msg = i18n("Automatic update of IP filter failed: cannot find blocklist in zip file %1", zipfile);
+				notification(msg);
+			}
 			
 			setError(UNZIP_FAILED);
 			emitResult();
@@ -182,8 +226,16 @@ namespace kt
 	{
 		if (j && j->error())
 		{
+			Out(SYS_IPF|LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
 			if (mode == Verbose)
+			{
 				((KIO::Job*)j)->ui()->showErrorMessage();
+			}
+			else
+			{
+				QString msg = i18n("Automatic update of IP filter failed: %1", j->errorString());
+				notification(msg);
+			}
 			setError(BACKUP_FAILED);
 			emitResult();
 		}
