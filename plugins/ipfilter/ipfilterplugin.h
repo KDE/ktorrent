@@ -32,6 +32,8 @@ namespace kt
 {	
 	class IPBlockingPrefPage;
 	
+	const int AUTO_UPDATE_RETRY_INTERVAL = 15*60; // seconds
+	
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 * @brief IP filter plugin
@@ -60,9 +62,9 @@ namespace kt
 		
 		/// Whether or not the IP filter is loaded and running
 		bool loadedAndRunning(); 
+		
 	public slots:
 		void checkAutoUpdate();
-		
 		
 	private:
 		IPBlockingPrefPage* pref;
