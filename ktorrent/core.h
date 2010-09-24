@@ -263,6 +263,7 @@ namespace kt
 		void checkForKDE3Torrents();
 		void closeScanListener(ScanListener* sl);
 		void delayedRemove(bt::TorrentInterface* tc);
+		void delayedStart();
 
 	private:
 		GUI* gui;

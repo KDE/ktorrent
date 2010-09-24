@@ -3,6 +3,7 @@ Changes in 4.0.4:
 - Don't hardcode background of bandwidth schedule to white so that system colors are used (251925)
 - Improve performance of ViewModel when there are many torrents (216501)
 - Backport several improvements for IP filter auto update from trunk
+- Fix bug causing two instances of ktorrent to be started when missing files dialog is shown at startup (252099)
 
 Changes in 4.0.3:
 - Fix bug causing wrong encoding to be used when the default save location of a group is read (244873)

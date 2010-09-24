@@ -50,7 +50,7 @@ namespace kt
 
 	int App::newInstance()
 	{
-		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();		
+		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 		kt::GUI *widget = 0;
 		if (!main_widget)
 		{
