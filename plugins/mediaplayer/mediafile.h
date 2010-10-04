@@ -95,7 +95,7 @@ namespace kt
 		bt::Uint32 lastChunk() const;
 		
 		/// Create a TorrentFileStream object for this MediaFile and return a weak pointer to it
-		bt::TorrentFileStream::WPtr stream(QObject* parent);
+		bt::TorrentFileStream::WPtr stream();
 		
 		typedef QSharedPointer<MediaFile> Ptr;
 		typedef QWeakPointer<MediaFile> WPtr;

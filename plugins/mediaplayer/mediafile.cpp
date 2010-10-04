@@ -173,10 +173,15 @@ namespace kt
 		}
 	}
 
-	bt::TorrentFileStream::WPtr MediaFile::stream(QObject* parent)
+	bt::TorrentFileStream::WPtr MediaFile::stream()
 	{
 		if (!tfs)
-			tfs = bt::TorrentFileStream::Ptr(tc->createTorrentFileStream(idx,parent));
+		{
+			// If some file is already in streaming mode, then try unstreamed mode
+			tfs = tc->createTorrentFileStream(idx,true,0);
+			if (!tfs)
+				tfs = tc->createTorrentFileStream(idx,false,0);
+		}
 		
 		return bt::TorrentFileStream::WPtr(tfs);
 	}
@@ -225,7 +230,7 @@ namespace kt
 		MediaFile::Ptr mf = mediaFile();
 		if (mf && !mf->fullyAvailable())
 		{
-			MediaFileStream* stream = new MediaFileStream(mf->stream(0));
+			MediaFileStream* stream = new MediaFileStream(mf->stream());
 			Phonon::MediaSource ms(stream);
 			ms.setAutoDelete(true);
 			return ms;

@@ -51,7 +51,7 @@ namespace kt
 
 	MediaPlayer::~MediaPlayer()
 	{
-		media->stop();
+		stop();
 	}
 	
 	bool MediaPlayer::paused() const
@@ -97,6 +97,7 @@ namespace kt
 	void MediaPlayer::stop()
 	{
 		media->stop();
+		media->clear();
 	}
 	
 	MediaFileRef MediaPlayer::prev()
