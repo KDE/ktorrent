@@ -26,6 +26,7 @@
 #include <QSharedPointer>
 #include <Phonon/MediaSource>
 #include <util/constants.h>
+#include <torrent/torrentfilestream.h>
 
 
 class QObject;
@@ -93,14 +94,15 @@ namespace kt
 		/// Get the last chunk of the file
 		bt::Uint32 lastChunk() const;
 		
-		/// Create a TorrentFileStream object for this MediaFile
-		bt::TorrentFileStream* stream(QObject* parent);
+		/// Create a TorrentFileStream object for this MediaFile and return a weak pointer to it
+		bt::TorrentFileStream::WPtr stream(QObject* parent);
 		
 		typedef QSharedPointer<MediaFile> Ptr;
 		typedef QWeakPointer<MediaFile> WPtr;
 	private:
 		bt::TorrentInterface* tc;
 		bt::Uint32 idx;
+		bt::TorrentFileStream::Ptr tfs;
 	};
 	
 	/**

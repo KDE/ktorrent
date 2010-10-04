@@ -19,12 +19,12 @@
  ***************************************************************************/
 
 #include "mediafile.h"
+#include <QFile>
 #include <QStringList>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
-#include <torrent/torrentfilestream.h>
 #include <util/functions.h>
-#include <QFile>
+#include "mediafilestream.h"
 
 
 namespace kt
@@ -173,9 +173,12 @@ namespace kt
 		}
 	}
 
-	bt::TorrentFileStream* MediaFile::stream(QObject* parent)
+	bt::TorrentFileStream::WPtr MediaFile::stream(QObject* parent)
 	{
-		return tc->createTorrentFileStream(idx,parent);
+		if (!tfs)
+			tfs = bt::TorrentFileStream::Ptr(tc->createTorrentFileStream(idx,parent));
+		
+		return bt::TorrentFileStream::WPtr(tfs);
 	}
 	
 	///////////////////////////////////////////////////////
@@ -219,16 +222,15 @@ namespace kt
 	
 	Phonon::MediaSource MediaFileRef::createMediaSource()
 	{
-		#if 0
 		MediaFile::Ptr mf = mediaFile();
-		if (mf)
+		if (mf && !mf->fullyAvailable())
 		{
-			Phonon::MediaSource ms(mf->stream(0));
+			MediaFileStream* stream = new MediaFileStream(mf->stream(0));
+			Phonon::MediaSource ms(stream);
 			ms.setAutoDelete(true);
 			return ms;
 		}
 		else
-			#endif
 			return Phonon::MediaSource(file_path);
 	}
 
