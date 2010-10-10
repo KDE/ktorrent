@@ -94,26 +94,9 @@ namespace kt
 		if (!stream)
 			return;
 		
-		if (position_pixmap.isNull())
-		{
-			KIcon icon = KIcon("arrow-up");
-			position_pixmap = icon.pixmap(contentsRect().height(),QIcon::Normal,QIcon::On);
-		}
-		
 		current_chunk = stream->currentChunk();
 		qreal f = (qreal)current_chunk / bitset.getNumBits();
 		int x = (int)(f * contentsRect().width()); 
-		
-		/*
-		QColor color = palette().color(QPalette::Active,QPalette::Foreground);
-		p->setPen(QPen(color,1,Qt::SolidLine));
-		p->drawLine(x,0,x,contentsRect().height());
-		*/
-		/*
-		QRect r = position_pixmap.rect();
-		QRect dr(x - r.width() / 2,contentsRect().height() - r.height() ,r.width(),r.height());
-		p->drawPixmap(dr,position_pixmap,r);
-		*/
 		
 		QStyleOptionSlider option;
 		option.orientation = Qt::Horizontal;

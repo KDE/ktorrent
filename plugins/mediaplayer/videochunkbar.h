@@ -54,7 +54,6 @@ namespace kt
 		MediaFileRef mfile;
 		bt::BitSet bitset;
 		bt::Uint32 current_chunk;
-		QPixmap position_pixmap;
 	};
 
 }

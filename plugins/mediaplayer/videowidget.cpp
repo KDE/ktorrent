@@ -65,6 +65,7 @@ namespace kt
 		pause_act = tb->addAction(KIcon("media-playback-pause"),i18n("Pause"),this,SLOT(pause()));
 		stop_act = tb->addAction(KIcon("media-playback-stop"),i18n("Stop"),this,SLOT(stop()));
 		QAction* tfs = tb->addAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"));
+		tfs->setShortcut(Qt::Key_F);
 		tfs->setCheckable(true);
 		connect(tfs,SIGNAL(toggled(bool)),this,SIGNAL(toggleFullScreen(bool)));
 		
@@ -77,9 +78,14 @@ namespace kt
 		volume->setMaximumHeight(tb->iconSize().height());
 		volume->setMaximumWidth(5*tb->iconSize().width());
 		
+		time_label = new QLabel(this);
+		time_label->setText(formatTime(player->media0bject()->currentTime(),player->media0bject()->totalTime()));
+		time_label->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+		
 		hlayout->addWidget(tb);
 		hlayout->addWidget(slider);
 		hlayout->addWidget(volume);
+		hlayout->addWidget(time_label);
 		
 		chunk_bar->setFixedHeight(hlayout->sizeHint().height() * 0.75);
 		
@@ -94,6 +100,7 @@ namespace kt
 		onStateChanged(player->media0bject()->state(),Phonon::StoppedState);
 		
 		connect(player->media0bject(),SIGNAL(tick(qint64)),this,SLOT(timerTick(qint64)));
+		connect(player,SIGNAL(playing(MediaFileRef)),this,SLOT(playing(MediaFileRef)));
 		
 		inhibitScreenSaver(true);
 	}
@@ -121,20 +128,11 @@ namespace kt
 	
 	void VideoWidget::setControlsVisible(bool on)
 	{
-		if (on)
-		{
-			chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
-			slider->show();
-			volume->show();
-			tb->show();
-		}
-		else
-		{
-			chunk_bar->hide();
-			slider->hide();
-			volume->hide();
-			tb->hide();
-		}
+		slider->setVisible(on);
+		volume->setVisible(on);
+		tb->setVisible(on);
+		chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream && on);
+		time_label->setVisible(on);
 	}
 	
 	void VideoWidget::mouseMoveEvent(QMouseEvent* event)
@@ -226,9 +224,24 @@ namespace kt
 	
 	void VideoWidget::timerTick(qint64 time)
 	{
+		time_label->setText(formatTime(time,player->media0bject()->totalTime()));
 		if (chunk_bar->isVisible())
 			chunk_bar->timeElapsed(time);
 	}
 
+	QString VideoWidget::formatTime(qint64 cur, qint64 total)
+	{
+		QTime ct(cur / (60*60*1000),(cur / (60*1000)) % 60,(cur / 1000) % 60,cur % 1000);
+		QTime tt(total / (60*60*1000),(total / (60*1000)) % 60,(total / 1000) % 60,total % 1000);
+		return QString(" %1 / %2 ").arg(ct.toString("hh:mm:ss")).arg(tt.toString("hh:mm:ss"));
+	}
+	
+	void VideoWidget::playing(const MediaFileRef& mfile)
+	{
+		if (fullscreen && player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream)
+			chunk_bar->setVisible(slider->isVisible());
+		else
+			chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
+	}
 
 }

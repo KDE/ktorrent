@@ -28,6 +28,7 @@
 #include <Phonon/VolumeSlider>
 
 class QAction;
+class QLabel;
 class KToolBar;
 
 namespace kt
@@ -35,6 +36,7 @@ namespace kt
 
 	class VideoChunkBar;
 	class MediaPlayer;
+	class MediaFileRef;
 
 	/**
 	 * Widget to display a video
@@ -62,18 +64,21 @@ namespace kt
 		void setControlsVisible(bool on);
 		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void timerTick(qint64 time);
+		void playing(const MediaFileRef & mfile);
 		
 	signals:
 		void toggleFullScreen(bool on);
 		
 	private:
 		void inhibitScreenSaver(bool on);
+		QString formatTime(qint64 cur,qint64 total);
 
 	private:
 		Phonon::VideoWidget* video;
 		MediaPlayer* player;
 		Phonon::SeekSlider* slider;
 		KToolBar* tb;
+		QLabel* time_label;
 		QAction* play_act;
 		QAction* pause_act;
 		QAction* stop_act;
