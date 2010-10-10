@@ -147,7 +147,7 @@ namespace kt
 		if (idx >= 0)
 			path = path.mid(idx+1);
 		
-		if (path.isNull())
+		if (path.isEmpty())
 			path = i18n("Media Player");
 		
 		if (video)
@@ -354,10 +354,13 @@ namespace kt
 			video->hide();
 			video->setFullScreen(false);
 			
-			QString path = media_player->media0bject()->currentSource().fileName();
+			QString path = media_player->getCurrentSource().path();
 			int idx = path.lastIndexOf(bt::DirSeparator());
 			if (idx >= 0)
 				path = path.mid(idx+1);
+			
+			if (path.isEmpty())
+				path = i18n("Media Player");
 			
 			idx = tabs->addTab(video,KIcon("video-x-generic"),path);
 			tabs->setTabToolTip(idx,i18n("Movie player"));

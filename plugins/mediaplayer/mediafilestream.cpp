@@ -21,6 +21,7 @@
 #include "mediafilestream.h"
 #include <torrent/torrentfilestream.h>
 #include <util/log.h>
+#include <settings.h>
 
 using namespace bt;
 
@@ -49,14 +50,25 @@ namespace kt
 		if (waiting_for_data)
 		{
 			TorrentFileStream::Ptr s = stream.toStrongRef();
+			// Make sure there is enough data buffered for smooth playback
 			if (s)
 			{
-				const QByteArray data = s->read(4096);
-				if (!data.isEmpty()) 
+				qint64 left = s->size() - s->pos();
+				qint64 min_amount_needed = Settings::previewSizeVideo();
+				if (left < min_amount_needed)
+					min_amount_needed = left;
+					
+				if (s->bytesAvailable() >= min_amount_needed)
 				{
-					writeData(data);
-					waiting_for_data = false;
+					const QByteArray data = s->read(4096);
+					if (!data.isEmpty()) 
+					{
+						writeData(data);
+						waiting_for_data = false;
+					}
 				}
+				else
+					Out(SYS_MPL|LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable()  << " (need " << min_amount_needed <<  ")" << endl;
 			}
 			else
 				endOfData();
@@ -72,14 +84,28 @@ namespace kt
 			return;
 		}
 		
-		QByteArray data = s->read(4096);
-		if (data.isEmpty()) 
+		// Make sure there is enough data buffered for smooth playback
+		qint64 left = s->size() - s->pos();
+		qint64 min_amount_needed = Settings::previewSizeVideo();
+		if (left < min_amount_needed)
+			min_amount_needed = left;
+		
+		if (s->bytesAvailable() >= min_amount_needed)
 		{
-			waiting_for_data = true;
+			QByteArray data = s->read(4096);
+			if (data.isEmpty()) 
+			{
+				waiting_for_data = true;
+			}
+			else
+			{
+				writeData(data);
+			}
 		}
 		else
 		{
-			writeData(data);
+			Out(SYS_MPL|LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable()  << " (need " << min_amount_needed <<  ")" << endl;
+			waiting_for_data = true;
 		}
 	}
 

@@ -100,14 +100,14 @@ namespace kt
 	ChunkBar::~ChunkBar()
 	{}
 	
-	void ChunkBar::updateBar()
+	void ChunkBar::updateBar(bool force)
 	{
 		const BitSet & bs = getBitSet();
 		QSize s = contentsRect().size();
 		
 		bool changed = !(curr == bs);
 
-		if (changed || pixmap.isNull() || pixmap.width() != s.width())
+		if (changed || pixmap.isNull() || pixmap.width() != s.width() || force)
 		{
 			pixmap = QPixmap(s);
 			pixmap.fill(palette().color(QPalette::Active,QPalette::Base));

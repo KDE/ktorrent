@@ -74,8 +74,18 @@ namespace kt
 		else
 		{
 			Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: playing " << file.path() << endl;
-			media->setCurrentSource(file.createMediaSource());
-			media->play();
+			Phonon::MediaSource ms = file.createMediaSource(); 
+			media->setCurrentSource(ms);
+			MediaFile::Ptr ptr = file.mediaFile();
+			if (ptr)
+			{
+				media->play(); 
+			}
+			else
+			{
+				media->play();
+			}
+			
 			history.append(file);
 		}
 	}

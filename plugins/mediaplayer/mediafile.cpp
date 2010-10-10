@@ -21,6 +21,7 @@
 #include "mediafile.h"
 #include <QFile>
 #include <QStringList>
+#include <KMimeType>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
@@ -185,6 +186,20 @@ namespace kt
 		
 		return bt::TorrentFileStream::WPtr(tfs);
 	}
+	
+	bool MediaFile::isVideo() const
+	{
+		if (tc->getStats().multi_file_torrent)
+		{
+			return tc->getTorrentFile(idx).isVideo();
+		}
+		else
+		{
+			KMimeType::Ptr ptr = KMimeType::findByPath(path());
+			return ptr->name().startsWith("video");
+		}
+	}
+
 	
 	///////////////////////////////////////////////////////
 	MediaFileRef::MediaFileRef()

@@ -97,6 +97,9 @@ namespace kt
 		/// Create a TorrentFileStream object for this MediaFile and return a weak pointer to it
 		bt::TorrentFileStream::WPtr stream();
 		
+		/// Is this a video ?
+		bool isVideo() const;
+		
 		typedef QSharedPointer<MediaFile> Ptr;
 		typedef QWeakPointer<MediaFile> WPtr;
 	private:

@@ -23,6 +23,7 @@
 
 #include <phonon/abstractmediastream.h>
 #include <torrent/torrentfilestream.h>
+#include <boost/concept_check.hpp>
 
 namespace bt
 {

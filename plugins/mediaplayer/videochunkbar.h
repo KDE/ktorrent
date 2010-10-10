@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,72 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTVIDEOWIDGET_H
-#define KTVIDEOWIDGET_H
 
-#include <QWidget>
-#include <Phonon/VideoWidget>
-#include <Phonon/MediaObject>
-#include <Phonon/SeekSlider>
-#include <Phonon/VolumeSlider>
+#ifndef KT_VIDEOCHUNKBAR_H
+#define KT_VIDEOCHUNKBAR_H
 
-class QAction;
-class KToolBar;
+#include <torrent/chunkbar.h>
+#include "mediafile.h"
 
-namespace kt
+namespace kt 
 {
 
-	class VideoChunkBar;
-	class MediaPlayer;
-
 	/**
-	 * Widget to display a video
-	 * @author Joris Guisson
-	*/
-	class VideoWidget : public QWidget
+		ChunkBar for a video during streaming mode
+	 */
+	class VideoChunkBar : public ChunkBar
 	{
 		Q_OBJECT
 	public:
-		VideoWidget(MediaPlayer* player,QWidget* parent);
-		virtual ~VideoWidget();
+		VideoChunkBar(const MediaFileRef & mfile,QWidget* parent);
+		virtual ~VideoChunkBar();
 		
-		virtual void mouseMoveEvent(QMouseEvent* event);
+		/// Get the bitset
+		virtual const bt::BitSet& getBitSet() const;
 		
-		/**
-		 * Make the widget full screen or not.
-		 * @param on 
-		 */
-		void setFullScreen(bool on);
+		/// Time has elapsed during playing, update the bar if necessary
+		void timeElapsed(qint64 time);
 		
 	private slots:
-		void play();
-		void pause();
-		void stop();
-		void setControlsVisible(bool on);
-		void onStateChanged(Phonon::State cur,Phonon::State old);
-		void timerTick(qint64 time);
-		
-	signals:
-		void toggleFullScreen(bool on);
+		void updateChunkBar();
+		void updateBitSet();
 		
 	private:
-		void inhibitScreenSaver(bool on);
-
+		virtual void drawBarContents(QPainter *p);
+		
 	private:
-		Phonon::VideoWidget* video;
-		MediaPlayer* player;
-		Phonon::SeekSlider* slider;
-		KToolBar* tb;
-		QAction* play_act;
-		QAction* pause_act;
-		QAction* stop_act;
-		Phonon::VolumeSlider* volume;
-		VideoChunkBar* chunk_bar;
-		bool fullscreen;
-		uint screensaver_cookie;
-		int powermanagement_cookie;
+		MediaFileRef mfile;
+		bt::BitSet bitset;
+		bt::Uint32 current_chunk;
+		QPixmap position_pixmap;
 	};
 
 }
 
-#endif
+#endif // KT_VIDEOCHUNKBAR_H

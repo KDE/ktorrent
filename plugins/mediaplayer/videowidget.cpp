@@ -33,23 +33,29 @@
 #include <Phonon/VolumeSlider>
 #include <solid/powermanagement.h>
 #include <util/log.h>
+#include <torrent/chunkbar.h>
 #include "videowidget.h"
 #include "mediaplayer.h"
+#include "videochunkbar.h"
 #include "screensaver_interface.h"
+
 
 using namespace bt;
 
 namespace kt
 {
 
+
 	VideoWidget::VideoWidget(MediaPlayer* player,QWidget* parent)
-		: QWidget(parent),player(player),fullscreen(false),screensaver_cookie(0),powermanagement_cookie(0)
+		: QWidget(parent),player(player),chunk_bar(0),fullscreen(false),
+		screensaver_cookie(0),powermanagement_cookie(0)
 	{
 		QVBoxLayout* vlayout = new QVBoxLayout(this);
 		vlayout->setMargin(0);
 		vlayout->setSpacing(0);
 		video = new Phonon::VideoWidget(this);
-		vlayout->addWidget(video);
+		chunk_bar = new VideoChunkBar(player->getCurrentSource(),this);
+		chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
 		
 		QHBoxLayout* hlayout = new QHBoxLayout(0);
 		
@@ -61,21 +67,24 @@ namespace kt
 		QAction* tfs = tb->addAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"));
 		tfs->setCheckable(true);
 		connect(tfs,SIGNAL(toggled(bool)),this,SIGNAL(toggleFullScreen(bool)));
-		hlayout->addWidget(tb);
-		
 		
 		slider = new Phonon::SeekSlider(this);
 		slider->setMediaObject(player->media0bject());
 		slider->setMaximumHeight(tb->iconSize().height());
-		hlayout->addWidget(slider);
-		
 		
 		volume = new Phonon::VolumeSlider(this);
 		volume->setAudioOutput(player->output());
 		volume->setMaximumHeight(tb->iconSize().height());
 		volume->setMaximumWidth(5*tb->iconSize().width());
+		
+		hlayout->addWidget(tb);
+		hlayout->addWidget(slider);
 		hlayout->addWidget(volume);
 		
+		chunk_bar->setFixedHeight(hlayout->sizeHint().height() * 0.75);
+		
+		vlayout->addWidget(chunk_bar);
+		vlayout->addWidget(video);
 		vlayout->addLayout(hlayout);
 	
 		Phonon::createPath(player->media0bject(),video);
@@ -83,6 +92,8 @@ namespace kt
 		connect(player->media0bject(),SIGNAL(stateChanged(Phonon::State,Phonon::State)),
 				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
 		onStateChanged(player->media0bject()->state(),Phonon::StoppedState);
+		
+		connect(player->media0bject(),SIGNAL(tick(qint64)),this,SLOT(timerTick(qint64)));
 		
 		inhibitScreenSaver(true);
 	}
@@ -112,12 +123,14 @@ namespace kt
 	{
 		if (on)
 		{
+			chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
 			slider->show();
 			volume->show();
 			tb->show();
 		}
 		else
 		{
+			chunk_bar->hide();
 			slider->hide();
 			volume->hide();
 			tb->hide();
@@ -131,14 +144,16 @@ namespace kt
 			
 		if (slider->isVisible())
 		{
-			int h = height() - slider->height();
-			if (event->y() < h - 10) // use a 10 pixel safety buffer to avoid fibrilation
+			int bh = height() - slider->height();
+			int th = chunk_bar->height();
+			if (event->y() < bh - 10 && event->y() > th + 10) // use a 10 pixel safety buffer to avoid fibrilation
 				setControlsVisible(false);
 		}
 		else
 		{
-			int h = height() - slider->height();
-			if (event->y() >= h)
+			int bh = height() - slider->height();
+			int th = chunk_bar->height();
+			if (event->y() >= bh || event->y() <= th)
 				setControlsVisible(true);
 		}
 	}
@@ -208,5 +223,12 @@ namespace kt
 			Out(SYS_MPL|LOG_NOTICE) << "PowerManagement uninhibited" << endl;
 		}
 	}
+	
+	void VideoWidget::timerTick(qint64 time)
+	{
+		if (chunk_bar->isVisible())
+			chunk_bar->timeElapsed(time);
+	}
+
 
 }
