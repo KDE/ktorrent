@@ -25,40 +25,47 @@
 
 namespace kt
 {
-	static QString ValidDBusName(const QString & s,int extra_digit)
+	static bool ValidCharacter(const QChar &c)
+	{
+		ushort u = c.unicode();
+		return (u >= 'a' && u <= 'z')
+			|| (u >= 'A' && u <= 'Z')
+			|| (u >= '0' && u <= '9')
+			|| (u == '_');
+	}
+	
+	
+	static bool ValidDBusName(const QString & s)
 	{
 		if (s.isEmpty())
-			return s;
+			return false;
 		
 		QString ret = s;
 		if (ret[0].isDigit())
-			ret[0] = '_';
+			return false;
 		
 		for (int i = 0;i < s.length();i++)
 		{
 			QChar c = ret[i];
-			if (!c.isLetterOrNumber() && c != '_')
-				ret[i] = '_';
+			if (!ValidCharacter(c))
+				return false;
 		}
 		
-		if (extra_digit > 0)
-			return ret + QString::number(extra_digit);
-		else
-			return ret;
+		return true;
 	}
 
 	DBusGroup::DBusGroup(Group* g,GroupManager* gman,QObject* parent)
 			: QObject(parent),group(g),gman(gman)
 	{
-		QString name = ValidDBusName(g->groupName(),0);
-		if (name != g->groupName())
+		QString name = g->groupName();
+		if (!ValidDBusName(name))
 		{
-			// check for dupes if the name has been changed
-			int i = 2;
-			while (gman->find(name) != 0)
+			static int invalid_groups = 0;
+			while (true)
 			{
-				name = ValidDBusName(g->groupName(),i);
-				i++;
+				name = "group_" + QString::number(invalid_groups++);
+				if (!gman->find(name))
+					break;
 			}
 		}
 		QString path = "/group/" + name;
