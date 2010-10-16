@@ -58,7 +58,7 @@ namespace kt
 		update();
 	}
 	
-	void DownloadedChunkBar::updateBar()
+	void DownloadedChunkBar::updateBar(bool force)
 	{
 		const BitSet & bs = getBitSet();
 		QSize s = contentsRect().size();
@@ -72,7 +72,7 @@ namespace kt
 						 curr_ebs = ebs;
 		}
 		
-		if (changed || pixmap.isNull() || pixmap.width() != s.width())
+		if (changed || pixmap.isNull() || pixmap.width() != s.width() || force)
 		{
 			pixmap = QPixmap(s);
 			pixmap.fill(palette().color(QPalette::Active,QPalette::Base));

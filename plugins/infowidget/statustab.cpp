@@ -30,6 +30,7 @@
 #include "downloadedchunkbar.h"
 #include "availabilitychunkbar.h"
 #include "statustab.h"
+#include "settings.h"
 		
 using namespace bt;
 
@@ -165,7 +166,7 @@ namespace kt
 		if (!time_limit->hasFocus())
 			maxSeedTimeUpdate();
 		
-		share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= 0.8 ? "#ff0000" : "#1c9a1c").arg(KGlobal::locale()->formatNumber(ratio,2)));
+		share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= Settings::greenRatio() ? "#ff0000" : "#1c9a1c").arg(KGlobal::locale()->formatNumber(ratio,2)));
 	
 		Uint32 secs = curr_tc->getRunningTimeUL(); 
 		if (secs == 0)

@@ -54,6 +54,8 @@ namespace kt
 		Q_SCRIPTABLE void setMaxDownloadRate(int val);
 		Q_SCRIPTABLE double maxRatio();
 		Q_SCRIPTABLE void setMaxRatio(double val);
+		Q_SCRIPTABLE double greenRatio();
+		Q_SCRIPTABLE void setGreenRatio(double val);
 		Q_SCRIPTABLE int port();
 		Q_SCRIPTABLE void setPort(int val);
 		Q_SCRIPTABLE int udpTrackerPort();
@@ -164,6 +166,8 @@ namespace kt
 		Q_SCRIPTABLE void setNetworkInterface(int val);
 		Q_SCRIPTABLE bool openMultipleTorrentsSilently();
 		Q_SCRIPTABLE void setOpenMultipleTorrentsSilently(bool val);
+		Q_SCRIPTABLE bool openAllTorrentsSilently();
+		Q_SCRIPTABLE void setOpenAllTorrentsSilently(bool val);
 		Q_SCRIPTABLE bool decreasePriorityOfStalledTorrents();
 		Q_SCRIPTABLE void setDecreasePriorityOfStalledTorrents(bool val);
 		Q_SCRIPTABLE int stallTimer();

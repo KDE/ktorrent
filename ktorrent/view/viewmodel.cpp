@@ -27,16 +27,17 @@
 #include <kglobal.h>
 #include <kicon.h>
 #include <util/log.h>
+#include <util/sha1hash.h>
 #include <util/functions.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/trackerinterface.h>
 #include <torrent/queuemanager.h>
 #include <groups/group.h>
 #include "viewmodel.h"
 #include "core.h"
-#include <interfaces/trackerinterface.h>
-#include <util/sha1hash.h>
 #include "viewdelegate.h"
 #include "view.h"
+#include "settings.h"
 
 using namespace bt;
 
@@ -289,7 +290,7 @@ namespace kt
 		else if (col == 11)
 		{
 			QColor green(40,205,40);
-			return share_ratio > 0.8 ? green : Qt::red;
+			return share_ratio >= Settings::greenRatio() ? green : Qt::red;
 		}
 		else
 			return QVariant();

@@ -167,7 +167,7 @@ class Generator:
 		
 	def header(self,output):
 		global class_declaration_header
-		global class_decleartion_footer
+		global class_declaration_footer
 		global license
 		output.write(class_declaration_header % 
 			{"class_name" : self.class_name, "namespace" : self.namespace, "license" : license})

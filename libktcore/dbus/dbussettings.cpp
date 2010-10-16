@@ -118,6 +118,16 @@ namespace kt
 		Settings::setMaxRatio(val);
 	}
 
+	double DBusSettings::greenRatio()
+	{
+		return Settings::greenRatio();
+	}
+
+	void DBusSettings::setGreenRatio(double val)
+	{
+		Settings::setGreenRatio(val);
+	}
+
 	int DBusSettings::port()
 	{
 		return Settings::port();
@@ -666,6 +676,16 @@ namespace kt
 	void DBusSettings::setOpenMultipleTorrentsSilently(bool val)
 	{
 		Settings::setOpenMultipleTorrentsSilently(val);
+	}
+
+	bool DBusSettings::openAllTorrentsSilently()
+	{
+		return Settings::openAllTorrentsSilently();
+	}
+
+	void DBusSettings::setOpenAllTorrentsSilently(bool val)
+	{
+		Settings::setOpenAllTorrentsSilently(val);
 	}
 
 	bool DBusSettings::decreasePriorityOfStalledTorrents()
