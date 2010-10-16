@@ -68,7 +68,7 @@ namespace kt
 {
 	const Uint32 CORE_UPDATE_INTERVAL = 250;
 
-	Core::Core(kt::GUI* gui) : gui(gui),keep_seeding(true),sleep_suppression_cookie(-1)
+	Core::Core(kt::GUI* gui) : gui(gui),keep_seeding(true),sleep_suppression_cookie(-1),exiting(false)
 	{
 		UpdateCurrentTime();
 		qman = new QueueManager();
@@ -871,6 +871,7 @@ namespace kt
 	void Core::onExit()
 	{
 		// stop timer to prevent updates during wait
+		exiting = true;
 		update_timer.stop();
 		
 		net::SocketMonitor::instance().shutdown();
@@ -1004,6 +1005,9 @@ namespace kt
 
 	void Core::update()
 	{
+		if (exiting)
+			return;
+		
 		try
 		{
 			bt::UpdateCurrentTime();

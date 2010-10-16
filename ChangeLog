@@ -5,6 +5,7 @@ Changes in 4.0.4:
 - Backport several improvements for IP filter auto update from trunk
 - Fix bug causing two instances of ktorrent to be started when missing files dialog is shown at startup (252099)
 - Fix bug causing KT to use invalid dbus paths in group paths
+- Fix crash at exit due to a Core::update getting called during exit (254214)
 
 Changes in 4.0.3:
 - Fix bug causing wrong encoding to be used when the default save location of a group is read (244873)

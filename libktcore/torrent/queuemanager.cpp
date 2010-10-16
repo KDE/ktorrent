@@ -86,11 +86,6 @@ namespace kt
 		exiting = true;
 		Uint32 nd = downloads.count();
 		suspended_torrents.clear();
-		
-		// wait for a second to allow all http jobs to send the stopped event
-		if (nd > 0)
-			SynchronousWait(1000);
-		
 		qDeleteAll(downloads);
 		downloads.clear();
 	}

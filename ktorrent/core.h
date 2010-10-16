@@ -280,6 +280,7 @@ namespace kt
 		int sleep_suppression_cookie;
 		QMap<bt::TorrentInterface*,ScanListener*> active_scans;
 		QMap<bt::TorrentInterface*,bool> delayed_removal;
+		bool exiting;
 	};
 }
 
