@@ -57,6 +57,6 @@ kde4_add_kcfg_files(libktorrent_SRC settings.kcfgc)
 kde4_add_library(ktcore SHARED ${libktorrent_SRC})
 
 target_link_libraries(ktcore ${QT_QT3SUPPORT_LIBRARY} ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} ${LIBKTORRENT_LIBRARIES} ${KDE4_SOLID_LIBS} ${GMP_LIBRARIES})
-set_target_properties(ktcore PROPERTIES VERSION 11.0.2 SOVERSION 11 )
+set_target_properties(ktcore PROPERTIES VERSION 11.0.3 SOVERSION 11 )
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
