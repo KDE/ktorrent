@@ -102,7 +102,7 @@ namespace kt
 	{
 		bool ok = false;
 		QString name = KInputDialog::getText(i18n("Add a Search Engine"), 
-						i18n("Enter the hostname of the search engine (for example www.google.com) :"),QString(),&ok,this);
+						i18n("Enter the hostname of the search engine (for example www.google.com):"),QString(),&ok,this);
 		if (!ok || name.isEmpty())
 			return;
 		

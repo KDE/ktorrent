@@ -189,7 +189,7 @@ namespace kt
 	{
 		QFile fptr(dir + "opensearch.xml");
 		if (!fptr.open(QIODevice::WriteOnly))
-			throw bt::Error(i18n("Cannot open %1 : %2",dir + "opensearch.xml",fptr.errorString()));
+			throw bt::Error(i18n("Cannot open %1: %2",dir + "opensearch.xml",fptr.errorString()));
 		
 		KUrl kurl(url);
 		QTextStream out(&fptr);
@@ -362,7 +362,7 @@ namespace kt
 		}
 		else if (role == Qt::ToolTipRole) 
 		{
-			return i18n("Url: <b>%1</b>",se->engineUrl());
+			return i18n("URL: <b>%1</b>",se->engineUrl());
 		}
 		
 		return QVariant();

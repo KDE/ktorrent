@@ -247,7 +247,7 @@ namespace kt
 		KUrl url(m_webseed->text());
 		if (!url.isValid())
 		{
-			KMessageBox::error(this,i18n("Invalid url %1",url.prettyUrl()));
+			KMessageBox::error(this,i18n("Invalid URL: %1",url.prettyUrl()));
 			return;
 		}
 		
@@ -292,7 +292,7 @@ namespace kt
 		if (m_tracker_list->count() == 0 && !m_dht->isChecked())
 		{
 			QString msg = i18n("You have not added a tracker, "
-					"are you sure you want to create this torrent ?");
+					"are you sure you want to create this torrent?");
 			if (KMessageBox::warningYesNo(gui,msg) == KMessageBox::No)
 				return;
 		}

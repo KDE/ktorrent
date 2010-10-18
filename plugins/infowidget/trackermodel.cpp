@@ -144,7 +144,7 @@ namespace kt
 		{
 			switch (section)
 			{
-				case 0: return i18n("Url");
+				case 0: return i18n("URL");
 				case 1: return i18n("Status");
 				case 2: return i18n("Seeders");
 				case 3: return i18n("Leechers");

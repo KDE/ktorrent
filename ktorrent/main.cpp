@@ -137,9 +137,9 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("Rickard Närström"),ki18n("A couple of bugfixes"),"rickard.narstrom@gmail.com");
 	about.addCredit(ki18n("caruccio"),ki18n("Patch to load torrents silently from the command line"),"mateus@caruccio.com");
 	about.addCredit(ki18n("Lee Olson"),ki18n("New set of icons"),"leetolson@gmail.com");
-	about.addCredit(ki18n("Aaron J. Seigo"),ki18n("Drag and drop support for plasma applet"),"aseigo@kde.org");
+	about.addCredit(ki18n("Aaron J. Seigo"),ki18n("Drag and drop support for Plasma applet"),"aseigo@kde.org");
 	about.addCredit(ki18n("Ian Higginson"),ki18n("Patch to cleanup the plugin list"),"xeriouxi@fastmail.fm");
-	about.addCredit(ki18n("Amichai Rothman"),ki18n("Patch to make the plasma applet a popup applet"),"amichai@amichais.net");
+	about.addCredit(ki18n("Amichai Rothman"),ki18n("Patch to make the Plasma applet a popup applet"),"amichai@amichais.net");
 	about.addCredit(ki18n("Leo Trubach"),ki18n("Patch to add support for IP ranges in IP filter dialog"),"leotrubach@gmail.com");
 	about.addCredit(ki18n("Andrei Barbu"),ki18n("Feature which adds the date a torrent was added"),"andrei@0xab.com");
 	KCmdLineArgs::init(argc, argv, &about);

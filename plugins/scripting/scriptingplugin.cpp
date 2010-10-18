@@ -243,7 +243,7 @@ namespace kt
 		if (scripts_to_delete.count() > 0)
 		{
 			QString msg = i18n("Removing these scripts will fully delete them from your disk. "
-								"Are you sure you want to do this ?");
+								"Are you sure you want to do this?");
 			if (KMessageBox::questionYesNoList(getGUI()->getMainWindow(),msg,scripts_to_delete) != KMessageBox::Yes)
 				return;
 		}

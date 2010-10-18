@@ -169,7 +169,7 @@ namespace kt
 		}
 		catch (bt::Error & err)
 		{
-			KMessageBox::error(tab,i18n("Failed to create directory for feed %1 : %2",downloads[loader],err.toString()));
+			KMessageBox::error(tab,i18n("Failed to create directory for feed %1: %2",downloads[loader],err.toString()));
 		}
 		downloads.remove(loader);
 	}

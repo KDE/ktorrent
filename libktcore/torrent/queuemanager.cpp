@@ -240,7 +240,7 @@ namespace kt
 			
 			if (tmp.count() > 0)
 			{
-				if (KMessageBox::questionYesNoList(0,i18n("Not enough disk space for the following torrents. Do you want to start them anyway ?"),names) == KMessageBox::No)
+				if (KMessageBox::questionYesNoList(0,i18n("Not enough disk space for the following torrents. Do you want to start them anyway?"),names) == KMessageBox::No)
 				{
 					foreach (bt::TorrentInterface* tc,tmp)
 						todo.removeAll(tc);
@@ -279,7 +279,7 @@ namespace kt
 			
 		if (tmp.count() > 0)
 		{
-			if (KMessageBox::questionYesNoList(0,i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway ?"),names) == KMessageBox::No)
+			if (KMessageBox::questionYesNoList(0,i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway?"),names) == KMessageBox::No)
 			{
 				foreach (bt::TorrentInterface* tc,tmp)
 					todo.removeAll(tc);
@@ -308,7 +308,7 @@ namespace kt
 			
 		if (tmp.count() > 0)
 		{
-			if (KMessageBox::questionYesNoList(0,i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway ?"),names) == KMessageBox::No)
+			if (KMessageBox::questionYesNoList(0,i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway?"),names) == KMessageBox::No)
 			{
 				foreach (bt::TorrentInterface* tc,tmp)
 					todo.removeAll(tc);
@@ -734,7 +734,7 @@ namespace kt
 		{
 			const TorrentStats & s = tc->getStats();
 			QString msg =
-					i18n("Error starting torrent %1 : %2",
+					i18n("Error starting torrent %1: %2",
 					s.torrent_name,err.toString());
 			KMessageBox::error(0,msg,i18n("Error"));
 		}
@@ -750,7 +750,7 @@ namespace kt
 		{
 			const TorrentStats & s = tc->getStats();
 			QString msg =
-					i18n("Error stopping torrent %1 : %2",
+					i18n("Error stopping torrent %1: %2",
 					s.torrent_name,err.toString());
 			KMessageBox::error(0,msg,i18n("Error"));
 		}

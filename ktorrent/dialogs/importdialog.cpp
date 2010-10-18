@@ -121,7 +121,7 @@ namespace kt
 		catch (Error & e)
 		{
 			delete dc;
-			KMessageBox::error(this,i18n("Cannot verify data : %1",e.toString()));
+			KMessageBox::error(this,i18n("Cannot verify data: %1",e.toString()));
 			reject();
 			return;
 		}
@@ -228,7 +228,7 @@ namespace kt
 			}
 			catch (Error & e)
 			{
-				KMessageBox::error(this,i18n("Cannot load the torrent file : %1",e.toString()));
+				KMessageBox::error(this,i18n("Cannot load the torrent file: %1",e.toString()));
 				reject();
 				return;
 			}
@@ -262,7 +262,7 @@ namespace kt
 			}
 			catch (Error & e)
 			{
-				KMessageBox::error(this,i18n("Cannot load the torrent file : %1",e.toString()));
+				KMessageBox::error(this,i18n("Cannot load the torrent file: %1",e.toString()));
 				reject();
 				return;
 			}
@@ -275,7 +275,7 @@ namespace kt
 		// first try to open it
 		File fptr;
 		if (!fptr.open(file,"wb"))
-			throw Error(i18n("Cannot open %1 : %2",file,fptr.errorString()));
+			throw Error(i18n("Cannot open %1: %2",file,fptr.errorString()));
 
 		// write all chunks to the file
 		for (Uint32 i = 0;i < chunks.getNumBits();i++)
@@ -384,7 +384,7 @@ namespace kt
 		QString file_map = tor_dir + "file_map";
 		QFile fptr(file_map);
 		if (!fptr.open(QIODevice::WriteOnly))
-			throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
+			throw Error(i18n("Failed to create %1: %2",file_map,fptr.errorString()));
 
 		QTextStream out(&fptr);
 
@@ -401,7 +401,7 @@ namespace kt
 		QString file_map = tor_dir + "file_map";
 		QFile fptr(file_map);
 		if (!fptr.open(QIODevice::WriteOnly))
-			throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
+			throw Error(i18n("Failed to create %1: %2",file_map,fptr.errorString()));
 
 		QTextStream out(&fptr);
 		out << ddir << ::endl;

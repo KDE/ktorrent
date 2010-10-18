@@ -157,7 +157,7 @@ namespace kt
 		KIO::Job* j = KIO::copy(KUrl(tor),KUrl(path),KIO::HideProgressInfo);
 		if (!j->exec())
 		{
-			m_text_output->append(i18n("Failed to import <b>%1</b> : %2",tor,j->errorString()));
+			m_text_output->append(i18n("Failed to import <b>%1</b>: %2",tor,j->errorString()));
 		}
 		else
 		{

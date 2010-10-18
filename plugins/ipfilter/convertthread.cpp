@@ -64,7 +64,7 @@ namespace kt
 		if (!source.open(QIODevice::ReadOnly))
 		{
 			Out(SYS_IPF|LOG_IMPORTANT) << "Cannot find level1.txt file" << endl;
-			failure_reason = i18n("Cannot open %1 : %2",txt_file,strerror(errno));
+			failure_reason = i18n("Cannot open %1: %2",txt_file,strerror(errno));
 			return;
 		}
 
@@ -164,7 +164,7 @@ namespace kt
 		if (!target.open(QIODevice::WriteOnly))
 		{
 			Out(SYS_IPF|LOG_IMPORTANT) << "Unable to open file for writing" << endl;
-			failure_reason = i18n("Cannot open %1 : %2",dat_file,strerror(errno));
+			failure_reason = i18n("Cannot open %1: %2",dat_file,strerror(errno));
 			return;
 		}
 		

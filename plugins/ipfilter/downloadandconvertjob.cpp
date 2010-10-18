@@ -163,7 +163,7 @@ namespace kt
 			}
 			else
 			{
-				QString msg = i18n("Automatic update of IP filter failed: cannot open zipfile %1", zipfile);
+				QString msg = i18n("Automatic update of IP filter failed: cannot open zip file %1", zipfile);
 				notification(msg);
 			}
 			

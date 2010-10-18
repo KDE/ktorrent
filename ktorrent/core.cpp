@@ -1254,7 +1254,7 @@ namespace kt
 		}
 		else
 		{
-			QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing. \n"
+			QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing.\n"
 					"Do you want to recreate it?",tc->getStats().torrent_name);
 			MissingFilesDlg dlg(msg,missing,tc,0);
 						
