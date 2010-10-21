@@ -87,7 +87,7 @@ set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
 
 target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore ${KDE4_SOLID_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS})
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install(PROGRAMS ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )
 install(FILES magnet.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install(FILES ktorrentui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
