@@ -63,7 +63,7 @@ namespace kt
 		void next();
 		void enableActions(unsigned int flags);
 		void onSelectionChanged(const QModelIndex & idx);
-		void openVideo();
+		void openVideo(bool tab_only);
 		void closeVideo();
 		void setVideoFullScreen(bool on);
 		void onDoubleClicked(const MediaFileRef & file);
@@ -94,6 +94,7 @@ namespace kt
 		KAction* show_video_action;
 		KAction* clear_action;
 		KAction* add_media_action;
+		KAction* status_action;
 	};
 
 }

@@ -41,12 +41,24 @@ namespace kt
 	public:
 		MediaFileStream(bt::TorrentFileStream::WPtr stream,QObject* parent = 0);
 		virtual ~MediaFileStream();
+		
+		enum StreamState
+		{
+			PLAYING,
+			BUFFERING
+		};
+		
+		StreamState state() const {return waiting_for_data ? BUFFERING : PLAYING;}
 
 	protected:
 		virtual void needData();
 		virtual void reset();
 		virtual void enoughData();
 		virtual void seekStream(qint64 offset);
+		
+	signals:
+		/// Emitted when the stream state changes
+		void stateChanged(MediaFileStream::StreamState state);
 		
 	private slots:
 		void dataReady();

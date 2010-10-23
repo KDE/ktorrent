@@ -26,6 +26,7 @@
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
 #include "mediafilestream.h"
+#include "mediaplayer.h"
 
 
 namespace kt
@@ -240,12 +241,14 @@ namespace kt
 		return file_path == other.path();
 	}
 	
-	Phonon::MediaSource MediaFileRef::createMediaSource()
+	Phonon::MediaSource MediaFileRef::createMediaSource(MediaPlayer* player)
 	{
 		MediaFile::Ptr mf = mediaFile();
 		if (mf && !mf->fullyAvailable())
 		{
 			MediaFileStream* stream = new MediaFileStream(mf->stream());
+			QObject::connect(stream,SIGNAL(stateChanged(MediaFileStream::StreamState)),
+					player,SLOT(streamStateChanged(MediaFileStream::StreamState)));
 			Phonon::MediaSource ms(stream);
 			ms.setAutoDelete(true);
 			return ms;
@@ -254,6 +257,14 @@ namespace kt
 			return Phonon::MediaSource(file_path);
 	}
 
+	QString MediaFileRef::name() const
+	{
+		int idx = file_path.lastIndexOf(bt::DirSeparator());
+		if (idx != -1)
+			return file_path.mid(idx + 1);
+		else
+			return file_path;
+	}
 
 
 }

@@ -66,7 +66,6 @@ namespace kt
 		info_label->setFrameShadow(QFrame::Sunken);
 		info_label->setFrameShape(QFrame::StyledPanel);
 		info_label->setBackgroundRole(QPalette::Base);
-		info_label->setAutoFillBackground(true);
 		info_label->setWordWrap(true);
 		layout->addWidget(info_label);
 		info_label->setText(i18n("Ready to play"));
@@ -172,11 +171,17 @@ namespace kt
 		QByteArray encoded = QFile::encodeName(current_file.path());
 		TagLib::FileRef ref(encoded.data(),true,TagLib::AudioProperties::Fast);
 		if (ref.isNull())
+		{
+			info_label->setText(i18n("Playing: <b>%1</b>",current_file.name()));
 			return;
+		}
 		
 		TagLib::Tag* tag = ref.tag();
 		if (!tag)
+		{
+			info_label->setText(i18n("Playing: <b>%1</b>",current_file.name()));
 			return;
+		}
 		
 		QString artist = tag->artist().toCString(true);
 		QString title =  tag->title().toCString(true);
@@ -189,21 +194,21 @@ namespace kt
 		if (has_artist && has_title && has_album)
 		{
 			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b><br/>Album: <b>%3</b>",title,artist,album);
-			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.path(),extra_data));
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.name(),extra_data));
 		}
 		else if (has_title && has_artist)
 		{
 			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b>",title,artist);
-			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.path(),extra_data));
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.name(),extra_data));
 		}
 		else if (has_title)
 		{
 			extra_data = i18n("Title: <b>%1</b>",title);
-			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.path(),extra_data));
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file.name(),extra_data));
 		}
 		else
 		{
-			info_label->setText(i18n("Playing: <b>%1</b>",current_file.path()));
+			info_label->setText(i18n("Playing: <b>%1</b>",current_file.name()));
 		}
 	}
 

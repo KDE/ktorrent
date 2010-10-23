@@ -39,6 +39,9 @@ namespace bt
 
 namespace kt 
 {
+
+	class MediaPlayer;
+
 	const bt::Uint32 INVALID_INDEX = 0xFFFFFFFF;
 
 	/**
@@ -138,6 +141,9 @@ namespace kt
 		/// Get the path
 		QString path() const {return file_path;}
 		
+		/// Get the name of the file
+		QString name() const;
+		
 		/// Assignment operator
 		MediaFileRef & operator = (const MediaFileRef & other);
 		
@@ -148,7 +154,7 @@ namespace kt
 		bool operator != (const MediaFileRef & other) const;
 		
 		/// Create a Phonon::MediaSource for this MediaFileRef
-		Phonon::MediaSource createMediaSource();
+		Phonon::MediaSource createMediaSource(MediaPlayer* p);
 		
 	private:
 		MediaFile::WPtr ptr;

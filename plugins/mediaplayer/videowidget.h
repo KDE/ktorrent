@@ -29,6 +29,7 @@
 
 class QAction;
 class QLabel;
+class QStackedWidget;
 class KToolBar;
 
 namespace kt
@@ -49,13 +50,21 @@ namespace kt
 		VideoWidget(MediaPlayer* player,QWidget* parent);
 		virtual ~VideoWidget();
 		
-		virtual void mouseMoveEvent(QMouseEvent* event);
-		
 		/**
 		 * Make the widget full screen or not.
 		 * @param on 
 		 */
 		void setFullScreen(bool on);
+		
+		/**
+		 * Enable or disable the Video
+		 * @param on True to enable, false to disable
+		 */
+		void setVideoEnabled(bool on);
+		
+	protected:
+		virtual void mouseMoveEvent(QMouseEvent* event);
+		virtual bool eventFilter(QObject* dst, QEvent* event);
 		
 	private slots:
 		void play();
@@ -74,6 +83,7 @@ namespace kt
 		QString formatTime(qint64 cur,qint64 total);
 
 	private:
+		QStackedWidget* stack;
 		Phonon::VideoWidget* video;
 		MediaPlayer* player;
 		Phonon::SeekSlider* slider;

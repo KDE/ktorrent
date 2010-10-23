@@ -25,6 +25,7 @@
 #include <QStringList>
 #include <Phonon/MediaObject>
 #include "mediafile.h"
+#include "mediafilestream.h"
 
 namespace Phonon
 {
@@ -79,7 +80,7 @@ namespace kt
 	private slots:
 		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void hasVideoChanged(bool hasVideo);
-		void currentSourceChanged(Phonon::MediaSource src);
+		void streamStateChanged(MediaFileStream::StreamState state);
 		
 	signals:
 		/**
@@ -90,8 +91,9 @@ namespace kt
 		
 		/**
 		 * A video has been detected, create the video player window. 
+		 * @param tab_only If true do not create the actual Phonon::VideoWidget yet
 		 */
-		void openVideo();
+		void openVideo(bool tab_only);
 		
 		/**
 		 * Emitted when the video widget needs to be closed.

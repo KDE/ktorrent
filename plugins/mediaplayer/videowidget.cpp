@@ -22,6 +22,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QMouseEvent>
+#include <QStackedWidget>
 #include <KToolBar>
 #include <KIcon>
 #include <KLocale>
@@ -53,7 +54,14 @@ namespace kt
 		QVBoxLayout* vlayout = new QVBoxLayout(this);
 		vlayout->setMargin(0);
 		vlayout->setSpacing(0);
-		video = new Phonon::VideoWidget(this);
+		
+		stack = new QStackedWidget(this);
+		QLabel* fake_video = new QLabel(this);
+		video = 0;
+		fake_video->setAutoFillBackground(true);
+		fake_video->setStyleSheet("QLabel {background-color: black}");
+		stack->addWidget(fake_video);
+		
 		chunk_bar = new VideoChunkBar(player->getCurrentSource(),this);
 		chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
 		
@@ -90,10 +98,8 @@ namespace kt
 		chunk_bar->setFixedHeight(hlayout->sizeHint().height() * 0.75);
 		
 		vlayout->addWidget(chunk_bar);
-		vlayout->addWidget(video);
+		vlayout->addWidget(stack);
 		vlayout->addLayout(hlayout);
-	
-		Phonon::createPath(player->media0bject(),video);
 		
 		connect(player->media0bject(),SIGNAL(stateChanged(Phonon::State,Phonon::State)),
 				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
@@ -110,6 +116,25 @@ namespace kt
 	{
 		inhibitScreenSaver(false);
 	}
+		
+	void VideoWidget::setVideoEnabled(bool on)
+	{
+		if (on && !video)
+		{
+			video = new Phonon::VideoWidget(stack);
+			int idx = stack->addWidget(video);
+			stack->setCurrentIndex(idx);
+			Phonon::createPath(player->media0bject(),video);
+			video->installEventFilter(this);
+		}
+		else if (!on && video)
+		{
+			stack->removeWidget(video);
+			video->deleteLater();
+			video = 0;
+		}
+	}
+
 
 	void VideoWidget::play()
 	{
@@ -135,22 +160,32 @@ namespace kt
 		time_label->setVisible(on);
 	}
 	
+	bool VideoWidget::eventFilter(QObject* dst, QEvent* event)
+	{
+		if (event->type() == QEvent::MouseMove && fullscreen)
+			mouseMoveEvent((QMouseEvent*)event);
+		
+		return true;
+	}
+
+	
 	void VideoWidget::mouseMoveEvent(QMouseEvent* event)
 	{
 		if (!fullscreen)
 			return;
 			
+		bool streaming = player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream;
 		if (slider->isVisible())
 		{
 			int bh = height() - slider->height();
-			int th = chunk_bar->height();
+			int th = streaming ? chunk_bar->height() : 0;
 			if (event->y() < bh - 10 && event->y() > th + 10) // use a 10 pixel safety buffer to avoid fibrilation
 				setControlsVisible(false);
 		}
 		else
 		{
 			int bh = height() - slider->height();
-			int th = chunk_bar->height();
+			int th = streaming ? chunk_bar->height() : 0;
 			if (event->y() >= bh || event->y() <= th)
 				setControlsVisible(true);
 		}

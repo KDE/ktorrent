@@ -65,10 +65,14 @@ namespace kt
 					{
 						writeData(data);
 						waiting_for_data = false;
+						stateChanged(PLAYING);
 					}
 				}
 				else
+				{
 					Out(SYS_MPL|LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable()  << " (need " << min_amount_needed <<  ")" << endl;
+					stateChanged(BUFFERING);
+				}
 			}
 			else
 				endOfData();
@@ -100,12 +104,18 @@ namespace kt
 			else
 			{
 				writeData(data);
+				if (waiting_for_data)
+				{
+					waiting_for_data = false;
+					stateChanged(PLAYING);
+				}
 			}
 		}
 		else
 		{
 			Out(SYS_MPL|LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable()  << " (need " << min_amount_needed <<  ")" << endl;
 			waiting_for_data = true;
+			stateChanged(BUFFERING);
 		}
 	}
 

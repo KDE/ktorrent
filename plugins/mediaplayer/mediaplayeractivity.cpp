@@ -18,6 +18,7 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
 #include <QBoxLayout>
+#include <QLabel>
 #include <kicon.h>
 #include <klocale.h>
 #include <kaction.h>
@@ -77,7 +78,7 @@ namespace kt
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 		connect(media_player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
-		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
+		connect(media_player,SIGNAL(openVideo(bool)),this,SLOT(openVideo(bool)));
 		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
 		connect(media_player,SIGNAL(aboutToFinish()),this,SLOT(aboutToFinishPlaying()));
 		connect(play_list,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
@@ -140,7 +141,7 @@ namespace kt
 		tb->addAction(show_video_action);
 	}
 
-	void MediaPlayerActivity::openVideo()
+	void MediaPlayerActivity::openVideo(bool tab_only)
 	{
 		QString path = media_player->getCurrentSource().path();
 		int idx = path.lastIndexOf(bt::DirSeparator());
@@ -156,6 +157,8 @@ namespace kt
 			tabs->setTabText(idx,path);
 			tabs->setCurrentIndex(idx);
 			tabs->setTabBarHidden(false);
+			if (!tab_only)
+				video->setVideoEnabled(true);
 		}
 		else
 		{
@@ -165,6 +168,8 @@ namespace kt
 			tabs->setTabToolTip(idx,i18n("Movie player"));
 			tabs->setCurrentIndex(idx);
 			tabs->setTabBarHidden(false);
+			if (!tab_only)
+				video->setVideoEnabled(true);
 		}
 		
 		if (!show_video_action->isChecked())
@@ -187,7 +192,7 @@ namespace kt
 	void MediaPlayerActivity::showVideo(bool on)
 	{
 		if (on)
-			openVideo();
+			openVideo(true);
 		else
 			closeVideo();
 	}
