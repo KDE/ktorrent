@@ -31,6 +31,7 @@
 #include "core.h"
 #include "gui.h"
 #include "torrentcreatordlg.h"
+#include <util/error.h>
 
 
 using namespace bt;
@@ -338,14 +339,24 @@ namespace kt
 			webseeds.append(KUrl(item->text()));
 		}
 		
-		mktor = new bt::TorrentCreator(url.toLocalFile(),trackers,webseeds,chunk_size,name,
+		try
+		{
+			mktor = new bt::TorrentCreator(url.toLocalFile(),trackers,webseeds,chunk_size,name,
 									   m_comments->text(),m_private->isChecked(),m_dht->isChecked());
-		
-		connect(mktor,SIGNAL(finished()),this,SLOT(hashCalculationDone()),Qt::QueuedConnection);
-		mktor->start();
-		setProgressBarEnabled(true);
-		update_timer.start(1000);
-		m_progress->setMaximum(mktor->getNumChunks());
+			
+			connect(mktor,SIGNAL(finished()),this,SLOT(hashCalculationDone()),Qt::QueuedConnection);
+			mktor->start();
+			setProgressBarEnabled(true);
+			update_timer.start(1000);
+			m_progress->setMaximum(mktor->getNumChunks());
+		}
+		catch (bt::Error & err)
+		{
+			delete mktor;
+			mktor = 0;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Error: " << err.toString() << endl;
+			gui->errorMsg(err.toString());
+		}
 	}
 
 	void TorrentCreatorDlg::hashCalculationDone()
