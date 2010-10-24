@@ -277,7 +277,7 @@ namespace kt
 		if (!Settings::showPopups())
 			return;
 		
-		QString msg = i18n("Cannot start <b>%1</b> : <br>",tc->getDisplayName());
+		QString msg = i18n("Cannot start <b>%1</b>: <br>",tc->getDisplayName());
 		switch (reason)
 		{
 		case bt::QM_LIMITS_REACHED:
