@@ -47,10 +47,10 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		MediaPlayerActivity(CoreInterface* core,QWidget* parent);
+		MediaPlayerActivity(CoreInterface* core,KActionCollection* ac,QWidget* parent);
 		virtual ~MediaPlayerActivity();
 		
-		void setupActions(KActionCollection* ac);
+		void setupActions();
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
 		
@@ -95,6 +95,7 @@ namespace kt
 		KAction* clear_action;
 		KAction* add_media_action;
 		KAction* status_action;
+		KActionCollection* ac;
 	};
 
 }

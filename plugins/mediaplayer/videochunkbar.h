@@ -37,6 +37,9 @@ namespace kt
 		VideoChunkBar(const MediaFileRef & mfile,QWidget* parent);
 		virtual ~VideoChunkBar();
 		
+		/// Set the media file 
+		void setMediaFile(const MediaFileRef & mf);
+		
 		/// Get the bitset
 		virtual const bt::BitSet& getBitSet() const;
 		

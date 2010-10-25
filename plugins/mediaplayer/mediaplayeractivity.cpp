@@ -44,8 +44,8 @@ using namespace bt;
 
 namespace kt
 {
-	MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core,QWidget* parent) 
-		: Activity(i18n("Media Player"),"applications-multimedia",90,parent)
+	MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core,KActionCollection* ac,QWidget* parent) 
+		: Activity(i18n("Media Player"),"applications-multimedia",90,parent),ac(ac)
 	{
 		action_flags = 0;
 		video = 0;
@@ -94,7 +94,7 @@ namespace kt
 			setVideoFullScreen(false);
 	}
 	
-	void MediaPlayerActivity::setupActions(KActionCollection* ac)
+	void MediaPlayerActivity::setupActions()
 	{
 		play_action = new KAction(KIcon("media-playback-start"),i18n("Play"),this);
 		connect(play_action,SIGNAL(triggered()),this,SLOT(play()));
@@ -127,6 +127,11 @@ namespace kt
 		clear_action = new KAction(KIcon("edit-clear-list"),i18n("Clear Playlist"),this);
 		connect(clear_action,SIGNAL(triggered()),play_list,SLOT(clearPlayList()));
 		ac->addAction("clear_play_list",clear_action);
+		
+		KAction* tfs = new KAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"),this);
+		tfs->setShortcut(Qt::Key_F);
+		tfs->setCheckable(true);
+		ac->addAction("video_fullscreen", tfs);
 		
 		QToolBar* tb = play_list->mediaToolBar();
 		tb->addAction(add_media_action);
@@ -162,7 +167,7 @@ namespace kt
 		}
 		else
 		{
-			video = new VideoWidget(media_player,0);
+			video = new VideoWidget(media_player,ac,0);
 			connect(video,SIGNAL(toggleFullScreen(bool)),this,SLOT(setVideoFullScreen(bool)));
 			int idx = tabs->addTab(video,KIcon("video-x-generic"),path);
 			tabs->setTabToolTip(idx,i18n("Movie player"));

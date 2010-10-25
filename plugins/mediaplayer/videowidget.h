@@ -26,11 +26,13 @@
 #include <Phonon/MediaObject>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
+#include <kaction.h>
 
 class QAction;
 class QLabel;
 class QStackedWidget;
 class KToolBar;
+class KActionCollection;
 
 namespace kt
 {
@@ -47,7 +49,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		VideoWidget(MediaPlayer* player,QWidget* parent);
+		VideoWidget(MediaPlayer* player,KActionCollection* ac,QWidget* parent);
 		virtual ~VideoWidget();
 		
 		/**
@@ -68,12 +70,11 @@ namespace kt
 		
 	private slots:
 		void play();
-		void pause();
 		void stop();
 		void setControlsVisible(bool on);
-		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void timerTick(qint64 time);
 		void playing(const MediaFileRef & mfile);
+		void enableActions(unsigned int flags);
 		
 	signals:
 		void toggleFullScreen(bool on);
@@ -88,10 +89,9 @@ namespace kt
 		MediaPlayer* player;
 		Phonon::SeekSlider* slider;
 		KToolBar* tb;
+		KAction* play_action;
+		KAction* stop_action;
 		QLabel* time_label;
-		QAction* play_act;
-		QAction* pause_act;
-		QAction* stop_act;
 		Phonon::VolumeSlider* volume;
 		VideoChunkBar* chunk_bar;
 		bool fullscreen;

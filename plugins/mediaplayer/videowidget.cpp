@@ -27,6 +27,7 @@
 #include <KIcon>
 #include <KLocale>
 #include <KToggleFullScreenAction>
+#include <KActionCollection>
 #include <Phonon/Path>
 #include <Phonon/AudioOutput>
 #include <Phonon/Global>
@@ -47,7 +48,7 @@ namespace kt
 {
 
 
-	VideoWidget::VideoWidget(MediaPlayer* player,QWidget* parent)
+	VideoWidget::VideoWidget(MediaPlayer* player,KActionCollection* ac,QWidget* parent)
 		: QWidget(parent),player(player),chunk_bar(0),fullscreen(false),
 		screensaver_cookie(0),powermanagement_cookie(0)
 	{
@@ -67,15 +68,20 @@ namespace kt
 		
 		QHBoxLayout* hlayout = new QHBoxLayout(0);
 		
+		play_action = new KAction(KIcon("media-playback-start"),i18n("Play"),this);
+		connect(play_action,SIGNAL(triggered()),this,SLOT(play()));
+		
+		stop_action = new KAction(KIcon("media-playback-stop"),i18n("Stop"),this);
+		connect(stop_action,SIGNAL(triggered()),this,SLOT(stop()));
+		
 		tb = new KToolBar(this);
 		tb->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		play_act = tb->addAction(KIcon("media-playback-start"),i18n("Play"),this,SLOT(play()));
-		pause_act = tb->addAction(KIcon("media-playback-pause"),i18n("Pause"),this,SLOT(pause()));
-		stop_act = tb->addAction(KIcon("media-playback-stop"),i18n("Stop"),this,SLOT(stop()));
-		QAction* tfs = tb->addAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"));
-		tfs->setShortcut(Qt::Key_F);
-		tfs->setCheckable(true);
+		tb->addAction(play_action);
+		tb->addAction(ac->action("media_pause"));
+		tb->addAction(stop_action);
+		QAction* tfs = ac->action("video_fullscreen");
 		connect(tfs,SIGNAL(toggled(bool)),this,SIGNAL(toggleFullScreen(bool)));
+		tb->addAction(tfs);
 		
 		slider = new Phonon::SeekSlider(this);
 		slider->setMediaObject(player->media0bject());
@@ -101,13 +107,9 @@ namespace kt
 		vlayout->addWidget(stack);
 		vlayout->addLayout(hlayout);
 		
-		connect(player->media0bject(),SIGNAL(stateChanged(Phonon::State,Phonon::State)),
-				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
-		onStateChanged(player->media0bject()->state(),Phonon::StoppedState);
-		
 		connect(player->media0bject(),SIGNAL(tick(qint64)),this,SLOT(timerTick(qint64)));
 		connect(player,SIGNAL(playing(MediaFileRef)),this,SLOT(playing(MediaFileRef)));
-		
+		connect(player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
 		inhibitScreenSaver(true);
 	}
 
@@ -141,15 +143,11 @@ namespace kt
 		player->media0bject()->play();
 	}
 	
-	void VideoWidget::pause()
-	{
-		player->media0bject()->pause();
-	}
-	
 	void VideoWidget::stop()
 	{
 		player->media0bject()->stop();
 	}
+
 	
 	void VideoWidget::setControlsVisible(bool on)
 	{
@@ -162,7 +160,7 @@ namespace kt
 	
 	bool VideoWidget::eventFilter(QObject* dst, QEvent* event)
 	{
-		if (event->type() == QEvent::MouseMove && fullscreen)
+		if (fullscreen && event->type() == QEvent::MouseMove)
 			mouseMoveEvent((QMouseEvent*)event);
 		
 		return true;
@@ -206,35 +204,6 @@ namespace kt
 		fullscreen = on;
 		setMouseTracking(fullscreen);
 	}
-
-	void VideoWidget::onStateChanged(Phonon::State cur,Phonon::State old)
-	{
-		Q_UNUSED(old);
-		
-		switch (cur)
-		{
-			case Phonon::LoadingState:
-				break;
-			case Phonon::ErrorState:
-			case Phonon::StoppedState:
-				play_act->setEnabled(true);
-				pause_act->setEnabled(false);
-				stop_act->setEnabled(false);
-				break;
-			case Phonon::PlayingState:
-				play_act->setEnabled(false);
-				pause_act->setEnabled(true);
-				stop_act->setEnabled(true);
-				break;
-			case Phonon::BufferingState:
-				break; 
-			case Phonon::PausedState:
-				play_act->setEnabled(true);
-				pause_act->setEnabled(false);
-				stop_act->setEnabled(true);
-				break;
-		}
-	}
 	
 	void VideoWidget::inhibitScreenSaver(bool on) 
 	{
@@ -273,10 +242,19 @@ namespace kt
 	
 	void VideoWidget::playing(const MediaFileRef& mfile)
 	{
-		if (fullscreen && player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream)
+		bool stream = player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream;
+		if (fullscreen && stream)
 			chunk_bar->setVisible(slider->isVisible());
 		else
-			chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
+			chunk_bar->setVisible(stream);
+		
+		chunk_bar->setMediaFile(mfile);
+	}
+
+	void VideoWidget::enableActions(unsigned int flags)
+	{
+		play_action->setEnabled(flags & kt::MEDIA_PLAY);
+		stop_action->setEnabled(flags & kt::MEDIA_STOP);
 	}
 
 }

@@ -31,8 +31,18 @@ namespace kt
 	VideoChunkBar::VideoChunkBar(const kt::MediaFileRef& mf, QWidget* parent)
 		: ChunkBar(parent),mfile(mf),current_chunk(0)
 	{
+		setMediaFile(mf);
+	}
+	
+	VideoChunkBar::~VideoChunkBar()
+	{
+	}
+	
+	void VideoChunkBar::setMediaFile(const kt::MediaFileRef& mf)
+	{
+		mfile = mf;
 		MediaFile::Ptr file = mfile.mediaFile();
-		if (file)
+		if (file && !file->fullyAvailable())
 		{
 			bt::TorrentFileStream::Ptr stream = file->stream().toStrongRef();
 			if (stream)
@@ -41,10 +51,7 @@ namespace kt
 			updateBitSet();
 		}
 	}
-	
-	VideoChunkBar::~VideoChunkBar()
-	{
-	}
+
 	
 	void VideoChunkBar::updateBitSet()
 	{

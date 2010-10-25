@@ -32,8 +32,8 @@ using namespace bt;
 namespace kt
 {
 
-	MediaPlayer::MediaPlayer(QObject* parent)
-			: QObject(parent)
+	MediaPlayer::MediaPlayer(QObject* parent) 
+		: QObject(parent),buffering(false),resume_when_buffering_finished(true)
 	{
 		media = new Phonon::MediaObject(this);
 		audio = new Phonon::AudioOutput(Phonon::MusicCategory, this);
@@ -60,17 +60,26 @@ namespace kt
 	void MediaPlayer::resume()
 	{
 		if (paused())
-			media->play();
+		{
+			if (buffering)
+				resume_when_buffering_finished = true;
+			else
+				media->play();
+		}
 	}	
 
 	void MediaPlayer::play(kt::MediaFileRef file)
 	{
 		if (media->state() == Phonon::PausedState)
 		{
-			media->play();
+			if (buffering)
+				resume_when_buffering_finished = true;
+			else
+				media->play();
 		}
 		else
 		{
+			buffering = false;
 			Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: playing " << file.path() << endl;
 			Phonon::MediaSource ms = file.createMediaSource(this); 
 			media->setCurrentSource(ms);
@@ -94,13 +103,38 @@ namespace kt
 		
 	void MediaPlayer::pause()
 	{
-		media->pause();
+		if (!buffering)
+		{
+			media->pause();
+		}
+		else
+		{
+			resume_when_buffering_finished = false;
+			if (media->state() == Phonon::PausedState)
+			{
+				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: paused" << endl;
+				int flags = MEDIA_PLAY|MEDIA_STOP;
+				if (history.count() > 1)
+					flags |= MEDIA_PREV;
+				
+				enableActions(flags);
+			}
+		}
 	}
 		
 	void MediaPlayer::stop()
 	{
-		media->stop();
-		media->clear();
+		if (buffering)
+		{
+			media->stop();
+			media->clear();
+			buffering = false;
+		}
+		else
+		{
+			media->stop();
+			media->clear();
+		}
 	}
 	
 	MediaFileRef MediaPlayer::prev()
@@ -163,12 +197,15 @@ namespace kt
 				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: buffering" << endl;
 				break; 
 			case Phonon::PausedState:
-				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: paused" << endl;
-				flags = MEDIA_PLAY|MEDIA_STOP;
-				if (history.count() > 1)
-					flags |= MEDIA_PREV;
-				
-				enableActions(flags);
+				if (!buffering)
+				{
+					Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: paused" << endl;
+					flags = MEDIA_PLAY|MEDIA_STOP;
+					if (history.count() > 1)
+						flags |= MEDIA_PREV;
+					
+					enableActions(flags);
+				}
 				break;
 			case Phonon::ErrorState:
 				Out(SYS_MPL|LOG_IMPORTANT) << "MediaPlayer: error " << media->errorString() << endl;
@@ -184,9 +221,20 @@ namespace kt
 	void MediaPlayer::streamStateChanged(MediaFileStream::StreamState state)
 	{
 		if (state == MediaFileStream::BUFFERING)
-			;
-		else
-			;
+		{
+			buffering = true;
+			if (media->state() == Phonon::PlayingState || media->state() == Phonon::BufferingState)
+				resume_when_buffering_finished = true;
+			else
+				resume_when_buffering_finished = false;
+			media->pause();
+		}
+		else if (buffering)
+		{
+			buffering = false;
+			if (resume_when_buffering_finished)
+				media->play();
+		}
 	}
 
 	
