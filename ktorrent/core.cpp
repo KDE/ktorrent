@@ -45,6 +45,7 @@
 #include <util/functions.h>
 #include <util/waitjob.h>
 #include <bcodec/bencoder.h>
+#include <bcodec/bnode.h>
 #include <plugin/pluginmanager.h>
 #include <groups/groupmanager.h>
 #include <groups/group.h>
@@ -1456,10 +1457,23 @@ namespace kt
 		BEncoderBufferOutput* out = new BEncoderBufferOutput(tmp);
 		BEncoder enc(out);
 		enc.beginDict();
-		if (!mlink.tracker().isEmpty())
+		KUrl::List trs = mlink.trackers();
+		if (trs.count())
 		{
 			enc.write("announce");
-			enc.write(mlink.tracker());
+			enc.write(trs.first().prettyUrl());
+			if (trs.count() > 1)
+			{
+				enc.write("announce-list");
+				enc.beginList();
+				foreach (const KUrl &tracker,trs)
+				{
+					enc.beginList();
+					enc.write(tracker.prettyUrl());
+					enc.end();
+				}
+				enc.end();
+			}
 		}
 		enc.write("info");
 		out->write(data.data(),data.size());
