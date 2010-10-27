@@ -36,6 +36,7 @@
 #include <QFile>
 #include <bcodec/bencoder.h>
 #include <peer/authenticationmonitor.h>
+#include <boost/concept_check.hpp>
 
 using namespace kt;
 using namespace bt;
@@ -136,18 +137,18 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
 	{
 		BEncoder enc(&fptr);
 		enc.beginDict();
-		QStringList trs = mlink.trackers();
+		KUrl::List trs = mlink.trackers();
 		if (trs.count())
 		{
 			enc.write("announce");
-			enc.write(trs.first());
-			if (trs.count()>1){
+			enc.write(trs.first().prettyUrl());
+			if (trs.count() > 1)
+			{
 				enc.write("announce-list");
 				enc.beginList();
-				QList<QString>::const_iterator it = trs.begin();
-				QList<QString>::const_iterator end = trs.end();
-				for(;it!=end;it++){
-					enc.write((*it));
+				foreach (const KUrl & u,trs)
+				{
+					enc.write(u.prettyUrl());
 				}
 				enc.end();
 			}	
