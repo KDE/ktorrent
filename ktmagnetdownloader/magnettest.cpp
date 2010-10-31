@@ -36,7 +36,7 @@
 #include <QFile>
 #include <bcodec/bencoder.h>
 #include <peer/authenticationmonitor.h>
-#include <boost/concept_check.hpp>
+
 
 using namespace kt;
 using namespace bt;

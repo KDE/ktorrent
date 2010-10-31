@@ -10,10 +10,17 @@ class TrackerGroup:
 	def __init__(self,url):
 		self.url = url
 		self.ref_count = 0
+		self.cache = {}
 		
 	def isMember(self,info_hash):
-		tor = KTorrent.torrent(info_hash)
-		return self.url in tor.trackers()
+		if info_hash in self.cache:
+			return self.cache[info_hash]
+		else:
+			tor = KTorrent.torrent(info_hash)
+			ret = self.url in tor.trackers()
+			self.cache[info_hash] = ret
+			return ret
+			
 	
 	def ref(self):
 		self.ref_count += 1
