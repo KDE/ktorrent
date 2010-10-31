@@ -137,10 +137,10 @@ namespace kt
 			return;
 		
 		QString tip = i18n("<table>"
-				"<tr><td>Download&nbsp;speed:</td><td><font color='#1c9a1c'>%1</font></td></tr>"
-				"<tr><td>Upload&nbsp;speed:</td><td><font color='#990000'>%2</font></td></tr>"
-				"<tr><td>Received:</td><td><font color='#1c9a1c'>%3</font></td></tr>"
-				"<tr><td>Transmitted:</td><td><font color='#990000'>%4</font></td></tr>"
+				"<tr><td>Download&nbsp;speed:</td><td><b>%1</b></td></tr>"
+				"<tr><td>Upload&nbsp;speed:</td><td><b>%2</b></td></tr>"
+				"<tr><td>Received:</td><td><b>%3</b></td></tr>"
+				"<tr><td>Transmitted:</td><td><b>%4</b></td></tr>"
 				"</table>",
 				BytesPerSecToString((double)stats.download_speed),
 				BytesPerSecToString((double)stats.upload_speed),

@@ -26,6 +26,7 @@ Changes in 4.1:
 - Add video streaming support (234212)
 - Make ratio configurable at which the share ratio becomes green (254144)
 - Don't show an error message for each duplicate tracker which is added
+- Stop using hardcoded colors in system tray tooltip (255732)
 
 Changes in 4.0.5:
 - Fix crash due to uncaught exception when creating torrent (255020)
