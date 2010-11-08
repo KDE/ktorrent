@@ -84,7 +84,6 @@ namespace kt
 	void QueueManager::clear()
 	{
 		exiting = true;
-		Uint32 nd = downloads.count();
 		suspended_torrents.clear();
 		qDeleteAll(downloads);
 		downloads.clear();

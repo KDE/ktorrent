@@ -8,7 +8,6 @@ set(ktorrent_SRC
 	app.cpp 
 	torrentactivity.cpp
 	statusbar.cpp 
-	scanlistener.cpp
 	trayicon.cpp
 	ipfilterlist.cpp
 	ipfilterwidget.cpp

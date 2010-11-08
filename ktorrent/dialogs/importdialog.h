@@ -23,7 +23,6 @@
 
 #include <QDialog>
 #include <util/constants.h>
-#include <datachecker/datacheckerlistener.h>
 #include "ui_importdialog.h"
 
 class KUrl;
@@ -33,6 +32,8 @@ namespace bt
 {
 	class BitSet;
 	class Torrent;
+	class DataChecker;
+	class DataCheckerThread;
 }
 
 
@@ -40,7 +41,7 @@ namespace kt
 {
 	class CoreInterface;
 	
-	class ImportDialog : public QDialog, public Ui_ImportDialog, public bt::DataCheckerListener
+	class ImportDialog : public QDialog, public Ui_ImportDialog
 	{
 		Q_OBJECT
 	
@@ -51,6 +52,11 @@ namespace kt
 	public slots:
 		void onImport();
 		void onTorrentGetReult(KJob* j);
+		
+	private slots:
+		void progress(quint32 num,quint32 total);
+		void finished();
+		void cancelImport();
 	
 	private:
 		void writeIndex(const QString & file,const bt::BitSet & chunks);
@@ -60,16 +66,14 @@ namespace kt
 		void saveFileInfo(const QString & file_info_file,QList<bt::Uint32> & dnd);
 		void saveFileMap(const bt::Torrent & tor,const QString & tor_dir);
 		void saveFileMap(const QString & tor_dir,const QString & ddir);
-		
-		virtual void progress(bt::Uint32 num,bt::Uint32 total);
-		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_found,bt::Uint32 num_downloaded,bt::Uint32 num_not_downloaded);
-		virtual void finished();
-		virtual void error(const QString& err);
-		
-		void import(bt::Torrent & tor);
+		void import();
 		
 	private:
 		CoreInterface* core;
+		bt::DataChecker* dc;
+		bt::DataCheckerThread* dc_thread;
+		bt::Torrent tor;
+		bool canceled;
 	};
 }
 

@@ -45,7 +45,6 @@
 #include "dialogs/addpeersdlg.h"
 #include "viewselectionmodel.h"
 #include "viewdelegate.h"
-#include "scanlistener.h"
 #include "propertiesextender.h"
 
 using namespace bt;
@@ -396,28 +395,6 @@ namespace kt
 			core->startUpdateTimer(); // make sure update timer of core is running
 		}
 	}
-
-	void View::dataScanStarted(ScanListener* listener)
-	{
-		Extender* ext = listener->createExtender();
-		if (ext)
-		{
-			ext->hide();
-			delegate->extend(listener->torrent(),ext);
-			data_scan_extenders.insert(listener->torrent(),ext);
-		}
-	}
-	
-	void View::dataScanClosed(ScanListener* listener)
-	{
-		QMap<bt::TorrentInterface*,Extender*>::iterator itr = data_scan_extenders.find(listener->torrent());
-		if (itr != data_scan_extenders.end())
-		{
-			delegate->closeExtender(listener->torrent(),itr.value());
-			data_scan_extenders.erase(itr);
-		}
-	}
-
 
 	void View::showMenu(const QPoint & pos)
 	{

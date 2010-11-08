@@ -31,7 +31,6 @@ class KAction;
 namespace kt
 {
 	class MagnetView;
-	class ScanListener;
 	class GUI;
 	class Core;
 	class View;
@@ -69,12 +68,6 @@ namespace kt
 		
 		/// Update the activity
 		void update();
-		
-		/// A data scan was started
-		void dataScanStarted(ScanListener* listener);
-		
-		/// A data scan was closed
-		void dataScanClosed(ScanListener* listener);
 		
 		/// Setup all actions
 		void setupActions();

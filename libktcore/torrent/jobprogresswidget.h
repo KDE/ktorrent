@@ -18,16 +18,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef KT_PROPERTIESEXTENDER_H
-#define KT_PROPERTIESEXTENDER_H
+
+#ifndef KT_JOBPROGRESSWIDGET_H
+#define KT_JOBPROGRESSWIDGET_H
 
 #include <QWidget>
-#include <view/viewdelegate.h>
+#include <KJob>
+#include <ktcore_export.h>
+#include <torrent/job.h>
 #include <gui/extender.h>
-#include "ui_propertiesextender.h"
 
+class QProgressBar;
+class QLabel;
 
-namespace bt
+namespace bt 
 {
 	class TorrentInterface;
 }
@@ -35,23 +39,50 @@ namespace bt
 namespace kt 
 {
 	/**
-		Extender which shows properties about a torrent.
-	*/
-	class PropertiesExtender : public Extender,public Ui_PropertiesExtender
+	 * Base class for widgets displaying the progress of a job
+	 */
+	class KTCORE_EXPORT JobProgressWidget : public Extender
 	{
 		Q_OBJECT
 	public:
-		PropertiesExtender(bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~PropertiesExtender();
+		JobProgressWidget(bt::Job* job,QWidget* parent);
+		virtual ~JobProgressWidget();
 		
-	public slots:
-		void moveOnCompletionEnabled(bool on);
-		void buttonClicked(QAbstractButton*);
+		/// Update the description
+		virtual void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2) = 0;
 		
-	private:
-		void apply();
+		/// Show an informational message
+		virtual void infoMessage(const QString& plain, const QString& rich) = 0;
+		
+		/// Show a warning message
+		virtual void warning(const QString& plain, const QString& rich) = 0;
+		
+		/// The total amount of unit has changed
+		virtual void totalAmount(KJob::Unit unit, qulonglong amount) = 0;
+		
+		/// The processed amount has changed
+		virtual void processedAmount(KJob::Unit unit, qulonglong amount) = 0;
+		
+		/// The percentage has changed
+		virtual void percent(long unsigned int percent) = 0;
+		
+		/// The speed has changed
+		virtual void speed(long unsigned int value) = 0;
+		
+		/// Emit the close request so the ViewDelegate will clean things up
+		void emitCloseRequest();
+		
+		/// Wether or not to automatically remove the widget
+		bool automaticRemove() const {return automatic_remove;}
+		
+	protected:
+		void setAutomaticRemove(bool ar) {automatic_remove = ar;}
+		
+	protected:
+		bt::Job* job;
+		bool automatic_remove;
 	};
 
 }
 
-#endif // KT_PROPERTIESEXTENDER_H
+#endif // KT_JOBPROGRESSWIDGET_H

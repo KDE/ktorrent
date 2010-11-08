@@ -24,6 +24,9 @@ set(libktorrent_SRC
 	torrent/torrentfilelistmodel.cpp
 	torrent/chunkbar.cpp 
 	torrent/chunkbarrenderer.cpp
+	torrent/jobtracker.cpp
+	torrent/jobprogresswidget.cpp 
+	torrent/basicjobprogresswidget.cpp 
 	
 	groups/group.cpp
 	groups/torrentgroup.cpp
@@ -39,6 +42,7 @@ set(libktorrent_SRC
 	
 	gui/centralwidget.cpp
 	gui/tabbarwidget.cpp
+	gui/extender.cpp
 	
 	plugin/pluginmanager.cpp
 	plugin/pluginactivity.cpp
@@ -46,7 +50,7 @@ set(libktorrent_SRC
 	ktorrent.kcfg
 )
 
-# set(libktorrent_UI pluginmanagerwidget.ui )
+set(libktorrent_UI torrent/basicjobprogresswidget.ui )
 
 kde4_add_ui_files(libktorrent_SRC ${libktorrent_UI})
 kde4_add_kcfg_files(libktorrent_SRC settings.kcfgc)

@@ -25,6 +25,7 @@
 #include <interfaces/guiinterface.h>
 #include <ksharedconfig.h>
 #include <torrent/queuemanager.h>
+#include <torrent/jobtracker.h>
 
 class KActionCollection;
 class QTabWidget;
@@ -40,7 +41,7 @@ namespace kt
 	class Group;
 	class TorrentActivity;
 
-	class ViewManager : public QObject
+	class ViewManager : public JobTracker
 	{
 		Q_OBJECT
 	public:
@@ -83,12 +84,6 @@ namespace kt
 		/// Remove a view
 		void removeView(View* view);
 		
-		/// A data scan was started
-		void dataScanStarted(ScanListener* listener);
-
-		/// A data scan was closed
-		void dataScanClosed(ScanListener* listener);
-		
 	public slots:
 		void onCurrentTabChanged(QWidget* tab);
 		void onCurrentGroupChanged(kt::Group* g);
@@ -124,6 +119,11 @@ namespace kt
 		
 		/// Select all torrents in the current view
 		void selectAll();
+		
+	protected:
+		virtual void jobRegistered(bt::Job* j);
+		virtual void jobUnregistered(bt::Job* j);
+		virtual JobProgressWidget* createJobWidget(bt::Job* job);
 		
 		
 	private slots:

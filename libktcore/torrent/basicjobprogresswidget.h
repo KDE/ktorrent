@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2009 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,46 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_SCANEXTENDER_H
-#define KT_SCANEXTENDER_H
 
-#include <QWidget>
-#include <QTimer>
+
+#ifndef KT_BASICJOBPROGRESSWIDGET_H
+#define KT_BASICJOBPROGRESSWIDGET_H
+
 #include <torrent/jobprogresswidget.h>
-#include "ui_scanextender.h"
-
-namespace bt
-{
-	class TorrentInterface;
-}
+#include "ui_basicjobprogresswidget.h"
 
 
 namespace kt 
 {
-	
 	/**
-		Extender widget which displays the results of a data scan
-	*/
-	class ScanExtender : public JobProgressWidget,public Ui_ScanExtender
+		Basic JobProgressWidget, showing a progress bar and the description
+	 */
+	class BasicJobProgressWidget : public kt::JobProgressWidget,public Ui_BasicJobProgressWidget
 	{
 		Q_OBJECT
 	public:
-		ScanExtender(bt::Job* job,QWidget* parent);
-		virtual ~ScanExtender();
+		BasicJobProgressWidget(bt::Job* job,QWidget* parent);
+		virtual ~BasicJobProgressWidget();
 		
 		virtual void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2);
 		virtual void infoMessage(const QString& plain, const QString& rich);
 		virtual void warning(const QString& plain, const QString& rich);
+		virtual void totalAmount(KJob::Unit unit, qulonglong amount);
+		virtual void processedAmount(KJob::Unit unit, qulonglong amount);
 		virtual void percent(long unsigned int percent);
 		virtual void speed(long unsigned int value);
-		virtual void processedAmount(KJob::Unit unit, qulonglong amount);
-		virtual void totalAmount(KJob::Unit unit, qulonglong amount);
-
-	private slots:
-		void cancelPressed();
-		void finished(KJob* j);
-		void closeRequested();
 	};
+
 }
 
-#endif // KT_SCANEXTENDER_H
+#endif // KT_BASICJOBPROGRESSWIDGET_H

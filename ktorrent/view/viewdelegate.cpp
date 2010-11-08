@@ -27,17 +27,12 @@
 #include <KLocale>
 #include <KApplication>
 #include <QVBoxLayout>
+#include <gui/extender.h>
 
 
 namespace kt
 {
-	Extender::Extender(bt::TorrentInterface* tc, QWidget* parent): QWidget(parent),tc(tc)
-	{
-	}
-
-	Extender::~Extender()
-	{
-	}
+	
 	
 	//////////////////////////
 	

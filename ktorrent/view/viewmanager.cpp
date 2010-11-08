@@ -28,11 +28,14 @@
 #include <klocale.h>
 #include <kmenu.h>
 #include <kshortcut.h>
+#include <kfiledialog.h>
 #include <groups/group.h>
 #include <util/log.h>
 #include <util/indexofcompare.h>
 #include <groups/groupmanager.h>
 #include <torrent/jobqueue.h>
+#include <torrent/jobprogresswidget.h>
+#include <torrent/torrentcontrol.h>
 #include <interfaces/functions.h>
 #include "gui.h"
 #include "view.h"
@@ -43,8 +46,9 @@
 #include "settings.h"
 #include "torrentactivity.h"
 #include "dialogs/speedlimitsdlg.h"
-#include <kfiledialog.h>
-#include <kio/job.h>
+#include "viewdelegate.h"
+#include "scanextender.h"
+
 
 
 using namespace bt;
@@ -52,7 +56,7 @@ using namespace bt;
 namespace kt
 {
 	ViewManager::ViewManager(Group* all_group,GUI* gui,Core* core,TorrentActivity* ta) 
-		: QObject(ta),gui(gui),core(core),current(0),all_group(all_group),ta(ta)
+		: JobTracker(ta),gui(gui),core(core),current(0),all_group(all_group),ta(ta)
 	{
 	}
 
@@ -377,18 +381,35 @@ namespace kt
 		updateActions();
 	}
 	
-	
-	void ViewManager::dataScanStarted(ScanListener* listener)
+	void ViewManager::jobRegistered(bt::Job* j)
 	{
 		foreach (View* v,views)
-			v->dataScanStarted(listener);
+		{
+			JobProgressWidget* w = createJobWidget(j);
+			v->viewDelegate()->extend(j->torrent(),w);
+		}
 	}
 	
-	void ViewManager::dataScanClosed(ScanListener* listener)
+	void ViewManager::jobUnregistered(bt::Job* j)
 	{
-		foreach (View* v,views)
-			v->dataScanClosed(listener);
+		JobProgessWidgetList & jpw = widgets[j];
+		foreach (JobProgressWidget* w,jpw)
+			if (w->automaticRemove())
+				w->emitCloseRequest();
 	}
+
+	JobProgressWidget* ViewManager::createJobWidget(Job* job)
+	{
+		if (job->torrentStatus() == bt::CHECKING_DATA)
+		{
+			ScanExtender* ext = new ScanExtender(job,0);
+			widgets[job].append(ext);
+			return ext;
+		}
+		else
+			return kt::JobTracker::createJobWidget(job);
+	}
+
 	
 	void ViewManager::updateActions()
 	{

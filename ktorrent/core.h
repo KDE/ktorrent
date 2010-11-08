@@ -39,7 +39,6 @@ namespace bt
 namespace kt
 {
 	class MagnetModel;
-	class ScanListener;
 	class GUI;
 	class PluginManager;
 	class GroupManager;
@@ -143,9 +142,10 @@ namespace kt
 		
 		/**
 		 * Do a data check on a torrent
-		 * @param tc 
+		 * @param tc The torrent
+		 * @param auto_import Is this an automatic import
 		 */
-		void doDataCheck(bt::TorrentInterface* tc);
+		void doDataCheck(bt::TorrentInterface* tc,bool auto_import = false);
 		
 		///Fires when disk space is running low
 		void onLowDiskSpace(bt::TorrentInterface* tc, bool stopped);
@@ -244,7 +244,6 @@ namespace kt
 		void emitCorruptedData(bt::TorrentInterface* tc);
 		void autoCheckData(bt::TorrentInterface* tc);
 		void checkForKDE3Torrents();
-		void closeScanListener(ScanListener* sl);
 		void delayedRemove(bt::TorrentInterface* tc);
 		void delayedStart();
 
@@ -261,7 +260,6 @@ namespace kt
 		QMap<KJob*,KUrl> custom_save_locations; // map to store save locations
 		QMap<KUrl,QString> add_to_groups; // Map to keep track of which group to add a torrent to
 		int sleep_suppression_cookie;
-		QMap<bt::TorrentInterface*,ScanListener*> active_scans;
 		QMap<bt::TorrentInterface*,bool> delayed_removal;
 		bool exiting;
 	};

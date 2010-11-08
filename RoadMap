@@ -1,5 +1,6 @@
 4.2:
-- 
+- Scanfolder: configurable loaded directory
+- Scanfolder: group per directory
 
 4.1:
 - Properties dialog

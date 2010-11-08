@@ -59,7 +59,6 @@
 #include "dialogs/missingfilesdlg.h"
 #include "gui.h"
 #include "dialogs/torrentmigratordlg.h"
-#include "scanlistener.h"
 #include "tools/magnetmodel.h"
 
 
@@ -326,7 +325,7 @@ namespace kt
 		if (tc->hasExistingFiles())
 		{
 			if (!skip_check)
-				doDataCheck(tc);
+				doDataCheck(tc,true);
 			else
 				tc->markExistingFilesAsDownloaded();
 		}
@@ -786,11 +785,6 @@ namespace kt
 				gui->errorMsg(e.toString());
 			}
 			
-			// cleanup potential data scans
-			QMap<bt::TorrentInterface*,ScanListener*>::iterator i = active_scans.find(tc);
-			if (i != active_scans.end())
-				closeScanListener(i.value());
-			
 			torrentRemoved(tc);
 			gman->torrentRemoved(tc);
 			qman->torrentRemoved(tc);
@@ -841,11 +835,6 @@ namespace kt
 			{
 				gui->errorMsg(e.toString());
 			}
-			
-			// cleanup potential data scans
-			QMap<bt::TorrentInterface*,ScanListener*>::iterator i = active_scans.find(tc);
-			if (i != active_scans.end())
-				closeScanListener(i.value());
 			
 			torrentRemoved(tc);
 			gman->torrentRemoved(tc);
@@ -1330,31 +1319,9 @@ namespace kt
 		doDataCheck(tc);
 	}
 
-	void Core::doDataCheck(bt::TorrentInterface* tc)
+	void Core::doDataCheck(bt::TorrentInterface* tc, bool auto_import)
 	{
-		QMap<bt::TorrentInterface*,ScanListener*>::iterator itr = active_scans.find(tc);
-		if (itr == active_scans.end())
-		{
-			ScanListener* listener = new ScanListener(tc);
-			connect(listener,SIGNAL(closeRequested(ScanListener*)),this,SLOT(closeScanListener(ScanListener*)));
-			active_scans.insert(tc,listener);
-			gui->dataScanStarted(listener);
-			tc->startDataCheck(listener);
-		}
-		else
-		{
-			ScanListener* listener = itr.value();
-			if (listener->isFinished())
-				listener->restart();
-		}
-	}
-	
-	
-	void Core::closeScanListener(ScanListener* sl)
-	{
-		gui->dataScanClosed(sl);
-		active_scans.remove(sl->torrent());
-		sl->deleteLater();
+		tc->startDataCheck(auto_import);
 	}
 
 

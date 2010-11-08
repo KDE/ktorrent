@@ -33,6 +33,7 @@
 #include <torrent/torrent.h>
 #include <diskio/chunkmanager.h>
 #include <interfaces/coreinterface.h>
+#include <datachecker/datacheckerthread.h>
 #include <datachecker/singledatachecker.h>
 #include <datachecker/multidatachecker.h>
 #include <interfaces/functions.h>
@@ -46,7 +47,7 @@ using namespace bt;
 namespace kt
 {
 	ImportDialog::ImportDialog(CoreInterface* core,QWidget* parent)
-	: QDialog(parent),DataCheckerListener(false),core(core)
+	: QDialog(parent),core(core),dc(0),dc_thread(0),canceled(false)
 	{
 		setupUi(this);
 		KUrlRequester* r = m_torrent_url;
@@ -57,7 +58,7 @@ namespace kt
 		r->setMode(KFile::File|KFile::Directory|KFile::LocalOnly);
 
 		connect(m_import_btn,SIGNAL(clicked()),this,SLOT(onImport()));
-		connect(m_cancel_btn,SIGNAL(clicked()),this,SLOT(reject()));
+		connect(m_cancel_btn,SIGNAL(clicked()),this,SLOT(cancelImport()));
 		m_progress->setEnabled(false);
 		m_progress->setValue(0);
 		m_cancel_btn->setGuiItem(KStandardGuiItem::cancel());
@@ -67,34 +68,118 @@ namespace kt
 	ImportDialog::~ImportDialog()
 	{}
 
-	void ImportDialog::progress(Uint32 num,Uint32 total)
+	void ImportDialog::progress(quint32 num,quint32 total)
 	{
 		m_progress->setMaximum(total);
 		m_progress->setValue(num);
 	}
 
-	void ImportDialog::status(bt::Uint32 num_failed,bt::Uint32 num_found,bt::Uint32 num_downloaded,bt::Uint32 num_not_downloaded )
-	{
-		// don't care
-		Q_UNUSED(num_failed);
-		Q_UNUSED(num_found);
-		Q_UNUSED(num_downloaded);
-		Q_UNUSED(num_not_downloaded);
-	}
-
 	void ImportDialog::finished()
 	{
-		// only used for check in separate thread, so does not apply for the import plugin
+		KUrl data_url = m_data_url->url();
+		KUrl tor_url = m_torrent_url->url();
+		if (canceled || !dc_thread->getError().isEmpty())
+		{
+			if (!canceled)
+				KMessageBox::error(this,dc_thread->getError());
+			dc_thread->deleteLater();
+			dc_thread = 0;
+			reject();
+			return;
+		}
+			
+		// find a new torrent dir and make it if necessary
+		QString tor_dir = core->findNewTorrentDir();
+		if (!tor_dir.endsWith(bt::DirSeparator()))
+			tor_dir += bt::DirSeparator();
+		
+		try
+		{
+			if (!bt::Exists(tor_dir))
+				bt::MakeDir(tor_dir);
+			
+			// write the index file
+				writeIndex(tor_dir + "index",dc->getResult());
+				
+				// copy the torrent file
+				bt::CopyFile(tor_url.url(),tor_dir + "torrent");
+				
+				Uint64 imported = calcImportedBytes(dc->getResult(),tor);
+				
+				// make the cache
+				if (tor.isMultiFile())
+				{
+					QList<Uint32> dnd_files;
+					
+					// first make tor_dir/dnd
+					QString dnd_dir = tor_dir + "dnd" + bt::DirSeparator();
+					if (!bt::Exists(dnd_dir))
+						MakeDir(dnd_dir);
+					
+					QString ddir = data_url.toLocalFile();
+					if (!ddir.endsWith(bt::DirSeparator()))
+						ddir += bt::DirSeparator();
+					
+					for (Uint32 i = 0;i < tor.getNumFiles();i++)
+					{
+						TorrentFile & tf = tor.getFile(i);
+						makeDirs(dnd_dir,data_url,tf.getPath());
+						tf.setPathOnDisk(ddir + tf.getPath());
+					}
+					
+					saveFileMap(tor,tor_dir);
+					
+					QString durl = data_url.toLocalFile();
+					if (durl.endsWith(bt::DirSeparator()))
+						durl = durl.left(durl.length() - 1);
+					int ds = durl.lastIndexOf(bt::DirSeparator());
+					if (durl.mid(ds+1) == tor.getNameSuggestion())
+					{
+						durl = durl.left(ds);
+						saveStats(tor_dir + "stats",KUrl(durl),imported,false);
+					}
+					else
+					{
+						saveStats(tor_dir + "stats",KUrl(durl),imported,true);
+					}
+					saveFileInfo(tor_dir + "file_info",dnd_files);
+				}
+				else
+				{
+					// single file, just symlink the data_url to tor_dir/cache
+					QString durl = data_url.toLocalFile();
+					int ds = durl.lastIndexOf(bt::DirSeparator());
+					durl = durl.left(ds);
+					saveStats(tor_dir + "stats",durl,imported,false);
+					saveFileMap(tor_dir,data_url.toLocalFile());
+				}
+				
+				// everything went OK, so load the whole shabang and start downloading
+				core->loadExistingTorrent(tor_dir);
+		}
+		catch (Error & e)
+		{
+			// delete tor_dir
+			bt::Delete(tor_dir,true);
+			KMessageBox::error(this,e.toString());
+			dc_thread->deleteLater();
+			dc_thread = 0;
+			reject();
+			return;
+		}
+		
+		dc_thread->deleteLater();
+		dc_thread = 0;
+		accept();
 	}
 
-	void ImportDialog::import(Torrent & tor)
+	void ImportDialog::import()
 	{
 		// get the urls
 		KUrl tor_url = m_torrent_url->url();
 		KUrl data_url = m_data_url->url();
 
 		// now we need to check the data
-		DataChecker* dc = 0;
 		if (tor.isMultiFile())
 		{
 			dc = new MultiDataChecker();
@@ -110,103 +195,14 @@ namespace kt
 		}
 		else
 			dc = new SingleDataChecker();
+		
+		connect(dc,SIGNAL(progress(quint32,quint32)),this,SLOT(progress(quint32,quint32)),Qt::QueuedConnection);
 
-		try
-		{
-			BitSet bs(tor.getNumChunks());
-			bs.setAll(false);
-			dc->setListener(this);
-			dc->check(data_url.toLocalFile(),tor,QString::null,bs);
-		}
-		catch (Error & e)
-		{
-			delete dc;
-			KMessageBox::error(this,i18n("Cannot verify data: %1",e.toString()));
-			reject();
-			return;
-		}
-
-		// find a new torrent dir and make it if necessary
-		QString tor_dir = core->findNewTorrentDir();
-		if (!tor_dir.endsWith(bt::DirSeparator()))
-			tor_dir += bt::DirSeparator();
-
-		try
-		{
-			if (!bt::Exists(tor_dir))
-				bt::MakeDir(tor_dir);
-
-			// write the index file
-			writeIndex(tor_dir + "index",dc->getResult());
-
-			// copy the torrent file
-			bt::CopyFile(tor_url.url(),tor_dir + "torrent");
-
-			Uint64 imported = calcImportedBytes(dc->getResult(),tor);
-
-			// make the cache
-			if (tor.isMultiFile())
-			{
-				QList<Uint32> dnd_files;
-
-				// first make tor_dir/dnd
-				QString dnd_dir = tor_dir + "dnd" + bt::DirSeparator();
-				if (!bt::Exists(dnd_dir))
-					MakeDir(dnd_dir);
-
-				QString ddir = data_url.toLocalFile();
-				if (!ddir.endsWith(bt::DirSeparator()))
-					ddir += bt::DirSeparator();
-
-				for (Uint32 i = 0;i < tor.getNumFiles();i++)
-				{
-					TorrentFile & tf = tor.getFile(i);
-					makeDirs(dnd_dir,data_url,tf.getPath());
-					tf.setPathOnDisk(ddir + tf.getPath());
-				}
-
-				saveFileMap(tor,tor_dir);
-
-				QString durl = data_url.toLocalFile();
-				if (durl.endsWith(bt::DirSeparator()))
-					durl = durl.left(durl.length() - 1);
-				int ds = durl.lastIndexOf(bt::DirSeparator());
-				if (durl.mid(ds+1) == tor.getNameSuggestion())
-				{
-					durl = durl.left(ds);
-					saveStats(tor_dir + "stats",KUrl(durl),imported,false);
-				}
-				else
-				{
-					saveStats(tor_dir + "stats",KUrl(durl),imported,true);
-				}
-				saveFileInfo(tor_dir + "file_info",dnd_files);
-			}
-			else
-			{
-				// single file, just symlink the data_url to tor_dir/cache
-				QString durl = data_url.toLocalFile();
-				int ds = durl.lastIndexOf(bt::DirSeparator());
-				durl = durl.left(ds);
-				saveStats(tor_dir + "stats",durl,imported,false);
-				saveFileMap(tor_dir,data_url.toLocalFile());
-			}
-
-			// everything went OK, so load the whole shabang and start downloading
-			core->loadExistingTorrent(tor_dir);
-		}
-		catch (Error & e)
-		{
-			// delete tor_dir
-			bt::Delete(tor_dir,true);
-			delete dc;
-			KMessageBox::error(this,e.toString());
-			reject();
-			return;
-		}
-
-		delete dc;
-		accept();
+		BitSet bs(tor.getNumChunks());
+		bs.setAll(false);
+		dc_thread = new DataCheckerThread(dc,bs,data_url.toLocalFile(),tor,QString::null);
+		connect(dc_thread,SIGNAL(finished()),this,SLOT(finished()),Qt::QueuedConnection);
+		dc_thread->start();
 	}
 
 	void ImportDialog::onTorrentGetReult(KJob* j)
@@ -218,12 +214,10 @@ namespace kt
 		}
 		else
 		{
-			KIO::StoredTransferJob* stj = (KIO::StoredTransferJob*)j;
-			Torrent tor;
-
 			// try to load the torrent
 			try
 			{
+				KIO::StoredTransferJob* stj = (KIO::StoredTransferJob*)j;
 				tor.load(stj->data(),false);
 			}
 			catch (Error & e)
@@ -232,7 +226,7 @@ namespace kt
 				reject();
 				return;
 			}
-			import(tor);
+			import();
 		}
 	}
 
@@ -253,8 +247,6 @@ namespace kt
 		}
 		else
 		{
-			Torrent tor;
-
 			// try to load the torrent
 			try
 			{
@@ -266,9 +258,24 @@ namespace kt
 				reject();
 				return;
 			}
-			import(tor);
+			import();
 		}
 	}
+	
+	void ImportDialog::cancelImport()
+	{
+		if (dc_thread)
+		{
+			canceled = true;
+			dc->stop();
+			dc_thread->wait();
+			dc_thread->deleteLater();
+			dc_thread = 0;
+		}
+		
+		reject();
+	}
+
 
 	void ImportDialog::writeIndex(const QString & file,const BitSet & chunks)
 	{
@@ -405,11 +412,6 @@ namespace kt
 
 		QTextStream out(&fptr);
 		out << ddir << ::endl;
-	}
-	
-	void ImportDialog::error(const QString& err)
-	{
-		KMessageBox::error(this,err);
 	}
 
 }

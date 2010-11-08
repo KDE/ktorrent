@@ -100,14 +100,9 @@ namespace kt
 		virtual void closeEditor(QWidget* editor,QAbstractItemDelegate::EndEditHint hint);
 		virtual bool edit(const QModelIndex & index,EditTrigger trigger,QEvent* event);
 		
-		/// A data scan was started
-		void dataScanStarted(ScanListener* listener);
-		
-		/// A data scan was closed
-		void dataScanClosed(ScanListener* listener);
-		
 		/// Get the ViewDelegate
 		ViewDelegate* viewDelegate() {return delegate;}
+		
 	public slots:
 		/**
 		 * Update all items in the view

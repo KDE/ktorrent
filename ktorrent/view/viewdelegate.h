@@ -35,30 +35,7 @@ namespace kt
 	class ViewModel;
 	class View;
 	class Core;
-	
-	/**
-		Base class for all extender widgets
-	*/
-	class Extender : public QWidget
-	{
-		Q_OBJECT
-	public:
-		Extender(bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~Extender();
-		
-		/// Get the torrent of this extender
-		bt::TorrentInterface* torrent() {return tc;}
-		
-	signals:
-		/// Should be emitted by an extender when it wants to close itself
-		void closeRequest(Extender* ext);
-		
-		/// Should be emitted when an extender is resized
-		void resized(Extender* ext);
-		
-	protected:
-		bt::TorrentInterface* tc;
-	};
+	class Extender;
 	
 	/**
 		Box which contains all the extenders of a widget

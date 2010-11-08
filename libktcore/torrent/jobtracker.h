@@ -18,40 +18,59 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef KT_PROPERTIESEXTENDER_H
-#define KT_PROPERTIESEXTENDER_H
 
-#include <QWidget>
-#include <view/viewdelegate.h>
-#include <gui/extender.h>
-#include "ui_propertiesextender.h"
+#ifndef KT_JOBTRACKER_H
+#define KT_JOBTRACKER_H
 
+#include <ktcore_export.h>
+#include <kjobtrackerinterface.h>
+#include <torrent/job.h>
 
-namespace bt
-{
-	class TorrentInterface;
-}
 
 namespace kt 
 {
+	class JobProgressWidget;
+	
 	/**
-		Extender which shows properties about a torrent.
-	*/
-	class PropertiesExtender : public Extender,public Ui_PropertiesExtender
+		JobTracker for bt::Job's
+	 */
+	class KTCORE_EXPORT JobTracker : public KJobTrackerInterface
 	{
 		Q_OBJECT
 	public:
-		PropertiesExtender(bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~PropertiesExtender();
+		JobTracker(QObject* parent);
+		virtual ~JobTracker();
 		
-	public slots:
-		void moveOnCompletionEnabled(bool on);
-		void buttonClicked(QAbstractButton*);
+		virtual void registerJob(KJob* job);
+		virtual void unregisterJob(KJob* job);
 		
-	private:
-		void apply();
+		/// A job has been registered
+		virtual void jobRegistered(bt::Job* j) = 0;
+		
+		/// A job has been unregistered
+		virtual void jobUnregistered(bt::Job* j) = 0;
+		
+		/// Create a widget for a job
+		virtual JobProgressWidget* createJobWidget(bt::Job* job);
+
+	protected:
+		virtual void finished(KJob* job);
+		virtual void suspended(KJob* job);
+		virtual void resumed(KJob* job);
+		virtual void description(KJob* job, const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2);
+		virtual void infoMessage(KJob* job, const QString& plain, const QString& rich);
+		virtual void warning(KJob* job, const QString& plain, const QString& rich);
+		virtual void totalAmount(KJob* job, KJob::Unit unit, qulonglong amount);
+		virtual void processedAmount(KJob* job, KJob::Unit unit, qulonglong amount);
+		virtual void percent(KJob* job, long unsigned int percent);
+		virtual void speed(KJob* job, long unsigned int value);
+
+	protected:
+		typedef QList<JobProgressWidget*> JobProgessWidgetList;
+		typedef QMap<bt::Job*,JobProgessWidgetList> ActiveJobs;
+		ActiveJobs widgets;
 	};
 
 }
 
-#endif // KT_PROPERTIESEXTENDER_H
+#endif // KT_JOBTRACKER_H

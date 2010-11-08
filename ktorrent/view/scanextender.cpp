@@ -18,19 +18,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <KLocale>
+#include <torrent/job.h>
 #include <interfaces/torrentinterface.h>
+#include <datachecker/datacheckerjob.h>
 #include "scanextender.h"
+
+
 
 namespace kt
 {
 	
-	ScanExtender::ScanExtender(ScanListener* lst,bt::TorrentInterface* tc,QWidget* parent) 
-	: Extender(tc,parent),listener(lst)
+	ScanExtender::ScanExtender(bt::Job* job, QWidget* parent) 
+	: JobProgressWidget(job,parent)
 	{
 		setupUi(this);
-		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
-		timer.start(500);
 		
+		bt::DataCheckerJob* dcj = (bt::DataCheckerJob*)job;
+		setAutomaticRemove(dcj->isAutoImport());
+		connect(job,SIGNAL(result(KJob*)),this,SLOT(finished(KJob*)));
+	
 		cancel_button->setGuiItem(KStandardGuiItem::Cancel);
 		close_button->setGuiItem(KStandardGuiItem::Close);
 		close_button->setEnabled(false);
@@ -50,68 +56,80 @@ namespace kt
 		chunks_found->setFont(font);
 		chunks_downloaded->setFont(font);
 		chunks_not_downloaded->setFont(font);
-		connect(listener,SIGNAL(scanFinished()),this,SLOT(finished()));
-		connect(listener,SIGNAL(restarted()),this,SLOT(restart()));
-		connect(listener,SIGNAL(scanError(QString)),this,SLOT(scanError(QString)));
 	}
 
 	ScanExtender::~ScanExtender()
 	{
 	}
-
-	void ScanExtender::update()
+	
+	void ScanExtender::description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2)
 	{
-		QMutexLocker lock(&listener->mutex);
-		progress_bar->setMaximum(listener->total_chunks);
-		progress_bar->setValue(listener->num_chunks);
-		chunks_found->setText(QString::number(listener->num_found));
-		chunks_failed->setText(QString::number(listener->num_failed));
-		chunks_downloaded->setText(QString::number(listener->num_downloaded));
-		chunks_not_downloaded->setText(QString::number(listener->num_not_downloaded));
+		chunks_found->setText(field1.first);
+		chunks_failed->setText(field1.second);
+		chunks_downloaded->setText(field2.first);
+		chunks_not_downloaded->setText(field2.second);
+	}
+	
+	void ScanExtender::processedAmount(KJob::Unit unit, qulonglong amount)
+	{
+		Q_UNUSED(unit);
+		progress_bar->setValue(amount);
 	}
 
-	void ScanExtender::finished()
+	void ScanExtender::totalAmount(KJob::Unit unit, qulonglong amount)
 	{
-		timer.stop();
-		update();
+		Q_UNUSED(unit);
+		progress_bar->setMaximum(amount);
+	}
+	
+	void ScanExtender::infoMessage(const QString& plain, const QString& rich)
+	{
+		Q_UNUSED(plain);
+		Q_UNUSED(rich);
+	}
+	
+	void ScanExtender::warning(const QString& plain, const QString& rich)
+	{
+		Q_UNUSED(plain);
+		Q_UNUSED(rich);
+	}
+
+	void ScanExtender::speed(long unsigned int value)
+	{
+		Q_UNUSED(value);
+	}
+
+	void ScanExtender::percent(long unsigned int percent)
+	{
+		Q_UNUSED(percent);
+	}
+
+
+
+	void ScanExtender::finished(KJob* j)
+	{
 		progress_bar->setValue(progress_bar->maximum());
 		progress_bar->setEnabled(false);
 		cancel_button->setDisabled(true);
 		close_button->setEnabled(true);
+		
+		if (j->error() && !j->errorText().isEmpty())
+		{
+			error_msg->show();
+			error_msg->setText(i18n("<font color=\"red\">%1</font>").arg(j->errorText()));
+			emit resized(this);
+		}
 	}
 
 	void ScanExtender::cancelPressed()
 	{
-		listener->stop();
-	}
-
-	void ScanExtender::restart()
-	{
-		cancel_button->setEnabled(true);
-		close_button->setEnabled(false);
-		progress_bar->setEnabled(true);
-		progress_bar->setFormat(i18n("Checked %v of %m chunks"));
-		progress_bar->setValue(0);
-		progress_bar->setMaximum(tc->getStats().total_chunks);
-		error_msg->clear();
-		if (!error_msg->isHidden())
-		{
-			error_msg->hide();
-			emit resized(this);
-		}
-		timer.start(500);
-	}
-	
-	void ScanExtender::scanError(const QString& err)
-	{
-		error_msg->show();
-		error_msg->setText(i18n("<font color=\"red\">%1</font>").arg(err));
-		emit resized(this);
+		if (job)
+			job->kill(false);
 	}
 	
 	void ScanExtender::closeRequested()
 	{
-		listener->emitCloseRequested();
+		closeRequest(this);
 	}
 }
 
