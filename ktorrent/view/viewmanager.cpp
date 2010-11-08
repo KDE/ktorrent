@@ -386,7 +386,7 @@ namespace kt
 		foreach (View* v,views)
 		{
 			JobProgressWidget* w = createJobWidget(j);
-			v->viewDelegate()->extend(j->torrent(),w);
+			v->extend(j->torrent(),w);
 		}
 	}
 	

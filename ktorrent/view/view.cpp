@@ -504,6 +504,14 @@ namespace kt
 		}
 	}
 	
+	void View::extend(TorrentInterface* tc, Extender* widget)
+	{
+		delegate->extend(tc,widget);
+		if (group && !group->isMember(tc))
+			delegate->hideExtender(tc);
+	}
+
+	
 }
 
 #include "view.moc"

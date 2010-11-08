@@ -103,6 +103,9 @@ namespace kt
 		/// Get the ViewDelegate
 		ViewDelegate* viewDelegate() {return delegate;}
 		
+		/// Extend a widget
+		void extend(bt::TorrentInterface* tc,Extender* widget);
+		
 	public slots:
 		/**
 		 * Update all items in the view
