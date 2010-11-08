@@ -433,6 +433,8 @@ namespace kt
 			ext->hide();
 			delegate->extend(listener->torrent(),ext);
 			data_scan_extenders.insert(listener->torrent(),ext);
+			if (group && !group->isMember(listener->torrent()))
+				delegate->hideExtender(listener->torrent());
 		}
 	}
 	
