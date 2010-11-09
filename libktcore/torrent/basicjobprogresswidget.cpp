@@ -61,7 +61,7 @@ namespace kt
 	void BasicJobProgressWidget::warning(const QString& plain, const QString& rich)
 	{
 		Q_UNUSED(plain);
-		msg->setText(i18n("Waring: %1",rich));
+		msg->setText(i18n("Warning: %1",rich));
 		msg->setVisible(true);
 		resized(this);
 	}
