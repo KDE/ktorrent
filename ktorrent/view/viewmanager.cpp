@@ -21,14 +21,15 @@
 #include <QWidget>
 #include <QClipboard>
 #include <QApplication>
-#include <ksharedconfig.h>
-#include <kconfiggroup.h>
-#include <kaction.h>
-#include <kactioncollection.h>
-#include <klocale.h>
-#include <kmenu.h>
-#include <kshortcut.h>
-#include <kfiledialog.h>
+#include <KSharedConfig>
+#include <KConfigGroup>
+#include <KAction>
+#include <KActionCollection>
+#include <KLocale>
+#include <KMenu>
+#include <KShortcut>
+#include <KFileDialog>
+#include <KMessageBox>
 #include <groups/group.h>
 #include <util/log.h>
 #include <util/indexofcompare.h>
@@ -48,7 +49,7 @@
 #include "dialogs/speedlimitsdlg.h"
 #include "viewdelegate.h"
 #include "scanextender.h"
-
+#include <util/fileops.h>
 
 
 using namespace bt;
@@ -759,9 +760,12 @@ namespace kt
 		{
 			bt::TorrentInterface* tc = sel.front();
 			QString filter = kt::TorrentFileFilter(false);
-			QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///exportTorrent"),filter);
-			if (!fn.isEmpty())
-				KIO::file_copy(tc->getTorDir() + "torrent",fn);
+			QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///exportTorrent"),filter,gui,
+													  QString(),KFileDialog::ConfirmOverwrite);
+			if (fn.isEmpty())
+				return;
+			
+			KIO::file_copy(tc->getTorDir() + "torrent",fn,-1,KIO::Overwrite);
 		}
 	}
 	
