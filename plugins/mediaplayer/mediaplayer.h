@@ -120,7 +120,7 @@ namespace kt
 		Phonon::AudioOutput* audio;
 		QList<MediaFileRef> history;
 		bool buffering;
-		bool resume_when_buffering_finished;
+		bool manually_paused;
 	};
 
 }

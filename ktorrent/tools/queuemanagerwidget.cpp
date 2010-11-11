@@ -60,7 +60,7 @@ namespace kt
 		search->hide();
 		vbox->addWidget(search);
 		vbox->addWidget(view);
-		layout->addItem(vbox);
+		layout->addLayout(vbox);
 		
 		show_search = toolbar->addAction(KIcon("edit-find"),i18n("Show Search"));
 		show_search->setToolTip(i18n("Show or hide the search bar"));
