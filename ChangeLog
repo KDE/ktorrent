@@ -29,6 +29,7 @@ Changes in 4.1:
 - Stop using hardcoded colors in system tray tooltip (255732)
 - Add support for tracking jobs inside the GUI of ktorrent
 - Ask if an existing file must be overwritten when exporting a torrent (256416)
+- Don't reinclude files when changing priority of a directory (252555)
 
 Changes in 4.0.5:
 - Fix crash due to uncaught exception when creating torrent (255020)

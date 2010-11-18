@@ -247,44 +247,46 @@ namespace kt
 		return QVariant();
 	}
 	
-	
-	bool IWFileTreeModel::setData(const QModelIndex & index, const QVariant & value, int role)
+	void IWFileTreeModel::changePriority(const QModelIndexList& indexes, Priority newpriority)
 	{
-		if (role == Qt::CheckStateRole)
-			return TorrentFileTreeModel::setData(index,value,role);
+		if (!tc)
+			return;
 		
-		if (!tc || !index.isValid() || role != Qt::UserRole)
-			return false;
-	
-		Node* n = static_cast<Node*>(index.internalPointer());
-		if (!n)
-			return false;
-		
+		foreach (const QModelIndex &idx,indexes)
+		{
+			Node* n = (Node*)idx.internalPointer();
+			if (n)
+				setPriority(n,newpriority,true);
+		}
+	}
+
+	void IWFileTreeModel::setPriority(TorrentFileTreeModel::Node* n, Priority newpriority, bool selected_node)
+	{
 		if (!n->file)
 		{
 			for (int i = 0;i < n->children.count();i++)
 			{
 				// recurse down the tree
-				setData(index.child(i,0),value,role);
+				setPriority(n->children.at(i),newpriority,false);
 			}
+			
+			emit dataChanged(createIndex(n->row(),0,n),createIndex(n->row(),4,n));
 		}
 		else
 		{
 			bt::TorrentFileInterface* file = n->file;
-			Priority prio = (bt::Priority)value.toInt();
 			Priority old = file->getPriority();
 			
-			if (prio != old)
+			// When recursing down the tree don't reinclude files
+			if ((old == EXCLUDED || old == ONLY_SEED_PRIORITY) && !selected_node)
+				return;
+			
+			if (newpriority != old)
 			{
-				file->setPriority(prio);
-				dataChanged(createIndex(index.row(),0),createIndex(index.row(),4));
-				QModelIndex parent = index.parent();
-				if (parent.isValid())
-					dataChanged(parent,parent); // parent needs to be updated to 
+				file->setPriority(newpriority);
+				emit dataChanged(createIndex(n->row(),0,n),createIndex(n->row(),4,n));
 			}
 		}
-		
-		return true;
 	}
 	
 	void IWFileTreeModel::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
