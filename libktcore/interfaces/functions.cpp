@@ -30,6 +30,7 @@
 #include <torrent/choker.h>
 #include <peer/authenticationmonitor.h>
 #include <peer/peermanager.h>
+#include <peer/peerconnector.h>
 #include <peer/utpex.h>
 #include <net/socketmonitor.h>
 #include <net/socks.h>
@@ -46,6 +47,7 @@
 #include <interfaces/queuemanagerinterface.h>
 #include "settings.h"
 #include "functions.h"
+
 
 using namespace bt;
 
@@ -70,7 +72,7 @@ namespace kt
 		net::SocketMonitor::setUploadCap(Settings::maxUploadRate()*1024);
 		net::SocketMonitor::setSleepTime(Settings::cpuUsage());
 		mse::StreamSocket::setTOS(Settings::dscp() << 2);
-		mse::StreamSocket::setMaxConnecting(Settings::maxConnectingSockets());
+		bt::PeerConnector::setMaxActive(Settings::maxConnectingSockets());
 		ChunkManager::setUploadDataCheckingEnabled(Settings::doUploadDataCheck());
 		if (!Settings::useMaxSizeForUploadDataCheck())
 			ChunkManager::setMaxChunkSizeForDataCheck(0);
