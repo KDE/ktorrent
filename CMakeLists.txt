@@ -41,6 +41,7 @@ add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)
 add_subdirectory(plasma)
 add_subdirectory(ktmagnetdownloader)
+add_subdirectory(doc)
 
 # --- show log ---
 macro_display_feature_log()
