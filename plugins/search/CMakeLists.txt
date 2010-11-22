@@ -18,7 +18,9 @@ target_link_libraries(
     ktsearchplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${KDE4_KHTML_LIBS}
+    ${QT_QTWEBKIT_LIBRARY}
+    ${KDE4_KPARTS_LIBS}
+    ${KDE4_KDEWEBKIT_LIBS}
     )
 install(TARGETS ktsearchplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktsearchplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

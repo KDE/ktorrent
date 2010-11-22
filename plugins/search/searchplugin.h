@@ -28,7 +28,6 @@
 namespace kt
 {
 	class SearchPrefPage;
-	class SearchToolBar;
 	class SearchActivity;
 
 	/**
@@ -46,27 +45,16 @@ namespace kt
 		virtual bool versionCheck(const QString& version) const;
 		
 		SearchEngineList* getSearchEngineList() const {return engines;}
-		KAction* getBackAction() {return back_action;}
-		int currentSearchEngine() const;
+		SearchActivity* getSearchActivity() const {return activity;}
+		
 	private slots:
 		void search(const QString & text,int engine,bool external);
 		void preferencesUpdated();
-
-	private:
-		void setupActions();
 		
 	private:
 		SearchActivity* activity;
 		SearchPrefPage* pref;
-		SearchToolBar* toolbar;
 		SearchEngineList* engines;
-		
-		KAction* find_action;
-		KAction* back_action;
-		KAction* reload_action;
-		KAction* search_action;
-		KAction* copy_action;
-		KAction* home_action;
 	};
 
 }

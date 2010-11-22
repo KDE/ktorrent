@@ -48,10 +48,8 @@ using namespace bt;
 namespace kt
 {
 
-	SearchToolBar::SearchToolBar(SearchPlugin* plugin,SearchEngineList* sl) : QObject(plugin)
+	SearchToolBar::SearchToolBar(KActionCollection* ac, kt::SearchEngineList* sl, QObject* parent) : QObject(parent)
 	{
-		KActionCollection* ac = plugin->actionCollection();
-		
 		m_search_text = new KComboBox((QWidget*)0);
 		m_search_text->setEditable(true);
 		m_search_text->setMaxCount(20);

@@ -18,42 +18,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include "searchwidget.h"
+
 #include <QLabel>
-#include <kapplication.h>
-#include <khtmlview.h>
-#include <qlayout.h>
-#include <qfile.h> 
-#include <qtextstream.h> 
-#include <qstring.h> 
-#include <qstringlist.h> 
-#include <klineedit.h>
-#include <kpushbutton.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kstandarddirs.h> 
-#include <kiconloader.h>
-#include <kcombobox.h>
-#include <kmenu.h>
-#include <kstandardaction.h>
-#include <kparts/partmanager.h>
-#include <kio/job.h>
-#include <kmessagebox.h>
-#include <kfiledialog.h>
-#include <kactioncollection.h>
+#include <QClipboard>
 #include <QProgressBar>
+#include <QVBoxLayout>
+#include <KIconLoader>
+#include <KComboBox>
+#include <KLocale>
+#include <QApplication>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <KMenu>
+#include <KStandardAction>
+#include <kio/job.h>
+#include <KMessageBox>
+#include <KFileDialog>
+#include <KActionCollection>
+
 #include <util/log.h>
+#include <magnet/magnetlink.h>
 #include <torrent/globals.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/functions.h>
-#include "searchwidget.h"
-#include "htmlpart.h"
 #include "searchplugin.h"
 #include "searchenginelist.h"
 #include "homepage.h"
-#include <QClipboard>
-
-
+#include "searchactivity.h"
 
 
 using namespace bt;
@@ -61,18 +55,19 @@ using namespace bt;
 namespace kt
 {
 	
-	SearchWidget::SearchWidget(SearchPlugin* sp) : html_part(0),sp(sp)
+	SearchWidget::SearchWidget(SearchPlugin* sp) : webview(0),sp(sp),prog(0),torrent_download(0)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
-		html_part = new HTMLPart(this);
+		webview = new HomePage(this);
 		
-		KActionCollection* ac = sp->actionCollection();
+		KActionCollection* ac = sp->getSearchActivity()->part()->actionCollection();
 		sbar = new KToolBar(this);
 		sbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		sbar->addAction(ac->action("search_tab_back"));
-		sbar->addAction(ac->action("search_tab_reload"));
+		sbar->addAction(webview->pageAction(QWebPage::Back));
+		sbar->addAction(webview->pageAction(QWebPage::Forward));
+		sbar->addAction(webview->pageAction(QWebPage::Reload));
 		sbar->addAction(ac->action("search_home"));
 		search_text = new KLineEdit(sbar);
 		sbar->addWidget(search_text);
@@ -85,41 +80,27 @@ namespace kt
 		connect(search_text,SIGNAL(returnPressed()),this,SLOT(search()));;
 
 		layout->addWidget(sbar);
-		layout->addWidget(html_part->view());
-		html_part->show();
-		html_part->view()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+		layout->addWidget(webview);
 
 		right_click_menu = new KMenu(this);
 		open_url_action = right_click_menu->addAction(KIcon("tab-new"),i18n("Open in New Tab"),this,SLOT(openNewTab()));
 		open_url_action->setEnabled(false);
 		right_click_menu->addSeparator();
-		right_click_menu->addAction(ac->action("search_tab_back"));
-		right_click_menu->addAction(ac->action("search_tab_reload"));
+		right_click_menu->addAction(webview->pageAction(QWebPage::Back));
+		right_click_menu->addAction(webview->pageAction(QWebPage::Reload));
 		right_click_menu->addSeparator();
-		right_click_menu->addAction(ac->action("search_tab_copy"));
+		right_click_menu->addAction(webview->pageAction(QWebPage::Copy));
 		copy_url_action = right_click_menu->addAction(KIcon("edit-copy"),i18n("Copy URL"),this,SLOT(copyUrl()));
-		
-
 		search_text->setClearButtonShown(true);
-
-		connect(html_part,SIGNAL(backAvailable(bool )),
-				this,SLOT(onBackAvailable(bool )));
-		connect(html_part,SIGNAL(onURL(const QString& )),
-				this,SLOT(onUrlHover(const QString& )));
-		connect(html_part,SIGNAL(openTorrent(const KUrl& )),
-				this,SLOT(onOpenTorrent(const KUrl& )));
-		connect(html_part,SIGNAL(popupMenu(const QString&, const QPoint& )),
-				this,SLOT(showPopupMenu(const QString&, const QPoint& )));
-		connect(html_part,SIGNAL(completed()),this,SLOT(onFinished()));
-		connect(html_part,SIGNAL(saveTorrent(const KUrl& )),
-				this,SLOT(onSaveTorrent(const KUrl& )));
-		connect(html_part,SIGNAL(searchRequested(QString)),this,SLOT(onSearchRequested(QString)));
-	
-		KParts::PartManager* pman = html_part->partManager();
-		connect(pman,SIGNAL(partAdded(KParts::Part*)),this,SLOT(onFrameAdded(KParts::Part* )));
 		
-		connect(html_part->browserExtension(),SIGNAL(loadingProgress(int)),this,SLOT(loadingProgress(int)));
-		prog = 0;
+		connect(webview,SIGNAL(loadStarted()),this,SLOT(loadStarted()));
+		connect(webview,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
+		connect(webview,SIGNAL(loadProgress(int)),this,SLOT(loadProgress(int)));
+		connect(webview->page(),SIGNAL(unsupportedContent(QNetworkReply*)),
+				this,SLOT(unsupportedContent(QNetworkReply*)));
+		connect(webview,SIGNAL(linkMiddleOrCtrlClicked(KUrl)),this,SIGNAL(openNewTab(KUrl)));
+		connect(webview,SIGNAL(iconChanged()),this,SLOT(iconChanged()));
+		connect(webview,SIGNAL(titleChanged(QString)),this,SLOT(titleChanged(QString)));
 	}
 	
 	
@@ -132,28 +113,16 @@ namespace kt
 		}
 	}
 	
-	void SearchWidget::onBackAvailable(bool available)
+	void SearchWidget::iconChanged()
 	{
-		enableBack(available);
+		changeIcon(this,webview->icon());
 	}
 	
-	void SearchWidget::onFrameAdded(KParts::Part* p)
+	void SearchWidget::titleChanged(const QString& text)
 	{
-		KHTMLPart* frame = dynamic_cast<KHTMLPart*>(p);
-		if (frame)
-		{
-			connect(frame,SIGNAL(popupMenu(const QString&, const QPoint& )),
-					this,SLOT(showPopupMenu(const QString&, const QPoint& )));
-		}
+		changeTitle(this,text);
 	}
-	
-	void SearchWidget::copy()
-	{
-		if (!html_part)
-			return;
-		html_part->copy();
-	}
-	
+
 	void SearchWidget::copyUrl()
 	{
 		QClipboard* cb = QApplication::clipboard();
@@ -162,9 +131,7 @@ namespace kt
 	
 	KUrl SearchWidget::getCurrentUrl() const
 	{
-		if (!html_part)
-			return KUrl();
-		return html_part->toplevelURL();
+		return webview->url();
 	}
 	
 	QString SearchWidget::getSearchBarText() const
@@ -179,13 +146,10 @@ namespace kt
 	
 	void SearchWidget::restore(const KUrl & url,const QString & text,const QString & sb_text,int engine)
 	{
-		if (html_part)
-		{
-			if (url.protocol() == "home")
-				home();
-			else
-				html_part->openUrl(url);
-		}
+		if (url.protocol() == "home")
+			webview->openUrl(KUrl("about:ktorrent"));
+		else
+			webview->openUrl(url);
 	
 		search_text->setText(sb_text);
 		search_engine->setCurrentIndex(engine);
@@ -193,9 +157,6 @@ namespace kt
 	
 	void SearchWidget::search(const QString & text,int engine)
 	{
-		if (!html_part)
-			return;
-		
 		if (search_text->text() != text)
 			search_text->setText(text);
 		
@@ -203,51 +164,21 @@ namespace kt
 			search_engine->setCurrentIndex(engine);
 	
 		KUrl url = sp->getSearchEngineList()->search(engine,text);
-	
-		statusBarMsg(i18n("Searching for %1...",text));
-		//html_part->openURL(url);
-		html_part->show();
- 		html_part->openUrlRequest(url,KParts::OpenUrlArguments(),KParts::BrowserArguments());
+		webview->openUrl(url);
 	}
 	
+	/*
 	void SearchWidget::onSearchRequested(const QString & text)
 	{
 		search(text,search_engine->currentIndex());
 	}
-
+	*/
 	
 	void SearchWidget::setSearchBarEngine(int engine)
 	{
 		search_engine->setCurrentIndex(engine);
 	}
-	
-	void SearchWidget::onUrlHover(const QString & url)
-	{
-		statusBarMsg(url);
-	}
-	
-	void SearchWidget::onFinished()
-	{
-		changeTitle(this,html_part->title());
-	}
-	
-	void SearchWidget::onOpenTorrent(const KUrl & url)
-	{
-		openTorrent(url);
-	}
-	
-	void SearchWidget::onSaveTorrent(const KUrl & url)
-	{
-		QString fn = KFileDialog::getSaveFileName(
-						KUrl("kfiledialog:///openTorrent"),kt::TorrentFileFilter(false),this);
-		if (!fn.isNull())
-		{
-			KUrl save_url = KUrl(fn);
-			// start a copy job
-			KIO::file_copy(url,save_url,-1,KIO::Overwrite);
-		}
-	}
-	
+	/*
 	void SearchWidget::showPopupMenu(const QString & url,const QPoint & p)
 	{
 		open_url_action->setEnabled(!url.isEmpty());
@@ -268,86 +199,120 @@ namespace kt
 		right_click_menu->popup(p);
 	}
 	
+	*/
+	
 	KMenu* SearchWidget::rightClickMenu()
 	{
 		return right_click_menu;
 	}
 	
-	void SearchWidget::onShutDown()
+	void SearchWidget::loadProgress(int perc)
 	{
-		delete html_part;
-		html_part = 0;
-	}
-
-	void SearchWidget::statusBarMsg(const QString & url)
-	{
-		sp->getGUI()->getStatusBar()->message(url);
+		if (!prog)
+			prog = sp->getGUI()->getStatusBar()->createProgressBar();
+		
+		if (prog)
+			prog->setValue(perc);
 	}
 	
-	void SearchWidget::openTorrent(const KUrl & url)
+	void SearchWidget::loadStarted()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "SearchWidget::openTorrent " << url.prettyUrl() << endl;
-		sp->getCore()->load(url,QString());
-	}
-	
-	void SearchWidget::loadingProgress(int perc)
-	{
-		if (perc < 100 && !prog)
+		if (!prog)
 		{
 			prog = sp->getGUI()->getStatusBar()->createProgressBar();
 			if (prog)
-				prog->setValue(perc);
-		}
-		else if (prog && perc < 100)
-		{
-			prog->setValue(perc);
-		}
-		else if (perc == 100) 
-		{
-			if (prog)
-			{
-				sp->getGUI()->getStatusBar()->removeProgressBar(prog);
-				prog = 0;
-			}
-			statusBarMsg(i18n("Search finished"));
+				prog->setValue(0);
 		}
 	}
 	
-	void SearchWidget::find()
+	void SearchWidget::loadFinished(bool ok)
 	{
-		html_part->findText();
+		Q_UNUSED(ok);
+		if (prog)
+		{
+			sp->getGUI()->getStatusBar()->removeProgressBar(prog);
+			prog = 0;
+		}
+	}
+
+	void SearchWidget::unsupportedContent(QNetworkReply* r)
+	{
+		if (r->url().scheme() == "magnet")
+		{
+			sp->getCore()->load(bt::MagnetLink(r->url().toString()),QString());
+		}
+		else if (r->header(QNetworkRequest::ContentTypeHeader).toString() == "application/x-bittorrent" || 
+				 r->url().path().endsWith(".torrent"))
+		{
+			torrent_download = r;
+			if (!r->isFinished())
+				connect(r,SIGNAL(finished()),this,SLOT(downloadRequestFinished()));
+			else
+				downloadRequestFinished();
+		}
+		else
+		{
+			KMessageBox::error(this,QString("unsupportedContent %1").arg(r->url().toString()));
+			r->abort();
+		}
 	}
 	
+	void SearchWidget::saveReply(QNetworkReply* reply)
+	{
+		QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"),kt::TorrentFileFilter(false),this);
+		if (!fn.isNull())
+		{
+			QFile fptr(fn);
+			if (!fptr.open(QIODevice::WriteOnly))
+			{
+				KMessageBox::error(this,i18n("Cannot open <b>%1</b>: %2",fn,fptr.errorString()));
+			}
+			else
+			{
+				fptr.write(reply->readAll());
+			}
+		}
+	}
+
+	
+	void SearchWidget::downloadRequestFinished()
+	{
+		if (torrent_download->error() != QNetworkReply::NoError)
+			return;
+		
+		int ret = KMessageBox::questionYesNoCancel(0,
+			i18n("Do you want to download or save the torrent?"),
+			i18n("Download Torrent"),
+			KGuiItem(i18n("Download"),"ktorrent"),
+			KStandardGuiItem::save());
+		
+		if (ret == KMessageBox::Yes)
+			sp->getCore()->load(torrent_download->readAll(),torrent_download->url(),QString(),QString());
+		else if (ret == KMessageBox::No)
+			saveReply(torrent_download);
+		
+		torrent_download = 0;
+	}
+
 	
 	void SearchWidget::search()
 	{
 		search(search_text->text(),search_engine->currentIndex());
 	}
-	
-	void SearchWidget::back()
-	{
-		html_part->back();
-	}
-	
-	void SearchWidget::reload()
-	{
-		html_part->reload();
-	}
-	
+
 	void SearchWidget::openNewTab()
 	{
 		openNewTab(url_to_open);
 	}
 	
-	void SearchWidget::home() 
+	void SearchWidget::home()
 	{
-		html_part->home();
+		webview->home();
 	}
-
 	
 	bool SearchWidget::backAvailable() const
 	{
-		return html_part->backAvailable();
+		return webview->pageAction(QWebPage::Back)->isEnabled();
 	}
 }
 

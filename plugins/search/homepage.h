@@ -23,32 +23,24 @@
 #ifndef KT_HOMEPAGE_H
 #define KT_HOMEPAGE_H
 
-#include <khtml_part.h>
+#include <KWebView>
 
 
 namespace kt
 {
 
-	class HomePage : public KHTMLPart
+	class HomePage : public KWebView
 	{
 		Q_OBJECT
 		
 	public:
-		HomePage(QWidget* parentWidget = 0, QObject* parent = 0, GUIProfile prof = DefaultGUI);
+		HomePage(QWidget* parentWidget = 0);
 		virtual ~HomePage();
 		
-		virtual bool openUrl(const KUrl & url);
-		virtual bool openFile();
-		
+		void openUrl(const KUrl & url);
 		void home();
 		
-		virtual void addToHistory(const KUrl & url) = 0;
-		
 	protected:
-		virtual bool urlSelected(const QString &url, int button, int state, const QString &target,
-								 const KParts::OpenUrlArguments& args = KParts::OpenUrlArguments(),
-								 const KParts::BrowserArguments& browserArgs = KParts::BrowserArguments());
-		
 		void loadHomePage();
 		QString serve();
 		

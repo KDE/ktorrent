@@ -26,6 +26,8 @@
 #include <KLocale>
 #include <KIcon>
 #include <KConfigGroup>
+#include <KStandardAction>
+#include <KActionCollection>
 #include <interfaces/functions.h>
 #include <util/indexofcompare.h>
 #include <util/error.h>
@@ -36,6 +38,7 @@
 #include "searchwidget.h"
 #include "searchplugin.h"
 #include <searchpluginsettings.h>
+#include "searchtoolbar.h"
 
 
 namespace kt
@@ -43,6 +46,12 @@ namespace kt
 	SearchActivity::SearchActivity(SearchPlugin* sp,QWidget* parent)
 		: Activity(i18nc("plugin name","Search"),"edit-find",10,parent),sp(sp)
 	{
+		setXMLGUIFile("ktsearchpluginui.rc");
+		setupActions();
+		toolbar = new SearchToolBar(part()->actionCollection(),sp->getSearchEngineList(),this);
+		connect(toolbar,SIGNAL(search( const QString&, int, bool )),
+				sp,SLOT(search( const QString&, int, bool )));
+		
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
@@ -63,6 +72,21 @@ namespace kt
 	
 	SearchActivity::~SearchActivity()
 	{
+	}
+	
+	void SearchActivity::setupActions()
+	{
+		KActionCollection* ac = part()->actionCollection();
+		
+		search_action = new KAction(KIcon("edit-find"),i18n("Search"),this);
+		connect(search_action,SIGNAL(triggered()),this,SLOT(search()));
+		ac->addAction("search_tab_search",search_action);
+		
+		find_action = KStandardAction::find(this,SLOT(find()),this);
+		ac->addAction("search_tab_find",find_action);
+		
+		home_action = KStandardAction::home(this,SLOT(home()),this);
+		ac->addAction("search_home",home_action);
 	}
 	
 	void SearchActivity::search(const QString & text,int engine)
@@ -163,6 +187,7 @@ namespace kt
 	{
 		KConfigGroup g = cfg->group("SearchActivity");
 		g.writeEntry("current_search",tabs->currentIndex());
+		toolbar->saveSettings();
 	}
 
 	void SearchActivity::loadState(KSharedConfigPtr cfg)
@@ -179,33 +204,7 @@ namespace kt
 		{
 			if (w == s)
 			{
-				s->find();
-				break;
-			}
-		}
-	}
-	
-	void SearchActivity::back()
-	{
-		QWidget* w = tabs->currentWidget();
-		foreach (SearchWidget* s,searches)
-		{
-			if (w == s)
-			{
-				s->back();
-				break;
-			}
-		}
-	}
-	
-	void SearchActivity::reload()
-	{
-		QWidget* w = tabs->currentWidget();
-		foreach (SearchWidget* s,searches)
-		{
-			if (w == s)
-			{
-				s->reload();
+//				s->find();
 				break;
 			}
 		}
@@ -224,6 +223,7 @@ namespace kt
 		}
 	}
 	
+	/*
 	void SearchActivity::copy()
 	{
 		QWidget* w = tabs->currentWidget();
@@ -236,6 +236,7 @@ namespace kt
 			}
 		}
 	}
+	*/
 	
 	SearchWidget* SearchActivity::newSearchWidget(const QString & text)
 	{
@@ -244,12 +245,11 @@ namespace kt
 		if (!text.isEmpty())
 			tabs->setTabToolTip(idx,i18n("Search for %1",text));
 		
-		KAction* back_action = sp->getBackAction();
-		connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
 		connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
 		connect(search,SIGNAL(changeTitle(SearchWidget*,QString)),this,SLOT(setTabTitle(SearchWidget*,QString)));
+		connect(search,SIGNAL(changeIcon(SearchWidget*,QIcon)),this,SLOT(setTabIcon(SearchWidget*,QIcon)));
 		searches.append(search);
-		search->setSearchBarEngine(sp->currentSearchEngine());
+		search->setSearchBarEngine(toolbar->currentSearchEngine());
 		return search;
 	}
 	
@@ -257,23 +257,12 @@ namespace kt
 	{
 		QString text = url.host();
 		SearchWidget* search = newSearchWidget(text);
-		search->restore(url,text,QString(),sp->currentSearchEngine());
-		sp->getBackAction()->setEnabled(false);
+		search->restore(url,text,QString(),toolbar->currentSearchEngine());
 		tabs->setCurrentWidget(search);
 	}
 	
 	void SearchActivity::currentTabChanged(int idx)
 	{
-		sp->getBackAction()->setEnabled(false);
-		foreach (SearchWidget* s,searches)
-		{
-			if (s == tabs->widget(idx))
-			{
-				sp->getBackAction()->setEnabled(s->backAvailable());
-				break;
-			}
-		}
-		
 		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(searches.count() > 1);
 	}
 	
@@ -320,4 +309,18 @@ namespace kt
 		if (idx >= 0)
 			tabs->setTabText(idx,title);
 	}
+	
+	void SearchActivity::setTabIcon(SearchWidget* sw, const QIcon& icon)
+	{
+		int idx = tabs->indexOf(sw);
+		if (idx >= 0)
+			tabs->setTabIcon(idx,icon);
+	}
+
+	
+	void SearchActivity::clearSearchHistory()
+	{
+		toolbar->clearHistory();
+	}
+
 }

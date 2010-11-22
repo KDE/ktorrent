@@ -20,9 +20,12 @@
 
 #include "homepage.h"
 #include <QFile>
+#include <QTextStream>
 #include <QTextCodec>
 #include <QApplication>
+#include <KUrl>
 #include <KStandardDirs>
+#include <KIconLoader>
 #include <KLocale>
 #include <util/log.h>
 
@@ -31,46 +34,30 @@ using namespace bt;
 namespace kt
 {
 	
-	HomePage::HomePage(QWidget* parentWidget, QObject* parent, KHTMLPart::GUIProfile prof)
-		: KHTMLPart(parentWidget, parent, prof)
+	HomePage::HomePage(QWidget* parentWidget)
+		: KWebView(parentWidget)
 	{
-		QTextCodec* codec = KGlobal::locale()->codecForEncoding();
-		if (codec)
-			setEncoding(codec->name(), true);
-		else
-			setEncoding("iso-8859-1", true);
 	}
 		
 	HomePage::~HomePage()
 	{
 	}
 
-	bool HomePage::openFile()
-	{
-		return true;
-	}
-
-	bool HomePage::openUrl(const KUrl& url)
+	void HomePage::openUrl(const KUrl& url)
 	{
 		if (url.url() == "about:ktorrent")
 			home();
 		else
-			KHTMLPart::openUrl(url);
-		return true;
+			load(url);
 	}
 	
 	void HomePage::home()
 	{
-		emit started(0);
 		Out(SYS_SRC|LOG_DEBUG) << "Opening about:ktorrent" << endl;
-		begin(KUrl("about:ktorrent"));
-		write(serve());
-		end();
-		addToHistory(KUrl("about:ktorrent"));
-		emit completed();
+		setHtml(serve(),KUrl("about:ktorrent"));
 	}
 
-
+/*
 	bool HomePage::urlSelected(const QString& url, int button, int state, const QString& target, const KParts::OpenUrlArguments& args, const KParts::BrowserArguments& browserArgs)
 	{
 		if (url == "about:ktorrent")
@@ -81,7 +68,7 @@ namespace kt
 		else
 			return KHTMLPart::urlSelected(url, button, state, target, args, browserArgs);
 	}
-
+*/
 	QString HomePage::serve()
 	{
 		if (home_page_html.isEmpty())

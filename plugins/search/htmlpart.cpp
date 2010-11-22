@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#if 0
+
 #include <kmessagebox.h>
 #include <kio/job.h>
 #include <kio/jobclasses.h>
@@ -230,3 +233,4 @@ namespace kt
 }
 
 #include "htmlpart.moc"
+#endif
