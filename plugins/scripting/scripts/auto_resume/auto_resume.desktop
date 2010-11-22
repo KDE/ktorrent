@@ -61,6 +61,7 @@ Comment[km]=ស្គ្រីប​ដើម្បី​បន្ត​ដោ�
 Comment[nb]=Et skript som gjenopptar aktiviteten etter en stund hvis hvilefunksjonen er slått på
 Comment[nds]=Dat Skript maakt automaatsch na en wiss Tiet wieder, wenn de Anhollen-Status anmaakt is.
 Comment[nl]=Script voor het automatisch verdergaan na enige tijd, als de onderbreek-status is ingeschakeld
+Comment[pl]=Skrypt do automatycznego wznawiania po ustalonym czasie po wstrzymaniu torrentów
 Comment[pt]=Um programa para prosseguir automaticamente, ao fim de algum tempo, quando for activado o estado suspenso
 Comment[pt_BR]=Script para reiniciar automaticamente após algum tempo, quando o estado suspender estiver habilitado
 Comment[ro]=Script pentru reluarea automată după un timp, cînd e activată starea suspendată
