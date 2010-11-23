@@ -212,6 +212,16 @@ namespace kt
 	{
 		KConfigGroup g = cfg->group(group);
 		
+		QString ctab = g.readPathEntry("current_tab", QString());
+		for (QMap<QWidget*,QAction*>::iterator i = widget_to_action.begin();i != widget_to_action.end();i++)
+		{
+			if (i.value()->text() == ctab)
+			{
+				widget_stack->setCurrentWidget(i.key());
+				break;
+			}
+		}
+		
 		bool tmp = g.readEntry("shrunken",true);
 		if (tmp != shrunken)
 		{
@@ -219,20 +229,6 @@ namespace kt
 				shrink();
 			else
 				unshrink();
-		}
-		
-		QString ctab = g.readPathEntry("current_tab", QString());
-		for (QMap<QWidget*,QAction*>::iterator i = widget_to_action.begin();i != widget_to_action.end();i++)
-		{
-			if (i.value()->text() == ctab)
-			{
-				i.value()->setChecked(true);
-				bool shrunken_tmp = shrunken;
-				onActionTriggered(i.value());
-				if (shrunken_tmp)
-					shrink();
-				break;
-			}
 		}
 	}
 }
