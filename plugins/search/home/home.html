@@ -4,78 +4,94 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 1st August 2004), see www.w3.org" />
+	<base href="file://%11" />
+	<meta name="generator" content=
+	"HTML Tidy for Linux/x86 (vers 1st August 2004), see www.w3.org" />
 
-  <style type="text/css">
-  /*<![CDATA[*/
-    @import "%1"; /* kde_infopage.css */
-    %2 /* maybe @import "kde_infopage_rtl.css"; */
-    @import "home.css";
-  /*]]>*/
-  </style>
+	<link rel="stylesheet" type="text/css" href="home.css" />
+	<link rel="stylesheet" type="text/css" href="%1" />
+	%2
 
-  <title>%3</title>
+	<title>%3</title>
 </head>
 
 <body>
-  <div id="header">
-    <div id="headerL"/>
-    <div id="headerR"/>
+	<div id="header">
+		<div id="headerL"></div>
+		<div id="headerR"></div>
 
-    <div id="title">
-      %4 <!-- Konqueror -->
-    </div>
+		<div id="title">
+		%4 <!-- Konqueror -->
+		</div>
 
-    <div id="tagline">
-      %5 <!-- Be free -->
-    </div>
-  </div>
+		<div id="tagline">
+		%5 <!-- Be free -->
+		</div>
+	</div>
 
   <!-- the bar -->
-  <div id="bar">
-    <div id="barT"><div id="barTL"/><div id="barTR"/><div id="barTC"/></div>
-    <div id="barL">
-      <div id="barR">
-        <div id="barCenter" class="bar_text">
-          %6<br />
-          <!-- Konqueror is your file manager, web browser and universal document viewer. -->
-          <ul>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div id="barB"><div id="barBL"/><div id="barBR"/><div id="barBC"/></div>
-  </div>
+	<div id="bar">
+		<div id="barT">
+			<div id="barTL"></div>
+			<div id="barTR"></div>
+			<div id="barTC"></div>
+		</div>
+		<div id="barL">
+			<div id="barR">
+			<div id="barCenter" class="bar_text">
+				%6<br />
+				<!-- Konqueror is your file manager, web browser and universal document viewer. -->
+				<ul>
+				</ul>
+			</div>
+			</div>
+		</div>
+		<div id="barB">
+			<div id="barBL"></div>
+			<div id="barBR"></div>
+			<div id="barBC"></div>
+		</div>
+	</div>
 
   <!-- the main text box -->
-  <div id="box">
-    <div id="boxT"><div id="boxTL"/><div id="boxTR"/><div id="boxTC"/></div>
-    <div id="boxL">
-      <div id="boxR">
-        <div id="boxCenter">
-	<table border="0" align="center">
-        
-<!--search bar argument replacement is performed between the "search bar splitter" lines-->
-<!--search bar splitter-->
+	<div id="box">
+		<div id="boxT">
+			<div id="boxTL"></div>
+			<div id="boxTR"></div>
+			<div id="boxTC"></div>
+		</div>
+		<div id="boxL">
+			<div id="boxR">
+				<div id="boxCenter">
+					<table border="0" align="center">
+		
+	<!--search bar argument replacement is performed between the "search bar splitter" lines-->
+	<!--search bar splitter-->
 
-        <tr>
-        <form action="about:ktorrent">
-        <td style="text-align:right;"><label id="searchbarlabel" for="searchbarinput">%7: </label></td>
-        <td><input id="searchbarinput" name="%8" type="text"></td>
-        </form>
-        </tr>
-        <tr>
-        <td colspan="2"><div style="width:%9px; height:%10px;"/></td>
-        </tr>            
-        </table>
-        </div>
-      </div>
-    </div>
-    <div id="boxB"><div id="boxBL"/><div id="boxBR"/><div id="boxBC"/></div>
-  </div>
+					<tr>
+					<form action="about:ktorrent">
+					<td style="text-align:right;"><label id="searchbarlabel" for="searchbarinput">%7: </label></td>
+					<td><input id="searchbarinput" name="%8" type="text"/></td>
+					</form>
+					</tr>
+					<tr>
+					<td colspan="2"><div style="width:%9px; height:%10px;"></div></td>
+					</tr>            
+					</table>
+				</div>
+			</div>
+		</div>
+		<div id="boxB">
+			<div id="boxBL"></div>
+			<div id="boxBR"></div>
+			<div id="boxBC"></div>
+		</div>
+	</div>
 
-  <div id="footer"><div id="footerL"/><div id="footerR"/></div>
+	<div id="footer">
+		<div id="footerL"></div>
+		<div id="footerR"></div>
+	</div>
 </body>
 </html>
 <!-- vim:set sw=2 et nocindent smartindent: -->

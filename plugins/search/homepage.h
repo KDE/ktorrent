@@ -42,10 +42,10 @@ namespace kt
 		
 	protected:
 		void loadHomePage();
-		QString serve();
 		
 	private:
 		QString home_page_html;
+		QString home_page_base_url;
 	};
 
 }

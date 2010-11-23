@@ -23,6 +23,7 @@
 #include <QTextStream>
 #include <QTextCodec>
 #include <QApplication>
+#include <QWebHistory>
 #include <KUrl>
 #include <KStandardDirs>
 #include <KIconLoader>
@@ -37,6 +38,7 @@ namespace kt
 	HomePage::HomePage(QWidget* parentWidget)
 		: KWebView(parentWidget)
 	{
+		page()->setForwardUnsupportedContent(true);
 	}
 		
 	HomePage::~HomePage()
@@ -54,27 +56,10 @@ namespace kt
 	void HomePage::home()
 	{
 		Out(SYS_SRC|LOG_DEBUG) << "Opening about:ktorrent" << endl;
-		setHtml(serve(),KUrl("about:ktorrent"));
-	}
-
-/*
-	bool HomePage::urlSelected(const QString& url, int button, int state, const QString& target, const KParts::OpenUrlArguments& args, const KParts::BrowserArguments& browserArgs)
-	{
-		if (url == "about:ktorrent")
-		{
-			home();
-			return true;
-		}
-		else
-			return KHTMLPart::urlSelected(url, button, state, target, args, browserArgs);
-	}
-*/
-	QString HomePage::serve()
-	{
 		if (home_page_html.isEmpty())
 			loadHomePage();
 		
-		return home_page_html;
+		setHtml(home_page_html, "file://" + home_page_base_url);
 	}
 
 	void HomePage::loadHomePage()
@@ -84,19 +69,20 @@ namespace kt
 		if (fptr.open(QIODevice::ReadOnly))
 		{
 			Out(SYS_SRC|LOG_DEBUG) << "Loading home page from " << file << endl;
+			home_page_base_url = file.left(file.lastIndexOf('/') + 1);
 			home_page_html = QTextStream(&fptr).readAll();
-			// otherwise all embedded objects are referenced as about:/...
-			QString basehref = QLatin1String("<BASE HREF=\"file:") +
-				file.left( file.lastIndexOf( '/' )) + QLatin1String("/\">\n");
-			home_page_html.replace("<head>", "<head>\n\t" + basehref, Qt::CaseInsensitive);
 			
 			// %1
 			home_page_html = home_page_html.arg("ktorrent_infopage.css");
 			// %2
 			if (qApp->layoutDirection() == Qt::RightToLeft)
-				home_page_html = home_page_html.arg("@import \"%1\";").arg(KStandardDirs::locate("data", "kdeui/about/kde_infopage_rtl.css"));
+			{
+				QString link = "<link rel=\"stylesheet\" type=\"text/css\" href=\"%1\" />";
+				link = link.arg(KStandardDirs::locate("data", "kdeui/about/kde_infopage_rtl.css"));
+				home_page_html = home_page_html.arg(link);
+			}
 			else
-				home_page_html = home_page_html.arg( "" );
+				home_page_html = home_page_html.arg("");
 			
 			KIconLoader *iconloader = KIconLoader::global();
 			int icon_size = iconloader->currentSize(KIconLoader::Desktop);
@@ -108,7 +94,7 @@ namespace kt
 				.arg(i18n("Search")) // %7
 				.arg("search_text") // %8
 				.arg(icon_size).arg(icon_size) // %9 and %10
-				;
+				.arg(home_page_base_url); // %11
 		}
 		else
 		{

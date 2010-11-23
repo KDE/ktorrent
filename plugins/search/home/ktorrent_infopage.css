@@ -4,7 +4,7 @@
  */
 
 img {margin: 0px; padding: 0px}
-body {margin: 0px; padding: 0px; background-color: #14749A; background-image: url(body-background.jpg); color: #FFFFFF; height="100%"; width="100%"}
+body {margin: 0px; padding: 0px; background-color: #14749A; background-image: url(body-background.jpg); color: #FFFFFF; height: 100%; width: 100%}
 a { color: #334560; text-decoration: none; font-weight: bold; }
 a:hover {
   color: #6193CF;
