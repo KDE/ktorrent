@@ -167,6 +167,12 @@ namespace kt
 		webview->openUrl(url);
 	}
 	
+	KUrl SearchWidget::searchUrl(const QString& search_text)
+	{
+		return sp->getSearchEngineList()->search(search_engine->currentIndex(),search_text);
+	}
+
+	
 	/*
 	void SearchWidget::onSearchRequested(const QString & text)
 	{

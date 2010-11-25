@@ -24,21 +24,47 @@
 #define KT_WEBVIEW_H
 
 #include <KWebView>
+#include <QNetworkReply>
 
 
 namespace kt
 {
-
+	
+	class SearchUrlBuilder
+	{
+	public:
+		virtual ~SearchUrlBuilder() {}
+		
+		virtual KUrl searchUrl(const QString & search_text) = 0;
+	};
+	
+	/**
+		WebView provides a webkit view which supports for the ktorrent homepage.
+	 */
 	class WebView : public KWebView
 	{
 		Q_OBJECT
-		
 	public:
-		WebView(QWidget* parentWidget = 0);
+		WebView(SearchUrlBuilder* search_url_builder, QWidget* parentWidget = 0);
 		virtual ~WebView();
 		
+		/**
+		 * Open a url
+		 * @param url The KUrl
+		 */
 		void openUrl(const KUrl & url);
+		
+		/**
+		 * Show the home page
+		 */
 		void home();
+		
+		/**
+		 * Get a search url for a search text
+		 * @param search_text The text to search
+		 * @return A KUrl to load
+		 */
+		KUrl searchUrl(const QString & search_text);
 		
 	protected:
 		void loadHomePage();
@@ -46,6 +72,7 @@ namespace kt
 	private:
 		QString home_page_html;
 		QString home_page_base_url;
+		SearchUrlBuilder* search_url_builder;
 	};
 
 }

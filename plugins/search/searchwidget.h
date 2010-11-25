@@ -24,6 +24,7 @@
 #include <kurl.h>
 #include <ktoolbar.h>
 #include <klineedit.h>
+#include "webview.h"
 
 class QProgressBar;
 class QNetworkReply;
@@ -37,7 +38,6 @@ namespace KParts
 
 namespace kt
 {
-	class WebView;
 	class SearchWidget;
 	class SearchPlugin;
 	
@@ -47,7 +47,7 @@ namespace kt
 		
 		Widget which shows a KHTML window with the users search in it
 	*/
-	class SearchWidget : public QWidget
+	class SearchWidget : public QWidget,public SearchUrlBuilder
 	{
 		Q_OBJECT
 	public:
@@ -86,6 +86,9 @@ namespace kt
 		void openNewTab();
 		void iconChanged();
 		void titleChanged(const QString & text);
+		
+	private:
+		virtual KUrl searchUrl(const QString& search_text);
 		
 	private:
 		WebView* webview;

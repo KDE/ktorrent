@@ -23,21 +23,56 @@
 #include <QTextStream>
 #include <QTextCodec>
 #include <QApplication>
+#include <QNetworkReply>
 #include <QWebHistory>
 #include <KUrl>
 #include <KStandardDirs>
 #include <KIconLoader>
 #include <KLocale>
 #include <util/log.h>
+#include <kio/accessmanager.h>
+
 
 using namespace bt;
 
 namespace kt
 {
 	
-	WebView::WebView(QWidget* parentWidget)
-		: KWebView(parentWidget)
+	
+	class NetworkAccessManager : public KIO::AccessManager
 	{
+	public:
+		NetworkAccessManager(WebView* parent) : KIO::AccessManager(parent),webview(parent)
+		{
+		}
+		
+		virtual ~NetworkAccessManager()
+		{}
+		
+		virtual QNetworkReply* createRequest(Operation op, const QNetworkRequest& req, QIODevice* outgoingData)
+		{
+			if (req.url().host() == "ktorrent.searchplugin")
+			{
+				//Out(SYS_GEN|LOG_DEBUG) << "REQUEST " << req.url().toString() << endl;
+				QString search_text = req.url().queryItemValue("search_text");
+				QUrl url(webview->searchUrl(search_text));
+				QNetworkRequest request(url);
+				webview->setUrl(url);
+				return KIO::AccessManager::createRequest(op,request,outgoingData);
+			}
+			
+			return KIO::AccessManager::createRequest(op,req,outgoingData);
+		}
+		
+		WebView* webview;
+	};
+	
+	//////////////////////////////////////////////////////
+	
+	WebView::WebView(kt::SearchUrlBuilder* search_url_builder, QWidget* parentWidget)
+		: KWebView(parentWidget),search_url_builder(search_url_builder)
+	{
+		page()->setNetworkAccessManager(new NetworkAccessManager(this));
 		page()->setForwardUnsupportedContent(true);
 	}
 		
@@ -47,7 +82,7 @@ namespace kt
 
 	void WebView::openUrl(const KUrl& url)
 	{
-		if (url.url() == "about:ktorrent")
+		if (url.host() == "ktorrent.searchplugin")
 			home();
 		else
 			load(url);
@@ -55,7 +90,6 @@ namespace kt
 	
 	void WebView::home()
 	{
-		Out(SYS_SRC|LOG_DEBUG) << "Opening about:ktorrent" << endl;
 		if (home_page_html.isEmpty())
 			loadHomePage();
 		
@@ -102,6 +136,13 @@ namespace kt
 		}
 	}
 
+	KUrl WebView::searchUrl(const QString& search_text)
+	{
+		if (search_url_builder)
+			return search_url_builder->searchUrl(search_text);
+		else
+			return KUrl("http://google.be");
+	}
 
 }
 
