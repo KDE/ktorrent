@@ -1,7 +1,6 @@
 set(ktsearchplugin_SRC 
-	homepage.cpp 
+	webview.cpp 
 	searchenginelist.cpp 
-	htmlpart.cpp 
 	searchprefpage.cpp 
 	searchwidget.cpp 
 	searchtoolbar.cpp 

@@ -20,8 +20,8 @@
 
 
 
-#ifndef KT_HOMEPAGE_H
-#define KT_HOMEPAGE_H
+#ifndef KT_WEBVIEW_H
+#define KT_WEBVIEW_H
 
 #include <KWebView>
 
@@ -29,13 +29,13 @@
 namespace kt
 {
 
-	class HomePage : public KWebView
+	class WebView : public KWebView
 	{
 		Q_OBJECT
 		
 	public:
-		HomePage(QWidget* parentWidget = 0);
-		virtual ~HomePage();
+		WebView(QWidget* parentWidget = 0);
+		virtual ~WebView();
 		
 		void openUrl(const KUrl & url);
 		void home();

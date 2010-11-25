@@ -24,7 +24,6 @@
 #include <kurl.h>
 #include <ktoolbar.h>
 #include <klineedit.h>
-#include "homepage.h"
 
 class QProgressBar;
 class QNetworkReply;
@@ -38,7 +37,7 @@ namespace KParts
 
 namespace kt
 {
-	class HTMLPart;
+	class WebView;
 	class SearchWidget;
 	class SearchPlugin;
 	
@@ -89,7 +88,7 @@ namespace kt
 		void titleChanged(const QString & text);
 		
 	private:
-		HomePage* webview;
+		WebView* webview;
 		KToolBar* sbar;
 		KMenu* right_click_menu;
 		SearchPlugin* sp;

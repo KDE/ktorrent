@@ -46,7 +46,7 @@
 #include <interfaces/functions.h>
 #include "searchplugin.h"
 #include "searchenginelist.h"
-#include "homepage.h"
+#include "webview.h"
 #include "searchactivity.h"
 
 
@@ -60,7 +60,7 @@ namespace kt
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
-		webview = new HomePage(this);
+		webview = new WebView(this);
 		
 		KActionCollection* ac = sp->getSearchActivity()->part()->actionCollection();
 		sbar = new KToolBar(this);

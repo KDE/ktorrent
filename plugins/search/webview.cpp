@@ -18,7 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include "homepage.h"
+#include "webview.h"
 #include <QFile>
 #include <QTextStream>
 #include <QTextCodec>
@@ -35,17 +35,17 @@ using namespace bt;
 namespace kt
 {
 	
-	HomePage::HomePage(QWidget* parentWidget)
+	WebView::WebView(QWidget* parentWidget)
 		: KWebView(parentWidget)
 	{
 		page()->setForwardUnsupportedContent(true);
 	}
 		
-	HomePage::~HomePage()
+	WebView::~WebView()
 	{
 	}
 
-	void HomePage::openUrl(const KUrl& url)
+	void WebView::openUrl(const KUrl& url)
 	{
 		if (url.url() == "about:ktorrent")
 			home();
@@ -53,7 +53,7 @@ namespace kt
 			load(url);
 	}
 	
-	void HomePage::home()
+	void WebView::home()
 	{
 		Out(SYS_SRC|LOG_DEBUG) << "Opening about:ktorrent" << endl;
 		if (home_page_html.isEmpty())
@@ -62,7 +62,7 @@ namespace kt
 		setHtml(home_page_html, "file://" + home_page_base_url);
 	}
 
-	void HomePage::loadHomePage()
+	void WebView::loadHomePage()
 	{
 		QString file = KStandardDirs::locate("data","ktorrent/search/home/home.html");
 		QFile fptr(file);
