@@ -69,8 +69,8 @@ namespace kt
 	
 	//////////////////////////////////////////////////////
 	
-	WebView::WebView(kt::SearchUrlBuilder* search_url_builder, QWidget* parentWidget)
-		: KWebView(parentWidget),search_url_builder(search_url_builder)
+	WebView::WebView(kt::WebViewClient* client, QWidget* parentWidget)
+		: KWebView(parentWidget),client(client)
 	{
 		page()->setNetworkAccessManager(new NetworkAccessManager(this));
 		page()->setForwardUnsupportedContent(true);
@@ -138,11 +138,18 @@ namespace kt
 
 	KUrl WebView::searchUrl(const QString& search_text)
 	{
-		if (search_url_builder)
-			return search_url_builder->searchUrl(search_text);
+		if (client)
+			return client->searchUrl(search_text);
 		else
 			return KUrl("http://google.be");
 	}
+	
+	QWebView* WebView::createWindow(QWebPage::WebWindowType type)
+	{
+		Q_UNUSED(type);
+		return client->newTab();
+	}
+
 
 }
 

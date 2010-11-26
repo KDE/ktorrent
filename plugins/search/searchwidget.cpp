@@ -311,6 +311,12 @@ namespace kt
 		openNewTab(url_to_open);
 	}
 	
+	QWebView* SearchWidget::newTab()
+	{
+		return sp->getSearchActivity()->newTab()->webview;
+	}
+
+	
 	void SearchWidget::home()
 	{
 		webview->home();

@@ -47,7 +47,7 @@ namespace kt
 		
 		Widget which shows a KHTML window with the users search in it
 	*/
-	class SearchWidget : public QWidget,public SearchUrlBuilder
+	class SearchWidget : public QWidget,public WebViewClient
 	{
 		Q_OBJECT
 	public:
@@ -89,6 +89,7 @@ namespace kt
 		
 	private:
 		virtual KUrl searchUrl(const QString& search_text);
+		virtual QWebView* newTab();
 		
 	private:
 		WebView* webview;

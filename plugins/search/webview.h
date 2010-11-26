@@ -30,12 +30,16 @@
 namespace kt
 {
 	
-	class SearchUrlBuilder
+	class WebViewClient
 	{
 	public:
-		virtual ~SearchUrlBuilder() {}
+		virtual ~WebViewClient() {}
 		
+		/// Get a search url for a search text
 		virtual KUrl searchUrl(const QString & search_text) = 0;
+		
+		/// Create a new tab
+		virtual QWebView* newTab() = 0;
 	};
 	
 	/**
@@ -45,7 +49,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		WebView(SearchUrlBuilder* search_url_builder, QWidget* parentWidget = 0);
+		WebView(WebViewClient* client, QWidget* parentWidget = 0);
 		virtual ~WebView();
 		
 		/**
@@ -68,11 +72,12 @@ namespace kt
 		
 	protected:
 		void loadHomePage();
+		virtual QWebView* createWindow(QWebPage::WebWindowType type);
 		
 	private:
 		QString home_page_html;
 		QString home_page_base_url;
-		SearchUrlBuilder* search_url_builder;
+		WebViewClient* client;
 	};
 
 }

@@ -253,6 +253,12 @@ namespace kt
 		return search;
 	}
 	
+	SearchWidget* SearchActivity::newTab()
+	{
+		return newSearchWidget(QString());
+	}
+
+	
 	void SearchActivity::openNewTab(const KUrl & url)
 	{
 		QString text = url.host();

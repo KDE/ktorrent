@@ -52,6 +52,9 @@ namespace kt
 		void loadState(KSharedConfigPtr cfg);
 		void saveState(KSharedConfigPtr cfg);
 		
+		/// Create a new empty search tab
+		SearchWidget* newTab();
+		
 	public slots:
 		void home();
 		void openNewTab(const KUrl & url);
