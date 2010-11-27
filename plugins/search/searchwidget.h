@@ -53,8 +53,6 @@ namespace kt
 	public:
 		SearchWidget(SearchPlugin* sp);
 		virtual ~SearchWidget();
-	
-		KMenu* rightClickMenu();
 		
 		QString getSearchText() const {return search_text->text();}
 		KUrl getCurrentUrl() const;
@@ -72,7 +70,6 @@ namespace kt
 	
 	public slots:
 		void search(const QString & text,int engine = 0);
-		void copyUrl();
 		void home();
 		void search();
 	
@@ -81,9 +78,7 @@ namespace kt
 		void loadFinished(bool ok);
 		void loadProgress(int p);
 		void unsupportedContent(QNetworkReply* reply);
-		void downloadRequestFinished();
-		void saveReply(QNetworkReply* reply);
-		void openNewTab();
+		void torrentDownloadFinished();
 		void iconChanged();
 		void titleChanged(const QString & text);
 		
@@ -94,16 +89,12 @@ namespace kt
 	private:
 		WebView* webview;
 		KToolBar* sbar;
-		KMenu* right_click_menu;
 		SearchPlugin* sp;
 		QProgressBar* prog;
 		QNetworkReply* torrent_download;
 		
 		KComboBox* search_engine;
 		KLineEdit* search_text;
-		QAction* open_url_action;
-		QAction* copy_url_action;
-		KUrl url_to_open;
 	};
 
 }

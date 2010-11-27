@@ -71,11 +71,21 @@ namespace kt
 		 */
 		KUrl searchUrl(const QString & search_text);
 		
+		/**
+		 * Download a response using KIO
+		 * @param reply The QNetworkReply to download
+		 */
+		void downloadResponse(QNetworkReply* reply);
+		
 	protected:
 		void loadHomePage();
 		virtual QWebView* createWindow(QWebPage::WebWindowType type);
 		
-	private slots:
+	public slots:
+		/**
+		 * Download a netwerk request
+		 * @param req The request
+		 */
 		void downloadRequested(const QNetworkRequest & req);
 		
 	private:

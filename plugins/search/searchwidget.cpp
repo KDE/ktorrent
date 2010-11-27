@@ -82,15 +82,6 @@ namespace kt
 		layout->addWidget(sbar);
 		layout->addWidget(webview);
 
-		right_click_menu = new KMenu(this);
-		open_url_action = right_click_menu->addAction(KIcon("tab-new"),i18n("Open in New Tab"),this,SLOT(openNewTab()));
-		open_url_action->setEnabled(false);
-		right_click_menu->addSeparator();
-		right_click_menu->addAction(webview->pageAction(QWebPage::Back));
-		right_click_menu->addAction(webview->pageAction(QWebPage::Reload));
-		right_click_menu->addSeparator();
-		right_click_menu->addAction(webview->pageAction(QWebPage::Copy));
-		copy_url_action = right_click_menu->addAction(KIcon("edit-copy"),i18n("Copy URL"),this,SLOT(copyUrl()));
 		search_text->setClearButtonShown(true);
 		
 		connect(webview,SIGNAL(loadStarted()),this,SLOT(loadStarted()));
@@ -122,12 +113,6 @@ namespace kt
 	{
 		changeTitle(this,text);
 	}
-
-	void SearchWidget::copyUrl()
-	{
-		QClipboard* cb = QApplication::clipboard();
-		cb->setText(url_to_open.prettyUrl());
-	}
 	
 	KUrl SearchWidget::getCurrentUrl() const
 	{
@@ -147,7 +132,7 @@ namespace kt
 	void SearchWidget::restore(const KUrl & url,const QString & text,const QString & sb_text,int engine)
 	{
 		if (url.protocol() == "home")
-			webview->openUrl(KUrl("about:ktorrent"));
+			webview->home();
 		else
 			webview->openUrl(url);
 	
@@ -171,45 +156,10 @@ namespace kt
 	{
 		return sp->getSearchEngineList()->search(search_engine->currentIndex(),search_text);
 	}
-
-	
-	/*
-	void SearchWidget::onSearchRequested(const QString & text)
-	{
-		search(text,search_engine->currentIndex());
-	}
-	*/
 	
 	void SearchWidget::setSearchBarEngine(int engine)
 	{
 		search_engine->setCurrentIndex(engine);
-	}
-	/*
-	void SearchWidget::showPopupMenu(const QString & url,const QPoint & p)
-	{
-		open_url_action->setEnabled(!url.isEmpty());
-		copy_url_action->setEnabled(!url.isEmpty());
-		if (!url.isEmpty())
-		{
-			if (!url.startsWith("/"))
-				url_to_open = KUrl(url);
-			else 
-			{
-				KUrl u = html_part->baseURL();
-				QString base = u.scheme() + "://" + u.authority();
-				url_to_open = KUrl(base);
-				url_to_open.setPath(url);
-			}
-		}
-		
-		right_click_menu->popup(p);
-	}
-	
-	*/
-	
-	KMenu* SearchWidget::rightClickMenu()
-	{
-		return right_click_menu;
 	}
 	
 	void SearchWidget::loadProgress(int perc)
@@ -252,39 +202,24 @@ namespace kt
 		{
 			torrent_download = r;
 			if (!r->isFinished())
-				connect(r,SIGNAL(finished()),this,SLOT(downloadRequestFinished()));
+				connect(r,SIGNAL(finished()),this,SLOT(torrentDownloadFinished()));
 			else
-				downloadRequestFinished();
+				torrentDownloadFinished();
 		}
 		else
 		{
-			KMessageBox::error(this,QString("unsupportedContent %1").arg(r->url().toString()));
-			r->abort();
+			webview->downloadResponse(r);
 		}
 	}
 	
-	void SearchWidget::saveReply(QNetworkReply* reply)
-	{
-		QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"),kt::TorrentFileFilter(false),this);
-		if (!fn.isNull())
-		{
-			QFile fptr(fn);
-			if (!fptr.open(QIODevice::WriteOnly))
-			{
-				KMessageBox::error(this,i18n("Cannot open <b>%1</b>: %2",fn,fptr.errorString()));
-			}
-			else
-			{
-				fptr.write(reply->readAll());
-			}
-		}
-	}
-
-	
-	void SearchWidget::downloadRequestFinished()
+	void SearchWidget::torrentDownloadFinished()
 	{
 		if (torrent_download->error() != QNetworkReply::NoError)
+		{
+			KMessageBox::error(this,torrent_download->errorString());
+			torrent_download = 0;
 			return;
+		}
 		
 		int ret = KMessageBox::questionYesNoCancel(0,
 			i18n("Do you want to download or save the torrent?"),
@@ -295,20 +230,14 @@ namespace kt
 		if (ret == KMessageBox::Yes)
 			sp->getCore()->load(torrent_download->readAll(),torrent_download->url(),QString(),QString());
 		else if (ret == KMessageBox::No)
-			saveReply(torrent_download);
+			webview->downloadResponse(torrent_download);
 		
 		torrent_download = 0;
 	}
-
 	
 	void SearchWidget::search()
 	{
 		search(search_text->text(),search_engine->currentIndex());
-	}
-
-	void SearchWidget::openNewTab()
-	{
-		openNewTab(url_to_open);
 	}
 	
 	QWebView* SearchWidget::newTab()

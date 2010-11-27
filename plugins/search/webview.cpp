@@ -166,5 +166,11 @@ namespace kt
 			KIO::copy(req.url(),KUrl(path));
 	}
 
+	void WebView::downloadResponse(QNetworkReply* reply)
+	{
+		KWebPage* p = (KWebPage*)page();
+		p->downloadResponse(reply);
+	}
+
 }
 
