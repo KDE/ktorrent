@@ -23,6 +23,7 @@
 #ifndef KT_WEBVIEW_H
 #define KT_WEBVIEW_H
 
+#include <KUrl>
 #include <KWebView>
 #include <QNetworkReply>
 
@@ -74,10 +75,15 @@ namespace kt
 		void loadHomePage();
 		virtual QWebView* createWindow(QWebPage::WebWindowType type);
 		
+	private slots:
+		void downloadRequested(const QNetworkRequest & req);
+		
 	private:
 		QString home_page_html;
 		QString home_page_base_url;
 		WebViewClient* client;
+		KUrl clicked_url;
+		KUrl image_url;
 	};
 
 }

@@ -19,18 +19,23 @@
  ***************************************************************************/
 
 #include "webview.h"
-#include <QFile>
+#include <QAction>
 #include <QTextStream>
-#include <QTextCodec>
 #include <QApplication>
 #include <QNetworkReply>
 #include <QWebHistory>
+#include <QWebHitTestResult>
 #include <KUrl>
 #include <KStandardDirs>
 #include <KIconLoader>
 #include <KLocale>
+#include <KWebPage>
 #include <util/log.h>
+#include <kio/job.h>
 #include <kio/accessmanager.h>
+#include <KFileDialog>
+#include <kio/copyjob.h>
+
 
 
 using namespace bt;
@@ -67,6 +72,7 @@ namespace kt
 		WebView* webview;
 	};
 	
+	
 	//////////////////////////////////////////////////////
 	
 	WebView::WebView(kt::WebViewClient* client, QWidget* parentWidget)
@@ -74,6 +80,8 @@ namespace kt
 	{
 		page()->setNetworkAccessManager(new NetworkAccessManager(this));
 		page()->setForwardUnsupportedContent(true);
+		
+		connect(page(),SIGNAL(downloadRequested(QNetworkRequest)),this,SLOT(downloadRequested(QNetworkRequest)));
 	}
 		
 	WebView::~WebView()
@@ -149,7 +157,14 @@ namespace kt
 		Q_UNUSED(type);
 		return client->newTab();
 	}
-
+	
+	void WebView::downloadRequested(const QNetworkRequest& req)
+	{
+		QString filename = QFileInfo(req.url().path()).fileName();
+		QString path = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///webview"),this,i18n("Save %1 to",filename));
+		if (!path.isEmpty())
+			KIO::copy(req.url(),KUrl(path));
+	}
 
 }
 
