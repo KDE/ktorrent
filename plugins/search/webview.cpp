@@ -23,7 +23,7 @@
 #include <QTextStream>
 #include <QApplication>
 #include <QNetworkReply>
-#include <QWebHistory>
+#include <QWebHistoryInterface>
 #include <QWebHitTestResult>
 #include <KUrl>
 #include <KStandardDirs>
@@ -35,14 +35,14 @@
 #include <kio/accessmanager.h>
 #include <KFileDialog>
 #include <kio/copyjob.h>
-
+#include "buffernetworkreply.h"
+#include "localfilenetworkreply.h"
 
 
 using namespace bt;
 
 namespace kt
 {
-	
 	
 	class NetworkAccessManager : public KIO::AccessManager
 	{
@@ -58,12 +58,22 @@ namespace kt
 		{
 			if (req.url().host() == "ktorrent.searchplugin")
 			{
-				//Out(SYS_GEN|LOG_DEBUG) << "REQUEST " << req.url().toString() << endl;
 				QString search_text = req.url().queryItemValue("search_text");
-				QUrl url(webview->searchUrl(search_text));
-				QNetworkRequest request(url);
-				webview->setUrl(url);
-				return KIO::AccessManager::createRequest(op,request,outgoingData);
+				if (!search_text.isEmpty())
+				{
+					QUrl url(webview->searchUrl(search_text));
+					QNetworkRequest request(url);
+					webview->setUrl(url);
+					return KIO::AccessManager::createRequest(op,request,outgoingData);
+				}
+				else if (req.url().path() == "/")
+				{
+					return new BufferNetworkReply(webview->homePageData().toLocal8Bit(),"text/html",this);
+				}
+				else
+				{
+					return new LocalFileNetworkReply(webview->homePageBaseDir() + req.url().path(),this);
+				}
 			}
 			
 			return KIO::AccessManager::createRequest(op,req,outgoingData);
@@ -101,8 +111,17 @@ namespace kt
 		if (home_page_html.isEmpty())
 			loadHomePage();
 		
-		setHtml(home_page_html, "file://" + home_page_base_url);
+		load(QUrl("http://ktorrent.searchplugin/"));
 	}
+	
+	QString WebView::homePageData()
+	{
+		if (home_page_html.isEmpty())
+			loadHomePage();
+		
+		return home_page_html;
+	}
+
 
 	void WebView::loadHomePage()
 	{
@@ -135,8 +154,7 @@ namespace kt
 				.arg(i18n("Search the web for torrents.")) // %6
 				.arg(i18n("Search")) // %7
 				.arg("search_text") // %8
-				.arg(icon_size).arg(icon_size) // %9 and %10
-				.arg(home_page_base_url); // %11
+				.arg(icon_size).arg(icon_size); // %9 and %10
 		}
 		else
 		{

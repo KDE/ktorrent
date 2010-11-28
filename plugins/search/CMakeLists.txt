@@ -1,5 +1,7 @@
 set(ktsearchplugin_SRC 
 	webview.cpp 
+	localfilenetworkreply.cpp 
+	buffernetworkreply.cpp 
 	searchenginelist.cpp 
 	searchprefpage.cpp 
 	searchwidget.cpp 

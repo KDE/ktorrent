@@ -77,6 +77,12 @@ namespace kt
 		 */
 		void downloadResponse(QNetworkReply* reply);
 		
+		/// Get the html code of the homepage
+		QString homePageData();
+		
+		/// Get the home page base directory
+		QString homePageBaseDir() const {return home_page_base_url;}
+		
 	protected:
 		void loadHomePage();
 		virtual QWebView* createWindow(QWebPage::WebWindowType type);
