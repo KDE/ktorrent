@@ -18,69 +18,90 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef SEARCHACTIVITY_H
-#define SEARCHACTIVITY_H
 
-#include <QList>
-#include <kurl.h>
-#include <ktabwidget.h>
-#include <kaction.h>
-#include <interfaces/activity.h>
+
+#ifndef KT_WEBVIEW_H
+#define KT_WEBVIEW_H
+
+#include <KUrl>
+#include <KWebView>
+#include <QNetworkReply>
+
 
 namespace kt
 {
-	class SearchToolBar;
-	class SearchWidget;
-	class SearchPlugin;
-
-	class SearchActivity : public kt::Activity
+	
+	class WebViewClient
+	{
+	public:
+		virtual ~WebViewClient() {}
+		
+		/// Get a search url for a search text
+		virtual KUrl searchUrl(const QString & search_text) = 0;
+		
+		/// Create a new tab
+		virtual QWebView* newTab() = 0;
+	};
+	
+	/**
+		WebView provides a webkit view which supports for the ktorrent homepage.
+	 */
+	class WebView : public KWebView
 	{
 		Q_OBJECT
 	public:
-		SearchActivity(SearchPlugin* sp,QWidget* parent);
-		virtual ~SearchActivity();
+		WebView(WebViewClient* client, QWidget* parentWidget = 0);
+		virtual ~WebView();
 		
-		/// Add a SearchWidget
-		void search(const QString & text,int engine);
+		/**
+		 * Open a url
+		 * @param url The KUrl
+		 */
+		void openUrl(const KUrl & url);
 		
-		/// Save all current searches
-		void saveCurrentSearches();
+		/**
+		 * Show the home page
+		 */
+		void home();
 		
-		/// Load current searches
-		void loadCurrentSearches();
+		/**
+		 * Get a search url for a search text
+		 * @param search_text The text to search
+		 * @return A KUrl to load
+		 */
+		KUrl searchUrl(const QString & search_text);
 		
-		void loadState(KSharedConfigPtr cfg);
-		void saveState(KSharedConfigPtr cfg);
+		/**
+		 * Download a response using KIO
+		 * @param reply The QNetworkReply to download
+		 */
+		void downloadResponse(QNetworkReply* reply);
 		
-		/// Create a new empty search tab
-		SearchWidget* newTab();
+		/// Get the html code of the homepage
+		QString homePageData();
+		
+		/// Get the home page base directory
+		QString homePageBaseDir() const {return home_page_base_url;}
+		
+	protected:
+		void loadHomePage();
+		virtual QWebView* createWindow(QWebPage::WebWindowType type);
 		
 	public slots:
-		void home();
-		void openNewTab(const KUrl & url);
-		void currentTabChanged(int idx);
-		void closeTab();
-		void openTab();
-		void setTabTitle(SearchWidget* sw,const QString & title);
-		void setTabIcon(SearchWidget* sw,const QIcon & icon);
-		void clearSearchHistory();
-		void search();
-		void find();
+		/**
+		 * Download a netwerk request
+		 * @param req The request
+		 */
+		void downloadRequested(const QNetworkRequest & req);
 		
 	private:
-		SearchWidget* newSearchWidget(const QString & text);
-		void setupActions();
-		
-	private:
-		KTabWidget* tabs;
-		QList<SearchWidget*> searches;
-		SearchPlugin* sp;
-		SearchToolBar* toolbar;
-		
-		KAction* find_action;
-		KAction* search_action;
-		KAction* home_action;
+		QString home_page_html;
+		QString home_page_base_url;
+		WebViewClient* client;
+		KUrl clicked_url;
+		KUrl image_url;
 	};
+
 }
 
-#endif // SEARCHACTIVITY_H
+#endif // KT_HOMEPAGE_H

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,46 +17,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSEARCHPLUGIN_H
-#define KTSEARCHPLUGIN_H
 
-#include <QList>
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
-#include "searchenginelist.h"
 
-namespace kt
+#ifndef KT_BUFFERNETWORKREPLY_H
+#define KT_BUFFERNETWORKREPLY_H
+
+#include <QBuffer>
+#include <QNetworkReply>
+
+
+namespace kt 
 {
-	class SearchPrefPage;
-	class SearchActivity;
-
 	/**
-	@author Joris Guisson
-	*/
-	class SearchPlugin : public Plugin
+	 * QNetworkReply which reads from a buffer
+	 */
+	class BufferNetworkReply : public QNetworkReply
 	{
-		Q_OBJECT
 	public:
-		SearchPlugin(QObject* parent, const QStringList& args);
-		virtual ~SearchPlugin();
+		/**
+		 * @param data The data to put into the buffer
+		 * @param content_type Content type of the data
+		 * @param parent Parent of the BufferNetworkReply
+		 */
+		BufferNetworkReply(const QByteArray & data, const QString & content_type, QObject* parent = 0);
+		virtual ~BufferNetworkReply();
+		
+		virtual void abort();
+		virtual bool isSequential() const {return true;}
+		virtual qint64 bytesAvailable() const;
 
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
-		
-		SearchEngineList* getSearchEngineList() const {return engines;}
-		SearchActivity* getSearchActivity() const {return activity;}
-		
-	private slots:
-		void search(const QString & text,int engine,bool external);
-		void preferencesUpdated();
-		
+	protected:
+		virtual qint64 readData(char* data, qint64 maxlen);
+
 	private:
-		SearchActivity* activity;
-		SearchPrefPage* pref;
-		SearchEngineList* engines;
+		QBuffer buf;
 	};
 
 }
 
-#endif
+#endif // KT_BUFFERNETWORKREPLY_H

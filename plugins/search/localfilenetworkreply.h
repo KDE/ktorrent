@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,64 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef HTMLPART_H
-#define HTMLPART_H
 
-#include "homepage.h"
 
-class KJob;
-class KUrl;
+#ifndef KT_LOCALFILENETWORKREPLY_H
+#define KT_LOCALFILENETWORKREPLY_H
 
-namespace KIO
+#include <QNetworkReply>
+#include <QFile>
+
+
+namespace kt 
 {
-	class Job;
-}
-
-
-namespace kt
-{
-
 	/**
-	@author Joris Guisson
-	*/
-	class HTMLPart : public HomePage
+	 * QNetworkReply which reads a local file.
+	 */
+	class LocalFileNetworkReply : public QNetworkReply
 	{
-		Q_OBJECT
 	public:
-		HTMLPart(QWidget *parent = 0);
-		virtual ~HTMLPart();
+		LocalFileNetworkReply(const QString & file,QObject* parent = 0);
+		virtual ~LocalFileNetworkReply();
 		
-		bool backAvailable() const {return history.count() > 1;}
-		QString title() const;
-	
-	public slots:
-		void back();
-		void reload();
-		void copy();
-		void openUrlRequest(const KUrl &url, const KParts::OpenUrlArguments & arg, const KParts::BrowserArguments & barg);
-		void addToHistory(const KUrl & url);
-	
-	private slots:
-		void dataReceived(KIO::Job* job,const QByteArray & data);
-		void mimetype(KIO::Job* job,const QString & mt);
-		void jobDone(KJob* job);
+		virtual void abort();
+		virtual bool isSequential() const {return true;}
+		virtual bool atEnd() const;
+		virtual qint64 bytesAvailable() const;
 		
-	
-	signals:
-		void backAvailable(bool yes);
-		void openTorrent(const KUrl & url);
-		void saveTorrent(const KUrl & url);
-		void searchFinished();
-		void searchRequested(const QString & text);
-	
+	protected:
+		virtual qint64 readData(char* data, qint64 maxlen);
+		
 	private:
-		KUrl::List history;
-		KJob* active_job;
-		QByteArray curr_data;
-		QString mime_type;
-		KUrl curr_url;
-		bool add_to_history;
+		QFile* fptr;
 	};
+
 }
 
-#endif
+#endif // KT_LOCALFILENETWORKREPLY_H

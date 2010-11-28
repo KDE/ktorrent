@@ -21,15 +21,16 @@
 #ifndef SEARCHTAB_H
 #define SEARCHTAB_H
 
-#include <ktoolbar.h>
-		
+#include <QObject>
+
+class QAction;
 class KComboBox;
+class KActionCollection;
 
 
 namespace kt
 {
 	class SearchEngineList;
-	class SearchPlugin;
 
 	/**
 		Holds all widgets of the toolbar of the search plugin.
@@ -39,7 +40,7 @@ namespace kt
 		Q_OBJECT
 	
 	public:
-		SearchToolBar(SearchPlugin* plugin,SearchEngineList* sl);
+		SearchToolBar(KActionCollection* ac,SearchEngineList* sl,QObject* parent);
 		virtual ~SearchToolBar();
 		
 		/// Save settings like current search engine

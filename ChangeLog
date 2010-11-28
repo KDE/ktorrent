@@ -30,6 +30,8 @@ Changes in 4.1:
 - Add support for tracking jobs inside the GUI of ktorrent
 - Ask if an existing file must be overwritten when exporting a torrent (256416)
 - Don't reinclude files when changing priority of a directory (252555)
+- Open new search tab on middle click (151429)
+- Search plugin now uses webkit instead of KHTML
 
 Changes in 4.0.5:
 - Fix crash due to uncaught exception when creating torrent (255020)

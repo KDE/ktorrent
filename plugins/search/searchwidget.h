@@ -24,8 +24,10 @@
 #include <kurl.h>
 #include <ktoolbar.h>
 #include <klineedit.h>
+#include "webview.h"
 
 class QProgressBar;
+class QNetworkReply;
 class KMenu;
 class KComboBox;
 
@@ -36,7 +38,6 @@ namespace KParts
 
 namespace kt
 {
-	class HTMLPart;
 	class SearchWidget;
 	class SearchPlugin;
 	
@@ -46,67 +47,54 @@ namespace kt
 		
 		Widget which shows a KHTML window with the users search in it
 	*/
-	class SearchWidget : public QWidget
+	class SearchWidget : public QWidget,public WebViewClient
 	{
 		Q_OBJECT
 	public:
 		SearchWidget(SearchPlugin* sp);
 		virtual ~SearchWidget();
-	
-		KMenu* rightClickMenu();
 		
 		QString getSearchText() const {return search_text->text();}
 		KUrl getCurrentUrl() const;
 		QString getSearchBarText() const;
 		int getSearchBarEngine() const;
 		void setSearchBarEngine(int engine);
-		
 		bool backAvailable() const;
+		void restore(const KUrl & url,const QString & text,const QString & sb_text,int engine);
 		
 	signals:
 		void enableBack(bool on);
 		void openNewTab(const KUrl & url);
 		void changeTitle(SearchWidget* w,const QString & title);
+		void changeIcon(SearchWidget* w,const QIcon & icon);
 	
 	public slots:
 		void search(const QString & text,int engine = 0);
-		void copy();
-		void copyUrl();
-		void find();
-		void search();
-		void back();
-		void reload();
-		void onShutDown();
 		void home();
-		void restore(const KUrl & url,const QString & text,const QString & sb_text,int engine);
-		void onSearchRequested(const QString & text);
+		void search();
 	
 	private slots:
-		void onUrlHover(const QString & url);
-		void onFinished();
-		void onOpenTorrent(const KUrl & url);
-		void onSaveTorrent(const KUrl & url);
-		void showPopupMenu(const QString & s,const QPoint & p);
-		void onBackAvailable(bool available);
-		void onFrameAdded(KParts::Part* p);
-		void statusBarMsg(const QString & url);
-		void openTorrent(const KUrl & url);
-		void loadingProgress(int perc);
-		void openNewTab();
-		
+		void loadStarted();
+		void loadFinished(bool ok);
+		void loadProgress(int p);
+		void unsupportedContent(QNetworkReply* reply);
+		void torrentDownloadFinished();
+		void iconChanged();
+		void titleChanged(const QString & text);
 		
 	private:
-		HTMLPart* html_part;
+		virtual KUrl searchUrl(const QString& search_text);
+		virtual QWebView* newTab();
+		
+	private:
+		WebView* webview;
 		KToolBar* sbar;
-		KMenu* right_click_menu;
 		SearchPlugin* sp;
 		QProgressBar* prog;
+		QNetworkReply* torrent_download;
 		
 		KComboBox* search_engine;
 		KLineEdit* search_text;
-		QAction* open_url_action;
-		QAction* copy_url_action;
-		KUrl url_to_open;
 	};
 
 }

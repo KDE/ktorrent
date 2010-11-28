@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,44 +18,48 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
-
-#ifndef KT_HOMEPAGE_H
-#define KT_HOMEPAGE_H
-
-#include <khtml_part.h>
-
+#include "buffernetworkreply.h"
+#include <QTimer>
+#include <QByteArray>
 
 namespace kt
 {
-
-	class HomePage : public KHTMLPart
+	BufferNetworkReply::BufferNetworkReply(const QByteArray& data, const QString& content_type, QObject* parent) 
+		: QNetworkReply(parent)
 	{
-		Q_OBJECT
+		buf.open(ReadWrite);
+		buf.write(data);
+		buf.seek(0);
 		
-	public:
-		HomePage(QWidget* parentWidget = 0, QObject* parent = 0, GUIProfile prof = DefaultGUI);
-		virtual ~HomePage();
+		open(ReadOnly | Unbuffered);
+		setHeader(QNetworkRequest::ContentTypeHeader, content_type);
+		setHeader(QNetworkRequest::ContentLengthHeader, data.size());
+		setAttribute(QNetworkRequest::HttpStatusCodeAttribute, 200);
+		setAttribute(QNetworkRequest::HttpReasonPhraseAttribute, "OK");
 		
-		virtual bool openUrl(const KUrl & url);
-		virtual bool openFile();
-		
-		void home();
-		
-		virtual void addToHistory(const KUrl & url) = 0;
-		
-	protected:
-		virtual bool urlSelected(const QString &url, int button, int state, const QString &target,
-								 const KParts::OpenUrlArguments& args = KParts::OpenUrlArguments(),
-								 const KParts::BrowserArguments& browserArgs = KParts::BrowserArguments());
-		
-		void loadHomePage();
-		QString serve();
-		
-	private:
-		QString home_page_html;
-	};
+		QTimer::singleShot(0,this,SIGNAL(readyRead()));
+		QTimer::singleShot(0,this,SIGNAL(finished()));
+	}
+
+	BufferNetworkReply::~BufferNetworkReply()
+	{
+
+	}
+
+	void BufferNetworkReply::abort()
+	{
+		// Do nothing
+	}
+
+	qint64 BufferNetworkReply::readData(char* data, qint64 maxlen)
+	{
+		return buf.read(data,maxlen);
+	}
+
+	qint64 BufferNetworkReply::bytesAvailable() const
+	{
+		return buf.bytesAvailable();
+	}
 
 }
 
-#endif // KT_HOMEPAGE_H

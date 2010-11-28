@@ -53,8 +53,6 @@ namespace kt
 	{
 		Q_UNUSED(args);
 		pref = 0;
-		toolbar = 0;
-		setXMLFile("ktsearchpluginui.rc");
 	}
 
 
@@ -67,22 +65,17 @@ namespace kt
 		LogSystemManager::instance().registerSystem(i18nc("plugin name","Search"),SYS_SRC);
 		engines = new SearchEngineList(kt::DataDir() + "searchengines/");
 		engines->loadEngines();
-	
-		toolbar = new SearchToolBar(this,engines);
-		
-		connect(toolbar,SIGNAL(search( const QString&, int, bool )),
-				this,SLOT(search( const QString&, int, bool )));
 		 
 		pref = new SearchPrefPage(this,engines,0);
 		getGUI()->addPrefPage(pref);
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(preferencesUpdated()));
-		connect(pref,SIGNAL(clearSearchHistory()),toolbar,SLOT(clearHistory()));
 		
 		activity = new SearchActivity(this,0);
 		getGUI()->addActivity(activity);
-		setupActions();
 		activity->loadCurrentSearches();
 		activity->loadState(KGlobal::config());
+		
+		connect(pref,SIGNAL(clearSearchHistory()),activity,SLOT(clearSearchHistory()));
 	}
 
 	void SearchPlugin::unload()
@@ -91,13 +84,10 @@ namespace kt
 		getGUI()->removeActivity(activity);
 		activity->saveCurrentSearches();
 		activity->saveState(KGlobal::config());
-		toolbar->saveSettings();
-		toolbar->deleteLater();
 		
 		getGUI()->removePrefPage(pref);
 		delete pref;
 		pref = 0;
-		toolbar = 0;
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(preferencesUpdated()));
 		delete engines;
 		engines = 0;
@@ -135,32 +125,5 @@ namespace kt
 		return version == KT_VERSION_MACRO;
 	}
 	
-	void SearchPlugin::setupActions()
-	{
-		KActionCollection* ac = actionCollection();
-		back_action = KStandardAction::back(activity,SLOT(back()),this);
-		ac->addAction("search_tab_back",back_action);
-		
-		reload_action = KStandardAction::redisplay(activity,SLOT(reload()),this);
-		ac->addAction("search_tab_reload",reload_action);
-		
-		search_action = new KAction(KIcon("edit-find"),i18n("Search"),this);
-		connect(search_action,SIGNAL(triggered()),activity,SLOT(search()));
-		ac->addAction("search_tab_search",search_action);
-		
-		find_action = KStandardAction::find(activity,SLOT(find()),this);
-		ac->addAction("search_tab_find",find_action);
-		
-		copy_action = KStandardAction::copy(activity,SLOT(copy()),this);
-		ac->addAction("search_tab_copy",copy_action);
-		
-		home_action = KStandardAction::home(activity,SLOT(home()),this);
-		ac->addAction("search_home",home_action);
-	}
-	
-	int SearchPlugin::currentSearchEngine() const
-	{
-		return toolbar->currentSearchEngine();
-	}
 }
 #include "searchplugin.moc"

@@ -100,6 +100,7 @@ namespace kt
 	QProgressBar* StatusBar::createProgressBar()
 	{
 		QProgressBar* pb = new QProgressBar(this);
+		pb->setMaximumHeight(height());
 		addPermanentWidget(pb);
 		return pb;
 	}
