@@ -63,6 +63,7 @@ Comment[pt_BR]=Mecanismo de dados do KTorrent, para adquirir informações do pr
 Comment[sv]=Ktorrent-datagränssnitt, för att hämta information från Ktorrent
 Comment[uk]=Рушій даних KTorrent, для отримання відомостей від KTorrent
 Comment[x-test]=xxKTorrent data engine, for getting information from KTorrentxx
+Comment[zh_TW]=KTorrent 資料引擎，從 KTorrent 中取得資訊
 X-KDE-ServiceTypes=Plasma/DataEngine
 Type=Service
 Icon=ktorrent

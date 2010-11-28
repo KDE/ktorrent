@@ -55,6 +55,7 @@ Comment[pt_BR]=Script para criar grupos automaticamente, baseado nas URLs dos ra
 Comment[sv]=Skript för att skapa automatiska grupper baserat på spårarnas webbadresser
 Comment[uk]=Скрипт для створення автоматичних груп за адресами координаторів
 Comment[x-test]=xxScript to create automatic groups based upon tracker URLsxx
+Comment[zh_TW]=依追蹤器的網址自動建立群組的文稿
 Type=KTorrentScript
 Icon=network-server
 X-KTorrent-Script-Author=Joris Guisson
