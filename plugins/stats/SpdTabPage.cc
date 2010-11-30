@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include <SpdTabPage.h>
+#include <peer/peer.h>
 
 namespace kt {
 
@@ -158,14 +159,10 @@ void SpdTabPage::GatherPeersSpeed(Plugin * pPlug)
 		
 		const bt::PeerManager * p_mgr = tctl -> getPeerMgr();
 		
-		for(bt::PeerManager::CItr p_it = p_mgr -> beginPeerList(); p_it != p_mgr -> endPeerList(); p_it++)
+		QList<bt::Peer*> ppl = p_mgr->getPeers();
+		foreach (bt::Peer* peer,ppl)
 		{
-			if(! (*p_it))
-			{
-				continue;
-			}
-			
-			const bt::PeerInterface::Stats p_stats = (*p_it) -> getStats();
+			const bt::PeerInterface::Stats p_stats = peer -> getStats();
 			
 			if(p_stats.perc_of_file >= 100)
 			{
