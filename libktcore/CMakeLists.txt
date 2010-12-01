@@ -39,6 +39,7 @@ set(libktorrent_SRC
 	dbus/dbustorrent.cpp
 	dbus/dbusgroup.cpp
 	dbus/dbussettings.cpp
+	dbus/dbustorrentfilestream.cpp
 	
 	gui/centralwidget.cpp
 	gui/tabbarwidget.cpp

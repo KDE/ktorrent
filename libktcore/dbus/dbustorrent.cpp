@@ -31,6 +31,7 @@
 #include <bcodec/bencoder.h>
 #include "dbustorrent.h"
 #include <interfaces/trackerinterface.h>
+#include "dbustorrentfilestream.h"
 
 using namespace bt;
 
@@ -39,7 +40,7 @@ namespace kt
 	
 
 	DBusTorrent::DBusTorrent(bt::TorrentInterface* ti,QObject* parent)
-			: QObject(parent),ti(ti)
+			: QObject(parent),ti(ti),stream(0)
 	{
 		QDBusConnection sb = QDBusConnection::sessionBus();
 		QString path = QString("/torrent/%1").arg(ti->getInfoHash().toString());
@@ -476,5 +477,22 @@ namespace kt
 	{
 		return ti->getStats().shareRatio();
 	}
+	
+	bool DBusTorrent::createStream(uint file_index)
+	{
+		if (stream)
+			delete stream;
+		
+		stream = new DBusTorrentFileStream(file_index,this);
+		if (!stream->ok())
+		{
+			delete stream;
+			stream = 0;
+			return false;
+		}
+		
+		return true;
+	}
+
 }
 
