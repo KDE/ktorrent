@@ -54,6 +54,7 @@ namespace kt
 		m_tracker_list->setRootIsDecorated(false);
 		m_tracker_list->setAlternatingRowColors(true);
 		m_tracker_list->setSortingEnabled(true);
+		m_tracker_list->setUniformRowHeights(true);
 		connect(m_add_tracker,SIGNAL(clicked()),this,SLOT(addClicked()));
 		connect(m_remove_tracker,SIGNAL(clicked()),this,SLOT(removeClicked()));
 		connect(m_change_tracker,SIGNAL(clicked()),this,SLOT(changeClicked()));

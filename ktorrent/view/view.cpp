@@ -68,7 +68,7 @@ namespace kt
 		setSelectionBehavior(QAbstractItemView::SelectRows);
 		setAcceptDrops(true);
 		setDragDropMode(DragDrop);
-//		setUniformRowHeights(true);
+		setUniformRowHeights(true);
 		
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showMenu( const QPoint& )));
 	
@@ -86,10 +86,6 @@ namespace kt
 			column_idx_map[act] = i;
 			column_action_list.append(act);
 		}
-		
-		// also add header_menu to the right click menu
-	//	menu->addSeparator();
-	//	menu->addMenu(header_menu)->setText(i18n("Configure Columns"));
 		
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
 		
@@ -139,6 +135,8 @@ namespace kt
 
 	void View::update()
 	{
+		if (!uniformRowHeights() && !delegate->hasExtenders())
+			setUniformRowHeights(true);
 		model->update(delegate);
 	}
 

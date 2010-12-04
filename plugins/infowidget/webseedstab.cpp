@@ -49,6 +49,7 @@ namespace kt
 		proxy_model->setSortRole(Qt::UserRole);
 		m_webseed_list->setModel(proxy_model);
 		m_webseed_list->setSortingEnabled(true);
+		m_webseed_list->setUniformRowHeights(true);
 		
 		connect(m_webseed_list->selectionModel(),SIGNAL( selectionChanged ( const QItemSelection & , const QItemSelection &  )),
 				this,SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));

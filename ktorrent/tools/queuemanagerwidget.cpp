@@ -47,6 +47,7 @@ namespace kt
 		vbox->setMargin(0);
 		vbox->setSpacing(0);
 		view = new QTreeView(this);
+		view->setUniformRowHeights(true);
 		toolbar = new QToolBar(this);
 		toolbar->setOrientation(Qt::Vertical);
 		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
