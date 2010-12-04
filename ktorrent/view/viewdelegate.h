@@ -93,6 +93,9 @@ namespace kt
 		/// Hide the extender for a torrent
 		void hideExtender(bt::TorrentInterface* tc);
 		
+		/// Does the delegate have extenders
+		bool hasExtenders() const {return !extenders.isEmpty();}
+		
 	public slots:
 		/// Close all the extenders of a torrent
 		void closeExtenders(bt::TorrentInterface* tc);
