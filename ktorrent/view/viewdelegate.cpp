@@ -93,6 +93,10 @@ namespace kt
 	
 	void ViewDelegate::extend(bt::TorrentInterface* tc, Extender* widget)
 	{
+		View* view = qobject_cast<View*>(parent());
+		if (view)
+			view->setUniformRowHeights(false);
+
 		ExtenderBox* ext = 0;
 		ExtItr itr = extenders.find(tc);
 		if (itr == extenders.end())
@@ -127,6 +131,11 @@ namespace kt
 			extenders.erase(itr);
 		}
 		
+		
+		View* view = qobject_cast<View*>(parent());
+		if (view && extenders.isEmpty())
+			view->setUniformRowHeights(true);
+						 
 		scheduleUpdateViewLayout();
 	}
 	
@@ -144,6 +153,10 @@ namespace kt
 				extenders.erase(itr);
 			}
 		}
+		
+		View* view = qobject_cast<View*>(parent());
+		if (view && extenders.isEmpty())
+			view->setUniformRowHeights(true);
 		
 		scheduleUpdateViewLayout();
 	}
