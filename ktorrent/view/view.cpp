@@ -136,7 +136,14 @@ namespace kt
 	{
 		if (!uniformRowHeights() && !delegate->hasExtenders())
 			setUniformRowHeights(true);
-		model->update(delegate);
+		
+		if (!model->update(delegate))
+		{
+			// model wasn't resorted, so update individual items
+			const QModelIndexList & to_update = model->updateList();
+			foreach (const QModelIndex & idx, to_update)
+				QAbstractItemView::update(idx);
+		}
 	}
 
 	bool View::needToUpdateCaption()

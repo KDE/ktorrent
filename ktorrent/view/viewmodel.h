@@ -77,6 +77,7 @@ namespace kt
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
 		virtual bool dropMimeData(const QMimeData *data,Qt::DropAction action,int row,int column,const QModelIndex &parent);
 		virtual Qt::DropActions supportedDropActions() const;
+		
 		/**
 		 * Emit the data changed signal
 		 * @param row The row 
@@ -117,6 +118,9 @@ namespace kt
 		 * @param tlist The list of torrents to fill
 		 */
 		void allTorrents(QList<bt::TorrentInterface*> & tlist) const;
+		
+		/// Get the list of indexes which need to be updated
+		const QModelIndexList & updateList() const {return update_list;}
 		
 	public slots:
 		void addTorrent(bt::TorrentInterface* ti);
@@ -172,7 +176,7 @@ namespace kt
 			
 			Item(bt::TorrentInterface* tc);
 
-			bool update(int col,bool & modified);
+			bool update(int row,int sort_column,QModelIndexList & to_update,ViewModel* model);
 			QVariant data(int col) const;
 			QVariant color(int col) const;
 			bool lessThan(int col,const Item* other) const;
@@ -187,6 +191,7 @@ namespace kt
 		Qt::SortOrder sort_order;
 		Group* group;
 		int num_visible;
+		QModelIndexList update_list;
 	};
 
 }

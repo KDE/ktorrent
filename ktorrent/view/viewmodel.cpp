@@ -68,109 +68,109 @@ namespace kt
 	}
 			
 	
-	bool ViewModel::Item::update(int col,bool & modified)
+	bool ViewModel::Item::update(int row, int sort_column, QModelIndexList& to_update, kt::ViewModel* model)
 	{
 		bool ret = false;
 		const TorrentStats & s = tc->getStats();
 		if (status != s.status)
 		{
-			modified = true;
+			to_update.append(model->index(row,STATUS));
 			status = s.status;
-			if (col == STATUS)
+			if (sort_column == STATUS)
 				ret = true;
 		}
 			
 		if (bytes_downloaded != s.bytes_downloaded)
 		{
-			modified = true;
+			to_update.append(model->index(row,BYTES_DOWNLOADED));
 			bytes_downloaded = s.bytes_downloaded;
-			if (col == BYTES_DOWNLOADED)
+			if (sort_column == BYTES_DOWNLOADED)
 				ret = true;
 		}
 		
 		if (total_bytes_to_download != s.total_bytes_to_download)
 		{
-			modified = true;
+			to_update.append(model->index(row,TOTAL_BYTES_TO_DOWNLOAD));
 			total_bytes_to_download = s.total_bytes_to_download;
-			if (col == TOTAL_BYTES_TO_DOWNLOAD)
+			if (sort_column == TOTAL_BYTES_TO_DOWNLOAD)
 				ret = true;
 		}
 		
 		if (bytes_uploaded != s.bytes_uploaded)
 		{
-			modified = true;
+			to_update.append(model->index(row,BYTES_UPLOADED));
 			bytes_uploaded = s.bytes_uploaded;
-			if (col == BYTES_UPLOADED)
+			if (sort_column == BYTES_UPLOADED)
 				ret = true;
 		}
 		
 		if (download_rate != s.download_rate)
 		{
-			modified = true;
+			to_update.append(model->index(row,DOWNLOAD_RATE));
 			download_rate = s.download_rate;
-			if (col == DOWNLOAD_RATE)
+			if (sort_column == DOWNLOAD_RATE)
 				ret = true;
 		}
 		
 		if (upload_rate != s.upload_rate)
 		{
-			modified = true;
+			to_update.append(model->index(row,UPLOAD_RATE));
 			upload_rate = s.upload_rate;
-			if (col == UPLOAD_RATE)
+			if (sort_column == UPLOAD_RATE)
 				ret = true;
 		}
 		
 		int neta = tc->getETA();
 		if (eta != neta)
 		{
-			modified = true;
+			to_update.append(model->index(row,ETA));
 			eta = neta;
-			if (col == ETA)
+			if (sort_column == ETA)
 				ret = true;
 		}
 		
 		if (seeders_connected_to != s.seeders_connected_to || seeders_total != s.seeders_total)
 		{
-			modified = true;
+			to_update.append(model->index(row,SEEDERS));
 			seeders_connected_to = s.seeders_connected_to;
 			seeders_total = s.seeders_total;
-			if (col == SEEDERS)
+			if (sort_column == SEEDERS)
 				ret = true;
 		}
 		
 		if (leechers_total != s.leechers_total || leechers_connected_to != s.leechers_connected_to)
 		{
-			modified = true;
+			to_update.append(model->index(row,LEECHERS));
 			leechers_total = s.leechers_total;
 			leechers_connected_to = s.leechers_connected_to;
-			if (col == LEECHERS)
+			if (sort_column == LEECHERS)
 				ret = true;
 		}
 		
 		double perc = Percentage(s); 
 		if (fabs(percentage - perc) > 0.01)
 		{
-			modified = true;
+			to_update.append(model->index(row,PERCENTAGE));
 			percentage = perc;
-			if (col == PERCENTAGE)
+			if (sort_column == PERCENTAGE)
 				ret = true;
 		}
 		
 		float ratio = s.shareRatio();
 		if (fabsf(share_ratio - ratio) > 0.01)
 		{
-			modified = true;
+			to_update.append(model->index(row,SHARE_RATIO));
 			share_ratio = ratio;
-			if (col == SHARE_RATIO)
+			if (sort_column == SHARE_RATIO)
 				ret = true;
 		}
 		
 		Uint32 rdl = tc->getRunningTimeDL();
 		if (runtime_dl != rdl)
 		{
-			modified = true;
+			to_update.append(model->index(row,DOWNLOAD_TIME));
 			runtime_dl = rdl;
-			if (col == DOWNLOAD_TIME)
+			if (sort_column == DOWNLOAD_TIME)
 				ret = true;
 		}
 		
@@ -178,9 +178,9 @@ namespace kt
 		rul = rul >= rdl ? rul - rdl : 0; // make sure rul cannot go negative
 		if (runtime_ul != rul)
 		{
-			modified = true;
+			to_update.append(model->index(row,SEED_TIME));
 			runtime_ul = rul;
-			if (col == SEED_TIME)
+			if (sort_column == SEED_TIME)
 				ret = true;
 		}
 		return ret;
@@ -362,20 +362,17 @@ namespace kt
 
 	bool ViewModel::update(ViewDelegate* delegate,bool force_resort)
 	{
+		update_list.clear();
 		bool resort = force_resort;
-		Uint32 idx=0;
 		num_visible = 0;
 		
-		int lowest = -1;
-		int highest = -1;
-		
+		int row = 0;
 		foreach (Item* i,torrents)
 		{
-			bool modified = false;
-			if (i->update(sort_column,modified))
+			bool hidden = !i->member(group);
+			if (!hidden && i->update(row,sort_column,update_list,this))
 				resort = true;
 			
-			bool hidden = !i->member(group)/* && !delegate->extended(i->tc) */;
 			if (hidden != i->hidden)
 			{
 				i->hidden = hidden;
@@ -387,23 +384,15 @@ namespace kt
 			
 			if (!i->hidden)
 				num_visible++;
-			
-			if (modified)
-			{
-				if (lowest == -1)
-					lowest = idx;
-				highest = idx;
-			}
-			idx++;
+			row++;
 		}
 	
 		if (resort)
 		{
+			update_list.clear();
 			sort(sort_column,sort_order);
 			return true;
 		}
-		else if (lowest != -1)
-			emit dataChanged(index(lowest,1),index(highest,14));
 		
 		return false;
 	}
@@ -729,10 +718,6 @@ namespace kt
 		sort_order = order;
 		emit layoutAboutToBeChanged();
 		qStableSort(torrents.begin(),torrents.end(),ViewModelItemCmp(col,order));
-	/*	Out(SYS_GEN|LOG_DEBUG) << "Sort results:" << endl;
-		foreach (Item* i,torrents)
-			Out(SYS_GEN|LOG_DEBUG) << "Item: " << i->hidden << " " << i->tc->getDisplayName() << endl;
-		*/
 		emit layoutChanged();
 		emit sorted();
 	}
