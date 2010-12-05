@@ -295,7 +295,6 @@ namespace kt
 				pe_ex.append(file.getUserModifiedPath());
 			}
 			file.setPathOnDisk(path);
-			file.setEmitDownloadStatusChanged(true);
 		}
 
 		if (pe_ex.count() > 0)
