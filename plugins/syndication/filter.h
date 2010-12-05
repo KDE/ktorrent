@@ -234,7 +234,7 @@ namespace kt
 		QString id;
 		QString name;
 		QList<QRegExp> word_matches;
-		QList<QRegExp> exclusion_patterns;;
+		QList<QRegExp> exclusion_patterns;
 		bool use_season_and_episode_matching;
 		bool no_duplicate_se_matches;
 		QList<Range> seasons;
