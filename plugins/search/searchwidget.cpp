@@ -225,7 +225,9 @@ namespace kt
 			i18n("Do you want to download or save the torrent?"),
 			i18n("Download Torrent"),
 			KGuiItem(i18n("Download"),"ktorrent"),
-			KStandardGuiItem::save());
+			KStandardGuiItem::save(),
+			KStandardGuiItem::cancel(),
+			":TorrentDownloadFinishedQuestion");
 		
 		if (ret == KMessageBox::Yes)
 			sp->getCore()->load(torrent_download->readAll(),torrent_download->url(),QString(),QString());

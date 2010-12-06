@@ -67,6 +67,7 @@ namespace kt
 		connect(m_clear_history,SIGNAL(clicked()),this,SLOT(clearHistory()));
 		connect(m_engines->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & ,const QItemSelection & )),
 				this,SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
+		connect(m_reset_default_action,SIGNAL(clicked()),this,SLOT(resetDefaultAction()));
 		
 		connect(kcfg_useCustomBrowser, SIGNAL(toggled(bool)), this, SLOT(customToggled( bool )));
 		connect(kcfg_openInExternal,SIGNAL(toggled(bool)),this, SLOT(openInExternalToggled(bool)));
@@ -216,6 +217,12 @@ namespace kt
 	{
 		emit clearSearchHistory();
 	}
+	
+	void SearchPrefPage::resetDefaultAction()
+	{
+		KMessageBox::enableMessage(":TorrentDownloadFinishedQuestion");
+	}
+
 }
 
 #include "searchprefpage.moc"

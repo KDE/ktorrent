@@ -32,6 +32,7 @@ Changes in 4.1:
 - Don't reinclude files when changing priority of a directory (252555)
 - Open new search tab on middle click (151429)
 - Search plugin now uses webkit instead of KHTML
+- Add do not ask again option to dialog shown when torrent file is downloaded in the search plugin (210701)
 
 Changes in 4.0.5:
 - Fix crash due to uncaught exception when creating torrent (255020)

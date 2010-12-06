@@ -39,6 +39,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="m_reset_default_action">
+       <property name="toolTip">
+        <string>Reset the default action taken when a torrent is downloaded.</string>
+       </property>
+       <property name="text">
+        <string>Reset Default Torrent Action</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

@@ -57,6 +57,7 @@ namespace kt
 		void openInExternalToggled(bool on);
 		void selectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
 		void downloadJobFinished(KJob* j);
+		void resetDefaultAction();
 
 	signals:
 		void clearSearchHistory();
