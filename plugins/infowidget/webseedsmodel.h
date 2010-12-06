@@ -21,6 +21,7 @@
 #ifndef KTWEBSEEDSMODEL_H
 #define KTWEBSEEDSMODEL_H
 
+#include <QVector>
 #include <QAbstractTableModel>
 #include <util/constants.h>
 
@@ -69,7 +70,7 @@ namespace kt
 			bt::Uint32 speed;
 		};
 		bt::TorrentInterface* curr_tc;
-		QList<Item> items;
+		QVector<Item> items;
 	};
 
 }
