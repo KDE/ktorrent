@@ -64,10 +64,16 @@ namespace kt
 	
 	void ScanExtender::description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2)
 	{
+		Q_UNUSED(title);
 		chunks_found->setText(field1.first);
 		chunks_failed->setText(field1.second);
 		chunks_downloaded->setText(field2.first);
 		chunks_not_downloaded->setText(field2.second);
+		if (error_msg->isVisible())
+		{
+			error_msg->hide();
+			emit resized(this);
+		}
 	}
 	
 	void ScanExtender::processedAmount(KJob::Unit unit, qulonglong amount)
@@ -84,14 +90,16 @@ namespace kt
 	
 	void ScanExtender::infoMessage(const QString& plain, const QString& rich)
 	{
-		Q_UNUSED(plain);
 		Q_UNUSED(rich);
+		error_msg->setText(plain);
+		error_msg->show();
+		emit resized(this);
 	}
 	
 	void ScanExtender::warning(const QString& plain, const QString& rich)
 	{
-		Q_UNUSED(plain);
 		Q_UNUSED(rich);
+		Q_UNUSED(plain);
 	}
 
 	void ScanExtender::speed(long unsigned int value)
