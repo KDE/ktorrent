@@ -342,6 +342,7 @@ namespace kt
 
 		// update the last save directory
 		Settings::setLastSaveDir(dn);
+		Settings::self()->writeConfig();
 		QDialog::accept();
 	}
 
