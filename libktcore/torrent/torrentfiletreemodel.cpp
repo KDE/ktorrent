@@ -318,7 +318,7 @@ namespace kt
 			if (tc->getStats().multi_file_torrent)
 				constructTree();
 			else
-				root = new Node(0,tc->getStats().torrent_name,tc->getStats().total_chunks);
+				root = new Node(0,tc->getUserModifiedFileName(),tc->getStats().total_chunks);
 		}
 	}
 
@@ -338,7 +338,7 @@ namespace kt
 			if (tc->getStats().multi_file_torrent)
 				constructTree();
 			else
-				root = new Node(0,tc->getStats().torrent_name,tc->getStats().total_chunks);
+				root = new Node(0,tc->getUserModifiedFileName(),tc->getStats().total_chunks);
 		}
 		reset();
 	}
