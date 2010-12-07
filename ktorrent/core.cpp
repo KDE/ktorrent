@@ -915,6 +915,8 @@ namespace kt
 		
 		pman->unloadAll();
 		qman->clear();
+		// Sync the config to be sure everything is saved
+		Settings::self()->writeConfig();
 	}
 
 	bool Core::changeDataDir(const QString & new_dir)

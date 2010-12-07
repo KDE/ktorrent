@@ -41,6 +41,7 @@ Changes in 4.0.5:
 - Fix restoring hidden state of bottom tab bar in the torrent activity
 - Improve performance of View (258324)
 - Fix bug causing user modified filename not be shown for single file torrents (258860)
+- Ensure that lastSaveDir is saved to the config (259041)
 
 Changes in 4.0.4:
 - Make sure that syndication filter save location overrides group save location (250116)
