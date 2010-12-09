@@ -14,14 +14,26 @@ if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 	#kde4_add_kcfg_files(ktshutdownplugin_SRC logviewerpluginsettings.kcfgc)
 	kde4_add_plugin(ktshutdownplugin ${ktshutdownplugin_SRC})
 	
-	target_link_libraries(
-		ktshutdownplugin
-		ktcore
-		${LIBKTORRENT_LIBRARIES}
-		solidcontrol
-		kworkspace
-		${KDE4_KPARTS_LIBS}
-		)
+	set(NEW_SOLID_POWERMANAGEMENT FALSE)
+	macro_ensure_version("4.5.82" ${KDE_VERSION} NEW_SOLID_POWERMANAGEMENT)
+	
+	if (NEW_SOLID_POWERMANAGEMENT)
+		target_link_libraries(
+			ktshutdownplugin
+			ktcore
+			${LIBKTORRENT_LIBRARIES}
+			${KDE4_SOLID_LIBS}
+			kworkspace
+			${KDE4_KPARTS_LIBS})
+	else (NEW_SOLID_POWERMANAGEMENT)
+		target_link_libraries(
+			ktshutdownplugin
+			ktcore
+			${LIBKTORRENT_LIBRARIES}
+			solidcontrol
+			kworkspace
+			${KDE4_KPARTS_LIBS})
+	endif (NEW_SOLID_POWERMANAGEMENT)
 	install(TARGETS ktshutdownplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 	install(FILES ktshutdownplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 	install(FILES ktshutdownpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )

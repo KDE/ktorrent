@@ -17,13 +17,18 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+#include <kdeversion.h>
 #include <kjob.h>
 #include <kgenericfactory.h>
 #include <kworkspace.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 #include <kmessagebox.h>
+#if KDE_IS_VERSION(4,5,82)
+#include <solid/powermanagement.h>
+#else
 #include <solid/control/powermanager.h>
+#endif
 #include <util/log.h>
 #include <interfaces/functions.h>
 #include "shutdownplugin.h"
@@ -100,28 +105,41 @@ namespace kt
 	void ShutdownPlugin::suspendToDisk() 
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Suspending to disk ..." << endl;
+#if KDE_IS_VERSION(4,5,82)
+		Solid::PowerManagement::requestSleep(Solid::PowerManagement::HibernateState,0,0);
+#else
 		Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::ToDisk;
 		KJob *job = Solid::Control::PowerManager::suspend(spdMethod);
 		if (job != 0)
-			job->start();
+		      job->start();
+#endif
 	}
 
 	void ShutdownPlugin::suspendToRam() 
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Suspending to RAM ..." << endl;
+#if KDE_IS_VERSION(4,5,82)
+		Solid::PowerManagement::requestSleep(Solid::PowerManagement::SuspendState,0,0);
+#else
 		Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::ToRam;
 		KJob *job = Solid::Control::PowerManager::suspend(spdMethod);
 		if (job != 0)
 			job->start();
+#endif
 	}
 	
 	void ShutdownPlugin::standby() 
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Suspending to standby ..." << endl;
+#if KDE_IS_VERSION(4,5,82)
+		Solid::PowerManagement::requestSleep(Solid::PowerManagement::StandbyState,0,0);
+#else
 		Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::Standby;
 		KJob *job = Solid::Control::PowerManager::suspend(spdMethod);
 		if (job != 0)
 			job->start();
+#endif
+
 	}
 
 	void ShutdownPlugin::shutdownToggled(bool on) 
