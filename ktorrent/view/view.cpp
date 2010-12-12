@@ -354,7 +354,7 @@ namespace kt
 
 		foreach(bt::TorrentInterface *tc,sel)
 		{
-			extend(tc,new PropertiesExtender(tc,0));
+			delegate->extend(tc,new PropertiesExtender(tc,0));
 		}
 	}
 
