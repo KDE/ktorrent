@@ -347,6 +347,10 @@ namespace kt
 		*start = m_chkStartTorrent->isChecked();
 		*skip_check = m_skip_data_check->isChecked();
 		
+		// set display name for non-multifile torrent as file name inside
+		if (Settings::autoRenameSingleFileTorrents() && !tc->getStats().multi_file_torrent)
+			tc->setDisplayName(QFileInfo(tc->getUserModifiedFileName()).completeBaseName());
+
 		//Now add torrent to selected group
 		if (m_cmbGroups->currentIndex() > 0)
 		{

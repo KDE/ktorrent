@@ -145,6 +145,7 @@ int main(int argc, char **argv)
 	KCmdLineArgs::init(argc, argv, &about);
 	about.addCredit(ki18n("Jonas Lundqvist"),ki18n("Feature to disable authentication in the webinterface"),"jonas@gannon.se"); 
 	about.addCredit(ki18n("Jaroslaw Swierczynski"),ki18n("Exclusion patterns in the syndication plugin"),"swiergot@gmail.com");
+	about.addCredit(ki18n("Alexey Shildyakov "),ki18n("Patch to rename single file torrents to the file inside"),"ashl1future@gmail.com");
 
 	KCmdLineOptions options;
 	options.add("+[Url]", ki18n("Document to open"));
