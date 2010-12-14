@@ -34,6 +34,7 @@ Changes in 4.1:
 - Search plugin now uses webkit instead of KHTML
 - Add do not ask again option to dialog shown when torrent file is downloaded in the search plugin (210701)
 - Add option to rename single file torrents to the file inside (251799)
+- Make sure that items in history of download locations and completed locations end with a slash (259499)
 
 Changes in 4.0.5:
 - Fix crash due to uncaught exception when creating torrent (255020)
@@ -45,7 +46,6 @@ Changes in 4.0.5:
 - Ensure that lastSaveDir is saved to the config (259041)
 - Make sure ktorrent compiles and works with new solid powermanagement api introduced in KDE 4.6beta2 (258331)
 - Fix bug causing the wrong path to be opened when opening a nested directory in a multifile torrent
-- Make sure that items in history of download locations and completed locations end with a slash (259499)
 
 Changes in 4.0.4:
 - Make sure that syndication filter save location overrides group save location (250116)
