@@ -177,19 +177,13 @@ namespace kt
 	{
 		QStringList pe_ex;
 		
-		QString cn = m_completedLocation->url().toLocalFile();
-		if (!cn.endsWith(bt::DirSeparator()))
-			cn += bt::DirSeparator();
-		
-		if (m_moveCompleted->isChecked() && m_completedLocation->url().isValid())
-			move_on_completion_location_history.insert(m_completedLocation->url().toLocalFile());
+		QString cn = m_completedLocation->url().toLocalFile(KUrl::AddTrailingSlash);
+		if (m_moveCompleted->isChecked() && !cn.isEmpty())
+			move_on_completion_location_history.insert(cn);
 
-		QString dn = m_downloadLocation->url().toLocalFile();
-		if (!dn.endsWith(bt::DirSeparator()))
-			dn += bt::DirSeparator();
-		
-		if (m_downloadLocation->url().isValid())
-			download_location_history.insert(m_downloadLocation->url().toLocalFile());
+		QString dn = m_downloadLocation->url().toLocalFile(KUrl::AddTrailingSlash);
+		if (!dn.isEmpty())
+			download_location_history.insert(dn);
 
 		
 		QString tld = tc->getUserModifiedFileName();
