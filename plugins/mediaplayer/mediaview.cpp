@@ -43,6 +43,7 @@ namespace kt
 		filter = new QSortFilterProxyModel(this);
 		filter->setSourceModel(model);
 		filter->setFilterRole(Qt::DisplayRole);
+		filter->setFilterCaseSensitivity(Qt::CaseInsensitive);
 		
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
