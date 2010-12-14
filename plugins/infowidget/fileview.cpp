@@ -248,7 +248,7 @@ namespace kt
 			dnd_action->setEnabled(true);
 			delete_action->setEnabled(true);
 			open_action->setEnabled(true);
-			preview_path = curr_tc->getDataDir() + model->dirPath(item);
+			preview_path = curr_tc->getStats().output_path + model->dirPath(item);
 			collapse_action->setEnabled(!show_list_of_files);
 			expand_action->setEnabled(!show_list_of_files);
 		}
