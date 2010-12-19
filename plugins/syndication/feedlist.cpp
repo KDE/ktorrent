@@ -163,6 +163,9 @@ namespace kt
 			return QVariant();
 		
 		Feed* f = feeds.at(index.row());
+		if (!f->feedData())
+			return QVariant();
+		
 		switch (role)
 		{
 			case Qt::EditRole:

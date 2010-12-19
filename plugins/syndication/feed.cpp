@@ -73,7 +73,7 @@ namespace kt
 			cookie = sl.last();
 		}
 		else
-			url = KUrl(url);
+			url = KUrl(feed_url);
 	}
 
 	
