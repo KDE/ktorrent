@@ -6,8 +6,8 @@
 # (c) 2006-2007 Tom Albers <tomalbers@kde.nl>
 # Some parts of this code taken from cvs2dist
 # License: GNU General Public License V2
-if ARGV.length != 1
-	puts "Usage: gen_kde4_pkg_stable.rb <version>"
+if ARGV.length != 2
+	puts "Usage: gen_kde4_pkg_stable.rb <version> <i18n-branch>"
 	exit
 end
 
@@ -20,8 +20,15 @@ remove     = ""
 
 version    = ARGV[0]
 svnbase    = "svn+ssh://guisson@svn.kde.org/home/kde"
-svnroot    = "#{svnbase}/trunk"
+if ARGV[1] == "stable"
+	svnroot = "#{svnbase}/branches/stable"
+	svnextragear = "extragear-kde4"
+else
+	svnroot = "#{svnbase}/trunk"
+	svnextragear = "extragear"
+end
 svntags    = "#{svnbase}/tags/#{name}"
+
 
 #----------------------------------------------------------------
 
@@ -38,9 +45,10 @@ Dir.mkdir( folder )
 Dir.chdir( folder )
 
 # Do the main checkouts.
-`svn co #{svntags}/#{version} #{name}-tmp`
+Dir.mkdir( name + "-tmp" )
 Dir.chdir( name + "-tmp" )
-`svn co #{svnroot}/extragear/#{egmodule}/doc/#{name} doc`
+`git archive --format=tar -o tmp.tar --remote=git@git.kde.org:ktorrent v#{version}`
+`tar -xvf tmp.tar && rm tmp.tar`
 
 # Move them to the toplevel
 `/bin/mv * ..`
@@ -136,9 +144,6 @@ puts "\n"
 `echo "find_package(Msgfmt REQUIRED)" >> CMakeLists.txt`
 `echo "find_package(Gettext REQUIRED)" >> CMakeLists.txt`
 `echo "add_subdirectory( po )" >> CMakeLists.txt`
-if FileTest.exist?( "doc" )
-   `echo "add_subdirectory( doc )" >> CMakeLists.txt`
-end
 
 # Remove cruft 
 `find -name ".svn" | xargs rm -rf`
