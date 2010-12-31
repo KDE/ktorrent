@@ -35,7 +35,7 @@ int main(int argc,char** argv)
 		return 0;
 	}
 	
-	bt::SetClientInfo("ktmagnetdownloader",bt::MAJOR,bt::MINOR,bt::RELEASE,bt::BETA,"KT");
+	bt::SetClientInfo("ktmagnetdownloader",bt::MAJOR,bt::MINOR,bt::BETA_ALPHA_RC_RELEASE,bt::BETA,"KT");
 	bt::InitLog("ktmagnetdownload.log",false,true);
 	bt::Log & log = Out();
 	log.setOutputToConsole(true);
