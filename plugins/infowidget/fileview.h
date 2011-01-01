@@ -84,6 +84,7 @@ namespace kt
 		void showTree();
 		void showList();
 		void setFilter(const QString& f);
+		void checkFile();
 
 	private:
 		bt::TorrentInterface* curr_tc;
@@ -102,6 +103,7 @@ namespace kt
 		QAction* show_tree_action;
 		QAction* show_list_action;
 		QAction* show_filter_action;
+		QAction* check_data;
 
 		QString preview_path;
 		bool show_list_of_files;

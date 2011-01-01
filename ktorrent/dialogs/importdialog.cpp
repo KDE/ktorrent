@@ -182,7 +182,7 @@ namespace kt
 		// now we need to check the data
 		if (tor.isMultiFile())
 		{
-			dc = new MultiDataChecker();
+			dc = new MultiDataChecker(0, tor.getNumChunks());
 			QString path = data_url.toLocalFile();
 			if (!path.endsWith(bt::DirSeparator()))
 				path += bt::DirSeparator();
@@ -194,7 +194,7 @@ namespace kt
 			}
 		}
 		else
-			dc = new SingleDataChecker();
+			dc = new SingleDataChecker(0, tor.getNumChunks());
 		
 		connect(dc,SIGNAL(progress(quint32,quint32)),this,SLOT(progress(quint32,quint32)),Qt::QueuedConnection);
 

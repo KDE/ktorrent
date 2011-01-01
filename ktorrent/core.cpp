@@ -1323,7 +1323,7 @@ namespace kt
 
 	void Core::doDataCheck(bt::TorrentInterface* tc, bool auto_import)
 	{
-		tc->startDataCheck(auto_import);
+		tc->startDataCheck(auto_import, 0, tc->getStats().total_chunks);
 	}
 
 

@@ -111,6 +111,7 @@ namespace kt
 	{
 		context_menu = new KMenu(this);
 		open_action = context_menu->addAction(KIcon("document-open"),i18nc("Open file", "Open"),this,SLOT(open()));
+		check_data = context_menu->addAction(KIcon("kt-check-data"),i18n("Check File"),this,SLOT(checkFile()));
 		context_menu->addSeparator();
 		download_first_action = context_menu->addAction(i18n("Download first"),this,SLOT(downloadFirst()));
 		download_normal_action = context_menu->addAction(i18n("Download normally"),this,SLOT(downloadNormal()));
@@ -123,7 +124,6 @@ namespace kt
 		context_menu->addSeparator();
 		collapse_action = context_menu->addAction(i18n("Collapse Folder Tree"),this,SLOT(collapseTree()));
 		expand_action = context_menu->addAction(i18n("Expand Folder Tree"),this,SLOT(expandTree()));
-		
 		
 		QActionGroup* ag = new QActionGroup(this);
 		show_tree_action = new QAction(KIcon("view-list-tree"),i18n("File Tree"),this);
@@ -198,6 +198,7 @@ namespace kt
 			move_files_action->setEnabled(true);
 			collapse_action->setEnabled(!show_list_of_files);
 			expand_action->setEnabled(!show_list_of_files);
+			check_data->setEnabled(true);
 			return;
 		}
 	
@@ -217,9 +218,11 @@ namespace kt
 			preview_path = curr_tc->getStats().output_path;
 			collapse_action->setEnabled(false);
 			expand_action->setEnabled(false);
+			check_data->setEnabled(true);
 		}
 		else if (file)
 		{
+			check_data->setEnabled(true);
 			move_files_action->setEnabled(true);
 			collapse_action->setEnabled(false);
 			expand_action->setEnabled(false);
@@ -241,6 +244,7 @@ namespace kt
 		}
 		else
 		{
+			check_data->setEnabled(false);
 			move_files_action->setEnabled(false);
 			download_first_action->setEnabled(true);
 			download_normal_action->setEnabled(true);
@@ -527,6 +531,32 @@ namespace kt
 		proxy_model->setFilterFixedString(filter->typedText());
 	}
 
+	void FileView::checkFile()
+	{
+		QModelIndexList sel = view->selectionModel()->selectedRows();
+		if (!curr_tc || sel.isEmpty())
+			return;
+		
+		if (curr_tc->getStats().multi_file_torrent)
+		{
+			bt::Uint32 from = curr_tc->getStats().total_chunks;
+			bt::Uint32 to = 0;
+			foreach (const QModelIndex &idx,sel)
+			{
+				bt::TorrentFileInterface* tfi = model->indexToFile(proxy_model->mapToSource(idx));
+				if (!tfi)
+					continue;
+				
+				if (tfi->getFirstChunk() < from)
+					from = tfi->getFirstChunk();
+				if (tfi->getLastChunk() > to)
+					to = tfi->getLastChunk();
+			}
+			curr_tc->startDataCheck(false, from, to);
+		}
+		else
+			curr_tc->startDataCheck(false, 0, curr_tc->getStats().total_chunks);
+	}
 
 }
 
