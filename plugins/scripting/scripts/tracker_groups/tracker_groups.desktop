@@ -45,6 +45,7 @@ Name[zh_CN]=Tracker 分组
 Name[zh_TW]=追蹤器分組
 Comment=Script to create automatic groups based upon tracker URLs
 Comment[ca]=Script per a crear grups automàtics basats en els URL dels seguidors
+Comment[ca@valencia]=Script per a crear grups automàtics basats en els URL dels seguidors
 Comment[en_GB]=Script to create automatic groups based upon tracker URLs
 Comment[es]=Guion para crear grupos automáticos basándose en los URL de los localizadores
 Comment[et]=Skript automaatsete rühmade loomiseks tracker'ite URL-ide järgi
