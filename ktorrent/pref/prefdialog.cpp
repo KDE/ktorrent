@@ -61,7 +61,8 @@ namespace kt
 	void PrefDialog::addPrefPage(PrefPageInterface* page)
 	{
 		PrefPageScrollArea* area = new PrefPageScrollArea(page,this);
-			
+		connect(area->page,SIGNAL(updateButtons()),this,SLOT(updateButtons()));
+		
 		KPageWidgetItem* p = addPage(area,page->config(),page->pageName(),page->pageIcon());
 		area->page_widget_item = p;
 		pages.append(area);
@@ -134,6 +135,19 @@ namespace kt
 		KConfigGroup g = cfg->group("PrefDialog");
 		g.writeEntry("size",size());
 	}
+	
+	bool PrefDialog::hasChanged()
+	{
+		if (KConfigDialog::hasChanged())
+			return true;
+		
+		foreach (PrefPageScrollArea* area,pages)
+			if (area->page->customWidgetsChanged())
+				return true;
+			
+		return false;
+	}
+
 
 	///////////////////////////////////////
 	

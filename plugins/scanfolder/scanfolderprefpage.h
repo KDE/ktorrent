@@ -42,11 +42,13 @@ namespace kt
 		virtual void loadSettings();
 		virtual void loadDefaults();
 		virtual void updateSettings();
+		virtual bool customWidgetsChanged();
 		
 	private slots:
 		void addPressed();
 		void removePressed();
 		void selectionChanged();
+		void currentGroupChanged(int idx);
 		
 	private:
 		ScanFolderPlugin* m_plugin;

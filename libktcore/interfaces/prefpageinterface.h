@@ -60,6 +60,13 @@ namespace kt
 		KConfigSkeleton* config() {return cfg;}
 		const QString & pageName() {return name;}
 		const QString & pageIcon() {return icon;}
+		
+		/// Override if there are custom widgets outside which have changed 
+		virtual bool customWidgetsChanged() {return false;}
+		
+	signals:
+		/// Emitted when buttons need to be updated
+		void updateButtons();
 
 	private:
 		KConfigSkeleton* cfg;

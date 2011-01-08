@@ -41,6 +41,7 @@ namespace kt
 		connect(m_add,SIGNAL(clicked()),this,SLOT(addPressed()));
 		connect(m_remove,SIGNAL(clicked()),this,SLOT(removePressed()));
 		connect(m_folders,SIGNAL(itemSelectionChanged()),this,SLOT(selectionChanged()));
+		connect(m_group,SIGNAL(currentIndexChanged(int)),this,SLOT(currentGroupChanged(int)));
 	}
 
 
@@ -112,6 +113,8 @@ namespace kt
 			m_folders->addItem(new QListWidgetItem(KIcon("folder"),p));
 			folders.append(p);
 		}
+		
+		updateButtons();
 	}
 	
 	void ScanFolderPrefPage::removePressed()
@@ -122,11 +125,24 @@ namespace kt
 			folders.removeAll(i->text());
 			delete i;
 		}
+		
+		updateButtons();
 	}
 	
 	void ScanFolderPrefPage::selectionChanged()
 	{
 		m_remove->setEnabled(m_folders->selectedItems().count() > 0);
 	}
-
+	
+	void ScanFolderPrefPage::currentGroupChanged(int idx)
+	{
+		Q_UNUSED(idx);
+		updateButtons();
+	}
+	
+	bool ScanFolderPrefPage::customWidgetsChanged()
+	{
+		return ScanFolderPluginSettings::group() != m_group->currentText() ||
+			folders != ScanFolderPluginSettings::folders();
+	}
 }
