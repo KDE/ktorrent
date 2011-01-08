@@ -77,6 +77,7 @@ namespace kt
 		virtual void updateWidgets();
 		virtual void updateWidgetsDefault();
 		virtual void updateSettings();
+		virtual bool hasChanged();
 	
 	private slots:
 		void calculateRecommendedSettings();

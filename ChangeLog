@@ -1,3 +1,6 @@
+Changes in 4.1rc1:
+- Make sure that apply button of config dialog is enabled properly when the group changes in the scanfolder settings
+
 Changes in 4.1beta1:
 - Remove libktupnp it is now part of libktorrent
 - Add support for superseeding (171661)
