@@ -1,0 +1,4 @@
+File=magnetsettings.kcfg
+ClassName=MagnetSettings
+Singleton=true
+Mutators=true

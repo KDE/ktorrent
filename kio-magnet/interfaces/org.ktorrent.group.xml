@@ -1,0 +1,47 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.ktorrent.group">
+    <method name="name">
+      <arg type="s" direction="out"/>
+    </method>
+    <method name="icon">
+      <arg type="s" direction="out"/>
+    </method>
+    <method name="defaultSaveLocation">
+      <arg type="s" direction="out"/>
+    </method>
+    <method name="setDefaultSaveLocation">
+      <arg name="dir" type="s" direction="in"/>
+    </method>
+    <method name="maxShareRatio">
+      <arg type="d" direction="out"/>
+    </method>
+    <method name="setMaxShareRatio">
+      <arg name="ratio" type="d" direction="in"/>
+    </method>
+    <method name="maxSeedTime">
+      <arg type="d" direction="out"/>
+    </method>
+    <method name="setMaxSeedTime">
+      <arg name="hours" type="d" direction="in"/>
+    </method>
+    <method name="maxUploadSpeed">
+      <arg type="u" direction="out"/>
+    </method>
+    <method name="setMaxUploadSpeed">
+      <arg name="speed" type="u" direction="in"/>
+    </method>
+    <method name="maxDownloadSpeed">
+      <arg type="u" direction="out"/>
+    </method>
+    <method name="setMaxDownloadSpeed">
+      <arg name="speed" type="u" direction="in"/>
+    </method>
+    <method name="onlyApplyOnNewTorrents">
+      <arg type="b" direction="out"/>
+    </method>
+    <method name="setOnlyApplyOnNewTorrents">
+      <arg name="on" type="b" direction="in"/>
+    </method>
+  </interface>
+</node>
