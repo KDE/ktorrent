@@ -255,8 +255,11 @@ namespace kt
 		*/
 		void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
 		
+		/// Emitted before the queue is reordered
+		void orderingQueue();
+		
 		/**
-		* Emitted when the QM reorders it's queue
+		* Emitted when the QM has reordered it's queue
 		*/
 		void queueOrdered();
 		

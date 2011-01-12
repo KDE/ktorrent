@@ -68,7 +68,12 @@ namespace kt
 {
 	const Uint32 CORE_UPDATE_INTERVAL = 250;
 
-	Core::Core(kt::GUI* gui) : gui(gui),keep_seeding(true),sleep_suppression_cookie(-1),exiting(false)
+	Core::Core(kt::GUI* gui) 
+		: gui(gui),
+		keep_seeding(true),
+		sleep_suppression_cookie(-1),
+		exiting(false),
+		reordering_queue(false)
 	{
 		UpdateCurrentTime();
 		qman = new QueueManager();
@@ -78,6 +83,8 @@ namespace kt
 				this, SLOT(enqueueTorrentOverMaxRatio( bt::TorrentInterface* )));
 		connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
 				this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
+		connect(qman, SIGNAL(orderingQueue()), this, SLOT(beforeQueueReorder()));
+		connect(qman, SIGNAL(queueOrdered()), this, SLOT(afterQueueReorder()));
 		
 		data_dir = Settings::tempDir().toLocalFile();
 		bool dd_not_exist = !bt::Exists(data_dir);
@@ -118,7 +125,6 @@ namespace kt
 		applySettings();
 		gman->loadGroups();
 		
-		connect(qman,SIGNAL(queueOrdered()),this,SLOT(startUpdateTimer()));
 		connect(magnet,SIGNAL(metadataFound(bt::MagnetLink,QByteArray,bool)),
 				this,SLOT(onMetadataDownloaded(bt::MagnetLink,QByteArray,bool)));
 		
@@ -1062,7 +1068,9 @@ namespace kt
 				magnet->updateMagnetDownloaders();
 				// check if the priority of stalled torrents must be decreased
 				if (Settings::decreasePriorityOfStalledTorrents())
+				{
 					qman->checkStalledTorrents(bt::CurrentTime(),Settings::stallTimer());
+				}
 			}
 		}
 		catch (bt::Error & err)
@@ -1380,7 +1388,20 @@ namespace kt
 	void Core::onStatusChanged(bt::TorrentInterface* tc)
 	{
 		Q_UNUSED(tc);
+		if (!reordering_queue)
+			gui->updateActions();
+	}
+	
+	void Core::beforeQueueReorder()
+	{
+		reordering_queue = true;
+	}
+	
+	void Core::afterQueueReorder()
+	{
+		reordering_queue = false;
 		gui->updateActions();
+		startUpdateTimer();
 	}
 	
 	void Core::load(const bt::MagnetLink& mlink,const QString & group)
