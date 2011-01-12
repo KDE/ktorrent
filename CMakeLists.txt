@@ -41,6 +41,7 @@ add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)
 add_subdirectory(plasma)
 add_subdirectory(ktmagnetdownloader)
+add_subdirectory(kio-magnet)
 add_subdirectory(doc)
 
 # --- show log ---
