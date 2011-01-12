@@ -547,6 +547,8 @@ namespace kt
 		if (ordering || !downloads.count() || exiting)
 			return;
 		
+		emit orderingQueue();
+		
 		downloads.sort(); // sort downloads, even when suspended so that the QM widget is updated
 		if (Settings::manuallyControlTorrents() || suspended_state)
 		{
