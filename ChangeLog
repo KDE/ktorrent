@@ -1,6 +1,7 @@
 Changes in 4.1rc1:
 - Make sure that apply button of config dialog is enabled properly when the group changes in the scanfolder settings
 - Don't update GUI actions when queue is being ordered, improves performance (262571)
+- Add kio-magnet
 
 Changes in 4.1beta1:
 - Remove libktupnp it is now part of libktorrent
