@@ -68,7 +68,7 @@ namespace kt
 		HttpServer(CoreInterface *core, bt::Uint16 port);
 		virtual ~HttpServer();
 		
-		bool isOK() const {return ok;}
+		bool isOK() const {return sockets.count() > 0;}
 		bt::Uint16 getPort() const {return port;}
 
 		void handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr);
@@ -102,7 +102,6 @@ namespace kt
 		Session session;
 		CoreInterface *core;
 		QCache<QString,bt::MMapFile> cache;
-		bool ok;
 		bt::Uint16 port;
 		QStringList skin_list;
 		QString challenge;

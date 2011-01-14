@@ -3,11 +3,11 @@
 - Scanfolder: group per directory
 - Improved streaming support to minimize
   the impact of streaming on swarm health
-- Remove storage management
-
-4.1:
+- Removeable storage management
 - Properties dialog
 - Expand scripting
 - SSL error dialog for HTTPAnnounceJob
+
+4.1:
 - kio-magnet integration with extended
   magnet support in libktorrent
