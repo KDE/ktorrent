@@ -145,27 +145,34 @@ namespace kt
 				QAbstractItemView::update(idx);
 		}
 	}
+	
+	struct RunningCounter
+	{
+	public:
+		Uint32 torrents;
+		Uint32 running;
+		
+		RunningCounter() : torrents(0),running(0)
+		{}
+		
+		bool operator()(bt::TorrentInterface* tc)
+		{
+			torrents++;
+			if (tc->getStats().running)
+				running++;
+			return true;
+		}
+	};
 
 	bool View::needToUpdateCaption()
 	{
-		Uint32 torrents = 0;
-		Uint32 running = 0;
-		QList<bt::TorrentInterface*> all;
-		model->allTorrents(all);
-		foreach (bt::TorrentInterface* ti,all)
-		{
-			if (!group || (group && group->isMember(ti)))
-			{
-				torrents++;
-				if (ti->getStats().running)
-					running++;
-			}
-		}
+		RunningCounter rc;
+		model->visit(rc);
 
-		if (num_running != running || num_torrents != torrents)
+		if (num_running != rc.running || num_torrents != rc.torrents)
 		{
-			num_running = running;
-			num_torrents = torrents;
+			num_running = rc.running;
+			num_torrents = rc.torrents;
 			return true;
 		}
 		

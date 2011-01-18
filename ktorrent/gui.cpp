@@ -88,6 +88,8 @@ namespace kt
 		part_manager = new KParts::PartManager(this);
 		connect(part_manager,SIGNAL(activePartChanged(KParts::Part*)),this,SLOT(activePartChanged(KParts::Part*)));
 		core = new Core(this);
+		core->loadTorrents();
+		
 		tray_icon = new TrayIcon(core,this);
 		
 		central = new CentralWidget(this);
@@ -104,7 +106,7 @@ namespace kt
 		setStatusBar(status_bar);
 
 		//Marker mark("core->loadTorrents()");
-		core->loadTorrents();
+		//core->loadTorrents();
 	
 		//mark.update();
 		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
