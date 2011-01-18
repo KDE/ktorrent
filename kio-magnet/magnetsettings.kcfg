@@ -18,7 +18,7 @@ xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
 		<label>List of hosts which are directly accepted on loading</label>
 	    </entry>
 	    <entry name="ManagedTorrents" type="StringList">
-		<label>Torrents inside KTorrent which are managed by this modules.</label>
+		<label>Torrents inside KTorrent which are managed by these modules.</label>
 	    </entry>
 	    <entry name="RunningTorrents" type="StringList">
 		    <label>Torrents currently used by the I/O-Slaves.</label>

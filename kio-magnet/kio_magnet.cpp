@@ -303,7 +303,7 @@ void MagnetProtocol::open(const KUrl& url, QIODevice::OpenMode mode)
 {
     kDebug() << url.url() << "path: " << m_path;
     if( mode != QIODevice::ReadOnly ){
-        error(KIO::ERR_CANNOT_OPEN_FOR_WRITING, i18n("You cannot write to magnet ressources."));
+        error(KIO::ERR_CANNOT_OPEN_FOR_WRITING, i18n("You cannot write to magnet resources."));
         return;
     }
     

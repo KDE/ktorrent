@@ -45,13 +45,13 @@ though, much more than what I would have been able to achieve.
 
 c) Memory usage. Using only a thin DBus inteface makes this solution
 quite efficient. Although this is not the primary design concern it is
-important to keep an eye on ressource usage. Especially if you want to
+important to keep an eye on resource usage. Especially if you want to
 compete with http.
 
 d) Can use any of KTorrents plugins to improve the BitTorrent(c)
 experience. The best examples are the UPnP and the Zeroconf plugins,
 which make setting up your router for port-forwarding or sharing
-already loaded ressources (e.g. webvideo youtube(c)-like) inside your
+already loaded resources (e.g. webvideo youtube(c)-like) inside your
 lan a breeze.
 
 The disadvantages are:
@@ -80,7 +80,7 @@ New parameters introduced (all optional):
 
 1. to
 
-"to" references a (http) ressource for the torrent file and therefore
+"to" references a (http) resource for the torrent file and therefore
 speeds up loading the metadata.  This in fact makes linking seperate
 torrent files unnecessary and makes magnet links a sane default.
 Trackers of both the link and the file get merged. Note: Since we
@@ -135,7 +135,7 @@ definition of this parameter.
 "pf" defines prefetches in a comma seperated list. If it contains "all",
 all files will be downloaded, when the torrent is added. Otherwise you
 define a list of paths like in pt to only select some files that you
-want to be fetched as well. This helps if you load linked ressources
+want to be fetched as well. This helps if you load linked resources
 like html pages or slideshows. The tradeoff for additional traffic and
 disc space might be low compared to the extra time needed to
 reestablish connections to fetch the next chunks. Take a webpage for
@@ -172,7 +172,7 @@ String parsing.  Now you can already reference any file inside a
 torrent with this code, in fact kio_magnet can also load directories,
 but you will quickly recognize that url aware applications like a
 browser or an html-renderer won't be able to find out the path and
-won't let you browse the ressource like you would do with http/ftp.
+won't let you browse the resource like you would do with http/ftp.
 This is not a big issue on proprietary systems, since they won't let
 you plugin new IO-URL systems anyway, but FOSS systems are mostly
 build in a much more generic and flexible way. So what you need is
@@ -320,7 +320,7 @@ here a lot. It just should not split the network up, like OneSwarm for
 example does, but has to make anonymizing seemlessly possible if
 wanted and only then, not in general. Don't force users onto your
 perspective of the web, but let them chose between commercial
-providers with http, p2p ressources (magnet), central/decentral
+providers with http, p2p resources (magnet), central/decentral
 web-applications with a mix of both, seperately allow public and
 private (darknet) BitTorrent usage selectively and make all that
 transparent to the application stack, so you can chose your channel of
@@ -354,7 +354,7 @@ browsers because they make improving the web communication possible in
 many ways. Still this has not changed the very old http-default. Now a
 good solution, as shown by IP/TCP protocolls is not to reinvent the
 wheel, but to find better technologies complementing the existing
-infrastructure. With magnet ressources you can easily distribute your
+infrastructure. With magnet resources you can easily distribute your
 storage to all users. At first I imagine a heavy switch of webvideo
 here.  This is not very interesting if you build services to lock in
 and monetize users, but it is very nice for free platforms and an open
