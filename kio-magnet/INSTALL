@@ -1,0 +1,18 @@
+The installation is pretty easy. You only need
+kdelibs-dev installed. There is no build-time
+dependency on KTorrent or libktorrent, as kio_magnet
+ships its own repesentation of KTorrent's DBus 
+interface. If it changes, you are screwed, but this
+should not happen, as it is official and other programs
+will rely on it as well.
+
+BUILD INSTRUCTIONS
+
+# in the sourc directory
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` ..
+make -j2 # set 2 to the number of cores your cpu has
+sudo make install
+
+That's it.

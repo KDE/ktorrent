@@ -246,6 +246,8 @@ namespace kt
 		void checkForKDE3Torrents();
 		void delayedRemove(bt::TorrentInterface* tc);
 		void delayedStart();
+		void beforeQueueReorder();
+		void afterQueueReorder();
 
 	private:
 		GUI* gui;
@@ -262,6 +264,7 @@ namespace kt
 		int sleep_suppression_cookie;
 		QMap<bt::TorrentInterface*,bool> delayed_removal;
 		bool exiting;
+		bool reordering_queue;
 	};
 }
 

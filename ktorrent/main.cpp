@@ -103,6 +103,7 @@ int main(int argc, char **argv)
 	about.addAuthor(ki18n("Alan Jones"),ki18n("BitFinder Plugin"),"skyphyr@gmail.com");
 	about.addAuthor(ki18n("Diego R. Brogna"),ki18n("Webinterface Plugin"),"dierbro@gmail.com");
 	about.addAuthor(ki18n("Krzysztof Kundzicz"),ki18n("Statistics Plugin"),"athantor@gmail.com"); 
+	about.addAuthor(ki18n("Christian Weilbach"),ki18n("kio-magnet"),"christian_weilbach@web.de");
 
 	about.addCredit(ki18n("Mladen Babic"),	ki18n("Application icon and a couple of others"),"bmladen@EUnet.yu");
 	about.addCredit(ki18n("Adam Treat"), KLocalizedString(), "treat@kde.org" );

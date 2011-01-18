@@ -1,0 +1,85 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.ktorrent.core">
+    <signal name="torrentAdded">
+      <arg name="tor" type="s" direction="out"/>
+    </signal>
+    <signal name="torrentRemoved">
+      <arg name="tor" type="s" direction="out"/>
+    </signal>
+    <signal name="finished">
+      <arg name="tor" type="s" direction="out"/>
+    </signal>
+    <signal name="torrentStoppedByError">
+      <arg name="tor" type="s" direction="out"/>
+      <arg name="msg" type="s" direction="out"/>
+    </signal>
+    <signal name="settingsChanged">
+    </signal>
+    <signal name="suspendStateChanged">
+      <arg name="suspended" type="b" direction="out"/>
+    </signal>
+    <method name="torrents">
+      <arg type="as" direction="out"/>
+    </method>
+    <method name="start">
+      <arg name="info_hash" type="s" direction="in"/>
+    </method>
+    <method name="stop">
+      <arg name="info_hash" type="s" direction="in"/>
+    </method>
+    <method name="startAll">
+    </method>
+    <method name="stopAll">
+    </method>
+    <method name="load">
+      <arg name="url" type="s" direction="in"/>
+      <arg name="group" type="s" direction="in"/>
+    </method>
+    <method name="loadSilently">
+      <arg name="url" type="s" direction="in"/>
+      <arg name="group" type="s" direction="in"/>
+    </method>
+    <method name="remove">
+      <arg name="info_hash" type="s" direction="in"/>
+      <arg name="data_to" type="b" direction="in"/>
+    </method>
+    <method name="removeDelayed">
+      <arg name="info_hash" type="s" direction="in"/>
+      <arg name="data_to" type="b" direction="in"/>
+    </method>
+    <method name="setSuspended">
+      <arg name="suspend" type="b" direction="in"/>
+    </method>
+    <method name="suspended">
+      <arg type="b" direction="out"/>
+    </method>
+    <method name="orderQueue">
+    </method>
+    <method name="reindexQueue">
+    </method>
+    <method name="groups">
+      <arg type="as" direction="out"/>
+    </method>
+    <method name="addGroup">
+      <arg type="b" direction="out"/>
+      <arg name="group" type="s" direction="in"/>
+    </method>
+    <method name="removeGroup">
+      <arg type="b" direction="out"/>
+      <arg name="group" type="s" direction="in"/>
+    </method>
+    <method name="log">
+      <arg name="line" type="s" direction="in"/>
+    </method>
+    <method name="numTorrentsRunning">
+      <arg type="u" direction="out"/>
+    </method>
+    <method name="numTorrentsNotRunning">
+      <arg type="u" direction="out"/>
+    </method>
+    <method name="dataDir">
+      <arg type="s" direction="out"/>
+    </method>
+  </interface>
+</node>

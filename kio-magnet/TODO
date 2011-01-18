@@ -1,0 +1,12 @@
+Unsorted TODO list for future releases:
+
+- Add cleanup functionality, so the user doesn't have to
+cleanup himself in KTorrent. Maybe do this as a generic
+plugin in KTorrent.
+- Sort out the magnet schema details.
+- Upstream the magnet link support as far as possible into
+KTorrent.
+- Add KDE integration to ease up file sharing: e.g. 
+owncloud private tracker inclusion for easy private sharing,
+KFile plugin to allow easy creation of Torrents, add a KCM/
+KTorrent plugin to manger settings of kio_magnet.

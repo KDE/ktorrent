@@ -1,8 +1,13 @@
 4.2:
 - Scanfolder: configurable loaded directory
 - Scanfolder: group per directory
-
-4.1:
+- Improved streaming support to minimize
+  the impact of streaming on swarm health
+- Removeable storage management
 - Properties dialog
 - Expand scripting
 - SSL error dialog for HTTPAnnounceJob
+
+4.1:
+- kio-magnet integration with extended
+  magnet support in libktorrent
