@@ -21,9 +21,11 @@
 #define KTLOGVIEWER_H
 
 #include <QTextBrowser>
+#include <QMutex>
 #include <interfaces/activity.h>
 #include <interfaces/logmonitorinterface.h>
 #include "logflags.h"
+
 
 namespace kt
 {
@@ -38,10 +40,10 @@ namespace kt
 		virtual ~LogViewer();
 
 		virtual void message(const QString& line, unsigned int arg);
-		virtual void customEvent(QEvent* ev);
 		
 		void setRichText(bool val);
 		void setMaxBlockCount(int max);
+		void processPending();
 		
 	public slots:
 		void showMenu(const QPoint & pos);
@@ -54,6 +56,10 @@ namespace kt
 		bool suspended;
 		QMenu* menu;
 		QAction* suspend_action;
+		int max_block_count;
+		
+		QMutex mutex;
+		QStringList pending;
 	};
 
 }

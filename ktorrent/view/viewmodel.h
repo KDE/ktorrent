@@ -119,6 +119,20 @@ namespace kt
 		 */
 		void allTorrents(QList<bt::TorrentInterface*> & tlist) const;
 		
+		/**
+		 * Visit all visible torrents in the model, and apply an action to them
+		 */
+		template<class Action>
+		void visit(Action & a)
+		{
+			foreach (Item* item,torrents)
+			{
+				if (item->member(group))
+					if (!a(item->tc))
+						break;
+			}
+		}
+		
 		/// Get the list of indexes which need to be updated
 		const QModelIndexList & updateList() const {return update_list;}
 		

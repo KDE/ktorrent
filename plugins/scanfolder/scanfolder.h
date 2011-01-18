@@ -55,48 +55,50 @@ namespace kt
 	*/
 	class ScanFolder : public QObject
 	{
-			Q_OBJECT
-		public:
-			
-			/**
-			 * Default constructor.
-			 * @param core Pointer to core interface
-			 * @param dir Full directory path
-			 * @param action Action to perform on loaded torrents.
-			 */
-			ScanFolder(CoreInterface* core, const QString& dir, LoadedTorrentAction action = defaultAction);
-			~ScanFolder();
+		Q_OBJECT
+	public:
+		
+		/**
+			* Default constructor.
+			* @param core Pointer to core interface
+			* @param dir Full directory path
+			* @param action Action to perform on loaded torrents.
+			*/
+		ScanFolder(CoreInterface* core, const QString& dir, LoadedTorrentAction action = defaultAction);
+		~ScanFolder();
 
 
-			///Accessor method for m_loadedAction.
-			void setLoadedAction(const LoadedTorrentAction& theValue);
-			///Accessor method for m_loadedAction.
-			LoadedTorrentAction loadedAction() const { return m_loadedAction; }
+		///Accessor method for m_loadedAction.
+		void setLoadedAction(const LoadedTorrentAction& theValue);
+		///Accessor method for m_loadedAction.
+		LoadedTorrentAction loadedAction() const { return m_loadedAction; }
 
-			///Returns true if this object is valid, that is - weather directory is valid and this object does its work.
-			bool isValid() const { return m_valid; }
-			
-			///Sets directory path
-			void setFolderUrl(QString& url);
+		///Returns true if this object is valid, that is - weather directory is valid and this object does its work.
+		bool isValid() const { return m_valid; }
+		
+		///Sets directory path
+		void setFolderUrl(QString& url);
 
-		public slots:
-			void onNewItems(const KFileItemList &items);
-			void onLoadingFinished(const KUrl & url,bool success,bool canceled);
-			void onIncompletePollingTimeout();
-			
-		private:
-			/// Check if the URL is a complete file
-			bool incomplete(const KUrl & src);
+	public slots:
+		void onNewItems(const KFileItemList &items);
+		void onLoadingFinished(const KUrl & url,bool success,bool canceled);
+		void onIncompletePollingTimeout();
+		void loadDelayed();
+		
+	private:
+		/// Check if the URL is a complete file
+		bool incomplete(const KUrl & src);
 
-		private:
-			QString m_root_dir;
-			CoreInterface* m_core;
-			bool m_valid;
-			KDirLister* m_dir;
-			LoadedTorrentAction m_loadedAction;
-			QList<KUrl> m_pendingURLs;
-			QList<KUrl> m_incompleteURLs;
-			QTimer m_incomplePollingTimer;
+	private:
+		QString m_root_dir;
+		CoreInterface* m_core;
+		bool m_valid;
+		KDirLister* m_dir;
+		LoadedTorrentAction m_loadedAction;
+		KUrl::List m_to_load;
+		KUrl::List m_pendingURLs;
+		KUrl::List m_incompleteURLs;
+		QTimer m_incomplePollingTimer;
 	};
 }
 #endif

@@ -411,6 +411,28 @@ namespace kt
 			return kt::JobTracker::createJobWidget(job);
 	}
 
+	struct StartAndStopAllVisitor
+	{
+		QAction* start_all;
+		QAction* stop_all;
+		
+		StartAndStopAllVisitor(QAction* start_all,QAction* stop_all) : start_all(start_all),stop_all(stop_all)
+		{}
+		
+		bool operator()(bt::TorrentInterface* tc)
+		{
+			if (tc->getJobQueue()->runningJobs())
+				return true;
+			
+			const TorrentStats & s = tc->getStats();
+			if (s.running || (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime()))
+				stop_all->setEnabled(true);
+			else
+				start_all->setEnabled(true);
+			
+			return !stop_all->isEnabled() || !start_all->isEnabled();
+		}
+	};
 	
 	void ViewManager::updateActions()
 	{
@@ -517,24 +539,10 @@ namespace kt
 		
 		if (qm_enabled)
 		{
-			QList<bt::TorrentInterface*> all;
-			current->viewModel()->allTorrents(all);
 			start_all->setEnabled(false);
 			stop_all->setEnabled(false);
-			foreach (bt::TorrentInterface* tc,all)
-			{
-				if (tc->getJobQueue()->runningJobs())
-					continue;
-				
-				const TorrentStats & s = tc->getStats();
-				if (s.running || (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime()))
-					stop_all->setEnabled(true);
-				else
-					start_all->setEnabled(true);
-				
-				if (stop_all->isEnabled() && start_all->isEnabled())
-					break;
-			}
+			StartAndStopAllVisitor v(start_all,stop_all);
+			current->viewModel()->visit(v);
 		}
 		else
 		{

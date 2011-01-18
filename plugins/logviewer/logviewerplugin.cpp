@@ -144,7 +144,11 @@ namespace kt
 		}
 	}
 
-
+	void LogViewerPlugin::guiUpdate()
+	{
+		if (lv)
+			lv->processPending();
+	}
 
 	bool LogViewerPlugin::versionCheck(const QString & version) const
 	{

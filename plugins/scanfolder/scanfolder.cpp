@@ -139,23 +139,44 @@ namespace kt
 					m_incomplePollingTimer.start(10000);
 				}
 			}
-			else
+			else if (!m_to_load.contains(source) && !m_pendingURLs.contains(source))
 			{
 				bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : found " << source << endl;
-				//Add pending entry...
-				m_pendingURLs.push_back(source);
-				
-				QString group;
-				if (ScanFolderPluginSettings::addToGroup())
-					group = ScanFolderPluginSettings::group();
-				//Load torrent
-				if (ScanFolderPluginSettings::openSilently())
-					m_core->loadSilently(source,group);
-				else
-					m_core->load(source,group);
+				m_to_load.append(source);
 			}
 		}
+		
+		loadDelayed();
 	}
+	
+	void ScanFolder::loadDelayed()
+	{
+		// Don't load to many in a row
+		int loaded = 0;
+		KUrl::List::iterator i = m_to_load.begin();
+		while (i != m_to_load.end() && loaded < 10)
+		{
+			KUrl source = *i;
+			//Add pending entry...
+			m_pendingURLs.push_back(source);
+			QString group;
+			if (ScanFolderPluginSettings::addToGroup())
+				group = ScanFolderPluginSettings::group();
+		
+			//Load torrent
+			if (ScanFolderPluginSettings::openSilently())
+				m_core->loadSilently(source,group);
+			else
+				m_core->load(source,group);
+				
+			i = m_to_load.erase(i);
+			loaded++;
+		}
+		
+		if (!m_to_load.isEmpty())
+			QTimer::singleShot(2000, this, SLOT(loadDelayed()));
+	}
+
 	
 	void ScanFolder::onLoadingFinished(const KUrl & url, bool success, bool canceled)
 	{
@@ -195,7 +216,7 @@ namespace kt
 					QFile::remove(dirname + "." + name);
 
 				// NetAccess considered harmfull !!!
-				KIO::file_move(url, destination);
+				KIO::file_move(url, destination, -1, KIO::HideProgressInfo);
 				break;
 			case defaultAction:
 				QFile f(dirname + "." + name);
