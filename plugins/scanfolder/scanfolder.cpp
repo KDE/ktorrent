@@ -50,6 +50,7 @@ namespace kt
 	{
 		bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : scanning " << dir << endl;
 		m_dir = new KDirLister();
+		m_dir->setAutoErrorHandlingEnabled(false,0);
 		
 		if (!m_root_dir.endsWith(bt::DirSeparator()))
 			m_root_dir += bt::DirSeparator();
