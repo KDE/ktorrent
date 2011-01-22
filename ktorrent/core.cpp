@@ -902,7 +902,7 @@ namespace kt
 		// make sure DHT is stopped
 		Globals::instance().getDHT().stop();
 		// stop all authentications going on
-		AuthenticationMonitor::instance().clear();
+		AuthenticationMonitor::instance().shutdown();
 		
 		WaitJob* job = new WaitJob(5000);
 		qman->saveState(KGlobal::config());
