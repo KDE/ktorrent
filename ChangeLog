@@ -2,6 +2,7 @@ Changes in 4.1rc1:
 - Make sure that apply button of config dialog is enabled properly when the group changes in the scanfolder settings
 - Add kio-magnet
 - Improve performance of ktorrent in situations where there are many torrents (262571)
+- Fix memory leak on exit (263802)
 
 Changes in 4.1beta1:
 - Remove libktupnp it is now part of libktorrent
