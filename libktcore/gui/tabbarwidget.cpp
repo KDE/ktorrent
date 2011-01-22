@@ -100,7 +100,7 @@ namespace kt
 		QAction* act = tab_bar->addAction(KIcon(icon),text);
 		act->setCheckable(true);
 		act->setToolTip(tooltip);
-		act->setChecked(false);
+		act->setChecked(widget_stack->count() == 0);
 		widget_stack->addWidget(ti);
 		action_group->addAction(act);
 		widget_to_action.insert(ti,act);
@@ -133,6 +133,15 @@ namespace kt
 		{
 			widget_stack->hide();
 			hide();
+		}
+		else
+		{
+			QMap<QWidget*,QAction*>::iterator itr = widget_to_action.find(widget_stack->currentWidget());
+			if (itr != widget_to_action.end())
+			{
+				QAction* act = itr.value();
+				act->setChecked(true);
+			}
 		}
 	}
 	
@@ -218,6 +227,7 @@ namespace kt
 			if (i.value()->text() == ctab)
 			{
 				widget_stack->setCurrentWidget(i.key());
+				i.value()->setChecked(true);
 				break;
 			}
 		}
