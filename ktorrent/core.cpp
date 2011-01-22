@@ -125,8 +125,10 @@ namespace kt
 		applySettings();
 		gman->loadGroups();
 		
+		qRegisterMetaType<bt::MagnetLink>("bt::MagnetLink");
 		connect(magnet,SIGNAL(metadataFound(bt::MagnetLink,QByteArray,bool)),
-				this,SLOT(onMetadataDownloaded(bt::MagnetLink,QByteArray,bool)));
+				this,SLOT(onMetadataDownloaded(bt::MagnetLink,QByteArray,bool)),
+				Qt::QueuedConnection);
 		
 		if (!Settings::oldTorrentsImported()) // check for old torrents if this hasn't happened yet
 			QTimer::singleShot(1000,this,SLOT(checkForKDE3Torrents()));

@@ -4,6 +4,7 @@ Changes in 4.1rc1:
 - Improve performance of ktorrent in situations where there are many torrents (262571)
 - Fix memory leak on exit (263802)
 - Fix tab bar not matching TabBarWidget state in some circumstances (263068)
+- Fix libktorrent not gettting updated when the download of a magnet link finishes and the FileSelectDlg is shown
 
 Changes in 4.1beta1:
 - Remove libktupnp it is now part of libktorrent
