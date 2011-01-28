@@ -256,6 +256,7 @@ namespace kt
 				current = v;
 				updateActions();
 				//Out(SYS_GEN|LOG_DEBUG) << "onCurrentTabChanged " << current->caption() << endl;
+				current->update();
 				break;
 			}
 		}
