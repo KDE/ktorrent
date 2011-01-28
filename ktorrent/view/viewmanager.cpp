@@ -225,8 +225,13 @@ namespace kt
 
 	void ViewManager::update()
 	{
-		if (current)
-			current->update();
+		foreach (View* v,views)
+		{
+			if (current == v)
+				current->update();
+			else if (v->needToUpdateCaption())
+				ta->setTabProperties(v,v->caption(false),v->getGroup()->groupIconName(),v->caption(true));
+		}
 	}
 	
 	const bt::TorrentInterface* ViewManager::getCurrentTorrent() const
