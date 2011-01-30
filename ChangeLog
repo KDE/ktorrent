@@ -11,6 +11,7 @@ Changes in 4.1rc1:
 - Update view tab when switching to it, fixes data scan widget showing in the wrong place (259483)
 - Update view captions every GUI update (264215)
 - Use user modified path for file column in chunks view (264814)
+- Fix QM bug causing torrents to get started when it is not needed (262570)
 
 Changes in 4.1beta1:
 - Remove libktupnp it is now part of libktorrent

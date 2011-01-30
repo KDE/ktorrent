@@ -563,11 +563,11 @@ namespace kt
 		foreach (TorrentInterface* tc,downloads)
 		{
 			const TorrentStats & s = tc->getStats();
-			if (tc->isAllowedToStart() && !s.stopped_by_error && !tc->getJobQueue()->runningJobs())
+			if (s.running || (tc->isAllowedToStart() && !s.stopped_by_error && !tc->getJobQueue()->runningJobs()))
 			{
 				if (s.completed)
 				{
-					if (!tc->overMaxRatio() && !tc->overMaxSeedTime())
+					if (s.running || (!tc->overMaxRatio() && !tc->overMaxSeedTime()))
 						seed_queue.append(tc);
 				}
 				else
