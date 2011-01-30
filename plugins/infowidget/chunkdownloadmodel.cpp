@@ -107,7 +107,7 @@ namespace kt
 					if (n > 0)
 						files += ", ";
 						
-					files += tf.getPath();
+					files += tf.getUserModifiedPath();
 					n++;
 				}
 				else if (stats.chunk_index < tf.getFirstChunk())
