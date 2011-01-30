@@ -10,6 +10,7 @@ Changes in 4.1rc1:
 - Fix libktorrent not gettting updated when the download of a magnet link finishes and the FileSelectDlg is shown
 - Update view tab when switching to it, fixes data scan widget showing in the wrong place (259483)
 - Update view captions every GUI update (264215)
+- Use user modified path for file column in chunks view (264814)
 
 Changes in 4.1beta1:
 - Remove libktupnp it is now part of libktorrent
