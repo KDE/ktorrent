@@ -50,7 +50,7 @@ public:
 private:
     virtual void load( const KUrl& url );
     virtual bool isDir( const KUrl& url );
-    QMutex m_mutex;
+    QMutex m_loadMutex;
     KUrl m_url;
     DBusHandler* m_dbusHandler;
     bool m_downloaded;

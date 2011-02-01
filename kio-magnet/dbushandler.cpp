@@ -54,7 +54,6 @@ DBusHandler::DBusHandler(MagnetProtocol* slave) :
         , m_passedTime( 0 )
         , m_loadInProgress( true )
 {
-    m_mutex.lock();
     kDebug() << "Thread: " << thread();
     m_thread = new DBusThread(this);
     m_thread->start();
@@ -63,7 +62,6 @@ DBusHandler::DBusHandler(MagnetProtocol* slave) :
 
 DBusHandler::~DBusHandler()
 {
-    m_mutex.lock();
     kDebug();
     m_thread->exit();
     if (!m_tor.isEmpty()) {
@@ -79,17 +77,17 @@ DBusHandler::~DBusHandler()
     delete m_torrentInt;
     delete m_coreInt;
     delete m_thread;
-    m_mutex.unlock();
 }
 
 void DBusHandler::init()
 {
     kDebug();
+    m_initMutex.lock();
     if (!MagnetSettings::enabled()) {
         m_slave->error(KIO::ERR_ABORTED,
                        i18n("The Web share for magnet-links is disabled. \
         You can set it up at settings:/network-and-connectivity/sharing"));
-        m_mutex.unlock();
+        m_initMutex.unlock();
     } else {
         initDBus();
     }
@@ -110,7 +108,7 @@ void DBusHandler::initDBus()
                            i18n("Cannot start process for KTorrent.\
                            This should not happen, even if KTorrent is not installed.\
                            Check your machines resources and limits."));
-            m_mutex.unlock();
+            m_initMutex.unlock();
             return;
         }
         m_process->waitForStarted();
@@ -124,6 +122,7 @@ void DBusHandler::connectToDBus()
 {
     kDebug();
 
+    // TODO check if this test is necessary with the dbus wrapper interface
     if (!m_coreInt->isValid()) {
         delete m_coreInt;
         m_coreInt = new org::ktorrent::core("org.ktorrent.ktorrent", "/core",
@@ -137,7 +136,7 @@ void DBusHandler::connectToDBus()
                                i18n("Could not connect to KTorrent via DBus\
                                      after %1 seconds. Is it broken?")
                                .arg(m_passedTime));
-                m_mutex.unlock();
+                m_initMutex.unlock();
                 return;
             }
         }
@@ -155,7 +154,7 @@ void DBusHandler::setupDBus()
         m_slave->error(KIO::ERR_COULD_NOT_CONNECT,
                        i18n("Could not get the group list, do you have a"
                             " compatible KTorrent version running?"));
-        m_mutex.unlock();
+        m_initMutex.unlock();
         return;
     } else {
         if (!groupList.value().contains("MagnetShare")) {
@@ -193,7 +192,7 @@ void DBusHandler::setupDBus()
 
     startTimer( 1000 );
 
-    m_mutex.unlock();
+    m_initMutex.unlock();
 }
 
 void DBusHandler::timerEvent(QTimerEvent* event)
@@ -250,8 +249,10 @@ bool DBusHandler::createFileStream( int file )
 
 void DBusHandler::load(const KUrl& u)
 {
-    m_mutex.lock();
-    kDebug() << u.url() << " Thread: " << thread();
+    kDebug() << u.url();
+    m_initMutex.lock();
+    m_initMutex.unlock();
+
     m_url = u; //"magnet:"+u.query();
     QString xt = u.queryItem("xt");
     m_path = u.queryItem("pt");
@@ -273,10 +274,9 @@ void DBusHandler::load(const KUrl& u)
 
     if ( xt.isEmpty() || !xt.contains( "urn:btih:" ) ) {
         m_slave->error(KIO::ERR_ABORTED
-	               ,i18n("The link for %1 does not contain the required btih hash-parameter.")
-	                     .arg(u.url()
-		       ));
-        m_mutex.unlock();
+                       ,i18n("The link for %1 does not contain the required btih hash-parameter.")
+                       .arg(u.url()
+                           ));
         m_slave->close();
         return;
     }
@@ -322,7 +322,6 @@ void DBusHandler::load(const KUrl& u)
 //KMessageBox::Yes ) {
 //                 kDebug()<<"host rejected.";
 //                 m_slave->error(KIO::ERR_ABORTED,i18n("Host rejected."));
-//                 m_mutex.unlock();
 //                 return;
 //             } else {
 //                 QStringList hosts = MagnetSettings::trustedHosts();
@@ -360,8 +359,6 @@ void DBusHandler::load(const KUrl& u)
             m_coreInt->loadSilently(m_url.url(),"MagnetShare");
         }
     }
-
-    m_mutex.unlock();
 }
 
 void DBusHandler::loadFiles()

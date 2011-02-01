@@ -65,7 +65,7 @@ private:
     KProcess* m_process;
     QDBusConnection* m_bus;
     KUrl m_url;
-    QMutex m_mutex;
+    QMutex m_initMutex;
     QThread* m_thread;
     MagnetProtocol* m_slave;
     QString m_tor, m_path;
