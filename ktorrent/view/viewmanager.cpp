@@ -523,17 +523,7 @@ namespace kt
 		const kt::Group* current_group = current->getGroup();
 		remove_from_group->setEnabled(current_group && !current_group->isStandardGroup());
 		groups_menu->setEnabled(group_actions.count() > 0);
-
-		if (sel.count() == 1)
-		{
-			TorrentInterface* tc = sel.front();
-			// no data check when we are preallocating diskspace
-			check_data->setEnabled(tc->getStats().status != bt::ALLOCATING_DISKSPACE);
-		}
-		else
-		{
-			check_data->setEnabled(false);
-		}
+		check_data->setEnabled(sel.count() > 0);
 		
 		rename_torrent->setEnabled(sel.count() == 1);
 		data_dir->setEnabled(sel.count() == 1);

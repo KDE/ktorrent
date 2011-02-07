@@ -1,5 +1,6 @@
 Changes in 4.2:
 - Make it possible to check individual files of a torrent
+- Data checks for multiple torrents can now get started at the same time (265611)
 
 Changes in 4.1rc1:
 - Make sure that apply button of config dialog is enabled properly when the group changes in the scanfolder settings

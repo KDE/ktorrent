@@ -401,11 +401,13 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() > 0)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
-			core->doDataCheck(sel.front());
-			core->startUpdateTimer(); // make sure update timer of core is running
+			if (tc->getStats().status != bt::ALLOCATING_DISKSPACE)
+				core->doDataCheck(tc);
 		}
+		
+		core->startUpdateTimer(); // make sure update timer of core is running
 	}
 
 	void View::showMenu(const QPoint & pos)
