@@ -135,6 +135,13 @@ namespace kt
 		void aboutToBeStarted(bt::TorrentInterface* tc,bool & ret);
 		
 		/**
+		 * Checks for missing files and shows the MissingFilesDlg if necessary.
+		 * @param tc The torrent
+		 * @return True if everything is OK, false otherwise
+		 */
+		bool checkMissingFiles(bt::TorrentInterface* tc);
+		
+		/**
 		 * User tried to enqueue a torrent that has reached max share ratio.
 		 * Emits appropriate signal.
 		 */

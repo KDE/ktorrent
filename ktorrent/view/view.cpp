@@ -352,9 +352,10 @@ namespace kt
 		if (dir.isNull())
 			return;
 		
-		foreach(bt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
-			tc->changeOutputDir(dir,bt::TorrentInterface::MOVE_FILES);
+			if (core->checkMissingFiles(tc))
+				tc->changeOutputDir(dir,bt::TorrentInterface::MOVE_FILES);
 		}
 	}
 
