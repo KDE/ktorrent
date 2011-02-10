@@ -1,5 +1,6 @@
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)
+- Fix scanextender showing when they are not supposed to (259483)
 
 Changes in 4.1rc1:
 - Make sure that apply button of config dialog is enabled properly when the group changes in the scanfolder settings

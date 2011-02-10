@@ -377,10 +377,11 @@ namespace kt
 			{
 				i->hidden = hidden;
 				resort = true;
-				// hide the extender if there is one shown
-				if (hidden && delegate->extended(i->tc))
-					delegate->hideExtender(i->tc);
 			}
+			
+			// hide the extender if there is one shown
+			if (hidden && delegate->extended(i->tc))
+				delegate->hideExtender(i->tc);
 			
 			if (!i->hidden)
 				num_visible++;
