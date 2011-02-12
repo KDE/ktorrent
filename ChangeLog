@@ -1,6 +1,7 @@
 Changes in 4.2:
 - Make it possible to check individual files of a torrent
 - Data checks for multiple torrents can now get started at the same time (265611)
+- Make links clickable in the status tab comments field (266100)
 
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)

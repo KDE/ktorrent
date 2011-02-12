@@ -44,6 +44,7 @@ namespace kt
 		void useRatioLimitToggled(bool on);
 		void useTimeLimitToggled(bool on);
 		void maxTimeChanged(double v);
+		void linkActivated(const QString & link);
 
 	private:
 		void maxRatioUpdate();

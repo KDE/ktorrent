@@ -18,11 +18,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <math.h>
-#include <float.h>
-#include <qdatetime.h>
-#include <qcheckbox.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <QDateTime>
+#include <QCheckBox>
+#include <KGlobal>
+#include <KLocale>
+#include <KRun>
 #include <util/functions.h>
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>
@@ -31,6 +31,7 @@
 #include "availabilitychunkbar.h"
 #include "statustab.h"
 #include "settings.h"
+
 		
 using namespace bt;
 
@@ -71,6 +72,9 @@ namespace kt
 		int h = (int)ceil(fontMetrics().height()*1.25);
 		downloaded_bar->setFixedHeight(h);
 		availability_bar->setFixedHeight(h);
+		
+		comments->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::LinksAccessibleByKeyboard|Qt::TextSelectableByMouse|Qt::TextSelectableByKeyboard);
+		connect(comments,SIGNAL(linkActivated(QString)),SLOT(linkActivated(QString)));
 
 		// initialize everything with curr_tc == 0
 		setEnabled(false);
@@ -103,9 +107,19 @@ namespace kt
 			// Don't allow multiple lines in the comments field
 			QString text = tc->getComments();
 			if (text.contains("\n"))
-				comments->setText(text.replace("\n"," "));
-			else
-				comments->setText(text);
+				text = text.replace("\n"," ");
+			
+			// Make links clickable
+			QStringList words = text.split(" ",QString::KeepEmptyParts);
+			for (QStringList::iterator i = words.begin();i != words.end();i++)
+			{
+				QString & w = *i;
+				if (w.startsWith("http://") || w.startsWith("https://") || w.startsWith("ftp://"))
+					w = "<a href=\"" + w + "\">" + w + "</a>";
+			}
+			
+			comments->setText(words.join(" "));
+			
 
 			float ratio = curr_tc->getMaxShareRatio();
 			if(ratio > 0)
@@ -315,6 +329,12 @@ namespace kt
 		if (curr_tc)
 			curr_tc->setMaxSeedTime(v);
 	}
+	
+	void StatusTab::linkActivated(const QString& link)
+	{
+		KRun::runUrl(KUrl(link),"text/html",0);
+	}
+
 
 }
 
