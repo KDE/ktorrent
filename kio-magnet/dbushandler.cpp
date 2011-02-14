@@ -247,9 +247,10 @@ bool DBusHandler::createFileStream( int file )
     }
 }
 
-void DBusHandler::load(const KUrl& u)
+bool DBusHandler::load(const KUrl& u)
 {
     kDebug() << u.url();
+    
     m_initMutex.lock();
     m_initMutex.unlock();
 
@@ -277,8 +278,7 @@ void DBusHandler::load(const KUrl& u)
                        ,i18n("The link for %1 does not contain the required btih hash-parameter.")
                        .arg(u.url()
                            ));
-        m_slave->close();
-        return;
+        return true;
     }
 
     if ( m_tor != xt.remove("urn:btih:") ) {
@@ -310,6 +310,7 @@ void DBusHandler::load(const KUrl& u)
             m_coreInt->start(m_tor);
         }
         torrentLoaded();
+        return true;
     } else {
 //         QString torrentUrl = m_url.queryItem("to");
 //         KUrl source( torrentUrl );
@@ -359,6 +360,7 @@ void DBusHandler::load(const KUrl& u)
             m_coreInt->loadSilently(m_url.url(),"MagnetShare");
         }
     }
+    return false;
 }
 
 void DBusHandler::loadFiles()

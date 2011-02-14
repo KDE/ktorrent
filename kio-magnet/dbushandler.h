@@ -26,6 +26,7 @@
 
 #include <QObject>
 #include <QtCore/QMutex>
+#include <QtCore/QWaitCondition>
 #include <QtDBus/QDBusConnection>
 
 class KProcess;;
@@ -40,7 +41,7 @@ public:
     DBusHandler( MagnetProtocol* );
     ~DBusHandler();
     void init();
-    void load(const KUrl&);
+    bool load(const KUrl&);
     bool seek(qint64 pos);
     qlonglong fileSize(qint32 idx);
 
