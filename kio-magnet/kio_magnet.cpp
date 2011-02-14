@@ -25,6 +25,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMutex>
+#include <QtCore/QWaitCondition>
 
 #include <kcomponentdata.h>
 #include <kstandarddirs.h>
@@ -82,16 +83,17 @@ void MagnetProtocol::load(const KUrl& url)
     kDebug();
 
     m_url = url;
-    m_downloaded=false;
-    m_size=-1;
-    m_position=0;
-    m_numFiles=0;
+    m_downloaded = false;
+    m_size = -1;
+    m_position = 0;
+    m_numFiles = 0;
     m_files.clear();
     m_path.clear();
 
-    m_filename = m_url.queryItem("pt");
-
-    m_dbusHandler->load(url);
+    if( !m_dbusHandler->load( url ) ) {
+        m_loadWaiter.wait( &m_loadMutex ); 
+    }
+    m_loadMutex.unlock();
 }
 
 /**
@@ -123,8 +125,6 @@ void MagnetProtocol::stat( const KUrl& url )
     kDebug() << url.url();
     load(url);
 
-    m_loadMutex.lock();
-    m_loadMutex.unlock();
     UDSEntry entry;
     entry.insert( KIO::UDSEntry::UDS_TARGET_URL, url.url() );
     entry.insert( KIO::UDSEntry::UDS_NAME, m_filename );
@@ -146,9 +146,7 @@ void MagnetProtocol::listDir(const KUrl& u)
     kDebug() << u.url();
     load(u);
 
-    m_loadMutex.lock();
-    m_loadMutex.unlock();
-    totalSize( m_numFiles);
+    totalSize( m_numFiles );
 
     UDSEntryList eList;
     QStringList subdirList;
@@ -216,8 +214,6 @@ void MagnetProtocol::mimetype(const KUrl& url)
 {
     kDebug();
     load(url);
-    m_loadMutex.lock();
-    m_loadMutex.unlock();
 
     KMimeType::Ptr mt = KMimeType::findByUrl( m_filename, 0, false /* local URL */ );
     emit mimeType( mt->name() );
@@ -228,9 +224,6 @@ void MagnetProtocol::get( const KUrl& url )
 {
     kDebug() << url.url() << "path: " << m_path;
     load(url);
-
-    m_loadMutex.lock();
-    m_loadMutex.unlock();
 
     totalSize( m_size );
 
@@ -286,7 +279,7 @@ void MagnetProtocol::added( const QString& fn )
     kDebug();
 
     m_filename = fn;
-    m_loadMutex.unlock();
+    m_loadWaiter.wakeOne();
 }
 
 void MagnetProtocol::downloaded(bool dl)
@@ -305,8 +298,6 @@ void MagnetProtocol::open(const KUrl& url, QIODevice::OpenMode mode)
 
     load(url);
 
-    m_loadMutex.lock();
-    m_loadMutex.unlock();
     if (m_size!=-1) {
         totalSize( m_size );
     }
@@ -335,8 +326,6 @@ void MagnetProtocol::open(const KUrl& url, QIODevice::OpenMode mode)
 void MagnetProtocol::read(filesize_t size)
 {
     kDebug() << size;
-    m_loadMutex.lock();
-    m_loadMutex.unlock();
 
     QFile file(m_path);
     if (!file.open(QIODevice::ReadOnly)) {
