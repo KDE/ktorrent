@@ -80,7 +80,7 @@ namespace kt
 	private slots:
 		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void hasVideoChanged(bool hasVideo);
-		void streamStateChanged(MediaFileStream::StreamState state);
+		void streamStateChanged(int state);
 		
 	signals:
 		/**
@@ -91,9 +91,8 @@ namespace kt
 		
 		/**
 		 * A video has been detected, create the video player window. 
-		 * @param tab_only If true do not create the actual Phonon::VideoWidget yet
 		 */
-		void openVideo(bool tab_only);
+		void openVideo();
 		
 		/**
 		 * Emitted when the video widget needs to be closed.

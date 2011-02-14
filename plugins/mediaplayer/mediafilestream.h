@@ -58,7 +58,7 @@ namespace kt
 		
 	signals:
 		/// Emitted when the stream state changes
-		void stateChanged(MediaFileStream::StreamState state);
+		void stateChanged(int state);
 		
 	private slots:
 		void dataReady();
