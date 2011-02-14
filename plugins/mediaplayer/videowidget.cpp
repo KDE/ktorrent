@@ -56,12 +56,9 @@ namespace kt
 		vlayout->setMargin(0);
 		vlayout->setSpacing(0);
 		
-		stack = new QStackedWidget(this);
-		QLabel* fake_video = new QLabel(this);
-		video = 0;
-		fake_video->setAutoFillBackground(true);
-		fake_video->setStyleSheet("QLabel {background-color: black}");
-		stack->addWidget(fake_video);
+		video = new Phonon::VideoWidget(this);
+		Phonon::createPath(player->media0bject(),video);
+		video->installEventFilter(this);
 		
 		chunk_bar = new VideoChunkBar(player->getCurrentSource(),this);
 		chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
@@ -104,7 +101,7 @@ namespace kt
 		chunk_bar->setFixedHeight(hlayout->sizeHint().height() * 0.75);
 		
 		vlayout->addWidget(chunk_bar);
-		vlayout->addWidget(stack);
+		vlayout->addWidget(video);
 		vlayout->addLayout(hlayout);
 		
 		connect(player->media0bject(),SIGNAL(tick(qint64)),this,SLOT(timerTick(qint64)));
@@ -118,25 +115,6 @@ namespace kt
 	{
 		inhibitScreenSaver(false);
 	}
-		
-	void VideoWidget::setVideoEnabled(bool on)
-	{
-		if (on && !video)
-		{
-			video = new Phonon::VideoWidget(stack);
-			int idx = stack->addWidget(video);
-			stack->setCurrentIndex(idx);
-			Phonon::createPath(player->media0bject(),video);
-			video->installEventFilter(this);
-		}
-		else if (!on && video)
-		{
-			stack->removeWidget(video);
-			video->deleteLater();
-			video = 0;
-		}
-	}
-
 
 	void VideoWidget::play()
 	{
@@ -145,7 +123,16 @@ namespace kt
 	
 	void VideoWidget::stop()
 	{
-		player->media0bject()->stop();
+		Phonon::MediaObject* mo = player->media0bject();
+		if (mo->state() == Phonon::PausedState)
+		{
+			mo->seek(0);
+			mo->stop();
+		}
+		else
+		{
+			mo->stop();
+		}
 	}
 
 	

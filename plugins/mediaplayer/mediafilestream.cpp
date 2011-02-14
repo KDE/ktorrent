@@ -27,6 +27,9 @@ using namespace bt;
 
 namespace kt
 {
+	const Uint32 MIN_AMOUNT_NEEDED = 16 * 1024;
+	
+	
 	MediaFileStream::MediaFileStream(bt::TorrentFileStream::WPtr stream, QObject* parent)
 		: AbstractMediaStream(parent), stream(stream), waiting_for_data(false)
 	{
@@ -54,7 +57,7 @@ namespace kt
 			if (s)
 			{
 				qint64 left = s->size() - s->pos();
-				qint64 min_amount_needed = Settings::previewSizeVideo();
+				qint64 min_amount_needed = MIN_AMOUNT_NEEDED;
 				if (left < min_amount_needed)
 					min_amount_needed = left;
 					
@@ -90,7 +93,7 @@ namespace kt
 		
 		// Make sure there is enough data buffered for smooth playback
 		qint64 left = s->size() - s->pos();
-		qint64 min_amount_needed = Settings::previewSizeVideo();
+		qint64 min_amount_needed = MIN_AMOUNT_NEEDED;
 		if (left < min_amount_needed)
 			min_amount_needed = left;
 		
@@ -116,6 +119,11 @@ namespace kt
 			Out(SYS_MPL|LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable()  << " (need " << min_amount_needed <<  ")" << endl;
 			waiting_for_data = true;
 			stateChanged(BUFFERING);
+			
+			// Send some more data, otherwise phonon seems to get stuck
+			QByteArray data = s->read(4096);
+			if (!data.isEmpty()) 
+				writeData(data);
 		}
 	}
 
