@@ -36,7 +36,7 @@ namespace kt
 		: QObject(parent),buffering(false),manually_paused(false)
 	{
 		media = new Phonon::MediaObject(this);
-		audio = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+		audio = new Phonon::AudioOutput(this);
 		Phonon::createPath(media,audio);
 		
 		connect(media,SIGNAL(stateChanged(Phonon::State,Phonon::State)),
@@ -83,12 +83,13 @@ namespace kt
 			Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: playing " << file.path() << endl;
 			Phonon::MediaSource ms = file.createMediaSource(this); 
 			media->setCurrentSource(ms);
-			media->play();
-			history.append(file);
 			
 			MediaFile::Ptr ptr = file.mediaFile();
-			if (ptr && ptr->isVideo() && ms.type() == Phonon::MediaSource::Stream)
-				openVideo(true);
+			if (ptr && ptr->isVideo())
+				openVideo();
+			
+			history.append(file);
+			media->play();
 		}
 	}
 
@@ -135,6 +136,8 @@ namespace kt
 			media->stop();
 			media->clear();
 		}
+		
+		onStateChanged(media->state(),Phonon::StoppedState);
 	}
 	
 	MediaFileRef MediaPlayer::prev()
@@ -218,13 +221,14 @@ namespace kt
 		}
 	}
 	
-	void MediaPlayer::streamStateChanged(MediaFileStream::StreamState state)
+	void MediaPlayer::streamStateChanged(int state)
 	{
 		Out(SYS_MPL|LOG_DEBUG) << "Stream state changed: " << (state == MediaFileStream::BUFFERING ? "BUFFERING" : "PLAYING") << endl;
 		if (state == MediaFileStream::BUFFERING)
 		{
 			buffering = true;
 			media->pause();
+			onStateChanged(media->state(),Phonon::PlayingState);
 		}
 		else if (buffering)
 		{
@@ -246,7 +250,7 @@ namespace kt
 	void MediaPlayer::hasVideoChanged(bool hasVideo)
 	{
 		if (hasVideo)
-			openVideo(false);
+			openVideo();
 		else
 			closeVideo();
 	}

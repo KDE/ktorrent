@@ -58,12 +58,6 @@ namespace kt
 		 */
 		void setFullScreen(bool on);
 		
-		/**
-		 * Enable or disable the Video
-		 * @param on True to enable, false to disable
-		 */
-		void setVideoEnabled(bool on);
-		
 	protected:
 		virtual void mouseMoveEvent(QMouseEvent* event);
 		virtual bool eventFilter(QObject* dst, QEvent* event);
@@ -84,7 +78,6 @@ namespace kt
 		QString formatTime(qint64 cur,qint64 total);
 
 	private:
-		QStackedWidget* stack;
 		Phonon::VideoWidget* video;
 		MediaPlayer* player;
 		Phonon::SeekSlider* slider;
