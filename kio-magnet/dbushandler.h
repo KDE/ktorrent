@@ -66,13 +66,13 @@ private:
     KProcess* m_process;
     QDBusConnection* m_bus;
     KUrl m_url;
-    QMutex m_initMutex;
+    QWaitCondition m_initWaiter;
     QThread* m_thread;
     MagnetProtocol* m_slave;
     QString m_tor, m_path;
     QStringList m_files;
     int m_file, m_passedTime;
-    bool m_loadInProgress;
+    bool m_init;
 };
 
 #endif // DBUSHANDLER_H
