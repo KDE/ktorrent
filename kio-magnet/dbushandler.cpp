@@ -285,7 +285,7 @@ bool DBusHandler::load(const KUrl& u)
 
     if ( hash.length() != 32 && hash.length() != 40 ) {
         m_slave->error(KIO::ERR_ABORTED
-                       , i18n("The the found value (%1) for the hash is neither 32 nor 40 chars"
+                       , i18n("The found value (%1) for the hash is neither 32 nor 40 chars"
                               " long.")
                         .arg(hash)
         );
