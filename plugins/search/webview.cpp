@@ -38,6 +38,12 @@
 #include "buffernetworkreply.h"
 #include "localfilenetworkreply.h"
 
+// KDE Devel Platform 4.4 compatibility
+#include <kdeversion.h>
+#if (!KDE_IS_VERSION(4, 5, 0))
+#include <KMessageBox>
+#include <interfaces/functions.h>
+#endif
 
 using namespace bt;
 
@@ -186,8 +192,24 @@ namespace kt
 
 	void WebView::downloadResponse(QNetworkReply* reply)
 	{
+#if KDE_IS_VERSION(4, 5, 0)
 		KWebPage* p = (KWebPage*)page();
 		p->downloadResponse(reply);
+#else
+		QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"),kt::TorrentFileFilter(false),this);
+		if (!fn.isNull())
+		{
+			QFile fptr(fn);
+			if (!fptr.open(QIODevice::WriteOnly))
+			{
+				KMessageBox::error(this,i18n("Cannot open <b>%1</b>: %2",fn,fptr.errorString()));
+			}
+			else
+			{
+				fptr.write(reply->readAll());
+			}
+		}
+#endif
 	}
 
 }
