@@ -52,7 +52,7 @@ DBusHandler::DBusHandler(MagnetProtocol* slave) :
         , m_slave( slave )
         , m_file( -1 )
         , m_passedTime( 0 )
-        , m_loadInProgress( true )
+        , m_init( false )
 {
     kDebug() << "Thread: " << thread();
     m_thread = new DBusThread(this);
@@ -82,12 +82,10 @@ DBusHandler::~DBusHandler()
 void DBusHandler::init()
 {
     kDebug();
-    m_initMutex.lock();
     if (!MagnetSettings::enabled()) {
         m_slave->error(KIO::ERR_ABORTED,
                        i18n("The Web share for magnet-links is disabled. \
         You can set it up at settings:/network-and-connectivity/sharing"));
-        m_initMutex.unlock();
     } else {
         initDBus();
     }
@@ -108,7 +106,6 @@ void DBusHandler::initDBus()
                            i18n("Cannot start process for KTorrent.\
                            This should not happen, even if KTorrent is not installed.\
                            Check your machines resources and limits."));
-            m_initMutex.unlock();
             return;
         }
         m_process->waitForStarted();
@@ -136,7 +133,6 @@ void DBusHandler::connectToDBus()
                                i18n("Could not connect to KTorrent via DBus\
                                      after %1 seconds. Is it broken?")
                                .arg(m_passedTime));
-                m_initMutex.unlock();
                 return;
             }
         }
@@ -154,7 +150,6 @@ void DBusHandler::setupDBus()
         m_slave->error(KIO::ERR_COULD_NOT_CONNECT,
                        i18n("Could not get the group list, do you have a"
                             " compatible KTorrent version running?"));
-        m_initMutex.unlock();
         return;
     } else {
         if (!groupList.value().contains("MagnetShare")) {
@@ -192,7 +187,8 @@ void DBusHandler::setupDBus()
 
     startTimer( 1000 );
 
-    m_initMutex.unlock();
+    m_init = true;
+    m_initWaiter.wakeOne();
 }
 
 void DBusHandler::timerEvent(QTimerEvent* event)
@@ -250,21 +246,25 @@ bool DBusHandler::createFileStream( int file )
 bool DBusHandler::load(const KUrl& u)
 {
     kDebug() << u.url();
-    
-    m_initMutex.lock();
-    m_initMutex.unlock();
 
-    m_url = u; //"magnet:"+u.query();
+    if( !m_init ) {
+        QMutex loadMutex;
+        loadMutex.lock();
+        m_initWaiter.wait(&loadMutex);
+        loadMutex.unlock();
+    }
+
+    m_url = u; 
     QString xt = u.queryItem("xt");
     m_path = u.queryItem("pt");
 
     // support extended magnet address space to something url like
-    // magnet://urn.btih.HASH/path?blabla
     if ( u.hasHost() && u.host().contains("btih") )  {
         if ( xt.isEmpty() || !xt.contains("urn:btih:") ) {
             QRegExp btihHash("([^\\.]+).btih");
             if ( btihHash.indexIn(u.host()) != -1 ) {
-                xt = "urn:btih:"+btihHash.cap(1);
+                QString primaryHash = btihHash.cap(1).split("-")[0];
+                xt = "urn:btih:"+primaryHash;
             }
         }
         if ( u.hasPath() && u.path() != "/" ) {
@@ -276,12 +276,23 @@ bool DBusHandler::load(const KUrl& u)
     if ( xt.isEmpty() || !xt.contains( "urn:btih:" ) ) {
         m_slave->error(KIO::ERR_ABORTED
                        ,i18n("The link for %1 does not contain the required btih hash-parameter.")
-                       .arg(u.url()
-                           ));
+                       .arg(u.url())
+        );
         return true;
     }
 
-    if ( m_tor != xt.remove("urn:btih:") ) {
+    QString hash = xt.remove("urn:btih:");
+
+    if ( hash.length() != 32 && hash.length() != 40 ) {
+        m_slave->error(KIO::ERR_ABORTED
+                       , i18n("The found value (%1) for the hash is neither 32 nor 40 chars"
+                              " long.")
+                        .arg(hash)
+        );
+        return true;
+    }
+
+    if ( m_tor != hash ) {
         if ( m_torrentInt ) {
             m_torrentInt->removeStream( m_file );
             delete m_streamInt;
@@ -290,7 +301,6 @@ bool DBusHandler::load(const KUrl& u)
         }
         m_file=-1;
         m_files.clear();
-        m_loadInProgress = false;
         m_tor = xt.remove("urn:btih:");
         m_torrentInt = new org::ktorrent::torrent("org.ktorrent.ktorrent"
                 , "/torrent/"+m_tor
@@ -312,53 +322,7 @@ bool DBusHandler::load(const KUrl& u)
         torrentLoaded();
         return true;
     } else {
-//         QString torrentUrl = m_url.queryItem("to");
-//         KUrl source( torrentUrl );
-//         if (!MagnetSettings::trustedHosts().contains(source.host())) {
-//             if ( m_slave->messageBox(KIO::SlaveBase::WarningYesNo,
-//                                      i18n("The host \"%1\" is not known yet.
-//Do you want to trust its shared sources?")
-//                                      .arg(source.host()),
-//                                      i18n("Host not known")) !=
-//KMessageBox::Yes ) {
-//                 kDebug()<<"host rejected.";
-//                 m_slave->error(KIO::ERR_ABORTED,i18n("Host rejected."));
-//                 return;
-//             } else {
-//                 QStringList hosts = MagnetSettings::trustedHosts();
-//                 hosts << source.host();
-//                 MagnetSettings::setTrustedHosts(hosts);
-//             }
-//         }
-        if (!m_loadInProgress) {
-            QString dn = m_url.queryItem("dn");
-            if ( dn.isEmpty() )
-                dn = i18n( "(no name given)" );
-            QString pt = m_url.queryItem("pt");
-            if ( pt.isEmpty() )
-                pt = i18n( "(no path given)" );
-            QString to = m_url.queryItem("to");
-            if ( to.isEmpty() )
-                to = i18n( "(magnet dht)" );
-            // Does not work, why? TODO
-//                      KNotification::event(KNotification::Notification, i18n(
-//"Magnet-Link information" ),
-//                                          i18n( "Loaded torrent \"%1\" from
-//\"%2\" for file \"%3\"." ).arg(dn).arg(to).arg(pt) );
-//                                                              KIcon(
-//"kt-magnet" ).pixmap( QSize(64,64) ));
-            /*if ( m_slave->messageBox( KIO::SlaveBase::QuestionYesNo,
-                                      i18n( "Do you want to download and share
-            the file: \"%1\" of torrent: \"%2\"?" ).arg(pt).arg(dn),
-                                      i18n( "Magnet-Link confirmation" ) ) !=
-            KMessageBox::No ) {
-            } else {
-                m_slave->error(KIO::ERR_USER_CANCELED,i18n("Torrent \"%1\"
-            rejected by user.").arg(dn));
-            }*/
-            m_loadInProgress = true;
-            m_coreInt->loadSilently(m_url.url(),"MagnetShare");
-        }
+        m_coreInt->loadSilently(m_url.url(),"MagnetShare");
     }
     return false;
 }
@@ -405,7 +369,6 @@ void DBusHandler::selectFiles(bool init)
 
     // give the actually requested file an even higher priority
     // this is not achievable in the KTorrent UI, TODO
-    m_torrentInt->setFilePriority(m_file,60);
     if ( !prefetches.contains("all") ) {
         for (qint32 i=0; i<n; i++) {
             bool dwnld = ( i==m_file || prefetches.contains( m_files[i] ) );
@@ -426,6 +389,7 @@ void DBusHandler::selectFiles(bool init)
             }
         }
     }
+    m_torrentInt->setFilePriority(m_file,60);
 }
 
 void DBusHandler::torrentLoaded()
