@@ -7,6 +7,7 @@
 - Properties dialog
 - Expand scripting
 - SSL error dialog for HTTPAnnounceJob
+- Time based expiration of items in the loaded list of a feed in the syndication plugin
 
 4.1:
 - kio-magnet integration with extended
