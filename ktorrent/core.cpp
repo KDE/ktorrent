@@ -21,6 +21,7 @@
 #include <QNetworkInterface>
 #include <klocale.h>
 #include <kio/job.h>
+#include <kio/copyjob.h>
 #include <kmessagebox.h>
 #include <kstandardguiitem.h>
 #include <kfiledialog.h>
@@ -342,7 +343,7 @@ namespace kt
 		qman->torrentAdded(tc,start_torrent);
 		
 		//now copy torrent file to user specified dir if needed
-		if(Settings::useTorrentCopyDir())
+		if (Settings::useTorrentCopyDir())
 		{
 			QString torFile = tc->getTorDir();
 			if(!torFile.endsWith(bt::DirSeparator()))
@@ -354,7 +355,7 @@ namespace kt
 				destination += bt::DirSeparator();
 			
 			destination += tc->getStats().torrent_name + ".torrent";
-			KIO::file_copy(torFile,destination,-1, KIO::HideProgressInfo);
+			KIO::copy(torFile,destination);
 		}
 		
 		torrentAdded(tc);
