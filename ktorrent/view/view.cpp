@@ -23,13 +23,14 @@
 #include <QDropEvent>
 #include <QDragEnterEvent>
 #include <QSortFilterProxyModel>
-#include <krun.h>
-#include <kmenu.h>
-#include <klocale.h>
-#include <ksharedconfig.h>
-#include <kmessagebox.h>
-#include <kfiledialog.h>
-#include <kinputdialog.h>
+#include <KRun>
+#include <KMenu>
+#include <KLocale>
+#include <KSharedConfig>
+#include <KMessageBox>
+#include <KFileDialog>
+#include <KInputDialog>
+#include <KAction>
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <torrent/jobqueue.h>
@@ -46,6 +47,7 @@
 #include "viewselectionmodel.h"
 #include "viewdelegate.h"
 #include "propertiesextender.h"
+
 
 using namespace bt;
 
@@ -79,7 +81,8 @@ namespace kt
 		for (int i = 0;i < model->columnCount(QModelIndex());i++)
 		{
 			QString col = model->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString();
-			QAction* act = header_menu->addAction(col);
+			KAction* act = new KAction(col,header_menu);
+			header_menu->addAction(act);
 			act->setCheckable(true);
 			act->setChecked(true);
 			column_idx_map[act] = i;

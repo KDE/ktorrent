@@ -4,6 +4,7 @@ Changes in 4.1:
 - Fix mediaplayer unable to stop in buffering mode when streaming (266100)
 - KDE 4.4 compatibility fix in search plugin
 - Make sure overwrite is possible for the torrent copy file feature
+- Fix critical Qt warning when opening context menu in view
 
 Changes in 4.1rc1:
 - Make sure that apply button of config dialog is enabled properly when the group changes in the scanfolder settings
