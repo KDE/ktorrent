@@ -232,7 +232,7 @@ void MagnetProtocol::get( const KUrl& url )
     if (info.isFile()) {
         if (!file.open(QIODevice::ReadOnly)) {
             error(KIO::ERR_ABORTED,
-                  i18n("File exits in KTorrent, but cannot open it on disk at path \"%1\"."
+                  i18n("File exists in KTorrent, but cannot open it on disk at path \"%1\"."
                        " Have you removed the file manually?" ).arg(m_path));
             return;
         }
