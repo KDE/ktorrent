@@ -480,8 +480,7 @@ namespace kt
 	
 	bool DBusTorrent::createStream(uint file_index)
 	{
-		if (stream)
-			delete stream;
+		delete stream;
 		
 		stream = new DBusTorrentFileStream(file_index,this);
 		if (!stream->ok())
@@ -497,11 +496,8 @@ namespace kt
 	// streaming only works for one file at once atm, so the index has no effect yet
 	bool DBusTorrent::removeStream(uint file_index) 
 	{
-		if (stream) 
-		{
-			delete stream;
-			stream = 0;
-		}
+		delete stream;
+		stream = 0;
 		return true;
 	}
 

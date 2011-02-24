@@ -344,13 +344,15 @@ namespace kt
 		double progress = index.data().toDouble();
 		
 		QStyleOptionProgressBar progressBarOption;
-		progressBarOption.state = QStyle::State_Active;
+		progressBarOption.palette = option.palette;
+		progressBarOption.state = option.state;
 		progressBarOption.rect = option.rect;
 		progressBarOption.minimum = 0;
 		progressBarOption.maximum = 100;
 		progressBarOption.progress = (int)progress;
 		progressBarOption.text = KGlobal::locale()->formatNumber(progress,2) + "%";
 		progressBarOption.textVisible = true;
+		progressBarOption.direction = option.direction;
 		
 		KApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
 	}

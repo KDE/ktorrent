@@ -297,11 +297,8 @@ namespace kt
 	
 	void InfoWidgetPlugin::createMonitor(bt::TorrentInterface* tc)
 	{	
-		if (monitor)
-		{
-			delete monitor; 
-			monitor = 0;
-		}
+		delete monitor; 
+		monitor = 0;
 			
 		if (peer_view)
 			peer_view->removeAll();

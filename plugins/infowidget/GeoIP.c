@@ -387,6 +387,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		if (flags & GEOIP_MEMORY_CACHE) {
 			if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
 				fprintf(stderr,"Error stating file %s\n",filename);
+				free(gi->file_path);
 				free(gi);
 				return NULL;
 			}
