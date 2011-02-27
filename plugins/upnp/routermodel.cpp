@@ -20,9 +20,12 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kicon.h>
+#include <util/log.h>
+#include <util/error.h>
 #include <upnp/upnprouter.h>
 #include "routermodel.h"
 
+using namespace bt;
 
 namespace kt
 {
@@ -54,7 +57,7 @@ namespace kt
 	int RouterModel::columnCount(const QModelIndex & parent) const
 	{
 		if (!parent.isValid())
-			return 3;
+			return 2;
 		else
 			return 0;
 	}
@@ -67,8 +70,7 @@ namespace kt
 		switch (section)
 		{
 			case 0: return i18n("Device");
-			case 1: return i18n("Port Forwarded");
-			case 2: return i18n("WAN Connection");
+			case 1: return i18n("Ports Forwarded");
 			default: return QVariant();
 		}
 	}
@@ -96,7 +98,6 @@ namespace kt
 							return r->getError();
 						else
 							return ports(r);
-				case 2: return connections(r);
 			}
 		}
 		else if (role == Qt::DecorationRole)
@@ -158,7 +159,7 @@ namespace kt
 
 		QString result()
 		{
-			return ports.join("\n");
+			return ports.join(", ");
 		}
 
 		QStringList ports;
@@ -171,40 +172,34 @@ namespace kt
 		return pv.result();
 	}
 
-	class ConnectionsVisitor : public bt::UPnPRouter::Visitor
-	{
-	public:
-		virtual ~ConnectionsVisitor() {}
-
-		virtual void forwarding(const net::Port& port, bool pending, const bt::UPnPService* service)
-		{
-			Q_UNUSED(port);
-			if (!pending)
-			{
-				if (service->servicetype.contains("WANPPPConnection"))
-					connections.append("PPP");
-				else
-					connections.append("IP");
-			}
-		}
-
-		QString result()
-		{
-			return connections.join("\n");
-		}
-
-		QStringList connections;
-	};
-
-	QString RouterModel::connections(const bt::UPnPRouter* r) const
-	{
-		ConnectionsVisitor cv;
-		r->visit(&cv);
-		return cv.result();
-	}
-
 	void RouterModel::update()
 	{
 		emit dataChanged(index(0,0),index(rowCount(QModelIndex()) - 1,columnCount(QModelIndex()) - 1));
+	}
+	
+	void RouterModel::forward(const net::Port& port)
+	{
+		try
+		{
+			foreach (bt::UPnPRouter* r, routers)
+				r->forward(port);
+		}
+		catch (bt::Error & e)
+		{
+			Out(SYS_PNP|LOG_DEBUG) << "Error : " << e.toString() << endl;
+		}
+	}
+	
+	void RouterModel::undoForward(const net::Port& port, bt::WaitJob* wjob)
+	{
+		try
+		{
+			foreach (bt::UPnPRouter* r, routers)
+				r->undoForward(port, wjob);
+		}
+		catch (Error & e)
+		{
+			Out(SYS_PNP|LOG_DEBUG) << "Error : " << e.toString() << endl;
+		}
 	}
 }

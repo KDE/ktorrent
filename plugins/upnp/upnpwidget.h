@@ -72,7 +72,6 @@ namespace kt
 	private:
 		bt::UPnPMCastSocket* sock;
 		RouterModel* model;
-		bt::UPnPRouter* def_router;
 	};
 }
 

@@ -26,6 +26,12 @@
 namespace bt
 {
 	class UPnPRouter;
+	class WaitJob;
+}
+
+namespace net
+{
+	class Port;
 }
 
 namespace kt 
@@ -56,9 +62,14 @@ namespace kt
 		
 		void update();
 		
+		/// Forward a ports on all routers
+		void forward(const net::Port& port);
+		
+		/// Undo forward a ports on all routers
+		void undoForward(const net::Port& port, bt::WaitJob* wjob);
+		
 	private:
 		QString ports(const bt::UPnPRouter* r) const;
-		QString connections(const bt::UPnPRouter* r) const;
 		
 	private:
 		QList<bt::UPnPRouter*> routers;

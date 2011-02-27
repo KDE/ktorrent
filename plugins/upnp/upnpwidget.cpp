@@ -43,7 +43,6 @@ namespace kt
 	{
 		setupUi(this);
 		m_devices->setRootIsDecorated(false);
-		def_router = 0;
 		connect(m_forward,SIGNAL(clicked()),this,SLOT(onForwardBtnClicked()));
 		connect(m_undo_forward,SIGNAL(clicked()),this,SLOT(onUndoForwardBtnClicked()));
 		connect(m_rescan,SIGNAL(clicked()),this,SLOT(onRescanClicked()));
@@ -79,19 +78,9 @@ namespace kt
 		QByteArray s = m_devices->header()->saveState();
 		g.writeEntry("state",s.toBase64());
 
-		if (!def_router)
-			return;
-		
 		net::PortList & pl = bt::Globals::instance().getPortList();
-		if (pl.count() == 0)
-			return;
-		
 		for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
-		{
-			net::Port & p = *i;
-			if (p.forward)
-				def_router->undoForward(p,job);
-		}
+			model->undoForward(*i,job);
 	}
 
 	void UPnPWidget::addDevice(bt::UPnPRouter* r)
@@ -99,31 +88,20 @@ namespace kt
 		connect(r,SIGNAL(stateChanged()),this,SLOT(updatePortMappings()));
 		model->addRouter(r);
 
-		// if we have discovered the default device or there is none
-		// forward it's ports
-		QString def_dev = UPnPPluginSettings::defaultDevice();
-		if (def_dev == r->getServer() || def_dev.length() == 0)
+		Out(SYS_PNP|LOG_DEBUG) << "Doing port mappings for " << r->getServer() << endl;
+		try
 		{
-			Out(SYS_PNP|LOG_DEBUG) << "Doing default port mappings ..." << endl;
-			UPnPPluginSettings::setDefaultDevice(r->getServer());
-			
-			try
+			net::PortList & pl = bt::Globals::instance().getPortList();
+		
+			for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
 			{
-				net::PortList & pl = bt::Globals::instance().getPortList();
-			
-				for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
-				{
-					net::Port & p = *i;
-					if (p.forward)
-						r->forward(p);
-				}
-				
-				def_router = r;
+				if (i->forward)
+					r->forward(*i);
 			}
-			catch (Error & e)
-			{
-				KMessageBox::error(this,e.toString());
-			}
+		}
+		catch (Error & e)
+		{
+			KMessageBox::error(this,e.toString());
 		}
 	}
 	
@@ -143,14 +121,6 @@ namespace kt
 				if (p.forward)
 					r->forward(p);
 			}
-			
-			QString def_dev = UPnPPluginSettings::defaultDevice();
-			if (def_dev != r->getServer())
-			{
-				UPnPPluginSettings::setDefaultDevice(r->getServer());
-				def_router = r;
-			}
-			
 		}
 		catch (Error & e)
 		{
@@ -174,13 +144,6 @@ namespace kt
 				if (p.forward)
 					r->undoForward(p,false);
 			}
-			
-			QString def_dev = UPnPPluginSettings::defaultDevice();
-			if (def_dev == r->getServer())
-			{
-				UPnPPluginSettings::setDefaultDevice(QString::null);
-				def_router = 0;
-			}
 		}
 		catch (Error & e)
 		{
@@ -202,28 +165,12 @@ namespace kt
 		
 	void UPnPWidget::portAdded(const net::Port & port)
 	{
-		try
-		{
-			if (def_router && port.forward)
-				def_router->forward(port);
-		}
-		catch (Error & e)
-		{
-			Out(SYS_PNP|LOG_DEBUG) << "Error : " << e.toString() << endl;
-		}
+		model->forward(port);
 	}
 
 	void UPnPWidget::portRemoved(const net::Port & port)
 	{
-		try
-		{
-			if (def_router && port.forward)
-				def_router->undoForward(port,false);
-		}
-		catch (Error & e)
-		{
-			Out(SYS_PNP|LOG_DEBUG) << "Error : " << e.toString() << endl;
-		}
+		model->undoForward(port, 0);
 	}
 	
 	void UPnPWidget::onCurrentDeviceChanged(const QModelIndex & current,const QModelIndex & previous)
