@@ -262,7 +262,8 @@ void DBusHandler::load(const KUrl& u)
         if ( xt.isEmpty() || !xt.contains("urn:btih:") ) {
             QRegExp btihHash("([^\\.]+).btih");
             if ( btihHash.indexIn(u.host()) != -1 ) {
-                xt = "urn:btih:"+btihHash.cap(1);
+                QString primaryHash = btihHash.cap(1).split("-")[0];
+                xt = "urn:btih:"+primaryHash;
             }
         }
         if ( u.hasPath() && u.path() != "/" ) {
