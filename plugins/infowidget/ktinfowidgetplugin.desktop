@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=Information Widget
-Name[bg]=Джаджа с данни
 Name[ca]=Estri d'informació
 Name[ca@valencia]=Estri d'informació
 Name[cs]=Informační widget
@@ -15,8 +14,7 @@ Name[fr]=Élément graphique affichant des informations
 Name[ga]=Giuirléid Eolais
 Name[gl]=Widget informativo
 Name[hr]=Informacijski widget
-Name[hu]=Információs kisalkalmazás
-Name[is]=Upplýsingagræja
+Name[hu]=Információs widget
 Name[it]=Pannello informazioni
 Name[ja]=情報ウィジェット
 Name[km]=ធាតុ​ក្រាហ្វិក​របស់​ព័ត៌មាន
@@ -59,7 +57,6 @@ Comment[fr]=Affiche des informations générales sur un torrent dans plusieurs o
 Comment[ga]=Breiseán a thaispeánann eolas ginearálta maidir le torrent i gcluaisíní éagsúla
 Comment[gl]=Mostra información xeral acerca dun torrente en varias páxinas
 Comment[hu]=Általános információk megjelenítése több lapon egy torrentről
-Comment[is]=Birtir í nokkrum flipum almennar upplýsingar um torrent straum
 Comment[it]=Visualizza in diverse schede informazioni generali sul torrent
 Comment[ja]=torrent に関する一般的な情報を複数のタブに表示します
 Comment[km]=បង្ហាញ​ព័ត៌មាន​ទូទៅ​អំពី torrent ក្នុង​ច្រើន​ផ្ទាំង
