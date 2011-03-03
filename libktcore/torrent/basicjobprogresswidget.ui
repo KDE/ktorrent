@@ -21,14 +21,14 @@
       </font>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string comment="KDE::DoNotExtract">TextLabel</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="job_description">
      <property name="text">
-      <string>TextLabel</string>
+      <string comment="KDE::DoNotExtract">TextLabel</string>
      </property>
     </widget>
    </item>
@@ -44,7 +44,7 @@
      <item>
       <widget class="QLabel" name="job_speed">
        <property name="text">
-        <string>TextLabel</string>
+        <string comment="KDE::DoNotExtract">TextLabel</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -56,7 +56,7 @@
    <item>
     <widget class="QLabel" name="msg">
      <property name="text">
-      <string>TextLabel</string>
+      <string comment="KDE::DoNotExtract">TextLabel</string>
      </property>
     </widget>
    </item>
