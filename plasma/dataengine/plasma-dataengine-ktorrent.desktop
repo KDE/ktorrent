@@ -52,6 +52,7 @@ Name[x-test]=xxKTorrentxx
 Name[zh_CN]=KTorrent
 Name[zh_TW]=KTorrent
 Comment=KTorrent data engine, for getting information from KTorrent
+Comment[ca]=Motor de dades del KTorrent, per obtenir informació del KTorrent
 Comment[cs]=Datový nástroj KTorrentu pro získání informací z KTorrentu
 Comment[nds]=KTorrent-Datenkarn. Hoolt Informatschonen vun KTorrent.
 Comment[nl]=Ktorrent gegevensengine, om informatie uit KTorrent te krijgen
