@@ -47,6 +47,7 @@ Comment[cs]=Skript pro automatické vytvoření skupin podle URL adres trackerů
 Comment[nds]=Skript, dat ut de Tracker-URLs automaatsch Koppeln opstellt
 Comment[nl]=Script voor het automatisch aanmaken van groepen gebaseerd op tracker-URL's
 Comment[pt]=Um programa para criar grupos automáticos com base nos URL's do localizador
+Comment[pt_BR]=Script para criar grupos automaticamente, baseado nas URLs dos rastreadores
 Comment[sv]=Skript för att skapa automatiska grupper baserat på spårarnas webbadresser
 Comment[uk]=Скрипт для створення автоматичних груп за адресами координаторів
 Comment[x-test]=xxScript to create automatic groups based upon tracker URLsxx
