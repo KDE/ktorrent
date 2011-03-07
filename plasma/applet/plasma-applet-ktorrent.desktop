@@ -55,6 +55,7 @@ Name[zh_TW]=KTorrent
 Icon=ktorrent
 Comment=Plasma widget to keep track of a single torrent
 Comment[ca]=Estri Plasma per mantenir el seguiment d'un sol torrent
+Comment[da]=Plasma-widget til at holde styr på en enkelt torrent
 Comment[nds]=Plasma-Lüttprogramm, dat op een Enkeltorrent kiekt
 Comment[nl]=Plasma widget voor het volgen van een enkele torrent
 Comment[pt]=Um elemento do Plasma para acompanhar o estado de uma única torrente
