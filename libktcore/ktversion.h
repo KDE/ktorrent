@@ -23,7 +23,7 @@
 #include <version.h>
 #include "util/constants.h"
 
-#define KT_VERSION_MACRO "4.1rc1"
+#define KT_VERSION_MACRO "4.1.0"
 
 namespace kt
 {
