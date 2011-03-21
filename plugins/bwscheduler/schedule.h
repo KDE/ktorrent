@@ -33,9 +33,16 @@ namespace bt
 
 namespace kt
 {
+	template<class T>
+	bool between(T v, T min_val, T max_val)
+	{
+		return v >= min_val && v <= max_val;
+	}
+	
 	struct ScheduleItem
 	{
-		int day;
+		int start_day;
+		int end_day;
 		QTime start;
 		QTime end;
 		bt::Uint32 upload_limit;
@@ -51,7 +58,13 @@ namespace kt
 		ScheduleItem();
 		ScheduleItem(const ScheduleItem & item);
 
-		bool isValid() const {return day >= 1 && day <= 7;}
+		bool isValid() const 
+		{
+			return 
+				between(start_day, 1, 7) && 
+				between(end_day, 1, 7) && 
+				start_day <= end_day;
+		}
 		
 		/**
 		 * Check if this item conflicts with another
@@ -84,7 +97,7 @@ namespace kt
 	/**
 	 * Class which holds the schedule of one week.
 	*/
-	class Schedule : public QList<ScheduleItem*>
+	class Schedule
 	{
 	public:
 		Schedule();
@@ -129,10 +142,22 @@ namespace kt
 		 * @param item The item
 		 * @param start The start time
 		 * @param end The stop time
-		 * @param day The day
+		 * @param start_day The start day
+		 * @param end_day The end day
 		 * @return true If this succeeds (i.e. no conflicts)
 		 */
-		bool modify(ScheduleItem* item,const QTime & start,const QTime & end,int day);
+		bool modify(ScheduleItem* item,const QTime & start,const QTime & end,int start_day,int end_day);
+		
+		/**
+		 * Would a modify succeed ? 
+		 * @param item The item
+		 * @param start The start time
+		 * @param end The stop time
+		 * @param start_day The start day
+		 * @param end_day The end day
+		 * @return true If this succeeds (i.e. no conflicts)
+		 */
+		bool validModify(ScheduleItem* item,const QTime & start,const QTime & end,int start_day,int end_day);
 		
 		/**
 		 * Check for conflicts with other schedule items.
@@ -147,6 +172,23 @@ namespace kt
 		
 		/// Is the schedule enabled
 		bool isEnabled() const {return enabled;}
+		
+		/// Clear the schedule
+		void clear();
+		
+		/// Apply an operation on each ScheduleItem
+		template<class Operation>
+		void apply(Operation op)
+		{
+			foreach (ScheduleItem* i, items)
+				op(i);
+		}
+		
+		/// Remove a ScheduleItem, item will be deleted
+		void removeItem(ScheduleItem* item);
+		
+		/// Get the number of items in the schedule
+		int count() const {return items.count();}
 	
 	private:
 		bool parseItem(ScheduleItem* item,bt::BDictNode* dict);
@@ -154,6 +196,7 @@ namespace kt
 		
 	private:
 		bool enabled;
+		QList<ScheduleItem*> items;
 	};
 
 }

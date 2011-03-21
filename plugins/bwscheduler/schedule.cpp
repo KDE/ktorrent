@@ -33,8 +33,16 @@ using namespace bt;
 namespace kt
 {
 	
+	
 	ScheduleItem::ScheduleItem() 
-		: day(0),upload_limit(0),download_limit(0),suspended(false),set_conn_limits(false),global_conn_limit(0),torrent_conn_limit(0)
+		: start_day(0),
+		end_day(0),
+		upload_limit(0),
+		download_limit(0),
+		suspended(false),
+		set_conn_limits(false),
+		global_conn_limit(0),
+		torrent_conn_limit(0)
 	{
 		screensaver_limits = false;
 		ss_download_limit = ss_upload_limit = 0;
@@ -47,11 +55,17 @@ namespace kt
 
 	bool ScheduleItem::conflicts(const ScheduleItem & other) const
 	{
-		if (day != other.day)
+		bool on_same_day = between(other.start_day, start_day, end_day) ||
+			between(other.end_day, start_day, end_day) ||
+			(other.start_day <= start_day && other.end_day >= end_day);
+		
+		if (!on_same_day)
 			return false;
-		else if (other.start >= start && other.start <= end)
+		else if (between(other.start, start, end))
 			return true;
-		else if (other.end >= start && other.end <= end)
+		else if (between(other.end, start, end))
+			return true;
+		else if (other.start <= start && other.end >= end)
 			return true;
 		else
 			return false;
@@ -59,15 +73,16 @@ namespace kt
 	
 	bool ScheduleItem::contains(const QDateTime & dt) const
 	{
-		if (dt.date().dayOfWeek() != day)
+		if (!between(dt.date().dayOfWeek(),start_day,end_day))
 			return false;
 		else
-			return start <= dt.time() && dt.time() <= end;
+			return between(dt.time(),start,end);
 	}
 	
 	ScheduleItem & ScheduleItem::operator = (const ScheduleItem & item)
 	{
-		day = item.day;
+		start_day = item.start_day;
+		end_day = item.end_day;
 		start = item.start;
 		end = item.end;
 		upload_limit = item.upload_limit;
@@ -84,7 +99,8 @@ namespace kt
 	
 	bool ScheduleItem::operator == (const ScheduleItem & item) const
 	{
-		return day == item.day &&
+		return start_day == item.start_day &&
+				end_day == item.end_day &&
 				start == item.start &&
 				end == item.end &&
 				upload_limit == item.upload_limit &&
@@ -113,7 +129,7 @@ namespace kt
 
 	Schedule::~Schedule()
 	{
-		qDeleteAll(*this);
+		qDeleteAll(items);
 	}
 
 	void Schedule::load(const QString & file)
@@ -179,7 +195,7 @@ namespace kt
 			if (!dict)
 				continue;
 			
-			ScheduleItem* item = new ScheduleItem();
+			ScheduleItem* item(new ScheduleItem());
 			if (parseItem(item,dict))
 				addItem(item);
 			else
@@ -189,17 +205,31 @@ namespace kt
 	
 	bool Schedule::parseItem(ScheduleItem* item,bt::BDictNode* dict)
 	{
+		// Must have atleast a day or days entry
 		BValueNode* day = dict->getValue("day");
+		BValueNode* start_day = dict->getValue("start_day");
+		BValueNode* end_day = dict->getValue("end_day");
+		if (!day && !start_day && !end_day)
+			return false;
+		
 		BValueNode* start = dict->getValue("start");
 		BValueNode* end = dict->getValue("end");
 		BValueNode* upload_limit = dict->getValue("upload_limit");
 		BValueNode* download_limit = dict->getValue("download_limit");
 		BValueNode* suspended = dict->getValue("suspended");
 		
-		if (!day || !start || !end || !upload_limit || !download_limit || !suspended)
+		if (!start || !end || !upload_limit || !download_limit || !suspended)
 			return false;
 		
-		item->day = day->data().toInt();
+		if (day)
+			item->start_day = item->end_day = day->data().toInt();
+		else
+		{
+			item->start_day = start_day->data().toInt();
+			item->end_day = end_day->data().toInt();
+		}
+		
+		
 		item->start = QTime::fromString(start->data().toString());
 		item->end = QTime::fromString(end->data().toString());
 		item->upload_limit = upload_limit->data().toInt();
@@ -252,11 +282,11 @@ namespace kt
 		enc.write("enabled",enabled);
 		enc.write("items");
 		enc.beginList();
-		for (iterator itr = begin();itr != end();itr++)
+		foreach (ScheduleItem* i, items)
 		{
-			ScheduleItem* i = *itr;
 			enc.beginDict();
-			enc.write("day"); enc.write((Uint32)i->day);
+			enc.write("start_day"); enc.write((Uint32)i->start_day);
+			enc.write("end_day"); enc.write((Uint32)i->end_day);
 			enc.write("start"); enc.write(i->start.toString());
 			enc.write("end"); enc.write(i->end.toString());
 			enc.write("upload_limit"); enc.write(i->upload_limit);
@@ -279,27 +309,39 @@ namespace kt
 		enc.end();
 	}
 	
+	void Schedule::clear()
+	{
+		qDeleteAll(items);
+		items.clear();
+	}
+
+	
 	bool Schedule::addItem(ScheduleItem* item)
 	{
 		if (!item->isValid() || item->end <= item->start)
 			return false;
 		
-		for (iterator itr = begin();itr != end();itr++)
+		foreach (ScheduleItem* i, items)
 		{
-			ScheduleItem* i = *itr;
 			if (item->conflicts(*i))
 				return false;
 		}
 		
-		append(item);
+		items.append(item);
 		return true;
 	}
 	
+	void Schedule::removeItem(ScheduleItem* item)
+	{
+		if (items.removeAll(item) > 0)
+			delete item;
+	}
+
+	
 	ScheduleItem* Schedule::getCurrentItem(const QDateTime & now)
 	{
-		for (iterator itr = begin();itr != end();itr++)
+		foreach (ScheduleItem* i, items)
 		{
-			ScheduleItem* i = *itr;
 			if (i->contains(now))
 			{
 				return i;
@@ -317,10 +359,9 @@ namespace kt
 		
 		// lets look at all schedule items on the same day
 		// and find the next one
-		for (iterator itr = begin();itr != end();itr++)
+		foreach (ScheduleItem* i, items)
 		{
-			ScheduleItem* i = *itr;
-			if (i->day == now.date().dayOfWeek() && i->start > now.time())
+			if (between(now.date().dayOfWeek(),i->start_day,i->end_day) && i->start > now.time())
 			{
 				if (!item || i->start < item->start)
 					item = i;
@@ -334,33 +375,58 @@ namespace kt
 		return now.time().secsTo(end_of_day) + 5;
 	}
 	
-	bool Schedule::modify(ScheduleItem* item,const QTime & start,const QTime & end,int day)
+	bool Schedule::modify(kt::ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day)
 	{
 		QTime old_start = item->start;
 		QTime old_end = item->end;
-		int old_day = item->day;
+		int old_start_day = item->start_day;
+		int old_end_day = item->end_day;
 			
 		item->start = start;
 		item->end = end;
-		item->day = day;
+		item->start_day = start_day;
+		item->end_day = end_day;
 		item->checkTimes();
-		if (conflicts(item))
+		if (!item->isValid() || conflicts(item))
 		{
 			// restore old start and end time
 			item->start = old_start;
 			item->end = old_end;
-			item->day = old_day;
+			item->start_day = old_start_day;
+			item->end_day = old_end_day;
 			return false;
 		}
 	
 		return true;
 	}
 	
+	bool Schedule::validModify(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day)
+	{
+		QTime old_start = item->start;
+		QTime old_end = item->end;
+		int old_start_day = item->start_day;
+		int old_end_day = item->end_day;
+		
+		item->start = start;
+		item->end = end;
+		item->start_day = start_day;
+		item->end_day = end_day;
+		item->checkTimes();
+		bool invalid = !item->isValid() || conflicts(item);
+		
+		// restore old start and end time
+		item->start = old_start;
+		item->end = old_end;
+		item->start_day = old_start_day;
+		item->end_day = old_end_day;
+		return !invalid;
+	}
+
+	
 	bool Schedule::conflicts(ScheduleItem* item)
 	{
-		for (iterator itr = begin();itr != end();itr++)
+		foreach (ScheduleItem* i, items)
 		{
-			ScheduleItem* i = *itr;
 			if (i != item && (i->conflicts(*item) || item->conflicts(*i)))
 				return true;
 		}

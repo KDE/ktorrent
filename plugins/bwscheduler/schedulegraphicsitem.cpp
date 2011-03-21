@@ -25,7 +25,8 @@
 #include <QFontMetricsF>
 #include <QGraphicsTextItem>
 #include <QGraphicsSceneMouseEvent>
-#include <klocale.h>
+#include <KLocale>
+#include <KCursor>
 #include <util/log.h>
 #include <util/functions.h>
 #include "schedulegraphicsitem.h"
@@ -37,6 +38,15 @@ using namespace bt;
 
 namespace kt
 {
+	const Uint32 Top = 1;
+	const Uint32 Bottom = 2;
+	const Uint32 Left = 4;
+	const Uint32 Right = 8;
+	
+	const Uint32 TopRight = Top|Right;
+	const Uint32 TopLeft = Top|Left;
+	const Uint32 BottomRight = Bottom|Right;
+	const Uint32 BottomLeft = Bottom|Left;
 
 	ScheduleGraphicsItem::ScheduleGraphicsItem(ScheduleItem* item,const QRectF & r,const QRectF & constraints,WeekScene* ws)
 	: QGraphicsRectItem(r),item(item),constraints(constraints),ws(ws)
@@ -59,7 +69,7 @@ namespace kt
 		text_item = 0;
 		ready_to_resize = false;
 		resizing = false;
-		resize_edge = NoEdge;
+		resize_edge = 0;
 	}
 
 
@@ -131,21 +141,13 @@ namespace kt
 		return QGraphicsItem::itemChange(change, value);
 	}
 	
-	void ScheduleGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+	QRectF ScheduleGraphicsItem::resize(QPointF scene_pos)
 	{
-		if (!resizing)
-		{
-			QGraphicsItem::mouseMoveEvent(event);
-			ws->setShowGuidanceLines(true);
-			QPointF sp = pos() + rect().topLeft();
-			ws->updateGuidanceLines(sp.y(),sp.y() + rect().height());
-			return;
-		}
+		qreal x = scene_pos.x();
+		qreal y = scene_pos.y();
 		
-		qreal y = event->scenePos().y();
-		// Use cursor y pos to determine size of new rect
 		QRectF cur = rect();
-		if (resize_edge == TopEdge)
+		if (resize_edge & Top)
 		{
 			if (y >= cur.y() + cur.height()) // rect becomes flipped
 			{
@@ -156,7 +158,8 @@ namespace kt
 				qreal h = y - yn;
 				cur.setY(yn);
 				cur.setHeight(h);
-				resize_edge = BottomEdge;
+				resize_edge |= kt::Bottom;
+				resize_edge &= ~kt::Top;
 			}
 			else
 			{
@@ -166,7 +169,7 @@ namespace kt
 				cur.setHeight(h);
 			}
 		}
-		else
+		else if (resize_edge & Bottom)
 		{
 			if (y < cur.y()) // rect becomes flipped
 			{
@@ -177,7 +180,8 @@ namespace kt
 				qreal h = cur.y() - yn;
 				cur.setY(yn);
 				cur.setHeight(h);
-				resize_edge = TopEdge;
+				resize_edge |= kt::Top;
+				resize_edge &= ~kt::Bottom;
 			}
 			else
 			{
@@ -187,11 +191,77 @@ namespace kt
 			}
 		}
 		
-		setRect(cur);
-		if (text_item)
-			text_item->setPos(cur.x(),cur.y());
+		if (resize_edge & Left)
+		{
+			if (x >= cur.x() + cur.width()) // rect becomes flipped
+			{
+				qreal xn = cur.x() + cur.x();
+				if (xn < constraints.x())
+					xn = constraints.x();
+				
+				qreal w = x - xn;
+				cur.setX(xn);
+				cur.setWidth(w);
+				resize_edge |= kt::Right;
+				resize_edge &= ~kt::Left;
+			}
+			else
+			{
+				qreal xn = x < constraints.x() ? constraints.x() : x;
+				qreal w = cur.width() + (cur.x() - xn);
+				cur.setX(xn);
+				cur.setWidth(w);
+			}
+		}
+		else if (resize_edge & Right)
+		{
+			if (x < cur.x()) // rect becomes flipped
+			{
+				qreal xn = x;
+				if (xn < constraints.x())
+					xn = constraints.x();
+				
+				qreal w = cur.x() - xn;
+				cur.setX(xn);
+				cur.setWidth(w);
+				resize_edge |= kt::Left;
+				resize_edge &= ~kt::Right;
+			}
+			else
+			{
+				cur.setWidth(x - cur.x());
+				if (cur.x() + cur.width() >= constraints.x() + constraints.width())
+					cur.setWidth(constraints.x() + constraints.width() - cur.x());
+			}
+		}
 		
-		ws->updateGuidanceLines(cur.y(),cur.y() + cur.height());
+		return cur;
+	}
+
+	
+	void ScheduleGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+	{
+		if (!resizing)
+		{
+			QGraphicsItem::mouseMoveEvent(event);
+			ws->setShowGuidanceLines(true);
+			QPointF sp = pos() + rect().topLeft();
+			ws->updateGuidanceLines(sp.y(),sp.y() + rect().height());
+			
+			if (!ws->validMove(item,sp))
+				setCursor(Qt::ForbiddenCursor);
+			else
+				setCursor(Qt::DragMoveCursor);
+		}
+		else
+		{
+			QRectF cur = resize(event->scenePos());
+			setRect(cur);
+			if (text_item)
+				text_item->setPos(cur.x(),cur.y());
+			
+			ws->updateGuidanceLines(cur.y(),cur.y() + cur.height());
+		}
 	}
 	
 	void ScheduleGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
@@ -208,6 +278,8 @@ namespace kt
 			ws->setShowGuidanceLines(true);
 			ws->updateGuidanceLines(rect().y(),rect().y() + rect().height());
 		}
+		
+		setZValue(4);
 	}
 	
 	void ScheduleGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -232,17 +304,21 @@ namespace kt
 			}
 			ws->setShowGuidanceLines(false);
 		}
+		
+		setZValue(3);
+		setCursor(Qt::ArrowCursor);
 	}
 	
 	void ScheduleGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 	{
-		setCursor(Qt::SizeVerCursor);
 		ready_to_resize = true;
 		resize_edge = nearEdge(event->scenePos());
+		updateCursor();
 	}
 	
 	void ScheduleGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 	{
+		Q_UNUSED(event);
 		setCursor(Qt::ArrowCursor);
 		ready_to_resize = false;
 	}
@@ -250,24 +326,47 @@ namespace kt
 	void ScheduleGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 	{
 		resize_edge = nearEdge(event->scenePos());
-		ready_to_resize = resize_edge != NoEdge;
-		if (ready_to_resize)
-			setCursor(Qt::SizeVerCursor);
+		ready_to_resize = resize_edge != 0;
+		updateCursor();
+	}
+	
+	void ScheduleGraphicsItem::updateCursor()
+	{
+		if (resize_edge != 0)
+		{
+			if (resize_edge == kt::TopRight || resize_edge == kt::BottomLeft)
+				setCursor(Qt::SizeBDiagCursor);
+			else if (resize_edge == kt::BottomRight || resize_edge == kt::TopLeft)
+				setCursor(Qt::SizeFDiagCursor);
+			else if (resize_edge == kt::Top || resize_edge == kt::Bottom)
+				setCursor(Qt::SizeVerCursor);
+			else
+				setCursor(Qt::SizeHorCursor);
+		}
 		else
 			setCursor(Qt::ArrowCursor);
 	}
+
 	
-	ScheduleGraphicsItem::Edge ScheduleGraphicsItem::nearEdge(QPointF p)
+	Uint32 ScheduleGraphicsItem::nearEdge(QPointF p)
 	{
 		qreal y = rect().y();
 		qreal ye = y + rect().height();
-		if (qAbs(p.y() - y) < 3)
-			return TopEdge;
-		else if (qAbs(p.y() - ye) < 3)
-			return BottomEdge;
-		else
-			return NoEdge;
-	}	
+		qreal x = rect().x();
+		qreal xe = x + rect().width();
+		Uint32 ret = 0;
+		if (qAbs(p.y() - y) < 4)
+			ret |= Top;
+		else if (qAbs(p.y() - ye) < 4)
+			ret |= Bottom;
+		
+		if (qAbs(p.x() - x) < 4)
+			ret |= Left;
+		else if (qAbs(p.x() - xe) < 4)
+			ret |= Right;
+		
+		return ret;
+	}
 
 	
 }

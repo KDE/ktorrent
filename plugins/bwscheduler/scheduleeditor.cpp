@@ -30,7 +30,6 @@
 #include "scheduleeditor.h"
 #include "weekview.h"
 #include "schedule.h"
-#include "additemdlg.h"
 #include "edititemdlg.h"
 
 
@@ -64,8 +63,8 @@ namespace kt
 		
 		connect(view,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 		connect(view,SIGNAL(editItem(ScheduleItem*)),this,SLOT(editItem(ScheduleItem*)));
-		connect(view,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&,int)),
-				this,SLOT(itemMoved(ScheduleItem*, const QTime&, const QTime&,int)));
+		connect(view,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&,int, int)),
+				this,SLOT(itemMoved(ScheduleItem*, const QTime&, const QTime&, int, int)));
 	}
 
 	
@@ -158,15 +157,21 @@ namespace kt
 	
 	void ScheduleEditor::addItem()
 	{
-		AddItemDlg dlg(schedule,this);
-		if (dlg.exec() == QDialog::Accepted)
+		ScheduleItem* item = new ScheduleItem();
+		item->start_day = 1;
+		item->end_day = 7;
+		item->start = QTime(10,0);
+		item->end = QTime(12,0);
+		item->checkTimes();
+		EditItemDlg dlg(schedule,item,true,this);
+		if (dlg.exec() == QDialog::Accepted && schedule->addItem(item))
 		{
 			clear_action->setEnabled(true);
-			QList<ScheduleItem*> added_items = dlg.getAddedItems();
-			foreach (ScheduleItem* item,added_items)
-				view->addScheduleItem(item);
+			view->addScheduleItem(item);
 			scheduleChanged();
 		}
+		else
+			delete item;
 	}
 
 	void ScheduleEditor::removeItem()
@@ -180,8 +185,8 @@ namespace kt
 	{
 		ScheduleItem tmp = *item;
 		
-		EditItemDlg dlg(this);
-		if (dlg.execute(item))
+		EditItemDlg dlg(schedule,item,false,this);
+		if (dlg.exec() == QDialog::Accepted)
 		{
 			if (schedule->conflicts(item))
 			{
@@ -214,9 +219,9 @@ namespace kt
 		view->updateStatusText(up,down,suspended,enabled);
 	}
 	
-	void ScheduleEditor::itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day)
+	void ScheduleEditor::itemMoved(kt::ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day)
 	{
-		schedule->modify(item,start,end,day);
+		schedule->modify(item,start,end,start_day,end_day);
 		view->itemChanged(item);
 		scheduleChanged();
 	}

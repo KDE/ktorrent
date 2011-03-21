@@ -44,7 +44,8 @@ namespace kt
 {
 
 	WeekScene::WeekScene(QObject* parent)
-			: QGraphicsScene(parent)
+			: QGraphicsScene(parent),
+			schedule(0)
 	{
 		addCalendar();
 	}
@@ -161,12 +162,12 @@ namespace kt
 	QGraphicsItem* WeekScene::addScheduleItem(ScheduleItem* item)
 	{
 		QTime midnight(0,0,0,0);
-		qreal x = xoff + (item->day - 1) * day_width;
-		qreal min_h = hour_height / 60.0;
+		qreal x = xoff + (item->start_day - 1) * day_width;
+//		qreal min_h = hour_height / 60.0;
 		qreal y = timeToY(item->start);
 		qreal ye = timeToY(item->end);
 		
-		QRectF rect(x,y,day_width,ye - y);
+		QRectF rect(x,y,day_width * (item->end_day - item->start_day + 1),ye - y);
 		QRectF cst(xoff,yoff,7*day_width,24*hour_height); 
 		ScheduleGraphicsItem* gi = new ScheduleGraphicsItem(item,rect,cst,this);
 		addItem(gi);
@@ -186,11 +187,7 @@ namespace kt
 			}
 		}
 	}
-	/*
-	void WeekScene::mouseMoveEvent(QGraphicsSceneMouseEvent* ev)
-	{
-	}
-	*/
+	
 	void WeekScene::mousePressEvent(QGraphicsSceneMouseEvent* ev)
 	{
 		if (ev->button() == Qt::RightButton)
@@ -229,23 +226,73 @@ namespace kt
 		QTime start = yToTime(np.y());		
 		int d = item->start.secsTo(item->end); // duration in seconds
 		QTime end = start.addSecs(d);
-		itemMoved(item,start,end,1 + floor((np.x() + day_width * 0.5 - xoff) / day_width));
+		
+		int start_day = 1 + floor((np.x() + day_width * 0.5 - xoff) / day_width);
+		if (start_day < 1)
+			start_day = 1;
+		else if (start_day > 7)
+			start_day = 7;
+		
+		int end_day = start_day + (item->end_day - item->start_day);
+		if (end_day < 1)
+			end_day = 1;
+		else if (end_day > 7)
+			end_day = 7;
+		itemMoved(item,start,end,start_day,end_day);
 	}
+	
+	bool WeekScene::validMove(ScheduleItem* item, const QPointF& np)
+	{
+		if (!schedule)
+			return true;
+		
+		QTime start = yToTime(np.y());		
+		int d = item->start.secsTo(item->end); // duration in seconds
+		QTime end = start.addSecs(d);
+		
+		int start_day = 1 + floor((np.x() + day_width * 0.5 - xoff) / day_width);
+		int end_day = start_day + (item->end_day - item->start_day);
+		if (end_day > 7)
+			end_day = 7;
+		return schedule->validModify(item,start,end,start_day,end_day);
+	}
+
 	
 	void WeekScene::itemResized(ScheduleItem* item,const QRectF & r)
 	{
 		QTime start = yToTime(r.y());
 		QTime end = yToTime(r.y() + r.height());
-		itemMoved(item,start,end,item->day);
+		
+		int start_day = 1 + floor((r.x() + day_width * 0.5 - xoff) / day_width);
+		int end_day = 1 + floor((r.x() + r.width() - day_width * 0.5 - xoff) / day_width);
+		if (start_day < 1)
+			start_day = 1;
+		else if (start_day > 7)
+			start_day = 7;
+		
+		if (end_day < 1)
+			end_day = 1;
+		else if (end_day > 7)
+			end_day = 7;
+		
+		itemMoved(item,start,end,start_day,end_day);
 	}
+	
+	bool WeekScene::validResize(ScheduleItem* item, const QRectF& r)
+	{
+		QTime start = yToTime(r.y());
+		QTime end = yToTime(r.y() + r.height());
+		return schedule->validModify(item,start,end,item->start_day,item->end_day);
+	}
+
 	
 	void WeekScene::itemChanged(ScheduleItem* item,QGraphicsItem* gi)
 	{
 		ScheduleGraphicsItem* sgi = (ScheduleGraphicsItem*)gi;
-		qreal x = xoff + (item->day - 1) * day_width;
+		qreal x = xoff + (item->start_day - 1) * day_width;
 		qreal y = timeToY(item->start);
 		qreal ye = timeToY(item->end);
-		sgi->update(QRectF(x,y,day_width,ye - y));
+		sgi->update(QRectF(x,y,day_width * (item->end_day - item->start_day + 1),ye - y));
 	}
 	
 	void WeekScene::colorsChanged()

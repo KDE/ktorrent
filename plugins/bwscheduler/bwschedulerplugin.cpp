@@ -84,7 +84,7 @@ namespace kt
 
 	void BWSchedulerPlugin::load()
 	{
-		LogSystemManager::instance().registerSystem(i18n("Bandwidth Scheduler"),SYS_SCD);
+		LogSystemManager::instance().registerSystem(i18n("Scheduler"),SYS_SCD);
 		m_schedule = new Schedule();
 		m_pref = new BWPrefPage(0);
 		connect(m_pref,SIGNAL(colorsChanged()),this,SLOT(colorsChanged()));

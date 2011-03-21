@@ -21,6 +21,7 @@
 
 #include <util/log.h>
 #include <QGraphicsItem>
+#include <boost/bind.hpp>
 #include "weekview.h"
 #include "weekscene.h"
 #include "schedule.h"
@@ -37,8 +38,8 @@ namespace kt
 		
 		connect(scene,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 		connect(scene,SIGNAL(itemDoubleClicked(QGraphicsItem*)),this,SLOT(onDoubleClicked(QGraphicsItem*)));
-		connect(scene,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&,int)),
-				this,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&,int)));
+		connect(scene,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&,int, int)),
+				this,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&, int, int)));
 		
 		menu = new KMenu(this);
 		setContextMenuPolicy(Qt::CustomContextMenu);
@@ -77,10 +78,9 @@ namespace kt
 		schedule = s;
 		
 		if (schedule)
-		{
-			for (Schedule::iterator i = s->begin();i != s->end();i++)
-				addScheduleItem(*i);
-		}
+			s->apply(boost::bind(&WeekView::addScheduleItem, this, _1));
+		
+		scene->setSchedule(s);
 	}
 		
 	void WeekView::clear()
@@ -107,10 +107,9 @@ namespace kt
 			if (i != item_map.end())
 			{
 				ScheduleItem* si = i.value();
-				schedule->removeAll(si);
 				scene->removeItem(s);
 				item_map.erase(i);
-				delete s;
+				schedule->removeItem(si);
 			}
 		}
 	}

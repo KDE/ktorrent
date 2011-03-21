@@ -25,6 +25,7 @@
 
 namespace kt
 {
+	class Schedule;
 	struct ScheduleItem;
 	class GuidanceLine;
 
@@ -37,6 +38,12 @@ namespace kt
 	public:
 		WeekScene(QObject* parent);
 		virtual ~WeekScene();
+		
+		/**
+		 * Set the current Schedule
+		 * @param s The current schedule
+		 */
+		void setSchedule(Schedule* s) {schedule = s;}
 		
 		/**
 		 * Add an item to the schedule.
@@ -61,11 +68,25 @@ namespace kt
 		void itemMoved(ScheduleItem* item,const QPointF & np);
 		
 		/**
+		 * Is a move valid, does it conflict or not ?
+		 * @param item The item
+		 * @param np New position
+		 */
+		bool validMove(ScheduleItem* item,const QPointF & np);
+		
+		/**
 		 * An item has been resized by the user.
 		 * @param item The item
 		 * @param r It's new rectangle
 		 */
 		void itemResized(ScheduleItem* item,const QRectF & r);
+		
+		/**
+		 * Is a resize valid, does it conflict or not ?
+		 * @param item The item
+		 * @param np New position
+		 */
+		bool validResize(ScheduleItem* item,const QRectF & r);
 		
 		/**
 		 * An item has changed, update it.
@@ -106,12 +127,11 @@ namespace kt
 		 * @param end The new end time
 		 * @param day The new day
 		 */
-		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day);
+		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int start_day,int end_day);
 
 	private:
 		void addCalendar();
 		virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev);
-	//	virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* ev);
 		virtual void mousePressEvent(QGraphicsSceneMouseEvent* ev);
 		qreal timeToY(const QTime & time);
 		QTime yToTime(qreal y);
@@ -125,6 +145,7 @@ namespace kt
 		QList<QGraphicsLineItem*> lines;
 		QList<QGraphicsRectItem*> rects;
 		GuidanceLine* gline[2]; // guidance lines
+		Schedule* schedule;
 	};
 
 }

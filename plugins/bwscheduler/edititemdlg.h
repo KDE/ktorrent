@@ -27,6 +27,7 @@
 namespace kt
 {
 	struct ScheduleItem;
+	class Schedule;
 
 	/**
 		@author
@@ -35,21 +36,28 @@ namespace kt
 	{
 		Q_OBJECT
 	public:		
-		EditItemDlg(QWidget* parent);
+		EditItemDlg(Schedule* schedule, ScheduleItem* item, bool new_item, QWidget* parent);
 		virtual ~EditItemDlg();
 		
 		/**
-		 * Execute the dialog
-		 * @param item The item to fill in if the user presses OK
-		 * @return true if OK was pressed
-		 */
-		bool execute(ScheduleItem* item);
-
+		 * accept will only work if the item does not conflict
+		 **/
+		virtual void accept();
+		
 	private slots:
 		void fromChanged(const QTime & time);
 		void toChanged(const QTime & time);
+		void startDayChanged(int idx);
+		void endDayChanged(int idx);
 		void suspendedChanged(bool on);
 		void screensaverLimitsToggled(bool on);
+		
+	private:
+		void fillItem();
+		
+	private:
+		Schedule* schedule;
+		ScheduleItem* item;
 	};
 
 }

@@ -3,6 +3,8 @@ Changes in 4.2:
 - Data checks for multiple torrents can now get started at the same time (265611)
 - Make links clickable in the status tab comments field (266089)
 - Revamp UPnP plugin (266397)
+- Fix bug making it possible to add conflicting items to the schedule (268879)
+- Make it possible for schedule items to span multiple days (225939)
 
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)

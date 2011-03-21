@@ -70,7 +70,7 @@ namespace kt
 		void editItem();
 		void onSelectionChanged();
 		void editItem(ScheduleItem* item);
-		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day);
+		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int start_day,int end_day);
 		void enableChecked(bool on);
 		
 	signals:

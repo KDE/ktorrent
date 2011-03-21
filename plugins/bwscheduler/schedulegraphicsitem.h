@@ -45,11 +45,6 @@ namespace kt
 		 */
 		void update(const QRectF & r);
 		
-		enum Edge
-		{
-			NoEdge,TopEdge,BottomEdge
-		};
-		
 	private:
 		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 		virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
@@ -57,7 +52,9 @@ namespace kt
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
 		virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
 		virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
-		Edge nearEdge(QPointF p);
+		bt::Uint32 nearEdge(QPointF p);
+		QRectF resize(QPointF scene_pos);
+		void updateCursor();
 
 	private:
 		ScheduleItem* item;
@@ -67,7 +64,7 @@ namespace kt
 		QPointF original_pos;
 		bool ready_to_resize;
 		bool resizing;
-		Edge resize_edge;
+		bt::Uint32 resize_edge;
 	};
 
 }
