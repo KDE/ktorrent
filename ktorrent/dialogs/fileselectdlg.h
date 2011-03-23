@@ -84,6 +84,7 @@ namespace kt
 		void clearMoveOnCompletionLocationHistory();
 		void downloadLocationHistoryTriggered(QAction* act);
 		void moveOnCompletionLocationHistoryTriggered(QAction* act);
+		void downloadLocationChanged(const QString & path);
 
 	private:
 		void populateFields(const QString & location_hint);
@@ -102,6 +103,7 @@ namespace kt
 		QSortFilterProxyModel* filter_model;
 		QSet<QString> download_location_history;
 		QSet<QString> move_on_completion_location_history;
+		bt::Uint64 already_downloaded;
 	};
 }
 
