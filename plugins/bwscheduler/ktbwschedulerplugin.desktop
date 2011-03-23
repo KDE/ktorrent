@@ -1,5 +1,10 @@
 [Desktop Entry]
 Name=Scheduler
+Name[pt]=Escalonador
+Name[ru]=Расписание загрузок
+Name[uk]=Планування
+Name[x-test]=xxSchedulerxx
+Name[zh_TW]=排程器
 Comment=Schedule upload and download limits over a period of a week
 Comment[ast]=Planificar los llímites d'unvíu y baxada durante un periodu d'una selmana
 Comment[bg]=Приставка за разчет на качването и свалянето през седмицата
