@@ -50,6 +50,8 @@ namespace kt
 
 	int App::newInstance()
 	{
+		// Add libktorrent catalog
+		KGlobal::locale()->insertCatalog("libktorrent");
 		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 		kt::GUI *widget = 0;
 		if (!main_widget)
