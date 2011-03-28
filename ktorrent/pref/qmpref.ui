@@ -295,13 +295,7 @@ p, li { white-space: pre-wrap; }
       <item row="4" column="2">
        <widget class="QDoubleSpinBox" name="kcfg_greenRatio">
         <property name="toolTip">
-         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;The maximum share ratio, if this value is reached seeding will be stopped. This is only applied to newly opened torrents, existing torrents will not be affected by changing this.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Attention: &lt;/span&gt;This is not used when downloading, only when seeding.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Value at which the share ratio will be displayed with a green color. Lower ratios will be displayed in red.</string>
         </property>
         <property name="specialValueText">
          <string>No limit</string>

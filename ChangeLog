@@ -1,5 +1,6 @@
 Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)
+- Fix wrong tooltip in QM preference page
 
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)
