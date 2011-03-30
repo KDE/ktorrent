@@ -76,10 +76,6 @@
 #include <interfaces/functions.h>
 
 
-
-
-
-
 namespace kt
 {
 	GUI::GUI() : core(0),pref_dlg(0)
@@ -380,17 +376,21 @@ namespace kt
 		KShortcutsDialog::configure(actionCollection());
 	}
 
-	void GUI::configureToolBars()
+	void GUI::configureToolbars()
 	{
-		saveMainWindowSettings( KGlobal::config()->group("MainWindow"));
+		saveMainWindowSettings(KGlobal::config()->group("MainWindow"));
 		KEditToolBar dlg(factory());
 		connect(&dlg,SIGNAL(newToolBarConfig()),this,SLOT(newToolBarConfig()));
 		dlg.exec();
+		
+		// Replug action list
+		unplugActionList("activities_list");
+		plugActionList("activities_list",central->activitySwitchingActions());
 	}
 
 	void GUI::newToolBarConfig() // This is called when OK, Apply or Defaults is clicked
 	{
-		applyMainWindowSettings( KGlobal::config()->group("MainWindow") );
+		applyMainWindowSettings(KGlobal::config()->group("MainWindow"));
 	}
 	
 	void GUI::import()
@@ -420,7 +420,7 @@ namespace kt
 		KStandardAction::preferences(this, SLOT(showPrefDialog()),ac);
 		KStandardAction::keyBindings(this, SLOT(configureKeys()),ac);
 		
-		KStandardAction::configureToolbars(this,SLOT(configureToolBars()),ac);
+		KStandardAction::configureToolbars(this,SLOT(configureToolbars()),ac);
 		KStandardAction::configureNotifications(this,SLOT(configureNotifications()),ac);		
 		
 		
