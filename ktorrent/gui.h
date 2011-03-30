@@ -104,7 +104,7 @@ namespace kt
 		void showMenuBar();
 		void showIPFilter();
 		void configureKeys();
-		void configureToolBars();
+		void configureToolbars();
 		void newToolBarConfig();
 		void import();
 		void update();
