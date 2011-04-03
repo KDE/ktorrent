@@ -64,6 +64,19 @@ namespace kt
 			return str;
 	}
 	
+	Uint16 RandomGoodPort()
+	{
+		Uint16 start = 50000;
+		while (true)
+		{
+			Uint16 port = start + qrand() % 10000;
+			if (port != Settings::port() && 
+				port != Settings::dhtPort() &&
+				port != Settings::udpTrackerPort())
+				return port;
+		}
+	}
+	
 	void ApplySettings()
 	{
 		PeerManager::setMaxConnections(Settings::maxConnections());
@@ -78,6 +91,13 @@ namespace kt
 			ChunkManager::setMaxChunkSizeForDataCheck(0);
 		else
 			ChunkManager::setMaxChunkSizeForDataCheck(Settings::maxSizeForUploadDataCheck() * 1024);
+		
+		// Check for port conflicts
+		if (Settings::port() == Settings::udpTrackerPort())
+			Settings::setUdpTrackerPort(RandomGoodPort());
+		
+		if (Settings::port() == Settings::dhtPort())
+			Settings::setDhtPort(RandomGoodPort());
 	
 		UDPTrackerSocket::setPort(Settings::udpTrackerPort());
 		Choker::setNumUploadSlots(Settings::numUploadSlots());

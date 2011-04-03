@@ -58,7 +58,7 @@
 		</entry>
 		<entry name="udpTrackerPort" type="Int">
 			<label>Port</label>
-			<default>4444</default>
+			<default>8881</default>
 			<min>0</min>
 			<max>65535</max>
 		</entry>
@@ -131,7 +131,7 @@
 		</entry>
 		<entry name="dhtPort" type="Int">
 		     <label>DHT port</label>
-			<default>6881</default>
+			<default>7881</default>
 			<min>1</min>
 			<max>65535</max>
 		</entry>

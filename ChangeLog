@@ -11,6 +11,7 @@ Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)
 - Fix wrong tooltip in QM preference page
 - Make sure activities list is added again to the GUI after toolbars are edited (269727)
+- Prevent port conflicts from happening (268989)
 
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)
