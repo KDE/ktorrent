@@ -35,6 +35,10 @@ namespace kt
 		: JobProgressWidget(job,parent)
 	{
 		setupUi(this);
+		job_description->clear();
+		job_title->clear();
+		job_speed->clear();
+		msg->clear();
 		msg->setVisible(false);
 	}
 	
