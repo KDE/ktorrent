@@ -76,6 +76,9 @@ namespace kt
 		 */
 		bool execute();
 		
+		/// Is the script executeable (i.e. is the interpreter not installed)
+		bool executeable() const;
+		
 		/**
 		 * Stop the script
 		 */

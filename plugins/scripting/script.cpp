@@ -68,6 +68,11 @@ namespace kt
 		file = dir + file;
 		return true;
 	}
+	
+	bool Script::executeable() const
+	{
+		return bt::Exists(file) && !Kross::Manager::self().interpreternameForFile(file).isNull();
+	}
 
 	bool Script::execute()
 	{

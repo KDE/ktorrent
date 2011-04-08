@@ -6,6 +6,7 @@ Changes in 4.2:
 - Fix bug making it possible to add conflicting items to the schedule (268879)
 - Make it possible for schedule items to span multiple days (225939)
 - Include disk usage of existing files when calculating bytes left after download in FileSelectDlg (267220)
+- Disable scripts in GUI, if no interpreter could be found for the script (270226)
 
 Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)

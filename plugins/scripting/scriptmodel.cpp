@@ -175,7 +175,12 @@ namespace kt
 			case Qt::CheckStateRole:
 				return s->running();
 			case Qt::ToolTipRole:
-				return i18n("<b>%1</b><br/><br/>%2",s->name(),s->metaInfo().comment);
+				if (s->executeable())
+					return i18n("<b>%1</b><br/><br/>%2",s->name(),s->metaInfo().comment);
+				else
+					return i18n("No interpreter for this script could be found, so it cannot be executed. "
+								"Please make sure the right interpreter is installed.<br/><br/>"
+								"<b>Hint:</b> All standard ktorrent scripts require krosspython");
 			case CommentRole:
 				return s->metaInfo().comment;
 			case ConfigurableRole:
@@ -221,8 +226,15 @@ namespace kt
 	{
 		if (!index.isValid())
 			return QAbstractItemModel::flags(index);
+		
+		Script* s = scriptForIndex(index);
+		if (!s)
+			return QAbstractItemModel::flags(index);
+		
+		if (s->executeable())
+			return Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
 		else
-			return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
+			return Qt::ItemIsUserCheckable;
 	}
 
 	Script* ScriptModel::scriptForIndex(const QModelIndex & index) const

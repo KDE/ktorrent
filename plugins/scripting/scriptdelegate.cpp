@@ -60,7 +60,9 @@ namespace kt
 		int iconSize = option.rect.height() - MARGIN * 2;
 		
 		QString icon = index.model()->data(index, Qt::DecorationRole).toString();
-		QPixmap pixmap = KIconLoader::global()->loadIcon(icon,KIconLoader::Desktop, iconSize,KIconLoader::DefaultState);
+		KIconLoader::States state = option.state & QStyle::State_Enabled ? 
+										KIconLoader::DefaultState : KIconLoader::DisabledState;
+		QPixmap pixmap = KIconLoader::global()->loadIcon(icon, KIconLoader::Desktop, iconSize, state);
 		
 		int x = MARGIN + option.rect.left() + x_offset;
 		painter->drawPixmap(QRect(x, MARGIN + option.rect.top(), iconSize, iconSize), pixmap, QRect(0, 0, iconSize, iconSize));
@@ -71,8 +73,15 @@ namespace kt
 		int lessHorizontalSpace = MARGIN * 2 + push_button->sizeHint().width();
 		contentsRect.setWidth(contentsRect.width() - lessHorizontalSpace);
 		
+		QPalette::ColorGroup cg = QPalette::Active;
+		if (!(option.state & QStyle::State_Enabled))
+			cg = QPalette::Inactive;
+			
+		
 		if (option.state & QStyle::State_Selected) 
-			painter->setPen(option.palette.highlightedText().color());
+			painter->setPen(option.palette.color(cg,QPalette::HighlightedText));
+		else
+			painter->setPen(option.palette.color(cg,QPalette::WindowText));
 		
 		painter->save();
 		painter->save();
