@@ -23,7 +23,9 @@
 #include <kiconloader.h>
 #include <QVBoxLayout>
 #include <KIcon>
+#include <KToolBar>
 #include <QAction>
+#include <QTimer>
 
 namespace kt
 {
@@ -71,8 +73,9 @@ namespace kt
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
-		tab_bar = new QToolBar(this);
+		tab_bar = new KToolBar(this);
 		tab_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+		connect(tab_bar,SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)),this,SLOT(toolButtonStyleChanged(Qt::ToolButtonStyle)));
 		action_group = new ActionGroup(this);
 		connect(action_group,SIGNAL(actionTriggered(QAction*)),this,SLOT(onActionTriggered(QAction*)));
 		widget_stack = new QStackedWidget(splitter);
@@ -241,4 +244,17 @@ namespace kt
 				unshrink();
 		}
 	}
+	
+	void TabBarWidget::toolButtonStyleChanged(Qt::ToolButtonStyle style)
+	{
+		if (style != Qt::ToolButtonTextBesideIcon)
+			QTimer::singleShot(0,this,SLOT(setToolButtonStyle()));
+	}
+	
+	void TabBarWidget::setToolButtonStyle()
+	{
+		tab_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	}
+
+
 }

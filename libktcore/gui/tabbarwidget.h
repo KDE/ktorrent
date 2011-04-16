@@ -62,6 +62,8 @@ namespace kt
 		
 	private slots:
 		void onActionTriggered(QAction* act);
+		void toolButtonStyleChanged(Qt::ToolButtonStyle style);
+		void setToolButtonStyle();
 		
 	private:
 		void shrink();

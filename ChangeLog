@@ -14,6 +14,7 @@ Changes in 4.1.1:
 - Make sure activities list is added again to the GUI after toolbars are edited (269727)
 - Prevent port conflicts from happening (268989)
 - Clear labels of BasicJobProgressWidget in constructor (270035)
+- Make tabbar widget icons follow KDE size changes (270277)
 
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)
