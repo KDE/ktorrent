@@ -53,6 +53,7 @@ Name[zh_CN]=KTorrent
 Name[zh_TW]=KTorrent
 Comment=KTorrent data engine, for getting information from KTorrent
 Comment[ca]=Motor de dades del KTorrent, per obtenir informació del KTorrent
+Comment[ca@valencia]=Motor de dades del KTorrent, per obtindre informació del KTorrent
 Comment[cs]=Datový nástroj KTorrentu pro získání informací z KTorrentu
 Comment[da]=KTorrrent datamotor, til at hente information fra KTorrent
 Comment[de]=KTorrent-Datenmodul zum Abrufen von Informationen von KTorrent
