@@ -214,6 +214,9 @@ namespace kt
 	
 	void SearchWidget::torrentDownloadFinished()
 	{
+		if (!torrent_download) 
+			return;
+		
 		if (torrent_download->error() != QNetworkReply::NoError)
 		{
 			KMessageBox::error(this,torrent_download->errorString());

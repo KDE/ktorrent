@@ -15,6 +15,7 @@ Changes in 4.1.1:
 - Prevent port conflicts from happening (268989)
 - Clear labels of BasicJobProgressWidget in constructor (270035)
 - Make tabbar widget icons follow KDE size changes (270277)
+- Fix crash in search plugin (271516)
 
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)
