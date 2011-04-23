@@ -144,7 +144,16 @@ namespace kt
 
 	void ShutdownPlugin::shutdownToggled(bool on) 
 	{
-		rules->setEnabled(on);
+		if (on && !rules->valid())
+		{
+			configureShutdown();
+			if (rules->valid())
+				rules->setEnabled(on);
+			else
+				shutdown_enabled->setChecked(false);
+		}
+		else
+			rules->setEnabled(on);
 	}
 
 	void ShutdownPlugin::configureShutdown() 
@@ -182,6 +191,8 @@ namespace kt
 				shutdown_enabled->setText(i18n("Hibernate (suspend to disk)"));
 				break;
 		}
+		
+		shutdown_enabled->setToolTip(rules->toolTip());
 	}
 
 }

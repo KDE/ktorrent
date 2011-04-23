@@ -18,6 +18,7 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
 #include <QFile>
+#include <KLocale>
 #include <util/log.h>
 #include <util/file.h>
 #include <util/error.h>
@@ -34,7 +35,11 @@ using namespace bt;
 namespace kt
 {
 	
-	ShutdownRuleSet::ShutdownRuleSet(kt::CoreInterface* core, QObject* parent) : QObject(parent),core(core),on(false)
+	ShutdownRuleSet::ShutdownRuleSet(kt::CoreInterface* core, QObject* parent) 
+		: QObject(parent),
+		core(core),
+		on(false),
+		all_rules_must_be_hit(false)
 	{
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
@@ -43,9 +48,6 @@ namespace kt
 		{
 			torrentAdded(*i);
 		}
-		
-		// Add the default rule
-		addRule(SHUTDOWN,ALL_TORRENTS,DOWNLOADING_COMPLETED);
 	}
 	
 	ShutdownRuleSet::~ShutdownRuleSet() 
@@ -70,50 +72,49 @@ namespace kt
 	
 	void ShutdownRuleSet::torrentFinished(bt::TorrentInterface* tc) 
 	{
-		if (!on)
-			return;
-		
-		for (QList<ShutdownRule>::iterator i = rules.begin();i != rules.end();i++)
-		{
-			if (i->downloadingFinished(tc,core->getQueueManager()))
-			{
-				// Rule has been hit now emit the correct signal
-				switch (i->action)
-				{
-					case SHUTDOWN: emit shutdown(); break;
-					case LOCK: emit lock(); break;
-					case STANDBY: emit standby(); break;
-					case SUSPEND_TO_DISK: emit suspendToDisk(); break;
-					case SUSPEND_TO_RAM: emit suspendToRAM(); break;
-				}
-				break;
-			}
-		}
+		triggered(DOWNLOADING_COMPLETED, tc);
 	}
 	
 	void ShutdownRuleSet::seedingAutoStopped(bt::TorrentInterface* tc, bt::AutoStopReason reason) 
 	{
 		Q_UNUSED(reason);
+		triggered(SEEDING_COMPLETED, tc);
+	}
+	
+	void ShutdownRuleSet::triggered(Trigger trigger, TorrentInterface* tc)
+	{
 		if (!on)
 			return;
 		
+		bool hit = false;
+		bool all_hit = true;
 		for (QList<ShutdownRule>::iterator i = rules.begin();i != rules.end();i++)
 		{
-			if (i->seedingFinished(tc,core->getQueueManager()))
+			bool rule_hit = false;
+			if (trigger == DOWNLOADING_COMPLETED)
+				rule_hit = i->downloadingFinished(tc,core->getQueueManager());
+			else
+				rule_hit = i->seedingFinished(tc,core->getQueueManager());
+				
+			if (rule_hit)
+				hit = true;
+			else if (!i->hit)
+				all_hit = false;
+		}
+		
+		if ((!all_rules_must_be_hit && hit) || (all_rules_must_be_hit && all_hit))
+		{
+			switch (currentAction())
 			{
-				// Rule has been hit now emit the correct signal
-				switch (i->action)
-				{
-					case SHUTDOWN: emit shutdown(); break;
-					case LOCK: emit lock(); break;
-					case STANDBY: emit standby(); break;
-					case SUSPEND_TO_DISK: emit suspendToDisk(); break;
-					case SUSPEND_TO_RAM: emit suspendToRAM(); break;
-				}
-				break;
+				case SHUTDOWN: emit shutdown(); break;
+				case LOCK: emit lock(); break;
+				case STANDBY: emit standby(); break;
+				case SUSPEND_TO_DISK: emit suspendToDisk(); break;
+				case SUSPEND_TO_RAM: emit suspendToRAM(); break;
 			}
 		}
 	}
+
 	
 	void ShutdownRuleSet::torrentAdded(bt::TorrentInterface* tc) 
 	{
@@ -163,9 +164,11 @@ namespace kt
 				enc.write("Torrent");
 				enc.write(hash.getData(),20);
 			}
+			enc.write("hit",i->hit);
 			enc.end();
 		}
 		enc.write(on);
+		enc.write(all_rules_must_be_hit);
 		enc.end();
 	}
 	
@@ -189,14 +192,18 @@ namespace kt
 				throw bt::Error("Toplevel node not a list");
 			
 			BListNode* const l = (BListNode*)node;
-			const int lNumChildrenMinusOne = l->getNumChildren() - 1;
-			for (int i = 0;i < lNumChildrenMinusOne;++i)
+			Uint32 i = 0;
+			for (;i < l->getNumChildren();++i)
 			{
+				if (l->getChild(i)->getType() != BNode::DICT)
+					break;
+				
 				BDictNode* const d = l->getDict(i);
 				ShutdownRule rule;
 				rule.action = (Action)d->getInt("Action");
 				rule.target = (Target)d->getInt("Target");
 				rule.trigger = (Trigger)d->getInt("Trigger");
+				rule.hit = d->keys().contains("hit") && d->getInt("hit") == 1;
 				rule.tc = 0;
 				if (d->getValue("Torrent"))
 				{
@@ -210,12 +217,15 @@ namespace kt
 				rules.append(rule);
 			}
 			
-			on = (l->getInt(lNumChildrenMinusOne) == 1);
+			on = (l->getInt(i++) == 1);
+			if (i < l->getNumChildren())
+				all_rules_must_be_hit = (l->getInt(i) == 1);
+			else
+				all_rules_must_be_hit = false;
 		}
 		catch (bt::Error & err)
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "Failed to parse " << file << " : " << err.toString() << endl;
-			addRule(SHUTDOWN,ALL_TORRENTS,DOWNLOADING_COMPLETED);
 		}
 		
 		delete node;
@@ -241,6 +251,53 @@ namespace kt
 			return SHUTDOWN;
 		else
 			return rules.front().action;
+	}
+
+	QString ShutdownRuleSet::toolTip() const
+	{
+		if (rules.isEmpty())
+		{
+			return i18n("Automatic shutdown not active");
+		}
+		else
+		{
+			QString msg;
+			Action action = currentAction();
+			switch (action)
+			{
+				case SHUTDOWN:
+					msg = i18n("Shutdown");
+					break;
+				case LOCK:
+					msg = i18n("Lock");
+					break;
+				case STANDBY:
+					msg = i18n("Standby");
+					break;
+				case SUSPEND_TO_RAM:
+					msg = i18n("Sleep (suspend to RAM)");
+					break;
+				case SUSPEND_TO_DISK:
+					msg = i18n("Hibernate (suspend to disk)");
+					break;
+			}
+			
+			
+			if (all_rules_must_be_hit)
+				msg += i18n(" when all of the following events have occurred:<br/><br/> ");
+			else
+				msg += i18n(" when one of the following events occur:<br/><br/> ");
+			
+			QStringList items;
+			foreach (const ShutdownRule & r, rules)
+			{
+				items += "- " + r.toolTip();
+			}
+			
+			
+			msg += items.join("<br/>");
+			return msg;
+		}
 	}
 
 
@@ -307,6 +364,21 @@ namespace kt
 			return true;
 		}
 	}
+	
+	QString ShutdownRule::toolTip() const
+	{
+		if (target == ALL_TORRENTS && trigger == kt::DOWNLOADING_COMPLETED)
+			return i18n("<b>All torrents</b> finish downloading");
+		else if (target == ALL_TORRENTS && trigger == kt::SEEDING_COMPLETED)
+			return i18n("<b>All torrents</b> finish seeding");
+		else if (target == SPECIFIC_TORRENT && trigger == kt::DOWNLOADING_COMPLETED)
+			return i18n("<b>%1</b> finishes downloading", tc->getDisplayName());
+		else if (target == SPECIFIC_TORRENT && trigger == kt::SEEDING_COMPLETED)
+			return i18n("<b>%1</b> finishes seeding", tc->getDisplayName());
+		else
+			return QString();
+	}
+
 
 
 }

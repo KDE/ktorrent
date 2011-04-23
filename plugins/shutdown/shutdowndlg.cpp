@@ -60,6 +60,7 @@ namespace kt
 		m_time_to_execute->addItem(i18n("When all torrents finish downloading"));
 		m_time_to_execute->addItem(i18n("When all torrents finish seeding"));
 		m_time_to_execute->addItem(i18n("When the events below happen"));
+		m_all_rules_must_be_hit->setChecked(rules->allRulesMustBeHit());
 		
 		connect(m_time_to_execute,SIGNAL(currentIndexChanged(int)),this,SLOT(timeToExecuteChanged(int)));
 		m_torrent_list->setEnabled(false);
@@ -82,6 +83,8 @@ namespace kt
 				model->addRule(r);
 			}
 		}
+		
+		m_all_rules_must_be_hit->setEnabled(m_time_to_execute->currentIndex() == 2);
 	}
 	
 	ShutdownDlg::~ShutdownDlg() 
@@ -91,6 +94,7 @@ namespace kt
 
 	void ShutdownDlg::accept() 
 	{
+		rules->setAllRulesMustBeHit(m_all_rules_must_be_hit->isChecked());
 		if (m_time_to_execute->currentIndex() == 2)
 		{
 			model->applyRules(indexToAction(m_action->currentIndex()),rules);
@@ -112,6 +116,7 @@ namespace kt
 	void ShutdownDlg::timeToExecuteChanged(int idx) 
 	{
 		m_torrent_list->setEnabled(idx == 2);
+		m_all_rules_must_be_hit->setEnabled(idx == 2);
 	}
 	
 	kt::Action ShutdownDlg::indexToAction(int idx) 

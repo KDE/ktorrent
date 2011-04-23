@@ -29,6 +29,7 @@ namespace kt
 {
 	class QueueManager;
 	
+	
 	enum Trigger
 	{
 		DOWNLOADING_COMPLETED = 0,
@@ -60,6 +61,7 @@ namespace kt
 		
 		bool downloadingFinished(bt::TorrentInterface* tor,QueueManager* qman);
 		bool seedingFinished(bt::TorrentInterface* tor,QueueManager* qman);
+		QString toolTip() const;
 	};
 	
 	/** 
@@ -73,8 +75,17 @@ namespace kt
 		ShutdownRuleSet(CoreInterface* core,QObject* parent);
 		virtual ~ShutdownRuleSet();
 		
+		/// Set if all rules must be hit, before actions are undertaken
+		void setAllRulesMustBeHit(bool on) {all_rules_must_be_hit = on;}
+		
+		/// See if all rules must be hit, before actions are undertaken
+		bool allRulesMustBeHit() const {return all_rules_must_be_hit;}
+		
 		/// Get the current action
 		Action currentAction() const;
+		
+		/// Do we have a valid ruleset
+		bool valid() const {return !rules.isEmpty();}
 		
 		/// Enable or disable the rules
 		void setEnabled(bool on);
@@ -103,6 +114,9 @@ namespace kt
 		
 		/// Load the ruleset from a file
 		void load(const QString & file);
+		
+		/// Generate a tool tip for the current ruleset
+		QString toolTip() const;
 	signals:
 		void shutdown();
 		void standby();
@@ -118,11 +132,13 @@ namespace kt
 		
 	private:
 		bt::TorrentInterface* torrentForHash(const QByteArray & hash);
+		void triggered(Trigger trigger, bt::TorrentInterface* tc);
 		
 	private:
 		QList<ShutdownRule> rules;
 		CoreInterface* core;
 		bool on;
+		bool all_rules_must_be_hit;
 	};
 
 }

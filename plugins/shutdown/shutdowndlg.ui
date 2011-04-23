@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>ShutdownDlg</class>
- <widget class="QWidget" name="ShutdownDlg" >
-  <property name="geometry" >
+ <widget class="QWidget" name="ShutdownDlg">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,43 +10,53 @@
     <height>300</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Shutdown Settings</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" >
-   <property name="margin" >
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
-    <layout class="QGridLayout" name="gridLayout" >
-     <item row="0" column="0" >
-      <widget class="QLabel" name="label" >
-       <property name="text" >
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
         <string>Action to execute:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1" >
-      <widget class="QComboBox" name="m_action" />
+     <item row="0" column="1">
+      <widget class="QComboBox" name="m_action"/>
      </item>
-     <item row="1" column="0" >
-      <widget class="QLabel" name="label_2" >
-       <property name="text" >
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
         <string>Execute action when:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1" >
-      <widget class="QComboBox" name="m_time_to_execute" />
+     <item row="1" column="1">
+      <widget class="QComboBox" name="m_time_to_execute"/>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QTreeView" name="m_torrent_list" />
+    <widget class="QTreeView" name="m_torrent_list"/>
    </item>
    <item>
-    <widget class="Line" name="line" >
-     <property name="orientation" >
+    <widget class="QCheckBox" name="m_all_rules_must_be_hit">
+     <property name="toolTip">
+      <string>When enabled, execute the action when all events have happened. When not enabled, execute when any of the above events have happened.</string>
+     </property>
+     <property name="text">
+      <string>All events must have happened</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
