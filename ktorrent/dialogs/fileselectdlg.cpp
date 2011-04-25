@@ -148,7 +148,6 @@ namespace kt
 			m_file_view->setSortingEnabled(true);
 			m_file_view->expandAll();
 			
-			updateExistingFiles();
 			updateSizeLabels();
 			
 			if (!tc->getStats().multi_file_torrent)
@@ -489,6 +488,8 @@ namespace kt
 		if (!model)
 			return;
 		
+		updateExistingFiles();
+		
 		//calculate free disk space
 		KUrl sdir = KUrl(m_downloadLocation -> url());
 		while( sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty())  && (! QDir(sdir.toLocalFile()).exists()) ) 
@@ -539,11 +540,14 @@ namespace kt
 				if (bt::Exists(path + file.getUserModifiedPath()))
 				{
 					found++;
-					bt::Uint64 size = bt::DiskUsage(path + file.getUserModifiedPath());
-					if (size <= file.getSize())
-						already_downloaded += file.getSize() - size;
-					else
-						already_downloaded += file.getSize();
+					if (!file.doNotDownload()) // Do not include excluded files in the already downloaded calculation
+					{
+						bt::Uint64 size = bt::DiskUsage(path + file.getUserModifiedPath());
+						if (size <= file.getSize())
+							already_downloaded += file.getSize() - size;
+						else
+							already_downloaded += file.getSize();
+					}
 				}
 			}
 			
@@ -572,7 +576,6 @@ namespace kt
 	void FileSelectDlg::downloadLocationChanged(const QString& path)
 	{
 		Q_UNUSED(path);
-		updateExistingFiles();
 		updateSizeLabels();
 	}
 

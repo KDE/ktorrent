@@ -18,6 +18,7 @@ Changes in 4.1.1:
 - Clear labels of BasicJobProgressWidget in constructor (270035)
 - Make tabbar widget icons follow KDE size changes (270277)
 - Fix crash in search plugin (271516)
+- Fix wrong required diskspace calculation in some rare circumstances (271097)
 
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)
