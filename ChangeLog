@@ -9,6 +9,7 @@ Changes in 4.2:
 - Disable scripts in GUI, if no interpreter could be found for the script (270226)
 - Show shutdown plugin's config dialog when no rules are present and the enable button is pressed (271311)
 - Make it possible to wait for several events before activating the shutdown action
+- Fix wrong required diskspace calculation in some rare circumstances (271097)
 
 Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)
@@ -18,7 +19,6 @@ Changes in 4.1.1:
 - Clear labels of BasicJobProgressWidget in constructor (270035)
 - Make tabbar widget icons follow KDE size changes (270277)
 - Fix crash in search plugin (271516)
-- Fix wrong required diskspace calculation in some rare circumstances (271097)
 
 Changes in 4.1:
 - Check if source files are missing before moving them (265607)
