@@ -71,7 +71,7 @@ namespace kt
 		connect(&m_incomplePollingTimer,SIGNAL(timeout()),this,SLOT(onIncompletePollingTimeout()));
 		
 		if( (m_loadedAction == moveAction) && !QDir(dir + i18n("loaded")).exists())
-			KIO::mkdir(dir + i18n("loaded"));
+			KIO::mkdir(QString(dir + i18n("loaded")));
 	}
 
 
@@ -238,7 +238,7 @@ namespace kt
 		QDir tmp(path);
 
 		if( (m_loadedAction == moveAction) && !QDir(path + i18n("loaded")).exists())
-			KIO::mkdir(path + i18n("loaded"));
+			KIO::mkdir(QString(path + i18n("loaded")));
 	}
 
 	void ScanFolder::setFolderUrl(QString& url)

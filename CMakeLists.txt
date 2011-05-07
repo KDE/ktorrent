@@ -22,7 +22,7 @@ include(CheckTypeSize) #XFS
 # according to http://www.cmake.org/pipermail/cmake/2008-June/022381.html
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 add_definitions( ${KDE4_DEFINITIONS} )
-
+add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 set (KTORRENT_DBUS_XML_DIR ${KTORRENT_SOURCE_DIR}/dbus_xml)
 
 include_directories( ${KDE4_INCLUDES} 

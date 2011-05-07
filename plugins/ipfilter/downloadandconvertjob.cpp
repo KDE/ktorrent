@@ -116,18 +116,18 @@ namespace kt
 		KMimeType::Ptr ptr = KMimeType::findByPath(temp);
 		if (ptr->name() == "application/zip")
 		{
-			active_job = KIO::file_move(temp,kt::DataDir() + "level1.zip",-1,KIO::HideProgressInfo|KIO::Overwrite);
+			active_job = KIO::file_move(temp,QString(kt::DataDir() + QLatin1String("level1.zip")),-1,KIO::HideProgressInfo|KIO::Overwrite);
 			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(extract(KJob*)));
 		}
 		else if (ptr->name() == "application/x-gzip" || ptr->name() == "application/x-bzip")
 		{
-			active_job = new bt::DecompressFileJob(temp,kt::DataDir() + "level1.txt");
+			active_job = new bt::DecompressFileJob(temp,QString(kt::DataDir() + "level1.txt"));
 			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(convert(KJob*)));
 			active_job->start();
 		}
 		else
 		{
-			active_job = KIO::file_move(temp,kt::DataDir() + "level1.txt",-1, KIO::HideProgressInfo|KIO::Overwrite);
+			active_job = KIO::file_move(temp,QString(kt::DataDir() + "level1.txt"),-1, KIO::HideProgressInfo|KIO::Overwrite);
 			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(convert(KJob*)));
 		}
 	}

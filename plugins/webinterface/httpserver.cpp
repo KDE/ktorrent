@@ -191,7 +191,7 @@ namespace kt
 			return false;
 		}
 		
-		QByteArray s = (challenge + WebInterfacePluginSettings::password()).toUtf8();
+		QByteArray s = (QString(challenge + WebInterfacePluginSettings::password())).toUtf8();
 		bt::SHA1Hash hash = bt::SHA1Hash::generate((const bt::Uint8*)s.data(),s.length());
 		if (hash.toString() == challenge_hash)
 		{

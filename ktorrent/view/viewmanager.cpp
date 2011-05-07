@@ -769,7 +769,7 @@ namespace kt
 			if (fn.isEmpty())
 				return;
 			
-			KIO::file_copy(tc->getTorDir() + "torrent",fn,-1,KIO::Overwrite);
+			KIO::file_copy(QString(tc->getTorDir() + "torrent"),fn,-1,KIO::Overwrite);
 		}
 	}
 	

@@ -85,7 +85,7 @@ namespace kt
 		{
 			case 0: 
 				if (stats.transport_protocol == bt::UTP)
-					return stats.address() + i18n(" (µTP)");
+					return QString(stats.address() + i18n(" (µTP)"));
 				else
 					return stats.address();
 			case 1: return country;
