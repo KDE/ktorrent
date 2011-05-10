@@ -60,7 +60,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string extracomment="starting day">From:</string>
+           <string comment="starting day">From:</string>
           </property>
          </widget>
         </item>
@@ -70,7 +70,7 @@
         <item>
          <widget class="QLabel" name="label_10">
           <property name="text">
-           <string extracomment="ending day">To:</string>
+           <string comment="ending day">To:</string>
           </property>
          </widget>
         </item>
