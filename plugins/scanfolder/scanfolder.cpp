@@ -58,13 +58,13 @@ namespace kt
 	
 	void ScanFolder::scanDir(const QString& path)
 	{
-		Out(SYS_SNF|LOG_NOTICE) << "Directory dirty: " << path << endl;
 		if (!QFileInfo(path).isDir())
 			return;
 		
 		if (!recursive && QDir(path) != QDir(scan_directory.toLocalFile()))
 			return;
 		
+		Out(SYS_SNF|LOG_NOTICE) << "Directory dirty: " << path << endl;
 		scanner->addDirectory(path, false);
 	}
 	
