@@ -1,7 +1,9 @@
 [Desktop Entry]
 Name=Scheduler
+Name[bs]=Raspoređivač
 Name[ca]=Planificador
 Name[et]=Ajastaja
+Name[nb]=Tidsplanlegger
 Name[nds]=Planer
 Name[nl]=Planner
 Name[pt]=Escalonador
@@ -12,12 +14,14 @@ Name[sr@ijekavian]=Распоређивач
 Name[sr@ijekavianlatin]=Raspoređivač
 Name[sr@latin]=Raspoređivač
 Name[sv]=Schemaläggning
+Name[ug]=پىلانچى
 Name[uk]=Планування
 Name[x-test]=xxSchedulerxx
 Name[zh_TW]=排程器
 Comment=Schedule upload and download limits over a period of a week
 Comment[ast]=Planificar los llímites d'unvíu y baxada durante un periodu d'una selmana
 Comment[bg]=Приставка за разчет на качването и свалянето през седмицата
+Comment[bs]=Rasporedite ograničenja slanja i preuzimanja tokom sedmice
 Comment[ca]=Planificació dels límits de pujada i baixada durant un període setmanal
 Comment[ca@valencia]=Planificació dels límits de pujada i baixada durant un període setmanal
 Comment[cs]=Naplánování odesílacích a stahovacích limitů během týdne

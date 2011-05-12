@@ -253,7 +253,7 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string extracomment="Noun, as in &quot;file sharing&quot;">Sharing</string>
+          <string comment="Noun, as in &quot;file sharing&quot;">Sharing</string>
          </property>
         </widget>
        </item>
