@@ -1,4 +1,9 @@
-set(ktscanfolderplugin_SRC scanfolder.cpp scanfolderplugin.cpp scanfolderprefpage.cpp)
+set(ktscanfolderplugin_SRC 
+	scanthread.cpp 
+	torrentloadqueue.cpp 
+	scanfolder.cpp 
+	scanfolderplugin.cpp 
+	scanfolderprefpage.cpp)
 
 kde4_add_ui_files(ktscanfolderplugin_SRC scanfolderprefpage.ui)
 kde4_add_kcfg_files(ktscanfolderplugin_SRC scanfolderpluginsettings.kcfgc)

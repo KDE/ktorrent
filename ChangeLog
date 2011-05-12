@@ -10,6 +10,7 @@ Changes in 4.2:
 - Show shutdown plugin's config dialog when no rules are present and the enable button is pressed (271311)
 - Make it possible to wait for several events before activating the shutdown action
 - Fix wrong required diskspace calculation in some rare circumstances (271097)
+- Revamp scanfolder plugin (263813, 271657)
 
 Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)

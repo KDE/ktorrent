@@ -27,8 +27,7 @@
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 
-#include <qstring.h>
-#include <qfile.h>
+#include <QDir>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -38,6 +37,8 @@
 #include "scanfolderplugin.h"
 #include "scanfolderprefpage.h"
 #include "scanfolderpluginsettings.h"
+#include "torrentloadqueue.h"
+#include "scanthread.h"
 
 using namespace bt;
 
@@ -46,10 +47,11 @@ K_EXPORT_COMPONENT_FACTORY(ktscanfolderplugin,KGenericFactory<kt::ScanFolderPlug
 namespace kt
 {	
 
-	ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+	ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QStringList& args) 
+		: Plugin(parent),
+		tlq(0)
 	{
 		Q_UNUSED(args);
-		m_sf_map.setAutoDelete(true);
 	}
 
 
@@ -60,9 +62,13 @@ namespace kt
 	void ScanFolderPlugin::load()
 	{
 		LogSystemManager::instance().registerSystem(i18nc("plugin name","Scan Folder"),SYS_SNF);
+		tlq = new TorrentLoadQueue(getCore(),this);
+		scanner = new ScanThread();
+		connect(scanner, SIGNAL(found(KUrl::List)), tlq, SLOT(add(KUrl::List)),Qt::QueuedConnection);
 		pref = new ScanFolderPrefPage(this,0);
 		getGUI()->addPrefPage(pref);
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(updateScanFolders()));
+		scanner->start(QThread::IdlePriority);
 		updateScanFolders();
 	}
 
@@ -70,10 +76,13 @@ namespace kt
 	{
 		LogSystemManager::instance().unregisterSystem(i18nc("plugin name","Scan Folder"));
 		getGUI()->removePrefPage(pref);
+		scanner->stop();
+		delete scanner;
+		scanner = 0;
 		delete pref;
 		pref = 0;
-		
-		m_sf_map.clear();
+		delete tlq;
+		tlq = 0;
 	}
 	
 	void ScanFolderPlugin::updateScanFolders()
@@ -83,48 +92,19 @@ namespace kt
 		// make sure folders end with /
 		for (QStringList::iterator i = folders.begin();i !=folders.end(); i++)
 		{
-			if (!(*i).endsWith(bt::DirSeparator()))
+			if (!i->endsWith(bt::DirSeparator()))
 				(*i) += bt::DirSeparator();
 		}
 		
-		LoadedTorrentAction action;
 		if (ScanFolderPluginSettings::actionDelete())
-			action = deleteAction;
+			tlq->setLoadedTorrentAction(DeleteAction);
 		else if (ScanFolderPluginSettings::actionMove())
-			action = moveAction;
+			tlq->setLoadedTorrentAction(MoveAction);
 		else
-			action = defaultAction;
+			tlq->setLoadedTorrentAction(DefaultAction);
 		
-		// first erase folders we don't need anymore
-		bt::PtrMap<QString,ScanFolder>::iterator i = m_sf_map.begin();
-		while (i != m_sf_map.end())
-		{
-			if (!folders.contains(i->first))
-			{
-				QString f = i->first;
-				i++;
-				m_sf_map.erase(f);
-			}
-			else
-			{
-				ScanFolder* sf = i->second;
-				sf->setLoadedAction(action);
-				i++;
-			}
-		}
-		
-		foreach (const QString &folder,folders)
-		{
-			if (m_sf_map.find(folder))
-				continue;
-			
-			if (QDir(folder).exists())
-			{
-				// only add folder when it exists
-				ScanFolder* sf = new ScanFolder(getCore(),folder,action);
-				m_sf_map.insert(folder,sf);
-			}	
-		}
+		scanner->setRecursive(ScanFolderPluginSettings::recursive());
+		scanner->setFolderList(folders);
 	}
 	
 	bool ScanFolderPlugin::versionCheck(const QString & version) const

@@ -20,38 +20,20 @@
 #ifndef SCANFOLDER_H
 #define SCANFOLDER_H
 
-#include <kdirlister.h>
-#include <kfileitem.h>
-#include <qstring.h>
-#include <qobject.h>
-#include <qdir.h>
-#include <qlist.h>
-#include <qtimer.h>
-#include <kurl.h>
+
+#include <QObject>
+#include <KUrl>
+#include <KDirWatch>
 
 namespace kt
 {
-	///Action to perform after loading torrent.
-	enum LoadedTorrentAction
-	{
-	    deleteAction,
-	    moveAction,
-	    defaultAction
-	};
+	
 	
 	class CoreInterface;
+	class ScanThread;
 
 	/**
-	 * @brief Scanned folder class.
-	 * @author Ivan Vasić <ivasic@gmail.com>
-	 * 
-	 * It will monitor m_dir directory for changes and automatically pass new torrents to core for loading.
-	 * After loading, it will perform specified action which can be:
-	 * 1. Deleting torrent in question
-	 * 2. Moving torrent to 'loaded' subdirectory
-	 * 3. Default action (neither 1. nor 2.)
-	 * @see LoadedTorrentAction
-	 * 
+	 * Monitors a folder for changes, and passes torrents to load to the TorrentLoadQueue
 	*/
 	class ScanFolder : public QObject
 	{
@@ -59,46 +41,27 @@ namespace kt
 	public:
 		
 		/**
-			* Default constructor.
-			* @param core Pointer to core interface
-			* @param dir Full directory path
-			* @param action Action to perform on loaded torrents.
-			*/
-		ScanFolder(CoreInterface* core, const QString& dir, LoadedTorrentAction action = defaultAction);
-		~ScanFolder();
-
-
-		///Accessor method for m_loadedAction.
-		void setLoadedAction(const LoadedTorrentAction& theValue);
-		///Accessor method for m_loadedAction.
-		LoadedTorrentAction loadedAction() const { return m_loadedAction; }
-
-		///Returns true if this object is valid, that is - weather directory is valid and this object does its work.
-		bool isValid() const { return m_valid; }
+		 * Default constructor.
+		 * @param scanner The ScanThread
+		 * @param dir The directory
+		 */
+		ScanFolder(ScanThread* scanner, const KUrl& dir, bool recursive);
+		virtual ~ScanFolder();
 		
-		///Sets directory path
-		void setFolderUrl(QString& url);
+		/**
+		 * Set if the ScanFolder needs to scan subdirectories recursively
+		 * @param rec Recursive or not
+		 */
+		void setRecursive(bool rec);
 
 	public slots:
-		void onNewItems(const KFileItemList &items);
-		void onLoadingFinished(const KUrl & url,bool success,bool canceled);
-		void onIncompletePollingTimeout();
-		void loadDelayed();
+		void scanDir(const QString & path);
 		
 	private:
-		/// Check if the URL is a complete file
-		bool incomplete(const KUrl & src);
-
-	private:
-		QString m_root_dir;
-		CoreInterface* m_core;
-		bool m_valid;
-		KDirLister* m_dir;
-		LoadedTorrentAction m_loadedAction;
-		KUrl::List m_to_load;
-		KUrl::List m_pendingURLs;
-		KUrl::List m_incompleteURLs;
-		QTimer m_incomplePollingTimer;
+		ScanThread* scanner;
+		KUrl scan_directory;
+		KDirWatch* watch;
+		bool recursive;
 	};
 }
 #endif

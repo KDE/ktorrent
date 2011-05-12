@@ -20,9 +20,7 @@
 #ifndef KTSCANFOLDERPLUGIN_H
 #define KTSCANFOLDERPLUGIN_H
 
-#include <util/ptrmap.h>
 #include <interfaces/plugin.h>
-#include "scanfolder.h"
 
 class QString;
 
@@ -30,6 +28,9 @@ class QString;
 namespace kt
 {	
 	class ScanFolderPrefPage;
+	class TorrentLoadQueue;
+	class ScanThread;
+	
 	
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
@@ -51,8 +52,9 @@ namespace kt
 		void updateScanFolders();
 		
 	private:
-		bt::PtrMap<QString,ScanFolder> m_sf_map;
 		ScanFolderPrefPage* pref;
+		TorrentLoadQueue* tlq;
+		ScanThread* scanner;
 	};
 
 }
