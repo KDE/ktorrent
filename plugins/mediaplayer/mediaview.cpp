@@ -35,15 +35,48 @@ using namespace bt;
 
 namespace kt
 {
+	MediaViewFilter::MediaViewFilter(QObject* parent) 
+		: QSortFilterProxyModel(parent),
+		show_incomplete(false)
+	{
+	}
+
+	MediaViewFilter::~MediaViewFilter()
+	{
+	}
+
+	void MediaViewFilter::setShowIncomplete(bool on)
+	{
+		show_incomplete = on;
+		invalidateFilter();
+	}
+
+	bool MediaViewFilter::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
+	{
+		if (show_incomplete)
+			return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+		
+		MediaModel* model = (MediaModel*)sourceModel();
+		MediaFileRef ref = model->fileForIndex(model->index(source_row));
+		MediaFile::Ptr file = ref.mediaFile();
+		if (file->fullyAvailable())
+			return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+		else
+			return false;
+	}
+
 	
 
 	MediaView::MediaView(MediaModel* model,QWidget* parent)
 			: QWidget(parent),model(model)
 	{
-		filter = new QSortFilterProxyModel(this);
+		filter = new MediaViewFilter(this);
 		filter->setSourceModel(model);
 		filter->setFilterRole(Qt::DisplayRole);
 		filter->setFilterCaseSensitivity(Qt::CaseInsensitive);
+		filter->setSortRole(Qt::UserRole + 1);
+		filter->sort(0,Qt::DescendingOrder);
+		
 		
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
@@ -61,6 +94,11 @@ namespace kt
 		media_tree->setSelectionMode(QAbstractItemView::ContiguousSelection);
 		media_tree->setAlternatingRowColors(true);
 		layout->addWidget(media_tree);
+		
+		show_incomplete = new QCheckBox(i18n("Show incomplete files"),this);
+		show_incomplete->setChecked(false);
+		connect(show_incomplete,SIGNAL(stateChanged(int)),this,SLOT(showIncompleteChanged(int)));
+		layout->addWidget(show_incomplete);
 		
 		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(onDoubleClicked(QModelIndex)));
 	}
@@ -80,6 +118,23 @@ namespace kt
 			return;
 		
 		doubleClicked(model->fileForIndex(idx));
+	}
+	
+	void MediaView::showIncompleteChanged(int state)
+	{
+		filter->setShowIncomplete(state == Qt::Checked);
+	}
+
+	void MediaView::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("MediaView");
+		show_incomplete->setChecked(g.readEntry("show_incomplete", false));
+	}
+
+	void MediaView::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("MediaView");
+		g.writeEntry("show_incomplete", show_incomplete->isChecked());
 	}
 
 }

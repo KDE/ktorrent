@@ -21,14 +21,11 @@
 #ifndef PLAYLISTWIDGET_H
 #define PLAYLISTWIDGET_H
 
-#include <QWidget>
 #include <QLabel>
 #include <QTreeView>
 #include <QToolBar>
 #include <QComboBox>
 #include <QCheckBox>
-#include <Phonon/SeekSlider>
-#include <Phonon/VolumeSlider>
 #include <KSharedConfig>
 #include <KMenu>
 #include "mediafile.h"
@@ -49,9 +46,6 @@ namespace kt
 		PlayListWidget(MediaFileCollection* collection,MediaPlayer* player,QWidget* parent);
 		virtual ~PlayListWidget();
 		
-		/// Get the media tool bar
-		QToolBar* mediaToolBar() {return tool_bar;}
-		
 		/// Get the play list
 		PlayList* playList() {return play_list;}
 		
@@ -70,25 +64,26 @@ namespace kt
 		/// Get the index of a file
 		QModelIndex indexForFile(const QString & file) const;
 		
+		/// Is random mode activated ?
+		bool randomOrder() const {return random_mode->isChecked();}
+		
 	public slots:
 		QModelIndex play();
-		void playing(const MediaFileRef & file);
-		void stopped();
 		void addMedia();
 		void clearPlayList();
 		
 	private slots:
-		void modeActivated(int idx);
-		void metaDataChanged();
 		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
 		void doubleClicked(const QModelIndex & index);
 		void showContextMenu(QPoint pos);
 		void removeFiles();
+		void onItemsDropped();
 		
 	signals:
-		void randomModeActivated();
-		void selectionChanged(const QModelIndex & idx);
+		void fileSelected(const MediaFileRef & file);
 		void doubleClicked(const MediaFileRef & file);
+		void randomModeActivated(bool random);
+		void enableNext(bool on);
 		
 	private:
 		QModelIndex next(const QModelIndex & idx) const;
@@ -96,14 +91,11 @@ namespace kt
 		
 	private:
 		MediaPlayer* player;
-		QTreeView* play_list_view;
 		PlayList* play_list;
 		QToolBar* tool_bar;
-		Phonon::VolumeSlider* volume;
-		Phonon::SeekSlider* play_slider;
-		QComboBox* queue_mode;
-		QLabel* info_label;
-		MediaFileRef current_file;
+		QTreeView* view;
+		QCheckBox* random_mode;
+
 		KMenu* menu;
 		QSortFilterProxyModel* proxy_model;
 		MediaFileCollection* collection;

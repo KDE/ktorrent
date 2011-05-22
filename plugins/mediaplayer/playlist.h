@@ -38,7 +38,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		PlayList(MediaFileCollection* collection,QObject* parent);
+		PlayList(MediaFileCollection* collection, MediaPlayer* player, QObject* parent);
 		virtual ~PlayList();
 		
 		void addFile(const MediaFileRef & file);
@@ -47,8 +47,6 @@ namespace kt
 		void save(const QString & file);
 		void load(const QString & file);
 		void clear();
-		
-		
 		
 		virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
@@ -64,12 +62,19 @@ namespace kt
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
+		
+	private slots:
+		void onPlaying(const MediaFileRef & file);
+		
+	signals:
+		void itemsDropped();
 			
 	private:
 		typedef QPair<MediaFileRef,TagLib::FileRef*> PlayListItem;
 		mutable QList<PlayListItem> files;
 		mutable QList<int> dragged_rows;
 		MediaFileCollection* collection;
+		MediaPlayer* player;
 	};
 }
 

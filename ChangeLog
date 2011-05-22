@@ -11,6 +11,7 @@ Changes in 4.2:
 - Make it possible to wait for several events before activating the shutdown action
 - Fix wrong required diskspace calculation in some rare circumstances (271097)
 - Revamp scanfolder plugin (263813, 271657)
+- Revamp GUI of mediaplayer plugin
 
 Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)

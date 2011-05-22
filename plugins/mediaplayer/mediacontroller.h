@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2010 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,57 +17,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <klocale.h>
-#include <kgenericfactory.h>
-#include <util/log.h>
-#include <util/logsystemmanager.h>
-#include <interfaces/guiinterface.h>
-#include "mediaplayerplugin.h"
-#include "mediaplayeractivity.h"
 
 
-K_EXPORT_COMPONENT_FACTORY(ktmediaplayerplugin,KGenericFactory<kt::MediaPlayerPlugin>("ktmediaplayerplugin"))
-		
-using namespace bt;
+#ifndef KT_MEDIACONTROLLER_H
+#define KT_MEDIACONTROLLER_H
 
-namespace kt
+#include <QLabel>
+#include <Phonon/SeekSlider>
+#include <Phonon/VolumeSlider>
+#include <KActionCollection>
+#include "mediafile.h"
+#include "ui_mediacontroller.h"
+
+namespace kt 
 {
 
-	MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
-	{
-		Q_UNUSED(args);
-	}
+	class MediaPlayer;
 
+	/**
+	 * Widget containing all the things necessary to control the media playback.
+	 */
+	class MediaController : public QWidget, public Ui_MediaController
+	{
+		Q_OBJECT
+	public:
+		MediaController(MediaPlayer* player, KActionCollection* ac, QWidget* parent = 0);
+		virtual ~MediaController();
+		
+		
+	private slots:
+		void playing(const MediaFileRef & file);
+		void stopped();
+		void metaDataChanged();
+		
+	private:
+		MediaFileRef current_file;
+	};
 
-	MediaPlayerPlugin::~MediaPlayerPlugin()
-	{
-	}
-	
-	void MediaPlayerPlugin::load()
-	{
-		LogSystemManager::instance().registerSystem(i18n("Media Player"),SYS_MPL);
-		CoreInterface* core = getCore();
-		act = new MediaPlayerActivity(core,actionCollection(),0);
-		getGUI()->addActivity(act);
-		setXMLFile("ktmediaplayerpluginui.rc");
-		act->enableActions(0);
-		act->loadState(KGlobal::config());
-	}
-	
-	void MediaPlayerPlugin::unload()
-	{
-		LogSystemManager::instance().unregisterSystem(i18n("Media Player"));
-		act->saveState(KGlobal::config());
-		act->setVideoFullScreen(false);
-		getGUI()->removeActivity(act);
-		delete act;
-		act = 0;
-	}
-	
-	bool MediaPlayerPlugin::versionCheck(const QString& version) const
-	{
-		return version == KT_VERSION_MACRO;
-	}
-	
-	
 }
+
+#endif // KT_MEDIACONTROLLER_H

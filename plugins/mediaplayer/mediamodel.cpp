@@ -29,7 +29,9 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <torrent/queuemanager.h>
+#include <QFileInfo>
 #include "mediamodel.h"
+
 
 
 using namespace bt;
@@ -96,6 +98,8 @@ namespace kt
 				return KIcon(KMimeType::findByPath(mf->path())->iconName());
 			case Qt::UserRole: // user role is for finding out if a torrent is complete
 				return mf->fullyAvailable();
+			case Qt::UserRole + 1:
+				return QFileInfo(mf->path()).lastModified().toTime_t();
 			default:
 				return QVariant();
 		}

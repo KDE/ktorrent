@@ -21,22 +21,28 @@
 #include "playlist.h"
 #include <QTime>
 #include <QFile>
+#include <QFileInfo>
 #include <QUrl>
 #include <QMimeData>
 #include <QStringList>
+#include <QTextStream>
 #include <taglib/tag.h>
-#include <klocale.h>
-#include <QFileInfo>
+#include <KLocale>
+#include <KIcon>
 #include <util/log.h>
-#include <qtextstream.h>
+#include "mediaplayer.h"
+
 
 using namespace bt;
 
 namespace kt
 {
-	PlayList::PlayList(MediaFileCollection* collection,QObject* parent)
-		: QAbstractItemModel(parent),collection(collection)
+	PlayList::PlayList(kt::MediaFileCollection* collection, kt::MediaPlayer* player, QObject* parent)
+		: QAbstractItemModel(parent),
+		collection(collection),
+		player(player)
 	{
+		connect(player,SIGNAL(playing(MediaFileRef)),this,SLOT(onPlaying(MediaFileRef)));
 	}
 	
 	PlayList::~PlayList() 
@@ -99,7 +105,7 @@ namespace kt
 
 	QVariant PlayList::data(const QModelIndex& index, int role) const
 	{
-		if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::UserRole))
+		if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::UserRole && role != Qt::DecorationRole))
 			return QVariant();
 		
 		const PlayListItem & item = files.at(index.row());
@@ -154,6 +160,12 @@ namespace kt
 				case 4: return tag->year() == 0 ? QVariant() : tag->year();
 				default: return QVariant();
 			}
+		}
+		
+		if (role == Qt::DecorationRole && index.column() == 0)
+		{
+			if (file == player->getCurrentSource())
+				return KIcon("arrow-right");
 		}
 		
 		return QVariant();
@@ -261,6 +273,7 @@ namespace kt
 		}
 		insertRows(row,urls.count(),QModelIndex());
 		dragged_rows.clear();
+		itemsDropped();
 		return true;
 	}
 	
@@ -316,4 +329,11 @@ namespace kt
 		
 		emit reset();
 	}
+	
+	void PlayList::onPlaying(const kt::MediaFileRef& file)
+	{
+		Q_UNUSED(file);
+		dataChanged(index(0, 0), index(files.count() - 1, 0));
+	}
+
 }

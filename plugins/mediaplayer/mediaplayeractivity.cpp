@@ -28,6 +28,7 @@
 #include <util/log.h>
 #include <util/fileops.h>
 #include <util/functions.h>
+#include <interfaces/functions.h>
 #include <interfaces/coreinterface.h>
 #include "mediaview.h"
 #include "mediamodel.h"
@@ -38,7 +39,9 @@
 #include <QToolButton>
 #include "playlistwidget.h"
 #include "playlist.h"
-#include <interfaces/functions.h>
+#include "mediacontroller.h"
+
+
 
 using namespace bt;
 
@@ -57,13 +60,25 @@ namespace kt
 		
 		QHBoxLayout* layout = new QHBoxLayout(this);
 		layout->setMargin(0);
+		tabs = new KTabWidget(this);
+		layout->addWidget(tabs);
 		
-		splitter = new QSplitter(Qt::Horizontal,this);
-		layout->addWidget(splitter);
+		
+		QWidget* tab = new QWidget(tabs);
+		tabs->addTab(tab, KIcon("applications-multimedia"), i18n("Media Player"));
+		QVBoxLayout* vbox = new QVBoxLayout(tab);
+		
+		splitter = new QSplitter(Qt::Horizontal,tab);
 		media_view = new MediaView(media_model,splitter);
-		tabs = new KTabWidget(splitter);
+		play_list = new PlayListWidget(media_model,media_player,tabs);
+		setupActions();
+		controller = new MediaController(media_player, ac, tab);
+		
+		
 		splitter->addWidget(media_view);
-		splitter->addWidget(tabs);
+		splitter->addWidget(play_list);
+		vbox->addWidget(controller);
+		vbox->addWidget(splitter);
 		
 		close_button = new QToolButton(tabs);
 		tabs->setCornerWidget(close_button,Qt::TopRightCorner);
@@ -71,8 +86,6 @@ namespace kt
 		close_button->setEnabled(false);
 		connect(close_button,SIGNAL(clicked()),this,SLOT(closeTab()));
 		
-		play_list = new PlayListWidget(media_model,media_player,tabs);
-		tabs->addTab(play_list,KIcon("audio-x-generic"),i18n("Play List"));
 		tabs->setTabBarHidden(true);
 		
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
@@ -81,10 +94,11 @@ namespace kt
 		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
 		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
 		connect(media_player,SIGNAL(aboutToFinish()),this,SLOT(aboutToFinishPlaying()));
-		connect(play_list,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
+		connect(play_list,SIGNAL(fileSelected(MediaFileRef)),this,SLOT(onSelectionChanged(MediaFileRef)));
 		connect(media_view,SIGNAL(doubleClicked(const MediaFileRef&)),this,SLOT(onDoubleClicked(const MediaFileRef&)));
-		connect(play_list,SIGNAL(randomModeActivated()),this,SLOT(randomPlayActivated()));
+		connect(play_list,SIGNAL(randomModeActivated(bool)),this,SLOT(randomPlayActivated(bool)));
 		connect(play_list,SIGNAL(doubleClicked(MediaFileRef)),this,SLOT(play(MediaFileRef)));
+		connect(play_list,SIGNAL(enableNext(bool)),next_action,SLOT(setEnabled(bool)));
 		connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(currentTabChanged(int)));
 	}
 
@@ -128,22 +142,14 @@ namespace kt
 		connect(clear_action,SIGNAL(triggered()),play_list,SLOT(clearPlayList()));
 		ac->addAction("clear_play_list",clear_action);
 		
+		volume = new KAction(this);
+		volume->setDefaultWidget(new Phonon::VolumeSlider(media_player->output(),this));
+		ac->addAction("volume",volume);
+		
 		KAction* tfs = new KAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"),this);
 		tfs->setShortcut(Qt::Key_F);
 		tfs->setCheckable(true);
 		ac->addAction("video_fullscreen", tfs);
-		
-		QToolBar* tb = play_list->mediaToolBar();
-		tb->addAction(add_media_action);
-		tb->addAction(clear_action);
-		tb->addSeparator();
-		tb->addAction(play_action);
-		tb->addAction(pause_action);
-		tb->addAction(stop_action);
-		tb->addAction(prev_action);
-		tb->addAction(next_action);
-		tb->addSeparator();
-		tb->addAction(show_video_action);
 	}
 
 	void MediaPlayerActivity::openVideo()
@@ -209,7 +215,7 @@ namespace kt
 			curr_item = play_list->play();
 			if (curr_item.isValid())
 			{
-				bool random = MediaPlayerPluginSettings::playMode() == 2;
+				bool random = play_list->randomOrder();
 				QModelIndex n = play_list->next(curr_item,random);
 				next_action->setEnabled(n.isValid());
 			}
@@ -223,7 +229,7 @@ namespace kt
 		if (idx.isValid())
 		{
 			curr_item = idx;
-			bool random = MediaPlayerPluginSettings::playMode() == 2;
+			bool random = play_list->randomOrder();
 			QModelIndex n = play_list->next(curr_item,random);
 			next_action->setEnabled(n.isValid());
 		}
@@ -254,7 +260,7 @@ namespace kt
 
 	void MediaPlayerActivity::next()
 	{
-		bool random = MediaPlayerPluginSettings::playMode() == 2;
+		bool random = play_list->randomOrder();
 		QModelIndex n = play_list->next(curr_item,random);
 		if (!n.isValid())
 			return;
@@ -292,33 +298,25 @@ namespace kt
 		action_flags = flags;
 	}
 
-	void MediaPlayerActivity::onSelectionChanged(const QModelIndex & idx)
+	void MediaPlayerActivity::onSelectionChanged(const MediaFileRef & file)
 	{
-		if (idx.isValid())
-		{
-			PlayList* pl = play_list->playList();
-			MediaFileRef file = pl->fileForIndex(idx);
-			if (bt::Exists(file.path()))
-				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
-			else
-				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
-		}
-		else
+		if (bt::Exists(file.path()))
+			play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
+		else if (!file.path().isEmpty())
 			play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
+		else
+			play_action->setEnabled(false);
 	}
 
-	void MediaPlayerActivity::randomPlayActivated()
+	void MediaPlayerActivity::randomPlayActivated(bool on)
 	{
-		QModelIndex next = play_list->next(curr_item,true);
+		QModelIndex next = play_list->next(curr_item,on);
 		next_action->setEnabled(next.isValid());
 	}
 
 	void MediaPlayerActivity::aboutToFinishPlaying()
 	{
-		if (MediaPlayerPluginSettings::playMode() == 0)
-			return;
-		
-		bool random = MediaPlayerPluginSettings::playMode() == 2;
+		bool random = play_list->randomOrder();
 		QModelIndex n = play_list->next(curr_item,random);
 		if (!n.isValid())
 			return;
@@ -381,6 +379,8 @@ namespace kt
 		g.writeEntry("splitter_state",splitter->saveState());
 		play_list->saveState(cfg);
 		play_list->playList()->save(kt::DataDir() + "playlist");
+		
+		media_view->saveState(cfg);
 	}
 	
 	void MediaPlayerActivity::loadState(KSharedConfigPtr cfg)
@@ -393,6 +393,11 @@ namespace kt
 		play_list->loadState(cfg);
 		if (bt::Exists(kt::DataDir() + "playlist"))
 			play_list->playList()->load(kt::DataDir() + "playlist");
+		
+		QModelIndex next = play_list->next(curr_item,play_list->randomOrder());
+		next_action->setEnabled(next.isValid());
+		
+		media_view->loadState(cfg);
 	}
 
 	void MediaPlayerActivity::currentTabChanged(int idx)

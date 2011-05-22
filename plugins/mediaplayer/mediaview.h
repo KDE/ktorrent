@@ -25,12 +25,31 @@
 #include <QListView>
 #include <QSortFilterProxyModel>
 #include "mediafile.h"
+#include <QCheckBox>
 
 class KLineEdit;
 
 namespace kt
 {
 	class MediaModel;
+	
+	/**
+	 * QSortFilterProxyModel to filter out incomplete files
+	 */
+	class MediaViewFilter : public QSortFilterProxyModel
+	{
+	public:
+		MediaViewFilter(QObject* parent = 0);
+		virtual ~MediaViewFilter();
+		
+		virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+		
+		/// Enable or disable showing of incomplete files
+		void setShowIncomplete(bool on);
+		
+	private:
+		bool show_incomplete;
+	};
 
 	/**
 		@author
@@ -42,17 +61,22 @@ namespace kt
 		MediaView(MediaModel* model,QWidget* parent);
 		virtual ~MediaView();
 		
+		void saveState(KSharedConfigPtr cfg);
+		void loadState(KSharedConfigPtr cfg);
+		
 	signals:
 		void doubleClicked(const MediaFileRef & mf);
 		
 	private slots:
 		void onDoubleClicked(const QModelIndex & index);
+		void showIncompleteChanged(int);
 
 	private:
 		MediaModel* model;
 		QListView* media_tree;
 		KLineEdit* search_box;
-		QSortFilterProxyModel* filter;
+		MediaViewFilter* filter;
+		QCheckBox* show_incomplete;
 	};
 
 }

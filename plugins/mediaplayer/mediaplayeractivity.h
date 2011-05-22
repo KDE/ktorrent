@@ -39,6 +39,7 @@ namespace kt
 	class CoreInterface;
 	class VideoWidget;
 	class PlayListWidget;
+	class MediaController;
 	
 	/**
 	 * Activity for the media player plugin.
@@ -62,12 +63,12 @@ namespace kt
 		void prev();
 		void next();
 		void enableActions(unsigned int flags);
-		void onSelectionChanged(const QModelIndex & idx);
+		void onSelectionChanged(const MediaFileRef & file);
 		void openVideo();
 		void closeVideo();
 		void setVideoFullScreen(bool on);
 		void onDoubleClicked(const MediaFileRef & file);
-		void randomPlayActivated();
+		void randomPlayActivated(bool on);
 		void aboutToFinishPlaying();
 		void showVideo(bool on);
 		void closeTab();
@@ -78,6 +79,7 @@ namespace kt
 		MediaModel* media_model;
 		MediaPlayer* media_player;
 		MediaView* media_view;
+		MediaController* controller;
 		KTabWidget* tabs;
 		int action_flags;
 		VideoWidget* video;
@@ -95,6 +97,7 @@ namespace kt
 		KAction* clear_action;
 		KAction* add_media_action;
 		KAction* status_action;
+		KAction* volume;
 		KActionCollection* ac;
 	};
 
