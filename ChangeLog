@@ -13,6 +13,9 @@ Changes in 4.2:
 - Revamp scanfolder plugin (263813, 271657)
 - Revamp GUI of mediaplayer plugin
 
+Changes in 4.1.2:
+- Fix crash when duplicate trackers are added (274413)
+
 Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)
 - Fix wrong tooltip in QM preference page
