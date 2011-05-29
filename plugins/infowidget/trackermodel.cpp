@@ -157,6 +157,9 @@ namespace kt
 	
 	void TrackerModel::addTrackers(QList<bt::TrackerInterface*> & tracker_list)
 	{
+		if (tracker_list.isEmpty())
+			return;
+		
 		int row = trackers.count();
 		foreach (bt::TrackerInterface* trk,tracker_list)
 			trackers.append(new Item(trk));

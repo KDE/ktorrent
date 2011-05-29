@@ -134,7 +134,8 @@ namespace kt
 		else if (dupes.size() > 1)
 			KMessageBox::informationList(0,i18n("The following duplicate trackers were not added:"),dupes.toStringList());
 		
-		model->addTrackers(tl);
+		if (!tl.isEmpty())
+			model->addTrackers(tl);
 	}
 
 	void TrackerView::removeClicked()
