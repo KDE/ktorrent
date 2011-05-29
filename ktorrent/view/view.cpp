@@ -46,7 +46,7 @@
 #include "dialogs/addpeersdlg.h"
 #include "viewselectionmodel.h"
 #include "viewdelegate.h"
-#include "propertiesextender.h"
+#include "propertiesdlg.h"
 
 
 using namespace bt;
@@ -369,10 +369,9 @@ namespace kt
 		if (sel.count() == 0)
 			return;
 
-		foreach(bt::TorrentInterface *tc,sel)
-		{
-			extend(tc,new PropertiesExtender(tc,0));
-		}
+		PropertiesDlg dlg(sel.front(),this);
+		dlg.show();
+		dlg.exec();
 	}
 
 	void View::removeFromGroup()
