@@ -51,6 +51,7 @@ Comment[ca]=Script per a reprendre automàticament després d'un temps, quan est
 Comment[ca@valencia]=Script per a reprendre automàticament després d'un temps, quan està activat l'estat de suspensió
 Comment[da]=Script til at genoptage automatisk efter et stykke tid, når suspenderet tilstand aktiveres
 Comment[de]=Skript zum automatischen Fortsetzen von ausgesetzten Torrents nach Ablauf einer festgelegten Zeit
+Comment[el]=Σενάριο για την αυτόματη συνέχιση μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
 Comment[en_GB]=Script to automatically resume after some time, when the suspended state is enabled
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está habilitado el estado de suspensión
 Comment[et]=Skript automaatseks taasalustamiseks mõne aja pärast, kui sisse on lülitatud paus
