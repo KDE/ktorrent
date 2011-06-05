@@ -102,7 +102,9 @@ namespace kt
 		if (status_notifier_item)
 			return;
 		
-		menu = new KMenu(0);
+		status_notifier_item = new KStatusNotifierItem(mwnd);
+		
+		menu = status_notifier_item->contextMenu();
 		KActionCollection* ac = mwnd->actionCollection();
 		max_upload_rate = new SetMaxRate(core,SetMaxRate::UPLOAD,menu);
 		max_upload_rate->setTitle(i18n("Set max upload speed"));
@@ -121,10 +123,11 @@ namespace kt
 		menu->addAction(ac->action(KStandardAction::name(KStandardAction::Preferences)));
 		menu->addSeparator();
 		
-		status_notifier_item = new KStatusNotifierItem(mwnd);
+		
 		status_notifier_item->setIconByName("ktorrent");
 		status_notifier_item->setCategory(KStatusNotifierItem::ApplicationStatus);
 		status_notifier_item->setStatus(KStatusNotifierItem::Active);
+		status_notifier_item->setStandardActionsEnabled(true);
 		status_notifier_item->setContextMenu(menu);
 		if (queue_suspended)
 			status_notifier_item->setOverlayIconByName("kt-pause");
