@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>707</width>
-    <height>205</height>
+    <height>186</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -118,13 +118,30 @@
       </widget>
      </item>
      <item row="1" column="2">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Info hash:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="info_hash">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="textInteractionFlags">
+        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
       <widget class="QLabel" name="label_17">
        <property name="text">
         <string>Comments:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="3">
+     <item row="2" column="1" colspan="4">
       <widget class="KSqueezedTextLabel" name="comments">
        <property name="minimumSize">
         <size>

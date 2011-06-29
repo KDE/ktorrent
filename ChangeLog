@@ -14,6 +14,7 @@ Changes in 4.2:
 - Revamp GUI of mediaplayer plugin
 - Make properties extender a dialog (274356)
 - Fix bug causing scripts not to be selectable in scripting plugin
+- Show info hash in status tab
 
 Changes in 4.1.2:
 - Fix crash when duplicate trackers are added (274413)
