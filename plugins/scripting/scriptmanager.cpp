@@ -152,6 +152,7 @@ namespace kt
 			s = model->scriptForIndex(selected.front());
 		properties->setEnabled(selected.count() == 1 && s && s->metaInfo().valid());
 		configure_script->setEnabled(selected.count() == 1 && s && s->hasConfigure());
+		edit_script->setEnabled(selected.count() == 1);
 	}
 	
 	QModelIndexList ScriptManager::selectedScripts()
