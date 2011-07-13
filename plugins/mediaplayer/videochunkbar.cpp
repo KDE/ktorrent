@@ -49,6 +49,7 @@ namespace kt
 				connect(stream.data(),SIGNAL(readyRead()),this,SLOT(updateChunkBar()));
 			
 			updateBitSet();
+			updateChunkBar();
 		}
 	}
 

@@ -40,7 +40,7 @@ namespace kt
 		Phonon::createPath(media,audio);
 		
 		connect(media,SIGNAL(stateChanged(Phonon::State,Phonon::State)),
-				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
+				this,SLOT(onStateChanged(Phonon::State,Phonon::State)));
 		connect(media,SIGNAL(hasVideoChanged(bool)),this,SLOT(hasVideoChanged(bool)));
 		connect(media,SIGNAL(aboutToFinish()),this,SIGNAL(aboutToFinish()));
 		media->setTickInterval(1000);
@@ -59,38 +59,33 @@ namespace kt
 
 	void MediaPlayer::resume()
 	{
-		if (paused())
+		if (paused() || manually_paused)
 		{
 			if (buffering)
 				manually_paused = false;
 			else
 				media->play();
 		}
-	}	
+	}
 
 	void MediaPlayer::play(kt::MediaFileRef file)
 	{
-		if (media->state() == Phonon::PausedState)
-		{
-			if (buffering)
-				manually_paused = false;
-			else
-				media->play();
-		}
-		else
-		{
-			buffering = false;
-			Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: playing " << file.path() << endl;
-			Phonon::MediaSource ms = file.createMediaSource(this); 
-			media->setCurrentSource(ms);
+		buffering = false;
+		Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: playing " << file.path() << endl;
+		Phonon::MediaSource ms = file.createMediaSource(this); 
+		media->setCurrentSource(ms);
 			
-			MediaFile::Ptr ptr = file.mediaFile();
-			if (ptr && ptr->isVideo())
-				openVideo();
-			
-			history.append(file);
-			media->play();
+		MediaFile::Ptr ptr = file.mediaFile();
+		if (ptr && ptr->isVideo())
+		{
+			Out(SYS_MPL|LOG_DEBUG) << "Opening video widget !" << endl;
+			openVideo();
 		}
+		
+		history.append(file);
+		playing(file);
+		current = file;
+		media->play();
 	}
 
 	
@@ -110,33 +105,24 @@ namespace kt
 		}
 		else
 		{
+			Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: paused" << endl;
 			manually_paused = true;
-			if (media->state() == Phonon::PausedState)
-			{
-				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: paused" << endl;
-				int flags = MEDIA_PLAY|MEDIA_STOP;
-				if (history.count() > 1)
-					flags |= MEDIA_PREV;
-				
-				enableActions(flags);
-			}
+			int flags = MEDIA_PLAY|MEDIA_STOP;
+			if (history.count() > 1)
+				flags |= MEDIA_PREV;
+			
+			enableActions(flags);
 		}
 	}
 		
 	void MediaPlayer::stop()
 	{
+		media->stop();
+		media->clear();
 		if (buffering)
-		{
-			media->stop();
-			media->clear();
 			buffering = false;
-		}
-		else
-		{
-			media->stop();
-			media->clear();
-		}
 		
+		current = MediaFileRef();
 		onStateChanged(media->state(),Phonon::StoppedState);
 	}
 	
@@ -176,6 +162,11 @@ namespace kt
 		{
 			case Phonon::LoadingState:
 				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: loading" << endl;
+				if (history.count() > 0)
+					flags |= MEDIA_PREV;
+				
+				enableActions(flags);
+				loading();
 				break;
 			case Phonon::StoppedState:
 				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: stopped" << endl;
@@ -254,4 +245,5 @@ namespace kt
 		else
 			closeVideo();
 	}
+
 }

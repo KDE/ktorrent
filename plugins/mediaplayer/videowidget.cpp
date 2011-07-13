@@ -147,6 +147,7 @@ namespace kt
 	
 	bool VideoWidget::eventFilter(QObject* dst, QEvent* event)
 	{
+		Q_UNUSED(dst);
 		if (fullscreen && event->type() == QEvent::MouseMove)
 			mouseMoveEvent((QMouseEvent*)event);
 		

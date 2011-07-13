@@ -21,11 +21,12 @@
 #ifndef KTAUDIOPLAYER_H
 #define KTAUDIOPLAYER_H
 
-#include <QObject>
+#include <QTimer>
 #include <QStringList>
 #include <Phonon/MediaObject>
 #include "mediafile.h"
 #include "mediafilestream.h"
+
 
 namespace Phonon
 {
@@ -110,14 +111,20 @@ namespace kt
 		void aboutToFinish();
 		
 		/**
-		* Emitted when the player starts playing
-		*/
+		 * Emitted when the player starts playing
+		 */
 		void playing(const MediaFileRef & file);
+		
+		/**
+		 * Emitted when the video is being loaded
+		 */
+		void loading();
 
 	private:
 		Phonon::MediaObject* media;
 		Phonon::AudioOutput* audio;
 		QList<MediaFileRef> history;
+		MediaFileRef current;
 		bool buffering;
 		bool manually_paused;
 	};

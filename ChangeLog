@@ -13,6 +13,7 @@ Changes in 4.2:
 - Revamp scanfolder plugin (263813, 271657)
 - Revamp GUI of mediaplayer plugin
 - Make properties extender a dialog (274356)
+- Improve video streaming support
 
 Changes in 4.1.2:
 - Fix crash when duplicate trackers are added (274413)

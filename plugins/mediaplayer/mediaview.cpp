@@ -129,12 +129,15 @@ namespace kt
 	{
 		KConfigGroup g = cfg->group("MediaView");
 		show_incomplete->setChecked(g.readEntry("show_incomplete", false));
+		search_box->setText(g.readEntry("search_text", QString()));
+		
 	}
 
 	void MediaView::saveState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("MediaView");
 		g.writeEntry("show_incomplete", show_incomplete->isChecked());
+		g.writeEntry("search_text", search_box->text());
 	}
 
 }

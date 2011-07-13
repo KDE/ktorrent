@@ -63,7 +63,7 @@ namespace kt
 					
 				if (s->bytesAvailable() >= min_amount_needed)
 				{
-					const QByteArray data = s->read(4096);
+					const QByteArray data = s->read(min_amount_needed);
 					if (!data.isEmpty()) 
 					{
 						writeData(data);
@@ -84,6 +84,7 @@ namespace kt
 
 	void MediaFileStream::needData()
 	{
+	//	Out(SYS_GEN|LOG_DEBUG) << "MediaFileStream::needData" << endl;
 		TorrentFileStream::Ptr s = stream.toStrongRef();
 		if (!s || s->atEnd())
 		{
@@ -99,7 +100,7 @@ namespace kt
 		
 		if (s->bytesAvailable() >= min_amount_needed)
 		{
-			QByteArray data = s->read(4096);
+			QByteArray data = s->read(min_amount_needed);
 			if (data.isEmpty()) 
 			{
 				waiting_for_data = true;
@@ -136,13 +137,16 @@ namespace kt
 
 	void MediaFileStream::enoughData()
 	{
-		waiting_for_data = false;
+	//	Out(SYS_GEN|LOG_DEBUG) << "MediaFileStream::enoughData" << endl;
+	//	waiting_for_data = false;
 	}
 
 	void MediaFileStream::seekStream(qint64 offset)
 	{
 		TorrentFileStream::Ptr s = stream.toStrongRef();
-		if (s)
-			s->seek(offset);
+		if (!s)
+			return;
+		
+		s->seek(offset);
 	}
 }

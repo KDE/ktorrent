@@ -249,6 +249,7 @@ namespace kt
 			MediaFileStream* stream = new MediaFileStream(mf->stream());
 			QObject::connect(stream,SIGNAL(stateChanged(int)),
 					player,SLOT(streamStateChanged(int)));
+					
 			Phonon::MediaSource ms(stream);
 			ms.setAutoDelete(true);
 			return ms;
