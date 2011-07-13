@@ -13,11 +13,16 @@ Changes in 4.2:
 - Revamp scanfolder plugin (263813, 271657)
 - Revamp GUI of mediaplayer plugin
 - Make properties extender a dialog (274356)
+- Fix bug causing scripts not to be selectable in scripting plugin
+- Show info hash in status tab
 - Improve video streaming support
 
 Changes in 4.1.2:
 - Fix crash when duplicate trackers are added (274413)
 - Fix bug causing quit action not be shown in system tray when not using KDE
+- Fix edit script not working in scripting plugin
+- Make log output suspension work again
+- Fix crash when shutdown_rules files becomes corrupted (277602)
 
 Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)

@@ -232,9 +232,9 @@ namespace kt
 			return QAbstractItemModel::flags(index);
 		
 		if (s->executeable())
-			return Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
+			return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
 		else
-			return Qt::ItemIsUserCheckable;
+			return Qt::ItemIsSelectable | Qt::ItemIsUserCheckable;
 	}
 
 	Script* ScriptModel::scriptForIndex(const QModelIndex & index) const

@@ -25,12 +25,14 @@
 #include <KRun>
 #include <util/functions.h>
 #include <util/log.h>
+#include <util/sha1hash.h>
 #include <interfaces/torrentinterface.h>
 
 #include "downloadedchunkbar.h"
 #include "availabilitychunkbar.h"
 #include "statustab.h"
 #include "settings.h"
+
 
 		
 using namespace bt;
@@ -53,6 +55,7 @@ namespace kt
 		avg_up_speed->setFont(f);
 		type->setFont(f);
 		comments->setFont(f);
+		info_hash->setFont(f);
 		
 		ratio_limit->setMinimum(0.0f);
 		ratio_limit->setMaximum(100.0f);
@@ -84,6 +87,7 @@ namespace kt
 		comments->clear();
 		avg_up_speed->clear();
 		avg_down_speed->clear();
+		info_hash->clear();
 	}
 	
 	StatusTab::~StatusTab()
@@ -102,6 +106,7 @@ namespace kt
 		
 		if (curr_tc)
 		{
+			info_hash->setText(tc->getInfoHash().toString());
 			type->setText(tc->getStats().priv_torrent ? i18n("Private") : i18n("Public"));
 
 			// Don't allow multiple lines in the comments field
@@ -151,6 +156,7 @@ namespace kt
 		}
 		else
 		{
+			info_hash->clear();
 			ratio_limit->setValue(0.00f);
 			time_limit->setValue(0.0);
 			share_ratio->clear();

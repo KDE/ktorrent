@@ -57,6 +57,9 @@ namespace kt
 
 	void LogViewer::message(const QString& line, unsigned int arg)
 	{
+		if (suspended)
+			return;
+		
 		/*
 			IMPORTANT: because QTextBrowser is not thread safe, we must use the Qt event mechanism 
 			to add strings to it, this will ensure that strings will only be added in the main application
