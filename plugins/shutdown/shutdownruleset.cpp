@@ -193,6 +193,9 @@ namespace kt
 			for (int i = 0;i < lNumChildrenMinusOne;++i)
 			{
 				BDictNode* const d = l->getDict(i);
+				if (!d)
+					continue;
+				
 				ShutdownRule rule;
 				rule.action = (Action)d->getInt("Action");
 				rule.target = (Target)d->getInt("Target");
