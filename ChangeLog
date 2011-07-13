@@ -21,6 +21,7 @@ Changes in 4.1.2:
 - Fix bug causing quit action not be shown in system tray when not using KDE
 - Fix edit script not working in scripting plugin
 - Make log output suspension work again
+- Fix crash when shutdown_rules files becomes corrupted (277602)
 
 Changes in 4.1.1:
 - Make sure that libktorrent translation catalog is inserted (269515)
