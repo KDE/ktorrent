@@ -111,6 +111,7 @@ namespace kt
 	{
 		context_menu = new KMenu(this);
 		open_action = context_menu->addAction(KIcon("document-open"),i18nc("Open file", "Open"),this,SLOT(open()));
+		open_with_action = context_menu->addAction(KIcon("document-open"),i18nc("Open file with", "Open With"),this,SLOT(openWith()));
 		check_data = context_menu->addAction(KIcon("kt-check-data"),i18n("Check File"),this,SLOT(checkFile()));
 		context_menu->addSeparator();
 		download_first_action = context_menu->addAction(i18n("Download first"),this,SLOT(downloadFirst()));
@@ -192,6 +193,7 @@ namespace kt
 			download_normal_action->setEnabled(true);
 			download_last_action->setEnabled(true);
 			open_action->setEnabled(false);
+			open_with_action->setEnabled(false);
 			dnd_action->setEnabled(true);
 			delete_action->setEnabled(true);
 			context_menu->popup(view->viewport()->mapToGlobal(p));
@@ -214,6 +216,7 @@ namespace kt
 		if (!s.multi_file_torrent)
 		{
 			open_action->setEnabled(true);
+			open_with_action->setEnabled(true);
 			move_files_action->setEnabled(true);
 			preview_path = curr_tc->getStats().output_path;
 			collapse_action->setEnabled(false);
@@ -229,6 +232,7 @@ namespace kt
 			if (!file->isNull())
 			{
 				open_action->setEnabled(true);
+				open_with_action->setEnabled(true);
 				preview_path = file->getPathOnDisk();
 				
 				download_first_action->setEnabled(file->getPriority() != FIRST_PRIORITY);
@@ -240,6 +244,7 @@ namespace kt
 			else
 			{
 				open_action->setEnabled(false);
+				open_with_action->setEnabled(false);
 			}
 		}
 		else
@@ -252,6 +257,7 @@ namespace kt
 			dnd_action->setEnabled(true);
 			delete_action->setEnabled(true);
 			open_action->setEnabled(true);
+			open_with_action->setEnabled(true);
 			preview_path = curr_tc->getStats().output_path + model->dirPath(item);
 			collapse_action->setEnabled(!show_list_of_files);
 			expand_action->setEnabled(!show_list_of_files);
@@ -264,6 +270,14 @@ namespace kt
 	{
 		new KRun(KUrl(preview_path), 0, 0, true, true);
 	}
+	
+	void FileView::openWith()
+	{
+		KUrl::List urls;
+		urls << KUrl(preview_path);
+		KRun::displayOpenWithDialog(urls, 0);
+	}
+
 	
 	void FileView::changePriority(bt::Priority newpriority)
 	{
