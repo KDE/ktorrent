@@ -126,7 +126,7 @@ namespace kt
 		
 		status_notifier_item->setIconByName("ktorrent");
 		status_notifier_item->setCategory(KStatusNotifierItem::ApplicationStatus);
-		status_notifier_item->setStatus(KStatusNotifierItem::Active);
+		status_notifier_item->setStatus(KStatusNotifierItem::Passive);
 		status_notifier_item->setStandardActionsEnabled(true);
 		status_notifier_item->setContextMenu(menu);
 		if (queue_suspended)
@@ -139,6 +139,8 @@ namespace kt
 		if (!status_notifier_item)
 			return;
 		
+		status_notifier_item->setStatus(core->getQueueManager()->getNumRunning(QueueManager::DOWNLOADS) > 0 ?
+						KStatusNotifierItem::Active : KStatusNotifierItem::Passive);
 		QString tip = i18n("<table>"
 				"<tr><td>Download&nbsp;speed:</td><td><b>%1</b></td></tr>"
 				"<tr><td>Upload&nbsp;speed:</td><td><b>%2</b></td></tr>"
