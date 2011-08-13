@@ -305,7 +305,7 @@ namespace kt
 			return QString(); // the root node must not be included in the path
 		
 		if (file)
-			return name;
+			return parent->path() + name;
 		else
 			return parent->path() + name + bt::DirSeparator();
 	}
