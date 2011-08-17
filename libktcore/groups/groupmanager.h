@@ -54,6 +54,13 @@ namespace kt
 		virtual ~GroupManager();
 		
 		/**
+		 * Find a group given it's path
+		 * @param path Path of the group
+		 * @return :Group* The Group or 0
+		 **/
+		Group* findByPath(const QString & path);
+		
+		/**
 		 * Create a new user created group.
 		 * @param name Name of the group
 		 * @return Pointer to the group or NULL, if another group already exists with the same name.

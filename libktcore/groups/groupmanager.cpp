@@ -326,4 +326,22 @@ namespace kt
 		}
 	}
 
+	Group* GroupManager::findByPath(const QString& path)
+	{
+		if (path.startsWith("/all/custom/"))
+		{
+			for (iterator i = begin();i != end();i++)
+				if (i->second->groupPath() == path)
+					return i->second;
+		}
+		else
+		{
+			foreach (Group* g, defaults)
+				if (g->groupPath() == path)
+					return g;
+		}
+		
+		return 0;
+	}
+
 }

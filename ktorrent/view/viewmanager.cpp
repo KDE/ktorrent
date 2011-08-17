@@ -92,7 +92,7 @@ namespace kt
 		QStringList cv;
 		foreach (View* v,views)
 		{
-			cv << v->getGroup()->groupName();
+			cv << v->getGroup()->groupPath();
 		}
 		g.writeEntry("current_views",cv);
 	}
@@ -104,8 +104,8 @@ namespace kt
 		QStringList cv;
 		cv = g.readEntry("current_views",cv);
 
-		foreach (const QString &s,cv)
-			ta->openView(s,true);
+		foreach (const QString & path,cv)
+			ta->openView(path);
 
 		if (views.count() == 0)
 			ta->openNewView(all_group);
