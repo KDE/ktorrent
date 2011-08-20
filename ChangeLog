@@ -18,6 +18,7 @@ Changes in 4.2:
 - Improve video streaming support
 - Add Open With option to FileView context menu (279386)
 - Fix bug causing views to not get properly restored when the application language changes (279588)
+- Check if new trackers have a supported protocol
 
 Changes in 4.1.2:
 - Fix crash when duplicate trackers are added (274413)

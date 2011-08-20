@@ -102,7 +102,7 @@ namespace kt
 				continue;
 			
 			KUrl url(line.trimmed());
-			if (!url.isValid())
+			if (!url.isValid() || (url.protocol() != "udp" && url.protocol() != "http" && url.protocol() != "https"))
 				invalid.append(line);
 			else
 				urls.append(url);
@@ -117,16 +117,11 @@ namespace kt
 		QList<bt::TrackerInterface*> tl;
 		foreach (const KUrl & url,urls)
 		{
-			// check for dupes
 			bt::TrackerInterface* trk = tc->getTrackersList()->addTracker(url,true);
 			if (!trk)
-			{
 				dupes.append(url);
-			}
 			else
-			{
 				tl.append(trk);
-			}
 		}
 		
 		if (dupes.size() == 1)
