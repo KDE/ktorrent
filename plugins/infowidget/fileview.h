@@ -73,6 +73,7 @@ namespace kt
 		
 	private slots:
 		void open();
+		void openWith();
 		void downloadFirst();
 		void downloadLast();
 		void downloadNormal();
@@ -92,6 +93,7 @@ namespace kt
 
 		KMenu* context_menu;
 		QAction* open_action;
+		QAction* open_with_action;
 		QAction* download_first_action;
 		QAction* download_normal_action;
 		QAction* download_last_action;

@@ -193,8 +193,7 @@ namespace kt
 		if (ti->getStats().priv_torrent)
 			return false;
 		
-		ti->getTrackersList()->addTracker(KUrl(tracker_url),true);
-		return true;
+		return ti->getTrackersList()->addTracker(KUrl(tracker_url),true) != 0;
 	}
 	
 	bool DBusTorrent::removeTracker(const QString & tracker_url)

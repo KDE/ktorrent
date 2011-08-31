@@ -80,11 +80,11 @@ namespace kt
 		void openNewView(kt::Group* g);
 		
 		/**
-		* Open a view
-		* @param group_name Name of group to show in view
-		* @param starting_up Wether or not we are starting up (and thus are loading existing views)
+		* Open a view given it's path. It is assumed that this is an exiting view, and 
+		* no default column setup will be done.
+		* @param group_path Path of group to show in view
 		*/
-		void openView(const QString & group_name,bool starting_up);
+		void openView(const QString & group_path);
 		
 		/**
 		* Remove a View

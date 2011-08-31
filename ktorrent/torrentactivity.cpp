@@ -154,19 +154,13 @@ namespace kt
 		newView(core->getGroupManager()->allGroup());
 	}
 	
-	void TorrentActivity::openView(const QString & group_name,bool starting_up)
+	void TorrentActivity::openView(const QString & group_path)
 	{
-		Group* g = core->getGroupManager()->find(group_name);
+		Group* g = core->getGroupManager()->findByPath(group_path);
 		if (!g)
-		{
-			g = core->getGroupManager()->findDefault(group_name);
-			if (!g)
-				g = core->getGroupManager()->allGroup();
-		}
+			g = core->getGroupManager()->allGroup();
 		
-		View* v = newView(g);
-		if (!starting_up) // if it is a new view, setup the default columns based upon the group
-			v->setupDefaultColumns();
+		newView(g);
 	}
 	
 	void TorrentActivity::closeTab()
