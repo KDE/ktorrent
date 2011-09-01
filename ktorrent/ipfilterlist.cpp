@@ -47,7 +47,7 @@ namespace kt
 		if (addr.ipVersion() != 4)
 			return false;
 		
-		bt::Uint32 ip = ntohl(addr.ipAddress().IPv4Addr());
+		bt::Uint32 ip = addr.toIPv4Address();
 		foreach (const Entry & e,ip_list)
 		{
 			if (e.is_range)

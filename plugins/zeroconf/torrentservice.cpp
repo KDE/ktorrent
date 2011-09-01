@@ -101,17 +101,15 @@ namespace kt
 			bt::Uint16 port = ptr->port();
 			Out(SYS_ZCO|LOG_NOTICE) << "ZC: found local peer " << host << ":" << port << endl;
 			// resolve host name before adding it 
-			KNetwork::KResolver::resolveAsync(this, SLOT(hostResolved(KNetwork::KResolverResults)), host, QString::number(port));
+			net::AddressResolver::resolve(host, port, this, SLOT(hostResolved(net::AddressResolver*)));
 		}
 	}
 	
-	void TorrentService::hostResolved(KNetwork::KResolverResults res)
+	void TorrentService::hostResolved(net::AddressResolver* ar)
 	{
-		if (res.count() > 0)
+		if (ar->succeeded())
 		{
-			KNetwork::KInetSocketAddress addr = res.front().address();
-			QString ip = addr.ipAddress().toString();
-			addPeer(ip,addr.port(),true);
+			addPeer(ar->address(), true);
 			peersReady(this); 
 		}
 	}

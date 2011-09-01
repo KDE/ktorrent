@@ -35,7 +35,7 @@ namespace kt
 		
 		void add(const QString & ip,bt::Uint16 port)
 		{
-			addPeer(ip,port);
+			addPeer(net::Address(ip, port), false);
 			peersReady(this);
 		}
 	};

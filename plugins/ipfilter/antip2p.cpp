@@ -89,7 +89,7 @@ namespace kt
 		if (addr.ipVersion() != 4)
 			return false;
 		
-		return isBlockedIP(ntohl(addr.ipAddress().IPv4Addr()));
+		return isBlockedIP(addr.toIPv4Address());
 	}
 	
 	bool AntiP2P::isBlockedIP(const QString & addr)
