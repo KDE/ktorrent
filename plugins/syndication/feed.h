@@ -48,6 +48,9 @@ namespace kt
 	};
 	
 	
+	/// Convert a syndication error into an error string
+	QString SyndicationErrorString(Syndication::ErrorCode err);
+	
 
 	/**
 		Class to keep track of a feed.

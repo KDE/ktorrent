@@ -21,6 +21,7 @@ Changes in 4.2:
 - Check if new trackers have a supported protocol
 - Remove usage of several deprecated KDE3 networking classes
 - Remove obsolete config options of datacheck during upload feature
+- Improve error display of syndication plugin errors (280814)
 
 Changes in 4.1.2:
 - Fix crash when duplicate trackers are added (274413)

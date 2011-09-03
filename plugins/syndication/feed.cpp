@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QFile>
+#include <KLocale>
 #include <util/log.h>
 #include <util/file.h>
 #include <util/fileops.h>
@@ -29,7 +30,7 @@
 #include "filter.h"
 #include "filterlist.h"
 #include "feedretriever.h"
-#include <kio/global.h>
+
 
 using namespace bt;
 
@@ -221,10 +222,9 @@ namespace kt
 	void Feed::loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status)
 	{
 		Q_UNUSED(loader);
-		
 		if (status != Syndication::Success)
 		{
-			update_error = KIO::buildErrorString(loader->retrieverError(),QString());
+			update_error = SyndicationErrorString(status);
 			Out(SYS_SYN|LOG_NOTICE) << "Failed to load feed " << url.prettyUrl() << ": " << update_error << endl;
 			this->status = FAILED_TO_DOWNLOAD;
 			update_timer.start(refresh_rate * 60 * 1000);
@@ -466,5 +466,31 @@ namespace kt
 		season = item.season;
 		episode = item.episode;
 		return *this;
+	}
+	
+	/////////////////////////////////////
+	QString SyndicationErrorString(Syndication::ErrorCode err)
+	{
+		switch (err)
+		{
+			case Syndication::Aborted: 
+				return i18n("Aborted");
+			case Syndication::Timeout: 
+				return i18n("Timeout when downloading feed");
+			case Syndication::UnknownHost:
+				return i18n("Unknown hostname");
+			case Syndication::FileNotFound:
+				return i18n("File not found");
+			case Syndication::OtherRetrieverError:
+				return i18n("Unknown retriever error");
+			case Syndication::InvalidXml:
+			case Syndication::XmlNotAccepted:
+			case Syndication::InvalidFormat:
+				return i18n("Invalid feed data");
+			case Syndication::Success:
+				return i18n("Success");
+			default:
+				return QString();
+		}
 	}
 }

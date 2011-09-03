@@ -153,7 +153,8 @@ namespace kt
 	{
 		if (status != Syndication::Success)
 		{
-			KMessageBox::error(tab,i18n("Failed to load feed %1.",downloads[loader]));
+			QString error = SyndicationErrorString(status);
+			KMessageBox::error(tab,i18n("Failed to load feed %1: %2",downloads[loader], error));
 			downloads.remove(loader);
 			return;
 		}
