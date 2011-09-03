@@ -152,17 +152,6 @@
 			<label>Allow unencrypted connections</label>
 			<default>true</default>
 		</entry>
-		<entry name="doUploadDataCheck" type="Bool">
-			<default>true</default>
-		</entry>
-		<entry name="useMaxSizeForUploadDataCheck" type="Bool">
-			<default>true</default>
-		</entry>
-		<entry name="maxSizeForUploadDataCheck" type="Int">
-			<default>512</default>
-			<min>16</min>
-			<max>8192</max>
-		</entry>
 		<entry name="typeOfService" type="Int">
 			<default>8</default>
 			<min>0</min>
@@ -178,15 +167,8 @@
 			<min>10</min>
 			<max>500</max>
 		</entry>
-		<entry name="autoRecheck" type="Bool">
-			<default>true</default>
-		</entry>
 		<entry name="checkWhenFinished" type="Bool">
 			<default>false</default>
-		</entry>
-		<entry name="maxCorruptedBeforeRecheck" type="Int">
-			<default>3</default>
-			<min>1</min>
 		</entry>
 		<entry name="shownColumns" type="IntList">
 			<label>Columns shown in KTorrentView</label>

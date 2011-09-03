@@ -86,11 +86,6 @@ namespace kt
 		net::SocketMonitor::setSleepTime(Settings::cpuUsage());
 		mse::StreamSocket::setTOS(Settings::dscp() << 2);
 		bt::PeerConnector::setMaxActive(Settings::maxConnectingSockets());
-		ChunkManager::setUploadDataCheckingEnabled(Settings::doUploadDataCheck());
-		if (!Settings::useMaxSizeForUploadDataCheck())
-			ChunkManager::setMaxChunkSizeForDataCheck(0);
-		else
-			ChunkManager::setMaxChunkSizeForDataCheck(Settings::maxSizeForUploadDataCheck() * 1024);
 		
 		// Check for port conflicts
 		if (Settings::port() == Settings::udpTrackerPort())
@@ -147,8 +142,6 @@ namespace kt
 		
 		bt::TorrentControl::setDataCheckWhenCompleted(Settings::checkWhenFinished());
 		bt::TorrentControl::setMinimumDiskSpace(Settings::minDiskSpace());
-		bt::TorrentControl::setAutoRecheck(Settings::autoRecheck());
-		bt::TorrentControl::setNumCorruptedForRecheck(Settings::maxCorruptedBeforeRecheck());
 		
 		
 		if (Settings::networkInterface() == 0)

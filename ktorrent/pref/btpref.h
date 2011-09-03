@@ -34,8 +34,6 @@ namespace kt
 		virtual ~BTPref();
 		
 		void loadSettings();
-	public Q_SLOTS:
-		void onUploadDataCheckToggled(bool on);
 	};
 }
 

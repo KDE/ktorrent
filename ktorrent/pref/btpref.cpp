@@ -27,12 +27,6 @@ namespace kt
 	BTPref::BTPref(QWidget* parent): PrefPageInterface(Settings::self(),i18n("BitTorrent"),"application-x-bittorrent",parent)
 	{
 		setupUi(this);
-#if KDE_IS_VERSION(4, 2, 80)
-		kcfg_maxCorruptedBeforeRecheck->setSuffix(ki18np(" corrupted chunk", " corrupted chunks"));
-#else
-		kcfg_maxCorruptedBeforeRecheck->setSuffix(i18n(" corrupted chunks"));
-#endif
-		connect(kcfg_doUploadDataCheck,SIGNAL(toggled(bool)),this,SLOT(onUploadDataCheckToggled(bool)));
 	}
 	
 	BTPref::~BTPref() 
@@ -44,14 +38,6 @@ namespace kt
 		kcfg_allowUnencryptedConnections->setEnabled(Settings::useEncryption());
 		kcfg_dhtPort->setEnabled(Settings::dhtSupport());
 		kcfg_customIP->setEnabled(Settings::useCustomIP());
-		
-		kcfg_maxCorruptedBeforeRecheck->setEnabled(Settings::autoRecheck());
-		kcfg_useMaxSizeForUploadDataCheck->setEnabled(Settings::doUploadDataCheck());
-		kcfg_maxSizeForUploadDataCheck->setEnabled(Settings::doUploadDataCheck() && Settings::useMaxSizeForUploadDataCheck());
 	}
-	void BTPref::onUploadDataCheckToggled(bool on)
-	{
-		kcfg_useMaxSizeForUploadDataCheck->setEnabled(on);
-		kcfg_maxSizeForUploadDataCheck->setEnabled(on&&kcfg_useMaxSizeForUploadDataCheck->isChecked());
-	}
+	
 }

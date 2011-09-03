@@ -102,24 +102,14 @@ namespace kt
 		Q_SCRIPTABLE void setUseEncryption(bool val);
 		Q_SCRIPTABLE bool allowUnencryptedConnections();
 		Q_SCRIPTABLE void setAllowUnencryptedConnections(bool val);
-		Q_SCRIPTABLE bool doUploadDataCheck();
-		Q_SCRIPTABLE void setDoUploadDataCheck(bool val);
-		Q_SCRIPTABLE bool useMaxSizeForUploadDataCheck();
-		Q_SCRIPTABLE void setUseMaxSizeForUploadDataCheck(bool val);
-		Q_SCRIPTABLE int maxSizeForUploadDataCheck();
-		Q_SCRIPTABLE void setMaxSizeForUploadDataCheck(int val);
 		Q_SCRIPTABLE int typeOfService();
 		Q_SCRIPTABLE void setTypeOfService(int val);
 		Q_SCRIPTABLE int dscp();
 		Q_SCRIPTABLE void setDscp(int val);
 		Q_SCRIPTABLE int maxConnectingSockets();
 		Q_SCRIPTABLE void setMaxConnectingSockets(int val);
-		Q_SCRIPTABLE bool autoRecheck();
-		Q_SCRIPTABLE void setAutoRecheck(bool val);
 		Q_SCRIPTABLE bool checkWhenFinished();
 		Q_SCRIPTABLE void setCheckWhenFinished(bool val);
-		Q_SCRIPTABLE int maxCorruptedBeforeRecheck();
-		Q_SCRIPTABLE void setMaxCorruptedBeforeRecheck(int val);
 		Q_SCRIPTABLE QList<int> shownColumns();
 		Q_SCRIPTABLE void setShownColumns(QList<int> val);
 		Q_SCRIPTABLE bool useKDEProxySettings();
@@ -194,6 +184,8 @@ namespace kt
 		Q_SCRIPTABLE void setOnlyUseUtp(bool val);
 		Q_SCRIPTABLE int primaryTransportProtocol();
 		Q_SCRIPTABLE void setPrimaryTransportProtocol(int val);
+		Q_SCRIPTABLE bool autoRenameSingleFileTorrents();
+		Q_SCRIPTABLE void setAutoRenameSingleFileTorrents(bool val);
 
 		Q_SCRIPTABLE void apply();
 	private:

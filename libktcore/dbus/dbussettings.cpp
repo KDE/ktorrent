@@ -358,36 +358,6 @@ namespace kt
 		Settings::setAllowUnencryptedConnections(val);
 	}
 
-	bool DBusSettings::doUploadDataCheck()
-	{
-		return Settings::doUploadDataCheck();
-	}
-
-	void DBusSettings::setDoUploadDataCheck(bool val)
-	{
-		Settings::setDoUploadDataCheck(val);
-	}
-
-	bool DBusSettings::useMaxSizeForUploadDataCheck()
-	{
-		return Settings::useMaxSizeForUploadDataCheck();
-	}
-
-	void DBusSettings::setUseMaxSizeForUploadDataCheck(bool val)
-	{
-		Settings::setUseMaxSizeForUploadDataCheck(val);
-	}
-
-	int DBusSettings::maxSizeForUploadDataCheck()
-	{
-		return Settings::maxSizeForUploadDataCheck();
-	}
-
-	void DBusSettings::setMaxSizeForUploadDataCheck(int val)
-	{
-		Settings::setMaxSizeForUploadDataCheck(val);
-	}
-
 	int DBusSettings::typeOfService()
 	{
 		return Settings::typeOfService();
@@ -418,16 +388,6 @@ namespace kt
 		Settings::setMaxConnectingSockets(val);
 	}
 
-	bool DBusSettings::autoRecheck()
-	{
-		return Settings::autoRecheck();
-	}
-
-	void DBusSettings::setAutoRecheck(bool val)
-	{
-		Settings::setAutoRecheck(val);
-	}
-
 	bool DBusSettings::checkWhenFinished()
 	{
 		return Settings::checkWhenFinished();
@@ -436,16 +396,6 @@ namespace kt
 	void DBusSettings::setCheckWhenFinished(bool val)
 	{
 		Settings::setCheckWhenFinished(val);
-	}
-
-	int DBusSettings::maxCorruptedBeforeRecheck()
-	{
-		return Settings::maxCorruptedBeforeRecheck();
-	}
-
-	void DBusSettings::setMaxCorruptedBeforeRecheck(int val)
-	{
-		Settings::setMaxCorruptedBeforeRecheck(val);
 	}
 
 	QList<int> DBusSettings::shownColumns()
@@ -816,6 +766,16 @@ namespace kt
 	void DBusSettings::setPrimaryTransportProtocol(int val)
 	{
 		Settings::setPrimaryTransportProtocol(val);
+	}
+
+	bool DBusSettings::autoRenameSingleFileTorrents()
+	{
+		return Settings::autoRenameSingleFileTorrents();
+	}
+
+	void DBusSettings::setAutoRenameSingleFileTorrents(bool val)
+	{
+		Settings::setAutoRenameSingleFileTorrents(val);
 	}
 
 }
