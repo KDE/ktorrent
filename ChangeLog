@@ -23,6 +23,9 @@ Changes in 4.2:
 - Remove obsolete config options of datacheck during upload feature
 - Improve error display of syndication plugin errors (280814)
 
+Changes in 4.1.3:
+- Fix statusbar hiding and showing not working (281674)
+
 Changes in 4.1.2:
 - Fix crash when duplicate trackers are added (274413)
 - Fix bug causing quit action not be shown in system tray when not using KDE
