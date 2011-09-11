@@ -93,16 +93,13 @@ namespace kt
 		connect(central,SIGNAL(changeActivity(Activity*)),this,SLOT(setCurrentActivity(Activity*)));
 		torrent_activity = new TorrentActivity(core,this,0);
 		
+		status_bar = new kt::StatusBar(this);
+		setStatusBar(status_bar);
+		
 		setupActions();
 		setupGUI(Default,"ktorrentui.rc");
 		
 		addActivity(torrent_activity);
-		
-		status_bar = new kt::StatusBar(this);
-		setStatusBar(status_bar);
-
-		//Marker mark("core->loadTorrents()");
-		//core->loadTorrents();
 	
 		//mark.update();
 		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
@@ -414,15 +411,15 @@ namespace kt
 		ac->addAction("file_open_silently",open_silently_action);
 				
 		KStandardAction::quit(kapp, SLOT(quit()), ac);
+		
 		show_status_bar_action = KStandardAction::showStatusbar(this, SLOT(showStatusBar()),ac);
 		show_status_bar_action->setIcon(KIcon("kt-show-statusbar"));
+		
 		show_menu_bar_action = KStandardAction::showMenubar(this, SLOT(showMenuBar()),ac);
 		KStandardAction::preferences(this, SLOT(showPrefDialog()),ac);
 		KStandardAction::keyBindings(this, SLOT(configureKeys()),ac);
-		
 		KStandardAction::configureToolbars(this,SLOT(configureToolbars()),ac);
 		KStandardAction::configureNotifications(this,SLOT(configureNotifications()),ac);		
-		
 		
 		paste_url_action = new KAction(KIcon("document-open-remote"),i18n("Open URL"),this);
 		paste_url_action->setToolTip(i18n("Open a URL which points to a torrent, magnet links are supported"));
