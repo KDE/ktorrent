@@ -49,6 +49,7 @@ namespace kt
 	
 	void TorrentService::stop(bt::WaitJob* wjob)
 	{
+		Q_UNUSED(wjob);
 		if (srv)
 		{
 			srv->stop();
