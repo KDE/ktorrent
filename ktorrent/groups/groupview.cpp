@@ -35,7 +35,6 @@
 #include <groups/group.h>
 #include <groups/groupmanager.h>
 #include <groups/torrentgroup.h>
-#include "view/viewmanager.h"
 #include "view/view.h"
 #include "groupview.h"
 #include "grouppolicydlg.h"
@@ -86,7 +85,7 @@ namespace kt
 		setIcon(0,g->groupIcon());
 	}
 
-	GroupView::GroupView(GroupManager* gman,ViewManager* view,GUI* gui,QWidget* parent)
+	GroupView::GroupView(GroupManager* gman,View* view,GUI* gui,QWidget* parent)
 	: QTreeWidget(parent),gui(gui),view(view),custom_root(0),gman(gman)
 	{
 		setColumnCount(1);
@@ -148,10 +147,6 @@ namespace kt
 		remove_group = new KAction(KIcon("edit-delete"),i18n("Remove Group"),this);
 		connect(remove_group,SIGNAL(triggered()),this,SLOT(removeGroup()));
 		col->addAction("remove_group",remove_group);
-		
-		open_in_new_tab = new KAction(KIcon("tab-new"),i18n("Open Tab"),this);
-		connect(open_in_new_tab,SIGNAL(triggered()),this,SLOT(openView()));
-		col->addAction("open_tab",open_in_new_tab);
 		
 		edit_group_policy = new KAction(KIcon("preferences-other"),i18n("Group Policy"),this);
 		connect(edit_group_policy,SIGNAL(triggered()),this,SLOT(editGroupPolicy()));
@@ -402,9 +397,6 @@ namespace kt
 			edit_group_policy->setEnabled(true);
 		}
 		
-		open_in_new_tab->setEnabled(g != 0);
-		
-
 		KMenu* menu = gui->getTorrentActivity()->part()->menu("GroupsMenu");
 		if (menu)
 			menu->popup(viewport()->mapToGlobal(p));
@@ -499,16 +491,6 @@ namespace kt
 		return Qt::CopyAction;
 	}
 
-	void GroupView::openView()
-	{
-		if (!current_item)
-			return;
-		
-		Group* g = current_item->group();
-		if (g)
-			openNewTab(g);
-	}
-	
 	void GroupView::editGroupPolicy()
 	{
 		if (!current_item)

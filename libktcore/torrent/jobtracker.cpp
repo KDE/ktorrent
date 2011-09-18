@@ -39,7 +39,6 @@ namespace kt
 		if (!j)
 			return;
 		
-		widgets[j] = JobProgessWidgetList();
 		KJobTrackerInterface::registerJob(job);
 		jobRegistered(j);
 	}
@@ -58,7 +57,7 @@ namespace kt
 	JobProgressWidget* JobTracker::createJobWidget(bt::Job* job)
 	{
 		JobProgressWidget* p = new BasicJobProgressWidget(job,0);
-		widgets[job].append(p);
+		widgets[job] = p;
 		return p;
 	}
 
@@ -84,9 +83,9 @@ namespace kt
 		if (!j)
 			return;
 		
-		JobProgessWidgetList & wlist = widgets[j];
-		foreach (JobProgressWidget* w,wlist)
-			w->description(title,field1,field2);
+		ActiveJobs::iterator i = widgets.find(j);
+		if (i != widgets.end())
+			i.value()->description(title,field1,field2);
 	}
 
 	void JobTracker::infoMessage(KJob* job, const QString& plain, const QString& rich)
@@ -95,9 +94,9 @@ namespace kt
 		if (!j)
 			return;
 		
-		JobProgessWidgetList & wlist = widgets[j];
-		foreach (JobProgressWidget* w,wlist)
-			w->infoMessage(plain,rich);
+		ActiveJobs::iterator i = widgets.find(j);
+		if (i != widgets.end())
+			i.value()->infoMessage(plain,rich);
 	}
 
 	void JobTracker::warning(KJob* job, const QString& plain, const QString& rich)
@@ -106,9 +105,9 @@ namespace kt
 		if (!j)
 			return;
 		
-		JobProgessWidgetList & wlist = widgets[j];
-		foreach (JobProgressWidget* w,wlist)
-			w->warning(plain,rich);
+		ActiveJobs::iterator i = widgets.find(j);
+		if (i != widgets.end())
+			i.value()->warning(plain,rich);
 	}
 
 	void JobTracker::totalAmount(KJob* job, KJob::Unit unit, qulonglong amount)
@@ -117,9 +116,9 @@ namespace kt
 		if (!j)
 			return;
 		
-		JobProgessWidgetList & wlist = widgets[j];
-		foreach (JobProgressWidget* w,wlist)
-			w->totalAmount(unit,amount);
+		ActiveJobs::iterator i = widgets.find(j);
+		if (i != widgets.end())
+			i.value()->totalAmount(unit,amount);
 	}
 
 	void JobTracker::processedAmount(KJob* job, KJob::Unit unit, qulonglong amount)
@@ -128,9 +127,9 @@ namespace kt
 		if (!j)
 			return;
 		
-		JobProgessWidgetList & wlist = widgets[j];
-		foreach (JobProgressWidget* w,wlist)
-			w->processedAmount(unit,amount);
+		ActiveJobs::iterator i = widgets.find(j);
+		if (i != widgets.end())
+			i.value()->processedAmount(unit,amount);
 	}
 
 	void JobTracker::percent(KJob* job, long unsigned int percent)
@@ -139,9 +138,9 @@ namespace kt
 		if (!j)
 			return;
 		
-		JobProgessWidgetList & wlist = widgets[j];
-		foreach (JobProgressWidget* w,wlist)
-			w->percent(percent);
+		ActiveJobs::iterator i = widgets.find(j);
+		if (i != widgets.end())
+			i.value()->percent(percent);
 	}
 
 	void JobTracker::speed(KJob* job, long unsigned int value)
@@ -150,8 +149,8 @@ namespace kt
 		if (!j)
 			return;
 		
-		JobProgessWidgetList & wlist = widgets[j];
-		foreach (JobProgressWidget* w,wlist)
-			w->speed(value);
+		ActiveJobs::iterator i = widgets.find(j);
+		if (i != widgets.end())
+			i.value()->speed(value);
 	}
 }

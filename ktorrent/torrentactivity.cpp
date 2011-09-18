@@ -30,13 +30,13 @@
 #include <gui/tabbarwidget.h>
 #include <groups/groupmanager.h>
 #include "torrentactivity.h"
-#include "view/viewmanager.h"
 #include "gui.h"
 #include "core.h"
 #include "view/view.h"
 #include "groups/groupview.h"
 #include "tools/queuemanagerwidget.h"
 #include "tools/magnetview.h"
+#include "torrent/queuemanager.h"
 
 using namespace bt;
 
@@ -48,7 +48,9 @@ namespace kt
 		: TorrentActivityInterface(i18n("Torrents"),"ktorrent",parent),core(core),gui(gui)
 	{
 		setXMLGUIFile("kttorrentactivityui.rc");
-		view_man = new ViewManager(core->getGroupManager()->allGroup(),gui,core,this);
+		view = new View(core, gui, this);
+		connect(view, SIGNAL(currentTorrentChanged(bt::TorrentInterface*)),
+				this, SLOT(currentTorrentChanged(bt::TorrentInterface*)));
 		setupActions();
 		
 		QVBoxLayout* layout = new QVBoxLayout(this);
@@ -58,15 +60,11 @@ namespace kt
 		layout->addWidget(vsplit);
 		hsplit = new QSplitter(Qt::Horizontal,vsplit);
 		
-		tabs = new KTabWidget(hsplit);
-		tabs->setMovable(true);
-		connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(currentTabPageChanged(int)));
-		group_view = new GroupView(core->getGroupManager(),view_man,gui,hsplit);
+		group_view = new GroupView(core->getGroupManager(),view,gui,hsplit);
 		group_view->setupActions(part()->actionCollection());
-		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openNewView(kt::Group*)));
 		
 		hsplit->addWidget(group_view);
-		hsplit->addWidget(tabs);
+		hsplit->addWidget(view);
 		hsplit->setStretchFactor(0,1);
 		hsplit->setStretchFactor(1,3);
 		vsplit->addWidget(hsplit);
@@ -84,15 +82,6 @@ namespace kt
 		magnet_view = new MagnetView(core->getMagnetModel(),this);
 		tool_views->addTab(magnet_view,i18n("Magnet"),"kt-magnet",
 						   i18n("Displays the currently downloading magnet links"));
-		
-		QToolButton* lc = new QToolButton(tabs);
-		tabs->setCornerWidget(lc,Qt::TopLeftCorner);
-		QToolButton* rc = new QToolButton(tabs);
-		tabs->setCornerWidget(rc,Qt::TopRightCorner);
-		lc->setIcon(KIcon("tab-new"));
-		connect(lc,SIGNAL(clicked()),this,SLOT(newView()));
-		rc->setIcon(KIcon("tab-close"));
-		connect(rc,SIGNAL(clicked()),this,SLOT(closeTab()));
 		
 		QueueManager* qman = core->getQueueManager();
 		connect(qman,SIGNAL(suspendStateChanged(bool)),this,SLOT(onSuspendedStateChanged(bool)));
@@ -129,66 +118,9 @@ namespace kt
 		connect(show_group_view_action,SIGNAL(toggled(bool)),this,SLOT(setGroupViewVisible(bool)));
 		ac->addAction("show_group_view",show_group_view_action);
 		
-		view_man->setupActions(ac);
+		view->setupActions(ac);
 	}
 
-
-	void TorrentActivity::openNewView(kt::Group* g)
-	{
-		View* v = newView(g);
-		v->setupDefaultColumns();
-	}
-	
-	View* TorrentActivity::newView(kt::Group* g)
-	{
-		View* view = view_man->newView(core,this);
-		view->setGroup(g);
-		int idx = tabs->addTab(view,KIcon(g->groupIconName()),view->caption(false));
-		tabs->setTabToolTip(idx,view->caption(true));
-		connect(view,SIGNAL(editingItem(bool)),gui,SLOT(setPasteDisabled(bool)));
-		return view;
-	}
-	
-	void TorrentActivity::newView()
-	{
-		newView(core->getGroupManager()->allGroup());
-	}
-	
-	void TorrentActivity::openView(const QString & group_path)
-	{
-		Group* g = core->getGroupManager()->findByPath(group_path);
-		if (!g)
-			g = core->getGroupManager()->allGroup();
-		
-		newView(g);
-	}
-	
-	void TorrentActivity::closeTab()
-	{
-		QWidget* w = tabs->currentWidget();
-		if (!w || tabs->count() == 1)
-			return;
-		
-		tabs->removeTab(tabs->currentIndex());
-		view_man->removeView((View*)w);
-	}
-	
-	void TorrentActivity::removeView(View* v)
-	{
-		tabs->removeTab(tabs->indexOf(v));
-	}
-	
-	void TorrentActivity::setTabProperties(View* v,const QString & name,const QString & icon,const QString & tooltip)
-	{
-		int idx = tabs->indexOf(v);
-		if (idx < 0)
-			return;
-		
-		tabs->setTabIcon(idx,KIcon(icon));
-		tabs->setTabToolTip(idx,tooltip);
-		tabs->setTabText(idx,name);
-	}
-	
 	void TorrentActivity::addToolWidget(QWidget* widget,const QString & text,const QString & icon,const QString & tooltip)
 	{
 		tool_views->addTab(widget,text,icon,tooltip);
@@ -216,18 +148,11 @@ namespace kt
 			hsplit->restoreState(data);
 		}
 		
-		view_man->loadState(cfg);
-		
-		g = cfg->group("MainTabWidget");
-		int ct = g.readEntry("current_tab",0);
-		if (ct >= 0 && ct < tabs->count())
-			tabs->setCurrentIndex(ct);
-		
+		view->loadState(cfg);
 		group_view->loadState(cfg);
 		qm->loadState(cfg);
 		tool_views->loadState(cfg,"TorrentActivityBottomTabBar");
-		notifyViewListeners(view_man->getCurrentTorrent());
-		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(tabs->count() > 1);
+		notifyViewListeners(view->getCurrentTorrent());
 		magnet_view->loadState(cfg);
 		
 		show_group_view_action->setChecked(!group_view->isHidden());
@@ -235,7 +160,7 @@ namespace kt
 	
 	void TorrentActivity::saveState(KSharedConfigPtr cfg)
 	{
-		view_man->saveState(cfg,tabs);
+		view->saveState(cfg);
 		group_view->saveState(cfg);
 		qm->saveState(cfg);
 		tool_views->saveState(cfg,"TorrentActivityBottomTabBar");
@@ -253,20 +178,16 @@ namespace kt
 			QByteArray data = hsplit->saveState();
 			g.writeEntry("hsplit",data.toBase64());
 		}
-		
-		// save the current tab
-		g = cfg->group("MainTabWidget");
-		g.writeEntry("current_tab",tabs->currentIndex());
 	}
 	
 	const TorrentInterface* TorrentActivity::getCurrentTorrent() const
 	{
-		return view_man->getCurrentTorrent();
+		return view->getCurrentTorrent();
 	}
 	
 	bt::TorrentInterface* TorrentActivity::getCurrentTorrent()
 	{
-		return view_man->getCurrentTorrent();
+		return view->getCurrentTorrent();
 	}
 	
 	void TorrentActivity::currentTorrentChanged(bt::TorrentInterface* tc)
@@ -274,17 +195,9 @@ namespace kt
 		notifyViewListeners(tc);
 	}
 	
-	void TorrentActivity::currentTabPageChanged(int idx)
-	{
-		QWidget* page = tabs->widget(idx);
-		view_man->onCurrentTabChanged(page);
-		notifyViewListeners(view_man->getCurrentTorrent());
-		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(tabs->count() > 1);
-	}
-	
 	void TorrentActivity::updateActions()
 	{
-		view_man->updateActions();
+		view->updateActions();
 		bt::Uint32 nr = core->getNumTorrentsRunning();
 		queue_suspend_action->setEnabled(core->getSuspendedState() || nr > 0);
 		start_all_action->setEnabled(core->getNumTorrentsNotRunning() > 0);
@@ -293,15 +206,9 @@ namespace kt
 	
 	void TorrentActivity::update()
 	{
-		view_man->update();
+		view->update();
 		if (qm->isVisible())
 			qm->update();
-	}
-	
-	
-	View* TorrentActivity::getCurrentView()
-	{
-		return view_man->getCurrentView();
 	}
 	
 	void TorrentActivity::setGroupViewVisible(bool visible)
@@ -331,5 +238,10 @@ namespace kt
 		queue_suspend_action->setChecked(suspended);
 	}
 	
+	Group* TorrentActivity::addNewGroup()
+	{
+		return group_view->addNewGroup();
+	}
+
 
 }

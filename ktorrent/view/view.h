@@ -28,10 +28,12 @@
 #include <ksharedconfig.h>
 
 class KMenu;
+class KAction;
+class KActionCollection;
 
 namespace kt
 {
-
+	class GUI;
 	class Extender;
 	class Core;
 	class ViewModel;
@@ -44,8 +46,14 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		View(Core* core,QWidget* parent);
+		View(Core* core, GUI* gui, QWidget* parent);
 		virtual ~View();
+		
+		/// Setup the actions of the view manager
+		void setupActions(KActionCollection* ac);
+		
+		/// Update all actions
+		void updateActions();
 
 		/**
 		 * Get the view model
@@ -69,22 +77,13 @@ namespace kt
 		const Group* getGroup() const {return group;}
 
 		/// Save the view's state
-		void saveState(KSharedConfigPtr cfg,int idx);
+		void saveState(KSharedConfigPtr cfg);
 
 		/// Load the view's state
-		void loadState(KSharedConfigPtr cfg,int idx);
+		void loadState(KSharedConfigPtr cfg);
 
 		/// Get the current torrent
 		bt::TorrentInterface* getCurrentTorrent();
-
-		/// Get the view's caption
-		QString caption(bool full) const;
-
-		/// Check if we need to update the caption
-		bool needToUpdateCaption();
-		
-		/// Get a list of column actions to plugin in the right click menu of a view
-		QList<QAction*> columnActionList() const;
 		
 		/**
 		 * Setup the default columns of the view depending on the group it is showing.
@@ -135,15 +134,35 @@ namespace kt
 		void onCurrentItemChanged(const QModelIndex & current,const QModelIndex & previous);
 		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
 		void onDoubleClicked(const QModelIndex & index);
+		void onCurrentGroupChanged(kt::Group* g);
+		void onGroupRenamed(kt::Group* g);
+		void onGroupRemoved(kt::Group* g);
+		void onGroupAdded(kt::Group* g);
+		
+		/// An item in the groups menu was triggered
+		void addToGroupItemTriggered();
+		
+		/// Copy the torrent URL to the clipboard
+		void copyTorrentURL();
+		
+		/// Show the speed limits dialog
+		void speedLimits();
+		
+		/// Export a torrent
+		void exportTorrent();
+		
+		/// Add a new group and add the current selection to it
+		void addToNewGroup();
+		
 
 	signals:
-		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
-		void torrentSelectionChanged(View* v);
-		void showMenu(View* v,const QPoint & pos);
+		void currentTorrentChanged(bt::TorrentInterface* tc);
+		void torrentSelectionChanged();
 		void editingItem(bool on);
 		
 	private:
 		Core* core;
+		GUI* gui;
 		Group* group;
 		KMenu* header_menu;
 		QMap<QAction*,int> column_idx_map;
@@ -154,6 +173,35 @@ namespace kt
 		ViewSelectionModel* selection_model;
 		ViewDelegate* delegate;
 		QMap<bt::TorrentInterface*,Extender*> data_scan_extenders;
+		
+		// actions for the view menu 
+		KAction* start_torrent;
+		KAction* start_all;
+		KAction* stop_torrent;
+		KAction* stop_all;
+		KAction* pause_torrent;
+		KAction* unpause_torrent;
+		KAction* remove_torrent;
+		KAction* remove_torrent_and_data;
+		KAction* add_peers;
+		KAction* manual_announce;
+		KAction* do_scrape;
+		KAction* preview;
+		KAction* data_dir;
+		KAction* tor_dir;
+		KAction* move_data;
+		KAction* torrent_properties;
+		KAction* rename_torrent;
+		KAction* remove_from_group;
+		QMap<Group*,QAction*> group_actions;
+		KAction* add_to_new_group;
+		KAction* check_data;
+		KAction* open_dir_menu;
+		KAction* groups_menu;
+		KAction* copy_url;
+		KAction* export_torrent;
+		QList<KAction*> configure_columns_list;
+		KAction* speed_limits;
 	};
 }
 

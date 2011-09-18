@@ -43,9 +43,9 @@ set(ktorrent_SRC
 	
 	view/view.cpp 
 	view/viewmodel.cpp
-	view/viewmanager.cpp 
 	view/viewdelegate.cpp
 	view/viewselectionmodel.cpp
+	view/viewjobtracker.cpp 
 	view/scanextender.cpp
 	view/propertiesdlg.cpp
 )

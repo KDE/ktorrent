@@ -58,7 +58,6 @@
 #include "gui.h"
 #include "core.h"
 #include "view/view.h"
-#include "view/viewmanager.h"
 #include "dialogs/fileselectdlg.h"
 #include "pref/prefdialog.h"
 #include "statusbar.h"

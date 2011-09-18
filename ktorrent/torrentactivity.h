@@ -22,7 +22,6 @@
 #define TORRENTACTIVITY_H
 
 #include <QSplitter>
-#include <KTabWidget>
 #include <interfaces/torrentactivityinterface.h>
 
 class KToggleAction;
@@ -34,7 +33,6 @@ namespace kt
 	class GUI;
 	class Core;
 	class View;
-	class ViewManager;
 	class GroupView;
 	class QueueManagerWidget;
 	class TabBarWidget;
@@ -54,9 +52,6 @@ namespace kt
 		/// Get the group view
 		GroupView* getGroupView() {return group_view;}
 		
-		/// Set the tab properties of a view 
-		void setTabProperties(View* v,const QString & name,const QString & icon,const QString & tooltip);
-		
 		virtual void loadState(KSharedConfigPtr cfg);
 		virtual void saveState(KSharedConfigPtr cfg);
 		virtual const bt::TorrentInterface* getCurrentTorrent() const;
@@ -64,7 +59,7 @@ namespace kt
 		virtual void updateActions();
 		virtual void addToolWidget(QWidget* widget,const QString & text,const QString & icon,const QString & tooltip);
 		virtual void removeToolWidget(QWidget* widget);
-		virtual View* getCurrentView();
+		virtual Group* addNewGroup();
 		
 		/// Update the activity
 		void update();
@@ -73,25 +68,6 @@ namespace kt
 		void setupActions();
 		
 	public slots:
-		/**
-		* Open a view
-		* @param g The group to show in the view
-		* */
-		void openNewView(kt::Group* g);
-		
-		/**
-		* Open a view given it's path. It is assumed that this is an exiting view, and 
-		* no default column setup will be done.
-		* @param group_path Path of group to show in view
-		*/
-		void openView(const QString & group_path);
-		
-		/**
-		* Remove a View
-		* @param v The View to remove
-		* */
-		void removeView(View* v);
-		
 		/**
 		* Called by the ViewManager when the current torrent has changed
 		* @param tc The torrent 
@@ -111,21 +87,14 @@ namespace kt
 		
 		
 	private slots:
-		void newView();
-		void closeTab();
-		void currentTabPageChanged(int idx);
 		void startAllTorrents();
 		void stopAllTorrents();
 		void suspendQueue(bool suspend);
 		
 	private:
-		View* newView(kt::Group* g);
-		
-	private:
 		Core* core;
 		GUI* gui;
-		KTabWidget* tabs;
-		ViewManager* view_man; 
+		View* view;
 		GroupView* group_view;
 		QueueManagerWidget* qm;
 		QSplitter* hsplit;
