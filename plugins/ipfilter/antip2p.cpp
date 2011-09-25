@@ -50,15 +50,6 @@ namespace kt
 		return ret;
 	}
 	
-	static QString StringFromUint32(Uint32 ip)
-	{
-		return QString("%1.%2.%3.%4")
-				.arg((ip & 0xFF000000) >> 24)
-				.arg((ip & 0x00FF0000) >> 16)
-				.arg((ip & 0x0000FF00) >> 8)
-				.arg((ip & 0x000000FF));
-	}
-	
 	IPBlock::IPBlock() : ip1(0),ip2(0)
 	{}
 	
@@ -89,7 +80,7 @@ namespace kt
 		if (addr.ipVersion() != 4)
 			return false;
 		
-		return isBlockedIP(ntohl(addr.ipAddress().IPv4Addr()));
+		return isBlockedIP(addr.toIPv4Address());
 	}
 	
 	bool AntiP2P::isBlockedIP(const QString & addr)

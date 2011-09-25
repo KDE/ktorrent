@@ -882,7 +882,7 @@ namespace kt
 	void Core::torrentFinished(bt::TorrentInterface* tc)
 	{
 		if (!keep_seeding)
-			tc->stop(false);
+			tc->stop();
 
 		finished(tc);
 		qman->torrentFinished(tc);

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   Copyright (C) 2011 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,27 +17,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kdeversion.h>
-#include <klocale.h>
-#include "btpref.h"
-#include "settings.h"
 
-namespace kt
+
+#ifndef KT_VIEWJOBTRACKER_H
+#define KT_VIEWJOBTRACKER_H
+
+#include <torrent/jobtracker.h>
+
+
+namespace kt 
 {
-	BTPref::BTPref(QWidget* parent): PrefPageInterface(Settings::self(),i18n("BitTorrent"),"application-x-bittorrent",parent)
-	{
-		setupUi(this);
-	}
-	
-	BTPref::~BTPref() 
-	{
-	}
+	class View;
 
-	void BTPref::loadSettings()
+	/**
+	 
+	 */
+	class ViewJobTracker : public kt::JobTracker
 	{
-		kcfg_allowUnencryptedConnections->setEnabled(Settings::useEncryption());
-		kcfg_dhtPort->setEnabled(Settings::dhtSupport());
-		kcfg_customIP->setEnabled(Settings::useCustomIP());
-	}
-	
+		Q_OBJECT
+	public:
+		ViewJobTracker(View* parent);
+		virtual ~ViewJobTracker();
+		
+		virtual void jobUnregistered(bt::Job* j);
+		virtual void jobRegistered(bt::Job* j);
+		virtual kt::JobProgressWidget* createJobWidget(bt::Job* job);
+	private:
+		View* view;
+	};
+
 }
+
+#endif // KT_VIEWJOBTRACKER_H

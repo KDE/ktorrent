@@ -20,8 +20,10 @@
  ***************************************************************************/
 #include <kio/job.h>
 #include <ktversion.h>
+#include <util/log.h>
 #include "feedretriever.h"
 
+using namespace bt;
 
 namespace kt
 {
@@ -63,6 +65,7 @@ namespace kt
 			j->addMetaData("cookies","none");
 			j->addMetaData("customHTTPHeader",QString("Cookie: %1").arg(cookie));
 		}
+		
 		connect(j,SIGNAL(result(KJob*)),this,SLOT(finished(KJob*)));
 		job = j;
 	}
@@ -81,6 +84,7 @@ namespace kt
 				fptr.close();
 			}
 		}
+		
 		dataRetrieved(data,err == 0);
 	}
 

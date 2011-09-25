@@ -711,7 +711,7 @@ namespace kt
 				if (s.running)
 				{
 					suspended_torrents.insert(tc);
-					stopSafely(tc,false);
+					stopSafely(tc);
 				}
 			}
 		}

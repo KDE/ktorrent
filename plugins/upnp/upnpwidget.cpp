@@ -142,7 +142,7 @@ namespace kt
 			{
 				net::Port & p = *i;
 				if (p.forward)
-					r->undoForward(p,false);
+					r->undoForward(p);
 			}
 		}
 		catch (Error & e)

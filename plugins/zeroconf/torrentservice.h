@@ -23,7 +23,7 @@
 #include <dnssd/publicservice.h>
 #include <dnssd/servicebrowser.h>
 #include <interfaces/peersource.h>
-#include <k3resolver.h>
+#include <net/addressresolver.h>
 
 namespace bt
 {
@@ -52,7 +52,7 @@ namespace kt
 	public slots:
 		void onPublished(bool ok);
 		void onServiceAdded(DNSSD::RemoteService::Ptr ptr);
-		void hostResolved(KNetwork::KResolverResults res);
+		void hostResolved(net::AddressResolver* ar);
 		
 	private:
 		bt::TorrentInterface* tc;

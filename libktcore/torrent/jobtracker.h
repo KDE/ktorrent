@@ -66,8 +66,7 @@ namespace kt
 		virtual void speed(KJob* job, long unsigned int value);
 
 	protected:
-		typedef QList<JobProgressWidget*> JobProgessWidgetList;
-		typedef QMap<bt::Job*,JobProgessWidgetList> ActiveJobs;
+		typedef QMap<bt::Job*,JobProgressWidget*> ActiveJobs;
 		ActiveJobs widgets;
 	};
 

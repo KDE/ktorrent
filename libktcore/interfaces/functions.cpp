@@ -35,7 +35,7 @@
 #include <net/socketmonitor.h>
 #include <net/socks.h>
 #include <dht/dhtbase.h>
-#include <mse/streamsocket.h>
+#include <mse/encryptedpacketsocket.h>
 #include <tracker/httptracker.h>
 #include <tracker/udptrackersocket.h>
 #include <diskio/chunkmanager.h>
@@ -84,13 +84,8 @@ namespace kt
 		net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
 		net::SocketMonitor::setUploadCap(Settings::maxUploadRate()*1024);
 		net::SocketMonitor::setSleepTime(Settings::cpuUsage());
-		mse::StreamSocket::setTOS(Settings::dscp() << 2);
+		mse::EncryptedPacketSocket::setTOS(Settings::dscp() << 2);
 		bt::PeerConnector::setMaxActive(Settings::maxConnectingSockets());
-		ChunkManager::setUploadDataCheckingEnabled(Settings::doUploadDataCheck());
-		if (!Settings::useMaxSizeForUploadDataCheck())
-			ChunkManager::setMaxChunkSizeForDataCheck(0);
-		else
-			ChunkManager::setMaxChunkSizeForDataCheck(Settings::maxSizeForUploadDataCheck() * 1024);
 		
 		// Check for port conflicts
 		if (Settings::port() == Settings::udpTrackerPort())
@@ -147,8 +142,6 @@ namespace kt
 		
 		bt::TorrentControl::setDataCheckWhenCompleted(Settings::checkWhenFinished());
 		bt::TorrentControl::setMinimumDiskSpace(Settings::minDiskSpace());
-		bt::TorrentControl::setAutoRecheck(Settings::autoRecheck());
-		bt::TorrentControl::setNumCorruptedForRecheck(Settings::maxCorruptedBeforeRecheck());
 		
 		
 		if (Settings::networkInterface() == 0)

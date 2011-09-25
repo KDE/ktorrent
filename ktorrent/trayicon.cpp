@@ -32,12 +32,12 @@
 #include <util/log.h>
 #include <settings.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/torrentactivityinterface.h>
 #include <torrent/queuemanager.h>
 #include "core.h"
 #include "trayicon.h"
 #include "gui.h"
 #include <kactioncollection.h>
-
 
 
 using namespace bt;
@@ -105,7 +105,7 @@ namespace kt
 		status_notifier_item = new KStatusNotifierItem(mwnd);
 		
 		menu = status_notifier_item->contextMenu();
-		KActionCollection* ac = mwnd->actionCollection();
+	
 		max_upload_rate = new SetMaxRate(core,SetMaxRate::UPLOAD,menu);
 		max_upload_rate->setTitle(i18n("Set max upload speed"));
 		max_download_rate = new SetMaxRate(core,SetMaxRate::DOWNLOAD,menu);
@@ -113,10 +113,14 @@ namespace kt
 		menu->addMenu(max_download_rate);
 		menu->addMenu(max_upload_rate);
 		menu->addSeparator();
+		
+		KActionCollection* ac = mwnd->getTorrentActivity()->part()->actionCollection();
 		menu->addAction(ac->action("start_all"));
 		menu->addAction(ac->action("stop_all"));
 		menu->addAction(ac->action("queue_suspend"));
 		menu->addSeparator();
+		
+		ac = mwnd->actionCollection();
 		menu->addAction(ac->action("paste_url"));
 		menu->addAction(ac->action(KStandardAction::name(KStandardAction::Open)));
 		menu->addSeparator();

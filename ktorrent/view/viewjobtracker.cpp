@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   Copyright (C) 2011 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,27 +17,56 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kdeversion.h>
-#include <klocale.h>
-#include "btpref.h"
-#include "settings.h"
+
+
+#include "viewjobtracker.h"
+#include "view.h"
+#include "scanextender.h"
+#include <torrent/torrentcontrol.h>
+
 
 namespace kt
 {
-	BTPref::BTPref(QWidget* parent): PrefPageInterface(Settings::self(),i18n("BitTorrent"),"application-x-bittorrent",parent)
-	{
-		setupUi(this);
-	}
-	
-	BTPref::~BTPref() 
+	ViewJobTracker::ViewJobTracker(View* parent)
+		: JobTracker(parent),
+		view(parent)
 	{
 	}
 
-	void BTPref::loadSettings()
-	{
-		kcfg_allowUnencryptedConnections->setEnabled(Settings::useEncryption());
-		kcfg_dhtPort->setEnabled(Settings::dhtSupport());
-		kcfg_customIP->setEnabled(Settings::useCustomIP());
-	}
 	
+	ViewJobTracker::~ViewJobTracker()
+	{
+	}
+
+	void ViewJobTracker::jobUnregistered(bt::Job* j)
+	{
+		ActiveJobs::iterator i = widgets.find(j);
+		if (i == widgets.end())
+			return;
+		
+		JobProgressWidget* w = i.value();
+		if (w->automaticRemove())
+			w->emitCloseRequest();
+	}
+
+	void ViewJobTracker::jobRegistered(bt::Job* j)
+	{
+		kt::JobProgressWidget* widget = createJobWidget(j);
+		view->extend(j->torrent(),widget);
+	}
+
+	kt::JobProgressWidget* ViewJobTracker::createJobWidget(bt::Job* job)
+	{
+		if (job->torrentStatus() == bt::CHECKING_DATA)
+		{
+			ScanExtender* ext = new ScanExtender(job,0);
+			widgets[job] = ext;
+			return ext;
+		}
+		else
+			return kt::JobTracker::createJobWidget(job);
+	}
+
+	
+
 }

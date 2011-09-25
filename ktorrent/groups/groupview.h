@@ -32,7 +32,7 @@ namespace kt
 	class Group;
 	class GroupView;
 	class GroupManager;
-	class ViewManager;
+	class View;
 		
 	class GroupViewItem : public QTreeWidgetItem
 	{
@@ -58,7 +58,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		GroupView(GroupManager* gman,ViewManager* view,GUI* gui,QWidget* parent);
+		GroupView(GroupManager* gman,View* view,GUI* gui,QWidget* parent);
 		virtual ~GroupView();
 		
 		/// Get the current group
@@ -83,7 +83,6 @@ namespace kt
 		void addGroup();
 		void removeGroup();
 		void editGroupName();
-		void openView();
 		void editGroupPolicy();
 		void defaultGroupAdded(Group* g);
 		void defaultGroupRemoved(Group* g);
@@ -94,7 +93,6 @@ namespace kt
 	signals:
 		void currentGroupChanged(kt::Group* g);
 		void groupRenamed(kt::Group* g);
-		void openNewTab(kt::Group* g);
 		
 	private:
 		GroupViewItem* addGroup(Group* g,QTreeWidgetItem* parent,const QString & name);
@@ -108,7 +106,7 @@ namespace kt
 
 	private:
 		GUI* gui;
-		ViewManager* view;
+		View* view;
 		QTreeWidgetItem* custom_root;
 		GroupManager* gman;
 		
@@ -118,7 +116,6 @@ namespace kt
 		KAction* new_group;
 		KAction* edit_group;
 		KAction* remove_group;
-		KAction* open_in_new_tab;
 		KAction* edit_group_policy;
 		
 		friend class GroupViewItem;

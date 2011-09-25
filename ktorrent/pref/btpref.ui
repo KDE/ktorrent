@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>BTPref</class>
- <widget class="QWidget" name="BTPref" >
-  <property name="geometry" >
+ <widget class="QWidget" name="BTPref">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,50 +10,50 @@
     <height>477</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" >
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QGroupBox" name="dhtGroupBox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="dhtGroupBox">
+     <property name="title">
       <string>Features</string>
      </property>
-     <layout class="QVBoxLayout" >
+     <layout class="QVBoxLayout">
       <item>
-       <widget class="QCheckBox" name="kcfg_dhtSupport" >
-        <property name="toolTip" >
+       <widget class="QCheckBox" name="kcfg_dhtSupport">
+        <property name="toolTip">
          <string>DHT is a trackerless protocol to find peers sharing the same torrents as you do.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Use DHT to get additional peers</string>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QHBoxLayout">
         <item>
-         <widget class="QLabel" name="label_4" >
-          <property name="text" >
+         <widget class="QLabel" name="label_4">
+          <property name="text">
            <string>UDP port for DHT communications:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="KIntSpinBox" name="kcfg_dhtPort" >
-          <property name="toolTip" >
-           <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+         <widget class="KIntSpinBox" name="kcfg_dhtPort">
+          <property name="toolTip">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;  font-size:9pt;">&lt;span style=" font-size:8pt;">UDP port to use for the DHT protocol.&lt;/span>&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; ">&lt;span style=" font-weight:600;">Attention:&lt;/span> If you are behind a router, this port needs to be forwarded to accept incoming DHT requests. The UPnP plugin can do this for you.&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;  font-size:9pt;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;UDP port to use for the DHT protocol.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; &quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Attention:&lt;/span&gt; If you are behind a router, this port needs to be forwarded to accept incoming DHT requests. The UPnP plugin can do this for you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>65535</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>4444</number>
           </property>
          </widget>
@@ -60,22 +61,32 @@ p, li { white-space: pre-wrap; }
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_pexEnabled" >
-        <property name="toolTip" >
+       <widget class="QCheckBox" name="kcfg_pexEnabled">
+        <property name="toolTip">
          <string>Whether or not to use µTorrent compatible peer exchange.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Use peer exchange</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_webseedsEnabled" >
-        <property name="toolTip" >
+       <widget class="QCheckBox" name="kcfg_webseedsEnabled">
+        <property name="toolTip">
          <string>Enable or disable the use of webseeds when they are present in a torrent.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Use webseeds</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_checkWhenFinished">
+        <property name="toolTip">
+         <string>When a torrent has finished downloading, do a full data check on the torrent.</string>
+        </property>
+        <property name="text">
+         <string>Check data when download is finished</string>
         </property>
        </widget>
       </item>
@@ -83,204 +94,81 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" >
-     <item>
-      <widget class="QGroupBox" name="groupBox_4" >
-       <property name="title" >
-        <string>Encryption</string>
-       </property>
-       <layout class="QVBoxLayout" >
-        <item>
-         <widget class="QCheckBox" name="kcfg_useEncryption" >
-          <property name="toolTip" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Protocol encryption is useful when your ISP is slowing down bittorrent connections. &lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The encryption will prevent your bittorrent traffic to be flagged as bittorrent traffic, and so the ISP will not slow it down.&lt;/p>&lt;/body>&lt;/html></string>
-          </property>
-          <property name="text" >
-           <string>Use protocol encryption</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="kcfg_allowUnencryptedConnections" >
-          <property name="toolTip" >
-           <string>Not all clients support encryption, and some people have encryption disabled. If you want to connect to those peers, you need to have this option enabled.</string>
-          </property>
-          <property name="text" >
-           <string>Allow unencrypted connections</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBox" >
-       <property name="title" >
-        <string>Tracker</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout" >
-        <item>
-         <widget class="QCheckBox" name="kcfg_useCustomIP" >
-          <property name="toolTip" >
-           <string>Instead of allowing the tracker to determine your IP address, tell the tracker which IP address to use. Use this when you are behind a proxy.</string>
-          </property>
-          <property name="text" >
-           <string>Send the tracker a custom IP address or hostname</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout" >
-          <item>
-           <widget class="QLabel" name="label" >
-            <property name="text" >
-             <string>Custom IP address or hostname:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="kcfg_customIP" >
-            <property name="toolTip" >
-             <string>Custom IP address or hostname to send to the tracker. Hostnames will be resolved at runtime and the resolved IP address will be sent to the tracker.</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox_2" >
-     <property name="title" >
-      <string>Data Checking</string>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
+      <string>Encryption</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2" >
+     <layout class="QVBoxLayout">
       <item>
-       <layout class="QFormLayout" name="formLayout" >
-        <property name="fieldGrowthPolicy" >
-         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       <widget class="QCheckBox" name="kcfg_useEncryption">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Protocol encryption is useful when your ISP is slowing down bittorrent connections. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The encryption will prevent your bittorrent traffic to be flagged as bittorrent traffic, and so the ISP will not slow it down.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
-        <property name="labelAlignment" >
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <property name="text">
+         <string>Use protocol encryption</string>
         </property>
-        <item row="0" column="0" >
-         <widget class="QCheckBox" name="kcfg_doUploadDataCheck" >
-          <property name="toolTip" >
-           <string>During uploading when a chunk is loaded into memory automatically recheck this chunk, to see if it still is OK.</string>
-          </property>
-          <property name="text" >
-           <string>Recheck chunks during uploading</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" >
-         <widget class="QCheckBox" name="kcfg_useMaxSizeForUploadDataCheck" >
-          <property name="toolTip" >
-           <string>Because rechecking big chunks can take a lot of time, the recheck can be disabled when the chunks are bigger then a certain size.</string>
-          </property>
-          <property name="text" >
-           <string>Do not recheck when chunks are bigger than</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" >
-         <widget class="QSpinBox" name="kcfg_maxSizeForUploadDataCheck" >
-          <property name="toolTip" >
-           <string>The maximum size a chunk can be for rechecking during uploading.</string>
-          </property>
-          <property name="suffix" >
-           <string> KiB</string>
-          </property>
-          <property name="minimum" >
-           <number>16</number>
-          </property>
-          <property name="maximum" >
-           <number>8192</number>
-          </property>
-          <property name="value" >
-           <number>512</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" >
-         <widget class="QCheckBox" name="kcfg_autoRecheck" >
-          <property name="toolTip" >
-           <string>Automatically do a full data check when we find to many corrupted chunks.</string>
-          </property>
-          <property name="text" >
-           <string>Do a full data check after </string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1" >
-         <widget class="KIntSpinBox" name="kcfg_maxCorruptedBeforeRecheck" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize" >
-           <size>
-            <width>175</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="toolTip" >
-           <string>The number of corrupted chunks before a full data check is done</string>
-          </property>
-          <property name="minimum" >
-           <number>1</number>
-          </property>
-          <property name="maximum" >
-           <number>10000000</number>
-          </property>
-          <property name="value" >
-           <number>3</number>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" >
-         <widget class="QCheckBox" name="kcfg_checkWhenFinished" >
-          <property name="toolTip" >
-           <string>When a torrent has finished downloading, do a full data check on the torrent.</string>
-          </property>
-          <property name="text" >
-           <string>Check data when download is finished</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer" >
-        <property name="orientation" >
-         <enum>Qt::Horizontal</enum>
+       <widget class="QCheckBox" name="kcfg_allowUnencryptedConnections">
+        <property name="toolTip">
+         <string>Not all clients support encryption, and some people have encryption disabled. If you want to connect to those peers, you need to have this option enabled.</string>
         </property>
-        <property name="sizeHint" stdset="0" >
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
+        <property name="text">
+         <string>Allow unencrypted connections</string>
         </property>
-       </spacer>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Tracker</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCheckBox" name="kcfg_useCustomIP">
+        <property name="toolTip">
+         <string>Instead of allowing the tracker to determine your IP address, tell the tracker which IP address to use. Use this when you are behind a proxy.</string>
+        </property>
+        <property name="text">
+         <string>Send the tracker a custom IP address or hostname</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Custom IP address or hostname:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="kcfg_customIP">
+          <property name="toolTip">
+           <string>Custom IP address or hostname to send to the tracker. Hostnames will be resolved at runtime and the resolved IP address will be sent to the tracker.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
        <height>40</height>
@@ -305,11 +193,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_dhtPort</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>355</x>
      <y>51</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>370</x>
      <y>75</y>
     </hint>
@@ -321,11 +209,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_allowUnencryptedConnections</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>126</x>
      <y>188</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>129</x>
      <y>215</y>
     </hint>
@@ -337,11 +225,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_customIP</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>93</x>
      <y>273</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>272</x>
      <y>304</y>
     </hint>
