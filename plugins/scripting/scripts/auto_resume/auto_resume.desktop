@@ -63,6 +63,7 @@ Comment[hu]=Automatikus folytatás bizonyos idő után, ha a felfüggesztett ál
 Comment[is]=Skrifta sem ræsir aftur sjálfkrafa eftir einhvern tíma, þegar biðstaða er virk
 Comment[it]=Script per riprendere automaticamente gli scaricamenti dopo un certo tempo se lo stato di sospensione è attivo
 Comment[km]=ស្គ្រីប​ដើម្បី​បន្ត​ដោយ​ស្វ័យ​ប្រវត្តិ បន្ទាប់​ពី​ពេល​មួយ នៅពេល​ស្ថានភាព​ផ្អាក​ត្រូវ​បាន​​បើក
+Comment[lt]=Scenarijus automatiškai tęsti po kurio laiko kai sustabdymo būsena yra įjungta
 Comment[nb]=Et skript som gjenopptar aktiviteten etter en stund hvis hvilefunksjonen er slått på
 Comment[nds]=Dat Skript maakt automaatsch na en wiss Tiet wieder, wenn de Anhollen-Status anmaakt is.
 Comment[nl]=Script voor het automatisch verdergaan na enige tijd, als de onderbreek-status is ingeschakeld
