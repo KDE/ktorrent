@@ -230,7 +230,7 @@ namespace kt
 	
 		bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
 		bool enabled = trk ? trk->isEnabled() : false;
-		m_change_tracker->setEnabled(s.running && model->rowCount(QModelIndex()) > 1 && enabled);
+		m_change_tracker->setEnabled(s.running && model->rowCount(QModelIndex()) > 1 && enabled && s.priv_torrent);
 		m_remove_tracker->setEnabled(trk && tc->getTrackersList()->canRemoveTracker(trk));
 	}
 	
