@@ -54,6 +54,7 @@ Comment[et]=Skript automaatsete rühmade loomiseks tracker'ite URL-ide järgi
 Comment[fi]=Skripti, joka luo automaattisesti ryhmiä seurantapalvelinten osoitteiden perusteella
 Comment[is]=Skrifta sem býr sjálfvirkt til hópa miðað við slóðir skrásetjara
 Comment[km]=ស្គ្រីប​ដើម្បី​បង្កើត​ក្រុម​ដោយ​ស្វ័យ​ប្រវត្តិ ដែល​មាន​មូលដ្ឋាន​លើ​ URL របស់​កម្មវិធី​តាមដាន​
+Comment[lt]=Scenarijus sukurti automatines grupes paremtas seklio URL
 Comment[nb]=Et skript som lager grupper automatisk basert på URL'ene til sporere
 Comment[nds]=Skript, dat ut de Tracker-URLs automaatsch Koppeln opstellt
 Comment[nl]=Script voor het automatisch aanmaken van groepen gebaseerd op tracker-URL's
