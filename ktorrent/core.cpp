@@ -257,7 +257,7 @@ namespace kt
 		if (Settings::maxSeedTime() > 0)
 			tc->setMaxSeedTime(Settings::maxSeedTime());
 
-		if (Settings::useCompletedDir() && silently)
+		if (Settings::useCompletedDir() && (silently || Settings::openAllTorrentsSilently()))
 			tc->setMoveWhenCompletedDir(Settings::completedDir());
 		
 		if (qman->alreadyLoaded(tc->getInfoHash()))
