@@ -24,6 +24,7 @@ Changes in 4.2:
 - Improve error display of syndication plugin errors (280814)
 - Remove multiple views support (281675)
 - Relabel Change Tracker button into Switch Tracker to avoid user confusion (282951)
+- Revamp IP filter widget (281245)
 
 Changes in 4.1.3:
 - Fix statusbar hiding and showing not working (281674)
