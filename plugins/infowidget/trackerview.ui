@@ -32,8 +32,11 @@
      </item>
      <item>
       <widget class="KPushButton" name="m_change_tracker">
+       <property name="toolTip">
+        <string>Changes the current active tracker for private torrents.</string>
+       </property>
        <property name="text">
-        <string>Change Tracker</string>
+        <string>Switch Tracker</string>
        </property>
       </widget>
      </item>

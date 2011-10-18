@@ -47,19 +47,11 @@ namespace kt
 		if (addr.ipVersion() != 4)
 			return false;
 		
-		bt::Uint32 ip = addr.toIPv4Address();
+		quint32 ip = addr.toIPv4Address();
 		foreach (const Entry & e,ip_list)
 		{
-			if (e.is_range)
-			{
-				if ((ip >= e.ip) && (ip <= e.mask))
-					return true;
-			}
-			else
-			{
-				if ((e.ip | e.mask) == (ip | e.mask))
-					return true;
-			}
+			if (e.start <= ip && ip <= e.end)
+				return true;
 		}
 		
 		return false;
@@ -70,62 +62,20 @@ namespace kt
 		return isBlockedIP(net::Address(addr,7777));
 	}
 	
-	bool IPFilterList::str2ip(const QString &addr, bt::Uint32 &ip)
+	bool IPFilterList::parseIPWithWildcards(const QString & str, bt::Uint32 & start, bt::Uint32 & end)
 	{
-		QStringList ip_comps = addr.split(".");
-		if (ip_comps.count() != 4)
-			return false;
-		
-		ip = 0;
-		for (int i = 0;i < 4;i++)
-		{
-			bool ok = false;
-			bt::Uint32 n = ip_comps[i].toUInt(&ok);
-			if (!ok || n > 255)
-				return false;
-			ip |= (n & 0x000000FF) << (8*(3 - i));
-		}
-		
-		return true;
-	}
-	
-	bool IPFilterList::decodeIPRange(const QString &str, bt::Uint32 &start, bt::Uint32 &end)
-	{
-		QStringList range = str.split("-");
-		bt::Uint32 addr_start = 0;
-		bt::Uint32 addr_end = 0;
-		
-		if (range.count() != 2)
-			return false;
-		if (!str2ip(range[0], addr_start))
-			return false;
-		if (!str2ip(range[1], addr_end))
-			return false;
-		if (addr_start > addr_end)
-		{
-            // swap addresses if ip_start > ip_end 
-			bt::Uint32 addr_temp = addr_start;
-			addr_start = addr_end;
-			addr_end = addr_temp;
-		}
-		start = addr_start;
-		end = addr_end;
-		return true;
-	}
-	
-	bool IPFilterList::decodeIP(const QString & str,bt::Uint32 & ip,bt::Uint32 & mask)
-	{
-
 		QStringList ip_comps = str.split(".");
 		if (ip_comps.count() != 4)
 			return false;
 		
-		ip = 0;
-		mask = 0;
+		bt::Uint32 ip = 0;
+		bt::Uint32 mask = 0;
 		for (int i = 0;i < 4;i++)
 		{
 			if (ip_comps[i] == "*")
+			{
 				mask |= 0xFF000000 >> (8*i);
+			}
 			else
 			{
 				bool ok = false;
@@ -136,36 +86,56 @@ namespace kt
 				ip |= (n & 0x000000FF) << (8*(3 - i));
 			}
 		}
-		
+
+		if (mask == 0xFFFFFFFF || mask == 0x00FFFFFF || mask == 0x0000FFFF || mask == 0x000000FF || mask == 0)
+		{
+			start = ip;
+			end = ip | mask;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IPFilterList::addIP(const QString& str)
+	{
+		Entry e;
+		e.string_rep = str;
+		if (!parseIPWithWildcards(str, e.start, e.end))
+			return false;
+
+		ip_list.append(e);
 		return true;
 	}
 
-	void IPFilterList::add(const QString & str)
+	
+	bool IPFilterList::addIPRange(const QString& str)
 	{
-		bt::Uint32 ip;
-		bt::Uint32 mask;
+		QStringList range = str.split("-");
+		if (range.count() != 2)
+			return false;
 		
-		// Try to treat string as range
-		if (decodeIPRange(str, ip, mask))
-		{
-			Entry e = {str, ip, mask, true}; // creating range entry
-			ip_list.append(e);
-			insertRow(ip_list.count());
-			return;
-		}
+		net::Address start;
+		net::Address end;
+		if (!start.setAddress(range[0]) || !end.setAddress(range[1]))
+			return false;
 		
-		if (!decodeIP(str,ip,mask))
-			throw Error(i18n("Invalid IP address %1",str));
-		
-		foreach (const Entry & e,ip_list)
-		{
-			if (ip == e.ip && mask == e.mask)
-				throw Error(i18n("Duplicate IP address %1",str));
-		}
-		
-		Entry e = {str, ip, mask, false};
+		Entry e = {str, start.toIPv4Address(), end.toIPv4Address()};
 		ip_list.append(e);
 		insertRow(ip_list.count());
+		return true;
+	}
+
+
+	bool IPFilterList::add(const QString & str)
+	{
+		int pos = ip_list.count();
+		beginInsertRows(QModelIndex(), pos, pos + 1);
+		bool ret = addIPRange(str) || addIP(str);
+		endInsertRows();
+		return ret;
 	}
 	
 	void IPFilterList::remove(int row,int count)
@@ -211,37 +181,28 @@ namespace kt
 		if (!index.isValid() || index.row() >= ip_list.count() || index.row() < 0 || role != Qt::EditRole)
 			return false;
 		
-		QString nip = value.toString();
-		bt::Uint32 ip;
-		bt::Uint32 mask;
-		
-		if (decodeIPRange(nip, ip, mask))
-		{
-			Entry &e = ip_list[index.row()];
-			e.ip = ip;
-			e.mask = mask;
-			e.is_range = true;
-			e.string_rep = nip;
-			emit dataChanged(index, index);
-			return true;
-		}
-		
-		if (!decodeIP(nip,ip,mask))
-			return false;
-		
-		int idx = 0;
-		foreach (const Entry & e,ip_list)
-		{
-			if (idx != index.row() && ip == e.ip && mask == e.mask && !e.is_range)
-				return false;
-			idx++;
-		}
-		
 		Entry & e = ip_list[index.row()];
-		e.ip = ip;
-		e.mask = mask;
-		e.is_range = false;
-		e.string_rep = nip;
+		QString str = value.toString();
+		QStringList range = str.split("-");
+		if (range.count() != 2)
+		{
+			if (!parseIPWithWildcards(str, e.start, e.end))
+				return false;
+
+			e.string_rep = str;
+		}
+		else
+		{
+			net::Address start;
+			net::Address end;
+			if (!start.setAddress(range[0]) || !end.setAddress(range[1]))
+				return false;
+
+			e.start = start.toIPv4Address();
+			e.end = end.toIPv4Address();
+			e.string_rep = str;
+		}
+
 		emit dataChanged(index,index);
 		return true;
 	}

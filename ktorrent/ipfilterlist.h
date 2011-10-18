@@ -34,14 +34,6 @@ namespace kt
 	*/
 	class IPFilterList : public QAbstractListModel, public bt::BlockListInterface
 	{
-		struct Entry
-		{
-			QString string_rep;
-			bt::Uint32 ip;   // start_ip if is_range == true
-			bt::Uint32 mask; // end_ip if is_range == true;
-			bool is_range;
-		};
-		
 	public:
 		IPFilterList();
 		virtual ~IPFilterList();
@@ -50,7 +42,7 @@ namespace kt
 		virtual bool isBlockedIP(const QString & addr);
 
 		/// Add an IP address with a mask.
-		void add(const QString & ip);
+		bool add(const QString & ip);
 		
 		/// Remove the IP address at a given row and count items following that
 		void remove(int row,int count);
@@ -64,11 +56,20 @@ namespace kt
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
+		
 	private:
-		bool decodeIP(const QString & str,bt::Uint32 & ip,bt::Uint32 & mask);
-		bool decodeIPRange(const QString &str, bt::Uint32 &start, bt::Uint32 &end);
-		bool str2ip(const QString &addr, bt::Uint32 &ip);
+		bool addIP(const QString & str);
+		bool addIPRange(const QString &str);
+		bool parseIPWithWildcards(const QString & str, bt::Uint32 & start, bt::Uint32 & end);
+		
 	private:
+		struct Entry
+		{
+			QString string_rep;
+			bt::Uint32 start;
+			bt::Uint32 end;
+		};
+
 		QList<Entry> ip_list;
 	};
 

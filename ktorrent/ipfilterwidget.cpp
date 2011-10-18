@@ -91,24 +91,24 @@ namespace kt
 	{
 		int var=0;
 	
-		QRegExp rx ( "(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))" 
-		             "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
-			     "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
-		QRegExpValidator v ( rx,0 );
-	
-		QString ip = m_ip_to_add->text();
-	
-		if (v.validate(ip, var) != QValidator::Acceptable)
-		{
-			KMessageBox::sorry(this, i18n ("Invalid IP address <b>%1</b>. IP addresses must be in the format 'XXX.XXX.XXX.XXX'."
-					"<br/><br/>You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-200.10.10.40'.").arg(ip));	
-					
-			return;
-		}
 		
+
 		try
 		{
-			filter_list->add(ip);
+			QRegExp rx( "(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
+						"|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
+						"([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
+			QRegExpValidator v(rx, 0);
+
+			QString ip = m_ip_to_add->text();
+
+			if (v.validate(ip, var) != QValidator::Acceptable || !filter_list->add(ip))
+			{
+				KMessageBox::sorry(this, i18n ("Invalid IP address <b>%1</b>. IP addresses must be in the format 'XXX.XXX.XXX.XXX'."
+						"<br/><br/>You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-200.10.10.40'.").arg(ip));
+
+				return;
+			}
 		}
 		catch (bt::Error & err)
 		{

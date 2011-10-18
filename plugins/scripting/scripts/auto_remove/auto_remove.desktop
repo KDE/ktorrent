@@ -66,6 +66,7 @@ Comment[is]=Skrifta sem fjarlægir strauma sjálfvirkt þegar þeir hafa lokið 
 Comment[it]=Script per rimuovere automaticamente gli scaricamenti al termine dello scaricamento o distribuzione seme
 Comment[ja]=ダウンロードまたはシードを完了したときに自動的に torrent を削除するスクリプト
 Comment[km]=ស្គ្រីប ដើម្បី​យក torrents ចេញ​ដោយ​ស្វ័យប្រវត្តិ នៅពេល​ដែល​ពួកគេ​បញ្ចប់​ការ​ទាញយក ឬ​បណ្ដុះ
+Comment[lt]=Scenarijus automatiškai pašalinti torrentus kai jie baigiami atsiųsti ar skleisti
 Comment[lv]=Skripts automātiski izņem torrnetus, kad pabeigta lejupielāde vai piedāvāšana
 Comment[nb]=Et skript som automatisk fjerner strømmer når de er ferdig lastet ned eller opp
 Comment[nds]=Dat Skript maakt Torrents automaatsch weg, wenn ehr Daalladen oder Verdelen afslaten is.
