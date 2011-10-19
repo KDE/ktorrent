@@ -61,7 +61,12 @@ namespace kt
 		if (!QFileInfo(path).isDir())
 			return;
 		
-		if (!recursive && QDir(path) != QDir(scan_directory.toLocalFile()))
+		QDir dir(path);
+		if (!recursive && dir != QDir(scan_directory.toLocalFile()))
+			return;
+
+		// ignore loaded directories
+		if (dir.dirName() == i18n("loaded"))
 			return;
 		
 		Out(SYS_SNF|LOG_NOTICE) << "Directory dirty: " << path << endl;
