@@ -58,8 +58,7 @@ namespace kt
     	AntiP2P();
     	virtual ~AntiP2P();
 		
-		virtual bool isBlockedIP(const net::Address & addr);
-		virtual bool isBlockedIP(const QString & addr);
+		virtual bool blocked(const net::Address& addr) const;
 			
 		/**
 		 * Checks if anti-p2p file is present. Used to check if we should use level1 list
@@ -93,14 +92,14 @@ namespace kt
 		 * 	-2 if IP is already found in blocks
 		 * 	or index of HeaderBlock in AntiP2P::blocks which will be used for direct file search.
 		 **/
-		int searchHeader(bt::Uint32& ip, int start, int end);
+		int searchHeader(bt::Uint32& ip, int start, int end) const;
 			
 			
 		/**
 		 * Binary searches AntiP2P::file to find IP.
 		 * @returns TRUE if IP should be blocked FALSE otherwise
 		 **/
-		bool searchFile(IPBlock* file_blocks, bt::Uint32& ip, int start, int end);
+		bool searchFile(IPBlock* file_blocks, bt::Uint32& ip, int start, int end) const;
 		
 	private:
 		bt::MMapFile* file;
