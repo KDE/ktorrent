@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="torrentactivity" version="2">
+<kpartgui name="torrentactivity" version="3">
 <MenuBar>
 	<Menu name="view">
 		<Action name="show_group_view" group="view_menu_top"/>
@@ -9,6 +9,7 @@
 		<Action name="pause" />
 		<Action name="stop" />
 		<Action name="remove" />
+		<Action name="view_remove_torrent_and_data" />
 		<Separator/>
 		<Action name="start_all"/>
 		<Action name="stop_all"/>
@@ -34,33 +35,38 @@
 
 <Menu name="ViewMenu"><text>View</text>
 	<Action name="start" />
+	<Action name="force_start" />
 	<Action name="pause" />
 	<Action name="stop" />
 	<Action name="remove" />
 	<Action name="view_remove_torrent_and_data" />
 	<Separator/>
 	<Action name="view_torrent_properties" />
-	<Action name="speed_limits" />
-	<Separator/>
-	<Action name="view_add_peers" />
 	<Action name="view_announce" />
-	<Action name="view_rename_torrent" />
-	<Action name="view_export_torrent" />
-	<Action name="view_copy_url" />
-	<Separator/>
-	<Action name="view_move_data" />
 	<Action name="check_data" />
+	<Action name="view_move_data" />
 	<Action name="view_preview" />
-	<Menu name="OpenDirMenu" icon="folder-open"><text>Open Directory</text>
-		<Action name="view_open_data_dir" />
-		<Action name="view_open_tmp_dir" />
-	</Menu>
 	<Separator/>
-	<Action name="view_remove_from_group" />
-	<Menu name="GroupsSubMenu" icon="application-x-bittorrent"><text>Add to Group</text>
-		<ActionList name="view_groups_list" />
+	<Menu name="AdvancedMenu">
+		<text>Advanced</text>
+		<Action name="view_rename_torrent" />
+		<Action name="view_export_torrent" />
+		<Action name="view_copy_url" />
+		<Action name="view_add_peers" />
+		<Action name="speed_limits" />
 		<Separator/>
-		<Action name="view_add_to_new_group" />
+		<Menu name="OpenDirMenu" icon="folder-open">
+			<text>Open Directory</text>
+			<Action name="view_open_data_dir" />
+			<Action name="view_open_tmp_dir" />
+		</Menu>
+		<Action name="view_remove_from_group" />
+		<Menu name="GroupsSubMenu" icon="application-x-bittorrent">
+			<text>Add to Group</text>
+			<ActionList name="view_groups_list" />
+			<Separator/>
+			<Action name="view_add_to_new_group" />
+		</Menu>
 	</Menu>
 	<Separator/>
 	<Menu name="ColumnsMenu">
@@ -68,7 +74,6 @@
 		<title>Columns</title>
 		<ActionList name="view_columns_list" />
 	</Menu>
-	<Separator/>
 	<Merge/>
 </Menu>
 

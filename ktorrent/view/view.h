@@ -111,6 +111,7 @@ namespace kt
 		 * */
 		void update();
 		void startTorrents();
+		void forceStartTorrents();
 		void stopTorrents();
 		void pauseTorrents();
 		void removeTorrents();
@@ -176,6 +177,7 @@ namespace kt
 		
 		// actions for the view menu 
 		KAction* start_torrent;
+		KAction* force_start_torrent;
 		KAction* start_all;
 		KAction* stop_torrent;
 		KAction* stop_all;
