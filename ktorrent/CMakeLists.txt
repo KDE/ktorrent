@@ -48,6 +48,7 @@ set(ktorrent_SRC
 	view/viewjobtracker.cpp 
 	view/scanextender.cpp
 	view/propertiesdlg.cpp
+	view/torrentsearchbar.cpp 
 )
 	
 

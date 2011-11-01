@@ -28,6 +28,7 @@ Changes in 4.2:
 - Fix scanfolder moving to loaded directory causing a flurry of popups about the torrent already being loaded (283508)
 - Only enable the infowidget plugin by default (278283)
 - Add force start option (213504)
+- Add torrent search bar for view (269279)
 
 Changes in 4.1.3:
 - Fix statusbar hiding and showing not working (281674)

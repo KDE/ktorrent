@@ -24,6 +24,7 @@
 #include <QSplitter>
 #include <interfaces/torrentactivityinterface.h>
 
+
 class KToggleAction;
 class KAction;
 
@@ -37,7 +38,7 @@ namespace kt
 	class QueueManagerWidget;
 	class TabBarWidget;
 	class Group;
-	
+	class TorrentSearchBar;
 	
 	/**
 	 * Activity which manages torrents.
@@ -101,11 +102,13 @@ namespace kt
 		QSplitter* vsplit;
 		TabBarWidget* tool_views;
 		MagnetView* magnet_view;
+		TorrentSearchBar* search_bar;
 		
 		KAction* start_all_action;
 		KAction* stop_all_action;
 		KToggleAction* queue_suspend_action;
 		KAction* show_group_view_action;
+		KAction* filter_torrent_action;
 	};
 }
 

@@ -381,25 +381,7 @@ namespace kt
 			stop_all->setEnabled(numRunningTorrents() > 0);
 		}
 	}
-
 	
-	void View::setupDefaultColumns()
-	{
-		int idx = 0;
-		foreach (QAction* act,column_action_list)
-		{
-			bool ret = true;
-			if (group->groupFlags() == Group::DOWNLOADS_ONLY_GROUP)
-				ret = model->defaultColumnForDownload(idx);
-			else if (group->groupFlags() == Group::UPLOADS_ONLY_GROUP)
-				ret = model->defaultColumnForUpload(idx); 
-			
-			header()->setSectionHidden(idx,!ret);
-			act->setChecked(ret);
-			idx++;
-		}
-	}
-
 	void View::setGroup(Group* g)
 	{
 		group = g;
@@ -907,6 +889,12 @@ namespace kt
 			
 			KIO::file_copy(QString(tc->getTorDir() + "torrent"),fn,-1,KIO::Overwrite);
 		}
+	}
+
+	void View::setFilterString(const QString& filter)
+	{
+		model->setFilterString(filter);
+		model->update(delegate);
 	}
 
 }

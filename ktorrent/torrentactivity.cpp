@@ -19,8 +19,6 @@
  ***************************************************************************/
 #include <QBoxLayout>
 #include <QToolBar>
-#include <QTreeView>
-#include <QToolButton>
 #include <KConfigGroup>
 #include <KLocale>
 #include <KIcon>
@@ -33,6 +31,7 @@
 #include "gui.h"
 #include "core.h"
 #include "view/view.h"
+#include "view/torrentsearchbar.h"
 #include "groups/groupview.h"
 #include "tools/queuemanagerwidget.h"
 #include "tools/magnetview.h"
@@ -43,14 +42,18 @@ using namespace bt;
 
 namespace kt
 {
+
 	
 	TorrentActivity::TorrentActivity(Core* core,GUI* gui,QWidget* parent) 
 		: TorrentActivityInterface(i18n("Torrents"),"ktorrent",parent),core(core),gui(gui)
 	{
 		setXMLGUIFile("kttorrentactivityui.rc");
-		view = new View(core, gui, this);
+		QWidget* view_part = new QWidget(this);
+		view = new View(core, gui, view_part);
 		connect(view, SIGNAL(currentTorrentChanged(bt::TorrentInterface*)),
 				this, SLOT(currentTorrentChanged(bt::TorrentInterface*)));
+		search_bar = new TorrentSearchBar(view, view_part);
+		search_bar->setHidden(true);
 		setupActions();
 		
 		QVBoxLayout* layout = new QVBoxLayout(this);
@@ -60,11 +63,17 @@ namespace kt
 		layout->addWidget(vsplit);
 		hsplit = new QSplitter(Qt::Horizontal,vsplit);
 		
+		QVBoxLayout* vlayout = new QVBoxLayout(view_part);
+		vlayout->setSpacing(0);
+		vlayout->setMargin(0);
+		vlayout->addWidget(search_bar);
+		vlayout->addWidget(view);
+		
 		group_view = new GroupView(core->getGroupManager(),view,gui,hsplit);
 		group_view->setupActions(part()->actionCollection());
 		
 		hsplit->addWidget(group_view);
-		hsplit->addWidget(view);
+		hsplit->addWidget(view_part);
 		hsplit->setStretchFactor(0,1);
 		hsplit->setStretchFactor(1,3);
 		vsplit->addWidget(hsplit);
@@ -118,6 +127,12 @@ namespace kt
 		connect(show_group_view_action,SIGNAL(toggled(bool)),this,SLOT(setGroupViewVisible(bool)));
 		ac->addAction("show_group_view",show_group_view_action);
 		
+		filter_torrent_action = new KAction(i18n("Filter Torrents"), this);
+		filter_torrent_action->setToolTip(i18n("Filter torrents based on filter string"));
+		filter_torrent_action->setShortcut(Qt::CTRL + Qt::Key_F);
+		connect(filter_torrent_action, SIGNAL(triggered(bool)), search_bar, SLOT(showBar()));
+		ac->addAction("filter_torrent", filter_torrent_action);
+		
 		view->setupActions(ac);
 	}
 
@@ -148,6 +163,7 @@ namespace kt
 			hsplit->restoreState(data);
 		}
 		
+		search_bar->loadState(cfg);
 		view->loadState(cfg);
 		group_view->loadState(cfg);
 		qm->loadState(cfg);
@@ -160,6 +176,7 @@ namespace kt
 	
 	void TorrentActivity::saveState(KSharedConfigPtr cfg)
 	{
+		search_bar->saveState(cfg);
 		view->saveState(cfg);
 		group_view->saveState(cfg);
 		qm->saveState(cfg);

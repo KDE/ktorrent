@@ -296,12 +296,12 @@ namespace kt
 			return QVariant();
 	}
 	
-	bool ViewModel::Item::member(Group* group) const
+	bool ViewModel::Item::visible(Group* group, const QString & filter_string) const
 	{
-		if (!group)
-			return true;
-		else
-			return group->isMember(tc);
+		if (group && !group->isMember(tc))
+			return false;
+			
+		return filter_string.isEmpty() || tc->getDisplayName().contains(filter_string, Qt::CaseInsensitive);
 	}
 
 	ViewModel::ViewModel(Core* core,View* parent) : QAbstractTableModel(parent),core(core),view(parent)
@@ -369,7 +369,7 @@ namespace kt
 		int row = 0;
 		foreach (Item* i,torrents)
 		{
-			bool hidden = !i->member(group);
+			bool hidden = !i->visible(group, filter_string);
 			if (!hidden && i->update(row,sort_column,update_list,this))
 				resort = true;
 			
@@ -396,6 +396,11 @@ namespace kt
 		}
 		
 		return false;
+	}
+	
+	void ViewModel::setFilterString(const QString& filter)
+	{
+		filter_string = filter;
 	}
 	
 	int ViewModel::rowCount(const QModelIndex & parent) const
@@ -664,7 +669,7 @@ namespace kt
 	{
 		foreach (Item* item,torrents)
 		{
-			if (item->member(group))
+			if (item->visible(group, filter_string))
 				tlist.append(item->tc);
 		}
 	}

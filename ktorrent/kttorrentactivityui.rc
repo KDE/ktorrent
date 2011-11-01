@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="torrentactivity" version="3">
+<kpartgui name="torrentactivity" version="4">
 <MenuBar>
 	<Menu name="view">
 		<Action name="show_group_view" group="view_menu_top"/>
@@ -15,6 +15,7 @@
 		<Action name="stop_all"/>
 		<Separator/>
 		<Action name="check_data"/>
+		<Action name="filter_torrent" />
 		<Separator/>
 		<Action name="queue_suspend" />
 		<Separator/>
