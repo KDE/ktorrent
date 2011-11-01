@@ -28,6 +28,7 @@ class QItemSelection;
 class QModelIndex;
 class QToolBar;
 class QTreeView;
+class KLineEdit;
 
 namespace bt
 {
@@ -36,7 +37,6 @@ namespace bt
 
 namespace kt
 {
-	class HintLineEdit;
 	class QueueManager;
 	class QueueManagerModel;
 	
@@ -81,7 +81,7 @@ namespace kt
 		QueueManager* qman;
 		QTreeView* view;
 		QToolBar* toolbar;
-		HintLineEdit* search;
+		KLineEdit* search;
 		
 		QAction* show_search;
 		QAction* move_top;

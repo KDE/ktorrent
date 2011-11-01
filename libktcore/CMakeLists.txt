@@ -7,7 +7,6 @@ set(libktorrent_SRC
 	util/mmapfile.cpp
 	util/itemselectionmodel.cpp
 	util/stringcompletionmodel.cpp
-	util/hintlineedit.cpp
 	util/treefiltermodel.cpp
 	
 	interfaces/functions.cpp

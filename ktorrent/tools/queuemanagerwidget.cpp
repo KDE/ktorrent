@@ -26,9 +26,9 @@
 #include <KLocale>
 #include <KStandardGuiItem>
 #include <KConfigGroup>
+#include <KLineEdit>
 #include <torrent/queuemanager.h>
 #include <util/log.h>
-#include <util/hintlineedit.h>
 #include "queuemanagerwidget.h"
 #include "queuemanagermodel.h"
 
@@ -53,8 +53,8 @@ namespace kt
 		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		layout->addWidget(toolbar);
 		
-		search = new HintLineEdit(this);
-		search->setHintText(i18n("Search"));
+		search = new KLineEdit(this);
+		search->setClickMessage(i18n("Search"));
 		search->setClearButtonShown(true);
 		search->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 		connect(search,SIGNAL(textChanged(QString)),this,SLOT(searchTextChanged(QString)));
@@ -210,7 +210,7 @@ namespace kt
 		KConfigGroup g = cfg->group("QueueManagerWidget");
 		QByteArray s = view->header()->saveState();
 		g.writeEntry("view_state",s.toBase64());
-		g.writeEntry("search_text",search->typedText());
+		g.writeEntry("search_text",search->text());
 		g.writeEntry("search_bar_visible",show_search->isChecked());
 	}
 	
@@ -223,10 +223,7 @@ namespace kt
 		
 		QString st = g.readEntry("search_text",QString());
 		if (!st.isEmpty())
-		{
-			search->hideHintText();
 			search->setText(st);
-		}
 		
 		show_search->setChecked(g.readEntry("search_bar_visible",false));
 	}

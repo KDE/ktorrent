@@ -21,21 +21,23 @@
 
 #include <QHeaderView>
 #include <QItemSelectionModel>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kglobal.h>
-#include <kmenu.h>
-#include <krun.h>
-#include <kmessagebox.h>
-#include <kmimetype.h>
-#include <ksharedconfig.h>
-#include <kconfiggroup.h>
-#include <kfiledialog.h>
+#include <QHBoxLayout>
+#include <QToolBar>
+#include <KLocale>
+#include <KIconLoader>
+#include <KGlobal>
+#include <KMenu>
+#include <KRun>
+#include <KMessageBox>
+#include <KMimeType>
+#include <KSharedConfig>
+#include <KConfigGroup>
+#include <KFileDialog>
+#include <KLineEdit>
 #include <util/bitset.h>
 #include <util/error.h>
 #include <util/functions.h>
 #include <util/treefiltermodel.h>
-#include <util/hintlineedit.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
@@ -44,8 +46,8 @@
 #include <util/timer.h>
 #include "iwfiletreemodel.h"
 #include "iwfilelistmodel.h"
-#include <QHBoxLayout>
-#include <QToolBar>
+
+
 	
 using namespace bt;
 
@@ -66,8 +68,8 @@ namespace kt
 		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		layout->addWidget(toolbar);
 		
-		filter = new HintLineEdit(this);
-		filter->setHintText(i18n("Filter"));
+		filter = new KLineEdit(this);
+		filter->setClickMessage(i18n("Filter"));
 		filter->setClearButtonShown(true);
 		filter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 		connect(filter,SIGNAL(textChanged(QString)),this,SLOT(setFilter(QString)));
@@ -542,7 +544,7 @@ namespace kt
 	void FileView::setFilter(const QString& f)
 	{
 		Q_UNUSED(f);
-		proxy_model->setFilterFixedString(filter->typedText());
+		proxy_model->setFilterFixedString(filter->text());
 	}
 
 	void FileView::checkFile()

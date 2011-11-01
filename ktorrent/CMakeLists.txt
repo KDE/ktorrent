@@ -66,8 +66,6 @@ kde4_add_ui_files(ktorrent_SRC
 	
 	groups/grouppolicydlg.ui
 	
-	tools/queuemanagerwidget.ui
-	
 	pref/qmpref.ui 
 	pref/btpref.ui
 	pref/generalpref.ui 

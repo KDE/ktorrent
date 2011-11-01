@@ -88,7 +88,7 @@
       </widget>
      </item>
      <item>
-      <widget class="kt::HintLineEdit" name="m_filter"/>
+      <widget class="KLineEdit" name="m_filter"/>
      </item>
      <item>
       <widget class="QLabel" name="label">
@@ -362,9 +362,9 @@ p, li { white-space: pre-wrap; }
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>KUrlRequester</class>
-   <extends>QFrame</extends>
-   <header>kurlrequester.h</header>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>KPushButton</class>
@@ -372,14 +372,9 @@ p, li { white-space: pre-wrap; }
    <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>kt::HintLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header location="global">util/hintlineedit.h</header>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
