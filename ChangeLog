@@ -29,6 +29,7 @@ Changes in 4.2:
 - Only enable the infowidget plugin by default (278283)
 - Add force start option (213504)
 - Add torrent search bar for view (269279)
+- Make it possible to hide uploads, downloads and not queued torrents in the queue manager (253779, 251861, 210064)
 
 Changes in 4.1.3:
 - Fix statusbar hiding and showing not working (281674)

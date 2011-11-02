@@ -70,6 +70,9 @@ namespace kt
 		void moveBottomClicked();
 		void searchTextChanged(const QString & t);
 		void showSearch(bool on);
+		void showDownloads(bool on);
+		void showUploads(bool on);
+		void showNotQueued(bool on);
 		void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 
 	private:
@@ -88,6 +91,10 @@ namespace kt
 		QAction* move_up;
 		QAction* move_down;
 		QAction* move_bottom;
+		
+		QAction* show_uploads;
+		QAction* show_downloads;
+		QAction* show_not_queued;
 	};
 }
 
