@@ -23,9 +23,10 @@
 #include <QColor>
 #include <QPalette>
 #include <QMimeData>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kicon.h>
+#include <KLocale>
+#include <KGlobal>
+#include <KIcon>
+#include <KIconLoader>
 #include <util/log.h>
 #include <util/sha1hash.h>
 #include <util/functions.h>
@@ -74,9 +75,9 @@ namespace kt
 		const TorrentStats & s = tc->getStats();
 		if (status != s.status)
 		{
-			to_update.append(model->index(row,STATUS));
+			to_update.append(model->index(row,NAME));
 			status = s.status;
-			if (sort_column == STATUS)
+			if (sort_column == NAME)
 				ret = true;
 		}
 			
@@ -191,24 +192,23 @@ namespace kt
 		const TorrentStats & s = tc->getStats();
 		switch (col)
 		{
-			case 0: return tc->getDisplayName();
-			case 1: return s.statusToString();
-			case 2: return BytesToString(bytes_downloaded);
-			case 3: return BytesToString(total_bytes_to_download);
-			case 4: return BytesToString(bytes_uploaded);
-			case 5: 
+			case NAME: return tc->getDisplayName();
+			case BYTES_DOWNLOADED: return BytesToString(bytes_downloaded);
+			case TOTAL_BYTES_TO_DOWNLOAD: return BytesToString(total_bytes_to_download);
+			case BYTES_UPLOADED: return BytesToString(bytes_uploaded);
+			case DOWNLOAD_RATE: 
 				if (download_rate >= 103 && s.bytes_left_to_download > 0) // lowest "visible" speed, all below will be 0,0 Kb/s
 					return BytesPerSecToString(download_rate);
 				else
 					return QVariant();
 				break;
-			case 6: 
+			case UPLOAD_RATE: 
 				if (upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
 					return BytesPerSecToString(upload_rate);
 				else
 					return QVariant();
 				break;
-			case 7: 
+			case ETA: 
 				if (eta == 0)
 					return QString("%1").arg(QChar(0x221E)); // infinity
 				else if (eta > 0)
@@ -216,15 +216,15 @@ namespace kt
 				else
 					return QVariant();
 				break;
-			case 8: return QString("%1 (%2)").arg(QString::number(seeders_connected_to)).arg(QString::number(seeders_total));
-			case 9: return QString("%1 (%2)").arg(QString::number(leechers_connected_to)).arg(QString::number(leechers_total));
+			case SEEDERS: return QString("%1 (%2)").arg(QString::number(seeders_connected_to)).arg(QString::number(seeders_total));
+			case LEECHERS: return QString("%1 (%2)").arg(QString::number(leechers_connected_to)).arg(QString::number(leechers_total));
 			// xgettext: no-c-format
-			case 10: return percentage;
-			case 11: return KGlobal::locale()->formatNumber(share_ratio,2);
-			case 12: return DurationToString(runtime_dl);
-			case 13: return DurationToString(runtime_ul);
-			case 14: return tc->getStats().output_path;
-			case 15: return KGlobal::locale()->formatDateTime(time_added);
+			case PERCENTAGE: return percentage;
+			case SHARE_RATIO: return KGlobal::locale()->formatNumber(share_ratio,2);
+			case DOWNLOAD_TIME: return DurationToString(runtime_dl);
+			case SEED_TIME: return DurationToString(runtime_ul);
+			case DOWNLOAD_LOCATION: return tc->getStats().output_path;
+			case TIME_ADDED: return KGlobal::locale()->formatDateTime(time_added);
 			default: return QVariant();
 		}
 	}
@@ -233,35 +233,34 @@ namespace kt
 	{
 		switch (col)
 		{
-			case 0: return QString::localeAwareCompare(tc->getDisplayName(),other->tc->getDisplayName()) < 0;
-			case 1: return tc->getStats().statusToString() < other->tc->getStats().statusToString();
-			case 2: return bytes_downloaded < other->bytes_downloaded;
-			case 3: return total_bytes_to_download < other->total_bytes_to_download;
-			case 4: return bytes_uploaded < other->bytes_uploaded;
-			case 5: return (download_rate < 102 ? 0 : download_rate) < (other->download_rate < 102 ? 0 : other->download_rate);
-			case 6: return (upload_rate < 102 ? 0 : upload_rate) < (other->upload_rate < 102 ? 0 : other->upload_rate);
-			case 7: 
+			case NAME: return QString::localeAwareCompare(tc->getDisplayName(),other->tc->getDisplayName()) < 0;
+			case BYTES_DOWNLOADED: return bytes_downloaded < other->bytes_downloaded;
+			case TOTAL_BYTES_TO_DOWNLOAD: return total_bytes_to_download < other->total_bytes_to_download;
+			case BYTES_UPLOADED: return bytes_uploaded < other->bytes_uploaded;
+			case DOWNLOAD_RATE: return (download_rate < 102 ? 0 : download_rate) < (other->download_rate < 102 ? 0 : other->download_rate);
+			case UPLOAD_RATE: return (upload_rate < 102 ? 0 : upload_rate) < (other->upload_rate < 102 ? 0 : other->upload_rate);
+			case ETA: 
 				if (eta == 0 && other->eta > 0)
 					return false;
 				else if (other->eta == 0 && eta > 0)
 					return true;
 				else
 					return eta < other->eta;
-			case 8: return seeders_connected_to < other->seeders_connected_to;
-			case 9: return leechers_connected_to < other->leechers_connected_to;
-			case 10: return percentage < other->percentage;
-			case 11: return share_ratio < other->share_ratio;
-			case 12: return runtime_dl < other->runtime_dl;
-			case 13: return runtime_ul < other->runtime_ul;
-			case 14: return tc->getStats().output_path < other->tc->getStats().output_path;
-			case 15: return time_added < other->time_added;
+			case SEEDERS: return seeders_connected_to < other->seeders_connected_to;
+			case LEECHERS: return leechers_connected_to < other->leechers_connected_to;
+			case PERCENTAGE: return percentage < other->percentage;
+			case SHARE_RATIO: return share_ratio < other->share_ratio;
+			case DOWNLOAD_TIME: return runtime_dl < other->runtime_dl;
+			case SEED_TIME: return runtime_ul < other->runtime_ul;
+			case DOWNLOAD_LOCATION: return tc->getStats().output_path < other->tc->getStats().output_path;
+			case TIME_ADDED: return time_added < other->time_added;
 			default: return false;
 		}
 	}
 	
 	QVariant ViewModel::Item::color(int col) const
 	{
-		if (col == 1)
+		if (col == NAME)
 		{	
 			QColor green(40,205,40);
 			QColor yellow(255,174,0);
@@ -287,7 +286,7 @@ namespace kt
 					return QVariant();
 			}
 		}
-		else if (col == 11)
+		else if (col == SHARE_RATIO)
 		{
 			QColor green(40,205,40);
 			return share_ratio >= Settings::greenRatio() ? green : Qt::red;
@@ -303,6 +302,44 @@ namespace kt
 			
 		return filter_string.isEmpty() || tc->getDisplayName().contains(filter_string, Qt::CaseInsensitive);
 	}
+	
+	QVariant ViewModel::Item::statusIcon() const
+	{
+		switch (tc->getStats().status)
+		{
+			case NOT_STARTED:
+			case STOPPED:
+				return KIcon("kt-stop");
+			case SEEDING_COMPLETE:
+			case DOWNLOAD_COMPLETE:
+				return KIcon("task-complete");
+			case SEEDING:
+			case SUPERSEEDING:
+				return KIcon("go-up");
+			case DOWNLOADING:
+				return KIcon("go-down");
+			case STALLED:
+				if (tc->getStats().completed)
+					return KIcon("go-up");
+				else
+					return KIcon("go-down");
+			case ALLOCATING_DISKSPACE:
+				return KIcon("drive-harddisk");
+			case ERROR:
+			case NO_SPACE_LEFT:
+				return KIcon("dialog-error");
+			case QUEUED:
+				return KIcon("download-later");
+			case CHECKING_DATA:
+				return KIcon("kt-check-data");
+			case PAUSED:
+				return KIcon("kt-pause");
+			default:
+				return QVariant();
+		}
+	}
+
+	////////////////////////////////////////////////////////
 
 	ViewModel::ViewModel(Core* core,View* parent) : QAbstractTableModel(parent),core(core),view(parent)
 	{
@@ -438,23 +475,22 @@ namespace kt
 		{
 			switch (section)
 			{
-				case 0: return i18n("Name");
-				case 1: return i18n("Status");
-				case 2: return i18n("Downloaded");
-				case 3: return i18n("Size");
-				case 4: return i18n("Uploaded");
-				case 5: return i18n("Down Speed");
-				case 6: return i18n("Up Speed");
-				case 7: return i18n("Time Left");
-				case 8: return i18n("Seeders");
-				case 9: return i18n("Leechers");
+				case NAME: return i18n("Name");
+				case BYTES_DOWNLOADED: return i18n("Downloaded");
+				case TOTAL_BYTES_TO_DOWNLOAD: return i18n("Size");
+				case BYTES_UPLOADED: return i18n("Uploaded");
+				case DOWNLOAD_RATE: return i18n("Down Speed");
+				case UPLOAD_RATE: return i18n("Up Speed");
+				case ETA: return i18n("Time Left");
+				case SEEDERS: return i18n("Seeders");
+				case LEECHERS: return i18n("Leechers");
 				// xgettext: no-c-format
-				case 10: return i18n("% Complete");
-				case 11: return i18n("Share Ratio");
-				case 12: return i18n("Time Downloaded");
-				case 13: return i18n("Time Seeded");
-				case 14: return i18n("Location");
-				case 15: return i18n("Added");
+				case PERCENTAGE: return i18n("% Complete");
+				case SHARE_RATIO: return i18n("Share Ratio");
+				case DOWNLOAD_TIME: return i18n("Time Downloaded");
+				case SEED_TIME: return i18n("Time Seeded");
+				case DOWNLOAD_LOCATION: return i18n("Location");
+				case TIME_ADDED: return i18n("Added");
 				default: return QVariant();
 			}
 		}
@@ -462,21 +498,21 @@ namespace kt
 		{
 			switch (section)
 			{
-				case 2: return i18n("How much data we have downloaded of the torrent");
-				case 3: return i18n("Total size of the torrent, excluded files are not included");
-				case 4: return i18n("How much data we have uploaded");
-				case 5: return i18n("Current download speed");
-				case 6: return i18n("Current upload speed");
-				case 7: return i18n("How much time is left before the torrent is finished or before the maximum share ratio is reached, if that is enabled");
-				case 8: return i18n("How many seeders we are connected to (How many seeders there are according to the tracker)");
-				case 9: return i18n("How many leechers we are connected to (How many leechers there are according to the tracker)");
+				case BYTES_DOWNLOADED: return i18n("How much data we have downloaded of the torrent");
+				case TOTAL_BYTES_TO_DOWNLOAD: return i18n("Total size of the torrent, excluded files are not included");
+				case BYTES_UPLOADED: return i18n("How much data we have uploaded");
+				case DOWNLOAD_RATE: return i18n("Current download speed");
+				case UPLOAD_RATE: return i18n("Current upload speed");
+				case ETA: return i18n("How much time is left before the torrent is finished or before the maximum share ratio is reached, if that is enabled");
+				case SEEDERS: return i18n("How many seeders we are connected to (How many seeders there are according to the tracker)");
+				case LEECHERS: return i18n("How many leechers we are connected to (How many leechers there are according to the tracker)");
 				// xgettext: no-c-format
-				case 10: return i18n("The percentage of data we have of the whole torrent, not including excluded files");
-				case 11: return i18n("Share ratio is the number of bytes uploaded divided by the number of bytes downloaded");
-				case 12: return i18n("How long we have been downloading the torrent");
-				case 13: return i18n("How long we have been seeding the torrent");
-				case 14: return i18n("The location of the torrent's data on disk");
-				case 15: return i18n("When this torrent was added");
+				case PERCENTAGE: return i18n("The percentage of data we have of the whole torrent, not including excluded files");
+				case SHARE_RATIO: return i18n("Share ratio is the number of bytes uploaded divided by the number of bytes downloaded");
+				case DOWNLOAD_TIME: return i18n("How long we have been downloading the torrent");
+				case SEED_TIME: return i18n("How long we have been seeding the torrent");
+				case DOWNLOAD_LOCATION: return i18n("The location of the torrent's data on disk");
+				case TIME_ADDED: return i18n("When this torrent was added");
 				default: return QVariant();
 			}
 		}
@@ -505,32 +541,47 @@ namespace kt
 			return QVariant(); 
 		
 		if (role == Qt::ForegroundRole)
+		{
 			return item->color(index.column());
+		}
 		else if (role == Qt::DisplayRole)
+		{
 			return item->data(index.column());
-		else if (role == Qt::EditRole && index.column() == 0)
+		}
+		else if (role == Qt::EditRole && index.column() == NAME)
+		{
 			return item->tc->getDisplayName();
-		else if (role == Qt::DecorationRole && index.column() == 1)
+		}
+		else if (role == Qt::DecorationRole && index.column() == NAME)
 		{
-			bt::TorrentInterface* tc = item->tc;
-			if (tc->getTrackersList()->noTrackersReachable())
-				return KIcon("dialog-warning");
+			return item->statusIcon();
 		} 
-		else if (role == Qt::ToolTipRole)
+		else if (role == Qt::ToolTipRole && index.column() == NAME)
 		{
-			if (index.column() == 1)
+			QString tooltip; 
+			bt::TorrentInterface* tc = item->tc;
+			if (tc->loadUrl().isValid())
+				tooltip = i18n("%1<br>Url: <b>%2</b>",tc->getDisplayName(),tc->loadUrl().prettyUrl());
+			else
+				tooltip = tc->getDisplayName();
+			
+			tooltip += "<br/><br/>" + tc->getStats().statusToString();
+			if (tc->getTrackersList()->noTrackersReachable())
+				tooltip += i18n("<br/><br/>Unable to contact a tracker.");
+			
+			return tooltip;
+		}
+		else if (role == Qt::TextAlignmentRole)
+		{
+			switch (index.column())
 			{
-				bt::TorrentInterface* tc = item->tc;
-				if (tc->getTrackersList()->noTrackersReachable())
-					return i18n("Unable to contact a tracker.");
-			}
-			else if (index.column() == 0)
-			{
-				bt::TorrentInterface* tc = item->tc;
-				if (tc->loadUrl().isValid())
-					return i18n("%1<br>Url: <b>%2</b>",tc->getDisplayName(),tc->loadUrl().prettyUrl());
-				else
-					return tc->getDisplayName();
+				case NAME:
+				case PERCENTAGE:
+				case DOWNLOAD_LOCATION:
+				case TIME_ADDED:
+					return Qt::AlignLeft;
+				default:
+					return Qt::AlignRight;
 			}
 		}
 		
@@ -540,7 +591,7 @@ namespace kt
 	bool ViewModel::setData(const QModelIndex & index,const QVariant & value,int role)
 	{
 		if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0 || 
-			role != Qt::EditRole || index.column() != 0)
+			role != Qt::EditRole || index.column() != NAME)
 			return false; 
 		
 		QString name = value.toString();
@@ -562,7 +613,7 @@ namespace kt
 			return QAbstractTableModel::flags(index) | Qt::ItemIsDropEnabled;
 		
 		Qt::ItemFlags flags = QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
-		if (index.column() == 0 )
+		if (index.column() == NAME)
 			flags |= Qt::ItemIsEditable;
 		
 		return flags;

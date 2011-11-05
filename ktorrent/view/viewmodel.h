@@ -154,7 +154,6 @@ namespace kt
 		enum Column
 		{
 			NAME = 0,
-			STATUS,
 			BYTES_DOWNLOADED,
 			TOTAL_BYTES_TO_DOWNLOAD,
 			BYTES_UPLOADED,
@@ -199,6 +198,7 @@ namespace kt
 			bool update(int row,int sort_column,QModelIndexList & to_update,ViewModel* model);
 			QVariant data(int col) const;
 			QVariant color(int col) const;
+			QVariant statusIcon() const;
 			bool lessThan(int col,const Item* other) const;
 			bool visible(Group* group, const QString & filter_string) const;
 		};

@@ -696,7 +696,10 @@ namespace kt
 		while (i != column_idx_map.end())
 		{
 			QAction* act = i.key();
-			act->setChecked(!header()->isSectionHidden(i.value()));
+			bool hidden = header()->isSectionHidden(i.value());
+			act->setChecked(!hidden);
+			if (!hidden && header()->sectionSize(i.value()) == 0)
+				header()->resizeSection(i.value(), 20);
 			i++;
 		}
 		
