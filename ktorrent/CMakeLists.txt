@@ -48,6 +48,7 @@ set(ktorrent_SRC
 	view/viewjobtracker.cpp 
 	view/scanextender.cpp
 	view/propertiesdlg.cpp
+	view/torrentsearchbar.cpp 
 )
 	
 
@@ -64,8 +65,6 @@ kde4_add_ui_files(ktorrent_SRC
 	dialogs/fileselectdlg.ui 
 	
 	groups/grouppolicydlg.ui
-	
-	tools/queuemanagerwidget.ui
 	
 	pref/qmpref.ui 
 	pref/btpref.ui

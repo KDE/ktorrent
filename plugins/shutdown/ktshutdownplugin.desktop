@@ -98,5 +98,5 @@ X-KDE-PluginInfo-Email=joris.guisson@gmail.com
 X-KDE-PluginInfo-Name=ShutdownPlugin
 X-KDE-PluginInfo-Website=http://ktorrent.org/
 X-KDE-PluginInfo-License=GPL
-X-KDE-PluginInfo-EnabledByDefault=true
+X-KDE-PluginInfo-EnabledByDefault=false
 Icon=system-shutdown

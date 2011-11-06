@@ -28,6 +28,7 @@ class QItemSelection;
 class QModelIndex;
 class QToolBar;
 class QTreeView;
+class KLineEdit;
 
 namespace bt
 {
@@ -36,7 +37,6 @@ namespace bt
 
 namespace kt
 {
-	class HintLineEdit;
 	class QueueManager;
 	class QueueManagerModel;
 	
@@ -70,6 +70,9 @@ namespace kt
 		void moveBottomClicked();
 		void searchTextChanged(const QString & t);
 		void showSearch(bool on);
+		void showDownloads(bool on);
+		void showUploads(bool on);
+		void showNotQueued(bool on);
 		void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 
 	private:
@@ -81,13 +84,17 @@ namespace kt
 		QueueManager* qman;
 		QTreeView* view;
 		QToolBar* toolbar;
-		HintLineEdit* search;
+		KLineEdit* search;
 		
 		QAction* show_search;
 		QAction* move_top;
 		QAction* move_up;
 		QAction* move_down;
 		QAction* move_bottom;
+		
+		QAction* show_uploads;
+		QAction* show_downloads;
+		QAction* show_not_queued;
 	};
 }
 

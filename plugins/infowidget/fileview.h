@@ -24,6 +24,7 @@
 #include <util/constants.h>
 #include <ksharedconfig.h>
 
+class KLineEdit;
 class KMenu;
 class QSortFilterProxyModel;
 class QToolBar;
@@ -37,7 +38,6 @@ namespace bt
 namespace kt
 {
 	class TorrentFileModel;
-	class HintLineEdit;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
@@ -114,7 +114,7 @@ namespace kt
 		
 		QTreeView* view;
 		QToolBar* toolbar;
-		HintLineEdit* filter;
+		KLineEdit* filter;
 	};
 
 }

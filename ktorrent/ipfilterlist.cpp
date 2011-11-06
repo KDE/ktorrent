@@ -42,7 +42,7 @@ namespace kt
 	{
 	}
 	
-	bool IPFilterList::isBlockedIP(const net::Address & addr)
+	bool IPFilterList::blocked(const net::Address& addr) const
 	{
 		if (addr.ipVersion() != 4)
 			return false;
@@ -55,11 +55,6 @@ namespace kt
 		}
 		
 		return false;
-	}
-	
-	bool IPFilterList::isBlockedIP(const QString & addr)
-	{
-		return isBlockedIP(net::Address(addr,7777));
 	}
 	
 	bool IPFilterList::parseIPWithWildcards(const QString & str, bt::Uint32 & start, bt::Uint32 & end)

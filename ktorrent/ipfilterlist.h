@@ -38,8 +38,7 @@ namespace kt
 		IPFilterList();
 		virtual ~IPFilterList();
 		
-		virtual bool isBlockedIP(const net::Address & addr);
-		virtual bool isBlockedIP(const QString & addr);
+		virtual bool blocked(const net::Address& addr) const;
 
 		/// Add an IP address with a mask.
 		bool add(const QString & ip);

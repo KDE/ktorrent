@@ -136,6 +136,11 @@ namespace kt
 		connect(start_torrent,SIGNAL(triggered()),this,SLOT(startTorrents()));
 		ac->addAction("start",start_torrent);
 		
+		force_start_torrent = new KAction(KIcon("kt-start"),i18nc("@action Force start all selected torrents in the current tab", "Force Start"), this);
+		force_start_torrent->setToolTip(i18n("Force start all selected torrents in the current tab"));
+		connect(force_start_torrent,SIGNAL(triggered()),this,SLOT(forceStartTorrents()));
+		ac->addAction("force_start",force_start_torrent);
+		
 		stop_torrent = new KAction(KIcon("kt-stop"),i18nc("@action Stop all selected torrents in the current tab", "Stop"),this);
 		stop_torrent->setToolTip(i18n("Stop all selected torrents in the current tab"));
 		stop_torrent->setShortcut(KShortcut(Qt::CTRL + Qt::Key_H));
@@ -340,6 +345,7 @@ namespace kt
 		en_add_peer = en_add_peer && en_stop;
 		
 		start_torrent->setEnabled(en_start);
+		force_start_torrent->setEnabled(en_start);
 		stop_torrent->setEnabled(en_stop);
 		remove_torrent->setEnabled(en_remove);
 		remove_torrent_and_data->setEnabled(en_remove);
@@ -375,25 +381,7 @@ namespace kt
 			stop_all->setEnabled(numRunningTorrents() > 0);
 		}
 	}
-
 	
-	void View::setupDefaultColumns()
-	{
-		int idx = 0;
-		foreach (QAction* act,column_action_list)
-		{
-			bool ret = true;
-			if (group->groupFlags() == Group::DOWNLOADS_ONLY_GROUP)
-				ret = model->defaultColumnForDownload(idx);
-			else if (group->groupFlags() == Group::UPLOADS_ONLY_GROUP)
-				ret = model->defaultColumnForUpload(idx); 
-			
-			header()->setSectionHidden(idx,!ret);
-			act->setChecked(ret);
-			idx++;
-		}
-	}
-
 	void View::setGroup(Group* g)
 	{
 		group = g;
@@ -424,6 +412,29 @@ namespace kt
 		if (sel.count() > 0)
 			core->start(sel);
 	}
+	
+	void View::forceStartTorrents()
+	{
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		if (sel.count() == 0)
+			return;
+		
+		QueueManager* qm = core->getQueueManager();
+		if (qm->enabled())
+		{
+			// Give everybody in the selection a high priority
+			int prio = qm->count();
+			int idx = 0;
+			foreach (bt::TorrentInterface* tc, sel)
+				tc->setPriority(prio + sel.count() - idx++);
+
+			core->start(sel);
+		}
+		else
+			core->start(sel);
+	}
+
 
 	void View::stopTorrents()
 	{
@@ -647,7 +658,6 @@ namespace kt
 		gui->getTorrentActivity()->part()->unplugActionList("view_columns_list");
 		gui->getTorrentActivity()->part()->plugActionList("view_columns_list",column_action_list);
 		view_menu->popup(viewport()->mapToGlobal(pos));
-		;
 	}
 	
 	void View::showHeaderMenu(const QPoint& pos)
@@ -686,7 +696,10 @@ namespace kt
 		while (i != column_idx_map.end())
 		{
 			QAction* act = i.key();
-			act->setChecked(!header()->isSectionHidden(i.value()));
+			bool hidden = header()->isSectionHidden(i.value());
+			act->setChecked(!hidden);
+			if (!hidden && header()->sectionSize(i.value()) == 0)
+				header()->resizeSection(i.value(), 20);
 			i++;
 		}
 		
@@ -879,6 +892,12 @@ namespace kt
 			
 			KIO::file_copy(QString(tc->getTorDir() + "torrent"),fn,-1,KIO::Overwrite);
 		}
+	}
+
+	void View::setFilterString(const QString& filter)
+	{
+		model->setFilterString(filter);
+		model->update(delegate);
 	}
 
 }

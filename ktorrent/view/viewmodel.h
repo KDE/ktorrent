@@ -58,6 +58,12 @@ namespace kt
 		 */
 		bool update(ViewDelegate* delegate,bool force_resort = false);
 		
+		/**
+		 * Set the current filter string
+		 * @param filter The filter string
+		 */
+		void setFilterString(const QString & filter);
+		
 		/// Is a column a default column for an upload view
 		bool defaultColumnForUpload(int column);
 		
@@ -127,7 +133,7 @@ namespace kt
 		{
 			foreach (Item* item,torrents)
 			{
-				if (item->member(group))
+				if (item->visible(group, filter_string))
 					if (!a(item->tc))
 						break;
 			}
@@ -148,7 +154,6 @@ namespace kt
 		enum Column
 		{
 			NAME = 0,
-			STATUS,
 			BYTES_DOWNLOADED,
 			TOTAL_BYTES_TO_DOWNLOAD,
 			BYTES_UPLOADED,
@@ -193,8 +198,9 @@ namespace kt
 			bool update(int row,int sort_column,QModelIndexList & to_update,ViewModel* model);
 			QVariant data(int col) const;
 			QVariant color(int col) const;
+			QVariant statusIcon() const;
 			bool lessThan(int col,const Item* other) const;
-			bool member(Group* group) const;
+			bool visible(Group* group, const QString & filter_string) const;
 		};
 			
 	private:
@@ -206,6 +212,7 @@ namespace kt
 		Group* group;
 		int num_visible;
 		QModelIndexList update_list;
+		QString filter_string;
 	};
 
 }

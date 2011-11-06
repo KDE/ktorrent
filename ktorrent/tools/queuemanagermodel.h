@@ -48,6 +48,10 @@ namespace kt
 		QueueManagerModel(QueueManager* qman,QObject* parent);
 		virtual ~QueueManagerModel();
 		
+		void setShowUploads(bool on);
+		void setShowDownloads(bool on);
+		void setShowNotQueued(bool on);
+		
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual int columnCount(const QModelIndex & parent) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
@@ -105,10 +109,30 @@ namespace kt
 		void onTorrentStatusChanged(bt::TorrentInterface* tc);
 
 	private:
+		struct Item
+		{
+			bt::TorrentInterface* tc;
+			bt::Int64 stalled_time;
+			
+			bool operator < (const Item & item) const
+			{
+				return tc->getPriority() < item.tc->getPriority();
+			}
+		};
+		
+		bool visible(const bt::TorrentInterface* tc);
+		void updateQueue();
+		void swapItems(int a, int b);
+		
+	private:
 		QueueManager* qman;
-		QMap<const bt::TorrentInterface*,bt::Int64> stalled_times;
+		QList<Item> queue; 
 		mutable QList<int> dragged_items;
 		QString search_text;
+		
+		bool show_uploads;
+		bool show_downloads;
+		bool show_not_queud;
 	};
 
 }

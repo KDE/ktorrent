@@ -98,7 +98,7 @@ namespace kt
 		bg->setExclusive(true);
 		
 		m_filter->setClearButtonShown(true);
-		m_filter->setHintText(i18n("Filter"));
+		m_filter->setClickMessage(i18n("Filter"));
 		connect(m_filter,SIGNAL(textChanged(QString)),this,SLOT(setFilter(QString)));
 
 		if (Settings::useCompletedDir())
@@ -721,8 +721,7 @@ namespace kt
 	void FileSelectDlg::setFilter(const QString & f)
 	{
 		Q_UNUSED(f);
-		// use typedText so we don't filter on the hint
-		filter_model->setFilterFixedString(m_filter->typedText());
+		filter_model->setFilterFixedString(m_filter->text());
 	}
 
 	void FileSelectDlg::moveCompletedToggled(bool on)

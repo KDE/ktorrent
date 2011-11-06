@@ -85,11 +85,6 @@ namespace kt
 		/// Get the current torrent
 		bt::TorrentInterface* getCurrentTorrent();
 		
-		/**
-		 * Setup the default columns of the view depending on the group it is showing.
-		 */
-		void setupDefaultColumns();
-		
 		/// Get the number of torrents
 		bt::Uint32 numTorrents() const {return num_torrents;};
 		
@@ -104,13 +99,17 @@ namespace kt
 		
 		/// Extend a widget
 		void extend(bt::TorrentInterface* tc,Extender* widget);
+	
 		
 	public slots:
-		/**
-		 * Update all items in the view
-		 * */
+		/// Set the filter string
+		void setFilterString(const QString & filter);
+		
+		/// Update all items in the view
 		void update();
+		
 		void startTorrents();
+		void forceStartTorrents();
 		void stopTorrents();
 		void pauseTorrents();
 		void removeTorrents();
@@ -176,6 +175,7 @@ namespace kt
 		
 		// actions for the view menu 
 		KAction* start_torrent;
+		KAction* force_start_torrent;
 		KAction* start_all;
 		KAction* stop_torrent;
 		KAction* stop_all;
