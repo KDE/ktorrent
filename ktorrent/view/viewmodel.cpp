@@ -66,6 +66,7 @@ namespace kt
 		runtime_ul = tc->getRunningTimeUL() - tc->getRunningTimeDL();
 		hidden = false;
 		time_added = s.time_added;
+		highlight = false;
 	}
 			
 	
@@ -371,8 +372,28 @@ namespace kt
 	
 	void ViewModel::addTorrent(bt::TorrentInterface* ti)
 	{
-		torrents.append(new Item(ti));
+		Item* i = new Item(ti);
+		i->highlight = true;
+		
+		// Turn off highlight for previously highlighted torrents
+		foreach (Item* item,torrents)
+			if (item->highlight)
+				item->highlight = false;
+			
+		torrents.append(i);
 		update(view->viewDelegate(),true);
+		
+		// Scroll to new torrent
+		int idx = 0;
+		foreach (Item* item,torrents)
+		{
+			if (item->tc == ti)
+			{
+				view->scrollTo(index(idx, 0));
+				break;
+			}
+			idx++;
+		}
 	}
 	
 	void ViewModel::removeTorrent(bt::TorrentInterface* ti)
@@ -454,16 +475,6 @@ namespace kt
 			return 0;
 		else
 			return _NUMBER_OF_COLUMNS;
-	}
-	
-	bool ViewModel::defaultColumnForUpload(int column)
-	{
-		return column != 2 && column != 5 && column != 10 && column != 12 && column != 14;
-	}
-	
-	bool ViewModel::defaultColumnForDownload(int column)
-	{
-		return column != 13 && column != 14;
 	}
 	
 	QVariant ViewModel::headerData(int section, Qt::Orientation orientation,int role) const
@@ -583,6 +594,12 @@ namespace kt
 				default:
 					return Qt::AlignRight;
 			}
+		}
+		else if (role == Qt::FontRole && item->highlight)
+		{
+			QFont f = view->font();
+			f.setBold(true);
+			return f;
 		}
 		
 		return QVariant();
