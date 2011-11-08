@@ -465,7 +465,7 @@ namespace kt
 				if (!s.completed)
 				{
 					QString msg = i18n("The torrent <b>%1</b> has not finished downloading, "
-							"do you want to delete the incomplete data, too?",s.torrent_name);
+						"do you want to delete the incomplete data, too?",tc->getDisplayName());
 					int ret = KMessageBox::questionYesNoCancel(
 							this,
 							msg,
@@ -490,11 +490,18 @@ namespace kt
 		if (sel.count() == 0)
 			return;
 
-		QString msg = i18n("You will lose all the downloaded data. Are you sure you want to do this?");
-		if (KMessageBox::warningYesNo(this,msg, i18n("Remove Torrent"), KStandardGuiItem::remove(),KStandardGuiItem::cancel()) == KMessageBox::No)
-			return;
-
-		core->remove(sel,true);
+		QStringList names;
+		foreach(bt::TorrentInterface* tc,sel)
+		{
+			names.append(tc->getDisplayName());
+		}
+		
+		QString msg = i18n("You will lose all the downloaded data of the following torrents. Are you sure you want to do this?");
+		if (KMessageBox::warningYesNoList(this, msg, names, i18n("Remove Torrent"),
+			KStandardGuiItem::remove(),KStandardGuiItem::cancel()) == KMessageBox::Yes)
+		{
+			core->remove(sel,true);
+		}
 	}
 
 	void View::startAllTorrents()
