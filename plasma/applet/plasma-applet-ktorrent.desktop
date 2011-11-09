@@ -85,6 +85,7 @@ Comment[sr@latin]=Plasma vidžet za praćenje jednog torenta
 Comment[sv]=Grafisk Plasmakomponent för att hålla reda på ett enstaka dataflöde
 Comment[uk]=Віджет Плазми для стеження за окремим торентом
 Comment[x-test]=xxPlasma widget to keep track of a single torrentxx
+Comment[zh_CN]=跟踪单个种子的离子部件
 Comment[zh_TW]=保持追蹤單一 torrent 的 Plasma 元件
 Type=Service
 X-Plasma-DropMimeTypes=application/x-ktorrent-drag-object

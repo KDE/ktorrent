@@ -64,12 +64,6 @@ namespace kt
 		 */
 		void setFilterString(const QString & filter);
 		
-		/// Is a column a default column for an upload view
-		bool defaultColumnForUpload(int column);
-		
-		/// Is a column a default column for a download view
-		bool defaultColumnForDownload(int column);
-		
 		virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
 		virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
@@ -192,6 +186,7 @@ namespace kt
 			int eta;
 			bool hidden;
 			QDateTime time_added;
+			bool highlight;
 			
 			Item(bt::TorrentInterface* tc);
 
