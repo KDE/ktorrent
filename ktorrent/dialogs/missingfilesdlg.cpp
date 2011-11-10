@@ -26,6 +26,7 @@
 #include <kmessagebox.h>
 #include <interfaces/torrentinterface.h>
 #include "missingfilesdlg.h"
+#include <interfaces/torrentfileinterface.h>
 
 namespace kt
 {
@@ -50,8 +51,12 @@ namespace kt
 		}
 		
 		m_dnd->setEnabled(tc->getStats().multi_file_torrent);
+		int disabled_files = 0;
+		for (bt::Uint32 i = 0; i < tc->getNumFiles(); i++)
+			if (tc->getTorrentFile(i).getPriority() == bt::EXCLUDED)
+				disabled_files++;
 		// select new is only possible if all files are missing 
-		m_select_new->setEnabled(!tc->getStats().multi_file_torrent || (bt::Uint32)missing.count() == tc->getNumFiles());
+		m_select_new->setEnabled(!tc->getStats().multi_file_torrent || missing.count() == (int)tc->getNumFiles() - disabled_files);
 	}
 
 

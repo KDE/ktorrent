@@ -33,6 +33,7 @@ Changes in 4.2:
 - Merge status and name column into one column and use icons to show the status (272160, 228564)
 - Highlight in bold and scroll to newly added torrents (145028)
 - Show torrent names in remove torrent and data confirmation dialog (284728)
+- Enable select new location button when all non excluded files are missing instead of when all files are missing
 
 Changes in 4.1.3:
 - Fix statusbar hiding and showing not working (281674)
