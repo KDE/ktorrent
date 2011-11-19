@@ -73,6 +73,7 @@ namespace kt
 	{
 		updateBitSet();
 		updateBar(true);
+		setVisible(!bitset.allOn());
 	}
 	
 	void VideoChunkBar::timeElapsed(qint64 time)
@@ -86,7 +87,7 @@ namespace kt
 		if (!stream)
 			return;
 		
-		if (current_chunk != stream->currentChunk())
+		if (current_chunk != stream->currentChunk() || stream->chunksBitSet() != bitset)
 			updateChunkBar();
 	}
 	
