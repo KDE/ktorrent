@@ -28,6 +28,7 @@
 #include <QCheckBox>
 
 class KLineEdit;
+class KToolBar;
 
 namespace kt
 {
@@ -38,6 +39,7 @@ namespace kt
 	 */
 	class MediaViewFilter : public QSortFilterProxyModel
 	{
+		Q_OBJECT
 	public:
 		MediaViewFilter(QObject* parent = 0);
 		virtual ~MediaViewFilter();
@@ -46,6 +48,9 @@ namespace kt
 		
 		/// Enable or disable showing of incomplete files
 		void setShowIncomplete(bool on);
+		
+	public slots:
+		void refresh();
 		
 	private:
 		bool show_incomplete;
@@ -69,14 +74,16 @@ namespace kt
 		
 	private slots:
 		void onDoubleClicked(const QModelIndex & index);
-		void showIncompleteChanged(int);
+		void showIncompleteChanged(bool on);
 
 	private:
 		MediaModel* model;
 		QListView* media_tree;
 		KLineEdit* search_box;
 		MediaViewFilter* filter;
-		QCheckBox* show_incomplete;
+		KToolBar* tool_bar;
+		QAction* show_incomplete;
+		QAction* refresh;
 	};
 
 }
