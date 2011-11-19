@@ -143,6 +143,9 @@ namespace kt
 		*/
 		void dhtNotEnabled(const QString & msg);
 		
+	private slots:
+		void secondaryActivate(const QPoint & pos);
+		
 	private:
 		Core* core;
 		int previousDownloadHeight;

@@ -103,6 +103,7 @@ namespace kt
 			return;
 		
 		status_notifier_item = new KStatusNotifierItem(mwnd);
+		connect(status_notifier_item, SIGNAL(secondaryActivateRequested(QPoint)), this, SLOT(secondaryActivate(QPoint)));
 		
 		menu = status_notifier_item->contextMenu();
 	
@@ -442,6 +443,12 @@ namespace kt
 			if (status_notifier_item)
 				status_notifier_item->setOverlayIconByName("kt-pause");
 		}
+	}
+
+	void TrayIcon::secondaryActivate(const QPoint& pos)
+	{
+		Q_UNUSED(pos);
+		core->setSuspendedState(!core->getSuspendedState());
 	}
 
 }
