@@ -27,6 +27,7 @@
 #include "fadingnavigationwidget.h"
 
 class QGraphicsLinearLayout;
+class QDBusPendingCallWatcher;
 
 namespace Plasma
 {
@@ -68,6 +69,7 @@ namespace ktplasma
 		void iconClicked();
 		void selectPrev();
 		void selectNext();
+		void dbusCallFinished(QDBusPendingCallWatcher* self);
 		
 	private:
 		void updateTorrentCombo();
