@@ -23,9 +23,11 @@
 
 
 #include <QListView>
-#include <QSortFilterProxyModel>
-#include "mediafile.h"
 #include <QCheckBox>
+#include <QSortFilterProxyModel>
+#include <KSharedConfigPtr>
+#include "mediafile.h"
+
 
 class KLineEdit;
 class KToolBar;
