@@ -50,32 +50,34 @@
 
 #include <ui_Spd.h>
 
-namespace kt {
-
-/** \brief Speeds tab
-\author Krzysztof Kundzicz <athantor@gmail.com>
-*/
-class SpdTabPage : public PluginPage
+namespace kt
 {
-	Q_OBJECT
+
+	/** \brief Speeds tab
+	\author Krzysztof Kundzicz <athantor@gmail.com>
+	*/
+
+	class SpdTabPage : public PluginPage
+	{
+		Q_OBJECT
 	private:
 		///Page's UI
 		std::auto_ptr<Ui::SpdWgt> pmUiSpd;
-		
+
 		///Dl speeds chart widget
 		std::auto_ptr<ChartDrawer> pmDlChtWgt;
 		///Peers speeds chart widget
 		std::auto_ptr<ChartDrawer> pmPeersChtWgt;
 		///Ul speeds chart widget
 		std::auto_ptr<ChartDrawer> pmUlChtWgt;
-		
+
 		///Dl average
 		avg_t mDlAvg;
 		///Ul average
 		avg_t mUlAvg;
-	
+
 		void SetupUi();
-		
+
 		/** \brief Gathers dl speeds data
 		\param  pP kt::Plugin interface
 		*/
@@ -88,21 +90,21 @@ class SpdTabPage : public PluginPage
 		\param  pP kt::Plugin interface
 		*/
 		void GatherUlSpeed(Plugin * pP);
-		
+
 	public:
-		/** \brief Constructor 
+		/** \brief Constructor
 		\param p Parent
 		*/
 		SpdTabPage(QWidget *p);
 		///Destructor
 		~SpdTabPage();
-		
+
 	public slots:
 		void ApplySettings();
 		void UpdateAllCharts();
 		void GatherData(Plugin *);
 		void ResetAvg(ChartDrawer *);
-};
+	};
 
 } //ns end
 

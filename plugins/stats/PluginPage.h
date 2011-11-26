@@ -26,14 +26,16 @@
 #include <interfaces/plugin.h>
 #include <drawer/ChartDrawer.h>
 
-namespace kt {
-
-/** \brief Base class for plugin's tabs in the main UI
-\author Krzysztof Kundzicz <athantor@gmail.com>
-*/
-class PluginPage : public QWidget
+namespace kt
 {
-	Q_OBJECT
+
+	/** \brief Base class for plugin's tabs in the main UI
+	\author Krzysztof Kundzicz <athantor@gmail.com>
+	*/
+
+	class PluginPage : public QWidget
+	{
+		Q_OBJECT
 
 	protected:
 		///Setups UI
@@ -41,20 +43,20 @@ class PluginPage : public QWidget
 	public:
 		//sum , msmnts
 		/** \brief Type used for computing average
-		* 
+		*
 		* Layout:
 		* - First: Sum of measurements
 		* - Second: Amount
 		*/
 		typedef std::pair<long double, long double> avg_t;
-		
+
 		/** \brief Constructor
 		\param p Parent
 		*/
 		PluginPage(QWidget * p);
 		///Destructor
 		virtual ~PluginPage();
-		
+
 	public slots:
 		///Applies settings
 		virtual void ApplySettings() = 0;
@@ -66,7 +68,7 @@ class PluginPage : public QWidget
 		virtual void GatherData(Plugin * pP) = 0;
 		///Resets average
 		virtual void ResetAvg(ChartDrawer *) = 0;
-};
+	};
 
 } // ns end
 

@@ -43,35 +43,37 @@
 #include <drawer/KPlotWgtDrawer.h>
 #include <statspluginsettings.h>
 
-namespace kt {
-
-/** \brief Connections tab
-\author Krzysztof Kundzicz <athantor@gmail.com>
-*/
-class ConnsTabPage : public PluginPage
+namespace kt
 {
-	Q_OBJECT
+
+	/** \brief Connections tab
+	\author Krzysztof Kundzicz <athantor@gmail.com>
+	*/
+
+	class ConnsTabPage : public PluginPage
+	{
+		Q_OBJECT
 
 	private:
 		///Tab's UI
 		std::auto_ptr<Ui::ConnsWgt> pmConnsUi;
-		
+
 		///Connections chart widget
 		std::auto_ptr<ChartDrawer> pmConnsChtWgt;
 		///DHT chart widget
 		std::auto_ptr<ChartDrawer> pmDhtChtWgt;
-		
+
 		/** \brief Leechers in swarms dataset UUID
-		
+
 		Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
 		*/
 		const std::auto_ptr<QUuid> pmLhrSwnUuid;
 		/** \brief Seeds in swarms dataset UUID
-		
+
 		Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
 		*/
 		const std::auto_ptr<QUuid> pmSesSwnUuid;
-		
+
 		/** \brief Gathers data about connections
 		\param  pP kt::Plugin interface
 		*/
@@ -80,7 +82,7 @@ class ConnsTabPage : public PluginPage
 		\param  pP kt::Plugin interface
 		*/
 		void GatherDhtStats();
-		
+
 		void SetupUi();
 	public:
 		/** \brief Constructor
@@ -90,13 +92,13 @@ class ConnsTabPage : public PluginPage
 		///Destructor
 		~ConnsTabPage();
 
-		
+
 	public slots:
 		void ApplySettings();
 		void UpdateAllCharts();
 		void GatherData(Plugin *);
 		void ResetAvg(ChartDrawer *);
-};
+	};
 
 } // ns end
 

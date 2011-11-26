@@ -174,14 +174,14 @@ void PlainChartDrawer::DrawChart(QPainter & rPnt)
 {
 	QPen oldpen = rPnt.pen();
 	
-	for(size_t i = 0; i < pmVals -> size(); i++)
+	for(size_t i = 0; i < pmVals->size(); i++)
 	{
-		DrawChartLine(rPnt, pmVals -> at(i));
-		DrawCurrentValue(rPnt, pmVals -> at(i), i);
+		DrawChartLine(rPnt, pmVals->at(i));
+		DrawCurrentValue(rPnt, pmVals->at(i), i);
 		
-		if(pmVals -> at(i).GetMarkMax())
+		if(pmVals->at(i).GetMarkMax())
 		{
-			DrawMaximum(rPnt, pmVals -> at(i), i);
+			DrawMaximum(rPnt, pmVals->at(i), i);
 		}
 	}
 	
@@ -197,22 +197,22 @@ void PlainChartDrawer::DrawChartLine(QPainter & rPnt, const ChartDrawerData & rC
 	
 	ChartDrawerData::val_t const * vals = rCdd . GetValues();
 	
-	QPointF * l = new QPointF[vals -> size()];
+	QPointF * l = new QPointF[vals->size()];
 	
-	for(size_t i = 0; i < vals -> size(); i++ )
+	for(size_t i = 0; i < vals->size(); i++ )
 	{
 		l[i] = QPointF(
 			FindXScreenCoords(i),
-			TY(FindYScreenCoords(vals -> at(i)))
+			TY(FindYScreenCoords(vals->at(i)))
 		);
 	}
 	
-	l[vals -> size() -1] = QPointF(
+	l[vals->size() -1] = QPointF(
 			width(),
-			TY(FindYScreenCoords( *(vals -> end() - 1) ))
+			TY(FindYScreenCoords( *(vals->end() - 1) ))
 		);
 	
-	rPnt.drawPolyline(l, vals -> size());
+	rPnt.drawPolyline(l, vals->size());
 	delete [] l;
 }
 
@@ -232,7 +232,7 @@ void PlainChartDrawer::DrawCurrentValue(QPainter & rPnt, const ChartDrawerData &
 	idx++;
 	wgtunit_t y = -5 + (idx * 16);
 	
-	wgtunit_t val = *(rCdd . GetValues() -> end() - 1);
+	wgtunit_t val = *(rCdd . GetValues()->end() - 1);
 	
 	wgtunit_t lenmod;
 	
@@ -264,7 +264,7 @@ void PlainChartDrawer::DrawCurrentValue(QPainter & rPnt, const ChartDrawerData &
 	rPnt.setPen(qp);
 	
 	QPointF l[3] = {
-		QPointF(width(), TY(FindYScreenCoords( *(rCdd . GetValues() -> end() - 1) ))),
+		QPointF(width(), TY(FindYScreenCoords( *(rCdd . GetValues()->end() - 1) ))),
 		QPointF(width() + (38 + lenmod), y + 2),
 		QPointF( QWidget::width() , y + 2.5),
 	};
@@ -320,22 +320,22 @@ void PlainChartDrawer::DrawMaximum(QPainter & rPnt, const ChartDrawerData & rCdd
 void PlainChartDrawer::MakeCtxMenu()
 {
 
-	connect(pmCtxMenu -> addAction(i18n("Save as image…")), SIGNAL(triggered ( bool )), this, SLOT(RenderToImage()));
+	connect(pmCtxMenu->addAction(i18n("Save as image…")), SIGNAL(triggered ( bool )), this, SLOT(RenderToImage()));
 	
-	pmCtxMenu -> addSeparator();
+	pmCtxMenu->addSeparator();
 	
-	connect(pmCtxMenu -> addAction(i18n("Rescale")), SIGNAL(triggered ( bool )), this, SLOT(FindSetMax()));
+	connect(pmCtxMenu->addAction(i18n("Rescale")), SIGNAL(triggered ( bool )), this, SLOT(FindSetMax()));
 	
-	pmCtxMenu -> addSeparator();
+	pmCtxMenu->addSeparator();
 	
-	QAction * rst = pmCtxMenu -> addAction(i18n("Reset"));
+	QAction * rst = pmCtxMenu->addAction(i18n("Reset"));
 	
 	connect(rst, SIGNAL(triggered ( bool )), this, SLOT(ZeroAll()));
 }
 
 void PlainChartDrawer::ShowCtxMenu(const QPoint & pos)
 {
-	pmCtxMenu -> exec( mapToGlobal(pos) );
+	pmCtxMenu->exec( mapToGlobal(pos) );
 }
 
 void PlainChartDrawer::RenderToImage()
@@ -356,7 +356,7 @@ void PlainChartDrawer::RenderToImage()
 
 void PlainChartDrawer::AddValue (const size_t idx, const wgtunit_t val, const bool upd )
 {
-	if(idx >= pmVals -> size())
+	if(idx >= pmVals->size())
 	{
 		return;
 	} else {
@@ -383,24 +383,24 @@ void PlainChartDrawer::AddValue (const size_t idx, const wgtunit_t val, const bo
 void PlainChartDrawer::AddDataSet (ChartDrawerData Cdd)
 {
 	Cdd . SetSize(mXMax);
-	pmVals -> push_back(Cdd);
+	pmVals->push_back(Cdd);
 	
 	SetLegend(MakeLegendStr());
 }
 
 void PlainChartDrawer::InsertDataSet (const size_t idx, ChartDrawerData Cdd)
 {
-	pmVals -> insert(pmVals->begin()+idx, Cdd);
+	pmVals->insert(pmVals->begin()+idx, Cdd);
 	SetLegend(MakeLegendStr());
 }
 
 void PlainChartDrawer::RemoveDataSet (const size_t idx)
 {
-	if(idx >= pmVals -> size())
+	if(idx >= pmVals->size())
 	{
 		return;
 	} else {
-		pmVals -> erase( (pmVals -> begin()) + idx);
+		pmVals->erase( (pmVals->begin()) + idx);
 	}
 	
 	SetLegend(MakeLegendStr());
@@ -409,7 +409,7 @@ void PlainChartDrawer::RemoveDataSet (const size_t idx)
 
 void PlainChartDrawer::Zero (const size_t idx)
 {
-	if(idx >= pmVals -> size())
+	if(idx >= pmVals->size())
 	{
 		return;
 	} else {
@@ -421,7 +421,7 @@ void PlainChartDrawer::Zero (const size_t idx)
 
 void PlainChartDrawer::ZeroAll ()
 {
-	for( size_t idx = 0; idx < pmVals -> size(); idx++)
+	for( size_t idx = 0; idx < pmVals->size(); idx++)
 	{
 		(*pmVals)[idx].Zero();
 	} 
@@ -438,9 +438,9 @@ void PlainChartDrawer::SetMaxMode (const MaxMode mm)
 void PlainChartDrawer::SetXMax (const wgtunit_t x)
 {
 	mXMax = x;
-	for(size_t i = 0; i < pmVals -> size(); i++)
+	for(size_t i = 0; i < pmVals->size(); i++)
 	{
-		pmVals -> at(i).SetSize(x);
+		pmVals->at(i).SetSize(x);
 	}
 }
 
@@ -458,42 +458,42 @@ void PlainChartDrawer::SetUnitName(const QString & rUn)
 
 void PlainChartDrawer::SetPen(const size_t idx, const QPen & rP)
 {
-	if(idx >= pmVals -> size())
+	if(idx >= pmVals->size())
 	{
 		return;
 	}
 	
-	pmVals -> at(idx).SetPen(rP);
+	pmVals->at(idx).SetPen(rP);
 	
 	MakeLegendStr();
 }
 
 const QUuid * PlainChartDrawer::GetUuid(const size_t idx) const
 {
-	if(idx >= pmVals -> size())
+	if(idx >= pmVals->size())
 	{
 		return 0;
 	}
 	
-	return pmVals -> at(idx) . GetUuid();
+	return pmVals->at(idx) . GetUuid();
 }
 
 void PlainChartDrawer::SetUuid(const size_t idx, const QUuid & rU)
 {
-	if(idx >= pmVals -> size())
+	if(idx >= pmVals->size())
 	{
 		return;
 	}
 	
-	pmVals -> at(idx) . SetUuid(rU);
+	pmVals->at(idx) . SetUuid(rU);
 }
 
 int16_t PlainChartDrawer::FindUuidInSet(const QUuid & rU) const
 {
 	
-	for(int16_t i = 0; i < static_cast<int16_t>(pmVals -> size()); i++)
+	for(int16_t i = 0; i < static_cast<int16_t>(pmVals->size()); i++)
 	{
-		if( (*(pmVals -> at(i).GetUuid())) == rU)
+		if( (*(pmVals->at(i).GetUuid())) == rU)
 		{
 			return i;
 		}
@@ -511,9 +511,9 @@ void PlainChartDrawer::FindSetMax()
 {
 	wgtunit_t max = 1;
 	
-	for(size_t i = 0; i < pmVals -> size(); i++)
+	for(size_t i = 0; i < pmVals->size(); i++)
 	{
-		wgtunit_t locval = pmVals -> at(i).FindMax().first;
+		wgtunit_t locval = pmVals->at(i).FindMax().first;
 		if(locval > max)
 		{
 			max = locval;
@@ -529,11 +529,11 @@ QString PlainChartDrawer::MakeLegendStr()
 	
 	lgnd += i18n("<h1 align='center' style='font-size: large; text-decoration: underline'>Legend:</h1><ul type='square'>");
 	
-	for(size_t i = 0; i < pmVals -> size(); i++)
+	for(size_t i = 0; i < pmVals->size(); i++)
 	{
 		lgnd +=	i18n("<li><span style='background-color: %1; font-size: 14px; font-family: monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>",
-			pmVals -> at(i) . GetPen() -> color().name(), 
-			*(pmVals -> at(i) . GetName())
+			pmVals->at(i) . GetPen()->color().name(), 
+			*(pmVals->at(i) . GetName())
 			);
 	}
 	

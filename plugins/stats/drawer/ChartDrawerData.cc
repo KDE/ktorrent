@@ -46,21 +46,21 @@ ChartDrawerData::ChartDrawerData(const QString & rN, const QPen & rP, const bool
 
 void ChartDrawerData::SetSize(const size_t s)
 {
-	if(s != pmVals -> size())
+	if(s != pmVals->size())
 	{
-		pmVals -> resize(s, 0.0);
+		pmVals->resize(s, 0.0);
 	}
 }
 
 void ChartDrawerData::Zero()
 {
-	std::fill(pmVals -> begin(), pmVals -> end(), 0.0);
+	std::fill(pmVals->begin(), pmVals->end(), 0.0);
 }
 
 void ChartDrawerData::AddValue(const qreal val)
 {
-	std::copy(pmVals -> begin() + 1, pmVals -> end(), pmVals -> begin());
-	*(pmVals -> end() - 1) = val;
+	std::copy(pmVals->begin() + 1, pmVals->end(), pmVals->begin());
+	*(pmVals->end() - 1) = val;
 }
 
 const ChartDrawerData::val_t * ChartDrawerData::GetValues() const
@@ -100,19 +100,19 @@ void ChartDrawerData::SetUuid(const QUuid & rU)
 
 std::pair<qreal, size_t> ChartDrawerData::FindMax() const
 {
-	if(!pmVals -> size())
+	if(!pmVals->size())
 	{
 		return std::make_pair(0,0);
 	}
 		
-	qreal max = pmVals -> at(0);
+	qreal max = pmVals->at(0);
 	size_t idx = 0;
 	
-	for(size_t i = 0; i < pmVals -> size(); i++)
+	for(size_t i = 0; i < pmVals->size(); i++)
 	{
-		if(pmVals -> at(i) >= max)
+		if(pmVals->at(i) >= max)
 		{
-			max = pmVals -> at(i);
+			max = pmVals->at(i);
 			idx = i;
 		}
 	}

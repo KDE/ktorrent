@@ -53,17 +53,17 @@ const QString * ChartDrawer::GetUnitName() const
 
 size_t ChartDrawer::SetsCount() const
 {
-	return pmVals -> size();
+	return pmVals->size();
 }
 
 ChartDrawer::val_t::const_iterator ChartDrawer::const_begin() const
 {
-	return pmVals -> begin();
+	return pmVals->begin();
 }
 
 ChartDrawer::val_t::const_iterator ChartDrawer::const_end() const
 {
-	return pmVals -> end();
+	return pmVals->end();
 }
 
 } //NS end

@@ -24,19 +24,20 @@
 #include <interfaces/prefpageinterface.h>
 #include "ui_DisplaySettings.h"
 
-namespace kt 
+namespace kt
 {
-	
+
 	/**
-		@author 
+		@author
 	*/
-	class DisplaySettingsPage : public PrefPageInterface,public Ui_DisplaySettingsWgt
+
+	class DisplaySettingsPage : public PrefPageInterface, public Ui_DisplaySettingsWgt
 	{
 	public:
-		DisplaySettingsPage(QWidget* parent);	
+		DisplaySettingsPage(QWidget* parent);
 		virtual ~DisplaySettingsPage();
-	
-		
+
+
 	};
 
 }
