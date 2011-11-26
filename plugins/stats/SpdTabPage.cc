@@ -33,8 +33,8 @@ namespace kt
 			pmPeersChtWgt.reset(new PlainChartDrawer(this));
 			pmUlChtWgt.reset(new PlainChartDrawer(this));
 
-			connect(dynamic_cast<PlainChartDrawer *>(pmDlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(ResetAvg(ChartDrawer *)));
-			connect(dynamic_cast<PlainChartDrawer *>(pmUlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(ResetAvg(ChartDrawer *)));
+			connect(dynamic_cast<PlainChartDrawer *>(pmDlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(resetAvg(ChartDrawer *)));
+			connect(dynamic_cast<PlainChartDrawer *>(pmUlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(resetAvg(ChartDrawer *)));
 
 		}
 		else if (StatsPluginSettings::widgetType() == 1)
@@ -43,20 +43,20 @@ namespace kt
 			pmPeersChtWgt.reset(new KPlotWgtDrawer(this));
 			pmUlChtWgt.reset(new KPlotWgtDrawer(this));
 
-			connect(dynamic_cast<KPlotWgtDrawer *>(pmDlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(ResetAvg(ChartDrawer *)));
-			connect(dynamic_cast<KPlotWgtDrawer *>(pmUlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(ResetAvg(ChartDrawer *)));
+			connect(dynamic_cast<KPlotWgtDrawer *>(pmDlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(resetAvg(ChartDrawer *)));
+			connect(dynamic_cast<KPlotWgtDrawer *>(pmUlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(resetAvg(ChartDrawer *)));
 		}
 
 
 
-		SetupUi();
+		setupUi();
 	}
 
 	SpdTabPage::~SpdTabPage()
 	{
 	}
 
-	void SpdTabPage::SetupUi()
+	void SpdTabPage::setupUi()
 	{
 		pmUiSpd->setupUi(this);
 
@@ -64,81 +64,81 @@ namespace kt
 		pmUiSpd->PeersSpdGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmPeersChtWgt.get()));
 		pmUiSpd->UlSpdGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmUlChtWgt.get()));
 
-		pmDlChtWgt->AddDataSet(ChartDrawerData(i18n("Current speed"), QPen(StatsPluginSettings::dlSpdColor()), true));
-		pmUlChtWgt->AddDataSet(ChartDrawerData(i18n("Current speed"), QPen(StatsPluginSettings::ulSpdColor()), true));
+		pmDlChtWgt->addDataSet(ChartDrawerData(i18n("Current speed"), QPen(StatsPluginSettings::dlSpdColor()), true));
+		pmUlChtWgt->addDataSet(ChartDrawerData(i18n("Current speed"), QPen(StatsPluginSettings::ulSpdColor()), true));
 
-		pmDlChtWgt->AddDataSet(ChartDrawerData(i18n("Average speed"), QPen(StatsPluginSettings::dlAvgColor()), true));
-		pmUlChtWgt->AddDataSet(ChartDrawerData(i18n("Average speed"), QPen(StatsPluginSettings::ulAvgColor()), true));
+		pmDlChtWgt->addDataSet(ChartDrawerData(i18n("Average speed"), QPen(StatsPluginSettings::dlAvgColor()), true));
+		pmUlChtWgt->addDataSet(ChartDrawerData(i18n("Average speed"), QPen(StatsPluginSettings::ulAvgColor()), true));
 
-		pmDlChtWgt->AddDataSet(ChartDrawerData(i18n("Speed limit"), QPen(StatsPluginSettings::dlLimitColor()), true));
-		pmUlChtWgt->AddDataSet(ChartDrawerData(i18n("Speed limit"), QPen(StatsPluginSettings::ulLimitColor()), true));
+		pmDlChtWgt->addDataSet(ChartDrawerData(i18n("Speed limit"), QPen(StatsPluginSettings::dlLimitColor()), true));
+		pmUlChtWgt->addDataSet(ChartDrawerData(i18n("Speed limit"), QPen(StatsPluginSettings::ulLimitColor()), true));
 
-		pmPeersChtWgt->AddDataSet(ChartDrawerData(i18n("Average from leechers"), QPen(StatsPluginSettings::prAvgFromLColor()), true));
-		pmPeersChtWgt->AddDataSet(ChartDrawerData(i18n("Average to leechers"), QPen(StatsPluginSettings::prAvgToLColor()), true));
-		pmPeersChtWgt->AddDataSet(ChartDrawerData(i18n("Average from seeds"), QPen(StatsPluginSettings::prAvgFromSColor()), true));
-		pmPeersChtWgt->AddDataSet(ChartDrawerData(i18n("From leechers"), QPen(StatsPluginSettings::prFromLColor()), true));
-		pmPeersChtWgt->AddDataSet(ChartDrawerData(i18n("From seeds"), QPen(StatsPluginSettings::prFromSColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("Average from leechers"), QPen(StatsPluginSettings::prAvgFromLColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("Average to leechers"), QPen(StatsPluginSettings::prAvgToLColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("Average from seeds"), QPen(StatsPluginSettings::prAvgFromSColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("From leechers"), QPen(StatsPluginSettings::prFromLColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("From seeds"), QPen(StatsPluginSettings::prFromSColor()), true));
 
-		ApplySettings();
+		applySettings();
 	}
 
-	void SpdTabPage::ApplySettings()
+	void SpdTabPage::applySettings()
 	{
 
-		pmDlChtWgt->SetPen(0, QPen(StatsPluginSettings::dlSpdColor()));
-		pmUlChtWgt->SetPen(0, QPen(StatsPluginSettings::ulSpdColor()));
+		pmDlChtWgt->setPen(0, QPen(StatsPluginSettings::dlSpdColor()));
+		pmUlChtWgt->setPen(0, QPen(StatsPluginSettings::ulSpdColor()));
 
-		pmDlChtWgt->SetPen(1, QPen(StatsPluginSettings::dlAvgColor()));
-		pmUlChtWgt->SetPen(1, QPen(StatsPluginSettings::ulAvgColor()));
+		pmDlChtWgt->setPen(1, QPen(StatsPluginSettings::dlAvgColor()));
+		pmUlChtWgt->setPen(1, QPen(StatsPluginSettings::ulAvgColor()));
 
-		pmDlChtWgt->SetPen(2, QPen(StatsPluginSettings::dlLimitColor()));
-		pmUlChtWgt->SetPen(2, QPen(StatsPluginSettings::ulLimitColor()));
+		pmDlChtWgt->setPen(2, QPen(StatsPluginSettings::dlLimitColor()));
+		pmUlChtWgt->setPen(2, QPen(StatsPluginSettings::ulLimitColor()));
 
-		pmPeersChtWgt->SetPen(0, QPen(StatsPluginSettings::prAvgFromLColor()));
-		pmPeersChtWgt->SetPen(1, QPen(StatsPluginSettings::prAvgToLColor()));
-		pmPeersChtWgt->SetPen(2, QPen(StatsPluginSettings::prAvgFromSColor()));
-		pmPeersChtWgt->SetPen(3, QPen(StatsPluginSettings::prFromLColor()));
-		pmPeersChtWgt->SetPen(4, QPen(StatsPluginSettings::prFromSColor()));
+		pmPeersChtWgt->setPen(0, QPen(StatsPluginSettings::prAvgFromLColor()));
+		pmPeersChtWgt->setPen(1, QPen(StatsPluginSettings::prAvgToLColor()));
+		pmPeersChtWgt->setPen(2, QPen(StatsPluginSettings::prAvgFromSColor()));
+		pmPeersChtWgt->setPen(3, QPen(StatsPluginSettings::prFromLColor()));
+		pmPeersChtWgt->setPen(4, QPen(StatsPluginSettings::prFromSColor()));
 
-		pmDlChtWgt->SetXMax(StatsPluginSettings::dlSpdSamples());
-		pmPeersChtWgt->SetXMax(StatsPluginSettings::peersSpdSamples());
-		pmUlChtWgt->SetXMax(StatsPluginSettings::ulSpdSamples());
+		pmDlChtWgt->setXMax(StatsPluginSettings::dlSpdSamples());
+		pmPeersChtWgt->setXMax(StatsPluginSettings::peersSpdSamples());
+		pmUlChtWgt->setXMax(StatsPluginSettings::ulSpdSamples());
 
-		pmDlChtWgt->SetMaxMode(static_cast<ChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
-		pmPeersChtWgt->SetMaxMode(static_cast<ChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
-		pmUlChtWgt->SetMaxMode(static_cast<ChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
+		pmDlChtWgt->setMaxMode(static_cast<ChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
+		pmPeersChtWgt->setMaxMode(static_cast<ChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
+		pmUlChtWgt->setMaxMode(static_cast<ChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
 
 		// ---
 
-		pmDlChtWgt->EnableAntiAlias(StatsPluginSettings::antiAliasing());
-		pmPeersChtWgt->EnableAntiAlias(StatsPluginSettings::antiAliasing());
-		pmUlChtWgt->EnableAntiAlias(StatsPluginSettings::antiAliasing());
+		pmDlChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
+		pmPeersChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
+		pmUlChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
 
-		pmDlChtWgt->EnableBgdGrid(StatsPluginSettings::drawBgdGrid());
-		pmPeersChtWgt->EnableBgdGrid(StatsPluginSettings::drawBgdGrid());
-		pmUlChtWgt->EnableBgdGrid(StatsPluginSettings::drawBgdGrid());
+		pmDlChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
+		pmPeersChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
+		pmUlChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
 
 	}
 
-	void SpdTabPage::UpdateAllCharts()
+	void SpdTabPage::updateAllCharts()
 	{
 		pmDlChtWgt->update();
 		pmPeersChtWgt->update();
 		pmUlChtWgt->update();
 	}
 
-	void SpdTabPage::GatherDlSpeed(Plugin * pPlug)
+	void SpdTabPage::gatherDownloadSpeed(Plugin * pPlug)
 	{
 		uint spd = pPlug->getCore()->getStats().download_speed;
 		mDlAvg.first += spd;
 		mDlAvg.second++;
 
-		pmDlChtWgt->AddValue(0,  spd / 1024.0);
-		pmDlChtWgt->AddValue(1, (mDlAvg.first / mDlAvg.second) / 1024.0);
-		pmDlChtWgt->AddValue(2, Settings::maxDownloadRate());
+		pmDlChtWgt->addValue(0,  spd / 1024.0);
+		pmDlChtWgt->addValue(1, (mDlAvg.first / mDlAvg.second) / 1024.0);
+		pmDlChtWgt->addValue(2, Settings::maxDownloadRate());
 	}
 
-	void SpdTabPage::GatherPeersSpeed(Plugin * pPlug)
+	void SpdTabPage::gatherPeersSpeed(Plugin * pPlug)
 	{
 		kt::QueueManager * qm_iface = pPlug->getCore()->getQueueManager();
 
@@ -187,50 +187,50 @@ namespace kt
 
 		if (!l_cnt)
 		{
-			pmPeersChtWgt->AddValue(0, 0);
-			pmPeersChtWgt->AddValue(1, 0);
-			pmPeersChtWgt->AddValue(3, 0);
+			pmPeersChtWgt->addValue(0, 0);
+			pmPeersChtWgt->addValue(1, 0);
+			pmPeersChtWgt->addValue(3, 0);
 		}
 		else
 		{
-			pmPeersChtWgt->AddValue(0, (static_cast<double>(l_dn_spd) / static_cast<double>(l_cnt)) / 1024.0);
-			pmPeersChtWgt->AddValue(1, (static_cast<double>(l_up_spd) / static_cast<double>(l_cnt)) / 1024.0);
-			pmPeersChtWgt->AddValue(3, static_cast<double>(l_dn_spd) / 1024.0);
+			pmPeersChtWgt->addValue(0, (static_cast<double>(l_dn_spd) / static_cast<double>(l_cnt)) / 1024.0);
+			pmPeersChtWgt->addValue(1, (static_cast<double>(l_up_spd) / static_cast<double>(l_cnt)) / 1024.0);
+			pmPeersChtWgt->addValue(3, static_cast<double>(l_dn_spd) / 1024.0);
 		}
 
 		if (!s_cnt)
 		{
-			pmPeersChtWgt->AddValue(2, 0);
-			pmPeersChtWgt->AddValue(4, 0);
+			pmPeersChtWgt->addValue(2, 0);
+			pmPeersChtWgt->addValue(4, 0);
 		}
 		else
 		{
-			pmPeersChtWgt->AddValue(2, (static_cast<double>(s_dn_spd) / static_cast<double>(s_cnt)) / 1024.0);
-			pmPeersChtWgt->AddValue(4, static_cast<double>(s_dn_spd) / 1024.0);
+			pmPeersChtWgt->addValue(2, (static_cast<double>(s_dn_spd) / static_cast<double>(s_cnt)) / 1024.0);
+			pmPeersChtWgt->addValue(4, static_cast<double>(s_dn_spd) / 1024.0);
 		}
 
 
 	}
 
-	void SpdTabPage::GatherUlSpeed(Plugin * pPlug)
+	void SpdTabPage::gatherUploadSpeed(Plugin * pPlug)
 	{
 		uint spd = pPlug->getCore()->getStats().upload_speed;
 		mUlAvg.first += spd;
 		mUlAvg.second++;
 
-		pmUlChtWgt->AddValue(0, spd / 1024.0);
-		pmUlChtWgt->AddValue(1, (mUlAvg.first / mUlAvg.second) / 1024.0);
-		pmUlChtWgt->AddValue(2, Settings::maxUploadRate());
+		pmUlChtWgt->addValue(0, spd / 1024.0);
+		pmUlChtWgt->addValue(1, (mUlAvg.first / mUlAvg.second) / 1024.0);
+		pmUlChtWgt->addValue(2, Settings::maxUploadRate());
 	}
 
-	void SpdTabPage::GatherData(Plugin * pPlug)
+	void SpdTabPage::gatherData(Plugin * pPlug)
 	{
-		GatherDlSpeed(pPlug);
-		GatherPeersSpeed(pPlug);
-		GatherUlSpeed(pPlug);
+		gatherDownloadSpeed(pPlug);
+		gatherPeersSpeed(pPlug);
+		gatherUploadSpeed(pPlug);
 	}
 
-	void SpdTabPage::ResetAvg(ChartDrawer * c)
+	void SpdTabPage::resetAvg(ChartDrawer * c)
 	{
 		if (!c)
 		{

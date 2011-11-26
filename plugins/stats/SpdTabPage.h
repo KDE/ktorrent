@@ -60,37 +60,6 @@ namespace kt
 	class SpdTabPage : public PluginPage
 	{
 		Q_OBJECT
-	private:
-		///Page's UI
-		std::auto_ptr<Ui::SpdWgt> pmUiSpd;
-
-		///Dl speeds chart widget
-		std::auto_ptr<ChartDrawer> pmDlChtWgt;
-		///Peers speeds chart widget
-		std::auto_ptr<ChartDrawer> pmPeersChtWgt;
-		///Ul speeds chart widget
-		std::auto_ptr<ChartDrawer> pmUlChtWgt;
-
-		///Dl average
-		avg_t mDlAvg;
-		///Ul average
-		avg_t mUlAvg;
-
-		void SetupUi();
-
-		/** \brief Gathers dl speeds data
-		\param  pP kt::Plugin interface
-		*/
-		void GatherDlSpeed(Plugin * pP);
-		/** \brief Gathers peers speeds data
-		\param  pP kt::Plugin interface
-		*/
-		void GatherPeersSpeed(Plugin * pP);
-		/** \brief Gathers Ul speeds data
-		\param  pP kt::Plugin interface
-		*/
-		void GatherUlSpeed(Plugin * pP);
-
 	public:
 		/** \brief Constructor
 		\param p Parent
@@ -100,10 +69,42 @@ namespace kt
 		~SpdTabPage();
 
 	public slots:
-		void ApplySettings();
-		void UpdateAllCharts();
-		void GatherData(Plugin *);
-		void ResetAvg(ChartDrawer *);
+		void applySettings();
+		void updateAllCharts();
+		void gatherData(Plugin *);
+		void resetAvg(ChartDrawer *);
+		
+	private:
+		/** \brief Gathers dl speeds data
+		 \ param  pP kt::Plugin interfac*e *
+		 */
+		void gatherDownloadSpeed(Plugin * pP);
+		/** \brief Gathers peers speeds data
+		 \ param  pP kt::Plugin interfac*e *
+		 */
+		void gatherPeersSpeed(Plugin * pP);
+		/** \brief Gathers Ul speeds data
+		 \ param  pP kt::Plugin interfac*e *
+		 */
+		void gatherUploadSpeed(Plugin * pP);
+		
+		void setupUi();
+		
+	private:
+		///Page's UI
+		std::auto_ptr<Ui::SpdWgt> pmUiSpd;
+		
+		///Dl speeds chart widget
+		std::auto_ptr<ChartDrawer> pmDlChtWgt;
+		///Peers speeds chart widget
+		std::auto_ptr<ChartDrawer> pmPeersChtWgt;
+		///Ul speeds chart widget
+		std::auto_ptr<ChartDrawer> pmUlChtWgt;
+		
+		///Dl average
+		avg_t mDlAvg;
+		///Ul average
+		avg_t mUlAvg;
 	};
 
 } //ns end

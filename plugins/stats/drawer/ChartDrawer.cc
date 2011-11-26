@@ -35,33 +35,33 @@ ChartDrawer::~ChartDrawer()
 {
 }
 
-ChartDrawer::wgtunit_t ChartDrawer::GetXMax() const
+ChartDrawer::wgtunit_t ChartDrawer::getXMax() const
 {
 	return mXMax;
 }
 
-ChartDrawer::wgtunit_t ChartDrawer::GetYMax() const
+ChartDrawer::wgtunit_t ChartDrawer::getYMax() const
 {
 	return mYMax;
 }
 
 
-const QString * ChartDrawer::GetUnitName() const
+const QString * ChartDrawer::getUnitName() const
 {
 	return pmUnitName.get();
 }
 
-size_t ChartDrawer::SetsCount() const
+size_t ChartDrawer::dataSetCount() const
 {
 	return pmVals->size();
 }
 
-ChartDrawer::val_t::const_iterator ChartDrawer::const_begin() const
+ChartDrawer::val_t::const_iterator ChartDrawer::begin() const
 {
 	return pmVals->begin();
 }
 
-ChartDrawer::val_t::const_iterator ChartDrawer::const_end() const
+ChartDrawer::val_t::const_iterator ChartDrawer::end() const
 {
 	return pmVals->end();
 }

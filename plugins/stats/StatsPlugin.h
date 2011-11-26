@@ -51,7 +51,25 @@ namespace kt
 	class StatsPlugin : public Plugin
 	{
 		Q_OBJECT
+	public:
+		/** \brief Constructor
+		\param p Parent
+		*/
+		StatsPlugin(QObject * p, const QStringList&);
+		///Destructor
+		virtual ~StatsPlugin();
 
+		void load();
+		void unload();
+		bool versionCheck(const QString& version) const;
+		void guiUpdate();
+
+	public slots:
+		///Gather data
+		void gatherData();
+		///Settings has been changed
+		void settingsChanged();
+		
 	private:
 		///Speeds tab
 		std::auto_ptr<SpdTabPage> pmUiSpd;
@@ -63,29 +81,9 @@ namespace kt
 		DisplaySettingsPage* pmDispSett;
 		///Timer
 		std::auto_ptr<QTimer> pmTmr;
-
+		
 		///Updates counter
 		uint32_t mUpdCtr;
-
-	public:
-		/** \brief Constructor
-		\param p Parent
-		*/
-		StatsPlugin(QObject * p, const QStringList&);
-		///Destructor
-		~StatsPlugin();
-
-		void load();
-		void unload();
-		bool versionCheck(const QString& version) const;
-		void guiUpdate();
-
-	public slots:
-		///Gather data
-		void DispatchDataGathering();
-		///Settings has been changed
-		void SettingsChanged();
-
 	};
 
 } //ns end

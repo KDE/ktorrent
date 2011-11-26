@@ -55,8 +55,8 @@ namespace kt
 		getGUI()->addPrefPage(pmUiSett);
 		getGUI()->addPrefPage(pmDispSett);
 
-		connect(pmTmr.get(), SIGNAL(timeout()), dynamic_cast<StatsPlugin*>(this), SLOT(DispatchDataGathering()));
-		connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(SettingsChanged()));
+		connect(pmTmr.get(), SIGNAL(timeout()), dynamic_cast<StatsPlugin*>(this), SLOT(gatherData()));
+		connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
 
 		pmTmr->start(StatsPluginSettings::dataGatherIval());
 
@@ -95,8 +95,8 @@ namespace kt
 	{
 		if (mUpdCtr >= StatsPluginSettings::updateEveryGuiUpdates())
 		{
-			pmUiSpd->UpdateAllCharts();
-			pmUiConns->UpdateAllCharts();
+			pmUiSpd->updateAllCharts();
+			pmUiConns->updateAllCharts();
 
 			mUpdCtr = 1;
 		}
@@ -106,17 +106,17 @@ namespace kt
 		}
 	}
 
-	void StatsPlugin::DispatchDataGathering()
+	void StatsPlugin::gatherData()
 	{
-		pmUiSpd->GatherData(this);
-		pmUiConns->GatherData(this);
+		pmUiSpd->gatherData(this);
+		pmUiConns->gatherData(this);
 	}
 
-	void StatsPlugin::SettingsChanged()
+	void StatsPlugin::settingsChanged()
 	{
 		pmTmr->setInterval(StatsPluginSettings::dataGatherIval());
-		pmUiSpd->ApplySettings();
-		pmUiConns->ApplySettings();
+		pmUiSpd->applySettings();
+		pmUiConns->applySettings();
 	}
 
 } //Ns end

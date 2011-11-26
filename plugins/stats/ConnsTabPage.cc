@@ -38,7 +38,7 @@ namespace kt
 			pmDhtChtWgt.reset(new KPlotWgtDrawer(this));
 		}
 
-		SetupUi();
+		setupUi();
 	}
 
 	ConnsTabPage::~ConnsTabPage()
@@ -46,106 +46,106 @@ namespace kt
 	}
 
 
-	void ConnsTabPage::SetupUi()
+	void ConnsTabPage::setupUi()
 	{
 		pmConnsUi->setupUi(this);
 
-		pmConnsChtWgt->SetUnitName("n");
-		pmDhtChtWgt->SetUnitName("n");
+		pmConnsChtWgt->setUnitName("n");
+		pmDhtChtWgt->setUnitName("n");
 
 		pmConnsUi->ConnsGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmConnsChtWgt.get()));
 		pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmDhtChtWgt.get()));
 
 		//------------------
-		pmConnsChtWgt->AddDataSet(ChartDrawerData(i18n("Leechers connected"), QPen(StatsPluginSettings::cnLConnColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Leechers connected"), QPen(StatsPluginSettings::cnLConnColor()), true));
 		//
 
 		if (StatsPluginSettings::showLeechersInSwarms())
 		{
-			pmConnsChtWgt->AddDataSet(ChartDrawerData(i18n("Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
+			pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
 		}
 
 		//
-		pmConnsChtWgt->AddDataSet(ChartDrawerData(i18n("Seeds connected"), QPen(StatsPluginSettings::cnSConnColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Seeds connected"), QPen(StatsPluginSettings::cnSConnColor()), true));
 
 		//
 		if (StatsPluginSettings::showSeedsInSwarms())
 		{
-			pmConnsChtWgt->AddDataSet(ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+			pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
 		}
 
 		//
-		pmConnsChtWgt->AddDataSet(ChartDrawerData(i18n("Average leechers connected per torrent"), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Average leechers connected per torrent"), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()), true));
 
 		//
-		pmConnsChtWgt->AddDataSet(ChartDrawerData(i18n("Average seeds connected per torrent"), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Average seeds connected per torrent"), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()), true));
 
 		//
-		pmConnsChtWgt->AddDataSet(ChartDrawerData(i18n("Average leechers connected per running torrent"), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Average leechers connected per running torrent"), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()), true));
 
 		//
-		pmConnsChtWgt->AddDataSet(ChartDrawerData(i18n("Average seeds connected per running torrent"), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Average seeds connected per running torrent"), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()), true));
 
 		//--------------------------
 
 		if (bt::Globals::instance().getDHT().isRunning())
 		{
-			pmDhtChtWgt->AddDataSet(ChartDrawerData(i18n("Nodes"), QPen(StatsPluginSettings::dhtNodesColor()), true));
-			pmDhtChtWgt->AddDataSet(ChartDrawerData(i18n("Tasks"), QPen(StatsPluginSettings::dhtTasksColor()), true));
+			pmDhtChtWgt->addDataSet(ChartDrawerData(i18n("Nodes"), QPen(StatsPluginSettings::dhtNodesColor()), true));
+			pmDhtChtWgt->addDataSet(ChartDrawerData(i18n("Tasks"), QPen(StatsPluginSettings::dhtTasksColor()), true));
 		}
 		else
 		{
 			pmConnsUi->DhtGbw->setEnabled(false);
 		}
 
-		ApplySettings();
+		applySettings();
 	}
 
-	void ConnsTabPage::ApplySettings()
+	void ConnsTabPage::applySettings()
 	{
 
-		pmConnsChtWgt->EnableAntiAlias(StatsPluginSettings::antiAliasing());
-		pmDhtChtWgt->EnableAntiAlias(StatsPluginSettings::antiAliasing());
+		pmConnsChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
+		pmDhtChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
 
-		pmConnsChtWgt->EnableBgdGrid(StatsPluginSettings::drawBgdGrid());
-		pmDhtChtWgt->EnableBgdGrid(StatsPluginSettings::drawBgdGrid());
+		pmConnsChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
+		pmDhtChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
 
 
 		//-------
 
-		if (StatsPluginSettings::showLeechersInSwarms() && (pmConnsChtWgt->FindUuidInSet(*pmLhrSwnUuid) == -1))
+		if (StatsPluginSettings::showLeechersInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
 		{
-			pmConnsChtWgt->InsertDataSet(1, ChartDrawerData(i18n("Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
+			pmConnsChtWgt->insertDataSet(1, ChartDrawerData(i18n("Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
 		}
 
-		if ((!StatsPluginSettings::showLeechersInSwarms()) && (pmConnsChtWgt->FindUuidInSet(*pmLhrSwnUuid) != -1))
+		if ((!StatsPluginSettings::showLeechersInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) != -1))
 		{
-			pmConnsChtWgt->RemoveDataSet(1);
+			pmConnsChtWgt->removeDataSet(1);
 		}
 
 		//~
 
-		if (StatsPluginSettings::showSeedsInSwarms() && (pmConnsChtWgt->FindUuidInSet(*pmSesSwnUuid) == -1))
+		if (StatsPluginSettings::showSeedsInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmSesSwnUuid) == -1))
 		{
-			if ((pmConnsChtWgt->FindUuidInSet(*pmLhrSwnUuid) == -1))
+			if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
 			{
-				pmConnsChtWgt->InsertDataSet(2, ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+				pmConnsChtWgt->insertDataSet(2, ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
 			}
 			else
 			{
-				pmConnsChtWgt->InsertDataSet(3, ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+				pmConnsChtWgt->insertDataSet(3, ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
 			}
 		}
 
-		if ((!StatsPluginSettings::showSeedsInSwarms()) && (pmConnsChtWgt->FindUuidInSet(*pmSesSwnUuid) != -1))
+		if ((!StatsPluginSettings::showSeedsInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmSesSwnUuid) != -1))
 		{
-			if ((pmConnsChtWgt->FindUuidInSet(*pmLhrSwnUuid) == -1))
+			if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
 			{
-				pmConnsChtWgt->RemoveDataSet(2);
+				pmConnsChtWgt->removeDataSet(2);
 			}
 			else
 			{
-				pmConnsChtWgt->RemoveDataSet(3);
+				pmConnsChtWgt->removeDataSet(3);
 			}
 		}
 
@@ -155,34 +155,34 @@ namespace kt
 
 		s1 = s2 = 1;
 
-		pmConnsChtWgt->SetPen(0, QPen(StatsPluginSettings::cnLConnColor()));
+		pmConnsChtWgt->setPen(0, QPen(StatsPluginSettings::cnLConnColor()));
 
 		if (StatsPluginSettings::showLeechersInSwarms())
 		{
-			pmConnsChtWgt->SetPen(1, QPen(StatsPluginSettings::cnLSwarmsColor()));
+			pmConnsChtWgt->setPen(1, QPen(StatsPluginSettings::cnLSwarmsColor()));
 			s1 = 0;
 		}
 
-		pmConnsChtWgt->SetPen(2 - s1, QPen(StatsPluginSettings::cnSConnColor()));
+		pmConnsChtWgt->setPen(2 - s1, QPen(StatsPluginSettings::cnSConnColor()));
 
 		if (StatsPluginSettings::showSeedsInSwarms())
 		{
-			pmConnsChtWgt->SetPen(3 - s1, QPen(StatsPluginSettings::cnSSwarmsColor()));
+			pmConnsChtWgt->setPen(3 - s1, QPen(StatsPluginSettings::cnSSwarmsColor()));
 			s2 = 0;
 		}
 
-		pmConnsChtWgt->SetPen(4 - (s1 + s2), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()));
+		pmConnsChtWgt->setPen(4 - (s1 + s2), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()));
 
-		pmConnsChtWgt->SetPen(5 - (s1 + s2), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()));
-		pmConnsChtWgt->SetPen(6 - (s1 + s2), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()));
-		pmConnsChtWgt->SetPen(7 - (s1 + s2), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()));
+		pmConnsChtWgt->setPen(5 - (s1 + s2), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()));
+		pmConnsChtWgt->setPen(6 - (s1 + s2), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()));
+		pmConnsChtWgt->setPen(7 - (s1 + s2), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()));
 
-		pmDhtChtWgt->SetPen(0, QPen(StatsPluginSettings::dhtNodesColor()));
-		pmDhtChtWgt->SetPen(1, QPen(StatsPluginSettings::dhtTasksColor()));
+		pmDhtChtWgt->setPen(0, QPen(StatsPluginSettings::dhtNodesColor()));
+		pmDhtChtWgt->setPen(1, QPen(StatsPluginSettings::dhtTasksColor()));
 
 //--------------------------------------------------------------------------------------------------------------------
 
-		pmConnsChtWgt->SetXMax(StatsPluginSettings::connsSamples());
+		pmConnsChtWgt->setXMax(StatsPluginSettings::connsSamples());
 
 		if (bt::Globals::instance().getDHT().isRunning())
 		{
@@ -191,7 +191,7 @@ namespace kt
 				pmConnsUi->DhtGbw->setEnabled(true);
 			}
 
-			pmDhtChtWgt->SetXMax(StatsPluginSettings::dhtSpdSamples());
+			pmDhtChtWgt->setXMax(StatsPluginSettings::dhtSpdSamples());
 
 		}
 		else
@@ -199,15 +199,15 @@ namespace kt
 			pmConnsUi->DhtGbw->setEnabled(false);
 		}
 
-		pmConnsChtWgt->SetXMax(StatsPluginSettings::connsSamples());
+		pmConnsChtWgt->setXMax(StatsPluginSettings::connsSamples());
 
-		pmDhtChtWgt->SetXMax(StatsPluginSettings::dhtSpdSamples());
+		pmDhtChtWgt->setXMax(StatsPluginSettings::dhtSpdSamples());
 
-		pmConnsChtWgt->SetMaxMode(static_cast<PlainChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
-		pmDhtChtWgt->SetMaxMode(static_cast<PlainChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
+		pmConnsChtWgt->setMaxMode(static_cast<PlainChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
+		pmDhtChtWgt->setMaxMode(static_cast<PlainChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
 	}
 
-	void ConnsTabPage::UpdateAllCharts()
+	void ConnsTabPage::updateAllCharts()
 	{
 		pmConnsChtWgt->update();
 
@@ -217,7 +217,7 @@ namespace kt
 		}
 	}
 
-	void ConnsTabPage::GatherData(Plugin * pPlug)
+	void ConnsTabPage::gatherData(Plugin * pPlug)
 	{
 
 		GatherConnStats(pPlug);
@@ -228,7 +228,7 @@ namespace kt
 		}
 	}
 
-	void ConnsTabPage::ResetAvg(ChartDrawer *)
+	void ConnsTabPage::resetAvg(ChartDrawer *)
 	{
 	}
 
@@ -236,8 +236,8 @@ namespace kt
 	{
 		const dht::Stats st = bt::Globals::instance().getDHT().getStats();
 
-		pmDhtChtWgt->AddValue(0, st.num_peers);
-		pmDhtChtWgt->AddValue(1, st.num_tasks);
+		pmDhtChtWgt->addValue(0, st.num_peers);
+		pmDhtChtWgt->addValue(1, st.num_tasks);
 	}
 
 	void ConnsTabPage::GatherConnStats(Plugin * pPlug)
@@ -274,42 +274,42 @@ namespace kt
 
 		s1 = s2 = 1;
 
-		pmConnsChtWgt->AddValue(0, lc);
+		pmConnsChtWgt->addValue(0, lc);
 
 		if (StatsPluginSettings::showLeechersInSwarms())
 		{
-			pmConnsChtWgt->AddValue(1, ls);
+			pmConnsChtWgt->addValue(1, ls);
 			s1 = 0;
 		}
 
-		pmConnsChtWgt->AddValue(2 - s1, sc);
+		pmConnsChtWgt->addValue(2 - s1, sc);
 
 		if (StatsPluginSettings::showSeedsInSwarms())
 		{
-			pmConnsChtWgt->AddValue(3 - s1, ss);
+			pmConnsChtWgt->addValue(3 - s1, ss);
 			s2 = 0;
 		}
 
 		if (tc == 0)
 		{
-			pmConnsChtWgt->AddValue(4 - (s1 + s2), 0);
-			pmConnsChtWgt->AddValue(5 - (s1 + s2), 0);
+			pmConnsChtWgt->addValue(4 - (s1 + s2), 0);
+			pmConnsChtWgt->addValue(5 - (s1 + s2), 0);
 		}
 		else
 		{
-			pmConnsChtWgt->AddValue(4 - (s1 + s2), static_cast<double>(lc) / static_cast<double>(tc));
-			pmConnsChtWgt->AddValue(5 - (s1 + s2), static_cast<double>(sc) / static_cast<double>(tc));
+			pmConnsChtWgt->addValue(4 - (s1 + s2), static_cast<double>(lc) / static_cast<double>(tc));
+			pmConnsChtWgt->addValue(5 - (s1 + s2), static_cast<double>(sc) / static_cast<double>(tc));
 		}
 
 		if (rtc == 0)
 		{
-			pmConnsChtWgt->AddValue(6 - (s1 + s2), 0);
-			pmConnsChtWgt->AddValue(7 - (s1 + s2), 0);
+			pmConnsChtWgt->addValue(6 - (s1 + s2), 0);
+			pmConnsChtWgt->addValue(7 - (s1 + s2), 0);
 		}
 		else
 		{
-			pmConnsChtWgt->AddValue(6 - (s1 + s2), static_cast<double>(lc) / static_cast<double>(rtc));
-			pmConnsChtWgt->AddValue(7 - (s1 + s2), static_cast<double>(sc) / static_cast<double>(rtc));
+			pmConnsChtWgt->addValue(6 - (s1 + s2), static_cast<double>(lc) / static_cast<double>(rtc));
+			pmConnsChtWgt->addValue(7 - (s1 + s2), static_cast<double>(sc) / static_cast<double>(rtc));
 		}
 	}
 

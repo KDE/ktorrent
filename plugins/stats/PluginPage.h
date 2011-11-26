@@ -36,10 +36,6 @@ namespace kt
 	class PluginPage : public QWidget
 	{
 		Q_OBJECT
-
-	protected:
-		///Setups UI
-		virtual void SetupUi() = 0;
 	public:
 		//sum , msmnts
 		/** \brief Type used for computing average
@@ -59,15 +55,19 @@ namespace kt
 
 	public slots:
 		///Applies settings
-		virtual void ApplySettings() = 0;
+		virtual void applySettings() = 0;
 		///Updates all charts
-		virtual void UpdateAllCharts() = 0;
+		virtual void updateAllCharts() = 0;
 		/** \brief Gathers data
 		\param pP Plugin interface
 		*/
-		virtual void GatherData(Plugin * pP) = 0;
+		virtual void gatherData(Plugin * pP) = 0;
 		///Resets average
-		virtual void ResetAvg(ChartDrawer *) = 0;
+		virtual void resetAvg(ChartDrawer *) = 0;
+		
+	protected:
+		///Setups UI
+		virtual void setupUi() = 0;
 	};
 
 } // ns end

@@ -48,21 +48,22 @@
 
 #include <drawer/ChartDrawer.h>
 
-namespace kt {
-
-/** \brief Drawer class based on KPlotWidget
-\author Krzysztof Kundzicz <athantor@gmail.com>
-*/
-
-class KPlotWgtDrawer : public KPlotWidget, public ChartDrawer
+namespace kt
 {
-	Q_OBJECT
-	
+
+	/** \brief Drawer class based on KPlotWidget
+	\author Krzysztof Kundzicz <athantor@gmail.com>
+	*/
+
+	class KPlotWgtDrawer : public KPlotWidget, public ChartDrawer
+	{
+		Q_OBJECT
+
 	public:
 		///Type used as buffer
 		typedef std::list<std::pair<size_t, wgtunit_t> > buff_t;
 		typedef QList< KPlotObject * > val_t;
-	
+
 	private:
 		///Uuids of plotObjects
 		std::auto_ptr<std::vector<QUuid> > pmUuids;
@@ -72,7 +73,7 @@ class KPlotWgtDrawer : public KPlotWidget, public ChartDrawer
 		std::auto_ptr<std::vector<QString> > pmDescs;
 		///Context menu
 		std::auto_ptr<KMenu> pmCtxMenu;
-		
+
 		///Makes a context menu for widget
 		void MakeCtxMenu();
 		/** \brief Converts ChartDrawerData to KPlotObject
@@ -84,46 +85,46 @@ class KPlotWgtDrawer : public KPlotWidget, public ChartDrawer
 		void AddPointsFromBuffer();
 		///Marks max
 		void MarkMax();
-		
-		
+
+
 	public:
 		///Constructor
 		KPlotWgtDrawer(QWidget *p);
-		
-		void paintEvent ( QPaintEvent * pPevt );
-		const QUuid * GetUuid(const size_t idx) const;
-		
- 		bool event( QEvent * ) ;
-	
-	public slots:
-		void AddValue (const size_t idx, const wgtunit_t val, const bool upd=false);
-		void AddDataSet (ChartDrawerData Cdd);
-		void InsertDataSet (const size_t idx, ChartDrawerData Cdd);
-		void RemoveDataSet (const size_t idx);
-		void Zero (const size_t idx);
-		void ZeroAll();
-		void SetUnitName(const QString & rN);
-		void SetPen (const size_t idx, const QPen &rP);
-		void SetXMax (const wgtunit_t x);
-		void SetYMax (const wgtunit_t y);
-		void FindSetMax ();
-		void SetUuid (const size_t idx, const QUuid &rQ);
-		int16_t FindUuidInSet (const QUuid &rQ) const;
-		void SetMaxMode (const MaxMode mm);
-		void update ();
-		void SetLegend(const QString & rL);
-		QString MakeLegendStr();
 
-		void EnableAntiAlias (bool aa);
-		void EnableBgdGrid(bool bg);
-		
-		void ShowCtxMenu(const QPoint & rP);
-		void RenderToImage();
-		
+		void paintEvent(QPaintEvent * pPevt);
+		const QUuid * getUuid(const size_t idx) const;
+
+		bool event(QEvent *) ;
+
+	public slots:
+		void addValue(const size_t idx, const wgtunit_t val, const bool upd = false);
+		void addDataSet(ChartDrawerData Cdd);
+		void insertDataSet(const size_t idx, ChartDrawerData Cdd);
+		void removeDataSet(const size_t idx);
+		void zero(const size_t idx);
+		void zeroAll();
+		void setUnitName(const QString & rN);
+		void setPen(const size_t idx, const QPen &rP);
+		void setXMax(const wgtunit_t x);
+		void setYMax(const wgtunit_t y);
+		void findSetMax();
+		void setUuid(const size_t idx, const QUuid &rQ);
+		int16_t findUuidInSet(const QUuid &rQ) const;
+		void setMaxMode(const MaxMode mm);
+		void update();
+		void setLegend(const QString & rL);
+		QString makeLegendString();
+
+		void enableAntiAlias(bool aa);
+		void enableBackgroundGrid(bool bg);
+
+		void showContextMenu(const QPoint & rP);
+		void renderToImage();
+
 	signals:
 		void Zeroed(ChartDrawer *);
-		
-};
+
+	};
 
 } // ns end
 

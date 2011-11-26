@@ -83,7 +83,7 @@ namespace kt
 		*/
 		void GatherDhtStats();
 
-		void SetupUi();
+		void setupUi();
 	public:
 		/** \brief Constructor
 		\param  p Parent
@@ -94,10 +94,10 @@ namespace kt
 
 
 	public slots:
-		void ApplySettings();
-		void UpdateAllCharts();
-		void GatherData(Plugin *);
-		void ResetAvg(ChartDrawer *);
+		void applySettings();
+		void updateAllCharts();
+		void gatherData(Plugin *);
+		void resetAvg(ChartDrawer *);
 	};
 
 } // ns end
