@@ -22,6 +22,7 @@
 
 #include <QTreeView>
 #include <util/constants.h>
+#include <interfaces/torrentinterface.h>
 #include <ksharedconfig.h>
 
 class KLineEdit;
@@ -31,7 +32,6 @@ class QToolBar;
 
 namespace bt
 {
-	class TorrentInterface;
 	class TorrentFileInterface;
 }
 
@@ -88,7 +88,7 @@ namespace kt
 		void checkFile();
 
 	private:
-		bt::TorrentInterface* curr_tc;
+		bt::TorrentInterface::WPtr curr_tc;
 		TorrentFileModel* model;
 
 		KMenu* context_menu;

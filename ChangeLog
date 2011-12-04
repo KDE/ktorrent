@@ -37,6 +37,7 @@ Changes in 4.2:
 - Hide chunkbar when download of stream is complete (259788)
 - Suspend/resume queue when middle clicking on tray icon (210027)
 - Use dbus to show ktorrent window from plasma applet (287309)
+- Fix crash due to dangling pointer (281196)
 
 Changes in 4.1.3:
 - Fix statusbar hiding and showing not working (281674)

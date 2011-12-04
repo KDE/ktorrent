@@ -23,11 +23,7 @@
 
 #include "ui_trackerview.h"
 #include <QSortFilterProxyModel>
-
-namespace bt
-{
-	class TorrentInterface;
-}
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {
@@ -61,7 +57,7 @@ namespace kt
 		void torrentChanged(bt::TorrentInterface* ti);
 			
 	private:
-		bt::TorrentInterface* tc;
+		bt::TorrentInterface::WPtr tc;
 		TrackerModel* model;
 		QSortFilterProxyModel* proxy_model;
 	};

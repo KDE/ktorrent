@@ -42,7 +42,7 @@ namespace kt
 	
 	
 	TrackerView::TrackerView(QWidget *parent)
-		: QWidget(parent), tc(0)
+		: QWidget(parent)
 	{
 		setupUi(this);
 		model = new TrackerModel(this);
@@ -117,7 +117,7 @@ namespace kt
 		QList<bt::TrackerInterface*> tl;
 		foreach (const KUrl & url,urls)
 		{
-			bt::TrackerInterface* trk = tc->getTrackersList()->addTracker(url,true);
+			bt::TrackerInterface* trk = tc.data()->getTrackersList()->addTracker(url,true);
 			if (!trk)
 				dupes.append(url);
 			else
@@ -145,10 +145,10 @@ namespace kt
 	void TrackerView::changeClicked()
 	{
 		QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
-		if (!current.isValid())
+		if (!current.isValid() || tc.isNull())
 			return;
 		
-		bt::TrackersList* tlist = tc->getTrackersList();
+		bt::TrackersList* tlist = tc.data()->getTrackersList();
 		bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
 		if (trk && trk->isEnabled())
 			tlist->setCurrentTracker(trk);
@@ -156,9 +156,12 @@ namespace kt
 
 	void TrackerView::restoreClicked()
 	{
-		tc->getTrackersList()->restoreDefault();
-		tc->updateTracker();
-		model->changeTC(tc); // trigger reset
+		if (tc)
+		{
+			tc.data()->getTrackersList()->restoreDefault();
+			tc.data()->updateTracker();
+			model->changeTC(tc.data()); // trigger reset
+		}
 	}
 
 	void TrackerView::updateClicked()
@@ -166,7 +169,7 @@ namespace kt
 		if(!tc)
 			return;
 		
-		tc->updateTracker();
+		tc.data()->updateTracker();
 	}
 	
 	void TrackerView::scrapeClicked()
@@ -174,12 +177,12 @@ namespace kt
 		if(!tc)
 			return;
 		
-		tc->scrapeTracker();
+		tc.data()->scrapeTracker();
 	}
 	
 	void TrackerView::changeTC(TorrentInterface* ti)
 	{
-		if (tc == ti)
+		if (tc.data() == ti)
 			return;
 		
 		setEnabled(ti != 0);
@@ -211,7 +214,7 @@ namespace kt
 			m_remove_tracker->setEnabled(true);
 			m_restore_defaults->setEnabled(true);
 			m_scrape->setEnabled(true);
-			model->changeTC(tc);
+			model->changeTC(ti);
 			currentChanged(m_tracker_list->selectionModel()->currentIndex(),QModelIndex());
 		}
 	}
@@ -226,12 +229,12 @@ namespace kt
 			return;
 		}
 		
-		const TorrentStats & s = tc->getStats();
+		const TorrentStats & s = tc.data()->getStats();
 	
 		bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
 		bool enabled = trk ? trk->isEnabled() : false;
 		m_change_tracker->setEnabled(s.running && model->rowCount(QModelIndex()) > 1 && enabled && s.priv_torrent);
-		m_remove_tracker->setEnabled(trk && tc->getTrackersList()->canRemoveTracker(trk));
+		m_remove_tracker->setEnabled(trk && tc.data()->getTrackersList()->canRemoveTracker(trk));
 	}
 	
 	void TrackerView::saveState(KSharedConfigPtr cfg)

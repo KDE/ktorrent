@@ -36,7 +36,7 @@ namespace kt
 {
 	
 
-	ChunkDownloadView::ChunkDownloadView(QWidget* parent) : QWidget(parent),curr_tc(0)
+	ChunkDownloadView::ChunkDownloadView(QWidget* parent) : QWidget(parent)
 	{
 		setupUi(this);
 		
@@ -82,7 +82,7 @@ namespace kt
 			return;
 
 		model->update();
-		const TorrentStats & s = curr_tc->getStats();
+		const TorrentStats & s = curr_tc.data()->getStats();
 		m_chunks_downloading->setText(QString::number(s.num_chunks_downloading));
 		m_chunks_downloaded->setText(QString::number(s.num_chunks_downloaded));
 		m_excluded_chunks->setText(QString::number(s.num_chunks_excluded));
@@ -99,7 +99,7 @@ namespace kt
 		else
 		{
 			setEnabled(true);
-			const TorrentStats & s = curr_tc->getStats();
+			const TorrentStats & s = curr_tc.data()->getStats();
 			m_total_chunks->setText(QString::number(s.total_chunks));
 			m_size_chunks->setText(BytesToString(s.chunk_size));
 		}

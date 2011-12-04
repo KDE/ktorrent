@@ -24,11 +24,7 @@
 #include <QVector>
 #include <QAbstractTableModel>
 #include <util/constants.h>
-
-namespace bt
-{
-	class TorrentInterface;
-}
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {
@@ -62,6 +58,7 @@ namespace kt
 		virtual QVariant data(const QModelIndex & index, int role) const;
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
+		
 	private:
 		struct Item
 		{
@@ -69,7 +66,7 @@ namespace kt
 			bt::Uint64 downloaded;
 			bt::Uint32 speed;
 		};
-		bt::TorrentInterface* curr_tc;
+		bt::TorrentInterface::WPtr curr_tc;
 		QVector<Item> items;
 	};
 

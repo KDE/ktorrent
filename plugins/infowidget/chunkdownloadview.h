@@ -25,14 +25,9 @@
 #include <QSortFilterProxyModel>
 #include <ksharedconfig.h>
 #include <interfaces/chunkdownloadinterface.h>
+#include <interfaces/torrentinterface.h>
 #include "ui_chunkdownloadview.h"
 
-
-
-namespace bt
-{
-	class TorrentInterface;
-}
 
 namespace kt
 {
@@ -66,8 +61,9 @@ namespace kt
 		
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
+		
 	private:
-		bt::TorrentInterface* curr_tc;
+		bt::TorrentInterface::WPtr curr_tc;
 		ChunkDownloadModel* model;
 		QSortFilterProxyModel* pm;
 	};
