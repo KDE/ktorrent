@@ -385,10 +385,7 @@ namespace kt
 		catch (bt::Warning & warning)
 		{
 			bt::Out(SYS_GEN|LOG_NOTICE) << warning.toString() << endl;
-			if (!silently)
-				gui->infoMsg(warning.toString());
-			else
-				canNotLoadSilently(warning.toString());
+			canNotLoadSilently(warning.toString());
 		}
 		catch (bt::Error & err)
 		{
@@ -427,10 +424,7 @@ namespace kt
 		catch (bt::Warning & warning)
 		{
 			bt::Out(SYS_GEN|LOG_NOTICE) << warning.toString() << endl;
-			if (!silently)
-				gui->infoMsg(warning.toString());
-			else
-				canNotLoadSilently(warning.toString());
+			canNotLoadSilently(warning.toString());
 		}
 		catch (bt::Error & err)
 		{
@@ -729,7 +723,7 @@ namespace kt
 		catch (bt::Warning & warning)
 		{
 			bt::Out(SYS_GEN|LOG_NOTICE) << warning.toString() << endl;
-			gui->infoMsg(warning.toString());
+			canNotLoadSilently(warning.toString());
 			bt::Delete(tor_dir,true);
 		}
 	}
