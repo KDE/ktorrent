@@ -290,9 +290,7 @@ namespace kt
 		bool en_prev = false;
 		bool en_announce = false;
 		bool en_add_peer = false;
-		bool en_peer_sources = false;
 		bool en_pause = false;
-		bool en_completed = false;
 		
 		foreach (bt::TorrentInterface* tc,sel)
 		{
@@ -335,11 +333,7 @@ namespace kt
 			if (!s.priv_torrent)
 			{
 				en_add_peer = true;
-				en_peer_sources = true;
 			}
-			
-			if (s.completed)
-				en_completed = true;
 		}
 		
 		en_add_peer = en_add_peer && en_stop;
@@ -612,7 +606,6 @@ namespace kt
 			return;
 
 		PropertiesDlg dlg(sel.front(),this);
-		dlg.show();
 		dlg.exec();
 	}
 

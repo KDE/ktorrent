@@ -39,6 +39,7 @@ Changes in 4.2:
 - Use dbus to show ktorrent window from plasma applet (287309)
 - Fix crash due to dangling pointer (281196)
 - Always make already loaded message of a torrent a passive popup (288201)
+- Make torrent properties dialog modal (288448)
 
 Changes in 4.1.3:
 - Fix statusbar hiding and showing not working (281674)
