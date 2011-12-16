@@ -40,17 +40,36 @@
 #include <DisplaySettingsPage.h>
 #include <statspluginsettings.h>
 
-namespace kt {
-
-/** \brief Statistics plugin
-\author Krzysztof Kundzicz <athantor@gmail.com>
-\version 1.1
-*/
-
-class StatsPlugin : public Plugin
+namespace kt
 {
-	Q_OBJECT
-	
+
+	/** \brief Statistics plugin
+	\author Krzysztof Kundzicz <athantor@gmail.com>
+	\version 1.1
+	*/
+
+	class StatsPlugin : public Plugin
+	{
+		Q_OBJECT
+	public:
+		/** \brief Constructor
+		\param p Parent
+		*/
+		StatsPlugin(QObject * p, const QStringList&);
+		///Destructor
+		virtual ~StatsPlugin();
+
+		void load();
+		void unload();
+		bool versionCheck(const QString& version) const;
+		void guiUpdate();
+
+	public slots:
+		///Gather data
+		void gatherData();
+		///Settings has been changed
+		void settingsChanged();
+		
 	private:
 		///Speeds tab
 		std::auto_ptr<SpdTabPage> pmUiSpd;
@@ -65,27 +84,7 @@ class StatsPlugin : public Plugin
 		
 		///Updates counter
 		uint32_t mUpdCtr;
-		
-	public:
-		/** \brief Constructor
-		\param p Parent
-		*/
-		StatsPlugin(QObject * p, const QStringList&);
-		///Destructor
-		~StatsPlugin();
-		
-		void load();
-  		void unload();
-  		bool versionCheck(const QString& version) const;
-  		void guiUpdate();
-  	
-  	public slots:
-  		///Gather data
-  		void DispatchDataGathering();
-  		///Settings has been changed
-  		void SettingsChanged();
-
-};
+	};
 
 } //ns end
 

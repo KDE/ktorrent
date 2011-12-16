@@ -26,8 +26,6 @@
 #include <util/functions.h>
 #include <util/log.h>
 #include <util/sha1hash.h>
-#include <interfaces/torrentinterface.h>
-
 #include "downloadedchunkbar.h"
 #include "availabilitychunkbar.h"
 #include "statustab.h"
@@ -40,7 +38,7 @@ using namespace bt;
 namespace kt
 {
 
-	StatusTab::StatusTab(QWidget* parent) : QWidget(parent),curr_tc(0)
+	StatusTab::StatusTab(QWidget* parent) : QWidget(parent)
 	{
 		setupUi(this);
 		// do not use hardcoded colors
@@ -95,10 +93,10 @@ namespace kt
 
 	void StatusTab::changeTC(bt::TorrentInterface* tc)
 	{
-		if (tc == curr_tc)
+		if (tc == curr_tc.data())
 			return;
 	
-		curr_tc = tc;
+		curr_tc = bt::TorrentInterface::WPtr(tc);
 	
 		downloaded_bar->setTC(tc);
 		availability_bar->setTC(tc);
@@ -126,7 +124,7 @@ namespace kt
 			comments->setText(words.join(" "));
 			
 
-			float ratio = curr_tc->getMaxShareRatio();
+			float ratio = tc->getMaxShareRatio();
 			if(ratio > 0)
 			{
 				use_ratio_limit->setChecked(true);
@@ -140,7 +138,7 @@ namespace kt
 				ratio_limit->setEnabled(false);
 			}
 			
-			float hours = curr_tc->getMaxSeedTime();
+			float hours = tc->getMaxSeedTime();
 			if (hours > 0)
 			{
 				time_limit->setEnabled(true);
@@ -174,7 +172,8 @@ namespace kt
 		if (!curr_tc)
 			return;
 	
-		const bt::TorrentStats & s = curr_tc->getStats();
+		bt::TorrentInterface* tc = curr_tc.data();
+		const bt::TorrentStats & s = tc->getStats();
 		
 		downloaded_bar->updateBar();
 		availability_bar->updateBar();
@@ -188,7 +187,7 @@ namespace kt
 		
 		share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= Settings::greenRatio() ? "#ff0000" : "#1c9a1c").arg(KGlobal::locale()->formatNumber(ratio,2)));
 	
-		Uint32 secs = curr_tc->getRunningTimeUL(); 
+		Uint32 secs = tc->getRunningTimeUL(); 
 		if (secs == 0)
 		{
 			avg_up_speed->setText(BytesPerSecToString(0));
@@ -199,7 +198,7 @@ namespace kt
 			avg_up_speed->setText(BytesPerSecToString(r / secs));
 		}
 		
-		secs = curr_tc->getRunningTimeDL();
+		secs = tc->getRunningTimeDL();
 		if (secs == 0)
 		{
 			avg_down_speed->setText(BytesPerSecToString(0));
@@ -221,7 +220,7 @@ namespace kt
 		if(!curr_tc)
 			return;
 		
-		curr_tc->setMaxShareRatio(v);
+		curr_tc.data()->setMaxShareRatio(v);
 	}
 	
 	void StatusTab::useRatioLimitToggled(bool state)
@@ -229,26 +228,28 @@ namespace kt
 		if(!curr_tc)
 			return;
 		
+		bt::TorrentInterface* tc = curr_tc.data();
+		
 		ratio_limit->setEnabled(state);
 		if (!state)
 		{
-			curr_tc->setMaxShareRatio(0.00f);
+			tc->setMaxShareRatio(0.00f);
 			ratio_limit->setValue(0.00f);
 		}
 		else
 		{
-			float msr = curr_tc->getMaxShareRatio();
+			float msr = tc->getMaxShareRatio();
 			if(msr == 0.00f)
 			{	
-				curr_tc->setMaxShareRatio(1.00f);
+				tc->setMaxShareRatio(1.00f);
 				ratio_limit->setValue(1.00f);
 			}
 			
-			float sr = curr_tc->getStats().shareRatio();
+			float sr = tc->getStats().shareRatio();
 			if(sr >= 1.00f)
 			{
 				//always add 1 to max share ratio to prevent stopping if torrent is running.
-				curr_tc->setMaxShareRatio(sr + 1.00f);
+				tc->setMaxShareRatio(sr + 1.00f);
 				ratio_limit->setValue(sr + 1.00f);
 			}
 		}
@@ -259,7 +260,7 @@ namespace kt
 		if(!curr_tc)
 			return;
 		
-		float ratio = curr_tc->getMaxShareRatio();
+		float ratio = curr_tc.data()->getMaxShareRatio();
 		if (ratio > 0.00f)
 		{
 			// only update when needed
@@ -287,7 +288,7 @@ namespace kt
 		if(!curr_tc)
 			return;
 		
-		float time = curr_tc->getMaxSeedTime();
+		float time = curr_tc.data()->getMaxSeedTime();
 		if (time > 0.00f)
 		{
 			// only update when needed
@@ -315,25 +316,26 @@ namespace kt
 		if(!curr_tc)
 			return;
 		
+		bt::TorrentInterface* tc = curr_tc.data();
 		time_limit->setEnabled(on);
 		if (on)
 		{
-			Uint32 dl = curr_tc->getRunningTimeDL();
-			Uint32 ul = curr_tc->getRunningTimeUL();
+			Uint32 dl = tc->getRunningTimeDL();
+			Uint32 ul = tc->getRunningTimeUL();
 			float hours = (ul - dl) / 3600.0f + 1.0; // add one hour to current seed time to not stop immediatly
 			time_limit->setValue(hours); 
-			curr_tc->setMaxSeedTime(hours);
+			tc->setMaxSeedTime(hours);
 		}
 		else
 		{
-			curr_tc->setMaxSeedTime(0.0f);
+			tc->setMaxSeedTime(0.0f);
 		}
 	}
 	
 	void StatusTab::maxTimeChanged(double v)
 	{
 		if (curr_tc)
-			curr_tc->setMaxSeedTime(v);
+			curr_tc.data()->setMaxSeedTime(v);
 	}
 	
 	void StatusTab::linkActivated(const QString& link)

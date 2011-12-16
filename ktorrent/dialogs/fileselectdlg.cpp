@@ -491,7 +491,7 @@ namespace kt
 		updateExistingFiles();
 		
 		//calculate free disk space
-		KUrl sdir = KUrl(m_downloadLocation -> url());
+		KUrl sdir = KUrl(m_downloadLocation->url());
 		while( sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty())  && (! QDir(sdir.toLocalFile()).exists()) ) 
 		{
 			sdir = sdir.upUrl();

@@ -21,7 +21,6 @@
 #include "webseedstab.h"
 #include <QHeaderView>
 #include <kmessagebox.h>
-#include <interfaces/torrentinterface.h>
 #include <interfaces/webseedinterface.h>
 #include "webseedsmodel.h"
 
@@ -31,7 +30,7 @@ namespace kt
 {
 
 	WebSeedsTab::WebSeedsTab(QWidget* parent)
-			: QWidget(parent),curr_tc(0)
+			: QWidget(parent)
 	{
 		setupUi(this);
 		connect(m_add,SIGNAL(clicked()),this,SLOT(addWebSeed()));
@@ -66,12 +65,12 @@ namespace kt
 	{
 		curr_tc = tc;
 		model->changeTC(tc);
-		m_add->setEnabled(curr_tc != 0);
-		m_remove->setEnabled(curr_tc != 0);
-		m_webseed_list->setEnabled(curr_tc != 0);
-		m_webseed->setEnabled(curr_tc != 0);
-		m_enable_all->setEnabled(curr_tc != 0);
-		m_disable_all->setEnabled(curr_tc != 0);
+		m_add->setEnabled(tc != 0);
+		m_remove->setEnabled(tc != 0);
+		m_webseed_list->setEnabled(tc != 0);
+		m_webseed->setEnabled(tc != 0);
+		m_enable_all->setEnabled(tc != 0);
+		m_disable_all->setEnabled(tc != 0);
 		onWebSeedTextChanged(m_webseed->text());
 		
 		// see if we need to enable or disable the remove button
@@ -84,12 +83,13 @@ namespace kt
 		if (!curr_tc)
 			return;
 		
+		bt::TorrentInterface* tc = curr_tc.data();
 		KUrl url(m_webseed->text());
-		if (curr_tc != 0 && url.isValid() && url.protocol() == "http")
+		if (tc && url.isValid() && url.protocol() == "http")
 		{
-			if (curr_tc->addWebSeed(url))
+			if (tc->addWebSeed(url))
 			{
-				model->changeTC(curr_tc);
+				model->changeTC(tc);
 				m_webseed->clear();
 			}
 			else
@@ -104,29 +104,33 @@ namespace kt
 		if (!curr_tc)
 			return;
 		
+		bt::TorrentInterface* tc = curr_tc.data();
 		QModelIndexList idx_list = m_webseed_list->selectionModel()->selectedRows();
 		foreach (const QModelIndex &idx, idx_list)
 		{
-			const WebSeedInterface* ws = curr_tc->getWebSeed(proxy_model->mapToSource(idx).row());
+			const WebSeedInterface* ws = tc->getWebSeed(proxy_model->mapToSource(idx).row());
 			if (ws && ws->isUserCreated())
 			{
-				if (!curr_tc->removeWebSeed(ws->getUrl()))
+				if (!tc->removeWebSeed(ws->getUrl()))
 					KMessageBox::error(this,i18n("Cannot remove webseed %1, it is part of the torrent.", ws->getUrl().prettyUrl()));
 			}
 		}
 		
-		model->changeTC(curr_tc);
+		model->changeTC(tc);
 	}
 	
 	void WebSeedsTab::selectionChanged(const QModelIndexList & indexes)
 	{
-		foreach (const QModelIndex & idx, indexes)
+		if (curr_tc)
 		{
-			const WebSeedInterface* ws = curr_tc->getWebSeed(proxy_model->mapToSource(idx).row());
-			if (ws && ws->isUserCreated())
+			foreach (const QModelIndex & idx, indexes)
 			{
-				m_remove->setEnabled(true);
-				return;
+				const WebSeedInterface* ws = curr_tc.data()->getWebSeed(proxy_model->mapToSource(idx).row());
+				if (ws && ws->isUserCreated())
+				{
+					m_remove->setEnabled(true);
+					return;
+				}
 			}
 		}
 		
@@ -145,7 +149,7 @@ namespace kt
 	void WebSeedsTab::onWebSeedTextChanged(const QString & ws)
 	{
 		KUrl url(ws);
-		m_add->setEnabled(curr_tc != 0 && url.isValid() && url.protocol() == "http");
+		m_add->setEnabled(!curr_tc.isNull() && url.isValid() && url.protocol() == "http");
 	}
 	
 	void WebSeedsTab::update()

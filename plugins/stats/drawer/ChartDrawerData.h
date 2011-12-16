@@ -77,58 +77,61 @@ class ChartDrawerData
 		\note If there is no UUID given, it'll going be generated automagically
 		*/
 		ChartDrawerData(const QString & rN, const QPen & rP, const bool max, const QUuid & rU = QUuid::createUuid());
+		
 		/** \brief Resizes set to given size
 		\param size New size
 		\note New values are filled with '0.0'
 		*/
-		void SetSize(const size_t size);
+		void setSize(const size_t size);
+		
 		///Zeros the set
-		void Zero();
+		void zero();
+		
 		/** \brief Adds value to set
 		\param val Value
 		*/
-		void AddValue(const qreal val);
+		void addValue(const qreal val);
 		
 		/** \brief Returns valueset
 		\return Values
 		*/
-		const val_t * GetValues() const;
+		const val_t * getValues() const;
 		
 		/** \brief Returns set's pen
 		\return Pen
 		*/
-		const QPen * GetPen() const;
+		const QPen * getPen() const;
 		/** \brief Sets set's pen
 		\param rP New pen
 		*/
-		void SetPen(const QPen & rP);
+		void setPen(const QPen & rP);
 		
 		/** \brief Returns set's name
 		\return Name
 		*/
-		const QString * GetName() const;
+		const QString * getName() const;
 		/** \brief Sets set's name
 		\param rN New name
 		*/
-		void SetName(const QString & rN);
+		void setName(const QString & rN);
 		
 		/** \brief Returns set's UUID
 		\return UUID
 		*/
-		const QUuid * GetUuid() const;
+		const QUuid * getUuid() const;
 		/** \brief Sets set's UUID
 		\param rU New UUID
 		*/
-		void SetUuid(const QUuid & rU);
+		void setUuid(const QUuid & rU);
 		
 		/** \brief Mark set's maximum
 		\return Mark?
 		*/
-		bool GetMarkMax() const;
+		bool getMarkMax() const;
 		/** \brief Enable maximum marking?
 		\param max Enable?
 		*/
-		void EnableMarkMax(const bool max);
+		void enableMarkMax(const bool max);
 		
 		/** \brief Finds maximum
 		* \return Maximum
@@ -137,7 +140,7 @@ class ChartDrawerData
 		* - First: Maximum value
 		* - Second: Value's position in set
 		*/
-		std::pair<qreal, size_t>  FindMax() const ;
+		std::pair<qreal, size_t>  findMax() const ;
         
 		/// Dummy assignment operator for MSVC
 		bool operator=( const ChartDrawerData & /*rCdd*/ ) { return true; };

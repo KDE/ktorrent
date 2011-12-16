@@ -23,12 +23,8 @@
 
 #include <QWidget>
 #include <QSortFilterProxyModel>
+#include <interfaces/torrentinterface.h>
 #include "ui_webseedstab.h"
-
-namespace bt
-{
-	class TorrentInterface;
-}
 
 namespace kt
 {
@@ -68,7 +64,7 @@ namespace kt
 		void selectionChanged(const QModelIndexList & indexes);
 
 	private:
-		bt::TorrentInterface* curr_tc;
+		bt::TorrentInterface::WPtr curr_tc;
 		WebSeedsModel* model;
 		QSortFilterProxyModel* proxy_model;
 	};

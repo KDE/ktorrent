@@ -54,7 +54,7 @@ using namespace bt;
 namespace kt
 {
 
-	FileView::FileView(QWidget *parent) : QWidget(parent),curr_tc(0),model(0),show_list_of_files(false)
+	FileView::FileView(QWidget *parent) : QWidget(parent),model(0),show_list_of_files(false)
 	{
 		QHBoxLayout* layout = new QHBoxLayout(this);
 		layout->setMargin(0);
@@ -149,11 +149,11 @@ namespace kt
 
 	void FileView::changeTC(bt::TorrentInterface* tc)
 	{
-		if (tc == curr_tc)
+		if (tc == curr_tc.data())
 			return;
 	
 		if (curr_tc)
-			expanded_state_map[curr_tc] = model->saveExpandedState(proxy_model,view);
+			expanded_state_map[curr_tc.data()] = model->saveExpandedState(proxy_model,view);
 		
 		curr_tc = tc;
 		setEnabled(tc != 0);
@@ -177,13 +177,17 @@ namespace kt
 	
 	void FileView::onMissingFileMarkedDND(bt::TorrentInterface* tc)
 	{
-		if (curr_tc == tc)
+		if (curr_tc.data() == tc)
 			model->missingFilesMarkedDND();
 	}
 		
 	void FileView::showContextMenu(const QPoint & p)
 	{
-		const TorrentStats & s = curr_tc->getStats();
+		if (!curr_tc)
+			return;
+		
+		bt::TorrentInterface* tc = curr_tc.data();
+		const TorrentStats & s = tc->getStats();
 		
 		QModelIndexList sel = view->selectionModel()->selectedRows();
 		if (sel.count() == 0)
@@ -220,7 +224,7 @@ namespace kt
 			open_action->setEnabled(true);
 			open_with_action->setEnabled(true);
 			move_files_action->setEnabled(true);
-			preview_path = curr_tc->getStats().output_path;
+			preview_path = tc->getStats().output_path;
 			collapse_action->setEnabled(false);
 			expand_action->setEnabled(false);
 			check_data->setEnabled(true);
@@ -260,7 +264,7 @@ namespace kt
 			delete_action->setEnabled(true);
 			open_action->setEnabled(true);
 			open_with_action->setEnabled(true);
-			preview_path = curr_tc->getStats().output_path + model->dirPath(item);
+			preview_path = tc->getStats().output_path + model->dirPath(item);
 			collapse_action->setEnabled(!show_list_of_files);
 			expand_action->setEnabled(!show_list_of_files);
 		}
@@ -331,7 +335,11 @@ namespace kt
 	
 	void FileView::moveFiles()
 	{
-		if (curr_tc->getStats().multi_file_torrent)
+		if (!curr_tc)
+			return;
+		
+		bt::TorrentInterface* tc = curr_tc.data();
+		if (tc->getStats().multi_file_torrent)
 		{
 			QModelIndexList sel = view->selectionModel()->selectedRows();
 			QMap<bt::TorrentFileInterface*,QString> moves;
@@ -352,7 +360,7 @@ namespace kt
 			
 			if (moves.count() > 0)
 			{
-				curr_tc->moveTorrentFiles(moves);
+				tc->moveTorrentFiles(moves);
 			}
 		}
 		else
@@ -362,7 +370,7 @@ namespace kt
 			if (dir.isNull())
 				return;
 		
-			curr_tc->changeOutputDir(dir,bt::TorrentInterface::MOVE_FILES);
+			tc->changeOutputDir(dir,bt::TorrentInterface::MOVE_FILES);
 		}
 	}
 	
@@ -403,7 +411,8 @@ namespace kt
 		if (!curr_tc)
 			return;
 		
-		const TorrentStats & s = curr_tc->getStats();
+		bt::TorrentInterface* tc = curr_tc.data();
+		const TorrentStats & s = tc->getStats();
 		
 		if (s.multi_file_torrent)
 		{
@@ -411,7 +420,7 @@ namespace kt
 			if (!file)
 			{
 				// directory
-				new KRun(KUrl(curr_tc->getDataDir() + model->dirPath(proxy_model->mapToSource(index))), 0, 0, true, true);
+				new KRun(KUrl(tc->getDataDir() + model->dirPath(proxy_model->mapToSource(index))), 0, 0, true, true);
 			}
 			else
 			{
@@ -421,7 +430,7 @@ namespace kt
 		}
 		else
 		{
-			new KRun(KUrl(curr_tc->getStats().output_path), 0, 0, true, true);
+			new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
 		}
 	}
 	
@@ -487,25 +496,26 @@ namespace kt
 			return;
 		}
 		
+		bt::TorrentInterface* tc = curr_tc.data();
 		if (on)
-			expanded_state_map[curr_tc] = model->saveExpandedState(proxy_model,view);
+			expanded_state_map[tc] = model->saveExpandedState(proxy_model,view);
 		
 		proxy_model->setSourceModel(0);
 		delete model;
 		model = 0;
 			
 		if (show_list_of_files)
-			model = new IWFileListModel(curr_tc,this);
+			model = new IWFileListModel(tc,this);
 		else 
-			model = new IWFileTreeModel(curr_tc,this);
+			model = new IWFileTreeModel(tc,this);
 			
 		proxy_model->setSourceModel(model);
-		view->setRootIsDecorated(!show_list_of_files && curr_tc->getStats().multi_file_torrent);
+		view->setRootIsDecorated(!show_list_of_files && tc->getStats().multi_file_torrent);
 		view->header()->restoreState(header_state);
 		
 		if (!on)
 		{
-			QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(curr_tc);
+			QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(tc);
 			if (i != expanded_state_map.end())
 				model->loadExpandedState(proxy_model,view,i.value());
 			else
@@ -553,9 +563,9 @@ namespace kt
 		if (!curr_tc || sel.isEmpty())
 			return;
 		
-		if (curr_tc->getStats().multi_file_torrent)
+		if (curr_tc.data()->getStats().multi_file_torrent)
 		{
-			bt::Uint32 from = curr_tc->getStats().total_chunks;
+			bt::Uint32 from = curr_tc.data()->getStats().total_chunks;
 			bt::Uint32 to = 0;
 			foreach (const QModelIndex &idx,sel)
 			{
@@ -568,10 +578,10 @@ namespace kt
 				if (tfi->getLastChunk() > to)
 					to = tfi->getLastChunk();
 			}
-			curr_tc->startDataCheck(false, from, to);
+			curr_tc.data()->startDataCheck(false, from, to);
 		}
 		else
-			curr_tc->startDataCheck(false, 0, curr_tc->getStats().total_chunks);
+			curr_tc.data()->startDataCheck(false, 0, curr_tc.data()->getStats().total_chunks);
 	}
 
 }

@@ -22,12 +22,16 @@
 #include <QVBoxLayout>
 #include <QSortFilterProxyModel>
 #include <KLineEdit>
+#include <KIcon>
 #include <KLocale>
+#include <KToolBar>
 #include <util/log.h>
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
 #include "mediaplayerpluginsettings.h"
+#include <QAction>
+
 
 
 
@@ -65,6 +69,11 @@ namespace kt
 			return false;
 	}
 
+	void MediaViewFilter::refresh()
+	{
+		invalidateFilter();
+	}
+
 	
 
 	MediaView::MediaView(MediaModel* model,QWidget* parent)
@@ -82,11 +91,28 @@ namespace kt
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		
+		QHBoxLayout* hbox = new QHBoxLayout();
+		hbox->setSpacing(0);
+		hbox->setMargin(0);
+		
+		tool_bar = new KToolBar(this);
+		hbox->addWidget(tool_bar);
+		
+		show_incomplete = tool_bar->addAction(KIcon("task-ongoing"), i18n("Show incomplete files"));
+		show_incomplete->setCheckable(true);
+		show_incomplete->setChecked(false);
+		connect(show_incomplete,SIGNAL(toggled(bool)),this,SLOT(showIncompleteChanged(bool)));
+		
+		refresh = tool_bar->addAction(KIcon("view-refresh"), i18n("Refresh"), filter, SLOT(refresh()));
+		refresh->setToolTip(i18n("Refresh media files"));
+		
 		search_box = new KLineEdit(this);
 		search_box->setClearButtonShown(true);
 		search_box->setClickMessage(i18n("Search media files"));
 		connect(search_box,SIGNAL(textChanged(QString)),filter,SLOT(setFilterFixedString(QString)));
-		layout->addWidget(search_box);
+		hbox->addWidget(search_box);
+		
+		layout->addLayout(hbox);
 		
 		media_tree = new QListView(this);
 		media_tree->setModel(filter);
@@ -94,11 +120,6 @@ namespace kt
 		media_tree->setSelectionMode(QAbstractItemView::ContiguousSelection);
 		media_tree->setAlternatingRowColors(true);
 		layout->addWidget(media_tree);
-		
-		show_incomplete = new QCheckBox(i18n("Show incomplete files"),this);
-		show_incomplete->setChecked(false);
-		connect(show_incomplete,SIGNAL(stateChanged(int)),this,SLOT(showIncompleteChanged(int)));
-		layout->addWidget(show_incomplete);
 		
 		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(onDoubleClicked(QModelIndex)));
 	}
@@ -120,9 +141,9 @@ namespace kt
 		doubleClicked(model->fileForIndex(idx));
 	}
 	
-	void MediaView::showIncompleteChanged(int state)
+	void MediaView::showIncompleteChanged(bool on)
 	{
-		filter->setShowIncomplete(state == Qt::Checked);
+		filter->setShowIncomplete(on);
 	}
 
 	void MediaView::loadState(KSharedConfigPtr cfg)

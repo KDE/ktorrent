@@ -24,12 +24,8 @@
 #include <QVector>
 #include <QAbstractTableModel>
 #include <interfaces/chunkdownloadinterface.h>
+#include <interfaces/torrentinterface.h>
 
-
-namespace bt
-{
-	class TorrentInterface;
-}
 
 namespace kt
 {
@@ -86,7 +82,7 @@ namespace kt
 		};
 	private:
 		QVector<Item*> items;
-		bt::TorrentInterface* tc;
+		bt::TorrentInterface::WPtr tc;
 	};
 
 }

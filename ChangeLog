@@ -33,6 +33,13 @@ Changes in 4.2:
 - Merge status and name column into one column and use icons to show the status (272160, 228564)
 - Highlight in bold and scroll to newly added torrents (145028)
 - Show torrent names in remove torrent and data confirmation dialog (284728)
+- Enable select new location button when all non excluded files are missing instead of when all files are missing
+- Hide chunkbar when download of stream is complete (259788)
+- Suspend/resume queue when middle clicking on tray icon (210027)
+- Use dbus to show ktorrent window from plasma applet (287309)
+- Fix crash due to dangling pointer (281196)
+- Always make already loaded message of a torrent a passive popup (288201)
+- Make torrent properties dialog modal (288448)
 
 Changes in 4.1.3:
 - Fix statusbar hiding and showing not working (281674)

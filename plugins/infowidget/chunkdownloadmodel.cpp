@@ -21,7 +21,6 @@
 #include "chunkdownloadmodel.h"
 
 #include <klocale.h>
-#include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include <util/functions.h>
@@ -78,7 +77,7 @@ namespace kt
 	/////////////////////////////////////////////////////////////
 
 	ChunkDownloadModel::ChunkDownloadModel ( QObject* parent )
-			: QAbstractTableModel(parent),tc(0)
+			: QAbstractTableModel(parent)
 	{
 	}
 
@@ -97,11 +96,11 @@ namespace kt
 		cd->getStats(stats);
 		QString files;
 		int n = 0;
-		if (tc->getStats().multi_file_torrent)
+		if (tc.data()->getStats().multi_file_torrent)
 		{
-			for (Uint32 i = 0;i < tc->getNumFiles();i++)
+			for (Uint32 i = 0;i < tc.data()->getNumFiles();i++)
 			{
-				const bt::TorrentFileInterface & tf = tc->getTorrentFile(i);
+				const bt::TorrentFileInterface & tf = tc.data()->getTorrentFile(i);
 				if (stats.chunk_index >= tf.getFirstChunk() && stats.chunk_index <= tf.getLastChunk())
 				{
 					if (n > 0)

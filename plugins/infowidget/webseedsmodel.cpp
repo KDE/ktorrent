@@ -21,7 +21,6 @@
 #include "webseedsmodel.h"
 #include <klocale.h>
 #include <interfaces/webseedinterface.h>
-#include <interfaces/torrentinterface.h>
 #include <util/functions.h>
 
 using namespace bt;
@@ -30,7 +29,7 @@ namespace kt
 {
 
 	WebSeedsModel::WebSeedsModel(QObject* parent)
-			: QAbstractTableModel(parent),curr_tc(0)
+			: QAbstractTableModel(parent)
 	{
 	}
 
@@ -47,7 +46,7 @@ namespace kt
 		{
 			for (Uint32 i = 0;i < tc->getNumWebSeeds();i++)
 			{
-				const bt::WebSeedInterface* ws = curr_tc->getWebSeed(i);
+				const bt::WebSeedInterface* ws = tc->getWebSeed(i);
 				Item item;
 				item.status = ws->getStatus();
 				item.downloaded = ws->getTotalDownloaded();
@@ -63,11 +62,12 @@ namespace kt
 		if (!curr_tc)
 			return false;
 		
+		bt::TorrentInterface* tc = curr_tc.data();
 		bool ret = false;
 		
-		for (Uint32 i = 0;i < curr_tc->getNumWebSeeds();i++)
+		for (Uint32 i = 0;i < tc->getNumWebSeeds();i++)
 		{
-			const bt::WebSeedInterface* ws = curr_tc->getWebSeed(i);
+			const bt::WebSeedInterface* ws = tc->getWebSeed(i);
 			Item & item = items[i];
 			bool changed = false;
 			if (item.status != ws->getStatus())
@@ -103,7 +103,7 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return curr_tc ? curr_tc->getNumWebSeeds() : 0;
+			return curr_tc ? curr_tc.data()->getNumWebSeeds() : 0;
 	}
 	
 	int WebSeedsModel::columnCount(const QModelIndex & parent) const
@@ -134,12 +134,12 @@ namespace kt
 		if (!curr_tc)
 			return QVariant();
 		
-		if (!index.isValid() || index.row() >= (int) curr_tc->getNumWebSeeds() || index.row() < 0)
+		if (!index.isValid() || index.row() >= (int) curr_tc.data()->getNumWebSeeds() || index.row() < 0)
 			return QVariant(); 
 		
 		if (role == Qt::DisplayRole)
 		{
-			const bt::WebSeedInterface* ws = curr_tc->getWebSeed(index.row());
+			const bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
 			switch (index.column())
 			{
 				case 0: return ws->getUrl().prettyUrl();
@@ -150,12 +150,12 @@ namespace kt
 		}
 		else if (role == Qt::CheckStateRole && index.column() == 0)
 		{
-			const bt::WebSeedInterface* ws = curr_tc->getWebSeed(index.row());
+			const bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
 			return ws->isEnabled() ? Qt::Checked : Qt::Unchecked;
 		}
 		else if (role == Qt::UserRole)
 		{
-			const bt::WebSeedInterface* ws = curr_tc->getWebSeed(index.row());
+			const bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
 			switch (index.column())
 			{
 				case 0: return ws->getUrl().prettyUrl();
@@ -181,10 +181,10 @@ namespace kt
 		if (!curr_tc || role != Qt::CheckStateRole)
 			return false;
 		
-		if (!index.isValid() || index.row() >= (int) curr_tc->getNumWebSeeds() || index.row() < 0)
+		if (!index.isValid() || index.row() >= (int) curr_tc.data()->getNumWebSeeds() || index.row() < 0)
 			return false; 
 		
-		bt::WebSeedInterface* ws = curr_tc->getWebSeed(index.row());
+		bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
 		ws->setEnabled((Qt::CheckState)value.toInt() == Qt::Checked),
 		emit dataChanged(index,index);
 		return true;

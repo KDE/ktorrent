@@ -44,75 +44,75 @@ ChartDrawerData::ChartDrawerData(const QString & rN, const QPen & rP, const bool
 {
 }
 
-void ChartDrawerData::SetSize(const size_t s)
+void ChartDrawerData::setSize(const size_t s)
 {
-	if(s != pmVals -> size())
+	if(s != pmVals->size())
 	{
-		pmVals -> resize(s, 0.0);
+		pmVals->resize(s, 0.0);
 	}
 }
 
-void ChartDrawerData::Zero()
+void ChartDrawerData::zero()
 {
-	std::fill(pmVals -> begin(), pmVals -> end(), 0.0);
+	std::fill(pmVals->begin(), pmVals->end(), 0.0);
 }
 
-void ChartDrawerData::AddValue(const qreal val)
+void ChartDrawerData::addValue(const qreal val)
 {
-	std::copy(pmVals -> begin() + 1, pmVals -> end(), pmVals -> begin());
-	*(pmVals -> end() - 1) = val;
+	std::copy(pmVals->begin() + 1, pmVals->end(), pmVals->begin());
+	*(pmVals->end() - 1) = val;
 }
 
-const ChartDrawerData::val_t * ChartDrawerData::GetValues() const
+const ChartDrawerData::val_t * ChartDrawerData::getValues() const
 {
 	return pmVals.get();
 }
 
-const QPen * ChartDrawerData::GetPen() const
+const QPen * ChartDrawerData::getPen() const
 {
 	return pmPen.get();
 }
 
-void ChartDrawerData::SetPen(const QPen & rQp)
+void ChartDrawerData::setPen(const QPen & rQp)
 {
 	pmPen.reset(new QPen(rQp));
 }
 
-const QString * ChartDrawerData::GetName() const
+const QString * ChartDrawerData::getName() const
 {
 	return pmName.get();
 }
 
-void ChartDrawerData::SetName(const QString & rNm)
+void ChartDrawerData::setName(const QString & rNm)
 {
 	pmName.reset(new QString(rNm));
 }
 
-const QUuid * ChartDrawerData::GetUuid() const
+const QUuid * ChartDrawerData::getUuid() const
 {
 	return pmUuid.get();
 }
 
-void ChartDrawerData::SetUuid(const QUuid & rU)
+void ChartDrawerData::setUuid(const QUuid & rU)
 {
 	pmUuid.reset(new QUuid(rU));
 }
 
-std::pair<qreal, size_t> ChartDrawerData::FindMax() const
+std::pair<qreal, size_t> ChartDrawerData::findMax() const
 {
-	if(!pmVals -> size())
+	if(!pmVals->size())
 	{
 		return std::make_pair(0,0);
 	}
 		
-	qreal max = pmVals -> at(0);
+	qreal max = pmVals->at(0);
 	size_t idx = 0;
 	
-	for(size_t i = 0; i < pmVals -> size(); i++)
+	for(size_t i = 0; i < pmVals->size(); i++)
 	{
-		if(pmVals -> at(i) >= max)
+		if(pmVals->at(i) >= max)
 		{
-			max = pmVals -> at(i);
+			max = pmVals->at(i);
 			idx = i;
 		}
 	}
@@ -120,12 +120,12 @@ std::pair<qreal, size_t> ChartDrawerData::FindMax() const
 	return std::make_pair(max, idx);
 }
 
-bool ChartDrawerData::GetMarkMax() const
+bool ChartDrawerData::getMarkMax() const
 {
 	return mMax;
 }
 
-void ChartDrawerData::EnableMarkMax(const bool e)
+void ChartDrawerData::enableMarkMax(const bool e)
 {
 	mMax = e;
 }

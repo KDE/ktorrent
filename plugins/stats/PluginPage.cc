@@ -20,15 +20,16 @@
 
 #include <PluginPage.h>
 
-namespace kt {
-
-PluginPage::PluginPage(QWidget * p) : QWidget(p)
+namespace kt
 {
-}
+
+	PluginPage::PluginPage(QWidget * p) : QWidget(p)
+	{
+	}
 
 
-PluginPage::~PluginPage()
-{
-}
+	PluginPage::~PluginPage()
+	{
+	}
 
 } //ns end

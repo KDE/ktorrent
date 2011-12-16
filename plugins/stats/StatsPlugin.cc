@@ -21,99 +21,102 @@
 #include <StatsPlugin.h>
 #include <interfaces/torrentactivityinterface.h>
 
-K_EXPORT_COMPONENT_FACTORY(ktstatsplugin,KGenericFactory<kt::StatsPlugin>("ktstatsplugin"))
+K_EXPORT_COMPONENT_FACTORY(ktstatsplugin, KGenericFactory<kt::StatsPlugin>("ktstatsplugin"))
 
-namespace kt {
-
-StatsPlugin::StatsPlugin(QObject * p, const QStringList&) : Plugin(p),mUpdCtr(1)
+namespace kt
 {
-	pmUiSett = 0;
-	pmDispSett = 0;
-}
 
-StatsPlugin::~StatsPlugin()
-{
-}
-
-void StatsPlugin::load()
-{
-	pmUiSpd.release();
-	pmUiConns.release();
-	pmTmr.release();
-	
-	pmUiSpd.reset(new SpdTabPage(0));
-	pmUiConns.reset(new ConnsTabPage(0));
-	pmUiSett = new SettingsPage(0);
-	pmDispSett = new DisplaySettingsPage(0);
-	pmTmr.reset(new QTimer(this));
-	
-	TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
-	ta->addToolWidget(pmUiSpd.get(), i18n("Speed charts"), "view-statistics", i18n("Displays charts about download and upload speed"));
-	ta->addToolWidget(pmUiConns.get(), i18n("Connections charts"), "view-statistics", i18n("Displays charts about connections"));
-	
-	getGUI() -> addPrefPage(pmUiSett);
-	getGUI() -> addPrefPage(pmDispSett);
-	
-	connect(pmTmr.get(), SIGNAL(timeout()), dynamic_cast<StatsPlugin*>(this), SLOT(DispatchDataGathering()));
-	connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(SettingsChanged()));
-	
-	pmTmr -> start(StatsPluginSettings::dataGatherIval());
-	
-}
-
-void StatsPlugin::unload()
-{
-	TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
-	ta -> removeToolWidget(pmUiSpd.get());
-	ta -> removeToolWidget(pmUiConns.get());
-	
-	getGUI() -> removePrefPage(pmUiSett);
-	getGUI() -> removePrefPage(pmDispSett);
-	
-	pmTmr -> stop();
-	
-	disconnect(pmTmr.get());
-	disconnect(getCore());
-	
- 	pmUiSpd.reset();
- 	pmUiConns.reset();
- 	
- 	pmUiSett = 0;
-	pmDispSett = 0;
- 	
- 	pmTmr.reset();
-	
-}
-
-bool StatsPlugin::versionCheck(const QString & version) const
-{
-	return version == KT_VERSION_MACRO;
-}
-
-void StatsPlugin::guiUpdate()
-{
-	if(mUpdCtr >= StatsPluginSettings::updateEveryGuiUpdates())
+	StatsPlugin::StatsPlugin(QObject * p, const QStringList&) : Plugin(p), mUpdCtr(1)
 	{
-		pmUiSpd -> UpdateAllCharts();
-		pmUiConns -> UpdateAllCharts();
-		
-		mUpdCtr = 1;
-	} else {
-		mUpdCtr++;
+		pmUiSett = 0;
+		pmDispSett = 0;
 	}
-}
 
-void StatsPlugin::DispatchDataGathering()
-{
-	pmUiSpd -> GatherData(this);
-	pmUiConns -> GatherData(this);
-}
+	StatsPlugin::~StatsPlugin()
+	{
+	}
 
-void StatsPlugin::SettingsChanged()
-{
-	pmTmr -> setInterval(StatsPluginSettings::dataGatherIval());
-	pmUiSpd -> ApplySettings();
-	pmUiConns -> ApplySettings();
-}
+	void StatsPlugin::load()
+	{
+		pmUiSpd.release();
+		pmUiConns.release();
+		pmTmr.release();
+
+		pmUiSpd.reset(new SpdTabPage(0));
+		pmUiConns.reset(new ConnsTabPage(0));
+		pmUiSett = new SettingsPage(0);
+		pmDispSett = new DisplaySettingsPage(0);
+		pmTmr.reset(new QTimer(this));
+
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+		ta->addToolWidget(pmUiSpd.get(), i18n("Speed charts"), "view-statistics", i18n("Displays charts about download and upload speed"));
+		ta->addToolWidget(pmUiConns.get(), i18n("Connections charts"), "view-statistics", i18n("Displays charts about connections"));
+
+		getGUI()->addPrefPage(pmUiSett);
+		getGUI()->addPrefPage(pmDispSett);
+
+		connect(pmTmr.get(), SIGNAL(timeout()), dynamic_cast<StatsPlugin*>(this), SLOT(gatherData()));
+		connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
+
+		pmTmr->start(StatsPluginSettings::dataGatherIval());
+
+	}
+
+	void StatsPlugin::unload()
+	{
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+		ta->removeToolWidget(pmUiSpd.get());
+		ta->removeToolWidget(pmUiConns.get());
+
+		getGUI()->removePrefPage(pmUiSett);
+		getGUI()->removePrefPage(pmDispSett);
+
+		pmTmr->stop();
+
+		disconnect(pmTmr.get());
+		disconnect(getCore());
+
+		pmUiSpd.reset();
+		pmUiConns.reset();
+
+		pmUiSett = 0;
+		pmDispSett = 0;
+
+		pmTmr.reset();
+
+	}
+
+	bool StatsPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
+
+	void StatsPlugin::guiUpdate()
+	{
+		if (mUpdCtr >= StatsPluginSettings::updateEveryGuiUpdates())
+		{
+			pmUiSpd->updateAllCharts();
+			pmUiConns->updateAllCharts();
+
+			mUpdCtr = 1;
+		}
+		else
+		{
+			mUpdCtr++;
+		}
+	}
+
+	void StatsPlugin::gatherData()
+	{
+		pmUiSpd->gatherData(this);
+		pmUiConns->gatherData(this);
+	}
+
+	void StatsPlugin::settingsChanged()
+	{
+		pmTmr->setInterval(StatsPluginSettings::dataGatherIval());
+		pmUiSpd->applySettings();
+		pmUiConns->applySettings();
+	}
 
 } //Ns end
