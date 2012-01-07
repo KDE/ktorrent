@@ -73,7 +73,7 @@ namespace kt
 
 	qint64 LocalFileNetworkReply::bytesAvailable() const
 	{
-		return fptr ? fptr->bytesAvailable() : 0;
+		return fptr ? fptr->size() : 0;
 	}
 }
 

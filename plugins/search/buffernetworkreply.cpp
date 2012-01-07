@@ -58,7 +58,7 @@ namespace kt
 
 	qint64 BufferNetworkReply::bytesAvailable() const
 	{
-		return buf.bytesAvailable();
+		return buf.size();
 	}
 
 }
