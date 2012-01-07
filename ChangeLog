@@ -1,4 +1,4 @@
-Changes in 4.2:
+Changes in 4.2rc1:
 - Make it possible to check individual files of a torrent
 - Data checks for multiple torrents can now get started at the same time (265611)
 - Make links clickable in the status tab comments field (266089)
