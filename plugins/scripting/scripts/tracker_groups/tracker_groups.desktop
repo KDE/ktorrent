@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Tracker Grouping
 Name[ast]=Agrupación de llocalizadores
+Name[bs]=Grupisanje pratilaca
 Name[ca]=Agrupació de seguidors
 Name[ca@valencia]=Agrupació de seguidors
 Name[cs]=Seskupování trackerů
@@ -34,6 +35,7 @@ Name[ru]=Категоризация по трекерам
 Name[si]=හඹායෑම් සමූහනය
 Name[sk]=Zoskupovanie trackerov
 Name[sl]=Združevanje sledilnikov
+Name[sq]=Grupim i Gjurmuesve
 Name[sr]=Груписање пратилаца
 Name[sr@ijekavian]=Груписање пратилаца
 Name[sr@ijekavianlatin]=Grupisanje pratilaca
@@ -45,6 +47,7 @@ Name[x-test]=xxTracker Groupingxx
 Name[zh_CN]=Tracker 分组
 Name[zh_TW]=追蹤器分組
 Comment=Script to create automatic groups based upon tracker URLs
+Comment[bs]=Skripta za pravljenje automatskih grupa na osnovu URL‑ova pratilaca
 Comment[ca]=Script per a crear grups automàtics basats en els URL dels seguidors
 Comment[ca@valencia]=Script per a crear grups automàtics basats en els URL dels seguidors
 Comment[cs]=Skript pro automatické vytvoření skupin podle URL adres trackerů
