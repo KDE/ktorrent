@@ -1,4 +1,4 @@
-Changes in 4.2:
+Changes in 4.2rc1:
 - Make it possible to check individual files of a torrent
 - Data checks for multiple torrents can now get started at the same time (265611)
 - Make links clickable in the status tab comments field (266089)
@@ -40,6 +40,8 @@ Changes in 4.2:
 - Fix crash due to dangling pointer (281196)
 - Always make already loaded message of a torrent a passive popup (288201)
 - Make torrent properties dialog modal (288448)
+- Allow i2p addresses as a custom ip in tracker announces
+- Fix bug causing homepage of search plugin not the render properly
 
 Changes in 4.1.3:
 - Fix statusbar hiding and showing not working (281674)
