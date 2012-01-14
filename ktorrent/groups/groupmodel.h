@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2012 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,30 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include "ungroupedgroup.h"
-#include "groupmanager.h"
+#ifndef KT_GROUPMODEL_H
+#define KT_GROUPMODEL_H
+
+#include <QAbstractListModel>
+
 
 namespace kt
 {
+	class Group;
+	class GroupManager;
 
-	UngroupedGroup::UngroupedGroup(GroupManager* gman) : Group(i18n("Ungrouped Torrents"), MIXED_GROUP,"/all/ungrouped"),gman(gman)
+	/**
+		Simple list model for the view switcher combobox
+	 */
+	class GroupModel : public QAbstractListModel
 	{
-		setIconByName("application-x-bittorrent");
-	}
-
-
-	UngroupedGroup::~UngroupedGroup()
-	{
-	}
-
-
-	bool UngroupedGroup::isMember(TorrentInterface* tor)
-	{
-		for (GroupManager::Itr i = gman->begin();i != gman->end();i++)
-			if ((i->second->groupFlags() & Group::CUSTOM_GROUP) && i->second->isMember(tor))
-				return false;
+		Q_OBJECT
+	public:
+		GroupModel(GroupManager* gman, QObject* parent);
+		virtual ~GroupModel();
 		
-		return true;
-	}
+		virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+		virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+		
+		/// Get a group given the index
+		Group* group(int idx) const;
+		
+		/// Get the index given a group
+		int groupIndex(Group* g) const;
+		
+	private slots:
+		void customGroupChanged(QString oldName, QString newName);
+		void groupAdded(Group* g);
+		void groupRemoved(Group* g);
+		
+	private:
+		GroupManager* gman;
+		QList<Group*> groups;
+	};
 
 }
+
+#endif // KT_GROUPMODEL_H

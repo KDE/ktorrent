@@ -147,6 +147,5 @@ namespace kt
 		ScriptableGroup* g = sgroups[name];
 		sgroups.remove(name);
 		gman->removeDefaultGroup(g);
-		delete g;
 	}
 }

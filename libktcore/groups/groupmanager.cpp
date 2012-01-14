@@ -92,10 +92,12 @@ namespace kt
 
 	GroupManager::GroupManager()
 	{
-		setAutoDelete(true);
+		groups.setAutoDelete(true);
 		
 		all = new AllGroup();
-		defaults << all;
+		groups.insert(all->groupName(), all);
+		
+		QList<Group*> defaults;
 		// uploads tree
 		defaults << new FunctionGroup<upload>(i18n("Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/uploads");
 		defaults << new FunctionGroup<member<running,upload> >(
@@ -125,66 +127,56 @@ namespace kt
 		defaults << new FunctionGroup<member<passive,upload> >(
 				i18n("Passive Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/passive/uploads");
 		defaults << new UngroupedGroup(this);
+		
+		foreach (Group* g, defaults)
+			groups.insert(g->groupName(), g);
 	}
 
 
 	GroupManager::~GroupManager()
 	{
-		qDeleteAll(defaults);
 	}
 
 
 	Group* GroupManager::newGroup(const QString & name)
 	{
-		if (find(name))
+		if (groups.find(name))
 			return 0;
 		
 		Group* g = new TorrentGroup(name);
-		insert(name,g);
-		emit customGroupsChanged();
-		emit customGroupAdded(g);
+		groups.insert(name,g);
+		emit groupAdded(g);
 		return g;
 	}
 	
 	void GroupManager::removeGroup(Group* g)
 	{
-		emit customGroupRemoved(g);
-		erase(g->groupName());
+		if (canRemove(g))
+		{
+			emit groupRemoved(g);
+			groups.erase(g->groupName());
+		}
 	}
 	
 	bool GroupManager::canRemove(const Group* g) const
 	{
-		return find(g->groupName()) != 0;
+		return g->groupFlags() & Group::CUSTOM_GROUP;
 	}
 	
-	bool GroupManager::erase(const QString & key)
-	{
-		if (bt::PtrMap<QString,Group>::erase(key))
-		{
-			emit customGroupsChanged();
-			return true;
-		}
-		return false;
-	}
-	
-	Group* GroupManager::findDefault(const QString & name)
+	Group* GroupManager::find(const QString & name)
 	{		
-		foreach (Group* g,defaults)
-		{
-			if (g->groupName() == name)
-				return g;
-		}
-		return 0;
+		return groups.find(name);
 	}
 	
 	QStringList GroupManager::customGroupNames()
 	{
 		QStringList groupNames;
-		iterator it = begin();
+		Itr it = groups.begin();
 		
 		while(it != end())
 		{
-			groupNames << it->first;
+			if (it->second->groupFlags() & Group::CUSTOM_GROUP)
+				groupNames << it->first;
 			++it;
 		}
 		
@@ -206,9 +198,10 @@ namespace kt
 			bt::BEncoder enc(&fptr);
 			
 			enc.beginList();
-			for (iterator i = begin();i != end();i++)
+			for (Itr i = groups.begin();i != groups.end();i++)
 			{
-				i->second->save(&enc);
+				if (i->second->groupFlags() & Group::CUSTOM_GROUP)
+					i->second->save(&enc);
 			}
 			enc.end();
 		}
@@ -263,7 +256,7 @@ namespace kt
 				}
 				
 				if (!find(g->groupName()))
-					insert(g->groupName(),g);
+					groups.insert(g->groupName(),g);
 				else
 					delete g;
 			}
@@ -280,7 +273,7 @@ namespace kt
 	
 	void GroupManager::torrentRemoved(TorrentInterface* ti)
 	{
-		for (iterator i = begin(); i != end();i++)
+		for (Itr i = groups.begin(); i != groups.end();i++)
 		{
 			i->second->torrentRemoved(ti);
 		}
@@ -293,52 +286,54 @@ namespace kt
 		if (!g)
 			return;
 		
-		setAutoDelete(false);
-		bt::PtrMap<QString,Group>::erase(old_name);
+		groups.setAutoDelete(false);
+		groups.erase(old_name);
 		g->rename(new_name);
-		insert(new_name,g);
-		setAutoDelete(true);
+		groups.insert(new_name,g);
+		groups.setAutoDelete(true);
 		saveGroups();
 		
-		emit customGroupsChanged(oldName, new_name);
+		emit customGroupChanged(oldName, new_name);
 	}
 	
 	void GroupManager::addDefaultGroup(Group* g)
 	{
-		defaults.append(g);
-		emit defaultGroupAdded(g);
+		if (find(g->groupName()))
+			return;
+		
+		groups.insert(g->groupName(), g);
+		emit groupAdded(g);
 	}
 		
 	
 	void GroupManager::removeDefaultGroup(Group* g)
 	{
-		emit defaultGroupRemoved(g);
-		defaults.removeAll(g);
+		if (g)
+		{
+			groupRemoved(g);
+			groups.erase(g->groupName());
+		}
 	}
 	
 	void GroupManager::torrentsLoaded(QueueManager* qman)
 	{
-		for (iterator i = begin();i != end();i++)
+		for (Itr i = groups.begin();i != groups.end();i++)
 		{
-			TorrentGroup* tg = dynamic_cast<TorrentGroup*>(i->second);
-			if (tg)
-				tg->loadTorrents(qman);
+			if (i->second->groupFlags() & Group::CUSTOM_GROUP)
+			{
+				TorrentGroup* tg = dynamic_cast<TorrentGroup*>(i->second);
+				if (tg)
+					tg->loadTorrents(qman);
+			}
 		}
 	}
 
 	Group* GroupManager::findByPath(const QString& path)
 	{
-		if (path.startsWith("/all/custom/"))
+		for (Itr i = groups.begin();i != groups.end();i++)
 		{
-			for (iterator i = begin();i != end();i++)
-				if (i->second->groupPath() == path)
-					return i->second;
-		}
-		else
-		{
-			foreach (Group* g, defaults)
-				if (g->groupPath() == path)
-					return g;
+			if (i->second->groupPath() == path)
+				return i->second;
 		}
 		
 		return 0;

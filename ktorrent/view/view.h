@@ -66,6 +66,9 @@ namespace kt
 		 * @param g The Group
 		 * */
 		void setGroup(Group* g);
+		
+		/// Get the current group
+		Group* getCurrentGroup() const {return group;}
 
 		/**
 		 * Put the current selection in a list.
