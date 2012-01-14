@@ -56,7 +56,7 @@ namespace kt
 	void PasteDialog::loadGroups()
 	{
 		GroupManager* gman = m_core->getGroupManager();
-		GroupManager::iterator it = gman->begin();
+		GroupManager::Itr it = gman->begin();
 		QStringList grps;
 		//First default group
 		grps << i18n("All Torrents");
@@ -64,7 +64,8 @@ namespace kt
 		//now custom ones
 		while(it != gman->end())
 		{
-			grps << it->first;
+			if (!it->second->isStandardGroup())
+				grps << it->first;
 			++it;
 		}
 		

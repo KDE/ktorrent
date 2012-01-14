@@ -227,11 +227,14 @@ namespace kt
 		ac->addAction("check_data",check_data);
 		
 		GroupManager* gman = core->getGroupManager();
-		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
+		for (GroupManager::Itr i = gman->begin();i != gman->end();i++)
 		{
-			KAction* act = new KAction(KIcon("application-x-bittorrent"),i->first,this);
-			connect(act,SIGNAL(triggered()),this,SLOT(addToGroupItemTriggered()));
-			group_actions.insert(i->second,act);
+			if (!i->second->isStandardGroup())
+			{
+				KAction* act = new KAction(KIcon("application-x-bittorrent"),i->first,this);
+				connect(act,SIGNAL(triggered()),this,SLOT(addToGroupItemTriggered()));
+				group_actions.insert(i->second,act);
+			}
 		}
 		
 		open_dir_menu = new KAction(KIcon("folder-open"),i18n("Open Directory"),this);

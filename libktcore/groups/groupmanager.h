@@ -42,13 +42,9 @@ namespace kt
 	 * 
 	 * Manages all user created groups and the standard groups.
 	*/
-	class KTCORE_EXPORT GroupManager : public QObject, public bt::PtrMap<QString,Group>
+	class KTCORE_EXPORT GroupManager : public QObject
 	{
 		Q_OBJECT
-		
-		QList<Group*> defaults;
-		Group* all;
-		
 	public:
 		GroupManager();
 		virtual ~GroupManager();
@@ -88,13 +84,13 @@ namespace kt
 		/// Get the group off all torrents
 		Group* allGroup() {return all;}
 		
-		typedef QList<Group*>::iterator DefGroupItr;
+		typedef bt::PtrMap<QString,Group>::iterator Itr;
 		
-		DefGroupItr beginDefaults() {return defaults.begin();}
-		DefGroupItr endDefaults() {return defaults.end();}
+		Itr begin() {return groups.begin();}
+		Itr end() {return groups.end();}
 		
-		/// Find a default Group given a name
-		Group* findDefault(const QString & name);
+		/// Find  Group given a name
+		Group* find(const QString & name);
 		
 		/// Return the custom group names
 		QStringList customGroupNames();
@@ -115,8 +111,6 @@ namespace kt
 		 * @return true on any user created group, false on the standard ones
 		 */
 		bool canRemove(const Group* g) const;
-		
-		virtual bool erase(const QString & key);
 
 		/**
 		 * A torrent has been removed. This function checks all groups and
@@ -139,11 +133,13 @@ namespace kt
 		void torrentsLoaded(QueueManager* qman);
 		
 	signals:
-		void customGroupsChanged(QString oldName=QString(), QString newName=QString());
-		void defaultGroupAdded(Group* g);
-		void defaultGroupRemoved(Group* g);
-		void customGroupAdded(Group* g);
-		void customGroupRemoved(Group* g);
+		void customGroupChanged(QString oldName=QString(), QString newName=QString());
+		void groupAdded(Group* g);
+		void groupRemoved(Group* g);
+		
+	private:
+		bt::PtrMap<QString,Group> groups;
+		Group* all;
 	};
 
 }

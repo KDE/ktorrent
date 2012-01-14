@@ -56,16 +56,19 @@ namespace kt
 		
 		GroupManager* gman = m_plugin->getCore()->getGroupManager();
 		QStringList grps;
-		GroupManager::iterator it = gman->begin();
+		GroupManager::Itr it = gman->begin();
 		int current = 0;
 		int cnt = 0;
 		//now custom ones
 		while(it != gman->end())
 		{
-			grps << it->first;
-			if (it->first == ScanFolderPluginSettings::group())
-				current = cnt;
-			cnt++;
+			if (it->second->groupFlags() & Group::CUSTOM_GROUP)
+			{
+				grps << it->first;
+				if (it->first == ScanFolderPluginSettings::group())
+					current = cnt;
+				cnt++;
+			}
 			++it;
 		}
 		m_group->addItems(grps);

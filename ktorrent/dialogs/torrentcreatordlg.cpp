@@ -110,7 +110,7 @@ namespace kt
 	void TorrentCreatorDlg::loadGroups()
 	{
 		GroupManager* gman = core->getGroupManager();
-		GroupManager::iterator it = gman->begin();
+		GroupManager::Itr it = gman->begin();
 		
 		QStringList grps;
 		
@@ -120,7 +120,8 @@ namespace kt
 		//now custom ones
 		while(it != gman->end())
 		{
-			grps << it->first;		
+			if (!it->second->isStandardGroup())
+				grps << it->first;		
 			++it;
 		}
 		

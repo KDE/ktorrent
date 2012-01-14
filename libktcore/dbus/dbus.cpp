@@ -63,12 +63,13 @@ namespace kt
 		connect(qm,SIGNAL(suspendStateChanged(bool)),this,SIGNAL(suspendStateChanged(bool)));
 		
 		kt::GroupManager* gman = core->getGroupManager();
-		connect(gman,SIGNAL(customGroupAdded(Group*)),this,SLOT(groupAdded(Group*)));
-		connect(gman,SIGNAL(customGroupRemoved(Group*)),this,SLOT(groupRemoved(Group*)));
-		kt::GroupManager::const_iterator i = gman->begin();
+		connect(gman,SIGNAL(groupAdded(Group*)),this,SLOT(groupAdded(Group*)));
+		connect(gman,SIGNAL(groupRemoved(Group*)),this,SLOT(groupRemoved(Group*)));
+		kt::GroupManager::Itr i = gman->begin();
 		while (i != gman->end())
 		{
-			groupAdded(i->second);
+			if (i->second->groupFlags() & Group::CUSTOM_GROUP)
+				groupAdded(i->second);
 			i++;
 		}
 		
@@ -172,10 +173,11 @@ namespace kt
 	{
 		QStringList ret;
 		kt::GroupManager* gman = core->getGroupManager();
-		kt::GroupManager::const_iterator i = gman->begin();
+		kt::GroupManager::Itr i = gman->begin();
 		while (i != gman->end())
 		{
-			ret << i->first;
+			if (i->second->groupFlags() & Group::CUSTOM_GROUP)
+				ret << i->first;
 			i++;
 		}
 		return ret;
@@ -200,7 +202,8 @@ namespace kt
 	
 	void DBus::groupAdded(kt::Group* g)
 	{
-		group_map.insert(g,new DBusGroup(g,core->getGroupManager(),this));
+		if (g->groupFlags() & Group::CUSTOM_GROUP)
+			group_map.insert(g,new DBusGroup(g,core->getGroupManager(),this));
 	}
 	
 	void DBus::groupRemoved(kt::Group* g)
@@ -216,7 +219,7 @@ namespace kt
 	QObject* DBus::group(const QString & name)
 	{
 		kt::GroupManager* gman = core->getGroupManager();
-		kt::GroupManager::const_iterator i = gman->begin();
+		kt::GroupManager::Itr i = gman->begin();
 		while (i != gman->end())
 		{
 			if (i->first == name)

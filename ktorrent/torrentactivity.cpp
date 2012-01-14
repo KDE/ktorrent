@@ -24,6 +24,7 @@
 #include <KIcon>
 #include <KToggleAction>
 #include <KActionCollection>
+#include <KComboBox>
 #include <util/log.h>
 #include <gui/tabbarwidget.h>
 #include <groups/groupmanager.h>
@@ -36,6 +37,8 @@
 #include "tools/queuemanagerwidget.h"
 #include "tools/magnetview.h"
 #include "torrent/queuemanager.h"
+#include "groups/groupmodel.h"
+
 
 using namespace bt;
 
@@ -54,8 +57,9 @@ namespace kt
 				this, SLOT(currentTorrentChanged(bt::TorrentInterface*)));
 		search_bar = new TorrentSearchBar(view, view_part);
 		search_bar->setHidden(true);
-		setupActions();
 		
+		view_switcher_model = new GroupModel(core->getGroupManager(), this);
+			
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
@@ -71,6 +75,9 @@ namespace kt
 		
 		group_view = new GroupView(core->getGroupManager(),view,gui,hsplit);
 		group_view->setupActions(part()->actionCollection());
+		connect(group_view, SIGNAL(currentGroupChanged(kt::Group*)), this, SLOT(currentGroupChanged(kt::Group*)));
+		
+		setupActions();
 		
 		hsplit->addWidget(group_view);
 		hsplit->addWidget(view_part);
@@ -81,7 +88,6 @@ namespace kt
 		vsplit->setStretchFactor(0,3);
 		vsplit->setStretchFactor(1,1);
 		layout->addWidget(tool_views);
-		
 		
 		qm = new QueueManagerWidget(core->getQueueManager(),this);
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),qm,SLOT(onTorrentAdded(bt::TorrentInterface*)));
@@ -133,6 +139,14 @@ namespace kt
 		connect(filter_torrent_action, SIGNAL(triggered(bool)), search_bar, SLOT(showBar()));
 		ac->addAction("filter_torrent", filter_torrent_action);
 		
+		KAction* switch_to_view = new KAction(i18n("Switch To View"), this);
+		view_switcher = new KComboBox();
+		view_switcher->setModel(view_switcher_model);
+		connect(view_switcher, SIGNAL(activated(int)), this, SLOT(groupActivated(int)));
+		
+		switch_to_view->setDefaultWidget(view_switcher);
+		ac->addAction("switch_to_view", switch_to_view);
+		
 		view->setupActions(ac);
 	}
 
@@ -172,6 +186,8 @@ namespace kt
 		magnet_view->loadState(cfg);
 		
 		show_group_view_action->setChecked(!group_view->isHidden());
+		
+		currentGroupChanged(view->getCurrentGroup());
 	}
 	
 	void TorrentActivity::saveState(KSharedConfigPtr cfg)
@@ -260,5 +276,16 @@ namespace kt
 		return group_view->addNewGroup();
 	}
 
+	void TorrentActivity::groupActivated(int idx)
+	{
+		Group* g = view_switcher_model->group(idx);
+		if (g)
+			view->setGroup(g);
+	}
+	
+	void TorrentActivity::currentGroupChanged(Group* g)
+	{
+		view_switcher->setCurrentIndex(view_switcher_model->groupIndex(g));
+	}
 
 }
