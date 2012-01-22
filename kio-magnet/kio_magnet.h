@@ -31,34 +31,34 @@ class QStringList;
 class MagnetProtocol : public KIO::SlaveBase
 {
 public:
-    MagnetProtocol( const QByteArray &pool, const QByteArray &app );
-    virtual ~MagnetProtocol();
+	MagnetProtocol(const QByteArray &pool, const QByteArray &app);
+	virtual ~MagnetProtocol();
 
-    virtual void stat( const KUrl & url );
-    virtual void listDir( const KUrl & url );
-    virtual void mimetype( const KUrl & url );
-    virtual void get( const KUrl & url );
-    virtual void open( const KUrl &url, QIODevice::OpenMode mode );
-    virtual void read( KIO::filesize_t );
-    virtual void seek( KIO::filesize_t );
-    virtual void setSize( qint64 );
-    virtual void setNumFiles( int );
-    virtual void setPath( const QString& );
-    virtual void setFiles( const QStringList& );
-    virtual void added( const QString& );
-    virtual void downloaded(bool);
+	virtual void stat(const KUrl & url);
+	virtual void listDir(const KUrl & url);
+	virtual void mimetype(const KUrl & url);
+	virtual void get(const KUrl & url);
+	virtual void open(const KUrl &url, QIODevice::OpenMode mode);
+	virtual void read(KIO::filesize_t);
+	virtual void seek(KIO::filesize_t);
+	virtual void setSize(qint64);
+	virtual void setNumFiles(int);
+	virtual void setPath(const QString&);
+	virtual void setFiles(const QStringList&);
+	virtual void added(const QString&);
+	virtual void downloaded(bool);
 
 private:
-    virtual void load( const KUrl& url );
-    virtual bool isDir( const KUrl& url );
-    QMutex m_loadMutex;
-    QWaitCondition m_loadWaiter;
-    KUrl m_url;
-    DBusHandler* m_dbusHandler;
-    bool m_downloaded;
-    QString m_path, m_filename;
-    QStringList m_files;
-    qint64 m_size, m_position, m_numFiles;
+	virtual void load(const KUrl& url);
+	virtual bool isDir(const KUrl& url);
+	QMutex m_loadMutex;
+	QWaitCondition m_loadWaiter;
+	KUrl m_url;
+	DBusHandler* m_dbusHandler;
+	bool m_downloaded;
+	QString m_path, m_filename;
+	QStringList m_files;
+	qint64 m_size, m_position, m_numFiles;
 };
 
 #endif // KIO_MAGNET_H

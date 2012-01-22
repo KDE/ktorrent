@@ -61,6 +61,12 @@ namespace kt
 	
 	void MagnetModel::addMagnetDownloader(const bt::MagnetLink& mlink, bool silent, bool start)
 	{
+		foreach (bt::MagnetDownloader* md, magnet_downloaders)
+		{
+			if (md->magnetLink() == mlink)
+				return; // Already downloading, do nothing
+		}
+		
 		bt::MagnetDownloader* md = new bt::MagnetDownloader(mlink,this);
 		magnet_downloaders.append(md);
 		connect(md,SIGNAL(foundMetadata(bt::MagnetDownloader*,QByteArray)),

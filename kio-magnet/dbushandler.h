@@ -29,50 +29,54 @@
 #include <QtCore/QWaitCondition>
 #include <QtDBus/QDBusConnection>
 
-class KProcess;;
+class KProcess;
 class MagnetProtocol;
 class DBusThread;
 class QThread;
 
 class DBusHandler : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    DBusHandler( MagnetProtocol* );
-    ~DBusHandler();
-    void init();
-    bool load(const KUrl&);
-    bool seek(qint64 pos);
-    qlonglong fileSize(qint32 idx);
+	DBusHandler(MagnetProtocol*);
+	virtual ~DBusHandler();
+	
+	void init();
+	bool load(const KUrl&);
+	bool seek(qint64 pos);
+	qlonglong fileSize(qint32 idx);
 
 private slots:
-    void cleanup();
-    void connectToDBus();
-    void slotFinished(const QString&);
-    void slotTorrentAdded(const QString&);
-    void slotTorrentRemoved(const QString&);
-    void slotTorrentStoppedByError( const QString&, const QString&);
+	void cleanup();
+	void connectToDBus();
+	void slotFinished(const QString&);
+	void slotTorrentAdded(const QString&);
+	void slotTorrentRemoved(const QString&);
+	void slotTorrentStoppedByError(const QString&, const QString&);
+	
 private:
-    void initDBus();
-    void setupDBus();
-    void timerEvent(QTimerEvent *event);
-    void loadFiles();
-    void selectFiles(bool);
-    void torrentLoaded();
-    bool createFileStream( int file );
-    org::ktorrent::core* m_coreInt;
-    org::ktorrent::torrent* m_torrentInt;
-    org::ktorrent::torrentfilestream* m_streamInt;
-    KProcess* m_process;
-    QDBusConnection* m_bus;
-    KUrl m_url;
-    QWaitCondition m_initWaiter;
-    QThread* m_thread;
-    MagnetProtocol* m_slave;
-    QString m_tor, m_path;
-    QStringList m_files;
-    int m_file, m_passedTime;
-    bool m_init;
+	void initDBus();
+	void setupDBus();
+	void timerEvent(QTimerEvent *event);
+	void loadFiles();
+	void selectFiles(bool);
+	void torrentLoaded();
+	bool createFileStream(int file);
+	
+private:
+	org::ktorrent::core* m_coreInt;
+	org::ktorrent::torrent* m_torrentInt;
+	org::ktorrent::torrentfilestream* m_streamInt;
+	KProcess* m_process;
+	QDBusConnection* m_bus;
+	KUrl m_url;
+	QWaitCondition m_initWaiter;
+	QThread* m_thread;
+	MagnetProtocol* m_slave;
+	QString m_tor, m_path;
+	QStringList m_files;
+	int m_file, m_passedTime;
+	bool m_init;
 };
 
 #endif // DBUSHANDLER_H
