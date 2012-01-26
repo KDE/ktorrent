@@ -25,12 +25,14 @@
 #include <torrent/jobtracker.h>
 
 
-namespace kt 
+namespace kt
 {
+
+	class ScanExtender;
 	class View;
 
 	/**
-	 
+		JobTracker for the View
 	 */
 	class ViewJobTracker : public kt::JobTracker
 	{
@@ -38,10 +40,11 @@ namespace kt
 	public:
 		ViewJobTracker(View* parent);
 		virtual ~ViewJobTracker();
-		
+
 		virtual void jobUnregistered(bt::Job* j);
 		virtual void jobRegistered(bt::Job* j);
 		virtual kt::JobProgressWidget* createJobWidget(bt::Job* job);
+		
 	private:
 		View* view;
 	};
