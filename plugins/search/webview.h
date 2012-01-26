@@ -41,6 +41,9 @@ namespace kt
 		
 		/// Create a new tab
 		virtual QWebView* newTab() = 0;
+		
+		/// Handle magnet urls
+		virtual void magnetUrl(const QUrl & magnet_url) = 0;
 	};
 	
 	/**
@@ -82,6 +85,9 @@ namespace kt
 		
 		/// Get the home page base directory
 		QString homePageBaseDir() const {return home_page_base_url;}
+		
+		/// Handle magnet url
+		void handleMagnetUrl(const QUrl & magnet_url);
 		
 	protected:
 		void loadHomePage();

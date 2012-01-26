@@ -367,7 +367,7 @@ bool DBusHandler::load(const KUrl& u)
 		        , QDBusConnection::sessionBus());
 	}
 
-	QDBusReply<QString>name = m_torrentInt->name();
+	QDBusReply<QString> name = m_torrentInt->name();
 
 	if (name.isValid())
 	{
@@ -435,7 +435,11 @@ void DBusHandler::selectFiles(bool init)
 	kDebug() << "Number of files: " << n;
 	m_slave->setNumFiles(n);
 
-	QStringList prefetches = m_url.queryItem("pf").split(",");
+	QString pf = m_url.queryItem("pf");
+	if (pf.isEmpty())
+		return;
+	
+	QStringList prefetches = pf.split(",");
 	// TODO somehow files get deselected on finished torrents sometimes
 	// so avoid selecting when the torrent is completely downloaded
 	// as this makes sense anyway
@@ -445,7 +449,7 @@ void DBusHandler::selectFiles(bool init)
 
 	// give the actually requested file an even higher priority
 	// this is not achievable in the KTorrent UI, TODO
-	if (!prefetches.contains("all"))
+	if (!prefetches.contains("all") && !prefetches.isEmpty())
 	{
 		for (qint32 i = 0; i < n; i++)
 		{

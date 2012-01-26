@@ -28,6 +28,7 @@
 #include <KIconLoader>
 #include <KComboBox>
 #include <KLocale>
+#include <KNotification>
 #include <QApplication>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -37,6 +38,7 @@
 #include <KMessageBox>
 #include <KFileDialog>
 #include <KActionCollection>
+#include <KMainWindow>
 
 #include <util/log.h>
 #include <magnet/magnetlink.h>
@@ -54,14 +56,14 @@ using namespace bt;
 
 namespace kt
 {
-	
-	SearchWidget::SearchWidget(SearchPlugin* sp) : webview(0),sp(sp),prog(0),torrent_download(0)
+
+	SearchWidget::SearchWidget(SearchPlugin* sp) : webview(0), sp(sp), prog(0), torrent_download(0)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		webview = new WebView(this);
-		
+
 		KActionCollection* ac = sp->getSearchActivity()->part()->actionCollection();
 		sbar = new KToolBar(this);
 		sbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -76,25 +78,25 @@ namespace kt
 		search_engine = new KComboBox(sbar);
 		search_engine->setModel(sp->getSearchEngineList());
 		sbar->addWidget(search_engine);
-		
-		connect(search_text,SIGNAL(returnPressed()),this,SLOT(search()));;
+
+		connect(search_text, SIGNAL(returnPressed()), this, SLOT(search()));;
 
 		layout->addWidget(sbar);
 		layout->addWidget(webview);
 
 		search_text->setClearButtonShown(true);
-		
-		connect(webview,SIGNAL(loadStarted()),this,SLOT(loadStarted()));
-		connect(webview,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
-		connect(webview,SIGNAL(loadProgress(int)),this,SLOT(loadProgress(int)));
-		connect(webview->page(),SIGNAL(unsupportedContent(QNetworkReply*)),
-				this,SLOT(unsupportedContent(QNetworkReply*)));
-		connect(webview,SIGNAL(linkMiddleOrCtrlClicked(KUrl)),this,SIGNAL(openNewTab(KUrl)));
-		connect(webview,SIGNAL(iconChanged()),this,SLOT(iconChanged()));
-		connect(webview,SIGNAL(titleChanged(QString)),this,SLOT(titleChanged(QString)));
+
+		connect(webview, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
+		connect(webview, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+		connect(webview, SIGNAL(loadProgress(int)), this, SLOT(loadProgress(int)));
+		connect(webview->page(), SIGNAL(unsupportedContent(QNetworkReply*)),
+		        this, SLOT(unsupportedContent(QNetworkReply*)));
+		connect(webview, SIGNAL(linkMiddleOrCtrlClicked(KUrl)), this, SIGNAL(openNewTab(KUrl)));
+		connect(webview, SIGNAL(iconChanged()), this, SLOT(iconChanged()));
+		connect(webview, SIGNAL(titleChanged(QString)), this, SLOT(titleChanged(QString)));
 	}
-	
-	
+
+
 	SearchWidget::~SearchWidget()
 	{
 		if (prog)
@@ -103,87 +105,91 @@ namespace kt
 			prog = 0;
 		}
 	}
-	
+
 	void SearchWidget::iconChanged()
 	{
-		changeIcon(this,webview->icon());
+		changeIcon(this, webview->icon());
 	}
-	
+
 	void SearchWidget::titleChanged(const QString& text)
 	{
-		changeTitle(this,text);
+		changeTitle(this, text);
 	}
-	
+
 	KUrl SearchWidget::getCurrentUrl() const
 	{
 		return webview->url();
 	}
-	
+
 	QString SearchWidget::getSearchBarText() const
 	{
 		return search_text->text();
 	}
-	
+
 	int SearchWidget::getSearchBarEngine() const
 	{
 		return search_engine->currentIndex();
 	}
-	
-	void SearchWidget::restore(const KUrl & url,const QString & text,const QString & sb_text,int engine)
+
+	void SearchWidget::restore(const KUrl & url, const QString & text, const QString & sb_text, int engine)
 	{
 		if (url.protocol() == "home")
 			webview->home();
 		else
 			webview->openUrl(url);
-	
+
 		search_text->setText(sb_text);
+
 		search_engine->setCurrentIndex(engine);
 	}
-	
-	void SearchWidget::search(const QString & text,int engine)
+
+	void SearchWidget::search(const QString & text, int engine)
 	{
 		if (search_text->text() != text)
 			search_text->setText(text);
-		
+
 		if (search_engine->currentIndex() != engine)
 			search_engine->setCurrentIndex(engine);
-	
-		KUrl url = sp->getSearchEngineList()->search(engine,text);
+
+		KUrl url = sp->getSearchEngineList()->search(engine, text);
+
 		webview->openUrl(url);
 	}
-	
+
 	KUrl SearchWidget::searchUrl(const QString& search_text)
 	{
-		return sp->getSearchEngineList()->search(search_engine->currentIndex(),search_text);
+		return sp->getSearchEngineList()->search(search_engine->currentIndex(), search_text);
 	}
-	
+
 	void SearchWidget::setSearchBarEngine(int engine)
 	{
 		search_engine->setCurrentIndex(engine);
 	}
-	
+
 	void SearchWidget::loadProgress(int perc)
 	{
 		if (!prog)
 			prog = sp->getGUI()->getStatusBar()->createProgressBar();
-		
+
 		if (prog)
 			prog->setValue(perc);
 	}
-	
+
 	void SearchWidget::loadStarted()
 	{
 		if (!prog)
 		{
 			prog = sp->getGUI()->getStatusBar()->createProgressBar();
+
 			if (prog)
 				prog->setValue(0);
 		}
 	}
-	
+
 	void SearchWidget::loadFinished(bool ok)
 	{
 		Q_UNUSED(ok);
+
 		if (prog)
 		{
 			sp->getGUI()->getStatusBar()->removeProgressBar(prog);
@@ -191,18 +197,26 @@ namespace kt
 		}
 	}
 
+	void SearchWidget::magnetUrl(const QUrl& magnet_url)
+	{
+		sp->getCore()->load(bt::MagnetLink(magnet_url.toString()), QString());
+		QString msg = i18n("Downloading:<br/><b>%1</b>", magnet_url.toString());
+		KNotification::event("MagnetLinkDownloadStarted", msg, QPixmap(), sp->getGUI()->getMainWindow());
+	}
+
 	void SearchWidget::unsupportedContent(QNetworkReply* r)
 	{
 		if (r->url().scheme() == "magnet")
 		{
-			sp->getCore()->load(bt::MagnetLink(r->url().toString()),QString());
+			magnetUrl(r->url());
 		}
-		else if (r->header(QNetworkRequest::ContentTypeHeader).toString() == "application/x-bittorrent" || 
-				 r->url().path().endsWith(".torrent"))
+		else if (r->header(QNetworkRequest::ContentTypeHeader).toString() == "application/x-bittorrent" ||
+		         r->url().path().endsWith(".torrent"))
 		{
 			torrent_download = r;
+
 			if (!r->isFinished())
-				connect(r,SIGNAL(finished()),this,SLOT(torrentDownloadFinished()));
+				connect(r, SIGNAL(finished()), this, SLOT(torrentDownloadFinished()));
 			else
 				torrentDownloadFinished();
 		}
@@ -211,51 +225,52 @@ namespace kt
 			webview->downloadResponse(r);
 		}
 	}
-	
+
 	void SearchWidget::torrentDownloadFinished()
 	{
-		if (!torrent_download) 
+		if (!torrent_download)
 			return;
-		
+
 		if (torrent_download->error() != QNetworkReply::NoError)
 		{
-			KMessageBox::error(this,torrent_download->errorString());
+			KMessageBox::error(this, torrent_download->errorString());
 			torrent_download = 0;
 			return;
 		}
-		
+
 		int ret = KMessageBox::questionYesNoCancel(0,
-			i18n("Do you want to download or save the torrent?"),
-			i18n("Download Torrent"),
-			KGuiItem(i18n("Download"),"ktorrent"),
-			KStandardGuiItem::save(),
-			KStandardGuiItem::cancel(),
-			":TorrentDownloadFinishedQuestion");
-		
+
+		          i18n("Do you want to download or save the torrent?"),
+		          i18n("Download Torrent"),
+		          KGuiItem(i18n("Download"), "ktorrent"),
+		          KStandardGuiItem::save(),
+		          KStandardGuiItem::cancel(),
+		          ":TorrentDownloadFinishedQuestion");
+
 		if (ret == KMessageBox::Yes)
-			sp->getCore()->load(torrent_download->readAll(),torrent_download->url(),QString(),QString());
+			sp->getCore()->load(torrent_download->readAll(), torrent_download->url(), QString(), QString());
 		else if (ret == KMessageBox::No)
 			webview->downloadResponse(torrent_download);
-		
+
 		torrent_download = 0;
 	}
-	
+
 	void SearchWidget::search()
 	{
-		search(search_text->text(),search_engine->currentIndex());
+		search(search_text->text(), search_engine->currentIndex());
 	}
-	
+
 	QWebView* SearchWidget::newTab()
 	{
 		return sp->getSearchActivity()->newTab()->webview;
 	}
 
-	
+
 	void SearchWidget::home()
 	{
 		webview->home();
 	}
-	
+
 	bool SearchWidget::backAvailable() const
 	{
 		return webview->pageAction(QWebPage::Back)->isEnabled();

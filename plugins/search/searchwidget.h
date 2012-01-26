@@ -85,6 +85,7 @@ namespace kt
 	private:
 		virtual KUrl searchUrl(const QString& search_text);
 		virtual QWebView* newTab();
+		virtual void magnetUrl(const QUrl& magnet_url);
 		
 	private:
 		WebView* webview;
