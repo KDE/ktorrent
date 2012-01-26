@@ -28,18 +28,25 @@
 
 namespace bt
 {
+
 	class TorrentInterface;
 }
 
 using namespace bt;
+
 class QString;
 
 namespace kt
 {
+
 	struct CurrentStats;
+
 	class Core;
+
 	class SetMaxRate;
+
 	class TorrentInterface;
+
 	class GUI;
 
 	struct TrayStats
@@ -54,30 +61,31 @@ namespace kt
 	 * @author Joris Guisson
 	 * @author Ivan Vasic
 	*/
+
 	class TrayIcon : public QObject
 	{
 		Q_OBJECT
 	public:
-		TrayIcon(Core* tc,GUI* parent);
+		TrayIcon(Core* tc, GUI* parent);
 		virtual ~TrayIcon();
 
 		/// Update stats for system tray icon
 		void updateStats(const CurrentStats & stats);
-		
+
 		/// Update the max rate menus
 		void updateMaxRateMenus();
-		
+
 		/// Show the icon
 		void show();
-		
+
 		/// Hide the icon
 		void hide();
-		
+
 		/// Get the co
 		KMenu* contextMenu();
-		
+
 	private:
-		void showPassivePopup(const QString & msg,const QString & titile);
+		void showPassivePopup(const QString & msg, const QString & titile);
 
 	private slots:
 		/**
@@ -85,67 +93,67 @@ namespace kt
 		 * @param tc The torrent
 		 */
 		void finished(bt::TorrentInterface* tc);
-		
+
 		/**
-		 * Show a passive popup that a torrent has reached it's max share ratio. 
+		 * Show a passive popup that a torrent has reached it's max share ratio.
 		 * @param tc The torrent
 		 */
 		void maxShareRatioReached(bt::TorrentInterface* tc);
-		
+
 		/**
 		 * Show a passive popup that a torrent has reached it's max seed time
 		 * @param tc The torrent
 		 */
 		void maxSeedTimeReached(bt::TorrentInterface* tc);
-		
+
 		/**
 		 * Show a passive popup when a torrent has been stopped by an error.
-		 * @param tc The torrent 
+		 * @param tc The torrent
 		 * @param msg Error message
 		 */
 		void torrentStoppedByError(bt::TorrentInterface* tc, QString msg);
-		
+
 		/**
 		 * Corrupted data has been found.
 		 * @param tc The torrent
 		 */
 		void corruptedData(bt::TorrentInterface* tc);
-		
+
 		/**
 		 * User tried to enqueue a torrent that has reached max share ratio or max seed time
 		 * Show passive popup message.
 		 */
 		void queuingNotPossible(bt::TorrentInterface* tc);
-		
+
 		/**
 		 * We failed to start a torrent
 		 * @param tc The torrent
 		 * @param reason The reason it failed
 		 */
-		void canNotStart(bt::TorrentInterface* tc,bt::TorrentStartResponse reason);
-		
+		void canNotStart(bt::TorrentInterface* tc, bt::TorrentStartResponse reason);
+
 		///Shows passive popup message
 		void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
-		
+
 		/**
 		 * A torrent could not be loaded silently.
 		 * @param msg Message to show
 		 */
 		void cannotLoadTorrentSilently(const QString & msg);
-		
+
 		/**
 			The QM changes suspended state.
 		*/
 		void suspendStateChanged(bool suspended);
-		
+
 		/**
 			Show a warning message
 		*/
 		void dhtNotEnabled(const QString & msg);
-		
+
 	private slots:
 		void secondaryActivate(const QPoint & pos);
-		
+
 	private:
 		Core* core;
 		int previousDownloadHeight;
@@ -164,20 +172,20 @@ namespace kt
 	public:
 		enum Type
 		{
-			UPLOAD,DOWNLOAD
+			UPLOAD, DOWNLOAD
 		};
-		SetMaxRate(Core* tc, Type t, QWidget *parent); 
+		SetMaxRate(Core* tc, Type t, QWidget *parent);
 		virtual ~SetMaxRate();
-	
+
 	public slots:
 		void update();
-		
+
 	private:
 		void makeMenu();
 
 	private slots:
 		void onTriggered(QAction* act);
-	
+
 	private:
 		Core* m_core;
 		Type type;

@@ -1,3 +1,9 @@
+Changes in 4.2:
+- Add new group switcher combobox in toolbar (290888)
+- Make kio-magnet optional
+- Improve handing magnet uris in search plugin
+- Fix bug causing kio-magnet to deselect all files
+
 Changes in 4.2rc1:
 - Make it possible to check individual files of a torrent
 - Data checks for multiple torrents can now get started at the same time (265611)

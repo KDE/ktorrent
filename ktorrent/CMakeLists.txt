@@ -88,10 +88,13 @@ target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore ${KDE4_SOLID_
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )
-# TODO remove once kio-magnet is properly integrated
-#install(FILES magnet.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install(FILES ktorrentui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 install(FILES kttorrentactivityui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 install(FILES ktorrent.notifyrc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+
+if (NOT ${ENABLE_KIO_MAGNET})
+    install(FILES magnet.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
+endif (NOT ${ENABLE_KIO_MAGNET})
+    
 
 add_subdirectory(icons)
