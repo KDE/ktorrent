@@ -27,29 +27,29 @@
 
 namespace kt
 {
-	
-	ScanExtender::ScanExtender(bt::Job* job, QWidget* parent) 
-	: JobProgressWidget(job,parent)
+
+	ScanExtender::ScanExtender(bt::Job* job, QWidget* parent)
+			: JobProgressWidget(job, parent)
 	{
 		setupUi(this);
-		
+
 		bt::DataCheckerJob* dcj = (bt::DataCheckerJob*)job;
 		setAutomaticRemove(dcj->isAutoImport());
-		connect(job,SIGNAL(result(KJob*)),this,SLOT(finished(KJob*)));
-	
+		connect(job, SIGNAL(result(KJob*)), this, SLOT(finished(KJob*)));
+
 		cancel_button->setGuiItem(KStandardGuiItem::Cancel);
 		close_button->setGuiItem(KStandardGuiItem::Close);
 		close_button->setEnabled(false);
-		connect(close_button,SIGNAL(clicked()),this,SLOT(closeRequested()));
-		connect(cancel_button,SIGNAL(clicked()),this,SLOT(cancelPressed()));
-		
+		connect(close_button, SIGNAL(clicked()), this, SLOT(closeRequested()));
+		connect(cancel_button, SIGNAL(clicked()), this, SLOT(cancelPressed()));
+
 		progress_bar->setFormat(i18n("Checked %v of %m chunks"));
 		progress_bar->setValue(0);
 		progress_bar->setMaximum(tc->getStats().total_chunks);
-		
+
 		error_msg->clear();
 		error_msg->hide();
-		
+
 		QFont font = chunks_failed->font();
 		font.setBold(true);
 		chunks_failed->setFont(font);
@@ -61,7 +61,7 @@ namespace kt
 	ScanExtender::~ScanExtender()
 	{
 	}
-	
+
 	void ScanExtender::description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2)
 	{
 		Q_UNUSED(title);
@@ -69,13 +69,14 @@ namespace kt
 		chunks_found->setText(field1.second);
 		chunks_downloaded->setText(field2.first);
 		chunks_not_downloaded->setText(field2.second);
+
 		if (error_msg->isVisible())
 		{
 			error_msg->hide();
 			emit resized(this);
 		}
 	}
-	
+
 	void ScanExtender::processedAmount(KJob::Unit unit, qulonglong amount)
 	{
 		Q_UNUSED(unit);
@@ -87,7 +88,7 @@ namespace kt
 		Q_UNUSED(unit);
 		progress_bar->setMaximum(amount);
 	}
-	
+
 	void ScanExtender::infoMessage(const QString& plain, const QString& rich)
 	{
 		Q_UNUSED(rich);
@@ -95,7 +96,7 @@ namespace kt
 		error_msg->show();
 		emit resized(this);
 	}
-	
+
 	void ScanExtender::warning(const QString& plain, const QString& rich)
 	{
 		Q_UNUSED(rich);
@@ -120,7 +121,7 @@ namespace kt
 		progress_bar->setEnabled(false);
 		cancel_button->setDisabled(true);
 		close_button->setEnabled(true);
-		
+
 		if (j->error() && !j->errorText().isEmpty())
 		{
 			error_msg->show();
@@ -134,10 +135,16 @@ namespace kt
 		if (job)
 			job->kill(false);
 	}
-	
+
 	void ScanExtender::closeRequested()
 	{
 		closeRequest(this);
 	}
+	
+	bool ScanExtender::similar(Extender* ext) const
+	{
+		return qobject_cast<ScanExtender*>(ext) != 0; 
+	}
+
 }
 

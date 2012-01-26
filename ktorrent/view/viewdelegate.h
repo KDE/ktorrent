@@ -52,6 +52,9 @@ namespace kt
 		/// Remove an Extender
 		void remove(Extender* ext);
 		
+		/// Remove extenders similar to ext
+		void removeSimilar(Extender* ext);
+		
 		/// Clear all extenders
 		void clear();
 		
@@ -76,7 +79,7 @@ namespace kt
 		/**
 			Extend a torrent with a widget
 		*/
-		void extend(bt::TorrentInterface* tc,Extender* widget);
+		void extend(bt::TorrentInterface* tc,Extender* widget, bool close_similar);
 		
 		virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 		virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;

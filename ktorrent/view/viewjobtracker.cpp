@@ -23,17 +23,18 @@
 #include "view.h"
 #include "scanextender.h"
 #include <torrent/torrentcontrol.h>
+#include "viewdelegate.h"
 
 
 namespace kt
 {
 	ViewJobTracker::ViewJobTracker(View* parent)
-		: JobTracker(parent),
-		view(parent)
+			: JobTracker(parent),
+			view(parent)
 	{
 	}
 
-	
+
 	ViewJobTracker::~ViewJobTracker()
 	{
 	}
@@ -43,7 +44,7 @@ namespace kt
 		ActiveJobs::iterator i = widgets.find(j);
 		if (i == widgets.end())
 			return;
-		
+
 		JobProgressWidget* w = i.value();
 		if (w->automaticRemove())
 			w->emitCloseRequest();
@@ -52,21 +53,18 @@ namespace kt
 	void ViewJobTracker::jobRegistered(bt::Job* j)
 	{
 		kt::JobProgressWidget* widget = createJobWidget(j);
-		view->extend(j->torrent(),widget);
+		view->extend(j->torrent(), widget, j->torrentStatus() == bt::CHECKING_DATA);
 	}
 
 	kt::JobProgressWidget* ViewJobTracker::createJobWidget(bt::Job* job)
 	{
 		if (job->torrentStatus() == bt::CHECKING_DATA)
 		{
-			ScanExtender* ext = new ScanExtender(job,0);
+			ScanExtender* ext = new ScanExtender(job, 0);
 			widgets[job] = ext;
 			return ext;
 		}
 		else
 			return kt::JobTracker::createJobWidget(job);
 	}
-
-	
-
 }

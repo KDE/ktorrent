@@ -45,6 +45,12 @@ namespace kt
 		virtual void processedAmount(KJob::Unit unit, qulonglong amount);
 		virtual void percent(long unsigned int percent);
 		virtual void speed(long unsigned int value);
+		
+		virtual bool similar(Extender* ext) const
+		{
+			Q_UNUSED(ext);
+			return false;
+		}
 	};
 
 }

@@ -41,17 +41,17 @@ namespace kt
 	class ViewDelegate;
 	class Group;
 	class TorrentInterface;
-	
+
 	class View : public QTreeView
 	{
 		Q_OBJECT
 	public:
 		View(Core* core, GUI* gui, QWidget* parent);
 		virtual ~View();
-		
+
 		/// Setup the actions of the view manager
 		void setupActions(KActionCollection* ac);
-		
+
 		/// Update all actions
 		void updateActions();
 
@@ -60,13 +60,13 @@ namespace kt
 		 * @return The ViewModel of this View
 		 */
 		ViewModel* viewModel() {return model;}
-		
+
 		/**
 		 * Set the group to show in this view
 		 * @param g The Group
 		 * */
 		void setGroup(Group* g);
-		
+
 		/// Get the current group
 		Group* getCurrentGroup() const {return group;}
 
@@ -87,30 +87,30 @@ namespace kt
 
 		/// Get the current torrent
 		bt::TorrentInterface* getCurrentTorrent();
-		
+
 		/// Get the number of torrents
 		bt::Uint32 numTorrents() const {return num_torrents;};
-		
+
 		/// Get the number of running torrents
 		bt::Uint32 numRunningTorrents() const {return num_running;}
-		
-		virtual void closeEditor(QWidget* editor,QAbstractItemDelegate::EndEditHint hint);
-		virtual bool edit(const QModelIndex & index,EditTrigger trigger,QEvent* event);
-		
+
+		virtual void closeEditor(QWidget* editor, QAbstractItemDelegate::EndEditHint hint);
+		virtual bool edit(const QModelIndex & index, EditTrigger trigger, QEvent* event);
+
 		/// Get the ViewDelegate
 		ViewDelegate* viewDelegate() {return delegate;}
-		
+
 		/// Extend a widget
-		void extend(bt::TorrentInterface* tc,Extender* widget);
-	
-		
+		void extend(bt::TorrentInterface* tc, Extender* widget, bool close_similar);
+
+
 	public slots:
 		/// Set the filter string
 		void setFilterString(const QString & filter);
-		
+
 		/// Update all items in the view
 		void update();
-		
+
 		void startTorrents();
 		void forceStartTorrents();
 		void stopTorrents();
@@ -133,50 +133,50 @@ namespace kt
 		void showMenu(const QPoint & pos);
 		void showHeaderMenu(const QPoint& pos);
 		void onHeaderMenuItemTriggered(QAction* act);
-		void onCurrentItemChanged(const QModelIndex & current,const QModelIndex & previous);
-		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
+		void onCurrentItemChanged(const QModelIndex & current, const QModelIndex & previous);
+		void onSelectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 		void onDoubleClicked(const QModelIndex & index);
 		void onCurrentGroupChanged(kt::Group* g);
 		void onGroupRenamed(kt::Group* g);
 		void onGroupRemoved(kt::Group* g);
 		void onGroupAdded(kt::Group* g);
-		
+
 		/// An item in the groups menu was triggered
 		void addToGroupItemTriggered();
-		
+
 		/// Copy the torrent URL to the clipboard
 		void copyTorrentURL();
-		
+
 		/// Show the speed limits dialog
 		void speedLimits();
-		
+
 		/// Export a torrent
 		void exportTorrent();
-		
+
 		/// Add a new group and add the current selection to it
 		void addToNewGroup();
-		
+
 
 	signals:
 		void currentTorrentChanged(bt::TorrentInterface* tc);
 		void torrentSelectionChanged();
 		void editingItem(bool on);
-		
+
 	private:
 		Core* core;
 		GUI* gui;
 		Group* group;
 		KMenu* header_menu;
-		QMap<QAction*,int> column_idx_map;
+		QMap<QAction*, int> column_idx_map;
 		QList<QAction*> column_action_list;
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
 		ViewModel* model;
 		ViewSelectionModel* selection_model;
 		ViewDelegate* delegate;
-		QMap<bt::TorrentInterface*,Extender*> data_scan_extenders;
-		
-		// actions for the view menu 
+		QMap<bt::TorrentInterface*, Extender*> data_scan_extenders;
+
+		// actions for the view menu
 		KAction* start_torrent;
 		KAction* force_start_torrent;
 		KAction* start_all;
@@ -196,7 +196,7 @@ namespace kt
 		KAction* torrent_properties;
 		KAction* rename_torrent;
 		KAction* remove_from_group;
-		QMap<Group*,QAction*> group_actions;
+		QMap<Group*, QAction*> group_actions;
 		KAction* add_to_new_group;
 		KAction* check_data;
 		KAction* open_dir_menu;
