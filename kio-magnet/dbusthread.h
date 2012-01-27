@@ -25,10 +25,12 @@ class DBusHandler;
 class DBusThread : public QThread
 {
 public:
-    DBusThread( DBusHandler* );
-    void run();
+	DBusThread(DBusHandler*);
+	
+	void run();
+	
 private:
-    DBusHandler* m_handler;
+	DBusHandler* m_handler;
 };
 
 #endif // DBUSTHREAD_H

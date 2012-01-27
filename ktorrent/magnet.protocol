@@ -1,5 +1,5 @@
 [Protocol]
-exec=ktorrent '%u'
+exec=ktorrent "%u"
 protocol=magnet
 Icon=kt-magnet
 input=none
@@ -10,3 +10,4 @@ reading=false
 writing=false
 makedir=false
 deleting=false
+URIMode=rawuri

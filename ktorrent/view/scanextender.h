@@ -51,6 +51,7 @@ namespace kt
 		virtual void speed(long unsigned int value);
 		virtual void processedAmount(KJob::Unit unit, qulonglong amount);
 		virtual void totalAmount(KJob::Unit unit, qulonglong amount);
+		virtual bool similar(Extender* ext) const;
 
 	private slots:
 		void cancelPressed();

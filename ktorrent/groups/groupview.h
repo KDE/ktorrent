@@ -84,11 +84,8 @@ namespace kt
 		void removeGroup();
 		void editGroupName();
 		void editGroupPolicy();
-		void defaultGroupAdded(Group* g);
-		void defaultGroupRemoved(Group* g);
-		void customGroupAdded(Group* g);
-		void customGroupRemoved(Group* g);
-		
+		void groupAdded(Group* g);
+		void groupRemoved(Group* g);
 		
 	signals:
 		void currentGroupChanged(kt::Group* g);

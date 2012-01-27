@@ -46,6 +46,9 @@ namespace kt
 		/// Get the torrent of this extender
 		bt::TorrentInterface* torrent() {return tc;}
 		
+		/// Is this similar to another extender
+		virtual bool similar(Extender* ext) const = 0;
+		
 	signals:
 		/// Should be emitted by an extender when it wants to close itself
 		void closeRequest(Extender* ext);

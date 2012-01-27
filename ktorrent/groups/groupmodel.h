@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2011 by Joris Guisson                                   *
+ *   Copyright (C) 2012 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,38 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KT_GROUPMODEL_H
+#define KT_GROUPMODEL_H
 
-
-#ifndef KT_VIEWJOBTRACKER_H
-#define KT_VIEWJOBTRACKER_H
-
-#include <torrent/jobtracker.h>
+#include <QAbstractListModel>
 
 
 namespace kt
 {
-
-	class ScanExtender;
-	class View;
+	class Group;
+	class GroupManager;
 
 	/**
-		JobTracker for the View
+		Simple list model for the view switcher combobox
 	 */
-	class ViewJobTracker : public kt::JobTracker
+	class GroupModel : public QAbstractListModel
 	{
 		Q_OBJECT
 	public:
-		ViewJobTracker(View* parent);
-		virtual ~ViewJobTracker();
-
-		virtual void jobUnregistered(bt::Job* j);
-		virtual void jobRegistered(bt::Job* j);
-		virtual kt::JobProgressWidget* createJobWidget(bt::Job* job);
+		GroupModel(GroupManager* gman, QObject* parent);
+		virtual ~GroupModel();
+		
+		virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+		virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+		
+		/// Get a group given the index
+		Group* group(int idx) const;
+		
+		/// Get the index given a group
+		int groupIndex(Group* g) const;
+		
+	private slots:
+		void customGroupChanged(QString oldName, QString newName);
+		void groupAdded(Group* g);
+		void groupRemoved(Group* g);
 		
 	private:
-		View* view;
+		GroupManager* gman;
+		QList<Group*> groups;
 	};
 
 }
 
-#endif // KT_VIEWJOBTRACKER_H
+#endif // KT_GROUPMODEL_H

@@ -422,7 +422,7 @@ namespace kt
 
 	void FileSelectDlg::loadGroups()
 	{
-		GroupManager::iterator it = gman->begin();
+		GroupManager::Itr it = gman->begin();
 		
 		QStringList grps;
 		
@@ -435,10 +435,13 @@ namespace kt
 		while(it != gman->end())
 		{
 			grps << it->first;		
-			if (it->second == initial_group)
-				selected = cnt + 1;
+			if (!it->second->isStandardGroup())
+			{
+				if (it->second == initial_group)
+					selected = cnt + 1;
+				cnt++;	
+			}
 			++it;
-			cnt++;
 		}
 		
 		m_cmbGroups->addItems(grps);
