@@ -589,4 +589,6 @@ Action=Sound|Popup
 
 [Event/MagnetLinkDownloadStarted]
 Name=Magnet link download started
+Name[pt_BR]=Download do link magnético iniciado
+Name[x-test]=xxMagnet link download startedxx
 Action=Sound|Popup
