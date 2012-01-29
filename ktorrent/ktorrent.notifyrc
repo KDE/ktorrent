@@ -598,6 +598,7 @@ Action=Sound|Popup
 
 [Event/MagnetLinkDownloadStarted]
 Name=Magnet link download started
+Name[da]=Download af magnet-link startet
 Name[nl]=Download van Magneetlink gestart
 Name[pt]=Transferência de ligação Magnet iniciada
 Name[pt_BR]=Download do link magnético iniciado
