@@ -591,6 +591,7 @@ Action=Sound|Popup
 Name=Magnet link download started
 Name[da]=Download af magnet-link startet
 Name[el]=Η λήψη συνδέσμου μαγνήτη ξεκίνησε
+Name[ga]=Íosluchtú naisc maighnéid tosaithe
 Name[pt_BR]=Download do link magnético iniciado
 Name[sk]=Spustené sťahovanie Magnet odkazu
 Name[sv]=Nerladdning med magnetlänk startad
