@@ -164,9 +164,9 @@ namespace kt
 
 			const bt::PeerManager * p_mgr = tctl->getPeerMgr();
 
-			QList<bt::Peer*> ppl = p_mgr->getPeers();
+			QList<bt::Peer::Ptr> ppl = p_mgr->getPeers();
 
-			foreach(bt::Peer* peer, ppl)
+			foreach(bt::Peer::Ptr peer, ppl)
 			{
 				const bt::PeerInterface::Stats p_stats = peer->getStats();
 
