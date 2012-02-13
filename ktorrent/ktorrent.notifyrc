@@ -600,6 +600,7 @@ Action=Sound|Popup
 Name=Magnet link download started
 Name[ca]=S'ha iniciat la baixada de l'enllaç «magnet»
 Name[da]=Download af magnet-link startet
+Name[de]=Download der Magnet-Verknüpfung wurde gestartet
 Name[el]=Η λήψη συνδέσμου μαγνήτη ξεκίνησε
 Name[fi]=Magnet-linkkilataus aloitettiin
 Name[hu]=A magnethivatkozás letöltése elkezdődött
