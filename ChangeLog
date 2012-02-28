@@ -4,6 +4,8 @@ Changes in 4.2:
 - Improve handing magnet uris in search plugin
 - Fix bug causing kio-magnet to deselect all files
 - Close current scan widget when a new one is started for a torrent (292001)
+- Fix syndication plugin not handling relative urls properly
+- Fix magnet uri's not being handled properly in load torrent feature of webinterface
 
 Changes in 4.2rc1:
 - Make it possible to check individual files of a torrent

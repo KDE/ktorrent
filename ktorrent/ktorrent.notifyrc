@@ -598,4 +598,23 @@ Action=Sound|Popup
 
 [Event/MagnetLinkDownloadStarted]
 Name=Magnet link download started
+Name[ca]=S'ha iniciat la baixada de l'enllaç «magnet»
+Name[da]=Download af magnet-link startet
+Name[de]=Download der Magnet-Verknüpfung wurde gestartet
+Name[el]=Η λήψη συνδέσμου μαγνήτη ξεκίνησε
+Name[es]=Se ha iniciado la descarga del enlace magnético
+Name[fi]=Magnet-linkkilataus aloitettiin
+Name[hu]=A magnethivatkozás letöltése elkezdődött
+Name[nl]=Download van Magneetlink gestart
+Name[pt]=Transferência de ligação Magnet iniciada
+Name[pt_BR]=Download do link magnético iniciado
+Name[sk]=Spustené sťahovanie Magnet odkazu
+Name[sr]=Покренуто преузимање магнетске везе
+Name[sr@ijekavian]=Покренуто преузимање магнетске везе
+Name[sr@ijekavianlatin]=Pokrenuto preuzimanje magnetske veze
+Name[sr@latin]=Pokrenuto preuzimanje magnetske veze
+Name[sv]=Nerladdning med magnetlänk startad
+Name[uk]=Розпочато звантаження за маґнет-посиланням
+Name[x-test]=xxMagnet link download startedxx
+Name[zh_TW]=Magnet 連結下載已開始
 Action=Sound|Popup

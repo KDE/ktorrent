@@ -45,6 +45,23 @@ namespace kt
 			: url(url),core(core),verbose(verbose),group(group),
 			location(location),move_on_completion(move_on_completion)
 	{
+		base_url = url.protocol() + "://" + url.host();
+		if (url.port(80) != 80)
+			base_url += ":" + QString::number(url.port(80));
+		
+		QString path = url.path();
+		if (path.size() > 0)
+		{
+			int idx = -1;
+			if (path.endsWith("/"))
+				base_url += (!path.startsWith("/") ? "/" : "") + path;
+			else if ((idx = path.lastIndexOf("/")) != -1)
+				base_url += path.mid(0, idx + 1);
+			else
+				base_url += "/";
+		}
+		else
+			base_url += "/";
 	}
 
 
@@ -121,13 +138,12 @@ namespace kt
 		while ((pos = rx.indexIn(str, pos)) != -1) 
 		{
 			QString href_link = rx.cap(1);
-			if (href_link.startsWith("/"))
+			if (!href_link.startsWith("http://") && !href_link.startsWith("https://"))
 			{
-				QString prefix = url.protocol() + "://" + url.host();
-				if (url.port(80) != 80)
-					prefix += ":" + QString::number(url.port(80));
-				
-				href_link = prefix + href_link;
+				if (!href_link.startsWith("/"))
+					href_link = base_url + href_link;
+				else
+					href_link = url.protocol() + "://" + url.authority() + href_link;
 			}
 			
 			link_url = KUrl(href_link);

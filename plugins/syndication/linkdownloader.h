@@ -67,6 +67,7 @@ namespace kt
 		QString group;
 		QString location;
 		QString move_on_completion;
+		QString base_url;
 	};
 
 }

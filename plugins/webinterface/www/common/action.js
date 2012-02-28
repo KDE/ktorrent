@@ -24,6 +24,6 @@ function shutdown()
 function load_url()
 {
 	var url = document.getElementById("torrent_url");
-	fetch_xml("/action?load_torrent=" + url.value,action_ok,action_error);
+	fetch_xml("/action?load_torrent=" + escape(url.value),action_ok,action_error);
 	url.value = "";
 }
