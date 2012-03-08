@@ -45,7 +45,7 @@ extern "C"
 
 int kdemain(int argc, char **argv)
 {
-	kDebug() << "Starting" << getpid();
+	kDebug(7019) << "Starting" << getpid();
 	KComponentData componentData("kio_magnet");
 	QCoreApplication app(argc, argv);
 
@@ -59,7 +59,7 @@ int kdemain(int argc, char **argv)
 
 	slave.dispatchLoop();
 
-	kDebug() << "Done";
+	kDebug(7019) << "Done";
 	return (0);
 }
 
@@ -70,22 +70,39 @@ MagnetProtocol::MagnetProtocol(const QByteArray &pool, const QByteArray &app)
 		, m_position(0)
 		, m_numFiles(0)
 {
-	kDebug();
+	kDebug(7019);
 	m_dbusHandler = new DBusHandler(this);
 }
 
 MagnetProtocol::~MagnetProtocol()
 {
-	kDebug();
+	kDebug(7019);
 	delete m_dbusHandler;
 }
 
 void MagnetProtocol::load(const KUrl& url)
 {
+	kDebug(7019);
 	m_loadMutex.lock();
-	kDebug();
+	// redirect from URI schema to URL
+	if( !url.hasHost() ) {
+	    KUrl redUrl(url);
+	    // rewrite to host part
+	    QString hash = redUrl.queryItem("xt");
+	    hash.remove("urn:btih:");
+	    redUrl.setHost(hash + ".btih.dht");
+	    redUrl.removeQueryItem("xt");
 
-	m_url = url;
+	    // set path
+	    QString path = redUrl.queryItem("pt");
+	    redUrl.setPath(path);
+	    kDebug(7019) << "redirect to " + redUrl.url();
+	    redirection(redUrl);
+	    m_url=redUrl;
+	} else {
+	    m_url=url;
+	}
+
 	m_downloaded = false;
 	m_size = -1;
 	m_position = 0;
@@ -111,7 +128,7 @@ void MagnetProtocol::load(const KUrl& url)
  */
 bool MagnetProtocol::isDir(const KUrl& url)
 {
-	kDebug();
+	kDebug(7019);
 	QString pt = url.queryItem("pt");
 	// TODO is the tailing "/" ok for a standard?
 
@@ -132,7 +149,7 @@ bool MagnetProtocol::isDir(const KUrl& url)
 
 void MagnetProtocol::stat(const KUrl& url)
 {
-	kDebug() << url.url();
+	kDebug(7019) << url.url();
 	load(url);
 
 	UDSEntry entry;
@@ -158,7 +175,7 @@ void MagnetProtocol::stat(const KUrl& url)
 
 void MagnetProtocol::listDir(const KUrl& u)
 {
-	kDebug() << u.url();
+	kDebug(7019) << u.url();
 	load(u);
 
 	totalSize(m_numFiles);
@@ -228,7 +245,7 @@ void MagnetProtocol::listDir(const KUrl& u)
 		}
 
 		if (!url.hasQueryItem("sp") &&
-		        file.contains(QRegExp("\\.(avi|mp2|mp3|mp4|m4v|webm|ogv|ogg|mpeg|mpg|wmv)$")))
+		    file.contains(QRegExp("\\.(avi|mp2|mp3|mp4|m4v|webm|ogv|ogg|mpeg|mpg|wmv)$")))
 		{
 			//HACK enable streaming for seemless playback on known containers for now
 			url.addQueryItem("sp", "200");
@@ -237,7 +254,8 @@ void MagnetProtocol::listDir(const KUrl& u)
 		entry.insert(KIO::UDSEntry::UDS_NAME, file);
 
 		// TODO KUrl doesn't like to have URNs without a "/" after the protocol as it seems
-		entry.insert(KIO::UDSEntry::UDS_TARGET_URL, url.url().replace("magnet:/?", "magnet:?"));
+		entry.insert(KIO::UDSEntry::UDS_TARGET_URL
+			, url.url().replace("magnet:/?", "magnet:?"));
 		// readable by everybody
 		entry.insert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IRGRP | S_IROTH);
 		eList << entry;
@@ -250,7 +268,7 @@ void MagnetProtocol::listDir(const KUrl& u)
 
 void MagnetProtocol::mimetype(const KUrl& url)
 {
-	kDebug();
+	kDebug(7019);
 	load(url);
 
 	KMimeType::Ptr mt = KMimeType::findByUrl(m_filename, 0, false /* local URL */);
@@ -260,7 +278,7 @@ void MagnetProtocol::mimetype(const KUrl& url)
 
 void MagnetProtocol::get(const KUrl& url)
 {
-	kDebug() << url.url() << "path: " << m_path;
+	kDebug(7019) << url.url() << "path: " << m_path;
 	load(url);
 
 	totalSize(m_size);
@@ -273,8 +291,8 @@ void MagnetProtocol::get(const KUrl& url)
 		if (!file.open(QIODevice::ReadOnly))
 		{
 			error(KIO::ERR_ABORTED,
-			      i18n("File exists in KTorrent, but cannot open it on disk at path \"%1\"."
-			           " Have you removed the file manually?").arg(m_path));
+			      i18n("File exists in KTorrent, but cannot open it on disk at path"
+				   "\"%1\". Have you removed thefile manually?").arg(m_path));
 			return;
 		}
 	}
@@ -297,8 +315,9 @@ void MagnetProtocol::get(const KUrl& url)
 		{
 			if (emitMimetype)
 			{
-				KMimeType::Ptr mt = KMimeType::findByUrl(m_path, 0, true /* local URL */);
-				kDebug() << "mimetype: " << mt->name();
+				KMimeType::Ptr mt = KMimeType::findByUrl(m_path, 0
+					, true /* local URL */);
+				kDebug(7019) << "mimetype: " << mt->name();
 				emit mimeType(mt->name());
 				emitMimetype = false;
 			}
@@ -316,7 +335,7 @@ void MagnetProtocol::get(const KUrl& url)
 
 			data(d);
 
-			kDebug() << "processed size: " << ps;
+			kDebug(7019) << "processed size: " << ps;
 
 			processedSize(ps);
 		}
@@ -326,7 +345,7 @@ void MagnetProtocol::get(const KUrl& url)
 		}
 	}
 
-	kDebug() << "reading ended.";
+	kDebug(7019) << "reading ended.";
 
 	file.close();
 	finished();
@@ -334,7 +353,7 @@ void MagnetProtocol::get(const KUrl& url)
 
 void MagnetProtocol::added(const QString& fn)
 {
-	kDebug();
+	kDebug(7019);
 
 	m_filename = fn;
 	m_loadWaiter.wakeOne();
@@ -342,17 +361,18 @@ void MagnetProtocol::added(const QString& fn)
 
 void MagnetProtocol::downloaded(bool dl)
 {
-	kDebug();
+// 	kDebug(7019);
 	m_downloaded = dl;
 }
 
 void MagnetProtocol::open(const KUrl& url, QIODevice::OpenMode mode)
 {
-	kDebug() << url.url() << "path: " << m_path;
+	kDebug(7019) << url.url() << "path: " << m_path;
 
 	if (mode != QIODevice::ReadOnly)
 	{
-		error(KIO::ERR_CANNOT_OPEN_FOR_WRITING, i18n("You cannot write to magnet resources."));
+		error(KIO::ERR_CANNOT_OPEN_FOR_WRITING
+		      , i18n("You cannot write to magnet resources."));
 		return;
 	}
 
@@ -372,8 +392,8 @@ void MagnetProtocol::open(const KUrl& url, QIODevice::OpenMode mode)
 		if (!file.open(QIODevice::ReadOnly))
 		{
 			error(KIO::ERR_ABORTED,
-			      i18n("File exists in KTorrent, but cannot open it on disk at path \"%1\"."
-			           " Have you removed the file manually?").arg(m_path));
+			      i18n("File exists in KTorrent, but cannot open it on disk at path"
+				   "\"%1\". Have you removed the file manually?").arg(m_path));
 			return;
 		}
 	}
@@ -393,7 +413,7 @@ void MagnetProtocol::open(const KUrl& url, QIODevice::OpenMode mode)
 
 void MagnetProtocol::read(filesize_t size)
 {
-	kDebug() << size;
+	kDebug(7019) << size;
 
 	QFile file(m_path);
 
@@ -406,8 +426,8 @@ void MagnetProtocol::read(filesize_t size)
 		else
 		{
 			error(KIO::ERR_CANNOT_OPEN_FOR_READING,
-			      i18n("File exists in KTorrent, but cannot open it on disk at path \"%1\"."
-			           " Have you removed the file manually?").arg(m_path));
+			      i18n("File exists in KTorrent, but cannot open it on disk at path "
+				   "\"%1\". Have you removed the file manually?").arg(m_path));
 		}
 
 		return;
@@ -436,7 +456,7 @@ void MagnetProtocol::read(filesize_t size)
 
 void MagnetProtocol::seek(filesize_t offset)
 {
-	kDebug() << offset;
+	kDebug(7019) << offset;
 
 	if (m_dbusHandler->seek(offset))
 	{
@@ -451,26 +471,26 @@ void MagnetProtocol::seek(filesize_t offset)
 
 void MagnetProtocol::setPath(const QString& path)
 {
-	kDebug() << path;
+	kDebug(7019) << path;
 	m_path = path;
 }
 
 void MagnetProtocol::setFiles(const QStringList& files)
 {
-	kDebug() << files;
+	kDebug(7019) << files;
 	m_files = files;
 }
 
 
 void MagnetProtocol::setSize(qint64 size)
 {
-	kDebug() << size;
+	kDebug(7019) << size;
 	m_size = size;
 }
 
 void MagnetProtocol::setNumFiles(int n)
 {
-	kDebug() << n;
+	kDebug(7019) << n;
 	m_numFiles = n;
 }
 

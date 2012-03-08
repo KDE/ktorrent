@@ -44,6 +44,8 @@
 const int timeout = 5000;
 const int repeat = 6;
 
+/** Represents the Interface to KTorrent.
+ */
 DBusHandler::DBusHandler(MagnetProtocol* slave) :
 		m_coreInt(0)
 		, m_torrentInt(0)
@@ -54,7 +56,7 @@ DBusHandler::DBusHandler(MagnetProtocol* slave) :
 		, m_passedTime(0)
 		, m_init(false)
 {
-	kDebug() << "Thread: " << thread();
+	kDebug(7019) << "Thread: " << thread();
 	m_thread = new DBusThread(this);
 	m_thread->start();
 	moveToThread(m_thread);
@@ -62,7 +64,7 @@ DBusHandler::DBusHandler(MagnetProtocol* slave) :
 
 DBusHandler::~DBusHandler()
 {
-	kDebug();
+	kDebug(7019);
 	m_thread->exit();
 
 	if (!m_tor.isEmpty())
@@ -78,25 +80,21 @@ DBusHandler::~DBusHandler()
 		m_torrentInt->removeStream(m_file);
 
 	delete m_process;
-
 	delete m_streamInt;
-
 	delete m_torrentInt;
-
 	delete m_coreInt;
-
 	delete m_thread;
 }
 
 void DBusHandler::init()
 {
-	kDebug();
+	kDebug(7019);
 
 	if (!MagnetSettings::enabled())
 	{
 		m_slave->error(KIO::ERR_ABORTED,
-		               i18n("The Web share for magnet-links is disabled. \
-        You can set it up at settings:/network-and-connectivity/sharing"));
+		               i18n("The Web share for magnet-links is disabled. " 
+	"You can set it up at settings:/network-and-connectivity/sharing"));
 	}
 	else
 	{
@@ -106,13 +104,13 @@ void DBusHandler::init()
 
 void DBusHandler::initDBus()
 {
-	kDebug() << "Thread: " << thread();
+	kDebug(7019) << "Thread: " << thread();
 	m_coreInt = new org::ktorrent::core("org.ktorrent.ktorrent", "/core",
 	                                    QDBusConnection::sessionBus());
 
 	if (!m_coreInt->isValid())
 	{
-		kDebug() << "Could not initialize org.ktorrent.ktorrent /core.\
+		kDebug(7019) << "Could not initialize org.ktorrent.ktorrent /core.\
                      KTorrent seems to be not running.";
 		m_process = new KProcess();
 
@@ -137,7 +135,7 @@ void DBusHandler::initDBus()
 
 void DBusHandler::connectToDBus()
 {
-	kDebug();
+	kDebug(7019);
 
 	// TODO check if this test is necessary with the dbus wrapper interface
 
@@ -172,7 +170,7 @@ void DBusHandler::connectToDBus()
 
 void DBusHandler::setupDBus()
 {
-	kDebug();
+	kDebug(7019);
 	QDBusConnection bus = QDBusConnection::sessionBus();
 	QDBusReply<QStringList>groupList = m_coreInt->groups();
 
@@ -211,17 +209,19 @@ void DBusHandler::setupDBus()
 	}
 
 
-	connect(m_coreInt, SIGNAL(torrentAdded(const QString&))
-
-	        , this, SLOT(slotTorrentAdded(const QString&)));
-	connect(m_coreInt, SIGNAL(finished(const QString&))
-	        , this, SLOT(slotFinished(const QString&)));
-	connect(m_coreInt, SIGNAL(torrentRemoved(const QString&))
-	        , this, SLOT(slotTorrentRemoved(const QString&)));
-	connect(m_coreInt
-	        , SIGNAL(torrentStoppedByError(const QString&, const QString&))
-	        , this
-	        , SLOT(slotTorrentStoppedByError(const QString&, const QString&)));
+	if( !connect(m_coreInt, SIGNAL(torrentAdded(const QString&))
+			, this, SLOT(slotTorrentAdded(const QString&)))
+		|| !connect(m_coreInt, SIGNAL(finished(const QString&))
+			, this, SLOT(slotFinished(const QString&)))
+		|| !connect(m_coreInt, SIGNAL(torrentRemoved(const QString&))
+			, this, SLOT(slotTorrentRemoved(const QString&)))
+		|| !connect(m_coreInt
+			, SIGNAL(torrentStoppedByError(const QString&, const QString&))
+			, this
+			, SLOT(slotTorrentStoppedByError(const QString&, const QString&)))
+	) {
+		kDebug(7019) << "Cannot connect DBus signals." << endl;
+	}
 
 	startTimer(1000);
 
@@ -233,7 +233,7 @@ void DBusHandler::timerEvent(QTimerEvent* event)
 {
 	Q_UNUSED(event);
 
-	kDebug();
+// 	kDebug(7019);
 
 	if (!m_torrentInt || m_file == -1)
 		return;
@@ -255,7 +255,7 @@ bool DBusHandler::seek(qint64 pos)
 
 qlonglong DBusHandler::fileSize(qint32 idx)
 {
-	kDebug();
+	kDebug(7019);
 	Q_ASSERT(m_torrentInt->isValid());
 
 	return m_torrentInt->fileSize(idx);
@@ -263,7 +263,7 @@ qlonglong DBusHandler::fileSize(qint32 idx)
 
 bool DBusHandler::createFileStream(int file)
 {
-	kDebug();
+	kDebug(7019);
 	Q_ASSERT(m_torrentInt->isValid());
 
 	int speed = m_url.queryItem("sp").toInt();
@@ -290,7 +290,7 @@ bool DBusHandler::createFileStream(int file)
 
 bool DBusHandler::load(const KUrl& u)
 {
-	kDebug() << u.url();
+	kDebug(7019) << u.url();
 
 	if (!m_init)
 	{
@@ -330,7 +330,8 @@ bool DBusHandler::load(const KUrl& u)
 	if (xt.isEmpty() || !xt.contains("urn:btih:"))
 	{
 		m_slave->error(KIO::ERR_ABORTED
-		               , i18n("The link for %1 does not contain the required btih hash-parameter.")
+		               , i18n("The link for %1 does not contain the required btih "
+				"hash-parameter.")
 		               .arg(u.url())
 		              );
 		return true;
@@ -371,7 +372,7 @@ bool DBusHandler::load(const KUrl& u)
 
 	if (name.isValid())
 	{
-		kDebug() << "Torrent " + name.value()
+		kDebug(7019) << "Torrent " + name.value()
 		+ "(" + m_tor + ") already loaded in KTorrent.";
 		selectFiles(false);
 		// HACK speed things up by forcing a restart
@@ -398,7 +399,7 @@ bool DBusHandler::load(const KUrl& u)
 
 void DBusHandler::loadFiles()
 {
-	kDebug();
+	kDebug(7019);
 	Q_ASSERT(m_torrentInt->isValid());
 
 	if (m_files.isEmpty())
@@ -416,7 +417,7 @@ void DBusHandler::loadFiles()
 
 void DBusHandler::selectFiles(bool init)
 {
-	kDebug();
+	kDebug(7019);
 	Q_ASSERT(m_torrentInt->isValid());
 	loadFiles();
 
@@ -429,10 +430,10 @@ void DBusHandler::selectFiles(bool init)
 
 	m_file = m_files.indexOf(m_path);
 
-	kDebug() << "file: " << m_path << "id: " << m_file;
+	kDebug(7019) << "file: " << m_path << "id: " << m_file;
 
 	qint32 n =  m_torrentInt->numFiles();
-	kDebug() << "Number of files: " << n;
+	kDebug(7019) << "Number of files: " << n;
 	m_slave->setNumFiles(n);
 
 	QString pf = m_url.queryItem("pf");
@@ -486,7 +487,7 @@ void DBusHandler::selectFiles(bool init)
 
 void DBusHandler::torrentLoaded()
 {
-	kDebug();
+	kDebug(7019);
 	QString filename, path;
 	qlonglong size;
 	bool downloaded = false;
@@ -521,7 +522,7 @@ void DBusHandler::torrentLoaded()
 
 void DBusHandler::cleanup()
 {
-	kDebug();
+	kDebug(7019);
 	/*    if (!m_torrentInt)
 	        return;
 
@@ -543,14 +544,14 @@ void DBusHandler::cleanup()
 	            delete torrentInt;
 	            torrentInt = 0;
 	            m_coreInt->remove(torrent,true);
-	            kDebug() << "removed " << torrent << " torrent.";
+	            kDebug(7019) << "removed " << torrent << " torrent.";
 	            continue;
 	        }
 	        totalSize+=torrentInt->bytesDownloaded(); // TODO might get wrong
 	results if network connection is buggy?
 	        if (torrentInt->bytesLeft()==0) {
 	            shareRatioList[torrent]=torrentInt->shareRatio();
-	            kDebug() << torrent << "-> " << torrentInt->shareRatio();
+	            kDebug(7019) << torrent << "-> " << torrentInt->shareRatio();
 	        }
 	        delete torrentInt;
 	    }
@@ -584,13 +585,13 @@ void DBusHandler::cleanup()
 
 void DBusHandler::slotFinished(const QString& tor)
 {
-	kDebug() << tor;
+	kDebug(7019) << tor;
 	m_slave->downloaded(true);
 }
 
 void DBusHandler::slotTorrentAdded(const QString& tor)
 {
-	kDebug() << tor;
+	kDebug(7019) << tor;
 
 	if (tor != m_tor)
 		return;
@@ -601,33 +602,27 @@ void DBusHandler::slotTorrentAdded(const QString& tor)
 	selectFiles(true);
 
 	QStringList mt = MagnetSettings::managedTorrents();
-
 	QStringList rt = MagnetSettings::runningTorrents();
-
 	mt.append(m_tor);
-
 	rt.append(m_tor);
 
 	MagnetSettings::setManagedTorrents(mt);
-
 	MagnetSettings::setRunningTorrents(rt);
-
 	MagnetSettings::self()->writeConfig();
 
 	cleanup();
-
 	m_coreInt->start(m_tor);
-
 	torrentLoaded();
 }
 
 void DBusHandler::slotTorrentRemoved(const QString& tor)
 {
-	kDebug() << tor;
+	kDebug(7019) << tor;
 
 	if (m_tor == tor)
 	{
-		m_slave->error(KIO::ERR_DOES_NOT_EXIST, i18n("Torrent has been removed from KTorrent."));
+		m_slave->error(KIO::ERR_DOES_NOT_EXIST, i18n("Torrent has been removed from"
+			" KTorrent."));
 		QStringList mt = MagnetSettings::managedTorrents();
 		mt.removeAll(m_tor);
 		MagnetSettings::setManagedTorrents(mt);
@@ -636,7 +631,7 @@ void DBusHandler::slotTorrentRemoved(const QString& tor)
 
 void DBusHandler::slotTorrentStoppedByError(const QString& tor, const QString& error)
 {
-	kDebug() << tor << error;
+	kDebug(7019) << tor << error;
 
 	if (m_tor == tor)
 	{

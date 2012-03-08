@@ -24,16 +24,16 @@
 
 DBusThread::DBusThread(DBusHandler* i)
 {
-	kDebug();
+	kDebug(7019);
 	m_handler = i;
 }
 
 
 void DBusThread::run()
 {
-	kDebug();
+	kDebug(7019);
 	m_handler->init();
-	kDebug() << " starting event loop.";
+	kDebug(7019) << " starting event loop.";
 	exec();
-	kDebug() << " event loop finished.";
+	kDebug(7019) << " event loop finished.";
 }
