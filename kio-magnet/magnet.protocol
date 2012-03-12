@@ -13,6 +13,6 @@ deleting=false
 moving=false
 Icon=folder-remote
 #maxInstancesPerHost=2
-maxInstances=10
+maxInstances=1
 #X-DocPath=kioslave/magnet/index.html
 Class=:internet
