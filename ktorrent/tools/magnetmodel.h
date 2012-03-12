@@ -24,11 +24,32 @@
 #define KT_MAGNETMODEL_H
 
 #include <QAbstractTableModel>
+#include <interfaces/coreinterface.h>
 #include <magnet/magnetdownloader.h>
 
 
 namespace kt
 {
+
+	/**
+	 * Adds options struct to bt::MagnetDownloader
+	 */
+	class MagnetDownloader : public bt::MagnetDownloader
+	{
+		Q_OBJECT
+	public:
+		MagnetDownloader(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions & options, QObject* parent) :
+				bt::MagnetDownloader(mlink, parent),
+				options(options)
+		{}
+
+		virtual ~MagnetDownloader()
+		{}
+
+		MagnetLinkLoadOptions options;
+	};
+
+
 	/**
 		Model which keeps track of MagnetDownloaders
 	*/
@@ -38,53 +59,52 @@ namespace kt
 	public:
 		MagnetModel(QObject* parent = 0);
 		virtual ~MagnetModel();
-		
+
 		/**
 			Start a magnet download
 		*/
-		void download(const bt::MagnetLink & mlink,bool silently);
-		
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const; 
+		void download(const bt::MagnetLink & mlink, const MagnetLinkLoadOptions & options);
+
+		virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 		virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
 		virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
 		virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 		virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		
+		virtual bool removeRows(int row, int count, const QModelIndex & parent);
+		virtual bool insertRows(int row, int count, const QModelIndex & parent);
+
 		/// Update the MagnetDownloaders
 		void updateMagnetDownloaders();
-		
+
 		/// Remove a MagnetDownloader
-		void removeMagnetDownloader(bt::MagnetDownloader* md);
-		
+		void removeMagnetDownloader(kt::MagnetDownloader* md);
+
 		/// Start a magnet downloader
 		void start(const QModelIndex & idx);
-		
+
 		/// Stop a magnet downloader
 		void stop(const QModelIndex & idx);
-		
+
 		/// Save current magnet links to a file
 		void saveMagnets(const QString & file);
-		
+
 		/// Load magnets from file
 		void loadMagnets(const QString & file);
-		
+
 	private slots:
-		void downloadFinished(bt::MagnetDownloader* md,const QByteArray & data);
-		
+		void downloadFinished(bt::MagnetDownloader* md, const QByteArray & data);
+
 	signals:
 		/// Emitted when metadata has been found for a MagnetLink
-		void metadataFound(const bt::MagnetLink & mlink,const QByteArray & data,bool load_silently);
-		
+		void metadataFound(const bt::MagnetLink & mlink, const QByteArray & data, const kt::MagnetLinkLoadOptions & options);
+
 	private:
 		QString displayName(const bt::MagnetDownloader* md) const;
 		QString status(const bt::MagnetDownloader* md) const;
-		void addMagnetDownloader(const bt::MagnetLink & mlink,bool silent,bool start);
-		
+		void addMagnetDownloader(const bt::MagnetLink & mlink, const MagnetLinkLoadOptions & options, bool start);
+
 	private:
-		QList<bt::MagnetDownloader*> magnet_downloaders;
-		QMap<bt::MagnetDownloader*,bool> silent_flags;
+		QList<kt::MagnetDownloader*> magnet_downloaders;
 	};
 
 }

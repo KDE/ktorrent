@@ -199,7 +199,9 @@ namespace kt
 
 	void SearchWidget::magnetUrl(const QUrl& magnet_url)
 	{
-		sp->getCore()->load(bt::MagnetLink(magnet_url.toString()), QString());
+		MagnetLinkLoadOptions options;
+		options.silently = false;
+		sp->getCore()->load(bt::MagnetLink(magnet_url.toString()), options);
 		QString msg = i18n("Downloading:<br/><b>%1</b>", magnet_url.toString());
 		KNotification::event("MagnetLinkDownloadStarted", msg, QPixmap(), sp->getGUI()->getMainWindow());
 	}

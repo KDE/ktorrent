@@ -22,8 +22,10 @@
 #include <kmessagebox.h>
 #include <kinputdialog.h>
 #include <kmainwindow.h>
+#include <magnet/magnetlink.h>
 #include <interfaces/functions.h>
 #include <interfaces/guiinterface.h>
+#include <interfaces/coreinterface.h>
 #include <util/error.h>
 #include <util/fileops.h>
 #include <syndication/loader.h>
@@ -41,6 +43,7 @@
 #include "syndicationplugin.h"
 #include "linkdownloader.h"
 #include "feedretriever.h"
+
 
 namespace kt
 {
@@ -252,8 +255,20 @@ namespace kt
 										   const QString& move_on_completion, 
 										   bool silently)
 	{
-		LinkDownloader* dlr = new LinkDownloader(url,sp->getCore(),!silently,group,location,move_on_completion);
-		dlr->start();
+		if (url.protocol() == "magnet")
+		{
+			MagnetLinkLoadOptions options;
+			options.silently = silently;
+			options.group = group;
+			options.location = location;
+			options.move_on_completion = move_on_completion;
+			sp->getCore()->load(bt::MagnetLink(url.prettyUrl()), options);
+		}
+		else
+		{
+			LinkDownloader* dlr = new LinkDownloader(url,sp->getCore(),!silently,group,location,move_on_completion);
+			dlr->start();
+		}
 	}
 	
 	void SyndicationActivity::updateTabText(QWidget* w,const QString & text)

@@ -42,11 +42,19 @@ namespace kt
 		bt::Uint64 bytes_downloaded;
 		bt::Uint64 bytes_uploaded;
 	};
-	
+
+	struct MagnetLinkLoadOptions
+	{
+		bool silently;
+		QString group;
+		QString location;
+		QString move_on_completion;
+	};
+
 	class QueueManager;
 	class GroupManager;
 	class DBus;
-	
+
 
 	/**
 	 * @author Joris Guisson
@@ -69,7 +77,7 @@ namespace kt
 		 * @param ks Keep seeding yes or no
 		 */
 		virtual void setKeepSeeding(bool ks) = 0;
-	
+
 		/**
 		 * Change the data dir. This involves copying
 		 * all data from the old dir to the new.
@@ -93,9 +101,9 @@ namespace kt
 		/**
 		 * Start a torrent, takes into account the maximum number of downloads.
 		 * @param tc The TorrentControl
-	 	 */
+		  */
 		virtual void start(bt::TorrentInterface* tc) = 0;
-		
+
 		/**
 		 * Start a list of torrents.
 		 * @param todo The list of torrents
@@ -108,19 +116,19 @@ namespace kt
 		 * @param user true if user stopped the torrent, false otherwise
 		 */
 		virtual void stop(bt::TorrentInterface* tc) = 0;
-		
+
 		/**
 		 * Stop a list of torrents.
 		 * @param todo The list of torrents
 		 */
 		virtual void stop(QList<bt::TorrentInterface*> & todo) = 0;
-		
+
 		/**
 		 * Pause a torrent
 		 * @param tc The torrent
 		 */
 		virtual void pause(bt::TorrentInterface* tc) = 0;
-		
+
 		/**
 		 * Pause a list of torrents.
 		 * @param todo The list of torrents
@@ -150,8 +158,8 @@ namespace kt
 		 * @param url The torrent file
 		 * @param group Group to add torrent to
 		 */
-		virtual void load(const KUrl& url,const QString & group) = 0;
-		
+		virtual void load(const KUrl& url, const QString & group) = 0;
+
 		/**
 		 * Load a torrent file. Pops up an error dialog
 		 * if something goes wrong. Will ask the user for a save location, or use
@@ -159,9 +167,9 @@ namespace kt
 		 * @param url The torrent file
 		 * @param group Group to add torrent to
 		 */
-		virtual void loadSilently(const KUrl& url,const QString & group) = 0;
+		virtual void loadSilently(const KUrl& url, const QString & group) = 0;
 
-		
+
 		/**
 		 * Load a torrent using a byte array
 		 * @param data Data of the torrent
@@ -170,8 +178,8 @@ namespace kt
 		 * @param savedir Directory to save to
 		 * @return The loaded TorrentInterface or 0 on failure
 		 */
-		virtual bt::TorrentInterface* load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir) = 0;
-		
+		virtual bt::TorrentInterface* load(const QByteArray & data, const KUrl& url, const QString & group, const QString & savedir) = 0;
+
 		/**
 		 * Load a torrent using a byte array silently
 		 * @param data Data of the torrent
@@ -180,8 +188,8 @@ namespace kt
 		 * @param savedir Directory to save to
 		 * @return The loaded TorrentInterface or 0 on failure
 		 */
-		virtual bt::TorrentInterface* loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir) = 0;
-		
+		virtual bt::TorrentInterface* loadSilently(const QByteArray & data, const KUrl& url, const QString & group, const QString & savedir) = 0;
+
 		/**
 		 * Remove a download.This will delete all temp
 		 * data from this TorrentControl And delete the
@@ -190,56 +198,53 @@ namespace kt
 		 * @param tc The torrent
 		 * @param data_to Whether or not to delete the file data to
 		 */
-		virtual void remove(bt::TorrentInterface* tc,bool data_to) = 0;
-		
+		virtual void remove(bt::TorrentInterface* tc, bool data_to) = 0;
+
 		/**
-		 * Remove a list of downloads. 
+		 * Remove a list of downloads.
 		 * @param todo The torrent list
 		 * @param data_to Whether or not to delete the file data to
 		 */
-		virtual void remove(QList<bt::TorrentInterface*> & todo,bool data_to) = 0; 
-		
+		virtual void remove(QList<bt::TorrentInterface*> & todo, bool data_to) = 0;
+
 		/**
 		 * Find the next free torX dir.
 		 * @return Path to the dir (including the torX part)
 		 */
 		virtual QString findNewTorrentDir() const = 0;
-		
+
 		/**
 		 * Load an existing torrent, which has already a properly set up torX dir.
 		 * @param tor_dir The torX dir
 		 */
 		virtual void loadExistingTorrent(const QString & tor_dir) = 0;
-		
+
 		/**
 		 * Sets global suspended state for all torrents (QueueManager) and stopps all torrents.
 		 * No torrents will be automatically started/stopped.
 		 */
 		virtual void setSuspendedState(bool suspend) = 0;
-		
+
 		/// Gets the globla suspended state
 		virtual bool getSuspendedState() = 0;
-		
+
 		/// Get the QueueManager
 		virtual kt::QueueManager* getQueueManager() = 0;
-		
+
 		/// Get the GroupManager
 		virtual kt::GroupManager* getGroupManager() = 0;
-		
+
 		/// Get a pointer to the external interface object (for dbus and scripting)
 		virtual DBus* getExternalInterface() = 0;
-		
+
 		/// Apply all settings
 		virtual void applySettings() = 0;
-		
+
 		/// Load a magnet link
-		virtual void load(const bt::MagnetLink & mlink,const QString & group) = 0;
-		
-		/// Load a magnet link silently
-		virtual void loadSilently(const bt::MagnetLink & mlink,const QString & group) = 0;
-		
+		virtual void load(const bt::MagnetLink & mlink, const MagnetLinkLoadOptions & options) = 0;
+
 		/// Create a torrent (Note: hash calculation should be finished, and torrent should have been saved)
-		virtual bt::TorrentInterface* createTorrent(bt::TorrentCreator* tc,bool seed) = 0;
+		virtual bt::TorrentInterface* createTorrent(bt::TorrentCreator* tc, bool seed) = 0;
 	signals:
 		/**
 		 * Seeing that when load returns the loading process may not have finished yet,
@@ -248,32 +253,32 @@ namespace kt
 		 * @param success Whether or not it succeeded
 		 * @param canceled Whether or not it was canceled by the user
 		 */
-		void loadingFinished(const KUrl & url,bool success,bool canceled);
-		
+		void loadingFinished(const KUrl & url, bool success, bool canceled);
+
 		/**
 		 * A bt::TorrentInterface was added
-		 * @param tc 
+		 * @param tc
 		 */
 		void torrentAdded(bt::TorrentInterface* tc);
 
-	
+
 		/**
 		 * A TorrentInterface was removed
 		 * @param tc
 		 */
 		void torrentRemoved(bt::TorrentInterface* tc);
-		
+
 		/**
 		 * A TorrentInterface has finished downloading.
 		 * @param tc
 		 */
 		void finished(bt::TorrentInterface* tc);
 
-	    	/**
-		 * Torrent download is stopped by error
-		 * @param tc TorrentInterface
-		 * @param msg Error message
-		 */
+		/**
+		* Torrent download is stopped by error
+		* @param tc TorrentInterface
+		* @param msg Error message
+		*/
 		void torrentStoppedByError(bt::TorrentInterface* tc, QString msg);
 
 		/**

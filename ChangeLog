@@ -1,3 +1,6 @@
+Changes in 4.3:
+- Add support for magnet links in the syndication plugin
+
 Changes in 4.2:
 - Add new group switcher combobox in toolbar (290888)
 - Make kio-magnet optional
