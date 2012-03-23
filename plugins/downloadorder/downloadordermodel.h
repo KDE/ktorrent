@@ -39,14 +39,20 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		DownloadOrderModel(bt::TorrentInterface* tor,QObject* parent);
+		DownloadOrderModel(bt::TorrentInterface* tor, QObject* parent);
 		virtual ~DownloadOrderModel();
-		
+
 		/// Initialize the order
 		void initOrder(const QList<bt::Uint32> & sl) {order = sl;}
-		
+
 		/// Get the order
 		const QList<bt::Uint32> & downloadOrder() const {return order;}
+
+		/// Find a text in the file list
+		QModelIndex find(const QString & text);
+
+		/// Clear high lights
+		void clearHighLights();
 
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual QVariant data(const QModelIndex & index, int role) const;
@@ -54,14 +60,17 @@ namespace kt
 		virtual Qt::DropActions supportedDropActions() const;
 		virtual QStringList mimeTypes() const;
 		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
-		virtual bool dropMimeData(const QMimeData *data,Qt::DropAction action, int row, int column, const QModelIndex &parent);
-	
-		void moveUp(const QModelIndex & index);
-		void moveDown(const QModelIndex & index);
-	
+		virtual bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+
+		void moveUp(int row, int count);
+		void moveDown(int row, int count);
+		void moveTop(int row, int count);
+		void moveBottom(int row, int count);
+
 	private:
 		bt::TorrentInterface* tor;
 		QList<bt::Uint32> order;
+		QString current_search_text;
 	};
 
 }

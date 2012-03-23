@@ -37,20 +37,23 @@ namespace kt
 	/**
 		Dialog to manipulate the download order.
 	*/
-	class DownloadOrderDialog : public KDialog,public Ui_DownloadOrderWidget
+	class DownloadOrderDialog : public KDialog, public Ui_DownloadOrderWidget
 	{
 		Q_OBJECT
 	public:
-		DownloadOrderDialog(DownloadOrderPlugin* plugin,bt::TorrentInterface* tor,QWidget* parent);
+		DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent);
 		virtual ~DownloadOrderDialog();
-		
-		
 
 	private slots:
 		void commitDownloadOrder();
 		void moveUp();
 		void moveDown();
-		
+		void moveTop();
+		void moveBottom();
+		void itemSelectionChanged(const QItemSelection & new_sel, const QItemSelection & old_sel);
+		void customOrderEnableToggled(bool on);
+		void search(const QString & text);
+
 	private:
 		bt::TorrentInterface* tor;
 		DownloadOrderPlugin* plugin;

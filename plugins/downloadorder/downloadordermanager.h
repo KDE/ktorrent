@@ -42,41 +42,41 @@ namespace kt
 	public:
 		DownloadOrderManager(bt::TorrentInterface* tor);
 		virtual ~DownloadOrderManager();
-		
+
 		/// See if the file download order is enabled
 		bool enabled() const {return order.count() > 0;}
-		
+
 		/// Save the order from torX/download_order
 		void save();
-		
+
 		/// Load the order to torX/download_order
 		void load();
-		
+
 		/// Enable the download order
 		void enable();
-		
+
 		/// Disable the download order
 		void disable();
-		
+
 		typedef QList<bt::Uint32> Order;
-		
+
 		/// Get the download order
 		const Order & downloadOrder() const {return order;}
-		
+
 		/// Set the order
 		void setDownloadOrder(const Order & norder) {order = norder;}
-		
+
 	public slots:
 		/**
 		 * Change file priorities if needed
 		 */
 		void update();
-		
+
 		/**
 		 * Change file priorities if needed
 		 */
-		void chunkDownloaded(bt::TorrentInterface* me,bt::Uint32 chunk);
-		
+		void chunkDownloaded(bt::TorrentInterface* me, bt::Uint32 chunk);
+
 	private:
 		bt::Uint32 nextIncompleteFile();
 

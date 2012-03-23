@@ -1,5 +1,8 @@
 Changes in 4.3:
 - Add support for magnet links in the syndication plugin
+- Add search line to download order dialog
+- Add move top and bottom option to download order dialog (295341)
+- Make sure that move up and move down in the download order dialog work with multiple items (295341)
 
 Changes in 4.2:
 - Add new group switcher combobox in toolbar (290888)

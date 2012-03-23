@@ -33,19 +33,19 @@
 #include "downloadorderdialog.h"
 #include "downloadordermanager.h"
 
-K_EXPORT_COMPONENT_FACTORY(ktdownloadorderplugin,KGenericFactory<kt::DownloadOrderPlugin>("ktdownloadorderplugin"))
-		
+K_EXPORT_COMPONENT_FACTORY(ktdownloadorderplugin, KGenericFactory<kt::DownloadOrderPlugin>("ktdownloadorderplugin"))
+
 using namespace bt;
 
 namespace kt
 {
 
-	DownloadOrderPlugin::DownloadOrderPlugin(QObject* parent,const QStringList& args): Plugin(parent)
+	DownloadOrderPlugin::DownloadOrderPlugin(QObject* parent, const QStringList& args): Plugin(parent)
 	{
 		Q_UNUSED(args);
-		download_order_action = new KAction(KIcon("view-sort-ascending"),i18n("File Download Order"),this);
-		connect(download_order_action,SIGNAL(triggered()),this,SLOT(showDownloadOrderDialog()));
-		actionCollection()->addAction("download_order",download_order_action);
+		download_order_action = new KAction(KIcon("view-sort-ascending"), i18n("File Download Order"), this);
+		connect(download_order_action, SIGNAL(triggered()), this, SLOT(showDownloadOrderDialog()));
+		actionCollection()->addAction("download_order", download_order_action);
 		setXMLFile("ktdownloadorderpluginui.rc");
 		managers.setAutoDelete(true);
 	}
@@ -63,74 +63,74 @@ namespace kt
 
 	void DownloadOrderPlugin::load()
 	{
-		TorrentActivityInterface* ta = getGUI()->getTorrentActivity(); 
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
 		ta->addViewListener(this);
-		connect(getCore(),SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
-		connect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
+		connect(getCore(), SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(torrentAdded(bt::TorrentInterface*)));
+		connect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(torrentRemoved(bt::TorrentInterface*)));
 		currentTorrentChanged(ta->getCurrentTorrent());
-		
+
 		kt::QueueManager* qman = getCore()->getQueueManager();
-		for (kt::QueueManager::iterator i = qman->begin();i != qman->end();i++)
+		for(kt::QueueManager::iterator i = qman->begin(); i != qman->end(); i++)
 			torrentAdded(*i);
 	}
 
 	void DownloadOrderPlugin::unload()
 	{
-		TorrentActivityInterface* ta = getGUI()->getTorrentActivity(); 
+		TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
 		ta->removeViewListener(this);
-		disconnect(getCore(),SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
-		disconnect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
+		disconnect(getCore(), SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(torrentAdded(bt::TorrentInterface*)));
+		disconnect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(torrentRemoved(bt::TorrentInterface*)));
 		managers.clear();
 	}
 
 	void DownloadOrderPlugin::showDownloadOrderDialog()
 	{
 		bt::TorrentInterface* tor = getGUI()->getTorrentActivity()->getCurrentTorrent();
-		if (!tor || !tor->getStats().multi_file_torrent)
+		if(!tor || !tor->getStats().multi_file_torrent)
 			return;
-		
-		DownloadOrderDialog dlg(this,tor,getGUI()->getMainWindow());
+
+		DownloadOrderDialog dlg(this, tor, getGUI()->getMainWindow());
 		dlg.exec();
 	}
-	
+
 	void DownloadOrderPlugin::currentTorrentChanged(bt::TorrentInterface* tc)
 	{
 		download_order_action->setEnabled(tc && tc->getStats().multi_file_torrent);
 	}
-	
+
 	DownloadOrderManager* DownloadOrderPlugin::manager(bt::TorrentInterface* tc)
 	{
 		return managers.find(tc);
 	}
-		
+
 	DownloadOrderManager* DownloadOrderPlugin::createManager(bt::TorrentInterface* tc)
 	{
 		DownloadOrderManager* m = manager(tc);
-		if (m)
+		if(m)
 			return m;
-		
+
 		m = new DownloadOrderManager(tc);
-		managers.insert(tc,m);
+		managers.insert(tc, m);
 		return m;
 	}
-	
+
 	void DownloadOrderPlugin::destroyManager(bt::TorrentInterface* tc)
 	{
 		managers.erase(tc);
 	}
-	
+
 	void DownloadOrderPlugin::torrentAdded(bt::TorrentInterface* tc)
 	{
-		if (bt::Exists(tc->getTorDir() + "download_order"))
+		if(bt::Exists(tc->getTorDir() + "download_order"))
 		{
 			DownloadOrderManager* m = createManager(tc);
 			m->load();
 			m->update();
-			connect(tc,SIGNAL(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)),
-					m,SLOT(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)));
+			connect(tc, SIGNAL(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)),
+			        m, SLOT(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)));
 		}
 	}
-	
+
 	void DownloadOrderPlugin::torrentRemoved(bt::TorrentInterface* tc)
 	{
 		managers.erase(tc);
