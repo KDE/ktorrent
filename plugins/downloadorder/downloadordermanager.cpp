@@ -33,7 +33,7 @@ namespace kt
 
 	DownloadOrderManager::DownloadOrderManager(bt::TorrentInterface* tor) : tor(tor)
 	{
-		current_high_priority_file = tor->getNumFiles();
+		current_normal_priority_file = current_high_priority_file = tor->getNumFiles();
 	}
 
 	DownloadOrderManager::~DownloadOrderManager()
@@ -109,13 +109,17 @@ namespace kt
 		if(!enabled() || tor->getStats().completed || tor != me)
 			return;
 
-		bt::TorrentFileInterface & file = tor->getTorrentFile(current_high_priority_file);
-		if(chunk >= file.getFirstChunk() && chunk <= file.getLastChunk())
+		bt::TorrentFileInterface & high_priority_file = tor->getTorrentFile(current_high_priority_file);
+		bool in_high_priority_file_range = chunk >= high_priority_file.getFirstChunk() && chunk <= high_priority_file.getLastChunk();
+		bt::TorrentFileInterface & normal_priority_file = tor->getTorrentFile(current_normal_priority_file);
+		bool in_normal_priority_file_range = chunk >= normal_priority_file.getFirstChunk() && chunk <= normal_priority_file.getLastChunk();
+		if(in_high_priority_file_range || in_normal_priority_file_range)
 		{
-			// If the chunk is part of the current high priority file
-			// check if it is completed, if it is do an update
-			if(qAbs(100.0f - file.getDownloadPercentage()) < 0.01)
+			// Check if high or normal are complete
+			if(qAbs(100.0f - high_priority_file.getDownloadPercentage()) < 0.01 || qAbs(100.0f - normal_priority_file.getDownloadPercentage()) < 0.01)
+			{
 				update();
+			}
 		}
 	}
 
@@ -129,35 +133,35 @@ namespace kt
 			return;
 
 		if(next_file != current_high_priority_file)
-		{
 			Out(SYS_DIO | LOG_NOTICE) << "DownloadOrderPlugin: next file to download is " << tor->getTorrentFile(next_file).getUserModifiedPath() << endl;
-			bool normal_found = false;
-			bool high_found = false;
-			// set the priority of the file to FIRST and all the other files to NORMAL
-			foreach(Uint32 file, order)
-			{
-				TorrentFileInterface & tf = tor->getTorrentFile(file);
-				if(tf.getPriority() < LAST_PRIORITY)
-					continue;
 
-				if(file == next_file)
-				{
-					tf.setPriority(FIRST_PRIORITY);
-					high_found = true;
-				}
-				else if(!normal_found && high_found)
-				{
-					// the file after the high prio file is set to normal
-					// so that when the high prio file is finished the selector
-					// will select it before we can set a new high prio file
-					tf.setPriority(NORMAL_PRIORITY);
-					normal_found = true;
-				}
-				else
-					tf.setPriority(LAST_PRIORITY);
+		bool normal_found = false;
+		bool high_found = false;
+		// set the priority of the file to FIRST and all the other files to NORMAL
+		foreach(Uint32 file, order)
+		{
+			TorrentFileInterface & tf = tor->getTorrentFile(file);
+			if(tf.getPriority() < LAST_PRIORITY)
+				continue;
+
+			if(file == next_file)
+			{
+				tf.setPriority(FIRST_PRIORITY);
+				high_found = true;
 			}
-			current_high_priority_file = next_file;
+			else if(!normal_found && high_found)
+			{
+				// the file after the high prio file is set to normal
+				// so that when the high prio file is finished the selector
+				// will select it before we can set a new high prio file
+				tf.setPriority(NORMAL_PRIORITY);
+				normal_found = true;
+				current_normal_priority_file = file;
+			}
+			else
+				tf.setPriority(LAST_PRIORITY);
 		}
+		current_high_priority_file = next_file;
 	}
 
 	void DownloadOrderManager::enable()

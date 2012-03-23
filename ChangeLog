@@ -3,6 +3,7 @@ Changes in 4.3:
 - Add search line to download order dialog
 - Add move top and bottom option to download order dialog (295341)
 - Make sure that move up and move down in the download order dialog work with multiple items (295341)
+- Also update file priorities when normal priority file completes downloading in download order plugin (296576)
 
 Changes in 4.2:
 - Add new group switcher combobox in toolbar (290888)

@@ -84,6 +84,7 @@ namespace kt
 		bt::TorrentInterface* tor;
 		QList<bt::Uint32> order;
 		bt::Uint32 current_high_priority_file;
+		bt::Uint32 current_normal_priority_file;
 	};
 
 }
