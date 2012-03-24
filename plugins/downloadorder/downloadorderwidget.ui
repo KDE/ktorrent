@@ -7,16 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>623</width>
-    <height>301</height>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>File Download Order</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="margin">
-    <number>0</number>
-   </property>
    <item>
     <widget class="QLabel" name="m_top_label">
      <property name="text">
@@ -35,14 +32,31 @@
     </widget>
    </item>
    <item>
-    <widget class="KLineEdit" name="m_search_files">
-     <property name="placeholderText">
-      <string>Search files</string>
-     </property>
-     <property name="showClearButton" stdset="0">
-      <bool>true</bool>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QToolButton" name="m_sort_by">
+       <property name="contextMenuPolicy">
+        <enum>Qt::DefaultContextMenu</enum>
+       </property>
+       <property name="text">
+        <string>Sort By</string>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KLineEdit" name="m_search_files">
+       <property name="placeholderText">
+        <string>Search files</string>
+       </property>
+       <property name="showClearButton" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -58,28 +72,28 @@
        <item>
         <widget class="KPushButton" name="m_move_top">
          <property name="text">
-          <string>Move Top</string>
+          <string/>
          </property>
         </widget>
        </item>
        <item>
         <widget class="KPushButton" name="m_move_up">
          <property name="text">
-          <string>Move Up</string>
+          <string/>
          </property>
         </widget>
        </item>
        <item>
         <widget class="KPushButton" name="m_move_down">
          <property name="text">
-          <string>Move Down</string>
+          <string/>
          </property>
         </widget>
        </item>
        <item>
         <widget class="KPushButton" name="m_move_bottom">
          <property name="text">
-          <string>Move Bottom</string>
+          <string/>
          </property>
         </widget>
        </item>

@@ -66,6 +66,11 @@ namespace kt
 		void moveDown(int row, int count);
 		void moveTop(int row, int count);
 		void moveBottom(int row, int count);
+		
+	public slots:
+		void sortByName();
+		void sortBySeasonsAndEpisodes();
+		void sortByAlbumTrackOrder();
 
 	private:
 		bt::TorrentInterface* tor;

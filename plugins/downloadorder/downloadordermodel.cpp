@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <algorithm>
 #include <QMimeData>
 #include <QDataStream>
 #include <QApplication>
@@ -251,4 +252,145 @@ namespace kt
 		reset();
 	}
 
+	struct NameCompare
+	{
+		NameCompare(bt::TorrentInterface* tor) : tor(tor)
+		{}
+
+		bool operator()(Uint32 a, Uint32 b)
+		{
+			return tor->getTorrentFile(a).getUserModifiedPath() < tor->getTorrentFile(b).getUserModifiedPath();
+		}
+
+		bt::TorrentInterface* tor;
+	};
+
+	void DownloadOrderModel::sortByName()
+	{
+		qSort(order.begin(), order.end(), NameCompare(tor));
+		reset();
+	}
+
+	struct AlbumTrackCompare
+	{
+		AlbumTrackCompare(bt::TorrentInterface* tor) : tor(tor)
+		{}
+
+		int getTrack(const QString & title)
+		{
+			QRegExp exp(".*(\\d+)\\s.*\\.\\w*", Qt::CaseInsensitive);
+			int pos = exp.indexIn(title);
+			if(pos > -1)
+			{
+				QString track = exp.cap(1);
+				bool ok = false;
+				int track_number = track.toInt(&ok);
+				if (ok)
+					return track_number;
+			}
+			
+			return -1;
+		}
+
+		bool operator()(Uint32 a, Uint32 b)
+		{
+			QString a_path = tor->getTorrentFile(a).getUserModifiedPath();
+			QString b_path = tor->getTorrentFile(b).getUserModifiedPath();
+			
+			int ta = getTrack(a_path);
+			int tb = getTrack(b_path);
+			if (ta < 0 && tb < 0)
+				return a_path < b_path;
+			else if (ta < 0)
+				return false;
+			else if (tb < 0)
+				return true;
+			else
+				return ta < tb;
+		}
+
+		bt::TorrentInterface* tor;
+	};
+
+	void DownloadOrderModel::sortByAlbumTrackOrder()
+	{
+		qSort(order.begin(), order.end(), AlbumTrackCompare(tor));
+		reset();
+	}
+
+	struct SeasonEpisodeCompare
+	{
+		SeasonEpisodeCompare(bt::TorrentInterface* tor) : tor(tor)
+		{}
+
+		bool getSeasonAndEpisode(const QString & title, int & season, int & episode)
+		{
+			QStringList se_formats;
+			se_formats << "(\\d+)x(\\d+)"
+			           << "S(\\d+)E(\\d+)"
+			           << "(\\d+)\\.(\\d+)"
+			           << "S(\\d+)\\.E(\\d+)"
+			           << "Season\\s(\\d+).*Episode\\s(\\d+)";
+
+			foreach(const QString & format, se_formats)
+			{
+				QRegExp exp(format, Qt::CaseInsensitive);
+				int pos = exp.indexIn(title);
+				if(pos > -1)
+				{
+					QString s = exp.cap(1); // Season
+					QString e = exp.cap(2);  // Episode
+					bool ok = false;
+					season = s.toInt(&ok);
+					if(!ok)
+						continue;
+
+					episode = e.toInt(&ok);
+					if(!ok)
+						continue;
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		bool operator()(Uint32 a, Uint32 b)
+		{
+			QString a_path = tor->getTorrentFile(a).getUserModifiedPath();
+			QString b_path = tor->getTorrentFile(b).getUserModifiedPath();
+			int a_season = 0, a_episode = 0;
+			int b_season = 0, b_episode = 0;
+			bool a_has_se = getSeasonAndEpisode(a_path, a_season, a_episode);
+			bool b_has_se = getSeasonAndEpisode(b_path, b_season, b_episode);
+			if(a_has_se && b_has_se)
+			{
+				if(a_season == b_season)
+					return a_episode < b_episode;
+				else
+					return a_season < b_season;
+			}
+			else if(a_has_se && !b_has_se)
+			{
+				return true;
+			}
+			else if(!a_has_se && b_has_se)
+			{
+				return false;
+			}
+			else
+			{
+				return a_path < b_path;
+			}
+		}
+
+		bt::TorrentInterface* tor;
+	};
+
+	void DownloadOrderModel::sortBySeasonsAndEpisodes()
+	{
+		qSort(order.begin(), order.end(), SeasonEpisodeCompare(tor));
+		reset();
+	}
 }

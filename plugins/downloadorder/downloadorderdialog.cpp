@@ -21,6 +21,7 @@
 #include <kglobal.h>
 #include <kconfig.h>
 #include <interfaces/torrentinterface.h>
+#include <QMenu>
 #include "downloadorderdialog.h"
 #include "downloadordermanager.h"
 #include "downloadorderplugin.h"
@@ -74,6 +75,14 @@ namespace kt
 		        this, SLOT(itemSelectionChanged(QItemSelection, QItemSelection)));
 		connect(m_custom_order_enabled, SIGNAL(toggled(bool)), this, SLOT(customOrderEnableToggled(bool)));
 		connect(m_search_files, SIGNAL(textChanged(QString)), this, SLOT(search(QString)));
+		
+		QMenu* sort_by_menu = new QMenu(m_sort_by);
+		sort_by_menu->addAction(i18n("Name"), model, SLOT(sortByName()));
+		sort_by_menu->addAction(i18n("Seasons and Epsiodes"), model, SLOT(sortBySeasonsAndEpisodes()));
+		sort_by_menu->addAction(i18n("Album Track Order"), model, SLOT(sortByAlbumTrackOrder()));
+		m_sort_by->setMenu(sort_by_menu);
+		m_sort_by->setPopupMode(QToolButton::InstantPopup);
+		m_sort_by->setEnabled(false);
 	}
 
 
@@ -184,10 +193,12 @@ namespace kt
 			m_move_top->setEnabled(false);
 			m_move_down->setEnabled(false);
 			m_search_files->setEnabled(false);
+			m_sort_by->setEnabled(false);
 		}
 		else
 		{
 			m_search_files->setEnabled(true);
+			m_sort_by->setEnabled(true);
 			itemSelectionChanged(m_order->selectionModel()->selection(), QItemSelection());
 		}
 	}
