@@ -119,6 +119,8 @@ namespace kt
 		core->loadPlugins();
 		loadState(KGlobal::config());
 		
+		IPFilterWidget::registerFilterList();
+		
 		//markk.update();
 		updateActions();
 		core->startUpdateTimer();

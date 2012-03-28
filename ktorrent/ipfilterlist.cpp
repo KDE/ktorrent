@@ -44,10 +44,14 @@ namespace kt
 	
 	bool IPFilterList::blocked(const net::Address& addr) const
 	{
-		if (addr.ipVersion() != 4)
+		quint32 ip = 0;
+		if (addr.isIPv4Mapped())
+			ip = addr.convertIPv4Mapped().toIPv4Address();
+		else if (addr.ipVersion() != 4)
 			return false;
+		else
+			ip = addr.toIPv4Address();
 		
-		quint32 ip = addr.toIPv4Address();
 		foreach (const Entry & e,ip_list)
 		{
 			if (e.start <= ip && ip <= e.end)
