@@ -39,8 +39,11 @@ namespace kt
 		IPFilterWidget(QWidget* parent);
 		virtual ~IPFilterWidget();
 		
+		/// Register the filter list
+		static void registerFilterList();
+		
 		void saveFilter(const QString & fn);
-		void loadFilter(const QString & fn);
+		static void loadFilter(const QString & fn);
 		
 	
 	public slots:
