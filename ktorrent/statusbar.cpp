@@ -92,7 +92,7 @@ namespace kt
 		dht_peers = s.num_peers;
 		dht_tasks = s.num_tasks;
 		if (on)
-			dht_status->setText(i18n("DHT: %1 nodes, %2 tasks",s.num_peers,s.num_tasks));
+			dht_status->setText(i18n("DHT: %1, %2",i18np("%1 node","%1 nodes",s.num_peers),i18np("%1 task","%1 tasks",s.num_tasks)));
 	        else
 			dht_status->setText(i18n("DHT: off"));
 	}
