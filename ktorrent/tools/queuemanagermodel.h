@@ -123,6 +123,8 @@ namespace kt
 		bool visible(const bt::TorrentInterface* tc);
 		void updateQueue();
 		void swapItems(int a, int b);
+		void dumpQueue();
+		void updatePriorities();
 		
 	private:
 		QueueManager* qman;

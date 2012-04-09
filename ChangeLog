@@ -1,5 +1,6 @@
 Changes in 4.2.1:
 - Fix IP filter widget list not getting registered at startup (281245)
+- Fix Queue Manager widget getting the priorities wrong (296536)
 
 Changes in 4.2:
 - Add new group switcher combobox in toolbar (290888)
