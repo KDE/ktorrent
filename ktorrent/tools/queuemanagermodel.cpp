@@ -57,6 +57,9 @@ namespace kt
 				queue.append(item);
 			}
 		}
+		
+		qSort(queue.begin(), queue.end());
+		//dumpQueue();
 	}
 
 
@@ -363,6 +366,7 @@ namespace kt
 		}
 		
 
+		updatePriorities();
 		// reorder the queue
 		qman->orderQueue();
 		reset();
@@ -394,7 +398,9 @@ namespace kt
 		{
 			swapItems(row + i, row + i - 1);
 		}
-
+		
+		updatePriorities();
+		//dumpQueue();
 		// reorder the queue
 		qman->orderQueue();
 		reset();
@@ -410,6 +416,8 @@ namespace kt
 			swapItems(row + i, row + i + 1);
 		}
 
+		updatePriorities();
+		//dumpQueue();
 		// reorder the queue
 		qman->orderQueue();
 		reset();
@@ -429,6 +437,8 @@ namespace kt
 			row--;
 		}
 		
+		updatePriorities();
+		//dumpQueue();
 		// reorder the queue
 		qman->orderQueue();
 		reset();
@@ -448,9 +458,28 @@ namespace kt
 			row++;
 		}
 		
+		updatePriorities();
+		//dumpQueue();
 		// reorder the queue
 		qman->orderQueue();
 		reset();
+	}
+	
+	void QueueManagerModel::dumpQueue()
+	{
+		int idx = 0;
+		foreach (const Item & item, queue)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Item " << idx << ": " << item.tc->getDisplayName() << " " << item.tc->getPriority() << endl;
+			idx++;
+		}
+	}
+	
+	void QueueManagerModel::updatePriorities()
+	{
+		int idx = queue.size();
+		for (QList<Item>::iterator i = queue.begin(); i != queue.end(); i++)
+			i->tc->setPriority(idx--);
 	}
 
 	void QueueManagerModel::update()
@@ -531,9 +560,6 @@ namespace kt
 		if (a < 0 || a >= queue.count() || b < 0 || b >= queue.count())
 			return;
 		
-		int prio = queue[a].tc->getPriority();
-		queue[a].tc->setPriority(queue[b].tc->getPriority());
-		queue[b].tc->setPriority(prio);
 		queue.swap(a, b);
 	}
 
