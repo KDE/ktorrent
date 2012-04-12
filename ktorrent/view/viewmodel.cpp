@@ -150,7 +150,7 @@ namespace kt
 		}
 		
 		double perc = Percentage(s); 
-		if (fabs(percentage - perc) > 0.01)
+		if (fabs(percentage - perc) > 0.001)
 		{
 			to_update.append(model->index(row,PERCENTAGE));
 			percentage = perc;
@@ -159,7 +159,7 @@ namespace kt
 		}
 		
 		float ratio = s.shareRatio();
-		if (fabsf(share_ratio - ratio) > 0.01)
+		if (fabsf(share_ratio - ratio) > 0.001)
 		{
 			to_update.append(model->index(row,SHARE_RATIO));
 			share_ratio = ratio;
