@@ -93,8 +93,6 @@ namespace kt
 		void startAllTorrents();
 		void stopAllTorrents();
 		void suspendQueue(bool suspend);
-		void groupActivated(int idx);
-		void currentGroupChanged(kt::Group* g);
 		
 	private:
 		Core* core;
@@ -107,8 +105,6 @@ namespace kt
 		TabBarWidget* tool_views;
 		MagnetView* magnet_view;
 		TorrentSearchBar* search_bar;
-		KComboBox* view_switcher;
-		GroupModel* view_switcher_model;
 		
 		KAction* start_all_action;
 		KAction* stop_all_action;
