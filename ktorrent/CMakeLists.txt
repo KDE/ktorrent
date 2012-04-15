@@ -21,6 +21,7 @@ set(ktorrent_SRC
 	groups/groupfiltermodel.cpp
 	groups/groupview.cpp
 	groups/groupmodel.cpp 
+	groups/groupswitcher.cpp
 	
 	dialogs/pastedialog.cpp
 	dialogs/speedlimitsdlg.cpp

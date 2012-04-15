@@ -104,6 +104,8 @@ namespace kt
 		if (!ln)
 			return;
 		
+		path = "/all/custom/" + name;
+		
 		for (Uint32 i = 0;i < ln->getNumChildren();i++)
 		{
 			QByteArray ba = ln->getByteArray(i);

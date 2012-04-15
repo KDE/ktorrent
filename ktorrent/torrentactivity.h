@@ -41,6 +41,7 @@ namespace kt
 	class Group;
 	class TorrentSearchBar;
 	class GroupModel;
+	class GroupSwitcher;
 	
 	/**
 	 * Activity which manages torrents.
@@ -99,6 +100,7 @@ namespace kt
 		GUI* gui;
 		View* view;
 		GroupView* group_view;
+		GroupSwitcher* group_switcher;
 		QueueManagerWidget* qm;
 		QSplitter* hsplit;
 		QSplitter* vsplit;

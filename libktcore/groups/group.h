@@ -34,6 +34,8 @@ namespace bt
 
 namespace kt
 {
+
+	class QueueManager;
 	using bt::TorrentInterface;
 	
 	/**
@@ -109,6 +111,12 @@ namespace kt
 		/// Path in the group tree
 		const QString & groupPath() const {return path;}
 		
+		/// Get the number of running torrents
+		int runningTorrents() const {return running;}
+		
+		/// Total torrents
+		int totalTorrents() const {return total;}
+		
 		/// Set the group policy
 		void setGroupPolicy(const Policy & p);
 		
@@ -158,6 +166,12 @@ namespace kt
 		 */
 		virtual void policyChanged();
 		
+		/**
+		 * Update the running and total count
+		 * @param qman The QueueManager
+		 **/
+		void updateCount(QueueManager* qman);
+		
 	protected:
 		QString name;
 		QIcon icon;
@@ -165,6 +179,8 @@ namespace kt
 		int flags;
 		Policy policy;
 		QString path;
+		int running;
+		int total;
 	};
 
 }
