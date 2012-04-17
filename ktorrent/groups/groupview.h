@@ -22,99 +22,77 @@
 
 #include <QTreeWidget>
 #include <ksharedconfig.h>
+#include "groupviewmodel.h"
 
+class KAction;
 class KActionCollection;
 
 namespace kt
 {
 	class GUI;
+	class Core;
 	class View;
 	class Group;
 	class GroupView;
 	class GroupManager;
 	class View;
-		
-	class GroupViewItem : public QTreeWidgetItem
-	{
-		Group* g;
-		// this is not the group name, but the name of the group in the path (if the path is /all/foo/bar, this will be bar)
-		QString path_name;  
-	public: 
-		GroupViewItem(GroupView* parent,Group* g,const QString & name);
-		GroupViewItem(QTreeWidgetItem* parent,Group* g,const QString & name);
-		virtual ~GroupViewItem();
-		
-		QString name() const {return path_name;}
-		Group* group() {return g;}
-		
-		void setGroup(Group* g);
-	//	virtual int compare(QListViewItem* i,int col,bool ascending) const; 
-	};
+
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class GroupView : public QTreeWidget
+	class GroupView : public QTreeView
 	{
 		Q_OBJECT
 	public:
-		GroupView(GroupManager* gman,View* view,GUI* gui,QWidget* parent);
+		GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidget* parent);
 		virtual ~GroupView();
-		
-		/// Get the current group
-		Group* currentGroup() {return current;} 
 
 		/// Save the status of the group view
 		void saveState(KSharedConfigPtr cfg);
 
 		/// Load status from config
 		void loadState(KSharedConfigPtr cfg);
-		
+
 		/// Create a new group
 		Group* addNewGroup();
-		
+
 		/// Setup all the actions of the GroupView
 		void setupActions(KActionCollection* col);
 		
+	public slots:
+		/// Update the group count
+		void updateGroupCount();
+		
 	private slots:
-		void onItemActivated(QTreeWidgetItem* item,int col);
-		void onItemChanged(QTreeWidgetItem* item,int col);
+		void onItemClicked(const QModelIndex & index);
 		void showContextMenu(const QPoint & p);
 		void addGroup();
 		void removeGroup();
 		void editGroupName();
 		void editGroupPolicy();
-		void groupAdded(Group* g);
-		void groupRemoved(Group* g);
-		
+		void openInNewTab();
+
 	signals:
 		void currentGroupChanged(kt::Group* g);
-		void groupRenamed(kt::Group* g);
-		
+		void openTab(Group* g);
+
 	private:
-		GroupViewItem* addGroup(Group* g,QTreeWidgetItem* parent,const QString & name);
-		GroupViewItem* add(QTreeWidgetItem* parent,const QString & path,Group* g);
-		void remove(QTreeWidgetItem* parent,const QString & path,Group* g);
-		virtual bool dropMimeData(QTreeWidgetItem *parent, int index, 
-					  const QMimeData *data,Qt::DropAction action);    
-		virtual QStringList mimeTypes() const;
-		virtual Qt::DropActions supportedDropActions() const;
 		virtual void keyPressEvent(QKeyEvent* event);
 
 	private:
 		GUI* gui;
+		Core* core;
 		View* view;
-		QTreeWidgetItem* custom_root;
 		GroupManager* gman;
-		
-		Group* current;
-		GroupViewItem* current_item;
+ 		GroupViewModel* model;
 
+		KAction* open_in_new_tab;
 		KAction* new_group;
 		KAction* edit_group;
 		KAction* remove_group;
 		KAction* edit_group_policy;
-		
+
 		friend class GroupViewItem;
 	};
 

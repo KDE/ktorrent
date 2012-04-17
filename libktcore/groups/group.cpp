@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <kiconloader.h>
 #include <kglobal.h>
+#include <torrent/queuemanager.h>
 #include "group.h"
 
 namespace kt
@@ -30,7 +31,12 @@ namespace kt
 		only_apply_on_new_torrents = false;
 	}
 
-	Group::Group(const QString & name,int flags,const QString & path) : name(name),flags(flags),path(path)
+	Group::Group(const QString & name, int flags, const QString & path) :
+		name(name),
+		flags(flags),
+		path(path),
+		running(0),
+		total(0)
 	{}
 
 
@@ -40,8 +46,8 @@ namespace kt
 	void Group::save(bt::BEncoder*)
 	{
 	}
-	
-	void Group::load(bt::BDictNode* )
+
+	void Group::load(bt::BDictNode*)
 	{
 	}
 
@@ -50,28 +56,42 @@ namespace kt
 		icon_name = in;
 		icon = SmallIcon(in);
 	}
-	
+
 	void Group::rename(const QString & nn)
 	{
 		name = nn;
 	}
-	
-	void Group::torrentRemoved(TorrentInterface* )
+
+	void Group::torrentRemoved(TorrentInterface*)
 	{}
-	
-	void Group::removeTorrent(TorrentInterface* )
+
+	void Group::removeTorrent(TorrentInterface*)
 	{}
-	
-	void Group::addTorrent(TorrentInterface* ,bool )
+
+	void Group::addTorrent(TorrentInterface* , bool)
 	{}
-	
+
 	void Group::setGroupPolicy(const Policy & p)
 	{
 		policy = p;
 		policyChanged();
 	}
-	
+
 	void Group::policyChanged()
 	{
+	}
+
+	void Group::updateCount(QueueManager* qman)
+	{
+		total = running = 0;
+		for(QueueManager::iterator j = qman->begin(); j != qman->end(); j++)
+		{
+			if(isMember(*j))
+			{
+				total++;
+				if((*j)->getStats().running)
+					running++;
+			}
+		}
 	}
 }

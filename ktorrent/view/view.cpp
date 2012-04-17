@@ -679,7 +679,6 @@ namespace kt
 		KConfigGroup g = cfg->group("View");
 		QByteArray s = header()->saveState();
 		g.writeEntry("state", s.toBase64());
-		g.writeEntry("group", group->groupPath());
 	}
 
 
@@ -704,14 +703,6 @@ namespace kt
 			if (!hidden && header()->sectionSize(i.value()) == 0)
 				header()->resizeSection(i.value(), 20);
 			i++;
-		}
-
-		QString path = g.readEntry("group", QString());
-		if (!path.isEmpty())
-		{
-			Group* grp = core->getGroupManager()->findByPath(path);
-			if (grp)
-				setGroup(grp);
 		}
 	}
 

@@ -143,7 +143,9 @@ namespace kt
 		if (groups.find(name))
 			return 0;
 		
-		Group* g = new TorrentGroup(name);
+		TorrentGroup* g = new TorrentGroup(name);
+		connect(g, SIGNAL(torrentAdded(Group*)), this, SIGNAL(customGroupChanged()));
+		connect(g, SIGNAL(torrentRemoved(Group*)), this, SIGNAL(customGroupChanged()));
 		groups.insert(name,g);
 		emit groupAdded(g);
 		return g;
@@ -154,7 +156,10 @@ namespace kt
 		if (canRemove(g))
 		{
 			emit groupRemoved(g);
+			groups.setAutoDelete(false);
 			groups.erase(g->groupName());
+			groups.setAutoDelete(true);
+			g->deleteLater();
 		}
 	}
 	
@@ -244,6 +249,8 @@ namespace kt
 					continue;
 				
 				TorrentGroup* g = new TorrentGroup("dummy");
+				connect(g, SIGNAL(torrentAdded(Group*)), this, SIGNAL(customGroupChanged()));
+				connect(g, SIGNAL(torrentRemoved(Group*)), this, SIGNAL(customGroupChanged()));
 				
 				try
 				{
@@ -293,7 +300,7 @@ namespace kt
 		groups.setAutoDelete(true);
 		saveGroups();
 		
-		emit customGroupChanged(oldName, new_name);
+		emit customGroupRenamed(oldName, new_name);
 	}
 	
 	void GroupManager::addDefaultGroup(Group* g)
@@ -338,5 +345,12 @@ namespace kt
 		
 		return 0;
 	}
+	
+	void GroupManager::updateCount(QueueManager* qman)
+	{
+		for (Itr i = groups.begin();i != groups.end();i++)
+			i->second->updateCount(qman);
+	}
+
 
 }

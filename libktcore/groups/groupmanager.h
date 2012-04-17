@@ -50,6 +50,12 @@ namespace kt
 		virtual ~GroupManager();
 		
 		/**
+		 * Update the count of all groups
+		 * @param qman The QueueManager
+		 **/
+		void updateCount(QueueManager* qman);
+		
+		/**
 		 * Find a group given it's path
 		 * @param path Path of the group
 		 * @return :Group* The Group or 0
@@ -133,9 +139,10 @@ namespace kt
 		void torrentsLoaded(QueueManager* qman);
 		
 	signals:
-		void customGroupChanged(QString oldName=QString(), QString newName=QString());
+		void customGroupRenamed(QString oldName=QString(), QString newName=QString());
 		void groupAdded(Group* g);
 		void groupRemoved(Group* g);
+		void customGroupChanged();
 		
 	private:
 		bt::PtrMap<QString,Group> groups;

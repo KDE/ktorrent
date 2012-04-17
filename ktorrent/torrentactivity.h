@@ -40,7 +40,7 @@ namespace kt
 	class TabBarWidget;
 	class Group;
 	class TorrentSearchBar;
-	class GroupModel;
+	class GroupSwitcher;
 	
 	/**
 	 * Activity which manages torrents.
@@ -93,22 +93,20 @@ namespace kt
 		void startAllTorrents();
 		void stopAllTorrents();
 		void suspendQueue(bool suspend);
-		void groupActivated(int idx);
-		void currentGroupChanged(kt::Group* g);
+		void queueOrdered();
 		
 	private:
 		Core* core;
 		GUI* gui;
 		View* view;
 		GroupView* group_view;
+		GroupSwitcher* group_switcher;
 		QueueManagerWidget* qm;
 		QSplitter* hsplit;
 		QSplitter* vsplit;
 		TabBarWidget* tool_views;
 		MagnetView* magnet_view;
 		TorrentSearchBar* search_bar;
-		KComboBox* view_switcher;
-		GroupModel* view_switcher_model;
 		
 		KAction* start_all_action;
 		KAction* stop_all_action;

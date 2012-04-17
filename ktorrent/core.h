@@ -254,6 +254,7 @@ namespace kt
 		void delayedStart();
 		void beforeQueueReorder();
 		void afterQueueReorder();
+		void customGroupChanged();
 
 	private:
 		GUI* gui;

@@ -104,6 +104,8 @@ namespace kt
 		if (!ln)
 			return;
 		
+		path = "/all/custom/" + name;
+		
 		for (Uint32 i = 0;i < ln->getNumChildren();i++)
 		{
 			QByteArray ba = ln->getByteArray(i);
@@ -150,12 +152,13 @@ namespace kt
 	
 	void TorrentGroup::torrentRemoved(TorrentInterface* tor)
 	{
-		torrents.erase(tor);
+		removeTorrent(tor);
 	}
 	
 	void TorrentGroup::removeTorrent(TorrentInterface* tor)
 	{
 		torrents.erase(tor);
+		torrentRemoved(this);
 	}
 	
 	void TorrentGroup::addTorrent(TorrentInterface* tor,bool new_torrent)
@@ -170,6 +173,8 @@ namespace kt
 		tor->setMaxShareRatio(policy.max_share_ratio);
 		tor->setMaxSeedTime(policy.max_seed_time);
 		tor->setTrafficLimits(policy.max_upload_rate * 1024,policy.max_download_rate * 1024);
+		
+		torrentAdded(this);
 	}
 	
 	void TorrentGroup::policyChanged()
