@@ -40,7 +40,6 @@ namespace kt
 	class TabBarWidget;
 	class Group;
 	class TorrentSearchBar;
-	class GroupModel;
 	class GroupSwitcher;
 	
 	/**

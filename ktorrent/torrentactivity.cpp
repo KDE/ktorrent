@@ -38,7 +38,6 @@
 #include "tools/queuemanagerwidget.h"
 #include "tools/magnetview.h"
 #include "torrent/queuemanager.h"
-#include "groups/groupmodel.h"
 
 
 using namespace bt;
