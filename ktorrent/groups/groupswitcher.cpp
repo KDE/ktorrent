@@ -37,14 +37,12 @@ namespace kt
 		  tool_bar(new KToolBar(this)),
 		  action_group(new QActionGroup(this)),
 		  gman(gman),
-		  view(view),
-		  update_needed(true)
+		  view(view)
 	{
 		QHBoxLayout* layout = new QHBoxLayout(this);
 		layout->addWidget(new_tab);
 		layout->addWidget(tool_bar);
 		layout->addWidget(close_tab);
-		//layout->setSpacing(0);
 		layout->setMargin(0);
 		
 		new_tab->setIcon(KIcon("list-add"));
@@ -60,6 +58,8 @@ namespace kt
 		tool_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		action_group->setExclusive(true);
 		connect(action_group, SIGNAL(selected(QAction*)), this, SLOT(onActivated(QAction*)));
+		
+		connect(gman, SIGNAL(groupRemoved(Group*)), this, SLOT(groupRemoved(Group*)));
 	}
 
 	GroupSwitcher::~GroupSwitcher()
@@ -85,6 +85,9 @@ namespace kt
 				addTab(gman->findByPath(group));
 		}
 		
+		updateGroupCount();
+		connect(gman, SIGNAL(customGroupChanged()), this, SLOT(updateGroupCount()));
+		
 		int current_tab = g.readEntry("current_tab", 0);
 		if(current_tab >= 0 && current_tab < tabs.count())
 		{
@@ -104,7 +107,7 @@ namespace kt
 		QStringList groups;
 		int current_tab = 0;
 		int idx = 0;
-		for(QList<QPair<Group*, QAction*> >::iterator i = tabs.begin(); i != tabs.end(); i++)
+		for(TabList::iterator i = tabs.begin(); i != tabs.end(); i++)
 		{
 			groups << i->first->groupPath();
 			if(i->second->isChecked())
@@ -121,7 +124,8 @@ namespace kt
 		if(!group)
 			return;
 
-		QAction* action = tool_bar->addAction(group->groupIcon(), group->groupName());
+		QString name = group->groupName() +  QString(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
+		QAction* action = tool_bar->addAction(group->groupIcon(), name);
 		action->setCheckable(true);
 		action_group->addAction(action);
 		tabs.append(qMakePair(group, action));
@@ -136,23 +140,30 @@ namespace kt
 	{
 		addTab(gman->allGroup());
 	}
+	
+	GroupSwitcher::TabList::iterator GroupSwitcher::closeTab(TabList::iterator i)
+	{
+		action_group->removeAction(i->second);
+		tool_bar->removeAction(i->second);
+		i->second->deleteLater();
+		TabList::iterator ret = tabs.erase(i);
+		tabs.first().second->toggle();
+		view->setGroup(tabs.first().first);
+		return ret;
+	}
+
 
 	void GroupSwitcher::closeTab()
 	{
 		if(tabs.size() <= 1) // Need atleast one tab visiblle
 			return;
 
-		QList<QPair<Group*, QAction*> >::iterator i = tabs.begin();
+		TabList::iterator i = tabs.begin();
 		while(i != tabs.end())
 		{
 			if(i->second->isChecked())
 			{
-				action_group->removeAction(i->second);
-				tool_bar->removeAction(i->second);
-				i->second->deleteLater();
-				tabs.erase(i);
-				tabs.first().second->toggle();
-				view->setGroup(tabs.first().first);
+				closeTab(i);
 				break;
 			}
 			i++;
@@ -163,7 +174,7 @@ namespace kt
 
 	void GroupSwitcher::onActivated(QAction* action)
 	{
-		for(QList<QPair<Group*, QAction*> >::iterator i = tabs.begin(); i != tabs.end(); i++)
+		for(TabList::iterator i = tabs.begin(); i != tabs.end(); i++)
 		{
 			if(i->second == action)
 			{
@@ -175,34 +186,45 @@ namespace kt
 	
 	void GroupSwitcher::currentGroupChanged(Group* group)
 	{
-		for(QList<QPair<Group*, QAction*> >::iterator i = tabs.begin(); i != tabs.end(); i++)
+		for(TabList::iterator i = tabs.begin(); i != tabs.end(); i++)
 		{
 			if(i->second->isChecked())
 			{
 				i->first = group;
-				i->second->setText(group->groupName());
+				QString name = group->groupName() +  QString(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
+				i->second->setText(name);
 				i->second->setIcon(group->groupIcon());
 				break;
 			}
 		}
 	}
 	
-	void GroupSwitcher::update(QueueManager* qman)
+	void GroupSwitcher::updateGroupCount()
 	{
-		if(!update_needed)
-			return;
-		
-		update_needed = false;
-		for(QList<QPair<Group*, QAction*> >::iterator i = tabs.begin(); i != tabs.end(); i++)
-		{
-			i->first->updateCount(qman);
+		for(TabList::iterator i = tabs.begin(); i != tabs.end(); i++)
 			i->second->setText(i->first->groupName() + QString(" %1/%2").arg(i->first->runningTorrents()).arg(i->first->totalTorrents()));
-		}
-	}
-	
-	void GroupSwitcher::queueOrdered()
-	{
-		update_needed = true;
 	}
 
+	void GroupSwitcher::groupRemoved(Group* group)
+	{
+		for(TabList::iterator i = tabs.begin(); i != tabs.end(); )
+		{
+			if(i->first == group)
+			{
+				if(tabs.size() > 1)
+				{
+					i = closeTab(i);
+				}
+				else
+				{
+					i->first = gman->allGroup();
+					i->second->setIcon(i->first->groupIcon());
+					i->second->setText(i->first->groupName() + QString(" %1/%2").arg(i->first->runningTorrents()).arg(i->first->totalTorrents()));
+					i++;
+				}
+			}
+			else
+				i++;
+		}
+	}
 }

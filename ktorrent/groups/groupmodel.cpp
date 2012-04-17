@@ -44,7 +44,7 @@ namespace kt
 	{
 		connect(gman, SIGNAL(groupAdded(Group*)), this, SLOT(groupAdded(Group*)));
 		connect(gman, SIGNAL(groupRemoved(Group*)), this, SLOT(groupRemoved(Group*)));
-		connect(gman, SIGNAL(customGroupChanged(QString,QString)), this, SLOT(customGroupChanged(QString,QString)));
+		connect(gman, SIGNAL(customGroupRenamed(QString,QString)), this, SLOT(customGroupChanged(QString,QString)));
 		
 		for (GroupManager::Itr i = gman->begin(); i != gman->end(); i++)
 		{

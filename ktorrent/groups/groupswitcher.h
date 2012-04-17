@@ -54,12 +54,6 @@ namespace kt
 		 * @param cfg The config
 		 **/
 		void saveState(KSharedConfig::Ptr cfg);
-		
-		/**
-		 * Update the torrent count for each tab
-		 * @param qman The QueueManager
-		 */
-		void update(kt::QueueManager* qman);
 
 	public slots:
 		/**
@@ -91,9 +85,20 @@ namespace kt
 		void currentGroupChanged(kt::Group* group);
 		
 		/**
-		 * The queue has been ordered
+		 * Update the group count
+		 */
+		void updateGroupCount();
+		
+		/**
+		 * A group has been removed
+		 * @param group The group
 		 **/
-		void queueOrdered();
+		void groupRemoved(Group* group);
+		
+	private:
+		typedef QList<QPair<Group*, QAction*> > TabList;
+		
+		TabList::iterator closeTab(TabList::iterator i);
 
 	private:
 		QToolButton* new_tab;
@@ -102,8 +107,7 @@ namespace kt
 		QActionGroup* action_group;
 		GroupManager* gman;
 		View* view;
-		QList<QPair<Group*, QAction*> > tabs;
-		bool update_needed;
+		TabList tabs;
 	};
 
 }

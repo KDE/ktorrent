@@ -125,6 +125,7 @@ namespace kt
 		gman = new kt::GroupManager();
 		applySettings();
 		gman->loadGroups();
+		connect(gman, SIGNAL(customGroupChanged()), this, SLOT(customGroupChanged()));
 
 		qRegisterMetaType<bt::MagnetLink>("bt::MagnetLink");
 		qRegisterMetaType<kt::MagnetLinkLoadOptions>("kt::MagnetLinkLoadOptions");
@@ -1404,8 +1405,15 @@ namespace kt
 	{
 		reordering_queue = false;
 		gui->updateActions();
+		gman->updateCount(qman);
 		startUpdateTimer();
 	}
+	
+	void Core::customGroupChanged()
+	{
+		gman->updateCount(qman);
+	}
+
 
 	void Core::load(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions & options)
 	{

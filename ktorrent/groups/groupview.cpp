@@ -39,6 +39,7 @@
 #include "groupview.h"
 #include "grouppolicydlg.h"
 #include "gui.h"
+#include "core.h"
 
 
 using namespace bt;
@@ -46,86 +47,24 @@ using namespace bt;
 namespace kt
 {
 
-	GroupViewItem::GroupViewItem(GroupView* parent,Group* g,const QString & name) : QTreeWidgetItem(parent),g(g),path_name(name)
+	GroupView::GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidget* parent)
+		: QTreeView(parent),
+		  gui(gui),
+		  core(core),
+		  view(view),
+		  gman(gman),
+		  model(new GroupViewModel(gman, view, parent))
 	{
-		if (g)
-		{
-			setText(0,g->groupName());
-			setIcon(0,g->groupIcon());
-		}
-		else
-		{
-			setText(0,path_name);
-			setIcon(0,KIcon("folder"));
-		}
-	}
-	
-	GroupViewItem::GroupViewItem(QTreeWidgetItem* parent,Group* g,const QString & name) : QTreeWidgetItem(parent),g(g),path_name(name)
-	{
-		if (g)
-		{
-			setText(0,g->groupName());
-			setIcon(0,g->groupIcon());
-		}
-		else
-		{
-			setText(0,path_name);
-			setIcon(0,KIcon("folder"));
-		}
-	}
-	
-	GroupViewItem::~GroupViewItem()
-	{
-	}
-	
-	void GroupViewItem::setGroup(Group* g)
-	{
-		this->g = g;
-		setText(0,g->groupName());
-		setIcon(0,g->groupIcon());
-	}
-
-	GroupView::GroupView(GroupManager* gman,View* view,GUI* gui,QWidget* parent)
-	: QTreeWidget(parent),gui(gui),view(view),custom_root(0),gman(gman)
-	{
-		setColumnCount(1);
 		setRootIsDecorated(false);
 		setContextMenuPolicy(Qt::CustomContextMenu);
-		headerItem()->setHidden(true);
-	
-		current = gman->allGroup();
-		
-		connect(this,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(onItemActivated(QTreeWidgetItem*,int)));
-		connect(this,SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showContextMenu( const QPoint& )));
-		connect(this,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(onItemChanged(QTreeWidgetItem*,int)));
-		connect(this,SIGNAL(currentGroupChanged(kt::Group*)),view,SLOT(onCurrentGroupChanged(kt::Group*)));
-		connect(this,SIGNAL(groupRenamed(kt::Group*)),view,SLOT(onGroupRenamed(kt::Group*)));
-		connect(gman,SIGNAL(groupRemoved(Group*)),this,SLOT(groupRemoved(Group*)));
-		connect(gman,SIGNAL(groupAdded(Group*)),this,SLOT(groupAdded(Group*)));
+		setModel(model);
+		header()->hide();
 
-		current_item = 0;
-		
-		for (GroupManager::Itr i = gman->begin();i != gman->end();i++)
-		{
-			Group* g = i->second;
-			if (g->isStandardGroup())
-				add(0, g->groupPath(), g);
-		}
-		
-		custom_root = add(0,"/all/custom",0);
-		custom_root->setText(0,i18n("Custom Groups"));
-		custom_root->setIcon(0,SmallIcon("folder"));
-		custom_root->setExpanded(true);
-		
-		for (GroupManager::Itr i = gman->begin();i != gman->end();i++)
-		{
-			Group* g = i->second;
-			if (!g->isStandardGroup())
-			{
-				GroupViewItem* gvi = addGroup(g, custom_root, g->groupName());
-				gvi->setFlags(gvi->flags() | Qt::ItemIsEditable | Qt::ItemIsDropEnabled);
-			}
-		}
+		connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(onItemClicked(QModelIndex)));
+		connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint&)));
+		connect(this, SIGNAL(currentGroupChanged(kt::Group*)), view, SLOT(onCurrentGroupChanged(kt::Group*)));
+		connect(model, SIGNAL(groupRenamed(kt::Group*)), view, SLOT(onGroupRenamed(kt::Group*)));
+		connect(gman, SIGNAL(customGroupChanged()), this, SLOT(updateGroupCount()));
 
 		setAcceptDrops(true);
 		setDropIndicatorShown(true);
@@ -134,261 +73,72 @@ namespace kt
 
 
 	GroupView::~GroupView()
-	{	
+	{
 	}
-	
+
 	void GroupView::setupActions(KActionCollection* col)
 	{
-		new_group = new KAction(KIcon("document-new"),i18n("New Group"),this);
-		connect(new_group,SIGNAL(triggered()),this,SLOT(addGroup()));
-		col->addAction("new_group",new_group);
+		new_group = new KAction(KIcon("document-new"), i18n("New Group"), this);
+		connect(new_group, SIGNAL(triggered()), this, SLOT(addGroup()));
+		col->addAction("new_group", new_group);
 
-		edit_group = new KAction(KIcon("insert-text"),i18n("Edit Name"),this);
-		connect(edit_group,SIGNAL(triggered()),this,SLOT(editGroupName()));
-		col->addAction("edit_group_name",edit_group);
-		
-		remove_group = new KAction(KIcon("edit-delete"),i18n("Remove Group"),this);
-		connect(remove_group,SIGNAL(triggered()),this,SLOT(removeGroup()));
-		col->addAction("remove_group",remove_group);
-		
-		edit_group_policy = new KAction(KIcon("preferences-other"),i18n("Group Policy"),this);
-		connect(edit_group_policy,SIGNAL(triggered()),this,SLOT(editGroupPolicy()));
-		col->addAction("edit_group_policy",edit_group_policy);
+		edit_group = new KAction(KIcon("insert-text"), i18n("Edit Name"), this);
+		connect(edit_group, SIGNAL(triggered()), this, SLOT(editGroupName()));
+		col->addAction("edit_group_name", edit_group);
+
+		remove_group = new KAction(KIcon("edit-delete"), i18n("Remove Group"), this);
+		connect(remove_group, SIGNAL(triggered()), this, SLOT(removeGroup()));
+		col->addAction("remove_group", remove_group);
+
+		edit_group_policy = new KAction(KIcon("preferences-other"), i18n("Group Policy"), this);
+		connect(edit_group_policy, SIGNAL(triggered()), this, SLOT(editGroupPolicy()));
+		col->addAction("edit_group_policy", edit_group_policy);
 	}
-	
-	GroupViewItem* GroupView::add(QTreeWidgetItem* parent,const QString & path,Group* g)
-	{
-		// if path looks like /foo we are at a leaf of the tree
-		Out(SYS_GEN|LOG_DEBUG) << "Adding " << path << endl;
-		if (path.count('/') == 1)
-		{
-			QString name = path.mid(1);
-			if (parent)
-			{
-				// see if we can find a GroupViewItem with the same name and which is a child of parent
-				for (int i = 0;i < parent->childCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
-					if (gvi->name() == name)
-					{
-						// there is one so just fill in the group
-						gvi->setGroup(g);
-						return gvi;
-					}
-				}
-			}
-			else
-			{
-				for (int i = 0;i < topLevelItemCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
-					if (gvi->name() == name)
-					{
-						// there is one so just fill in the group
-						gvi->setGroup(g);
-						return gvi;
-					}
-				}
-			}
-			
-			// no existing one found, so create a new one
-			return addGroup(g,parent,name);
-		}
-		else
-		{
-			QString p = path.mid(1); // get rid of first slash
-			int slash_pos = p.indexOf('/'); // find position of slash
-			QString name = p.mid(0,slash_pos); // get the name
-			p = p.mid(slash_pos); // p now becomes next part of path
-		
-			// see if we can find a GroupViewItem with the same name and which is a child of parent
-			if (parent)
-			{
-				for (int i = 0;i < parent->childCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
-					if (gvi->name() == name)
-					{
-						// there is one, go on recusively
-						return add(gvi,p,g);
-					}
-				}
-			}
-			else
-			{
-				for (int i = 0;i < topLevelItemCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
-					if (gvi->name() == name)
-					{
-						// there is one, go on recusively
-						return add(gvi,p,g);
-					}
-				}
-			}
-			
-			// create a new empty GroupViewItem and go on recursively
-			GroupViewItem* gvi = addGroup(0,parent,name);
-			return add(gvi,p,g);
-		}
-	}
-	
-	void GroupView::remove(QTreeWidgetItem* parent,const QString & path,Group* g)
-	{
-		// if path looks like /foo we are at a leaf of the tree
-		if (path.count('/') == 1)
-		{
-			QString name = path.mid(1);
-			if (parent)
-			{
-				for (int i = 0;i < parent->childCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
-					if (gvi->group() == g)
-					{
-						// we have found it
-						delete gvi;
-						return;
-					}
-				}
-			}
-			else
-			{
-				for (int i = 0;i < topLevelItemCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
-					if (gvi->group() == g)
-					{
-						// we have found it
-						delete gvi;
-						return;
-					}
-				}
-			}
-		}
-		else
-		{
-			QString p = path.mid(1); // get rid of first slash
-			int slash_pos = p.indexOf('/'); // find position of slash
-			QString name = p.mid(0,slash_pos); // get the name
-			p = p.mid(slash_pos); // p now becomes next part of path
-			
-			// see if we can find a GroupViewItem with the same name and which is a child of parent
-			if (parent)
-			{
-				for (int i = 0;i < parent->childCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
-					if (gvi->name() == name)
-					{
-						// there is one, go on recusively
-						remove(gvi,p,g);
-						// remove empty maps, if they are not the custom map
-						if (gvi->childCount() == 0 && gvi != custom_root)
-						{
-							delete gvi;
-						}
-						
-						return;
-					}
-				}
-			}
-			else
-			{
-				for (int i = 0;i < topLevelItemCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
-					if (gvi->name() == name)
-					{
-						// there is one, go on recusively
-						remove(gvi,p,g);
-						return;
-					}
-				}
-			}
-		}
-	}
-	
-	
+
 	void GroupView::addGroup()
 	{
 		addNewGroup();
 	}
-	
+
 	Group* GroupView::addNewGroup()
 	{
 		bool ok = false;
-		QString name = KInputDialog::getText(QString(),i18n("Please enter the group name."),QString(),&ok,this);
-		
-		if (name.isNull() || name.length() == 0 || !ok)
+		QString name = KInputDialog::getText(QString(), i18n("Please enter the group name."), QString(), &ok, this);
+
+		if(name.isNull() || name.length() == 0 || !ok)
 			return 0;
-		
-		if (gman->find(name))
+
+		if(gman->find(name))
 		{
-			KMessageBox::error(this,i18n("The group %1 already exists.",name));
+			KMessageBox::error(this, i18n("The group %1 already exists.", name));
 			return 0;
 		}
-		
+
 		Group* g = gman->newGroup(name);
 		gman->saveGroups();
 		return g;
 	}
-	
+
 	void GroupView::removeGroup()
 	{
-		if (!current_item)
-			return;
-		
-		Group* g = current_item->group();
-		if (!g)
-			return;
-		
-		gman->removeGroup(g);
-		current_item = 0;
-		gman->saveGroups();
-	}
-	
-	void GroupView::editGroupName()
-	{
-		if (!current_item)
-			return;
-		
-		editItem(current_item);
+		Group* g = model->groupForIndex(selectionModel()->currentIndex());
+		if(g)
+		{
+			gman->removeGroup(g);
+			gman->saveGroups();
+		}
 	}
 
-	GroupViewItem* GroupView::addGroup(Group* g,QTreeWidgetItem* parent,const QString & name)
+	void GroupView::editGroupName()
 	{
-		// Note: g can be 0
-		GroupViewItem* li = 0;
-		if (parent)
-		{
-			li = new GroupViewItem(parent,g,name);
-			li->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		}
-		else
-		{
-			li = new GroupViewItem(this,g,name);
-			if (g)
-				li->setText(1,g->groupName());
-			li->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-			addTopLevelItem(li);
-		}
-		
-		if (custom_root && custom_root->childCount() == 1 && custom_root == parent)
-			custom_root->setExpanded(true);
-		
-		return li;
+		edit(selectionModel()->currentIndex());
 	}
-	
+
 	void GroupView::showContextMenu(const QPoint & p)
 	{
-		current_item = dynamic_cast<GroupViewItem*>(itemAt(p));
+		Group* g = model->groupForIndex(selectionModel()->currentIndex());
 		
-		Group* g = 0;
-		if (current_item)
-			g = current_item->group();
-		
-		if (!g || !gman->canRemove(g))
+		if(!g || !gman->canRemove(g))
 		{
 			edit_group->setEnabled(false);
 			remove_group->setEnabled(false);
@@ -400,175 +150,61 @@ namespace kt
 			remove_group->setEnabled(true);
 			edit_group_policy->setEnabled(true);
 		}
-		
+
 		KMenu* menu = gui->getTorrentActivity()->part()->menu("GroupsMenu");
-		if (menu)
+		if(menu)
 			menu->popup(viewport()->mapToGlobal(p));
 	}
 	
-	void GroupView::onItemActivated(QTreeWidgetItem* item,int)
+	void GroupView::onItemClicked(const QModelIndex& index)
 	{
-		if (!item) return;
-		
-		GroupViewItem* li = dynamic_cast<GroupViewItem*>(item);
-		if (!li)
-			return;
-		
-		Group* g = li->group();
-		if (g)
-		{
-			current = g;
+		Group* g = model->groupForIndex(index);
+		if(g)
 			currentGroupChanged(g);
-		}
-	}
-
-	void GroupView::onItemChanged(QTreeWidgetItem* item,int )
-	{
-		if (!item) 
-			return;
-
-		GroupViewItem* li = dynamic_cast<GroupViewItem*>(item);
-		if (!li)
-			return;
-		
-		Group* g = li->group();
-		if (g)
-		{
-			QString name = item->text(0);
-			if (name.isNull() || name.length() == 0)
-			{
-				item->setText(0,g->groupName());
-				return;
-			}
-		
-			if (g->groupName() == name)
-				return;
-		
-			if (gman->find(name)) 
-			{
-				KMessageBox::error(this,i18n("The group %1 already exists.",name));
-				item->setText(0,g->groupName());
-			}
-			else
-			{
-				gman->renameGroup(g->groupName(),name);
-				li->setText(0,name);
-				groupRenamed(g);
-				gman->saveGroups();
-			//	sort();
-			}
-		}
-	}
-	
-	bool GroupView::dropMimeData(QTreeWidgetItem *parent, int index,const QMimeData *data,Qt::DropAction action)			  
-	{
-		Q_UNUSED(index);
-		Q_UNUSED(data);
-		Q_UNUSED(action);
-		GroupViewItem* li = dynamic_cast<GroupViewItem*>(parent);
-		if (!li)
-			return false;
-		
-		TorrentGroup* g = dynamic_cast<TorrentGroup*>(li->group());
-		if (!g)
-			return false;
-		
-		QList<TorrentInterface*> sel;
-		view->getSelection(sel);
-		foreach (TorrentInterface* ti,sel)
-		{
-			g->addTorrent(ti,false);
-		}
-		gman->saveGroups();
-		return true;
-	}
-	
-	QStringList GroupView::mimeTypes() const
-	{
-		QStringList sl;
-		sl << "application/x-ktorrent-drag-object";
-		return sl;
-	}
-	
-	Qt::DropActions GroupView::supportedDropActions () const
-	{
-		return Qt::CopyAction;
 	}
 
 	void GroupView::editGroupPolicy()
 	{
-		if (!current_item)
-			return;
-		
-		Group* g = current_item->group();
-		if (g)
+		Group* g = model->groupForIndex(selectionModel()->currentIndex());
+		if(g)
 		{
-			GroupPolicyDlg dlg(g,this);
-			if (dlg.exec() == QDialog::Accepted)
+			GroupPolicyDlg dlg(g, this);
+			if(dlg.exec() == QDialog::Accepted)
 				gman->saveGroups();
 		}
 	}
-	
+
 	void GroupView::saveState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("GroupView");
-		QTreeWidgetItemIterator it(this);
-		while (*it) 
-		{
-			if ((*it)->childCount() > 0)
-				g.writeEntry((*it)->text(0),(*it)->isExpanded());
-				
-			++it;
-		}
-		g.writeEntry("visible",isVisible());
+		g.writeEntry("expanded", model->expandedGroups(this));
+		g.writeEntry("visible", isVisible());
 	}
 
 
 	void GroupView::loadState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("GroupView");
-		QTreeWidgetItemIterator it(this);
-		while (*it) 
-		{
-			if (!(*it)->parent())
-				(*it)->setExpanded(true);
-			else if ((*it)->childCount() > 0)
-				(*it)->setExpanded(g.readEntry((*it)->text(0),true));
-				
-			++it;
-		}
-		setVisible(g.readEntry("visible",true));
+		QStringList default_expanded;
+		default_expanded << "/all" << "/all/downloads" << "/all/uploads" << "/all/active" << "/all/passive" << "/all/custom";
+		QStringList slist = g.readEntry("expanded", default_expanded);
+		model->expandGroups(this, slist);
+		setVisible(g.readEntry("visible", true));
+		expand(model->index(0, 0));
 	}
-	
-	void GroupView::groupAdded(Group* g)
+
+	void GroupView::keyPressEvent(QKeyEvent* event)
 	{
-		add(0,g->groupPath(),g);
-		if (!g->isStandardGroup())
-			view->onGroupAdded(g);
-	}
-	
-	
-	
-	void GroupView::groupRemoved(Group* g)
-	{
-		if (g == current)
-		{
-			current = gman->allGroup();
-			currentGroupChanged(current);
-		}
-		
-		view->onGroupRemoved(g);
-		remove(0,g->groupPath(),g);
-	}
-	
-	void GroupView::keyPressEvent(QKeyEvent* event) 
-	{
-		if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
-			onItemActivated(currentItem(),0);
+		if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+			onItemClicked(selectionModel()->currentIndex());
 		else
 			QTreeView::keyPressEvent(event);
 	}
-
+	
+	void GroupView::updateGroupCount()
+	{
+		model->updateGroupCount(model->index(0, 0));
+	}
 }
 
 #include "groupview.moc"

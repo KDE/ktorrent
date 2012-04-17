@@ -1,7 +1,7 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 #  set(kt4_SRC app.cpp mainwindow.cpp core.cpp view.cpp viewmodel.cpp main.cpp)
-set(ktorrent_SRC
+set(ktorrent_SRC 
 	main.cpp 
 	core.cpp 
 	gui.cpp 
@@ -20,6 +20,7 @@ set(ktorrent_SRC
 	groups/grouppolicydlg.cpp
 	groups/groupfiltermodel.cpp
 	groups/groupview.cpp
+	groups/groupviewmodel.cpp
 	groups/groupmodel.cpp 
 	groups/groupswitcher.cpp
 	

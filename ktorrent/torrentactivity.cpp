@@ -69,7 +69,7 @@ namespace kt
 		hsplit = new QSplitter(Qt::Horizontal, vsplit);
 
 		group_switcher = new GroupSwitcher(view, core->getGroupManager(), this);
-		connect(core->getQueueManager(), SIGNAL(queueOrdered()), group_switcher, SLOT(queueOrdered()));
+		connect(core->getQueueManager(), SIGNAL(queueOrdered()), this, SLOT(queueOrdered()));
 			
 		QVBoxLayout* vlayout = new QVBoxLayout(view_part);
 		vlayout->setSpacing(0);
@@ -78,7 +78,7 @@ namespace kt
 		vlayout->addWidget(search_bar);
 		vlayout->addWidget(view);
 
-		group_view = new GroupView(core->getGroupManager(), view, gui, hsplit);
+		group_view = new GroupView(core->getGroupManager(), view, core, gui, hsplit);
 		group_view->setupActions(part()->actionCollection());
 		connect(group_view, SIGNAL(currentGroupChanged(kt::Group*)), group_switcher, SLOT(currentGroupChanged(kt::Group*)));
 
@@ -239,7 +239,7 @@ namespace kt
 		view->update();
 		if(qm->isVisible())
 			qm->update();
-		group_switcher->update(core->getQueueManager());
+		group_switcher->update();
 	}
 
 	void TorrentActivity::setGroupViewVisible(bool visible)
@@ -272,6 +272,12 @@ namespace kt
 	Group* TorrentActivity::addNewGroup()
 	{
 		return group_view->addNewGroup();
+	}
+
+	void TorrentActivity::queueOrdered()
+	{
+		group_view->updateGroupCount();
+		group_switcher->updateGroupCount();
 	}
 
 }

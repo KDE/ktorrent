@@ -45,8 +45,9 @@ namespace kt
 	 * isMember function, but can also provide save and load
 	 * functionality.
 	 */
-	class KTCORE_EXPORT Group
+	class KTCORE_EXPORT Group : public QObject
 	{
+		Q_OBJECT
 	public:
 		enum Properties
 		{

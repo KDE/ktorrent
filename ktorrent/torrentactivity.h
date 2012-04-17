@@ -94,6 +94,7 @@ namespace kt
 		void startAllTorrents();
 		void stopAllTorrents();
 		void suspendQueue(bool suspend);
+		void queueOrdered();
 		
 	private:
 		Core* core;
