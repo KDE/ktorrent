@@ -78,6 +78,10 @@ namespace kt
 
 	void GroupView::setupActions(KActionCollection* col)
 	{
+		open_in_new_tab = new KAction(KIcon("list-add"), i18n("Open In New Tab"), this);
+		connect(open_in_new_tab, SIGNAL(triggered()), this, SLOT(openInNewTab()));
+		col->addAction("open_in_new_tab", open_in_new_tab);
+		
 		new_group = new KAction(KIcon("document-new"), i18n("New Group"), this);
 		connect(new_group, SIGNAL(triggered()), this, SLOT(addGroup()));
 		col->addAction("new_group", new_group);
@@ -150,6 +154,8 @@ namespace kt
 			remove_group->setEnabled(true);
 			edit_group_policy->setEnabled(true);
 		}
+		
+		open_in_new_tab->setEnabled(g != 0);
 
 		KMenu* menu = gui->getTorrentActivity()->part()->menu("GroupsMenu");
 		if(menu)
@@ -204,6 +210,13 @@ namespace kt
 	void GroupView::updateGroupCount()
 	{
 		model->updateGroupCount(model->index(0, 0));
+	}
+	
+	void GroupView::openInNewTab()
+	{
+		Group* g = model->groupForIndex(selectionModel()->currentIndex());
+		if(g)
+			openTab(g);
 	}
 }
 

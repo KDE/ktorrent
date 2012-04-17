@@ -71,9 +71,11 @@ namespace kt
 		void removeGroup();
 		void editGroupName();
 		void editGroupPolicy();
+		void openInNewTab();
 
 	signals:
 		void currentGroupChanged(kt::Group* g);
+		void openTab(Group* g);
 
 	private:
 		virtual void keyPressEvent(QKeyEvent* event);
@@ -85,6 +87,7 @@ namespace kt
 		GroupManager* gman;
  		GroupViewModel* model;
 
+		KAction* open_in_new_tab;
 		KAction* new_group;
 		KAction* edit_group;
 		KAction* remove_group;

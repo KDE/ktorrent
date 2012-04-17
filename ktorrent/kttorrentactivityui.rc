@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="torrentactivity" version="6">
+<kpartgui name="torrentactivity" version="7">
 <MenuBar>
 	<Menu name="view">
 		<Action name="show_group_view" group="view_menu_top"/>
@@ -24,6 +24,8 @@
 </MenuBar>
 
 <Menu name="GroupsMenu"><text>Groups</text>
+	<Action name="open_in_new_tab" />
+	<Separator/>
 	<Action name="new_group" />
 	<Action name="edit_group_name" />
 	<Action name="remove_group" />

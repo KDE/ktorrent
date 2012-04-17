@@ -80,7 +80,8 @@ namespace kt
 		group_view = new GroupView(core->getGroupManager(), view, core, gui, hsplit);
 		group_view->setupActions(part()->actionCollection());
 		connect(group_view, SIGNAL(currentGroupChanged(kt::Group*)), group_switcher, SLOT(currentGroupChanged(kt::Group*)));
-
+		connect(group_view, SIGNAL(openTab(Group*)), group_switcher, SLOT(addTab(Group*)));
+		
 		setupActions();
 
 		hsplit->addWidget(group_view);
