@@ -7,6 +7,7 @@ Changes in 4.3:
 - Add automatic sorting options to download order plugin (name, seasons and episodes, album track number) (295341)
 - Make float comparison factor smaller in ViewModel when checking if share ratio has changed (297931)
 - Show torrent count next to group in GroupView (176173)
+- Add new GroupSwitcher widget
 
 Changes in 4.2.1:
 - Fix IP filter widget list not getting registered at startup (281245)

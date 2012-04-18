@@ -78,12 +78,9 @@ namespace kt
 
 		/// Get the current group
 		const Group* getGroup() const {return group;}
-
-		/// Save the view's state
-		void saveState(KSharedConfigPtr cfg);
-
-		/// Load the view's state
-		void loadState(KSharedConfigPtr cfg);
+		
+		/// Restore the view state
+		void restoreState(const QByteArray & state);
 
 		/// Get the current torrent
 		bt::TorrentInterface* getCurrentTorrent();
@@ -102,6 +99,9 @@ namespace kt
 
 		/// Extend a widget
 		void extend(bt::TorrentInterface* tc, Extender* widget, bool close_similar);
+		
+		/// Get the default state
+		const QByteArray & defaultState() const {return default_state;}
 
 
 	public slots:
@@ -175,6 +175,7 @@ namespace kt
 		ViewSelectionModel* selection_model;
 		ViewDelegate* delegate;
 		QMap<bt::TorrentInterface*, Extender*> data_scan_extenders;
+		QByteArray default_state;
 
 		// actions for the view menu
 		KAction* start_torrent;

@@ -62,13 +62,13 @@ namespace kt
 {
 
 	View::View(Core* core, GUI* gui, QWidget* parent)
-			: QTreeView(parent),
-			core(core),
-			gui(gui),
-			group(core->getGroupManager()->allGroup()),
-			num_torrents(0),
-			num_running(0),
-			model(0)
+		: QTreeView(parent),
+		  core(core),
+		  gui(gui),
+		  group(core->getGroupManager()->allGroup()),
+		  num_torrents(0),
+		  num_running(0),
+		  model(0)
 	{
 		new ViewJobTracker(this);
 
@@ -93,7 +93,7 @@ namespace kt
 		header_menu = new KMenu(this);
 		header_menu->addTitle(i18n("Columns"));
 
-		for (int i = 0;i < model->columnCount(QModelIndex());i++)
+		for(int i = 0; i < model->columnCount(QModelIndex()); i++)
 		{
 			QString col = model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
 			KAction* act = new KAction(col, header_menu);
@@ -119,6 +119,8 @@ namespace kt
 		setItemDelegate(delegate);
 
 		gui->setCaption(group->groupName());
+		
+		default_state = header()->saveState();
 	}
 
 	View::~View()
@@ -227,9 +229,9 @@ namespace kt
 		ac->addAction("check_data", check_data);
 
 		GroupManager* gman = core->getGroupManager();
-		for (GroupManager::Itr i = gman->begin();i != gman->end();i++)
+		for(GroupManager::Itr i = gman->begin(); i != gman->end(); i++)
 		{
-			if (!i->second->isStandardGroup())
+			if(!i->second->isStandardGroup())
 			{
 				KAction* act = new KAction(KIcon("application-x-bittorrent"), i->first, this);
 				connect(act, SIGNAL(triggered()), this, SLOT(addToGroupItemTriggered()));
@@ -268,11 +270,11 @@ namespace kt
 
 		bool operator()(bt::TorrentInterface* tc)
 		{
-			if (tc->getJobQueue()->runningJobs())
+			if(tc->getJobQueue()->runningJobs())
 				return true;
 
 			const TorrentStats & s = tc->getStats();
-			if (s.running || (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime()))
+			if(s.running || (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime()))
 				stop_all->setEnabled(true);
 			else
 				start_all->setEnabled(true);
@@ -295,23 +297,23 @@ namespace kt
 		bool en_add_peer = false;
 		bool en_pause = false;
 
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
 			const TorrentStats & s = tc->getStats();
 
-			if (tc->readyForPreview() && !s.multi_file_torrent)
+			if(tc->readyForPreview() && !s.multi_file_torrent)
 				en_prev = true;
 
-			if (tc->getJobQueue()->runningJobs())
+			if(tc->getJobQueue()->runningJobs())
 				continue;
 
 			en_remove = true;
-			if (!s.running)
+			if(!s.running)
 			{
-				if (qm_enabled)
+				if(qm_enabled)
 				{
 					// Queued torrents can be stopped, and not started
-					if (s.queued)
+					if(s.queued)
 						en_stop = true;
 					else
 						en_start = true;
@@ -324,16 +326,16 @@ namespace kt
 			else
 			{
 				en_stop = true;
-				if (tc->announceAllowed())
+				if(tc->announceAllowed())
 					en_announce = true;
 
-				if (!s.paused)
+				if(!s.paused)
 					en_pause = true;
 				else
 					en_start = true;
 			}
 
-			if (!s.priv_torrent)
+			if(!s.priv_torrent)
 			{
 				en_add_peer = true;
 			}
@@ -365,7 +367,7 @@ namespace kt
 		copy_url->setEnabled(sel.count() == 1 && sel.front()->loadUrl().isValid());
 		export_torrent->setEnabled(sel.count() == 1);
 
-		if (qm_enabled)
+		if(qm_enabled)
 		{
 			start_all->setEnabled(false);
 			stop_all->setEnabled(false);
@@ -390,10 +392,10 @@ namespace kt
 
 	void View::update()
 	{
-		if (!uniformRowHeights() && !delegate->hasExtenders())
+		if(!uniformRowHeights() && !delegate->hasExtenders())
 			setUniformRowHeights(true);
 
-		if (!model->update(delegate))
+		if(!model->update(delegate))
 		{
 			// model wasn't resorted, so update individual items
 			const QModelIndexList & to_update = model->updateList();
@@ -406,7 +408,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() > 0)
+		if(sel.count() > 0)
 			core->start(sel);
 	}
 
@@ -414,16 +416,16 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() == 0)
+		if(sel.count() == 0)
 			return;
 
 		QueueManager* qm = core->getQueueManager();
-		if (qm->enabled())
+		if(qm->enabled())
 		{
 			// Give everybody in the selection a high priority
 			int prio = qm->count();
 			int idx = 0;
-			foreach(bt::TorrentInterface* tc, sel)
+			foreach(bt::TorrentInterface * tc, sel)
 			tc->setPriority(prio + sel.count() - idx++);
 
 			core->start(sel);
@@ -437,7 +439,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() > 0)
+		if(sel.count() > 0)
 			core->stop(sel);
 	}
 
@@ -445,7 +447,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() > 0)
+		if(sel.count() > 0)
 			core->pause(sel);
 	}
 
@@ -453,13 +455,13 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
-			if (tc && !tc->getJobQueue()->runningJobs())
+			if(tc && !tc->getJobQueue()->runningJobs())
 			{
 				const TorrentStats & s = tc->getStats();
 				bool data_to = false;
-				if (!s.completed)
+				if(!s.completed)
 				{
 					QString msg = i18n("The torrent <b>%1</b> has not finished downloading, "
 					                   "do you want to delete the incomplete data, too?", tc->getDisplayName());
@@ -470,9 +472,9 @@ namespace kt
 					              KGuiItem(i18n("Delete Data")),
 					              KGuiItem(i18n("Keep Data")),
 					              KStandardGuiItem::cancel());
-					if (ret == KMessageBox::Cancel)
+					if(ret == KMessageBox::Cancel)
 						return;
-					else if (ret == KMessageBox::Yes)
+					else if(ret == KMessageBox::Yes)
 						data_to = true;
 				}
 				core->remove(tc, data_to);
@@ -484,18 +486,18 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() == 0)
+		if(sel.count() == 0)
 			return;
 
 		QStringList names;
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
 			names.append(tc->getDisplayName());
 		}
 
 		QString msg = i18n("You will lose all the downloaded data of the following torrents. Are you sure you want to do this?");
-		if (KMessageBox::warningYesNoList(this, msg, names, i18n("Remove Torrent"),
-		                                  KStandardGuiItem::remove(), KStandardGuiItem::cancel()) == KMessageBox::Yes)
+		if(KMessageBox::warningYesNoList(this, msg, names, i18n("Remove Torrent"),
+		                                 KStandardGuiItem::remove(), KStandardGuiItem::cancel()) == KMessageBox::Yes)
 		{
 			core->remove(sel, true);
 		}
@@ -519,7 +521,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() > 0)
+		if(sel.count() > 0)
 		{
 			AddPeersDlg dlg(sel[0], this);
 			dlg.exec();
@@ -530,9 +532,9 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
-			if (tc->getStats().running)
+			if(tc->getStats().running)
 				tc->updateTracker();
 		}
 	}
@@ -541,7 +543,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
 			tc->scrapeTracker();
 		}
@@ -551,9 +553,9 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
-			if (tc->readyForPreview() && !tc->getStats().multi_file_torrent)
+			if(tc->readyForPreview() && !tc->getStats().multi_file_torrent)
 			{
 				new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
 			}
@@ -564,9 +566,9 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
-			if (tc->getStats().multi_file_torrent)
+			if(tc->getStats().multi_file_torrent)
 				new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
 			else
 				new KRun(KUrl(tc->getDataDir()), 0, 0, true, true);
@@ -577,7 +579,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
 			new KRun(KUrl(tc->getTorDir()), 0, 0, true, true);
 		}
@@ -587,16 +589,16 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() == 0)
+		if(sel.count() == 0)
 			return;
 
 		QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///saveTorrentData"), this, i18n("Select a directory to move the data to."));
-		if (dir.isNull())
+		if(dir.isNull())
 			return;
 
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
-			if (core->checkMissingFiles(tc))
+			if(core->checkMissingFiles(tc))
 				tc->changeOutputDir(dir, bt::TorrentInterface::MOVE_FILES);
 		}
 	}
@@ -605,7 +607,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() == 0)
+		if(sel.count() == 0)
 			return;
 
 		PropertiesDlg dlg(sel.front(), this);
@@ -614,12 +616,12 @@ namespace kt
 
 	void View::removeFromGroup()
 	{
-		if (!group || group->isStandardGroup())
+		if(!group || group->isStandardGroup())
 			return;
 
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		group->removeTorrent(tc);
 		core->getGroupManager()->saveGroups();
 		update();
@@ -630,7 +632,7 @@ namespace kt
 	void View::renameTorrent()
 	{
 		QModelIndexList indices = selectionModel()->selectedRows();
-		if (indices.count() == 0)
+		if(indices.count() == 0)
 			return;
 
 		QModelIndex idx = indices.front();
@@ -642,9 +644,9 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
-			if (tc->getStats().status != bt::ALLOCATING_DISKSPACE)
+			if(tc->getStats().status != bt::ALLOCATING_DISKSPACE)
 				core->doDataCheck(tc);
 		}
 
@@ -654,7 +656,7 @@ namespace kt
 	void View::showMenu(const QPoint & pos)
 	{
 		KMenu* view_menu = gui->getTorrentActivity()->part()->menu("ViewMenu");
-		if (!view_menu)
+		if(!view_menu)
 			return;
 
 		gui->getTorrentActivity()->part()->plugActionList("view_groups_list", group_actions.values());
@@ -674,37 +676,28 @@ namespace kt
 		model->torrentsFromIndexList(indices, sel);
 	}
 
-	void View::saveState(KSharedConfigPtr cfg)
+	void View::restoreState(const QByteArray& state)
 	{
-		KConfigGroup g = cfg->group("View");
-		QByteArray s = header()->saveState();
-		g.writeEntry("state", s.toBase64());
-	}
-
-
-	void View::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("View");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
-		if (!s.isNull())
+		if(!state.isNull())
 		{
 			QHeaderView* v = header();
-			v->restoreState(s);
+			v->restoreState(state);
 			sortByColumn(v->sortIndicatorSection(), v->sortIndicatorOrder());
 			model->sort(v->sortIndicatorSection(), v->sortIndicatorOrder());
 		}
 
 		QMap<QAction*, int>::iterator i = column_idx_map.begin();
-		while (i != column_idx_map.end())
+		while(i != column_idx_map.end())
 		{
 			QAction* act = i.key();
 			bool hidden = header()->isSectionHidden(i.value());
 			act->setChecked(!hidden);
-			if (!hidden && header()->sectionSize(i.value()) == 0)
+			if(!hidden && header()->sectionSize(i.value()) == 0)
 				header()->resizeSection(i.value(), 20);
 			i++;
 		}
 	}
+
 
 	bt::TorrentInterface* View::getCurrentTorrent()
 	{
@@ -721,7 +714,7 @@ namespace kt
 	void View::onHeaderMenuItemTriggered(QAction* act)
 	{
 		int idx = column_idx_map[act];
-		if (act->isChecked())
+		if(act->isChecked())
 			header()->showSection(idx);
 		else
 			header()->hideSection(idx);
@@ -743,7 +736,7 @@ namespace kt
 	bool View::edit(const QModelIndex & index, EditTrigger trigger, QEvent* event)
 	{
 		bool ret = QTreeView::edit(index, trigger, event);
-		if (ret)
+		if(ret)
 			editingItem(true);
 
 		return ret;
@@ -751,13 +744,13 @@ namespace kt
 
 	void View::onDoubleClicked(const QModelIndex& index)
 	{
-		if (index.column() == 0) // double clicking on column 0 will change the name of a torrent
+		if(index.column() == 0)  // double clicking on column 0 will change the name of a torrent
 			return;
 
 		bt::TorrentInterface* tc = model->torrentFromIndex(index);
-		if (tc)
+		if(tc)
 		{
-			if (tc->getStats().multi_file_torrent)
+			if(tc->getStats().multi_file_torrent)
 				new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
 			else
 				new KRun(KUrl(tc->getDataDir()), 0, 0, true, true);
@@ -768,7 +761,7 @@ namespace kt
 	{
 		setUniformRowHeights(false);
 		delegate->extend(tc, widget, close_similar);
-		if (group && !group->isMember(tc))
+		if(group && !group->isMember(tc))
 			delegate->hideExtender(tc);
 	}
 
@@ -788,12 +781,12 @@ namespace kt
 
 	void View::onGroupRemoved(Group* g)
 	{
-		if (group == g)
+		if(group == g)
 			setGroup(core->getGroupManager()->allGroup());
 
 		gui->getTorrentActivity()->part()->unplugActionList("view_groups_list");
 		QMap<Group*, QAction*>::iterator i = group_actions.find(g);
-		if (i != group_actions.end())
+		if(i != group_actions.end())
 		{
 			delete i.value();
 			group_actions.erase(i);
@@ -805,7 +798,7 @@ namespace kt
 	void View::onGroupRenamed(Group* g)
 	{
 		QMap<Group*, QAction*>::iterator j = group_actions.find(g);
-		if (j != group_actions.end())
+		if(j != group_actions.end())
 			j.value()->setText(g->groupName());
 	}
 
@@ -814,19 +807,19 @@ namespace kt
 		KAction* s = (KAction*)sender();
 		Group* g = 0;
 		QMap<Group*, QAction*>::iterator j = group_actions.begin();
-		while (j != group_actions.end() && !g)
+		while(j != group_actions.end() && !g)
 		{
-			if (j.value() == s)
+			if(j.value() == s)
 				g = j.key();
 			j++;
 		}
 
-		if (!g)
+		if(!g)
 			return;
 
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc, sel)
+		foreach(bt::TorrentInterface * tc, sel)
 		{
 			g->addTorrent(tc, false);
 		}
@@ -836,11 +829,11 @@ namespace kt
 	void View::addToNewGroup()
 	{
 		Group* g = gui->getTorrentActivity()->addNewGroup();
-		if (g)
+		if(g)
 		{
 			QList<bt::TorrentInterface*> sel;
 			getSelection(sel);
-			foreach(bt::TorrentInterface* tc, sel)
+			foreach(bt::TorrentInterface * tc, sel)
 			{
 				g->addTorrent(tc, false);
 			}
@@ -852,11 +845,11 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() == 0)
+		if(sel.count() == 0)
 			return;
 
 		bt::TorrentInterface* tc = sel.front();
-		if (!tc->loadUrl().isValid())
+		if(!tc->loadUrl().isValid())
 			return;
 
 		QClipboard* cb = QApplication::clipboard();
@@ -875,13 +868,13 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		if (sel.count() == 1)
+		if(sel.count() == 1)
 		{
 			bt::TorrentInterface* tc = sel.front();
 			QString filter = kt::TorrentFileFilter(false);
 			QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///exportTorrent"), filter, gui,
 			             QString(), KFileDialog::ConfirmOverwrite);
-			if (fn.isEmpty())
+			if(fn.isEmpty())
 				return;
 
 			KIO::file_copy(QString(tc->getTorDir() + "torrent"), fn, -1, KIO::Overwrite);

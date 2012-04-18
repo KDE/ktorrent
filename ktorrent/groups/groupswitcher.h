@@ -96,7 +96,17 @@ namespace kt
 		void groupRemoved(Group* group);
 		
 	private:
-		typedef QList<QPair<Group*, QAction*> > TabList;
+		struct Tab
+		{
+			Group* group;
+			QAction* action;
+			QByteArray view_settings;
+			
+			Tab(Group* group, QAction* action) : group(group), action(action)
+			{}
+		};
+		
+		typedef QList<Tab> TabList;
 		
 		TabList::iterator closeTab(TabList::iterator i);
 
@@ -108,6 +118,7 @@ namespace kt
 		GroupManager* gman;
 		View* view;
 		TabList tabs;
+		int current_tab;
 	};
 
 }

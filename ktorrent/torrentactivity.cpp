@@ -175,7 +175,6 @@ namespace kt
 		}
 
 		search_bar->loadState(cfg);
-		view->loadState(cfg);
 		group_view->loadState(cfg);
 		qm->loadState(cfg);
 		tool_views->loadState(cfg, "TorrentActivityBottomTabBar");
@@ -189,7 +188,6 @@ namespace kt
 	void TorrentActivity::saveState(KSharedConfigPtr cfg)
 	{
 		search_bar->saveState(cfg);
-		view->saveState(cfg);
 		group_view->saveState(cfg);
 		group_switcher->saveState(cfg);
 		qm->saveState(cfg);
