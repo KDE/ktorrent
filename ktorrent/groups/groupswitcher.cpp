@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include "groupswitcher.h"
+#include "grouppolicydlg.h"
 #include <view/view.h>
 #include <torrent/queuemanager.h>
 #include <util/log.h>
@@ -38,6 +39,7 @@ namespace kt
 		: QWidget(parent),
 		  new_tab(new QToolButton(this)),
 		  close_tab(new QToolButton(this)),
+		  edit_group_policy(new QToolButton(this)),
 		  tool_bar(new KToolBar(this)),
 		  action_group(new QActionGroup(this)),
 		  gman(gman),
@@ -46,6 +48,7 @@ namespace kt
 	{
 		QHBoxLayout* layout = new QHBoxLayout(this);
 		layout->addWidget(new_tab);
+		layout->addWidget(edit_group_policy);
 		layout->addWidget(tool_bar);
 		layout->addWidget(close_tab);
 		layout->setMargin(0);
@@ -59,6 +62,11 @@ namespace kt
 		close_tab->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		close_tab->setToolTip(i18n("Close the current tab"));
 		connect(close_tab, SIGNAL(clicked(bool)), this, SLOT(closeTab()));
+		
+		edit_group_policy->setIcon(KIcon("preferences-other"));
+		edit_group_policy->setToolButtonStyle(Qt::ToolButtonIconOnly); 
+		edit_group_policy->setToolTip(i18n("Edit Group Policy"));
+		connect(edit_group_policy, SIGNAL(clicked(bool)), this, SLOT(editGroupPolicy()));
 
 		tool_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		action_group->setExclusive(true);
@@ -115,6 +123,8 @@ namespace kt
 			view->restoreState(tabs.first().view_settings);
 			current_tab = 0;
 		}
+		
+		edit_group_policy->setEnabled(!tabs.at(current_tab).group->isStandardGroup());
 	}
 
 	void GroupSwitcher::saveState(KSharedConfig::Ptr cfg)
@@ -204,6 +214,7 @@ namespace kt
 				view->setGroup(i->group);
 				view->restoreState(i->view_settings);
 				current_tab = idx;
+				edit_group_policy->setEnabled(!i->group->isStandardGroup());
 				break;
 			}
 		}
@@ -219,6 +230,7 @@ namespace kt
 				QString name = group->groupName() +  QString(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
 				i->action->setText(name);
 				i->action->setIcon(group->groupIcon());
+				edit_group_policy->setEnabled(!group->isStandardGroup());
 				break;
 			}
 		}
@@ -252,4 +264,16 @@ namespace kt
 				i++;
 		}
 	}
+	
+	void GroupSwitcher::editGroupPolicy()
+	{
+		Group* g = tabs[current_tab].group;
+		if(g)
+		{
+			GroupPolicyDlg dlg(g, this);
+			if(dlg.exec() == QDialog::Accepted)
+				gman->saveGroups();
+		}
+	}
+
 }

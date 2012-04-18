@@ -95,6 +95,11 @@ namespace kt
 		 **/
 		void groupRemoved(Group* group);
 		
+		/**
+		 * Edit the group policy
+		 **/
+		void editGroupPolicy();
+		
 	private:
 		struct Tab
 		{
@@ -113,6 +118,7 @@ namespace kt
 	private:
 		QToolButton* new_tab;
 		QToolButton* close_tab;
+		QToolButton* edit_group_policy;
 		KToolBar* tool_bar;
 		QActionGroup* action_group;
 		GroupManager* gman;
