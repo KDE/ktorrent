@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>ProxyPref</class>
- <widget class="QWidget" name="ProxyPref" >
-  <property name="geometry" >
+ <widget class="QWidget" name="ProxyPref">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,62 +10,58 @@
     <height>387</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout">
    <item>
-    <widget class="QGroupBox" name="groupBox_3" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
       <string>HTTP</string>
      </property>
-     <layout class="QVBoxLayout" >
+     <layout class="QVBoxLayout">
       <item>
-       <widget class="QCheckBox" name="kcfg_useKDEProxySettings" >
-        <property name="toolTip" >
-         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">Use the HTTP proxy settings configured in the settings of KDE.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+       <widget class="QCheckBox" name="kcfg_useKDEProxySettings">
+        <property name="toolTip">
+         <string>&lt;p&gt;Use the HTTP proxy settings configured in the settings of KDE.&lt;/p&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Use KDE proxy settings</string>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QHBoxLayout">
         <item>
-         <widget class="QLabel" name="label_10" >
-          <property name="text" >
+         <widget class="QLabel" name="label_10">
+          <property name="text">
            <string>Proxy:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="kcfg_httpProxy" >
-          <property name="toolTip" >
+         <widget class="QLineEdit" name="kcfg_httpProxy">
+          <property name="toolTip">
            <string>IP address or hostname of the HTTP proxy to use. </string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_2" >
-          <property name="text" >
+         <widget class="QLabel" name="label_2">
+          <property name="text">
            <string>Port:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="kcfg_httpProxyPort" >
-          <property name="toolTip" >
+         <widget class="QSpinBox" name="kcfg_httpProxyPort">
+          <property name="toolTip">
            <string>Port of the HTTP proxy.</string>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>65535</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>8080</number>
           </property>
          </widget>
@@ -72,24 +69,21 @@ p, li { white-space: pre-wrap; }
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_useProxyForWebSeeds" >
-        <property name="toolTip" >
+       <widget class="QCheckBox" name="kcfg_useProxyForWebSeeds">
+        <property name="toolTip">
          <string>Whether or not to use the HTTP proxy for webseed connections.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Use proxy for webseed connections</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_useProxyForTracker" >
-        <property name="toolTip" >
-         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Whether or not to use the HTTP proxy for tracker connections.&lt;/p>&lt;/body>&lt;/html></string>
+       <widget class="QCheckBox" name="kcfg_useProxyForTracker">
+        <property name="toolTip">
+         <string>&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Whether or not to use the HTTP proxy for tracker connections.&lt;/p&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Use proxy for tracker connections</string>
         </property>
        </widget>
@@ -98,126 +92,105 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
       <string>SOCKS</string>
      </property>
-     <layout class="QVBoxLayout" >
+     <layout class="QVBoxLayout">
       <item>
-       <widget class="QCheckBox" name="kcfg_socksEnabled" >
-        <property name="toolTip" >
-         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">Use a SOCKS proxy server for bittorrent connections.&lt;/span>&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" font-family:'OpenSymbol'; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note: &lt;/span>This is not used for tracker connections&lt;/p>&lt;/body>&lt;/html></string>
+       <widget class="QCheckBox" name="kcfg_socksEnabled">
+        <property name="toolTip">
+         <string>&lt;p&gt;Use a SOCKS proxy server for bittorrent connections.&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;This is not used for tracker connections&lt;/p&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Use a SOCKS proxy server:</string>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QHBoxLayout">
         <item>
-         <widget class="QLabel" name="label_12" >
-          <property name="text" >
+         <widget class="QLabel" name="label_12">
+          <property name="text">
            <string>Server:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="kcfg_socksProxy" >
-          <property name="toolTip" >
-           <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">IP address or hostname of the SOCKS server&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+         <widget class="QLineEdit" name="kcfg_socksProxy">
+          <property name="toolTip">
+           <string>&lt;p&gt;IP address or hostname of the SOCKS server&lt;/p&gt;</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_11" >
-          <property name="text" >
+         <widget class="QLabel" name="label_11">
+          <property name="text">
            <string>Port:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="kcfg_socksPort" >
-          <property name="toolTip" >
-           <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">Port used by the SOCKS server&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+         <widget class="QSpinBox" name="kcfg_socksPort">
+          <property name="toolTip">
+           <string>Port used by the SOCKS server</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_13" >
-          <property name="text" >
+         <widget class="QLabel" name="label_13">
+          <property name="text">
            <string>Version:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="kcfg_socksVersion" />
+         <widget class="QSpinBox" name="kcfg_socksVersion"/>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_socksUsePassword" >
-        <property name="toolTip" >
+       <widget class="QCheckBox" name="kcfg_socksUsePassword">
+        <property name="toolTip">
          <string>If the SOCKS server requires authentication via a username and a password, enable this box.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Username and password required</string>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QHBoxLayout">
         <item>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QLabel" name="label" >
-            <property name="text" >
+         <layout class="QGridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
              <string>Username:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1" >
-           <widget class="QLineEdit" name="kcfg_socksUsername" >
-            <property name="toolTip" >
-             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;">&lt;span style=" font-size:8pt;">Username for the SOCKS proxy server.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="kcfg_socksUsername">
+            <property name="toolTip">
+             <string>Username for the SOCKS proxy server.</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="label_14" >
-            <property name="text" >
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
              <string>Password:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" >
-           <widget class="KLineEdit" name="kcfg_socksPassword" >
-            <property name="toolTip" >
-             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;">&lt;span style=" font-size:8pt;">Password for the SOCKS proxy server.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+          <item row="1" column="1">
+           <widget class="KLineEdit" name="kcfg_socksPassword">
+            <property name="toolTip">
+             <string>Password for the SOCKS proxy server.</string>
             </property>
-            <property name="passwordMode" >
+            <property name="passwordMode">
              <bool>true</bool>
             </property>
            </widget>
@@ -226,10 +199,10 @@ p, li { white-space: pre-wrap; }
         </item>
         <item>
          <spacer>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" stdset="0" >
+          <property name="sizeHint" stdset="0">
            <size>
             <width>40</width>
             <height>20</height>
@@ -244,10 +217,10 @@ p, li { white-space: pre-wrap; }
    </item>
    <item>
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>409</width>
        <height>21</height>
@@ -272,11 +245,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_socksProxy</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>67</x>
      <y>216</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>179</x>
      <y>249</y>
     </hint>
@@ -288,11 +261,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_socksPort</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>230</x>
      <y>216</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>290</x>
      <y>248</y>
     </hint>
@@ -304,11 +277,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_socksVersion</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>302</x>
      <y>216</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>402</x>
      <y>248</y>
     </hint>
@@ -320,11 +293,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_httpProxy</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>107</x>
      <y>47</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>170</x>
      <y>85</y>
     </hint>
@@ -336,11 +309,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_httpProxyPort</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>201</x>
      <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>368</x>
      <y>77</y>
     </hint>
@@ -352,11 +325,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_useProxyForWebSeeds</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>111</x>
      <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>96</x>
      <y>111</y>
     </hint>
@@ -368,11 +341,11 @@ p, li { white-space: pre-wrap; }
    <receiver>kcfg_useProxyForTracker</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>69</x>
      <y>48</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>67</x>
      <y>146</y>
     </hint>

@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>ScanFolderPrefPage</class>
- <widget class="QWidget" name="ScanFolderPrefPage" >
-  <property name="geometry" >
+ <widget class="QWidget" name="ScanFolderPrefPage">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,51 +10,51 @@
     <height>590</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout">
    <item>
-    <widget class="QLabel" name="label" >
-     <property name="text" >
+    <widget class="QLabel" name="label">
+     <property name="text">
       <string>Folders to scan for torrents:</string>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
+    <layout class="QHBoxLayout">
      <item>
-      <widget class="KListWidget" name="m_folders" >
-       <property name="toolTip" >
+      <widget class="KListWidget" name="m_folders">
+       <property name="toolTip">
         <string>List of folders which will be scanned for torrents by this plugin.</string>
        </property>
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" >
+      <layout class="QVBoxLayout">
        <item>
-        <widget class="QPushButton" name="m_add" >
-         <property name="toolTip" >
+        <widget class="QPushButton" name="m_add">
+         <property name="toolTip">
           <string>Add a new folder to be scanned.</string>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Add Folder</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="m_remove" >
-         <property name="toolTip" >
+        <widget class="QPushButton" name="m_remove">
+         <property name="toolTip">
           <string>Remove a folder from the list.</string>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Remove Folder</string>
          </property>
         </widget>
        </item>
        <item>
         <spacer>
-         <property name="orientation" >
+         <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
            <height>221</height>
@@ -66,78 +67,68 @@
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
       <string>Options</string>
      </property>
-     <layout class="QVBoxLayout" >
+     <layout class="QVBoxLayout">
       <item>
-       <widget class="QCheckBox" name="kcfg_openSilently" >
-        <property name="toolTip" >
+       <widget class="QCheckBox" name="kcfg_openSilently">
+        <property name="toolTip">
          <string>Open the torrents without asking any questions.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Open silently</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_recursive" >
-        <property name="toolTip" >
-         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Scan the folder recursively for torrents.&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">Note: &lt;span style=" font-weight:400;">This will not be done for any folder named loaded.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+       <widget class="QCheckBox" name="kcfg_recursive">
+        <property name="toolTip">
+         <string>Scan the folder recursively for torrents. &lt;br/&gt;&lt;br/&gt;
+Note: This will not be done for any folder named loaded.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Scan subfolders</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_actionDelete" >
-        <property name="toolTip" >
-         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">When a torrent file has been found and loaded, delete it.&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">Warning:&lt;span style=" font-weight:400;"> you will permanently lose this file.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+       <widget class="QCheckBox" name="kcfg_actionDelete">
+        <property name="toolTip">
+         <string>When a torrent file has been found and loaded, delete it.&lt;br/&gt;&lt;br/&gt;
+Warning: you will permanently lose this file.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Remove torrent file after loading</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_actionMove" >
-        <property name="toolTip" >
+       <widget class="QCheckBox" name="kcfg_actionMove">
+        <property name="toolTip">
          <string>When a torrent file is loaded, move it to a subdirectory named loaded. If the folder does not exist, it will be created.</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Move torrent file to loaded directory</string>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QHBoxLayout">
         <item>
-         <widget class="QCheckBox" name="kcfg_addToGroup" >
-          <property name="toolTip" >
+         <widget class="QCheckBox" name="kcfg_addToGroup">
+          <property name="toolTip">
            <string>Add torrents opened with this plugin to a group.</string>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Add torrent to group:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="m_group" >
-          <property name="toolTip" >
+         <widget class="QComboBox" name="m_group">
+          <property name="toolTip">
            <string>Group to add torrents to.</string>
           </property>
          </widget>
@@ -164,11 +155,11 @@ p, li { white-space: pre-wrap; }
    <receiver>m_group</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>251</x>
      <y>567</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>366</x>
      <y>567</y>
     </hint>

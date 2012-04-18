@@ -50,10 +50,7 @@
       <item>
        <widget class="QCheckBox" name="kcfg_showWebSeedsTab">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Whether or not to show the webseeds tab at the bottom of the window.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Whether or not to show the webseeds tab at the bottom of the window.</string>
         </property>
         <property name="text">
          <string>Show list of webseeds</string>
@@ -79,10 +76,7 @@ p, li { white-space: pre-wrap; }
       <item row="0" column="1">
        <widget class="KColorButton" name="kcfg_firstColor">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Color to use for first priority files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Color to use for first priority files.</string>
         </property>
        </widget>
       </item>
@@ -96,10 +90,7 @@ p, li { white-space: pre-wrap; }
       <item row="1" column="1">
        <widget class="KColorButton" name="kcfg_lastColor">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Color to use for last priority files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Color to use for last priority files.</string>
         </property>
        </widget>
       </item>

@@ -39,13 +39,8 @@
         <item>
          <widget class="KIntSpinBox" name="kcfg_dhtPort">
           <property name="toolTip">
-           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;  font-size:9pt;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;UDP port to use for the DHT protocol.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; &quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Attention:&lt;/span&gt; If you are behind a router, this port needs to be forwarded to accept incoming DHT requests. The UPnP plugin can do this for you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;p&gt;UDP port to use for the DHT protocol.&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Attention:&lt;/span&gt; If you are behind a router, this port needs to be forwarded to accept incoming DHT requests. The UPnP plugin can do this for you.&lt;/p&gt;</string>
           </property>
           <property name="minimum">
            <number>1</number>
@@ -102,11 +97,8 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QCheckBox" name="kcfg_useEncryption">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Protocol encryption is useful when your ISP is slowing down bittorrent connections. &lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The encryption will prevent your bittorrent traffic to be flagged as bittorrent traffic, and so the ISP will not slow it down.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;p&gt;Protocol encryption is useful when your ISP is slowing down bittorrent connections. &lt;/p&gt;
+&lt;p&gt;The encryption will prevent your bittorrent traffic to be flagged as bittorrent traffic, and so the ISP will not slow it down.&lt;/p&gt;</string>
         </property>
         <property name="text">
          <string>Use protocol encryption</string>
