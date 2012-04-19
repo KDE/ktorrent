@@ -235,6 +235,7 @@ namespace kt
 	
 	GroupViewModel::Item::Item(const QString& name, kt::GroupViewModel::Item* parent, int row, kt::GroupViewModel* model) : 
 		name(name),
+		display_name(name),
 		parent(parent),
 		row(row),
 		group(0),

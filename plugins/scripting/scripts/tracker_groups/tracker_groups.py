@@ -3,8 +3,15 @@
 import KTorrent
 import KTScriptingPlugin
 import Kross
+from urlparse import urlparse
 
 t = Kross.module("kdetranslation")
+
+def fqdn(tracker):
+	netloc = urlparse(tracker).netloc
+	if ':' in netloc:
+		netloc = netloc[:netloc.find(':')]
+	return netloc
 
 class TrackerGroup:
 	def __init__(self,url):
@@ -17,7 +24,7 @@ class TrackerGroup:
 			return self.cache[info_hash]
 		else:
 			tor = KTorrent.torrent(info_hash)
-			ret = self.url in tor.trackers()
+			ret = self.url in [fqdn(tracker) for tracker in tor.trackers()]
 			self.cache[info_hash] = ret
 			return ret
 			
@@ -51,9 +58,9 @@ class TrackerGroupsScript:
 		KTorrent.log("Adding group for tracker " + tracker)
 		KTScriptingPlugin.addGroup(tracker,"network-server","/all/" + t.i18n("Trackers") + "/" + str(self.id),g)
 		self.id += 1
-		
+			
 	def removeTracker(self,tracker):
-		g = self.tracker_map[tracker]
+		g = self.tracker_map[fqdn(tracker)]
 		g.unref()
 		if g.canBeRemoved():
 			KTorrent.log("Removing group for tracker " + tracker)
@@ -64,10 +71,11 @@ class TrackerGroupsScript:
 		tor = KTorrent.torrent(info_hash)
 		trackers = tor.trackers()
 		for tracker in trackers:
-			if not tracker in self.tracker_map:
-				self.addTracker(tracker)
+			hostname = fqdn(tracker)
+			if not hostname in self.tracker_map:
+				self.addTracker(hostname)
 			else:
-				self.tracker_map[tracker].ref()
+				self.tracker_map[hostname].ref()
 		
 	def torrentRemoved(self,info_hash):
 		tor = KTorrent.torrent(info_hash)
