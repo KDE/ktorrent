@@ -159,8 +159,7 @@ namespace kt
 		if (m_editor)
 			m_editor->updateStatusText(ulim,dlim,false,m_schedule->isEnabled());
 		
-		PeerManager::setMaxConnections(Settings::maxConnections());
-		PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+		PeerManager::connectionLimits().setLimits(Settings::maxTotalConnections(), Settings::maxConnections());
 	}
 
 	
@@ -211,13 +210,12 @@ namespace kt
 		{
 			Out(SYS_SCD|LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
 			.arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
-			PeerManager::setMaxConnections(item->torrent_conn_limit);
-			PeerManager::setMaxTotalConnections(item->global_conn_limit);
+			
+			PeerManager::connectionLimits().setLimits(item->global_conn_limit, item->torrent_conn_limit);
 		}
 		else
 		{
-			PeerManager::setMaxConnections(Settings::maxConnections());
-			PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+			PeerManager::connectionLimits().setLimits(Settings::maxTotalConnections(), Settings::maxConnections());
 		}
 		
 		restartTimer();

@@ -95,7 +95,7 @@ namespace kt
 		else if (cmd=="global_connection")
 		{
 			Settings::setMaxTotalConnections(arg.toInt());
-			PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+			PeerManager::connectionLimits().setLimits(Settings::maxTotalConnections(), Settings::maxConnections());
 			return true;
 		}
 		else if(cmd=="load_torrent" && arg.length() > 0)
@@ -118,7 +118,7 @@ namespace kt
 		}
 		else if(cmd=="maximum_connection_per_torrent")
 		{
-			PeerManager::setMaxConnections(arg.toInt());
+			PeerManager::connectionLimits().setLimits(Settings::maxTotalConnections(), arg.toInt());
 			Settings::setMaxConnections(arg.toInt());
 			return true;
 		}

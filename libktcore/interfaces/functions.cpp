@@ -32,6 +32,7 @@
 #include <peer/peermanager.h>
 #include <peer/peerconnector.h>
 #include <peer/utpex.h>
+#include <peer/connectionlimit.h>
 #include <net/socketmonitor.h>
 #include <net/socks.h>
 #include <dht/dhtbase.h>
@@ -79,8 +80,7 @@ namespace kt
 	
 	void ApplySettings()
 	{
-		PeerManager::setMaxConnections(Settings::maxConnections());
-		PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+		PeerManager::connectionLimits().setLimits(Settings::maxTotalConnections(), Settings::maxConnections());
 		net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
 		net::SocketMonitor::setUploadCap(Settings::maxUploadRate()*1024);
 		net::SocketMonitor::setSleepTime(Settings::cpuUsage());
