@@ -26,13 +26,13 @@
 #include <kurl.h>
 #include <kmessagebox.h>
 #include <kglobal.h>
-#include <kinputdialog.h>
 #include <torrent/globals.h>
 #include <interfaces/trackerinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerslist.h>
 #include <util/log.h>
 #include "trackermodel.h"
+#include "addtrackersdialog.h"
 
 
 using namespace bt;
@@ -81,31 +81,29 @@ namespace kt
 	{
 		if(!tc)
 			return;
-
-		bool ok = false;
-		QClipboard* clipboard = QApplication::clipboard();
-		QString text = KInputDialog::getMultiLineText(
-		                   i18n("Add Trackers"),
-		                   i18n("Enter the URL's of the trackers, one per line:"),
-		                   clipboard->text(), &ok, this);
-
-		QStringList list = text.split(QChar('\n'));
-		if(!ok)
+		
+		AddTrackersDialog dlg(this, tracker_hints);
+		if(dlg.exec() != QDialog::Accepted)
 			return;
-
+		
+		QStringList trackers = dlg.trackerList();
 		KUrl::List urls;
 		QStringList invalid;
 		// check for invalid urls
-		foreach(const QString & line, list)
+		foreach(const QString & t, trackers)
 		{
-			if(line.isEmpty())
+			if(t.isEmpty())
 				continue;
 
-			KUrl url(line.trimmed());
+			KUrl url(t.trimmed());
 			if(!url.isValid() || (url.protocol() != "udp" && url.protocol() != "http" && url.protocol() != "https"))
-				invalid.append(line);
+				invalid.append(t);
 			else
+			{
+				if(!tracker_hints.contains(url.prettyUrl()))
+					tracker_hints.append(url.prettyUrl());
 				urls.append(url);
+			}
 		}
 
 		if(!invalid.isEmpty())
@@ -242,6 +240,7 @@ namespace kt
 		KConfigGroup g = cfg->group("TrackerView");
 		QByteArray s = m_tracker_list->header()->saveState();
 		g.writeEntry("state", s.toBase64());
+		g.writeEntry("tracker_hints", tracker_hints);
 	}
 
 	void TrackerView::loadState(KSharedConfigPtr cfg)
@@ -253,6 +252,10 @@ namespace kt
 			QHeaderView* v = m_tracker_list->header();
 			v->restoreState(s);
 		}
+		
+		QStringList default_hints;
+		default_hints << "udp://tracker.publicbt.com:80/announce" << "udp://tracker.openbittorrent.com:80/announce";
+		tracker_hints = g.readEntry("tracker_hints", default_hints);
 	}
 }
 

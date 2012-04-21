@@ -1,8 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Joris Guisson, Ivan Vasic                  *
- *   joris.guisson@gmail.com                                               *
- *	 ivasic@gmail.com                                                  *
- *									   *
+ *   Copyright (C) 2012 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
@@ -18,49 +17,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef TRACKERVIEW_H
-#define TRACKERVIEW_H
 
-#include "ui_trackerview.h"
-#include <QSortFilterProxyModel>
-#include <interfaces/torrentinterface.h>
+#ifndef KT_ADDTRACKERSDIALOG_H
+#define KT_ADDTRACKERSDIALOG_H
+
+#include <KDialog>
+#include <KEditListWidget>
+
 
 namespace kt
 {
-	class TrackerModel;
 
 	/**
-	 * @author Ivan Vasic <ivan@ktorrent.org>
+	 * Dialog to add trackers
 	 */
-	class TrackerView: public QWidget, public Ui_TrackerView
+	class AddTrackersDialog : public KDialog
 	{
 		Q_OBJECT
 	public:
-		TrackerView(QWidget *parent);
-		virtual ~TrackerView();
-
-		void update();
-		void changeTC(bt::TorrentInterface* ti);
-		void saveState(KSharedConfigPtr cfg);
-		void loadState(KSharedConfigPtr cfg);
-
-	public slots:
-		virtual void updateClicked();
-		virtual void restoreClicked();
-		virtual void changeClicked();
-		virtual void removeClicked();
-		virtual void addClicked();
-		virtual void scrapeClicked();
-		void currentChanged(const QModelIndex & current, const QModelIndex & previous);
-
+		AddTrackersDialog(QWidget* parent, const QStringList & tracker_hints);
+		virtual ~AddTrackersDialog();
+		
+		/// Get the tracker list
+		QStringList trackerList() const;
+		
 	private:
-		void torrentChanged(bt::TorrentInterface* ti);
-
-	private:
-		bt::TorrentInterface::WPtr tc;
-		TrackerModel* model;
-		QSortFilterProxyModel* proxy_model;
-		QStringList tracker_hints;
+		KEditListWidget* trackers;
 	};
+
 }
-#endif
+
+#endif // KT_ADDTRACKERSDIALOG_H

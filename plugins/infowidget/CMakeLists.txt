@@ -40,6 +40,7 @@ set(ktinfowidgetplugin_SRC
 	chunkdownloadmodel.cpp
 	trackerview.cpp
 	trackermodel.cpp
+	addtrackersdialog.cpp
 	${geoip_src}
 	geoipmanager.cpp
 	flagdb.cpp
