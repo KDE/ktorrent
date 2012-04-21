@@ -44,26 +44,26 @@ namespace kt
 	 *
 	 * Dialog to select which files to download from a multifile torrent.
 	 */
-	class FileSelectDlg : public KDialog,public Ui_FileSelectDlg
+	class FileSelectDlg : public KDialog, public Ui_FileSelectDlg
 	{
 		Q_OBJECT
 
 	public:
-		FileSelectDlg(kt::QueueManager* qman,kt::GroupManager* gman,const QString & group_hint,QWidget* parent);
+		FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, const QString & group_hint, QWidget* parent);
 		virtual ~FileSelectDlg();
-		
-		int execute(bt::TorrentInterface* tc, bool* start,bool* skip_check,const QString & location_hint);
-		
+
+		int execute(bt::TorrentInterface* tc, bool* start, bool* skip_check, const QString & location_hint);
+
 		/**
 		 * Load the state of the dialog
 		 */
 		void loadState(KSharedConfigPtr cfg);
-		
+
 		/**
 		 * Save the state of the dialog
 		 */
 		void saveState(KSharedConfigPtr cfg);
-		
+
 	protected slots:
 		virtual void reject();
 		virtual void accept();
@@ -79,7 +79,7 @@ namespace kt
 		void setFilter(const QString & filter);
 		void updateExistingFiles();
 		void moveCompletedToggled(bool on);
-		QMenu* createHistoryMenu(const QSet<QString> & urls,const char* slot);
+		QMenu* createHistoryMenu(const QSet<QString> & urls, const char* slot);
 		void clearDownloadLocationHistory();
 		void clearMoveOnCompletionLocationHistory();
 		void downloadLocationHistoryTriggered(QAction* act);
@@ -89,7 +89,7 @@ namespace kt
 	private:
 		void populateFields(const QString & location_hint);
 		void loadGroups();
-		
+
 	private:
 		bt::TorrentInterface* tc;
 		TorrentFileModel* model;
