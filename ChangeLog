@@ -12,6 +12,7 @@ Changes in 4.3:
 - Remove html tooltips from ui files
 - Tracker grouping script now uses the domain name of the tracker (227430)
 - Catch SIGINT and SIGTERM and do a clean shutdown (296835)
+- Add bytes left to download column in View (152070)
 
 Changes in 4.2.1:
 - Fix IP filter widget list not getting registered at startup (281245)
