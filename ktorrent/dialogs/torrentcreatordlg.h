@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #ifndef KT_TORRENTCREATORDLG_HH
-#define KT_TORRENTCREATORDLG_HH 
+#define KT_TORRENTCREATORDLG_HH
 
 #include <KDialog>
 #include "ui_torrentcreatordlg.h"
@@ -30,51 +30,51 @@ namespace kt
 	class StringCompletionModel;
 	class Core;
 	class GUI;
-	
+
 	/**
 	 * Dialog to create torrents with
 	 */
-	class TorrentCreatorDlg : public KDialog,public Ui_TorrentCreatorDlg
+	class TorrentCreatorDlg : public KDialog, public Ui_TorrentCreatorDlg
 	{
 		Q_OBJECT
 	public:
-		TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent);
+		TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent);
 		virtual ~TorrentCreatorDlg();
-		
+
 	private slots:
 		void addTrackerPressed();
 		void removeTrackerPressed();
 		void moveUpPressed();
 		void moveDownPressed();
-		
+
 		void addWebSeedPressed();
 		void removeWebSeedPressed();
-		
+
 		void addNodePressed();
 		void removeNodePressed();
-		
+
 		void dhtToggled(bool on);
-		
+
 		void nodeTextChanged(const QString & str);
 		void nodeSelectionChanged();
-		
+
 		void trackerTextChanged(const QString & str);
 		void trackerSelectionChanged();
-		
+
 		void webSeedTextChanged(const QString & str);
 		void webSeedSelectionChanged();
-		
+
 		void hashCalculationDone();
 		void updateProgressBar();
-		
+
 		virtual void accept();
 		virtual void reject();
-		
+
 	private:
 		void loadGroups();
 		void loadCompleterData();
 		void setProgressBarEnabled(bool on);
-		
+
 	private:
 		Core* core;
 		GUI* gui;
