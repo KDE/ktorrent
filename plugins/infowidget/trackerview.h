@@ -38,24 +38,24 @@ namespace kt
 	public:
 		TrackerView(QWidget *parent);
 		virtual ~TrackerView();
-			
+
 		void update();
 		void changeTC(bt::TorrentInterface* ti);
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
-			
+
 	public slots:
 		virtual void updateClicked();
 		virtual void restoreClicked();
 		virtual void changeClicked();
 		virtual void removeClicked();
-		virtual void addClicked();        
+		virtual void addClicked();
 		virtual void scrapeClicked();
-		void currentChanged(const QModelIndex & current,const QModelIndex & previous);
-			
+		void currentChanged(const QModelIndex & current, const QModelIndex & previous);
+
 	private:
 		void torrentChanged(bt::TorrentInterface* ti);
-			
+
 	private:
 		bt::TorrentInterface::WPtr tc;
 		TrackerModel* model;
