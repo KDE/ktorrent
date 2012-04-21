@@ -43,26 +43,26 @@ namespace kt
 	public:
 		TrackerModel(QObject* parent);
 		virtual ~TrackerModel();
-		
+
 		void changeTC(bt::TorrentInterface* tc);
 		void update();
 
 		virtual int rowCount(const QModelIndex &parent) const;
 		virtual int columnCount(const QModelIndex &parent) const;
 		virtual QVariant data(const QModelIndex &index, int role) const;
-		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool setData(const QModelIndex & index, const QVariant & value, int role);
+		virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+		virtual bool insertRows(int row, int count, const QModelIndex & parent);
+		virtual bool removeRows(int row, int count, const QModelIndex & parent);
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
-		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
-		
+		virtual QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const;
+
 		/// Get a tracker url given a model index
 		KUrl trackerUrl(const QModelIndex & idx);
-		
+
 		/// Get a tracker given a model index
 		bt::TrackerInterface* tracker(const QModelIndex & idx);
-		
+
 		/// Add trackers to the model
 		void addTrackers(QList<bt::TrackerInterface*> & tracker_list);
 	private:
@@ -74,13 +74,13 @@ namespace kt
 			int leechers;
 			int times_downloaded;
 			int time_to_next_update;
-			
+
 			Item(bt::TrackerInterface* tracker);
 			bool update();
 			QVariant displayData(int column) const;
 			QVariant sortData(int column) const;
 		};
-		
+
 		bt::TorrentInterface* tc;
 		QList<Item*> trackers;
 		bool running;
