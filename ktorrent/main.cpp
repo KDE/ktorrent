@@ -42,6 +42,7 @@
 #include <util/error.h>
 #include <util/log.h>
 #include <util/functions.h>
+#include <util/signalcatcher.h>
 
 using namespace bt;
 
@@ -173,6 +174,14 @@ int main(int argc, char **argv)
 	try
 	{
 		kt::App app;
+		
+#ifndef Q_WS_WIN
+		bt::SignalCatcher catcher;
+		catcher.catchSignal(SIGINT);
+		catcher.catchSignal(SIGTERM);
+		QObject::connect(&catcher, SIGNAL(triggered()), &app, SLOT(quit()));
+#endif
+		
 		app.setQuitOnLastWindowClosed(false);
 		app.exec();
 	}

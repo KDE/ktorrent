@@ -911,6 +911,10 @@ namespace kt
 
 		WaitJob* job = new WaitJob(5000);
 		qman->saveState(KGlobal::config());
+		
+		// Sync the config to be sure everything is saved
+		Settings::self()->writeConfig();
+		
 		qman->onExit(job);
 		// wait for completion of stopped events
 		if (job->needToWait())
@@ -926,8 +930,6 @@ namespace kt
 
 		pman->unloadAll();
 		qman->clear();
-		// Sync the config to be sure everything is saved
-		Settings::self()->writeConfig();
 	}
 
 	bool Core::changeDataDir(const QString & new_dir)
