@@ -32,6 +32,7 @@
 #include <util/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerinterface.h>
+#include <torrent/timeestimator.h>
 #include <torrent/queuemanager.h>
 #include <groups/group.h>
 #include "viewmodel.h"
@@ -220,9 +221,9 @@ namespace kt
 				return QVariant();
 			break;
 		case ETA:
-			if(eta == 0)
+			if(eta == bt::TimeEstimator::NEVER)
 				return QString("%1").arg(QChar(0x221E)); // infinity
-			else if(eta > 0)
+			else if(eta != bt::TimeEstimator::ALREADY_FINISHED)
 				return DurationToString(eta);
 			else
 				return QVariant();
@@ -251,13 +252,7 @@ namespace kt
 		case BYTES_LEFT: return bytes_left < other->bytes_left;
 		case DOWNLOAD_RATE: return (download_rate < 102 ? 0 : download_rate) < (other->download_rate < 102 ? 0 : other->download_rate);
 		case UPLOAD_RATE: return (upload_rate < 102 ? 0 : upload_rate) < (other->upload_rate < 102 ? 0 : other->upload_rate);
-		case ETA:
-			if(eta == 0 && other->eta > 0)
-				return false;
-			else if(other->eta == 0 && eta > 0)
-				return true;
-			else
-				return eta < other->eta;
+		case ETA: return eta < other->eta;
 		case SEEDERS: return seeders_connected_to < other->seeders_connected_to;
 		case LEECHERS: return leechers_connected_to < other->leechers_connected_to;
 		case PERCENTAGE: return percentage < other->percentage;

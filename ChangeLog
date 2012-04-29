@@ -15,6 +15,7 @@ Changes in 4.3:
 - Add bytes left to download column in View (152070)
 - Add new add trackers dialog with url completion (269563)
 - Delete key now also works in the MagnetView (295173)
+- Fix sorting of time left column (298542)
 
 Changes in 4.2.1:
 - Fix IP filter widget list not getting registered at startup (281245)
