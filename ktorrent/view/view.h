@@ -103,6 +103,7 @@ namespace kt
 		/// Get the default state
 		const QByteArray & defaultState() const {return default_state;}
 
+		virtual void keyPressEvent(QKeyEvent* event);
 
 	public slots:
 		/// Set the filter string

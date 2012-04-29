@@ -156,7 +156,7 @@ namespace kt
 
 		remove_torrent = new KAction(KIcon("kt-remove"), i18nc("@action Remove all selected torrents in the current tab", "Remove"), this);
 		remove_torrent->setToolTip(i18n("Remove all selected torrents in the current tab"));
-		remove_torrent->setShortcut(KShortcut(Qt::Key_Delete));
+		remove_torrent->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_Delete));
 		connect(remove_torrent, SIGNAL(triggered()), this, SLOT(removeTorrents()));
 		ac->addAction("remove", remove_torrent);
 
@@ -887,7 +887,16 @@ namespace kt
 		model->update(delegate);
 	}
 
-}
+	void View::keyPressEvent(QKeyEvent* event)
+	{
+		if(event->key() == Qt::Key_Delete)
+		{
+			removeTorrents();
+			event->accept();
+		}
+		else
+			QTreeView::keyPressEvent(event);
+	}
 
-#include "view.moc"
+}
 

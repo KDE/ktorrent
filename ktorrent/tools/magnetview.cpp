@@ -26,6 +26,7 @@
 #include <KIcon>
 #include <KConfigGroup>
 #include <QHeaderView>
+#include <QKeyEvent>
 
 namespace kt
 {
@@ -114,6 +115,17 @@ namespace kt
 		{
 			magnet_model->stop(idx);
 		}
+	}
+
+	void MagnetView::keyPressEvent(QKeyEvent* event)
+	{
+		if(event->key() == Qt::Key_Delete)
+		{
+			removeMagnetDownload();
+			event->accept();
+		}
+		else
+			QTreeView::keyPressEvent(event);
 	}
 
 

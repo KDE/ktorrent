@@ -42,6 +42,8 @@ namespace kt
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
 		
+		virtual void keyPressEvent(QKeyEvent* event);
+		
 	private slots:
 		void showContextMenu(QPoint p);
 		void removeMagnetDownload();
