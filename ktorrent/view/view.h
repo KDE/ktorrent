@@ -40,7 +40,6 @@ namespace kt
 	class ViewSelectionModel;
 	class ViewDelegate;
 	class Group;
-	class TorrentInterface;
 
 	class View : public QTreeView
 	{

@@ -29,7 +29,6 @@ namespace kt
 {
 
 	class QueueManager;
-	class TorrentInterface;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>

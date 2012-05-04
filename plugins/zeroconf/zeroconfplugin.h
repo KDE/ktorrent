@@ -25,7 +25,6 @@
 
 namespace kt
 {
-	class TorrentInterface;
 	class TorrentService;
 
 	/**

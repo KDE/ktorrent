@@ -45,8 +45,6 @@ namespace kt
 
 	class SetMaxRate;
 
-	class TorrentInterface;
-
 	class GUI;
 
 	struct TrayStats
