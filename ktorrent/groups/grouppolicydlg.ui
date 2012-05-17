@@ -20,7 +20,7 @@
    <item>
     <widget class="QCheckBox" name="m_default_location_enabled">
      <property name="toolTip">
-      <string>Default save location for torrents from this group. &lt;br/&gt;&lt;br/&gt;This is only used in the file selection dialog, when you change the group, the download location in the dialog will be set to this. You can still override it, if you want to. </string>
+      <string>Default save location for torrents from this group. &lt;br/&gt;&lt;br/&gt;This is only used in the file selection dialog, when you change the group, the download location in the dialog will be set to this. You can still override it, if you want to.</string>
      </property>
      <property name="text">
       <string>Default save location:</string>
