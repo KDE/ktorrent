@@ -17,6 +17,7 @@ Changes in 4.3:
 - Delete key now also works in the MagnetView (295173)
 - Fix sorting of time left column (298542)
 - Add support for removable storage (286120)
+- Fix typo in string (300969)
 
 Changes in 4.2.1:
 - Fix IP filter widget list not getting registered at startup (281245)

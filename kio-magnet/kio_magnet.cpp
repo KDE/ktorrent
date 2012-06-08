@@ -292,7 +292,7 @@ void MagnetProtocol::get(const KUrl& url)
 		{
 			error(KIO::ERR_ABORTED,
 			      i18n("File exists in KTorrent, but cannot open it on disk at path"
-				   "\"%1\". Have you removed thefile manually?").arg(m_path));
+				   "\"%1\". Have you removed the file manually?").arg(m_path));
 			return;
 		}
 	}
