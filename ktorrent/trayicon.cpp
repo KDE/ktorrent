@@ -80,7 +80,7 @@ namespace kt
 		connect(core->getQueueManager(),SIGNAL(suspendStateChanged(bool)),
 				this,SLOT(suspendStateChanged(bool))); 
 		
-		
+		suspendStateChanged(core->getQueueManager()->getSuspendedState());
 	}
 
 	TrayIcon::~TrayIcon()
@@ -100,7 +100,10 @@ namespace kt
 	void TrayIcon::show()
 	{
 		if (status_notifier_item)
+		{
+			suspendStateChanged(core->getQueueManager()->getSuspendedState());
 			return;
+		}
 		
 		status_notifier_item = new KStatusNotifierItem(mwnd);
 		connect(status_notifier_item, SIGNAL(secondaryActivateRequested(QPoint)), this, SLOT(secondaryActivate(QPoint)));
@@ -134,6 +137,8 @@ namespace kt
 		status_notifier_item->setStatus(KStatusNotifierItem::Passive);
 		status_notifier_item->setStandardActionsEnabled(true);
 		status_notifier_item->setContextMenu(menu);
+		
+		queue_suspended = core->getQueueManager()->getSuspendedState();
 		if (queue_suspended)
 			status_notifier_item->setOverlayIconByName("kt-pause");
 	}
