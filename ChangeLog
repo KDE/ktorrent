@@ -17,7 +17,7 @@ Changes in 4.3:
 - Delete key now also works in the MagnetView (295173)
 - Fix sorting of time left column (298542)
 - Add support for removable storage (286120)
-- Fix typo in string (300969)
+- Fix typos in several strings (300969, 300781, 300782)
 - Fix suspended overlay not shown on tray icon when ktorrent is started up suspended (301042)
 
 Changes in 4.2.1:

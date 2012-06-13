@@ -177,7 +177,7 @@ namespace kt
 		}
 		else
 		{
-			gui->errorMsg(i18n("KTorrent is unable to accept connections because the TCP ports %1 is "
+			gui->errorMsg(i18n("KTorrent is unable to accept connections because the TCP port %1 is "
 			                   "already in use by another program.", port));
 			Out(SYS_GEN | LOG_IMPORTANT) << "Cannot find free TCP port" << endl;
 		}
@@ -305,7 +305,7 @@ namespace kt
 			if(!silently)
 			{
 				QString err = i18n("Opening the torrent <b>%1</b>, "
-				                   "would share one or more files with the following torrents. ."
+				                   "would share one or more files with the following torrents. "
 				                   "Torrents are not allowed to write to the same files. ", tc->getDisplayName());
 				KMessageBox::errorList(gui, err, conflicting);
 			}
