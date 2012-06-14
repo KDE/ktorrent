@@ -21,6 +21,7 @@
 
 #include <QTimer>
 #include <QClipboard>
+#include <qdesktopwidget.h>
 #include <kconfig.h>
 #include <klocale.h>
 #include <kaction.h>
@@ -130,6 +131,14 @@ namespace kt
 	{
 		delete core;
 	}
+	
+	QSize GUI::sizeHint() const
+	{
+		QDesktopWidget dw;
+		QSize desktop_size = dw.screenGeometry(dw.primaryScreen()).size();
+		return KParts::MainWindow::sizeHint().expandedTo(desktop_size * 0.8);
+	}
+
 	
 	void GUI::addActivity(Activity* act)
 	{

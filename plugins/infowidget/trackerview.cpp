@@ -42,7 +42,8 @@ namespace kt
 
 
 	TrackerView::TrackerView(QWidget *parent)
-		: QWidget(parent)
+		: QWidget(parent),
+		header_state_loaded(false)
 	{
 		setupUi(this);
 		model = new TrackerModel(this);
@@ -186,6 +187,12 @@ namespace kt
 		setEnabled(ti != 0);
 		torrentChanged(ti);
 		update();
+		
+		if(!header_state_loaded)
+		{
+			m_tracker_list->resizeColumnToContents(0);
+			header_state_loaded = true;
+		}
 	}
 
 	void TrackerView::update()
@@ -246,11 +253,12 @@ namespace kt
 	void TrackerView::loadState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("TrackerView");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
+		QByteArray s = g.readEntry("state", QByteArray());
 		if(!s.isNull())
 		{
 			QHeaderView* v = m_tracker_list->header();
-			v->restoreState(s);
+			v->restoreState(QByteArray::fromBase64(s));
+			header_state_loaded = true;
 		}
 		
 		QStringList default_hints;

@@ -61,6 +61,7 @@ namespace kt
 		TrackerModel* model;
 		QSortFilterProxyModel* proxy_model;
 		QStringList tracker_hints;
+		bool header_state_loaded;
 	};
 }
 #endif

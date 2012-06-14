@@ -111,6 +111,7 @@ namespace kt
 		bool show_list_of_files;
 		QMap<bt::TorrentInterface*,QByteArray> expanded_state_map;
 		QSortFilterProxyModel* proxy_model;
+		bool header_state_loaded;
 		
 		QTreeView* view;
 		QToolBar* toolbar;
