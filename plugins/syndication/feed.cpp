@@ -299,6 +299,7 @@ namespace kt
 	void Feed::removeFilter(Filter* f)
 	{
 		filters.removeAll(f);
+		downloaded_se_items.remove(f);
 	}
 	
 	bool Feed::needToDownload(Syndication::ItemPtr item,Filter* filter)
