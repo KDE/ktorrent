@@ -300,6 +300,8 @@ namespace kt
 				break;
 			}
 		}
+		
+		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(searches.count() > 1);
 	}
 	
 	void SearchActivity::openTab()
