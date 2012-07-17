@@ -322,7 +322,7 @@ namespace kt
 		{
 			Uint32 dl = tc->getRunningTimeDL();
 			Uint32 ul = tc->getRunningTimeUL();
-			float hours = (ul - dl) / 3600.0f + 1.0; // add one hour to current seed time to not stop immediatly
+			float hours = (ul - dl) / 3600.0f + 1.0; // add one hour to current seed time to not stop immediately
 			time_limit->setValue(hours); 
 			tc->setMaxSeedTime(hours);
 		}

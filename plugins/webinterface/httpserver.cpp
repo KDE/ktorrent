@@ -160,7 +160,7 @@ namespace kt
 			session.logged_in = true;
 			session.sessionId = rand();
 			session.last_access = QTime::currentTime();
-			Out(SYS_WEB|LOG_NOTICE) << "Webgui login succesfull ! (auth disable)" << endl;
+			Out(SYS_WEB|LOG_NOTICE) << "Webgui login successful ! (auth disable)" << endl;
 			challenge = QString();
 			return true;
 		}
@@ -198,7 +198,7 @@ namespace kt
 			session.logged_in = true;
 			session.sessionId=rand();
 			session.last_access=QTime::currentTime();
-			Out(SYS_WEB|LOG_NOTICE) << "Webgui login succesfull !" << endl;
+			Out(SYS_WEB|LOG_NOTICE) << "Webgui login successful !" << endl;
 			challenge = QString();
 			return true;
 		}

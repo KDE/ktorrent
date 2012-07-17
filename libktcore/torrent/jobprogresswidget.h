@@ -72,7 +72,7 @@ namespace kt
 		/// Emit the close request so the ViewDelegate will clean things up
 		void emitCloseRequest();
 		
-		/// Wether or not to automatically remove the widget
+		/// Whether or not to automatically remove the widget
 		bool automaticRemove() const {return automatic_remove;}
 		
 	protected:

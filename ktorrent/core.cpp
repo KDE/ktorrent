@@ -963,7 +963,7 @@ namespace kt
 				bt::TorrentInterface* tc = *i;
 				if(!tc->changeTorDir(nd))
 				{
-					// failure time to roll back all the succesfull tc's
+					// failure time to roll back all the successful tc's
 					rollback(succes);
 					// set back the old data_dir in Settings
 					Settings::setTempDir(data_dir);

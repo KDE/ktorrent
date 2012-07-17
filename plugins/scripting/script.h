@@ -111,7 +111,7 @@ namespace kt
 		/// Call the configure function of the script
 		void configure();
 		
-		/// Wether or not the script can be removed
+		/// Whether or not the script can be removed
 		bool removeable() const {return can_be_removed;}
 		
 		/// Set the script to be removeable or not

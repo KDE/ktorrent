@@ -205,7 +205,7 @@ namespace kt
 	
 	bool Schedule::parseItem(ScheduleItem* item,bt::BDictNode* dict)
 	{
-		// Must have atleast a day or days entry
+		// Must have at least a day or days entry
 		BValueNode* day = dict->getValue("day");
 		BValueNode* start_day = dict->getValue("start_day");
 		BValueNode* end_day = dict->getValue("end_day");
