@@ -46,7 +46,7 @@ namespace kt
 		virtual ~ScanThread();
 		
 		/**
-		 * Set wether to scan recursively or not
+		 * Set whether to scan recursively or not
 		 * @param rec Recursive or not
 		 */
 		void setRecursive(bool rec);
@@ -54,7 +54,7 @@ namespace kt
 		/**
 		 * Add a directory to scan.
 		 * @param url Directory
-		 * @param recursive Wether or not to scan resursively
+		 * @param recursive Whether or not to scan resursively
 		 */
 		void addDirectory(const KUrl & url, bool recursive);
 		

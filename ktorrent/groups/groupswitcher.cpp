@@ -185,7 +185,7 @@ namespace kt
 
 	void GroupSwitcher::closeTab()
 	{
-		if(tabs.size() <= 1) // Need atleast one tab visiblle
+		if(tabs.size() <= 1) // Need at least one tab visiblle
 			return;
 
 		TabList::iterator i = tabs.begin();

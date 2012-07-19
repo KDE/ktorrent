@@ -570,7 +570,7 @@ Changes in 3.2beta1 :
 - Fix bug causing closed connections not to be detected
 - Make it possible to rename files and folders in fileselectdlg (152813 and 134098)
 - Deleting data files is now done in a background job
-- Added patch from Adam Forsyth which keeps track of wether we are interested in a peer or not (167938)
+- Added patch from Adam Forsyth which keeps track of whether we are interested in a peer or not (167938)
 - Added patch from Adam Forsyth with some modifications, which allows you to rename torrents in the main torrent list.(168459 and 157544)
 - Revamped webinterface
 - Patch from Adam Forsyth which adds a second kfiledialog:// keyword openTorrentData (168693)

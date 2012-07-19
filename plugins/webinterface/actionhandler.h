@@ -27,7 +27,7 @@ namespace kt
 {
 
 	/**
-		Handles actions comming from the client
+		Handles actions coming from the client
 	*/
 	class ActionHandler : public WebContentGenerator
 	{

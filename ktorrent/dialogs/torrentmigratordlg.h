@@ -56,7 +56,7 @@ namespace kt
 		 */
 		void migrateFoundTorrents(QueueManager* qman);
 		
-		/// Get all succesfully imported torrents (their new torX dir)
+		/// Get all successfully imported torrents (their new torX dir)
 		const QStringList & getSuccessFullImports() const {return success;}
 	private:
 		void doTorrent(const QString & tor,bt::Uint32 idx,QueueManager* qman);

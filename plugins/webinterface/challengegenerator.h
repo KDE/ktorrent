@@ -27,7 +27,7 @@ namespace kt
 {
 
 	/**
-		Generates XML containg the challenge field for login pages
+		Generates XML containing the challenge field for login pages
 	*/
 	class ChallengeGenerator : public WebContentGenerator
 	{

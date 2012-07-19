@@ -105,12 +105,12 @@ namespace kt
 		//---------------
 		/** \brief Adds value to the dataset
 		\param idx Index of the dataset
-		\param val Value that's beeing added
+		\param val Value that's being added
 		\param upd Update chart after adding?
 		*/
 		virtual void addValue(const size_t idx, const wgtunit_t val, const bool upd = false) = 0;
 		/** \brief Add new dataset
-		\param Cdd Dataset that's beeing added
+		\param Cdd Dataset that's being added
 		*/
 		virtual void addDataSet(ChartDrawerData Cdd) = 0;
 		/** \brief Inserts dataset before idx

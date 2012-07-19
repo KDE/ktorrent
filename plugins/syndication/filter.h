@@ -166,10 +166,10 @@ namespace kt
 		/// Set case sensitivity of word matches
 		void setCaseSensitive(bool on) {case_sensitive = on;}
 		
-		/// Return wether or not all word matches must match
+		/// Return whether or not all word matches must match
 		bool allWordMatchesMustMatch() const {return all_word_matches_must_match;}
 		
-		/// Set wether or not all word matches must match
+		/// Set whether or not all word matches must match
 		void setAllWordMatchesMustMatch(bool on) {all_word_matches_must_match = on;}
 		
 		/// Are the word matches case sensitive
@@ -178,10 +178,10 @@ namespace kt
 		/// Set case sensitivity of word matches
 		void setExclusionCaseSensitive(bool on) {exclusion_case_sensitive = on;}
 
-		/// Return wether or not all word matches must match
+		/// Return whether or not all word matches must match
 		bool exclusionAllMustMatch() const {return exclusion_all_must_match;}
 
-		/// Set wether or not all word matches must match
+		/// Set whether or not all word matches must match
 		void setExclusionAllMustMatch(bool on) {exclusion_all_must_match = on;}
 
 		/// Save the filter
@@ -190,13 +190,13 @@ namespace kt
 		/// Load the filter
 		bool load(bt::BDictNode* dict);
 		
-		/// Wether or not the string matches are regular expressions
+		/// Whether or not the string matches are regular expressions
 		bool useRegularExpressions() const {return use_regular_expressions;}
 		
 		/// Enable or disable regular expressions
 		void setUseRegularExpressions(bool on) {use_regular_expressions = on;}
 		
-		/// Wether or not the string matches are regular expressions
+		/// Whether or not the string matches are regular expressions
 		bool exclusionUseRegularExpressions() const {return exclusion_reg_exp;}
 
 		/// Enable or disable regular expressions

@@ -83,7 +83,7 @@ namespace kt
 	
 	bool App::notify(QObject* receiver, QEvent* event)
 	{
-		// This function is overriden so that we can catch our own exceptions
+		// This function is overridden so that we can catch our own exceptions
 		// If they are uncaught, you get a crash.
 		try
 		{

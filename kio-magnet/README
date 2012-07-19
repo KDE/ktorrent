@@ -107,7 +107,7 @@ application of stream-downloading possible with torrents. So it is no
 solution to simply drop the feature from p2p just because it has some
 bad side-effects. Most of todays web-video (I don't know any other) is
 streaming capable. Users do expect the video to playback nearly
-immediatly.  Therefore KTorrent and many other commercial clients, in
+immediately.  Therefore KTorrent and many other commercial clients, in
 opposition to Transmission for example, have decided to allow stream
 downloading.  To soften the bad sideeffects of streaming (which can
 actually dry out the last chunks of the streamed files and choke the
