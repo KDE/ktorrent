@@ -88,7 +88,7 @@ namespace kt
 
 	QString GeoIPManager::countryCode(int country_id)
 	{
-		if (country_id > 0)
+		if (country_id > 0 && country_id < 247)
 			return GeoIP_country_code[country_id];
 		else 
 			return QString();
@@ -96,7 +96,7 @@ namespace kt
 
 	QString GeoIPManager::countryName(int country_id)
 	{
-		if (country_id > 0)
+		if (country_id > 0 && country_id < 247)
 			return GeoIP_country_name[country_id];
 		else
 			return QString();
