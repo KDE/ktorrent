@@ -603,6 +603,7 @@ Action=Sound|Popup
 [Event/MagnetLinkDownloadStarted]
 Name=Magnet link download started
 Name[ca]=S'ha iniciat la baixada de l'enllaç «magnet»
+Name[cs]=Stahování odkazu Magnet bylo zahájeno
 Name[da]=Download af magnet-link startet
 Name[de]=Download der Magnet-Verknüpfung wurde gestartet
 Name[el]=Η λήψη συνδέσμου μαγνήτη ξεκίνησε
