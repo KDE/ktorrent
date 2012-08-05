@@ -545,7 +545,7 @@ namespace kt
 					found++;
 					if(!file.doNotDownload())  // Do not include excluded files in the already downloaded calculation
 					{
-						bt::Uint64 size = bt::DiskUsage(path + file.getUserModifiedPath());
+						bt::Uint64 size = bt::FileSize(path + file.getUserModifiedPath());
 						if(size <= file.getSize())
 							already_downloaded += file.getSize() - size;
 						else
@@ -570,7 +570,7 @@ namespace kt
 			}
 			else
 			{
-				already_downloaded = bt::DiskUsage(path);
+				already_downloaded = bt::FileSize(path);
 				m_existing_found->setText(i18n("Existing file: <b>Yes</b>"));
 			}
 		}
