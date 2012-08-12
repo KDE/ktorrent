@@ -340,7 +340,7 @@ namespace kt
 	
 	void StatusTab::linkActivated(const QString& link)
 	{
-		KRun::runUrl(KUrl(link),"text/html",0);
+		new KRun(KUrl(link), QApplication::activeWindow());
 	}
 
 
