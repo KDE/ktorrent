@@ -24,7 +24,7 @@ Changes in 4.3rc1:
 - Fix close search tab button not getting disabled when only one is left after closing another one (302896)
 - Fix crash when looking up country for IP address (303340)
 - Fix size after download calculation in FileSelectDlg when file already exists (304595)
-- Use default browser instead of application associated to test/html when clicking on a links in the comments field of the status tab (292959)
+- Use default browser instead of application associated to test/html when clicking on a links in the comments field of the status tab (305005)
 
 Changes in 4.2.1:
 - Fix IP filter widget list not getting registered at startup (281245)
