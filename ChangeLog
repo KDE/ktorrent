@@ -1,3 +1,6 @@
+Changes in 4.3:
+- Change default blocklist url to iblocklist.org (305109)
+
 Changes in 4.3rc1:
 - Add support for magnet links in the syndication plugin
 - Add search line to download order dialog
