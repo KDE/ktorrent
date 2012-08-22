@@ -90,8 +90,8 @@
       <item>
        <widget class="QLabel" name="textLabel1_2">
         <property name="text">
-         <string>Download PeerGuardian filter from bluetack.co.uk or blocklist.org.
-NOTE: ZIP file from bluetack.co.uk is supported.</string>
+         <string>Download PeerGuardian filter from bluetack.co.uk or iblocklist.org.
+NOTE: archive files like zip and tar.gz or tar.bz2 are supported.</string>
         </property>
         <property name="wordWrap">
          <bool>false</bool>
