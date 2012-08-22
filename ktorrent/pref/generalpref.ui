@@ -157,7 +157,7 @@
 &lt;p&gt;If for example the file is named &lt;span style=&quot; font-weight:600;&quot;&gt;linux-desktop.iso&lt;/span&gt;, the torrent will be displayed as &lt;span style=&quot; font-weight:600;&quot;&gt;linux-desktop.&lt;/span&gt;&lt;/p&gt;</string>
         </property>
         <property name="text">
-         <string>Rename single file torrents with the name its only file</string>
+         <string>Rename single file torrents with the name of its only file</string>
         </property>
        </widget>
       </item>
