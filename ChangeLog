@@ -1,5 +1,6 @@
 Changes in 4.4:
 - Fix typo in generalpref.ui (305383)
+- Remove unnecessary volume action from MediaPlayerActivity (305378)
 
 Changes in 4.3:
 - Change default blocklist url to iblocklist.org (305109)

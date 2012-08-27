@@ -142,10 +142,6 @@ namespace kt
 		connect(clear_action,SIGNAL(triggered()),play_list,SLOT(clearPlayList()));
 		ac->addAction("clear_play_list",clear_action);
 		
-		volume = new KAction(this);
-		volume->setDefaultWidget(new Phonon::VolumeSlider(media_player->output(),this));
-		ac->addAction("volume",volume);
-		
 		KAction* tfs = new KAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"),this);
 		tfs->setShortcut(Qt::Key_F);
 		tfs->setCheckable(true);

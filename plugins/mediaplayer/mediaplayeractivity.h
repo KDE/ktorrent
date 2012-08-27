@@ -97,7 +97,6 @@ namespace kt
 		KAction* clear_action;
 		KAction* add_media_action;
 		KAction* status_action;
-		KAction* volume;
 		KActionCollection* ac;
 	};
 
