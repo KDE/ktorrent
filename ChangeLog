@@ -2,6 +2,7 @@ Changes in 4.4:
 - Fix typo in generalpref.ui (305383)
 - Remove unnecessary volume action from MediaPlayerActivity (305378)
 - Use translatable unit names in connections stats graph (305395)
+- Make sure search engine selected entry is not cleared when defaults are added (306913)
 
 Changes in 4.3:
 - Change default blocklist url to iblocklist.org (305109)

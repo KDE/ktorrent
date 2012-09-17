@@ -269,6 +269,7 @@ namespace kt
 	
 	void SearchActivity::currentTabChanged(int idx)
 	{
+		Q_UNUSED(idx);
 		tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(searches.count() > 1);
 	}
 	

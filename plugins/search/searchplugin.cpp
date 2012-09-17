@@ -105,7 +105,7 @@ namespace kt
 			KUrl url = engines->search(engine,text);
 			
 			if(SearchPluginSettings::useDefaultBrowser())
-				KRun::runUrl(url,"text/html",0);
+				new KRun(KUrl(url), QApplication::activeWindow());
 			else
 				KRun::runCommand(QString("%1 %2").arg(SearchPluginSettings::customBrowser()).arg(KShell::quoteArg(url.url())),0);
 		}

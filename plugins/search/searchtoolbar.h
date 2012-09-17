@@ -57,6 +57,7 @@ namespace kt
 		void searchNewTabPressed();
 		void searchBoxReturn();
 		void textChanged(const QString & str);
+		void selectedEngineChanged(int idx);
 		
 	signals:
 		/// Emitted when the user presses enter or clicks search
@@ -70,6 +71,7 @@ namespace kt
 		KComboBox* m_search_text;
 		KComboBox* m_search_engine;
 		QAction* m_search_new_tab;
+		int m_current_search_engine;
 	};
 }
 

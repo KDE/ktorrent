@@ -38,6 +38,7 @@
 #include <ktoolbarlabelaction.h>
 #include <interfaces/functions.h>
 #include <util/fileops.h>
+#include <util/log.h>
 #include "searchtoolbar.h"
 #include "searchenginelist.h"
 #include "searchpluginsettings.h"
@@ -48,7 +49,9 @@ using namespace bt;
 namespace kt
 {
 
-	SearchToolBar::SearchToolBar(KActionCollection* ac, kt::SearchEngineList* sl, QObject* parent) : QObject(parent)
+	SearchToolBar::SearchToolBar(KActionCollection* ac, kt::SearchEngineList* sl, QObject* parent) : 
+		QObject(parent),
+		m_current_search_engine(0)
 	{
 		m_search_text = new KComboBox((QWidget*)0);
 		m_search_text->setEditable(true);
@@ -76,6 +79,7 @@ namespace kt
 		m_search_engine = new KComboBox((QWidget*)0);
 		search_engine_action->setDefaultWidget(m_search_engine);
 		ac->addAction("search_engine",search_engine_action);
+		connect(m_search_engine, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedEngineChanged(int)));
 		
 		KAction* search_engine_label_action = new KAction(i18n("Search Engine Label"),this);
 		QLabel* l = new QLabel(i18n(" Engine: "),(QWidget*)0);
@@ -83,12 +87,26 @@ namespace kt
 		ac->addAction("search_engine_label",search_engine_label_action);
 		
 		loadSearchHistory();
+		
 		m_search_engine->setModel(sl);
 		m_search_engine->setCurrentIndex(SearchPluginSettings::searchEngine());
 	}
 
 	SearchToolBar::~SearchToolBar()
 	{
+	}
+	
+	void SearchToolBar::selectedEngineChanged(int idx)
+	{
+		if(idx < 0)
+		{
+			if(m_current_search_engine < 0 || m_current_search_engine >= m_search_engine->model()->rowCount())
+				m_current_search_engine = 0;
+			
+			m_search_engine->setCurrentIndex(m_current_search_engine);
+		}
+		else
+			m_current_search_engine = idx;
 	}
 	
 	int SearchToolBar::currentSearchEngine() const
