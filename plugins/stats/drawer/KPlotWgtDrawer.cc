@@ -393,7 +393,7 @@ namespace kt
 	void KPlotWgtDrawer::MakeCtxMenu()
 	{
 
-		connect(pmCtxMenu->addAction(i18n("Save as image…")), SIGNAL(triggered(bool)), this, SLOT(RenderToImage()));
+		connect(pmCtxMenu->addAction(i18n("Save as image…")), SIGNAL(triggered(bool)), this, SLOT(renderToImage()));
 
 		pmCtxMenu->addSeparator();
 

@@ -50,8 +50,8 @@ namespace kt
 	{
 		pmConnsUi->setupUi(this);
 
-		pmConnsChtWgt->setUnitName("n");
-		pmDhtChtWgt->setUnitName("n");
+		pmConnsChtWgt->setUnitName(i18n("Connections"));
+		pmDhtChtWgt->setUnitName(i18n("Nodes"));
 
 		pmConnsUi->ConnsGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmConnsChtWgt.get()));
 		pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmDhtChtWgt.get()));
