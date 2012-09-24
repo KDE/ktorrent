@@ -1,5 +1,6 @@
 Changes in 4.3.1:
 - Fix new custom groups not appearing in add to group submenu (307230)
+- Fix crash when right clicking on some locations in the GroupView due to 0 pointer (307160)
 
 Changes in 4.3:
 - Change default blocklist url to iblocklist.org (305109)
