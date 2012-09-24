@@ -63,7 +63,6 @@ namespace kt
 		connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(onItemClicked(QModelIndex)));
 		connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint&)));
 		connect(this, SIGNAL(currentGroupChanged(kt::Group*)), view, SLOT(onCurrentGroupChanged(kt::Group*)));
-		connect(model, SIGNAL(groupRenamed(kt::Group*)), view, SLOT(onGroupRenamed(kt::Group*)));
 		connect(gman, SIGNAL(customGroupChanged()), this, SLOT(updateGroupCount()));
 
 		setAcceptDrops(true);
