@@ -179,7 +179,7 @@ namespace kt
 	Group* GroupViewModel::groupForIndex(const QModelIndex& index) const
 	{
 		Item* item = (Item*)index.internalPointer();
-		return item->group;
+		return item ? item->group : 0;
 	}
 	
 	QModelIndex GroupViewModel::findGroup(Group* g)
