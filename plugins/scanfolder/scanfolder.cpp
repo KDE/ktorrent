@@ -22,6 +22,7 @@
 #include <QDir>
 #include <KLocale>
 #include <KFileItem>
+#include <KConfigGroup>
 #include <kio/job.h>
 #include <util/log.h>
 #include <util/functions.h>
@@ -43,11 +44,18 @@ namespace kt
 		recursive(recursive)
 	{
 		bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder: scanning " << dir << endl;
+		
+		KConfigGroup config(KGlobal::config(), "DirWatch");
+		config.writeEntry("NFSPollInterval", 5000);
+		config.writeEntry("nfsPreferredMethod", "Stat"); // Force the usage of Stat method for NFS
+		config.sync();
+		
 		watch = new KDirWatch(this);
 		connect(watch,SIGNAL(dirty(QString)),this,SLOT(scanDir(QString)));
 		connect(watch,SIGNAL(created(QString)),this,SLOT(scanDir(QString)));
 		
 		watch->addDir(dir.toLocalFile(),recursive ? KDirWatch::WatchSubDirs : KDirWatch::WatchDirOnly);
+
 		scanner->addDirectory(dir.toLocalFile(), recursive);
 	}
 
