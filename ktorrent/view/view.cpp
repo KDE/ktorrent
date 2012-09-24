@@ -121,6 +121,10 @@ namespace kt
 		gui->setCaption(group->groupName());
 		
 		default_state = header()->saveState();
+        
+        connect(core->getGroupManager(), SIGNAL(groupAdded(Group*)), this, SLOT(onGroupAdded(Group*)));
+        connect(core->getGroupManager(), SIGNAL(groupRemoved(Group*)), this, SLOT(onGroupRemoved(Group*)));
+        connect(core->getGroupManager(), SIGNAL(groupRenamed(Group*)), this, SLOT(onGroupRenamed(Group*)));
 	}
 
 	View::~View()

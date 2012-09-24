@@ -137,9 +137,9 @@ namespace kt
 		void onSelectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 		void onDoubleClicked(const QModelIndex & index);
 		void onCurrentGroupChanged(kt::Group* g);
-		void onGroupRenamed(kt::Group* g);
-		void onGroupRemoved(kt::Group* g);
-		void onGroupAdded(kt::Group* g);
+		void onGroupRenamed(Group* g);
+		void onGroupRemoved(Group* g);
+		void onGroupAdded(Group* g);
 
 		/// An item in the groups menu was triggered
 		void addToGroupItemTriggered();

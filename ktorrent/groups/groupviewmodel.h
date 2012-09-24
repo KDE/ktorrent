@@ -72,9 +72,6 @@ namespace kt
 		void groupAdded(Group* g);
 		void groupRemoved(Group* g);
 		
-	signals:
-		void groupRenamed(kt::Group* g);
-		
 	private:
 		struct Item
 		{

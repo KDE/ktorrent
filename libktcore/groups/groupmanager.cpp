@@ -300,7 +300,7 @@ namespace kt
 		groups.setAutoDelete(true);
 		saveGroups();
 		
-		emit customGroupRenamed(oldName, new_name);
+		emit groupRenamed(g);
 	}
 	
 	void GroupManager::addDefaultGroup(Group* g)

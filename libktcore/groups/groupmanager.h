@@ -139,7 +139,7 @@ namespace kt
 		void torrentsLoaded(QueueManager* qman);
 		
 	signals:
-		void customGroupRenamed(QString oldName=QString(), QString newName=QString());
+		void groupRenamed(Group* g);
 		void groupAdded(Group* g);
 		void groupRemoved(Group* g);
 		void customGroupChanged();

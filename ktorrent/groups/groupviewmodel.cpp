@@ -80,7 +80,6 @@ namespace kt
 		item->name = new_name;
 		gman->renameGroup(group->groupName(), new_name);
 		dataChanged(index, index);
-		groupRenamed(group);
 		return true;
 	}
 
