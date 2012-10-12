@@ -5,9 +5,9 @@
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
-<article lang="&language;">
+<article id="ktorrent" lang="&language;">
 <title>KTorrent</title>
-<articleinfo>
+<article id="ktorrent"info>
 <authorgroup>
 <author><firstname>Luca</firstname>
 <surname>Beltrame</surname>
