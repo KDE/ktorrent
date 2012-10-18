@@ -40,12 +40,14 @@ namespace kt
 		hide_search_bar = new QToolButton(this);
 		hide_search_bar->setIcon(KIcon("window-close"));
 		hide_search_bar->setAutoRaise(true);
-		connect(hide_search_bar, SIGNAL(clicked(bool)), this, SLOT(hide()));
+		connect(hide_search_bar, SIGNAL(clicked(bool)), this, SLOT(hideBar()));
+		connect(this, SIGNAL(filterBarHidden(QString)), view, SLOT(setFilterString(QString)));
 
 		search_bar = new KLineEdit(this);
 		search_bar->setClearButtonShown(true);
 		search_bar->setClickMessage(i18n("Torrent filter"));
 		connect(search_bar, SIGNAL(textChanged(QString)), view, SLOT(setFilterString(QString)));
+		connect(this, SIGNAL(filterBarShown(QString)), view, SLOT(setFilterString(QString)));
 
 		layout->addWidget(hide_search_bar);
 		layout->addWidget(search_bar);
@@ -61,12 +63,20 @@ namespace kt
 	{
 		show();
 		search_bar->setFocus();
+		emit filterBarShown(search_bar->text());
 	}
+
+	void TorrentSearchBar::hideBar()
+	{
+		hide();
+		emit filterBarHidden("");
+	}
+
 
 	bool TorrentSearchBar::eventFilter(QObject* obj, QEvent* ev)
 	{
 		if (ev->type() == QEvent::KeyPress && ((QKeyEvent*)ev)->key() == Qt::Key_Escape)
-			hide();
+			hideBar();
 
 		return QObject::eventFilter(obj, ev);
 	}

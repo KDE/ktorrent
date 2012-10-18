@@ -46,6 +46,11 @@ namespace kt
 
 	public slots:
 		void showBar();
+		void hideBar();
+
+	signals:
+		void filterBarHidden(QString str);
+		void filterBarShown(QString str);
 
 	protected:
 		virtual bool eventFilter(QObject* obj, QEvent* ev);
