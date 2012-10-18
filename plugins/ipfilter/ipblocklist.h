@@ -18,61 +18,63 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTIPFILTERPLUGIN_H
-#define KTIPFILTERPLUGIN_H
+#ifndef ANTIP2P_H
+#define ANTIP2P_H
 
-#include <QTimer>
-#include <interfaces/plugin.h>
-#include "ipblockingprefpage.h"
-#include "ipblocklist.h"
-
-class QString;
+#include <QVector>
+#include <util/constants.h>
+#include <interfaces/blocklistinterface.h>
 
 namespace kt
 {
-    class IPBlockingPrefPage;
 
-    const int AUTO_UPDATE_RETRY_INTERVAL = 15 * 60; // seconds
+    struct IPBlock
+    {
+        bt::Uint32 ip1;
+        bt::Uint32 ip2;
+
+        IPBlock();
+        IPBlock(const IPBlock& block);
+        IPBlock(const QString& start, const QString& end);
+
+        bool constains(bt::Uint32 ip) const
+        {
+            return ip1 <= ip && ip <= ip2;
+        }
+    };
 
     /**
      * @author Ivan Vasic <ivasic@gmail.com>
-     * @brief IP filter plugin
-     *
-     * This plugin will load IP ranges from specific files into KT IPBlocklist.
+     * @brief This class is used to manage anti-p2p filter list, so called level1.
      */
-    class IPFilterPlugin : public Plugin
+    class IPBlockList : public bt::BlockListInterface
     {
-        Q_OBJECT
     public:
-        IPFilterPlugin(QObject* parent, const QStringList& args);
-        virtual ~IPFilterPlugin();
+        IPBlockList();
+        virtual ~IPBlockList();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
+        virtual bool blocked(const net::Address& addr) const;
+        
+        /**
+         * Overloaded function. Uses Uint32 IP to be checked
+         **/
+        bool isBlockedIP(bt::Uint32 ip);
 
-        ///Loads the KT format list filter
-        void loadFilters();
-
-        ///Loads the anti-p2p filter list
-        bool loadAntiP2P();
-
-        ///Unloads the anti-p2p filter list
-        bool unloadAntiP2P();
-
-        /// Whether or not the IP filter is loaded and running
-        bool loadedAndRunning();
-
-    public slots:
-        void checkAutoUpdate();
-        void notification(const QString& msg);
+        /**
+         * Loads filter file
+         * @param path The file to load
+         * @return true upon success, false otherwise
+         */
+        bool load(const QString & path);
+        
+        /**
+         * Add a single block
+         * @param block
+         */
+        void addBlock(const IPBlock & block);
 
     private:
-        IPBlockingPrefPage* pref;
-        QScopedPointer<IPBlockList> ip_filter;
-        QTimer auto_update_timer;
+        QVector<IPBlock> blocks;
     };
-
 }
-
 #endif

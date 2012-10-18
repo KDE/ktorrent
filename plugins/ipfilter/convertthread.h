@@ -22,7 +22,7 @@
 #define KTCONVERTTHREAD_H
 
 #include <QThread>
-#include "antip2p.h"
+#include "ipblocklist.h"
 
 
 namespace kt
