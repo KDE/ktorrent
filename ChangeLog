@@ -2,6 +2,7 @@ Changes in 4.3.1:
 - Fix new custom groups not appearing in add to group submenu (307230)
 - Fix crash when right clicking on some locations in the GroupView due to 0 pointer (307160)
 - Force KDirWatch to use polling when watching NFS filesystems (301381)
+- Fix crash due to bus error in ip filter plugin (307854)
 
 Changes in 4.3:
 - Change default blocklist url to iblocklist.org (305109)
