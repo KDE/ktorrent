@@ -84,8 +84,15 @@ namespace kt
 	void TorrentSearchBar::loadState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("TorrentSearchBar");
-		setHidden(g.readEntry("hidden", true));
 		search_bar->setText(g.readEntry("text", QString()));
+
+		if(g.readEntry("hidden", true))
+		{
+			setHidden(true);
+			emit filterBarHidden("");
+		}
+		else
+			setHidden(false);
 	}
 
 	void TorrentSearchBar::saveState(KSharedConfigPtr cfg)
