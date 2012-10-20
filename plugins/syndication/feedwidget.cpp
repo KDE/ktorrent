@@ -52,7 +52,7 @@ namespace kt
 		model = new FeedWidgetModel(feed,this);
 		m_item_list->setModel(model);
 		m_item_list->setAlternatingRowColors(true);
-		m_item_list->setSelectionMode(QAbstractItemView::ContiguousSelection);
+		m_item_list->setSelectionMode(QAbstractItemView::ExtendedSelection);
 		QHeaderView* hv = m_item_list->header();
 		hv->setResizeMode(QHeaderView::ResizeToContents);
 		connect(m_item_list->selectionModel(),SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),

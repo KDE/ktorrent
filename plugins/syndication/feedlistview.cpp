@@ -31,7 +31,7 @@ namespace kt
 			: QListView(parent),feeds(feeds)
 	{
 		setContextMenuPolicy(Qt::CustomContextMenu);
-		setSelectionMode(QAbstractItemView::ContiguousSelection);
+		setSelectionMode(QAbstractItemView::ExtendedSelection);
 		setModel(feeds);
 		setItemDelegate(new FeedListDelegate(this));
 		setAlternatingRowColors(true);
