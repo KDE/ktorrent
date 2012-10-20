@@ -1229,6 +1229,10 @@ namespace kt
 				return false;
 			}
 		}
+		
+		missing.clear();
+        if(!tc->hasMissingFiles(missing))
+            return true;
 
 		if(tc->getStats().multi_file_torrent)
 		{
