@@ -1206,6 +1206,10 @@ namespace kt
 
 	bool Core::checkMissingFiles(TorrentInterface* tc)
 	{
+        QStringList missing;
+        if(!tc->hasMissingFiles(missing))
+            return true;
+        
 		QStringList not_mounted;
 		while(!tc->isStorageMounted(not_mounted))
 		{
@@ -1225,10 +1229,6 @@ namespace kt
 				return false;
 			}
 		}
-
-		QStringList missing;
-		if(!tc->hasMissingFiles(missing))
-			return true;
 
 		if(tc->getStats().multi_file_torrent)
 		{

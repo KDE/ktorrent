@@ -10,6 +10,7 @@ Changes in 4.3.1:
 - Fix crash when right clicking on some locations in the GroupView due to 0 pointer (307160)
 - Force KDirWatch to use polling when watching NFS filesystems (301381)
 - Fix crash due to bus error in ip filter plugin (307854)
+- First check for missing files then for unmounted storage (308638)
 
 Changes in 4.3:
 - Change default blocklist url to iblocklist.org (305109)
