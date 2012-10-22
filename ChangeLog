@@ -5,6 +5,7 @@ Changes in 4.3.1:
 - Fix crash due to bus error in ip filter plugin (307854)
 - First check for missing files then for unmounted storage (308638)
 - Use extended selection mode in syndication plugin so ctrl key works as expected (308672)
+- Fix crash in GroupViewModel when dragging torrents over groups (308733)
 
 Changes in 4.3:
 - Change default blocklist url to iblocklist.org (305109)
