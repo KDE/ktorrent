@@ -54,6 +54,12 @@ Comment[x-test]=xxKTorrentxx
 Comment[zh_CN]=KTorrent
 Comment[zh_TW]=KTorrent
 
+[Event/TorrentSilentlyOpened]
+Name=Torrent silently opened
+Name[nl]=Torrent stilzwijgend geopend
+Name[x-test]=xxTorrent silently openedxx
+Action=Sound|Popup
+
 [Event/TorrentStoppedByError]
 Name=Torrent stopped by error
 Name[ast]=Torrent paráu por fallos

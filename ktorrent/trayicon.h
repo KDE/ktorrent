@@ -86,6 +86,12 @@ namespace kt
 		void showPassivePopup(const QString & msg, const QString & titile);
 
 	private slots:
+/**
+		 * Show a passive popup, that a torrent has been silently added.
+		 * @param tc The torrent
+		 */
+		void torrentSilentlyOpened(bt::TorrentInterface* tc);
+
 		/**
 		 * Show a passive popup, that the torrent has stopped downloading.
 		 * @param tc The torrent

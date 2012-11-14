@@ -361,6 +361,8 @@ namespace kt
 		}
 
 		torrentAdded(tc);
+		if(silently)
+			emit openedSilently(tc);
 		return true;
 	}
 

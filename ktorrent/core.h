@@ -226,6 +226,7 @@ namespace kt
 		 * Emitted when DHT is not enabled and a MagnetLink is being downloaded
 		*/
 		void dhtNotEnabled(const QString & msg);
+		void openedSilently(bt::TorrentInterface* tc);
 
 	private:
 		void rollback(const QList<bt::TorrentInterface*> & success);

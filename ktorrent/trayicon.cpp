@@ -55,8 +55,10 @@ namespace kt
 		previousUploadHeight = 0;
 		queue_suspended = false;
 		menu = 0;
-		
-		
+
+
+		connect(core, SIGNAL(openedSilently(bt::TorrentInterface*)),
+				this, SLOT(torrentSilentlyOpened(bt::TorrentInterface* )));
 		connect(core, SIGNAL(finished(bt::TorrentInterface* )),
 				this, SLOT(finished(bt::TorrentInterface* )));
 		connect(core,SIGNAL(torrentStoppedByError(bt::TorrentInterface*, QString )),
@@ -183,8 +185,18 @@ namespace kt
 	{
 		if (!Settings::showPopups())
 			return;
-		
+
 		KNotification::event("DHTNotEnabled",msg,QPixmap(),mwnd);
+	}
+
+	void TrayIcon::torrentSilentlyOpened(bt::TorrentInterface* tc)
+	{
+		if (!Settings::showPopups())
+			return;
+
+		QString msg = i18n("<b>%1</b> was silently opened.",
+					tc->getDisplayName());
+		KNotification::event("TorrentSilentlyOpened",msg,QPixmap(),mwnd);
 	}
 
 	void TrayIcon::finished(bt::TorrentInterface* tc)
