@@ -56,8 +56,6 @@ Comment[zh_TW]=KTorrent
 
 [Event/TorrentSilentlyOpened]
 Name=Torrent silently opened
-Name[nl]=Torrent stilzwijgend geopend
-Name[x-test]=xxTorrent silently openedxx
 Action=Sound|Popup
 
 [Event/TorrentStoppedByError]
