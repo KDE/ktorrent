@@ -57,11 +57,16 @@ Comment[zh_TW]=KTorrent
 [Event/TorrentSilentlyOpened]
 Name=Torrent silently opened
 Name[cs]=Torrent byl tiše otevřen
+Name[el]=Το torrent άνοιξε σιωπηρά
 Name[hu]=A torrent csendesen megnyitva
 Name[nl]=Torrent stilletjes geopend
 Name[pt]=A torrente foi aberta silenciosamente
 Name[pt_BR]=O torrent foi aberto silenciosamente
 Name[sl]=Torrent je bil potiho odprt
+Name[sr]=Торент тихо отворен
+Name[sr@ijekavian]=Торент тихо отворен
+Name[sr@ijekavianlatin]=Torent tiho otvoren
+Name[sr@latin]=Torent tiho otvoren
 Name[uk]=Торент відкрито без додаткових запитів
 Name[x-test]=xxTorrent silently openedxx
 Action=Sound|Popup
