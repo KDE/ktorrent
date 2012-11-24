@@ -68,6 +68,7 @@ Name[sr]=Торент тихо отворен
 Name[sr@ijekavian]=Торент тихо отворен
 Name[sr@ijekavianlatin]=Torent tiho otvoren
 Name[sr@latin]=Torent tiho otvoren
+Name[sv]=Dataflödet öppnades utan meddelanden
 Name[uk]=Торент відкрито без додаткових запитів
 Name[x-test]=xxTorrent silently openedxx
 Action=Sound|Popup
