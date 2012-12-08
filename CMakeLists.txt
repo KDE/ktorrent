@@ -36,15 +36,6 @@ include_directories( ${KDE4_INCLUDES}
    )
 
 add_subdirectory(libktcore)
-
-option(ENABLE_KIO_MAGNET "Whether to build kio-magnet or not" false)
-if (${ENABLE_KIO_MAGNET})
-    message(STATUS "Building kio-magnet (-DENABLE_KIO_MAGNET=false to disable)")
-    add_subdirectory(kio-magnet)
-else (${ENABLE_KIO_MAGNET})
-    message(STATUS "Not building kio-magnet (-DENABLE_KIO_MAGNET=true to enable)")
-endif (${ENABLE_KIO_MAGNET})
-
 add_subdirectory(plugins)
 add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)

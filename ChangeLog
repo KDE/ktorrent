@@ -4,7 +4,8 @@ Changes in 4.4:
 - Use translatable unit names in connections stats graph (305395)
 - Make sure search engine selected entry is not cleared when defaults are added (306913)
 - Reset filter when the filterbar is closed (305379)
-- Show notification when torrents are opened silently (260329)
+- Show notification when torrents are opened silently (260329) 
+- Remove kio-magnet, nobody really uses it and it only causes confusion for people who only want to use magnet links with ktorrent (309091)
 
 Changes in 4.3.1:
 - Fix new custom groups not appearing in add to group submenu (307230)
