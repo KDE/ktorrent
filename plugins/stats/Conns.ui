@@ -14,9 +14,9 @@
   </property>
   <layout class="QHBoxLayout" >
    <item>
-    <widget class="QGroupBox" name="ConnsGbw" >
-     <property name="title" >
-      <string>Connections</string>
+    <widget class="QGroupBox" name="ConnsGbw">
+     <property name="title">
+      <string comment="Chart name">Connections</string>
      </property>
      <layout class="QGridLayout" >
       <item row="0" column="0" >
@@ -26,9 +26,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="DhtGbw" >
-     <property name="title" >
-      <string>DHT</string>
+    <widget class="QGroupBox" name="DhtGbw">
+     <property name="title">
+      <string comment="Chart name">DHT</string>
      </property>
      <layout class="QGridLayout" >
       <item row="0" column="0" >

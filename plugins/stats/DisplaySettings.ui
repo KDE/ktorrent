@@ -24,7 +24,7 @@
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
-          <string comment="Noun">Download</string>
+          <string comment="Chart name">Download</string>
          </attribute>
          <layout class="QVBoxLayout">
           <item>
@@ -34,7 +34,7 @@
               <item>
                <widget class="QLabel" name="label_8">
                 <property name="text">
-                 <string>Download</string>
+                 <string comment="Name of a line on download chart">Current speed</string>
                 </property>
                 <property name="buddy">
                  <cstring>kcfg_DlSpdColor</cstring>
@@ -70,7 +70,7 @@
               <item>
                <widget class="QLabel" name="label_9">
                 <property name="text">
-                 <string>Average</string>
+                 <string comment="Name of a line on download chart">Average</string>
                 </property>
                 <property name="buddy">
                  <cstring>kcfg_DlAvgColor</cstring>
@@ -109,7 +109,7 @@
               <item>
                <widget class="QLabel" name="label_13">
                 <property name="text">
-                 <string>Limit</string>
+                 <string comment="Name of a line on download chart">Limit</string>
                 </property>
                 <property name="buddy">
                  <cstring>kcfg_DlLimitColor</cstring>
@@ -162,7 +162,7 @@
         </widget>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">
-          <string>Peers</string>
+          <string comment="Chart name">Peers</string>
          </attribute>
          <layout class="QVBoxLayout">
           <item>
@@ -170,7 +170,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_14">
               <property name="text">
-               <string>Average from leechers</string>
+               <string comment="Name of a line on chart">Average from leechers</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_PrAvgFromLColor</cstring>
@@ -205,7 +205,7 @@
             <item row="1" column="0">
              <widget class="QLabel" name="label_19">
               <property name="text">
-               <string>Average to leechers</string>
+               <string comment="Name of a line on chart">Average to leechers</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_PrAvgToLColor</cstring>
@@ -240,7 +240,7 @@
             <item row="2" column="0">
              <widget class="QLabel" name="label_20">
               <property name="text">
-               <string>Average from seeds</string>
+               <string comment="Name of a line on chart">Average from seeds</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_PrAvgFromSColor</cstring>
@@ -275,7 +275,7 @@
             <item row="3" column="0">
              <widget class="QLabel" name="label_21">
               <property name="text">
-               <string>From leechers</string>
+               <string comment="Name of a line on chart">From leechers</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_PrFromLColor</cstring>
@@ -310,7 +310,7 @@
             <item row="4" column="0">
              <widget class="QLabel" name="label_22">
               <property name="text">
-               <string>From seeds</string>
+               <string comment="Name of a line on chart">From seeds</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_PrFromSColor</cstring>
@@ -361,7 +361,7 @@
         </widget>
         <widget class="QWidget" name="tab_3">
          <attribute name="title">
-          <string>Upload</string>
+          <string comment="Chart name">Upload</string>
          </attribute>
          <layout class="QVBoxLayout">
           <item>
@@ -371,7 +371,7 @@
               <item>
                <widget class="QLabel" name="label_15">
                 <property name="text">
-                 <string>Upload</string>
+                 <string comment="Name of a line on upload chart">Current speed</string>
                 </property>
                 <property name="buddy">
                  <cstring>kcfg_UlSpdColor</cstring>
@@ -410,7 +410,7 @@
               <item>
                <widget class="QLabel" name="label_16">
                 <property name="text">
-                 <string>Average</string>
+                 <string comment="Name of a line on upload chart">Average</string>
                 </property>
                 <property name="buddy">
                  <cstring>kcfg_UlAvgColor</cstring>
@@ -449,7 +449,7 @@
               <item>
                <widget class="QLabel" name="label_17">
                 <property name="text">
-                 <string>Limit</string>
+                 <string comment="Name of a line on upload chart">Limit</string>
                 </property>
                 <property name="buddy">
                  <cstring>kcfg_UlLimitColor</cstring>
@@ -502,7 +502,7 @@
         </widget>
         <widget class="QWidget" name="tab_4">
          <attribute name="title">
-          <string>Connections</string>
+          <string comment="Chart name">Connections</string>
          </attribute>
          <layout class="QVBoxLayout">
           <item>
@@ -510,7 +510,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_23">
               <property name="text">
-               <string>Leechers connected</string>
+               <string comment="Name of a line on chart">Leechers connected</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_CnLConnColor</cstring>
@@ -545,7 +545,7 @@
             <item row="1" column="0">
              <widget class="QLabel" name="label_24">
               <property name="text">
-               <string>Leechers in swarms</string>
+               <string comment="Name of a line on chart">Leechers in swarms</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_CnLSwarmsColor</cstring>
@@ -580,7 +580,7 @@
             <item row="2" column="0">
              <widget class="QLabel" name="label_25">
               <property name="text">
-               <string>Seeds connected</string>
+               <string comment="Name of a line on chart">Seeds connected</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_CnSConnColor</cstring>
@@ -615,7 +615,7 @@
             <item row="3" column="0">
              <widget class="QLabel" name="label_26">
               <property name="text">
-               <string>Seeds  in swarms</string>
+               <string comment="Name of a line on chart">Seeds in swarms</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_CnSSwarmsColor</cstring>
@@ -650,7 +650,7 @@
             <item row="4" column="0">
              <widget class="QLabel" name="label_27">
               <property name="text">
-               <string>Average leechers connected per torrent</string>
+               <string comment="Name of a line on chart">Average leechers connected per torrent</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_CnAvgLConnPerTorrColor</cstring>
@@ -685,7 +685,7 @@
             <item row="5" column="0">
              <widget class="QLabel" name="label_28">
               <property name="text">
-               <string>Average seeds connected per torrent</string>
+               <string comment="Name of a line on chart">Average seeds connected per torrent</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_CnAvgSConnPerTorrColor</cstring>
@@ -720,7 +720,7 @@
             <item row="6" column="0">
              <widget class="QLabel" name="label_29">
               <property name="text">
-               <string>Avg. leechers connected per running torr.</string>
+               <string comment="Name of a line on chart">Avg. leechers connected per running torr.</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_CnAvgLConnPerRunTorrColor</cstring>
@@ -755,7 +755,7 @@
             <item row="7" column="0">
              <widget class="QLabel" name="label_30">
               <property name="text">
-               <string>Avg. seeds connected per running torrent</string>
+               <string comment="Name of a line on chart">Avg. seeds connected per running torrent</string>
               </property>
               <property name="buddy">
                <cstring>kcfg_CnAvgSConnPerRunTorrColor</cstring>
@@ -793,7 +793,7 @@
         </widget>
         <widget class="QWidget" name="tab_5">
          <attribute name="title">
-          <string>DHT</string>
+          <string comment="Chart name">DHT</string>
          </attribute>
          <layout class="QGridLayout">
           <item row="0" column="0">
@@ -803,7 +803,7 @@
               <item>
                <widget class="QLabel" name="label_31">
                 <property name="text">
-                 <string>Nodes</string>
+                 <string comment="Name of a line on chart">Nodes</string>
                 </property>
                 <property name="buddy">
                  <cstring>kcfg_DhtNodesColor</cstring>
@@ -842,7 +842,7 @@
               <item>
                <widget class="QLabel" name="label_32">
                 <property name="text">
-                 <string>Tasks</string>
+                 <string comment="Name of a line on chart">Tasks</string>
                 </property>
                 <property name="buddy">
                  <cstring>kcfg_DhtTasksColor</cstring>
@@ -929,7 +929,7 @@
         <item>
          <widget class="QLabel" name="label_18">
           <property name="text">
-           <string>Widget type:</string>
+           <string comment="@label:listbox">Widget type:</string>
           </property>
          </widget>
         </item>

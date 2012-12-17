@@ -14,9 +14,9 @@
   </property>
   <layout class="QHBoxLayout" >
    <item>
-    <widget class="QGroupBox" name="DlSpdGbw" >
-     <property name="title" >
-      <string>Download</string>
+    <widget class="QGroupBox" name="DlSpdGbw">
+     <property name="title">
+      <string comment="Chart name">Download</string>
      </property>
      <layout class="QGridLayout" >
       <item row="0" column="0" >
@@ -26,9 +26,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="PeersSpdGbw" >
-     <property name="title" >
-      <string>Peers</string>
+    <widget class="QGroupBox" name="PeersSpdGbw">
+     <property name="title">
+      <string comment="Chart name">Peers</string>
      </property>
      <layout class="QGridLayout" >
       <item row="0" column="0" >
@@ -38,9 +38,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="UlSpdGbw" >
-     <property name="title" >
-      <string>Upload</string>
+    <widget class="QGroupBox" name="UlSpdGbw">
+     <property name="title">
+      <string comment="Chart name">Upload</string>
      </property>
      <layout class="QGridLayout" >
       <item row="0" column="0" >
