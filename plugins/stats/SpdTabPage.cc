@@ -64,20 +64,20 @@ namespace kt
 		pmUiSpd->PeersSpdGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmPeersChtWgt.get()));
 		pmUiSpd->UlSpdGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmUlChtWgt.get()));
 
-		pmDlChtWgt->addDataSet(ChartDrawerData(i18n("Current speed"), QPen(StatsPluginSettings::dlSpdColor()), true));
-		pmUlChtWgt->addDataSet(ChartDrawerData(i18n("Current speed"), QPen(StatsPluginSettings::ulSpdColor()), true));
+		pmDlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on download chart", "Current speed"), QPen(StatsPluginSettings::dlSpdColor()), true));
+		pmUlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on upload chart", "Current speed"), QPen(StatsPluginSettings::ulSpdColor()), true));
 
-		pmDlChtWgt->addDataSet(ChartDrawerData(i18n("Average speed"), QPen(StatsPluginSettings::dlAvgColor()), true));
-		pmUlChtWgt->addDataSet(ChartDrawerData(i18n("Average speed"), QPen(StatsPluginSettings::ulAvgColor()), true));
+		pmDlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on download chart", "Average speed"), QPen(StatsPluginSettings::dlAvgColor()), true));
+		pmUlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on upload chart", "Average speed"), QPen(StatsPluginSettings::ulAvgColor()), true));
 
-		pmDlChtWgt->addDataSet(ChartDrawerData(i18n("Speed limit"), QPen(StatsPluginSettings::dlLimitColor()), true));
-		pmUlChtWgt->addDataSet(ChartDrawerData(i18n("Speed limit"), QPen(StatsPluginSettings::ulLimitColor()), true));
+		pmDlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on download chart", "Speed limit"), QPen(StatsPluginSettings::dlLimitColor()), true));
+		pmUlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on upload chart", "Speed limit"), QPen(StatsPluginSettings::ulLimitColor()), true));
 
-		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("Average from leechers"), QPen(StatsPluginSettings::prAvgFromLColor()), true));
-		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("Average to leechers"), QPen(StatsPluginSettings::prAvgToLColor()), true));
-		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("Average from seeds"), QPen(StatsPluginSettings::prAvgFromSColor()), true));
-		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("From leechers"), QPen(StatsPluginSettings::prFromLColor()), true));
-		pmPeersChtWgt->addDataSet(ChartDrawerData(i18n("From seeds"), QPen(StatsPluginSettings::prFromSColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average from leechers"), QPen(StatsPluginSettings::prAvgFromLColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average to leechers"), QPen(StatsPluginSettings::prAvgToLColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average from seeds"), QPen(StatsPluginSettings::prAvgFromSColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "From leechers"), QPen(StatsPluginSettings::prFromLColor()), true));
+		pmPeersChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "From seeds"), QPen(StatsPluginSettings::prFromSColor()), true));
 
 		applySettings();
 	}

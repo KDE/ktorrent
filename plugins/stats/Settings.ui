@@ -14,15 +14,15 @@
   </property>
   <layout class="QVBoxLayout" >
    <item>
-    <widget class="QGroupBox" name="UpdateGbw" >
-     <property name="title" >
-      <string>Update</string>
+    <widget class="QGroupBox" name="UpdateGbw">
+     <property name="title">
+      <string comment="@title:group">Update</string>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="label" >
-        <property name="text" >
-         <string>Update charts every</string>
+     <layout class="QGridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string comment="Continues with: [number field] GUI updates">Update charts every</string>
         </property>
         <property name="buddy" >
          <cstring>kcfg_UpdateEveryGuiUpdates</cstring>
@@ -45,9 +45,9 @@
       <item row="0" column="2" >
        <layout class="QHBoxLayout" >
         <item>
-         <widget class="QLabel" name="label_2" >
-          <property name="text" >
-           <string>GUI updates</string>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string comment="Continuation of: Update charts every [number field]">GUI updates</string>
           </property>
           <property name="buddy" >
            <cstring>kcfg_UpdateEveryGuiUpdates</cstring>
@@ -63,10 +63,10 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0" >
-       <widget class="QLabel" name="label_3" >
-        <property name="text" >
-         <string>Gather data every</string>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string comment="Continues with: [number field] milliseconds">Gather data every</string>
         </property>
         <property name="buddy" >
          <cstring>kcfg_DataGatherIval</cstring>
@@ -89,10 +89,10 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2" >
-       <widget class="QLabel" name="label_4" >
-        <property name="text" >
-         <string>milliseconds</string>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string comment="Continuation of: Gather data every [number field]">milliseconds</string>
         </property>
         <property name="buddy" >
          <cstring>kcfg_DataGatherIval</cstring>
@@ -103,15 +103,15 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
-      <string>Measurements counts</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string extracomment="The maximums of 0X axes on charts">Measurements counts</string>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="label_6" >
-        <property name="text" >
-         <string>Download</string>
+     <layout class="QGridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string comment="Chart name">Download</string>
         </property>
         <property name="buddy" >
          <cstring>kcfg_DlSpdSamples</cstring>
@@ -134,10 +134,10 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2" >
-       <widget class="QLabel" name="label_11" >
-        <property name="text" >
-         <string>Connections</string>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string comment="Chart name">Connections</string>
         </property>
         <property name="buddy" >
          <cstring>kcfg_ConnsSamples</cstring>
@@ -160,10 +160,10 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0" >
-       <widget class="QLabel" name="label_7" >
-        <property name="text" >
-         <string>Peers</string>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string comment="Chart name">Peers</string>
         </property>
         <property name="buddy" >
          <cstring>kcfg_PeersSpdSamples</cstring>
@@ -186,10 +186,10 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0" >
-       <widget class="QLabel" name="label_10" >
-        <property name="text" >
-         <string>Upload</string>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string comment="Chart name">Upload</string>
         </property>
         <property name="buddy" >
          <cstring>kcfg_UlSpdSamples</cstring>
@@ -220,7 +220,7 @@
         <property name="minimum" >
          <number>3</number>
         </property>
-        <property name="maximum" >
+        <property name="maximum">
          <number>999999999</number>
         </property>
         <property name="value" >
@@ -228,10 +228,10 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2" >
-       <widget class="QLabel" name="label_12" >
-        <property name="text" >
-         <string>DHT</string>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string comment="Chart name">DHT</string>
         </property>
         <property name="buddy" >
          <cstring>kcfg_DhtSpdSamples</cstring>
@@ -250,9 +250,9 @@
       <item>
        <layout class="QHBoxLayout" >
         <item>
-         <widget class="QLabel" name="label_5" >
-          <property name="text" >
-           <string>Maximum speed scale mode: </string>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string comment="@label:listbox" extracomment="The way the maximum of 0Y axis is calculated">Maximum speed scale mode: </string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -268,13 +268,13 @@
            <number>1</number>
           </property>
           <item>
-           <property name="text" >
-            <string>Top</string>
+           <property name="text">
+            <string>Maximum ever achieved</string>
            </property>
           </item>
           <item>
-           <property name="text" >
-            <string>Exact</string>
+           <property name="text">
+            <string>Maximum visible on chart</string>
            </property>
           </item>
          </widget>
@@ -285,21 +285,21 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_2" >
-     <property name="title" >
-      <string>Peers connections</string>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string comment="@title:group">Peers connections</string>
      </property>
      <layout class="QVBoxLayout" >
       <item>
-       <widget class="QCheckBox" name="kcfg_ShowSeedsInSwarms" >
-        <property name="text" >
+       <widget class="QCheckBox" name="kcfg_ShowSeedsInSwarms">
+        <property name="text">
          <string>Show seeds in swarms</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_ShowLeechersInSwarms" >
-        <property name="text" >
+       <widget class="QCheckBox" name="kcfg_ShowLeechersInSwarms">
+        <property name="text">
          <string>Show leechers in swarms</string>
         </property>
        </widget>

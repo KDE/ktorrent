@@ -57,41 +57,41 @@ namespace kt
 		pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmDhtChtWgt.get()));
 
 		//------------------
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Leechers connected"), QPen(StatsPluginSettings::cnLConnColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers connected"), QPen(StatsPluginSettings::cnLConnColor()), true));
 		//
 
 		if (StatsPluginSettings::showLeechersInSwarms())
 		{
-			pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
+			pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
 		}
 
 		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Seeds connected"), QPen(StatsPluginSettings::cnSConnColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds connected"), QPen(StatsPluginSettings::cnSConnColor()), true));
 
 		//
 		if (StatsPluginSettings::showSeedsInSwarms())
 		{
-			pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+			pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
 		}
 
 		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Average leechers connected per torrent"), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per torrent"), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()), true));
 
 		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Average seeds connected per torrent"), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per torrent"), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()), true));
 
 		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Average leechers connected per running torrent"), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per running torrent"), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()), true));
 
 		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18n("Average seeds connected per running torrent"), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()), true));
+		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per running torrent"), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()), true));
 
 		//--------------------------
 
 		if (bt::Globals::instance().getDHT().isRunning())
 		{
-			pmDhtChtWgt->addDataSet(ChartDrawerData(i18n("Nodes"), QPen(StatsPluginSettings::dhtNodesColor()), true));
-			pmDhtChtWgt->addDataSet(ChartDrawerData(i18n("Tasks"), QPen(StatsPluginSettings::dhtTasksColor()), true));
+			pmDhtChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Nodes"), QPen(StatsPluginSettings::dhtNodesColor()), true));
+			pmDhtChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Tasks"), QPen(StatsPluginSettings::dhtTasksColor()), true));
 		}
 		else
 		{
@@ -115,7 +115,7 @@ namespace kt
 
 		if (StatsPluginSettings::showLeechersInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
 		{
-			pmConnsChtWgt->insertDataSet(1, ChartDrawerData(i18n("Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
+			pmConnsChtWgt->insertDataSet(1, ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
 		}
 
 		if ((!StatsPluginSettings::showLeechersInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) != -1))
@@ -129,11 +129,11 @@ namespace kt
 		{
 			if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
 			{
-				pmConnsChtWgt->insertDataSet(2, ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+				pmConnsChtWgt->insertDataSet(2, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
 			}
 			else
 			{
-				pmConnsChtWgt->insertDataSet(3, ChartDrawerData(i18n("Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+				pmConnsChtWgt->insertDataSet(3, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
 			}
 		}
 

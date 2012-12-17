@@ -393,15 +393,15 @@ namespace kt
 	void KPlotWgtDrawer::MakeCtxMenu()
 	{
 
-		connect(pmCtxMenu->addAction(i18n("Save as image…")), SIGNAL(triggered(bool)), this, SLOT(renderToImage()));
+		connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")), SIGNAL(triggered(bool)), this, SLOT(renderToImage()));
 
 		pmCtxMenu->addSeparator();
 
-		connect(pmCtxMenu->addAction(i18n("Rescale")), SIGNAL(triggered(bool)), this, SLOT(findSetMax()));
+		connect(pmCtxMenu->addAction(i18nc("@action:inmenu Recalculate the 0Y axis and then redraw the chart", "Rescale")), SIGNAL(triggered(bool)), this, SLOT(findSetMax()));
 
 		pmCtxMenu->addSeparator();
 
-		QAction * rst = pmCtxMenu->addAction(i18n("Reset"));
+		QAction * rst = pmCtxMenu->addAction(i18nc("@action:inmenu", "Reset"));
 
 		connect(rst, SIGNAL(triggered(bool)), this, SLOT(zeroAll()));
 	}
