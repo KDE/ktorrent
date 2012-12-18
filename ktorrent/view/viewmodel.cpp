@@ -549,8 +549,8 @@ namespace kt
                 return i18n("Seeders");
             case LEECHERS:
                 return i18n("Leechers");
-                // xgettext: no-c-format
             case PERCENTAGE:
+                // xgettext: no-c-format
                 return i18n("% Complete");
             case SHARE_RATIO:
                 return i18n("Share Ratio");
