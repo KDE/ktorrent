@@ -28,54 +28,48 @@
 
 namespace kt
 {
-	class Feed;
-	class Filter;
-	class FilterList;
-	class FeedList;
-	class SyndicationTab;
-	class FeedWidget;
-	class SyndicationPlugin;
-	
-	
-	class SyndicationActivity : public kt::Activity
-	{
-		Q_OBJECT
-	public:
-		SyndicationActivity(SyndicationPlugin* sp,QWidget* parent);
-		virtual ~SyndicationActivity();
-		
-		void loadState(KSharedConfigPtr cfg);
-		void saveState(KSharedConfigPtr cfg);
-		Filter* addNewFilter();
-		
-	private slots:
-		void addFeed();
-		void removeFeed();
-		void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
-		void activateFeedWidget(Feed* f);
-		void downloadLink(const KUrl & url,const QString & group,const QString & location,const QString & move_on_completion,bool silently);
-		void updateTabText(QWidget* w,const QString & text);
-		void showFeed();
-		void addFilter();
-		void removeFilter();
-		void editFilter();
-		void editFilter(Filter* f);
-		void manageFilters();
-		void closeTab();
-		void editFeedName();
-		
-	private:
-		FeedWidget* feedWidget(Feed* f);
-		
-	private:
-		FeedList* feed_list;
-		FilterList* filter_list;
-		SyndicationTab* tab;
-		KTabWidget* tabs;
-		QSplitter* splitter;
-		QMap<Syndication::Loader*,QString> downloads;
-		SyndicationPlugin* sp;
-	};
+    class Feed;
+    class Filter;
+    class FilterList;
+    class FeedList;
+    class SyndicationTab;
+    class FeedWidget;
+    class SyndicationPlugin;
+
+
+    class SyndicationActivity : public kt::Activity
+    {
+        Q_OBJECT
+    public:
+        SyndicationActivity(SyndicationPlugin* sp, QWidget* parent);
+        virtual ~SyndicationActivity();
+
+        void loadState(KSharedConfigPtr cfg);
+        void saveState(KSharedConfigPtr cfg);
+        Filter* addNewFilter();
+
+    private slots:
+        void addFeed();
+        void removeFeed();
+        void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
+        void showFeed(Feed* f);
+        void downloadLink(const KUrl& url, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
+        void addFilter();
+        void removeFilter();
+        void editFilter();
+        void editFilter(Filter* f);
+        void manageFilters();
+        void editFeedName();
+
+    private:
+        FeedList* feed_list;
+        FilterList* filter_list;
+        SyndicationTab* tab;
+        FeedWidget* feed_widget;
+        QSplitter* splitter;
+        QMap<Syndication::Loader*, QString> downloads;
+        SyndicationPlugin* sp;
+    };
 }
 
 #endif // SYNDICATIONACTIVITY_H

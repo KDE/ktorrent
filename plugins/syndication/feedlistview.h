@@ -26,33 +26,33 @@
 
 namespace kt
 {
-	class Feed;
-	class FeedList;
+    class Feed;
+    class FeedList;
 
-	/**
-		View to show the list of feeds.
-	*/
-	class FeedListView : public QListView
-	{
-		Q_OBJECT
-	public:
-		FeedListView(FeedList* feeds,QWidget* parent);
-		virtual ~FeedListView();
-		
-		/// Get all the selected feeds
-		QModelIndexList selectedFeeds();
-		
-	private slots:
-		void itemActivated(const QModelIndex & idx);
-		void selectionChanged(const QItemSelection& sel, const QItemSelection& desel);
-		
-	signals:
-		void feedActivated(Feed* feed);
-		void enableRemove(bool on);
+    /**
+        View to show the list of feeds.
+    */
+    class FeedListView : public QListView
+    {
+        Q_OBJECT
+    public:
+        FeedListView(FeedList* feeds, QWidget* parent);
+        virtual ~FeedListView();
 
-	private:
-		FeedList* feeds;
-	};
+        /// Get all the selected feeds
+        QModelIndexList selectedFeeds();
+
+    private slots:
+        void itemActivated(const QModelIndex& idx);
+        void selectionChanged(const QItemSelection& sel, const QItemSelection& desel);
+
+    signals:
+        void feedActivated(Feed* feed);
+        void enableRemove(bool on);
+
+    private:
+        FeedList* feeds;
+    };
 
 }
 

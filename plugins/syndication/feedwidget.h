@@ -26,42 +26,52 @@
 
 namespace kt
 {
-	class Feed;
-	class FeedWidgetModel;
-	class FilterList;
-	class SyndicationActivity;
+    class Feed;
+    class FeedWidgetModel;
+    class FilterList;
+    class SyndicationActivity;
 
-	/**
-		@author
-	*/
-	class FeedWidget : public QWidget,public Ui_FeedWidget
-	{
-		Q_OBJECT
-	public:
-		FeedWidget(Feed* feed,FilterList* filters,SyndicationActivity* act,QWidget* parent);
-		virtual ~FeedWidget();
-		
-		Feed* getFeed() {return feed;}
+    /**
+        Displays a Feed
+    */
+    class FeedWidget : public QWidget, public Ui_FeedWidget
+    {
+        Q_OBJECT
+    public:
+        FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* parent);
+        virtual ~FeedWidget();
+        
+        /// Set the Feed to show, can be 0
+        void setFeed(Feed* feed);
 
-	private slots:
-		void downloadClicked();
-		void refreshClicked();
-		void filtersClicked();
-		void cookiesClicked();
-		void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
-		void updated();
-		void onFeedRenamed(Feed* f);
-		void refreshRateChanged(int v);
-		
-	signals:
-		void updateCaption(QWidget* w,const QString & text);
-		
-	private:
-		Feed* feed;
-		FeedWidgetModel* model;
-		FilterList* filters;
-		SyndicationActivity* act;
-	};
+        Feed* getFeed() {return feed;}
+        
+        void loadState(KConfigGroup & g);
+        void saveState(KConfigGroup & g);
+
+    private slots:
+        void downloadClicked();
+        void refreshClicked();
+        void filtersClicked();
+        void cookiesClicked();
+        void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+        void updated();
+        void onFeedRenamed(Feed* f);
+        void refreshRateChanged(int v);
+        void linkClicked(const QUrl & url);
+        void resizeColumns();
+
+    signals:
+        void updateCaption(QWidget* w, const QString& text);
+
+    private:
+        Feed* feed;
+        FeedWidgetModel* model;
+        FilterList* filters;
+        SyndicationActivity* act;
+        
+        static QString item_template;
+    };
 
 }
 

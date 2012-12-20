@@ -138,7 +138,8 @@ namespace kt
 		applyOnFilter(test_filter);
 		if (!test_model)
 		{
-			test_model = new FeedWidgetModel(f,this);
+			test_model = new FeedWidgetModel(this);
+            test_model->setCurrentFeed(f);
 			filter_model = new TestFilterModel(test_filter,test_model,this);
 			m_test_results->setModel(filter_model);
 		}

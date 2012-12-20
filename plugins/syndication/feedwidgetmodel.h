@@ -26,40 +26,40 @@
 
 namespace kt
 {
-	class Feed;
-	
-	QString TorrentUrlFromItem(Syndication::ItemPtr item);
+    class Feed;
 
-	/**
-		@author
-	*/
-	class FeedWidgetModel : public QAbstractTableModel
-	{
-		Q_OBJECT
-	public:
-		FeedWidgetModel(Feed* feed,QObject* parent);
-		virtual ~FeedWidgetModel();
-		
-		Feed* currentFeed() {return feed;}
-		void setCurrentFeed(Feed* f);
+    QString TorrentUrlFromItem(Syndication::ItemPtr item);
 
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual int columnCount(const QModelIndex & parent) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		
-		Syndication::ItemPtr itemForIndex(const QModelIndex & idx);
-	private:
-		
-	private slots:
-		void updated();
-		
-	private:
-		Feed* feed;
-		QList<Syndication::ItemPtr> items;
-	};
+    /**
+        @author
+    */
+    class FeedWidgetModel : public QAbstractTableModel
+    {
+        Q_OBJECT
+    public:
+        FeedWidgetModel(QObject* parent);
+        virtual ~FeedWidgetModel();
+
+        Feed* currentFeed() {return feed;}
+        void setCurrentFeed(Feed* f);
+
+        virtual int rowCount(const QModelIndex& parent) const;
+        virtual int columnCount(const QModelIndex& parent) const;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual bool removeRows(int row, int count, const QModelIndex& parent);
+        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+
+        Syndication::ItemPtr itemForIndex(const QModelIndex& idx);
+    private:
+
+    private slots:
+        void updated();
+
+    private:
+        Feed* feed;
+        QList<Syndication::ItemPtr> items;
+    };
 
 }
 

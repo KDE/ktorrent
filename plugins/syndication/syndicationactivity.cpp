@@ -47,338 +47,255 @@
 
 namespace kt
 {
-	SyndicationActivity::SyndicationActivity(SyndicationPlugin* sp,QWidget* parent) 
-		: Activity(i18n("Syndication"),"application-rss+xml",30,parent),sp(sp)
-	{
-		QString ddir = kt::DataDir() + "syndication/";
-		if (!bt::Exists(ddir))
-			bt::MakeDir(ddir,true);
-		
-		setToolTip(i18n("Manages RSS and Atom feeds"));
-		QHBoxLayout* layout = new QHBoxLayout(this);
-		splitter = new QSplitter(Qt::Horizontal,this);
-		layout->addWidget(splitter);
-		
-		feed_list = new FeedList(ddir,this);
-		filter_list = new FilterList(this);
-		tab = new SyndicationTab(sp->actionCollection(),feed_list,filter_list,splitter);
-		splitter->addWidget(tab);
-		
-		tabs = new KTabWidget(splitter);
-		splitter->addWidget(tabs);
-		splitter->setStretchFactor(0,1);
-		splitter->setStretchFactor(1,3);
-		
-		connect(tab->feedView(),SIGNAL(feedActivated(Feed*)),this,SLOT(activateFeedWidget(Feed*)));
-		connect(tab->feedView(),SIGNAL(enableRemove(bool)),sp->remove_feed,SLOT(setEnabled(bool)));
-		connect(tab->feedView(),SIGNAL(enableRemove(bool)),sp->show_feed,SLOT(setEnabled(bool)));
-		connect(tab->feedView(),SIGNAL(enableRemove(bool)),sp->manage_filters,SLOT(setEnabled(bool)));
-		connect(tab->filterView(),SIGNAL(filterActivated(Filter*)),this,SLOT(editFilter(Filter*)));
-		connect(tab->filterView(),SIGNAL(enableRemove(bool)),sp->remove_filter,SLOT(setEnabled(bool)));
-		connect(tab->filterView(),SIGNAL(enableEdit(bool)),sp->edit_filter,SLOT(setEnabled(bool)));
-	
-		tabs->hide();
-		filter_list->loadFilters(kt::DataDir() + "syndication/filters");
-		feed_list->loadFeeds(filter_list,this);
-		feed_list->importOldFeeds();
-		
-		QToolButton* rc = new QToolButton(tabs);
-		tabs->setCornerWidget(rc,Qt::TopRightCorner);
-		rc->setIcon(KIcon("tab-close"));
-		connect(rc,SIGNAL(clicked()),this,SLOT(closeTab()));
-	}
+    SyndicationActivity::SyndicationActivity(SyndicationPlugin* sp, QWidget* parent)
+        : Activity(i18n("Syndication"), "application-rss+xml", 30, parent), sp(sp)
+    {
+        QString ddir = kt::DataDir() + "syndication/";
+        if (!bt::Exists(ddir))
+            bt::MakeDir(ddir, true);
 
-	SyndicationActivity::~SyndicationActivity() 
-	{
-	}
+        setToolTip(i18n("Manages RSS and Atom feeds"));
+        QHBoxLayout* layout = new QHBoxLayout(this);
+        splitter = new QSplitter(Qt::Horizontal, this);
+        layout->addWidget(splitter);
 
-	void SyndicationActivity::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("SyndicationActivity");
-		QStringList tab_list;
-		tab_list = g.readEntry("tabs",tab_list);
-		foreach (const QString & tab,tab_list)
-		{
-			Feed* f = feed_list->feedForDirectory(tab);
-			if (f)
-				activateFeedWidget(f);
-		}
-		
-		tabs->setCurrentIndex(g.readEntry("current_tab",0));
-		QByteArray state = g.readEntry("splitter",QByteArray());
-		splitter->restoreState(state);
-		tab->loadState(g);
-	}
+        feed_list = new FeedList(ddir, this);
+        filter_list = new FilterList(this);
+        tab = new SyndicationTab(sp->actionCollection(), feed_list, filter_list, splitter);
+        splitter->addWidget(tab);
 
-	void SyndicationActivity::saveState(KSharedConfigPtr cfg)
-	{
-		QStringList active_tabs;
-		int cnt = tabs->count();
-		for (int i = 0;i < cnt;i++)
-		{
-			FeedWidget* fw = (FeedWidget*)tabs->widget(i);
-			active_tabs << fw->getFeed()->directory();
-		}
-		
-		KConfigGroup g = cfg->group("SyndicationActivity");
-		g.writeEntry("tabs",active_tabs);
-		g.writeEntry("current_tab",tabs->currentIndex());
-		g.writeEntry("splitter",splitter->saveState());
-		tab->saveState(g);
-		g.sync();
-	}
-	
-	void SyndicationActivity::addFeed()
-	{
-		bool ok = false;
-		QString url = KInputDialog::getText(i18n("Enter the URL"),i18n("Please enter the URL of the RSS or Atom feed."),
-					QString(),&ok,sp->getGUI()->getMainWindow());
-		if (!ok || url.isEmpty())
-			return;
-		
-		Syndication::Loader* loader = Syndication::Loader::create(this,SLOT(loadingComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
-		QStringList sl = url.split(":COOKIE:");
-		if (sl.size() == 2)
-		{
-			FeedRetriever* retr = new FeedRetriever();
-			retr->setAuthenticationCookie(sl.last());
-			loader->loadFrom(KUrl(sl.first()),retr);
-			downloads.insert(loader,url);
-		}
-		else
-		{
-			loader->loadFrom(KUrl(url));
-			downloads.insert(loader,url);
-		}
-	}
+        feed_widget = new FeedWidget(filter_list, this, splitter);
+        splitter->addWidget(feed_widget);
+        splitter->setStretchFactor(0, 1);
+        splitter->setStretchFactor(1, 3);
 
-	void SyndicationActivity::loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status)
-	{
-		if (status != Syndication::Success)
-		{
-			QString error = SyndicationErrorString(status);
-			KMessageBox::error(tab,i18n("Failed to load feed %1: %2",downloads[loader], error));
-			downloads.remove(loader);
-			return;
-		}
-		
-		try
-		{
-			QString ddir = kt::DataDir() + "syndication/";
-			Feed* f = new Feed(downloads[loader],feed,Feed::newFeedDir(ddir));
-			connect(f,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)),
-					this,SLOT(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)));
-			f->save();
-			feed_list->addFeed(f);
-		}
-		catch (bt::Error & err)
-		{
-			KMessageBox::error(tab,i18n("Failed to create directory for feed %1: %2",downloads[loader],err.toString()));
-		}
-		downloads.remove(loader);
-	}
-	
-	FeedWidget* SyndicationActivity::feedWidget(Feed* f)
-	{
-		int cnt = tabs->count();
-		for (int i = 0;i < cnt;i++)
-		{
-			FeedWidget* fw = (FeedWidget*)tabs->widget(i);
-			if (fw->getFeed() == f)
-				return fw;
-		}
-		
-		return 0;
-	}
+        connect(tab->feedView(), SIGNAL(feedActivated(Feed*)), this, SLOT(showFeed(Feed*)));
+        connect(tab->feedView(), SIGNAL(enableRemove(bool)), sp->remove_feed, SLOT(setEnabled(bool)));
+        connect(tab->feedView(), SIGNAL(enableRemove(bool)), sp->manage_filters, SLOT(setEnabled(bool)));
+        connect(tab->filterView(), SIGNAL(filterActivated(Filter*)), this, SLOT(editFilter(Filter*)));
+        connect(tab->filterView(), SIGNAL(enableRemove(bool)), sp->remove_filter, SLOT(setEnabled(bool)));
+        connect(tab->filterView(), SIGNAL(enableEdit(bool)), sp->edit_filter, SLOT(setEnabled(bool)));
 
-	void SyndicationActivity::removeFeed()
-	{
-		QModelIndexList idx = tab->feedView()->selectedFeeds();
-		foreach (const QModelIndex & i,idx)
-		{
-			Feed* f = feed_list->feedForIndex(i);
-			// close tab window if one is open for this feed
-			if (f)
-			{
-				FeedWidget* fw = feedWidget(f);
-				if (fw)
-				{
-					tabs->removePage(fw);
-					delete fw;
-				}
-			}
-		}
-		feed_list->removeFeeds(idx);
-	}
-	
-	void SyndicationActivity::activateFeedWidget(Feed* f)
-	{
-		if (!f)
-			return;
-		
-		FeedWidget* fw = feedWidget(f);
-		if (!fw)
-		{
-			fw = new FeedWidget(f,filter_list,this,tabs);
-			connect(fw,SIGNAL(updateCaption(QWidget*, const QString&)),this,SLOT(updateTabText(QWidget*, const QString&)));
-			tabs->addTab(fw,KIcon("application-rss+xml"),f->displayName());
-			if (tabs->count() == 1)
-			{
-				tabs->show();
-			}
-			tabs->setCurrentWidget(fw);
-		}
-		else
-		{
-			tabs->setCurrentWidget(fw);
-		}
-	}
-	
-	void SyndicationActivity::closeTab()
-	{
-		int idx = tabs->currentIndex();
-		if (idx >= 0)
-		{
-			QWidget* w = tabs->widget(idx);
-			tabs->removeTab(idx);
-			delete w;
-			if (tabs->count() == 0)
-			{
-				tabs->hide();
-			}
-		}
-	}
-	
-	void SyndicationActivity::downloadLink(const KUrl& url, 
-										   const QString& group, 
-										   const QString& location, 
-										   const QString& move_on_completion, 
-										   bool silently)
-	{
-		if (url.protocol() == "magnet")
-		{
-			MagnetLinkLoadOptions options;
-			options.silently = silently;
-			options.group = group;
-			options.location = location;
-			options.move_on_completion = move_on_completion;
-			sp->getCore()->load(bt::MagnetLink(url.prettyUrl()), options);
-		}
-		else
-		{
-			LinkDownloader* dlr = new LinkDownloader(url,sp->getCore(),!silently,group,location,move_on_completion);
-			dlr->start();
-		}
-	}
-	
-	void SyndicationActivity::updateTabText(QWidget* w,const QString & text)
-	{
-		int idx = tabs->indexOf(w);
-		if (idx >= 0)
-			tabs->setTabText(idx,text);
-	}
-	
-	void SyndicationActivity::showFeed()
-	{
-		QModelIndexList idx = tab->feedView()->selectedFeeds();
-		foreach (const QModelIndex & i,idx)
-		{
-			Feed* f = feed_list->feedForIndex(i);
-			if (f)
-			{
-				activateFeedWidget(f);
-			}
-		}
-	}
-	
-	Filter* SyndicationActivity::addNewFilter()
-	{
-		Filter* filter = new Filter(i18n("New Filter"));
-		FilterEditor dlg(filter,filter_list,feed_list,sp->getCore(),sp->getGUI()->getMainWindow());
-		dlg.setWindowTitle(i18n("Add New Filter"));
-		if (dlg.exec() == QDialog::Accepted)
-		{
-			filter_list->addFilter(filter);
-			filter_list->saveFilters(kt::DataDir() + "syndication/filters");
-			return filter;
-		}
-		else
-		{
-			delete filter;
-			return 0;
-		}
-	}
-	
-	void SyndicationActivity::addFilter()
-	{
-		addNewFilter();
-	}
-	
-	void SyndicationActivity::removeFilter()
-	{
-		QModelIndexList indexes = tab->filterView()->selectedFilters();
-		QList<Filter*> to_remove;
-		foreach (const QModelIndex & idx,indexes)
-		{
-			Filter* f = filter_list->filterForIndex(idx);
-			if (f)
-				to_remove.append(f);
-		}
-		
-		foreach (Filter* f,to_remove)
-		{
-			feed_list->filterRemoved(f);
-			filter_list->removeFilter(f);
-			delete f;
-		}
-		
-		filter_list->saveFilters(kt::DataDir() + "syndication/filters");
-	}
-	
-	void SyndicationActivity::editFilter()
-	{
-		QModelIndexList idx = tab->filterView()->selectedFilters();
-		if (idx.count() == 0)
-			return;
-		
-		Filter* f = filter_list->filterForIndex(idx.front());
-		if (f)
-			editFilter(f);
-	}
-	
-	void SyndicationActivity::editFilter(Filter* f)
-	{
-		FilterEditor dlg(f,filter_list,feed_list,sp->getCore(),sp->getGUI()->getMainWindow());
-		if (dlg.exec() == QDialog::Accepted)
-		{
-			filter_list->filterEdited(f);
-			filter_list->saveFilters(kt::DataDir() + "syndication/filters");
-			feed_list->filterEdited(f);
-		}
-	}
-	
-	void SyndicationActivity::manageFilters()
-	{
-		QModelIndexList idx = tab->feedView()->selectedFeeds();
-		if (idx.count() == 0)
-			return;
-		
-		Feed* f = feed_list->feedForIndex(idx.front());
-		if (!f)
-			return;
-		
-		ManageFiltersDlg dlg(f,filter_list,this,tab);
-		if (dlg.exec() == QDialog::Accepted)
-		{
-			f->save();
-			f->runFilters();
-		}
-	}
-	
-	void SyndicationActivity::editFeedName()
-	{
-		QModelIndexList idx = tab->feedView()->selectedFeeds();
-		if (idx.count())
-			tab->feedView()->edit(idx.front());
-	}
+        filter_list->loadFilters(kt::DataDir() + "syndication/filters");
+        feed_list->loadFeeds(filter_list, this);
+        feed_list->importOldFeeds();
+    }
+
+    SyndicationActivity::~SyndicationActivity()
+    {
+    }
+
+    void SyndicationActivity::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("SyndicationActivity");
+        QString current = g.readEntry("current_feed", QString());
+        
+        Feed* f = feed_list->feedForDirectory(current);
+        if(f)
+            feed_widget->setFeed(f);
+        
+        QByteArray state = g.readEntry("splitter", QByteArray());
+        splitter->restoreState(state);
+        tab->loadState(g);
+        feed_widget->loadState(g);
+    }
+
+    void SyndicationActivity::saveState(KSharedConfigPtr cfg)
+    {
+        Feed* feed = feed_widget->getFeed();
+        
+        KConfigGroup g = cfg->group("SyndicationActivity");
+        g.writeEntry("current_feed", feed ? feed->directory() : QString());
+        g.writeEntry("splitter", splitter->saveState());
+        tab->saveState(g);
+        feed_widget->saveState(g);
+        g.sync();
+    }
+
+    void SyndicationActivity::addFeed()
+    {
+        bool ok = false;
+        QString url = KInputDialog::getText(i18n("Enter the URL"), i18n("Please enter the URL of the RSS or Atom feed."),
+                                            QString(), &ok, sp->getGUI()->getMainWindow());
+        if (!ok || url.isEmpty())
+            return;
+
+        Syndication::Loader* loader = Syndication::Loader::create(this, SLOT(loadingComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
+        QStringList sl = url.split(":COOKIE:");
+        if (sl.size() == 2)
+        {
+            FeedRetriever* retr = new FeedRetriever();
+            retr->setAuthenticationCookie(sl.last());
+            loader->loadFrom(KUrl(sl.first()), retr);
+            downloads.insert(loader, url);
+        }
+        else
+        {
+            loader->loadFrom(KUrl(url));
+            downloads.insert(loader, url);
+        }
+    }
+
+    void SyndicationActivity::loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status)
+    {
+        if (status != Syndication::Success)
+        {
+            QString error = SyndicationErrorString(status);
+            KMessageBox::error(tab, i18n("Failed to load feed %1: %2", downloads[loader], error));
+            downloads.remove(loader);
+            return;
+        }
+
+        try
+        {
+            QString ddir = kt::DataDir() + "syndication/";
+            Feed* f = new Feed(downloads[loader], feed, Feed::newFeedDir(ddir));
+            connect(f, SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)),
+                    this, SLOT(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)));
+            f->save();
+            feed_list->addFeed(f);
+            feed_widget->setFeed(f);
+        }
+        catch (bt::Error& err)
+        {
+            KMessageBox::error(tab, i18n("Failed to create directory for feed %1: %2", downloads[loader], err.toString()));
+        }
+        downloads.remove(loader);
+    }
+
+    void SyndicationActivity::removeFeed()
+    {
+        QModelIndexList idx = tab->feedView()->selectedFeeds();
+        foreach (const QModelIndex& i, idx)
+        {
+            Feed* f = feed_list->feedForIndex(i);
+            if(f && feed_widget->getFeed() == f)
+            {
+                feed_widget->setFeed(0);
+            }
+        }
+        feed_list->removeFeeds(idx);
+    }
+
+    void SyndicationActivity::showFeed(Feed* f)
+    {
+        if (!f)
+            return;
+
+        feed_widget->setFeed(f);
+    }
+
+
+    void SyndicationActivity::downloadLink(const KUrl& url,
+                                           const QString& group,
+                                           const QString& location,
+                                           const QString& move_on_completion,
+                                           bool silently)
+    {
+        if (url.protocol() == "magnet")
+        {
+            MagnetLinkLoadOptions options;
+            options.silently = silently;
+            options.group = group;
+            options.location = location;
+            options.move_on_completion = move_on_completion;
+            sp->getCore()->load(bt::MagnetLink(url.prettyUrl()), options);
+        }
+        else
+        {
+            LinkDownloader* dlr = new LinkDownloader(url, sp->getCore(), !silently, group, location, move_on_completion);
+            dlr->start();
+        }
+    }
+
+    Filter* SyndicationActivity::addNewFilter()
+    {
+        Filter* filter = new Filter(i18n("New Filter"));
+        FilterEditor dlg(filter, filter_list, feed_list, sp->getCore(), sp->getGUI()->getMainWindow());
+        dlg.setWindowTitle(i18n("Add New Filter"));
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            filter_list->addFilter(filter);
+            filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+            return filter;
+        }
+        else
+        {
+            delete filter;
+            return 0;
+        }
+    }
+
+    void SyndicationActivity::addFilter()
+    {
+        addNewFilter();
+    }
+
+    void SyndicationActivity::removeFilter()
+    {
+        QModelIndexList indexes = tab->filterView()->selectedFilters();
+        QList<Filter*> to_remove;
+        foreach (const QModelIndex& idx, indexes)
+        {
+            Filter* f = filter_list->filterForIndex(idx);
+            if (f)
+                to_remove.append(f);
+        }
+
+        foreach (Filter* f, to_remove)
+        {
+            feed_list->filterRemoved(f);
+            filter_list->removeFilter(f);
+            delete f;
+        }
+
+        filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+    }
+
+    void SyndicationActivity::editFilter()
+    {
+        QModelIndexList idx = tab->filterView()->selectedFilters();
+        if (idx.count() == 0)
+            return;
+
+        Filter* f = filter_list->filterForIndex(idx.front());
+        if (f)
+            editFilter(f);
+    }
+
+    void SyndicationActivity::editFilter(Filter* f)
+    {
+        FilterEditor dlg(f, filter_list, feed_list, sp->getCore(), sp->getGUI()->getMainWindow());
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            filter_list->filterEdited(f);
+            filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+            feed_list->filterEdited(f);
+        }
+    }
+
+    void SyndicationActivity::manageFilters()
+    {
+        QModelIndexList idx = tab->feedView()->selectedFeeds();
+        if (idx.count() == 0)
+            return;
+
+        Feed* f = feed_list->feedForIndex(idx.front());
+        if (!f)
+            return;
+
+        ManageFiltersDlg dlg(f, filter_list, this, tab);
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            f->save();
+            f->runFilters();
+        }
+    }
+
+    void SyndicationActivity::editFeedName()
+    {
+        QModelIndexList idx = tab->feedView()->selectedFeeds();
+        if (idx.count())
+            tab->feedView()->edit(idx.front());
+    }
 }

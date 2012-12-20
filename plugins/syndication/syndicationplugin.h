@@ -50,7 +50,6 @@ namespace kt
 	private:
 		KAction* add_feed;
 		KAction* remove_feed;
-		KAction* show_feed;
 		KAction* edit_feed_name;
 		KAction* add_filter;
 		KAction* remove_filter;

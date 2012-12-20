@@ -31,8 +31,10 @@ target_link_libraries(
     ktsyndicationplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
+    ${QT_QTWEBKIT_LIBRARY}
     ${KDE4_KPARTS_LIBS}
-	${KDE4_SYNDICATION_LIBS})
+	${KDE4_SYNDICATION_LIBS}
+	${KDE4_KDEWEBKIT_LIBS})
     
 install(TARGETS ktsyndicationplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktsyndicationplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
