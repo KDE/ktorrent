@@ -253,6 +253,7 @@ namespace kt
     {
         bool start_torrent = false;
         bool skip_check = false;
+        QString selected_group = group;
 
         if (Settings::maxRatio() > 0)
             tc->setMaxShareRatio(Settings::maxRatio());
@@ -265,37 +266,24 @@ namespace kt
         if (qman->alreadyLoaded(tc->getInfoHash()))
         {
             Out(SYS_GEN | LOG_IMPORTANT) << "Torrent " << tc->getDisplayName() << " already loaded" << endl;
-            // Cleanup tor dir
-            QString dir = tc->getTorDir();
-            if (bt::Exists(dir))
-                bt::Delete(dir, true);
-            delete tc;
             return false;
         }
 
         if (!silently && !Settings::openAllTorrentsSilently())
         {
-            if (!gui->selectFiles(tc, &start_torrent, group, location, &skip_check))
-            {
-                // Cleanup tor dir
-                QString dir = tc->getTorDir();
-                if (bt::Exists(dir))
-                    bt::Delete(dir, true);
-                delete tc;
+            FileSelectDlg dlg(qman, gman, group, gui->getMainWindow());
+            dlg.loadState(KGlobal::config());
+            bool ret = dlg.execute(tc, &start_torrent, &skip_check, location) == QDialog::Accepted;
+            dlg.saveState(KGlobal::config());
+
+            if (!ret)
                 return false;
-            }
+            else
+                selected_group = dlg.selectedGroup();
         }
         else
-        {
             start_torrent = true;
-            // add torrent to group if necessary
-            Group* g = gman->find(group);
-            if (g)
-            {
-                g->addTorrent(tc, true);
-                gman->saveGroups();
-            }
-        }
+
 
         QStringList conflicting;
         if (qman->checkFileConflicts(tc, conflicting))
@@ -309,16 +297,9 @@ namespace kt
                                    "Torrents are not allowed to write to the same files. ", tc->getDisplayName());
                 KMessageBox::errorList(gui, err, conflicting);
             }
-            // Cleanup tor dir
-            QString dir = tc->getTorDir();
-            if (bt::Exists(dir))
-                bt::Delete(dir, true);
-            delete tc;
+
             return false;
         }
-
-        connectSignals(tc);
-        qman->append(tc);
 
         try
         {
@@ -329,7 +310,6 @@ namespace kt
             if (!silently)
                 gui->errorMsg(err.toString());
             Out(SYS_GEN | LOG_IMPORTANT) << err.toString() << endl;
-            remove(tc, false);
             return false;
         }
 
@@ -341,7 +321,10 @@ namespace kt
                 tc->markExistingFilesAsDownloaded();
         }
 
+
         tc->setPreallocateDiskSpace(true);
+        connectSignals(tc);
+        qman->append(tc);
         qman->torrentAdded(tc, start_torrent);
 
         //now copy torrent file to user specified dir if needed
@@ -360,6 +343,14 @@ namespace kt
             KIO::copy(torFile, destination);
         }
 
+        // add torrent to group if necessary
+        Group* g = gman->find(selected_group);
+        if (g)
+        {
+            g->addTorrent(tc, true);
+            gman->saveGroups();
+        }
+
         torrentAdded(tc);
         if (silently)
             emit openedSilently(tc);
@@ -372,19 +363,15 @@ namespace kt
         TorrentControl* tc = 0;
         try
         {
-            Out(SYS_GEN | LOG_NOTICE) << "Loading torrent from data " << endl;
             tc = new TorrentControl();
             tc->setLoadUrl(url);
             tc->init(qman, data, tdir, dir);
 
-
-            if (!init(tc, group, dir, silently))
-                loadingFinished(url, false, true);
-            else
-                loadingFinished(url, true, false);
-
-            startUpdateTimer();
-            return tc;
+            if (init(tc, group, dir, silently))
+            {
+                startUpdateTimer();
+                return tc;
+            }
         }
         catch (bt::Warning& warning)
         {
@@ -406,45 +393,25 @@ namespace kt
         if (bt::Exists(tdir))
             bt::Delete(tdir, true);
 
-        loadingFinished(url, false, false);
         return 0;
     }
 
     bt::TorrentInterface* Core::loadFromFile(const QString& target, const QString& dir, const QString& group, bool silently)
     {
-        QString tdir = findNewTorrentDir();
-        TorrentControl* tc = 0;
         try
         {
-            Out(SYS_GEN | LOG_NOTICE) << "Loading file " << target << endl;
-            tc = new TorrentControl();
-            tc->init(qman, target, tdir, dir);
-            tc->setLoadUrl(KUrl(target));
-
-            init(tc, group, dir, silently);
-            startUpdateTimer();
-            return tc;
+            QByteArray data = bt::LoadFile(target);
+            return loadFromData(data, dir, group, silently, KUrl(target));
         }
-        catch (bt::Warning& warning)
-        {
-            bt::Out(SYS_GEN | LOG_NOTICE) << warning.toString() << endl;
-            canNotLoadSilently(warning.toString());
-        }
-        catch (bt::Error& err)
+        catch(bt::Error & err)
         {
             bt::Out(SYS_GEN | LOG_IMPORTANT) << err.toString() << endl;
             if (!silently)
                 gui->errorMsg(err.toString());
             else
                 canNotLoadSilently(err.toString());
+            return 0;
         }
-
-        delete tc;
-        tc = 0;
-        // delete tdir if necesarry
-        if (bt::Exists(tdir))
-            bt::Delete(tdir, true);
-        return 0;
     }
 
     void Core::downloadFinished(KJob* job)
@@ -452,14 +419,10 @@ namespace kt
         KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
         int err = j->error();
         if (err == KIO::ERR_USER_CANCELED)
-        {
-            loadingFinished(j->url(), false, true);
             return;
-        }
 
         if (err)
         {
-            loadingFinished(j->url(), false, false);
             gui->errorMsg(j);
         }
         else
@@ -474,10 +437,8 @@ namespace kt
             }
 
             QString dir = locationHint(group);
-            if (dir != QString::null && loadFromData(j->data(), dir, group, false, j->url()))
-                loadingFinished(j->url(), true, false);
-            else
-                loadingFinished(j->url(), false, true);
+            if (dir != QString::null)
+                loadFromData(j->data(), dir, group, false, j->url());
         }
     }
 
@@ -494,10 +455,8 @@ namespace kt
         {
             QString path = url.toLocalFile();
             QString dir = locationHint(group);
-            if (dir != QString::null && loadFromFile(path, dir, group, false))
-                loadingFinished(url, true, false);
-            else
-                loadingFinished(url, false, true);
+            if (dir != QString::null)
+                loadFromFile(path, dir, group, false);
         }
         else
         {
@@ -514,11 +473,10 @@ namespace kt
         int err = j->error();
         if (err == KIO::ERR_USER_CANCELED)
         {
-            loadingFinished(j->url(), false, true);
+            // do nothing
         }
         else if (err)
         {
-            loadingFinished(j->url(), false, false);
             canNotLoadSilently(j->errorString());
         }
         else
@@ -551,10 +509,8 @@ namespace kt
             }
 
 
-            if (dir != QString::null && loadFromData(j->data(), dir, group, true, j->url()))
-                loadingFinished(j->url(), true, false);
-            else
-                loadingFinished(j->url(), false, false);
+            if (dir != QString::null)
+                loadFromData(j->data(), dir, group, true, j->url());
         }
     }
 
@@ -572,10 +528,8 @@ namespace kt
             QString path = url.toLocalFile();
             QString dir = locationHint(group);
 
-            if (dir != QString::null && loadFromFile(path, dir, group, true))
-                loadingFinished(url, true, false);
-            else
-                loadingFinished(url, false, true);
+            if (dir != QString::null)
+                loadFromFile(path, dir, group, true);
         }
         else
         {
@@ -595,13 +549,10 @@ namespace kt
         else
             dir = savedir;
 
-        bt::TorrentInterface* tc = 0;
-        if (dir != QString::null && (tc = loadFromData(data, dir, group, false, url)))
-            loadingFinished(url, true, false);
+        if (dir != QString::null)
+            return loadFromData(data, dir, group, false, url);
         else
-            loadingFinished(url, false, true);
-
-        return tc;
+            return 0;
     }
 
     bt::TorrentInterface* Core::loadSilently(const QByteArray& data, const KUrl& url, const QString& group, const QString& savedir)
@@ -612,13 +563,10 @@ namespace kt
         else
             dir = savedir;
 
-        bt::TorrentInterface* tc = 0;
-        if (dir != QString::null && (tc = loadFromData(data, dir, group, true, url)))
-            loadingFinished(url, true, false);
+        if (dir != QString::null)
+            return loadFromData(data, dir, group, true, url);
         else
-            loadingFinished(url, false, true);
-
-        return tc;
+            return 0;
     }
 
     void Core::start(bt::TorrentInterface* tc)
@@ -719,7 +667,7 @@ namespace kt
         try
         {
             tc = new TorrentControl();
-            tc->init(qman, idir + "torrent", idir, QString::null);
+            tc->init(qman, bt::LoadFile(idir + "torrent"), idir, QString::null);
 
             qman->append(tc);
             connectSignals(tc);

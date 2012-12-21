@@ -134,7 +134,7 @@ namespace kt
 		try 
 		{
 			bt::Torrent t;
-			t.load(torrent_file,false);
+			t.load(bt::LoadFile(torrent_file),false);
 			// make sure we don't load any dupes
 			const SHA1Hash & info_hash = t.getInfoHash();
 			for (QueueManager::iterator i = qman->begin();i != qman->end();i++)

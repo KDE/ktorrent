@@ -250,7 +250,7 @@ namespace kt
 			// try to load the torrent
 			try
 			{
-				tor.load(tor_url.toLocalFile(),false);
+				tor.load(bt::LoadFile(tor_url.toLocalFile()),false);
 			}
 			catch (Error & e)
 			{

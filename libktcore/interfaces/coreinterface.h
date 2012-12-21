@@ -247,15 +247,6 @@ namespace kt
         virtual bt::TorrentInterface* createTorrent(bt::TorrentCreator* tc, bool seed) = 0;
     signals:
         /**
-         * Seeing that when load returns the loading process may not have finished yet,
-         * and some code expects this. We emit this signal to notify that code of it.
-         * @param url The url which has been loaded
-         * @param success Whether or not it succeeded
-         * @param canceled Whether or not it was canceled by the user
-         */
-        void loadingFinished(const KUrl& url, bool success, bool canceled);
-
-        /**
          * A bt::TorrentInterface was added
          * @param tc
          */

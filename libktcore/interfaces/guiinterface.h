@@ -113,9 +113,6 @@ namespace kt
          */
         virtual void removePluginGui(Plugin* p) = 0;
 
-        /// Select the files to download, return false if users cancels
-        virtual bool selectFiles(bt::TorrentInterface* tc, bool* start_torrent, const QString& group_hint, const QString& location_hint, bool* skip_check) = 0;
-
         /// Show an error message box
         virtual void errorMsg(const QString& err) = 0;
 

@@ -59,7 +59,6 @@
 #include "gui.h"
 #include "core.h"
 #include "view/view.h"
-#include "dialogs/fileselectdlg.h"
 #include "pref/prefdialog.h"
 #include "statusbar.h"
 #include "groups/groupview.h"
@@ -233,14 +232,7 @@ namespace kt
         }
     }
 
-    bool GUI::selectFiles(bt::TorrentInterface* tc, bool* start_torrent, const QString& group_hint, const QString& location_hint, bool* skip_check)
-    {
-        FileSelectDlg dlg(core->getQueueManager(), core->getGroupManager(), group_hint, this);
-        dlg.loadState(KGlobal::config());
-        bool ret = dlg.execute(tc, start_torrent, skip_check, location_hint) == QDialog::Accepted;
-        dlg.saveState(KGlobal::config());
-        return ret;
-    }
+
 
     void GUI::errorMsg(const QString& err)
     {
