@@ -23,35 +23,35 @@
 
 #include "group.h"
 
-namespace kt 
+namespace kt
 {
-	
-	typedef bool (*IsMemberFunction)(TorrentInterface* tor);
 
-	/**
-		Group which calls a function pointer to test for membership
-	*/
-	template <IsMemberFunction fn>
-	class FunctionGroup : public Group
-	{
-	public:
-		FunctionGroup(const QString& name,const QString & icon,int flags, const QString& path)
-			: Group(name, flags, path)
-		{
-			setIconByName(icon);
-		}
-		
-		virtual ~FunctionGroup() {}
-	
-		virtual bool isMember(TorrentInterface* tor)
-		{
-			if (!tor)
-				return false;
-			else
-				return fn(tor);
-		}
+    typedef bool (*IsMemberFunction)(TorrentInterface* tor);
 
-	};
+    /**
+        Group which calls a function pointer to test for membership
+    */
+    template <IsMemberFunction fn>
+    class FunctionGroup : public Group
+    {
+    public:
+        FunctionGroup(const QString& name, const QString& icon, int flags, const QString& path)
+            : Group(name, flags, path)
+        {
+            setIconByName(icon);
+        }
+
+        virtual ~FunctionGroup() {}
+
+        virtual bool isMember(TorrentInterface* tor)
+        {
+            if (!tor)
+                return false;
+            else
+                return fn(tor);
+        }
+
+    };
 
 }
 

@@ -28,43 +28,43 @@
 namespace kt
 {
 
-	AddTrackersDialog::AddTrackersDialog(QWidget* parent, const QStringList& tracker_hints): KDialog(parent)
-	{
-		setButtons(KDialog::Ok | KDialog::Cancel);
-		showButtonSeparator(true);
-		setCaption(i18n("Add Trackers"));
-		trackers = new KEditListWidget(this);
-		trackers->setButtons(KEditListWidget::Add|KEditListWidget::Remove);
-		
-		// If we find any urls on the clipboard, add them
-		QClipboard* clipboard = QApplication::clipboard();
-		QStringList strings = clipboard->text().split(QRegExp("\\s"));
-		foreach(const QString & s, strings)
-		{
-			KUrl url(s);
-			if(url.isValid() && (url.protocol() == "http" || url.protocol() == "https" || url.protocol() == "udp"))
-			{
-				trackers->insertItem(s);
-			}
-		}
-		
-		KCompletion* completion = new KCompletion();
-		completion->insertItems(tracker_hints);
-		completion->setCompletionMode(KGlobalSettings::CompletionPopup);
-		
-		trackers->lineEdit()->setCompletionObject(completion);
-		
-		setMainWidget(trackers);
-	}
+    AddTrackersDialog::AddTrackersDialog(QWidget* parent, const QStringList& tracker_hints): KDialog(parent)
+    {
+        setButtons(KDialog::Ok | KDialog::Cancel);
+        showButtonSeparator(true);
+        setCaption(i18n("Add Trackers"));
+        trackers = new KEditListWidget(this);
+        trackers->setButtons(KEditListWidget::Add | KEditListWidget::Remove);
 
-	AddTrackersDialog::~AddTrackersDialog()
-	{
-	}
+        // If we find any urls on the clipboard, add them
+        QClipboard* clipboard = QApplication::clipboard();
+        QStringList strings = clipboard->text().split(QRegExp("\\s"));
+        foreach (const QString& s, strings)
+        {
+            KUrl url(s);
+            if (url.isValid() && (url.protocol() == "http" || url.protocol() == "https" || url.protocol() == "udp"))
+            {
+                trackers->insertItem(s);
+            }
+        }
 
-	QStringList AddTrackersDialog::trackerList() const
-	{
-		return trackers->items();
-	}
+        KCompletion* completion = new KCompletion();
+        completion->insertItems(tracker_hints);
+        completion->setCompletionMode(KGlobalSettings::CompletionPopup);
+
+        trackers->lineEdit()->setCompletionObject(completion);
+
+        setMainWidget(trackers);
+    }
+
+    AddTrackersDialog::~AddTrackersDialog()
+    {
+    }
+
+    QStringList AddTrackersDialog::trackerList() const
+    {
+        return trackers->items();
+    }
 
 
 }

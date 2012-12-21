@@ -23,29 +23,29 @@
 
 #include <webcontentgenerator.h>
 
-namespace kt 
+namespace kt
 {
 
-	/**
-		Handles actions coming from the client
-	*/
-	class ActionHandler : public WebContentGenerator
-	{
-	public:
-		ActionHandler(CoreInterface* core,HttpServer* server);
-		virtual ~ActionHandler();
-	
-		virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-		virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-	private:
-		bool doCommand(const QString & cmd,const QString & arg);
-		bool dht(const QString & arg);
-		bool encryption(const QString & arg);
-		bool file(const QString & cmd,const QString & arg);
-		
-	private:
-		CoreInterface* core;
-	};
+    /**
+        Handles actions coming from the client
+    */
+    class ActionHandler : public WebContentGenerator
+    {
+    public:
+        ActionHandler(CoreInterface* core, HttpServer* server);
+        virtual ~ActionHandler();
+
+        virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+        virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+    private:
+        bool doCommand(const QString& cmd, const QString& arg);
+        bool dht(const QString& arg);
+        bool encryption(const QString& arg);
+        bool file(const QString& cmd, const QString& arg);
+
+    private:
+        CoreInterface* core;
+    };
 
 }
 

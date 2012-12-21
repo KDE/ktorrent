@@ -24,37 +24,37 @@
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
 namespace kt
 {
-	class PeerView;
-	class ChunkDownloadView;
-	class FileView;
-	
-	/**
-	@author Joris Guisson
-	*/
-	class Monitor : public bt::MonitorInterface
-	{
-		bt::TorrentInterface* tc;
-		PeerView* pv;
-		ChunkDownloadView* cdv;
-		FileView* fv;
-	public:
-		Monitor(bt::TorrentInterface* tc,PeerView* pv ,ChunkDownloadView* cdv,FileView* fv);
-		virtual ~Monitor();
-	
-		virtual void downloadRemoved(bt::ChunkDownloadInterface* cd);
-		virtual void downloadStarted(bt::ChunkDownloadInterface* cd);
-		virtual void peerAdded(bt::PeerInterface* peer);
-		virtual void peerRemoved(bt::PeerInterface* peer);
-		virtual void stopped();
-		virtual void destroyed();
-		virtual void filePercentageChanged(bt::TorrentFileInterface* file,float percentage);
-		virtual void filePreviewChanged(bt::TorrentFileInterface* file,bool preview);
-	};
+    class PeerView;
+    class ChunkDownloadView;
+    class FileView;
+
+    /**
+    @author Joris Guisson
+    */
+    class Monitor : public bt::MonitorInterface
+    {
+        bt::TorrentInterface* tc;
+        PeerView* pv;
+        ChunkDownloadView* cdv;
+        FileView* fv;
+    public:
+        Monitor(bt::TorrentInterface* tc, PeerView* pv , ChunkDownloadView* cdv, FileView* fv);
+        virtual ~Monitor();
+
+        virtual void downloadRemoved(bt::ChunkDownloadInterface* cd);
+        virtual void downloadStarted(bt::ChunkDownloadInterface* cd);
+        virtual void peerAdded(bt::PeerInterface* peer);
+        virtual void peerRemoved(bt::PeerInterface* peer);
+        virtual void stopped();
+        virtual void destroyed();
+        virtual void filePercentageChanged(bt::TorrentFileInterface* file, float percentage);
+        virtual void filePreviewChanged(bt::TorrentFileInterface* file, bool preview);
+    };
 }
 
 #endif

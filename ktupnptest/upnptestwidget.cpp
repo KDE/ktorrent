@@ -28,78 +28,78 @@ using namespace bt;
 
 UPnPTestWidget::UPnPTestWidget(QWidget* parent) : QWidget(parent)
 {
-	setupUi(this);
-	connect(m_find_routers,SIGNAL(clicked()),this,SLOT(findRouters()));
-	connect(m_forward,SIGNAL(clicked()),this,SLOT(doForward()));
-	connect(m_undo_forward,SIGNAL(clicked()),this,SLOT(undoForward()));
-	connect(m_verbose,SIGNAL(toggled(bool)),this,SLOT(verboseModeChecked(bool)));
-	mcast_socket = 0;
-	router = 0;
+    setupUi(this);
+    connect(m_find_routers, SIGNAL(clicked()), this, SLOT(findRouters()));
+    connect(m_forward, SIGNAL(clicked()), this, SLOT(doForward()));
+    connect(m_undo_forward, SIGNAL(clicked()), this, SLOT(undoForward()));
+    connect(m_verbose, SIGNAL(toggled(bool)), this, SLOT(verboseModeChecked(bool)));
+    mcast_socket = 0;
+    router = 0;
 
-	m_forward->setEnabled(false);
-	m_undo_forward->setEnabled(false);
-	m_port->setEnabled(false);
-	m_protocol->setEnabled(false);
+    m_forward->setEnabled(false);
+    m_undo_forward->setEnabled(false);
+    m_port->setEnabled(false);
+    m_protocol->setEnabled(false);
 
-	AddLogMonitor(this);
+    AddLogMonitor(this);
 }
 
 UPnPTestWidget::~UPnPTestWidget()
 {
-	delete mcast_socket;
+    delete mcast_socket;
 }
 
 void UPnPTestWidget::doForward()
 {
-	QString proto = m_protocol->currentText();
-	bt::Uint16 port = m_port->value();
-	Out(SYS_GEN|LOG_DEBUG) << "Forwarding port " << port << " (" << proto << ")" << endl;
-	net::Port p(port,proto == "UDP" ? net::UDP : net::TCP,true);
-	router->forward(p);
+    QString proto = m_protocol->currentText();
+    bt::Uint16 port = m_port->value();
+    Out(SYS_GEN | LOG_DEBUG) << "Forwarding port " << port << " (" << proto << ")" << endl;
+    net::Port p(port, proto == "UDP" ? net::UDP : net::TCP, true);
+    router->forward(p);
 }
-	
+
 void UPnPTestWidget::undoForward()
 {
-	QString proto = m_protocol->currentText();
-	bt::Uint16 port = m_port->value();
-	Out(SYS_GEN|LOG_DEBUG) << "Unforwarding port " << port << " (" << proto << ")" << endl;
-	net::Port p(port,proto == "UDP" ? net::UDP : net::TCP,true);
-	router->undoForward(p);
+    QString proto = m_protocol->currentText();
+    bt::Uint16 port = m_port->value();
+    Out(SYS_GEN | LOG_DEBUG) << "Unforwarding port " << port << " (" << proto << ")" << endl;
+    net::Port p(port, proto == "UDP" ? net::UDP : net::TCP, true);
+    router->undoForward(p);
 }
 
 void UPnPTestWidget::findRouters()
 {
-	Out(SYS_GEN|LOG_DEBUG) << "Searching for routers ..." << endl;
-	if (!mcast_socket)
-	{
-		mcast_socket = new UPnPMCastSocket(m_verbose->isChecked());
-		connect(mcast_socket,SIGNAL(discovered(bt::UPnPRouter*)),this,SLOT(discovered(bt::UPnPRouter*)));
-	}
+    Out(SYS_GEN | LOG_DEBUG) << "Searching for routers ..." << endl;
+    if (!mcast_socket)
+    {
+        mcast_socket = new UPnPMCastSocket(m_verbose->isChecked());
+        connect(mcast_socket, SIGNAL(discovered(bt::UPnPRouter*)), this, SLOT(discovered(bt::UPnPRouter*)));
+    }
 
-	mcast_socket->discover();
+    mcast_socket->discover();
 }
 
 void UPnPTestWidget::discovered(bt::UPnPRouter* r)
 {
-	router = r;
-	m_router->setText(router->getServer());
-	m_forward->setEnabled(true);
-	m_undo_forward->setEnabled(true);
-	m_port->setEnabled(true);
-	m_protocol->setEnabled(true);
-	router->setVerbose(true);
+    router = r;
+    m_router->setText(router->getServer());
+    m_forward->setEnabled(true);
+    m_undo_forward->setEnabled(true);
+    m_port->setEnabled(true);
+    m_protocol->setEnabled(true);
+    router->setVerbose(true);
 }
 
-void UPnPTestWidget::message(const QString & line, unsigned int arg)
+void UPnPTestWidget::message(const QString& line, unsigned int arg)
 {
-	Q_UNUSED(arg);
-	m_text_output->append(line);
+    Q_UNUSED(arg);
+    m_text_output->append(line);
 }
 
 void UPnPTestWidget::verboseModeChecked(bool on)
 {
-	if (mcast_socket)
-		mcast_socket->setVerbose(on);
+    if (mcast_socket)
+        mcast_socket->setVerbose(on);
 }
 
 #include "upnptestwidget.moc"

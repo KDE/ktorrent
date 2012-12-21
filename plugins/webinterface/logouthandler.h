@@ -23,22 +23,22 @@
 
 #include <webcontentgenerator.h>
 
-namespace kt 
+namespace kt
 {
 
-	/**
-		Handles logout
-	*/
-	class LogoutHandler : public WebContentGenerator
-	{
-	public:
-		LogoutHandler(HttpServer* server);
-		virtual ~LogoutHandler();
-	
-		virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-		virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-	
-	};
+    /**
+        Handles logout
+    */
+    class LogoutHandler : public WebContentGenerator
+    {
+    public:
+        LogoutHandler(HttpServer* server);
+        virtual ~LogoutHandler();
+
+        virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+        virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+
+    };
 
 }
 

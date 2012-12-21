@@ -26,38 +26,38 @@
 namespace kt
 {
 
-	/**
-	 * 
-	 * @author Joris Guisson
-	 * 
-	 * Expands the standard TorrentFileListModel to show more information.
-	*/
-	class IWFileListModel : public TorrentFileListModel
-	{
-		Q_OBJECT
-	public:
-		IWFileListModel(bt::TorrentInterface* tc,QObject* parent);
-		virtual ~IWFileListModel();
+    /**
+     *
+     * @author Joris Guisson
+     *
+     * Expands the standard TorrentFileListModel to show more information.
+    */
+    class IWFileListModel : public TorrentFileListModel
+    {
+        Q_OBJECT
+    public:
+        IWFileListModel(bt::TorrentInterface* tc, QObject* parent);
+        virtual ~IWFileListModel();
 
-		virtual void changeTorrent(bt::TorrentInterface* tc);
-		virtual int columnCount(const QModelIndex & parent) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual bool setData(const QModelIndex & index, const QVariant & value, int role); 
-		void update();
-		
-		void filePercentageChanged(bt::TorrentFileInterface* file,float percentage);
-		void filePreviewChanged(bt::TorrentFileInterface* file,bool preview);
-		
-	private:
-		QVariant displayData(const QModelIndex & index) const;
-		QVariant sortData(const QModelIndex & index) const;
-		
-	private:
-		bool preview;
-		bool mmfile;
-		double percentage;
-	};
+        virtual void changeTorrent(bt::TorrentInterface* tc);
+        virtual int columnCount(const QModelIndex& parent) const;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
+        void update();
+
+        void filePercentageChanged(bt::TorrentFileInterface* file, float percentage);
+        void filePreviewChanged(bt::TorrentFileInterface* file, bool preview);
+
+    private:
+        QVariant displayData(const QModelIndex& index) const;
+        QVariant sortData(const QModelIndex& index) const;
+
+    private:
+        bool preview;
+        bool mmfile;
+        double percentage;
+    };
 
 }
 

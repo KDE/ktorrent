@@ -42,73 +42,73 @@
 
 using namespace bt;
 
-K_EXPORT_COMPONENT_FACTORY(ktscanfolderplugin,KGenericFactory<kt::ScanFolderPlugin>("scanfolderplugin"))
+K_EXPORT_COMPONENT_FACTORY(ktscanfolderplugin, KGenericFactory<kt::ScanFolderPlugin>("scanfolderplugin"))
 
 namespace kt
-{	
+{
 
-	ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QStringList& args) 
-		: Plugin(parent),
-		tlq(0)
-	{
-		Q_UNUSED(args);
-	}
+    ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QStringList& args)
+        : Plugin(parent),
+          tlq(0)
+    {
+        Q_UNUSED(args);
+    }
 
 
-	ScanFolderPlugin::~ScanFolderPlugin()
-	{
-	}
+    ScanFolderPlugin::~ScanFolderPlugin()
+    {
+    }
 
-	void ScanFolderPlugin::load()
-	{
-		LogSystemManager::instance().registerSystem(i18nc("plugin name","Scan Folder"),SYS_SNF);
-		tlq = new TorrentLoadQueue(getCore(),this);
-		scanner = new ScanThread();
-		connect(scanner, SIGNAL(found(KUrl::List)), tlq, SLOT(add(KUrl::List)),Qt::QueuedConnection);
-		pref = new ScanFolderPrefPage(this,0);
-		getGUI()->addPrefPage(pref);
-		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(updateScanFolders()));
-		scanner->start(QThread::IdlePriority);
-		updateScanFolders();
-	}
+    void ScanFolderPlugin::load()
+    {
+        LogSystemManager::instance().registerSystem(i18nc("plugin name", "Scan Folder"), SYS_SNF);
+        tlq = new TorrentLoadQueue(getCore(), this);
+        scanner = new ScanThread();
+        connect(scanner, SIGNAL(found(KUrl::List)), tlq, SLOT(add(KUrl::List)), Qt::QueuedConnection);
+        pref = new ScanFolderPrefPage(this, 0);
+        getGUI()->addPrefPage(pref);
+        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(updateScanFolders()));
+        scanner->start(QThread::IdlePriority);
+        updateScanFolders();
+    }
 
-	void ScanFolderPlugin::unload()
-	{
-		LogSystemManager::instance().unregisterSystem(i18nc("plugin name","Scan Folder"));
-		getGUI()->removePrefPage(pref);
-		scanner->stop();
-		delete scanner;
-		scanner = 0;
-		delete pref;
-		pref = 0;
-		delete tlq;
-		tlq = 0;
-	}
-	
-	void ScanFolderPlugin::updateScanFolders()
-	{
-		QStringList folders = ScanFolderPluginSettings::folders();
-		
-		// make sure folders end with /
-		for (QStringList::iterator i = folders.begin();i !=folders.end(); i++)
-		{
-			if (!i->endsWith(bt::DirSeparator()))
-				(*i) += bt::DirSeparator();
-		}
-		
-		if (ScanFolderPluginSettings::actionDelete())
-			tlq->setLoadedTorrentAction(DeleteAction);
-		else if (ScanFolderPluginSettings::actionMove())
-			tlq->setLoadedTorrentAction(MoveAction);
-		else
-			tlq->setLoadedTorrentAction(DefaultAction);
-		
-		scanner->setRecursive(ScanFolderPluginSettings::recursive());
-		scanner->setFolderList(folders);
-	}
-	
-	bool ScanFolderPlugin::versionCheck(const QString & version) const
-	{
-		return version == KT_VERSION_MACRO;
-	}
+    void ScanFolderPlugin::unload()
+    {
+        LogSystemManager::instance().unregisterSystem(i18nc("plugin name", "Scan Folder"));
+        getGUI()->removePrefPage(pref);
+        scanner->stop();
+        delete scanner;
+        scanner = 0;
+        delete pref;
+        pref = 0;
+        delete tlq;
+        tlq = 0;
+    }
+
+    void ScanFolderPlugin::updateScanFolders()
+    {
+        QStringList folders = ScanFolderPluginSettings::folders();
+
+        // make sure folders end with /
+        for (QStringList::iterator i = folders.begin(); i != folders.end(); i++)
+        {
+            if (!i->endsWith(bt::DirSeparator()))
+                (*i) += bt::DirSeparator();
+        }
+
+        if (ScanFolderPluginSettings::actionDelete())
+            tlq->setLoadedTorrentAction(DeleteAction);
+        else if (ScanFolderPluginSettings::actionMove())
+            tlq->setLoadedTorrentAction(MoveAction);
+        else
+            tlq->setLoadedTorrentAction(DefaultAction);
+
+        scanner->setRecursive(ScanFolderPluginSettings::recursive());
+        scanner->setFolderList(folders);
+    }
+
+    bool ScanFolderPlugin::versionCheck(const QString& version) const
+    {
+        return version == KT_VERSION_MACRO;
+    }
 }

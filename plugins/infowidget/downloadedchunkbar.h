@@ -23,30 +23,30 @@
 #include <torrent/chunkbar.h>
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
 namespace kt
 {
-	/**
-	@author Joris Guisson
-	*/
-	class DownloadedChunkBar : public ChunkBar
-	{
-		Q_OBJECT
-	public:
-		DownloadedChunkBar(QWidget* parent);
-		virtual ~DownloadedChunkBar();
-	
-		virtual const bt::BitSet & getBitSet() const;
-		virtual void updateBar(bool force = false);
-		virtual void drawBarContents(QPainter *p);
-		
-		void setTC(bt::TorrentInterface* tc);
-	private:
-		bt::TorrentInterface* curr_tc;
-		bt::BitSet curr_ebs;
-	};
+    /**
+    @author Joris Guisson
+    */
+    class DownloadedChunkBar : public ChunkBar
+    {
+        Q_OBJECT
+    public:
+        DownloadedChunkBar(QWidget* parent);
+        virtual ~DownloadedChunkBar();
+
+        virtual const bt::BitSet& getBitSet() const;
+        virtual void updateBar(bool force = false);
+        virtual void drawBarContents(QPainter* p);
+
+        void setTC(bt::TorrentInterface* tc);
+    private:
+        bt::TorrentInterface* curr_tc;
+        bt::BitSet curr_ebs;
+    };
 }
 
 #endif

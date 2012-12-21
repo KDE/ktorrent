@@ -27,32 +27,32 @@ class QPropertyAnimation;
 
 class FadingItem : public QObject, public QGraphicsItem
 {
-        Q_OBJECT
-        Q_PROPERTY(qreal opacityValue READ opacityValue WRITE setOpacityValue)
-        #if QT_VERSION >= 0x040600
-        Q_INTERFACES(QGraphicsItem)
-        #endif
-    public:
-        FadingItem( QGraphicsItem *parent );
+    Q_OBJECT
+    Q_PROPERTY(qreal opacityValue READ opacityValue WRITE setOpacityValue)
+#if QT_VERSION >= 0x040600
+    Q_INTERFACES(QGraphicsItem)
+#endif
+public:
+    FadingItem(QGraphicsItem* parent);
 
-        void updatePixmap();
-        virtual QRectF boundingRect() const;
-        virtual void paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
-                             QWidget *widget = 0 );
-        void showItem();
-        void hideItem();
-        bool isVisible() const;
-        qreal opacityValue() const;
+    void updatePixmap();
+    virtual QRectF boundingRect() const;
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+                       QWidget* widget = 0);
+    void showItem();
+    void hideItem();
+    bool isVisible() const;
+    qreal opacityValue() const;
 
-    protected slots:
-        void setOpacityValue( qreal opacityValue );
-        void animationFinished();
+protected slots:
+    void setOpacityValue(qreal opacityValue);
+    void animationFinished();
 
-    private:
-        QPixmap mParent;
-        qreal mOpacity;
-        QWeakPointer<QPropertyAnimation> mAnimation;
-        bool mShowing;
+private:
+    QPixmap mParent;
+    qreal mOpacity;
+    QWeakPointer<QPropertyAnimation> mAnimation;
+    bool mShowing;
 };
 
 #endif

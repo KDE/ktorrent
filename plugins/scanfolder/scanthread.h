@@ -32,66 +32,66 @@
 
 class QDir;
 
-namespace kt 
+namespace kt
 {
-	
-	/**
-	 * Thread which scans directories in the background and looks for torrent files.
-	 */
-	class ScanThread : public QThread
-	{
-		Q_OBJECT
-	public:
-		ScanThread();
-		virtual ~ScanThread();
-		
-		/**
-		 * Set whether to scan recursively or not
-		 * @param rec Recursive or not
-		 */
-		void setRecursive(bool rec);
-		
-		/**
-		 * Add a directory to scan.
-		 * @param url Directory
-		 * @param recursive Whether or not to scan resursively
-		 */
-		void addDirectory(const KUrl & url, bool recursive);
-		
-		/**
-		 * Stop the scanning thread.
-		 */
-		void stop();
-		
-		/**
-		 * Set the list of folders to scan.
-		 * @param folders List of folders
-		 */
-		void setFolderList(const QStringList & folders);
-		
-	protected:
-		virtual void run();
-		
-	private:
-		void scan(const KUrl & dir, bool recursive);
-		bool alreadyLoaded(const QDir & d, const QString & torrent);
-		void updateFolders();
-		virtual void customEvent(QEvent* ev);
-		
-	signals:
-		/**
-		 * Emitted when one or more torrents are found. 
-		 * @param torrents The list of torrents
-		 */
-		void found(const KUrl::List & torrent);
 
-	private:
-		QMutex mutex;
-		QStringList folders;
-		bool stop_requested;
-		bool recursive;
-		bt::PtrMap<QString,ScanFolder> scan_folders;
-	};
+    /**
+     * Thread which scans directories in the background and looks for torrent files.
+     */
+    class ScanThread : public QThread
+    {
+        Q_OBJECT
+    public:
+        ScanThread();
+        virtual ~ScanThread();
+
+        /**
+         * Set whether to scan recursively or not
+         * @param rec Recursive or not
+         */
+        void setRecursive(bool rec);
+
+        /**
+         * Add a directory to scan.
+         * @param url Directory
+         * @param recursive Whether or not to scan resursively
+         */
+        void addDirectory(const KUrl& url, bool recursive);
+
+        /**
+         * Stop the scanning thread.
+         */
+        void stop();
+
+        /**
+         * Set the list of folders to scan.
+         * @param folders List of folders
+         */
+        void setFolderList(const QStringList& folders);
+
+    protected:
+        virtual void run();
+
+    private:
+        void scan(const KUrl& dir, bool recursive);
+        bool alreadyLoaded(const QDir& d, const QString& torrent);
+        void updateFolders();
+        virtual void customEvent(QEvent* ev);
+
+    signals:
+        /**
+         * Emitted when one or more torrents are found.
+         * @param torrents The list of torrents
+         */
+        void found(const KUrl::List& torrent);
+
+    private:
+        QMutex mutex;
+        QStringList folders;
+        bool stop_requested;
+        bool recursive;
+        bt::PtrMap<QString, ScanFolder> scan_folders;
+    };
 
 }
 

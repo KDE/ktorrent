@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2010 by Jonas Lundqvist                                 *
- *   jonas@gannon.se                                                 	   *
+ *   jonas@gannon.se                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,34 +31,34 @@ using namespace bt;
 namespace kt
 {
 
-	MagnetGeneratorPrefWidget::MagnetGeneratorPrefWidget(QWidget *parent)
-		: PrefPageInterface(MagnetGeneratorPluginSettings::self(),i18n("Magnet Generator"),"kt-magnet",parent)
-	{
-		setupUi(this);
-		connect(kcfg_customtracker,SIGNAL(toggled(bool)),this,SLOT(customTrackerToggled(bool)));
-		connect(kcfg_torrenttracker,SIGNAL(toggled(bool)),this,SLOT(torrentTrackerToggled(bool)));
-		kcfg_tr->setEnabled(MagnetGeneratorPluginSettings::customtracker());
-	}
+    MagnetGeneratorPrefWidget::MagnetGeneratorPrefWidget(QWidget* parent)
+        : PrefPageInterface(MagnetGeneratorPluginSettings::self(), i18n("Magnet Generator"), "kt-magnet", parent)
+    {
+        setupUi(this);
+        connect(kcfg_customtracker, SIGNAL(toggled(bool)), this, SLOT(customTrackerToggled(bool)));
+        connect(kcfg_torrenttracker, SIGNAL(toggled(bool)), this, SLOT(torrentTrackerToggled(bool)));
+        kcfg_tr->setEnabled(MagnetGeneratorPluginSettings::customtracker());
+    }
 
-	MagnetGeneratorPrefWidget::~MagnetGeneratorPrefWidget()
-	{}
+    MagnetGeneratorPrefWidget::~MagnetGeneratorPrefWidget()
+    {}
 
-	void MagnetGeneratorPrefWidget::customTrackerToggled(bool on)
-	{
-		if(on)
-			kcfg_torrenttracker->setCheckState(Qt::Unchecked);
+    void MagnetGeneratorPrefWidget::customTrackerToggled(bool on)
+    {
+        if (on)
+            kcfg_torrenttracker->setCheckState(Qt::Unchecked);
 
-		kcfg_tr->setEnabled(on);
-	}
+        kcfg_tr->setEnabled(on);
+    }
 
-	void MagnetGeneratorPrefWidget::torrentTrackerToggled(bool on)
-	{
-		if(on)
-		{
-			kcfg_customtracker->setCheckState(Qt::Unchecked);
-			kcfg_tr->setEnabled(!on);
-		}
-	}
+    void MagnetGeneratorPrefWidget::torrentTrackerToggled(bool on)
+    {
+        if (on)
+        {
+            kcfg_customtracker->setCheckState(Qt::Unchecked);
+            kcfg_tr->setEnabled(!on);
+        }
+    }
 
 }
 

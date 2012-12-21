@@ -24,10 +24,10 @@
 namespace kt
 {
 
-	GUIInterface::GUIInterface()
-	{}
+    GUIInterface::GUIInterface()
+    {}
 
 
-	GUIInterface::~GUIInterface()
-	{}
+    GUIInterface::~GUIInterface()
+    {}
 }

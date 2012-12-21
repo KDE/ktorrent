@@ -26,32 +26,32 @@
 #include "ui_basicjobprogresswidget.h"
 
 
-namespace kt 
+namespace kt
 {
-	/**
-		Basic JobProgressWidget, showing a progress bar and the description
-	 */
-	class BasicJobProgressWidget : public kt::JobProgressWidget,public Ui_BasicJobProgressWidget
-	{
-		Q_OBJECT
-	public:
-		BasicJobProgressWidget(bt::Job* job,QWidget* parent);
-		virtual ~BasicJobProgressWidget();
-		
-		virtual void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2);
-		virtual void infoMessage(const QString& plain, const QString& rich);
-		virtual void warning(const QString& plain, const QString& rich);
-		virtual void totalAmount(KJob::Unit unit, qulonglong amount);
-		virtual void processedAmount(KJob::Unit unit, qulonglong amount);
-		virtual void percent(long unsigned int percent);
-		virtual void speed(long unsigned int value);
-		
-		virtual bool similar(Extender* ext) const
-		{
-			Q_UNUSED(ext);
-			return false;
-		}
-	};
+    /**
+        Basic JobProgressWidget, showing a progress bar and the description
+     */
+    class BasicJobProgressWidget : public kt::JobProgressWidget, public Ui_BasicJobProgressWidget
+    {
+        Q_OBJECT
+    public:
+        BasicJobProgressWidget(bt::Job* job, QWidget* parent);
+        virtual ~BasicJobProgressWidget();
+
+        virtual void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2);
+        virtual void infoMessage(const QString& plain, const QString& rich);
+        virtual void warning(const QString& plain, const QString& rich);
+        virtual void totalAmount(KJob::Unit unit, qulonglong amount);
+        virtual void processedAmount(KJob::Unit unit, qulonglong amount);
+        virtual void percent(long unsigned int percent);
+        virtual void speed(long unsigned int value);
+
+        virtual bool similar(Extender* ext) const
+        {
+            Q_UNUSED(ext);
+            return false;
+        }
+    };
 
 }
 

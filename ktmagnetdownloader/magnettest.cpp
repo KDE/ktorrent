@@ -41,126 +41,126 @@
 using namespace kt;
 using namespace bt;
 
-MagnetTest::MagnetTest(const bt::MagnetLink & mlink, QObject* parent) : QObject(parent),mlink(mlink)
+MagnetTest::MagnetTest(const bt::MagnetLink& mlink, QObject* parent) : QObject(parent), mlink(mlink)
 {
-	upnp = new bt::UPnPMCastSocket();
-	connect(upnp,SIGNAL(discovered(bt::UPnPRouter*)),this,SLOT(routerDiscovered(bt::UPnPRouter*)));
-	
-	mdownloader = new MagnetDownloader(mlink,this);
-	connect(mdownloader,SIGNAL(foundMetaData(bt::MagnetDownloader*,QByteArray)),
-			this,SLOT(foundMetaData(bt::MagnetDownloader*,QByteArray)));
-			
-	QTimer::singleShot(0,this,SLOT(start()));
-	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
+    upnp = new bt::UPnPMCastSocket();
+    connect(upnp, SIGNAL(discovered(bt::UPnPRouter*)), this, SLOT(routerDiscovered(bt::UPnPRouter*)));
+
+    mdownloader = new MagnetDownloader(mlink, this);
+    connect(mdownloader, SIGNAL(foundMetaData(bt::MagnetDownloader*, QByteArray)),
+            this, SLOT(foundMetaData(bt::MagnetDownloader*, QByteArray)));
+
+    QTimer::singleShot(0, this, SLOT(start()));
+    connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
 }
 
 MagnetTest::~MagnetTest()
 {
-	delete upnp;
+    delete upnp;
 }
 
 
 void MagnetTest::routerDiscovered(bt::UPnPRouter* router)
 {
-	net::Port port;
-	port.number = Settings::dhtPort();
-	port.proto = net::UDP;
-	port.forward = true;
-	router->forward(port);
+    net::Port port;
+    port.number = Settings::dhtPort();
+    port.proto = net::UDP;
+    port.forward = true;
+    router->forward(port);
 }
 
 void MagnetTest::start()
 {
-	Uint16 port = Settings::port();
-	if (port == 0)
-	{
-		port = 6881;
-		Settings::setPort(6881);
-	}
-	
-	// Make sure network interface is set properly before server is initialized
-	if (Settings::networkInterface() != 0)
-	{
-		QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
-		int iface = Settings::networkInterface();
-		if (iface > iface_list.count())
-			SetNetworkInterface(QString::null);
-		else
-			SetNetworkInterface(iface_list[iface - 1].name());
-	}
-	
-	
-	Uint16 i = 0;
-	while (!Globals::instance().initTCPServer(port + i) && i < 10)
-		i++;
-	
-	if (i != 10)
-	{
-		Out(SYS_GEN|LOG_NOTICE) << "Bound to port " << (port + i - 1) << endl;
-	}
-	else
-	{
-		Out(SYS_GEN|LOG_IMPORTANT) << "Cannot find free port" << endl;
-	}
-	
-	// start DHT
-	bt::Globals::instance().getDHT().start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
-	
-	// Start UPnP router discovery
-	upnp->loadRouters(kt::DataDir() + "routers");
-	upnp->discover();
-	
-	mdownloader->start();
-	timer.start(500);
+    Uint16 port = Settings::port();
+    if (port == 0)
+    {
+        port = 6881;
+        Settings::setPort(6881);
+    }
+
+    // Make sure network interface is set properly before server is initialized
+    if (Settings::networkInterface() != 0)
+    {
+        QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
+        int iface = Settings::networkInterface();
+        if (iface > iface_list.count())
+            SetNetworkInterface(QString::null);
+        else
+            SetNetworkInterface(iface_list[iface - 1].name());
+    }
+
+
+    Uint16 i = 0;
+    while (!Globals::instance().initTCPServer(port + i) && i < 10)
+        i++;
+
+    if (i != 10)
+    {
+        Out(SYS_GEN | LOG_NOTICE) << "Bound to port " << (port + i - 1) << endl;
+    }
+    else
+    {
+        Out(SYS_GEN | LOG_IMPORTANT) << "Cannot find free port" << endl;
+    }
+
+    // start DHT
+    bt::Globals::instance().getDHT().start(kt::DataDir() + "dht_table", kt::DataDir() + "dht_key", Settings::dhtPort());
+
+    // Start UPnP router discovery
+    upnp->loadRouters(kt::DataDir() + "routers");
+    upnp->discover();
+
+    mdownloader->start();
+    timer.start(500);
 }
 
 void MagnetTest::update()
 {
-	try
-	{
-		bt::AuthenticationMonitor::instance().update();
-		mdownloader->update();
-	}
-	catch (bt::Error & err)
-	{
-		Out(SYS_GEN|LOG_IMPORTANT) << "Caught bt::Error: " << err.toString() << endl;
-	}
+    try
+    {
+        bt::AuthenticationMonitor::instance().update();
+        mdownloader->update();
+    }
+    catch (bt::Error& err)
+    {
+        Out(SYS_GEN | LOG_IMPORTANT) << "Caught bt::Error: " << err.toString() << endl;
+    }
 }
 
 
 void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
 {
-	Q_UNUSED(md);
-	Out(SYS_GEN|LOG_IMPORTANT) << "Saving to output.torrent" << endl;
-	bt::File fptr;
-	if (fptr.open("output.torrent","wb"))
-	{
-		BEncoder enc(&fptr);
-		enc.beginDict();
-		KUrl::List trs = mlink.trackers();
-		if (trs.count())
-		{
-			enc.write("announce");
-			enc.write(trs.first().prettyUrl());
-			if (trs.count() > 1)
-			{
-				enc.write("announce-list");
-				enc.beginList();
-				foreach (const KUrl & u,trs)
-				{
-					enc.write(u.prettyUrl());
-				}
-				enc.end();
-			}	
-		}
-		enc.write("info");
-		fptr.write(data.data(),data.size());
-		enc.end();
-		QTimer::singleShot(0,qApp,SLOT(quit()));
-	}
-	else
-	{
-		Out(SYS_GEN|LOG_IMPORTANT) << "Failed to open output.torrent: " << fptr.errorString() << endl;
-	}
+    Q_UNUSED(md);
+    Out(SYS_GEN | LOG_IMPORTANT) << "Saving to output.torrent" << endl;
+    bt::File fptr;
+    if (fptr.open("output.torrent", "wb"))
+    {
+        BEncoder enc(&fptr);
+        enc.beginDict();
+        KUrl::List trs = mlink.trackers();
+        if (trs.count())
+        {
+            enc.write("announce");
+            enc.write(trs.first().prettyUrl());
+            if (trs.count() > 1)
+            {
+                enc.write("announce-list");
+                enc.beginList();
+                foreach (const KUrl& u, trs)
+                {
+                    enc.write(u.prettyUrl());
+                }
+                enc.end();
+            }
+        }
+        enc.write("info");
+        fptr.write(data.data(), data.size());
+        enc.end();
+        QTimer::singleShot(0, qApp, SLOT(quit()));
+    }
+    else
+    {
+        Out(SYS_GEN | LOG_IMPORTANT) << "Failed to open output.torrent: " << fptr.errorString() << endl;
+    }
 }
 

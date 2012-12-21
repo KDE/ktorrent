@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Vasić   								   *
- *   ivasic@gmail.com   												   *
+ *   Copyright (C) 2006 by Ivan Vasić                                     *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,41 +27,41 @@
 
 namespace kt
 {
-	
-	
-	class CoreInterface;
-	class ScanThread;
 
-	/**
-	 * Monitors a folder for changes, and passes torrents to load to the TorrentLoadQueue
-	*/
-	class ScanFolder : public QObject
-	{
-		Q_OBJECT
-	public:
-		
-		/**
-		 * Default constructor.
-		 * @param scanner The ScanThread
-		 * @param dir The directory
-		 */
-		ScanFolder(ScanThread* scanner, const KUrl& dir, bool recursive);
-		virtual ~ScanFolder();
-		
-		/**
-		 * Set if the ScanFolder needs to scan subdirectories recursively
-		 * @param rec Recursive or not
-		 */
-		void setRecursive(bool rec);
 
-	public slots:
-		void scanDir(const QString & path);
-		
-	private:
-		ScanThread* scanner;
-		KUrl scan_directory;
-		KDirWatch* watch;
-		bool recursive;
-	};
+    class CoreInterface;
+    class ScanThread;
+
+    /**
+     * Monitors a folder for changes, and passes torrents to load to the TorrentLoadQueue
+    */
+    class ScanFolder : public QObject
+    {
+        Q_OBJECT
+    public:
+
+        /**
+         * Default constructor.
+         * @param scanner The ScanThread
+         * @param dir The directory
+         */
+        ScanFolder(ScanThread* scanner, const KUrl& dir, bool recursive);
+        virtual ~ScanFolder();
+
+        /**
+         * Set if the ScanFolder needs to scan subdirectories recursively
+         * @param rec Recursive or not
+         */
+        void setRecursive(bool rec);
+
+    public slots:
+        void scanDir(const QString& path);
+
+    private:
+        ScanThread* scanner;
+        KUrl scan_directory;
+        KDirWatch* watch;
+        bool recursive;
+    };
 }
 #endif

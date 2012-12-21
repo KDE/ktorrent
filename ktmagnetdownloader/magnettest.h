@@ -27,29 +27,29 @@
 
 namespace bt
 {
-	class UPnPRouter;
-	class UPnPMCastSocket;
+    class UPnPRouter;
+    class UPnPMCastSocket;
 }
 
 
 class MagnetTest : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	MagnetTest(const bt::MagnetLink & mlink, QObject* parent = 0);
-	virtual ~MagnetTest();
-	
+    MagnetTest(const bt::MagnetLink& mlink, QObject* parent = 0);
+    virtual ~MagnetTest();
+
 public slots:
-	void routerDiscovered(bt::UPnPRouter* router);
-	void start();
-	void update();
-	void foundMetaData(bt::MagnetDownloader* md,const QByteArray & data);
-	
+    void routerDiscovered(bt::UPnPRouter* router);
+    void start();
+    void update();
+    void foundMetaData(bt::MagnetDownloader* md, const QByteArray& data);
+
 private:
-	bt::MagnetLink mlink;
-	bt::UPnPMCastSocket* upnp;
-	bt::MagnetDownloader* mdownloader;
-	QTimer timer;
+    bt::MagnetLink mlink;
+    bt::UPnPMCastSocket* upnp;
+    bt::MagnetDownloader* mdownloader;
+    QTimer timer;
 };
 
 #endif // MAGNETTEST_H

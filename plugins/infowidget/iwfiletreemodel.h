@@ -26,40 +26,40 @@
 namespace kt
 {
 
-	/**
-	 * 
-	 * @author Joris Guisson
-	 * 
-	 * Expands the standard TorrentFileTreeModel to show more information.
-	*/
-	class IWFileTreeModel : public TorrentFileTreeModel
-	{
-		Q_OBJECT
-	public:
-		IWFileTreeModel(bt::TorrentInterface* tc,QObject* parent);
-		virtual ~IWFileTreeModel();
+    /**
+     *
+     * @author Joris Guisson
+     *
+     * Expands the standard TorrentFileTreeModel to show more information.
+    */
+    class IWFileTreeModel : public TorrentFileTreeModel
+    {
+        Q_OBJECT
+    public:
+        IWFileTreeModel(bt::TorrentInterface* tc, QObject* parent);
+        virtual ~IWFileTreeModel();
 
-		virtual void changeTorrent(bt::TorrentInterface* tc);
-		virtual int columnCount(const QModelIndex & parent) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual void update();
-		virtual void changePriority(const QModelIndexList& indexes, bt::Priority newpriority);
-		
-		void filePercentageChanged(bt::TorrentFileInterface* file,float percentage);
-		void filePreviewChanged(bt::TorrentFileInterface* file,bool preview);
-		
-	private:
-		void update(const QModelIndex & index,bt::TorrentFileInterface* file,int col);
-		QVariant displayData(Node* n,const QModelIndex & index) const;
-		QVariant sortData(Node* n,const QModelIndex & index) const;
-		void setPriority(Node* n, bt::Priority newpriority, bool selected_node);
-		
-	private:
-		bool preview;
-		bool mmfile;
-		double percentage;
-	};
+        virtual void changeTorrent(bt::TorrentInterface* tc);
+        virtual int columnCount(const QModelIndex& parent) const;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual void update();
+        virtual void changePriority(const QModelIndexList& indexes, bt::Priority newpriority);
+
+        void filePercentageChanged(bt::TorrentFileInterface* file, float percentage);
+        void filePreviewChanged(bt::TorrentFileInterface* file, bool preview);
+
+    private:
+        void update(const QModelIndex& index, bt::TorrentFileInterface* file, int col);
+        QVariant displayData(Node* n, const QModelIndex& index) const;
+        QVariant sortData(Node* n, const QModelIndex& index) const;
+        void setPriority(Node* n, bt::Priority newpriority, bool selected_node);
+
+    private:
+        bool preview;
+        bool mmfile;
+        double percentage;
+    };
 
 }
 

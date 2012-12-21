@@ -23,45 +23,48 @@
 #include "flagdb.h"
 
 kt::FlagDBSource::FlagDBSource(const char* type, const QString& pathPattern)
-	: type(type), pathPattern(pathPattern) 
+    : type(type), pathPattern(pathPattern)
 {
 }
 
 kt::FlagDBSource::FlagDBSource(const QString& pathPattern)
-	: type(NULL), pathPattern(pathPattern) 
+    : type(NULL), pathPattern(pathPattern)
 {
 }
 
 kt::FlagDBSource::FlagDBSource()
-	: type(NULL), pathPattern()
+    : type(NULL), pathPattern()
 {
 }
 
 QString kt::FlagDBSource::getPath(const QString& country) const
 {
-	if (type) {
-		return KStandardDirs::locate(type, pathPattern.arg(country));
-	} else {
-		return pathPattern.arg(country);
-	}
+    if (type)
+    {
+        return KStandardDirs::locate(type, pathPattern.arg(country));
+    }
+    else
+    {
+        return pathPattern.arg(country);
+    }
 }
 
 const QPixmap& kt::FlagDB::nullPixmap = QPixmap();
 
 kt::FlagDB::FlagDB(int preferredWidth, int preferredHeight)
-	: preferredWidth(preferredWidth),
-	  preferredHeight(preferredHeight),
-	  sources(),
-	  db()
+    : preferredWidth(preferredWidth),
+      preferredHeight(preferredHeight),
+      sources(),
+      db()
 {
 }
 
 
 kt::FlagDB::FlagDB(const FlagDB& other)
-	: preferredWidth(other.preferredWidth),
-	  preferredHeight(other.preferredHeight),
-	  sources(other.sources),
-	  db(other.db)
+    : preferredWidth(other.preferredWidth),
+      preferredHeight(other.preferredHeight),
+      sources(other.sources),
+      db(other.db)
 {
 }
 
@@ -71,59 +74,59 @@ kt::FlagDB::~FlagDB()
 
 void kt::FlagDB::addFlagSource(const FlagDBSource& source)
 {
-	sources.append(source);
+    sources.append(source);
 }
 
 void kt::FlagDB::addFlagSource(const char* type, const QString& pathPattern)
 {
-	addFlagSource(FlagDBSource(type, pathPattern));
+    addFlagSource(FlagDBSource(type, pathPattern));
 }
 
 const QList<kt::FlagDBSource>& kt::FlagDB::listSources() const
 {
-	return sources;
+    return sources;
 }
 
 bool kt::FlagDB::isFlagAvailable(const QString& country)
 {
-	return getFlag(country).isNull();
+    return getFlag(country).isNull();
 }
 
 const QPixmap& kt::FlagDB::getFlag(const QString& country)
 {
-	const QString& c = country.toLower();
-	if (db.contains(c)) 
-		return db[c];
-	
-	QImage img;
-	QPixmap pixmap;
-	foreach (const FlagDBSource & s,sources)
-	{
-		const QString& path = s.getPath(c);
-		if (QFile::exists(path) && img.load(path))
-		{
-			if (img.width() != preferredWidth || img.height() != preferredHeight) 
-			{
-				const QImage& imgScaled = img.scaled(preferredWidth, preferredHeight, Qt::KeepAspectRatio,Qt::SmoothTransformation);
-				if (!imgScaled.isNull()) 
-				{
-					pixmap = QPixmap::fromImage(imgScaled);
-					break;
-				} 
-				else if (img.width() <= preferredWidth || img.height() <= preferredHeight) 
-				{
-					pixmap = QPixmap::fromImage(img);
-					break;
-				}
-			}
-			else
-			{
-				pixmap = QPixmap::fromImage(img);
-				break;
-			}
-		}
-	}
+    const QString& c = country.toLower();
+    if (db.contains(c))
+        return db[c];
 
-	db[c] = (!pixmap.isNull()) ? pixmap : nullPixmap;
-	return db[c];
+    QImage img;
+    QPixmap pixmap;
+    foreach (const FlagDBSource& s, sources)
+    {
+        const QString& path = s.getPath(c);
+        if (QFile::exists(path) && img.load(path))
+        {
+            if (img.width() != preferredWidth || img.height() != preferredHeight)
+            {
+                const QImage& imgScaled = img.scaled(preferredWidth, preferredHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                if (!imgScaled.isNull())
+                {
+                    pixmap = QPixmap::fromImage(imgScaled);
+                    break;
+                }
+                else if (img.width() <= preferredWidth || img.height() <= preferredHeight)
+                {
+                    pixmap = QPixmap::fromImage(img);
+                    break;
+                }
+            }
+            else
+            {
+                pixmap = QPixmap::fromImage(img);
+                break;
+            }
+        }
+    }
+
+    db[c] = (!pixmap.isNull()) ? pixmap : nullPixmap;
+    return db[c];
 }

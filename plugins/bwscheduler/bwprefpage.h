@@ -27,23 +27,23 @@
 namespace kt
 {
 
-	/**
-		@author
-	*/
-	class BWPrefPage : public PrefPageInterface,public Ui_BWPrefPage
-	{
-		Q_OBJECT
-	public:
-		BWPrefPage(QWidget* parent);
-		virtual ~BWPrefPage();
+    /**
+        @author
+    */
+    class BWPrefPage : public PrefPageInterface, public Ui_BWPrefPage
+    {
+        Q_OBJECT
+    public:
+        BWPrefPage(QWidget* parent);
+        virtual ~BWPrefPage();
 
-		virtual void loadDefaults();
-		virtual void loadSettings();
-		virtual void updateSettings();
-		
-	signals:
-		void colorsChanged();
-	};
+        virtual void loadDefaults();
+        virtual void loadSettings();
+        virtual void updateSettings();
+
+    signals:
+        void colorsChanged();
+    };
 
 }
 

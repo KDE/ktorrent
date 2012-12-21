@@ -28,60 +28,60 @@ using namespace bt;
 
 namespace kt
 {
-	
-	StringCompletionModel::StringCompletionModel(const QString& file, QObject* parent): QStringListModel(parent),file(file)
-	{
-	}
 
-	
-	StringCompletionModel::~StringCompletionModel()
-	{
-	}
-	
-	void StringCompletionModel::load()
-	{
-		QFile fptr(file);
-		if (!fptr.open(QIODevice::ReadOnly))
-		{
-			Out(SYS_GEN|LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
-			return;
-		}
-		
-		QSet<QString> strings;
-		while (!fptr.atEnd())
-		{
-			QString line = fptr.readLine().trimmed();
-			if (line.length() > 0)
-				strings.insert(line);
-		}
-		
-		setStringList(strings.toList());
-	}
-	
-	void StringCompletionModel::save()
-	{
-		QFile fptr(file);
-		if (!fptr.open(QIODevice::WriteOnly))
-		{
-			Out(SYS_GEN|LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
-			return;
-		}
-		
-		QTextStream out(&fptr);
-		QStringList sl = stringList();
-		foreach (const QString & s,sl)
-			out << s << endl;
-	}
+    StringCompletionModel::StringCompletionModel(const QString& file, QObject* parent): QStringListModel(parent), file(file)
+    {
+    }
 
-	void StringCompletionModel::addString(const QString& s)
-	{
-		QStringList curr = stringList();
-		if (!curr.contains(s))
-		{
-			curr.append(s);
-			setStringList(curr);
-		}
-	}
+
+    StringCompletionModel::~StringCompletionModel()
+    {
+    }
+
+    void StringCompletionModel::load()
+    {
+        QFile fptr(file);
+        if (!fptr.open(QIODevice::ReadOnly))
+        {
+            Out(SYS_GEN | LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
+            return;
+        }
+
+        QSet<QString> strings;
+        while (!fptr.atEnd())
+        {
+            QString line = fptr.readLine().trimmed();
+            if (line.length() > 0)
+                strings.insert(line);
+        }
+
+        setStringList(strings.toList());
+    }
+
+    void StringCompletionModel::save()
+    {
+        QFile fptr(file);
+        if (!fptr.open(QIODevice::WriteOnly))
+        {
+            Out(SYS_GEN | LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
+            return;
+        }
+
+        QTextStream out(&fptr);
+        QStringList sl = stringList();
+        foreach (const QString& s, sl)
+            out << s << endl;
+    }
+
+    void StringCompletionModel::addString(const QString& s)
+    {
+        QStringList curr = stringList();
+        if (!curr.contains(s))
+        {
+            curr.append(s);
+            setStringList(curr);
+        }
+    }
 
 }
 

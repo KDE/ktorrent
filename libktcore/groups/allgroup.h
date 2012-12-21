@@ -25,18 +25,18 @@
 namespace kt
 {
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class AllGroup : public Group
-	{
-	public:
-		AllGroup();
-		virtual ~AllGroup();
+    /**
+        @author Joris Guisson <joris.guisson@gmail.com>
+    */
+    class AllGroup : public Group
+    {
+    public:
+        AllGroup();
+        virtual ~AllGroup();
 
-		virtual bool isMember(TorrentInterface* tor);
+        virtual bool isMember(TorrentInterface* tor);
 
-	};
+    };
 
 }
 

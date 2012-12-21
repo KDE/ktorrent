@@ -22,47 +22,47 @@
 #include <QApplication>
 #include "feedlistdelegate.h"
 
-namespace kt 
+namespace kt
 {
 
-	FeedListDelegate::FeedListDelegate(QObject* parent) : QStyledItemDelegate(parent)
-	{
-	}
-	
-	
-	FeedListDelegate::~FeedListDelegate()
-	{
-	}
-	
-	QSize FeedListDelegate::sizeHint(const QStyleOptionViewItem &option,const QModelIndex &index) const
-	{
-		QVariant value = index.data(Qt::SizeHintRole);
-		if (value.isValid())
-			return qvariant_cast<QSize>(value);
+    FeedListDelegate::FeedListDelegate(QObject* parent) : QStyledItemDelegate(parent)
+    {
+    }
 
-		QStyleOptionViewItemV4 opt = option;
-		initStyleOption(&opt, index);
-		opt.text = displayText(index.data(Qt::UserRole).toString(), opt.locale);
-		
-		const QWidget *widget = 0;
-		if (const QStyleOptionViewItemV3 *v3 = qstyleoption_cast<const QStyleOptionViewItemV3 *>(&option))
-			widget = v3->widget;
-		QStyle *style = widget ? widget->style() : QApplication::style();
-		return style->sizeFromContents(QStyle::CT_ItemViewItem, &opt, QSize(), widget);
-	}
 
-	
-	void FeedListDelegate::paint(QPainter * painter,const QStyleOptionViewItem & option,const QModelIndex & index) const
-	{
-		QStyleOptionViewItemV4 opt = option;
-		initStyleOption(&opt, index);
-		opt.text = displayText(index.data(Qt::UserRole).toString(), opt.locale);
+    FeedListDelegate::~FeedListDelegate()
+    {
+    }
 
-		const QWidget *widget = 0;
-		if (const QStyleOptionViewItemV3 *v3 = qstyleoption_cast<const QStyleOptionViewItemV3 *>(&option))
-			widget = v3->widget;
+    QSize FeedListDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+    {
+        QVariant value = index.data(Qt::SizeHintRole);
+        if (value.isValid())
+            return qvariant_cast<QSize>(value);
 
-		QStyle *style = widget ? widget->style() : QApplication::style();
-		style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
-	}
+        QStyleOptionViewItemV4 opt = option;
+        initStyleOption(&opt, index);
+        opt.text = displayText(index.data(Qt::UserRole).toString(), opt.locale);
+
+        const QWidget* widget = 0;
+        if (const QStyleOptionViewItemV3* v3 = qstyleoption_cast<const QStyleOptionViewItemV3*>(&option))
+            widget = v3->widget;
+        QStyle* style = widget ? widget->style() : QApplication::style();
+        return style->sizeFromContents(QStyle::CT_ItemViewItem, &opt, QSize(), widget);
+    }
+
+
+    void FeedListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+    {
+        QStyleOptionViewItemV4 opt = option;
+        initStyleOption(&opt, index);
+        opt.text = displayText(index.data(Qt::UserRole).toString(), opt.locale);
+
+        const QWidget* widget = 0;
+        if (const QStyleOptionViewItemV3* v3 = qstyleoption_cast<const QStyleOptionViewItemV3*>(&option))
+            widget = v3->widget;
+
+        QStyle* style = widget ? widget->style() : QApplication::style();
+        style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
+    }
 }

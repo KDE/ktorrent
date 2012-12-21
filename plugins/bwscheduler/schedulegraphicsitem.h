@@ -26,46 +26,46 @@
 
 namespace kt
 {
-	class WeekScene;
+    class WeekScene;
 
-	/**
-		QGraphicsItem to display a ScheduleItem
-	*/
-	class ScheduleGraphicsItem : public QGraphicsRectItem
-	{
-	public:
-		ScheduleGraphicsItem(ScheduleItem* item,const QRectF & r,const QRectF & constraints,WeekScene* ws);
-		virtual ~ScheduleGraphicsItem();
+    /**
+        QGraphicsItem to display a ScheduleItem
+    */
+    class ScheduleGraphicsItem : public QGraphicsRectItem
+    {
+    public:
+        ScheduleGraphicsItem(ScheduleItem* item, const QRectF& r, const QRectF& constraints, WeekScene* ws);
+        virtual ~ScheduleGraphicsItem();
 
-		virtual QVariant itemChange(GraphicsItemChange change, const QVariant & value);
-		
-		/**
-		 * Update the item.
-		 * @param r The new rect
-		 */
-		void update(const QRectF & r);
-		
-	private:
-		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-		virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
-		virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
-		virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
-		virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
-		bt::Uint32 nearEdge(QPointF p);
-		QRectF resize(QPointF scene_pos);
-		void updateCursor();
+        virtual QVariant itemChange(GraphicsItemChange change, const QVariant& value);
 
-	private:
-		ScheduleItem* item;
-		QRectF constraints;
-		WeekScene* ws;
-		QGraphicsTextItem* text_item;
-		QPointF original_pos;
-		bool ready_to_resize;
-		bool resizing;
-		bt::Uint32 resize_edge;
-	};
+        /**
+         * Update the item.
+         * @param r The new rect
+         */
+        void update(const QRectF& r);
+
+    private:
+        virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+        virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+        virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+        virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
+        virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
+        virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
+        bt::Uint32 nearEdge(QPointF p);
+        QRectF resize(QPointF scene_pos);
+        void updateCursor();
+
+    private:
+        ScheduleItem* item;
+        QRectF constraints;
+        WeekScene* ws;
+        QGraphicsTextItem* text_item;
+        QPointF original_pos;
+        bool ready_to_resize;
+        bool resizing;
+        bt::Uint32 resize_edge;
+    };
 
 }
 

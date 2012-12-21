@@ -31,76 +31,76 @@
 
 namespace kt
 {
-	TorrentSearchBar::TorrentSearchBar(View* view, QWidget* parent): QWidget(parent)
-	{
-		QHBoxLayout* layout = new QHBoxLayout(this);
-		layout->setSpacing(0);
-		layout->setMargin(0);
+    TorrentSearchBar::TorrentSearchBar(View* view, QWidget* parent): QWidget(parent)
+    {
+        QHBoxLayout* layout = new QHBoxLayout(this);
+        layout->setSpacing(0);
+        layout->setMargin(0);
 
-		hide_search_bar = new QToolButton(this);
-		hide_search_bar->setIcon(KIcon("window-close"));
-		hide_search_bar->setAutoRaise(true);
-		connect(hide_search_bar, SIGNAL(clicked(bool)), this, SLOT(hideBar()));
-		connect(this, SIGNAL(filterBarHidden(QString)), view, SLOT(setFilterString(QString)));
+        hide_search_bar = new QToolButton(this);
+        hide_search_bar->setIcon(KIcon("window-close"));
+        hide_search_bar->setAutoRaise(true);
+        connect(hide_search_bar, SIGNAL(clicked(bool)), this, SLOT(hideBar()));
+        connect(this, SIGNAL(filterBarHidden(QString)), view, SLOT(setFilterString(QString)));
 
-		search_bar = new KLineEdit(this);
-		search_bar->setClearButtonShown(true);
-		search_bar->setClickMessage(i18n("Torrent filter"));
-		connect(search_bar, SIGNAL(textChanged(QString)), view, SLOT(setFilterString(QString)));
-		connect(this, SIGNAL(filterBarShown(QString)), view, SLOT(setFilterString(QString)));
+        search_bar = new KLineEdit(this);
+        search_bar->setClearButtonShown(true);
+        search_bar->setClickMessage(i18n("Torrent filter"));
+        connect(search_bar, SIGNAL(textChanged(QString)), view, SLOT(setFilterString(QString)));
+        connect(this, SIGNAL(filterBarShown(QString)), view, SLOT(setFilterString(QString)));
 
-		layout->addWidget(hide_search_bar);
-		layout->addWidget(search_bar);
+        layout->addWidget(hide_search_bar);
+        layout->addWidget(search_bar);
 
-		search_bar->installEventFilter(this);
-	}
+        search_bar->installEventFilter(this);
+    }
 
-	TorrentSearchBar::~TorrentSearchBar()
-	{
-	}
+    TorrentSearchBar::~TorrentSearchBar()
+    {
+    }
 
-	void TorrentSearchBar::showBar()
-	{
-		show();
-		search_bar->setFocus();
-		emit filterBarShown(search_bar->text());
-	}
+    void TorrentSearchBar::showBar()
+    {
+        show();
+        search_bar->setFocus();
+        emit filterBarShown(search_bar->text());
+    }
 
-	void TorrentSearchBar::hideBar()
-	{
-		hide();
-		emit filterBarHidden("");
-	}
+    void TorrentSearchBar::hideBar()
+    {
+        hide();
+        emit filterBarHidden("");
+    }
 
 
-	bool TorrentSearchBar::eventFilter(QObject* obj, QEvent* ev)
-	{
-		if (ev->type() == QEvent::KeyPress && ((QKeyEvent*)ev)->key() == Qt::Key_Escape)
-			hideBar();
+    bool TorrentSearchBar::eventFilter(QObject* obj, QEvent* ev)
+    {
+        if (ev->type() == QEvent::KeyPress && ((QKeyEvent*)ev)->key() == Qt::Key_Escape)
+            hideBar();
 
-		return QObject::eventFilter(obj, ev);
-	}
+        return QObject::eventFilter(obj, ev);
+    }
 
-	void TorrentSearchBar::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("TorrentSearchBar");
-		search_bar->setText(g.readEntry("text", QString()));
+    void TorrentSearchBar::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("TorrentSearchBar");
+        search_bar->setText(g.readEntry("text", QString()));
 
-		if(g.readEntry("hidden", true))
-		{
-			setHidden(true);
-			emit filterBarHidden("");
-		}
-		else
-			setHidden(false);
-	}
+        if (g.readEntry("hidden", true))
+        {
+            setHidden(true);
+            emit filterBarHidden("");
+        }
+        else
+            setHidden(false);
+    }
 
-	void TorrentSearchBar::saveState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("TorrentSearchBar");
-		g.writeEntry("hidden", isHidden());
-		g.writeEntry("text", search_bar->text());
-	}
+    void TorrentSearchBar::saveState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("TorrentSearchBar");
+        g.writeEntry("hidden", isHidden());
+        g.writeEntry("text", search_bar->text());
+    }
 
 }
 

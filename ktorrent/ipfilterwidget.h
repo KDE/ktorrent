@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Vasić   								   *
- *   ivasic@gmail.com   												   *
+ *   Copyright (C) 2007 by Ivan Vasić                                     *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -25,40 +25,40 @@
 
 namespace kt
 {
-	class IPFilterList;
-	
-	/**
-	* @author Ivan Vasic <ivasic@gmail.com>
-	* @brief Integrated IPFilter GUI class.
-	* Used to show, add and remove banned peers from blacklist.
-	*/
-	class IPFilterWidget: public KDialog, public Ui_IPFilterWidget
-	{
-		Q_OBJECT
-	public:
-		IPFilterWidget(QWidget* parent);
-		virtual ~IPFilterWidget();
-		
-		/// Register the filter list
-		static void registerFilterList();
-		
-		void saveFilter(const QString & fn);
-		static void loadFilter(const QString & fn);
-		
-	
-	public slots:
-		virtual void save();
-		virtual void open();
-		virtual void clear();
-		virtual void remove();
-		virtual void add();
-		virtual void accept();
-	
-	private:
-		void setupConnections();
-		
-		static IPFilterList* filter_list;
-	};
+    class IPFilterList;
+
+    /**
+    * @author Ivan Vasic <ivasic@gmail.com>
+    * @brief Integrated IPFilter GUI class.
+    * Used to show, add and remove banned peers from blacklist.
+    */
+    class IPFilterWidget: public KDialog, public Ui_IPFilterWidget
+    {
+        Q_OBJECT
+    public:
+        IPFilterWidget(QWidget* parent);
+        virtual ~IPFilterWidget();
+
+        /// Register the filter list
+        static void registerFilterList();
+
+        void saveFilter(const QString& fn);
+        static void loadFilter(const QString& fn);
+
+
+    public slots:
+        virtual void save();
+        virtual void open();
+        virtual void clear();
+        virtual void remove();
+        virtual void add();
+        virtual void accept();
+
+    private:
+        void setupConnections();
+
+        static IPFilterList* filter_list;
+    };
 }
 
 #endif

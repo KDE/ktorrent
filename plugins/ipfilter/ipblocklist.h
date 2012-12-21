@@ -54,7 +54,7 @@ namespace kt
         virtual ~IPBlockList();
 
         virtual bool blocked(const net::Address& addr) const;
-        
+
         /**
          * Overloaded function. Uses Uint32 IP to be checked
          **/
@@ -65,13 +65,13 @@ namespace kt
          * @param path The file to load
          * @return true upon success, false otherwise
          */
-        bool load(const QString & path);
-        
+        bool load(const QString& path);
+
         /**
          * Add a single block
          * @param block
          */
-        void addBlock(const IPBlock & block);
+        void addBlock(const IPBlock& block);
 
     private:
         QVector<IPBlock> blocks;

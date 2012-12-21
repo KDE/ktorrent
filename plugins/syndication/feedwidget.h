@@ -40,14 +40,14 @@ namespace kt
     public:
         FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* parent);
         virtual ~FeedWidget();
-        
+
         /// Set the Feed to show, can be 0
         void setFeed(Feed* feed);
 
         Feed* getFeed() {return feed;}
-        
-        void loadState(KConfigGroup & g);
-        void saveState(KConfigGroup & g);
+
+        void loadState(KConfigGroup& g);
+        void saveState(KConfigGroup& g);
 
     private slots:
         void downloadClicked();
@@ -58,7 +58,7 @@ namespace kt
         void updated();
         void onFeedRenamed(Feed* f);
         void refreshRateChanged(int v);
-        void linkClicked(const QUrl & url);
+        void linkClicked(const QUrl& url);
         void resizeColumns();
 
     signals:
@@ -69,7 +69,7 @@ namespace kt
         FeedWidgetModel* model;
         FilterList* filters;
         SyndicationActivity* act;
-        
+
         static QString item_template;
     };
 

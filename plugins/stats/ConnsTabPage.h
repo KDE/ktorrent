@@ -46,59 +46,59 @@
 namespace kt
 {
 
-	/** \brief Connections tab
-	\author Krzysztof Kundzicz <athantor@gmail.com>
-	*/
+    /** \brief Connections tab
+    \author Krzysztof Kundzicz <athantor@gmail.com>
+    */
 
-	class ConnsTabPage : public PluginPage
-	{
-		Q_OBJECT
+    class ConnsTabPage : public PluginPage
+    {
+        Q_OBJECT
 
-	private:
-		///Tab's UI
-		std::auto_ptr<Ui::ConnsWgt> pmConnsUi;
+    private:
+        ///Tab's UI
+        std::auto_ptr<Ui::ConnsWgt> pmConnsUi;
 
-		///Connections chart widget
-		std::auto_ptr<ChartDrawer> pmConnsChtWgt;
-		///DHT chart widget
-		std::auto_ptr<ChartDrawer> pmDhtChtWgt;
+        ///Connections chart widget
+        std::auto_ptr<ChartDrawer> pmConnsChtWgt;
+        ///DHT chart widget
+        std::auto_ptr<ChartDrawer> pmDhtChtWgt;
 
-		/** \brief Leechers in swarms dataset UUID
+        /** \brief Leechers in swarms dataset UUID
 
-		Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
-		*/
-		const std::auto_ptr<QUuid> pmLhrSwnUuid;
-		/** \brief Seeds in swarms dataset UUID
+        Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
+        */
+        const std::auto_ptr<QUuid> pmLhrSwnUuid;
+        /** \brief Seeds in swarms dataset UUID
 
-		Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
-		*/
-		const std::auto_ptr<QUuid> pmSesSwnUuid;
+        Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
+        */
+        const std::auto_ptr<QUuid> pmSesSwnUuid;
 
-		/** \brief Gathers data about connections
-		\param  pP kt::Plugin interface
-		*/
-		void GatherConnStats(Plugin *);
-		/** \brief Gathers data about DHT
-		\param  pP kt::Plugin interface
-		*/
-		void GatherDhtStats();
+        /** \brief Gathers data about connections
+        \param  pP kt::Plugin interface
+        */
+        void GatherConnStats(Plugin*);
+        /** \brief Gathers data about DHT
+        \param  pP kt::Plugin interface
+        */
+        void GatherDhtStats();
 
-		void setupUi();
-	public:
-		/** \brief Constructor
-		\param  p Parent
-		*/
-		ConnsTabPage(QWidget * p);
-		///Destructor
-		~ConnsTabPage();
+        void setupUi();
+    public:
+        /** \brief Constructor
+        \param  p Parent
+        */
+        ConnsTabPage(QWidget* p);
+        ///Destructor
+        ~ConnsTabPage();
 
 
-	public slots:
-		void applySettings();
-		void updateAllCharts();
-		void gatherData(Plugin *);
-		void resetAvg(ChartDrawer *);
-	};
+    public slots:
+        void applySettings();
+        void updateAllCharts();
+        void gatherData(Plugin*);
+        void resetAvg(ChartDrawer*);
+    };
 
 } // ns end
 

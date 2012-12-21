@@ -26,39 +26,39 @@
 
 namespace kt
 {
-	struct ScheduleItem;
-	class Schedule;
+    struct ScheduleItem;
+    class Schedule;
 
-	/**
-		@author
-	*/
-	class EditItemDlg : public KDialog, public Ui_EditItemDlg
-	{
-		Q_OBJECT
-	public:		
-		EditItemDlg(Schedule* schedule, ScheduleItem* item, bool new_item, QWidget* parent);
-		virtual ~EditItemDlg();
-		
-		/**
-		 * accept will only work if the item does not conflict
-		 **/
-		virtual void accept();
-		
-	private slots:
-		void fromChanged(const QTime & time);
-		void toChanged(const QTime & time);
-		void startDayChanged(int idx);
-		void endDayChanged(int idx);
-		void suspendedChanged(bool on);
-		void screensaverLimitsToggled(bool on);
-		
-	private:
-		void fillItem();
-		
-	private:
-		Schedule* schedule;
-		ScheduleItem* item;
-	};
+    /**
+        @author
+    */
+    class EditItemDlg : public KDialog, public Ui_EditItemDlg
+    {
+        Q_OBJECT
+    public:
+        EditItemDlg(Schedule* schedule, ScheduleItem* item, bool new_item, QWidget* parent);
+        virtual ~EditItemDlg();
+
+        /**
+         * accept will only work if the item does not conflict
+         **/
+        virtual void accept();
+
+    private slots:
+        void fromChanged(const QTime& time);
+        void toChanged(const QTime& time);
+        void startDayChanged(int idx);
+        void endDayChanged(int idx);
+        void suspendedChanged(bool on);
+        void screensaverLimitsToggled(bool on);
+
+    private:
+        void fillItem();
+
+    private:
+        Schedule* schedule;
+        ScheduleItem* item;
+    };
 
 }
 

@@ -29,87 +29,87 @@
 
 namespace kt
 {
-	struct ScheduleItem;
-	class Schedule;
-	class WeekScene;
+    struct ScheduleItem;
+    class Schedule;
+    class WeekScene;
 
-	/**
-		Displays the schedule of one week.
-	*/
-	class WeekView : public QGraphicsView
-	{
-		Q_OBJECT
-	public:
-		WeekView(QWidget* parent);
-		virtual ~WeekView();
-		
-		/**
-		 * Set the current Schedule
-		 * @param s The current schedule
-		 */
-		void setSchedule(Schedule* s);
-		
-		/**
-		 * Clear the current Schedule.
-		 */
-		void clear();
-		
-		/// Get the selected items
-		QList<ScheduleItem*> selectedItems() {return selection;}
-		
-		/**
-		 * Add an item to the schedule.
-		 * @param item The item to add
-		 */
-		void addScheduleItem(ScheduleItem* item);
-		
-		
-		/**
-		 * Remove all selected items from the schedule.
-		 */
-		void removeSelectedItems();
-		
-		/// Get the right click menu
-		KMenu* rightClickMenu() {return menu;}
-		
-		/**
-		 * Update the text of the status line
-		 * @param up Up speed
-		 * @param down Down speed
-		 * @param suspended Suspended or not
-		 * @param enabled Enabled or not
-		 */
-		void updateStatusText(int up,int down,bool suspended,bool enabled);
-		
-		/**
-		 * Something has changed about an item
-		 * @param item 
-		 */
-		void itemChanged(ScheduleItem* item);
-		
-		/**
-		 * The color settings have changed.
-		 */
-		void colorsChanged();
-		
-	signals:
-		void selectionChanged();
-		void editItem(ScheduleItem* item);
-		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int start_day,int end_day);
-		
-	private slots:
-		void onSelectionChanged();
-		void showContextMenu(const QPoint& pos);
-		void onDoubleClicked(QGraphicsItem* i);
-		
-	private:
-		WeekScene* scene;
-		
-		Schedule* schedule;
-		QMap<QGraphicsItem*,ScheduleItem*>  item_map;
-		QList<ScheduleItem*> selection;
-		KMenu* menu;
-	};
+    /**
+        Displays the schedule of one week.
+    */
+    class WeekView : public QGraphicsView
+    {
+        Q_OBJECT
+    public:
+        WeekView(QWidget* parent);
+        virtual ~WeekView();
+
+        /**
+         * Set the current Schedule
+         * @param s The current schedule
+         */
+        void setSchedule(Schedule* s);
+
+        /**
+         * Clear the current Schedule.
+         */
+        void clear();
+
+        /// Get the selected items
+        QList<ScheduleItem*> selectedItems() {return selection;}
+
+        /**
+         * Add an item to the schedule.
+         * @param item The item to add
+         */
+        void addScheduleItem(ScheduleItem* item);
+
+
+        /**
+         * Remove all selected items from the schedule.
+         */
+        void removeSelectedItems();
+
+        /// Get the right click menu
+        KMenu* rightClickMenu() {return menu;}
+
+        /**
+         * Update the text of the status line
+         * @param up Up speed
+         * @param down Down speed
+         * @param suspended Suspended or not
+         * @param enabled Enabled or not
+         */
+        void updateStatusText(int up, int down, bool suspended, bool enabled);
+
+        /**
+         * Something has changed about an item
+         * @param item
+         */
+        void itemChanged(ScheduleItem* item);
+
+        /**
+         * The color settings have changed.
+         */
+        void colorsChanged();
+
+    signals:
+        void selectionChanged();
+        void editItem(ScheduleItem* item);
+        void itemMoved(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day);
+
+    private slots:
+        void onSelectionChanged();
+        void showContextMenu(const QPoint& pos);
+        void onDoubleClicked(QGraphicsItem* i);
+
+    private:
+        WeekScene* scene;
+
+        Schedule* schedule;
+        QMap<QGraphicsItem*, ScheduleItem*>  item_map;
+        QList<ScheduleItem*> selection;
+        KMenu* menu;
+    };
 
 }
 

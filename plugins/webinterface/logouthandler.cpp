@@ -22,30 +22,30 @@
 #include "httpserver.h"
 #include "httpclienthandler.h"
 
-namespace kt 
+namespace kt
 {
 
-	LogoutHandler::LogoutHandler(HttpServer* server): WebContentGenerator(server,"/logout", LOGIN_REQUIRED)
-	{
-	}
-	
-	
-	LogoutHandler::~LogoutHandler()
-	{
-	}
-	
-	
-	void LogoutHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
-	{
-		Q_UNUSED(hdr);
-		server->logout();
-		server->redirectToLoginPage(hdlr);
-	}
-	
-	void LogoutHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
-	{
-		Q_UNUSED(data);
-		get(hdlr,hdr);
-	}
+    LogoutHandler::LogoutHandler(HttpServer* server): WebContentGenerator(server, "/logout", LOGIN_REQUIRED)
+    {
+    }
+
+
+    LogoutHandler::~LogoutHandler()
+    {
+    }
+
+
+    void LogoutHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+    {
+        Q_UNUSED(hdr);
+        server->logout();
+        server->redirectToLoginPage(hdlr);
+    }
+
+    void LogoutHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+    {
+        Q_UNUSED(data);
+        get(hdlr, hdr);
+    }
 
 }

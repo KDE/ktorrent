@@ -29,18 +29,18 @@ namespace bt
 
 namespace kt
 {
-	class ViewModel;
+    class ViewModel;
 
-	/**
-		Custom selection model for View
-	*/
-	class ViewSelectionModel : public ItemSelectionModel
-	{
-		Q_OBJECT
-	public:
-		ViewSelectionModel(ViewModel* vm,QObject* parent);
-		virtual ~ViewSelectionModel();
-	};
+    /**
+        Custom selection model for View
+    */
+    class ViewSelectionModel : public ItemSelectionModel
+    {
+        Q_OBJECT
+    public:
+        ViewSelectionModel(ViewModel* vm, QObject* parent);
+        virtual ~ViewSelectionModel();
+    };
 
 }
 

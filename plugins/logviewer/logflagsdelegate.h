@@ -26,21 +26,21 @@
 namespace kt
 {
 
-	/**
-		@author
-	*/
-	class LogFlagsDelegate : public QItemDelegate
-	{
-		Q_OBJECT
-	public:
-		LogFlagsDelegate(QObject *parent);
-		virtual ~LogFlagsDelegate();
-		
-		virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,const QModelIndex &index) const;
-		virtual void setEditorData(QWidget *editor, const QModelIndex &index) const;
-		virtual void setModelData(QWidget *editor, QAbstractItemModel *model,const QModelIndex &index) const;
-		virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
-	};
+    /**
+        @author
+    */
+    class LogFlagsDelegate : public QItemDelegate
+    {
+        Q_OBJECT
+    public:
+        LogFlagsDelegate(QObject* parent);
+        virtual ~LogFlagsDelegate();
+
+        virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+        virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+        virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    };
 
 }
 

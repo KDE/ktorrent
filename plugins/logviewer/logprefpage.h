@@ -25,24 +25,24 @@
 
 namespace kt
 {
-	class LogFlags;
-	
-	class LogPrefPage : public PrefPageInterface,public Ui_LogPrefWidget
-	{
-		Q_OBJECT
-	public:
-		LogPrefPage(LogFlags* flags,QWidget* parent);
-		virtual ~LogPrefPage();
-		
-		virtual void loadDefaults();
-		virtual void loadSettings();
-		virtual void updateSettings();
-		
-		void saveState();
-		void loadState();
-	private:
-		bool state_loaded;
-	};
+    class LogFlags;
+
+    class LogPrefPage : public PrefPageInterface, public Ui_LogPrefWidget
+    {
+        Q_OBJECT
+    public:
+        LogPrefPage(LogFlags* flags, QWidget* parent);
+        virtual ~LogPrefPage();
+
+        virtual void loadDefaults();
+        virtual void loadSettings();
+        virtual void updateSettings();
+
+        void saveState();
+        void loadState();
+    private:
+        bool state_loaded;
+    };
 }
 
 #endif

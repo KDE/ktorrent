@@ -25,60 +25,60 @@
 
 namespace kt
 {
-	TorrentFileModel::TorrentFileModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent)
-	: QAbstractItemModel(parent),tc(tc),mode(mode),file_names_editable(false)
-	{}
+    TorrentFileModel::TorrentFileModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent)
+        : QAbstractItemModel(parent), tc(tc), mode(mode), file_names_editable(false)
+    {}
 
-	TorrentFileModel::~TorrentFileModel()
-	{}
-	
-	QByteArray TorrentFileModel::saveExpandedState(QSortFilterProxyModel*, QTreeView* )
-	{
-		return QByteArray();
-	}
-		
-	void TorrentFileModel::loadExpandedState(QSortFilterProxyModel* ,QTreeView* ,const QByteArray &)
-	{}
+    TorrentFileModel::~TorrentFileModel()
+    {}
 
-	void TorrentFileModel::missingFilesMarkedDND()
-	{
-		reset();
-	}
+    QByteArray TorrentFileModel::saveExpandedState(QSortFilterProxyModel*, QTreeView*)
+    {
+        return QByteArray();
+    }
 
-	void TorrentFileModel::update()
-	{}
+    void TorrentFileModel::loadExpandedState(QSortFilterProxyModel* , QTreeView* , const QByteArray&)
+    {}
 
-	void TorrentFileModel::onCodecChange()
-	{
-		reset();
-	}
-	
-	Qt::ItemFlags TorrentFileModel::flags(const QModelIndex & index) const
-	{
-		if (!index.isValid())
-			return 0;
-		
-		Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-		if (tc->getStats().multi_file_torrent)
-			flags |= Qt::ItemIsUserCheckable;
-		
-		if (fileNamesEditable() && index.column() == 0)
-			flags |= Qt::ItemIsEditable;
-		
-		return flags;
-	}
-	
-	void TorrentFileModel::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
-	{
-		Q_UNUSED(file);
-		Q_UNUSED(percentage);
-	}
-	
-	void TorrentFileModel::filePreviewChanged(bt::TorrentFileInterface* file,bool preview)
-	{
-		Q_UNUSED(file);
-		Q_UNUSED(preview);
-	}
+    void TorrentFileModel::missingFilesMarkedDND()
+    {
+        reset();
+    }
+
+    void TorrentFileModel::update()
+    {}
+
+    void TorrentFileModel::onCodecChange()
+    {
+        reset();
+    }
+
+    Qt::ItemFlags TorrentFileModel::flags(const QModelIndex& index) const
+    {
+        if (!index.isValid())
+            return 0;
+
+        Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+        if (tc->getStats().multi_file_torrent)
+            flags |= Qt::ItemIsUserCheckable;
+
+        if (fileNamesEditable() && index.column() == 0)
+            flags |= Qt::ItemIsEditable;
+
+        return flags;
+    }
+
+    void TorrentFileModel::filePercentageChanged(bt::TorrentFileInterface* file, float percentage)
+    {
+        Q_UNUSED(file);
+        Q_UNUSED(percentage);
+    }
+
+    void TorrentFileModel::filePreviewChanged(bt::TorrentFileInterface* file, bool preview)
+    {
+        Q_UNUSED(file);
+        Q_UNUSED(preview);
+    }
 }
 
 #include "torrentfilemodel.moc"

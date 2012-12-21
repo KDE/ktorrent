@@ -28,35 +28,35 @@
 namespace kt
 {
 
-	IconHandler::IconHandler(HttpServer* server) : WebContentGenerator(server,"/icon",PUBLIC)
-	{
-	}
+    IconHandler::IconHandler(HttpServer* server) : WebContentGenerator(server, "/icon", PUBLIC)
+    {
+    }
 
 
-	IconHandler::~IconHandler()
-	{
-	}
+    IconHandler::~IconHandler()
+    {
+    }
 
 
-	void IconHandler::get(HttpClientHandler* hdlr,const QHttpRequestHeader& hdr)
-	{
-		KUrl url;
-		url.setEncodedPathAndQuery(hdr.path());
-		QString name = url.queryItem("name");
-		
-		int size = url.queryItem("size").toInt();
-		if (size < KIconLoader::NoGroup)
-			size = KIconLoader::NoGroup;
-		else if (size > KIconLoader::User)
-			size = KIconLoader::User;
+    void IconHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+    {
+        KUrl url;
+        url.setEncodedPathAndQuery(hdr.path());
+        QString name = url.queryItem("name");
 
-		server->handleNormalFile(hdlr,hdr,KIconLoader::global()->iconPath(name,size));
-	}
+        int size = url.queryItem("size").toInt();
+        if (size < KIconLoader::NoGroup)
+            size = KIconLoader::NoGroup;
+        else if (size > KIconLoader::User)
+            size = KIconLoader::User;
 
-	void IconHandler::post(HttpClientHandler* hdlr,const QHttpRequestHeader& hdr,const QByteArray& data)
-	{
-		Q_UNUSED(data);
-		get(hdlr,hdr);
-	}
+        server->handleNormalFile(hdlr, hdr, KIconLoader::global()->iconPath(name, size));
+    }
+
+    void IconHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+    {
+        Q_UNUSED(data);
+        get(hdlr, hdr);
+    }
 
 }

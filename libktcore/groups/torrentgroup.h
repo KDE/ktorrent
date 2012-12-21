@@ -28,41 +28,41 @@
 namespace kt
 {
 
-	class QueueManager;
+    class QueueManager;
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class KTCORE_EXPORT TorrentGroup : public Group
-	{
-		Q_OBJECT
-	public:
-		TorrentGroup(const QString& name);
-		virtual ~TorrentGroup();
+    /**
+        @author Joris Guisson <joris.guisson@gmail.com>
+    */
+    class KTCORE_EXPORT TorrentGroup : public Group
+    {
+        Q_OBJECT
+    public:
+        TorrentGroup(const QString& name);
+        virtual ~TorrentGroup();
 
-		virtual bool isMember(TorrentInterface* tor);
-		virtual void save(bt::BEncoder* enc);
-		virtual void load(bt::BDictNode* n);
-		virtual void torrentRemoved(TorrentInterface* tor);
-		virtual void removeTorrent(TorrentInterface* tor);
-		virtual void addTorrent(TorrentInterface* tor,bool new_torrent);
-		virtual void policyChanged();
+        virtual bool isMember(TorrentInterface* tor);
+        virtual void save(bt::BEncoder* enc);
+        virtual void load(bt::BDictNode* n);
+        virtual void torrentRemoved(TorrentInterface* tor);
+        virtual void removeTorrent(TorrentInterface* tor);
+        virtual void addTorrent(TorrentInterface* tor, bool new_torrent);
+        virtual void policyChanged();
 
-		void add(TorrentInterface* tor);
-		void remove(TorrentInterface* tor);
-		void loadTorrents(QueueManager* qman);
-	
-	signals:
-		/// Emitted when a torrent has been added
-		void torrentAdded(Group* g);
-		
-		/// Emittend when a torrent has been removed
-		void torrentRemoved(Group* g);
-		
-	private:
-		std::set<TorrentInterface*> torrents;
-		std::set<bt::SHA1Hash> hashes;
-	};
+        void add(TorrentInterface* tor);
+        void remove(TorrentInterface* tor);
+        void loadTorrents(QueueManager* qman);
+
+    signals:
+        /// Emitted when a torrent has been added
+        void torrentAdded(Group* g);
+
+        /// Emittend when a torrent has been removed
+        void torrentRemoved(Group* g);
+
+    private:
+        std::set<TorrentInterface*> torrents;
+        std::set<bt::SHA1Hash> hashes;
+    };
 
 }
 

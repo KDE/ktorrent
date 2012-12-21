@@ -31,133 +31,133 @@ using namespace bt;
 
 namespace kt
 {
-	Script::Script(QObject* parent) : QObject(parent),action(0),executing(false),can_be_removed(true)
-	{
-	}
-	
-	Script::Script(const QString & file,QObject* parent) : QObject(parent),file(file),action(0),executing(false),can_be_removed(true)
-	{
-	}
+    Script::Script(QObject* parent) : QObject(parent), action(0), executing(false), can_be_removed(true)
+    {
+    }
+
+    Script::Script(const QString& file, QObject* parent) : QObject(parent), file(file), action(0), executing(false), can_be_removed(true)
+    {
+    }
 
 
-	Script::~Script()
-	{
-		stop();
-	}
-	
-	bool Script::loadFromDesktopFile(const QString & dir,const QString & desktop_file)
-	{
-		KDesktopFile df(dir + desktop_file);
-		// check if everything is OK
-		if (df.readType().trimmed() != "KTorrentScript")
-			return false;
-		
-		info.name = df.readName();
-		info.comment = df.readComment();
-		info.icon = df.readIcon();
-		
-		KConfigGroup g = df.group("Desktop Entry");
-		info.author = g.readEntry("X-KTorrent-Script-Author",QString());
-		info.email = g.readEntry("X-KTorrent-Script-Email",QString());
-		info.website = g.readEntry("X-KTorrent-Script-Website",QString());
-		info.license = g.readEntry("X-KTorrent-Script-License",QString());
-		file = g.readEntry("X-KTorrent-Script-File",QString());
-		if (file.isEmpty() || !bt::Exists(dir + file)) // the script file must exist
-			return false;
-		
-		file = dir + file;
-		return true;
-	}
-	
-	bool Script::executeable() const
-	{
-		return bt::Exists(file) && !Kross::Manager::self().interpreternameForFile(file).isNull();
-	}
+    Script::~Script()
+    {
+        stop();
+    }
 
-	bool Script::execute()
-	{
-		if (!bt::Exists(file) || action)
-			return false;
-		
-		KMimeType::Ptr mt = KMimeType::findByPath(file);
-		QString name = QFileInfo(file).fileName();
-		action = new Kross::Action(this,name);
-		action->setText(name);
-		action->setDescription(name);
-		action->setFile(file);
-		action->setIconName(mt->iconName());
-		QString interpreter = Kross::Manager::self().interpreternameForFile(file);
-		if (interpreter.isNull())
-		{
-			delete action;
-			action = 0;
-			return false;
-		}
-		else
-		{
-			action->setInterpreter(interpreter);
-			Kross::Manager::self().actionCollection()->addAction(file,action);
-			action->trigger();
-			executing = true;
-			return true;
-		}
-	}
-		
-	void Script::stop()
-	{
-		if (!executing)
-			return;
-		
-		// Call unload function if the script has one
-		if (action->functionNames().contains("unload"))
-		{
-			QVariantList args;
-			action->callFunction("unload",args);
-		}
-		
-		Kross::ActionCollection* col = Kross::Manager::self().actionCollection();
-		col->removeAction(action->file());
-		action->deleteLater();
-		action = 0;
-		executing = false;
-	}
-	
-	QString Script::name() const
-	{
-		if (!info.name.isEmpty())
-			return info.name;
-		else if (action)
-			return action->name();
-		else
-			return QFileInfo(file).fileName();
-	}
-		
-	QString Script::iconName() const
-	{
-		if (!info.icon.isEmpty())
-			return info.icon;
-		else if (action)
-			return action->iconName();
-		else
-			return KMimeType::findByPath(file)->iconName();
-	}
-	
-	bool Script::hasConfigure() const
-	{
-		if (!action)
-			return false;
-		
-		QStringList functions = action->functionNames();
-		return functions.contains("configure");
-	}
-		
-	void Script::configure()
-	{
-		if (!action)
-			return;
-		
-		QVariantList args;
-		action->callFunction("configure",args);
-	}
-	
+    bool Script::loadFromDesktopFile(const QString& dir, const QString& desktop_file)
+    {
+        KDesktopFile df(dir + desktop_file);
+        // check if everything is OK
+        if (df.readType().trimmed() != "KTorrentScript")
+            return false;
+
+        info.name = df.readName();
+        info.comment = df.readComment();
+        info.icon = df.readIcon();
+
+        KConfigGroup g = df.group("Desktop Entry");
+        info.author = g.readEntry("X-KTorrent-Script-Author", QString());
+        info.email = g.readEntry("X-KTorrent-Script-Email", QString());
+        info.website = g.readEntry("X-KTorrent-Script-Website", QString());
+        info.license = g.readEntry("X-KTorrent-Script-License", QString());
+        file = g.readEntry("X-KTorrent-Script-File", QString());
+        if (file.isEmpty() || !bt::Exists(dir + file)) // the script file must exist
+            return false;
+
+        file = dir + file;
+        return true;
+    }
+
+    bool Script::executeable() const
+    {
+        return bt::Exists(file) && !Kross::Manager::self().interpreternameForFile(file).isNull();
+    }
+
+    bool Script::execute()
+    {
+        if (!bt::Exists(file) || action)
+            return false;
+
+        KMimeType::Ptr mt = KMimeType::findByPath(file);
+        QString name = QFileInfo(file).fileName();
+        action = new Kross::Action(this, name);
+        action->setText(name);
+        action->setDescription(name);
+        action->setFile(file);
+        action->setIconName(mt->iconName());
+        QString interpreter = Kross::Manager::self().interpreternameForFile(file);
+        if (interpreter.isNull())
+        {
+            delete action;
+            action = 0;
+            return false;
+        }
+        else
+        {
+            action->setInterpreter(interpreter);
+            Kross::Manager::self().actionCollection()->addAction(file, action);
+            action->trigger();
+            executing = true;
+            return true;
+        }
+    }
+
+    void Script::stop()
+    {
+        if (!executing)
+            return;
+
+        // Call unload function if the script has one
+        if (action->functionNames().contains("unload"))
+        {
+            QVariantList args;
+            action->callFunction("unload", args);
+        }
+
+        Kross::ActionCollection* col = Kross::Manager::self().actionCollection();
+        col->removeAction(action->file());
+        action->deleteLater();
+        action = 0;
+        executing = false;
+    }
+
+    QString Script::name() const
+    {
+        if (!info.name.isEmpty())
+            return info.name;
+        else if (action)
+            return action->name();
+        else
+            return QFileInfo(file).fileName();
+    }
+
+    QString Script::iconName() const
+    {
+        if (!info.icon.isEmpty())
+            return info.icon;
+        else if (action)
+            return action->iconName();
+        else
+            return KMimeType::findByPath(file)->iconName();
+    }
+
+    bool Script::hasConfigure() const
+    {
+        if (!action)
+            return false;
+
+        QStringList functions = action->functionNames();
+        return functions.contains("configure");
+    }
+
+    void Script::configure()
+    {
+        if (!action)
+            return;
+
+        QVariantList args;
+        action->callFunction("configure", args);
+    }
+
 }

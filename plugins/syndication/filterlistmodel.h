@@ -23,35 +23,35 @@
 
 #include <QAbstractListModel>
 
-namespace kt 
+namespace kt
 {
-	class Filter;
+    class Filter;
 
-	/**
-		Model to show a list of filters in a view.
-	*/
-	class FilterListModel : public QAbstractListModel
-	{
-	public:
-		FilterListModel(QObject* parent);
-		virtual ~FilterListModel();
-			
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-			
-		void addFilter(Filter* f);
-		void removeFilter(Filter* f);
-		Filter* filterForIndex(const QModelIndex & idx);
-		Filter* filterByName(const QString & name);
-		Filter* filterByRow(int row);
-		Filter* filterByID(const QString & id);
-		void clear();
-		
-	protected:
-		QList<Filter*> filters;
-	};
+    /**
+        Model to show a list of filters in a view.
+    */
+    class FilterListModel : public QAbstractListModel
+    {
+    public:
+        FilterListModel(QObject* parent);
+        virtual ~FilterListModel();
+
+        virtual int rowCount(const QModelIndex& parent) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual bool removeRows(int row, int count, const QModelIndex& parent);
+        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+
+        void addFilter(Filter* f);
+        void removeFilter(Filter* f);
+        Filter* filterForIndex(const QModelIndex& idx);
+        Filter* filterByName(const QString& name);
+        Filter* filterByRow(int row);
+        Filter* filterByID(const QString& id);
+        void clear();
+
+    protected:
+        QList<Filter*> filters;
+    };
 
 }
 

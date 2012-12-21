@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Diego R. Brogna                                 *
- *   dierbro@gmail.com                                               	   *
+ *   dierbro@gmail.com                                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -36,40 +36,40 @@ using namespace bt;
 namespace kt
 {
 
-	WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent) 
-		: PrefPageInterface(WebInterfacePluginSettings::self(),i18n("Web Interface"),"network-server",parent)
-	{
-		setupUi(this);
-		connect(kcfg_authentication,SIGNAL(toggled(bool)),this,SLOT(authenticationToggled(bool)));
-	
-		QStringList dirList =KGlobal::dirs()->findDirs("data", "ktorrent/www");
-		if (!dirList.isEmpty())
-		{
-			QDir d(*(dirList.begin()));
-			
-			QStringList skinList = d.entryList(QDir::Dirs);
-			foreach (const QString& skin,skinList)
-			{
-				if (skin =="." || skin == ".." || skin == "common")
-					continue;
-				kcfg_skin->addItem(skin);
-			}
-		}
-		kcfg_username->setEnabled(WebInterfacePluginSettings::authentication());
-		kcfg_password->setEnabled(WebInterfacePluginSettings::authentication());
-	}
-	
-	WebInterfacePrefWidget::~WebInterfacePrefWidget()
-	{}
+    WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget* parent)
+        : PrefPageInterface(WebInterfacePluginSettings::self(), i18n("Web Interface"), "network-server", parent)
+    {
+        setupUi(this);
+        connect(kcfg_authentication, SIGNAL(toggled(bool)), this, SLOT(authenticationToggled(bool)));
 
-	void WebInterfacePrefWidget::authenticationToggled(bool on)
-	{
-		kcfg_username->setEnabled(on);
-		kcfg_password->setEnabled(on);
-	}
+        QStringList dirList = KGlobal::dirs()->findDirs("data", "ktorrent/www");
+        if (!dirList.isEmpty())
+        {
+            QDir d(*(dirList.begin()));
 
-	
+            QStringList skinList = d.entryList(QDir::Dirs);
+            foreach (const QString& skin, skinList)
+            {
+                if (skin == "." || skin == ".." || skin == "common")
+                    continue;
+                kcfg_skin->addItem(skin);
+            }
+        }
+        kcfg_username->setEnabled(WebInterfacePluginSettings::authentication());
+        kcfg_password->setEnabled(WebInterfacePluginSettings::authentication());
+    }
+
+    WebInterfacePrefWidget::~WebInterfacePrefWidget()
+    {}
+
+    void WebInterfacePrefWidget::authenticationToggled(bool on)
+    {
+        kcfg_username->setEnabled(on);
+        kcfg_password->setEnabled(on);
+    }
+
+
 }
 
 #include "webinterfaceprefwidget.moc"
-			 
+

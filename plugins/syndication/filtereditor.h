@@ -27,53 +27,53 @@
 
 namespace kt
 {
-	class Filter;
-	class FilterList;
-	class CoreInterface;
-	class FeedList;
-	class FeedWidgetModel;
-	
-	class TestFilterModel : public QSortFilterProxyModel
-	{
-	public:
-		TestFilterModel(Filter* filter,FeedWidgetModel* source,QObject* parent);
-		virtual ~TestFilterModel();
-		
-		virtual bool filterAcceptsRow(int source_row,const QModelIndex & source_parent) const;
-	private:
-		Filter* filter;
-		FeedWidgetModel* feed_model;
-	};
+    class Filter;
+    class FilterList;
+    class CoreInterface;
+    class FeedList;
+    class FeedWidgetModel;
 
-	/**
-		Dialog to edit filters
-	*/
-	class FilterEditor : public KDialog,public Ui_FilterEditor
-	{
-		Q_OBJECT
-	public:
-		FilterEditor(Filter* filter,FilterList* filters,FeedList* feeds,CoreInterface* core,QWidget* parent);
-		virtual ~FilterEditor();
-		
-	private slots:
-		void onOK();
-		void checkOKButton();
-		void test();
-		
-	private:
-		bool okIsPossible();
-		void applyOnFilter(Filter* f);
-		virtual void slotButtonClicked(int button);
+    class TestFilterModel : public QSortFilterProxyModel
+    {
+    public:
+        TestFilterModel(Filter* filter, FeedWidgetModel* source, QObject* parent);
+        virtual ~TestFilterModel();
 
-	private:
-		Filter* filter;
-		Filter* test_filter;
-		CoreInterface* core;
-		FeedList* feeds;
-		FeedWidgetModel* test_model;
-		TestFilterModel* filter_model;
-		FilterList* filters;
-	};
+        virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+    private:
+        Filter* filter;
+        FeedWidgetModel* feed_model;
+    };
+
+    /**
+        Dialog to edit filters
+    */
+    class FilterEditor : public KDialog, public Ui_FilterEditor
+    {
+        Q_OBJECT
+    public:
+        FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds, CoreInterface* core, QWidget* parent);
+        virtual ~FilterEditor();
+
+    private slots:
+        void onOK();
+        void checkOKButton();
+        void test();
+
+    private:
+        bool okIsPossible();
+        void applyOnFilter(Filter* f);
+        virtual void slotButtonClicked(int button);
+
+    private:
+        Filter* filter;
+        Filter* test_filter;
+        CoreInterface* core;
+        FeedList* feeds;
+        FeedWidgetModel* test_model;
+        TestFilterModel* filter_model;
+        FilterList* filters;
+    };
 
 }
 

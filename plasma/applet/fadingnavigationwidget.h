@@ -29,30 +29,30 @@
 
 class FadingNavigationWidget : public QObject
 {
-	Q_OBJECT
-	public:
-		FadingNavigationWidget(QGraphicsWidget *parent);
-		virtual ~FadingNavigationWidget();
-		void setEnabled(bool enabled);
-		Plasma::Frame *frame();
-		Plasma::PushButton *nextButton();
-		Plasma::PushButton *prevButton();
+    Q_OBJECT
+public:
+    FadingNavigationWidget(QGraphicsWidget* parent);
+    virtual ~FadingNavigationWidget();
+    void setEnabled(bool enabled);
+    Plasma::Frame* frame();
+    Plasma::PushButton* nextButton();
+    Plasma::PushButton* prevButton();
 
-	signals:
-		void prevClicked();
-		void nextClicked();
+signals:
+    void prevClicked();
+    void nextClicked();
 
-	protected:
-		void initFrame();
-		virtual bool eventFilter(QObject *obj, QEvent *event);
+protected:
+    void initFrame();
+    virtual bool eventFilter(QObject* obj, QEvent* event);
 
-	private:
-		bool navigation_enabled;
-		QGraphicsWidget *parent;
-		Plasma::Frame *mFrame;
-		FadingItem *mFadingItem;
-		Plasma::PushButton *mPrevButton;
-		Plasma::PushButton *mNextButton;
+private:
+    bool navigation_enabled;
+    QGraphicsWidget* parent;
+    Plasma::Frame* mFrame;
+    FadingItem* mFadingItem;
+    Plasma::PushButton* mPrevButton;
+    Plasma::PushButton* mNextButton;
 };
 
 #endif

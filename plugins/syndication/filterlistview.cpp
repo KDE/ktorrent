@@ -24,37 +24,37 @@
 namespace kt
 {
 
-	FilterListView::FilterListView(FilterList* filters,QWidget* parent)
-			: QListView(parent),filters(filters)
-	{
-		setContextMenuPolicy(Qt::CustomContextMenu);
-		setModel(filters);
-		setAlternatingRowColors(true);
-		connect(this,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(itemActivated(const QModelIndex&)));
-		connect(this->selectionModel(),SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-				this,SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
-	}
+    FilterListView::FilterListView(FilterList* filters, QWidget* parent)
+        : QListView(parent), filters(filters)
+    {
+        setContextMenuPolicy(Qt::CustomContextMenu);
+        setModel(filters);
+        setAlternatingRowColors(true);
+        connect(this, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(itemActivated(const QModelIndex&)));
+        connect(this->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+                this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
+    }
 
 
-	FilterListView::~FilterListView()
-	{
-	}
+    FilterListView::~FilterListView()
+    {
+    }
 
-	void FilterListView::itemActivated(const QModelIndex & idx)
-	{
-		filterActivated(filters->filterForIndex(idx));
-	}
+    void FilterListView::itemActivated(const QModelIndex& idx)
+    {
+        filterActivated(filters->filterForIndex(idx));
+    }
 
-	void FilterListView::selectionChanged(const QItemSelection& sel, const QItemSelection& desel)
-	{
-		Q_UNUSED(desel);
-		Q_UNUSED(sel);
-		enableRemove(selectionModel()->selectedRows().count() > 0);
-		enableEdit(selectionModel()->selectedRows().count() == 1);
-	}
-	
-	QModelIndexList FilterListView::selectedFilters()
-	{
-		return selectionModel()->selectedRows();
-	}
+    void FilterListView::selectionChanged(const QItemSelection& sel, const QItemSelection& desel)
+    {
+        Q_UNUSED(desel);
+        Q_UNUSED(sel);
+        enableRemove(selectionModel()->selectedRows().count() > 0);
+        enableEdit(selectionModel()->selectedRows().count() == 1);
+    }
+
+    QModelIndexList FilterListView::selectedFilters()
+    {
+        return selectionModel()->selectedRows();
+    }
 }

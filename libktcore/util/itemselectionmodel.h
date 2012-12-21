@@ -26,33 +26,33 @@
 
 namespace kt
 {
-	/**
-	 * Selection model which works on internal pointers instead of indexes.
-	 */
-	class KTCORE_EXPORT ItemSelectionModel : public QItemSelectionModel
-	{
-		Q_OBJECT
-	public:
-		ItemSelectionModel(QAbstractItemModel* model,QObject* parent);
-		virtual ~ItemSelectionModel();
-		
-		virtual void select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command);
-		virtual void select(const QItemSelection & sel, QItemSelectionModel::SelectionFlags command);
-		virtual void clear();
-		virtual void reset();
-		
-	public slots:
-		/**
-		 * Updates the selection after a sort.
-		 */
-		void sorted();
-		
-	private:
-		void doRange(const QItemSelectionRange r, QItemSelectionModel::SelectionFlags command);
-		
-	private:
-		QSet<void*> selection;
-	};
+    /**
+     * Selection model which works on internal pointers instead of indexes.
+     */
+    class KTCORE_EXPORT ItemSelectionModel : public QItemSelectionModel
+    {
+        Q_OBJECT
+    public:
+        ItemSelectionModel(QAbstractItemModel* model, QObject* parent);
+        virtual ~ItemSelectionModel();
+
+        virtual void select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command);
+        virtual void select(const QItemSelection& sel, QItemSelectionModel::SelectionFlags command);
+        virtual void clear();
+        virtual void reset();
+
+    public slots:
+        /**
+         * Updates the selection after a sort.
+         */
+        void sorted();
+
+    private:
+        void doRange(const QItemSelectionRange r, QItemSelectionModel::SelectionFlags command);
+
+    private:
+        QSet<void*> selection;
+    };
 }
 
 #endif // ITEMSELECTIONMODEL_H

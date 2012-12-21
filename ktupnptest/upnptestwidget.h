@@ -26,30 +26,30 @@
 
 namespace bt
 {
-	class UPnPMCastSocket;
-	class UPnPRouter;
+    class UPnPMCastSocket;
+    class UPnPRouter;
 }
 
-class UPnPTestWidget : public QWidget,public Ui_UPnPTestWidget,public bt::LogMonitorInterface
+class UPnPTestWidget : public QWidget, public Ui_UPnPTestWidget, public bt::LogMonitorInterface
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	UPnPTestWidget(QWidget* parent = 0);
-	virtual ~UPnPTestWidget();
+    UPnPTestWidget(QWidget* parent = 0);
+    virtual ~UPnPTestWidget();
 
 private:
-	virtual void message(const QString & line, unsigned int arg);
+    virtual void message(const QString& line, unsigned int arg);
 
 private slots:
-	void doForward();
-	void undoForward();
-	void findRouters();
-	void discovered(bt::UPnPRouter* r);
-	void verboseModeChecked(bool on);
+    void doForward();
+    void undoForward();
+    void findRouters();
+    void discovered(bt::UPnPRouter* r);
+    void verboseModeChecked(bool on);
 
 private:
-	bt::UPnPMCastSocket* mcast_socket;
-	bt::UPnPRouter* router;
+    bt::UPnPMCastSocket* mcast_socket;
+    bt::UPnPRouter* router;
 };
 
 #endif

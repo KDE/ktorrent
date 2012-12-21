@@ -26,29 +26,29 @@
 
 namespace ktplasma
 {
-	class Engine;
-	
-	/**
-		@author
-	*/
-	class CoreDBusInterface : public QObject
-	{
-		Q_OBJECT
-	public:
-		CoreDBusInterface(Engine* engine);
-		virtual ~CoreDBusInterface();
-		
-		void init();
-		void update();
-		
-	private slots:
-		void torrentAdded(const QString & tor);
-		void torrentRemoved(const QString & tor);
+    class Engine;
 
-	private:
-		QDBusInterface* core;
-		Engine* engine;
-	};
+    /**
+        @author
+    */
+    class CoreDBusInterface : public QObject
+    {
+        Q_OBJECT
+    public:
+        CoreDBusInterface(Engine* engine);
+        virtual ~CoreDBusInterface();
+
+        void init();
+        void update();
+
+    private slots:
+        void torrentAdded(const QString& tor);
+        void torrentRemoved(const QString& tor);
+
+    private:
+        QDBusInterface* core;
+        Engine* engine;
+    };
 
 }
 

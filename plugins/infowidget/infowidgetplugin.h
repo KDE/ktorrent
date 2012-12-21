@@ -26,64 +26,64 @@
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
 
 namespace kt
 {
-	class PeerView;
-	class TrackerView;
-	class StatusTab;
-	class FileView;
-	class ChunkDownloadView;
-	class IWPrefPage;
-	class Monitor;
-	class WebSeedsTab;
-	
+    class PeerView;
+    class TrackerView;
+    class StatusTab;
+    class FileView;
+    class ChunkDownloadView;
+    class IWPrefPage;
+    class Monitor;
+    class WebSeedsTab;
 
-	/**
-	@author Joris Guisson
-	*/
-	class InfoWidgetPlugin : public Plugin,public ViewListener
-	{
-		Q_OBJECT
-	public:
-		InfoWidgetPlugin(QObject* parent,const QStringList& args);
-		virtual ~InfoWidgetPlugin();
 
-		virtual void load();
-		virtual void unload();
-		virtual void guiUpdate();
-		virtual void currentTorrentChanged(bt::TorrentInterface* tc);
-		virtual bool versionCheck(const QString & version) const;
-		
-		///Show PeerView in main window
-		void showPeerView(bool show);
-		///Show ChunkDownloadView in main window
-		void showChunkView(bool show);
-		///Show TrackerView in main window
-		void showTrackerView(bool show);
-		///Show WebSeedsTab in main window
-		void showWebSeedsTab(bool show);
-	private:
-		void createMonitor(bt::TorrentInterface* tc);
+    /**
+    @author Joris Guisson
+    */
+    class InfoWidgetPlugin : public Plugin, public ViewListener
+    {
+        Q_OBJECT
+    public:
+        InfoWidgetPlugin(QObject* parent, const QStringList& args);
+        virtual ~InfoWidgetPlugin();
 
-	private slots:
-		void applySettings();
-		void torrentRemoved(bt::TorrentInterface* tc);
-		
-	private:
-		PeerView* peer_view;
-		ChunkDownloadView* cd_view;
-		TrackerView* tracker_view;
-		FileView* file_view;
-		StatusTab* status_tab;
-		WebSeedsTab* webseeds_tab;
-		Monitor* monitor; 
-		
-		IWPrefPage* pref;
-	};
+        virtual void load();
+        virtual void unload();
+        virtual void guiUpdate();
+        virtual void currentTorrentChanged(bt::TorrentInterface* tc);
+        virtual bool versionCheck(const QString& version) const;
+
+        ///Show PeerView in main window
+        void showPeerView(bool show);
+        ///Show ChunkDownloadView in main window
+        void showChunkView(bool show);
+        ///Show TrackerView in main window
+        void showTrackerView(bool show);
+        ///Show WebSeedsTab in main window
+        void showWebSeedsTab(bool show);
+    private:
+        void createMonitor(bt::TorrentInterface* tc);
+
+    private slots:
+        void applySettings();
+        void torrentRemoved(bt::TorrentInterface* tc);
+
+    private:
+        PeerView* peer_view;
+        ChunkDownloadView* cd_view;
+        TrackerView* tracker_view;
+        FileView* file_view;
+        StatusTab* status_tab;
+        WebSeedsTab* webseeds_tab;
+        Monitor* monitor;
+
+        IWPrefPage* pref;
+    };
 
 }
 

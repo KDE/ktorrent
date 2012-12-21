@@ -27,18 +27,18 @@ class IPBlockListTest : public QObject
 {
     Q_OBJECT
 private:
-    
+
 private slots:
     void initTestCase()
     {
         bt::InitLog("ipblocklisttest.log", false, true);
     }
-    
+
     void cleanupTestCase()
     {
     }
-    
-    
+
+
     void testBlockList()
     {
         kt::IPBlockList bl;
@@ -47,7 +47,7 @@ private slots:
         bl.addBlock(kt::IPBlock("129.0.0.0", "129.255.255.255"));
         bl.addBlock(kt::IPBlock("131.0.0.0", "137.255.255.255"));
         bl.addBlock(kt::IPBlock("140.0.0.0", "200.255.255.255"));
-        
+
         QVERIFY(bl.blocked(net::Address("25.25.25.25", 0)));
         QVERIFY(!bl.blocked(net::Address("75.25.25.25", 0)));
         QVERIFY(!bl.blocked(net::Address("126.255.255.255", 0)));
@@ -57,11 +57,11 @@ private slots:
         QVERIFY(!bl.blocked(net::Address("138.255.255.255", 0)));
         QVERIFY(bl.blocked(net::Address("197.25.25.25", 0)));
     }
-    
-    
-    
+
+
+
 private:
-    
+
 };
 
 QTEST_MAIN(IPBlockListTest)

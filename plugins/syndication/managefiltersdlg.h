@@ -26,39 +26,39 @@
 
 namespace kt
 {
-	class Feed;
-	class FilterList;
-	class FilterListModel;
-	class SyndicationActivity;
+    class Feed;
+    class FilterList;
+    class FilterListModel;
+    class SyndicationActivity;
 
-	/**
-		Dialog to manage filters for a feed
-	*/
-	class ManageFiltersDlg : public KDialog,public Ui_ManageFiltersDlg
-	{
-		Q_OBJECT
-	public:
-		ManageFiltersDlg(Feed* feed,FilterList* filters,SyndicationActivity* act,QWidget* parent);
-		virtual ~ManageFiltersDlg();
+    /**
+        Dialog to manage filters for a feed
+    */
+    class ManageFiltersDlg : public KDialog, public Ui_ManageFiltersDlg
+    {
+        Q_OBJECT
+    public:
+        ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationActivity* act, QWidget* parent);
+        virtual ~ManageFiltersDlg();
 
-	private slots:
-		void add();
-		void remove();
-		void removeAll();
-		void newFilter();
-		void activeSelectionChanged(const QItemSelection& sel,const QItemSelection& desel);
-		void availableSelectionChanged(const QItemSelection& sel,const QItemSelection& desel);
-		
-	private:
-		virtual void accept();
-		
-	private:
-		Feed* feed;
-		FilterList* filters;
-		FilterListModel* active;
-		FilterListModel* available;
-		SyndicationActivity* act;
-	};
+    private slots:
+        void add();
+        void remove();
+        void removeAll();
+        void newFilter();
+        void activeSelectionChanged(const QItemSelection& sel, const QItemSelection& desel);
+        void availableSelectionChanged(const QItemSelection& sel, const QItemSelection& desel);
+
+    private:
+        virtual void accept();
+
+    private:
+        Feed* feed;
+        FilterList* filters;
+        FilterListModel* active;
+        FilterListModel* available;
+        SyndicationActivity* act;
+    };
 
 }
 

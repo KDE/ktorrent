@@ -34,138 +34,138 @@
 
 namespace kt
 {
-	
-	
-	
-	PrefDialog::PrefDialog(QWidget* parent,Core* core) : KConfigDialog(parent,"settings",Settings::self())
-	{
-		KConfigDialogManager::propertyMap()->insert("KUrlRequester","url");
-		setFaceType(KPageDialog::List);
-		connect(this,SIGNAL(settingsChanged(const QString &)),core,SLOT(applySettings()));
-		addPrefPage(new GeneralPref(this));
-		net_pref = new NetworkPref(this);
-		addPrefPage(net_pref);
-		addPrefPage(new ProxyPref(this));
-		addPrefPage(new BTPref(this));
-		qm_pref = new QMPref(this);
-		addPrefPage(qm_pref);
-		addPrefPage(new AdvancedPref(this));
-		
-		connect(net_pref,SIGNAL(calculateRecommendedSettings()),this,SLOT(calculateRecommendedSettings()));
-	}
-
-	PrefDialog::~PrefDialog()
-	{
-	}
-
-	void PrefDialog::addPrefPage(PrefPageInterface* page)
-	{
-		PrefPageScrollArea* area = new PrefPageScrollArea(page,this);
-		connect(area->page,SIGNAL(updateButtons()),this,SLOT(updateButtons()));
-		
-		KPageWidgetItem* p = addPage(area,page->config(),page->pageName(),page->pageIcon());
-		area->page_widget_item = p;
-		pages.append(area);
-		if (!isHidden())
-			page->loadSettings();
-	}
-
-	void PrefDialog::removePrefPage(PrefPageInterface* page)
-	{
-		foreach (PrefPageScrollArea* area,pages)
-		{
-			if (area->page == page)
-			{
-				area->takeWidget();
-				pages.removeAll(area);
-				removePage(area->page_widget_item);
-				break;
-			}
-		}
-	}
-	
-	void PrefDialog::updateWidgetsAndShow()
-	{
-		updateWidgets();
-		show();
-	}
-
-	void PrefDialog::updateWidgets()
-	{
-		foreach (PrefPageScrollArea* area,pages)
-			area->page->loadSettings();
-	}
-
-	void PrefDialog::updateWidgetsDefault()
-	{
-		foreach (PrefPageScrollArea* area,pages)
-			area->page->loadDefaults();
-	}
-	
-	void PrefDialog::updateSettings()
-	{
-		foreach (PrefPageScrollArea* area,pages)
-			area->page->updateSettings();
-	}
-	
-	void PrefDialog::calculateRecommendedSettings()
-	{
-		RecommendedSettingsDlg dlg(this);
-		if (dlg.exec() == QDialog::Accepted)
-		{
-			qm_pref->kcfg_maxSeeds->setValue(dlg.max_seeds);
-			qm_pref->kcfg_maxDownloads->setValue(dlg.max_downloads);
-			qm_pref->kcfg_numUploadSlots->setValue(dlg.max_slots);
-			net_pref->kcfg_maxDownloadRate->setValue(dlg.max_download_speed);
-			net_pref->kcfg_maxUploadRate->setValue(dlg.max_upload_speed);
-			net_pref->kcfg_maxConnections->setValue(dlg.max_conn_tor);
-			net_pref->kcfg_maxTotalConnections->setValue(dlg.max_conn_glob);
-		}
-	}
-	
-	void PrefDialog::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("PrefDialog");
-		QSize s = g.readEntry("size",sizeHint());
-		resize(s);
-	}
-	
-	void PrefDialog::saveState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("PrefDialog");
-		g.writeEntry("size",size());
-	}
-	
-	bool PrefDialog::hasChanged()
-	{
-		if (KConfigDialog::hasChanged())
-			return true;
-		
-		foreach (PrefPageScrollArea* area,pages)
-			if (area->page->customWidgetsChanged())
-				return true;
-			
-		return false;
-	}
 
 
-	///////////////////////////////////////
-	
-	PrefPageScrollArea::PrefPageScrollArea(kt::PrefPageInterface* page, QWidget* parent) : QScrollArea(parent),page(page),page_widget_item(0)
-	{
-		setWidget(page);
-		setWidgetResizable(true);
-		setFrameStyle(QFrame::NoFrame);
-		viewport()->setAutoFillBackground(false);
-	}
 
-	PrefPageScrollArea::~PrefPageScrollArea()
-	{
-	}
+    PrefDialog::PrefDialog(QWidget* parent, Core* core) : KConfigDialog(parent, "settings", Settings::self())
+    {
+        KConfigDialogManager::propertyMap()->insert("KUrlRequester", "url");
+        setFaceType(KPageDialog::List);
+        connect(this, SIGNAL(settingsChanged(const QString&)), core, SLOT(applySettings()));
+        addPrefPage(new GeneralPref(this));
+        net_pref = new NetworkPref(this);
+        addPrefPage(net_pref);
+        addPrefPage(new ProxyPref(this));
+        addPrefPage(new BTPref(this));
+        qm_pref = new QMPref(this);
+        addPrefPage(qm_pref);
+        addPrefPage(new AdvancedPref(this));
+
+        connect(net_pref, SIGNAL(calculateRecommendedSettings()), this, SLOT(calculateRecommendedSettings()));
+    }
+
+    PrefDialog::~PrefDialog()
+    {
+    }
+
+    void PrefDialog::addPrefPage(PrefPageInterface* page)
+    {
+        PrefPageScrollArea* area = new PrefPageScrollArea(page, this);
+        connect(area->page, SIGNAL(updateButtons()), this, SLOT(updateButtons()));
+
+        KPageWidgetItem* p = addPage(area, page->config(), page->pageName(), page->pageIcon());
+        area->page_widget_item = p;
+        pages.append(area);
+        if (!isHidden())
+            page->loadSettings();
+    }
+
+    void PrefDialog::removePrefPage(PrefPageInterface* page)
+    {
+        foreach (PrefPageScrollArea* area, pages)
+        {
+            if (area->page == page)
+            {
+                area->takeWidget();
+                pages.removeAll(area);
+                removePage(area->page_widget_item);
+                break;
+            }
+        }
+    }
+
+    void PrefDialog::updateWidgetsAndShow()
+    {
+        updateWidgets();
+        show();
+    }
+
+    void PrefDialog::updateWidgets()
+    {
+        foreach (PrefPageScrollArea* area, pages)
+            area->page->loadSettings();
+    }
+
+    void PrefDialog::updateWidgetsDefault()
+    {
+        foreach (PrefPageScrollArea* area, pages)
+            area->page->loadDefaults();
+    }
+
+    void PrefDialog::updateSettings()
+    {
+        foreach (PrefPageScrollArea* area, pages)
+            area->page->updateSettings();
+    }
+
+    void PrefDialog::calculateRecommendedSettings()
+    {
+        RecommendedSettingsDlg dlg(this);
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            qm_pref->kcfg_maxSeeds->setValue(dlg.max_seeds);
+            qm_pref->kcfg_maxDownloads->setValue(dlg.max_downloads);
+            qm_pref->kcfg_numUploadSlots->setValue(dlg.max_slots);
+            net_pref->kcfg_maxDownloadRate->setValue(dlg.max_download_speed);
+            net_pref->kcfg_maxUploadRate->setValue(dlg.max_upload_speed);
+            net_pref->kcfg_maxConnections->setValue(dlg.max_conn_tor);
+            net_pref->kcfg_maxTotalConnections->setValue(dlg.max_conn_glob);
+        }
+    }
+
+    void PrefDialog::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("PrefDialog");
+        QSize s = g.readEntry("size", sizeHint());
+        resize(s);
+    }
+
+    void PrefDialog::saveState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("PrefDialog");
+        g.writeEntry("size", size());
+    }
+
+    bool PrefDialog::hasChanged()
+    {
+        if (KConfigDialog::hasChanged())
+            return true;
+
+        foreach (PrefPageScrollArea* area, pages)
+            if (area->page->customWidgetsChanged())
+                return true;
+
+        return false;
+    }
+
+
+    ///////////////////////////////////////
+
+    PrefPageScrollArea::PrefPageScrollArea(kt::PrefPageInterface* page, QWidget* parent) : QScrollArea(parent), page(page), page_widget_item(0)
+    {
+        setWidget(page);
+        setWidgetResizable(true);
+        setFrameStyle(QFrame::NoFrame);
+        viewport()->setAutoFillBackground(false);
+    }
+
+    PrefPageScrollArea::~PrefPageScrollArea()
+    {
+    }
 
 
 }
 
 #include "prefdialog.moc"
 
-// kate: space-indent on; indent-width 8; replace-tabs off; mixed-indent off;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; mixed-indent off;

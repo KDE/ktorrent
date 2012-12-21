@@ -24,24 +24,24 @@
 namespace kt
 {
 
-	UngroupedGroup::UngroupedGroup(GroupManager* gman) : Group(i18n("Ungrouped Torrents"), MIXED_GROUP,"/all/ungrouped"),gman(gman)
-	{
-		setIconByName("application-x-bittorrent");
-	}
+    UngroupedGroup::UngroupedGroup(GroupManager* gman) : Group(i18n("Ungrouped Torrents"), MIXED_GROUP, "/all/ungrouped"), gman(gman)
+    {
+        setIconByName("application-x-bittorrent");
+    }
 
 
-	UngroupedGroup::~UngroupedGroup()
-	{
-	}
+    UngroupedGroup::~UngroupedGroup()
+    {
+    }
 
 
-	bool UngroupedGroup::isMember(TorrentInterface* tor)
-	{
-		for (GroupManager::Itr i = gman->begin();i != gman->end();i++)
-			if ((i->second->groupFlags() & Group::CUSTOM_GROUP) && i->second->isMember(tor))
-				return false;
-		
-		return true;
-	}
+    bool UngroupedGroup::isMember(TorrentInterface* tor)
+    {
+        for (GroupManager::Itr i = gman->begin(); i != gman->end(); i++)
+            if ((i->second->groupFlags() & Group::CUSTOM_GROUP) && i->second->isMember(tor))
+                return false;
+
+        return true;
+    }
 
 }

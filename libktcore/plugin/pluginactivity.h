@@ -27,29 +27,29 @@ class KPluginSelector;
 
 namespace kt
 {
-	class PluginManager;
+    class PluginManager;
 
-	/**
-	 * @author Joris Guisson
-	 *
-	 * Pref page which allows to load and unload plugins.
-	*/
-	class PluginActivity : public Activity 
-	{
-		Q_OBJECT
-	public:
-		PluginActivity(PluginManager* pman);
-		virtual ~PluginActivity();
+    /**
+     * @author Joris Guisson
+     *
+     * Pref page which allows to load and unload plugins.
+    */
+    class PluginActivity : public Activity
+    {
+        Q_OBJECT
+    public:
+        PluginActivity(PluginManager* pman);
+        virtual ~PluginActivity();
 
-		void updatePluginList();
-		void update();
-	private slots:
-		void changed();
-		
-	private:
-		PluginManager* pman;
-		KPluginSelector* pmw;
-	};
+        void updatePluginList();
+        void update();
+    private slots:
+        void changed();
+
+    private:
+        PluginManager* pman;
+        KPluginSelector* pmw;
+    };
 
 }
 

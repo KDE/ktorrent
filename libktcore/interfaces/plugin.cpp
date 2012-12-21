@@ -22,23 +22,23 @@
 namespace kt
 {
 
-	Plugin::Plugin(QObject *parent) : KParts::Plugin(parent)
-	{
-		core = 0;
-		gui = 0;
-		loaded = false;
-	}
+    Plugin::Plugin(QObject* parent) : KParts::Plugin(parent)
+    {
+        core = 0;
+        gui = 0;
+        loaded = false;
+    }
 
 
-	Plugin::~Plugin()
-	{}
+    Plugin::~Plugin()
+    {}
 
-	void Plugin::guiUpdate()
-	{
-	}
+    void Plugin::guiUpdate()
+    {
+    }
 
-	void Plugin::shutdown(bt::WaitJob* )
-	{
-	}
+    void Plugin::shutdown(bt::WaitJob*)
+    {
+    }
 }
 #include "plugin.moc"

@@ -33,70 +33,70 @@ class KComboBox;
 
 namespace KParts
 {
-	class Part;
+    class Part;
 }
 
 namespace kt
 {
-	class SearchWidget;
-	class SearchPlugin;
-	
-	
-	/**
-		@author Joris Guisson
-		
-		Widget which shows a KHTML window with the users search in it
-	*/
-	class SearchWidget : public QWidget,public WebViewClient
-	{
-		Q_OBJECT
-	public:
-		SearchWidget(SearchPlugin* sp);
-		virtual ~SearchWidget();
-		
-		QString getSearchText() const {return search_text->text();}
-		KUrl getCurrentUrl() const;
-		QString getSearchBarText() const;
-		int getSearchBarEngine() const;
-		void setSearchBarEngine(int engine);
-		bool backAvailable() const;
-		void restore(const KUrl & url,const QString & text,const QString & sb_text,int engine);
-		
-	signals:
-		void enableBack(bool on);
-		void openNewTab(const KUrl & url);
-		void changeTitle(SearchWidget* w,const QString & title);
-		void changeIcon(SearchWidget* w,const QIcon & icon);
-	
-	public slots:
-		void search(const QString & text,int engine = 0);
-		void home();
-		void search();
-	
-	private slots:
-		void loadStarted();
-		void loadFinished(bool ok);
-		void loadProgress(int p);
-		void unsupportedContent(QNetworkReply* reply);
-		void torrentDownloadFinished();
-		void iconChanged();
-		void titleChanged(const QString & text);
-		
-	private:
-		virtual KUrl searchUrl(const QString& search_text);
-		virtual QWebView* newTab();
-		virtual void magnetUrl(const QUrl& magnet_url);
-		
-	private:
-		WebView* webview;
-		KToolBar* sbar;
-		SearchPlugin* sp;
-		QProgressBar* prog;
-		QNetworkReply* torrent_download;
-		
-		KComboBox* search_engine;
-		KLineEdit* search_text;
-	};
+    class SearchWidget;
+    class SearchPlugin;
+
+
+    /**
+        @author Joris Guisson
+
+        Widget which shows a KHTML window with the users search in it
+    */
+    class SearchWidget : public QWidget, public WebViewClient
+    {
+        Q_OBJECT
+    public:
+        SearchWidget(SearchPlugin* sp);
+        virtual ~SearchWidget();
+
+        QString getSearchText() const {return search_text->text();}
+        KUrl getCurrentUrl() const;
+        QString getSearchBarText() const;
+        int getSearchBarEngine() const;
+        void setSearchBarEngine(int engine);
+        bool backAvailable() const;
+        void restore(const KUrl& url, const QString& text, const QString& sb_text, int engine);
+
+    signals:
+        void enableBack(bool on);
+        void openNewTab(const KUrl& url);
+        void changeTitle(SearchWidget* w, const QString& title);
+        void changeIcon(SearchWidget* w, const QIcon& icon);
+
+    public slots:
+        void search(const QString& text, int engine = 0);
+        void home();
+        void search();
+
+    private slots:
+        void loadStarted();
+        void loadFinished(bool ok);
+        void loadProgress(int p);
+        void unsupportedContent(QNetworkReply* reply);
+        void torrentDownloadFinished();
+        void iconChanged();
+        void titleChanged(const QString& text);
+
+    private:
+        virtual KUrl searchUrl(const QString& search_text);
+        virtual QWebView* newTab();
+        virtual void magnetUrl(const QUrl& magnet_url);
+
+    private:
+        WebView* webview;
+        KToolBar* sbar;
+        SearchPlugin* sp;
+        QProgressBar* prog;
+        QNetworkReply* torrent_download;
+
+        KComboBox* search_engine;
+        KLineEdit* search_text;
+    };
 
 }
 

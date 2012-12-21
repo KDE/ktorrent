@@ -19,7 +19,7 @@
  ***************************************************************************/
 #ifndef KTHTTPRESPONSEHEADER_H
 #define KTHTTPRESPONSEHEADER_H
-		
+
 
 #include <qmap.h>
 #include <qstring.h>
@@ -27,26 +27,26 @@
 namespace kt
 {
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class HttpResponseHeader
-	{
-		int response_code;
-		QMap<QString,QString> fields;
-		int major;
-		int minor;
-		
-	public:
-		HttpResponseHeader(int response_code,int major = 1,int minor = 1);
-		HttpResponseHeader(const HttpResponseHeader & hdr);
-		virtual ~HttpResponseHeader();
-		
-		void setResponseCode(int response_code);
-		void setValue(const QString & key,const QString & value);
-		
-		QString toString() const;
-	};
+    /**
+        @author Joris Guisson <joris.guisson@gmail.com>
+    */
+    class HttpResponseHeader
+    {
+        int response_code;
+        QMap<QString, QString> fields;
+        int major;
+        int minor;
+
+    public:
+        HttpResponseHeader(int response_code, int major = 1, int minor = 1);
+        HttpResponseHeader(const HttpResponseHeader& hdr);
+        virtual ~HttpResponseHeader();
+
+        void setResponseCode(int response_code);
+        void setValue(const QString& key, const QString& value);
+
+        QString toString() const;
+    };
 
 
 }

@@ -72,17 +72,17 @@ namespace kt
         quint32 ip = addr.toIPv4Address();
         int begin = 0;
         int end = blocks.size() - 1;
-        while(true)
+        while (true)
         {
-            if(begin == end)
+            if (begin == end)
                 return blocks[begin].constains(ip);
-            else if(begin == end - 1)
+            else if (begin == end - 1)
                 return blocks[begin].constains(ip) || blocks[end].constains(ip);
-            
+
             int pivot = begin + (end - begin) / 2;
-            if(blocks[pivot].constains(ip))
+            if (blocks[pivot].constains(ip))
                 return true;
-            else if(ip < blocks[pivot].ip1)
+            else if (ip < blocks[pivot].ip1)
                 end = pivot - 1; // continue in the range [begin, pivot - 1]
             else // ip > blocks[pivot].ip2
                 begin = pivot + 1; // continue in the range [pivot + 1, end]
@@ -90,7 +90,7 @@ namespace kt
         return false;
     }
 
-    bool IPBlockList::load(const QString & path)
+    bool IPBlockList::load(const QString& path)
     {
         QFile file(path);
         if (!file.open(QIODevice::ReadOnly))
@@ -114,7 +114,7 @@ namespace kt
         Out(SYS_IPF | LOG_NOTICE) << "Loaded " << blocks.size() << " blocked IP ranges" << endl;
         return true;
     }
-    
+
     void IPBlockList::addBlock(const IPBlock& block)
     {
         blocks.append(block);

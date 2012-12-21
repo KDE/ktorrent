@@ -25,60 +25,60 @@
 
 namespace kt
 {
-	ActivityPart::ActivityPart(Activity* parent) : KParts::Part(parent)
-	{
-	}
-	
-	ActivityPart::~ActivityPart()
-	{
-	}
-	
-	void ActivityPart::setXMLGUIFile(const QString& xml_gui)
-	{
-		setXMLFile(xml_gui,true);
-	}
-	
-	KMenu* ActivityPart::menu(const QString& name)
-	{
-		return qobject_cast<KMenu*>(factory()->container(name, this));
-	}
+    ActivityPart::ActivityPart(Activity* parent) : KParts::Part(parent)
+    {
+    }
+
+    ActivityPart::~ActivityPart()
+    {
+    }
+
+    void ActivityPart::setXMLGUIFile(const QString& xml_gui)
+    {
+        setXMLFile(xml_gui, true);
+    }
+
+    KMenu* ActivityPart::menu(const QString& name)
+    {
+        return qobject_cast<KMenu*>(factory()->container(name, this));
+    }
 
 
-	Activity::Activity(const QString& name, const QString& icon, int weight, QWidget* parent) 
-		: QWidget(parent),activity_name(name),activity_icon(icon),activity_weight(weight),activity_part(0)
-	{
-	}
+    Activity::Activity(const QString& name, const QString& icon, int weight, QWidget* parent)
+        : QWidget(parent), activity_name(name), activity_icon(icon), activity_weight(weight), activity_part(0)
+    {
+    }
 
-	Activity::~Activity() 
-	{
-	}
-	
-	void Activity::setXMLGUIFile(const QString& xml_file)
-	{
-		if (!activity_part)
-			activity_part = new ActivityPart(this);
-		
-		activity_part->setXMLGUIFile(xml_file);
-	}
+    Activity::~Activity()
+    {
+    }
 
-	
-	void Activity::setName(const QString& name) 
-	{
-		activity_name = name;
-		nameChanged(this,name);
-	}
+    void Activity::setXMLGUIFile(const QString& xml_file)
+    {
+        if (!activity_part)
+            activity_part = new ActivityPart(this);
 
-	void Activity::setIcon(const QString& icon) 
-	{
-		activity_icon = icon;
-		iconChanged(this,icon);
-	}
+        activity_part->setXMLGUIFile(xml_file);
+    }
 
-	bool Activity::lessThan(Activity* l,Activity* r)
-	{
-		if (l->weight() == r->weight())
-			return KStringHandler::naturalCompare(l->name(),r->name()) < 0;
-		else
-			return l->weight() < r->weight();
-	}
+
+    void Activity::setName(const QString& name)
+    {
+        activity_name = name;
+        nameChanged(this, name);
+    }
+
+    void Activity::setIcon(const QString& icon)
+    {
+        activity_icon = icon;
+        iconChanged(this, icon);
+    }
+
+    bool Activity::lessThan(Activity* l, Activity* r)
+    {
+        if (l->weight() == r->weight())
+            return KStringHandler::naturalCompare(l->name(), r->name()) < 0;
+        else
+            return l->weight() < r->weight();
+    }
 }

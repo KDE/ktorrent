@@ -24,35 +24,35 @@
 #include <QWidget>
 #include <interfaces/torrentinterface.h>
 #include "ui_statustab.h"
-		
+
 namespace kt
 {
-	
-	class StatusTab : public QWidget,public Ui_StatusTab
-	{
-		Q_OBJECT
-	
-	public:
-		StatusTab(QWidget* parent);
-		virtual ~StatusTab();
-		
-	
-	public slots:
-		void changeTC(bt::TorrentInterface* tc);
-		void update();
-		void maxRatioChanged(double v);
-		void useRatioLimitToggled(bool on);
-		void useTimeLimitToggled(bool on);
-		void maxTimeChanged(double v);
-		void linkActivated(const QString & link);
 
-	private:
-		void maxRatioUpdate();
-		void maxSeedTimeUpdate();
-	
-	private:
-		bt::TorrentInterface::WPtr curr_tc;
-	};
+    class StatusTab : public QWidget, public Ui_StatusTab
+    {
+        Q_OBJECT
+
+    public:
+        StatusTab(QWidget* parent);
+        virtual ~StatusTab();
+
+
+    public slots:
+        void changeTC(bt::TorrentInterface* tc);
+        void update();
+        void maxRatioChanged(double v);
+        void useRatioLimitToggled(bool on);
+        void useTimeLimitToggled(bool on);
+        void maxTimeChanged(double v);
+        void linkActivated(const QString& link);
+
+    private:
+        void maxRatioUpdate();
+        void maxSeedTimeUpdate();
+
+    private:
+        bt::TorrentInterface::WPtr curr_tc;
+    };
 }
 
 #endif

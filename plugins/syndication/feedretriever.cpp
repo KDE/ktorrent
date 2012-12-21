@@ -27,65 +27,65 @@ using namespace bt;
 
 namespace kt
 {
-	FeedRetriever::FeedRetriever() : job(0),err(0)
-	{
-	}
+    FeedRetriever::FeedRetriever() : job(0), err(0)
+    {
+    }
 
-	FeedRetriever::FeedRetriever(const QString & file_name) : backup_file(file_name),job(0),err(0)
-	{
-	}
-	
-	
-	FeedRetriever::~FeedRetriever()
-	{
-	}
-	
-	void FeedRetriever::setAuthenticationCookie(const QString& cookie)
-	{
-		this->cookie = cookie;
-	}
-	
-	void FeedRetriever::abort()
-	{
-		if (job)
-			job->kill(KJob::EmitResult);
-	}
-	
-	int FeedRetriever::errorCode() const
-	{
-		return err;
-	}
-	
-	void FeedRetriever::retrieveData(const KUrl &url)
-	{
-		KIO::StoredTransferJob* j = KIO::storedGet(url,KIO::NoReload,KIO::HideProgressInfo);
-		j->addMetaData("UserAgent",bt::GetVersionString());
-		if (!cookie.isEmpty())
-		{
-			j->addMetaData("cookies","none");
-			j->addMetaData("customHTTPHeader",QString("Cookie: %1").arg(cookie));
-		}
-		
-		connect(j,SIGNAL(result(KJob*)),this,SLOT(finished(KJob*)));
-		job = j;
-	}
+    FeedRetriever::FeedRetriever(const QString& file_name) : backup_file(file_name), job(0), err(0)
+    {
+    }
 
-	void FeedRetriever::finished(KJob* j)
-	{
-		KIO::StoredTransferJob* stj = (KIO::StoredTransferJob*)j;
-		err = stj->error();
-		QByteArray data = stj->data();
-		if (!err && !backup_file.isEmpty())
-		{
-			QFile fptr(backup_file);
-			if (fptr.open(QIODevice::WriteOnly))
-			{
-				fptr.write(data);
-				fptr.close();
-			}
-		}
-		
-		dataRetrieved(data,err == 0);
-	}
+
+    FeedRetriever::~FeedRetriever()
+    {
+    }
+
+    void FeedRetriever::setAuthenticationCookie(const QString& cookie)
+    {
+        this->cookie = cookie;
+    }
+
+    void FeedRetriever::abort()
+    {
+        if (job)
+            job->kill(KJob::EmitResult);
+    }
+
+    int FeedRetriever::errorCode() const
+    {
+        return err;
+    }
+
+    void FeedRetriever::retrieveData(const KUrl& url)
+    {
+        KIO::StoredTransferJob* j = KIO::storedGet(url, KIO::NoReload, KIO::HideProgressInfo);
+        j->addMetaData("UserAgent", bt::GetVersionString());
+        if (!cookie.isEmpty())
+        {
+            j->addMetaData("cookies", "none");
+            j->addMetaData("customHTTPHeader", QString("Cookie: %1").arg(cookie));
+        }
+
+        connect(j, SIGNAL(result(KJob*)), this, SLOT(finished(KJob*)));
+        job = j;
+    }
+
+    void FeedRetriever::finished(KJob* j)
+    {
+        KIO::StoredTransferJob* stj = (KIO::StoredTransferJob*)j;
+        err = stj->error();
+        QByteArray data = stj->data();
+        if (!err && !backup_file.isEmpty())
+        {
+            QFile fptr(backup_file);
+            if (fptr.open(QIODevice::WriteOnly))
+            {
+                fptr.write(data);
+                fptr.close();
+            }
+        }
+
+        dataRetrieved(data, err == 0);
+    }
 
 }

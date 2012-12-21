@@ -24,20 +24,20 @@
 
 namespace kt
 {
-	BTPref::BTPref(QWidget* parent): PrefPageInterface(Settings::self(),i18n("BitTorrent"),"application-x-bittorrent",parent)
-	{
-		setupUi(this);
-	}
-	
-	BTPref::~BTPref() 
-	{
-	}
+    BTPref::BTPref(QWidget* parent): PrefPageInterface(Settings::self(), i18n("BitTorrent"), "application-x-bittorrent", parent)
+    {
+        setupUi(this);
+    }
 
-	void BTPref::loadSettings()
-	{
-		kcfg_allowUnencryptedConnections->setEnabled(Settings::useEncryption());
-		kcfg_dhtPort->setEnabled(Settings::dhtSupport());
-		kcfg_customIP->setEnabled(Settings::useCustomIP());
-	}
-	
+    BTPref::~BTPref()
+    {
+    }
+
+    void BTPref::loadSettings()
+    {
+        kcfg_allowUnencryptedConnections->setEnabled(Settings::useEncryption());
+        kcfg_dhtPort->setEnabled(Settings::dhtSupport());
+        kcfg_customIP->setEnabled(Settings::useCustomIP());
+    }
+
 }

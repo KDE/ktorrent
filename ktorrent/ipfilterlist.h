@@ -28,49 +28,49 @@
 
 namespace kt
 {
-	
-	/**
-		Blocklist for the IPFilterWidget
-	*/
-	class IPFilterList : public QAbstractListModel, public bt::BlockListInterface
-	{
-	public:
-		IPFilterList();
-		virtual ~IPFilterList();
-		
-		virtual bool blocked(const net::Address& addr) const;
 
-		/// Add an IP address with a mask.
-		bool add(const QString & ip);
-		
-		/// Remove the IP address at a given row and count items following that
-		void remove(int row,int count);
-		
-		/// Clear the list
-		void clear();
-		
-		virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
-		
-	private:
-		bool addIP(const QString & str);
-		bool addIPRange(const QString &str);
-		bool parseIPWithWildcards(const QString & str, bt::Uint32 & start, bt::Uint32 & end);
-		
-	private:
-		struct Entry
-		{
-			QString string_rep;
-			bt::Uint32 start;
-			bt::Uint32 end;
-		};
+    /**
+        Blocklist for the IPFilterWidget
+    */
+    class IPFilterList : public QAbstractListModel, public bt::BlockListInterface
+    {
+    public:
+        IPFilterList();
+        virtual ~IPFilterList();
 
-		QList<Entry> ip_list;
-	};
+        virtual bool blocked(const net::Address& addr) const;
+
+        /// Add an IP address with a mask.
+        bool add(const QString& ip);
+
+        /// Remove the IP address at a given row and count items following that
+        void remove(int row, int count);
+
+        /// Clear the list
+        void clear();
+
+        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
+        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        virtual bool removeRows(int row, int count, const QModelIndex& parent);
+        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+
+    private:
+        bool addIP(const QString& str);
+        bool addIPRange(const QString& str);
+        bool parseIPWithWildcards(const QString& str, bt::Uint32& start, bt::Uint32& end);
+
+    private:
+        struct Entry
+        {
+            QString string_rep;
+            bt::Uint32 start;
+            bt::Uint32 end;
+        };
+
+        QList<Entry> ip_list;
+    };
 
 }
 

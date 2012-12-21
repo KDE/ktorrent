@@ -32,61 +32,61 @@
 #include <interfaces/torrentactivityinterface.h>
 
 
-K_EXPORT_COMPONENT_FACTORY(ktupnpplugin,KGenericFactory<kt::UPnPPlugin>("ktupnpplugin"))
+K_EXPORT_COMPONENT_FACTORY(ktupnpplugin, KGenericFactory<kt::UPnPPlugin>("ktupnpplugin"))
 
 using namespace bt;
 
 namespace kt
 {
 
-	UPnPPlugin::UPnPPlugin(QObject* parent, const QStringList& /*args*/) : Plugin(parent)
-	{
-		sock = 0;
-		upnp_tab = 0;
-	}
+    UPnPPlugin::UPnPPlugin(QObject* parent, const QStringList& /*args*/) : Plugin(parent)
+    {
+        sock = 0;
+        upnp_tab = 0;
+    }
 
 
-	UPnPPlugin::~UPnPPlugin()
-	{
-	}
+    UPnPPlugin::~UPnPPlugin()
+    {
+    }
 
 
-	void UPnPPlugin::load()
-	{
-		LogSystemManager::instance().registerSystem(i18n("UPnP"),SYS_PNP);
-		sock = new UPnPMCastSocket();
-		upnp_tab = new UPnPWidget(sock,0);
-		GUIInterface* gui = getGUI();
-		gui->getTorrentActivity()->addToolWidget(upnp_tab,i18n("UPnP"),"kt-upnp",
-			   i18n("Shows the status of the UPnP plugin"));
-		// load the routers list
-		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
-		if (bt::Exists(routers_file))
-			sock->loadRouters(routers_file);
-		sock->discover();
-	}
+    void UPnPPlugin::load()
+    {
+        LogSystemManager::instance().registerSystem(i18n("UPnP"), SYS_PNP);
+        sock = new UPnPMCastSocket();
+        upnp_tab = new UPnPWidget(sock, 0);
+        GUIInterface* gui = getGUI();
+        gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), "kt-upnp",
+                i18n("Shows the status of the UPnP plugin"));
+        // load the routers list
+        QString routers_file = KGlobal::dirs()->saveLocation("data", "ktorrent") + "routers";
+        if (bt::Exists(routers_file))
+            sock->loadRouters(routers_file);
+        sock->discover();
+    }
 
-	void UPnPPlugin::unload()
-	{
-		LogSystemManager::instance().unregisterSystem(i18n("UPnP"));
-		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
-		sock->saveRouters(routers_file);
-		getGUI()->getTorrentActivity()->removeToolWidget(upnp_tab);
-		sock->close();
-		delete upnp_tab;
-		upnp_tab = 0;
-		delete sock;
-		sock = 0;
-	}
-	
-	void UPnPPlugin::shutdown(bt::WaitJob* job)
-	{
-		upnp_tab->shutdown(job);
-	}
-	
-	bool UPnPPlugin::versionCheck(const QString & version) const
-	{
-		return version == KT_VERSION_MACRO;
-	}
+    void UPnPPlugin::unload()
+    {
+        LogSystemManager::instance().unregisterSystem(i18n("UPnP"));
+        QString routers_file = KGlobal::dirs()->saveLocation("data", "ktorrent") + "routers";
+        sock->saveRouters(routers_file);
+        getGUI()->getTorrentActivity()->removeToolWidget(upnp_tab);
+        sock->close();
+        delete upnp_tab;
+        upnp_tab = 0;
+        delete sock;
+        sock = 0;
+    }
+
+    void UPnPPlugin::shutdown(bt::WaitJob* job)
+    {
+        upnp_tab->shutdown(job);
+    }
+
+    bool UPnPPlugin::versionCheck(const QString& version) const
+    {
+        return version == KT_VERSION_MACRO;
+    }
 }
 #include "upnpplugin.moc"

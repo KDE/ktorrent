@@ -28,22 +28,22 @@
 namespace kt
 {
 
-	/**
-	 * Dialog to add trackers
-	 */
-	class AddTrackersDialog : public KDialog
-	{
-		Q_OBJECT
-	public:
-		AddTrackersDialog(QWidget* parent, const QStringList & tracker_hints);
-		virtual ~AddTrackersDialog();
-		
-		/// Get the tracker list
-		QStringList trackerList() const;
-		
-	private:
-		KEditListWidget* trackers;
-	};
+    /**
+     * Dialog to add trackers
+     */
+    class AddTrackersDialog : public KDialog
+    {
+        Q_OBJECT
+    public:
+        AddTrackersDialog(QWidget* parent, const QStringList& tracker_hints);
+        virtual ~AddTrackersDialog();
+
+        /// Get the tracker list
+        QStringList trackerList() const;
+
+    private:
+        KEditListWidget* trackers;
+    };
 
 }
 

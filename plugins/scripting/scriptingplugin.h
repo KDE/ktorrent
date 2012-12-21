@@ -27,38 +27,38 @@ class KJob;
 
 namespace kt
 {
-	class Script;
-	class ScriptManager;
-	class ScriptModel;
-	
-	/**
-		@author
-	*/
-	class ScriptingPlugin : public Plugin
-	{
-		Q_OBJECT
-	public:
-		ScriptingPlugin(QObject* parent, const QStringList& args);
-		virtual ~ScriptingPlugin();
+    class Script;
+    class ScriptManager;
+    class ScriptModel;
 
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
-		
-	private:
-		void scriptDownloadFinished(KJob* job);
-		void loadScripts();
-		void saveScripts();
-		Script* loadScriptDir(const QString & dir);
-		
-	private slots:
-		void addScript();
-		void removeScript();
-	
-	private:
-		ScriptManager* sman;
-		ScriptModel* model;
-	};
+    /**
+        @author
+    */
+    class ScriptingPlugin : public Plugin
+    {
+        Q_OBJECT
+    public:
+        ScriptingPlugin(QObject* parent, const QStringList& args);
+        virtual ~ScriptingPlugin();
+
+        virtual void load();
+        virtual void unload();
+        virtual bool versionCheck(const QString& version) const;
+
+    private:
+        void scriptDownloadFinished(KJob* job);
+        void loadScripts();
+        void saveScripts();
+        Script* loadScriptDir(const QString& dir);
+
+    private slots:
+        void addScript();
+        void removeScript();
+
+    private:
+        ScriptManager* sman;
+        ScriptModel* model;
+    };
 
 }
 

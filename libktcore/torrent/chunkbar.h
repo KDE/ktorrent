@@ -32,41 +32,41 @@ class QPainter;
 
 namespace bt
 {
-	class BitSet;
+    class BitSet;
 }
 
 namespace kt
 {
 
-	
-	/**
-	* @author Joris Guisson, Vincent Wagelaar
-	*
-	* Bar which displays BitSets, subclasses need to fill the BitSet.
-	* BitSets can represent which chunks are downloaded, which chunks are available
-	* and which chunks are excluded.
-	*/
-	class KTCORE_EXPORT ChunkBar : public QFrame,public ChunkBarRenderer
-	{
-		Q_OBJECT
-	public:
-		ChunkBar(QWidget *parent);
-		virtual ~ChunkBar();
-	
-		virtual const bt::BitSet & getBitSet() const = 0;
-		virtual void drawContents(QPainter *p);
-		virtual void updateBar(bool force = false);
-	
-	protected:
-		
-		virtual void drawBarContents(QPainter *p);
-		virtual void paintEvent(QPaintEvent* ev);
-		
-	protected:
-		bt::BitSet curr;
-		QPixmap pixmap;
-		ChunkBarRenderer* cbr;
-	};
+
+    /**
+    * @author Joris Guisson, Vincent Wagelaar
+    *
+    * Bar which displays BitSets, subclasses need to fill the BitSet.
+    * BitSets can represent which chunks are downloaded, which chunks are available
+    * and which chunks are excluded.
+    */
+    class KTCORE_EXPORT ChunkBar : public QFrame, public ChunkBarRenderer
+    {
+        Q_OBJECT
+    public:
+        ChunkBar(QWidget* parent);
+        virtual ~ChunkBar();
+
+        virtual const bt::BitSet& getBitSet() const = 0;
+        virtual void drawContents(QPainter* p);
+        virtual void updateBar(bool force = false);
+
+    protected:
+
+        virtual void drawBarContents(QPainter* p);
+        virtual void paintEvent(QPaintEvent* ev);
+
+    protected:
+        bt::BitSet curr;
+        QPixmap pixmap;
+        ChunkBarRenderer* cbr;
+    };
 }
 
 #endif

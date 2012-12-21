@@ -36,172 +36,172 @@ using namespace bt;
 namespace kt
 {
 
-	PluginManager::PluginManager(CoreInterface* core,GUIInterface* gui) : core(core),gui(gui)
-	{
-		prefpage = 0;
-		loaded.setAutoDelete(true);
-	}
+    PluginManager::PluginManager(CoreInterface* core, GUIInterface* gui) : core(core), gui(gui)
+    {
+        prefpage = 0;
+        loaded.setAutoDelete(true);
+    }
 
-	PluginManager::~PluginManager()
-	{
-		delete prefpage;
-	}
+    PluginManager::~PluginManager()
+    {
+        delete prefpage;
+    }
 
-	void PluginManager::loadPluginList()
-	{
-		KService::List offers = KServiceTypeTrader::self()->query("KTorrent/Plugin");
-		plugins = KPluginInfo::fromServices(offers);
+    void PluginManager::loadPluginList()
+    {
+        KService::List offers = KServiceTypeTrader::self()->query("KTorrent/Plugin");
+        plugins = KPluginInfo::fromServices(offers);
 
-		for (KPluginInfo::List::iterator i = plugins.begin();i != plugins.end();i++)
-		{	
-			KPluginInfo & pi = *i;
-			pi.setConfig(KGlobal::config()->group(pi.pluginName()));
-			pi.load();
-		}
-		
-		if (!prefpage)
-		{
-			prefpage = new PluginActivity(this);
-			gui->addActivity(prefpage);
-		}
-		
-		prefpage->updatePluginList();
-		loadPlugins();
-		prefpage->update();
-	}
-	
-	void PluginManager::loadPlugins()
-	{
-		int idx = 0;
-		for (KPluginInfo::List::iterator i = plugins.begin();i != plugins.end();i++)
-		{
-			KPluginInfo & pi = *i;
-			if (loaded.contains(idx) & !pi.isPluginEnabled())
-			{
-				// unload it
-				unload(pi,idx);
-				pi.save();
-			}
-			else if (!loaded.contains(idx) && pi.isPluginEnabled())
-			{
-				// load it
-				load(pi,idx);
-				pi.save();
-			}
-			idx++;
-		}
-	}
-	
-	void PluginManager::load(const KPluginInfo & pi,int idx)
-	{
-		KService::Ptr service = pi.service();
-			
-		Plugin* p = service->createInstance<kt::Plugin>(); 
-		if (!p) 
+        for (KPluginInfo::List::iterator i = plugins.begin(); i != plugins.end(); i++)
         {
-			p = service->createInstance<kt::Plugin>();
-			if (!p)
-			{
-				Out(SYS_GEN|LOG_NOTICE) <<
-						QString("Creating instance of plugin %1 failed !")
-						.arg(service->library()) << endl;
-				return;
-			}
+            KPluginInfo& pi = *i;
+            pi.setConfig(KGlobal::config()->group(pi.pluginName()));
+            pi.load();
         }
-			
-		if (!p->versionCheck(kt::VERSION_STRING))
-		{
-			Out(SYS_GEN|LOG_NOTICE) <<
-					QString("Plugin %1 version does not match KTorrent version, unloading it.")
-					.arg(service->library()) << endl;
 
-			delete p;
-		}
-		else
-		{
-			p->setCore(core);
-			p->setGUI(gui);
-			p->load();
-			gui->mergePluginGui(p);
-			p->loaded = true;
-			loaded.insert(idx,p,true);
-		}
-	}
-	
-	void PluginManager::unload(const KPluginInfo & pi,int idx)
-	{
-		Plugin* p = loaded.find(idx);
-		if (!p)
-			return;
-		
-		// first shut it down properly
-		bt::WaitJob* wjob = new WaitJob(2000);
-		try
-		{
-			p->shutdown(wjob);
-			if (wjob->needToWait())
-				bt::WaitJob::execute(wjob);
-			else
-				delete wjob;
-		}
-		catch (Error & err)
-		{
-			Out(SYS_GEN|LOG_NOTICE) << "Error when unloading plugin: " << err.toString() << endl;
-		}
+        if (!prefpage)
+        {
+            prefpage = new PluginActivity(this);
+            gui->addActivity(prefpage);
+        }
 
-		gui->removePluginGui(p);
-		p->unload();
-		p->loaded = false;
-		loaded.erase(idx);
-	}
+        prefpage->updatePluginList();
+        loadPlugins();
+        prefpage->update();
+    }
+
+    void PluginManager::loadPlugins()
+    {
+        int idx = 0;
+        for (KPluginInfo::List::iterator i = plugins.begin(); i != plugins.end(); i++)
+        {
+            KPluginInfo& pi = *i;
+            if (loaded.contains(idx) & !pi.isPluginEnabled())
+            {
+                // unload it
+                unload(pi, idx);
+                pi.save();
+            }
+            else if (!loaded.contains(idx) && pi.isPluginEnabled())
+            {
+                // load it
+                load(pi, idx);
+                pi.save();
+            }
+            idx++;
+        }
+    }
+
+    void PluginManager::load(const KPluginInfo& pi, int idx)
+    {
+        KService::Ptr service = pi.service();
+
+        Plugin* p = service->createInstance<kt::Plugin>();
+        if (!p)
+        {
+            p = service->createInstance<kt::Plugin>();
+            if (!p)
+            {
+                Out(SYS_GEN | LOG_NOTICE) <<
+                                          QString("Creating instance of plugin %1 failed !")
+                                          .arg(service->library()) << endl;
+                return;
+            }
+        }
+
+        if (!p->versionCheck(kt::VERSION_STRING))
+        {
+            Out(SYS_GEN | LOG_NOTICE) <<
+                                      QString("Plugin %1 version does not match KTorrent version, unloading it.")
+                                      .arg(service->library()) << endl;
+
+            delete p;
+        }
+        else
+        {
+            p->setCore(core);
+            p->setGUI(gui);
+            p->load();
+            gui->mergePluginGui(p);
+            p->loaded = true;
+            loaded.insert(idx, p, true);
+        }
+    }
+
+    void PluginManager::unload(const KPluginInfo& pi, int idx)
+    {
+        Plugin* p = loaded.find(idx);
+        if (!p)
+            return;
+
+        // first shut it down properly
+        bt::WaitJob* wjob = new WaitJob(2000);
+        try
+        {
+            p->shutdown(wjob);
+            if (wjob->needToWait())
+                bt::WaitJob::execute(wjob);
+            else
+                delete wjob;
+        }
+        catch (Error& err)
+        {
+            Out(SYS_GEN | LOG_NOTICE) << "Error when unloading plugin: " << err.toString() << endl;
+        }
+
+        gui->removePluginGui(p);
+        p->unload();
+        p->loaded = false;
+        loaded.erase(idx);
+    }
 
 
-	
-	void PluginManager::unloadAll()
-	{
-		// first properly shutdown all plugins
-		bt::WaitJob* wjob = new WaitJob(2000);
-		try
-		{
-			bt::PtrMap<int,Plugin>::iterator i = loaded.begin();
-			while (i != loaded.end())
-			{
-				Plugin* p = i->second;
-				p->shutdown(wjob);
-				i++;
-			}
-			if (wjob->needToWait())
-				bt::WaitJob::execute(wjob);
-			else
-				delete wjob;
-		}
-		catch (Error & err)
-		{
-			Out(SYS_GEN|LOG_NOTICE) << "Error when unloading all plugins: " << err.toString() << endl;
-		}
-		
-		// then unload them
-		bt::PtrMap<int,Plugin>::iterator i = loaded.begin();
-		while (i != loaded.end())
-		{
-			Plugin* p = i->second;
-			gui->removePluginGui(p);
-			p->unload();
-			p->loaded = false;
-			i++;
-		}
-		loaded.clear();
-	}
 
-	void PluginManager::updateGuiPlugins()
-	{
-		bt::PtrMap<int,Plugin>::iterator i = loaded.begin();
-		while (i != loaded.end())
-		{
-			Plugin* p = i->second;
-			p->guiUpdate();
-			i++;
-		}
-	}
+    void PluginManager::unloadAll()
+    {
+        // first properly shutdown all plugins
+        bt::WaitJob* wjob = new WaitJob(2000);
+        try
+        {
+            bt::PtrMap<int, Plugin>::iterator i = loaded.begin();
+            while (i != loaded.end())
+            {
+                Plugin* p = i->second;
+                p->shutdown(wjob);
+                i++;
+            }
+            if (wjob->needToWait())
+                bt::WaitJob::execute(wjob);
+            else
+                delete wjob;
+        }
+        catch (Error& err)
+        {
+            Out(SYS_GEN | LOG_NOTICE) << "Error when unloading all plugins: " << err.toString() << endl;
+        }
+
+        // then unload them
+        bt::PtrMap<int, Plugin>::iterator i = loaded.begin();
+        while (i != loaded.end())
+        {
+            Plugin* p = i->second;
+            gui->removePluginGui(p);
+            p->unload();
+            p->loaded = false;
+            i++;
+        }
+        loaded.clear();
+    }
+
+    void PluginManager::updateGuiPlugins()
+    {
+        bt::PtrMap<int, Plugin>::iterator i = loaded.begin();
+        while (i != loaded.end())
+        {
+            Plugin* p = i->second;
+            p->guiUpdate();
+            i++;
+        }
+    }
 
 }

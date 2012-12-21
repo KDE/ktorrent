@@ -24,32 +24,32 @@
 
 namespace kt
 {
-	AdvancedPref::AdvancedPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Advanced"),"configure",parent)
-	{
-		setupUi(this);
-		connect(kcfg_diskPrealloc,SIGNAL(toggled(bool)),this,SLOT(onDiskPreallocToggled(bool)));
-	}
+    AdvancedPref::AdvancedPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Advanced"), "configure", parent)
+    {
+        setupUi(this);
+        connect(kcfg_diskPrealloc, SIGNAL(toggled(bool)), this, SLOT(onDiskPreallocToggled(bool)));
+    }
 
-	AdvancedPref::~AdvancedPref()
-	{
-	}
+    AdvancedPref::~AdvancedPref()
+    {
+    }
 
-	void AdvancedPref::loadSettings()
-	{
-		kcfg_fullDiskPrealloc->setEnabled(Settings::diskPrealloc());
-	}
+    void AdvancedPref::loadSettings()
+    {
+        kcfg_fullDiskPrealloc->setEnabled(Settings::diskPrealloc());
+    }
 
-	void AdvancedPref::loadDefaults()
-	{
-		loadSettings();
-	}
+    void AdvancedPref::loadDefaults()
+    {
+        loadSettings();
+    }
 
-	void AdvancedPref::onDiskPreallocToggled(bool on)
-	{
-		kcfg_fullDiskPrealloc->setEnabled(on);
-	}
+    void AdvancedPref::onDiskPreallocToggled(bool on)
+    {
+        kcfg_fullDiskPrealloc->setEnabled(on);
+    }
 }
 
 #include "advancedpref.moc"
 
-// kate: space-indent on; indent-width 8; replace-tabs off; mixed-indent off;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; mixed-indent off;

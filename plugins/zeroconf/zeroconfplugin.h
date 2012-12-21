@@ -25,45 +25,45 @@
 
 namespace kt
 {
-	class TorrentService;
+    class TorrentService;
 
-	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * 
-	 * Plugin which handles the zeroconf service.
-	 */
-	class ZeroConfPlugin : public Plugin
-	{
-		Q_OBJECT
-	public:
-		ZeroConfPlugin(QObject* parent, const QStringList& args);
-		virtual ~ZeroConfPlugin();
-		
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
-		
-	private slots:
-		/**
-		 * A TorrentInterface was added
-		 * @param tc 
-		 */
-		void torrentAdded(bt::TorrentInterface* tc);
+    /**
+     * @author Joris Guisson <joris.guisson@gmail.com>
+     *
+     * Plugin which handles the zeroconf service.
+     */
+    class ZeroConfPlugin : public Plugin
+    {
+        Q_OBJECT
+    public:
+        ZeroConfPlugin(QObject* parent, const QStringList& args);
+        virtual ~ZeroConfPlugin();
 
-		/**
-		 * A TorrentInterface was removed
-		 * @param tc
-		 */
-		void torrentRemoved(bt::TorrentInterface* tc);
-	
-		/**
-		 * An AvahiService has been destroyed by the psman
-		 */
-		void avahiServiceDestroyed(TorrentService* av);
-		
-	private:
-		bt::PtrMap<bt::TorrentInterface*,TorrentService> services;
-	};
+        virtual void load();
+        virtual void unload();
+        virtual bool versionCheck(const QString& version) const;
+
+    private slots:
+        /**
+         * A TorrentInterface was added
+         * @param tc
+         */
+        void torrentAdded(bt::TorrentInterface* tc);
+
+        /**
+         * A TorrentInterface was removed
+         * @param tc
+         */
+        void torrentRemoved(bt::TorrentInterface* tc);
+
+        /**
+         * An AvahiService has been destroyed by the psman
+         */
+        void avahiServiceDestroyed(TorrentService* av);
+
+    private:
+        bt::PtrMap<bt::TorrentInterface*, TorrentService> services;
+    };
 
 }
 

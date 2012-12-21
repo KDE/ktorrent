@@ -31,47 +31,47 @@ class KJob;
 
 namespace kt
 {
-	class IPFilterPlugin;
-	class DownloadAndConvertJob;
-	
-	/**
-	 * @author Ivan Vasic
-	 * @brief IPBlocking plugin interface page
-	 **/
-	class IPBlockingPrefPage : public PrefPageInterface,public Ui_IPBlockingPrefPage
-	{
-		Q_OBJECT
-	public:
-		IPBlockingPrefPage(IPFilterPlugin* p);
-		virtual ~IPBlockingPrefPage();
-		
-	
-		virtual void loadSettings();
-		virtual void loadDefaults();
-		virtual void updateSettings();
-		
-		/// Do an auto update, return false if this is not possible
-		bool doAutoUpdate();
-			
-	private slots:
-		void downloadClicked();
-		void checkUseLevel1Toggled(bool);
-		void restoreGUI();
-		void downloadAndConvertFinished(KJob* j);
-		void autoUpdateToggled(bool on);
-		void autoUpdateIntervalChanged(int val);
-		
-	private:
-		void updateAutoUpdate();
-		
-	Q_SIGNALS:
-		void updateFinished();
+    class IPFilterPlugin;
+    class DownloadAndConvertJob;
 
-	private:
-		CoreInterface* m_core;
-		IPFilterPlugin* m_plugin;
-		DownloadAndConvertJob* m_job;
-		bool m_verbose;
-	};
+    /**
+     * @author Ivan Vasic
+     * @brief IPBlocking plugin interface page
+     **/
+    class IPBlockingPrefPage : public PrefPageInterface, public Ui_IPBlockingPrefPage
+    {
+        Q_OBJECT
+    public:
+        IPBlockingPrefPage(IPFilterPlugin* p);
+        virtual ~IPBlockingPrefPage();
+
+
+        virtual void loadSettings();
+        virtual void loadDefaults();
+        virtual void updateSettings();
+
+        /// Do an auto update, return false if this is not possible
+        bool doAutoUpdate();
+
+    private slots:
+        void downloadClicked();
+        void checkUseLevel1Toggled(bool);
+        void restoreGUI();
+        void downloadAndConvertFinished(KJob* j);
+        void autoUpdateToggled(bool on);
+        void autoUpdateIntervalChanged(int val);
+
+    private:
+        void updateAutoUpdate();
+
+    Q_SIGNALS:
+        void updateFinished();
+
+    private:
+        CoreInterface* m_core;
+        IPFilterPlugin* m_plugin;
+        DownloadAndConvertJob* m_job;
+        bool m_verbose;
+    };
 }
 #endif

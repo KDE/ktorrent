@@ -24,42 +24,42 @@
 
 namespace kt
 {
-	BufferNetworkReply::BufferNetworkReply(const QByteArray& data, const QString& content_type, QObject* parent) 
-		: QNetworkReply(parent)
-	{
-		buf.open(ReadWrite);
-		buf.write(data);
-		buf.seek(0);
-		
-		open(ReadOnly | Unbuffered);
-		setHeader(QNetworkRequest::ContentTypeHeader, content_type);
-		setHeader(QNetworkRequest::ContentLengthHeader, data.size());
-		setAttribute(QNetworkRequest::HttpStatusCodeAttribute, 200);
-		setAttribute(QNetworkRequest::HttpReasonPhraseAttribute, "OK");
-		
-		QTimer::singleShot(0,this,SIGNAL(readyRead()));
-		QTimer::singleShot(0,this,SIGNAL(finished()));
-	}
+    BufferNetworkReply::BufferNetworkReply(const QByteArray& data, const QString& content_type, QObject* parent)
+        : QNetworkReply(parent)
+    {
+        buf.open(ReadWrite);
+        buf.write(data);
+        buf.seek(0);
 
-	BufferNetworkReply::~BufferNetworkReply()
-	{
+        open(ReadOnly | Unbuffered);
+        setHeader(QNetworkRequest::ContentTypeHeader, content_type);
+        setHeader(QNetworkRequest::ContentLengthHeader, data.size());
+        setAttribute(QNetworkRequest::HttpStatusCodeAttribute, 200);
+        setAttribute(QNetworkRequest::HttpReasonPhraseAttribute, "OK");
 
-	}
+        QTimer::singleShot(0, this, SIGNAL(readyRead()));
+        QTimer::singleShot(0, this, SIGNAL(finished()));
+    }
 
-	void BufferNetworkReply::abort()
-	{
-		// Do nothing
-	}
+    BufferNetworkReply::~BufferNetworkReply()
+    {
 
-	qint64 BufferNetworkReply::readData(char* data, qint64 maxlen)
-	{
-		return buf.read(data,maxlen);
-	}
+    }
 
-	qint64 BufferNetworkReply::bytesAvailable() const
-	{
-		return buf.size();
-	}
+    void BufferNetworkReply::abort()
+    {
+        // Do nothing
+    }
+
+    qint64 BufferNetworkReply::readData(char* data, qint64 maxlen)
+    {
+        return buf.read(data, maxlen);
+    }
+
+    qint64 BufferNetworkReply::bytesAvailable() const
+    {
+        return buf.size();
+    }
 
 }
 

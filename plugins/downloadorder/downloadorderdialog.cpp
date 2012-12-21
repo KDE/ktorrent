@@ -30,190 +30,190 @@
 namespace kt
 {
 
-	DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent)
-		: KDialog(parent), tor(tor), plugin(plugin)
-	{
-		setupUi(mainWidget());
-		setButtons(KDialog::Ok | KDialog::Cancel);
-		connect(this, SIGNAL(okClicked()), this, SLOT(commitDownloadOrder()));
-		setCaption(i18n("File Download Order"));
-		m_top_label->setText(i18n("File download order for <b>%1</b>:", tor->getDisplayName()));
+    DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent)
+        : KDialog(parent), tor(tor), plugin(plugin)
+    {
+        setupUi(mainWidget());
+        setButtons(KDialog::Ok | KDialog::Cancel);
+        connect(this, SIGNAL(okClicked()), this, SLOT(commitDownloadOrder()));
+        setCaption(i18n("File Download Order"));
+        m_top_label->setText(i18n("File download order for <b>%1</b>:", tor->getDisplayName()));
 
-		DownloadOrderManager* dom = plugin->manager(tor);
-		m_custom_order_enabled->setChecked(dom != 0);
-		m_order->setEnabled(dom != 0);
-		m_move_up->setEnabled(false);
-		m_move_down->setEnabled(false);
-		m_move_top->setEnabled(false);
-		m_move_bottom->setEnabled(false);
-		m_search_files->setEnabled(false);
+        DownloadOrderManager* dom = plugin->manager(tor);
+        m_custom_order_enabled->setChecked(dom != 0);
+        m_order->setEnabled(dom != 0);
+        m_move_up->setEnabled(false);
+        m_move_down->setEnabled(false);
+        m_move_top->setEnabled(false);
+        m_move_bottom->setEnabled(false);
+        m_search_files->setEnabled(false);
 
-		m_move_up->setIcon(KIcon("go-up"));
-		connect(m_move_up, SIGNAL(clicked()), this, SLOT(moveUp()));
-		m_move_down->setIcon(KIcon("go-down"));
-		connect(m_move_down, SIGNAL(clicked()), this, SLOT(moveDown()));
-		m_move_top->setIcon(KIcon("go-top"));
-		connect(m_move_top, SIGNAL(clicked()), this, SLOT(moveTop()));
-		m_move_bottom->setIcon(KIcon("go-bottom"));
-		connect(m_move_bottom, SIGNAL(clicked()), this, SLOT(moveBottom()));
+        m_move_up->setIcon(KIcon("go-up"));
+        connect(m_move_up, SIGNAL(clicked()), this, SLOT(moveUp()));
+        m_move_down->setIcon(KIcon("go-down"));
+        connect(m_move_down, SIGNAL(clicked()), this, SLOT(moveDown()));
+        m_move_top->setIcon(KIcon("go-top"));
+        connect(m_move_top, SIGNAL(clicked()), this, SLOT(moveTop()));
+        m_move_bottom->setIcon(KIcon("go-bottom"));
+        connect(m_move_bottom, SIGNAL(clicked()), this, SLOT(moveBottom()));
 
-		m_order->setSelectionMode(QAbstractItemView::ContiguousSelection);
-		m_order->setDragEnabled(true);
-		m_order->setAcceptDrops(true);
-		m_order->setDropIndicatorShown(true);
-		m_order->setDragDropMode(QAbstractItemView::InternalMove);
+        m_order->setSelectionMode(QAbstractItemView::ContiguousSelection);
+        m_order->setDragEnabled(true);
+        m_order->setAcceptDrops(true);
+        m_order->setDropIndicatorShown(true);
+        m_order->setDragDropMode(QAbstractItemView::InternalMove);
 
-		model = new DownloadOrderModel(tor, this);
-		if(dom)
-			model->initOrder(dom->downloadOrder());
-		m_order->setModel(model);
+        model = new DownloadOrderModel(tor, this);
+        if (dom)
+            model->initOrder(dom->downloadOrder());
+        m_order->setModel(model);
 
-		QSize s = KGlobal::config()->group("DownloadOrderDialog").readEntry("size", size());
-		resize(s);
+        QSize s = KGlobal::config()->group("DownloadOrderDialog").readEntry("size", size());
+        resize(s);
 
-		connect(m_order->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-		        this, SLOT(itemSelectionChanged(QItemSelection, QItemSelection)));
-		connect(m_custom_order_enabled, SIGNAL(toggled(bool)), this, SLOT(customOrderEnableToggled(bool)));
-		connect(m_search_files, SIGNAL(textChanged(QString)), this, SLOT(search(QString)));
-		
-		QMenu* sort_by_menu = new QMenu(m_sort_by);
-		sort_by_menu->addAction(i18n("Name"), model, SLOT(sortByName()));
-		sort_by_menu->addAction(i18n("Seasons and Episodes"), model, SLOT(sortBySeasonsAndEpisodes()));
-		sort_by_menu->addAction(i18n("Album Track Order"), model, SLOT(sortByAlbumTrackOrder()));
-		m_sort_by->setMenu(sort_by_menu);
-		m_sort_by->setPopupMode(QToolButton::InstantPopup);
-		m_sort_by->setEnabled(false);
-	}
+        connect(m_order->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+                this, SLOT(itemSelectionChanged(QItemSelection, QItemSelection)));
+        connect(m_custom_order_enabled, SIGNAL(toggled(bool)), this, SLOT(customOrderEnableToggled(bool)));
+        connect(m_search_files, SIGNAL(textChanged(QString)), this, SLOT(search(QString)));
+
+        QMenu* sort_by_menu = new QMenu(m_sort_by);
+        sort_by_menu->addAction(i18n("Name"), model, SLOT(sortByName()));
+        sort_by_menu->addAction(i18n("Seasons and Episodes"), model, SLOT(sortBySeasonsAndEpisodes()));
+        sort_by_menu->addAction(i18n("Album Track Order"), model, SLOT(sortByAlbumTrackOrder()));
+        m_sort_by->setMenu(sort_by_menu);
+        m_sort_by->setPopupMode(QToolButton::InstantPopup);
+        m_sort_by->setEnabled(false);
+    }
 
 
-	DownloadOrderDialog::~DownloadOrderDialog()
-	{
-		KGlobal::config()->group("DownloadOrderDialog").writeEntry("size", size());
-	}
+    DownloadOrderDialog::~DownloadOrderDialog()
+    {
+        KGlobal::config()->group("DownloadOrderDialog").writeEntry("size", size());
+    }
 
-	void DownloadOrderDialog::commitDownloadOrder()
-	{
-		if(m_custom_order_enabled->isChecked())
-		{
-			DownloadOrderManager* dom = plugin->manager(tor);
-			if(!dom)
-			{
-				dom = plugin->createManager(tor);
-				connect(tor, SIGNAL(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)),
-				        dom, SLOT(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)));
-			}
+    void DownloadOrderDialog::commitDownloadOrder()
+    {
+        if (m_custom_order_enabled->isChecked())
+        {
+            DownloadOrderManager* dom = plugin->manager(tor);
+            if (!dom)
+            {
+                dom = plugin->createManager(tor);
+                connect(tor, SIGNAL(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)),
+                        dom, SLOT(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)));
+            }
 
-			dom->setDownloadOrder(model->downloadOrder());
-			dom->save();
-			dom->update();
-		}
-		else
-		{
-			DownloadOrderManager* dom = plugin->manager(tor);
-			if(dom)
-			{
-				dom->disable();
-				plugin->destroyManager(tor);
-			}
-		}
-		accept();
-	}
+            dom->setDownloadOrder(model->downloadOrder());
+            dom->save();
+            dom->update();
+        }
+        else
+        {
+            DownloadOrderManager* dom = plugin->manager(tor);
+            if (dom)
+            {
+                dom->disable();
+                plugin->destroyManager(tor);
+            }
+        }
+        accept();
+    }
 
-	void DownloadOrderDialog::moveUp()
-	{
-		QModelIndexList idx = m_order->selectionModel()->selectedRows();
-		model->moveUp(idx.front().row(), idx.count());
-		if(idx.front().row() > 0)
-		{
-			QItemSelection sel(model->index(idx.first().row() - 1), model->index(idx.last().row() - 1));
-			m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
-		}
-	}
-	
-	void DownloadOrderDialog::moveTop()
-	{
-		QModelIndexList idx = m_order->selectionModel()->selectedRows();
-		model->moveTop(idx.front().row(), idx.count());
-		if(idx.front().row() > 0)
-		{
-			QItemSelection sel(model->index(0), model->index(idx.count() - 1));
-			m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
-		}
-	}
+    void DownloadOrderDialog::moveUp()
+    {
+        QModelIndexList idx = m_order->selectionModel()->selectedRows();
+        model->moveUp(idx.front().row(), idx.count());
+        if (idx.front().row() > 0)
+        {
+            QItemSelection sel(model->index(idx.first().row() - 1), model->index(idx.last().row() - 1));
+            m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
+        }
+    }
 
-	void DownloadOrderDialog::moveDown()
-	{
-		QModelIndexList idx = m_order->selectionModel()->selectedRows();
-		model->moveDown(idx.front().row(), idx.count());
-		if(idx.back().row() < (int)tor->getNumFiles() - 1)
-		{
-			QItemSelection sel(model->index(idx.first().row() + 1), model->index(idx.last().row() + 1));
-			m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
-		}
-	}
-	
-	void DownloadOrderDialog::moveBottom()
-	{
-		QModelIndexList idx = m_order->selectionModel()->selectedRows();
-		model->moveBottom(idx.front().row(), idx.count());
-		if(idx.back().row() < (int)tor->getNumFiles() - 1)
-		{
-			QItemSelection sel(model->index(tor->getNumFiles() - idx.size()), model->index(tor->getNumFiles() - 1));
-			m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
-		}
-	}
+    void DownloadOrderDialog::moveTop()
+    {
+        QModelIndexList idx = m_order->selectionModel()->selectedRows();
+        model->moveTop(idx.front().row(), idx.count());
+        if (idx.front().row() > 0)
+        {
+            QItemSelection sel(model->index(0), model->index(idx.count() - 1));
+            m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
+        }
+    }
 
-	void DownloadOrderDialog::itemSelectionChanged(const QItemSelection& new_sel, const QItemSelection& old_sel)
-	{
-		Q_UNUSED(old_sel);
-		if(new_sel.empty())
-		{
-			m_move_down->setEnabled(false);
-			m_move_up->setEnabled(false);
-			m_move_top->setEnabled(false);
-			m_move_down->setEnabled(false);
-		}
-		else
-		{
-			bool up_ok = new_sel.front().topLeft().row() > 0;
-			bool down_ok = new_sel.back().bottomRight().row() != (int)tor->getNumFiles() - 1;
-			m_move_up->setEnabled(up_ok);
-			m_move_top->setEnabled(up_ok);
-			m_move_down->setEnabled(down_ok);
-			m_move_bottom->setEnabled(down_ok);
-		}
-	}
-	
-	void DownloadOrderDialog::customOrderEnableToggled(bool on)
-	{
-		if (!on)
-		{
-			m_move_down->setEnabled(false);
-			m_move_up->setEnabled(false);
-			m_move_top->setEnabled(false);
-			m_move_down->setEnabled(false);
-			m_search_files->setEnabled(false);
-			m_sort_by->setEnabled(false);
-		}
-		else
-		{
-			m_search_files->setEnabled(true);
-			m_sort_by->setEnabled(true);
-			itemSelectionChanged(m_order->selectionModel()->selection(), QItemSelection());
-		}
-	}
-	
-	void DownloadOrderDialog::search(const QString& text)
-	{
-		if (text.isEmpty())
-		{
-			model->clearHighLights();
-		}
-		else
-		{
-			QModelIndex idx = model->find(text);
-			if (idx.isValid())
-				m_order->scrollTo(idx);
-		}
-	}
+    void DownloadOrderDialog::moveDown()
+    {
+        QModelIndexList idx = m_order->selectionModel()->selectedRows();
+        model->moveDown(idx.front().row(), idx.count());
+        if (idx.back().row() < (int)tor->getNumFiles() - 1)
+        {
+            QItemSelection sel(model->index(idx.first().row() + 1), model->index(idx.last().row() + 1));
+            m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
+        }
+    }
+
+    void DownloadOrderDialog::moveBottom()
+    {
+        QModelIndexList idx = m_order->selectionModel()->selectedRows();
+        model->moveBottom(idx.front().row(), idx.count());
+        if (idx.back().row() < (int)tor->getNumFiles() - 1)
+        {
+            QItemSelection sel(model->index(tor->getNumFiles() - idx.size()), model->index(tor->getNumFiles() - 1));
+            m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
+        }
+    }
+
+    void DownloadOrderDialog::itemSelectionChanged(const QItemSelection& new_sel, const QItemSelection& old_sel)
+    {
+        Q_UNUSED(old_sel);
+        if (new_sel.empty())
+        {
+            m_move_down->setEnabled(false);
+            m_move_up->setEnabled(false);
+            m_move_top->setEnabled(false);
+            m_move_down->setEnabled(false);
+        }
+        else
+        {
+            bool up_ok = new_sel.front().topLeft().row() > 0;
+            bool down_ok = new_sel.back().bottomRight().row() != (int)tor->getNumFiles() - 1;
+            m_move_up->setEnabled(up_ok);
+            m_move_top->setEnabled(up_ok);
+            m_move_down->setEnabled(down_ok);
+            m_move_bottom->setEnabled(down_ok);
+        }
+    }
+
+    void DownloadOrderDialog::customOrderEnableToggled(bool on)
+    {
+        if (!on)
+        {
+            m_move_down->setEnabled(false);
+            m_move_up->setEnabled(false);
+            m_move_top->setEnabled(false);
+            m_move_down->setEnabled(false);
+            m_search_files->setEnabled(false);
+            m_sort_by->setEnabled(false);
+        }
+        else
+        {
+            m_search_files->setEnabled(true);
+            m_sort_by->setEnabled(true);
+            itemSelectionChanged(m_order->selectionModel()->selection(), QItemSelection());
+        }
+    }
+
+    void DownloadOrderDialog::search(const QString& text)
+    {
+        if (text.isEmpty())
+        {
+            model->clearHighLights();
+        }
+        else
+        {
+            QModelIndex idx = model->find(text);
+            if (idx.isValid())
+                m_order->scrollTo(idx);
+        }
+    }
 }

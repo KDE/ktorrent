@@ -25,21 +25,21 @@
 
 namespace kt
 {
-	class GUI;
+    class GUI;
 
-	class App : public KUniqueApplication
-	{
-		Q_OBJECT
-	public:
-		App();
-		virtual ~App();
+    class App : public KUniqueApplication
+    {
+        Q_OBJECT
+    public:
+        App();
+        virtual ~App();
 
-		virtual int newInstance();
-		virtual bool notify(QObject* receiver, QEvent* event);
-		
-	private:
-		static GUI* main_widget;
-	};
+        virtual int newInstance();
+        virtual bool notify(QObject* receiver, QEvent* event);
+
+    private:
+        static GUI* main_widget;
+    };
 }
 
 #endif // _KTORRENTAPP_H_

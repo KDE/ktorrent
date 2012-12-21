@@ -28,176 +28,176 @@
 
 namespace kt
 {
-	ShutdownDlg::ShutdownDlg(ShutdownRuleSet* rules,CoreInterface* core,QWidget* parent) : KDialog(parent),rules(rules)
-	{
-		setupUi(mainWidget());
-		setWindowTitle(i18nc("@title:window", "Configure Shutdown"));
-		model = new ShutdownTorrentModel(core,this);
-		
-		m_action->addItem(KIcon("system-shutdown"),i18n("Shutdown"));
-		m_action->addItem(KIcon("system-lock-screen"),i18n("Lock"));
+    ShutdownDlg::ShutdownDlg(ShutdownRuleSet* rules, CoreInterface* core, QWidget* parent) : KDialog(parent), rules(rules)
+    {
+        setupUi(mainWidget());
+        setWindowTitle(i18nc("@title:window", "Configure Shutdown"));
+        model = new ShutdownTorrentModel(core, this);
+
+        m_action->addItem(KIcon("system-shutdown"), i18n("Shutdown"));
+        m_action->addItem(KIcon("system-lock-screen"), i18n("Lock"));
 #if KDE_IS_VERSION(4,5,82)
-		QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
-		if (spdMethods.contains(Solid::PowerManagement::StandbyState))
-			m_action->addItem(KIcon("system-suspend"),i18n("Standby"));
-		
-		if (spdMethods.contains(Solid::PowerManagement::SuspendState))
-			m_action->addItem(KIcon("system-suspend"),i18n("Sleep (suspend to RAM)"));
-		
-		if (spdMethods.contains(Solid::PowerManagement::HibernateState))
-			m_action->addItem(KIcon("system-suspend-hibernate"),i18n("Hibernate (suspend to disk)"));
+        QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
+        if (spdMethods.contains(Solid::PowerManagement::StandbyState))
+            m_action->addItem(KIcon("system-suspend"), i18n("Standby"));
+
+        if (spdMethods.contains(Solid::PowerManagement::SuspendState))
+            m_action->addItem(KIcon("system-suspend"), i18n("Sleep (suspend to RAM)"));
+
+        if (spdMethods.contains(Solid::PowerManagement::HibernateState))
+            m_action->addItem(KIcon("system-suspend-hibernate"), i18n("Hibernate (suspend to disk)"));
 #else
-		Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
-		if (spdMethods & Solid::Control::PowerManager::Standby) 
-			m_action->addItem(KIcon("system-suspend"),i18n("Standby"));
+        Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
+        if (spdMethods & Solid::Control::PowerManager::Standby)
+            m_action->addItem(KIcon("system-suspend"), i18n("Standby"));
 
-		if (spdMethods & Solid::Control::PowerManager::ToRam) 
-			m_action->addItem(KIcon("system-suspend"),i18n("Sleep (suspend to RAM)"));
+        if (spdMethods & Solid::Control::PowerManager::ToRam)
+            m_action->addItem(KIcon("system-suspend"), i18n("Sleep (suspend to RAM)"));
 
-		if (spdMethods & Solid::Control::PowerManager::ToDisk) 
-			m_action->addItem(KIcon("system-suspend-hibernate"),i18n("Hibernate (suspend to disk)"));
+        if (spdMethods & Solid::Control::PowerManager::ToDisk)
+            m_action->addItem(KIcon("system-suspend-hibernate"), i18n("Hibernate (suspend to disk)"));
 #endif
-		m_time_to_execute->addItem(i18n("When all torrents finish downloading"));
-		m_time_to_execute->addItem(i18n("When all torrents finish seeding"));
-		m_time_to_execute->addItem(i18n("When the events below happen"));
-		m_all_rules_must_be_hit->setChecked(rules->allRulesMustBeHit());
-		
-		connect(m_time_to_execute,SIGNAL(currentIndexChanged(int)),this,SLOT(timeToExecuteChanged(int)));
-		m_torrent_list->setEnabled(false);
-		m_torrent_list->setModel(model);
-		m_torrent_list->setRootIsDecorated(false);
-		m_torrent_list->setItemDelegateForColumn(1,new ShutdownTorrentDelegate(this));
-		
-		for (int i = 0;i < rules->count();i++)
-		{
-			const ShutdownRule & r = rules->rule(i);
-			if (r.target == ALL_TORRENTS)
-			{
-				m_action->setCurrentIndex(actionToIndex(r.action));
-				m_time_to_execute->setCurrentIndex(r.trigger == DOWNLOADING_COMPLETED ? 0 : 1);
-			}
-			else
-			{
-				m_action->setCurrentIndex(actionToIndex(r.action));
-				m_time_to_execute->setCurrentIndex(2);
-				model->addRule(r);
-			}
-		}
-		
-		m_all_rules_must_be_hit->setEnabled(m_time_to_execute->currentIndex() == 2);
-	}
-	
-	ShutdownDlg::~ShutdownDlg() 
-	{
+        m_time_to_execute->addItem(i18n("When all torrents finish downloading"));
+        m_time_to_execute->addItem(i18n("When all torrents finish seeding"));
+        m_time_to_execute->addItem(i18n("When the events below happen"));
+        m_all_rules_must_be_hit->setChecked(rules->allRulesMustBeHit());
 
-	}
+        connect(m_time_to_execute, SIGNAL(currentIndexChanged(int)), this, SLOT(timeToExecuteChanged(int)));
+        m_torrent_list->setEnabled(false);
+        m_torrent_list->setModel(model);
+        m_torrent_list->setRootIsDecorated(false);
+        m_torrent_list->setItemDelegateForColumn(1, new ShutdownTorrentDelegate(this));
 
-	void ShutdownDlg::accept() 
-	{
-		rules->setAllRulesMustBeHit(m_all_rules_must_be_hit->isChecked());
-		if (m_time_to_execute->currentIndex() == 2)
-		{
-			model->applyRules(indexToAction(m_action->currentIndex()),rules);
-		}
-		else
-		{
-			rules->clear();
-			Trigger trigger = m_time_to_execute->currentIndex() == 0 ? DOWNLOADING_COMPLETED : SEEDING_COMPLETED;
-			rules->addRule(indexToAction(m_action->currentIndex()),ALL_TORRENTS,trigger);
-		}
-		QDialog::accept();
-	}
+        for (int i = 0; i < rules->count(); i++)
+        {
+            const ShutdownRule& r = rules->rule(i);
+            if (r.target == ALL_TORRENTS)
+            {
+                m_action->setCurrentIndex(actionToIndex(r.action));
+                m_time_to_execute->setCurrentIndex(r.trigger == DOWNLOADING_COMPLETED ? 0 : 1);
+            }
+            else
+            {
+                m_action->setCurrentIndex(actionToIndex(r.action));
+                m_time_to_execute->setCurrentIndex(2);
+                model->addRule(r);
+            }
+        }
 
-	void ShutdownDlg::reject() 
-	{
-		QDialog::reject();
-	}
-	
-	void ShutdownDlg::timeToExecuteChanged(int idx) 
-	{
-		m_torrent_list->setEnabled(idx == 2);
-		m_all_rules_must_be_hit->setEnabled(idx == 2);
-	}
-	
-	kt::Action ShutdownDlg::indexToAction(int idx) 
-	{
-		int next = 2;
-		int stand_by = -1;
-		int suspend_to_ram = -1;
-		int suspend_to_disk = -1;
+        m_all_rules_must_be_hit->setEnabled(m_time_to_execute->currentIndex() == 2);
+    }
+
+    ShutdownDlg::~ShutdownDlg()
+    {
+
+    }
+
+    void ShutdownDlg::accept()
+    {
+        rules->setAllRulesMustBeHit(m_all_rules_must_be_hit->isChecked());
+        if (m_time_to_execute->currentIndex() == 2)
+        {
+            model->applyRules(indexToAction(m_action->currentIndex()), rules);
+        }
+        else
+        {
+            rules->clear();
+            Trigger trigger = m_time_to_execute->currentIndex() == 0 ? DOWNLOADING_COMPLETED : SEEDING_COMPLETED;
+            rules->addRule(indexToAction(m_action->currentIndex()), ALL_TORRENTS, trigger);
+        }
+        QDialog::accept();
+    }
+
+    void ShutdownDlg::reject()
+    {
+        QDialog::reject();
+    }
+
+    void ShutdownDlg::timeToExecuteChanged(int idx)
+    {
+        m_torrent_list->setEnabled(idx == 2);
+        m_all_rules_must_be_hit->setEnabled(idx == 2);
+    }
+
+    kt::Action ShutdownDlg::indexToAction(int idx)
+    {
+        int next = 2;
+        int stand_by = -1;
+        int suspend_to_ram = -1;
+        int suspend_to_disk = -1;
 #if KDE_IS_VERSION(4,5,82)
-		QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
-		if (spdMethods.contains(Solid::PowerManagement::StandbyState))
-			stand_by = next++;
-		
-		if (spdMethods.contains(Solid::PowerManagement::SuspendState))
-			suspend_to_ram = next++;
-		
-		if (spdMethods.contains(Solid::PowerManagement::HibernateState))
-			suspend_to_disk = next++;
+        QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
+        if (spdMethods.contains(Solid::PowerManagement::StandbyState))
+            stand_by = next++;
+
+        if (spdMethods.contains(Solid::PowerManagement::SuspendState))
+            suspend_to_ram = next++;
+
+        if (spdMethods.contains(Solid::PowerManagement::HibernateState))
+            suspend_to_disk = next++;
 #else
-                Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
-                if (spdMethods & Solid::Control::PowerManager::Standby)
-                        stand_by = next++;
+        Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
+        if (spdMethods & Solid::Control::PowerManager::Standby)
+            stand_by = next++;
 
-                if (spdMethods & Solid::Control::PowerManager::ToRam) 
-                        suspend_to_ram = next++;
+        if (spdMethods & Solid::Control::PowerManager::ToRam)
+            suspend_to_ram = next++;
 
-                if (spdMethods & Solid::Control::PowerManager::ToDisk) 
-                        suspend_to_disk = next++;
+        if (spdMethods & Solid::Control::PowerManager::ToDisk)
+            suspend_to_disk = next++;
 #endif
-		if (idx == 0)
-			return SHUTDOWN;
-		else if (idx == 1)
-			return LOCK;
-		else if (idx == stand_by)
-			return STANDBY;
-		else if (idx == suspend_to_ram)
-			return SUSPEND_TO_RAM;
-		else if (idx == suspend_to_disk)
-			return SUSPEND_TO_DISK;
-		else
-			return SHUTDOWN;
-	}
-	
-	int ShutdownDlg::actionToIndex(Action act)
-	{
-		int next = 2;
-		int stand_by = -1;
-		int suspend_to_ram = -1;
-		int suspend_to_disk = -1;
+        if (idx == 0)
+            return SHUTDOWN;
+        else if (idx == 1)
+            return LOCK;
+        else if (idx == stand_by)
+            return STANDBY;
+        else if (idx == suspend_to_ram)
+            return SUSPEND_TO_RAM;
+        else if (idx == suspend_to_disk)
+            return SUSPEND_TO_DISK;
+        else
+            return SHUTDOWN;
+    }
+
+    int ShutdownDlg::actionToIndex(Action act)
+    {
+        int next = 2;
+        int stand_by = -1;
+        int suspend_to_ram = -1;
+        int suspend_to_disk = -1;
 #if KDE_IS_VERSION(4,5,82)
-		QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
-		if (spdMethods.contains(Solid::PowerManagement::StandbyState))
-			stand_by = next++;
-		
-		if (spdMethods.contains(Solid::PowerManagement::SuspendState))
-			suspend_to_ram = next++;
-		
-		if (spdMethods.contains(Solid::PowerManagement::HibernateState))
-			suspend_to_disk = next++;
+        QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
+        if (spdMethods.contains(Solid::PowerManagement::StandbyState))
+            stand_by = next++;
+
+        if (spdMethods.contains(Solid::PowerManagement::SuspendState))
+            suspend_to_ram = next++;
+
+        if (spdMethods.contains(Solid::PowerManagement::HibernateState))
+            suspend_to_disk = next++;
 #else
-		Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
-		if (spdMethods & Solid::Control::PowerManager::Standby)
-			stand_by = next++;
+        Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
+        if (spdMethods & Solid::Control::PowerManager::Standby)
+            stand_by = next++;
 
-		if (spdMethods & Solid::Control::PowerManager::ToRam) 
-			suspend_to_ram = next++;
+        if (spdMethods & Solid::Control::PowerManager::ToRam)
+            suspend_to_ram = next++;
 
-		if (spdMethods & Solid::Control::PowerManager::ToDisk) 
-			suspend_to_disk = next++;
+        if (spdMethods & Solid::Control::PowerManager::ToDisk)
+            suspend_to_disk = next++;
 #endif
-			
-		switch (act)
-		{
-			case SHUTDOWN: return 0;
-			case LOCK: return 1;
-			case STANDBY: return stand_by;
-			case SUSPEND_TO_RAM: return suspend_to_ram;
-			case SUSPEND_TO_DISK: return suspend_to_disk;
-			default:
-				return -1;
-		}
-	}
+
+        switch (act)
+        {
+        case SHUTDOWN: return 0;
+        case LOCK: return 1;
+        case STANDBY: return stand_by;
+        case SUSPEND_TO_RAM: return suspend_to_ram;
+        case SUSPEND_TO_DISK: return suspend_to_disk;
+        default:
+            return -1;
+        }
+    }
 
 }

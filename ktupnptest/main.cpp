@@ -35,32 +35,32 @@ using namespace bt;
 
 
 
-int main(int argc,char** argv)
+int main(int argc, char** argv)
 {
-	KAboutData about("ktupnp", 0, ki18n("KTUPnPTest"),
-			"1.0", ki18n("KTorrent's UPnP test application"),
-			KAboutData::License_GPL,
-			ki18n("(C) 2005 - 2007 Joris Guisson and Ivan Vasic"),
-			KLocalizedString(),
-			"http://www.ktorrent.org/");
-	KCmdLineArgs::init(argc, argv,&about);
-	KApplication app;
-	
-	if (!bt::InitLibKTorrent())
-	{
-		fprintf(stderr,"Failed to initialize libktorrent\n");
-		return -1;
-	}
-	
-	QString str = KGlobal::dirs()->saveLocation("data","ktorrent");
-	if (!str.endsWith(bt::DirSeparator()))
-		str += bt::DirSeparator();
-	
-	bt::InitLog(str + "ktupnptest.log");
-	UPnPTestWidget* mwnd = new UPnPTestWidget();
+    KAboutData about("ktupnp", 0, ki18n("KTUPnPTest"),
+                     "1.0", ki18n("KTorrent's UPnP test application"),
+                     KAboutData::License_GPL,
+                     ki18n("(C) 2005 - 2007 Joris Guisson and Ivan Vasic"),
+                     KLocalizedString(),
+                     "http://www.ktorrent.org/");
+    KCmdLineArgs::init(argc, argv, &about);
+    KApplication app;
 
-	app.setTopWidget(mwnd);
-	mwnd->show();
-	app.exec();
-	return 0;
+    if (!bt::InitLibKTorrent())
+    {
+        fprintf(stderr, "Failed to initialize libktorrent\n");
+        return -1;
+    }
+
+    QString str = KGlobal::dirs()->saveLocation("data", "ktorrent");
+    if (!str.endsWith(bt::DirSeparator()))
+        str += bt::DirSeparator();
+
+    bt::InitLog(str + "ktupnptest.log");
+    UPnPTestWidget* mwnd = new UPnPTestWidget();
+
+    app.setTopWidget(mwnd);
+    mwnd->show();
+    app.exec();
+    return 0;
 }

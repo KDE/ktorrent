@@ -26,33 +26,33 @@
 #include <QAbstractItemView>
 #include <kwidgetitemdelegate.h>
 
-namespace kt 
+namespace kt
 {
 
-	class ScriptDelegate : public KWidgetItemDelegate
-	{
-		Q_OBJECT
-	public:
-		ScriptDelegate(QAbstractItemView* parent);
-		virtual ~ScriptDelegate();
-		
-		virtual void paint(QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex &index) const;
-		virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
-		virtual QList<QWidget*> createItemWidgets() const;
-		virtual void updateItemWidgets(const QList<QWidget*> widgets,const QStyleOptionViewItem &option,const QPersistentModelIndex &index) const;
-	
-	private:
-		QFont titleFont(const QFont &baseFont) const;
-		
-	private slots:
-		void toggled(bool on);
-		void aboutClicked();
-		void settingsClicked();
-		
-	private:
-		QCheckBox* check_box;
-		QPushButton* push_button;
-	};
+    class ScriptDelegate : public KWidgetItemDelegate
+    {
+        Q_OBJECT
+    public:
+        ScriptDelegate(QAbstractItemView* parent);
+        virtual ~ScriptDelegate();
+
+        virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        virtual QList<QWidget*> createItemWidgets() const;
+        virtual void updateItemWidgets(const QList<QWidget*> widgets, const QStyleOptionViewItem& option, const QPersistentModelIndex& index) const;
+
+    private:
+        QFont titleFont(const QFont& baseFont) const;
+
+    private slots:
+        void toggled(bool on);
+        void aboutClicked();
+        void settingsClicked();
+
+    private:
+        QCheckBox* check_box;
+        QPushButton* push_button;
+    };
 
 }
 

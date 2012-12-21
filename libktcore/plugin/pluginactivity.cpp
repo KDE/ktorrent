@@ -34,36 +34,36 @@ using namespace bt;
 
 namespace kt
 {
-	PluginActivity::PluginActivity(PluginManager* pman) 
-		: Activity(i18n("Plugins"),"preferences-plugin",5,0),pman(pman)
-	{
-		QVBoxLayout* layout = new QVBoxLayout(this);
-		layout->setMargin(0);
-		pmw = new KPluginSelector(this);
-		connect(pmw,SIGNAL(changed(bool)),this,SLOT(changed()));
-		connect(pmw,SIGNAL(configCommitted(const QByteArray &)),this,SLOT(changed()));
-		layout->addWidget(pmw);
-	}
+    PluginActivity::PluginActivity(PluginManager* pman)
+        : Activity(i18n("Plugins"), "preferences-plugin", 5, 0), pman(pman)
+    {
+        QVBoxLayout* layout = new QVBoxLayout(this);
+        layout->setMargin(0);
+        pmw = new KPluginSelector(this);
+        connect(pmw, SIGNAL(changed(bool)), this, SLOT(changed()));
+        connect(pmw, SIGNAL(configCommitted(const QByteArray&)), this, SLOT(changed()));
+        layout->addWidget(pmw);
+    }
 
 
-	PluginActivity::~PluginActivity()
-	{
-	}
+    PluginActivity::~PluginActivity()
+    {
+    }
 
-	void PluginActivity::updatePluginList()
- 	{
-		pmw->addPlugins(pman->pluginInfoList(),KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
-	}
-		
-	void PluginActivity::update()
-	{
-		pmw->updatePluginsState();
-		pman->loadPlugins();
-	}
-	
-	void PluginActivity::changed()
-	{
-		update();
-	}
+    void PluginActivity::updatePluginList()
+    {
+        pmw->addPlugins(pman->pluginInfoList(), KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
+    }
+
+    void PluginActivity::update()
+    {
+        pmw->updatePluginsState();
+        pman->loadPlugins();
+    }
+
+    void PluginActivity::changed()
+    {
+        update();
+    }
 }
 

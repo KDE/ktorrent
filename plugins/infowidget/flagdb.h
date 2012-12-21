@@ -26,43 +26,43 @@
 
 namespace kt
 {
-	class FlagDBSource
-	{
-	public:
-		FlagDBSource();
-		FlagDBSource(const char* type, const QString& pathPattern);
-		FlagDBSource(const QString& pathPattern);
-		QString getPath(const QString& country) const;
+    class FlagDBSource
+    {
+    public:
+        FlagDBSource();
+        FlagDBSource(const char* type, const QString& pathPattern);
+        FlagDBSource(const QString& pathPattern);
+        QString getPath(const QString& country) const;
 
-		const char* getType() { return type; };
-		const QString& getPathPattern() { return pathPattern; };
+        const char* getType() { return type; };
+        const QString& getPathPattern() { return pathPattern; };
 
-	private:
-		const char* type;
-		QString pathPattern;
-	};
+    private:
+        const char* type;
+        QString pathPattern;
+    };
 
-	/**
-	@author Modestas Vainius
-	*/
-	class FlagDB
-	{
-	public :
-		FlagDB(int preferredWidth, int preferredHeight);
-		FlagDB(const FlagDB& m);
-		~FlagDB();
+    /**
+    @author Modestas Vainius
+    */
+    class FlagDB
+    {
+    public :
+        FlagDB(int preferredWidth, int preferredHeight);
+        FlagDB(const FlagDB& m);
+        ~FlagDB();
 
-		void addFlagSource(const FlagDBSource& source);
-		void addFlagSource(const char* type, const QString& pathPattern);
-		const QList<FlagDBSource>& listSources() const;
-		bool isFlagAvailable(const QString& country);
-		const QPixmap& getFlag(const QString& country);
-	private:
-		static const QPixmap& nullPixmap;
-		int preferredWidth, preferredHeight;
-		QList<FlagDBSource> sources;
-		QMap<QString,QPixmap> db;
-	};
+        void addFlagSource(const FlagDBSource& source);
+        void addFlagSource(const char* type, const QString& pathPattern);
+        const QList<FlagDBSource>& listSources() const;
+        bool isFlagAvailable(const QString& country);
+        const QPixmap& getFlag(const QString& country);
+    private:
+        static const QPixmap& nullPixmap;
+        int preferredWidth, preferredHeight;
+        QList<FlagDBSource> sources;
+        QMap<QString, QPixmap> db;
+    };
 }
 
- #endif
+#endif

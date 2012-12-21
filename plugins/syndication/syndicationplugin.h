@@ -27,38 +27,38 @@ class KAction;
 
 namespace kt
 {
-	class SyndicationActivity;
-	
+    class SyndicationActivity;
 
-	/**
-		@author
-	*/
-	class SyndicationPlugin : public Plugin
-	{
-		Q_OBJECT
-	public:
-		SyndicationPlugin(QObject* parent,const QStringList& args);
-		virtual ~SyndicationPlugin();
 
-		virtual bool versionCheck(const QString& version) const;
-		virtual void load();
-		virtual void unload();
-	
-	private:
-		void setupActions();
-	
-	private:
-		KAction* add_feed;
-		KAction* remove_feed;
-		KAction* edit_feed_name;
-		KAction* add_filter;
-		KAction* remove_filter;
-		KAction* edit_filter;
-		KAction* manage_filters;
-		SyndicationActivity* activity;
-		
-		friend class SyndicationActivity;
-	};
+    /**
+        @author
+    */
+    class SyndicationPlugin : public Plugin
+    {
+        Q_OBJECT
+    public:
+        SyndicationPlugin(QObject* parent, const QStringList& args);
+        virtual ~SyndicationPlugin();
+
+        virtual bool versionCheck(const QString& version) const;
+        virtual void load();
+        virtual void unload();
+
+    private:
+        void setupActions();
+
+    private:
+        KAction* add_feed;
+        KAction* remove_feed;
+        KAction* edit_feed_name;
+        KAction* add_filter;
+        KAction* remove_filter;
+        KAction* edit_filter;
+        KAction* manage_filters;
+        SyndicationActivity* activity;
+
+        friend class SyndicationActivity;
+    };
 
 }
 

@@ -31,74 +31,74 @@ using namespace bt;
 namespace kt
 {
 
-	NetworkPref::NetworkPref(QWidget* parent)
-	: PrefPageInterface(Settings::self(),i18n("Network"),"preferences-system-network",parent)
-	{
-		setupUi(this);
-		connect(m_recommended_settings,SIGNAL(clicked()),this,SIGNAL(calculateRecommendedSettings()));
-		connect(kcfg_utpEnabled,SIGNAL(toggled(bool)),this,SLOT(utpEnabled(bool)));
-		connect(kcfg_onlyUseUtp,SIGNAL(toggled(bool)),this,SLOT(onlyUseUtpEnabled(bool)));
-	}
+    NetworkPref::NetworkPref(QWidget* parent)
+        : PrefPageInterface(Settings::self(), i18n("Network"), "preferences-system-network", parent)
+    {
+        setupUi(this);
+        connect(m_recommended_settings, SIGNAL(clicked()), this, SIGNAL(calculateRecommendedSettings()));
+        connect(kcfg_utpEnabled, SIGNAL(toggled(bool)), this, SLOT(utpEnabled(bool)));
+        connect(kcfg_onlyUseUtp, SIGNAL(toggled(bool)), this, SLOT(onlyUseUtpEnabled(bool)));
+    }
 
 
-	NetworkPref::~NetworkPref()
-	{
-	}
+    NetworkPref::~NetworkPref()
+    {
+    }
 
-	void NetworkPref::loadSettings()
-	{
-		kcfg_maxDownloadRate->setValue(Settings::maxDownloadRate());
-		kcfg_maxUploadRate->setValue(Settings::maxUploadRate());
-		kcfg_maxConnections->setValue(Settings::maxConnections());
-		kcfg_maxTotalConnections->setValue(Settings::maxTotalConnections());
-		
-		kcfg_networkInterface->clear();
-		kcfg_networkInterface->addItem(KIcon("network-wired"),i18n("All interfaces"));
-		
-		kcfg_onlyUseUtp->setEnabled(Settings::utpEnabled());
-		kcfg_primaryTransportProtocol->setEnabled(Settings::utpEnabled() && !Settings::onlyUseUtp());
+    void NetworkPref::loadSettings()
+    {
+        kcfg_maxDownloadRate->setValue(Settings::maxDownloadRate());
+        kcfg_maxUploadRate->setValue(Settings::maxUploadRate());
+        kcfg_maxConnections->setValue(Settings::maxConnections());
+        kcfg_maxTotalConnections->setValue(Settings::maxTotalConnections());
 
-		// get all the network devices and add them to the combo box
-		QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
-		
-		QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
-		
-		
-		foreach(const QNetworkInterface &iface,iface_list)
-		{
-			KIcon icon("network-wired");
-			foreach (const Solid::Device &device,netlist)
-			{
-				const Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
-				if (netdev->ifaceName() == iface.name() && netdev->isWireless())
-				{
-					icon = KIcon("network-wireless");
-					break;
-				}
-					
-			}
-			
-			kcfg_networkInterface->addItem(icon,iface.name());
-		}
-		
-		kcfg_networkInterface->setCurrentIndex(Settings::networkInterface());
-	}
+        kcfg_networkInterface->clear();
+        kcfg_networkInterface->addItem(KIcon("network-wired"), i18n("All interfaces"));
 
-	void NetworkPref::loadDefaults()
-	{
-	}
-	
-	
-	void NetworkPref::utpEnabled(bool on)
-	{
-		kcfg_onlyUseUtp->setEnabled(on);
-		kcfg_primaryTransportProtocol->setEnabled(on && !kcfg_onlyUseUtp->isChecked());
-	}
+        kcfg_onlyUseUtp->setEnabled(Settings::utpEnabled());
+        kcfg_primaryTransportProtocol->setEnabled(Settings::utpEnabled() && !Settings::onlyUseUtp());
 
-	void NetworkPref::onlyUseUtpEnabled(bool on)
-	{
-		kcfg_primaryTransportProtocol->setEnabled(!on && kcfg_utpEnabled->isChecked());
-	}
+        // get all the network devices and add them to the combo box
+        QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
 
-	
+        QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
+
+
+        foreach (const QNetworkInterface& iface, iface_list)
+        {
+            KIcon icon("network-wired");
+            foreach (const Solid::Device& device, netlist)
+            {
+                const Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
+                if (netdev->ifaceName() == iface.name() && netdev->isWireless())
+                {
+                    icon = KIcon("network-wireless");
+                    break;
+                }
+
+            }
+
+            kcfg_networkInterface->addItem(icon, iface.name());
+        }
+
+        kcfg_networkInterface->setCurrentIndex(Settings::networkInterface());
+    }
+
+    void NetworkPref::loadDefaults()
+    {
+    }
+
+
+    void NetworkPref::utpEnabled(bool on)
+    {
+        kcfg_onlyUseUtp->setEnabled(on);
+        kcfg_primaryTransportProtocol->setEnabled(on && !kcfg_onlyUseUtp->isChecked());
+    }
+
+    void NetworkPref::onlyUseUtpEnabled(bool on)
+    {
+        kcfg_primaryTransportProtocol->setEnabled(!on && kcfg_utpEnabled->isChecked());
+    }
+
+
 }

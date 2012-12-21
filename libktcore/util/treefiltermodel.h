@@ -24,20 +24,20 @@
 #include <QSortFilterProxyModel>
 #include <ktcore_export.h>
 
-namespace kt 
+namespace kt
 {
-	/**
-		SortFilterProxyModel for trees, which doesn't
-	*/
-	class KTCORE_EXPORT TreeFilterModel : public QSortFilterProxyModel
-	{
-	public:
-		TreeFilterModel(QObject* parent = 0);
-		virtual ~TreeFilterModel();
-		
-	protected:
-		virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
-	};
+    /**
+        SortFilterProxyModel for trees, which doesn't
+    */
+    class KTCORE_EXPORT TreeFilterModel : public QSortFilterProxyModel
+    {
+    public:
+        TreeFilterModel(QObject* parent = 0);
+        virtual ~TreeFilterModel();
+
+    protected:
+        virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+    };
 
 }
 

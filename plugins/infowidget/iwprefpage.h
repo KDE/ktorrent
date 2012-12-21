@@ -26,14 +26,14 @@
 
 namespace kt
 {
-	class IWPrefPage : public PrefPageInterface, public Ui_IWPrefPage
-	{
-		Q_OBJECT
-	public:
-		IWPrefPage(QWidget* parent);
-		virtual ~IWPrefPage();
+    class IWPrefPage : public PrefPageInterface, public Ui_IWPrefPage
+    {
+        Q_OBJECT
+    public:
+        IWPrefPage(QWidget* parent);
+        virtual ~IWPrefPage();
 
-	};
+    };
 }
 
 #endif

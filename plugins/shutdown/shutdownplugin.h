@@ -26,38 +26,38 @@
 
 class KToggleAction;
 
-namespace kt 
+namespace kt
 {
-	class ShutdownRuleSet;
-	
-	class ShutdownPlugin : public kt::Plugin
-	{
-		Q_OBJECT
-	public:
-		ShutdownPlugin(QObject* parent,const QStringList& args);
-		virtual ~ShutdownPlugin();
-		
-		virtual bool versionCheck(const QString& version) const;
-		virtual void unload();
-		virtual void load();
-		
-	public slots:
-		void shutdownComputer();
-		void lock();
-		void standby();
-		void suspendToDisk();
-		void suspendToRam();
-		
-	private slots:
-		void shutdownToggled(bool on);
-		void configureShutdown();
-		void updateAction();
-		
-	private:
-		KToggleAction* shutdown_enabled;
-		KAction* configure_shutdown;
-		ShutdownRuleSet* rules;
-	};
+    class ShutdownRuleSet;
+
+    class ShutdownPlugin : public kt::Plugin
+    {
+        Q_OBJECT
+    public:
+        ShutdownPlugin(QObject* parent, const QStringList& args);
+        virtual ~ShutdownPlugin();
+
+        virtual bool versionCheck(const QString& version) const;
+        virtual void unload();
+        virtual void load();
+
+    public slots:
+        void shutdownComputer();
+        void lock();
+        void standby();
+        void suspendToDisk();
+        void suspendToRam();
+
+    private slots:
+        void shutdownToggled(bool on);
+        void configureShutdown();
+        void updateAction();
+
+    private:
+        KToggleAction* shutdown_enabled;
+        KAction* configure_shutdown;
+        ShutdownRuleSet* rules;
+    };
 
 }
 

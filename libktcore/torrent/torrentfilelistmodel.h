@@ -26,36 +26,36 @@
 namespace kt
 {
 
-	/**
-	 * Model for displaying file trees of a torrent
-	 * @author Joris Guisson
-	*/
-	class KTCORE_EXPORT TorrentFileListModel : public TorrentFileModel
-	{
-		Q_OBJECT
-	public:
-		TorrentFileListModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent);
-		virtual ~TorrentFileListModel();
-		
-		virtual void changeTorrent(bt::TorrentInterface* tc);
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual int columnCount(const QModelIndex & parent) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual QModelIndex parent(const QModelIndex & index) const;
-		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
-		virtual bool setData(const QModelIndex & index, const QVariant & value, int role);
-		virtual void checkAll();
-		virtual void uncheckAll();
-		virtual void invertCheck();
-		virtual bt::Uint64 bytesToDownload();
-		virtual bt::TorrentFileInterface* indexToFile(const QModelIndex & idx);
-		virtual QString dirPath(const QModelIndex & idx);
-		virtual void changePriority(const QModelIndexList & indexes,bt::Priority newpriority);
+    /**
+     * Model for displaying file trees of a torrent
+     * @author Joris Guisson
+    */
+    class KTCORE_EXPORT TorrentFileListModel : public TorrentFileModel
+    {
+        Q_OBJECT
+    public:
+        TorrentFileListModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent);
+        virtual ~TorrentFileListModel();
 
-	private: 
-		void invertCheck(const QModelIndex & idx);
-	};
+        virtual void changeTorrent(bt::TorrentInterface* tc);
+        virtual int rowCount(const QModelIndex& parent) const;
+        virtual int columnCount(const QModelIndex& parent) const;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual QModelIndex parent(const QModelIndex& index) const;
+        virtual QModelIndex index(int row, int column, const QModelIndex& parent) const;
+        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
+        virtual void checkAll();
+        virtual void uncheckAll();
+        virtual void invertCheck();
+        virtual bt::Uint64 bytesToDownload();
+        virtual bt::TorrentFileInterface* indexToFile(const QModelIndex& idx);
+        virtual QString dirPath(const QModelIndex& idx);
+        virtual void changePriority(const QModelIndexList& indexes, bt::Priority newpriority);
+
+    private:
+        void invertCheck(const QModelIndex& idx);
+    };
 
 }
 

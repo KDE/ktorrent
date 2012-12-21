@@ -24,31 +24,31 @@
 
 namespace bt
 {
-	class UPnPMCastSocket;
+    class UPnPMCastSocket;
 }
 
 namespace kt
 {
-	class UPnPWidget;
+    class UPnPWidget;
 
-	/**
-	@author Joris Guisson
-	*/
-	class UPnPPlugin : public Plugin
-	{
-		Q_OBJECT
-	public:
-		UPnPPlugin(QObject* parent, const QStringList& args);
-		virtual ~UPnPPlugin();
+    /**
+    @author Joris Guisson
+    */
+    class UPnPPlugin : public Plugin
+    {
+        Q_OBJECT
+    public:
+        UPnPPlugin(QObject* parent, const QStringList& args);
+        virtual ~UPnPPlugin();
 
-		virtual void load();
-		virtual void unload();
-		virtual void shutdown(bt::WaitJob* job);
-		virtual bool versionCheck(const QString& version) const;
-	private:
-		bt::UPnPMCastSocket* sock;
-		UPnPWidget* upnp_tab;
-	};
+        virtual void load();
+        virtual void unload();
+        virtual void shutdown(bt::WaitJob* job);
+        virtual bool versionCheck(const QString& version) const;
+    private:
+        bt::UPnPMCastSocket* sock;
+        UPnPWidget* upnp_tab;
+    };
 
 }
 

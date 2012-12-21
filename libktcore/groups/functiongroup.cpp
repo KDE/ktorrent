@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include "functiongroup.h"
 
-namespace kt 
+namespace kt
 {
 
 

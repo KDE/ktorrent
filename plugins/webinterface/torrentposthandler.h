@@ -23,24 +23,24 @@
 
 #include "webcontentgenerator.h"
 
-namespace kt 
+namespace kt
 {
-	class CoreInterface;
+    class CoreInterface;
 
-	/**
-		Handles torrent posts and loads the torrents
-	*/
-	class TorrentPostHandler : public WebContentGenerator
-	{
-	public:
-		TorrentPostHandler(CoreInterface* core,HttpServer* server);	
-		virtual ~TorrentPostHandler();
-	
-		virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-		virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-	private:
-		CoreInterface* core;
-	};
+    /**
+        Handles torrent posts and loads the torrents
+    */
+    class TorrentPostHandler : public WebContentGenerator
+    {
+    public:
+        TorrentPostHandler(CoreInterface* core, HttpServer* server);
+        virtual ~TorrentPostHandler();
+
+        virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+        virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+    private:
+        CoreInterface* core;
+    };
 
 }
 

@@ -32,410 +32,410 @@ using namespace bt;
 
 namespace kt
 {
-	
-	
-	ScheduleItem::ScheduleItem() 
-		: start_day(0),
-		end_day(0),
-		upload_limit(0),
-		download_limit(0),
-		suspended(false),
-		set_conn_limits(false),
-		global_conn_limit(0),
-		torrent_conn_limit(0)
-	{
-		screensaver_limits = false;
-		ss_download_limit = ss_upload_limit = 0;
-	}
-	
-	ScheduleItem::ScheduleItem(const ScheduleItem & item)
-	{
-		operator = (item);
-	}
-
-	bool ScheduleItem::conflicts(const ScheduleItem & other) const
-	{
-		bool on_same_day = between(other.start_day, start_day, end_day) ||
-			between(other.end_day, start_day, end_day) ||
-			(other.start_day <= start_day && other.end_day >= end_day);
-		
-		if (!on_same_day)
-			return false;
-		else if (between(other.start, start, end))
-			return true;
-		else if (between(other.end, start, end))
-			return true;
-		else if (other.start <= start && other.end >= end)
-			return true;
-		else
-			return false;
-	}
-	
-	bool ScheduleItem::contains(const QDateTime & dt) const
-	{
-		if (!between(dt.date().dayOfWeek(),start_day,end_day))
-			return false;
-		else
-			return between(dt.time(),start,end);
-	}
-	
-	ScheduleItem & ScheduleItem::operator = (const ScheduleItem & item)
-	{
-		start_day = item.start_day;
-		end_day = item.end_day;
-		start = item.start;
-		end = item.end;
-		upload_limit = item.upload_limit;
-		download_limit = item.download_limit;
-		suspended = item.suspended;
-		screensaver_limits = item.screensaver_limits;
-		ss_download_limit = item.ss_download_limit;
-		ss_upload_limit = item.ss_upload_limit;
-		set_conn_limits = item.set_conn_limits;
-		global_conn_limit = item.global_conn_limit;
-		torrent_conn_limit = item.torrent_conn_limit;
-		return *this;
-	}
-	
-	bool ScheduleItem::operator == (const ScheduleItem & item) const
-	{
-		return start_day == item.start_day &&
-				end_day == item.end_day &&
-				start == item.start &&
-				end == item.end &&
-				upload_limit == item.upload_limit &&
-				download_limit == item.download_limit &&
-				suspended == item.suspended && 
-				set_conn_limits == item.set_conn_limits &&
-				global_conn_limit == item.global_conn_limit &&
-				torrent_conn_limit == item.torrent_conn_limit &&
-				screensaver_limits == item.screensaver_limits &&
-				ss_download_limit == item.ss_download_limit &&
-				ss_upload_limit == item.ss_upload_limit;
-	}
-	
-	void ScheduleItem::checkTimes()
-	{
-		start.setHMS(start.hour(),start.minute(),0);
-		end.setHMS(end.hour(),end.minute(),59);
-	}
-	
-	
-	/////////////////////////////////////////
-
-	Schedule::Schedule() : enabled(true)
-	{}
 
 
-	Schedule::~Schedule()
-	{
-		qDeleteAll(items);
-	}
+    ScheduleItem::ScheduleItem()
+        : start_day(0),
+          end_day(0),
+          upload_limit(0),
+          download_limit(0),
+          suspended(false),
+          set_conn_limits(false),
+          global_conn_limit(0),
+          torrent_conn_limit(0)
+    {
+        screensaver_limits = false;
+        ss_download_limit = ss_upload_limit = 0;
+    }
 
-	void Schedule::load(const QString & file)
-	{
-		QFile fptr(file);
-		if (!fptr.open(QIODevice::ReadOnly))
-		{
-			QString msg = i18n("Cannot open file %1: %2",file,fptr.errorString());
-			Out(SYS_SCD|LOG_NOTICE) << msg << endl;
-			throw bt::Error(msg);
-		}
-		
-		QByteArray data = fptr.readAll();
-		BDecoder dec(data,false,0);
-		BNode* node = 0;
-		try
-		{
-			node = dec.decode();
-		}
-		catch (bt::Error & err)
-		{
-			delete node;
-			Out(SYS_SCD|LOG_NOTICE) << "Decoding " << file << " failed : " << err.toString() << endl;
-			throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file.", file));
-		}
-		
-		if (!node)
-		{
-			Out(SYS_SCD|LOG_NOTICE) << "Decoding " << file << " failed !" << endl;
-			throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file.", file));
-		}
-		
-		if (node->getType() == BNode::LIST)
-		{
-			// Old format
-			parseItems((BListNode*)node);
-		}
-		else if (node->getType() == BNode::DICT)
-		{
-			BDictNode* dict = (BDictNode*)node;
-			BListNode* items = dict->getList("items");
-			if (items)
-				parseItems(items);
-			
-			try
-			{
-				enabled = dict->getInt("enabled") == 1;
-			}
-			catch (...)
-			{
-				enabled = true;
-			}
-		}
-		
-		delete node;
-	}
-	
-	void Schedule::parseItems(BListNode* items)
-	{
-		for (Uint32 i = 0;i < items->getNumChildren();i++)
-		{
-			BDictNode* dict = items->getDict(i);
-			if (!dict)
-				continue;
-			
-			ScheduleItem* item(new ScheduleItem());
-			if (parseItem(item,dict))
-				addItem(item);
-			else
-				delete item;
-		}
-	}
-	
-	bool Schedule::parseItem(ScheduleItem* item,bt::BDictNode* dict)
-	{
-		// Must have at least a day or days entry
-		BValueNode* day = dict->getValue("day");
-		BValueNode* start_day = dict->getValue("start_day");
-		BValueNode* end_day = dict->getValue("end_day");
-		if (!day && !start_day && !end_day)
-			return false;
-		
-		BValueNode* start = dict->getValue("start");
-		BValueNode* end = dict->getValue("end");
-		BValueNode* upload_limit = dict->getValue("upload_limit");
-		BValueNode* download_limit = dict->getValue("download_limit");
-		BValueNode* suspended = dict->getValue("suspended");
-		
-		if (!start || !end || !upload_limit || !download_limit || !suspended)
-			return false;
-		
-		if (day)
-			item->start_day = item->end_day = day->data().toInt();
-		else
-		{
-			item->start_day = start_day->data().toInt();
-			item->end_day = end_day->data().toInt();
-		}
-		
-		
-		item->start = QTime::fromString(start->data().toString());
-		item->end = QTime::fromString(end->data().toString());
-		item->upload_limit = upload_limit->data().toInt();
-		item->download_limit = download_limit->data().toInt();
-		item->suspended = suspended->data().toInt() == 1;
-		item->set_conn_limits = false;
-		
-		BDictNode* conn_limits = dict->getDict(QString("conn_limits"));
-		if (conn_limits)
-		{
-			BValueNode* glob = conn_limits->getValue("global");
-			BValueNode* per_torrent = conn_limits->getValue("per_torrent");
-			if (glob && per_torrent)
-			{
-				item->global_conn_limit = glob->data().toInt();
-				item->torrent_conn_limit = per_torrent->data().toInt();
-				item->set_conn_limits = true;
-			}
-		}
-		
-		BValueNode* ss_limits = dict->getValue(QString("screensaver_limits"));
-		if (ss_limits)
-		{
-			item->screensaver_limits = ss_limits->data().toInt() == 1;
-			item->ss_download_limit = dict->getInt("ss_download_limit");
-			item->ss_upload_limit = dict->getInt("ss_upload_limit");
-		}
-		else
-		{
-			item->screensaver_limits = false;
-			item->ss_download_limit = item->ss_upload_limit = 0;
-		}
-		
-		item->checkTimes();
-		return true;
-	}
-		
-	void Schedule::save(const QString & file)
-	{
-		File fptr;
-		if (!fptr.open(file,"wb"))
-		{
-			QString msg = i18n("Cannot open file %1: %2",file,fptr.errorString());
-			Out(SYS_SCD|LOG_NOTICE) << msg << endl;
-			throw bt::Error(msg);
-		}
+    ScheduleItem::ScheduleItem(const ScheduleItem& item)
+    {
+        operator = (item);
+    }
 
-		BEncoder enc(&fptr);
-		enc.beginDict();
-		enc.write("enabled",enabled);
-		enc.write("items");
-		enc.beginList();
-		foreach (ScheduleItem* i, items)
-		{
-			enc.beginDict();
-			enc.write("start_day"); enc.write((Uint32)i->start_day);
-			enc.write("end_day"); enc.write((Uint32)i->end_day);
-			enc.write("start"); enc.write(i->start.toString());
-			enc.write("end"); enc.write(i->end.toString());
-			enc.write("upload_limit"); enc.write(i->upload_limit);
-			enc.write("download_limit"); enc.write(i->download_limit);
-			enc.write("suspended"); enc.write((Uint32) (i->suspended ? 1 : 0));
-			if (i->set_conn_limits)
-			{
-				enc.write("conn_limits"); 
-				enc.beginDict();
-				enc.write("global"); enc.write((Uint32)i->global_conn_limit);
-				enc.write("per_torrent"); enc.write((Uint32)i->torrent_conn_limit);
-				enc.end();
-			}
-			enc.write("screensaver_limits",(Uint32)i->screensaver_limits);
-			enc.write("ss_upload_limit",i->ss_upload_limit);
-			enc.write("ss_download_limit",i->ss_download_limit);
-			enc.end();
-		}
-		enc.end();
-		enc.end();
-	}
-	
-	void Schedule::clear()
-	{
-		qDeleteAll(items);
-		items.clear();
-	}
+    bool ScheduleItem::conflicts(const ScheduleItem& other) const
+    {
+        bool on_same_day = between(other.start_day, start_day, end_day) ||
+                           between(other.end_day, start_day, end_day) ||
+                           (other.start_day <= start_day && other.end_day >= end_day);
 
-	
-	bool Schedule::addItem(ScheduleItem* item)
-	{
-		if (!item->isValid() || item->end <= item->start)
-			return false;
-		
-		foreach (ScheduleItem* i, items)
-		{
-			if (item->conflicts(*i))
-				return false;
-		}
-		
-		items.append(item);
-		return true;
-	}
-	
-	void Schedule::removeItem(ScheduleItem* item)
-	{
-		if (items.removeAll(item) > 0)
-			delete item;
-	}
+        if (!on_same_day)
+            return false;
+        else if (between(other.start, start, end))
+            return true;
+        else if (between(other.end, start, end))
+            return true;
+        else if (other.start <= start && other.end >= end)
+            return true;
+        else
+            return false;
+    }
 
-	
-	ScheduleItem* Schedule::getCurrentItem(const QDateTime & now)
-	{
-		foreach (ScheduleItem* i, items)
-		{
-			if (i->contains(now))
-			{
-				return i;
-			}
-		}
-		return 0;
-	}
-	
-	int Schedule::getTimeToNextScheduleEvent(const QDateTime & now)
-	{
-		ScheduleItem* item = getCurrentItem(now);
-		// when we are in the middle of a ScheduleItem, we need to trigger again at the end of it
-		if (item) 
-			return now.time().secsTo(item->end) + 5; // change the schedule 5 seconds after it expires
-		
-		// lets look at all schedule items on the same day
-		// and find the next one
-		foreach (ScheduleItem* i, items)
-		{
-			if (between(now.date().dayOfWeek(),i->start_day,i->end_day) && i->start > now.time())
-			{
-				if (!item || i->start < item->start)
-					item = i;
-			}
-		}
-		
-		if (item)
-			return now.time().secsTo(item->start) + 5;
-		
-		QTime end_of_day(23,59,59);
-		return now.time().secsTo(end_of_day) + 5;
-	}
-	
-	bool Schedule::modify(kt::ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day)
-	{
-		QTime old_start = item->start;
-		QTime old_end = item->end;
-		int old_start_day = item->start_day;
-		int old_end_day = item->end_day;
-			
-		item->start = start;
-		item->end = end;
-		item->start_day = start_day;
-		item->end_day = end_day;
-		item->checkTimes();
-		if (!item->isValid() || conflicts(item))
-		{
-			// restore old start and end time
-			item->start = old_start;
-			item->end = old_end;
-			item->start_day = old_start_day;
-			item->end_day = old_end_day;
-			return false;
-		}
-	
-		return true;
-	}
-	
-	bool Schedule::validModify(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day)
-	{
-		QTime old_start = item->start;
-		QTime old_end = item->end;
-		int old_start_day = item->start_day;
-		int old_end_day = item->end_day;
-		
-		item->start = start;
-		item->end = end;
-		item->start_day = start_day;
-		item->end_day = end_day;
-		item->checkTimes();
-		bool invalid = !item->isValid() || conflicts(item);
-		
-		// restore old start and end time
-		item->start = old_start;
-		item->end = old_end;
-		item->start_day = old_start_day;
-		item->end_day = old_end_day;
-		return !invalid;
-	}
+    bool ScheduleItem::contains(const QDateTime& dt) const
+    {
+        if (!between(dt.date().dayOfWeek(), start_day, end_day))
+            return false;
+        else
+            return between(dt.time(), start, end);
+    }
 
-	
-	bool Schedule::conflicts(ScheduleItem* item)
-	{
-		foreach (ScheduleItem* i, items)
-		{
-			if (i != item && (i->conflicts(*item) || item->conflicts(*i)))
-				return true;
-		}
-		return false;
-	}
-	
-	void Schedule::setEnabled(bool on)
-	{
-		enabled = on;
-	}
+    ScheduleItem& ScheduleItem::operator = (const ScheduleItem& item)
+    {
+        start_day = item.start_day;
+        end_day = item.end_day;
+        start = item.start;
+        end = item.end;
+        upload_limit = item.upload_limit;
+        download_limit = item.download_limit;
+        suspended = item.suspended;
+        screensaver_limits = item.screensaver_limits;
+        ss_download_limit = item.ss_download_limit;
+        ss_upload_limit = item.ss_upload_limit;
+        set_conn_limits = item.set_conn_limits;
+        global_conn_limit = item.global_conn_limit;
+        torrent_conn_limit = item.torrent_conn_limit;
+        return *this;
+    }
+
+    bool ScheduleItem::operator == (const ScheduleItem& item) const
+    {
+        return start_day == item.start_day &&
+               end_day == item.end_day &&
+               start == item.start &&
+               end == item.end &&
+               upload_limit == item.upload_limit &&
+               download_limit == item.download_limit &&
+               suspended == item.suspended &&
+               set_conn_limits == item.set_conn_limits &&
+               global_conn_limit == item.global_conn_limit &&
+               torrent_conn_limit == item.torrent_conn_limit &&
+               screensaver_limits == item.screensaver_limits &&
+               ss_download_limit == item.ss_download_limit &&
+               ss_upload_limit == item.ss_upload_limit;
+    }
+
+    void ScheduleItem::checkTimes()
+    {
+        start.setHMS(start.hour(), start.minute(), 0);
+        end.setHMS(end.hour(), end.minute(), 59);
+    }
+
+
+    /////////////////////////////////////////
+
+    Schedule::Schedule() : enabled(true)
+    {}
+
+
+    Schedule::~Schedule()
+    {
+        qDeleteAll(items);
+    }
+
+    void Schedule::load(const QString& file)
+    {
+        QFile fptr(file);
+        if (!fptr.open(QIODevice::ReadOnly))
+        {
+            QString msg = i18n("Cannot open file %1: %2", file, fptr.errorString());
+            Out(SYS_SCD | LOG_NOTICE) << msg << endl;
+            throw bt::Error(msg);
+        }
+
+        QByteArray data = fptr.readAll();
+        BDecoder dec(data, false, 0);
+        BNode* node = 0;
+        try
+        {
+            node = dec.decode();
+        }
+        catch (bt::Error& err)
+        {
+            delete node;
+            Out(SYS_SCD | LOG_NOTICE) << "Decoding " << file << " failed : " << err.toString() << endl;
+            throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file.", file));
+        }
+
+        if (!node)
+        {
+            Out(SYS_SCD | LOG_NOTICE) << "Decoding " << file << " failed !" << endl;
+            throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file.", file));
+        }
+
+        if (node->getType() == BNode::LIST)
+        {
+            // Old format
+            parseItems((BListNode*)node);
+        }
+        else if (node->getType() == BNode::DICT)
+        {
+            BDictNode* dict = (BDictNode*)node;
+            BListNode* items = dict->getList("items");
+            if (items)
+                parseItems(items);
+
+            try
+            {
+                enabled = dict->getInt("enabled") == 1;
+            }
+            catch (...)
+            {
+                enabled = true;
+            }
+        }
+
+        delete node;
+    }
+
+    void Schedule::parseItems(BListNode* items)
+    {
+        for (Uint32 i = 0; i < items->getNumChildren(); i++)
+        {
+            BDictNode* dict = items->getDict(i);
+            if (!dict)
+                continue;
+
+            ScheduleItem* item(new ScheduleItem());
+            if (parseItem(item, dict))
+                addItem(item);
+            else
+                delete item;
+        }
+    }
+
+    bool Schedule::parseItem(ScheduleItem* item, bt::BDictNode* dict)
+    {
+        // Must have at least a day or days entry
+        BValueNode* day = dict->getValue("day");
+        BValueNode* start_day = dict->getValue("start_day");
+        BValueNode* end_day = dict->getValue("end_day");
+        if (!day && !start_day && !end_day)
+            return false;
+
+        BValueNode* start = dict->getValue("start");
+        BValueNode* end = dict->getValue("end");
+        BValueNode* upload_limit = dict->getValue("upload_limit");
+        BValueNode* download_limit = dict->getValue("download_limit");
+        BValueNode* suspended = dict->getValue("suspended");
+
+        if (!start || !end || !upload_limit || !download_limit || !suspended)
+            return false;
+
+        if (day)
+            item->start_day = item->end_day = day->data().toInt();
+        else
+        {
+            item->start_day = start_day->data().toInt();
+            item->end_day = end_day->data().toInt();
+        }
+
+
+        item->start = QTime::fromString(start->data().toString());
+        item->end = QTime::fromString(end->data().toString());
+        item->upload_limit = upload_limit->data().toInt();
+        item->download_limit = download_limit->data().toInt();
+        item->suspended = suspended->data().toInt() == 1;
+        item->set_conn_limits = false;
+
+        BDictNode* conn_limits = dict->getDict(QString("conn_limits"));
+        if (conn_limits)
+        {
+            BValueNode* glob = conn_limits->getValue("global");
+            BValueNode* per_torrent = conn_limits->getValue("per_torrent");
+            if (glob && per_torrent)
+            {
+                item->global_conn_limit = glob->data().toInt();
+                item->torrent_conn_limit = per_torrent->data().toInt();
+                item->set_conn_limits = true;
+            }
+        }
+
+        BValueNode* ss_limits = dict->getValue(QString("screensaver_limits"));
+        if (ss_limits)
+        {
+            item->screensaver_limits = ss_limits->data().toInt() == 1;
+            item->ss_download_limit = dict->getInt("ss_download_limit");
+            item->ss_upload_limit = dict->getInt("ss_upload_limit");
+        }
+        else
+        {
+            item->screensaver_limits = false;
+            item->ss_download_limit = item->ss_upload_limit = 0;
+        }
+
+        item->checkTimes();
+        return true;
+    }
+
+    void Schedule::save(const QString& file)
+    {
+        File fptr;
+        if (!fptr.open(file, "wb"))
+        {
+            QString msg = i18n("Cannot open file %1: %2", file, fptr.errorString());
+            Out(SYS_SCD | LOG_NOTICE) << msg << endl;
+            throw bt::Error(msg);
+        }
+
+        BEncoder enc(&fptr);
+        enc.beginDict();
+        enc.write("enabled", enabled);
+        enc.write("items");
+        enc.beginList();
+        foreach (ScheduleItem* i, items)
+        {
+            enc.beginDict();
+            enc.write("start_day"); enc.write((Uint32)i->start_day);
+            enc.write("end_day"); enc.write((Uint32)i->end_day);
+            enc.write("start"); enc.write(i->start.toString());
+            enc.write("end"); enc.write(i->end.toString());
+            enc.write("upload_limit"); enc.write(i->upload_limit);
+            enc.write("download_limit"); enc.write(i->download_limit);
+            enc.write("suspended"); enc.write((Uint32)(i->suspended ? 1 : 0));
+            if (i->set_conn_limits)
+            {
+                enc.write("conn_limits");
+                enc.beginDict();
+                enc.write("global"); enc.write((Uint32)i->global_conn_limit);
+                enc.write("per_torrent"); enc.write((Uint32)i->torrent_conn_limit);
+                enc.end();
+            }
+            enc.write("screensaver_limits", (Uint32)i->screensaver_limits);
+            enc.write("ss_upload_limit", i->ss_upload_limit);
+            enc.write("ss_download_limit", i->ss_download_limit);
+            enc.end();
+        }
+        enc.end();
+        enc.end();
+    }
+
+    void Schedule::clear()
+    {
+        qDeleteAll(items);
+        items.clear();
+    }
+
+
+    bool Schedule::addItem(ScheduleItem* item)
+    {
+        if (!item->isValid() || item->end <= item->start)
+            return false;
+
+        foreach (ScheduleItem* i, items)
+        {
+            if (item->conflicts(*i))
+                return false;
+        }
+
+        items.append(item);
+        return true;
+    }
+
+    void Schedule::removeItem(ScheduleItem* item)
+    {
+        if (items.removeAll(item) > 0)
+            delete item;
+    }
+
+
+    ScheduleItem* Schedule::getCurrentItem(const QDateTime& now)
+    {
+        foreach (ScheduleItem* i, items)
+        {
+            if (i->contains(now))
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    int Schedule::getTimeToNextScheduleEvent(const QDateTime& now)
+    {
+        ScheduleItem* item = getCurrentItem(now);
+        // when we are in the middle of a ScheduleItem, we need to trigger again at the end of it
+        if (item)
+            return now.time().secsTo(item->end) + 5; // change the schedule 5 seconds after it expires
+
+        // lets look at all schedule items on the same day
+        // and find the next one
+        foreach (ScheduleItem* i, items)
+        {
+            if (between(now.date().dayOfWeek(), i->start_day, i->end_day) && i->start > now.time())
+            {
+                if (!item || i->start < item->start)
+                    item = i;
+            }
+        }
+
+        if (item)
+            return now.time().secsTo(item->start) + 5;
+
+        QTime end_of_day(23, 59, 59);
+        return now.time().secsTo(end_of_day) + 5;
+    }
+
+    bool Schedule::modify(kt::ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day)
+    {
+        QTime old_start = item->start;
+        QTime old_end = item->end;
+        int old_start_day = item->start_day;
+        int old_end_day = item->end_day;
+
+        item->start = start;
+        item->end = end;
+        item->start_day = start_day;
+        item->end_day = end_day;
+        item->checkTimes();
+        if (!item->isValid() || conflicts(item))
+        {
+            // restore old start and end time
+            item->start = old_start;
+            item->end = old_end;
+            item->start_day = old_start_day;
+            item->end_day = old_end_day;
+            return false;
+        }
+
+        return true;
+    }
+
+    bool Schedule::validModify(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day)
+    {
+        QTime old_start = item->start;
+        QTime old_end = item->end;
+        int old_start_day = item->start_day;
+        int old_end_day = item->end_day;
+
+        item->start = start;
+        item->end = end;
+        item->start_day = start_day;
+        item->end_day = end_day;
+        item->checkTimes();
+        bool invalid = !item->isValid() || conflicts(item);
+
+        // restore old start and end time
+        item->start = old_start;
+        item->end = old_end;
+        item->start_day = old_start_day;
+        item->end_day = old_end_day;
+        return !invalid;
+    }
+
+
+    bool Schedule::conflicts(ScheduleItem* item)
+    {
+        foreach (ScheduleItem* i, items)
+        {
+            if (i != item && (i->conflicts(*item) || item->conflicts(*i)))
+                return true;
+        }
+        return false;
+    }
+
+    void Schedule::setEnabled(bool on)
+    {
+        enabled = on;
+    }
 
 }

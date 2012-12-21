@@ -38,148 +38,148 @@ namespace kt
 {
 
 
-	UPnPWidget::UPnPWidget(UPnPMCastSocket* sock,QWidget* parent)
-		: QWidget(parent),sock(sock)
-	{
-		setupUi(this);
-		m_devices->setRootIsDecorated(false);
-		connect(m_forward,SIGNAL(clicked()),this,SLOT(onForwardBtnClicked()));
-		connect(m_undo_forward,SIGNAL(clicked()),this,SLOT(onUndoForwardBtnClicked()));
-		connect(m_rescan,SIGNAL(clicked()),this,SLOT(onRescanClicked()));
-		connect(sock,SIGNAL(discovered(bt::UPnPRouter* )),this,SLOT(addDevice(bt::UPnPRouter* )));
+    UPnPWidget::UPnPWidget(UPnPMCastSocket* sock, QWidget* parent)
+        : QWidget(parent), sock(sock)
+    {
+        setupUi(this);
+        m_devices->setRootIsDecorated(false);
+        connect(m_forward, SIGNAL(clicked()), this, SLOT(onForwardBtnClicked()));
+        connect(m_undo_forward, SIGNAL(clicked()), this, SLOT(onUndoForwardBtnClicked()));
+        connect(m_rescan, SIGNAL(clicked()), this, SLOT(onRescanClicked()));
+        connect(sock, SIGNAL(discovered(bt::UPnPRouter*)), this, SLOT(addDevice(bt::UPnPRouter*)));
 
-		bt::Globals::instance().getPortList().setListener(this);
+        bt::Globals::instance().getPortList().setListener(this);
 
-		model = new RouterModel(this);
-		m_devices->setModel(model);
-		
-		// load the state of the devices treewidget
-		KConfigGroup g = KGlobal::config()->group("UPnPDevicesList");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
-		if (!s.isNull())
-			m_devices->header()->restoreState(s);
-		
-		m_forward->setEnabled(false);
-		m_undo_forward->setEnabled(false);
-		connect(m_devices->selectionModel(),SIGNAL(currentChanged(const QModelIndex & , const QModelIndex & )),
-				this,SLOT(onCurrentDeviceChanged(const QModelIndex&, const QModelIndex&)));
-	}
+        model = new RouterModel(this);
+        m_devices->setModel(model);
+
+        // load the state of the devices treewidget
+        KConfigGroup g = KGlobal::config()->group("UPnPDevicesList");
+        QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
+        if (!s.isNull())
+            m_devices->header()->restoreState(s);
+
+        m_forward->setEnabled(false);
+        m_undo_forward->setEnabled(false);
+        connect(m_devices->selectionModel(), SIGNAL(currentChanged(const QModelIndex& , const QModelIndex&)),
+                this, SLOT(onCurrentDeviceChanged(const QModelIndex&, const QModelIndex&)));
+    }
 
 
-	UPnPWidget::~UPnPWidget()
-	{
-		bt::Globals::instance().getPortList().setListener(0);
-	}
+    UPnPWidget::~UPnPWidget()
+    {
+        bt::Globals::instance().getPortList().setListener(0);
+    }
 
-	void UPnPWidget::shutdown(bt::WaitJob* job)
-	{	
-		// save the state of the devices treewidget
-		KConfigGroup g = KGlobal::config()->group("UPnPDevicesList");
-		QByteArray s = m_devices->header()->saveState();
-		g.writeEntry("state",s.toBase64());
+    void UPnPWidget::shutdown(bt::WaitJob* job)
+    {
+        // save the state of the devices treewidget
+        KConfigGroup g = KGlobal::config()->group("UPnPDevicesList");
+        QByteArray s = m_devices->header()->saveState();
+        g.writeEntry("state", s.toBase64());
 
-		net::PortList & pl = bt::Globals::instance().getPortList();
-		for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
-			model->undoForward(*i,job);
-	}
+        net::PortList& pl = bt::Globals::instance().getPortList();
+        for (net::PortList::iterator i = pl.begin(); i != pl.end(); i++)
+            model->undoForward(*i, job);
+    }
 
-	void UPnPWidget::addDevice(bt::UPnPRouter* r)
-	{
-		connect(r,SIGNAL(stateChanged()),this,SLOT(updatePortMappings()));
-		model->addRouter(r);
+    void UPnPWidget::addDevice(bt::UPnPRouter* r)
+    {
+        connect(r, SIGNAL(stateChanged()), this, SLOT(updatePortMappings()));
+        model->addRouter(r);
 
-		Out(SYS_PNP|LOG_DEBUG) << "Doing port mappings for " << r->getServer() << endl;
-		try
-		{
-			net::PortList & pl = bt::Globals::instance().getPortList();
-		
-			for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
-			{
-				if (i->forward)
-					r->forward(*i);
-			}
-		}
-		catch (Error & e)
-		{
-			KMessageBox::error(this,e.toString());
-		}
-	}
-	
-	void UPnPWidget::onForwardBtnClicked()
-	{
-		UPnPRouter* r = model->routerForIndex(m_devices->selectionModel()->currentIndex());
-		if (!r)
-			return;
-		
-		try
-		{
-			net::PortList & pl = bt::Globals::instance().getPortList();
-			
-			for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
-			{
-				net::Port & p = *i;
-				if (p.forward)
-					r->forward(p);
-			}
-		}
-		catch (Error & e)
-		{
-			KMessageBox::error(this,e.toString());
-		}
-	}
+        Out(SYS_PNP | LOG_DEBUG) << "Doing port mappings for " << r->getServer() << endl;
+        try
+        {
+            net::PortList& pl = bt::Globals::instance().getPortList();
 
-	void UPnPWidget::onUndoForwardBtnClicked()
-	{
-		UPnPRouter* r = model->routerForIndex(m_devices->selectionModel()->currentIndex());
-		if (!r)
-			return;
-		
-		try
-		{
-			net::PortList & pl = bt::Globals::instance().getPortList();
-			
-			for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
-			{
-				net::Port & p = *i;
-				if (p.forward)
-					r->undoForward(p);
-			}
-		}
-		catch (Error & e)
-		{
-			KMessageBox::error(this,e.toString());
-		}
-	}
+            for (net::PortList::iterator i = pl.begin(); i != pl.end(); i++)
+            {
+                if (i->forward)
+                    r->forward(*i);
+            }
+        }
+        catch (Error& e)
+        {
+            KMessageBox::error(this, e.toString());
+        }
+    }
 
-	void UPnPWidget::onRescanClicked()
-	{
-		sock->discover();
-	}
+    void UPnPWidget::onForwardBtnClicked()
+    {
+        UPnPRouter* r = model->routerForIndex(m_devices->selectionModel()->currentIndex());
+        if (!r)
+            return;
 
-	void UPnPWidget::updatePortMappings()
-	{
-		// update all port mappings
-		model->update();
-		onCurrentDeviceChanged(m_devices->selectionModel()->currentIndex(),QModelIndex());
-	}
-		
-	void UPnPWidget::portAdded(const net::Port & port)
-	{
-		model->forward(port);
-	}
+        try
+        {
+            net::PortList& pl = bt::Globals::instance().getPortList();
 
-	void UPnPWidget::portRemoved(const net::Port & port)
-	{
-		model->undoForward(port, 0);
-	}
-	
-	void UPnPWidget::onCurrentDeviceChanged(const QModelIndex & current,const QModelIndex & previous)
-	{
-		Q_UNUSED(previous);
-		UPnPRouter* r = model->routerForIndex(current);
-		m_forward->setEnabled(r != 0);
-		m_undo_forward->setEnabled(r != 0 && model->rowCount(QModelIndex()) > 0);
-	}
+            for (net::PortList::iterator i = pl.begin(); i != pl.end(); i++)
+            {
+                net::Port& p = *i;
+                if (p.forward)
+                    r->forward(p);
+            }
+        }
+        catch (Error& e)
+        {
+            KMessageBox::error(this, e.toString());
+        }
+    }
+
+    void UPnPWidget::onUndoForwardBtnClicked()
+    {
+        UPnPRouter* r = model->routerForIndex(m_devices->selectionModel()->currentIndex());
+        if (!r)
+            return;
+
+        try
+        {
+            net::PortList& pl = bt::Globals::instance().getPortList();
+
+            for (net::PortList::iterator i = pl.begin(); i != pl.end(); i++)
+            {
+                net::Port& p = *i;
+                if (p.forward)
+                    r->undoForward(p);
+            }
+        }
+        catch (Error& e)
+        {
+            KMessageBox::error(this, e.toString());
+        }
+    }
+
+    void UPnPWidget::onRescanClicked()
+    {
+        sock->discover();
+    }
+
+    void UPnPWidget::updatePortMappings()
+    {
+        // update all port mappings
+        model->update();
+        onCurrentDeviceChanged(m_devices->selectionModel()->currentIndex(), QModelIndex());
+    }
+
+    void UPnPWidget::portAdded(const net::Port& port)
+    {
+        model->forward(port);
+    }
+
+    void UPnPWidget::portRemoved(const net::Port& port)
+    {
+        model->undoForward(port, 0);
+    }
+
+    void UPnPWidget::onCurrentDeviceChanged(const QModelIndex& current, const QModelIndex& previous)
+    {
+        Q_UNUSED(previous);
+        UPnPRouter* r = model->routerForIndex(current);
+        m_forward->setEnabled(r != 0);
+        m_undo_forward->setEnabled(r != 0 && model->rowCount(QModelIndex()) > 0);
+    }
 
 }
 

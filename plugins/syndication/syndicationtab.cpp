@@ -30,90 +30,90 @@
 namespace kt
 {
 
-	SyndicationTab::SyndicationTab(KActionCollection* ac,FeedList* feeds,FilterList* filters,QWidget* parent)
-		: QWidget(parent),feeds(feeds),splitter(0),filters(filters)
-	{
-		QVBoxLayout* layout = new QVBoxLayout(this);
-		layout->setSpacing(0);
-		layout->setMargin(0);
-		splitter = new QSplitter(Qt::Vertical,this);
-		layout->addWidget(splitter);
-		
-		QWidget* widget = new QWidget(splitter);
-		layout = new QVBoxLayout(widget);
-		layout->setSpacing(0);
-		layout->setMargin(0);
-		
-		feed_tool_bar = new KToolBar(widget);
-		feed_tool_bar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		feed_tool_bar->addAction(ac->action("add_feed"));
-		feed_tool_bar->addAction(ac->action("remove_feed"));
-		feed_tool_bar->addSeparator();
-		feed_tool_bar->addAction(ac->action("manage_filters"));
-		layout->addWidget(feed_tool_bar);
-		
-		feed_view = new FeedListView(feeds,widget);
-		layout->addWidget(feed_view);
-		splitter->addWidget(widget);
-		
-		widget = new QWidget(splitter);
-		layout = new QVBoxLayout(widget);
-		layout->setSpacing(0);
-		layout->setMargin(0);
-		
-		filter_tool_bar = new KToolBar(widget);
-		filter_tool_bar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		filter_tool_bar->addAction(ac->action("add_filter"));
-		filter_tool_bar->addAction(ac->action("remove_filter"));
-		filter_tool_bar->addSeparator();
-		filter_tool_bar->addAction(ac->action("edit_filter"));
-		layout->addWidget(filter_tool_bar);
-		
-		filter_view = new FilterListView(filters,widget);
-		layout->addWidget(filter_view);
-		splitter->addWidget(widget);
-		
-		feed_view_menu = new KMenu(this);
-		feed_view_menu->addAction(ac->action("manage_filters"));
-		feed_view_menu->addAction(ac->action("edit_feed_name"));
-		feed_view_menu->addSeparator();
-		feed_view_menu->addAction(ac->action("add_feed"));
-		feed_view_menu->addAction(ac->action("remove_feed"));
-		connect(feed_view,SIGNAL(customContextMenuRequested(const QPoint & )),
-				this,SLOT(showFeedViewMenu(const QPoint&)));
-		
-		
-		filter_view_menu = new KMenu(this);
-		filter_view_menu->addAction(ac->action("edit_filter"));
-		filter_view_menu->addSeparator();
-		filter_view_menu->addAction(ac->action("add_filter"));
-		filter_view_menu->addAction(ac->action("remove_filter"));
-		connect(filter_view,SIGNAL(customContextMenuRequested(const QPoint & )),
-				this,SLOT(showFilterViewMenu(const QPoint&)));
-	}
+    SyndicationTab::SyndicationTab(KActionCollection* ac, FeedList* feeds, FilterList* filters, QWidget* parent)
+        : QWidget(parent), feeds(feeds), splitter(0), filters(filters)
+    {
+        QVBoxLayout* layout = new QVBoxLayout(this);
+        layout->setSpacing(0);
+        layout->setMargin(0);
+        splitter = new QSplitter(Qt::Vertical, this);
+        layout->addWidget(splitter);
+
+        QWidget* widget = new QWidget(splitter);
+        layout = new QVBoxLayout(widget);
+        layout->setSpacing(0);
+        layout->setMargin(0);
+
+        feed_tool_bar = new KToolBar(widget);
+        feed_tool_bar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        feed_tool_bar->addAction(ac->action("add_feed"));
+        feed_tool_bar->addAction(ac->action("remove_feed"));
+        feed_tool_bar->addSeparator();
+        feed_tool_bar->addAction(ac->action("manage_filters"));
+        layout->addWidget(feed_tool_bar);
+
+        feed_view = new FeedListView(feeds, widget);
+        layout->addWidget(feed_view);
+        splitter->addWidget(widget);
+
+        widget = new QWidget(splitter);
+        layout = new QVBoxLayout(widget);
+        layout->setSpacing(0);
+        layout->setMargin(0);
+
+        filter_tool_bar = new KToolBar(widget);
+        filter_tool_bar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        filter_tool_bar->addAction(ac->action("add_filter"));
+        filter_tool_bar->addAction(ac->action("remove_filter"));
+        filter_tool_bar->addSeparator();
+        filter_tool_bar->addAction(ac->action("edit_filter"));
+        layout->addWidget(filter_tool_bar);
+
+        filter_view = new FilterListView(filters, widget);
+        layout->addWidget(filter_view);
+        splitter->addWidget(widget);
+
+        feed_view_menu = new KMenu(this);
+        feed_view_menu->addAction(ac->action("manage_filters"));
+        feed_view_menu->addAction(ac->action("edit_feed_name"));
+        feed_view_menu->addSeparator();
+        feed_view_menu->addAction(ac->action("add_feed"));
+        feed_view_menu->addAction(ac->action("remove_feed"));
+        connect(feed_view, SIGNAL(customContextMenuRequested(const QPoint&)),
+                this, SLOT(showFeedViewMenu(const QPoint&)));
 
 
-	SyndicationTab::~SyndicationTab()
-	{
-	}
+        filter_view_menu = new KMenu(this);
+        filter_view_menu->addAction(ac->action("edit_filter"));
+        filter_view_menu->addSeparator();
+        filter_view_menu->addAction(ac->action("add_filter"));
+        filter_view_menu->addAction(ac->action("remove_filter"));
+        connect(filter_view, SIGNAL(customContextMenuRequested(const QPoint&)),
+                this, SLOT(showFilterViewMenu(const QPoint&)));
+    }
 
-	void SyndicationTab::showFeedViewMenu(const QPoint & pos)
-	{
-		feed_view_menu->popup(feed_view->viewport()->mapToGlobal(pos));
-	}
-	
-	void SyndicationTab::showFilterViewMenu(const QPoint & pos)
-	{
-		filter_view_menu->popup(filter_view->viewport()->mapToGlobal(pos));
-	}
 
-	void SyndicationTab::loadState(KConfigGroup & g)
-	{
-		splitter->restoreState(g.readEntry("ver_splitter",QByteArray()));
-	}
-	
-	void SyndicationTab::saveState(KConfigGroup & g)
-	{
-		g.writeEntry("ver_splitter",splitter->saveState());
-	}
+    SyndicationTab::~SyndicationTab()
+    {
+    }
+
+    void SyndicationTab::showFeedViewMenu(const QPoint& pos)
+    {
+        feed_view_menu->popup(feed_view->viewport()->mapToGlobal(pos));
+    }
+
+    void SyndicationTab::showFilterViewMenu(const QPoint& pos)
+    {
+        filter_view_menu->popup(filter_view->viewport()->mapToGlobal(pos));
+    }
+
+    void SyndicationTab::loadState(KConfigGroup& g)
+    {
+        splitter->restoreState(g.readEntry("ver_splitter", QByteArray()));
+    }
+
+    void SyndicationTab::saveState(KConfigGroup& g)
+    {
+        g.writeEntry("ver_splitter", splitter->saveState());
+    }
 }

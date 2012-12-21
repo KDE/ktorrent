@@ -28,64 +28,64 @@
 
 namespace kt
 {
-	class GeoIPManager;
+    class GeoIPManager;
 
-	/**
-		@author Joris Guisson
-		Model for the PeerView
-	*/
-	class PeerViewModel : public QAbstractTableModel
-	{
-		Q_OBJECT
-	public:
-		PeerViewModel(QObject* parent);
-		virtual ~PeerViewModel();
-		
-		/// A peer has been added
-		void peerAdded(bt::PeerInterface* peer);
+    /**
+        @author Joris Guisson
+        Model for the PeerView
+    */
+    class PeerViewModel : public QAbstractTableModel
+    {
+        Q_OBJECT
+    public:
+        PeerViewModel(QObject* parent);
+        virtual ~PeerViewModel();
 
-		/// A peer has been removed
-		void peerRemoved(bt::PeerInterface* peer);
-		
-		/**
-		 * Update the model
-		 */
-		void update();
-		
-		/**
-			Clear the model
-		*/
-		void clear();
+        /// A peer has been added
+        void peerAdded(bt::PeerInterface* peer);
 
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual int columnCount(const QModelIndex & parent) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index,int role) const;
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
-		
-		bt::PeerInterface* indexToPeer(const QModelIndex & idx);
-	
-	public:	
-		struct Item
-		{
-			bt::PeerInterface* peer;
-			mutable bt::PeerInterface::Stats stats;
-			QString country;
-			KIcon flag;
-			
-			Item(bt::PeerInterface* peer,GeoIPManager* geo_ip);
-			
-			bool changed() const;
-			QVariant data(int col) const;
-			QVariant decoration(int col) const;
-			QVariant sortData(int col) const;
-		};
-	private:
-		QVector<Item*> items;
-		GeoIPManager* geo_ip;
-	};
+        /// A peer has been removed
+        void peerRemoved(bt::PeerInterface* peer);
+
+        /**
+         * Update the model
+         */
+        void update();
+
+        /**
+            Clear the model
+        */
+        void clear();
+
+        virtual int rowCount(const QModelIndex& parent) const;
+        virtual int columnCount(const QModelIndex& parent) const;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual bool removeRows(int row, int count, const QModelIndex& parent);
+        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+
+        bt::PeerInterface* indexToPeer(const QModelIndex& idx);
+
+    public:
+        struct Item
+        {
+            bt::PeerInterface* peer;
+            mutable bt::PeerInterface::Stats stats;
+            QString country;
+            KIcon flag;
+
+            Item(bt::PeerInterface* peer, GeoIPManager* geo_ip);
+
+            bool changed() const;
+            QVariant data(int col) const;
+            QVariant decoration(int col) const;
+            QVariant sortData(int col) const;
+        };
+    private:
+        QVector<Item*> items;
+        GeoIPManager* geo_ip;
+    };
 
 }
 

@@ -21,60 +21,60 @@
 
 namespace kt
 {
-	static QString ResponseCodeToString(int r)
-	{
-		switch (r)
-		{
-			case 200: return "OK";
-			case 301: return "Moved Permanently";
-			case 304: return "Not Modified";
-			case 404: return "Not Found";
-		}
-		return QString::null;
-	}
-	
-	HttpResponseHeader::HttpResponseHeader(int response_code,int major,int minor) 
-		: response_code(response_code),major(major),minor(minor)
-	{
-	}
-	
-	HttpResponseHeader::HttpResponseHeader(const HttpResponseHeader & hdr)
-	{
-		response_code = hdr.response_code;
-		fields = hdr.fields;
-		major = hdr.major;
-		minor = hdr.minor;
-	}
-	
-	HttpResponseHeader::~HttpResponseHeader()
-	{
-	}
-	
-	void HttpResponseHeader::setResponseCode(int rc)
-	{
-		response_code = rc;
-	}
-	
-	void HttpResponseHeader::setValue(const QString & key,const QString & value)
-	{
-		fields[key] = value;
-	}
-		
-	QString HttpResponseHeader::toString() const
-	{
-		QString str;
-		str += QString("HTTP/%1.%2 %3 %4\r\n").arg(major).arg(minor).arg(response_code).arg(ResponseCodeToString(response_code));
-		
-		QMap<QString,QString>::const_iterator itr = fields.begin();
-		while (itr != fields.end())
-		{
-			str += QString("%1: %2\r\n").arg(itr.key()).arg(itr.value());
-			itr++;
-		}
-		str += "\r\n";
-		return str;
-	}
-	
+    static QString ResponseCodeToString(int r)
+    {
+        switch (r)
+        {
+        case 200: return "OK";
+        case 301: return "Moved Permanently";
+        case 304: return "Not Modified";
+        case 404: return "Not Found";
+        }
+        return QString::null;
+    }
+
+    HttpResponseHeader::HttpResponseHeader(int response_code, int major, int minor)
+        : response_code(response_code), major(major), minor(minor)
+    {
+    }
+
+    HttpResponseHeader::HttpResponseHeader(const HttpResponseHeader& hdr)
+    {
+        response_code = hdr.response_code;
+        fields = hdr.fields;
+        major = hdr.major;
+        minor = hdr.minor;
+    }
+
+    HttpResponseHeader::~HttpResponseHeader()
+    {
+    }
+
+    void HttpResponseHeader::setResponseCode(int rc)
+    {
+        response_code = rc;
+    }
+
+    void HttpResponseHeader::setValue(const QString& key, const QString& value)
+    {
+        fields[key] = value;
+    }
+
+    QString HttpResponseHeader::toString() const
+    {
+        QString str;
+        str += QString("HTTP/%1.%2 %3 %4\r\n").arg(major).arg(minor).arg(response_code).arg(ResponseCodeToString(response_code));
+
+        QMap<QString, QString>::const_iterator itr = fields.begin();
+        while (itr != fields.end())
+        {
+            str += QString("%1: %2\r\n").arg(itr.key()).arg(itr.value());
+            itr++;
+        }
+        str += "\r\n";
+        return str;
+    }
+
 
 
 }

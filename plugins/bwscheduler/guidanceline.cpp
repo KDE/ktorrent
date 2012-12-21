@@ -26,36 +26,36 @@
 namespace kt
 {
 
-	GuidanceLine::GuidanceLine(qreal x,qreal y,qreal text_offset)
-			: QGraphicsLineItem(),x(x),y(y),text_offset(text_offset)
-	{
-		QPen pen(SchedulerPluginSettings::scheduleLineColor());
-		pen.setStyle(Qt::DashLine);
-		setPen(pen);
-		setZValue(5);
-		
-		text = new QGraphicsTextItem("00:00",this);
-		text->setPos(text_offset,y);
-		
-		QFontMetricsF fm(text->font());
-		qreal xe = text_offset + fm.width("00:00");
-		setLine(x,y,xe,y);
-	}
+    GuidanceLine::GuidanceLine(qreal x, qreal y, qreal text_offset)
+        : QGraphicsLineItem(), x(x), y(y), text_offset(text_offset)
+    {
+        QPen pen(SchedulerPluginSettings::scheduleLineColor());
+        pen.setStyle(Qt::DashLine);
+        setPen(pen);
+        setZValue(5);
+
+        text = new QGraphicsTextItem("00:00", this);
+        text->setPos(text_offset, y);
+
+        QFontMetricsF fm(text->font());
+        qreal xe = text_offset + fm.width("00:00");
+        setLine(x, y, xe, y);
+    }
 
 
-	GuidanceLine::~GuidanceLine()
-	{
-	}
+    GuidanceLine::~GuidanceLine()
+    {
+    }
 
-	void GuidanceLine::update(qreal nx,qreal ny,const QString & txt)
-	{
-		x = nx;
-		y = ny;
-		text->setPlainText(txt);
-		text->setPos(text_offset,y);
-		QFontMetricsF fm(text->font());
-		qreal xe = text_offset + fm.width(txt);
-		setLine(x,y,xe,y);
-	}
+    void GuidanceLine::update(qreal nx, qreal ny, const QString& txt)
+    {
+        x = nx;
+        y = ny;
+        text->setPlainText(txt);
+        text->setPos(text_offset, y);
+        QFontMetricsF fm(text->font());
+        qreal xe = text_offset + fm.width(txt);
+        setLine(x, y, xe, y);
+    }
 
 }

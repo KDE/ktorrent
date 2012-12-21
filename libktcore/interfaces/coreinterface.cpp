@@ -22,12 +22,12 @@
 namespace kt
 {
 
-	CoreInterface::CoreInterface()
-	{}
+    CoreInterface::CoreInterface()
+    {}
 
 
-	CoreInterface::~CoreInterface()
-	{}
+    CoreInterface::~CoreInterface()
+    {}
 }
 
 #include "coreinterface.moc"

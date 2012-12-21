@@ -27,94 +27,94 @@
 
 namespace kt
 {
-	CentralWidget::CentralWidget(QWidget* parent) : QStackedWidget(parent)
-	{
-		activity_switching_group = new QActionGroup(this);
-		connect(activity_switching_group,SIGNAL(triggered(QAction*)),this,SLOT(switchActivity(QAction*)));
-	}
+    CentralWidget::CentralWidget(QWidget* parent) : QStackedWidget(parent)
+    {
+        activity_switching_group = new QActionGroup(this);
+        connect(activity_switching_group, SIGNAL(triggered(QAction*)), this, SLOT(switchActivity(QAction*)));
+    }
 
-	CentralWidget::~CentralWidget() 
-	{
-	}
+    CentralWidget::~CentralWidget()
+    {
+    }
 
-	void CentralWidget::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("MainWindow");
-		int idx = g.readEntry("current_activity",0);
-		Activity* act = (Activity*)widget(idx);
-		if (act)
-			setCurrentActivity(act);
-		
-		QList<QAction*> actions = activity_switching_group->actions();
-		foreach (QAction* a,actions)
-		{
-			if (a->data().value<QObject*>() == act || act == 0)
-			{
-				a->setChecked(true);
-				break;
-			}
-		}
-	}
-	
-	void CentralWidget::saveState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("MainWindow");
-		g.writeEntry("current_activity",currentIndex());
-	}
-	
-	KAction* CentralWidget::addActivity(Activity* act)
-	{
-		KAction* a = new KAction(KIcon(act->icon()),act->name(),this);
-		activity_switching_group->addAction(a);
-		a->setCheckable(true);
-		a->setToolTip(act->toolTip());
-		a->setData(qVariantFromValue<QObject*>(act));
-		addWidget(act);
-		return a;
-	}
-	
-	void CentralWidget::removeActivity(Activity* act)
-	{
-		QList<QAction*> actions = activity_switching_group->actions();
-		foreach (QAction* a,actions)
-		{
-			if (a->data().value<QObject*>() == act)
-			{
-				activity_switching_group->removeAction(a);
-				a->deleteLater();
-				break;
-			}
-		}
-		removeWidget(act);
-	}
-	
-	void CentralWidget::setCurrentActivity(Activity* act)
-	{
-		setCurrentWidget(act);
-	}
-	
-	Activity* CentralWidget::currentActivity()
-	{
-		return (Activity*)currentWidget();
-	}
-	
-	QList< QAction* > CentralWidget::activitySwitchingActions()
-	{
-		return activity_switching_group->actions();
-	}
-	
-	void CentralWidget::switchActivity(QAction* action)
-	{
-		for (int i = 0;i < count();i++)
-		{
-			Activity* act = (Activity*)widget(i);
-			if (action->data().value<QObject*>() == act)
-			{
-				changeActivity(act);
-				break;
-			}
-		}
-	}
+    void CentralWidget::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("MainWindow");
+        int idx = g.readEntry("current_activity", 0);
+        Activity* act = (Activity*)widget(idx);
+        if (act)
+            setCurrentActivity(act);
+
+        QList<QAction*> actions = activity_switching_group->actions();
+        foreach (QAction* a, actions)
+        {
+            if (a->data().value<QObject*>() == act || act == 0)
+            {
+                a->setChecked(true);
+                break;
+            }
+        }
+    }
+
+    void CentralWidget::saveState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("MainWindow");
+        g.writeEntry("current_activity", currentIndex());
+    }
+
+    KAction* CentralWidget::addActivity(Activity* act)
+    {
+        KAction* a = new KAction(KIcon(act->icon()), act->name(), this);
+        activity_switching_group->addAction(a);
+        a->setCheckable(true);
+        a->setToolTip(act->toolTip());
+        a->setData(qVariantFromValue<QObject*>(act));
+        addWidget(act);
+        return a;
+    }
+
+    void CentralWidget::removeActivity(Activity* act)
+    {
+        QList<QAction*> actions = activity_switching_group->actions();
+        foreach (QAction* a, actions)
+        {
+            if (a->data().value<QObject*>() == act)
+            {
+                activity_switching_group->removeAction(a);
+                a->deleteLater();
+                break;
+            }
+        }
+        removeWidget(act);
+    }
+
+    void CentralWidget::setCurrentActivity(Activity* act)
+    {
+        setCurrentWidget(act);
+    }
+
+    Activity* CentralWidget::currentActivity()
+    {
+        return (Activity*)currentWidget();
+    }
+
+    QList< QAction* > CentralWidget::activitySwitchingActions()
+    {
+        return activity_switching_group->actions();
+    }
+
+    void CentralWidget::switchActivity(QAction* action)
+    {
+        for (int i = 0; i < count(); i++)
+        {
+            Activity* act = (Activity*)widget(i);
+            if (action->data().value<QObject*>() == act)
+            {
+                changeActivity(act);
+                break;
+            }
+        }
+    }
 
 }
 

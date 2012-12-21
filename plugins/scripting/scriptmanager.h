@@ -29,60 +29,60 @@ class KActionCollection;
 
 namespace Kross
 {
-	class Action;
+    class Action;
 }
 
 namespace kt
 {
-	class Script;
-	class ScriptModel;
+    class Script;
+    class ScriptModel;
 
-	/**
-		Widget to display all scripts.
-	*/
-	class ScriptManager : public Activity
-	{
-		Q_OBJECT
-	public:
-		ScriptManager(ScriptModel* model,QWidget* parent);
-		virtual ~ScriptManager();
-		
-		/// Get all selected scripts
-		QModelIndexList selectedScripts();
-		
-		/// Update all actions and make sure they are properly enabled or disabled
-		void updateActions(const QModelIndexList & selected);
-		
-	private slots:
-		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
-		void showContextMenu(const QPoint& p);
-		void dataChanged(const QModelIndex & f,const QModelIndex & to);
-		void runScript();
-		void stopScript();
-		void editScript();
-		void showProperties();
-		void showProperties(Script* script);
-		void configureScript();
-		
-	private:
-		void setupActions();
-		
-	signals:
-		void addScript();
-		void removeScript();
-		
-	private:
-		ScriptModel* model;
-		QListView* view;
-		
-		KAction* add_script;
-		KAction* remove_script;
-		KAction* run_script;
-		KAction* stop_script;
-		KAction* edit_script;
-		KAction* properties;
-		KAction* configure_script;
-	};
+    /**
+        Widget to display all scripts.
+    */
+    class ScriptManager : public Activity
+    {
+        Q_OBJECT
+    public:
+        ScriptManager(ScriptModel* model, QWidget* parent);
+        virtual ~ScriptManager();
+
+        /// Get all selected scripts
+        QModelIndexList selectedScripts();
+
+        /// Update all actions and make sure they are properly enabled or disabled
+        void updateActions(const QModelIndexList& selected);
+
+    private slots:
+        void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+        void showContextMenu(const QPoint& p);
+        void dataChanged(const QModelIndex& f, const QModelIndex& to);
+        void runScript();
+        void stopScript();
+        void editScript();
+        void showProperties();
+        void showProperties(Script* script);
+        void configureScript();
+
+    private:
+        void setupActions();
+
+    signals:
+        void addScript();
+        void removeScript();
+
+    private:
+        ScriptModel* model;
+        QListView* view;
+
+        KAction* add_script;
+        KAction* remove_script;
+        KAction* run_script;
+        KAction* stop_script;
+        KAction* edit_script;
+        KAction* properties;
+        KAction* configure_script;
+    };
 
 }
 

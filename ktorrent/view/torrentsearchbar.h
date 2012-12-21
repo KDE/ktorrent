@@ -29,36 +29,36 @@
 
 namespace kt
 {
-	class View;
+    class View;
 
-	/**
-	 * Search bar widget for torrents.
-	 */
-	class TorrentSearchBar : public QWidget
-	{
-		Q_OBJECT
-	public:
-		TorrentSearchBar(View* view, QWidget* parent);
-		virtual ~TorrentSearchBar();
+    /**
+     * Search bar widget for torrents.
+     */
+    class TorrentSearchBar : public QWidget
+    {
+        Q_OBJECT
+    public:
+        TorrentSearchBar(View* view, QWidget* parent);
+        virtual ~TorrentSearchBar();
 
-		void loadState(KSharedConfigPtr cfg);
-		void saveState(KSharedConfigPtr cfg);
+        void loadState(KSharedConfigPtr cfg);
+        void saveState(KSharedConfigPtr cfg);
 
-	public slots:
-		void showBar();
-		void hideBar();
+    public slots:
+        void showBar();
+        void hideBar();
 
-	signals:
-		void filterBarHidden(QString str);
-		void filterBarShown(QString str);
+    signals:
+        void filterBarHidden(QString str);
+        void filterBarShown(QString str);
 
-	protected:
-		virtual bool eventFilter(QObject* obj, QEvent* ev);
+    protected:
+        virtual bool eventFilter(QObject* obj, QEvent* ev);
 
-	private:
-		QToolButton* hide_search_bar;
-		KLineEdit* search_bar;
-	};
+    private:
+        QToolButton* hide_search_bar;
+        KLineEdit* search_bar;
+    };
 }
 
 #endif // KT_TORRENTSEARCHBAR_H

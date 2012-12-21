@@ -23,294 +23,294 @@
 namespace kt
 {
 
-	ConnsTabPage::ConnsTabPage(QWidget * p) : PluginPage(p), pmConnsUi(new Ui::ConnsWgt), pmLhrSwnUuid(new QUuid(QUuid::createUuid())),
-			pmSesSwnUuid(new QUuid(QUuid::createUuid()))
-	{
+    ConnsTabPage::ConnsTabPage(QWidget* p) : PluginPage(p), pmConnsUi(new Ui::ConnsWgt), pmLhrSwnUuid(new QUuid(QUuid::createUuid())),
+        pmSesSwnUuid(new QUuid(QUuid::createUuid()))
+    {
 
-		if (StatsPluginSettings::widgetType() == 0)
-		{
-			pmConnsChtWgt.reset(new PlainChartDrawer(this));
-			pmDhtChtWgt.reset(new PlainChartDrawer(this));
-		}
-		else if (StatsPluginSettings::widgetType() == 1)
-		{
-			pmConnsChtWgt.reset(new KPlotWgtDrawer(this));
-			pmDhtChtWgt.reset(new KPlotWgtDrawer(this));
-		}
+        if (StatsPluginSettings::widgetType() == 0)
+        {
+            pmConnsChtWgt.reset(new PlainChartDrawer(this));
+            pmDhtChtWgt.reset(new PlainChartDrawer(this));
+        }
+        else if (StatsPluginSettings::widgetType() == 1)
+        {
+            pmConnsChtWgt.reset(new KPlotWgtDrawer(this));
+            pmDhtChtWgt.reset(new KPlotWgtDrawer(this));
+        }
 
-		setupUi();
-	}
+        setupUi();
+    }
 
-	ConnsTabPage::~ConnsTabPage()
-	{
-	}
-
-
-	void ConnsTabPage::setupUi()
-	{
-		pmConnsUi->setupUi(this);
-
-		pmConnsChtWgt->setUnitName(i18n("Connections"));
-		pmDhtChtWgt->setUnitName(i18n("Nodes"));
-
-		pmConnsUi->ConnsGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmConnsChtWgt.get()));
-		pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmDhtChtWgt.get()));
-
-		//------------------
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers connected"), QPen(StatsPluginSettings::cnLConnColor()), true));
-		//
-
-		if (StatsPluginSettings::showLeechersInSwarms())
-		{
-			pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
-		}
-
-		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds connected"), QPen(StatsPluginSettings::cnSConnColor()), true));
-
-		//
-		if (StatsPluginSettings::showSeedsInSwarms())
-		{
-			pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
-		}
-
-		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per torrent"), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()), true));
-
-		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per torrent"), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()), true));
-
-		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per running torrent"), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()), true));
-
-		//
-		pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per running torrent"), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()), true));
-
-		//--------------------------
-
-		if (bt::Globals::instance().getDHT().isRunning())
-		{
-			pmDhtChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Nodes"), QPen(StatsPluginSettings::dhtNodesColor()), true));
-			pmDhtChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Tasks"), QPen(StatsPluginSettings::dhtTasksColor()), true));
-		}
-		else
-		{
-			pmConnsUi->DhtGbw->setEnabled(false);
-		}
-
-		applySettings();
-	}
-
-	void ConnsTabPage::applySettings()
-	{
-
-		pmConnsChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
-		pmDhtChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
-
-		pmConnsChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
-		pmDhtChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
+    ConnsTabPage::~ConnsTabPage()
+    {
+    }
 
 
-		//-------
+    void ConnsTabPage::setupUi()
+    {
+        pmConnsUi->setupUi(this);
 
-		if (StatsPluginSettings::showLeechersInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
-		{
-			pmConnsChtWgt->insertDataSet(1, ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
-		}
+        pmConnsChtWgt->setUnitName(i18n("Connections"));
+        pmDhtChtWgt->setUnitName(i18n("Nodes"));
 
-		if ((!StatsPluginSettings::showLeechersInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) != -1))
-		{
-			pmConnsChtWgt->removeDataSet(1);
-		}
+        pmConnsUi->ConnsGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmConnsChtWgt.get()));
+        pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmDhtChtWgt.get()));
 
-		//~
+        //------------------
+        pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers connected"), QPen(StatsPluginSettings::cnLConnColor()), true));
+        //
 
-		if (StatsPluginSettings::showSeedsInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmSesSwnUuid) == -1))
-		{
-			if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
-			{
-				pmConnsChtWgt->insertDataSet(2, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
-			}
-			else
-			{
-				pmConnsChtWgt->insertDataSet(3, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
-			}
-		}
+        if (StatsPluginSettings::showLeechersInSwarms())
+        {
+            pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
+        }
 
-		if ((!StatsPluginSettings::showSeedsInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmSesSwnUuid) != -1))
-		{
-			if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
-			{
-				pmConnsChtWgt->removeDataSet(2);
-			}
-			else
-			{
-				pmConnsChtWgt->removeDataSet(3);
-			}
-		}
+        //
+        pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds connected"), QPen(StatsPluginSettings::cnSConnColor()), true));
 
-		//-------------
+        //
+        if (StatsPluginSettings::showSeedsInSwarms())
+        {
+            pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+        }
 
-		uint8_t s1, s2;
+        //
+        pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per torrent"), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()), true));
 
-		s1 = s2 = 1;
+        //
+        pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per torrent"), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()), true));
 
-		pmConnsChtWgt->setPen(0, QPen(StatsPluginSettings::cnLConnColor()));
+        //
+        pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per running torrent"), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()), true));
 
-		if (StatsPluginSettings::showLeechersInSwarms())
-		{
-			pmConnsChtWgt->setPen(1, QPen(StatsPluginSettings::cnLSwarmsColor()));
-			s1 = 0;
-		}
+        //
+        pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per running torrent"), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()), true));
 
-		pmConnsChtWgt->setPen(2 - s1, QPen(StatsPluginSettings::cnSConnColor()));
+        //--------------------------
 
-		if (StatsPluginSettings::showSeedsInSwarms())
-		{
-			pmConnsChtWgt->setPen(3 - s1, QPen(StatsPluginSettings::cnSSwarmsColor()));
-			s2 = 0;
-		}
+        if (bt::Globals::instance().getDHT().isRunning())
+        {
+            pmDhtChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Nodes"), QPen(StatsPluginSettings::dhtNodesColor()), true));
+            pmDhtChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Tasks"), QPen(StatsPluginSettings::dhtTasksColor()), true));
+        }
+        else
+        {
+            pmConnsUi->DhtGbw->setEnabled(false);
+        }
 
-		pmConnsChtWgt->setPen(4 - (s1 + s2), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()));
+        applySettings();
+    }
 
-		pmConnsChtWgt->setPen(5 - (s1 + s2), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()));
-		pmConnsChtWgt->setPen(6 - (s1 + s2), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()));
-		pmConnsChtWgt->setPen(7 - (s1 + s2), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()));
+    void ConnsTabPage::applySettings()
+    {
 
-		pmDhtChtWgt->setPen(0, QPen(StatsPluginSettings::dhtNodesColor()));
-		pmDhtChtWgt->setPen(1, QPen(StatsPluginSettings::dhtTasksColor()));
+        pmConnsChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
+        pmDhtChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
+
+        pmConnsChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
+        pmDhtChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
+
+
+        //-------
+
+        if (StatsPluginSettings::showLeechersInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
+        {
+            pmConnsChtWgt->insertDataSet(1, ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
+        }
+
+        if ((!StatsPluginSettings::showLeechersInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) != -1))
+        {
+            pmConnsChtWgt->removeDataSet(1);
+        }
+
+        //~
+
+        if (StatsPluginSettings::showSeedsInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmSesSwnUuid) == -1))
+        {
+            if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
+            {
+                pmConnsChtWgt->insertDataSet(2, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+            }
+            else
+            {
+                pmConnsChtWgt->insertDataSet(3, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+            }
+        }
+
+        if ((!StatsPluginSettings::showSeedsInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmSesSwnUuid) != -1))
+        {
+            if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
+            {
+                pmConnsChtWgt->removeDataSet(2);
+            }
+            else
+            {
+                pmConnsChtWgt->removeDataSet(3);
+            }
+        }
+
+        //-------------
+
+        uint8_t s1, s2;
+
+        s1 = s2 = 1;
+
+        pmConnsChtWgt->setPen(0, QPen(StatsPluginSettings::cnLConnColor()));
+
+        if (StatsPluginSettings::showLeechersInSwarms())
+        {
+            pmConnsChtWgt->setPen(1, QPen(StatsPluginSettings::cnLSwarmsColor()));
+            s1 = 0;
+        }
+
+        pmConnsChtWgt->setPen(2 - s1, QPen(StatsPluginSettings::cnSConnColor()));
+
+        if (StatsPluginSettings::showSeedsInSwarms())
+        {
+            pmConnsChtWgt->setPen(3 - s1, QPen(StatsPluginSettings::cnSSwarmsColor()));
+            s2 = 0;
+        }
+
+        pmConnsChtWgt->setPen(4 - (s1 + s2), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()));
+
+        pmConnsChtWgt->setPen(5 - (s1 + s2), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()));
+        pmConnsChtWgt->setPen(6 - (s1 + s2), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()));
+        pmConnsChtWgt->setPen(7 - (s1 + s2), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()));
+
+        pmDhtChtWgt->setPen(0, QPen(StatsPluginSettings::dhtNodesColor()));
+        pmDhtChtWgt->setPen(1, QPen(StatsPluginSettings::dhtTasksColor()));
 
 //--------------------------------------------------------------------------------------------------------------------
 
-		pmConnsChtWgt->setXMax(StatsPluginSettings::connsSamples());
+        pmConnsChtWgt->setXMax(StatsPluginSettings::connsSamples());
 
-		if (bt::Globals::instance().getDHT().isRunning())
-		{
-			if (! dynamic_cast<QWidget *>(pmDhtChtWgt.get())->isEnabled())
-			{
-				pmConnsUi->DhtGbw->setEnabled(true);
-			}
+        if (bt::Globals::instance().getDHT().isRunning())
+        {
+            if (! dynamic_cast<QWidget*>(pmDhtChtWgt.get())->isEnabled())
+            {
+                pmConnsUi->DhtGbw->setEnabled(true);
+            }
 
-			pmDhtChtWgt->setXMax(StatsPluginSettings::dhtSpdSamples());
+            pmDhtChtWgt->setXMax(StatsPluginSettings::dhtSpdSamples());
 
-		}
-		else
-		{
-			pmConnsUi->DhtGbw->setEnabled(false);
-		}
+        }
+        else
+        {
+            pmConnsUi->DhtGbw->setEnabled(false);
+        }
 
-		pmConnsChtWgt->setXMax(StatsPluginSettings::connsSamples());
+        pmConnsChtWgt->setXMax(StatsPluginSettings::connsSamples());
 
-		pmDhtChtWgt->setXMax(StatsPluginSettings::dhtSpdSamples());
+        pmDhtChtWgt->setXMax(StatsPluginSettings::dhtSpdSamples());
 
-		pmConnsChtWgt->setMaxMode(static_cast<PlainChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
-		pmDhtChtWgt->setMaxMode(static_cast<PlainChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
-	}
+        pmConnsChtWgt->setMaxMode(static_cast<PlainChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
+        pmDhtChtWgt->setMaxMode(static_cast<PlainChartDrawer::MaxMode>(StatsPluginSettings::maxMode()));
+    }
 
-	void ConnsTabPage::updateAllCharts()
-	{
-		pmConnsChtWgt->update();
+    void ConnsTabPage::updateAllCharts()
+    {
+        pmConnsChtWgt->update();
 
-		if (dynamic_cast<QWidget *>(pmDhtChtWgt.get())->isEnabled())
-		{
-			pmDhtChtWgt->update();
-		}
-	}
+        if (dynamic_cast<QWidget*>(pmDhtChtWgt.get())->isEnabled())
+        {
+            pmDhtChtWgt->update();
+        }
+    }
 
-	void ConnsTabPage::gatherData(Plugin * pPlug)
-	{
+    void ConnsTabPage::gatherData(Plugin* pPlug)
+    {
 
-		GatherConnStats(pPlug);
+        GatherConnStats(pPlug);
 
-		if (pmConnsUi->DhtGbw->isEnabled())
-		{
-			GatherDhtStats();
-		}
-	}
+        if (pmConnsUi->DhtGbw->isEnabled())
+        {
+            GatherDhtStats();
+        }
+    }
 
-	void ConnsTabPage::resetAvg(ChartDrawer *)
-	{
-	}
+    void ConnsTabPage::resetAvg(ChartDrawer*)
+    {
+    }
 
-	void ConnsTabPage::GatherDhtStats()
-	{
-		const dht::Stats st = bt::Globals::instance().getDHT().getStats();
+    void ConnsTabPage::GatherDhtStats()
+    {
+        const dht::Stats st = bt::Globals::instance().getDHT().getStats();
 
-		pmDhtChtWgt->addValue(0, st.num_peers);
-		pmDhtChtWgt->addValue(1, st.num_tasks);
-	}
+        pmDhtChtWgt->addValue(0, st.num_peers);
+        pmDhtChtWgt->addValue(1, st.num_tasks);
+    }
 
-	void ConnsTabPage::GatherConnStats(Plugin * pPlug)
-	{
-		QueueManager * qm_iface = pPlug->getCore()->getQueueManager();
+    void ConnsTabPage::GatherConnStats(Plugin* pPlug)
+    {
+        QueueManager* qm_iface = pPlug->getCore()->getQueueManager();
 
-		if (qm_iface == 0)
-		{
-			return;
-		}
+        if (qm_iface == 0)
+        {
+            return;
+        }
 
-		uint_least32_t lc, ls, sc, ss, tc, rtc;
+        uint_least32_t lc, ls, sc, ss, tc, rtc;
 
-		lc = ls = sc = ss = tc = rtc = 0;
+        lc = ls = sc = ss = tc = rtc = 0;
 
-		for (QList< bt::TorrentInterface *>::iterator it = qm_iface->begin(); it != qm_iface->end(); it++)
-		{
-			const bt::TorrentStats & tstat = (*it)->getStats();
+        for (QList< bt::TorrentInterface*>::iterator it = qm_iface->begin(); it != qm_iface->end(); it++)
+        {
+            const bt::TorrentStats& tstat = (*it)->getStats();
 
-			lc += tstat.leechers_connected_to;
-			ls += tstat.leechers_total;
-			sc += tstat.seeders_connected_to;
-			ss += tstat.seeders_total;
+            lc += tstat.leechers_connected_to;
+            ls += tstat.leechers_total;
+            sc += tstat.seeders_connected_to;
+            ss += tstat.seeders_total;
 
-			tc++;
+            tc++;
 
-			if (tstat.running)
-			{
-				rtc++;
-			}
-		}
+            if (tstat.running)
+            {
+                rtc++;
+            }
+        }
 
-		uint8_t s1, s2;
+        uint8_t s1, s2;
 
-		s1 = s2 = 1;
+        s1 = s2 = 1;
 
-		pmConnsChtWgt->addValue(0, lc);
+        pmConnsChtWgt->addValue(0, lc);
 
-		if (StatsPluginSettings::showLeechersInSwarms())
-		{
-			pmConnsChtWgt->addValue(1, ls);
-			s1 = 0;
-		}
+        if (StatsPluginSettings::showLeechersInSwarms())
+        {
+            pmConnsChtWgt->addValue(1, ls);
+            s1 = 0;
+        }
 
-		pmConnsChtWgt->addValue(2 - s1, sc);
+        pmConnsChtWgt->addValue(2 - s1, sc);
 
-		if (StatsPluginSettings::showSeedsInSwarms())
-		{
-			pmConnsChtWgt->addValue(3 - s1, ss);
-			s2 = 0;
-		}
+        if (StatsPluginSettings::showSeedsInSwarms())
+        {
+            pmConnsChtWgt->addValue(3 - s1, ss);
+            s2 = 0;
+        }
 
-		if (tc == 0)
-		{
-			pmConnsChtWgt->addValue(4 - (s1 + s2), 0);
-			pmConnsChtWgt->addValue(5 - (s1 + s2), 0);
-		}
-		else
-		{
-			pmConnsChtWgt->addValue(4 - (s1 + s2), static_cast<double>(lc) / static_cast<double>(tc));
-			pmConnsChtWgt->addValue(5 - (s1 + s2), static_cast<double>(sc) / static_cast<double>(tc));
-		}
+        if (tc == 0)
+        {
+            pmConnsChtWgt->addValue(4 - (s1 + s2), 0);
+            pmConnsChtWgt->addValue(5 - (s1 + s2), 0);
+        }
+        else
+        {
+            pmConnsChtWgt->addValue(4 - (s1 + s2), static_cast<double>(lc) / static_cast<double>(tc));
+            pmConnsChtWgt->addValue(5 - (s1 + s2), static_cast<double>(sc) / static_cast<double>(tc));
+        }
 
-		if (rtc == 0)
-		{
-			pmConnsChtWgt->addValue(6 - (s1 + s2), 0);
-			pmConnsChtWgt->addValue(7 - (s1 + s2), 0);
-		}
-		else
-		{
-			pmConnsChtWgt->addValue(6 - (s1 + s2), static_cast<double>(lc) / static_cast<double>(rtc));
-			pmConnsChtWgt->addValue(7 - (s1 + s2), static_cast<double>(sc) / static_cast<double>(rtc));
-		}
-	}
+        if (rtc == 0)
+        {
+            pmConnsChtWgt->addValue(6 - (s1 + s2), 0);
+            pmConnsChtWgt->addValue(7 - (s1 + s2), 0);
+        }
+        else
+        {
+            pmConnsChtWgt->addValue(6 - (s1 + s2), static_cast<double>(lc) / static_cast<double>(rtc));
+            pmConnsChtWgt->addValue(7 - (s1 + s2), static_cast<double>(sc) / static_cast<double>(rtc));
+        }
+    }
 
 } //ns end

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Vasić   								   *
- *   ivasic@gmail.com   												   *
+ *   Copyright (C) 2006 by Ivan Vasić                                     *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,33 +27,33 @@
 namespace kt
 {
 
-	/**
-	 * ScanFolder plugin preferences page
-	 * @author Ivan Vasić <ivasic@gmail.com>
-	 */
-	class ScanFolderPrefPage : public PrefPageInterface,public Ui_ScanFolderPrefPage
-	{
-		Q_OBJECT
+    /**
+     * ScanFolder plugin preferences page
+     * @author Ivan Vasić <ivasic@gmail.com>
+     */
+    class ScanFolderPrefPage : public PrefPageInterface, public Ui_ScanFolderPrefPage
+    {
+        Q_OBJECT
 
-	public:
-		ScanFolderPrefPage(ScanFolderPlugin* plugin,QWidget* parent);
-		virtual ~ScanFolderPrefPage();
+    public:
+        ScanFolderPrefPage(ScanFolderPlugin* plugin, QWidget* parent);
+        virtual ~ScanFolderPrefPage();
 
-		virtual void loadSettings();
-		virtual void loadDefaults();
-		virtual void updateSettings();
-		virtual bool customWidgetsChanged();
-		
-	private slots:
-		void addPressed();
-		void removePressed();
-		void selectionChanged();
-		void currentGroupChanged(int idx);
-		
-	private:
-		ScanFolderPlugin* m_plugin;
-		QStringList folders;
-	};
+        virtual void loadSettings();
+        virtual void loadDefaults();
+        virtual void updateSettings();
+        virtual bool customWidgetsChanged();
+
+    private slots:
+        void addPressed();
+        void removePressed();
+        void selectionChanged();
+        void currentGroupChanged(int idx);
+
+    private:
+        ScanFolderPlugin* m_plugin;
+        QStringList folders;
+    };
 
 }
 

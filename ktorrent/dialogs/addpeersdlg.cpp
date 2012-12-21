@@ -24,47 +24,47 @@
 
 namespace kt
 {
-	class ManualPeerSource : public bt::PeerSource
-	{
-	public:
-		ManualPeerSource() {}
-		virtual ~ManualPeerSource() {}
-		
-		virtual void start() {}
-		virtual void stop(bt::WaitJob* ){}
-		
-		void add(const QString & ip,bt::Uint16 port)
-		{
-			addPeer(net::Address(ip, port), false);
-			peersReady(this);
-		}
-	};
+    class ManualPeerSource : public bt::PeerSource
+    {
+    public:
+        ManualPeerSource() {}
+        virtual ~ManualPeerSource() {}
 
-	AddPeersDlg::AddPeersDlg(bt::TorrentInterface* tc,QWidget* parent)
-			: QDialog(parent),tc(tc),mps(0)
-	{
-		setupUi(this);
-		connect(m_close,SIGNAL(clicked()),this,SLOT(reject()));
-		connect(m_add,SIGNAL(clicked()),this,SLOT(addPressed()));
-		
-		m_close->setGuiItem(KStandardGuiItem::close());
-		m_add->setGuiItem(KStandardGuiItem::add());
-		
-		mps = new ManualPeerSource();
-		tc->addPeerSource(mps);
-	}
+        virtual void start() {}
+        virtual void stop(bt::WaitJob*) {}
+
+        void add(const QString& ip, bt::Uint16 port)
+        {
+            addPeer(net::Address(ip, port), false);
+            peersReady(this);
+        }
+    };
+
+    AddPeersDlg::AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent)
+        : QDialog(parent), tc(tc), mps(0)
+    {
+        setupUi(this);
+        connect(m_close, SIGNAL(clicked()), this, SLOT(reject()));
+        connect(m_add, SIGNAL(clicked()), this, SLOT(addPressed()));
+
+        m_close->setGuiItem(KStandardGuiItem::close());
+        m_add->setGuiItem(KStandardGuiItem::add());
+
+        mps = new ManualPeerSource();
+        tc->addPeerSource(mps);
+    }
 
 
-	AddPeersDlg::~AddPeersDlg()
-	{
-		tc->removePeerSource(mps);
-		delete mps;
-	}
+    AddPeersDlg::~AddPeersDlg()
+    {
+        tc->removePeerSource(mps);
+        delete mps;
+    }
 
-	void AddPeersDlg::addPressed()
-	{
-		mps->add(m_ip->text(),m_port->value());
-	}
+    void AddPeersDlg::addPressed()
+    {
+        mps->add(m_ip->text(), m_port->value());
+    }
 
 }
 

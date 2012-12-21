@@ -27,30 +27,30 @@
 
 namespace kt
 {
-	class MagnetGeneratorPrefWidget;
+    class MagnetGeneratorPrefWidget;
 
-	class MagnetGeneratorPlugin : public Plugin, public ViewListener
-	{
-		Q_OBJECT
-	public:
-		MagnetGeneratorPlugin(QObject* parent,const QStringList& args);
-		virtual ~MagnetGeneratorPlugin();
+    class MagnetGeneratorPlugin : public Plugin, public ViewListener
+    {
+        Q_OBJECT
+    public:
+        MagnetGeneratorPlugin(QObject* parent, const QStringList& args);
+        virtual ~MagnetGeneratorPlugin();
 
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
-		virtual QString parentPart() const {return "torrentactivity";}
-		void currentTorrentChanged(bt::TorrentInterface *tc);
+        virtual void load();
+        virtual void unload();
+        virtual bool versionCheck(const QString& version) const;
+        virtual QString parentPart() const {return "torrentactivity";}
+        void currentTorrentChanged(bt::TorrentInterface* tc);
 
-	private slots:
-		void generateMagnet();
+    private slots:
+        void generateMagnet();
 
-	private:
-		MagnetGeneratorPrefWidget *pref;
-		KAction *generate_magnet_action;
-		void addToClipboard(QString uri);
-		void showPopup();
-	};
+    private:
+        MagnetGeneratorPrefWidget* pref;
+        KAction* generate_magnet_action;
+        void addToClipboard(QString uri);
+        void showPopup();
+    };
 
 }
 

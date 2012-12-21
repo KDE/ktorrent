@@ -24,23 +24,23 @@
 
 namespace kt
 {
-		
-	/**
-	@author Joris Guisson
-	*/
-	class AvailabilityChunkBar : public ChunkBar
-	{
-		Q_OBJECT
-	public:
-		AvailabilityChunkBar(QWidget* parent);
-		virtual ~AvailabilityChunkBar();
-	
-		virtual const bt::BitSet & getBitSet() const;
-	
-		void setTC(bt::TorrentInterface* tc);
-	private:
-		bt::TorrentInterface* curr_tc;
-	};
+
+    /**
+    @author Joris Guisson
+    */
+    class AvailabilityChunkBar : public ChunkBar
+    {
+        Q_OBJECT
+    public:
+        AvailabilityChunkBar(QWidget* parent);
+        virtual ~AvailabilityChunkBar();
+
+        virtual const bt::BitSet& getBitSet() const;
+
+        void setTC(bt::TorrentInterface* tc);
+    private:
+        bt::TorrentInterface* curr_tc;
+    };
 }
 
 #endif

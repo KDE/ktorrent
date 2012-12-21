@@ -33,50 +33,50 @@ using namespace bt;
 namespace kt
 {
 
-	GlobalDataGenerator::GlobalDataGenerator(CoreInterface* core,HttpServer* server) 
-		: WebContentGenerator(server,"/data/global.xml",LOGIN_REQUIRED),core(core)
-	{
-	}
+    GlobalDataGenerator::GlobalDataGenerator(CoreInterface* core, HttpServer* server)
+        : WebContentGenerator(server, "/data/global.xml", LOGIN_REQUIRED), core(core)
+    {
+    }
 
 
-	GlobalDataGenerator::~GlobalDataGenerator()
-	{
-	}
+    GlobalDataGenerator::~GlobalDataGenerator()
+    {
+    }
 
 
-	void GlobalDataGenerator::get(HttpClientHandler* hdlr,const QHttpRequestHeader& hdr)
-	{
-		Q_UNUSED(hdr);
-		HttpResponseHeader rhdr(200);
-		server->setDefaultResponseHeaders(rhdr,"text/xml",true);
-		
-		CurrentStats s = core->getStats();
-		QByteArray output_data;
-		QXmlStreamWriter out(&output_data);
-		out.setAutoFormatting(true);
-		out.writeStartDocument();
-		out.writeStartElement("global_data");
-		writeElement(out,"transferred_down",BytesToString(s.bytes_downloaded));
-		writeElement(out,"transferred_up",BytesToString(s.bytes_uploaded));
-		writeElement(out,"speed_down",BytesPerSecToString(s.download_speed));
-		writeElement(out,"speed_up",BytesPerSecToString(s.upload_speed));
-		writeElement(out,"dht",Settings::dhtSupport() ? "1" : "0");
-		writeElement(out,"encryption",Settings::useEncryption() ? "1" : "0");
-		out.writeEndElement();
-		out.writeEndDocument();
-		hdlr->send(rhdr,output_data);
-	}
+    void GlobalDataGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+    {
+        Q_UNUSED(hdr);
+        HttpResponseHeader rhdr(200);
+        server->setDefaultResponseHeaders(rhdr, "text/xml", true);
 
-	void GlobalDataGenerator::post(HttpClientHandler* hdlr,const QHttpRequestHeader& hdr,const QByteArray& data)
-	{
-		Q_UNUSED(data);
-		get(hdlr,hdr);
-	}
+        CurrentStats s = core->getStats();
+        QByteArray output_data;
+        QXmlStreamWriter out(&output_data);
+        out.setAutoFormatting(true);
+        out.writeStartDocument();
+        out.writeStartElement("global_data");
+        writeElement(out, "transferred_down", BytesToString(s.bytes_downloaded));
+        writeElement(out, "transferred_up", BytesToString(s.bytes_uploaded));
+        writeElement(out, "speed_down", BytesPerSecToString(s.download_speed));
+        writeElement(out, "speed_up", BytesPerSecToString(s.upload_speed));
+        writeElement(out, "dht", Settings::dhtSupport() ? "1" : "0");
+        writeElement(out, "encryption", Settings::useEncryption() ? "1" : "0");
+        out.writeEndElement();
+        out.writeEndDocument();
+        hdlr->send(rhdr, output_data);
+    }
 
-	void GlobalDataGenerator::writeElement(QXmlStreamWriter & out,const QString & name,const QString & value)
-	{
-		out.writeStartElement(name);
-		out.writeCharacters(value);
-		out.writeEndElement();
-	}
+    void GlobalDataGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+    {
+        Q_UNUSED(data);
+        get(hdlr, hdr);
+    }
+
+    void GlobalDataGenerator::writeElement(QXmlStreamWriter& out, const QString& name, const QString& value)
+    {
+        out.writeStartElement(name);
+        out.writeCharacters(value);
+        out.writeEndElement();
+    }
 }

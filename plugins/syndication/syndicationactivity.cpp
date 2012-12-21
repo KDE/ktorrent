@@ -89,11 +89,11 @@ namespace kt
     {
         KConfigGroup g = cfg->group("SyndicationActivity");
         QString current = g.readEntry("current_feed", QString());
-        
+
         Feed* f = feed_list->feedForDirectory(current);
-        if(f)
+        if (f)
             feed_widget->setFeed(f);
-        
+
         QByteArray state = g.readEntry("splitter", QByteArray());
         splitter->restoreState(state);
         tab->loadState(g);
@@ -103,7 +103,7 @@ namespace kt
     void SyndicationActivity::saveState(KSharedConfigPtr cfg)
     {
         Feed* feed = feed_widget->getFeed();
-        
+
         KConfigGroup g = cfg->group("SyndicationActivity");
         g.writeEntry("current_feed", feed ? feed->directory() : QString());
         g.writeEntry("splitter", splitter->saveState());
@@ -169,7 +169,7 @@ namespace kt
         foreach (const QModelIndex& i, idx)
         {
             Feed* f = feed_list->feedForIndex(i);
-            if(f && feed_widget->getFeed() == f)
+            if (f && feed_widget->getFeed() == f)
             {
                 feed_widget->setFeed(0);
             }

@@ -26,30 +26,30 @@
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
-namespace kt 
+namespace kt
 {
-	/**
-		Extender which shows properties about a torrent.
-	*/
-	class PropertiesDlg : public KDialog,public Ui_PropertiesDlg
-	{
-		Q_OBJECT
-	public:
-		PropertiesDlg(bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~PropertiesDlg();
-		
-	public slots:
-		void moveOnCompletionEnabled(bool on);
-		
-	private:
-		virtual void accept();
-		
-	private:
-		bt::TorrentInterface* tc;
-	};
+    /**
+        Extender which shows properties about a torrent.
+    */
+    class PropertiesDlg : public KDialog, public Ui_PropertiesDlg
+    {
+        Q_OBJECT
+    public:
+        PropertiesDlg(bt::TorrentInterface* tc, QWidget* parent);
+        virtual ~PropertiesDlg();
+
+    public slots:
+        void moveOnCompletionEnabled(bool on);
+
+    private:
+        virtual void accept();
+
+    private:
+        bt::TorrentInterface* tc;
+    };
 
 }
 

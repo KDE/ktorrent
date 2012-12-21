@@ -33,82 +33,82 @@ using namespace bt;
 namespace kt
 {
 
-	FilterList::FilterList(QObject* parent)
-			: FilterListModel(parent)
-	{
-	}
+    FilterList::FilterList(QObject* parent)
+        : FilterListModel(parent)
+    {
+    }
 
 
-	FilterList::~FilterList()
-	{
-		qDeleteAll(filters);
-	}
-	
-	void FilterList::filterEdited(Filter* f)
-	{
-		int idx = filters.indexOf(f);
-		if (idx < 0)
-			return;
-		
-		emit dataChanged(index(idx,0),index(idx,0));
-	}
-	
-	void FilterList::saveFilters(const QString & file)
-	{
-		File fptr;
-		if (!fptr.open(file,"wt"))
-		{
-			Out(SYS_SYN|LOG_DEBUG) << "Failed to open " << file << " : " << fptr.errorString() << endl;
-			return;
-		}
-		
-		BEncoder enc(&fptr);
-		enc.beginList();
-		foreach (Filter* f,filters)
-			f->save(enc);
-		enc.end();
-	}
-	
-	void FilterList::loadFilters(const QString & file)
-	{
-		QFile fptr(file);
-		if (!fptr.open(QIODevice::ReadOnly))
-		{
-			Out(SYS_SYN|LOG_DEBUG) << "Failed to open " << file << " : " << fptr.errorString() << endl;
-			return;
-		}
-		
-		QByteArray data = fptr.readAll();
-		BDecoder dec(data,false);
-		BNode* n = 0;
-		try
-		{
-			n = dec.decode();
-			if (!n || n->getType() != BNode::LIST)
-			{
-				delete n;
-				return;
-			}
-			
-			BListNode* ln = (BListNode*)n;
-			for (Uint32 i = 0;i < ln->getNumChildren();i++)
-			{
-				BDictNode* dict = ln->getDict(i);
-				if (dict)
-				{
-					Filter* filter = new Filter();
-					if (filter->load(dict))
-						addFilter(filter);
-					else 
-						delete filter;
-				}
-			}
-		}
-		catch (bt::Error & err)
-		{
-			Out(SYS_SYN|LOG_DEBUG) << "Failed to parse " << file << " : " << err.toString() << endl;
-		}
-		
-		delete n;
-	}
+    FilterList::~FilterList()
+    {
+        qDeleteAll(filters);
+    }
+
+    void FilterList::filterEdited(Filter* f)
+    {
+        int idx = filters.indexOf(f);
+        if (idx < 0)
+            return;
+
+        emit dataChanged(index(idx, 0), index(idx, 0));
+    }
+
+    void FilterList::saveFilters(const QString& file)
+    {
+        File fptr;
+        if (!fptr.open(file, "wt"))
+        {
+            Out(SYS_SYN | LOG_DEBUG) << "Failed to open " << file << " : " << fptr.errorString() << endl;
+            return;
+        }
+
+        BEncoder enc(&fptr);
+        enc.beginList();
+        foreach (Filter* f, filters)
+            f->save(enc);
+        enc.end();
+    }
+
+    void FilterList::loadFilters(const QString& file)
+    {
+        QFile fptr(file);
+        if (!fptr.open(QIODevice::ReadOnly))
+        {
+            Out(SYS_SYN | LOG_DEBUG) << "Failed to open " << file << " : " << fptr.errorString() << endl;
+            return;
+        }
+
+        QByteArray data = fptr.readAll();
+        BDecoder dec(data, false);
+        BNode* n = 0;
+        try
+        {
+            n = dec.decode();
+            if (!n || n->getType() != BNode::LIST)
+            {
+                delete n;
+                return;
+            }
+
+            BListNode* ln = (BListNode*)n;
+            for (Uint32 i = 0; i < ln->getNumChildren(); i++)
+            {
+                BDictNode* dict = ln->getDict(i);
+                if (dict)
+                {
+                    Filter* filter = new Filter();
+                    if (filter->load(dict))
+                        addFilter(filter);
+                    else
+                        delete filter;
+                }
+            }
+        }
+        catch (bt::Error& err)
+        {
+            Out(SYS_SYN | LOG_DEBUG) << "Failed to parse " << file << " : " << err.toString() << endl;
+        }
+
+        delete n;
+    }
 }

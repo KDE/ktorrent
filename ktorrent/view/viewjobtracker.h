@@ -28,26 +28,26 @@
 namespace kt
 {
 
-	class ScanExtender;
-	class View;
+    class ScanExtender;
+    class View;
 
-	/**
-		JobTracker for the View
-	 */
-	class ViewJobTracker : public kt::JobTracker
-	{
-		Q_OBJECT
-	public:
-		ViewJobTracker(View* parent);
-		virtual ~ViewJobTracker();
+    /**
+        JobTracker for the View
+     */
+    class ViewJobTracker : public kt::JobTracker
+    {
+        Q_OBJECT
+    public:
+        ViewJobTracker(View* parent);
+        virtual ~ViewJobTracker();
 
-		virtual void jobUnregistered(bt::Job* j);
-		virtual void jobRegistered(bt::Job* j);
-		virtual kt::JobProgressWidget* createJobWidget(bt::Job* job);
-		
-	private:
-		View* view;
-	};
+        virtual void jobUnregistered(bt::Job* j);
+        virtual void jobRegistered(bt::Job* j);
+        virtual kt::JobProgressWidget* createJobWidget(bt::Job* job);
+
+    private:
+        View* view;
+    };
 
 }
 

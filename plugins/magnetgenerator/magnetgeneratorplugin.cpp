@@ -37,112 +37,112 @@
 #include "magnetgeneratorplugin.h"
 #include "magnetgeneratorpluginsettings.h"
 
-K_EXPORT_COMPONENT_FACTORY(ktmagnetgeneratorplugin,KGenericFactory<kt::MagnetGeneratorPlugin>("ktmagnetgeneratorplugin"))
+K_EXPORT_COMPONENT_FACTORY(ktmagnetgeneratorplugin, KGenericFactory<kt::MagnetGeneratorPlugin>("ktmagnetgeneratorplugin"))
 
 using namespace bt;
 namespace kt
 {
-	MagnetGeneratorPlugin::MagnetGeneratorPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
-	{
-		Q_UNUSED(args);
-		pref = 0;
-		generate_magnet_action = new KAction(KIcon("kt-magnet"),i18n("Copy Magnet URI"), this);
-		connect(generate_magnet_action,SIGNAL(triggered()), this, SLOT(generateMagnet()));
-		actionCollection()->addAction("generate_magnet", generate_magnet_action);
-		setXMLFile("ktmagnetgeneratorpluginui.rc");
+    MagnetGeneratorPlugin::MagnetGeneratorPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+    {
+        Q_UNUSED(args);
+        pref = 0;
+        generate_magnet_action = new KAction(KIcon("kt-magnet"), i18n("Copy Magnet URI"), this);
+        connect(generate_magnet_action, SIGNAL(triggered()), this, SLOT(generateMagnet()));
+        actionCollection()->addAction("generate_magnet", generate_magnet_action);
+        setXMLFile("ktmagnetgeneratorpluginui.rc");
 
-	}
+    }
 
-	MagnetGeneratorPlugin::~MagnetGeneratorPlugin()
-	{
-	}
+    MagnetGeneratorPlugin::~MagnetGeneratorPlugin()
+    {
+    }
 
-	void MagnetGeneratorPlugin::load()
-	{
-		pref = new MagnetGeneratorPrefWidget(0);
-		getGUI()->addPrefPage(pref);
-		TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
-		ta->addViewListener(this);
-		currentTorrentChanged(ta->getCurrentTorrent());
-	}
+    void MagnetGeneratorPlugin::load()
+    {
+        pref = new MagnetGeneratorPrefWidget(0);
+        getGUI()->addPrefPage(pref);
+        TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+        ta->addViewListener(this);
+        currentTorrentChanged(ta->getCurrentTorrent());
+    }
 
-	bool MagnetGeneratorPlugin::versionCheck(const QString& version) const
-	{
-		return version == KT_VERSION_MACRO;
-	}
+    bool MagnetGeneratorPlugin::versionCheck(const QString& version) const
+    {
+        return version == KT_VERSION_MACRO;
+    }
 
-	void MagnetGeneratorPlugin::unload()
-	{
-		getGUI()->removePrefPage(pref);
-		delete pref;
-		pref = 0;
-		TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
-		ta->removeViewListener(this);
-	}
+    void MagnetGeneratorPlugin::unload()
+    {
+        getGUI()->removePrefPage(pref);
+        delete pref;
+        pref = 0;
+        TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+        ta->removeViewListener(this);
+    }
 
-	void MagnetGeneratorPlugin::currentTorrentChanged(bt::TorrentInterface *tc)
-	{
-		generate_magnet_action->setEnabled(tc && (!tc->getStats().priv_torrent || !MagnetGeneratorPluginSettings::onlypublic()));
-	}
+    void MagnetGeneratorPlugin::currentTorrentChanged(bt::TorrentInterface* tc)
+    {
+        generate_magnet_action->setEnabled(tc && (!tc->getStats().priv_torrent || !MagnetGeneratorPluginSettings::onlypublic()));
+    }
 
-	void MagnetGeneratorPlugin::generateMagnet()
-	{
-		bt::TorrentInterface *tor = getGUI()->getTorrentActivity()->getCurrentTorrent();
-		if(!tor)
-			return;
+    void MagnetGeneratorPlugin::generateMagnet()
+    {
+        bt::TorrentInterface* tor = getGUI()->getTorrentActivity()->getCurrentTorrent();
+        if (!tor)
+            return;
 
-		QUrl dn(tor->getStats().torrent_name);
-		SHA1Hash ih(tor->getInfoHash());
+        QUrl dn(tor->getStats().torrent_name);
+        SHA1Hash ih(tor->getInfoHash());
 
-		QString uri("magnet:?xt=urn:btih:");
-		uri.append(ih.toString());
+        QString uri("magnet:?xt=urn:btih:");
+        uri.append(ih.toString());
 
-		if(MagnetGeneratorPluginSettings::dn())
-		{
-			uri.append("&dn=");
-			uri.append(QUrl::toPercentEncoding(dn.toString(), "{}", NULL));
-		}
+        if (MagnetGeneratorPluginSettings::dn())
+        {
+            uri.append("&dn=");
+            uri.append(QUrl::toPercentEncoding(dn.toString(), "{}", NULL));
+        }
 
-		if((MagnetGeneratorPluginSettings::customtracker() && MagnetGeneratorPluginSettings::tr().length() > 0) && !MagnetGeneratorPluginSettings::torrenttracker())
-		{
-			uri.append("&tr=");
-			QUrl tr(MagnetGeneratorPluginSettings::tr());
-			uri.append(QUrl::toPercentEncoding(tr.toString(), "{}", NULL));
-		}
+        if ((MagnetGeneratorPluginSettings::customtracker() && MagnetGeneratorPluginSettings::tr().length() > 0) && !MagnetGeneratorPluginSettings::torrenttracker())
+        {
+            uri.append("&tr=");
+            QUrl tr(MagnetGeneratorPluginSettings::tr());
+            uri.append(QUrl::toPercentEncoding(tr.toString(), "{}", NULL));
+        }
 
-		if(MagnetGeneratorPluginSettings::torrenttracker())
-		{
-			QList<bt::TrackerInterface*> trackers = tor->getTrackersList()->getTrackers();
-			if(!trackers.isEmpty())
-			{
-				Tracker *trk = (Tracker*)trackers.first();
-				QUrl tr(trk->trackerURL());
+        if (MagnetGeneratorPluginSettings::torrenttracker())
+        {
+            QList<bt::TrackerInterface*> trackers = tor->getTrackersList()->getTrackers();
+            if (!trackers.isEmpty())
+            {
+                Tracker* trk = (Tracker*)trackers.first();
+                QUrl tr(trk->trackerURL());
 
-				uri.append("&tr=");
-				uri.append(QUrl::toPercentEncoding(tr.toString(), "{}", NULL));
-			}
+                uri.append("&tr=");
+                uri.append(QUrl::toPercentEncoding(tr.toString(), "{}", NULL));
+            }
 
-		}
+        }
 
-		addToClipboard(uri);
+        addToClipboard(uri);
 
-		if(MagnetGeneratorPluginSettings::popup())
-			showPopup();
+        if (MagnetGeneratorPluginSettings::popup())
+            showPopup();
 
-	}
+    }
 
-	void MagnetGeneratorPlugin::addToClipboard(QString uri)
-	{
-		QClipboard *cb = QApplication::clipboard();
-		cb->setText(uri, QClipboard::Clipboard);
-		cb->setText(uri, QClipboard::Selection);
-	}
+    void MagnetGeneratorPlugin::addToClipboard(QString uri)
+    {
+        QClipboard* cb = QApplication::clipboard();
+        cb->setText(uri, QClipboard::Clipboard);
+        cb->setText(uri, QClipboard::Selection);
+    }
 
-	void MagnetGeneratorPlugin::showPopup()
-	{
-		KPassivePopup::message(i18n("Magnet"), i18n("Magnet link copied to clipboard"),
-							   KIcon("kt-magnet").pixmap(20, 20), getGUI()->getMainWindow(), 3000);
-	}
+    void MagnetGeneratorPlugin::showPopup()
+    {
+        KPassivePopup::message(i18n("Magnet"), i18n("Magnet link copied to clipboard"),
+                               KIcon("kt-magnet").pixmap(20, 20), getGUI()->getMainWindow(), 3000);
+    }
 
 }
 

@@ -27,37 +27,37 @@
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
 
-namespace kt 
+namespace kt
 {
-	
-	/**
-		Extender widget which displays the results of a data scan
-	*/
-	class ScanExtender : public JobProgressWidget,public Ui_ScanExtender
-	{
-		Q_OBJECT
-	public:
-		ScanExtender(bt::Job* job,QWidget* parent);
-		virtual ~ScanExtender();
-		
-		virtual void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2);
-		virtual void infoMessage(const QString& plain, const QString& rich);
-		virtual void warning(const QString& plain, const QString& rich);
-		virtual void percent(long unsigned int percent);
-		virtual void speed(long unsigned int value);
-		virtual void processedAmount(KJob::Unit unit, qulonglong amount);
-		virtual void totalAmount(KJob::Unit unit, qulonglong amount);
-		virtual bool similar(Extender* ext) const;
 
-	private slots:
-		void cancelPressed();
-		void finished(KJob* j);
-		void closeRequested();
-	};
+    /**
+        Extender widget which displays the results of a data scan
+    */
+    class ScanExtender : public JobProgressWidget, public Ui_ScanExtender
+    {
+        Q_OBJECT
+    public:
+        ScanExtender(bt::Job* job, QWidget* parent);
+        virtual ~ScanExtender();
+
+        virtual void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2);
+        virtual void infoMessage(const QString& plain, const QString& rich);
+        virtual void warning(const QString& plain, const QString& rich);
+        virtual void percent(long unsigned int percent);
+        virtual void speed(long unsigned int value);
+        virtual void processedAmount(KJob::Unit unit, qulonglong amount);
+        virtual void totalAmount(KJob::Unit unit, qulonglong amount);
+        virtual bool similar(Extender* ext) const;
+
+    private slots:
+        void cancelPressed();
+        void finished(KJob* j);
+        void closeRequested();
+    };
 }
 
 #endif // KT_SCANEXTENDER_H

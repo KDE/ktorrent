@@ -27,38 +27,38 @@
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
 namespace kt
-{	
-	/**
-	 * Zeroconf service which publishes a torrent
-	 * */
-	class TorrentService : public bt::PeerSource
-	{
-		Q_OBJECT
-	public:
-		TorrentService(bt::TorrentInterface* tc);
-		virtual ~TorrentService();
-		
-		virtual void stop(bt::WaitJob* wjob = 0);
-		virtual void start();
-		virtual void aboutToBeDestroyed();
-		
-	signals:
-		void serviceDestroyed(TorrentService* av);
-		
-	public slots:
-		void onPublished(bool ok);
-		void onServiceAdded(DNSSD::RemoteService::Ptr ptr);
-		void hostResolved(net::AddressResolver* ar);
-		
-	private:
-		bt::TorrentInterface* tc;
-		DNSSD::PublicService* srv;
-		DNSSD::ServiceBrowser* browser;
-	};
+{
+    /**
+     * Zeroconf service which publishes a torrent
+     * */
+    class TorrentService : public bt::PeerSource
+    {
+        Q_OBJECT
+    public:
+        TorrentService(bt::TorrentInterface* tc);
+        virtual ~TorrentService();
+
+        virtual void stop(bt::WaitJob* wjob = 0);
+        virtual void start();
+        virtual void aboutToBeDestroyed();
+
+    signals:
+        void serviceDestroyed(TorrentService* av);
+
+    public slots:
+        void onPublished(bool ok);
+        void onServiceAdded(DNSSD::RemoteService::Ptr ptr);
+        void hostResolved(net::AddressResolver* ar);
+
+    private:
+        bt::TorrentInterface* tc;
+        DNSSD::PublicService* srv;
+        DNSSD::ServiceBrowser* browser;
+    };
 }
 
 #endif

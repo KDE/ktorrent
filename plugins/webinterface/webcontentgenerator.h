@@ -25,55 +25,55 @@
 #include <QHttpRequestHeader>
 
 
-namespace kt 
+namespace kt
 {
-	class HttpServer;
-	class HttpClientHandler;
+    class HttpServer;
+    class HttpClientHandler;
 
-	/**
-		Base class for special pages which generate content or HTML
-	*/
-	class WebContentGenerator
-	{
-	public:
-		enum Permissions
-		{
-			PUBLIC,
-			LOGIN_REQUIRED
-		};
-		
-		/**
-		 * Constructor
-		 * @param path Path of the content e.g. /actions/foobar
-		 */
-		WebContentGenerator(HttpServer* server,const QString & path,Permissions per);
-		virtual ~WebContentGenerator();
-		
-		/// Get the path
-		QString getPath() const {return path;}
-		
-		/// Get the permissions (i.e. login required or not)
-		Permissions getPermissions() const {return permissions;}
-		
-		/**
-		 * Generate HTML or XML on HTTP a get request
-		 * @param hdlr Client handler
-		 * @param hdr HTTP Header of request
-		 */
-		virtual void get(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr) = 0;
-		
-		/**
-		 * Generate HTML or XML on HTTP a get request
-		 * @param hdlr Client handler
-		 * @param hdr HTTP Header of request
-		 * @param data Data of request
-		 */
-		virtual void post(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data) = 0;
-	protected:
-		HttpServer* server;
-		QString path;
-		Permissions permissions;
-	};
+    /**
+        Base class for special pages which generate content or HTML
+    */
+    class WebContentGenerator
+    {
+    public:
+        enum Permissions
+        {
+            PUBLIC,
+            LOGIN_REQUIRED
+        };
+
+        /**
+         * Constructor
+         * @param path Path of the content e.g. /actions/foobar
+         */
+        WebContentGenerator(HttpServer* server, const QString& path, Permissions per);
+        virtual ~WebContentGenerator();
+
+        /// Get the path
+        QString getPath() const {return path;}
+
+        /// Get the permissions (i.e. login required or not)
+        Permissions getPermissions() const {return permissions;}
+
+        /**
+         * Generate HTML or XML on HTTP a get request
+         * @param hdlr Client handler
+         * @param hdr HTTP Header of request
+         */
+        virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr) = 0;
+
+        /**
+         * Generate HTML or XML on HTTP a get request
+         * @param hdlr Client handler
+         * @param hdr HTTP Header of request
+         * @param data Data of request
+         */
+        virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data) = 0;
+    protected:
+        HttpServer* server;
+        QString path;
+        Permissions permissions;
+    };
 
 }
 

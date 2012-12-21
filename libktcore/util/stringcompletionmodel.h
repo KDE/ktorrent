@@ -25,35 +25,35 @@
 #include <ktcore_export.h>
 
 
-namespace kt 
+namespace kt
 {
-	/**
-		Model for a QCompleter which works with a list of unique strings loaded from a file.
-	*/
-	class KTCORE_EXPORT StringCompletionModel : public QStringListModel
-	{
-		Q_OBJECT
-	public:
-		StringCompletionModel(const QString & file,QObject* parent);
-		virtual ~StringCompletionModel();
-		
-		/**
-			Load the list of strings.
-		*/
-		void load();
-		
-		/**
-			Save the list of strings to the file
-		*/
-		void save();
-		
-		/**
-			Add a string to the list, automatically saves it.
-		*/
-		void addString(const QString & s);
-	private:
-		QString file;
-	};
+    /**
+        Model for a QCompleter which works with a list of unique strings loaded from a file.
+    */
+    class KTCORE_EXPORT StringCompletionModel : public QStringListModel
+    {
+        Q_OBJECT
+    public:
+        StringCompletionModel(const QString& file, QObject* parent);
+        virtual ~StringCompletionModel();
+
+        /**
+            Load the list of strings.
+        */
+        void load();
+
+        /**
+            Save the list of strings to the file
+        */
+        void save();
+
+        /**
+            Add a string to the list, automatically saves it.
+        */
+        void addString(const QString& s);
+    private:
+        QString file;
+    };
 
 }
 

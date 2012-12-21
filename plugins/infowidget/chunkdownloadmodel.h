@@ -30,60 +30,60 @@
 namespace kt
 {
 
-	/**
-		@author
-	*/
-	class ChunkDownloadModel : public QAbstractTableModel
-	{			
-		Q_OBJECT
-	public:
-		ChunkDownloadModel(QObject* parent);
-		virtual ~ChunkDownloadModel();
+    /**
+        @author
+    */
+    class ChunkDownloadModel : public QAbstractTableModel
+    {
+        Q_OBJECT
+    public:
+        ChunkDownloadModel(QObject* parent);
+        virtual ~ChunkDownloadModel();
 
-		/// A peer has been added
-		void downloadAdded(bt::ChunkDownloadInterface* cd);
+        /// A peer has been added
+        void downloadAdded(bt::ChunkDownloadInterface* cd);
 
-		/// A download has been removed
-		void downloadRemoved(bt::ChunkDownloadInterface* cd);
-		
-		/// change the current torrent
-		void changeTC(bt::TorrentInterface* tc);
-		
-		/**
-		 * Update the model
-		 */
-		void update();
-		
-		/**
-			Clear the model
-		*/
-		void clear();
+        /// A download has been removed
+        void downloadRemoved(bt::ChunkDownloadInterface* cd);
 
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual int columnCount(const QModelIndex & parent) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index,int role) const;
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
-		
-	public:
-		struct Item
-		{
-			mutable bt::ChunkDownloadInterface::Stats stats;
-			bt::ChunkDownloadInterface* cd;
-			QString files;
-			
-			Item(bt::ChunkDownloadInterface* cd,const QString & files);
-			
-			bool changed() const;
-			QVariant data(int col) const;
-			QVariant sortData(int col) const;
-		};
-	private:
-		QVector<Item*> items;
-		bt::TorrentInterface::WPtr tc;
-	};
+        /// change the current torrent
+        void changeTC(bt::TorrentInterface* tc);
+
+        /**
+         * Update the model
+         */
+        void update();
+
+        /**
+            Clear the model
+        */
+        void clear();
+
+        virtual int rowCount(const QModelIndex& parent) const;
+        virtual int columnCount(const QModelIndex& parent) const;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual bool removeRows(int row, int count, const QModelIndex& parent);
+        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+
+    public:
+        struct Item
+        {
+            mutable bt::ChunkDownloadInterface::Stats stats;
+            bt::ChunkDownloadInterface* cd;
+            QString files;
+
+            Item(bt::ChunkDownloadInterface* cd, const QString& files);
+
+            bool changed() const;
+            QVariant data(int col) const;
+            QVariant sortData(int col) const;
+        };
+    private:
+        QVector<Item*> items;
+        bt::TorrentInterface::WPtr tc;
+    };
 
 }
 

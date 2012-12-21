@@ -32,46 +32,46 @@ class QString;
 
 
 namespace kt
-{	
-	class ScheduleEditor;
-	class Schedule;
-	class BWPrefPage;
-	
-	/**
-	 * @author Ivan Vasic <ivasic@gmail.com>
-	 * @brief KTorrent scheduler plugin.
-	 *
-	 */
-	class BWSchedulerPlugin : public Plugin
-	{
-		Q_OBJECT
-	public:
-		BWSchedulerPlugin(QObject* parent, const QStringList& args);
-		virtual ~BWSchedulerPlugin();
+{
+    class ScheduleEditor;
+    class Schedule;
+    class BWPrefPage;
 
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
-		
-	public slots:
-		void timerTriggered();
-		void onLoaded(Schedule* ns);
-		void colorsChanged();
-		void screensaverActivated(bool on);
-		void networkStatusChanged(Solid::Networking::Status status);
-		
-	private:
-		void setNormalLimits();
-		void restartTimer();
-		
-	private:
-		QTimer m_timer;
-		ScheduleEditor* m_editor;
-		Schedule* m_schedule;
-		BWPrefPage* m_pref;
-		org::freedesktop::ScreenSaver* screensaver;
-		bool screensaver_on;
-	};
+    /**
+     * @author Ivan Vasic <ivasic@gmail.com>
+     * @brief KTorrent scheduler plugin.
+     *
+     */
+    class BWSchedulerPlugin : public Plugin
+    {
+        Q_OBJECT
+    public:
+        BWSchedulerPlugin(QObject* parent, const QStringList& args);
+        virtual ~BWSchedulerPlugin();
+
+        virtual void load();
+        virtual void unload();
+        virtual bool versionCheck(const QString& version) const;
+
+    public slots:
+        void timerTriggered();
+        void onLoaded(Schedule* ns);
+        void colorsChanged();
+        void screensaverActivated(bool on);
+        void networkStatusChanged(Solid::Networking::Status status);
+
+    private:
+        void setNormalLimits();
+        void restartTimer();
+
+    private:
+        QTimer m_timer;
+        ScheduleEditor* m_editor;
+        Schedule* m_schedule;
+        BWPrefPage* m_pref;
+        org::freedesktop::ScreenSaver* screensaver;
+        bool screensaver_on;
+    };
 
 }
 

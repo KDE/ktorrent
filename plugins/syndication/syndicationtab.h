@@ -31,41 +31,41 @@ class KMenu;
 
 namespace kt
 {
-	class FeedList;
-	class FeedListView;
-	class FilterList;
-	class FilterListView;
+    class FeedList;
+    class FeedListView;
+    class FilterList;
+    class FilterListView;
 
-	/**
-		@author
-	*/
-	class SyndicationTab : public QWidget
-	{
-		Q_OBJECT
-	public:
-		SyndicationTab(KActionCollection* ac,FeedList* feeds,FilterList* filters,QWidget* parent);
-		virtual ~SyndicationTab();
+    /**
+        @author
+    */
+    class SyndicationTab : public QWidget
+    {
+        Q_OBJECT
+    public:
+        SyndicationTab(KActionCollection* ac, FeedList* feeds, FilterList* filters, QWidget* parent);
+        virtual ~SyndicationTab();
 
-		FeedListView* feedView() {return feed_view;}
-		FilterListView* filterView() {return filter_view;}
-		void loadState(KConfigGroup & g);
-		void saveState(KConfigGroup & g);
-		
-	private slots:
-		void showFeedViewMenu(const QPoint & pos);
-		void showFilterViewMenu(const QPoint & pos);
-		
-	private:
-		FeedList* feeds;
-		FeedListView* feed_view;
-		KToolBar* feed_tool_bar;
-		QSplitter* splitter;
-		FilterList* filters;
-		FilterListView* filter_view;
-		KToolBar* filter_tool_bar;
-		KMenu* feed_view_menu;
-		KMenu* filter_view_menu;
-	};
+        FeedListView* feedView() {return feed_view;}
+        FilterListView* filterView() {return filter_view;}
+        void loadState(KConfigGroup& g);
+        void saveState(KConfigGroup& g);
+
+    private slots:
+        void showFeedViewMenu(const QPoint& pos);
+        void showFilterViewMenu(const QPoint& pos);
+
+    private:
+        FeedList* feeds;
+        FeedListView* feed_view;
+        KToolBar* feed_tool_bar;
+        QSplitter* splitter;
+        FilterList* filters;
+        FilterListView* filter_view;
+        KToolBar* filter_tool_bar;
+        KMenu* feed_view_menu;
+        KMenu* filter_view_menu;
+    };
 
 }
 

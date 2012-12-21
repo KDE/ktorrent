@@ -34,117 +34,117 @@ class KUrl;
 
 namespace kt
 {
-	class Core;
-	class PrefDialog;
-	class StatusBar;
-	class TrayIcon;
-	class DBus;
-	class TorrentActivity;
-	class CentralWidget;
-	
+    class Core;
+    class PrefDialog;
+    class StatusBar;
+    class TrayIcon;
+    class DBus;
+    class TorrentActivity;
+    class CentralWidget;
 
-	class GUI : public KParts::MainWindow,public GUIInterface
-	{
-		Q_OBJECT
-	public:
-		GUI();
-		virtual ~GUI();
 
-		DBus* getDBusInterface() {return dbus_iface;}
-		
-		// Stuff implemented from GUIInterface
-		virtual KMainWindow* getMainWindow() {return this;}
-		virtual void addPrefPage(PrefPageInterface* page);
-		virtual void removePrefPage(PrefPageInterface* page);
-		virtual void mergePluginGui(Plugin* p);
-		virtual void removePluginGui(Plugin* p);
-		virtual bool selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,const QString & location_hint,bool* skip_check);
-		virtual void errorMsg(const QString & err);
-		virtual void errorMsg(KIO::Job* j);
-		virtual void infoMsg(const QString & info);
-		virtual StatusBarInterface* getStatusBar();
-		virtual void addActivity(Activity* act);
-		virtual void removeActivity(Activity* act);
-		virtual TorrentActivityInterface* getTorrentActivity(); 
-		virtual QSize sizeHint() const;
-		
-		/**
-		* Create a XML GUI container (menu or toolbar)
-		* @param name The name of the item
-		* @return The widget
-		*/
-		QWidget* container(const QString & name);
+    class GUI : public KParts::MainWindow, public GUIInterface
+    {
+        Q_OBJECT
+    public:
+        GUI();
+        virtual ~GUI();
 
-		/// load a torrent
-		void load(const KUrl & url);
-		
-		/// load a torrent silently
-		void loadSilently(const KUrl & url);
-		
-	public slots:
-		/// Update all actions
-		void updateActions();
-		
-		/**
-		 * Enable or disable the paste action
-		 * @param on Set on
-		 */
-		void setPasteDisabled(bool on);
-		
-		/// Set the current activity
-		virtual void setCurrentActivity(Activity* act);
+        DBus* getDBusInterface() {return dbus_iface;}
 
-	private slots:
-		void createTorrent();
-		void openTorrent();
-		void openTorrentSilently();
-		void pasteURL();
-		void paste();
-		void showPrefDialog();
-		void showStatusBar();
-		void showMenuBar();
-		void showIPFilter();
-		void configureKeys();
-		void configureToolbars();
-		void newToolBarConfig();
-		void import();
-		void update();
-		/// apply gui specific settings
-		void applySettings();
-		void showOrHide();
-		void configureNotifications();
-		void activePartChanged(KParts::Part* p);
-		
-	private:
-		void setupActions();
-		
-		virtual void loadState(KSharedConfigPtr cfg);
-		virtual void saveState(KSharedConfigPtr cfg);
-		virtual bool queryExit();
-		virtual bool queryClose();
+        // Stuff implemented from GUIInterface
+        virtual KMainWindow* getMainWindow() {return this;}
+        virtual void addPrefPage(PrefPageInterface* page);
+        virtual void removePrefPage(PrefPageInterface* page);
+        virtual void mergePluginGui(Plugin* p);
+        virtual void removePluginGui(Plugin* p);
+        virtual bool selectFiles(bt::TorrentInterface* tc, bool* start_torrent, const QString& group_hint, const QString& location_hint, bool* skip_check);
+        virtual void errorMsg(const QString& err);
+        virtual void errorMsg(KIO::Job* j);
+        virtual void infoMsg(const QString& info);
+        virtual StatusBarInterface* getStatusBar();
+        virtual void addActivity(Activity* act);
+        virtual void removeActivity(Activity* act);
+        virtual TorrentActivityInterface* getTorrentActivity();
+        virtual QSize sizeHint() const;
 
-	private:
-		Core* core;
-		QTimer timer;
-		kt::StatusBar* status_bar;
-		TrayIcon* tray_icon;
-		DBus* dbus_iface;
-		TorrentActivity* torrent_activity;
-		CentralWidget* central;
-		PrefDialog* pref_dlg;
-		KParts::PartManager* part_manager;
-		
-		KToggleAction* show_status_bar_action;
-		KToggleAction* show_menu_bar_action;
-		KAction* open_silently_action;
-		
-		KAction* paste_url_action;
-		KAction* ipfilter_action;
-		KAction* import_action;
-		KAction* import_kde3_torrents_action;
-		KAction* show_kt_action;
-		KAction* paste_action;
-	};
+        /**
+        * Create a XML GUI container (menu or toolbar)
+        * @param name The name of the item
+        * @return The widget
+        */
+        QWidget* container(const QString& name);
+
+        /// load a torrent
+        void load(const KUrl& url);
+
+        /// load a torrent silently
+        void loadSilently(const KUrl& url);
+
+    public slots:
+        /// Update all actions
+        void updateActions();
+
+        /**
+         * Enable or disable the paste action
+         * @param on Set on
+         */
+        void setPasteDisabled(bool on);
+
+        /// Set the current activity
+        virtual void setCurrentActivity(Activity* act);
+
+    private slots:
+        void createTorrent();
+        void openTorrent();
+        void openTorrentSilently();
+        void pasteURL();
+        void paste();
+        void showPrefDialog();
+        void showStatusBar();
+        void showMenuBar();
+        void showIPFilter();
+        void configureKeys();
+        void configureToolbars();
+        void newToolBarConfig();
+        void import();
+        void update();
+        /// apply gui specific settings
+        void applySettings();
+        void showOrHide();
+        void configureNotifications();
+        void activePartChanged(KParts::Part* p);
+
+    private:
+        void setupActions();
+
+        virtual void loadState(KSharedConfigPtr cfg);
+        virtual void saveState(KSharedConfigPtr cfg);
+        virtual bool queryExit();
+        virtual bool queryClose();
+
+    private:
+        Core* core;
+        QTimer timer;
+        kt::StatusBar* status_bar;
+        TrayIcon* tray_icon;
+        DBus* dbus_iface;
+        TorrentActivity* torrent_activity;
+        CentralWidget* central;
+        PrefDialog* pref_dlg;
+        KParts::PartManager* part_manager;
+
+        KToggleAction* show_status_bar_action;
+        KToggleAction* show_menu_bar_action;
+        KAction* open_silently_action;
+
+        KAction* paste_url_action;
+        KAction* ipfilter_action;
+        KAction* import_action;
+        KAction* import_kde3_torrents_action;
+        KAction* show_kt_action;
+        KAction* paste_action;
+    };
 }
 
 #endif
