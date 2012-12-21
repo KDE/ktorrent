@@ -306,5 +306,8 @@
 		<entry name="autoRenameSingleFileTorrents" type="Bool">
 			<default>false</default>
 		</entry>
+		<entry name="highlightNewTorrents" type="Bool">
+			<default>true</default>
+		</entry>
 	</group>
 </kcfg>

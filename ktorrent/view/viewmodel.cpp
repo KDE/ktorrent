@@ -416,12 +416,15 @@ namespace kt
     void ViewModel::addTorrent(bt::TorrentInterface* ti)
     {
         Item* i = new Item(ti);
-        i->highlight = true;
+        if (Settings::highlightNewTorrents())
+        {
+            i->highlight = true;
 
-        // Turn off highlight for previously highlighted torrents
-        foreach (Item* item, torrents)
-            if (item->highlight)
-                item->highlight = false;
+            // Turn off highlight for previously highlighted torrents
+            foreach (Item* item, torrents)
+                if (item->highlight)
+                    item->highlight = false;
+        }
 
         torrents.append(i);
         update(view->viewDelegate(), true);
