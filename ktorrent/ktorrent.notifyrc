@@ -637,6 +637,7 @@ Action=Sound|Popup
 
 [Event/MagnetLinkDownloadStarted]
 Name=Magnet link download started
+Name[bs]=Magnetno preuzimanje datoteka započelo
 Name[ca]=S'ha iniciat la baixada de l'enllaç «magnet»
 Name[cs]=Stahování odkazu Magnet bylo zahájeno
 Name[da]=Download af magnet-link startet
