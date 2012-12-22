@@ -58,7 +58,6 @@ namespace kt
             }
         }
 
-        qSort(queue.begin(), queue.end());
         //dumpQueue();
     }
 
@@ -68,11 +67,18 @@ namespace kt
 
     void QueueManagerModel::onQueueOrdered()
     {
-        reset();
+        updateQueue();
     }
+
+    void QueueManagerModel::softReset()
+    {
+        emit dataChanged(index(0, 0), index(queue.count() - 1, columnCount(QModelIndex()) - 1));
+    }
+
 
     void QueueManagerModel::updateQueue()
     {
+        int count = queue.count();
         queue.clear();
 
         for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++)
@@ -85,7 +91,20 @@ namespace kt
             }
         }
 
-        reset();
+        if (count == queue.count())
+        {
+            softReset();
+        }
+        else if (queue.count() > count)
+        {
+            insertRows(0, queue.count() - count, QModelIndex());
+            softReset();
+        }
+        else // queue.count() < count)
+        {
+            removeRows(0, count - queue.count(), QModelIndex());
+            softReset();
+        }
     }
 
     void QueueManagerModel::setShowDownloads(bool on)
@@ -108,13 +127,6 @@ namespace kt
 
     void QueueManagerModel::onTorrentAdded(bt::TorrentInterface* tc)
     {
-        if (visible(tc))
-        {
-            Item item = {tc, 0};
-            queue.append(item);
-            qSort(queue.begin(), queue.end());
-            reset();
-        }
         connect(tc, SIGNAL(statusChanged(bt::TorrentInterface*)), this, SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
     }
 
@@ -122,16 +134,6 @@ namespace kt
     {
         disconnect(tc, SIGNAL(statusChanged(bt::TorrentInterface*)),
                    this, SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
-        int r = 0;
-        foreach (const Item& i, queue)
-        {
-            if (tc == i.tc)
-            {
-                queue.removeAt(r);
-                break;
-            }
-            r++;
-        }
     }
 
     void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface* tc)
@@ -159,10 +161,7 @@ namespace kt
 
         if (visible(tc))
         {
-            Item item = {tc, 0};
-            queue.append(item);
-            qSort(queue.begin(), queue.end());
-            reset();
+            updateQueue();
         }
     }
 

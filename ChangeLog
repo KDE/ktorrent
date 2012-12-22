@@ -9,6 +9,7 @@ Changes in 4.4:
 - Revamp syndication plugin interface and add support for torrent elements from namespace (http://xmlns.ezrss.it/0.1/) within the rss item element (311224)
 - Fix crash in torrent loading code under some circumstances (309332)
 - Add option to enable or disable torrent highlighting (Review: 107810)
+- Fix queue order not reflecting reality in some circumstances (308579)
 
 Changes in 4.3.1:
 - Fix new custom groups not appearing in add to group submenu (307230)

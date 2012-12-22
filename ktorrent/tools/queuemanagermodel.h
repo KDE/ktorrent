@@ -125,6 +125,7 @@ namespace kt
         void swapItems(int a, int b);
         void dumpQueue();
         void updatePriorities();
+        void softReset();
 
     private:
         QueueManager* qman;
