@@ -23,27 +23,27 @@
 namespace kt
 {
 
-	SettingsPage::SettingsPage(QWidget * p) :
-			PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Statistics"), "view-statistics", p)
-	{
-		setupUi(this);
-		connect(kcfg_UpdateEveryGuiUpdates, SIGNAL(valueChanged(int)), this, SLOT(UpdGuiUpdatesToMs(int)));
-		UpdGuiUpdatesToMs(0);
-	}
+    SettingsPage::SettingsPage(QWidget* p) :
+        PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Statistics"), "view-statistics", p)
+    {
+        setupUi(this);
+        connect(kcfg_UpdateEveryGuiUpdates, SIGNAL(valueChanged(int)), this, SLOT(UpdGuiUpdatesToMs(int)));
+        UpdGuiUpdatesToMs(0);
+    }
 
-	SettingsPage::~SettingsPage()
-	{
-		disconnect(kcfg_UpdateEveryGuiUpdates);
-	}
+    SettingsPage::~SettingsPage()
+    {
+        disconnect(kcfg_UpdateEveryGuiUpdates);
+    }
 
-	void SettingsPage::updateSettings()
-	{
-		emit Applied();
-	}
+    void SettingsPage::updateSettings()
+    {
+        emit Applied();
+    }
 
-	void SettingsPage::UpdGuiUpdatesToMs(int)
-	{
-		UpdMsLbl->setText(i18n("(= %1 ms)", (kcfg_UpdateEveryGuiUpdates->value()) * Settings::guiUpdateInterval())) ;
-	}
+    void SettingsPage::UpdGuiUpdatesToMs(int)
+    {
+        UpdMsLbl->setText(i18n("(= %1 ms)", (kcfg_UpdateEveryGuiUpdates->value()) * Settings::guiUpdateInterval())) ;
+    }
 
 } //ns end

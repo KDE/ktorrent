@@ -26,46 +26,46 @@
 
 namespace bt
 {
-	class TorrentFileStream;
+    class TorrentFileStream;
 }
 
-namespace kt 
+namespace kt
 {
-	/**
-		Class to stream a TorrentFileStream to phonon.
-	 */
-	class MediaFileStream : public Phonon::AbstractMediaStream
-	{
-		Q_OBJECT
-	public:
-		MediaFileStream(bt::TorrentFileStream::WPtr stream,QObject* parent = 0);
-		virtual ~MediaFileStream();
-		
-		enum StreamState
-		{
-			PLAYING,
-			BUFFERING
-		};
-		
-		StreamState state() const {return waiting_for_data ? BUFFERING : PLAYING;}
+    /**
+        Class to stream a TorrentFileStream to phonon.
+     */
+    class MediaFileStream : public Phonon::AbstractMediaStream
+    {
+        Q_OBJECT
+    public:
+        MediaFileStream(bt::TorrentFileStream::WPtr stream, QObject* parent = 0);
+        virtual ~MediaFileStream();
 
-	protected:
-		virtual void needData();
-		virtual void reset();
-		virtual void enoughData();
-		virtual void seekStream(qint64 offset);
-		
-	signals:
-		/// Emitted when the stream state changes
-		void stateChanged(int state);
-		
-	private slots:
-		void dataReady();
-		
-	private:
-		bt::TorrentFileStream::WPtr stream;
-		bool waiting_for_data;
-	};
+        enum StreamState
+        {
+            PLAYING,
+            BUFFERING
+        };
+
+        StreamState state() const {return waiting_for_data ? BUFFERING : PLAYING;}
+
+    protected:
+        virtual void needData();
+        virtual void reset();
+        virtual void enoughData();
+        virtual void seekStream(qint64 offset);
+
+    signals:
+        /// Emitted when the stream state changes
+        void stateChanged(int state);
+
+    private slots:
+        void dataReady();
+
+    private:
+        bt::TorrentFileStream::WPtr stream;
+        bool waiting_for_data;
+    };
 
 }
 

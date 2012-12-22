@@ -29,58 +29,58 @@
 
 namespace kt
 {
-	class SearchToolBar;
-	class SearchWidget;
-	class SearchPlugin;
+    class SearchToolBar;
+    class SearchWidget;
+    class SearchPlugin;
 
-	class SearchActivity : public kt::Activity
-	{
-		Q_OBJECT
-	public:
-		SearchActivity(SearchPlugin* sp,QWidget* parent);
-		virtual ~SearchActivity();
-		
-		/// Add a SearchWidget
-		void search(const QString & text,int engine);
-		
-		/// Save all current searches
-		void saveCurrentSearches();
-		
-		/// Load current searches
-		void loadCurrentSearches();
-		
-		void loadState(KSharedConfigPtr cfg);
-		void saveState(KSharedConfigPtr cfg);
-		
-		/// Create a new empty search tab
-		SearchWidget* newTab();
-		
-	public slots:
-		void home();
-		void openNewTab(const KUrl & url);
-		void currentTabChanged(int idx);
-		void closeTab();
-		void openTab();
-		void setTabTitle(SearchWidget* sw,const QString & title);
-		void setTabIcon(SearchWidget* sw,const QIcon & icon);
-		void clearSearchHistory();
-		void search();
-		void find();
-		
-	private:
-		SearchWidget* newSearchWidget(const QString & text);
-		void setupActions();
-		
-	private:
-		KTabWidget* tabs;
-		QList<SearchWidget*> searches;
-		SearchPlugin* sp;
-		SearchToolBar* toolbar;
-		
-		KAction* find_action;
-		KAction* search_action;
-		KAction* home_action;
-	};
+    class SearchActivity : public kt::Activity
+    {
+        Q_OBJECT
+    public:
+        SearchActivity(SearchPlugin* sp, QWidget* parent);
+        virtual ~SearchActivity();
+
+        /// Add a SearchWidget
+        void search(const QString& text, int engine);
+
+        /// Save all current searches
+        void saveCurrentSearches();
+
+        /// Load current searches
+        void loadCurrentSearches();
+
+        void loadState(KSharedConfigPtr cfg);
+        void saveState(KSharedConfigPtr cfg);
+
+        /// Create a new empty search tab
+        SearchWidget* newTab();
+
+    public slots:
+        void home();
+        void openNewTab(const KUrl& url);
+        void currentTabChanged(int idx);
+        void closeTab();
+        void openTab();
+        void setTabTitle(SearchWidget* sw, const QString& title);
+        void setTabIcon(SearchWidget* sw, const QIcon& icon);
+        void clearSearchHistory();
+        void search();
+        void find();
+
+    private:
+        SearchWidget* newSearchWidget(const QString& text);
+        void setupActions();
+
+    private:
+        KTabWidget* tabs;
+        QList<SearchWidget*> searches;
+        SearchPlugin* sp;
+        SearchToolBar* toolbar;
+
+        KAction* find_action;
+        KAction* search_action;
+        KAction* home_action;
+    };
 }
 
 #endif // SEARCHACTIVITY_H

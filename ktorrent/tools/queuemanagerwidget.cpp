@@ -38,284 +38,284 @@ using namespace bt;
 namespace kt
 {
 
-	QueueManagerWidget::QueueManagerWidget(QueueManager* qman, QWidget* parent) : QWidget(parent), qman(qman)
-	{
-		QHBoxLayout* layout = new QHBoxLayout(this);
-		layout->setMargin(0);
-		layout->setSpacing(0);
-		QVBoxLayout* vbox = new QVBoxLayout();
-		vbox->setMargin(0);
-		vbox->setSpacing(0);
-		view = new QTreeView(this);
-		view->setUniformRowHeights(true);
-		toolbar = new QToolBar(this);
-		toolbar->setOrientation(Qt::Vertical);
-		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		layout->addWidget(toolbar);
+    QueueManagerWidget::QueueManagerWidget(QueueManager* qman, QWidget* parent) : QWidget(parent), qman(qman)
+    {
+        QHBoxLayout* layout = new QHBoxLayout(this);
+        layout->setMargin(0);
+        layout->setSpacing(0);
+        QVBoxLayout* vbox = new QVBoxLayout();
+        vbox->setMargin(0);
+        vbox->setSpacing(0);
+        view = new QTreeView(this);
+        view->setUniformRowHeights(true);
+        toolbar = new QToolBar(this);
+        toolbar->setOrientation(Qt::Vertical);
+        toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        layout->addWidget(toolbar);
 
-		search = new KLineEdit(this);
-		search->setClickMessage(i18n("Search"));
-		search->setClearButtonShown(true);
-		search->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-		connect(search, SIGNAL(textChanged(QString)), this, SLOT(searchTextChanged(QString)));
-		search->hide();
-		vbox->addWidget(search);
-		vbox->addWidget(view);
-		layout->addLayout(vbox);
+        search = new KLineEdit(this);
+        search->setClickMessage(i18n("Search"));
+        search->setClearButtonShown(true);
+        search->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        connect(search, SIGNAL(textChanged(QString)), this, SLOT(searchTextChanged(QString)));
+        search->hide();
+        vbox->addWidget(search);
+        vbox->addWidget(view);
+        layout->addLayout(vbox);
 
-		show_search = toolbar->addAction(KIcon("edit-find"), i18n("Show Search"));
-		show_search->setToolTip(i18n("Show or hide the search bar"));
-		show_search->setCheckable(true);
-		connect(show_search, SIGNAL(toggled(bool)), this, SLOT(showSearch(bool)));
+        show_search = toolbar->addAction(KIcon("edit-find"), i18n("Show Search"));
+        show_search->setToolTip(i18n("Show or hide the search bar"));
+        show_search->setCheckable(true);
+        connect(show_search, SIGNAL(toggled(bool)), this, SLOT(showSearch(bool)));
 
-		move_top = toolbar->addAction(KIcon("go-top"), i18n("Move Top"), this, SLOT(moveTopClicked()));
-		move_top->setToolTip(i18n("Move a torrent to the top of the queue"));
+        move_top = toolbar->addAction(KIcon("go-top"), i18n("Move Top"), this, SLOT(moveTopClicked()));
+        move_top->setToolTip(i18n("Move a torrent to the top of the queue"));
 
-		move_up = toolbar->addAction(KIcon("go-up"), i18n("Move Up"), this, SLOT(moveUpClicked()));
-		move_up->setToolTip(i18n("Move a torrent up in the queue"));
+        move_up = toolbar->addAction(KIcon("go-up"), i18n("Move Up"), this, SLOT(moveUpClicked()));
+        move_up->setToolTip(i18n("Move a torrent up in the queue"));
 
-		move_down = toolbar->addAction(KIcon("go-down"), i18n("Move Down"), this, SLOT(moveDownClicked()));
-		move_down->setToolTip(i18n("Move a torrent down in the queue"));
+        move_down = toolbar->addAction(KIcon("go-down"), i18n("Move Down"), this, SLOT(moveDownClicked()));
+        move_down->setToolTip(i18n("Move a torrent down in the queue"));
 
-		move_bottom = toolbar->addAction(KIcon("go-bottom"), i18n("Move Bottom"), this, SLOT(moveBottomClicked()));
-		move_bottom->setToolTip(i18n("Move a torrent to the bottom of the queue"));
+        move_bottom = toolbar->addAction(KIcon("go-bottom"), i18n("Move Bottom"), this, SLOT(moveBottomClicked()));
+        move_bottom->setToolTip(i18n("Move a torrent to the bottom of the queue"));
 
-		show_downloads = toolbar->addAction(KIcon("arrow-down"), i18n("Show Downloads"));
-		show_downloads->setToolTip(i18n("Show all downloads"));
-		show_downloads->setCheckable(true);
-		connect(show_downloads, SIGNAL(toggled(bool)), this, SLOT(showDownloads(bool)));
-		
-		show_uploads = toolbar->addAction(KIcon("arrow-up"), i18n("Show Uploads"));
-		show_uploads->setToolTip(i18n("Show all uploads"));
-		show_uploads->setCheckable(true);
-		connect(show_uploads, SIGNAL(toggled(bool)), this, SLOT(showUploads(bool)));
-		
-		show_not_queued = toolbar->addAction(KIcon("kt-queue-manager"), i18n("Show Not Queued"));
-		show_not_queued->setToolTip(i18n("Show all not queued torrents"));
-		show_not_queued->setCheckable(true);
-		connect(show_not_queued, SIGNAL(toggled(bool)), this, SLOT(showNotQueued(bool)));
+        show_downloads = toolbar->addAction(KIcon("arrow-down"), i18n("Show Downloads"));
+        show_downloads->setToolTip(i18n("Show all downloads"));
+        show_downloads->setCheckable(true);
+        connect(show_downloads, SIGNAL(toggled(bool)), this, SLOT(showDownloads(bool)));
 
-		model = new QueueManagerModel(qman, this);
-		view->setModel(model);
-		view->setRootIsDecorated(false);
-		view->setAlternatingRowColors(true);
-		view->setSelectionBehavior(QAbstractItemView::SelectRows);
-		view->setSortingEnabled(false);
-		view->setDragDropMode(QAbstractItemView::InternalMove);
-		view->setDragEnabled(true);
-		view->setAcceptDrops(true);
-		view->setDropIndicatorShown(true);
-		view->setAutoScroll(true);
-		view->setSelectionMode(QAbstractItemView::ContiguousSelection);
+        show_uploads = toolbar->addAction(KIcon("arrow-up"), i18n("Show Uploads"));
+        show_uploads->setToolTip(i18n("Show all uploads"));
+        show_uploads->setCheckable(true);
+        connect(show_uploads, SIGNAL(toggled(bool)), this, SLOT(showUploads(bool)));
 
-		connect(view->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-		        this, SLOT(selectionChanged(QItemSelection, QItemSelection)));
+        show_not_queued = toolbar->addAction(KIcon("kt-queue-manager"), i18n("Show Not Queued"));
+        show_not_queued->setToolTip(i18n("Show all not queued torrents"));
+        show_not_queued->setCheckable(true);
+        connect(show_not_queued, SIGNAL(toggled(bool)), this, SLOT(showNotQueued(bool)));
 
-		updateButtons();
-	}
+        model = new QueueManagerModel(qman, this);
+        view->setModel(model);
+        view->setRootIsDecorated(false);
+        view->setAlternatingRowColors(true);
+        view->setSelectionBehavior(QAbstractItemView::SelectRows);
+        view->setSortingEnabled(false);
+        view->setDragDropMode(QAbstractItemView::InternalMove);
+        view->setDragEnabled(true);
+        view->setAcceptDrops(true);
+        view->setDropIndicatorShown(true);
+        view->setAutoScroll(true);
+        view->setSelectionMode(QAbstractItemView::ContiguousSelection);
+
+        connect(view->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+                this, SLOT(selectionChanged(QItemSelection, QItemSelection)));
+
+        updateButtons();
+    }
 
 
-	QueueManagerWidget::~QueueManagerWidget()
-	{}
+    QueueManagerWidget::~QueueManagerWidget()
+    {}
 
-	void QueueManagerWidget::onTorrentAdded(bt::TorrentInterface* tc)
-	{
-		model->onTorrentAdded(tc);
-	}
+    void QueueManagerWidget::onTorrentAdded(bt::TorrentInterface* tc)
+    {
+        model->onTorrentAdded(tc);
+    }
 
-	void QueueManagerWidget::onTorrentRemoved(bt::TorrentInterface* tc)
-	{
-		model->onTorrentRemoved(tc);
-	}
+    void QueueManagerWidget::onTorrentRemoved(bt::TorrentInterface* tc)
+    {
+        model->onTorrentRemoved(tc);
+    }
 
-	void QueueManagerWidget::moveUpClicked()
-	{
-		QModelIndexList sel = view->selectionModel()->selectedRows();
-		QList<int> rows;
-		foreach (const QModelIndex & idx, sel)
-		rows.append(idx.row());
+    void QueueManagerWidget::moveUpClicked()
+    {
+        QModelIndexList sel = view->selectionModel()->selectedRows();
+        QList<int> rows;
+        foreach (const QModelIndex& idx, sel)
+            rows.append(idx.row());
 
-		if (rows.isEmpty() || rows.front() == 0)
-			return;
+        if (rows.isEmpty() || rows.front() == 0)
+            return;
 
-		model->moveUp(rows.front(), rows.count());
+        model->moveUp(rows.front(), rows.count());
 
-		QItemSelection nsel;
-		int cols = model->columnCount(QModelIndex());
-		QModelIndex top_left = model->index(rows.front() - 1, 0);
-		QModelIndex bottom_right = model->index(rows.back() - 1, cols - 1);
-		nsel.select(top_left, bottom_right);
-		view->selectionModel()->select(nsel, QItemSelectionModel::Select);
-		if (!indexVisible(top_left))
-			view->scrollTo(top_left, QAbstractItemView::PositionAtCenter);
+        QItemSelection nsel;
+        int cols = model->columnCount(QModelIndex());
+        QModelIndex top_left = model->index(rows.front() - 1, 0);
+        QModelIndex bottom_right = model->index(rows.back() - 1, cols - 1);
+        nsel.select(top_left, bottom_right);
+        view->selectionModel()->select(nsel, QItemSelectionModel::Select);
+        if (!indexVisible(top_left))
+            view->scrollTo(top_left, QAbstractItemView::PositionAtCenter);
 
-		updateButtons();
-	}
+        updateButtons();
+    }
 
-	void QueueManagerWidget::moveDownClicked()
-	{
-		QModelIndexList sel = view->selectionModel()->selectedRows();
-		QList<int> rows;
-		foreach (const QModelIndex & idx, sel)
-		rows.append(idx.row());
+    void QueueManagerWidget::moveDownClicked()
+    {
+        QModelIndexList sel = view->selectionModel()->selectedRows();
+        QList<int> rows;
+        foreach (const QModelIndex& idx, sel)
+            rows.append(idx.row());
 
-		int rowcount = model->rowCount(QModelIndex());
-		if (rows.isEmpty() || rows.back() == rowcount - 1)
-			return;
+        int rowcount = model->rowCount(QModelIndex());
+        if (rows.isEmpty() || rows.back() == rowcount - 1)
+            return;
 
-		model->moveDown(rows.front(), rows.count());
+        model->moveDown(rows.front(), rows.count());
 
-		QItemSelection nsel;
-		int cols = model->columnCount(QModelIndex());
-		QModelIndex top_left = model->index(rows.front() + 1, 0);
-		QModelIndex bottom_right = model->index(rows.back() + 1, cols - 1);
-		nsel.select(top_left, bottom_right);
-		view->selectionModel()->select(nsel, QItemSelectionModel::Select);
-		if (!indexVisible(top_left))
-			view->scrollTo(top_left, QAbstractItemView::PositionAtCenter);
+        QItemSelection nsel;
+        int cols = model->columnCount(QModelIndex());
+        QModelIndex top_left = model->index(rows.front() + 1, 0);
+        QModelIndex bottom_right = model->index(rows.back() + 1, cols - 1);
+        nsel.select(top_left, bottom_right);
+        view->selectionModel()->select(nsel, QItemSelectionModel::Select);
+        if (!indexVisible(top_left))
+            view->scrollTo(top_left, QAbstractItemView::PositionAtCenter);
 
-		updateButtons();
-	}
+        updateButtons();
+    }
 
-	void QueueManagerWidget::moveTopClicked()
-	{
-		QModelIndexList sel = view->selectionModel()->selectedRows();
-		QList<int> rows;
-		foreach (const QModelIndex & idx, sel)
-		rows.append(idx.row());
+    void QueueManagerWidget::moveTopClicked()
+    {
+        QModelIndexList sel = view->selectionModel()->selectedRows();
+        QList<int> rows;
+        foreach (const QModelIndex& idx, sel)
+            rows.append(idx.row());
 
-		if (rows.isEmpty() || rows.front() == 0)
-			return;
+        if (rows.isEmpty() || rows.front() == 0)
+            return;
 
-		model->moveTop(rows.front(), rows.count());
+        model->moveTop(rows.front(), rows.count());
 
-		QItemSelection nsel;
-		int cols = model->columnCount(QModelIndex());
-		nsel.select(model->index(0, 0), model->index(rows.count() - 1, cols - 1));
-		view->selectionModel()->select(nsel, QItemSelectionModel::Select);
-		view->scrollToTop();
+        QItemSelection nsel;
+        int cols = model->columnCount(QModelIndex());
+        nsel.select(model->index(0, 0), model->index(rows.count() - 1, cols - 1));
+        view->selectionModel()->select(nsel, QItemSelectionModel::Select);
+        view->scrollToTop();
 
-		updateButtons();
-	}
+        updateButtons();
+    }
 
-	void QueueManagerWidget::moveBottomClicked()
-	{
-		QModelIndexList sel = view->selectionModel()->selectedRows();
-		QList<int> rows;
-		foreach (const QModelIndex & idx, sel)
-		rows.append(idx.row());
+    void QueueManagerWidget::moveBottomClicked()
+    {
+        QModelIndexList sel = view->selectionModel()->selectedRows();
+        QList<int> rows;
+        foreach (const QModelIndex& idx, sel)
+            rows.append(idx.row());
 
-		int rowcount = model->rowCount(QModelIndex());
-		if (rows.isEmpty() || rows.back() == rowcount - 1)
-			return;
+        int rowcount = model->rowCount(QModelIndex());
+        if (rows.isEmpty() || rows.back() == rowcount - 1)
+            return;
 
-		model->moveBottom(rows.front(), rows.count());
+        model->moveBottom(rows.front(), rows.count());
 
-		QItemSelection nsel;
-		int cols = model->columnCount(QModelIndex());
-		nsel.select(model->index(rowcount - rows.count(), 0), model->index(rowcount - 1, cols - 1));
-		view->selectionModel()->select(nsel, QItemSelectionModel::Select);
-		view->scrollToBottom();
+        QItemSelection nsel;
+        int cols = model->columnCount(QModelIndex());
+        nsel.select(model->index(rowcount - rows.count(), 0), model->index(rowcount - 1, cols - 1));
+        view->selectionModel()->select(nsel, QItemSelectionModel::Select);
+        view->scrollToBottom();
 
-		updateButtons();
-	}
+        updateButtons();
+    }
 
-	void QueueManagerWidget::saveState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("QueueManagerWidget");
-		QByteArray s = view->header()->saveState();
-		g.writeEntry("view_state", s.toBase64());
-		g.writeEntry("search_text", search->text());
-		g.writeEntry("search_bar_visible", show_search->isChecked());
-		g.writeEntry("show_uploads", show_uploads->isChecked());
-		g.writeEntry("show_downloads", show_downloads->isChecked());
-		g.writeEntry("show_not_queued", show_not_queued->isChecked());
-	}
+    void QueueManagerWidget::saveState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("QueueManagerWidget");
+        QByteArray s = view->header()->saveState();
+        g.writeEntry("view_state", s.toBase64());
+        g.writeEntry("search_text", search->text());
+        g.writeEntry("search_bar_visible", show_search->isChecked());
+        g.writeEntry("show_uploads", show_uploads->isChecked());
+        g.writeEntry("show_downloads", show_downloads->isChecked());
+        g.writeEntry("show_not_queued", show_not_queued->isChecked());
+    }
 
-	void QueueManagerWidget::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("QueueManagerWidget");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("view_state", QByteArray()));
-		if (!s.isNull())
-			view->header()->restoreState(s);
+    void QueueManagerWidget::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("QueueManagerWidget");
+        QByteArray s = QByteArray::fromBase64(g.readEntry("view_state", QByteArray()));
+        if (!s.isNull())
+            view->header()->restoreState(s);
 
-		QString st = g.readEntry("search_text", QString());
-		if (!st.isEmpty())
-			search->setText(st);
+        QString st = g.readEntry("search_text", QString());
+        if (!st.isEmpty())
+            search->setText(st);
 
-		show_search->setChecked(g.readEntry("search_bar_visible", false));
-		show_downloads->setChecked(g.readEntry("show_downloads", true));
-		show_uploads->setChecked(g.readEntry("show_uploads", true));
-		show_not_queued->setChecked(g.readEntry("show_not_queued", true));
-	}
+        show_search->setChecked(g.readEntry("search_bar_visible", false));
+        show_downloads->setChecked(g.readEntry("show_downloads", true));
+        show_uploads->setChecked(g.readEntry("show_uploads", true));
+        show_not_queued->setChecked(g.readEntry("show_not_queued", true));
+    }
 
-	void QueueManagerWidget::update()
-	{
-		model->update();
-	}
+    void QueueManagerWidget::update()
+    {
+        model->update();
+    }
 
-	void QueueManagerWidget::searchTextChanged(const QString& t)
-	{
-		QModelIndex idx = model->find(t);
-		if (idx.isValid())
-		{
-			view->scrollTo(idx, QAbstractItemView::PositionAtCenter);
-		}
-	}
+    void QueueManagerWidget::searchTextChanged(const QString& t)
+    {
+        QModelIndex idx = model->find(t);
+        if (idx.isValid())
+        {
+            view->scrollTo(idx, QAbstractItemView::PositionAtCenter);
+        }
+    }
 
-	void QueueManagerWidget::showSearch(bool on)
-	{
-		search->setShown(on);
-	}
-	
-	void QueueManagerWidget::showDownloads(bool on)
-	{
-		model->setShowDownloads(on);
-	}
-	
-	void QueueManagerWidget::showUploads(bool on)
-	{
-		model->setShowUploads(on);
-	}
+    void QueueManagerWidget::showSearch(bool on)
+    {
+        search->setShown(on);
+    }
 
-	void QueueManagerWidget::showNotQueued(bool on)
-	{
-		model->setShowNotQueued(on);
-	}
+    void QueueManagerWidget::showDownloads(bool on)
+    {
+        model->setShowDownloads(on);
+    }
 
-	bool QueueManagerWidget::indexVisible(const QModelIndex& idx)
-	{
-		QRect r = view->visualRect(idx);
-		return view->viewport()->rect().contains(r);
-	}
+    void QueueManagerWidget::showUploads(bool on)
+    {
+        model->setShowUploads(on);
+    }
 
-	void QueueManagerWidget::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
-	{
-		Q_UNUSED(selected);
-		Q_UNUSED(deselected);
-		updateButtons();
-	}
+    void QueueManagerWidget::showNotQueued(bool on)
+    {
+        model->setShowNotQueued(on);
+    }
 
-	void QueueManagerWidget::updateButtons()
-	{
-		QModelIndexList idx = view->selectionModel()->selectedRows();
-		if (idx.count() == 0)
-		{
-			move_top->setEnabled(false);
-			move_up->setEnabled(false);
-			move_down->setEnabled(false);
-			move_bottom->setEnabled(false);
-		}
-		else
-		{
-			move_top->setEnabled(idx.front().row() != 0);
-			move_up->setEnabled(idx.front().row() != 0);
+    bool QueueManagerWidget::indexVisible(const QModelIndex& idx)
+    {
+        QRect r = view->visualRect(idx);
+        return view->viewport()->rect().contains(r);
+    }
 
-			int rows = model->rowCount(QModelIndex());
-			move_down->setEnabled(idx.back().row() != rows - 1);
-			move_bottom->setEnabled(idx.back().row() != rows - 1);
-		}
-	}
+    void QueueManagerWidget::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+    {
+        Q_UNUSED(selected);
+        Q_UNUSED(deselected);
+        updateButtons();
+    }
+
+    void QueueManagerWidget::updateButtons()
+    {
+        QModelIndexList idx = view->selectionModel()->selectedRows();
+        if (idx.count() == 0)
+        {
+            move_top->setEnabled(false);
+            move_up->setEnabled(false);
+            move_down->setEnabled(false);
+            move_bottom->setEnabled(false);
+        }
+        else
+        {
+            move_top->setEnabled(idx.front().row() != 0);
+            move_up->setEnabled(idx.front().row() != 0);
+
+            int rows = model->rowCount(QModelIndex());
+            move_down->setEnabled(idx.back().row() != rows - 1);
+            move_bottom->setEnabled(idx.back().row() != rows - 1);
+        }
+    }
 
 }
 

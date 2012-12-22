@@ -27,76 +27,76 @@
 
 namespace kt
 {
-	class Core;
-	class PrefPageInterface;
-	class NetworkPref;
-	class QMPref;
-	class PrefPageScrollArea;
+    class Core;
+    class PrefPageInterface;
+    class NetworkPref;
+    class QMPref;
+    class PrefPageScrollArea;
 
-	/**
-	 * KTorrent's preferences dialog, this uses the new KConfigDialog class which should make our live much easier.
-	 * In order for this to work properly the widgets have to be named kcfg_FOO where FOO is a somehting out of our settings class.
-	 *
-	 * The use of KConfigDialog should deprecate PrefPageInterface.
-	 * */
-	class PrefDialog : public KConfigDialog
-	{
-		Q_OBJECT
-	public:
-		PrefDialog(QWidget* parent,Core* core);
-		virtual ~PrefDialog();
+    /**
+     * KTorrent's preferences dialog, this uses the new KConfigDialog class which should make our live much easier.
+     * In order for this to work properly the widgets have to be named kcfg_FOO where FOO is a somehting out of our settings class.
+     *
+     * The use of KConfigDialog should deprecate PrefPageInterface.
+     * */
+    class PrefDialog : public KConfigDialog
+    {
+        Q_OBJECT
+    public:
+        PrefDialog(QWidget* parent, Core* core);
+        virtual ~PrefDialog();
 
-		/**
-		 * Add a pref page to the dialog.
-		 * @param page The page
-		 * */
-		void addPrefPage(PrefPageInterface* page);
+        /**
+         * Add a pref page to the dialog.
+         * @param page The page
+         * */
+        void addPrefPage(PrefPageInterface* page);
 
-		/**
-		 * Remove a pref page.
-		 * @param page The page
-		 * */
-		void removePrefPage(PrefPageInterface* page);
-		
-		/**
-		 * Update the widgets and show
-		 */
-		void updateWidgetsAndShow();
-		
-		/**
-		 * Load the state of the dialog
-		 */
-		void loadState(KSharedConfigPtr cfg);
-		
-		/**
-		 * Save the state of the dialog
-		 */
-		void saveState(KSharedConfigPtr cfg);
+        /**
+         * Remove a pref page.
+         * @param page The page
+         * */
+        void removePrefPage(PrefPageInterface* page);
 
-	protected:
-		virtual void updateWidgets();
-		virtual void updateWidgetsDefault();
-		virtual void updateSettings();
-		virtual bool hasChanged();
-	
-	private slots:
-		void calculateRecommendedSettings();
-		
-	private:
-		QList<PrefPageScrollArea*> pages;
-		NetworkPref* net_pref;
-		QMPref* qm_pref;
-	};
-	
-	class PrefPageScrollArea : public QScrollArea
-	{
-	public:
-		PrefPageScrollArea(PrefPageInterface* page,QWidget* parent = 0);
-		virtual ~PrefPageScrollArea();
-		
-		PrefPageInterface* page;
-		KPageWidgetItem* page_widget_item;
-	};
+        /**
+         * Update the widgets and show
+         */
+        void updateWidgetsAndShow();
+
+        /**
+         * Load the state of the dialog
+         */
+        void loadState(KSharedConfigPtr cfg);
+
+        /**
+         * Save the state of the dialog
+         */
+        void saveState(KSharedConfigPtr cfg);
+
+    protected:
+        virtual void updateWidgets();
+        virtual void updateWidgetsDefault();
+        virtual void updateSettings();
+        virtual bool hasChanged();
+
+    private slots:
+        void calculateRecommendedSettings();
+
+    private:
+        QList<PrefPageScrollArea*> pages;
+        NetworkPref* net_pref;
+        QMPref* qm_pref;
+    };
+
+    class PrefPageScrollArea : public QScrollArea
+    {
+    public:
+        PrefPageScrollArea(PrefPageInterface* page, QWidget* parent = 0);
+        virtual ~PrefPageScrollArea();
+
+        PrefPageInterface* page;
+        KPageWidgetItem* page_widget_item;
+    };
 }
 
 

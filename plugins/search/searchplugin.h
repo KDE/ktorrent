@@ -27,35 +27,35 @@
 
 namespace kt
 {
-	class SearchPrefPage;
-	class SearchActivity;
+    class SearchPrefPage;
+    class SearchActivity;
 
-	/**
-	@author Joris Guisson
-	*/
-	class SearchPlugin : public Plugin
-	{
-		Q_OBJECT
-	public:
-		SearchPlugin(QObject* parent, const QStringList& args);
-		virtual ~SearchPlugin();
+    /**
+    @author Joris Guisson
+    */
+    class SearchPlugin : public Plugin
+    {
+        Q_OBJECT
+    public:
+        SearchPlugin(QObject* parent, const QStringList& args);
+        virtual ~SearchPlugin();
 
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
-		
-		SearchEngineList* getSearchEngineList() const {return engines;}
-		SearchActivity* getSearchActivity() const {return activity;}
-		
-	private slots:
-		void search(const QString & text,int engine,bool external);
-		void preferencesUpdated();
-		
-	private:
-		SearchActivity* activity;
-		SearchPrefPage* pref;
-		SearchEngineList* engines;
-	};
+        virtual void load();
+        virtual void unload();
+        virtual bool versionCheck(const QString& version) const;
+
+        SearchEngineList* getSearchEngineList() const {return engines;}
+        SearchActivity* getSearchActivity() const {return activity;}
+
+    private slots:
+        void search(const QString& text, int engine, bool external);
+        void preferencesUpdated();
+
+    private:
+        SearchActivity* activity;
+        SearchPrefPage* pref;
+        SearchEngineList* engines;
+    };
 
 }
 

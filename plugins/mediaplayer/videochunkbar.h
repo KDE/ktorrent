@@ -24,40 +24,40 @@
 #include <torrent/chunkbar.h>
 #include "mediafile.h"
 
-namespace kt 
+namespace kt
 {
 
-	/**
-		ChunkBar for a video during streaming mode
-	 */
-	class VideoChunkBar : public ChunkBar
-	{
-		Q_OBJECT
-	public:
-		VideoChunkBar(const MediaFileRef & mfile,QWidget* parent);
-		virtual ~VideoChunkBar();
-		
-		/// Set the media file 
-		void setMediaFile(const MediaFileRef & mf);
-		
-		/// Get the bitset
-		virtual const bt::BitSet& getBitSet() const;
-		
-		/// Time has elapsed during playing, update the bar if necessary
-		void timeElapsed(qint64 time);
-		
-	private slots:
-		void updateChunkBar();
-		void updateBitSet();
-		
-	private:
-		virtual void drawBarContents(QPainter *p);
-		
-	private:
-		MediaFileRef mfile;
-		bt::BitSet bitset;
-		bt::Uint32 current_chunk;
-	};
+    /**
+        ChunkBar for a video during streaming mode
+     */
+    class VideoChunkBar : public ChunkBar
+    {
+        Q_OBJECT
+    public:
+        VideoChunkBar(const MediaFileRef& mfile, QWidget* parent);
+        virtual ~VideoChunkBar();
+
+        /// Set the media file
+        void setMediaFile(const MediaFileRef& mf);
+
+        /// Get the bitset
+        virtual const bt::BitSet& getBitSet() const;
+
+        /// Time has elapsed during playing, update the bar if necessary
+        void timeElapsed(qint64 time);
+
+    private slots:
+        void updateChunkBar();
+        void updateBitSet();
+
+    private:
+        virtual void drawBarContents(QPainter* p);
+
+    private:
+        MediaFileRef mfile;
+        bt::BitSet bitset;
+        bt::Uint32 current_chunk;
+    };
 
 }
 

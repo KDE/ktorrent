@@ -23,18 +23,18 @@
 #include <interfaces/prefpageinterface.h>
 #include "ui_btpref.h"
 
-namespace kt 
+namespace kt
 {
 
-	class BTPref : public PrefPageInterface,public Ui_BTPref
-	{
-		Q_OBJECT
-	public:
-		BTPref(QWidget* parent);
-		virtual ~BTPref();
-		
-		void loadSettings();
-	};
+    class BTPref : public PrefPageInterface, public Ui_BTPref
+    {
+        Q_OBJECT
+    public:
+        BTPref(QWidget* parent);
+        virtual ~BTPref();
+
+        void loadSettings();
+    };
 }
 
 #endif // KT_BTPREF_H

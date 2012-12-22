@@ -27,25 +27,25 @@
 namespace kt
 {
 
-	/**
-		Preference page for network settings.
-	*/
-	class NetworkPref : public PrefPageInterface,public Ui_NetworkPref
-	{
-		Q_OBJECT
-	public:
-		NetworkPref(QWidget* parent);
-		virtual ~NetworkPref();
-		
-		virtual void loadSettings();
-		virtual void loadDefaults();
-	signals:
-		void calculateRecommendedSettings();
-		
-	private slots:
-		void utpEnabled(bool on);
-		void onlyUseUtpEnabled(bool on);
-	};
+    /**
+        Preference page for network settings.
+    */
+    class NetworkPref : public PrefPageInterface, public Ui_NetworkPref
+    {
+        Q_OBJECT
+    public:
+        NetworkPref(QWidget* parent);
+        virtual ~NetworkPref();
+
+        virtual void loadSettings();
+        virtual void loadDefaults();
+    signals:
+        void calculateRecommendedSettings();
+
+    private slots:
+        void utpEnabled(bool on);
+        void onlyUseUtpEnabled(bool on);
+    };
 
 }
 

@@ -26,37 +26,37 @@
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
-		
+
 namespace kt
 {
-	class Core;
-	class SpeedLimitsModel;
+    class Core;
+    class SpeedLimitsModel;
 
-	/// Dialog to modify the speed limits of a torrent
-	class SpeedLimitsDlg : public KDialog,public Ui_SpeedLimitsDlg
-	{
-		Q_OBJECT
+    /// Dialog to modify the speed limits of a torrent
+    class SpeedLimitsDlg : public KDialog, public Ui_SpeedLimitsDlg
+    {
+        Q_OBJECT
 
-	public:
-		SpeedLimitsDlg(bt::TorrentInterface* current,Core* core,QWidget* parent);
-		virtual ~SpeedLimitsDlg();
-			
+    public:
+        SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidget* parent);
+        virtual ~SpeedLimitsDlg();
 
-	protected slots:
-		virtual void accept();
-		virtual void reject();
-		void apply();
-		void spinBoxValueChanged(int);
-		void saveState();
-		void loadState();
 
-	private:
-		Core* core;
-		SpeedLimitsModel* model;
-		bt::TorrentInterface* current;
-	};
+    protected slots:
+        virtual void accept();
+        virtual void reject();
+        void apply();
+        void spinBoxValueChanged(int);
+        void saveState();
+        void loadState();
+
+    private:
+        Core* core;
+        SpeedLimitsModel* model;
+        bt::TorrentInterface* current;
+    };
 }
 
 #endif

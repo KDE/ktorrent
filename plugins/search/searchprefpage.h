@@ -26,46 +26,46 @@
 
 
 namespace kt
-{	
-	class SearchPlugin;
-	class SearchEngineList;
-	
-	/**
-	 * @author Joris Guisson
-	 *
-	 * Preference page for the search plugin.
-	*/
-	class SearchPrefPage : public PrefPageInterface,public Ui_SearchPref
-	{
-		Q_OBJECT
-	public:
-		SearchPrefPage(SearchPlugin* plugin,SearchEngineList* sl,QWidget* parent);
-		virtual ~SearchPrefPage();
-		
-		virtual void loadSettings();
-		virtual void loadDefaults();
-		
-	public slots:
-		void customToggled(bool toggled);
-	
-	private slots:
-		void addClicked();
-		void removeClicked();
-		void addDefaultClicked();
-		void removeAllClicked();
-		void clearHistory();
-		void openInExternalToggled(bool on);
-		void selectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
-		void downloadJobFinished(KJob* j);
-		void resetDefaultAction();
+{
+    class SearchPlugin;
+    class SearchEngineList;
 
-	signals:
-		void clearSearchHistory();
-	
-	private:
-		SearchPlugin* plugin;
-		SearchEngineList* engines;
-	};
+    /**
+     * @author Joris Guisson
+     *
+     * Preference page for the search plugin.
+    */
+    class SearchPrefPage : public PrefPageInterface, public Ui_SearchPref
+    {
+        Q_OBJECT
+    public:
+        SearchPrefPage(SearchPlugin* plugin, SearchEngineList* sl, QWidget* parent);
+        virtual ~SearchPrefPage();
+
+        virtual void loadSettings();
+        virtual void loadDefaults();
+
+    public slots:
+        void customToggled(bool toggled);
+
+    private slots:
+        void addClicked();
+        void removeClicked();
+        void addDefaultClicked();
+        void removeAllClicked();
+        void clearHistory();
+        void openInExternalToggled(bool on);
+        void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+        void downloadJobFinished(KJob* j);
+        void resetDefaultAction();
+
+    signals:
+        void clearSearchHistory();
+
+    private:
+        SearchPlugin* plugin;
+        SearchEngineList* engines;
+    };
 
 }
 

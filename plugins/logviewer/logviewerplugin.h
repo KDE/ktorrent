@@ -27,46 +27,46 @@ class QDockWidget;
 
 namespace kt
 {
-	class LogViewer;
-	class LogPrefPage;
-	class LogFlags;
+    class LogViewer;
+    class LogPrefPage;
+    class LogFlags;
 
-	enum LogViewerPosition
-	{
-		SEPARATE_ACTIVITY = 0,
-		DOCKABLE_WIDGET = 1,
-		TORRENT_ACTIVITY = 2
-	};
-	
-	/**
-	 * @author Joris Guisson
-	*/
-	class LogViewerPlugin : public Plugin
-	{
-		Q_OBJECT
-	public:
-		LogViewerPlugin(QObject* parent,const QStringList& args);
-		virtual ~LogViewerPlugin();
-			
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
-		virtual void guiUpdate();
-		
-	private slots:
-		void applySettings();
-		
-	private:
-		void addLogViewerToGUI();
-		void removeLogViewerFromGUI();
+    enum LogViewerPosition
+    {
+        SEPARATE_ACTIVITY = 0,
+        DOCKABLE_WIDGET = 1,
+        TORRENT_ACTIVITY = 2
+    };
 
-	private:
-		LogViewer* lv;
-		LogPrefPage* pref;
-		LogFlags* flags;
-		LogViewerPosition pos;
-		QDockWidget* dock;
-	};
+    /**
+     * @author Joris Guisson
+    */
+    class LogViewerPlugin : public Plugin
+    {
+        Q_OBJECT
+    public:
+        LogViewerPlugin(QObject* parent, const QStringList& args);
+        virtual ~LogViewerPlugin();
+
+        virtual void load();
+        virtual void unload();
+        virtual bool versionCheck(const QString& version) const;
+        virtual void guiUpdate();
+
+    private slots:
+        void applySettings();
+
+    private:
+        void addLogViewerToGUI();
+        void removeLogViewerFromGUI();
+
+    private:
+        LogViewer* lv;
+        LogPrefPage* pref;
+        LogFlags* flags;
+        LogViewerPosition pos;
+        QDockWidget* dock;
+    };
 
 }
 

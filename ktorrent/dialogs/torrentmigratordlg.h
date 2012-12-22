@@ -31,40 +31,40 @@
 
 namespace kt
 {
-	class QueueManager;
+    class QueueManager;
 
-	/**
-		Class to find old torrents and migrate them to the KDE4 version.
-	*/
-	class TorrentMigratorDlg : public QDialog,public Ui_TorrentMigratorDlg
-	{
-		Q_OBJECT
-	public:
-		TorrentMigratorDlg(QWidget* parent);
-		virtual ~TorrentMigratorDlg();
-		
-		/**
-		 * Find all the torrents which can be migrated.
-		 * @param qman The QueueManager
-		 * @return The number found
-		 */
-		bt::Uint32 findTorrentsToBeMigrated();
-		
-		/**
-		 * Migrate the torrents found.This will show the dialog.
-		 * @param qman The QueueManager
-		 */
-		void migrateFoundTorrents(QueueManager* qman);
-		
-		/// Get all successfully imported torrents (their new torX dir)
-		const QStringList & getSuccessFullImports() const {return success;}
-	private:
-		void doTorrent(const QString & tor,bt::Uint32 idx,QueueManager* qman);
-		
-	private:
-		QMap<QString,bt::Uint32> todo;
-		QStringList success;
-	};
+    /**
+        Class to find old torrents and migrate them to the KDE4 version.
+    */
+    class TorrentMigratorDlg : public QDialog, public Ui_TorrentMigratorDlg
+    {
+        Q_OBJECT
+    public:
+        TorrentMigratorDlg(QWidget* parent);
+        virtual ~TorrentMigratorDlg();
+
+        /**
+         * Find all the torrents which can be migrated.
+         * @param qman The QueueManager
+         * @return The number found
+         */
+        bt::Uint32 findTorrentsToBeMigrated();
+
+        /**
+         * Migrate the torrents found.This will show the dialog.
+         * @param qman The QueueManager
+         */
+        void migrateFoundTorrents(QueueManager* qman);
+
+        /// Get all successfully imported torrents (their new torX dir)
+        const QStringList& getSuccessFullImports() const {return success;}
+    private:
+        void doTorrent(const QString& tor, bt::Uint32 idx, QueueManager* qman);
+
+    private:
+        QMap<QString, bt::Uint32> todo;
+        QStringList success;
+    };
 
 }
 

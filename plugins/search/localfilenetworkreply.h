@@ -26,28 +26,28 @@
 #include <QFile>
 
 
-namespace kt 
+namespace kt
 {
-	/**
-	 * QNetworkReply which reads a local file.
-	 */
-	class LocalFileNetworkReply : public QNetworkReply
-	{
-	public:
-		LocalFileNetworkReply(const QString & file,QObject* parent = 0);
-		virtual ~LocalFileNetworkReply();
-		
-		virtual void abort();
-		virtual bool isSequential() const {return true;}
-		virtual bool atEnd() const;
-		virtual qint64 bytesAvailable() const;
-		
-	protected:
-		virtual qint64 readData(char* data, qint64 maxlen);
-		
-	private:
-		QFile* fptr;
-	};
+    /**
+     * QNetworkReply which reads a local file.
+     */
+    class LocalFileNetworkReply : public QNetworkReply
+    {
+    public:
+        LocalFileNetworkReply(const QString& file, QObject* parent = 0);
+        virtual ~LocalFileNetworkReply();
+
+        virtual void abort();
+        virtual bool isSequential() const {return true;}
+        virtual bool atEnd() const;
+        virtual qint64 bytesAvailable() const;
+
+    protected:
+        virtual qint64 readData(char* data, qint64 maxlen);
+
+    private:
+        QFile* fptr;
+    };
 
 }
 

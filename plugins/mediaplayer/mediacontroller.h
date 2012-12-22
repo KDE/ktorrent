@@ -29,30 +29,30 @@
 #include "mediafile.h"
 #include "ui_mediacontroller.h"
 
-namespace kt 
+namespace kt
 {
 
-	class MediaPlayer;
+    class MediaPlayer;
 
-	/**
-	 * Widget containing all the things necessary to control the media playback.
-	 */
-	class MediaController : public QWidget, public Ui_MediaController
-	{
-		Q_OBJECT
-	public:
-		MediaController(MediaPlayer* player, KActionCollection* ac, QWidget* parent = 0);
-		virtual ~MediaController();
-		
-		
-	private slots:
-		void playing(const MediaFileRef & file);
-		void stopped();
-		void metaDataChanged();
-		
-	private:
-		MediaFileRef current_file;
-	};
+    /**
+     * Widget containing all the things necessary to control the media playback.
+     */
+    class MediaController : public QWidget, public Ui_MediaController
+    {
+        Q_OBJECT
+    public:
+        MediaController(MediaPlayer* player, KActionCollection* ac, QWidget* parent = 0);
+        virtual ~MediaController();
+
+
+    private slots:
+        void playing(const MediaFileRef& file);
+        void stopped();
+        void metaDataChanged();
+
+    private:
+        MediaFileRef current_file;
+    };
 
 }
 

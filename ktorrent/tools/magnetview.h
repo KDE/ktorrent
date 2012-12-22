@@ -28,35 +28,35 @@ class KMenu;
 
 namespace kt
 {
-	class MagnetModel;
-	/**
-		View which displays a list of magnet links being downloaded
-	*/
-	class MagnetView : public QTreeView
-	{
-		Q_OBJECT
-	public:
-		MagnetView(MagnetModel* magnet_model,QWidget* parent = 0);
-		virtual ~MagnetView();
-		
-		void saveState(KSharedConfigPtr cfg);
-		void loadState(KSharedConfigPtr cfg);
-		
-		virtual void keyPressEvent(QKeyEvent* event);
-		
-	private slots:
-		void showContextMenu(QPoint p);
-		void removeMagnetDownload();
-		void startMagnetDownload();
-		void stopMagnetDownload();
-		
-	private:
-		MagnetModel* magnet_model;
-		KMenu* menu;
-		QAction* start;
-		QAction* stop;
-		QAction* remove;
-	};
+    class MagnetModel;
+    /**
+        View which displays a list of magnet links being downloaded
+    */
+    class MagnetView : public QTreeView
+    {
+        Q_OBJECT
+    public:
+        MagnetView(MagnetModel* magnet_model, QWidget* parent = 0);
+        virtual ~MagnetView();
+
+        void saveState(KSharedConfigPtr cfg);
+        void loadState(KSharedConfigPtr cfg);
+
+        virtual void keyPressEvent(QKeyEvent* event);
+
+    private slots:
+        void showContextMenu(QPoint p);
+        void removeMagnetDownload();
+        void startMagnetDownload();
+        void stopMagnetDownload();
+
+    private:
+        MagnetModel* magnet_model;
+        KMenu* menu;
+        QAction* start;
+        QAction* stop;
+        QAction* remove;
+    };
 
 }
 

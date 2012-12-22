@@ -67,9 +67,9 @@ namespace kt
         */
         if (arg == 0x00 || flags->checkFlags(arg))
         {
-            if(!mutex.tryLock()) // Drop the message if we cannot acquire the lock, no deadlocks
+            if (!mutex.tryLock()) // Drop the message if we cannot acquire the lock, no deadlocks
                 return;
-            
+
             if (use_rich_text)
             {
                 pending.append(flags->getFormattedMessage(arg, line));
@@ -90,14 +90,14 @@ namespace kt
         // Copy to tmp list so that we do not get a deadlock when Qt tries to print something when we add lines to the output
         QStringList tmp;
         {
-            if(!mutex.tryLock()) // No deadlocks
+            if (!mutex.tryLock()) // No deadlocks
                 return;
-            
+
             tmp = pending;
             pending.clear();
             mutex.unlock();
         }
-        
+
         foreach (const QString& line, tmp)
         {
             QTextCharFormat fm = output->currentCharFormat();

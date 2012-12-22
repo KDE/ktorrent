@@ -28,79 +28,79 @@
 
 namespace kt
 {
-	class OpenSearchDownloadJob;
+    class OpenSearchDownloadJob;
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class SearchEngineList : public QAbstractListModel
-	{
-		Q_OBJECT
-				
-		QList<SearchEngine*> engines;
-		KUrl::List default_opensearch_urls;
-		KUrl::List default_urls;
-		QString data_dir;
-	public:
-		SearchEngineList(const QString & data_dir);
-		virtual ~SearchEngineList();
+    /**
+        @author Joris Guisson <joris.guisson@gmail.com>
+    */
+    class SearchEngineList : public QAbstractListModel
+    {
+        Q_OBJECT
 
-		/// Load all engines
-		void loadEngines();
-		
-		/// Search with an engine
-		KUrl search(bt::Uint32 engine,const QString & terms);
-		
-		/// Get the name of an engine
-		QString getEngineName(bt::Uint32 engine) const;
-		
-		/// Get the number of engines
-		bt::Uint32 getNumEngines() const {return engines.count();} 
-		
-		virtual int rowCount(const QModelIndex &parent) const;
-		virtual QVariant data(const QModelIndex &index, int role) const;
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		
-		/**
-		 * Remove all engines in a list
-		 * @param sel The list
-		 */
-		void removeEngines(const QModelIndexList & sel);
-		
-		/**
-		 * Remove all engines
-		 */
-		void removeAllEngines();
-		
-		/**
-		 * Add all defaults engines (if they are not added yet) 
-		 */
-		void addDefaults();
-		
-		/**
-		 * Add an engine from an OpenSearchDownloadJob
-		 * @param j The OpenSearchDownloadJob
-		 */
-		void addEngine(OpenSearchDownloadJob* j);
-		
-		
-		/**
-		 * Add an engine from a search URL
-		 * @param dir The directory to use
-		 * @param url The url
-		 */
-		void addEngine(const QString & dir,const QString & url);
-		
-	private:
-		void convertSearchEnginesFile();
-		void loadDefault(bool removed_to);
-		bool alreadyLoaded(const QString & user_dir);
-		void loadEngine(const QString & global_dir,const QString & user_dir,bool load_removed);
-		
-	private slots:
-		void openSearchDownloadJobFinished(KJob* j);
-	};
+        QList<SearchEngine*> engines;
+        KUrl::List default_opensearch_urls;
+        KUrl::List default_urls;
+        QString data_dir;
+    public:
+        SearchEngineList(const QString& data_dir);
+        virtual ~SearchEngineList();
+
+        /// Load all engines
+        void loadEngines();
+
+        /// Search with an engine
+        KUrl search(bt::Uint32 engine, const QString& terms);
+
+        /// Get the name of an engine
+        QString getEngineName(bt::Uint32 engine) const;
+
+        /// Get the number of engines
+        bt::Uint32 getNumEngines() const {return engines.count();}
+
+        virtual int rowCount(const QModelIndex& parent) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        virtual bool removeRows(int row, int count, const QModelIndex& parent);
+
+        /**
+         * Remove all engines in a list
+         * @param sel The list
+         */
+        void removeEngines(const QModelIndexList& sel);
+
+        /**
+         * Remove all engines
+         */
+        void removeAllEngines();
+
+        /**
+         * Add all defaults engines (if they are not added yet)
+         */
+        void addDefaults();
+
+        /**
+         * Add an engine from an OpenSearchDownloadJob
+         * @param j The OpenSearchDownloadJob
+         */
+        void addEngine(OpenSearchDownloadJob* j);
+
+
+        /**
+         * Add an engine from a search URL
+         * @param dir The directory to use
+         * @param url The url
+         */
+        void addEngine(const QString& dir, const QString& url);
+
+    private:
+        void convertSearchEnginesFile();
+        void loadDefault(bool removed_to);
+        bool alreadyLoaded(const QString& user_dir);
+        void loadEngine(const QString& global_dir, const QString& user_dir, bool load_removed);
+
+    private slots:
+        void openSearchDownloadJobFinished(KJob* j);
+    };
 
 }
 

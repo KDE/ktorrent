@@ -26,32 +26,32 @@
 #include <QNetworkReply>
 
 
-namespace kt 
+namespace kt
 {
-	/**
-	 * QNetworkReply which reads from a buffer
-	 */
-	class BufferNetworkReply : public QNetworkReply
-	{
-	public:
-		/**
-		 * @param data The data to put into the buffer
-		 * @param content_type Content type of the data
-		 * @param parent Parent of the BufferNetworkReply
-		 */
-		BufferNetworkReply(const QByteArray & data, const QString & content_type, QObject* parent = 0);
-		virtual ~BufferNetworkReply();
-		
-		virtual void abort();
-		virtual bool isSequential() const {return true;}
-		virtual qint64 bytesAvailable() const;
+    /**
+     * QNetworkReply which reads from a buffer
+     */
+    class BufferNetworkReply : public QNetworkReply
+    {
+    public:
+        /**
+         * @param data The data to put into the buffer
+         * @param content_type Content type of the data
+         * @param parent Parent of the BufferNetworkReply
+         */
+        BufferNetworkReply(const QByteArray& data, const QString& content_type, QObject* parent = 0);
+        virtual ~BufferNetworkReply();
 
-	protected:
-		virtual qint64 readData(char* data, qint64 maxlen);
+        virtual void abort();
+        virtual bool isSequential() const {return true;}
+        virtual qint64 bytesAvailable() const;
 
-	private:
-		QBuffer buf;
-	};
+    protected:
+        virtual qint64 readData(char* data, qint64 maxlen);
+
+    private:
+        QBuffer buf;
+    };
 
 }
 

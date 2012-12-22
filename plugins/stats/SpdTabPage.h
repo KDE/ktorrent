@@ -53,59 +53,59 @@
 namespace kt
 {
 
-	/** \brief Speeds tab
-	\author Krzysztof Kundzicz <athantor@gmail.com>
-	*/
+    /** \brief Speeds tab
+    \author Krzysztof Kundzicz <athantor@gmail.com>
+    */
 
-	class SpdTabPage : public PluginPage
-	{
-		Q_OBJECT
-	public:
-		/** \brief Constructor
-		\param p Parent
-		*/
-		SpdTabPage(QWidget *p);
-		///Destructor
-		~SpdTabPage();
+    class SpdTabPage : public PluginPage
+    {
+        Q_OBJECT
+    public:
+        /** \brief Constructor
+        \param p Parent
+        */
+        SpdTabPage(QWidget* p);
+        ///Destructor
+        ~SpdTabPage();
 
-	public slots:
-		void applySettings();
-		void updateAllCharts();
-		void gatherData(Plugin *);
-		void resetAvg(ChartDrawer *);
-		
-	private:
-		/** \brief Gathers dl speeds data
-		 \ param  pP kt::Plugin interfac*e *
-		 */
-		void gatherDownloadSpeed(Plugin * pP);
-		/** \brief Gathers peers speeds data
-		 \ param  pP kt::Plugin interfac*e *
-		 */
-		void gatherPeersSpeed(Plugin * pP);
-		/** \brief Gathers Ul speeds data
-		 \ param  pP kt::Plugin interfac*e *
-		 */
-		void gatherUploadSpeed(Plugin * pP);
-		
-		void setupUi();
-		
-	private:
-		///Page's UI
-		std::auto_ptr<Ui::SpdWgt> pmUiSpd;
-		
-		///Dl speeds chart widget
-		std::auto_ptr<ChartDrawer> pmDlChtWgt;
-		///Peers speeds chart widget
-		std::auto_ptr<ChartDrawer> pmPeersChtWgt;
-		///Ul speeds chart widget
-		std::auto_ptr<ChartDrawer> pmUlChtWgt;
-		
-		///Dl average
-		avg_t mDlAvg;
-		///Ul average
-		avg_t mUlAvg;
-	};
+    public slots:
+        void applySettings();
+        void updateAllCharts();
+        void gatherData(Plugin*);
+        void resetAvg(ChartDrawer*);
+
+    private:
+        /** \brief Gathers dl speeds data
+         \ param  pP kt::Plugin interfac*e *
+         */
+        void gatherDownloadSpeed(Plugin* pP);
+        /** \brief Gathers peers speeds data
+         \ param  pP kt::Plugin interfac*e *
+         */
+        void gatherPeersSpeed(Plugin* pP);
+        /** \brief Gathers Ul speeds data
+         \ param  pP kt::Plugin interfac*e *
+         */
+        void gatherUploadSpeed(Plugin* pP);
+
+        void setupUi();
+
+    private:
+        ///Page's UI
+        std::auto_ptr<Ui::SpdWgt> pmUiSpd;
+
+        ///Dl speeds chart widget
+        std::auto_ptr<ChartDrawer> pmDlChtWgt;
+        ///Peers speeds chart widget
+        std::auto_ptr<ChartDrawer> pmPeersChtWgt;
+        ///Ul speeds chart widget
+        std::auto_ptr<ChartDrawer> pmUlChtWgt;
+
+        ///Dl average
+        avg_t mDlAvg;
+        ///Ul average
+        avg_t mUlAvg;
+    };
 
 } //ns end
 

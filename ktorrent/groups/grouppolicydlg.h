@@ -26,21 +26,21 @@
 
 namespace kt
 {
-	class Group;
+    class Group;
 
-	/**
-		@author
-	*/
-	class GroupPolicyDlg : public KDialog,public Ui_GroupPolicyDlg
-	{
-	public:
-		GroupPolicyDlg(Group* group,QWidget* parent);
-		virtual ~GroupPolicyDlg();
+    /**
+        @author
+    */
+    class GroupPolicyDlg : public KDialog, public Ui_GroupPolicyDlg
+    {
+    public:
+        GroupPolicyDlg(Group* group, QWidget* parent);
+        virtual ~GroupPolicyDlg();
 
-		virtual void accept();
-	private:
-		Group* group;
-	};
+        virtual void accept();
+    private:
+        Group* group;
+    };
 
 }
 

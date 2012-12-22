@@ -46,114 +46,114 @@
 namespace kt
 {
 
-	/** \brief Basic chart drawer widget
-	\author Krzysztof Kundzicz <athantor@gmail.com>
-	*/
+    /** \brief Basic chart drawer widget
+    \author Krzysztof Kundzicz <athantor@gmail.com>
+    */
 
-	class PlainChartDrawer : public QFrame, public ChartDrawer
-	{
-		Q_OBJECT
-	private:
-		///Pointer to context menu
-		std::auto_ptr<KMenu> pmCtxMenu;
+    class PlainChartDrawer : public QFrame, public ChartDrawer
+    {
+        Q_OBJECT
+    private:
+        ///Pointer to context menu
+        std::auto_ptr<KMenu> pmCtxMenu;
 
-		///Height of the chart area ( \b not widget height!)
-		inline wgtunit_t height() const;
-		///Width of the chart area ( \b not widget width!)
-		inline wgtunit_t width() const;
+        ///Height of the chart area ( \b not widget height!)
+        inline wgtunit_t height() const;
+        ///Width of the chart area ( \b not widget width!)
+        inline wgtunit_t width() const;
 
-		/// Translates coords
-		inline wgtunit_t TY(const wgtunit_t) const;
+        /// Translates coords
+        inline wgtunit_t TY(const wgtunit_t) const;
 
-		/** \brief Translates chart X coord to screen coord
-		\param xcc X chart coord
-		\return Screen X coord
-		*/
-		inline wgtunit_t FindXScreenCoords(const wgtunit_t xcc) const;
-		/** \brief Translates chart Y coord to screen coord
-		\param ycc Y chart coord
-		\return Screen Y coord
-		*/
-		inline wgtunit_t FindYScreenCoords(const wgtunit_t ycc) const;
+        /** \brief Translates chart X coord to screen coord
+        \param xcc X chart coord
+        \return Screen X coord
+        */
+        inline wgtunit_t FindXScreenCoords(const wgtunit_t xcc) const;
+        /** \brief Translates chart Y coord to screen coord
+        \param ycc Y chart coord
+        \return Screen Y coord
+        */
+        inline wgtunit_t FindYScreenCoords(const wgtunit_t ycc) const;
 
-		///Makes a context menu for widget
-		void MakeCtxMenu();
+        ///Makes a context menu for widget
+        void MakeCtxMenu();
 
-		/** \brief Draws chart's scale
-		\param rPnt Painter object
-		*/
-		void DrawScale(QPainter & rPnt);
-		/** \brief Draws chart's frame
-		\param rPnt Painter object
-		*/
-		void DrawFrame(QPainter & rPnt);
-		/** \brief Draws chart
-		\param rPnt Painter object
-		*/
-		void DrawChart(QPainter & rPnt);
+        /** \brief Draws chart's scale
+        \param rPnt Painter object
+        */
+        void DrawScale(QPainter& rPnt);
+        /** \brief Draws chart's frame
+        \param rPnt Painter object
+        */
+        void DrawFrame(QPainter& rPnt);
+        /** \brief Draws chart
+        \param rPnt Painter object
+        */
+        void DrawChart(QPainter& rPnt);
 
-		/** \brief Draws chart's lines
-		\param rPnt Painter object
-		\param rCdd Dataset to draw
-		*/
-		void DrawChartLine(QPainter & rPnt, const ChartDrawerData & rCdd);
-		/** \brief Draws current values of the sets
-		\param rPnt Painter object
-		\param rCdd Dataset to draw
-		\param idx Set's index
-		*/
-		void DrawCurrentValue(QPainter & rPnt, const ChartDrawerData & rCdd, size_t idx);
-		/** \brief Marks maximum values
-		\param rPnt Painter object
-		\param rCdd Dataset to draw
-		\param idx Set's index
-		*/
-		void DrawMaximum(QPainter & rPnt, const ChartDrawerData & rCdd, size_t idx);
+        /** \brief Draws chart's lines
+        \param rPnt Painter object
+        \param rCdd Dataset to draw
+        */
+        void DrawChartLine(QPainter& rPnt, const ChartDrawerData& rCdd);
+        /** \brief Draws current values of the sets
+        \param rPnt Painter object
+        \param rCdd Dataset to draw
+        \param idx Set's index
+        */
+        void DrawCurrentValue(QPainter& rPnt, const ChartDrawerData& rCdd, size_t idx);
+        /** \brief Marks maximum values
+        \param rPnt Painter object
+        \param rCdd Dataset to draw
+        \param idx Set's index
+        */
+        void DrawMaximum(QPainter& rPnt, const ChartDrawerData& rCdd, size_t idx);
 
-	public:
-		/** \brief Constructor
-		\param p Parent
-		*/
-		PlainChartDrawer(QWidget * p = 0);
-		///Destructor
-		virtual ~PlainChartDrawer();
+    public:
+        /** \brief Constructor
+        \param p Parent
+        */
+        PlainChartDrawer(QWidget* p = 0);
+        ///Destructor
+        virtual ~PlainChartDrawer();
 
-		/** \brief Widget's paint event
-		\param pPevt Event
-		*/
-		virtual void paintEvent(QPaintEvent * pPevt);
+        /** \brief Widget's paint event
+        \param pPevt Event
+        */
+        virtual void paintEvent(QPaintEvent* pPevt);
 
-	public slots:
-		void showContextMenu(const QPoint & rP);
-		void renderToImage();
+    public slots:
+        void showContextMenu(const QPoint& rP);
+        void renderToImage();
 
-		void addValue(const size_t idx, const wgtunit_t val, const bool upd = false);
-		void addDataSet(ChartDrawerData Cdd);
-		void insertDataSet(const size_t idx, ChartDrawerData Cdd);
-		void removeDataSet(const size_t idx);
-		void zero(const size_t idx);
-		void zeroAll();
-		void setUnitName(const QString & rN);
-		void setPen(const size_t idx, const QPen &rP);
-		void setXMax(const wgtunit_t x);
-		void setYMax(const wgtunit_t y);
-		void findSetMax();
-		void setUuid(const size_t idx, const QUuid &rQ);
-		int16_t findUuidInSet(const QUuid &rQ) const;
-		void setMaxMode(const MaxMode mm);
-		const QUuid * getUuid(const size_t idx) const;
-		QString makeLegendString() ;
-		void setLegend(const QString & rL);
-		void update();
+        void addValue(const size_t idx, const wgtunit_t val, const bool upd = false);
+        void addDataSet(ChartDrawerData Cdd);
+        void insertDataSet(const size_t idx, ChartDrawerData Cdd);
+        void removeDataSet(const size_t idx);
+        void zero(const size_t idx);
+        void zeroAll();
+        void setUnitName(const QString& rN);
+        void setPen(const size_t idx, const QPen& rP);
+        void setXMax(const wgtunit_t x);
+        void setYMax(const wgtunit_t y);
+        void findSetMax();
+        void setUuid(const size_t idx, const QUuid& rQ);
+        int16_t findUuidInSet(const QUuid& rQ) const;
+        void setMaxMode(const MaxMode mm);
+        const QUuid* getUuid(const size_t idx) const;
+        QString makeLegendString() ;
+        void setLegend(const QString& rL);
+        void update();
 
-		void enableAntiAlias(bool aa);
-		void enableBackgroundGrid(bool bg);
+        void enableAntiAlias(bool aa);
+        void enableBackgroundGrid(bool bg);
 
-	signals:
-		void Zeroed(ChartDrawer *);
+    signals:
+        void Zeroed(ChartDrawer*);
 
 
-	};
+    };
 
 } //ns end
 

@@ -27,21 +27,21 @@
 
 namespace kt
 {
-	class AdvancedPref : public PrefPageInterface,public Ui_AdvancedPref
-	{
-		Q_OBJECT
-	public:
-		AdvancedPref(QWidget* parent);
-		/*virtual */~AdvancedPref();
+    class AdvancedPref : public PrefPageInterface, public Ui_AdvancedPref
+    {
+        Q_OBJECT
+    public:
+        AdvancedPref(QWidget* parent);
+        /*virtual */~AdvancedPref();
 
-		void loadSettings();
-		void loadDefaults();
+        void loadSettings();
+        void loadDefaults();
 
-	public slots:
-		void onDiskPreallocToggled(bool on);
-	};
+    public slots:
+        void onDiskPreallocToggled(bool on);
+    };
 }
 
 #endif
 
-// kate: space-indent on; indent-width 8; replace-tabs off; mixed-indent off;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; mixed-indent off;

@@ -23,13 +23,13 @@
 namespace kt
 {
 
-	PluginPage::PluginPage(QWidget * p) : QWidget(p)
-	{
-	}
+    PluginPage::PluginPage(QWidget* p) : QWidget(p)
+    {
+    }
 
 
-	PluginPage::~PluginPage()
-	{
-	}
+    PluginPage::~PluginPage()
+    {
+    }
 
 } //ns end

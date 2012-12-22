@@ -25,37 +25,37 @@
 
 namespace kt
 {
-	class Group;
-	class ViewModel;
+    class Group;
+    class ViewModel;
 
-	/**
-		Model to filter out torrents based upon group membership
-	*/
-	class GroupFilterModel : public QSortFilterProxyModel
-	{
-		Q_OBJECT
-	public:
-		GroupFilterModel(ViewModel* view_model,QObject* parent);
-		virtual ~GroupFilterModel();
+    /**
+        Model to filter out torrents based upon group membership
+    */
+    class GroupFilterModel : public QSortFilterProxyModel
+    {
+        Q_OBJECT
+    public:
+        GroupFilterModel(ViewModel* view_model, QObject* parent);
+        virtual ~GroupFilterModel();
 
-		virtual bool filterAcceptsColumn(int source_column,const QModelIndex & source_parent) const;
-		virtual bool filterAcceptsRow(int source_row,const QModelIndex & source_parent) const;
-		
-		/**
-		 * Set the group to filter
-		 * @param g The Group
-		 * */
-		void setGroup(Group* g);
-		
-		/**
-		 * Filter again.
-		 */
-		void refilter();
-				
-	private:
-		Group* group;
-		ViewModel* view_model;
-	};
+        virtual bool filterAcceptsColumn(int source_column, const QModelIndex& source_parent) const;
+        virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+
+        /**
+         * Set the group to filter
+         * @param g The Group
+         * */
+        void setGroup(Group* g);
+
+        /**
+         * Filter again.
+         */
+        void refilter();
+
+    private:
+        Group* group;
+        ViewModel* view_model;
+    };
 
 }
 

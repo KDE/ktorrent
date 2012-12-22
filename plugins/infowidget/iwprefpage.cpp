@@ -24,13 +24,13 @@
 
 namespace kt
 {
-	IWPrefPage::IWPrefPage(QWidget* parent) : PrefPageInterface(InfoWidgetPluginSettings::self(),i18n("Info Widget"),"kt-info-widget",parent)
-	{
-		setupUi(this);
-	}
+    IWPrefPage::IWPrefPage(QWidget* parent) : PrefPageInterface(InfoWidgetPluginSettings::self(), i18n("Info Widget"), "kt-info-widget", parent)
+    {
+        setupUi(this);
+    }
 
-	IWPrefPage::~IWPrefPage()
-	{
-	}
+    IWPrefPage::~IWPrefPage()
+    {
+    }
 }
 #include "iwprefpage.moc"

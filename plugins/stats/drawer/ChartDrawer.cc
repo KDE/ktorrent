@@ -20,50 +20,51 @@
 
 #include <ChartDrawer.h>
 
-namespace kt {
-
-ChartDrawer::ChartDrawer () :		pmVals(new val_t), 
-					pmUnitName(new QString(i18n("KiB/s") ) ), 
-					mCurrMaxMode(MM_Exact), 
-					mXMax(16), 
-					mYMax(1),
-					mAntiAlias(1)
+namespace kt
 {
-}
 
-ChartDrawer::~ChartDrawer()
-{
-}
+    ChartDrawer::ChartDrawer() :       pmVals(new val_t),
+        pmUnitName(new QString(i18n("KiB/s"))),
+        mCurrMaxMode(MM_Exact),
+        mXMax(16),
+        mYMax(1),
+        mAntiAlias(1)
+    {
+    }
 
-ChartDrawer::wgtunit_t ChartDrawer::getXMax() const
-{
-	return mXMax;
-}
+    ChartDrawer::~ChartDrawer()
+    {
+    }
 
-ChartDrawer::wgtunit_t ChartDrawer::getYMax() const
-{
-	return mYMax;
-}
+    ChartDrawer::wgtunit_t ChartDrawer::getXMax() const
+    {
+        return mXMax;
+    }
+
+    ChartDrawer::wgtunit_t ChartDrawer::getYMax() const
+    {
+        return mYMax;
+    }
 
 
-const QString * ChartDrawer::getUnitName() const
-{
-	return pmUnitName.get();
-}
+    const QString* ChartDrawer::getUnitName() const
+    {
+        return pmUnitName.get();
+    }
 
-size_t ChartDrawer::dataSetCount() const
-{
-	return pmVals->size();
-}
+    size_t ChartDrawer::dataSetCount() const
+    {
+        return pmVals->size();
+    }
 
-ChartDrawer::val_t::const_iterator ChartDrawer::begin() const
-{
-	return pmVals->begin();
-}
+    ChartDrawer::val_t::const_iterator ChartDrawer::begin() const
+    {
+        return pmVals->begin();
+    }
 
-ChartDrawer::val_t::const_iterator ChartDrawer::end() const
-{
-	return pmVals->end();
-}
+    ChartDrawer::val_t::const_iterator ChartDrawer::end() const
+    {
+        return pmVals->end();
+    }
 
 } //NS end

@@ -41,230 +41,230 @@ namespace kt
 {
 
 
-	TrackerView::TrackerView(QWidget *parent)
-		: QWidget(parent),
-		header_state_loaded(false)
-	{
-		setupUi(this);
-		model = new TrackerModel(this);
-		proxy_model = new QSortFilterProxyModel(this);
-		proxy_model->setSortRole(Qt::UserRole);
-		proxy_model->setSourceModel(model);
-		m_tracker_list->setModel(proxy_model);
-		m_tracker_list->setAllColumnsShowFocus(true);
-		m_tracker_list->setRootIsDecorated(false);
-		m_tracker_list->setAlternatingRowColors(true);
-		m_tracker_list->setSortingEnabled(true);
-		m_tracker_list->setUniformRowHeights(true);
-		connect(m_add_tracker, SIGNAL(clicked()), this, SLOT(addClicked()));
-		connect(m_remove_tracker, SIGNAL(clicked()), this, SLOT(removeClicked()));
-		connect(m_change_tracker, SIGNAL(clicked()), this, SLOT(changeClicked()));
-		connect(m_restore_defaults, SIGNAL(clicked()), this, SLOT(restoreClicked()));
-		connect(m_tracker_list->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-		        this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
-		connect(m_scrape, SIGNAL(clicked()), this, SLOT(scrapeClicked()));
+    TrackerView::TrackerView(QWidget* parent)
+        : QWidget(parent),
+          header_state_loaded(false)
+    {
+        setupUi(this);
+        model = new TrackerModel(this);
+        proxy_model = new QSortFilterProxyModel(this);
+        proxy_model->setSortRole(Qt::UserRole);
+        proxy_model->setSourceModel(model);
+        m_tracker_list->setModel(proxy_model);
+        m_tracker_list->setAllColumnsShowFocus(true);
+        m_tracker_list->setRootIsDecorated(false);
+        m_tracker_list->setAlternatingRowColors(true);
+        m_tracker_list->setSortingEnabled(true);
+        m_tracker_list->setUniformRowHeights(true);
+        connect(m_add_tracker, SIGNAL(clicked()), this, SLOT(addClicked()));
+        connect(m_remove_tracker, SIGNAL(clicked()), this, SLOT(removeClicked()));
+        connect(m_change_tracker, SIGNAL(clicked()), this, SLOT(changeClicked()));
+        connect(m_restore_defaults, SIGNAL(clicked()), this, SLOT(restoreClicked()));
+        connect(m_tracker_list->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+                this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
+        connect(m_scrape, SIGNAL(clicked()), this, SLOT(scrapeClicked()));
 
-		m_add_tracker->setIcon(KIcon("list-add"));
-		m_remove_tracker->setIcon(KIcon("list-remove"));
-		m_restore_defaults->setIcon(KIcon("kt-restore-defaults"));
-		m_change_tracker->setIcon(KIcon("kt-change-tracker"));
+        m_add_tracker->setIcon(KIcon("list-add"));
+        m_remove_tracker->setIcon(KIcon("list-remove"));
+        m_restore_defaults->setIcon(KIcon("kt-restore-defaults"));
+        m_change_tracker->setIcon(KIcon("kt-change-tracker"));
 
 
-		setEnabled(false);
-		torrentChanged(0);
-	}
+        setEnabled(false);
+        torrentChanged(0);
+    }
 
-	TrackerView::~TrackerView()
-	{
-	}
+    TrackerView::~TrackerView()
+    {
+    }
 
-	void TrackerView::addClicked()
-	{
-		if(!tc)
-			return;
-		
-		AddTrackersDialog dlg(this, tracker_hints);
-		if(dlg.exec() != QDialog::Accepted)
-			return;
-		
-		QStringList trackers = dlg.trackerList();
-		KUrl::List urls;
-		QStringList invalid;
-		// check for invalid urls
-		foreach(const QString & t, trackers)
-		{
-			if(t.isEmpty())
-				continue;
+    void TrackerView::addClicked()
+    {
+        if (!tc)
+            return;
 
-			KUrl url(t.trimmed());
-			if(!url.isValid() || (url.protocol() != "udp" && url.protocol() != "http" && url.protocol() != "https"))
-				invalid.append(t);
-			else
-			{
-				if(!tracker_hints.contains(url.prettyUrl()))
-					tracker_hints.append(url.prettyUrl());
-				urls.append(url);
-			}
-		}
+        AddTrackersDialog dlg(this, tracker_hints);
+        if (dlg.exec() != QDialog::Accepted)
+            return;
 
-		if(!invalid.isEmpty())
-		{
-			KMessageBox::errorList(this, i18n("Several URL's could not be added because they are malformed:"), invalid);
-		}
+        QStringList trackers = dlg.trackerList();
+        KUrl::List urls;
+        QStringList invalid;
+        // check for invalid urls
+        foreach (const QString& t, trackers)
+        {
+            if (t.isEmpty())
+                continue;
 
-		KUrl::List dupes;
-		QList<bt::TrackerInterface*> tl;
-		foreach(const KUrl & url, urls)
-		{
-			bt::TrackerInterface* trk = tc.data()->getTrackersList()->addTracker(url, true);
-			if(!trk)
-				dupes.append(url);
-			else
-				tl.append(trk);
-		}
+            KUrl url(t.trimmed());
+            if (!url.isValid() || (url.protocol() != "udp" && url.protocol() != "http" && url.protocol() != "https"))
+                invalid.append(t);
+            else
+            {
+                if (!tracker_hints.contains(url.prettyUrl()))
+                    tracker_hints.append(url.prettyUrl());
+                urls.append(url);
+            }
+        }
 
-		if(dupes.size() == 1)
-			KMessageBox::sorry(0, i18n("There already is a tracker named <b>%1</b>.", dupes.front().prettyUrl()));
-		else if(dupes.size() > 1)
-			KMessageBox::informationList(0, i18n("The following duplicate trackers were not added:"), dupes.toStringList());
+        if (!invalid.isEmpty())
+        {
+            KMessageBox::errorList(this, i18n("Several URL's could not be added because they are malformed:"), invalid);
+        }
 
-		if(!tl.isEmpty())
-			model->addTrackers(tl);
-	}
+        KUrl::List dupes;
+        QList<bt::TrackerInterface*> tl;
+        foreach (const KUrl& url, urls)
+        {
+            bt::TrackerInterface* trk = tc.data()->getTrackersList()->addTracker(url, true);
+            if (!trk)
+                dupes.append(url);
+            else
+                tl.append(trk);
+        }
 
-	void TrackerView::removeClicked()
-	{
-		QModelIndex current = proxy_model->mapToSource(m_tracker_list->selectionModel()->currentIndex());
-		if(!current.isValid())
-			return;
+        if (dupes.size() == 1)
+            KMessageBox::sorry(0, i18n("There already is a tracker named <b>%1</b>.", dupes.front().prettyUrl()));
+        else if (dupes.size() > 1)
+            KMessageBox::informationList(0, i18n("The following duplicate trackers were not added:"), dupes.toStringList());
 
-		model->removeRow(current.row());
-	}
+        if (!tl.isEmpty())
+            model->addTrackers(tl);
+    }
 
-	void TrackerView::changeClicked()
-	{
-		QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
-		if(!current.isValid() || tc.isNull())
-			return;
+    void TrackerView::removeClicked()
+    {
+        QModelIndex current = proxy_model->mapToSource(m_tracker_list->selectionModel()->currentIndex());
+        if (!current.isValid())
+            return;
 
-		bt::TrackersList* tlist = tc.data()->getTrackersList();
-		bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
-		if(trk && trk->isEnabled())
-			tlist->setCurrentTracker(trk);
-	}
+        model->removeRow(current.row());
+    }
 
-	void TrackerView::restoreClicked()
-	{
-		if(tc)
-		{
-			tc.data()->getTrackersList()->restoreDefault();
-			tc.data()->updateTracker();
-			model->changeTC(tc.data()); // trigger reset
-		}
-	}
+    void TrackerView::changeClicked()
+    {
+        QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
+        if (!current.isValid() || tc.isNull())
+            return;
 
-	void TrackerView::updateClicked()
-	{
-		if(!tc)
-			return;
+        bt::TrackersList* tlist = tc.data()->getTrackersList();
+        bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
+        if (trk && trk->isEnabled())
+            tlist->setCurrentTracker(trk);
+    }
 
-		tc.data()->updateTracker();
-	}
+    void TrackerView::restoreClicked()
+    {
+        if (tc)
+        {
+            tc.data()->getTrackersList()->restoreDefault();
+            tc.data()->updateTracker();
+            model->changeTC(tc.data()); // trigger reset
+        }
+    }
 
-	void TrackerView::scrapeClicked()
-	{
-		if(!tc)
-			return;
+    void TrackerView::updateClicked()
+    {
+        if (!tc)
+            return;
 
-		tc.data()->scrapeTracker();
-	}
+        tc.data()->updateTracker();
+    }
 
-	void TrackerView::changeTC(TorrentInterface* ti)
-	{
-		if(tc.data() == ti)
-			return;
+    void TrackerView::scrapeClicked()
+    {
+        if (!tc)
+            return;
 
-		setEnabled(ti != 0);
-		torrentChanged(ti);
-		update();
-		
-		if(!header_state_loaded)
-		{
-			m_tracker_list->resizeColumnToContents(0);
-			header_state_loaded = true;
-		}
-	}
+        tc.data()->scrapeTracker();
+    }
 
-	void TrackerView::update()
-	{
-		if(tc)
-			model->update();
-	}
+    void TrackerView::changeTC(TorrentInterface* ti)
+    {
+        if (tc.data() == ti)
+            return;
 
-	void TrackerView::torrentChanged(TorrentInterface* ti)
-	{
-		tc = ti;
-		if(!tc)
-		{
-			m_add_tracker->setEnabled(false);
-			m_remove_tracker->setEnabled(false);
-			m_restore_defaults->setEnabled(false);
-			m_change_tracker->setEnabled(false);
-			m_scrape->setEnabled(false);
-			model->changeTC(0);
-		}
-		else
-		{
-			m_add_tracker->setEnabled(true);
-			m_remove_tracker->setEnabled(true);
-			m_restore_defaults->setEnabled(true);
-			m_scrape->setEnabled(true);
-			model->changeTC(ti);
-			currentChanged(m_tracker_list->selectionModel()->currentIndex(), QModelIndex());
-		}
-	}
+        setEnabled(ti != 0);
+        torrentChanged(ti);
+        update();
 
-	void TrackerView::currentChanged(const QModelIndex & current, const QModelIndex & previous)
-	{
-		Q_UNUSED(previous);
-		if(!tc)
-		{
-			m_change_tracker->setEnabled(false);
-			m_remove_tracker->setEnabled(false);
-			return;
-		}
+        if (!header_state_loaded)
+        {
+            m_tracker_list->resizeColumnToContents(0);
+            header_state_loaded = true;
+        }
+    }
 
-		const TorrentStats & s = tc.data()->getStats();
+    void TrackerView::update()
+    {
+        if (tc)
+            model->update();
+    }
 
-		bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
-		bool enabled = trk ? trk->isEnabled() : false;
-		m_change_tracker->setEnabled(s.running && model->rowCount(QModelIndex()) > 1 && enabled && s.priv_torrent);
-		m_remove_tracker->setEnabled(trk && tc.data()->getTrackersList()->canRemoveTracker(trk));
-	}
+    void TrackerView::torrentChanged(TorrentInterface* ti)
+    {
+        tc = ti;
+        if (!tc)
+        {
+            m_add_tracker->setEnabled(false);
+            m_remove_tracker->setEnabled(false);
+            m_restore_defaults->setEnabled(false);
+            m_change_tracker->setEnabled(false);
+            m_scrape->setEnabled(false);
+            model->changeTC(0);
+        }
+        else
+        {
+            m_add_tracker->setEnabled(true);
+            m_remove_tracker->setEnabled(true);
+            m_restore_defaults->setEnabled(true);
+            m_scrape->setEnabled(true);
+            model->changeTC(ti);
+            currentChanged(m_tracker_list->selectionModel()->currentIndex(), QModelIndex());
+        }
+    }
 
-	void TrackerView::saveState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("TrackerView");
-		QByteArray s = m_tracker_list->header()->saveState();
-		g.writeEntry("state", s.toBase64());
-		g.writeEntry("tracker_hints", tracker_hints);
-	}
+    void TrackerView::currentChanged(const QModelIndex& current, const QModelIndex& previous)
+    {
+        Q_UNUSED(previous);
+        if (!tc)
+        {
+            m_change_tracker->setEnabled(false);
+            m_remove_tracker->setEnabled(false);
+            return;
+        }
 
-	void TrackerView::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("TrackerView");
-		QByteArray s = g.readEntry("state", QByteArray());
-		if(!s.isNull())
-		{
-			QHeaderView* v = m_tracker_list->header();
-			v->restoreState(QByteArray::fromBase64(s));
-			header_state_loaded = true;
-		}
-		
-		QStringList default_hints;
-		default_hints << "udp://tracker.publicbt.com:80/announce" << "udp://tracker.openbittorrent.com:80/announce";
-		tracker_hints = g.readEntry("tracker_hints", default_hints);
-	}
+        const TorrentStats& s = tc.data()->getStats();
+
+        bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
+        bool enabled = trk ? trk->isEnabled() : false;
+        m_change_tracker->setEnabled(s.running && model->rowCount(QModelIndex()) > 1 && enabled && s.priv_torrent);
+        m_remove_tracker->setEnabled(trk && tc.data()->getTrackersList()->canRemoveTracker(trk));
+    }
+
+    void TrackerView::saveState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("TrackerView");
+        QByteArray s = m_tracker_list->header()->saveState();
+        g.writeEntry("state", s.toBase64());
+        g.writeEntry("tracker_hints", tracker_hints);
+    }
+
+    void TrackerView::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("TrackerView");
+        QByteArray s = g.readEntry("state", QByteArray());
+        if (!s.isNull())
+        {
+            QHeaderView* v = m_tracker_list->header();
+            v->restoreState(QByteArray::fromBase64(s));
+            header_state_loaded = true;
+        }
+
+        QStringList default_hints;
+        default_hints << "udp://tracker.publicbt.com:80/announce" << "udp://tracker.openbittorrent.com:80/announce";
+        tracker_hints = g.readEntry("tracker_hints", default_hints);
+    }
 }
 
 

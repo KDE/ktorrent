@@ -28,83 +28,83 @@
 namespace kt
 {
 
-	class GroupView;
+    class GroupView;
 
-	class View;
-	class Group;
-	class GroupManager;
+    class View;
+    class Group;
+    class GroupManager;
 
-	/**
-	 * Model for the GroupView
-	 **/
-	class GroupViewModel : public QAbstractItemModel
-	{
-		Q_OBJECT
-	public:
-		GroupViewModel(GroupManager* gman, View* view, QObject* parent);
-		virtual ~GroupViewModel();
-		
-		virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
-		virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-		virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
-		virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-		virtual QModelIndex parent(const QModelIndex& child) const;
-		virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-		virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
-		virtual Qt::DropActions supportedDropActions() const;
-		virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-		virtual QStringList mimeTypes() const;
-		virtual bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
-		
-		/// Get the group given an index
-		Group* groupForIndex(const QModelIndex & index) const;
-		
-		/// Get all the expanded groups
-		QStringList expandedGroups(GroupView* gview);
-		
-		/// Expand all items in the tree which are in the groups list
-		void expandGroups(GroupView* gview, const QStringList & groups);
-		
-		/// Update the group count
-		void updateGroupCount(const QModelIndex & idx);
-		
-	private slots:
-		void groupAdded(Group* g);
-		void groupRemoved(Group* g);
-		
-	private:
-		struct Item
-		{
-			Item(const QString & name, Item* parent, int row, GroupViewModel* model);
-			
-			void insert(const QString & name, const QString & p, const QModelIndex & idx);
-			void insert(Group* g, const QModelIndex & idx);
-			void remove(Group* g, const QModelIndex & idx);
-			bool operator == (const QString & n) const;
-			QVariant displayData();
-			QVariant decoration();
-			void expandedGroups(GroupView* gview, QStringList & groups, const QModelIndex & idx) const;
-			void expandGroups(GroupView* gview, const QStringList & groups, const QModelIndex & idx);
-			QString path() const;
-			void dump();
-			QModelIndex findGroup(Group* g, const QModelIndex & idx);
-			
-			QString name;
-			QString display_name;
-			Item* parent;
-			int row;
-			Group* group;
-			QList<Item> children;
-			GroupViewModel* model;
-		};
-		
-		QModelIndex findGroup(Group* g);
-		
-	private:
-		Item root;
-		GroupManager* gman;
-		View* view;
-	};
+    /**
+     * Model for the GroupView
+     **/
+    class GroupViewModel : public QAbstractItemModel
+    {
+        Q_OBJECT
+    public:
+        GroupViewModel(GroupManager* gman, View* view, QObject* parent);
+        virtual ~GroupViewModel();
+
+        virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+        virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
+        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+        virtual QModelIndex parent(const QModelIndex& child) const;
+        virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+        virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
+        virtual Qt::DropActions supportedDropActions() const;
+        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+        virtual QStringList mimeTypes() const;
+        virtual bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
+
+        /// Get the group given an index
+        Group* groupForIndex(const QModelIndex& index) const;
+
+        /// Get all the expanded groups
+        QStringList expandedGroups(GroupView* gview);
+
+        /// Expand all items in the tree which are in the groups list
+        void expandGroups(GroupView* gview, const QStringList& groups);
+
+        /// Update the group count
+        void updateGroupCount(const QModelIndex& idx);
+
+    private slots:
+        void groupAdded(Group* g);
+        void groupRemoved(Group* g);
+
+    private:
+        struct Item
+        {
+            Item(const QString& name, Item* parent, int row, GroupViewModel* model);
+
+            void insert(const QString& name, const QString& p, const QModelIndex& idx);
+            void insert(Group* g, const QModelIndex& idx);
+            void remove(Group* g, const QModelIndex& idx);
+            bool operator == (const QString& n) const;
+            QVariant displayData();
+            QVariant decoration();
+            void expandedGroups(GroupView* gview, QStringList& groups, const QModelIndex& idx) const;
+            void expandGroups(GroupView* gview, const QStringList& groups, const QModelIndex& idx);
+            QString path() const;
+            void dump();
+            QModelIndex findGroup(Group* g, const QModelIndex& idx);
+
+            QString name;
+            QString display_name;
+            Item* parent;
+            int row;
+            Group* group;
+            QList<Item> children;
+            GroupViewModel* model;
+        };
+
+        QModelIndex findGroup(Group* g);
+
+    private:
+        Item root;
+        GroupManager* gman;
+        View* view;
+    };
 
 }
 

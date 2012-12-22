@@ -53,7 +53,7 @@ namespace kt
         virtual ~FileSelectDlg();
 
         int execute(bt::TorrentInterface* tc, bool* start, bool* skip_check, const QString& location_hint);
-        
+
         /// Which group did the user select
         QString selectedGroup() const;
 

@@ -28,103 +28,103 @@ using namespace bt;
 namespace kt
 {
 
-	OpenSearchDownloadJob::OpenSearchDownloadJob(const KUrl & url,const QString & dir) : url(url),dir(dir)
-	{
-	}
+    OpenSearchDownloadJob::OpenSearchDownloadJob(const KUrl& url, const QString& dir) : url(url), dir(dir)
+    {
+    }
 
 
-	OpenSearchDownloadJob::~OpenSearchDownloadJob()
-	{
-	}
-	
-	void OpenSearchDownloadJob::start()
-	{
-		// first try to download the html page
-		KIO::StoredTransferJob* j = KIO::storedGet(url,KIO::NoReload,KIO::HideProgressInfo);
-		connect(j,SIGNAL(result(KJob*)),this,SLOT(getFinished(KJob*)));
-	}
+    OpenSearchDownloadJob::~OpenSearchDownloadJob()
+    {
+    }
 
-	void OpenSearchDownloadJob::getFinished(KJob* j)
-	{
-		if (j->error())
-		{
-			setError(j->error());
-			emitResult();
-			return;
-		}
-		
-		QString str = QString(((KIO::StoredTransferJob*)j)->data());
-		
-		// try to find the link tags
-		QRegExp rx("<link([^<>]*)",Qt::CaseInsensitive);
-		int pos = 0;
+    void OpenSearchDownloadJob::start()
+    {
+        // first try to download the html page
+        KIO::StoredTransferJob* j = KIO::storedGet(url, KIO::NoReload, KIO::HideProgressInfo);
+        connect(j, SIGNAL(result(KJob*)), this, SLOT(getFinished(KJob*)));
+    }
 
-		while ((pos = rx.indexIn(str, pos)) != -1) 
-		{
-			QString link_tag = rx.cap(1);
-			// exit when we find the description
-			if (checkLinkTagContent(link_tag))
-				return;
-			
-			pos += rx.matchedLength();
-		}
-	
-			
-		// no link tag found emit error
-		setError(KIO::ERR_INTERNAL);
-		emitResult();
-	}
-	
-	bool OpenSearchDownloadJob::checkLinkTagContent(const QString & content)
-	{
-		if (htmlParam("type",content) != "application/opensearchdescription+xml")
-			return false;
-		
-		QString href = htmlParam("href",content);
-		if (href.isEmpty())
-			return false;
-		
-		if (href.startsWith("/"))
-			href = url.protocol() + "://" + url.host() + href;
-		
-		if (!bt::Exists(dir))
-		{
-			try
-			{
-				bt::MakeDir(dir);
-			}
-			catch (...)
-			{
-				return false;
-			}
-		}
-		
-		// href is the opensearch description, so lets try to download it
-		KIO::Job* j = KIO::copy(KUrl(href),KUrl(dir + "opensearch.xml"),KIO::HideProgressInfo);
-		connect(j,SIGNAL(result(KJob*)),this,SLOT(xmlFileDownloadFinished(KJob*)));
-		return true;
-	}
-	
-	QString OpenSearchDownloadJob::htmlParam(const QString & param,const QString & content)
-	{
-		QRegExp rx(QString("%1=\"?([^\">< ]*)[\" ]").arg(param),Qt::CaseInsensitive);
-		if (rx.indexIn(content, 0) == -1)
-			return QString();
-		
-		return rx.cap(1);
-	}
-	
-	void OpenSearchDownloadJob::xmlFileDownloadFinished(KJob* j)
-	{
-		if (j->error())
-		{
-			setError(j->error());
-			emitResult();
-		}
-		else
-		{
-			setError(0);
-			emitResult();
-		}
-	}
+    void OpenSearchDownloadJob::getFinished(KJob* j)
+    {
+        if (j->error())
+        {
+            setError(j->error());
+            emitResult();
+            return;
+        }
+
+        QString str = QString(((KIO::StoredTransferJob*)j)->data());
+
+        // try to find the link tags
+        QRegExp rx("<link([^<>]*)", Qt::CaseInsensitive);
+        int pos = 0;
+
+        while ((pos = rx.indexIn(str, pos)) != -1)
+        {
+            QString link_tag = rx.cap(1);
+            // exit when we find the description
+            if (checkLinkTagContent(link_tag))
+                return;
+
+            pos += rx.matchedLength();
+        }
+
+
+        // no link tag found emit error
+        setError(KIO::ERR_INTERNAL);
+        emitResult();
+    }
+
+    bool OpenSearchDownloadJob::checkLinkTagContent(const QString& content)
+    {
+        if (htmlParam("type", content) != "application/opensearchdescription+xml")
+            return false;
+
+        QString href = htmlParam("href", content);
+        if (href.isEmpty())
+            return false;
+
+        if (href.startsWith("/"))
+            href = url.protocol() + "://" + url.host() + href;
+
+        if (!bt::Exists(dir))
+        {
+            try
+            {
+                bt::MakeDir(dir);
+            }
+            catch (...)
+            {
+                return false;
+            }
+        }
+
+        // href is the opensearch description, so lets try to download it
+        KIO::Job* j = KIO::copy(KUrl(href), KUrl(dir + "opensearch.xml"), KIO::HideProgressInfo);
+        connect(j, SIGNAL(result(KJob*)), this, SLOT(xmlFileDownloadFinished(KJob*)));
+        return true;
+    }
+
+    QString OpenSearchDownloadJob::htmlParam(const QString& param, const QString& content)
+    {
+        QRegExp rx(QString("%1=\"?([^\">< ]*)[\" ]").arg(param), Qt::CaseInsensitive);
+        if (rx.indexIn(content, 0) == -1)
+            return QString();
+
+        return rx.cap(1);
+    }
+
+    void OpenSearchDownloadJob::xmlFileDownloadFinished(KJob* j)
+    {
+        if (j->error())
+        {
+            setError(j->error());
+            emitResult();
+        }
+        else
+        {
+            setError(0);
+            emitResult();
+        }
+    }
 }

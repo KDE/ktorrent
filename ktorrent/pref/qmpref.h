@@ -26,21 +26,21 @@
 namespace kt
 {
 
-	/**
-		Preference page for the queue manager
-	*/
-	class QMPref : public PrefPageInterface,public Ui_QMPref
-	{
-		Q_OBJECT
-	public:
-		QMPref(QWidget* parent);
-		virtual ~QMPref();
-	
-		void loadSettings();
-		void loadDefaults();
-	private slots:
-		void onControlTorrentsManuallyToggled(bool on);
-	};
+    /**
+        Preference page for the queue manager
+    */
+    class QMPref : public PrefPageInterface, public Ui_QMPref
+    {
+        Q_OBJECT
+    public:
+        QMPref(QWidget* parent);
+        virtual ~QMPref();
+
+        void loadSettings();
+        void loadDefaults();
+    private slots:
+        void onControlTorrentsManuallyToggled(bool on);
+    };
 
 }
 

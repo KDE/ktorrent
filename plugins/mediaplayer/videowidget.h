@@ -37,60 +37,60 @@ class KActionCollection;
 namespace kt
 {
 
-	class VideoChunkBar;
-	class MediaPlayer;
-	class MediaFileRef;
+    class VideoChunkBar;
+    class MediaPlayer;
+    class MediaFileRef;
 
-	/**
-	 * Widget to display a video
-	 * @author Joris Guisson
-	*/
-	class VideoWidget : public QWidget
-	{
-		Q_OBJECT
-	public:
-		VideoWidget(MediaPlayer* player,KActionCollection* ac,QWidget* parent);
-		virtual ~VideoWidget();
-		
-		/**
-		 * Make the widget full screen or not.
-		 * @param on 
-		 */
-		void setFullScreen(bool on);
-		
-	protected:
-		virtual void mouseMoveEvent(QMouseEvent* event);
-		virtual bool eventFilter(QObject* dst, QEvent* event);
-		
-	private slots:
-		void play();
-		void stop();
-		void setControlsVisible(bool on);
-		void timerTick(qint64 time);
-		void playing(const MediaFileRef & mfile);
-		void enableActions(unsigned int flags);
-		
-	signals:
-		void toggleFullScreen(bool on);
-		
-	private:
-		void inhibitScreenSaver(bool on);
-		QString formatTime(qint64 cur,qint64 total);
+    /**
+     * Widget to display a video
+     * @author Joris Guisson
+    */
+    class VideoWidget : public QWidget
+    {
+        Q_OBJECT
+    public:
+        VideoWidget(MediaPlayer* player, KActionCollection* ac, QWidget* parent);
+        virtual ~VideoWidget();
 
-	private:
-		Phonon::VideoWidget* video;
-		MediaPlayer* player;
-		Phonon::SeekSlider* slider;
-		KToolBar* tb;
-		KAction* play_action;
-		KAction* stop_action;
-		QLabel* time_label;
-		Phonon::VolumeSlider* volume;
-		VideoChunkBar* chunk_bar;
-		bool fullscreen;
-		uint screensaver_cookie;
-		int powermanagement_cookie;
-	};
+        /**
+         * Make the widget full screen or not.
+         * @param on
+         */
+        void setFullScreen(bool on);
+
+    protected:
+        virtual void mouseMoveEvent(QMouseEvent* event);
+        virtual bool eventFilter(QObject* dst, QEvent* event);
+
+    private slots:
+        void play();
+        void stop();
+        void setControlsVisible(bool on);
+        void timerTick(qint64 time);
+        void playing(const MediaFileRef& mfile);
+        void enableActions(unsigned int flags);
+
+    signals:
+        void toggleFullScreen(bool on);
+
+    private:
+        void inhibitScreenSaver(bool on);
+        QString formatTime(qint64 cur, qint64 total);
+
+    private:
+        Phonon::VideoWidget* video;
+        MediaPlayer* player;
+        Phonon::SeekSlider* slider;
+        KToolBar* tb;
+        KAction* play_action;
+        KAction* stop_action;
+        QLabel* time_label;
+        Phonon::VolumeSlider* volume;
+        VideoChunkBar* chunk_bar;
+        bool fullscreen;
+        uint screensaver_cookie;
+        int powermanagement_cookie;
+    };
 
 }
 

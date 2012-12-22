@@ -29,38 +29,38 @@
 
 namespace kt
 {
-	/**
-	 * @author Joris Guisson
-	*/
-	class LogViewer : public Activity,public bt::LogMonitorInterface
-	{
-		Q_OBJECT
-	public:
-		LogViewer(LogFlags* flags,QWidget *parent = 0);
-		virtual ~LogViewer();
+    /**
+     * @author Joris Guisson
+    */
+    class LogViewer : public Activity, public bt::LogMonitorInterface
+    {
+        Q_OBJECT
+    public:
+        LogViewer(LogFlags* flags, QWidget* parent = 0);
+        virtual ~LogViewer();
 
-		virtual void message(const QString& line, unsigned int arg);
-		
-		void setRichText(bool val);
-		void setMaxBlockCount(int max);
-		void processPending();
-		
-	public slots:
-		void showMenu(const QPoint & pos);
-		void suspend(bool on);
-		
-	private:
-		bool use_rich_text;
-		LogFlags* flags;
-		QTextBrowser* output;
-		bool suspended;
-		QMenu* menu;
-		QAction* suspend_action;
-		int max_block_count;
-		
-		QMutex mutex;
-		QStringList pending;
-	};
+        virtual void message(const QString& line, unsigned int arg);
+
+        void setRichText(bool val);
+        void setMaxBlockCount(int max);
+        void processPending();
+
+    public slots:
+        void showMenu(const QPoint& pos);
+        void suspend(bool on);
+
+    private:
+        bool use_rich_text;
+        LogFlags* flags;
+        QTextBrowser* output;
+        bool suspended;
+        QMenu* menu;
+        QAction* suspend_action;
+        int max_block_count;
+
+        QMutex mutex;
+        QStringList pending;
+    };
 
 }
 

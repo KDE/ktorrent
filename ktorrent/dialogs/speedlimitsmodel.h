@@ -25,58 +25,58 @@
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
 namespace kt
 {
-	class Core;
+    class Core;
 
-	/**
-	 * Model for the SpeedLimitsDlg main list view
-	*/
-	class SpeedLimitsModel : public QAbstractTableModel
-	{
-		Q_OBJECT
-	public:
-		SpeedLimitsModel(Core* core,QObject* parent);
-		virtual ~SpeedLimitsModel();
-		
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual int columnCount(const QModelIndex & parent) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
-		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
-		
-		void apply();
-		
-	signals:
-		void enableApply(bool on);
-		
-	private:
-		bt::TorrentInterface* torrentForIndex(const QModelIndex & index) const;
-		
-	private slots:
-		void onTorrentAdded(bt::TorrentInterface* tc);
-		void onTorrentRemoved(bt::TorrentInterface* tc);
-	
-	private:
-		struct Limits
-		{
-			bt::Uint32 up;
-			bt::Uint32 up_original;
-			bt::Uint32 down;
-			bt::Uint32 down_original;
-			bt::Uint32 assured_up;
-			bt::Uint32 assured_up_original;
-			bt::Uint32 assured_down;
-			bt::Uint32 assured_down_original;
-		};
-		
-		Core* core;
-		QMap<bt::TorrentInterface*,Limits> limits;
-	};
+    /**
+     * Model for the SpeedLimitsDlg main list view
+    */
+    class SpeedLimitsModel : public QAbstractTableModel
+    {
+        Q_OBJECT
+    public:
+        SpeedLimitsModel(Core* core, QObject* parent);
+        virtual ~SpeedLimitsModel();
+
+        virtual int rowCount(const QModelIndex& parent) const;
+        virtual int columnCount(const QModelIndex& parent) const;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
+        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+
+        void apply();
+
+    signals:
+        void enableApply(bool on);
+
+    private:
+        bt::TorrentInterface* torrentForIndex(const QModelIndex& index) const;
+
+    private slots:
+        void onTorrentAdded(bt::TorrentInterface* tc);
+        void onTorrentRemoved(bt::TorrentInterface* tc);
+
+    private:
+        struct Limits
+        {
+            bt::Uint32 up;
+            bt::Uint32 up_original;
+            bt::Uint32 down;
+            bt::Uint32 down_original;
+            bt::Uint32 assured_up;
+            bt::Uint32 assured_up_original;
+            bt::Uint32 assured_down;
+            bt::Uint32 assured_down_original;
+        };
+
+        Core* core;
+        QMap<bt::TorrentInterface*, Limits> limits;
+    };
 
 }
 

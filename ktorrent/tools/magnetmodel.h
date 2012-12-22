@@ -31,81 +31,81 @@
 namespace kt
 {
 
-	/**
-	 * Adds options struct to bt::MagnetDownloader
-	 */
-	class MagnetDownloader : public bt::MagnetDownloader
-	{
-		Q_OBJECT
-	public:
-		MagnetDownloader(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions & options, QObject* parent) :
-				bt::MagnetDownloader(mlink, parent),
-				options(options)
-		{}
+    /**
+     * Adds options struct to bt::MagnetDownloader
+     */
+    class MagnetDownloader : public bt::MagnetDownloader
+    {
+        Q_OBJECT
+    public:
+        MagnetDownloader(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options, QObject* parent) :
+            bt::MagnetDownloader(mlink, parent),
+            options(options)
+        {}
 
-		virtual ~MagnetDownloader()
-		{}
+        virtual ~MagnetDownloader()
+        {}
 
-		MagnetLinkLoadOptions options;
-	};
+        MagnetLinkLoadOptions options;
+    };
 
 
-	/**
-		Model which keeps track of MagnetDownloaders
-	*/
-	class MagnetModel : public QAbstractTableModel
-	{
-		Q_OBJECT
-	public:
-		MagnetModel(QObject* parent = 0);
-		virtual ~MagnetModel();
+    /**
+        Model which keeps track of MagnetDownloaders
+    */
+    class MagnetModel : public QAbstractTableModel
+    {
+        Q_OBJECT
+    public:
+        MagnetModel(QObject* parent = 0);
+        virtual ~MagnetModel();
 
-		/**
-			Start a magnet download
-		*/
-		void download(const bt::MagnetLink & mlink, const MagnetLinkLoadOptions & options);
+        /**
+            Start a magnet download
+        */
+        void download(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options);
 
-		virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-		virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-		virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
-		virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-		virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-		virtual bool removeRows(int row, int count, const QModelIndex & parent);
-		virtual bool insertRows(int row, int count, const QModelIndex & parent);
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
+        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+        virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+        virtual bool removeRows(int row, int count, const QModelIndex& parent);
+        virtual bool insertRows(int row, int count, const QModelIndex& parent);
 
-		/// Update the MagnetDownloaders
-		void updateMagnetDownloaders();
+        /// Update the MagnetDownloaders
+        void updateMagnetDownloaders();
 
-		/// Remove a MagnetDownloader
-		void removeMagnetDownloader(kt::MagnetDownloader* md);
+        /// Remove a MagnetDownloader
+        void removeMagnetDownloader(kt::MagnetDownloader* md);
 
-		/// Start a magnet downloader
-		void start(const QModelIndex & idx);
+        /// Start a magnet downloader
+        void start(const QModelIndex& idx);
 
-		/// Stop a magnet downloader
-		void stop(const QModelIndex & idx);
+        /// Stop a magnet downloader
+        void stop(const QModelIndex& idx);
 
-		/// Save current magnet links to a file
-		void saveMagnets(const QString & file);
+        /// Save current magnet links to a file
+        void saveMagnets(const QString& file);
 
-		/// Load magnets from file
-		void loadMagnets(const QString & file);
+        /// Load magnets from file
+        void loadMagnets(const QString& file);
 
-	private slots:
-		void downloadFinished(bt::MagnetDownloader* md, const QByteArray & data);
+    private slots:
+        void downloadFinished(bt::MagnetDownloader* md, const QByteArray& data);
 
-	signals:
-		/// Emitted when metadata has been found for a MagnetLink
-		void metadataFound(const bt::MagnetLink & mlink, const QByteArray & data, const kt::MagnetLinkLoadOptions & options);
+    signals:
+        /// Emitted when metadata has been found for a MagnetLink
+        void metadataFound(const bt::MagnetLink& mlink, const QByteArray& data, const kt::MagnetLinkLoadOptions& options);
 
-	private:
-		QString displayName(const bt::MagnetDownloader* md) const;
-		QString status(const bt::MagnetDownloader* md) const;
-		void addMagnetDownloader(const bt::MagnetLink & mlink, const MagnetLinkLoadOptions & options, bool start);
+    private:
+        QString displayName(const bt::MagnetDownloader* md) const;
+        QString status(const bt::MagnetDownloader* md) const;
+        void addMagnetDownloader(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options, bool start);
 
-	private:
-		QList<kt::MagnetDownloader*> magnet_downloaders;
-	};
+    private:
+        QList<kt::MagnetDownloader*> magnet_downloaders;
+    };
 
 }
 

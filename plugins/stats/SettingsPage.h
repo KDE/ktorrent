@@ -38,33 +38,33 @@
 namespace kt
 {
 
-	/** \brief Settings page
-	\author Krzysztof Kundzicz <athantor@gmail.com>
-	*/
+    /** \brief Settings page
+    \author Krzysztof Kundzicz <athantor@gmail.com>
+    */
 
-	class SettingsPage : public PrefPageInterface, public Ui_StatsSettingsWgt
-	{
-		Q_OBJECT
+    class SettingsPage : public PrefPageInterface, public Ui_StatsSettingsWgt
+    {
+        Q_OBJECT
 
-	public:
-		/** \brief Constructor
-		\param  p Parent
-		*/
-		SettingsPage(QWidget * p);
-		///Destructor
-		virtual ~SettingsPage();
+    public:
+        /** \brief Constructor
+        \param  p Parent
+        */
+        SettingsPage(QWidget* p);
+        ///Destructor
+        virtual ~SettingsPage();
 
-	public slots:
-		void updateSettings();
-		
-	private slots:
-		void UpdGuiUpdatesToMs(int);
+    public slots:
+        void updateSettings();
 
-	signals:
-		///Settings has been applied
-		void Applied();
+    private slots:
+        void UpdGuiUpdatesToMs(int);
 
-	};
+    signals:
+        ///Settings has been applied
+        void Applied();
+
+    };
 
 } //ns end
 

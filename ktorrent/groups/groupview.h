@@ -29,72 +29,72 @@ class KActionCollection;
 
 namespace kt
 {
-	class GUI;
-	class Core;
-	class View;
-	class Group;
-	class GroupView;
-	class GroupManager;
-	class View;
+    class GUI;
+    class Core;
+    class View;
+    class Group;
+    class GroupView;
+    class GroupManager;
+    class View;
 
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class GroupView : public QTreeView
-	{
-		Q_OBJECT
-	public:
-		GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidget* parent);
-		virtual ~GroupView();
+    /**
+        @author Joris Guisson <joris.guisson@gmail.com>
+    */
+    class GroupView : public QTreeView
+    {
+        Q_OBJECT
+    public:
+        GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidget* parent);
+        virtual ~GroupView();
 
-		/// Save the status of the group view
-		void saveState(KSharedConfigPtr cfg);
+        /// Save the status of the group view
+        void saveState(KSharedConfigPtr cfg);
 
-		/// Load status from config
-		void loadState(KSharedConfigPtr cfg);
+        /// Load status from config
+        void loadState(KSharedConfigPtr cfg);
 
-		/// Create a new group
-		Group* addNewGroup();
+        /// Create a new group
+        Group* addNewGroup();
 
-		/// Setup all the actions of the GroupView
-		void setupActions(KActionCollection* col);
-		
-	public slots:
-		/// Update the group count
-		void updateGroupCount();
-		
-	private slots:
-		void onItemClicked(const QModelIndex & index);
-		void showContextMenu(const QPoint & p);
-		void addGroup();
-		void removeGroup();
-		void editGroupName();
-		void editGroupPolicy();
-		void openInNewTab();
+        /// Setup all the actions of the GroupView
+        void setupActions(KActionCollection* col);
 
-	signals:
-		void currentGroupChanged(kt::Group* g);
-		void openTab(Group* g);
+    public slots:
+        /// Update the group count
+        void updateGroupCount();
 
-	private:
-		virtual void keyPressEvent(QKeyEvent* event);
+    private slots:
+        void onItemClicked(const QModelIndex& index);
+        void showContextMenu(const QPoint& p);
+        void addGroup();
+        void removeGroup();
+        void editGroupName();
+        void editGroupPolicy();
+        void openInNewTab();
 
-	private:
-		GUI* gui;
-		Core* core;
-		View* view;
-		GroupManager* gman;
- 		GroupViewModel* model;
+    signals:
+        void currentGroupChanged(kt::Group* g);
+        void openTab(Group* g);
 
-		KAction* open_in_new_tab;
-		KAction* new_group;
-		KAction* edit_group;
-		KAction* remove_group;
-		KAction* edit_group_policy;
+    private:
+        virtual void keyPressEvent(QKeyEvent* event);
 
-		friend class GroupViewItem;
-	};
+    private:
+        GUI* gui;
+        Core* core;
+        View* view;
+        GroupManager* gman;
+        GroupViewModel* model;
+
+        KAction* open_in_new_tab;
+        KAction* new_group;
+        KAction* edit_group;
+        KAction* remove_group;
+        KAction* edit_group_policy;
+
+        friend class GroupViewItem;
+    };
 
 }
 

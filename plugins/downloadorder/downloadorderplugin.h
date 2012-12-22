@@ -27,42 +27,42 @@
 
 namespace kt
 {
-	class DownloadOrderManager;
+    class DownloadOrderManager;
 
-	/**
-		@author
-	*/
-	class DownloadOrderPlugin : public Plugin,public ViewListener
-	{
-		Q_OBJECT
-	public:
-		DownloadOrderPlugin(QObject* parent,const QStringList& args);
-		virtual ~DownloadOrderPlugin();
+    /**
+        @author
+    */
+    class DownloadOrderPlugin : public Plugin, public ViewListener
+    {
+        Q_OBJECT
+    public:
+        DownloadOrderPlugin(QObject* parent, const QStringList& args);
+        virtual ~DownloadOrderPlugin();
 
-		virtual bool versionCheck(const QString& version) const;
-		virtual void load();
-		virtual void unload();
-		virtual void currentTorrentChanged(bt::TorrentInterface* tc);
-		virtual QString parentPart() const {return "torrentactivity";}
-		
-		/// Get the download order manager for a torrent (returns 0 if none exists)
-		DownloadOrderManager* manager(bt::TorrentInterface* tc);
-		
-		/// Create a manager for a torrent
-		DownloadOrderManager* createManager(bt::TorrentInterface* tc);
-		
-		/// Destroy a manager
-		void destroyManager(bt::TorrentInterface* tc);
-		
-	private slots:
-		void showDownloadOrderDialog();
-		void torrentAdded(bt::TorrentInterface* tc);
-		void torrentRemoved(bt::TorrentInterface* tc);
+        virtual bool versionCheck(const QString& version) const;
+        virtual void load();
+        virtual void unload();
+        virtual void currentTorrentChanged(bt::TorrentInterface* tc);
+        virtual QString parentPart() const {return "torrentactivity";}
 
-	private:
-		KAction* download_order_action;
-		bt::PtrMap<bt::TorrentInterface*,DownloadOrderManager> managers;
-	};
+        /// Get the download order manager for a torrent (returns 0 if none exists)
+        DownloadOrderManager* manager(bt::TorrentInterface* tc);
+
+        /// Create a manager for a torrent
+        DownloadOrderManager* createManager(bt::TorrentInterface* tc);
+
+        /// Destroy a manager
+        void destroyManager(bt::TorrentInterface* tc);
+
+    private slots:
+        void showDownloadOrderDialog();
+        void torrentAdded(bt::TorrentInterface* tc);
+        void torrentRemoved(bt::TorrentInterface* tc);
+
+    private:
+        KAction* download_order_action;
+        bt::PtrMap<bt::TorrentInterface*, DownloadOrderManager> managers;
+    };
 
 }
 

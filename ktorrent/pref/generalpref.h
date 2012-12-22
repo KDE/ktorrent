@@ -26,16 +26,16 @@
 namespace kt
 {
 
-	class GeneralPref : public PrefPageInterface,public Ui_GeneralPref
-	{
-		Q_OBJECT
-	public:
-		GeneralPref(QWidget* parent);
-		virtual ~GeneralPref();
-			
-		void loadSettings();
-		void loadDefaults();
-	};
+    class GeneralPref : public PrefPageInterface, public Ui_GeneralPref
+    {
+        Q_OBJECT
+    public:
+        GeneralPref(QWidget* parent);
+        virtual ~GeneralPref();
+
+        void loadSettings();
+        void loadDefaults();
+    };
 }
 
 #endif

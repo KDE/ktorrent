@@ -47,359 +47,359 @@ using namespace bt;
 
 namespace kt
 {
-	MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core,KActionCollection* ac,QWidget* parent) 
-		: Activity(i18n("Media Player"),"applications-multimedia",90,parent),ac(ac)
-	{
-		action_flags = 0;
-		video = 0;
-		play_action = pause_action = stop_action = prev_action = next_action = 0;
-		fullscreen_mode = false;
-		
-		media_model = new MediaModel(core,this);
-		media_player = new MediaPlayer(this);
-		
-		QHBoxLayout* layout = new QHBoxLayout(this);
-		layout->setMargin(0);
-		tabs = new KTabWidget(this);
-		layout->addWidget(tabs);
-		
-		
-		QWidget* tab = new QWidget(tabs);
-		tabs->addTab(tab, KIcon("applications-multimedia"), i18n("Media Player"));
-		QVBoxLayout* vbox = new QVBoxLayout(tab);
-		
-		splitter = new QSplitter(Qt::Horizontal,tab);
-		media_view = new MediaView(media_model,splitter);
-		play_list = new PlayListWidget(media_model,media_player,tabs);
-		setupActions();
-		controller = new MediaController(media_player, ac, tab);
-		
-		
-		splitter->addWidget(media_view);
-		splitter->addWidget(play_list);
-		vbox->addWidget(controller);
-		vbox->addWidget(splitter);
-		
-		close_button = new QToolButton(tabs);
-		tabs->setCornerWidget(close_button,Qt::TopRightCorner);
-		close_button->setIcon(KIcon("tab-close"));
-		close_button->setEnabled(false);
-		connect(close_button,SIGNAL(clicked()),this,SLOT(closeTab()));
-		
-		tabs->setTabBarHidden(true);
-		
-		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
-		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
-		connect(media_player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
-		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
-		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
-		connect(media_player,SIGNAL(aboutToFinish()),this,SLOT(aboutToFinishPlaying()));
-		connect(play_list,SIGNAL(fileSelected(MediaFileRef)),this,SLOT(onSelectionChanged(MediaFileRef)));
-		connect(media_view,SIGNAL(doubleClicked(const MediaFileRef&)),this,SLOT(onDoubleClicked(const MediaFileRef&)));
-		connect(play_list,SIGNAL(randomModeActivated(bool)),this,SLOT(randomPlayActivated(bool)));
-		connect(play_list,SIGNAL(doubleClicked(MediaFileRef)),this,SLOT(play(MediaFileRef)));
-		connect(play_list,SIGNAL(enableNext(bool)),next_action,SLOT(setEnabled(bool)));
-		connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(currentTabChanged(int)));
-	}
+    MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core, KActionCollection* ac, QWidget* parent)
+        : Activity(i18n("Media Player"), "applications-multimedia", 90, parent), ac(ac)
+    {
+        action_flags = 0;
+        video = 0;
+        play_action = pause_action = stop_action = prev_action = next_action = 0;
+        fullscreen_mode = false;
 
-	MediaPlayerActivity::~MediaPlayerActivity() 
-	{
-		if (fullscreen_mode)
-			setVideoFullScreen(false);
-	}
-	
-	void MediaPlayerActivity::setupActions()
-	{
-		play_action = new KAction(KIcon("media-playback-start"),i18n("Play"),this);
-		connect(play_action,SIGNAL(triggered()),this,SLOT(play()));
-		ac->addAction("media_play",play_action);
-		
-		pause_action = new KAction(KIcon("media-playback-pause"),i18n("Pause"),this);
-		connect(pause_action,SIGNAL(triggered()),this,SLOT(pause()));
-		ac->addAction("media_pause",pause_action);
-		
-		stop_action = new KAction(KIcon("media-playback-stop"),i18n("Stop"),this);
-		connect(stop_action,SIGNAL(triggered()),this,SLOT(stop()));
-		ac->addAction("media_stop",stop_action);
-		
-		prev_action = new KAction(KIcon("media-skip-backward"),i18n("Previous"),this);
-		connect(prev_action,SIGNAL(triggered()),this,SLOT(prev()));
-		ac->addAction("media_prev",prev_action);
-		
-		next_action = new KAction(KIcon("media-skip-forward"),i18n("Next"),this);
-		connect(next_action,SIGNAL(triggered()),this,SLOT(next()));
-		ac->addAction("media_next",next_action);
-		
-		show_video_action = new KToggleAction(KIcon("video-x-generic"),i18n("Show Video"),this);
-		connect(show_video_action,SIGNAL(toggled(bool)),this,SLOT(showVideo(bool)));
-		ac->addAction("show_video",show_video_action);
-		
-		add_media_action = new KAction(KIcon("document-open"),i18n("Add Media"),this);
-		connect(add_media_action,SIGNAL(triggered()),play_list,SLOT(addMedia()));
-		ac->addAction("add_media",add_media_action); 
-		
-		clear_action = new KAction(KIcon("edit-clear-list"),i18n("Clear Playlist"),this);
-		connect(clear_action,SIGNAL(triggered()),play_list,SLOT(clearPlayList()));
-		ac->addAction("clear_play_list",clear_action);
-		
-		KAction* tfs = new KAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"),this);
-		tfs->setShortcut(Qt::Key_F);
-		tfs->setCheckable(true);
-		ac->addAction("video_fullscreen", tfs);
-	}
+        media_model = new MediaModel(core, this);
+        media_player = new MediaPlayer(this);
 
-	void MediaPlayerActivity::openVideo()
-	{
-		QString path = media_player->getCurrentSource().path();
-		int idx = path.lastIndexOf(bt::DirSeparator());
-		if (idx >= 0)
-			path = path.mid(idx+1);
-		
-		if (path.isEmpty())
-			path = i18n("Media Player");
-		
-		if (video)
-		{
-			int idx = tabs->indexOf(video);
-			tabs->setTabText(idx,path);
-			tabs->setCurrentIndex(idx);
-			tabs->setTabBarHidden(false);
-		}
-		else
-		{
-			video = new VideoWidget(media_player,ac,0);
-			connect(video,SIGNAL(toggleFullScreen(bool)),this,SLOT(setVideoFullScreen(bool)));
-			int idx = tabs->addTab(video,KIcon("video-x-generic"),path);
-			tabs->setTabToolTip(idx,i18n("Movie player"));
-			tabs->setCurrentIndex(idx);
-			tabs->setTabBarHidden(false);
-		}
-		
-		if (!show_video_action->isChecked())
-			show_video_action->setChecked(true);
-	}
+        QHBoxLayout* layout = new QHBoxLayout(this);
+        layout->setMargin(0);
+        tabs = new KTabWidget(this);
+        layout->addWidget(tabs);
 
-	void MediaPlayerActivity::closeVideo()
-	{
-		if (video)
-		{
-			tabs->removePage(video);
-			if (show_video_action->isChecked())
-				show_video_action->setChecked(false);
-			tabs->setTabBarHidden(true);
-			video->deleteLater();
-			video = 0;
-		}
-	}
 
-	void MediaPlayerActivity::showVideo(bool on)
-	{
-		if (on)
-			openVideo();
-		else
-			closeVideo();
-	}
+        QWidget* tab = new QWidget(tabs);
+        tabs->addTab(tab, KIcon("applications-multimedia"), i18n("Media Player"));
+        QVBoxLayout* vbox = new QVBoxLayout(tab);
 
-	void MediaPlayerActivity::play()
-	{
-		if (media_player->paused())
-		{
-			media_player->resume();
-		}
-		else
-		{
-			curr_item = play_list->play();
-			if (curr_item.isValid())
-			{
-				bool random = play_list->randomOrder();
-				QModelIndex n = play_list->next(curr_item,random);
-				next_action->setEnabled(n.isValid());
-			}
-		}
-	}
-	
-	void MediaPlayerActivity::play(const MediaFileRef & file)
-	{
-		media_player->play(file);
-		QModelIndex idx = play_list->indexForFile(file.path());
-		if (idx.isValid())
-		{
-			curr_item = idx;
-			bool random = play_list->randomOrder();
-			QModelIndex n = play_list->next(curr_item,random);
-			next_action->setEnabled(n.isValid());
-		}
-	}
+        splitter = new QSplitter(Qt::Horizontal, tab);
+        media_view = new MediaView(media_model, splitter);
+        play_list = new PlayListWidget(media_model, media_player, tabs);
+        setupActions();
+        controller = new MediaController(media_player, ac, tab);
 
-	void MediaPlayerActivity::onDoubleClicked(const MediaFileRef & file)
-	{
-		if (bt::Exists(file.path()))
-		{
-			play(file);
-		}
-	}
 
-	void MediaPlayerActivity::pause()
-	{
-		media_player->pause();
-	}
+        splitter->addWidget(media_view);
+        splitter->addWidget(play_list);
+        vbox->addWidget(controller);
+        vbox->addWidget(splitter);
 
-	void MediaPlayerActivity::stop()
-	{
-		media_player->stop();
-	}
+        close_button = new QToolButton(tabs);
+        tabs->setCornerWidget(close_button, Qt::TopRightCorner);
+        close_button->setIcon(KIcon("tab-close"));
+        close_button->setEnabled(false);
+        connect(close_button, SIGNAL(clicked()), this, SLOT(closeTab()));
 
-	void MediaPlayerActivity::prev()
-	{
-		media_player->prev();
-	}
+        tabs->setTabBarHidden(true);
 
-	void MediaPlayerActivity::next()
-	{
-		bool random = play_list->randomOrder();
-		QModelIndex n = play_list->next(curr_item,random);
-		if (!n.isValid())
-			return;
-		
-		QString path = play_list->fileForIndex(n);
-		if (bt::Exists(path))
-		{
-			media_player->play(path);
-			curr_item = n;
-			n = play_list->next(curr_item,random);
-			next_action->setEnabled(n.isValid());
-		}
-	}
+        connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), media_model, SLOT(onTorrentAdded(bt::TorrentInterface*)));
+        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), media_model, SLOT(onTorrentRemoved(bt::TorrentInterface*)));
+        connect(media_player, SIGNAL(enableActions(unsigned int)), this, SLOT(enableActions(unsigned int)));
+        connect(media_player, SIGNAL(openVideo()), this, SLOT(openVideo()));
+        connect(media_player, SIGNAL(closeVideo()), this, SLOT(closeVideo()));
+        connect(media_player, SIGNAL(aboutToFinish()), this, SLOT(aboutToFinishPlaying()));
+        connect(play_list, SIGNAL(fileSelected(MediaFileRef)), this, SLOT(onSelectionChanged(MediaFileRef)));
+        connect(media_view, SIGNAL(doubleClicked(const MediaFileRef&)), this, SLOT(onDoubleClicked(const MediaFileRef&)));
+        connect(play_list, SIGNAL(randomModeActivated(bool)), this, SLOT(randomPlayActivated(bool)));
+        connect(play_list, SIGNAL(doubleClicked(MediaFileRef)), this, SLOT(play(MediaFileRef)));
+        connect(play_list, SIGNAL(enableNext(bool)), next_action, SLOT(setEnabled(bool)));
+        connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+    }
 
-	void MediaPlayerActivity::enableActions(unsigned int flags)
-	{
-		pause_action->setEnabled(flags & kt::MEDIA_PAUSE);
-		stop_action->setEnabled(flags & kt::MEDIA_STOP);
-		play_action->setEnabled(false);
-		
-		QModelIndex idx = play_list->selectedItem();
-		if (idx.isValid())
-		{
-			PlayList* pl = play_list->playList();
-			MediaFileRef file = pl->fileForIndex(idx);
-			if (bt::Exists(file.path()))
-				play_action->setEnabled((flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
-			else
-				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
-		}
-		else
-			play_action->setEnabled(flags & kt::MEDIA_PLAY);
-		
-		prev_action->setEnabled(flags & kt::MEDIA_PREV);
-		action_flags = flags;
-	}
+    MediaPlayerActivity::~MediaPlayerActivity()
+    {
+        if (fullscreen_mode)
+            setVideoFullScreen(false);
+    }
 
-	void MediaPlayerActivity::onSelectionChanged(const MediaFileRef & file)
-	{
-		if (bt::Exists(file.path()))
-			play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
-		else if (!file.path().isEmpty())
-			play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
-		else
-			play_action->setEnabled(false);
-	}
+    void MediaPlayerActivity::setupActions()
+    {
+        play_action = new KAction(KIcon("media-playback-start"), i18n("Play"), this);
+        connect(play_action, SIGNAL(triggered()), this, SLOT(play()));
+        ac->addAction("media_play", play_action);
 
-	void MediaPlayerActivity::randomPlayActivated(bool on)
-	{
-		QModelIndex next = play_list->next(curr_item,on);
-		next_action->setEnabled(next.isValid());
-	}
+        pause_action = new KAction(KIcon("media-playback-pause"), i18n("Pause"), this);
+        connect(pause_action, SIGNAL(triggered()), this, SLOT(pause()));
+        ac->addAction("media_pause", pause_action);
 
-	void MediaPlayerActivity::aboutToFinishPlaying()
-	{
-		bool random = play_list->randomOrder();
-		QModelIndex n = play_list->next(curr_item,random);
-		if (!n.isValid())
-			return;
-		
-		QString path = play_list->fileForIndex(n);
-		if (bt::Exists(path))
-		{
-			media_player->queue(path);
-			curr_item = n;
-			n = play_list->next(curr_item,random);
-			next_action->setEnabled(n.isValid());
-		}
-	}
+        stop_action = new KAction(KIcon("media-playback-stop"), i18n("Stop"), this);
+        connect(stop_action, SIGNAL(triggered()), this, SLOT(stop()));
+        ac->addAction("media_stop", stop_action);
 
-	void MediaPlayerActivity::closeTab()
-	{
-		if (video != tabs->currentWidget())
-			return;
-		
-		stop();
-		closeVideo();
-	}
+        prev_action = new KAction(KIcon("media-skip-backward"), i18n("Previous"), this);
+        connect(prev_action, SIGNAL(triggered()), this, SLOT(prev()));
+        ac->addAction("media_prev", prev_action);
 
-	void MediaPlayerActivity::setVideoFullScreen(bool on)
-	{
-		if (!video)
-			return;
-		
-		if (on && !fullscreen_mode)
-		{
-			tabs->removePage(video);
-			video->setParent(0);
-			video->setFullScreen(true);
-			video->show();
-			fullscreen_mode = true;
-		}
-		else if (!on && fullscreen_mode)
-		{
-			video->hide();
-			video->setFullScreen(false);
-			
-			QString path = media_player->getCurrentSource().path();
-			int idx = path.lastIndexOf(bt::DirSeparator());
-			if (idx >= 0)
-				path = path.mid(idx+1);
-			
-			if (path.isEmpty())
-				path = i18n("Media Player");
-			
-			idx = tabs->addTab(video,KIcon("video-x-generic"),path);
-			tabs->setTabToolTip(idx,i18n("Movie player"));
-			tabs->setCurrentIndex(idx);
-			fullscreen_mode = false;
-		}
-	}
+        next_action = new KAction(KIcon("media-skip-forward"), i18n("Next"), this);
+        connect(next_action, SIGNAL(triggered()), this, SLOT(next()));
+        ac->addAction("media_next", next_action);
 
-	void MediaPlayerActivity::saveState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("MediaPlayerActivity");
-		g.writeEntry("splitter_state",splitter->saveState());
-		play_list->saveState(cfg);
-		play_list->playList()->save(kt::DataDir() + "playlist");
-		
-		media_view->saveState(cfg);
-	}
-	
-	void MediaPlayerActivity::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("MediaPlayerActivity");
-		QByteArray d = g.readEntry("splitter_state",QByteArray());
-		if (!d.isNull())
-			splitter->restoreState(d);
-		
-		play_list->loadState(cfg);
-		if (bt::Exists(kt::DataDir() + "playlist"))
-			play_list->playList()->load(kt::DataDir() + "playlist");
-		
-		QModelIndex next = play_list->next(curr_item,play_list->randomOrder());
-		next_action->setEnabled(next.isValid());
-		
-		media_view->loadState(cfg);
-	}
+        show_video_action = new KToggleAction(KIcon("video-x-generic"), i18n("Show Video"), this);
+        connect(show_video_action, SIGNAL(toggled(bool)), this, SLOT(showVideo(bool)));
+        ac->addAction("show_video", show_video_action);
 
-	void MediaPlayerActivity::currentTabChanged(int idx)
-	{
-		close_button->setEnabled(idx != 0);
-	}
-	
+        add_media_action = new KAction(KIcon("document-open"), i18n("Add Media"), this);
+        connect(add_media_action, SIGNAL(triggered()), play_list, SLOT(addMedia()));
+        ac->addAction("add_media", add_media_action);
+
+        clear_action = new KAction(KIcon("edit-clear-list"), i18n("Clear Playlist"), this);
+        connect(clear_action, SIGNAL(triggered()), play_list, SLOT(clearPlayList()));
+        ac->addAction("clear_play_list", clear_action);
+
+        KAction* tfs = new KAction(KIcon("view-fullscreen"), i18n("Toggle Fullscreen"), this);
+        tfs->setShortcut(Qt::Key_F);
+        tfs->setCheckable(true);
+        ac->addAction("video_fullscreen", tfs);
+    }
+
+    void MediaPlayerActivity::openVideo()
+    {
+        QString path = media_player->getCurrentSource().path();
+        int idx = path.lastIndexOf(bt::DirSeparator());
+        if (idx >= 0)
+            path = path.mid(idx + 1);
+
+        if (path.isEmpty())
+            path = i18n("Media Player");
+
+        if (video)
+        {
+            int idx = tabs->indexOf(video);
+            tabs->setTabText(idx, path);
+            tabs->setCurrentIndex(idx);
+            tabs->setTabBarHidden(false);
+        }
+        else
+        {
+            video = new VideoWidget(media_player, ac, 0);
+            connect(video, SIGNAL(toggleFullScreen(bool)), this, SLOT(setVideoFullScreen(bool)));
+            int idx = tabs->addTab(video, KIcon("video-x-generic"), path);
+            tabs->setTabToolTip(idx, i18n("Movie player"));
+            tabs->setCurrentIndex(idx);
+            tabs->setTabBarHidden(false);
+        }
+
+        if (!show_video_action->isChecked())
+            show_video_action->setChecked(true);
+    }
+
+    void MediaPlayerActivity::closeVideo()
+    {
+        if (video)
+        {
+            tabs->removePage(video);
+            if (show_video_action->isChecked())
+                show_video_action->setChecked(false);
+            tabs->setTabBarHidden(true);
+            video->deleteLater();
+            video = 0;
+        }
+    }
+
+    void MediaPlayerActivity::showVideo(bool on)
+    {
+        if (on)
+            openVideo();
+        else
+            closeVideo();
+    }
+
+    void MediaPlayerActivity::play()
+    {
+        if (media_player->paused())
+        {
+            media_player->resume();
+        }
+        else
+        {
+            curr_item = play_list->play();
+            if (curr_item.isValid())
+            {
+                bool random = play_list->randomOrder();
+                QModelIndex n = play_list->next(curr_item, random);
+                next_action->setEnabled(n.isValid());
+            }
+        }
+    }
+
+    void MediaPlayerActivity::play(const MediaFileRef& file)
+    {
+        media_player->play(file);
+        QModelIndex idx = play_list->indexForFile(file.path());
+        if (idx.isValid())
+        {
+            curr_item = idx;
+            bool random = play_list->randomOrder();
+            QModelIndex n = play_list->next(curr_item, random);
+            next_action->setEnabled(n.isValid());
+        }
+    }
+
+    void MediaPlayerActivity::onDoubleClicked(const MediaFileRef& file)
+    {
+        if (bt::Exists(file.path()))
+        {
+            play(file);
+        }
+    }
+
+    void MediaPlayerActivity::pause()
+    {
+        media_player->pause();
+    }
+
+    void MediaPlayerActivity::stop()
+    {
+        media_player->stop();
+    }
+
+    void MediaPlayerActivity::prev()
+    {
+        media_player->prev();
+    }
+
+    void MediaPlayerActivity::next()
+    {
+        bool random = play_list->randomOrder();
+        QModelIndex n = play_list->next(curr_item, random);
+        if (!n.isValid())
+            return;
+
+        QString path = play_list->fileForIndex(n);
+        if (bt::Exists(path))
+        {
+            media_player->play(path);
+            curr_item = n;
+            n = play_list->next(curr_item, random);
+            next_action->setEnabled(n.isValid());
+        }
+    }
+
+    void MediaPlayerActivity::enableActions(unsigned int flags)
+    {
+        pause_action->setEnabled(flags & kt::MEDIA_PAUSE);
+        stop_action->setEnabled(flags & kt::MEDIA_STOP);
+        play_action->setEnabled(false);
+
+        QModelIndex idx = play_list->selectedItem();
+        if (idx.isValid())
+        {
+            PlayList* pl = play_list->playList();
+            MediaFileRef file = pl->fileForIndex(idx);
+            if (bt::Exists(file.path()))
+                play_action->setEnabled((flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
+            else
+                play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
+        }
+        else
+            play_action->setEnabled(flags & kt::MEDIA_PLAY);
+
+        prev_action->setEnabled(flags & kt::MEDIA_PREV);
+        action_flags = flags;
+    }
+
+    void MediaPlayerActivity::onSelectionChanged(const MediaFileRef& file)
+    {
+        if (bt::Exists(file.path()))
+            play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
+        else if (!file.path().isEmpty())
+            play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
+        else
+            play_action->setEnabled(false);
+    }
+
+    void MediaPlayerActivity::randomPlayActivated(bool on)
+    {
+        QModelIndex next = play_list->next(curr_item, on);
+        next_action->setEnabled(next.isValid());
+    }
+
+    void MediaPlayerActivity::aboutToFinishPlaying()
+    {
+        bool random = play_list->randomOrder();
+        QModelIndex n = play_list->next(curr_item, random);
+        if (!n.isValid())
+            return;
+
+        QString path = play_list->fileForIndex(n);
+        if (bt::Exists(path))
+        {
+            media_player->queue(path);
+            curr_item = n;
+            n = play_list->next(curr_item, random);
+            next_action->setEnabled(n.isValid());
+        }
+    }
+
+    void MediaPlayerActivity::closeTab()
+    {
+        if (video != tabs->currentWidget())
+            return;
+
+        stop();
+        closeVideo();
+    }
+
+    void MediaPlayerActivity::setVideoFullScreen(bool on)
+    {
+        if (!video)
+            return;
+
+        if (on && !fullscreen_mode)
+        {
+            tabs->removePage(video);
+            video->setParent(0);
+            video->setFullScreen(true);
+            video->show();
+            fullscreen_mode = true;
+        }
+        else if (!on && fullscreen_mode)
+        {
+            video->hide();
+            video->setFullScreen(false);
+
+            QString path = media_player->getCurrentSource().path();
+            int idx = path.lastIndexOf(bt::DirSeparator());
+            if (idx >= 0)
+                path = path.mid(idx + 1);
+
+            if (path.isEmpty())
+                path = i18n("Media Player");
+
+            idx = tabs->addTab(video, KIcon("video-x-generic"), path);
+            tabs->setTabToolTip(idx, i18n("Movie player"));
+            tabs->setCurrentIndex(idx);
+            fullscreen_mode = false;
+        }
+    }
+
+    void MediaPlayerActivity::saveState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("MediaPlayerActivity");
+        g.writeEntry("splitter_state", splitter->saveState());
+        play_list->saveState(cfg);
+        play_list->playList()->save(kt::DataDir() + "playlist");
+
+        media_view->saveState(cfg);
+    }
+
+    void MediaPlayerActivity::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("MediaPlayerActivity");
+        QByteArray d = g.readEntry("splitter_state", QByteArray());
+        if (!d.isNull())
+            splitter->restoreState(d);
+
+        play_list->loadState(cfg);
+        if (bt::Exists(kt::DataDir() + "playlist"))
+            play_list->playList()->load(kt::DataDir() + "playlist");
+
+        QModelIndex next = play_list->next(curr_item, play_list->randomOrder());
+        next_action->setEnabled(next.isValid());
+
+        media_view->loadState(cfg);
+    }
+
+    void MediaPlayerActivity::currentTabChanged(int idx)
+    {
+        close_button->setEnabled(idx != 0);
+    }
+
 }
 

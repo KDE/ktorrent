@@ -27,54 +27,54 @@ using namespace bt;
 
 namespace kt
 {
-	LocalFileNetworkReply::LocalFileNetworkReply(const QString& file, QObject* parent): QNetworkReply(parent),fptr(0)
-	{
-		fptr = new QFile(file,this);
-		if (fptr->open(QIODevice::ReadOnly))
-		{
-			open(ReadOnly | Unbuffered);
-			setHeader(QNetworkRequest::ContentLengthHeader, QVariant(fptr->size()));
-			setAttribute(QNetworkRequest::HttpStatusCodeAttribute, 200);
-			setAttribute(QNetworkRequest::HttpReasonPhraseAttribute, "OK");
-			
-			QTimer::singleShot(0,this,SIGNAL(readyRead()));
-			QTimer::singleShot(0,this,SIGNAL(finished()));
-		}
-		else
-		{
-			Out(SYS_SRC|LOG_IMPORTANT) << "Cannot open " << file << ": " << fptr->errorString() << endl;
-			delete fptr;
-			fptr = 0;
-			setAttribute(QNetworkRequest::HttpStatusCodeAttribute, 500);
-			setAttribute(QNetworkRequest::HttpReasonPhraseAttribute, "Internal server error");
-			QTimer::singleShot(0,this,SIGNAL(finished()));
-		}
-	}
-	
-	LocalFileNetworkReply::~LocalFileNetworkReply()
-	{
-	}
+    LocalFileNetworkReply::LocalFileNetworkReply(const QString& file, QObject* parent): QNetworkReply(parent), fptr(0)
+    {
+        fptr = new QFile(file, this);
+        if (fptr->open(QIODevice::ReadOnly))
+        {
+            open(ReadOnly | Unbuffered);
+            setHeader(QNetworkRequest::ContentLengthHeader, QVariant(fptr->size()));
+            setAttribute(QNetworkRequest::HttpStatusCodeAttribute, 200);
+            setAttribute(QNetworkRequest::HttpReasonPhraseAttribute, "OK");
 
-	void LocalFileNetworkReply::abort()
-	{
-		delete fptr;
-		fptr = 0;
-	}
+            QTimer::singleShot(0, this, SIGNAL(readyRead()));
+            QTimer::singleShot(0, this, SIGNAL(finished()));
+        }
+        else
+        {
+            Out(SYS_SRC | LOG_IMPORTANT) << "Cannot open " << file << ": " << fptr->errorString() << endl;
+            delete fptr;
+            fptr = 0;
+            setAttribute(QNetworkRequest::HttpStatusCodeAttribute, 500);
+            setAttribute(QNetworkRequest::HttpReasonPhraseAttribute, "Internal server error");
+            QTimer::singleShot(0, this, SIGNAL(finished()));
+        }
+    }
 
-	qint64 LocalFileNetworkReply::readData(char* data, qint64 maxlen)
-	{
-		return fptr ? fptr->read(data,maxlen) : 0;
-	}
+    LocalFileNetworkReply::~LocalFileNetworkReply()
+    {
+    }
 
-	bool LocalFileNetworkReply::atEnd() const
-	{
-		return !fptr || fptr->atEnd();
-	}
+    void LocalFileNetworkReply::abort()
+    {
+        delete fptr;
+        fptr = 0;
+    }
 
-	qint64 LocalFileNetworkReply::bytesAvailable() const
-	{
-		return fptr ? fptr->size() : 0;
-	}
+    qint64 LocalFileNetworkReply::readData(char* data, qint64 maxlen)
+    {
+        return fptr ? fptr->read(data, maxlen) : 0;
+    }
+
+    bool LocalFileNetworkReply::atEnd() const
+    {
+        return !fptr || fptr->atEnd();
+    }
+
+    qint64 LocalFileNetworkReply::bytesAvailable() const
+    {
+        return fptr ? fptr->size() : 0;
+    }
 }
 
 

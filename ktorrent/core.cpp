@@ -403,7 +403,7 @@ namespace kt
             QByteArray data = bt::LoadFile(target);
             return loadFromData(data, dir, group, silently, KUrl(target));
         }
-        catch(bt::Error & err)
+        catch (bt::Error& err)
         {
             bt::Out(SYS_GEN | LOG_IMPORTANT) << err.toString() << endl;
             if (!silently)

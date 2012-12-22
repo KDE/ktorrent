@@ -27,48 +27,48 @@
 #include "mediaplayeractivity.h"
 
 
-K_EXPORT_COMPONENT_FACTORY(ktmediaplayerplugin,KGenericFactory<kt::MediaPlayerPlugin>("ktmediaplayerplugin"))
-		
+K_EXPORT_COMPONENT_FACTORY(ktmediaplayerplugin, KGenericFactory<kt::MediaPlayerPlugin>("ktmediaplayerplugin"))
+
 using namespace bt;
 
 namespace kt
 {
 
-	MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
-	{
-		Q_UNUSED(args);
-	}
+    MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+    {
+        Q_UNUSED(args);
+    }
 
 
-	MediaPlayerPlugin::~MediaPlayerPlugin()
-	{
-	}
-	
-	void MediaPlayerPlugin::load()
-	{
-		LogSystemManager::instance().registerSystem(i18n("Media Player"),SYS_MPL);
-		CoreInterface* core = getCore();
-		act = new MediaPlayerActivity(core,actionCollection(),0);
-		getGUI()->addActivity(act);
-		setXMLFile("ktmediaplayerpluginui.rc");
-		act->enableActions(0);
-		act->loadState(KGlobal::config());
-	}
-	
-	void MediaPlayerPlugin::unload()
-	{
-		LogSystemManager::instance().unregisterSystem(i18n("Media Player"));
-		act->saveState(KGlobal::config());
-		act->setVideoFullScreen(false);
-		getGUI()->removeActivity(act);
-		delete act;
-		act = 0;
-	}
-	
-	bool MediaPlayerPlugin::versionCheck(const QString& version) const
-	{
-		return version == KT_VERSION_MACRO;
-	}
-	
-	
+    MediaPlayerPlugin::~MediaPlayerPlugin()
+    {
+    }
+
+    void MediaPlayerPlugin::load()
+    {
+        LogSystemManager::instance().registerSystem(i18n("Media Player"), SYS_MPL);
+        CoreInterface* core = getCore();
+        act = new MediaPlayerActivity(core, actionCollection(), 0);
+        getGUI()->addActivity(act);
+        setXMLFile("ktmediaplayerpluginui.rc");
+        act->enableActions(0);
+        act->loadState(KGlobal::config());
+    }
+
+    void MediaPlayerPlugin::unload()
+    {
+        LogSystemManager::instance().unregisterSystem(i18n("Media Player"));
+        act->saveState(KGlobal::config());
+        act->setVideoFullScreen(false);
+        getGUI()->removeActivity(act);
+        delete act;
+        act = 0;
+    }
+
+    bool MediaPlayerPlugin::versionCheck(const QString& version) const
+    {
+        return version == KT_VERSION_MACRO;
+    }
+
+
 }

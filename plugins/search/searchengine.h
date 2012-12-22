@@ -30,62 +30,62 @@ class KJob;
 namespace kt
 {
 
-	/**
-		Keeps track of a search engine
-	*/
-	class SearchEngine : public QObject
-	{
-		Q_OBJECT
-	public:
-		/**
-		 * Constructor, sets the data dir
-		 * @param data_dir Directory where all the information regarding the engine is stored
-		 */
-		SearchEngine(const QString & data_dir);
-		virtual ~SearchEngine();
+    /**
+        Keeps track of a search engine
+    */
+    class SearchEngine : public QObject
+    {
+        Q_OBJECT
+    public:
+        /**
+         * Constructor, sets the data dir
+         * @param data_dir Directory where all the information regarding the engine is stored
+         */
+        SearchEngine(const QString& data_dir);
+        virtual ~SearchEngine();
 
-		/**
-		 * Load the engine from an opensearch XML file
-		 * @param xml_file Local XML file
-		 * @return true upon success
-		 */
-		bool load(const QString & xml_file);
-		
-		/**
-		 * Fill in search terms into the search url and create the KUrl to use
-		 * @param terms Tersm to search for
-		 * @return The url
-		 */
-		KUrl search(const QString & terms);
-		
-		/// Get the name of the engine
-		QString engineName() const {return name;}
-		
-		/// Get the icon
-		KIcon engineIcon() const {return icon;}
-		
-		/// Get the engine directory
-		QString engineDir() const {return data_dir;}
-		
-		/// Get the URL
-		QString engineUrl() const {return url;}
-		
-		/// Get the description
-		QString engineDescription() const {return description;}
-		
-	private slots:
-		void iconDownloadFinished(KJob* job);
-		
-	private:
-		QString data_dir;
-		QString name;
-		QString description;
-		QString url;
-		QString icon_url;
-		KIcon icon;
-		
-		friend class OpenSearchHandler;
-	};
+        /**
+         * Load the engine from an opensearch XML file
+         * @param xml_file Local XML file
+         * @return true upon success
+         */
+        bool load(const QString& xml_file);
+
+        /**
+         * Fill in search terms into the search url and create the KUrl to use
+         * @param terms Tersm to search for
+         * @return The url
+         */
+        KUrl search(const QString& terms);
+
+        /// Get the name of the engine
+        QString engineName() const {return name;}
+
+        /// Get the icon
+        KIcon engineIcon() const {return icon;}
+
+        /// Get the engine directory
+        QString engineDir() const {return data_dir;}
+
+        /// Get the URL
+        QString engineUrl() const {return url;}
+
+        /// Get the description
+        QString engineDescription() const {return description;}
+
+    private slots:
+        void iconDownloadFinished(KJob* job);
+
+    private:
+        QString data_dir;
+        QString name;
+        QString description;
+        QString url;
+        QString icon_url;
+        KIcon icon;
+
+        friend class OpenSearchHandler;
+    };
 
 }
 

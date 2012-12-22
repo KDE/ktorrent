@@ -39,126 +39,126 @@ using namespace bt;
 
 namespace kt
 {
-	MediaViewFilter::MediaViewFilter(QObject* parent) 
-		: QSortFilterProxyModel(parent),
-		show_incomplete(false)
-	{
-	}
+    MediaViewFilter::MediaViewFilter(QObject* parent)
+        : QSortFilterProxyModel(parent),
+          show_incomplete(false)
+    {
+    }
 
-	MediaViewFilter::~MediaViewFilter()
-	{
-	}
+    MediaViewFilter::~MediaViewFilter()
+    {
+    }
 
-	void MediaViewFilter::setShowIncomplete(bool on)
-	{
-		show_incomplete = on;
-		invalidateFilter();
-	}
+    void MediaViewFilter::setShowIncomplete(bool on)
+    {
+        show_incomplete = on;
+        invalidateFilter();
+    }
 
-	bool MediaViewFilter::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
-	{
-		if (show_incomplete)
-			return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
-		
-		MediaModel* model = (MediaModel*)sourceModel();
-		MediaFileRef ref = model->fileForIndex(model->index(source_row));
-		MediaFile::Ptr file = ref.mediaFile();
-		if (file->fullyAvailable())
-			return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
-		else
-			return false;
-	}
+    bool MediaViewFilter::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
+    {
+        if (show_incomplete)
+            return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 
-	void MediaViewFilter::refresh()
-	{
-		invalidateFilter();
-	}
+        MediaModel* model = (MediaModel*)sourceModel();
+        MediaFileRef ref = model->fileForIndex(model->index(source_row));
+        MediaFile::Ptr file = ref.mediaFile();
+        if (file->fullyAvailable())
+            return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+        else
+            return false;
+    }
 
-	
-
-	MediaView::MediaView(MediaModel* model,QWidget* parent)
-			: QWidget(parent),model(model)
-	{
-		filter = new MediaViewFilter(this);
-		filter->setSourceModel(model);
-		filter->setFilterRole(Qt::DisplayRole);
-		filter->setFilterCaseSensitivity(Qt::CaseInsensitive);
-		filter->setSortRole(Qt::UserRole + 1);
-		filter->sort(0,Qt::DescendingOrder);
-		
-		
-		QVBoxLayout* layout = new QVBoxLayout(this);
-		layout->setSpacing(0);
-		layout->setMargin(0);
-		
-		QHBoxLayout* hbox = new QHBoxLayout();
-		hbox->setSpacing(0);
-		hbox->setMargin(0);
-		
-		tool_bar = new KToolBar(this);
-		hbox->addWidget(tool_bar);
-		
-		show_incomplete = tool_bar->addAction(KIcon("task-ongoing"), i18n("Show incomplete files"));
-		show_incomplete->setCheckable(true);
-		show_incomplete->setChecked(false);
-		connect(show_incomplete,SIGNAL(toggled(bool)),this,SLOT(showIncompleteChanged(bool)));
-		
-		refresh = tool_bar->addAction(KIcon("view-refresh"), i18n("Refresh"), filter, SLOT(refresh()));
-		refresh->setToolTip(i18n("Refresh media files"));
-		
-		search_box = new KLineEdit(this);
-		search_box->setClearButtonShown(true);
-		search_box->setClickMessage(i18n("Search media files"));
-		connect(search_box,SIGNAL(textChanged(QString)),filter,SLOT(setFilterFixedString(QString)));
-		hbox->addWidget(search_box);
-		
-		layout->addLayout(hbox);
-		
-		media_tree = new QListView(this);
-		media_tree->setModel(filter);
-		media_tree->setDragEnabled(true);
-		media_tree->setSelectionMode(QAbstractItemView::ContiguousSelection);
-		media_tree->setAlternatingRowColors(true);
-		layout->addWidget(media_tree);
-		
-		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(onDoubleClicked(QModelIndex)));
-	}
+    void MediaViewFilter::refresh()
+    {
+        invalidateFilter();
+    }
 
 
-	MediaView::~MediaView()
-	{
-	}
-	
-	void MediaView::onDoubleClicked(const QModelIndex& index)
-	{
-		if (!index.isValid())
-			return;
-		
-		QModelIndex idx = filter->mapToSource(index);
-		if (!idx.isValid())
-			return;
-		
-		doubleClicked(model->fileForIndex(idx));
-	}
-	
-	void MediaView::showIncompleteChanged(bool on)
-	{
-		filter->setShowIncomplete(on);
-	}
 
-	void MediaView::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("MediaView");
-		show_incomplete->setChecked(g.readEntry("show_incomplete", false));
-		search_box->setText(g.readEntry("search_text", QString()));
-		
-	}
+    MediaView::MediaView(MediaModel* model, QWidget* parent)
+        : QWidget(parent), model(model)
+    {
+        filter = new MediaViewFilter(this);
+        filter->setSourceModel(model);
+        filter->setFilterRole(Qt::DisplayRole);
+        filter->setFilterCaseSensitivity(Qt::CaseInsensitive);
+        filter->setSortRole(Qt::UserRole + 1);
+        filter->sort(0, Qt::DescendingOrder);
 
-	void MediaView::saveState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("MediaView");
-		g.writeEntry("show_incomplete", show_incomplete->isChecked());
-		g.writeEntry("search_text", search_box->text());
-	}
+
+        QVBoxLayout* layout = new QVBoxLayout(this);
+        layout->setSpacing(0);
+        layout->setMargin(0);
+
+        QHBoxLayout* hbox = new QHBoxLayout();
+        hbox->setSpacing(0);
+        hbox->setMargin(0);
+
+        tool_bar = new KToolBar(this);
+        hbox->addWidget(tool_bar);
+
+        show_incomplete = tool_bar->addAction(KIcon("task-ongoing"), i18n("Show incomplete files"));
+        show_incomplete->setCheckable(true);
+        show_incomplete->setChecked(false);
+        connect(show_incomplete, SIGNAL(toggled(bool)), this, SLOT(showIncompleteChanged(bool)));
+
+        refresh = tool_bar->addAction(KIcon("view-refresh"), i18n("Refresh"), filter, SLOT(refresh()));
+        refresh->setToolTip(i18n("Refresh media files"));
+
+        search_box = new KLineEdit(this);
+        search_box->setClearButtonShown(true);
+        search_box->setClickMessage(i18n("Search media files"));
+        connect(search_box, SIGNAL(textChanged(QString)), filter, SLOT(setFilterFixedString(QString)));
+        hbox->addWidget(search_box);
+
+        layout->addLayout(hbox);
+
+        media_tree = new QListView(this);
+        media_tree->setModel(filter);
+        media_tree->setDragEnabled(true);
+        media_tree->setSelectionMode(QAbstractItemView::ContiguousSelection);
+        media_tree->setAlternatingRowColors(true);
+        layout->addWidget(media_tree);
+
+        connect(media_tree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onDoubleClicked(QModelIndex)));
+    }
+
+
+    MediaView::~MediaView()
+    {
+    }
+
+    void MediaView::onDoubleClicked(const QModelIndex& index)
+    {
+        if (!index.isValid())
+            return;
+
+        QModelIndex idx = filter->mapToSource(index);
+        if (!idx.isValid())
+            return;
+
+        doubleClicked(model->fileForIndex(idx));
+    }
+
+    void MediaView::showIncompleteChanged(bool on)
+    {
+        filter->setShowIncomplete(on);
+    }
+
+    void MediaView::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("MediaView");
+        show_incomplete->setChecked(g.readEntry("show_incomplete", false));
+        search_box->setText(g.readEntry("search_text", QString()));
+
+    }
+
+    void MediaView::saveState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("MediaView");
+        g.writeEntry("show_incomplete", show_incomplete->isChecked());
+        g.writeEntry("search_text", search_box->text());
+    }
 
 }

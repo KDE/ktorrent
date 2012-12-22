@@ -26,57 +26,57 @@
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
 namespace kt
 {
 
-	/**
-		Model for the download order in the dialog
-	*/
-	class DownloadOrderModel : public QAbstractListModel
-	{
-		Q_OBJECT
-	public:
-		DownloadOrderModel(bt::TorrentInterface* tor, QObject* parent);
-		virtual ~DownloadOrderModel();
+    /**
+        Model for the download order in the dialog
+    */
+    class DownloadOrderModel : public QAbstractListModel
+    {
+        Q_OBJECT
+    public:
+        DownloadOrderModel(bt::TorrentInterface* tor, QObject* parent);
+        virtual ~DownloadOrderModel();
 
-		/// Initialize the order
-		void initOrder(const QList<bt::Uint32> & sl) {order = sl;}
+        /// Initialize the order
+        void initOrder(const QList<bt::Uint32> & sl) {order = sl;}
 
-		/// Get the order
-		const QList<bt::Uint32> & downloadOrder() const {return order;}
+        /// Get the order
+        const QList<bt::Uint32> & downloadOrder() const {return order;}
 
-		/// Find a text in the file list
-		QModelIndex find(const QString & text);
+        /// Find a text in the file list
+        QModelIndex find(const QString& text);
 
-		/// Clear high lights
-		void clearHighLights();
+        /// Clear high lights
+        void clearHighLights();
 
-		virtual int rowCount(const QModelIndex & parent) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
-		virtual Qt::DropActions supportedDropActions() const;
-		virtual QStringList mimeTypes() const;
-		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
-		virtual bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+        virtual int rowCount(const QModelIndex& parent) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+        virtual Qt::DropActions supportedDropActions() const;
+        virtual QStringList mimeTypes() const;
+        virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
+        virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
 
-		void moveUp(int row, int count);
-		void moveDown(int row, int count);
-		void moveTop(int row, int count);
-		void moveBottom(int row, int count);
-		
-	public slots:
-		void sortByName();
-		void sortBySeasonsAndEpisodes();
-		void sortByAlbumTrackOrder();
+        void moveUp(int row, int count);
+        void moveDown(int row, int count);
+        void moveTop(int row, int count);
+        void moveBottom(int row, int count);
 
-	private:
-		bt::TorrentInterface* tor;
-		QList<bt::Uint32> order;
-		QString current_search_text;
-	};
+    public slots:
+        void sortByName();
+        void sortBySeasonsAndEpisodes();
+        void sortByAlbumTrackOrder();
+
+    private:
+        bt::TorrentInterface* tor;
+        QList<bt::Uint32> order;
+        QString current_search_text;
+    };
 
 }
 

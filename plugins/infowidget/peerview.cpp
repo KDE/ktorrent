@@ -35,108 +35,108 @@ using namespace bt;
 
 namespace kt
 {
-	
 
-	PeerView::PeerView(QWidget* parent) : QTreeView(parent)
-	{
-		setContextMenuPolicy(Qt::CustomContextMenu);
-		setRootIsDecorated(false);
-		setSortingEnabled(true);
-		setAlternatingRowColors(true);
-		setUniformRowHeights(true);
-		
-		pm = new QSortFilterProxyModel(this);
-		pm->setSortRole(Qt::UserRole);
-		pm->setDynamicSortFilter(true);
-		model = new PeerViewModel(this);
-		pm->setSourceModel(model);
-		setModel(pm);
-		
-		context_menu = new KMenu(this);
-		context_menu->addAction(KIcon("list-remove-user"),i18n("Kick Peer"),this,SLOT(kickPeer()));
-		context_menu->addAction(KIcon("view-filter"),i18n("Ban Peer"),this,SLOT(banPeer()));
-		connect(this,SIGNAL(customContextMenuRequested(const QPoint & )),
-				this,SLOT(showContextMenu(const QPoint& )));
-	}
 
-	PeerView::~PeerView()
-	{
-	}
-	
-	void PeerView::showContextMenu(const QPoint& pos)
-	{
-		if (selectionModel()->selectedRows().count() == 0)
-			return;
-	
-		context_menu->popup(viewport()->mapToGlobal(pos));
-	}
-	
-	void PeerView::banPeer()
-	{
-		AccessManager & aman = AccessManager::instance();
-		
-		QModelIndexList indices = selectionModel()->selectedRows();
-		foreach (const QModelIndex &idx,indices)
-		{
-			bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
-			if (peer)
-			{
-				aman.banPeer(peer->getStats().ip_address);
-				peer->kill();
-			}
-		}
-	}
-	
-	void PeerView::kickPeer()
-	{
-		QModelIndexList indices = selectionModel()->selectedRows();
-		foreach (const QModelIndex &idx,indices)
-		{
-			bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
-			if (peer)
-				peer->kill();
-		}
-	}
+    PeerView::PeerView(QWidget* parent) : QTreeView(parent)
+    {
+        setContextMenuPolicy(Qt::CustomContextMenu);
+        setRootIsDecorated(false);
+        setSortingEnabled(true);
+        setAlternatingRowColors(true);
+        setUniformRowHeights(true);
 
-	void PeerView::peerAdded(PeerInterface* peer)
-	{
-		model->peerAdded(peer);
-	}
+        pm = new QSortFilterProxyModel(this);
+        pm->setSortRole(Qt::UserRole);
+        pm->setDynamicSortFilter(true);
+        model = new PeerViewModel(this);
+        pm->setSourceModel(model);
+        setModel(pm);
 
-	void PeerView::peerRemoved(PeerInterface* peer)
-	{
-		model->peerRemoved(peer);
-	}
+        context_menu = new KMenu(this);
+        context_menu->addAction(KIcon("list-remove-user"), i18n("Kick Peer"), this, SLOT(kickPeer()));
+        context_menu->addAction(KIcon("view-filter"), i18n("Ban Peer"), this, SLOT(banPeer()));
+        connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
+                this, SLOT(showContextMenu(const QPoint&)));
+    }
 
-	void PeerView::update()
-	{
-		model->update();
-	}
+    PeerView::~PeerView()
+    {
+    }
 
-	void PeerView::removeAll()
-	{
-		model->clear();
-	}
+    void PeerView::showContextMenu(const QPoint& pos)
+    {
+        if (selectionModel()->selectedRows().count() == 0)
+            return;
 
-	void PeerView::saveState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("PeerView");
-		QByteArray s = header()->saveState();
-		g.writeEntry("state",s.toBase64());
-	}
-	
-	void PeerView::loadState(KSharedConfigPtr cfg)
-	{
-		KConfigGroup g = cfg->group("PeerView");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
-		if (!s.isNull())
-		{
-			QHeaderView* v = header();
-			v->restoreState(s);
-			sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
-			pm->sort(v->sortIndicatorSection(),v->sortIndicatorOrder());
-		}
-	}
+        context_menu->popup(viewport()->mapToGlobal(pos));
+    }
+
+    void PeerView::banPeer()
+    {
+        AccessManager& aman = AccessManager::instance();
+
+        QModelIndexList indices = selectionModel()->selectedRows();
+        foreach (const QModelIndex& idx, indices)
+        {
+            bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
+            if (peer)
+            {
+                aman.banPeer(peer->getStats().ip_address);
+                peer->kill();
+            }
+        }
+    }
+
+    void PeerView::kickPeer()
+    {
+        QModelIndexList indices = selectionModel()->selectedRows();
+        foreach (const QModelIndex& idx, indices)
+        {
+            bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
+            if (peer)
+                peer->kill();
+        }
+    }
+
+    void PeerView::peerAdded(PeerInterface* peer)
+    {
+        model->peerAdded(peer);
+    }
+
+    void PeerView::peerRemoved(PeerInterface* peer)
+    {
+        model->peerRemoved(peer);
+    }
+
+    void PeerView::update()
+    {
+        model->update();
+    }
+
+    void PeerView::removeAll()
+    {
+        model->clear();
+    }
+
+    void PeerView::saveState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("PeerView");
+        QByteArray s = header()->saveState();
+        g.writeEntry("state", s.toBase64());
+    }
+
+    void PeerView::loadState(KSharedConfigPtr cfg)
+    {
+        KConfigGroup g = cfg->group("PeerView");
+        QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
+        if (!s.isNull())
+        {
+            QHeaderView* v = header();
+            v->restoreState(s);
+            sortByColumn(v->sortIndicatorSection(), v->sortIndicatorOrder());
+            pm->sort(v->sortIndicatorSection(), v->sortIndicatorOrder());
+        }
+    }
 }
 
 #include "peerview.moc"

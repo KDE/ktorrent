@@ -27,37 +27,37 @@
 
 namespace kt
 {
-	class Core;
+    class Core;
 
-	/**
-	 * @author Ivan Vasic
-	 * @brief Torrent URL paste dialog
-	 **/
-	class PasteDialog: public KDialog, public Ui_PasteDlgBase
-	{
-		Q_OBJECT
-	public:
-		PasteDialog(Core* core, QWidget* parent = 0, Qt::WFlags fl = 0);
-		virtual ~PasteDialog();
-		
-		/**
-		* Load the state of the dialog
-		*/
-		void loadState(KSharedConfigPtr cfg);
-		
-		/**
-		* Save the state of the dialog
-		*/
-		void saveState(KSharedConfigPtr cfg);
-		
-	public slots:
-		virtual void accept();
-		
-	private:
-		void loadGroups();
-		
-	private:
-		Core* m_core;
-	};
+    /**
+     * @author Ivan Vasic
+     * @brief Torrent URL paste dialog
+     **/
+    class PasteDialog: public KDialog, public Ui_PasteDlgBase
+    {
+        Q_OBJECT
+    public:
+        PasteDialog(Core* core, QWidget* parent = 0, Qt::WFlags fl = 0);
+        virtual ~PasteDialog();
+
+        /**
+        * Load the state of the dialog
+        */
+        void loadState(KSharedConfigPtr cfg);
+
+        /**
+        * Save the state of the dialog
+        */
+        void saveState(KSharedConfigPtr cfg);
+
+    public slots:
+        virtual void accept();
+
+    private:
+        void loadGroups();
+
+    private:
+        Core* m_core;
+    };
 }
 #endif

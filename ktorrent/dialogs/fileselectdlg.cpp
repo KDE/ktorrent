@@ -374,12 +374,12 @@ namespace kt
         Settings::self()->writeConfig();
         QDialog::accept();
     }
-    
+
     QString FileSelectDlg::selectedGroup() const
     {
         if (m_cmbGroups->currentIndex() == 0)
             return QString();
-        
+
         return m_cmbGroups->currentText();
     }
 

@@ -32,70 +32,70 @@ class KLineEdit;
 
 namespace bt
 {
-	class TorrentInterface;
+    class TorrentInterface;
 }
 
 namespace kt
 {
-	class QueueManager;
-	class QueueManagerModel;
-	
-	/**
-	 * @author Joris Guisson
-	 * 
-	 * Widget for the QueueManager
-	*/
-	class QueueManagerWidget : public QWidget
-	{
-		Q_OBJECT
-	public:
-		QueueManagerWidget(QueueManager* qman,QWidget* parent);
-		virtual ~QueueManagerWidget();
-		
-		/// Save the widget state
-		void saveState(KSharedConfigPtr cfg);
-		/// Load the widget state
-		void loadState(KSharedConfigPtr cfg);
-		/// Update the widget
-		void update();
-		
-	public slots:
-		void onTorrentAdded(bt::TorrentInterface* tc);
-		void onTorrentRemoved(bt::TorrentInterface* tc);
-		
-	private slots:
-		void moveUpClicked();
-		void moveDownClicked();
-		void moveTopClicked();
-		void moveBottomClicked();
-		void searchTextChanged(const QString & t);
-		void showSearch(bool on);
-		void showDownloads(bool on);
-		void showUploads(bool on);
-		void showNotQueued(bool on);
-		void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
+    class QueueManager;
+    class QueueManagerModel;
 
-	private:
-		bool indexVisible(const QModelIndex & idx);
-		void updateButtons();
-		
-	private:
-		QueueManagerModel* model;
-		QueueManager* qman;
-		QTreeView* view;
-		QToolBar* toolbar;
-		KLineEdit* search;
-		
-		QAction* show_search;
-		QAction* move_top;
-		QAction* move_up;
-		QAction* move_down;
-		QAction* move_bottom;
-		
-		QAction* show_uploads;
-		QAction* show_downloads;
-		QAction* show_not_queued;
-	};
+    /**
+     * @author Joris Guisson
+     *
+     * Widget for the QueueManager
+    */
+    class QueueManagerWidget : public QWidget
+    {
+        Q_OBJECT
+    public:
+        QueueManagerWidget(QueueManager* qman, QWidget* parent);
+        virtual ~QueueManagerWidget();
+
+        /// Save the widget state
+        void saveState(KSharedConfigPtr cfg);
+        /// Load the widget state
+        void loadState(KSharedConfigPtr cfg);
+        /// Update the widget
+        void update();
+
+    public slots:
+        void onTorrentAdded(bt::TorrentInterface* tc);
+        void onTorrentRemoved(bt::TorrentInterface* tc);
+
+    private slots:
+        void moveUpClicked();
+        void moveDownClicked();
+        void moveTopClicked();
+        void moveBottomClicked();
+        void searchTextChanged(const QString& t);
+        void showSearch(bool on);
+        void showDownloads(bool on);
+        void showUploads(bool on);
+        void showNotQueued(bool on);
+        void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+
+    private:
+        bool indexVisible(const QModelIndex& idx);
+        void updateButtons();
+
+    private:
+        QueueManagerModel* model;
+        QueueManager* qman;
+        QTreeView* view;
+        QToolBar* toolbar;
+        KLineEdit* search;
+
+        QAction* show_search;
+        QAction* move_top;
+        QAction* move_up;
+        QAction* move_down;
+        QAction* move_bottom;
+
+        QAction* show_uploads;
+        QAction* show_downloads;
+        QAction* show_not_queued;
+    };
 }
 
 #endif

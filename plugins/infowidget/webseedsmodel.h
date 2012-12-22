@@ -29,46 +29,46 @@
 namespace kt
 {
 
-	/**
-		@author
-	*/
-	class WebSeedsModel : public QAbstractTableModel
-	{
-		Q_OBJECT
-	
-	public:
-		WebSeedsModel(QObject* parent);
-		virtual ~WebSeedsModel();
-		
-		
-		/**
-		 * Change the current torrent.
-		 * @param tc 
-		 */
-		void changeTC(bt::TorrentInterface* tc);
-		
-		/**
-		 *  See if we need to update the model
-		 */
-		bool update();
-		
-		virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
-		virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
-		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
-		
-	private:
-		struct Item
-		{
-			QString status;
-			bt::Uint64 downloaded;
-			bt::Uint32 speed;
-		};
-		bt::TorrentInterface::WPtr curr_tc;
-		QVector<Item> items;
-	};
+    /**
+        @author
+    */
+    class WebSeedsModel : public QAbstractTableModel
+    {
+        Q_OBJECT
+
+    public:
+        WebSeedsModel(QObject* parent);
+        virtual ~WebSeedsModel();
+
+
+        /**
+         * Change the current torrent.
+         * @param tc
+         */
+        void changeTC(bt::TorrentInterface* tc);
+
+        /**
+         *  See if we need to update the model
+         */
+        bool update();
+
+        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        virtual QVariant data(const QModelIndex& index, int role) const;
+        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
+
+    private:
+        struct Item
+        {
+            QString status;
+            bt::Uint64 downloaded;
+            bt::Uint32 speed;
+        };
+        bt::TorrentInterface::WPtr curr_tc;
+        QVector<Item> items;
+    };
 
 }
 

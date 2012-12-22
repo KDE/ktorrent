@@ -34,59 +34,59 @@ class KToolBar;
 
 namespace kt
 {
-	class MediaModel;
-	
-	/**
-	 * QSortFilterProxyModel to filter out incomplete files
-	 */
-	class MediaViewFilter : public QSortFilterProxyModel
-	{
-		Q_OBJECT
-	public:
-		MediaViewFilter(QObject* parent = 0);
-		virtual ~MediaViewFilter();
-		
-		virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
-		
-		/// Enable or disable showing of incomplete files
-		void setShowIncomplete(bool on);
-		
-	public slots:
-		void refresh();
-		
-	private:
-		bool show_incomplete;
-	};
+    class MediaModel;
 
-	/**
-		@author
-	*/
-	class MediaView : public QWidget
-	{
-		Q_OBJECT
-	public:
-		MediaView(MediaModel* model,QWidget* parent);
-		virtual ~MediaView();
-		
-		void saveState(KSharedConfigPtr cfg);
-		void loadState(KSharedConfigPtr cfg);
-		
-	signals:
-		void doubleClicked(const MediaFileRef & mf);
-		
-	private slots:
-		void onDoubleClicked(const QModelIndex & index);
-		void showIncompleteChanged(bool on);
+    /**
+     * QSortFilterProxyModel to filter out incomplete files
+     */
+    class MediaViewFilter : public QSortFilterProxyModel
+    {
+        Q_OBJECT
+    public:
+        MediaViewFilter(QObject* parent = 0);
+        virtual ~MediaViewFilter();
 
-	private:
-		MediaModel* model;
-		QListView* media_tree;
-		KLineEdit* search_box;
-		MediaViewFilter* filter;
-		KToolBar* tool_bar;
-		QAction* show_incomplete;
-		QAction* refresh;
-	};
+        virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+
+        /// Enable or disable showing of incomplete files
+        void setShowIncomplete(bool on);
+
+    public slots:
+        void refresh();
+
+    private:
+        bool show_incomplete;
+    };
+
+    /**
+        @author
+    */
+    class MediaView : public QWidget
+    {
+        Q_OBJECT
+    public:
+        MediaView(MediaModel* model, QWidget* parent);
+        virtual ~MediaView();
+
+        void saveState(KSharedConfigPtr cfg);
+        void loadState(KSharedConfigPtr cfg);
+
+    signals:
+        void doubleClicked(const MediaFileRef& mf);
+
+    private slots:
+        void onDoubleClicked(const QModelIndex& index);
+        void showIncompleteChanged(bool on);
+
+    private:
+        MediaModel* model;
+        QListView* media_tree;
+        KLineEdit* search_box;
+        MediaViewFilter* filter;
+        KToolBar* tool_bar;
+        QAction* show_incomplete;
+        QAction* refresh;
+    };
 
 }
 

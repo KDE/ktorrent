@@ -27,38 +27,38 @@
 namespace kt
 {
 
-	/**
-		Job which tries to find an opensearch xml description on a website and 
-		download that to a directory.
-	*/
-	class OpenSearchDownloadJob : public KIO::Job
-	{
-		Q_OBJECT
-	public:
-		OpenSearchDownloadJob(const KUrl & url,const QString & dir);
-		virtual ~OpenSearchDownloadJob();
+    /**
+        Job which tries to find an opensearch xml description on a website and
+        download that to a directory.
+    */
+    class OpenSearchDownloadJob : public KIO::Job
+    {
+        Q_OBJECT
+    public:
+        OpenSearchDownloadJob(const KUrl& url, const QString& dir);
+        virtual ~OpenSearchDownloadJob();
 
-		/// Start the job
-		void start();
-		
-		/// Get the directory 
-		QString directory() const {return dir;}
-		
-		/// Get the hostname
-		QString hostname() const {return url.host();}
-		
-	private slots:
-		void getFinished(KJob* j);
-		void xmlFileDownloadFinished(KJob* j);
-		
-	private:
-		bool checkLinkTagContent(const QString & content);
-		QString htmlParam(const QString & param,const QString & content);
-		
-	private:
-		KUrl url;
-		QString dir;
-	};
+        /// Start the job
+        void start();
+
+        /// Get the directory
+        QString directory() const {return dir;}
+
+        /// Get the hostname
+        QString hostname() const {return url.host();}
+
+    private slots:
+        void getFinished(KJob* j);
+        void xmlFileDownloadFinished(KJob* j);
+
+    private:
+        bool checkLinkTagContent(const QString& content);
+        QString htmlParam(const QString& param, const QString& content);
+
+    private:
+        KUrl url;
+        QString dir;
+    };
 
 }
 
