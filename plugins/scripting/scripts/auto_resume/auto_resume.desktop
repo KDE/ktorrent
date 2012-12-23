@@ -2,7 +2,6 @@
 Name=Automatic Resume
 Name[ast]=Reanudación automática
 Name[bg]=Автоматично продължаване
-Name[bs]=Automatsko nastavljanje
 Name[ca]=Represa automàtica
 Name[ca@valencia]=Represa automàtica
 Name[cs]=Automatické pokračování
@@ -49,7 +48,6 @@ Name[x-test]=xxAutomatic Resumexx
 Name[zh_CN]=自动恢复
 Name[zh_TW]=自動回復
 Comment=Script to automatically resume after some time, when the suspended state is enabled
-Comment[bs]=Skripta za automatsko nastavljanje nakon određenog vremena, kada se pređe u stanje suspendovanosti
 Comment[ca]=Script per a reprendre automàticament després d'un temps, quan està activat l'estat de suspensió
 Comment[ca@valencia]=Script per a reprendre automàticament després d'un temps, quan està activat l'estat de suspensió
 Comment[cs]=Skript, který automaticky po určité době spustí stahování, pokud je torrent pozastaven

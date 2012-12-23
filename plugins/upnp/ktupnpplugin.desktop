@@ -2,7 +2,6 @@
 Name=UPnP
 Name[ast]=UPnP
 Name[bg]=UPnP
-Name[bs]=UPnP
 Name[ca]=UPnP
 Name[ca@valencia]=UPnP
 Name[cs]=UPnP
@@ -53,7 +52,6 @@ Name[zh_TW]=UPnP
 Comment=Forward ports using UPnP
 Comment[ast]=Reunviar puertos usando UPnP
 Comment[bg]=Пренасочване на портове с UPnP
-Comment[bs]=Proslijedi priključke koristeći UPnP
 Comment[ca]=Redirecció de ports usant UPnP
 Comment[ca@valencia]=Redirecció de ports usant UPnP
 Comment[cs]=Předávání portů pomocí UPnP

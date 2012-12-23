@@ -2,7 +2,6 @@
 Name=Log Viewer
 Name[ast]=Visualización del rexistru
 Name[bg]=Преглед на дневника
-Name[bs]=Prikazivač dnevnika
 Name[ca]=Visor del registre
 Name[ca@valencia]=Visor del registre
 Name[cs]=Prohlížeč záznamů
@@ -51,7 +50,6 @@ Name[zh_CN]=日志查看器
 Name[zh_TW]=紀錄檢視器
 Comment=Displays the logging output
 Comment[bg]=Показване на изхода от дневника
-Comment[bs]=Prikazuje upise dnevnika
 Comment[ca]=Mostra la sortida del registre
 Comment[ca@valencia]=Mostra l'eixida del registre
 Comment[cs]=Zobrazí výstup záznamu

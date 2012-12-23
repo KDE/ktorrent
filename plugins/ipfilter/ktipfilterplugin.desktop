@@ -2,7 +2,6 @@
 Name=IP Filter
 Name[ast]=Peñera d'IP
 Name[bg]=Филтър по IP
-Name[bs]=IP filter
 Name[ca]=Filtre d'IP
 Name[ca@valencia]=Filtre d'IP
 Name[cs]=Filtr IP
@@ -51,7 +50,6 @@ Name[zh_CN]=IP 过滤
 Name[zh_TW]=IP 過濾
 Comment=Filter IP addresses through a blocklist
 Comment[bg]=Филтриране на IP-адресите с черен списък
-Comment[bs]=Filtrirajte IP adrese kroz listu blokiranja
 Comment[ca]=Filtra adreces IP a través d'una llista de bloqueig
 Comment[ca@valencia]=Filtra adreces IP a través d'una llista de bloqueig
 Comment[cs]=Filtrovat IP adresy podle seznamu blokovaných

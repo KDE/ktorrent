@@ -2,7 +2,6 @@
 Name=Scripting
 Name[ast]=Scripting
 Name[bg]=Скриптиране
-Name[bs]=Skriptovanje
 Name[ca]=Scripting
 Name[ca@valencia]=Scripting
 Name[cs]=Skriptování
@@ -51,7 +50,6 @@ Name[zh_TW]=文稿
 Comment=Enables Kross scripting support
 Comment[ast]=Activa'l sofitu de scripting de Kross
 Comment[bg]=Включване на поддръжка на скриптиране на Kross
-Comment[bs]=Omogućava podršku za skriptovanje Krosom
 Comment[ca]=Habilita l'ús d'scripts Kross 
 Comment[ca@valencia]=Habilita l'ús d'scripts Kross 
 Comment[cs]=Podpora skriptování Kross
