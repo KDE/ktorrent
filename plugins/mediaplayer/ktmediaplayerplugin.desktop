@@ -2,6 +2,7 @@
 Name=Media Player
 Name[ast]=Reproductor Multimedia
 Name[bg]=Медиен плеър
+Name[bs]=Izvođač medija
 Name[ca]=Reproductor de suports
 Name[ca@valencia]=Reproductor de suports
 Name[cs]=Přehrávač médií
@@ -51,6 +52,7 @@ Name[zh_TW]=媒體播放器
 Comment=Phonon-based media player
 Comment[ast]=Reproductor multimedia basáu en Phonon
 Comment[bg]=Програма за преглед на мултимедия на основата на Phonon
+Comment[bs]=Medija plejer zasnovan na Fononu
 Comment[ca]=Reproductor de medis basat en Phonon
 Comment[ca@valencia]=Reproductor de medis basat en Phonon
 Comment[cs]=Přehrávač médií založený na Phononu

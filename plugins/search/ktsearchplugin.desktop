@@ -2,6 +2,7 @@
 Name=Search
 Name[ast]=Guetar
 Name[bg]=Търсене
+Name[bs]=Traži
 Name[ca]=Cerca
 Name[ca@valencia]=Cerca
 Name[cs]=Hledat
@@ -51,6 +52,7 @@ Name[zh_TW]=搜尋
 Comment=Search for torrents
 Comment[ast]=Guetar torrents
 Comment[bg]=Търсене на торенти
+Comment[bs]=Traži torente
 Comment[ca]=Cerca de torrents
 Comment[ca@valencia]=Cerca de torrents
 Comment[cs]=Hledat torrenty
