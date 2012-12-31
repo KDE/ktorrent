@@ -65,6 +65,7 @@ Name[hu]=A torrent csendesen megnyitva
 Name[lt]=Torentas tyliai įkeltas
 Name[nb]=Torrent åpnet stille
 Name[nl]=Torrent stilletjes geopend
+Name[pl]=Torrent został otworzony po cichu
 Name[pt]=A torrente foi aberta silenciosamente
 Name[pt_BR]=O torrent foi aberto silenciosamente
 Name[sk]=Torrent ticho otvorený
@@ -76,6 +77,7 @@ Name[sr@latin]=Torent tiho otvoren
 Name[sv]=Dataflödet öppnades utan meddelanden
 Name[uk]=Торент відкрито без додаткових запитів
 Name[x-test]=xxTorrent silently openedxx
+Name[zh_CN]=种子已静默打开
 Action=Sound|Popup
 
 [Event/TorrentStoppedByError]
@@ -178,7 +180,7 @@ Name[sv]=Nerladdning av dataflöde är klar
 Name[tr]=Torrent indirme işlemi tamamlandı
 Name[uk]=Звантаження торента завершено
 Name[x-test]=xxTorrent has finished downloadingxx
-Name[zh_CN]=种子完成下载
+Name[zh_CN]=种子已下载完成
 Name[zh_TW]=Torrent 已完成下載
 Action=Sound|Popup
 
@@ -230,7 +232,7 @@ Name[sv]=Maximalt delningsförhållande uppnått
 Name[tr]=En yüksek paylaşım oranına ulaşıldı
 Name[uk]=Досягнути максимального відношення поширення
 Name[x-test]=xxMaximum share ratio reachedxx
-Name[zh_CN]=可达到的最高共享率
+Name[zh_CN]=已达到的最高分享率
 Name[zh_TW]=已達到最大的分享比率
 Action=Sound|Popup
 
@@ -282,7 +284,7 @@ Name[sv]=Maximal erbjudningstid uppnådd
 Name[tr]=En yüksek paylaşım süresine ulaşıldı
 Name[uk]=Досягнуто максимального часу поширення
 Name[x-test]=xxMaximum seed time reachedxx
-Name[zh_CN]=可达到的最大做种时间
+Name[zh_CN]=已达到的最大做种时间
 Name[zh_TW]=已達到最大播種時間
 Action=Sound|Popup
 
@@ -439,7 +441,7 @@ Name[sv]=Dataflödet kan inte köas
 Name[tr]=Torrent bekletilemez
 Name[uk]=Торент неможливо поставити в чергу
 Name[x-test]=xxTorrent cannot be enqueuedxx
-Name[zh_CN]=种子无法排入队列
+Name[zh_CN]=无法将种子排入队列
 Name[zh_TW]=Torrent 無法加入佇列
 Action=Sound|Popup
 
@@ -491,7 +493,7 @@ Name[sv]=Dataflödet kan inte startas
 Name[tr]=Torrent başlatılamadı
 Name[uk]=Неможливо запустити торент
 Name[x-test]=xxTorrent cannot be startedxx
-Name[zh_CN]=种子无法启动
+Name[zh_CN]=无法启动种子
 Name[zh_TW]=Torrent 無法被啟始
 Action=Sound|Popup
 
@@ -543,7 +545,7 @@ Name[sv]=Dataflödet kan inte laddas tyst
 Name[tr]=Torrent sessizce yüklenemedi
 Name[uk]=Неможливо завантажити торент без додаткової інформації
 Name[x-test]=xxTorrent cannot be loaded silentlyxx
-Name[zh_CN]=种子无法静默装入
+Name[zh_CN]=无法静默地加载种子
 Name[zh_TW]=Torrent 無法安靜地被載入
 Action=Sound|Popup
 
@@ -670,5 +672,6 @@ Name[sv]=Nerladdning med magnetlänk startad
 Name[tr]=Magnet bağlantı indirmesi başlatıldı
 Name[uk]=Розпочато звантаження за маґнет-посиланням
 Name[x-test]=xxMagnet link download startedxx
+Name[zh_CN]=已开始磁力链下载
 Name[zh_TW]=Magnet 連結下載已開始
 Action=Sound|Popup
