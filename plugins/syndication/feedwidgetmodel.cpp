@@ -148,7 +148,7 @@ namespace kt
         QList<Syndication::EnclosurePtr> encs = item->enclosures();
         foreach (Syndication::EnclosurePtr e, encs)
         {
-            if (e->type() == "application/x-bittorrent")
+            if (e->type() == "application/x-bittorrent" || e->url().endsWith(".torrent"))
                 return e->url();
         }
 
