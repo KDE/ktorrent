@@ -95,6 +95,7 @@ Comment[sv]=Ktorrent-datagränssnitt, för att hämta information från Ktorrent
 Comment[tr]=Ktorrent veri motoru, KTorrent'ten bilgi almaya yarayan veri motoru
 Comment[uk]=Рушій даних KTorrent, для отримання відомостей від KTorrent
 Comment[x-test]=xxKTorrent data engine, for getting information from KTorrentxx
+Comment[zh_CN]=KTorrent 数据引擎，用于从 KTorrent 获取信息
 Comment[zh_TW]=KTorrent 資料引擎，從 KTorrent 中取得資訊
 X-KDE-ServiceTypes=Plasma/DataEngine
 Type=Service
