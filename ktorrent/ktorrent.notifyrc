@@ -81,6 +81,7 @@ Name[sv]=Dataflödet öppnades utan meddelanden
 Name[uk]=Торент відкрито без додаткових запитів
 Name[x-test]=xxTorrent silently openedxx
 Name[zh_CN]=种子已静默打开
+Name[zh_TW]=Torrent 無聲地開啟
 Action=Sound|Popup
 
 [Event/TorrentStoppedByError]
