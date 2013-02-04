@@ -709,10 +709,9 @@ namespace kt
 
     void Core::delayedStart()
     {
+        qman->orderQueue();
         if (!kt::QueueManager::enabled())
-            qman->startAutoStartTorrents();
-        else
-            qman->orderQueue();
+            qman->startAutoStartTorrents(); 
     }
 
 

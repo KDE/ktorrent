@@ -11,6 +11,7 @@ Changes in 4.4:
 - Add option to enable or disable torrent highlighting (Review: 107810)
 - Fix queue order not reflecting reality in some circumstances (308579)
 - Use enclosure urls ending with .torrent in the syndication plugin
+- Fix bug causing tab counts not to be initialized when QM is disabled (313737)
 
 Changes in 4.3.1:
 - Fix new custom groups not appearing in add to group submenu (307230)
