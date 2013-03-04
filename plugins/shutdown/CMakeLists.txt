@@ -21,7 +21,7 @@ if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 		ktshutdownplugin
 		ktcore
 		${LIBKTORRENT_LIBRARIES}
-		kworkspace
+		${KWORKSPACE_LIBRARY}
 		${KDE4_KPARTS_LIBS})
 	if (NEW_SOLID_POWERMANAGEMENT)
 		target_link_libraries(
