@@ -17,22 +17,20 @@ if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 	set(NEW_SOLID_POWERMANAGEMENT FALSE)
 	macro_ensure_version("4.5.82" ${KDE_VERSION} NEW_SOLID_POWERMANAGEMENT)
 	
+	target_link_libraries(
+		ktshutdownplugin
+		ktcore
+		${LIBKTORRENT_LIBRARIES}
+		kworkspace
+		${KDE4_KPARTS_LIBS})
 	if (NEW_SOLID_POWERMANAGEMENT)
 		target_link_libraries(
 			ktshutdownplugin
-			ktcore
-			${LIBKTORRENT_LIBRARIES}
-			${KDE4_SOLID_LIBS}
-			kworkspace
-			${KDE4_KPARTS_LIBS})
+			${KDE4_SOLID_LIBS})
 	else (NEW_SOLID_POWERMANAGEMENT)
 		target_link_libraries(
 			ktshutdownplugin
-			ktcore
-			${LIBKTORRENT_LIBRARIES}
-			solidcontrol
-			kworkspace
-			${KDE4_KPARTS_LIBS})
+			solidcontrol)
 	endif (NEW_SOLID_POWERMANAGEMENT)
 	install(TARGETS ktshutdownplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 	install(FILES ktshutdownplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
