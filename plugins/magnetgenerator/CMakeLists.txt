@@ -12,7 +12,6 @@ target_link_libraries(
     ${LIBKTORRENT_LIBRARIES}
     ${KDE4_KPARTS_LIBS}
 	${KDE4_KDEUI_LIBS}
-    ${QT_QT3SUPPORT_LIBRARY}
     )
 install(TARGETS ktmagnetgeneratorplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktmagnetgeneratorplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
