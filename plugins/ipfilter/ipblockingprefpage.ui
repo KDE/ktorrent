@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="Q3GroupBox" name="groupBox1">
+    <widget class="QGroupBox" name="groupBox1">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -236,12 +236,6 @@ NOTE: archive files like zip and tar.gz or tar.bz2 are supported.</string>
    <class>KUrlRequester</class>
    <extends>QFrame</extends>
    <header>kurlrequester.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <includes>
