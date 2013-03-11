@@ -13,6 +13,7 @@ Changes in 4.4:
 - Use enclosure urls ending with .torrent in the syndication plugin
 - Fix bug causing tab counts not to be initialized when QM is disabled (313737)
 - Use file contents to figure out which type of blocklist we are dealing with in IP filter (315239)
+- Fix bug causing torrent percentage to be slightly off in the files tab (315549)
 
 Changes in 4.3.1:
 - Fix new custom groups not appearing in add to group submenu (307230)

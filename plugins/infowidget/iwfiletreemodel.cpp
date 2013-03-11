@@ -359,7 +359,7 @@ namespace kt
             }
 
             double perc = bt::Percentage(tc->getStats());
-            if (fabs(perc - percentage) > 0.01)
+            if (fabs(perc - percentage) > 0.001)
             {
                 percentage = perc;
                 changed = true;
