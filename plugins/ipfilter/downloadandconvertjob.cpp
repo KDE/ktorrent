@@ -113,7 +113,7 @@ namespace kt
         QString temp = kt::DataDir() + "tmp-" + url.fileName();
 
         //now determine if it's ZIP or TXT file
-        KMimeType::Ptr ptr = KMimeType::findByPath(temp);
+        KMimeType::Ptr ptr = KMimeType::findByFileContent(temp);
         if (ptr->name() == "application/zip")
         {
             active_job = KIO::file_move(temp, QString(kt::DataDir() + QLatin1String("level1.zip")), -1, KIO::HideProgressInfo | KIO::Overwrite);
@@ -125,10 +125,21 @@ namespace kt
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
             active_job->start();
         }
-        else
+        else if(!KMimeType::isBinaryData(temp))
         {
             active_job = KIO::file_move(temp, QString(kt::DataDir() + "level1.txt"), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
+        }
+        else
+        {
+            QString msg = i18n("Cannot determine file type of <b>%1</b>", url.prettyUrl());
+            if (mode == Verbose)
+                KMessageBox::error(0, msg);
+            else
+                notification(msg);
+
+            setError(UNZIP_FAILED);
+            emitResult();
         }
     }
 
@@ -174,23 +185,10 @@ namespace kt
         }
 
         QString destination = kt::DataDir() + "level1.txt";
-        if (zip->directory()->entries().contains("splist.txt"))
+        QStringList entries = zip->directory()->entries();
+        if(entries.count() >= 1)
         {
-            active_job = new bt::ExtractFileJob(zip, "splist.txt", destination);
-            connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
-            unzip = true;
-            active_job->start();
-        }
-        else if (zip->directory()->entries().contains("level1.txt"))
-        {
-            active_job = new bt::ExtractFileJob(zip, "level1.txt", destination);
-            connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
-            unzip = true;
-            active_job->start();
-        }
-        else if (zip->directory()->entries().contains("ipfilter.dat"))
-        {
-            active_job = new bt::ExtractFileJob(zip, "ipfilter.dat", destination);
+            active_job = new bt::ExtractFileJob(zip, entries.front(), destination);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
             unzip = true;
             active_job->start();
