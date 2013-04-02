@@ -40,7 +40,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The number of chunks which were not downloaded but have been found anyway.&lt;/p&gt;</string>
+          <string>The number of chunks which were not downloaded but have been found anyway.</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -79,7 +79,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The number of chunks which have been downloaded, and which are not OK.&lt;/p&gt;</string>
+          <string>The number of chunks which have been downloaded, and which are not OK.</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -124,7 +124,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The number of chunks which have not been downloaded.&lt;/p&gt;</string>
+          <string>The number of chunks which have not been downloaded.</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -163,7 +163,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The number of chunks which have been downloaded, and which are OK.&lt;/p&gt;</string>
+          <string>The number of chunks which have been downloaded, and which are OK.</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>

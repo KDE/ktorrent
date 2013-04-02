@@ -20,7 +20,7 @@
       <item>
        <widget class="QCheckBox" name="kcfg_useKDEProxySettings">
         <property name="toolTip">
-         <string>&lt;p&gt;Use the HTTP proxy settings configured in the settings of KDE.&lt;/p&gt;</string>
+         <string>Use the HTTP proxy settings configured in the settings of KDE.</string>
         </property>
         <property name="text">
          <string>Use KDE proxy settings</string>
@@ -81,7 +81,7 @@
       <item>
        <widget class="QCheckBox" name="kcfg_useProxyForTracker">
         <property name="toolTip">
-         <string>&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Whether or not to use the HTTP proxy for tracker connections.&lt;/p&gt;</string>
+         <string>Whether or not to use the HTTP proxy for tracker connections.</string>
         </property>
         <property name="text">
          <string>Use proxy for tracker connections</string>
@@ -120,7 +120,7 @@
         <item>
          <widget class="QLineEdit" name="kcfg_socksProxy">
           <property name="toolTip">
-           <string>&lt;p&gt;IP address or hostname of the SOCKS server&lt;/p&gt;</string>
+           <string>IP address or hostname of the SOCKS server.</string>
           </property>
          </widget>
         </item>
@@ -134,7 +134,7 @@
         <item>
          <widget class="QSpinBox" name="kcfg_socksPort">
           <property name="toolTip">
-           <string>Port used by the SOCKS server</string>
+           <string>Port used by the SOCKS server.</string>
           </property>
          </widget>
         </item>
