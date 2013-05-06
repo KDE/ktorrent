@@ -42,7 +42,9 @@
 #include <util/error.h>
 #include <util/log.h>
 #include <util/functions.h>
+#ifndef Q_OS_WIN
 #include <util/signalcatcher.h>
+#endif
 
 using namespace bt;
 
