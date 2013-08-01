@@ -25,6 +25,7 @@ Changes in 4.3.1:
 - Use extended selection mode in syndication plugin so ctrl key works as expected (308672)
 - Fix crash in GroupViewModel when dragging torrents over groups (308733)
 - Sort by total leechers and seeders, if connected seeders and leechers is equal (311470)
+- Fix gzip not working in ipfilter plugin due to wrong mimetype (315239)
 
 Changes in 4.3:
 - Change default blocklist url to iblocklist.org (305109)
