@@ -16,6 +16,9 @@ Changes in 4.4:
 - Fix bug causing torrent percentage to be slightly off in the files tab (315549)
 - Remove estimation algorithm option 
 
+Changes in 4.3.2:
+- Backport ipfilter extraction fixes from master branch (315239)
+
 Changes in 4.3.1:
 - Fix new custom groups not appearing in add to group submenu (307230)
 - Fix crash when right clicking on some locations in the GroupView due to 0 pointer (307160)
