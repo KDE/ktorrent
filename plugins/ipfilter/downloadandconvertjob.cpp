@@ -114,12 +114,13 @@ namespace kt
 		
 		//now determine if it's ZIP or TXT file
 		KMimeType::Ptr ptr = KMimeType::findByPath(temp);
+        Out(SYS_IPF|LOG_NOTICE) << "Mimetype: " << ptr->name() << endl;
 		if (ptr->name() == "application/zip")
 		{
 			active_job = KIO::file_move(temp,QString(kt::DataDir() + QLatin1String("level1.zip")),-1,KIO::HideProgressInfo|KIO::Overwrite);
 			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(extract(KJob*)));
 		}
-		else if (ptr->name() == "application/x-gzip" || ptr->name() == "application/x-bzip")
+		else if (ptr->name() == "application/x-gzip" || ptr->name() == "application/x-bzip" || ptr->name() == "application/gzip")
 		{
 			active_job = new bt::DecompressFileJob(temp,QString(kt::DataDir() + "level1.txt"));
 			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(convert(KJob*)));
@@ -174,23 +175,10 @@ namespace kt
 		}
 		
 		QString destination = kt::DataDir() + "level1.txt";
-		if (zip->directory()->entries().contains("splist.txt"))
+        QStringList entries = zip->directory()->entries();
+		if (entries.count() >= 1)
 		{
-			active_job = new bt::ExtractFileJob(zip,"splist.txt",destination);
-			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(convert(KJob*)));
-			unzip = true;
-			active_job->start();
-		}
-		else if (zip->directory()->entries().contains("level1.txt"))
-		{
-			active_job = new bt::ExtractFileJob(zip,"level1.txt",destination);
-			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(convert(KJob*)));
-			unzip = true;
-			active_job->start();
-		}
-		else if (zip->directory()->entries().contains("ipfilter.dat"))
-		{
-			active_job = new bt::ExtractFileJob(zip,"ipfilter.dat",destination);
+			active_job = new bt::ExtractFileJob(zip,entries.front(),destination);
 			connect(active_job,SIGNAL(result(KJob*)),this,SLOT(convert(KJob*)));
 			unzip = true;
 			active_job->start();
