@@ -137,57 +137,13 @@
         <item>
          <layout class="QGridLayout">
           <item row="0" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Time estimation algorithm:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="kcfg_eta">
-            <property name="toolTip">
-             <string>&lt;p&gt;Select which algorithm to use for estimating the time left :&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;KTorrent:&lt;/span&gt; Mix of other algorithms, we use the one which fits best in the current situation.&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Current speed:&lt;/span&gt; Bytes left to download / current speed&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Average speed: &lt;/span&gt;Bytes left to download / average speed&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Window of X:&lt;/span&gt; Average of the last X samples (X = 20)&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Moving average:&lt;/span&gt;  Moving average of the last 20 samples&lt;/p&gt;</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>KTorrent</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Current speed</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Average speed</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Window of X</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Moving average</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>Preview size for audio files:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="0" column="1">
            <widget class="QSpinBox" name="kcfg_previewSizeAudio">
             <property name="toolTip">
              <string>&lt;p&gt;The amount of data at the beginning and end of an audio file, which will be prioritized for previewing.&lt;/p&gt;</string>
@@ -203,14 +159,14 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Preview size for video files:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="1" column="1">
            <widget class="QSpinBox" name="kcfg_previewSizeVideo">
             <property name="toolTip">
              <string>&lt;p&gt;The amount of data at the beginning and end of a video file, which will be prioritized for previewing.&lt;/p&gt;</string>

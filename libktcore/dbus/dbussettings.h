@@ -136,8 +136,6 @@ namespace kt
         Q_SCRIPTABLE void setSocksUsername(QString val);
         Q_SCRIPTABLE QString socksPassword();
         Q_SCRIPTABLE void setSocksPassword(QString val);
-        Q_SCRIPTABLE int eta();
-        Q_SCRIPTABLE void setEta(int val);
         Q_SCRIPTABLE bool diskPrealloc();
         Q_SCRIPTABLE void setDiskPrealloc(bool val);
         Q_SCRIPTABLE bool fullDiskPrealloc();

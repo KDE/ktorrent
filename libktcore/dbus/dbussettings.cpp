@@ -528,16 +528,6 @@ namespace kt
         Settings::setSocksPassword(val);
     }
 
-    int DBusSettings::eta()
-    {
-        return Settings::eta();
-    }
-
-    void DBusSettings::setEta(int val)
-    {
-        Settings::setEta(val);
-    }
-
     bool DBusSettings::diskPrealloc()
     {
         return Settings::diskPrealloc();
