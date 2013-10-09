@@ -58,6 +58,7 @@ Comment[zh_TW]=KTorrent
 [Event/TorrentSilentlyOpened]
 Name=Torrent silently opened
 Name[ca]=Torrent obert en silenci
+Name[ca@valencia]=Torrent obert en silenci
 Name[cs]=Torrent byl tiše otevřen
 Name[da]=Torrent åbnet tavst
 Name[de]=Torrent ohne Nachfrage geöffnet
