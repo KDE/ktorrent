@@ -24,6 +24,7 @@
 #include <groups/groupmanager.h>
 #include <groups/group.h>
 #include <groups/torrentgroup.h>
+#include <torrent/queuemanager.h>
 #include <view/view.h>
 #include <util/log.h>
 

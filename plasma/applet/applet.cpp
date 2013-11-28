@@ -375,7 +375,7 @@ namespace ktplasma
         else
         {
             QDBusPendingReply<qlonglong> reply = *self;
-            KWindowSystem::activateWindow(reply.value());
+            KWindowSystem::activateWindow(reinterpret_cast<WId>(reply.value()));
         }
         self->deleteLater();
     }
