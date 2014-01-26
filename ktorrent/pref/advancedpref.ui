@@ -91,7 +91,7 @@
          <widget class="QSpinBox" name="kcfg_cpuUsage">
           <property name="toolTip">
            <string>&lt;p&gt;Amount of time the network threads will sleep when they are speed limited. This has absolutely no effect when there are no speed limits.&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; The lower this is the more CPU is used. Setting it high can lead to lower speeds in high bandwith situations. &lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; The lower this is the more CPU is used. Setting it high can lead to lower speeds in high bandwidth situations. &lt;/p&gt;
 &lt;p&gt;For example on an 100 Mbit LAN, if you set a limit of 3000 KiB/s, you might not actually reach this speed when this value is too high. Without a limit you can easily get above 3000 KiB/s on a LAN.&lt;/p&gt;</string>
           </property>
           <property name="suffix">
