@@ -133,6 +133,8 @@ namespace kt
 
     void SearchWidget::restore(const KUrl& url, const QString& text, const QString& sb_text, int engine)
     {
+        Q_UNUSED(text);
+
         if (url.protocol() == "home")
             webview->home();
         else

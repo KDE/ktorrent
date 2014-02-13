@@ -495,6 +495,8 @@ namespace kt
     // streaming only works for one file at once atm, so the index has no effect yet
     bool DBusTorrent::removeStream(uint file_index)
     {
+        Q_UNUSED(file_index);
+
         delete stream;
         stream = 0;
         return true;

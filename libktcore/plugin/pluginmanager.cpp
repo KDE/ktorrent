@@ -130,6 +130,8 @@ namespace kt
 
     void PluginManager::unload(const KPluginInfo& pi, int idx)
     {
+        Q_UNUSED(pi);
+
         Plugin* p = loaded.find(idx);
         if (!p)
             return;

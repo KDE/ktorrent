@@ -77,6 +77,9 @@ namespace kt
 
     QSize LogFlagsDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
     {
+        Q_UNUSED(option);
+        Q_UNUSED(index);
+
         QComboBox tmp;
         return QSize(100, tmp.sizeHint().height());
     }

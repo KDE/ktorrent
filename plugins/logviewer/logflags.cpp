@@ -182,6 +182,8 @@ namespace kt
 
     bool LogFlags::removeRows(int row, int count, const QModelIndex& parent)
     {
+        Q_UNUSED(parent);
+
         beginRemoveRows(QModelIndex(), row, row + count - 1);
         endRemoveRows();
         return true;
@@ -189,6 +191,8 @@ namespace kt
 
     bool LogFlags::insertRows(int row, int count, const QModelIndex& parent)
     {
+        Q_UNUSED(parent);
+
         beginInsertRows(QModelIndex(), row, row + count - 1);
         endInsertRows();
         return true;
