@@ -152,6 +152,17 @@ namespace kt
                 return e->url();
         }
 
+        // Search for magnets on item's link as some RSS feeds only use this item to post the magnet link.
+        QString link = item->link();
+        if (!link.isEmpty())
+        {
+            // Note that syndication library prepends the channel link to the item link by default, so
+            // we need to extract the magnet from the string.
+            int magnetStartIndex = link.indexOf("magnet:");
+            if (magnetStartIndex >= 0)
+                return link.right(link.size() - magnetStartIndex);
+        }
+
         QMultiMap<QString, QDomElement> props = item->additionalProperties();
         QMultiMap<QString, QDomElement>::iterator itr = props.begin();
         while (itr != props.end())
