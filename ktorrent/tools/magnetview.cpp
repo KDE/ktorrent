@@ -37,6 +37,7 @@ namespace kt
 		setRootIsDecorated(false);
 		setContextMenuPolicy(Qt::CustomContextMenu);
 		setModel(magnet_model);
+        setSelectionMode(QAbstractItemView::ExtendedSelection);
 		connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(showContextMenu(QPoint)));
 		
 		menu = new KMenu(this);
