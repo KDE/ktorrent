@@ -768,4 +768,33 @@ namespace kt
         Settings::setAutoRenameSingleFileTorrents(val);
     }
 
+    int DBusSettings::numMagnetDownloadingSlots()
+    {
+        return Settings::numMagnetDownloadingSlots();
+    }
+
+    void DBusSettings::setNumMagnetDownloadingSlots(int val)
+    {
+        Settings::setNumMagnetDownloadingSlots(val);
+    }
+
+    bool DBusSettings::requeueMagnets()
+    {
+        return Settings::requeueMagnets();
+    }
+
+    void DBusSettings::setRequeueMagnets(bool val)
+    {
+        Settings::setRequeueMagnets(val);
+    }
+
+    int DBusSettings::requeueMagnetsTime()
+    {
+        return Settings::requeueMagnetsTime();
+    }
+
+    void DBusSettings::setRequeueMagnetsTime(int val)
+    {
+        Settings::setRequeueMagnetsTime(val);
+    }
 }

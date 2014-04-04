@@ -24,86 +24,74 @@
 #include <QFile>
 #include <QTextStream>
 
+#include <magnet/magnetdownloader.h>
+#include <torrent/magnetmanager.h>
 #include <util/log.h>
 #include <bcodec/bencoder.h>
 #include <bcodec/bdecoder.h>
 #include <util/error.h>
 #include <bcodec/bnode.h>
 
-
-using namespace bt;
-
 namespace kt
 {
-
-    MagnetModel::MagnetModel(QObject* parent) : QAbstractTableModel(parent)
+    MagnetModel::MagnetModel(MagnetManager *magnetManager, QObject* parent)
+        : QAbstractTableModel(parent)
+        , currentRows(0)
+        , mman(magnetManager)
     {
-
+        connect (mman, SIGNAL(updateQueue(bt::Uint32,bt::Uint32)),
+                 this, SLOT(onUpdateQueue(bt::Uint32,bt::Uint32)));
     }
 
     MagnetModel::~MagnetModel()
     {
-
+        delete mman;
     }
 
-    void MagnetModel::download(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options)
+    void MagnetModel::removeMagnets(int row, int count)
     {
-        addMagnetDownloader(mlink, options, true);
+        mman->removeMagnets(row, count);
     }
 
-    void MagnetModel::downloadFinished(bt::MagnetDownloader* md, const QByteArray& data)
+    void MagnetModel::start(int row, int count)
     {
-        kt::MagnetDownloader* ktmd = (kt::MagnetDownloader*)md;
-        emit metadataFound(md->magnetLink(), data, ktmd->options);
-        int idx = magnet_downloaders.indexOf(ktmd);
-        if (idx >= 0)
-            removeRow(idx);
+        mman->start(row, count);
     }
 
-    void MagnetModel::addMagnetDownloader(const bt::MagnetLink& mlink, const kt::MagnetLinkLoadOptions& options, bool start)
+    void MagnetModel::stop(int row, int count)
     {
-        foreach (bt::MagnetDownloader* md, magnet_downloaders)
-        {
-            if (md->magnetLink() == mlink)
-                return; // Already downloading, do nothing
-        }
-
-        kt::MagnetDownloader* md = new kt::MagnetDownloader(mlink, options, this);
-        magnet_downloaders.append(md);
-        connect(md, SIGNAL(foundMetadata(bt::MagnetDownloader*, QByteArray)),
-                this, SLOT(downloadFinished(bt::MagnetDownloader*, QByteArray)));
-        insertRow(magnet_downloaders.size() - 1);
-        if (start)
-            md->start();
+        mman->stop(row, count);
     }
 
-    void MagnetModel::updateMagnetDownloaders()
+    bool MagnetModel::isStopped(int row) const
     {
-        foreach (bt::MagnetDownloader* md, magnet_downloaders)
-        {
-            md->update();
-        }
-
-        if (magnet_downloaders.count() > 0)
-        {
-            // make sure num peers is updated
-            emit dataChanged(index(0, 2), index(magnet_downloaders.count() - 1, 2));
-        }
+        return mman->isStopped(row);
     }
 
+    void MagnetModel::onUpdateQueue(bt::Uint32 idx, bt::Uint32 count)
+    {
+        int rows = mman->count();
+        if (currentRows < rows)  // add new rows
+            insertRows(idx, rows - currentRows, QModelIndex());
+        else if (currentRows > rows) // delete rows
+            removeRows(idx, currentRows - rows, QModelIndex());
+
+        currentRows = rows;
+        emit dataChanged(index(idx, 0), index(count, columnCount(QModelIndex())));
+    }
 
     QVariant MagnetModel::data(const QModelIndex& index, int role) const
     {
-        if (!index.isValid())
+        if (!index.isValid() || index.row() < 0 || index.row() >= mman->count())
             return QVariant();
 
-        bt::MagnetDownloader* md = (bt::MagnetDownloader*)index.internalPointer();
+        const MagnetDownloader* md = mman->getMagnetDownloader(index.row());
         if (role == Qt::DisplayRole)
         {
             switch (index.column())
             {
             case 0: return displayName(md);
-            case 1: return status(md);
+            case 1: return status(index.row());
             case 2: return md->numPeers();
             default: return QVariant();
             }
@@ -154,19 +142,9 @@ namespace kt
         if (parent.isValid())
             return 0;
         else
-            return magnet_downloaders.count();
+            return mman->count();
     }
 
-    QModelIndex MagnetModel::index(int row, int column, const QModelIndex& parent) const
-    {
-        if (parent.isValid())
-            return QModelIndex();
-
-        if (row < 0 || row >= magnet_downloaders.count())
-            return QModelIndex();
-
-        return createIndex(row, column, magnet_downloaders[row]);
-    }
 
     bool MagnetModel::insertRows(int row, int count, const QModelIndex& parent)
     {
@@ -180,20 +158,8 @@ namespace kt
     {
         Q_UNUSED(parent);
         beginRemoveRows(QModelIndex(), row, row + count - 1);
-        for (int i = 0; i < count; i++)
-        {
-            kt::MagnetDownloader* md = magnet_downloaders.takeAt(row);
-            md->deleteLater();
-        }
         endRemoveRows();
         return true;
-    }
-
-    void MagnetModel::removeMagnetDownloader(kt::MagnetDownloader* md)
-    {
-        int idx = magnet_downloaders.indexOf(md);
-        if (idx != -1)
-            removeRow(idx);
     }
 
     QString MagnetModel::displayName(const bt::MagnetDownloader* md) const
@@ -204,109 +170,19 @@ namespace kt
             return md->magnetLink().displayName();
     }
 
-    QString MagnetModel::status(const bt::MagnetDownloader* md) const
+    QString MagnetModel::status(int row) const
     {
-        if (md->running())
+        switch(mman->status(row))
+        {
+        case MagnetManager::DOWNLOADING:
             return i18n("Downloading");
-        else
+
+        case MagnetManager::QUEUED:
+            return i18n("Queued");
+
+        case MagnetManager::STOPPED:
+        default:
             return i18n("Stopped");
-    }
-
-    void MagnetModel::start(const QModelIndex& idx)
-    {
-        if (!idx.isValid())
-            return;
-
-        bt::MagnetDownloader* md = (bt::MagnetDownloader*)idx.internalPointer();
-        if (!md || md->running())
-            return;
-
-        md->start();
-        emit dataChanged(idx, idx);
-    }
-
-    void MagnetModel::stop(const QModelIndex& idx)
-    {
-        if (!idx.isValid())
-            return;
-
-        bt::MagnetDownloader* md = (bt::MagnetDownloader*)idx.internalPointer();
-        if (!md || !md->running())
-            return;
-
-        md->stop();
-        emit dataChanged(idx, idx);
-    }
-
-    void MagnetModel::loadMagnets(const QString& file)
-    {
-        QFile fptr(file);
-        if (!fptr.open(QIODevice::ReadOnly))
-        {
-            Out(SYS_GEN | LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
-            return;
         }
-
-        QByteArray magnet_data = fptr.readAll();
-        if (magnet_data.size() == 0)
-            return;
-
-        BDecoder decoder(magnet_data, 0, false);
-        BNode* node = 0;
-        try
-        {
-            node = decoder.decode();
-            if (!node || node->getType() != BNode::LIST)
-                throw bt::Error("Corrupted magnet file");
-
-            BListNode* ml = (BListNode*)node;
-            for (Uint32 i = 0; i < ml->getNumChildren(); i++)
-            {
-                BDictNode* dict = ml->getDict(i);
-                bt::MagnetLink mlink(dict->getString("magnet", 0));
-                MagnetLinkLoadOptions options;
-                bool running = dict->getInt("running") == 1;
-                options.silently = dict->getInt("silent") == 1;
-
-                if (dict->keys().contains("group"))
-                    options.group = dict->getString("group", 0);
-                if (dict->keys().contains("location"))
-                    options.location = dict->getString("location", 0);
-                if (dict->keys().contains("move_on_completion"))
-                    options.move_on_completion = dict->getString("move_on_completion", 0);
-
-                addMagnetDownloader(mlink, options, running);
-            }
-        }
-        catch (bt::Error& err)
-        {
-            Out(SYS_GEN | LOG_NOTICE) << "Failed to load " << file << " : " << err.toString() << endl;
-        }
-        delete node;
-    }
-
-    void MagnetModel::saveMagnets(const QString& file)
-    {
-        bt::File fptr;
-        if (!fptr.open(file, "wb"))
-        {
-            Out(SYS_GEN | LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
-            return;
-        }
-
-        BEncoder enc(&fptr);
-        enc.beginList();
-        foreach (kt::MagnetDownloader* md, magnet_downloaders)
-        {
-            enc.beginDict();
-            enc.write("magnet", md->magnetLink().toString());
-            enc.write("running", md->running());
-            enc.write("silent", md->options.silently);
-            enc.write("group", md->options.group);
-            enc.write("location", md->options.location);
-            enc.write("move_on_completion", md->options.move_on_completion);
-            enc.end();
-        }
-        enc.end();
     }
 }

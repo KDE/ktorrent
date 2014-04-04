@@ -21,22 +21,27 @@
 #ifndef KT_MAGNETVIEW_H
 #define KT_MAGNETVIEW_H
 
-#include <QTreeView>
+#include <QWidget>
 #include <KSharedConfig>
 
+class QItemSelection;
+class QToolBar;
+class QTreeView;
 class KMenu;
 
 namespace kt
 {
+    class MagnetManager;
     class MagnetModel;
+
     /**
         View which displays a list of magnet links being downloaded
     */
-    class MagnetView : public QTreeView
+    class MagnetView : public QWidget
     {
         Q_OBJECT
     public:
-        MagnetView(MagnetModel* magnet_model, QWidget* parent = 0);
+        MagnetView(MagnetManager* magnetManager, QWidget* parent = 0);
         virtual ~MagnetView();
 
         void saveState(KSharedConfigPtr cfg);
@@ -51,8 +56,12 @@ namespace kt
         void stopMagnetDownload();
 
     private:
-        MagnetModel* magnet_model;
+        MagnetManager* mman;
+        MagnetModel* model;
+        QTreeView* view;
+        QToolBar* toolbar;
         KMenu* menu;
+
         QAction* start;
         QAction* stop;
         QAction* remove;

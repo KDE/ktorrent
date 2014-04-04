@@ -22,23 +22,44 @@
 #include "magnetview.h"
 #include "magnetmodel.h"
 #include <KMenu>
+#include <QBoxLayout>
 #include <KLocalizedString>
 #include <KIcon>
 #include <KConfigGroup>
 #include <QHeaderView>
+#include <QTreeView>
 #include <QKeyEvent>
+#include <torrent/magnetmanager.h>
 
 namespace kt
 {
 
-    MagnetView::MagnetView(MagnetModel* magnet_model, QWidget* parent): QTreeView(parent), magnet_model(magnet_model)
+    MagnetView::MagnetView(MagnetManager *magnetManager, QWidget* parent)
+        : QWidget(parent)
+        , mman(magnetManager)
     {
-        setAllColumnsShowFocus(true);
-        setRootIsDecorated(false);
-        setContextMenuPolicy(Qt::CustomContextMenu);
-        setModel(magnet_model);
-        connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+        model = new MagnetModel(magnetManager, this);
 
+        QHBoxLayout* layout = new QHBoxLayout(this);
+        layout->setMargin(0);
+        layout->setSpacing(0);
+
+        // magnets view
+        view = new QTreeView(this);
+        view->setModel(model);
+        view->setUniformRowHeights(true);
+        view->setRootIsDecorated(false);
+        view->setAlternatingRowColors(true);
+        view->setSelectionBehavior(QAbstractItemView::SelectRows);
+        view->setSortingEnabled(false);
+        view->setAllColumnsShowFocus(true);
+        view->setSelectionMode(QAbstractItemView::ContiguousSelection);
+        view->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(view, SIGNAL(customContextMenuRequested(QPoint)),
+                this, SLOT(showContextMenu(QPoint)));
+        layout->addWidget(view);
+
+        // context menu
         menu = new KMenu(this);
         start = menu->addAction(KIcon("kt-start"), i18n("Start Magnet"), this, SLOT(startMagnetDownload()));
         stop = menu->addAction(KIcon("kt-stop"), i18n("Stop Magnet"), this, SLOT(stopMagnetDownload()));
@@ -56,7 +77,7 @@ namespace kt
         QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
         if (!s.isNull())
         {
-            QHeaderView* v = header();
+            QHeaderView* v = view->header();
             v->restoreState(s);
         }
     }
@@ -64,12 +85,12 @@ namespace kt
     void MagnetView::saveState(KSharedConfigPtr cfg)
     {
         KConfigGroup g = cfg->group("MagnetView");
-        g.writeEntry("state", header()->saveState().toBase64());
+        g.writeEntry("state", view->header()->saveState().toBase64());
     }
 
     void MagnetView::showContextMenu(QPoint p)
     {
-        QModelIndexList idx_list = selectionModel()->selectedRows();
+        QModelIndexList idx_list = view->selectionModel()->selectedRows();
 
         start->setEnabled(false);
         stop->setEnabled(false);
@@ -77,44 +98,32 @@ namespace kt
 
         foreach (const QModelIndex& idx, idx_list)
         {
-            kt::MagnetDownloader* md = (kt::MagnetDownloader*)idx.internalPointer();
-            if (md->running())
+            if (!mman->isStopped(idx.row()))
                 stop->setEnabled(true);
             else
                 start->setEnabled(true);
         }
-        menu->popup(viewport()->mapToGlobal(p));
+        menu->popup(view->viewport()->mapToGlobal(p));
     }
 
     void MagnetView::removeMagnetDownload()
     {
-        QList<kt::MagnetDownloader*> mdl;
-        QModelIndexList idx_list = selectionModel()->selectedRows();
-        foreach (const QModelIndex& idx, idx_list)
-        {
-            mdl.append((kt::MagnetDownloader*)idx.internalPointer());
-        }
-
-        foreach (kt::MagnetDownloader* md, mdl)
-            magnet_model->removeMagnetDownloader(md);
+        QModelIndexList idx_list = view->selectionModel()->selectedRows();
+        mman->removeMagnets(idx_list.front().row(), idx_list.size());
     }
 
     void MagnetView::startMagnetDownload()
     {
-        QModelIndexList idx_list = selectionModel()->selectedRows();
-        foreach (const QModelIndex& idx, idx_list)
-        {
-            magnet_model->start(idx);
-        }
+        QModelIndexList idx_list = view->selectionModel()->selectedRows();
+        mman->start(idx_list.front().row(), idx_list.size());
+        view->clearSelection();
     }
 
     void MagnetView::stopMagnetDownload()
     {
-        QModelIndexList idx_list = selectionModel()->selectedRows();
-        foreach (const QModelIndex& idx, idx_list)
-        {
-            magnet_model->stop(idx);
-        }
+        QModelIndexList idx_list = view->selectionModel()->selectedRows();
+        mman->stop(idx_list.front().row(), idx_list.size());
+        view->clearSelection();
     }
 
     void MagnetView::keyPressEvent(QKeyEvent* event)
@@ -125,9 +134,7 @@ namespace kt
             event->accept();
         }
         else
-            QTreeView::keyPressEvent(event);
+            QWidget::keyPressEvent(event);
     }
-
-
 }
 

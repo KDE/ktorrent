@@ -35,6 +35,7 @@
 #include <interfaces/guiinterface.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentfileinterface.h>
+#include <torrent/magnetmanager.h>
 #include <torrent/queuemanager.h>
 #include <torrent/torrentcontrol.h>
 #include <torrent/torrentcreator.h>
@@ -60,7 +61,6 @@
 #include "dialogs/missingfilesdlg.h"
 #include "gui.h"
 #include "dialogs/torrentmigratordlg.h"
-#include "tools/magnetmodel.h"
 
 
 using namespace bt;
@@ -120,7 +120,7 @@ namespace kt
 
         startServers();
 
-        magnet = new kt::MagnetModel(this);
+        mman = new kt::MagnetManager(this);
         pman = new kt::PluginManager(this, gui);
         gman = new kt::GroupManager();
         applySettings();
@@ -129,14 +129,14 @@ namespace kt
 
         qRegisterMetaType<bt::MagnetLink>("bt::MagnetLink");
         qRegisterMetaType<kt::MagnetLinkLoadOptions>("kt::MagnetLinkLoadOptions");
-        connect(magnet, SIGNAL(metadataFound(bt::MagnetLink, QByteArray, kt::MagnetLinkLoadOptions)),
+        connect(mman, SIGNAL(metadataDownloaded(bt::MagnetLink, QByteArray, kt::MagnetLinkLoadOptions)),
                 this, SLOT(onMetadataDownloaded(bt::MagnetLink, QByteArray, kt::MagnetLinkLoadOptions)),
                 Qt::QueuedConnection);
 
         if (!Settings::oldTorrentsImported()) // check for old torrents if this hasn't happened yet
             QTimer::singleShot(1000, this, SLOT(checkForKDE3Torrents()));
 
-        magnet->loadMagnets(kt::DataDir() + "magnets");
+        mman->loadMagnets(kt::DataDir() + "magnets");
     }
 
     Core::~Core()
@@ -241,6 +241,11 @@ namespace kt
         changeDataDir(tmp);
         //update QM
         getQueueManager()->orderQueue();
+
+        mman->setUseSlotTimer(Settings::requeueMagnets());
+        mman->setTimerDuration(Settings::requeueMagnetsTime());
+        mman->setDownloadingSlots(Settings::numMagnetDownloadingSlots());
+
         settingsChanged();
     }
 
@@ -852,7 +857,7 @@ namespace kt
         update_timer.stop();
 
         net::SocketMonitor::instance().shutdown();
-        magnet->saveMagnets(kt::DataDir() + "magnets");
+        mman->saveMagnets(kt::DataDir() + "magnets");
         // make sure DHT is stopped
         Globals::instance().getDHT().stop();
         // stop all authentications going on
@@ -1008,7 +1013,7 @@ namespace kt
                 i++;
             }
 
-            if (!updated && magnet->rowCount() == 0)
+            if (!updated && mman->count() == 0)
             {
                 Out(SYS_GEN | LOG_DEBUG) << "Stopped update timer" << endl;
                 update_timer.stop(); // stop timer when not necessary
@@ -1021,7 +1026,7 @@ namespace kt
             }
             else
             {
-                magnet->updateMagnetDownloaders();
+                mman->update();
                 // check if the priority of stalled torrents must be decreased
                 if (Settings::decreasePriorityOfStalledTorrents())
                 {
@@ -1401,7 +1406,7 @@ namespace kt
             if (!Globals::instance().getDHT().isRunning())
                 dhtNotEnabled(i18n("You are attempting to download a magnet link, and DHT is not enabled. "
                                    "For optimum results enable DHT."));
-            magnet->download(mlink, options);
+            mman->addMagnet(mlink, options, false);
             startUpdateTimer();
         }
     }

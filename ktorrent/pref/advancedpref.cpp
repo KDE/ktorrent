@@ -28,6 +28,7 @@ namespace kt
     {
         setupUi(this);
         connect(kcfg_diskPrealloc, SIGNAL(toggled(bool)), this, SLOT(onDiskPreallocToggled(bool)));
+        connect(kcfg_requeueMagnets, SIGNAL(toggled(bool)), kcfg_requeueMagnetsTime, SLOT(setEnabled(bool)));
     }
 
     AdvancedPref::~AdvancedPref()
@@ -37,6 +38,10 @@ namespace kt
     void AdvancedPref::loadSettings()
     {
         kcfg_fullDiskPrealloc->setEnabled(Settings::diskPrealloc());
+        kcfg_numMagnetDownloadingSlots->setValue(Settings::numMagnetDownloadingSlots());
+        kcfg_requeueMagnets->setChecked(Settings::requeueMagnets());
+        kcfg_requeueMagnetsTime->setEnabled(Settings::requeueMagnets());
+        kcfg_requeueMagnetsTime->setValue(Settings::requeueMagnetsTime());
     }
 
     void AdvancedPref::loadDefaults()

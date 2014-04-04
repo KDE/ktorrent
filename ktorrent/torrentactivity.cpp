@@ -99,7 +99,7 @@ namespace kt
         connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), qm, SLOT(onTorrentRemoved(bt::TorrentInterface*)));
         tool_views->addTab(qm, i18n("Queue Manager"), "kt-queue-manager", i18n("Widget to manage the torrent queue"));
 
-        magnet_view = new MagnetView(core->getMagnetModel(), this);
+        magnet_view = new MagnetView(core->getMagnetManager(), this);
         tool_views->addTab(magnet_view, i18n("Magnet"), "kt-magnet",
                            i18n("Displays the currently downloading magnet links"));
 

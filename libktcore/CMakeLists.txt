@@ -18,6 +18,7 @@ set(libktorrent_SRC
 	interfaces/torrentactivityinterface.cpp
 	
 	torrent/queuemanager.cpp
+    torrent/magnetmanager.cpp
 	torrent/torrentfilemodel.cpp
 	torrent/torrentfiletreemodel.cpp
 	torrent/torrentfilelistmodel.cpp

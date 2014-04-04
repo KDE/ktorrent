@@ -38,7 +38,7 @@ namespace bt
 
 namespace kt
 {
-    class MagnetModel;
+    class MagnetManager;
     class GUI;
     class PluginManager;
     class GroupManager;
@@ -80,8 +80,8 @@ namespace kt
         /// Get the group manager
         kt::GroupManager* getGroupManager() {return gman;}
 
-        /// Get the magnet model
-        kt::MagnetModel* getMagnetModel() {return magnet;}
+        /// Get the magnet manager
+        kt::MagnetManager* getMagnetManager() {return mman;}
 
         virtual  bt::TorrentInterface* createTorrent(bt::TorrentCreator* mktor, bool seed);
 
@@ -266,7 +266,7 @@ namespace kt
         kt::PluginManager* pman;
         kt::QueueManager* qman;
         kt::GroupManager* gman;
-        kt::MagnetModel* magnet;
+        kt::MagnetManager* mman;
         QMap<KJob*, KUrl> custom_save_locations; // map to store save locations
         QMap<KUrl, QString> add_to_groups; // Map to keep track of which group to add a torrent to
         int sleep_suppression_cookie;

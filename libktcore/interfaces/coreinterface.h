@@ -51,6 +51,7 @@ namespace kt
         QString move_on_completion;
     };
 
+    class MagnetManager;
     class QueueManager;
     class GroupManager;
     class DBus;
@@ -233,6 +234,9 @@ namespace kt
 
         /// Get the GroupManager
         virtual kt::GroupManager* getGroupManager() = 0;
+
+        /// Get the MagnetManager
+        virtual kt::MagnetManager* getMagnetManager() = 0;
 
         /// Get a pointer to the external interface object (for dbus and scripting)
         virtual DBus* getExternalInterface() = 0;

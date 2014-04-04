@@ -184,6 +184,12 @@ namespace kt
         Q_SCRIPTABLE void setPrimaryTransportProtocol(int val);
         Q_SCRIPTABLE bool autoRenameSingleFileTorrents();
         Q_SCRIPTABLE void setAutoRenameSingleFileTorrents(bool val);
+        Q_SCRIPTABLE int numMagnetDownloadingSlots();
+        Q_SCRIPTABLE void setNumMagnetDownloadingSlots(int val);
+        Q_SCRIPTABLE bool requeueMagnets();
+        Q_SCRIPTABLE void setRequeueMagnets(bool val);
+        Q_SCRIPTABLE int requeueMagnetsTime();
+        Q_SCRIPTABLE void setRequeueMagnetsTime(int val);
 
         Q_SCRIPTABLE void apply();
     private:

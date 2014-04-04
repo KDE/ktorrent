@@ -303,5 +303,18 @@
 		<entry name="highlightNewTorrents" type="Bool">
 			<default>true</default>
 		</entry>
+        <entry name="numMagnetDownloadingSlots" type="Int">
+            <min>1</min>
+            <max>20</max>
+            <default>5</default>
+        </entry>
+        <entry name="requeueMagnets" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="requeueMagnetsTime" type="Int">
+            <min>1</min>
+            <max>60</max>
+            <default>5</default>
+        </entry>
 	</group>
 </kcfg>
