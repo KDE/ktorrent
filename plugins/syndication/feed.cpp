@@ -177,7 +177,7 @@ namespace kt
             {
                 for (Uint32 i = 0; i < ll->getNumChildren(); i++)
                 {
-                    loaded.append(ll->getString(i, 0));
+                    loaded.insert(ll->getString(i, 0));
                 }
             }
 
@@ -238,6 +238,13 @@ namespace kt
         this->feed = feed;
         update_timer.start(refresh_rate * 60  * 1000);
         this->status = OK;
+
+        // refresh cache of feed_items_ids
+        feed_items_id.clear();
+        QList<Syndication::ItemPtr> feedItems = feed->items();
+        foreach (Syndication::ItemPtr item, feedItems)
+            feed_items_id.insert(item->id());
+
         checkLoaded();
         runFilters();
         updated();
@@ -367,7 +374,7 @@ namespace kt
 
     void Feed::downloadItem(Syndication::ItemPtr item, const QString& group, const QString& location, const QString& move_on_completion, bool silently)
     {
-        loaded.append(item->id());
+        loaded.insert(item->id());
         QString url = TorrentUrlFromItem(item);
         if (!url.isEmpty())
             downloadLink(KUrl(url), group, location, move_on_completion, silently);
@@ -387,27 +394,19 @@ namespace kt
         // remove all id's which are in loaded but no longer in
         // the item list
         bool need_to_save = false;
-        QList<Syndication::ItemPtr> items = feed->items();
-        for (QStringList::iterator i = loaded.begin(); i != loaded.end();)
-        {
-            bool found = false;
-            foreach (Syndication::ItemPtr item, items)
-            {
-                if (item->id() == *i)
-                {
-                    found = true;
-                    break;
-                }
-            }
 
-            if (!found)
+        QList<QString> itemsToRemove;
+        foreach (const QString &loadedItem, loaded)
+        {
+            if (!feed_items_id.contains(loadedItem))
             {
+                itemsToRemove.push_front(loadedItem);
                 need_to_save = true;
-                i = loaded.erase(i);
             }
-            else
-                i++;
         }
+
+        foreach (const QString &itemToRemove, itemsToRemove)
+            loaded.remove(itemToRemove);
 
         if (need_to_save)
             save();

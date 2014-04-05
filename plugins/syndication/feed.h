@@ -23,7 +23,7 @@
 
 #include <QMap>
 #include <QTimer>
-#include <QStringList>
+#include <QSet>
 #include <kurl.h>
 #include <syndication/feed.h>
 #include <syndication/loader.h>
@@ -171,11 +171,12 @@ namespace kt
     private:
         KUrl url;
         Syndication::FeedPtr feed;
+        QSet<QString> feed_items_id;
         QString dir;
         QTimer update_timer;
         Status status;
         QList<Filter*> filters;
-        QStringList loaded;
+        QSet<QString> loaded;
         QMap<Filter*, QList<SeasonEpisodeItem> > downloaded_se_items;
         QString custom_name;
         bt::Uint32 refresh_rate;
