@@ -305,7 +305,7 @@
 		</entry>
         <entry name="numMagnetDownloadingSlots" type="Int">
             <min>1</min>
-            <max>20</max>
+            <max>100</max>
             <default>5</default>
         </entry>
         <entry name="requeueMagnets" type="Bool">

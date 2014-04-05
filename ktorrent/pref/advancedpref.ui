@@ -144,13 +144,13 @@
         <item row="0" column="1">
          <widget class="QSpinBox" name="kcfg_numMagnetDownloadingSlots">
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum number of concurrent downloading magnets at the same time.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; If you already tweak this value and KTorrent hangs when you are trying to download a big list of magnets, try to lower it.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum number of concurrent downloading magnets at the same time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="minimum">
            <number>1</number>
           </property>
           <property name="maximum">
-           <number>20</number>
+           <number>100</number>
           </property>
           <property name="value">
            <number>5</number>
