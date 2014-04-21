@@ -412,7 +412,7 @@ namespace kt
         connect(open_silently_action, SIGNAL(triggered()), this, SLOT(openTorrentSilently()));
         ac->addAction("file_open_silently", open_silently_action);
 
-        KStandardAction::quit(kapp, SLOT(quit()), ac);
+        KStandardAction::quit(this, SLOT(quit()), ac);
 
         show_status_bar_action = KStandardAction::showStatusbar(this, SLOT(showStatusBar()), ac);
         show_status_bar_action->setIcon(KIcon("kt-show-statusbar"));
@@ -546,28 +546,21 @@ namespace kt
         if (Settings::showSystemTrayIcon() && !KApplication::kApplication()->sessionSaving())
         {
             hide();
+            saveState(KGlobal::config());
             return false;
         }
         else
         {
+            saveState(KGlobal::config());
             QTimer::singleShot(500, KApplication::kApplication(), SLOT(quit()));
             return true;
         }
     }
 
-    bool GUI::queryExit()
+    void GUI::quit()
     {
-        static bool first_time = true;
-        if (first_time)
-        {
-            saveState(KGlobal::config());
-            timer.stop();
-            hide();
-            tray_icon->hide();
-            core->onExit();
-            first_time = false;
-        }
-        return true;
+        saveState(KGlobal::config());
+        qApp->quit();
     }
 
     void GUI::updateActions()

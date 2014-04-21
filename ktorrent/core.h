@@ -86,11 +86,6 @@ namespace kt
         virtual  bt::TorrentInterface* createTorrent(bt::TorrentCreator* mktor, bool seed);
 
         /**
-         * KT is exiting, shutdown the core
-         */
-        void onExit();
-
-        /**
          * Set the maximum number of simultaneous downloads.
          * @param max The max num (0 == no limit)
          */
@@ -256,6 +251,10 @@ namespace kt
         void beforeQueueReorder();
         void afterQueueReorder();
         void customGroupChanged();
+        /**
+         * KT is exiting, shutdown the core
+         */
+        void onExit();
 
     private:
         GUI* gui;

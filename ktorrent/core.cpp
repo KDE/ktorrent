@@ -137,6 +137,8 @@ namespace kt
             QTimer::singleShot(1000, this, SLOT(checkForKDE3Torrents()));
 
         mman->loadMagnets(kt::DataDir() + "magnets");
+
+        connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()), this, SLOT(onExit()));
     }
 
     Core::~Core()

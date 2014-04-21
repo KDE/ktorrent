@@ -113,13 +113,13 @@ namespace kt
         void showOrHide();
         void configureNotifications();
         void activePartChanged(KParts::Part* p);
+        void quit();
 
     private:
         void setupActions();
 
         virtual void loadState(KSharedConfigPtr cfg);
         virtual void saveState(KSharedConfigPtr cfg);
-        virtual bool queryExit();
         virtual bool queryClose();
 
     private:
