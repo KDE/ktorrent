@@ -11,6 +11,7 @@ Name[de]=Automatisch fortsetzen
 Name[el]=Αυτόματη συνέχιση
 Name[en_GB]=Automatic Resume
 Name[es]=Reanudación automática
+Name[et]=Automaatne taasalustamine
 Name[fi]=Automaattinen jatkaminen
 Name[fr]=Reprise automatique
 Name[ga]=Lean go hUathoibríoch
@@ -59,6 +60,7 @@ Comment[de]=Skript zum automatischen Fortsetzen von ausgesetzten Torrents nach A
 Comment[el]=Σενάριο για την αυτόματη συνέχιση μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
 Comment[en_GB]=Script to automatically resume after some time, when the suspended state is enabled
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está activado el estado de suspensión
+Comment[et]=Skript automaatseks taasalustamiseks mõne aja pärast, kui sisse on lülitatud paus
 Comment[fi]=Skripti torrentin automaattiseen jatkamiseen, kun keskeytystila on käytössä
 Comment[fr]=Script pour reprendre automatiquement après un certain temps, lorsque l'état suspendu est activé
 Comment[ga]=Script a leanann ar aghaidh go huathoibríoch tar éis tréimhse éigin, nó atá an clár curtha ar fionraí
