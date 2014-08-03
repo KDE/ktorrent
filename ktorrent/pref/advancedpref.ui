@@ -144,7 +144,7 @@
         <item row="0" column="1">
          <widget class="QSpinBox" name="kcfg_numMagnetDownloadingSlots">
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum number of concurrent downloading magnets at the same time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Maximum number of concurrent downloading magnets at the same time.</string>
           </property>
           <property name="minimum">
            <number>1</number>
@@ -160,7 +160,7 @@
         <item row="1" column="0">
          <widget class="QCheckBox" name="kcfg_requeueMagnets">
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Whether or not the magnets that are not downloaded after a maximum period of time must be pushed back at the end of the queue.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Whether or not the magnets that are not downloaded after a maximum period of time must be pushed back at the end of the queue.</string>
           </property>
           <property name="text">
            <string>Requeue magnets after:</string>
@@ -170,7 +170,7 @@
         <item row="1" column="1">
          <widget class="QSpinBox" name="kcfg_requeueMagnetsTime">
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum time that a magnet can occupy a downloading slot before it will be pushed back in the queue.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Maximum time that a magnet can occupy a downloading slot before it will be pushed back in the queue.</string>
           </property>
           <property name="suffix">
            <string> min</string>
