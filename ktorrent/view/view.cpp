@@ -91,13 +91,11 @@ namespace kt
 		header()->setContextMenuPolicy(Qt::CustomContextMenu);
 		connect(header(), SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showHeaderMenu(const QPoint&)));
 		header_menu = new KMenu(this);
-		header_menu->addTitle(i18n("Columns"));
 
 		for(int i = 0; i < model->columnCount(QModelIndex()); i++)
 		{
 			QString col = model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
-			KAction* act = new KAction(col, header_menu);
-			header_menu->addAction(act);
+			KAction* act = new KAction(col, this);
 			act->setCheckable(true);
 			act->setChecked(true);
 			column_idx_map[act] = i;
@@ -671,6 +669,20 @@ namespace kt
 
 	void View::showHeaderMenu(const QPoint& pos)
 	{
+		const int col = columnAt(pos.x());
+
+	        header_menu->clear();
+		header_menu->addTitle(i18n("Columns"));
+	        header_menu->addAction(column_idx_map.key(col));
+	        header_menu->addSeparator();
+	        for(int i = 0; i < model->columnCount(QModelIndex()); i++)
+	        {
+	                if (i == col) {
+	                        continue;
+	                }
+	                header_menu->addAction(column_idx_map.key(i));
+	        }
+
 		header_menu->popup(header()->mapToGlobal(pos));
 	}
 
