@@ -18,6 +18,7 @@ Changes in 4.4:
 - Fix double click on subdirectory not working in fileview (337457)
 - Drop support for importing KDE3 torrents
 - Support x-scheme-handler/magnet mimetype
+- Fix some magnet links not working in webinterface plugin (339584)
 
 Changes in 4.3.2:
 - Backport ipfilter extraction fixes from master branch (315239)

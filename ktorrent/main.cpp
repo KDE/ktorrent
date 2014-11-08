@@ -150,6 +150,7 @@ int main(int argc, char** argv)
     about.addCredit(ki18n("Alexey Shildyakov "), ki18n("Patch to rename single file torrents to the file inside"), "ashl1future@gmail.com");
     about.addCredit(ki18n("Maarten De Meyer"), ki18n("Fix for bug 305379"), "de.meyer.maarten@gmail.com");
     about.addCredit(ki18n("Rex Dieter"), ki18n("Add support for x-scheme-handler/magnet mimetype"), "rdieter@gmail.com");
+    about.addCredit(ki18n("Leszek Lesner"), ki18n("Fix for bug 339584"), "leszek.lesner@web.de");
 
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineOptions options;
