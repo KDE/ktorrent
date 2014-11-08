@@ -107,7 +107,6 @@ int main(int argc, char** argv)
     about.addAuthor(ki18n("Diego R. Brogna"), ki18n("Webinterface Plugin"), "dierbro@gmail.com");
     about.addAuthor(ki18n("Krzysztof Kundzicz"), ki18n("Statistics Plugin"), "athantor@gmail.com");
     about.addAuthor(ki18n("Christian Weilbach"), ki18n("kio-magnet"), "christian_weilbach@web.de");
-
     about.addCredit(ki18n("Mladen Babic"),  ki18n("Application icon and a couple of others"), "bmladen@EUnet.yu");
     about.addCredit(ki18n("Adam Treat"), KLocalizedString(), "treat@kde.org");
     about.addCredit(ki18n("Danny Allen"), ki18n("1.0 application icon"), "danny@dannyallen.co.uk");
@@ -146,12 +145,13 @@ int main(int argc, char** argv)
     about.addCredit(ki18n("Amichai Rothman"), ki18n("Patch to make the Plasma applet a popup applet"), "amichai@amichais.net");
     about.addCredit(ki18n("Leo Trubach"), ki18n("Patch to add support for IP ranges in IP filter dialog"), "leotrubach@gmail.com");
     about.addCredit(ki18n("Andrei Barbu"), ki18n("Feature which adds the date a torrent was added"), "andrei@0xab.com");
-    KCmdLineArgs::init(argc, argv, &about);
     about.addCredit(ki18n("Jonas Lundqvist"), ki18n("Feature to disable authentication in the webinterface"), "jonas@gannon.se");
     about.addCredit(ki18n("Jaroslaw Swierczynski"), ki18n("Exclusion patterns in the syndication plugin"), "swiergot@gmail.com");
     about.addCredit(ki18n("Alexey Shildyakov "), ki18n("Patch to rename single file torrents to the file inside"), "ashl1future@gmail.com");
     about.addCredit(ki18n("Maarten De Meyer"), ki18n("Fix for bug 305379"), "de.meyer.maarten@gmail.com");
+    about.addCredit(ki18n("Rex Dieter"), ki18n("Add support for x-scheme-handler/magnet mimetype"), "rdieter@gmail.com");
 
+    KCmdLineArgs::init(argc, argv, &about);
     KCmdLineOptions options;
     options.add("+[Url]", ki18n("Document to open"));
     options.add("silent", ki18n("Silently open torrent given on URL"));
