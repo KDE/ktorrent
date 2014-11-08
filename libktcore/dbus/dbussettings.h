@@ -166,8 +166,6 @@ namespace kt
         Q_SCRIPTABLE void setPreviewSizeVideo(int val);
         Q_SCRIPTABLE bool suppressSleep();
         Q_SCRIPTABLE void setSuppressSleep(bool val);
-        Q_SCRIPTABLE bool oldTorrentsImported();
-        Q_SCRIPTABLE void setOldTorrentsImported(bool val);
         Q_SCRIPTABLE bool manuallyControlTorrents();
         Q_SCRIPTABLE void setManuallyControlTorrents(bool val);
         Q_SCRIPTABLE bool webseedsEnabled();

@@ -60,7 +60,6 @@
 #include "dialogs/fileselectdlg.h"
 #include "dialogs/missingfilesdlg.h"
 #include "gui.h"
-#include "dialogs/torrentmigratordlg.h"
 
 
 using namespace bt;
@@ -132,9 +131,6 @@ namespace kt
         connect(mman, SIGNAL(metadataDownloaded(bt::MagnetLink, QByteArray, kt::MagnetLinkLoadOptions)),
                 this, SLOT(onMetadataDownloaded(bt::MagnetLink, QByteArray, kt::MagnetLinkLoadOptions)),
                 Qt::QueuedConnection);
-
-        if (!Settings::oldTorrentsImported()) // check for old torrents if this hasn't happened yet
-            QTimer::singleShot(1000, this, SLOT(checkForKDE3Torrents()));
 
         mman->loadMagnets(kt::DataDir() + "magnets");
 
@@ -1329,41 +1325,6 @@ namespace kt
     void Core::updateGuiPlugins()
     {
         pman->updateGuiPlugins();
-    }
-
-    void Core::checkForKDE3Torrents()
-    {
-        Settings::setOldTorrentsImported(true);
-        Settings::self()->writeConfig();
-#ifndef Q_WS_WIN // this is only necessary on linux and other unix variants which support KDE3  
-        TorrentMigratorDlg mig(gui);
-        Uint32 num = mig.findTorrentsToBeMigrated();
-        if (num > 0)
-        {
-            if (KMessageBox::questionYesNo(gui, i18np("KTorrent has found a torrent from the KDE3 version of KTorrent, do you want to import it?", "KTorrent has found %1 torrents from the KDE3 version of KTorrent, do you want to import them?", num)) == KMessageBox::Yes)
-            {
-                mig.migrateFoundTorrents(qman);
-                foreach (const QString& s, mig.getSuccessFullImports())
-                    loadExistingTorrent(s);
-            }
-        }
-#endif
-    }
-
-    void Core::importKDE3Torrents()
-    {
-        TorrentMigratorDlg mig(gui);
-        Uint32 num = mig.findTorrentsToBeMigrated();
-        if (num > 0)
-        {
-            mig.migrateFoundTorrents(qman);
-            foreach (const QString& s, mig.getSuccessFullImports())
-                loadExistingTorrent(s);
-        }
-        else
-        {
-            KMessageBox::information(gui, i18n("No torrents from the KDE3 version were found."));
-        }
     }
 
     DBus* Core::getExternalInterface()

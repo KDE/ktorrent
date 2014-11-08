@@ -441,15 +441,6 @@ namespace kt
         connect(import_action, SIGNAL(triggered()), this, SLOT(import()));
         ac->addAction("import", import_action);
 
-#ifndef Q_WS_WIN
-        import_kde3_torrents_action = new KAction(KIcon("document-import"), i18n("Import KDE3 Torrents"), this);
-        import_kde3_torrents_action->setToolTip(i18n("Import all torrents from the KDE3 version of KTorrent"));
-        connect(import_kde3_torrents_action, SIGNAL(triggered()), core, SLOT(importKDE3Torrents()));
-        ac->addAction("import_kde3_torrents", import_kde3_torrents_action);
-#else
-        import_kde3_torrents_action = 0; // this action is not needed in windows
-#endif
-
         show_kt_action = new KAction(KIcon("kt-show-hide"), i18n("Show/Hide KTorrent"), this);
         connect(show_kt_action, SIGNAL(triggered()), this, SLOT(showOrHide()));
         ac->addAction("show_kt", show_kt_action);

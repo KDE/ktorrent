@@ -157,9 +157,6 @@ namespace kt
         /// Update the GUI plugins
         void updateGuiPlugins();
 
-        /// Import KDE3 torrents
-        void importKDE3Torrents();
-
         /// Handle status changes
         void onStatusChanged(bt::TorrentInterface* tc);
 
@@ -245,7 +242,6 @@ namespace kt
         void downloadFinishedSilently(KJob* job);
         void emitCorruptedData(bt::TorrentInterface* tc);
         void autoCheckData(bt::TorrentInterface* tc);
-        void checkForKDE3Torrents();
         void delayedRemove(bt::TorrentInterface* tc);
         void delayedStart();
         void beforeQueueReorder();

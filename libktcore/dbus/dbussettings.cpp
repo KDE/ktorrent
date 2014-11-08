@@ -678,16 +678,6 @@ namespace kt
         Settings::setSuppressSleep(val);
     }
 
-    bool DBusSettings::oldTorrentsImported()
-    {
-        return Settings::oldTorrentsImported();
-    }
-
-    void DBusSettings::setOldTorrentsImported(bool val)
-    {
-        Settings::setOldTorrentsImported(val);
-    }
-
     bool DBusSettings::manuallyControlTorrents()
     {
         return Settings::manuallyControlTorrents();

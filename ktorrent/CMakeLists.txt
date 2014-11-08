@@ -31,7 +31,6 @@ set(ktorrent_SRC
 	dialogs/missingfilesdlg.cpp
 	dialogs/importdialog.cpp
 	dialogs/addpeersdlg.cpp
-	dialogs/torrentmigratordlg.cpp
 	dialogs/fileselectdlg.cpp 
 	
 	pref/prefdialog.cpp 
@@ -63,7 +62,6 @@ kde4_add_ui_files(ktorrent_SRC
 	dialogs/missingfilesdlg.ui
 	dialogs/importdialog.ui
 	dialogs/addpeersdlg.ui
-	dialogs/torrentmigratordlg.ui
 	dialogs/fileselectdlg.ui 
 	
 	groups/grouppolicydlg.ui

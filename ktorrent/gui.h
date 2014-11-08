@@ -140,7 +140,6 @@ namespace kt
         KAction* paste_url_action;
         KAction* ipfilter_action;
         KAction* import_action;
-        KAction* import_kde3_torrents_action;
         KAction* show_kt_action;
         KAction* paste_action;
     };

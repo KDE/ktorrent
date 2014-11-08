@@ -273,9 +273,6 @@
 		<entry name="suppressSleep" type="Bool">
 			<default>true</default>
 		</entry>
-		<entry name="oldTorrentsImported" type="Bool">
-			<default>false</default>
-		</entry>
 		<entry name="manuallyControlTorrents" type="Bool">
 			<default>false</default>
 		</entry>
