@@ -17,6 +17,7 @@ Changes in 4.4:
 - Remove estimation algorithm option 
 - Fix double click on subdirectory not working in fileview (337457)
 - Drop support for importing KDE3 torrents
+- Support x-scheme-handler/magnet mimetype
 
 Changes in 4.3.2:
 - Backport ipfilter extraction fixes from master branch (315239)

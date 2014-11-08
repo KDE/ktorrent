@@ -91,9 +91,5 @@ install(FILES ktorrentui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 install(FILES kttorrentactivityui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 install(FILES ktorrent.notifyrc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 
-if (NOT ${ENABLE_KIO_MAGNET})
-    install(FILES magnet.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
-endif (NOT ${ENABLE_KIO_MAGNET})
-    
 
 add_subdirectory(icons)
