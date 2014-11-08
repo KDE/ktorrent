@@ -426,7 +426,8 @@ namespace kt
             if (!file)
             {
                 // directory
-                new KRun(KUrl(tc->getDataDir() + model->dirPath(proxy_model->mapToSource(index))), 0, 0, true, true);
+                QString path = tc->getStats().output_path + model->dirPath(proxy_model->mapToSource(index));
+                new KRun(KUrl(path), 0, 0, true, true);
             }
             else
             {
