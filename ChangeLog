@@ -15,6 +15,7 @@ Changes in 4.4:
 - Use file contents to figure out which type of blocklist we are dealing with in IP filter (315239)
 - Fix bug causing torrent percentage to be slightly off in the files tab (315549)
 - Remove estimation algorithm option 
+- Fix double click on subdirectory not working in fileview (337457)
 
 Changes in 4.3.2:
 - Backport ipfilter extraction fixes from master branch (315239)
