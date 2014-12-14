@@ -350,8 +350,11 @@ namespace kt
         Group* g = gman->find(selected_group);
         if (g)
         {
-            g->addTorrent(tc, true);
-            gman->saveGroups();
+            if (!g->isMember(tc))
+            {
+                g->addTorrent(tc, true);
+                gman->saveGroups();
+            }
         }
 
         torrentAdded(tc);
