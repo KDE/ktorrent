@@ -109,21 +109,26 @@ namespace kt
     void MagnetView::removeMagnetDownload()
     {
         QModelIndexList idx_list = view->selectionModel()->selectedRows();
-        mman->removeMagnets(idx_list.front().row(), idx_list.size());
+        if (!idx_list.isEmpty())
+            mman->removeMagnets(idx_list.front().row(), idx_list.size());
     }
 
     void MagnetView::startMagnetDownload()
     {
         QModelIndexList idx_list = view->selectionModel()->selectedRows();
-        mman->start(idx_list.front().row(), idx_list.size());
-        view->clearSelection();
+        if (!idx_list.isEmpty()) {
+            mman->start(idx_list.front().row(), idx_list.size());
+            view->clearSelection();
+        }
     }
 
     void MagnetView::stopMagnetDownload()
     {
         QModelIndexList idx_list = view->selectionModel()->selectedRows();
-        mman->stop(idx_list.front().row(), idx_list.size());
-        view->clearSelection();
+        if (!idx_list.isEmpty()) {
+            mman->stop(idx_list.front().row(), idx_list.size());
+            view->clearSelection();
+        }
     }
 
     void MagnetView::keyPressEvent(QKeyEvent* event)
