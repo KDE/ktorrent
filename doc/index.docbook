@@ -66,10 +66,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 
 <itemizedlist>
 <title>Online Help Resources</title>
-<listitem><para><ulink url="http://ktorrent.org/">KTorrent Homepage</ulink></para></listitem>
-<listitem><para><ulink url="http://ktorrent.org/wiki/index.php/Main_Page">KTorrent Handbook</ulink></para></listitem>
-<listitem><para><ulink url="http://ktorrent.org/forum/">KTorrent Forum</ulink></para></listitem>
-<listitem><para><ulink url="http://ktorrent.org/wiki/">KTorrent Wiki</ulink></para></listitem>
+<listitem><para><ulink url="https://userbase.kde.org/KTorrent">KTorrent on UserBase</ulink></para></listitem>
 <listitem><para><ulink url="http://forum.kde.org/viewforum.php?f=18">KDE Community Forums</ulink></para></listitem>
 </itemizedlist>
 </article>
