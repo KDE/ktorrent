@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.8.9)
 project(KTORRENT)
 find_package(Qt4 4.7.0 REQUIRED)
 find_package(KDE4 4.4.0 REQUIRED)
