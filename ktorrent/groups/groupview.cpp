@@ -24,7 +24,7 @@
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kmenu.h>
-#include <kaction.h>
+#include <QAction>
 #include <kmessagebox.h>
 #include <kinputdialog.h>
 #include <kactioncollection.h>
@@ -77,23 +77,23 @@ namespace kt
 
     void GroupView::setupActions(KActionCollection* col)
     {
-        open_in_new_tab = new KAction(KIcon("list-add"), i18n("Open In New Tab"), this);
+        open_in_new_tab = new QAction(QIcon::fromTheme("list-add"), i18n("Open In New Tab"), this);
         connect(open_in_new_tab, SIGNAL(triggered()), this, SLOT(openInNewTab()));
         col->addAction("open_in_new_tab", open_in_new_tab);
 
-        new_group = new KAction(KIcon("document-new"), i18n("New Group"), this);
+        new_group = new QAction(QIcon::fromTheme("document-new"), i18n("New Group"), this);
         connect(new_group, SIGNAL(triggered()), this, SLOT(addGroup()));
         col->addAction("new_group", new_group);
 
-        edit_group = new KAction(KIcon("insert-text"), i18n("Edit Name"), this);
+        edit_group = new QAction(QIcon::fromTheme("insert-text"), i18n("Edit Name"), this);
         connect(edit_group, SIGNAL(triggered()), this, SLOT(editGroupName()));
         col->addAction("edit_group_name", edit_group);
 
-        remove_group = new KAction(KIcon("edit-delete"), i18n("Remove Group"), this);
+        remove_group = new QAction(QIcon::fromTheme("edit-delete"), i18n("Remove Group"), this);
         connect(remove_group, SIGNAL(triggered()), this, SLOT(removeGroup()));
         col->addAction("remove_group", remove_group);
 
-        edit_group_policy = new KAction(KIcon("preferences-other"), i18n("Group Policy"), this);
+        edit_group_policy = new QAction(QIcon::fromTheme("preferences-other"), i18n("Group Policy"), this);
         connect(edit_group_policy, SIGNAL(triggered()), this, SLOT(editGroupPolicy()));
         col->addAction("edit_group_policy", edit_group_policy);
     }

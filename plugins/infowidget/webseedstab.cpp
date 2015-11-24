@@ -37,8 +37,8 @@ namespace kt
         connect(m_remove, SIGNAL(clicked()), this, SLOT(removeWebSeed()));
         connect(m_disable_all, SIGNAL(clicked()), this, SLOT(disableAll()));
         connect(m_enable_all, SIGNAL(clicked()), this, SLOT(enableAll()));
-        m_add->setIcon(KIcon("list-add"));
-        m_remove->setIcon(KIcon("list-remove"));
+        m_add->setIcon(QIcon::fromTheme("list-add"));
+        m_remove->setIcon(QIcon::fromTheme("list-remove"));
         m_add->setEnabled(false);
         m_remove->setEnabled(false);
         m_webseed_list->setEnabled(false);

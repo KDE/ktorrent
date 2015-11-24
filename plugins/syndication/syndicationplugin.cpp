@@ -82,25 +82,25 @@ namespace kt
     {
         KActionCollection* ac = actionCollection();
 
-        add_feed = new KAction(KIcon("kt-add-feeds"), i18n("Add Feed"), this);
+        add_feed = new QAction(QIcon::fromTheme("kt-add-feeds"), i18n("Add Feed"), this);
         ac->addAction("add_feed", add_feed);
 
-        remove_feed = new KAction(KIcon("kt-remove-feeds"), i18n("Remove Feed"), this);
+        remove_feed = new QAction(QIcon::fromTheme("kt-remove-feeds"), i18n("Remove Feed"), this);
         ac->addAction("remove_feed", remove_feed);
 
-        manage_filters = new KAction(KIcon("view-filter"), i18n("Add/Remove Filters"), this);
+        manage_filters = new QAction(QIcon::fromTheme("view-filter"), i18n("Add/Remove Filters"), this);
         ac->addAction("manage_filters", manage_filters);
 
-        edit_feed_name = new KAction(KIcon("edit-rename"), i18n("Rename"), this);
+        edit_feed_name = new QAction(QIcon::fromTheme("edit-rename"), i18n("Rename"), this);
         ac->addAction("edit_feed_name", edit_feed_name);
 
-        add_filter = new KAction(KIcon("kt-add-filters"), i18n("Add Filter"), this);
+        add_filter = new QAction(QIcon::fromTheme("kt-add-filters"), i18n("Add Filter"), this);
         ac->addAction("add_filter", add_filter);
 
-        remove_filter = new KAction(KIcon("kt-remove-filters"), i18n("Remove Filter"), this);
+        remove_filter = new QAction(QIcon::fromTheme("kt-remove-filters"), i18n("Remove Filter"), this);
         ac->addAction("remove_filter", remove_filter);
 
-        edit_filter = new KAction(KIcon("preferences-other"), i18n("Edit Filter"), this);
+        edit_filter = new QAction(QIcon::fromTheme("preferences-other"), i18n("Edit Filter"), this);
         ac->addAction("edit_filter", edit_filter);
 
         remove_filter->setEnabled(false);

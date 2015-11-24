@@ -31,7 +31,6 @@
 #include <errno.h>
 #include <qfile.h>
 #include <kfileitem.h>
-#include <kio/netaccess.h>
 #include <klocale.h>
 #include <util/error.h>
 #include <util/log.h>

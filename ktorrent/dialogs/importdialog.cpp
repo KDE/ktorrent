@@ -62,7 +62,7 @@ namespace kt
         m_progress->setEnabled(false);
         m_progress->setValue(0);
         m_cancel_btn->setGuiItem(KStandardGuiItem::cancel());
-        m_import_btn->setIcon(KIcon("document-import"));
+        m_import_btn->setIcon(QIcon::fromTheme("document-import"));
     }
 
     ImportDialog::~ImportDialog()

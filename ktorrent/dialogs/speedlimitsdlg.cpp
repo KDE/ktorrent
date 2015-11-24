@@ -46,7 +46,7 @@ namespace kt
     {
         setButtons(KDialog::Ok | KDialog::Apply | KDialog::Cancel);
         setupUi(mainWidget());
-        setWindowIcon(KIcon("kt-speed-limits"));
+        setWindowIcon(QIcon::fromTheme("kt-speed-limits"));
         setWindowTitle(i18n("Speed Limits"));
 
         model = new SpeedLimitsModel(core, this);

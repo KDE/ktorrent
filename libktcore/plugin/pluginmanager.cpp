@@ -21,7 +21,6 @@
 #include <qtextstream.h>
 #include <klocale.h>
 #include <kservicetypetrader.h>
-#include <kparts/componentfactory.h>
 #include <util/log.h>
 #include <util/error.h>
 #include <util/fileops.h>
@@ -49,6 +48,7 @@ namespace kt
 
     void PluginManager::loadPluginList()
     {
+#if 0 //KF5
         KService::List offers = KServiceTypeTrader::self()->query("KTorrent/Plugin");
         plugins = KPluginInfo::fromServices(offers);
 
@@ -68,10 +68,12 @@ namespace kt
         prefpage->updatePluginList();
         loadPlugins();
         prefpage->update();
+#endif
     }
 
     void PluginManager::loadPlugins()
     {
+#if 0 //KF5
         int idx = 0;
         for (KPluginInfo::List::iterator i = plugins.begin(); i != plugins.end(); i++)
         {
@@ -90,6 +92,7 @@ namespace kt
             }
             idx++;
         }
+#endif
     }
 
     void PluginManager::load(const KPluginInfo& pi, int idx)

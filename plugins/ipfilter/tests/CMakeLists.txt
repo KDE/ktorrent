@@ -1,3 +1,5 @@
 set(ipblocklisttest_SRCS ipblocklisttest.cpp ../ipblocklist.cpp)
-kde4_add_unit_test(ipblocklisttest TESTNAME ipblocklisttest ${ipblocklisttest_SRCS})
-target_link_libraries(ipblocklisttest ${QT_QTCORE_LIBRARY} ${QT_QTNETWORK_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBKTORRENT_LIBRARIES})
+add_executable(ipblocklisttestNAME ipblocklisttest ${ipblocklisttest_SRCS})
+add_test(ipblocklisttest ipblocklisttest)
+ecm_mark_as_test(ipblocklisttest)
+target_link_libraries(ipblocklisttest Qt5::Core Qt5::Network Qt5::Test ${LIBKTORRENT_LIBRARIES})

@@ -21,7 +21,7 @@
 #include "torrentfiletreemodel.h"
 
 #include <klocale.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kmimetype.h>
 #include <QTreeView>
 #include <QSortFilterProxyModel>
@@ -443,9 +443,9 @@ namespace kt
             // if this is an empty folder then we are in the single file case
             if (!n->file)
                 return n->children.count() > 0 ?
-                       KIcon("folder") : KIcon(KMimeType::findByPath(tc->getStats().torrent_name)->iconName());
+                       QIcon::fromTheme("folder") : QIcon::fromTheme(KMimeType::findByPath(tc->getStats().torrent_name)->iconName());
             else
-                return KIcon(KMimeType::findByPath(n->file->getPath())->iconName());
+                return QIcon::fromTheme(KMimeType::findByPath(n->file->getPath())->iconName());
         }
         else if (role == Qt::CheckStateRole && index.column() == 0)
         {

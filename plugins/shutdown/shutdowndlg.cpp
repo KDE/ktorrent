@@ -34,28 +34,28 @@ namespace kt
         setWindowTitle(i18nc("@title:window", "Configure Shutdown"));
         model = new ShutdownTorrentModel(core, this);
 
-        m_action->addItem(KIcon("system-shutdown"), i18n("Shutdown"));
-        m_action->addItem(KIcon("system-lock-screen"), i18n("Lock"));
+        m_action->addItem(QIcon::fromTheme("system-shutdown"), i18n("Shutdown"));
+        m_action->addItem(QIcon::fromTheme("system-lock-screen"), i18n("Lock"));
 #if KDE_IS_VERSION(4,5,82)
         QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
         if (spdMethods.contains(Solid::PowerManagement::StandbyState))
-            m_action->addItem(KIcon("system-suspend"), i18n("Standby"));
+            m_action->addItem(QIcon::fromTheme("system-suspend"), i18n("Standby"));
 
         if (spdMethods.contains(Solid::PowerManagement::SuspendState))
-            m_action->addItem(KIcon("system-suspend"), i18n("Sleep (suspend to RAM)"));
+            m_action->addItem(QIcon::fromTheme("system-suspend"), i18n("Sleep (suspend to RAM)"));
 
         if (spdMethods.contains(Solid::PowerManagement::HibernateState))
-            m_action->addItem(KIcon("system-suspend-hibernate"), i18n("Hibernate (suspend to disk)"));
+            m_action->addItem(QIcon::fromTheme("system-suspend-hibernate"), i18n("Hibernate (suspend to disk)"));
 #else
         Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
         if (spdMethods & Solid::Control::PowerManager::Standby)
-            m_action->addItem(KIcon("system-suspend"), i18n("Standby"));
+            m_action->addItem(QIcon::fromTheme("system-suspend"), i18n("Standby"));
 
         if (spdMethods & Solid::Control::PowerManager::ToRam)
-            m_action->addItem(KIcon("system-suspend"), i18n("Sleep (suspend to RAM)"));
+            m_action->addItem(QIcon::fromTheme("system-suspend"), i18n("Sleep (suspend to RAM)"));
 
         if (spdMethods & Solid::Control::PowerManager::ToDisk)
-            m_action->addItem(KIcon("system-suspend-hibernate"), i18n("Hibernate (suspend to disk)"));
+            m_action->addItem(QIcon::fromTheme("system-suspend-hibernate"), i18n("Hibernate (suspend to disk)"));
 #endif
         m_time_to_execute->addItem(i18n("When all torrents finish downloading"));
         m_time_to_execute->addItem(i18n("When all torrents finish seeding"));

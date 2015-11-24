@@ -23,7 +23,7 @@
 #include <QStyle>
 #include <QPainter>
 #include <QStyleOption>
-#include <KIcon>
+#include <QIcon>
 
 
 namespace kt

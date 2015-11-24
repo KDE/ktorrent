@@ -17,24 +17,22 @@ set(ktmediaplayerplugin_SRC
 )
 
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
-QT4_ADD_DBUS_INTERFACE(ktmediaplayerplugin_SRC ${screensaver_xml} screensaver_interface)
+qt5_add_dbus_interface(ktmediaplayerplugin_SRC ${screensaver_xml} screensaver_interface)
 
-kde4_add_ui_files(ktmediaplayerplugin_SRC mediacontroller.ui)
-kde4_add_kcfg_files(ktmediaplayerplugin_SRC mediaplayerpluginsettings.kcfgc)
-kde4_add_plugin(ktmediaplayerplugin ${ktmediaplayerplugin_SRC})
+ki18n_wrap_ui(ktmediaplayerplugin_SRC mediacontroller.ui)
+kconfig_add_kcfg_files(ktmediaplayerplugin_SRC mediaplayerpluginsettings.kcfgc)
+add_library(ktmediaplayerplugin MODULE ${ktmediaplayerplugin_SRC})
 
 target_link_libraries(
     ktmediaplayerplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-	${TAGLIB_LIBRARIES}
-    ${KDE4_KDECORE_LIBS}
-    ${KDE4_KDEUI_LIBS}
-    ${KDE4_KPARTS_LIBS}
-    ${KDE4_PHONON_LIBS}
-	${KDE4_SOLID_LIBS}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTGUI_LIBRARY}
+    ${TAGLIB_LIBRARIES}
+    KF5::KDELibs4Support
+    KF5::Parts
+    Phonon::phonon4qt5
+    Qt5::Core
+    Qt5::Gui
     )
 install(TARGETS ktmediaplayerplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktmediaplayerplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

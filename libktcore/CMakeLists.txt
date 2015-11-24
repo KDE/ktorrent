@@ -18,7 +18,7 @@ set(libktorrent_SRC
 	interfaces/torrentactivityinterface.cpp
 	
 	torrent/queuemanager.cpp
-    torrent/magnetmanager.cpp
+	torrent/magnetmanager.cpp
 	torrent/torrentfilemodel.cpp
 	torrent/torrentfiletreemodel.cpp
 	torrent/torrentfilelistmodel.cpp
@@ -53,17 +53,15 @@ set(libktorrent_SRC
 
 set(libktorrent_UI torrent/basicjobprogresswidget.ui )
 
-kde4_add_ui_files(libktorrent_SRC ${libktorrent_UI})
-kde4_add_kcfg_files(libktorrent_SRC settings.kcfgc)
-kde4_add_library(ktcore SHARED ${libktorrent_SRC})
+ki18n_wrap_ui(libktorrent_SRC ${libktorrent_UI})
+kconfig_add_kcfg_files(libktorrent_SRC settings.kcfgc)
+add_library(ktcore SHARED ${libktorrent_SRC})
 
 target_link_libraries(ktcore LINK_PUBLIC
-   ${QT_QT3SUPPORT_LIBRARY} # for Q3MimeSourceFactory (images in tooltips)
-   ${KDE4_KPARTS_LIBS}
-   ${KDE4_KUTILS_LIBS}
+   KF5::Parts
+   KF5::KDELibs4Support
    ${LIBKTORRENT_LIBRARIES}
-   ${KDE4_SOLID_LIBS}
    ${GMP_LIBRARIES})
-set_target_properties(ktcore PROPERTIES VERSION 14.0.0 SOVERSION 14 )
+set_target_properties(ktcore PROPERTIES VERSION 15.0.0 SOVERSION 15 )
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 

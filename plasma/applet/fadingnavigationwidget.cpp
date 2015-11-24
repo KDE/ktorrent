@@ -61,13 +61,13 @@ void FadingNavigationWidget::initFrame()
     mFrame->setZValue(10);
     QGraphicsLinearLayout* l = new QGraphicsLinearLayout();
     mPrevButton = new Plasma::PushButton(mFrame);
-    mPrevButton->nativeWidget()->setIcon(KIcon("arrow-left"));
+    mPrevButton->nativeWidget()->setIcon(QIcon::fromTheme("arrow-left"));
     mPrevButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     mPrevButton->setMaximumSize(IconSize(KIconLoader::MainToolbar), IconSize(KIconLoader::MainToolbar));
     connect(mPrevButton, SIGNAL(clicked()), this , SIGNAL(prevClicked()));
     l->addItem(mPrevButton);
     mNextButton = new Plasma::PushButton(mFrame);
-    mNextButton->nativeWidget()->setIcon(KIcon("arrow-right"));
+    mNextButton->nativeWidget()->setIcon(QIcon::fromTheme("arrow-right"));
     mNextButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     mNextButton->setMaximumSize(IconSize(KIconLoader::MainToolbar), IconSize(KIconLoader::MainToolbar));
     connect(mNextButton, SIGNAL(clicked()), this , SIGNAL(nextClicked()));

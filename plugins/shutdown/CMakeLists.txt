@@ -9,10 +9,10 @@ if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 	set(ktshutdownplugin_SRC shutdownruleset.cpp shutdowntorrentmodel.cpp shutdowndlg.cpp shutdownplugin.cpp)
 
 	set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
-	QT4_ADD_DBUS_INTERFACE(ktshutdownplugin_SRC ${screensaver_xml} screensaver_interface)
-	kde4_add_ui_files(ktshutdownplugin_SRC shutdowndlg.ui)
-	#kde4_add_kcfg_files(ktshutdownplugin_SRC logviewerpluginsettings.kcfgc)
-	kde4_add_plugin(ktshutdownplugin ${ktshutdownplugin_SRC})
+	qt5_add_dbus_interface(ktshutdownplugin_SRC ${screensaver_xml} screensaver_interface)
+	ki18n_wrap_ui(ktshutdownplugin_SRC shutdowndlg.ui)
+	#kconfig_add_kcfg_files(ktshutdownplugin_SRC logviewerpluginsettings.kcfgc)
+	add_library(ktshutdownplugin MODULE ${ktshutdownplugin_SRC})
 	
 	set(NEW_SOLID_POWERMANAGEMENT FALSE)
 	macro_ensure_version("4.5.82" ${KDE_VERSION} NEW_SOLID_POWERMANAGEMENT)
@@ -22,11 +22,11 @@ if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 		ktcore
 		${LIBKTORRENT_LIBRARIES}
 		${KWORKSPACE_LIBRARY}
-		${KDE4_KPARTS_LIBS})
+		KF5::Parts)
 	if (NEW_SOLID_POWERMANAGEMENT)
 		target_link_libraries(
 			ktshutdownplugin
-			${KDE4_SOLID_LIBS})
+			)
 	else (NEW_SOLID_POWERMANAGEMENT)
 		target_link_libraries(
 			ktshutdownplugin

@@ -100,9 +100,9 @@ namespace ktplasma
         QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
 
 #if (PLASMA_VERSION_MAJOR < 3)
-        icon = new Plasma::Icon(KIcon("ktorrent"), QString(), this);
+        icon = new Plasma::Icon(QIcon::fromTheme("ktorrent"), QString(), this);
 #else
-        icon = new Plasma::IconWidget(KIcon("ktorrent"), QString(), this);
+        icon = new Plasma::IconWidget(QIcon::fromTheme("ktorrent"), QString(), this);
 #endif
         int icon_size = IconSize(KIconLoader::Desktop);
         icon->setMaximumSize(icon_size, icon_size);

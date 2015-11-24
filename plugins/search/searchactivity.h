@@ -24,7 +24,7 @@
 #include <QList>
 #include <kurl.h>
 #include <ktabwidget.h>
-#include <kaction.h>
+#include <QAction>
 #include <interfaces/activity.h>
 
 namespace kt
@@ -77,9 +77,9 @@ namespace kt
         SearchPlugin* sp;
         SearchToolBar* toolbar;
 
-        KAction* find_action;
-        KAction* search_action;
-        KAction* home_action;
+        QAction * find_action;
+        QAction * search_action;
+        QAction * home_action;
     };
 }
 

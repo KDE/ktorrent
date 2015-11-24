@@ -20,9 +20,8 @@
 #include "tabbarwidget.h"
 
 #include <kconfiggroup.h>
-#include <kiconloader.h>
 #include <QVBoxLayout>
-#include <KIcon>
+#include <QIcon>
 #include <KToolBar>
 #include <QAction>
 #include <QTimer>
@@ -100,7 +99,7 @@ namespace kt
 
     void TabBarWidget::addTab(QWidget* ti, const QString& text, const QString& icon, const QString& tooltip)
     {
-        QAction* act = tab_bar->addAction(KIcon(icon), text);
+        QAction* act = tab_bar->addAction(QIcon::fromTheme(icon), text);
         act->setCheckable(true);
         act->setToolTip(tooltip);
         act->setChecked(widget_stack->count() == 0);
@@ -154,7 +153,7 @@ namespace kt
         if (itr == widget_to_action.end())
             return;
 
-        itr.value()->setIcon(KIcon(icon));
+        itr.value()->setIcon(QIcon::fromTheme(icon));
     }
 
     void TabBarWidget::changeTabText(QWidget* ti, const QString& text)

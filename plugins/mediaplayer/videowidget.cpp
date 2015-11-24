@@ -24,7 +24,7 @@
 #include <QMouseEvent>
 #include <QStackedWidget>
 #include <KToolBar>
-#include <KIcon>
+#include <QIcon>
 #include <KLocale>
 #include <KToggleFullScreenAction>
 #include <KActionCollection>
@@ -65,10 +65,10 @@ namespace kt
 
         QHBoxLayout* hlayout = new QHBoxLayout(0);
 
-        play_action = new KAction(KIcon("media-playback-start"), i18n("Play"), this);
+        play_action = new QAction(QIcon::fromTheme("media-playback-start"), i18n("Play"), this);
         connect(play_action, SIGNAL(triggered()), this, SLOT(play()));
 
-        stop_action = new KAction(KIcon("media-playback-stop"), i18n("Stop"), this);
+        stop_action = new QAction(QIcon::fromTheme("media-playback-stop"), i18n("Stop"), this);
         connect(stop_action, SIGNAL(triggered()), this, SLOT(stop()));
 
         tb = new KToolBar(this);

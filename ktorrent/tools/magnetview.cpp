@@ -24,7 +24,7 @@
 #include <KMenu>
 #include <QBoxLayout>
 #include <KLocalizedString>
-#include <KIcon>
+#include <QIcon>
 #include <KConfigGroup>
 #include <QHeaderView>
 #include <QTreeView>
@@ -61,10 +61,10 @@ namespace kt
 
         // context menu
         menu = new KMenu(this);
-        start = menu->addAction(KIcon("kt-start"), i18n("Start Magnet"), this, SLOT(startMagnetDownload()));
-        stop = menu->addAction(KIcon("kt-stop"), i18n("Stop Magnet"), this, SLOT(stopMagnetDownload()));
+        start = menu->addAction(QIcon::fromTheme("kt-start"), i18n("Start Magnet"), this, SLOT(startMagnetDownload()));
+        stop = menu->addAction(QIcon::fromTheme("kt-stop"), i18n("Stop Magnet"), this, SLOT(stopMagnetDownload()));
         menu->addSeparator();
-        remove = menu->addAction(KIcon("kt-remove"), i18n("Remove Magnet"), this, SLOT(removeMagnetDownload()));
+        remove = menu->addAction(QIcon::fromTheme("kt-remove"), i18n("Remove Magnet"), this, SLOT(removeMagnetDownload()));
     }
 
     MagnetView::~MagnetView()

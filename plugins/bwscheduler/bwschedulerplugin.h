@@ -21,7 +21,7 @@
 #define KTschedulerPLUGIN_H
 
 #include <QTimer>
-#include <KAction>
+#include <QAction>
 #include <solid/networking.h>
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>

@@ -25,7 +25,7 @@
 #include <qclipboard.h>
 #include <qtooltip.h>
 #include <kpassivepopup.h>
-#include <KIcon>
+#include <QIcon>
 
 #include <interfaces/guiinterface.h>
 #include <interfaces/torrentinterface.h>
@@ -46,7 +46,7 @@ namespace kt
     {
         Q_UNUSED(args);
         pref = 0;
-        generate_magnet_action = new KAction(KIcon("kt-magnet"), i18n("Copy Magnet URI"), this);
+        generate_magnet_action = new QAction(QIcon::fromTheme("kt-magnet"), i18n("Copy Magnet URI"), this);
         connect(generate_magnet_action, SIGNAL(triggered()), this, SLOT(generateMagnet()));
         actionCollection()->addAction("generate_magnet", generate_magnet_action);
         setXMLFile("ktmagnetgeneratorpluginui.rc");
@@ -141,7 +141,7 @@ namespace kt
     void MagnetGeneratorPlugin::showPopup()
     {
         KPassivePopup::message(i18n("Magnet"), i18n("Magnet link copied to clipboard"),
-                               KIcon("kt-magnet").pixmap(20, 20), getGUI()->getMainWindow(), 3000);
+                               QIcon::fromTheme("kt-magnet").pixmap(20, 20), getGUI()->getMainWindow(), 3000);
     }
 
 }

@@ -24,7 +24,7 @@
 #include <KRun>
 #include <KLocale>
 #include <KMenu>
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <kross/core/manager.h>
 #include "scriptmanager.h"
@@ -87,31 +87,31 @@ namespace kt
     {
         KActionCollection* ac = part()->actionCollection();
 
-        add_script = new KAction(KIcon("list-add"), i18n("Add Script"), this);
+        add_script = new QAction(QIcon::fromTheme("list-add"), i18n("Add Script"), this);
         connect(add_script, SIGNAL(triggered()), this, SIGNAL(addScript()));
         ac->addAction("add_script", add_script);
 
-        remove_script = new KAction(KIcon("list-remove"), i18n("Remove Script"), this);
+        remove_script = new QAction(QIcon::fromTheme("list-remove"), i18n("Remove Script"), this);
         connect(remove_script, SIGNAL(triggered()), this, SIGNAL(removeScript()));
         ac->addAction("remove_script", remove_script);
 
-        run_script = new KAction(KIcon("system-run"), i18n("Run Script"), this);
+        run_script = new QAction(QIcon::fromTheme("system-run"), i18n("Run Script"), this);
         connect(run_script, SIGNAL(triggered()), this, SLOT(runScript()));
         ac->addAction("run_script", run_script);
 
-        stop_script = new KAction(KIcon("media-playback-stop"), i18n("Stop Script"), this);
+        stop_script = new QAction(QIcon::fromTheme("media-playback-stop"), i18n("Stop Script"), this);
         connect(stop_script, SIGNAL(triggered()), this, SLOT(stopScript()));
         ac->addAction("stop_script", stop_script);
 
-        edit_script = new KAction(KIcon("document-open"), i18n("Edit Script"), this);
+        edit_script = new QAction(QIcon::fromTheme("document-open"), i18n("Edit Script"), this);
         connect(edit_script, SIGNAL(triggered()), this, SLOT(editScript()));
         ac->addAction("edit_script", edit_script);
 
-        properties = new KAction(KIcon("dialog-information"), i18n("Properties"), this);
+        properties = new QAction(QIcon::fromTheme("dialog-information"), i18n("Properties"), this);
         connect(properties, SIGNAL(triggered()), this, SLOT(showProperties()));
         ac->addAction("script_properties", properties);
 
-        configure_script = new KAction(KIcon("preferences-other"), i18n("Configure"), this);
+        configure_script = new QAction(QIcon::fromTheme("preferences-other"), i18n("Configure"), this);
         connect(configure_script, SIGNAL(triggered()), this, SLOT(configureScript()));
         ac->addAction("configure_script", configure_script);
     }

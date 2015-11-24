@@ -1,14 +1,14 @@
 set(ktlogviewerplugin_SRC logviewerplugin.cpp logflags.cpp logviewer.cpp logprefpage.cpp logflagsdelegate.cpp)
 
-kde4_add_ui_files(ktlogviewerplugin_SRC logprefwidget.ui)
-kde4_add_kcfg_files(ktlogviewerplugin_SRC logviewerpluginsettings.kcfgc)
-kde4_add_plugin(ktlogviewerplugin ${ktlogviewerplugin_SRC})
+ki18n_wrap_ui(ktlogviewerplugin_SRC logprefwidget.ui)
+kconfig_add_kcfg_files(ktlogviewerplugin_SRC logviewerpluginsettings.kcfgc)
+add_library(ktlogviewerplugin MODULE ${ktlogviewerplugin_SRC})
 
 target_link_libraries(
     ktlogviewerplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${KDE4_KPARTS_LIBS}
+    KF5::Parts
     )
 install(TARGETS ktlogviewerplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktlogviewerplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

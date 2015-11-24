@@ -26,7 +26,7 @@
 
 
 class KToggleAction;
-class KAction;
+class QAction;
 class KComboBox;
 
 namespace kt
@@ -108,11 +108,11 @@ namespace kt
         MagnetView* magnet_view;
         TorrentSearchBar* search_bar;
 
-        KAction* start_all_action;
-        KAction* stop_all_action;
+        QAction * start_all_action;
+        QAction * stop_all_action;
         KToggleAction* queue_suspend_action;
-        KAction* show_group_view_action;
-        KAction* filter_torrent_action;
+        QAction * show_group_view_action;
+        QAction * filter_torrent_action;
     };
 }
 

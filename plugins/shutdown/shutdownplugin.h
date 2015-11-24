@@ -55,7 +55,7 @@ namespace kt
 
     private:
         KToggleAction* shutdown_enabled;
-        KAction* configure_shutdown;
+        QAction * configure_shutdown;
         ShutdownRuleSet* rules;
     };
 

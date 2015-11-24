@@ -20,9 +20,9 @@
  ***************************************************************************/
 
 #include <QVBoxLayout>
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
-#include <KIcon>
+#include <QIcon>
 #include <KLocale>
 #include <KMessageBox>
 #include <KFileDialog>
@@ -75,7 +75,7 @@ namespace kt
                                        QObject* obj, const char* slot)
     {
         KActionCollection* ac = part()->actionCollection();
-        KAction* a = new KAction(KIcon(icon), text, this);
+        QAction * a = new QAction(QIcon::fromTheme(icon), text, this);
         connect(a, SIGNAL(triggered(bool)), obj, slot);
         ac->addAction(name, a);
         return a;
@@ -91,7 +91,7 @@ namespace kt
         edit_item_action = addAction("edit-select-all", i18n("Edit Item"), "edit_schedule_item", this, SLOT(editItem()));
         clear_action = addAction("edit-clear", i18n("Clear Schedule"), "schedule_clear", this, SLOT(clear()));
 
-        KAction* act = new KAction(this);
+        QAction * act = new QAction(this);
         enable_schedule = new QCheckBox(i18n("Scheduler Active"), this);
         enable_schedule->setToolTip(i18n("Activate or deactivate the scheduler"));
         act->setDefaultWidget(enable_schedule);

@@ -20,7 +20,7 @@
 
 #include "groupviewmodel.h"
 #include "groupview.h"
-#include <KIcon>
+#include <QIcon>
 #include <groups/groupmanager.h>
 #include <groups/group.h>
 #include <groups/torrentgroup.h>
@@ -368,7 +368,7 @@ namespace kt
         if (group)
             return group->groupIcon();
         else
-            return KIcon("folder");
+            return QIcon::fromTheme("folder");
     }
 
     QString GroupViewModel::Item::path() const

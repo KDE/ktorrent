@@ -26,7 +26,7 @@
 #include "logflags.h"
 #include "logviewerpluginsettings.h"
 #include <QMenu>
-#include <KIcon>
+#include <QIcon>
 
 
 namespace kt
@@ -44,7 +44,7 @@ namespace kt
         output->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(output, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
 
-        suspend_action = new QAction(KIcon("media-playback-pause"), i18n("Suspend Output"), this);
+        suspend_action = new QAction(QIcon::fromTheme("media-playback-pause"), i18n("Suspend Output"), this);
         suspend_action->setCheckable(true);
         connect(suspend_action, SIGNAL(toggled(bool)), this, SLOT(suspend(bool)));
     }

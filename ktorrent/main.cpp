@@ -32,7 +32,7 @@
 #include <QFile>
 #include <kurl.h>
 #include <klocale.h>
-#include <kaboutdata.h>
+#include <K4AboutData>
 #include <kcmdlineargs.h>
 #include "app.h"
 #include "version.h"
@@ -93,10 +93,10 @@ int main(int argc, char** argv)
 
     bt::SetClientInfo("KTorrent", kt::MAJOR, kt::MINOR, kt::RELEASE, kt::VERSION_TYPE, "KT");
 
-    KAboutData about(
+    K4AboutData about(
         "ktorrent", 0, ki18n("KTorrent"),
         kt::VERSION_STRING, ki18n("Bittorrent client for KDE"),
-        KAboutData::License_GPL,
+        K4AboutData::License_GPL,
         ki18n("(C) 2005 - 2011 Joris Guisson and Ivan Vasic"),
         KLocalizedString(),
         "http://www.ktorrent.org/");

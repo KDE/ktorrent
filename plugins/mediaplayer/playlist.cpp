@@ -28,7 +28,7 @@
 #include <QTextStream>
 #include <taglib/tag.h>
 #include <KLocale>
-#include <KIcon>
+#include <QIcon>
 #include <util/log.h>
 #include "mediaplayer.h"
 
@@ -165,7 +165,7 @@ namespace kt
         if (role == Qt::DecorationRole && index.column() == 0)
         {
             if (file == player->getCurrentSource())
-                return KIcon("arrow-right");
+                return QIcon::fromTheme("arrow-right");
         }
 
         return QVariant();

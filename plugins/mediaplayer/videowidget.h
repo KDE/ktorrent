@@ -26,7 +26,7 @@
 #include <Phonon/MediaObject>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
-#include <kaction.h>
+#include <QAction>
 
 class QAction;
 class QLabel;
@@ -82,8 +82,8 @@ namespace kt
         MediaPlayer* player;
         Phonon::SeekSlider* slider;
         KToolBar* tb;
-        KAction* play_action;
-        KAction* stop_action;
+        QAction * play_action;
+        QAction * stop_action;
         QLabel* time_label;
         Phonon::VolumeSlider* volume;
         VideoChunkBar* chunk_bar;

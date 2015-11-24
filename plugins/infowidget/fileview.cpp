@@ -112,9 +112,9 @@ namespace kt
     void FileView::setupActions()
     {
         context_menu = new KMenu(this);
-        open_action = context_menu->addAction(KIcon("document-open"), i18nc("Open file", "Open"), this, SLOT(open()));
-        open_with_action = context_menu->addAction(KIcon("document-open"), i18nc("Open file with", "Open With"), this, SLOT(openWith()));
-        check_data = context_menu->addAction(KIcon("kt-check-data"), i18n("Check File"), this, SLOT(checkFile()));
+        open_action = context_menu->addAction(QIcon::fromTheme("document-open"), i18nc("Open file", "Open"), this, SLOT(open()));
+        open_with_action = context_menu->addAction(QIcon::fromTheme("document-open"), i18nc("Open file with", "Open With"), this, SLOT(openWith()));
+        check_data = context_menu->addAction(QIcon::fromTheme("kt-check-data"), i18n("Check File"), this, SLOT(checkFile()));
         context_menu->addSeparator();
         download_first_action = context_menu->addAction(i18n("Download first"), this, SLOT(downloadFirst()));
         download_normal_action = context_menu->addAction(i18n("Download normally"), this, SLOT(downloadNormal()));
@@ -129,9 +129,9 @@ namespace kt
         expand_action = context_menu->addAction(i18n("Expand Folder Tree"), this, SLOT(expandTree()));
 
         QActionGroup* ag = new QActionGroup(this);
-        show_tree_action = new QAction(KIcon("view-list-tree"), i18n("File Tree"), this);
+        show_tree_action = new QAction(QIcon::fromTheme("view-list-tree"), i18n("File Tree"), this);
         connect(show_tree_action, SIGNAL(triggered(bool)), this, SLOT(showTree()));
-        show_list_action = new QAction(KIcon("view-list-text"), i18n("File List"), this);
+        show_list_action = new QAction(QIcon::fromTheme("view-list-text"), i18n("File List"), this);
         connect(show_list_action, SIGNAL(triggered(bool)), this, SLOT(showList()));
         ag->addAction(show_list_action);
         ag->addAction(show_tree_action);
@@ -141,7 +141,7 @@ namespace kt
         toolbar->addAction(show_tree_action);
         toolbar->addAction(show_list_action);
 
-        show_filter_action = new QAction(KIcon("view-filter"), i18n("Show Filter"), this);
+        show_filter_action = new QAction(QIcon::fromTheme("view-filter"), i18n("Show Filter"), this);
         show_filter_action->setCheckable(true);
         connect(show_filter_action, SIGNAL(toggled(bool)), filter, SLOT(setShown(bool)));
         toolbar->addAction(show_filter_action);

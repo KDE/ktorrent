@@ -48,13 +48,13 @@ namespace kt
         m_move_bottom->setEnabled(false);
         m_search_files->setEnabled(false);
 
-        m_move_up->setIcon(KIcon("go-up"));
+        m_move_up->setIcon(QIcon::fromTheme("go-up"));
         connect(m_move_up, SIGNAL(clicked()), this, SLOT(moveUp()));
-        m_move_down->setIcon(KIcon("go-down"));
+        m_move_down->setIcon(QIcon::fromTheme("go-down"));
         connect(m_move_down, SIGNAL(clicked()), this, SLOT(moveDown()));
-        m_move_top->setIcon(KIcon("go-top"));
+        m_move_top->setIcon(QIcon::fromTheme("go-top"));
         connect(m_move_top, SIGNAL(clicked()), this, SLOT(moveTop()));
-        m_move_bottom->setIcon(KIcon("go-bottom"));
+        m_move_bottom->setIcon(QIcon::fromTheme("go-bottom"));
         connect(m_move_bottom, SIGNAL(clicked()), this, SLOT(moveBottom()));
 
         m_order->setSelectionMode(QAbstractItemView::ContiguousSelection);

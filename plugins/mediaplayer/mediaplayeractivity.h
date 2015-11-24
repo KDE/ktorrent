@@ -28,7 +28,7 @@
 #include <QToolButton>
 #include "mediafile.h"
 
-class KAction;
+class QAction;
 class KActionCollection;
 
 namespace kt
@@ -88,15 +88,15 @@ namespace kt
         PlayListWidget* play_list;
         QToolButton* close_button;
 
-        KAction* play_action;
-        KAction* pause_action;
-        KAction* stop_action;
-        KAction* prev_action;
-        KAction* next_action;
-        KAction* show_video_action;
-        KAction* clear_action;
-        KAction* add_media_action;
-        KAction* status_action;
+        QAction * play_action;
+        QAction * pause_action;
+        QAction * stop_action;
+        QAction * prev_action;
+        QAction * next_action;
+        QAction * show_video_action;
+        QAction * clear_action;
+        QAction * add_media_action;
+        QAction * status_action;
         KActionCollection* ac;
     };
 

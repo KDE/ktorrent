@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QFile>
-#include <kicon.h>
+#include <QIcon>
 #include <util/log.h>
 #include <util/error.h>
 #include <bcodec/bnode.h>

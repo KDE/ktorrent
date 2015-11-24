@@ -43,7 +43,7 @@ namespace kt
     DownloadOrderPlugin::DownloadOrderPlugin(QObject* parent, const QStringList& args): Plugin(parent)
     {
         Q_UNUSED(args);
-        download_order_action = new KAction(KIcon("view-sort-ascending"), i18n("File Download Order"), this);
+        download_order_action = new QAction(QIcon::fromTheme("view-sort-ascending"), i18n("File Download Order"), this);
         connect(download_order_action, SIGNAL(triggered()), this, SLOT(showDownloadOrderDialog()));
         actionCollection()->addAction("download_order", download_order_action);
         setXMLFile("ktdownloadorderpluginui.rc");

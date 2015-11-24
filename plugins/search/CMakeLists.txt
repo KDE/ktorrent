@@ -11,16 +11,16 @@ set(ktsearchplugin_SRC
 	opensearchdownloadjob.cpp
 	searchactivity.cpp)
 
-kde4_add_ui_files(ktsearchplugin_SRC searchpref.ui)
-kde4_add_kcfg_files(ktsearchplugin_SRC searchpluginsettings.kcfgc)
-kde4_add_plugin(ktsearchplugin ${ktsearchplugin_SRC})
+ki18n_wrap_ui(ktsearchplugin_SRC searchpref.ui)
+kconfig_add_kcfg_files(ktsearchplugin_SRC searchpluginsettings.kcfgc)
+add_library(ktsearchplugin MODULE ${ktsearchplugin_SRC})
 
 target_link_libraries(
     ktsearchplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${QT_QTWEBKIT_LIBRARY}
-    ${KDE4_KPARTS_LIBS}
+    Qt5::WebKitWidgets
+    KF5::Parts
     ${KDE4_KDEWEBKIT_LIBS}
     )
 install(TARGETS ktsearchplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

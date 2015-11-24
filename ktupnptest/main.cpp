@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <klocale.h>
-#include <kaboutdata.h>
+#include <K4AboutData>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kstandarddirs.h>
@@ -37,9 +37,9 @@ using namespace bt;
 
 int main(int argc, char** argv)
 {
-    KAboutData about("ktupnp", 0, ki18n("KTUPnPTest"),
+    K4AboutData about("ktupnp", 0, ki18n("KTUPnPTest"),
                      "1.0", ki18n("KTorrent's UPnP test application"),
-                     KAboutData::License_GPL,
+                     K4AboutData::License_GPL,
                      ki18n("(C) 2005 - 2007 Joris Guisson and Ivan Vasic"),
                      KLocalizedString(),
                      "http://www.ktorrent.org/");

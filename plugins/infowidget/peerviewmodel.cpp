@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include "peerviewmodel.h"
 #include <klocale.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kstandarddirs.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
@@ -41,8 +41,8 @@ namespace kt
         stats = peer->getStats();
         if (!icons_loaded)
         {
-            yes = KIcon("dialog-ok");
-            no = KIcon("dialog-cancel");
+            yes = QIcon::fromTheme("dialog-ok");
+            no = QIcon::fromTheme("dialog-cancel");
             icons_loaded = true;
             flagDB.addFlagSource("locale", QString("l10n/%1/flag.png"));
         }
@@ -53,7 +53,7 @@ namespace kt
             if (country_id > 0)
             {
                 country = geo_ip->countryName(country_id);
-                flag = KIcon(flagDB.getFlag(geo_ip->countryCode(country_id)));
+                flag = QIcon::fromTheme(flagDB.getFlag(geo_ip->countryCode(country_id)));
             }
         }
     }
@@ -147,11 +147,11 @@ namespace kt
         {
         case 0:
             if (stats.encrypted)
-                return KIcon("kt-encrypted");
+                return QIcon::fromTheme("kt-encrypted");
             break;
         case 1: return flag;
         case 8: return stats.dht_support ? yes : no;
-        case 10: return stats.has_upload_slot ? yes : KIcon();
+        case 10: return stats.has_upload_slot ? yes : QIcon();
         }
 
         return QVariant();

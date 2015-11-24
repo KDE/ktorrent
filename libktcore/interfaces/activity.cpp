@@ -17,10 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <KMenu>
-#include <KStringHandler>
-#include <KXMLGUIFactory>
 #include "activity.h"
+
+#include <QCollator>
+#include <KMenu>
+#include <KXMLGUIFactory>
 
 
 namespace kt
@@ -77,7 +78,7 @@ namespace kt
     bool Activity::lessThan(Activity* l, Activity* r)
     {
         if (l->weight() == r->weight())
-            return KStringHandler::naturalCompare(l->name(), r->name()) < 0;
+            return QString::compare(l->name(), r->name()) < 0; //KF5 QCollator
         else
             return l->weight() < r->weight();
     }

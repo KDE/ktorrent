@@ -80,7 +80,7 @@ namespace kt
         folders = ScanFolderPluginSettings::folders();
         foreach (const QString& f, folders)
         {
-            m_folders->addItem(new QListWidgetItem(KIcon("folder"), f));
+            m_folders->addItem(new QListWidgetItem(QIcon::fromTheme("folder"), f));
         }
         selectionChanged();
     }
@@ -113,7 +113,7 @@ namespace kt
             QString p = dir.toLocalFile();
             if (!p.endsWith(bt::DirSeparator()))
                 p += bt::DirSeparator();
-            m_folders->addItem(new QListWidgetItem(KIcon("folder"), p));
+            m_folders->addItem(new QListWidgetItem(QIcon::fromTheme("folder"), p));
             folders.append(p);
         }
 

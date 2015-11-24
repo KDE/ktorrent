@@ -61,10 +61,10 @@ namespace kt
         connect(m_refresh_rate, SIGNAL(valueChanged(int)), this, SLOT(refreshRateChanged(int)));
         connect(m_cookies, SIGNAL(clicked()), this, SLOT(cookiesClicked()));
 
-        m_refresh->setIcon(KIcon("view-refresh"));
-        m_filters->setIcon(KIcon("view-filter"));
-        m_cookies->setIcon(KIcon("preferences-web-browser-cookies"));
-        m_download->setIcon(KIcon("ktorrent"));
+        m_refresh->setIcon(QIcon::fromTheme("view-refresh"));
+        m_filters->setIcon(QIcon::fromTheme("view-filter"));
+        m_cookies->setIcon(QIcon::fromTheme("preferences-web-browser-cookies"));
+        m_download->setIcon(QIcon::fromTheme("ktorrent"));
 
         model = new FeedWidgetModel(this);
         m_item_list->setModel(model);

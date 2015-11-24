@@ -63,34 +63,34 @@ namespace kt
         vbox->addWidget(view);
         layout->addLayout(vbox);
 
-        show_search = toolbar->addAction(KIcon("edit-find"), i18n("Show Search"));
+        show_search = toolbar->addAction(QIcon::fromTheme("edit-find"), i18n("Show Search"));
         show_search->setToolTip(i18n("Show or hide the search bar"));
         show_search->setCheckable(true);
         connect(show_search, SIGNAL(toggled(bool)), this, SLOT(showSearch(bool)));
 
-        move_top = toolbar->addAction(KIcon("go-top"), i18n("Move Top"), this, SLOT(moveTopClicked()));
+        move_top = toolbar->addAction(QIcon::fromTheme("go-top"), i18n("Move Top"), this, SLOT(moveTopClicked()));
         move_top->setToolTip(i18n("Move a torrent to the top of the queue"));
 
-        move_up = toolbar->addAction(KIcon("go-up"), i18n("Move Up"), this, SLOT(moveUpClicked()));
+        move_up = toolbar->addAction(QIcon::fromTheme("go-up"), i18n("Move Up"), this, SLOT(moveUpClicked()));
         move_up->setToolTip(i18n("Move a torrent up in the queue"));
 
-        move_down = toolbar->addAction(KIcon("go-down"), i18n("Move Down"), this, SLOT(moveDownClicked()));
+        move_down = toolbar->addAction(QIcon::fromTheme("go-down"), i18n("Move Down"), this, SLOT(moveDownClicked()));
         move_down->setToolTip(i18n("Move a torrent down in the queue"));
 
-        move_bottom = toolbar->addAction(KIcon("go-bottom"), i18n("Move Bottom"), this, SLOT(moveBottomClicked()));
+        move_bottom = toolbar->addAction(QIcon::fromTheme("go-bottom"), i18n("Move Bottom"), this, SLOT(moveBottomClicked()));
         move_bottom->setToolTip(i18n("Move a torrent to the bottom of the queue"));
 
-        show_downloads = toolbar->addAction(KIcon("arrow-down"), i18n("Show Downloads"));
+        show_downloads = toolbar->addAction(QIcon::fromTheme("arrow-down"), i18n("Show Downloads"));
         show_downloads->setToolTip(i18n("Show all downloads"));
         show_downloads->setCheckable(true);
         connect(show_downloads, SIGNAL(toggled(bool)), this, SLOT(showDownloads(bool)));
 
-        show_uploads = toolbar->addAction(KIcon("arrow-up"), i18n("Show Uploads"));
+        show_uploads = toolbar->addAction(QIcon::fromTheme("arrow-up"), i18n("Show Uploads"));
         show_uploads->setToolTip(i18n("Show all uploads"));
         show_uploads->setCheckable(true);
         connect(show_uploads, SIGNAL(toggled(bool)), this, SLOT(showUploads(bool)));
 
-        show_not_queued = toolbar->addAction(KIcon("kt-queue-manager"), i18n("Show Not Queued"));
+        show_not_queued = toolbar->addAction(QIcon::fromTheme("kt-queue-manager"), i18n("Show Not Queued"));
         show_not_queued->setToolTip(i18n("Show all not queued torrents"));
         show_not_queued->setCheckable(true);
         connect(show_not_queued, SIGNAL(toggled(bool)), this, SLOT(showNotQueued(bool)));

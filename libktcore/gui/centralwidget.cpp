@@ -18,7 +18,7 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
 #include <QAction>
-#include <KIcon>
+#include <QIcon>
 #include <KConfigGroup>
 #include "centralwidget.h"
 #include <interfaces/activity.h>
@@ -62,9 +62,9 @@ namespace kt
         g.writeEntry("current_activity", currentIndex());
     }
 
-    KAction* CentralWidget::addActivity(Activity* act)
+    QAction * CentralWidget::addActivity(Activity* act)
     {
-        KAction* a = new KAction(KIcon(act->icon()), act->name(), this);
+        QAction * a = new QAction(QIcon::fromTheme(act->icon()), act->name(), this);
         activity_switching_group->addAction(a);
         a->setCheckable(true);
         a->setToolTip(act->toolTip());

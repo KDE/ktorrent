@@ -4,7 +4,7 @@ option(WITH_SYSTEM_GEOIP
 	OFF)
 
 if (WITH_SYSTEM_GEOIP)
-	find_path(GEOIP_INCLUDE_DIR NAMES GeoIP.h PATHS ${KDE4_INCLUDE_DIR}/ ${INCLUDE_INSTALL_DIR}/)
+	find_path(GEOIP_INCLUDE_DIR NAMES GeoIP.h PATHS / ${INCLUDE_INSTALL_DIR}/)
 	find_library(GEOIP_LIBRARY NAMES GeoIP PATHS ${KDE4_LIB_DIR} ${LIB_INSTALL_DIR})
 	
 	if (NOT GEOIP_INCLUDE_DIR OR NOT GEOIP_LIBRARY)
@@ -49,15 +49,15 @@ set(ktinfowidgetplugin_SRC
 	webseedstab.cpp
 	webseedsmodel.cpp)
 
-kde4_add_ui_files(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
-kde4_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)
-kde4_add_plugin(ktinfowidgetplugin ${ktinfowidgetplugin_SRC})
+ki18n_wrap_ui(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
+kconfig_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)
+add_library(ktinfowidgetplugin MODULE ${ktinfowidgetplugin_SRC})
 
 target_link_libraries(
     ktinfowidgetplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${KDE4_KPARTS_LIBS}
+    KF5::Parts
     ${geoip_link}
     )
 install(TARGETS ktinfowidgetplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

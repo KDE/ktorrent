@@ -1,1 +1,61 @@
-kde4_install_icons( ${ICON_INSTALL_DIR}  )
+ecm_install_icons(ICONS
+    16-actions-kt-stop-all.png
+    16-actions-kt-stop.png
+    16-actions-kt-upnp.png
+    16-apps-ktorrent.png
+    22-actions-kt-magnet.png
+    22-actions-kt-pause.png
+    22-actions-kt-remove.png
+    22-actions-kt-set-max-download-speed.png
+    22-actions-kt-set-max-upload-speed.png
+    22-actions-kt-speed-limits.png
+    22-actions-kt-start-all.png
+    22-actions-kt-start.png
+    22-actions-kt-stop-all.png
+    22-actions-kt-stop.png
+    22-apps-ktorrent.png
+    32-actions-kt-info-widget.png
+    32-actions-kt-magnet.png
+    32-actions-kt-pause.png
+    32-actions-kt-queue-manager.png
+    32-actions-kt-remove.png
+    32-actions-kt-set-max-download-speed.png
+    32-actions-kt-set-max-upload-speed.png
+    32-actions-kt-speed-limits.png
+    32-actions-kt-start-all.png
+    32-actions-kt-start.png
+    32-actions-kt-stop-all.png
+    32-actions-kt-stop.png
+    32-actions-kt-upnp.png
+    32-apps-ktorrent.png
+    48-actions-kt-bandwidth-scheduler.png
+    48-actions-kt-change-tracker.png
+    48-actions-kt-check-data.png
+    48-actions-kt-chunks.png
+    48-actions-kt-info-widget.png
+    48-actions-kt-magnet.png
+    48-actions-kt-pause.png
+    48-actions-kt-plugins.png
+    48-actions-kt-queue-manager.png
+    48-actions-kt-remove.png
+    48-actions-kt-restore-defaults.png
+    48-actions-kt-set-max-download-speed.png
+    48-actions-kt-set-max-upload-speed.png
+    48-actions-kt-show-hide.png
+    48-actions-kt-show-statusbar.png
+    48-actions-kt-speed-limits.png
+    48-actions-kt-start-all.png
+    48-actions-kt-start.png
+    48-actions-kt-stop-all.png
+    48-actions-kt-stop.png
+    48-actions-kt-upnp.png
+    48-apps-ktorrent.png
+    64-actions-kt-magnet.png
+    64-apps-ktorrent.png
+    sc-actions-kt-magnet.svgz
+    sc-actions-kt-set-max-download-speed.svgz
+    sc-actions-kt-set-max-upload-speed.svgz
+    sc-actions-kt-speed-limits.svgz
+    DESTINATION ${ICON_INSTALL_DIR}
+    THEME hicolor
+)

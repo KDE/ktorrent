@@ -33,9 +33,9 @@ namespace kt
         setWindowTitle(i18n("Add/Remove Filters"));
         setupUi(mainWidget());
         m_feed_text->setText(i18n("Feed: <b>%1</b>", feed->title()));
-        m_add->setIcon(KIcon("go-previous"));
+        m_add->setIcon(QIcon::fromTheme("go-previous"));
         m_add->setText(QString());
-        m_remove->setIcon(KIcon("go-next"));
+        m_remove->setIcon(QIcon::fromTheme("go-next"));
         m_remove->setText(QString());
         connect(m_add, SIGNAL(clicked()), this, SLOT(add()));
         connect(m_remove, SIGNAL(clicked()), this, SLOT(remove()));

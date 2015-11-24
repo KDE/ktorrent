@@ -19,9 +19,9 @@
 ***************************************************************************/
 #include <QBoxLayout>
 #include <QLabel>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 
@@ -65,7 +65,7 @@ namespace kt
 
 
         QWidget* tab = new QWidget(tabs);
-        tabs->addTab(tab, KIcon("applications-multimedia"), i18n("Media Player"));
+        tabs->addTab(tab, QIcon::fromTheme("applications-multimedia"), i18n("Media Player"));
         QVBoxLayout* vbox = new QVBoxLayout(tab);
 
         splitter = new QSplitter(Qt::Horizontal, tab);
@@ -82,7 +82,7 @@ namespace kt
 
         close_button = new QToolButton(tabs);
         tabs->setCornerWidget(close_button, Qt::TopRightCorner);
-        close_button->setIcon(KIcon("tab-close"));
+        close_button->setIcon(QIcon::fromTheme("tab-close"));
         close_button->setEnabled(false);
         connect(close_button, SIGNAL(clicked()), this, SLOT(closeTab()));
 
@@ -110,39 +110,39 @@ namespace kt
 
     void MediaPlayerActivity::setupActions()
     {
-        play_action = new KAction(KIcon("media-playback-start"), i18n("Play"), this);
+        play_action = new QAction(QIcon::fromTheme("media-playback-start"), i18n("Play"), this);
         connect(play_action, SIGNAL(triggered()), this, SLOT(play()));
         ac->addAction("media_play", play_action);
 
-        pause_action = new KAction(KIcon("media-playback-pause"), i18n("Pause"), this);
+        pause_action = new QAction(QIcon::fromTheme("media-playback-pause"), i18n("Pause"), this);
         connect(pause_action, SIGNAL(triggered()), this, SLOT(pause()));
         ac->addAction("media_pause", pause_action);
 
-        stop_action = new KAction(KIcon("media-playback-stop"), i18n("Stop"), this);
+        stop_action = new QAction(QIcon::fromTheme("media-playback-stop"), i18n("Stop"), this);
         connect(stop_action, SIGNAL(triggered()), this, SLOT(stop()));
         ac->addAction("media_stop", stop_action);
 
-        prev_action = new KAction(KIcon("media-skip-backward"), i18n("Previous"), this);
+        prev_action = new QAction(QIcon::fromTheme("media-skip-backward"), i18n("Previous"), this);
         connect(prev_action, SIGNAL(triggered()), this, SLOT(prev()));
         ac->addAction("media_prev", prev_action);
 
-        next_action = new KAction(KIcon("media-skip-forward"), i18n("Next"), this);
+        next_action = new QAction(QIcon::fromTheme("media-skip-forward"), i18n("Next"), this);
         connect(next_action, SIGNAL(triggered()), this, SLOT(next()));
         ac->addAction("media_next", next_action);
 
-        show_video_action = new KToggleAction(KIcon("video-x-generic"), i18n("Show Video"), this);
+        show_video_action = new KToggleAction(QIcon::fromTheme("video-x-generic"), i18n("Show Video"), this);
         connect(show_video_action, SIGNAL(toggled(bool)), this, SLOT(showVideo(bool)));
         ac->addAction("show_video", show_video_action);
 
-        add_media_action = new KAction(KIcon("document-open"), i18n("Add Media"), this);
+        add_media_action = new QAction(QIcon::fromTheme("document-open"), i18n("Add Media"), this);
         connect(add_media_action, SIGNAL(triggered()), play_list, SLOT(addMedia()));
         ac->addAction("add_media", add_media_action);
 
-        clear_action = new KAction(KIcon("edit-clear-list"), i18n("Clear Playlist"), this);
+        clear_action = new QAction(QIcon::fromTheme("edit-clear-list"), i18n("Clear Playlist"), this);
         connect(clear_action, SIGNAL(triggered()), play_list, SLOT(clearPlayList()));
         ac->addAction("clear_play_list", clear_action);
 
-        KAction* tfs = new KAction(KIcon("view-fullscreen"), i18n("Toggle Fullscreen"), this);
+        QAction * tfs = new QAction(QIcon::fromTheme("view-fullscreen"), i18n("Toggle Fullscreen"), this);
         tfs->setShortcut(Qt::Key_F);
         tfs->setCheckable(true);
         ac->addAction("video_fullscreen", tfs);
@@ -169,7 +169,7 @@ namespace kt
         {
             video = new VideoWidget(media_player, ac, 0);
             connect(video, SIGNAL(toggleFullScreen(bool)), this, SLOT(setVideoFullScreen(bool)));
-            int idx = tabs->addTab(video, KIcon("video-x-generic"), path);
+            int idx = tabs->addTab(video, QIcon::fromTheme("video-x-generic"), path);
             tabs->setTabToolTip(idx, i18n("Movie player"));
             tabs->setCurrentIndex(idx);
             tabs->setTabBarHidden(false);
@@ -362,7 +362,7 @@ namespace kt
             if (path.isEmpty())
                 path = i18n("Media Player");
 
-            idx = tabs->addTab(video, KIcon("video-x-generic"), path);
+            idx = tabs->addTab(video, QIcon::fromTheme("video-x-generic"), path);
             tabs->setTabToolTip(idx, i18n("Movie player"));
             tabs->setCurrentIndex(idx);
             fullscreen_mode = false;

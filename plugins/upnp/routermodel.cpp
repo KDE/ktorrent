@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <klocale.h>
-#include <kicon.h>
+#include <QIcon>
 #include <util/log.h>
 #include <util/error.h>
 #include <upnp/upnprouter.h>
@@ -103,9 +103,9 @@ namespace kt
         else if (role == Qt::DecorationRole)
         {
             if (index.column() == 0)
-                return KIcon("modem");
+                return QIcon::fromTheme("modem");
             else if (index.column() == 1 && !r->getError().isEmpty())
-                return KIcon("dialog-error");
+                return QIcon::fromTheme("dialog-error");
         }
         else if (role == Qt::ToolTipRole)
         {

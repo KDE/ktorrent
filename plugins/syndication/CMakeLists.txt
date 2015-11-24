@@ -23,16 +23,16 @@ set(ktsyndicationplugin_SRC
 	filterlistmodel.cpp
 	filtereditor.cpp)
 
-kde4_add_ui_files(ktsyndicationplugin_SRC feedwidget.ui managefiltersdlg.ui filtereditor.ui)
-#kde4_add_kcfg_files(ktsyndicationplugin_SRC syndicationpluginsettings.kcfgc)
-kde4_add_plugin(ktsyndicationplugin ${ktsyndicationplugin_SRC})
+ki18n_wrap_ui(ktsyndicationplugin_SRC feedwidget.ui managefiltersdlg.ui filtereditor.ui)
+#kconfig_add_kcfg_files(ktsyndicationplugin_SRC syndicationpluginsettings.kcfgc)
+add_library(ktsyndicationplugin MODULE ${ktsyndicationplugin_SRC})
 
 target_link_libraries(
     ktsyndicationplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${QT_QTWEBKIT_LIBRARY}
-    ${KDE4_KPARTS_LIBS}
+    Qt5::WebKitWidgets
+    KF5::Parts
 	${KDE4_SYNDICATION_LIBS}
 	${KDE4_KDEWEBKIT_LIBS})
     

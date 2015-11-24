@@ -12,19 +12,17 @@ set(ktbwschedulerplugin_SRC
 )
 
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
-QT4_ADD_DBUS_INTERFACE(ktbwschedulerplugin_SRC ${screensaver_xml} screensaver_interface)
+qt5_add_dbus_interface(ktbwschedulerplugin_SRC ${screensaver_xml} screensaver_interface)
 
-kde4_add_ui_files(ktbwschedulerplugin_SRC edititemdlg.ui bwprefpage.ui)
-kde4_add_kcfg_files(ktbwschedulerplugin_SRC bwschedulerpluginsettings.kcfgc)
-kde4_add_plugin(ktbwschedulerplugin ${ktbwschedulerplugin_SRC})
+ki18n_wrap_ui(ktbwschedulerplugin_SRC edititemdlg.ui bwprefpage.ui)
+kconfig_add_kcfg_files(ktbwschedulerplugin_SRC bwschedulerpluginsettings.kcfgc)
+add_library(ktbwschedulerplugin MODULE ${ktbwschedulerplugin_SRC})
 
 target_link_libraries(
     ktbwschedulerplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${KDE4_KDEUI_LIBS}
-    ${KDE4_KPARTS_LIBS} 
-    ${KDE4_SOLID_LIBS}
+    KF5::Parts
     )
 install(TARGETS ktbwschedulerplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktbwschedulerplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

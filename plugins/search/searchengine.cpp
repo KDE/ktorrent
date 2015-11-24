@@ -117,7 +117,7 @@ namespace kt
             else
             {
                 // load the icon
-                icon = KIcon(QIcon(data_dir + icon_name));
+                icon = QIcon::fromTheme(QIcon(data_dir + icon_name));
             }
         }
 
@@ -148,7 +148,7 @@ namespace kt
             fptr.close();
 
             // load the icon
-            icon = KIcon(QIcon(data_dir + icon_name));
+            icon = QIcon::fromTheme(QIcon(data_dir + icon_name));
         }
     }
 }

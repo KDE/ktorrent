@@ -20,7 +20,7 @@
 
 #include "magnetmodel.h"
 #include <KLocalizedString>
-#include <KIcon>
+#include <QIcon>
 #include <QFile>
 #include <QTextStream>
 
@@ -99,7 +99,7 @@ namespace kt
         else if (role == Qt::DecorationRole)
         {
             if (index.column() == 0)
-                return KIcon("kt-magnet");
+                return QIcon::fromTheme("kt-magnet");
         }
         else if (role == Qt::ToolTipRole)
         {

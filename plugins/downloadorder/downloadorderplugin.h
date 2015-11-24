@@ -60,7 +60,7 @@ namespace kt
         void torrentRemoved(bt::TorrentInterface* tc);
 
     private:
-        KAction* download_order_action;
+        QAction * download_order_action;
         bt::PtrMap<bt::TorrentInterface*, DownloadOrderManager> managers;
     };
 

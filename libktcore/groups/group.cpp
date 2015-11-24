@@ -17,7 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kiconloader.h>
 #include <kglobal.h>
 #include <torrent/queuemanager.h>
 #include "group.h"
@@ -54,7 +53,7 @@ namespace kt
     void Group::setIconByName(const QString& in)
     {
         icon_name = in;
-        icon = SmallIcon(in);
+        // KF5 icon = SmallIcon(in);
     }
 
     void Group::rename(const QString& nn)

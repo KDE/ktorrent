@@ -24,7 +24,7 @@
 #include <ksharedconfig.h>
 #include "groupviewmodel.h"
 
-class KAction;
+class QAction;
 class KActionCollection;
 
 namespace kt
@@ -87,11 +87,11 @@ namespace kt
         GroupManager* gman;
         GroupViewModel* model;
 
-        KAction* open_in_new_tab;
-        KAction* new_group;
-        KAction* edit_group;
-        KAction* remove_group;
-        KAction* edit_group_policy;
+        QAction * open_in_new_tab;
+        QAction * new_group;
+        QAction * edit_group;
+        QAction * remove_group;
+        QAction * edit_group_policy;
 
         friend class GroupViewItem;
     };

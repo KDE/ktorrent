@@ -47,7 +47,7 @@ namespace kt
 
     private:
         MagnetGeneratorPrefWidget* pref;
-        KAction* generate_magnet_action;
+        QAction * generate_magnet_action;
         void addToClipboard(QString uri);
         void showPopup();
     };

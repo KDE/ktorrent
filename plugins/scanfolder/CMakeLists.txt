@@ -5,15 +5,15 @@ set(ktscanfolderplugin_SRC
 	scanfolderplugin.cpp 
 	scanfolderprefpage.cpp)
 
-kde4_add_ui_files(ktscanfolderplugin_SRC scanfolderprefpage.ui)
-kde4_add_kcfg_files(ktscanfolderplugin_SRC scanfolderpluginsettings.kcfgc)
-kde4_add_plugin(ktscanfolderplugin ${ktscanfolderplugin_SRC})
+ki18n_wrap_ui(ktscanfolderplugin_SRC scanfolderprefpage.ui)
+kconfig_add_kcfg_files(ktscanfolderplugin_SRC scanfolderpluginsettings.kcfgc)
+add_library(ktscanfolderplugin MODULE ${ktscanfolderplugin_SRC})
 
 target_link_libraries(
     ktscanfolderplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${KDE4_KPARTS_LIBS}
+    KF5::Parts
     )
 install(TARGETS ktscanfolderplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktscanfolderplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

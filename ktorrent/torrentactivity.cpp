@@ -21,7 +21,7 @@
 #include <QToolBar>
 #include <KConfigGroup>
 #include <KLocale>
-#include <KIcon>
+#include <QIcon>
 #include <KToggleAction>
 #include <KActionCollection>
 #include <KComboBox>
@@ -116,29 +116,29 @@ namespace kt
     void TorrentActivity::setupActions()
     {
         KActionCollection* ac = part()->actionCollection();
-        start_all_action = new KAction(KIcon("kt-start-all"), i18n("Start All"), this);
+        start_all_action = new QAction(QIcon::fromTheme("kt-start-all"), i18n("Start All"), this);
         start_all_action->setToolTip(i18n("Start all torrents"));
         connect(start_all_action, SIGNAL(triggered()), this, SLOT(startAllTorrents()));
         ac->addAction("start_all", start_all_action);
 
-        stop_all_action = new KAction(KIcon("kt-stop-all"), i18n("Stop All"), this);
+        stop_all_action = new QAction(QIcon::fromTheme("kt-stop-all"), i18n("Stop All"), this);
         stop_all_action->setToolTip(i18n("Stop all torrents"));
         connect(stop_all_action, SIGNAL(triggered()), this, SLOT(stopAllTorrents()));
         ac->addAction("stop_all", stop_all_action);
 
-        queue_suspend_action = new KToggleAction(KIcon("kt-pause"), i18n("Suspend Torrents"), this);
+        queue_suspend_action = new KToggleAction(QIcon::fromTheme("kt-pause"), i18n("Suspend Torrents"), this);
         ac->addAction("queue_suspend", queue_suspend_action);
         queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
         queue_suspend_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_P));
         queue_suspend_action->setGlobalShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_P));
         connect(queue_suspend_action, SIGNAL(toggled(bool)), this, SLOT(suspendQueue(bool)));
 
-        show_group_view_action = new KToggleAction(KIcon("view-list-tree"), i18n("Group View Visible"), this);
+        show_group_view_action = new KToggleAction(QIcon::fromTheme("view-list-tree"), i18n("Group View Visible"), this);
         show_group_view_action->setToolTip(i18n("Show or hide the group view"));
         connect(show_group_view_action, SIGNAL(toggled(bool)), this, SLOT(setGroupViewVisible(bool)));
         ac->addAction("show_group_view", show_group_view_action);
 
-        filter_torrent_action = new KAction(i18n("Filter Torrents"), this);
+        filter_torrent_action = new QAction(i18n("Filter Torrents"), this);
         filter_torrent_action->setToolTip(i18n("Filter torrents based on filter string"));
         filter_torrent_action->setShortcut(Qt::CTRL + Qt::Key_F);
         connect(filter_torrent_action, SIGNAL(triggered(bool)), search_bar, SLOT(showBar()));

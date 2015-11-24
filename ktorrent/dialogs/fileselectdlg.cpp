@@ -69,9 +69,9 @@ namespace kt
         m_downloadLocation->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
         m_completedLocation->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 
-        m_download_location_history->setIcon(KIcon("view-history"));
+        m_download_location_history->setIcon(QIcon::fromTheme("view-history"));
         m_download_location_history->setPopupMode(QToolButton::MenuButtonPopup);
-        m_move_when_completed_history->setIcon(KIcon("view-history"));
+        m_move_when_completed_history->setIcon(QIcon::fromTheme("view-history"));
         m_move_when_completed_history->setPopupMode(QToolButton::MenuButtonPopup);
 
 
@@ -85,10 +85,10 @@ namespace kt
             initial_group = gman->find(group_hint);
 
         QButtonGroup* bg = new QButtonGroup(this);
-        m_tree->setIcon(KIcon("view-list-tree"));
+        m_tree->setIcon(QIcon::fromTheme("view-list-tree"));
         m_tree->setToolTip(i18n("Show a file tree"));
         connect(m_tree, SIGNAL(clicked(bool)), this, SLOT(fileTree(bool)));
-        m_list->setIcon(KIcon("view-list-text"));
+        m_list->setIcon(QIcon::fromTheme("view-list-text"));
         m_list->setToolTip(i18n("Show a file list"));
         connect(m_list, SIGNAL(clicked(bool)), this, SLOT(fileList(bool)));
         m_tree->setCheckable(true);

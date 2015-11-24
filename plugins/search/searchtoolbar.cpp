@@ -23,7 +23,7 @@
 #include <qapplication.h>
 #include <qcheckbox.h>
 #include <KLineEdit>
-#include <kicon.h>
+#include <QIcon>
 #include <kglobal.h>
 #include <kguiitem.h>
 #include <kpushbutton.h>
@@ -66,22 +66,22 @@ namespace kt
         connect(m_search_text->lineEdit(), SIGNAL(returnPressed()), this, SLOT(searchBoxReturn()));
         connect(m_search_text, SIGNAL(textChanged(const QString&)), this, SLOT(textChanged(const QString&)));
 
-        KAction* search_text_action = new KAction(i18n("Search Text"), this);
+        QAction * search_text_action = new QAction(i18n("Search Text"), this);
         search_text_action->setDefaultWidget(m_search_text);
         ac->addAction("search_text", search_text_action);
 
-        m_search_new_tab = new KAction(KIcon("edit-find"), i18n("Search"), this);
+        m_search_new_tab = new QAction(QIcon::fromTheme("edit-find"), i18n("Search"), this);
         connect(m_search_new_tab, SIGNAL(triggered()), this, SLOT(searchNewTabPressed()));
         m_search_new_tab->setEnabled(false);
         ac->addAction("search", m_search_new_tab);
 
-        KAction* search_engine_action = new KAction(i18n("Search Engine"), this);
+        QAction * search_engine_action = new QAction(i18n("Search Engine"), this);
         m_search_engine = new KComboBox((QWidget*)0);
         search_engine_action->setDefaultWidget(m_search_engine);
         ac->addAction("search_engine", search_engine_action);
         connect(m_search_engine, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedEngineChanged(int)));
 
-        KAction* search_engine_label_action = new KAction(i18n("Search Engine Label"), this);
+        QAction * search_engine_label_action = new QAction(i18n("Search Engine Label"), this);
         QLabel* l = new QLabel(i18n(" Engine: "), (QWidget*)0);
         search_engine_label_action->setDefaultWidget(l);
         ac->addAction("search_engine_label", search_engine_label_action);

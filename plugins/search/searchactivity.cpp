@@ -24,7 +24,7 @@
 #include <QVBoxLayout>
 #include <QToolButton>
 #include <KLocale>
-#include <KIcon>
+#include <QIcon>
 #include <KConfigGroup>
 #include <KStandardAction>
 #include <KActionCollection>
@@ -64,9 +64,9 @@ namespace kt
         tabs->setCornerWidget(lc, Qt::TopLeftCorner);
         QToolButton* rc = new QToolButton(tabs);
         tabs->setCornerWidget(rc, Qt::TopRightCorner);
-        lc->setIcon(KIcon("tab-new"));
+        lc->setIcon(QIcon::fromTheme("tab-new"));
         connect(lc, SIGNAL(clicked()), this, SLOT(openTab()));
-        rc->setIcon(KIcon("tab-close"));
+        rc->setIcon(QIcon::fromTheme("tab-close"));
         connect(rc, SIGNAL(clicked()), this, SLOT(closeTab()));
     }
 
@@ -78,7 +78,7 @@ namespace kt
     {
         KActionCollection* ac = part()->actionCollection();
 
-        search_action = new KAction(KIcon("edit-find"), i18n("Search"), this);
+        search_action = new QAction(QIcon::fromTheme("edit-find"), i18n("Search"), this);
         connect(search_action, SIGNAL(triggered()), this, SLOT(search()));
         ac->addAction("search_tab_search", search_action);
 
@@ -241,7 +241,7 @@ namespace kt
     SearchWidget* SearchActivity::newSearchWidget(const QString& text)
     {
         SearchWidget* search = new SearchWidget(sp);
-        int idx = tabs->addTab(search, KIcon("edit-find"), text);
+        int idx = tabs->addTab(search, QIcon::fromTheme("edit-find"), text);
         if (!text.isEmpty())
             tabs->setTabToolTip(idx, i18n("Search for %1", text));
 

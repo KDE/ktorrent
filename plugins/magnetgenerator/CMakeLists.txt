@@ -2,16 +2,15 @@ set(ktmagnetgeneratorplugin_SRC
 	magnetgeneratorprefwidget.cpp
 	magnetgeneratorplugin.cpp)
 
-kde4_add_ui_files(ktmagnetgeneratorplugin_SRC magnetgeneratorprefwidget.ui)
-kde4_add_kcfg_files(ktmagnetgeneratorplugin_SRC magnetgeneratorpluginsettings.kcfgc)
-kde4_add_plugin(ktmagnetgeneratorplugin ${ktmagnetgeneratorplugin_SRC})
+ki18n_wrap_ui(ktmagnetgeneratorplugin_SRC magnetgeneratorprefwidget.ui)
+kconfig_add_kcfg_files(ktmagnetgeneratorplugin_SRC magnetgeneratorpluginsettings.kcfgc)
+add_library(ktmagnetgeneratorplugin MODULE ${ktmagnetgeneratorplugin_SRC})
 
 target_link_libraries(
     ktmagnetgeneratorplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${KDE4_KPARTS_LIBS}
-	${KDE4_KDEUI_LIBS}
+    KF5::Parts
     )
 install(TARGETS ktmagnetgeneratorplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktmagnetgeneratorplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

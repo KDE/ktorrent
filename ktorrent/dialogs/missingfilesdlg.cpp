@@ -18,7 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kicon.h>
+#include <QIcon>
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <kstandardguiitem.h>

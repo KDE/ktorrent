@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QMimeData>
-#include <kicon.h>
+#include <QIcon>
 #include <kmimetype.h>
 #include <klocale.h>
 #include <util/log.h>
@@ -95,7 +95,7 @@ namespace kt
         case Qt::DisplayRole:
             return mf->name();
         case Qt::DecorationRole:
-            return KIcon(KMimeType::findByPath(mf->path())->iconName());
+            return QIcon::fromTheme(KMimeType::findByPath(mf->path())->iconName());
         case Qt::UserRole: // user role is for finding out if a torrent is complete
             return mf->fullyAvailable();
         case Qt::UserRole + 1:

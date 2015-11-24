@@ -24,7 +24,7 @@
 #include <torrent/queuemanager.h>
 #include <util/log.h>
 #include <KConfigGroup>
-#include <KIcon>
+#include <QIcon>
 #include <QAction>
 #include <QToolButton>
 #include <QHBoxLayout>
@@ -53,17 +53,17 @@ namespace kt
         layout->addWidget(close_tab);
         layout->setMargin(0);
 
-        new_tab->setIcon(KIcon("list-add"));
+        new_tab->setIcon(QIcon::fromTheme("list-add"));
         new_tab->setToolButtonStyle(Qt::ToolButtonIconOnly);
         new_tab->setToolTip(i18n("Open a new tab"));
         connect(new_tab, SIGNAL(clicked(bool)), this, SLOT(newTab()));
 
-        close_tab->setIcon(KIcon("list-remove"));
+        close_tab->setIcon(QIcon::fromTheme("list-remove"));
         close_tab->setToolButtonStyle(Qt::ToolButtonIconOnly);
         close_tab->setToolTip(i18n("Close the current tab"));
         connect(close_tab, SIGNAL(clicked(bool)), this, SLOT(closeTab()));
 
-        edit_group_policy->setIcon(KIcon("preferences-other"));
+        edit_group_policy->setIcon(QIcon::fromTheme("preferences-other"));
         edit_group_policy->setToolButtonStyle(Qt::ToolButtonIconOnly);
         edit_group_policy->setToolTip(i18n("Edit Group Policy"));
         connect(edit_group_policy, SIGNAL(clicked(bool)), this, SLOT(editGroupPolicy()));

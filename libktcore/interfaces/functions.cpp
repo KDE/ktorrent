@@ -23,7 +23,6 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <solid/device.h>
-#include <solid/networkinterface.h>
 #include <util/functions.h>
 #include <download/downloader.h>
 #include <download/webseed.h>

@@ -47,11 +47,11 @@ namespace kt
         Q_UNUSED(args);
 
         KActionCollection* ac = actionCollection();
-        shutdown_enabled = new KToggleAction(KIcon("system-shutdown"), i18n("Shutdown Enabled"), this);
+        shutdown_enabled = new KToggleAction(QIcon::fromTheme("system-shutdown"), i18n("Shutdown Enabled"), this);
         connect(shutdown_enabled, SIGNAL(toggled(bool)), this, SLOT(shutdownToggled(bool)));
         ac->addAction("shutdown_enabled", shutdown_enabled);
 
-        configure_shutdown = new KAction(KIcon("preferences-other"), i18n("Configure Shutdown"), this);
+        configure_shutdown = new QAction(QIcon::fromTheme("preferences-other"), i18n("Configure Shutdown"), this);
         connect(configure_shutdown, SIGNAL(triggered()), this, SLOT(configureShutdown()));
         ac->addAction("shutdown_settings", configure_shutdown);
 
@@ -171,23 +171,23 @@ namespace kt
         switch (rules->currentAction())
         {
         case SHUTDOWN:
-            shutdown_enabled->setIcon(KIcon("system-shutdown"));
+            shutdown_enabled->setIcon(QIcon::fromTheme("system-shutdown"));
             shutdown_enabled->setText(i18n("Shutdown"));
             break;
         case LOCK:
-            shutdown_enabled->setIcon(KIcon("system-lock-screen"));
+            shutdown_enabled->setIcon(QIcon::fromTheme("system-lock-screen"));
             shutdown_enabled->setText(i18n("Lock"));
             break;
         case STANDBY:
-            shutdown_enabled->setIcon(KIcon("system-suspend"));
+            shutdown_enabled->setIcon(QIcon::fromTheme("system-suspend"));
             shutdown_enabled->setText(i18n("Standby"));
             break;
         case SUSPEND_TO_RAM:
-            shutdown_enabled->setIcon(KIcon("system-suspend"));
+            shutdown_enabled->setIcon(QIcon::fromTheme("system-suspend"));
             shutdown_enabled->setText(i18n("Sleep (suspend to RAM)"));
             break;
         case SUSPEND_TO_DISK:
-            shutdown_enabled->setIcon(KIcon("system-suspend-hibernate"));
+            shutdown_enabled->setIcon(QIcon::fromTheme("system-suspend-hibernate"));
             shutdown_enabled->setText(i18n("Hibernate (suspend to disk)"));
             break;
         }

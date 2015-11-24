@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <QColor>
 #include <QMimeData>
-#include <KIcon>
+#include <QIcon>
 #include <KLocale>
 #include <util/log.h>
 #include <util/functions.h>
@@ -264,9 +264,9 @@ namespace kt
         else if (role == Qt::DecorationRole && index.column() == 1)
         {
             if (!tc->getStats().completed)
-                return KIcon("arrow-down");
+                return QIcon::fromTheme("arrow-down");
             else
-                return KIcon("arrow-up");
+                return QIcon::fromTheme("arrow-up");
         }
         else if (role == Qt::FontRole && !search_text.isEmpty())
         {

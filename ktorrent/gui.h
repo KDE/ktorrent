@@ -28,7 +28,7 @@
 #include <kparts/mainwindow.h>
 
 class KUrl;
-class KAction;
+class QAction;
 class KToggleAction;
 class KUrl;
 
@@ -135,13 +135,13 @@ namespace kt
 
         KToggleAction* show_status_bar_action;
         KToggleAction* show_menu_bar_action;
-        KAction* open_silently_action;
+        QAction * open_silently_action;
 
-        KAction* paste_url_action;
-        KAction* ipfilter_action;
-        KAction* import_action;
-        KAction* show_kt_action;
-        KAction* paste_action;
+        QAction * paste_url_action;
+        QAction * ipfilter_action;
+        QAction * import_action;
+        QAction * show_kt_action;
+        QAction * paste_action;
     };
 }
 

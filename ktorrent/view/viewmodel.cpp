@@ -25,7 +25,7 @@
 #include <QMimeData>
 #include <KLocale>
 #include <KGlobal>
-#include <KIcon>
+#include <QIcon>
 #include <KIconLoader>
 #include <util/log.h>
 #include <util/sha1hash.h>
@@ -353,31 +353,31 @@ namespace kt
         {
         case NOT_STARTED:
         case STOPPED:
-            return KIcon("kt-stop");
+            return QIcon::fromTheme("kt-stop");
         case SEEDING_COMPLETE:
         case DOWNLOAD_COMPLETE:
-            return KIcon("task-complete");
+            return QIcon::fromTheme("task-complete");
         case SEEDING:
         case SUPERSEEDING:
-            return KIcon("go-up");
+            return QIcon::fromTheme("go-up");
         case DOWNLOADING:
-            return KIcon("go-down");
+            return QIcon::fromTheme("go-down");
         case STALLED:
             if (tc->getStats().completed)
-                return KIcon("go-up");
+                return QIcon::fromTheme("go-up");
             else
-                return KIcon("go-down");
+                return QIcon::fromTheme("go-down");
         case ALLOCATING_DISKSPACE:
-            return KIcon("drive-harddisk");
+            return QIcon::fromTheme("drive-harddisk");
         case ERROR:
         case NO_SPACE_LEFT:
-            return KIcon("dialog-error");
+            return QIcon::fromTheme("dialog-error");
         case QUEUED:
-            return KIcon("download-later");
+            return QIcon::fromTheme("download-later");
         case CHECKING_DATA:
-            return KIcon("kt-check-data");
+            return QIcon::fromTheme("kt-check-data");
         case PAUSED:
-            return KIcon("kt-pause");
+            return QIcon::fromTheme("kt-pause");
         default:
             return QVariant();
         }

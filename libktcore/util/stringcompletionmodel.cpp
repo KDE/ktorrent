@@ -20,6 +20,7 @@
 
 #include "stringcompletionmodel.h"
 
+#include <QSet>
 #include <QFile>
 #include <QTextStream>
 #include <util/log.h>

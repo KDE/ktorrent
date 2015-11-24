@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <QPainter>
 #include <QtAlgorithms>
-#include <KIcon>
+#include <QIcon>
 #include <klocale.h>
 #include <kapplication.h>
 #include <qtooltip.h>
@@ -357,7 +357,7 @@ namespace kt
 
     SetMaxRate::SetMaxRate(Core* core, Type t, QWidget* parent) : KMenu(parent)
     {
-        setIcon(t == UPLOAD ? KIcon("kt-set-max-upload-speed") : KIcon("kt-set-max-download-speed"));
+        setIcon(t == UPLOAD ? QIcon::fromTheme("kt-set-max-upload-speed") : QIcon::fromTheme("kt-set-max-download-speed"));
         m_core = core;
         type = t;
         makeMenu();

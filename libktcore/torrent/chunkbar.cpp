@@ -18,7 +18,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <Q3MimeSourceFactory>
 #include <QPainter>
 #include <QPen>
 #include <QBrush>
@@ -27,7 +26,6 @@
 #include <math.h>
 #include <qtooltip.h>
 #include <klocale.h>
-#include <qmime.h>
 #include <qimage.h>
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>
@@ -66,6 +64,7 @@ namespace kt
             return;
         images_initialized = true;
 
+#if 0 //KF5
         Q3MimeSourceFactory* factory = Q3MimeSourceFactory::defaultFactory();
 
         QImage excluded(16, 16, QImage::Format_RGB32);
@@ -79,6 +78,7 @@ namespace kt
         QImage unavailable(16, 16, QImage::Format_RGB32);
         FillAndFrameBlack(&unavailable, bar->palette().color(QPalette::Active, QPalette::Base), 16);
         factory->setImage("unavailable_color", unavailable);
+#endif
     }
 
     ChunkBar::ChunkBar(QWidget* parent)

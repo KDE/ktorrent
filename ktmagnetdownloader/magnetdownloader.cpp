@@ -7,7 +7,7 @@
 #include "magnettest.h"
 #include <KApplication>
 #include <KLocalizedString>
-#include <kaboutdata.h>
+#include <K4AboutData>
 #include <kcmdlineargs.h>
 
 using namespace bt;
@@ -41,9 +41,9 @@ int main(int argc, char** argv)
     log.setOutputToConsole(true);
     log << "Downloading " << mlink.toString() << bt::endl;
 
-    KAboutData about("ktmagnetdownloader", 0, ki18n("KTMagnetDownloader"),
+    K4AboutData about("ktmagnetdownloader", 0, ki18n("KTMagnetDownloader"),
                      "3.0dev", ki18n("KTorrent's magnet link downloader"),
-                     KAboutData::License_GPL,
+                     K4AboutData::License_GPL,
                      ki18n("(C) 2009 Joris Guisson"),
                      KLocalizedString(),
                      "http://www.ktorrent.org/");

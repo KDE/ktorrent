@@ -23,7 +23,7 @@
 #include <QDataStream>
 #include <QApplication>
 #include <QFont>
-#include <kicon.h>
+#include <QIcon>
 #include <kmimetype.h>
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>
@@ -71,7 +71,7 @@ namespace kt
         case Qt::DisplayRole:
             return tor->getTorrentFile(idx).getUserModifiedPath();
         case Qt::DecorationRole:
-            return KIcon(KMimeType::findByPath(tor->getTorrentFile(idx).getPath())->iconName());
+            return QIcon::fromTheme(KMimeType::findByPath(tor->getTorrentFile(idx).getPath())->iconName());
         case Qt::FontRole:
             if (!current_search_text.isEmpty() && tor->getTorrentFile(idx).getUserModifiedPath().contains(current_search_text, Qt::CaseInsensitive))
             {

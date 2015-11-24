@@ -24,7 +24,7 @@
 #include <QKeyEvent>
 #include <QHBoxLayout>
 #include <KLocale>
-#include <KIcon>
+#include <QIcon>
 #include <KConfigGroup>
 #include "view.h"
 
@@ -38,7 +38,7 @@ namespace kt
         layout->setMargin(0);
 
         hide_search_bar = new QToolButton(this);
-        hide_search_bar->setIcon(KIcon("window-close"));
+        hide_search_bar->setIcon(QIcon::fromTheme("window-close"));
         hide_search_bar->setAutoRaise(true);
         connect(hide_search_bar, SIGNAL(clicked(bool)), this, SLOT(hideBar()));
         connect(this, SIGNAL(filterBarHidden(QString)), view, SLOT(setFilterString(QString)));

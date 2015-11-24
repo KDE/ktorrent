@@ -24,7 +24,7 @@
 #include <QListView>
 #include <interfaces/activity.h>
 
-class KAction;
+class QAction;
 class KActionCollection;
 
 namespace Kross
@@ -75,13 +75,13 @@ namespace kt
         ScriptModel* model;
         QListView* view;
 
-        KAction* add_script;
-        KAction* remove_script;
-        KAction* run_script;
-        KAction* stop_script;
-        KAction* edit_script;
-        KAction* properties;
-        KAction* configure_script;
+        QAction * add_script;
+        QAction * remove_script;
+        QAction * run_script;
+        QAction * stop_script;
+        QAction * edit_script;
+        QAction * properties;
+        QAction * configure_script;
     };
 
 }

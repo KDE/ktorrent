@@ -16,15 +16,15 @@ set(ktwebinterfaceplugin_SRC
 	iconhandler.cpp
 	torrentposthandler.cpp)
 
-kde4_add_ui_files(ktwebinterfaceplugin_SRC webinterfaceprefwidget.ui)
-kde4_add_kcfg_files(ktwebinterfaceplugin_SRC webinterfacepluginsettings.kcfgc)
-kde4_add_plugin(ktwebinterfaceplugin ${ktwebinterfaceplugin_SRC})
+ki18n_wrap_ui(ktwebinterfaceplugin_SRC webinterfaceprefwidget.ui)
+kconfig_add_kcfg_files(ktwebinterfaceplugin_SRC webinterfacepluginsettings.kcfgc)
+add_library(ktwebinterfaceplugin MODULE ${ktwebinterfaceplugin_SRC})
 
 target_link_libraries(
     ktwebinterfaceplugin
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    ${KDE4_KPARTS_LIBS}
+    KF5::Parts
     )
 install(TARGETS ktwebinterfaceplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktwebinterfaceplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

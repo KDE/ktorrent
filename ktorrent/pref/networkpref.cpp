@@ -53,7 +53,7 @@ namespace kt
         kcfg_maxTotalConnections->setValue(Settings::maxTotalConnections());
 
         kcfg_networkInterface->clear();
-        kcfg_networkInterface->addItem(KIcon("network-wired"), i18n("All interfaces"));
+        kcfg_networkInterface->addItem(QIcon::fromTheme("network-wired"), i18n("All interfaces"));
 
         kcfg_onlyUseUtp->setEnabled(Settings::utpEnabled());
         kcfg_primaryTransportProtocol->setEnabled(Settings::utpEnabled() && !Settings::onlyUseUtp());
@@ -72,7 +72,7 @@ namespace kt
                 const Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
                 if (netdev->ifaceName() == iface.name() && netdev->isWireless())
                 {
-                    icon = KIcon("network-wireless");
+                    icon = QIcon::fromTheme("network-wireless");
                     break;
                 }
 

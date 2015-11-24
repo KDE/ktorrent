@@ -18,7 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kicon.h>
+#include <QIcon>
 #include "filterlistmodel.h"
 #include "filter.h"
 
@@ -107,7 +107,7 @@ namespace kt
         case Qt::DisplayRole:
             return f->filterName();
         case Qt::DecorationRole:
-            return KIcon("view-filter");
+            return QIcon::fromTheme("view-filter");
         }
 
         return QVariant();

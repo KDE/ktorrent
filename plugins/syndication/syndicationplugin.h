@@ -23,7 +23,7 @@
 
 #include <interfaces/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace kt
 {
@@ -48,13 +48,13 @@ namespace kt
         void setupActions();
 
     private:
-        KAction* add_feed;
-        KAction* remove_feed;
-        KAction* edit_feed_name;
-        KAction* add_filter;
-        KAction* remove_filter;
-        KAction* edit_filter;
-        KAction* manage_filters;
+        QAction * add_feed;
+        QAction * remove_feed;
+        QAction * edit_feed_name;
+        QAction * add_filter;
+        QAction * remove_filter;
+        QAction * edit_filter;
+        QAction * manage_filters;
         SyndicationActivity* activity;
 
         friend class SyndicationActivity;

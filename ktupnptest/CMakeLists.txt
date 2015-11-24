@@ -1,9 +1,9 @@
 set(ktupnptest_SRC main.cpp upnptestwidget.cpp)
 	
 
-kde4_add_ui_files(ktupnptest_SRC upnptestwidget.ui)
-kde4_add_executable(ktupnptest ${ktupnptest_SRC})
+ki18n_wrap_ui(ktupnptest_SRC upnptestwidget.ui)
+add_executable(ktupnptest ${ktupnptest_SRC})
 
-target_link_libraries(ktupnptest ${LIBKTORRENT_LIBRARIES} ${QT_QTNETWORK_LIBRARY} ${KDE4_KDEUI_LIBS})
+target_link_libraries(ktupnptest ${LIBKTORRENT_LIBRARIES} Qt5::Network )
 install(TARGETS ktupnptest ${INSTALL_TARGETS_DEFAULT_ARGS})
 
