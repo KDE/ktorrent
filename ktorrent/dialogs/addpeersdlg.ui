@@ -104,14 +104,14 @@
       </spacer>
      </item>
      <item>
-      <widget class="KPushButton" name="m_add">
+      <widget class="QPushButton" name="m_add">
        <property name="text">
         <string>Add</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_close">
+      <widget class="QPushButton" name="m_close">
        <property name="text">
         <string>Close</string>
        </property>
@@ -121,13 +121,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

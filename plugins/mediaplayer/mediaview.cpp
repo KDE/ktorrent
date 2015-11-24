@@ -21,7 +21,7 @@
 #include <QHeaderView>
 #include <QVBoxLayout>
 #include <QSortFilterProxyModel>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <QIcon>
 #include <KLocale>
 #include <KToolBar>
@@ -106,9 +106,9 @@ namespace kt
         refresh = tool_bar->addAction(QIcon::fromTheme("view-refresh"), i18n("Refresh"), filter, SLOT(refresh()));
         refresh->setToolTip(i18n("Refresh media files"));
 
-        search_box = new KLineEdit(this);
-        search_box->setClearButtonShown(true);
-        search_box->setClickMessage(i18n("Search media files"));
+        search_box = new QLineEdit(this);
+        search_box->setClearButtonEnabled(true);
+        search_box->setPlaceholderText(i18n("Search media files"));
         connect(search_box, SIGNAL(textChanged(QString)), filter, SLOT(setFilterFixedString(QString)));
         hbox->addWidget(search_box);
 

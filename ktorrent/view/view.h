@@ -27,7 +27,7 @@
 #include <interfaces/guiinterface.h>
 #include <ksharedconfig.h>
 
-class KMenu;
+class QMenu;
 class QAction;
 class KActionCollection;
 
@@ -166,7 +166,7 @@ namespace kt
         Core* core;
         GUI* gui;
         Group* group;
-        KMenu* header_menu;
+        QMenu* header_menu;
         QMap<QAction*, int> column_idx_map;
         QList<QAction*> column_action_list;
         bt::Uint32 num_torrents;

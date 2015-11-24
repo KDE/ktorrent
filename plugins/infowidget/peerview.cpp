@@ -23,7 +23,7 @@
 #include <QHeaderView>
 #include <klocale.h>
 #include <QIcon>
-#include <kmenu.h>
+#include <QMenu>
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
 #include <interfaces/peerinterface.h>
@@ -52,7 +52,7 @@ namespace kt
         pm->setSourceModel(model);
         setModel(pm);
 
-        context_menu = new KMenu(this);
+        context_menu = new QMenu(this);
         context_menu->addAction(QIcon::fromTheme("list-remove-user"), i18n("Kick Peer"), this, SLOT(kickPeer()));
         context_menu->addAction(QIcon::fromTheme("view-filter"), i18n("Ban Peer"), this, SLOT(banPeer()));
         connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),

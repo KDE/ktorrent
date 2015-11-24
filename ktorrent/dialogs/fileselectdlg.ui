@@ -88,7 +88,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KLineEdit" name="m_filter"/>
+      <widget class="QLineEdit" name="m_filter"/>
      </item>
      <item>
       <widget class="QLabel" name="label">
@@ -127,35 +127,35 @@
      <item>
       <layout class="QVBoxLayout">
        <item>
-        <widget class="KPushButton" name="m_select_all">
+        <widget class="QPushButton" name="m_select_all">
          <property name="text">
           <string>Select &amp;All</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="m_select_none">
+        <widget class="QPushButton" name="m_select_none">
          <property name="text">
           <string>Select &amp;None</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="m_invert_selection">
+        <widget class="QPushButton" name="m_invert_selection">
          <property name="text">
           <string>Invert Selection</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="m_collapse_all">
+        <widget class="QPushButton" name="m_collapse_all">
          <property name="text">
           <string>Collapse All</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="m_expand_all">
+        <widget class="QPushButton" name="m_expand_all">
          <property name="text">
           <string>Expand All</string>
          </property>
@@ -361,16 +361,6 @@
    <class>KComboBox</class>
    <extends>QComboBox</extends>
    <header>kcombobox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KUrlRequester</class>

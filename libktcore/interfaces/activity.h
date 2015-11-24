@@ -26,7 +26,7 @@
 #include <ktcore_export.h>
 #include <kparts/part.h>
 
-class KMenu;
+class QMenu;
 
 namespace kt
 {
@@ -46,7 +46,7 @@ namespace kt
         void setXMLGUIFile(const QString& xml_gui);
 
         /// Get a menu described in the XML of the part
-        KMenu* menu(const QString& name);
+        QMenu* menu(const QString& name);
     };
 
     /**

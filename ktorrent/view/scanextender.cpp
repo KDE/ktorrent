@@ -21,6 +21,8 @@
 #include <torrent/job.h>
 #include <interfaces/torrentinterface.h>
 #include <datachecker/datacheckerjob.h>
+#include <KGuiItem>
+#include <KStandardGuiItem>
 #include "scanextender.h"
 
 
@@ -37,8 +39,8 @@ namespace kt
         setAutomaticRemove(dcj->isAutoImport());
         connect(job, SIGNAL(result(KJob*)), this, SLOT(finished(KJob*)));
 
-        cancel_button->setGuiItem(KStandardGuiItem::Cancel);
-        close_button->setGuiItem(KStandardGuiItem::Close);
+        KGuiItem::assign(cancel_button, KStandardGuiItem::cancel());
+        KGuiItem::assign(close_button, KStandardGuiItem::close());
         close_button->setEnabled(false);
         connect(close_button, SIGNAL(clicked()), this, SLOT(closeRequested()));
         connect(cancel_button, SIGNAL(clicked()), this, SLOT(cancelPressed()));

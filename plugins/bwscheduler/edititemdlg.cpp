@@ -23,7 +23,7 @@
 #include <kcalendarsystem.h>
 #include "edititemdlg.h"
 #include "schedule.h"
-#include <KPushButton>
+#include <QPushButton>
 
 namespace kt
 {

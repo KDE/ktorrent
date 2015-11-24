@@ -26,7 +26,7 @@
 #include <KLocale>
 #include <KStandardGuiItem>
 #include <KConfigGroup>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <torrent/queuemanager.h>
 #include <util/log.h>
 #include "queuemanagerwidget.h"
@@ -53,9 +53,9 @@ namespace kt
         toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
         layout->addWidget(toolbar);
 
-        search = new KLineEdit(this);
-        search->setClickMessage(i18n("Search"));
-        search->setClearButtonShown(true);
+        search = new QLineEdit(this);
+        search->setPlaceholderText(i18n("Search"));
+        search->setClearButtonEnabled(true);
         search->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         connect(search, SIGNAL(textChanged(QString)), this, SLOT(searchTextChanged(QString)));
         search->hide();
@@ -265,7 +265,7 @@ namespace kt
 
     void QueueManagerWidget::showSearch(bool on)
     {
-        search->setShown(on);
+        search->setVisible(on);
     }
 
     void QueueManagerWidget::showDownloads(bool on)

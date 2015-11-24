@@ -23,7 +23,7 @@
 
 #include <QMap>
 #include <QGraphicsView>
-#include <kmenu.h>
+#include <QMenu>
 #include <util/constants.h>
 
 
@@ -70,7 +70,7 @@ namespace kt
         void removeSelectedItems();
 
         /// Get the right click menu
-        KMenu* rightClickMenu() {return menu;}
+        QMenu* rightClickMenu() {return menu;}
 
         /**
          * Update the text of the status line
@@ -108,7 +108,7 @@ namespace kt
         Schedule* schedule;
         QMap<QGraphicsItem*, ScheduleItem*>  item_map;
         QList<ScheduleItem*> selection;
-        KMenu* menu;
+        QMenu* menu;
     };
 
 }

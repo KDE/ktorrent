@@ -103,14 +103,14 @@
       </spacer>
      </item>
      <item>
-      <widget class="KPushButton" name="m_import_btn" >
+      <widget class="QPushButton" name="m_import_btn" >
        <property name="text" >
         <string>&amp;Import</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_cancel_btn" >
+      <widget class="QPushButton" name="m_cancel_btn" >
        <property name="text" >
         <string>Ca&amp;ncel</string>
        </property>
@@ -127,11 +127,6 @@
    <class>KUrlRequester</class>
    <extends>QWidget</extends>
    <header>kurlrequester.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <includes>

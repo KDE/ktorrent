@@ -112,14 +112,14 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="KPushButton" name="m_download">
+            <widget class="QPushButton" name="m_download">
              <property name="text">
               <string>Download</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="KPushButton" name="m_refresh">
+            <widget class="QPushButton" name="m_refresh">
              <property name="text">
               <string>Refresh</string>
              </property>
@@ -165,14 +165,14 @@
             </spacer>
            </item>
            <item>
-            <widget class="KPushButton" name="m_cookies">
+            <widget class="QPushButton" name="m_cookies">
              <property name="text">
               <string>Cookies</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="KPushButton" name="m_filters">
+            <widget class="QPushButton" name="m_filters">
              <property name="text">
               <string>Filters</string>
              </property>
@@ -199,11 +199,6 @@
    <class>KWebView</class>
    <extends>QWebView</extends>
    <header>kwebview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KSqueezedTextLabel</class>

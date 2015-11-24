@@ -86,7 +86,7 @@ namespace kt
                 this, SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
         connect(view, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClicked(QModelIndex)));
 
-        menu = new KMenu(this);
+        menu = new QMenu(this);
         menu->addAction(remove_action);
         menu->addSeparator();
         menu->addAction(add_action);

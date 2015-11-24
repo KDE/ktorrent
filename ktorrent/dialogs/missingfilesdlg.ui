@@ -29,7 +29,7 @@
      <item>
       <layout class="QVBoxLayout">
        <item>
-        <widget class="KPushButton" name="m_recreate">
+        <widget class="QPushButton" name="m_recreate">
          <property name="toolTip">
           <string>They are no longer there, recreate them.</string>
          </property>
@@ -39,7 +39,7 @@
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="m_dnd">
+        <widget class="QPushButton" name="m_dnd">
          <property name="toolTip">
           <string>Do not download the missing files.</string>
          </property>
@@ -49,7 +49,7 @@
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="m_select_new">
+        <widget class="QPushButton" name="m_select_new">
          <property name="toolTip">
           <string>The files have been moved to another location, select the new location.</string>
          </property>
@@ -72,7 +72,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="KPushButton" name="m_cancel">
+        <widget class="QPushButton" name="m_cancel">
          <property name="toolTip">
           <string>Cancel, do not start the torrent.</string>
          </property>
@@ -87,13 +87,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

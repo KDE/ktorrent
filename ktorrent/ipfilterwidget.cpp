@@ -32,6 +32,8 @@
 #include <KMessageBox>
 #include <KFileDialog>
 #include <KUrl>
+#include <KGuiItem>
+#include <KStandardGuiItem>
 
 #include "ipfilterlist.h"
 
@@ -52,12 +54,12 @@ namespace kt
         setButtons(KDialog::None);
         setCaption(i18n("IP Filter List"));
 
-        m_add->setGuiItem(KStandardGuiItem::add());
-        m_clear->setGuiItem(KStandardGuiItem::clear());
-        m_save_as->setGuiItem(KStandardGuiItem::saveAs());
-        m_open->setGuiItem(KStandardGuiItem::open());
-        m_remove->setGuiItem(KStandardGuiItem::remove());
-        m_close->setGuiItem(KStandardGuiItem::close());
+        KGuiItem::assign(m_add, KStandardGuiItem::add());
+        KGuiItem::assign(m_clear, KStandardGuiItem::clear());
+        KGuiItem::assign(m_save_as, KStandardGuiItem::saveAs());
+        KGuiItem::assign(m_open, KStandardGuiItem::open());
+        KGuiItem::assign(m_remove, KStandardGuiItem::remove());
+        KGuiItem::assign(m_close, KStandardGuiItem::close());
 
         registerFilterList();
 

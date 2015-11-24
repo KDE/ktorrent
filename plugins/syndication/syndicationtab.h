@@ -27,7 +27,7 @@
 class QSplitter;
 class KToolBar;
 class KActionCollection;
-class KMenu;
+class QMenu;
 
 namespace kt
 {
@@ -63,8 +63,8 @@ namespace kt
         FilterList* filters;
         FilterListView* filter_view;
         KToolBar* filter_tool_bar;
-        KMenu* feed_view_menu;
-        KMenu* filter_view_menu;
+        QMenu* feed_view_menu;
+        QMenu* filter_view_menu;
     };
 
 }

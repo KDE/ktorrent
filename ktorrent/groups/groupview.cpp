@@ -23,7 +23,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <QAction>
 #include <kmessagebox.h>
 #include <kinputdialog.h>
@@ -156,7 +156,7 @@ namespace kt
 
         open_in_new_tab->setEnabled(g != 0);
 
-        KMenu* menu = gui->getTorrentActivity()->part()->menu("GroupsMenu");
+        QMenu* menu = gui->getTorrentActivity()->part()->menu("GroupsMenu");
         if (menu)
             menu->popup(viewport()->mapToGlobal(p));
     }

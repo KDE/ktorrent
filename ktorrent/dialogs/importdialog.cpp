@@ -38,6 +38,8 @@
 #include <datachecker/multidatachecker.h>
 #include <interfaces/functions.h>
 #include <settings.h>
+#include <KGuiItem>
+#include <KStandardGuiItem>
 #include "importdialog.h"
 
 
@@ -61,7 +63,7 @@ namespace kt
         connect(m_cancel_btn, SIGNAL(clicked()), this, SLOT(cancelImport()));
         m_progress->setEnabled(false);
         m_progress->setValue(0);
-        m_cancel_btn->setGuiItem(KStandardGuiItem::cancel());
+        KGuiItem::assign(m_cancel_btn, KStandardGuiItem::cancel());
         m_import_btn->setIcon(QIcon::fromTheme("document-import"));
     }
 

@@ -54,7 +54,7 @@ namespace kt
         edit_item_action->setEnabled(false);
         remove_item_action->setEnabled(false);
 
-        KMenu* menu = view->rightClickMenu();
+        QMenu* menu = view->rightClickMenu();
         menu->addAction(new_item_action);
         menu->addAction(edit_item_action);
         menu->addAction(remove_item_action);

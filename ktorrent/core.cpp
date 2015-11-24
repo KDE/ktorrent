@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QNetworkInterface>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kio/job.h>
 #include <kio/copyjob.h>

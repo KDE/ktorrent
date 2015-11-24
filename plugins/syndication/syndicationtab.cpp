@@ -21,7 +21,7 @@
 #include <QVBoxLayout>
 #include <QSplitter>
 #include <ktoolbar.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kactioncollection.h>
 #include "syndicationtab.h"
 #include "feedlistview.h"
@@ -73,7 +73,7 @@ namespace kt
         layout->addWidget(filter_view);
         splitter->addWidget(widget);
 
-        feed_view_menu = new KMenu(this);
+        feed_view_menu = new QMenu(this);
         feed_view_menu->addAction(ac->action("manage_filters"));
         feed_view_menu->addAction(ac->action("edit_feed_name"));
         feed_view_menu->addSeparator();
@@ -83,7 +83,7 @@ namespace kt
                 this, SLOT(showFeedViewMenu(const QPoint&)));
 
 
-        filter_view_menu = new KMenu(this);
+        filter_view_menu = new QMenu(this);
         filter_view_menu->addAction(ac->action("edit_filter"));
         filter_view_menu->addSeparator();
         filter_view_menu->addAction(ac->action("add_filter"));

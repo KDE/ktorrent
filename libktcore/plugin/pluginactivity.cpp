@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include <QVBoxLayout>
 #include <klocale.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <qtreewidget.h>
 #include <kglobal.h>
 #include <util/constants.h>

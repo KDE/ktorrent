@@ -19,8 +19,9 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
-#include <KPushButton>
+#include <QPushButton>
 #include <klocale.h>
+#include <kglobal.h>
 #include <util/constants.h>
 #include <util/log.h>
 #include <interfaces/functions.h>
@@ -65,7 +66,7 @@ namespace kt
 
         connect(this, SIGNAL(applyClicked()), this, SLOT(apply()));
 
-        KPushButton* apply_btn = button(KDialog::Apply);
+        QPushButton* apply_btn = button(KDialog::Apply);
         apply_btn->setEnabled(false);
         connect(model, SIGNAL(enableApply(bool)), apply_btn, SLOT(setEnabled(bool)));
 

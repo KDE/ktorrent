@@ -20,7 +20,7 @@
 #include "activity.h"
 
 #include <QCollator>
-#include <KMenu>
+#include <QMenu>
 #include <KXMLGUIFactory>
 
 
@@ -39,9 +39,9 @@ namespace kt
         setXMLFile(xml_gui, true);
     }
 
-    KMenu* ActivityPart::menu(const QString& name)
+    QMenu* ActivityPart::menu(const QString& name)
     {
-        return qobject_cast<KMenu*>(factory()->container(name, this));
+        return qobject_cast<QMenu*>(factory()->container(name, this));
     }
 
 

@@ -23,7 +23,7 @@
 #include <QClipboard>
 #include <QApplication>
 #include <KUrl>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <KMessageBox>
 #include <KLocale>
 #include <KStandardGuiItem>

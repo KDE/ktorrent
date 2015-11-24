@@ -112,7 +112,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KLineEdit" name="kcfg_customBrowser">
+      <widget class="QLineEdit" name="kcfg_customBrowser">
        <property name="toolTip">
         <string>Path of the custom browser.</string>
        </property>
@@ -213,17 +213,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
- </customwidgets>
- <includes>
-  <include location="local">klineedit.h</include>
-  <include location="local">kpushbutton.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>

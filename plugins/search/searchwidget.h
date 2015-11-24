@@ -23,12 +23,12 @@
 #include <qwidget.h>
 #include <kurl.h>
 #include <ktoolbar.h>
-#include <klineedit.h>
+#include <QLineEdit>
 #include "webview.h"
 
 class QProgressBar;
 class QNetworkReply;
-class KMenu;
+class QMenu;
 class KComboBox;
 
 namespace KParts
@@ -95,7 +95,7 @@ namespace kt
         QNetworkReply* torrent_download;
 
         KComboBox* search_engine;
-        KLineEdit* search_text;
+        QLineEdit* search_text;
     };
 
 }

@@ -37,8 +37,8 @@
       </widget>
      </item>
      <item>
-      <widget class="KLineEdit" name="m_filter">
-       <property name="showClearButton" stdset="0">
+      <widget class="QLineEdit" name="m_filter">
+       <property name="clearButtonEnabled" stdset="0">
         <bool>true</bool>
        </property>
       </widget>
@@ -127,13 +127,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

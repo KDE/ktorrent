@@ -23,7 +23,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <KLocalizedString>
-#include <KLineEdit>
+#include <QLineEdit>
 
 namespace kt
 {

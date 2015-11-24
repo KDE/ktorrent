@@ -19,7 +19,7 @@
 ***************************************************************************/
 #include <QPainter>
 #include <KIconLoader>
-#include <KPushButton>
+#include <QPushButton>
 #include <QApplication>
 #include "scriptdelegate.h"
 #include "scriptmodel.h"
@@ -30,7 +30,7 @@
 namespace kt
 {
     ScriptDelegate::ScriptDelegate(QAbstractItemView* parent)
-        : KWidgetItemDelegate(parent, parent), check_box(new QCheckBox), push_button(new KPushButton)
+        : KWidgetItemDelegate(parent, parent), check_box(new QCheckBox), push_button(new QPushButton)
     {
     }
 
@@ -117,11 +117,11 @@ namespace kt
         QCheckBox* enabled_check = new QCheckBox;
         connect(enabled_check, SIGNAL(clicked(bool)), this, SLOT(toggled(bool)));
 
-        KPushButton* about_button = new KPushButton;
+        QPushButton* about_button = new QPushButton;
         about_button->setIcon(QIcon::fromTheme("dialog-information"));
         connect(about_button, SIGNAL(clicked(bool)), this, SLOT(aboutClicked()));
 
-        KPushButton* configure_button = new KPushButton;
+        QPushButton* configure_button = new QPushButton;
         configure_button->setIcon(QIcon::fromTheme("configure"));
         connect(configure_button, SIGNAL(clicked(bool)), this, SLOT(settingsClicked()));
 
@@ -142,13 +142,13 @@ namespace kt
         int x = MARGIN;
         check_box->move(x, option.rect.height() / 2 - check_box->sizeHint().height() / 2);
 
-        KPushButton* about_button = static_cast<KPushButton*>(widgets[2]);
+        QPushButton* about_button = static_cast<QPushButton*>(widgets[2]);
         QSize about_size_hint = about_button->sizeHint();
         about_button->resize(about_size_hint);
         x = option.rect.width() - MARGIN - about_size_hint.width();
         about_button->move(x, option.rect.height() / 2 - about_size_hint.height() / 2);
 
-        KPushButton* configure_button = static_cast<KPushButton*>(widgets[1]);
+        QPushButton* configure_button = static_cast<QPushButton*>(widgets[1]);
         QSize configure_size_hint = configure_button->sizeHint();
         configure_button->resize(configure_size_hint);
         x = option.rect.width() - MARGIN * 2 - configure_size_hint.width() - about_size_hint.width();

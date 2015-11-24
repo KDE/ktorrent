@@ -22,11 +22,11 @@
 #include <qtextstream.h>
 #include <qapplication.h>
 #include <qcheckbox.h>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <QIcon>
 #include <kglobal.h>
 #include <kguiitem.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <kiconloader.h>
 #include <kcombobox.h>
 #include <kcompletion.h>
@@ -59,8 +59,8 @@ namespace kt
         m_search_text->setInsertPolicy(QComboBox::NoInsert);
         m_search_text->setMinimumWidth(150);
 
-        KLineEdit* search_text_lineedit = new KLineEdit(m_search_text);
-        search_text_lineedit->setClearButtonShown(true);
+        QLineEdit* search_text_lineedit = new QLineEdit(m_search_text);
+        search_text_lineedit->setClearButtonEnabled(true);
         m_search_text->setLineEdit(search_text_lineedit);
 
         connect(m_search_text->lineEdit(), SIGNAL(returnPressed()), this, SLOT(searchBoxReturn()));

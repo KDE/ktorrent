@@ -35,7 +35,7 @@
 
 #include <kfiledialog.h>
 #include <kurl.h>
-#include <kmenu.h>
+#include <QMenu>
 
 #include <utility>
 #include <memory>
@@ -55,7 +55,7 @@ namespace kt
         Q_OBJECT
     private:
         ///Pointer to context menu
-        std::auto_ptr<KMenu> pmCtxMenu;
+        std::auto_ptr<QMenu> pmCtxMenu;
 
         ///Height of the chart area ( \b not widget height!)
         inline wgtunit_t height() const;

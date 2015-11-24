@@ -26,14 +26,14 @@
 #include <KLocale>
 #include <KIconLoader>
 #include <KGlobal>
-#include <KMenu>
+#include <QMenu>
 #include <KRun>
 #include <KMessageBox>
 #include <KMimeType>
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KFileDialog>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <util/bitset.h>
 #include <util/error.h>
 #include <util/functions.h>
@@ -68,9 +68,9 @@ namespace kt
         toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
         layout->addWidget(toolbar);
 
-        filter = new KLineEdit(this);
-        filter->setClickMessage(i18n("Filter"));
-        filter->setClearButtonShown(true);
+        filter = new QLineEdit(this);
+        filter->setPlaceholderText(i18n("Filter"));
+        filter->setClearButtonEnabled(true);
         filter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         connect(filter, SIGNAL(textChanged(QString)), this, SLOT(setFilter(QString)));
         filter->hide();
@@ -111,7 +111,7 @@ namespace kt
 
     void FileView::setupActions()
     {
-        context_menu = new KMenu(this);
+        context_menu = new QMenu(this);
         open_action = context_menu->addAction(QIcon::fromTheme("document-open"), i18nc("Open file", "Open"), this, SLOT(open()));
         open_with_action = context_menu->addAction(QIcon::fromTheme("document-open"), i18nc("Open file with", "Open With"), this, SLOT(openWith()));
         check_data = context_menu->addAction(QIcon::fromTheme("kt-check-data"), i18n("Check File"), this, SLOT(checkFile()));

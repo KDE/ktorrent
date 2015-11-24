@@ -22,7 +22,7 @@
 #define TRAYICON_H
 
 #include <KIcon>
-#include <KMenu>
+#include <QMenu>
 #include <KStatusNotifierItem>
 #include <util/constants.h>
 
@@ -80,7 +80,7 @@ namespace kt
         void hide();
 
         /// Get the co
-        KMenu* contextMenu();
+        QMenu* contextMenu();
 
     private:
         void showPassivePopup(const QString& msg, const QString& titile);
@@ -167,10 +167,10 @@ namespace kt
         GUI* mwnd;
         KStatusNotifierItem* status_notifier_item;
         bool queue_suspended;
-        KMenu* menu;
+        QMenu* menu;
     };
 
-    class SetMaxRate : public KMenu
+    class SetMaxRate : public QMenu
     {
         Q_OBJECT
     public:

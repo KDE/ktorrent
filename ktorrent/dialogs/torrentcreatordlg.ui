@@ -164,7 +164,7 @@
         <widget class="QLineEdit" name="m_tracker"/>
        </item>
        <item row="0" column="1">
-        <widget class="KPushButton" name="m_add_tracker">
+        <widget class="QPushButton" name="m_add_tracker">
          <property name="text">
           <string>Add</string>
          </property>
@@ -176,21 +176,21 @@
        <item row="1" column="1">
         <layout class="QVBoxLayout">
          <item>
-          <widget class="KPushButton" name="m_remove_tracker">
+          <widget class="QPushButton" name="m_remove_tracker">
            <property name="text">
             <string>Remove</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="KPushButton" name="m_move_up">
+          <widget class="QPushButton" name="m_move_up">
            <property name="text">
             <string>Move Up</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="KPushButton" name="m_move_down">
+          <widget class="QPushButton" name="m_move_down">
            <property name="text">
             <string>Move Down</string>
            </property>
@@ -253,7 +253,7 @@
         </layout>
        </item>
        <item row="0" column="1">
-        <widget class="KPushButton" name="m_add_node">
+        <widget class="QPushButton" name="m_add_node">
          <property name="text">
           <string>Add</string>
          </property>
@@ -282,7 +282,7 @@
        <item row="1" column="1">
         <layout class="QVBoxLayout">
          <item>
-          <widget class="KPushButton" name="m_remove_node">
+          <widget class="QPushButton" name="m_remove_node">
            <property name="text">
             <string>Remove</string>
            </property>
@@ -314,7 +314,7 @@
         <widget class="QLineEdit" name="m_webseed"/>
        </item>
        <item row="0" column="1">
-        <widget class="KPushButton" name="m_add_webseed">
+        <widget class="QPushButton" name="m_add_webseed">
          <property name="text">
           <string>Add</string>
          </property>
@@ -326,7 +326,7 @@
        <item row="1" column="1">
         <layout class="QVBoxLayout">
          <item>
-          <widget class="KPushButton" name="m_remove_webseed">
+          <widget class="QPushButton" name="m_remove_webseed">
            <property name="text">
             <string>Remove</string>
            </property>
@@ -390,11 +390,6 @@
    <extends>QFrame</extends>
    <header>kurlrequester.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

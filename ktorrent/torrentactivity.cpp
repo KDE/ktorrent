@@ -129,8 +129,8 @@ namespace kt
         queue_suspend_action = new KToggleAction(QIcon::fromTheme("kt-pause"), i18n("Suspend Torrents"), this);
         ac->addAction("queue_suspend", queue_suspend_action);
         queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
-        queue_suspend_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_P));
-        queue_suspend_action->setGlobalShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_P));
+        queue_suspend_action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_P));
+        //KF5 queue_suspend_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_P));
         connect(queue_suspend_action, SIGNAL(toggled(bool)), this, SLOT(suspendQueue(bool)));
 
         show_group_view_action = new KToggleAction(QIcon::fromTheme("view-list-tree"), i18n("Group View Visible"), this);

@@ -27,7 +27,7 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <KSharedConfig>
-#include <KMenu>
+#include <QMenu>
 #include "mediafile.h"
 
 class QSortFilterProxyModel;
@@ -96,7 +96,7 @@ namespace kt
         QTreeView* view;
         QCheckBox* random_mode;
 
-        KMenu* menu;
+        QMenu* menu;
         QSortFilterProxyModel* proxy_model;
         MediaFileCollection* collection;
     };

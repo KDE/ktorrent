@@ -22,6 +22,7 @@
 #include <QtAlgorithms>
 #include <QIcon>
 #include <klocale.h>
+#include <kglobal.h>
 #include <kapplication.h>
 #include <qtooltip.h>
 #include <kpassivepopup.h>
@@ -355,7 +356,7 @@ namespace kt
 
 
 
-    SetMaxRate::SetMaxRate(Core* core, Type t, QWidget* parent) : KMenu(parent)
+    SetMaxRate::SetMaxRate(Core* core, Type t, QWidget* parent) : QMenu(parent)
     {
         setIcon(t == UPLOAD ? QIcon::fromTheme("kt-set-max-upload-speed") : QIcon::fromTheme("kt-set-max-download-speed"));
         m_core = core;
@@ -375,7 +376,7 @@ namespace kt
         int delta = 0;
         int maxBandwidthRounded;
 
-        addTitle(i18n("Speed limit in KiB/s"));
+        setTitle(i18n("Speed limit in KiB/s"));
 
         unlimited = addAction(i18n("Unlimited"));
         unlimited->setCheckable(true);

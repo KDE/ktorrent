@@ -20,6 +20,8 @@
  ***************************************************************************/
 #include <kstandardguiitem.h>
 #include <interfaces/torrentinterface.h>
+#include <KGuiItem>
+#include <KStandardGuiItem>
 #include "addpeersdlg.h"
 
 namespace kt
@@ -47,8 +49,8 @@ namespace kt
         connect(m_close, SIGNAL(clicked()), this, SLOT(reject()));
         connect(m_add, SIGNAL(clicked()), this, SLOT(addPressed()));
 
-        m_close->setGuiItem(KStandardGuiItem::close());
-        m_add->setGuiItem(KStandardGuiItem::add());
+        KGuiItem::assign(m_close, KStandardGuiItem::close());
+        KGuiItem::assign(m_add, KStandardGuiItem::add());
 
         mps = new ManualPeerSource();
         tc->addPeerSource(mps);

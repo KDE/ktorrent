@@ -23,10 +23,11 @@
 #include <QClipboard>
 #include <qdesktopwidget.h>
 #include <kconfig.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <QAction>
-#include <kmenu.h>
-#include <kmenubar.h>
+#include <QMenu>
+#include <QMenuBar>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 #include <kmessagebox.h>
@@ -36,7 +37,7 @@
 #include <kedittoolbar.h>
 #include <kstandardaction.h>
 #include <kfiledialog.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <kxmlguifactory.h>
 #include <KNotifyConfigWidget>
 #include <kio/jobclasses.h>
@@ -377,7 +378,7 @@ namespace kt
 
     void GUI::configureToolbars()
     {
-        saveMainWindowSettings(KGlobal::config()->group("MainWindow"));
+        //KF5 saveMainWindowSettings(KGlobal::config()->group("MainWindow"));
         KEditToolBar dlg(factory());
         connect(&dlg, SIGNAL(newToolBarConfig()), this, SLOT(newToolBarConfig()));
         dlg.exec();
@@ -407,7 +408,7 @@ namespace kt
         open_action->setToolTip(i18n("Open a torrent"));
         paste_action = KStandardAction::paste(this, SLOT(paste()), ac);
 
-        open_silently_action = new QAction(QIcon::fromTheme(open_action->icon()), i18n("Open Silently"), this);
+        open_silently_action = new QAction(open_action->icon(), i18n("Open Silently"), this);
         open_silently_action->setToolTip(i18n("Open a torrent without asking any questions"));
         connect(open_silently_action, SIGNAL(triggered()), this, SLOT(openTorrentSilently()));
         ac->addAction("file_open_silently", open_silently_action);
@@ -425,26 +426,26 @@ namespace kt
 
         paste_url_action = new QAction(QIcon::fromTheme("document-open-remote"), i18n("Open URL"), this);
         paste_url_action->setToolTip(i18n("Open a URL which points to a torrent, magnet links are supported"));
-        paste_url_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
+        paste_url_action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_P));
         connect(paste_url_action, SIGNAL(triggered()), this, SLOT(pasteURL()));
         ac->addAction("paste_url", paste_url_action);
 
         ipfilter_action = new QAction(QIcon::fromTheme("view-filter"), i18n("IP Filter"), this);
         ipfilter_action->setToolTip(i18n("Show the list of blocked IP addresses"));
-        ipfilter_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_I));
+        ipfilter_action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
         connect(ipfilter_action, SIGNAL(triggered()), this, SLOT(showIPFilter()));
         ac->addAction("ipfilter_action", ipfilter_action);
 
         import_action = new QAction(QIcon::fromTheme("document-import"), i18n("Import Torrent"), this);
         import_action->setToolTip(i18n("Import a torrent"));
-        import_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_I));
+        import_action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_I));
         connect(import_action, SIGNAL(triggered()), this, SLOT(import()));
         ac->addAction("import", import_action);
 
         show_kt_action = new QAction(QIcon::fromTheme("kt-show-hide"), i18n("Show/Hide KTorrent"), this);
         connect(show_kt_action, SIGNAL(triggered()), this, SLOT(showOrHide()));
         ac->addAction("show_kt", show_kt_action);
-        show_kt_action->setGlobalShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_T));
+        // KF5 show_kt_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_T));
 
         setStandardToolBarMenuEnabled(true);
     }

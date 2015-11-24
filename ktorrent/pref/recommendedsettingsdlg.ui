@@ -91,7 +91,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout" >
        <item>
-        <widget class="KPushButton" name="m_calculate" >
+        <widget class="QPushButton" name="m_calculate" >
          <property name="text" >
           <string>Calculate</string>
          </property>
@@ -339,13 +339,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

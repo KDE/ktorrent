@@ -41,7 +41,7 @@ namespace kt
         connect(scene, SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&, int, int)),
                 this, SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&, int, int)));
 
-        menu = new KMenu(this);
+        menu = new QMenu(this);
         setContextMenuPolicy(Qt::CustomContextMenu);
         connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
                 this, SLOT(showContextMenu(const QPoint&)));

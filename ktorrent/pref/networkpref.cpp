@@ -21,7 +21,6 @@
 #include <klocale.h>
 #include <QNetworkInterface>
 #include <solid/device.h>
-#include <solid/networkinterface.h>
 #include <util/log.h>
 #include "networkpref.h"
 #include "settings.h"
@@ -61,12 +60,13 @@ namespace kt
         // get all the network devices and add them to the combo box
         QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
 
-        QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
+        // KF5 QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
 
 
         foreach (const QNetworkInterface& iface, iface_list)
         {
-            KIcon icon("network-wired");
+            QIcon icon = QIcon::fromTheme("network-wired");
+#if 0 //KF5
             foreach (const Solid::Device& device, netlist)
             {
                 const Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
@@ -77,6 +77,7 @@ namespace kt
                 }
 
             }
+#endif
 
             kcfg_networkInterface->addItem(icon, iface.name());
         }

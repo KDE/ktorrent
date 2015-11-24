@@ -32,7 +32,7 @@
 #include <QApplication>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include <KMenu>
+#include <QMenu>
 #include <KStandardAction>
 #include <kio/job.h>
 #include <KMessageBox>
@@ -71,7 +71,7 @@ namespace kt
         sbar->addAction(webview->pageAction(QWebPage::Forward));
         sbar->addAction(webview->pageAction(QWebPage::Reload));
         sbar->addAction(ac->action("search_home"));
-        search_text = new KLineEdit(sbar);
+        search_text = new QLineEdit(sbar);
         sbar->addWidget(search_text);
         sbar->addAction(ac->action("search_tab_search"));
         sbar->addWidget(new QLabel(i18n(" Engine:")));
@@ -84,7 +84,7 @@ namespace kt
         layout->addWidget(sbar);
         layout->addWidget(webview);
 
-        search_text->setClearButtonShown(true);
+        search_text->setClearButtonEnabled(true);
 
         connect(webview, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
         connect(webview, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));

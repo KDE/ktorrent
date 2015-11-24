@@ -27,6 +27,8 @@
 #include <interfaces/torrentinterface.h>
 #include "missingfilesdlg.h"
 #include <interfaces/torrentfileinterface.h>
+#include <KGuiItem>
+#include <KStandardGuiItem>
 
 namespace kt
 {
@@ -41,7 +43,7 @@ namespace kt
         connect(m_dnd, SIGNAL(clicked()), this, SLOT(dndPressed()));
         connect(m_select_new, SIGNAL(clicked()), this, SLOT(selectNewPressed()));
 
-        m_cancel->setGuiItem(KStandardGuiItem::cancel());
+        KGuiItem::assign(m_cancel, KStandardGuiItem::cancel());
 
         foreach (const QString& s, missing)
         {

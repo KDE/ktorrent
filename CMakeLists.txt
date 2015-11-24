@@ -13,7 +13,7 @@ include(KDECompilerSettings)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core DBus Widgets Script Sql)
 
-find_package(KF5 REQUIRED KDELibs4Support I18n KIO XmlGui Notifications Solid Config CoreAddons DocTools Kross Sonnet DBusAddons Crash)
+find_package(KF5 REQUIRED KDELibs4Support I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross Sonnet DBusAddons Crash)
 
 #find_package(KTorrent REQUIRED)
 find_package(Boost REQUIRED)
@@ -46,6 +46,7 @@ include_directories(
 /usr/include/KF5/KDELibs4Support
 /usr/include/KF5/KDELibs4Support/KDE
 /usr/include/KF5/Solid
+/usr/include/KF5/KNotifyConfig
    )
 
 add_subdirectory(libktcore)

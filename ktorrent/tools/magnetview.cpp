@@ -21,7 +21,7 @@
 
 #include "magnetview.h"
 #include "magnetmodel.h"
-#include <KMenu>
+#include <QMenu>
 #include <QBoxLayout>
 #include <KLocalizedString>
 #include <QIcon>
@@ -60,7 +60,7 @@ namespace kt
         layout->addWidget(view);
 
         // context menu
-        menu = new KMenu(this);
+        menu = new QMenu(this);
         start = menu->addAction(QIcon::fromTheme("kt-start"), i18n("Start Magnet"), this, SLOT(startMagnetDownload()));
         stop = menu->addAction(QIcon::fromTheme("kt-stop"), i18n("Stop Magnet"), this, SLOT(stopMagnetDownload()));
         menu->addSeparator();

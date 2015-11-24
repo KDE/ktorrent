@@ -25,7 +25,7 @@
 #include <QSortFilterProxyModel>
 #include <QClipboard>
 #include <KRun>
-#include <KMenu>
+#include <QMenu>
 #include <KLocale>
 #include <KSharedConfig>
 #include <KMessageBox>
@@ -90,8 +90,8 @@ namespace kt
 
         header()->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(header(), SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showHeaderMenu(const QPoint&)));
-        header_menu = new KMenu(this);
-        header_menu->addTitle(i18n("Columns"));
+        header_menu = new QMenu(this);
+        header_menu->addSection(i18n("Columns"));
 
         for (int i = 0; i < model->columnCount(QModelIndex()); i++)
         {
@@ -138,7 +138,7 @@ namespace kt
 
         start_torrent = new QAction(QIcon::fromTheme("kt-start"), i18nc("@action Start all selected torrents in the current tab", "Start"), this);
         start_torrent->setToolTip(i18n("Start all selected torrents in the current tab"));
-        start_torrent->setShortcut(KShortcut(Qt::CTRL + Qt::Key_S));
+        start_torrent->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
         connect(start_torrent, SIGNAL(triggered()), this, SLOT(startTorrents()));
         ac->addAction("start", start_torrent);
 
@@ -149,7 +149,7 @@ namespace kt
 
         stop_torrent = new QAction(QIcon::fromTheme("kt-stop"), i18nc("@action Stop all selected torrents in the current tab", "Stop"), this);
         stop_torrent->setToolTip(i18n("Stop all selected torrents in the current tab"));
-        stop_torrent->setShortcut(KShortcut(Qt::CTRL + Qt::Key_H));
+        stop_torrent->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_H));
         connect(stop_torrent, SIGNAL(triggered()), this, SLOT(stopTorrents()));
         ac->addAction("stop", stop_torrent);
 
@@ -160,24 +160,24 @@ namespace kt
 
         remove_torrent = new QAction(QIcon::fromTheme("kt-remove"), i18nc("@action Remove all selected torrents in the current tab", "Remove"), this);
         remove_torrent->setToolTip(i18n("Remove all selected torrents in the current tab"));
-        remove_torrent->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_Delete));
+        remove_torrent->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Delete));
         connect(remove_torrent, SIGNAL(triggered()), this, SLOT(removeTorrents()));
         ac->addAction("remove", remove_torrent);
 
         start_all = new QAction(QIcon::fromTheme("kt-start-all"), i18nc("@action Start all torrents in the current tab", "Start All"), this);
         start_all->setToolTip(i18n("Start all torrents in the current tab"));
-        start_all->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_S));
+        start_all->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_S));
         connect(start_all, SIGNAL(triggered()), this, SLOT(startAllTorrents()));
         ac->addAction("start_all", start_all);
 
         stop_all = new QAction(QIcon::fromTheme("kt-stop-all"), i18nc("@action Stop all torrents in the current tab", "Stop All"), this);
         stop_all->setToolTip(i18n("Stop all torrents in the current tab"));
-        stop_all->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_H));
+        stop_all->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_H));
         connect(stop_all, SIGNAL(triggered()), this, SLOT(stopAllTorrents()));
         ac->addAction("stop_all", stop_all);
 
         remove_torrent_and_data = new QAction(QIcon::fromTheme("kt-remove"), i18n("Remove Torrent and Data"), this);
-        remove_torrent_and_data->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Delete));
+        remove_torrent_and_data->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Delete));
         connect(remove_torrent_and_data, SIGNAL(triggered()), this, SLOT(removeTorrentsAndData()));
         ac->addAction("view_remove_torrent_and_data", remove_torrent_and_data);
 
@@ -190,7 +190,7 @@ namespace kt
         ac->addAction("view_add_peers", add_peers);
 
         manual_announce = new QAction(i18n("Manual Announce"), this);
-        manual_announce->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_A));
+        manual_announce->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_A));
         connect(manual_announce, SIGNAL(triggered()), this, SLOT(manualAnnounce()));
         ac->addAction("view_announce", manual_announce);
 
@@ -228,7 +228,7 @@ namespace kt
 
         check_data = new QAction(QIcon::fromTheme("kt-check-data"), i18n("Check Data"), this);
         check_data->setToolTip(i18n("Check all the data of a torrent"));
-        check_data->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_C));
+        check_data->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_C));
         connect(check_data, SIGNAL(triggered()), this, SLOT(checkData()));
         ac->addAction("check_data", check_data);
 
@@ -260,7 +260,7 @@ namespace kt
         speed_limits = new QAction(QIcon::fromTheme("kt-speed-limits"), i18n("Speed Limits"), this);
         speed_limits->setToolTip(i18n("Set the speed limits of individual torrents"));
         connect(speed_limits, SIGNAL(triggered()), this, SLOT(speedLimits()));
-        speed_limits->setShortcut(KShortcut(Qt::CTRL + Qt::Key_L));
+        speed_limits->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
         ac->addAction("speed_limits", speed_limits);
     }
 
@@ -561,7 +561,7 @@ namespace kt
         {
             if (tc->readyForPreview() && !tc->getStats().multi_file_torrent)
             {
-                new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
+                new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
             }
         }
     }
@@ -573,9 +573,9 @@ namespace kt
         foreach (bt::TorrentInterface* tc, sel)
         {
             if (tc->getStats().multi_file_torrent)
-                new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
+                new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
             else
-                new KRun(KUrl(tc->getDataDir()), 0, 0, true, true);
+                new KRun(QUrl::fromLocalFile(tc->getDataDir()), 0, true);
         }
     }
 
@@ -585,7 +585,7 @@ namespace kt
         getSelection(sel);
         foreach (bt::TorrentInterface* tc, sel)
         {
-            new KRun(KUrl(tc->getTorDir()), 0, 0, true, true);
+            new KRun(QUrl::fromLocalFile(tc->getTorDir()), 0, true);
         }
     }
 
@@ -659,7 +659,7 @@ namespace kt
 
     void View::showMenu(const QPoint& pos)
     {
-        KMenu* view_menu = gui->getTorrentActivity()->part()->menu("ViewMenu");
+        QMenu* view_menu = gui->getTorrentActivity()->part()->menu("ViewMenu");
         if (!view_menu)
             return;
 
@@ -755,9 +755,9 @@ namespace kt
         if (tc)
         {
             if (tc->getStats().multi_file_torrent)
-                new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
+                new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
             else
-                new KRun(KUrl(tc->getDataDir()), 0, 0, true, true);
+                new KRun(QUrl::fromLocalFile(tc->getDataDir()), 0, true);
         }
     }
 

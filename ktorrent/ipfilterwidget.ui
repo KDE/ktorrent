@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KLineEdit" name="m_ip_to_add">
+      <widget class="QLineEdit" name="m_ip_to_add">
        <property name="toolTip">
         <string>IP addresses must be in the format 'XXX.XXX.XXX.XXX'.
                                         
@@ -33,7 +33,7 @@ You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-
        <property name="text">
         <string>127.0.0.1</string>
        </property>
-       <property name="showClearButton" stdset="0">
+       <property name="clearButtonEnabled" stdset="0">
         <bool>true</bool>
        </property>
       </widget>
@@ -41,7 +41,7 @@ You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-
     </layout>
    </item>
    <item row="0" column="1">
-    <widget class="KPushButton" name="m_add">
+    <widget class="QPushButton" name="m_add">
      <property name="text">
       <string>Add</string>
      </property>
@@ -60,14 +60,14 @@ You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-
    <item row="1" column="1">
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="KPushButton" name="m_remove">
+      <widget class="QPushButton" name="m_remove">
        <property name="text">
         <string>Remove</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_clear">
+      <widget class="QPushButton" name="m_clear">
        <property name="text">
         <string>Clear</string>
        </property>
@@ -87,21 +87,21 @@ You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-
       </spacer>
      </item>
      <item>
-      <widget class="KPushButton" name="m_open">
+      <widget class="QPushButton" name="m_open">
        <property name="text">
         <string>Open...</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_save_as">
+      <widget class="QPushButton" name="m_save_as">
        <property name="text">
         <string>Save As...</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_close">
+      <widget class="QPushButton" name="m_close">
        <property name="text">
         <string>Close</string>
        </property>
@@ -111,18 +111,6 @@ You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

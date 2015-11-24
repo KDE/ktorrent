@@ -57,10 +57,10 @@ namespace kt
     {
         Group::Policy p;
         if (m_default_location_enabled->isChecked() && m_default_location->url().isValid())
-            p.default_save_location = m_default_location->url().pathOrUrl();
+            p.default_save_location = m_default_location->url().toDisplayString(QUrl::PreferLocalFile);
 
         if (m_default_move_on_completion_enabled->isChecked() && m_default_move_on_completion_location->url().isValid())
-            p.default_move_on_completion_location = m_default_move_on_completion_location->url().pathOrUrl();
+            p.default_move_on_completion_location = m_default_move_on_completion_location->url().toDisplayString(QUrl::PreferLocalFile);
 
         p.only_apply_on_new_torrents = m_only_new->isChecked();
         p.max_share_ratio = m_max_share_ratio->value();

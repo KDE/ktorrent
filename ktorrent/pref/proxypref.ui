@@ -186,12 +186,12 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="KLineEdit" name="kcfg_socksPassword">
+           <widget class="QLineEdit" name="kcfg_socksPassword">
             <property name="toolTip">
              <string>Password for the SOCKS proxy server.</string>
             </property>
-            <property name="passwordMode">
-             <bool>true</bool>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
             </property>
            </widget>
           </item>
@@ -230,13 +230,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>

@@ -61,7 +61,9 @@ target_link_libraries(ktcore LINK_PUBLIC
    KF5::Parts
    KF5::KDELibs4Support
    ${LIBKTORRENT_LIBRARIES}
-   ${GMP_LIBRARIES})
+   ${GMP_LIBRARIES}
+   -lktorrent
+)
 set_target_properties(ktcore PROPERTIES VERSION 15.0.0 SOVERSION 15 )
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 

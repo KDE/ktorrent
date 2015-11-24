@@ -25,8 +25,8 @@
 #include <interfaces/torrentinterface.h>
 #include <ksharedconfig.h>
 
-class KLineEdit;
-class KMenu;
+class QLineEdit;
+class QMenu;
 class QSortFilterProxyModel;
 class QToolBar;
 
@@ -91,7 +91,7 @@ namespace kt
         bt::TorrentInterface::WPtr curr_tc;
         TorrentFileModel* model;
 
-        KMenu* context_menu;
+        QMenu* context_menu;
         QAction* open_action;
         QAction* open_with_action;
         QAction* download_first_action;
@@ -115,7 +115,7 @@ namespace kt
 
         QTreeView* view;
         QToolBar* toolbar;
-        KLineEdit* filter;
+        QLineEdit* filter;
     };
 
 }

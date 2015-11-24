@@ -27,7 +27,7 @@
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <krun.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kshell.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>

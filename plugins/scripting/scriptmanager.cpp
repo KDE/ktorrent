@@ -23,7 +23,7 @@
 #include <util/log.h>
 #include <KRun>
 #include <KLocale>
-#include <KMenu>
+#include <QMenu>
 #include <QAction>
 #include <KActionCollection>
 #include <kross/core/manager.h>
@@ -162,7 +162,7 @@ namespace kt
 
     void ScriptManager::showContextMenu(const QPoint& p)
     {
-        KMenu* m = part()->menu("ScriptingMenu");
+        QMenu* m = part()->menu("ScriptingMenu");
         if (m)
             m->popup(view->viewport()->mapToGlobal(p));
     }

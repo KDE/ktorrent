@@ -44,7 +44,7 @@
 #include <kplotaxis.h>
 #include <kfiledialog.h>
 #include <kurl.h>
-#include <kmenu.h>
+#include <QMenu>
 
 #include <drawer/ChartDrawer.h>
 
@@ -72,7 +72,7 @@ namespace kt
         ///Descriptions of plotObjects
         std::auto_ptr<std::vector<QString> > pmDescs;
         ///Context menu
-        std::auto_ptr<KMenu> pmCtxMenu;
+        std::auto_ptr<QMenu> pmCtxMenu;
 
         ///Makes a context menu for widget
         void MakeCtxMenu();

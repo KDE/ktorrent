@@ -26,12 +26,12 @@
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kactivelabel.h>
-#include <kpushbutton.h>
-#include <klineedit.h>
+#include <QPushButton>
+#include <QLineEdit>
 #include <kmessagebox.h>
 #include <kio/copyjob.h>
 #include <kio/jobuidelegate.h>
-#include <klineedit.h>
+#include <QLineEdit>
 #include <kinputdialog.h>
 
 #include <qlabel.h>

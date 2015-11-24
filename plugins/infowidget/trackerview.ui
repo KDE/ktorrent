@@ -17,21 +17,21 @@
    <item>
     <layout class="QVBoxLayout">
      <item>
-      <widget class="KPushButton" name="m_add_tracker">
+      <widget class="QPushButton" name="m_add_tracker">
        <property name="text">
         <string>Add Trackers</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_remove_tracker">
+      <widget class="QPushButton" name="m_remove_tracker">
        <property name="text">
         <string>Remove Tracker</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_change_tracker">
+      <widget class="QPushButton" name="m_change_tracker">
        <property name="toolTip">
         <string>Changes the current active tracker for private torrents.</string>
        </property>
@@ -61,7 +61,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="KPushButton" name="m_restore_defaults">
+      <widget class="QPushButton" name="m_restore_defaults">
        <property name="text">
         <string>Restore Defaults</string>
        </property>
@@ -71,13 +71,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

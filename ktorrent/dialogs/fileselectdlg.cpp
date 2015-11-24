@@ -24,7 +24,7 @@
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <kstandardguiitem.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
@@ -97,8 +97,8 @@ namespace kt
         bg->addButton(m_list);
         bg->setExclusive(true);
 
-        m_filter->setClearButtonShown(true);
-        m_filter->setClickMessage(i18n("Filter"));
+        m_filter->setClearButtonEnabled(true);
+        m_filter->setPlaceholderText(i18n("Filter"));
         connect(m_filter, SIGNAL(textChanged(QString)), this, SLOT(setFilter(QString)));
 
         if (Settings::useCompletedDir())
@@ -180,11 +180,11 @@ namespace kt
     {
         QStringList pe_ex;
 
-        QString cn = m_completedLocation->url().toLocalFile(KUrl::AddTrailingSlash);
+        QString cn = m_completedLocation->url().toLocalFile() + '/';
         if (m_moveCompleted->isChecked() && !cn.isEmpty())
             move_on_completion_location_history.insert(cn);
 
-        QString dn = m_downloadLocation->url().toLocalFile(KUrl::AddTrailingSlash);
+        QString dn = m_downloadLocation->url().toLocalFile() + '/';
         if (!dn.isEmpty())
             download_location_history.insert(dn);
 
@@ -545,7 +545,7 @@ namespace kt
         {
             already_downloaded = 0;
             bt::Uint32 found = 0;
-            QString path = m_downloadLocation->url().path(KUrl::AddTrailingSlash) + tc->getDisplayName() + '/';
+            QString path = m_downloadLocation->url().path() + '/' + tc->getDisplayName() + '/';
             for (bt::Uint32 i = 0; i < tc->getNumFiles(); i++)
             {
                 const bt::TorrentFileInterface& file = tc->getTorrentFile(i);
@@ -572,7 +572,7 @@ namespace kt
         }
         else
         {
-            QString path = m_downloadLocation->url().path(KUrl::AddTrailingSlash) + tc->getDisplayName();
+            QString path = m_downloadLocation->url().path() + '/' + tc->getDisplayName();
             if (!bt::Exists(path))
             {
                 m_existing_found->setText(i18n("Existing file: <b>No</b>"));

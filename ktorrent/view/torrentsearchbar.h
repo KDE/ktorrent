@@ -25,7 +25,7 @@
 #include <QWidget>
 #include <KSharedConfig>
 #include <QToolButton>
-#include <KLineEdit>
+#include <QLineEdit>
 
 namespace kt
 {
@@ -57,7 +57,7 @@ namespace kt
 
     private:
         QToolButton* hide_search_bar;
-        KLineEdit* search_bar;
+        QLineEdit* search_bar;
     };
 }
 

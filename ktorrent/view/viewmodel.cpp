@@ -320,7 +320,7 @@ namespace kt
             case bt::CHECKING_DATA:
                 return yellow;
             case bt::ERROR :
-                return Qt::red;
+                return QColor(Qt::red);
             case bt::NOT_STARTED :
             case bt::STOPPED:
             case bt::QUEUED:
