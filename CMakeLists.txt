@@ -10,12 +10,13 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings)
+include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core DBus Widgets Script Sql)
 
 find_package(KF5 REQUIRED KDELibs4Support I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross Sonnet DBusAddons Crash)
 
-#find_package(KTorrent REQUIRED)
+find_package(LibKTorrent 1.9.50 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 
 #
@@ -35,19 +36,14 @@ include_directories(
    ${KTORRENT_BINARY_DIR}
    ${KTORRENT_BINARY_DIR}/libktcore
    ${KTORRENT_SOURCE_DIR}/libktcore
-   #${LIBKTORRENT_INCLUDE_DIR}
+   ${LIBKTORRENT_INCLUDE_DIR}
    ${KTORRENT_SOURCE_DIR}
    ${GMP_INCLUDE_DIR}
    ${Boost_INCLUDE_DIR}
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${CMAKE_CURRENT_BINARY_DIR}
    ${QT_INCLUDES}
-/usr/local/include/libktorrent
-/usr/include/KF5/KDELibs4Support
-/usr/include/KF5/KDELibs4Support/KDE
-/usr/include/KF5/Solid
-/usr/include/KF5/KNotifyConfig
-   )
+)
 
 add_subdirectory(libktcore)
 #add_subdirectory(plugins)
@@ -57,7 +53,4 @@ add_subdirectory(ktorrent)
 #add_subdirectory(ktmagnetdownloader)
 #add_subdirectory(doc)
 
-
-
-
-
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
