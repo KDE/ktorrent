@@ -85,7 +85,7 @@ ki18n_wrap_ui(ktorrent_SRC
 add_executable(ktorrent_app ${ktorrent_SRC})
 set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
 
-target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore KF5::KIO KF5::Parts KF5::KDELibs4Support)
+target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore KF5::NotifyConfig KF5::Parts KF5::KDELibs4Support)
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )

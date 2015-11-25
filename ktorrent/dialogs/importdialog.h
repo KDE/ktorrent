@@ -22,6 +22,7 @@
 #define IMPORTDIALOG_H
 
 #include <QDialog>
+#include <torrent/torrent.h>
 #include <util/constants.h>
 #include "ui_importdialog.h"
 
