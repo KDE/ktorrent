@@ -22,6 +22,7 @@
 #include <QPushButton>
 #include <qtreewidget.h>
 #include <kglobal.h>
+#include <kpluginselector.h>
 #include <util/constants.h>
 #include <util/log.h>
 #include "pluginmanager.h"
@@ -37,12 +38,10 @@ namespace kt
     {
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setMargin(0);
-#if 0 //KF5
         pmw = new KPluginSelector(this);
         connect(pmw, SIGNAL(changed(bool)), this, SLOT(changed()));
         connect(pmw, SIGNAL(configCommitted(const QByteArray&)), this, SLOT(changed()));
         layout->addWidget(pmw);
-#endif
     }
 
 
@@ -52,17 +51,13 @@ namespace kt
 
     void PluginActivity::updatePluginList()
     {
-#if 0 //KF5
         pmw->addPlugins(pman->pluginInfoList(), KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
-#endif
     }
 
     void PluginActivity::update()
     {
-#if 0 //KF5
         pmw->updatePluginsState();
         pman->loadPlugins();
-#endif
     }
 
     void PluginActivity::changed()

@@ -60,6 +60,7 @@ add_library(ktcore SHARED ${libktorrent_SRC})
 target_link_libraries(ktcore LINK_PUBLIC
    KF5::Parts
    KF5::KDELibs4Support
+   KF5::KCMUtils
    ${GMP_LIBRARIES}
    ktorrent
 )

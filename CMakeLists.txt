@@ -14,7 +14,7 @@ include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core DBus Widgets Script)
 
-find_package(KF5 REQUIRED KDELibs4Support I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross Sonnet DBusAddons Crash)
+find_package(KF5 REQUIRED KDELibs4Support I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross KCMUtils Sonnet DBusAddons Crash)
 
 find_package(LibKTorrent 1.9.50 CONFIG REQUIRED)
 find_package(Boost REQUIRED)

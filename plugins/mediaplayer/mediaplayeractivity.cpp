@@ -143,9 +143,9 @@ namespace kt
         ac->addAction("clear_play_list", clear_action);
 
         QAction * tfs = new QAction(QIcon::fromTheme("view-fullscreen"), i18n("Toggle Fullscreen"), this);
-        tfs->setShortcut(Qt::Key_F);
         tfs->setCheckable(true);
         ac->addAction("video_fullscreen", tfs);
+        ac->setDefaultShortcut(tfs, QKeySequence(Qt::Key_F));
     }
 
     void MediaPlayerActivity::openVideo()

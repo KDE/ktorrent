@@ -136,132 +136,132 @@ namespace kt
     {
         KStandardAction::selectAll(this, SLOT(selectAll()), ac);
 
-        start_torrent = new QAction(QIcon::fromTheme("kt-start"), i18nc("@action Start all selected torrents in the current tab", "Start"), this);
+        start_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18nc("@action Start all selected torrents in the current tab", "Start"), this);
         start_torrent->setToolTip(i18n("Start all selected torrents in the current tab"));
-        start_torrent->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
         connect(start_torrent, SIGNAL(triggered()), this, SLOT(startTorrents()));
-        ac->addAction("start", start_torrent);
+        ac->addAction(QStringLiteral("start"), start_torrent);
+        ac->setDefaultShortcut(start_torrent, QKeySequence(Qt::CTRL + Qt::Key_S));
 
-        force_start_torrent = new QAction(QIcon::fromTheme("kt-start"), i18nc("@action Force start all selected torrents in the current tab", "Force Start"), this);
+        force_start_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18nc("@action Force start all selected torrents in the current tab", "Force Start"), this);
         force_start_torrent->setToolTip(i18n("Force start all selected torrents in the current tab"));
         connect(force_start_torrent, SIGNAL(triggered()), this, SLOT(forceStartTorrents()));
-        ac->addAction("force_start", force_start_torrent);
+        ac->addAction(QStringLiteral("force_start"), force_start_torrent);
 
-        stop_torrent = new QAction(QIcon::fromTheme("kt-stop"), i18nc("@action Stop all selected torrents in the current tab", "Stop"), this);
+        stop_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-stop")), i18nc("@action Stop all selected torrents in the current tab", "Stop"), this);
         stop_torrent->setToolTip(i18n("Stop all selected torrents in the current tab"));
-        stop_torrent->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_H));
         connect(stop_torrent, SIGNAL(triggered()), this, SLOT(stopTorrents()));
-        ac->addAction("stop", stop_torrent);
+        ac->addAction(QStringLiteral("stop"), stop_torrent);
+        ac->setDefaultShortcut(stop_torrent, QKeySequence(Qt::CTRL + Qt::Key_H));
 
-        pause_torrent = new QAction(QIcon::fromTheme("media-playback-pause"), i18nc("@action Pause all selected torrents in the current tab", "Pause"), this);
+        pause_torrent = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-pause")), i18nc("@action Pause all selected torrents in the current tab", "Pause"), this);
         pause_torrent->setToolTip(i18n("Pause all selected torrents in the current tab"));
         connect(pause_torrent, SIGNAL(triggered()), this, SLOT(pauseTorrents()));
-        ac->addAction("pause", pause_torrent);
+        ac->addAction(QStringLiteral("pause"), pause_torrent);
 
-        remove_torrent = new QAction(QIcon::fromTheme("kt-remove"), i18nc("@action Remove all selected torrents in the current tab", "Remove"), this);
+        remove_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-remove")), i18nc("@action Remove all selected torrents in the current tab", "Remove"), this);
         remove_torrent->setToolTip(i18n("Remove all selected torrents in the current tab"));
-        remove_torrent->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Delete));
         connect(remove_torrent, SIGNAL(triggered()), this, SLOT(removeTorrents()));
-        ac->addAction("remove", remove_torrent);
+        ac->addAction(QStringLiteral("remove"), remove_torrent);
+        ac->setDefaultShortcut(remove_torrent, QKeySequence(Qt::SHIFT + Qt::Key_Delete));
 
-        start_all = new QAction(QIcon::fromTheme("kt-start-all"), i18nc("@action Start all torrents in the current tab", "Start All"), this);
+        start_all = new QAction(QIcon::fromTheme(QStringLiteral("kt-start-all")), i18nc("@action Start all torrents in the current tab", "Start All"), this);
         start_all->setToolTip(i18n("Start all torrents in the current tab"));
-        start_all->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_S));
         connect(start_all, SIGNAL(triggered()), this, SLOT(startAllTorrents()));
-        ac->addAction("start_all", start_all);
+        ac->addAction(QStringLiteral("start_all"), start_all);
+        ac->setDefaultShortcut(start_all, QKeySequence(Qt::SHIFT + Qt::Key_S));
 
-        stop_all = new QAction(QIcon::fromTheme("kt-stop-all"), i18nc("@action Stop all torrents in the current tab", "Stop All"), this);
+        stop_all = new QAction(QIcon::fromTheme(QStringLiteral("kt-stop-all")), i18nc("@action Stop all torrents in the current tab", "Stop All"), this);
         stop_all->setToolTip(i18n("Stop all torrents in the current tab"));
-        stop_all->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_H));
         connect(stop_all, SIGNAL(triggered()), this, SLOT(stopAllTorrents()));
-        ac->addAction("stop_all", stop_all);
+        ac->addAction(QStringLiteral("stop_all"), stop_all);
+        ac->setDefaultShortcut(stop_all, QKeySequence(Qt::SHIFT + Qt::Key_H));
 
-        remove_torrent_and_data = new QAction(QIcon::fromTheme("kt-remove"), i18n("Remove Torrent and Data"), this);
-        remove_torrent_and_data->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Delete));
+        remove_torrent_and_data = new QAction(QIcon::fromTheme(QStringLiteral("kt-remove")), i18n("Remove Torrent and Data"), this);
         connect(remove_torrent_and_data, SIGNAL(triggered()), this, SLOT(removeTorrentsAndData()));
-        ac->addAction("view_remove_torrent_and_data", remove_torrent_and_data);
+        ac->addAction(QStringLiteral("view_remove_torrent_and_data"), remove_torrent_and_data);
+        ac->setDefaultShortcut(remove_torrent_and_data, QKeySequence(Qt::CTRL + Qt::Key_Delete));
 
         rename_torrent = new QAction(i18n("Rename Torrent"), this);
         connect(rename_torrent, SIGNAL(triggered()), this, SLOT(renameTorrent()));
-        ac->addAction("view_rename_torrent", rename_torrent);
+        ac->addAction(QStringLiteral("view_rename_torrent"), rename_torrent);
 
-        add_peers = new QAction(QIcon::fromTheme("list-add"), i18n("Add Peers"), this);
+        add_peers = new QAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add Peers"), this);
         connect(add_peers, SIGNAL(triggered()), this, SLOT(addPeers()));
-        ac->addAction("view_add_peers", add_peers);
+        ac->addAction(QStringLiteral("view_add_peers"), add_peers);
 
         manual_announce = new QAction(i18n("Manual Announce"), this);
-        manual_announce->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_A));
         connect(manual_announce, SIGNAL(triggered()), this, SLOT(manualAnnounce()));
-        ac->addAction("view_announce", manual_announce);
+        ac->addAction(QStringLiteral("view_announce"), manual_announce);
+        ac->setDefaultShortcut(manual_announce, QKeySequence(Qt::SHIFT + Qt::Key_A));
 
         do_scrape = new QAction(i18n("Scrape"), this);
         connect(do_scrape, SIGNAL(triggered()), this, SLOT(scrape()));
-        ac->addAction("view_scrape", do_scrape);
+        ac->addAction(QStringLiteral("view_scrape"), do_scrape);
 
-        preview = new QAction(QIcon::fromTheme("document-open"), i18n("Preview"), this);
+        preview = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Preview"), this);
         connect(preview, SIGNAL(triggered()), this, SLOT(previewTorrents()));
-        ac->addAction("view_preview", preview);
+        ac->addAction(QStringLiteral("view_preview"), preview);
 
-        data_dir = new QAction(QIcon::fromTheme("folder-open"), i18n("Data Directory"), this);
+        data_dir = new QAction(QIcon::fromTheme(QStringLiteral("folder-open")), i18n("Data Directory"), this);
         connect(data_dir, SIGNAL(triggered()), this, SLOT(openDataDir()));
-        ac->addAction("view_open_data_dir", data_dir);
+        ac->addAction(QStringLiteral("view_open_data_dir"), data_dir);
 
-        tor_dir = new QAction(QIcon::fromTheme("folder-open"), i18n("Temporary Directory"), this);
+        tor_dir = new QAction(QIcon::fromTheme(QStringLiteral("folder-open")), i18n("Temporary Directory"), this);
         connect(tor_dir, SIGNAL(triggered()), this, SLOT(openTorDir()));
-        ac->addAction("view_open_tmp_dir", tor_dir);
+        ac->addAction(QStringLiteral("view_open_tmp_dir"), tor_dir);
 
         move_data = new QAction(i18n("Move Data"), this);
         connect(move_data, SIGNAL(triggered()), this, SLOT(moveData()));
-        ac->addAction("view_move_data", move_data);
+        ac->addAction(QStringLiteral("view_move_data"), move_data);
 
         torrent_properties = new QAction(i18n("Settings"), this);
         connect(torrent_properties, SIGNAL(triggered()), this, SLOT(showProperties()));
-        ac->addAction("view_torrent_properties", torrent_properties);
+        ac->addAction(QStringLiteral("view_torrent_properties"), torrent_properties);
 
         remove_from_group = new QAction(i18n("Remove from Group"), this);
         connect(remove_from_group, SIGNAL(triggered()), this, SLOT(removeFromGroup()));
-        ac->addAction("view_remove_from_group", remove_from_group);
+        ac->addAction(QStringLiteral("view_remove_from_group"), remove_from_group);
 
-        add_to_new_group = new QAction(QIcon::fromTheme("document-new"), i18n("New Group"), this);
+        add_to_new_group = new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Group"), this);
         connect(add_to_new_group, SIGNAL(triggered()), this, SLOT(addToNewGroup()));
-        ac->addAction("view_add_to_new_group", add_to_new_group);
+        ac->addAction(QStringLiteral("view_add_to_new_group"), add_to_new_group);
 
-        check_data = new QAction(QIcon::fromTheme("kt-check-data"), i18n("Check Data"), this);
+        check_data = new QAction(QIcon::fromTheme(QStringLiteral("kt-check-data")), i18n("Check Data"), this);
         check_data->setToolTip(i18n("Check all the data of a torrent"));
-        check_data->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_C));
         connect(check_data, SIGNAL(triggered()), this, SLOT(checkData()));
-        ac->addAction("check_data", check_data);
+        ac->addAction(QStringLiteral("check_data"), check_data);
+        ac->setDefaultShortcut(check_data, QKeySequence(Qt::SHIFT + Qt::Key_C));
 
         GroupManager* gman = core->getGroupManager();
         for (GroupManager::Itr i = gman->begin(); i != gman->end(); i++)
         {
             if (!i->second->isStandardGroup())
             {
-                QAction * act = new QAction(QIcon::fromTheme("application-x-bittorrent"), i->first, this);
+                QAction * act = new QAction(QIcon::fromTheme(QStringLiteral("application-x-bittorrent")), i->first, this);
                 connect(act, SIGNAL(triggered()), this, SLOT(addToGroupItemTriggered()));
                 group_actions.insert(i->second, act);
             }
         }
 
-        open_dir_menu = new QAction(QIcon::fromTheme("folder-open"), i18n("Open Directory"), this);
-        ac->addAction("OpenDirMenu", open_dir_menu);
+        open_dir_menu = new QAction(QIcon::fromTheme(QStringLiteral("folder-open")), i18n("Open Directory"), this);
+        ac->addAction(QStringLiteral("OpenDirMenu"), open_dir_menu);
 
-        groups_menu = new QAction(QIcon::fromTheme("application-x-bittorrent"), i18n("Add to Group"), this);
-        ac->addAction("GroupsSubMenu", groups_menu);
+        groups_menu = new QAction(QIcon::fromTheme(QStringLiteral("application-x-bittorrent")), i18n("Add to Group"), this);
+        ac->addAction(QStringLiteral("GroupsSubMenu"), groups_menu);
 
-        copy_url = new QAction(QIcon::fromTheme("edit-copy"), i18n("Copy Torrent URL"), this);
+        copy_url = new QAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Torrent URL"), this);
         connect(copy_url, SIGNAL(triggered()), this, SLOT(copyTorrentURL()));
-        ac->addAction("view_copy_url", copy_url);
+        ac->addAction(QStringLiteral("view_copy_url"), copy_url);
 
-        export_torrent = new QAction(QIcon::fromTheme("document-export"), i18n("Export Torrent"), this);
+        export_torrent = new QAction(QIcon::fromTheme(QStringLiteral("document-export")), i18n("Export Torrent"), this);
         connect(export_torrent, SIGNAL(triggered()), this, SLOT(exportTorrent()));
-        ac->addAction("view_export_torrent", export_torrent);
+        ac->addAction(QStringLiteral("view_export_torrent"), export_torrent);
 
-        speed_limits = new QAction(QIcon::fromTheme("kt-speed-limits"), i18n("Speed Limits"), this);
+        speed_limits = new QAction(QIcon::fromTheme(QStringLiteral("kt-speed-limits")), i18n("Speed Limits"), this);
         speed_limits->setToolTip(i18n("Set the speed limits of individual torrents"));
         connect(speed_limits, SIGNAL(triggered()), this, SLOT(speedLimits()));
-        speed_limits->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
-        ac->addAction("speed_limits", speed_limits);
+        ac->addAction(QStringLiteral("speed_limits"), speed_limits);
+        ac->setDefaultShortcut(speed_limits, QKeySequence(Qt::CTRL + Qt::Key_L));
     }
 
     struct StartAndStopAllVisitor

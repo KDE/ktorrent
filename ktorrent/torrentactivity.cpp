@@ -128,8 +128,8 @@ namespace kt
 
         queue_suspend_action = new KToggleAction(QIcon::fromTheme("kt-pause"), i18n("Suspend Torrents"), this);
         ac->addAction("queue_suspend", queue_suspend_action);
+        ac->setDefaultShortcut(queue_suspend_action, QKeySequence(Qt::SHIFT + Qt::Key_P));
         queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
-        queue_suspend_action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_P));
         //KF5 queue_suspend_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_P));
         connect(queue_suspend_action, SIGNAL(toggled(bool)), this, SLOT(suspendQueue(bool)));
 
@@ -140,9 +140,9 @@ namespace kt
 
         filter_torrent_action = new QAction(i18n("Filter Torrents"), this);
         filter_torrent_action->setToolTip(i18n("Filter torrents based on filter string"));
-        filter_torrent_action->setShortcut(Qt::CTRL + Qt::Key_F);
         connect(filter_torrent_action, SIGNAL(triggered(bool)), search_bar, SLOT(showBar()));
         ac->addAction("filter_torrent", filter_torrent_action);
+        ac->setDefaultShortcut(filter_torrent_action, QKeySequence(Qt::CTRL + Qt::Key_F));
 
         view->setupActions(ac);
     }

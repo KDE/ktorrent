@@ -31,6 +31,7 @@
 #include "dbustorrent.h"
 #include "dbusgroup.h"
 #include <QTimer>
+#include <QDebug>
 #include "dbussettings.h"
 
 using namespace bt;

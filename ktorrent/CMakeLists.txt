@@ -89,8 +89,8 @@ target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore KF5::NotifyCo
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )
-install(FILES ktorrentui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
-install(FILES kttorrentactivityui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+install(FILES ktorrentui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
+install(FILES kttorrentactivityui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 install(FILES ktorrent.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR} )
 
 
