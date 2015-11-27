@@ -280,14 +280,12 @@ namespace kt
 
     void FileView::open()
     {
-        new KRun(KUrl(preview_path), 0, 0, true, true);
+        new KRun(QUrl::fromLocalFile(preview_path), 0, true);
     }
 
     void FileView::openWith()
     {
-        KUrl::List urls;
-        urls << KUrl(preview_path);
-        KRun::displayOpenWithDialog(urls, 0);
+        KRun::displayOpenWithDialog({QUrl::fromLocalFile(preview_path)}, 0);
     }
 
 
@@ -427,17 +425,17 @@ namespace kt
             {
                 // directory
                 QString path = tc->getStats().output_path + model->dirPath(proxy_model->mapToSource(index));
-                new KRun(KUrl(path), 0, 0, true, true);
+                new KRun(QUrl::fromLocalFile(path), 0, true);
             }
             else
             {
                 // file
-                new KRun(KUrl(file->getPathOnDisk()), 0, 0, true, true);
+                new KRun(QUrl::fromLocalFile(file->getPathOnDisk()), 0, true);
             }
         }
         else
         {
-            new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
+            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
         }
     }
 

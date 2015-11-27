@@ -23,6 +23,7 @@
 #include <KLocale>
 #include <KFileItem>
 #include <KConfigGroup>
+#include <kglobal.h>
 #include <kio/job.h>
 #include <util/log.h>
 #include <util/functions.h>

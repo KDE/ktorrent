@@ -20,10 +20,13 @@
 
 #include "addtrackersdialog.h"
 #include <QRegExp>
+#include <QUrl>
 #include <QApplication>
 #include <QClipboard>
-#include <KLocalizedString>
 #include <QLineEdit>
+#include <QCompleter>
+
+#include <klocalizedstring.h>
 
 namespace kt
 {
@@ -38,21 +41,19 @@ namespace kt
 
         // If we find any urls on the clipboard, add them
         QClipboard* clipboard = QApplication::clipboard();
-        QStringList strings = clipboard->text().split(QRegExp("\\s"));
+        QStringList strings = clipboard->text().split(QRegExp(QLatin1String("\\s")));
         foreach (const QString& s, strings)
         {
-            KUrl url(s);
-            if (url.isValid() && (url.protocol() == "http" || url.protocol() == "https" || url.protocol() == "udp"))
+            QUrl url(s);
+            if (url.isValid() && (url.scheme() == QLatin1String("http")
+                               || url.scheme() == QLatin1String("https")
+                               || url.scheme() == QLatin1String("udp")))
             {
                 trackers->insertItem(s);
             }
         }
 
-        KCompletion* completion = new KCompletion();
-        completion->insertItems(tracker_hints);
-        completion->setCompletionMode(KGlobalSettings::CompletionPopup);
-
-        trackers->lineEdit()->setCompletionObject(completion);
+        trackers->lineEdit()->setCompleter(new QCompleter(tracker_hints));
 
         setMainWidget(trackers);
     }

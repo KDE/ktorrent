@@ -19,9 +19,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "peerviewmodel.h"
-#include <klocale.h>
 #include <QIcon>
+#include <QLocale>
 #include <kstandarddirs.h>
+#include <klocalizedstring.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
 #include "flagdb.h"
@@ -31,7 +32,7 @@ using namespace bt;
 
 namespace kt
 {
-    static KIcon yes, no;
+    static QIcon yes, no;
     static bool icons_loaded = false;
     static FlagDB flagDB(22, 18);
 
@@ -53,7 +54,7 @@ namespace kt
             if (country_id > 0)
             {
                 country = geo_ip->countryName(country_id);
-                flag = QIcon::fromTheme(flagDB.getFlag(geo_ip->countryCode(country_id)));
+                flag = flagDB.getFlag(geo_ip->countryCode(country_id));
             }
         }
     }
@@ -102,9 +103,9 @@ namespace kt
                 return QVariant();
         case 5: return stats.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No");
         case 6: return stats.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No");
-        case 7: return QString("%1 %").arg(KGlobal::locale()->formatNumber(stats.perc_of_file, 2));
+        case 7: return QString("%1 %").arg(QLocale().toString(stats.perc_of_file, 'g', 2));
         case 8: return QVariant();
-        case 9: return KGlobal::locale()->formatNumber(stats.aca_score, 2);
+        case 9: return QLocale().toString(stats.aca_score, 'g', 2);
         case 10: return QVariant();
         case 11: return QString("%1 / %2").arg(stats.num_down_requests).arg(stats.num_up_requests);
         case 12: return BytesToString(stats.bytes_downloaded);

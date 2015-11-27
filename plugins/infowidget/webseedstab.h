@@ -23,6 +23,8 @@
 
 #include <QWidget>
 #include <QSortFilterProxyModel>
+#include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <interfaces/torrentinterface.h>
 #include "ui_webseedstab.h"
 

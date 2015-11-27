@@ -21,7 +21,7 @@
 #ifndef KTPEERVIEWMODEL_H
 #define KTPEERVIEWMODEL_H
 
-#include <kicon.h>
+#include <QIcon>
 #include <QVector>
 #include <QAbstractTableModel>
 #include <interfaces/peerinterface.h>
@@ -73,7 +73,7 @@ namespace kt
             bt::PeerInterface* peer;
             mutable bt::PeerInterface::Stats stats;
             QString country;
-            KIcon flag;
+            QIcon flag;
 
             Item(bt::PeerInterface* peer, GeoIPManager* geo_ip);
 

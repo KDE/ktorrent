@@ -22,6 +22,7 @@
 #define TRACKERVIEW_H
 
 #include "ui_trackerview.h"
+#include <ksharedconfig.h>
 #include <QSortFilterProxyModel>
 #include <interfaces/torrentinterface.h>
 

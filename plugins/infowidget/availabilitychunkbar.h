@@ -21,6 +21,7 @@
 #define AVAILABILITYCHUNKBAR_H
 
 #include <torrent/chunkbar.h>
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {

@@ -11,22 +11,22 @@
 
 		<entry name="openSilently" type="Bool">
 			<label>Whether to open torrent silently or not.</label>
-			<default>FALSE</default>
+			<default>false</default>
 		</entry>
 
 		<entry name="actionDelete" type="Bool">
 			<label>Delete action checked.</label>
-			<default>FALSE</default>
+			<default>false</default>
 		</entry>
 
 		<entry name="actionMove" type="Bool">
 			<label>Move action checked.</label>
-			<default>FALSE</default>
+			<default>false</default>
 		</entry>
 		
 		<entry name="recursive" type="Bool">
 			<label>Scan directories recursively.</label>
-			<default>FALSE</default>
+			<default>false</default>
 		</entry>
 		
 		<entry name="addToGroup" type="Bool">

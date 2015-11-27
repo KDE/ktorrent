@@ -12,7 +12,7 @@ include(KDECMakeSettings)
 include(KDECompilerSettings)
 include(FeatureSummary)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core DBus Widgets Script Sql)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core DBus Widgets Script)
 
 find_package(KF5 REQUIRED KDELibs4Support I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross Sonnet DBusAddons Crash)
 
@@ -46,7 +46,7 @@ include_directories(
 )
 
 add_subdirectory(libktcore)
-#add_subdirectory(plugins)
+add_subdirectory(plugins)
 add_subdirectory(ktorrent)
 #add_subdirectory(ktupnptest)
 #add_subdirectory(plasma)

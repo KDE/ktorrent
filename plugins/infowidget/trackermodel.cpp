@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include "trackermodel.h"
 #include <QList>
+#include <QColor>
 #include <klocale.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerinterface.h>
@@ -115,7 +116,7 @@ namespace kt
         }
         else if (role == Qt::ForegroundRole && index.column() == 1 && trk->trackerStatus() == bt::TRACKER_ERROR)
         {
-            return Qt::red;
+            return QColor(Qt::red);
         }
 
         return QVariant();
