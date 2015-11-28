@@ -291,8 +291,7 @@ namespace kt
         {
             if (!n->file)
             {
-                BDictNode* d = dict->getDict(n->name);
-                if (d)
+                if (BDictNode* d = dict->getDict(n->name.toUtf8()))
                     n->loadExpandedState(index.child(idx, 0), pm, tv, d);
             }
             idx++;

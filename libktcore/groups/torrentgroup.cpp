@@ -115,38 +115,37 @@ namespace kt
             hashes.insert(SHA1Hash((const Uint8*)ba.data()));
         }
 
-        BDictNode* gp = dn->getDict(QString("policy"));
-        if (gp)
+        if (BDictNode* gp = dn->getDict(QByteArrayLiteral("policy")))
         {
             // load the group policy
-            if (gp->getValue("default_save_location"))
+            if (gp->getValue(QByteArrayLiteral("default_save_location")))
             {
-                policy.default_save_location = gp->getString("default_save_location", 0);
+                policy.default_save_location = gp->getString(QByteArrayLiteral("default_save_location"), 0);
                 if (policy.default_save_location.length() == 0)
                     policy.default_save_location = QString(); // make sure that 0 length strings are loaded as null strings
             }
 
-            if (gp->getValue("default_move_on_completion_location"))
+            if (gp->getValue(QByteArrayLiteral("default_move_on_completion_location")))
             {
-                policy.default_move_on_completion_location = gp->getString("default_move_on_completion_location", 0);
+                policy.default_move_on_completion_location = gp->getString(QByteArrayLiteral("default_move_on_completion_location"), 0);
                 if (policy.default_move_on_completion_location.length() == 0)
                     policy.default_move_on_completion_location = QString(); // make sure that 0 length strings are loaded as null strings
             }
 
-            if (gp->getValue("max_share_ratio"))
-                policy.max_share_ratio = gp->getString("max_share_ratio", 0).toFloat();
+            if (gp->getValue(QByteArrayLiteral("max_share_ratio")))
+                policy.max_share_ratio = gp->getString(QByteArrayLiteral("max_share_ratio"), 0).toFloat();
 
-            if (gp->getValue("max_seed_time"))
-                policy.max_seed_time = gp->getString("max_seed_time", 0).toFloat();
+            if (gp->getValue(QByteArrayLiteral("max_seed_time")))
+                policy.max_seed_time = gp->getString(QByteArrayLiteral("max_seed_time"), 0).toFloat();
 
-            if (gp->getValue("max_upload_rate"))
-                policy.max_upload_rate = gp->getInt("max_upload_rate");
+            if (gp->getValue(QByteArrayLiteral("max_upload_rate")))
+                policy.max_upload_rate = gp->getInt(QByteArrayLiteral("max_upload_rate"));
 
-            if (gp->getValue("max_download_rate"))
-                policy.max_download_rate = gp->getInt("max_download_rate");
+            if (gp->getValue(QByteArrayLiteral("max_download_rate")))
+                policy.max_download_rate = gp->getInt(QByteArrayLiteral("max_download_rate"));
 
-            if (gp->getValue("only_apply_on_new_torrents"))
-                policy.only_apply_on_new_torrents = gp->getInt("only_apply_on_new_torrents");
+            if (gp->getValue(QByteArrayLiteral("only_apply_on_new_torrents")))
+                policy.only_apply_on_new_torrents = gp->getInt(QByteArrayLiteral("only_apply_on_new_torrents"));
         }
     }
 
