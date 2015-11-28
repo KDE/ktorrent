@@ -23,7 +23,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDateTime>
-#include <KLocalizedString>
+#include <klocalizedstring.h>
 #include <kio/job.h>
 #include <bcodec/bnode.h>
 #include <bcodec/bdecoder.h>
@@ -153,26 +153,26 @@ namespace kt
         {
         case DeleteAction:
             // If torrent has it's hidden complement - remove it too.
-            if (bt::Exists(dirname + "." + name))
-                bt::Delete(dirname + "." + name, true);
+            if (bt::Exists(dirname + '.' + name))
+                bt::Delete(dirname + '.' + name, true);
 
             bt::Delete(url.toLocalFile(), true);
             break;
         case MoveAction:
             // If torrent has it's hidden complement - remove it too.
-            if (bt::Exists(dirname + "." + name))
-                bt::Delete(dirname + "." + name, true);
+            if (bt::Exists(dirname + '.' + name))
+                bt::Delete(dirname + '.' + name, true);
 
-            if (!bt::Exists(dirname + i18n("loaded")))
-                bt::MakeDir(dirname + i18n("loaded"), true);
+            if (!bt::Exists(dirname + i18nc("folder name part", "loaded")))
+                bt::MakeDir(dirname + i18nc("folder name part", "loaded"), true);
 
             KIO::file_move(url,
-                           KUrl(dirname + i18n("loaded") + bt::DirSeparator() + name),
+                           QUrl::fromLocalFile(dirname + i18nc("folder name part", "loaded") + bt::DirSeparator() + name),
                            -1,
                            KIO::HideProgressInfo | KIO::Overwrite);
             break;
         case DefaultAction:
-            QFile f(dirname + "." + name);
+            QFile f(dirname + '.' + name);
             f.open(QIODevice::WriteOnly);
             f.close();
             break;

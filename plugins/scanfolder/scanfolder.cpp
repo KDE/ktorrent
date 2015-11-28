@@ -75,7 +75,7 @@ namespace kt
             return;
 
         // ignore loaded directories
-        if (dir.dirName() == i18n("loaded"))
+        if (dir.dirName() == i18nc("folder name part", "loaded"))
             return;
 
         Out(SYS_SNF | LOG_NOTICE) << "Directory dirty: " << path << endl;
@@ -93,5 +93,3 @@ namespace kt
     }
 
 }
-
-#include "scanfolder.moc"

@@ -160,7 +160,7 @@ namespace kt
 
     bool ScanThread::alreadyLoaded(const QDir& d, const QString& torrent)
     {
-        return d.exists("." + torrent);
+        return d.exists('.' + torrent);
     }
 
 
@@ -170,7 +170,7 @@ namespace kt
             return;
 
         QStringList filters;
-        filters << "*.torrent";
+        filters << QStringLiteral("*.torrent");
         QDir d(dir.toLocalFile());
         QStringList files = d.entryList(filters, QDir::Readable | QDir::Files);
 
@@ -188,10 +188,12 @@ namespace kt
 
         if (recursive)
         {
+            const QString loaded_localized = i18nc("folder name part", "loaded");
+
             QStringList dirs = d.entryList(QDir::Readable | QDir::Dirs);
             foreach (const QString& subdir, dirs)
             {
-                if (subdir != "." && subdir != ".." && subdir != i18n("loaded"))
+                if (subdir != QLatin1String(".") && subdir != QLatin1String("..") && subdir != loaded_localized)
                 {
                     QCoreApplication::postEvent(this, new RecursiveScanEvent(d.absoluteFilePath(subdir)));
                 }

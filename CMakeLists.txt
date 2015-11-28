@@ -30,7 +30,7 @@ include(CheckTypeSize) #XFS
 # according to http://www.cmake.org/pipermail/cmake/2008-June/022381.html
 kde_enable_exceptions()
 
-#set (KTORRENT_DBUS_XML_DIR ${KTORRENT_SOURCE_DIR}/dbus_xml)
+set (KTORRENT_DBUS_XML_DIR ${KTORRENT_SOURCE_DIR}/dbus_xml)
 
 include_directories(
    ${KTORRENT_BINARY_DIR}
@@ -44,6 +44,8 @@ include_directories(
    ${CMAKE_CURRENT_BINARY_DIR}
    ${QT_INCLUDES}
 )
+
+add_definitions(-DQT_USE_QSTRINGBUILDER)
 
 add_subdirectory(libktcore)
 add_subdirectory(plugins)

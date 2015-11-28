@@ -30,4 +30,3 @@ namespace kt
     {}
 }
 
-#include "coreinterface.moc"

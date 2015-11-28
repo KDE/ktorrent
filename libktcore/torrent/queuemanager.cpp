@@ -943,4 +943,3 @@ namespace kt
 
 }
 
-#include "queuemanager.moc"

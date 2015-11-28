@@ -41,4 +41,3 @@ namespace kt
     {
     }
 }
-#include "plugin.moc"
