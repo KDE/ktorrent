@@ -38,7 +38,7 @@ using namespace bt;
 namespace kt
 {
 
-    ScanFolder::ScanFolder(ScanThread* scanner, const KUrl& dir, bool recursive)
+    ScanFolder::ScanFolder(ScanThread* scanner, const QUrl &dir, bool recursive)
         : scanner(scanner),
           scan_directory(dir),
           watch(0),

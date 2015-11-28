@@ -22,7 +22,7 @@
 
 
 #include <QObject>
-#include <KUrl>
+#include <QUrl>
 #include <KDirWatch>
 
 namespace kt
@@ -45,7 +45,7 @@ namespace kt
          * @param scanner The ScanThread
          * @param dir The directory
          */
-        ScanFolder(ScanThread* scanner, const KUrl& dir, bool recursive);
+        ScanFolder(ScanThread* scanner, const QUrl &dir, bool recursive);
         virtual ~ScanFolder();
 
         /**
@@ -59,7 +59,7 @@ namespace kt
 
     private:
         ScanThread* scanner;
-        KUrl scan_directory;
+        QUrl scan_directory;
         KDirWatch* watch;
         bool recursive;
     };

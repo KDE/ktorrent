@@ -277,7 +277,7 @@ namespace kt
     {
         switch (column)
         {
-        case 0: return trk->trackerURL().prettyUrl();
+        case 0: return trk->trackerURL().toString();
         case 1: return trk->trackerStatusString();
         case 2: return seeders >= 0 ? seeders : QVariant();
         case 3: return leechers >= 0 ? leechers : QVariant();
@@ -298,7 +298,7 @@ namespace kt
     {
         switch (column)
         {
-        case 0: return trk->trackerURL().prettyUrl();
+        case 0: return trk->trackerURL().toString();
         case 1: return status;
         case 2: return seeders;
         case 3: return leechers;

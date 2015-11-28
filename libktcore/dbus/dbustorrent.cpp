@@ -155,7 +155,7 @@ namespace kt
     QString DBusTorrent::currentTracker() const
     {
         bt::TrackerInterface* t = ti->getTrackersList()->getCurrentTracker();
-        return t ? t->trackerURL().prettyUrl() : QString();
+        return t ? t->trackerURL().toString() : QString();
     }
 
     QStringList DBusTorrent::trackers() const
@@ -163,13 +163,13 @@ namespace kt
         QList<bt::TrackerInterface*> trackers = ti->getTrackersList()->getTrackers();
         QStringList ret;
         foreach (bt::TrackerInterface* t, trackers)
-            ret << t->trackerURL().prettyUrl();
+            ret << t->trackerURL().toString();
         return ret;
     }
 
     void DBusTorrent::changeTracker(const QString& tracker_url)
     {
-        KUrl url(tracker_url);
+        QUrl url(tracker_url);
         ti->getTrackersList()->setCurrentTracker(url);
     }
 
@@ -185,7 +185,7 @@ namespace kt
 
     void DBusTorrent::setTrackerEnabled(const QString& tracker_url, bool enabled)
     {
-        ti->getTrackersList()->setTrackerEnabled(KUrl(tracker_url), enabled);
+        ti->getTrackersList()->setTrackerEnabled(QUrl(tracker_url), enabled);
     }
 
     bool DBusTorrent::addTracker(const QString& tracker_url)
@@ -193,7 +193,7 @@ namespace kt
         if (ti->getStats().priv_torrent)
             return false;
 
-        return ti->getTrackersList()->addTracker(KUrl(tracker_url), true) != 0;
+        return ti->getTrackersList()->addTracker(QUrl(tracker_url), true) != 0;
     }
 
     bool DBusTorrent::removeTracker(const QString& tracker_url)
@@ -201,7 +201,7 @@ namespace kt
         if (ti->getStats().priv_torrent)
             return false;
 
-        ti->getTrackersList()->removeTracker(KUrl(tracker_url));
+        ti->getTrackersList()->removeTracker(QUrl(tracker_url));
         return true;
     }
 
@@ -224,12 +224,12 @@ namespace kt
 
     bool DBusTorrent::addWebSeed(const QString& webseed_url)
     {
-        return ti->addWebSeed(KUrl(webseed_url));
+        return ti->addWebSeed(QUrl(webseed_url));
     }
 
     bool DBusTorrent::removeWebSeed(const QString& webseed_url)
     {
-        return ti->removeWebSeed(KUrl(webseed_url));
+        return ti->removeWebSeed(QUrl(webseed_url));
     }
 
     uint DBusTorrent::numFiles() const
