@@ -340,7 +340,7 @@ namespace kt
 
     void StatusTab::linkActivated(const QString& link)
     {
-        new KRun(KUrl(link), QApplication::activeWindow());
+        new KRun(QUrl(link), QApplication::activeWindow());
     }
 
 

@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <kurl.h>
+#include <QUrl>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kio/job.h>
@@ -78,8 +78,8 @@ namespace kt
 
     void ImportDialog::finished()
     {
-        KUrl data_url = m_data_url->url();
-        KUrl tor_url = m_torrent_url->url();
+        QUrl data_url = m_data_url->url();
+        QUrl tor_url = m_torrent_url->url();
         if (canceled || !dc_thread->getError().isEmpty())
         {
             if (!canceled)
@@ -138,11 +138,11 @@ namespace kt
                 if (durl.mid(ds + 1) == tor.getNameSuggestion())
                 {
                     durl = durl.left(ds);
-                    saveStats(tor_dir + "stats", KUrl(durl), imported, false);
+                    saveStats(tor_dir + "stats", QUrl(durl), imported, false);
                 }
                 else
                 {
-                    saveStats(tor_dir + "stats", KUrl(durl), imported, true);
+                    saveStats(tor_dir + "stats", QUrl(durl), imported, true);
                 }
                 saveFileInfo(tor_dir + "file_info", dnd_files);
             }
@@ -178,8 +178,8 @@ namespace kt
     void ImportDialog::import()
     {
         // get the urls
-        KUrl tor_url = m_torrent_url->url();
-        KUrl data_url = m_data_url->url();
+        QUrl tor_url = m_torrent_url->url();
+        QUrl data_url = m_data_url->url();
 
         // now we need to check the data
         if (tor.isMultiFile())
@@ -240,7 +240,7 @@ namespace kt
         m_torrent_url->setEnabled(false);
         m_data_url->setEnabled(false);
 
-        KUrl tor_url = m_torrent_url->url();
+        QUrl tor_url = m_torrent_url->url();
         if (!tor_url.isLocalFile())
         {
             // download the torrent file
@@ -300,7 +300,7 @@ namespace kt
         }
     }
 
-    void ImportDialog::makeDirs(const QString& dnd_dir, const KUrl& data_url, const QString& fpath)
+    void ImportDialog::makeDirs(const QString& dnd_dir, const QUrl &data_url, const QString& fpath)
     {
         QStringList sl = fpath.split(bt::DirSeparator());
 
@@ -323,7 +323,7 @@ namespace kt
         }
     }
 
-    void ImportDialog::saveStats(const QString& stats_file, const KUrl& data_url, Uint64 imported, bool custom_output_name)
+    void ImportDialog::saveStats(const QString& stats_file, const QUrl &data_url, Uint64 imported, bool custom_output_name)
     {
         QFile fptr(stats_file);
         if (!fptr.open(QIODevice::WriteOnly))

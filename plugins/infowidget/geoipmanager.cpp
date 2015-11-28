@@ -32,7 +32,7 @@ using namespace bt;
 
 namespace kt
 {
-    KUrl GeoIPManager::geoip_url = KUrl("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz");
+    QUrl GeoIPManager::geoip_url = QUrl("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz");
 
     GeoIPManager::GeoIPManager(QObject* parent): QObject(parent), geo_ip(0), decompress_thread(0)
     {
@@ -105,7 +105,7 @@ namespace kt
     void GeoIPManager::downloadDataBase()
     {
 #ifndef USE_SYSTEM_GEOIP
-        Out(SYS_INW | LOG_NOTICE) << "Downloading GeoIP database: " << geoip_url.prettyUrl() << endl;
+        Out(SYS_INW | LOG_NOTICE) << "Downloading GeoIP database: " << geoip_url << endl;
         download_destination = kt::DataDir() + geoip_url.fileName();
         KIO::CopyJob* job = KIO::copy(geoip_url, download_destination, KIO::Overwrite | KIO::HideProgressInfo);
         connect(job, SIGNAL(result(KJob*)), this, SLOT(databaseDownloadFinished(KJob*)));
@@ -165,7 +165,7 @@ namespace kt
     }
 
 
-    void GeoIPManager::setGeoIPUrl(const KUrl& url)
+    void GeoIPManager::setGeoIPUrl(const QUrl &url)
     {
         geoip_url = url;
     }

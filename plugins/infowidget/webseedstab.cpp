@@ -37,8 +37,8 @@ namespace kt
         connect(m_remove, SIGNAL(clicked()), this, SLOT(removeWebSeed()));
         connect(m_disable_all, SIGNAL(clicked()), this, SLOT(disableAll()));
         connect(m_enable_all, SIGNAL(clicked()), this, SLOT(enableAll()));
-        m_add->setIcon(QIcon::fromTheme("list-add"));
-        m_remove->setIcon(QIcon::fromTheme("list-remove"));
+        m_add->setIcon(QIcon::fromTheme(QLatin1String("list-add")));
+        m_remove->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
         m_add->setEnabled(false);
         m_remove->setEnabled(false);
         m_webseed_list->setEnabled(false);
@@ -84,8 +84,8 @@ namespace kt
             return;
 
         bt::TorrentInterface* tc = curr_tc.data();
-        KUrl url(m_webseed->text());
-        if (tc && url.isValid() && url.protocol() == "http")
+        QUrl url(m_webseed->text());
+        if (tc && url.isValid() && url.scheme() == QLatin1String("http"))
         {
             if (tc->addWebSeed(url))
             {
@@ -94,7 +94,7 @@ namespace kt
             }
             else
             {
-                KMessageBox::error(this, i18n("Cannot add the webseed %1, it is already part of the list of webseeds.", url.prettyUrl()));
+                KMessageBox::error(this, i18n("Cannot add the webseed %1, it is already part of the list of webseeds.", url.toDisplayString()));
             }
         }
     }
@@ -112,7 +112,7 @@ namespace kt
             if (ws && ws->isUserCreated())
             {
                 if (!tc->removeWebSeed(ws->getUrl()))
-                    KMessageBox::error(this, i18n("Cannot remove webseed %1, it is part of the torrent.", ws->getUrl().prettyUrl()));
+                    KMessageBox::error(this, i18n("Cannot remove webseed %1, it is part of the torrent.", ws->getUrl().toDisplayString()));
             }
         }
 
@@ -148,8 +148,8 @@ namespace kt
 
     void WebSeedsTab::onWebSeedTextChanged(const QString& ws)
     {
-        KUrl url(ws);
-        m_add->setEnabled(!curr_tc.isNull() && url.isValid() && url.protocol() == "http");
+        QUrl url(ws);
+        m_add->setEnabled(!curr_tc.isNull() && url.isValid() && url.scheme() == QLatin1String("http"));
     }
 
     void WebSeedsTab::update()

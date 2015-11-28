@@ -23,7 +23,7 @@
 
 #include <QObject>
 #include <QThread>
-#include <KUrl>
+#include <QUrl>
 
 #ifdef USE_SYSTEM_GEOIP
 #include <GeoIP.h>
@@ -74,10 +74,10 @@ namespace kt
         QString countryCode(int country_id);
 
         /// Get the database URL
-        static KUrl geoIPUrl() {return geoip_url;}
+        static QUrl geoIPUrl() {return geoip_url;}
 
         /// Set the database URL
-        static void setGeoIPUrl(const KUrl& url);
+        static void setGeoIPUrl(const QUrl &url);
 
         /// Download the database
         void downloadDataBase();
@@ -91,7 +91,7 @@ namespace kt
         QString geoip_data_file;
         QString download_destination;
         bt::DecompressThread* decompress_thread;
-        static KUrl geoip_url;
+        static QUrl geoip_url;
     };
 
 

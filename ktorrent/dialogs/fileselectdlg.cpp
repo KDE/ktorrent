@@ -20,6 +20,7 @@
 #include <QMenu>
 #include <QTextCodec>
 #include <klocale.h>
+#include <kio/global.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
@@ -365,9 +366,9 @@ namespace kt
         // so that the user selection in the dialog is not
         // overwritten by the group policy
         if (m_moveCompleted->checkState() == Qt::Checked)
-            tc->setMoveWhenCompletedDir(KUrl(cn));
+            tc->setMoveWhenCompletedDir(cn);
         else
-            tc->setMoveWhenCompletedDir(KUrl());
+            tc->setMoveWhenCompletedDir(QString());
 
         // update the last save directory
         Settings::setLastSaveDir(dn);
@@ -409,7 +410,7 @@ namespace kt
         }
         else
         {
-            dir = Settings::saveDir().toLocalFile();
+            dir = Settings::saveDir();
             if (!Settings::useSaveDir() || dir.isNull())
             {
                 dir = Settings::lastSaveDir();
@@ -418,7 +419,7 @@ namespace kt
             }
         }
 
-        comp_dir = Settings::completedDir().toLocalFile();
+        comp_dir = Settings::completedDir();
         if (!Settings::useCompletedDir() || comp_dir.isNull())
         {
             comp_dir = dir;
@@ -461,11 +462,11 @@ namespace kt
             m_cmbGroups->setCurrentIndex(selected);
             QString dir = initial_group->groupPolicy().default_save_location;
             if (!dir.isNull() && bt::Exists(dir))
-                m_downloadLocation->setUrl(KUrl(dir));
+                m_downloadLocation->setUrl(QUrl(dir));
 
             dir = initial_group->groupPolicy().default_move_on_completion_location;
             if (!dir.isNull() && bt::Exists(dir))
-                m_completedLocation->setUrl(KUrl(dir));
+                m_completedLocation->setUrl(QUrl::fromLocalFile(dir));
         }
     }
 
@@ -481,13 +482,13 @@ namespace kt
 
         QString dir = g->groupPolicy().default_save_location;
         if (!dir.isNull() && bt::Exists(dir))
-            m_downloadLocation->setUrl(KUrl(dir));
+            m_downloadLocation->setUrl(QUrl(dir));
 
         dir = g->groupPolicy().default_move_on_completion_location;
         if (!dir.isNull() && bt::Exists(dir))
         {
             m_moveCompleted->setChecked(true);
-            m_completedLocation->setUrl(KUrl(dir));
+            m_completedLocation->setUrl(QUrl::fromLocalFile(dir));
         }
         else
         {
@@ -503,10 +504,10 @@ namespace kt
         updateExistingFiles();
 
         //calculate free disk space
-        KUrl sdir = KUrl(m_downloadLocation->url());
+        QUrl sdir = m_downloadLocation->url();
         while (sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty())  && (! QDir(sdir.toLocalFile()).exists()))
         {
-            sdir = sdir.upUrl();
+            sdir = KIO::upUrl(sdir);
         }
 
         Uint64 bytes_free = 0;
@@ -687,7 +688,7 @@ namespace kt
     void FileSelectDlg::moveOnCompletionLocationHistoryTriggered(QAction* act)
     {
         if (!act->data().isNull())
-            m_completedLocation->setUrl(act->data().toString());
+            m_completedLocation->setUrl(QUrl::fromLocalFile(act->data().toString()));
         else
             clearMoveOnCompletionLocationHistory();
     }
@@ -741,6 +742,3 @@ namespace kt
         m_completedLocation->setEnabled(on);
     }
 }
-
-#include "fileselectdlg.moc"
-

@@ -90,21 +90,21 @@
 			<label>Keep seeding after download has finished</label>
 			<default>true</default>
 		</entry>
-		<entry name="tempDir" type="Url">
+		<entry name="tempDir" type="String">
 			<label>Folder to store temporary files</label>
 		</entry>
 		<entry name="useSaveDir" type="Bool">
 			<label>Whether to automatically save downloads to saveDir</label>
 			<default>false</default>
 		</entry>
-		<entry name="saveDir" type="Url">
+		<entry name="saveDir" type="String">
 			<label>Folder to store downloaded files</label>
 		</entry>
 		<entry name="useTorrentCopyDir" type="Bool">
 			<label>Whether to automatically copy .torrent files to torrentCopyDir</label>
 			<default>false</default>
 		</entry>
-		<entry name="torrentCopyDir" type="Url">
+		<entry name="torrentCopyDir" type="String">
 			<label>Folder to copy .torrent files to</label>
 		</entry>
 		<entry name="useCustomIP" type="Bool">
@@ -236,7 +236,7 @@
 			<label>Whether to automatically move completed downloads to completedDir</label>
 			<default>false</default>
 		</entry>
-		<entry name="completedDir" type="Url">
+		<entry name="completedDir" type="String">
 			<label>Folder to move completed downloaded files to</label>
 		</entry>
 		<entry name="maxSeedTime" type="Double">

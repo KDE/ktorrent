@@ -87,7 +87,7 @@ namespace kt
         connect(qman, SIGNAL(orderingQueue()), this, SLOT(beforeQueueReorder()));
         connect(qman, SIGNAL(queueOrdered()), this, SLOT(afterQueueReorder()));
 
-        data_dir = Settings::tempDir().toLocalFile();
+        data_dir = Settings::tempDir();
         bool dd_not_exist = !bt::Exists(data_dir);
         if (data_dir == QString::null || dd_not_exist)
         {
@@ -133,7 +133,7 @@ namespace kt
                 this, SLOT(onMetadataDownloaded(bt::MagnetLink, QByteArray, kt::MagnetLinkLoadOptions)),
                 Qt::QueuedConnection);
 
-        mman->loadMagnets(kt::DataDir() + "magnets");
+        mman->loadMagnets(kt::DataDir() + QLatin1String("magnets"));
 
         connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()), this, SLOT(onExit()));
     }
@@ -233,7 +233,7 @@ namespace kt
         setMaxSeeds(Settings::maxSeeds());
         setKeepSeeding(Settings::keepSeeding());
 
-        QString tmp = Settings::tempDir().toLocalFile();
+        QString tmp = Settings::tempDir();
         if (tmp.isEmpty())
             tmp = kt::DataDir();
 
@@ -338,12 +338,12 @@ namespace kt
             if (!torFile.endsWith(bt::DirSeparator()))
                 torFile += bt::DirSeparator();
 
-            torFile += "torrent";
-            QString destination = Settings::torrentCopyDir().toLocalFile();
+            torFile += QLatin1String("torrent");
+            QString destination = Settings::torrentCopyDir();
             if (!destination.endsWith(bt::DirSeparator()))
                 destination += bt::DirSeparator();
 
-            destination += tc->getStats().torrent_name + ".torrent";
+            destination += tc->getStats().torrent_name + QLatin1String(".torrent");
             KIO::copy(torFile, destination);
         }
 
@@ -451,7 +451,7 @@ namespace kt
 
     void Core::load(const KUrl& url, const QString& group)
     {
-        if (url.protocol() == "magnet")
+        if (url.protocol() == QLatin1String("magnet"))
         {
             MagnetLinkLoadOptions options;
             options.silently = false;
@@ -504,7 +504,7 @@ namespace kt
             }
             else
             {
-                dir = Settings::saveDir().toLocalFile();
+                dir = Settings::saveDir();
             }
 
             QString group;
@@ -523,7 +523,7 @@ namespace kt
 
     void Core::loadSilently(const KUrl& url, const QString& group)
     {
-        if (url.protocol() == "magnet")
+        if (url.protocol() == QLatin1String("magnet"))
         {
             MagnetLinkLoadOptions options;
             options.silently = true;
@@ -650,7 +650,7 @@ namespace kt
         while (true)
         {
             QDir d;
-            QString dir = data_dir + QString("tor%1/").arg(i);
+            QString dir = data_dir + QString(QLatin1String("tor%1/")).arg(i);
             if (!d.exists(dir))
             {
                 return dir;
@@ -668,13 +668,13 @@ namespace kt
         if (!idir.endsWith(bt::DirSeparator()))
             idir += bt::DirSeparator();
 
-        if (!bt::Exists(idir + "torrent"))
+        if (!bt::Exists(idir + QLatin1String("torrent")))
             return;
 
         try
         {
             tc = new TorrentControl();
-            tc->init(qman, bt::LoadFile(idir + "torrent"), idir, QString::null);
+            tc->init(qman, bt::LoadFile(idir + QLatin1String("torrent")), idir, QString::null);
 
             qman->append(tc);
             connectSignals(tc);
@@ -697,7 +697,7 @@ namespace kt
     {
         QDir dir(data_dir);
         QStringList filters;
-        filters << "tor*";
+        filters << QLatin1String("tor*");
         QStringList sl = dir.entryList(filters, QDir::Dirs);
         for (int i = 0; i < sl.count(); i++)
         {
@@ -859,7 +859,7 @@ namespace kt
         update_timer.stop();
 
         net::SocketMonitor::instance().shutdown();
-        mman->saveMagnets(kt::DataDir() + "magnets");
+        mman->saveMagnets(kt::DataDir() + QLatin1String("magnets"));
         // make sure DHT is stopped
         Globals::instance().getDHT().stop();
         // stop all authentications going on
@@ -1415,7 +1415,7 @@ namespace kt
             tc = load(tmp, url, options.group, options.location);
 
         if (tc && !options.move_on_completion.isEmpty())
-            tc->setMoveWhenCompletedDir(KUrl(options.move_on_completion));
+            tc->setMoveWhenCompletedDir(options.move_on_completion);
     }
 
 
@@ -1429,7 +1429,7 @@ namespace kt
         if (!group_save_location.isEmpty() && bt::Exists(group_save_location))
             dir = g->groupPolicy().default_save_location;
         else if (Settings::useSaveDir())
-            dir = Settings::saveDir().toLocalFile();
+            dir = Settings::saveDir();
         else
             dir = Settings::lastSaveDir();
 
@@ -1441,6 +1441,3 @@ namespace kt
     }
 
 }
-
-#include "core.moc"
-

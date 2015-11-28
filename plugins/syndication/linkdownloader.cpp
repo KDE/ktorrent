@@ -94,7 +94,7 @@ namespace kt
                 tc = core->loadSilently(job->data(), url, group, location);
 
             if (tc && !move_on_completion.isEmpty())
-                tc->setMoveWhenCompletedDir(KUrl(move_on_completion));
+                tc->setMoveWhenCompletedDir(move_on_completion);
 
             finished(true);
             deleteLater();
@@ -236,7 +236,7 @@ namespace kt
                 tc = core->loadSilently(job->data(), link_url, group, location);
 
             if (tc && !move_on_completion.isEmpty())
-                tc->setMoveWhenCompletedDir(KUrl(move_on_completion));
+                tc->setMoveWhenCompletedDir(move_on_completion);
 
             finished(true);
             deleteLater();

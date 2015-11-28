@@ -208,12 +208,12 @@ namespace kt
         Settings::setKeepSeeding(val);
     }
 
-    KUrl DBusSettings::tempDir()
+    QString DBusSettings::tempDir()
     {
         return Settings::tempDir();
     }
 
-    void DBusSettings::setTempDir(KUrl val)
+    void DBusSettings::setTempDir(QString val)
     {
         Settings::setTempDir(val);
     }
@@ -228,12 +228,12 @@ namespace kt
         Settings::setUseSaveDir(val);
     }
 
-    KUrl DBusSettings::saveDir()
+    QString DBusSettings::saveDir()
     {
         return Settings::saveDir();
     }
 
-    void DBusSettings::setSaveDir(KUrl val)
+    void DBusSettings::setSaveDir(QString val)
     {
         Settings::setSaveDir(val);
     }
@@ -248,12 +248,12 @@ namespace kt
         Settings::setUseTorrentCopyDir(val);
     }
 
-    KUrl DBusSettings::torrentCopyDir()
+    QString DBusSettings::torrentCopyDir()
     {
         return Settings::torrentCopyDir();
     }
 
-    void DBusSettings::setTorrentCopyDir(KUrl val)
+    void DBusSettings::setTorrentCopyDir(QString val)
     {
         Settings::setTorrentCopyDir(val);
     }
@@ -578,12 +578,12 @@ namespace kt
         Settings::setUseCompletedDir(val);
     }
 
-    KUrl DBusSettings::completedDir()
+    QString DBusSettings::completedDir()
     {
         return Settings::completedDir();
     }
 
-    void DBusSettings::setCompletedDir(KUrl val)
+    void DBusSettings::setCompletedDir(QString val)
     {
         Settings::setCompletedDir(val);
     }

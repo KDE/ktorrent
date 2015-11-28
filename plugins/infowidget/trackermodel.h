@@ -22,7 +22,7 @@
 #define KTTRACKERMODEL_H
 
 #include <QList>
-#include <KUrl>
+#include <QUrl>
 #include <QAbstractTableModel>
 #include <interfaces/trackerinterface.h>
 
@@ -58,7 +58,7 @@ namespace kt
         virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
 
         /// Get a tracker url given a model index
-        KUrl trackerUrl(const QModelIndex& idx);
+        QUrl trackerUrl(const QModelIndex& idx);
 
         /// Get a tracker given a model index
         bt::TrackerInterface* tracker(const QModelIndex& idx);

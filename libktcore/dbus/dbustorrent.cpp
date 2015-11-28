@@ -155,7 +155,7 @@ namespace kt
     QString DBusTorrent::currentTracker() const
     {
         bt::TrackerInterface* t = ti->getTrackersList()->getCurrentTracker();
-        return t ? t->trackerURL().toString() : QString();
+        return t ? t->trackerURL().toDisplayString() : QString();
     }
 
     QStringList DBusTorrent::trackers() const
@@ -163,7 +163,7 @@ namespace kt
         QList<bt::TrackerInterface*> trackers = ti->getTrackersList()->getTrackers();
         QStringList ret;
         foreach (bt::TrackerInterface* t, trackers)
-            ret << t->trackerURL().toString();
+            ret << t->trackerURL().toDisplayString();
         return ret;
     }
 
@@ -217,7 +217,7 @@ namespace kt
         for (Uint32 i = 0; i < ti->getNumWebSeeds(); i++)
         {
             const WebSeedInterface* wsi = ti->getWebSeed(i);
-            ws << wsi->getUrl().prettyUrl();
+            ws << wsi->getUrl().toDisplayString();
         }
         return ws;
     }

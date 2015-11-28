@@ -20,7 +20,7 @@
 
 
 #include "propertiesdlg.h"
-#include <KUrl>
+#include <QUrl>
 #include <interfaces/torrentinterface.h>
 #include <settings.h>
 
@@ -33,11 +33,11 @@ namespace kt
         setupUi(mainWidget());
         setWindowTitle(i18n("Torrent Settings"));
 
-        KUrl url = tc->getMoveWhenCompletedDir();
-        if (url.isValid())
+        QString folder = tc->getMoveWhenCompletedDir();
+        if (QFile::exists(folder))
         {
             move_on_completion_enabled->setChecked(true);
-            move_on_completion_url->setUrl(url);
+            move_on_completion_url->setUrl(QUrl::fromLocalFile(folder));
             move_on_completion_url->setEnabled(true);
         }
         else
@@ -70,11 +70,11 @@ namespace kt
     {
         if (move_on_completion_enabled->isChecked())
         {
-            tc->setMoveWhenCompletedDir(move_on_completion_url->url());
+            tc->setMoveWhenCompletedDir(move_on_completion_url->url().toLocalFile());
         }
         else
         {
-            tc->setMoveWhenCompletedDir(KUrl());
+            tc->setMoveWhenCompletedDir(QString());
         }
 
         tc->setFeatureEnabled(bt::DHT_FEATURE, dht->isChecked());

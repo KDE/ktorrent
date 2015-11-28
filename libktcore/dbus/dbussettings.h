@@ -22,7 +22,6 @@
 
 #include <QObject>
 #include <QList>
-#include <KUrl>
 #include <ktcore_export.h>
 
 namespace kt
@@ -72,16 +71,16 @@ namespace kt
         Q_SCRIPTABLE void setShowPopups(bool val);
         Q_SCRIPTABLE bool keepSeeding();
         Q_SCRIPTABLE void setKeepSeeding(bool val);
-        Q_SCRIPTABLE KUrl tempDir();
-        Q_SCRIPTABLE void setTempDir(KUrl val);
+        Q_SCRIPTABLE QString tempDir();
+        Q_SCRIPTABLE void setTempDir(QString val);
         Q_SCRIPTABLE bool useSaveDir();
         Q_SCRIPTABLE void setUseSaveDir(bool val);
-        Q_SCRIPTABLE KUrl saveDir();
-        Q_SCRIPTABLE void setSaveDir(KUrl val);
+        Q_SCRIPTABLE QString saveDir();
+        Q_SCRIPTABLE void setSaveDir(QString val);
         Q_SCRIPTABLE bool useTorrentCopyDir();
         Q_SCRIPTABLE void setUseTorrentCopyDir(bool val);
-        Q_SCRIPTABLE KUrl torrentCopyDir();
-        Q_SCRIPTABLE void setTorrentCopyDir(KUrl val);
+        Q_SCRIPTABLE QString torrentCopyDir();
+        Q_SCRIPTABLE void setTorrentCopyDir(QString val);
         Q_SCRIPTABLE bool useCustomIP();
         Q_SCRIPTABLE void setUseCustomIP(bool val);
         Q_SCRIPTABLE QString lastSaveDir();
@@ -146,8 +145,8 @@ namespace kt
         Q_SCRIPTABLE void setCpuUsage(int val);
         Q_SCRIPTABLE bool useCompletedDir();
         Q_SCRIPTABLE void setUseCompletedDir(bool val);
-        Q_SCRIPTABLE KUrl completedDir();
-        Q_SCRIPTABLE void setCompletedDir(KUrl val);
+        Q_SCRIPTABLE QString completedDir();
+        Q_SCRIPTABLE void setCompletedDir(QString val);
         Q_SCRIPTABLE double maxSeedTime();
         Q_SCRIPTABLE void setMaxSeedTime(double val);
         Q_SCRIPTABLE int networkInterface();

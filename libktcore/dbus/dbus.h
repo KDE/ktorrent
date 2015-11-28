@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QMap>
 #include <ktcore_export.h>
 #include <util/ptrmap.h>
 #include <dbus/dbusgroup.h>

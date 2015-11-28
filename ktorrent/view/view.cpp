@@ -596,7 +596,7 @@ namespace kt
         if (sel.count() == 0)
             return;
 
-        QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///saveTorrentData"), this, i18n("Select a directory to move the data to."));
+        QString dir = KFileDialog::getExistingDirectory(QUrl("kfiledialog:///saveTorrentData"), this, i18n("Select a directory to move the data to."));
         if (dir.isNull())
             return;
 
@@ -857,7 +857,7 @@ namespace kt
             return;
 
         QClipboard* cb = QApplication::clipboard();
-        cb->setText(tc->loadUrl().prettyUrl());
+        cb->setText(tc->loadUrl().toDisplayString());
     }
 
     void View::speedLimits()
@@ -876,7 +876,7 @@ namespace kt
         {
             bt::TorrentInterface* tc = sel.front();
             QString filter = kt::TorrentFileFilter(false);
-            QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///exportTorrent"), filter, gui,
+            QString fn = KFileDialog::getSaveFileName(QUrl("kfiledialog:///exportTorrent"), filter, gui,
                          QString(), KFileDialog::ConfirmOverwrite);
             if (fn.isEmpty())
                 return;

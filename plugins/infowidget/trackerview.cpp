@@ -23,7 +23,7 @@
 #include <QHeaderView>
 #include <QClipboard>
 #include <klocale.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kmessagebox.h>
 #include <kglobal.h>
 #include <torrent/globals.h>
@@ -88,7 +88,7 @@ namespace kt
             return;
 
         QStringList trackers = dlg.trackerList();
-        KUrl::List urls;
+        QList<QUrl> urls;
         QStringList invalid;
         // check for invalid urls
         foreach (const QString& t, trackers)
@@ -96,13 +96,13 @@ namespace kt
             if (t.isEmpty())
                 continue;
 
-            KUrl url(t.trimmed());
-            if (!url.isValid() || (url.protocol() != "udp" && url.protocol() != "http" && url.protocol() != "https"))
+            QUrl url(t.trimmed());
+            if (!url.isValid() || (url.scheme() != "udp" && url.scheme() != "http" && url.scheme() != "https"))
                 invalid.append(t);
             else
             {
-                if (!tracker_hints.contains(url.prettyUrl()))
-                    tracker_hints.append(url.prettyUrl());
+                if (!tracker_hints.contains(url.toDisplayString()))
+                    tracker_hints.append(url.toDisplayString());
                 urls.append(url);
             }
         }
@@ -112,9 +112,9 @@ namespace kt
             KMessageBox::errorList(this, i18n("Several URL's could not be added because they are malformed:"), invalid);
         }
 
-        KUrl::List dupes;
+        QList<QUrl> dupes;
         QList<bt::TrackerInterface*> tl;
-        foreach (const KUrl& url, urls)
+        foreach (const QUrl &url, urls)
         {
             bt::TrackerInterface* trk = tc.data()->getTrackersList()->addTracker(url, true);
             if (!trk)
@@ -124,9 +124,9 @@ namespace kt
         }
 
         if (dupes.size() == 1)
-            KMessageBox::sorry(0, i18n("There already is a tracker named <b>%1</b>.", dupes.front().prettyUrl()));
+            KMessageBox::sorry(0, i18n("There already is a tracker named <b>%1</b>.", dupes.front().toDisplayString()));
         else if (dupes.size() > 1)
-            KMessageBox::informationList(0, i18n("The following duplicate trackers were not added:"), dupes.toStringList());
+            KMessageBox::informationList(0, i18n("The following duplicate trackers were not added:"), QUrl::toStringList(dupes));
 
         if (!tl.isEmpty())
             model->addTrackers(tl);

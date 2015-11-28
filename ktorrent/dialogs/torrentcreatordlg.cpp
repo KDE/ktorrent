@@ -246,14 +246,14 @@ namespace kt
 
     void TorrentCreatorDlg::addWebSeedPressed()
     {
-        KUrl url(m_webseed->text());
+        QUrl url(m_webseed->text());
         if (!url.isValid())
         {
-            KMessageBox::error(this, i18n("Invalid URL: %1", url.prettyUrl()));
+            KMessageBox::error(this, i18n("Invalid URL: %1", url.toDisplayString()));
             return;
         }
 
-        if (url.protocol() != "http")
+        if (url.scheme() != "http")
         {
             KMessageBox::error(this, i18n("Only HTTP is supported for webseeding."));
             return;
@@ -305,7 +305,7 @@ namespace kt
             return;
         }
 
-        KUrl url = m_url->url();
+        QUrl url = m_url->url();
         Uint32 chunk_size_table[] =
         {
             32, 64, 128, 256, 512, 1024, 2048, 4096, 8192
@@ -333,11 +333,11 @@ namespace kt
             }
         }
 
-        KUrl::List webseeds;
+        QList<QUrl> webseeds;
         for (int i = 0; i < m_webseed_list->count(); ++i)
         {
             QListWidgetItem* item = m_webseed_list->item(i);
-            webseeds.append(KUrl(item->text()));
+            webseeds.append(QUrl(item->text()));
         }
 
         try
@@ -366,7 +366,7 @@ namespace kt
         update_timer.stop();
 
         QString filter = kt::TorrentFileFilter(false);
-        QString s = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"), filter,
+        QString s = KFileDialog::getSaveFileName(QUrl("kfiledialog:///openTorrent"), filter,
                     this, i18n("Choose a file to save the torrent"));
 
         if (s.isNull())

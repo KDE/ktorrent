@@ -26,7 +26,7 @@
 #include <util/constants.h>
 #include "ui_importdialog.h"
 
-class KUrl;
+class QUrl;
 class KJob;
 
 namespace bt
@@ -61,8 +61,8 @@ namespace kt
 
     private:
         void writeIndex(const QString& file, const bt::BitSet& chunks);
-        void makeDirs(const QString& dnd_dir, const KUrl& data_url, const QString& fpath);
-        void saveStats(const QString& stats_file, const KUrl& data_url, bt::Uint64 imported, bool custom_output_name);
+        void makeDirs(const QString& dnd_dir, const QUrl &data_url, const QString& fpath);
+        void saveStats(const QString& stats_file, const QUrl &data_url, bt::Uint64 imported, bool custom_output_name);
         bt::Uint64 calcImportedBytes(const bt::BitSet& chunks, const bt::Torrent& tor);
         void saveFileInfo(const QString& file_info_file, QList<bt::Uint32> & dnd);
         void saveFileMap(const bt::Torrent& tor, const QString& tor_dir);

@@ -129,7 +129,7 @@ namespace kt
 
         if (role == Qt::CheckStateRole)
         {
-            KUrl url = trackers.at(index.row())->trk->trackerURL();
+            QUrl url = trackers.at(index.row())->trk->trackerURL();
             tc->getTrackersList()->setTrackerEnabled(url, (Qt::CheckState)value.toUInt() == Qt::Checked);
             return true;
         }
@@ -185,7 +185,7 @@ namespace kt
             for (int i = 0; i < count; i++)
             {
                 Item* item = trackers.takeAt(row);
-                KUrl url = item->trk->trackerURL();
+                QUrl url = item->trk->trackerURL();
                 tc->getTrackersList()->removeTracker(url);
                 delete item;
             }
@@ -211,10 +211,10 @@ namespace kt
     }
 
 
-    KUrl TrackerModel::trackerUrl(const QModelIndex& index)
+    QUrl TrackerModel::trackerUrl(const QModelIndex& index)
     {
         if (!tc || !index.isValid() ||  index.row() < 0 || index.row() >= trackers.count())
-            return KUrl();
+            return QUrl();
 
         return ((Item*)index.internalPointer())->trk->trackerURL();
     }

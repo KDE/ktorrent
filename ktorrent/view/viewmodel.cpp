@@ -653,7 +653,7 @@ namespace kt
             QString tooltip;
             bt::TorrentInterface* tc = item->tc;
             if (tc->loadUrl().isValid())
-                tooltip = i18n("%1<br>Url: <b>%2</b>", tc->getDisplayName(), tc->loadUrl().prettyUrl());
+                tooltip = i18n("%1<br>Url: <b>%2</b>", tc->getDisplayName(), tc->loadUrl().toDisplayString());
             else
                 tooltip = tc->getDisplayName();
 
