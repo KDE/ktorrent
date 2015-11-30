@@ -18,9 +18,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "downloadorderplugin.h"
 #include <kmainwindow.h>
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
+#include <kpluginfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <util/fileops.h>
@@ -29,18 +30,18 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <torrent/queuemanager.h>
-#include "downloadorderplugin.h"
-#include "downloadorderdialog.h"
 #include "downloadordermanager.h"
+#include "downloadorderdialog.h"
 
-K_EXPORT_COMPONENT_FACTORY(ktdownloadorderplugin, KGenericFactory<kt::DownloadOrderPlugin>("ktdownloadorderplugin"))
+
+
+K_PLUGIN_FACTORY(ktdownloadorderplugin, registerPlugin<kt::DownloadOrderPlugin>();)
 
 using namespace bt;
 
 namespace kt
 {
-
-    DownloadOrderPlugin::DownloadOrderPlugin(QObject* parent, const QStringList& args): Plugin(parent)
+    DownloadOrderPlugin::DownloadOrderPlugin(QObject* parent, const QVariantList &args): Plugin(parent)
     {
         Q_UNUSED(args);
         download_order_action = new QAction(QIcon::fromTheme("view-sort-ascending"), i18n("File Download Order"), this);
@@ -136,3 +137,5 @@ namespace kt
         managers.erase(tc);
     }
 }
+
+#include <downloadorderplugin.moc>

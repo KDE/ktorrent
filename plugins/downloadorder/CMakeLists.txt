@@ -2,14 +2,18 @@ set(ktdownloadorderplugin_SRC downloadorderplugin.cpp downloadorderdialog.cpp do
 
 ki18n_wrap_ui(ktdownloadorderplugin_SRC downloadorderwidget.ui)
 #kconfig_add_kcfg_files(ktdownloadorderplugin_SRC searchpluginsettings.kcfgc)
-add_library(ktdownloadorderplugin MODULE ${ktdownloadorderplugin_SRC})
+
+
+add_library(ktorrent_downloadorder MODULE ${ktdownloadorderplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_downloadorder  ktorrent_downloadorder.desktop)
 
 target_link_libraries(
-    ktdownloadorderplugin
+    ktorrent_downloadorder
     ktcore
     ${LIBKTORRENT_LIBRARIES}
     KF5::Parts
     )
-install(TARGETS ktdownloadorderplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktdownloadorderplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install(FILES ktdownloadorderpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+install(TARGETS ktorrent_downloadorder  DESTINATION ${PLUGIN_INSTALL_DIR} )
+install(FILES ktorrent_downloadorder.desktop DESTINATION  ${SERVICES_INSTALL_DIR} )
+install(FILES ktorrent_downloadorderui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

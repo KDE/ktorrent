@@ -36,7 +36,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        DownloadOrderPlugin(QObject* parent, const QStringList& args);
+        DownloadOrderPlugin(QObject* parent, const QVariantList& args);
         virtual ~DownloadOrderPlugin();
 
         virtual bool versionCheck(const QString& version) const;
