@@ -23,6 +23,7 @@
 #include <QVBoxLayout>
 #include <ktoolbar.h>
 #include <klocale.h>
+#include <kurl.h>
 #include <QIcon>
 #include <kfiledialog.h>
 #include "mediaplayer.h"

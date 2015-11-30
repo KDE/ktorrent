@@ -18,23 +18,24 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "mediaplayerplugin.h"
+
 #include <klocale.h>
 #include <kgenericfactory.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 #include <interfaces/guiinterface.h>
-#include "mediaplayerplugin.h"
 #include "mediaplayeractivity.h"
 
 
-K_EXPORT_COMPONENT_FACTORY(ktmediaplayerplugin, KGenericFactory<kt::MediaPlayerPlugin>("ktmediaplayerplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_mediaplayer, "ktorrent_mediaplayer.json", registerPlugin<kt::MediaPlayerPlugin>();)
 
 using namespace bt;
 
 namespace kt
 {
 
-    MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+    MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
     {
         Q_UNUSED(args);
     }
@@ -50,7 +51,7 @@ namespace kt
         CoreInterface* core = getCore();
         act = new MediaPlayerActivity(core, actionCollection(), 0);
         getGUI()->addActivity(act);
-        setXMLFile("ktmediaplayerpluginui.rc");
+        setXMLFile("ktorrent_mediaplayerui.rc");
         act->enableActions(0);
         act->loadState(KGlobal::config());
     }
@@ -72,3 +73,5 @@ namespace kt
 
 
 }
+
+#include "mediaplayerplugin.moc"

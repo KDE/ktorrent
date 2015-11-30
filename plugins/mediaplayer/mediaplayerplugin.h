@@ -38,7 +38,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        MediaPlayerPlugin(QObject* parent, const QStringList& args);
+        MediaPlayerPlugin(QObject* parent, const QVariantList& args);
         virtual ~MediaPlayerPlugin();
 
         virtual void load();
