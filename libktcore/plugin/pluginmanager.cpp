@@ -17,18 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <qfile.h>
-#include <qtextstream.h>
+#include "pluginmanager.h"
+
+#include <QFile>
+#include <QTextStream>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kservicetypetrader.h>
+#include <kpluginmetadata.h>
 #include <util/log.h>
 #include <util/error.h>
 #include <util/fileops.h>
 #include <util/waitjob.h>
 #include <torrent/globals.h>
 #include <interfaces/guiinterface.h>
-#include "pluginmanager.h"
 #include "pluginactivity.h"
 
 using namespace bt;
@@ -49,14 +51,14 @@ namespace kt
 
     void PluginManager::loadPluginList()
     {
-        KService::List offers = KServiceTypeTrader::self()->query("KTorrent/Plugin");
-        plugins = KPluginInfo::fromServices(offers);
-
-        for (KPluginInfo::List::iterator i = plugins.begin(); i != plugins.end(); i++)
+        pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent"));
+        foreach (const KPluginMetaData &module, pluginsMetaData)
         {
-            KPluginInfo& pi = *i;
+            KPluginInfo pi(module);
             pi.setConfig(KGlobal::config()->group(pi.pluginName()));
             pi.load();
+
+            plugins << pi;
         }
 
         if (!prefpage)
@@ -73,7 +75,7 @@ namespace kt
     void PluginManager::loadPlugins()
     {
         int idx = 0;
-        for (KPluginInfo::List::iterator i = plugins.begin(); i != plugins.end(); i++)
+        for (auto i = plugins.begin(); i != plugins.end(); i++)
         {
             KPluginInfo& pi = *i;
             if (loaded.contains(idx) & !pi.isPluginEnabled())
@@ -94,37 +96,36 @@ namespace kt
 
     void PluginManager::load(const KPluginInfo& pi, int idx)
     {
-        KService::Ptr service = pi.service();
+        KPluginLoader loader(pluginsMetaData.at(idx).fileName());
+        KPluginFactory *factory = loader.factory();
+        if (!factory)
+            return;
 
-        Plugin* p = service->createInstance<kt::Plugin>();
-        if (!p)
+        Plugin* plugin = factory->create<kt::Plugin>();
+        if (!plugin)
         {
-            p = service->createInstance<kt::Plugin>();
-            if (!p)
-            {
-                Out(SYS_GEN | LOG_NOTICE) <<
-                                          QString("Creating instance of plugin %1 failed !")
-                                          .arg(service->library()) << endl;
-                return;
-            }
+            Out(SYS_GEN | LOG_NOTICE) <<
+                                      QString("Creating instance of plugin %1 failed !")
+                                      .arg(pluginsMetaData.at(idx).fileName()) << endl;
+            return;
         }
 
-        if (!p->versionCheck(kt::VERSION_STRING))
+        if (!plugin->versionCheck(kt::VERSION_STRING))
         {
             Out(SYS_GEN | LOG_NOTICE) <<
                                       QString("Plugin %1 version does not match KTorrent version, unloading it.")
-                                      .arg(service->library()) << endl;
+                                      .arg(pluginsMetaData.at(idx).fileName()) << endl;
 
-            delete p;
+            delete plugin;
         }
         else
         {
-            p->setCore(core);
-            p->setGUI(gui);
-            p->load();
-            gui->mergePluginGui(p);
-            p->loaded = true;
-            loaded.insert(idx, p, true);
+            plugin->setCore(core);
+            plugin->setGUI(gui);
+            plugin->load();
+            gui->mergePluginGui(plugin);
+            plugin->loaded = true;
+            loaded.insert(idx, plugin, true);
         }
     }
 

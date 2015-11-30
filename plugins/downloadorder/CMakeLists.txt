@@ -12,8 +12,6 @@ target_link_libraries(
     ktorrent_downloadorder
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    KF5::Parts
     )
-install(TARGETS ktorrent_downloadorder  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktorrent_downloadorder.desktop DESTINATION  ${SERVICES_INSTALL_DIR} )
+install(TARGETS ktorrent_downloadorder  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_downloadorderui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

@@ -34,8 +34,7 @@
 #include "downloadorderdialog.h"
 
 
-
-K_PLUGIN_FACTORY(ktorrent_downloadorder, registerPlugin<kt::DownloadOrderPlugin>();)
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_downloadorder, "ktorrent_downloadorder.json", registerPlugin<kt::DownloadOrderPlugin>();)
 
 using namespace bt;
 
@@ -122,7 +121,7 @@ namespace kt
 
     void DownloadOrderPlugin::torrentAdded(bt::TorrentInterface* tc)
     {
-        if (bt::Exists(tc->getTorDir() + "download_order"))
+        if (bt::Exists(tc->getTorDir() + QLatin1String("download_order")))
         {
             DownloadOrderManager* m = createManager(tc);
             m->load();

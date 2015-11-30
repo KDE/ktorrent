@@ -26,6 +26,7 @@
 #include <qstringlist.h>
 #include <ktcore_export.h>
 #include <kplugininfo.h>
+#include <kpluginmetadata.h>
 
 namespace kt
 {
@@ -42,6 +43,7 @@ namespace kt
     class KTCORE_EXPORT PluginManager
     {
         KPluginInfo::List plugins;
+        QVector<KPluginMetaData> pluginsMetaData;
         CoreInterface* core;
         GUIInterface* gui;
         PluginActivity* prefpage;

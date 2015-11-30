@@ -107,7 +107,7 @@ namespace kt
 #ifndef USE_SYSTEM_GEOIP
         Out(SYS_INW | LOG_NOTICE) << "Downloading GeoIP database: " << geoip_url << endl;
         download_destination = kt::DataDir() + geoip_url.fileName();
-        KIO::CopyJob* job = KIO::copy(geoip_url, download_destination, KIO::Overwrite | KIO::HideProgressInfo);
+        KIO::CopyJob* job = KIO::copy(geoip_url, QUrl::fromLocalFile(download_destination), KIO::Overwrite | KIO::HideProgressInfo);
         connect(job, SIGNAL(result(KJob*)), this, SLOT(databaseDownloadFinished(KJob*)));
 #endif
     }

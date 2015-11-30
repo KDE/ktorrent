@@ -51,15 +51,15 @@ set(ktinfowidgetplugin_SRC
 
 ki18n_wrap_ui(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
 kconfig_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)
-add_library(ktinfowidgetplugin MODULE ${ktinfowidgetplugin_SRC})
+add_library(ktorrent_infowidget MODULE ${ktinfowidgetplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_infowidget ktorrent_infowidget.desktop)
 
 target_link_libraries(
-    ktinfowidgetplugin
+    ktorrent_infowidget
     ktcore
     ${LIBKTORRENT_LIBRARIES}
-    KF5::Parts
     ${geoip_link}
     )
-install(TARGETS ktinfowidgetplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktinfowidgetplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install(TARGETS ktorrent_infowidget DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 

@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "infowidgetplugin.h"
+
 #include <kpluginfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -27,7 +29,6 @@
 #include <interfaces/torrentinterface.h>
 #include <settings.h>
 
-#include "infowidgetplugin.h"
 #include "iwprefpage.h"
 #include "statustab.h"
 #include "fileview.h"
@@ -40,7 +41,7 @@
 #include "geoipmanager.h"
 
 
-K_PLUGIN_FACTORY(ktorrent_infowidget, registerPlugin<kt::InfoWidgetPlugin>();)
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_infowidget, "ktorrent_infowidget.json", registerPlugin<kt::InfoWidgetPlugin>();)
 
 using namespace bt;
 

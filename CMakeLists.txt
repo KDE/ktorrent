@@ -31,6 +31,7 @@ include(CheckTypeSize) #XFS
 kde_enable_exceptions()
 
 set (KTORRENT_DBUS_XML_DIR ${KTORRENT_SOURCE_DIR}/dbus_xml)
+set (KTORRENT_PLUGIN_INSTALL_DIR ${PLUGIN_INSTALL_DIR}/ktorrent)
 
 include_directories(
    ${KTORRENT_BINARY_DIR}
