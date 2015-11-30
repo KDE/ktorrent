@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui library="libktdownloadorderplugin" name="downloadorderplugin" version="1">
+<kpartgui library="libktorrent_downloadorder" name="downloadorderplugin" version="1">
 	<Menu name="ViewMenu">
 		<Action name="download_order"/>
 	</Menu>

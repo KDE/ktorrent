@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <kgenericfactory.h>
+#include <kpluginfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <util/log.h>
@@ -40,8 +40,7 @@
 #include "geoipmanager.h"
 
 
-
-K_EXPORT_COMPONENT_FACTORY(ktinfowidgetplugin, KGenericFactory<kt::InfoWidgetPlugin>("ktinfowidgetplugin"))
+K_PLUGIN_FACTORY(ktorrent_infowidget, registerPlugin<kt::InfoWidgetPlugin>();)
 
 using namespace bt;
 
@@ -49,7 +48,7 @@ namespace kt
 {
 
 
-    InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent, const QStringList&) : Plugin(parent)
+    InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent, const QVariantList&) : Plugin(parent)
     {
         pref = 0;
         peer_view = 0;

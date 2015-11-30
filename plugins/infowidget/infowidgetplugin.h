@@ -49,7 +49,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        InfoWidgetPlugin(QObject* parent, const QStringList& args);
+        InfoWidgetPlugin(QObject* parent, const QVariantList& args);
         virtual ~InfoWidgetPlugin();
 
         virtual void load();

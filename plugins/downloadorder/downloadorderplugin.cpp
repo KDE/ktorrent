@@ -35,7 +35,7 @@
 
 
 
-K_PLUGIN_FACTORY(ktdownloadorderplugin, registerPlugin<kt::DownloadOrderPlugin>();)
+K_PLUGIN_FACTORY(ktorrent_downloadorder, registerPlugin<kt::DownloadOrderPlugin>();)
 
 using namespace bt;
 
@@ -47,7 +47,7 @@ namespace kt
         download_order_action = new QAction(QIcon::fromTheme("view-sort-ascending"), i18n("File Download Order"), this);
         connect(download_order_action, SIGNAL(triggered()), this, SLOT(showDownloadOrderDialog()));
         actionCollection()->addAction("download_order", download_order_action);
-        setXMLFile("ktdownloadorderpluginui.rc");
+        setXMLFile("ktorrent_downloadorderui.rc");
         managers.setAutoDelete(true);
     }
 
