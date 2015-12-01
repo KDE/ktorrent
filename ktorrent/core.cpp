@@ -78,14 +78,11 @@ namespace kt
     {
         UpdateCurrentTime();
         qman = new QueueManager();
-        connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
-                this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
-        connect(qman, SIGNAL(queuingNotPossible(bt::TorrentInterface*)),
-                this, SLOT(enqueueTorrentOverMaxRatio(bt::TorrentInterface*)));
-        connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
-                this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
-        connect(qman, SIGNAL(orderingQueue()), this, SLOT(beforeQueueReorder()));
-        connect(qman, SIGNAL(queueOrdered()), this, SLOT(afterQueueReorder()));
+        connect(qman, &kt::QueueManager::lowDiskSpace, this, &Core::onLowDiskSpace);
+        connect(qman, &kt::QueueManager::queuingNotPossible, this, &Core::enqueueTorrentOverMaxRatio);
+        connect(qman, &kt::QueueManager::lowDiskSpace, this, &Core::onLowDiskSpace);
+        connect(qman, &kt::QueueManager::orderingQueue, this, &Core::beforeQueueReorder);
+        connect(qman, &kt::QueueManager::queueOrdered, this, &Core::afterQueueReorder);
 
         data_dir = Settings::tempDir();
         bool dd_not_exist = !bt::Exists(data_dir);
@@ -104,7 +101,7 @@ namespace kt
         if (!data_dir.endsWith(bt::DirSeparator()))
             data_dir += bt::DirSeparator();
 
-        connect(&update_timer, SIGNAL(timeout()), this, SLOT(update()));
+        connect(&update_timer, &QTimer::timeout, this, &Core::update);
 
         // Make sure network interface is set properly before server is initialized
         if (Settings::networkInterface() != 0)
@@ -125,13 +122,11 @@ namespace kt
         gman = new kt::GroupManager();
         applySettings();
         gman->loadGroups();
-        connect(gman, SIGNAL(customGroupChanged()), this, SLOT(customGroupChanged()));
+        connect(gman, &kt::GroupManager::customGroupChanged, this, &Core::customGroupChanged);
 
         qRegisterMetaType<bt::MagnetLink>("bt::MagnetLink");
         qRegisterMetaType<kt::MagnetLinkLoadOptions>("kt::MagnetLinkLoadOptions");
-        connect(mman, SIGNAL(metadataDownloaded(bt::MagnetLink, QByteArray, kt::MagnetLinkLoadOptions)),
-                this, SLOT(onMetadataDownloaded(bt::MagnetLink, QByteArray, kt::MagnetLinkLoadOptions)),
-                Qt::QueuedConnection);
+        connect(mman, &kt::MagnetManager::metadataDownloaded, this, &Core::onMetadataDownloaded, Qt::QueuedConnection);
 
         mman->loadMagnets(kt::DataDir() + QLatin1String("magnets"));
 
@@ -468,7 +463,7 @@ namespace kt
         else
         {
             KIO::Job* j = KIO::storedGet(url);
-            connect(j, SIGNAL(result(KJob*)), this, SLOT(downloadFinished(KJob*)));
+            connect(j, &KIO::Job::result, this, &Core::downloadFinished);
             if (!group.isNull())
                 add_to_groups.insert(url, group);
         }
@@ -542,7 +537,7 @@ namespace kt
         {
             // download to a random file in tmp
             KIO::Job* j = KIO::storedGet(url);
-            connect(j, SIGNAL(result(KJob*)), this, SLOT(downloadFinishedSilently(KJob*)));
+            connect(j, &KIO::Job::result, this, &Core::downloadFinishedSilently);
             if (!group.isNull())
                 add_to_groups.insert(url, group);
         }
@@ -730,8 +725,7 @@ namespace kt
             {
                 // if there are running jobs, schedule delete when they finish
                 delayed_removal.insert(tc, data_to);
-                connect(tc, SIGNAL(runningJobsDone(bt::TorrentInterface*)),
-                        this, SLOT(delayedRemove(bt::TorrentInterface*)));
+                connect(tc, &TorrentControl::runningJobsDone, this, &Core::delayedRemove);
                 return;
             }
 
@@ -775,8 +769,7 @@ namespace kt
             {
                 // if there are running jobs, schedule delete when they finish
                 delayed_removal.insert(tc, data_to);
-                connect(tc, SIGNAL(runningJobsDone(bt::TorrentInterface*)),
-                        this, SLOT(delayedRemove(bt::TorrentInterface*)));
+                connect(tc, &bt::TorrentInterface::runningJobsDone, this, &Core::delayedRemove);
                 i = todo.erase(i);
             }
             else
@@ -1281,20 +1274,13 @@ namespace kt
 
     void Core::connectSignals(bt::TorrentInterface* tc)
     {
-        connect(tc, SIGNAL(finished(bt::TorrentInterface*)),
-                this, SLOT(torrentFinished(bt::TorrentInterface*)));
-        connect(tc, SIGNAL(stoppedByError(bt::TorrentInterface*, QString)),
-                this, SLOT(slotStoppedByError(bt::TorrentInterface*, QString)));
-        connect(tc, SIGNAL(seedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)),
-                this, SLOT(torrentSeedAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)));
-        connect(tc, SIGNAL(aboutToBeStarted(bt::TorrentInterface*, bool&)),
-                this, SLOT(aboutToBeStarted(bt::TorrentInterface*, bool&)));
-        connect(tc, SIGNAL(corruptedDataFound(bt::TorrentInterface*)),
-                this, SLOT(emitCorruptedData(bt::TorrentInterface*)));
-        connect(tc, SIGNAL(needDataCheck(bt::TorrentInterface*)),
-                this, SLOT(autoCheckData(bt::TorrentInterface*)));
-        connect(tc, SIGNAL(statusChanged(bt::TorrentInterface*)),
-                this, SLOT(onStatusChanged(bt::TorrentInterface*)));
+        connect(tc, &bt::TorrentInterface::finished, this, &Core::torrentFinished);
+        connect(tc, &bt::TorrentInterface::stoppedByError, this, &Core::slotStoppedByError);
+        connect(tc, &bt::TorrentInterface::seedingAutoStopped, this, &Core::torrentSeedAutoStopped);
+        connect(tc, &bt::TorrentInterface::aboutToBeStarted, this, &Core::aboutToBeStarted);
+        connect(tc, &bt::TorrentInterface::corruptedDataFound, this, &Core::emitCorruptedData);
+        connect(tc, &bt::TorrentInterface::needDataCheck, this, &Core::autoCheckData);
+        connect(tc, &bt::TorrentInterface::statusChanged, this, &Core::onStatusChanged);
     }
 
     float Core::getGlobalMaxShareRatio() const

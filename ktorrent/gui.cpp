@@ -102,7 +102,7 @@ namespace kt
         addActivity(torrent_activity);
 
         //mark.update();
-        connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+        connect(&timer, &QTimer::timeout, this, &GUI::update);
         timer.start(Settings::guiUpdateInterval());
 
         applySettings();
