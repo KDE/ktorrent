@@ -881,7 +881,7 @@ namespace kt
             if (fn.isEmpty())
                 return;
 
-            KIO::file_copy(QString(tc->getTorDir() + "torrent"), fn, -1, KIO::Overwrite);
+            KIO::file_copy(QUrl::fromLocalFile(tc->getTorDir() + QLatin1String("torrent")), QUrl::fromLocalFile(fn), -1, KIO::Overwrite);
         }
     }
 

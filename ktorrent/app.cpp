@@ -122,6 +122,3 @@ namespace kt
     }
 
 }
-
-#include "app.moc"
-

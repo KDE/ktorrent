@@ -157,5 +157,3 @@ namespace kt
 
 
 }
-
-#include "chunkbar.moc"

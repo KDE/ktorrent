@@ -425,8 +425,8 @@ namespace kt
             comp_dir = dir;
         }
 
-        m_downloadLocation->setUrl(dir);
-        m_completedLocation->setUrl(comp_dir);
+        m_downloadLocation->setUrl(QUrl::fromLocalFile(dir));
+        m_completedLocation->setUrl(QUrl::fromLocalFile(comp_dir));
         loadGroups();
     }
 
@@ -681,7 +681,7 @@ namespace kt
     void FileSelectDlg::downloadLocationHistoryTriggered(QAction* act)
     {
         if (!act->data().isNull())
-            m_downloadLocation->setUrl(act->data().toString());
+            m_downloadLocation->setUrl(QUrl::fromLocalFile(act->data().toString()));
         else
             clearDownloadLocationHistory();
     }

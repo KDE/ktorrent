@@ -229,8 +229,7 @@ namespace kt
         {
             if (index.isValid() && index.column() == 0)
             {
-                QString text = files.at(index.row()).first.path();
-                urls.append(text);
+                urls << QUrl::fromLocalFile(files.at(index.row()).first.path());
                 dragged_rows.append(index.row());
             }
         }

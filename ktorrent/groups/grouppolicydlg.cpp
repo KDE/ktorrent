@@ -33,12 +33,12 @@ namespace kt
         const Group::Policy& p = group->groupPolicy();
         m_default_location_enabled->setChecked(!p.default_save_location.isNull());
         m_default_location->setEnabled(!p.default_save_location.isNull());
-        m_default_location->setUrl(p.default_save_location);
+        m_default_location->setUrl(QUrl::fromLocalFile(p.default_save_location));
         m_default_location->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 
         m_default_move_on_completion_enabled->setChecked(!p.default_move_on_completion_location.isNull());
         m_default_move_on_completion_location->setEnabled(!p.default_move_on_completion_location.isNull());
-        m_default_move_on_completion_location->setUrl(p.default_move_on_completion_location);
+        m_default_move_on_completion_location->setUrl(QUrl::fromLocalFile(p.default_move_on_completion_location));
         m_default_move_on_completion_location->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 
         m_only_new->setChecked(p.only_apply_on_new_torrents);

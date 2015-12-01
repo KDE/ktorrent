@@ -249,7 +249,7 @@ namespace kt
                 continue;
 
             MediaFile::Ptr p = items.at(idx.row());
-            urls.append(p->path());
+            urls << QUrl::fromLocalFile(p->path());
         }
         data->setUrls(urls);
         return data;

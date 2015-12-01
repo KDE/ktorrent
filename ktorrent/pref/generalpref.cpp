@@ -40,27 +40,27 @@ namespace kt
     void GeneralPref::loadSettings()
     {
         if (Settings::tempDir().isEmpty())
-            kcfg_tempDir->setUrl(kt::DataDir());
+            kcfg_tempDir->setUrl(QUrl::fromLocalFile(kt::DataDir()));
         else
-            kcfg_tempDir->setUrl(Settings::tempDir());
+            kcfg_tempDir->setUrl(QUrl::fromLocalFile(Settings::tempDir()));
 
         kcfg_saveDir->setEnabled(Settings::useSaveDir());
         if (Settings::saveDir().isEmpty())
-            kcfg_saveDir->setUrl(QDir::homePath());
+            kcfg_saveDir->setUrl(QUrl::fromLocalFile(QDir::homePath()));
         else
-            kcfg_saveDir->setUrl(Settings::saveDir());
+            kcfg_saveDir->setUrl(QUrl::fromLocalFile(Settings::saveDir()));
 
         kcfg_torrentCopyDir->setEnabled(Settings::useTorrentCopyDir());
         if (Settings::torrentCopyDir().isEmpty())
-            kcfg_torrentCopyDir->setUrl(QDir::homePath());
+            kcfg_torrentCopyDir->setUrl(QUrl::fromLocalFile(QDir::homePath()));
         else
-            kcfg_torrentCopyDir->setUrl(Settings::torrentCopyDir());
+            kcfg_torrentCopyDir->setUrl(QUrl::fromLocalFile(Settings::torrentCopyDir()));
 
         kcfg_completedDir->setEnabled(Settings::useCompletedDir());
         if (Settings::completedDir().isEmpty())
-            kcfg_completedDir->setUrl(QDir::homePath());
+            kcfg_completedDir->setUrl(QUrl::fromLocalFile(QDir::homePath()));
         else
-            kcfg_completedDir->setUrl(Settings::completedDir());
+            kcfg_completedDir->setUrl(QUrl::fromLocalFile(Settings::completedDir()));
 
 //          kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
 //          kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());

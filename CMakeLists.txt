@@ -46,7 +46,7 @@ include_directories(
    ${QT_INCLUDES}
 )
 
-add_definitions(-DQT_USE_QSTRINGBUILDER)
+add_definitions(-DQT_USE_QSTRINGBUILDER -DQT_NO_URL_CAST_FROM_STRING)
 
 add_subdirectory(libktcore)
 add_subdirectory(plugins)

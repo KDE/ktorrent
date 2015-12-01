@@ -339,7 +339,7 @@ namespace kt
                 destination += bt::DirSeparator();
 
             destination += tc->getStats().torrent_name + QLatin1String(".torrent");
-            KIO::copy(torFile, destination);
+            KIO::copy(QUrl::fromLocalFile(torFile), QUrl::fromLocalFile(destination));
         }
 
         // add torrent to group if necessary
@@ -1393,7 +1393,7 @@ namespace kt
         out->write(data.data(), data.size());
         enc.end();
 
-        QUrl url = mlink.toString();
+        QUrl url(mlink.toString());
 
         bt::TorrentInterface* tc = 0;
         if (options.silently)

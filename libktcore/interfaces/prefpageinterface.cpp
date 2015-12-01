@@ -41,4 +41,3 @@ namespace kt
     }
 }
 
-#include "prefpageinterface.moc"
