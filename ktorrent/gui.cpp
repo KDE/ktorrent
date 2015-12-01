@@ -264,8 +264,8 @@ namespace kt
 
     void GUI::createTorrent()
     {
-        TorrentCreatorDlg dlg(core, this, this);
-        dlg.exec();
+        TorrentCreatorDlg* dlg = new TorrentCreatorDlg(core, this, this);
+        dlg->show();
     }
 
     void GUI::openTorrentSilently()
@@ -351,24 +351,18 @@ namespace kt
 
     void GUI::showStatusBar()
     {
-        if (show_status_bar_action->isChecked())
-            status_bar->show();
-        else
-            status_bar->hide();
+        status_bar->setVisible(show_status_bar_action->isChecked());
     }
 
     void GUI::showMenuBar()
     {
-        if (show_menu_bar_action->isChecked())
-            menuBar()->show();
-        else
-            menuBar()->hide();
+        menuBar()->setVisible(show_menu_bar_action->isChecked());
     }
 
     void GUI::showIPFilter()
     {
-        IPFilterWidget dlg(this);
-        dlg.exec();
+        IPFilterWidget* dlg = new IPFilterWidget(this);
+        dlg->show();
     }
 
     void GUI::configureKeys()
@@ -395,8 +389,8 @@ namespace kt
 
     void GUI::import()
     {
-        ImportDialog dlg(core, this);
-        dlg.exec();
+        ImportDialog* dlg = new ImportDialog(core, this);
+        dlg->show();
     }
 
     void GUI::setupActions()
@@ -586,5 +580,3 @@ namespace kt
     }
 
 }
-
-#include "gui.moc"

@@ -40,6 +40,7 @@ namespace kt
 {
     TorrentCreatorDlg::TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent) : KDialog(parent), core(core), gui(gui), mktor(0)
     {
+        setAttribute(Qt::WA_DeleteOnClose);
         tracker_completion = webseeds_completion = nodes_completion = 0;
         setWindowTitle(i18n("Create A Torrent"));
         setupUi(mainWidget());
@@ -131,17 +132,17 @@ namespace kt
 
     void TorrentCreatorDlg::loadCompleterData()
     {
-        QString file = kt::DataDir() + "torrent_creator_known_trackers";
+        QString file = kt::DataDir() + QLatin1String("torrent_creator_known_trackers");
         tracker_completion = new StringCompletionModel(file, this);
         tracker_completion->load();
         m_tracker->setCompleter(new QCompleter(tracker_completion, this));
 
-        file = kt::DataDir() + "torrent_creator_known_webseeds";
+        file = kt::DataDir() + QLatin1String("torrent_creator_known_webseeds");
         webseeds_completion = new StringCompletionModel(file, this);
         webseeds_completion->load();
         m_webseed->setCompleter(new QCompleter(webseeds_completion, this));
 
-        file = kt::DataDir() + "torrent_creator_known_nodes";
+        file = kt::DataDir() + QLatin1String("torrent_creator_known_nodes");
         nodes_completion = new StringCompletionModel(file, this);
         nodes_completion->load();
         m_node->setCompleter(new QCompleter(nodes_completion, this));
@@ -159,11 +160,7 @@ namespace kt
 
     void TorrentCreatorDlg::removeTrackerPressed()
     {
-        QList<QListWidgetItem*> sel = m_tracker_list->selectedItems();
-        foreach (QListWidgetItem* s, sel)
-        {
-            delete s;
-        }
+        qDeleteAll(m_tracker_list->selectedItems());
     }
 
     void TorrentCreatorDlg::moveUpPressed()
@@ -209,9 +206,7 @@ namespace kt
 
     void TorrentCreatorDlg::removeNodePressed()
     {
-        QList<QTreeWidgetItem*> sel = m_node_list->selectedItems();
-        foreach (QTreeWidgetItem* s, sel)
-            delete s;
+        qDeleteAll(m_node_list->selectedItems());
     }
 
     void TorrentCreatorDlg::dhtToggled(bool on)
@@ -253,7 +248,7 @@ namespace kt
             return;
         }
 
-        if (url.scheme() != "http")
+        if (url.scheme() != QLatin1String("http"))
         {
             KMessageBox::error(this, i18n("Only HTTP is supported for webseeding."));
             return;
@@ -266,11 +261,7 @@ namespace kt
 
     void TorrentCreatorDlg::removeWebSeedPressed()
     {
-        QList<QListWidgetItem*> sel = m_webseed_list->selectedItems();
-        foreach (QListWidgetItem* s, sel)
-        {
-            delete s;
-        }
+        qDeleteAll(m_webseed_list->selectedItems());
     }
 
     void TorrentCreatorDlg::webSeedTextChanged(const QString& str)
@@ -321,7 +312,7 @@ namespace kt
             for (int i = 0; i < m_node_list->topLevelItemCount(); ++i)
             {
                 QTreeWidgetItem* item = m_node_list->topLevelItem(i);
-                trackers.append(item->text(0) + "," +  item->text(1));
+                trackers.append(item->text(0) + ',' +  item->text(1));
             }
         }
         else
@@ -375,8 +366,8 @@ namespace kt
             return;
         }
 
-        if (!s.endsWith(".torrent"))
-            s += ".torrent";
+        if (!s.endsWith(QLatin1String(".torrent")))
+            s += QLatin1String(".torrent");
 
         mktor->saveTorrent(s);
         bt::TorrentInterface* tc = core->createTorrent(mktor, m_start_seeding->isChecked());

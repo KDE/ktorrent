@@ -364,7 +364,7 @@ namespace kt
         return true;
     }
 
-    bt::TorrentInterface* Core::loadFromData(const QByteArray& data, const QString& dir, const QString& group, bool silently, const KUrl& url)
+    bt::TorrentInterface* Core::loadFromData(const QByteArray& data, const QString& dir, const QString& group, bool silently, const QUrl& url)
     {
         QString tdir = findNewTorrentDir();
         TorrentControl* tc = 0;

@@ -1,6 +1,6 @@
 set(KWORKSPACE_FOUND FALSE)
-FIND_PATH(KWORKSPACE_INCLUDE_DIR NAMES kworkspace.h PATH_SUFFIXES kworkspace)
-FIND_LIBRARY(KWORKSPACE_LIBRARY NAMES kworkspace)
+FIND_PATH(KWORKSPACE_INCLUDE_DIR NAMES kworkspace.h PATH_SUFFIXES kworkspace5)
+FIND_LIBRARY(KWORKSPACE_LIBRARY NAMES kworkspace5)
 
 if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 	set(KWORKSPACE_FOUND TRUE)
@@ -13,9 +13,6 @@ if(KWORKSPACE_INCLUDE_DIR AND KWORKSPACE_LIBRARY)
 	ki18n_wrap_ui(ktshutdownplugin_SRC shutdowndlg.ui)
 	#kconfig_add_kcfg_files(ktshutdownplugin_SRC logviewerpluginsettings.kcfgc)
 	add_library(ktshutdownplugin MODULE ${ktshutdownplugin_SRC})
-	
-	set(NEW_SOLID_POWERMANAGEMENT FALSE)
-	macro_ensure_version("4.5.82" ${KDE_VERSION} NEW_SOLID_POWERMANAGEMENT)
 	
 	target_link_libraries(
 		ktshutdownplugin

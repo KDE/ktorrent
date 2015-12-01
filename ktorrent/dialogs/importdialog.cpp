@@ -51,6 +51,7 @@ namespace kt
     ImportDialog::ImportDialog(CoreInterface* core, QWidget* parent)
         : QDialog(parent), core(core), dc(0), dc_thread(0), canceled(false)
     {
+        setAttribute(Qt::WA_DeleteOnClose);
         setupUi(this);
         KUrlRequester* r = m_torrent_url;
         r->setMode(KFile::File | KFile::LocalOnly);

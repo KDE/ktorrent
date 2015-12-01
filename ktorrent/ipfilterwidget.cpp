@@ -50,6 +50,7 @@ namespace kt
     IPFilterWidget::IPFilterWidget(QWidget* parent)
         : KDialog(parent)
     {
+        setAttribute(Qt::WA_DeleteOnClose);
         setupUi(mainWidget());
         setButtons(KDialog::None);
         setCaption(i18n("IP Filter List"));

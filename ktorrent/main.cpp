@@ -52,7 +52,7 @@ using namespace bt;
 bool GrabPIDLock()
 {
     // open the PID file in the /tmp directory and attempt to lock it
-    QString pid_file = QString(QDir::tempPath() + "/.ktorrent_kde4_%1.lock").arg(getuid());
+    QString pid_file = QString(QDir::tempPath() + "/.ktorrent_kf5_%1.lock").arg(getuid());
 
     int fd = open(QFile::encodeName(pid_file), O_RDWR | O_CREAT, 0640);
     if (fd < 0)
