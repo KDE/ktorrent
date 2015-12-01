@@ -26,12 +26,10 @@
 #include <util/constants.h>
 #include <interfaces/functions.h>
 
-#include <QtGui>
-#include <QtCore>
+#include <QUrl>
+#include <QFileDialog>
 
 #include <KMessageBox>
-#include <KFileDialog>
-#include <KUrl>
 #include <KGuiItem>
 #include <KStandardGuiItem>
 
@@ -80,7 +78,7 @@ namespace kt
         {
             filter_list = new IPFilterList();
             AccessManager::instance().addBlockList(filter_list);
-            loadFilter(kt::DataDir() + "ip_filter");
+            loadFilter(kt::DataDir() + QLatin1String("ip_filter"));
         }
     }
 
@@ -139,7 +137,8 @@ namespace kt
 
     void IPFilterWidget::open()
     {
-        QString lf = KFileDialog::getOpenFileName(KUrl("kfiledialog:///openTorrent"), "*.txt|", this, i18n("Choose a file"));
+        QString lf = QFileDialog::getOpenFileName(this, i18n("Choose a file"),
+                                                 i18n("Text files") + QLatin1String(" (*.txt)"));
 
         if (lf.isEmpty())
             return;
@@ -151,7 +150,8 @@ namespace kt
 
     void IPFilterWidget::save()
     {
-        QString sf = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"), "*.txt|", this, i18n("Choose a filename to save under"));
+        QString sf = QFileDialog::getSaveFileName(this, i18n("Choose a filename to save under"),
+                                                 i18n("Text files") + QLatin1String(" (*.txt)"));
 
         if (sf.isEmpty())
             return;
@@ -161,7 +161,7 @@ namespace kt
 
     void IPFilterWidget::accept()
     {
-        saveFilter(kt::DataDir() + "ip_filter");
+        saveFilter(kt::DataDir() + QLatin1String("ip_filter"));
         KDialog::accept();
     }
 
@@ -192,10 +192,9 @@ namespace kt
 
         QTextStream stream(&dat);
         QString line;
-        QRegExp rx("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
-                   "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
-                   "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
-        QRegExpValidator v(rx, 0);
+        QRegExpValidator v(QRegExp(QStringLiteral("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
+                                                  "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
+                                                  "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))")), 0);
 
         bool err = false;
         int pos = 0;
@@ -226,4 +225,3 @@ namespace kt
         dat.close();
     }
 }
-#include "ipfilterwidget.moc"

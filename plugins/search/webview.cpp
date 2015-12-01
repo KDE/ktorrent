@@ -214,22 +214,27 @@ namespace kt
         KWebPage* p = (KWebPage*)page();
         p->downloadResponse(reply);
 #else
-        QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"), kt::TorrentFileFilter(false), this);
+        QString recentDirClass;
+        QString fn = QFileDialog::getSaveFileName(this, i18n("Choose a file to save the torrent"),
+                                                 KFileWidget::getStartUrl(QUrl("kfiledialog:///openTorrent"), recentDirClass).toLocalFile(),
+                                                 kt::TorrentFileFilter(false));
 
-        if (!fn.isNull())
+        if (fn.isEmpty())
+            return;
+
+        if (!recentDirClass.isEmpty())
+            KRecentDirs::add(recentDirClass, QFileInfo(fn).absolutePath());
+
+        QFile fptr(fn);
+
+        if (!fptr.open(QIODevice::WriteOnly))
         {
-            QFile fptr(fn);
-
-            if (!fptr.open(QIODevice::WriteOnly))
-            {
-                KMessageBox::error(this, i18n("Cannot open <b>%1</b>: %2", fn, fptr.errorString()));
-            }
-            else
-            {
-                fptr.write(reply->readAll());
-            }
+            KMessageBox::error(this, i18n("Cannot open <b>%1</b>: %2", fn, fptr.errorString()));
         }
-
+        else
+        {
+            fptr.write(reply->readAll());
+        }
 #endif
     }
 

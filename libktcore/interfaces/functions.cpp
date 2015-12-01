@@ -99,7 +99,7 @@ namespace kt
         dht::DHTBase& ht = Globals::instance().getDHT();
         if (Settings::dhtSupport() && !ht.isRunning())
         {
-            ht.start(kt::DataDir() + "dht_table", kt::DataDir() + "dht_key", Settings::dhtPort());
+            ht.start(kt::DataDir() + QLatin1String("dht_table"), kt::DataDir() + QLatin1String("dht_key"), Settings::dhtPort());
         }
         else if (!Settings::dhtSupport() && ht.isRunning())
         {
@@ -109,7 +109,7 @@ namespace kt
         {
             Out(SYS_GEN | LOG_NOTICE) << "Restarting DHT with new port " << Settings::dhtPort() << endl;
             ht.stop();
-            ht.start(kt::DataDir() + "dht_table", kt::DataDir() + "dht_key", Settings::dhtPort());
+            ht.start(kt::DataDir() + QLatin1String("dht_table"), kt::DataDir() + QLatin1String("dht_key"), Settings::dhtPort());
         }
 
         UTPex::setEnabled(Settings::pexEnabled());
@@ -173,9 +173,9 @@ namespace kt
 
     QString TorrentFileFilter(bool all_files_included)
     {
-        QString ret = QString("*.torrent|%1").arg(i18n("Torrents"));
+        QString ret = i18nc("*.torrent", "Torrents") + QLatin1String(" (*.torrent)");
         if (all_files_included)
-            ret += "\n*|" + i18n("All files");
+            ret += QLatin1String(";;") + i18n("All files") + QLatin1String(" (*)");
         return ret;
     }
 

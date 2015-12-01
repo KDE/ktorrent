@@ -39,7 +39,7 @@ using namespace bt;
 namespace kt
 {
 
-    DownloadAndConvertJob::DownloadAndConvertJob(const KUrl& url, Mode mode)
+    DownloadAndConvertJob::DownloadAndConvertJob(const QUrl& url, Mode mode)
         : url(url), unzip(false), convert_dlg(0), mode(mode)
     {
     }

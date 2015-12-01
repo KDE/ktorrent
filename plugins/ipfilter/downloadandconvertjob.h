@@ -38,7 +38,7 @@ namespace kt
         {
             Verbose, Quietly
         };
-        DownloadAndConvertJob(const KUrl& url, Mode mode);
+        DownloadAndConvertJob(const QUrl& url, Mode mode);
         virtual ~DownloadAndConvertJob();
 
         enum ErrorCode
@@ -70,7 +70,7 @@ namespace kt
         void cleanUpFiles();
 
     private:
-        KUrl url;
+        QUrl url;
         KJob* active_job;
         bool unzip;
         ConvertDialog* convert_dlg;

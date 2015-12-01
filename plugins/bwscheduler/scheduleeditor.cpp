@@ -122,7 +122,7 @@ namespace kt
 
     void ScheduleEditor::save()
     {
-        QString fn = KFileDialog::getSaveFileName(KUrl(), "*.sched | " + i18n("KTorrent scheduler files"), this);
+        QString fn = KFileDialog::getSaveFileName(QUrl(), "*.sched | " + i18n("KTorrent scheduler files"), this);
         if (!fn.isNull())
         {
             try

@@ -18,6 +18,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "view.h"
+
 #include <QHeaderView>
 #include <QFileInfo>
 #include <QDropEvent>
@@ -34,6 +36,9 @@
 #include <QAction>
 #include <KStandardAction>
 #include <KActionCollection>
+#include <kfilewidget.h>
+#include <krecentdirs.h>
+
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <torrent/jobqueue.h>
@@ -42,7 +47,6 @@
 #include <interfaces/functions.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
-#include "view.h"
 #include "core.h"
 #include "gui.h"
 #include "viewmodel.h"
@@ -875,11 +879,18 @@ namespace kt
         if (sel.count() == 1)
         {
             bt::TorrentInterface* tc = sel.front();
-            QString filter = kt::TorrentFileFilter(false);
-            QString fn = KFileDialog::getSaveFileName(QUrl("kfiledialog:///exportTorrent"), filter, gui,
-                         QString(), KFileDialog::ConfirmOverwrite);
+
+            QString recentDirClass;
+            QString fn = QFileDialog::getSaveFileName(gui, QString(),
+                                                    KFileWidget::getStartUrl(QUrl("kfiledialog:///exportTorrent"), recentDirClass).toLocalFile(),
+                                                    kt::TorrentFileFilter(false));
+
             if (fn.isEmpty())
                 return;
+
+            if (!recentDirClass.isEmpty())
+                KRecentDirs::add(recentDirClass, QFileInfo(fn).absolutePath());
+
 
             KIO::file_copy(QUrl::fromLocalFile(tc->getTorDir() + QLatin1String("torrent")), QUrl::fromLocalFile(fn), -1, KIO::Overwrite);
         }

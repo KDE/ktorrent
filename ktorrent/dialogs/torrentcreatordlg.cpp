@@ -19,7 +19,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QCompleter>
-#include <kfiledialog.h>
+#include <kfilewidget.h>
+#include <krecentdirs.h>
 #include <kmessagebox.h>
 #include <kprogressdialog.h>
 #include <dht/dht.h>
@@ -356,15 +357,19 @@ namespace kt
         setProgressBarEnabled(false);
         update_timer.stop();
 
-        QString filter = kt::TorrentFileFilter(false);
-        QString s = KFileDialog::getSaveFileName(QUrl("kfiledialog:///openTorrent"), filter,
-                    this, i18n("Choose a file to save the torrent"));
+        QString recentDirClass;
+        QString s = QFileDialog::getSaveFileName(this, i18n("Choose a file to save the torrent"),
+                                                 KFileWidget::getStartUrl(QUrl("kfiledialog:///openTorrent"), recentDirClass).toLocalFile(),
+                                                 kt::TorrentFileFilter(false));
 
-        if (s.isNull())
+        if (s.isEmpty())
         {
             QDialog::reject();
             return;
         }
+
+        if (!recentDirClass.isEmpty())
+            KRecentDirs::add(recentDirClass, QFileInfo(s).absolutePath());
 
         if (!s.endsWith(QLatin1String(".torrent")))
             s += QLatin1String(".torrent");
@@ -414,5 +419,3 @@ namespace kt
     }
 
 }
-
-#include "torrentcreatordlg.moc"

@@ -113,7 +113,7 @@ namespace kt
 
     void IPBlockingPrefPage::downloadClicked()
     {
-        KUrl url = kcfg_filterURL->url();
+        QUrl url = kcfg_filterURL->url();
 
         // block GUI so you cannot do stuff during conversion
         m_download->setEnabled(false);

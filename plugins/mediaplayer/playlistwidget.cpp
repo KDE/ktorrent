@@ -21,18 +21,22 @@
 #include "playlistwidget.h"
 
 #include <QVBoxLayout>
-#include <ktoolbar.h>
-#include <klocale.h>
-#include <kurl.h>
 #include <QIcon>
-#include <kfiledialog.h>
-#include "mediaplayer.h"
-#include "mediaplayerpluginsettings.h"
-#include "playlist.h"
 #include <QFile>
+#include <QFileDialog>
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
 #include <QWidgetAction>
+
+#include <ktoolbar.h>
+#include <klocalizedstring.h>
+#include <kurl.h>
+#include <kfilewidget.h>
+#include <krecentdirs.h>
+
+#include "mediaplayer.h"
+#include "mediaplayerpluginsettings.h"
+#include "playlist.h"
 
 
 namespace kt
@@ -169,12 +173,19 @@ namespace kt
 
     void PlayListWidget::addMedia()
     {
-        QString filter;
-        QStringList files = KFileDialog::getOpenFileNames(KUrl("kfiledialog:///add_media"), filter, this);
+        QString recentDirClass;
+        QStringList files = QFileDialog::getOpenFileNames(this, QString(),
+                                                         KFileWidget::getStartUrl(QUrl("kfiledialog:///add_media"), recentDirClass).toLocalFile());
+
+        if (files.isEmpty())
+            return;
+
+        if (!recentDirClass.isEmpty())
+            KRecentDirs::add(recentDirClass, QFileInfo(files.first()).absolutePath());
+
         foreach (const QString& file, files)
-        {
             play_list->addFile(collection->find(file));
-        }
+
         enableNext(play_list->rowCount() > 0);
     }
 

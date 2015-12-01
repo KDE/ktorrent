@@ -36,7 +36,6 @@
 #include <KStandardAction>
 #include <kio/job.h>
 #include <KMessageBox>
-#include <KFileDialog>
 #include <KActionCollection>
 #include <KMainWindow>
 

@@ -24,7 +24,6 @@
 #include <qdesktopwidget.h>
 #include <kconfig.h>
 #include <kglobal.h>
-#include <klocale.h>
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
@@ -36,7 +35,8 @@
 #include <kshortcutsdialog.h>
 #include <kedittoolbar.h>
 #include <kstandardaction.h>
-#include <kfiledialog.h>
+#include <kfilewidget.h>
+#include <krecentdirs.h>
 #include <QPushButton>
 #include <kxmlguifactory.h>
 #include <KNotifyConfigWidget>
@@ -270,11 +270,16 @@ namespace kt
 
     void GUI::openTorrentSilently()
     {
-        QString filter = kt::TorrentFileFilter(true);
-        QList<QUrl> urls = KFileDialog::getOpenUrls(QUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
+        QString recentDirClass;
+        QList<QUrl> urls = QFileDialog::getOpenFileUrls(this, i18n("Open Location"),
+                                                        KFileWidget::getStartUrl(QUrl("kfiledialog:///openTorrent"), recentDirClass),
+                                                        kt::TorrentFileFilter(true));
 
-        if (urls.count() == 0)
+        if (urls.isEmpty())
             return;
+
+        if (!recentDirClass.isEmpty())
+            KRecentDirs::add(recentDirClass, QFileInfo(urls.first().toLocalFile()).absolutePath());
 
         foreach (const QUrl& url, urls)
         {
@@ -285,12 +290,18 @@ namespace kt
 
     void GUI::openTorrent()
     {
-        QString filter = kt::TorrentFileFilter(true);
-        QList<QUrl> urls = KFileDialog::getOpenUrls(QUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
+        QString recentDirClass;
+        QList<QUrl> urls = QFileDialog::getOpenFileUrls(this, i18n("Open Location"),
+                                                        KFileWidget::getStartUrl(QUrl("kfiledialog:///openTorrent"), recentDirClass),
+                                                        kt::TorrentFileFilter(true));
 
-        if (urls.count() == 0)
+        if (urls.isEmpty())
             return;
-        else if (urls.count() == 1)
+
+        if (!recentDirClass.isEmpty())
+            KRecentDirs::add(recentDirClass, QFileInfo(urls.first().toLocalFile()).absolutePath());
+
+        if (urls.count() == 1)
         {
             QUrl url = urls.front();
             if (url.isValid())

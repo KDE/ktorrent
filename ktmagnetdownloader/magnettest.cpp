@@ -137,7 +137,7 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
     {
         BEncoder enc(&fptr);
         enc.beginDict();
-        KUrl::List trs = mlink.trackers();
+        Qlist<QUrl> trs = mlink.trackers();
         if (trs.count())
         {
             enc.write("announce");
@@ -146,9 +146,9 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
             {
                 enc.write("announce-list");
                 enc.beginList();
-                foreach (const KUrl& u, trs)
+                foreach (const QUrl& u, trs)
                 {
-                    enc.write(u.prettyUrl());
+                    enc.write(u.toDisplayString());
                 }
                 enc.end();
             }
