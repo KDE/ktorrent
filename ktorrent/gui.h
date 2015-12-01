@@ -100,8 +100,6 @@ namespace kt
         void pasteURL();
         void paste();
         void showPrefDialog();
-        void showStatusBar();
-        void showMenuBar();
         void showIPFilter();
         void configureKeys();
         void configureToolbars();

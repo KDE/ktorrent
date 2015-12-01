@@ -97,7 +97,7 @@ namespace kt
         setStatusBar(status_bar);
 
         setupActions();
-        setupGUI(Default, "ktorrentui.rc");
+        setupGUI(Default, QStringLiteral("ktorrentui.rc"));
 
         addActivity(torrent_activity);
 
@@ -349,16 +349,6 @@ namespace kt
         pref_dlg->updateWidgetsAndShow();
     }
 
-    void GUI::showStatusBar()
-    {
-        status_bar->setVisible(show_status_bar_action->isChecked());
-    }
-
-    void GUI::showMenuBar()
-    {
-        menuBar()->setVisible(show_menu_bar_action->isChecked());
-    }
-
     void GUI::showIPFilter()
     {
         IPFilterWidget* dlg = new IPFilterWidget(this);
@@ -409,10 +399,10 @@ namespace kt
 
         KStandardAction::quit(this, SLOT(quit()), ac);
 
-        show_status_bar_action = KStandardAction::showStatusbar(this, SLOT(showStatusBar()), ac);
+        show_status_bar_action = KStandardAction::showStatusbar(statusBar(), SLOT(setVisible(bool)), ac);
         show_status_bar_action->setIcon(QIcon::fromTheme(QStringLiteral("kt-show-statusbar")));
 
-        show_menu_bar_action = KStandardAction::showMenubar(this, SLOT(showMenuBar()), ac);
+        show_menu_bar_action = KStandardAction::showMenubar(menuBar(), SLOT(setVisible(bool)), ac);
         KStandardAction::preferences(this, SLOT(showPrefDialog()), ac);
         KStandardAction::keyBindings(this, SLOT(configureKeys()), ac);
         KStandardAction::configureToolbars(this, SLOT(configureToolbars()), ac);
@@ -538,6 +528,7 @@ namespace kt
         else
         {
             saveState(KGlobal::config());
+            timer.stop();
             QTimer::singleShot(500, KApplication::kApplication(), SLOT(quit()));
             return true;
         }
