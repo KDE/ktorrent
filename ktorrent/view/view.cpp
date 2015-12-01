@@ -31,7 +31,6 @@
 #include <KLocale>
 #include <KSharedConfig>
 #include <KMessageBox>
-#include <KFileDialog>
 #include <KInputDialog>
 #include <QAction>
 #include <KStandardAction>
@@ -600,9 +599,15 @@ namespace kt
         if (sel.count() == 0)
             return;
 
-        QString dir = KFileDialog::getExistingDirectory(QUrl("kfiledialog:///saveTorrentData"), this, i18n("Select a directory to move the data to."));
-        if (dir.isNull())
+        QString recentDirClass;
+        QString dir = QFileDialog::getExistingDirectory(this, i18n("Select a directory to move the data to."),
+                                                        KFileWidget::getStartUrl(QUrl("kfiledialog:///saveTorrentData"), recentDirClass).toLocalFile());
+
+        if (dir.isEmpty())
             return;
+
+        if (!recentDirClass.isEmpty())
+            KRecentDirs::add(recentDirClass, dir);
 
         foreach (bt::TorrentInterface* tc, sel)
         {

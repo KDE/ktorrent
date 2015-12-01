@@ -23,17 +23,22 @@
 #include <QItemSelectionModel>
 #include <QHBoxLayout>
 #include <QToolBar>
-#include <KLocale>
-#include <KIconLoader>
-#include <KGlobal>
+#include <QFileDialog>
+#include <QFileInfo>
 #include <QMenu>
+#include <QLineEdit>
+
+#include <KIconLoader>
 #include <KRun>
 #include <KMessageBox>
 #include <KMimeType>
 #include <KSharedConfig>
 #include <KConfigGroup>
-#include <KFileDialog>
-#include <QLineEdit>
+
+#include <klocalizedstring.h>
+#include <kfilewidget.h>
+#include <krecentdirs.h>
+
 #include <util/bitset.h>
 #include <util/error.h>
 #include <util/functions.h>
@@ -41,7 +46,6 @@
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
-#include <qfileinfo.h>
 #include <util/log.h>
 #include <util/timer.h>
 #include "iwfiletreemodel.h"
@@ -348,10 +352,15 @@ namespace kt
             QModelIndexList sel = view->selectionModel()->selectedRows();
             QMap<bt::TorrentFileInterface*, QString> moves;
 
-            QString dir = KFileDialog::getExistingDirectory(QUrl("kfiledialog:///saveTorrentData"),
-                          this, i18n("Select a directory to move the data to."));
-            if (dir.isNull())
+            QString recentDirClass;
+            QString dir = QFileDialog::getExistingDirectory(this, i18n("Select a directory to move the data to."),
+                                                            KFileWidget::getStartUrl(QUrl("kfiledialog:///saveTorrentData"), recentDirClass).toLocalFile());
+
+            if (dir.isEmpty())
                 return;
+
+            if (!recentDirClass.isEmpty())
+                KRecentDirs::add(recentDirClass, dir);
 
             foreach (const QModelIndex& idx, sel)
             {
@@ -369,10 +378,15 @@ namespace kt
         }
         else
         {
-            QString dir = KFileDialog::getExistingDirectory(QUrl("kfiledialog:///saveTorrentData"),
-                          this, i18n("Select a directory to move the data to."));
-            if (dir.isNull())
+            QString recentDirClass;
+            QString dir = QFileDialog::getExistingDirectory(this, i18n("Select a directory to move the data to."),
+                                                            KFileWidget::getStartUrl(QUrl("kfiledialog:///saveTorrentData"), recentDirClass).toLocalFile());
+
+            if (dir.isEmpty())
                 return;
+
+            if (!recentDirClass.isEmpty())
+                KRecentDirs::add(recentDirClass, dir);
 
             tc->changeOutputDir(dir, bt::TorrentInterface::MOVE_FILES);
         }
