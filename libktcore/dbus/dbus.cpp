@@ -30,6 +30,7 @@
 #include <interfaces/guiinterface.h>
 #include "dbustorrent.h"
 #include "dbusgroup.h"
+#include <QFile>
 #include <QTimer>
 #include <QDebug>
 #include "dbussettings.h"
@@ -162,12 +163,12 @@ namespace kt
 
     void DBus::load(const QString& url, const QString& group)
     {
-        core->load(KUrl(url), group);
+        core->load(QFile::exists(url)?QUrl::fromLocalFile(url):QUrl(url), group);
     }
 
     void DBus::loadSilently(const QString& url, const QString& group)
     {
-        core->loadSilently(KUrl(url), group);
+        core->loadSilently(QFile::exists(url)?QUrl::fromLocalFile(url):QUrl(url), group);
     }
 
     QStringList DBus::groups() const

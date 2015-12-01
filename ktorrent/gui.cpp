@@ -252,12 +252,12 @@ namespace kt
     }
 
 
-    void GUI::load(const KUrl& url)
+    void GUI::load(const QUrl& url)
     {
         core->load(url, QString());
     }
 
-    void GUI::loadSilently(const KUrl& url)
+    void GUI::loadSilently(const QUrl& url)
     {
         core->loadSilently(url, QString());
     }
@@ -271,12 +271,12 @@ namespace kt
     void GUI::openTorrentSilently()
     {
         QString filter = kt::TorrentFileFilter(true);
-        KUrl::List urls = KFileDialog::getOpenUrls(KUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
+        QList<QUrl> urls = KFileDialog::getOpenUrls(QUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
 
         if (urls.count() == 0)
             return;
 
-        foreach (const KUrl& url, urls)
+        foreach (const QUrl& url, urls)
         {
             if (url.isValid())
                 core->loadSilently(url, QString());
@@ -286,20 +286,20 @@ namespace kt
     void GUI::openTorrent()
     {
         QString filter = kt::TorrentFileFilter(true);
-        KUrl::List urls = KFileDialog::getOpenUrls(KUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
+        QList<QUrl> urls = KFileDialog::getOpenUrls(QUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
 
         if (urls.count() == 0)
             return;
         else if (urls.count() == 1)
         {
-            KUrl url = urls.front();
+            QUrl url = urls.front();
             if (url.isValid())
                 load(url);
         }
         else
         {
             // load multiple torrents silently
-            foreach (const KUrl& url, urls)
+            foreach (const QUrl& url, urls)
             {
                 if (url.isValid())
                 {
@@ -333,12 +333,12 @@ namespace kt
         if (text.length() == 0)
             return;
 
-        KUrl url = KUrl(text);
+        QUrl url = QFile::exists(text)?QUrl::fromLocalFile(text):QUrl(text);
 
         if (url.isValid())
             load(url);
         else
-            KMessageBox::error(this, i18n("Invalid URL: %1", url.prettyUrl()));
+            KMessageBox::error(this, i18n("Invalid URL: %1", url.toDisplayString()));
     }
 
     void GUI::showPrefDialog()

@@ -403,7 +403,7 @@ namespace kt
         try
         {
             QByteArray data = bt::LoadFile(target);
-            return loadFromData(data, dir, group, silently, KUrl(target));
+            return loadFromData(data, dir, group, silently, QUrl::fromLocalFile(target));
         }
         catch (bt::Error& err)
         {
@@ -431,7 +431,7 @@ namespace kt
         {
             // load in the file (target is always local)
             QString group;
-            QMap<KUrl, QString>::iterator i = add_to_groups.find(j->url());
+            QMap<QUrl, QString>::iterator i = add_to_groups.find(j->url());
             if (i != add_to_groups.end())
             {
                 group = i.value();
@@ -444,14 +444,14 @@ namespace kt
         }
     }
 
-    void Core::load(const KUrl& url, const QString& group)
+    void Core::load(const QUrl& url, const QString& group)
     {
-        if (url.protocol() == QLatin1String("magnet"))
+        if (url.scheme() == QLatin1String("magnet"))
         {
             MagnetLinkLoadOptions options;
             options.silently = false;
             options.group = group;
-            load(bt::MagnetLink(url.prettyUrl()), options);
+            load(bt::MagnetLink(url.toDisplayString()), options);
         }
         else if (url.isLocalFile())
         {
@@ -503,7 +503,7 @@ namespace kt
             }
 
             QString group;
-            QMap<KUrl, QString>::iterator i = add_to_groups.find(j->url());
+            QMap<QUrl, QString>::iterator i = add_to_groups.find(j->url());
             if (i != add_to_groups.end())
             {
                 group = i.value();
@@ -516,14 +516,14 @@ namespace kt
         }
     }
 
-    void Core::loadSilently(const KUrl& url, const QString& group)
+    void Core::loadSilently(const QUrl &url, const QString& group)
     {
-        if (url.protocol() == QLatin1String("magnet"))
+        if (url.scheme() == QLatin1String("magnet"))
         {
             MagnetLinkLoadOptions options;
             options.silently = true;
             options.group = group;
-            load(bt::MagnetLink(url.prettyUrl()), options);
+            load(bt::MagnetLink(url.toDisplayString()), options);
         }
         else if (url.isLocalFile())
         {
@@ -543,7 +543,7 @@ namespace kt
         }
     }
 
-    bt::TorrentInterface* Core::load(const QByteArray& data, const KUrl& url, const QString& group, const QString& savedir)
+    bt::TorrentInterface* Core::load(const QByteArray& data, const QUrl &url, const QString& group, const QString& savedir)
     {
         QString dir;
         if (savedir.isEmpty() || !bt::Exists(savedir))
@@ -557,7 +557,7 @@ namespace kt
             return 0;
     }
 
-    bt::TorrentInterface* Core::loadSilently(const QByteArray& data, const KUrl& url, const QString& group, const QString& savedir)
+    bt::TorrentInterface* Core::loadSilently(const QByteArray& data, const QUrl &url, const QString& group, const QString& savedir)
     {
         QString dir;
         if (savedir.isEmpty() || !bt::Exists(savedir))
@@ -886,7 +886,8 @@ namespace kt
         try
         {
             // do nothing if new and old dir are the same
-            if (KUrl(data_dir) == KUrl(new_dir) || data_dir == (new_dir + bt::DirSeparator()))
+            if (QFileInfo(data_dir).absoluteFilePath().length() && QFileInfo(data_dir).absoluteFilePath() == QFileInfo(new_dir).absoluteFilePath()
+                || data_dir == new_dir || data_dir == (new_dir + bt::DirSeparator()))
                 return true;
 
             update_timer.stop();
@@ -1370,19 +1371,19 @@ namespace kt
         BEncoderBufferOutput* out = new BEncoderBufferOutput(tmp);
         BEncoder enc(out);
         enc.beginDict();
-        KUrl::List trs = mlink.trackers();
+        QList<QUrl> trs = mlink.trackers();
         if (trs.count())
         {
             enc.write("announce");
-            enc.write(trs.first().prettyUrl());
+            enc.write(trs.first().toDisplayString());
             if (trs.count() > 1)
             {
                 enc.write("announce-list");
                 enc.beginList();
-                foreach (const KUrl& tracker, trs)
+                foreach (const QUrl &tracker, trs)
                 {
                     enc.beginList();
-                    enc.write(tracker.prettyUrl());
+                    enc.write(tracker.toDisplayString());
                     enc.end();
                 }
                 enc.end();
@@ -1392,7 +1393,7 @@ namespace kt
         out->write(data.data(), data.size());
         enc.end();
 
-        KUrl url = mlink.toString();
+        QUrl url = mlink.toString();
 
         bt::TorrentInterface* tc = 0;
         if (options.silently)

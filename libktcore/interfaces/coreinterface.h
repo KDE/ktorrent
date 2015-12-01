@@ -20,7 +20,7 @@
 #ifndef KTCOREINTERFACE_H
 #define KTCOREINTERFACE_H
 
-#include <kurl.h>
+#include <QUrl>
 #include <qobject.h>
 #include <util/constants.h>
 #include <ktcore_export.h>
@@ -159,7 +159,7 @@ namespace kt
          * @param url The torrent file
          * @param group Group to add torrent to
          */
-        virtual void load(const KUrl& url, const QString& group) = 0;
+        virtual void load(const QUrl &url, const QString& group) = 0;
 
         /**
          * Load a torrent file. Pops up an error dialog
@@ -168,7 +168,7 @@ namespace kt
          * @param url The torrent file
          * @param group Group to add torrent to
          */
-        virtual void loadSilently(const KUrl& url, const QString& group) = 0;
+        virtual void loadSilently(const QUrl &url, const QString& group) = 0;
 
 
         /**
@@ -179,7 +179,7 @@ namespace kt
          * @param savedir Directory to save to
          * @return The loaded TorrentInterface or 0 on failure
          */
-        virtual bt::TorrentInterface* load(const QByteArray& data, const KUrl& url, const QString& group, const QString& savedir) = 0;
+        virtual bt::TorrentInterface* load(const QByteArray& data, const QUrl &url, const QString& group, const QString& savedir) = 0;
 
         /**
          * Load a torrent using a byte array silently
@@ -189,7 +189,7 @@ namespace kt
          * @param savedir Directory to save to
          * @return The loaded TorrentInterface or 0 on failure
          */
-        virtual bt::TorrentInterface* loadSilently(const QByteArray& data, const KUrl& url, const QString& group, const QString& savedir) = 0;
+        virtual bt::TorrentInterface* loadSilently(const QByteArray& data, const QUrl &url, const QString& group, const QString& savedir) = 0;
 
         /**
          * Remove a download.This will delete all temp

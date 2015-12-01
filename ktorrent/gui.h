@@ -27,10 +27,8 @@
 #include <interfaces/guiinterface.h>
 #include <kparts/mainwindow.h>
 
-class KUrl;
 class QAction;
 class KToggleAction;
-class KUrl;
 
 namespace kt
 {
@@ -75,10 +73,10 @@ namespace kt
         QWidget* container(const QString& name);
 
         /// load a torrent
-        void load(const KUrl& url);
+        void load(const QUrl& url);
 
         /// load a torrent silently
-        void loadSilently(const KUrl& url);
+        void loadSilently(const QUrl& url);
 
     public slots:
         /// Update all actions
