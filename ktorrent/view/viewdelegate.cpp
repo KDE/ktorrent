@@ -23,9 +23,7 @@
 #include "view.h"
 #include <QApplication>
 #include <QRect>
-#include <KGlobal>
-#include <KLocale>
-#include <KApplication>
+#include <QLocale>
 #include <QVBoxLayout>
 #include <gui/extender.h>
 
@@ -369,11 +367,11 @@ namespace kt
         progressBarOption.minimum = 0;
         progressBarOption.maximum = 100;
         progressBarOption.progress = (int)progress;
-        progressBarOption.text = KGlobal::locale()->formatNumber(progress, 2) + "%";
+        progressBarOption.text = QLocale().toString(progress, 'g', 2) + '%';
         progressBarOption.textVisible = true;
         progressBarOption.direction = option.direction;
 
-        KApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
+        QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
     }
 
 

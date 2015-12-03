@@ -163,7 +163,7 @@ namespace kt
         if (apply)
         {
             kt::ApplySettings();
-            Settings::self()->writeConfig();
+            Settings::self()->save();
         }
     }
 

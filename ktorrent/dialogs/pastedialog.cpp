@@ -108,4 +108,3 @@ namespace kt
     }
 }
 
-#include "pastedialog.moc"

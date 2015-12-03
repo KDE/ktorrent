@@ -18,17 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "queuemanagermodel.h"
+
 #include <QColor>
 #include <QMimeData>
 #include <QIcon>
-#include <KLocale>
+#include <QApplication>
+#include <QLocale>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include <torrent/queuemanager.h>
 #include <interfaces/torrentinterface.h>
-#include "queuemanagermodel.h"
 #include "settings.h"
-#include <QApplication>
 
 
 using namespace bt;
@@ -565,4 +567,3 @@ namespace kt
 
 }
 
-#include "queuemanagermodel.moc"

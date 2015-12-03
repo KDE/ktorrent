@@ -77,4 +77,3 @@ namespace kt
     }
 }
 
-#include "spinboxdelegate.moc"

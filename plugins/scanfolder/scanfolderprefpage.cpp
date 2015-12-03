@@ -101,7 +101,7 @@ namespace kt
             ScanFolderPluginSettings::setGroup(QString());
 
         ScanFolderPluginSettings::setFolders(folders);
-        ScanFolderPluginSettings::self()->writeConfig();
+        ScanFolderPluginSettings::self()->save();
         m_plugin->updateScanFolders();
     }
 

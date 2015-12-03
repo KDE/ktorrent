@@ -76,4 +76,3 @@ namespace kt
     }
 }
 
-#include "proxypref.moc"

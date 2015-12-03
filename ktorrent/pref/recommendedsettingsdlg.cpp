@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <math.h>
-#include <kglobal.h>
+#include <kformat.h>
 #include <ksharedconfig.h>
 #include <util/constants.h>
 #include <util/functions.h>
@@ -241,13 +241,11 @@ namespace kt
 
     void RecommendedSettingsDlg::uploadBWChanged(int val)
     {
-        KLocale* loc = KGlobal::locale();
-        m_upload_bw_display->setText(i18n("(= %1/s)", loc->formatByteSize(val * 128)));
+        m_upload_bw_display->setText(i18n("(= %1/s)", KFormat().formatByteSize(val * 128)));
     }
 
     void RecommendedSettingsDlg::downloadBWChanged(int val)
     {
-        KLocale* loc = KGlobal::locale();
-        m_download_bw_display->setText(i18n("(= %1/s)", loc->formatByteSize(val * 128)));
+        m_download_bw_display->setText(i18n("(= %1/s)", KFormat().formatByteSize(val * 128)));
     }
 }

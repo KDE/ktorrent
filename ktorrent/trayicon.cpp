@@ -18,16 +18,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include "trayicon.h"
+
 #include <QPainter>
 #include <QtAlgorithms>
 #include <QIcon>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kapplication.h>
-#include <qtooltip.h>
+#include <QLocale>
+#include <QToolTip>
 #include <kpassivepopup.h>
+#include <klocalizedstring.h>
 #include <knotification.h>
-#include <interfaces/torrentinterface.h>
+#include <kactioncollection.h>
 #include <util/functions.h>
 #include <net/socketmonitor.h>
 #include <util/log.h>
@@ -36,9 +38,7 @@
 #include <interfaces/torrentactivityinterface.h>
 #include <torrent/queuemanager.h>
 #include "core.h"
-#include "trayicon.h"
 #include "gui.h"
-#include <kactioncollection.h>
 
 
 using namespace bt;
@@ -224,13 +224,12 @@ namespace kt
             return;
 
         const TorrentStats& s = tc->getStats();
-        KLocale* loc = KGlobal::locale();
         double speed_up = (double)s.bytes_uploaded;
 
         QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
                            "<br>Uploaded %3 at an average speed of %4.",
                            tc->getDisplayName(),
-                           loc->formatNumber(s.max_share_ratio, 2),
+                           QLocale().toString(s.max_share_ratio, 'g', 2),
                            BytesToString(s.bytes_uploaded),
                            BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
@@ -243,13 +242,12 @@ namespace kt
             return;
 
         const TorrentStats& s = tc->getStats();
-        KLocale* loc = KGlobal::locale();
         double speed_up = (double)s.bytes_uploaded;
 
         QString msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
                            "<br>Uploaded %3 at an average speed of %4.",
                            tc->getDisplayName(),
-                           loc->formatNumber(s.max_seed_time, 2),
+                           QLocale().toString(s.max_seed_time, 'g', 2),
                            BytesToString(s.bytes_uploaded),
                            BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
@@ -286,16 +284,15 @@ namespace kt
         const TorrentStats& s = tc->getStats();
 
         QString msg;
-        KLocale* loc = KGlobal::locale();
 
         if (tc->overMaxRatio())
             msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
                        "<br>Remove the limit manually if you want to continue seeding.",
-                       tc->getDisplayName(), loc->formatNumber(s.max_share_ratio, 2));
+                       tc->getDisplayName(), QLocale().toString(s.max_share_ratio, 'g', 2));
         else
             msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and cannot be enqueued. "
                        "<br>Remove the limit manually if you want to continue seeding.",
-                       tc->getDisplayName(), loc->formatNumber(s.max_seed_time, 2));
+                       tc->getDisplayName(), QLocale().toString(s.max_seed_time, 'g', 2));
 
         KNotification::event("QueueNotPossible", msg, QPixmap(), mwnd);
     }
@@ -445,7 +442,7 @@ namespace kt
             Settings::setMaxDownloadRate(rate);
             net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate() * 1024);
         }
-        Settings::self()->writeConfig();
+        Settings::self()->save();
     }
 
     void TrayIcon::suspendStateChanged(bool suspended)
@@ -470,5 +467,3 @@ namespace kt
     }
 
 }
-
-#include "trayicon.moc"

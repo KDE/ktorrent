@@ -117,7 +117,7 @@ namespace kt
     void SearchToolBar::saveSettings()
     {
         SearchPluginSettings::setSearchEngine(m_search_engine->currentIndex());
-        SearchPluginSettings::self()->writeConfig();
+        SearchPluginSettings::self()->save();
     }
 
     void SearchToolBar::searchBoxReturn()

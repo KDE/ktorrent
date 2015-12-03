@@ -91,14 +91,14 @@ namespace kt
                 if (cfg_param == "webgui_automatic_refresh")
                 {
                     WebInterfacePluginSettings::setAutomaticRefresh(cfg_value == "1");
-                    WebInterfacePluginSettings::self()->writeConfig();
+                    WebInterfacePluginSettings::self()->save();
                 }
             }
             else
                 item->setProperty(cfg_value);
         }
         core->applySettings();
-        Settings::self()->writeConfig();
+        Settings::self()->save();
         get(hdlr, hdr);
     }
 

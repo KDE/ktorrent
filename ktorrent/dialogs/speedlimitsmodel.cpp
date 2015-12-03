@@ -245,4 +245,3 @@ namespace kt
     }
 }
 
-#include "speedlimitsmodel.moc"

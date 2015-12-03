@@ -18,13 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "statusbar.h"
+
 #include <QLabel>
 #include <QProgressBar>
 #include <klocale.h>
 #include <util/functions.h>
 #include <dht/dhtbase.h>
 #include <kstatusbarofflineindicator.h>
-#include "statusbar.h"
 
 using namespace bt;
 
@@ -116,4 +117,3 @@ namespace kt
         showMessage(msg, 30 * 1000);
     }
 }
-#include "statusbar.moc"

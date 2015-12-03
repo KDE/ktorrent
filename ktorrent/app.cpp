@@ -17,7 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <kurl.h>
+#include "app.h"
+
 #include <kglobal.h>
 #include <kstartupinfo.h>
 #include <kcmdlineargs.h>
@@ -29,7 +30,6 @@
 #include <util/log.h>
 #include <interfaces/functions.h>
 #include <utp/connection.h>
-#include "app.h"
 #include "gui.h"
 
 

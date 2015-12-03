@@ -18,15 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "viewmodel.h"
+
 #include <math.h>
+
 #include <QBrush>
 #include <QColor>
 #include <QPalette>
 #include <QMimeData>
-#include <KLocale>
-#include <KGlobal>
+#include <QLocale>
 #include <QIcon>
-#include <KIconLoader>
+
+#include <klocalizedstring.h>
+
 #include <util/log.h>
 #include <util/sha1hash.h>
 #include <util/functions.h>
@@ -35,7 +39,6 @@
 #include <torrent/timeestimator.h>
 #include <torrent/queuemanager.h>
 #include <groups/group.h>
-#include "viewmodel.h"
 #include "core.h"
 #include "viewdelegate.h"
 #include "view.h"
@@ -200,6 +203,7 @@ namespace kt
 
     QVariant ViewModel::Item::data(int col) const
     {
+        static QLocale locale;
         const TorrentStats& s = tc->getStats();
         switch (col)
         {
@@ -241,7 +245,7 @@ namespace kt
         case PERCENTAGE:
             return percentage;
         case SHARE_RATIO:
-            return KGlobal::locale()->formatNumber(share_ratio, 2);
+            return locale.toString(share_ratio, 'g', 2);
         case DOWNLOAD_TIME:
             return DurationToString(runtime_dl);
         case SEED_TIME:
@@ -249,7 +253,7 @@ namespace kt
         case DOWNLOAD_LOCATION:
             return tc->getStats().output_path;
         case TIME_ADDED:
-            return KGlobal::locale()->formatDateTime(time_added);
+            return locale.toString(time_added);
         default:
             return QVariant();
         }
@@ -878,4 +882,3 @@ namespace kt
     }
 }
 
-#include "viewmodel.moc"

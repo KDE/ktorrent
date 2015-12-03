@@ -21,16 +21,10 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
-#include <KIcon>
 #include <QMenu>
 #include <KStatusNotifierItem>
 #include <util/constants.h>
-
-namespace bt
-{
-
-    class TorrentInterface;
-}
+#include <interfaces/torrentinterface.h>
 
 using namespace bt;
 

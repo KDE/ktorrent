@@ -18,18 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "queuemanagerwidget.h"
+
 #include <QHeaderView>
 #include <QTreeView>
 #include <QAction>
 #include <QBoxLayout>
 #include <QToolBar>
-#include <KLocale>
+#include <QLineEdit>
 #include <KStandardGuiItem>
 #include <KConfigGroup>
-#include <QLineEdit>
+#include <klocalizedstring.h>
 #include <torrent/queuemanager.h>
 #include <util/log.h>
-#include "queuemanagerwidget.h"
 #include "queuemanagermodel.h"
 
 
@@ -63,34 +64,34 @@ namespace kt
         vbox->addWidget(view);
         layout->addLayout(vbox);
 
-        show_search = toolbar->addAction(QIcon::fromTheme("edit-find"), i18n("Show Search"));
+        show_search = toolbar->addAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("Show Search"));
         show_search->setToolTip(i18n("Show or hide the search bar"));
         show_search->setCheckable(true);
         connect(show_search, SIGNAL(toggled(bool)), this, SLOT(showSearch(bool)));
 
-        move_top = toolbar->addAction(QIcon::fromTheme("go-top"), i18n("Move Top"), this, SLOT(moveTopClicked()));
+        move_top = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-top")), i18n("Move Top"), this, SLOT(moveTopClicked()));
         move_top->setToolTip(i18n("Move a torrent to the top of the queue"));
 
-        move_up = toolbar->addAction(QIcon::fromTheme("go-up"), i18n("Move Up"), this, SLOT(moveUpClicked()));
+        move_up = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-up")), i18n("Move Up"), this, SLOT(moveUpClicked()));
         move_up->setToolTip(i18n("Move a torrent up in the queue"));
 
-        move_down = toolbar->addAction(QIcon::fromTheme("go-down"), i18n("Move Down"), this, SLOT(moveDownClicked()));
+        move_down = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-down")), i18n("Move Down"), this, SLOT(moveDownClicked()));
         move_down->setToolTip(i18n("Move a torrent down in the queue"));
 
-        move_bottom = toolbar->addAction(QIcon::fromTheme("go-bottom"), i18n("Move Bottom"), this, SLOT(moveBottomClicked()));
+        move_bottom = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-bottom")), i18n("Move Bottom"), this, SLOT(moveBottomClicked()));
         move_bottom->setToolTip(i18n("Move a torrent to the bottom of the queue"));
 
-        show_downloads = toolbar->addAction(QIcon::fromTheme("arrow-down"), i18n("Show Downloads"));
+        show_downloads = toolbar->addAction(QIcon::fromTheme(QStringLiteral("arrow-down")), i18n("Show Downloads"));
         show_downloads->setToolTip(i18n("Show all downloads"));
         show_downloads->setCheckable(true);
         connect(show_downloads, SIGNAL(toggled(bool)), this, SLOT(showDownloads(bool)));
 
-        show_uploads = toolbar->addAction(QIcon::fromTheme("arrow-up"), i18n("Show Uploads"));
+        show_uploads = toolbar->addAction(QIcon::fromTheme(QStringLiteral("arrow-up")), i18n("Show Uploads"));
         show_uploads->setToolTip(i18n("Show all uploads"));
         show_uploads->setCheckable(true);
         connect(show_uploads, SIGNAL(toggled(bool)), this, SLOT(showUploads(bool)));
 
-        show_not_queued = toolbar->addAction(QIcon::fromTheme("kt-queue-manager"), i18n("Show Not Queued"));
+        show_not_queued = toolbar->addAction(QIcon::fromTheme(QStringLiteral("kt-queue-manager")), i18n("Show Not Queued"));
         show_not_queued->setToolTip(i18n("Show all not queued torrents"));
         show_not_queued->setCheckable(true);
         connect(show_not_queued, SIGNAL(toggled(bool)), this, SLOT(showNotQueued(bool)));
@@ -319,4 +320,3 @@ namespace kt
 
 }
 
-#include "queuemanagerwidget.moc"

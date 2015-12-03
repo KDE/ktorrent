@@ -70,4 +70,3 @@ namespace kt
 
 }
 
-#include "addpeersdlg.moc"

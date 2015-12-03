@@ -92,7 +92,7 @@ namespace kt
             if (dd_not_exist)
             {
                 Settings::setTempDir(data_dir);
-                Settings::self()->writeConfig();
+                Settings::self()->save();
             }
         }
 
@@ -862,7 +862,7 @@ namespace kt
         qman->saveState(KSharedConfig::openConfig());
 
         // Sync the config to be sure everything is saved
-        Settings::self()->writeConfig();
+        Settings::self()->save();
 
         qman->onExit(job);
         // wait for completion of stopped events
@@ -917,7 +917,7 @@ namespace kt
                     rollback(succes);
                     // set back the old data_dir in Settings
                     Settings::setTempDir(data_dir);
-                    Settings::self()->writeConfig();
+                    Settings::self()->save();
                     qman->setSuspendedState(false);
                     update_timer.start(CORE_UPDATE_INTERVAL);
                     return false;

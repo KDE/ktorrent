@@ -17,16 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "groupview.h"
+
 #include <QDropEvent>
 #include <QDragEnterEvent>
 #include <QTreeWidgetItemIterator>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kiconloader.h>
+#include <QInputDialog>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <QAction>
 #include <kmessagebox.h>
-#include <kinputdialog.h>
 #include <kactioncollection.h>
 #include <kconfiggroup.h>
 #include <util/log.h>
@@ -36,7 +36,6 @@
 #include <groups/groupmanager.h>
 #include <groups/torrentgroup.h>
 #include "view/view.h"
-#include "groupview.h"
 #include "grouppolicydlg.h"
 #include "gui.h"
 #include "core.h"
@@ -77,25 +76,25 @@ namespace kt
 
     void GroupView::setupActions(KActionCollection* col)
     {
-        open_in_new_tab = new QAction(QIcon::fromTheme("list-add"), i18n("Open In New Tab"), this);
+        open_in_new_tab = new QAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Open In New Tab"), this);
         connect(open_in_new_tab, SIGNAL(triggered()), this, SLOT(openInNewTab()));
-        col->addAction("open_in_new_tab", open_in_new_tab);
+        col->addAction(QStringLiteral("open_in_new_tab"), open_in_new_tab);
 
-        new_group = new QAction(QIcon::fromTheme("document-new"), i18n("New Group"), this);
+        new_group = new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Group"), this);
         connect(new_group, SIGNAL(triggered()), this, SLOT(addGroup()));
-        col->addAction("new_group", new_group);
+        col->addAction(QStringLiteral("new_group"), new_group);
 
-        edit_group = new QAction(QIcon::fromTheme("insert-text"), i18n("Edit Name"), this);
+        edit_group = new QAction(QIcon::fromTheme(QStringLiteral("insert-text")), i18n("Edit Name"), this);
         connect(edit_group, SIGNAL(triggered()), this, SLOT(editGroupName()));
-        col->addAction("edit_group_name", edit_group);
+        col->addAction(QStringLiteral("edit_group_name"), edit_group);
 
-        remove_group = new QAction(QIcon::fromTheme("edit-delete"), i18n("Remove Group"), this);
+        remove_group = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Remove Group"), this);
         connect(remove_group, SIGNAL(triggered()), this, SLOT(removeGroup()));
-        col->addAction("remove_group", remove_group);
+        col->addAction(QStringLiteral("remove_group"), remove_group);
 
-        edit_group_policy = new QAction(QIcon::fromTheme("preferences-other"), i18n("Group Policy"), this);
+        edit_group_policy = new QAction(QIcon::fromTheme(QStringLiteral("preferences-other")), i18n("Group Policy"), this);
         connect(edit_group_policy, SIGNAL(triggered()), this, SLOT(editGroupPolicy()));
-        col->addAction("edit_group_policy", edit_group_policy);
+        col->addAction(QStringLiteral("edit_group_policy"), edit_group_policy);
     }
 
     void GroupView::addGroup()
@@ -106,7 +105,7 @@ namespace kt
     Group* GroupView::addNewGroup()
     {
         bool ok = false;
-        QString name = KInputDialog::getText(QString(), i18n("Please enter the group name."), QString(), &ok, this);
+        QString name = QInputDialog::getText(this, QString(), i18n("Please enter the group name."), QLineEdit::Normal, QString(), &ok);
 
         if (name.isNull() || name.length() == 0 || !ok)
             return 0;
@@ -141,18 +140,10 @@ namespace kt
     {
         Group* g = model->groupForIndex(selectionModel()->currentIndex());
 
-        if (!g || !gman->canRemove(g))
-        {
-            edit_group->setEnabled(false);
-            remove_group->setEnabled(false);
-            edit_group_policy->setEnabled(false);
-        }
-        else
-        {
-            edit_group->setEnabled(true);
-            remove_group->setEnabled(true);
-            edit_group_policy->setEnabled(true);
-        }
+        bool enable = g && gman->canRemove(g);
+        edit_group->setEnabled(enable);
+        remove_group->setEnabled(enable);
+        edit_group_policy->setEnabled(enable);
 
         open_in_new_tab->setEnabled(g != 0);
 
@@ -191,7 +182,12 @@ namespace kt
     {
         KConfigGroup g = cfg->group("GroupView");
         QStringList default_expanded;
-        default_expanded << "/all" << "/all/downloads" << "/all/uploads" << "/all/active" << "/all/passive" << "/all/custom";
+        default_expanded << QStringLiteral("/all")
+                         << QStringLiteral("/all/downloads")
+                         << QStringLiteral("/all/uploads")
+                         << QStringLiteral("/all/active")
+                         << QStringLiteral("/all/passive")
+                         << QStringLiteral("/all/custom");
         QStringList slist = g.readEntry("expanded", default_expanded);
         model->expandGroups(this, slist);
         setVisible(g.readEntry("visible", true));
@@ -219,4 +215,3 @@ namespace kt
     }
 }
 
-#include "groupview.moc"
