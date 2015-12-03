@@ -37,7 +37,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="KIntSpinBox" name="kcfg_maxDownloads">
+         <widget class="QSpinBox" name="kcfg_maxDownloads">
           <property name="toolTip">
            <string>The maximum number of simultaneous downloads the queue manager will run.</string>
           </property>
@@ -57,7 +57,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="KIntSpinBox" name="kcfg_maxSeeds">
+         <widget class="QSpinBox" name="kcfg_maxSeeds">
           <property name="toolTip">
            <string>The maximum number of simultaneous seeds the queue manager will run.</string>
           </property>
@@ -106,7 +106,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="KIntSpinBox" name="kcfg_minDiskSpace">
+         <widget class="QSpinBox" name="kcfg_minDiskSpace">
           <property name="toolTip">
            <string>When the free diskspace drops below this value, stop all torrents downloading.</string>
           </property>
@@ -147,7 +147,7 @@
          </widget>
         </item>
         <item>
-         <widget class="KIntSpinBox" name="kcfg_stallTimer">
+         <widget class="QSpinBox" name="kcfg_stallTimer">
           <property name="toolTip">
            <string>&lt;p&gt;Time used for the stall timer. When a torrent is stalled longer than this, its priority will be decreased.&lt;/p&gt;</string>
           </property>
@@ -156,9 +156,6 @@
           </property>
           <property name="maximum">
            <number>1000000</number>
-          </property>
-          <property name="base">
-           <number>10</number>
           </property>
          </widget>
         </item>
@@ -185,7 +182,7 @@
      <property name="title">
       <string comment="@title:group Options regarging Seeding">Seeding</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="gl">
       <item row="0" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_keepSeeding">
         <property name="toolTip">
@@ -204,7 +201,7 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="KIntSpinBox" name="kcfg_numUploadSlots">
+       <widget class="QSpinBox" name="kcfg_numUploadSlots">
         <property name="toolTip">
          <string>The number of upload slots, this determines the number of peers you can upload to simultaneously for one torrent.</string>
         </property>
@@ -313,13 +310,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>

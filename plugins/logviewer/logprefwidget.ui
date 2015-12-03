@@ -105,7 +105,7 @@
          </widget>
         </item>
         <item>
-         <widget class="KIntSpinBox" name="kcfg_maxBlockCount"/>
+         <widget class="QSpinBox" name="kcfg_maxBlockCount"/>
         </item>
         <item>
          <spacer name="horizontalSpacer_2">
@@ -127,13 +127,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

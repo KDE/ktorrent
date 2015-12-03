@@ -129,10 +129,6 @@
    <header>kurlrequester.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local" >kurlrequester.h</include>
-  <include location="local" >kpushbutton.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>

@@ -17,11 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <qdatetime.h>
+#include "functions.h"
+
+#include <QDateTime>
 #include <QNetworkInterface>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
+#include <QStandardPaths>
+#include <klocalizedstring.h>
+
 #include <solid/device.h>
 #include <util/functions.h>
 #include <download/downloader.h>
@@ -46,7 +48,6 @@
 #include <torrent/timeestimator.h>
 #include <interfaces/queuemanagerinterface.h>
 #include "settings.h"
-#include "functions.h"
 
 
 using namespace bt;
@@ -57,11 +58,11 @@ namespace kt
 
     QString DataDir()
     {
-        QString str = KGlobal::dirs()->saveLocation("data", "ktorrent");
-        if (!str.endsWith(bt::DirSeparator()))
+        QString str = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+        //if (!str.endsWith(bt::DirSeparator()))
             return str + bt::DirSeparator();
-        else
-            return str;
+        //else
+        //    return str;
     }
 
     Uint16 RandomGoodPort()

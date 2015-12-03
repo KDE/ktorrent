@@ -376,11 +376,6 @@
   <tabstop>m_select_none</tabstop>
   <tabstop>m_invert_selection</tabstop>
  </tabstops>
- <includes>
-  <include location="global">kurlrequester.h</include>
-  <include location="global">klineedit.h</include>
-  <include location="global">kpushbutton.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>
