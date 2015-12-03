@@ -118,7 +118,7 @@ namespace kt
 
         dbus_iface = new DBus(this, core, this);
         core->loadPlugins();
-        loadState(KGlobal::config());
+        loadState(KSharedConfig::openConfig());
 
         IPFilterWidget::registerFilterList();
 
@@ -176,7 +176,7 @@ namespace kt
         if (!pref_dlg)
         {
             pref_dlg = new PrefDialog(this, core);
-            pref_dlg->loadState(KGlobal::config());
+            pref_dlg->loadState(KSharedConfig::openConfig());
         }
 
         pref_dlg->addPrefPage(page);
@@ -329,9 +329,9 @@ namespace kt
     void GUI::pasteURL()
     {
         PasteDialog dlg(core, this);
-        dlg.loadState(KGlobal::config());
+        dlg.loadState(KSharedConfig::openConfig());
         dlg.exec();
-        dlg.saveState(KGlobal::config());
+        dlg.saveState(KSharedConfig::openConfig());
     }
 
     void GUI::paste()
@@ -373,7 +373,7 @@ namespace kt
 
     void GUI::configureToolbars()
     {
-        //KF5 saveMainWindowSettings(KGlobal::config()->group("MainWindow"));
+        //KF5 saveMainWindowSettings(KSharedConfig::openConfig()->group("MainWindow"));
         KEditToolBar dlg(factory());
         connect(&dlg, SIGNAL(newToolBarConfig()), this, SLOT(newToolBarConfig()));
         dlg.exec();
@@ -385,7 +385,7 @@ namespace kt
 
     void GUI::newToolBarConfig() // This is called when OK, Apply or Defaults is clicked
     {
-        applyMainWindowSettings(KGlobal::config()->group("MainWindow"));
+        applyMainWindowSettings(KSharedConfig::openConfig()->group("MainWindow"));
     }
 
     void GUI::import()
@@ -533,12 +533,12 @@ namespace kt
         if (Settings::showSystemTrayIcon() && !KApplication::kApplication()->sessionSaving())
         {
             hide();
-            saveState(KGlobal::config());
+            saveState(KSharedConfig::openConfig());
             return false;
         }
         else
         {
-            saveState(KGlobal::config());
+            saveState(KSharedConfig::openConfig());
             timer.stop();
             QTimer::singleShot(500, KApplication::kApplication(), SLOT(quit()));
             return true;
@@ -547,7 +547,7 @@ namespace kt
 
     void GUI::quit()
     {
-        saveState(KGlobal::config());
+        saveState(KSharedConfig::openConfig());
         qApp->quit();
     }
 

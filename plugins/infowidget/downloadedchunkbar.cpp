@@ -112,4 +112,3 @@ namespace kt
     }
 }
 
-#include "downloadedchunkbar.moc"

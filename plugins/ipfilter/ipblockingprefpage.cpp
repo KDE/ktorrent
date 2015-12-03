@@ -162,7 +162,7 @@ namespace kt
         if (j != m_job)
             return;
 
-        KConfigGroup g = KGlobal::config()->group("IPFilterAutoUpdate");
+        KConfigGroup g = KSharedConfig::openConfig()->group("IPFilterAutoUpdate");
         if (!j->error())
         {
             g.writeEntry("last_updated", QDateTime::currentDateTime());
@@ -192,7 +192,7 @@ namespace kt
             return;
         }
 
-        KConfigGroup g = KGlobal::config()->group("IPFilterAutoUpdate");
+        KConfigGroup g = KSharedConfig::openConfig()->group("IPFilterAutoUpdate");
         bool ok = g.readEntry("last_update_ok", true);
         QDate last_updated = g.readEntry("last_updated", QDate());
 

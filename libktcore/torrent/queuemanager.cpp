@@ -20,9 +20,9 @@
  ***************************************************************************/
 #include "queuemanager.h"
 
-#include <qstring.h>
+#include <QNetworkConfigurationManager>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/error.h>
 #include <util/sha1hash.h>
@@ -53,9 +53,9 @@ namespace kt
         suspended_state = false;
         exiting = false;
         ordering = false;
-        Solid::Networking::Notifier* notifier = Solid::Networking::notifier();
-        connect(notifier, SIGNAL(statusChanged(Solid::Networking::Status)),
-                this, SLOT(networkStatusChanged(Solid::Networking::Status)));
+
+        QNetworkConfigurationManager* networkConfigurationManager = new QNetworkConfigurationManager(this);
+        connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SLOT(onOnlineStateChanged(bool)));
     }
 
 
@@ -814,9 +814,9 @@ namespace kt
         orderQueue();
     }
 
-    void QueueManager::networkStatusChanged(Solid::Networking::Status status)
+    void QueueManager::onOnlineStateChanged(bool isOnline)
     {
-        if (status == Solid::Networking::Connected)
+        if (isOnline)
         {
             Out(SYS_GEN | LOG_IMPORTANT) << "Network is up" << endl;
             // if the network has gone down, longer then 2 minutes
@@ -833,7 +833,7 @@ namespace kt
 
             network_down_time = QDateTime();
         }
-        else if (status == Solid::Networking::Unconnected)
+        else
         {
             Out(SYS_GEN | LOG_IMPORTANT) << "Network is down" << endl;
             network_down_time = QDateTime::currentDateTime();

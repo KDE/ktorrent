@@ -126,7 +126,7 @@ namespace kt
         }
 
         //
-        KConfigGroup g = KGlobal::config()->group("Scripting");
+        KConfigGroup g = KSharedConfig::openConfig()->group("Scripting");
         QStringList scripts = g.readEntry("scripts", QStringList());
         foreach (const QString& s, scripts)
         {
@@ -173,7 +173,7 @@ namespace kt
 
     void ScriptingPlugin::saveScripts()
     {
-        KConfigGroup g = KGlobal::config()->group("Scripting");
+        KConfigGroup g = KSharedConfig::openConfig()->group("Scripting");
         g.writeEntry("scripts", model->scriptFiles());
         g.writeEntry("running", model->runningScriptFiles());
         g.sync();

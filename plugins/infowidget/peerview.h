@@ -25,8 +25,8 @@
 #include <util/ptrmap.h>
 #include <interfaces/peerinterface.h>
 #include <ksharedconfig.h>
-#include <QSortFilterProxyModel>
 
+class QSortFilterProxyModel;
 class QMenu;
 
 namespace kt

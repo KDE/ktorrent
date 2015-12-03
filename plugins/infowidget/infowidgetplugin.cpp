@@ -20,8 +20,8 @@
 #include "infowidgetplugin.h"
 
 #include <kpluginfactory.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <ksharedconfig.h>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 #include <interfaces/guiinterface.h>
@@ -73,7 +73,7 @@ namespace kt
 
         status_tab = new StatusTab(0);
         file_view = new FileView(0);
-        file_view->loadState(KGlobal::config());
+        file_view->loadState(KSharedConfig::openConfig());
         connect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)),
                 this, SLOT(torrentRemoved(bt::TorrentInterface*)));
 
@@ -98,16 +98,16 @@ namespace kt
         disconnect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)),
                    this, SLOT(torrentRemoved(bt::TorrentInterface*)));
         if (cd_view)
-            cd_view->saveState(KGlobal::config());
+            cd_view->saveState(KSharedConfig::openConfig());
         if (peer_view)
-            peer_view->saveState(KGlobal::config());
+            peer_view->saveState(KSharedConfig::openConfig());
         if (file_view)
-            file_view->saveState(KGlobal::config());
+            file_view->saveState(KSharedConfig::openConfig());
         if (webseeds_tab)
-            webseeds_tab->saveState(KGlobal::config());
+            webseeds_tab->saveState(KSharedConfig::openConfig());
         if (tracker_view)
-            tracker_view->saveState(KGlobal::config());
-        KGlobal::config()->sync();
+            tracker_view->saveState(KSharedConfig::openConfig());
+        KSharedConfig::openConfig()->sync();
 
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
         ta->removeViewListener(this);
@@ -203,7 +203,7 @@ namespace kt
         }
 
         if (save)
-            InfoWidgetPluginSettings::self()->writeConfig();
+            InfoWidgetPluginSettings::self()->save();
 
         showWebSeedsTab(InfoWidgetPluginSettings::showWebSeedsTab());
         showPeerView(InfoWidgetPluginSettings::showPeerView());
@@ -221,12 +221,12 @@ namespace kt
             peer_view = new PeerView(0);
             ta->addToolWidget(peer_view, i18n("Peers"), "system-users",
                               i18n("Displays all the peers you are connected to for a torrent"));
-            peer_view->loadState(KGlobal::config());
+            peer_view->loadState(KSharedConfig::openConfig());
             createMonitor(tc);
         }
         else if (!show && peer_view)
         {
-            peer_view->saveState(KGlobal::config());
+            peer_view->saveState(KSharedConfig::openConfig());
             ta->removeToolWidget(peer_view);
             delete peer_view; peer_view = 0;
             createMonitor(tc);
@@ -244,13 +244,13 @@ namespace kt
             ta->addToolWidget(cd_view, i18n("Chunks"), "kt-chunks",
                               i18n("Displays all the chunks you are downloading, of a torrent"));
 
-            cd_view->loadState(KGlobal::config());
+            cd_view->loadState(KSharedConfig::openConfig());
             cd_view->changeTC(tc);
             createMonitor(tc);
         }
         else if (!show && cd_view)
         {
-            cd_view->saveState(KGlobal::config());
+            cd_view->saveState(KSharedConfig::openConfig());
             ta->removeToolWidget(cd_view);
             delete cd_view; cd_view = 0;
             createMonitor(tc);
@@ -265,12 +265,12 @@ namespace kt
             tracker_view = new TrackerView(0);
             ta->addToolWidget(tracker_view, i18n("Trackers"), "network-server",
                               i18n("Displays information about all the trackers of a torrent"));
-            tracker_view->loadState(KGlobal::config());
+            tracker_view->loadState(KSharedConfig::openConfig());
             tracker_view->changeTC(ta->getCurrentTorrent());
         }
         else if (!show && tracker_view)
         {
-            tracker_view->saveState(KGlobal::config());
+            tracker_view->saveState(KSharedConfig::openConfig());
             ta->removeToolWidget(tracker_view);
             delete tracker_view; tracker_view = 0;
         }
@@ -284,12 +284,12 @@ namespace kt
             webseeds_tab = new WebSeedsTab(0);
             ta->addToolWidget(webseeds_tab, i18n("Webseeds"), "network-server",
                               i18n("Displays all the webseeds of a torrent"));
-            webseeds_tab->loadState(KGlobal::config());
+            webseeds_tab->loadState(KSharedConfig::openConfig());
             webseeds_tab->changeTC(ta->getCurrentTorrent());
         }
         else if (!show && webseeds_tab)
         {
-            webseeds_tab->saveState(KGlobal::config());
+            webseeds_tab->saveState(KSharedConfig::openConfig());
             ta->removeToolWidget(webseeds_tab);
             delete webseeds_tab; webseeds_tab = 0;
         }

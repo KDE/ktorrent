@@ -61,7 +61,7 @@ namespace kt
 
     void LogFlags::updateFlags()
     {
-        KConfigGroup cfg = KGlobal::config()->group("LogFlags");
+        KConfigGroup cfg = KSharedConfig::openConfig()->group("LogFlags");
         log_flags.clear();
         LogSystemManager& lsman = LogSystemManager::instance();
         for (LogSystemManager::iterator i = lsman.begin(); i != lsman.end(); i++)
@@ -161,7 +161,7 @@ namespace kt
         LogFlag& f = log_flags[index.row()];
         f.flag = flag;
 
-        KConfigGroup cfg = KGlobal::config()->group("LogFlags");
+        KConfigGroup cfg = KSharedConfig::openConfig()->group("LogFlags");
         cfg.writeEntry(QString("sys_%1").arg(f.id), flag);
         cfg.sync();
 
@@ -213,7 +213,7 @@ namespace kt
 
     void LogFlags::registered(const QString& sys)
     {
-        KConfigGroup cfg = KGlobal::config()->group("LogFlags");
+        KConfigGroup cfg = KSharedConfig::openConfig()->group("LogFlags");
 
         LogSystemManager& lsman = LogSystemManager::instance();
         LogFlag f;

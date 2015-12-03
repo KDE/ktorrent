@@ -70,55 +70,55 @@ namespace kt
 
     QString ScriptingModule::readConfigEntry(const QString& group, const QString& name, const QString& default_value)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         return g.readEntry(name, default_value);
     }
 
     bool ScriptingModule::readConfigEntryBool(const QString& group, const QString& name, bool default_value)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         return g.readEntry(name, default_value);
     }
 
     int ScriptingModule::readConfigEntryInt(const QString& group, const QString& name, int default_value)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         return g.readEntry(name, default_value);
     }
 
     float ScriptingModule::readConfigEntryFloat(const QString& group, const QString& name, float default_value)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         return g.readEntry(name, default_value);
     }
 
     void ScriptingModule::writeConfigEntry(const QString& group, const QString& name, const QString& value)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         g.writeEntry(name, value);
     }
 
     void ScriptingModule::writeConfigEntryBool(const QString& group, const QString& name, bool value)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         g.writeEntry(name, value);
     }
 
     void ScriptingModule::writeConfigEntryInt(const QString& group, const QString& name, int value)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         g.writeEntry(name, value);
     }
 
     void ScriptingModule::writeConfigEntryFloat(const QString& group, const QString& name, float value)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         g.writeEntry(name, value);
     }
 
     void ScriptingModule::syncConfig(const QString& group)
     {
-        KConfigGroup g = KGlobal::config()->group(group);
+        KConfigGroup g = KSharedConfig::openConfig()->group(group);
         g.sync();
     }
 

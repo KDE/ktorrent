@@ -22,12 +22,12 @@
 #define KT_MEDIAPLAYERACTIVITY_H
 
 #include <QModelIndex>
-#include <QSplitter>
-#include <KTabWidget>
 #include <interfaces/activity.h>
-#include <QToolButton>
 #include "mediafile.h"
 
+class QToolButton;
+class QSplitter;
+class QTabWidget;
 class QAction;
 class KActionCollection;
 
@@ -80,7 +80,7 @@ namespace kt
         MediaPlayer* media_player;
         MediaView* media_view;
         MediaController* controller;
-        KTabWidget* tabs;
+        QTabWidget* tabs;
         int action_flags;
         VideoWidget* video;
         bool fullscreen_mode;

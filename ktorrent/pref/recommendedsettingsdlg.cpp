@@ -49,7 +49,7 @@ namespace kt
         m_slots->setEnabled(false);
         m_sim_torrents->setEnabled(false);
 
-        loadState(KGlobal::config());
+        loadState(KSharedConfig::openConfig());
 
         calculate();
     }
@@ -61,7 +61,7 @@ namespace kt
 
     void RecommendedSettingsDlg::apply()
     {
-        saveState(KGlobal::config());
+        saveState(KSharedConfig::openConfig());
         /*  Settings::setMaxDownloadRate(max_download_speed);
             Settings::setMaxUploadRate(max_upload_speed);
             Settings::setMaxConnections(max_conn_tor);

@@ -124,7 +124,7 @@ namespace kt
         if (!loadedAndRunning() || !IPBlockingPluginSettings::autoUpdate())
             return;
 
-        KConfigGroup g = KGlobal::config()->group("IPFilterAutoUpdate");
+        KConfigGroup g = KSharedConfig::openConfig()->group("IPFilterAutoUpdate");
         bool ok = g.readEntry("last_update_ok", false);
         QDateTime now = QDateTime::currentDateTime();
         if (!ok)

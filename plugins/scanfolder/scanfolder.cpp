@@ -46,7 +46,7 @@ namespace kt
     {
         bt::Out(SYS_SNF | LOG_NOTICE) << "ScanFolder: scanning " << dir << endl;
 
-        KConfigGroup config(KGlobal::config(), "DirWatch");
+        KConfigGroup config(KSharedConfig::openConfig(), "DirWatch");
         config.writeEntry("NFSPollInterval", 5000);
         config.writeEntry("nfsPreferredMethod", "Stat"); // Force the usage of Stat method for NFS
         config.sync();

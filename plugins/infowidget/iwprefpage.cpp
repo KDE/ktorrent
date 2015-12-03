@@ -33,4 +33,3 @@ namespace kt
     {
     }
 }
-#include "iwprefpage.moc"

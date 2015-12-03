@@ -54,11 +54,11 @@ namespace kt
         KGlobal::locale()->insertCatalog("libktorrent");
         KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
         kt::GUI* widget = 0;
-            bt::InitLog(kt::DataDir() + "log", true, true, true);
+            bt::InitLog(kt::DataDir() + QLatin1String("log"), true, true, true);
 
         if (!main_widget)
         {
-            bt::InitLog(kt::DataDir() + "log", true);
+            bt::InitLog(kt::DataDir() + QLatin1String("log"), true);
             widget = new kt::GUI();
             setTopWidget(widget);
             main_widget = widget;

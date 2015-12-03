@@ -21,8 +21,8 @@
 
 #include <QFile>
 #include <QTextStream>
-#include <klocale.h>
-#include <kglobal.h>
+#include <klocalizedstring.h>
+#include <ksharedconfig.h>
 #include <kservicetypetrader.h>
 #include <kpluginmetadata.h>
 #include <util/log.h>
@@ -55,7 +55,7 @@ namespace kt
         foreach (const KPluginMetaData &module, pluginsMetaData)
         {
             KPluginInfo pi(module);
-            pi.setConfig(KGlobal::config()->group(pi.pluginName()));
+            pi.setConfig(KSharedConfig::openConfig()->group(pi.pluginName()));
             pi.load();
 
             plugins << pi;

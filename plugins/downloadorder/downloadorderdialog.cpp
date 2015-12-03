@@ -68,7 +68,7 @@ namespace kt
             model->initOrder(dom->downloadOrder());
         m_order->setModel(model);
 
-        QSize s = KGlobal::config()->group("DownloadOrderDialog").readEntry("size", size());
+        QSize s = KSharedConfig::openConfig()->group("DownloadOrderDialog").readEntry("size", size());
         resize(s);
 
         connect(m_order->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
@@ -88,7 +88,7 @@ namespace kt
 
     DownloadOrderDialog::~DownloadOrderDialog()
     {
-        KGlobal::config()->group("DownloadOrderDialog").writeEntry("size", size());
+        KSharedConfig::openConfig()->group("DownloadOrderDialog").writeEntry("size", size());
     }
 
     void DownloadOrderDialog::commitDownloadOrder()

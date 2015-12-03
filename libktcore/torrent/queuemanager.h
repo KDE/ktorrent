@@ -23,7 +23,6 @@
 
 #include <set>
 #include <QObject>
-#include <solid/networking.h>
 #include <KSharedConfig>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/queuemanagerinterface.h>
@@ -289,7 +288,7 @@ namespace kt
         bool checkDiskSpace(bt::TorrentInterface* tc, bool interactive);
 
     private slots:
-        void networkStatusChanged(Solid::Networking::Status status);
+        void onOnlineStateChanged(bool);
 
     private:
         QueuePtrList downloads;

@@ -54,7 +54,7 @@ namespace kt
         m_devices->setModel(model);
 
         // load the state of the devices treewidget
-        KConfigGroup g = KGlobal::config()->group("UPnPDevicesList");
+        KConfigGroup g = KSharedConfig::openConfig()->group("UPnPDevicesList");
         QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
         if (!s.isNull())
             m_devices->header()->restoreState(s);
@@ -74,7 +74,7 @@ namespace kt
     void UPnPWidget::shutdown(bt::WaitJob* job)
     {
         // save the state of the devices treewidget
-        KConfigGroup g = KGlobal::config()->group("UPnPDevicesList");
+        KConfigGroup g = KSharedConfig::openConfig()->group("UPnPDevicesList");
         QByteArray s = m_devices->header()->saveState();
         g.writeEntry("state", s.toBase64());
 

@@ -108,7 +108,7 @@ namespace kt
 
     void SpeedLimitsDlg::saveState()
     {
-        KConfigGroup g = KGlobal::config()->group("SpeedLimitsDlg");
+        KConfigGroup g = KSharedConfig::openConfig()->group("SpeedLimitsDlg");
         QByteArray s = m_speed_limits_view->header()->saveState();
         g.writeEntry("view_state", s.toBase64());
         g.writeEntry("size", size());
@@ -116,7 +116,7 @@ namespace kt
 
     void SpeedLimitsDlg::loadState()
     {
-        KConfigGroup g = KGlobal::config()->group("SpeedLimitsDlg");
+        KConfigGroup g = KSharedConfig::openConfig()->group("SpeedLimitsDlg");
         QByteArray s = QByteArray::fromBase64(g.readEntry("view_state", QByteArray()));
         if (!s.isNull())
         {
@@ -173,6 +173,4 @@ namespace kt
     }
 
 }
-
-#include "speedlimitsdlg.moc"
 

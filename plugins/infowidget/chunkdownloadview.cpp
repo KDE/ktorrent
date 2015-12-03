@@ -22,7 +22,7 @@
 
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kconfiggroup.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
@@ -133,4 +133,3 @@ namespace kt
     }
 }
 
-#include "chunkdownloadview.moc"

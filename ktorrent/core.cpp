@@ -271,9 +271,9 @@ namespace kt
         if (!silently && !Settings::openAllTorrentsSilently())
         {
             FileSelectDlg dlg(qman, gman, group, gui->getMainWindow());
-            dlg.loadState(KGlobal::config());
+            dlg.loadState(KSharedConfig::openConfig());
             bool ret = dlg.execute(tc, &start_torrent, &skip_check, location) == QDialog::Accepted;
-            dlg.saveState(KGlobal::config());
+            dlg.saveState(KSharedConfig::openConfig());
 
             if (!ret)
                 return false;
@@ -705,7 +705,7 @@ namespace kt
         }
 
         gman->torrentsLoaded(qman);
-        qman->loadState(KGlobal::config());
+        qman->loadState(KSharedConfig::openConfig());
         QTimer::singleShot(0, this, SLOT(delayedStart()));
     }
 
@@ -859,7 +859,7 @@ namespace kt
         AuthenticationMonitor::instance().shutdown();
 
         WaitJob* job = new WaitJob(5000);
-        qman->saveState(KGlobal::config());
+        qman->saveState(KSharedConfig::openConfig());
 
         // Sync the config to be sure everything is saved
         Settings::self()->writeConfig();

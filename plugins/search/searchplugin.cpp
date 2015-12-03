@@ -73,7 +73,7 @@ namespace kt
         activity = new SearchActivity(this, 0);
         getGUI()->addActivity(activity);
         activity->loadCurrentSearches();
-        activity->loadState(KGlobal::config());
+        activity->loadState(KSharedConfig::openConfig());
 
         connect(pref, SIGNAL(clearSearchHistory()), activity, SLOT(clearSearchHistory()));
     }
@@ -83,7 +83,7 @@ namespace kt
         LogSystemManager::instance().unregisterSystem(i18nc("plugin name", "Search"));
         getGUI()->removeActivity(activity);
         activity->saveCurrentSearches();
-        activity->saveState(KGlobal::config());
+        activity->saveState(KSharedConfig::openConfig());
 
         getGUI()->removePrefPage(pref);
         delete pref;

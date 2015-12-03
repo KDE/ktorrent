@@ -22,10 +22,9 @@
 
 #include <QHeaderView>
 #include <QClipboard>
-#include <klocale.h>
 #include <QUrl>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kglobal.h>
 #include <torrent/globals.h>
 #include <interfaces/trackerinterface.h>
 #include <interfaces/torrentinterface.h>
@@ -268,4 +267,3 @@ namespace kt
 }
 
 
-#include "trackerview.moc"

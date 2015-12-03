@@ -17,13 +17,17 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+#include "mediaplayeractivity.h"
+
 #include <QBoxLayout>
 #include <QLabel>
 #include <QIcon>
-#include <klocale.h>
+#include <QSplitter>
+#include <QToolButton>
 #include <QAction>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
+#include <klocalizedstring.h>
 
 #include <util/log.h>
 #include <util/fileops.h>
@@ -35,8 +39,6 @@
 #include "mediaplayer.h"
 #include "videowidget.h"
 #include "mediaplayerpluginsettings.h"
-#include "mediaplayeractivity.h"
-#include <QToolButton>
 #include "playlistwidget.h"
 #include "playlist.h"
 #include "mediacontroller.h"
@@ -60,12 +62,12 @@ namespace kt
 
         QHBoxLayout* layout = new QHBoxLayout(this);
         layout->setMargin(0);
-        tabs = new KTabWidget(this);
+        tabs = new QTabWidget(this);
         layout->addWidget(tabs);
 
 
         QWidget* tab = new QWidget(tabs);
-        tabs->addTab(tab, QIcon::fromTheme("applications-multimedia"), i18n("Media Player"));
+        tabs->addTab(tab, QIcon::fromTheme(QStringLiteral("applications-multimedia")), i18n("Media Player"));
         QVBoxLayout* vbox = new QVBoxLayout(tab);
 
         splitter = new QSplitter(Qt::Horizontal, tab);
@@ -82,11 +84,12 @@ namespace kt
 
         close_button = new QToolButton(tabs);
         tabs->setCornerWidget(close_button, Qt::TopRightCorner);
-        close_button->setIcon(QIcon::fromTheme("tab-close"));
+        close_button->setIcon(QIcon::fromTheme(QStringLiteral("tab-close")));
         close_button->setEnabled(false);
         connect(close_button, SIGNAL(clicked()), this, SLOT(closeTab()));
 
-        tabs->setTabBarHidden(true);
+        //tabs->setTabBarHidden(true);
+        tabs->setTabBarAutoHide(true);
 
         connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), media_model, SLOT(onTorrentAdded(bt::TorrentInterface*)));
         connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), media_model, SLOT(onTorrentRemoved(bt::TorrentInterface*)));
@@ -110,41 +113,41 @@ namespace kt
 
     void MediaPlayerActivity::setupActions()
     {
-        play_action = new QAction(QIcon::fromTheme("media-playback-start"), i18n("Play"), this);
+        play_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-start")), i18n("Play"), this);
         connect(play_action, SIGNAL(triggered()), this, SLOT(play()));
-        ac->addAction("media_play", play_action);
+        ac->addAction(QStringLiteral("media_play"), play_action);
 
-        pause_action = new QAction(QIcon::fromTheme("media-playback-pause"), i18n("Pause"), this);
+        pause_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-pause")), i18n("Pause"), this);
         connect(pause_action, SIGNAL(triggered()), this, SLOT(pause()));
-        ac->addAction("media_pause", pause_action);
+        ac->addAction(QStringLiteral("media_pause"), pause_action);
 
-        stop_action = new QAction(QIcon::fromTheme("media-playback-stop"), i18n("Stop"), this);
+        stop_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18n("Stop"), this);
         connect(stop_action, SIGNAL(triggered()), this, SLOT(stop()));
-        ac->addAction("media_stop", stop_action);
+        ac->addAction(QStringLiteral("media_stop"), stop_action);
 
-        prev_action = new QAction(QIcon::fromTheme("media-skip-backward"), i18n("Previous"), this);
+        prev_action = new QAction(QIcon::fromTheme(QStringLiteral("media-skip-backward")), i18n("Previous"), this);
         connect(prev_action, SIGNAL(triggered()), this, SLOT(prev()));
-        ac->addAction("media_prev", prev_action);
+        ac->addAction(QStringLiteral("media_prev"), prev_action);
 
-        next_action = new QAction(QIcon::fromTheme("media-skip-forward"), i18n("Next"), this);
+        next_action = new QAction(QIcon::fromTheme(QStringLiteral("media-skip-forward")), i18n("Next"), this);
         connect(next_action, SIGNAL(triggered()), this, SLOT(next()));
-        ac->addAction("media_next", next_action);
+        ac->addAction(QStringLiteral("media_next"), next_action);
 
-        show_video_action = new KToggleAction(QIcon::fromTheme("video-x-generic"), i18n("Show Video"), this);
+        show_video_action = new KToggleAction(QIcon::fromTheme(QStringLiteral("video-x-generic")), i18n("Show Video"), this);
         connect(show_video_action, SIGNAL(toggled(bool)), this, SLOT(showVideo(bool)));
-        ac->addAction("show_video", show_video_action);
+        ac->addAction(QStringLiteral("show_video"), show_video_action);
 
-        add_media_action = new QAction(QIcon::fromTheme("document-open"), i18n("Add Media"), this);
+        add_media_action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Add Media"), this);
         connect(add_media_action, SIGNAL(triggered()), play_list, SLOT(addMedia()));
-        ac->addAction("add_media", add_media_action);
+        ac->addAction(QStringLiteral("add_media"), add_media_action);
 
-        clear_action = new QAction(QIcon::fromTheme("edit-clear-list"), i18n("Clear Playlist"), this);
+        clear_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")), i18n("Clear Playlist"), this);
         connect(clear_action, SIGNAL(triggered()), play_list, SLOT(clearPlayList()));
-        ac->addAction("clear_play_list", clear_action);
+        ac->addAction(QStringLiteral("clear_play_list"), clear_action);
 
-        QAction * tfs = new QAction(QIcon::fromTheme("view-fullscreen"), i18n("Toggle Fullscreen"), this);
+        QAction * tfs = new QAction(QIcon::fromTheme(QStringLiteral("view-fullscreen")), i18n("Toggle Fullscreen"), this);
         tfs->setCheckable(true);
-        ac->addAction("video_fullscreen", tfs);
+        ac->addAction(QStringLiteral("video_fullscreen"), tfs);
         ac->setDefaultShortcut(tfs, QKeySequence(Qt::Key_F));
     }
 
@@ -163,17 +166,16 @@ namespace kt
             int idx = tabs->indexOf(video);
             tabs->setTabText(idx, path);
             tabs->setCurrentIndex(idx);
-            tabs->setTabBarHidden(false);
         }
         else
         {
             video = new VideoWidget(media_player, ac, 0);
             connect(video, SIGNAL(toggleFullScreen(bool)), this, SLOT(setVideoFullScreen(bool)));
-            int idx = tabs->addTab(video, QIcon::fromTheme("video-x-generic"), path);
+            int idx = tabs->addTab(video, QIcon::fromTheme(QStringLiteral("video-x-generic")), path);
             tabs->setTabToolTip(idx, i18n("Movie player"));
             tabs->setCurrentIndex(idx);
-            tabs->setTabBarHidden(false);
         }
+        //tabs->setTabBarHidden(false);
 
         if (!show_video_action->isChecked())
             show_video_action->setChecked(true);
@@ -183,10 +185,10 @@ namespace kt
     {
         if (video)
         {
-            tabs->removePage(video);
+            tabs->removeTab(tabs->indexOf(video));
             if (show_video_action->isChecked())
                 show_video_action->setChecked(false);
-            tabs->setTabBarHidden(true);
+            //tabs->setTabBarHidden(true);
             video->deleteLater();
             video = 0;
         }
@@ -343,7 +345,7 @@ namespace kt
 
         if (on && !fullscreen_mode)
         {
-            tabs->removePage(video);
+            tabs->removeTab(tabs->indexOf(video));
             video->setParent(0);
             video->setFullScreen(true);
             video->show();
@@ -362,7 +364,7 @@ namespace kt
             if (path.isEmpty())
                 path = i18n("Media Player");
 
-            idx = tabs->addTab(video, QIcon::fromTheme("video-x-generic"), path);
+            idx = tabs->addTab(video, QIcon::fromTheme(QStringLiteral("video-x-generic")), path);
             tabs->setTabToolTip(idx, i18n("Movie player"));
             tabs->setCurrentIndex(idx);
             fullscreen_mode = false;
@@ -374,7 +376,7 @@ namespace kt
         KConfigGroup g = cfg->group("MediaPlayerActivity");
         g.writeEntry("splitter_state", splitter->saveState());
         play_list->saveState(cfg);
-        play_list->playList()->save(kt::DataDir() + "playlist");
+        play_list->playList()->save(kt::DataDir() + QLatin1String("playlist"));
 
         media_view->saveState(cfg);
     }
@@ -387,8 +389,8 @@ namespace kt
             splitter->restoreState(d);
 
         play_list->loadState(cfg);
-        if (bt::Exists(kt::DataDir() + "playlist"))
-            play_list->playList()->load(kt::DataDir() + "playlist");
+        if (bt::Exists(kt::DataDir() + QLatin1String("playlist")))
+            play_list->playList()->load(kt::DataDir() + QLatin1String("playlist"));
 
         QModelIndex next = play_list->next(curr_item, play_list->randomOrder());
         next_action->setEnabled(next.isValid());

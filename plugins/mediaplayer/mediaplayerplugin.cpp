@@ -53,13 +53,13 @@ namespace kt
         getGUI()->addActivity(act);
         setXMLFile("ktorrent_mediaplayerui.rc");
         act->enableActions(0);
-        act->loadState(KGlobal::config());
+        act->loadState(KSharedConfig::openConfig());
     }
 
     void MediaPlayerPlugin::unload()
     {
         LogSystemManager::instance().unregisterSystem(i18n("Media Player"));
-        act->saveState(KGlobal::config());
+        act->saveState(KSharedConfig::openConfig());
         act->setVideoFullScreen(false);
         getGUI()->removeActivity(act);
         delete act;

@@ -21,10 +21,10 @@
 #include "peerview.h"
 
 #include <QHeaderView>
-#include <klocale.h>
 #include <QIcon>
 #include <QMenu>
-#include <kstandarddirs.h>
+#include <QSortFilterProxyModel>
+#include <klocalizedstring.h>
 #include <kconfiggroup.h>
 #include <interfaces/peerinterface.h>
 #include <peer/accessmanager.h>
@@ -139,4 +139,3 @@ namespace kt
     }
 }
 
-#include "peerview.moc"

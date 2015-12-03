@@ -63,12 +63,12 @@ namespace kt
         connect(edit_filter, SIGNAL(triggered()), activity, SLOT(editFilter()));
         connect(edit_feed_name, SIGNAL(triggered()), activity, SLOT(editFeedName()));
         getGUI()->addActivity(activity);
-        activity->loadState(KGlobal::config());
+        activity->loadState(KSharedConfig::openConfig());
     }
 
     void SyndicationPlugin::unload()
     {
-        activity->saveState(KGlobal::config());
+        activity->saveState(KSharedConfig::openConfig());
         getGUI()->removeActivity(activity);
         delete activity;
         activity = 0;
