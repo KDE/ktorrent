@@ -26,6 +26,7 @@
 #include <util/constants.h>
 #include <interfaces/guiinterface.h>
 #include <kparts/mainwindow.h>
+#include <ksharedconfig.h>
 
 class QAction;
 class KToggleAction;

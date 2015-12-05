@@ -31,7 +31,7 @@
 #include <errno.h>
 #include <qfile.h>
 #include <kfileitem.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <util/error.h>
 #include <util/log.h>
 #include <torrent/globals.h>

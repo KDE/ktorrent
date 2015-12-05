@@ -21,24 +21,17 @@
 #ifndef _KTAPP_H_
 #define _KTAPP_H_
 
-#include <kuniqueapplication.h>
+#include <QApplication>
 
 namespace kt
 {
-    class GUI;
-
-    class App : public KUniqueApplication
+    class App : public QApplication
     {
-        Q_OBJECT
     public:
-        App();
-        virtual ~App();
+        App(int argc, char** argv): QApplication(argc, argv) {}
+        ~App(){}
 
-        virtual int newInstance();
-        virtual bool notify(QObject* receiver, QEvent* event);
-
-    private:
-        static GUI* main_widget;
+        //bool notify(QObject* receiver, QEvent* event);
     };
 }
 

@@ -3,12 +3,11 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 #  set(kt4_SRC app.cpp mainwindow.cpp core.cpp view.cpp viewmodel.cpp main.cpp)
 set(ktorrent_SRC 
-	main.cpp 
-	core.cpp 
-	gui.cpp 
-	app.cpp 
+	main.cpp
+	core.cpp
+	gui.cpp
 	torrentactivity.cpp
-	statusbar.cpp 
+	statusbar.cpp
 	trayicon.cpp
 	ipfilterlist.cpp
 	ipfilterwidget.cpp
@@ -85,7 +84,7 @@ ki18n_wrap_ui(ktorrent_SRC
 add_executable(ktorrent_app ${ktorrent_SRC})
 set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
 
-target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore KF5::NotifyConfig KF5::Parts KF5::KDELibs4Support)
+target_link_libraries(ktorrent_app ${LIBKTORRENT_LIBRARIES} ktcore KF5::NotifyConfig KF5::Parts KF5::DBusAddons)
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS org.kde.ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )

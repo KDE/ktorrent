@@ -28,16 +28,28 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <exception>
+
 #include <QDir>
 #include <QFile>
-#include <kurl.h>
-#include <klocale.h>
-#include <K4AboutData>
-#include <kcmdlineargs.h>
-#include "app.h"
+#include <QApplication>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <kaboutdata.h>
+#include <klocalizedstring.h>
+#include <kdbusservice.h>
+
+#include <util/log.h>
+#include <torrent/globals.h>
+#include <util/functions.h>
+#include <util/error.h>
+#include <util/log.h>
+#include <interfaces/functions.h>
+#include <utp/connection.h>
+#include "gui.h"
+
+
 #include "version.h"
 #include "ktversion.h"
-#include <kdebug.h>
 #include <torrent/globals.h>
 #include <util/error.h>
 #include <util/log.h>
@@ -45,6 +57,7 @@
 #ifndef Q_OS_WIN
 #include <util/signalcatcher.h>
 #endif
+
 
 using namespace bt;
 
@@ -93,79 +106,82 @@ int main(int argc, char** argv)
 
     bt::SetClientInfo("KTorrent", kt::MAJOR, kt::MINOR, kt::RELEASE, kt::VERSION_TYPE, "KT");
 
-    K4AboutData about(
-        "ktorrent", 0, ki18n("KTorrent"),
-        kt::VERSION_STRING, ki18n("Bittorrent client for KDE"),
-        K4AboutData::License_GPL,
-        ki18n("(C) 2005 - 2011 Joris Guisson and Ivan Vasic"),
-        KLocalizedString(),
-        "http://www.ktorrent.org/");
+    KLocalizedString::setApplicationDomain("ktorrent");
+    // Add libktorrent catalog
+    //FIXME i18n KGlobal::locale()->insertCatalog("libktorrent");
 
-    about.addAuthor(ki18n("Joris Guisson"), KLocalizedString(), "joris.guisson@gmail.com", "http://ktorrent.org");
-    about.addAuthor(ki18n("Ivan Vasic"), KLocalizedString(), "ivasic@gmail.com");
-    about.addAuthor(ki18n("Alan Jones"), ki18n("BitFinder Plugin"), "skyphyr@gmail.com");
-    about.addAuthor(ki18n("Diego R. Brogna"), ki18n("Webinterface Plugin"), "dierbro@gmail.com");
-    about.addAuthor(ki18n("Krzysztof Kundzicz"), ki18n("Statistics Plugin"), "athantor@gmail.com");
-    about.addAuthor(ki18n("Christian Weilbach"), ki18n("kio-magnet"), "christian_weilbach@web.de");
-    about.addCredit(ki18n("Mladen Babic"),  ki18n("Application icon and a couple of others"), "bmladen@EUnet.yu");
-    about.addCredit(ki18n("Adam Treat"), KLocalizedString(), "treat@kde.org");
-    about.addCredit(ki18n("Danny Allen"), ki18n("1.0 application icon"), "danny@dannyallen.co.uk");
-    about.addCredit(ki18n("Vincent Wagelaar"), KLocalizedString(), "vincent@ricardis.tudelft.nl");
-    about.addCredit(ki18n("Knut Morten Johansson"), KLocalizedString(), "knut@johansson.com");
-    about.addCredit(ki18n("Felix Berger"),  ki18n("ChunkBar's tooltip and IWFileTreeItem sorting"), "bflat1@gmx.net");
-    about.addCredit(ki18n("Andreas Kling"), KLocalizedString(), "kling@impul.se");
-    about.addCredit(ki18n("Felipe Sateler"), KLocalizedString(), "fsateler@gmail.com");
-    about.addCredit(ki18n("Maxmind"), ki18n("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."), 0, "http://www.maxmind.com/");
-    about.addCredit(ki18n("Adam Forsyth"), ki18n("File prioritization and some other patches"), "agforsyth@gmail.com");
-    about.addCredit(ki18n("Thomas Bernard"), ki18n("Miniupnp was used as an example for our own UPnP implementation"), 0, "http://miniupnp.free.fr/");
-    about.addCredit(ki18n("Diego Rosario Brogna"), ki18n("Global max share ratio patch"), 0, "dierbro@gmail.com");
-    about.addCredit(ki18n("Lesly Weyts"), ki18n("Zeroconf enhancements"), 0, 0);
-    about.addCredit(ki18n("Kevin Andre"), ki18n("Zeroconf enhancements"), 0, "http://users.edpnet.be/hyperquantum/");
-    about.addCredit(ki18n("Dagur Valberg Johannsson"), ki18n("Coldmilk webgui"), "dagurval@pvv.ntnu.no");
-    about.addCredit(ki18n("Alexander Dymo"), ki18n("IDEAl code from KDevelop"), "adymo@kdevelop.org");
-    about.addCredit(ki18n("Scott Wolchok"), ki18n("Conversion speed improvement in ipfilter plugin"), "swolchok@umich.edu");
-    about.addCredit(ki18n("Bryan Burns of Juniper Networks"), ki18n("Discovered 2 security vulnerabilities (both are fixed)"), 0);
-    about.addCredit(ki18n("Goten Xiao"), ki18n("Patch to load silently with a save location"), 0);
-    about.addCredit(ki18n("Rapsys"), ki18n("Fixes in PHP code of webinterface"), 0);
-    about.addCredit(ki18n("Athantor"), ki18n("XFS specific disk preallocation"), 0);
-    about.addCredit(ki18n("twisted_fall"), ki18n("Patch to not show very low speeds"), "twisted.fall@gmail.com");
-    about.addCredit(ki18n("Lucke"), ki18n("Patch to show potentially firewalled status"), 0);
-    about.addCredit(ki18n("Modestas Vainius"), ki18n("Several patches"), "modestas@vainius.eu");
-    about.addCredit(ki18n("Stefan Monov"), ki18n("Patch to hide menu bar"), "logixoul@gmail.com");
-    about.addCredit(ki18n("The_Kernel"), ki18n("Patch to change file priorities in the webgui"), "kernja@cs.earlham.edu");
-    about.addCredit(ki18n("Rafał Miłecki"), ki18n("Several webgui patches"), "zajec5@gmail.com");
-    about.addCredit(ki18n("Ozzi"), ki18n("Fixes for several warnings"), "ossi@masiina.no-ip.info");
-    about.addCredit(ki18n("Markus Brueffer"), ki18n("Patch to fix free diskspace calculation on FreeBSD"), "markus@brueffer.de");
-    about.addCredit(ki18n("Lukas Appelhans"), ki18n("Patch to fix a crash in ChunkDownloadView"), "l.appelhans@gmx.de");
-    about.addCredit(ki18n("Rickard Närström"), ki18n("A couple of bugfixes"), "rickard.narstrom@gmail.com");
-    about.addCredit(ki18n("caruccio"), ki18n("Patch to load torrents silently from the command line"), "mateus@caruccio.com");
-    about.addCredit(ki18n("Lee Olson"), ki18n("New set of icons"), "leetolson@gmail.com");
-    about.addCredit(ki18n("Aaron J. Seigo"), ki18n("Drag and drop support for Plasma applet"), "aseigo@kde.org");
-    about.addCredit(ki18n("Ian Higginson"), ki18n("Patch to cleanup the plugin list"), "xeriouxi@fastmail.fm");
-    about.addCredit(ki18n("Amichai Rothman"), ki18n("Patch to make the Plasma applet a popup applet"), "amichai@amichais.net");
-    about.addCredit(ki18n("Leo Trubach"), ki18n("Patch to add support for IP ranges in IP filter dialog"), "leotrubach@gmail.com");
-    about.addCredit(ki18n("Andrei Barbu"), ki18n("Feature which adds the date a torrent was added"), "andrei@0xab.com");
-    about.addCredit(ki18n("Jonas Lundqvist"), ki18n("Feature to disable authentication in the webinterface"), "jonas@gannon.se");
-    about.addCredit(ki18n("Jaroslaw Swierczynski"), ki18n("Exclusion patterns in the syndication plugin"), "swiergot@gmail.com");
-    about.addCredit(ki18n("Alexey Shildyakov "), ki18n("Patch to rename single file torrents to the file inside"), "ashl1future@gmail.com");
-    about.addCredit(ki18n("Maarten De Meyer"), ki18n("Fix for bug 305379"), "de.meyer.maarten@gmail.com");
-    about.addCredit(ki18n("Rex Dieter"), ki18n("Add support for x-scheme-handler/magnet mimetype"), "rdieter@gmail.com");
-    about.addCredit(ki18n("Leszek Lesner"), ki18n("Fix for bug 339584"), "leszek.lesner@web.de");
+    QApplication app(argc, argv);
 
-    KCmdLineArgs::init(argc, argv, &about);
-    KCmdLineOptions options;
-    options.add("+[Url]", ki18n("Document to open"));
-    options.add("silent", ki18n("Silently open torrent given on URL"));
-    KCmdLineArgs::addCmdLineOptions(options);
+    QCommandLineParser parser;
+    KAboutData about(QStringLiteral("ktorrent"), i18nc("@title", "KTorrent"), kt::VERSION_STRING, i18n("Bittorrent client for KDE"),
+                     KAboutLicense::GPL, i18nc("@info:credit", "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"), QString(),
+                     QStringLiteral("http://www.ktorrent.org/"));
 
-    kt::App::addCmdLineOptions();
-    if (!kt::App::start())
-    {
-        fprintf(stderr, "ktorrent is already running !\n");
-        return 0;
-    }
+    about.addAuthor(i18n("Joris Guisson"), QString(), QStringLiteral("joris.guisson@gmail.com"), QStringLiteral("http://ktorrent.org"));
+    about.addAuthor(i18n("Ivan Vasic"), QString(), QStringLiteral("ivasic@gmail.com"));
+    about.addAuthor(i18n("Alan Jones"), i18n("BitFinder Plugin"), QStringLiteral("skyphyr@gmail.com"));
+    about.addAuthor(i18n("Diego R. Brogna"), i18n("Webinterface Plugin"), QStringLiteral("dierbro@gmail.com"));
+    about.addAuthor(i18n("Krzysztof Kundzicz"), i18n("Statistics Plugin"), QStringLiteral("athantor@gmail.com"));
+    about.addAuthor(i18n("Christian Weilbach"), i18n("kio-magnet"), QStringLiteral("christian_weilbach@web.de"));
+    about.addCredit(i18n("Mladen Babic"),  i18n("Application icon and a couple of others"), QStringLiteral("bmladen@EUnet.yu"));
+    about.addCredit(i18n("Adam Treat"), QString(), QStringLiteral("treat@kde.org"));
+    about.addCredit(i18n("Danny Allen"), i18n("1.0 application icon"), QStringLiteral("danny@dannyallen.co.uk"));
+    about.addCredit(i18n("Vincent Wagelaar"), QString(), QStringLiteral("vincent@ricardis.tudelft.nl"));
+    about.addCredit(i18n("Knut Morten Johansson"), QString(), QStringLiteral("knut@johansson.com"));
+    about.addCredit(i18n("Felix Berger"),  i18n("ChunkBar's tooltip and IWFileTreeItem sorting"), QStringLiteral("bflat1@gmx.net"));
+    about.addCredit(i18n("Andreas Kling"), QString(), QStringLiteral("kling@impul.se"));
+    about.addCredit(i18n("Felipe Sateler"), QString(), QStringLiteral("fsateler@gmail.com"));
+    about.addCredit(i18n("Maxmind"), i18n("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."), QString(), QStringLiteral("http://www.maxmind.com/"));
+    about.addCredit(i18n("Adam Forsyth"), i18n("File prioritization and some other patches"), QStringLiteral("agforsyth@gmail.com"));
+    about.addCredit(i18n("Thomas Bernard"), i18n("Miniupnp was used as an example for our own UPnP implementation"), QString(), QStringLiteral("http://miniupnp.free.fr/"));
+    about.addCredit(i18n("Diego Rosario Brogna"), i18n("Global max share ratio patch"), QStringLiteral("dierbro@gmail.com"));
+    about.addCredit(i18n("Lesly Weyts"), i18n("Zeroconf enhancements"));
+    about.addCredit(i18n("Kevin Andre"), i18n("Zeroconf enhancements"), QString(), QStringLiteral("http://users.edpnet.be/hyperquantum/"));
+    about.addCredit(i18n("Dagur Valberg Johannsson"), i18n("Coldmilk webgui"), QStringLiteral("dagurval@pvv.ntnu.no"));
+    about.addCredit(i18n("Alexander Dymo"), i18n("IDEAl code from KDevelop"), QStringLiteral("adymo@kdevelop.org"));
+    about.addCredit(i18n("Scott Wolchok"), i18n("Conversion speed improvement in ipfilter plugin"), QStringLiteral("swolchok@umich.edu"));
+    about.addCredit(i18n("Bryan Burns of Juniper Networks"), i18n("Discovered 2 security vulnerabilities (both are fixed)"));
+    about.addCredit(i18n("Goten Xiao"), i18n("Patch to load silently with a save location"));
+    about.addCredit(i18n("Rapsys"), i18n("Fixes in PHP code of webinterface"));
+    about.addCredit(i18n("Athantor"), i18n("XFS specific disk preallocation"));
+    about.addCredit(i18n("twisted_fall"), i18n("Patch to not show very low speeds"), QStringLiteral("twisted.fall@gmail.com"));
+    about.addCredit(i18n("Lucke"), i18n("Patch to show potentially firewalled status"));
+    about.addCredit(i18n("Modestas Vainius"), i18n("Several patches"), QStringLiteral("modestas@vainius.eu"));
+    about.addCredit(i18n("Stefan Monov"), i18n("Patch to hide menu bar"), QStringLiteral("logixoul@gmail.com"));
+    about.addCredit(i18n("The_Kernel"), i18n("Patch to change file priorities in the webgui"), QStringLiteral("kernja@cs.earlham.edu"));
+    about.addCredit(i18n("Rafał Miłecki"), i18n("Several webgui patches"), QStringLiteral("zajec5@gmail.com"));
+    about.addCredit(i18n("Ozzi"), i18n("Fixes for several warnings"), QStringLiteral("ossi@masiina.no-ip.info"));
+    about.addCredit(i18n("Markus Brueffer"), i18n("Patch to fix free diskspace calculation on FreeBSD"), QStringLiteral("markus@brueffer.de"));
+    about.addCredit(i18n("Lukas Appelhans"), i18n("Patch to fix a crash in ChunkDownloadView"), QStringLiteral("l.appelhans@gmx.de"));
+    about.addCredit(i18n("Rickard Närström"), i18n("A couple of bugfixes"), QStringLiteral("rickard.narstrom@gmail.com"));
+    about.addCredit(i18n("caruccio"), i18n("Patch to load torrents silently from the command line"), QStringLiteral("mateus@caruccio.com"));
+    about.addCredit(i18n("Lee Olson"), i18n("New set of icons"), QStringLiteral("leetolson@gmail.com"));
+    about.addCredit(i18n("Aaron J. Seigo"), i18n("Drag and drop support for Plasma applet"), QStringLiteral("aseigo@kde.org"));
+    about.addCredit(i18n("Ian Higginson"), i18n("Patch to cleanup the plugin list"), QStringLiteral("xeriouxi@fastmail.fm"));
+    about.addCredit(i18n("Amichai Rothman"), i18n("Patch to make the Plasma applet a popup applet"), QStringLiteral("amichai@amichais.net"));
+    about.addCredit(i18n("Leo Trubach"), i18n("Patch to add support for IP ranges in IP filter dialog"), QStringLiteral("leotrubach@gmail.com"));
+    about.addCredit(i18n("Andrei Barbu"), i18n("Feature which adds the date a torrent was added"), QStringLiteral("andrei@0xab.com"));
+    about.addCredit(i18n("Jonas Lundqvist"), i18n("Feature to disable authentication in the webinterface"), QStringLiteral("jonas@gannon.se"));
+    about.addCredit(i18n("Jaroslaw Swierczynski"), i18n("Exclusion patterns in the syndication plugin"), QStringLiteral("swiergot@gmail.com"));
+    about.addCredit(i18n("Alexey Shildyakov "), i18n("Patch to rename single file torrents to the file inside"), QStringLiteral("ashl1future@gmail.com"));
+    about.addCredit(i18n("Maarten De Meyer"), i18n("Fix for bug 305379"), QStringLiteral("de.meyer.maarten@gmail.com"));
+    about.addCredit(i18n("Rex Dieter"), i18n("Add support for x-scheme-handler/magnet mimetype"), QStringLiteral("rdieter@gmail.com"));
+    about.addCredit(i18n("Leszek Lesner"), i18n("Fix for bug 339584"), QStringLiteral("leszek.lesner@web.de"));
+    about.addCredit(i18n("Andrius Štikonas"), i18n("KF5 porting"), QStringLiteral("andrius@stikonas.eu"));
+    about.addCredit(i18n("Nick Shaforostoff"), i18n("KF5 porting"), QStringLiteral("shaforostoff@gmail.com"));
 
-#ifndef Q_WS_WIN
+    KAboutData::setApplicationData(about);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    about.setupCommandLine(&parser);
+    parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("silent"), i18n( "Silently open torrent given on URL")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("+[URL]"), i18n( "Document to open" )));
+    parser.process(app);
+    about.processCommandLine(&parser);
+
+    const KDBusService dbusService(KDBusService::Unique);
+
+#if 0 //ndef Q_WS_WIN
     // need to grab lock after the fork call in start, otherwise this will not work properly
     if (!GrabPIDLock())
     {
@@ -177,14 +193,27 @@ int main(int argc, char** argv)
 
     try
     {
-        kt::App app;
-
 #ifndef Q_WS_WIN
         bt::SignalCatcher catcher;
         catcher.catchSignal(SIGINT);
         catcher.catchSignal(SIGTERM);
         QObject::connect(&catcher, SIGNAL(triggered()), &app, SLOT(quit()));
 #endif
+
+        bt::InitLog(kt::DataDir() + QLatin1String("log"), true, true, true);
+
+        kt::GUI widget;
+        widget.show();
+
+        bool silent = parser.isSet(QStringLiteral("silent"));
+        Q_FOREACH (const QString& filePath, parser.positionalArguments())
+        {
+            QUrl url = QFile::exists(filePath)?QUrl::fromLocalFile(filePath):QUrl(filePath);
+            if (silent)
+                widget.loadSilently(url);
+            else
+                widget.load(url);
+        }
 
         app.setQuitOnLastWindowClosed(false);
         app.exec();

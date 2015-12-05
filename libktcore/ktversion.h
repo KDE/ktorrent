@@ -23,12 +23,12 @@
 #include <version.h>
 #include "util/constants.h"
 
-#define KT_VERSION_MACRO "4.3dev"
+#define KT_VERSION_MACRO "5.0dev"
 
 namespace kt
 {
-    const bt::Uint32 MAJOR = 4;
-    const bt::Uint32 MINOR = 3;
+    const bt::Uint32 MAJOR = 5;
+    const bt::Uint32 MINOR = 0;
     const bt::Uint32 RELEASE = 0;
     const bt::VersionType VERSION_TYPE = bt::DEVEL;
     const char VERSION_STRING[] = KT_VERSION_MACRO;

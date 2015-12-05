@@ -21,23 +21,21 @@
 
 #include <QTimer>
 #include <QClipboard>
-#include <qdesktopwidget.h>
-#include <kconfig.h>
-#include <kglobal.h>
+#include <QDesktopWidget>
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
+#include <QPushButton>
+#include <kconfig.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 #include <kmessagebox.h>
 #include <kstatusbar.h>
-#include <kapplication.h>
 #include <kshortcutsdialog.h>
 #include <kedittoolbar.h>
 #include <kstandardaction.h>
 #include <kfilewidget.h>
 #include <krecentdirs.h>
-#include <QPushButton>
 #include <kxmlguifactory.h>
 #include <KNotifyConfigWidget>
 #include <kio/jobclasses.h>
@@ -530,7 +528,7 @@ namespace kt
 
     bool GUI::queryClose()
     {
-        if (Settings::showSystemTrayIcon() && !KApplication::kApplication()->sessionSaving())
+        if (Settings::showSystemTrayIcon() && !qApp->isSavingSession())
         {
             hide();
             saveState(KSharedConfig::openConfig());
@@ -540,7 +538,7 @@ namespace kt
         {
             saveState(KSharedConfig::openConfig());
             timer.stop();
-            QTimer::singleShot(500, KApplication::kApplication(), SLOT(quit()));
+            QTimer::singleShot(500, qApp, SLOT(quit()));
             return true;
         }
     }
