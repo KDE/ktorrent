@@ -18,14 +18,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "videowidget.h"
+
 #include <QAction>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QStackedWidget>
-#include <KToolBar>
 #include <QIcon>
-#include <KLocale>
+#include <klocalizedstring.h>
+#include <KToolBar>
 #include <KToggleFullScreenAction>
 #include <KActionCollection>
 #include <Phonon/Path>
@@ -36,7 +38,6 @@
 #include <solid/powermanagement.h>
 #include <util/log.h>
 #include <torrent/chunkbar.h>
-#include "videowidget.h"
 #include "mediaplayer.h"
 #include "videochunkbar.h"
 #include "screensaver_interface.h"
@@ -225,7 +226,7 @@ namespace kt
     {
         QTime ct(cur / (60 * 60 * 1000), (cur / (60 * 1000)) % 60, (cur / 1000) % 60, cur % 1000);
         QTime tt(total / (60 * 60 * 1000), (total / (60 * 1000)) % 60, (total / 1000) % 60, total % 1000);
-        return QString(" %1 / %2 ").arg(ct.toString("hh:mm:ss")).arg(tt.toString("hh:mm:ss"));
+        return QStringLiteral(" %1 / %2 ").arg(ct.toString("hh:mm:ss"), tt.toString("hh:mm:ss"));
     }
 
     void VideoWidget::playing(const MediaFileRef& mfile)

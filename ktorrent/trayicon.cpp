@@ -34,7 +34,6 @@
 #include <net/socketmonitor.h>
 #include <util/log.h>
 #include <settings.h>
-#include <interfaces/torrentinterface.h>
 #include <interfaces/torrentactivityinterface.h>
 #include <torrent/queuemanager.h>
 #include "core.h"

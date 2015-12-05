@@ -54,11 +54,11 @@ namespace kt
             if (idx < tc->getNumFiles())
             {
                 QString path = tc->getTorrentFile(idx).getUserModifiedPath();
-                QStringList parts = path.split("/");
+                QVector<QStringRef> parts = path.splitRef('/');
                 if (parts.count() == 0)
                     return path;
                 else
-                    return parts.back();
+                    return parts.back().toString();
             }
             else
                 return QString();
@@ -89,10 +89,7 @@ namespace kt
     {
         if (tc->getStats().multi_file_torrent)
         {
-            if (idx < tc->getNumFiles())
-                return qAbs(tc->getTorrentFile(idx).getDownloadPercentage() - 100.0f) < 0.0001f;
-            else
-                return false;
+            return idx < tc->getNumFiles() && qAbs(tc->getTorrentFile(idx).getDownloadPercentage() - 100.0f) < 0.0001f;
         }
         else
         {
@@ -104,10 +101,7 @@ namespace kt
     {
         if (tc->getStats().multi_file_torrent)
         {
-            if (idx < tc->getNumFiles())
-                return tc->getTorrentFile(idx).isPreviewAvailable();
-            else
-                return false;
+            return idx < tc->getNumFiles() && tc->getTorrentFile(idx).isPreviewAvailable();
         }
         else
         {
@@ -255,7 +249,7 @@ namespace kt
             return ms;
         }
         else
-            return Phonon::MediaSource(file_path);
+            return Phonon::MediaSource(QUrl::fromLocalFile(file_path));
     }
 
     QString MediaFileRef::name() const
