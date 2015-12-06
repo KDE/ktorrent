@@ -64,6 +64,6 @@ target_link_libraries(ktcore LINK_PUBLIC
    ${GMP_LIBRARIES}
    ktorrent
 )
-set_target_properties(ktcore PROPERTIES VERSION 15.0.0 SOVERSION 15 )
+set_target_properties(ktcore PROPERTIES VERSION 16.0.0 SOVERSION 16 )
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 
