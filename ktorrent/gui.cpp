@@ -30,7 +30,6 @@
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 #include <kmessagebox.h>
-#include <kstatusbar.h>
 #include <kshortcutsdialog.h>
 #include <kedittoolbar.h>
 #include <kstandardaction.h>

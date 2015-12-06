@@ -17,36 +17,27 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <qfile.h>
-#include <qimage.h>
-#include <kstandarddirs.h>
+#include <QFile>
+#include <QImage>
+#include <QDebug>
+#include <QStandardPaths>
 #include "flagdb.h"
 
-kt::FlagDBSource::FlagDBSource(const char* type, const QString& pathPattern)
-    : type(type), pathPattern(pathPattern)
-{
-}
-
 kt::FlagDBSource::FlagDBSource(const QString& pathPattern)
-    : type(NULL), pathPattern(pathPattern)
+    : pathPattern(pathPattern)
 {
 }
 
 kt::FlagDBSource::FlagDBSource()
-    : type(NULL), pathPattern()
 {
 }
 
 QString kt::FlagDBSource::getPath(const QString& country) const
 {
-    if (type)
-    {
-        return KStandardDirs::locate(type, pathPattern.arg(country));
-    }
-    else
-    {
-        return pathPattern.arg(country);
-    }
+    //pathPattern = QStringLiteral("locale/l10n/%1/flag.png");
+    //QStandardPaths::locate(QStandardPaths::GenericDataLocation, flagPath.arg(code));
+    // example: /usr/share/locale/l10n/ru/flag.png (part of kde-runtime-data package)
+    return pathPattern.arg(country);
 }
 
 const QPixmap& kt::FlagDB::nullPixmap = QPixmap();
@@ -77,9 +68,9 @@ void kt::FlagDB::addFlagSource(const FlagDBSource& source)
     sources.append(source);
 }
 
-void kt::FlagDB::addFlagSource(const char* type, const QString& pathPattern)
+void kt::FlagDB::addFlagSource(const QString& pathPattern)
 {
-    addFlagSource(FlagDBSource(type, pathPattern));
+    addFlagSource(FlagDBSource(pathPattern));
 }
 
 const QList<kt::FlagDBSource>& kt::FlagDB::listSources() const
@@ -95,14 +86,16 @@ bool kt::FlagDB::isFlagAvailable(const QString& country)
 const QPixmap& kt::FlagDB::getFlag(const QString& country)
 {
     const QString& c = country.toLower();
-    if (db.contains(c))
-        return db[c];
+    auto it = db.constFind(c);
+    if (it != db.constEnd())
+        return *it;
 
     QImage img;
     QPixmap pixmap;
     foreach (const FlagDBSource& s, sources)
     {
         const QString& path = s.getPath(c);
+        qDebug()<<"dddddd"<<path;
         if (QFile::exists(path) && img.load(path))
         {
             if (img.width() != preferredWidth || img.height() != preferredHeight)
@@ -127,6 +120,5 @@ const QPixmap& kt::FlagDB::getFlag(const QString& country)
         }
     }
 
-    db[c] = (!pixmap.isNull()) ? pixmap : nullPixmap;
-    return db[c];
+    return (db[c] = (!pixmap.isNull()) ? pixmap : nullPixmap);
 }

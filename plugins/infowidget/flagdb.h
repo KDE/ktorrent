@@ -30,15 +30,12 @@ namespace kt
     {
     public:
         FlagDBSource();
-        FlagDBSource(const char* type, const QString& pathPattern);
         FlagDBSource(const QString& pathPattern);
         QString getPath(const QString& country) const;
 
-        const char* getType() { return type; };
         const QString& getPathPattern() { return pathPattern; };
 
     private:
-        const char* type;
         QString pathPattern;
     };
 
@@ -53,7 +50,7 @@ namespace kt
         ~FlagDB();
 
         void addFlagSource(const FlagDBSource& source);
-        void addFlagSource(const char* type, const QString& pathPattern);
+        void addFlagSource(const QString& pathPattern);
         const QList<FlagDBSource>& listSources() const;
         bool isFlagAvailable(const QString& country);
         const QPixmap& getFlag(const QString& country);

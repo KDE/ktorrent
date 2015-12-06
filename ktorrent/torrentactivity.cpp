@@ -17,18 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "torrentactivity.h"
+
 #include <QBoxLayout>
 #include <QToolBar>
-#include <KConfigGroup>
-#include <KLocale>
 #include <QIcon>
 #include <KToggleAction>
 #include <KActionCollection>
 #include <KComboBox>
+#include <KConfigGroup>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <gui/tabbarwidget.h>
 #include <groups/groupmanager.h>
-#include "torrentactivity.h"
 #include "gui.h"
 #include "core.h"
 #include "view/view.h"

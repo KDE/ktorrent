@@ -59,7 +59,6 @@ target_link_libraries(
     ktorrent_infowidget
     ktcore
     KF5::KIOFileWidgets
-    KF5::KDELibs4Support
     ${LIBKTORRENT_LIBRARIES}
     ${geoip_link}
     )

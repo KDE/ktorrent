@@ -32,7 +32,7 @@ using namespace bt;
 namespace kt
 {
     StatusBar::StatusBar(QWidget* parent)
-        : KStatusBar(parent),
+        : QStatusBar(parent),
           speed(0), up_speed(0), down_speed(0),
           transfer(0), up_transfer(0), down_transfer(0),
           dht_status(0), dht_peers(0), dht_tasks(0), dht_on(false)

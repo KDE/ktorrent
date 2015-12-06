@@ -22,7 +22,7 @@
 #ifndef KT_STATUSBAR_HH
 #define KT_STATUSBAR_HH
 
-#include <kstatusbar.h>
+#include <QStatusBar>
 #include <util/constants.h>
 #include <interfaces/guiinterface.h>
 
@@ -38,7 +38,7 @@ namespace kt
     /**
      * Class which handles the statusbar
      * */
-    class StatusBar : public KStatusBar, public StatusBarInterface
+    class StatusBar : public QStatusBar, public StatusBarInterface
     {
         Q_OBJECT
     public:

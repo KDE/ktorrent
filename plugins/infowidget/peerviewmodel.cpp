@@ -41,10 +41,10 @@ namespace kt
         stats = peer->getStats();
         if (!icons_loaded)
         {
-            yes = QIcon::fromTheme("dialog-ok");
-            no = QIcon::fromTheme("dialog-cancel");
+            yes = QIcon::fromTheme(QStringLiteral("dialog-ok"));
+            no = QIcon::fromTheme(QStringLiteral("dialog-cancel"));
             icons_loaded = true;
-            flagDB.addFlagSource("locale", QString("l10n/%1/flag.png"));
+            flagDB.addFlagSource(QStringLiteral("/usr/share/locale/l10n/%1/flag.png")); //part of kde-runtime-data package
         }
 
         if (geo_ip)
