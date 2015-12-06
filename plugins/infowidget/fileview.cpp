@@ -28,10 +28,8 @@
 #include <QMenu>
 #include <QLineEdit>
 
-#include <KIconLoader>
 #include <KRun>
 #include <KMessageBox>
-#include <KMimeType>
 #include <KSharedConfig>
 #include <KConfigGroup>
 

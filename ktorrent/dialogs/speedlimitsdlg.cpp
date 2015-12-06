@@ -20,8 +20,7 @@
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
 #include <QPushButton>
-#include <klocale.h>
-#include <kglobal.h>
+#include <klocalizedstring.h>
 #include <util/constants.h>
 #include <util/log.h>
 #include <interfaces/functions.h>

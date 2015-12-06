@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QComboBox>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include "logflagsdelegate.h"
 

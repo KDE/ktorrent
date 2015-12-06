@@ -20,7 +20,7 @@
 #include "scanfolderplugin.h"
 #include "scanfolderprefpage.h"
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kglobal.h>
 #include <kfiledialog.h>
 #include <util/functions.h>

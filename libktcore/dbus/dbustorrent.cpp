@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <QDBusConnection>
 #include <QThread>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/sha1hash.h>
 #include <util/bitset.h>

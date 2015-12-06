@@ -39,7 +39,7 @@
 #include <qdatetime.h>
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kstdaction.h>
 #include <kiconloader.h>
 #include <kglobal.h>

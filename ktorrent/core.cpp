@@ -18,19 +18,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "core.h"
+
 #include <QNetworkInterface>
-#include <kglobal.h>
-#include <klocale.h>
+#include <QDir>
+#include <QProgressBar>
+#include <klocalizedstring.h>
 #include <kio/job.h>
 #include <kio/copyjob.h>
 #include <kmessagebox.h>
 #include <kstandardguiitem.h>
-#include <kfiledialog.h>
-#include <kapplication.h>
-#include <qprogressbar.h>
-#include <qdir.h>
 #include <solid/powermanagement.h>
-
 
 #include <dbus/dbus.h>
 #include <interfaces/guiinterface.h>
@@ -57,7 +55,6 @@
 #include <net/socketmonitor.h>
 #include <torrent/jobqueue.h>
 #include "settings.h"
-#include "core.h"
 #include "dialogs/fileselectdlg.h"
 #include "dialogs/missingfilesdlg.h"
 #include "gui.h"

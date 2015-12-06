@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include "mediaplayerplugin.h"
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kgenericfactory.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>

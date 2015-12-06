@@ -23,6 +23,7 @@
 #include <QHeaderView>
 #include <QClipboard>
 #include <QUrl>
+#include <kconfiggroup.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <torrent/globals.h>

@@ -21,6 +21,7 @@
 #include "groupviewmodel.h"
 #include "groupview.h"
 #include <QIcon>
+#include <klocalizedstring.h>
 #include <groups/groupmanager.h>
 #include <groups/group.h>
 #include <groups/torrentgroup.h>

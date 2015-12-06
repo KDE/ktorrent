@@ -18,11 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kglobal.h>
+#include "downloadorderdialog.h"
+
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <interfaces/torrentinterface.h>
 #include <QMenu>
-#include "downloadorderdialog.h"
 #include "downloadordermanager.h"
 #include "downloadorderplugin.h"
 #include "downloadordermodel.h"
@@ -31,12 +32,13 @@ namespace kt
 {
 
     DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent)
-        : KDialog(parent), tor(tor), plugin(plugin)
+        : QDialog(parent), tor(tor), plugin(plugin)
     {
-        setupUi(mainWidget());
-        setButtons(KDialog::Ok | KDialog::Cancel);
-        connect(this, SIGNAL(okClicked()), this, SLOT(commitDownloadOrder()));
-        setCaption(i18n("File Download Order"));
+        setupUi(this);
+        connect(buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
+        connect(buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
+        connect(this, SIGNAL(accepted()), this, SLOT(commitDownloadOrder()));
+        setWindowTitle(i18n("File Download Order"));
         m_top_label->setText(i18n("File download order for <b>%1</b>:", tor->getDisplayName()));
 
         DownloadOrderManager* dom = plugin->manager(tor);

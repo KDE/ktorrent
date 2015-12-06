@@ -20,9 +20,9 @@
  ***************************************************************************/
 #include "torrentfiletreemodel.h"
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QIcon>
-#include <kmimetype.h>
+
 #include <QTreeView>
 #include <QSortFilterProxyModel>
 #include <bcodec/bdecoder.h>
@@ -33,6 +33,8 @@
 #include <util/functions.h>
 #include <util/log.h>
 #include <util/error.h>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 using namespace bt;
 
@@ -329,6 +331,7 @@ namespace kt
 
     void TorrentFileTreeModel::changeTorrent(bt::TorrentInterface* tc)
     {
+        beginResetModel();
         this->tc = tc;
         delete root;
         root = 0;
@@ -339,7 +342,7 @@ namespace kt
             else
                 root = new Node(0, tc->getUserModifiedFileName(), tc->getStats().total_chunks);
         }
-        reset();
+        endResetModel();
     }
 
 
@@ -358,10 +361,11 @@ namespace kt
 
     void TorrentFileTreeModel::onCodecChange()
     {
+        beginResetModel();
         delete root;
         root = 0;
         constructTree();
-        reset();
+        endResetModel();
     }
 
     int TorrentFileTreeModel::rowCount(const QModelIndex& parent) const
@@ -442,9 +446,9 @@ namespace kt
             // if this is an empty folder then we are in the single file case
             if (!n->file)
                 return n->children.count() > 0 ?
-                       QIcon::fromTheme("folder") : QIcon::fromTheme(KMimeType::findByPath(tc->getStats().torrent_name)->iconName());
+                       QIcon::fromTheme(QStringLiteral("folder")) : QIcon::fromTheme(QMimeDatabase().mimeTypeForFile(tc->getStats().torrent_name).iconName());
             else
-                return QIcon::fromTheme(KMimeType::findByPath(n->file->getPath())->iconName());
+                return QIcon::fromTheme(QMimeDatabase().mimeTypeForFile(n->file->getPath()).iconName());
         }
         else if (role == Qt::CheckStateRole && index.column() == 0)
         {

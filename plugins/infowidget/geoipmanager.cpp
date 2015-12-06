@@ -18,7 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QFile>
-#include <kstandarddirs.h>
+#include <QStandardPaths>
 #include <kio/copyjob.h>
 #include <util/log.h>
 #include <util/decompressfilejob.h>
@@ -32,18 +32,18 @@ using namespace bt;
 
 namespace kt
 {
-    QUrl GeoIPManager::geoip_url = QUrl("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz");
+    QUrl GeoIPManager::geoip_url = QUrl(QStringLiteral("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz"));
 
     GeoIPManager::GeoIPManager(QObject* parent): QObject(parent), geo_ip(0), decompress_thread(0)
     {
 #ifdef USE_SYSTEM_GEOIP
         geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
 #else
-        geoip_data_file = KStandardDirs::locate("data", "ktorrent/geoip.dat");
-        if (geoip_data_file.isNull())
-            geoip_data_file = KStandardDirs::locate("data", "ktorrent/GeoIP.dat");
+        geoip_data_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("ktorrent/geoip.dat"));
+        if (geoip_data_file.isEmpty())
+            geoip_data_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("ktorrent/GeoIP.dat"));
 
-        if (geoip_data_file.isNull())
+        if (geoip_data_file.isEmpty())
         {
             downloadDataBase();
         }
@@ -120,7 +120,7 @@ namespace kt
             return;
         }
 
-        if (download_destination.endsWith(".dat") || download_destination.endsWith(".DAT"))
+        if (download_destination.endsWith(QLatin1String(".dat")) || download_destination.endsWith(QLatin1String(".DAT")))
         {
             Out(SYS_INW | LOG_NOTICE) << "GeoIP database downloaded, opening ...  " << endl;
             geoip_data_file = download_destination;
@@ -137,7 +137,7 @@ namespace kt
         {
             Out(SYS_INW | LOG_NOTICE) << "GeoIP database downloaded, decompressing ...  " << endl;
             // decompress the file
-            decompress_thread = new bt::DecompressThread(download_destination, kt::DataDir() + "geoip.dat");
+            decompress_thread = new bt::DecompressThread(download_destination, kt::DataDir() + QLatin1String("geoip.dat"));
             connect(decompress_thread, SIGNAL(finished()), this, SLOT(decompressFinished()), Qt::QueuedConnection);
             decompress_thread->start(QThread::IdlePriority);
         }
@@ -148,7 +148,7 @@ namespace kt
         Out(SYS_INW | LOG_NOTICE) << "GeoIP database decompressed, opening ...  " << endl;
         if (!decompress_thread->error())
         {
-            geoip_data_file = kt::DataDir() + "geoip.dat";
+            geoip_data_file = kt::DataDir() + QLatin1String("geoip.dat");
             if (geo_ip)
             {
                 GeoIP_delete(geo_ip);

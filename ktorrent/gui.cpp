@@ -266,40 +266,21 @@ namespace kt
         dlg->show();
     }
 
-    void GUI::openTorrentSilently()
+    void GUI::openTorrent(bool silently)
     {
         QString recentDirClass;
-        QList<QUrl> urls = QFileDialog::getOpenFileUrls(this, i18n("Open Location"),
-                                                        KFileWidget::getStartUrl(QUrl("kfiledialog:///openTorrent"), recentDirClass),
-                                                        kt::TorrentFileFilter(true));
+        QUrl defaultUrl = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///openTorrent")), recentDirClass);
+        if (!QDir(defaultUrl.toLocalFile()).exists())
+            defaultUrl = QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+        QList<QUrl> urls = QFileDialog::getOpenFileUrls(this, i18n("Open Location"), defaultUrl, kt::TorrentFileFilter(true));
 
         if (urls.isEmpty())
             return;
 
-        if (!recentDirClass.isEmpty())
+        if (!recentDirClass.isEmpty() && defaultUrl.toLocalFile()!=urls.first().toLocalFile())
             KRecentDirs::add(recentDirClass, QFileInfo(urls.first().toLocalFile()).absolutePath());
 
-        foreach (const QUrl& url, urls)
-        {
-            if (url.isValid())
-                core->loadSilently(url, QString());
-        }
-    }
-
-    void GUI::openTorrent()
-    {
-        QString recentDirClass;
-        QList<QUrl> urls = QFileDialog::getOpenFileUrls(this, i18n("Open Location"),
-                                                        KFileWidget::getStartUrl(QUrl("kfiledialog:///openTorrent"), recentDirClass),
-                                                        kt::TorrentFileFilter(true));
-
-        if (urls.isEmpty())
-            return;
-
-        if (!recentDirClass.isEmpty())
-            KRecentDirs::add(recentDirClass, QFileInfo(urls.first().toLocalFile()).absolutePath());
-
-        if (urls.count() == 1)
+        if (urls.count() == 1 && !silently)
         {
             QUrl url = urls.front();
             if (url.isValid())
@@ -312,7 +293,7 @@ namespace kt
             {
                 if (url.isValid())
                 {
-                    if (Settings::openMultipleTorrentsSilently())
+                    if (silently || Settings::openMultipleTorrentsSilently())
                         loadSilently(url);
                     else
                         load(url);
@@ -320,7 +301,6 @@ namespace kt
             }
         }
     }
-
 
 
 

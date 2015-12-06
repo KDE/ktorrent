@@ -21,7 +21,7 @@
 #include "trackermodel.h"
 #include <QList>
 #include <QColor>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerinterface.h>
 

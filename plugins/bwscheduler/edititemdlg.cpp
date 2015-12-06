@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <kglobal.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kcalendarsystem.h>
 #include "edititemdlg.h"
 #include "schedule.h"

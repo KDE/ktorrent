@@ -20,7 +20,7 @@
 #include <kgenericfactory.h>
 #include <kmainwindow.h>
 #include <kactioncollection.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <qurl.h>
 #include <qclipboard.h>
 #include <qtooltip.h>

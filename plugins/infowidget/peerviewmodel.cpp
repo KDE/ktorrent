@@ -21,7 +21,6 @@
 #include "peerviewmodel.h"
 #include <QIcon>
 #include <QLocale>
-#include <kstandarddirs.h>
 #include <klocalizedstring.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>

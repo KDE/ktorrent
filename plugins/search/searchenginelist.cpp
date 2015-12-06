@@ -21,7 +21,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QDir>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kio/copyjob.h>
 #include <util/log.h>
 #include <util/error.h>

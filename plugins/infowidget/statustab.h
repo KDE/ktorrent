@@ -22,6 +22,7 @@
 #define STATUSTAB_H
 
 #include <QWidget>
+#include <QPointer>
 #include <interfaces/torrentinterface.h>
 #include "ui_statustab.h"
 
@@ -51,7 +52,7 @@ namespace kt
         void maxSeedTimeUpdate();
 
     private:
-        bt::TorrentInterface::WPtr curr_tc;
+        QPointer<bt::TorrentInterface> curr_tc;
     };
 }
 

@@ -20,7 +20,7 @@
 #include <QDockWidget>
 #include <kgenericfactory.h>
 #include <kglobal.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kiconloader.h>
 #include <util/log.h>
 #include <torrent/globals.h>

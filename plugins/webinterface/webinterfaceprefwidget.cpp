@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include <Qt>
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>

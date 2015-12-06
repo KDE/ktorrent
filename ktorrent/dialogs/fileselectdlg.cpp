@@ -17,13 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "fileselectdlg.h"
+
 #include <QMenu>
 #include <QTextCodec>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kio/global.h>
 #include <kmessagebox.h>
-#include <kiconloader.h>
-#include <kmimetype.h>
 #include <kstandardguiitem.h>
 #include <QPushButton>
 #include <interfaces/torrentfileinterface.h>
@@ -39,7 +39,6 @@
 #include <torrent/queuemanager.h>
 #include <torrent/torrentfiletreemodel.h>
 #include <torrent/torrentfilelistmodel.h>
-#include "fileselectdlg.h"
 #include "settings.h"
 
 using namespace bt;
@@ -48,18 +47,24 @@ namespace kt
 {
 
     FileSelectDlg::FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, const QString& group_hint, QWidget* parent)
-        : KDialog(parent),
-          qman(qman),
-          gman(gman),
-          initial_group(0),
-          show_file_tree(true),
-          already_downloaded(0)
+        : QDialog(parent)
+        , tc(0)
+        , model(0)
+        , qman(qman)
+        , gman(gman)
+        , start(0)
+        , skip_check(0)
+        , initial_group(0)
+        , show_file_tree(true)
+        , already_downloaded(0)
     {
-        setupUi(mainWidget());
+        setupUi(this);
+        connect(buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
+        connect(buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
+
         m_file_view->setAlternatingRowColors(true);
         filter_model = new TreeFilterModel(this);
         m_file_view->setModel(filter_model);
-        model = 0;
         //root = 0;
         connect(m_select_all, SIGNAL(clicked()), this, SLOT(selectAll()));
         connect(m_select_none, SIGNAL(clicked()), this, SLOT(selectNone()));
@@ -70,11 +75,10 @@ namespace kt
         m_downloadLocation->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
         m_completedLocation->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 
-        m_download_location_history->setIcon(QIcon::fromTheme("view-history"));
+        m_download_location_history->setIcon(QIcon::fromTheme(QStringLiteral("view-history")));
         m_download_location_history->setPopupMode(QToolButton::MenuButtonPopup);
-        m_move_when_completed_history->setIcon(QIcon::fromTheme("view-history"));
+        m_move_when_completed_history->setIcon(QIcon::fromTheme(QStringLiteral("view-history")));
         m_move_when_completed_history->setPopupMode(QToolButton::MenuButtonPopup);
-
 
         encodings = QTextCodec::availableMibs();
         foreach (int mib, encodings)
@@ -86,10 +90,10 @@ namespace kt
             initial_group = gman->find(group_hint);
 
         QButtonGroup* bg = new QButtonGroup(this);
-        m_tree->setIcon(QIcon::fromTheme("view-list-tree"));
+        m_tree->setIcon(QIcon::fromTheme(QStringLiteral("view-list-tree")));
         m_tree->setToolTip(i18n("Show a file tree"));
         connect(m_tree, SIGNAL(clicked(bool)), this, SLOT(fileTree(bool)));
-        m_list->setIcon(QIcon::fromTheme("view-list-text"));
+        m_list->setIcon(QIcon::fromTheme(QStringLiteral("view-list-text")));
         m_list->setToolTip(i18n("Show a file list"));
         connect(m_list, SIGNAL(clicked(bool)), this, SLOT(fileList(bool)));
         m_tree->setCheckable(true);
@@ -102,10 +106,7 @@ namespace kt
         m_filter->setPlaceholderText(i18n("Filter"));
         connect(m_filter, SIGNAL(textChanged(QString)), this, SLOT(setFilter(QString)));
 
-        if (Settings::useCompletedDir())
-            m_moveCompleted->setCheckState(Qt::Checked);
-        else
-            m_moveCompleted->setCheckState(Qt::Unchecked);
+        m_moveCompleted->setCheckState(Settings::useCompletedDir()?Qt::Checked:Qt::Unchecked);
 
         m_completedLocation->setEnabled(Settings::useCompletedDir());
         connect(m_moveCompleted, SIGNAL(toggled(bool)), this, SLOT(moveCompletedToggled(bool)));
@@ -533,7 +534,7 @@ namespace kt
             bytes_to_download -= already_downloaded;
             if (bytes_to_download > bytes_free)
                 lblStatus->setText(
-                    "<font color=\"#ff0000\">" + i18nc("We are %1 bytes short of what we need", "%1 short",
+                    QLatin1String("<font color=\"#ff0000\">") + i18nc("We are %1 bytes short of what we need", "%1 short",
                                                        bt::BytesToString(-1 * (long long)(bytes_free - bytes_to_download))));
             else
                 lblStatus->setText(bt::BytesToString(bytes_free - bytes_to_download));

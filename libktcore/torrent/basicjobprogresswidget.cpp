@@ -24,7 +24,7 @@
 #include <QLabel>
 #include <QProgressBar>
 #include <QVBoxLayout>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <util/functions.h>
 
 

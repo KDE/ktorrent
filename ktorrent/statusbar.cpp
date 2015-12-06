@@ -22,7 +22,7 @@
 
 #include <QLabel>
 #include <QProgressBar>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <util/functions.h>
 #include <dht/dhtbase.h>
 #include <kstatusbarofflineindicator.h>

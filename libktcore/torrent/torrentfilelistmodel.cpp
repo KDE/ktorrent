@@ -20,13 +20,15 @@
  ***************************************************************************/
 #include "torrentfilelistmodel.h"
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QIcon>
-#include <kmimetype.h>
+
 #include <QTreeView>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 using namespace bt;
 
@@ -45,8 +47,9 @@ namespace kt
 
     void TorrentFileListModel::changeTorrent(bt::TorrentInterface* tc)
     {
+        beginResetModel();
         this->tc = tc;
-        reset();
+        endResetModel();
     }
 
 
@@ -130,10 +133,7 @@ namespace kt
         else if (role == Qt::DecorationRole && index.column() == 0)
         {
             // if this is an empty folder then we are in the single file case
-            if (multi)
-                return QIcon::fromTheme(KMimeType::findByPath(tc->getTorrentFile(r).getPath())->iconName());
-            else
-                return QIcon::fromTheme(KMimeType::findByPath(s.torrent_name)->iconName());
+            return QIcon::fromTheme(QMimeDatabase().mimeTypeForFile(multi ? tc->getTorrentFile(r).getPath() : s.torrent_name).iconName());
         }
         else if (role == Qt::CheckStateRole && index.column() == 0 && multi)
         {

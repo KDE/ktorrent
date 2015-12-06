@@ -95,7 +95,7 @@ namespace kt
         if (tc == curr_tc.data())
             return;
 
-        curr_tc = bt::TorrentInterface::WPtr(tc);
+        curr_tc = tc;
 
         downloaded_bar->setTC(tc);
         availability_bar->setTC(tc);

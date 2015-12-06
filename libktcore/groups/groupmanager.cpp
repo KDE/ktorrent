@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "groupmanager.h"
+
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/file.h>
 #include <util/fileops.h>
@@ -26,7 +29,6 @@
 #include <bcodec/bencoder.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
-#include "groupmanager.h"
 #include "torrentgroup.h"
 #include "allgroup.h"
 #include "torrentgroup.h"

@@ -32,7 +32,7 @@
 #include <kcompletion.h>
 #include <kmainwindow.h>
 #include <qlabel.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kstandardguiitem.h>
 #include <kactioncollection.h>
 #include <ktoolbarlabelaction.h>

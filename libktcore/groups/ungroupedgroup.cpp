@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include "ungroupedgroup.h"
 #include "groupmanager.h"
+#include <klocalizedstring.h>
 
 namespace kt
 {

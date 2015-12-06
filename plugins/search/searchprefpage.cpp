@@ -21,7 +21,7 @@
 #include <kurl.h>
 #include <qtooltip.h>
 #include <qfile.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>

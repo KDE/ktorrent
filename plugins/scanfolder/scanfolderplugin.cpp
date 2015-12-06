@@ -30,7 +30,7 @@
 #include <QDir>
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kglobal.h>
 
 #include "scanfolder.h"

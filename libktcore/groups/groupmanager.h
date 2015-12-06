@@ -20,8 +20,7 @@
 #ifndef KTGROUPMANAGER_H
 #define KTGROUPMANAGER_H
 
-#include <qstring.h>
-#include <klocale.h>
+#include <QString>
 #include <util/ptrmap.h>
 #include <ktcore_export.h>
 #include <groups/group.h>

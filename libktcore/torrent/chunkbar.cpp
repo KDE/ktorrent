@@ -25,7 +25,7 @@
 #include <QPixmap>
 #include <math.h>
 #include <qtooltip.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <qimage.h>
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>

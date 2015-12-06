@@ -58,6 +58,8 @@ kcoreaddons_desktop_to_json(ktorrent_infowidget ktorrent_infowidget.desktop)
 target_link_libraries(
     ktorrent_infowidget
     ktcore
+    KF5::KIOFileWidgets
+    KF5::KDELibs4Support
     ${LIBKTORRENT_LIBRARIES}
     ${geoip_link}
     )

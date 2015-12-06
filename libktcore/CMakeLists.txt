@@ -56,10 +56,10 @@ set(libktorrent_UI torrent/basicjobprogresswidget.ui )
 ki18n_wrap_ui(libktorrent_SRC ${libktorrent_UI})
 kconfig_add_kcfg_files(libktorrent_SRC settings.kcfgc)
 add_library(ktcore SHARED ${libktorrent_SRC})
+generate_export_header(ktcore BASE_NAME ktcore)
 
 target_link_libraries(ktcore LINK_PUBLIC
    KF5::Parts
-   KF5::KDELibs4Support
    KF5::KCMUtils
    ${GMP_LIBRARIES}
    ktorrent

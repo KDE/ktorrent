@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <arpa/inet.h>
 #include <QStringList>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <net/address.h>
 #include <util/log.h>
 #include <util/error.h>

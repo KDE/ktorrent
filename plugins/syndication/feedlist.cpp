@@ -23,7 +23,7 @@
 #include <QTime>
 #include <QTextStream>
 #include <QIcon>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/fileops.h>
 #include <util/functions.h>

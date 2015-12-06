@@ -20,7 +20,7 @@
 #include <QFile>
 #include <kgenericfactory.h>
 #include <kglobal.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kiconloader.h>
 #include <kactioncollection.h>
 #include <kstdaction.h>

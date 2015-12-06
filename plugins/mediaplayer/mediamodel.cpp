@@ -21,7 +21,7 @@
 #include <QMimeData>
 #include <QIcon>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/constants.h>
 #include <util/functions.h>

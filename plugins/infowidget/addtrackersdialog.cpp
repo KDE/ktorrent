@@ -25,24 +25,23 @@
 #include <QClipboard>
 #include <QLineEdit>
 #include <QCompleter>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
 
 #include <klocalizedstring.h>
 
 namespace kt
 {
 
-    AddTrackersDialog::AddTrackersDialog(QWidget* parent, const QStringList& tracker_hints): KDialog(parent)
+    AddTrackersDialog::AddTrackersDialog(QWidget* parent, const QStringList& tracker_hints): QDialog(parent)
     {
-        setButtons(KDialog::Ok | KDialog::Cancel);
-        showButtonSeparator(true);
-        setCaption(i18n("Add Trackers"));
+        setWindowTitle(i18n("Add Trackers"));
         trackers = new KEditListWidget(this);
         trackers->setButtons(KEditListWidget::Add | KEditListWidget::Remove);
 
         // If we find any urls on the clipboard, add them
         QClipboard* clipboard = QApplication::clipboard();
-        QStringList strings = clipboard->text().split(QRegExp(QLatin1String("\\s")));
-        foreach (const QString& s, strings)
+        foreach (const QString& s, clipboard->text().split(QRegExp(QLatin1String("\\s"))))
         {
             QUrl url(s);
             if (url.isValid() && (url.scheme() == QLatin1String("http")
@@ -55,7 +54,13 @@ namespace kt
 
         trackers->lineEdit()->setCompleter(new QCompleter(tracker_hints));
 
-        setMainWidget(trackers);
+        QDialogButtonBox* box=new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel, this);
+        connect(box,SIGNAL(accepted()),this,SLOT(accept()));
+        connect(box,SIGNAL(rejected()),this,SLOT(reject()));
+
+        QVBoxLayout *layout = new QVBoxLayout(this);
+        layout->addWidget(trackers);
+        layout->addWidget(box);
     }
 
     AddTrackersDialog::~AddTrackersDialog()

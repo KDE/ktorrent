@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <QRegExp>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>

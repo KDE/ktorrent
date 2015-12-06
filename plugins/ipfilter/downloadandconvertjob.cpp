@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <kmimetype.h>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kzip.h>
 #include <kio/jobuidelegate.h>
 #include <util/log.h>

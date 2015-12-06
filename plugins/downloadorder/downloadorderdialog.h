@@ -21,7 +21,7 @@
 #ifndef KTDOWNLOADORDERDIALOG_H
 #define KTDOWNLOADORDERDIALOG_H
 
-#include <kdialog.h>
+#include <QDialog>
 #include "ui_downloadorderwidget.h"
 
 namespace bt
@@ -37,7 +37,7 @@ namespace kt
     /**
         Dialog to manipulate the download order.
     */
-    class DownloadOrderDialog : public KDialog, public Ui_DownloadOrderWidget
+    class DownloadOrderDialog : public QDialog, public Ui_DownloadOrderWidget
     {
         Q_OBJECT
     public:

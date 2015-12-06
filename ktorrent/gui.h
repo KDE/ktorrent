@@ -22,7 +22,6 @@
 #define KT_GUI_HH
 
 #include <QTimer>
-#include <QStackedWidget>
 #include <util/constants.h>
 #include <interfaces/guiinterface.h>
 #include <kparts/mainwindow.h>
@@ -94,8 +93,8 @@ namespace kt
 
     private slots:
         void createTorrent();
-        void openTorrent();
-        void openTorrentSilently();
+        void openTorrent(bool silently = false);
+        void openTorrentSilently(){openTorrent(true);}
         void pasteURL();
         void paste();
         void showPrefDialog();

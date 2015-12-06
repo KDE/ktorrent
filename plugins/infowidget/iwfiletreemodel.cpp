@@ -21,8 +21,7 @@
 #include "iwfiletreemodel.h"
 
 #include <math.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <klocalizedstring.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>

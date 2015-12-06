@@ -45,7 +45,6 @@ namespace kt
 
     MagnetModel::~MagnetModel()
     {
-        delete mman;
     }
 
     void MagnetModel::removeMagnets(int row, int count)

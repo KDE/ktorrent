@@ -21,7 +21,7 @@
 #ifndef KT_ADDTRACKERSDIALOG_H
 #define KT_ADDTRACKERSDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 #include <KEditListWidget>
 
 
@@ -31,7 +31,7 @@ namespace kt
     /**
      * Dialog to add trackers
      */
-    class AddTrackersDialog : public KDialog
+    class AddTrackersDialog : public QDialog
     {
         Q_OBJECT
     public:

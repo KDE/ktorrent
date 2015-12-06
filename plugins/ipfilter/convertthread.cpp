@@ -25,7 +25,7 @@
 #include <QTextStream>
 #include <QRegExp>
 #include <QRegExpValidator>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kio/job.h>
 #include <interfaces/functions.h>
 #include <util/log.h>

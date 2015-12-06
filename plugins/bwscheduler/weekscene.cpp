@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <math.h>
 #include <kglobal.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kcalendarsystem.h>
 #include <QPalette>
 #include <QFontMetricsF>

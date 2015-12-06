@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include "chunkdownloadmodel.h"
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include <util/functions.h>

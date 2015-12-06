@@ -22,8 +22,7 @@
 #include <kmainwindow.h>
 #include <kactioncollection.h>
 #include <kpluginfactory.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <util/fileops.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>

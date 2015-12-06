@@ -20,7 +20,7 @@
 #include <QBoxLayout>
 #include <kglobal.h>
 #include <kconfig.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <qapplication.h>
 #include "logviewer.h"
 #include "logflags.h"

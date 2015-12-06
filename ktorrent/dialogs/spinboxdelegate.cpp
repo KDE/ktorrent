@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <QSpinBox>
 #include <QModelIndex>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include "spinboxdelegate.h"
 
 namespace kt

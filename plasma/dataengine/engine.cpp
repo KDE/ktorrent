@@ -19,7 +19,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QDBusInterface>
-#include <kglobal.h>
 #include <kstandarddirs.h>
 #include <util/log.h>
 #include "engine.h"

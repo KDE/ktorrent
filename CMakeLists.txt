@@ -12,10 +12,11 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings)
 include(FeatureSummary)
+include(GenerateExportHeader)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core DBus Widgets Script)
 
-find_package(KF5 REQUIRED KDELibs4Support I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross KCMUtils Sonnet DBusAddons Crash)
+find_package(KF5 REQUIRED I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross KCMUtils Sonnet DBusAddons Crash Archive KDELibs4Support)
 
 find_package(LibKTorrent 1.9.50 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
