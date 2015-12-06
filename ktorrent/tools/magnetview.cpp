@@ -75,7 +75,7 @@ namespace kt
     {
         KConfigGroup g = cfg->group("MagnetView");
         QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
-        if (!s.isNull())
+        if (!s.isEmpty())
         {
             QHeaderView* v = view->header();
             v->restoreState(s);

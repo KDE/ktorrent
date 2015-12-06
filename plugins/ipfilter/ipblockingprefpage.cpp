@@ -196,7 +196,7 @@ namespace kt
         bool ok = g.readEntry("last_update_ok", true);
         QDate last_updated = g.readEntry("last_updated", QDate());
 
-        if (last_updated.isNull())
+        if (last_updated.isEmpty())
             m_last_updated->setText(i18n("No update done yet."));
         else if (ok)
             m_last_updated->setText(last_updated.toString());
@@ -206,7 +206,7 @@ namespace kt
         if (kcfg_autoUpdate->isChecked())
         {
             QDate next_update;
-            if (last_updated.isNull())
+            if (last_updated.isEmpty())
                 next_update = QDate::currentDate().addDays(kcfg_autoUpdateInterval->value());
             else
                 next_update = last_updated.addDays(kcfg_autoUpdateInterval->value());

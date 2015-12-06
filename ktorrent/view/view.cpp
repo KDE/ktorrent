@@ -26,17 +26,16 @@
 #include <QDragEnterEvent>
 #include <QSortFilterProxyModel>
 #include <QClipboard>
-#include <KRun>
 #include <QMenu>
-#include <KLocale>
+#include <KRun>
 #include <KSharedConfig>
 #include <KMessageBox>
-#include <KInputDialog>
 #include <QAction>
 #include <KStandardAction>
 #include <KActionCollection>
 #include <kfilewidget.h>
 #include <krecentdirs.h>
+#include <klocalizedstring.h>
 
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
@@ -691,7 +690,7 @@ namespace kt
 
     void View::restoreState(const QByteArray& state)
     {
-        if (!state.isNull())
+        if (!state.isEmpty())
         {
             QHeaderView* v = header();
             v->restoreState(state);

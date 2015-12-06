@@ -169,7 +169,7 @@ namespace kt
     {
         KConfigGroup g = cfg->group("WebSeedsTab");
         QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
-        if (!s.isNull())
+        if (!s.isEmpty())
             m_webseed_list->header()->restoreState(s);
     }
 

@@ -23,7 +23,7 @@
 
 #include <QKeyEvent>
 #include <QHBoxLayout>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <QIcon>
 #include <KConfigGroup>
 #include "view.h"

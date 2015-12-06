@@ -25,7 +25,7 @@
 #include <QFontMetricsF>
 #include <QGraphicsTextItem>
 #include <QGraphicsSceneMouseEvent>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <KCursor>
 #include <util/log.h>
 #include <util/functions.h>

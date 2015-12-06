@@ -123,7 +123,7 @@ namespace kt
     {
         KConfigGroup g = cfg->group("ChunkDownloadView");
         QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
-        if (!s.isNull())
+        if (!s.isEmpty())
         {
             QHeaderView* v = m_chunk_view->header();
             v->restoreState(s);

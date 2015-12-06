@@ -18,10 +18,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QDockWidget>
-#include <kgenericfactory.h>
-#include <kglobal.h>
+#include <kpluginfactory.h>
 #include <klocalizedstring.h>
-#include <kiconloader.h>
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <interfaces/guiinterface.h>
@@ -37,19 +35,20 @@
 
 using namespace bt;
 
-K_EXPORT_COMPONENT_FACTORY(ktlogviewerplugin, KGenericFactory<kt::LogViewerPlugin>("ktlogviewerplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_logviewer, "ktorrent_logviewer.json", registerPlugin<kt::LogViewerPlugin>();)
 
 namespace kt
 {
 
 
 
-    LogViewerPlugin::LogViewerPlugin(QObject* parent, const QStringList&) : Plugin(parent)
+    LogViewerPlugin::LogViewerPlugin(QObject* parent, const QVariantList&) : Plugin(parent)
+        , lv(0)
+        , pref(0)
+        , flags(0)
+        , dock(0)
+        , pos(SEPARATE_ACTIVITY)
     {
-        lv = 0;
-        flags = 0;
-        pos = SEPARATE_ACTIVITY;
-        dock = 0;
     }
 
 

@@ -19,15 +19,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include "scheduleeditor.h"
+
 #include <QVBoxLayout>
 #include <QAction>
 #include <KActionCollection>
 #include <QIcon>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <KMessageBox>
 #include <KFileDialog>
 #include <util/error.h>
-#include "scheduleeditor.h"
 #include "weekview.h"
 #include "schedule.h"
 #include "edititemdlg.h"
@@ -123,7 +124,7 @@ namespace kt
     void ScheduleEditor::save()
     {
         QString fn = KFileDialog::getSaveFileName(QUrl(), "*.sched | " + i18n("KTorrent scheduler files"), this);
-        if (!fn.isNull())
+        if (!fn.isEmpty())
         {
             try
             {
@@ -139,7 +140,7 @@ namespace kt
     void ScheduleEditor::load()
     {
         QString fn = KFileDialog::getOpenFileName(KUrl(), "*.sched | " + i18n("KTorrent scheduler files") + "\n* |" + i18n("All files"), this);
-        if (!fn.isNull())
+        if (!fn.isEmpty())
         {
             Schedule* s = new Schedule();
             try

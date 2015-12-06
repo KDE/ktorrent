@@ -107,7 +107,7 @@ namespace kt
         bool ok = false;
         QString name = QInputDialog::getText(this, QString(), i18n("Please enter the group name."), QLineEdit::Normal, QString(), &ok);
 
-        if (name.isNull() || name.length() == 0 || !ok)
+        if (name.isEmpty() || name.length() == 0 || !ok)
             return 0;
 
         if (gman->find(name))

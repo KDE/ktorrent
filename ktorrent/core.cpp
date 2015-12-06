@@ -461,7 +461,7 @@ namespace kt
         {
             KIO::Job* j = KIO::storedGet(url);
             connect(j, &KIO::Job::result, this, &Core::downloadFinished);
-            if (!group.isNull())
+            if (!group.isEmpty())
                 add_to_groups.insert(url, group);
         }
     }
@@ -535,7 +535,7 @@ namespace kt
             // download to a random file in tmp
             KIO::Job* j = KIO::storedGet(url);
             connect(j, &KIO::Job::result, this, &Core::downloadFinishedSilently);
-            if (!group.isNull())
+            if (!group.isEmpty())
                 add_to_groups.insert(url, group);
         }
     }

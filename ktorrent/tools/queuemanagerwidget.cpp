@@ -237,7 +237,7 @@ namespace kt
     {
         KConfigGroup g = cfg->group("QueueManagerWidget");
         QByteArray s = QByteArray::fromBase64(g.readEntry("view_state", QByteArray()));
-        if (!s.isNull())
+        if (!s.isEmpty())
             view->header()->restoreState(s);
 
         QString st = g.readEntry("search_text", QString());

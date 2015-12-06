@@ -17,12 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "logviewer.h"
+
 #include <QBoxLayout>
-#include <kglobal.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <qapplication.h>
-#include "logviewer.h"
 #include "logflags.h"
 #include "logviewerpluginsettings.h"
 #include <QMenu>
@@ -143,4 +143,3 @@ namespace kt
 
 
 }
-#include "logviewer.moc"

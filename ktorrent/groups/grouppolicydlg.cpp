@@ -18,26 +18,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <groups/group.h>
 #include "grouppolicydlg.h"
+#include <groups/group.h>
 
 namespace kt
 {
 
     GroupPolicyDlg::GroupPolicyDlg(Group* group, QWidget* parent)
-        : KDialog(parent), group(group)
+        : QDialog(parent), group(group)
     {
-        setupUi(mainWidget());
+        setupUi(this);
+        connect(buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
+        connect(buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
         setWindowTitle(i18n("Policy for the %1 group", group->groupName()));
 
         const Group::Policy& p = group->groupPolicy();
-        m_default_location_enabled->setChecked(!p.default_save_location.isNull());
-        m_default_location->setEnabled(!p.default_save_location.isNull());
+        m_default_location_enabled->setChecked(!p.default_save_location.isEmpty());
+        m_default_location->setEnabled(!p.default_save_location.isEmpty());
         m_default_location->setUrl(QUrl::fromLocalFile(p.default_save_location));
         m_default_location->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 
-        m_default_move_on_completion_enabled->setChecked(!p.default_move_on_completion_location.isNull());
-        m_default_move_on_completion_location->setEnabled(!p.default_move_on_completion_location.isNull());
+        m_default_move_on_completion_enabled->setChecked(!p.default_move_on_completion_location.isEmpty());
+        m_default_move_on_completion_location->setEnabled(!p.default_move_on_completion_location.isEmpty());
         m_default_move_on_completion_location->setUrl(QUrl::fromLocalFile(p.default_move_on_completion_location));
         m_default_move_on_completion_location->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 

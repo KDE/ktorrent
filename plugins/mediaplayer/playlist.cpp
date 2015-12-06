@@ -27,7 +27,7 @@
 #include <QStringList>
 #include <QTextStream>
 #include <taglib/tag.h>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <QIcon>
 #include <util/log.h>
 #include "mediaplayer.h"

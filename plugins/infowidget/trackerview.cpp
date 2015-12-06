@@ -254,7 +254,7 @@ namespace kt
     {
         KConfigGroup g = cfg->group("TrackerView");
         QByteArray s = g.readEntry("state", QByteArray());
-        if (!s.isNull())
+        if (!s.isEmpty())
         {
             QHeaderView* v = m_tracker_list->header();
             v->restoreState(QByteArray::fromBase64(s));

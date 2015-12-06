@@ -23,6 +23,7 @@
 #include <QIcon>
 #include <KGlobal>
 #include <KLocale>
+#include <klocalizedstring.h>
 #include <syndication/item.h>
 #include <syndication/enclosure.h>
 #include <util/log.h>

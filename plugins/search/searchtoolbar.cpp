@@ -157,7 +157,7 @@ namespace kt
         while (!in.atEnd() && cnt < 50)
         {
             QString line = in.readLine();
-            if (line.isNull())
+            if (line.isEmpty())
                 break;
 
             if (!m_search_text->contains(line))

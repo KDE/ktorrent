@@ -466,7 +466,7 @@ namespace kt
     {
         KConfigGroup g = cfg->group("FileView");
         QByteArray s = g.readEntry("state", QByteArray());
-        if (!s.isNull())
+        if (!s.isEmpty())
         {
             QHeaderView* v = view->header();
             v->restoreState(QByteArray::fromBase64(s));

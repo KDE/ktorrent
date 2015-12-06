@@ -45,7 +45,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        LogViewerPlugin(QObject* parent, const QStringList& args);
+        LogViewerPlugin(QObject* parent, const QVariantList& args);
         virtual ~LogViewerPlugin();
 
         virtual void load();
@@ -64,8 +64,8 @@ namespace kt
         LogViewer* lv;
         LogPrefPage* pref;
         LogFlags* flags;
-        LogViewerPosition pos;
         QDockWidget* dock;
+        LogViewerPosition pos;
     };
 
 }

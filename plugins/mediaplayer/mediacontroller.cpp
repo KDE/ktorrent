@@ -22,13 +22,18 @@
 #include "mediacontroller.h"
 #include <QBoxLayout>
 #include <QFile>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
 #include "mediaplayer.h"
 
 namespace kt
 {
+    static QString t2q(const TagLib::String& t)
+    {
+        return QString::fromWCharArray((const wchar_t*)t.toCWString(), t.length());
+    }
+
     MediaController::MediaController(kt::MediaPlayer* player, KActionCollection* ac, QWidget* parent) : QWidget(parent)
     {
         setupUi(this);
@@ -100,9 +105,9 @@ namespace kt
             return;
         }
 
-        QString artist = tag->artist().toCString(true);
-        QString title =  tag->title().toCString(true);
-        QString album = tag->album().toCString(true);
+        QString artist = t2q(tag->artist());
+        QString title =  t2q(tag->title());
+        QString album = t2q(tag->album());
 
         bool has_artist = !artist.isEmpty();
         bool has_title = !title.isEmpty();

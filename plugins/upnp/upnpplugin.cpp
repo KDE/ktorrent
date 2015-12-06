@@ -17,32 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kgenericfactory.h>
-#include <kglobal.h>
+#include "upnpplugin.h"
+
+#include <QStandardPaths>
+#include <kpluginfactory.h>
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
-#include <kstdaction.h>
 #include <interfaces/guiinterface.h>
 #include <util/fileops.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 #include <upnp/upnpmcastsocket.h>
-#include "upnpplugin.h"
+
 #include "upnpwidget.h"
 #include <interfaces/torrentactivityinterface.h>
 
-
-K_EXPORT_COMPONENT_FACTORY(ktupnpplugin, KGenericFactory<kt::UPnPPlugin>("ktupnpplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_upnp, "ktorrent_upnp.json", registerPlugin<kt::UPnPPlugin>();)
 
 using namespace bt;
 
 namespace kt
 {
 
-    UPnPPlugin::UPnPPlugin(QObject* parent, const QStringList& /*args*/) : Plugin(parent)
+    UPnPPlugin::UPnPPlugin(QObject* parent, const QVariantList& /*args*/) : Plugin(parent), sock(0), upnp_tab(0)
     {
-        sock = 0;
-        upnp_tab = 0;
     }
 
 
@@ -57,11 +54,11 @@ namespace kt
         sock = new UPnPMCastSocket();
         upnp_tab = new UPnPWidget(sock, 0);
         GUIInterface* gui = getGUI();
-        gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), "kt-upnp",
+        gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QLatin1String("kt-upnp"),
                 i18n("Shows the status of the UPnP plugin"));
         // load the routers list
-        QString routers_file = KGlobal::dirs()->saveLocation("data", "ktorrent") + "routers";
-        if (bt::Exists(routers_file))
+        QString routers_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("routers"));
+        if (routers_file.length())
             sock->loadRouters(routers_file);
         sock->discover();
     }
@@ -69,7 +66,7 @@ namespace kt
     void UPnPPlugin::unload()
     {
         LogSystemManager::instance().unregisterSystem(i18n("UPnP"));
-        QString routers_file = KGlobal::dirs()->saveLocation("data", "ktorrent") + "routers";
+        QString routers_file = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QLatin1String("/routers");
         sock->saveRouters(routers_file);
         getGUI()->getTorrentActivity()->removeToolWidget(upnp_tab);
         sock->close();

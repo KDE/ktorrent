@@ -138,7 +138,7 @@ namespace kt
         {
             QDateTime last_updated = g.readEntry("last_updated", QDateTime());
             QDateTime next_update;
-            if (last_updated.isNull())
+            if (last_updated.isEmpty())
                 next_update = now.addDays(IPBlockingPluginSettings::autoUpdateInterval());
             else
                 next_update = QDateTime(last_updated).addDays(IPBlockingPluginSettings::autoUpdateInterval());

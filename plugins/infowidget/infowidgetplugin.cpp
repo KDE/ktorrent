@@ -50,15 +50,15 @@ namespace kt
 
 
     InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent, const QVariantList&) : Plugin(parent)
+        , peer_view(0)
+        , cd_view(0)
+        , tracker_view(0)
+        , file_view(0)
+        , status_tab(0)
+        , webseeds_tab(0)
+        , monitor(0)
+        , pref(0)
     {
-        pref = 0;
-        peer_view = 0;
-        cd_view = 0;
-        tracker_view = 0;
-        file_view = 0;
-        status_tab = 0;
-        monitor = 0;
-        webseeds_tab = 0;
     }
 
 

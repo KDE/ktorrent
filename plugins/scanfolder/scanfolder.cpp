@@ -20,7 +20,7 @@
 #include "scanfolder.h"
 
 #include <QDir>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <KFileItem>
 #include <KConfigGroup>
 #include <kglobal.h>

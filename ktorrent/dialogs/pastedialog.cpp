@@ -25,8 +25,9 @@
 #include <QUrl>
 #include <QLineEdit>
 #include <KMessageBox>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <KStandardGuiItem>
+#include <ksharedconfig.h>
 #include <groups/groupmanager.h>
 
 namespace kt

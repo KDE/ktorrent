@@ -17,15 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "logflags.h"
+
 #include <klocalizedstring.h>
-#include <kglobal.h>
 #include <ksharedconfig.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 #include <torrent/globals.h>
-#include <qstring.h>
+#include <QString>
 
-#include "logflags.h"
 #include "logviewer.h"
 #include "logviewerpluginsettings.h"
 

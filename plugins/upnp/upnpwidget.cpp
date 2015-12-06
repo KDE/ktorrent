@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <klocalizedstring.h>
-#include <kglobal.h>
 #include <ksharedconfig.h>
 #include <kmessagebox.h>
 #include <torrent/globals.h>
@@ -56,7 +55,7 @@ namespace kt
         // load the state of the devices treewidget
         KConfigGroup g = KSharedConfig::openConfig()->group("UPnPDevicesList");
         QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
-        if (!s.isNull())
+        if (!s.isEmpty())
             m_devices->header()->restoreState(s);
 
         m_forward->setEnabled(false);
@@ -182,5 +181,3 @@ namespace kt
     }
 
 }
-
-#include "upnpwidget.moc"

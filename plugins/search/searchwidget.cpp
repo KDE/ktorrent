@@ -27,7 +27,7 @@
 #include <QVBoxLayout>
 #include <KIconLoader>
 #include <KComboBox>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <KNotification>
 #include <QApplication>
 #include <QNetworkRequest>

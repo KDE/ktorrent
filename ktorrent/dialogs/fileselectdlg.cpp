@@ -421,7 +421,7 @@ namespace kt
         }
 
         comp_dir = Settings::completedDir();
-        if (!Settings::useCompletedDir() || comp_dir.isNull())
+        if (!Settings::useCompletedDir() || comp_dir.isEmpty())
         {
             comp_dir = dir;
         }
@@ -462,11 +462,11 @@ namespace kt
         {
             m_cmbGroups->setCurrentIndex(selected);
             QString dir = initial_group->groupPolicy().default_save_location;
-            if (!dir.isNull() && bt::Exists(dir))
+            if (!dir.isEmpty() && bt::Exists(dir))
                 m_downloadLocation->setUrl(QUrl(dir));
 
             dir = initial_group->groupPolicy().default_move_on_completion_location;
-            if (!dir.isNull() && bt::Exists(dir))
+            if (!dir.isEmpty() && bt::Exists(dir))
                 m_completedLocation->setUrl(QUrl::fromLocalFile(dir));
         }
     }
@@ -482,11 +482,11 @@ namespace kt
             return;
 
         QString dir = g->groupPolicy().default_save_location;
-        if (!dir.isNull() && bt::Exists(dir))
+        if (!dir.isEmpty() && bt::Exists(dir))
             m_downloadLocation->setUrl(QUrl(dir));
 
         dir = g->groupPolicy().default_move_on_completion_location;
-        if (!dir.isNull() && bt::Exists(dir))
+        if (!dir.isEmpty() && bt::Exists(dir))
         {
             m_moveCompleted->setChecked(true);
             m_completedLocation->setUrl(QUrl::fromLocalFile(dir));

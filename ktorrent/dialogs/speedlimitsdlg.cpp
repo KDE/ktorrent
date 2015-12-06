@@ -117,7 +117,7 @@ namespace kt
     {
         KConfigGroup g = KSharedConfig::openConfig()->group("SpeedLimitsDlg");
         QByteArray s = QByteArray::fromBase64(g.readEntry("view_state", QByteArray()));
-        if (!s.isNull())
+        if (!s.isEmpty())
         {
             m_speed_limits_view->header()->restoreState(s);
             m_speed_limits_view->header()->setSortIndicatorShown(true);

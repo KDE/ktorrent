@@ -385,7 +385,7 @@ namespace kt
     {
         KConfigGroup g = cfg->group("MediaPlayerActivity");
         QByteArray d = g.readEntry("splitter_state", QByteArray());
-        if (!d.isNull())
+        if (!d.isEmpty())
             splitter->restoreState(d);
 
         play_list->loadState(cfg);

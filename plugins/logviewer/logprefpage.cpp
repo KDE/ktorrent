@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QHeaderView>
-#include <kglobal.h>
-#include <ksharedconfig.h>
 #include "logprefpage.h"
+
+#include <QHeaderView>
+#include <ksharedconfig.h>
 #include "logviewerpluginsettings.h"
 #include "logflags.h"
 #include "logflagsdelegate.h"
@@ -51,7 +51,7 @@ namespace kt
     {
         KConfigGroup g = KSharedConfig::openConfig()->group("LogFlags");
         QByteArray s = QByteArray::fromBase64(g.readEntry("logging_flags_view_state", QByteArray()));
-        if (!s.isNull())
+        if (!s.isEmpty())
             m_logging_flags->header()->restoreState(s);
     }
 
@@ -77,5 +77,3 @@ namespace kt
     {
     }
 }
-#include "logprefpage.moc"
-

@@ -38,7 +38,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        UPnPPlugin(QObject* parent, const QStringList& args);
+        UPnPPlugin(QObject* parent, const QVariantList& args);
         virtual ~UPnPPlugin();
 
         virtual void load();

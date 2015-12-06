@@ -22,7 +22,7 @@
 #include <QVBoxLayout>
 #include <util/log.h>
 #include <KRun>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <QAction>
 #include <KActionCollection>

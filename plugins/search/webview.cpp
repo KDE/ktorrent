@@ -28,7 +28,7 @@
 #include <KUrl>
 #include <KStandardDirs>
 #include <KIconLoader>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <KWebPage>
 #include <util/log.h>
 #include <kio/job.h>

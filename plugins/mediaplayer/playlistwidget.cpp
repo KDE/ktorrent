@@ -152,7 +152,7 @@ namespace kt
     {
         KConfigGroup g = cfg->group("PlayListWidget");
         QByteArray d = g.readEntry("play_list_state", QByteArray());
-        if (!d.isNull())
+        if (!d.isEmpty())
             view->header()->restoreState(d);
 
         view->header()->setSortIndicatorShown(true);

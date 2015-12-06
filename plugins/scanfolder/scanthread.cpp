@@ -23,7 +23,7 @@
 #include <QDir>
 #include <QEvent>
 #include <QCoreApplication>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <util/fileops.h>
 #include <QTimer>
 

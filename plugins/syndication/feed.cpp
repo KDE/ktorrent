@@ -20,7 +20,7 @@
  ***************************************************************************/
 #include <QFile>
 #include <QDomElement>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <syndication/enclosure.h>
 #include <util/log.h>
 #include <util/file.h>

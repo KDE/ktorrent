@@ -23,7 +23,7 @@
 #include <QTextStream>
 #include <QVBoxLayout>
 #include <QToolButton>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <QIcon>
 #include <KConfigGroup>
 #include <KStandardAction>

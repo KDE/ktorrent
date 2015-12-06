@@ -184,7 +184,7 @@ namespace kt
                 challenge_hash = t.section("=", 1, 1);
         }
 
-        if (username.isNull() || challenge.isNull() || username != WebInterfacePluginSettings::username())
+        if (username.isEmpty() || challenge.isNull() || username != WebInterfacePluginSettings::username())
         {
             Out(SYS_WEB | LOG_NOTICE) << "Webgui login failed ! 2" << endl;
             challenge = QString();

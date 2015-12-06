@@ -23,7 +23,7 @@
 #include <QSortFilterProxyModel>
 #include <QLineEdit>
 #include <QIcon>
-#include <KLocale>
+#include <klocalizedstring.h>
 #include <KToolBar>
 #include <util/log.h>
 #include "mediaview.h"
