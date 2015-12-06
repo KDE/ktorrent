@@ -58,7 +58,7 @@ namespace kt
 
     QString DataDir()
     {
-        QString str = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+        QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
         //if (!str.endsWith(bt::DirSeparator()))
             return str + bt::DirSeparator();
         //else
