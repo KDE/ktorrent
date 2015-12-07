@@ -287,6 +287,9 @@ This is experimental and should only be used if you are getting a lot of connect
         <property name="text">
          <string>Do not use KIO for tracker announces</string>
         </property>
+        <property name="visible">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item>

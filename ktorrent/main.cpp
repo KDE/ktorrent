@@ -120,7 +120,7 @@ int main(int argc, char** argv)
     about.addAuthor(i18n("Joris Guisson"), QString(), QStringLiteral("joris.guisson@gmail.com"), QStringLiteral("http://ktorrent.org"));
     about.addAuthor(i18n("Ivan Vasic"), QString(), QStringLiteral("ivasic@gmail.com"));
     about.addAuthor(i18n("Alan Jones"), i18n("BitFinder Plugin"), QStringLiteral("skyphyr@gmail.com"));
-    about.addAuthor(i18n("Diego R. Brogna"), i18n("Webinterface Plugin"), QStringLiteral("dierbro@gmail.com"));
+    about.addCredit(i18n("Diego Rosario Brogna"), i18n("Webinterface Plugin, global max share ratio patch"), QStringLiteral("dierbro@gmail.com"));
     about.addAuthor(i18n("Krzysztof Kundzicz"), i18n("Statistics Plugin"), QStringLiteral("athantor@gmail.com"));
     about.addAuthor(i18n("Christian Weilbach"), i18n("kio-magnet"), QStringLiteral("christian_weilbach@web.de"));
     about.addCredit(i18n("Mladen Babic"),  i18n("Application icon and a couple of others"), QStringLiteral("bmladen@EUnet.yu"));
@@ -134,7 +134,6 @@ int main(int argc, char** argv)
     about.addCredit(i18n("Maxmind"), i18n("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."), QString(), QStringLiteral("http://www.maxmind.com/"));
     about.addCredit(i18n("Adam Forsyth"), i18n("File prioritization and some other patches"), QStringLiteral("agforsyth@gmail.com"));
     about.addCredit(i18n("Thomas Bernard"), i18n("Miniupnp was used as an example for our own UPnP implementation"), QString(), QStringLiteral("http://miniupnp.free.fr/"));
-    about.addCredit(i18n("Diego Rosario Brogna"), i18n("Global max share ratio patch"), QStringLiteral("dierbro@gmail.com"));
     about.addCredit(i18n("Lesly Weyts"), i18n("Zeroconf enhancements"));
     about.addCredit(i18n("Kevin Andre"), i18n("Zeroconf enhancements"), QString(), QStringLiteral("http://users.edpnet.be/hyperquantum/"));
     about.addCredit(i18n("Dagur Valberg Johannsson"), i18n("Coldmilk webgui"), QStringLiteral("dagurval@pvv.ntnu.no"));
