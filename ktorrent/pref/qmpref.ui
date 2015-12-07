@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>635</width>
-    <height>449</height>
+    <height>483</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -124,29 +124,18 @@
           </property>
          </widget>
         </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="kcfg_decreasePriorityOfStalledTorrents">
-        <property name="toolTip">
-         <string>&lt;p&gt;With this enabled, the queue manager will decrease the priority of a torrent which has been stalled for too long. &lt;/p&gt;
+        <item row="4" column="0">
+         <widget class="QCheckBox" name="kcfg_decreasePriorityOfStalledTorrents">
+          <property name="toolTip">
+           <string>&lt;p&gt;With this enabled, the queue manager will decrease the priority of a torrent which has been stalled for too long. &lt;/p&gt;
 &lt;p&gt;This will allow the queue manager to run other torrents, when a torrent is doing nothing.&lt;/p&gt;</string>
-        </property>
-        <property name="text">
-         <string>Decrease priority of torrents which are stalled for too long</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout">
-        <item>
-         <widget class="QLabel" name="label">
+          </property>
           <property name="text">
-           <string>Stalled timer:</string>
+           <string>Decrease priority of torrents which are stalled for more than:</string>
           </property>
          </widget>
         </item>
-        <item>
+        <item row="4" column="1">
          <widget class="QSpinBox" name="kcfg_stallTimer">
           <property name="toolTip">
            <string>&lt;p&gt;Time used for the stall timer. When a torrent is stalled longer than this, its priority will be decreased.&lt;/p&gt;</string>
@@ -158,19 +147,6 @@
            <number>1000000</number>
           </property>
          </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </item>
