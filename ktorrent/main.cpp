@@ -37,6 +37,7 @@
 #include <kaboutdata.h>
 #include <klocalizedstring.h>
 #include <kdbusservice.h>
+#include <KCrash>
 
 #include <util/log.h>
 #include <torrent/globals.h>
@@ -111,6 +112,7 @@ int main(int argc, char** argv)
     //FIXME i18n KGlobal::locale()->insertCatalog("libktorrent");
 
     QApplication app(argc, argv);
+    KCrash::initialize();
 
     QCommandLineParser parser;
     KAboutData about(QStringLiteral("ktorrent"), i18nc("@title", "KTorrent"), kt::VERSION_STRING, i18n("Bittorrent client for KDE"),
