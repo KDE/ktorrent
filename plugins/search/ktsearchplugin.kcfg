@@ -4,7 +4,7 @@
 		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
 		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
 		
-	<kcfgfile name="ktsearchpluginrc"/>
+	<kcfgfile name="ktorrent_searchrc"/>
 	<group name="general">
 		<entry name="searchEngine" type="Int">
 			<label>Current search engine</label>

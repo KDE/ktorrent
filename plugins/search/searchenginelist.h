@@ -20,7 +20,6 @@
 #ifndef KTSEARCHENGINELIST_H
 #define KTSEARCHENGINELIST_H
 
-#include <KUrl>
 #include <QList>
 #include <QAbstractListModel>
 #include <util/constants.h>
@@ -38,8 +37,8 @@ namespace kt
         Q_OBJECT
 
         QList<SearchEngine*> engines;
-        KUrl::List default_opensearch_urls;
-        KUrl::List default_urls;
+        QList<QUrl> default_opensearch_urls;
+        QList<QUrl> default_urls;
         QString data_dir;
     public:
         SearchEngineList(const QString& data_dir);
@@ -49,7 +48,7 @@ namespace kt
         void loadEngines();
 
         /// Search with an engine
-        KUrl search(bt::Uint32 engine, const QString& terms);
+        QUrl search(bt::Uint32 engine, const QString& terms);
 
         /// Get the name of an engine
         QString getEngineName(bt::Uint32 engine) const;

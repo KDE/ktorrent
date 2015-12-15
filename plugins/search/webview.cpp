@@ -19,32 +19,29 @@
  ***************************************************************************/
 
 #include "webview.h"
+
 #include <QAction>
 #include <QTextStream>
 #include <QApplication>
 #include <QNetworkReply>
 #include <QWebHistoryInterface>
 #include <QWebHitTestResult>
-#include <KUrl>
-#include <KStandardDirs>
-#include <KIconLoader>
+#include <QUrl>
+#include <QStandardPaths>
+#include <QFileDialog>
+
 #include <klocalizedstring.h>
-#include <KWebPage>
+#include <kwebpage.h>
+#include <kiconloader.h>
+
 #include <util/log.h>
 #include <kio/job.h>
 #include <kio/accessmanager.h>
-#include <KFileDialog>
 #include <KMainWindow>
 #include <kio/copyjob.h>
 #include "buffernetworkreply.h"
 #include "localfilenetworkreply.h"
 
-// KDE Devel Platform 4.4 compatibility
-#include <kdeversion.h>
-#if (!KDE_IS_VERSION(4, 5, 0))
-#include <KMessageBox>
-#include <interfaces/functions.h>
-#endif
 
 using namespace bt;
 
@@ -63,14 +60,14 @@ namespace kt
 
         virtual QNetworkReply* createRequest(Operation op, const QNetworkRequest& req, QIODevice* outgoingData)
         {
-            if (req.url().scheme() == "magnet")
+            if (req.url().scheme() == QLatin1String("magnet"))
             {
                 webview->handleMagnetUrl(req.url());
                 return QNetworkAccessManager::createRequest(op, req, outgoingData);
             }
-            else if (req.url().host() == "ktorrent.searchplugin")
+            else if (req.url().host() == QLatin1String("ktorrent.searchplugin"))
             {
-                QString search_text = req.url().queryItemValue("search_text");
+                QString search_text = req.url().queryItemValue(QLatin1String("search_text"));
 
                 if (!search_text.isEmpty())
                 {
@@ -79,9 +76,9 @@ namespace kt
                     webview->setUrl(url);
                     return KIO::AccessManager::createRequest(op, request, outgoingData);
                 }
-                else if (req.url().path() == "/")
+                else if (req.url().path() == QLatin1String("/"))
                 {
-                    return new BufferNetworkReply(webview->homePageData().toLocal8Bit(), "text/html", this);
+                    return new BufferNetworkReply(webview->homePageData().toLocal8Bit(), QLatin1String("text/html"), this);
                 }
                 else
                 {
@@ -117,9 +114,9 @@ namespace kt
             client->magnetUrl(magnet_url);
     }
 
-    void WebView::openUrl(const KUrl& url)
+    void WebView::openUrl(const QUrl &url)
     {
-        if (url.host() == "ktorrent.searchplugin")
+        if (url.host() == QLatin1String("ktorrent.searchplugin"))
             home();
         else
             load(url);
@@ -130,7 +127,7 @@ namespace kt
         if (home_page_html.isEmpty())
             loadHomePage();
 
-        load(QUrl("http://ktorrent.searchplugin/"));
+        load(QUrl(QLatin1String("http://ktorrent.searchplugin/")));
     }
 
     QString WebView::homePageData()
@@ -144,7 +141,7 @@ namespace kt
 
     void WebView::loadHomePage()
     {
-        QString file = KStandardDirs::locate("data", "ktorrent/search/home/home.html");
+        QString file = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "ktorrent/search/home/home.html");
         QFile fptr(file);
 
         if (fptr.open(QIODevice::ReadOnly))
@@ -154,17 +151,17 @@ namespace kt
             home_page_html = QTextStream(&fptr).readAll();
 
             // %1
-            home_page_html = home_page_html.arg("ktorrent_infopage.css");
+            home_page_html = home_page_html.arg(QLatin1String("ktorrent_infopage.css"));
             // %2
 
             if (qApp->layoutDirection() == Qt::RightToLeft)
             {
                 QString link = "<link rel=\"stylesheet\" type=\"text/css\" href=\"%1\" />";
-                link = link.arg(KStandardDirs::locate("data", "kdeui/about/kde_infopage_rtl.css"));
+                link = link.arg(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kdeui/about/kde_infopage_rtl.css"));
                 home_page_html = home_page_html.arg(link);
             }
             else
-                home_page_html = home_page_html.arg("");
+                home_page_html = home_page_html.arg(QString());
 
             KIconLoader* iconloader = KIconLoader::global();
 
@@ -185,12 +182,12 @@ namespace kt
         }
     }
 
-    KUrl WebView::searchUrl(const QString& search_text)
+    QUrl WebView::searchUrl(const QString& search_text)
     {
         if (client)
             return client->searchUrl(search_text);
         else
-            return KUrl("http://google.be");
+            return QUrl("http://google.be");
     }
 
     QWebView* WebView::createWindow(QWebPage::WebWindowType type)
@@ -202,40 +199,16 @@ namespace kt
     void WebView::downloadRequested(const QNetworkRequest& req)
     {
         QString filename = QFileInfo(req.url().path()).fileName();
-        QString path = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///webview"), this, i18n("Save %1 to", filename));
+        QString path = QFileDialog::getExistingDirectory(this, i18n("Save %1 to"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 
         if (!path.isEmpty())
-            KIO::copy(req.url(), KUrl(path));
+            KIO::copy(req.url(), QUrl(path));
     }
 
     void WebView::downloadResponse(QNetworkReply* reply)
     {
-#if KDE_IS_VERSION(4, 5, 0)
         KWebPage* p = (KWebPage*)page();
         p->downloadResponse(reply);
-#else
-        QString recentDirClass;
-        QString fn = QFileDialog::getSaveFileName(this, i18n("Choose a file to save the torrent"),
-                                                 KFileWidget::getStartUrl(QUrl("kfiledialog:///openTorrent"), recentDirClass).toLocalFile(),
-                                                 kt::TorrentFileFilter(false));
-
-        if (fn.isEmpty())
-            return;
-
-        if (!recentDirClass.isEmpty())
-            KRecentDirs::add(recentDirClass, QFileInfo(fn).absolutePath());
-
-        QFile fptr(fn);
-
-        if (!fptr.open(QIODevice::WriteOnly))
-        {
-            KMessageBox::error(this, i18n("Cannot open <b>%1</b>: %2", fn, fptr.errorString()));
-        }
-        else
-        {
-            fptr.write(reply->readAll());
-        }
-#endif
     }
 
 }

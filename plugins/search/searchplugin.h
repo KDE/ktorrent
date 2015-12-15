@@ -37,7 +37,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        SearchPlugin(QObject* parent, const QStringList& args);
+        SearchPlugin(QObject* parent, const QVariantList& args);
         virtual ~SearchPlugin();
 
         virtual void load();

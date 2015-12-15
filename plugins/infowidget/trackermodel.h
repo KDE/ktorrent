@@ -73,7 +73,7 @@ namespace kt
             int seeders;
             int leechers;
             int times_downloaded;
-            int time_to_next_update;
+            unsigned int time_to_next_update;
 
             Item(bt::TrackerInterface* tracker);
             bool update();

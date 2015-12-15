@@ -23,7 +23,7 @@
 #include <qstring.h>
 #include <interfaces/prefpageinterface.h>
 #include "ui_searchpref.h"
-
+class KJob;
 
 namespace kt
 {

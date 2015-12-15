@@ -20,10 +20,9 @@
 #ifndef BTSEARCHWIDGET_H
 #define BTSEARCHWIDGET_H
 
-#include <qwidget.h>
-#include <kurl.h>
-#include <ktoolbar.h>
 #include <QLineEdit>
+
+#include <ktoolbar.h>
 #include "webview.h"
 
 class QProgressBar;
@@ -55,16 +54,16 @@ namespace kt
         virtual ~SearchWidget();
 
         QString getSearchText() const {return search_text->text();}
-        KUrl getCurrentUrl() const;
+        QUrl getCurrentUrl() const;
         QString getSearchBarText() const;
         int getSearchBarEngine() const;
         void setSearchBarEngine(int engine);
         bool backAvailable() const;
-        void restore(const KUrl& url, const QString& text, const QString& sb_text, int engine);
+        void restore(const QUrl &url, const QString& text, const QString& sb_text, int engine);
 
     signals:
         void enableBack(bool on);
-        void openNewTab(const KUrl& url);
+        void openNewTab(const QUrl &url);
         void changeTitle(SearchWidget* w, const QString& title);
         void changeIcon(SearchWidget* w, const QIcon& icon);
 
@@ -83,7 +82,7 @@ namespace kt
         void titleChanged(const QString& text);
 
     private:
-        virtual KUrl searchUrl(const QString& search_text);
+        virtual QUrl searchUrl(const QString& search_text);
         virtual QWebView* newTab();
         virtual void magnetUrl(const QUrl& magnet_url);
 

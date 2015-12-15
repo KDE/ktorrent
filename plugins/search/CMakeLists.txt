@@ -13,19 +13,22 @@ set(ktsearchplugin_SRC
 
 ki18n_wrap_ui(ktsearchplugin_SRC searchpref.ui)
 kconfig_add_kcfg_files(ktsearchplugin_SRC searchpluginsettings.kcfgc)
-add_library(ktsearchplugin MODULE ${ktsearchplugin_SRC})
+add_library(ktorrent_search MODULE ${ktsearchplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_search ktorrent_search.desktop)
 
 target_link_libraries(
-    ktsearchplugin
+    ktorrent_search
     ktcore
     ${LIBKTORRENT_LIBRARIES}
     Qt5::WebKitWidgets
     KF5::Parts
-    ${KDE4_KDEWEBKIT_LIBS}
+    KF5::WebKit
+    KF5::IconThemes
+    KF5::Notifications
     )
-install(TARGETS ktsearchplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktsearchplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install(FILES ktsearchpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+install(TARGETS ktorrent_search  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
+install(FILES ktorrent_searchui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 
 add_subdirectory(opensearch)
 add_subdirectory(home)

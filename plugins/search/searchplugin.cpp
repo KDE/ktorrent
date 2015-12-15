@@ -17,24 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "searchplugin.h"
+
 #include <QFile>
-#include <kgenericfactory.h>
-#include <kglobal.h>
-#include <klocalizedstring.h>
-#include <kiconloader.h>
-#include <kactioncollection.h>
-#include <kstdaction.h>
-#include <kapplication.h>
-#include <kstandarddirs.h>
-#include <krun.h>
 #include <QMenu>
+
+#include <kpluginfactory.h>
+//#include <ksharedconfig.h>
+
+#include <klocalizedstring.h>
+#include <kactioncollection.h>
+#include <krun.h>
 #include <kshell.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/functions.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
-#include "searchplugin.h"
 #include "searchwidget.h"
 #include "searchprefpage.h"
 #include "searchtoolbar.h"
@@ -42,14 +41,14 @@
 #include "searchenginelist.h"
 #include "searchactivity.h"
 
-K_EXPORT_COMPONENT_FACTORY(ktsearchplugin, KGenericFactory<kt::SearchPlugin>("ktsearchplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_search, "ktorrent_search.json", registerPlugin<kt::SearchPlugin>();)
 
 using namespace bt;
 
 namespace kt
 {
 
-    SearchPlugin::SearchPlugin(QObject* parent, const QStringList& args) : Plugin(parent), engines(0)
+    SearchPlugin::SearchPlugin(QObject* parent, const QVariantList& args) : Plugin(parent), engines(0)
     {
         Q_UNUSED(args);
         pref = 0;
@@ -102,12 +101,12 @@ namespace kt
             if (engine < 0 || engine >= (int)engines->getNumEngines())
                 engine = 0;
 
-            KUrl url = engines->search(engine, text);
+            QUrl url = engines->search(engine, text);
 
             if (SearchPluginSettings::useDefaultBrowser())
-                new KRun(KUrl(url), QApplication::activeWindow());
+                new KRun(url, QApplication::activeWindow());
             else
-                KRun::runCommand(QString("%1 %2").arg(SearchPluginSettings::customBrowser()).arg(KShell::quoteArg(url.url())), 0);
+                KRun::runCommand(SearchPluginSettings::customBrowser() + ' ' + KShell::quoteArg(url.toDisplayString()), 0);
         }
         else
         {
@@ -126,4 +125,5 @@ namespace kt
     }
 
 }
+
 #include "searchplugin.moc"

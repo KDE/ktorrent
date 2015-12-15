@@ -28,7 +28,7 @@ using namespace bt;
 namespace kt
 {
 
-    OpenSearchDownloadJob::OpenSearchDownloadJob(const KUrl& url, const QString& dir) : url(url), dir(dir)
+    OpenSearchDownloadJob::OpenSearchDownloadJob(const QUrl &url, const QString& dir) : url(url), dir(dir)
     {
     }
 
@@ -56,7 +56,7 @@ namespace kt
         QString str = QString(((KIO::StoredTransferJob*)j)->data());
 
         // try to find the link tags
-        QRegExp rx("<link([^<>]*)", Qt::CaseInsensitive);
+        QRegExp rx(QLatin1String("<link([^<>]*)"), Qt::CaseInsensitive);
         int pos = 0;
 
         while ((pos = rx.indexIn(str, pos)) != -1)
@@ -77,15 +77,15 @@ namespace kt
 
     bool OpenSearchDownloadJob::checkLinkTagContent(const QString& content)
     {
-        if (htmlParam("type", content) != "application/opensearchdescription+xml")
+        if (htmlParam("type", content) != QLatin1String("application/opensearchdescription+xml"))
             return false;
 
         QString href = htmlParam("href", content);
         if (href.isEmpty())
             return false;
 
-        if (href.startsWith("/"))
-            href = url.protocol() + "://" + url.host() + href;
+        if (href.startsWith('/'))
+            href = url.scheme() + QLatin1String("://") + url.host() + href;
 
         if (!bt::Exists(dir))
         {
@@ -100,14 +100,14 @@ namespace kt
         }
 
         // href is the opensearch description, so lets try to download it
-        KIO::Job* j = KIO::copy(KUrl(href), KUrl(dir + "opensearch.xml"), KIO::HideProgressInfo);
+        KIO::Job* j = KIO::copy(QUrl(href), QUrl::fromLocalFile(dir + QLatin1String("opensearch.xml")), KIO::HideProgressInfo);
         connect(j, SIGNAL(result(KJob*)), this, SLOT(xmlFileDownloadFinished(KJob*)));
         return true;
     }
 
     QString OpenSearchDownloadJob::htmlParam(const QString& param, const QString& content)
     {
-        QRegExp rx(QString("%1=\"?([^\">< ]*)[\" ]").arg(param), Qt::CaseInsensitive);
+        QRegExp rx(QString::fromLatin1("%1=\"?([^\">< ]*)[\" ]").arg(param), Qt::CaseInsensitive);
         if (rx.indexIn(content, 0) == -1)
             return QString();
 

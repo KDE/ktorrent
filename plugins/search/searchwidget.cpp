@@ -25,14 +25,15 @@
 #include <QClipboard>
 #include <QProgressBar>
 #include <QVBoxLayout>
-#include <KIconLoader>
-#include <KComboBox>
-#include <klocalizedstring.h>
-#include <KNotification>
 #include <QApplication>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QMenu>
+
+#include <KIconLoader>
+#include <KComboBox>
+#include <klocalizedstring.h>
+#include <knotification.h>
 #include <KStandardAction>
 #include <kio/job.h>
 #include <KMessageBox>
@@ -69,10 +70,10 @@ namespace kt
         sbar->addAction(webview->pageAction(QWebPage::Back));
         sbar->addAction(webview->pageAction(QWebPage::Forward));
         sbar->addAction(webview->pageAction(QWebPage::Reload));
-        sbar->addAction(ac->action("search_home"));
+        sbar->addAction(ac->action(QStringLiteral("search_home")));
         search_text = new QLineEdit(sbar);
         sbar->addWidget(search_text);
-        sbar->addAction(ac->action("search_tab_search"));
+        sbar->addAction(ac->action(QStringLiteral("search_tab_search")));
         sbar->addWidget(new QLabel(i18n(" Engine:")));
         search_engine = new KComboBox(sbar);
         search_engine->setModel(sp->getSearchEngineList());
@@ -90,7 +91,7 @@ namespace kt
         connect(webview, SIGNAL(loadProgress(int)), this, SLOT(loadProgress(int)));
         connect(webview->page(), SIGNAL(unsupportedContent(QNetworkReply*)),
                 this, SLOT(unsupportedContent(QNetworkReply*)));
-        connect(webview, SIGNAL(linkMiddleOrCtrlClicked(KUrl)), this, SIGNAL(openNewTab(KUrl)));
+        connect(webview, SIGNAL(linkMiddleOrCtrlClicked(QUrl)), this, SIGNAL(openNewTab(QUrl)));
         connect(webview, SIGNAL(iconChanged()), this, SLOT(iconChanged()));
         connect(webview, SIGNAL(titleChanged(QString)), this, SLOT(titleChanged(QString)));
     }
@@ -115,7 +116,7 @@ namespace kt
         changeTitle(this, text);
     }
 
-    KUrl SearchWidget::getCurrentUrl() const
+    QUrl SearchWidget::getCurrentUrl() const
     {
         return webview->url();
     }
@@ -130,11 +131,11 @@ namespace kt
         return search_engine->currentIndex();
     }
 
-    void SearchWidget::restore(const KUrl& url, const QString& text, const QString& sb_text, int engine)
+    void SearchWidget::restore(const QUrl &url, const QString& text, const QString& sb_text, int engine)
     {
         Q_UNUSED(text);
 
-        if (url.protocol() == "home")
+        if (url.scheme() == QLatin1String("home"))
             webview->home();
         else
             webview->openUrl(url);
@@ -152,12 +153,12 @@ namespace kt
         if (search_engine->currentIndex() != engine)
             search_engine->setCurrentIndex(engine);
 
-        KUrl url = sp->getSearchEngineList()->search(engine, text);
+        QUrl url = sp->getSearchEngineList()->search(engine, text);
 
         webview->openUrl(url);
     }
 
-    KUrl SearchWidget::searchUrl(const QString& search_text)
+    QUrl SearchWidget::searchUrl(const QString& search_text)
     {
         return sp->getSearchEngineList()->search(search_engine->currentIndex(), search_text);
     }
@@ -209,12 +210,12 @@ namespace kt
 
     void SearchWidget::unsupportedContent(QNetworkReply* r)
     {
-        if (r->url().scheme() == "magnet")
+        if (r->url().scheme() == QLatin1String("magnet"))
         {
             magnetUrl(r->url());
         }
-        else if (r->header(QNetworkRequest::ContentTypeHeader).toString() == "application/x-bittorrent" ||
-                 r->url().path().endsWith(".torrent"))
+        else if (r->header(QNetworkRequest::ContentTypeHeader).toString() == QLatin1String("application/x-bittorrent") ||
+                 r->url().path().endsWith(QLatin1String(".torrent")))
         {
             torrent_download = r;
 
@@ -280,4 +281,3 @@ namespace kt
     }
 }
 
-#include "searchwidget.moc"

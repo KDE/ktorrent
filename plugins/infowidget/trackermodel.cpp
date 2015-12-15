@@ -29,11 +29,9 @@ namespace kt
 {
 
     TrackerModel::TrackerModel(QObject* parent)
-        : QAbstractTableModel(parent), tc(0)
+        : QAbstractTableModel(parent), tc(0), running(false)
     {
-        running = false;
     }
-
 
     TrackerModel::~TrackerModel()
     {
@@ -229,12 +227,14 @@ namespace kt
 
     //////////////////////////////////////////
 
-    TrackerModel::Item::Item(bt::TrackerInterface* tracker) : trk(tracker)
+    TrackerModel::Item::Item(bt::TrackerInterface* tracker)
+        : trk(tracker)
+        , status(tracker->trackerStatus())
+        , seeders(-1)
+        , leechers(-1)
+        , times_downloaded(-1)
+        , time_to_next_update(0)
     {
-        seeders = leechers = -1;
-        times_downloaded = -1;
-        time_to_next_update = 0;
-        status = tracker->trackerStatus();
     }
 
     bool TrackerModel::Item::update()
@@ -286,7 +286,7 @@ namespace kt
         {
             int secs = time_to_next_update;
             if (secs)
-                return QTime().addSecs(secs).toString("mm:ss");
+                return QTime().addSecs(secs).toString(QStringLiteral("mm:ss"));
             else
                 return QVariant();
         }

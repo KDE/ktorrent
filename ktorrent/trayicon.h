@@ -154,11 +154,11 @@ namespace kt
 
     private:
         Core* core;
+        GUI* mwnd;
         int previousDownloadHeight;
         int previousUploadHeight;
         SetMaxRate* max_upload_rate;
         SetMaxRate* max_download_rate;
-        GUI* mwnd;
         KStatusNotifierItem* status_notifier_item;
         bool queue_suspended;
         QMenu* menu;

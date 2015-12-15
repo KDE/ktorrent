@@ -44,9 +44,9 @@
 namespace kt
 {
     SearchActivity::SearchActivity(SearchPlugin* sp, QWidget* parent)
-        : Activity(i18nc("plugin name", "Search"), "edit-find", 10, parent), sp(sp)
+        : Activity(i18nc("plugin name", "Search"), QLatin1String("edit-find"), 10, parent), sp(sp)
     {
-        setXMLGUIFile("ktsearchpluginui.rc");
+        setXMLGUIFile(QStringLiteral("ktorrent_searchui.rc"));
         setupActions();
         toolbar = new SearchToolBar(part()->actionCollection(), sp->getSearchEngineList(), this);
         connect(toolbar, SIGNAL(search(const QString&, int, bool)),
@@ -55,7 +55,7 @@ namespace kt
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setSpacing(0);
         layout->setMargin(0);
-        tabs = new KTabWidget(this);
+        tabs = new QTabWidget(this);
         tabs->setMovable(true);
         layout->addWidget(tabs);
         connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
@@ -64,9 +64,9 @@ namespace kt
         tabs->setCornerWidget(lc, Qt::TopLeftCorner);
         QToolButton* rc = new QToolButton(tabs);
         tabs->setCornerWidget(rc, Qt::TopRightCorner);
-        lc->setIcon(QIcon::fromTheme("tab-new"));
+        lc->setIcon(QIcon::fromTheme(QStringLiteral("tab-new")));
         connect(lc, SIGNAL(clicked()), this, SLOT(openTab()));
-        rc->setIcon(QIcon::fromTheme("tab-close"));
+        rc->setIcon(QIcon::fromTheme(QStringLiteral("tab-close")));
         connect(rc, SIGNAL(clicked()), this, SLOT(closeTab()));
     }
 
@@ -78,22 +78,22 @@ namespace kt
     {
         KActionCollection* ac = part()->actionCollection();
 
-        search_action = new QAction(QIcon::fromTheme("edit-find"), i18n("Search"), this);
+        search_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("Search"), this);
         connect(search_action, SIGNAL(triggered()), this, SLOT(search()));
-        ac->addAction("search_tab_search", search_action);
+        ac->addAction(QStringLiteral("search_tab_search"), search_action);
 
         find_action = KStandardAction::find(this, SLOT(find()), this);
-        ac->addAction("search_tab_find", find_action);
+        ac->addAction(QStringLiteral("search_tab_find"), find_action);
 
         home_action = KStandardAction::home(this, SLOT(home()), this);
-        ac->addAction("search_home", home_action);
+        ac->addAction(QStringLiteral("search_home"), home_action);
     }
 
     void SearchActivity::search(const QString& text, int engine)
     {
         foreach (SearchWidget* s, searches)
         {
-            if (s->getCurrentUrl() == KUrl("about:ktorrent"))
+            if (s->getCurrentUrl() == QUrl(QLatin1String("about:ktorrent")))
             {
                 s->search(text, engine);
                 tabs->setCurrentWidget(s);
@@ -108,19 +108,19 @@ namespace kt
 
     void SearchActivity::saveCurrentSearches()
     {
-        QFile fptr(kt::DataDir() + "current_searches");
+        QFile fptr(kt::DataDir() + QLatin1String("current_searches"));
         if (!fptr.open(QIODevice::WriteOnly))
             return;
 
         // Sort by order in tab widget so that they are restored in the proper order
-        qSort(searches.begin(), searches.end(), IndexOfCompare<KTabWidget, SearchWidget>(tabs));
+        qSort(searches.begin(), searches.end(), IndexOfCompare<QTabWidget, SearchWidget>(tabs));
         bt::BEncoder enc(&fptr);
         enc.beginList();
         foreach (SearchWidget* w, searches)
         {
             enc.beginDict();
             enc.write("TEXT", w->getSearchText());
-            enc.write("URL", w->getCurrentUrl().prettyUrl());
+            enc.write("URL", w->getCurrentUrl().toDisplayString());
             enc.write("SBTEXT", w->getSearchBarText());
             enc.write("ENGINE", (bt::Uint32)w->getSearchBarEngine());
             enc.end();
@@ -137,7 +137,7 @@ namespace kt
             return;
         }
 
-        QFile fptr(kt::DataDir() + "current_searches");
+        QFile fptr(kt::DataDir() + QLatin1String("current_searches"));
         if (!fptr.open(QIODevice::ReadOnly))
         {
             SearchWidget* search = newSearchWidget(QString());
@@ -163,7 +163,7 @@ namespace kt
                 QString text = dict->getString("TEXT", 0);
                 QString sbtext = dict->getString("SBTEXT", 0);
                 int engine = dict->getInt("ENGINE");
-                KUrl url = dict->getString("URL", 0);
+                QUrl url = QUrl(dict->getString("URL", 0));
 
                 SearchWidget* search = newSearchWidget(text);
                 search->restore(url, text, sbtext, engine);
@@ -241,11 +241,11 @@ namespace kt
     SearchWidget* SearchActivity::newSearchWidget(const QString& text)
     {
         SearchWidget* search = new SearchWidget(sp);
-        int idx = tabs->addTab(search, QIcon::fromTheme("edit-find"), text);
+        int idx = tabs->addTab(search, QIcon::fromTheme(QLatin1String("edit-find")), text);
         if (!text.isEmpty())
             tabs->setTabToolTip(idx, i18n("Search for %1", text));
 
-        connect(search, SIGNAL(openNewTab(const KUrl&)), this, SLOT(openNewTab(const KUrl&)));
+        connect(search, SIGNAL(openNewTab(const QUrl&)), this, SLOT(openNewTab(const QUrl&)));
         connect(search, SIGNAL(changeTitle(SearchWidget*, QString)), this, SLOT(setTabTitle(SearchWidget*, QString)));
         connect(search, SIGNAL(changeIcon(SearchWidget*, QIcon)), this, SLOT(setTabIcon(SearchWidget*, QIcon)));
         searches.append(search);
@@ -259,7 +259,7 @@ namespace kt
     }
 
 
-    void SearchActivity::openNewTab(const KUrl& url)
+    void SearchActivity::openNewTab(const QUrl &url)
     {
         QString text = url.host();
         SearchWidget* search = newSearchWidget(text);

@@ -18,25 +18,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kurl.h>
-#include <qtooltip.h>
-#include <qfile.h>
-#include <klocalizedstring.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <kiconloader.h>
-#include <kactivelabel.h>
+#include "searchprefpage.h"
+
+#include <QUrl>
+#include <QLineEdit>
+#include <QToolTip>
+#include <QFile>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QLabel>
+#include <QCheckBox>
+#include <QRadioButton>
+#include <QInputDialog>
+
+#include <klocalizedstring.h>
+
+#include <kiconloader.h>
+
 #include <kmessagebox.h>
 #include <kio/copyjob.h>
 #include <kio/jobuidelegate.h>
-#include <QLineEdit>
-#include <kinputdialog.h>
-
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
 
 #include <util/log.h>
 #include <util/constants.h>
@@ -44,7 +45,6 @@
 #include <util/fileops.h>
 #include <util/error.h>
 #include <interfaces/functions.h>
-#include "searchprefpage.h"
 #include "searchplugin.h"
 #include "searchenginelist.h"
 #include "searchpluginsettings.h"
@@ -55,7 +55,7 @@ using namespace bt;
 namespace kt
 {
     SearchPrefPage::SearchPrefPage(SearchPlugin* plugin, SearchEngineList* sl, QWidget* parent)
-        : PrefPageInterface(SearchPluginSettings::self(), i18nc("plugin name", "Search"), "edit-find", parent), plugin(plugin), engines(sl)
+        : PrefPageInterface(SearchPluginSettings::self(), i18nc("plugin name", "Search"), QStringLiteral("edit-find"), parent), plugin(plugin), engines(sl)
     {
         setupUi(this);
         m_engines->setModel(sl);
@@ -101,24 +101,23 @@ namespace kt
 
     void SearchPrefPage::addClicked()
     {
-        bool ok = false;
-        QString name = KInputDialog::getText(i18n("Add a Search Engine"),
-                                             i18n("Enter the hostname of the search engine (for example www.google.com):"), QString(), &ok, this);
-        if (!ok || name.isEmpty())
+        QString name = QInputDialog::getText(this, i18n("Add a Search Engine"),
+                                             i18n("Enter the hostname of the search engine (for example www.google.com):"));
+        if (name.isEmpty())
             return;
 
-        if (!name.startsWith("http://") || !name.startsWith("https://"))
-            name = "http://" + name;
+        if (!name.startsWith(QLatin1String("http://")) || !name.startsWith(QLatin1String("https://")))
+            name = QLatin1String("http://") + name;
 
-        KUrl url(name);
-        QString dir = kt::DataDir() + "searchengines/" + url.host();
+        QUrl url(name);
+        QString dir = kt::DataDir() + QLatin1String("searchengines/") + url.host();
         int idx = 1;
         while (bt::Exists(dir))
         {
             dir += QString::number(idx++);
         }
 
-        dir += "/";
+        dir += '/';
 
         try
         {
@@ -140,13 +139,12 @@ namespace kt
         OpenSearchDownloadJob* osdj = (OpenSearchDownloadJob*)j;
         if (osdj->error())
         {
-            bool ok = false;
             QString msg = i18n("Opensearch is not supported by %1, you will need to enter the search URL manually. "
                                "The URL should contain {searchTerms}, ktorrent will replace this by the thing you are searching for.", osdj->hostname());
-            QString url = KInputDialog::getText(i18n("Add a Search Engine"), msg, QString(), &ok, this);
-            if (ok && !url.isEmpty())
+            QString url = QInputDialog::getText(this, i18n("Add a Search Engine"), msg);
+            if (!url.isEmpty())
             {
-                if (!url.contains("{searchTerms}"))
+                if (!url.contains(QLatin1String("{searchTerms}")))
                 {
                     KMessageBox::error(this, i18n("The URL %1 does not contain {searchTerms}.", url));
                 }
@@ -199,18 +197,9 @@ namespace kt
 
     void SearchPrefPage::openInExternalToggled(bool on)
     {
-        if (on)
-        {
-            kcfg_useCustomBrowser->setEnabled(true);
-            kcfg_customBrowser->setEnabled(SearchPluginSettings::useCustomBrowser());
-            kcfg_useDefaultBrowser->setEnabled(true);
-        }
-        else
-        {
-            kcfg_useCustomBrowser->setEnabled(false);
-            kcfg_customBrowser->setEnabled(false);
-            kcfg_useDefaultBrowser->setEnabled(false);
-        }
+        kcfg_useCustomBrowser->setEnabled(on);
+        kcfg_customBrowser->setEnabled(on && SearchPluginSettings::useCustomBrowser());
+        kcfg_useDefaultBrowser->setEnabled(on);
     }
 
     void SearchPrefPage::clearHistory()
@@ -225,4 +214,3 @@ namespace kt
 
 }
 
-#include "searchprefpage.moc"

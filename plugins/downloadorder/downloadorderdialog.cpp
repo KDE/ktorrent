@@ -188,19 +188,17 @@ namespace kt
 
     void DownloadOrderDialog::customOrderEnableToggled(bool on)
     {
+        m_search_files->setEnabled(on);
+        m_sort_by->setEnabled(on);
         if (!on)
         {
             m_move_down->setEnabled(false);
             m_move_up->setEnabled(false);
             m_move_top->setEnabled(false);
             m_move_down->setEnabled(false);
-            m_search_files->setEnabled(false);
-            m_sort_by->setEnabled(false);
         }
         else
         {
-            m_search_files->setEnabled(true);
-            m_sort_by->setEnabled(true);
             itemSelectionChanged(m_order->selectionModel()->selection(), QItemSelection());
         }
     }

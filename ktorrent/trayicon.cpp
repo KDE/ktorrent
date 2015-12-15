@@ -46,17 +46,17 @@ namespace kt
 {
 
 
-    TrayIcon::TrayIcon(Core* core, GUI* parent) : QObject(parent), core(core), mwnd(parent)
+    TrayIcon::TrayIcon(Core* core, GUI* parent) : QObject(parent)
+        , core(core)
+        , mwnd(parent)
+        , previousDownloadHeight(0)
+        , previousUploadHeight(0)
+        , max_upload_rate(0)
+        , max_download_rate(0)
+        , status_notifier_item(0)
+        , queue_suspended(false)
+        , menu(0)
     {
-        status_notifier_item = 0;
-        max_upload_rate = 0;
-        max_download_rate = 0;
-        previousDownloadHeight = 0;
-        previousUploadHeight = 0;
-        queue_suspended = false;
-        menu = 0;
-
-
         connect(core, SIGNAL(openedSilently(bt::TorrentInterface*)),
                 this, SLOT(torrentSilentlyOpened(bt::TorrentInterface*)));
         connect(core, SIGNAL(finished(bt::TorrentInterface*)),
@@ -121,20 +121,20 @@ namespace kt
         menu->addSeparator();
 
         KActionCollection* ac = mwnd->getTorrentActivity()->part()->actionCollection();
-        menu->addAction(ac->action("start_all"));
-        menu->addAction(ac->action("stop_all"));
-        menu->addAction(ac->action("queue_suspend"));
+        menu->addAction(ac->action(QStringLiteral("start_all")));
+        menu->addAction(ac->action(QStringLiteral("stop_all")));
+        menu->addAction(ac->action(QStringLiteral("queue_suspend")));
         menu->addSeparator();
 
         ac = mwnd->actionCollection();
-        menu->addAction(ac->action("paste_url"));
+        menu->addAction(ac->action(QStringLiteral("paste_url")));
         menu->addAction(ac->action(KStandardAction::name(KStandardAction::Open)));
         menu->addSeparator();
         menu->addAction(ac->action(KStandardAction::name(KStandardAction::Preferences)));
         menu->addSeparator();
 
 
-        status_notifier_item->setIconByName("ktorrent");
+        status_notifier_item->setIconByName(QStringLiteral("ktorrent"));
         status_notifier_item->setCategory(KStatusNotifierItem::ApplicationStatus);
         status_notifier_item->setStatus(KStatusNotifierItem::Passive);
         status_notifier_item->setStandardActionsEnabled(true);
@@ -142,7 +142,7 @@ namespace kt
 
         queue_suspended = core->getQueueManager()->getSuspendedState();
         if (queue_suspended)
-            status_notifier_item->setOverlayIconByName("kt-pause");
+            status_notifier_item->setOverlayIconByName(QStringLiteral("kt-pause"));
     }
 
 
@@ -164,13 +164,13 @@ namespace kt
                            BytesToString(stats.bytes_downloaded),
                            BytesToString(stats.bytes_uploaded));
 
-        status_notifier_item->setToolTip("ktorrent", i18n("Status"), tip);
+        status_notifier_item->setToolTip(QStringLiteral("ktorrent"), i18n("Status"), tip);
     }
 
     void TrayIcon::showPassivePopup(const QString& msg, const QString& title)
     {
         if (status_notifier_item)
-            status_notifier_item->showMessage(title, msg, "ktorrent");
+            status_notifier_item->showMessage(title, msg, QStringLiteral("ktorrent"));
     }
 
     void TrayIcon::cannotLoadTorrentSilently(const QString& msg)
@@ -354,7 +354,7 @@ namespace kt
 
     SetMaxRate::SetMaxRate(Core* core, Type t, QWidget* parent) : QMenu(parent)
     {
-        setIcon(t == UPLOAD ? QIcon::fromTheme("kt-set-max-upload-speed") : QIcon::fromTheme("kt-set-max-download-speed"));
+        setIcon(t == UPLOAD ? QIcon::fromTheme(QStringLiteral("kt-set-max-upload-speed")) : QIcon::fromTheme(QStringLiteral("kt-set-max-download-speed")));
         m_core = core;
         type = t;
         makeMenu();
@@ -410,7 +410,7 @@ namespace kt
         {
             if (v >= 1)
             {
-                QAction* act = addAction(QString("%1").arg(v));
+                QAction* act = addAction(QStringLiteral("%1").arg(v));
                 act->setCheckable(true);
                 act->setChecked(rate == v);
             }
@@ -429,7 +429,7 @@ namespace kt
         if (act == unlimited)
             rate = 0;
         else
-            rate = act->text().remove("&").toInt(); // remove ampersands
+            rate = act->text().remove('&').toInt(); // remove ampersands
 
         if (type == UPLOAD)
         {
@@ -447,16 +447,8 @@ namespace kt
     void TrayIcon::suspendStateChanged(bool suspended)
     {
         queue_suspended = queue_suspended;
-        if (!suspended)
-        {
-            if (status_notifier_item)
-                status_notifier_item->setOverlayIconByName(QString());
-        }
-        else
-        {
-            if (status_notifier_item)
-                status_notifier_item->setOverlayIconByName("kt-pause");
-        }
+        if (status_notifier_item)
+            status_notifier_item->setOverlayIconByName(suspended?QStringLiteral("kt-pause"):QString());
     }
 
     void TrayIcon::secondaryActivate(const QPoint& pos)

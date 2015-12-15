@@ -17,21 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "searchtoolbar.h"
+
 #include <QAction>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qapplication.h>
-#include <qcheckbox.h>
-#include <QLineEdit>
-#include <QIcon>
-#include <kglobal.h>
-#include <kguiitem.h>
 #include <QPushButton>
+#include <QFile>
+#include <QTextStream>
+#include <qapplication.h>
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QLabel>
+#include <QIcon>
+#include <kguiitem.h>
 #include <kiconloader.h>
 #include <kcombobox.h>
 #include <kcompletion.h>
 #include <kmainwindow.h>
-#include <qlabel.h>
 #include <klocalizedstring.h>
 #include <kstandardguiitem.h>
 #include <kactioncollection.h>
@@ -39,7 +40,6 @@
 #include <interfaces/functions.h>
 #include <util/fileops.h>
 #include <util/log.h>
-#include "searchtoolbar.h"
 #include "searchenginelist.h"
 #include "searchpluginsettings.h"
 #include "searchplugin.h"
@@ -64,27 +64,30 @@ namespace kt
         m_search_text->setLineEdit(search_text_lineedit);
 
         connect(m_search_text->lineEdit(), SIGNAL(returnPressed()), this, SLOT(searchBoxReturn()));
-        connect(m_search_text, SIGNAL(textChanged(const QString&)), this, SLOT(textChanged(const QString&)));
+        connect(m_search_text->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
 
-        QAction * search_text_action = new QAction(i18n("Search Text"), this);
+        QWidgetAction * search_text_action = new QWidgetAction(this);
+        search_text_action->setText(i18n("Search Text"));
         search_text_action->setDefaultWidget(m_search_text);
-        ac->addAction("search_text", search_text_action);
+        ac->addAction(QLatin1String("search_text"), search_text_action);
 
-        m_search_new_tab = new QAction(QIcon::fromTheme("edit-find"), i18n("Search"), this);
+        m_search_new_tab = new QAction(QIcon::fromTheme(QLatin1String("edit-find")), i18n("Search"), this);
         connect(m_search_new_tab, SIGNAL(triggered()), this, SLOT(searchNewTabPressed()));
         m_search_new_tab->setEnabled(false);
-        ac->addAction("search", m_search_new_tab);
+        ac->addAction(QLatin1String("search"), m_search_new_tab);
 
-        QAction * search_engine_action = new QAction(i18n("Search Engine"), this);
+        QWidgetAction * search_engine_action = new QWidgetAction(this);
+        search_engine_action->setText(i18n("Search Engine"));
         m_search_engine = new KComboBox((QWidget*)0);
         search_engine_action->setDefaultWidget(m_search_engine);
-        ac->addAction("search_engine", search_engine_action);
+        ac->addAction(QLatin1String("search_engine"), search_engine_action);
         connect(m_search_engine, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedEngineChanged(int)));
 
-        QAction * search_engine_label_action = new QAction(i18n("Search Engine Label"), this);
+        QWidgetAction * search_engine_label_action = new QWidgetAction(this);
+        search_engine_label_action->setText(i18n("Search Engine Label"));
         QLabel* l = new QLabel(i18n(" Engine: "), (QWidget*)0);
         search_engine_label_action->setDefaultWidget(l);
-        ac->addAction("search_engine_label", search_engine_label_action);
+        ac->addAction(QLatin1String("search_engine_label"), search_engine_label_action);
 
         loadSearchHistory();
 
@@ -141,12 +144,12 @@ namespace kt
 
     void SearchToolBar::textChanged(const QString& str)
     {
-        m_search_new_tab->setEnabled(str.length() > 0);
+        m_search_new_tab->setEnabled(str.length());
     }
 
     void SearchToolBar::loadSearchHistory()
     {
-        QFile fptr(kt::DataDir() + "search_history");
+        QFile fptr(kt::DataDir() + QLatin1String("search_history"));
         if (!fptr.open(QIODevice::ReadOnly))
             return;
 
@@ -173,7 +176,7 @@ namespace kt
 
     void SearchToolBar::saveSearchHistory()
     {
-        QFile fptr(kt::DataDir() + "search_history");
+        QFile fptr(kt::DataDir() + QLatin1String("search_history"));
         if (!fptr.open(QIODevice::WriteOnly))
             return;
 
@@ -188,13 +191,11 @@ namespace kt
 
     void SearchToolBar::clearHistory()
     {
-        bt::Delete(kt::DataDir() + "search_history", true);
+        bt::Delete(kt::DataDir() + QLatin1String("search_history"), true);
         KCompletion* comp = m_search_text->completionObject();
         m_search_text->clear();
         comp->clear();
     }
 
 }
-
-#include "searchtoolbar.moc"
 

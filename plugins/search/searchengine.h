@@ -22,8 +22,8 @@
 #define KTSEARCHENGINE_H
 
 #include <QObject>
-#include <KUrl>
-#include <KIcon>
+#include <QUrl>
+#include <QIcon>
 
 class KJob;
 
@@ -52,17 +52,17 @@ namespace kt
         bool load(const QString& xml_file);
 
         /**
-         * Fill in search terms into the search url and create the KUrl to use
+         * Fill in search terms into the search url and create the QUrl to use
          * @param terms Tersm to search for
          * @return The url
          */
-        KUrl search(const QString& terms);
+        QUrl search(const QString& terms);
 
         /// Get the name of the engine
         QString engineName() const {return name;}
 
         /// Get the icon
-        KIcon engineIcon() const {return icon;}
+        QIcon engineIcon() const {return icon;}
 
         /// Get the engine directory
         QString engineDir() const {return data_dir;}
@@ -82,7 +82,7 @@ namespace kt
         QString description;
         QString url;
         QString icon_url;
-        KIcon icon;
+        QIcon icon;
 
         friend class OpenSearchHandler;
     };

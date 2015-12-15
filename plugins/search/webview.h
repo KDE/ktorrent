@@ -23,7 +23,7 @@
 #ifndef KT_WEBVIEW_H
 #define KT_WEBVIEW_H
 
-#include <KUrl>
+#include <QUrl>
 #include <KWebView>
 #include <QNetworkReply>
 
@@ -37,7 +37,7 @@ namespace kt
         virtual ~WebViewClient() {}
 
         /// Get a search url for a search text
-        virtual KUrl searchUrl(const QString& search_text) = 0;
+        virtual QUrl searchUrl(const QString& search_text) = 0;
 
         /// Create a new tab
         virtual QWebView* newTab() = 0;
@@ -58,9 +58,9 @@ namespace kt
 
         /**
          * Open a url
-         * @param url The KUrl
+         * @param url The QUrl
          */
-        void openUrl(const KUrl& url);
+        void openUrl(const QUrl &url);
 
         /**
          * Show the home page
@@ -70,9 +70,9 @@ namespace kt
         /**
          * Get a search url for a search text
          * @param search_text The text to search
-         * @return A KUrl to load
+         * @return A QUrl to load
          */
-        KUrl searchUrl(const QString& search_text);
+        QUrl searchUrl(const QString& search_text);
 
         /**
          * Download a response using KIO
@@ -104,8 +104,8 @@ namespace kt
         QString home_page_html;
         QString home_page_base_url;
         WebViewClient* client;
-        KUrl clicked_url;
-        KUrl image_url;
+        QUrl clicked_url;
+        QUrl image_url;
     };
 
 }

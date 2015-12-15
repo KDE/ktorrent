@@ -22,8 +22,8 @@
 #define SEARCHACTIVITY_H
 
 #include <QList>
-#include <kurl.h>
-#include <ktabwidget.h>
+#include <QUrl>
+#include <QTabWidget>
 #include <QAction>
 #include <interfaces/activity.h>
 
@@ -57,7 +57,7 @@ namespace kt
 
     public slots:
         void home();
-        void openNewTab(const KUrl& url);
+        void openNewTab(const QUrl &url);
         void currentTabChanged(int idx);
         void closeTab();
         void openTab();
@@ -72,7 +72,7 @@ namespace kt
         void setupActions();
 
     private:
-        KTabWidget* tabs;
+        QTabWidget* tabs;
         QList<SearchWidget*> searches;
         SearchPlugin* sp;
         SearchToolBar* toolbar;

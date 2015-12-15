@@ -26,7 +26,7 @@
 #include <util/log.h>
 #include <util/error.h>
 #include <util/fileops.h>
-#include <kstandarddirs.h>
+#include <QStandardPaths>
 #include "searchenginelist.h"
 #include "opensearchdownloadjob.h"
 
@@ -38,13 +38,13 @@ namespace kt
 
     SearchEngineList::SearchEngineList(const QString& data_dir) : data_dir(data_dir)
     {
-        default_opensearch_urls << KUrl("http://www.torrentz.com") << KUrl("http://isohunt.com");
-        default_urls << KUrl("http://www.ktorrents.com")
-                     << KUrl("http://www.bittorrent.com")
-                     << KUrl("http://www.mininova.org")
-                     << KUrl("http://thepiratebay.org")
-                     << KUrl("http://www.bitenova.org")
-                     << KUrl("http://btjunkie.org");
+        default_opensearch_urls << QUrl(QLatin1String("http://www.torrentz.com")) << QUrl(QLatin1String("http://isohunt.com"));
+        default_urls << QUrl(QLatin1String("http://www.ktorrents.com"))
+                     << QUrl(QLatin1String("http://www.bittorrent.com"))
+                     << QUrl(QLatin1String("http://www.mininova.org"))
+                     << QUrl(QLatin1String("http://thepiratebay.org"))
+                     << QUrl(QLatin1String("http://www.bitenova.org"))
+                     << QUrl(QLatin1String("http://btjunkie.org"));
     }
 
 
@@ -58,7 +58,7 @@ namespace kt
     {
         if (!bt::Exists(data_dir))
         {
-            if (bt::Exists(kt::DataDir() + "search_engines"))
+            if (bt::Exists(kt::DataDir() + QLatin1String("search_engines")))
             {
                 try
                 {
@@ -83,15 +83,15 @@ namespace kt
             QStringList subdirs = QDir(data_dir).entryList(QDir::Dirs);
             foreach (const QString& sd, subdirs)
             {
-                if (sd == ".." || sd == ".")
+                if (sd == QLatin1String("..") || sd == QLatin1String("."))
                     continue;
 
                 // Load only if there is an opensearch.xml file and not a removed file
-                if (bt::Exists(data_dir + sd + "/opensearch.xml") && !bt::Exists(data_dir + sd + "/removed"))
+                if (bt::Exists(data_dir + sd + QLatin1String("/opensearch.xml")) && !bt::Exists(data_dir + sd + QLatin1String("/removed")))
                 {
                     Out(SYS_SRC | LOG_DEBUG) << "Loading " << sd << endl;
-                    SearchEngine* se = new SearchEngine(data_dir + sd + "/");
-                    if (!se->load(data_dir + sd + "/opensearch.xml"))
+                    SearchEngine* se = new SearchEngine(data_dir + sd + '/');
+                    if (!se->load(data_dir + sd + QLatin1String("/opensearch.xml")))
                         delete se;
                     else
                         engines.append(se);
@@ -105,7 +105,7 @@ namespace kt
 
     void SearchEngineList::convertSearchEnginesFile()
     {
-        QFile fptr(kt::DataDir() + "search_engines");
+        QFile fptr(kt::DataDir() + QLatin1String("search_engines"));
         if (!fptr.open(QIODevice::ReadOnly))
         {
             addDefaults();
@@ -118,24 +118,24 @@ namespace kt
         {
             QString line = in.readLine();
 
-            if (line.startsWith("#") || line.startsWith(" ") || line.isEmpty()) continue;
+            if (line.startsWith('#') || line.startsWith(' ') || line.isEmpty()) continue;
 
-            QStringList tokens = line.split(" ");
+            QStringList tokens = line.split(' ');
             QString name = tokens[0];
-            name = name.replace("%20", " ");
-            KUrl url = KUrl(tokens[1]);
+            name = name.replace(QLatin1String("%20"), QLatin1String(" "));
+            QUrl url = QUrl(tokens[1]);
 
             for (Uint32 i = 2; i < (Uint32)tokens.count(); ++i)
-                url.addQueryItem(tokens[i].section("=", 0, 0), tokens[i].section("=", 1, 1));
+                url.addQueryItem(tokens[i].section('=', 0, 0), tokens[i].section('=', 1, 1));
 
             try
             {
                 QString dir = data_dir + name;
-                if (!dir.endsWith("/"))
-                    dir += "/";
+                if (!dir.endsWith('/'))
+                    dir += '/';
 
                 bt::MakeDir(dir);
-                addEngine(dir, url.prettyUrl().replace("FOOBAR", "{searchTerms}"));
+                addEngine(dir, url.toDisplayString().replace(QLatin1String("FOOBAR"), QLatin1String("{searchTerms}")));
             }
             catch (bt::Error& err)
             {
@@ -144,13 +144,13 @@ namespace kt
         }
     }
 
-    KUrl SearchEngineList::search(bt::Uint32 engine, const QString& terms)
+    QUrl SearchEngineList::search(bt::Uint32 engine, const QString& terms)
     {
-        KUrl u;
+        QUrl u;
         if (engine < (Uint32)engines.count())
             u = engines[engine]->search(terms);
 
-        Out(SYS_SRC | LOG_NOTICE) << "Searching " << u.prettyUrl() << endl;
+        Out(SYS_SRC | LOG_NOTICE) << "Searching " << u.toDisplayString() << endl;
         return u;
     }
 
@@ -169,7 +169,7 @@ namespace kt
             bt::Delete(osdj->directory(), true);
 
         SearchEngine* se = new SearchEngine(osdj->directory());
-        if (!se->load(osdj->directory() + "opensearch.xml"))
+        if (!se->load(osdj->directory() + QLatin1String("opensearch.xml")))
         {
             delete se;
             bt::Delete(osdj->directory(), true);
@@ -187,33 +187,33 @@ namespace kt
 
     void SearchEngineList::addEngine(const QString& dir, const QString& url)
     {
-        QFile fptr(dir + "opensearch.xml");
+        QFile fptr(dir + QLatin1String("opensearch.xml"));
         if (!fptr.open(QIODevice::WriteOnly))
-            throw bt::Error(i18n("Cannot open %1: %2", dir + "opensearch.xml", fptr.errorString()));
+            throw bt::Error(i18n("Cannot open %1: %2", dir + QLatin1String("opensearch.xml"), fptr.errorString()));
 
-        KUrl kurl(url);
+        QUrl kurl(url);
         QTextStream out(&fptr);
-        QString xml_template = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        QString xml_template = QLatin1String("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                                "<OpenSearchDescription xmlns=\"http://a9.com/-/spec/opensearch/1.1/\">\n"
                                "<ShortName>%1</ShortName>\n"
                                "<Url type=\"text/html\" template=\"%2\" />\n"
                                "<Image>%3/favicon.ico</Image>\n"
-                               "</OpenSearchDescription>\n";
+                               "</OpenSearchDescription>\n");
 
-        QString base = kurl.protocol() + "://" + kurl.host();
+        QString base = kurl.scheme() + QLatin1String("://") + kurl.host();
         if (kurl.port() > 0)
-            base += QString(":%1").arg(kurl.port());
+            base += QString::fromLatin1(":%1").arg(kurl.port());
 
         QString tmp = url;
-        tmp = tmp.replace("&", "&amp;");
+        tmp = tmp.replace('&', QLatin1String("&amp;"));
         out << xml_template.arg(kurl.host()).arg(tmp).arg(base) << endl;
 
         SearchEngine* se = new SearchEngine(dir);
 
-        if (!se->load(dir + "opensearch.xml"))
+        if (!se->load(dir + QLatin1String("opensearch.xml")))
         {
             delete se;
-            throw bt::Error(i18n("Failed to parse %1", dir + "opensearch.xml"));
+            throw bt::Error(i18n("Failed to parse %1", dir + QLatin1String("opensearch.xml")));
         }
 
         engines.append(se);
@@ -231,7 +231,7 @@ namespace kt
 
         foreach (SearchEngine* se, to_remove)
         {
-            bt::Touch(se->engineDir() + "removed");
+            bt::Touch(se->engineDir() + QLatin1String("removed"));
             engines.removeAll(se);
             delete se;
         }
@@ -259,10 +259,10 @@ namespace kt
             return;
         }
 
-        foreach (const KUrl& u, default_opensearch_urls)
+        foreach (const QUrl &u, default_opensearch_urls)
         {
-            Out(SYS_SRC | LOG_DEBUG) << "Setting up default engine " << u.prettyUrl() << endl;
-            QString dir = data_dir + u.host() + "/";
+            Out(SYS_SRC | LOG_DEBUG) << "Setting up default engine " << u.toDisplayString() << endl;
+            QString dir = data_dir + u.host() + '/';
             if (!bt::Exists(dir))
             {
                 OpenSearchDownloadJob* j = new OpenSearchDownloadJob(u, dir);
@@ -288,19 +288,19 @@ namespace kt
             bt::MakeDir(user_dir);
         }
 
-        if (bt::Exists(user_dir + "removed"))
+        if (bt::Exists(user_dir + QLatin1String("removed")))
         {
             // if the removed file is there don't load, if we are not allowed
             if (!load_removed)
                 return;
             else
-                bt::Delete(user_dir + "removed");
+                bt::Delete(user_dir + QLatin1String("removed"));
         }
 
         if (!alreadyLoaded(user_dir))
         {
             SearchEngine* se = new SearchEngine(user_dir);
-            if (!se->load(global_dir + "opensearch.xml"))
+            if (!se->load(global_dir + QLatin1String("opensearch.xml")))
                 delete se;
             else
                 engines.append(se);
@@ -310,16 +310,16 @@ namespace kt
 
     void SearchEngineList::loadDefault(bool removed_to)
     {
-        QStringList dir_list = KGlobal::dirs()->findDirs("data", "ktorrent/opensearch");
+        QStringList dir_list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("ktorrent/opensearch"));
         foreach (const QString& dir, dir_list)
         {
             QStringList subdirs = QDir(dir).entryList(QDir::Dirs);
             foreach (const QString& sd, subdirs)
             {
-                if (sd == ".." || sd == ".")
+                if (sd == QLatin1String("..") || sd == QLatin1String("."))
                     continue;
 
-                loadEngine(dir + sd + "/", data_dir + sd + "/", removed_to);
+                loadEngine(dir + sd + '/', data_dir + sd + '/', removed_to);
             }
         }
     }
@@ -383,7 +383,7 @@ namespace kt
         for (int i = 0; i < count; i++)
         {
             SearchEngine* se = engines.takeAt(row);
-            bt::Touch(se->engineDir() + "removed");
+            bt::Touch(se->engineDir() + QLatin1String("removed"));
             delete se;
         }
         endRemoveRows();

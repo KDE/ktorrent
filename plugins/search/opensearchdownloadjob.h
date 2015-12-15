@@ -22,7 +22,7 @@
 #define KTOPENSEARCHDOWNLOADJOB_H
 
 #include <kio/job.h>
-#include <KUrl>
+#include <QUrl>
 
 namespace kt
 {
@@ -35,7 +35,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        OpenSearchDownloadJob(const KUrl& url, const QString& dir);
+        OpenSearchDownloadJob(const QUrl &url, const QString& dir);
         virtual ~OpenSearchDownloadJob();
 
         /// Start the job
@@ -56,7 +56,7 @@ namespace kt
         QString htmlParam(const QString& param, const QString& content);
 
     private:
-        KUrl url;
+        QUrl url;
         QString dir;
     };
 

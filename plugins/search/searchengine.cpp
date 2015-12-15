@@ -51,10 +51,10 @@ namespace kt
             Q_UNUSED(namespaceURI);
             Q_UNUSED(qName);
             tmp = QString();
-            if (localName == "Url")
+            if (localName == QLatin1String("Url"))
             {
-                if (atts.value("type") == "text/html")
-                    engine->url = atts.value("template");
+                if (atts.value(QLatin1String("type")) == QLatin1String("text/html"))
+                    engine->url = atts.value(QLatin1String("template"));
             }
 
             return true;
@@ -65,11 +65,11 @@ namespace kt
             Q_UNUSED(namespaceURI);
             Q_UNUSED(qName);
 
-            if (localName == "ShortName")
+            if (localName == QLatin1String("ShortName"))
                 engine->name = tmp;
-            else if (localName == "Description")
+            else if (localName == QLatin1String("Description"))
                 engine->description = tmp;
-            else if (localName == "Image")
+            else if (localName == QLatin1String("Image"))
                 engine->icon_url = tmp;
 
             return true;
@@ -108,34 +108,34 @@ namespace kt
         // if not, download it
         if (!icon_url.isEmpty())
         {
-            QString icon_name = KUrl(icon_url).fileName();
+            QString icon_name = QUrl(icon_url).fileName();
             if (!bt::Exists(data_dir + icon_name))
             {
-                KJob* j = KIO::storedGet(KUrl(icon_url), KIO::Reload, KIO::HideProgressInfo);
+                KJob* j = KIO::storedGet(QUrl(icon_url), KIO::Reload, KIO::HideProgressInfo);
                 connect(j, SIGNAL(result(KJob*)), this, SLOT(iconDownloadFinished(KJob*)));
             }
             else
             {
                 // load the icon
-                icon = QIcon::fromTheme(QIcon(data_dir + icon_name));
+                icon = QIcon(data_dir + icon_name);
             }
         }
 
         return true;
     }
 
-    KUrl SearchEngine::search(const QString& terms)
+    QUrl SearchEngine::search(const QString& terms)
     {
         QString r = url;
-        r = r.replace("{searchTerms}", terms);
-        return KUrl(r);
+        r = r.replace(QLatin1String("{searchTerms}"), terms);
+        return QUrl(r);
     }
 
     void SearchEngine::iconDownloadFinished(KJob* job)
     {
         if (!job->error())
         {
-            QString icon_name = KUrl(icon_url).fileName();
+            QString icon_name = QUrl(icon_url).fileName();
             KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
             QFile fptr(data_dir + icon_name);
             if (!fptr.open(QIODevice::WriteOnly))
@@ -148,7 +148,7 @@ namespace kt
             fptr.close();
 
             // load the icon
-            icon = QIcon::fromTheme(QIcon(data_dir + icon_name));
+            icon = QIcon(data_dir + icon_name);
         }
     }
 }
