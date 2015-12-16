@@ -17,45 +17,44 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
-#include <kdeversion.h>
-#include <kjob.h>
-#include <kgenericfactory.h>
+#include "shutdownplugin.h"
+
+#include <solid/powermanagement.h>
+
 #include <kworkspace.h>
+
+#include <kjob.h>
+#include <kpluginfactory.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 #include <kmessagebox.h>
-#if KDE_IS_VERSION(4,5,82)
-#include <solid/powermanagement.h>
-#else
-#include <solid/control/powermanager.h>
-#endif
+
 #include <util/log.h>
 #include <interfaces/functions.h>
-#include "shutdownplugin.h"
 #include "screensaver_interface.h"
 #include "shutdowndlg.h"
 #include "shutdownruleset.h"
 
-K_EXPORT_COMPONENT_FACTORY(ktshutdownplugin, KGenericFactory<kt::ShutdownPlugin>("ktshutdownplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_shutdown, "ktorrent_shutdown.json", registerPlugin<kt::ShutdownPlugin>();)
 
 using namespace bt;
 
 namespace kt
 {
-    ShutdownPlugin::ShutdownPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+    ShutdownPlugin::ShutdownPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
     {
         Q_UNUSED(args);
 
         KActionCollection* ac = actionCollection();
-        shutdown_enabled = new KToggleAction(QIcon::fromTheme("system-shutdown"), i18n("Shutdown Enabled"), this);
+        shutdown_enabled = new KToggleAction(QIcon::fromTheme(QStringLiteral("system-shutdown")), i18n("Shutdown Enabled"), this);
         connect(shutdown_enabled, SIGNAL(toggled(bool)), this, SLOT(shutdownToggled(bool)));
-        ac->addAction("shutdown_enabled", shutdown_enabled);
+        ac->addAction(QStringLiteral("shutdown_enabled"), shutdown_enabled);
 
-        configure_shutdown = new QAction(QIcon::fromTheme("preferences-other"), i18n("Configure Shutdown"), this);
+        configure_shutdown = new QAction(QIcon::fromTheme(QStringLiteral("preferences-other")), i18n("Configure Shutdown"), this);
         connect(configure_shutdown, SIGNAL(triggered()), this, SLOT(configureShutdown()));
-        ac->addAction("shutdown_settings", configure_shutdown);
+        ac->addAction(QStringLiteral("shutdown_settings"), configure_shutdown);
 
-        setXMLFile("ktshutdownpluginui.rc");
+        setXMLFile(QStringLiteral("ktorrent_shutdownui.rc"));
     }
 
     ShutdownPlugin::~ShutdownPlugin()
@@ -69,7 +68,7 @@ namespace kt
 
     void ShutdownPlugin::unload()
     {
-        rules->save(kt::DataDir() + "shutdown_rules");
+        rules->save(kt::DataDir() + QLatin1String("shutdown_rules"));
         delete rules;
         rules = 0;
     }
@@ -77,7 +76,7 @@ namespace kt
     void ShutdownPlugin::load()
     {
         rules = new ShutdownRuleSet(getCore(), this);
-        rules->load(kt::DataDir() + "shutdown_rules");
+        rules->load(kt::DataDir() + QLatin1String("shutdown_rules"));
         if (rules->enabled())
             shutdown_enabled->setChecked(true);
         connect(rules, SIGNAL(shutdown()), this, SLOT(shutdownComputer()));
@@ -105,40 +104,19 @@ namespace kt
     void ShutdownPlugin::suspendToDisk()
     {
         Out(SYS_GEN | LOG_NOTICE) << "Suspending to disk ..." << endl;
-#if KDE_IS_VERSION(4,5,82)
         Solid::PowerManagement::requestSleep(Solid::PowerManagement::HibernateState, 0, 0);
-#else
-        Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::ToDisk;
-        KJob* job = Solid::Control::PowerManager::suspend(spdMethod);
-        if (job != 0)
-            job->start();
-#endif
-    }
+   }
 
     void ShutdownPlugin::suspendToRam()
     {
         Out(SYS_GEN | LOG_NOTICE) << "Suspending to RAM ..." << endl;
-#if KDE_IS_VERSION(4,5,82)
         Solid::PowerManagement::requestSleep(Solid::PowerManagement::SuspendState, 0, 0);
-#else
-        Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::ToRam;
-        KJob* job = Solid::Control::PowerManager::suspend(spdMethod);
-        if (job != 0)
-            job->start();
-#endif
     }
 
     void ShutdownPlugin::standby()
     {
         Out(SYS_GEN | LOG_NOTICE) << "Suspending to standby ..." << endl;
-#if KDE_IS_VERSION(4,5,82)
         Solid::PowerManagement::requestSleep(Solid::PowerManagement::StandbyState, 0, 0);
-#else
-        Solid::Control::PowerManager::SuspendMethod spdMethod = Solid::Control::PowerManager::Standby;
-        KJob* job = Solid::Control::PowerManager::suspend(spdMethod);
-        if (job != 0)
-            job->start();
-#endif
 
     }
 
@@ -161,7 +139,7 @@ namespace kt
         ShutdownDlg dlg(rules, getCore(), 0);
         if (dlg.exec() == QDialog::Accepted)
         {
-            rules->save(kt::DataDir() + "shutdown_rules");
+            rules->save(kt::DataDir() + QLatin1String("shutdown_rules"));
             updateAction();
         }
     }
@@ -171,23 +149,23 @@ namespace kt
         switch (rules->currentAction())
         {
         case SHUTDOWN:
-            shutdown_enabled->setIcon(QIcon::fromTheme("system-shutdown"));
+            shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-shutdown")));
             shutdown_enabled->setText(i18n("Shutdown"));
             break;
         case LOCK:
-            shutdown_enabled->setIcon(QIcon::fromTheme("system-lock-screen"));
+            shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-lock-screen")));
             shutdown_enabled->setText(i18n("Lock"));
             break;
         case STANDBY:
-            shutdown_enabled->setIcon(QIcon::fromTheme("system-suspend"));
+            shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-suspend")));
             shutdown_enabled->setText(i18n("Standby"));
             break;
         case SUSPEND_TO_RAM:
-            shutdown_enabled->setIcon(QIcon::fromTheme("system-suspend"));
+            shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-suspend")));
             shutdown_enabled->setText(i18n("Sleep (suspend to RAM)"));
             break;
         case SUSPEND_TO_DISK:
-            shutdown_enabled->setIcon(QIcon::fromTheme("system-suspend-hibernate"));
+            shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-suspend-hibernate")));
             shutdown_enabled->setText(i18n("Hibernate (suspend to disk)"));
             break;
         }
@@ -196,3 +174,5 @@ namespace kt
     }
 
 }
+
+#include "shutdownplugin.moc"

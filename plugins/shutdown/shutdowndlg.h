@@ -20,7 +20,7 @@
 #ifndef KT_SHUTDOWNDLG_H
 #define KT_SHUTDOWNDLG_H
 
-#include <kdialog.h>
+#include <QDialog>
 #include "ui_shutdowndlg.h"
 #include "shutdownruleset.h"
 
@@ -30,7 +30,7 @@ namespace kt
     class ShutdownTorrentModel;
 
 
-    class ShutdownDlg : public KDialog, public Ui_ShutdownDlg
+    class ShutdownDlg : public QDialog, public Ui_ShutdownDlg
     {
         Q_OBJECT
     public:

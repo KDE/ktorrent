@@ -17,46 +17,36 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
-#include <kdeversion.h>
-#if KDE_IS_VERSION(4,5,82)
-#include <solid/powermanagement.h>
-#else
-#include <solid/control/powermanager.h>
-#endif
 #include "shutdowndlg.h"
+
+#include <solid/powermanagement.h>
+#include <KConfigGroup>
+#include <QVBoxLayout>
 #include "shutdowntorrentmodel.h"
 
 namespace kt
 {
-    ShutdownDlg::ShutdownDlg(ShutdownRuleSet* rules, CoreInterface* core, QWidget* parent) : KDialog(parent), rules(rules)
+    ShutdownDlg::ShutdownDlg(ShutdownRuleSet* rules, CoreInterface* core, QWidget* parent) : QDialog(parent), rules(rules)
     {
-        setupUi(mainWidget());
+        setupUi(this);
+        connect(buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
+        connect(buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
         setWindowTitle(i18nc("@title:window", "Configure Shutdown"));
         model = new ShutdownTorrentModel(core, this);
 
-        m_action->addItem(QIcon::fromTheme("system-shutdown"), i18n("Shutdown"));
-        m_action->addItem(QIcon::fromTheme("system-lock-screen"), i18n("Lock"));
-#if KDE_IS_VERSION(4,5,82)
+        m_action->addItem(QIcon::fromTheme(QStringLiteral("system-shutdown")), i18n("Shutdown"));
+        m_action->addItem(QIcon::fromTheme(QStringLiteral("system-lock-screen")), i18n("Lock"));
+
         QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
         if (spdMethods.contains(Solid::PowerManagement::StandbyState))
-            m_action->addItem(QIcon::fromTheme("system-suspend"), i18n("Standby"));
+            m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend")), i18n("Standby"));
 
         if (spdMethods.contains(Solid::PowerManagement::SuspendState))
-            m_action->addItem(QIcon::fromTheme("system-suspend"), i18n("Sleep (suspend to RAM)"));
+            m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend")), i18n("Sleep (suspend to RAM)"));
 
         if (spdMethods.contains(Solid::PowerManagement::HibernateState))
-            m_action->addItem(QIcon::fromTheme("system-suspend-hibernate"), i18n("Hibernate (suspend to disk)"));
-#else
-        Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
-        if (spdMethods & Solid::Control::PowerManager::Standby)
-            m_action->addItem(QIcon::fromTheme("system-suspend"), i18n("Standby"));
+            m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend-hibernate")), i18n("Hibernate (suspend to disk)"));
 
-        if (spdMethods & Solid::Control::PowerManager::ToRam)
-            m_action->addItem(QIcon::fromTheme("system-suspend"), i18n("Sleep (suspend to RAM)"));
-
-        if (spdMethods & Solid::Control::PowerManager::ToDisk)
-            m_action->addItem(QIcon::fromTheme("system-suspend-hibernate"), i18n("Hibernate (suspend to disk)"));
-#endif
         m_time_to_execute->addItem(i18n("When all torrents finish downloading"));
         m_time_to_execute->addItem(i18n("When all torrents finish seeding"));
         m_time_to_execute->addItem(i18n("When the events below happen"));
@@ -125,7 +115,7 @@ namespace kt
         int stand_by = -1;
         int suspend_to_ram = -1;
         int suspend_to_disk = -1;
-#if KDE_IS_VERSION(4,5,82)
+
         QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
         if (spdMethods.contains(Solid::PowerManagement::StandbyState))
             stand_by = next++;
@@ -135,17 +125,7 @@ namespace kt
 
         if (spdMethods.contains(Solid::PowerManagement::HibernateState))
             suspend_to_disk = next++;
-#else
-        Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
-        if (spdMethods & Solid::Control::PowerManager::Standby)
-            stand_by = next++;
 
-        if (spdMethods & Solid::Control::PowerManager::ToRam)
-            suspend_to_ram = next++;
-
-        if (spdMethods & Solid::Control::PowerManager::ToDisk)
-            suspend_to_disk = next++;
-#endif
         if (idx == 0)
             return SHUTDOWN;
         else if (idx == 1)
@@ -166,7 +146,7 @@ namespace kt
         int stand_by = -1;
         int suspend_to_ram = -1;
         int suspend_to_disk = -1;
-#if KDE_IS_VERSION(4,5,82)
+
         QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
         if (spdMethods.contains(Solid::PowerManagement::StandbyState))
             stand_by = next++;
@@ -176,17 +156,6 @@ namespace kt
 
         if (spdMethods.contains(Solid::PowerManagement::HibernateState))
             suspend_to_disk = next++;
-#else
-        Solid::Control::PowerManager::SuspendMethods spdMethods = Solid::Control::PowerManager::supportedSuspendMethods();
-        if (spdMethods & Solid::Control::PowerManager::Standby)
-            stand_by = next++;
-
-        if (spdMethods & Solid::Control::PowerManager::ToRam)
-            suspend_to_ram = next++;
-
-        if (spdMethods & Solid::Control::PowerManager::ToDisk)
-            suspend_to_disk = next++;
-#endif
 
         switch (act)
         {

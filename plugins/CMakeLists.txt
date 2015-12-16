@@ -31,7 +31,7 @@ endif()
 #macro_kt_plugin(ENABLE_SCRIPTING_PLUGIN scripting scripting)
 #macro_kt_plugin(ENABLE_SYNDICATION_PLUGIN syndication syndication)
 macro_kt_plugin(ENABLE_DOWNLOADORDER_PLUGIN downloadorder downloadorder)
-#macro_kt_plugin(ENABLE_SHUTDOWN_PLUGIN shutdown shutdown)
+macro_kt_plugin(ENABLE_SHUTDOWN_PLUGIN shutdown shutdown)
 #macro_kt_plugin(ENABLE_ZEROCONF_PLUGIN zeroconf zeroconf)
 #macro_kt_plugin(ENABLE_MAGNETGENERATOR_PLUGIN magnetgenerator magnetgenerator)
 
