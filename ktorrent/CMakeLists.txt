@@ -93,4 +93,4 @@ install(FILES kttorrentactivityui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent
 install(FILES ktorrent.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR} )
 
 
-#add_subdirectory(icons)
+add_subdirectory(icons)

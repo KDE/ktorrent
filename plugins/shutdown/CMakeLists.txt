@@ -1,7 +1,7 @@
 find_package(LibKWorkspace)
 
-message(STATUS "Found libkworkspace: ${KWORKSPACE_LIBRARY} ")
-include_directories(${KWORKSPACE_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+message(STATUS "Found libkworkspace: ${LIBKWORKSPACE_LIBRARY} ")
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 set(ktshutdownplugin_SRC shutdownruleset.cpp shutdowntorrentmodel.cpp shutdowndlg.cpp shutdownplugin.cpp)
 
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
@@ -14,7 +14,7 @@ target_link_libraries(
 	ktorrent_shutdown
 	ktcore
 	${LIBKTORRENT_LIBRARIES}
-	${KWORKSPACE_LIBRARY}
+        PW::KWorkspace
 	KF5::KDELibs4Support
 	KF5::Parts)
 
