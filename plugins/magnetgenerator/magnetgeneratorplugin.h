@@ -33,7 +33,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        MagnetGeneratorPlugin(QObject* parent, const QStringList& args);
+        MagnetGeneratorPlugin(QObject* parent, const QVariantList& args);
         virtual ~MagnetGeneratorPlugin();
 
         virtual void load();

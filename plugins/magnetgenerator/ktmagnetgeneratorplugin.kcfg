@@ -4,7 +4,7 @@
 		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
 		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
 		
-	<kcfgfile name="ktmagnetgeneratorpluginrc"/>
+	<kcfgfile name="ktorrent_magnetgeneratorrc"/>
 	<group name="general">
 		<entry name="torrenttracker" type="Bool">
 			<label>Grabs a tracker from the torrent file</label>

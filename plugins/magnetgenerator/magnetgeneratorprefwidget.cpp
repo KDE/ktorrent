@@ -18,8 +18,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <Qt>
-#include <kstandarddirs.h>
 #include <torrent/globals.h>
 
 #include "magnetgeneratorprefwidget.h"
@@ -62,4 +60,3 @@ namespace kt
 
 }
 
-#include "magnetgeneratorprefwidget.moc"

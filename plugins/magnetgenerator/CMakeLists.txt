@@ -4,14 +4,16 @@ set(ktmagnetgeneratorplugin_SRC
 
 ki18n_wrap_ui(ktmagnetgeneratorplugin_SRC magnetgeneratorprefwidget.ui)
 kconfig_add_kcfg_files(ktmagnetgeneratorplugin_SRC magnetgeneratorpluginsettings.kcfgc)
-add_library(ktmagnetgeneratorplugin MODULE ${ktmagnetgeneratorplugin_SRC})
+add_library(ktorrent_magnetgenerator MODULE ${ktmagnetgeneratorplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_magnetgenerator ktorrent_magnetgenerator.desktop)
 
 target_link_libraries(
-    ktmagnetgeneratorplugin
+    ktorrent_magnetgenerator
     ktcore
     ${LIBKTORRENT_LIBRARIES}
     KF5::Parts
+    KF5::Notifications
     )
-install(TARGETS ktmagnetgeneratorplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktmagnetgeneratorplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install(FILES ktmagnetgeneratorpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+install(TARGETS ktorrent_magnetgenerator  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
+install(FILES ktorrent_magnetgeneratorui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

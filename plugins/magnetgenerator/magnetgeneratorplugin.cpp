@@ -17,11 +17,13 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
-#include <kgenericfactory.h>
+#include "magnetgeneratorplugin.h"
+
+#include <kpluginfactory.h>
 #include <kmainwindow.h>
 #include <kactioncollection.h>
 #include <klocalizedstring.h>
-#include <qurl.h>
+#include <QUrl>
 #include <qclipboard.h>
 #include <qtooltip.h>
 #include <kpassivepopup.h>
@@ -34,22 +36,21 @@
 #include <util/sha1hash.h>
 #include <ktorrent/gui.h>
 #include "magnetgeneratorprefwidget.h"
-#include "magnetgeneratorplugin.h"
 #include "magnetgeneratorpluginsettings.h"
 
-K_EXPORT_COMPONENT_FACTORY(ktmagnetgeneratorplugin, KGenericFactory<kt::MagnetGeneratorPlugin>("ktmagnetgeneratorplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_magnetgenerator, "ktorrent_magnetgenerator.json", registerPlugin<kt::MagnetGeneratorPlugin>();)
 
 using namespace bt;
 namespace kt
 {
-    MagnetGeneratorPlugin::MagnetGeneratorPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+    MagnetGeneratorPlugin::MagnetGeneratorPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
     {
         Q_UNUSED(args);
         pref = 0;
-        generate_magnet_action = new QAction(QIcon::fromTheme("kt-magnet"), i18n("Copy Magnet URI"), this);
+        generate_magnet_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-magnet")), i18n("Copy Magnet URI"), this);
         connect(generate_magnet_action, SIGNAL(triggered()), this, SLOT(generateMagnet()));
-        actionCollection()->addAction("generate_magnet", generate_magnet_action);
-        setXMLFile("ktmagnetgeneratorpluginui.rc");
+        actionCollection()->addAction(QStringLiteral("generate_magnet"), generate_magnet_action);
+        setXMLFile(QStringLiteral("ktorrent_magnetgeneratorui.rc"));
 
     }
 
@@ -94,20 +95,16 @@ namespace kt
         QUrl dn(tor->getStats().torrent_name);
         SHA1Hash ih(tor->getInfoHash());
 
-        QString uri("magnet:?xt=urn:btih:");
-        uri.append(ih.toString());
+        QString uri = QLatin1String("magnet:?xt=urn:btih:") + ih.toString();
 
         if (MagnetGeneratorPluginSettings::dn())
         {
-            uri.append("&dn=");
-            uri.append(QUrl::toPercentEncoding(dn.toString(), "{}", NULL));
+            uri += QLatin1String("&dn=") + QUrl::toPercentEncoding(dn.toString(), QByteArrayLiteral("{}"), NULL);
         }
 
         if ((MagnetGeneratorPluginSettings::customtracker() && MagnetGeneratorPluginSettings::tr().length() > 0) && !MagnetGeneratorPluginSettings::torrenttracker())
         {
-            uri.append("&tr=");
-            QUrl tr(MagnetGeneratorPluginSettings::tr());
-            uri.append(QUrl::toPercentEncoding(tr.toString(), "{}", NULL));
+            uri += (QLatin1String("&tr=")) + QUrl::toPercentEncoding(QUrl(MagnetGeneratorPluginSettings::tr()).toString(), QByteArrayLiteral("{}"), NULL);
         }
 
         if (MagnetGeneratorPluginSettings::torrenttracker())
@@ -116,10 +113,8 @@ namespace kt
             if (!trackers.isEmpty())
             {
                 Tracker* trk = (Tracker*)trackers.first();
-                QUrl tr(trk->trackerURL());
 
-                uri.append("&tr=");
-                uri.append(QUrl::toPercentEncoding(tr.toString(), "{}", NULL));
+                uri += QLatin1String("&tr=") + QUrl::toPercentEncoding(QUrl(trk->trackerURL()).toString(), QByteArrayLiteral("{}"), NULL);
             }
 
         }
@@ -141,7 +136,7 @@ namespace kt
     void MagnetGeneratorPlugin::showPopup()
     {
         KPassivePopup::message(i18n("Magnet"), i18n("Magnet link copied to clipboard"),
-                               QIcon::fromTheme("kt-magnet").pixmap(20, 20), getGUI()->getMainWindow(), 3000);
+                               QIcon::fromTheme(QStringLiteral("kt-magnet")).pixmap(20, 20), getGUI()->getMainWindow(), 3000);
     }
 
 }
