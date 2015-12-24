@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "torrentservice.h"
+
 #include <stdlib.h>
 #include <util/log.h>
 #include <util/sha1hash.h>
@@ -24,7 +26,6 @@
 #include <torrent/server.h>
 #include <peer/peerid.h>
 #include <interfaces/torrentinterface.h>
-#include "torrentservice.h"
 
 using namespace bt;
 
@@ -69,11 +70,11 @@ namespace kt
         bt::Uint16 port = bt::ServerInterface::getPort();
         QString name = QString("%1__%2%3").arg(tc->getOwnPeerID().toString()).arg((rand() % 26) + 65).arg((rand() % 26) + 65);
         QStringList subtypes;
-        subtypes << QString("_" + tc->getInfoHash().toString() + "._sub._bittorrent._tcp");
+        subtypes << QString('_' + tc->getInfoHash().toString() + QLatin1String("._sub._bittorrent._tcp"));
 
         if (!srv)
         {
-            srv = new DNSSD::PublicService();
+            srv = new KDNSSD::PublicService();
 
             srv->setPort(port);
             srv->setServiceName(name);
@@ -87,13 +88,13 @@ namespace kt
 
         if (!browser)
         {
-            browser = new DNSSD::ServiceBrowser(QString("_" + tc->getInfoHash().toString() + "._sub._bittorrent._tcp"), true);
+            browser = new KDNSSD::ServiceBrowser(QString('_' + tc->getInfoHash().toString() + QLatin1String("._sub._bittorrent._tcp")), true);
             connect(browser, SIGNAL(serviceAdded(DNSSD::RemoteService::Ptr)), this, SLOT(onServiceAdded(DNSSD::RemoteService::Ptr)));
             browser->startBrowse();
         }
     }
 
-    void TorrentService::onServiceAdded(DNSSD::RemoteService::Ptr ptr)
+    void TorrentService::onServiceAdded(KDNSSD::RemoteService::Ptr ptr)
     {
         // lets not connect to ourselve
         if (!ptr->serviceName().startsWith(tc->getOwnPeerID().toString()))
@@ -121,4 +122,3 @@ namespace kt
     }
 }
 
-#include "torrentservice.moc"

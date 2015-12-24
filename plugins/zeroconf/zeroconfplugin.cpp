@@ -17,26 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kgenericfactory.h>
+#include "zeroconfplugin.h"
+
+#include <kpluginfactory.h>
+#include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
-#include <interfaces/coreinterface.h>
-#include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
-#include "zeroconfplugin.h"
 #include "torrentservice.h"
 
-
-
-
-K_EXPORT_COMPONENT_FACTORY(ktzeroconfplugin, KGenericFactory<kt::ZeroConfPlugin>("ktzeroconfplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_zeroconf, "ktorrent_zeroconf.json", registerPlugin<kt::ZeroConfPlugin>();)
 
 using namespace bt;
 
 namespace kt
 {
 
-    ZeroConfPlugin::ZeroConfPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+    ZeroConfPlugin::ZeroConfPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
     {
         Q_UNUSED(args);
         services.setAutoDelete(true);

@@ -22,6 +22,8 @@
 
 #include <util/ptrmap.h>
 #include <interfaces/plugin.h>
+#include <interfaces/coreinterface.h>
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {
@@ -36,7 +38,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        ZeroConfPlugin(QObject* parent, const QStringList& args);
+        ZeroConfPlugin(QObject* parent, const QVariantList& args);
         virtual ~ZeroConfPlugin();
 
         virtual void load();

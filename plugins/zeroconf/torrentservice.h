@@ -51,13 +51,13 @@ namespace kt
 
     public slots:
         void onPublished(bool ok);
-        void onServiceAdded(DNSSD::RemoteService::Ptr ptr);
+        void onServiceAdded(KDNSSD::RemoteService::Ptr ptr);
         void hostResolved(net::AddressResolver* ar);
 
     private:
         bt::TorrentInterface* tc;
-        DNSSD::PublicService* srv;
-        DNSSD::ServiceBrowser* browser;
+        KDNSSD::PublicService* srv;
+        KDNSSD::ServiceBrowser* browser;
     };
 }
 
