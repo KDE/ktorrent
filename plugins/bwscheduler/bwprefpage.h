@@ -35,11 +35,11 @@ namespace kt
         Q_OBJECT
     public:
         BWPrefPage(QWidget* parent);
-        virtual ~BWPrefPage();
+        ~BWPrefPage();
 
-        virtual void loadDefaults();
-        virtual void loadSettings();
-        virtual void updateSettings();
+        void loadDefaults();
+        void loadSettings();
+        void updateSettings();
 
     signals:
         void colorsChanged();

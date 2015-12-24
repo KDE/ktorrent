@@ -22,12 +22,12 @@
 #include "scheduleeditor.h"
 
 #include <QVBoxLayout>
-#include <QAction>
-#include <KActionCollection>
 #include <QIcon>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QWidgetAction>
+#include <KActionCollection>
 #include <klocalizedstring.h>
-#include <KMessageBox>
-#include <KFileDialog>
 #include <util/error.h>
 #include "weekview.h"
 #include "schedule.h"
@@ -41,7 +41,7 @@ namespace kt
     ScheduleEditor::ScheduleEditor(QWidget* parent)
         : Activity(i18n("Bandwidth Schedule"), "kt-bandwidth-scheduler", 20, parent), schedule(0)
     {
-        setXMLGUIFile("ktbwschedulerpluginui.rc");
+        setXMLGUIFile(QStringLiteral("ktorrent_bwschedulerui.rc"));
         setToolTip(i18n("Edit the bandwidth schedule"));
         QVBoxLayout* layout = new QVBoxLayout(this);
         view = new WeekView(this);
@@ -92,7 +92,7 @@ namespace kt
         edit_item_action = addAction("edit-select-all", i18n("Edit Item"), "edit_schedule_item", this, SLOT(editItem()));
         clear_action = addAction("edit-clear", i18n("Clear Schedule"), "schedule_clear", this, SLOT(clear()));
 
-        QAction * act = new QAction(this);
+        QWidgetAction* act = new QWidgetAction(this);
         enable_schedule = new QCheckBox(i18n("Scheduler Active"), this);
         enable_schedule->setToolTip(i18n("Activate or deactivate the scheduler"));
         act->setDefaultWidget(enable_schedule);
@@ -123,7 +123,7 @@ namespace kt
 
     void ScheduleEditor::save()
     {
-        QString fn = KFileDialog::getSaveFileName(QUrl(), "*.sched | " + i18n("KTorrent scheduler files"), this);
+        QString fn = QFileDialog::getSaveFileName(this, QString(), i18n("KTorrent scheduler files") + QLatin1String(" (*.sched)"));
         if (!fn.isEmpty())
         {
             try
@@ -132,14 +132,14 @@ namespace kt
             }
             catch (bt::Error& err)
             {
-                KMessageBox::error(this, err.toString());
+                QMessageBox::critical(this, QString(), err.toString());
             }
         }
     }
 
     void ScheduleEditor::load()
     {
-        QString fn = KFileDialog::getOpenFileName(KUrl(), "*.sched | " + i18n("KTorrent scheduler files") + "\n* |" + i18n("All files"), this);
+        QString fn = QFileDialog::getOpenFileName(this, QString(), i18n("KTorrent scheduler files") + QLatin1String(" (*.sched)"));
         if (!fn.isEmpty())
         {
             Schedule* s = new Schedule();
@@ -150,7 +150,7 @@ namespace kt
             }
             catch (bt::Error& err)
             {
-                KMessageBox::error(this, err.toString());
+                QMessageBox::critical(this, QString(), err.toString());
                 delete s;
             }
         }
@@ -192,7 +192,7 @@ namespace kt
             if (schedule->conflicts(item))
             {
                 *item = tmp; // restore old values
-                KMessageBox::error(this, i18n("This item conflicts with another item in the schedule, we cannot change it."));
+                QMessageBox::critical(this, QString(), i18n("This item conflicts with another item in the schedule, we cannot change it."));
             }
             else
             {
@@ -240,4 +240,3 @@ namespace kt
 
 }
 
-#include "scheduleeditor.moc"

@@ -18,6 +18,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "schedulegraphicsitem.h"
+
 #include <QPen>
 #include <QBrush>
 #include <QRectF>
@@ -29,7 +31,6 @@
 #include <KCursor>
 #include <util/log.h>
 #include <util/functions.h>
-#include "schedulegraphicsitem.h"
 #include "schedule.h"
 #include "weekscene.h"
 #include "bwschedulerpluginsettings.h"
@@ -49,27 +50,25 @@ namespace kt
     const Uint32 BottomLeft = Bottom | Left;
 
     ScheduleGraphicsItem::ScheduleGraphicsItem(ScheduleItem* item, const QRectF& r, const QRectF& constraints, WeekScene* ws)
-        : QGraphicsRectItem(r), item(item), constraints(constraints), ws(ws)
+        : QGraphicsRectItem(r)
+        , item(item)
+        , constraints(constraints)
+        , ws(ws)
+        , text_item(0)
+        , resize_edge(0)
+        , ready_to_resize(false)
+        , resizing(false)
     {
         setAcceptHoverEvents(true);
         setPen(QPen(Qt::black));
         setZValue(3);
         setHandlesChildEvents(true);
 
-        if (item->suspended)
-        {
-            setBrush(QBrush(SchedulerPluginSettings::suspendedColor()));
-        }
-        else
-        {
-            setBrush(QBrush(SchedulerPluginSettings::itemColor()));
-        }
+        setBrush(QBrush(item->suspended?
+                                SchedulerPluginSettings::suspendedColor()
+                               :SchedulerPluginSettings::itemColor()));
         setFlag(QGraphicsItem::ItemIsSelectable, true);
         setFlag(QGraphicsItem::ItemIsMovable, true);
-        text_item = 0;
-        ready_to_resize = false;
-        resizing = false;
-        resize_edge = 0;
     }
 
 
@@ -248,10 +247,7 @@ namespace kt
             QPointF sp = pos() + rect().topLeft();
             ws->updateGuidanceLines(sp.y(), sp.y() + rect().height());
 
-            if (!ws->validMove(item, sp))
-                setCursor(Qt::ForbiddenCursor);
-            else
-                setCursor(Qt::DragMoveCursor);
+            setCursor(ws->validMove(item, sp)?Qt::DragMoveCursor:Qt::ForbiddenCursor);
         }
         else
         {
@@ -332,19 +328,19 @@ namespace kt
 
     void ScheduleGraphicsItem::updateCursor()
     {
+        Qt::CursorShape shape = Qt::ArrowCursor;
         if (resize_edge != 0)
         {
             if (resize_edge == kt::TopRight || resize_edge == kt::BottomLeft)
-                setCursor(Qt::SizeBDiagCursor);
+                shape = Qt::SizeBDiagCursor;
             else if (resize_edge == kt::BottomRight || resize_edge == kt::TopLeft)
-                setCursor(Qt::SizeFDiagCursor);
+                shape = Qt::SizeFDiagCursor;
             else if (resize_edge == kt::Top || resize_edge == kt::Bottom)
-                setCursor(Qt::SizeVerCursor);
+                shape = Qt::SizeVerCursor;
             else
-                setCursor(Qt::SizeHorCursor);
+                shape = Qt::SizeHorCursor;
         }
-        else
-            setCursor(Qt::ArrowCursor);
+        setCursor(shape);
     }
 
 

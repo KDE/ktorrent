@@ -16,15 +16,17 @@ qt5_add_dbus_interface(ktbwschedulerplugin_SRC ${screensaver_xml} screensaver_in
 
 ki18n_wrap_ui(ktbwschedulerplugin_SRC edititemdlg.ui bwprefpage.ui)
 kconfig_add_kcfg_files(ktbwschedulerplugin_SRC bwschedulerpluginsettings.kcfgc)
-add_library(ktbwschedulerplugin MODULE ${ktbwschedulerplugin_SRC})
+add_library(ktorrent_bwscheduler MODULE ${ktbwschedulerplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_bwscheduler ktorrent_bwscheduler.desktop)
 
 target_link_libraries(
-    ktbwschedulerplugin
+    ktorrent_bwscheduler
     ktcore
     ${LIBKTORRENT_LIBRARIES}
     KF5::Parts
+    KF5::KDELibs4Support
     )
-install(TARGETS ktbwschedulerplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktbwschedulerplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install(FILES ktbwschedulerpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+install(TARGETS ktorrent_bwscheduler  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
+install(FILES ktorrent_bwschedulerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 

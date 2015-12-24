@@ -17,12 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#include <kgenericfactory.h>
-#include <ktoolbar.h>
-#include <kglobal.h>
-#include <kconfig.h>
-#include <kmainwindow.h>
-#include <ktoggleaction.h>
+#include "bwschedulerplugin.h"
+
+#include <QTimer>
+#include <QDateTime>
+#include <QNetworkConfigurationManager>
+
+#include <kpluginfactory.h>
+#include <klocalizedstring.h>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
@@ -34,20 +36,9 @@
 #include <interfaces/functions.h>
 #include <settings.h>
 
-#include <qstring.h>
-#include <qtimer.h>
-#include <qdatetime.h>
-
-#include <kmessagebox.h>
-#include <klocalizedstring.h>
-#include <kstdaction.h>
-#include <kiconloader.h>
-#include <kglobal.h>
-#include <solid/networking.h>
 
 #include "scheduleeditor.h"
 #include "schedule.h"
-#include "bwschedulerplugin.h"
 #include "bwprefpage.h"
 
 #include <torrent/globals.h>
@@ -56,25 +47,25 @@
 
 using namespace bt;
 
-K_EXPORT_COMPONENT_FACTORY(ktbwschedulerplugin, KGenericFactory<kt::BWSchedulerPlugin>("ktbwschedulerplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_bwscheduler, "ktorrent_bwscheduler.json", registerPlugin<kt::BWSchedulerPlugin>();)
 
 namespace kt
 {
 
-    BWSchedulerPlugin::BWSchedulerPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+    BWSchedulerPlugin::BWSchedulerPlugin(QObject* parent, const QVariantList& args)
+        : Plugin(parent)
+        , m_editor(0)
+        , m_pref(0)
     {
         Q_UNUSED(args);
         connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerTriggered()));
-        m_editor = 0;
-        m_pref = 0;
-        QString interface("org.freedesktop.ScreenSaver");
-        screensaver = new org::freedesktop::ScreenSaver(interface, "/ScreenSaver", QDBusConnection::sessionBus(), this);
+        screensaver = new org::freedesktop::ScreenSaver(QStringLiteral("org.freedesktop.ScreenSaver"),
+                                                        QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus(), this);
         connect(screensaver, SIGNAL(ActiveChanged(bool)), this, SLOT(screensaverActivated(bool)));
         screensaver_on = screensaver->GetActive();
 
-        Solid::Networking::Notifier* notifier = Solid::Networking::notifier();
-        connect(notifier, SIGNAL(statusChanged(Solid::Networking::Status)),
-                this, SLOT(networkStatusChanged(Solid::Networking::Status)));
+        QNetworkConfigurationManager* networkConfigurationManager = new QNetworkConfigurationManager(this);
+        connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SLOT(networkStatusChanged(bool)));
     }
 
 
@@ -94,7 +85,7 @@ namespace kt
 
         try
         {
-            m_schedule->load(kt::DataDir() + "current.sched");
+            m_schedule->load(kt::DataDir() + QLatin1String("current.sched"));
         }
         catch (bt::Error& err)
         {
@@ -129,7 +120,7 @@ namespace kt
 
         try
         {
-            m_schedule->save(kt::DataDir() + "current.sched");
+            m_schedule->save(kt::DataDir() + QLatin1String("current.sched"));
         }
         catch (bt::Error& err)
         {
@@ -262,9 +253,9 @@ namespace kt
         timerTriggered();
     }
 
-    void BWSchedulerPlugin::networkStatusChanged(Solid::Networking::Status status)
+    void BWSchedulerPlugin::networkStatusChanged(bool online)
     {
-        if (status == Solid::Networking::Connected)
+        if (online)
         {
             Out(SYS_SCD | LOG_NOTICE) << "Network is up, setting schedule" << endl;
             timerTriggered();
@@ -272,3 +263,5 @@ namespace kt
     }
 
 }
+
+#include <bwschedulerplugin.moc>

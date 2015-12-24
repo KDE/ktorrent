@@ -18,7 +18,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "weekscene.h"
+
 #include <math.h>
+#include <kformat.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
 #include <kcalendarsystem.h>
@@ -31,7 +34,6 @@
 
 #include <util/functions.h>
 #include <util/log.h>
-#include "weekscene.h"
 #include "schedule.h"
 #include "schedulegraphicsitem.h"
 #include "bwschedulerpluginsettings.h"
@@ -69,17 +71,17 @@ namespace kt
 
     void WeekScene::updateStatusText(int up, int down, bool suspended, bool enabled)
     {
-        KLocale* loc = KGlobal::locale();
+        static KFormat format;
         QString msg;
         if (suspended)
             msg = i18n("Current schedule: suspended");
         else if (up > 0 && down > 0)
             msg = i18n("Current schedule: %1/s download, %2/s upload",
-                       loc->formatByteSize(down * 1024), loc->formatByteSize(up * 1024));
+                       format.formatByteSize(down * 1024), format.formatByteSize(up * 1024));
         else if (up > 0)
-            msg = i18n("Current schedule: unlimited download, %1/s upload", loc->formatByteSize(up * 1024));
+            msg = i18n("Current schedule: unlimited download, %1/s upload", format.formatByteSize(up * 1024));
         else if (down > 0)
-            msg = i18n("Current schedule: %1/s download, unlimited upload", loc->formatByteSize(down * 1024));
+            msg = i18n("Current schedule: %1/s download, unlimited upload", format.formatByteSize(down * 1024));
         else
             msg = i18n("Current schedule: unlimited upload and download");
 
@@ -139,7 +141,7 @@ namespace kt
 
             if (i < 24)
             {
-                QGraphicsTextItem* t = addText(QString("%1:00").arg(i));
+                QGraphicsTextItem* t = addText(QStringLiteral("%1:00").arg(i));
                 t->setPos(QPointF(0, yoff + i * hour_height));
                 t->setZValue(2);
             }
@@ -322,9 +324,9 @@ namespace kt
 
     void WeekScene::updateGuidanceLines(qreal y1, qreal y2)
     {
-        gline[0]->update(xoff, y1, yToTime(y1).toString("hh:mm"));
-        gline[1]->update(xoff, y2, yToTime(y2).toString("hh:mm"));
+        const QString FORMAT = QStringLiteral("hh:mm");
+        gline[0]->update(xoff, y1, yToTime(y1).toString(FORMAT));
+        gline[1]->update(xoff, y2, yToTime(y2).toString(FORMAT));
     }
 }
 
-#include "weekscene.moc"

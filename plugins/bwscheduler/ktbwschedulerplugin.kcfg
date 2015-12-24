@@ -4,7 +4,7 @@
 		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
 		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
 		
-	<kcfgfile name="ktbwschedulerpluginrc"/>
+	<kcfgfile name="ktorrent_bwschedulerrc"/>
 	<group name="general">
 		<entry name="itemColor" type="Color">
 			<default code="true">QColor(0,255,0,255)</default>

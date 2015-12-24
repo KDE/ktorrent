@@ -76,10 +76,7 @@ namespace kt
         connect(m_start_day, SIGNAL(activated(int)), this, SLOT(startDayChanged(int)));
         connect(m_end_day, SIGNAL(activated(int)), this, SLOT(endDayChanged(int)));
 
-        if (new_item)
-            setWindowTitle(i18n("Add an item"));
-        else
-            setWindowTitle(i18n("Edit an item"));
+        setWindowTitle(new_item?i18n("Add an item"):i18n("Edit an item"));
     }
 
 
@@ -167,4 +164,3 @@ namespace kt
 
 }
 
-#include "edititemdlg.moc"

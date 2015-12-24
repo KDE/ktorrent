@@ -18,9 +18,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "guidanceline.h"
+
 #include <QPen>
 #include <QFontMetricsF>
-#include "guidanceline.h"
 #include "bwschedulerpluginsettings.h"
 
 namespace kt
@@ -34,11 +35,12 @@ namespace kt
         setPen(pen);
         setZValue(5);
 
-        text = new QGraphicsTextItem("00:00", this);
+        const QString ZERO = QStringLiteral("00:00");
+        text = new QGraphicsTextItem(ZERO, this);
         text->setPos(text_offset, y);
 
         QFontMetricsF fm(text->font());
-        qreal xe = text_offset + fm.width("00:00");
+        qreal xe = text_offset + fm.width(ZERO);
         setLine(x, y, xe, y);
     }
 

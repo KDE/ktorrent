@@ -26,7 +26,6 @@
 #include <QFileDialog>
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
-#include <QWidgetAction>
 
 #include <ktoolbar.h>
 #include <klocalizedstring.h>

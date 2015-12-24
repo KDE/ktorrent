@@ -62,9 +62,9 @@ namespace kt
         WeekScene* ws;
         QGraphicsTextItem* text_item;
         QPointF original_pos;
+        bt::Uint32 resize_edge;
         bool ready_to_resize;
         bool resizing;
-        bt::Uint32 resize_edge;
     };
 
 }

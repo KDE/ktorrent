@@ -19,10 +19,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include "weekview.h"
+
 #include <util/log.h>
 #include <QGraphicsItem>
 #include <boost/bind.hpp>
-#include "weekview.h"
 #include "weekscene.h"
 #include "schedule.h"
 
@@ -155,4 +156,3 @@ namespace kt
     }
 }
 
-#include "weekview.moc"
