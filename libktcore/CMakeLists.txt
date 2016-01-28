@@ -61,7 +61,6 @@ generate_export_header(ktcore BASE_NAME ktcore)
 target_link_libraries(ktcore LINK_PUBLIC
    KF5::Parts
    KF5::KCMUtils
-   ${GMP_LIBRARIES}
    ktorrent
 )
 set_target_properties(ktcore PROPERTIES VERSION 16.0.0 SOVERSION 16 )
