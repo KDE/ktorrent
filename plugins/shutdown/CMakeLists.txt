@@ -1,6 +1,3 @@
-find_package(LibKWorkspace)
-
-message(STATUS "Found libkworkspace: ${LIBKWORKSPACE_LIBRARY} ")
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 set(ktshutdownplugin_SRC shutdownruleset.cpp shutdowntorrentmodel.cpp shutdowndlg.cpp shutdownplugin.cpp)
 
