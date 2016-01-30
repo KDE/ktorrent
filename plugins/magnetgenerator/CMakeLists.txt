@@ -11,9 +11,12 @@ kcoreaddons_desktop_to_json(ktorrent_magnetgenerator ktorrent_magnetgenerator.de
 target_link_libraries(
     ktorrent_magnetgenerator
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
+    ktorrent
     KF5::Parts
     KF5::Notifications
     )
+
+target_include_directories(ktorrent_magnetgenerator PRIVATE "$<BUILD_INTERFACE:${KTORRENT_SOURCE_DIR}>")
+
 install(TARGETS ktorrent_magnetgenerator  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_magnetgeneratorui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

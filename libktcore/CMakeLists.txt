@@ -55,14 +55,17 @@ set(libktorrent_UI torrent/basicjobprogresswidget.ui )
 
 ki18n_wrap_ui(libktorrent_SRC ${libktorrent_UI})
 kconfig_add_kcfg_files(libktorrent_SRC settings.kcfgc)
-add_library(ktcore SHARED ${libktorrent_SRC})
+add_library(ktcore ${libktorrent_SRC})
 generate_export_header(ktcore BASE_NAME ktcore)
 
-target_link_libraries(ktcore LINK_PUBLIC
+target_link_libraries(ktcore PUBLIC
    KF5::Parts
    KF5::KCMUtils
    ktorrent
 )
+
+target_include_directories(ktcore PUBLIC "$<BUILD_INTERFACE:${KTORRENT_SOURCE_DIR}/libktcore;${KTORRENT_BINARY_DIR}/libktcore;${KTORRENT_BINARY_DIR}>")
+
 set_target_properties(ktcore PROPERTIES VERSION 16.0.0 SOVERSION 16 )
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 

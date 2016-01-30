@@ -9,7 +9,7 @@ kcoreaddons_desktop_to_json(ktorrent_upnp ktorrent_upnp.desktop)
 target_link_libraries(
     ktorrent_upnp
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
+    ktorrent
     KF5::Parts
     )
 install(TARGETS ktorrent_upnp  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

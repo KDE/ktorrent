@@ -23,7 +23,7 @@ kcoreaddons_desktop_to_json(ktorrent_bwscheduler ktorrent_bwscheduler.desktop)
 target_link_libraries(
     ktorrent_bwscheduler
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
+    ktorrent
     KF5::Parts
     KF5::KDELibs4Support
     )
