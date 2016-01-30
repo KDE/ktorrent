@@ -6,7 +6,6 @@ set (QT_MIN_VERSION "5.5.0")
 
 find_package(ECM REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
-set(KDE_INSTALL_USE_QT_SYS_PATHS ON CACHE BOOL "Install mkspecs files, Plugins and Imports to the Qt 5 install dir" FORCE)
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
