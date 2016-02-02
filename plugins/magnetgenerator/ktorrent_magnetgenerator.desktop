@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Magnet Generator
+Name[ast]=Xenerador Magnet
 Name[bs]=Generator magneta
 Name[ca]=Generador de «magnets»
 Name[ca@valencia]=Generador de «magnets»
@@ -44,6 +45,7 @@ Name[x-test]=xxMagnet Generatorxx
 Name[zh_CN]=磁力链生成器
 Name[zh_TW]=Magnet 產生器
 Comment=Generates magnet links
+Comment[ast]=Xenera enllaces magnéticos
 Comment[bs]=Stvara magnetske veze
 Comment[ca]=Genera enllaços «magnet»
 Comment[ca@valencia]=Genera enllaços «magnet»
