@@ -448,7 +448,7 @@ namespace kt
             MagnetLinkLoadOptions options;
             options.silently = false;
             options.group = group;
-            load(bt::MagnetLink(url.toDisplayString()), options);
+            load(bt::MagnetLink(url), options);
         }
         else if (url.isLocalFile())
         {
@@ -520,7 +520,7 @@ namespace kt
             MagnetLinkLoadOptions options;
             options.silently = true;
             options.group = group;
-            load(bt::MagnetLink(url.toDisplayString()), options);
+            load(bt::MagnetLink(url), options);
         }
         else if (url.isLocalFile())
         {
