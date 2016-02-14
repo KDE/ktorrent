@@ -22,6 +22,8 @@
 #include <QDateTime>
 #include <QNetworkInterface>
 #include <QStandardPaths>
+#include <QFileInfo>
+#include <QDir>
 #include <klocalizedstring.h>
 
 #include <solid/device.h>
@@ -56,11 +58,17 @@ namespace kt
 {
 
 
-    QString DataDir()
+    QString DataDir(CreationMode mode)
     {
-        QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        QString dataDirPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        if (mode == CreateIfNotExists)
+        {
+            QFileInfo fileInfo(dataDirPath);
+            if (!fileInfo.exists())
+                fileInfo.dir().mkdir(fileInfo.fileName());
+        }
         //if (!str.endsWith(bt::DirSeparator()))
-            return str + bt::DirSeparator();
+            return dataDirPath + bt::DirSeparator();
         //else
         //    return str;
     }

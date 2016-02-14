@@ -58,7 +58,7 @@ namespace kt
 
         QList<Range> rs;
 
-        for (Uint32 i = 0; i < bs.getNumBits(); i++)
+        for (int i = 0; i < (int)bs.getNumBits(); i++)
         {
             if (!bs.get(i))
                 continue;

@@ -28,6 +28,7 @@
 #include "dbus.h"
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
+#include <interfaces/functions.h>
 #include "dbustorrent.h"
 #include "dbusgroup.h"
 #include <QFile>
@@ -39,14 +40,12 @@ using namespace bt;
 
 namespace kt
 {
-    QString DataDir();
-
     DBus::DBus(GUIInterface* gui, CoreInterface* core, QObject* parent) : QObject(parent), gui(gui), core(core)
     {
         torrent_map.setAutoDelete(true);
         group_map.setAutoDelete(true);
 
-        QDBusConnection::sessionBus().registerObject("/core", this,
+        QDBusConnection::sessionBus().registerObject(QLatin1String("/core"), this,
                 QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals);
 
         connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(torrentAdded(bt::TorrentInterface*)));

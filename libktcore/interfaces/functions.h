@@ -26,8 +26,9 @@
 
 namespace kt
 {
-    /// Get the data directory of ktorrent (~/.kde/share/apps/ktorrent most of the time)
-    KTCORE_EXPORT QString DataDir();
+    enum CreationMode {DoNotCheckDirPresence, CreateIfNotExists};
+    /// Get the data directory of ktorrent (~/.local/share/ktorrent most of the time)
+    KTCORE_EXPORT QString DataDir(CreationMode mode = DoNotCheckDirPresence);
 
     /// Apply all settings
     KTCORE_EXPORT void ApplySettings();

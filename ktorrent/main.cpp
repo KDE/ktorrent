@@ -201,7 +201,7 @@ int main(int argc, char** argv)
         QObject::connect(&catcher, SIGNAL(triggered()), &app, SLOT(quit()));
 #endif
 
-        bt::InitLog(kt::DataDir() + QLatin1String("log"), true, true, true);
+        bt::InitLog(kt::DataDir(kt::CreateIfNotExists) + QLatin1String("log"), true, true, true);
 
         kt::GUI widget;
         widget.show();
