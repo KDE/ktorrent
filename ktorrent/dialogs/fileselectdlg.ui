@@ -131,6 +131,9 @@
        <property name="toolTip">
         <string>All files in the torrent, you can change them by double clicking on them.</string>
        </property>
+       <property name="uniformRowHeights">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>

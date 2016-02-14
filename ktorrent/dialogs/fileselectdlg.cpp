@@ -149,6 +149,7 @@ namespace kt
             filter_model->setSortRole(Qt::UserRole);
             m_file_view->setSortingEnabled(true);
             m_file_view->expandAll();
+            m_file_view->resizeColumnToContents(0);
 
             updateSizeLabels();
 
