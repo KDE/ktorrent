@@ -56,7 +56,7 @@ namespace kt
         p->setPen(QPen(c, 1, Qt::SolidLine));
         p->setBrush(c);
 
-        QList<Range> rs;
+        QVector<Range> rs;
 
         for (int i = 0; i < (int)bs.getNumBits(); i++)
         {
@@ -85,9 +85,9 @@ namespace kt
 
         QRect r = contents_rect;
 
-        for (QList<Range>::iterator i = rs.begin(); i != rs.end(); ++i)
+        for (auto i = rs.constBegin(); i != rs.constEnd(); ++i)
         {
-            Range& ra = *i;
+            const Range& ra = *i;
             int rw = ra.last - ra.first + 1;
             p->drawRect((int)(scale * ra.first), 0, (int)(rw * scale), r.height());
         }
@@ -95,11 +95,11 @@ namespace kt
 
     void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter* p, const BitSet& bs, const QColor& color, const QRect& contents_rect)
     {
-        Uint32 w = contents_rect.width();
+        int w = contents_rect.width();
         double chunks_per_pixel = (double)bs.getNumBits() / w;
-        QList<Range> rs;
+        QVector<Range> rs;
 
-        for (Uint32 i = 0; i < w; i++)
+        for (int i = 0; i < w; i++)
         {
             Uint32 num_dl = 0;
             Uint32 jStart = (Uint32)(i * chunks_per_pixel);
@@ -134,9 +134,9 @@ namespace kt
 
         QRect r = contents_rect;
 
-        for (QList<Range>::iterator i = rs.begin(); i != rs.end(); ++i)
+        for (auto i = rs.constBegin(); i != rs.constEnd(); ++i)
         {
-            Range& ra = *i;
+            const Range& ra = *i;
             int rw = ra.last - ra.first + 1;
             int fac = ra.fac;
             QColor c = color;

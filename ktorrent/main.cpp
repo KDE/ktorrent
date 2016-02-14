@@ -37,6 +37,8 @@
 #include <kaboutdata.h>
 #include <klocalizedstring.h>
 #include <kdbusservice.h>
+#include <kstartupinfo.h>
+#include <kwindowsystem.h>
 #include <KCrash>
 
 #include <util/log.h>
@@ -206,15 +208,31 @@ int main(int argc, char** argv)
         kt::GUI widget;
         widget.show();
 
-        bool silent = parser.isSet(QStringLiteral("silent"));
-        Q_FOREACH (const QString& filePath, parser.positionalArguments())
+        auto handleCmdLine = [&widget, &parser](const QStringList &arguments, const QString &workingDirectory)
         {
-            QUrl url = QFile::exists(filePath)?QUrl::fromLocalFile(filePath):QUrl(filePath);
-            if (silent)
-                widget.loadSilently(url);
-            else
-                widget.load(url);
-        }
+            if (!arguments.isEmpty())
+            {
+                parser.parse(arguments);
+                KStartupInfo::setNewStartupId(&widget, KStartupInfo::startupId());
+                KWindowSystem::forceActiveWindow(widget.winId());
+            }
+            QString oldCurrent = QDir::currentPath();
+            if (!workingDirectory.isEmpty())
+                QDir::setCurrent(workingDirectory);
+
+            bool silent = parser.isSet(QStringLiteral("silent"));
+            auto loadMethod = silent ? &kt::GUI::loadSilently : &kt::GUI::load;
+            Q_FOREACH (const QString& filePath, parser.positionalArguments())
+            {
+                QUrl url = QFile::exists(filePath)?QUrl::fromLocalFile(filePath):QUrl(filePath);
+                (widget.*loadMethod)(url);
+            }
+
+            if (!workingDirectory.isEmpty())
+                QDir::setCurrent(oldCurrent);
+        };
+        QObject::connect(&dbusService, &KDBusService::activateRequested, handleCmdLine);
+        handleCmdLine(QStringList(), QString());
 
         app.setQuitOnLastWindowClosed(false);
         app.exec();
