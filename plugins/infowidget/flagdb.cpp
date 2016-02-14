@@ -95,7 +95,7 @@ const QPixmap& kt::FlagDB::getFlag(const QString& country)
     foreach (const FlagDBSource& s, sources)
     {
         const QString& path = s.getPath(c);
-        qDebug()<<"dddddd"<<path;
+        //e.g.: /usr/share/locale/l10n/ru/flag.png
         if (QFile::exists(path) && img.load(path))
         {
             if (img.width() != preferredWidth || img.height() != preferredHeight)
