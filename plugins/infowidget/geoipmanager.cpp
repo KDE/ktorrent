@@ -39,9 +39,9 @@ namespace kt
 #ifdef USE_SYSTEM_GEOIP
         geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
 #else
-        geoip_data_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("ktorrent/geoip.dat"));
+        geoip_data_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("geoip.dat"));
         if (geoip_data_file.isEmpty())
-            geoip_data_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("ktorrent/GeoIP.dat"));
+            geoip_data_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("GeoIP.dat"));
 
         if (geoip_data_file.isEmpty())
         {
