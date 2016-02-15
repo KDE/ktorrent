@@ -32,9 +32,9 @@ using namespace bt;
 namespace kt
 {
 
-    TorrentGroup::TorrentGroup(const QString& name): Group(name, MIXED_GROUP | CUSTOM_GROUP, "/all/custom/" + name)
+    TorrentGroup::TorrentGroup(const QString& name): Group(name, MIXED_GROUP | CUSTOM_GROUP, QLatin1String("/all/custom/") + name)
     {
-        setIconByName("application-x-bittorrent");
+        setIconByName(QStringLiteral("application-x-bittorrent"));
     }
 
 
@@ -44,10 +44,7 @@ namespace kt
 
     bool TorrentGroup::isMember(TorrentInterface* tor)
     {
-        if (torrents.count(tor) > 0)
-            return true;
-        else
-            return false;
+        return torrents.count(tor) > 0;
     }
 
     void TorrentGroup::add(TorrentInterface* tor)
@@ -63,9 +60,9 @@ namespace kt
     void TorrentGroup::save(bt::BEncoder* enc)
     {
         enc->beginDict();
-        enc->write(QString("name")); enc->write(name.toLocal8Bit());
-        enc->write(QString("icon")); enc->write(icon_name.toLocal8Bit());
-        enc->write(QString("hashes")); enc->beginList();
+        enc->write(QByteArrayLiteral("name")); enc->write(name.toLocal8Bit());
+        enc->write(QByteArrayLiteral("icon")); enc->write(icon_name.toLocal8Bit());
+        enc->write(QByteArrayLiteral("hashes")); enc->beginList();
         std::set<TorrentInterface*>::iterator i = torrents.begin();
         while (i != torrents.end())
         {
@@ -82,16 +79,16 @@ namespace kt
             j++;
         }
         enc->end();
-        enc->write(QString("policy")); enc->beginDict();
-        enc->write(QString("default_save_location")); enc->write(policy.default_save_location);
-        enc->write(QString("max_share_ratio")); enc->write(QString::number(policy.max_share_ratio));
-        enc->write(QString("max_seed_time")); enc->write(QString::number(policy.max_seed_time));
-        enc->write(QString("max_upload_rate")); enc->write(policy.max_upload_rate);
-        enc->write(QString("max_download_rate")); enc->write(policy.max_download_rate);
-        enc->write(QString("only_apply_on_new_torrents"));
+        enc->write(QByteArrayLiteral("policy")); enc->beginDict();
+        enc->write(QByteArrayLiteral("default_save_location")); enc->write(policy.default_save_location.toUtf8());
+        enc->write(QByteArrayLiteral("max_share_ratio")); enc->write(QByteArray::number(policy.max_share_ratio));
+        enc->write(QByteArrayLiteral("max_seed_time")); enc->write(QByteArray::number(policy.max_seed_time));
+        enc->write(QByteArrayLiteral("max_upload_rate")); enc->write(policy.max_upload_rate);
+        enc->write(QByteArrayLiteral("max_download_rate")); enc->write(policy.max_download_rate);
+        enc->write(QByteArrayLiteral("only_apply_on_new_torrents"));
         enc->write((bt::Uint32)(policy.only_apply_on_new_torrents ? 1 : 0));
-        enc->write(QString("default_move_on_completion_location"));
-        enc->write(policy.default_move_on_completion_location);
+        enc->write(QByteArrayLiteral("default_move_on_completion_location"));
+        enc->write(policy.default_move_on_completion_location.toUtf8());
         enc->end();
         enc->end();
     }
@@ -104,7 +101,7 @@ namespace kt
         if (!ln)
             return;
 
-        path = "/all/custom/" + name;
+        path = QLatin1String("/all/custom/") + name;
 
         for (Uint32 i = 0; i < ln->getNumChildren(); i++)
         {

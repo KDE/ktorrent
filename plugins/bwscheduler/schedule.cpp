@@ -273,30 +273,30 @@ namespace kt
 
         BEncoder enc(&fptr);
         enc.beginDict();
-        enc.write("enabled", enabled);
-        enc.write("items");
+        enc.write(QByteArrayLiteral("enabled"), enabled);
+        enc.write(QByteArrayLiteral("items"));
         enc.beginList();
         foreach (ScheduleItem* i, items)
         {
             enc.beginDict();
-            enc.write("start_day"); enc.write((Uint32)i->start_day);
-            enc.write("end_day"); enc.write((Uint32)i->end_day);
-            enc.write("start"); enc.write(i->start.toString());
-            enc.write("end"); enc.write(i->end.toString());
-            enc.write("upload_limit"); enc.write(i->upload_limit);
-            enc.write("download_limit"); enc.write(i->download_limit);
-            enc.write("suspended"); enc.write((Uint32)(i->suspended ? 1 : 0));
+            enc.write(QByteArrayLiteral("start_day")); enc.write((Uint32)i->start_day);
+            enc.write(QByteArrayLiteral("end_day")); enc.write((Uint32)i->end_day);
+            enc.write(QByteArrayLiteral("start")); enc.write(i->start.toString().toLatin1());
+            enc.write(QByteArrayLiteral("end")); enc.write(i->end.toString().toLatin1());
+            enc.write(QByteArrayLiteral("upload_limit")); enc.write(i->upload_limit);
+            enc.write(QByteArrayLiteral("download_limit")); enc.write(i->download_limit);
+            enc.write(QByteArrayLiteral("suspended")); enc.write((Uint32)(i->suspended ? 1 : 0));
             if (i->set_conn_limits)
             {
-                enc.write("conn_limits");
+                enc.write(QByteArrayLiteral("conn_limits"));
                 enc.beginDict();
-                enc.write("global"); enc.write((Uint32)i->global_conn_limit);
-                enc.write("per_torrent"); enc.write((Uint32)i->torrent_conn_limit);
+                enc.write(QByteArrayLiteral("global")); enc.write((Uint32)i->global_conn_limit);
+                enc.write(QByteArrayLiteral("per_torrent")); enc.write((Uint32)i->torrent_conn_limit);
                 enc.end();
             }
-            enc.write("screensaver_limits", (Uint32)i->screensaver_limits);
-            enc.write("ss_upload_limit", i->ss_upload_limit);
-            enc.write("ss_download_limit", i->ss_download_limit);
+            enc.write(QByteArrayLiteral("screensaver_limits"), (Uint32)i->screensaver_limits);
+            enc.write(QByteArrayLiteral("ss_upload_limit"), i->ss_upload_limit);
+            enc.write(QByteArrayLiteral("ss_download_limit"), i->ss_download_limit);
             enc.end();
         }
         enc.end();

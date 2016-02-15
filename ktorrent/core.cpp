@@ -642,7 +642,7 @@ namespace kt
         while (true)
         {
             QDir d;
-            QString dir = data_dir + QString(QLatin1String("tor%1/")).arg(i);
+            QString dir = data_dir % QLatin1String("tor") % QString::number(i) % QLatin1Char('/');
             if (!d.exists(dir))
             {
                 return dir;
@@ -689,7 +689,7 @@ namespace kt
     {
         QDir dir(data_dir);
         QStringList filters;
-        filters << QLatin1String("tor*");
+        filters << QStringLiteral("tor*");
         QStringList sl = dir.entryList(filters, QDir::Dirs);
         for (int i = 0; i < sl.count(); i++)
         {
@@ -1371,22 +1371,22 @@ namespace kt
         QList<QUrl> trs = mlink.trackers();
         if (trs.count())
         {
-            enc.write("announce");
-            enc.write(trs.first().toDisplayString());
+            enc.write(QByteArrayLiteral("announce"));
+            enc.write(trs.first().toDisplayString().toUtf8());
             if (trs.count() > 1)
             {
-                enc.write("announce-list");
+                enc.write(QByteArrayLiteral("announce-list"));
                 enc.beginList();
                 foreach (const QUrl &tracker, trs)
                 {
                     enc.beginList();
-                    enc.write(tracker.toDisplayString());
+                    enc.write(tracker.toDisplayString().toUtf8());
                     enc.end();
                 }
                 enc.end();
             }
         }
-        enc.write("info");
+        enc.write(QByteArrayLiteral("info"));
         out->write(data.data(), data.size());
         enc.end();
 

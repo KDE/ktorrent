@@ -404,17 +404,17 @@ void MagnetManager::loadMagnets(const QString& file)
         for (Uint32 i = 0; i < ml->getNumChildren(); i++)
         {
             BDictNode* dict = ml->getDict(i);
-            MagnetLink mlink(dict->getString("magnet", 0));
+            MagnetLink mlink(dict->getString(QByteArrayLiteral("magnet"), 0));
             MagnetLinkLoadOptions options;
-            bool stopped = dict->getInt("stopped") == 1;
-            options.silently = dict->getInt("silent") == 1;
+            bool stopped = dict->getInt(QByteArrayLiteral("stopped")) == 1;
+            options.silently = dict->getInt(QByteArrayLiteral("silent")) == 1;
 
             if (dict->keys().contains("group"))
-                options.group = dict->getString("group", 0);
+                options.group = dict->getString(QByteArrayLiteral("group"), 0);
             if (dict->keys().contains("location"))
-                options.location = dict->getString("location", 0);
+                options.location = dict->getString(QByteArrayLiteral("location"), 0);
             if (dict->keys().contains("move_on_completion"))
-                options.move_on_completion = dict->getString("move_on_completion", 0);
+                options.move_on_completion = dict->getString(QByteArrayLiteral("move_on_completion"), 0);
 
             addMagnet(mlink, options, stopped);
         }
@@ -450,12 +450,12 @@ void MagnetManager::saveMagnets(const QString& file)
 void MagnetManager::writeEncoderInfo(bt::BEncoder &enc, kt::MagnetDownloader* md)
 {
     enc.beginDict();
-    enc.write("magnet", md->magnetLink().toString());
-    enc.write("stopped", stoppedHashes.contains(md->magnetLink().infoHash()));
-    enc.write("silent", md->options.silently);
-    enc.write("group", md->options.group);
-    enc.write("location", md->options.location);
-    enc.write("move_on_completion", md->options.move_on_completion);
+    enc.write(QByteArrayLiteral("magnet"), md->magnetLink().toString().toUtf8());
+    enc.write(QByteArrayLiteral("stopped"), stoppedHashes.contains(md->magnetLink().infoHash()));
+    enc.write(QByteArrayLiteral("silent"), md->options.silently);
+    enc.write(QByteArrayLiteral("group"), md->options.group.toUtf8());
+    enc.write(QByteArrayLiteral("location"), md->options.location.toUtf8());
+    enc.write(QByteArrayLiteral("move_on_completion"), md->options.move_on_completion.toUtf8());
     enc.end();
 }
 

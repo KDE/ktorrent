@@ -161,10 +161,10 @@ namespace kt
             if (i->target == SPECIFIC_TORRENT)
             {
                 bt::SHA1Hash hash = i->tc->getInfoHash();
-                enc.write("Torrent");
+                enc.write(QByteArrayLiteral("Torrent"));
                 enc.write(hash.getData(), 20);
             }
-            enc.write("hit", i->hit);
+            enc.write(QByteArrayLiteral("hit"), i->hit);
             enc.end();
         }
         enc.write(on);

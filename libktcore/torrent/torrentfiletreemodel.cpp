@@ -258,7 +258,7 @@ namespace kt
         if (file)
             return;
 
-        enc->write("expanded");
+        enc->write(QByteArrayLiteral("expanded"));
         enc->write((Uint32)(tv->isExpanded(pm->mapFromSource(index)) ? 1 : 0));
 
         int idx = 0;
@@ -266,7 +266,7 @@ namespace kt
         {
             if (!n->file)
             {
-                enc->write(n->name);
+                enc->write(n->name.toUtf8());
                 enc->beginDict();
                 n->saveExpandedState(index.child(idx, 0), pm, tv, enc);
                 enc->end();
