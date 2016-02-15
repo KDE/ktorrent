@@ -25,8 +25,8 @@
 #include <interfaces/torrentactivityinterface.h>
 
 
-class KToggleAction;
 class QAction;
+class KToggleAction;
 class KComboBox;
 
 namespace kt
