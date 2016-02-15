@@ -64,10 +64,10 @@ namespace kt
                 this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
         connect(m_scrape, SIGNAL(clicked()), this, SLOT(scrapeClicked()));
 
-        m_add_tracker->setIcon(QIcon::fromTheme("list-add"));
-        m_remove_tracker->setIcon(QIcon::fromTheme("list-remove"));
-        m_restore_defaults->setIcon(QIcon::fromTheme("kt-restore-defaults"));
-        m_change_tracker->setIcon(QIcon::fromTheme("kt-change-tracker"));
+        m_add_tracker->setIcon(QIcon::fromTheme(QLatin1String("list-add")));
+        m_remove_tracker->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
+        m_restore_defaults->setIcon(QIcon::fromTheme(QLatin1String("kt-restore-defaults")));
+        m_change_tracker->setIcon(QIcon::fromTheme(QLatin1String("kt-change-tracker")));
 
 
         setEnabled(false);
@@ -97,7 +97,9 @@ namespace kt
                 continue;
 
             QUrl url(t.trimmed());
-            if (!url.isValid() || (url.scheme() != "udp" && url.scheme() != "http" && url.scheme() != "https"))
+            if (!url.isValid() || (url.scheme() != QLatin1String("udp")
+                                && url.scheme() != QLatin1String("http")
+                                && url.scheme() != QLatin1String("https")))
                 invalid.append(t);
             else
             {
@@ -221,6 +223,7 @@ namespace kt
             m_scrape->setEnabled(true);
             model->changeTC(ti);
             currentChanged(m_tracker_list->selectionModel()->currentIndex(), QModelIndex());
+            m_tracker_list->resizeColumnToContents(0);
         }
     }
 
@@ -262,7 +265,7 @@ namespace kt
         }
 
         QStringList default_hints;
-        default_hints << "udp://tracker.publicbt.com:80/announce" << "udp://tracker.openbittorrent.com:80/announce";
+        default_hints << QStringLiteral("udp://tracker.publicbt.com:80/announce") << QStringLiteral("udp://tracker.openbittorrent.com:80/announce");
         tracker_hints = g.readEntry("tracker_hints", default_hints);
     }
 }
