@@ -100,7 +100,7 @@ namespace kt
         if (index.column() < 2 && role != Qt::ForegroundRole)
             return TorrentFileListModel::data(index, role);
 
-        if (!tc || !index.isValid() || index.row() < 0 || index.row() >= rowCount(QModelIndex()))
+        if (!tc || !index.isValid() || index.row() >= rowCount(QModelIndex()))
             return QVariant();
 
         if (role == Qt::ForegroundRole && index.column() == 2 && tc->getStats().multi_file_torrent)

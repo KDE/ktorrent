@@ -629,7 +629,8 @@ namespace kt
 
     QVariant ViewModel::data(const QModelIndex& index, int role) const
     {
-        if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0)
+        //there is no point checking index.row() < 0 because isValid already does this
+        if (!index.isValid() || index.row() >= torrents.count())
             return QVariant();
 
         Item* item = (Item*)index.internalPointer();
@@ -661,7 +662,7 @@ namespace kt
             else
                 tooltip = tc->getDisplayName();
 
-            tooltip += "<br/><br/>" + tc->getStats().statusToString();
+            tooltip += QLatin1String("<br/><br/>") + tc->getStats().statusToString();
             if (tc->getTrackersList()->noTrackersReachable())
                 tooltip += i18n("<br/><br/>Unable to contact a tracker.");
 
@@ -692,8 +693,7 @@ namespace kt
 
     bool ViewModel::setData(const QModelIndex& index, const QVariant& value, int role)
     {
-        if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0 ||
-                role != Qt::EditRole || index.column() != NAME)
+        if (!index.isValid() || index.row() >= torrents.count() || role != Qt::EditRole || index.column() != NAME)
             return false;
 
         QString name = value.toString();
@@ -711,7 +711,7 @@ namespace kt
 
     Qt::ItemFlags ViewModel::flags(const QModelIndex& index) const
     {
-        if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0)
+        if (!index.isValid() || index.row() >= torrents.count())
             return QAbstractTableModel::flags(index) | Qt::ItemIsDropEnabled;
 
         Qt::ItemFlags flags = QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
@@ -796,7 +796,7 @@ namespace kt
 
     const bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex& index) const
     {
-        if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
+        if (index.isValid() && index.row() < torrents.count())
             return torrents[index.row()]->tc;
         else
             return 0;
@@ -804,7 +804,7 @@ namespace kt
 
     bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex& index)
     {
-        if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
+        if (index.isValid() && index.row() < torrents.count())
             return torrents[index.row()]->tc;
         else
             return 0;

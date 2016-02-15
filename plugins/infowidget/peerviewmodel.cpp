@@ -299,7 +299,7 @@ namespace kt
 
     QVariant PeerViewModel::data(const QModelIndex& index, int role) const
     {
-        if (!index.isValid() || index.row() >= items.count() || index.row() < 0)
+        if (!index.isValid() || index.row() >= items.count())
             return QVariant();
 
         Item* item = items[index.row()];
@@ -332,7 +332,7 @@ namespace kt
 
     bt::PeerInterface* PeerViewModel::indexToPeer(const QModelIndex& index)
     {
-        if (!index.isValid() || index.row() >= items.count() || index.row() < 0)
+        if (!index.isValid() || index.row() >= items.count())
             return 0;
         else
             return ((Item*)index.internalPointer())->peer;

@@ -92,7 +92,7 @@ namespace kt
         int r = index.row();
         int nfiles = rowCount(QModelIndex());
         bool multi = tc->getStats().multi_file_torrent;
-        if (r < 0 || r >= nfiles)
+        if (r >= nfiles)
             return QVariant();
 
         const TorrentStats& s = tc->getStats();
@@ -288,7 +288,7 @@ namespace kt
             return 0;
 
         int r = idx.row();
-        if (r < 0 || r >= rowCount(QModelIndex()))
+        if (r >= rowCount(QModelIndex()))
             return 0;
         else
             return &tc->getTorrentFile(r);
@@ -300,7 +300,7 @@ namespace kt
             return QString();
 
         int r = idx.row();
-        if (r < 0 || r >= rowCount(QModelIndex()))
+        if (r >= rowCount(QModelIndex()))
             return QString();
         else
             return tc->getTorrentFile(r).getPath();
