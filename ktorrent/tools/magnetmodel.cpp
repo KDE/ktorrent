@@ -98,7 +98,7 @@ namespace kt
         else if (role == Qt::DecorationRole)
         {
             if (index.column() == 0)
-                return QIcon::fromTheme("kt-magnet");
+                return QIcon::fromTheme(QStringLiteral("kt-magnet"));
         }
         else if (role == Qt::ToolTipRole)
         {
@@ -138,7 +138,7 @@ namespace kt
 
     int MagnetModel::rowCount(const QModelIndex& parent) const
     {
-        if (parent.isValid())
+        if (parent.isValid() || !mman)
             return 0;
         else
             return mman->count();

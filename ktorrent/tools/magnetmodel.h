@@ -21,6 +21,7 @@
 #define KT_MAGNETMODEL_H
 
 #include <QAbstractTableModel>
+#include <QPointer>
 #include <util/constants.h>
 
 namespace bt
@@ -67,7 +68,7 @@ namespace kt
 
     private:
         int currentRows;
-        MagnetManager* mman;
+        QPointer<MagnetManager> mman;
     };
 
 }
