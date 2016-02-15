@@ -886,7 +886,7 @@ namespace kt
 
             QString recentDirClass;
             QString fn = QFileDialog::getSaveFileName(gui, QString(),
-                                                    KFileWidget::getStartUrl(QUrl("kfiledialog:///exportTorrent"), recentDirClass).toLocalFile(),
+                                                    KFileWidget::getStartUrl(QUrl(QLatin1String("kfiledialog:///exportTorrent")), recentDirClass).toLocalFile(),
                                                     kt::TorrentFileFilter(false));
 
             if (fn.isEmpty())

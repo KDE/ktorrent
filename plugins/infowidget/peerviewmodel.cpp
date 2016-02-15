@@ -102,11 +102,11 @@ namespace kt
                 return QVariant();
         case 5: return stats.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No");
         case 6: return stats.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No");
-        case 7: return QString("%1 %").arg(QLocale().toString(stats.perc_of_file, 'g', 2));
+        case 7: return QString(QString::number((int)stats.perc_of_file) + QLatin1String(" %"));
         case 8: return QVariant();
         case 9: return QLocale().toString(stats.aca_score, 'g', 2);
         case 10: return QVariant();
-        case 11: return QString("%1 / %2").arg(stats.num_down_requests).arg(stats.num_up_requests);
+        case 11: return QString(QString::number(stats.num_down_requests) + QLatin1String(" / ") + QString::number(stats.num_up_requests));
         case 12: return BytesToString(stats.bytes_downloaded);
         case 13: return BytesToString(stats.bytes_uploaded);
         case 14: return stats.interested ? i18nc("Interested", "Yes") : i18nc("Not Interested", "No");
@@ -147,7 +147,7 @@ namespace kt
         {
         case 0:
             if (stats.encrypted)
-                return QIcon::fromTheme("kt-encrypted");
+                return QIcon::fromTheme(QStringLiteral("kt-encrypted"));
             break;
         case 1: return flag;
         case 8: return stats.dht_support ? yes : no;

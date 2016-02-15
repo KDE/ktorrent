@@ -358,7 +358,7 @@ namespace kt
 
     void ViewDelegate::paintProgressBar(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
     {
-        double progress = index.data().toDouble();
+        int progress = index.data().toInt();
 
         QStyleOptionProgressBar progressBarOption;
         progressBarOption.palette = option.palette;
@@ -366,8 +366,8 @@ namespace kt
         progressBarOption.rect = option.rect;
         progressBarOption.minimum = 0;
         progressBarOption.maximum = 100;
-        progressBarOption.progress = (int)progress;
-        progressBarOption.text = QLocale().toString(progress, 'g', 2) + '%';
+        progressBarOption.progress = progress;
+        progressBarOption.text = QLocale().toString(progress) + '%';
         progressBarOption.textVisible = true;
         progressBarOption.direction = option.direction;
 

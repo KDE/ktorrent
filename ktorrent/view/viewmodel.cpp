@@ -231,21 +231,21 @@ namespace kt
             break;
         case ETA:
             if (eta == bt::TimeEstimator::NEVER)
-                return QString("%1").arg(QChar(0x221E)); // infinity
+                return QString(QChar(0x221E)); // infinity
             else if (eta != bt::TimeEstimator::ALREADY_FINISHED)
                 return DurationToString(eta);
             else
                 return QVariant();
             break;
         case SEEDERS:
-            return QString("%1 (%2)").arg(QString::number(seeders_connected_to)).arg(QString::number(seeders_total));
+            return QString(QString::number(seeders_connected_to) + QLatin1String(" (") + QString::number(seeders_total) + QLatin1Char(')'));
         case LEECHERS:
-            return QString("%1 (%2)").arg(QString::number(leechers_connected_to)).arg(QString::number(leechers_total));
+            return QString(QString::number(leechers_connected_to) + QLatin1String(" (") + QString::number(leechers_total) + QLatin1Char(')'));
             // xgettext: no-c-format
         case PERCENTAGE:
             return percentage;
         case SHARE_RATIO:
-            return locale.toString(share_ratio, 'g', 2);
+            return locale.toString(share_ratio, 'f', 2);
         case DOWNLOAD_TIME:
             return DurationToString(runtime_dl);
         case SEED_TIME:
