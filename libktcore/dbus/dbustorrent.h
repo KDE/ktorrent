@@ -129,11 +129,11 @@ namespace kt
         Q_SCRIPTABLE bool removeStream(uint file_index);
 
     Q_SIGNALS:
-        Q_SCRIPTABLE void finished(QObject* tor);
-        Q_SCRIPTABLE void stoppedByError(QObject* tor, const QString& msg);
-        Q_SCRIPTABLE void seedingAutoStopped(QObject* tor, const QString& reason);
-        Q_SCRIPTABLE void corruptedDataFound(QObject* tor);
-        Q_SCRIPTABLE void torrentStopped(QObject* tor);
+        void finished(QObject* tor);
+        void stoppedByError(QObject* tor, const QString& msg);
+        void seedingAutoStopped(QObject* tor, const QString& reason);
+        void corruptedDataFound(QObject* tor);
+        void torrentStopped(QObject* tor);
 
     private slots:
         void onFinished(bt::TorrentInterface* tor);

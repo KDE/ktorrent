@@ -336,7 +336,7 @@ namespace kt
     void DBusTorrent::onTorrentStopped(bt::TorrentInterface* tor)
     {
         Q_UNUSED(tor);
-        emit torrentStopped(this);
+        //emit torrentStopped(this); //TODO emit string representation of the torrent
     }
 
     QString DBusTorrent::filePath(uint file_index) const
