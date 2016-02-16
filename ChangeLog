@@ -1,3 +1,8 @@
+Changes in 5.0:
+- Port to KF5/Qt5: QHttp-based tracker communication was dropped in favour of KIO-based one
+- fix issues found by Coverity static analyzer
+- improve naming of few UI items
+
 Changes in 4.4:
 - Fix typo in generalpref.ui (305383)
 - Remove unnecessary volume action from MediaPlayerActivity (305378)

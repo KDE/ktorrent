@@ -286,7 +286,7 @@ namespace kt
         {
             int secs = time_to_next_update;
             if (secs)
-                return QTime().addSecs(secs).toString(QStringLiteral("mm:ss"));
+                return QTime(0,0,0,0).addSecs(secs).toString(QStringLiteral("mm:ss"));
             else
                 return QVariant();
         }
