@@ -75,8 +75,8 @@ namespace kt
                 this, SLOT(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)));
         connect(core, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
                 this, SLOT(lowDiskSpace(bt::TorrentInterface*, bool)));
-        connect(core, SIGNAL(canNotLoadSilently(const QString&)),
-                this, SLOT(cannotLoadTorrentSilently(const QString&)));
+        connect(core, SIGNAL(canNotLoadSilently(QString)),
+                this, SLOT(cannotLoadTorrentSilently(QString)));
         connect(core, SIGNAL(dhtNotEnabled(QString)),
                 this, SLOT(dhtNotEnabled(QString)));
         connect(core->getQueueManager(), SIGNAL(suspendStateChanged(bool)),
@@ -410,7 +410,7 @@ namespace kt
         {
             if (v >= 1)
             {
-                QAction* act = addAction(QStringLiteral("%1").arg(v));
+                QAction* act = addAction(QString::number(v));
                 act->setCheckable(true);
                 act->setChecked(rate == v);
             }

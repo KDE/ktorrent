@@ -117,61 +117,57 @@ namespace kt
 
     int FileSelectDlg::execute(bt::TorrentInterface* tc, bool* start, bool* skip_check, const QString& location_hint)
     {
+        if (!tc)
+            return QDialog::Rejected;
+
         setWindowTitle(i18n("Opening %1", tc->getDisplayName()));
         this->tc = tc;
         this->start = start;
         this->skip_check = skip_check;
-        if (tc)
+
+        int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
+        Out(SYS_GEN | LOG_DEBUG) << "Codec: " << QString(tc->getTextCodec()->name()) << " " << idx << endl;
+        m_encoding->setCurrentIndex(idx);
+        connect(m_encoding, SIGNAL(currentIndexChanged(QString)), this, SLOT(onCodecChanged(QString)));
+
+
+        for (Uint32 i = 0; i < tc->getNumFiles(); i++)
         {
-            int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
-            Out(SYS_GEN | LOG_DEBUG) << "Codec: " << QString(tc->getTextCodec()->name()) << " " << idx << endl;
-            m_encoding->setCurrentIndex(idx);
-            connect(m_encoding, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(onCodecChanged(const QString&)));
-
-
-            for (Uint32 i = 0; i < tc->getNumFiles(); i++)
-            {
-                bt::TorrentFileInterface& file = tc->getTorrentFile(i);
-                file.setEmitDownloadStatusChanged(false);
-            }
-
-            populateFields(location_hint);
-            if (show_file_tree)
-                model = new TorrentFileTreeModel(tc, TorrentFileTreeModel::DELETE_FILES, this);
-            else
-                model = new TorrentFileListModel(tc, TorrentFileTreeModel::DELETE_FILES, this);
-
-            model->setFileNamesEditable(true);
-
-            connect(model, SIGNAL(checkStateChanged()), this, SLOT(updateSizeLabels()));
-            connect(m_downloadLocation, SIGNAL(textChanged(QString)), this, SLOT(downloadLocationChanged(QString)));
-            filter_model->setSourceModel(model);
-            filter_model->setSortRole(Qt::UserRole);
-            m_file_view->setSortingEnabled(true);
-            m_file_view->expandAll();
-            m_file_view->resizeColumnToContents(0);
-
-            updateSizeLabels();
-
-            if (!tc->getStats().multi_file_torrent)
-            {
-                m_select_all->setEnabled(false);
-                m_select_none->setEnabled(false);
-                m_invert_selection->setEnabled(false);
-                m_collapse_all->setEnabled(false);
-                m_expand_all->setEnabled(false);
-            }
-            else
-            {
-                m_collapse_all->setEnabled(show_file_tree);
-                m_expand_all->setEnabled(show_file_tree);
-            }
-
-            m_file_view->setAlternatingRowColors(false);
-            m_file_view->setRootIsDecorated(show_file_tree && tc->getStats().multi_file_torrent);
-            return exec();
+            bt::TorrentFileInterface& file = tc->getTorrentFile(i);
+            file.setEmitDownloadStatusChanged(false);
         }
-        return QDialog::Rejected;
+
+        populateFields(location_hint);
+        if (show_file_tree)
+            model = new TorrentFileTreeModel(tc, TorrentFileTreeModel::DELETE_FILES, this);
+        else
+            model = new TorrentFileListModel(tc, TorrentFileTreeModel::DELETE_FILES, this);
+
+        model->setFileNamesEditable(true);
+
+        connect(model, SIGNAL(checkStateChanged()), this, SLOT(updateSizeLabels()));
+        connect(m_downloadLocation, SIGNAL(textChanged(QString)), this, SLOT(downloadLocationChanged(QString)));
+        filter_model->setSourceModel(model);
+        filter_model->setSortRole(Qt::UserRole);
+        m_file_view->setSortingEnabled(true);
+        m_file_view->expandAll();
+        m_file_view->resizeColumnToContents(0);
+
+        updateSizeLabels();
+
+        bool multi_file_torrent = tc->getStats().multi_file_torrent;
+        bool collapse_expand_enable = show_file_tree && multi_file_torrent;
+        m_collapse_all->setEnabled(collapse_expand_enable);
+        m_expand_all->setEnabled(collapse_expand_enable);
+
+        m_select_all->setEnabled(multi_file_torrent);
+        m_select_none->setEnabled(multi_file_torrent);
+        m_invert_selection->setEnabled(multi_file_torrent);
+        m_expand_all->setEnabled(multi_file_torrent);
+
+        m_file_view->setRootIsDecorated(collapse_expand_enable);
+        m_file_view->setAlternatingRowColors(false);
+        return exec();
     }
 
     void FileSelectDlg::reject()

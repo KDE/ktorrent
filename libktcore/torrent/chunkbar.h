@@ -65,7 +65,6 @@ namespace kt
     protected:
         bt::BitSet curr;
         QPixmap pixmap;
-        ChunkBarRenderer* cbr;
     };
 }
 

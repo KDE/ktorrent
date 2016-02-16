@@ -59,7 +59,6 @@ namespace kt
         MagnetManager* mman;
         MagnetModel* model;
         QTreeView* view;
-        QToolBar* toolbar;
         QMenu* menu;
 
         QAction* start;

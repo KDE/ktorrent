@@ -101,7 +101,7 @@ namespace kt
         tool_views->addTab(qm, i18n("Queue Manager"), QStringLiteral("kt-queue-manager"), i18n("Widget to manage the torrent queue"));
 
         magnet_view = new MagnetView(core->getMagnetManager(), this);
-        tool_views->addTab(magnet_view, i18n("Magnet"), QStringLiteral("kt-magnet"),
+        tool_views->addTab(magnet_view, i18n("Magnet Downloader"), QStringLiteral("kt-magnet"),
                            i18n("Displays the currently downloading magnet links"));
 
         QueueManager* qman = core->getQueueManager();

@@ -41,8 +41,7 @@ namespace kt
 {
 
 
-
-
+#if 0 //KF5
     static void FillAndFrameBlack(QImage* image, const QColor& color, int size)
     {
         image->fill(color.rgb());
@@ -55,8 +54,6 @@ namespace kt
         }
     }
 
-
-
     static void InitializeToolTipImages(ChunkBar* bar)
     {
         static bool images_initialized = false;
@@ -64,7 +61,6 @@ namespace kt
             return;
         images_initialized = true;
 
-#if 0 //KF5
         Q3MimeSourceFactory* factory = Q3MimeSourceFactory::defaultFactory();
 
         QImage excluded(16, 16, QImage::Format_RGB32);
@@ -78,8 +74,8 @@ namespace kt
         QImage unavailable(16, 16, QImage::Format_RGB32);
         FillAndFrameBlack(&unavailable, bar->palette().color(QPalette::Active, QPalette::Base), 16);
         factory->setImage("unavailable_color", unavailable);
-#endif
     }
+#endif
 
     ChunkBar::ChunkBar(QWidget* parent)
         : QFrame(parent)
@@ -89,11 +85,12 @@ namespace kt
         setLineWidth(3);
         setMidLineWidth(3);
 
+#if 0 //KF5
         InitializeToolTipImages(this);
         setToolTip(i18n("<img src=\"available_color\">&nbsp; - Downloaded Chunks<br>"
                         "<img src=\"unavailable_color\">&nbsp; - Chunks to Download<br>"
                         "<img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
-
+#endif
     }
 
 
@@ -127,15 +124,11 @@ namespace kt
     void ChunkBar::drawContents(QPainter* p)
     {
         // first draw background
-        if (isEnabled())
-            p->setBrush(palette().color(QPalette::Active, QPalette::Base));
-        else
-            p->setBrush(palette().color(QPalette::Inactive, QPalette::Base));
-
-        p->setPen(Qt::NoPen);
-        //p->setPen(QPen(Qt::red));
+        bool enable = isEnabled();
+        p->setBrush(palette().color(enable?QPalette::Active:QPalette::Inactive, QPalette::Base));
+        p->setPen(Qt::NoPen); //p->setPen(QPen(Qt::red));
         p->drawRect(contentsRect());
-        if (isEnabled())
+        if (enable)
             p->drawPixmap(contentsRect(), pixmap);
     }
 
