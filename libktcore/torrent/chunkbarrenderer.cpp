@@ -28,7 +28,7 @@ namespace kt
 {
     struct Range
     {
-        int first, last;
+        Uint32 first, last;
         int fac;
     };
 
@@ -58,7 +58,7 @@ namespace kt
 
         QVector<Range> rs;
 
-        for (int i = 0; i < (int)bs.getNumBits(); i++)
+        for (Uint32 i = 0; i < bs.getNumBits(); i++)
         {
             if (!bs.get(i))
                 continue;
@@ -71,7 +71,7 @@ namespace kt
             else
             {
                 Range& l = rs.last();
-                if (l.last == int(i - 1))
+                if (l.last == i - 1)
                 {
                     l.last = i;
                 }
@@ -99,7 +99,7 @@ namespace kt
         double chunks_per_pixel = (double)bs.getNumBits() / w;
         QVector<Range> rs;
 
-        for (int i = 0; i < w; i++)
+        for (Uint32 i = 0; i < w; i++)
         {
             Uint32 num_dl = 0;
             Uint32 jStart = (Uint32)(i * chunks_per_pixel);
@@ -120,7 +120,7 @@ namespace kt
             else
             {
                 Range& l = rs.last();
-                if (l.last == int(i - 1) && l.fac == fac)
+                if (l.last == i - 1 && l.fac == fac)
                 {
                     l.last = i;
                 }
