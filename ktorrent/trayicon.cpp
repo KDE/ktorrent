@@ -446,7 +446,7 @@ namespace kt
 
     void TrayIcon::suspendStateChanged(bool suspended)
     {
-        queue_suspended = queue_suspended;
+        queue_suspended = suspended;
         if (status_notifier_item)
             status_notifier_item->setOverlayIconByName(suspended?QStringLiteral("kt-pause"):QString());
     }

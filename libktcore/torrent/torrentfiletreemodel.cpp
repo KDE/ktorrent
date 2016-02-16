@@ -374,22 +374,15 @@ namespace kt
             return 0;
 
         if (!parent.isValid())
-        {
             return 1;
-        }
-        else
-        {
-            Node* n = (Node*)parent.internalPointer();
-            return n->children.count();
-        }
+
+        Node* n = (Node*)parent.internalPointer();
+        return n->children.count();
     }
 
     int TorrentFileTreeModel::columnCount(const QModelIndex& parent) const
     {
-        if (!parent.isValid())
-            return 2;
-        else
-            return 2;
+        return 2;
     }
 
     QVariant TorrentFileTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
