@@ -22,7 +22,7 @@
 
 #include <klocalizedstring.h>
 #include <QIcon>
-
+#include <QDebug>
 #include <QTreeView>
 #include <QSortFilterProxyModel>
 #include <bcodec/bdecoder.h>
@@ -436,6 +436,19 @@ namespace kt
         }
         else if (role == Qt::DecorationRole && index.column() == 0)
         {
+            if (!n->file && n->children.count() <= 0)
+            {
+                qWarning()<<tc;
+                qWarning()<<tc->getStats().torrent_name;
+            }
+
+            if (n->file)
+            {
+                qWarning()<<n;
+                qWarning()<<n->file;
+                qWarning()<<n->file->getPath();
+            }
+
             // if this is an empty folder then we are in the single file case
             if (!n->file)
                 return n->children.count() > 0 ?

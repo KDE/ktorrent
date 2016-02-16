@@ -65,7 +65,17 @@ namespace kt
         {
             QFileInfo fileInfo(dataDirPath);
             if (!fileInfo.exists())
-                fileInfo.dir().mkdir(fileInfo.fileName());
+            {
+                QString ktorrent4DataFolder = QDir::homePath() + QLatin1String("/.kde/share/apps/ktorrent");
+                if (!QFile::exists(ktorrent4DataFolder))
+                {
+                    ktorrent4DataFolder = QDir::homePath() + QLatin1String("/.kde4/share/apps/ktorrent");
+                    if (!QFile::exists(ktorrent4DataFolder))
+                        ktorrent4DataFolder.clear();
+                }
+                if (ktorrent4DataFolder.isEmpty() || !QFile::rename(ktorrent4DataFolder, dataDirPath))
+                    fileInfo.dir().mkdir(fileInfo.fileName());
+            }
         }
         //if (!str.endsWith(bt::DirSeparator()))
             return dataDirPath + bt::DirSeparator();
