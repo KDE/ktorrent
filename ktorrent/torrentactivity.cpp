@@ -56,8 +56,7 @@ namespace kt
         setXMLGUIFile(QStringLiteral("kttorrentactivityui.rc"));
         QWidget* view_part = new QWidget(this);
         view = new View(core, gui, view_part);
-        connect(view, SIGNAL(currentTorrentChanged(bt::TorrentInterface*)),
-                this, SLOT(currentTorrentChanged(bt::TorrentInterface*)));
+        connect(view, &View::currentTorrentChanged, this, &TorrentActivity::currentTorrentChanged);
         search_bar = new TorrentSearchBar(view, view_part);
         search_bar->setHidden(true);
 
@@ -80,8 +79,8 @@ namespace kt
 
         group_view = new GroupView(core->getGroupManager(), view, core, gui, hsplit);
         group_view->setupActions(part()->actionCollection());
-        connect(group_view, SIGNAL(currentGroupChanged(kt::Group*)), group_switcher, SLOT(currentGroupChanged(kt::Group*)));
-        connect(group_view, SIGNAL(openTab(Group*)), group_switcher, SLOT(addTab(Group*)));
+        connect(group_view, &GroupView::currentGroupChanged, group_switcher, &GroupSwitcher::currentGroupChanged);
+        connect(group_view, &GroupView::openTab, group_switcher, &GroupSwitcher::addTab);
 
         setupActions();
 
@@ -96,8 +95,8 @@ namespace kt
         layout->addWidget(tool_views);
 
         qm = new QueueManagerWidget(core->getQueueManager(), this);
-        connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), qm, SLOT(onTorrentAdded(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), qm, SLOT(onTorrentRemoved(bt::TorrentInterface*)));
+        connect(core, &Core::torrentAdded, qm, &QueueManagerWidget::onTorrentAdded);
+        connect(core, &Core::torrentRemoved, qm, &QueueManagerWidget::onTorrentRemoved);
         tool_views->addTab(qm, i18n("Queue Manager"), QStringLiteral("kt-queue-manager"), i18n("Widget to manage the torrent queue"));
 
         magnet_view = new MagnetView(core->getMagnetManager(), this);
@@ -105,7 +104,7 @@ namespace kt
                            i18n("Displays the currently downloading magnet links"));
 
         QueueManager* qman = core->getQueueManager();
-        connect(qman, SIGNAL(suspendStateChanged(bool)), this, SLOT(onSuspendedStateChanged(bool)));
+        connect(qman, &QueueManager::suspendStateChanged, this, &TorrentActivity::onSuspendedStateChanged);
 
         queue_suspend_action->setChecked(core->getSuspendedState());
     }
@@ -119,12 +118,12 @@ namespace kt
         KActionCollection* ac = part()->actionCollection();
         start_all_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-start-all")), i18n("Start All"), this);
         start_all_action->setToolTip(i18n("Start all torrents"));
-        connect(start_all_action, SIGNAL(triggered()), this, SLOT(startAllTorrents()));
+        connect(start_all_action, &QAction::triggered, this, &TorrentActivity::startAllTorrents);
         ac->addAction(QStringLiteral("start_all"), start_all_action);
 
         stop_all_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-stop-all")), i18n("Stop All"), this);
         stop_all_action->setToolTip(i18n("Stop all torrents"));
-        connect(stop_all_action, SIGNAL(triggered()), this, SLOT(stopAllTorrents()));
+        connect(stop_all_action, &QAction::triggered, this, &TorrentActivity::stopAllTorrents);
         ac->addAction(QStringLiteral("stop_all"), stop_all_action);
 
         queue_suspend_action = new KToggleAction(QIcon::fromTheme(QStringLiteral("kt-pause")), i18n("Suspend Torrents"), this);
@@ -132,16 +131,16 @@ namespace kt
         ac->setDefaultShortcut(queue_suspend_action, QKeySequence(Qt::SHIFT + Qt::Key_P));
         queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
         //KF5 queue_suspend_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_P));
-        connect(queue_suspend_action, SIGNAL(toggled(bool)), this, SLOT(suspendQueue(bool)));
+        connect(queue_suspend_action, &KToggleAction::toggled, this, &TorrentActivity::suspendQueue);
 
         show_group_view_action = new KToggleAction(QIcon::fromTheme(QStringLiteral("view-list-tree")), i18n("Group View"), this);
         show_group_view_action->setToolTip(i18n("Show or hide the group view"));
-        connect(show_group_view_action, SIGNAL(toggled(bool)), this, SLOT(setGroupViewVisible(bool)));
+        connect(show_group_view_action, &QAction::toggled, this, &TorrentActivity::setGroupViewVisible);
         ac->addAction(QStringLiteral("show_group_view"), show_group_view_action);
 
         filter_torrent_action = new QAction(i18n("Filter Torrents"), this);
         filter_torrent_action->setToolTip(i18n("Filter torrents based on filter string"));
-        connect(filter_torrent_action, SIGNAL(triggered(bool)), search_bar, SLOT(showBar()));
+        connect(filter_torrent_action, &QAction::triggered, search_bar, &TorrentSearchBar::showBar);
         ac->addAction(QStringLiteral("filter_torrent"), filter_torrent_action);
         ac->setDefaultShortcut(filter_torrent_action, QKeySequence(Qt::CTRL + Qt::Key_F));
 

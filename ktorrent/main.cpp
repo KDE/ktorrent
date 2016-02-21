@@ -200,7 +200,7 @@ int main(int argc, char** argv)
         bt::SignalCatcher catcher;
         catcher.catchSignal(SIGINT);
         catcher.catchSignal(SIGTERM);
-        QObject::connect(&catcher, SIGNAL(triggered()), &app, SLOT(quit()));
+        QObject::connect(&catcher, &bt::SignalCatcher::triggered, &app, &QApplication::quit);
 #endif
 
         bt::InitLog(kt::DataDir(kt::CreateIfNotExists) + QLatin1String("log"), true, true, true);

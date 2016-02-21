@@ -55,7 +55,7 @@ namespace kt
         ordering = false;
 
         QNetworkConfigurationManager* networkConfigurationManager = new QNetworkConfigurationManager(this);
-        connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SLOT(onOnlineStateChanged(bool)));
+        connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &QueueManager::onOnlineStateChanged);
     }
 
 

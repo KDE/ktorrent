@@ -54,7 +54,7 @@ namespace kt
         pex->setChecked(!s.priv_torrent && tc->isFeatureEnabled(bt::UT_PEX_FEATURE));
 
         superseeding->setChecked(s.superseeding);
-        connect(move_on_completion_enabled, SIGNAL(toggled(bool)), this, SLOT(moveOnCompletionEnabled(bool)));
+        connect(move_on_completion_enabled, &QCheckBox::toggled, this, &PropertiesDlg::moveOnCompletionEnabled);
     }
 
     PropertiesDlg::~PropertiesDlg()

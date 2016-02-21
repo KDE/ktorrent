@@ -40,7 +40,7 @@ namespace kt
         hide_search_bar = new QToolButton(this);
         hide_search_bar->setIcon(QIcon::fromTheme("window-close"));
         hide_search_bar->setAutoRaise(true);
-        connect(hide_search_bar, SIGNAL(clicked(bool)), this, SLOT(hideBar()));
+        connect(hide_search_bar, &QToolButton::clicked, this, &TorrentSearchBar::hideBar);
         connect(this, SIGNAL(filterBarHidden(QString)), view, SLOT(setFilterString(QString)));
 
         search_bar = new QLineEdit(this);

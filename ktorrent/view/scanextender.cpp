@@ -43,8 +43,8 @@ namespace kt
         KGuiItem::assign(cancel_button, KStandardGuiItem::cancel());
         KGuiItem::assign(close_button, KStandardGuiItem::close());
         close_button->setEnabled(false);
-        connect(close_button, SIGNAL(clicked()), this, SLOT(closeRequested()));
-        connect(cancel_button, SIGNAL(clicked()), this, SLOT(cancelPressed()));
+        connect(close_button, &QPushButton::clicked, this, &ScanExtender::closeRequested);
+        connect(cancel_button, &QPushButton::clicked, this, &ScanExtender::cancelPressed);
 
         progress_bar->setFormat(i18n("Checked %v of %m chunks"));
         progress_bar->setValue(0);

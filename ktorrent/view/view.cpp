@@ -88,7 +88,7 @@ namespace kt
         setDragDropMode(DragDrop);
         setUniformRowHeights(true);
 
-        connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu(const QPoint&)));
+        connect(this, &View::customContextMenuRequested, this, &View::showMenu);
 
         header()->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(header(), SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showHeaderMenu(const QPoint&)));
@@ -106,7 +106,7 @@ namespace kt
             column_action_list.append(act);
         }
 
-        connect(header_menu, SIGNAL(triggered(QAction*)), this, SLOT(onHeaderMenuItemTriggered(QAction*)));
+        connect(header_menu, &QMenu::triggered, this, &View::onHeaderMenuItemTriggered);
 
         setModel(model);
         setSelectionModel(selection_model);
@@ -114,8 +114,8 @@ namespace kt
                 this, SLOT(onCurrentItemChanged(const QModelIndex&, const QModelIndex&)));
         connect(selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
                 this, SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection)));
-        connect(model, SIGNAL(sorted()), selection_model, SLOT(sorted()));
-        connect(this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(onDoubleClicked(QModelIndex)));
+        connect(model, &ViewModel::sorted, selection_model, &ViewSelectionModel::sorted);
+        connect(this, &View::doubleClicked, this, &View::onDoubleClicked);
 
         delegate = new ViewDelegate(core, model, this);
         setItemDelegate(delegate);
@@ -140,97 +140,97 @@ namespace kt
 
         start_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18nc("@action Start all selected torrents in the current tab", "Start"), this);
         start_torrent->setToolTip(i18n("Start all selected torrents in the current tab"));
-        connect(start_torrent, SIGNAL(triggered()), this, SLOT(startTorrents()));
+        connect(start_torrent, &QAction::triggered, this, &View::startTorrents);
         ac->addAction(QStringLiteral("start"), start_torrent);
         ac->setDefaultShortcut(start_torrent, QKeySequence(Qt::CTRL + Qt::Key_S));
 
         force_start_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18nc("@action Force start all selected torrents in the current tab", "Force Start"), this);
         force_start_torrent->setToolTip(i18n("Force start all selected torrents in the current tab"));
-        connect(force_start_torrent, SIGNAL(triggered()), this, SLOT(forceStartTorrents()));
+        connect(force_start_torrent, &QAction::triggered, this, &View::forceStartTorrents);
         ac->addAction(QStringLiteral("force_start"), force_start_torrent);
 
         stop_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-stop")), i18nc("@action Stop all selected torrents in the current tab", "Stop"), this);
         stop_torrent->setToolTip(i18n("Stop all selected torrents in the current tab"));
-        connect(stop_torrent, SIGNAL(triggered()), this, SLOT(stopTorrents()));
+        connect(stop_torrent, &QAction::triggered, this, &View::stopTorrents);
         ac->addAction(QStringLiteral("stop"), stop_torrent);
         ac->setDefaultShortcut(stop_torrent, QKeySequence(Qt::CTRL + Qt::Key_H));
 
         pause_torrent = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-pause")), i18nc("@action Pause all selected torrents in the current tab", "Pause"), this);
         pause_torrent->setToolTip(i18n("Pause all selected torrents in the current tab"));
-        connect(pause_torrent, SIGNAL(triggered()), this, SLOT(pauseTorrents()));
+        connect(pause_torrent, &QAction::triggered, this, &View::pauseTorrents);
         ac->addAction(QStringLiteral("pause"), pause_torrent);
 
         remove_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-remove")), i18nc("@action Remove all selected torrents in the current tab", "Remove"), this);
         remove_torrent->setToolTip(i18n("Remove all selected torrents in the current tab"));
-        connect(remove_torrent, SIGNAL(triggered()), this, SLOT(removeTorrents()));
+        connect(remove_torrent, &QAction::triggered, this, &View::removeTorrents);
         ac->addAction(QStringLiteral("remove"), remove_torrent);
         ac->setDefaultShortcut(remove_torrent, QKeySequence(Qt::SHIFT + Qt::Key_Delete));
 
         start_all = new QAction(QIcon::fromTheme(QStringLiteral("kt-start-all")), i18nc("@action Start all torrents in the current tab", "Start All"), this);
         start_all->setToolTip(i18n("Start all torrents in the current tab"));
-        connect(start_all, SIGNAL(triggered()), this, SLOT(startAllTorrents()));
+        connect(start_all, &QAction::triggered, this, &View::startAllTorrents);
         ac->addAction(QStringLiteral("start_all"), start_all);
         ac->setDefaultShortcut(start_all, QKeySequence(Qt::SHIFT + Qt::Key_S));
 
         stop_all = new QAction(QIcon::fromTheme(QStringLiteral("kt-stop-all")), i18nc("@action Stop all torrents in the current tab", "Stop All"), this);
         stop_all->setToolTip(i18n("Stop all torrents in the current tab"));
-        connect(stop_all, SIGNAL(triggered()), this, SLOT(stopAllTorrents()));
+        connect(stop_all, &QAction::triggered, this, &View::stopAllTorrents);
         ac->addAction(QStringLiteral("stop_all"), stop_all);
         ac->setDefaultShortcut(stop_all, QKeySequence(Qt::SHIFT + Qt::Key_H));
 
         remove_torrent_and_data = new QAction(QIcon::fromTheme(QStringLiteral("kt-remove")), i18n("Remove Torrent and Data"), this);
-        connect(remove_torrent_and_data, SIGNAL(triggered()), this, SLOT(removeTorrentsAndData()));
+        connect(remove_torrent_and_data, &QAction::triggered, this, &View::removeTorrentsAndData);
         ac->addAction(QStringLiteral("view_remove_torrent_and_data"), remove_torrent_and_data);
         ac->setDefaultShortcut(remove_torrent_and_data, QKeySequence(Qt::CTRL + Qt::Key_Delete));
 
         rename_torrent = new QAction(i18n("Rename Torrent"), this);
-        connect(rename_torrent, SIGNAL(triggered()), this, SLOT(renameTorrent()));
+        connect(rename_torrent, &QAction::triggered, this, &View::renameTorrent);
         ac->addAction(QStringLiteral("view_rename_torrent"), rename_torrent);
 
         add_peers = new QAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add Peers"), this);
-        connect(add_peers, SIGNAL(triggered()), this, SLOT(addPeers()));
+        connect(add_peers, &QAction::triggered, this, &View::addPeers);
         ac->addAction(QStringLiteral("view_add_peers"), add_peers);
 
         manual_announce = new QAction(i18n("Manual Announce"), this);
-        connect(manual_announce, SIGNAL(triggered()), this, SLOT(manualAnnounce()));
+        connect(manual_announce, &QAction::triggered, this, &View::manualAnnounce);
         ac->addAction(QStringLiteral("view_announce"), manual_announce);
         ac->setDefaultShortcut(manual_announce, QKeySequence(Qt::SHIFT + Qt::Key_A));
 
         do_scrape = new QAction(i18n("Scrape"), this);
-        connect(do_scrape, SIGNAL(triggered()), this, SLOT(scrape()));
+        connect(do_scrape, &QAction::triggered, this, &View::scrape);
         ac->addAction(QStringLiteral("view_scrape"), do_scrape);
 
         preview = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Preview"), this);
-        connect(preview, SIGNAL(triggered()), this, SLOT(previewTorrents()));
+        connect(preview, &QAction::triggered, this, &View::previewTorrents);
         ac->addAction(QStringLiteral("view_preview"), preview);
 
         data_dir = new QAction(QIcon::fromTheme(QStringLiteral("folder-open")), i18n("Data Directory"), this);
-        connect(data_dir, SIGNAL(triggered()), this, SLOT(openDataDir()));
+        connect(data_dir, &QAction::triggered, this, &View::openDataDir);
         ac->addAction(QStringLiteral("view_open_data_dir"), data_dir);
 
         tor_dir = new QAction(QIcon::fromTheme(QStringLiteral("folder-open")), i18n("Temporary Directory"), this);
-        connect(tor_dir, SIGNAL(triggered()), this, SLOT(openTorDir()));
+        connect(tor_dir, &QAction::triggered, this, &View::openTorDir);
         ac->addAction(QStringLiteral("view_open_tmp_dir"), tor_dir);
 
         move_data = new QAction(i18n("Move Data"), this);
-        connect(move_data, SIGNAL(triggered()), this, SLOT(moveData()));
+        connect(move_data, &QAction::triggered, this, &View::moveData);
         ac->addAction(QStringLiteral("view_move_data"), move_data);
 
         torrent_properties = new QAction(i18n("Settings"), this);
-        connect(torrent_properties, SIGNAL(triggered()), this, SLOT(showProperties()));
+        connect(torrent_properties, &QAction::triggered, this, &View::showProperties);
         ac->addAction(QStringLiteral("view_torrent_properties"), torrent_properties);
 
         remove_from_group = new QAction(i18n("Remove from Group"), this);
-        connect(remove_from_group, SIGNAL(triggered()), this, SLOT(removeFromGroup()));
+        connect(remove_from_group, &QAction::triggered, this, &View::removeFromGroup);
         ac->addAction(QStringLiteral("view_remove_from_group"), remove_from_group);
 
         add_to_new_group = new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Group"), this);
-        connect(add_to_new_group, SIGNAL(triggered()), this, SLOT(addToNewGroup()));
+        connect(add_to_new_group, &QAction::triggered, this, &View::addToNewGroup);
         ac->addAction(QStringLiteral("view_add_to_new_group"), add_to_new_group);
 
         check_data = new QAction(QIcon::fromTheme(QStringLiteral("kt-check-data")), i18n("Check Data"), this);
         check_data->setToolTip(i18n("Check all the data of a torrent"));
-        connect(check_data, SIGNAL(triggered()), this, SLOT(checkData()));
+        connect(check_data, &QAction::triggered, this, &View::checkData);
         ac->addAction(QStringLiteral("check_data"), check_data);
         ac->setDefaultShortcut(check_data, QKeySequence(Qt::SHIFT + Qt::Key_C));
 
@@ -240,7 +240,7 @@ namespace kt
             if (!i->second->isStandardGroup())
             {
                 QAction * act = new QAction(QIcon::fromTheme(QStringLiteral("application-x-bittorrent")), i->first, this);
-                connect(act, SIGNAL(triggered()), this, SLOT(addToGroupItemTriggered()));
+                connect(act, &QAction::triggered, this, &View::addToGroupItemTriggered);
                 group_actions.insert(i->second, act);
             }
         }
@@ -252,16 +252,16 @@ namespace kt
         ac->addAction(QStringLiteral("GroupsSubMenu"), groups_menu);
 
         copy_url = new QAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Torrent URL"), this);
-        connect(copy_url, SIGNAL(triggered()), this, SLOT(copyTorrentURL()));
+        connect(copy_url, &QAction::triggered, this, &View::copyTorrentURL);
         ac->addAction(QStringLiteral("view_copy_url"), copy_url);
 
         export_torrent = new QAction(QIcon::fromTheme(QStringLiteral("document-export")), i18n("Export Torrent"), this);
-        connect(export_torrent, SIGNAL(triggered()), this, SLOT(exportTorrent()));
+        connect(export_torrent, &QAction::triggered, this, &View::exportTorrent);
         ac->addAction(QStringLiteral("view_export_torrent"), export_torrent);
 
         speed_limits = new QAction(QIcon::fromTheme(QStringLiteral("kt-speed-limits")), i18n("Speed Limits"), this);
         speed_limits->setToolTip(i18n("Set the speed limits of individual torrents"));
-        connect(speed_limits, SIGNAL(triggered()), this, SLOT(speedLimits()));
+        connect(speed_limits, &QAction::triggered, this, &View::speedLimits);
         ac->addAction(QStringLiteral("speed_limits"), speed_limits);
         ac->setDefaultShortcut(speed_limits, QKeySequence(Qt::CTRL + Qt::Key_L));
     }
@@ -786,7 +786,7 @@ namespace kt
     {
         gui->getTorrentActivity()->part()->unplugActionList("view_groups_list");
         QAction * act = new QAction(QIcon::fromTheme("application-x-bittorrent"), g->groupName(), this);
-        connect(act, SIGNAL(triggered()), this, SLOT(addToGroupItemTriggered()));
+        connect(act, &QAction::triggered, this, &View::addToGroupItemTriggered);
         group_actions.insert(g, act);
         gui->getTorrentActivity()->part()->plugActionList("view_groups_list", group_actions.values());
     }

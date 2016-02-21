@@ -57,28 +57,17 @@ namespace kt
         , queue_suspended(false)
         , menu(0)
     {
-        connect(core, SIGNAL(openedSilently(bt::TorrentInterface*)),
-                this, SLOT(torrentSilentlyOpened(bt::TorrentInterface*)));
-        connect(core, SIGNAL(finished(bt::TorrentInterface*)),
-                this, SLOT(finished(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentStoppedByError(bt::TorrentInterface*, QString)),
-                this, SLOT(torrentStoppedByError(bt::TorrentInterface*, QString)));
-        connect(core, SIGNAL(maxShareRatioReached(bt::TorrentInterface*)),
-                this, SLOT(maxShareRatioReached(bt::TorrentInterface*)));
-        connect(core, SIGNAL(maxSeedTimeReached(bt::TorrentInterface*)),
-                this, SLOT(maxSeedTimeReached(bt::TorrentInterface*)));
-        connect(core, SIGNAL(corruptedData(bt::TorrentInterface*)),
-                this, SLOT(corruptedData(bt::TorrentInterface*)));
-        connect(core, SIGNAL(queuingNotPossible(bt::TorrentInterface*)),
-                this, SLOT(queuingNotPossible(bt::TorrentInterface*)));
-        connect(core, SIGNAL(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)),
-                this, SLOT(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)));
-        connect(core, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
-                this, SLOT(lowDiskSpace(bt::TorrentInterface*, bool)));
-        connect(core, SIGNAL(canNotLoadSilently(QString)),
-                this, SLOT(cannotLoadTorrentSilently(QString)));
-        connect(core, SIGNAL(dhtNotEnabled(QString)),
-                this, SLOT(dhtNotEnabled(QString)));
+        connect(core, &Core::openedSilently, this, &TrayIcon::torrentSilentlyOpened);
+        connect(core, &Core::finished, this, &TrayIcon::finished);
+        connect(core, &Core::torrentStoppedByError, this, &TrayIcon::torrentStoppedByError);
+        connect(core, &Core::maxShareRatioReached, this, &TrayIcon::maxShareRatioReached);
+        connect(core, &Core::maxSeedTimeReached, this, &TrayIcon::maxSeedTimeReached);
+        connect(core, &Core::corruptedData, this, &TrayIcon::corruptedData);
+        connect(core, &Core::queuingNotPossible, this, &TrayIcon::queuingNotPossible);
+        connect(core, &Core::canNotStart, this, &TrayIcon::canNotStart);
+        connect(core, &Core::lowDiskSpace, this, &TrayIcon::lowDiskSpace);
+        connect(core, &Core::canNotLoadSilently, this, &TrayIcon::cannotLoadTorrentSilently);
+        connect(core, &Core::dhtNotEnabled, this, &TrayIcon::dhtNotEnabled);
         connect(core->getQueueManager(), SIGNAL(suspendStateChanged(bool)),
                 this, SLOT(suspendStateChanged(bool)));
 
@@ -108,7 +97,7 @@ namespace kt
         }
 
         status_notifier_item = new KStatusNotifierItem(mwnd);
-        connect(status_notifier_item, SIGNAL(secondaryActivateRequested(QPoint)), this, SLOT(secondaryActivate(QPoint)));
+        connect(status_notifier_item, &KStatusNotifierItem::secondaryActivateRequested, this, &TrayIcon::secondaryActivate);
 
         menu = status_notifier_item->contextMenu();
 
@@ -358,8 +347,8 @@ namespace kt
         m_core = core;
         type = t;
         makeMenu();
-        connect(this, SIGNAL(triggered(QAction*)), this, SLOT(onTriggered(QAction*)));
-        connect(this, SIGNAL(aboutToShow()), this, SLOT(update()));
+        connect(this, &SetMaxRate::triggered, this, &SetMaxRate::onTriggered);
+        connect(this, &SetMaxRate::aboutToShow, this, &SetMaxRate::update);
     }
 
     SetMaxRate::~SetMaxRate()

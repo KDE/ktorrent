@@ -39,7 +39,7 @@ DownloadSlot::DownloadSlot(QObject *parent)
     timer = new QTimer(parent);
     timer->setSingleShot(true);
     timer->setInterval(timerDuration);
-    connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+    connect(timer, &QTimer::timeout, this, &DownloadSlot::onTimeout);
 }
 
 DownloadSlot::~DownloadSlot()
@@ -127,8 +127,7 @@ void MagnetManager::addMagnet(const bt::MagnetLink& mlink, const kt::MagnetLinkL
         return; // Already managed, do nothing
 
     MagnetDownloader* md = new MagnetDownloader(mlink, options, this);
-    connect(md, SIGNAL(foundMetadata(bt::MagnetDownloader*, QByteArray)),
-            this, SLOT(onDownloadFinished(bt::MagnetDownloader*, QByteArray)));
+    connect(md, &MagnetDownloader::foundMetadata, this, &MagnetManager::onDownloadFinished);
 
     int updateIndex = 0;
     int updateCount = 0;
@@ -284,7 +283,7 @@ void MagnetManager::setDownloadingSlots(bt::Uint32 count)
             DownloadSlot* slot = new DownloadSlot();
             slot->setTimerDuration(timerDuration);
             freeDownloadingSlots.push_back(slot);
-            connect(slot, SIGNAL(timeout(int)), this, SLOT(onSlotTimeout(int)));
+            connect(slot, &DownloadSlot::timeout, this, &MagnetManager::onSlotTimeout);
         }
         updateIndex = startNextQueuedMagnets();
         updateCount = slotsToAdd;

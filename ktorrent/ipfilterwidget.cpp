@@ -85,13 +85,13 @@ namespace kt
 
     void IPFilterWidget::setupConnections()
     {
-        connect(m_add, SIGNAL(clicked()), this, SLOT(add()));
-        connect(m_close, SIGNAL(clicked()), this, SLOT(accept()));
-        connect(m_clear, SIGNAL(clicked()), this, SLOT(clear()));
-        connect(m_save_as, SIGNAL(clicked()), this, SLOT(save()));
-        connect(m_open, SIGNAL(clicked()), this, SLOT(open()));
-        connect(m_remove, SIGNAL(clicked()), this, SLOT(remove()));
-        connect(this, SIGNAL(closeClicked()), this, SLOT(reject()));
+        connect(m_add, &QPushButton::clicked, this, &IPFilterWidget::add);
+        connect(m_close, &QPushButton::clicked, this, &IPFilterWidget::accept);
+        connect(m_clear, &QPushButton::clicked, this, &IPFilterWidget::clear);
+        connect(m_save_as, &QPushButton::clicked, this, &IPFilterWidget::save);
+        connect(m_open, &QPushButton::clicked, this, &IPFilterWidget::open);
+        connect(m_remove, &QPushButton::clicked, this, &IPFilterWidget::remove);
+        connect(this, &IPFilterWidget::closeClicked, this, &IPFilterWidget::reject);
     }
 
     void IPFilterWidget::add()

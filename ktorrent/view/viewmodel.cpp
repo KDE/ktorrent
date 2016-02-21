@@ -391,8 +391,8 @@ namespace kt
 
     ViewModel::ViewModel(Core* core, View* parent) : QAbstractTableModel(parent), core(core), view(parent)
     {
-        connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(addTorrent(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(removeTorrent(bt::TorrentInterface*)));
+        connect(core, &Core::torrentAdded, this, &ViewModel::addTorrent);
+        connect(core, &Core::torrentRemoved, this, &ViewModel::removeTorrent);
         sort_column = 0;
         sort_order = Qt::AscendingOrder;
         group = 0;

@@ -79,7 +79,7 @@ namespace kt
     {
         //Marker markk("GUI::GUI()");
         part_manager = new KParts::PartManager(this);
-        connect(part_manager, SIGNAL(activePartChanged(KParts::Part*)), this, SLOT(activePartChanged(KParts::Part*)));
+        connect(part_manager, &KParts::PartManager::activePartChanged, this, &GUI::activePartChanged);
         core = new Core(this);
         core->loadTorrents();
 
@@ -87,7 +87,7 @@ namespace kt
 
         central = new CentralWidget(this);
         setCentralWidget(central);
-        connect(central, SIGNAL(changeActivity(Activity*)), this, SLOT(setCurrentActivity(Activity*)));
+        connect(central, &CentralWidget::changeActivity, this, &GUI::setCurrentActivity);
         torrent_activity = new TorrentActivity(core, this, 0);
 
         status_bar = new kt::StatusBar(this);
@@ -103,7 +103,7 @@ namespace kt
         timer.start(Settings::guiUpdateInterval());
 
         applySettings();
-        connect(core, SIGNAL(settingsChanged()), this, SLOT(applySettings()));
+        connect(core, &Core::settingsChanged, this, &GUI::applySettings);
 
         if (Settings::showSystemTrayIcon())
         {
@@ -352,7 +352,7 @@ namespace kt
     {
         //KF5 saveMainWindowSettings(KSharedConfig::openConfig()->group("MainWindow"));
         KEditToolBar dlg(factory());
-        connect(&dlg, SIGNAL(newToolBarConfig()), this, SLOT(newToolBarConfig()));
+        connect(&dlg, &KEditToolBar::newToolBarConfig, this, &GUI::newToolBarConfig);
         dlg.exec();
 
         // Replug action list
@@ -382,7 +382,7 @@ namespace kt
 
         open_silently_action = new QAction(open_action->icon(), i18n("Open Silently"), this);
         open_silently_action->setToolTip(i18n("Open a torrent without asking any questions"));
-        connect(open_silently_action, SIGNAL(triggered()), this, SLOT(openTorrentSilently()));
+        connect(open_silently_action, &QAction::triggered, this, &GUI::openTorrentSilently);
         ac->addAction(QStringLiteral("file_open_silently"), open_silently_action);
 
         KStandardAction::quit(this, SLOT(quit()), ac);
@@ -398,24 +398,24 @@ namespace kt
 
         paste_url_action = new QAction(QIcon::fromTheme(QStringLiteral("document-open-remote")), i18n("Open URL"), this);
         paste_url_action->setToolTip(i18n("Open a URL which points to a torrent, magnet links are supported"));
-        connect(paste_url_action, SIGNAL(triggered()), this, SLOT(pasteURL()));
+        connect(paste_url_action, &QAction::triggered, this, &GUI::pasteURL);
         ac->addAction(QStringLiteral("paste_url"), paste_url_action);
         ac->setDefaultShortcut(paste_url_action, QKeySequence(Qt::CTRL + Qt::Key_P));
 
         ipfilter_action = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("IP Filter"), this);
         ipfilter_action->setToolTip(i18n("Show the list of blocked IP addresses"));
-        connect(ipfilter_action, SIGNAL(triggered()), this, SLOT(showIPFilter()));
+        connect(ipfilter_action, &QAction::triggered, this, &GUI::showIPFilter);
         ac->addAction(QStringLiteral("ipfilter_action"), ipfilter_action);
         ac->setDefaultShortcut(ipfilter_action, QKeySequence(Qt::CTRL + Qt::Key_I));
 
         import_action = new QAction(QIcon::fromTheme("document-import"), i18n("Import Torrent"), this);
         import_action->setToolTip(i18n("Import a torrent"));
-        connect(import_action, SIGNAL(triggered()), this, SLOT(import()));
+        connect(import_action, &QAction::triggered, this, &GUI::import);
         ac->addAction(QStringLiteral("import"), import_action);
         ac->setDefaultShortcut(import_action, QKeySequence(Qt::SHIFT + Qt::Key_I));
 
         show_kt_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-show-hide")), i18n("Show/Hide KTorrent"), this);
-        connect(show_kt_action, SIGNAL(triggered()), this, SLOT(showOrHide()));
+        connect(show_kt_action, &QAction::triggered, this, &GUI::showOrHide);
         ac->addAction(QStringLiteral("show_kt"), show_kt_action);
         // KF5 show_kt_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_T));
 
