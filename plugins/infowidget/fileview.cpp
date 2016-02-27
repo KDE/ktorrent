@@ -27,6 +27,7 @@
 #include <QFileInfo>
 #include <QMenu>
 #include <QLineEdit>
+#include <QDebug>
 
 #include <KRun>
 #include <KMessageBox>
@@ -432,25 +433,67 @@ namespace kt
         bt::TorrentInterface* tc = curr_tc.data();
         const TorrentStats& s = tc->getStats();
 
+        QString pathToOpen;
+        bool isMultimedia = false;
+        bool isPreviewAvailable = false;
+        int downloadPercentage = 0;
+        int fileIndex = 0;
+
         if (s.multi_file_torrent)
         {
             bt::TorrentFileInterface* file = model->indexToFile(proxy_model->mapToSource(index));
             if (!file)
             {
                 // directory
-                QString path = tc->getStats().output_path + model->dirPath(proxy_model->mapToSource(index));
-                new KRun(QUrl::fromLocalFile(path), 0, true);
+                pathToOpen = s.output_path + model->dirPath(proxy_model->mapToSource(index));
             }
             else
             {
-                // file
-                new KRun(QUrl::fromLocalFile(file->getPathOnDisk()), 0, true);
+                isMultimedia = (file->isVideo() || file->isAudio() || file->isMultimedia()) && !file->doNotDownload();
+                if (isMultimedia)
+                {
+                    isPreviewAvailable = file->isPreviewAvailable();
+                    downloadPercentage = file->getDownloadPercentage();
+                    fileIndex = file->getIndex();
+                }
+                pathToOpen = file->getPathOnDisk();
             }
         }
         else
         {
-            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
+            isMultimedia = tc->isMultimedia();
+            isPreviewAvailable = tc->readyForPreview();
+            if (s.total_bytes) downloadPercentage = 100 - 100*s.total_bytes_to_download/s.total_bytes;
+            pathToOpen = s.output_path;
         }
+
+        if (isMultimedia)
+        {
+            static QList<TorrentFileStream::Ptr> streams;
+            bool doStream = false;
+            if (!isPreviewAvailable)
+            {
+                doStream = KMessageBox::Yes==KMessageBox::questionYesNo(this,
+                    i18n("Not enough data downloaded for opening the file.\n\n"
+                    "Enable sequential download mode for it to obtain necessary data with a higher priority?"),
+                    QString(), KStandardGuiItem::yes(), KStandardGuiItem::no());
+            }
+            else if (downloadPercentage < 90)
+            {
+                doStream = true;
+                //doStream = KMessageBox::Yes==KMessageBox::questionYesNo(this, i18n("Enable sequential download mode for this file?"),
+                //    QString(), KStandardGuiItem::yes(), KStandardGuiItem::no(), QStringLiteral("SequentialModeOnFileOpen"));
+            }
+            if (doStream)
+            {
+                streams << tc->createTorrentFileStream(fileIndex, true, 0);
+                if (streams.last().isNull())
+                    streams << tc->createTorrentFileStream(fileIndex, false, 0);
+            }
+            if (!isPreviewAvailable)
+                return;
+        }
+        new KRun(QUrl::fromLocalFile(pathToOpen), 0, true);
     }
 
     void FileView::saveState(KSharedConfigPtr cfg)

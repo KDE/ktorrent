@@ -436,6 +436,7 @@ namespace kt
         }
         else if (role == Qt::DecorationRole && index.column() == 0)
         {
+#if 0
             if (!n->file && n->children.count() <= 0)
             {
                 qWarning()<<tc;
@@ -448,6 +449,7 @@ namespace kt
                 qWarning()<<n->file;
                 qWarning()<<n->file->getPath();
             }
+#endif
 
             // if this is an empty folder then we are in the single file case
             if (!n->file)
