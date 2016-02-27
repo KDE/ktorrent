@@ -74,7 +74,7 @@ namespace kt
         filter->setPlaceholderText(i18n("Filter"));
         filter->setClearButtonEnabled(true);
         filter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        connect(filter, SIGNAL(textChanged(QString)), this, SLOT(setFilter(QString)));
+        connect(filter, &QLineEdit::textChanged, this, &FileView::setFilter);
         filter->hide();
         vbox->addWidget(filter);
         vbox->addWidget(view);
@@ -99,10 +99,8 @@ namespace kt
 
         setupActions();
 
-        connect(view, SIGNAL(customContextMenuRequested(const QPoint&)),
-                this, SLOT(showContextMenu(const QPoint&)));
-        connect(view, SIGNAL(doubleClicked(const QModelIndex&)),
-                this, SLOT(onDoubleClicked(const QModelIndex&)));
+        connect(view, &QTreeView::customContextMenuRequested, this, &FileView::showContextMenu);
+        connect(view, &QTreeView::doubleClicked, this, &FileView::onDoubleClicked);
 
         setEnabled(false);
 
@@ -122,7 +120,7 @@ namespace kt
         download_normal_action = context_menu->addAction(i18n("Download normally"), this, SLOT(downloadNormal()));
         download_last_action = context_menu->addAction(i18n("Download last"), this, SLOT(downloadLast()));
         context_menu->addSeparator();
-        dnd_action = context_menu->addAction(i18n("Do Not Download"), this, SLOT(doNotDownload()));
+        dnd_action = context_menu->addAction(i18n("Do not download"), this, SLOT(doNotDownload()));
         delete_action = context_menu->addAction(i18n("Delete File(s)"), this, SLOT(deleteFiles()));
         context_menu->addSeparator();
         move_files_action = context_menu->addAction(i18n("Move File"), this, SLOT(moveFiles()));
@@ -132,9 +130,9 @@ namespace kt
 
         QActionGroup* ag = new QActionGroup(this);
         show_tree_action = new QAction(QIcon::fromTheme(QStringLiteral("view-list-tree")), i18n("File Tree"), this);
-        connect(show_tree_action, SIGNAL(triggered(bool)), this, SLOT(showTree()));
+        connect(show_tree_action, &QAction::triggered, this, &FileView::showTree);
         show_list_action = new QAction(QIcon::fromTheme(QStringLiteral("view-list-text")), i18n("File List"), this);
-        connect(show_list_action, SIGNAL(triggered(bool)), this, SLOT(showList()));
+        connect(show_list_action, &QAction::triggered, this, &FileView::showList);
         ag->addAction(show_list_action);
         ag->addAction(show_tree_action);
         ag->setExclusive(true);
@@ -145,7 +143,7 @@ namespace kt
 
         show_filter_action = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Show Filter"), this);
         show_filter_action->setCheckable(true);
-        connect(show_filter_action, SIGNAL(toggled(bool)), filter, SLOT(setVisible(bool)));
+        connect(show_filter_action, &QAction::toggled, filter, &QLineEdit::setVisible);
         toolbar->addAction(show_filter_action);
     }
 
@@ -168,19 +166,23 @@ namespace kt
             view->setRootIsDecorated(!show_list_of_files && tc->getStats().multi_file_torrent);
             if (!show_list_of_files)
             {
-                QMap<bt::TorrentInterface*, QByteArray>::iterator i = expanded_state_map.find(tc);
-                if (i != expanded_state_map.end())
+                auto i = expanded_state_map.constFind(tc);
+                if (i != expanded_state_map.constEnd())
                     model->loadExpandedState(proxy_model, view, i.value());
                 else
                     view->expandAll();
             }
         }
 
+#if 0
         if (!header_state_loaded)
         {
             view->resizeColumnToContents(0);
             header_state_loaded = true;
         }
+#else
+        view->resizeColumnToContents(0);
+#endif
     }
 
     void FileView::onMissingFileMarkedDND(bt::TorrentInterface* tc)
@@ -533,8 +535,8 @@ namespace kt
 
         if (!on)
         {
-            QMap<bt::TorrentInterface*, QByteArray>::iterator i = expanded_state_map.find(tc);
-            if (i != expanded_state_map.end())
+            auto i = expanded_state_map.constFind(tc);
+            if (i != expanded_state_map.constEnd())
                 model->loadExpandedState(proxy_model, view, i.value());
             else
                 view->expandAll();
