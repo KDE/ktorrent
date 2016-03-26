@@ -124,10 +124,23 @@ namespace kt
         core->startUpdateTimer();
     }
 
-    GUI:: ~GUI()
+    GUI::~GUI()
     {
         delete core;
     }
+
+    bool GUI::event(QEvent *e)
+    {
+        if (e->type() == QEvent::DeferredDelete)
+        {
+            //HACK to prevent ktorrent from crashing on logout/shotdown (when launched e.g. via alt+f2)
+            delete core; core = 0;
+            return true;
+        }
+
+        return KParts::MainWindow::event(e);
+    }
+
 
     QSize GUI::sizeHint() const
     {
@@ -201,7 +214,7 @@ namespace kt
             QList<KParts::Part*> parts = part_manager->parts();
             foreach (KParts::Part* part, parts)
             {
-                if (part->domDocument().documentElement().attribute("name") == p->parentPart())
+                if (part->domDocument().documentElement().attribute(QStringLiteral("name")) == p->parentPart())
                 {
                     part->insertChildClient(p);
                     break;
@@ -221,7 +234,7 @@ namespace kt
             QList<KParts::Part*> parts = part_manager->parts();
             foreach (KParts::Part* part, parts)
             {
-                if (part->domDocument().documentElement().attribute("name") == p->parentPart())
+                if (part->domDocument().documentElement().attribute(QStringLiteral("name")) == p->parentPart())
                 {
                     part->removeChildClient(p);
                     break;

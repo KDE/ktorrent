@@ -46,24 +46,26 @@ namespace kt
         Q_OBJECT
     public:
         GUI();
-        virtual ~GUI();
+        ~GUI();
 
         DBus* getDBusInterface() {return dbus_iface;}
 
         // Stuff implemented from GUIInterface
-        virtual KMainWindow* getMainWindow() {return this;}
-        virtual void addPrefPage(PrefPageInterface* page);
-        virtual void removePrefPage(PrefPageInterface* page);
-        virtual void mergePluginGui(Plugin* p);
-        virtual void removePluginGui(Plugin* p);
-        virtual void errorMsg(const QString& err);
-        virtual void errorMsg(KIO::Job* j);
-        virtual void infoMsg(const QString& info);
-        virtual StatusBarInterface* getStatusBar();
-        virtual void addActivity(Activity* act);
-        virtual void removeActivity(Activity* act);
-        virtual TorrentActivityInterface* getTorrentActivity();
-        virtual QSize sizeHint() const;
+        KMainWindow* getMainWindow() {return this;}
+        void addPrefPage(PrefPageInterface* page);
+        void removePrefPage(PrefPageInterface* page);
+        void mergePluginGui(Plugin* p);
+        void removePluginGui(Plugin* p);
+        void errorMsg(const QString& err);
+        void errorMsg(KIO::Job* j);
+        void infoMsg(const QString& info);
+        StatusBarInterface* getStatusBar();
+        void addActivity(Activity* act);
+        void removeActivity(Activity* act);
+        TorrentActivityInterface* getTorrentActivity();
+        QSize sizeHint() const;
+
+        bool event(QEvent *e);
 
         /**
         * Create a XML GUI container (menu or toolbar)
@@ -89,7 +91,7 @@ namespace kt
         void setPasteDisabled(bool on);
 
         /// Set the current activity
-        virtual void setCurrentActivity(Activity* act);
+        void setCurrentActivity(Activity* act);
 
     private slots:
         void createTorrent();
@@ -114,9 +116,9 @@ namespace kt
     private:
         void setupActions();
 
-        virtual void loadState(KSharedConfigPtr cfg);
-        virtual void saveState(KSharedConfigPtr cfg);
-        virtual bool queryClose();
+        void loadState(KSharedConfigPtr cfg);
+        void saveState(KSharedConfigPtr cfg);
+        bool queryClose();
 
     private:
         Core* core;
