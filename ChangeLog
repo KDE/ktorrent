@@ -2,6 +2,7 @@ Changes in 5.0:
 - Port to KF5/Qt5: QHttp-based tracker communication was dropped in favour of KIO-based one
 - fix issues found by Coverity static analyzer
 - improve naming of few UI items
+- initiate sequential download of media content automatically when it is opened from filelist view
 
 Changes in 4.4:
 - Fix typo in generalpref.ui (305383)
