@@ -83,7 +83,7 @@ namespace kt
 
         data_dir = Settings::tempDir();
         bool dd_not_exist = !bt::Exists(data_dir);
-        if (data_dir == QString::null || dd_not_exist)
+        if (data_dir.isEmpty() || dd_not_exist)
         {
             data_dir = kt::DataDir();
             if (dd_not_exist)

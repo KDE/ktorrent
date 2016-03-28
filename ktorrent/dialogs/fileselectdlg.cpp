@@ -179,11 +179,13 @@ namespace kt
     {
         QStringList pe_ex;
 
-        QString cn = m_completedLocation->url().toLocalFile() + '/';
+        QString cn = m_completedLocation->url().toLocalFile();
+        if (!cn.endsWith('/')) cn += '/';
         if (m_moveCompleted->isChecked() && !cn.isEmpty())
             move_on_completion_location_history.insert(cn);
 
-        QString dn = m_downloadLocation->url().toLocalFile() + '/';
+        QString dn = m_downloadLocation->url().toLocalFile();
+        if (!dn.endsWith('/')) dn += '/';
         if (!dn.isEmpty())
             download_location_history.insert(dn);
 

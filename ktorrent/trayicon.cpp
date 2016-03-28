@@ -142,12 +142,10 @@ namespace kt
 
         status_notifier_item->setStatus(core->getQueueManager()->getNumRunning(QueueManager::DOWNLOADS) > 0 ?
                                         KStatusNotifierItem::Active : KStatusNotifierItem::Passive);
-        QString tip = i18n("<table>"
-                           "<tr><td>Download&nbsp;speed:</td><td><b>%1</b></td></tr>"
-                           "<tr><td>Upload&nbsp;speed:</td><td><b>%2</b></td></tr>"
-                           "<tr><td>Received:</td><td><b>%3</b></td></tr>"
-                           "<tr><td>Transmitted:</td><td><b>%4</b></td></tr>"
-                           "</table>",
+        QString tip = i18n("Download speed: <b>%1</b><br/>"
+                           "Upload speed: <b>%2</b><br/>"
+                           "Received: <b>%3</b><br/>"
+                           "Transmitted: <b>%4</b>",
                            BytesPerSecToString((double)stats.download_speed),
                            BytesPerSecToString((double)stats.upload_speed),
                            BytesToString(stats.bytes_downloaded),
