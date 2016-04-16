@@ -86,21 +86,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="kcfg_showSystemTrayIcon">
      <property name="title">
       <string>System Tray Icon</string>
      </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
      <layout class="QVBoxLayout">
-      <item>
-       <widget class="QCheckBox" name="kcfg_showSystemTrayIcon">
-        <property name="toolTip">
-         <string>Whether or not to show an icon in the system tray.</string>
-        </property>
-        <property name="text">
-         <string>Show system tray icon</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QCheckBox" name="kcfg_showPopups">
         <property name="toolTip">
