@@ -244,10 +244,7 @@
 			<default>0</default>
 			<min>0</min>
 		</entry>
-		<entry name="networkInterface" type="Int">
-			<default>0</default>
-			<min>0</min>
-			<max>255</max>
+		<entry name="networkInterface" type="String">
 		</entry>
 		<entry name="openMultipleTorrentsSilently" type="Bool">
 			<default>false</default>

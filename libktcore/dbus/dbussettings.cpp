@@ -598,12 +598,12 @@ namespace kt
         Settings::setMaxSeedTime(val);
     }
 
-    int DBusSettings::networkInterface()
+    QString DBusSettings::networkInterface()
     {
         return Settings::networkInterface();
     }
 
-    void DBusSettings::setNetworkInterface(int val)
+    void DBusSettings::setNetworkInterface(const QString &val)
     {
         Settings::setNetworkInterface(val);
     }

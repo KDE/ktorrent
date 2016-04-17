@@ -44,6 +44,7 @@ namespace kt
     {
     }
 
+
     void NetworkPref::loadSettings()
     {
         kcfg_maxDownloadRate->setValue(Settings::maxDownloadRate());
@@ -51,8 +52,8 @@ namespace kt
         kcfg_maxConnections->setValue(Settings::maxConnections());
         kcfg_maxTotalConnections->setValue(Settings::maxTotalConnections());
 
-        kcfg_networkInterface->clear();
-        kcfg_networkInterface->addItem(QIcon::fromTheme("network-wired"), i18n("All interfaces"));
+        combo_networkInterface->clear();
+        combo_networkInterface->addItem(QIcon::fromTheme("network-wired"), i18n("All interfaces"));
 
         kcfg_onlyUseUtp->setEnabled(Settings::utpEnabled());
         kcfg_primaryTransportProtocol->setEnabled(Settings::utpEnabled() && !Settings::onlyUseUtp());
@@ -79,10 +80,31 @@ namespace kt
             }
 #endif
 
-            kcfg_networkInterface->addItem(icon, iface.name());
+            combo_networkInterface->addItem(icon, iface.name());
         }
+        QString iface = Settings::networkInterface();
+        int idx = (iface.isEmpty())? 0 /*all*/: combo_networkInterface->findText(iface);
+        if (idx < 0)
+        {
+            bool ok;
+            iface.toInt(&ok);
+            if (ok)
+            {
+                idx = 0;
+            }
+            else
+            {
+                combo_networkInterface->addItem(iface);
+                idx = combo_networkInterface->findText(iface);
+            }
+        }
+        combo_networkInterface->setCurrentIndex(idx);
+    }
 
-        kcfg_networkInterface->setCurrentIndex(Settings::networkInterface());
+    void NetworkPref::updateSettings()
+    {
+        QString iface = combo_networkInterface->currentText();
+        Settings::setNetworkInterface(iface);
     }
 
     void NetworkPref::loadDefaults()

@@ -39,6 +39,7 @@ namespace kt
 
         virtual void loadSettings();
         virtual void loadDefaults();
+        virtual void updateSettings();
     signals:
         void calculateRecommendedSettings();
 

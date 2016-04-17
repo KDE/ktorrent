@@ -211,7 +211,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QComboBox" name="kcfg_networkInterface">
+         <widget class="QComboBox" name="combo_networkInterface">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>

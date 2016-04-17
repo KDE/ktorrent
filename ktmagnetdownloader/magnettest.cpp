@@ -79,14 +79,11 @@ void MagnetTest::start()
     }
 
     // Make sure network interface is set properly before server is initialized
-    if (Settings::networkInterface() != 0)
+    if (!Settings::networkInterface().isEmpty())
     {
-        QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
-        int iface = Settings::networkInterface();
-        if (iface > iface_list.count())
-            SetNetworkInterface(QString::null);
-        else
-            SetNetworkInterface(iface_list[iface - 1].name());
+        //QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
+        QString iface = Settings::networkInterface();
+        SetNetworkInterface(iface);
     }
 
 

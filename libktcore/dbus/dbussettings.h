@@ -149,8 +149,8 @@ namespace kt
         Q_SCRIPTABLE void setCompletedDir(QString val);
         Q_SCRIPTABLE double maxSeedTime();
         Q_SCRIPTABLE void setMaxSeedTime(double val);
-        Q_SCRIPTABLE int networkInterface();
-        Q_SCRIPTABLE void setNetworkInterface(int val);
+        Q_SCRIPTABLE QString networkInterface();
+        Q_SCRIPTABLE void setNetworkInterface(const QString &val);
         Q_SCRIPTABLE bool openMultipleTorrentsSilently();
         Q_SCRIPTABLE void setOpenMultipleTorrentsSilently(bool val);
         Q_SCRIPTABLE bool openAllTorrentsSilently();

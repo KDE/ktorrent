@@ -160,22 +160,7 @@ namespace kt
 
         bt::TorrentControl::setDataCheckWhenCompleted(Settings::checkWhenFinished());
         bt::TorrentControl::setMinimumDiskSpace(Settings::minDiskSpace());
-
-
-        if (Settings::networkInterface() == 0)
-        {
-            SetNetworkInterface(QString::null);
-        }
-        else
-        {
-            QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
-            int iface = Settings::networkInterface();
-            if (iface > iface_list.count())
-                SetNetworkInterface(QString::null);
-            else
-                SetNetworkInterface(iface_list[iface - 1].name());
-        }
-
+        bt::SetNetworkInterface(Settings::networkInterface());
         net::Socks::setSocksEnabled(Settings::socksEnabled());
         net::Socks::setSocksVersion(Settings::socksVersion());
         net::Socks::setSocksServerAddress(Settings::socksProxy(), Settings::socksPort());
