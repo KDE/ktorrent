@@ -12,7 +12,7 @@ find_package(Taglib)
 #find_package(Qt5 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
 find_package(Phonon4Qt5)
 
-find_package(KF5 5.15 OPTIONAL_COMPONENTS WebKit IconThemes DNSSD)
+find_package(KF5 5.15 OPTIONAL_COMPONENTS WebKit IconThemes DNSSD Plotting)
 
 find_package(LibKWorkspace CONFIG)
 set_package_properties(LibKWorkspace
@@ -30,7 +30,7 @@ endif()
 #macro_kt_plugin(ENABLE_WEBINTERFACE_PLUGIN webinterface webinterface)
 #macro_kt_plugin(ENABLE_SCANFOLDER_PLUGIN scanfolder scanfolder)
 #macro_kt_plugin(ENABLE_IPFILTER_PLUGIN ipfilter ipfilter)
-#macro_kt_plugin(ENABLE_STATS_PLUGIN stats stats)
+macro_kt_plugin(ENABLE_STATS_PLUGIN stats stats)
 macro_kt_plugin(ENABLE_BWSCHEDULER_PLUGIN bwscheduler bwscheduler)
 if (TAGLIB_FOUND AND PHONON_FOUND_EXPERIMENTAL) #AND Qt5Multimedia_FOUND)
   macro_kt_plugin(ENABLE_MEDIAPLAYER_PLUGIN mediaplayer mediaplayer)

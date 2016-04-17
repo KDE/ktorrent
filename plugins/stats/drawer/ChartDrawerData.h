@@ -26,8 +26,6 @@
 #include <QPointer>
 #include <QUuid>
 
-#include <klocale.h>
-
 #include <vector>
 #include <memory>
 #include <algorithm>
@@ -49,13 +47,13 @@ namespace kt
         typedef std::vector<qreal> val_t;
     private:
         ///Name of the set
-        std::auto_ptr<QString> pmName;
+        QString pmName;
         ///Pent of the set
-        std::auto_ptr<QPen> pmPen;
+        QPen pmPen;
         ///Values
-        std::auto_ptr<val_t> pmVals;
+        val_t pmVals;
         ///Set's UUID
-        std::auto_ptr<QUuid> pmUuid;
+        QUuid pmUuid;
         ///Mark maximum?
         bool mMax;
 
@@ -96,34 +94,35 @@ namespace kt
         /** \brief Returns valueset
         \return Values
         */
-        const val_t* getValues() const;
+        const val_t& getValues() const {return pmVals;}
 
         /** \brief Returns set's pen
         \return Pen
         */
-        const QPen* getPen() const;
+        QPen getPen() const {return pmPen;}
         /** \brief Sets set's pen
         \param rP New pen
         */
-        void setPen(const QPen& rP);
+        void setPen(const QPen& rP) {pmPen = rP;}
 
         /** \brief Returns set's name
         \return Name
         */
-        const QString* getName() const;
+        QString getName() const {return pmName;}
+
         /** \brief Sets set's name
         \param rN New name
         */
-        void setName(const QString& rN);
+        void setName(const QString& rN) {pmName = rN;}
 
         /** \brief Returns set's UUID
         \return UUID
         */
-        const QUuid* getUuid() const;
+        const QUuid getUuid() const {return pmUuid;}
         /** \brief Sets set's UUID
         \param rU New UUID
         */
-        void setUuid(const QUuid& rU);
+        void setUuid(const QUuid& rU) {pmUuid = rU;}
 
         /** \brief Mark set's maximum
         \return Mark?

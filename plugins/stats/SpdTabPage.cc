@@ -29,22 +29,22 @@ namespace kt
 
         if (StatsPluginSettings::widgetType() == 0)
         {
-            pmDlChtWgt.reset(new PlainChartDrawer(this));
-            pmPeersChtWgt.reset(new PlainChartDrawer(this));
-            pmUlChtWgt.reset(new PlainChartDrawer(this));
+            pmDlChtWgt = new PlainChartDrawer(this);
+            pmPeersChtWgt = new PlainChartDrawer(this);
+            pmUlChtWgt = new PlainChartDrawer(this);
 
-            connect(dynamic_cast<PlainChartDrawer*>(pmDlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
-            connect(dynamic_cast<PlainChartDrawer*>(pmUlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
+            connect(dynamic_cast<PlainChartDrawer*>(pmDlChtWgt), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
+            connect(dynamic_cast<PlainChartDrawer*>(pmUlChtWgt), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
 
         }
         else if (StatsPluginSettings::widgetType() == 1)
         {
-            pmDlChtWgt.reset(new KPlotWgtDrawer(this));
-            pmPeersChtWgt.reset(new KPlotWgtDrawer(this));
-            pmUlChtWgt.reset(new KPlotWgtDrawer(this));
+            pmDlChtWgt = new KPlotWgtDrawer(this);
+            pmPeersChtWgt = new KPlotWgtDrawer(this);
+            pmUlChtWgt = new KPlotWgtDrawer(this);
 
-            connect(dynamic_cast<KPlotWgtDrawer*>(pmDlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
-            connect(dynamic_cast<KPlotWgtDrawer*>(pmUlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
+            connect(dynamic_cast<KPlotWgtDrawer*>(pmDlChtWgt), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
+            connect(dynamic_cast<KPlotWgtDrawer*>(pmUlChtWgt), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
         }
 
 
@@ -60,9 +60,9 @@ namespace kt
     {
         pmUiSpd->setupUi(this);
 
-        pmUiSpd->DlSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmDlChtWgt.get()));
-        pmUiSpd->PeersSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmPeersChtWgt.get()));
-        pmUiSpd->UlSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmUlChtWgt.get()));
+        pmUiSpd->DlSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmDlChtWgt));
+        pmUiSpd->PeersSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmPeersChtWgt));
+        pmUiSpd->UlSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmUlChtWgt));
 
         pmDlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on download chart", "Current speed"), QPen(StatsPluginSettings::dlSpdColor()), true));
         pmUlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on upload chart", "Current speed"), QPen(StatsPluginSettings::ulSpdColor()), true));
@@ -236,11 +236,11 @@ namespace kt
         {
             return;
         }
-        else if (c == pmDlChtWgt.get())
+        else if (c == pmDlChtWgt)
         {
             mDlAvg = std::make_pair(0, 0);
         }
-        else if (c == pmUlChtWgt.get())
+        else if (c == pmUlChtWgt)
         {
             mUlAvg = std::make_pair(0, 0);
         }

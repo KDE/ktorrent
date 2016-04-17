@@ -26,9 +26,6 @@
 #include <QStringList>
 #include <QTimer>
 
-#include <kgenericfactory.h>
-#include <klocale.h>
-
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
 
@@ -55,7 +52,7 @@ namespace kt
         /** \brief Constructor
         \param p Parent
         */
-        StatsPlugin(QObject* p, const QStringList&);
+        StatsPlugin(QObject* p, const QVariantList&);
         ///Destructor
         virtual ~StatsPlugin();
 
@@ -72,15 +69,15 @@ namespace kt
 
     private:
         ///Speeds tab
-        std::auto_ptr<SpdTabPage> pmUiSpd;
+        SpdTabPage* pmUiSpd;
         ///Connections tab
-        std::auto_ptr<ConnsTabPage> pmUiConns;
+        ConnsTabPage* pmUiConns;
         ///Settings Page
         SettingsPage* pmUiSett;
         /// Display settings page
         DisplaySettingsPage* pmDispSett;
         ///Timer
-        std::auto_ptr<QTimer> pmTmr;
+        QTimer pmTmr;
 
         ///Updates counter
         uint32_t mUpdCtr;

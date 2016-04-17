@@ -20,12 +20,15 @@
 
 #include <PlainChartDrawer.h>
 
+#include <klocalizedstring.h>
+#include <QFileDialog>
+
 namespace kt
 {
 
-    PlainChartDrawer::PlainChartDrawer(QWidget* p) :  QFrame(p), ChartDrawer(), pmCtxMenu(new KMenu(this))
+    PlainChartDrawer::PlainChartDrawer(QWidget* p) :  QFrame(p), ChartDrawer(), pmCtxMenu(new QMenu(this))
     {
-        setStyleSheet(" background-color: " + QPalette().color(QPalette::Active, QPalette::Base).name() + ";");
+        setStyleSheet(" background-color: " % QPalette().color(QPalette::Active, QPalette::Base).name() % ';');
 
         setContextMenuPolicy(Qt::CustomContextMenu);
         MakeCtxMenu();
@@ -167,7 +170,7 @@ namespace kt
         pen.setColor(qc);
         rPnt.setPen(pen);
 
-        rPnt.drawText(width() + 42., TY(-10.), *pmUnitName);
+        rPnt.drawText(width() + 42., TY(-10.), pmUnitName);
 
         rPnt.setFont(oldf);
         rPnt.setPen(oldpen);
@@ -178,14 +181,14 @@ namespace kt
     {
         QPen oldpen = rPnt.pen();
 
-        for (size_t i = 0; i < pmVals->size(); i++)
+        for (size_t i = 0; i < pmVals.size(); i++)
         {
-            DrawChartLine(rPnt, pmVals->at(i));
-            DrawCurrentValue(rPnt, pmVals->at(i), i);
+            DrawChartLine(rPnt, pmVals.at(i));
+            DrawCurrentValue(rPnt, pmVals.at(i), i);
 
-            if (pmVals->at(i).getMarkMax())
+            if (pmVals.at(i).getMarkMax())
             {
-                DrawMaximum(rPnt, pmVals->at(i), i);
+                DrawMaximum(rPnt, pmVals.at(i), i);
             }
         }
 
@@ -195,35 +198,35 @@ namespace kt
     void PlainChartDrawer::DrawChartLine(QPainter& rPnt, const ChartDrawerData& rCdd)
     {
 
-        QPen qp(*rCdd.getPen());
+        QPen qp = rCdd.getPen();
         qp.setJoinStyle(Qt::RoundJoin);
         rPnt.setPen(qp);
 
-        ChartDrawerData::val_t const* vals = rCdd.getValues();
+        const ChartDrawerData::val_t& vals = rCdd.getValues();
 
-        QPointF* l = new QPointF[vals->size()];
+        QPointF* l = new QPointF[vals.size()];
 
-        for (size_t i = 0; i < vals->size(); i++)
+        for (size_t i = 0; i < vals.size(); i++)
         {
             l[i] = QPointF(
                        FindXScreenCoords(i),
-                       TY(FindYScreenCoords(vals->at(i)))
+                       TY(FindYScreenCoords(vals.at(i)))
                    );
         }
 
-        l[vals->size() - 1] = QPointF(
+        l[vals.size() - 1] = QPointF(
 
                                   width(),
-                                  TY(FindYScreenCoords(*(vals->end() - 1)))
+                                  TY(FindYScreenCoords(*(vals.end() - 1)))
                               );
 
-        rPnt.drawPolyline(l, vals->size());
+        rPnt.drawPolyline(l, vals.size());
         delete [] l;
     }
 
     void PlainChartDrawer::DrawCurrentValue(QPainter& rPnt, const ChartDrawerData& rCdd, size_t idx)
     {
-        QPen qp(*rCdd.getPen());
+        QPen qp = rCdd.getPen();
         qp.setJoinStyle(Qt::RoundJoin);
 
         QColor qc(qp.color());
@@ -237,7 +240,7 @@ namespace kt
         idx++;
         wgtunit_t y = -5 + (idx * 16);
 
-        wgtunit_t val = *(rCdd.getValues()->end() - 1);
+        wgtunit_t val = *(rCdd.getValues().end() - 1);
 
         wgtunit_t lenmod;
 
@@ -275,7 +278,7 @@ namespace kt
 
         QPointF l[3] =
         {
-            QPointF(width(), TY(FindYScreenCoords(*(rCdd.getValues()->end() - 1)))),
+            QPointF(width(), TY(FindYScreenCoords(*(rCdd.getValues().end() - 1)))),
             QPointF(width() + (38 + lenmod), y + 2),
             QPointF(QWidget::width() , y + 2.5),
         };
@@ -287,7 +290,7 @@ namespace kt
 
     void PlainChartDrawer::DrawMaximum(QPainter& rPnt, const ChartDrawerData& rCdd, size_t idx)
     {
-        QPen qp(*rCdd.getPen());
+        QPen qp = rCdd.getPen();
         QBrush oldb = qp.brush();
         QColor qc(qp.color());
 
@@ -354,30 +357,24 @@ namespace kt
 
     void PlainChartDrawer::renderToImage()
     {
-        QString saveloc = KFileDialog:: getSaveFileName(KUrl("kfiledialog:///openTorrent"), "image/png", this, i18n("Select path to save image…"));
-
+        QString saveloc = QFileDialog::getSaveFileName(this, i18n("Select path to save image…"), i18n("Image files") + QLatin1String(" (*.png)"));
         if (!saveloc.length())
-        {
             return;
-        }
 
         QImage qi(QWidget::width(), QWidget::height(), QImage::Format_RGB32);
-
         render(&qi);
-
         qi.save(saveloc, "PNG", 0);
-
     }
 
     void PlainChartDrawer::addValue(const size_t idx, const wgtunit_t val, const bool upd)
     {
-        if (idx >= pmVals->size())
+        if (idx >= pmVals.size())
         {
             return;
         }
         else
         {
-            (*pmVals)[idx].addValue(val);
+            pmVals[idx].addValue(val);
         }
 
         if (mCurrMaxMode == MM_Top)
@@ -402,26 +399,26 @@ namespace kt
     void PlainChartDrawer::addDataSet(ChartDrawerData Cdd)
     {
         Cdd.setSize(mXMax);
-        pmVals->push_back(Cdd);
+        pmVals.push_back(Cdd);
 
         setLegend(makeLegendString());
     }
 
     void PlainChartDrawer::insertDataSet(const size_t idx, ChartDrawerData Cdd)
     {
-        pmVals->insert(pmVals->begin() + idx, Cdd);
+        pmVals.insert(pmVals.begin() + idx, Cdd);
         setLegend(makeLegendString());
     }
 
     void PlainChartDrawer::removeDataSet(const size_t idx)
     {
-        if (idx >= pmVals->size())
+        if (idx >= pmVals.size())
         {
             return;
         }
         else
         {
-            pmVals->erase((pmVals->begin()) + idx);
+            pmVals.erase((pmVals.begin()) + idx);
         }
 
         setLegend(makeLegendString());
@@ -430,13 +427,13 @@ namespace kt
 
     void PlainChartDrawer::zero(const size_t idx)
     {
-        if (idx >= pmVals->size())
+        if (idx >= pmVals.size())
         {
             return;
         }
         else
         {
-            (*pmVals)[idx].zero();
+            pmVals[idx].zero();
         }
 
         findSetMax();
@@ -444,9 +441,9 @@ namespace kt
 
     void PlainChartDrawer::zeroAll()
     {
-        for (size_t idx = 0; idx < pmVals->size(); idx++)
+        for (size_t idx = 0; idx < pmVals.size(); idx++)
         {
-            (*pmVals)[idx].zero();
+            pmVals[idx].zero();
         }
 
         findSetMax();
@@ -463,9 +460,9 @@ namespace kt
     {
         mXMax = x;
 
-        for (size_t i = 0; i < pmVals->size(); i++)
+        for (size_t i = 0; i < pmVals.size(); i++)
         {
-            pmVals->at(i).setSize(x);
+            pmVals.at(i).setSize(x);
         }
     }
 
@@ -475,50 +472,44 @@ namespace kt
         mYMax = y;
     }
 
-    void PlainChartDrawer::setUnitName(const QString& rUn)
-    {
-        pmUnitName.reset(new QString(rUn));
-    }
-
-
     void PlainChartDrawer::setPen(const size_t idx, const QPen& rP)
     {
-        if (idx >= pmVals->size())
+        if (idx >= pmVals.size())
         {
             return;
         }
 
-        pmVals->at(idx).setPen(rP);
+        pmVals.at(idx).setPen(rP);
 
         makeLegendString();
     }
 
-    const QUuid* PlainChartDrawer::getUuid(const size_t idx) const
+    QUuid PlainChartDrawer::getUuid(const size_t idx) const
     {
-        if (idx >= pmVals->size())
+        if (idx >= pmVals.size())
         {
             return 0;
         }
 
-        return pmVals->at(idx).getUuid();
+        return pmVals.at(idx).getUuid();
     }
 
     void PlainChartDrawer::setUuid(const size_t idx, const QUuid& rU)
     {
-        if (idx >= pmVals->size())
+        if (idx >= pmVals.size())
         {
             return;
         }
 
-        pmVals->at(idx).setUuid(rU);
+        pmVals.at(idx).setUuid(rU);
     }
 
     int16_t PlainChartDrawer::findUuidInSet(const QUuid& rU) const
     {
 
-        for (int16_t i = 0; i < static_cast<int16_t>(pmVals->size()); i++)
+        for (int16_t i = 0; i < static_cast<int16_t>(pmVals.size()); i++)
         {
-            if ((*(pmVals->at(i).getUuid())) == rU)
+            if (pmVals.at(i).getUuid() == rU)
             {
                 return i;
             }
@@ -536,9 +527,9 @@ namespace kt
     {
         wgtunit_t max = 1;
 
-        for (size_t i = 0; i < pmVals->size(); i++)
+        for (size_t i = 0; i < pmVals.size(); i++)
         {
-            wgtunit_t locval = pmVals->at(i).findMax().first;
+            wgtunit_t locval = pmVals.at(i).findMax().first;
 
             if (locval > max)
             {
@@ -551,15 +542,13 @@ namespace kt
 
     QString PlainChartDrawer::makeLegendString()
     {
-        QString lgnd("");
+        QString lgnd = i18n("<h1 align='center' style='font-size: large; text-decoration: underline'>Legend:</h1><ul type='square'>");
 
-        lgnd += i18n("<h1 align='center' style='font-size: large; text-decoration: underline'>Legend:</h1><ul type='square'>");
-
-        for (size_t i = 0; i < pmVals->size(); i++)
+        for (size_t i = 0; i < pmVals.size(); i++)
         {
             lgnd += i18n("<li><span style='background-color: %1; font-size: 14px; font-family: monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>",
-                         pmVals->at(i).getPen()->color().name(),
-                         *(pmVals->at(i).getName())
+                         pmVals.at(i).getPen().color().name(),
+                         pmVals.at(i).getName()
                         );
         }
 

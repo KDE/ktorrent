@@ -20,17 +20,19 @@
 
 #include <KPlotWgtDrawer.h>
 
+#include <QFileDialog>
+#include <klocalizedstring.h>
+
 namespace kt
 {
 
-    KPlotWgtDrawer::KPlotWgtDrawer(QWidget* p) : KPlotWidget(p), ChartDrawer(), pmUuids(new std::vector<QUuid>), pmBuff(new buff_t),
-        pmDescs(new std::vector<QString>), pmCtxMenu(new KMenu(this))
+    KPlotWgtDrawer::KPlotWgtDrawer(QWidget* p) : KPlotWidget(p), ChartDrawer(), pmCtxMenu(new QMenu(this))
     {
         setLimits(0, mXMax, 0, mYMax);
         axis(TopAxis)->setVisible(false);
         axis(LeftAxis)->setVisible(false);
 
-        axis(RightAxis)->setLabel(*pmUnitName);
+        axis(RightAxis)->setLabel(pmUnitName);
         axis(RightAxis)->setTickLabelsShown(true);
 
         setBackgroundColor(QPalette().color(QPalette::Active, QPalette::Base));
@@ -51,7 +53,7 @@ namespace kt
             return;
         }
 
-        pmBuff->push_back(std::make_pair(idx, val));
+        pmBuff.push_back(std::make_pair(idx, val));
 
         if (upd)
         {
@@ -63,26 +65,26 @@ namespace kt
     void KPlotWgtDrawer::AddPointsFromBuffer()
     {
 
-        if (!(pmBuff->size()))
+        if (!(pmBuff.size()))
         {
             return;
         }
 
         val_t kpo(plotObjects());
 
-        while (pmBuff->size())
+        while (pmBuff.size())
         {
-            if ((pmBuff->front().first) >= static_cast<size_t>(kpo.size()))
+            if ((pmBuff.front().first) >= static_cast<size_t>(kpo.size()))
             {
-                pmBuff->pop_front();
+                pmBuff.pop_front();
                 continue;
             }
 
-            QList< KPlotPoint* > kpp = kpo[pmBuff->front().first]->points();
+            QList< KPlotPoint* > kpp = kpo[pmBuff.front().first]->points();
 
             if (kpp.size() > mXMax)
             {
-                kpo[pmBuff->front().first]->removePoint(0);
+                kpo[pmBuff.front().first]->removePoint(0);
             }
 
             for (size_t i = kpp.size() - 1 ; ((kpp.size()) && (i > 0)); i--)
@@ -90,13 +92,13 @@ namespace kt
                 kpp[i]->setX(kpp[i]->x() - 1);
             }
 
-            kpo[pmBuff->front().first]->addPoint(mXMax, pmBuff->front().second);
+            kpo[pmBuff.front().first]->addPoint(mXMax, pmBuff.front().second);
 
             if (mCurrMaxMode == MM_Top)
             {
-                if ((pmBuff->front().second > 1) && (pmBuff->front().second > mYMax))
+                if ((pmBuff.front().second > 1) && (pmBuff.front().second > mYMax))
                 {
-                    mYMax = pmBuff->front().second + 5;
+                    mYMax = pmBuff.front().second + 5;
                 }
             }
             else if (mCurrMaxMode == MM_Exact)
@@ -104,14 +106,14 @@ namespace kt
                 findSetMax();
             }
 
-            pmBuff->pop_front();
+            pmBuff.pop_front();
         }
     }
 
     KPlotObject* KPlotWgtDrawer::cdd2kpo(const ChartDrawerData& rC) const
     {
-        KPlotObject* kpo = new KPlotObject(rC.getPen()->color(), KPlotObject::Lines, 1, KPlotObject::NoPoints);
-        kpo->setPen(*(rC.getPen()));
+        KPlotObject* kpo = new KPlotObject(rC.getPen().color(), KPlotObject::Lines, 1, KPlotObject::NoPoints);
+        kpo->setPen(rC.getPen());
 
         return kpo;
     }
@@ -120,8 +122,8 @@ namespace kt
     {
         addPlotObject(cdd2kpo(Cdd));
 
-        pmUuids->push_back(*(Cdd.getUuid()));
-        pmDescs->push_back(*(Cdd.getName()));
+        pmUuids.push_back(Cdd.getUuid());
+        pmDescs.push_back(Cdd.getName());
     }
 
     void KPlotWgtDrawer::insertDataSet(const size_t idx, ChartDrawerData Cdd)
@@ -149,8 +151,8 @@ namespace kt
 
         addPlotObjects(dest_l);
 
-        pmUuids->insert(pmUuids->begin() + idx, *(Cdd.getUuid()));
-        pmDescs->insert(pmDescs->begin() + idx, *(Cdd.getName()));
+        pmUuids.insert(pmUuids.begin() + idx, Cdd.getUuid());
+        pmDescs.insert(pmDescs.begin() + idx, Cdd.getName());
 
         zeroAll();
 
@@ -180,8 +182,8 @@ namespace kt
 
         addPlotObjects(dest_l);
 
-        pmUuids->erase(pmUuids->begin() + idx);
-        pmDescs->erase(pmDescs->begin() + idx);
+        pmUuids.erase(pmUuids.begin() + idx);
+        pmDescs.erase(pmDescs.begin() + idx);
 
         zeroAll();
     }
@@ -199,8 +201,8 @@ namespace kt
 
         //iteration through elements to-be-removed is EVIL
 
-        for (buff_t::iterator it = pmBuff->begin();
-                it != pmBuff->end();
+        for (buff_t::iterator it = pmBuff.begin();
+                it != pmBuff.end();
                 it++)
         {
             if (it->first == idx)
@@ -214,7 +216,7 @@ namespace kt
                 it != lb.end();
                 it++)
         {
-            pmBuff->erase(*it);
+            pmBuff.erase(*it);
         }
 
         kpol[idx]->clearPoints();
@@ -234,7 +236,7 @@ namespace kt
 
     void KPlotWgtDrawer::setUnitName(const QString& rN)
     {
-        *pmUnitName = rN;
+        pmUnitName = rN;
         axis(RightAxis)->setLabel(rN);
     }
 
@@ -302,20 +304,20 @@ namespace kt
             return;
         }
 
-        pmUuids->at(idx) = rQ;
+        pmUuids.at(idx) = rQ;
     }
 
     int16_t KPlotWgtDrawer::findUuidInSet(const QUuid& rQ) const
     {
-        std::vector<QUuid>::iterator it = std::find(pmUuids->begin(), pmUuids->end(), rQ);
+        std::vector<QUuid>::const_iterator it = std::find(pmUuids.begin(), pmUuids.end(), rQ);
 
-        if (it == pmUuids->end())
+        if (it == pmUuids.end())
         {
             return -1;
         }
         else
         {
-            return it - pmUuids->begin();
+            return it - pmUuids.begin();
         }
     }
 
@@ -345,7 +347,7 @@ namespace kt
 
     QString KPlotWgtDrawer::makeLegendString()
     {
-        QString lgnd("");
+        QString lgnd;
         val_t kpo(plotObjects());
 
         lgnd += i18n("<h1 align='center' style='font-size: large; text-decoration: underline'>Legend:</h1><ul type='square'>");
@@ -354,21 +356,21 @@ namespace kt
         {
             lgnd += i18n("<li><span style='background-color: %1; font-size: 14px; font-family: monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>",
                          kpo[i]->linePen().color().name(),
-                         pmDescs->at(i)
+                         pmDescs.at(i)
                         );
         }
 
         return lgnd + "</ul>";
     }
 
-    const QUuid* KPlotWgtDrawer::getUuid(const size_t idx) const
+    QUuid KPlotWgtDrawer::getUuid(const size_t idx) const
     {
         if (idx >= static_cast<size_t>(plotObjects().size()))
         {
             return 0;
         }
 
-        return &(pmUuids->at(idx));
+        return pmUuids.at(idx);
     }
 
     void KPlotWgtDrawer::enableBackgroundGrid(bool bg)
@@ -413,17 +415,13 @@ namespace kt
 
     void KPlotWgtDrawer::renderToImage()
     {
-        QString saveloc = KFileDialog:: getSaveFileName(KUrl("kfiledialog:///openTorrent"), "image/png", this, i18n("Select path to save image…"));
+        QString saveloc = QFileDialog::getSaveFileName(this, i18n("Select path to save image…"), i18n("Image files") + QLatin1String(" (*.png)"));
 
         if (!saveloc.length())
-        {
             return;
-        }
 
         QImage qi(width(), height(), QImage::Format_RGB32);
-
         render(&qi);
-
         qi.save(saveloc, "PNG", 0);
     }
 

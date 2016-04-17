@@ -20,13 +20,14 @@
 
 #include <StatsPlugin.h>
 #include <interfaces/torrentactivityinterface.h>
+#include <kpluginfactory.h>
 
-K_EXPORT_COMPONENT_FACTORY(ktstatsplugin, KGenericFactory<kt::StatsPlugin>("ktstatsplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_stats, "ktorrent_stats.json", registerPlugin<kt::StatsPlugin>();)
 
 namespace kt
 {
 
-    StatsPlugin::StatsPlugin(QObject* p, const QStringList&) : Plugin(p), mUpdCtr(1)
+    StatsPlugin::StatsPlugin(QObject* p, const QVariantList&) : Plugin(p), mUpdCtr(1)
     {
         pmUiSett = 0;
         pmDispSett = 0;
@@ -38,52 +39,38 @@ namespace kt
 
     void StatsPlugin::load()
     {
-        pmUiSpd.release();
-        pmUiConns.release();
-        pmTmr.release();
-
-        pmUiSpd.reset(new SpdTabPage(0));
-        pmUiConns.reset(new ConnsTabPage(0));
+        pmUiSpd = new SpdTabPage(0);
+        pmUiConns = new ConnsTabPage(0);
         pmUiSett = new SettingsPage(0);
         pmDispSett = new DisplaySettingsPage(0);
-        pmTmr.reset(new QTimer(this));
 
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
-        ta->addToolWidget(pmUiSpd.get(), i18n("Speed charts"), "view-statistics", i18n("Displays charts about download and upload speed"));
-        ta->addToolWidget(pmUiConns.get(), i18n("Connections charts"), "view-statistics", i18n("Displays charts about connections"));
+        ta->addToolWidget(pmUiSpd, i18n("Speed charts"), "view-statistics", i18n("Displays charts about download and upload speed"));
+        ta->addToolWidget(pmUiConns, i18n("Connections charts"), "view-statistics", i18n("Displays charts about connections"));
 
         getGUI()->addPrefPage(pmUiSett);
         getGUI()->addPrefPage(pmDispSett);
 
-        connect(pmTmr.get(), SIGNAL(timeout()), dynamic_cast<StatsPlugin*>(this), SLOT(gatherData()));
+        connect(&pmTmr, SIGNAL(timeout()), dynamic_cast<StatsPlugin*>(this), SLOT(gatherData()));
         connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
 
-        pmTmr->start(StatsPluginSettings::dataGatherIval());
+        pmTmr.start(StatsPluginSettings::dataGatherIval());
 
     }
 
     void StatsPlugin::unload()
     {
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
-        ta->removeToolWidget(pmUiSpd.get());
-        ta->removeToolWidget(pmUiConns.get());
+        ta->removeToolWidget(pmUiSpd);
+        ta->removeToolWidget(pmUiConns);
 
         getGUI()->removePrefPage(pmUiSett);
         getGUI()->removePrefPage(pmDispSett);
 
-        pmTmr->stop();
+        pmTmr.stop();
 
-        disconnect(pmTmr.get());
+        disconnect(&pmTmr);
         disconnect(getCore());
-
-        pmUiSpd.reset();
-        pmUiConns.reset();
-
-        pmUiSett = 0;
-        pmDispSett = 0;
-
-        pmTmr.reset();
-
     }
 
     bool StatsPlugin::versionCheck(const QString& version) const
@@ -114,9 +101,11 @@ namespace kt
 
     void StatsPlugin::settingsChanged()
     {
-        pmTmr->setInterval(StatsPluginSettings::dataGatherIval());
+        pmTmr.setInterval(StatsPluginSettings::dataGatherIval());
         pmUiSpd->applySettings();
         pmUiConns->applySettings();
     }
 
 } //Ns end
+
+#include "StatsPlugin.moc"

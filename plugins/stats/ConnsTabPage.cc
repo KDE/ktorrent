@@ -23,19 +23,19 @@
 namespace kt
 {
 
-    ConnsTabPage::ConnsTabPage(QWidget* p) : PluginPage(p), pmConnsUi(new Ui::ConnsWgt), pmLhrSwnUuid(new QUuid(QUuid::createUuid())),
-        pmSesSwnUuid(new QUuid(QUuid::createUuid()))
+    ConnsTabPage::ConnsTabPage(QWidget* p) : PluginPage(p), pmConnsUi(new Ui::ConnsWgt), pmLhrSwnUuid(QUuid::createUuid()),
+        pmSesSwnUuid(QUuid::createUuid())
     {
 
         if (StatsPluginSettings::widgetType() == 0)
         {
-            pmConnsChtWgt.reset(new PlainChartDrawer(this));
-            pmDhtChtWgt.reset(new PlainChartDrawer(this));
+            pmConnsChtWgt = new PlainChartDrawer(this);
+            pmDhtChtWgt = new PlainChartDrawer(this);
         }
         else if (StatsPluginSettings::widgetType() == 1)
         {
-            pmConnsChtWgt.reset(new KPlotWgtDrawer(this));
-            pmDhtChtWgt.reset(new KPlotWgtDrawer(this));
+            pmConnsChtWgt = new KPlotWgtDrawer(this);
+            pmDhtChtWgt = new KPlotWgtDrawer(this);
         }
 
         setupUi();
@@ -53,8 +53,8 @@ namespace kt
         pmConnsChtWgt->setUnitName(i18n("Connections"));
         pmDhtChtWgt->setUnitName(i18n("Nodes"));
 
-        pmConnsUi->ConnsGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmConnsChtWgt.get()));
-        pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmDhtChtWgt.get()));
+        pmConnsUi->ConnsGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmConnsChtWgt));
+        pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmDhtChtWgt));
 
         //------------------
         pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers connected"), QPen(StatsPluginSettings::cnLConnColor()), true));
@@ -62,7 +62,7 @@ namespace kt
 
         if (StatsPluginSettings::showLeechersInSwarms())
         {
-            pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
+            pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, pmLhrSwnUuid));
         }
 
         //
@@ -71,7 +71,7 @@ namespace kt
         //
         if (StatsPluginSettings::showSeedsInSwarms())
         {
-            pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+            pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
         }
 
         //
@@ -113,33 +113,33 @@ namespace kt
 
         //-------
 
-        if (StatsPluginSettings::showLeechersInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
+        if (StatsPluginSettings::showLeechersInSwarms() && (pmConnsChtWgt->findUuidInSet(pmLhrSwnUuid) == -1))
         {
-            pmConnsChtWgt->insertDataSet(1, ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, *pmLhrSwnUuid));
+            pmConnsChtWgt->insertDataSet(1, ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, pmLhrSwnUuid));
         }
 
-        if ((!StatsPluginSettings::showLeechersInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) != -1))
+        if ((!StatsPluginSettings::showLeechersInSwarms()) && (pmConnsChtWgt->findUuidInSet(pmLhrSwnUuid) != -1))
         {
             pmConnsChtWgt->removeDataSet(1);
         }
 
         //~
 
-        if (StatsPluginSettings::showSeedsInSwarms() && (pmConnsChtWgt->findUuidInSet(*pmSesSwnUuid) == -1))
+        if (StatsPluginSettings::showSeedsInSwarms() && (pmConnsChtWgt->findUuidInSet(pmSesSwnUuid) == -1))
         {
-            if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
+            if ((pmConnsChtWgt->findUuidInSet(pmLhrSwnUuid) == -1))
             {
-                pmConnsChtWgt->insertDataSet(2, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+                pmConnsChtWgt->insertDataSet(2, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
             }
             else
             {
-                pmConnsChtWgt->insertDataSet(3, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, *pmSesSwnUuid));
+                pmConnsChtWgt->insertDataSet(3, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
             }
         }
 
-        if ((!StatsPluginSettings::showSeedsInSwarms()) && (pmConnsChtWgt->findUuidInSet(*pmSesSwnUuid) != -1))
+        if ((!StatsPluginSettings::showSeedsInSwarms()) && (pmConnsChtWgt->findUuidInSet(pmSesSwnUuid) != -1))
         {
-            if ((pmConnsChtWgt->findUuidInSet(*pmLhrSwnUuid) == -1))
+            if ((pmConnsChtWgt->findUuidInSet(pmLhrSwnUuid) == -1))
             {
                 pmConnsChtWgt->removeDataSet(2);
             }
@@ -186,7 +186,7 @@ namespace kt
 
         if (bt::Globals::instance().getDHT().isRunning())
         {
-            if (! dynamic_cast<QWidget*>(pmDhtChtWgt.get())->isEnabled())
+            if (! dynamic_cast<QWidget*>(pmDhtChtWgt)->isEnabled())
             {
                 pmConnsUi->DhtGbw->setEnabled(true);
             }
@@ -211,7 +211,7 @@ namespace kt
     {
         pmConnsChtWgt->update();
 
-        if (dynamic_cast<QWidget*>(pmDhtChtWgt.get())->isEnabled())
+        if (dynamic_cast<QWidget*>(pmDhtChtWgt)->isEnabled())
         {
             pmDhtChtWgt->update();
         }

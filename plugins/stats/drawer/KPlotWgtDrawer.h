@@ -42,8 +42,6 @@
 #include <kplotobject.h>
 #include <kplotpoint.h>
 #include <kplotaxis.h>
-#include <kfiledialog.h>
-#include <kurl.h>
 #include <QMenu>
 
 #include <drawer/ChartDrawer.h>
@@ -66,13 +64,13 @@ namespace kt
 
     private:
         ///Uuids of plotObjects
-        std::auto_ptr<std::vector<QUuid> > pmUuids;
+        std::vector<QUuid> pmUuids;
         ///Buffer where new values are stored between GUI updates
-        std::auto_ptr<buff_t> pmBuff;
+        buff_t pmBuff;
         ///Descriptions of plotObjects
-        std::auto_ptr<std::vector<QString> > pmDescs;
+        std::vector<QString> pmDescs;
         ///Context menu
-        std::auto_ptr<QMenu> pmCtxMenu;
+        QMenu* pmCtxMenu;
 
         ///Makes a context menu for widget
         void MakeCtxMenu();
@@ -92,7 +90,7 @@ namespace kt
         KPlotWgtDrawer(QWidget* p);
 
         void paintEvent(QPaintEvent* pPevt);
-        const QUuid* getUuid(const size_t idx) const;
+        QUuid getUuid(const size_t idx) const;
 
         bool event(QEvent*) ;
 

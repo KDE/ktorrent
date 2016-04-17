@@ -23,8 +23,6 @@
 #include <QWidget>
 #include <QUuid>
 
-#include <klocale.h>
-
 #include <interfaces/plugin.h>
 #include <torrent/globals.h>
 #include <dht/dhtbase.h>
@@ -56,23 +54,23 @@ namespace kt
 
     private:
         ///Tab's UI
-        std::auto_ptr<Ui::ConnsWgt> pmConnsUi;
+        Ui::ConnsWgt* pmConnsUi;
 
         ///Connections chart widget
-        std::auto_ptr<ChartDrawer> pmConnsChtWgt;
+        ChartDrawer* pmConnsChtWgt;
         ///DHT chart widget
-        std::auto_ptr<ChartDrawer> pmDhtChtWgt;
+        ChartDrawer* pmDhtChtWgt;
 
         /** \brief Leechers in swarms dataset UUID
 
         Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
         */
-        const std::auto_ptr<QUuid> pmLhrSwnUuid;
+        const QUuid pmLhrSwnUuid;
         /** \brief Seeds in swarms dataset UUID
 
         Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
         */
-        const std::auto_ptr<QUuid> pmSesSwnUuid;
+        const QUuid pmSesSwnUuid;
 
         /** \brief Gathers data about connections
         \param  pP kt::Plugin interface

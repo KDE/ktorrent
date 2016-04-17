@@ -20,15 +20,17 @@
 
 #include <ChartDrawer.h>
 
+#include <klocalizedstring.h>
+
 namespace kt
 {
 
-    ChartDrawer::ChartDrawer() :       pmVals(new val_t),
-        pmUnitName(new QString(i18n("KiB/s"))),
-        mCurrMaxMode(MM_Exact),
-        mXMax(16),
-        mYMax(1),
-        mAntiAlias(1)
+    ChartDrawer::ChartDrawer()
+        : pmUnitName(i18n("KiB/s"))
+        , mCurrMaxMode(MM_Exact)
+        , mXMax(16)
+        , mYMax(1)
+        , mAntiAlias(1)
     {
     }
 
@@ -46,25 +48,19 @@ namespace kt
         return mYMax;
     }
 
-
-    const QString* ChartDrawer::getUnitName() const
-    {
-        return pmUnitName.get();
-    }
-
     size_t ChartDrawer::dataSetCount() const
     {
-        return pmVals->size();
+        return pmVals.size();
     }
 
     ChartDrawer::val_t::const_iterator ChartDrawer::begin() const
     {
-        return pmVals->begin();
+        return pmVals.begin();
     }
 
     ChartDrawer::val_t::const_iterator ChartDrawer::end() const
     {
-        return pmVals->end();
+        return pmVals.end();
     }
 
 } //NS end

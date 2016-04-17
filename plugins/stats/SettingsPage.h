@@ -23,7 +23,6 @@
 
 #include <QWidget>
 
-#include <klocale.h>
 #include <kcolorbutton.h>
 
 #include <interfaces/prefpageinterface.h>

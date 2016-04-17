@@ -33,8 +33,6 @@
 #include <QImage>
 #include <QPalette>
 
-#include <kfiledialog.h>
-#include <kurl.h>
 #include <QMenu>
 
 #include <utility>
@@ -55,7 +53,7 @@ namespace kt
         Q_OBJECT
     private:
         ///Pointer to context menu
-        std::auto_ptr<QMenu> pmCtxMenu;
+        QMenu* pmCtxMenu;
 
         ///Height of the chart area ( \b not widget height!)
         inline wgtunit_t height() const;
@@ -133,7 +131,7 @@ namespace kt
         void removeDataSet(const size_t idx);
         void zero(const size_t idx);
         void zeroAll();
-        void setUnitName(const QString& rN);
+        void setUnitName(const QString& rN) {pmUnitName = rN;}
         void setPen(const size_t idx, const QPen& rP);
         void setXMax(const wgtunit_t x);
         void setYMax(const wgtunit_t y);
@@ -141,7 +139,7 @@ namespace kt
         void setUuid(const size_t idx, const QUuid& rQ);
         int16_t findUuidInSet(const QUuid& rQ) const;
         void setMaxMode(const MaxMode mm);
-        const QUuid* getUuid(const size_t idx) const;
+        QUuid getUuid(const size_t idx) const;
         QString makeLegendString() ;
         void setLegend(const QString& rL);
         void update();

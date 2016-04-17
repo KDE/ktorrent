@@ -26,8 +26,6 @@
 #include <QUuid>
 #include <QPaintEvent>
 
-#include <klocale.h>
-
 #include <memory>
 #include <stdint.h>
 
@@ -75,12 +73,12 @@ namespace kt
         /** \brief Get name of a unit used shown chart
         \return Name
         */
-        const QString* getUnitName() const;
+        QString getUnitName() const {return pmUnitName;}
         /** \brief Get UUID of the dataset
         \param idx Index of the dataset
         \return UUID
         */
-        virtual const QUuid* getUuid(const size_t idx) const = 0;
+        virtual QUuid getUuid(const size_t idx) const = 0;
 
         /** \brief Gets the begin of dataset as const_iterator
         \return Beginning of the set
@@ -196,9 +194,9 @@ namespace kt
 
     protected:
         ///Pointer to chart's data container
-        std::auto_ptr<val_t> pmVals;
+        val_t pmVals;
         ///Pointer to a name of the unit used on chart
-        std::auto_ptr<QString> pmUnitName;
+        QString pmUnitName;
         ///Current maximum mode
         MaxMode mCurrMaxMode;
         ///Current maximum on OX

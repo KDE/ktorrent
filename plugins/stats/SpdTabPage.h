@@ -26,8 +26,6 @@
 #include <QPen>
 #include <QList>
 
-#include <klocale.h>
-
 #include <interfaces/plugin.h>
 #include <interfaces/coreinterface.h>
 #include <torrent/torrentcontrol.h>
@@ -92,14 +90,14 @@ namespace kt
 
     private:
         ///Page's UI
-        std::auto_ptr<Ui::SpdWgt> pmUiSpd;
+        Ui::SpdWgt* pmUiSpd;
 
         ///Dl speeds chart widget
-        std::auto_ptr<ChartDrawer> pmDlChtWgt;
+        ChartDrawer* pmDlChtWgt;
         ///Peers speeds chart widget
-        std::auto_ptr<ChartDrawer> pmPeersChtWgt;
+        ChartDrawer* pmPeersChtWgt;
         ///Ul speeds chart widget
-        std::auto_ptr<ChartDrawer> pmUlChtWgt;
+        ChartDrawer* pmUlChtWgt;
 
         ///Dl average
         avg_t mDlAvg;

@@ -4,7 +4,7 @@
 		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
 		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
 		
-	<kcfgfile name="ktstatspluginrc"/>
+	<kcfgfile name="ktorrent_statsrc"/>
 	<group name="general">
 		<entry name="UpdateEveryGuiUpdates" type="UInt">
 			<label>Update charts every n gui updates</label>
