@@ -39,28 +39,33 @@ namespace kt
 
     void GeneralPref::loadSettings()
     {
+        kcfg_tempDir->setProperty("kcfg_property", "text");
+        kcfg_saveDir->setProperty("kcfg_property", "text");
+        kcfg_torrentCopyDir->setProperty("kcfg_property", "text");
+        kcfg_completedDir->setProperty("kcfg_property", "text");
+
         if (Settings::tempDir().isEmpty())
-            kcfg_tempDir->setUrl(QUrl::fromLocalFile(kt::DataDir()));
+            kcfg_tempDir->setText(kt::DataDir());
         else
-            kcfg_tempDir->setUrl(QUrl::fromLocalFile(Settings::tempDir()));
+            kcfg_tempDir->setText(Settings::tempDir());
 
         kcfg_saveDir->setEnabled(Settings::useSaveDir());
         if (Settings::saveDir().isEmpty())
-            kcfg_saveDir->setUrl(QUrl::fromLocalFile(QDir::homePath()));
+            kcfg_saveDir->setText(QDir::homePath());
         else
-            kcfg_saveDir->setUrl(QUrl::fromLocalFile(Settings::saveDir()));
+            kcfg_saveDir->setText(Settings::saveDir());
 
         kcfg_torrentCopyDir->setEnabled(Settings::useTorrentCopyDir());
         if (Settings::torrentCopyDir().isEmpty())
-            kcfg_torrentCopyDir->setUrl(QUrl::fromLocalFile(QDir::homePath()));
+            kcfg_torrentCopyDir->setText(QDir::homePath());
         else
-            kcfg_torrentCopyDir->setUrl(QUrl::fromLocalFile(Settings::torrentCopyDir()));
+            kcfg_torrentCopyDir->setText(Settings::torrentCopyDir());
 
         kcfg_completedDir->setEnabled(Settings::useCompletedDir());
         if (Settings::completedDir().isEmpty())
-            kcfg_completedDir->setUrl(QUrl::fromLocalFile(QDir::homePath()));
+            kcfg_completedDir->setText(QDir::homePath());
         else
-            kcfg_completedDir->setUrl(QUrl::fromLocalFile(Settings::completedDir()));
+            kcfg_completedDir->setText(Settings::completedDir());
 
 //          kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
 //          kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
