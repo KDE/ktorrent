@@ -22,6 +22,7 @@
 #define PASTEDIALOG_H
 
 #include <KDialog>
+#include <KSharedConfig>
 #include "ui_pastedlgbase.h"
 
 

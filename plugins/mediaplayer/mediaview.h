@@ -25,7 +25,7 @@
 #include <QListView>
 #include <QCheckBox>
 #include <QSortFilterProxyModel>
-#include <KSharedConfigPtr>
+#include <KSharedConfig>
 #include "mediafile.h"
 
 
