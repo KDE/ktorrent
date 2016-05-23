@@ -119,9 +119,9 @@ namespace kt
         foreach (SearchWidget* w, searches)
         {
             enc.beginDict();
-            enc.write("TEXT", w->getSearchText());
-            enc.write("URL", w->getCurrentUrl().toDisplayString());
-            enc.write("SBTEXT", w->getSearchBarText());
+            enc.write("TEXT", w->getSearchText().toUtf8());
+            enc.write("URL", w->getCurrentUrl().toDisplayString().toUtf8());
+            enc.write("SBTEXT", w->getSearchBarText().toUtf8());
             enc.write("ENGINE", (bt::Uint32)w->getSearchBarEngine());
             enc.end();
         }
