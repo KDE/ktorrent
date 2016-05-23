@@ -39,7 +39,7 @@ include_directories(
    ${Boost_INCLUDE_DIR}
 )
 
-add_definitions(-DQT_USE_QSTRINGBUILDER -DQT_NO_URL_CAST_FROM_STRING)
+add_definitions(-DQT_USE_QSTRINGBUILDER -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_TO_ASCII)
 
 add_subdirectory(libktcore)
 add_subdirectory(plugins)
