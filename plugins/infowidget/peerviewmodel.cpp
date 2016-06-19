@@ -21,6 +21,7 @@
 #include "peerviewmodel.h"
 #include <QIcon>
 #include <QLocale>
+#include <QStandardPaths>
 #include <klocalizedstring.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
@@ -44,7 +45,12 @@ namespace kt
             yes = QIcon::fromTheme(QStringLiteral("dialog-ok"));
             no = QIcon::fromTheme(QStringLiteral("dialog-cancel"));
             icons_loaded = true;
-            flagDB.addFlagSource(QStringLiteral("/usr/share/locale/l10n/%1/flag.png")); //part of kde-runtime-data package
+
+            QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                  "kf5/locale/countries",
+                                                  QStandardPaths::LocateDirectory);
+            if (!path.isEmpty())
+                flagDB.addFlagSource(path+QStringLiteral("/%1/flag.png"));
         }
 
         if (geo_ip)
