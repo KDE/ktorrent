@@ -73,14 +73,14 @@ namespace kt
         m_groups->addItems(grps);
     }
 
-    void PasteDialog::loadState(KSharedConfigPtr cfg)
+    void PasteDialog::loadState(KSharedConfig::Ptr cfg)
     {
         KConfigGroup g = cfg->group("PasteDlg");
         m_silently->setChecked(g.readEntry("silently", false));
         m_groups->setCurrentIndex(g.readEntry("group", 0));
     }
 
-    void PasteDialog::saveState(KSharedConfigPtr cfg)
+    void PasteDialog::saveState(KSharedConfig::Ptr cfg)
     {
         KConfigGroup g = cfg->group("PasteDlg");
         g.writeEntry("silently", m_silently->isChecked());
