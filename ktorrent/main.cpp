@@ -114,6 +114,7 @@ int main(int argc, char** argv)
     //FIXME i18n KGlobal::locale()->insertCatalog("libktorrent");
 
     QApplication app(argc, argv);
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("ktorrent")));
     KCrash::initialize();
 
     QCommandLineParser parser;

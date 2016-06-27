@@ -68,8 +68,8 @@ namespace kt
         MediaView(MediaModel* model, QWidget* parent);
         virtual ~MediaView();
 
-        void saveState(KSharedConfigPtr cfg);
-        void loadState(KSharedConfigPtr cfg);
+        void saveState(KSharedConfig::Ptr cfg);
+        void loadState(KSharedConfig::Ptr cfg);
 
     signals:
         void doubleClicked(const MediaFileRef& mf);

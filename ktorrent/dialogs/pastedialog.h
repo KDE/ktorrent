@@ -44,12 +44,12 @@ namespace kt
         /**
         * Load the state of the dialog
         */
-        void loadState(KSharedConfigPtr cfg);
+        void loadState(KSharedConfig::Ptr cfg);
 
         /**
         * Save the state of the dialog
         */
-        void saveState(KSharedConfigPtr cfg);
+        void saveState(KSharedConfig::Ptr cfg);
 
     public slots:
         virtual void accept();

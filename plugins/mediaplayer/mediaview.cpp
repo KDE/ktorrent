@@ -146,7 +146,7 @@ namespace kt
         filter->setShowIncomplete(on);
     }
 
-    void MediaView::loadState(KSharedConfigPtr cfg)
+    void MediaView::loadState(KSharedConfig::Ptr cfg)
     {
         KConfigGroup g = cfg->group("MediaView");
         show_incomplete->setChecked(g.readEntry("show_incomplete", false));
@@ -154,7 +154,7 @@ namespace kt
 
     }
 
-    void MediaView::saveState(KSharedConfigPtr cfg)
+    void MediaView::saveState(KSharedConfig::Ptr cfg)
     {
         KConfigGroup g = cfg->group("MediaView");
         g.writeEntry("show_incomplete", show_incomplete->isChecked());
