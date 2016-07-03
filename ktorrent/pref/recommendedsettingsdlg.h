@@ -21,7 +21,7 @@
 #ifndef KTRECOMMENDEDSETTINGSDLG_H
 #define KTRECOMMENDEDSETTINGSDLG_H
 
-#include <kdialog.h>
+#include <QDialog>
 #include <util/constants.h>
 #include "ui_recommendedsettingsdlg.h"
 
@@ -31,7 +31,7 @@ namespace kt
     /**
         Dialog to compute the best settings
     */
-    class RecommendedSettingsDlg : public KDialog, public Ui_RecommendedSettingsDlg
+    class RecommendedSettingsDlg : public QDialog, public Ui_RecommendedSettingsDlg
     {
         Q_OBJECT
     public:

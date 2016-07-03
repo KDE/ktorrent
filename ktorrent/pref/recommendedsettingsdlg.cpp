@@ -32,13 +32,14 @@ namespace kt
 {
 
     RecommendedSettingsDlg::RecommendedSettingsDlg(QWidget* parent)
-        : KDialog(parent)
+        : QDialog(parent)
     {
         setWindowTitle(i18n("Calculate Recommended Settings"));
-        setupUi(mainWidget());
-        setButtons(KDialog::Apply | KDialog::Cancel);
+        setupUi(this);
+        connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+        connect(m_buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked,
+                this, &RecommendedSettingsDlg::apply);
         connect(m_calculate, SIGNAL(clicked()), this, SLOT(calculate()));
-        connect(this, SIGNAL(applyClicked()), this, SLOT(apply()));
         connect(m_chk_avg_speed_slot, SIGNAL(toggled(bool)), this, SLOT(avgSpeedSlotToggled(bool)));
         connect(m_chk_sim_torrents, SIGNAL(toggled(bool)), this, SLOT(simTorrentsToggled(bool)));
         connect(m_chk_slots, SIGNAL(toggled(bool)), this, SLOT(slotsToggled(bool)));
@@ -69,7 +70,7 @@ namespace kt
             Settings::setNumUploadSlots(max_slots);
             Settings::setMaxDownloads(max_downloads);
             Settings::setMaxSeeds(max_seeds);*/
-        KDialog::accept();
+        QDialog::accept();
     }
 
     void RecommendedSettingsDlg::saveState(KSharedConfigPtr cfg)
