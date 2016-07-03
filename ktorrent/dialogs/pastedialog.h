@@ -34,7 +34,7 @@ namespace kt
      * @author Ivan Vasic
      * @brief Torrent URL paste dialog
      **/
-    class PasteDialog: public KDialog, public Ui_PasteDlgBase
+    class PasteDialog: public QDialog, public Ui_PasteDlgBase
     {
         Q_OBJECT
     public:

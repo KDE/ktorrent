@@ -33,9 +33,9 @@
 namespace kt
 {
     PasteDialog::PasteDialog(Core* core, QWidget* parent, Qt::WFlags fl)
-        : KDialog(parent, fl)
+        : QDialog(parent, fl)
     {
-        setupUi(mainWidget());
+        setupUi(this);
         setWindowTitle(i18n("Open an URL"));
 
         m_core = core;
@@ -43,6 +43,9 @@ namespace kt
         QString text = cb->text(QClipboard::Clipboard);
 
         QUrl url = QUrl(text);
+
+        connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+        connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
         if (url.isValid())
             m_url->setText(text);

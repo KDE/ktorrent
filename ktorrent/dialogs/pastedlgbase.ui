@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PasteDlgBase</class>
- <widget class="QWidget" name="PasteDlgBase">
+ <widget class="QDialog" name="PasteDlgBase">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>454</width>
-    <height>76</height>
+    <width>478</width>
+    <height>148</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Open an URL</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="margin">
-    <number>0</number>
-   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -89,6 +86,13 @@
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="m_buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
