@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>SpeedLimitsDlg</class>
- <widget class="QWidget" name="SpeedLimitsDlg">
+ <widget class="QDialog" name="SpeedLimitsDlg">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,9 +14,6 @@
    <string>Speed Limits</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="margin">
-    <number>0</number>
-   </property>
    <item>
     <widget class="QLabel" name="m_main_caption">
      <property name="text">
@@ -38,7 +35,7 @@
      </item>
      <item>
       <widget class="QLineEdit" name="m_filter">
-       <property name="clearButtonEnabled" stdset="0">
+       <property name="clearButtonEnabled">
         <bool>true</bool>
        </property>
       </widget>
@@ -111,6 +108,13 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="m_buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
     </widget>
    </item>
    <item>

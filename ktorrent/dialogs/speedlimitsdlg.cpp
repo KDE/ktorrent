@@ -42,10 +42,9 @@ namespace kt
 
 
     SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidget* parent)
-        : KDialog(parent), core(core), current(current)
+        : QDialog(parent), core(core), current(current)
     {
-        setButtons(KDialog::Ok | KDialog::Apply | KDialog::Cancel);
-        setupUi(mainWidget());
+        setupUi(this);
         setWindowIcon(QIcon::fromTheme("kt-speed-limits"));
         setWindowTitle(i18n("Speed Limits"));
 
@@ -63,11 +62,12 @@ namespace kt
         m_speed_limits_view->header()->setClickable(true);
         m_speed_limits_view->setAlternatingRowColors(true);
 
-        connect(this, SIGNAL(applyClicked()), this, SLOT(apply()));
-
-        QPushButton* apply_btn = button(KDialog::Apply);
+        QPushButton* apply_btn = m_buttonBox->button(QDialogButtonBox::Apply);
         apply_btn->setEnabled(false);
-        connect(model, SIGNAL(enableApply(bool)), apply_btn, SLOT(setEnabled(bool)));
+        connect(model, &SpeedLimitsModel::enableApply, apply_btn, &QPushButton::setEnabled);
+        connect(apply_btn, &QPushButton::clicked, this, &SpeedLimitsDlg::apply);
+        connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+        connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
         m_upload_rate->setValue(Settings::maxUploadRate());
         m_download_rate->setValue(Settings::maxDownloadRate());
@@ -144,7 +144,7 @@ namespace kt
     void SpeedLimitsDlg::apply()
     {
         model->apply();
-        button(KDialog::Apply)->setEnabled(false);
+        m_buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 
         bool apply = false;
         if (Settings::maxUploadRate() != m_upload_rate->value())
@@ -168,7 +168,7 @@ namespace kt
 
     void SpeedLimitsDlg::spinBoxValueChanged(int)
     {
-        button(KDialog::Apply)->setEnabled(true);
+        m_buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
     }
 
 }

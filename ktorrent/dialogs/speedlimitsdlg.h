@@ -21,7 +21,7 @@
 #ifndef SPEEDLIMITSDLG_H
 #define SPEEDLIMITSDLG_H
 
-#include <KDialog>
+#include <QDialog>
 #include "ui_speedlimitsdlg.h"
 
 namespace bt
@@ -35,7 +35,7 @@ namespace kt
     class SpeedLimitsModel;
 
     /// Dialog to modify the speed limits of a torrent
-    class SpeedLimitsDlg : public KDialog, public Ui_SpeedLimitsDlg
+    class SpeedLimitsDlg : public QDialog, public Ui_SpeedLimitsDlg
     {
         Q_OBJECT
 
