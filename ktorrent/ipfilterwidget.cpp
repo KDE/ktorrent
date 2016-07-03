@@ -46,12 +46,11 @@ namespace kt
 
 
     IPFilterWidget::IPFilterWidget(QWidget* parent)
-        : KDialog(parent)
+        : QDialog(parent)
     {
         setAttribute(Qt::WA_DeleteOnClose);
-        setupUi(mainWidget());
-        setButtons(KDialog::None);
-        setCaption(i18n("IP Filter List"));
+        setupUi(this);
+        setWindowTitle(i18n("IP Filter List"));
 
         KGuiItem::assign(m_add, KStandardGuiItem::add());
         KGuiItem::assign(m_clear, KStandardGuiItem::clear());
@@ -91,7 +90,6 @@ namespace kt
         connect(m_save_as, &QPushButton::clicked, this, &IPFilterWidget::save);
         connect(m_open, &QPushButton::clicked, this, &IPFilterWidget::open);
         connect(m_remove, &QPushButton::clicked, this, &IPFilterWidget::remove);
-        connect(this, &IPFilterWidget::closeClicked, this, &IPFilterWidget::reject);
     }
 
     void IPFilterWidget::add()
@@ -162,7 +160,7 @@ namespace kt
     void IPFilterWidget::accept()
     {
         saveFilter(kt::DataDir() + QLatin1String("ip_filter"));
-        KDialog::accept();
+        QDialog::accept();
     }
 
     void IPFilterWidget::saveFilter(const QString& fn)

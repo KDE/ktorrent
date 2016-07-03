@@ -21,7 +21,7 @@
 #define IPFILTERWIDGET_H
 
 #include "ui_ipfilterwidget.h"
-#include <KDialog>
+#include <QDialog>
 
 namespace kt
 {
@@ -32,7 +32,7 @@ namespace kt
     * @brief Integrated IPFilter GUI class.
     * Used to show, add and remove banned peers from blacklist.
     */
-    class IPFilterWidget: public KDialog, public Ui_IPFilterWidget
+    class IPFilterWidget: public QDialog, public Ui_IPFilterWidget
     {
         Q_OBJECT
     public:

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>IPFilterWidget</class>
- <widget class="QWidget" name="IPFilterWidget">
+ <widget class="QDialog" name="IPFilterWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>632</width>
-    <height>219</height>
+    <height>323</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@ You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-
        <property name="text">
         <string>127.0.0.1</string>
        </property>
-       <property name="clearButtonEnabled" stdset="0">
+       <property name="clearButtonEnabled">
         <bool>true</bool>
        </property>
       </widget>
