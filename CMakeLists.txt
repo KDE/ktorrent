@@ -46,7 +46,7 @@ add_subdirectory(plugins)
 add_subdirectory(ktorrent)
 #add_subdirectory(ktupnptest)
 #add_subdirectory(plasma)
-#add_subdirectory(ktmagnetdownloader)
+add_subdirectory(ktmagnetdownloader)
 add_subdirectory(doc)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

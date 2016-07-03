@@ -134,23 +134,23 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
     {
         BEncoder enc(&fptr);
         enc.beginDict();
-        Qlist<QUrl> trs = mlink.trackers();
+        QList<QUrl> trs = mlink.trackers();
         if (trs.count())
         {
-            enc.write("announce");
-            enc.write(trs.first().prettyUrl());
+            enc.write(QByteArrayLiteral("announce"));
+            enc.write(trs.first().toEncoded());
             if (trs.count() > 1)
             {
-                enc.write("announce-list");
+                enc.write(QByteArrayLiteral("announce-list"));
                 enc.beginList();
                 foreach (const QUrl& u, trs)
                 {
-                    enc.write(u.toDisplayString());
+                    enc.write(u.toEncoded());
                 }
                 enc.end();
             }
         }
-        enc.write("info");
+        enc.write(QByteArrayLiteral("info"));
         fptr.write(data.data(), data.size());
         enc.end();
         QTimer::singleShot(0, qApp, SLOT(quit()));
