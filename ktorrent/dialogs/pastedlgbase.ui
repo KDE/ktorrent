@@ -76,7 +76,7 @@
         </widget>
        </item>
        <item>
-        <widget class="KComboBox" name="m_groups"/>
+        <widget class="QComboBox" name="m_groups"/>
        </item>
       </layout>
      </item>
@@ -98,13 +98,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
