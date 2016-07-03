@@ -21,7 +21,7 @@
 #ifndef KT_TORRENTCREATORDLG_HH
 #define KT_TORRENTCREATORDLG_HH
 
-#include <KDialog>
+#include <QDialog>
 #include "ui_torrentcreatordlg.h"
 #include <torrent/torrentcreator.h>
 
@@ -34,7 +34,7 @@ namespace kt
     /**
      * Dialog to create torrents with
      */
-    class TorrentCreatorDlg : public KDialog, public Ui_TorrentCreatorDlg
+    class TorrentCreatorDlg : public QDialog, public Ui_TorrentCreatorDlg
     {
         Q_OBJECT
     public:

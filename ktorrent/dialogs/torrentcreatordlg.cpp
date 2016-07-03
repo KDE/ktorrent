@@ -39,17 +39,20 @@ using namespace bt;
 
 namespace kt
 {
-    TorrentCreatorDlg::TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent) : KDialog(parent), core(core), gui(gui), mktor(0)
+    TorrentCreatorDlg::TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent) : QDialog(parent), core(core), gui(gui), mktor(0)
     {
         setAttribute(Qt::WA_DeleteOnClose);
         tracker_completion = webseeds_completion = nodes_completion = 0;
         setWindowTitle(i18n("Create A Torrent"));
-        setupUi(mainWidget());
+        setupUi(this);
         adjustSize();
         loadGroups();
 
         m_url->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly | KFile::Directory);
         m_dht_tab->setEnabled(false);
+
+        connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+        connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
         connect(m_dht, SIGNAL(toggled(bool)), this, SLOT(dhtToggled(bool)));
 
@@ -410,7 +413,7 @@ namespace kt
         m_url->setEnabled(!on);
         m_tabs->setEnabled(!on);
         m_comments->setEnabled(!on);
-        button(Ok)->setEnabled(!on);
+        m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!on);
     }
 
     void TorrentCreatorDlg::updateProgressBar()
