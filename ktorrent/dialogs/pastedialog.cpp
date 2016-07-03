@@ -27,6 +27,7 @@
 #include <KMessageBox>
 #include <klocalizedstring.h>
 #include <KStandardGuiItem>
+#include <KConfigGroup>
 #include <ksharedconfig.h>
 #include <groups/groupmanager.h>
 
