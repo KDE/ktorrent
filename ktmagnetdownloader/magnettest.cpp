@@ -44,14 +44,13 @@ using namespace bt;
 MagnetTest::MagnetTest(const bt::MagnetLink& mlink, QObject* parent) : QObject(parent), mlink(mlink)
 {
     upnp = new bt::UPnPMCastSocket();
-    connect(upnp, SIGNAL(discovered(bt::UPnPRouter*)), this, SLOT(routerDiscovered(bt::UPnPRouter*)));
+    connect(upnp, &bt::UPnPMCastSocket::discovered, this, &MagnetTest::routerDiscovered);
 
     mdownloader = new MagnetDownloader(mlink, this);
-    connect(mdownloader, SIGNAL(foundMetaData(bt::MagnetDownloader*, QByteArray)),
-            this, SLOT(foundMetaData(bt::MagnetDownloader*, QByteArray)));
+    connect(mdownloader, &MagnetDownloader::foundMetadata, this, &MagnetTest::foundMetaData);
 
     QTimer::singleShot(0, this, SLOT(start()));
-    connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(&timer, &QTimer::timeout, this, &MagnetTest::update);
 }
 
 MagnetTest::~MagnetTest()
