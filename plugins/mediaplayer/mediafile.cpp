@@ -21,7 +21,7 @@
 #include "mediafile.h"
 #include <QFile>
 #include <QStringList>
-#include <KMimeType>
+#include <QMimeDatabase>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
@@ -190,8 +190,8 @@ namespace kt
         }
         else
         {
-            KMimeType::Ptr ptr = KMimeType::findByPath(path());
-            return ptr->name().startsWith("video");
+            QMimeDatabase db;
+            return db.mimeTypeForFile(path()).name().startsWith("video");
         }
     }
 

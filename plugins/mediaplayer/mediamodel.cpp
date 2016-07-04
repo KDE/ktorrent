@@ -20,7 +20,6 @@
  ***************************************************************************/
 #include <QMimeData>
 #include <QIcon>
-#include <kmimetype.h>
 #include <klocalizedstring.h>
 #include <util/log.h>
 #include <util/constants.h>
@@ -95,7 +94,7 @@ namespace kt
         case Qt::DisplayRole:
             return mf->name();
         case Qt::DecorationRole:
-            return QIcon::fromTheme(KMimeType::findByPath(mf->path())->iconName());
+            return QIcon::fromTheme(m_mimeDatabase.mimeTypeForFile(mf->path()).iconName());
         case Qt::UserRole: // user role is for finding out if a torrent is complete
             return mf->fullyAvailable();
         case Qt::UserRole + 1:

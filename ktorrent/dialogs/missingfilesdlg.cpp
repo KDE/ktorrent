@@ -26,7 +26,7 @@
 #include <kfilewidget.h>
 #include <krecentdirs.h>
 #include <kiconloader.h>
-#include <kmimetype.h>
+#include <QMimeDatabase>
 #include <kstandardguiitem.h>
 #include <kmessagebox.h>
 #include <KGuiItem>
@@ -50,11 +50,12 @@ namespace kt
 
         KGuiItem::assign(m_cancel, KStandardGuiItem::cancel());
 
+        QMimeDatabase mimeDatabase;
         foreach (const QString& s, missing)
         {
             QListWidgetItem* lwi = new QListWidgetItem(m_file_list);
             lwi->setText(s);
-            lwi->setIcon(SmallIcon(KMimeType::findByPath(s)->iconName()));
+            lwi->setIcon(SmallIcon(mimeDatabase.mimeTypeForFile(s).iconName()));
         }
 
         m_dnd->setEnabled(tc->getStats().multi_file_torrent);

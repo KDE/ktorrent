@@ -22,6 +22,7 @@
 #define KTMEDIAMODEL_H
 
 #include <QAbstractListModel>
+#include <QMimeDatabase>
 #include <util/constants.h>
 #include "mediafile.h"
 
@@ -81,6 +82,7 @@ namespace kt
     private:
         CoreInterface* core;
         QList<MediaFile::Ptr> items;
+        QMimeDatabase m_mimeDatabase;
     };
 
 }
