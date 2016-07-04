@@ -225,23 +225,23 @@ namespace kt
 
     void ViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
     {
-        QStyleOptionViewItemV4 indicatorOption(option);
+        QStyleOptionViewItem indicatorOption(option);
         initStyleOption(&indicatorOption, index);
         if (index.column() == 0)
-            indicatorOption.viewItemPosition = QStyleOptionViewItemV4::Beginning;
+            indicatorOption.viewItemPosition = QStyleOptionViewItem::Beginning;
         else if (index.column() == index.model()->columnCount() - 1)
-            indicatorOption.viewItemPosition = QStyleOptionViewItemV4::End;
+            indicatorOption.viewItemPosition = QStyleOptionViewItem::End;
         else
-            indicatorOption.viewItemPosition = QStyleOptionViewItemV4::Middle;
+            indicatorOption.viewItemPosition = QStyleOptionViewItem::Middle;
 
-        QStyleOptionViewItemV4 itemOption(option);
+        QStyleOptionViewItem itemOption(option);
         initStyleOption(&itemOption, index);
         if (index.column() == 0)
-            itemOption.viewItemPosition = QStyleOptionViewItemV4::Beginning;
+            itemOption.viewItemPosition = QStyleOptionViewItem::Beginning;
         else if (index.column() == index.model()->columnCount() - 1)
-            itemOption.viewItemPosition = QStyleOptionViewItemV4::End;
+            itemOption.viewItemPosition = QStyleOptionViewItem::End;
         else
-            itemOption.viewItemPosition = QStyleOptionViewItemV4::Middle;
+            itemOption.viewItemPosition = QStyleOptionViewItem::Middle;
 
 
         bt::TorrentInterface* tc = model->torrentFromIndex(index);
@@ -256,7 +256,7 @@ namespace kt
 
 
         //an extender is present - make two rectangles: one to paint the original item, one for the extender
-        QStyleOptionViewItemV4 extOption(option);
+        QStyleOptionViewItem extOption(option);
         initStyleOption(&extOption, index);
         extOption.rect = extenderRect(extender, option, index);
         extender->setGeometry(extOption.rect);
@@ -286,7 +286,7 @@ namespace kt
             QWidget* extender = extenders[tc];
             int extenderHeight = extender->sizeHint().height();
 
-            QStyleOptionViewItemV4 itemOption(option);
+            QStyleOptionViewItem itemOption(option);
             initStyleOption(&itemOption, index);
             itemOption.rect.setHeight(option.rect.height() - extenderHeight);
             editor->setGeometry(itemOption.rect);
