@@ -18,7 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kglobal.h>
+#include <KLocale>
 #include <klocalizedstring.h>
 #include <kcalendarsystem.h>
 #include "edititemdlg.h"
@@ -37,7 +37,7 @@ namespace kt
         connect(m_suspended, SIGNAL(toggled(bool)), this, SLOT(suspendedChanged(bool)));
         connect(m_screensaver_limits, SIGNAL(toggled(bool)), this, SLOT(screensaverLimitsToggled(bool)));
 
-        const KCalendarSystem* cal = KGlobal::locale()->calendar();
+        const KCalendarSystem* cal = KLocale::global()->calendar();
         for (int i = 1; i <= 7; i++)
         {
             m_start_day->addItem(cal->weekDayName(i));
