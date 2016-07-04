@@ -29,7 +29,6 @@
 
 #include <ktoolbar.h>
 #include <klocalizedstring.h>
-#include <kurl.h>
 #include <kfilewidget.h>
 #include <krecentdirs.h>
 

@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "videochunkbar.h"
-#include <KApplication>
+#include <QApplication>
 #include <QStyle>
 #include <QPainter>
 #include <QStyleOption>
@@ -116,7 +116,7 @@ namespace kt
         option.sliderPosition = current_chunk;
         option.rect = QRect(x - 5, 0, 11, contentsRect().height());
 
-        KApplication::style()->drawControl(QStyle::CE_ScrollBarSlider, &option, p, this);
+        QApplication::style()->drawControl(QStyle::CE_ScrollBarSlider, &option, p, this);
     }
 
 
