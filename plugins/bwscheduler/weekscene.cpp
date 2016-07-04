@@ -58,7 +58,7 @@ namespace kt
 
     qreal LongestDayWidth(const QFontMetricsF& fm)
     {
-        const KCalendarSystem* cal = KGlobal::locale()->calendar();
+        const KCalendarSystem* cal = KLocale::global()->calendar();
         qreal wd = 0;
         for (int i = 1; i <= 7; i++)
         {
@@ -93,7 +93,7 @@ namespace kt
 
     void WeekScene::addCalendar()
     {
-        const KCalendarSystem* cal = KGlobal::locale()->calendar();
+        const KCalendarSystem* cal = KLocale::global()->calendar();
 
         QGraphicsTextItem* tmp = addText("Dinges");
         QFontMetricsF fm(tmp->font());
