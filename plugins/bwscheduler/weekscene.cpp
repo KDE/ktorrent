@@ -22,9 +22,7 @@
 
 #include <math.h>
 #include <kformat.h>
-#include <kglobal.h>
 #include <klocalizedstring.h>
-#include <kcalendarsystem.h>
 #include <QPalette>
 #include <QFontMetricsF>
 #include <QGraphicsRectItem>
@@ -58,11 +56,10 @@ namespace kt
 
     qreal LongestDayWidth(const QFontMetricsF& fm)
     {
-        const KCalendarSystem* cal = KLocale::global()->calendar();
         qreal wd = 0;
         for (int i = 1; i <= 7; i++)
         {
-            qreal w = fm.width(cal->weekDayName(i));
+            qreal w = fm.width(QLocale::system().dayName(i));
             if (w > wd)
                 wd = w;
         }
@@ -93,8 +90,6 @@ namespace kt
 
     void WeekScene::addCalendar()
     {
-        const KCalendarSystem* cal = KLocale::global()->calendar();
-
         QGraphicsTextItem* tmp = addText("Dinges");
         QFontMetricsF fm(tmp->font());
         removeItem(tmp);
@@ -119,7 +114,7 @@ namespace kt
             QGraphicsRectItem* item = addRect(xoff + day_width * i, yoff, day_width, 24 * hour_height, pen, brush);
             item->setZValue(1);
 
-            QString day = cal->weekDayName(i + 1);
+            QString day = QLocale::system().dayName(i + 1);
 
             // make sure day is centered in the middle of the column
             qreal dlen = fm.width(day);

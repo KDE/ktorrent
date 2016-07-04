@@ -18,9 +18,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <KLocale>
+#include <QLocale>
 #include <klocalizedstring.h>
-#include <kcalendarsystem.h>
 #include "edititemdlg.h"
 #include "schedule.h"
 #include <QPushButton>
@@ -40,11 +39,11 @@ namespace kt
         connect(m_suspended, SIGNAL(toggled(bool)), this, SLOT(suspendedChanged(bool)));
         connect(m_screensaver_limits, SIGNAL(toggled(bool)), this, SLOT(screensaverLimitsToggled(bool)));
 
-        const KCalendarSystem* cal = KLocale::global()->calendar();
+        QLocale locale(QLocale::system());
         for (int i = 1; i <= 7; i++)
         {
-            m_start_day->addItem(cal->weekDayName(i));
-            m_end_day->addItem(cal->weekDayName(i));
+            m_start_day->addItem(locale.dayName(i));
+            m_end_day->addItem(locale.dayName(i));
         }
 
         m_from->setMaximumTime(QTime(23, 58, 0));
