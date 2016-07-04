@@ -21,7 +21,7 @@
 #ifndef KT_PROPERTIESDLG_H
 #define KT_PROPERTIESDLG_H
 
-#include <KDialog>
+#include <QDialog>
 #include "ui_propertiesdlg.h"
 
 namespace bt
@@ -34,7 +34,7 @@ namespace kt
     /**
         Extender which shows properties about a torrent.
     */
-    class PropertiesDlg : public KDialog, public Ui_PropertiesDlg
+    class PropertiesDlg : public QDialog, public Ui_PropertiesDlg
     {
         Q_OBJECT
     public:

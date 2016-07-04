@@ -27,11 +27,14 @@
 namespace kt
 {
     PropertiesDlg::PropertiesDlg(bt::TorrentInterface* tc, QWidget* parent)
-        : KDialog(parent),
+        : QDialog(parent),
           tc(tc)
     {
-        setupUi(mainWidget());
+        setupUi(this);
         setWindowTitle(i18n("Torrent Settings"));
+
+        connect(m_buttonBox, &QDialogButtonBox::accepted, this, &PropertiesDlg::accept);
+        connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
         QString folder = tc->getMoveWhenCompletedDir();
         if (QFile::exists(folder))
