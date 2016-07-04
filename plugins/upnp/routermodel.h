@@ -31,7 +31,7 @@ namespace bt
 
 namespace net
 {
-    class Port;
+    struct Port;
 }
 
 namespace kt
