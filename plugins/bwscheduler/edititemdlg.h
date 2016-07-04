@@ -21,7 +21,7 @@
 #ifndef KTEDITITEMDLG_H
 #define KTEDITITEMDLG_H
 
-#include <KDialog>
+#include <QDialog>
 #include "ui_edititemdlg.h"
 
 namespace kt
@@ -32,7 +32,7 @@ namespace kt
     /**
         @author
     */
-    class EditItemDlg : public KDialog, public Ui_EditItemDlg
+    class EditItemDlg : public QDialog, public Ui_EditItemDlg
     {
         Q_OBJECT
     public:

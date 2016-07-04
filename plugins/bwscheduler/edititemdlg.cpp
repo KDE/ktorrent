@@ -29,11 +29,14 @@ namespace kt
 {
 
     EditItemDlg::EditItemDlg(kt::Schedule* schedule, ScheduleItem* item, bool new_item, QWidget* parent)
-        : KDialog(parent),
+        : QDialog(parent),
           schedule(schedule),
           item(item)
     {
-        setupUi(mainWidget());
+        setupUi(this);
+        connect(m_buttonBox, &QDialogButtonBox::accepted, this, &EditItemDlg::accept);
+        connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
         connect(m_suspended, SIGNAL(toggled(bool)), this, SLOT(suspendedChanged(bool)));
         connect(m_screensaver_limits, SIGNAL(toggled(bool)), this, SLOT(screensaverLimitsToggled(bool)));
 
@@ -69,7 +72,7 @@ namespace kt
         m_ss_download_limit->setEnabled(!item->suspended && item->screensaver_limits);
         m_ss_upload_limit->setEnabled(!item->suspended && item->screensaver_limits);
 
-        button(Ok)->setEnabled(!schedule->conflicts(item));
+        m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
 
         connect(m_from, SIGNAL(timeChanged(const QTime&)), this, SLOT(fromChanged(const QTime&)));
         connect(m_to, SIGNAL(timeChanged(const QTime&)), this, SLOT(toChanged(const QTime&)));
@@ -90,7 +93,7 @@ namespace kt
             m_to->setTime(time.addSecs(60));
 
         fillItem();
-        button(Ok)->setEnabled(!schedule->conflicts(item));
+        m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
     }
 
     void EditItemDlg::toChanged(const QTime& time)
@@ -100,7 +103,7 @@ namespace kt
             m_from->setTime(time.addSecs(-60));
 
         fillItem();
-        button(Ok)->setEnabled(!schedule->conflicts(item));
+        m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
     }
 
     void EditItemDlg::startDayChanged(int idx)
@@ -110,7 +113,7 @@ namespace kt
             m_end_day->setCurrentIndex(idx);
 
         fillItem();
-        button(Ok)->setEnabled(!schedule->conflicts(item));
+        m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
     }
 
     void EditItemDlg::endDayChanged(int idx)
@@ -120,7 +123,7 @@ namespace kt
             m_start_day->setCurrentIndex(idx);
 
         fillItem();
-        button(Ok)->setEnabled(!schedule->conflicts(item));
+        m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
     }
 
     void EditItemDlg::suspendedChanged(bool on)
