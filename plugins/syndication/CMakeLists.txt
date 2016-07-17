@@ -1,9 +1,3 @@
-find_package(KdepimLibs REQUIRED)
-find_package(Boost REQUIRED)
-
-include_directories(${Boost_INCLUDE_DIR})
-include_directories(${KDEPIMLIBS_INCLUDE_DIR})
-
 set(ktsyndicationplugin_SRC 
 	syndicationplugin.cpp 
 	syndicationactivity.cpp
@@ -25,19 +19,20 @@ set(ktsyndicationplugin_SRC
 
 ki18n_wrap_ui(ktsyndicationplugin_SRC feedwidget.ui managefiltersdlg.ui filtereditor.ui)
 #kconfig_add_kcfg_files(ktsyndicationplugin_SRC syndicationpluginsettings.kcfgc)
-add_library(ktsyndicationplugin MODULE ${ktsyndicationplugin_SRC})
+add_library(ktorrent_syndication MODULE ${ktsyndicationplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_syndication ktorrent_syndication.desktop)
 
 target_link_libraries(
-    ktsyndicationplugin
+    ktorrent_syndication
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
-    Qt5::WebKitWidgets
+    ktorrent
+    KF5::WebKit
     KF5::Parts
-	${KDE4_SYNDICATION_LIBS}
-	${KDE4_KDEWEBKIT_LIBS})
-    
-install(TARGETS ktsyndicationplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktsyndicationplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install(FILES ktsyndicationpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+    KF5::Syndication
+    KF5::KDELibs4Support
+    )
+install(TARGETS ktorrent_syndication DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
+install(FILES ktorrent_syndicationui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 
 add_subdirectory(icons)

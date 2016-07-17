@@ -37,7 +37,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        SyndicationPlugin(QObject* parent, const QStringList& args);
+        SyndicationPlugin(QObject* parent, const QVariantList& args);
         virtual ~SyndicationPlugin();
 
         virtual bool versionCheck(const QString& version) const;

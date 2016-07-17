@@ -13,6 +13,7 @@ find_package(Taglib)
 find_package(Phonon4Qt5)
 
 find_package(KF5 5.15 OPTIONAL_COMPONENTS WebKit IconThemes DNSSD Plotting)
+find_package(KF5 OPTIONAL_COMPONENTS Syndication)
 
 find_package(LibKWorkspace CONFIG)
 set_package_properties(LibKWorkspace
@@ -36,7 +37,9 @@ if (TAGLIB_FOUND AND PHONON_FOUND_EXPERIMENTAL) #AND Qt5Multimedia_FOUND)
   macro_kt_plugin(ENABLE_MEDIAPLAYER_PLUGIN mediaplayer mediaplayer)
 endif()
 #macro_kt_plugin(ENABLE_SCRIPTING_PLUGIN scripting scripting)
-#macro_kt_plugin(ENABLE_SYNDICATION_PLUGIN syndication syndication)
+if (KF5_Syndication_FOUND AND KF5_WebKit_FOUND)
+#  macro_kt_plugin(ENABLE_SYNDICATION_PLUGIN syndication syndication)
+endif()
 macro_kt_plugin(ENABLE_DOWNLOADORDER_PLUGIN downloadorder downloadorder)
 if (LibKWorkspace_FOUND)
   macro_kt_plugin(ENABLE_SHUTDOWN_PLUGIN shutdown shutdown)

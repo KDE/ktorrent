@@ -20,21 +20,21 @@
  ***************************************************************************/
 #include <klocalizedstring.h>
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
+#include <kpluginfactory.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 #include <interfaces/guiinterface.h>
 #include "syndicationplugin.h"
 #include "syndicationactivity.h"
 
-K_EXPORT_COMPONENT_FACTORY(ktsyndicationplugin, KGenericFactory<kt::SyndicationPlugin>("ktsyndicationplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_syndication, "ktorrent_syndication.json", registerPlugin<kt::SyndicationPlugin>();)
 
 using namespace bt;
 
 namespace kt
 {
 
-    SyndicationPlugin::SyndicationPlugin(QObject* parent, const QStringList& args): Plugin(parent), add_feed(0)
+    SyndicationPlugin::SyndicationPlugin(QObject* parent, const QVariantList& args): Plugin(parent), add_feed(0)
     {
         Q_UNUSED(args);
         setupActions();
@@ -111,3 +111,5 @@ namespace kt
 
 
 }
+
+#include "syndicationplugin.moc"
