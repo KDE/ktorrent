@@ -18,9 +18,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QHBoxLayout>
+#include <QInputDialog>
 #include <QToolButton>
 #include <kmessagebox.h>
-#include <kinputdialog.h>
 #include <kmainwindow.h>
 #include <magnet/magnetlink.h>
 #include <interfaces/functions.h>
@@ -115,8 +115,9 @@ namespace kt
     void SyndicationActivity::addFeed()
     {
         bool ok = false;
-        QString url = KInputDialog::getText(i18n("Enter the URL"), i18n("Please enter the URL of the RSS or Atom feed."),
-                                            QString(), &ok, sp->getGUI()->getMainWindow());
+        QString url = QInputDialog::getText(sp->getGUI()->getMainWindow(), i18n("Enter the URL"),
+                                            i18n("Please enter the URL of the RSS or Atom feed."),
+                                            QLineEdit::Normal, QString(), &ok);
         if (!ok || url.isEmpty())
             return;
 

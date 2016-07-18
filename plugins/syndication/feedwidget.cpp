@@ -19,8 +19,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QHeaderView>
+#include <QInputDialog>
 #include <KRun>
-#include <KInputDialog>
 #include <util/log.h>
 #include "ktfeed.h"
 #include "feedwidget.h"
@@ -189,7 +189,7 @@ namespace kt
 
         bool ok = false;
         QString cookie = feed->authenticationCookie();
-        QString nc = KInputDialog::getText(i18n("Authentication Cookie"), i18n("Enter the new authentication cookie"), cookie, &ok);
+        QString nc = QInputDialog::getText(0, i18n("Authentication Cookie"), i18n("Enter the new authentication cookie"), QLineEdit::Normal, cookie, &ok);
         if (ok)
         {
             feed->setAuthenticationCookie(nc);
