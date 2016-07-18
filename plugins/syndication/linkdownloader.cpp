@@ -18,8 +18,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <QRegExp>
-#include <kmimetype.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kio/job.h>
@@ -101,8 +102,8 @@ namespace kt
         }
         else
         {
-            KMimeType::Ptr data_type = KMimeType::findByContent(job->data());
-            if (data_type && data_type->name().contains("html"))
+            QMimeType data_type = QMimeDatabase().mimeTypeForData(job->data());
+            if (data_type.isValid() && data_type.name().contains("html"))
                 handleHtmlPage(job->data());
         }
     }
