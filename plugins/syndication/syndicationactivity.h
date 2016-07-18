@@ -22,7 +22,6 @@
 #define SYNDICATIONACTIVITY_H
 
 #include <QSplitter>
-#include <ktabwidget.h>
 #include <interfaces/activity.h>
 #include <syndication/loader.h>
 

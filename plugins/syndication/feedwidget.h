@@ -22,6 +22,7 @@
 #define KTFEEDWIDGET_H
 
 #include <QWidget>
+#include <kconfiggroup.h>
 #include "ui_feedwidget.h"
 
 namespace kt
