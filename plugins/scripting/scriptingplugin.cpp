@@ -185,7 +185,7 @@ namespace kt
                          "\n *.rb *.py *.js | " + i18n("Scripts") +
                          "\n* |" + i18n("All files");
 
-        KUrl url = KFileDialog::getOpenUrl(KUrl("kfiledialog:///addScript"), filter, getGUI()->getMainWindow());
+        QUrl url = KFileDialog::getOpenUrl(QUrl("kfiledialog:///addScript"), filter, getGUI()->getMainWindow());
         if (!url.isValid())
             return;
 
@@ -193,12 +193,12 @@ namespace kt
         {
             if (url.isLocalFile())
             {
-                model->addScript(url.pathOrUrl());
+                model->addScript(url.toLocalFile());
             }
             else
             {
                 QString script_dir = kt::DataDir() + "scripts" + bt::DirSeparator();
-                KIO::CopyJob* j = KIO::copy(url, KUrl(script_dir + url.fileName()));
+                KIO::CopyJob* j = KIO::copy(url, QUrl::fromLocalFile(script_dir + url.fileName()));
                 connect(j, SIGNAL(result(KJob*)), this, SLOT(scriptDownloadFinished(KJob*)));
             }
         }
