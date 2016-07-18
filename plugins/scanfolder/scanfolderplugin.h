@@ -41,7 +41,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        ScanFolderPlugin(QObject* parent, const QStringList& args);
+        ScanFolderPlugin(QObject* parent, const QVariantList& args);
         virtual ~ScanFolderPlugin();
 
         virtual void load();

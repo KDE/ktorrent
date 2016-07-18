@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#include <kgenericfactory.h>
+#include <kpluginfactory.h>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
@@ -42,12 +42,12 @@
 
 using namespace bt;
 
-K_EXPORT_COMPONENT_FACTORY(ktscanfolderplugin, KGenericFactory<kt::ScanFolderPlugin>("scanfolderplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_scanfolder, "ktorrent_scanfolder.json", registerPlugin<kt::ScanFolderPlugin>();)
 
 namespace kt
 {
 
-    ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QStringList& args)
+    ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QVariantList& args)
         : Plugin(parent),
           tlq(0)
     {
@@ -112,3 +112,5 @@ namespace kt
         return version == KT_VERSION_MACRO;
     }
 }
+
+#include "scanfolderplugin.moc"

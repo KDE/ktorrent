@@ -7,14 +7,15 @@ set(ktscanfolderplugin_SRC
 
 ki18n_wrap_ui(ktscanfolderplugin_SRC scanfolderprefpage.ui)
 kconfig_add_kcfg_files(ktscanfolderplugin_SRC scanfolderpluginsettings.kcfgc)
-add_library(ktscanfolderplugin MODULE ${ktscanfolderplugin_SRC})
+add_library(ktorrent_scanfolder MODULE ${ktscanfolderplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_scanfolder ktorrent_scanfolder.desktop)
 
 target_link_libraries(
-    ktscanfolderplugin
+    ktorrent_scanfolder
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
+    ktorrent
     KF5::Parts
     )
-install(TARGETS ktscanfolderplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktscanfolderplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install(TARGETS ktorrent_scanfolder  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 
