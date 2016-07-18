@@ -50,14 +50,14 @@ namespace kt
 
     }
 
-    void TorrentLoadQueue::add(const KUrl& url)
+    void TorrentLoadQueue::add(const QUrl& url)
     {
         to_load.append(url);
         if (!timer.isActive())
             timer.start(1000);
     }
 
-    void TorrentLoadQueue::add(const KUrl::List& urls)
+    void TorrentLoadQueue::add(const QList<QUrl>& urls)
     {
         to_load.append(urls);
         if (!timer.isActive())
@@ -65,7 +65,7 @@ namespace kt
     }
 
 
-    bool TorrentLoadQueue::validateTorrent(const KUrl& url, QByteArray& data)
+    bool TorrentLoadQueue::validateTorrent(const QUrl& url, QByteArray& data)
     {
         // try to decode file, if it is syntactically correct, we can try to load it
         QFile fptr(url.toLocalFile());
@@ -102,7 +102,7 @@ namespace kt
         if (to_load.isEmpty())
             return;
 
-        KUrl url = to_load.takeFirst();
+        QUrl url = to_load.takeFirst();
 
         QByteArray data;
         if (validateTorrent(url, data))
@@ -127,9 +127,9 @@ namespace kt
             timer.start(1000);
     }
 
-    void TorrentLoadQueue::load(const KUrl& url, const QByteArray& data)
+    void TorrentLoadQueue::load(const QUrl& url, const QByteArray& data)
     {
-        bt::Out(SYS_SNF | LOG_NOTICE) << "ScanFolder: loading " << url.prettyUrl() << bt::endl;
+        bt::Out(SYS_SNF | LOG_NOTICE) << "ScanFolder: loading " << url.toDisplayString() << bt::endl;
         QString group;
         if (ScanFolderPluginSettings::addToGroup())
             group = ScanFolderPluginSettings::group();
@@ -142,7 +142,7 @@ namespace kt
         loadingFinished(url);
     }
 
-    void TorrentLoadQueue::loadingFinished(const KUrl& url)
+    void TorrentLoadQueue::loadingFinished(const QUrl& url)
     {
         QString name = url.fileName();
         QString dirname = QFileInfo(url.toLocalFile()).absolutePath();

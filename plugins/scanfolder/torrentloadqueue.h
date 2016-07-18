@@ -22,7 +22,7 @@
 #define KT_TORRENTLOADQUEUE_H
 
 
-#include <KUrl>
+#include <QUrl>
 #include <QTimer>
 
 namespace kt
@@ -59,12 +59,12 @@ namespace kt
         /**
          * Add a torrent to load.
          */
-        void add(const KUrl& url);
+        void add(const QUrl& url);
 
         /**
          * Add a list of torrents
          */
-        void add(const KUrl::List& urls);
+        void add(const QList<QUrl>& urls);
 
     private:
         /**
@@ -73,14 +73,14 @@ namespace kt
          * @param data The torrent data will be put into this array upon success
          * @return true upon success, false otherwise
          */
-        bool validateTorrent(const KUrl& url, QByteArray& data);
+        bool validateTorrent(const QUrl& url, QByteArray& data);
 
         /**
          * Load a torrent
          * @param url The file url
          * @param data The torrent data
          */
-        void load(const KUrl& url, const QByteArray& data);
+        void load(const QUrl& url, const QByteArray& data);
 
     private slots:
         /**
@@ -93,11 +93,11 @@ namespace kt
          * Loading of a torrent has finished.
          * @param url The url
          */
-        void loadingFinished(const KUrl& url);
+        void loadingFinished(const QUrl& url);
 
     private:
         CoreInterface* core;
-        KUrl::List to_load;
+        QList<QUrl> to_load;
         LoadedTorrentAction action;
         QTimer timer;
     };

@@ -25,7 +25,7 @@
 #include <QThread>
 #include <QMutex>
 #include <QStringList>
-#include <KUrl>
+#include <QUrl>
 #include <util/ptrmap.h>
 #include "scanfolder.h"
 
@@ -56,7 +56,7 @@ namespace kt
          * @param url Directory
          * @param recursive Whether or not to scan resursively
          */
-        void addDirectory(const KUrl& url, bool recursive);
+        void addDirectory(const QUrl& url, bool recursive);
 
         /**
          * Stop the scanning thread.
@@ -73,7 +73,7 @@ namespace kt
         virtual void run();
 
     private:
-        void scan(const KUrl& dir, bool recursive);
+        void scan(const QUrl& dir, bool recursive);
         bool alreadyLoaded(const QDir& d, const QString& torrent);
         void updateFolders();
         virtual void customEvent(QEvent* ev);
@@ -83,7 +83,7 @@ namespace kt
          * Emitted when one or more torrents are found.
          * @param torrents The list of torrents
          */
-        void found(const KUrl::List& torrent);
+        void found(const QList<QUrl>& torrent);
 
     private:
         QMutex mutex;

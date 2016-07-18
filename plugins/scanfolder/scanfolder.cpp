@@ -57,7 +57,7 @@ namespace kt
 
         watch->addDir(dir.toLocalFile(), recursive ? KDirWatch::WatchSubDirs : KDirWatch::WatchDirOnly);
 
-        scanner->addDirectory(dir.toLocalFile(), recursive);
+        scanner->addDirectory(dir, recursive);
     }
 
 
@@ -79,7 +79,7 @@ namespace kt
             return;
 
         Out(SYS_SNF | LOG_NOTICE) << "Directory dirty: " << path << endl;
-        scanner->addDirectory(path, false);
+        scanner->addDirectory(QUrl::fromLocalFile(path), false);
     }
 
     void ScanFolder::setRecursive(bool rec)

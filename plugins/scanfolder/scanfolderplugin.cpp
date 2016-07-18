@@ -64,7 +64,7 @@ namespace kt
         LogSystemManager::instance().registerSystem(i18nc("plugin name", "Scan Folder"), SYS_SNF);
         tlq = new TorrentLoadQueue(getCore(), this);
         scanner = new ScanThread();
-        connect(scanner, SIGNAL(found(KUrl::List)), tlq, SLOT(add(KUrl::List)), Qt::QueuedConnection);
+        connect(scanner, SIGNAL(found(QList<QUrl>)), tlq, SLOT(add(QList<QUrl>)), Qt::QueuedConnection);
         pref = new ScanFolderPrefPage(this, 0);
         getGUI()->addPrefPage(pref);
         connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(updateScanFolders()));

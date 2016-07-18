@@ -46,13 +46,13 @@ namespace kt
     class RecursiveScanEvent : public QEvent
     {
     public:
-        RecursiveScanEvent(const KUrl& url) : QEvent((QEvent::Type)RECURSIVE_SCAN_EVENT), url(url)
+        RecursiveScanEvent(const QUrl& url) : QEvent((QEvent::Type)RECURSIVE_SCAN_EVENT), url(url)
         {}
 
         virtual ~RecursiveScanEvent()
         {}
 
-        KUrl url;
+        QUrl url;
     };
 
     ScanThread::ScanThread()
@@ -75,7 +75,7 @@ namespace kt
     }
 
 
-    void ScanThread::addDirectory(const KUrl& url, bool recursive)
+    void ScanThread::addDirectory(const QUrl& url, bool recursive)
     {
         scan(url, recursive);
     }
@@ -139,7 +139,7 @@ namespace kt
             if (QDir(folder).exists())
             {
                 // only add folder when it exists
-                ScanFolder* sf = new ScanFolder(this, folder, recursive);
+                ScanFolder* sf = new ScanFolder(this, QUrl::fromLocalFile(folder), recursive);
                 scan_folders.insert(folder, sf);
             }
         }
@@ -164,7 +164,7 @@ namespace kt
     }
 
 
-    void ScanThread::scan(const KUrl& dir, bool recursive)
+    void ScanThread::scan(const QUrl& dir, bool recursive)
     {
         if (stop_requested)
             return;
@@ -174,11 +174,11 @@ namespace kt
         QDir d(dir.toLocalFile());
         QStringList files = d.entryList(filters, QDir::Readable | QDir::Files);
 
-        KUrl::List torrents;
+        QList<QUrl> torrents;
         foreach (const QString& tor, files)
         {
             if (!alreadyLoaded(d, tor))
-                torrents.append(d.absoluteFilePath(tor));
+                torrents.append(QUrl::fromLocalFile(d.absoluteFilePath(tor)));
         }
 
         found(torrents);
@@ -195,7 +195,7 @@ namespace kt
             {
                 if (subdir != QLatin1String(".") && subdir != QLatin1String("..") && subdir != loaded_localized)
                 {
-                    QCoreApplication::postEvent(this, new RecursiveScanEvent(d.absoluteFilePath(subdir)));
+                    QCoreApplication::postEvent(this, new RecursiveScanEvent(QUrl::fromLocalFile(d.absoluteFilePath(subdir))));
                 }
             }
         }
