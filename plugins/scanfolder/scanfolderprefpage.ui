@@ -21,7 +21,7 @@
    <item>
     <layout class="QHBoxLayout">
      <item>
-      <widget class="KListWidget" name="m_folders">
+      <widget class="QListWidget" name="m_folders">
        <property name="toolTip">
         <string>List of folders which will be scanned for torrents by this plugin.</string>
        </property>
@@ -140,13 +140,6 @@ Warning: you will permanently lose this file.</string>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KListWidget</class>
-   <extends>QListWidget</extends>
-   <header>klistwidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
