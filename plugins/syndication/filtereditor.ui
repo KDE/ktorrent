@@ -39,7 +39,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="KEditListBox" name="m_word_matches">
+        <widget class="KEditListWidget" name="m_word_matches">
          <property name="toolTip">
           <string>&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The string to find in the title of an item. Simple wildcard syntax is supported :&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
@@ -67,11 +67,8 @@
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;&quot;&gt;Sets of characters can be represented in square brackets. Within the character class, like outside, backslash has no special meaning.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;&quot;&gt;For example the *.torrent will match any item which ends in .torrent. &lt;/p&gt;</string>
          </property>
-         <property name="title">
-          <string/>
-         </property>
          <property name="buttons">
-          <set>KEditListBox::Add|KEditListBox::Remove</set>
+          <set>KEditListWidget::Add|KEditListWidget::Remove</set>
          </property>
         </widget>
        </item>
@@ -107,7 +104,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="KEditListBox" name="m_exclusion_patterns">
+        <widget class="KEditListWidget" name="m_exclusion_patterns">
          <property name="toolTip">
           <string>&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The string to find in the title of an item. Simple wildcard syntax is supported :&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
@@ -135,11 +132,8 @@
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;&quot;&gt;Sets of characters can be represented in square brackets. Within the character class, like outside, backslash has no special meaning.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;&quot;&gt;For example the *.torrent will match any item which ends in .torrent. &lt;/p&gt;</string>
          </property>
-         <property name="title">
-          <string/>
-         </property>
          <property name="buttons">
-          <set>KEditListBox::Add|KEditListBox::Remove</set>
+          <set>KEditListWidget::Add|KEditListWidget::Remove</set>
          </property>
         </widget>
        </item>
@@ -415,9 +409,9 @@ Will download episodes 1, 3, 4, 5, 6 and 9</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KEditListBox</class>
-   <extends>QGroupBox</extends>
-   <header>keditlistbox.h</header>
+   <class>KEditListWidget</class>
+   <extends>QWidget</extends>
+   <header>keditlistwidget.h</header>
   </customwidget>
   <customwidget>
    <class>KUrlRequester</class>
