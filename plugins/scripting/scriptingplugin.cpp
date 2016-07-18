@@ -18,7 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kgenericfactory.h>
+#include <kpluginfactory.h>
 #include <kactioncollection.h>
 #include <kfiledialog.h>
 #include <kmainwindow.h>
@@ -45,14 +45,14 @@
 #include "script.h"
 #include "api/scriptingmodule.h"
 
-K_EXPORT_COMPONENT_FACTORY(ktscriptingplugin, KGenericFactory<kt::ScriptingPlugin>("ktscriptingplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_scripting, "ktorrent_scripting.json", registerPlugin<kt::ScriptingPlugin>();)
 
 using namespace bt;
 
 namespace kt
 {
 
-    ScriptingPlugin::ScriptingPlugin(QObject* parent, const QStringList& args)
+    ScriptingPlugin::ScriptingPlugin(QObject* parent, const QVariantList& args)
         : Plugin(parent)
     {
         Q_UNUSED(args);
@@ -258,3 +258,5 @@ namespace kt
         return version == KT_VERSION_MACRO;
     }
 }
+
+#include "scriptingplugin.moc"

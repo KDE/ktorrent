@@ -11,17 +11,18 @@ set(ktscriptingplugin_SRC
 
 ki18n_wrap_ui(ktscriptingplugin_SRC scriptproperties.ui)
 #kconfig_add_kcfg_files(ktscriptingplugin_SRC scriptingpluginsettings.kcfgc)
-add_library(ktscriptingplugin MODULE ${ktscriptingplugin_SRC})
+add_library(ktorrent_scripting MODULE ${ktscriptingplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_scripting ktorrent_scripting.desktop)
 
 target_link_libraries(
-    ktscriptingplugin
+    ktorrent_scripting
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
+    ktorrent
     KF5::KDELibs4Support
     KF5::KrossCore
     KF5::Parts
     Qt5::Core
     )
-install(TARGETS ktscriptingplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktscriptingplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install(FILES ktscriptingpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
+install(TARGETS ktorrent_scripting  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
+install(FILES ktorrent_scriptingui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

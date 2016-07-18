@@ -38,7 +38,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        ScriptingPlugin(QObject* parent, const QStringList& args);
+        ScriptingPlugin(QObject* parent, const QVariantList& args);
         virtual ~ScriptingPlugin();
 
         virtual void load();
