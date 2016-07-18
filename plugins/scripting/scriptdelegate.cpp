@@ -110,7 +110,7 @@ namespace kt
         return QSize(w + KIconLoader::SizeMedium, h);
     }
 
-    QList< QWidget* > ScriptDelegate::createItemWidgets() const
+    QList< QWidget* > ScriptDelegate::createItemWidgets(const QModelIndex& index) const
     {
         QList<QWidget*> widgets;
 
