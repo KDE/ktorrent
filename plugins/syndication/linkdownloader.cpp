@@ -38,7 +38,7 @@ using namespace bt;
 namespace kt
 {
 
-    LinkDownloader::LinkDownloader(const KUrl& url,
+    LinkDownloader::LinkDownloader(const QUrl& url,
                                    kt::CoreInterface* core,
                                    bool verbose,
                                    const QString& group,
@@ -47,7 +47,7 @@ namespace kt
         : url(url), core(core), verbose(verbose), group(group),
           location(location), move_on_completion(move_on_completion)
     {
-        base_url = url.protocol() + "://" + url.host();
+        base_url = url.scheme() + "://" + url.host();
         if (url.port(80) != 80)
             base_url += ":" + QString::number(url.port(80));
 
@@ -76,7 +76,7 @@ namespace kt
         KIO::StoredTransferJob* job = (KIO::StoredTransferJob*)j;
         if (job->error())
         {
-            Out(SYS_SYN | LOG_NOTICE) << "Failed to download " << url.prettyUrl() << " : " << job->errorString() << endl;
+            Out(SYS_SYN | LOG_NOTICE) << "Failed to download " << url.toDisplayString() << " : " << job->errorString() << endl;
             if (verbose)
                 job->ui()->showErrorMessage();
 
@@ -157,10 +157,10 @@ namespace kt
                 if (!href_link.startsWith("/"))
                     href_link = base_url + href_link;
                 else
-                    href_link = url.protocol() + "://" + url.authority() + href_link;
+                    href_link = url.scheme() + "://" + url.authority() + href_link;
             }
 
-            link_url = KUrl(href_link);
+            link_url = QUrl(href_link);
             if (link_url.isValid())
                 links.append(link_url);
 
@@ -173,11 +173,11 @@ namespace kt
     void LinkDownloader::tryTorrentLinks()
     {
         // First try links ending with .torrent
-        foreach (KUrl u, links)
+        foreach (QUrl u, links)
         {
             if (u.path().endsWith(".torrent") || u.path().endsWith(".TORRENT"))
             {
-                Out(SYS_SYN | LOG_DEBUG) << "Trying torrent link: " << u.prettyUrl() << endl;
+                Out(SYS_SYN | LOG_DEBUG) << "Trying torrent link: " << u.toDisplayString() << endl;
                 link_url = u;
                 KIO::StoredTransferJob* j = KIO::storedGet(u, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
                 connect(j, SIGNAL(result(KJob*)), this, SLOT(torrentDownloadFinished(KJob*)));
@@ -194,9 +194,9 @@ namespace kt
     {
         if (links.count() == 0)
         {
-            Out(SYS_SYN | LOG_DEBUG) << "Couldn't find a valid link to a torrent on " << url.prettyUrl() << endl;
+            Out(SYS_SYN | LOG_DEBUG) << "Couldn't find a valid link to a torrent on " << url.toDisplayString() << endl;
             if (verbose)
-                KMessageBox::error(0, i18n("Could not find a valid link to a torrent on %1", url.prettyUrl()));
+                KMessageBox::error(0, i18n("Could not find a valid link to a torrent on %1", url.toDisplayString()));
 
             finished(false);
             deleteLater();
@@ -207,7 +207,7 @@ namespace kt
         links.pop_front();
         KIO::StoredTransferJob* j = KIO::storedGet(link_url, KIO::Reload, KIO::HideProgressInfo);
         connect(j, SIGNAL(result(KJob*)), this, SLOT(torrentDownloadFinished(KJob*)));
-        Out(SYS_SYN | LOG_DEBUG) << "Trying " << link_url.prettyUrl() << endl;
+        Out(SYS_SYN | LOG_DEBUG) << "Trying " << link_url.toDisplayString() << endl;
     }
 
     void LinkDownloader::torrentDownloadFinished(KJob* j)

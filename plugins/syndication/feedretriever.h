@@ -49,7 +49,7 @@ namespace kt
 
         virtual void abort();
         virtual int errorCode() const;
-        virtual void retrieveData(const KUrl& url);
+        virtual void retrieveData(const QUrl& url);
 
     private slots:
         void finished(KJob* j);

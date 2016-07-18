@@ -65,8 +65,8 @@ namespace kt
             try
             {
                 feed = new Feed(idir);
-                connect(feed, SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)),
-                        activity, SLOT(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)));
+                connect(feed, SIGNAL(downloadLink(const QUrl&, const QString&, const QString&, const QString&, bool)),
+                        activity, SLOT(downloadLink(const QUrl&, const QString&, const QString&, const QString&, bool)));
                 feed->load(filter_list);
                 addFeed(feed);
 
@@ -89,7 +89,7 @@ namespace kt
         in >> num_feeds;
         for (int i = 0; i < num_feeds; i++)
         {
-            KUrl feed_url;
+            QUrl feed_url;
             QString title;
             int active;
             int article_age;
@@ -109,17 +109,17 @@ namespace kt
             in >> protocol >> user >> pass >> host
                >> path >> path_encoded >> query >>  ref_encoded
                >> malf >> port;
-            feed_url.setProtocol(protocol);
-            feed_url.setUser(user);
+            feed_url.setScheme(protocol);
+            feed_url.setUserName(user);
             feed_url.setPassword(pass);
             feed_url.setHost(host);
             feed_url.setPath(path);
             feed_url.setQuery(query);
-            feed_url.setRef(ref_encoded);
+            feed_url.setFragment(ref_encoded);
             feed_url.setPort(port == 0 ? -1 : port);
 
             in >> title >> active >> article_age >> ignore_ttl >> auto_refresh;
-            Out(SYS_GEN | LOG_DEBUG) << "Importing " << feed_url.prettyUrl() << " ..." << endl;
+            Out(SYS_GEN | LOG_DEBUG) << "Importing " << feed_url.toDisplayString() << " ..." << endl;
 
             // check for duplicate URL's
             bool found = false;
@@ -134,7 +134,7 @@ namespace kt
 
             if (!found)
             {
-                Feed* f = new Feed(feed_url.prettyUrl(), Feed::newFeedDir(data_dir));
+                Feed* f = new Feed(feed_url.toString(), Feed::newFeedDir(data_dir));
                 addFeed(f);
             }
         }

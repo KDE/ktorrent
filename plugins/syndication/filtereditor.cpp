@@ -71,14 +71,14 @@ namespace kt
         m_use_custom_download_location->setChecked(!dl.isEmpty());
         m_custom_download_location->setEnabled(!dl.isEmpty());
         if (!dl.isEmpty())
-            m_custom_download_location->setUrl(KUrl(dl));
+            m_custom_download_location->setUrl(QUrl(dl));
         m_custom_download_location->setMode(KFile::Directory);
 
         QString mloc = filter->moveOnCompletionLocation();
         m_move_on_completion->setChecked(!mloc.isEmpty());
         m_move_on_completion_location->setEnabled(!mloc.isEmpty());
         if (!mloc.isEmpty())
-            m_move_on_completion_location->setUrl(KUrl(mloc));
+            m_move_on_completion_location->setUrl(QUrl(mloc));
         m_move_on_completion_location->setMode(KFile::Directory);
 
         m_silently->setChecked(filter->openSilently());

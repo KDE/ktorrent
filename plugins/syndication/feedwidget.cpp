@@ -135,7 +135,7 @@ namespace kt
             connect(feed, SIGNAL(updated()), this, SLOT(updated()));
             connect(feed, SIGNAL(feedRenamed(Feed*)), this, SLOT(onFeedRenamed(Feed*)));
 
-            m_url->setText(QString("<b>%1</b>").arg(feed->feedUrl().prettyUrl()));
+            m_url->setText(QString("<b>%1</b>").arg(feed->feedUrl().toDisplayString()));
             m_refresh_rate->setValue(feed->refreshRate());
             updated();
             selectionChanged(m_item_list->selectionModel()->selection(), QItemSelection());
@@ -210,7 +210,7 @@ namespace kt
                 m_item_view->setHtml(item_template
                                      .arg(item->title())
                                      .arg(KGlobal::locale()->formatDateTime(QDateTime::fromTime_t(item->datePublished())))
-                                     .arg(item->description()), feed->feedData()->link());
+                                     .arg(item->description()), QUrl(feed->feedData()->link()));
             }
         }
     }
@@ -248,7 +248,7 @@ namespace kt
     void FeedWidget::linkClicked(const QUrl& url)
     {
         Out(SYS_SYN | LOG_DEBUG) << "linkClicked " << url.toString() << endl;
-        new KRun(KUrl(url), QApplication::activeWindow());
+        new KRun(url, QApplication::activeWindow());
     }
 
 

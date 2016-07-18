@@ -72,11 +72,11 @@ namespace kt
         QStringList sl = feed_url.split(":COOKIE:");
         if (sl.size() == 2)
         {
-            url = KUrl(sl.first());
+            url = QUrl(sl.first());
             cookie = sl.last();
         }
         else
-            url = KUrl(feed_url);
+            url = QUrl(feed_url);
     }
 
 
@@ -156,7 +156,7 @@ namespace kt
 
         try
         {
-            url = KUrl(dict->getString("url", 0));
+            url = QUrl(dict->getString("url", 0));
             cookie = dict->getValue("cookie") ? dict->getString("cookie", 0) : QString();
             custom_name = dict->getValue("custom_name") ? dict->getString("custom_name", 0) : QString();
             refresh_rate = dict->getValue("refresh_rate") ? dict->getInt("refresh_rate") : DEFAULT_REFRESH_RATE;
@@ -227,14 +227,14 @@ namespace kt
         if (status != Syndication::Success)
         {
             update_error = SyndicationErrorString(status);
-            Out(SYS_SYN | LOG_NOTICE) << "Failed to load feed " << url.prettyUrl() << ": " << update_error << endl;
+            Out(SYS_SYN | LOG_NOTICE) << "Failed to load feed " << url.toDisplayString() << ": " << update_error << endl;
             this->status = FAILED_TO_DOWNLOAD;
             update_timer.start(refresh_rate * 60 * 1000);
             updated();
             return;
         }
 
-        Out(SYS_SYN | LOG_NOTICE) << "Loaded feed " << url.prettyUrl() << endl;
+        Out(SYS_SYN | LOG_NOTICE) << "Loaded feed " << url.toDisplayString() << endl;
         this->feed = feed;
         update_timer.start(refresh_rate * 60  * 1000);
         this->status = OK;
@@ -274,7 +274,7 @@ namespace kt
         status = DOWNLOADING;
         update_timer.stop();
         Syndication::Loader* loader = Syndication::Loader::create(this, SLOT(loadingFromDiskComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
-        loader->loadFrom(KUrl(dir + "feed.xml"));
+        loader->loadFrom(QUrl(dir + "feed.xml"));
         updated();
     }
 
@@ -283,7 +283,7 @@ namespace kt
         if (feed)
             return feed->title();
         else
-            return url.prettyUrl();
+            return url.toDisplayString();
     }
 
     QString Feed::newFeedDir(const QString& base)
@@ -377,9 +377,9 @@ namespace kt
         loaded.insert(item->id());
         QString url = TorrentUrlFromItem(item);
         if (!url.isEmpty())
-            downloadLink(KUrl(url), group, location, move_on_completion, silently);
+            downloadLink(QUrl(url), group, location, move_on_completion, silently);
         else
-            downloadLink(KUrl(item->link()), group, location, move_on_completion, silently);
+            downloadLink(QUrl(item->link()), group, location, move_on_completion, silently);
         save();
     }
 
@@ -425,7 +425,7 @@ namespace kt
         else if (ok())
             return feed->title();
         else
-            return url.prettyUrl();
+            return url.toDisplayString();
     }
 
 

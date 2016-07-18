@@ -24,7 +24,7 @@
 #include <QMap>
 #include <QTimer>
 #include <QSet>
-#include <kurl.h>
+#include <QUrl>
 #include <syndication/feed.h>
 #include <syndication/loader.h>
 #include <util/constants.h>
@@ -79,7 +79,7 @@ namespace kt
         Syndication::FeedPtr feedData() {return feed;}
 
         /// Get the URL of the feed
-        KUrl feedUrl() const {return url;}
+        QUrl feedUrl() const {return url;}
 
         /// Get the authentication cookie
         const QString& authenticationCookie() const {return cookie;}
@@ -146,7 +146,7 @@ namespace kt
 
     signals:
         /// Emitted when a link must de downloaded
-        void downloadLink(const KUrl& link, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
+        void downloadLink(const QUrl& link, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
 
         /// A feed has been renamed
         void feedRenamed(Feed* f);
@@ -169,7 +169,7 @@ namespace kt
         void parseUrl(const QString& feed_url);
 
     private:
-        KUrl url;
+        QUrl url;
         Syndication::FeedPtr feed;
         QSet<QString> feed_items_id;
         QString dir;

@@ -22,7 +22,7 @@
 #define KTLINKDOWNLOADER_H
 
 #include <QObject>
-#include <kurl.h>
+#include <QUrl>
 
 class KJob;
 
@@ -39,7 +39,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        LinkDownloader(const KUrl& url, CoreInterface* core, bool verbose, const QString& group, const QString& location, const QString& move_on_completion);
+        LinkDownloader(const QUrl& url, CoreInterface* core, bool verbose, const QString& group, const QString& location, const QString& move_on_completion);
         virtual ~LinkDownloader();
 
         /// Start the download proces
@@ -59,11 +59,11 @@ namespace kt
         void finished(bool ok);
 
     private:
-        KUrl url;
+        QUrl url;
         CoreInterface* core;
         bool verbose;
-        KUrl link_url;
-        KUrl::List links;
+        QUrl link_url;
+        QList<QUrl> links;
         QString group;
         QString location;
         QString move_on_completion;

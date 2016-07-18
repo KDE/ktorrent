@@ -53,7 +53,7 @@ namespace kt
         void removeFeed();
         void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
         void showFeed(Feed* f);
-        void downloadLink(const KUrl& url, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
+        void downloadLink(const QUrl& url, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
         void addFilter();
         void removeFilter();
         void editFilter();

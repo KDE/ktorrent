@@ -56,7 +56,7 @@ namespace kt
         return err;
     }
 
-    void FeedRetriever::retrieveData(const KUrl& url)
+    void FeedRetriever::retrieveData(const QUrl& url)
     {
         KIO::StoredTransferJob* j = KIO::storedGet(url, KIO::NoReload, KIO::HideProgressInfo);
         j->addMetaData("UserAgent", bt::GetVersionString());

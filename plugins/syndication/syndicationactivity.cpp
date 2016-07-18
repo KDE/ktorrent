@@ -126,12 +126,12 @@ namespace kt
         {
             FeedRetriever* retr = new FeedRetriever();
             retr->setAuthenticationCookie(sl.last());
-            loader->loadFrom(KUrl(sl.first()), retr);
+            loader->loadFrom(QUrl(sl.first()), retr);
             downloads.insert(loader, url);
         }
         else
         {
-            loader->loadFrom(KUrl(url));
+            loader->loadFrom(QUrl(url));
             downloads.insert(loader, url);
         }
     }
@@ -150,8 +150,8 @@ namespace kt
         {
             QString ddir = kt::DataDir() + "syndication/";
             Feed* f = new Feed(downloads[loader], feed, Feed::newFeedDir(ddir));
-            connect(f, SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)),
-                    this, SLOT(downloadLink(const KUrl&, const QString&, const QString&, const QString&, bool)));
+            connect(f, SIGNAL(downloadLink(const QUrl&, const QString&, const QString&, const QString&, bool)),
+                    this, SLOT(downloadLink(const QUrl&, const QString&, const QString&, const QString&, bool)));
             f->save();
             feed_list->addFeed(f);
             feed_widget->setFeed(f);
@@ -186,20 +186,20 @@ namespace kt
     }
 
 
-    void SyndicationActivity::downloadLink(const KUrl& url,
+    void SyndicationActivity::downloadLink(const QUrl& url,
                                            const QString& group,
                                            const QString& location,
                                            const QString& move_on_completion,
                                            bool silently)
     {
-        if (url.protocol() == "magnet")
+        if (url.scheme() == "magnet")
         {
             MagnetLinkLoadOptions options;
             options.silently = silently;
             options.group = group;
             options.location = location;
             options.move_on_completion = move_on_completion;
-            sp->getCore()->load(bt::MagnetLink(url.prettyUrl()), options);
+            sp->getCore()->load(bt::MagnetLink(url), options);
         }
         else
         {
