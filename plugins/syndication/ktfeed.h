@@ -88,7 +88,7 @@ namespace kt
         void setAuthenticationCookie(const QString& nc) {cookie = nc;}
 
         /// Is the feed OK
-        bool ok() const {return feed.get() != 0;}
+        bool ok() const {return feed;}
 
         /// Save the feed to it's directory
         void save();
