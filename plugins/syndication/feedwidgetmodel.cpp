@@ -21,8 +21,7 @@
 #include <QDateTime>
 #include <QDomElement>
 #include <QIcon>
-#include <KGlobal>
-#include <KLocale>
+#include <QLocale>
 #include <klocalizedstring.h>
 #include <syndication/item.h>
 #include <syndication/enclosure.h>
@@ -108,7 +107,7 @@ namespace kt
             switch (index.column())
             {
             case 0: return item->title();
-            case 1: return KGlobal::locale()->formatDateTime(QDateTime::fromTime_t(item->datePublished()));
+            case 1: return QLocale().toString(QDateTime::fromTime_t(item->datePublished()), QLocale::ShortFormat);
             case 2: return TorrentUrlFromItem(item);
             default:
                 return QVariant();

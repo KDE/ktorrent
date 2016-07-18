@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QInputDialog>
+#include <QLocale>
 #include <KRun>
 #include <util/log.h>
 #include "ktfeed.h"
@@ -209,7 +210,7 @@ namespace kt
             {
                 m_item_view->setHtml(item_template
                                      .arg(item->title())
-                                     .arg(KGlobal::locale()->formatDateTime(QDateTime::fromTime_t(item->datePublished())))
+                                     .arg(QLocale().toString(QDateTime::fromTime_t(item->datePublished()), QLocale::ShortFormat))
                                      .arg(item->description()), QUrl(feed->feedData()->link()));
             }
         }
