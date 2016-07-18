@@ -1,2 +1,6 @@
-ecm_install_icons( ${ICON_INSTALL_DIR}  )
-
+file(GLOB icons "*.png")
+ecm_install_icons(
+    ICONS ${icons}
+    DESTINATION ${ICON_INSTALL_DIR}
+    THEME hicolor
+)
