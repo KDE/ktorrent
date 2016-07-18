@@ -23,6 +23,8 @@
 #include <util/log.h>
 #include <KRun>
 #include <klocalizedstring.h>
+#include <kdialog.h>
+#include <kiconloader.h>
 #include <QMenu>
 #include <QAction>
 #include <KActionCollection>

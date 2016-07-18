@@ -21,9 +21,12 @@
 #include <kpluginfactory.h>
 #include <kactioncollection.h>
 #include <kfiledialog.h>
+#include <klocalizedstring.h>
 #include <kmainwindow.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
+#include <kglobal.h>
+#include <kconfiggroup.h>
 #include <kio/copyjob.h>
 #include <kross/core/manager.h>
 #include <kross/core/interpreter.h>
