@@ -311,37 +311,37 @@ namespace kt
     void Filter::save(bt::BEncoder& enc)
     {
         enc.beginDict();
-        enc.write("id", id);
-        enc.write("name", name);
-        enc.write("case_sensitive", case_sensitive);
-        enc.write("all_word_matches_must_match", all_word_matches_must_match);
-        enc.write("exclusion_case_sensitive", exclusion_case_sensitive);
-        enc.write("exclusion_all_must_match", exclusion_all_must_match);
-        enc.write("word_matches");
+        enc.write(QByteArrayLiteral("id"), id.toUtf8());
+        enc.write(QByteArrayLiteral("name"), name.toUtf8());
+        enc.write(QByteArrayLiteral("case_sensitive"), case_sensitive);
+        enc.write(QByteArrayLiteral("all_word_matches_must_match"), all_word_matches_must_match);
+        enc.write(QByteArrayLiteral("exclusion_case_sensitive"), exclusion_case_sensitive);
+        enc.write(QByteArrayLiteral("exclusion_all_must_match"), exclusion_all_must_match);
+        enc.write(QByteArrayLiteral("word_matches"));
         enc.beginList();
         foreach (const QRegExp& exp, word_matches)
-            enc.write(exp.pattern());
+            enc.write(exp.pattern().toUtf8());
         enc.end();
-        enc.write("exclusion_patterns");
+        enc.write(QByteArrayLiteral("exclusion_patterns"));
         enc.beginList();
         foreach (const QRegExp& exp, exclusion_patterns)
-            enc.write(exp.pattern());
+            enc.write(exp.pattern().toUtf8());
         enc.end();
-        enc.write("use_season_and_episode_matching", use_season_and_episode_matching);
-        enc.write("no_duplicate_se_matches", no_duplicate_se_matches);
-        enc.write("seasons", seasons_string);
-        enc.write("episodes", episodes_string);
-        enc.write("download_matching", download_matching);
-        enc.write("download_non_matching", download_non_matching);
+        enc.write(QByteArrayLiteral("use_season_and_episode_matching"), use_season_and_episode_matching);
+        enc.write(QByteArrayLiteral("no_duplicate_se_matches"), no_duplicate_se_matches);
+        enc.write(QByteArrayLiteral("seasons"), seasons_string.toUtf8());
+        enc.write(QByteArrayLiteral("episodes"), episodes_string.toUtf8());
+        enc.write(QByteArrayLiteral("download_matching"), download_matching);
+        enc.write(QByteArrayLiteral("download_non_matching"), download_non_matching);
         if (!dest_group.isEmpty())
-            enc.write("group", dest_group);
+            enc.write(QByteArrayLiteral("group"), dest_group.toUtf8());
         if (!download_location.isEmpty())
-            enc.write("download_location", download_location);
+            enc.write(QByteArrayLiteral("download_location"), download_location.toUtf8());
         if (!move_on_completion_location.isEmpty())
-            enc.write("move_on_completion_location", move_on_completion_location);
-        enc.write("silently", silent);
-        enc.write("use_regular_expressions", use_regular_expressions);
-        enc.write("exclusion_reg_exp", exclusion_reg_exp);
+            enc.write(QByteArrayLiteral("move_on_completion_location"), move_on_completion_location.toUtf8());
+        enc.write(QByteArrayLiteral("silently"), silent);
+        enc.write(QByteArrayLiteral("use_regular_expressions"), use_regular_expressions);
+        enc.write(QByteArrayLiteral("exclusion_reg_exp"), exclusion_reg_exp);
         enc.end();
     }
 

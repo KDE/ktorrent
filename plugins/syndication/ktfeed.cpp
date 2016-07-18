@@ -92,31 +92,31 @@ namespace kt
 
         BEncoder enc(&fptr);
         enc.beginDict();
-        enc.write("url");
-        enc.write(url.prettyUrl());
+        enc.write(QByteArrayLiteral("url"));
+        enc.write(url.toEncoded());
         if (!cookie.isEmpty())
         {
-            enc.write("cookie");
-            enc.write(cookie);
+            enc.write(QByteArrayLiteral("cookie"));
+            enc.write(cookie.toUtf8());
         }
-        enc.write("filters");
+        enc.write(QByteArrayLiteral("filters"));
         enc.beginList();
         foreach (Filter* f, filters)
-            enc.write(f->filterID());
+            enc.write(f->filterID().toUtf8());
         enc.end();
-        enc.write("loaded");
+        enc.write(QByteArrayLiteral("loaded"));
         enc.beginList();
         foreach (const QString& id, loaded)
-            enc.write(id);
+            enc.write(id.toUtf8());
         enc.end();
-        enc.write("downloaded_se_items");
+        enc.write(QByteArrayLiteral("downloaded_se_items"));
         enc.beginList();
         QMap<Filter*, QList<SeasonEpisodeItem> >::iterator i = downloaded_se_items.begin();
         while (i != downloaded_se_items.end())
         {
             Filter* f = i.key();
             QList<SeasonEpisodeItem> & se = i.value();
-            enc.write(f->filterID());
+            enc.write(f->filterID().toUtf8());
             enc.beginList();
             foreach (const SeasonEpisodeItem& item, se)
             {
@@ -128,8 +128,8 @@ namespace kt
         }
         enc.end();
         if (!custom_name.isEmpty())
-            enc.write("custom_name", custom_name);
-        enc.write("refresh_rate", refresh_rate);
+            enc.write(QByteArrayLiteral("custom_name"), custom_name.toUtf8());
+        enc.write(QByteArrayLiteral("refresh_rate"), refresh_rate);
         enc.end();
     }
 
