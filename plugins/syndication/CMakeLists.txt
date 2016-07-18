@@ -5,10 +5,10 @@ set(ktsyndicationplugin_SRC
 	feedlistview.cpp 
 	feedlist.cpp 
 	feedlistdelegate.cpp
-	feed.cpp 
 	feedwidget.cpp 
 	feedwidgetmodel.cpp
 	feedretriever.cpp
+	ktfeed.cpp
 	linkdownloader.cpp
 	managefiltersdlg.cpp
 	filter.cpp

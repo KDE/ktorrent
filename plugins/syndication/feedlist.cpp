@@ -28,7 +28,7 @@
 #include <util/fileops.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
-#include "feed.h"
+#include "ktfeed.h"
 #include "feedlist.h"
 #include "filterlist.h"
 #include "syndicationactivity.h"

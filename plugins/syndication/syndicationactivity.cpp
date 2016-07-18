@@ -31,7 +31,7 @@
 #include <syndication/loader.h>
 #include "syndicationactivity.h"
 #include "feedwidget.h"
-#include "feed.h"
+#include "ktfeed.h"
 #include "feedlist.h"
 #include "feedlistview.h"
 #include "filter.h"

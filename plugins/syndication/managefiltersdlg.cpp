@@ -22,7 +22,7 @@
 #include "managefiltersdlg.h"
 #include "filterlistmodel.h"
 #include "filterlist.h"
-#include "feed.h"
+#include "ktfeed.h"
 #include "syndicationactivity.h"
 
 namespace kt

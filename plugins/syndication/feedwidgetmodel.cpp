@@ -28,7 +28,7 @@
 #include <syndication/enclosure.h>
 #include <util/log.h>
 #include "feedwidgetmodel.h"
-#include "feed.h"
+#include "ktfeed.h"
 
 using namespace bt;
 

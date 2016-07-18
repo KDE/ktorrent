@@ -22,7 +22,7 @@
 #include <KRun>
 #include <KInputDialog>
 #include <util/log.h>
-#include "feed.h"
+#include "ktfeed.h"
 #include "feedwidget.h"
 #include "feedwidgetmodel.h"
 #include "managefiltersdlg.h"

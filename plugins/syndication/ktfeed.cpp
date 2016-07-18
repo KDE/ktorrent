@@ -28,7 +28,7 @@
 #include <bcodec/bnode.h>
 #include <bcodec/bencoder.h>
 #include <bcodec/bdecoder.h>
-#include "feed.h"
+#include "ktfeed.h"
 #include "filter.h"
 #include "filterlist.h"
 #include "feedretriever.h"
