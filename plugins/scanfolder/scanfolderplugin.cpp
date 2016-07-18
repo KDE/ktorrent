@@ -29,9 +29,7 @@
 
 #include <QDir>
 
-#include <kmessagebox.h>
 #include <klocalizedstring.h>
-#include <kglobal.h>
 
 #include "scanfolder.h"
 #include "scanfolderplugin.h"

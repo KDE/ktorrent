@@ -22,7 +22,6 @@
 
 #include <QFileDialog>
 #include <klocalizedstring.h>
-#include <kglobal.h>
 #include <util/functions.h>
 #include <groups/groupmanager.h>
 #include <interfaces/coreinterface.h>

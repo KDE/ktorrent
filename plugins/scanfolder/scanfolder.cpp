@@ -23,7 +23,7 @@
 #include <klocalizedstring.h>
 #include <KFileItem>
 #include <KConfigGroup>
-#include <kglobal.h>
+#include <KSharedConfig>
 #include <kio/job.h>
 #include <util/log.h>
 #include <util/functions.h>
