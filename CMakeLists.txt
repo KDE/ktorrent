@@ -18,7 +18,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core DBus Widgets Script)
 
 find_package(KF5 5.15 REQUIRED I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross KCMUtils DBusAddons Crash Archive KDELibs4Support)
 
-find_package(LibKTorrent 1.9.50 CONFIG REQUIRED)
+find_package(KF5Torrent 1.9.50 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 
 #

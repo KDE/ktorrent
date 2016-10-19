@@ -83,7 +83,7 @@ set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
 
 target_link_libraries(ktorrent_app
     ktcore
-    ktorrent
+    KF5::Torrent
     KF5::NotifyConfig
     KF5::Parts
     KF5::DBusAddons

@@ -10,7 +10,7 @@ kcoreaddons_desktop_to_json(ktorrent_shutdown ktorrent_shutdown.desktop)
 target_link_libraries(
 	ktorrent_shutdown
 	ktcore
-	ktorrent
+	KF5::Torrent
         PW::KWorkspace
 	KF5::KDELibs4Support
 	KF5::Parts)

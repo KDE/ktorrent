@@ -7,7 +7,7 @@ add_library(ktipfilterplugin MODULE ${ktipfilterplugin_SRC})
 target_link_libraries(
     ktipfilterplugin
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
+    KF5::Torrent 
     KF5::Parts
     )
 install(TARGETS ktipfilterplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )

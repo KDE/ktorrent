@@ -11,7 +11,7 @@ kcoreaddons_desktop_to_json(ktorrent_magnetgenerator ktorrent_magnetgenerator.de
 target_link_libraries(
     ktorrent_magnetgenerator
     ktcore
-    ktorrent
+    KF5::Torrent
     KF5::Parts
     KF5::Notifications
     )

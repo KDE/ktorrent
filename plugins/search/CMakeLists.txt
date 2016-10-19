@@ -20,7 +20,7 @@ kcoreaddons_desktop_to_json(ktorrent_search ktorrent_search.desktop)
 target_link_libraries(
     ktorrent_search
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
+    KF5::Torrent
     Qt5::WebKitWidgets
     KF5::Parts
     KF5::WebKit

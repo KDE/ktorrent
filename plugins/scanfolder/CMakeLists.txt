@@ -14,7 +14,7 @@ kcoreaddons_desktop_to_json(ktorrent_scanfolder ktorrent_scanfolder.desktop)
 target_link_libraries(
     ktorrent_scanfolder
     ktcore
-    ktorrent
+    KF5::Torrent
     KF5::Parts
     )
 install(TARGETS ktorrent_scanfolder  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

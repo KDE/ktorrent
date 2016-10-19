@@ -59,7 +59,7 @@ target_link_libraries(
     ktorrent_infowidget
     ktcore
     KF5::KIOFileWidgets
-    ktorrent
+    KF5::Torrent
     ${geoip_link}
     )
 install(TARGETS ktorrent_infowidget DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

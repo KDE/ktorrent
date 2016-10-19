@@ -9,7 +9,7 @@ kcoreaddons_desktop_to_json(ktorrent_logviewer ktorrent_logviewer.desktop)
 target_link_libraries(
     ktorrent_logviewer
     ktcore
-    ktorrent
+    KF5::Torrent
     KF5::Parts
     )
 install(TARGETS ktorrent_logviewer DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

@@ -61,7 +61,7 @@ generate_export_header(ktcore BASE_NAME ktcore)
 target_link_libraries(ktcore PUBLIC
    KF5::Parts
    KF5::KCMUtils
-   ktorrent
+   KF5::Torrent
 )
 
 target_include_directories(ktcore PUBLIC "$<BUILD_INTERFACE:${KTORRENT_SOURCE_DIR}/libktcore;${KTORRENT_BINARY_DIR}/libktcore;${KTORRENT_BINARY_DIR}>")

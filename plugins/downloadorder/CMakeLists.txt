@@ -11,7 +11,7 @@ kcoreaddons_desktop_to_json(ktorrent_downloadorder  ktorrent_downloadorder.deskt
 target_link_libraries(
     ktorrent_downloadorder
     ktcore
-    ktorrent
+    KF5::Torrent
     )
 install(TARGETS ktorrent_downloadorder  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_downloadorderui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

@@ -26,7 +26,7 @@ kcoreaddons_desktop_to_json(ktorrent_syndication ktorrent_syndication.desktop)
 target_link_libraries(
     ktorrent_syndication
     ktcore
-    ktorrent
+    KF5::Torrent
     KF5::WebKit
     KF5::Parts
     KF5::Syndication

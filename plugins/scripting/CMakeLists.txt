@@ -18,7 +18,7 @@ kcoreaddons_desktop_to_json(ktorrent_scripting ktorrent_scripting.desktop)
 target_link_libraries(
     ktorrent_scripting
     ktcore
-    ktorrent
+    KF5::Torrent
     KF5::KDELibs4Support
     KF5::KrossCore
     KF5::Parts

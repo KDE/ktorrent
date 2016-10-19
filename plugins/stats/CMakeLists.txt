@@ -31,7 +31,7 @@ kcoreaddons_desktop_to_json(ktorrent_stats ktorrent_stats.desktop)
 target_link_libraries(
     ktorrent_stats
     ktcore
-    ${LIBKTORRENT_LIBRARIES}
+    KF5::Torrent
     KF5::Parts
     KF5::Plotting
     )

@@ -31,7 +31,7 @@ kcoreaddons_desktop_to_json(ktorrent_mediaplayer ktorrent_mediaplayer.desktop)
 target_link_libraries(
     ktorrent_mediaplayer
     ktcore
-    ktorrent
+    KF5::Torrent
     ${TAGLIB_LIBRARIES}
     KF5::KDELibs4Support
     Phonon::phonon4qt5

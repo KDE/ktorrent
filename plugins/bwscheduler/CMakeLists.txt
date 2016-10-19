@@ -23,7 +23,7 @@ kcoreaddons_desktop_to_json(ktorrent_bwscheduler ktorrent_bwscheduler.desktop)
 target_link_libraries(
     ktorrent_bwscheduler
     ktcore
-    ktorrent
+    KF5::Torrent
     KF5::Parts
     )
 install(TARGETS ktorrent_bwscheduler  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
