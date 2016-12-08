@@ -84,7 +84,7 @@ namespace kt
         void setFilter(const QString& filter);
         void updateExistingFiles();
         void moveCompletedToggled(bool on);
-        QMenu* createHistoryMenu(const QSet<QString> & urls, const char* slot);
+        QMenu* createHistoryMenu(const QStringList& urls, const char* slot);
         void clearDownloadLocationHistory();
         void clearMoveOnCompletionLocationHistory();
         void downloadLocationHistoryTriggered(QAction* act);
@@ -106,8 +106,8 @@ namespace kt
         kt::Group* initial_group;
         bool show_file_tree;
         QSortFilterProxyModel* filter_model;
-        QSet<QString> download_location_history;
-        QSet<QString> move_on_completion_location_history;
+        QStringList download_location_history;
+        QStringList move_on_completion_location_history;
         bt::Uint64 already_downloaded;
     };
 }

@@ -182,12 +182,18 @@ namespace kt
         QString cn = m_completedLocation->url().toLocalFile();
         if (!cn.endsWith('/')) cn += '/';
         if (m_moveCompleted->isChecked() && !cn.isEmpty())
-            move_on_completion_location_history.insert(cn);
+        {
+            move_on_completion_location_history.removeOne(cn);
+            move_on_completion_location_history.prepend(cn);
+        }
 
         QString dn = m_downloadLocation->url().toLocalFile();
         if (!dn.endsWith('/')) dn += '/';
         if (!dn.isEmpty())
-            download_location_history.insert(dn);
+        {
+            download_location_history.removeOne(dn);
+            download_location_history.prepend(dn);
+        }
 
 
         QString tld = tc->getUserModifiedFileName();
@@ -612,10 +618,12 @@ namespace kt
         show_file_tree = g.readEntry("show_file_tree", true);
         m_tree->setChecked(show_file_tree);
         m_list->setChecked(!show_file_tree);
-        QStringList tmp = g.readEntry("download_location_history", QStringList());
-        download_location_history = QSet<QString>::fromList(tmp);
-        tmp = g.readEntry("move_on_completion_location_history", QStringList());
-        move_on_completion_location_history = QSet<QString>::fromList(tmp);
+        download_location_history = g.readEntry("download_location_history", QStringList());
+        for (int i=0; i<download_location_history.count(); i++)
+            if (download_location_history.at(i).endsWith(QLatin1String("//"))) download_location_history[i].chop(1);
+        download_location_history.removeDuplicates();
+        move_on_completion_location_history = g.readEntry("move_on_completion_location_history", QStringList());
+        move_on_completion_location_history.removeDuplicates();
 
         if (download_location_history.count())
         {
@@ -647,12 +655,12 @@ namespace kt
         KConfigGroup g = cfg->group("FileSelectDlg");
         g.writeEntry("size", size());
         g.writeEntry("show_file_tree", show_file_tree);
-        g.writeEntry("download_location_history", download_location_history.toList());
-        g.writeEntry("move_on_completion_location_history", move_on_completion_location_history.toList());
+        g.writeEntry("download_location_history", download_location_history);
+        g.writeEntry("move_on_completion_location_history", move_on_completion_location_history);
         g.writeEntry("file_view", m_file_view->header()->saveState());
     }
 
-    QMenu* FileSelectDlg::createHistoryMenu(const QSet<QString> & urls, const char* slot)
+    QMenu* FileSelectDlg::createHistoryMenu(const QStringList & urls, const char* slot)
     {
         QMenu* m = new QMenu(this);
         foreach (const QString& url, urls)
