@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=Scheduler
-Name[ast]=Planificador
 Name[bg]=Разписание
 Name[bs]=Raspoređivač
 Name[ca]=Planificador
@@ -47,7 +46,6 @@ Name[x-test]=xxSchedulerxx
 Name[zh_CN]=调度器
 Name[zh_TW]=排程器
 Comment=Schedule upload and download limits over a period of a week
-Comment[ast]=Planificar los llímites d'unvíu y baxada durante un periodu d'una selmana
 Comment[bg]=Приставка за разчет на качването и свалянето през седмицата
 Comment[bs]=Rasporedite ograničenja slanja i preuzimanja tokom sedmice
 Comment[ca]=Planificació dels límits de pujada i baixada durant un període setmanal

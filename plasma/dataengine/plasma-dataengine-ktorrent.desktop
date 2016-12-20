@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=KTorrent
-Name[ast]=KTorrent
 Name[be]=KTorrent
 Name[bg]=KTorrent
 Name[bs]=KTorent
@@ -58,7 +57,6 @@ Name[x-test]=xxKTorrentxx
 Name[zh_CN]=KTorrent
 Name[zh_TW]=KTorrent
 Comment=KTorrent data engine, for getting information from KTorrent
-Comment[ast]=Motor de datos de KTorrent, pa consiguir información de KTorrent
 Comment[bs]=KTorentov pogon podataka, za dobivanje informacija od KTorenta
 Comment[ca]=Motor de dades del KTorrent, per obtenir informació del KTorrent
 Comment[ca@valencia]=Motor de dades del KTorrent, per obtindre informació del KTorrent

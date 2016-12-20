@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=E-Mail Notifications
-Name[ast]=Notificaciones por corréu electrónicu
 Name[bg]=Уведомления по е-поща
 Name[bs]=Obavještenja E-poštom
 Name[ca]=Notificacions de correu electrònic
@@ -51,7 +50,6 @@ Name[x-test]=xxE-Mail Notificationsxx
 Name[zh_CN]=电子邮件通知
 Name[zh_TW]=電子郵件通知
 Comment=Script to notify you of events via e-mail
-Comment[ast]=Script pa notificate de socesos por mediu del corréu electrónicu
 Comment[bg]=Скрипт за уведомяване за събития по електронната поща
 Comment[bs]=Skripta koja vas obavještava o dešavanjima putem e-pošte
 Comment[ca]=Script per a notificar els esdeveniments via correu electrònic

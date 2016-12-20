@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=Download Order
-Name[ast]=Orde de baxada
 Name[bg]=Ред на изтегляне
 Name[bs]=Redoslijed preuzimanja
 Name[ca]=Ordre de baixada
@@ -50,7 +49,6 @@ Name[x-test]=xxDownload Orderxx
 Name[zh_CN]=下载顺序
 Name[zh_TW]=下載順序
 Comment=Specify the download order of a multi-file torrent
-Comment[ast]=Especifica l'orde de baxada d'un ficheru torrent múltiple
 Comment[bs]=Specificirajte redoslijed preuzimanja višedatotečnog torenta
 Comment[ca]=Especifica l'ordre de baixada d'un torrent amb múltiples fitxers
 Comment[ca@valencia]=Especifica l'orde de baixada d'un torrent amb múltiples fitxers

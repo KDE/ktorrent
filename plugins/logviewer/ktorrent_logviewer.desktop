@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=Log Viewer
-Name[ast]=Visualización del rexistru
 Name[bg]=Преглед на дневника
 Name[bs]=Prikazivač dnevnika
 Name[ca]=Visor del registre
@@ -53,7 +52,6 @@ Name[x-test]=xxLog Viewerxx
 Name[zh_CN]=日志查看器
 Name[zh_TW]=紀錄檢視器
 Comment=Displays the logging output
-Comment[ast]=Amuesa la salida del rexistru
 Comment[bg]=Показване на изхода от дневника
 Comment[bs]=Prikazuje upise dnevnika
 Comment[ca]=Mostra la sortida del registre

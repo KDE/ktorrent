@@ -1,7 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KTorrent
-Name[ast]=KTorrent
 Name[be]=KTorrent
 Name[bg]=KTorrent
 Name[bs]=KTorent
@@ -60,7 +59,6 @@ Name[zh_CN]=KTorrent
 Name[zh_TW]=KTorrent
 Icon=ktorrent
 Comment=Plasma widget to keep track of a single torrent
-Comment[ast]=Widget de plasma pa rastrexar un torrent
 Comment[bs]=Plazma grafička kontrola za praćenje jednog torenta
 Comment[ca]=Estri Plasma per a mantenir el seguiment d'un sol torrent
 Comment[ca@valencia]=Estri Plasma per a mantindre el seguiment d'un sol torrent
