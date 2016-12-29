@@ -1,3 +1,5 @@
+# [Fonic] Renamed from 'ktipfilterplugin.desktop' to 'ktorrent_ipfilter.desktop',
+#         as all other plugins do it that way too
 [Desktop Entry]
 Name=IP Filter
 Name[bg]=Филтър по IP

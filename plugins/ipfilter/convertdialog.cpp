@@ -21,8 +21,9 @@
 #include <QCloseEvent>
 #include <kurl.h>
 #include <kmessagebox.h>
-#include <kio/netaccess.h>
-#include <kmimetype.h>
+// [Fonic]
+//#include <kio/netaccess.h>
+//#include <kmimetype.h>
 
 #include <util/log.h>
 #include <util/constants.h>

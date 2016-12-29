@@ -39,7 +39,11 @@ namespace kt
         connect(m_download, SIGNAL(clicked()), this, SLOT(downloadClicked()));
         connect(kcfg_autoUpdate, SIGNAL(toggled(bool)), this, SLOT(autoUpdateToggled(bool)));
         connect(kcfg_autoUpdateInterval, SIGNAL(valueChanged(int)), this, SLOT(autoUpdateIntervalChanged(int)));
-        kcfg_autoUpdateInterval->setSuffix(ki18np(" day", " days"));
+        // [Fonic] Not entirely sure how this worked previously, as QSpinBox::setSuffix()
+        //         expects a QString while ki18np provided a KLocalizedString. Doesn't
+        //         matter much, we just let autoUpdateIntervalChanged() take care of this
+        //kcfg_autoUpdateInterval->setSuffix(ki18np(" day", " days"));
+        autoUpdateIntervalChanged(kcfg_autoUpdateInterval->value());
         m_job = 0;
         m_verbose = true;
     }
@@ -196,7 +200,9 @@ namespace kt
         bool ok = g.readEntry("last_update_ok", true);
         QDate last_updated = g.readEntry("last_updated", QDate());
 
-        if (last_updated.isEmpty())
+        // [Fonic]
+        //if (last_updated.isEmpty())
+        if (last_updated.isValid())
             m_last_updated->setText(i18n("No update done yet."));
         else if (ok)
             m_last_updated->setText(last_updated.toString());
@@ -206,7 +212,9 @@ namespace kt
         if (kcfg_autoUpdate->isChecked())
         {
             QDate next_update;
-            if (last_updated.isEmpty())
+            // [Fonic]
+            //if (last_updated.isEmpty())
+            if (last_updated.isValid())
                 next_update = QDate::currentDate().addDays(kcfg_autoUpdateInterval->value());
             else
                 next_update = last_updated.addDays(kcfg_autoUpdateInterval->value());
@@ -227,7 +235,10 @@ namespace kt
 
     void IPBlockingPrefPage::autoUpdateIntervalChanged(int val)
     {
-        Q_UNUSED(val);
+        // [Fonic] Set suffix using finalized string (i18np returns QString)
+        // Refer to: https://api.kde.org/frameworks/ki18n/html/prg_guide.html#spec_usage
+        //Q_UNUSED(val);
+        kcfg_autoUpdateInterval->setSuffix(i18np(" day", " days", val));
         updateAutoUpdate();
     }
 
