@@ -18,7 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kmimetype.h>
+
+// [Fonic] Porting from KMimeType to QMimeType; reference: plugin syndication, file linkdownloader.cpp
+//#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
+
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 #include <kzip.h>
@@ -51,11 +56,20 @@ namespace kt
 
     void DownloadAndConvertJob::start()
     {
-        QString temp = kt::DataDir() + "tmp-" + url.fileName();
+        // [Fonic] url.fileName() doesn't work for the default URL (will return ""),
+        // so we hard-code this for now...
+        //QString temp = kt::DataDir() + "tmp-" + url.fileName();
+        QString temp = kt::DataDir() + "temp-ipfilter-download.gz";
         if (bt::Exists(temp))
             bt::Delete(temp, true);
 
-        active_job = KIO::file_copy(url, temp, -1, KIO::Overwrite);
+        // [Fonic] Changed API:
+        // FileCopyJob *KIO::file_copy(const QUrl &src, const QUrl &dest, int permissions, JobFlags flags)
+        // -> QString needs to be converted to QUrl:
+        // QUrl(const QString &url, ParsingMode parsingMode = TolerantMode)
+        // QUrl QUrl::fromLocalFile(const QString &localFile)
+        //active_job = KIO::file_copy(url, temp, -1, KIO::Overwrite);
+        active_job = KIO::file_copy(url, QUrl::fromLocalFile(temp), -1, KIO::Overwrite);
         connect(active_job, SIGNAL(result(KJob*)), this, SLOT(downloadFileFinished(KJob*)));
     }
 
@@ -110,49 +124,64 @@ namespace kt
             return;
         }
 
-        QString temp = kt::DataDir() + "tmp-" + url.fileName();
+        // [Fonic] Same as in DownloadAndConvertJob::start()
+        //QString temp = kt::DataDir() + "tmp-" + url.fileName();
+        QString temp = kt::DataDir() + "temp-ipfilter-download.gz";
 
+        // [Fonic]
+        // - Porting from KMimeType to QMimeType; reference: plugin syndication, file linkdownloader.cpp
+        // - KIO::file_* operations require QUrl as argument for both source and destination
         //now determine if it's ZIP or TXT file
-        KMimeType::Ptr ptr = KMimeType::findByFileContent(temp);
-        Out(SYS_IPF|LOG_NOTICE) << "Mimetype: " << ptr->name() << endl;
-        if(ptr->name() == "application/zip")
+        QMimeType file_type = QMimeDatabase().mimeTypeForFile(temp);
+        Out(SYS_IPF|LOG_NOTICE) << "Mimetype: " << file_type.name() << endl;
+        if (file_type.name() == "application/zip")
         {
-            active_job = KIO::file_move(temp, QString(kt::DataDir() + QLatin1String("level1.zip")), -1, KIO::HideProgressInfo | KIO::Overwrite);
+            // [Fonic] Changed API (similar to KIO::file_copy):
+            // FileCopyJob *KIO::file_move(const QUrl &src, const QUrl &dest, int permissions, JobFlags flags)
+            //active_job = KIO::file_move(temp, QString(kt::DataDir() + QLatin1String("level1.zip")), -1, KIO::HideProgressInfo | KIO::Overwrite);
+            active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + QLatin1String("level1.zip"))), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(extract(KJob*)));
         }
-        else if(ptr->name() == "application/x-7z-compressed")
+        else if (file_type.name() == "application/x-7z-compressed")
         {
-            QString msg = i18n("7z files are not supported", url.prettyUrl());
+            // [Fonic] QUrl.toString defaults to formatting 'PrettyDecoded'
+            //QString msg = i18n("7z files are not supported", url.prettyUrl());
+            QString msg = i18n("7z files are not supported", url.toString());
             if (mode == Verbose)
                 KMessageBox::error(0, msg);
             else
                 notification(msg);
-            
             setError(UNZIP_FAILED);
             emitResult();
         }
-        else if(ptr->name() == "application/gzip" || ptr->name() == "application/x-bzip")
+        else if (file_type.name() == "application/gzip" || file_type.name() == "application/x-bzip")
         {
             active_job = new bt::DecompressFileJob(temp, QString(kt::DataDir() + "level1.txt"));
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
             active_job->start();
         }
-        else if(!KMimeType::isBinaryData(temp) || ptr->name() == "text/plain")
+        // [Fonic] TODO: find out if check for binary data is supported by QMimeType
+        //else if(!KMimeType::isBinaryData(temp) || file_type.name() == "text/plain")
+        else if (file_type.name() == "text/plain")
         {
-            active_job = KIO::file_move(temp, QString(kt::DataDir() + "level1.txt"), -1, KIO::HideProgressInfo | KIO::Overwrite);
+            // [Fonic] Same as above
+            //active_job = KIO::file_move(temp, QString(kt::DataDir() + "level1.txt"), -1, KIO::HideProgressInfo | KIO::Overwrite);
+            active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + "level1.txt")), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
         }
         else
         {
-            QString msg = i18n("Cannot determine file type of <b>%1</b>", url.prettyUrl());
+            // [Fonic] Same as above
+            //QString msg = i18n("Cannot determine file type of <b>%1</b>", url.prettyUrl());
+            QString msg = i18n("Cannot determine file type of <b>%1</b>", url.toString());
             if (mode == Verbose)
                 KMessageBox::error(0, msg);
             else
                 notification(msg);
-
             setError(UNZIP_FAILED);
             emitResult();
         }
+        
     }
 
     void DownloadAndConvertJob::extract(KJob* j)
@@ -278,7 +307,9 @@ namespace kt
 
         if (bt::Exists(tmp_file))
         {
-            active_job = KIO::file_copy(tmp_file, dat_file, -1, KIO::HideProgressInfo | KIO::Overwrite);
+            // [Fonic] Same as above
+            //active_job = KIO::file_copy(tmp_file, dat_file, -1, KIO::HideProgressInfo | KIO::Overwrite);
+            active_job = KIO::file_copy(QUrl::fromLocalFile(tmp_file), QUrl::fromLocalFile(dat_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(revertBackupFinished(KJob*)));
         }
         else
@@ -297,8 +328,9 @@ namespace kt
             QString dat_file = kt::DataDir() + "level1.dat";
             QString tmp_file = kt::DataDir() + "level1.dat.tmp";
 
-
-            KIO::Job* job = KIO::file_copy(dat_file, tmp_file, -1, KIO::HideProgressInfo | KIO::Overwrite);
+            // [Fonic] Same as above
+            //KIO::Job* job = KIO::file_copy(dat_file, tmp_file, -1, KIO::HideProgressInfo | KIO::Overwrite);
+            KIO::Job* job = KIO::file_copy(QUrl::fromLocalFile(dat_file), QUrl::fromLocalFile(tmp_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(job, SIGNAL(result(KJob*)), this, SLOT(makeBackupFinished(KJob*)));
         }
         else

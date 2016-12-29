@@ -44,20 +44,22 @@ namespace kt
     {
         Q_OBJECT
     public:
-        IPFilterPlugin(QObject* parent, const QStringList& args);
+        // [Fonic]
+        //IPFilterPlugin(QObject* parent, const QStringList& args);
+        IPFilterPlugin(QObject* parent, const QVariantList& args);
         virtual ~IPFilterPlugin();
 
         virtual void load();
         virtual void unload();
         virtual bool versionCheck(const QString& version) const;
 
-        ///Loads the KT format list filter
+        /// Loads the KT format list filter
         void loadFilters();
 
-        ///Loads the anti-p2p filter list
+        /// Loads the anti-p2p filter list
         bool loadAntiP2P();
 
-        ///Unloads the anti-p2p filter list
+        /// Unloads the anti-p2p filter list
         bool unloadAntiP2P();
 
         /// Whether or not the IP filter is loaded and running

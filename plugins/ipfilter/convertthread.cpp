@@ -187,6 +187,10 @@ namespace kt
     }
 }
 
-#include "convertthread.moc"
+// [Fonic] Throws:
+//         Generating moc source convertthread.moc
+//         /data/Development/KDE/KTorrent/ktorrent.git/plugins/ipfilter/convertthread.cpp:0: Note: No relevant classes found. No output generated.
+//         -> probably not necessary?
+//#include "convertthread.moc"
 
 
