@@ -1,4 +1,4 @@
-#!/usr/bin/env kross
+#!/usr/bin/env kf5kross
 # -*- coding: utf-8 -*-
 import KTorrent
 import KTScriptingPlugin
