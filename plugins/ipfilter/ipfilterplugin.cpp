@@ -18,10 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <kgenericfactory.h>
+
+#include "ipfilterplugin.h"
+
 #include <knotification.h>
 #include <kmainwindow.h>
 #include <QTimer>
+
+#include <kpluginfactory.h>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
@@ -31,19 +35,18 @@
 #include <util/logsystemmanager.h>
 #include <peer/accessmanager.h>
 
-
-#include "ipfilterplugin.h"
 #include "ipfilterpluginsettings.h"
 #include "ipblocklist.h"
 
 using namespace bt;
 
-K_EXPORT_COMPONENT_FACTORY(ktipfilterplugin, KGenericFactory<kt::IPFilterPlugin>("ipfilterplugin"))
+K_PLUGIN_FACTORY_WITH_JSON(ktorrent_ipfilter, "ktorrent_ipfilter.json", registerPlugin<kt::IPFilterPlugin>();)
 
 namespace kt
 {
 
-    IPFilterPlugin::IPFilterPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+    IPFilterPlugin::IPFilterPlugin(QObject* parent, const QVariantList& args)
+        : Plugin(parent)
     {
         Q_UNUSED(args);
         connect(&auto_update_timer, SIGNAL(timeout()), this, SLOT(checkAutoUpdate()));
@@ -138,7 +141,7 @@ namespace kt
         {
             QDateTime last_updated = g.readEntry("last_updated", QDateTime());
             QDateTime next_update;
-            if (last_updated.isEmpty())
+            if (last_updated.isNull())
                 next_update = now.addDays(IPBlockingPluginSettings::autoUpdateInterval());
             else
                 next_update = QDateTime(last_updated).addDays(IPBlockingPluginSettings::autoUpdateInterval());
@@ -163,3 +166,5 @@ namespace kt
     }
 
 }
+
+#include <ipfilterplugin.moc>

@@ -44,7 +44,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        IPFilterPlugin(QObject* parent, const QStringList& args);
+        IPFilterPlugin(QObject* parent, const QVariantList& args);
         virtual ~IPFilterPlugin();
 
         virtual void load();

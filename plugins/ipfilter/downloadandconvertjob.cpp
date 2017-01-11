@@ -55,7 +55,7 @@ namespace kt
         if (bt::Exists(temp))
             bt::Delete(temp, true);
 
-        active_job = KIO::file_copy(url, temp, -1, KIO::Overwrite);
+        active_job = KIO::file_copy(url, QUrl::fromLocalFile(temp), -1, KIO::Overwrite);
         connect(active_job, SIGNAL(result(KJob*)), this, SLOT(downloadFileFinished(KJob*)));
     }
 
@@ -117,12 +117,12 @@ namespace kt
         Out(SYS_IPF|LOG_NOTICE) << "Mimetype: " << ptr->name() << endl;
         if(ptr->name() == "application/zip")
         {
-            active_job = KIO::file_move(temp, QString(kt::DataDir() + QLatin1String("level1.zip")), -1, KIO::HideProgressInfo | KIO::Overwrite);
+            active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + QLatin1String("level1.zip"))), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(extract(KJob*)));
         }
         else if(ptr->name() == "application/x-7z-compressed")
         {
-            QString msg = i18n("7z files are not supported", url.prettyUrl());
+            QString msg = i18n("7z files are not supported", url.toDisplayString());
             if (mode == Verbose)
                 KMessageBox::error(0, msg);
             else
@@ -139,12 +139,12 @@ namespace kt
         }
         else if(!KMimeType::isBinaryData(temp) || ptr->name() == "text/plain")
         {
-            active_job = KIO::file_move(temp, QString(kt::DataDir() + "level1.txt"), -1, KIO::HideProgressInfo | KIO::Overwrite);
+            active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + "level1.txt")), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
         }
         else
         {
-            QString msg = i18n("Cannot determine file type of <b>%1</b>", url.prettyUrl());
+            QString msg = i18n("Cannot determine file type of <b>%1</b>", url.toDisplayString());
             if (mode == Verbose)
                 KMessageBox::error(0, msg);
             else
@@ -278,7 +278,7 @@ namespace kt
 
         if (bt::Exists(tmp_file))
         {
-            active_job = KIO::file_copy(tmp_file, dat_file, -1, KIO::HideProgressInfo | KIO::Overwrite);
+            active_job = KIO::file_copy(QUrl::fromLocalFile(tmp_file), QUrl::fromLocalFile(dat_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(revertBackupFinished(KJob*)));
         }
         else
@@ -298,7 +298,7 @@ namespace kt
             QString tmp_file = kt::DataDir() + "level1.dat.tmp";
 
 
-            KIO::Job* job = KIO::file_copy(dat_file, tmp_file, -1, KIO::HideProgressInfo | KIO::Overwrite);
+            KIO::Job* job = KIO::file_copy(QUrl::fromLocalFile(dat_file), QUrl::fromLocalFile(tmp_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(job, SIGNAL(result(KJob*)), this, SLOT(makeBackupFinished(KJob*)));
         }
         else

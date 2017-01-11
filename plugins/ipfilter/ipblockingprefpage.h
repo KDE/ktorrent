@@ -43,12 +43,12 @@ namespace kt
         Q_OBJECT
     public:
         IPBlockingPrefPage(IPFilterPlugin* p);
-        virtual ~IPBlockingPrefPage();
+        ~IPBlockingPrefPage();
 
 
-        virtual void loadSettings();
-        virtual void loadDefaults();
-        virtual void updateSettings();
+        void loadSettings();
+        void loadDefaults();
+        void updateSettings();
 
         /// Do an auto update, return false if this is not possible
         bool doAutoUpdate();

@@ -2,16 +2,18 @@ set(ktipfilterplugin_SRC ipblocklist.cpp ipblockingprefpage.cpp convertthread.cp
 
 ki18n_wrap_ui(ktipfilterplugin_SRC ipblockingprefpage.ui convertdialog.ui)
 kconfig_add_kcfg_files(ktipfilterplugin_SRC ipfilterpluginsettings.kcfgc)
-add_library(ktipfilterplugin MODULE ${ktipfilterplugin_SRC})
+add_library(ktorrent_ipfilter MODULE ${ktipfilterplugin_SRC})
+
+kcoreaddons_desktop_to_json(ktorrent_ipfilter ktorrent_ipfilter.desktop)
+
 
 target_link_libraries(
-    ktipfilterplugin
+    ktorrent_ipfilter
     ktcore
     KF5::Torrent 
     KF5::Parts
+    KF5::KDELibs4Support
     )
-install(TARGETS ktipfilterplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
-install(FILES ktipfilterplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install(TARGETS ktorrent_ipfilter  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 
-
-add_subdirectory(tests)
+# add_subdirectory(tests)
