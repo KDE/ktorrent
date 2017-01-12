@@ -266,6 +266,8 @@ namespace kt
             return "image/" + ext;
         else if (ext == "jpg" || ext == "jpeg")
             return "image/jpeg";
+        else if (ext == "svg" || ext == "svgz")
+            return "image/svg+xml";
         else
             return QString::null;
     }
