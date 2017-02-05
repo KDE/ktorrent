@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=HTML interface
+Name[fr]=Interface HTML
+Comment=Manager KTorrent from an HTML interface.
+Comment[fr]=Gérer KTorrent à partir d'une interface HTML.
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=kthtmlinterfaceplugin
+X-KDE-PluginInfo-Author=Emmanuel Eytan
+X-KDE-PluginInfo-Email=eje211@gmail.com
+X-KDE-PluginInfo-Name=HtmlInterface
+X-KDE-PluginInfo-Website=http://kde.org/applications/internet/ktorrent/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Icon=view-sort-ascending

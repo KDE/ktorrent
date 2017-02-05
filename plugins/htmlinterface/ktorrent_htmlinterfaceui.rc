@@ -1,0 +1,6 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui library="libktorrent_htmlinterface" name="htmlinterfaceplugin" version="1">
+	<Menu name="ViewMenu">
+		<Action name="html_interface"/>
+	</Menu>
+</kpartgui>

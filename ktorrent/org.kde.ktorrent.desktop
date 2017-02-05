@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=KTorrent
+Name[ar]=سيولك
 Name[be]=KTorrent
 Name[bg]=KTorrent
 Name[bs]=KTorent
@@ -57,6 +58,7 @@ Name[x-test]=xxKTorrentxx
 Name[zh_CN]=KTorrent
 Name[zh_TW]=KTorrent
 GenericName=BitTorrent Client
+GenericName[ar]=عميل بِت‌تورنت
 GenericName[be]=Кліент BitTorrent
 GenericName[bg]=Клиент за торент
 GenericName[bs]=BitTorent klijent
