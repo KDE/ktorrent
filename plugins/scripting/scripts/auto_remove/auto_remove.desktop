@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Automatic Remove
+Name[ar]=الإزالة الآليّة
 Name[bg]=Автоматично премахване
 Name[bs]=Automatsko uklanjanje
 Name[ca]=Supressió automàtica
@@ -49,6 +50,7 @@ Name[x-test]=xxAutomatic Removexx
 Name[zh_CN]=自动移除
 Name[zh_TW]=自動移除
 Comment=Script to automatically remove torrents when they finish downloading or seeding
+Comment[ar]=سكربت لإزالة السّيول آليًّا عندما ينتهي تنزيلها أو تزويدها
 Comment[bg]=Скрипт за автоматично премахване на торенти при приключване с изтеглянето или разпръскването им
 Comment[bs]=Skripta za automatsko uklanjanje torenata nakon što završe preuzimanje ili sijanje
 Comment[ca]=Script per a suprimir automàticament els «torrent» quan han acabat de baixar o sembrar
