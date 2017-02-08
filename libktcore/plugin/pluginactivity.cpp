@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QVBoxLayout>
 #include <klocalizedstring.h>
@@ -33,7 +33,7 @@ using namespace bt;
 namespace kt
 {
     PluginActivity::PluginActivity(PluginManager* pman)
-        : Activity(i18n("Plugins"), "preferences-plugin", 5, 0), pman(pman)
+        : Activity(i18n("Plugins"), "plugins", 5, 0), pman(pman)
     {
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setMargin(0);

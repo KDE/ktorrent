@@ -49,7 +49,7 @@ namespace kt
 
 
     TorrentActivity::TorrentActivity(Core* core, GUI* gui, QWidget* parent)
-        : TorrentActivityInterface(i18n("Torrents"), QStringLiteral("ktorrent"), parent),
+        : TorrentActivityInterface(i18n("Torrents"), QStringLiteral("torrents"), parent),
           core(core),
           gui(gui)
     {
