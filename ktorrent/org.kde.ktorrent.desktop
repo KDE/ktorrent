@@ -134,5 +134,6 @@ Comment[sl]=Program za BitTorrent s strani KDE
 Comment[sv]=Ett BitTorrent-program av KDE
 Comment[uk]=Програма BitTorrent від KDE
 Comment[x-test]=xxA BitTorrent program by KDExx
+Comment[zh_CN]=KDE 的 BitTorrent 程序
 Terminal=false
 Categories=Qt;KDE;Network;FileTransfer;P2P;
