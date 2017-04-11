@@ -391,6 +391,7 @@ namespace kt
 
     ViewModel::ViewModel(Core* core, View* parent) : QAbstractTableModel(parent), core(core), view(parent)
     {
+        connect(core, &Core::aboutToQuit, this, &ViewModel::onExit); // model must be in core's thread to be notified in time
         connect(core, &Core::torrentAdded, this, &ViewModel::addTorrent);
         connect(core, &Core::torrentRemoved, this, &ViewModel::removeTorrent);
         sort_column = 0;
@@ -847,6 +848,15 @@ namespace kt
         torrents.remove(row, count);
         endRemoveRows();
         return true;
+    }
+
+    void ViewModel::onExit()
+    {
+        // items should be removed before Core delete their tc data.
+        foreach (Item* item, torrents)
+        {
+            removeTorrent(item->tc);
+        }
     }
 
     class ViewModelItemCmp

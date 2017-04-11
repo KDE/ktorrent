@@ -220,6 +220,11 @@ namespace kt
         void dhtNotEnabled(const QString& msg);
         void openedSilently(bt::TorrentInterface* tc);
 
+        /**
+         * Emitted just before Core object is destroyed
+        */
+        void aboutToQuit();
+
     private:
         void rollback(const QList<bt::TorrentInterface*> & success);
         void connectSignals(bt::TorrentInterface* tc);
