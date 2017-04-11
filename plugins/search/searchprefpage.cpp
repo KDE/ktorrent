@@ -129,7 +129,7 @@ namespace kt
             return;
         }
 
-        OpenSearchDownloadJob* j = new OpenSearchDownloadJob(url, dir);
+        OpenSearchDownloadJob* j = new OpenSearchDownloadJob(url, dir, plugin->getProxy());
         connect(j, SIGNAL(result(KJob*)), this, SLOT(downloadJobFinished(KJob*)));
         j->start();
     }
@@ -198,6 +198,7 @@ namespace kt
     void SearchPrefPage::openInExternalToggled(bool on)
     {
         kcfg_useCustomBrowser->setEnabled(on);
+        kcfg_useProxySettings->setEnabled(!on);
         kcfg_customBrowser->setEnabled(on && SearchPluginSettings::useCustomBrowser());
         kcfg_useDefaultBrowser->setEnabled(on);
     }

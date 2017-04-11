@@ -10,7 +10,10 @@
 			<label>Current search engine</label>
 			<default>0</default>
 		</entry>
-		
+		<entry name="useProxySettings" type ="Bool">
+			<label>Use proxy settings for search</label>
+			<default>true</default>
+		</entry>
 		<entry name="useDefaultBrowser" type ="Bool">
 			<label>Use default browser</label>
 			<default>true</default>

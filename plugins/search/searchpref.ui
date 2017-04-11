@@ -84,6 +84,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="kcfg_useProxySettings">
+     <property name="toolTip">
+      <string>Whether or not to use the HTTP proxy settings for search.</string>
+     </property>
+     <property name="text">
+      <string>Use proxy settings for search</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QRadioButton" name="kcfg_useDefaultBrowser">
      <property name="toolTip">
       <string>Use the default browser configured in the system settings.</string>

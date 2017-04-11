@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
- *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
+ *   Copyright (C) 2017 by Alexander Trufanov                              *
+ *   trufanovan@gmail.com                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,55 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTOPENSEARCHDOWNLOADJOB_H
-#define KTOPENSEARCHDOWNLOADJOB_H
 
-#include <kio/job.h>
+
+
+#ifndef KT_PROXY_HELPER_H
+#define KT_PROXY_HELPER_H
+
 #include <QUrl>
 
-#include "proxy_helper.h"
+#include <kio/metadata.h>
+#include <dbus/dbussettings.h>
+
+#include "searchpluginsettings.h"
 
 namespace kt
 {
 
-    /**
-        Job which tries to find an opensearch xml description on a website and
-        download that to a directory.
-    */
-    class OpenSearchDownloadJob : public KIO::Job
+    class ProxyHelper
     {
-        Q_OBJECT
+        DBusSettings* m_settings;
     public:
-        OpenSearchDownloadJob(const QUrl &url, const QString& dir, ProxyHelper *proxy);
-        virtual ~OpenSearchDownloadJob();
-
-        /// Start the job
-        void start();
-
-        /// Start the job. Try to get file by default url
-        void startDefault();
-
-        /// Get the directory
-        QString directory() const {return dir;}
-
-        /// Get the hostname
-        QString hostname() const {return url.host();}
-
-    private slots:
-        void getFinished(KJob* j);
-        void xmlFileDownloadFinished(KJob* j);
-
-    private:
-        bool checkLinkTagContent(const QString& content);
-        QString htmlParam(const QString& param, const QString& content);
-        bool startXMLDownload(const QUrl& url);
-
-    private:
-        QUrl url;
-        QString dir;
-        ProxyHelper* m_proxy;
+        ProxyHelper(DBusSettings* settings);
+        void setSettings(DBusSettings* settings) {m_settings = settings;}
+        bool ApplyProxy (KIO::MetaData& metadata) const;
     };
 
 }
 
-#endif
+#endif // KT_HOMEPAGE_H

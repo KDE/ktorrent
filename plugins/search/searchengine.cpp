@@ -23,6 +23,7 @@
 #include <util/log.h>
 #include <QXmlDefaultHandler>
 #include <QXmlInputSource>
+#include <QFileInfo>
 #include "searchengine.h"
 
 using namespace bt;
@@ -109,7 +110,18 @@ namespace kt
         if (!icon_url.isEmpty())
         {
             QString icon_name = QUrl(icon_url).fileName();
-            if (!bt::Exists(data_dir + icon_name))
+            QString icon_filename = data_dir + icon_name;
+            bool found = false;
+            found = bt::Exists(icon_filename);
+            if (!found) {
+                // if there is an icon in xml file folder - use it
+                // xml file folder might not be equal to data_dir
+                icon_filename = QFileInfo(fptr).absolutePath() + '/' + icon_name;
+                found = bt::Exists(icon_filename);
+            }
+
+
+            if (!found)
             {
                 KJob* j = KIO::storedGet(QUrl(icon_url), KIO::Reload, KIO::HideProgressInfo);
                 connect(j, SIGNAL(result(KJob*)), this, SLOT(iconDownloadFinished(KJob*)));
@@ -117,7 +129,7 @@ namespace kt
             else
             {
                 // load the icon
-                icon = QIcon(data_dir + icon_name);
+                icon = QIcon(icon_filename);
             }
         }
 

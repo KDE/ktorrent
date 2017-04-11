@@ -27,6 +27,7 @@
 #include <util/error.h>
 #include <util/fileops.h>
 #include <QStandardPaths>
+#include <interfaces/functions.h>
 #include "searchenginelist.h"
 #include "opensearchdownloadjob.h"
 
@@ -34,17 +35,14 @@ using namespace bt;
 
 namespace kt
 {
-    QString DataDir();
 
-    SearchEngineList::SearchEngineList(const QString& data_dir) : data_dir(data_dir)
+    SearchEngineList::SearchEngineList(ProxyHelper *proxy, const QString& data_dir) : m_proxy(proxy), data_dir(data_dir)
     {
-        default_opensearch_urls << QUrl(QLatin1String("http://www.torrentz.com")) << QUrl(QLatin1String("http://isohunt.com"));
-        default_urls << QUrl(QLatin1String("http://www.ktorrents.com"))
-                     << QUrl(QLatin1String("http://www.bittorrent.com"))
-                     << QUrl(QLatin1String("http://www.mininova.org"))
-                     << QUrl(QLatin1String("http://thepiratebay.org"))
-                     << QUrl(QLatin1String("http://www.bitenova.org"))
-                     << QUrl(QLatin1String("http://btjunkie.org"));
+        // default_opensearch_urls << QUrl(QLatin1String("https://torrentproject.com"));
+        default_urls << QUrl(QLatin1String("http://btdig.com"))
+                     << QUrl(QLatin1String("http://btdb.in"))
+                     << QUrl(QLatin1String("https://torrentproject.se"))
+                     << QUrl(QLatin1String("http://duckduckgo.com"));
     }
 
 
@@ -80,11 +78,9 @@ namespace kt
         }
         else
         {
-            QStringList subdirs = QDir(data_dir).entryList(QDir::Dirs);
+            QStringList subdirs = QDir(data_dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
             foreach (const QString& sd, subdirs)
             {
-                if (sd == QLatin1String("..") || sd == QLatin1String("."))
-                    continue;
 
                 // Load only if there is an opensearch.xml file and not a removed file
                 if (bt::Exists(data_dir + sd + QLatin1String("/opensearch.xml")) && !bt::Exists(data_dir + sd + QLatin1String("/removed")))
@@ -165,19 +161,22 @@ namespace kt
     void SearchEngineList::openSearchDownloadJobFinished(KJob* j)
     {
         OpenSearchDownloadJob* osdj = (OpenSearchDownloadJob*)j;
-        if (osdj->error())
-            bt::Delete(osdj->directory(), true);
-
-        SearchEngine* se = new SearchEngine(osdj->directory());
-        if (!se->load(osdj->directory() + QLatin1String("opensearch.xml")))
+        if (!osdj->error())
         {
-            delete se;
+            SearchEngine* se = new SearchEngine(osdj->directory());
+            if (!se->load(osdj->directory() + QLatin1String("opensearch.xml")))
+            {
+                delete se;
+                bt::Delete(osdj->directory(), true);
+            }
+            else {
+                engines.append(se);
+                insertRow(engines.count() - 1);
+            }
+        }
+        else {
             bt::Delete(osdj->directory(), true);
         }
-        else
-            engines.append(se);
-
-        insertRow(engines.count() - 1);
     }
 
     void SearchEngineList::addEngine(OpenSearchDownloadJob* j)
@@ -265,7 +264,7 @@ namespace kt
             QString dir = data_dir + u.host() + '/';
             if (!bt::Exists(dir))
             {
-                OpenSearchDownloadJob* j = new OpenSearchDownloadJob(u, dir);
+                OpenSearchDownloadJob* j = new OpenSearchDownloadJob(u, dir, m_proxy);
                 connect(j, SIGNAL(result(KJob*)), this, SLOT(openSearchDownloadJobFinished(KJob*)));
                 j->start();
             }
@@ -310,16 +309,18 @@ namespace kt
 
     void SearchEngineList::loadDefault(bool removed_to)
     {
-        QStringList dir_list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("ktorrent/opensearch"));
+        QStringList dir_list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
+        if (dir_list.isEmpty())
+            dir_list = QStandardPaths::locateAll(QStandardPaths::DataLocation, QLatin1String("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
+        if (dir_list.isEmpty())
+            dir_list = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QLatin1String("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
+
         foreach (const QString& dir, dir_list)
         {
-            QStringList subdirs = QDir(dir).entryList(QDir::Dirs);
+            QStringList subdirs = QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
             foreach (const QString& sd, subdirs)
             {
-                if (sd == QLatin1String("..") || sd == QLatin1String("."))
-                    continue;
-
-                loadEngine(dir + sd + '/', data_dir + sd + '/', removed_to);
+                loadEngine(QDir::cleanPath(dir) + '/' + sd + '/', data_dir + sd + '/', removed_to);
             }
         }
     }

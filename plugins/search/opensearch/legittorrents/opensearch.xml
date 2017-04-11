@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
- <ShortName>Legit Torrents</ShortName>
- <Description>100% legally free media</Description>
- <Url type="text/html" template="http://www.legittorrents.info/index.php?search={searchTerms}&amp;page=torrents" />
- <Image height="16" width="16" type="image/x-icon">http://www.legittorrents.info/favicon.ico</Image>
-</OpenSearchDescription>  

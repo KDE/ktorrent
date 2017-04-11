@@ -42,7 +42,6 @@
 #include "buffernetworkreply.h"
 #include "localfilenetworkreply.h"
 
-
 using namespace bt;
 
 namespace kt
@@ -53,6 +52,7 @@ namespace kt
     public:
         NetworkAccessManager(WebView* parent) : KIO::AccessManager(parent), webview(parent)
         {
+            webview->getProxy()->ApplyProxy(sessionMetaData());
         }
 
         virtual ~NetworkAccessManager()
@@ -63,7 +63,7 @@ namespace kt
             if (req.url().scheme() == QLatin1String("magnet"))
             {
                 webview->handleMagnetUrl(req.url());
-                return QNetworkAccessManager::createRequest(op, req, outgoingData);
+                return KIO::AccessManager::createRequest(op, req, outgoingData);
             }
             else if (req.url().host() == QLatin1String("ktorrent.searchplugin"))
             {
@@ -73,7 +73,6 @@ namespace kt
                 {
                     QUrl url(webview->searchUrl(search_text));
                     QNetworkRequest request(url);
-                    webview->setUrl(url);
                     return KIO::AccessManager::createRequest(op, request, outgoingData);
                 }
                 else if (req.url().path() == QLatin1String("/"))
@@ -95,8 +94,8 @@ namespace kt
 
     //////////////////////////////////////////////////////
 
-    WebView::WebView(kt::WebViewClient* client, QWidget* parentWidget)
-        : KWebView(parentWidget), client(client)
+    WebView::WebView(kt::WebViewClient* client, ProxyHelper* proxy, QWidget* parentWidget)
+        : KWebView(parentWidget), client(client), m_proxy(proxy)
     {
         page()->setNetworkAccessManager(new NetworkAccessManager(this));
         page()->setForwardUnsupportedContent(true);
@@ -187,7 +186,8 @@ namespace kt
         if (client)
             return client->searchUrl(search_text);
         else
-            return QUrl("http://google.be");
+            // client is broken -> browse to home
+            return QUrl(QLatin1String("http://ktorrent.searchplugin/"));
     }
 
     QWebView* WebView::createWindow(QWebPage::WebWindowType type)

@@ -62,7 +62,7 @@ namespace kt
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setSpacing(0);
         layout->setMargin(0);
-        webview = new WebView(this);
+        webview = new WebView(this, sp->getProxy());
 
         KActionCollection* ac = sp->getSearchActivity()->part()->actionCollection();
         sbar = new KToolBar(this);
@@ -74,7 +74,7 @@ namespace kt
         search_text = new QLineEdit(sbar);
         sbar->addWidget(search_text);
         sbar->addAction(ac->action(QStringLiteral("search_tab_search")));
-        sbar->addWidget(new QLabel(i18n(" Engine:")));
+        sbar->addWidget(new QLabel(i18n(" Engine: "))); // same i18n string as in SearchToolBar()
         search_engine = new KComboBox(sbar);
         search_engine->setModel(sp->getSearchEngineList());
         sbar->addWidget(search_engine);
@@ -113,7 +113,12 @@ namespace kt
 
     void SearchWidget::titleChanged(const QString& text)
     {
-        changeTitle(this, text);
+        if (!text.isEmpty()) {
+            changeTitle(this, text);
+        }
+        else { // no empty tab titles allowed
+            changeTitle(this, webview->url().toString(QUrl::FullyDecoded));
+        }
     }
 
     QUrl SearchWidget::getCurrentUrl() const

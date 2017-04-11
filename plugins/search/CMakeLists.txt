@@ -9,7 +9,8 @@ set(ktsearchplugin_SRC
 	searchplugin.cpp 
 	searchengine.cpp 
 	opensearchdownloadjob.cpp
-	searchactivity.cpp)
+        searchactivity.cpp
+        proxy_helper.cpp)
 
 ki18n_wrap_ui(ktsearchplugin_SRC searchpref.ui)
 kconfig_add_kcfg_files(ktsearchplugin_SRC searchpluginsettings.kcfgc)
