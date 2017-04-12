@@ -307,7 +307,8 @@ namespace kt
         };
 
         int chunk_size = chunk_size_table[m_chunk_size->currentIndex()];
-        QString name = url.fileName();
+        QString name = url.toLocalFile();
+        name = QFileInfo(name).isDir() ? QDir(name).dirName() : url.fileName();
 
         QStringList trackers;
 
