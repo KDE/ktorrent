@@ -124,6 +124,7 @@ int main(int argc, char** argv)
                      QStringLiteral("http://www.ktorrent.org/"));
 
     about.setOrganizationDomain(QByteArray("kde.org"));
+    about.setDesktopFileName(QStringLiteral("org.kde.ktorrent"));
 
     about.addAuthor(i18n("Joris Guisson"), QString(), QStringLiteral("joris.guisson@gmail.com"), QStringLiteral("http://ktorrent.org"));
     about.addAuthor(i18n("Ivan Vasic"), QString(), QStringLiteral("ivasic@gmail.com"));
