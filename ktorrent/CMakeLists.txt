@@ -95,6 +95,6 @@ install(PROGRAMS org.kde.ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} 
 install(FILES ktorrentui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 install(FILES kttorrentactivityui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 install(FILES ktorrent.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR} )
-
+install(FILES org.kde.ktorrent.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
 
 add_subdirectory(icons)
