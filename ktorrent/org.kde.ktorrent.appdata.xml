@@ -28,13 +28,12 @@
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li>Support for webseeds</li>
-      <li>Scripting support via Kross and interprocess control via DBus interface</li>
+      <li>Scripting support via Kross, and interprocess control via D-Bus interface</li>
       <li>System tray integration</li>
       <li>Tracker authentication support</li>
-      <li>Connection though a proxy</li>
-      <li>Scripting support via Kross and interprocess control via DBus interface</li>
-      <li>In addition to the built-in functionality, there are some plugins available for KTorrent</li>
+      <li>Connection through a proxy</li>
     </ul>
+    <p>In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
   </description>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=ktorrent</url>
   <url type="help">http://docs.kde.org/?application=ktorrent</url>
