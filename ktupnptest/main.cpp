@@ -42,7 +42,7 @@ int main(int argc, char** argv)
                      K4AboutData::License_GPL,
                      ki18n("(C) 2005 - 2007 Joris Guisson and Ivan Vasic"),
                      KLocalizedString(),
-                     "http://www.ktorrent.org/");
+                     "http://www.kde.org/applications/internet/ktorrent/");
     KCmdLineArgs::init(argc, argv, &about);
     KApplication app;
 

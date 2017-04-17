@@ -121,12 +121,12 @@ int main(int argc, char** argv)
     QCommandLineParser parser;
     KAboutData about(QStringLiteral("ktorrent"), i18nc("@title", "KTorrent"), kt::VERSION_STRING, i18n("Bittorrent client by KDE"),
                      KAboutLicense::GPL, i18nc("@info:credit", "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"), QString(),
-                     QStringLiteral("http://www.ktorrent.org/"));
+                     QStringLiteral("http://www.kde.org/applications/internet/ktorrent/"));
 
     about.setOrganizationDomain(QByteArray("kde.org"));
     about.setDesktopFileName(QStringLiteral("org.kde.ktorrent"));
 
-    about.addAuthor(i18n("Joris Guisson"), QString(), QStringLiteral("joris.guisson@gmail.com"), QStringLiteral("http://ktorrent.org"));
+    about.addAuthor(i18n("Joris Guisson"), QString(), QStringLiteral("joris.guisson@gmail.com"), QStringLiteral("http://kde.org/applications/internet/ktorrent"));
     about.addAuthor(i18n("Ivan Vasic"), QString(), QStringLiteral("ivasic@gmail.com"));
     about.addAuthor(i18n("Alan Jones"), i18n("BitFinder Plugin"), QStringLiteral("skyphyr@gmail.com"));
     about.addCredit(i18n("Diego Rosario Brogna"), i18n("Webinterface Plugin, global max share ratio patch"), QStringLiteral("dierbro@gmail.com"));
