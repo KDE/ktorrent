@@ -4,36 +4,202 @@
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>KTorrent</name>
+  <name xml:lang="ca">KTorrent</name>
+  <name xml:lang="de">KTorrent</name>
+  <name xml:lang="nl">KTorrent</name>
+  <name xml:lang="pt">KTorrent</name>
+  <name xml:lang="sv">Ktorrent</name>
+  <name xml:lang="uk">KTorrent</name>
+  <name xml:lang="x-test">xxKTorrentxx</name>
   <summary>BitTorrent Client</summary>
-    <description>
+  <summary xml:lang="ca">Client de BitTorrent</summary>
+  <summary xml:lang="de">BitTorrent-Programm</summary>
+  <summary xml:lang="nl">BitTorrent-cliënt</summary>
+  <summary xml:lang="pt">Cliente de BitTorrent</summary>
+  <summary xml:lang="sv">Dataflödesprogram</summary>
+  <summary xml:lang="uk">Клієнт BitTorrent</summary>
+  <summary xml:lang="x-test">xxBitTorrent Clientxx</summary>
+  <description>
     <p>
       KTorrent is a BitTorrent application by KDE which allows you to download files using
       the BitTorrent protocol. It enables you to run multiple torrents at the same time and
       comes with extended features to make it a full-featured client for BitTorrent.
     </p>
+    <p xml:lang="ca">El KTorrent és una aplicació de BitTorrent pel KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrents alhora i ve amb característiques esteses per fer-lo un client complet per a BitTorrent.</p>
+    <p xml:lang="nl">KTorrent is een BitTorrent-toepassing door KDE die u in staat stelt bestanden te downloaden met het BitTorrent-protocol. U kunt meerdere torrents tegelijk doen en het komt met uitgebreide functies om het een client voor BitTorrent te laten zijn met alle mogelijkheden.</p>
+    <p xml:lang="pt">O KTorrent é uma aplicação de BitTorrent do KDE que lhe permite obter ficheiros pelo protocolo BitTorrent. Ele permite-lhe executar várias torrentes ao mesmo tempo e vem com funcionalidades alargadas que o tornam um cliente pleno de funcionalidades para o BitTorrent.</p>
+    <p xml:lang="sv">Ktorrent är ett dataflödesprogram av KDE som låter dig ladda ner filer med protokollet BitTorrent. Det möjliggör att hantera flera dataflöden samtidigt och levereras med utökade funktioner som gör det till en fullfjädrad klient för BitTorrent.</p>
+    <p xml:lang="uk">KTorrent — програма для обміну даними торентів, створена розробниками KDE, за допомогою якої ви можете отримувати і розповсюджувати дані на основі протоколу BitTorrent. Ця програма надає вам змогу одночасно обмінюватися даними декількох торентів. Також передбачено додаткові можливості, які роблять програму повноцінною клієнтською частиною для обміну даними BitTorrent.</p>
+    <p xml:lang="x-test">xxKTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.xx</p>
     <p>Features:</p>
+    <p xml:lang="ca">Característiques:</p>
+    <p xml:lang="de">Funktionen:</p>
+    <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="pt">Funcionalidades:</p>
+    <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="uk">Можливості:</p>
+    <p xml:lang="x-test">xxFeatures:xx</p>
     <ul>
       <li>Queuing of torrents</li>
+      <li xml:lang="ca">Cua dels torrents</li>
+      <li xml:lang="de">Verwaltung von Warteschlangen für Torrents</li>
+      <li xml:lang="nl">Torrents in de wachtrij zetten</li>
+      <li xml:lang="pt">Fila de espera de torrentes</li>
+      <li xml:lang="sv">Köa dataflöden</li>
+      <li xml:lang="uk">Черга торентів</li>
+      <li xml:lang="x-test">xxQueuing of torrentsxx</li>
       <li>Global and per torrent speed limits</li>
+      <li xml:lang="ca">Límits de velocitat global i per torrent</li>
+      <li xml:lang="de">Geschwindigkeitsbegrenzungen global und für den einzelnen Torrent</li>
+      <li xml:lang="nl">Globale en per torrent snelheidslimieten</li>
+      <li xml:lang="pt">Limites de velocidades globais e por torrentes</li>
+      <li xml:lang="sv">Hastighetsbegränsningar, allmänna och per dataflöde</li>
+      <li xml:lang="uk">Обмеження на швидкість на загальному рівні і для окремих торентів</li>
+      <li xml:lang="x-test">xxGlobal and per torrent speed limitsxx</li>
       <li>Previewing of certain file types, build in (video and audio)</li>
+      <li xml:lang="ca">Vista prèvia de certs tipus de fitxers, construït en (vídeo i àudio)</li>
+      <li xml:lang="de">Eingebaute Vorschau für bestimmte Dateitypen (Video und Audio)</li>
+      <li xml:lang="nl">Voorbeelden van bepaalde bestandstypen bekijken, ingebouwd (video en geluid)</li>
+      <li xml:lang="pt">Antevisão incorporada de alguns tipos de ficheiros (vídeo e áudio)</li>
+      <li xml:lang="sv">Förhandsgranskning av vissa filtyper inbyggd (video och ljud)</li>
+      <li xml:lang="uk">Перегляд даних файлів деяких типів, вбудований (відео і звукові дані)</li>
+      <li xml:lang="x-test">xxPreviewing of certain file types, build in (video and audio)xx</li>
       <li>Importing of partially or fully downloaded files</li>
+      <li xml:lang="ca">Importació de fitxers descarregats parcialment o del tot</li>
+      <li xml:lang="de">Teilweise oder vollständig heruntergeladene Dateien werden importiert</li>
+      <li xml:lang="nl">Gedeeltelijk of volledig gedownloade bestanden importeren</li>
+      <li xml:lang="pt">Importação de ficheiros transferidos parcialmente ou por completo</li>
+      <li xml:lang="sv">Import av partiellt eller fullständigt nerladdade filer</li>
+      <li xml:lang="uk">Імпортування частково або повністю звантажених файлів</li>
+      <li xml:lang="x-test">xxImporting of partially or fully downloaded filesxx</li>
       <li>File prioritization for multi-file torrents</li>
+      <li xml:lang="ca">Priorització de fitxers per a torrents amb múltiples fitxers</li>
+      <li xml:lang="de">Dateipriorisierung für Torrents mit mehreren Dateien</li>
+      <li xml:lang="nl">Bestandsprioriteit instellen multi-bestand-torrents</li>
+      <li xml:lang="pt">Prioritização de torrentes multi-ficheiros</li>
+      <li xml:lang="sv">Filprioritering för dataflöden med flera filer</li>
+      <li xml:lang="uk">Визначення пріоритетів файлів у торентах, які складаються з декількох файлів</li>
+      <li xml:lang="x-test">xxFile prioritization for multi-file torrentsxx</li>
       <li>Selective downloading for multi-file torrents</li>
+      <li xml:lang="ca">Descàrrega selectiva per a torrents amb múltiples fitxers</li>
+      <li xml:lang="de">In Torrents mit mehreren Dateien können einzelne Dateien zum Herunterladen ausgewählt werden.</li>
+      <li xml:lang="nl">Selectief downloaden van multi-bestand-torrents</li>
+      <li xml:lang="pt">Transferência selectiva para torrentes multi-ficheiros</li>
+      <li xml:lang="sv">Selektiv nerladdning för dataflöden med flera filer</li>
+      <li xml:lang="uk">Вибіркове отримання даних торентів, які складаються з декількох файлів</li>
+      <li xml:lang="x-test">xxSelective downloading for multi-file torrentsxx</li>
       <li>Kick/ban peers with an additional IP Filter dialog for list/edit purposes</li>
+      <li xml:lang="ca">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a propòsits de llista/edició</li>
+      <li xml:lang="de">Gegenstellen zwangsweise trennen oder verbannen mit Hilfe eines zusätzlichen IP-Filterdialogs. Die IP-Einträge können in diesem Dialog angezeigt und bearbeitet werden.</li>
+      <li xml:lang="nl">Start/stop peers met een extra dialoog voor IP-filteren voor weergeven/bewerken</li>
+      <li xml:lang="pt">Banir/expulsar as máquinas com uma janela adicional de filtros de IP's para fins de listagem/edição</li>
+      <li xml:lang="sv">Sparka ut eller förbjud deltagare med en ytterligare IP-filtreringsdialogruta i listnings- och redigeringssyfte</li>
+      <li xml:lang="uk">Викидання/Блокування вузлів за допомогою додаткового діалогового вікна фільтрування за IP (список і редагування записів)</li>
+      <li xml:lang="x-test">xxKick/ban peers with an additional IP Filter dialog for list/edit purposesxx</li>
       <li>UDP tracker support</li>
+      <li xml:lang="ca">Suport del seguidor UDP</li>
+      <li xml:lang="de">Unterstützung für UDP-Tracker</li>
+      <li xml:lang="nl">Ondersteuning van UDP-tracker</li>
+      <li xml:lang="pt">Suporte a localizadores por UDP</li>
+      <li xml:lang="sv">Stöd för UDP-spårare</li>
+      <li xml:lang="uk">Підтримка координування UDP</li>
+      <li xml:lang="x-test">xxUDP tracker supportxx</li>
       <li>Support for private trackers and torrents</li>
+      <li xml:lang="ca">Suport per a seguidors i torrents privats</li>
+      <li xml:lang="de">Unterstützung für private Tracker und Torrents</li>
+      <li xml:lang="nl">Ondersteuning voor privé-trackers en -torrents</li>
+      <li xml:lang="pt">Suporte para localizadores e torrentes privadas</li>
+      <li xml:lang="sv">Stöd för privata spårare och dataflöden</li>
+      <li xml:lang="uk">Підтримка приватних координаторів та торентів</li>
+      <li xml:lang="x-test">xxSupport for private trackers and torrentsxx</li>
       <li>Support for µTorrent's peer exchange</li>
+      <li xml:lang="ca">Suport per a l'intercanvi entre parells de µTorrent</li>
+      <li xml:lang="de">Unterstützung für Austausch von Gegenstellen bei µTorrents</li>
+      <li xml:lang="nl">Ondersteuning voor uitwisseling van peers van µTorrent</li>
+      <li xml:lang="pt">Suporte para a troca de máquinas do µTorrent</li>
+      <li xml:lang="sv">Stöd för µTorrents utbyte mellan deltagare</li>
+      <li xml:lang="uk">Підтримка обміну вузлами у форматі µTorrent</li>
+      <li xml:lang="x-test">xxSupport for µTorrent's peer exchangexx</li>
       <li>Support for protocol encryption (compatible with Azureus)</li>
+      <li xml:lang="ca">Suport per a encriptatge del protocol (compatible amb Azureus)</li>
+      <li xml:lang="de">Unterstützung für Protokollverschlüsselung (kompatibel mit Azureus)</li>
+      <li xml:lang="nl">Ondersteuning voor protocolversleuteling (compatibel met Azureus)</li>
+      <li xml:lang="pt">Suporte para a encriptação do protocolo (compatível com o Azureus)</li>
+      <li xml:lang="sv">Stöd för protokollkryptering (kompatibel med Azureus)</li>
+      <li xml:lang="uk">Підтримка шифрування даних протоколів (сумісна з Azureus)</li>
+      <li xml:lang="x-test">xxSupport for protocol encryption (compatible with Azureus)xx</li>
       <li>Support for creating trackerless torrents</li>
+      <li xml:lang="ca">Suport per a la creació de torrents sense seguidors</li>
+      <li xml:lang="de">Unterstützung für das Erstellen von Torrents ohne Tracker</li>
+      <li xml:lang="nl">Ondersteuning voor aanmaken van torrents zonder tracker</li>
+      <li xml:lang="pt">Suporte para a criação de torrentes sem localizador</li>
+      <li xml:lang="sv">Stöd för att skapa dataflöden utan spårare</li>
+      <li xml:lang="uk">Підтримка створення торентів без координації</li>
+      <li xml:lang="x-test">xxSupport for creating trackerless torrentsxx</li>
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
+      <li xml:lang="ca">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
+      <li xml:lang="de">Unterstützung für Verteilte Hashtabellen (Distributed Hash Table, DHT in der Mainline-Version)</li>
+      <li xml:lang="nl">Ondersteuning voor gedistribueerde hash-tabellen (DHT, het hoofdversie)</li>
+      <li xml:lang="pt">Suporte para tabelas de dispersão distribuídas (DHT)</li>
+      <li xml:lang="sv">Stöd för distribuerade kondensattabeller (DHT, huvudversionen)</li>
+      <li xml:lang="uk">Підтримка розподілених таблиць хешів (distributed hash tables або DHT, основної версії)</li>
+      <li xml:lang="x-test">xxSupport for distributed hash tables (DHT, the Mainline version)xx</li>
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
+      <li xml:lang="ca">Suport per a UPnP per desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
+      <li xml:lang="de">Unterstützung für UPnP zur automatischen Port-Weiterleitung in Netzwerken mit dynamisch zugewiesenen Rechnern</li>
+      <li xml:lang="nl">Ondersteuning voor UPnP om automatisch poorten te 'forwarden' op een LAN met dynamisch toegekende hosts</li>
+      <li xml:lang="pt">Suporte de UPnP para encaminhar automaticamente os portos numa LAN para as máquinas atribuídas de forma dinâmica</li>
+      <li xml:lang="sv">Stöd för UPnP för att automatiskt vidarebefordra portar på ett lokalt nätverk med dynamiskt tilldelade värddatorer</li>
+      <li xml:lang="uk">Підтримка UPnP з метою автоматичного переспрямування портів у локальній мережі з динамічним призначенням назв вузлів</li>
+      <li xml:lang="x-test">xxSupport for UPnP to automatically forward ports on a LAN with dynamic assigned hostsxx</li>
       <li>Support for webseeds</li>
+      <li xml:lang="ca">Suport per a sembradors web</li>
+      <li xml:lang="de">Unterstützung für Webseeds</li>
+      <li xml:lang="nl">Ondersteuning voor webseeds</li>
+      <li xml:lang="pt">Suporte para fontes Web</li>
+      <li xml:lang="sv">Stöd för webberbjudanden</li>
+      <li xml:lang="uk">Підтримка вебпоширення</li>
+      <li xml:lang="x-test">xxSupport for webseedsxx</li>
       <li>Scripting support via Kross, and interprocess control via D-Bus interface</li>
+      <li xml:lang="ca">Suport per crear scripts a través de Kross i control entre processos a través de la interfície de D-Bus</li>
+      <li xml:lang="de">Skript-Unterstützung mit Kross und Interprozess-Steuerung über die D-Bus-Schnittstelle</li>
+      <li xml:lang="nl">Ondersteuning voor scripts via Kross en interprocescontrole via het D-Bus-interface</li>
+      <li xml:lang="pt">Suporte de programação através do Kross e controlo entre processos por uma interface de D-Bus</li>
+      <li xml:lang="sv">Skriptstöd via Kross och styrning mellan processer via D-Bus gränssnitt</li>
+      <li xml:lang="uk">Підтримка керування за допомогою скриптів на Kross та обміну даними між процесами за допомогою D-Bus</li>
+      <li xml:lang="x-test">xxScripting support via Kross, and interprocess control via D-Bus interfacexx</li>
       <li>System tray integration</li>
+      <li xml:lang="ca">Integració amb la safata del sistema</li>
+      <li xml:lang="de">Integration in den Systemabschnitt der Kontrollleiste</li>
+      <li xml:lang="nl">Integratie in het systeemvak</li>
+      <li xml:lang="pt">Integração na bandeja do sistema</li>
+      <li xml:lang="sv">Integrering med systembricka</li>
+      <li xml:lang="uk">Можливість роботи у системному лотку</li>
+      <li xml:lang="x-test">xxSystem tray integrationxx</li>
       <li>Tracker authentication support</li>
+      <li xml:lang="ca">Suport d'autenticació del seguidor</li>
+      <li xml:lang="de">Unterstützung für Tracker-Authentifizierung</li>
+      <li xml:lang="nl">Authenticatieondersteuning voor tracker</li>
+      <li xml:lang="pt">Suporte para localizadores autenticados</li>
+      <li xml:lang="sv">Stöd för behörighetskontroll av spårare</li>
+      <li xml:lang="uk">Підтримка розпізнавання для координації</li>
+      <li xml:lang="x-test">xxTracker authentication supportxx</li>
       <li>Connection through a proxy</li>
+      <li xml:lang="ca">Connexió a través d'un servidor intermediari</li>
+      <li xml:lang="de">Verbindung über Proxys</li>
+      <li xml:lang="nl">Verbinding via een proxy</li>
+      <li xml:lang="pt">Ligação através de um 'proxy'</li>
+      <li xml:lang="sv">Anslutning via en proxy</li>
+      <li xml:lang="uk">Встановлення з’єднання крізь проксі-сервер</li>
+      <li xml:lang="x-test">xxConnection through a proxyxx</li>
     </ul>
     <p>In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
+    <p xml:lang="ca">Addicionalment a les funcionalitats integrades, hi ha diversos connectors disponibles per al KTorrent.</p>
+    <p xml:lang="nl">Naast de ingebouwde functionaliteiten zijn er enige plug-ins beschikbaar voor KTorrent.</p>
+    <p xml:lang="pt">Para além das funcionalidades incorporadas, existem alguns 'plugins' disponíveis para o KTorrent.</p>
+    <p xml:lang="sv">Förutom inbyggd funktionalitet, finns några insticksprogram tillgängliga för Ktorrent.</p>
+    <p xml:lang="uk">Окрім вбудованих функціональних можливостей, у KTorrent передбачено розширення можливостей за допомогою додатків.</p>
+    <p xml:lang="x-test">xxIn addition to the built-in functionalities, there are some plugins available for KTorrent.xx</p>
   </description>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=ktorrent</url>
   <url type="help">http://docs.kde.org/?application=ktorrent</url>
