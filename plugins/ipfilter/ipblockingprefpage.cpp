@@ -39,7 +39,7 @@ namespace kt
         connect(m_download, SIGNAL(clicked()), this, SLOT(downloadClicked()));
         connect(kcfg_autoUpdate, SIGNAL(toggled(bool)), this, SLOT(autoUpdateToggled(bool)));
         connect(kcfg_autoUpdateInterval, SIGNAL(valueChanged(int)), this, SLOT(autoUpdateIntervalChanged(int)));
-        kcfg_autoUpdateInterval->setSuffix(ki18np(" day", " days").toString());
+        kcfg_autoUpdateInterval->setSuffix(ki18np(" day", " days"));
         m_job = 0;
         m_verbose = true;
     }

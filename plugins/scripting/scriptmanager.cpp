@@ -44,7 +44,7 @@ namespace kt
     ScriptManager::ScriptManager(ScriptModel* model, QWidget* parent)
         : Activity(i18n("Scripts"), "text-x-script", 40, parent), model(model)
     {
-        setXMLGUIFile("ktscriptingpluginui.rc");
+        setXMLGUIFile("ktorrent_scriptingui.rc");
         setupActions();
         setToolTip(i18n("Widget to start, stop and manage scripts"));
         QVBoxLayout* layout = new QVBoxLayout(this);

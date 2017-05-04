@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+    <moz:SearchForm>http://btdb.in/</moz:SearchForm>
+    <ShortName>BTDB</ShortName>
+    <LongName>BTDB.in torrent search</LongName>
+    <Description>BTDB.in torrent search Firefox extension helps you search and download TV series, movies, music, ebooks and games. BTDB.in is a fast growing torrent search engine. 10 millions torrents, friendly community.</Description>
+    <Image height="16" width="16" type="image/x-icon">http://btdb.in/favicon.ico</Image>
+    <Contact>bittorrent.db@gmail.com</Contact>
+    <Url type="text/html" template="http://btdb.in/q/{searchTerms}/?from=opensearch"/>
+    <!--- http://btdb.in/search?q=mp4&amp;from=opensearch -->
+    <Url type="application/opensearchdescription+xml" template="http://btdb.in/opensearch.xml"/>
+    <Query role="example" searchTerms="720p"/>
+    <Developer>BTDB.in</Developer>
+    <OutputEncoding>UTF-8</OutputEncoding>
+    <InputEncoding>UTF-8</InputEncoding>
+    <Language>en-us</Language>
+    <SyndicationRight>open</SyndicationRight>
+    <AdultContent>true</AdultContent>
+</OpenSearchDescription>

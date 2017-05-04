@@ -140,6 +140,7 @@ namespace kt
         void addTorrent(bt::TorrentInterface* ti);
         void removeTorrent(bt::TorrentInterface* ti);
         void sort(int col, Qt::SortOrder order);
+        void onExit();
 
     signals:
         void sorted();

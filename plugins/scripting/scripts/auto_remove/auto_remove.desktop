@@ -101,7 +101,7 @@ Type=KTorrentScript
 Icon=kt-remove
 X-KTorrent-Script-Author=Joris Guisson
 X-KTorrent-Script-Email=joris.guisson@gmail.com
-X-KTorrent-Script-Website=http://ktorrent.org/
+X-KTorrent-Script-Website=http://kde.org/applications/internet/ktorrent/
 X-KTorrent-Script-License=GPL
 X-KTorrent-Script-File=auto_remove.py
 

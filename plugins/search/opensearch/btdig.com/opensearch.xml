@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>BTDigg</ShortName>
+  <Description>Search in BTDigg</Description>
+  <Url type="text/html" method="get" template="http://btdig.com/search?q={searchTerms}"/>
+  <Image width="16" height="16" type="image/x-icon">http://btdig.com/favicon.ico</Image>
+  <Developer>BTDigg</Developer>
+  <InputEncoding>UTF-8</InputEncoding>
+</OpenSearchDescription>

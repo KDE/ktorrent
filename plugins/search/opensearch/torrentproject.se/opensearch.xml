@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Torrent Project</ShortName>
+  <Description>Torrent search engine</Description>
+  <Tags>torrent bittorrent search engine</Tags>
+  <Url type="text/html" method="get" template="https://torrentproject.se/?hl=en&amp;num=20&amp;start=0&amp;t={searchTerms}"/>
+  <Url type="application/x-suggestions+json" template="http://suggestqueries.google.com/complete/search?output=firefox&amp;client=firefox&amp;hl=en-US&amp;q={searchTerms}"/>
+  <Image width="16" height="16">https://torrentproject.se/favicon.ico</Image>
+  <InputEncoding>UTF-8</InputEncoding>
+</OpenSearchDescription>

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2017 by Alexander Trufanov                              *
+ *   trufanovan@gmail.com                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,49 +17,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSEARCHPLUGIN_H
-#define KTSEARCHPLUGIN_H
 
-#include <QList>
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
-#include "searchenginelist.h"
 #include "proxy_helper.h"
 
 namespace kt
 {
-    class SearchPrefPage;
-    class SearchActivity;
 
-    /**
-    @author Joris Guisson
-    */
-    class SearchPlugin : public Plugin
-    {
-        Q_OBJECT
-    public:
-        SearchPlugin(QObject* parent, const QVariantList& args);
-        virtual ~SearchPlugin();
-
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
-
-        SearchEngineList* getSearchEngineList() const {return engines;}
-        SearchActivity* getSearchActivity() const {return activity;}
-        ProxyHelper* getProxy() const {return proxy;}
-
-    private slots:
-        void search(const QString& text, int engine, bool external);
-        void preferencesUpdated();
-
-    private:
-        SearchActivity* activity;
-        SearchPrefPage* pref;
-        SearchEngineList* engines;
-        ProxyHelper* proxy;
-    };
+ProxyHelper::ProxyHelper(DBusSettings* settings): m_settings(settings)
+{
 
 }
 
-#endif
+bool ProxyHelper::ApplyProxy(KIO::MetaData& metadata) const
+{
+    if (!SearchPluginSettings::openInExternal() &&
+            SearchPluginSettings::useProxySettings() &&
+            m_settings)
+    {
+        if (!m_settings->useKDEProxySettings() &&
+            !m_settings->httpProxy().trimmed().isEmpty())
+        {
+            QString p = QString("%1:%2").arg(m_settings->httpProxy()).arg(m_settings->httpProxyPort());
+            if (!p.startsWith("http://"))
+                p = "http://" + p;
+
+            if (!QUrl(p).isValid()) {
+                p = QString("");
+            }
+
+            metadata["UseProxy"] = p;
+            metadata["ProxyUrls"] = p;
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+}

@@ -841,6 +841,7 @@ namespace kt
 
     void Core::onExit()
     {
+        emit aboutToQuit();
         // stop timer to prevent updates during wait
         exiting = true;
         update_timer.stop();

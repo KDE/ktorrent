@@ -34,6 +34,7 @@
 #include <interfaces/functions.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
+#include <dbus/dbus.h>
 #include "searchwidget.h"
 #include "searchprefpage.h"
 #include "searchtoolbar.h"
@@ -62,7 +63,8 @@ namespace kt
     void SearchPlugin::load()
     {
         LogSystemManager::instance().registerSystem(i18nc("plugin name", "Search"), SYS_SRC);
-        engines = new SearchEngineList(kt::DataDir() + "searchengines/");
+        proxy = new ProxyHelper((DBusSettings*) getCore()->getExternalInterface()->settings());
+        engines = new SearchEngineList(proxy, kt::DataDir() + "searchengines/");
         engines->loadEngines();
 
         pref = new SearchPrefPage(this, engines, 0);
@@ -92,6 +94,8 @@ namespace kt
         engines = 0;
         delete activity;
         activity = 0;
+        delete proxy;
+        proxy = 0;
     }
 
     void SearchPlugin::search(const QString& text, int engine, bool external)

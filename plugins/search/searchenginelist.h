@@ -24,6 +24,7 @@
 #include <QAbstractListModel>
 #include <util/constants.h>
 #include "searchengine.h"
+#include "proxy_helper.h"
 
 namespace kt
 {
@@ -39,9 +40,10 @@ namespace kt
         QList<SearchEngine*> engines;
         QList<QUrl> default_opensearch_urls;
         QList<QUrl> default_urls;
+        ProxyHelper* m_proxy;
         QString data_dir;
     public:
-        SearchEngineList(const QString& data_dir);
+        SearchEngineList(ProxyHelper* proxy, const QString& data_dir);
         virtual ~SearchEngineList();
 
         /// Load all engines
