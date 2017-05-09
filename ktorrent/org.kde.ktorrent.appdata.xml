@@ -21,6 +21,7 @@
   <name xml:lang="sv">Ktorrent</name>
   <name xml:lang="uk">KTorrent</name>
   <name xml:lang="x-test">xxKTorrentxx</name>
+  <name xml:lang="zh-CN">KTorrent</name>
   <summary>BitTorrent Client</summary>
   <summary xml:lang="ca">Client de BitTorrent</summary>
   <summary xml:lang="ca-valencia">Client de BitTorrent</summary>
@@ -39,6 +40,7 @@
   <summary xml:lang="sv">Dataflödesprogram</summary>
   <summary xml:lang="uk">Клієнт BitTorrent</summary>
   <summary xml:lang="x-test">xxBitTorrent Clientxx</summary>
+  <summary xml:lang="zh-CN">BitTorrent 客户端</summary>
   <description>
     <p>
       KTorrent is a BitTorrent application by KDE which allows you to download files using
@@ -78,6 +80,7 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">功能：</p>
     <ul>
       <li>Queuing of torrents</li>
       <li xml:lang="ca">Cua dels torrents</li>
