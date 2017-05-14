@@ -337,7 +337,7 @@ namespace kt
     void PlainChartDrawer::MakeCtxMenu()
     {
 
-        connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")), SIGNAL(triggered(bool)), this, SLOT(RenderToImage()));
+        connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")), SIGNAL(triggered()), this, SLOT(renderToImage()));
 
         pmCtxMenu->addSeparator();
 
