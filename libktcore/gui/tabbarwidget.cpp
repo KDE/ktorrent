@@ -102,7 +102,7 @@ namespace kt
         QAction* act = tab_bar->addAction(QIcon::fromTheme(icon), text);
         act->setCheckable(true);
         act->setToolTip(tooltip);
-        act->setChecked(widget_stack->count() == 0);
+        act->setChecked(widget_stack->count() == 0 && !shrunken);
         widget_stack->addWidget(ti);
         action_group->addAction(act);
         widget_to_action.insert(ti, act);
@@ -223,17 +223,6 @@ namespace kt
     {
         KConfigGroup g = cfg->group(group);
 
-        QString ctab = g.readPathEntry("current_tab", QString());
-        for (QMap<QWidget*, QAction*>::iterator i = widget_to_action.begin(); i != widget_to_action.end(); i++)
-        {
-            if (i.value()->text() == ctab)
-            {
-                widget_stack->setCurrentWidget(i.key());
-                i.value()->setChecked(true);
-                break;
-            }
-        }
-
         bool tmp = g.readEntry("shrunken", true);
         if (tmp != shrunken)
         {
@@ -241,6 +230,17 @@ namespace kt
                 shrink();
             else
                 unshrink();
+        }
+
+        QString ctab = g.readPathEntry("current_tab", QString());
+        for (QMap<QWidget*, QAction*>::iterator i = widget_to_action.begin(); i != widget_to_action.end(); i++)
+        {
+            if (i.value()->text() == ctab)
+            {
+                widget_stack->setCurrentWidget(i.key());
+                i.value()->setChecked(!tmp);
+                break;
+            }
         }
     }
 
