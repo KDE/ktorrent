@@ -17,34 +17,39 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <klocalizedstring.h>
-#include <K4AboutData>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kstandarddirs.h>
+#include <cstdio>
+#include <cstdlib>
+
+#include <QApplication>
+#include <QCommandLineOption>
+#include <QCommandLineParser>
+
+#include <KAboutData>
+#include <KGlobal>
+#include <KStandardDirs>
+#include <KLocalizedString>
+
 #include <util/functions.h>
-#include <interfaces/functions.h>
 #include <util/log.h>
 #include "upnptestwidget.h"
 
-using namespace kt;
-using namespace bt;
-
-
-
-
 int main(int argc, char** argv)
 {
-    K4AboutData about("ktupnp", 0, ki18n("KTUPnPTest"),
-                     "1.0", ki18n("KTorrent's UPnP test application"),
-                     K4AboutData::License_GPL,
-                     ki18n("(C) 2005 - 2007 Joris Guisson and Ivan Vasic"),
-                     KLocalizedString(),
+    QApplication app(argc, argv);
+    KAboutData about(QStringLiteral("ktupnp"), i18n("KTUPnPTest"),
+                     QStringLiteral("1.0"), i18n("KTorrent's UPnP test application"),
+                     KAboutLicense::GPL,
+                     i18n("&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"),
+                     QString(),
                      "http://www.kde.org/applications/internet/ktorrent/");
-    KCmdLineArgs::init(argc, argv, &about);
-    KApplication app;
+    KAboutData::setApplicationData(about);
+
+    QCommandLineParser parser;
+    parser.addVersionOption();
+    parser.addHelpOption();
+    about.setupCommandLine(&parser);
+    parser.process(app);
+    about.processCommandLine(&parser);
 
     if (!bt::InitLibKTorrent())
     {
@@ -59,7 +64,6 @@ int main(int argc, char** argv)
     bt::InitLog(str + "ktupnptest.log");
     UPnPTestWidget* mwnd = new UPnPTestWidget();
 
-    app.setTopWidget(mwnd);
     mwnd->show();
     app.exec();
     return 0;

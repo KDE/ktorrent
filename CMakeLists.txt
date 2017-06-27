@@ -44,7 +44,7 @@ add_definitions(-DQT_USE_QSTRINGBUILDER -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAS
 add_subdirectory(libktcore)
 add_subdirectory(plugins)
 add_subdirectory(ktorrent)
-#add_subdirectory(ktupnptest)
+add_subdirectory(ktupnptest)
 #add_subdirectory(plasma)
 add_subdirectory(ktmagnetdownloader)
 add_subdirectory(doc)
