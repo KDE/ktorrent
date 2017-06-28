@@ -20,17 +20,17 @@
 
 #include "playlistwidget.h"
 
-#include <QVBoxLayout>
-#include <QIcon>
 #include <QFile>
 #include <QFileDialog>
 #include <QHeaderView>
+#include <QIcon>
 #include <QSortFilterProxyModel>
+#include <QVBoxLayout>
 
-#include <ktoolbar.h>
-#include <klocalizedstring.h>
-#include <kfilewidget.h>
-#include <krecentdirs.h>
+#include <KLocalizedString>
+#include <KFileWidget>
+#include <KRecentDirs>
+#include <KToolBar>
 
 #include "mediaplayer.h"
 #include "mediaplayerpluginsettings.h"

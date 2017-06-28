@@ -17,12 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef KTPLUGIN_H
 #define KTPLUGIN_H
 
 #include <ktversion.h>
 #include <ktcore_export.h>
-#include <kparts/plugin.h>
+#include <KParts/Plugin>
 
 namespace bt
 {

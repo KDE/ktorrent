@@ -22,7 +22,8 @@
 #include <Phonon/Path>
 #include <Phonon/AudioOutput>
 #include <Phonon/Global>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+
 #include <util/log.h>
 #include <torrent/torrentfilestream.h>
 #include "mediaplayer.h"

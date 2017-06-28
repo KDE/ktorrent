@@ -23,7 +23,7 @@
 
 #include <QWidget>
 
-#include <kcolorbutton.h>
+#include <KColorButton>
 
 #include <interfaces/prefpageinterface.h>
 

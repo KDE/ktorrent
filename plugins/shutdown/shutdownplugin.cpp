@@ -17,17 +17,16 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+
 #include "shutdownplugin.h"
 
-#include <solid/powermanagement.h>
-
+#include <KActionCollection>
+#include <KJob>
+#include <KMessageBox>
+#include <KPluginFactory>
+#include <KToggleAction>
 #include <kworkspace.h>
-
-#include <kjob.h>
-#include <kpluginfactory.h>
-#include <ktoggleaction.h>
-#include <kactioncollection.h>
-#include <kmessagebox.h>
+#include <Solid/PowerManagement>
 
 #include <util/log.h>
 #include <interfaces/functions.h>

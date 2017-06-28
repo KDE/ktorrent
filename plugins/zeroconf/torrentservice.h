@@ -17,11 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KT_TORRENTSERVICE_HH
 #define KT_TORRENTSERVICE_HH
 
-#include <dnssd/publicservice.h>
-#include <dnssd/servicebrowser.h>
+#include <DNSSD/PublicService>
+#include <DNSSD/ServiceBrowser>
+
 #include <interfaces/peersource.h>
 #include <net/addressresolver.h>
 

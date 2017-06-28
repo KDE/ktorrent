@@ -18,9 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QTimer>
 #include <QXmlStreamWriter>
-#include <kapplication.h>
+
+#include <KApplication>
+
 #include <settings.h>
 #include <dht/dhtbase.h>
 #include <net/socketmonitor.h>

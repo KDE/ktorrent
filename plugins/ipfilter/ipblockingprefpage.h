@@ -23,7 +23,7 @@
 
 #include <interfaces/prefpageinterface.h>
 #include <interfaces/coreinterface.h>
-#include <qthread.h>
+#include <QThread>
 #include "ui_ipblockingprefpage.h"
 #include "ipfilterplugin.h"
 

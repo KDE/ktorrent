@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTCORE_HH
 #define KTCORE_HH
 
-#include <qmap.h>
-#include <qtimer.h>
+#include <QMap>
+#include <QTimer>
+
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
 

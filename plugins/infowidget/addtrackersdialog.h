@@ -22,6 +22,7 @@
 #define KT_ADDTRACKERSDIALOG_H
 
 #include <QDialog>
+
 #include <KEditListWidget>
 
 

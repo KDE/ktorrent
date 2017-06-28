@@ -23,8 +23,10 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDateTime>
-#include <klocalizedstring.h>
-#include <kio/job.h>
+
+#include <KLocalizedString>
+#include <KIO/Job>
+
 #include <bcodec/bnode.h>
 #include <bcodec/bdecoder.h>
 #include <interfaces/coreinterface.h>

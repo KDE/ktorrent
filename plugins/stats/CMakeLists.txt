@@ -32,7 +32,9 @@ target_link_libraries(
     ktorrent_stats
     ktcore
     KF5::Torrent
-    KF5::Parts
+    KF5::CoreAddons
+    KF5::I18n
     KF5::Plotting
-    )
+    KF5::WidgetsAddons
+)
 install(TARGETS ktorrent_stats  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

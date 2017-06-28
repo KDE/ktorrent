@@ -18,13 +18,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #include "basicjobprogresswidget.h"
 
 #include <QLabel>
 #include <QProgressBar>
 #include <QVBoxLayout>
-#include <klocalizedstring.h>
+
+#include <KLocalizedString>
+
 #include <util/functions.h>
 
 

@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kmimetype.h>
-#include <kdesktopfile.h>
-#include <kconfiggroup.h>
-#include <kross/core/manager.h>
-#include <kross/core/actioncollection.h>
+
+#include <KConfigGroup>
+#include <KDesktopFile>
+#include <KMimeType>
+#include <Kross/Core/Manager>
+#include <Kross/Core/ActionCollection>
+
 #include <util/fileops.h>
 #include <util/log.h>
 #include "script.h"

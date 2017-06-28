@@ -17,10 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef KTGUIINTERFACE_H
 #define KTGUIINTERFACE_H
 
-#include <qlist.h>
+#include <QList>
 #include <ktcore_export.h>
 
 class QString;

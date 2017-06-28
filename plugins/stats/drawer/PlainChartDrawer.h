@@ -21,22 +21,20 @@
 #ifndef PlainChartDrawer_H_
 #define PlainChartDrawer_H_
 
-#include <QWidget>
-#include <QFrame>
-#include <QPainter>
-#include <QPen>
 #include <QBrush>
 #include <QFont>
-#include <QStyleOption>
-#include <QMenu>
-#include <QString>
+#include <QFrame>
 #include <QImage>
-#include <QPalette>
-
 #include <QMenu>
+#include <QPainter>
+#include <QPalette>
+#include <QPen>
+#include <QString>
+#include <QStyleOption>
+#include <QWidget>
 
-#include <utility>
 #include <memory>
+#include <utility>
 
 #include <ChartDrawer.h>
 #include <ChartDrawerData.h>

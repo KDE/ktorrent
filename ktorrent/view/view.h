@@ -23,9 +23,11 @@
 
 #include <QMap>
 #include <QTreeWidget>
+
+#include <KSharedConfig>
+
 #include <util/constants.h>
 #include <interfaces/guiinterface.h>
-#include <ksharedconfig.h>
 
 class QMenu;
 class QAction;

@@ -19,10 +19,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #ifndef KTTORRENTFILEMODEL_HH
+
 #define KTTORRENTFILEMODEL_HH
 
-#include <QByteArray>
 #include <QAbstractItemModel>
+#include <QByteArray>
+
 #include <util/constants.h>
 #include <ktcore_export.h>
 

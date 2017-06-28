@@ -18,7 +18,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kio/copyjob.h>
+
+#include <KIO/CopyJob>
 #include <util/fileops.h>
 #include <util/log.h>
 #include "opensearchdownloadjob.h"

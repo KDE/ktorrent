@@ -18,8 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QDBusConnection>
-#include <kconfig.h>
+#include <QFile>
+#include <QTimer>
+
+#include <KConfig>
+
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <util/log.h>
@@ -31,9 +36,6 @@
 #include <interfaces/functions.h>
 #include "dbustorrent.h"
 #include "dbusgroup.h"
-#include <QFile>
-#include <QTimer>
-#include <QDebug>
 #include "dbussettings.h"
 
 using namespace bt;

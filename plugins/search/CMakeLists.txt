@@ -21,13 +21,22 @@ kcoreaddons_desktop_to_json(ktorrent_search ktorrent_search.desktop)
 target_link_libraries(
     ktorrent_search
     ktcore
-    KF5::Torrent
     Qt5::WebKitWidgets
-    KF5::Parts
-    KF5::WebKit
+    KF5::Torrent
+    KF5::CoreAddons
+    KF5::Completion
+    KF5::ConfigCore
+    KF5::ConfigGui
+    KF5::I18n
     KF5::IconThemes
+    KF5::KIOCore
+    KF5::KIOWidgets
     KF5::Notifications
-    )
+    KF5::WebKit
+    KF5::WidgetsAddons
+    KF5::XmlGui
+)
+
 install(TARGETS ktorrent_search  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_searchui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 

@@ -18,7 +18,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <klocalizedstring.h>
+
+#include <KLocalizedString>
+
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <util/functions.h>

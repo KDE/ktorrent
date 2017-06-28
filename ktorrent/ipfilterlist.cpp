@@ -18,9 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <arpa/inet.h>
+
 #include <QStringList>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+
+#include <arpa/inet.h>
 #include <net/address.h>
 #include <util/log.h>
 #include <util/error.h>

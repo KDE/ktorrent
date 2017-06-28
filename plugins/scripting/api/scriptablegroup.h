@@ -18,11 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTAPISCRIPTABLEGROUP_H
 #define KTAPISCRIPTABLEGROUP_H
 
 #include <groups/group.h>
-#include <kross/core/object.h>
+#include <Kross/Core/Object>
 
 namespace kt
 {

@@ -17,6 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+
 #ifndef KT_SHUTDOWNDLG_H
 #define KT_SHUTDOWNDLG_H
 

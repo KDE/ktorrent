@@ -18,11 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTFEEDWIDGETMODEL_H
 #define KTFEEDWIDGETMODEL_H
 
 #include <QAbstractTableModel>
-#include <syndication/item.h>
+#include <Syndication/Item>
 
 namespace kt
 {

@@ -18,10 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "iwfilelistmodel.h"
 
-#include <math.h>
-#include <klocalizedstring.h>
+#include <cmath>
+
+#include <KLocalizedString>
+
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>

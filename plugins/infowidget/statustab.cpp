@@ -17,11 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <math.h>
-#include <QDateTime>
+
+#include <cmath>
+
 #include <QCheckBox>
-#include <klocalizedstring.h>
-#include <krun.h>
+#include <QDateTime>
+
+#include <KLocalizedString>
+#include <KRun>
+
 #include <util/functions.h>
 #include <util/log.h>
 #include <util/sha1hash.h>

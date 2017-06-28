@@ -18,7 +18,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #include "propertiesdlg.h"
 #include <QUrl>
 #include <interfaces/torrentinterface.h>

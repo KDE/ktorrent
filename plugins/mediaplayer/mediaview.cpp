@@ -18,22 +18,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include <QAction>
 #include <QHeaderView>
-#include <QVBoxLayout>
-#include <QSortFilterProxyModel>
-#include <QLineEdit>
 #include <QIcon>
-#include <klocalizedstring.h>
+#include <QLineEdit>
+#include <QSortFilterProxyModel>
+#include <QVBoxLayout>
+
+#include <KLocalizedString>
 #include <KToolBar>
+
 #include <util/log.h>
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
 #include "mediaplayerpluginsettings.h"
-#include <QAction>
-
-
-
 
 using namespace bt;
 

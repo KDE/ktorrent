@@ -20,11 +20,12 @@
 #ifndef CONVERTDIALOG_H
 #define CONVERTDIALOG_H
 
-#include <QEvent>
 #include <QDialog>
+#include <QEvent>
 #include <QMutex>
-#include <QTimer>
 #include <QThread>
+#include <QTimer>
+
 #include "ui_convertdialog.h"
 
 namespace kt

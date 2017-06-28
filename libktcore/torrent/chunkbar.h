@@ -18,12 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef CHUNKBAR_H
 #define CHUNKBAR_H
 
-#include <qlabel.h>
+#include <QLabel>
+#include <QPixmap>
+
 #include <util/bitset.h>
-#include <qpixmap.h>
 #include <ktcore_export.h>
 #include "chunkbarrenderer.h"
 

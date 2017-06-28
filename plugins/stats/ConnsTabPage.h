@@ -31,7 +31,7 @@
 #include <torrent/queuemanager.h>
 
 #include <memory>
-#include <stdint.h>
+#include <cstdint>
 
 #include <ui_Conns.h>
 

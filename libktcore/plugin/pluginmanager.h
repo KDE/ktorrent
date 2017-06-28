@@ -17,16 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef KTPLUGINMANAGER_H
 #define KTPLUGINMANAGER_H
 
-#include <qlist.h>
+#include <QList>
+#include <QStringList>
+
+#include <KPluginInfo>
+#include <KPluginMetaData>
+
 #include <util/ptrmap.h>
 #include <interfaces/plugin.h>
-#include <qstringlist.h>
 #include <ktcore_export.h>
-#include <kplugininfo.h>
-#include <kpluginmetadata.h>
 
 namespace kt
 {

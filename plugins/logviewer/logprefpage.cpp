@@ -17,10 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "logprefpage.h"
 
 #include <QHeaderView>
-#include <ksharedconfig.h>
+#include <KSharedConfig>
+
 #include "logviewerpluginsettings.h"
 #include "logflags.h"
 #include "logflagsdelegate.h"

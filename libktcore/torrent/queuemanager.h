@@ -18,12 +18,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef KTQUEUEMANAGER_H
 #define KTQUEUEMANAGER_H
 
 #include <set>
+
 #include <QObject>
 #include <KSharedConfig>
+
 #include <interfaces/torrentinterface.h>
 #include <interfaces/queuemanagerinterface.h>
 #include <ktcore_export.h>

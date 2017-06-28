@@ -18,14 +18,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #include "torrentsearchbar.h"
 
-#include <QKeyEvent>
 #include <QHBoxLayout>
-#include <klocalizedstring.h>
 #include <QIcon>
+#include <QKeyEvent>
+
 #include <KConfigGroup>
+#include <KLocalizedString>
+
 #include "view.h"
 
 

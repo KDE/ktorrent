@@ -17,14 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "tabbarwidget.h"
 
-#include <kconfiggroup.h>
-#include <QVBoxLayout>
-#include <QIcon>
-#include <KToolBar>
 #include <QAction>
+#include <KConfigGroup>
+#include <KToolBar>
+
+#include <QIcon>
 #include <QTimer>
+#include <QVBoxLayout>
 
 namespace kt
 {

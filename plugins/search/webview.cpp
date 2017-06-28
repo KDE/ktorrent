@@ -21,24 +21,24 @@
 #include "webview.h"
 
 #include <QAction>
-#include <QTextStream>
 #include <QApplication>
+#include <QFileDialog>
 #include <QNetworkReply>
+#include <QStandardPaths>
+#include <QTextStream>
+#include <QUrl>
 #include <QWebHistoryInterface>
 #include <QWebHitTestResult>
-#include <QUrl>
-#include <QStandardPaths>
-#include <QFileDialog>
 
-#include <klocalizedstring.h>
-#include <kwebpage.h>
-#include <kiconloader.h>
+#include <KIconLoader>
+#include <KIO/AccessManager>
+#include <KIO/CopyJob>
+#include <KIO/Job>
+#include <KLocalizedString>
+#include <KMainWindow>
+#include <KWebPage>
 
 #include <util/log.h>
-#include <kio/job.h>
-#include <kio/accessmanager.h>
-#include <KMainWindow>
-#include <kio/copyjob.h>
 #include "buffernetworkreply.h"
 #include "localfilenetworkreply.h"
 

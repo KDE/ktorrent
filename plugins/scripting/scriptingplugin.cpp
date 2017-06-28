@@ -18,19 +18,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kpluginfactory.h>
-#include <kactioncollection.h>
-#include <kfiledialog.h>
-#include <klocalizedstring.h>
-#include <kmainwindow.h>
-#include <kstandarddirs.h>
-#include <kmessagebox.h>
-#include <kglobal.h>
-#include <kconfiggroup.h>
-#include <kio/copyjob.h>
-#include <kross/core/manager.h>
-#include <kross/core/interpreter.h>
-#include <kross/core/actioncollection.h>
+
+#include <KActionCollection>
+#include <KConfigGroup>
+#include <KFileDialog>
+#include <KGlobal>
+#include <KIO/CopyJob>
+#include <KLocalizedString>
+#include <KMainWindow>
+#include <KMessageBox>
+#include <KPluginFactory>
+#include <Kross/Core/Manager>
+#include <Kross/Core/Interpreter>
+#include <Kross/Core/ActionCollection>
+#include <KStandardDirs>
 
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>

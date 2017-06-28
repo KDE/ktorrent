@@ -18,15 +18,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTVIDEOWIDGET_H
 #define KTVIDEOWIDGET_H
 
+#include <QAction>
 #include <QWidget>
 #include <Phonon/VideoWidget>
 #include <Phonon/MediaObject>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
-#include <QAction>
 
 class QAction;
 class QLabel;

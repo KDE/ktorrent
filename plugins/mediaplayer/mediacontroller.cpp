@@ -18,11 +18,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #include "mediacontroller.h"
+
 #include <QBoxLayout>
 #include <QFile>
-#include <klocalizedstring.h>
+
+#include <KLocalizedString>
+
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
 #include "mediaplayer.h"

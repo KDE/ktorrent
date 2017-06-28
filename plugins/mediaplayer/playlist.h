@@ -23,6 +23,7 @@
 
 #include <QAbstractItemModel>
 #include <QStringList>
+
 #include <taglib/fileref.h>
 #include <util/ptrmap.h>
 #include "mediafile.h"

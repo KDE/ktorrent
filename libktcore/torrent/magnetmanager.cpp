@@ -17,10 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "magnetmanager.h"
+
 #include <QFile>
 #include <QTextStream>
-#include <QSet>
 
 #include <util/log.h>
 #include <bcodec/bencoder.h>

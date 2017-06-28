@@ -21,13 +21,15 @@
 
 #include "scheduleeditor.h"
 
-#include <QVBoxLayout>
-#include <QIcon>
 #include <QFileDialog>
+#include <QIcon>
 #include <QMessageBox>
+#include <QVBoxLayout>
 #include <QWidgetAction>
+
 #include <KActionCollection>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+
 #include <util/error.h>
 #include "weekview.h"
 #include "schedule.h"

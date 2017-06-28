@@ -22,9 +22,10 @@
 #define FILESELECTDLG_H
 
 #include <QDialog>
-#include <QSet>
 #include <QSortFilterProxyModel>
-#include <ksharedconfig.h>
+
+#include <KSharedConfig>
+
 #include <util/constants.h>
 #include "ui_fileselectdlg.h"
 

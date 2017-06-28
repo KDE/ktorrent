@@ -18,12 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include <QTextCodec>
+
 #include <util/log.h>
 #include <util/sha1hash.h>
 #include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
 #include "filter.h"
-#include <qtextcodec.h>
 
 using namespace bt;
 

@@ -18,9 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <klocalizedstring.h>
+
 #include <QNetworkInterface>
-#include <solid/device.h>
+
+#include <KLocalizedString>
+#include <Solid/Device>
+
 #include <util/log.h>
 #include "networkpref.h"
 #include "settings.h"

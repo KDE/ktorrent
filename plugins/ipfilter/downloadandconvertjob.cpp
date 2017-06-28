@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kmimetype.h>
-#include <kmessagebox.h>
-#include <klocalizedstring.h>
-#include <kzip.h>
-#include <kio/jobuidelegate.h>
+
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KMimeType>
+#include <KZip>
+#include <KIO/JobUiDelegate>
+
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/fileops.h>

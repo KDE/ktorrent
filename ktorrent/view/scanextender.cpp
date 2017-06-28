@@ -17,14 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "scanextender.h"
 
-#include <klocalizedstring.h>
+#include <KGuiItem>
+#include <KLocalizedString>
+#include <KStandardGuiItem>
+
 #include <torrent/job.h>
 #include <interfaces/torrentinterface.h>
 #include <datachecker/datacheckerjob.h>
-#include <KGuiItem>
-#include <KStandardGuiItem>
 
 
 

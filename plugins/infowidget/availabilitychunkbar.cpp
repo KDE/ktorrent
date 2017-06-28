@@ -17,11 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Fran`in Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "availabilitychunkbar.h"
 
-#include <QToolTip>
 #include <QPainter>
-#include <klocalizedstring.h>
+#include <QToolTip>
+
+#include <KLocalizedString>
 
 #include <util/bitset.h>
 #include <interfaces/torrentinterface.h>

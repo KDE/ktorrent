@@ -18,11 +18,19 @@ kcoreaddons_desktop_to_json(ktorrent_scripting ktorrent_scripting.desktop)
 target_link_libraries(
     ktorrent_scripting
     ktcore
-    KF5::Torrent
-    KF5::KDELibs4Support
-    KF5::KrossCore
-    KF5::Parts
     Qt5::Core
-    )
+    KF5::Torrent
+    KF5::Archive
+    KF5::ConfigCore
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::IconThemes
+    KF5::ItemViews
+    KF5::KIOWidgets
+    KF5::KrossCore
+    KF5::XmlGui
+    KF5::KDELibs4Support
+)
+
 install(TARGETS ktorrent_scripting  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_scriptingui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include "antip2p.h"
 #include <arpa/inet.h>
 #include <torrent/globals.h>
@@ -26,10 +27,10 @@
 #include <util/mmapfile.h>
 #include <net/address.h>
 
-#include <kglobal.h>
-#include <kstandarddirs.h>
+#include <KGlobal>
+#include <KStandardDirs>
 
-#include <qstring.h>
+#include <QString>
 
 
 using namespace bt;

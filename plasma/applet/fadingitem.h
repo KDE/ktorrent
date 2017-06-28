@@ -20,8 +20,8 @@
 #ifndef FADINGITEM_H
 #define FADINGITEM_H
 
-#include <QtCore/QWeakPointer>
-#include <QtGui/QGraphicsItem>
+#include <QGraphicsItem>
+#include <QWeakPointer>
 
 class QPropertyAnimation;
 

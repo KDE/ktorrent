@@ -17,13 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include <QUrl>
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
-#include <kio/jobclasses.h>
-#include <kstandardguiitem.h>
+
+#include <KGuiItem>
+#include <KIO/Job>
+#include <KIO/JobClasses>
+#include <KIO/JobUiDelegate>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KStandardGuiItem>
+
 #include <util/log.h>
 #include <util/error.h>
 #include <util/file.h>
@@ -38,10 +42,7 @@
 #include <datachecker/multidatachecker.h>
 #include <interfaces/functions.h>
 #include <settings.h>
-#include <KGuiItem>
-#include <KStandardGuiItem>
 #include "importdialog.h"
-
 
 
 using namespace bt;

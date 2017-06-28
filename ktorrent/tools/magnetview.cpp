@@ -21,14 +21,17 @@
 
 #include "magnetview.h"
 #include "magnetmodel.h"
-#include <QMenu>
-#include <QBoxLayout>
-#include <KLocalizedString>
-#include <QIcon>
+
 #include <KConfigGroup>
+#include <KLocalizedString>
+
+#include <QBoxLayout>
+#include <QIcon>
 #include <QHeaderView>
-#include <QTreeView>
 #include <QKeyEvent>
+#include <QMenu>
+#include <QTreeView>
+
 #include <torrent/magnetmanager.h>
 
 namespace kt

@@ -17,11 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "scanfolderplugin.h"
 #include "scanfolderprefpage.h"
 
 #include <QFileDialog>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+
 #include <util/functions.h>
 #include <groups/groupmanager.h>
 #include <interfaces/coreinterface.h>

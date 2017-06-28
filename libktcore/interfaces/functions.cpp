@@ -17,16 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "functions.h"
 
 #include <QDateTime>
+#include <QDir>
+#include <QFileInfo>
 #include <QNetworkInterface>
 #include <QStandardPaths>
-#include <QFileInfo>
-#include <QDir>
-#include <klocalizedstring.h>
 
-#include <solid/device.h>
+#include <KLocalizedString>
+#include <Solid/Device>
+
 #include <util/functions.h>
 #include <download/downloader.h>
 #include <download/webseed.h>

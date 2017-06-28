@@ -17,9 +17,11 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+
 #include <QAction>
 #include <QIcon>
 #include <KConfigGroup>
+
 #include "centralwidget.h"
 #include <interfaces/activity.h>
 

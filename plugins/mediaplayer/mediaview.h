@@ -18,14 +18,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTMEDIAVIEW_H
 #define KTMEDIAVIEW_H
-
 
 #include <QListView>
 #include <QCheckBox>
 #include <QSortFilterProxyModel>
 #include <KSharedConfig>
+
 #include "mediafile.h"
 
 

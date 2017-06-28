@@ -17,11 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QHBoxLayout>
 #include <QInputDialog>
 #include <QToolButton>
-#include <kmessagebox.h>
-#include <kmainwindow.h>
+
+#include <KMainWindow>
+#include <KMessageBox>
+
 #include <magnet/magnetlink.h>
 #include <interfaces/functions.h>
 #include <interfaces/guiinterface.h>

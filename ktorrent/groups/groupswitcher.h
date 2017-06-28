@@ -21,9 +21,11 @@
 #ifndef KT_GROUPSWITCHER_H
 #define KT_GROUPSWITCHER_H
 
-#include <KToolBar>
-#include <KSharedConfig>
 #include <QActionGroup>
+
+#include <KSharedConfig>
+#include <KToolBar>
+
 #include <groups/groupmanager.h>
 
 class QToolButton;

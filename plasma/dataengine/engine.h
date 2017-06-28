@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTPLASMAENGINE_H
 #define KTPLASMAENGINE_H
 
-#include <util/ptrmap.h>
 #include <QDBusConnectionInterface>
+
+#include <util/ptrmap.h>
 #include <plasma/dataengine.h>
 #include "torrentdbusinterface.h"
 

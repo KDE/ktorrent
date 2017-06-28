@@ -21,7 +21,7 @@
 #include <KPlotWgtDrawer.h>
 
 #include <QFileDialog>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 namespace kt
 {

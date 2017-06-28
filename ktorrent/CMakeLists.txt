@@ -84,9 +84,19 @@ set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
 target_link_libraries(ktorrent_app
     ktcore
     KF5::Torrent
+    KF5::ConfigCore
+    KF5::ConfigGui
+    KF5::DBusAddons
+    KF5::I18n
+    KF5::KIOCore
+    KF5::KIOFileWidgets
+    KF5::Notifications
     KF5::NotifyConfig
     KF5::Parts
-    KF5::DBusAddons
+    KF5::Solid
+    KF5::WidgetsAddons
+    KF5::WindowSystem
+    KF5::XmlGui
     KF5::KDELibs4Support
 )
 

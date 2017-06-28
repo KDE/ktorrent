@@ -10,10 +10,14 @@ kcoreaddons_desktop_to_json(ktorrent_ipfilter ktorrent_ipfilter.desktop)
 target_link_libraries(
     ktorrent_ipfilter
     ktcore
-    KF5::Torrent 
-    KF5::Parts
+    KF5::Torrent
+    KF5::Archive
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::KIOWidgets
+    KF5::WidgetsAddons
     KF5::KDELibs4Support
-    )
+)
 install(TARGETS ktorrent_ipfilter  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 
 # add_subdirectory(tests)

@@ -3,6 +3,7 @@ project(KTORRENT)
 
 
 set (QT_MIN_VERSION "5.5.0")
+set (KF5_MIN_VERSION "5.15")
 
 find_package(ECM REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -14,9 +15,34 @@ include(FeatureSummary)
 include(GenerateExportHeader)
 include(ECMInstallIcons)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core DBus Widgets Script)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
+    Core
+    DBus
+    Network
+    Script
+    Widgets
+)
 
-find_package(KF5 5.15 REQUIRED I18n KIO XmlGui Notifications NotifyConfig Solid Config CoreAddons DocTools Kross KCMUtils DBusAddons Crash Archive KDELibs4Support)
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
+    Config
+    CoreAddons
+    DBusAddons
+    Crash
+    I18n
+    KIO
+    Notifications
+    NotifyConfig
+    KCMUtils
+    Parts
+    Service
+    Solid
+    WidgetsAddons
+    WindowSystem
+    XmlGui
+    KDELibs4Support
+)
+
+find_package(KF5DocTools ${KF5_MIN_VERSION})
 
 find_package(KF5Torrent 1.9.50 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
@@ -47,6 +73,8 @@ add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)
 #add_subdirectory(plasma)
 add_subdirectory(ktmagnetdownloader)
-add_subdirectory(doc)
+if (KF5DocTools_FOUND)
+    add_subdirectory(doc)
+endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

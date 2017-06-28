@@ -20,12 +20,14 @@
  ***************************************************************************/
 #include "trackerview.h"
 
-#include <QHeaderView>
 #include <QClipboard>
+#include <QHeaderView>
 #include <QUrl>
-#include <kconfiggroup.h>
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
+
+#include <KConfigGroup>
+#include <KLocalizedString>
+#include <KMessageBox>
+
 #include <torrent/globals.h>
 #include <interfaces/trackerinterface.h>
 #include <interfaces/torrentinterface.h>

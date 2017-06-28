@@ -19,10 +19,10 @@
 #ifndef FLAGDB_H
 #define FLAGDB_H
 
-#include <qpixmap.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qmap.h>
+#include <QMap>
+#include <QPixmap>
+#include <QString>
+#include <QStringList>
 
 namespace kt
 {

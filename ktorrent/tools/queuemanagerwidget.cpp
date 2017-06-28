@@ -18,17 +18,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "queuemanagerwidget.h"
 
-#include <QHeaderView>
-#include <QTreeView>
 #include <QAction>
 #include <QBoxLayout>
-#include <QToolBar>
+#include <QHeaderView>
 #include <QLineEdit>
-#include <KStandardGuiItem>
+#include <QTreeView>
+#include <QToolBar>
+
 #include <KConfigGroup>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+#include <KStandardGuiItem>
+
 #include <torrent/queuemanager.h>
 #include <util/log.h>
 #include "queuemanagermodel.h"

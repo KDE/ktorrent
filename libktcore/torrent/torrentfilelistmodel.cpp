@@ -20,15 +20,16 @@
  ***************************************************************************/
 #include "torrentfilelistmodel.h"
 
-#include <klocalizedstring.h>
-#include <QIcon>
+#include <KLocalizedString>
 
+#include <QIcon>
+#include <QMimeDatabase>
+#include <QMimeType>
 #include <QTreeView>
+
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
-#include <QMimeDatabase>
-#include <QMimeType>
 
 using namespace bt;
 

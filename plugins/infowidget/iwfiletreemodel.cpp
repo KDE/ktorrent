@@ -18,16 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "iwfiletreemodel.h"
 
-#include <math.h>
-#include <klocalizedstring.h>
+#include <cmath>
+
+#include <QApplication>
+#include <KLocalizedString>
+
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include "infowidgetpluginsettings.h"
-#include <QApplication>
 
 using namespace bt;
 

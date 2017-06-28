@@ -10,7 +10,9 @@ target_link_libraries(
     ktorrent_logviewer
     ktcore
     KF5::Torrent
-    KF5::Parts
-    )
+    KF5::ConfigCore
+    KF5::I18n
+    KF5::XmlGui
+)
 install(TARGETS ktorrent_logviewer DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 

@@ -18,14 +18,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
-
 #ifndef KT_WEBVIEW_H
 #define KT_WEBVIEW_H
 
-#include <QUrl>
 #include <KWebView>
+
 #include <QNetworkReply>
+#include <QUrl>
 
 #include "proxy_helper.h"
 

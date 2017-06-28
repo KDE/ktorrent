@@ -19,15 +19,16 @@
 ***************************************************************************/
 #include "mediaplayeractivity.h"
 
+#include <QAction>
 #include <QBoxLayout>
-#include <QLabel>
 #include <QIcon>
+#include <QLabel>
 #include <QSplitter>
 #include <QToolButton>
-#include <QAction>
-#include <ktoggleaction.h>
-#include <kactioncollection.h>
-#include <klocalizedstring.h>
+
+#include <KActionCollection>
+#include <KLocalizedString>
+#include <KToggleAction>
 
 #include <util/log.h>
 #include <util/fileops.h>

@@ -18,9 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QHeaderView>
-#include <kdialog.h>
-#include <kmessagebox.h>
+
+#include <KDialog>
+#include <KMessageBox>
+
 #include <interfaces/coreinterface.h>
 #include <groups/groupmanager.h>
 #include "filtereditor.h"

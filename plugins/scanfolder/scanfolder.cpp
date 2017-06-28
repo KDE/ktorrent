@@ -17,14 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "scanfolder.h"
 
 #include <QDir>
-#include <klocalizedstring.h>
-#include <KFileItem>
+
 #include <KConfigGroup>
+#include <KFileItem>
+#include <KLocalizedString>
 #include <KSharedConfig>
-#include <kio/job.h>
+#include <KIO/Job>
+
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/fileops.h>

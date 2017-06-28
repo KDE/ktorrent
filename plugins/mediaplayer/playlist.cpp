@@ -19,16 +19,19 @@
 ***************************************************************************/
 
 #include "playlist.h"
-#include <QTime>
+
 #include <QFile>
 #include <QFileInfo>
-#include <QUrl>
+#include <QIcon>
 #include <QMimeData>
 #include <QStringList>
 #include <QTextStream>
+#include <QTime>
+#include <QUrl>
+
+#include <KLocalizedString>
+
 #include <taglib/tag.h>
-#include <klocalizedstring.h>
-#include <QIcon>
 #include <util/log.h>
 #include "mediaplayer.h"
 

@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef BTSEARCHWIDGET_H
 #define BTSEARCHWIDGET_H
 
@@ -29,11 +30,6 @@ class QProgressBar;
 class QNetworkReply;
 class QMenu;
 class KComboBox;
-
-namespace KParts
-{
-    class Part;
-}
 
 namespace kt
 {

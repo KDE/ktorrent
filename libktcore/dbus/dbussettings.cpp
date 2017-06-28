@@ -17,9 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "dbussettings.h"
 #include "settings.h"
+
 #include <QDBusConnection>
+
 #include <interfaces/coreinterface.h>
 
 namespace kt

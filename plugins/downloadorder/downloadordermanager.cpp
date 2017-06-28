@@ -18,8 +18,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QFile>
 #include <QTextStream>
+
 #include <util/log.h>
 #include <util/fileops.h>
 #include <interfaces/torrentinterface.h>

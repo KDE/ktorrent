@@ -21,10 +21,10 @@
 #ifndef SpdTabPage_H_
 #define SpdTabPage_H_
 
-#include <QWidget>
+#include <QList>
 #include <QString>
 #include <QPen>
-#include <QList>
+#include <QWidget>
 
 #include <interfaces/plugin.h>
 #include <interfaces/coreinterface.h>
@@ -37,7 +37,7 @@
 #include <settings.h>
 
 #include <memory>
-#include <stdint.h>
+#include <cstdint>
 
 #include <PluginPage.h>
 #include <drawer/ChartDrawer.h>

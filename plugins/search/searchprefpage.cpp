@@ -20,24 +20,21 @@
  ***************************************************************************/
 #include "searchprefpage.h"
 
-#include <QUrl>
-#include <QLineEdit>
-#include <QToolTip>
-#include <QFile>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QLabel>
 #include <QCheckBox>
-#include <QRadioButton>
+#include <QFile>
 #include <QInputDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QToolTip>
+#include <QUrl>
 
-#include <klocalizedstring.h>
-
-#include <kiconloader.h>
-
-#include <kmessagebox.h>
-#include <kio/copyjob.h>
-#include <kio/jobuidelegate.h>
+#include <KIconLoader>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KIO/CopyJob>
+#include <KIO/JobUiDelegate>
 
 #include <util/log.h>
 #include <util/constants.h>

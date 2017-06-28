@@ -18,12 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTPEERVIEWMODEL_H
 #define KTPEERVIEWMODEL_H
 
+#include <QAbstractTableModel>
 #include <QIcon>
 #include <QVector>
-#include <QAbstractTableModel>
+
 #include <interfaces/peerinterface.h>
 
 namespace kt

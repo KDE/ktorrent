@@ -18,10 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QHeaderView>
 #include <QInputDialog>
 #include <QLocale>
+
 #include <KRun>
+
 #include <util/log.h>
 #include "ktfeed.h"
 #include "feedwidget.h"

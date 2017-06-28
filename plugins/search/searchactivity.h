@@ -21,10 +21,11 @@
 #ifndef SEARCHACTIVITY_H
 #define SEARCHACTIVITY_H
 
-#include <QList>
-#include <QUrl>
-#include <QTabWidget>
 #include <QAction>
+#include <QList>
+#include <QTabWidget>
+#include <QUrl>
+
 #include <interfaces/activity.h>
 
 namespace kt

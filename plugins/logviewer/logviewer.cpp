@@ -17,16 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include "logviewer.h"
 
+#include <QApplication>
 #include <QBoxLayout>
-#include <kconfig.h>
-#include <klocalizedstring.h>
-#include <qapplication.h>
+#include <QIcon>
+#include <QMenu>
+
+#include <KConfig>
+#include <KLocalizedString>
+
 #include "logflags.h"
 #include "logviewerpluginsettings.h"
-#include <QMenu>
-#include <QIcon>
 
 
 namespace kt

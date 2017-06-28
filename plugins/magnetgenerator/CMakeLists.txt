@@ -12,9 +12,11 @@ target_link_libraries(
     ktorrent_magnetgenerator
     ktcore
     KF5::Torrent
-    KF5::Parts
+    KF5::CoreAddons
+    KF5::I18n
     KF5::Notifications
-    )
+    KF5::XmlGui
+)
 
 target_include_directories(ktorrent_magnetgenerator PRIVATE "$<BUILD_INTERFACE:${KTORRENT_SOURCE_DIR}>")
 

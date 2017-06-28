@@ -17,10 +17,12 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
-#include <QPainter>
-#include <KIconLoader>
-#include <QPushButton>
+
 #include <QApplication>
+#include <QPainter>
+#include <QPushButton>
+#include <KIconLoader>
+
 #include "scriptdelegate.h"
 #include "scriptmodel.h"
 

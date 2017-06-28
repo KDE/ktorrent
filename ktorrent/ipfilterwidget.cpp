@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "ipfilterwidget.h"
 
 #include <peer/accessmanager.h>
@@ -26,11 +27,11 @@
 #include <util/constants.h>
 #include <interfaces/functions.h>
 
-#include <QUrl>
 #include <QFileDialog>
+#include <QUrl>
 
-#include <KMessageBox>
 #include <KGuiItem>
+#include <KMessageBox>
 #include <KStandardGuiItem>
 
 #include "ipfilterlist.h"

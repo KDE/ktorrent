@@ -17,8 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QToolTip>
+
 #include <QPainter>
+#include <QToolTip>
+
 #include "downloadedchunkbar.h"
 
 #include <util/bitset.h>

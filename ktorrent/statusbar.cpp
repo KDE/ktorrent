@@ -22,10 +22,11 @@
 
 #include <QLabel>
 #include <QProgressBar>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+#include <KStatusBarOfflineIndicator>
+
 #include <util/functions.h>
 #include <dht/dhtbase.h>
-#include <kstatusbarofflineindicator.h>
 
 using namespace bt;
 

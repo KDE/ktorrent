@@ -18,10 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QFile>
+
 #include <QDomElement>
-#include <klocalizedstring.h>
-#include <syndication/enclosure.h>
+#include <QFile>
+
+#include <KLocalizedString>
+#include <Syndication/Enclosure>
+
 #include <util/log.h>
 #include <util/file.h>
 #include <util/fileops.h>

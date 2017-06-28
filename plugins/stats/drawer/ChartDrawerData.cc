@@ -20,7 +20,7 @@
 
 #include <ChartDrawerData.h>
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 namespace kt
 {

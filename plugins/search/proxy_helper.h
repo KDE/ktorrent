@@ -18,14 +18,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
-
 #ifndef KT_PROXY_HELPER_H
 #define KT_PROXY_HELPER_H
 
 #include <QUrl>
 
-#include <kio/metadata.h>
+#include <KIO/MetaData>
 #include <dbus/dbussettings.h>
 
 #include "searchpluginsettings.h"

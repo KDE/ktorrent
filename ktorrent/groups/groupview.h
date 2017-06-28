@@ -17,11 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTGROUPVIEW_H
 #define KTGROUPVIEW_H
 
 #include <QTreeWidget>
-#include <ksharedconfig.h>
+#include <KSharedConfig>
+
 #include "groupviewmodel.h"
 
 class QAction;

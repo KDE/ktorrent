@@ -17,10 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QHeaderView>
-#include <klocalizedstring.h>
-#include <ksharedconfig.h>
-#include <kmessagebox.h>
+
+#include <KLocalizedString>
+#include <KSharedConfig>
+#include <KMessageBox>
+
 #include <torrent/globals.h>
 #include <util/log.h>
 #include <util/error.h>

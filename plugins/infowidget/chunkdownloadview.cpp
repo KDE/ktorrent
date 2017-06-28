@@ -18,12 +18,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "chunkdownloadview.h"
 
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
-#include <klocalizedstring.h>
-#include <kconfiggroup.h>
+
+#include <KConfigGroup>
+#include <KLocalizedString>
+
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/chunkdownloadinterface.h>

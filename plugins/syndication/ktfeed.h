@@ -18,15 +18,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTFEED_H
 #define KTFEED_H
 
 #include <QMap>
-#include <QTimer>
 #include <QSet>
+#include <QTimer>
 #include <QUrl>
-#include <syndication/feed.h>
-#include <syndication/loader.h>
+
+#include <Syndication/Feed>
+#include <Syndication/Loader>
+
 #include <util/constants.h>
 
 namespace kt

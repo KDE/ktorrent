@@ -17,11 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef KTCOREINTERFACE_H
 #define KTCOREINTERFACE_H
 
+#include <QObject>
 #include <QUrl>
-#include <qobject.h>
+
 #include <util/constants.h>
 #include <ktcore_export.h>
 

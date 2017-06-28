@@ -18,9 +18,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <stdio.h>
-#include <signal.h>
-#include <stdlib.h>
+
+#include <cstdio>
+#include <csignal>
+#include <cstdlib>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -29,18 +30,19 @@
 #include <fcntl.h>
 #include <exception>
 
+#include <QApplication>
+#include <QCommandLineOption>
+#include <QCommandLineParser>
 #include <QDir>
 #include <QFile>
-#include <QApplication>
-#include <QCommandLineParser>
-#include <QCommandLineOption>
-#include <kaboutdata.h>
-#include <klocalizedstring.h>
-#include <KLocale>
-#include <kdbusservice.h>
-#include <kstartupinfo.h>
-#include <kwindowsystem.h>
+
+#include <KAboutData>
 #include <KCrash>
+#include <KDBusService>
+#include <KLocalizedString>
+#include <KLocale>
+#include <KStartupInfo>
+#include <KWindowSystem>
 
 #include <util/log.h>
 #include <torrent/globals.h>

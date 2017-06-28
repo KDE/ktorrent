@@ -18,11 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTAUDIOPLAYER_H
 #define KTAUDIOPLAYER_H
 
-#include <QTimer>
 #include <QStringList>
+#include <QTimer>
 #include <Phonon/MediaObject>
 #include "mediafile.h"
 #include "mediafilestream.h"

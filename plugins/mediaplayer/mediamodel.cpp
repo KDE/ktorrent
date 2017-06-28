@@ -18,9 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QMimeData>
+
+#include <QFileInfo>
 #include <QIcon>
-#include <klocalizedstring.h>
+#include <QMimeData>
+
+#include <KLocalizedString>
+
 #include <util/log.h>
 #include <util/constants.h>
 #include <util/functions.h>
@@ -28,7 +32,6 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <torrent/queuemanager.h>
-#include <QFileInfo>
 #include "mediamodel.h"
 
 

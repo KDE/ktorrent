@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTFILTEREDITOR_H
 #define KTFILTEREDITOR_H
 
 #include <QSortFilterProxyModel>
-#include <kdialog.h>
+#include <KDialog>
+
 #include "ui_filtereditor.h"
 
 namespace kt

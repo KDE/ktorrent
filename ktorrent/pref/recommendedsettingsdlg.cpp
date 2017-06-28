@@ -18,9 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <math.h>
-#include <kformat.h>
-#include <ksharedconfig.h>
+
+#include <cmath>
+
+#include <KFormat>
+#include <KSharedConfig>
+
 #include <util/constants.h>
 #include <util/functions.h>
 #include "recommendedsettingsdlg.h"

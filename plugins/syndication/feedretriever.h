@@ -18,11 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTFEEDRETRIEVER_H
 #define KTFEEDRETRIEVER_H
 
 #include <QFile>
-#include <syndication/dataretriever.h>
+#include <Syndication/DataRetriever>
 
 class KJob;
 

@@ -18,13 +18,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QDateTime>
 #include <QDomElement>
 #include <QIcon>
 #include <QLocale>
-#include <klocalizedstring.h>
-#include <syndication/item.h>
-#include <syndication/enclosure.h>
+
+#include <KLocalizedString>
+
+#include <Syndication/Item>
+#include <Syndication/Enclosure>
+
 #include <util/log.h>
 #include "feedwidgetmodel.h"
 #include "ktfeed.h"

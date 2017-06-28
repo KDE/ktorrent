@@ -18,12 +18,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #ifndef KT_JOBPROGRESSWIDGET_H
 #define KT_JOBPROGRESSWIDGET_H
 
 #include <QWidget>
 #include <KJob>
+
 #include <ktcore_export.h>
 #include <torrent/job.h>
 #include <gui/extender.h>

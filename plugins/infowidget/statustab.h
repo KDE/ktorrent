@@ -21,8 +21,8 @@
 #ifndef STATUSTAB_H
 #define STATUSTAB_H
 
-#include <QWidget>
 #include <QPointer>
+#include <QWidget>
 #include <interfaces/torrentinterface.h>
 #include "ui_statustab.h"
 

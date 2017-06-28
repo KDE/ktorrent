@@ -18,11 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTCHUNKDOWNLOADMODEL_H
 #define KTCHUNKDOWNLOADMODEL_H
 
-#include <QVector>
 #include <QAbstractTableModel>
+#include <QVector>
 #include <interfaces/chunkdownloadinterface.h>
 #include <interfaces/torrentinterface.h>
 

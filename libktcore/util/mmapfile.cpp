@@ -20,18 +20,20 @@
 
 #include <config-ktcore.h>
 
-
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <qfile.h>
-#include <kfileitem.h>
-#include <klocalizedstring.h>
+
+#include <QFile>
+
+#include <KFileItem>
+#include <KLocalizedString>
+
 #include <util/error.h>
 #include <util/log.h>
 #include <torrent/globals.h>

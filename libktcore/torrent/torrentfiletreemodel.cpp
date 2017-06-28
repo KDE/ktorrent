@@ -18,13 +18,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "torrentfiletreemodel.h"
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+
 #include <QIcon>
-#include <QDebug>
-#include <QTreeView>
+#include <QMimeDatabase>
+#include <QMimeType>
 #include <QSortFilterProxyModel>
+#include <QTreeView>
+
 #include <bcodec/bdecoder.h>
 #include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
@@ -33,8 +37,6 @@
 #include <util/functions.h>
 #include <util/log.h>
 #include <util/error.h>
-#include <QMimeDatabase>
-#include <QMimeType>
 
 using namespace bt;
 

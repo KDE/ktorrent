@@ -18,12 +18,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kio/job.h>
-#include <util/fileops.h>
-#include <util/log.h>
+
+#include <QFileInfo>
 #include <QXmlDefaultHandler>
 #include <QXmlInputSource>
-#include <QFileInfo>
+
+#include <KIO/Job>
+
+#include <util/fileops.h>
+#include <util/log.h>
 #include "searchengine.h"
 
 using namespace bt;

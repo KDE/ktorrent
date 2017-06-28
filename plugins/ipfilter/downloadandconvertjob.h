@@ -18,10 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTDOWNLOADANDCONVERTJOB_H
 #define KTDOWNLOADANDCONVERTJOB_H
 
-#include <kio/job.h>
+#include <KIO/Job>
 
 namespace kt
 {

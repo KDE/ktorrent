@@ -18,10 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QVBoxLayout>
-#include <QSplitter>
-#include <ktoolbar.h>
+
 #include <QMenu>
+#include <QSplitter>
+#include <QVBoxLayout>
+
+#include <KToolBar>
+
 #include <kactioncollection.h>
 #include "syndicationtab.h"
 #include "feedlistview.h"

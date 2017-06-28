@@ -20,15 +20,15 @@
 
 #include "addtrackersdialog.h"
 #include <QRegExp>
-#include <QUrl>
 #include <QApplication>
 #include <QClipboard>
-#include <QLineEdit>
 #include <QCompleter>
 #include <QDialogButtonBox>
+#include <QLineEdit>
 #include <QVBoxLayout>
+#include <QUrl>
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 namespace kt
 {

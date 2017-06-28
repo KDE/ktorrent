@@ -18,12 +18,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QFile>
+
 #include <QDir>
-#include <QTime>
-#include <QTextStream>
+#include <QFile>
 #include <QIcon>
-#include <klocalizedstring.h>
+#include <QTextStream>
+#include <QTime>
+
+#include <KLocalizedString>
+
 #include <util/log.h>
 #include <util/fileops.h>
 #include <util/functions.h>

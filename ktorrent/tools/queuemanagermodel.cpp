@@ -20,12 +20,14 @@
  ***************************************************************************/
 #include "queuemanagermodel.h"
 
-#include <QColor>
-#include <QMimeData>
-#include <QIcon>
 #include <QApplication>
+#include <QColor>
+#include <QIcon>
 #include <QLocale>
-#include <klocalizedstring.h>
+#include <QMimeData>
+
+#include <KLocalizedString>
+
 #include <util/log.h>
 #include <util/functions.h>
 #include <torrent/queuemanager.h>

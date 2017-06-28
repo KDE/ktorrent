@@ -26,16 +26,19 @@
 #include <QMouseEvent>
 #include <QStackedWidget>
 #include <QIcon>
-#include <klocalizedstring.h>
-#include <KToolBar>
-#include <KToggleFullScreenAction>
+
 #include <KActionCollection>
+#include <KLocalizedString>
+#include <KToggleFullScreenAction>
+#include <KToolBar>
+#include <Solid/PowerManagement>
+
 #include <Phonon/Path>
 #include <Phonon/AudioOutput>
 #include <Phonon/Global>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
-#include <solid/powermanagement.h>
+
 #include <util/log.h>
 #include <torrent/chunkbar.h>
 #include "mediaplayer.h"

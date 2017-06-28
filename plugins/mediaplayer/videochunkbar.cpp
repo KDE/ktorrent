@@ -19,11 +19,12 @@
  ***************************************************************************/
 
 #include "videochunkbar.h"
+
 #include <QApplication>
-#include <QStyle>
-#include <QPainter>
-#include <QStyleOption>
 #include <QIcon>
+#include <QPainter>
+#include <QStyle>
+#include <QStyleOption>
 
 
 namespace kt

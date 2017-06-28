@@ -18,14 +18,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #include "scanthread.h"
+
+#include <QCoreApplication>
 #include <QDir>
 #include <QEvent>
-#include <QCoreApplication>
-#include <klocalizedstring.h>
-#include <util/fileops.h>
 #include <QTimer>
+
+#include <KLocalizedString>
+
+#include <util/fileops.h>
 
 
 namespace kt

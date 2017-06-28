@@ -17,11 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTLOGFLAGS_H
 #define KTLOGFLAGS_H
 
-#include <QList>
 #include <QAbstractTableModel>
+#include <QList>
 #include <util/constants.h>
 
 class QString;

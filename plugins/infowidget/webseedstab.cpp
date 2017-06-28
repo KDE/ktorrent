@@ -18,9 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "webseedstab.h"
+
 #include <QHeaderView>
-#include <kmessagebox.h>
+#include <KMessageBox>
+
 #include <interfaces/webseedinterface.h>
 #include "webseedsmodel.h"
 

@@ -18,17 +18,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QIcon>
-#include <klocalizedstring.h>
-#include <kmimetype.h>
-#include <ktar.h>
-#include <kzip.h>
+
+#include <KLocalizedString>
+#include <KMimeType>
+#include <KTar>
+#include <KZip>
+
 #include <util/error.h>
+#include <util/fileops.h>
 #include <util/log.h>
 #include <interfaces/functions.h>
 #include "scriptmodel.h"
 #include "script.h"
-#include <util/fileops.h>
 
 using namespace bt;
 

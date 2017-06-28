@@ -18,11 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QCompleter>
-#include <kfilewidget.h>
-#include <krecentdirs.h>
-#include <kmessagebox.h>
-#include <kprogressdialog.h>
+
+#include <KFileWidget>
+#include <KMessageBox>
+#include <KProgressDialog>
+#include <KRecentDirs>
+
 #include <dht/dht.h>
 #include <torrent/globals.h>
 #include <groups/group.h>

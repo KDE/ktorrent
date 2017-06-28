@@ -18,8 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "webseedsmodel.h"
-#include <klocalizedstring.h>
+
+#include <KLocalizedString>
+
 #include <interfaces/webseedinterface.h>
 #include <util/functions.h>
 

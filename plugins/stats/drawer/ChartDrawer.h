@@ -27,7 +27,7 @@
 #include <QPaintEvent>
 
 #include <memory>
-#include <stdint.h>
+#include <cstdint>
 
 #include <ChartDrawerData.h>
 

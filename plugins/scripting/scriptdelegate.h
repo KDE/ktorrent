@@ -21,10 +21,11 @@
 #ifndef KT_SCRIPTDELEGATE_H
 #define KT_SCRIPTDELEGATE_H
 
+#include <QAbstractItemView>
 #include <QCheckBox>
 #include <QPushButton>
-#include <QAbstractItemView>
-#include <kwidgetitemdelegate.h>
+
+#include <KWidgetItemDelegate>
 
 namespace kt
 {

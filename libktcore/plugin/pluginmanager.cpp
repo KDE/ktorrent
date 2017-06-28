@@ -17,14 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include "pluginmanager.h"
 
 #include <QFile>
 #include <QTextStream>
-#include <klocalizedstring.h>
-#include <ksharedconfig.h>
-#include <kservicetypetrader.h>
-#include <kpluginmetadata.h>
+
+#include <KLocalizedString>
+#include <KSharedConfig>
+#include <KPluginMetaData>
+#include <KServiceTypeTrader>
+
 #include <util/log.h>
 #include <util/error.h>
 #include <util/fileops.h>

@@ -58,9 +58,13 @@ kcoreaddons_desktop_to_json(ktorrent_infowidget ktorrent_infowidget.desktop)
 target_link_libraries(
     ktorrent_infowidget
     ktcore
-    KF5::KIOFileWidgets
     KF5::Torrent
+    KF5::ConfigCore
+    KF5::I18n
+    KF5::KIOFileWidgets
+    KF5::KIOWidgets
+    KF5::WidgetsAddons
     ${geoip_link}
-    )
+)
 install(TARGETS ktorrent_infowidget DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 

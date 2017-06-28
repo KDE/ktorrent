@@ -17,10 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTGROUPMANAGER_H
 #define KTGROUPMANAGER_H
 
 #include <QString>
+
 #include <util/ptrmap.h>
 #include <ktcore_export.h>
 #include <groups/group.h>

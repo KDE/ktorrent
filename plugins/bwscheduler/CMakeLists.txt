@@ -24,8 +24,11 @@ target_link_libraries(
     ktorrent_bwscheduler
     ktcore
     KF5::Torrent
-    KF5::Parts
-    )
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::XmlGui
+    KF5::WidgetsAddons
+)
 install(TARGETS ktorrent_bwscheduler  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_bwschedulerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 

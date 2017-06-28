@@ -20,22 +20,23 @@
  ***************************************************************************/
 #include "view.h"
 
-#include <QHeaderView>
+#include <QAction>
+#include <QClipboard>
 #include <QFileInfo>
 #include <QDropEvent>
 #include <QDragEnterEvent>
-#include <QSortFilterProxyModel>
-#include <QClipboard>
+#include <QHeaderView>
 #include <QMenu>
-#include <KRun>
-#include <KSharedConfig>
-#include <KMessageBox>
-#include <QAction>
-#include <KStandardAction>
+#include <QSortFilterProxyModel>
+
 #include <KActionCollection>
-#include <kfilewidget.h>
-#include <krecentdirs.h>
-#include <klocalizedstring.h>
+#include <KFileWidget>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KSharedConfig>
+#include <KStandardAction>
+#include <KRecentDirs>
+#include <KRun>
 
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>

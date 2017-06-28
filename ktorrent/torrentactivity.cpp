@@ -20,13 +20,15 @@
 #include "torrentactivity.h"
 
 #include <QBoxLayout>
-#include <QToolBar>
 #include <QIcon>
-#include <KToggleAction>
+#include <QToolBar>
+
 #include <KActionCollection>
 #include <KComboBox>
 #include <KConfigGroup>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+#include <KToggleAction>
+
 #include <util/log.h>
 #include <gui/tabbarwidget.h>
 #include <groups/groupmanager.h>

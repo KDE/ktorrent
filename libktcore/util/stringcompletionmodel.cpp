@@ -20,9 +20,10 @@
 
 #include "stringcompletionmodel.h"
 
-#include <QSet>
 #include <QFile>
+#include <QSet>
 #include <QTextStream>
+
 #include <util/log.h>
 
 using namespace bt;

@@ -18,11 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QLocale>
-#include <klocalizedstring.h>
+#include <QPushButton>
+
+#include <KLocalizedString>
+
 #include "edititemdlg.h"
 #include "schedule.h"
-#include <QPushButton>
 
 namespace kt
 {

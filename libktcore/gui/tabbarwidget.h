@@ -21,12 +21,14 @@
 #ifndef TABBARWIDGET_H
 #define TABBARWIDGET_H
 
+#include <QActionGroup>
 #include <QList>
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QToolBar>
-#include <QActionGroup>
-#include <ksharedconfig.h>
+
+#include <KSharedConfig>
+
 #include "ktcore_export.h"
 
 

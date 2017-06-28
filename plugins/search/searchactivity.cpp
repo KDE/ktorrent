@@ -20,14 +20,16 @@
 #include "searchactivity.h"
 
 #include <QFile>
-#include <QTextStream>
-#include <QVBoxLayout>
-#include <QToolButton>
-#include <klocalizedstring.h>
 #include <QIcon>
-#include <KConfigGroup>
-#include <KStandardAction>
+#include <QTextStream>
+#include <QToolButton>
+#include <QVBoxLayout>
+
 #include <KActionCollection>
+#include <KConfigGroup>
+#include <KLocalizedString>
+#include <KStandardAction>
+
 #include <interfaces/functions.h>
 #include <util/indexofcompare.h>
 #include <util/error.h>

@@ -17,26 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "fileview.h"
 
-#include <QHeaderView>
-#include <QItemSelectionModel>
-#include <QHBoxLayout>
-#include <QToolBar>
+#include <QDebug>
 #include <QFileDialog>
 #include <QFileInfo>
-#include <QMenu>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QItemSelectionModel>
 #include <QLineEdit>
-#include <QDebug>
+#include <QMenu>
+#include <QToolBar>
 
-#include <KRun>
-#include <KMessageBox>
-#include <KSharedConfig>
 #include <KConfigGroup>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KFileWidget>
+#include <KRecentDirs>
+#include <KRun>
+#include <KSharedConfig>
 
-#include <klocalizedstring.h>
-#include <kfilewidget.h>
-#include <krecentdirs.h>
 
 #include <util/bitset.h>
 #include <util/error.h>

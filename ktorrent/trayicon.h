@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
 #include <QMenu>
 #include <KStatusNotifierItem>
+
 #include <util/constants.h>
 #include <interfaces/torrentinterface.h>
 

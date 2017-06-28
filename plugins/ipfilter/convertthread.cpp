@@ -18,15 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <errno.h>
 #include <string.h>
+
 #include <QFile>
-#include <QTimer>
-#include <QTextStream>
 #include <QRegExp>
 #include <QRegExpValidator>
-#include <klocalizedstring.h>
-#include <kio/job.h>
+#include <QTimer>
+#include <QTextStream>
+
+#include <KLocalizedString>
+#include <KIO/Job>
+
 #include <interfaces/functions.h>
 #include <util/log.h>
 #include <util/fileops.h>

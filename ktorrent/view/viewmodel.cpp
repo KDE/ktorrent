@@ -20,16 +20,16 @@
  ***************************************************************************/
 #include "viewmodel.h"
 
-#include <math.h>
+#include <cmath>
 
 #include <QBrush>
 #include <QColor>
-#include <QPalette>
-#include <QMimeData>
-#include <QLocale>
 #include <QIcon>
+#include <QLocale>
+#include <QMimeData>
+#include <QPalette>
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 #include <util/log.h>
 #include <util/sha1hash.h>

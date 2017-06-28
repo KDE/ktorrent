@@ -18,14 +18,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KT_GUI_HH
 #define KT_GUI_HH
 
 #include <QTimer>
+#include <KParts/MainWindow>
+#include <KSharedConfig>
+
 #include <util/constants.h>
 #include <interfaces/guiinterface.h>
-#include <kparts/mainwindow.h>
-#include <ksharedconfig.h>
 
 class QAction;
 class KToggleAction;

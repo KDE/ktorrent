@@ -17,11 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include "infowidgetplugin.h"
 
-#include <kpluginfactory.h>
-#include <ksharedconfig.h>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+#include <KPluginFactory>
+#include <KSharedConfig>
+
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 #include <interfaces/guiinterface.h>

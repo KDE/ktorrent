@@ -19,15 +19,16 @@
 ***************************************************************************/
 #include "magnetgeneratorplugin.h"
 
-#include <kpluginfactory.h>
-#include <kmainwindow.h>
-#include <kactioncollection.h>
-#include <klocalizedstring.h>
-#include <QUrl>
-#include <qclipboard.h>
-#include <qtooltip.h>
-#include <kpassivepopup.h>
+#include <KActionCollection>
+#include <KMainWindow>
+#include <KLocalizedString>
+#include <KPassivePopup>
+#include <KPluginFactory>
+
+#include <QClipboard>
 #include <QIcon>
+#include <QToolTip>
+#include <QUrl>
 
 #include <interfaces/guiinterface.h>
 #include <interfaces/torrentinterface.h>

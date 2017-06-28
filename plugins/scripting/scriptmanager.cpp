@@ -18,17 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QAction>
-#include <QVBoxLayout>
-#include <util/log.h>
-#include <KRun>
-#include <klocalizedstring.h>
-#include <kdialog.h>
-#include <kiconloader.h>
 #include <QMenu>
-#include <QAction>
+#include <QVBoxLayout>
+
 #include <KActionCollection>
-#include <kross/core/manager.h>
+#include <KDialog>
+#include <KIconLoader>
+#include <KLocalizedString>
+#include <Kross/Core/Manager>
+#include <KRun>
+
+#include <util/log.h>
 #include "scriptmanager.h"
 #include "scriptmodel.h"
 #include "script.h"

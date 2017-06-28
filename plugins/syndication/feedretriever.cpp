@@ -18,7 +18,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kio/job.h>
+
+#include <KIO/Job>
+
 #include <ktversion.h>
 #include <util/log.h>
 #include "feedretriever.h"

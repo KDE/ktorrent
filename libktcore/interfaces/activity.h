@@ -22,9 +22,10 @@
 #define ACTIVITY_H
 
 #include <QWidget>
-#include <ksharedconfig.h>
+#include <KSharedConfig>
+#include <KParts/Part>
+
 #include <ktcore_export.h>
-#include <kparts/part.h>
 
 class QMenu;
 

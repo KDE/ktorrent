@@ -20,29 +20,27 @@
 #ifndef KPlotWgtDrawer_H_
 #define KPlotWgtDrawer_H_
 
-#include <vector>
-#include <list>
-#include <utility>
-#include <memory>
 #include <algorithm>
+#include <cstdint>
+#include <list>
+#include <memory>
+#include <utility>
+#include <vector>
 
-#include <stdint.h>
-
-#include <QWidget>
-#include <QList>
-#include <QUuid>
-#include <QPalette>
 #include <QEvent>
-#include <QToolTip>
 #include <QHelpEvent>
-#include <QMenu>
 #include <QImage>
-
-#include <kplotwidget.h>
-#include <kplotobject.h>
-#include <kplotpoint.h>
-#include <kplotaxis.h>
+#include <QList>
 #include <QMenu>
+#include <QPalette>
+#include <QToolTip>
+#include <QUuid>
+#include <QWidget>
+
+#include <KPlotAxis>
+#include <KPlotPoint>
+#include <KPlotObject>
+#include <KPlotWidget>
 
 #include <drawer/ChartDrawer.h>
 

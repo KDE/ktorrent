@@ -17,12 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTHTTPRESPONSEHEADER_H
 #define KTHTTPRESPONSEHEADER_H
 
-
-#include <qmap.h>
-#include <qstring.h>
+#include <QMap>
+#include <QString>
 
 namespace kt
 {

@@ -17,16 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QFile>
-#include <QTextStream>
-#include <QStringList>
+
 #include <QDir>
-#include <klocalizedstring.h>
-#include <kio/copyjob.h>
+#include <QFile>
+#include <QStandardPaths>
+#include <QStringList>
+#include <QTextStream>
+
+#include <KIO/CopyJob>
+#include <KLocalizedString>
+
 #include <util/log.h>
 #include <util/error.h>
 #include <util/fileops.h>
-#include <QStandardPaths>
 #include <interfaces/functions.h>
 #include "searchenginelist.h"
 #include "opensearchdownloadjob.h"

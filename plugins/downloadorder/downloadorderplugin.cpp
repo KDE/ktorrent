@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include <KActionCollection>
+#include <KLocalizedString>
+#include <KMainWindow>
+#include <KPluginFactory>
+
 #include "downloadorderplugin.h"
-#include <kmainwindow.h>
-#include <kactioncollection.h>
-#include <kpluginfactory.h>
-#include <klocalizedstring.h>
 #include <util/fileops.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>

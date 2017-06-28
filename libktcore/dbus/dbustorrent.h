@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTDBUSTORRENT_H
 #define KTDBUSTORRENT_H
 
 #include <QObject>
 #include <QStringList>
+
 #include <util/constants.h>
 #include <interfaces/torrentinterface.h>
 

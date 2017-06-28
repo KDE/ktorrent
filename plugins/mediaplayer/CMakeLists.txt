@@ -31,10 +31,14 @@ kcoreaddons_desktop_to_json(ktorrent_mediaplayer ktorrent_mediaplayer.desktop)
 target_link_libraries(
     ktorrent_mediaplayer
     ktcore
-    KF5::Torrent
     ${TAGLIB_LIBRARIES}
-    KF5::KDELibs4Support
     Phonon::phonon4qt5
+    KF5::Torrent
+    KF5::I18n
+    KF5::KIOFileWidgets
+    KF5::XmlGui
+    KF5::WidgetsAddons
+    KF5::KDELibs4Support
 #    Qt5::MultimediaWidgets
     )
 install(TARGETS ktorrent_mediaplayer DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

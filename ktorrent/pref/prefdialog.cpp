@@ -19,8 +19,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <klocalizedstring.h>
-#include <kconfigdialogmanager.h>
+#include <KLocalizedString>
+#include <KConfigDialogManager>
+
 #include "settings.h"
 #include "prefdialog.h"
 #include "core.h"

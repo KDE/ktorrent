@@ -17,10 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include <qstring.h>
+#include <QString>
 #include <util/constants.h>
 #include <ktcore_export.h>
 

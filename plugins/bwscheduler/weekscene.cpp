@@ -20,15 +20,17 @@
  ***************************************************************************/
 #include "weekscene.h"
 
-#include <math.h>
-#include <kformat.h>
-#include <klocalizedstring.h>
-#include <QPalette>
+#include <cmath>
+
+#include <KFormat>
+#include <KLocalizedString>
+
 #include <QFontMetricsF>
-#include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
-#include <QGraphicsTextItem>
+#include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsTextItem>
+#include <QPalette>
 
 #include <util/functions.h>
 #include <util/log.h>

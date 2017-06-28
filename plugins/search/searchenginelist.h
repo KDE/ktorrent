@@ -17,11 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTSEARCHENGINELIST_H
 #define KTSEARCHENGINELIST_H
 
-#include <QList>
 #include <QAbstractListModel>
+#include <QList>
 #include <util/constants.h>
 #include "searchengine.h"
 #include "proxy_helper.h"

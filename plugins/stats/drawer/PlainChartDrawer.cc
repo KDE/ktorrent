@@ -20,7 +20,7 @@
 
 #include <PlainChartDrawer.h>
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 #include <QFileDialog>
 
 namespace kt

@@ -17,12 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef BTMMAPFILE_H
 #define BTMMAPFILE_H
 
+#include <QFile>
+#include <QString>
 
-#include <qstring.h>
-#include <qfile.h>
 #include <util/constants.h>
 #include <ktcore_export.h>
 

@@ -18,15 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include <QBrush>
+#include <QImage>
+#include <QList>
 #include <QPainter>
 #include <QPen>
-#include <QBrush>
-#include <QList>
 #include <QPixmap>
-#include <math.h>
-#include <qtooltip.h>
-#include <klocalizedstring.h>
-#include <qimage.h>
+#include <QToolTip>
+
+#include <KLocalizedString>
+
+#include <cmath>
+
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>
 #include <util/bitset.h>

@@ -20,7 +20,7 @@
 
 #include <StatsPlugin.h>
 #include <interfaces/torrentactivityinterface.h>
-#include <kpluginfactory.h>
+#include <KPluginFactory>
 
 K_PLUGIN_FACTORY_WITH_JSON(ktorrent_stats, "ktorrent_stats.json", registerPlugin<kt::StatsPlugin>();)
 

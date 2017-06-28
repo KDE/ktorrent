@@ -21,7 +21,6 @@
 #ifndef KT_TORRENTLOADQUEUE_H
 #define KT_TORRENTLOADQUEUE_H
 
-
 #include <QUrl>
 #include <QTimer>
 

@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include "app.h"
 
 #include <util/log.h>
@@ -25,7 +26,6 @@
 #include <util/error.h>
 #include <interfaces/functions.h>
 #include <utp/connection.h>
-
 
 using namespace bt;
 

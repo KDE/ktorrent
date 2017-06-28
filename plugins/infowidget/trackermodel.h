@@ -21,9 +21,10 @@
 #ifndef KTTRACKERMODEL_H
 #define KTTRACKERMODEL_H
 
+#include <QAbstractTableModel>
 #include <QList>
 #include <QUrl>
-#include <QAbstractTableModel>
+
 #include <interfaces/trackerinterface.h>
 
 namespace bt

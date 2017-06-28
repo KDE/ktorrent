@@ -18,16 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "applet.h"
-#include <QFile>
-#include <QGraphicsLinearLayout>
+
+#include <KConfigDialog>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDBusMessage>
-#include <KConfigDialog>
-#include <klocalizedstring.h>
+#include <QFile>
+#include <QGraphicsLinearLayout>
+#include <KLocalizedString>
 #include <KRun>
 #include <KWindowSystem>
+
 #if (PLASMA_VERSION_MAJOR < 3)
 #include <Plasma/Icon>
 #else

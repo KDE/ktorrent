@@ -17,7 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#include <kpluginfactory.h>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
@@ -29,7 +28,8 @@
 
 #include <QDir>
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "scanfolder.h"
 #include "scanfolderplugin.h"

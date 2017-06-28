@@ -19,9 +19,10 @@
 ***************************************************************************/
 #include "shutdowndlg.h"
 
-#include <solid/powermanagement.h>
 #include <KConfigGroup>
+#include <Solid/PowerManagement>
 #include <QVBoxLayout>
+
 #include "shutdowntorrentmodel.h"
 
 namespace kt
@@ -29,8 +30,8 @@ namespace kt
     ShutdownDlg::ShutdownDlg(ShutdownRuleSet* rules, CoreInterface* core, QWidget* parent) : QDialog(parent), rules(rules)
     {
         setupUi(this);
-        connect(buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
-        connect(buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &ShutdownDlg::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &ShutdownDlg::reject);
         setWindowTitle(i18nc("@title:window", "Configure Shutdown"));
         model = new ShutdownTorrentModel(core, this);
 

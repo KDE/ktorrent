@@ -18,18 +18,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <algorithm>
-#include <QMimeData>
-#include <QDataStream>
+
 #include <QApplication>
+#include <QDataStream>
 #include <QFont>
 #include <QIcon>
+#include <QMimeData>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
-#include <QMimeDatabase>
-#include <QMimeType>
 #include "downloadordermodel.h"
 
 using namespace bt;

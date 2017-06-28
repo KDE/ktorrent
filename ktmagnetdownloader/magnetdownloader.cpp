@@ -1,9 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
+
 #include <QApplication>
+
 #include <version.h>
 #include <util/log.h>
 #include <util/functions.h>
+
 #include "magnettest.h"
 
 using namespace bt;

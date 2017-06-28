@@ -17,15 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include "fileselectdlg.h"
 
 #include <QMenu>
-#include <QTextCodec>
-#include <klocalizedstring.h>
-#include <kio/global.h>
-#include <kmessagebox.h>
-#include <kstandardguiitem.h>
 #include <QPushButton>
+#include <QTextCodec>
+
+#include <KIO/Global>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KStandardGuiItem>
+
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>

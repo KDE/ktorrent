@@ -17,11 +17,13 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+
 #ifndef ITEMSELECTIONMODEL_H
 #define ITEMSELECTIONMODEL_H
 
-#include <QSet>
 #include <QItemSelectionModel>
+#include <QSet>
+
 #include <ktcore_export.h>
 
 namespace kt

@@ -27,8 +27,10 @@
 #include <QFontMetricsF>
 #include <QGraphicsTextItem>
 #include <QGraphicsSceneMouseEvent>
-#include <klocalizedstring.h>
+
 #include <KCursor>
+#include <KLocalizedString>
+
 #include <util/log.h>
 #include <util/functions.h>
 #include "schedule.h"

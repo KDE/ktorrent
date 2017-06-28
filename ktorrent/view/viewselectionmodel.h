@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTVIEWSELECTIONMODEL_H
 #define KTVIEWSELECTIONMODEL_H
 
-#include <QSet>
 #include <util/itemselectionmodel.h>
 
 namespace bt

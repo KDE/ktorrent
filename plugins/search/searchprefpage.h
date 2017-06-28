@@ -17,10 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTSEARCHPREFPAGE_H
 #define KTSEARCHPREFPAGE_H
 
-#include <qstring.h>
+#include <QString>
+
 #include <interfaces/prefpageinterface.h>
 #include "ui_searchpref.h"
 class KJob;

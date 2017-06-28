@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTQUEUEMANAGERMODEL_H
 #define KTQUEUEMANAGERMODEL_H
 
-#include <QList>
 #include <QAbstractTableModel>
+#include <QList>
+
 #include <torrent/queuemanager.h>
 
 class QMimeData;

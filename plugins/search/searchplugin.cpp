@@ -22,13 +22,13 @@
 #include <QFile>
 #include <QMenu>
 
-#include <kpluginfactory.h>
-//#include <ksharedconfig.h>
+#include <KActionCollection>
+#include <KLocalizedString>
+#include <KPluginFactory>
+#include <KRun>
+#include <KSharedConfig>
+#include <KShell>
 
-#include <klocalizedstring.h>
-#include <kactioncollection.h>
-#include <krun.h>
-#include <kshell.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/functions.h>

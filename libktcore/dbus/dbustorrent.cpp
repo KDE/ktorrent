@@ -18,9 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QDBusConnection>
 #include <QThread>
-#include <klocalizedstring.h>
+
+#include <KLocalizedString>
+
 #include <util/log.h>
 #include <util/sha1hash.h>
 #include <util/bitset.h>

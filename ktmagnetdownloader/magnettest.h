@@ -22,6 +22,7 @@
 #define MAGNETTEST_H
 
 #include <QObject>
+
 #include <magnet/magnetlink.h>
 #include <magnet/magnetdownloader.h>
 

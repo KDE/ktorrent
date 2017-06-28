@@ -20,8 +20,9 @@
 #ifndef KTLOGVIEWER_H
 #define KTLOGVIEWER_H
 
-#include <QTextBrowser>
 #include <QMutex>
+#include <QTextBrowser>
+
 #include <interfaces/activity.h>
 #include <interfaces/logmonitorinterface.h>
 #include "logflags.h"

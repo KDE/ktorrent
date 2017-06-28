@@ -21,19 +21,20 @@
 #include "magnettest.h"
 
 #include <QApplication>
+#include <QFile>
+#include <QNetworkInterface>
+#include <QTimer>
+
 #include <dht/dhtbase.h>
 #include <magnet/magnetlink.h>
 #include <torrent/globals.h>
 #include <interfaces/functions.h>
 #include <settings.h>
 #include <upnp/upnpmcastsocket.h>
-#include <QTimer>
-#include <QNetworkInterface>
 #include <util/functions.h>
 #include <util/log.h>
 #include <util/error.h>
 #include <torrent/server.h>
-#include <QFile>
 #include <bcodec/bencoder.h>
 #include <peer/authenticationmonitor.h>
 

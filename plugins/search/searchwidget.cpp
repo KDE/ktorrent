@@ -21,24 +21,24 @@
 
 #include "searchwidget.h"
 
-#include <QLabel>
+#include <QApplication>
 #include <QClipboard>
+#include <QLabel>
+#include <QMenu>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QProgressBar>
 #include <QVBoxLayout>
-#include <QApplication>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QMenu>
 
-#include <KIconLoader>
-#include <KComboBox>
-#include <klocalizedstring.h>
-#include <knotification.h>
-#include <KStandardAction>
-#include <kio/job.h>
-#include <KMessageBox>
 #include <KActionCollection>
+#include <KComboBox>
+#include <KIconLoader>
+#include <KIO/Job>
+#include <KLocalizedString>
 #include <KMainWindow>
+#include <KMessageBox>
+#include <KNotification>
+#include <KStandardAction>
 
 #include <util/log.h>
 #include <magnet/magnetlink.h>

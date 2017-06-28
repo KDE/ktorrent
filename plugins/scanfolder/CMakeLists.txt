@@ -15,7 +15,10 @@ target_link_libraries(
     ktorrent_scanfolder
     ktcore
     KF5::Torrent
-    KF5::Parts
-    )
+    KF5::ConfigCore
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::KIOCore
+)
 install(TARGETS ktorrent_scanfolder  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 

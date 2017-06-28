@@ -10,7 +10,10 @@ target_link_libraries(
     ktorrent_upnp
     ktcore
     KF5::Torrent
-    KF5::Parts
-    )
+    KF5::ConfigCore
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::WidgetsAddons
+)
 install(TARGETS ktorrent_upnp  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 

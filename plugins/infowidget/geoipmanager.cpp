@@ -17,16 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include <KIO/CopyJob>
+
+#include <QDateTime>
 #include <QFile>
+#include <QFileInfo>
 #include <QStandardPaths>
-#include <kio/copyjob.h>
+
 #include <util/log.h>
 #include <util/decompressfilejob.h>
 #include <interfaces/functions.h>
 #include <util/fileops.h>
 #include "geoipmanager.h"
-#include <QFileInfo>
-#include <QDateTime>
 
 using namespace bt;
 

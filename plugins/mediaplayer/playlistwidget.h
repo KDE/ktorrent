@@ -21,13 +21,15 @@
 #ifndef PLAYLISTWIDGET_H
 #define PLAYLISTWIDGET_H
 
-#include <QLabel>
-#include <QTreeView>
-#include <QToolBar>
-#include <QComboBox>
 #include <QCheckBox>
-#include <KSharedConfig>
+#include <QComboBox>
+#include <QLabel>
 #include <QMenu>
+#include <QToolBar>
+#include <QTreeView>
+
+#include <KSharedConfig>
+
 #include "mediafile.h"
 
 class QSortFilterProxyModel;

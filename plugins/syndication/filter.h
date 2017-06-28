@@ -18,13 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTFILTER_H
 #define KTFILTER_H
 
-
 #include <QList>
 #include <QRegExp>
-#include <syndication/item.h>
+#include <Syndication/Item>
 
 namespace bt
 {

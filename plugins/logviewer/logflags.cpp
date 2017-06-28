@@ -19,12 +19,14 @@
  ***************************************************************************/
 #include "logflags.h"
 
-#include <klocalizedstring.h>
-#include <ksharedconfig.h>
+#include <QString>
+
+#include <KSharedConfig>
+#include <KLocalizedString>
+
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 #include <torrent/globals.h>
-#include <QString>
 
 #include "logviewer.h"
 #include "logviewerpluginsettings.h"

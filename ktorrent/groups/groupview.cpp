@@ -19,16 +19,18 @@
  ***************************************************************************/
 #include "groupview.h"
 
-#include <QDropEvent>
-#include <QDragEnterEvent>
-#include <QTreeWidgetItemIterator>
-#include <QInputDialog>
-#include <klocalizedstring.h>
-#include <QMenu>
 #include <QAction>
-#include <kmessagebox.h>
-#include <kactioncollection.h>
-#include <kconfiggroup.h>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QInputDialog>
+#include <QMenu>
+#include <QTreeWidgetItemIterator>
+
+#include <KActionCollection>
+#include <KConfigGroup>
+#include <KLocalizedString>
+#include <KMessageBox>
+
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentactivityinterface.h>

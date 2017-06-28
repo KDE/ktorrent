@@ -17,21 +17,24 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
-#include <time.h>
+
+#include <ctime>
+
+#include <QDateTime>
 #include <QDir>
+#include <QFileInfo>
+#include <QHostAddress>
 #include <QRegExp>
 #include <QSocketNotifier>
-#include <QFileInfo>
 #include <QStringList>
-#include <QHostAddress>
 #include <QTimer>
-#include <QDateTime>
-#include <kcodecs.h>
-#include <kapplication.h>
-#include <kgenericfactory.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <ktemporaryfile.h>
+
+#include <KApplication>
+#include <KCodecs>
+#include <KGenericFactory>
+#include <KGlobal>
+#include <KStandardDirs>
+#include <KTemporaryFile>
 #include <k3streamsocket.h>
 #include <k3resolver.h>
 

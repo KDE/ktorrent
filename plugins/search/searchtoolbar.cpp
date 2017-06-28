@@ -20,23 +20,25 @@
 #include "searchtoolbar.h"
 
 #include <QAction>
-#include <QPushButton>
-#include <QFile>
-#include <QTextStream>
-#include <qapplication.h>
+#include <QApplication>
 #include <QCheckBox>
-#include <QLineEdit>
-#include <QLabel>
+#include <QFile>
 #include <QIcon>
-#include <kguiitem.h>
-#include <kiconloader.h>
-#include <kcombobox.h>
-#include <kcompletion.h>
-#include <kmainwindow.h>
-#include <klocalizedstring.h>
-#include <kstandardguiitem.h>
-#include <kactioncollection.h>
-#include <ktoolbarlabelaction.h>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QTextStream>
+
+#include <KActionCollection>
+#include <KComboBox>
+#include <KCompletion>
+#include <KGuiItem>
+#include <KIconLoader>
+#include <KLocalizedString>
+#include <KMainWindow>
+#include <KStandardGuiItem>
+#include <KToolBarLabelAction>
+
 #include <interfaces/functions.h>
 #include <util/fileops.h>
 #include <util/log.h>

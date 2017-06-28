@@ -20,8 +20,10 @@
 #include "upnpplugin.h"
 
 #include <QStandardPaths>
-#include <kpluginfactory.h>
-#include <klocalizedstring.h>
+
+#include <KLocalizedString>
+#include <KPluginFactory>
+
 #include <interfaces/guiinterface.h>
 #include <util/fileops.h>
 #include <util/log.h>

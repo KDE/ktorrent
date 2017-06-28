@@ -18,17 +18,19 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <KConfigGroup>
+
+#include <QAction>
+#include <QIcon>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QToolButton>
+
 #include "groupswitcher.h"
 #include "grouppolicydlg.h"
 #include <view/view.h>
 #include <torrent/queuemanager.h>
 #include <util/log.h>
-#include <KConfigGroup>
-#include <QIcon>
-#include <QAction>
-#include <QToolButton>
-#include <QHBoxLayout>
-#include <QHeaderView>
 
 using namespace bt;
 

@@ -18,9 +18,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #include "dbustorrentfilestream.h"
 #include "dbustorrent.h"
+
 #include <QDBusConnection>
 #include <util/sha1hash.h>
 

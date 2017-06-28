@@ -19,8 +19,8 @@
  ***************************************************************************/
 
 #include "buffernetworkreply.h"
-#include <QTimer>
 #include <QByteArray>
+#include <QTimer>
 
 namespace kt
 {

@@ -21,10 +21,11 @@
 #ifndef KT_MEDIAFILE_H
 #define KT_MEDIAFILE_H
 
+#include <QSharedPointer>
 #include <QString>
 #include <QWeakPointer>
-#include <QSharedPointer>
 #include <Phonon/MediaSource>
+
 #include <util/constants.h>
 #include <torrent/torrentfilestream.h>
 

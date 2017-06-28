@@ -18,14 +18,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "peerview.h"
 
 #include <QHeaderView>
 #include <QIcon>
 #include <QMenu>
 #include <QSortFilterProxyModel>
-#include <klocalizedstring.h>
-#include <kconfiggroup.h>
+
+#include <KConfigGroup>
+#include <KLocalizedString>
+
 #include <interfaces/peerinterface.h>
 #include <peer/accessmanager.h>
 #include <util/functions.h>

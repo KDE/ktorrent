@@ -18,10 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "trackermodel.h"
-#include <QList>
+
 #include <QColor>
-#include <klocalizedstring.h>
+#include <QList>
+
+#include <KLocalizedString>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerinterface.h>
 

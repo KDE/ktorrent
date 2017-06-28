@@ -17,9 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QDockWidget>
-#include <kpluginfactory.h>
-#include <klocalizedstring.h>
+
+#include <KPluginFactory>
+#include <KLocalizedString>
+#include <KMainWindow>
+
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <interfaces/guiinterface.h>
@@ -30,7 +34,6 @@
 #include "logprefpage.h"
 #include "logflags.h"
 #include "logviewerpluginsettings.h"
-#include <kmainwindow.h>
 
 
 using namespace bt;

@@ -18,12 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KT_PREFDIALOG_HH
 #define KT_PREFDIALOG_HH
 
 #include <QList>
 #include <QScrollArea>
-#include <kconfigdialog.h>
+
+#include <KConfigDialog>
 
 namespace kt
 {

@@ -18,12 +18,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef TRACKERVIEW_H
 #define TRACKERVIEW_H
 
 #include "ui_trackerview.h"
-#include <ksharedconfig.h>
+
+#include <KSharedConfig>
 #include <QSortFilterProxyModel>
+
 #include <interfaces/torrentinterface.h>
 
 namespace kt

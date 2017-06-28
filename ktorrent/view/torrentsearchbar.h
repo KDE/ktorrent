@@ -18,14 +18,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #ifndef KT_TORRENTSEARCHBAR_H
 #define KT_TORRENTSEARCHBAR_H
 
-#include <QWidget>
-#include <KSharedConfig>
-#include <QToolButton>
 #include <QLineEdit>
+#include <QToolButton>
+#include <QWidget>
+
+#include <KSharedConfig>
 
 namespace kt
 {

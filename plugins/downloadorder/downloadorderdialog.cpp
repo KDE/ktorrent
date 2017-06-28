@@ -20,10 +20,12 @@
  ***************************************************************************/
 #include "downloadorderdialog.h"
 
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include <interfaces/torrentinterface.h>
+#include <KConfig>
+#include <KConfigGroup>
+
 #include <QMenu>
+
+#include <interfaces/torrentinterface.h>
 #include "downloadordermanager.h"
 #include "downloadorderplugin.h"
 #include "downloadordermodel.h"

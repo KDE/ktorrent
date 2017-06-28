@@ -25,7 +25,7 @@
 #include <kmainwindow.h>
 #include <QTimer>
 
-#include <kpluginfactory.h>
+#include <KPluginFactory>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>

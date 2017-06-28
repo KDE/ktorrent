@@ -17,12 +17,14 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
 ***************************************************************************/
-#include <QTimer>
+
 #include <QCloseEvent>
-#include <kurl.h>
-#include <kmessagebox.h>
-#include <kio/netaccess.h>
-#include <kmimetype.h>
+#include <QTimer>
+
+#include <KMessageBox>
+#include <KIO/NetAccess>
+#include <KMimeType>
+#include <KUrl>
 
 #include <util/log.h>
 #include <util/constants.h>

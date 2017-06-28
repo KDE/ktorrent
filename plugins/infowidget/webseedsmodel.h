@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTWEBSEEDSMODEL_H
 #define KTWEBSEEDSMODEL_H
 
-#include <QVector>
 #include <QAbstractTableModel>
+#include <QVector>
+
 #include <util/constants.h>
 #include <interfaces/torrentinterface.h>
 

@@ -17,14 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KT_PEERVIEW_HH
 #define KT_PEERVIEW_HH
 
-
 #include <QTreeView>
+#include <KSharedConfig>
+
 #include <util/ptrmap.h>
 #include <interfaces/peerinterface.h>
-#include <ksharedconfig.h>
 
 class QSortFilterProxyModel;
 class QMenu;

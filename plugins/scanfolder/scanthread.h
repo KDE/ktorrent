@@ -18,14 +18,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #ifndef KT_SCANTHREAD_H
 #define KT_SCANTHREAD_H
 
-#include <QThread>
 #include <QMutex>
 #include <QStringList>
+#include <QThread>
 #include <QUrl>
+
 #include <util/ptrmap.h>
 #include "scanfolder.h"
 

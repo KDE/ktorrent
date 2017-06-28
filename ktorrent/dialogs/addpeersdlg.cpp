@@ -18,10 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kstandardguiitem.h>
-#include <interfaces/torrentinterface.h>
+
 #include <KGuiItem>
 #include <KStandardGuiItem>
+
+#include <interfaces/torrentinterface.h>
 #include "addpeersdlg.h"
 
 namespace kt

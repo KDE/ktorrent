@@ -22,8 +22,9 @@
 #define SYNDICATIONACTIVITY_H
 
 #include <QSplitter>
+#include <Syndication/Loader>
+
 #include <interfaces/activity.h>
-#include <syndication/loader.h>
 
 namespace kt
 {

@@ -19,9 +19,11 @@
  ***************************************************************************/
 
 #include "mediafile.h"
+
 #include <QFile>
-#include <QStringList>
 #include <QMimeDatabase>
+#include <QStringList>
+
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>

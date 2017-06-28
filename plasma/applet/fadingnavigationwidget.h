@@ -22,7 +22,7 @@
 #define FADINGNAVIGATIONWIDGET_H
 
 #include <QPushButton>
-#include <QtGui/QGraphicsWidget>
+#include <QGraphicsWidget>
 #include <Plasma/PushButton>
 #include <Plasma/Frame>
 #include "fadingitem.h"

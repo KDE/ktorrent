@@ -18,12 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KT_DBUS_HH
 #define KT_DBUS_HH
 
+#include <QMap>
 #include <QObject>
 #include <QStringList>
-#include <QMap>
+
 #include <ktcore_export.h>
 #include <util/ptrmap.h>
 #include <dbus/dbusgroup.h>

@@ -19,27 +19,28 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <QTimer>
+#include <QAction>
 #include <QClipboard>
 #include <QDesktopWidget>
-#include <QAction>
 #include <QMenu>
 #include <QMenuBar>
 #include <QPushButton>
-#include <kconfig.h>
-#include <ktoggleaction.h>
-#include <kactioncollection.h>
-#include <kmessagebox.h>
-#include <kshortcutsdialog.h>
-#include <kedittoolbar.h>
-#include <kstandardaction.h>
-#include <kfilewidget.h>
-#include <krecentdirs.h>
-#include <kxmlguifactory.h>
+#include <QTimer>
+
+#include <KActionCollection>
+#include <KConfig>
+#include <KEditToolBar>
+#include <KFileWidget>
+#include <KIO/JobClasses>
+#include <KIO/JobUiDelegate>
+#include <KMessageBox>
 #include <KNotifyConfigWidget>
-#include <kio/jobclasses.h>
-#include <kio/jobuidelegate.h>
-#include <kparts/partmanager.h>
+#include <KParts/PartManager>
+#include <KRecentDirs>
+#include <KShortcutsDialog>
+#include <KStandardAction>
+#include <KToggleAction>
+#include <KXMLGUIFactory>
 
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>

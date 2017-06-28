@@ -17,9 +17,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QDebug>
 #include <QFile>
 #include <QImage>
-#include <QDebug>
 #include <QStandardPaths>
 #include "flagdb.h"
 

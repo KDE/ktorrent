@@ -18,18 +18,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "missingfilesdlg.h"
 
 #include <QIcon>
 #include <QFileDialog>
-
-#include <kfilewidget.h>
-#include <krecentdirs.h>
-#include <kiconloader.h>
 #include <QMimeDatabase>
-#include <kstandardguiitem.h>
-#include <kmessagebox.h>
+
+#include <KFileWidget>
 #include <KGuiItem>
+#include <KIconLoader>
+#include <KMessageBox>
+#include <KRecentDirs>
 #include <KStandardGuiItem>
 
 #include <interfaces/torrentinterface.h>

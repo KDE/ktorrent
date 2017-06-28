@@ -17,10 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QHeaderView>
-#include <QSortFilterProxyModel>
 #include <QPushButton>
-#include <klocalizedstring.h>
+#include <QSortFilterProxyModel>
+
+#include <KLocalizedString>
+
 #include <util/constants.h>
 #include <util/log.h>
 #include <interfaces/functions.h>

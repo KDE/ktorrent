@@ -26,10 +26,12 @@
 #include <QIcon>
 #include <QLocale>
 #include <QToolTip>
-#include <kpassivepopup.h>
-#include <klocalizedstring.h>
-#include <knotification.h>
-#include <kactioncollection.h>
+
+#include <KActionCollection>
+#include <KLocalizedString>
+#include <KNotification>
+#include <KPassivePopup>
+
 #include <util/functions.h>
 #include <net/socketmonitor.h>
 #include <util/log.h>

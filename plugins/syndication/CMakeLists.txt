@@ -27,11 +27,17 @@ target_link_libraries(
     ktorrent_syndication
     ktcore
     KF5::Torrent
-    KF5::WebKit
-    KF5::Parts
+    KF5::CoreAddons
+    KF5::ConfigCore
+    KF5::I18n
+    KF5::KIOCore
+    KF5::KIOWidgets
     KF5::Syndication
+    KF5::WebKit
+    KF5::WidgetsAddons
+    KF5::XmlGui
     KF5::KDELibs4Support
-    )
+)
 install(TARGETS ktorrent_syndication DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_syndicationui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 

@@ -18,11 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTFEEDWIDGET_H
 #define KTFEEDWIDGET_H
 
 #include <QWidget>
-#include <kconfiggroup.h>
+#include <KConfigGroup>
+
 #include "ui_feedwidget.h"
 
 namespace kt

@@ -18,11 +18,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QTimer>
-#include <kglobal.h>
-#include <kconfiggroup.h>
-#include <ksharedconfig.h>
-#include <kstandarddirs.h>
+
+#include <KConfigGroup>
+#include <KGlobal>
+#include <KSharedConfig>
+#include <KStandardDirs>
+
 #include <util/functions.h>
 #include <groups/groupmanager.h>
 #include <interfaces/coreinterface.h>
