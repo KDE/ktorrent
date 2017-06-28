@@ -40,7 +40,6 @@
 #include <KCrash>
 #include <KDBusService>
 #include <KLocalizedString>
-#include <KLocale>
 #include <KStartupInfo>
 #include <KWindowSystem>
 
@@ -188,9 +187,6 @@ int main(int argc, char** argv)
     parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("+[URL]"), i18n( "Document to open" )));
     parser.process(app);
     about.processCommandLine(&parser);
-
-    // Ensure that this is set up before plugins call it
-    KLocale::global();
 
     const KDBusService dbusService(KDBusService::Unique);
 

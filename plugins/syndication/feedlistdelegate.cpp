@@ -21,6 +21,8 @@
 
 #include <QApplication>
 #include <QPainter>
+#include <QStyleOptionViewItem>
+
 #include "feedlistdelegate.h"
 
 namespace kt
@@ -41,13 +43,11 @@ namespace kt
         if (value.isValid())
             return qvariant_cast<QSize>(value);
 
-        QStyleOptionViewItemV4 opt = option;
+        QStyleOptionViewItem opt = option;
         initStyleOption(&opt, index);
         opt.text = displayText(index.data(Qt::UserRole).toString(), opt.locale);
 
-        const QWidget* widget = 0;
-        if (const QStyleOptionViewItemV3* v3 = qstyleoption_cast<const QStyleOptionViewItemV3*>(&option))
-            widget = v3->widget;
+        const QWidget* widget = opt.widget;
         QStyle* style = widget ? widget->style() : QApplication::style();
         return style->sizeFromContents(QStyle::CT_ItemViewItem, &opt, QSize(), widget);
     }
@@ -55,13 +55,11 @@ namespace kt
 
     void FeedListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
     {
-        QStyleOptionViewItemV4 opt = option;
+        QStyleOptionViewItem opt = option;
         initStyleOption(&opt, index);
         opt.text = displayText(index.data(Qt::UserRole).toString(), opt.locale);
 
-        const QWidget* widget = 0;
-        if (const QStyleOptionViewItemV3* v3 = qstyleoption_cast<const QStyleOptionViewItemV3*>(&option))
-            widget = v3->widget;
+        const QWidget* widget = opt.widget;
 
         QStyle* style = widget ? widget->style() : QApplication::style();
         style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);

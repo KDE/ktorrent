@@ -23,7 +23,6 @@
 
 #include <KFileWidget>
 #include <KMessageBox>
-#include <KProgressDialog>
 #include <KRecentDirs>
 
 #include <dht/dht.h>

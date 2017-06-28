@@ -19,11 +19,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <KIO/JobUiDelegate>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KMimeType>
 #include <KZip>
-#include <KIO/JobUiDelegate>
 
 #include <util/log.h>
 #include <util/functions.h>
@@ -77,7 +77,7 @@ namespace kt
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
             if (mode == Verbose)
             {
-                ((KIO::Job*)j)->ui()->showErrorMessage();
+                j->uiDelegate()->showErrorMessage();
             }
             else
             {
@@ -99,7 +99,7 @@ namespace kt
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
             if (mode == Verbose)
             {
-                ((KIO::Job*)j)->ui()->showErrorMessage();
+                j->uiDelegate()->showErrorMessage();
             }
             else
             {
@@ -165,7 +165,7 @@ namespace kt
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
             if (mode == Verbose)
             {
-                ((KIO::Job*)j)->ui()->showErrorMessage();
+                j->uiDelegate()->showErrorMessage();
             }
             else
             {
@@ -241,7 +241,7 @@ namespace kt
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
             if (mode == Verbose)
             {
-                ((KIO::Job*)j)->ui()->showErrorMessage();
+                j->uiDelegate()->showErrorMessage();
             }
             else
             {

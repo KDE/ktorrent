@@ -18,13 +18,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <QRegExp>
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
+
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KIO/Job>
+#include <KIO/JobUiDelegate>
+
 #include <magnet/magnetlink.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
@@ -79,7 +82,7 @@ namespace kt
         {
             Out(SYS_SYN | LOG_NOTICE) << "Failed to download " << url.toDisplayString() << " : " << job->errorString() << endl;
             if (verbose)
-                job->ui()->showErrorMessage();
+                job->uiDelegate()->showErrorMessage();
 
             finished(false);
             deleteLater();
@@ -220,7 +223,7 @@ namespace kt
             {
                 Out(SYS_SYN | LOG_NOTICE) << "Failed to download torrent: " << job->errorString() << endl;
                 if (verbose)
-                    job->ui()->showErrorMessage();
+                    job->uiDelegate()->showErrorMessage();
 
                 finished(false);
                 deleteLater();

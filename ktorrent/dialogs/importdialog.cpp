@@ -22,7 +22,6 @@
 
 #include <KGuiItem>
 #include <KIO/Job>
-#include <KIO/JobClasses>
 #include <KIO/JobUiDelegate>
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -212,7 +211,7 @@ namespace kt
     {
         if (j->error())
         {
-            ((KIO::Job*)j)->ui()->showErrorMessage();
+            j->uiDelegate()->showErrorMessage();
             reject();
         }
         else

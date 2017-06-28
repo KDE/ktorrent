@@ -48,7 +48,7 @@ set(ktorrent_SRC
 	view/propertiesdlg.cpp
 	view/torrentsearchbar.cpp 
 )
-	
+
 
 ki18n_wrap_ui(ktorrent_SRC
 	ipfilterwidget.ui 
@@ -88,6 +88,7 @@ target_link_libraries(ktorrent_app
     KF5::ConfigGui
     KF5::DBusAddons
     KF5::I18n
+    KF5::IconThemes
     KF5::KIOCore
     KF5::KIOFileWidgets
     KF5::Notifications

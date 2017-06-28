@@ -31,7 +31,7 @@
 #include <KConfig>
 #include <KEditToolBar>
 #include <KFileWidget>
-#include <KIO/JobClasses>
+#include <KIO/Job>
 #include <KIO/JobUiDelegate>
 #include <KMessageBox>
 #include <KNotifyConfigWidget>
@@ -254,7 +254,7 @@ namespace kt
     void GUI::errorMsg(KIO::Job* j)
     {
         if (j->error())
-            j->ui()->showErrorMessage();
+            j->uiDelegate()->showErrorMessage();
     }
 
     void GUI::infoMsg(const QString& info)
