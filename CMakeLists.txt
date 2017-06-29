@@ -42,7 +42,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     WidgetsAddons
     WindowSystem
     XmlGui
-    KDELibs4Support
 )
 
 find_package(KF5DocTools ${KF5_MIN_VERSION})
