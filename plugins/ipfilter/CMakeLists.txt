@@ -20,8 +20,6 @@ target_link_libraries(
 )
 install(TARGETS ktorrent_ipfilter DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 
-find_package(Qt5Test ${QT5_REQUIRED_VERSION})
-
 if (QT5_Test_FOUND)
     add_subdirectory(tests)
 endif()

@@ -1,8 +1,6 @@
 set(ktdownloadorderplugin_SRC downloadorderplugin.cpp downloadorderdialog.cpp downloadordermanager.cpp downloadordermodel.cpp)
 
 ki18n_wrap_ui(ktdownloadorderplugin_SRC downloadorderwidget.ui)
-#kconfig_add_kcfg_files(ktdownloadorderplugin_SRC searchpluginsettings.kcfgc)
-
 
 add_library(ktorrent_downloadorder MODULE ${ktdownloadorderplugin_SRC})
 

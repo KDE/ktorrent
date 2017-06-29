@@ -8,20 +8,6 @@ else (${_option})
 endif (${_option})
 ENDMACRO (MACRO_KT_PLUGIN)
 
-find_package(Taglib)
-#find_package(Qt5 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
-find_package(Phonon4Qt5)
-
-find_package(KF5 ${KF5_REQUIRED_VERSION} OPTIONAL_COMPONENTS Archive Completion DNSSD ItemViews Kross Plotting TextWidgets WebKit KDELibs4Support)
-find_package(KF5 OPTIONAL_COMPONENTS Syndication)
-
-find_package(LibKWorkspace CONFIG)
-set_package_properties(LibKWorkspace
-  PROPERTIES
-  TYPE OPTIONAL
-  PURPOSE "Required for KTorrent's shutdown plugin"
-)
-
 macro_kt_plugin(ENABLE_LOGVIEWER_PLUGIN logviewer logviewer)
 macro_kt_plugin(ENABLE_INFOWIDGET_PLUGIN infowidget infowidget)
 macro_kt_plugin(ENABLE_UPNP_PLUGIN upnp upnp)

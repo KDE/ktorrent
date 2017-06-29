@@ -10,7 +10,7 @@ set(ktscriptingplugin_SRC
 	script.cpp)
 
 ki18n_wrap_ui(ktscriptingplugin_SRC scriptproperties.ui)
-#kconfig_add_kcfg_files(ktscriptingplugin_SRC scriptingpluginsettings.kcfgc)
+
 add_library(ktorrent_scripting MODULE ${ktscriptingplugin_SRC})
 
 kcoreaddons_desktop_to_json(ktorrent_scripting ktorrent_scripting.desktop)

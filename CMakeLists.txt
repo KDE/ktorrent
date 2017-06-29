@@ -49,6 +49,98 @@ find_package(KF5DocTools ${KF5_MIN_VERSION})
 find_package(KF5Torrent 1.9.50 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 
+find_package(KF5KDELibs4Support ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5KDELibs4Support
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's syndication and shutdown plugins"
+)
+
+find_package(KF5TextWidgets ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5TextWidgets
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's IP Filter plugin"
+)
+
+find_package(KF5Archive ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5Archive
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's scripting plugin"
+)
+
+find_package(KF5ItemViews ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5ItemViews
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's scripting plugin"
+)
+
+find_package(KF5Kross ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5Kross
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's scripting plugin"
+)
+
+find_package(KF5Plotting ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5Plotting
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's statistics plugin"
+)
+
+find_package(KF5Syndication)
+set_package_properties(KF5Syndication
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's syndication plugin"
+)
+find_package(KF5WebKit ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5WebKit
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's syndication plugin"
+)
+
+find_package(KF5DNSSD ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5DNSSD
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's Zeroconf plugin"
+)
+
+find_package(KF5Completion ${KF5_REQUIRED_VERSION})
+set_package_properties(KF5Completion
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's UPnP plugin"
+)
+
+find_package(Qt5Test ${QT5_REQUIRED_VERSION})
+
+find_package(LibKWorkspace CONFIG)
+set_package_properties(LibKWorkspace
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's shutdown plugin"
+)
+
+find_package(Taglib)
+#find_package(Qt5 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
+find_package(Phonon4Qt5)
+set_package_properties(Taglib
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's multimedia plugin"
+)
+set_package_properties(Phonon4Qt5
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's multimedia plugin"
+)
+
 #
 # checks for functions and stuff
 #
