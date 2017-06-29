@@ -56,7 +56,7 @@ namespace kt
         if (!act)
             return;
 
-        foreach (QAction* a, actions)
+        for (QAction* a : qAsConst(actions))
         {
             if (a != act)
                 a->setChecked(false);

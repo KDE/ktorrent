@@ -70,8 +70,8 @@ namespace kt
         }
 
         QTextStream out(&fptr);
-        QStringList sl = stringList();
-        foreach (const QString& s, sl)
+        const QStringList sl = stringList();
+        for (const QString& s : sl)
             out << s << endl;
     }
 

@@ -72,7 +72,7 @@ namespace kt
         else
         {
             QString subdir = path.left(p);
-            foreach (Node* n, children)
+            for (Node* n : qAsConst(children))
             {
                 if (n->name == subdir)
                 {
@@ -103,7 +103,7 @@ namespace kt
         if (!file)
         {
             // directory
-            foreach (Node* n, children)
+            for (Node* n : qAsConst(children))
                 size += n->fileSize(tc);
         }
         else
@@ -120,7 +120,7 @@ namespace kt
 
         if (!file)
         {
-            foreach (Node* n, children)
+            for (Node* n : qAsConst(children))
             {
                 n->fillChunks();
                 chunks.orBitSet(n->chunks);
@@ -203,7 +203,7 @@ namespace kt
                 percentage = 100.0f * ((float)tmp.numOnBits() / (float)chunks.numOnBits());
             }
 
-            foreach (Node* n, children)
+            for (Node* n : qAsConst(children))
                 n->initPercentage(tc, havechunks); // update the percentage of the children
         }
     }
@@ -215,7 +215,7 @@ namespace kt
         if (!file)
         {
             // directory
-            foreach (Node* n, children)
+            for (Node* n : qAsConst(children))
                 s += n->bytesToDownload(tc);
         }
         else
@@ -233,7 +233,7 @@ namespace kt
             bool found_checked = false;
             bool found_unchecked = false;
             // directory
-            foreach (Node* n, children)
+            for (Node* n : qAsConst(children))
             {
                 Qt::CheckState s = n->checkState(tc);
                 if (s == Qt::PartiallyChecked)
@@ -264,7 +264,7 @@ namespace kt
         enc->write((Uint32)(tv->isExpanded(pm->mapFromSource(index)) ? 1 : 0));
 
         int idx = 0;
-        foreach (Node* n, children)
+        for (Node* n : qAsConst(children))
         {
             if (!n->file)
             {
@@ -291,7 +291,7 @@ namespace kt
             tv->setExpanded(pm->mapFromSource(index), v->data().toInt() == 1);
 
         int idx = 0;
-        foreach (Node* n, children)
+        for (Node* n : qAsConst(children))
         {
             if (!n->file)
             {
@@ -605,7 +605,7 @@ namespace kt
             else
             {
                 // Check if there is a sibling with the same name
-                foreach (Node* sibling, n->parent->children)
+                for (const Node* sibling : qAsConst(n->parent->children))
                 {
                     if (sibling != n && sibling->name == name)
                         return false;
@@ -621,7 +621,7 @@ namespace kt
         else
         {
             // Check if there is a sibling with the same name
-            foreach (Node* sibling, n->parent->children)
+            for (const Node* sibling : qAsConst(n->parent->children))
             {
                 if (sibling != n && sibling->name == name)
                     return false;
@@ -778,7 +778,7 @@ namespace kt
         if (!tc)
             return;
 
-        foreach (const QModelIndex& idx, indexes)
+        for (const QModelIndex& idx : indexes)
         {
             Node* n = (Node*)idx.internalPointer();
             if (!n)
@@ -788,4 +788,3 @@ namespace kt
         }
     }
 }
-

@@ -47,8 +47,8 @@ namespace kt
         if (act)
             setCurrentActivity(act);
 
-        QList<QAction*> actions = activity_switching_group->actions();
-        foreach (QAction* a, actions)
+        const QList<QAction*> actions = activity_switching_group->actions();
+        for (QAction* a : actions)
         {
             if (a->data().value<QObject*>() == act || act == 0)
             {
@@ -78,7 +78,7 @@ namespace kt
     void CentralWidget::removeActivity(Activity* act)
     {
         QList<QAction*> actions = activity_switching_group->actions();
-        foreach (QAction* a, actions)
+        for (QAction* a : actions)
         {
             if (a->data().value<QObject*>() == act)
             {

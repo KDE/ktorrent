@@ -44,7 +44,7 @@ namespace kt
         if (command & QItemSelectionModel::Clear)
             selection.clear();
 
-        foreach (const QItemSelectionRange& r, sel)
+        for (const QItemSelectionRange& r : sel)
             doRange(r, command);
 
         QItemSelectionModel::select(sel, command);

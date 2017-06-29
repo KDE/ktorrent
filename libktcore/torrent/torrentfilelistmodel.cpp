@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "torrentfilelistmodel.h"
 
 #include <KLocalizedString>
@@ -309,7 +310,7 @@ namespace kt
 
     void TorrentFileListModel::changePriority(const QModelIndexList& indexes, bt::Priority newpriority)
     {
-        foreach (const QModelIndex& idx, indexes)
+        for (const QModelIndex& idx : indexes)
         {
             setData(idx, newpriority, Qt::UserRole);
         }

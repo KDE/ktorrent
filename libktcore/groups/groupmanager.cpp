@@ -132,7 +132,7 @@ namespace kt
                      i18n("Passive Uploads"), QStringLiteral("go-up"), Group::UPLOADS_ONLY_GROUP, QStringLiteral("/all/passive/uploads"));
         defaults << new UngroupedGroup(this);
 
-        foreach (Group* g, defaults)
+        for (Group* g : qAsConst(defaults))
             groups.insert(g->groupName(), g);
     }
 

@@ -115,10 +115,10 @@ MagnetManager::MagnetManager(QObject *parent)
 
 MagnetManager::~MagnetManager()
 {
-    foreach (DownloadSlot* slot, usedDownloadingSlots)
+    for (DownloadSlot* slot : qAsConst(usedDownloadingSlots))
         delete slot;
 
-    foreach (DownloadSlot* slot, freeDownloadingSlots)
+    for (DownloadSlot* slot : qAsConst(freeDownloadingSlots))
         delete slot;
 }
 
@@ -340,7 +340,7 @@ void MagnetManager::setUseSlotTimer(bool value)
 
     if (!useSlotTimer)
     {
-        foreach (DownloadSlot* slot, usedDownloadingSlots)
+        for (DownloadSlot* slot : qAsConst(usedDownloadingSlots))
         {
             slot->stopTimer();
             slot->setTimerDuration(timerDuration);
@@ -348,7 +348,7 @@ void MagnetManager::setUseSlotTimer(bool value)
     }
     else
     {
-        foreach (DownloadSlot* slot, usedDownloadingSlots)
+        for (DownloadSlot* slot : qAsConst(usedDownloadingSlots))
         {
             if (!slot->isTimerActived())
             {
@@ -362,10 +362,10 @@ void MagnetManager::setUseSlotTimer(bool value)
 void MagnetManager::setTimerDuration(bt::Uint32 duration)
 {
     timerDuration = duration * 60000; // convert to milliseconds
-    foreach (DownloadSlot* slot, usedDownloadingSlots)
+    for (DownloadSlot* slot : qAsConst(usedDownloadingSlots))
         slot->setTimerDuration(timerDuration);
 
-    foreach (DownloadSlot* slot, freeDownloadingSlots)
+    for (DownloadSlot* slot : qAsConst(freeDownloadingSlots))
         slot->setTimerDuration(timerDuration);
 
     emit updateQueue(0, usedDownloadingSlots.size());
@@ -373,7 +373,7 @@ void MagnetManager::setTimerDuration(bt::Uint32 duration)
 
 void MagnetManager::update()
 {
-    foreach (DownloadSlot* slot, usedDownloadingSlots)
+    for (DownloadSlot* slot : qAsConst(usedDownloadingSlots))
         magnetQueue.at(slot->getMagnetIndex())->update();
 
     emit updateQueue(0, usedDownloadingSlots.size());
@@ -438,10 +438,10 @@ void MagnetManager::saveMagnets(const QString& file)
     BEncoder enc(&fptr);
     enc.beginList();
 
-    foreach (MagnetDownloader* md, magnetQueue)
+    for (MagnetDownloader* md : qAsConst(magnetQueue))
         writeEncoderInfo(enc, md);
 
-    foreach (MagnetDownloader* md, stoppedList)
+    for (MagnetDownloader* md : qAsConst(stoppedList))
         writeEncoderInfo(enc, md);
 
     enc.end();

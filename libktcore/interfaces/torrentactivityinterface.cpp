@@ -32,7 +32,7 @@ namespace kt
 
     void TorrentActivityInterface::notifyViewListeners(bt::TorrentInterface* tc)
     {
-        foreach (ViewListener* vl, listeners)
+        for (ViewListener* vl : qAsConst(listeners))
             vl->currentTorrentChanged(tc);
     }
 

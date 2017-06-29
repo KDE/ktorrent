@@ -143,7 +143,7 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
             {
                 enc.write(QByteArrayLiteral("announce-list"));
                 enc.beginList();
-                foreach (const QUrl& u, trs)
+                for (const QUrl& u : qAsConst(trs))
                 {
                     enc.write(u.toEncoded());
                 }

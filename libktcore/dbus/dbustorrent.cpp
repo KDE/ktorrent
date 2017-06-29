@@ -163,9 +163,9 @@ namespace kt
 
     QStringList DBusTorrent::trackers() const
     {
-        QList<bt::TrackerInterface*> trackers = ti->getTrackersList()->getTrackers();
+        const QList<bt::TrackerInterface*> trackers = ti->getTrackersList()->getTrackers();
         QStringList ret;
-        foreach (bt::TrackerInterface* t, trackers)
+        for (bt::TrackerInterface* t : trackers)
             ret << t->trackerURL().toDisplayString();
         return ret;
     }
