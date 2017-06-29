@@ -601,7 +601,7 @@ namespace kt
 
         QString recentDirClass;
         QString dir = QFileDialog::getExistingDirectory(this, i18n("Select a directory to move the data to."),
-                                                        KFileWidget::getStartUrl(QUrl("kfiledialog:///saveTorrentData"), recentDirClass).toLocalFile());
+                                                        KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
         if (dir.isEmpty())
             return;
@@ -668,13 +668,13 @@ namespace kt
 
     void View::showMenu(const QPoint& pos)
     {
-        QMenu* view_menu = gui->getTorrentActivity()->part()->menu("ViewMenu");
+        QMenu* view_menu = gui->getTorrentActivity()->part()->menu(QStringLiteral("ViewMenu"));
         if (!view_menu)
             return;
 
-        gui->getTorrentActivity()->part()->plugActionList("view_groups_list", group_actions.values());
-        gui->getTorrentActivity()->part()->unplugActionList("view_columns_list");
-        gui->getTorrentActivity()->part()->plugActionList("view_columns_list", column_action_list);
+        gui->getTorrentActivity()->part()->plugActionList(QStringLiteral("view_groups_list"), group_actions.values());
+        gui->getTorrentActivity()->part()->unplugActionList(QStringLiteral("view_columns_list"));
+        gui->getTorrentActivity()->part()->plugActionList(QStringLiteral("view_columns_list"), column_action_list);
         view_menu->popup(viewport()->mapToGlobal(pos));
     }
 
@@ -785,11 +785,11 @@ namespace kt
 
     void View::onGroupAdded(Group* g)
     {
-        gui->getTorrentActivity()->part()->unplugActionList("view_groups_list");
-        QAction * act = new QAction(QIcon::fromTheme("application-x-bittorrent"), g->groupName(), this);
+        gui->getTorrentActivity()->part()->unplugActionList(QStringLiteral("view_groups_list"));
+        QAction * act = new QAction(QIcon::fromTheme(QStringLiteral("application-x-bittorrent")), g->groupName(), this);
         connect(act, &QAction::triggered, this, &View::addToGroupItemTriggered);
         group_actions.insert(g, act);
-        gui->getTorrentActivity()->part()->plugActionList("view_groups_list", group_actions.values());
+        gui->getTorrentActivity()->part()->plugActionList(QStringLiteral("view_groups_list"), group_actions.values());
     }
 
     void View::onGroupRemoved(Group* g)
@@ -797,7 +797,7 @@ namespace kt
         if (group == g)
             setGroup(core->getGroupManager()->allGroup());
 
-        gui->getTorrentActivity()->part()->unplugActionList("view_groups_list");
+        gui->getTorrentActivity()->part()->unplugActionList(QStringLiteral("view_groups_list"));
         QMap<Group*, QAction*>::iterator i = group_actions.find(g);
         if (i != group_actions.end())
         {
@@ -805,7 +805,7 @@ namespace kt
             group_actions.erase(i);
         }
 
-        gui->getTorrentActivity()->part()->plugActionList("view_groups_list", group_actions.values());
+        gui->getTorrentActivity()->part()->plugActionList(QStringLiteral("view_groups_list"), group_actions.values());
     }
 
     void View::onGroupRenamed(Group* g)

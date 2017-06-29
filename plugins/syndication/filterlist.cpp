@@ -58,7 +58,7 @@ namespace kt
     void FilterList::saveFilters(const QString& file)
     {
         File fptr;
-        if (!fptr.open(file, "wt"))
+        if (!fptr.open(file, QStringLiteral("wt")))
         {
             Out(SYS_SYN | LOG_DEBUG) << "Failed to open " << file << " : " << fptr.errorString() << endl;
             return;

@@ -102,10 +102,10 @@ namespace kt
                 bt::MakeDir(tor_dir);
 
             // write the index file
-            writeIndex(tor_dir + QLatin1String("index"), dc->getResult());
+            writeIndex(tor_dir + QStringLiteral("index"), dc->getResult());
 
             // copy the torrent file
-            bt::CopyFile(tor_url.url(), tor_dir + QLatin1String("torrent"));
+            bt::CopyFile(tor_url.url(), tor_dir + QStringLiteral("torrent"));
 
             Uint64 imported = calcImportedBytes(dc->getResult(), tor);
 
@@ -115,7 +115,7 @@ namespace kt
                 QList<Uint32> dnd_files;
 
                 // first make tor_dir/dnd
-                QString dnd_dir = tor_dir + QLatin1String("dnd") + bt::DirSeparator();
+                QString dnd_dir = tor_dir + QStringLiteral("dnd") + bt::DirSeparator();
                 if (!bt::Exists(dnd_dir))
                     MakeDir(dnd_dir);
 
@@ -138,13 +138,13 @@ namespace kt
                 if (durl.midRef(ds + 1) == tor.getNameSuggestion())
                 {
                     durl.truncate(ds);
-                    saveStats(tor_dir + QLatin1String("stats"), durl, imported, false);
+                    saveStats(tor_dir + QStringLiteral("stats"), durl, imported, false);
                 }
                 else
                 {
-                    saveStats(tor_dir + QLatin1String("stats"), durl, imported, true);
+                    saveStats(tor_dir + QStringLiteral("stats"), durl, imported, true);
                 }
-                saveFileInfo(tor_dir + QLatin1String("file_info"), dnd_files);
+                saveFileInfo(tor_dir + QStringLiteral("file_info"), dnd_files);
             }
             else
             {
@@ -152,7 +152,7 @@ namespace kt
                 QString durl = data_dir;
                 int ds = durl.lastIndexOf(bt::DirSeparator());
                 durl.truncate(ds);
-                saveStats(tor_dir + QLatin1String("stats"), durl, imported, false);
+                saveStats(tor_dir + QStringLiteral("stats"), durl, imported, false);
                 saveFileMap(tor_dir, data_dir);
             }
 
@@ -283,7 +283,7 @@ namespace kt
     {
         // first try to open it
         File fptr;
-        if (!fptr.open(file, "wb"))
+        if (!fptr.open(file, QStringLiteral("wb")))
             throw Error(i18n("Cannot open %1: %2", file, fptr.errorString()));
 
         // write all chunks to the file
@@ -340,8 +340,8 @@ namespace kt
         out << "PRIORITY=0" << ::endl;
         out << "AUTOSTART=1" << ::endl;
         if (Settings::maxRatio() > 0)
-            out << QString("MAX_RATIO=%1").arg(Settings::maxRatio(), 0, 'f', 2) << ::endl;
-        out << QString("IMPORTED=%1").arg(imported) << ::endl;
+            out << QStringLiteral("MAX_RATIO=%1").arg(Settings::maxRatio(), 0, 'f', 2) << ::endl;
+        out << QStringLiteral("IMPORTED=%1").arg(imported) << ::endl;
         if (custom_output_name)
             out << "CUSTOM_OUTPUT_NAME=1" << endl;
     }
@@ -368,7 +368,7 @@ namespace kt
     {
         // saves which TorrentFile's do not need to be downloaded
         File fptr;
-        if (!fptr.open(file_info_file, "wb"))
+        if (!fptr.open(file_info_file, QStringLiteral("wb")))
         {
             Out(SYS_GEN | LOG_IMPORTANT) << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
             return;

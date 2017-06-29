@@ -42,7 +42,7 @@ int main(int argc, char** argv)
                      KAboutLicense::GPL,
                      i18n("&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"),
                      QString(),
-                     "http://www.kde.org/applications/internet/ktorrent/");
+                     QStringLiteral("http://www.kde.org/applications/internet/ktorrent/"));
     KAboutData::setApplicationData(about);
 
     QCommandLineParser parser;
@@ -58,11 +58,11 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    QString str = KGlobal::dirs()->saveLocation("data", "ktorrent");
+    QString str = KGlobal::dirs()->saveLocation("data", QStringLiteral("ktorrent"));
     if (!str.endsWith(bt::DirSeparator()))
         str += bt::DirSeparator();
 
-    bt::InitLog(str + "ktupnptest.log");
+    bt::InitLog(str + QStringLiteral("ktupnptest.log"));
     UPnPTestWidget* mwnd = new UPnPTestWidget();
 
     mwnd->show();

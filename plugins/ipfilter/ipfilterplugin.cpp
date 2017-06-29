@@ -90,7 +90,7 @@ namespace kt
             return true;
 
         ip_filter.reset(new IPBlockList());
-        if (!ip_filter->load(kt::DataDir() + "level1.dat"))
+        if (!ip_filter->load(kt::DataDir() + QStringLiteral("level1.dat")))
         {
             ip_filter.reset();
             return false;
@@ -118,7 +118,7 @@ namespace kt
 
     bool IPFilterPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
     void IPFilterPlugin::checkAutoUpdate()
@@ -162,7 +162,7 @@ namespace kt
 
     void IPFilterPlugin::notification(const QString& msg)
     {
-        KNotification::event("PluginEvent", msg, QPixmap(), getGUI()->getMainWindow());
+        KNotification::event(QStringLiteral("PluginEvent"), msg, QPixmap(), getGUI()->getMainWindow());
     }
 
 }

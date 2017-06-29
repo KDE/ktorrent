@@ -26,7 +26,7 @@ namespace kt
 {
 
     DisplaySettingsPage::DisplaySettingsPage(QWidget* parent)
-        : PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Display"), "view-statistics", parent)
+        : PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Display"), QStringLiteral("view-statistics"), parent)
     {
         setupUi(this);
     }

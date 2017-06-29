@@ -26,7 +26,7 @@
 
 namespace kt
 {
-    AdvancedPref::AdvancedPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Advanced"), "configure", parent)
+    AdvancedPref::AdvancedPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Advanced"), QStringLiteral("configure"), parent)
     {
         setupUi(this);
         connect(kcfg_diskPrealloc, SIGNAL(toggled(bool)), this, SLOT(onDiskPreallocToggled(bool)));

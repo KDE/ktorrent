@@ -119,7 +119,7 @@ namespace kt
             if (!found) {
                 // if there is an icon in xml file folder - use it
                 // xml file folder might not be equal to data_dir
-                icon_filename = QFileInfo(fptr).absolutePath() + '/' + icon_name;
+                icon_filename = QFileInfo(fptr).absolutePath() + QLatin1Char('/') + icon_name;
                 found = bt::Exists(icon_filename);
             }
 

@@ -56,7 +56,7 @@ namespace kt
         sock = new UPnPMCastSocket();
         upnp_tab = new UPnPWidget(sock, 0);
         GUIInterface* gui = getGUI();
-        gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QLatin1String("kt-upnp"),
+        gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QStringLiteral("kt-upnp"),
                 i18n("Shows the status of the UPnP plugin"));
         // load the routers list
         QString routers_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("routers"));
@@ -68,7 +68,7 @@ namespace kt
     void UPnPPlugin::unload()
     {
         LogSystemManager::instance().unregisterSystem(i18n("UPnP"));
-        QString routers_file = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QLatin1String("/routers");
+        QString routers_file = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/routers");
         sock->saveRouters(routers_file);
         getGUI()->getTorrentActivity()->removeToolWidget(upnp_tab);
         sock->close();
@@ -85,7 +85,7 @@ namespace kt
 
     bool UPnPPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 }
 #include "upnpplugin.moc"

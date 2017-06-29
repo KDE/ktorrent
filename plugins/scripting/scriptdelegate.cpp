@@ -120,11 +120,11 @@ namespace kt
         connect(enabled_check, SIGNAL(clicked(bool)), this, SLOT(toggled(bool)));
 
         QPushButton* about_button = new QPushButton;
-        about_button->setIcon(QIcon::fromTheme("dialog-information"));
+        about_button->setIcon(QIcon::fromTheme(QStringLiteral("dialog-information")));
         connect(about_button, SIGNAL(clicked(bool)), this, SLOT(aboutClicked()));
 
         QPushButton* configure_button = new QPushButton;
-        configure_button->setIcon(QIcon::fromTheme("configure"));
+        configure_button->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
         connect(configure_button, SIGNAL(clicked(bool)), this, SLOT(settingsClicked()));
 
         QList<QEvent::Type> blocked;

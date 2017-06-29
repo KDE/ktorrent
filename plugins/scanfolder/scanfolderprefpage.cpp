@@ -35,7 +35,7 @@ namespace kt
 {
 
     ScanFolderPrefPage::ScanFolderPrefPage(ScanFolderPlugin* plugin, QWidget* parent)
-        : PrefPageInterface(ScanFolderPluginSettings::self(), i18nc("plugin name", "Scan Folder"), "folder-open", parent), m_plugin(plugin)
+        : PrefPageInterface(ScanFolderPluginSettings::self(), i18nc("plugin name", "Scan Folder"), QStringLiteral("folder-open"), parent), m_plugin(plugin)
     {
         setupUi(this);
         connect(kcfg_actionDelete, SIGNAL(toggled(bool)), kcfg_actionMove, SLOT(setDisabled(bool)));
@@ -81,7 +81,7 @@ namespace kt
         folders = ScanFolderPluginSettings::folders();
         foreach (const QString& f, folders)
         {
-            m_folders->addItem(new QListWidgetItem(QIcon::fromTheme("folder"), f));
+            m_folders->addItem(new QListWidgetItem(QIcon::fromTheme(QStringLiteral("folder")), f));
         }
         selectionChanged();
     }
@@ -113,7 +113,7 @@ namespace kt
         {
             if (!p.endsWith(bt::DirSeparator()))
                 p += bt::DirSeparator();
-            m_folders->addItem(new QListWidgetItem(QIcon::fromTheme("folder"), p));
+            m_folders->addItem(new QListWidgetItem(QIcon::fromTheme(QStringLiteral("folder")), p));
             folders.append(p);
         }
 

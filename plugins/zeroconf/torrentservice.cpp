@@ -69,9 +69,9 @@ namespace kt
     void TorrentService::start()
     {
         bt::Uint16 port = bt::ServerInterface::getPort();
-        QString name = QString("%1__%2%3").arg(tc->getOwnPeerID().toString()).arg((rand() % 26) + 65).arg((rand() % 26) + 65);
+        QString name = QStringLiteral("%1__%2%3").arg(tc->getOwnPeerID().toString()).arg((rand() % 26) + 65).arg((rand() % 26) + 65);
         QStringList subtypes;
-        subtypes << QString('_' + tc->getInfoHash().toString() + QLatin1String("._sub._bittorrent._tcp"));
+        subtypes << QLatin1Char('_') + tc->getInfoHash().toString() + QStringLiteral("._sub._bittorrent._tcp");
 
         if (!srv)
         {
@@ -79,7 +79,7 @@ namespace kt
 
             srv->setPort(port);
             srv->setServiceName(name);
-            srv->setType("_bittorrent._tcp");
+            srv->setType(QStringLiteral("_bittorrent._tcp"));
             srv->setSubTypes(subtypes);
 
             connect(srv, SIGNAL(published(bool)), this, SLOT(onPublished(bool)));
@@ -89,7 +89,7 @@ namespace kt
 
         if (!browser)
         {
-            browser = new KDNSSD::ServiceBrowser(QString('_' + tc->getInfoHash().toString() + QLatin1String("._sub._bittorrent._tcp")), true);
+            browser = new KDNSSD::ServiceBrowser(QLatin1Char('_') + tc->getInfoHash().toString() + QStringLiteral("._sub._bittorrent._tcp"), true);
             connect(browser, SIGNAL(serviceAdded(DNSSD::RemoteService::Ptr)), this, SLOT(onServiceAdded(DNSSD::RemoteService::Ptr)));
             browser->startBrowse();
         }
@@ -97,7 +97,7 @@ namespace kt
 
     void TorrentService::onServiceAdded(KDNSSD::RemoteService::Ptr ptr)
     {
-        // lets not connect to ourselve
+        // lets not connect to ourselves
         if (!ptr->serviceName().startsWith(tc->getOwnPeerID().toString()))
         {
             QString host = ptr->hostName();

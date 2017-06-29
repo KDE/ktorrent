@@ -51,10 +51,10 @@ namespace kt
             icons_loaded = true;
 
             QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                  "kf5/locale/countries",
+                                                  QStringLiteral("kf5/locale/countries"),
                                                   QStandardPaths::LocateDirectory);
             if (!path.isEmpty())
-                flagDB.addFlagSource(path+QStringLiteral("/%1/flag.png"));
+                flagDB.addFlagSource(path + QStringLiteral("/%1/flag.png"));
         }
 
         if (geo_ip)

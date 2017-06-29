@@ -30,7 +30,7 @@ namespace kt
 {
 
     MagnetGeneratorPrefWidget::MagnetGeneratorPrefWidget(QWidget* parent)
-        : PrefPageInterface(MagnetGeneratorPluginSettings::self(), i18n("Magnet Generator"), "kt-magnet", parent)
+        : PrefPageInterface(MagnetGeneratorPluginSettings::self(), i18n("Magnet Generator"), QStringLiteral("kt-magnet"), parent)
     {
         setupUi(this);
         connect(kcfg_customtracker, SIGNAL(toggled(bool)), this, SLOT(customTrackerToggled(bool)));

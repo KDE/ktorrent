@@ -23,7 +23,7 @@
 
 namespace kt
 {
-    QMPref::QMPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Queue Manager"), "kt-queue-manager", parent)
+    QMPref::QMPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Queue Manager"), QStringLiteral("kt-queue-manager"), parent)
     {
         setupUi(this);
         connect(kcfg_manuallyControlTorrents, SIGNAL(toggled(bool)), this, SLOT(onControlTorrentsManuallyToggled(bool)));

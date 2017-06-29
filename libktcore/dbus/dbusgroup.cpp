@@ -65,12 +65,12 @@ namespace kt
             static int invalid_groups = 0;
             while (true)
             {
-                name = "group_" + QString::number(invalid_groups++);
+                name = QStringLiteral("group_") + QString::number(invalid_groups++);
                 if (!gman->find(name))
                     break;
             }
         }
-        QString path = "/group/" + name;
+        QString path = QStringLiteral("/group/") + name;
         QDBusConnection::sessionBus().registerObject(path, this,
                 QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals);
     }

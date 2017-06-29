@@ -112,19 +112,19 @@ namespace kt
 
             // Don't allow multiple lines in the comments field
             QString text = tc->getComments();
-            if (text.contains("\n"))
-                text = text.replace("\n", " ");
+            if (text.contains(QLatin1String("\n")))
+                text = text.replace(QLatin1Char('\n'), QLatin1Char(' '));
 
             // Make links clickable
-            QStringList words = text.split(" ", QString::KeepEmptyParts);
+            QStringList words = text.split(QLatin1Char(' '), QString::KeepEmptyParts);
             for (QStringList::iterator i = words.begin(); i != words.end(); i++)
             {
                 QString& w = *i;
-                if (w.startsWith("http://") || w.startsWith("https://") || w.startsWith("ftp://"))
-                    w = "<a href=\"" + w + "\">" + w + "</a>";
+                if (w.startsWith(QLatin1String("http://")) || w.startsWith(QLatin1String("https://")) || w.startsWith(QLatin1String("ftp://")))
+                    w = QStringLiteral("<a href=\"") + w + QStringLiteral("\">") + w + QStringLiteral("</a>");
             }
 
-            comments->setText(words.join(" "));
+            comments->setText(words.join(QStringLiteral(" ")));
 
 
             float ratio = tc->getMaxShareRatio();
@@ -189,7 +189,7 @@ namespace kt
             maxSeedTimeUpdate();
 
         static QLocale locale;
-        share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= Settings::greenRatio() ? "#ff0000" : "#1c9a1c").arg(locale.toString(ratio, 'g', 2)));
+        share_ratio->setText(QStringLiteral("<font color=\"%1\">%2</font>").arg(ratio <= Settings::greenRatio() ? QStringLiteral("#ff0000") : QStringLiteral("#1c9a1c")).arg(locale.toString(ratio, 'g', 2)));
 
         Uint32 secs = tc->getRunningTimeUL();
         if (secs == 0)

@@ -25,7 +25,7 @@
 
 namespace kt
 {
-    BTPref::BTPref(QWidget* parent): PrefPageInterface(Settings::self(), i18n("BitTorrent"), "application-x-bittorrent", parent)
+    BTPref::BTPref(QWidget* parent): PrefPageInterface(Settings::self(), i18n("BitTorrent"), QStringLiteral("application-x-bittorrent"), parent)
     {
         setupUi(this);
     }

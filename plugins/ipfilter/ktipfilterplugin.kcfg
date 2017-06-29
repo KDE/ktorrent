@@ -8,7 +8,7 @@
 	<group name="general">
 		<entry name="filterURL" type="Url">
 			<label>Level1 filter url</label>
-            <default code="true">QUrl("http://list.iblocklist.com/?list=bt_level1&amp;fileformat=p2p&amp;archiveformat=gz")</default>
+            <default code="true">QUrl(QStringLiteral("http://list.iblocklist.com/?list=bt_level1&amp;fileformat=p2p&amp;archiveformat=gz"))</default>
 		</entry>
 		<entry name="useLevel1" type="Bool">
 			<label>Use level1 filter?</label>

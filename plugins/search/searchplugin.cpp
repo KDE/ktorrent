@@ -64,7 +64,7 @@ namespace kt
     {
         LogSystemManager::instance().registerSystem(i18nc("plugin name", "Search"), SYS_SRC);
         proxy = new ProxyHelper((DBusSettings*) getCore()->getExternalInterface()->settings());
-        engines = new SearchEngineList(proxy, kt::DataDir() + "searchengines/");
+        engines = new SearchEngineList(proxy, kt::DataDir() + QStringLiteral("searchengines/"));
         engines->loadEngines();
 
         pref = new SearchPrefPage(this, engines, 0);
@@ -110,7 +110,7 @@ namespace kt
             if (SearchPluginSettings::useDefaultBrowser())
                 new KRun(url, QApplication::activeWindow());
             else
-                KRun::runCommand(SearchPluginSettings::customBrowser() + ' ' + KShell::quoteArg(url.toDisplayString()), 0);
+                KRun::runCommand(SearchPluginSettings::customBrowser() + QStringLiteral(" ") + KShell::quoteArg(url.toDisplayString()), 0);
         }
         else
         {
@@ -125,7 +125,7 @@ namespace kt
 
     bool SearchPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
 }

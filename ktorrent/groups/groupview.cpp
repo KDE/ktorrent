@@ -149,7 +149,7 @@ namespace kt
 
         open_in_new_tab->setEnabled(g != 0);
 
-        QMenu* menu = gui->getTorrentActivity()->part()->menu("GroupsMenu");
+        QMenu* menu = gui->getTorrentActivity()->part()->menu(QStringLiteral("GroupsMenu"));
         if (menu)
             menu->popup(viewport()->mapToGlobal(p));
     }

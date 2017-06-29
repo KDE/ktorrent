@@ -61,12 +61,26 @@ include(CheckTypeSize) #XFS
 # according to http://www.cmake.org/pipermail/cmake/2008-June/022381.html
 kde_enable_exceptions()
 
+add_definitions(
+  -DQT_USE_QSTRINGBUILDER
+  -DQT_NO_CAST_TO_ASCII
+  -DQT_NO_CAST_FROM_ASCII
+  -DQT_STRICT_ITERATORS
+  -DQT_NO_URL_CAST_FROM_STRING
+  -DQT_NO_CAST_FROM_BYTEARRAY
+  -DQT_NO_CAST_TO_BYTEARRAY
+#   -DQT_NO_SIGNALS_SLOTS_KEYWORDS
+  -DQT_USE_FAST_OPERATOR_PLUS
+)
+
 set (KTORRENT_DBUS_XML_DIR ${KTORRENT_SOURCE_DIR}/dbus_xml)
 set (KTORRENT_PLUGIN_INSTALL_DIR ${PLUGIN_INSTALL_DIR}/ktorrent)
 
 include_directories(
    ${Boost_INCLUDE_DIR}
 )
+
+
 
 add_definitions(-DQT_USE_QSTRINGBUILDER -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_TO_ASCII)
 

@@ -53,7 +53,7 @@ namespace kt
     {
         KDesktopFile df(dir + desktop_file);
         // check if everything is OK
-        if (df.readType().trimmed() != "KTorrentScript")
+        if (df.readType().trimmed() != QStringLiteral("KTorrentScript"))
             return false;
 
         info.name = df.readName();
@@ -114,10 +114,10 @@ namespace kt
             return;
 
         // Call unload function if the script has one
-        if (action->functionNames().contains("unload"))
+        if (action->functionNames().contains(QStringLiteral("unload")))
         {
             QVariantList args;
-            action->callFunction("unload", args);
+            action->callFunction(QStringLiteral("unload"), args);
         }
 
         Kross::ActionCollection* col = Kross::Manager::self().actionCollection();
@@ -154,7 +154,7 @@ namespace kt
             return false;
 
         QStringList functions = action->functionNames();
-        return functions.contains("configure");
+        return functions.contains(QStringLiteral("configure"));
     }
 
     void Script::configure()
@@ -163,7 +163,7 @@ namespace kt
             return;
 
         QVariantList args;
-        action->callFunction("configure", args);
+        action->callFunction(QStringLiteral("configure"), args);
     }
 
 }

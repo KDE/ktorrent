@@ -65,7 +65,7 @@ namespace kt
 
     bool IPFilterList::parseIPWithWildcards(const QString& str, bt::Uint32& start, bt::Uint32& end)
     {
-        QStringList ip_comps = str.split(".");
+        QStringList ip_comps = str.split(QLatin1Char('.'));
         if (ip_comps.count() != 4)
             return false;
 
@@ -73,7 +73,7 @@ namespace kt
         bt::Uint32 mask = 0;
         for (int i = 0; i < 4; i++)
         {
-            if (ip_comps[i] == "*")
+            if (ip_comps[i] == QStringLiteral("*"))
             {
                 mask |= 0xFF000000 >> (8 * i);
             }
@@ -114,7 +114,7 @@ namespace kt
 
     bool IPFilterList::addIPRange(const QString& str)
     {
-        QStringList range = str.split("-");
+        QStringList range = str.split(QLatin1Char('-'));
         if (range.count() != 2)
             return false;
 
@@ -184,7 +184,7 @@ namespace kt
 
         Entry& e = ip_list[index.row()];
         QString str = value.toString();
-        QStringList range = str.split("-");
+        QStringList range = str.split(QLatin1Char('-'));
         if (range.count() != 2)
         {
             if (!parseIPWithWildcards(str, e.start, e.end))

@@ -165,13 +165,13 @@ namespace kt
         max_conn_glob = qRound(qMin((double)pow((int)(upload_rate * 8), 0.8) + 50, 900.0));
         max_conn_tor = qRound(qMin((qreal)(max_conn_glob * 1.2 / max_torrents), (qreal)max_conn_glob));
 
-        m_max_upload->setText(QString("<b>%1</b>").arg(BytesPerSecToString(max_upload_speed * 1024)));
-        m_max_download->setText(QString("<b>%1</b>").arg(BytesPerSecToString(max_download_speed * 1024)));
-        m_max_conn_per_torrent->setText(QString("<b>%1</b>").arg(max_conn_tor));
-        m_max_conn_global->setText(QString("<b>%1</b>").arg(max_conn_glob));
-        m_max_downloads->setText(QString("<b>%1</b>").arg(max_downloads));
-        m_max_seeds->setText(QString("<b>%1</b>").arg(max_seeds));
-        m_upload_slots->setText(QString("<b>%1</b>").arg(max_slots));
+        m_max_upload->setText(QStringLiteral("<b>%1</b>").arg(BytesPerSecToString(max_upload_speed * 1024)));
+        m_max_download->setText(QStringLiteral("<b>%1</b>").arg(BytesPerSecToString(max_download_speed * 1024)));
+        m_max_conn_per_torrent->setText(QStringLiteral("<b>%1</b>").arg(max_conn_tor));
+        m_max_conn_global->setText(QStringLiteral("<b>%1</b>").arg(max_conn_glob));
+        m_max_downloads->setText(QStringLiteral("<b>%1</b>").arg(max_downloads));
+        m_max_seeds->setText(QStringLiteral("<b>%1</b>").arg(max_seeds));
+        m_upload_slots->setText(QStringLiteral("<b>%1</b>").arg(max_slots));
     }
 
     void RecommendedSettingsDlg::avgSpeedSlotToggled(bool on)

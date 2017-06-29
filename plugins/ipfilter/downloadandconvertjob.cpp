@@ -55,7 +55,7 @@ namespace kt
 
     void DownloadAndConvertJob::start()
     {
-        QString temp = kt::DataDir() + "tmp-" + url.fileName();
+        QString temp = kt::DataDir() + QStringLiteral("tmp-") + url.fileName();
         if (bt::Exists(temp))
             bt::Delete(temp, true);
 
@@ -131,18 +131,18 @@ namespace kt
             return;
         }
 
-        QString temp = kt::DataDir() + "tmp-" + url.fileName();
+        QString temp = kt::DataDir() + QStringLiteral("tmp-") + url.fileName();
 
         //now determine if it's ZIP or TXT file
         QMimeDatabase db;
         QMimeType ptr = db.mimeTypeForFile(temp, QMimeDatabase::MatchContent);
         Out(SYS_IPF|LOG_NOTICE) << "Mimetype: " << ptr.name() << endl;
-        if(ptr.name() == "application/zip")
+        if(ptr.name() == QStringLiteral("application/zip"))
         {
             active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + QLatin1String("level1.zip"))), -1, KIO::HideProgressInfo | KIO::Overwrite);
-            connect(active_job, SIGNAL(result(KJob*)), this, SLOT(extract(KJob*)));
+            connect(active_job, &KJob::result, this, &DownloadAndConvertJob::extract);
         }
-        else if(ptr.name() == "application/x-7z-compressed")
+        else if(ptr.name() == QStringLiteral("application/x-7z-compressed"))
         {
             QString msg = i18n("7z files are not supported", url.toDisplayString());
             if (mode == Verbose)
@@ -153,15 +153,15 @@ namespace kt
             setError(UNZIP_FAILED);
             emitResult();
         }
-        else if(ptr.name() == "application/gzip" || ptr.name() == "application/x-bzip")
+        else if(ptr.name() == QStringLiteral("application/gzip") || ptr.name() == QStringLiteral("application/x-bzip"))
         {
-            active_job = new bt::DecompressFileJob(temp, QString(kt::DataDir() + "level1.txt"));
+            active_job = new bt::DecompressFileJob(temp, kt::DataDir() + QStringLiteral("level1.txt"));
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
             active_job->start();
         }
-        else if(!isBinaryData(temp) || ptr.name() == "text/plain")
+        else if(!isBinaryData(temp) || ptr.name() == QStringLiteral("text/plain"))
         {
-            active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + "level1.txt")), -1, KIO::HideProgressInfo | KIO::Overwrite);
+            active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(kt::DataDir() + QStringLiteral("level1.txt")), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
         }
         else
@@ -197,7 +197,7 @@ namespace kt
             return;
         }
 
-        QString zipfile = kt::DataDir() + "level1.zip";
+        QString zipfile = kt::DataDir() + QStringLiteral("level1.zip");
         KZip* zip = new KZip(zipfile);
         if (!zip->open(QIODevice::ReadOnly) || !zip->directory())
         {
@@ -218,7 +218,7 @@ namespace kt
             return;
         }
 
-        QString destination = kt::DataDir() + "level1.txt";
+        QString destination = kt::DataDir() + QStringLiteral("level1.txt");
         QStringList entries = zip->directory()->entries();
         if(entries.count() >= 1)
         {
@@ -295,8 +295,8 @@ namespace kt
         convert_dlg->deleteLater();
         convert_dlg = 0;
         // shit happened move back backup stuff
-        QString dat_file = kt::DataDir() + "level1.dat";
-        QString tmp_file = kt::DataDir() + "level1.dat.tmp";
+        QString dat_file = kt::DataDir() + QStringLiteral("level1.dat");
+        QString tmp_file = kt::DataDir() + QStringLiteral("level1.dat.tmp");
 
         if (bt::Exists(tmp_file))
         {
@@ -313,11 +313,11 @@ namespace kt
 
     void DownloadAndConvertJob::convert()
     {
-        if (bt::Exists(kt::DataDir() + "level1.dat"))
+        if (bt::Exists(kt::DataDir() + QStringLiteral("level1.dat")))
         {
             // make backup of data file, if stuff fails we can always go back
-            QString dat_file = kt::DataDir() + "level1.dat";
-            QString tmp_file = kt::DataDir() + "level1.dat.tmp";
+            QString dat_file = kt::DataDir() + QStringLiteral("level1.dat");
+            QString tmp_file = kt::DataDir() + QStringLiteral("level1.dat.tmp");
 
 
             KIO::Job* job = KIO::file_copy(QUrl::fromLocalFile(dat_file), QUrl::fromLocalFile(tmp_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
@@ -330,10 +330,10 @@ namespace kt
     void DownloadAndConvertJob::cleanUpFiles()
     {
         // cleanup temp files
-        cleanUp(kt::DataDir() + "level1.zip");
-        cleanUp(kt::DataDir() + "level1.txt");
-        cleanUp(kt::DataDir() + "level1.tmp");
-        cleanUp(kt::DataDir() + "level1.dat.tmp");
+        cleanUp(kt::DataDir() + QStringLiteral("level1.zip"));
+        cleanUp(kt::DataDir() + QStringLiteral("level1.txt"));
+        cleanUp(kt::DataDir() + QStringLiteral("level1.tmp"));
+        cleanUp(kt::DataDir() + QStringLiteral("level1.dat.tmp"));
     }
 
     void DownloadAndConvertJob::cleanUp(const QString& path)

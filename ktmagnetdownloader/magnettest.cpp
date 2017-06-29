@@ -101,10 +101,10 @@ void MagnetTest::start()
     }
 
     // start DHT
-    bt::Globals::instance().getDHT().start(kt::DataDir() + "dht_table", kt::DataDir() + "dht_key", Settings::dhtPort());
+    bt::Globals::instance().getDHT().start(kt::DataDir() + QStringLiteral("dht_table"), kt::DataDir() + QStringLiteral("dht_key"), Settings::dhtPort());
 
     // Start UPnP router discovery
-    upnp->loadRouters(kt::DataDir() + "routers");
+    upnp->loadRouters(kt::DataDir() + QStringLiteral("routers"));
     upnp->discover();
 
     mdownloader->start();
@@ -130,7 +130,7 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
     Q_UNUSED(md);
     Out(SYS_GEN | LOG_IMPORTANT) << "Saving to output.torrent" << endl;
     bt::File fptr;
-    if (fptr.open("output.torrent", "wb"))
+    if (fptr.open(QStringLiteral("output.torrent"), QStringLiteral("wb")))
     {
         BEncoder enc(&fptr);
         enc.beginDict();

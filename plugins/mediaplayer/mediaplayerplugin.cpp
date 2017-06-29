@@ -52,7 +52,7 @@ namespace kt
         CoreInterface* core = getCore();
         act = new MediaPlayerActivity(core, actionCollection(), 0);
         getGUI()->addActivity(act);
-        setXMLFile("ktorrent_mediaplayerui.rc");
+        setXMLFile(QStringLiteral("ktorrent_mediaplayerui.rc"));
         act->enableActions(0);
         act->loadState(KSharedConfig::openConfig());
     }
@@ -69,7 +69,7 @@ namespace kt
 
     bool MediaPlayerPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
 

@@ -210,16 +210,16 @@ namespace kt
         options.silently = false;
         sp->getCore()->load(bt::MagnetLink(magnet_url.toString()), options);
         QString msg = i18n("Downloading:<br/><b>%1</b>", magnet_url.toString());
-        KNotification::event("MagnetLinkDownloadStarted", msg, QPixmap(), sp->getGUI()->getMainWindow());
+        KNotification::event(QStringLiteral("MagnetLinkDownloadStarted"), msg, QPixmap(), sp->getGUI()->getMainWindow());
     }
 
     void SearchWidget::unsupportedContent(QNetworkReply* r)
     {
-        if (r->url().scheme() == QLatin1String("magnet"))
+        if (r->url().scheme() == QStringLiteral("magnet"))
         {
             magnetUrl(r->url());
         }
-        else if (r->header(QNetworkRequest::ContentTypeHeader).toString() == QLatin1String("application/x-bittorrent") ||
+        else if (r->header(QNetworkRequest::ContentTypeHeader).toString() == QStringLiteral("application/x-bittorrent") ||
                  r->url().path().endsWith(QLatin1String(".torrent")))
         {
             torrent_download = r;
@@ -251,10 +251,10 @@ namespace kt
 
                   i18n("Do you want to download or save the torrent?"),
                   i18n("Download Torrent"),
-                  KGuiItem(i18n("Download"), "ktorrent"),
+                  KGuiItem(i18n("Download"), QStringLiteral("ktorrent")),
                   KStandardGuiItem::save(),
                   KStandardGuiItem::cancel(),
-                  ":TorrentDownloadFinishedQuestion");
+                  QStringLiteral(":TorrentDownloadFinishedQuestion"));
 
         if (ret == KMessageBox::Yes)
             sp->getCore()->load(torrent_download->readAll(), torrent_download->url(), QString(), QString());

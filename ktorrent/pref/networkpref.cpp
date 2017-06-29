@@ -34,7 +34,7 @@ namespace kt
 {
 
     NetworkPref::NetworkPref(QWidget* parent)
-        : PrefPageInterface(Settings::self(), i18n("Network"), "preferences-system-network", parent)
+        : PrefPageInterface(Settings::self(), i18n("Network"), QStringLiteral("preferences-system-network"), parent)
     {
         setupUi(this);
         connect(m_recommended_settings, SIGNAL(clicked()), this, SIGNAL(calculateRecommendedSettings()));
@@ -56,7 +56,7 @@ namespace kt
         kcfg_maxTotalConnections->setValue(Settings::maxTotalConnections());
 
         combo_networkInterface->clear();
-        combo_networkInterface->addItem(QIcon::fromTheme("network-wired"), i18n("All interfaces"));
+        combo_networkInterface->addItem(QIcon::fromTheme(QStringLiteral("network-wired")), i18n("All interfaces"));
 
         kcfg_onlyUseUtp->setEnabled(Settings::utpEnabled());
         kcfg_primaryTransportProtocol->setEnabled(Settings::utpEnabled() && !Settings::onlyUseUtp());
@@ -64,19 +64,19 @@ namespace kt
         // get all the network devices and add them to the combo box
         QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
 
-        // KF5 QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
+        // FIXME KF5 QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
 
 
-        foreach (const QNetworkInterface& iface, iface_list)
+        for (const QNetworkInterface& iface : iface_list)
         {
-            QIcon icon = QIcon::fromTheme("network-wired");
-#if 0 //KF5
+            QIcon icon = QIcon::fromTheme(QStringLiteral("network-wired"));
+#if 0 //FIXME KF5
             foreach (const Solid::Device& device, netlist)
             {
                 const Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
                 if (netdev->ifaceName() == iface.name() && netdev->isWireless())
                 {
-                    icon = QIcon::fromTheme("network-wireless");
+                    icon = QIcon::fromTheme(QStringLiteral("network-wireless"));
                     break;
                 }
 

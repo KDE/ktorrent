@@ -44,10 +44,10 @@ namespace kt
     DownloadOrderPlugin::DownloadOrderPlugin(QObject* parent, const QVariantList &args): Plugin(parent)
     {
         Q_UNUSED(args);
-        download_order_action = new QAction(QIcon::fromTheme("view-sort-ascending"), i18n("File Download Order"), this);
+        download_order_action = new QAction(QIcon::fromTheme(QStringLiteral("view-sort-ascending")), i18n("File Download Order"), this);
         connect(download_order_action, SIGNAL(triggered()), this, SLOT(showDownloadOrderDialog()));
-        actionCollection()->addAction("download_order", download_order_action);
-        setXMLFile("ktorrent_downloadorderui.rc");
+        actionCollection()->addAction(QStringLiteral("download_order"), download_order_action);
+        setXMLFile(QStringLiteral("ktorrent_downloadorderui.rc"));
         managers.setAutoDelete(true);
     }
 
@@ -59,7 +59,7 @@ namespace kt
 
     bool DownloadOrderPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
     void DownloadOrderPlugin::load()
@@ -122,7 +122,7 @@ namespace kt
 
     void DownloadOrderPlugin::torrentAdded(bt::TorrentInterface* tc)
     {
-        if (bt::Exists(tc->getTorDir() + QLatin1String("download_order")))
+        if (bt::Exists(tc->getTorDir() + QStringLiteral("download_order")))
         {
             DownloadOrderManager* m = createManager(tc);
             m->load();

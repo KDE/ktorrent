@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     }
 
     QApplication app(argc, argv);
-    app.setApplicationName("KTMagnetDownloader");
+    app.setApplicationName(QStringLiteral("KTMagnetDownloader"));
     app.setQuitOnLastWindowClosed(false);
 
     if (!bt::InitLibKTorrent())
@@ -30,7 +30,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    bt::MagnetLink mlink(argv[1]);
+    bt::MagnetLink mlink(QString::fromUtf8(argv[1]));
     if (!mlink.isValid())
     {
         fprintf(stderr, "Invalid magnet link %s\n\n", argv[1]);
@@ -38,8 +38,8 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    bt::SetClientInfo("ktmagnetdownloader", bt::MAJOR, bt::MINOR, bt::BETA_ALPHA_RC_RELEASE, bt::BETA, "KT");
-    bt::InitLog("ktmagnetdownload.log", false, true);
+    bt::SetClientInfo(QStringLiteral("ktmagnetdownloader"), bt::MAJOR, bt::MINOR, bt::BETA_ALPHA_RC_RELEASE, bt::BETA, QStringLiteral("KT"));
+    bt::InitLog(QStringLiteral("ktmagnetdownload.log"), false, true);
     bt::Log& log = Out();
     log.setOutputToConsole(true);
     log << "Downloading " << mlink.toString() << bt::endl;

@@ -113,7 +113,7 @@ namespace kt
             KMainWindow* mwnd = getGUI()->getMainWindow();
             dock = new QDockWidget(mwnd);
             dock->setWidget(lv);
-            dock->setObjectName("LogViewerDockWidget");
+            dock->setObjectName(QStringLiteral("LogViewerDockWidget"));
             mwnd->addDockWidget(Qt::BottomDockWidgetArea, dock);
             break;
         }
@@ -154,7 +154,7 @@ namespace kt
 
     bool LogViewerPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
 }

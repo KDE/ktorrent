@@ -51,23 +51,23 @@ namespace kt
         : url(url), core(core), verbose(verbose), group(group),
           location(location), move_on_completion(move_on_completion)
     {
-        base_url = url.scheme() + "://" + url.host();
+        base_url = url.scheme() + QStringLiteral("://") + url.host();
         if (url.port(80) != 80)
-            base_url += ":" + QString::number(url.port(80));
+            base_url += QLatin1Char(':') + QString::number(url.port(80));
 
         QString path = url.path();
         if (path.size() > 0)
         {
             int idx = -1;
-            if (path.endsWith("/"))
-                base_url += (!path.startsWith("/") ? "/" : "") + path;
-            else if ((idx = path.lastIndexOf("/")) != -1)
+            if (path.endsWith(QLatin1Char('/')))
+                base_url += (!path.startsWith(QStringLiteral("/")) ? QStringLiteral("/") : QString()) + path;
+            else if ((idx = path.lastIndexOf(QStringLiteral("/"))) != -1)
                 base_url += path.mid(0, idx + 1);
             else
-                base_url += "/";
+                base_url += QLatin1Char('/');
         }
         else
-            base_url += "/";
+            base_url += QLatin1Char('/');
     }
 
 
@@ -106,7 +106,7 @@ namespace kt
         else
         {
             QMimeType data_type = QMimeDatabase().mimeTypeForData(job->data());
-            if (data_type.isValid() && data_type.name().contains("html"))
+            if (data_type.isValid() && data_type.name().contains(QStringLiteral("html")))
                 handleHtmlPage(job->data());
         }
     }
@@ -138,13 +138,13 @@ namespace kt
 
     void LinkDownloader::handleHtmlPage(const QByteArray& data)
     {
-        QRegExp rx("href\\s*=\"([^\"]*)\"", Qt::CaseInsensitive);
-        QString str(data);
+        QRegExp rx(QLatin1String("href\\s*=\"([^\"]*)\""), Qt::CaseInsensitive);
+        QString str(QString::fromUtf8(data));
         int pos = 0;
         while ((pos = rx.indexIn(str, pos)) != -1)
         {
             QString href_link = rx.cap(1);
-            if (href_link.startsWith("magnet:") && href_link.contains("xt=urn:btih:"))
+            if (href_link.startsWith(QStringLiteral("magnet:")) && href_link.contains(QStringLiteral("xt=urn:btih:")))
             {
                 MagnetLinkLoadOptions options;
                 options.silently = verbose;
@@ -156,12 +156,12 @@ namespace kt
                 deleteLater();
                 return;
             }
-            else if (!href_link.startsWith("http://") && !href_link.startsWith("https://"))
+            else if (!href_link.startsWith(QStringLiteral("http://")) && !href_link.startsWith(QStringLiteral("https://")))
             {
-                if (!href_link.startsWith("/"))
+                if (!href_link.startsWith(QStringLiteral("/")))
                     href_link = base_url + href_link;
                 else
-                    href_link = url.scheme() + "://" + url.authority() + href_link;
+                    href_link = url.scheme() + QStringLiteral("://") + url.authority() + href_link;
             }
 
             link_url = QUrl(href_link);
@@ -179,7 +179,7 @@ namespace kt
         // First try links ending with .torrent
         foreach (QUrl u, links)
         {
-            if (u.path().endsWith(".torrent") || u.path().endsWith(".TORRENT"))
+            if (u.path().endsWith(QStringLiteral(".torrent")) || u.path().endsWith(QStringLiteral(".TORRENT")))
             {
                 Out(SYS_SYN | LOG_DEBUG) << "Trying torrent link: " << u.toDisplayString() << endl;
                 link_url = u;

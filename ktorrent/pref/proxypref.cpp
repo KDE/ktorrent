@@ -25,7 +25,7 @@
 namespace kt
 {
 
-    ProxyPref::ProxyPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Proxy"), "preferences-system-network", parent)
+    ProxyPref::ProxyPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Proxy"), QStringLiteral("preferences-system-network"), parent)
     {
         setupUi(this);
         connect(kcfg_socksEnabled, SIGNAL(toggled(bool)), this, SLOT(socksEnabledToggled(bool)));

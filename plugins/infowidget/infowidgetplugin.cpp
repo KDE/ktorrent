@@ -82,9 +82,9 @@ namespace kt
         pref = new IWPrefPage(0);
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
         ta->addViewListener(this);
-        ta->addToolWidget(status_tab, i18nc("@title:tab", "Status"), "dialog-information",
+        ta->addToolWidget(status_tab, i18nc("@title:tab", "Status"), QStringLiteral("dialog-information"),
                           i18n("Displays status information about a torrent"));
-        ta->addToolWidget(file_view, i18nc("@title:tab", "Files"), "folder",
+        ta->addToolWidget(file_view, i18nc("@title:tab", "Files"), QStringLiteral("folder"),
                           i18n("Shows all the files in a torrent"));
 
         applySettings();
@@ -185,7 +185,7 @@ namespace kt
 
     bool InfoWidgetPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
     void InfoWidgetPlugin::applySettings()
@@ -221,7 +221,7 @@ namespace kt
         if (show && !peer_view)
         {
             peer_view = new PeerView(0);
-            ta->addToolWidget(peer_view, i18n("Peers"), "system-users",
+            ta->addToolWidget(peer_view, i18n("Peers"), QStringLiteral("system-users"),
                               i18n("Displays all the peers you are connected to for a torrent"));
             peer_view->loadState(KSharedConfig::openConfig());
             createMonitor(tc);
@@ -243,7 +243,7 @@ namespace kt
         if (show && !cd_view)
         {
             cd_view = new ChunkDownloadView(0);
-            ta->addToolWidget(cd_view, i18n("Chunks"), "kt-chunks",
+            ta->addToolWidget(cd_view, i18n("Chunks"), QStringLiteral("kt-chunks"),
                               i18n("Displays all the chunks you are downloading, of a torrent"));
 
             cd_view->loadState(KSharedConfig::openConfig());
@@ -265,7 +265,7 @@ namespace kt
         if (show && !tracker_view)
         {
             tracker_view = new TrackerView(0);
-            ta->addToolWidget(tracker_view, i18n("Trackers"), "network-server",
+            ta->addToolWidget(tracker_view, i18n("Trackers"), QStringLiteral("network-server"),
                               i18n("Displays information about all the trackers of a torrent"));
             tracker_view->loadState(KSharedConfig::openConfig());
             tracker_view->changeTC(ta->getCurrentTorrent());
@@ -284,7 +284,7 @@ namespace kt
         if (show && !webseeds_tab)
         {
             webseeds_tab = new WebSeedsTab(0);
-            ta->addToolWidget(webseeds_tab, i18n("Webseeds"), "network-server",
+            ta->addToolWidget(webseeds_tab, i18n("Webseeds"), QStringLiteral("network-server"),
                               i18n("Displays all the webseeds of a torrent"));
             webseeds_tab->loadState(KSharedConfig::openConfig());
             webseeds_tab->changeTC(ta->getCurrentTorrent());

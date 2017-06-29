@@ -119,15 +119,15 @@ namespace kt
         if (!plugin)
         {
             Out(SYS_GEN | LOG_NOTICE) <<
-                                      QString("Creating instance of plugin %1 failed !")
+                                      QStringLiteral("Creating instance of plugin %1 failed !")
                                       .arg(pluginsMetaData.at(idx).fileName()) << endl;
             return;
         }
 
-        if (!plugin->versionCheck(kt::VERSION_STRING))
+        if (!plugin->versionCheck(QString::fromLatin1(kt::VERSION_STRING)))
         {
             Out(SYS_GEN | LOG_NOTICE) <<
-                                      QString("Plugin %1 version does not match KTorrent version, unloading it.")
+                                      QStringLiteral("Plugin %1 version does not match KTorrent version, unloading it.")
                                       .arg(pluginsMetaData.at(idx).fileName()) << endl;
 
             delete plugin;

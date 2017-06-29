@@ -38,9 +38,9 @@ namespace kt
 
 
 
-    PrefDialog::PrefDialog(QWidget* parent, Core* core) : KConfigDialog(parent, "settings", Settings::self())
+    PrefDialog::PrefDialog(QWidget* parent, Core* core) : KConfigDialog(parent, QStringLiteral("settings"), Settings::self())
     {
-        KConfigDialogManager::propertyMap()->insert("KUrlRequester", "url");
+        KConfigDialogManager::propertyMap()->insert(QStringLiteral("KUrlRequester"), QByteArrayLiteral("url"));
         setFaceType(KPageDialog::List);
         connect(this, SIGNAL(settingsChanged(const QString&)), core, SLOT(applySettings()));
         addPrefPage(new GeneralPref(this));

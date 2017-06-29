@@ -42,7 +42,7 @@ namespace kt
     {
         QVariantList args;
         args << tor->getInfoHash().toString();
-        QVariant ret = script->callMethod("isMember", args);
+        QVariant ret = script->callMethod(QStringLiteral("isMember"), args);
         return ret.toBool();
     }
 

@@ -15,6 +15,7 @@ target_link_libraries(
     KF5::I18n
     KF5::KIOWidgets
     KF5::Notifications
+    KF5::TextWidgets
     KF5::WidgetsAddons
 )
 install(TARGETS ktorrent_ipfilter DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

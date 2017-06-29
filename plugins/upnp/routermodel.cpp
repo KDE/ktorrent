@@ -105,9 +105,9 @@ namespace kt
         else if (role == Qt::DecorationRole)
         {
             if (index.column() == 0)
-                return QIcon::fromTheme("modem");
+                return QIcon::fromTheme(QStringLiteral("modem"));
             else if (index.column() == 1 && !r->getError().isEmpty())
-                return QIcon::fromTheme("dialog-error");
+                return QIcon::fromTheme(QStringLiteral("dialog-error"));
         }
         else if (role == Qt::ToolTipRole)
         {
@@ -152,16 +152,16 @@ namespace kt
             Q_UNUSED(service);
             if (!pending)
             {
-                QString ret = QString::number(port.number) + " (";
-                QString prot = (port.proto == net::UDP ? "UDP" : "TCP");
-                ret +=  prot + ")";
+                QString ret = QString::number(port.number) + QStringLiteral(" (");
+                QString prot = (port.proto == net::UDP ? QStringLiteral("UDP") : QStringLiteral("TCP"));
+                ret +=  prot + QStringLiteral(")");
                 ports.append(ret);
             }
         }
 
         QString result()
         {
-            return ports.join(", ");
+            return ports.join(QStringLiteral(", "));
         }
 
         QStringList ports;

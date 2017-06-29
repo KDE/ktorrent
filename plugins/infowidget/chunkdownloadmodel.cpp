@@ -55,7 +55,7 @@ namespace kt
         switch (col)
         {
         case 0: return stats.chunk_index;
-        case 1: return QString("%1 / %2").arg(stats.pieces_downloaded).arg(stats.total_pieces);
+        case 1: return QStringLiteral("%1 / %2").arg(stats.pieces_downloaded).arg(stats.total_pieces);
         case 2: return stats.current_peer_id;
         case 3: return BytesPerSecToString(stats.download_speed);
         case 4: return files;
@@ -106,7 +106,7 @@ namespace kt
                 if (stats.chunk_index >= tf.getFirstChunk() && stats.chunk_index <= tf.getLastChunk())
                 {
                     if (n > 0)
-                        files += ", ";
+                        files += QStringLiteral(", ");
 
                     files += tf.getUserModifiedPath();
                     n++;

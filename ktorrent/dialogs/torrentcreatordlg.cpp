@@ -138,17 +138,17 @@ namespace kt
 
     void TorrentCreatorDlg::loadCompleterData()
     {
-        QString file = kt::DataDir() + QLatin1String("torrent_creator_known_trackers");
+        QString file = kt::DataDir() + QStringLiteral("torrent_creator_known_trackers");
         tracker_completion = new StringCompletionModel(file, this);
         tracker_completion->load();
         m_tracker->setCompleter(new QCompleter(tracker_completion, this));
 
-        file = kt::DataDir() + QLatin1String("torrent_creator_known_webseeds");
+        file = kt::DataDir() + QStringLiteral("torrent_creator_known_webseeds");
         webseeds_completion = new StringCompletionModel(file, this);
         webseeds_completion->load();
         m_webseed->setCompleter(new QCompleter(webseeds_completion, this));
 
-        file = kt::DataDir() + QLatin1String("torrent_creator_known_nodes");
+        file = kt::DataDir() + QStringLiteral("torrent_creator_known_nodes");
         nodes_completion = new StringCompletionModel(file, this);
         nodes_completion->load();
         m_node->setCompleter(new QCompleter(nodes_completion, this));
@@ -319,7 +319,7 @@ namespace kt
             for (int i = 0; i < m_node_list->topLevelItemCount(); ++i)
             {
                 QTreeWidgetItem* item = m_node_list->topLevelItem(i);
-                trackers.append(item->text(0) + ',' +  item->text(1));
+                trackers.append(item->text(0) + QLatin1Char(',') +  item->text(1));
             }
         }
         else
@@ -365,7 +365,7 @@ namespace kt
 
         QString recentDirClass;
         QString s = QFileDialog::getSaveFileName(this, i18n("Choose a file to save the torrent"),
-                                                 KFileWidget::getStartUrl(QUrl("kfiledialog:///openTorrent"), recentDirClass).toLocalFile(),
+                                                 KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///openTorrent")), recentDirClass).toLocalFile(),
                                                  kt::TorrentFileFilter(false));
 
         if (s.isEmpty())

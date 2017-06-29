@@ -141,7 +141,7 @@ namespace kt
             dlim = SchedulerPluginSettings::screensaverDownloadLimit();
         }
 
-        Out(SYS_SCD | LOG_NOTICE) << QString("Changing schedule to normal values : %1 down, %2 up")
+        Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Changing schedule to normal values : %1 down, %2 up")
                                   .arg(dlim).arg(ulim) << endl;
         // set normal limits
         getCore()->setSuspendedState(false);
@@ -167,7 +167,7 @@ namespace kt
 
         if (item->suspended)
         {
-            Out(SYS_SCD | LOG_NOTICE) << QString("Changing schedule to : PAUSED") << endl;
+            Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Changing schedule to : PAUSED") << endl;
             if (!getCore()->getSuspendedState())
             {
                 getCore()->setSuspendedState(true);
@@ -187,7 +187,7 @@ namespace kt
                 dlim = item->ss_download_limit;
             }
 
-            Out(SYS_SCD | LOG_NOTICE) << QString("Changing schedule to : %1 down, %2 up")
+            Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Changing schedule to : %1 down, %2 up")
                                       .arg(dlim).arg(ulim) << endl;
             getCore()->setSuspendedState(false);
 
@@ -199,7 +199,7 @@ namespace kt
 
         if (item->set_conn_limits)
         {
-            Out(SYS_SCD | LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
+            Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Setting connection limits to : %1 per torrent, %2 global")
                                       .arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
 
             PeerManager::connectionLimits().setLimits(item->global_conn_limit, item->torrent_conn_limit);
@@ -235,7 +235,7 @@ namespace kt
 
     bool BWSchedulerPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
     void BWSchedulerPlugin::colorsChanged()

@@ -55,7 +55,7 @@ namespace kt
     {
         QDir dir(data_dir);
         QStringList filters;
-        filters << "feed*";
+        filters << QStringLiteral("feed*");
         QStringList sl = dir.entryList(filters, QDir::Dirs);
         for (int i = 0; i < sl.count(); i++)
         {
@@ -83,7 +83,7 @@ namespace kt
 
     void FeedList::importOldFeeds()
     {
-        QFile fptr(kt::DataDir() + "rssfeeds.ktr");
+        QFile fptr(kt::DataDir() + QStringLiteral("rssfeeds.ktr"));
         if (!fptr.open(QIODevice::ReadOnly))
             return;
 
@@ -145,7 +145,7 @@ namespace kt
         fptr.close();
         // move the rssfeeds.ktr file to a backup location
         // so that it doesn't get immorted twice
-        bt::Move(kt::DataDir() + "rssfeeds.ktr", kt::DataDir() + "imported-rssfeeds.ktr", true, true);
+        bt::Move(kt::DataDir() + QStringLiteral("rssfeeds.ktr"), kt::DataDir() + QStringLiteral("imported-rssfeeds.ktr"), true, true);
     }
 
     void FeedList::addFeed(Feed* f)
@@ -178,9 +178,9 @@ namespace kt
             return i18np("%2\n1 active filter", "%2\n%1 active filters", f->numFilters(), f->displayName());
         case Qt::DecorationRole:
             if (f->feedStatus() == Feed::FAILED_TO_DOWNLOAD)
-                return QIcon::fromTheme("dialog-error");
+                return QIcon::fromTheme(QStringLiteral("dialog-error"));
             else
-                return QIcon::fromTheme("application-rss+xml");
+                return QIcon::fromTheme(QStringLiteral("application-rss+xml"));
         case Qt::ToolTipRole:
             if (f->feedStatus() == Feed::FAILED_TO_DOWNLOAD)
                 return i18n("<b>%1</b><br/><br/>Download failed: <b>%2</b>", f->feedData()->link(), f->errorString());

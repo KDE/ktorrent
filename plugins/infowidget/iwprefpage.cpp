@@ -23,7 +23,7 @@
 
 namespace kt
 {
-    IWPrefPage::IWPrefPage(QWidget* parent) : PrefPageInterface(InfoWidgetPluginSettings::self(), i18n("Info Widget"), "kt-info-widget", parent)
+    IWPrefPage::IWPrefPage(QWidget* parent) : PrefPageInterface(InfoWidgetPluginSettings::self(), i18n("Info Widget"), QStringLiteral("kt-info-widget"), parent)
     {
         setupUi(this);
     }

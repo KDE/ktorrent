@@ -237,7 +237,7 @@ namespace kt
     QStringList MediaModel::mimeTypes() const
     {
         QStringList types;
-        types << "text/uri-list";
+        types << QStringLiteral("text/uri-list");
         return types;
     }
 

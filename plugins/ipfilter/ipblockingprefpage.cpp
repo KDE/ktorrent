@@ -34,13 +34,13 @@ namespace kt
 {
 
     IPBlockingPrefPage::IPBlockingPrefPage(IPFilterPlugin* p)
-        : PrefPageInterface(IPBlockingPluginSettings::self(), i18n("IP Filter"), "view-filter", 0), m_plugin(p)
+        : PrefPageInterface(IPBlockingPluginSettings::self(), i18n("IP Filter"), QStringLiteral("view-filter"), 0), m_plugin(p)
     {
         setupUi(this);
-        connect(kcfg_useLevel1, SIGNAL(toggled(bool)), this, SLOT(checkUseLevel1Toggled(bool)));
-        connect(m_download, SIGNAL(clicked()), this, SLOT(downloadClicked()));
-        connect(kcfg_autoUpdate, SIGNAL(toggled(bool)), this, SLOT(autoUpdateToggled(bool)));
-        connect(kcfg_autoUpdateInterval, SIGNAL(valueChanged(int)), this, SLOT(autoUpdateIntervalChanged(int)));
+        connect(kcfg_useLevel1, &QCheckBox::toggled, this, &IPBlockingPrefPage::checkUseLevel1Toggled);
+        connect(m_download, &QPushButton::clicked, this, &IPBlockingPrefPage::downloadClicked);
+        connect(kcfg_autoUpdate, &QCheckBox::toggled, this, &IPBlockingPrefPage::autoUpdateToggled);
+        connect(kcfg_autoUpdateInterval, static_cast<void(KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &IPBlockingPrefPage::autoUpdateIntervalChanged);
         kcfg_autoUpdateInterval->setSuffix(ki18np(" day", " days"));
         m_job = 0;
         m_verbose = true;
@@ -59,7 +59,7 @@ namespace kt
         }
         else
         {
-            m_status->setText("");
+            m_status->setText(QString());
             kcfg_filterURL->setEnabled(false);
             m_download->setEnabled(false);
             m_plugin->unloadAntiP2P();

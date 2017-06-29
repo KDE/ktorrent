@@ -48,7 +48,7 @@ namespace kt
         : QDialog(parent), core(core), current(current)
     {
         setupUi(this);
-        setWindowIcon(QIcon::fromTheme("kt-speed-limits"));
+        setWindowIcon(QIcon::fromTheme(QStringLiteral("kt-speed-limits")));
         setWindowTitle(i18n("Speed Limits"));
 
         model = new SpeedLimitsModel(core, this);

@@ -45,9 +45,9 @@ namespace kt
 
     ConvertThread::ConvertThread(ConvertDialog* dlg) : dlg(dlg), abort(false)
     {
-        txt_file = kt::DataDir() + "level1.txt";
-        dat_file = kt::DataDir() + "level1.dat";
-        tmp_file = kt::DataDir() + "level1.dat.tmp";
+        txt_file = kt::DataDir() + QStringLiteral("level1.txt");
+        dat_file = kt::DataDir() + QStringLiteral("level1.dat");
+        tmp_file = kt::DataDir() + QStringLiteral("level1.dat.tmp");
     }
 
     ConvertThread::~ConvertThread()
@@ -67,7 +67,7 @@ namespace kt
         if (!source.open(QIODevice::ReadOnly))
         {
             Out(SYS_IPF | LOG_IMPORTANT) << "Cannot find level1.txt file" << endl;
-            failure_reason = i18n("Cannot open %1: %2", txt_file, strerror(errno));
+            failure_reason = i18n("Cannot open %1: %2", txt_file, QString::fromLatin1(strerror(errno)));
             return;
         }
 
@@ -78,7 +78,7 @@ namespace kt
         QTextStream stream(&source);
 
         int i = 0;
-        QRegExp rx("([0-9]{1,3}\\.){3}[0-9]{1,3}");
+        QRegExp rx(QLatin1String("([0-9]{1,3}\\.){3}[0-9]{1,3}"));
 
         while (!stream.atEnd() && !abort)
         {
@@ -167,7 +167,7 @@ namespace kt
         if (!target.open(QIODevice::WriteOnly))
         {
             Out(SYS_IPF | LOG_IMPORTANT) << "Unable to open file for writing" << endl;
-            failure_reason = i18n("Cannot open %1: %2", dat_file, strerror(errno));
+            failure_reason = i18n("Cannot open %1: %2", dat_file, QString::fromLatin1(strerror(errno)));
             return;
         }
 
@@ -190,7 +190,3 @@ namespace kt
         }
     }
 }
-
-#include "convertthread.moc"
-
-

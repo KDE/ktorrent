@@ -66,9 +66,9 @@ namespace kt
             return;
         }
 
-        QString str = QString(((KIO::StoredTransferJob*)j)->data());
+        QString str = QString::fromUtf8(((KIO::StoredTransferJob*)j)->data());
 
-        if (url.path() != QLatin1String("/opensearch.xml")) {
+        if (url.path() != QStringLiteral("/opensearch.xml")) {
             // try to find the link tags
             QRegExp rx(QLatin1String("<link([^<>]*)"), Qt::CaseInsensitive);
             int pos = 0;
@@ -84,7 +84,7 @@ namespace kt
             }
         }
         else {
-            if (str.contains("<OpenSearchDescription") && str.contains("</OpenSearchDescription>"))
+            if (str.contains(QStringLiteral("<OpenSearchDescription")) && str.contains(QStringLiteral("</OpenSearchDescription>")))
             {
                 if (startXMLDownload(url))
                     return;
@@ -122,18 +122,18 @@ namespace kt
 
     bool OpenSearchDownloadJob::checkLinkTagContent(const QString& content)
     {
-        if (htmlParam("type", content) != QLatin1String("application/opensearchdescription+xml"))
+        if (htmlParam(QStringLiteral("type"), content) != QLatin1String("application/opensearchdescription+xml"))
             return false;
 
-        QString href = htmlParam("href", content);
+        QString href = htmlParam(QStringLiteral("href"), content);
         if (href.isEmpty())
             return false;
 
-        if (href.startsWith("//")) { // href may point to other domain without protocol like "//not_here.com/search.xml"
-            href = url.scheme() + QLatin1String(":") + href;
+        if (href.startsWith(QLatin1String("//"))) { // href may point to other domain without protocol like "//not_here.com/search.xml"
+            href = url.scheme() + QLatin1Char(':') + href;
         }
-        else if (href.startsWith('/')) {
-            href = url.scheme() + QLatin1String("://") + url.host() + href;
+        else if (href.startsWith(QLatin1Char('/'))) {
+            href = url.scheme() + QStringLiteral("://") + url.host() + href;
         }
 
         return startXMLDownload(QUrl(href));

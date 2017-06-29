@@ -276,7 +276,7 @@ namespace bt
 
     QString MMapFile::errorString() const
     {
-        return strerror(errno);
+        return QString::fromUtf8(strerror(errno));
     }
 
     Uint64 MMapFile::getSize() const

@@ -46,7 +46,7 @@
 namespace kt
 {
     SearchActivity::SearchActivity(SearchPlugin* sp, QWidget* parent)
-        : Activity(i18nc("plugin name", "Search"), QLatin1String("edit-find"), 10, parent), sp(sp)
+        : Activity(i18nc("plugin name", "Search"), QStringLiteral("edit-find"), 10, parent), sp(sp)
     {
         setXMLGUIFile(QStringLiteral("ktorrent_searchui.rc"));
         setupActions();
@@ -154,7 +154,7 @@ namespace kt
         {
             search_list = dec.decodeList();
             if (!search_list)
-                throw bt::Error("Invalid current searches");
+                throw bt::Error(QStringLiteral("Invalid current searches"));
 
             for (bt::Uint32 i = 0; i < search_list->getNumChildren(); i++)
             {

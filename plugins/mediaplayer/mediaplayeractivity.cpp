@@ -17,6 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+
 #include "mediaplayeractivity.h"
 
 #include <QAction>
@@ -51,7 +52,7 @@ using namespace bt;
 namespace kt
 {
     MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core, KActionCollection* ac, QWidget* parent)
-        : Activity(i18n("Media Player"), "applications-multimedia", 90, parent), ac(ac)
+        : Activity(i18n("Media Player"), QStringLiteral("applications-multimedia"), 90, parent), ac(ac)
     {
         action_flags = 0;
         video = 0;

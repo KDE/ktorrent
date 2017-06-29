@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <KLocalizedString>
 #include <QFile>
 
@@ -265,7 +266,7 @@ namespace kt
     void Schedule::save(const QString& file)
     {
         File fptr;
-        if (!fptr.open(file, "wb"))
+        if (!fptr.open(file, QStringLiteral("wb")))
         {
             QString msg = i18n("Cannot open file %1: %2", file, fptr.errorString());
             Out(SYS_SCD | LOG_NOTICE) << msg << endl;

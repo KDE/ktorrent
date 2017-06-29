@@ -36,7 +36,7 @@ namespace kt
     */
     class SyndicationPlugin : public Plugin
     {
-        Q_OBJECT
+
     public:
         SyndicationPlugin(QObject* parent, const QVariantList& args);
         virtual ~SyndicationPlugin();

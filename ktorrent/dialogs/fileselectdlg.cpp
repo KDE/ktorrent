@@ -86,7 +86,7 @@ namespace kt
         encodings = QTextCodec::availableMibs();
         foreach (int mib, encodings)
         {
-            m_encoding->addItem(QTextCodec::codecForMib(mib)->name());
+            m_encoding->addItem(QString::fromUtf8(QTextCodec::codecForMib(mib)->name()));
         }
 
         if (!group_hint.isNull())
@@ -129,7 +129,7 @@ namespace kt
         this->skip_check = skip_check;
 
         int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
-        Out(SYS_GEN | LOG_DEBUG) << "Codec: " << QString(tc->getTextCodec()->name()) << " " << idx << endl;
+        Out(SYS_GEN | LOG_DEBUG) << "Codec: " << QString::fromLatin1(tc->getTextCodec()->name()) << " " << idx << endl;
         m_encoding->setCurrentIndex(idx);
         connect(m_encoding, SIGNAL(currentIndexChanged(QString)), this, SLOT(onCodecChanged(QString)));
 
@@ -183,7 +183,7 @@ namespace kt
         QStringList pe_ex;
 
         QString cn = m_completedLocation->url().toLocalFile();
-        if (!cn.endsWith('/')) cn += '/';
+        if (!cn.endsWith(QLatin1Char('/'))) cn += QLatin1Char('/');
         if (m_moveCompleted->isChecked() && !cn.isEmpty())
         {
             move_on_completion_location_history.removeOne(cn);
@@ -191,7 +191,7 @@ namespace kt
         }
 
         QString dn = m_downloadLocation->url().toLocalFile();
-        if (!dn.endsWith('/')) dn += '/';
+        if (!dn.endsWith(QLatin1Char('/'))) dn += QLatin1Char('/');
         if (!dn.isEmpty())
         {
             download_location_history.removeOne(dn);
@@ -555,7 +555,7 @@ namespace kt
         {
             already_downloaded = 0;
             bt::Uint32 found = 0;
-            QString path = m_downloadLocation->url().path() + '/' + tc->getDisplayName() + '/';
+            QString path = m_downloadLocation->url().path() + QLatin1Char('/') + tc->getDisplayName() + QLatin1Char('/');
             for (bt::Uint32 i = 0; i < tc->getNumFiles(); i++)
             {
                 const bt::TorrentFileInterface& file = tc->getTorrentFile(i);
@@ -582,7 +582,7 @@ namespace kt
         }
         else
         {
-            QString path = m_downloadLocation->url().path() + '/' + tc->getDisplayName();
+            QString path = m_downloadLocation->url().path() + QLatin1Char('/') + tc->getDisplayName();
             if (!bt::Exists(path))
             {
                 m_existing_found->setText(i18n("Existing file: <b>No</b>"));

@@ -114,7 +114,7 @@ namespace kt
             dir += QString::number(idx++);
         }
 
-        dir += '/';
+        dir += QLatin1Char('/');
 
         try
         {
@@ -207,7 +207,7 @@ namespace kt
 
     void SearchPrefPage::resetDefaultAction()
     {
-        KMessageBox::enableMessage(":TorrentDownloadFinishedQuestion");
+        KMessageBox::enableMessage(QStringLiteral(":TorrentDownloadFinishedQuestion"));
     }
 
 }

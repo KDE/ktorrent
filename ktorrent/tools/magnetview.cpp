@@ -64,10 +64,10 @@ namespace kt
 
         // context menu
         menu = new QMenu(this);
-        start = menu->addAction(QIcon::fromTheme("kt-start"), i18n("Start Magnet"), this, SLOT(startMagnetDownload()));
-        stop = menu->addAction(QIcon::fromTheme("kt-stop"), i18n("Stop Magnet"), this, SLOT(stopMagnetDownload()));
+        start = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18n("Start Magnet"), this, SLOT(startMagnetDownload()));
+        stop = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-stop")), i18n("Stop Magnet"), this, SLOT(stopMagnetDownload()));
         menu->addSeparator();
-        remove = menu->addAction(QIcon::fromTheme("kt-remove"), i18n("Remove Magnet"), this, SLOT(removeMagnetDownload()));
+        remove = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-remove")), i18n("Remove Magnet"), this, SLOT(removeMagnetDownload()));
     }
 
     MagnetView::~MagnetView()

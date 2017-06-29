@@ -38,14 +38,14 @@ namespace kt
 {
     GroupViewModel::GroupViewModel(kt::GroupManager* gman, View* view, QObject* parent) :
         QAbstractItemModel(parent),
-        root("all", 0, 0, this),
+        root(QStringLiteral("all"), 0, 0, this),
         gman(gman),
         view(view)
     {
         for (GroupManager::Itr i = gman->begin(); i != gman->end(); i++)
             root.insert(i->second, index(0, 0));
 
-        root.insert(i18n("Custom Groups"), "/all/custom", index(0, 0));
+        root.insert(i18n("Custom Groups"), QStringLiteral("/all/custom"), index(0, 0));
         //root.dump();
 
         connect(gman, SIGNAL(groupRemoved(Group*)), this, SLOT(groupRemoved(Group*)));
@@ -162,7 +162,7 @@ namespace kt
     QStringList GroupViewModel::mimeTypes() const
     {
         QStringList sl;
-        sl << "application/x-ktorrent-drag-object";
+        sl << QStringLiteral("application/x-ktorrent-drag-object");
         return sl;
     }
 
@@ -274,10 +274,10 @@ namespace kt
         else
         {
             QString child_name;
-            if (remainder.indexOf("/") == -1)
+            if (remainder.indexOf(QLatin1Char('/')) == -1)
                 child_name = remainder;
             else
-                child_name = remainder.section("/", 1, 1);
+                child_name = remainder.section(QLatin1Char('/'), 1, 1);
 
             QList<Item>::iterator i = qFind(children.begin(), children.end(), child_name);
             if (i == children.end())
@@ -308,10 +308,10 @@ namespace kt
         else
         {
             QString child_name;
-            if (remainder.indexOf("/") == -1)
+            if (remainder.indexOf(QLatin1Char('/')) == -1)
                 child_name = remainder;
             else
-                child_name = remainder.section("/", 1, 1);
+                child_name = remainder.section(QLatin1Char('/'), 1, 1);
 
             QList<Item>::iterator i = qFind(children.begin(), children.end(), child_name);
             if (i == children.end())
@@ -335,7 +335,7 @@ namespace kt
             return;
 
         QString remainder = group_path.remove(0, item_path.size());
-        if (remainder.count("/") == 1)
+        if (remainder.count(QLatin1Char('/')) == 1)
         {
             QList<Item>::iterator i = qFind(children.begin(), children.end(), remainder.mid(1));
             if (i != children.end())
@@ -345,7 +345,7 @@ namespace kt
         }
         else
         {
-            QString child_name = remainder.section("/", 1, 1);
+            QString child_name = remainder.section(QLatin1Char('/'), 1, 1);
             QList<Item>::iterator i = qFind(children.begin(), children.end(), child_name);
             if (i != children.end())
                 i->remove(g, idx.child(i->row, 0));
@@ -361,7 +361,7 @@ namespace kt
     QVariant GroupViewModel::Item::displayData()
     {
         if (group)
-            return QString("%1 (%2/%3)").arg(group->groupName()).arg(group->runningTorrents()).arg(group->totalTorrents());
+            return QStringLiteral("%1 (%2/%3)").arg(group->groupName()).arg(group->runningTorrents()).arg(group->totalTorrents());
         else
             return display_name;
     }
@@ -371,15 +371,15 @@ namespace kt
         if (group)
             return group->groupIcon();
         else
-            return QIcon::fromTheme("folder");
+            return QIcon::fromTheme(QStringLiteral("folder"));
     }
 
     QString GroupViewModel::Item::path() const
     {
         if (!parent)
-            return "/" + name;
+            return QLatin1Char('/') + name;
         else
-            return parent->path() + "/" + name;
+            return parent->path() + QLatin1Char('/') + name;
     }
 
 
@@ -435,8 +435,8 @@ namespace kt
     void GroupViewModel::Item::dump()
     {
         QString p = path();
-        int indentation = p.count('/') - 1;
-        QString indent = QString("\t").repeated(indentation);
+        int indentation = p.count(QLatin1Char('/')) - 1;
+        QString indent = QStringLiteral("\t").repeated(indentation);
         Out(SYS_GEN | LOG_DEBUG) << indent <<  path() << endl;
         if (group)
             Out(SYS_GEN | LOG_DEBUG) << indent << group->groupName()  << endl;

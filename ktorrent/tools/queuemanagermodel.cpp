@@ -268,9 +268,9 @@ namespace kt
         else if (role == Qt::DecorationRole && index.column() == 1)
         {
             if (!tc->getStats().completed)
-                return QIcon::fromTheme("arrow-down");
+                return QIcon::fromTheme(QStringLiteral("arrow-down"));
             else
-                return QIcon::fromTheme("arrow-up");
+                return QIcon::fromTheme(QStringLiteral("arrow-up"));
         }
         else if (role == Qt::FontRole && !search_text.isEmpty())
         {
@@ -302,7 +302,7 @@ namespace kt
     QStringList QueueManagerModel::mimeTypes() const
     {
         QStringList types;
-        types << "application/vnd.text.list";
+        types << QStringLiteral("application/vnd.text.list");
         return types;
     }
 
@@ -313,13 +313,13 @@ namespace kt
 
         dragged_items.clear();
 
-        foreach (const QModelIndex& index, indexes)
+        for (const QModelIndex& index : indexes)
         {
             if (index.isValid() && !dragged_items.contains(index.row()))
                 dragged_items.append(index.row());
         }
 
-        mimeData->setData("application/vnd.text.list", "stuff");
+        mimeData->setData(QStringLiteral("application/vnd.text.list"), QByteArrayLiteral("stuff"));
         return mimeData;
     }
 
@@ -329,7 +329,7 @@ namespace kt
         if (action == Qt::IgnoreAction)
             return true;
 
-        if (!data->hasFormat("application/vnd.text.list"))
+        if (!data->hasFormat(QStringLiteral("application/vnd.text.list")))
             return false;
 
         int begin_row = row;

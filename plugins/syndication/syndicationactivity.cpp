@@ -51,9 +51,9 @@
 namespace kt
 {
     SyndicationActivity::SyndicationActivity(SyndicationPlugin* sp, QWidget* parent)
-        : Activity(i18n("Syndication"), "application-rss+xml", 30, parent), sp(sp)
+        : Activity(i18n("Syndication"), QStringLiteral("application-rss+xml"), 30, parent), sp(sp)
     {
-        QString ddir = kt::DataDir() + "syndication/";
+        QString ddir = kt::DataDir() + QStringLiteral("syndication/");
         if (!bt::Exists(ddir))
             bt::MakeDir(ddir, true);
 
@@ -72,14 +72,14 @@ namespace kt
         splitter->setStretchFactor(0, 1);
         splitter->setStretchFactor(1, 3);
 
-        connect(tab->feedView(), SIGNAL(feedActivated(Feed*)), this, SLOT(showFeed(Feed*)));
-        connect(tab->feedView(), SIGNAL(enableRemove(bool)), sp->remove_feed, SLOT(setEnabled(bool)));
-        connect(tab->feedView(), SIGNAL(enableRemove(bool)), sp->manage_filters, SLOT(setEnabled(bool)));
-        connect(tab->filterView(), SIGNAL(filterActivated(Filter*)), this, SLOT(editFilter(Filter*)));
-        connect(tab->filterView(), SIGNAL(enableRemove(bool)), sp->remove_filter, SLOT(setEnabled(bool)));
-        connect(tab->filterView(), SIGNAL(enableEdit(bool)), sp->edit_filter, SLOT(setEnabled(bool)));
+        connect(tab->feedView(), &kt::FeedListView::feedActivated, this, &SyndicationActivity::showFeed);
+        connect(tab->feedView(), &kt::FeedListView::enableRemove, sp->remove_feed, &QAction::setEnabled);
+        connect(tab->feedView(), &kt::FeedListView::enableRemove, sp->manage_filters, &QAction::setEnabled);
+        connect(tab->filterView(), &kt::FilterListView::filterActivated, this, static_cast<void(SyndicationActivity::*)(Filter*)>(&SyndicationActivity::editFilter));
+        connect(tab->filterView(), &kt::FilterListView::enableRemove, sp->remove_filter, &QAction::setEnabled);
+        connect(tab->filterView(), &kt::FilterListView::enableEdit, sp->edit_filter, &QAction::setEnabled);
 
-        filter_list->loadFilters(kt::DataDir() + "syndication/filters");
+        filter_list->loadFilters(kt::DataDir() + QStringLiteral("syndication/filters"));
         feed_list->loadFeeds(filter_list, this);
         feed_list->importOldFeeds();
     }
@@ -125,7 +125,7 @@ namespace kt
             return;
 
         Syndication::Loader* loader = Syndication::Loader::create(this, SLOT(loadingComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
-        QStringList sl = url.split(":COOKIE:");
+        QStringList sl = url.split(QStringLiteral(":COOKIE:"));
         if (sl.size() == 2)
         {
             FeedRetriever* retr = new FeedRetriever();
@@ -152,10 +152,9 @@ namespace kt
 
         try
         {
-            QString ddir = kt::DataDir() + "syndication/";
+            QString ddir = kt::DataDir() + QStringLiteral("syndication/");
             Feed* f = new Feed(downloads[loader], feed, Feed::newFeedDir(ddir));
-            connect(f, SIGNAL(downloadLink(const QUrl&, const QString&, const QString&, const QString&, bool)),
-                    this, SLOT(downloadLink(const QUrl&, const QString&, const QString&, const QString&, bool)));
+            connect(f, &Feed::downloadLink, this, &SyndicationActivity::downloadLink);
             f->save();
             feed_list->addFeed(f);
             feed_widget->setFeed(f);
@@ -196,7 +195,7 @@ namespace kt
                                            const QString& move_on_completion,
                                            bool silently)
     {
-        if (url.scheme() == "magnet")
+        if (url.scheme() == QStringLiteral("magnet"))
         {
             MagnetLinkLoadOptions options;
             options.silently = silently;
@@ -220,7 +219,7 @@ namespace kt
         if (dlg.exec() == QDialog::Accepted)
         {
             filter_list->addFilter(filter);
-            filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+            filter_list->saveFilters(kt::DataDir() + QStringLiteral("syndication/filters"));
             return filter;
         }
         else
@@ -237,9 +236,9 @@ namespace kt
 
     void SyndicationActivity::removeFilter()
     {
-        QModelIndexList indexes = tab->filterView()->selectedFilters();
+        const QModelIndexList indexes = tab->filterView()->selectedFilters();
         QList<Filter*> to_remove;
-        foreach (const QModelIndex& idx, indexes)
+        for (const QModelIndex& idx : indexes)
         {
             Filter* f = filter_list->filterForIndex(idx);
             if (f)
@@ -253,7 +252,7 @@ namespace kt
             delete f;
         }
 
-        filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+        filter_list->saveFilters(kt::DataDir() + QStringLiteral("syndication/filters"));
     }
 
     void SyndicationActivity::editFilter()
@@ -273,7 +272,7 @@ namespace kt
         if (dlg.exec() == QDialog::Accepted)
         {
             filter_list->filterEdited(f);
-            filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+            filter_list->saveFilters(kt::DataDir() + QStringLiteral("syndication/filters"));
             feed_list->filterEdited(f);
         }
     }

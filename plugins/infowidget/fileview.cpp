@@ -356,7 +356,7 @@ namespace kt
 
             QString recentDirClass;
             QString dir = QFileDialog::getExistingDirectory(this, i18n("Select a directory to move the data to."),
-                                                            KFileWidget::getStartUrl(QUrl("kfiledialog:///saveTorrentData"), recentDirClass).toLocalFile());
+                                                            KFileWidget::getStartUrl(QUrl(QLatin1String("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
             if (dir.isEmpty())
                 return;
@@ -382,7 +382,7 @@ namespace kt
         {
             QString recentDirClass;
             QString dir = QFileDialog::getExistingDirectory(this, i18n("Select a directory to move the data to."),
-                                                            KFileWidget::getStartUrl(QUrl("kfiledialog:///saveTorrentData"), recentDirClass).toLocalFile());
+                                                            KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
             if (dir.isEmpty())
                 return;

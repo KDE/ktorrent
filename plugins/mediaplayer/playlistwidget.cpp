@@ -50,11 +50,11 @@ namespace kt
         layout->setSpacing(0);
 
 
-        QAction* remove_action = new QAction(QIcon::fromTheme("list-remove"), i18n("Remove"), this);
+        QAction* remove_action = new QAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this);
         connect(remove_action, SIGNAL(triggered(bool)), this, SLOT(removeFiles()));
-        QAction* add_action = new QAction(QIcon::fromTheme("document-open"), i18n("Add Media"), this);
+        QAction* add_action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Add Media"), this);
         connect(add_action, SIGNAL(triggered(bool)), this, SLOT(addMedia()));
-        QAction* clear_action = new QAction(QIcon::fromTheme("edit-clear-list"), i18n("Clear Playlist"), this);
+        QAction* clear_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")), i18n("Clear Playlist"), this);
         connect(clear_action, SIGNAL(triggered(bool)), this, SLOT(clearPlayList()));
 
         tool_bar = new QToolBar(this);
@@ -173,7 +173,7 @@ namespace kt
     {
         QString recentDirClass;
         QStringList files = QFileDialog::getOpenFileNames(this, QString(),
-                                                         KFileWidget::getStartUrl(QUrl("kfiledialog:///add_media"), recentDirClass).toLocalFile());
+                                                         KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///add_media")), recentDirClass).toLocalFile());
 
         if (files.isEmpty())
             return;

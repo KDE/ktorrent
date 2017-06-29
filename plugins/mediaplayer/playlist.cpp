@@ -144,11 +144,11 @@ namespace kt
             {
             case 0:
             {
-                QString title = QString(tag->title().toCString(true));
+                QString title = TStringToQString(tag->title());
                 return title.isEmpty() ? QFileInfo(file.path()).fileName() : title;
             }
-            case 1: return QString(tag->artist().toCString(true));
-            case 2: return QString(tag->album().toCString(true));
+            case 1: return TStringToQString(tag->artist());
+            case 2: return TStringToQString(tag->album());
             case 3:
                 if (role == Qt::UserRole)
                 {
@@ -158,7 +158,7 @@ namespace kt
                 {
                     QTime t(0, 0);
                     t = t.addSecs(ref->audioProperties()->length());
-                    return t.toString("m:ss");
+                    return t.toString(QStringLiteral("m:ss"));
                 }
             case 4: return tag->year() == 0 ? QVariant() : tag->year();
             default: return QVariant();
@@ -168,7 +168,7 @@ namespace kt
         if (role == Qt::DecorationRole && index.column() == 0)
         {
             if (file == player->getCurrentSource())
-                return QIcon::fromTheme("arrow-right");
+                return QIcon::fromTheme(QStringLiteral("arrow-right"));
         }
 
         return QVariant();
@@ -219,7 +219,7 @@ namespace kt
     QStringList PlayList::mimeTypes() const
     {
         QStringList types;
-        types << "text/uri-list";
+        types << QStringLiteral("text/uri-list");
         return types;
     }
 
@@ -228,7 +228,7 @@ namespace kt
         dragged_rows.clear();
         QMimeData* data = new QMimeData();
         QList<QUrl> urls;
-        foreach (QModelIndex index, indexes)
+        for (QModelIndex index : indexes)
         {
             if (index.isValid() && index.column() == 0)
             {

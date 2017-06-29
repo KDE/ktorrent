@@ -98,12 +98,12 @@ namespace kt
         tool_bar = new KToolBar(this);
         hbox->addWidget(tool_bar);
 
-        show_incomplete = tool_bar->addAction(QIcon::fromTheme("task-ongoing"), i18n("Show incomplete files"));
+        show_incomplete = tool_bar->addAction(QIcon::fromTheme(QStringLiteral("task-ongoing")), i18n("Show incomplete files"));
         show_incomplete->setCheckable(true);
         show_incomplete->setChecked(false);
         connect(show_incomplete, SIGNAL(toggled(bool)), this, SLOT(showIncompleteChanged(bool)));
 
-        refresh = tool_bar->addAction(QIcon::fromTheme("view-refresh"), i18n("Refresh"), filter, SLOT(refresh()));
+        refresh = tool_bar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Refresh"), filter, SLOT(refresh()));
         refresh->setToolTip(i18n("Refresh media files"));
 
         search_box = new QLineEdit(this);

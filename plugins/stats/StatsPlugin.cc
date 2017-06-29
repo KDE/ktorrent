@@ -45,8 +45,8 @@ namespace kt
         pmDispSett = new DisplaySettingsPage(0);
 
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
-        ta->addToolWidget(pmUiSpd, i18n("Speed charts"), "view-statistics", i18n("Displays charts about download and upload speed"));
-        ta->addToolWidget(pmUiConns, i18n("Connections charts"), "view-statistics", i18n("Displays charts about connections"));
+        ta->addToolWidget(pmUiSpd, i18n("Speed charts"), QStringLiteral("view-statistics"), i18n("Displays charts about download and upload speed"));
+        ta->addToolWidget(pmUiConns, i18n("Connections charts"), QStringLiteral("view-statistics"), i18n("Displays charts about connections"));
 
         getGUI()->addPrefPage(pmUiSett);
         getGUI()->addPrefPage(pmDispSett);
@@ -75,7 +75,7 @@ namespace kt
 
     bool StatsPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
     void StatsPlugin::guiUpdate()

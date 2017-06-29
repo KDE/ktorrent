@@ -55,7 +55,7 @@ void UPnPTestWidget::doForward()
     QString proto = m_protocol->currentText();
     bt::Uint16 port = m_port->value();
     Out(SYS_GEN | LOG_DEBUG) << "Forwarding port " << port << " (" << proto << ")" << endl;
-    net::Port p(port, proto == "UDP" ? net::UDP : net::TCP, true);
+    net::Port p(port, proto == QStringLiteral("UDP") ? net::UDP : net::TCP, true);
     router->forward(p);
 }
 
@@ -64,7 +64,7 @@ void UPnPTestWidget::undoForward()
     QString proto = m_protocol->currentText();
     bt::Uint16 port = m_port->value();
     Out(SYS_GEN | LOG_DEBUG) << "Unforwarding port " << port << " (" << proto << ")" << endl;
-    net::Port p(port, proto == "UDP" ? net::UDP : net::TCP, true);
+    net::Port p(port, proto == QStringLiteral("UDP") ? net::UDP : net::TCP, true);
     router->undoForward(p);
 }
 

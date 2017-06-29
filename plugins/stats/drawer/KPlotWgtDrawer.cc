@@ -360,7 +360,7 @@ namespace kt
                         );
         }
 
-        return lgnd + "</ul>";
+        return lgnd + QStringLiteral("</ul>");
     }
 
     QUuid KPlotWgtDrawer::getUuid(const size_t idx) const

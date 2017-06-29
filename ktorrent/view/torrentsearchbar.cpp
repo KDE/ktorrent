@@ -39,7 +39,7 @@ namespace kt
         layout->setMargin(0);
 
         hide_search_bar = new QToolButton(this);
-        hide_search_bar->setIcon(QIcon::fromTheme("window-close"));
+        hide_search_bar->setIcon(QIcon::fromTheme(QStringLiteral("window-close")));
         hide_search_bar->setAutoRaise(true);
         connect(hide_search_bar, &QToolButton::clicked, this, &TorrentSearchBar::hideBar);
         connect(this, SIGNAL(filterBarHidden(QString)), view, SLOT(setFilterString(QString)));
@@ -70,7 +70,7 @@ namespace kt
     void TorrentSearchBar::hideBar()
     {
         hide();
-        emit filterBarHidden("");
+        emit filterBarHidden(QString());
     }
 
 
@@ -90,7 +90,7 @@ namespace kt
         if (g.readEntry("hidden", true))
         {
             setHidden(true);
-            emit filterBarHidden("");
+            emit filterBarHidden(QString());
         }
         else
             setHidden(false);

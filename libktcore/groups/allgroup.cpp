@@ -24,9 +24,9 @@
 namespace kt
 {
 
-    AllGroup::AllGroup() : Group(i18n("All Torrents"), MIXED_GROUP, "/all")
+    AllGroup::AllGroup() : Group(i18n("All Torrents"), MIXED_GROUP, QStringLiteral("/all"))
     {
-        setIconByName("folder");
+        setIconByName(QStringLiteral("folder"));
     }
 
 

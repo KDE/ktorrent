@@ -70,9 +70,9 @@ using namespace bt;
 bool GrabPIDLock()
 {
     // open the PID file in the /tmp directory and attempt to lock it
-    QString pid_file = QString(QDir::tempPath() + "/.ktorrent_kf5_%1.lock").arg(getuid());
+    QString pid_file = QDir::tempPath() + QStringLiteral("/.ktorrent_kf5_%1.lock").arg(getuid());
 
-    int fd = open(QFile::encodeName(pid_file), O_RDWR | O_CREAT, 0640);
+    int fd = open(QFile::encodeName(pid_file).data(), O_RDWR | O_CREAT, 0640);
     if (fd < 0)
     {
         fprintf(stderr, "Failed to open KT lock file %s : %s\n", pid_file.toAscii().constData(), strerror(errno));
@@ -109,7 +109,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    bt::SetClientInfo("KTorrent", kt::MAJOR, kt::MINOR, kt::RELEASE, kt::VERSION_TYPE, "KT");
+    bt::SetClientInfo(QStringLiteral("KTorrent"), kt::MAJOR, kt::MINOR, kt::RELEASE, kt::VERSION_TYPE, QStringLiteral("KT"));
 
     KLocalizedString::setApplicationDomain("ktorrent");
     // Add libktorrent catalog
@@ -120,7 +120,7 @@ int main(int argc, char** argv)
     KCrash::initialize();
 
     QCommandLineParser parser;
-    KAboutData about(QStringLiteral("ktorrent"), i18nc("@title", "KTorrent"), kt::VERSION_STRING, i18n("Bittorrent client by KDE"),
+    KAboutData about(QStringLiteral("ktorrent"), i18nc("@title", "KTorrent"), QStringLiteral(KT_VERSION_MACRO), i18n("Bittorrent client by KDE"),
                      KAboutLicense::GPL, i18nc("@info:credit", "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"), QString(),
                      QStringLiteral("http://www.kde.org/applications/internet/ktorrent/"));
 

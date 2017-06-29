@@ -286,7 +286,7 @@ namespace kt
         if (qman->checkFileConflicts(tc, conflicting))
         {
             Out(SYS_GEN | LOG_IMPORTANT) << "Torrent " << tc->getDisplayName() << " conflicts with the following torrents: " << endl;
-            Out(SYS_GEN | LOG_IMPORTANT) << conflicting.join(", ") << endl;
+            Out(SYS_GEN | LOG_IMPORTANT) << conflicting.join(QStringLiteral(", ")) << endl;
             if (!silently)
             {
                 QString err = i18n("Opening the torrent <b>%1</b>, "
@@ -973,7 +973,7 @@ namespace kt
             if (Settings::suppressSleep() && sleep_suppression_cookie == -1)
             {
                 QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
-                QDBusReply<int> reply = freeDesktopInterface.call( QStringLiteral("Inhibit"), QStringLiteral("KTorrent"), i18n("KTorrent is running one or more torrents"));
+                QDBusReply<int> reply = freeDesktopInterface.call( QStringLiteral("Inhibit"), QStringLiteral("ktorrent"), i18n("KTorrent is running one or more torrents"));
                 if ( reply.isValid() )
                     sleep_suppression_cookie = reply.value();
 
@@ -1169,7 +1169,7 @@ namespace kt
         while (!tc->isStorageMounted(not_mounted))
         {
             QString msg = i18n("One or more storage volumes are not mounted. In order to start this torrent, they need to be mounted.");
-            KGuiItem retry(i18n("Retry"), "emblem-mounted");
+            KGuiItem retry(i18n("Retry"), QStringLiteral("emblem-mounted"));
             if (KMessageBox::warningContinueCancelList(gui, msg, not_mounted, QString(), retry) == KMessageBox::Continue)
             {
                 not_mounted.clear();
@@ -1180,7 +1180,7 @@ namespace kt
                 if (not_mounted.size() == 1)
                     tc->handleError(i18n("Storage volume %1 is not mounted", not_mounted.first()));
                 else
-                    tc->handleError(i18n("Storage volumes %1 are not mounted", not_mounted.join(", ")));
+                    tc->handleError(i18n("Storage volumes %1 are not mounted", not_mounted.join(QStringLiteral(", "))));
                 return false;
             }
         }

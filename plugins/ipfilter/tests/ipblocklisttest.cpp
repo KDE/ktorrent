@@ -31,7 +31,7 @@ private:
 private slots:
     void initTestCase()
     {
-        bt::InitLog("ipblocklisttest.log", false, true);
+        bt::InitLog(QStringLiteral("ipblocklisttest.log"), false, true);
     }
 
     void cleanupTestCase()
@@ -42,20 +42,20 @@ private slots:
     void testBlockList()
     {
         kt::IPBlockList bl;
-        bl.addBlock(kt::IPBlock("1.0.0.0", "50.255.255.255"));
-        bl.addBlock(kt::IPBlock("127.0.0.0", "127.255.255.255"));
-        bl.addBlock(kt::IPBlock("129.0.0.0", "129.255.255.255"));
-        bl.addBlock(kt::IPBlock("131.0.0.0", "137.255.255.255"));
-        bl.addBlock(kt::IPBlock("140.0.0.0", "200.255.255.255"));
+        bl.addBlock(kt::IPBlock(QStringLiteral("1.0.0.0"), QStringLiteral("50.255.255.255")));
+        bl.addBlock(kt::IPBlock(QStringLiteral("127.0.0.0"), QStringLiteral("127.255.255.255")));
+        bl.addBlock(kt::IPBlock(QStringLiteral("129.0.0.0"), QStringLiteral("129.255.255.255")));
+        bl.addBlock(kt::IPBlock(QStringLiteral("131.0.0.0"), QStringLiteral("137.255.255.255")));
+        bl.addBlock(kt::IPBlock(QStringLiteral("140.0.0.0"), QStringLiteral("200.255.255.255")));
 
-        QVERIFY(bl.blocked(net::Address("25.25.25.25", 0)));
-        QVERIFY(!bl.blocked(net::Address("75.25.25.25", 0)));
-        QVERIFY(!bl.blocked(net::Address("126.255.255.255", 0)));
-        QVERIFY(bl.blocked(net::Address("127.25.25.25", 0)));
-        QVERIFY(!bl.blocked(net::Address("130.255.255.255", 0)));
-        QVERIFY(bl.blocked(net::Address("135.25.25.25", 0)));
-        QVERIFY(!bl.blocked(net::Address("138.255.255.255", 0)));
-        QVERIFY(bl.blocked(net::Address("197.25.25.25", 0)));
+        QVERIFY(bl.blocked(net::Address(QStringLiteral("25.25.25.25"), 0)));
+        QVERIFY(!bl.blocked(net::Address(QStringLiteral("75.25.25.25"), 0)));
+        QVERIFY(!bl.blocked(net::Address(QStringLiteral("126.255.255.255"), 0)));
+        QVERIFY(bl.blocked(net::Address(QStringLiteral("127.25.25.25"), 0)));
+        QVERIFY(!bl.blocked(net::Address(QStringLiteral("130.255.255.255"), 0)));
+        QVERIFY(bl.blocked(net::Address(QStringLiteral("135.25.25.25"), 0)));
+        QVERIFY(!bl.blocked(net::Address(QStringLiteral("138.255.255.255"), 0)));
+        QVERIFY(bl.blocked(net::Address(QStringLiteral("197.25.25.25"), 0)));
     }
 
 

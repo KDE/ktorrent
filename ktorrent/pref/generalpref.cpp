@@ -25,7 +25,7 @@
 namespace kt
 {
 
-    GeneralPref::GeneralPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Application"), "ktorrent", parent)
+    GeneralPref::GeneralPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Application"), QStringLiteral("ktorrent"), parent)
     {
         setupUi(this);
         kcfg_tempDir->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
@@ -40,10 +40,10 @@ namespace kt
 
     void GeneralPref::loadSettings()
     {
-        kcfg_tempDir->setProperty("kcfg_property", "text");
-        kcfg_saveDir->setProperty("kcfg_property", "text");
-        kcfg_torrentCopyDir->setProperty("kcfg_property", "text");
-        kcfg_completedDir->setProperty("kcfg_property", "text");
+        kcfg_tempDir->setProperty("kcfg_property", QStringLiteral("text"));
+        kcfg_saveDir->setProperty("kcfg_property", QStringLiteral("text"));
+        kcfg_torrentCopyDir->setProperty("kcfg_property", QStringLiteral("text"));
+        kcfg_completedDir->setProperty("kcfg_property", QStringLiteral("text"));
 
         if (Settings::tempDir().isEmpty())
             kcfg_tempDir->setText(kt::DataDir());

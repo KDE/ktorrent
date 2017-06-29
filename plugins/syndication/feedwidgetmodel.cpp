@@ -118,7 +118,7 @@ namespace kt
             }
         }
         else if (role == Qt::DecorationRole && index.column() == 0 && feed->downloaded(item))
-            return QIcon::fromTheme("go-down");
+            return QIcon::fromTheme(QStringLiteral("go-down"));
 
         return QVariant();
     }
@@ -149,10 +149,10 @@ namespace kt
 
     QString TorrentUrlFromItem(Syndication::ItemPtr item)
     {
-        QList<Syndication::EnclosurePtr> encs = item->enclosures();
-        foreach (Syndication::EnclosurePtr e, encs)
+        const QList<Syndication::EnclosurePtr> encs = item->enclosures();
+        for (Syndication::EnclosurePtr e : encs)
         {
-            if (e->type() == "application/x-bittorrent" || e->url().endsWith(".torrent"))
+            if (e->type() == QStringLiteral("application/x-bittorrent") || e->url().endsWith(QStringLiteral(".torrent")))
                 return e->url();
         }
 
@@ -162,7 +162,7 @@ namespace kt
         {
             // Note that syndication library prepends the channel link to the item link by default, so
             // we need to extract the magnet from the string.
-            int magnetStartIndex = link.indexOf("magnet:");
+            int magnetStartIndex = link.indexOf(QStringLiteral("magnet:"));
             if (magnetStartIndex >= 0)
                 return link.right(link.size() - magnetStartIndex);
         }
@@ -172,9 +172,9 @@ namespace kt
         while (itr != props.end())
         {
             const QDomElement& elem = itr.value();
-            if (elem.nodeName() == "torrent")
+            if (elem.nodeName() == QStringLiteral("torrent"))
             {
-                QDomElement uri = elem.firstChildElement("magnetURI");
+                QDomElement uri = elem.firstChildElement(QStringLiteral("magnetURI"));
                 if (!uri.isNull())
                     return uri.text();
             }

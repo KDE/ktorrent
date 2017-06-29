@@ -37,16 +37,16 @@ bool ProxyHelper::ApplyProxy(KIO::MetaData& metadata) const
         if (!m_settings->useKDEProxySettings() &&
             !m_settings->httpProxy().trimmed().isEmpty())
         {
-            QString p = QString("%1:%2").arg(m_settings->httpProxy()).arg(m_settings->httpProxyPort());
-            if (!p.startsWith("http://"))
-                p = "http://" + p;
+            QString p = QStringLiteral("%1:%2").arg(m_settings->httpProxy()).arg(m_settings->httpProxyPort());
+            if (!p.startsWith(QLatin1String("http://")))
+                p = QStringLiteral("http://") + p;
 
             if (!QUrl(p).isValid()) {
-                p = QString("");
+                p = QString();
             }
 
-            metadata["UseProxy"] = p;
-            metadata["ProxyUrls"] = p;
+            metadata[QStringLiteral("UseProxy")] = p;
+            metadata[QStringLiteral("ProxyUrls")] = p;
         }
 
         return true;

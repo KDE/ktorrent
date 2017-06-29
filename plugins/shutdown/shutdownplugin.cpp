@@ -62,7 +62,7 @@ namespace kt
 
     bool ShutdownPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
     void ShutdownPlugin::unload()
@@ -95,8 +95,8 @@ namespace kt
     void ShutdownPlugin::lock()
     {
         Out(SYS_GEN | LOG_NOTICE) << "Locking screen ..." << endl;
-        QString interface("org.freedesktop.ScreenSaver");
-        org::freedesktop::ScreenSaver screensaver(interface, "/ScreenSaver", QDBusConnection::sessionBus());
+        QString interface(QStringLiteral("org.freedesktop.ScreenSaver"));
+        org::freedesktop::ScreenSaver screensaver(interface, QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus());
         screensaver.Lock();
     }
 

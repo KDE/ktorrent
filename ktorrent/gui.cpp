@@ -153,20 +153,20 @@ namespace kt
 
     void GUI::addActivity(Activity* act)
     {
-        unplugActionList("activities_list");
+        unplugActionList(QStringLiteral("activities_list"));
         central->addActivity(act);
         if (act->part())
             part_manager->addPart(act->part(), false);
-        plugActionList("activities_list", central->activitySwitchingActions());
+        plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
     }
 
     void GUI::removeActivity(Activity* act)
     {
-        unplugActionList("activities_list");
+        unplugActionList(QStringLiteral("activities_list"));
         central->removeActivity(act);
         if (act->part())
             part_manager->removePart(act->part());
-        plugActionList("activities_list", central->activitySwitchingActions());
+        plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
     }
 
     void GUI::setCurrentActivity(Activity* act)
@@ -177,9 +177,9 @@ namespace kt
 
     void GUI::activePartChanged(KParts::Part* p)
     {
-        unplugActionList("activities_list");
+        unplugActionList(QStringLiteral("activities_list"));
         createGUI(p);
-        plugActionList("activities_list", central->activitySwitchingActions());
+        plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
     }
 
     void GUI::addPrefPage(PrefPageInterface* page)
@@ -206,7 +206,7 @@ namespace kt
 
     void GUI::mergePluginGui(Plugin* p)
     {
-        if (p->parentPart() == "ktorrent")
+        if (p->parentPart() == QStringLiteral("ktorrent"))
         {
             guiFactory()->addClient(p);
         }
@@ -226,7 +226,7 @@ namespace kt
 
     void GUI::removePluginGui(Plugin* p)
     {
-        if (p->parentPart() == "ktorrent")
+        if (p->parentPart() == QStringLiteral("ktorrent"))
         {
             guiFactory()->removeClient(p);
         }
@@ -370,8 +370,8 @@ namespace kt
         dlg.exec();
 
         // Replug action list
-        unplugActionList("activities_list");
-        plugActionList("activities_list", central->activitySwitchingActions());
+        unplugActionList(QStringLiteral("activities_list"));
+        plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
     }
 
     void GUI::newToolBarConfig() // This is called when OK, Apply or Defaults is clicked
@@ -422,7 +422,7 @@ namespace kt
         ac->addAction(QStringLiteral("ipfilter_action"), ipfilter_action);
         ac->setDefaultShortcut(ipfilter_action, QKeySequence(Qt::CTRL + Qt::Key_I));
 
-        import_action = new QAction(QIcon::fromTheme("document-import"), i18n("Import Torrent"), this);
+        import_action = new QAction(QIcon::fromTheme(QStringLiteral("document-import")), i18n("Import Torrent"), this);
         import_action->setToolTip(i18n("Import a torrent"));
         connect(import_action, &QAction::triggered, this, &GUI::import);
         ac->addAction(QStringLiteral("import"), import_action);
@@ -470,7 +470,7 @@ namespace kt
 
     void GUI::loadState(KSharedConfigPtr cfg)
     {
-        setAutoSaveSettings("MainWindow", true);
+        setAutoSaveSettings(QStringLiteral("MainWindow"), true);
         central->loadState(cfg);
         torrent_activity->loadState(cfg);
 

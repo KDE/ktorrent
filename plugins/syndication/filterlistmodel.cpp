@@ -108,7 +108,7 @@ namespace kt
         case Qt::DisplayRole:
             return f->filterName();
         case Qt::DecorationRole:
-            return QIcon::fromTheme("view-filter");
+            return QIcon::fromTheme(QStringLiteral("view-filter"));
         }
 
         return QVariant();

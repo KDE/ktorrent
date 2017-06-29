@@ -36,7 +36,7 @@ using namespace bt;
 namespace kt
 {
     PluginActivity::PluginActivity(PluginManager* pman)
-        : Activity(i18n("Plugins"), "plugins", 5, 0), pman(pman)
+        : Activity(i18n("Plugins"), QStringLiteral("plugins"), 5, 0), pman(pman)
     {
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setMargin(0);

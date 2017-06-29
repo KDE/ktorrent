@@ -128,7 +128,7 @@ namespace kt
     QStringList DownloadOrderModel::mimeTypes() const
     {
         QStringList types;
-        types << "application/octet-stream";
+        types << QStringLiteral("application/octet-stream");
         return types;
     }
 
@@ -147,7 +147,7 @@ namespace kt
             }
         }
         out << files;
-        mimeData->setData("application/octet-stream", data);
+        mimeData->setData(QStringLiteral("application/octet-stream"), data);
         return mimeData;
     }
 
@@ -157,7 +157,7 @@ namespace kt
         if (action == Qt::IgnoreAction)
             return true;
 
-        if (!data->hasFormat("application/octet-stream"))
+        if (!data->hasFormat(QStringLiteral("application/octet-stream")))
             return false;
 
         int begin_row;
@@ -168,7 +168,7 @@ namespace kt
         else
             begin_row = rowCount(QModelIndex());
 
-        QByteArray file_data = data->data("application/octet-stream");
+        QByteArray file_data = data->data(QStringLiteral("application/octet-stream"));
         QDataStream in(&file_data, QIODevice::ReadOnly);
         QList<Uint32> files;
         in >> files;
@@ -282,7 +282,7 @@ namespace kt
 
         int getTrack(const QString& title)
         {
-            QRegExp exp(".*(\\d+)\\s.*\\.\\w*", Qt::CaseInsensitive);
+            QRegExp exp(QLatin1String(".*(\\d+)\\s.*\\.\\w*"), Qt::CaseInsensitive);
             int pos = exp.indexIn(title);
             if (pos > -1)
             {
@@ -330,11 +330,11 @@ namespace kt
         bool getSeasonAndEpisode(const QString& title, int& season, int& episode)
         {
             QStringList se_formats;
-            se_formats << "(\\d+)x(\\d+)"
-                       << "S(\\d+)E(\\d+)"
-                       << "(\\d+)\\.(\\d+)"
-                       << "S(\\d+)\\.E(\\d+)"
-                       << "Season\\s(\\d+).*Episode\\s(\\d+)";
+            se_formats << QStringLiteral("(\\d+)x(\\d+)")
+                       << QStringLiteral("S(\\d+)E(\\d+)")
+                       << QStringLiteral("(\\d+)\\.(\\d+)")
+                       << QStringLiteral("S(\\d+)\\.E(\\d+)")
+                       << QStringLiteral("Season\\s(\\d+).*Episode\\s(\\d+)");
 
             foreach (const QString& format, se_formats)
             {

@@ -357,31 +357,31 @@ namespace kt
         {
         case NOT_STARTED:
         case STOPPED:
-            return QIcon::fromTheme("kt-stop");
+            return QIcon::fromTheme(QStringLiteral("kt-stop"));
         case SEEDING_COMPLETE:
         case DOWNLOAD_COMPLETE:
-            return QIcon::fromTheme("task-complete");
+            return QIcon::fromTheme(QStringLiteral("task-complete"));
         case SEEDING:
         case SUPERSEEDING:
-            return QIcon::fromTheme("go-up");
+            return QIcon::fromTheme(QStringLiteral("go-up"));
         case DOWNLOADING:
-            return QIcon::fromTheme("go-down");
+            return QIcon::fromTheme(QStringLiteral("go-down"));
         case STALLED:
             if (tc->getStats().completed)
-                return QIcon::fromTheme("go-up");
+                return QIcon::fromTheme(QStringLiteral("go-up"));
             else
-                return QIcon::fromTheme("go-down");
+                return QIcon::fromTheme(QStringLiteral("go-down"));
         case ALLOCATING_DISKSPACE:
-            return QIcon::fromTheme("drive-harddisk");
+            return QIcon::fromTheme(QStringLiteral("drive-harddisk"));
         case ERROR:
         case NO_SPACE_LEFT:
-            return QIcon::fromTheme("dialog-error");
+            return QIcon::fromTheme(QStringLiteral("dialog-error"));
         case QUEUED:
-            return QIcon::fromTheme("download-later");
+            return QIcon::fromTheme(QStringLiteral("download-later"));
         case CHECKING_DATA:
-            return QIcon::fromTheme("kt-check-data");
+            return QIcon::fromTheme(QStringLiteral("kt-check-data"));
         case PAUSED:
-            return QIcon::fromTheme("kt-pause");
+            return QIcon::fromTheme(QStringLiteral("kt-pause"));
         default:
             return QVariant();
         }
@@ -725,8 +725,8 @@ namespace kt
     QStringList ViewModel::mimeTypes() const
     {
         QStringList types;
-        types << "application/x-ktorrent-drag-object";
-        types << "text/uri-list";
+        types << QStringLiteral("application/x-ktorrent-drag-object");
+        types << QStringLiteral("text/uri-list");
         return types;
     }
 
@@ -737,7 +737,7 @@ namespace kt
 
         QDataStream stream(&encoded_data, QIODevice::WriteOnly);
         QStringList hashes;
-        foreach (const QModelIndex& index, indexes)
+        for (const QModelIndex& index : indexes)
         {
             if (!index.isValid())
                 continue;
@@ -756,7 +756,7 @@ namespace kt
         foreach (const QString& s, hashes)
             stream << s;
 
-        mime_data->setData("application/x-ktorrent-drag-object", encoded_data);
+        mime_data->setData(QStringLiteral("application/x-ktorrent-drag-object"), encoded_data);
         return mime_data;
     }
 

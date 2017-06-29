@@ -51,7 +51,7 @@ namespace kt
         KGuiItem::assign(m_cancel, KStandardGuiItem::cancel());
 
         QMimeDatabase mimeDatabase;
-        foreach (const QString& s, missing)
+        for (const QString& s : missing)
         {
             QListWidgetItem* lwi = new QListWidgetItem(m_file_list);
             lwi->setText(s);
@@ -83,7 +83,7 @@ namespace kt
         {
             QString recentDirClass;
             QString dir = QFileDialog::getExistingDirectory(this, i18n("Select the directory where the data now is."),
-                                                            KFileWidget::getStartUrl(QUrl("kfiledialog:///saveTorrentData"), recentDirClass).toLocalFile());
+                                                            KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
             if (dir.isEmpty())
                 return;
@@ -121,7 +121,7 @@ namespace kt
         {
             QString recentDirClass;
             QString dir = QFileDialog::getExistingDirectory(this, i18n("Select the directory where the data now is."),
-                                                            KFileWidget::getStartUrl(QUrl("kfiledialog:///saveTorrentData"), recentDirClass).toLocalFile());
+                                                            KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
             if (dir.isEmpty())
                 return;

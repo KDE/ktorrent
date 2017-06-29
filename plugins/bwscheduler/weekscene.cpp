@@ -92,14 +92,14 @@ namespace kt
 
     void WeekScene::addCalendar()
     {
-        QGraphicsTextItem* tmp = addText("Dinges");
+        QGraphicsTextItem* tmp = addText(QStringLiteral("Dinges"));
         QFontMetricsF fm(tmp->font());
         removeItem(tmp);
         delete tmp;
 
 
         // first add 7 rectangles for each day of the week
-        xoff = fm.width("00:00") + 10;
+        xoff = fm.width(QStringLiteral("00:00")) + 10;
         yoff = 2 * fm.height() + 10;
         day_width = LongestDayWidth(fm) * 1.5;
         hour_height = fm.height() * 1.5;

@@ -30,7 +30,7 @@ namespace kt
     DBusTorrentFileStream::DBusTorrentFileStream(bt::Uint32 file_index, kt::DBusTorrent* tor) : QObject(tor), tor(tor)
     {
         QDBusConnection sb = QDBusConnection::sessionBus();
-        QString path = QString("/torrent/%1/stream").arg(tor->torrent()->getInfoHash().toString());
+        QString path = QStringLiteral("/torrent/%1/stream").arg(tor->torrent()->getInfoHash().toString());
         QFlags<QDBusConnection::RegisterOption> flags = QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals;
         sb.registerObject(path, this, flags);
 

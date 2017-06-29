@@ -39,7 +39,6 @@ namespace kt
 
     class SyndicationActivity : public kt::Activity
     {
-        Q_OBJECT
     public:
         SyndicationActivity(SyndicationPlugin* sp, QWidget* parent);
         virtual ~SyndicationActivity();
@@ -48,7 +47,7 @@ namespace kt
         void saveState(KSharedConfigPtr cfg);
         Filter* addNewFilter();
 
-    private slots:
+    public:
         void addFeed();
         void removeFeed();
         void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);

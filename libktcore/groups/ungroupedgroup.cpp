@@ -27,9 +27,9 @@
 namespace kt
 {
 
-    UngroupedGroup::UngroupedGroup(GroupManager* gman) : Group(i18n("Ungrouped Torrents"), MIXED_GROUP, "/all/ungrouped"), gman(gman)
+    UngroupedGroup::UngroupedGroup(GroupManager* gman) : Group(i18n("Ungrouped Torrents"), MIXED_GROUP, QStringLiteral("/all/ungrouped")), gman(gman)
     {
-        setIconByName("application-x-bittorrent");
+        setIconByName(QStringLiteral("application-x-bittorrent"));
     }
 
 

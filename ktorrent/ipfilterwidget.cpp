@@ -99,9 +99,9 @@ namespace kt
 
         try
         {
-            QRegExp rx("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
+            QRegExp rx(QLatin1String("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
                        "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
-                       "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
+                       "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))"));
             QRegExpValidator v(rx, 0);
 
             QString ip = m_ip_to_add->text();
@@ -150,7 +150,7 @@ namespace kt
     void IPFilterWidget::save()
     {
         QString sf = QFileDialog::getSaveFileName(this, i18n("Choose a filename to save under"),
-                                                 i18n("Text files") + QLatin1String(" (*.txt)"));
+                                                 i18n("Text files") + QStringLiteral(" (*.txt)"));
 
         if (sf.isEmpty())
             return;
@@ -160,7 +160,7 @@ namespace kt
 
     void IPFilterWidget::accept()
     {
-        saveFilter(kt::DataDir() + QLatin1String("ip_filter"));
+        saveFilter(kt::DataDir() + QStringLiteral("ip_filter"));
         QDialog::accept();
     }
 
@@ -170,7 +170,7 @@ namespace kt
 
         if (!fptr.open(QIODevice::WriteOnly))
         {
-            Out(SYS_GEN | LOG_NOTICE) << QString("Could not open file %1 for writing.").arg(fn) << endl;
+            Out(SYS_GEN | LOG_NOTICE) << QStringLiteral("Could not open file %1 for writing.").arg(fn) << endl;
             return;
         }
 

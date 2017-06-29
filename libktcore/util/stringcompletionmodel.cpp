@@ -52,7 +52,7 @@ namespace kt
         QSet<QString> strings;
         while (!fptr.atEnd())
         {
-            QString line = fptr.readLine().trimmed();
+            QString line = QString::fromUtf8(fptr.readLine().trimmed());
             if (line.length() > 0)
                 strings.insert(line);
         }

@@ -65,10 +65,10 @@ namespace kt
         connect(m_refresh_rate, SIGNAL(valueChanged(int)), this, SLOT(refreshRateChanged(int)));
         connect(m_cookies, SIGNAL(clicked()), this, SLOT(cookiesClicked()));
 
-        m_refresh->setIcon(QIcon::fromTheme("view-refresh"));
-        m_filters->setIcon(QIcon::fromTheme("view-filter"));
-        m_cookies->setIcon(QIcon::fromTheme("preferences-web-browser-cookies"));
-        m_download->setIcon(QIcon::fromTheme("ktorrent"));
+        m_refresh->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
+        m_filters->setIcon(QIcon::fromTheme(QStringLiteral("view-filter")));
+        m_cookies->setIcon(QIcon::fromTheme(QStringLiteral("preferences-web-browser-cookies")));
+        m_download->setIcon(QIcon::fromTheme(QStringLiteral("ktorrent")));
 
         model = new FeedWidgetModel(this);
         m_item_list->setModel(model);
@@ -139,7 +139,7 @@ namespace kt
             connect(feed, SIGNAL(updated()), this, SLOT(updated()));
             connect(feed, SIGNAL(feedRenamed(Feed*)), this, SLOT(onFeedRenamed(Feed*)));
 
-            m_url->setText(QString("<b>%1</b>").arg(feed->feedUrl().toDisplayString()));
+            m_url->setText(QStringLiteral("<b>%1</b>").arg(feed->feedUrl().toDisplayString()));
             m_refresh_rate->setValue(feed->refreshRate());
             updated();
             selectionChanged(m_item_list->selectionModel()->selection(), QItemSelection());
@@ -240,7 +240,7 @@ namespace kt
             break;
         }
         updateCaption(this, feed->title());
-        m_active_filters->setText("<b>" + feed->filterNamesString() + "</b>");
+        m_active_filters->setText(QStringLiteral("<b>") + feed->filterNamesString() + QStringLiteral("</b>"));
     }
 
 

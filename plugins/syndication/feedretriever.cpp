@@ -61,11 +61,11 @@ namespace kt
     void FeedRetriever::retrieveData(const QUrl& url)
     {
         KIO::StoredTransferJob* j = KIO::storedGet(url, KIO::NoReload, KIO::HideProgressInfo);
-        j->addMetaData("UserAgent", bt::GetVersionString());
+        j->addMetaData(QStringLiteral("UserAgent"), bt::GetVersionString());
         if (!cookie.isEmpty())
         {
-            j->addMetaData("cookies", "none");
-            j->addMetaData("customHTTPHeader", QString("Cookie: %1").arg(cookie));
+            j->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
+            j->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("Cookie: %1").arg(cookie));
         }
 
         connect(j, SIGNAL(result(KJob*)), this, SLOT(finished(KJob*)));

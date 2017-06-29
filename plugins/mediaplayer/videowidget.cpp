@@ -18,14 +18,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "videowidget.h"
 
 #include <QAction>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QMouseEvent>
 #include <QStackedWidget>
-#include <QIcon>
+#include <QVBoxLayout>
 
 #include <KActionCollection>
 #include <KLocalizedString>
@@ -68,18 +69,18 @@ namespace kt
 
         QHBoxLayout* hlayout = new QHBoxLayout(0);
 
-        play_action = new QAction(QIcon::fromTheme("media-playback-start"), i18n("Play"), this);
+        play_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-start")), i18n("Play"), this);
         connect(play_action, SIGNAL(triggered()), this, SLOT(play()));
 
-        stop_action = new QAction(QIcon::fromTheme("media-playback-stop"), i18n("Stop"), this);
+        stop_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18n("Stop"), this);
         connect(stop_action, SIGNAL(triggered()), this, SLOT(stop()));
 
         tb = new KToolBar(this);
         tb->setToolButtonStyle(Qt::ToolButtonIconOnly);
         tb->addAction(play_action);
-        tb->addAction(ac->action("media_pause"));
+        tb->addAction(ac->action(QStringLiteral("media_pause")));
         tb->addAction(stop_action);
-        QAction* tfs = ac->action("video_fullscreen");
+        QAction* tfs = ac->action(QStringLiteral("video_fullscreen"));
         connect(tfs, SIGNAL(toggled(bool)), this, SIGNAL(toggleFullScreen(bool)));
         tb->addAction(tfs);
 
@@ -198,16 +199,16 @@ namespace kt
 
     void VideoWidget::inhibitScreenSaver(bool on)
     {
-        QString interface("org.freedesktop.ScreenSaver");
-        org::freedesktop::ScreenSaver screensaver(interface, "/ScreenSaver", QDBusConnection::sessionBus());
+        QString interface(QStringLiteral("org.freedesktop.ScreenSaver"));
+        org::freedesktop::ScreenSaver screensaver(interface, QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus());
         if (on)
         {
             QString msg = i18n("KTorrent is playing a video.");
-            screensaver_cookie = screensaver.Inhibit("ktorrent", msg);
+            screensaver_cookie = screensaver.Inhibit(QStringLiteral("ktorrent"), msg);
             Out(SYS_MPL | LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
 
             QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
-            QDBusReply<int> reply = freeDesktopInterface.call( QStringLiteral("Inhibit"), QStringLiteral("KTorrent"), msg);
+            QDBusReply<int> reply = freeDesktopInterface.call( QStringLiteral("Inhibit"), QStringLiteral("ktorrent"), msg);
             if ( reply.isValid() )
                 powermanagement_cookie = reply.value();
 
@@ -236,7 +237,7 @@ namespace kt
     {
         QTime ct(cur / (60 * 60 * 1000), (cur / (60 * 1000)) % 60, (cur / 1000) % 60, cur % 1000);
         QTime tt(total / (60 * 60 * 1000), (total / (60 * 1000)) % 60, (total / 1000) % 60, total % 1000);
-        return QStringLiteral(" %1 / %2 ").arg(ct.toString("hh:mm:ss"), tt.toString("hh:mm:ss"));
+        return QStringLiteral(" %1 / %2 ").arg(ct.toString(QStringLiteral("hh:mm:ss")), tt.toString(QStringLiteral("hh:mm:ss")));
     }
 
     void VideoWidget::playing(const MediaFileRef& mfile)

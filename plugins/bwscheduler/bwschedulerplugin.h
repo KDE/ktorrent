@@ -17,11 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
+
 #ifndef KTschedulerPLUGIN_H
 #define KTschedulerPLUGIN_H
 
-#include <QTimer>
 #include <QAction>
+#include <QTimer>
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
 #include "screensaver_interface.h"

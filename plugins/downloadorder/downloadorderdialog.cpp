@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "downloadorderdialog.h"
 
 #include <KConfig>
@@ -37,9 +38,9 @@ namespace kt
         : QDialog(parent), tor(tor), plugin(plugin)
     {
         setupUi(this);
-        connect(buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
-        connect(buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
-        connect(this, SIGNAL(accepted()), this, SLOT(commitDownloadOrder()));
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &DownloadOrderDialog::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &DownloadOrderDialog::reject);
+        connect(this, &DownloadOrderDialog::accepted, this, &DownloadOrderDialog::commitDownloadOrder);
         setWindowTitle(i18n("File Download Order"));
         m_top_label->setText(i18n("File download order for <b>%1</b>:", tor->getDisplayName()));
 
@@ -52,13 +53,13 @@ namespace kt
         m_move_bottom->setEnabled(false);
         m_search_files->setEnabled(false);
 
-        m_move_up->setIcon(QIcon::fromTheme("go-up"));
+        m_move_up->setIcon(QIcon::fromTheme(QStringLiteral("go-up")));
         connect(m_move_up, SIGNAL(clicked()), this, SLOT(moveUp()));
-        m_move_down->setIcon(QIcon::fromTheme("go-down"));
+        m_move_down->setIcon(QIcon::fromTheme(QStringLiteral("go-down")));
         connect(m_move_down, SIGNAL(clicked()), this, SLOT(moveDown()));
-        m_move_top->setIcon(QIcon::fromTheme("go-top"));
+        m_move_top->setIcon(QIcon::fromTheme(QStringLiteral("go-top")));
         connect(m_move_top, SIGNAL(clicked()), this, SLOT(moveTop()));
-        m_move_bottom->setIcon(QIcon::fromTheme("go-bottom"));
+        m_move_bottom->setIcon(QIcon::fromTheme(QStringLiteral("go-bottom")));
         connect(m_move_bottom, SIGNAL(clicked()), this, SLOT(moveBottom()));
 
         m_order->setSelectionMode(QAbstractItemView::ContiguousSelection);

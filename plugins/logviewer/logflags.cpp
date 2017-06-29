@@ -71,7 +71,7 @@ namespace kt
             LogFlag f;
             f.name = i.key();
             f.id = i.value();
-            f.flag = cfg.readEntry(QString("sys_%1").arg(i.value()), LOG_ALL);
+            f.flag = cfg.readEntry(QStringLiteral("sys_%1").arg(i.value()), LOG_ALL);
             log_flags.append(f);
         }
     }
@@ -83,7 +83,7 @@ namespace kt
 
         if (arg & 0x04) // Debug
         {
-            return QString("<font color=\"#646464\">%1</font>").arg(line);
+            return QStringLiteral("<font color=\"#646464\">%1</font>").arg(line);
         }
 
         if (arg & 0x02) // Notice
@@ -91,7 +91,7 @@ namespace kt
 
         if (arg & 0x01) // Important
         {
-            return QString("<b>%1</b>").arg(line);
+            return QStringLiteral("<b>%1</b>").arg(line);
         }
 
         return line;
@@ -164,7 +164,7 @@ namespace kt
         f.flag = flag;
 
         KConfigGroup cfg = KSharedConfig::openConfig()->group("LogFlags");
-        cfg.writeEntry(QString("sys_%1").arg(f.id), flag);
+        cfg.writeEntry(QStringLiteral("sys_%1").arg(f.id), flag);
         cfg.sync();
 
         emit dataChanged(index, index);
@@ -220,7 +220,7 @@ namespace kt
         LogSystemManager& lsman = LogSystemManager::instance();
         LogFlag f;
         f.id = lsman.systemID(sys);
-        f.flag = cfg.readEntry(QString("sys_%1").arg(f.id), LOG_ALL);;
+        f.flag = cfg.readEntry(QStringLiteral("sys_%1").arg(f.id), LOG_ALL);;
         f.name = sys;
         log_flags.append(f);
         insertRow(log_flags.count() - 1);

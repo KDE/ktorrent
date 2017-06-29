@@ -52,7 +52,7 @@ namespace kt
         }
         else
         {
-            geo_ip = GeoIP_open(QFile::encodeName(geoip_data_file), 0);
+            geo_ip = GeoIP_open(QFile::encodeName(geoip_data_file).data(), 0);
             if (geo_ip)
             {
                 QFileInfo fi(geoip_data_file);
@@ -86,13 +86,13 @@ namespace kt
         if (!geo_ip)
             return 0;
         else
-            return GeoIP_id_by_name(geo_ip, addr.toAscii());
+            return GeoIP_id_by_name(geo_ip, addr.toAscii().data());
     }
 
     QString GeoIPManager::countryCode(int country_id)
     {
         if (country_id > 0 && country_id < 247)
-            return GeoIP_country_code[country_id];
+            return QString::fromLatin1(GeoIP_country_code[country_id]);
         else
             return QString();
     }
@@ -100,7 +100,7 @@ namespace kt
     QString GeoIPManager::countryName(int country_id)
     {
         if (country_id > 0 && country_id < 247)
-            return GeoIP_country_name[country_id];
+            return QString::fromUtf8(GeoIP_country_name[country_id]);
         else
             return QString();
     }
@@ -132,7 +132,7 @@ namespace kt
                 GeoIP_delete(geo_ip);
                 geo_ip = 0;
             }
-            geo_ip = GeoIP_open(QFile::encodeName(geoip_data_file), 0);
+            geo_ip = GeoIP_open(QFile::encodeName(geoip_data_file).data(), 0);
             if (!geo_ip)
                 Out(SYS_INW | LOG_NOTICE) << "Failed to open GeoIP database  " << endl;
         }
@@ -157,7 +157,7 @@ namespace kt
                 GeoIP_delete(geo_ip);
                 geo_ip = 0;
             }
-            geo_ip = GeoIP_open(QFile::encodeName(geoip_data_file), 0);
+            geo_ip = GeoIP_open(QFile::encodeName(geoip_data_file).data(), 0);
             if (!geo_ip)
                 Out(SYS_INW | LOG_NOTICE) << "Failed to open GeoIP database  " << endl;
         }

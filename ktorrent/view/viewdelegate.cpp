@@ -370,7 +370,7 @@ namespace kt
         progressBarOption.minimum = 0;
         progressBarOption.maximum = 100;
         progressBarOption.progress = progress;
-        progressBarOption.text = QLocale().toString(progress) + '%';
+        progressBarOption.text = QLocale().toString(progress) + QLatin1Char('%');
         progressBarOption.textVisible = true;
         progressBarOption.direction = option.direction;
 

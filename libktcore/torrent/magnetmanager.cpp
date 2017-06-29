@@ -398,7 +398,7 @@ void MagnetManager::loadMagnets(const QString& file)
     {
         node = decoder.decode();
         if (!node || node->getType() != BNode::LIST)
-            throw Error("Corrupted magnet file");
+            throw Error(QStringLiteral("Corrupted magnet file"));
 
         BListNode* ml = (BListNode*)node;
         for (Uint32 i = 0; i < ml->getNumChildren(); i++)
@@ -429,7 +429,7 @@ void MagnetManager::loadMagnets(const QString& file)
 void MagnetManager::saveMagnets(const QString& file)
 {
     File fptr;
-    if (!fptr.open(file, "wb"))
+    if (!fptr.open(file, QStringLiteral("wb")))
     {
         Out(SYS_GEN | LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
         return;

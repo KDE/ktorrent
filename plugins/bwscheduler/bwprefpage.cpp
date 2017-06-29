@@ -24,7 +24,7 @@
 namespace kt
 {
 
-    BWPrefPage::BWPrefPage(QWidget* parent) : PrefPageInterface(SchedulerPluginSettings::self(), i18n("Scheduler"), "kt-bandwidth-scheduler", parent)
+    BWPrefPage::BWPrefPage(QWidget* parent) : PrefPageInterface(SchedulerPluginSettings::self(), i18n("Scheduler"), QStringLiteral("kt-bandwidth-scheduler"), parent)
     {
         setupUi(this);
     }

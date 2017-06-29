@@ -70,7 +70,7 @@ namespace kt
 
     bool MagnetGeneratorPlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(KT_VERSION_MACRO);
     }
 
     void MagnetGeneratorPlugin::unload()
@@ -96,16 +96,16 @@ namespace kt
         QUrl dn(tor->getStats().torrent_name);
         SHA1Hash ih(tor->getInfoHash());
 
-        QString uri = QLatin1String("magnet:?xt=urn:btih:") + ih.toString();
+        QString uri = QStringLiteral("magnet:?xt=urn:btih:") + ih.toString();
 
         if (MagnetGeneratorPluginSettings::dn())
         {
-            uri += QLatin1String("&dn=") + QUrl::toPercentEncoding(dn.toString(), QByteArrayLiteral("{}"), NULL);
+            uri += QStringLiteral("&dn=") + QString::fromLatin1(QUrl::toPercentEncoding(dn.toString(), QByteArrayLiteral("{}"), nullptr));
         }
 
         if ((MagnetGeneratorPluginSettings::customtracker() && MagnetGeneratorPluginSettings::tr().length() > 0) && !MagnetGeneratorPluginSettings::torrenttracker())
         {
-            uri += (QLatin1String("&tr=")) + QUrl::toPercentEncoding(QUrl(MagnetGeneratorPluginSettings::tr()).toString(), QByteArrayLiteral("{}"), NULL);
+            uri += (QStringLiteral("&tr=")) + QString::fromLatin1(QUrl::toPercentEncoding(QUrl(MagnetGeneratorPluginSettings::tr()).toString(), QByteArrayLiteral("{}"), nullptr));
         }
 
         if (MagnetGeneratorPluginSettings::torrenttracker())
@@ -115,7 +115,7 @@ namespace kt
             {
                 Tracker* trk = (Tracker*)trackers.first();
 
-                uri += QLatin1String("&tr=") + QUrl::toPercentEncoding(QUrl(trk->trackerURL()).toString(), QByteArrayLiteral("{}"), NULL);
+                uri += QLatin1String("&tr=") + QString::fromLatin1(QUrl::toPercentEncoding(QUrl(trk->trackerURL()).toString(), QByteArrayLiteral("{}"), nullptr));
             }
 
         }

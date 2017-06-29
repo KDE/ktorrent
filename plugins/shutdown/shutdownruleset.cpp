@@ -146,7 +146,7 @@ namespace kt
     void ShutdownRuleSet::save(const QString& file)
     {
         File fptr;
-        if (!fptr.open(file, "wt"))
+        if (!fptr.open(file, QStringLiteral("wt")))
         {
             Out(SYS_GEN | LOG_DEBUG) << "Failed to open file " << file << " : " << fptr.errorString() << endl;
             return;
@@ -191,7 +191,7 @@ namespace kt
             clear();
             node = dec.decode();
             if (!node || node->getType() != BNode::LIST)
-                throw bt::Error("Toplevel node not a list");
+                throw bt::Error(QStringLiteral("Toplevel node not a list"));
 
             BListNode* const l = (BListNode*)node;
             Uint32 i = 0;
@@ -205,14 +205,14 @@ namespace kt
                     continue;
 
                 ShutdownRule rule;
-                rule.action = (Action)d->getInt("Action");
-                rule.target = (Target)d->getInt("Target");
-                rule.trigger = (Trigger)d->getInt("Trigger");
-                rule.hit = d->keys().contains("hit") && d->getInt("hit") == 1;
+                rule.action = (Action)d->getInt(QByteArrayLiteral("Action"));
+                rule.target = (Target)d->getInt(QByteArrayLiteral("Target"));
+                rule.trigger = (Trigger)d->getInt(QByteArrayLiteral("Trigger"));
+                rule.hit = d->keys().contains(QByteArrayLiteral("hit")) && d->getInt(QByteArrayLiteral("hit")) == 1;
                 rule.tc = 0;
-                if (d->getValue("Torrent"))
+                if (d->getValue(QByteArrayLiteral("Torrent")))
                 {
-                    const QByteArray hash = d->getByteArray("Torrent");
+                    const QByteArray hash = d->getByteArray(QByteArrayLiteral("Torrent"));
                     bt::TorrentInterface* const tc = torrentForHash(hash);
                     if (tc)
                         rule.tc = tc;
@@ -296,11 +296,11 @@ namespace kt
             QStringList items;
             foreach (const ShutdownRule& r, rules)
             {
-                items += "- " + r.toolTip();
+                items += QStringLiteral("- ") + r.toolTip();
             }
 
 
-            msg += items.join("<br/>");
+            msg += items.join(QStringLiteral("<br/>"));
             return msg;
         }
     }
