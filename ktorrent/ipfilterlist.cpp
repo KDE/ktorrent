@@ -150,7 +150,7 @@ namespace kt
     void IPFilterList::clear()
     {
         ip_list.clear();
-        reset();
+        endResetModel();
     }
 
     int IPFilterList::rowCount(const QModelIndex& parent) const

@@ -372,7 +372,7 @@ namespace kt
         updatePriorities();
         // reorder the queue
         qman->orderQueue();
-        reset();
+        endResetModel();
         return true;
     }
 
@@ -406,7 +406,7 @@ namespace kt
         //dumpQueue();
         // reorder the queue
         qman->orderQueue();
-        reset();
+        endResetModel();
     }
 
     void QueueManagerModel::moveDown(int row, int count)
@@ -423,7 +423,7 @@ namespace kt
         //dumpQueue();
         // reorder the queue
         qman->orderQueue();
-        reset();
+        endResetModel();
     }
 
     void QueueManagerModel::moveTop(int row, int count)
@@ -444,7 +444,7 @@ namespace kt
         //dumpQueue();
         // reorder the queue
         qman->orderQueue();
-        reset();
+        endResetModel();
     }
 
     void QueueManagerModel::moveBottom(int row, int count)
@@ -465,7 +465,7 @@ namespace kt
         //dumpQueue();
         // reorder the queue
         qman->orderQueue();
-        reset();
+        endResetModel();
     }
 
     void QueueManagerModel::dumpQueue()
@@ -524,7 +524,7 @@ namespace kt
         search_text = text;
         if (text.isEmpty())
         {
-            reset();
+            endResetModel();
             return QModelIndex();
         }
 
@@ -534,13 +534,13 @@ namespace kt
             bt::TorrentInterface* tc = i.tc;
             if (tc->getDisplayName().contains(text, Qt::CaseInsensitive))
             {
-                reset();
+                endResetModel();
                 return index(idx, 0);
             }
             idx++;
         }
 
-        reset();
+        endResetModel();
         return QModelIndex();
     }
 

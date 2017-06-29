@@ -75,13 +75,13 @@ bool GrabPIDLock()
     int fd = open(QFile::encodeName(pid_file).data(), O_RDWR | O_CREAT, 0640);
     if (fd < 0)
     {
-        fprintf(stderr, "Failed to open KT lock file %s : %s\n", pid_file.toAscii().constData(), strerror(errno));
+        fprintf(stderr, "Failed to open KT lock file %s : %s\n", pid_file.toLatin1().constData(), strerror(errno));
         return false;
     }
 
     if (lockf(fd, F_TLOCK, 0) < 0)
     {
-        fprintf(stderr, "Failed to get lock on %s : %s\n", pid_file.toAscii().constData(), strerror(errno));
+        fprintf(stderr, "Failed to get lock on %s : %s\n", pid_file.toLatin1().constData(), strerror(errno));
         return false;
     }
 

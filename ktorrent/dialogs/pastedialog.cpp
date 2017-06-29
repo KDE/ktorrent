@@ -37,7 +37,7 @@
 
 namespace kt
 {
-    PasteDialog::PasteDialog(Core* core, QWidget* parent, Qt::WFlags fl)
+    PasteDialog::PasteDialog(Core* core, QWidget* parent, Qt::WindowFlags fl)
         : QDialog(parent, fl)
     {
         setupUi(this);

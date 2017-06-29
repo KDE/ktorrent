@@ -62,7 +62,7 @@ namespace kt
         m_speed_limits_view->setSortingEnabled(true);
         m_speed_limits_view->sortByColumn(0, Qt::AscendingOrder);
         m_speed_limits_view->header()->setSortIndicatorShown(true);
-        m_speed_limits_view->header()->setClickable(true);
+        m_speed_limits_view->header()->setSectionsClickable(true);
         m_speed_limits_view->setAlternatingRowColors(true);
 
         QPushButton* apply_btn = m_buttonBox->button(QDialogButtonBox::Apply);
@@ -124,7 +124,7 @@ namespace kt
         {
             m_speed_limits_view->header()->restoreState(s);
             m_speed_limits_view->header()->setSortIndicatorShown(true);
-            m_speed_limits_view->header()->setClickable(true);
+            m_speed_limits_view->header()->setSectionsClickable(true);
         }
 
         QSize ws = g.readEntry("size", size());
