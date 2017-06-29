@@ -4,7 +4,7 @@ set(ktshutdownplugin_SRC shutdownruleset.cpp shutdowntorrentmodel.cpp shutdowndl
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
 qt5_add_dbus_interface(ktshutdownplugin_SRC ${screensaver_xml} screensaver_interface)
 ki18n_wrap_ui(ktshutdownplugin_SRC shutdowndlg.ui)
-#kconfig_add_kcfg_files(ktshutdownplugin_SRC logviewerpluginsettings.kcfgc)
+
 add_library(ktorrent_shutdown MODULE ${ktshutdownplugin_SRC})
 kcoreaddons_desktop_to_json(ktorrent_shutdown ktorrent_shutdown.desktop)
 target_link_libraries(

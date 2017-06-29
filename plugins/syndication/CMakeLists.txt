@@ -18,7 +18,6 @@ set(ktsyndicationplugin_SRC
 	filtereditor.cpp)
 
 ki18n_wrap_ui(ktsyndicationplugin_SRC feedwidget.ui managefiltersdlg.ui filtereditor.ui)
-#kconfig_add_kcfg_files(ktsyndicationplugin_SRC syndicationpluginsettings.kcfgc)
 add_library(ktorrent_syndication MODULE ${ktsyndicationplugin_SRC})
 
 kcoreaddons_desktop_to_json(ktorrent_syndication ktorrent_syndication.desktop)

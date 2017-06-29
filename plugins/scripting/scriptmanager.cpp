@@ -20,11 +20,14 @@
  ***************************************************************************/
 
 #include <QAction>
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <QMenu>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 #include <KActionCollection>
-#include <KDialog>
+#include <KConfigGroup>
 #include <KIconLoader>
 #include <KLocalizedString>
 #include <Kross/Core/Manager>
@@ -228,10 +231,19 @@ namespace kt
     void ScriptManager::showProperties(kt::Script* s)
     {
         Ui_ScriptProperties prop;
-        KDialog* dialog = new KDialog(this);
-        dialog->setButtons(KDialog::Ok);
+        QDialog* dialog = new QDialog(this);
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
+        QWidget *mainWidget = new QWidget(this);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        dialog->setLayout(mainLayout);
+        mainLayout->addWidget(mainWidget);
+        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        dialog->connect(okButton, &QPushButton::clicked, dialog, &QDialog::accept);
+        mainLayout->addWidget(buttonBox);
         dialog->setWindowTitle(i18n("Script Properties"));
-        prop.setupUi(dialog->mainWidget());
+        prop.setupUi(mainWidget);
         prop.m_icon->setPixmap(DesktopIcon(s->iconName()));
         prop.m_name->setText(s->name());
         prop.m_description->setText(s->metaInfo().comment);

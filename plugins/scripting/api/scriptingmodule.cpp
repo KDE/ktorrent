@@ -19,12 +19,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QStandardPaths>
 #include <QTimer>
 
 #include <KConfigGroup>
-#include <KGlobal>
 #include <KSharedConfig>
-#include <KStandardDirs>
 
 #include <util/functions.h>
 #include <groups/groupmanager.h>
@@ -47,7 +46,7 @@ namespace kt
 
     QString ScriptingModule::scriptsDir() const
     {
-        QStringList dirs = KGlobal::dirs()->findDirs("data", "ktorrent/scripts");
+        QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/scripts"), QStandardPaths::LocateDirectory);
         if (dirs.count() == 0)
             return QString();
 
@@ -60,7 +59,7 @@ namespace kt
 
     QString ScriptingModule::scriptDir(const QString& script) const
     {
-        QStringList dirs = KGlobal::dirs()->findDirs("data", "ktorrent/scripts/" + script);
+        QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/scripts") + script, QStandardPaths::LocateDirectory);
         if (dirs.count() == 0)
             return QString();
 

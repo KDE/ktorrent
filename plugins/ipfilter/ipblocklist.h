@@ -23,6 +23,7 @@
 #define ANTIP2P_H
 
 #include <QVector>
+
 #include <util/constants.h>
 #include <interfaces/blocklistinterface.h>
 

@@ -21,7 +21,7 @@
 #include <QtTest>
 #include <util/log.h>
 #include <net/address.h>
-#include <plugins/ipfilter/ipblocklist.h>
+#include "../ipblocklist.h"
 
 class IPBlockListTest : public QObject
 {

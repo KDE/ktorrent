@@ -22,9 +22,6 @@
 #include <QTimer>
 
 #include <KMessageBox>
-#include <KIO/NetAccess>
-#include <KMimeType>
-#include <KUrl>
 
 #include <util/log.h>
 #include <util/constants.h>

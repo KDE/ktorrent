@@ -20,8 +20,8 @@
  ***************************************************************************/
 #include "mediaplayerplugin.h"
 
-#include <KGenericFactory>
 #include <KLocalizedString>
+#include <KPluginFactory>
 
 #include <util/log.h>
 #include <util/logsystemmanager.h>

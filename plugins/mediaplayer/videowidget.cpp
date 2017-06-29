@@ -31,7 +31,6 @@
 #include <KLocalizedString>
 #include <KToggleFullScreenAction>
 #include <KToolBar>
-#include <Solid/PowerManagement>
 
 #include <Phonon/Path>
 #include <Phonon/AudioOutput>
@@ -206,13 +205,21 @@ namespace kt
             QString msg = i18n("KTorrent is playing a video.");
             screensaver_cookie = screensaver.Inhibit("ktorrent", msg);
             Out(SYS_MPL | LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
-            powermanagement_cookie = Solid::PowerManagement::beginSuppressingSleep(msg);
+
+            QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
+            QDBusReply<int> reply = freeDesktopInterface.call( QStringLiteral("Inhibit"), QStringLiteral("KTorrent"), msg);
+            if ( reply.isValid() )
+                powermanagement_cookie = reply.value();
+
             Out(SYS_MPL | LOG_NOTICE) << "PowerManagement inhibited (cookie " << powermanagement_cookie << ")" << endl;
         }
         else
         {
             screensaver.UnInhibit(screensaver_cookie);
-            powermanagement_cookie = Solid::PowerManagement::stopSuppressingSleep(powermanagement_cookie);
+
+            QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
+            freeDesktopInterface.call( QStringLiteral("UnInhibit"), powermanagement_cookie);
+
             Out(SYS_MPL | LOG_NOTICE) << "Screensaver uninhibited" << endl;
             Out(SYS_MPL | LOG_NOTICE) << "PowerManagement uninhibited" << endl;
         }

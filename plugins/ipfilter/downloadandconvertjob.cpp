@@ -19,10 +19,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QMimeDatabase>
+#include <QMimeType>
+
 #include <KIO/JobUiDelegate>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KMimeType>
 #include <KZip>
 
 #include <util/log.h>
@@ -91,6 +93,23 @@ namespace kt
             convert();
     }
 
+    static bool isBinaryData(const QString &fileName)
+    {
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly)) {
+            return false;    // err, whatever
+        }
+        // Check the first 32 bytes (see shared-mime spec)
+        const QByteArray data = file.read(32);
+        const char *p = data.data();
+        for (int i = 0; i < data.size(); ++i) {
+            if ((unsigned char)(p[i]) < 32 && p[i] != 9 && p[i] != 10 && p[i] != 13) { // ASCII control character
+                return true;
+            }
+        }
+        return false;
+    }
+
     void DownloadAndConvertJob::downloadFileFinished(KJob* j)
     {
         active_job = 0;
@@ -115,14 +134,15 @@ namespace kt
         QString temp = kt::DataDir() + "tmp-" + url.fileName();
 
         //now determine if it's ZIP or TXT file
-        KMimeType::Ptr ptr = KMimeType::findByFileContent(temp);
-        Out(SYS_IPF|LOG_NOTICE) << "Mimetype: " << ptr->name() << endl;
-        if(ptr->name() == "application/zip")
+        QMimeDatabase db;
+        QMimeType ptr = db.mimeTypeForFile(temp, QMimeDatabase::MatchContent);
+        Out(SYS_IPF|LOG_NOTICE) << "Mimetype: " << ptr.name() << endl;
+        if(ptr.name() == "application/zip")
         {
             active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + QLatin1String("level1.zip"))), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(extract(KJob*)));
         }
-        else if(ptr->name() == "application/x-7z-compressed")
+        else if(ptr.name() == "application/x-7z-compressed")
         {
             QString msg = i18n("7z files are not supported", url.toDisplayString());
             if (mode == Verbose)
@@ -133,13 +153,13 @@ namespace kt
             setError(UNZIP_FAILED);
             emitResult();
         }
-        else if(ptr->name() == "application/gzip" || ptr->name() == "application/x-bzip")
+        else if(ptr.name() == "application/gzip" || ptr.name() == "application/x-bzip")
         {
             active_job = new bt::DecompressFileJob(temp, QString(kt::DataDir() + "level1.txt"));
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
             active_job->start();
         }
-        else if(!KMimeType::isBinaryData(temp) || ptr->name() == "text/plain")
+        else if(!isBinaryData(temp) || ptr.name() == "text/plain")
         {
             active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + "level1.txt")), -1, KIO::HideProgressInfo | KIO::Overwrite);
             connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));

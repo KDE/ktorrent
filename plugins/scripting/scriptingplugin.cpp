@@ -19,10 +19,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QFileDialog>
+
 #include <KActionCollection>
 #include <KConfigGroup>
-#include <KFileDialog>
-#include <KGlobal>
 #include <KIO/CopyJob>
 #include <KLocalizedString>
 #include <KMainWindow>
@@ -31,7 +31,6 @@
 #include <Kross/Core/Manager>
 #include <Kross/Core/Interpreter>
 #include <Kross/Core/ActionCollection>
-#include <KStandardDirs>
 
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
@@ -109,12 +108,12 @@ namespace kt
 
     void ScriptingPlugin::loadScripts()
     {
-        QStringList dir_list = KGlobal::dirs()->findDirs("data", "ktorrent/scripts");
-        foreach (const QString& dir, dir_list)
+        const QStringList dir_list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/scripts"), QStandardPaths::LocateDirectory);
+        for (const QString& dir : dir_list)
         {
             QDir d(dir);
-            QStringList subdirs = d.entryList(QDir::Dirs);
-            foreach (const QString& sdir, subdirs)
+            const QStringList subdirs = d.entryList(QDir::Dirs);
+            for (const QString& sdir : subdirs)
             {
                 if (sdir != ".." && sdir != ".")
                 {
@@ -130,9 +129,9 @@ namespace kt
         }
 
         //
-        KConfigGroup g = KSharedConfig::openConfig()->group("Scripting");
-        QStringList scripts = g.readEntry("scripts", QStringList());
-        foreach (const QString& s, scripts)
+        KConfigGroup g = KSharedConfig::openConfig()->group(QLatin1String("Scripting"));
+        const QStringList scripts = g.readEntry(QLatin1String("scripts"), QStringList());
+        for (const QString& s : scripts)
         {
             Out(SYS_SCR | LOG_DEBUG) << "Loading script " << s << endl;
             if (bt::Exists(s))
@@ -189,7 +188,7 @@ namespace kt
                          "\n *.rb *.py *.js | " + i18n("Scripts") +
                          "\n* |" + i18n("All files");
 
-        QUrl url = KFileDialog::getOpenUrl(QUrl("kfiledialog:///addScript"), filter, getGUI()->getMainWindow());
+        QUrl url = QFileDialog::getOpenFileUrl(getGUI()->getMainWindow(), QString(), QUrl("kfiledialog:///addScript"), filter);
         if (!url.isValid())
             return;
 

@@ -29,7 +29,6 @@ target_link_libraries(
     KF5::KIOWidgets
     KF5::KrossCore
     KF5::XmlGui
-    KF5::KDELibs4Support
 )
 
 install(TARGETS ktorrent_scripting  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

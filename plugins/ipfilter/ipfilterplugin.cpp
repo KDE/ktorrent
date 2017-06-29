@@ -21,11 +21,11 @@
 
 #include "ipfilterplugin.h"
 
-#include <knotification.h>
-#include <kmainwindow.h>
-#include <QTimer>
-
+#include <KNotification>
+#include <KMainWindow>
 #include <KPluginFactory>
+
+#include <QTimer>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>

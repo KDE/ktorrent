@@ -35,7 +35,6 @@ namespace kt
     */
     class ConvertThread : public QThread
     {
-        Q_OBJECT
     public:
         ConvertThread(ConvertDialog* dlg);
         virtual ~ConvertThread();

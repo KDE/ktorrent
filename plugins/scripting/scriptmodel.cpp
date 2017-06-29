@@ -20,9 +20,10 @@
  ***************************************************************************/
 
 #include <QIcon>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 #include <KLocalizedString>
-#include <KMimeType>
 #include <KTar>
 #include <KZip>
 
@@ -30,6 +31,7 @@
 #include <util/fileops.h>
 #include <util/log.h>
 #include <interfaces/functions.h>
+
 #include "scriptmodel.h"
 #include "script.h"
 
@@ -51,12 +53,11 @@ namespace kt
     void ScriptModel::addScript(const QString& file)
     {
         Out(SYS_SCR | LOG_NOTICE) << "Adding script from " << file << endl;
-        KMimeType::Ptr ptr = KMimeType::findByPath(file);
-        if (!ptr)
-            return;
+        QMimeDatabase db;
+        QMimeType ptr = db.mimeTypeForFile(file);
 
-        bool is_tar = ptr->name() == "application/x-compressed-tar" || ptr->name() == "application/x-bzip-compressed-tar";
-        bool is_zip = ptr->name() == "application/zip";
+        bool is_tar = ptr.name() == "application/x-compressed-tar" || ptr.name() == "application/x-bzip-compressed-tar";
+        bool is_zip = ptr.name() == "application/zip";
         if (is_tar || is_zip)
         {
             // It's a package

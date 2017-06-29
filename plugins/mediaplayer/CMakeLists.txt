@@ -38,7 +38,6 @@ target_link_libraries(
     KF5::KIOFileWidgets
     KF5::XmlGui
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
 #    Qt5::MultimediaWidgets
     )
 install(TARGETS ktorrent_mediaplayer DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

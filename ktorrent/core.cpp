@@ -21,8 +21,11 @@
 
 #include "core.h"
 
-#include <QNetworkInterface>
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDBusReply>
 #include <QDir>
+#include <QNetworkInterface>
 #include <QProgressBar>
 
 #include <KLocalizedString>
@@ -30,7 +33,6 @@
 #include <KIO/CopyJob>
 #include <KMessageBox>
 #include <KStandardGuiItem>
-#include <Solid/PowerManagement>
 
 #include <dbus/dbus.h>
 #include <interfaces/guiinterface.h>
@@ -970,7 +972,11 @@ namespace kt
             update_timer.start(CORE_UPDATE_INTERVAL);
             if (Settings::suppressSleep() && sleep_suppression_cookie == -1)
             {
-                sleep_suppression_cookie = Solid::PowerManagement::beginSuppressingSleep(i18n("KTorrent is running one or more torrents"));
+                QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
+                QDBusReply<int> reply = freeDesktopInterface.call( QStringLiteral("Inhibit"), QStringLiteral("KTorrent"), i18n("KTorrent is running one or more torrents"));
+                if ( reply.isValid() )
+                    sleep_suppression_cookie = reply.value();
+
                 if (sleep_suppression_cookie == -1)
                 {
                     Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
@@ -1012,7 +1018,9 @@ namespace kt
                 update_timer.stop(); // stop timer when not necessary
                 if (sleep_suppression_cookie != -1)
                 {
-                    Solid::PowerManagement::stopSuppressingSleep(sleep_suppression_cookie);
+                    QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
+                    freeDesktopInterface.call( QStringLiteral("UnInhibit"), sleep_suppression_cookie);
+
                     Out(SYS_GEN | LOG_DEBUG) << "Stopped suppressing sleep" << endl;
                     sleep_suppression_cookie = -1;
                 }

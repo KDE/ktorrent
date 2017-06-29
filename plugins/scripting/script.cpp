@@ -19,9 +19,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QMimeDatabase>
+#include <QMimeType>
+
 #include <KConfigGroup>
 #include <KDesktopFile>
-#include <KMimeType>
 #include <Kross/Core/Manager>
 #include <Kross/Core/ActionCollection>
 
@@ -81,13 +83,14 @@ namespace kt
         if (!bt::Exists(file) || action)
             return false;
 
-        KMimeType::Ptr mt = KMimeType::findByPath(file);
+        QMimeDatabase db;
+        QMimeType mt = db.mimeTypeForFile(file);
         QString name = QFileInfo(file).fileName();
         action = new Kross::Action(this, name);
         action->setText(name);
         action->setDescription(name);
         action->setFile(file);
-        action->setIconName(mt->iconName());
+        action->setIconName(mt.iconName());
         QString interpreter = Kross::Manager::self().interpreternameForFile(file);
         if (interpreter.isNull())
         {
@@ -136,12 +139,13 @@ namespace kt
 
     QString Script::iconName() const
     {
+        QMimeDatabase db;
         if (!info.icon.isEmpty())
             return info.icon;
         else if (action)
             return action->iconName();
         else
-            return KMimeType::findByPath(file)->iconName();
+            return db.mimeTypeForFile(file).iconName();
     }
 
     bool Script::hasConfigure() const
