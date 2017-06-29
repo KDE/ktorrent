@@ -24,10 +24,9 @@
 #include <QApplication>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
+#include <QStandardPaths>
 
 #include <KAboutData>
-#include <KGlobal>
-#include <KStandardDirs>
 #include <KLocalizedString>
 
 #include <util/functions.h>
@@ -58,7 +57,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    QString str = KGlobal::dirs()->saveLocation("data", QStringLiteral("ktorrent"));
+    QString str = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QStringLiteral("/ktorrent");
     if (!str.endsWith(bt::DirSeparator()))
         str += bt::DirSeparator();
 

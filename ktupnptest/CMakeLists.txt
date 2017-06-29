@@ -9,7 +9,6 @@ target_link_libraries(
     KF5::Torrent
     KF5::CoreAddons
     KF5::I18n
-    KF5::KDELibs4Support
 )
 install(TARGETS ktupnptest ${INSTALL_TARGETS_DEFAULT_ARGS})
 
