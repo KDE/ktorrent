@@ -83,7 +83,7 @@ namespace kt
             }
 #endif
 
-            combo_networkInterface->addItem(icon, iface.name());
+            combo_networkInterface->addItem(icon, iface.humanReadableName());
         }
         QString iface = Settings::networkInterface();
         int idx = (iface.isEmpty())? 0 /*all*/: combo_networkInterface->findText(iface);

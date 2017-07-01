@@ -112,8 +112,6 @@ int main(int argc, char** argv)
     bt::SetClientInfo(QStringLiteral("KTorrent"), kt::MAJOR, kt::MINOR, kt::RELEASE, kt::VERSION_TYPE, QStringLiteral("KT"));
 
     KLocalizedString::setApplicationDomain("ktorrent");
-    // Add libktorrent catalog
-    //FIXME i18n KGlobal::locale()->insertCatalog("libktorrent");
 
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("ktorrent")));

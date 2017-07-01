@@ -55,6 +55,9 @@ set_package_properties(KF5KDELibs4Support
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's syndication and shutdown plugins"
 )
+if(KF5KDELibs4Support_FOUND)
+  set(HAVE_KDELibs4Support 1)
+endif()
 
 find_package(KF5TextWidgets ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5TextWidgets
@@ -62,6 +65,9 @@ set_package_properties(KF5TextWidgets
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's IP Filter plugin"
 )
+if(KF5TextWidgets_FOUND)
+  set(HAVE_KF5TextWidgets 1)
+endif()
 
 find_package(KF5Archive ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5Archive
@@ -69,6 +75,9 @@ set_package_properties(KF5Archive
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's scripting plugin"
 )
+if(KF5Archive_FOUND)
+  set(HAVE_KF5Archive 1)
+endif()
 
 find_package(KF5ItemViews ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5ItemViews
@@ -76,6 +85,9 @@ set_package_properties(KF5ItemViews
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's scripting plugin"
 )
+if(KF5ItemViews_FOUND)
+  set(HAVE_KF5ItemViews 1)
+endif()
 
 find_package(KF5Kross ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5Kross
@@ -83,6 +95,9 @@ set_package_properties(KF5Kross
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's scripting plugin"
 )
+if(KF5Kross_FOUND)
+  set(HAVE_KF5Kross 1)
+endif()
 
 find_package(KF5Plotting ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5Plotting
@@ -90,6 +105,9 @@ set_package_properties(KF5Plotting
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's statistics plugin"
 )
+if(KF5Plotting_FOUND)
+  set(HAVE_KF5Plotting 1)
+endif()
 
 find_package(KF5Syndication)
 set_package_properties(KF5Syndication
@@ -97,12 +115,19 @@ set_package_properties(KF5Syndication
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's syndication plugin"
 )
+if(KF5Syndication_FOUND)
+  set(HAVE_KF5Syndication 1)
+endif()
+
 find_package(KF5WebKit ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5WebKit
   PROPERTIES
   TYPE OPTIONAL
-  PURPOSE "Required for KTorrent's syndication plugin"
+  PURPOSE "Required for KTorrent's search and syndication plugins"
 )
+if(KF5WebKit_FOUND)
+  set(HAVE_KF5WebKit 1)
+endif()
 
 find_package(KF5DNSSD ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5DNSSD
@@ -110,6 +135,9 @@ set_package_properties(KF5DNSSD
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's Zeroconf plugin"
 )
+if(KF5DNSSD_FOUND)
+  set(HAVE_KF5DNSSD 1)
+endif()
 
 find_package(KF5Completion ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5Completion
@@ -117,8 +145,9 @@ set_package_properties(KF5Completion
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's UPnP plugin"
 )
-
-find_package(Qt5Test ${QT5_REQUIRED_VERSION})
+if(KF5Completion_FOUND)
+  set(HAVE_KF5Completion 1)
+endif()
 
 find_package(LibKWorkspace CONFIG)
 set_package_properties(LibKWorkspace
@@ -126,8 +155,14 @@ set_package_properties(LibKWorkspace
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's shutdown plugin"
 )
+if(LibKWorkspace_FOUND)
+  set(HAVE_LibKWorkspace 1)
+endif()
 
 find_package(Taglib)
+if(TAGLIB_FOUND)
+  set(HAVE_Taglib 1)
+endif()
 #find_package(Qt5 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
 find_package(Phonon4Qt5)
 set_package_properties(Taglib
@@ -170,10 +205,6 @@ set (KTORRENT_PLUGIN_INSTALL_DIR ${PLUGIN_INSTALL_DIR}/ktorrent)
 include_directories(
    ${Boost_INCLUDE_DIR}
 )
-
-
-
-add_definitions(-DQT_USE_QSTRINGBUILDER -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_TO_ASCII)
 
 add_subdirectory(libktcore)
 add_subdirectory(plugins)
