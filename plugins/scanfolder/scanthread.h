@@ -83,7 +83,7 @@ namespace kt
          * Emitted when one or more torrents are found.
          * @param torrents The list of torrents
          */
-        void found(const QList<QUrl>& torrent);
+        void found(const QList<QUrl>& torrents);
 
     private:
         QMutex mutex;

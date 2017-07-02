@@ -47,7 +47,7 @@ namespace kt
 
     ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QVariantList& args)
         : Plugin(parent),
-          tlq(0)
+          tlq(nullptr)
     {
         Q_UNUSED(args);
     }
@@ -62,7 +62,7 @@ namespace kt
         LogSystemManager::instance().registerSystem(i18nc("plugin name", "Scan Folder"), SYS_SNF);
         tlq = new TorrentLoadQueue(getCore(), this);
         scanner = new ScanThread();
-        connect(scanner, SIGNAL(found(QList<QUrl>)), tlq, SLOT(add(QList<QUrl>)), Qt::QueuedConnection);
+        connect(scanner, &ScanThread::found, tlq, static_cast<void (TorrentLoadQueue::*)(const QList<QUrl>&)>(&TorrentLoadQueue::add), Qt::QueuedConnection);
         pref = new ScanFolderPrefPage(this, 0);
         getGUI()->addPrefPage(pref);
         connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(updateScanFolders()));
@@ -76,11 +76,11 @@ namespace kt
         getGUI()->removePrefPage(pref);
         scanner->stop();
         delete scanner;
-        scanner = 0;
+        scanner = nullptr;
         delete pref;
-        pref = 0;
+        pref = nullptr;
         delete tlq;
-        tlq = 0;
+        tlq = nullptr;
     }
 
     void ScanFolderPlugin::updateScanFolders()
