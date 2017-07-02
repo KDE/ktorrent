@@ -37,6 +37,7 @@ namespace kt
 {
     class Script;
     class ScriptModel;
+    class ScriptDelegate;
 
     /**
         Widget to display all scripts.
@@ -74,6 +75,7 @@ namespace kt
 
     private:
         ScriptModel* model;
+        ScriptDelegate* delegate;
         QListView* view;
 
         QAction * add_script;

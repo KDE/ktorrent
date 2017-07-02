@@ -57,7 +57,8 @@ namespace kt
         layout->setMargin(0);
 
         view = new QListView(this);
-        view->setItemDelegate(new ScriptDelegate(view));
+        delegate = new ScriptDelegate(view);
+        view->setItemDelegate(delegate);
         view->setAlternatingRowColors(true);
         layout->addWidget(view);
 
@@ -87,6 +88,7 @@ namespace kt
 
     ScriptManager::~ScriptManager()
     {
+        delete delegate;
     }
 
 
