@@ -114,6 +114,7 @@ namespace kt
 
     QList< QWidget* > ScriptDelegate::createItemWidgets(const QModelIndex& index) const
     {
+        Q_UNUSED(index)
         QList<QWidget*> widgets;
 
         QCheckBox* enabled_check = new QCheckBox;
