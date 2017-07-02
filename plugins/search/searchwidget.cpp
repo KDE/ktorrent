@@ -117,7 +117,7 @@ namespace kt
             changeTitle(this, text);
         }
         else { // no empty tab titles allowed
-            changeTitle(this, webview->url().toString(QUrl::FullyDecoded));
+            changeTitle(this, webview->url().toString());
         }
     }
 
