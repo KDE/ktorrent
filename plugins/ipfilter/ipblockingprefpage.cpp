@@ -34,7 +34,7 @@ namespace kt
 {
 
     IPBlockingPrefPage::IPBlockingPrefPage(IPFilterPlugin* p)
-        : PrefPageInterface(IPBlockingPluginSettings::self(), i18n("IP Filter"), QStringLiteral("view-filter"), 0), m_plugin(p)
+        : PrefPageInterface(IPBlockingPluginSettings::self(), i18n("IP Filter"), QStringLiteral("view-filter"), nullptr), m_plugin(p)
     {
         setupUi(this);
         connect(kcfg_useLevel1, &QCheckBox::toggled, this, &IPBlockingPrefPage::checkUseLevel1Toggled);
@@ -42,7 +42,7 @@ namespace kt
         connect(kcfg_autoUpdate, &QCheckBox::toggled, this, &IPBlockingPrefPage::autoUpdateToggled);
         connect(kcfg_autoUpdateInterval, static_cast<void(KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &IPBlockingPrefPage::autoUpdateIntervalChanged);
         kcfg_autoUpdateInterval->setSuffix(ki18np(" day", " days"));
-        m_job = 0;
+        m_job = nullptr;
         m_verbose = true;
     }
 

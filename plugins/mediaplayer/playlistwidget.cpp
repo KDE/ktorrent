@@ -42,7 +42,7 @@ namespace kt
     PlayListWidget::PlayListWidget(kt::MediaFileCollection* collection, kt::MediaPlayer* player, QWidget* parent)
         : QWidget(parent),
           player(player),
-          menu(0),
+          menu(nullptr),
           collection(collection)
     {
         QVBoxLayout* layout = new QVBoxLayout(this);

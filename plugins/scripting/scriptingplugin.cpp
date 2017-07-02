@@ -87,7 +87,7 @@ namespace kt
         foreach (const QString& s, interpreters)
             Out(SYS_SCR | LOG_DEBUG) << s << endl;
 
-        sman = new ScriptManager(model, 0);
+        sman = new ScriptManager(model, nullptr);
         connect(sman, SIGNAL(addScript()), this, SLOT(addScript()));
         connect(sman, SIGNAL(removeScript()), this, SLOT(removeScript()));
         connect(model, SIGNAL(showPropertiesDialog(Script*)), sman, SLOT(showProperties(Script*)));
@@ -101,9 +101,9 @@ namespace kt
         saveScripts();
         getGUI()->removeActivity(sman);
         delete sman;
-        sman = 0;
+        sman = nullptr;
         delete model;
-        model = 0;
+        model = nullptr;
     }
 
     void ScriptingPlugin::loadScripts()

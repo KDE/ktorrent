@@ -51,7 +51,7 @@ namespace kt
 
     FeedWidget::FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* parent)
         : QWidget(parent),
-          feed(0),
+          feed(nullptr),
           filters(filters),
           act(act)
     {

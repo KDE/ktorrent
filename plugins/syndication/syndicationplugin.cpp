@@ -38,7 +38,7 @@ using namespace bt;
 namespace kt
 {
 
-    SyndicationPlugin::SyndicationPlugin(QObject* parent, const QVariantList& args): Plugin(parent), add_feed(0)
+    SyndicationPlugin::SyndicationPlugin(QObject* parent, const QVariantList& args): Plugin(parent), add_feed(nullptr)
     {
         Q_UNUSED(args);
         setupActions();
@@ -58,7 +58,7 @@ namespace kt
 
     void SyndicationPlugin::load()
     {
-        activity = new SyndicationActivity(this, 0);
+        activity = new SyndicationActivity(this, nullptr);
         connect(add_feed, &QAction::triggered, activity, &SyndicationActivity::addFeed);
         connect(remove_feed, &QAction::triggered, activity, &SyndicationActivity::removeFeed);
         connect(manage_filters, &QAction::triggered, activity, &SyndicationActivity::manageFilters);
@@ -75,7 +75,7 @@ namespace kt
         activity->saveState(KSharedConfig::openConfig());
         getGUI()->removeActivity(activity);
         delete activity;
-        activity = 0;
+        activity = nullptr;
     }
 
 
@@ -109,7 +109,6 @@ namespace kt
         remove_feed->setEnabled(false);
         manage_filters->setEnabled(false);
     }
-
 
 }
 

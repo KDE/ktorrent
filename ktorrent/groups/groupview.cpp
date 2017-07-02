@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "groupview.h"
 
 #include <QAction>
@@ -110,12 +111,12 @@ namespace kt
         QString name = QInputDialog::getText(this, QString(), i18n("Please enter the group name."), QLineEdit::Normal, QString(), &ok);
 
         if (name.isEmpty() || name.length() == 0 || !ok)
-            return 0;
+            return nullptr;
 
         if (gman->find(name))
         {
             KMessageBox::error(this, i18n("The group %1 already exists.", name));
-            return 0;
+            return nullptr;
         }
 
         Group* g = gman->newGroup(name);

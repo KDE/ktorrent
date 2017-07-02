@@ -29,11 +29,11 @@ using namespace bt;
 
 namespace kt
 {
-    FeedRetriever::FeedRetriever() : job(0), err(0)
+    FeedRetriever::FeedRetriever() : job(nullptr), err(0)
     {
     }
 
-    FeedRetriever::FeedRetriever(const QString& file_name) : backup_file(file_name), job(0), err(0)
+    FeedRetriever::FeedRetriever(const QString& file_name) : backup_file(file_name), job(nullptr), err(0)
     {
     }
 

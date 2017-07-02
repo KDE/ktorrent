@@ -40,7 +40,7 @@ namespace kt
 
     FeedWidgetModel::FeedWidgetModel(QObject* parent)
         : QAbstractTableModel(parent),
-          feed(0)
+          feed(nullptr)
     {
     }
 

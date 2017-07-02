@@ -44,7 +44,7 @@ namespace kt
     };
 
     AddPeersDlg::AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent)
-        : QDialog(parent), tc(tc), mps(0)
+        : QDialog(parent), tc(tc), mps(nullptr)
     {
         setupUi(this);
         connect(m_close, SIGNAL(clicked()), this, SLOT(reject()));

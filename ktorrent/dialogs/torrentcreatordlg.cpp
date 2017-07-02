@@ -41,10 +41,10 @@ using namespace bt;
 
 namespace kt
 {
-    TorrentCreatorDlg::TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent) : QDialog(parent), core(core), gui(gui), mktor(0)
+    TorrentCreatorDlg::TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent) : QDialog(parent), core(core), gui(gui), mktor(nullptr)
     {
         setAttribute(Qt::WA_DeleteOnClose);
-        tracker_completion = webseeds_completion = nodes_completion = 0;
+        tracker_completion = webseeds_completion = nodes_completion = nullptr;
         setWindowTitle(i18n("Create A Torrent"));
         setupUi(this);
         adjustSize();

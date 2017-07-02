@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "upnpplugin.h"
 
 #include <QStandardPaths>
@@ -40,7 +41,7 @@ using namespace bt;
 namespace kt
 {
 
-    UPnPPlugin::UPnPPlugin(QObject* parent, const QVariantList& /*args*/) : Plugin(parent), sock(0), upnp_tab(0)
+    UPnPPlugin::UPnPPlugin(QObject* parent, const QVariantList& /*args*/) : Plugin(parent), sock(nullptr), upnp_tab(nullptr)
     {
     }
 
@@ -54,7 +55,7 @@ namespace kt
     {
         LogSystemManager::instance().registerSystem(i18n("UPnP"), SYS_PNP);
         sock = new UPnPMCastSocket();
-        upnp_tab = new UPnPWidget(sock, 0);
+        upnp_tab = new UPnPWidget(sock, nullptr);
         GUIInterface* gui = getGUI();
         gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QStringLiteral("kt-upnp"),
                 i18n("Shows the status of the UPnP plugin"));
@@ -73,9 +74,9 @@ namespace kt
         getGUI()->getTorrentActivity()->removeToolWidget(upnp_tab);
         sock->close();
         delete upnp_tab;
-        upnp_tab = 0;
+        upnp_tab = nullptr;
         delete sock;
-        sock = 0;
+        sock = nullptr;
     }
 
     void UPnPPlugin::shutdown(bt::WaitJob* job)

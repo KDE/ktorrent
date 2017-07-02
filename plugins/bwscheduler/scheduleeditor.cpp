@@ -41,7 +41,7 @@ namespace kt
 
 
     ScheduleEditor::ScheduleEditor(QWidget* parent)
-        : Activity(i18n("Bandwidth Schedule"), QStringLiteral("kt-bandwidth-scheduler"), 20, parent), schedule(0)
+        : Activity(i18n("Bandwidth Schedule"), QStringLiteral("kt-bandwidth-scheduler"), 20, parent), schedule(nullptr)
     {
         setXMLGUIFile(QStringLiteral("ktorrent_bwschedulerui.rc"));
         setToolTip(i18n("Edit the bandwidth schedule"));

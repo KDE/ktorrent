@@ -49,7 +49,7 @@ using namespace bt;
 namespace kt
 {
     ImportDialog::ImportDialog(CoreInterface* core, QWidget* parent)
-        : QDialog(parent), core(core), dc(0), dc_thread(0), canceled(false)
+        : QDialog(parent), core(core), dc(nullptr), dc_thread(nullptr), canceled(false)
     {
         setAttribute(Qt::WA_DeleteOnClose);
         setupUi(this);
@@ -86,7 +86,7 @@ namespace kt
             if (!canceled)
                 KMessageBox::error(this, dc_thread->getError());
             dc_thread->deleteLater();
-            dc_thread = 0;
+            dc_thread = nullptr;
             reject();
             return;
         }
@@ -165,13 +165,13 @@ namespace kt
             bt::Delete(tor_dir, true);
             KMessageBox::error(this, e.toString());
             dc_thread->deleteLater();
-            dc_thread = 0;
+            dc_thread = nullptr;
             reject();
             return;
         }
 
         dc_thread->deleteLater();
-        dc_thread = 0;
+        dc_thread = nullptr;
         accept();
     }
 
@@ -272,7 +272,7 @@ namespace kt
             dc->stop();
             dc_thread->wait();
             dc_thread->deleteLater();
-            dc_thread = 0;
+            dc_thread = nullptr;
         }
 
         reject();

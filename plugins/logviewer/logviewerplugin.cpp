@@ -42,14 +42,11 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_logviewer, "ktorrent_logviewer.json", regist
 
 namespace kt
 {
-
-
-
     LogViewerPlugin::LogViewerPlugin(QObject* parent, const QVariantList&) : Plugin(parent)
-        , lv(0)
-        , pref(0)
-        , flags(0)
-        , dock(0)
+        , lv(nullptr)
+        , pref(nullptr)
+        , flags(nullptr)
+        , dock(nullptr)
         , pos(SEPARATE_ACTIVITY)
     {
     }
@@ -64,7 +61,7 @@ namespace kt
         connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(applySettings()));
         flags = new LogFlags();
         lv = new LogViewer(flags);
-        pref = new LogPrefPage(flags, 0);
+        pref = new LogPrefPage(flags, nullptr);
 
         pos = (LogViewerPosition)LogViewerPluginSettings::logWidgetPosition();
         addLogViewerToGUI();
@@ -81,11 +78,11 @@ namespace kt
         removeLogViewerFromGUI();
         RemoveLogMonitor(lv);
         delete lv;
-        lv = 0;
+        lv = nullptr;
         delete pref;
-        pref = 0;
+        pref = nullptr;
         delete flags;
-        flags = 0;
+        flags = nullptr;
     }
 
     void LogViewerPlugin::applySettings()
@@ -137,10 +134,10 @@ namespace kt
         {
             KMainWindow* mwnd = getGUI()->getMainWindow();
             mwnd->removeDockWidget(dock);
-            dock->setWidget(0);
-            lv->setParent(0);
+            dock->setWidget(nullptr);
+            lv->setParent(nullptr);
             delete dock;
-            dock = 0;
+            dock = nullptr;
             break;
         }
         }

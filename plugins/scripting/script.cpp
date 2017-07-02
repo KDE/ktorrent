@@ -35,11 +35,11 @@ using namespace bt;
 
 namespace kt
 {
-    Script::Script(QObject* parent) : QObject(parent), action(0), executing(false), can_be_removed(true)
+    Script::Script(QObject* parent) : QObject(parent), action(nullptr), executing(false), can_be_removed(true)
     {
     }
 
-    Script::Script(const QString& file, QObject* parent) : QObject(parent), file(file), action(0), executing(false), can_be_removed(true)
+    Script::Script(const QString& file, QObject* parent) : QObject(parent), file(file), action(nullptr), executing(false), can_be_removed(true)
     {
     }
 
@@ -95,7 +95,7 @@ namespace kt
         if (interpreter.isNull())
         {
             delete action;
-            action = 0;
+            action = nullptr;
             return false;
         }
         else
@@ -123,7 +123,7 @@ namespace kt
         Kross::ActionCollection* col = Kross::Manager::self().actionCollection();
         col->removeAction(action->file());
         action->deleteLater();
-        action = 0;
+        action = nullptr;
         executing = false;
     }
 

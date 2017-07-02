@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "statusbar.h"
 
 #include <QLabel>
@@ -34,9 +35,9 @@ namespace kt
 {
     StatusBar::StatusBar(QWidget* parent)
         : QStatusBar(parent),
-          speed(0), up_speed(0), down_speed(0),
-          transfer(0), up_transfer(0), down_transfer(0),
-          dht_status(0), dht_peers(0), dht_tasks(0), dht_on(false)
+          speed(nullptr), up_speed(0), down_speed(0),
+          transfer(nullptr), up_transfer(0), down_transfer(0),
+          dht_status(nullptr), dht_peers(0), dht_tasks(0), dht_on(false)
     {
         QString s = i18n("Speed down: %1 / up: %2", BytesPerSecToString((double)down_speed), BytesPerSecToString((double)up_speed));
         QString t = i18n("Transferred down: %1 / up: %2", BytesToString(down_transfer), BytesToString(up_transfer));

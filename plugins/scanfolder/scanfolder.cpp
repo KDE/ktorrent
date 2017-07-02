@@ -44,7 +44,7 @@ namespace kt
     ScanFolder::ScanFolder(ScanThread* scanner, const QUrl &dir, bool recursive)
         : scanner(scanner),
           scan_directory(dir),
-          watch(0),
+          watch(nullptr),
           recursive(recursive)
     {
         bt::Out(SYS_SNF | LOG_NOTICE) << "ScanFolder: scanning " << dir << endl;

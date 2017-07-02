@@ -76,7 +76,7 @@ namespace kt
         LogSystemManager::instance().unregisterSystem(i18n("IP Filter"));
         getGUI()->removePrefPage(pref);
         delete pref;
-        pref = 0;
+        pref = nullptr;
         if (ip_filter)
         {
             AccessManager::instance().removeBlockList(ip_filter.data());

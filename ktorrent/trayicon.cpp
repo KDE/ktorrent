@@ -53,11 +53,11 @@ namespace kt
         , mwnd(parent)
         , previousDownloadHeight(0)
         , previousUploadHeight(0)
-        , max_upload_rate(0)
-        , max_download_rate(0)
-        , status_notifier_item(0)
+        , max_upload_rate(nullptr)
+        , max_download_rate(nullptr)
+        , status_notifier_item(nullptr)
         , queue_suspended(false)
-        , menu(0)
+        , menu(nullptr)
     {
         connect(core, &Core::openedSilently, this, &TrayIcon::torrentSilentlyOpened);
         connect(core, &Core::finished, this, &TrayIcon::finished);
@@ -85,9 +85,9 @@ namespace kt
             return;
 
         delete status_notifier_item;
-        status_notifier_item = 0;
-        menu = 0;
-        max_download_rate = max_upload_rate = 0;
+        status_notifier_item = nullptr;
+        menu = nullptr;
+        max_download_rate = max_upload_rate = nullptr;
     }
 
     void TrayIcon::show()

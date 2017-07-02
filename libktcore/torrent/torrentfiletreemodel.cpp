@@ -51,7 +51,7 @@ namespace kt
     }
 
     TorrentFileTreeModel::Node::Node(Node* parent, const QString& name, const bt::Uint32 total_chunks)
-        : parent(parent), file(0), name(name), size(0), chunks(total_chunks), chunks_set(false), percentage(0.0f)
+        : parent(parent), file(nullptr), name(name), size(0), chunks(total_chunks), chunks_set(false), percentage(0.0f)
     {
         chunks.setAll(false);
     }
@@ -314,14 +314,14 @@ namespace kt
     }
 
     TorrentFileTreeModel::TorrentFileTreeModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent)
-        : TorrentFileModel(tc, mode, parent), root(0), emit_check_state_change(true)
+        : TorrentFileModel(tc, mode, parent), root(nullptr), emit_check_state_change(true)
     {
         if (tc)
         {
             if (tc->getStats().multi_file_torrent)
                 constructTree();
             else
-                root = new Node(0, tc->getUserModifiedFileName(), tc->getStats().total_chunks);
+                root = new Node(nullptr, tc->getUserModifiedFileName(), tc->getStats().total_chunks);
         }
     }
 
@@ -336,13 +336,13 @@ namespace kt
         beginResetModel();
         this->tc = tc;
         delete root;
-        root = 0;
+        root = nullptr;
         if (tc)
         {
             if (tc->getStats().multi_file_torrent)
                 constructTree();
             else
-                root = new Node(0, tc->getUserModifiedFileName(), tc->getStats().total_chunks);
+                root = new Node(nullptr, tc->getUserModifiedFileName(), tc->getStats().total_chunks);
         }
         endResetModel();
     }
@@ -352,7 +352,7 @@ namespace kt
     {
         bt::Uint32 num_chunks = tc->getStats().total_chunks;
         if (!root)
-            root = new Node(0, tc->getUserModifiedFileName(), num_chunks);
+            root = new Node(nullptr, tc->getUserModifiedFileName(), num_chunks);
 
         for (Uint32 i = 0; i < tc->getNumFiles(); i++)
         {
@@ -365,7 +365,7 @@ namespace kt
     {
         beginResetModel();
         delete root;
-        root = 0;
+        root = nullptr;
         constructTree();
         endResetModel();
     }

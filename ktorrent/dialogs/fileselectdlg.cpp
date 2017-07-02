@@ -51,13 +51,13 @@ namespace kt
 
     FileSelectDlg::FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, const QString& group_hint, QWidget* parent)
         : QDialog(parent)
-        , tc(0)
-        , model(0)
+        , tc(nullptr)
+        , model(nullptr)
         , qman(qman)
         , gman(gman)
-        , start(0)
-        , skip_check(0)
-        , initial_group(0)
+        , start(nullptr)
+        , skip_check(nullptr)
+        , initial_group(nullptr)
         , show_file_tree(true)
         , already_downloaded(0)
     {

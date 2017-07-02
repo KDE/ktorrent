@@ -31,7 +31,7 @@
 namespace kt
 {
 
-    AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent) : ChunkBar(parent), curr_tc(0)
+    AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent) : ChunkBar(parent), curr_tc(nullptr)
     {
         setToolTip(i18n("<img src=\"available_color\">&nbsp; - Available Chunks<br>"
                         "<img src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br>"

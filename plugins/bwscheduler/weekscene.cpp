@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "weekscene.h"
 
 #include <cmath>
@@ -47,7 +48,7 @@ namespace kt
 
     WeekScene::WeekScene(QObject* parent)
         : QGraphicsScene(parent),
-          schedule(0)
+          schedule(nullptr)
     {
         addCalendar();
     }

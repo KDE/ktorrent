@@ -17,6 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+
 #include "magnetgeneratorplugin.h"
 
 #include <KActionCollection>
@@ -47,7 +48,7 @@ namespace kt
     MagnetGeneratorPlugin::MagnetGeneratorPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
     {
         Q_UNUSED(args);
-        pref = 0;
+        pref = nullptr;
         generate_magnet_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-magnet")), i18n("Copy Magnet URI"), this);
         connect(generate_magnet_action, SIGNAL(triggered()), this, SLOT(generateMagnet()));
         actionCollection()->addAction(QStringLiteral("generate_magnet"), generate_magnet_action);
@@ -61,7 +62,7 @@ namespace kt
 
     void MagnetGeneratorPlugin::load()
     {
-        pref = new MagnetGeneratorPrefWidget(0);
+        pref = new MagnetGeneratorPrefWidget(nullptr);
         getGUI()->addPrefPage(pref);
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
         ta->addViewListener(this);
@@ -77,7 +78,7 @@ namespace kt
     {
         getGUI()->removePrefPage(pref);
         delete pref;
-        pref = 0;
+        pref = nullptr;
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
         ta->removeViewListener(this);
     }

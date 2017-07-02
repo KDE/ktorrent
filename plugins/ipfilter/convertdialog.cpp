@@ -37,10 +37,7 @@ using namespace bt;
 namespace kt
 {
 
-
-
-
-    ConvertDialog::ConvertDialog(QWidget* parent) : QDialog(parent), convert_thread(0)
+    ConvertDialog::ConvertDialog(QWidget* parent) : QDialog(parent), convert_thread(nullptr)
     {
         setupUi(this);
         setModal(false);

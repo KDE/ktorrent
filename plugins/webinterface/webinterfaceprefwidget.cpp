@@ -17,12 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <Qt>
 
-#include <klocalizedstring.h>
-#include <kglobal.h>
-#include <kiconloader.h>
-#include <kstandarddirs.h>
+#include <KLocalizedString>
+#include <KGlobal>
+#include <KIconLoader>
+#include <KStandardDirs>
 
 #include <net/portlist.h>
 #include <torrent/globals.h>

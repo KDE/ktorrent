@@ -172,15 +172,15 @@ namespace kt
 
     void UPnPWidget::portRemoved(const net::Port& port)
     {
-        model->undoForward(port, 0);
+        model->undoForward(port, nullptr);
     }
 
     void UPnPWidget::onCurrentDeviceChanged(const QModelIndex& current, const QModelIndex& previous)
     {
         Q_UNUSED(previous);
         UPnPRouter* r = model->routerForIndex(current);
-        m_forward->setEnabled(r != 0);
-        m_undo_forward->setEnabled(r != 0 && model->rowCount(QModelIndex()) > 0);
+        m_forward->setEnabled(r != nullptr);
+        m_undo_forward->setEnabled(r != nullptr && model->rowCount(QModelIndex()) > 0);
     }
 
 }

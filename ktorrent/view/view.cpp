@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "view.h"
 
 #include <QAction>
@@ -71,7 +72,7 @@ namespace kt
           group(core->getGroupManager()->allGroup()),
           num_torrents(0),
           num_running(0),
-          model(0)
+          model(nullptr)
     {
         new ViewJobTracker(this);
 

@@ -47,7 +47,7 @@ namespace kt
 
 
     Activity::Activity(const QString& name, const QString& icon, int weight, QWidget* parent)
-        : QWidget(parent), activity_name(name), activity_icon(icon), activity_weight(weight), activity_part(0)
+        : QWidget(parent), activity_name(name), activity_icon(icon), activity_weight(weight), activity_part(nullptr)
     {
     }
 

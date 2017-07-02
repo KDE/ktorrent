@@ -17,8 +17,9 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
 ***************************************************************************/
-#include <kgenericfactory.h>
-#include <kglobal.h>
+
+#include <KGenericFactory>
+#include <KGlobal>
 
 #include <util/log.h>
 #include <util/logsystemmanager.h>
@@ -41,8 +42,8 @@ namespace kt
     WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const QStringList& args) : Plugin(parent)
     {
         Q_UNUSED(args);
-        http_server = 0;
-        pref = 0;
+        http_server = nullptr;
+        pref = nullptr;
     }
 
     WebInterfacePlugin::~WebInterfacePlugin()
@@ -55,7 +56,7 @@ namespace kt
         LogSystemManager::instance().registerSystem(i18n("Web Interface"), SYS_WEB);
         initServer();
 
-        pref = new WebInterfacePrefWidget(0);
+        pref = new WebInterfacePrefWidget(nullptr);
         getGUI()->addPrefPage(pref);
         connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(preferencesUpdated()));
     }
@@ -67,12 +68,12 @@ namespace kt
         {
             bt::Globals::instance().getPortList().removePort(http_server->getPort(), net::TCP);
             delete http_server;
-            http_server = 0;
+            http_server = nullptr;
         }
 
         getGUI()->removePrefPage(pref);
         delete pref;
-        pref = 0;
+        pref = nullptr;
         disconnect(getCore(), SIGNAL(settingsChanged()), this, SLOT(preferencesUpdated()));
     }
 
@@ -87,7 +88,7 @@ namespace kt
             if (!http_server->isOK())
             {
                 delete http_server;
-                http_server = 0;
+                http_server = nullptr;
             }
             else
                 break;
@@ -114,7 +115,7 @@ namespace kt
             //stop and delete http server
             bt::Globals::instance().getPortList().removePort(http_server->getPort(), net::TCP);
             delete http_server;
-            http_server = 0;
+            http_server = nullptr;
             // reinitialize server
             initServer();
         }

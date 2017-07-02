@@ -38,7 +38,6 @@
 #include <KRun>
 #include <KSharedConfig>
 
-
 #include <util/bitset.h>
 #include <util/error.h>
 #include <util/functions.h>
@@ -58,7 +57,7 @@ using namespace bt;
 namespace kt
 {
 
-    FileView::FileView(QWidget* parent) : QWidget(parent), model(0), show_list_of_files(false), header_state_loaded(false)
+    FileView::FileView(QWidget* parent) : QWidget(parent), model(nullptr), show_list_of_files(false), header_state_loaded(false)
     {
         QHBoxLayout* layout = new QHBoxLayout(this);
         layout->setMargin(0);

@@ -27,7 +27,7 @@ namespace kt
 {
 
     GroupFilterModel::GroupFilterModel(ViewModel* view_model, QObject* parent)
-        : QSortFilterProxyModel(parent), group(0), view_model(view_model)
+        : QSortFilterProxyModel(parent), group(nullptr), view_model(view_model)
     {
         setSourceModel(view_model);
     }

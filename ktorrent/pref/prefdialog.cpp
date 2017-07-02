@@ -152,7 +152,7 @@ namespace kt
 
     ///////////////////////////////////////
 
-    PrefPageScrollArea::PrefPageScrollArea(kt::PrefPageInterface* page, QWidget* parent) : QScrollArea(parent), page(page), page_widget_item(0)
+    PrefPageScrollArea::PrefPageScrollArea(kt::PrefPageInterface* page, QWidget* parent) : QScrollArea(parent), page(page), page_widget_item(nullptr)
     {
         setWidget(page);
         setWidgetResizable(true);

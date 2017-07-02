@@ -69,7 +69,7 @@ namespace kt
     {
         rules->save(kt::DataDir() + QLatin1String("shutdown_rules"));
         delete rules;
-        rules = 0;
+        rules = nullptr;
     }
 
     void ShutdownPlugin::load()
@@ -103,19 +103,19 @@ namespace kt
     void ShutdownPlugin::suspendToDisk()
     {
         Out(SYS_GEN | LOG_NOTICE) << "Suspending to disk ..." << endl;
-        Solid::PowerManagement::requestSleep(Solid::PowerManagement::HibernateState, 0, 0);
+        Solid::PowerManagement::requestSleep(Solid::PowerManagement::HibernateState, nullptr, nullptr);
    }
 
     void ShutdownPlugin::suspendToRam()
     {
         Out(SYS_GEN | LOG_NOTICE) << "Suspending to RAM ..." << endl;
-        Solid::PowerManagement::requestSleep(Solid::PowerManagement::SuspendState, 0, 0);
+        Solid::PowerManagement::requestSleep(Solid::PowerManagement::SuspendState, nullptr, nullptr);
     }
 
     void ShutdownPlugin::standby()
     {
         Out(SYS_GEN | LOG_NOTICE) << "Suspending to standby ..." << endl;
-        Solid::PowerManagement::requestSleep(Solid::PowerManagement::StandbyState, 0, 0);
+        Solid::PowerManagement::requestSleep(Solid::PowerManagement::StandbyState, nullptr, nullptr);
 
     }
 
@@ -135,7 +135,7 @@ namespace kt
 
     void ShutdownPlugin::configureShutdown()
     {
-        ShutdownDlg dlg(rules, getCore(), 0);
+        ShutdownDlg dlg(rules, getCore(), nullptr);
         if (dlg.exec() == QDialog::Accepted)
         {
             rules->save(kt::DataDir() + QLatin1String("shutdown_rules"));

@@ -54,8 +54,8 @@ namespace kt
 
     BWSchedulerPlugin::BWSchedulerPlugin(QObject* parent, const QVariantList& args)
         : Plugin(parent)
-        , m_editor(0)
-        , m_pref(0)
+        , m_editor(nullptr)
+        , m_pref(nullptr)
     {
         Q_UNUSED(args);
         connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerTriggered()));
@@ -77,7 +77,7 @@ namespace kt
     {
         LogSystemManager::instance().registerSystem(i18n("Scheduler"), SYS_SCD);
         m_schedule = new Schedule();
-        m_pref = new BWPrefPage(0);
+        m_pref = new BWPrefPage(nullptr);
         connect(m_pref, SIGNAL(colorsChanged()), this, SLOT(colorsChanged()));
         getGUI()->addPrefPage(m_pref);
 
@@ -112,11 +112,11 @@ namespace kt
 
         getGUI()->removeActivity(m_editor);
         delete m_editor;
-        m_editor = 0;
+        m_editor = nullptr;
 
         getGUI()->removePrefPage(m_pref);
         delete m_pref;
-        m_pref = 0;
+        m_pref = nullptr;
 
         try
         {
@@ -128,7 +128,7 @@ namespace kt
         }
 
         delete m_schedule;
-        m_schedule = 0;
+        m_schedule = nullptr;
     }
 
     void BWSchedulerPlugin::setNormalLimits()

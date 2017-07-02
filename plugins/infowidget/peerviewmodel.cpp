@@ -170,7 +170,7 @@ namespace kt
     /////////////////////////////////////////////////////////////
 
     PeerViewModel::PeerViewModel(QObject* parent)
-        : QAbstractTableModel(parent), geo_ip(0)
+        : QAbstractTableModel(parent), geo_ip(nullptr)
     {
         geo_ip = new GeoIPManager(this);
     }
@@ -343,7 +343,7 @@ namespace kt
     bt::PeerInterface* PeerViewModel::indexToPeer(const QModelIndex& index)
     {
         if (!index.isValid() || index.row() >= items.count())
-            return 0;
+            return nullptr;
         else
             return ((Item*)index.internalPointer())->peer;
     }

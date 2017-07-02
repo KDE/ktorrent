@@ -69,7 +69,7 @@ namespace kt
 
 
     TabBarWidget::TabBarWidget(QSplitter* splitter, QWidget* parent)
-        : QWidget(parent), widget_stack(0), shrunken(false)
+        : QWidget(parent), widget_stack(nullptr), shrunken(false)
     {
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setSpacing(0);
@@ -125,12 +125,12 @@ namespace kt
         {
             ti->hide();
             widget_stack->removeWidget(ti);
-            ti->setParent(0);
+            ti->setParent(nullptr);
         }
         else
         {
             widget_stack->removeWidget(ti);
-            ti->setParent(0);
+            ti->setParent(nullptr);
         }
 
         if (widget_stack->count() == 0)
@@ -181,7 +181,7 @@ namespace kt
 
     void TabBarWidget::onActionTriggered(QAction* act)
     {
-        QWidget* ti = 0;
+        QWidget* ti = nullptr;
         QMap<QWidget*, QAction*>::iterator i = widget_to_action.begin();
         while (i != widget_to_action.end() && !ti)
         {

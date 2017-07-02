@@ -34,7 +34,7 @@ namespace kt
 {
 
     SyndicationTab::SyndicationTab(KActionCollection* ac, FeedList* feeds, FilterList* filters, QWidget* parent)
-        : QWidget(parent), feeds(feeds), splitter(0), filters(filters)
+        : QWidget(parent), feeds(feeds), splitter(nullptr), filters(filters)
     {
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setSpacing(0);

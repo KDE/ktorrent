@@ -76,7 +76,7 @@
 
 namespace kt
 {
-    GUI::GUI() : core(0), pref_dlg(0)
+    GUI::GUI() : core(nullptr), pref_dlg(nullptr)
     {
         //Marker markk("GUI::GUI()");
         part_manager = new KParts::PartManager(this);
@@ -89,7 +89,7 @@ namespace kt
         central = new CentralWidget(this);
         setCentralWidget(central);
         connect(central, &CentralWidget::changeActivity, this, &GUI::setCurrentActivity);
-        torrent_activity = new TorrentActivity(core, this, 0);
+        torrent_activity = new TorrentActivity(core, this, nullptr);
 
         status_bar = new kt::StatusBar(this);
         setStatusBar(status_bar);
@@ -135,7 +135,7 @@ namespace kt
         if (e->type() == QEvent::DeferredDelete)
         {
             //HACK to prevent ktorrent from crashing on logout/shotdown (when launched e.g. via alt+f2)
-            delete core; core = 0;
+            delete core; core = nullptr;
             return true;
         }
 

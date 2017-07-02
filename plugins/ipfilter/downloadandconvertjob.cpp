@@ -44,7 +44,7 @@ namespace kt
 {
 
     DownloadAndConvertJob::DownloadAndConvertJob(const QUrl& url, Mode mode)
-        : url(url), unzip(false), convert_dlg(0), mode(mode)
+        : url(url), unzip(false), convert_dlg(nullptr), mode(mode)
     {
     }
 
@@ -73,7 +73,7 @@ namespace kt
 
     void DownloadAndConvertJob::convert(KJob* j)
     {
-        active_job = 0;
+        active_job = nullptr;
         if (j->error())
         {
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
@@ -112,7 +112,7 @@ namespace kt
 
     void DownloadAndConvertJob::downloadFileFinished(KJob* j)
     {
-        active_job = 0;
+        active_job = nullptr;
         if (j->error())
         {
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
@@ -146,7 +146,7 @@ namespace kt
         {
             QString msg = i18n("7z files are not supported", url.toDisplayString());
             if (mode == Verbose)
-                KMessageBox::error(0, msg);
+                KMessageBox::error(nullptr, msg);
             else
                 notification(msg);
             
@@ -168,7 +168,7 @@ namespace kt
         {
             QString msg = i18n("Cannot determine file type of <b>%1</b>", url.toDisplayString());
             if (mode == Verbose)
-                KMessageBox::error(0, msg);
+                KMessageBox::error(nullptr, msg);
             else
                 notification(msg);
 
@@ -179,7 +179,7 @@ namespace kt
 
     void DownloadAndConvertJob::extract(KJob* j)
     {
-        active_job = 0;
+        active_job = nullptr;
         if (j->error())
         {
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
@@ -204,7 +204,7 @@ namespace kt
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: cannot open zip file " << zipfile << endl;
             if (mode == Verbose)
             {
-                KMessageBox::error(0, i18n("Cannot open zip file %1.", zipfile));
+                KMessageBox::error(nullptr, i18n("Cannot open zip file %1.", zipfile));
             }
             else
             {
@@ -232,7 +232,7 @@ namespace kt
             Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: no blocklist found in zipfile " << zipfile << endl;
             if (mode == Verbose)
             {
-                KMessageBox::error(0, i18n("Cannot find blocklist in zip file %1.", zipfile));
+                KMessageBox::error(nullptr, i18n("Cannot find blocklist in zip file %1.", zipfile));
             }
             else
             {
@@ -273,7 +273,7 @@ namespace kt
         }
         else
         {
-            convert_dlg = new ConvertDialog(0);
+            convert_dlg = new ConvertDialog(nullptr);
             if (mode == Verbose)
                 convert_dlg->show();
             connect(convert_dlg, SIGNAL(accepted()), this, SLOT(convertAccepted()));
@@ -284,7 +284,7 @@ namespace kt
     void DownloadAndConvertJob::convertAccepted()
     {
         convert_dlg->deleteLater();
-        convert_dlg = 0;
+        convert_dlg = nullptr;
         cleanUpFiles();
         setError(0);
         emitResult();
@@ -293,7 +293,7 @@ namespace kt
     void DownloadAndConvertJob::convertRejected()
     {
         convert_dlg->deleteLater();
-        convert_dlg = 0;
+        convert_dlg = nullptr;
         // shit happened move back backup stuff
         QString dat_file = kt::DataDir() + QStringLiteral("level1.dat");
         QString tmp_file = kt::DataDir() + QStringLiteral("level1.dat.tmp");
@@ -324,7 +324,7 @@ namespace kt
             connect(job, SIGNAL(result(KJob*)), this, SLOT(makeBackupFinished(KJob*)));
         }
         else
-            makeBackupFinished(0);
+            makeBackupFinished(nullptr);
     }
 
     void DownloadAndConvertJob::cleanUpFiles()

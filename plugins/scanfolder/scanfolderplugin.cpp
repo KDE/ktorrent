@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
 #include <interfaces/coreinterface.h>
@@ -63,7 +63,7 @@ namespace kt
         tlq = new TorrentLoadQueue(getCore(), this);
         scanner = new ScanThread();
         connect(scanner, &ScanThread::found, tlq, static_cast<void (TorrentLoadQueue::*)(const QList<QUrl>&)>(&TorrentLoadQueue::add), Qt::QueuedConnection);
-        pref = new ScanFolderPrefPage(this, 0);
+        pref = new ScanFolderPrefPage(this, nullptr);
         getGUI()->addPrefPage(pref);
         connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(updateScanFolders()));
         scanner->start(QThread::IdlePriority);

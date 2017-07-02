@@ -53,7 +53,7 @@ namespace kt
 
 
     VideoWidget::VideoWidget(MediaPlayer* player, KActionCollection* ac, QWidget* parent)
-        : QWidget(parent), player(player), chunk_bar(0), fullscreen(false),
+        : QWidget(parent), player(player), chunk_bar(nullptr), fullscreen(false),
           screensaver_cookie(0), powermanagement_cookie(0)
     {
         QVBoxLayout* vlayout = new QVBoxLayout(this);
@@ -67,7 +67,7 @@ namespace kt
         chunk_bar = new VideoChunkBar(player->getCurrentSource(), this);
         chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
 
-        QHBoxLayout* hlayout = new QHBoxLayout(0);
+        QHBoxLayout* hlayout = new QHBoxLayout(nullptr);
 
         play_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-start")), i18n("Play"), this);
         connect(play_action, SIGNAL(triggered()), this, SLOT(play()));

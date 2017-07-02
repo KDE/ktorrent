@@ -37,7 +37,7 @@ namespace kt
 {
     QUrl GeoIPManager::geoip_url = QUrl(QStringLiteral("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz"));
 
-    GeoIPManager::GeoIPManager(QObject* parent): QObject(parent), geo_ip(0), decompress_thread(0)
+    GeoIPManager::GeoIPManager(QObject* parent): QObject(parent), geo_ip(nullptr), decompress_thread(nullptr)
     {
 #ifdef USE_SYSTEM_GEOIP
         geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
@@ -130,7 +130,7 @@ namespace kt
             if (geo_ip)
             {
                 GeoIP_delete(geo_ip);
-                geo_ip = 0;
+                geo_ip = nullptr;
             }
             geo_ip = GeoIP_open(QFile::encodeName(geoip_data_file).data(), 0);
             if (!geo_ip)
@@ -155,7 +155,7 @@ namespace kt
             if (geo_ip)
             {
                 GeoIP_delete(geo_ip);
-                geo_ip = 0;
+                geo_ip = nullptr;
             }
             geo_ip = GeoIP_open(QFile::encodeName(geoip_data_file).data(), 0);
             if (!geo_ip)
@@ -164,7 +164,7 @@ namespace kt
 
         decompress_thread->wait();
         delete decompress_thread;
-        decompress_thread = 0;
+        decompress_thread = nullptr;
     }
 
 

@@ -29,8 +29,8 @@ namespace kt
 
     StatsPlugin::StatsPlugin(QObject* p, const QVariantList&) : Plugin(p), mUpdCtr(1)
     {
-        pmUiSett = 0;
-        pmDispSett = 0;
+        pmUiSett = nullptr;
+        pmDispSett = nullptr;
     }
 
     StatsPlugin::~StatsPlugin()
@@ -39,10 +39,10 @@ namespace kt
 
     void StatsPlugin::load()
     {
-        pmUiSpd = new SpdTabPage(0);
-        pmUiConns = new ConnsTabPage(0);
-        pmUiSett = new SettingsPage(0);
-        pmDispSett = new DisplaySettingsPage(0);
+        pmUiSpd = new SpdTabPage(nullptr);
+        pmUiConns = new ConnsTabPage(nullptr);
+        pmUiSett = new SettingsPage(nullptr);
+        pmDispSett = new DisplaySettingsPage(nullptr);
 
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
         ta->addToolWidget(pmUiSpd, i18n("Speed charts"), QStringLiteral("view-statistics"), i18n("Displays charts about download and upload speed"));

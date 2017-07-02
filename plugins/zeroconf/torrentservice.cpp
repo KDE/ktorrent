@@ -32,13 +32,13 @@ using namespace bt;
 
 namespace kt
 {
-    TorrentService::TorrentService(TorrentInterface* tc) : tc(tc), srv(0), browser(0)
+    TorrentService::TorrentService(TorrentInterface* tc) : tc(tc), srv(nullptr), browser(nullptr)
     {
     }
 
     TorrentService::~TorrentService()
     {
-        stop(0);
+        stop(nullptr);
     }
 
     void TorrentService::onPublished(bool ok)
@@ -56,13 +56,13 @@ namespace kt
         {
             srv->stop();
             srv->deleteLater();
-            srv = 0;
+            srv = nullptr;
         }
 
         if (browser)
         {
             browser->deleteLater();
-            browser = 0;
+            browser = nullptr;
         }
     }
 

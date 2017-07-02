@@ -38,7 +38,7 @@ namespace kt
 {
     GroupViewModel::GroupViewModel(kt::GroupManager* gman, View* view, QObject* parent) :
         QAbstractItemModel(parent),
-        root(QStringLiteral("all"), 0, 0, this),
+        root(QStringLiteral("all"), nullptr, 0, this),
         gman(gman),
         view(view)
     {
@@ -253,7 +253,7 @@ namespace kt
         display_name(name),
         parent(parent),
         row(row),
-        group(0),
+        group(nullptr),
         model(model)
     {
 

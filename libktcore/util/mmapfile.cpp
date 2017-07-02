@@ -42,7 +42,7 @@
 namespace bt
 {
 
-    MMapFile::MMapFile() : fptr(0), data(0), size(0), file_size(0), ptr(0), mode(QIODevice::ReadOnly)
+    MMapFile::MMapFile() : fptr(nullptr), data(0), size(0), file_size(0), ptr(0), mode(QIODevice::ReadOnly)
     {}
 
 
@@ -81,7 +81,7 @@ namespace bt
         if (!(fptr->open(mode)))
         {
             delete fptr;
-            fptr = 0;
+            fptr = nullptr;
             return false;
         }
 
@@ -117,7 +117,7 @@ namespace bt
         {
             fptr->close();
             delete fptr;
-            fptr = 0;
+            fptr = nullptr;
             return false;
         }
         ptr = 0;
@@ -287,7 +287,7 @@ namespace bt
     Uint8* MMapFile::getData(Uint64 off)
     {
         if (off >= size)
-            return 0;
+            return nullptr;
         return &data[off];
     }
 }

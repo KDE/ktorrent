@@ -32,7 +32,7 @@ using namespace bt;
 namespace kt
 {
 
-    WeekView::WeekView(QWidget* parent) : QGraphicsView(parent), schedule(0)
+    WeekView::WeekView(QWidget* parent) : QGraphicsView(parent), schedule(nullptr)
     {
         scene = new WeekScene(this);
         setScene(scene);

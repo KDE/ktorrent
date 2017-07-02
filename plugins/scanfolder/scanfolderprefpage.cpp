@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Vasić                                     *
+ *   Copyright (C) 2006 by Ivan Vasić                                      *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *

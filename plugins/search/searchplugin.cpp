@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "searchplugin.h"
 
 #include <QFile>
@@ -49,10 +50,10 @@ using namespace bt;
 namespace kt
 {
 
-    SearchPlugin::SearchPlugin(QObject* parent, const QVariantList& args) : Plugin(parent), engines(0)
+    SearchPlugin::SearchPlugin(QObject* parent, const QVariantList& args) : Plugin(parent), engines(nullptr)
     {
         Q_UNUSED(args);
-        pref = 0;
+        pref = nullptr;
     }
 
 
@@ -67,11 +68,11 @@ namespace kt
         engines = new SearchEngineList(proxy, kt::DataDir() + QStringLiteral("searchengines/"));
         engines->loadEngines();
 
-        pref = new SearchPrefPage(this, engines, 0);
+        pref = new SearchPrefPage(this, engines, nullptr);
         getGUI()->addPrefPage(pref);
         connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(preferencesUpdated()));
 
-        activity = new SearchActivity(this, 0);
+        activity = new SearchActivity(this, nullptr);
         getGUI()->addActivity(activity);
         activity->loadCurrentSearches();
         activity->loadState(KSharedConfig::openConfig());
@@ -88,14 +89,14 @@ namespace kt
 
         getGUI()->removePrefPage(pref);
         delete pref;
-        pref = 0;
+        pref = nullptr;
         disconnect(getCore(), SIGNAL(settingsChanged()), this, SLOT(preferencesUpdated()));
         delete engines;
-        engines = 0;
+        engines = nullptr;
         delete activity;
-        activity = 0;
+        activity = nullptr;
         delete proxy;
-        proxy = 0;
+        proxy = nullptr;
     }
 
     void SearchPlugin::search(const QString& text, int engine, bool external)
@@ -110,7 +111,7 @@ namespace kt
             if (SearchPluginSettings::useDefaultBrowser())
                 new KRun(url, QApplication::activeWindow());
             else
-                KRun::runCommand(SearchPluginSettings::customBrowser() + QStringLiteral(" ") + KShell::quoteArg(url.toDisplayString()), 0);
+                KRun::runCommand(SearchPluginSettings::customBrowser() + QStringLiteral(" ") + KShell::quoteArg(url.toDisplayString()), nullptr);
         }
         else
         {

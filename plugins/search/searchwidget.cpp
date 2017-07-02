@@ -57,7 +57,7 @@ using namespace bt;
 namespace kt
 {
 
-    SearchWidget::SearchWidget(SearchPlugin* sp) : webview(0), sp(sp), prog(0), torrent_download(0)
+    SearchWidget::SearchWidget(SearchPlugin* sp) : webview(nullptr), sp(sp), prog(nullptr), torrent_download(nullptr)
     {
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setSpacing(0);
