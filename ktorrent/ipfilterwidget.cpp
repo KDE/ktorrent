@@ -27,6 +27,8 @@
 #include <util/constants.h>
 #include <interfaces/functions.h>
 
+#include <regex>
+
 #include <QFileDialog>
 #include <QUrl>
 
@@ -95,18 +97,15 @@ namespace kt
 
     void IPFilterWidget::add()
     {
-        int var = 0;
-
         try
         {
-            QRegExp rx(QLatin1String("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
+            std::regex rx("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
                        "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
-                       "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))"));
-            QRegExpValidator v(rx, 0);
+                       "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
 
             QString ip = m_ip_to_add->text();
 
-            if (v.validate(ip, var) != QValidator::Acceptable || !filter_list->add(ip))
+            if (!regex_match(ip.toStdString(),rx) || !filter_list->add(ip))
             {
                 KMessageBox::sorry(this, i18n("Invalid IP address <b>%1</b>. IP addresses must be in the format 'XXX.XXX.XXX.XXX'."
                                               "<br/><br/>You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-200.10.10.40'.").arg(ip));
@@ -191,17 +190,16 @@ namespace kt
 
         QTextStream stream(&dat);
         QString line;
-        QRegExpValidator v(QRegExp(QStringLiteral("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
+        std::regex rx("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
                                                   "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
-                                                  "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))")), 0);
+                                                  "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
 
         bool err = false;
-        int pos = 0;
 
         while (!stream.atEnd())
         {
             line = stream.readLine();
-            if (v.validate(line, pos) != QValidator::Acceptable)
+            if (!regex_match(line.toStdString(), rx))
             {
                 err = true;
             }

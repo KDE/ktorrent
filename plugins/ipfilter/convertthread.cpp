@@ -20,11 +20,10 @@
  ***************************************************************************/
 
 #include <errno.h>
-#include <string.h>
+#include <regex>
+#include <string>
 
 #include <QFile>
-#include <QRegExp>
-#include <QRegExpValidator>
 #include <QTimer>
 #include <QTextStream>
 
@@ -78,27 +77,25 @@ namespace kt
         QTextStream stream(&source);
 
         int i = 0;
-        QRegExp rx(QLatin1String("([0-9]{1,3}\\.){3}[0-9]{1,3}"));
+        const std::regex rx("([0-9]{1,3}\\.){3}[0-9]{1,3}");
 
         while (!stream.atEnd() && !abort)
         {
-            QString line = stream.readLine();
+            std::string line = stream.readLine().toStdString();
             i += line.length() * sizeof(char);   //rough estimation of string size
             dlg->progress(i, source_size);
             ++i;
 
-            QStringList addresses;
-            int pos = 0;
-            while ((pos = rx.indexIn(line, pos)) != -1)
-            {
-                addresses << rx.cap(0);
-                pos += rx.matchedLength();
-            }
+            std::vector<std::string> addresses;
+            std::smatch sm;
+            if (regex_search(line, sm, rx))
+                for (const auto &match : sm)
+                    addresses.push_back(match.str());
 
             // if we have found two addresses, create a block out of it
-            if (addresses.count() == 2)
+            if (addresses.size() == 2)
             {
-                input += IPBlock(addresses[0], addresses[1]);
+                input += IPBlock(QString::fromStdString(addresses[0]), QString::fromStdString(addresses[1]));
             }
         }
         source.close();
@@ -161,7 +158,7 @@ namespace kt
         }
 
         sort(); // sort the block
-        merge(); // merge neigbhouring blocks
+        merge(); // merge neighbouring blocks
 
         QFile target(dat_file);
         if (!target.open(QIODevice::WriteOnly))

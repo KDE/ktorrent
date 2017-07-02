@@ -19,12 +19,13 @@
  ***************************************************************************/
 
 #include "addtrackersdialog.h"
-#include <QRegExp>
+
 #include <QApplication>
 #include <QClipboard>
 #include <QCompleter>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QRegularExpression>
 #include <QVBoxLayout>
 #include <QUrl>
 
@@ -41,7 +42,8 @@ namespace kt
 
         // If we find any urls on the clipboard, add them
         QClipboard* clipboard = QApplication::clipboard();
-        foreach (const QString& s, clipboard->text().split(QRegExp(QLatin1String("\\s"))))
+        const QStringList urlStrings = clipboard->text().split(QRegularExpression(QLatin1String("\\s")));
+        for (const QString& s : urlStrings)
         {
             QUrl url(s);
             if (url.isValid() && (url.scheme() == QLatin1String("http")
