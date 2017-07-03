@@ -22,8 +22,8 @@
 #ifndef KTFILTEREDITOR_H
 #define KTFILTEREDITOR_H
 
+#include <QDialog>
 #include <QSortFilterProxyModel>
-#include <KDialog>
 
 #include "ui_filtereditor.h"
 
@@ -50,7 +50,7 @@ namespace kt
     /**
         Dialog to edit filters
     */
-    class FilterEditor : public KDialog, public Ui_FilterEditor
+    class FilterEditor : public QDialog, public Ui_FilterEditor
     {
         Q_OBJECT
     public:
@@ -65,7 +65,6 @@ namespace kt
     private:
         bool okIsPossible();
         void applyOnFilter(Filter* f);
-        virtual void slotButtonClicked(int button);
 
     private:
         Filter* filter;
@@ -75,6 +74,8 @@ namespace kt
         FeedWidgetModel* test_model;
         TestFilterModel* filter_model;
         FilterList* filters;
+
+        QPushButton *okButton;
     };
 
 }

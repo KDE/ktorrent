@@ -19,9 +19,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <QHeaderView>
+#include <QPushButton>
+#include <QVBoxLayout>
 
-#include <KDialog>
+#include <KConfigGroup>
 #include <KMessageBox>
 
 #include <interfaces/coreinterface.h>
@@ -36,12 +40,21 @@ namespace kt
 {
 
     FilterEditor::FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds, CoreInterface* core, QWidget* parent)
-        : KDialog(parent), filter(filter), core(core), feeds(feeds), filters(filters)
+        : QDialog(parent), filter(filter), core(core), feeds(feeds), filters(filters)
     {
-        setupUi(mainWidget());
-        setCaption(i18n("Edit Filter"));
-        setButtons(KDialog::Ok | KDialog::Cancel);
-        connect(this, SIGNAL(okClicked()), this, SLOT(onOK()));
+        QWidget *mainWidget = new QWidget(this);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        mainLayout->addWidget(mainWidget);
+        setupUi(mainWidget);
+        setWindowTitle(i18n("Edit Filter"));
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &FilterEditor::onOK);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &FilterEditor::reject);
+        mainLayout->addWidget(buttonBox);
 
         m_name->setText(filter->filterName());
         m_match_case_sensitive->setChecked(filter->caseSensitive());
@@ -113,7 +126,7 @@ namespace kt
         connect(m_word_matches, SIGNAL(changed()), this, SLOT(checkOKButton()));
         connect(m_word_matches, SIGNAL(removed(const QString&)), this, SLOT(checkOKButton()));
         connect(m_use_se_matching, SIGNAL(stateChanged(int)), this, SLOT(checkOKButton()));
-        enableButtonOk(okIsPossible());
+        okButton->setEnabled(okIsPossible());
 
         m_feed->setModel(feeds);
         m_test->setEnabled(feeds->rowCount(QModelIndex()) > 0);
@@ -158,7 +171,7 @@ namespace kt
 
     void FilterEditor::checkOKButton()
     {
-        enableButtonOk(okIsPossible());
+        okButton->setEnabled(okIsPossible());
     }
 
     bool FilterEditor::okIsPossible()
@@ -238,15 +251,7 @@ namespace kt
             return;
         }
         applyOnFilter(filter);
-        QDialog::accept();
-    }
-
-    void FilterEditor::slotButtonClicked(int button)
-    {
-        if (button == KDialog::Cancel)
-            QDialog::reject();
-        else if (button == KDialog::Ok)
-            onOK();
+        accept();
     }
 
     ////////////////////////////////////////

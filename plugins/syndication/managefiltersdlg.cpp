@@ -20,6 +20,9 @@
  ***************************************************************************/
 
 #include <KLocalizedString>
+#include <KConfigGroup>
+
+#include <QVBoxLayout>
 
 #include "managefiltersdlg.h"
 #include "filterlistmodel.h"
@@ -30,10 +33,14 @@
 namespace kt
 {
 
-    ManageFiltersDlg::ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationActivity* act, QWidget* parent) : KDialog(parent), feed(feed), filters(filters), act(act)
+    ManageFiltersDlg::ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationActivity* act, QWidget* parent) : QDialog(parent), feed(feed), filters(filters), act(act)
     {
         setWindowTitle(i18n("Add/Remove Filters"));
-        setupUi(mainWidget());
+        QWidget *mainWidget = new QWidget(this);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        mainLayout->addWidget(mainWidget);
+        setupUi(mainWidget);
         m_feed_text->setText(i18n("Feed: <b>%1</b>", feed->title()));
         m_add->setIcon(QIcon::fromTheme(QStringLiteral("go-previous")));
         m_add->setText(QString());

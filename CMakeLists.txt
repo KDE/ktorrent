@@ -53,7 +53,7 @@ find_package(KF5KDELibs4Support ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5KDELibs4Support
   PROPERTIES
   TYPE OPTIONAL
-  PURPOSE "Required for KTorrent's syndication and shutdown plugins"
+  PURPOSE "Required for KTorrent's shutdown plugin"
 )
 if(KF5KDELibs4Support_FOUND)
   set(HAVE_KDELibs4Support 1)

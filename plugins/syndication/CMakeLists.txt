@@ -35,7 +35,6 @@ target_link_libraries(
     KF5::WebKit
     KF5::WidgetsAddons
     KF5::XmlGui
-    KF5::KDELibs4Support
 )
 install(TARGETS ktorrent_syndication DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_syndicationui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

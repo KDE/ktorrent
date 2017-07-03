@@ -22,7 +22,7 @@
 #ifndef KTMANAGEFILTERSDLG_H
 #define KTMANAGEFILTERSDLG_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "ui_managefiltersdlg.h"
 
@@ -36,7 +36,7 @@ namespace kt
     /**
         Dialog to manage filters for a feed
     */
-    class ManageFiltersDlg : public KDialog, public Ui_ManageFiltersDlg
+    class ManageFiltersDlg : public QDialog, public Ui_ManageFiltersDlg
     {
         Q_OBJECT
     public:
