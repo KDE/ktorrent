@@ -47,7 +47,7 @@ class DownloadSlot : public QObject
 {
     Q_OBJECT
 public:
-    DownloadSlot(QObject *parent = 0);
+    DownloadSlot(QObject *parent = nullptr);
     virtual ~DownloadSlot();
 
     void setTimerDuration(unsigned int duration);
@@ -82,7 +82,7 @@ class KTCORE_EXPORT MagnetManager : public QObject
 {
     Q_OBJECT
 public:
-    MagnetManager(QObject* parent = 0);
+    MagnetManager(QObject* parent = nullptr);
     virtual ~MagnetManager();
 
     /// Adds a magnet link to the queue

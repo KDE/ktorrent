@@ -482,7 +482,7 @@ const MagnetDownloader *MagnetManager::getMagnetDownloader(bt::Uint32 idx) const
 {
     Q_ASSERT(idx < (Uint32) magnetHashes.size());
 
-    MagnetDownloader* md = 0;
+    MagnetDownloader* md = nullptr;
 
     Uint32 downloadQueueSize = magnetQueue.size();
     if (idx < downloadQueueSize)

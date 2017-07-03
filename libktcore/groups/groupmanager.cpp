@@ -347,7 +347,7 @@ namespace kt
                 return i->second;
         }
 
-        return 0;
+        return nullptr;
     }
 
     void GroupManager::updateCount(QueueManager* qman)

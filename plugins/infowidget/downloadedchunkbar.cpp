@@ -31,7 +31,7 @@ using namespace bt;
 namespace kt
 {
 
-    DownloadedChunkBar::DownloadedChunkBar(QWidget* parent) : ChunkBar(parent), curr_tc(NULL)
+    DownloadedChunkBar::DownloadedChunkBar(QWidget* parent) : ChunkBar(parent), curr_tc(nullptr)
     {
     }
 
