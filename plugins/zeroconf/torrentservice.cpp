@@ -90,7 +90,7 @@ namespace kt
         if (!browser)
         {
             browser = new KDNSSD::ServiceBrowser(QLatin1Char('_') + tc->getInfoHash().toString() + QStringLiteral("._sub._bittorrent._tcp"), true);
-            connect(browser, SIGNAL(serviceAdded(DNSSD::RemoteService::Ptr)), this, SLOT(onServiceAdded(DNSSD::RemoteService::Ptr)));
+            connect(browser, &KDNSSD::ServiceBrowser::serviceAdded, this, &TorrentService::onServiceAdded);
             browser->startBrowse();
         }
     }
