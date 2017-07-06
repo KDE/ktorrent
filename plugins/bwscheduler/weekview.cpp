@@ -21,8 +21,9 @@
 
 #include "weekview.h"
 
-#include <util/log.h>
 #include <QGraphicsItem>
+
+#include <util/log.h>
 #include <boost/bind.hpp>
 #include "weekscene.h"
 #include "schedule.h"
@@ -62,8 +63,8 @@ namespace kt
     {
         selection.clear();
 
-        QList<QGraphicsItem*> sel = scene->selectedItems();
-        foreach (QGraphicsItem* s, sel)
+        const QList<QGraphicsItem*> sel = scene->selectedItems();
+        for (QGraphicsItem* s : sel)
         {
             QMap<QGraphicsItem*, ScheduleItem*>::iterator i = item_map.find(s);
             if (i != item_map.end())

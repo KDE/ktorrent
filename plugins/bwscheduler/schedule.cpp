@@ -278,7 +278,7 @@ namespace kt
         enc.write(QByteArrayLiteral("enabled"), enabled);
         enc.write(QByteArrayLiteral("items"));
         enc.beginList();
-        foreach (ScheduleItem* i, items)
+        for (ScheduleItem* i : qAsConst(items))
         {
             enc.beginDict();
             enc.write(QByteArrayLiteral("start_day")); enc.write((Uint32)i->start_day);
@@ -317,7 +317,7 @@ namespace kt
         if (!item->isValid() || item->end <= item->start)
             return false;
 
-        foreach (ScheduleItem* i, items)
+        for (ScheduleItem* i : qAsConst(items))
         {
             if (item->conflicts(*i))
                 return false;
@@ -336,7 +336,7 @@ namespace kt
 
     ScheduleItem* Schedule::getCurrentItem(const QDateTime& now)
     {
-        foreach (ScheduleItem* i, items)
+        for (ScheduleItem* i : qAsConst(items))
         {
             if (i->contains(now))
             {
@@ -355,7 +355,7 @@ namespace kt
 
         // lets look at all schedule items on the same day
         // and find the next one
-        foreach (ScheduleItem* i, items)
+        for (ScheduleItem* i : qAsConst(items))
         {
             if (between(now.date().dayOfWeek(), i->start_day, i->end_day) && i->start > now.time())
             {
@@ -421,7 +421,7 @@ namespace kt
 
     bool Schedule::conflicts(ScheduleItem* item)
     {
-        foreach (ScheduleItem* i, items)
+        for (ScheduleItem* i : qAsConst(items))
         {
             if (i != item && (i->conflicts(*item) || item->conflicts(*i)))
                 return true;

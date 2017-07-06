@@ -181,7 +181,7 @@ namespace kt
         template<class Operation>
         void apply(Operation op)
         {
-            foreach (ScheduleItem* i, items)
+            for (ScheduleItem* i : qAsConst(items))
                 op(i);
         }
 

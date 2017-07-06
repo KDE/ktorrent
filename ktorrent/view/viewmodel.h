@@ -126,7 +126,7 @@ namespace kt
         template<class Action>
         void visit(Action& a)
         {
-            foreach (Item* item, torrents)
+            for (Item* item : qAsConst(torrents))
             {
                 if (item->visible(group, filter_string))
                     if (!a(item->tc))

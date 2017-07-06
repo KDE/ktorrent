@@ -226,9 +226,10 @@ int main(int argc, char** argv)
 
             bool silent = parser.isSet(QStringLiteral("silent"));
             auto loadMethod = silent ? &kt::GUI::loadSilently : &kt::GUI::load;
-            Q_FOREACH (const QString& filePath, parser.positionalArguments())
+            const auto positionalArguments = parser.positionalArguments();
+            for (const QString& filePath : positionalArguments)
             {
-                QUrl url = QFile::exists(filePath)?QUrl::fromLocalFile(filePath):QUrl(filePath);
+                QUrl url = QFile::exists(filePath) ? QUrl::fromLocalFile(filePath) : QUrl(filePath);
                 (widget.*loadMethod)(url);
             }
 

@@ -93,13 +93,13 @@ namespace kt
 
     void MagnetView::showContextMenu(QPoint p)
     {
-        QModelIndexList idx_list = view->selectionModel()->selectedRows();
+        const QModelIndexList idx_list = view->selectionModel()->selectedRows();
 
         start->setEnabled(false);
         stop->setEnabled(false);
         remove->setEnabled(idx_list.count() > 0);
 
-        foreach (const QModelIndex& idx, idx_list)
+        for (const QModelIndex& idx : idx_list)
         {
             if (!mman->isStopped(idx.row()))
                 stop->setEnabled(true);

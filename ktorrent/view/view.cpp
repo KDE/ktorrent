@@ -305,7 +305,7 @@ namespace kt
         bool en_add_peer = false;
         bool en_pause = false;
 
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             const TorrentStats& s = tc->getStats();
 
@@ -407,7 +407,7 @@ namespace kt
         {
             // model wasn't resorted, so update individual items
             const QModelIndexList& to_update = model->updateList();
-            foreach (const QModelIndex& idx, to_update)
+            for (const QModelIndex& idx : to_update)
                 QAbstractItemView::update(idx);
         }
     }
@@ -433,7 +433,7 @@ namespace kt
             // Give everybody in the selection a high priority
             int prio = qm->count();
             int idx = 0;
-            foreach (bt::TorrentInterface* tc, sel)
+            for (bt::TorrentInterface* tc : qAsConst(sel))
                 tc->setPriority(prio + sel.count() - idx++);
 
             core->start(sel);
@@ -463,7 +463,7 @@ namespace kt
     {
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             if (tc && !tc->getJobQueue()->runningJobs())
             {
@@ -498,7 +498,7 @@ namespace kt
             return;
 
         QStringList names;
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             names.append(tc->getDisplayName());
         }
@@ -540,7 +540,7 @@ namespace kt
     {
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             if (tc->getStats().running)
                 tc->updateTracker();
@@ -551,7 +551,7 @@ namespace kt
     {
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             tc->scrapeTracker();
         }
@@ -561,7 +561,7 @@ namespace kt
     {
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             if (tc->readyForPreview() && !tc->getStats().multi_file_torrent)
             {
@@ -574,7 +574,7 @@ namespace kt
     {
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             if (tc->getStats().multi_file_torrent)
                 new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
@@ -587,7 +587,7 @@ namespace kt
     {
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             new KRun(QUrl::fromLocalFile(tc->getTorDir()), 0, true);
         }
@@ -610,7 +610,7 @@ namespace kt
         if (!recentDirClass.isEmpty())
             KRecentDirs::add(recentDirClass, dir);
 
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             if (core->checkMissingFiles(tc))
                 tc->changeOutputDir(dir, bt::TorrentInterface::MOVE_FILES);
@@ -635,7 +635,7 @@ namespace kt
 
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
             group->removeTorrent(tc);
         core->getGroupManager()->saveGroups();
         update();
@@ -658,7 +658,7 @@ namespace kt
     {
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             if (tc->getStats().status != bt::ALLOCATING_DISKSPACE)
                 core->doDataCheck(tc);
@@ -833,7 +833,7 @@ namespace kt
 
         QList<bt::TorrentInterface*> sel;
         getSelection(sel);
-        foreach (bt::TorrentInterface* tc, sel)
+        for (bt::TorrentInterface* tc : qAsConst(sel))
         {
             g->addTorrent(tc, false);
         }
@@ -847,7 +847,7 @@ namespace kt
         {
             QList<bt::TorrentInterface*> sel;
             getSelection(sel);
-            foreach (bt::TorrentInterface* tc, sel)
+            for (bt::TorrentInterface* tc : qAsConst(sel))
             {
                 g->addTorrent(tc, false);
             }

@@ -183,7 +183,7 @@ namespace kt
     {
         try
         {
-            foreach (bt::UPnPRouter* r, routers)
+            for (bt::UPnPRouter* r : qAsConst(routers))
                 r->forward(port);
         }
         catch (bt::Error& e)
@@ -196,7 +196,7 @@ namespace kt
     {
         try
         {
-            foreach (bt::UPnPRouter* r, routers)
+            for (bt::UPnPRouter* r : qAsConst(routers))
                 r->undoForward(port, wjob);
         }
         catch (Error& e)

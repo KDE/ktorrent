@@ -177,8 +177,8 @@ namespace kt
 
     void WeekScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev)
     {
-        QList<QGraphicsItem*> gis = items(ev->scenePos());
-        foreach (QGraphicsItem* gi, gis)
+        const QList<QGraphicsItem*> gis = items(ev->scenePos());
+        for (QGraphicsItem* gi : gis)
         {
             if (gi->zValue() == 3)
             {
@@ -300,10 +300,10 @@ namespace kt
         QPen pen(SchedulerPluginSettings::scheduleLineColor());
         QBrush brush(SchedulerPluginSettings::scheduleBackgroundColor());
 
-        foreach (QGraphicsLineItem* line, lines)
+        for (QGraphicsLineItem* line : qAsConst(lines))
             line->setPen(pen);
 
-        foreach (QGraphicsRectItem* rect, rects)
+        for (QGraphicsRectItem* rect : qAsConst(rects))
         {
             rect->setPen(pen);
             rect->setBrush(brush);

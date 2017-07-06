@@ -427,7 +427,7 @@ namespace kt
             i->highlight = true;
 
             // Turn off highlight for previously highlighted torrents
-            foreach (Item* item, torrents)
+            for (Item* item : qAsConst(torrents))
                 if (item->highlight)
                     item->highlight = false;
         }
@@ -437,7 +437,7 @@ namespace kt
 
         // Scroll to new torrent
         int idx = 0;
-        foreach (Item* item, torrents)
+        for (Item* item : qAsConst(torrents))
         {
             if (item->tc == ti)
             {
@@ -451,7 +451,7 @@ namespace kt
     void ViewModel::removeTorrent(bt::TorrentInterface* ti)
     {
         int idx = 0;
-        foreach (Item* item, torrents)
+        for (Item* item : qAsConst(torrents))
         {
             if (item->tc == ti)
             {
@@ -477,7 +477,7 @@ namespace kt
         num_visible = 0;
 
         int row = 0;
-        foreach (Item* i, torrents)
+        for (Item* i : qAsConst(torrents))
         {
             bool hidden = !i->visible(group, filter_string);
             if (!hidden && i->update(row, sort_column, update_list, this))
@@ -754,7 +754,7 @@ namespace kt
             }
         }
 
-        foreach (const QString& s, hashes)
+        for (const QString& s : qAsConst(hashes))
             stream << s;
 
         mime_data->setData(QStringLiteral("application/x-ktorrent-drag-object"), encoded_data);
@@ -772,8 +772,8 @@ namespace kt
         if (!data->hasUrls())
             return false;
 
-        QList<QUrl> files = data->urls();
-        foreach (QUrl file, files)
+        const QList<QUrl> files = data->urls();
+        for (const QUrl &file : files)
         {
             core->load(file, QString());
         }
@@ -788,7 +788,7 @@ namespace kt
 
     void ViewModel::torrentsFromIndexList(const QModelIndexList& idx, QList<bt::TorrentInterface*> & tlist)
     {
-        foreach (const QModelIndex& i, idx)
+        for (const QModelIndex& i : idx)
         {
             bt::TorrentInterface* tc = torrentFromIndex(i);
             if (tc)
@@ -822,7 +822,7 @@ namespace kt
 
     void ViewModel::allTorrents(QList<bt::TorrentInterface*> & tlist) const
     {
-        foreach (Item* item, torrents)
+        for (Item* item : qAsConst(torrents))
         {
             if (item->visible(group, filter_string))
                 tlist.append(item->tc);
@@ -854,7 +854,7 @@ namespace kt
     void ViewModel::onExit()
     {
         // items should be removed before Core delete their tc data.
-        foreach (Item* item, torrents)
+        for (Item* item : qAsConst(torrents))
         {
             removeTorrent(item->tc);
         }
