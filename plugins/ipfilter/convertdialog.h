@@ -17,6 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
 ***************************************************************************/
+
 #ifndef CONVERTDIALOG_H
 #define CONVERTDIALOG_H
 
@@ -38,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         ConvertDialog(QWidget* parent);
-        virtual ~ConvertDialog();
+        ~ConvertDialog();
 
         /**
          * Set the message.
@@ -60,7 +61,7 @@ namespace kt
         void update();
 
     private:
-        virtual void closeEvent(QCloseEvent* e);
+        void closeEvent(QCloseEvent* e) override;
 
     private:
         ConvertThread* convert_thread;

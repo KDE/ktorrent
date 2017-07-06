@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         PlayList(MediaFileCollection* collection, MediaPlayer* player, QObject* parent);
-        virtual ~PlayList();
+        ~PlayList();
 
         void addFile(const MediaFileRef& file);
         void removeFile(const MediaFileRef& file);
@@ -49,20 +49,19 @@ namespace kt
         void load(const QString& file);
         void clear();
 
-        virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual QModelIndex parent(const QModelIndex& child) const;
-        virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-        virtual Qt::DropActions supportedDropActions() const;
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual QStringList mimeTypes() const;
-        virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
-        virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
-
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+        QModelIndex parent(const QModelIndex& child) const override;
+        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+        Qt::DropActions supportedDropActions() const override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        QStringList mimeTypes() const override;
+        QMimeData* mimeData(const QModelIndexList& indexes) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
 
     private slots:
         void onPlaying(const MediaFileRef& file);

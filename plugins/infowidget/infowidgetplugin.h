@@ -51,13 +51,13 @@ namespace kt
         Q_OBJECT
     public:
         InfoWidgetPlugin(QObject* parent, const QVariantList& args);
-        virtual ~InfoWidgetPlugin();
+        ~InfoWidgetPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual void guiUpdate();
-        virtual void currentTorrentChanged(bt::TorrentInterface* tc);
-        virtual bool versionCheck(const QString& version) const;
+        void load() override;
+        void unload() override;
+        void guiUpdate() override;
+        void currentTorrentChanged(bt::TorrentInterface* tc) override;
+        bool versionCheck(const QString& version) const override;
 
         ///Show PeerView in main window
         void showPeerView(bool show);

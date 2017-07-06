@@ -47,7 +47,7 @@ namespace kt
         Q_OBJECT
     public:
         ScriptManager(ScriptModel* model, QWidget* parent);
-        virtual ~ScriptManager();
+        ~ScriptManager();
 
         /// Get all selected scripts
         QModelIndexList selectedScripts();

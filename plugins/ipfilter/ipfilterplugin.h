@@ -46,11 +46,11 @@ namespace kt
         Q_OBJECT
     public:
         IPFilterPlugin(QObject* parent, const QVariantList& args);
-        virtual ~IPFilterPlugin();
+        ~IPFilterPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
 
         ///Loads the KT format list filter
         void loadFilters();

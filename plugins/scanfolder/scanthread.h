@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         ScanThread();
-        virtual ~ScanThread();
+        ~ScanThread();
 
         /**
          * Set whether to scan recursively or not
@@ -70,13 +70,13 @@ namespace kt
         void setFolderList(const QStringList& folders);
 
     protected:
-        virtual void run();
+        void run() override;
 
     private:
         void scan(const QUrl& dir, bool recursive);
         bool alreadyLoaded(const QDir& d, const QString& torrent);
         void updateFolders();
-        virtual void customEvent(QEvent* ev);
+        void customEvent(QEvent* ev) override;
 
     signals:
         /**

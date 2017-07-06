@@ -15,8 +15,9 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
+
 #ifndef KPlotWgtDrawer_H_
 #define KPlotWgtDrawer_H_
 
@@ -87,35 +88,35 @@ namespace kt
         ///Constructor
         KPlotWgtDrawer(QWidget* p);
 
-        void paintEvent(QPaintEvent* pPevt);
-        QUuid getUuid(const size_t idx) const;
+        void paintEvent(QPaintEvent* pPevt) override;
+        QUuid getUuid(const size_t idx) const override;
 
-        bool event(QEvent*) ;
+        bool event(QEvent*) override;
 
     public slots:
-        void addValue(const size_t idx, const wgtunit_t val, const bool upd = false);
-        void addDataSet(ChartDrawerData Cdd);
-        void insertDataSet(const size_t idx, ChartDrawerData Cdd);
-        void removeDataSet(const size_t idx);
-        void zero(const size_t idx);
-        void zeroAll();
-        void setUnitName(const QString& rN);
-        void setPen(const size_t idx, const QPen& rP);
-        void setXMax(const wgtunit_t x);
-        void setYMax(const wgtunit_t y);
-        void findSetMax();
-        void setUuid(const size_t idx, const QUuid& rQ);
-        int16_t findUuidInSet(const QUuid& rQ) const;
-        void setMaxMode(const MaxMode mm);
-        void update();
-        void setLegend(const QString& rL);
-        QString makeLegendString();
+        void addValue(const size_t idx, const wgtunit_t val, const bool upd = false) override;
+        void addDataSet(ChartDrawerData Cdd) override;
+        void insertDataSet(const size_t idx, ChartDrawerData Cdd) override;
+        void removeDataSet(const size_t idx) override;
+        void zero(const size_t idx) override;
+        void zeroAll() override;
+        void setUnitName(const QString& rN) override;
+        void setPen(const size_t idx, const QPen& rP) override;
+        void setXMax(const wgtunit_t x) override;
+        void setYMax(const wgtunit_t y) override;
+        void findSetMax() override;
+        void setUuid(const size_t idx, const QUuid& rQ) override;
+        int16_t findUuidInSet(const QUuid& rQ) const override;
+        void setMaxMode(const MaxMode mm) override;
+        void update() override;
+        void setLegend(const QString& rL) override;
+        QString makeLegendString() override;
 
-        void enableAntiAlias(bool aa);
-        void enableBackgroundGrid(bool bg);
+        void enableAntiAlias(bool aa) override;
+        void enableBackgroundGrid(bool bg) override;
 
-        void showContextMenu(const QPoint& rP);
-        void renderToImage();
+        void showContextMenu(const QPoint& rP) override;
+        void renderToImage() override;
 
     signals:
         void Zeroed(ChartDrawer*);

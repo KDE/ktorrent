@@ -46,7 +46,7 @@ namespace kt
          * @param dir The directory
          */
         ScanFolder(ScanThread* scanner, const QUrl &dir, bool recursive);
-        virtual ~ScanFolder();
+        ~ScanFolder();
 
         /**
          * Set if the ScanFolder needs to scan subdirectories recursively

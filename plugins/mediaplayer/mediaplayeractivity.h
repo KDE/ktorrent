@@ -49,7 +49,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaPlayerActivity(CoreInterface* core, KActionCollection* ac, QWidget* parent);
-        virtual ~MediaPlayerActivity();
+        ~MediaPlayerActivity();
 
         void setupActions();
         void saveState(KSharedConfigPtr cfg);

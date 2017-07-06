@@ -39,11 +39,11 @@ namespace kt
 
     public:
         SyndicationPlugin(QObject* parent, const QVariantList& args);
-        virtual ~SyndicationPlugin();
+        ~SyndicationPlugin();
 
-        virtual bool versionCheck(const QString& version) const;
-        virtual void load();
-        virtual void unload();
+        bool versionCheck(const QString& version) const override;
+        void load() override;
+        void unload() override;
 
     private:
         void setupActions();

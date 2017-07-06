@@ -40,17 +40,17 @@ namespace kt
         {
         }
 
-        virtual ~OpenSearchHandler()
+        ~OpenSearchHandler()
         {
         }
 
-        virtual bool characters(const QString& ch)
+        bool characters(const QString& ch) override
         {
             tmp += ch;
             return true;
         }
 
-        virtual bool startElement(const QString& namespaceURI, const QString& localName, const QString& qName, const QXmlAttributes& atts)
+        bool startElement(const QString& namespaceURI, const QString& localName, const QString& qName, const QXmlAttributes& atts) override
         {
             Q_UNUSED(namespaceURI);
             Q_UNUSED(qName);
@@ -64,7 +64,7 @@ namespace kt
             return true;
         }
 
-        virtual bool endElement(const QString& namespaceURI, const QString& localName, const QString& qName)
+        bool endElement(const QString& namespaceURI, const QString& localName, const QString& qName) override
         {
             Q_UNUSED(namespaceURI);
             Q_UNUSED(qName);

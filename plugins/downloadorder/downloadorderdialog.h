@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTDOWNLOADORDERDIALOG_H
 #define KTDOWNLOADORDERDIALOG_H
 
@@ -42,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent);
-        virtual ~DownloadOrderDialog();
+        ~DownloadOrderDialog();
 
     private slots:
         void commitDownloadOrder();

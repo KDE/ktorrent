@@ -39,14 +39,14 @@ namespace kt
          * @param parent Parent of the BufferNetworkReply
          */
         BufferNetworkReply(const QByteArray& data, const QString& content_type, QObject* parent = 0);
-        virtual ~BufferNetworkReply();
+        ~BufferNetworkReply();
 
-        virtual void abort();
-        virtual bool isSequential() const {return true;}
-        virtual qint64 bytesAvailable() const;
+        void abort() override;
+        bool isSequential() const override {return true;}
+        qint64 bytesAvailable() const override;
 
     protected:
-        virtual qint64 readData(char* data, qint64 maxlen);
+        qint64 readData(char* data, qint64 maxlen) override;
 
     private:
         QBuffer buf;

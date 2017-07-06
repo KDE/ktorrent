@@ -40,11 +40,11 @@ namespace kt
         Q_OBJECT
     public:
         ZeroConfPlugin(QObject* parent, const QVariantList& args);
-        virtual ~ZeroConfPlugin();
+        ~ZeroConfPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
 
     private slots:
         /**

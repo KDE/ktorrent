@@ -38,9 +38,9 @@ namespace kt
         DBus* api;
     public:
         ScriptableGroup(const QString& name, const QString& icon, const QString& path, Kross::Object::Ptr script, DBus* api);
-        virtual ~ScriptableGroup();
+        ~ScriptableGroup();
 
-        virtual bool isMember(bt::TorrentInterface* tor);
+        bool isMember(bt::TorrentInterface* tor) override;
     };
 
 }

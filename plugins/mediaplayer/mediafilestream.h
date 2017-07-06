@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaFileStream(bt::TorrentFileStream::WPtr stream, QObject* parent = 0);
-        virtual ~MediaFileStream();
+        ~MediaFileStream();
 
         enum StreamState
         {
@@ -50,10 +50,10 @@ namespace kt
         StreamState state() const {return waiting_for_data ? BUFFERING : PLAYING;}
 
     protected:
-        virtual void needData();
-        virtual void reset();
-        virtual void enoughData();
-        virtual void seekStream(qint64 offset);
+        void needData() override;
+        void reset() override;
+        void enoughData() override;
+        void seekStream(qint64 offset) override;
 
     signals:
         /// Emitted when the stream state changes

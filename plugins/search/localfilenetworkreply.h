@@ -33,15 +33,15 @@ namespace kt
     {
     public:
         LocalFileNetworkReply(const QString& file, QObject* parent = 0);
-        virtual ~LocalFileNetworkReply();
+        ~LocalFileNetworkReply();
 
-        virtual void abort();
-        virtual bool isSequential() const {return true;}
-        virtual bool atEnd() const;
-        virtual qint64 bytesAvailable() const;
+        void abort() override;
+        bool isSequential() const override {return true;}
+        bool atEnd() const override;
+        qint64 bytesAvailable() const override;
 
     protected:
-        virtual qint64 readData(char* data, qint64 maxlen);
+        qint64 readData(char* data, qint64 maxlen) override;
 
     private:
         QFile* fptr;

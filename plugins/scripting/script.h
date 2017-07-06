@@ -41,7 +41,7 @@ namespace kt
     public:
         Script(QObject* parent);
         Script(const QString& file, QObject* parent);
-        virtual ~Script();
+        ~Script();
 
         struct MetaInfo
         {

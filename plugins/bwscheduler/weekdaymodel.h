@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTWEEKDAYMODEL_H
 #define KTWEEKDAYMODEL_H
 
@@ -35,12 +36,12 @@ namespace kt
         Q_OBJECT
     public:
         WeekDayModel(QObject* parent);
-        virtual ~WeekDayModel();
+        ~WeekDayModel();
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+        int rowCount(const QModelIndex& parent) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
 
         /// Get all the days which have been checked
         QList<int> checkedDays() const;

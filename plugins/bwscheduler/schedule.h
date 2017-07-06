@@ -18,11 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTSCHEDULE_H
 #define KTSCHEDULE_H
 
-#include <QTime>
 #include <QList>
+#include <QTime>
 #include <util/constants.h>
 
 namespace bt
@@ -101,7 +102,7 @@ namespace kt
     {
     public:
         Schedule();
-        virtual ~Schedule();
+        ~Schedule();
 
         /**
          * Load a schedule from a file.

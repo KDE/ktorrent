@@ -55,10 +55,10 @@ namespace kt
             webview->getProxy()->ApplyProxy(sessionMetaData());
         }
 
-        virtual ~NetworkAccessManager()
+        ~NetworkAccessManager()
         {}
 
-        virtual QNetworkReply* createRequest(Operation op, const QNetworkRequest& req, QIODevice* outgoingData)
+        QNetworkReply* createRequest(Operation op, const QNetworkRequest& req, QIODevice* outgoingData) override
         {
             if (req.url().scheme() == QStringLiteral("magnet"))
             {

@@ -54,12 +54,12 @@ namespace kt
         */
         StatsPlugin(QObject* p, const QVariantList&);
         ///Destructor
-        virtual ~StatsPlugin();
+        ~StatsPlugin();
 
-        void load();
-        void unload();
-        bool versionCheck(const QString& version) const;
-        void guiUpdate();
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
+        void guiUpdate() override;
 
     public slots:
         ///Gather data

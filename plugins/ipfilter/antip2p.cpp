@@ -40,13 +40,13 @@ namespace kt
     static Uint32 StringToUint32(const QString& ip)
     {
         bool test;
-        Uint32 ret = ip.section('.', 0, 0).toULongLong(&test);
+        Uint32 ret = ip.section(QLatin1Char('.'), 0, 0).toULongLong(&test);
         ret <<= 8;
-        ret |= ip.section('.', 1, 1).toULong(&test);
+        ret |= ip.section(QLatin1Char('.'), 1, 1).toULong(&test);
         ret <<= 8;
-        ret |= ip.section('.', 2, 2).toULong(&test);
+        ret |= ip.section(QLatin1Char('.'), 2, 2).toULong(&test);
         ret <<= 8;
-        ret |= ip.section('.', 3, 3).toULong(&test);
+        ret |= ip.section(QLatin1Char('.'), 3, 3).toULong(&test);
 
         return ret;
     }

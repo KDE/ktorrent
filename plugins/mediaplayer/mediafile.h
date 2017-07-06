@@ -69,7 +69,7 @@ namespace kt
             @param mf The MediaFile to copy
         */
         MediaFile(const MediaFile& mf);
-        virtual ~MediaFile();
+        ~MediaFile();
 
         /// Get the path of the MediaFile
         QString path() const;

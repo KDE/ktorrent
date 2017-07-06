@@ -55,18 +55,18 @@ namespace kt
         Q_OBJECT
     public:
         MediaModel(CoreInterface* core, QObject* parent);
-        virtual ~MediaModel();
+        ~MediaModel();
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual int columnCount(const QModelIndex& parent) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual QStringList mimeTypes() const;
-        virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
-        virtual QModelIndex index(int row, int column = 0, const QModelIndex& parent = QModelIndex()) const;
+        int rowCount(const QModelIndex& parent) const override;
+        int columnCount(const QModelIndex& parent) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        QStringList mimeTypes() const override;
+        QMimeData* mimeData(const QModelIndexList& indexes) const override;
+        QModelIndex index(int row, int column = 0, const QModelIndex& parent = QModelIndex()) const override;
 
         /// Get the file given a model index
         MediaFileRef fileForIndex(const QModelIndex& idx) const;
@@ -74,7 +74,7 @@ namespace kt
         /// Get the index of a full path
         QModelIndex indexForPath(const QString& path) const;
 
-        virtual MediaFileRef find(const QString& path);
+        MediaFileRef find(const QString& path) override;
 
     public slots:
         void onTorrentAdded(bt::TorrentInterface* t);

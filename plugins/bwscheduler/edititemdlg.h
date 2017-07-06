@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTEDITITEMDLG_H
 #define KTEDITITEMDLG_H
 
@@ -37,12 +38,12 @@ namespace kt
         Q_OBJECT
     public:
         EditItemDlg(Schedule* schedule, ScheduleItem* item, bool new_item, QWidget* parent);
-        virtual ~EditItemDlg();
+        ~EditItemDlg();
 
         /**
          * accept will only work if the item does not conflict
          **/
-        virtual void accept();
+        void accept() override;
 
     private slots:
         void fromChanged(const QTime& time);

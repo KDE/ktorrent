@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         SearchActivity(SearchPlugin* sp, QWidget* parent);
-        virtual ~SearchActivity();
+        ~SearchActivity();
 
         /// Add a SearchWidget
         void search(const QString& text, int engine);

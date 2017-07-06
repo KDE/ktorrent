@@ -41,7 +41,7 @@ namespace kt
     {
     public:
         SyndicationActivity(SyndicationPlugin* sp, QWidget* parent);
-        virtual ~SyndicationActivity();
+        ~SyndicationActivity();
 
         void loadState(KSharedConfigPtr cfg);
         void saveState(KSharedConfigPtr cfg);

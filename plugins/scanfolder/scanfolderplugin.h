@@ -43,11 +43,11 @@ namespace kt
         Q_OBJECT
     public:
         ScanFolderPlugin(QObject* parent, const QVariantList& args);
-        virtual ~ScanFolderPlugin();
+        ~ScanFolderPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
 
     public slots:
         void updateScanFolders();

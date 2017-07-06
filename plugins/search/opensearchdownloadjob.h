@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         OpenSearchDownloadJob(const QUrl &url, const QString& dir, ProxyHelper *proxy);
-        virtual ~OpenSearchDownloadJob();
+        ~OpenSearchDownloadJob();
 
         /// Start the job
         void start();

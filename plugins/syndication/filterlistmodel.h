@@ -35,12 +35,12 @@ namespace kt
     {
     public:
         FilterListModel(QObject* parent);
-        virtual ~FilterListModel();
+        ~FilterListModel();
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        int rowCount(const QModelIndex& parent) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
 
         void addFilter(Filter* f);
         void removeFilter(Filter* f);

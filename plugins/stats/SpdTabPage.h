@@ -67,10 +67,10 @@ namespace kt
         ~SpdTabPage();
 
     public slots:
-        void applySettings();
-        void updateAllCharts();
-        void gatherData(Plugin*);
-        void resetAvg(ChartDrawer*);
+        void applySettings() override;
+        void updateAllCharts() override;
+        void gatherData(Plugin*) override;
+        void resetAvg(ChartDrawer*) override;
 
     private:
         /** \brief Gathers dl speeds data
@@ -86,7 +86,7 @@ namespace kt
          */
         void gatherUploadSpeed(Plugin* pP);
 
-        void setupUi();
+        void setupUi() override;
 
     private:
         ///Page's UI

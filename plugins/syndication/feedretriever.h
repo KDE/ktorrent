@@ -43,14 +43,14 @@ namespace kt
         /// Constructor, does save a backup copy
         FeedRetriever(const QString& file_name);
 
-        virtual ~FeedRetriever();
+        ~FeedRetriever();
 
         /// Set the authentication cookie
         void setAuthenticationCookie(const QString& cookie);
 
-        virtual void abort();
-        virtual int errorCode() const;
-        virtual void retrieveData(const QUrl& url);
+        void abort() override;
+        int errorCode() const override;
+        void retrieveData(const QUrl& url) override;
 
     private slots:
         void finished(KJob* j);

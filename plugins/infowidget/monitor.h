@@ -45,16 +45,16 @@ namespace kt
         FileView* fv;
     public:
         Monitor(bt::TorrentInterface* tc, PeerView* pv , ChunkDownloadView* cdv, FileView* fv);
-        virtual ~Monitor();
+        ~Monitor();
 
-        virtual void downloadRemoved(bt::ChunkDownloadInterface* cd);
-        virtual void downloadStarted(bt::ChunkDownloadInterface* cd);
-        virtual void peerAdded(bt::PeerInterface* peer);
-        virtual void peerRemoved(bt::PeerInterface* peer);
-        virtual void stopped();
-        virtual void destroyed();
-        virtual void filePercentageChanged(bt::TorrentFileInterface* file, float percentage);
-        virtual void filePreviewChanged(bt::TorrentFileInterface* file, bool preview);
+        void downloadRemoved(bt::ChunkDownloadInterface* cd) override;
+        void downloadStarted(bt::ChunkDownloadInterface* cd) override;
+        void peerAdded(bt::PeerInterface* peer) override;
+        void peerRemoved(bt::PeerInterface* peer) override;
+        void stopped() override;
+        void destroyed() override;
+        void filePercentageChanged(bt::TorrentFileInterface* file, float percentage) override;
+        void filePreviewChanged(bt::TorrentFileInterface* file, bool preview) override;
     };
 }
 

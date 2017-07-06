@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         PeerViewModel(QObject* parent);
-        virtual ~PeerViewModel();
+        ~PeerViewModel();
 
         /// A peer has been added
         void peerAdded(bt::PeerInterface* peer);
@@ -59,13 +59,13 @@ namespace kt
         */
         void clear();
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual int columnCount(const QModelIndex& parent) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
-        virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+        int rowCount(const QModelIndex& parent) const override;
+        int columnCount(const QModelIndex& parent) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
+        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
 
         bt::PeerInterface* indexToPeer(const QModelIndex& idx);
 

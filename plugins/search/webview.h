@@ -93,7 +93,7 @@ namespace kt
         ProxyHelper* getProxy() const {return m_proxy;}
     protected:
         void loadHomePage();
-        virtual QWebView* createWindow(QWebPage::WebWindowType type);
+        QWebView* createWindow(QWebPage::WebWindowType type) override;
 
     public slots:
         /**

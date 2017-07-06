@@ -38,14 +38,14 @@ namespace kt
         Q_OBJECT
     public:
         IWFileTreeModel(bt::TorrentInterface* tc, QObject* parent);
-        virtual ~IWFileTreeModel();
+        ~IWFileTreeModel();
 
-        virtual void changeTorrent(bt::TorrentInterface* tc);
-        virtual int columnCount(const QModelIndex& parent) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual void update();
-        virtual void changePriority(const QModelIndexList& indexes, bt::Priority newpriority);
+        void changeTorrent(bt::TorrentInterface* tc) override;
+        int columnCount(const QModelIndex& parent) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        void update() override;
+        void changePriority(const QModelIndexList& indexes, bt::Priority newpriority) override;
 
         void filePercentageChanged(bt::TorrentFileInterface* file, float percentage);
         void filePreviewChanged(bt::TorrentFileInterface* file, bool preview);

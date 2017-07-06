@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef ANTIP2P_H
 #define ANTIP2P_H
 
@@ -56,9 +57,9 @@ namespace kt
     {
     public:
         AntiP2P();
-        virtual ~AntiP2P();
+        ~AntiP2P();
 
-        virtual bool blocked(const net::Address& addr) const;
+        bool blocked(const net::Address& addr) const override;
 
         /**
          * Checks if anti-p2p file is present. Used to check if we should use level1 list

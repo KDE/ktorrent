@@ -37,13 +37,13 @@ namespace kt
         Q_OBJECT
     public:
         ShutdownTorrentDelegate(QObject* parent = 0);
-        virtual ~ShutdownTorrentDelegate();
+        ~ShutdownTorrentDelegate();
 
-        virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-        virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
-        virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
-        virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-        virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        void setEditorData(QWidget* editor, const QModelIndex& index) const override;
+        void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
+        void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
     };
 
 
@@ -52,16 +52,16 @@ namespace kt
         Q_OBJECT
     public:
         ShutdownTorrentModel(CoreInterface* core, QObject* parent);
-        virtual ~ShutdownTorrentModel();
+        ~ShutdownTorrentModel();
 
-        virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
 
         /**
             Apply the current model to the rules

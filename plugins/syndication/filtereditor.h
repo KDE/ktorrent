@@ -39,9 +39,9 @@ namespace kt
     {
     public:
         TestFilterModel(Filter* filter, FeedWidgetModel* source, QObject* parent);
-        virtual ~TestFilterModel();
+        ~TestFilterModel();
 
-        virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+        bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
     private:
         Filter* filter;
         FeedWidgetModel* feed_model;
@@ -55,7 +55,7 @@ namespace kt
         Q_OBJECT
     public:
         FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds, CoreInterface* core, QWidget* parent);
-        virtual ~FilterEditor();
+        ~FilterEditor();
 
     private slots:
         void onOK();

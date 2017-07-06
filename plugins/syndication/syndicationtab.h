@@ -45,7 +45,7 @@ namespace kt
         Q_OBJECT
     public:
         SyndicationTab(KActionCollection* ac, FeedList* feeds, FilterList* filters, QWidget* parent);
-        virtual ~SyndicationTab();
+        ~SyndicationTab();
 
         FeedListView* feedView() {return feed_view;}
         FilterListView* filterView() {return filter_view;}

@@ -35,9 +35,9 @@ namespace kt
         Q_OBJECT
     public:
         AvailabilityChunkBar(QWidget* parent);
-        virtual ~AvailabilityChunkBar();
+        ~AvailabilityChunkBar();
 
-        virtual const bt::BitSet& getBitSet() const;
+        const bt::BitSet& getBitSet() const override;
 
         void setTC(bt::TorrentInterface* tc);
     private:

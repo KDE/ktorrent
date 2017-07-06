@@ -51,7 +51,7 @@ namespace kt
         Q_OBJECT
     public:
         VideoWidget(MediaPlayer* player, KActionCollection* ac, QWidget* parent);
-        virtual ~VideoWidget();
+        ~VideoWidget();
 
         /**
          * Make the widget full screen or not.
@@ -60,8 +60,8 @@ namespace kt
         void setFullScreen(bool on);
 
     protected:
-        virtual void mouseMoveEvent(QMouseEvent* event);
-        virtual bool eventFilter(QObject* dst, QEvent* event);
+        void mouseMoveEvent(QMouseEvent* event) override;
+        bool eventFilter(QObject* dst, QEvent* event) override;
 
     private slots:
         void play();

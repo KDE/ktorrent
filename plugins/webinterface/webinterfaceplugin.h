@@ -36,11 +36,11 @@ namespace kt
         Q_OBJECT
     public:
         WebInterfacePlugin(QObject* parent, const QStringList& args);
-        virtual ~WebInterfacePlugin();
+        ~WebInterfacePlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
 
     private slots:
         void preferencesUpdated();

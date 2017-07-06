@@ -37,7 +37,7 @@ namespace kt
         Q_OBJECT
     public:
         FilterListView(FilterList* filters, QWidget* parent);
-        virtual ~FilterListView();
+        ~FilterListView();
 
         QModelIndexList selectedFilters();
 

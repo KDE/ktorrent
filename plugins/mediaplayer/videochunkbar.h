@@ -35,13 +35,13 @@ namespace kt
         Q_OBJECT
     public:
         VideoChunkBar(const MediaFileRef& mfile, QWidget* parent);
-        virtual ~VideoChunkBar();
+        ~VideoChunkBar();
 
         /// Set the media file
         void setMediaFile(const MediaFileRef& mf);
 
         /// Get the bitset
-        virtual const bt::BitSet& getBitSet() const;
+        const bt::BitSet& getBitSet() const override;
 
         /// Time has elapsed during playing, update the bar if necessary
         void timeElapsed(qint64 time);
@@ -51,7 +51,7 @@ namespace kt
         void updateBitSet();
 
     private:
-        virtual void drawBarContents(QPainter* p);
+        void drawBarContents(QPainter* p) override;
 
     private:
         MediaFileRef mfile;

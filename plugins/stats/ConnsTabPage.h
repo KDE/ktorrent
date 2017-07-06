@@ -73,15 +73,14 @@ namespace kt
         const QUuid pmSesSwnUuid;
 
         /** \brief Gathers data about connections
-        \param  pP kt::Plugin interface
+        \param  pPlug kt::Plugin interface
         */
-        void GatherConnStats(Plugin*);
+        void GatherConnStats(Plugin* pPlug);
         /** \brief Gathers data about DHT
-        \param  pP kt::Plugin interface
         */
         void GatherDhtStats();
 
-        void setupUi();
+        void setupUi() override;
     public:
         /** \brief Constructor
         \param  p Parent
@@ -92,10 +91,10 @@ namespace kt
 
 
     public slots:
-        void applySettings();
-        void updateAllCharts();
-        void gatherData(Plugin*);
-        void resetAvg(ChartDrawer*);
+        void applySettings() override;
+        void updateAllCharts() override;
+        void gatherData(Plugin*) override;
+        void resetAvg(ChartDrawer*) override;
     };
 
 } // ns end

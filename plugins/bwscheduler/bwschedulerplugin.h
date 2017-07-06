@@ -47,11 +47,11 @@ namespace kt
         Q_OBJECT
     public:
         BWSchedulerPlugin(QObject* parent, const QVariantList& args);
-        virtual ~BWSchedulerPlugin();
+        ~BWSchedulerPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
 
     public slots:
         void timerTriggered();

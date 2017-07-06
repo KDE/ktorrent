@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTDOWNLOADORDERMANAGER_H
 #define KTDOWNLOADORDERMANAGER_H
 
@@ -41,7 +42,7 @@ namespace kt
         Q_OBJECT
     public:
         DownloadOrderManager(bt::TorrentInterface* tor);
-        virtual ~DownloadOrderManager();
+        ~DownloadOrderManager();
 
         /// See if the file download order is enabled
         bool enabled() const {return order.count() > 0;}

@@ -37,13 +37,13 @@ namespace kt
         Q_OBJECT
     public:
         DownloadOrderPlugin(QObject* parent, const QVariantList& args);
-        virtual ~DownloadOrderPlugin();
+        ~DownloadOrderPlugin();
 
-        virtual bool versionCheck(const QString& version) const;
-        virtual void load();
-        virtual void unload();
-        virtual void currentTorrentChanged(bt::TorrentInterface* tc);
-        virtual QString parentPart() const {return QStringLiteral("torrentactivity");}
+        bool versionCheck(const QString& version) const override;
+        void load() override;
+        void unload() override;
+        void currentTorrentChanged(bt::TorrentInterface* tc) override;
+        QString parentPart() const override {return QStringLiteral("torrentactivity");}
 
         /// Get the download order manager for a torrent (returns 0 if none exists)
         DownloadOrderManager* manager(bt::TorrentInterface* tc);

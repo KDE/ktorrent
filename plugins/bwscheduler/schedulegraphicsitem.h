@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTSCHEDULEGRAPHICSITEM_H
 #define KTSCHEDULEGRAPHICSITEM_H
 
@@ -35,9 +36,9 @@ namespace kt
     {
     public:
         ScheduleGraphicsItem(ScheduleItem* item, const QRectF& r, const QRectF& constraints, WeekScene* ws);
-        virtual ~ScheduleGraphicsItem();
+        ~ScheduleGraphicsItem();
 
-        virtual QVariant itemChange(GraphicsItemChange change, const QVariant& value);
+        QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
         /**
          * Update the item.
@@ -46,12 +47,12 @@ namespace kt
         void update(const QRectF& r);
 
     private:
-        virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-        virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
-        virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-        virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
-        virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
-        virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
+        void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+        void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+        void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+        void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
+        void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+        void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
         bt::Uint32 nearEdge(QPointF p);
         QRectF resize(QPointF scene_pos);
         void updateCursor();

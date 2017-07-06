@@ -45,7 +45,7 @@ namespace kt
         QString data_dir;
     public:
         SearchEngineList(ProxyHelper* proxy, const QString& data_dir);
-        virtual ~SearchEngineList();
+        ~SearchEngineList();
 
         /// Load all engines
         void loadEngines();
@@ -59,10 +59,10 @@ namespace kt
         /// Get the number of engines
         bt::Uint32 getNumEngines() const {return engines.count();}
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
+        int rowCount(const QModelIndex& parent) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
 
         /**
          * Remove all engines in a list

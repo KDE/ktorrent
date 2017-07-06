@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         LinkDownloader(const QUrl& url, CoreInterface* core, bool verbose, const QString& group, const QString& location, const QString& move_on_completion);
-        virtual ~LinkDownloader();
+        ~LinkDownloader();
 
         /// Start the download proces
         void start();

@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
     public:
         FilterList(QObject* parent);
-        virtual ~FilterList();
+        ~FilterList();
 
         void saveFilters(const QString& file);
         void loadFilters(const QString& file);

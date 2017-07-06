@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationActivity* act, QWidget* parent);
-        virtual ~ManageFiltersDlg();
+        ~ManageFiltersDlg();
 
     private slots:
         void add();
@@ -52,7 +52,7 @@ namespace kt
         void availableSelectionChanged(const QItemSelection& sel, const QItemSelection& desel);
 
     private:
-        virtual void accept();
+        void accept() override;
 
     private:
         Feed* feed;

@@ -42,10 +42,10 @@ namespace kt
         Q_OBJECT
     public:
         SearchPrefPage(SearchPlugin* plugin, SearchEngineList* sl, QWidget* parent);
-        virtual ~SearchPrefPage();
+        ~SearchPrefPage();
 
-        virtual void loadSettings();
-        virtual void loadDefaults();
+        void loadSettings() override;
+        void loadDefaults() override;
 
     public slots:
         void customToggled(bool toggled);

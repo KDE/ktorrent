@@ -40,12 +40,12 @@ namespace kt
         Q_OBJECT
     public:
         UPnPPlugin(QObject* parent, const QVariantList& args);
-        virtual ~UPnPPlugin();
+        ~UPnPPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual void shutdown(bt::WaitJob* job);
-        virtual bool versionCheck(const QString& version) const;
+        void load() override;
+        void unload() override;
+        void shutdown(bt::WaitJob* job) override;
+        bool versionCheck(const QString& version) const override;
     private:
         bt::UPnPMCastSocket* sock;
         UPnPWidget* upnp_tab;

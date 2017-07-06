@@ -38,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         FeedListView(FeedList* feeds, QWidget* parent);
-        virtual ~FeedListView();
+        ~FeedListView();
 
         /// Get all the selected feeds
         QModelIndexList selectedFeeds();

@@ -51,7 +51,7 @@ namespace kt
         */
         PluginPage(QWidget* p);
         ///Destructor
-        virtual ~PluginPage();
+        ~PluginPage();
 
     public slots:
         ///Applies settings

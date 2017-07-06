@@ -40,14 +40,14 @@ namespace kt
         Q_OBJECT
     public:
         FeedList(const QString& data_dir, QObject* parent);
-        virtual ~FeedList();
+        ~FeedList();
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        int rowCount(const QModelIndex& parent) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
 
         void addFeed(Feed* f);
         void loadFeeds(FilterList* filters, SyndicationActivity* activity);

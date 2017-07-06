@@ -47,7 +47,7 @@ namespace kt
         Q_OBJECT
     public:
         SearchWidget(SearchPlugin* sp);
-        virtual ~SearchWidget();
+        ~SearchWidget();
 
         QString getSearchText() const {return search_text->text();}
         QUrl getCurrentUrl() const;
@@ -78,9 +78,9 @@ namespace kt
         void titleChanged(const QString& text);
 
     private:
-        virtual QUrl searchUrl(const QString& search_text);
-        virtual QWebView* newTab();
-        virtual void magnetUrl(const QUrl& magnet_url);
+        QUrl searchUrl(const QString& search_text) override;
+        QWebView* newTab() override;
+        void magnetUrl(const QUrl& magnet_url) override;
 
     private:
         WebView* webview;

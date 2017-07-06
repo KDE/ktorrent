@@ -33,13 +33,13 @@ namespace kt
         Q_OBJECT
     public:
         MagnetGeneratorPlugin(QObject* parent, const QVariantList& args);
-        virtual ~MagnetGeneratorPlugin();
+        ~MagnetGeneratorPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
-        virtual QString parentPart() const {return QStringLiteral("torrentactivity");}
-        void currentTorrentChanged(bt::TorrentInterface* tc);
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
+        QString parentPart() const override {return QStringLiteral("torrentactivity");}
+        void currentTorrentChanged(bt::TorrentInterface* tc) override;
 
     private slots:
         void generateMagnet();

@@ -40,14 +40,14 @@ namespace kt
             Verbose, Quietly
         };
         DownloadAndConvertJob(const QUrl& url, Mode mode);
-        virtual ~DownloadAndConvertJob();
+        ~DownloadAndConvertJob();
 
         enum ErrorCode
         {
             CANCELED = 100, DOWNLOAD_FAILED, UNZIP_FAILED, MOVE_FAILED, BACKUP_FAILED
         };
 
-        virtual void kill(KJob::KillVerbosity v);
+        void kill(KJob::KillVerbosity v);
         void start();
 
         bool isAutoUpdate() const {return mode == Quietly;}

@@ -34,11 +34,11 @@ namespace kt
         Q_OBJECT
     public:
         ShutdownPlugin(QObject* parent, const QVariantList& args);
-        virtual ~ShutdownPlugin();
+        ~ShutdownPlugin();
 
-        virtual bool versionCheck(const QString& version) const;
-        virtual void unload();
-        virtual void load();
+        bool versionCheck(const QString& version) const override;
+        void unload() override;
+        void load() override;
 
     public slots:
         void shutdownComputer();

@@ -44,7 +44,7 @@ namespace kt
     public:
         Filter();
         Filter(const QString& name);
-        virtual ~Filter();
+        ~Filter();
 
         /**
          * Start matching items, must be called before the first call to match, when matching

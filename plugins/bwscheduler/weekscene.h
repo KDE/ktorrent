@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTWEEKSCENE_H
 #define KTWEEKSCENE_H
 
@@ -37,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         WeekScene(QObject* parent);
-        virtual ~WeekScene();
+        ~WeekScene();
 
         /**
          * Set the current Schedule
@@ -131,8 +132,8 @@ namespace kt
 
     private:
         void addCalendar();
-        virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev);
-        virtual void mousePressEvent(QGraphicsSceneMouseEvent* ev);
+        void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev) override;
+        void mousePressEvent(QGraphicsSceneMouseEvent* ev) override;
         qreal timeToY(const QTime& time);
         QTime yToTime(qreal y);
 

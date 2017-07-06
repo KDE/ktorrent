@@ -50,7 +50,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaPlayer(QObject* parent);
-        virtual ~MediaPlayer();
+        ~MediaPlayer();
 
         Phonon::AudioOutput* output() {return audio;}
         Phonon::MediaObject* media0bject() {return media;}

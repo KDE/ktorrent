@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTSCHEDULEEDITOR_H
 #define KTSCHEDULEEDITOR_H
 
@@ -39,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         ScheduleEditor(QWidget* parent);
-        virtual ~ScheduleEditor();
+        ~ScheduleEditor();
 
         /**
          * Set the current Schedule

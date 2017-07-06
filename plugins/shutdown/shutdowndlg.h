@@ -36,10 +36,10 @@ namespace kt
         Q_OBJECT
     public:
         ShutdownDlg(ShutdownRuleSet* rules, CoreInterface* core, QWidget* parent);
-        virtual ~ShutdownDlg();
+        ~ShutdownDlg();
 
-        virtual void accept();
-        virtual void reject();
+        void accept() override;
+        void reject() override;
 
     private slots:
         void timeToExecuteChanged(int idx);

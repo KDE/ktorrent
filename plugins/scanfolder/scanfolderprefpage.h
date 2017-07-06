@@ -38,12 +38,12 @@ namespace kt
 
     public:
         ScanFolderPrefPage(ScanFolderPlugin* plugin, QWidget* parent);
-        virtual ~ScanFolderPrefPage();
+        ~ScanFolderPrefPage();
 
-        virtual void loadSettings();
-        virtual void loadDefaults();
-        virtual void updateSettings();
-        virtual bool customWidgetsChanged();
+        void loadSettings() override;
+        void loadDefaults() override;
+        void updateSettings() override;
+        bool customWidgetsChanged() override;
 
     private slots:
         void addPressed();

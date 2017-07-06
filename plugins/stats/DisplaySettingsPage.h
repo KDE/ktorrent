@@ -36,9 +36,7 @@ namespace kt
     {
     public:
         DisplaySettingsPage(QWidget* parent);
-        virtual ~DisplaySettingsPage();
-
-
+        ~DisplaySettingsPage();
     };
 
 }

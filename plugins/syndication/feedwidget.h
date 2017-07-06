@@ -42,7 +42,7 @@ namespace kt
         Q_OBJECT
     public:
         FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* parent);
-        virtual ~FeedWidget();
+        ~FeedWidget();
 
         /// Set the Feed to show, can be 0
         void setFeed(Feed* feed);

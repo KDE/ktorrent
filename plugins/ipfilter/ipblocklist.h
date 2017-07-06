@@ -53,9 +53,9 @@ namespace kt
     {
     public:
         IPBlockList();
-        virtual ~IPBlockList();
+        ~IPBlockList();
 
-        virtual bool blocked(const net::Address& addr) const;
+        bool blocked(const net::Address& addr) const override;
 
         /**
          * Overloaded function. Uses Uint32 IP to be checked

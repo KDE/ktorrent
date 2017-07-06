@@ -41,7 +41,7 @@ namespace kt
 
     public:
         LogFlags();
-        virtual ~LogFlags();
+        ~LogFlags();
 
         static LogFlags& instance();
 
@@ -54,14 +54,14 @@ namespace kt
         ///Makes line rich text according to arg level.
         QString getFormattedMessage(unsigned int arg, const QString& line);
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual int columnCount(const QModelIndex& parent) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        int rowCount(const QModelIndex& parent) const override;
+        int columnCount(const QModelIndex& parent) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
 
     private slots:
         void registered(const QString& sys);

@@ -41,7 +41,7 @@ namespace kt
 
     public:
         SearchToolBar(KActionCollection* ac, SearchEngineList* sl, QObject* parent);
-        virtual ~SearchToolBar();
+        ~SearchToolBar();
 
         /// Save settings like current search engine
         void saveSettings();

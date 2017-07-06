@@ -34,10 +34,10 @@ namespace kt
     {
     public:
         FeedListDelegate(QObject* parent);
-        virtual ~FeedListDelegate();
+        ~FeedListDelegate();
 
-        virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
-        virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
     };
 
 }

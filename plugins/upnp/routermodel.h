@@ -46,7 +46,7 @@ namespace kt
         Q_OBJECT
     public:
         RouterModel(QObject* parent);
-        virtual ~RouterModel();
+        ~RouterModel();
 
         /// Add a router tot the model
         void addRouter(bt::UPnPRouter* r);
@@ -54,12 +54,12 @@ namespace kt
         /// Get a router given an index
         bt::UPnPRouter* routerForIndex(const QModelIndex& index);
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual int columnCount(const QModelIndex& parent) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        int rowCount(const QModelIndex& parent) const override;
+        int columnCount(const QModelIndex& parent) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
 
         void update();
 

@@ -1,4 +1,3 @@
-class KArchiveDirectory;
 /***************************************************************************
  *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
@@ -40,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         ScriptModel(QObject* parent);
-        virtual ~ScriptModel();
+        ~ScriptModel();
 
         enum Role
         {
@@ -59,7 +58,7 @@ namespace kt
         /**
          * Add script which is described by a desktop file.
          * @param dir The directory the script is in
-         * @param desktop The desktop file (relative to dir, not an absolute path)
+         * @param desktop_file The desktop file (relative to dir, not an absolute path)
          * @return The Script or 0 if something goes wrong
          */
         Script* addScriptFromDesktopFile(const QString& dir, const QString& desktop_file);
@@ -79,12 +78,12 @@ namespace kt
         /// Run all the scripts in the string list
         void runScripts(const QStringList& r);
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        int rowCount(const QModelIndex& parent) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
     private:
         void addScriptFromArchive(KArchive* archive);
         void addScriptFromArchiveDirectory(const KArchiveDirectory* dir);

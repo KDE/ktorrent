@@ -42,11 +42,11 @@ namespace kt
         Q_OBJECT
     public:
         TorrentService(bt::TorrentInterface* tc);
-        virtual ~TorrentService();
+        ~TorrentService();
 
-        virtual void stop(bt::WaitJob* wjob = 0);
-        virtual void start();
-        virtual void aboutToBeDestroyed();
+        void stop(bt::WaitJob* wjob = 0) override;
+        void start() override;
+        void aboutToBeDestroyed() override;
 
     signals:
         void serviceDestroyed(TorrentService* av);

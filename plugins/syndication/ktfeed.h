@@ -65,7 +65,7 @@ namespace kt
         Feed(const QString& dir);
         Feed(const QString& feed_url, const QString& dir);
         Feed(const QString& feed_url, Syndication::FeedPtr feed, const QString& dir);
-        virtual ~Feed();
+        ~Feed();
 
         enum Status
         {

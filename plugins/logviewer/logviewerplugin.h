@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef KTLOGVIEWERPLUGIN_H
 #define KTLOGVIEWERPLUGIN_H
 
@@ -46,12 +47,12 @@ namespace kt
         Q_OBJECT
     public:
         LogViewerPlugin(QObject* parent, const QVariantList& args);
-        virtual ~LogViewerPlugin();
+        ~LogViewerPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
-        virtual void guiUpdate();
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
+        void guiUpdate() override;
 
     private slots:
         void applySettings();

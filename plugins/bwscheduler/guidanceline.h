@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTGUIDANCELINE_H
 #define KTGUIDANCELINE_H
 
@@ -35,7 +36,7 @@ namespace kt
     {
     public:
         GuidanceLine(qreal x, qreal y, qreal text_offset);
-        virtual ~GuidanceLine();
+        ~GuidanceLine();
 
         /**
          * Update the guidance line

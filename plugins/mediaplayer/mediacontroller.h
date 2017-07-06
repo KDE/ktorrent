@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaController(MediaPlayer* player, KActionCollection* ac, QWidget* parent = 0);
-        virtual ~MediaController();
+        ~MediaController();
 
 
     private slots:

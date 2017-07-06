@@ -51,10 +51,10 @@ namespace kt
         */
         SettingsPage(QWidget* p);
         ///Destructor
-        virtual ~SettingsPage();
+        ~SettingsPage();
 
     public slots:
-        void updateSettings();
+        void updateSettings() override;
 
     private slots:
         void UpdGuiUpdatesToMs(int);

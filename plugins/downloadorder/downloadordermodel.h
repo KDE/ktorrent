@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTDOWNLOADORDERMODEL_H
 #define KTDOWNLOADORDERMODEL_H
 
@@ -40,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         DownloadOrderModel(bt::TorrentInterface* tor, QObject* parent);
-        virtual ~DownloadOrderModel();
+        ~DownloadOrderModel();
 
         /// Initialize the order
         void initOrder(const QList<bt::Uint32> & sl) {order = sl;}
@@ -54,13 +55,13 @@ namespace kt
         /// Clear high lights
         void clearHighLights();
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual Qt::DropActions supportedDropActions() const;
-        virtual QStringList mimeTypes() const;
-        virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
-        virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
+        int rowCount(const QModelIndex& parent) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        Qt::DropActions supportedDropActions() const override;
+        QStringList mimeTypes() const override;
+        QMimeData* mimeData(const QModelIndexList& indexes) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 
         void moveUp(int row, int count);
         void moveDown(int row, int count);

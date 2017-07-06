@@ -41,11 +41,11 @@ namespace kt
         Q_OBJECT
     public:
         SearchPlugin(QObject* parent, const QVariantList& args);
-        virtual ~SearchPlugin();
+        ~SearchPlugin();
 
-        virtual void load();
-        virtual void unload();
-        virtual bool versionCheck(const QString& version) const;
+        void load() override;
+        void unload() override;
+        bool versionCheck(const QString& version) const override;
 
         SearchEngineList* getSearchEngineList() const {return engines;}
         SearchActivity* getSearchActivity() const {return activity;}

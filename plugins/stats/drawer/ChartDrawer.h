@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
 
 #ifndef ChartDrawer_H_
@@ -56,7 +56,6 @@ namespace kt
         typedef std::vector< ChartDrawerData > val_t;
 
         /** \brief Constructor
-        \param p Parent
         */
         ChartDrawer();
         ///Destructor
@@ -157,7 +156,7 @@ namespace kt
         virtual void enableAntiAlias(bool aa) = 0;
 
         /** \brief Enable background grid
-        \param aa Enable?
+        \param bg Enable?
         */
         virtual void enableBackgroundGrid(bool bg) = 0;
 

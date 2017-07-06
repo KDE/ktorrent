@@ -38,9 +38,9 @@ namespace kt
     {
     public:
         ConvertThread(ConvertDialog* dlg);
-        virtual ~ConvertThread();
+        ~ConvertThread();
 
-        virtual void run();
+        void run() override;
 
         QString getFailureReason() const {return failure_reason;}
 
