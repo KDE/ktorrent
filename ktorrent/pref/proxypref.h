@@ -36,11 +36,11 @@ namespace kt
         Q_OBJECT
     public:
         ProxyPref(QWidget* parent);
-        virtual ~ProxyPref();
+        ~ProxyPref();
 
-        virtual void loadDefaults();
-        virtual void loadSettings();
-        virtual void updateSettings();
+        void loadDefaults() override;
+        void loadSettings() override;
+        void updateSettings() override;
     private slots:
         void socksEnabledToggled(bool on);
         void usernamePasswordToggled(bool on);

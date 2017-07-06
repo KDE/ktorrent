@@ -35,10 +35,10 @@ namespace kt
         Q_OBJECT
     public:
         QMPref(QWidget* parent);
-        virtual ~QMPref();
+        ~QMPref();
 
-        void loadSettings();
-        void loadDefaults();
+        void loadSettings() override;
+        void loadDefaults() override;
     private slots:
         void onControlTorrentsManuallyToggled(bool on);
     };

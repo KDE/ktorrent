@@ -44,16 +44,16 @@ namespace kt
         Q_OBJECT
     public:
         ScanExtender(bt::Job* job, QWidget* parent);
-        virtual ~ScanExtender();
+        ~ScanExtender();
 
-        virtual void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2);
-        virtual void infoMessage(const QString& plain, const QString& rich);
-        virtual void warning(const QString& plain, const QString& rich);
-        virtual void percent(long unsigned int percent);
-        virtual void speed(long unsigned int value);
-        virtual void processedAmount(KJob::Unit unit, qulonglong amount);
-        virtual void totalAmount(KJob::Unit unit, qulonglong amount);
-        virtual bool similar(Extender* ext) const;
+        void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2) override;
+        void infoMessage(const QString& plain, const QString& rich) override;
+        void warning(const QString& plain, const QString& rich) override;
+        void percent(long unsigned int percent) override;
+        void speed(long unsigned int value) override;
+        void processedAmount(KJob::Unit unit, qulonglong amount) override;
+        void totalAmount(KJob::Unit unit, qulonglong amount) override;
+        bool similar(Extender* ext) const override;
 
     private slots:
         void cancelPressed();

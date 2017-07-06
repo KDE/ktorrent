@@ -39,15 +39,15 @@ namespace kt
         Q_OBJECT
     public:
         TorrentGroup(const QString& name);
-        virtual ~TorrentGroup();
+        ~TorrentGroup();
 
-        virtual bool isMember(TorrentInterface* tor);
-        virtual void save(bt::BEncoder* enc);
-        virtual void load(bt::BDictNode* n);
-        virtual void torrentRemoved(TorrentInterface* tor);
-        virtual void removeTorrent(TorrentInterface* tor);
-        virtual void addTorrent(TorrentInterface* tor, bool new_torrent);
-        virtual void policyChanged();
+        bool isMember(TorrentInterface* tor) override;
+        void save(bt::BEncoder* enc) override;
+        void load(bt::BDictNode* n) override;
+        void torrentRemoved(TorrentInterface* tor) override;
+        void removeTorrent(TorrentInterface* tor) override;
+        void addTorrent(TorrentInterface* tor, bool new_torrent) override;
+        void policyChanged() override;
 
         void add(TorrentInterface* tor);
         void remove(TorrentInterface* tor);

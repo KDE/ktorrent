@@ -47,7 +47,7 @@ namespace kt
 
     public:
         ImportDialog(CoreInterface* core, QWidget* parent = 0);
-        virtual ~ImportDialog();
+        ~ImportDialog();
 
     public slots:
         void onImport();

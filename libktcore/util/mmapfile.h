@@ -41,7 +41,7 @@ namespace bt
     {
     public:
         MMapFile();
-        virtual ~MMapFile();
+        ~MMapFile();
 
         /**
          * Open the file. If mode is write and the file doesn't exist, it will

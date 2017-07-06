@@ -36,11 +36,11 @@ namespace kt
         Q_OBJECT
     public:
         NetworkPref(QWidget* parent);
-        virtual ~NetworkPref();
+        ~NetworkPref();
 
-        virtual void loadSettings();
-        virtual void loadDefaults();
-        virtual void updateSettings();
+        void loadSettings() override;
+        void loadDefaults() override;
+        void updateSettings() override;
     signals:
         void calculateRecommendedSettings();
 

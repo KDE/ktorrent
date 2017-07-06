@@ -38,7 +38,7 @@ namespace kt
         Q_CLASSINFO("D-Bus Interface", "org.ktorrent.group")
     public:
         DBusGroup(Group* g, GroupManager* gman, QObject* parent);
-        virtual ~DBusGroup();
+        ~DBusGroup();
 
     public Q_SLOTS:
         Q_SCRIPTABLE QString name() const;

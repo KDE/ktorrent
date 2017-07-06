@@ -38,9 +38,9 @@ namespace kt
     {
     public:
         IPFilterList();
-        virtual ~IPFilterList();
+        ~IPFilterList();
 
-        virtual bool blocked(const net::Address& addr) const;
+        bool blocked(const net::Address& addr) const override;
 
         /// Add an IP address with a mask.
         bool add(const QString& ip);
@@ -51,12 +51,12 @@ namespace kt
         /// Clear the list
         void clear();
 
-        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     private:
         bool addIP(const QString& str);

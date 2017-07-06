@@ -44,7 +44,7 @@ namespace kt
     {
     public:
         ExtenderBox(QWidget* widget);
-        virtual ~ExtenderBox();
+        ~ExtenderBox();
 
         /// Add an Extender
         void add(Extender* ext);
@@ -74,16 +74,16 @@ namespace kt
         Q_OBJECT
     public:
         ViewDelegate(Core* core, ViewModel* model, View* parent);
-        virtual ~ViewDelegate();
+        ~ViewDelegate();
 
         /**
             Extend a torrent with a widget
         */
         void extend(bt::TorrentInterface* tc, Extender* widget, bool close_similar);
 
-        virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
-        virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-        virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
         /**
         * Close all extenders and delete all extender widgets.

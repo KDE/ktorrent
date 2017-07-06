@@ -75,26 +75,26 @@ namespace kt
         };
     public:
         TorrentFileTreeModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent);
-        virtual ~TorrentFileTreeModel();
+        ~TorrentFileTreeModel();
 
-        virtual void changeTorrent(bt::TorrentInterface* tc);
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual int columnCount(const QModelIndex& parent) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual QModelIndex parent(const QModelIndex& index) const;
-        virtual QModelIndex index(int row, int column, const QModelIndex& parent) const;
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
-        virtual void checkAll();
-        virtual void uncheckAll();
-        virtual void invertCheck();
-        virtual bt::Uint64 bytesToDownload();
-        virtual QByteArray saveExpandedState(QSortFilterProxyModel* pm, QTreeView* tv);
-        virtual void loadExpandedState(QSortFilterProxyModel* pm, QTreeView* tv, const QByteArray& state);
-        virtual bt::TorrentFileInterface* indexToFile(const QModelIndex& idx);
-        virtual QString dirPath(const QModelIndex& idx);
-        virtual void changePriority(const QModelIndexList& indexes, bt::Priority newpriority);
-        virtual void onCodecChange();
+        void changeTorrent(bt::TorrentInterface* tc) override;
+        int rowCount(const QModelIndex& parent) const override;
+        int columnCount(const QModelIndex& parent) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        QModelIndex parent(const QModelIndex& index) const override;
+        QModelIndex index(int row, int column, const QModelIndex& parent) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+        void checkAll() override;
+        void uncheckAll() override;
+        void invertCheck() override;
+        bt::Uint64 bytesToDownload() override;
+        QByteArray saveExpandedState(QSortFilterProxyModel* pm, QTreeView* tv) override;
+        void loadExpandedState(QSortFilterProxyModel* pm, QTreeView* tv, const QByteArray& state) override;
+        bt::TorrentFileInterface* indexToFile(const QModelIndex& idx) override;
+        QString dirPath(const QModelIndex& idx) override;
+        void changePriority(const QModelIndexList& indexes, bt::Priority newpriority) override;
+        void onCodecChange() override;
 
     private:
         void constructTree();

@@ -36,12 +36,12 @@ namespace kt
         Q_OBJECT
     public:
         ItemSelectionModel(QAbstractItemModel* model, QObject* parent);
-        virtual ~ItemSelectionModel();
+        ~ItemSelectionModel();
 
-        virtual void select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command);
-        virtual void select(const QItemSelection& sel, QItemSelectionModel::SelectionFlags command);
-        virtual void clear();
-        virtual void reset();
+        void select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command) override;
+        void select(const QItemSelection& sel, QItemSelectionModel::SelectionFlags command) override;
+        void clear() override;
+        void reset() override;
 
     public slots:
         /**

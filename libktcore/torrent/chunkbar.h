@@ -56,7 +56,7 @@ namespace kt
         virtual ~ChunkBar();
 
         virtual const bt::BitSet& getBitSet() const = 0;
-        virtual void drawContents(QPainter* p);
+        void drawContents(QPainter* p);
         virtual void updateBar(bool force = false);
 
     protected:

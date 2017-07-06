@@ -48,7 +48,7 @@ namespace kt
         Q_OBJECT
     public:
         GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidget* parent);
-        virtual ~GroupView();
+        ~GroupView();
 
         /// Save the status of the group view
         void saveState(KSharedConfigPtr cfg);
@@ -80,7 +80,7 @@ namespace kt
         void openTab(Group* g);
 
     private:
-        virtual void keyPressEvent(QKeyEvent* event);
+        void keyPressEvent(QKeyEvent* event) override;
 
     private:
         GUI* gui;

@@ -31,10 +31,10 @@ namespace kt
     {
     public:
         ManualPeerSource() {}
-        virtual ~ManualPeerSource() {}
+        ~ManualPeerSource() {}
 
-        virtual void start() {}
-        virtual void stop(bt::WaitJob*) {}
+        void start() override {}
+        void stop (bt::WaitJob*) override {}
 
         void add(const QString& ip, bt::Uint16 port)
         {

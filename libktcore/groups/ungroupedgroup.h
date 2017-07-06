@@ -35,9 +35,9 @@ namespace kt
     {
     public:
         UngroupedGroup(GroupManager* gman);
-        virtual ~UngroupedGroup();
+        ~UngroupedGroup();
 
-        virtual bool isMember(TorrentInterface* tor);
+        bool isMember(TorrentInterface* tor) override;
 
     private:
         GroupManager* gman;

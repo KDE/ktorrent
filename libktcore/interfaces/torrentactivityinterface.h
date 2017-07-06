@@ -55,7 +55,7 @@ namespace kt
     {
     public:
         TorrentActivityInterface(const QString& name, const QString& icon, QWidget* parent);
-        virtual ~TorrentActivityInterface();
+        ~TorrentActivityInterface();
 
         /// Add a view listener.
         void addViewListener(ViewListener* vl);

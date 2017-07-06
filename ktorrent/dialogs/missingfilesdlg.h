@@ -49,7 +49,7 @@ namespace kt
          * @param parent The parent widget
          */
         MissingFilesDlg(const QString& text, const QStringList& missing, bt::TorrentInterface* tc, QWidget* parent);
-        virtual ~MissingFilesDlg();
+        ~MissingFilesDlg();
 
         enum ReturnCode
         {

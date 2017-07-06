@@ -53,7 +53,7 @@ namespace kt
         Q_CLASSINFO("D-Bus Interface", "org.ktorrent.core")
     public:
         DBus(GUIInterface* gui, CoreInterface* core, QObject* parent);
-        virtual ~DBus();
+        ~DBus();
 
 
     public Q_SLOTS:

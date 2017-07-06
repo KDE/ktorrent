@@ -35,7 +35,7 @@ namespace kt
         Q_CLASSINFO("D-Bus Interface", "org.ktorrent.settings")
     public:
         DBusSettings(CoreInterface* core, QObject* parent);
-        virtual~DBusSettings();
+        ~DBusSettings();
 
     public slots:
         Q_SCRIPTABLE int maxDownloads();

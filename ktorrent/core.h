@@ -53,39 +53,39 @@ namespace kt
         Q_OBJECT
     public:
         Core(GUI* gui);
-        virtual ~Core();
+        ~Core();
 
         // implemented from CoreInterface
-        virtual void setKeepSeeding(bool ks);
-        virtual bool changeDataDir(const QString& new_dir);
-        virtual void startAll();
-        virtual void stopAll();
-        virtual CurrentStats getStats();
-        virtual bool changePort(bt::Uint16 port);
-        virtual bt::Uint32 getNumTorrentsRunning() const;
-        virtual bt::Uint32 getNumTorrentsNotRunning() const;
-        virtual void load(const QUrl &url, const QString& group);
-        virtual bt::TorrentInterface* load(const QByteArray& data, const QUrl &url, const QString& group, const QString& savedir);
-        virtual void loadSilently(const QUrl &url, const QString& group);
-        virtual bt::TorrentInterface* loadSilently(const QByteArray& data, const QUrl &url, const QString& group, const QString& savedir);
-        virtual void load(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options);
-        virtual QString findNewTorrentDir() const;
-        virtual void loadExistingTorrent(const QString& tor_dir);
-        virtual void setSuspendedState(bool suspend);
-        virtual bool getSuspendedState();
-        virtual float getGlobalMaxShareRatio() const;
-        virtual DBus* getExternalInterface();
+        void setKeepSeeding(bool ks) override;
+        bool changeDataDir(const QString& new_dir) override;
+        void startAll() override;
+        void stopAll() override;
+        CurrentStats getStats() override;
+        bool changePort(bt::Uint16 port) override;
+        bt::Uint32 getNumTorrentsRunning() const override;
+        bt::Uint32 getNumTorrentsNotRunning() const override;
+        void load(const QUrl &url, const QString& group) override;
+        bt::TorrentInterface* load(const QByteArray& data, const QUrl &url, const QString& group, const QString& savedir) override;
+        void loadSilently(const QUrl &url, const QString& group) override;
+        bt::TorrentInterface* loadSilently(const QByteArray& data, const QUrl &url, const QString& group, const QString& savedir) override;
+        void load(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options) override;
+        QString findNewTorrentDir() const override;
+        void loadExistingTorrent(const QString& tor_dir) override;
+        void setSuspendedState(bool suspend) override;
+        bool getSuspendedState() override;
+        float getGlobalMaxShareRatio() const;
+        DBus* getExternalInterface() override;
 
         /// Get the queue manager
-        kt::QueueManager* getQueueManager();
+        kt::QueueManager* getQueueManager() override;
 
         /// Get the group manager
-        kt::GroupManager* getGroupManager() {return gman;}
+        kt::GroupManager* getGroupManager() override {return gman;}
 
         /// Get the magnet manager
-        kt::MagnetManager* getMagnetManager() {return mman;}
+        kt::MagnetManager* getMagnetManager() override {return mman;}
 
-        virtual  bt::TorrentInterface* createTorrent(bt::TorrentCreator* mktor, bool seed);
+         bt::TorrentInterface* createTorrent(bt::TorrentCreator* mktor, bool seed) override;
 
         /**
          * Set the maximum number of simultaneous downloads.
@@ -115,14 +115,14 @@ namespace kt
          */
         void update();
 
-        virtual void start(bt::TorrentInterface* tc);
-        virtual void start(QList<bt::TorrentInterface*> & todo);
-        virtual void stop(bt::TorrentInterface* tc);
-        virtual void stop(QList<bt::TorrentInterface*> & todo);
-        virtual void remove(bt::TorrentInterface* tc, bool data_to);
-        virtual void remove(QList<bt::TorrentInterface*> & todo, bool data_to);
-        virtual void pause(bt::TorrentInterface* tc);
-        virtual void pause(QList<bt::TorrentInterface*> & todo);
+        void start(bt::TorrentInterface* tc) override;
+        void start(QList<bt::TorrentInterface*> & todo) override;
+        void stop(bt::TorrentInterface* tc) override;
+        void stop(QList<bt::TorrentInterface*> & todo) override;
+        void remove(bt::TorrentInterface* tc, bool data_to) override;
+        void remove(QList<bt::TorrentInterface*> & todo, bool data_to) override;
+        void pause(bt::TorrentInterface* tc) override;
+        void pause(QList<bt::TorrentInterface*> & todo) override;
 
         /**
          * A torrent is about to be started. We will do some file checks upon this signal.
@@ -154,7 +154,7 @@ namespace kt
         void onLowDiskSpace(bt::TorrentInterface* tc, bool stopped);
 
         /// Apply all the settings
-        void applySettings();
+        void applySettings() override;
 
         /// Update the GUI plugins
         void updateGuiPlugins();

@@ -37,7 +37,7 @@ namespace kt
         Q_OBJECT
     public:
         RecommendedSettingsDlg(QWidget* parent);
-        virtual ~RecommendedSettingsDlg();
+        ~RecommendedSettingsDlg();
 
     private slots:
         void calculate();

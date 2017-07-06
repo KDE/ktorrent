@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KTVIEW_HH
 #define KTVIEW_HH
 
@@ -48,7 +49,7 @@ namespace kt
         Q_OBJECT
     public:
         View(Core* core, GUI* gui, QWidget* parent);
-        virtual ~View();
+        ~View();
 
         /// Setup the actions of the view manager
         void setupActions(KActionCollection* ac);
@@ -92,8 +93,8 @@ namespace kt
         /// Get the number of running torrents
         bt::Uint32 numRunningTorrents() const {return num_running;}
 
-        virtual void closeEditor(QWidget* editor, QAbstractItemDelegate::EndEditHint hint);
-        virtual bool edit(const QModelIndex& index, EditTrigger trigger, QEvent* event);
+        void closeEditor(QWidget* editor, QAbstractItemDelegate::EndEditHint hint) override;
+        bool edit(const QModelIndex& index, EditTrigger trigger, QEvent* event) override;
 
         /// Get the ViewDelegate
         ViewDelegate* viewDelegate() {return delegate;}
@@ -104,7 +105,7 @@ namespace kt
         /// Get the default state
         const QByteArray& defaultState() const {return default_state;}
 
-        virtual void keyPressEvent(QKeyEvent* event);
+        void keyPressEvent(QKeyEvent* event) override;
 
     public slots:
         /// Set the filter string

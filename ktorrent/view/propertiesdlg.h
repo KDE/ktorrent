@@ -39,13 +39,13 @@ namespace kt
         Q_OBJECT
     public:
         PropertiesDlg(bt::TorrentInterface* tc, QWidget* parent);
-        virtual ~PropertiesDlg();
+        ~PropertiesDlg();
 
     public slots:
         void moveOnCompletionEnabled(bool on);
 
     private:
-        virtual void accept();
+        void accept() override;
 
     private:
         bt::TorrentInterface* tc;

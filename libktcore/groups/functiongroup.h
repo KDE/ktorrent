@@ -42,9 +42,9 @@ namespace kt
             setIconByName(icon);
         }
 
-        virtual ~FunctionGroup() {}
+        ~FunctionGroup() {}
 
-        virtual bool isMember(TorrentInterface* tor)
+        bool isMember(TorrentInterface* tor) override
         {
             if (!tor)
                 return false;

@@ -38,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         IPFilterWidget(QWidget* parent);
-        virtual ~IPFilterWidget();
+        ~IPFilterWidget();
 
         /// Register the filter list
         static void registerFilterList();
@@ -48,12 +48,12 @@ namespace kt
 
 
     public slots:
-        virtual void save();
-        virtual void open();
-        virtual void clear();
-        virtual void remove();
-        virtual void add();
-        virtual void accept();
+        void save();
+        void open();
+        void clear();
+        void remove();
+        void add();
+        void accept();
 
     private:
         void setupConnections();

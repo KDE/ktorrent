@@ -42,12 +42,12 @@ namespace kt
         Q_OBJECT
     public:
         MagnetView(MagnetManager* magnetManager, QWidget* parent = 0);
-        virtual ~MagnetView();
+        ~MagnetView();
 
         void saveState(KSharedConfigPtr cfg);
         void loadState(KSharedConfigPtr cfg);
 
-        virtual void keyPressEvent(QKeyEvent* event);
+        void keyPressEvent(QKeyEvent* event) override;
 
     private slots:
         void showContextMenu(QPoint p);

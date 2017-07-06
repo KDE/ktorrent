@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
     public:
         StringCompletionModel(const QString& file, QObject* parent);
-        virtual ~StringCompletionModel();
+        ~StringCompletionModel();
 
         /**
             Load the list of strings.

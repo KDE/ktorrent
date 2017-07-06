@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         Extender(bt::TorrentInterface* tc, QWidget* parent);
-        virtual ~Extender();
+        ~Extender();
 
         /// Get the torrent of this extender
         bt::TorrentInterface* torrent() {return tc;}

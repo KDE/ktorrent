@@ -45,7 +45,7 @@ namespace kt
     {
     public:
         QueuePtrList();
-        virtual ~QueuePtrList();
+        ~QueuePtrList();
 
         /**
          * Sort based upon priority
@@ -66,7 +66,7 @@ namespace kt
 
     public:
         QueueManager();
-        virtual ~QueueManager();
+        ~QueueManager();
 
         void append(bt::TorrentInterface* tc);
         void remove(bt::TorrentInterface* tc);

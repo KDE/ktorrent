@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         ActivityPart(Activity* parent);
-        virtual ~ActivityPart();
+        ~ActivityPart();
 
         /// Set the XML GUI file of the part
         void setXMLGUIFile(const QString& xml_gui);
@@ -58,7 +58,7 @@ namespace kt
         Q_OBJECT
     public:
         Activity(const QString& name, const QString& icon, int weight, QWidget* parent);
-        virtual ~Activity();
+        ~Activity();
 
         /// Get the name of the activity
         const QString& name() const {return activity_name;}

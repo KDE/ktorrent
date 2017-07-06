@@ -39,10 +39,10 @@ namespace kt
         Q_OBJECT
     public:
         JobTracker(QObject* parent);
-        virtual ~JobTracker();
+        ~JobTracker();
 
-        virtual void registerJob(KJob* job);
-        virtual void unregisterJob(KJob* job);
+        void registerJob(KJob* job) override;
+        void unregisterJob(KJob* job) override;
 
         /// A job has been registered
         virtual void jobRegistered(bt::Job* j) = 0;
@@ -54,16 +54,16 @@ namespace kt
         virtual JobProgressWidget* createJobWidget(bt::Job* job);
 
     protected:
-        virtual void finished(KJob* job);
-        virtual void suspended(KJob* job);
-        virtual void resumed(KJob* job);
-        virtual void description(KJob* job, const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2);
-        virtual void infoMessage(KJob* job, const QString& plain, const QString& rich);
-        virtual void warning(KJob* job, const QString& plain, const QString& rich);
-        virtual void totalAmount(KJob* job, KJob::Unit unit, qulonglong amount);
-        virtual void processedAmount(KJob* job, KJob::Unit unit, qulonglong amount);
-        virtual void percent(KJob* job, long unsigned int percent);
-        virtual void speed(KJob* job, long unsigned int value);
+        void finished(KJob* job) override;
+        void suspended(KJob* job) override;
+        void resumed(KJob* job) override;
+        void description(KJob* job, const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2) override;
+        void infoMessage(KJob* job, const QString& plain, const QString& rich) override;
+        void warning(KJob* job, const QString& plain, const QString& rich) override;
+        void totalAmount(KJob* job, KJob::Unit unit, qulonglong amount) override;
+        void processedAmount(KJob* job, KJob::Unit unit, qulonglong amount) override;
+        void percent(KJob* job, long unsigned int percent) override;
+        void speed(KJob* job, long unsigned int value) override;
 
     protected:
         typedef QMap<bt::Job*, JobProgressWidget*> ActiveJobs;

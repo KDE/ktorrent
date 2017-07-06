@@ -31,8 +31,6 @@
 
 #include "ktcore_export.h"
 
-
-
 namespace kt
 {
     class ActionGroup;
@@ -42,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         TabBarWidget(QSplitter* splitter, QWidget* parent);
-        virtual ~TabBarWidget();
+        ~TabBarWidget();
 
         /// Add a tab to the TabBarWidget
         void addTab(QWidget* w, const QString& text, const QString& icon, const QString& tooltip);
@@ -84,7 +82,7 @@ namespace kt
         Q_OBJECT
     public:
         ActionGroup(QObject* parent = 0);
-        virtual ~ActionGroup();
+        ~ActionGroup();
 
         void addAction(QAction* act);
         void removeAction(QAction* act);

@@ -38,11 +38,11 @@ namespace kt
         Q_OBJECT
     public:
         ViewJobTracker(View* parent);
-        virtual ~ViewJobTracker();
+        ~ViewJobTracker();
 
-        virtual void jobUnregistered(bt::Job* j);
-        virtual void jobRegistered(bt::Job* j);
-        virtual kt::JobProgressWidget* createJobWidget(bt::Job* job);
+        void jobUnregistered(bt::Job* j) override;
+        void jobRegistered(bt::Job* j) override;
+        kt::JobProgressWidget* createJobWidget(bt::Job* job) override;
 
     private:
         View* view;

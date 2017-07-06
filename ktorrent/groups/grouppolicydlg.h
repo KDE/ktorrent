@@ -36,9 +36,9 @@ namespace kt
     {
     public:
         GroupPolicyDlg(Group* group, QWidget* parent);
-        virtual ~GroupPolicyDlg();
+        ~GroupPolicyDlg();
 
-        virtual void accept();
+        void accept() override;
     private:
         Group* group;
     };

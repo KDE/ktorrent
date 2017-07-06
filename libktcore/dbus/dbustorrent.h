@@ -34,8 +34,6 @@ namespace kt
 
     class DBusTorrentFileStream;
 
-
-
     /**
         DBus object to access a torrent
     */
@@ -45,7 +43,7 @@ namespace kt
         Q_CLASSINFO("D-Bus Interface", "org.ktorrent.torrent")
     public:
         DBusTorrent(bt::TorrentInterface* ti, QObject* parent);
-        virtual ~DBusTorrent();
+        ~DBusTorrent();
 
         /// Get a pointer to the actual torrent
         bt::TorrentInterface* torrent() {return ti;}

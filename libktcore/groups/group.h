@@ -21,8 +21,8 @@
 #ifndef KTGROUP_H
 #define KTGROUP_H
 
-#include <QString>
 #include <QIcon>
+#include <QString>
 
 #include <ktcore_export.h>
 #include <util/constants.h>

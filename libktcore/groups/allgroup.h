@@ -33,9 +33,9 @@ namespace kt
     {
     public:
         AllGroup();
-        virtual ~AllGroup();
+        ~AllGroup();
 
-        virtual bool isMember(TorrentInterface* tor);
+        bool isMember(TorrentInterface* tor) override;
 
     };
 

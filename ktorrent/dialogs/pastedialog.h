@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         PasteDialog(Core* core, QWidget* parent = 0, Qt::WindowFlags fl = 0);
-        virtual ~PasteDialog();
+        ~PasteDialog();
 
         /**
         * Load the state of the dialog
@@ -53,7 +53,7 @@ namespace kt
         void saveState(KSharedConfig::Ptr cfg);
 
     public slots:
-        virtual void accept();
+        void accept() override;
 
     private:
         void loadGroups();

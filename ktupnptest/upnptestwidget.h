@@ -35,10 +35,10 @@ class UPnPTestWidget : public QWidget, public Ui_UPnPTestWidget, public bt::LogM
     Q_OBJECT
 public:
     UPnPTestWidget(QWidget* parent = 0);
-    virtual ~UPnPTestWidget();
+    ~UPnPTestWidget();
 
 private:
-    virtual void message(const QString& line, unsigned int arg);
+    void message(const QString& line, unsigned int arg) override;
 
 private slots:
     void doForward();

@@ -41,12 +41,12 @@ namespace kt
 
     public:
         SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidget* parent);
-        virtual ~SpeedLimitsDlg();
+        ~SpeedLimitsDlg();
 
 
     protected slots:
-        virtual void accept();
-        virtual void reject();
+        void accept() override;
+        void reject() override;
         void apply();
         void spinBoxValueChanged(int);
         void saveState();

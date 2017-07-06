@@ -48,7 +48,7 @@ namespace kt
         Q_OBJECT
     public:
         GroupManager();
-        virtual ~GroupManager();
+        ~GroupManager();
 
         /**
          * Update the count of all groups

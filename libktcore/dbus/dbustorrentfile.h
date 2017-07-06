@@ -38,7 +38,7 @@ namespace kt
         Q_CLASSINFO("D-Bus Interface", "org.ktorrent.torrentfile")
     public:
         DBusTorrentFile(bt::TorrentFileInterface& file, QObject* parent);
-        virtual ~DBusTorrentFile();
+        ~DBusTorrentFile();
 
     public Q_SLOTS:
         Q_SCRIPTABLE QString path() const;

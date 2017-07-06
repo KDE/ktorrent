@@ -42,19 +42,19 @@ namespace kt
         Q_OBJECT
     public:
         GroupViewModel(GroupManager* gman, View* view, QObject* parent);
-        virtual ~GroupViewModel();
+        ~GroupViewModel();
 
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
-        virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual QModelIndex parent(const QModelIndex& child) const;
-        virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-        virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
-        virtual Qt::DropActions supportedDropActions() const;
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual QStringList mimeTypes() const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
+        bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+        QModelIndex parent(const QModelIndex& child) const override;
+        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+        Qt::DropActions supportedDropActions() const override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        QStringList mimeTypes() const override;
+        bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
 
         /// Get the group given an index
         Group* groupForIndex(const QModelIndex& index) const;

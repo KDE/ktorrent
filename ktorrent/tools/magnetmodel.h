@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef KT_MAGNETMODEL_H
 #define KT_MAGNETMODEL_H
 
@@ -38,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         MagnetModel(MagnetManager *magnetManager, QObject* parent = 0);
-        virtual ~MagnetModel();
+        ~MagnetModel();
 
         /// Remove a magnet downloader
         void removeMagnets(int row, int count);
@@ -52,12 +53,12 @@ namespace kt
         /// Check if the magnet downloader that correspond to row is stopped
         bool isStopped(int row) const;
 
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
 
    public slots:
         void onUpdateQueue(bt::Uint32 idx, bt::Uint32 count);

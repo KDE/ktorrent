@@ -48,23 +48,23 @@ namespace kt
         Q_OBJECT
     public:
         QueueManagerModel(QueueManager* qman, QObject* parent);
-        virtual ~QueueManagerModel();
+        ~QueueManagerModel();
 
         void setShowUploads(bool on);
         void setShowDownloads(bool on);
         void setShowNotQueued(bool on);
 
-        virtual int rowCount(const QModelIndex& parent) const;
-        virtual int columnCount(const QModelIndex& parent) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual Qt::DropActions supportedDropActions() const;
-        virtual QStringList mimeTypes() const;
-        virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
-        virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
+        int rowCount(const QModelIndex& parent) const override;
+        int columnCount(const QModelIndex& parent) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        Qt::DropActions supportedDropActions() const override;
+        QStringList mimeTypes() const override;
+        QMimeData* mimeData(const QModelIndexList& indexes) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 
         /**
          * Move items one row up

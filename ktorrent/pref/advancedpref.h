@@ -33,10 +33,10 @@ namespace kt
         Q_OBJECT
     public:
         AdvancedPref(QWidget* parent);
-        /*virtual */~AdvancedPref();
+        ~AdvancedPref();
 
-        void loadSettings();
-        void loadDefaults();
+        void loadSettings() override;
+        void loadDefaults() override;
 
     public slots:
         void onDiskPreallocToggled(bool on);

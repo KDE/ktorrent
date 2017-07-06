@@ -38,7 +38,7 @@ class MagnetTest : public QObject
     Q_OBJECT
 public:
     MagnetTest(const bt::MagnetLink& mlink, QObject* parent = 0);
-    virtual ~MagnetTest();
+    ~MagnetTest();
 
 public slots:
     void routerDiscovered(bt::UPnPRouter* router);

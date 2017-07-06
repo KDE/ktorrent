@@ -35,7 +35,7 @@ public:
     MagnetDownloader(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options, QObject* parent)
         : bt::MagnetDownloader(mlink, parent)
         , options(options) {}
-    virtual ~MagnetDownloader() {}
+    ~MagnetDownloader() {}
 
     MagnetLinkLoadOptions options;
 };
@@ -48,7 +48,7 @@ class DownloadSlot : public QObject
     Q_OBJECT
 public:
     DownloadSlot(QObject *parent = nullptr);
-    virtual ~DownloadSlot();
+    ~DownloadSlot();
 
     void setTimerDuration(unsigned int duration);
     void startTimer();
@@ -83,7 +83,7 @@ class KTCORE_EXPORT MagnetManager : public QObject
     Q_OBJECT
 public:
     MagnetManager(QObject* parent = nullptr);
-    virtual ~MagnetManager();
+    ~MagnetManager();
 
     /// Adds a magnet link to the queue
     /// @param mlink magnet link to be added

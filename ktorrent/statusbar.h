@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         StatusBar(QWidget* parent);
-        virtual ~StatusBar();
+        ~StatusBar();
 
         /// Update the speed info of the status bar (speeds are in bytes per sec)
         void updateSpeed(bt::Uint32 up, bt::Uint32 down);
@@ -55,13 +55,13 @@ namespace kt
         void updateDHTStatus(bool on, const dht::Stats& s);
 
         /// Create a progress bar and put it on the right side of the statusbar
-        virtual QProgressBar* createProgressBar();
+        QProgressBar* createProgressBar() override;
 
         /// Remove a progress bar created with createProgressBar
-        virtual void removeProgressBar(QProgressBar* pb);
+        void removeProgressBar(QProgressBar* pb) override;
     public slots:
         /// Show an information message
-        virtual void message(const QString& msg);
+        void message(const QString& msg) override;
 
     private:
         QLabel* speed;

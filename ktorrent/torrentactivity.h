@@ -24,7 +24,6 @@
 #include <QSplitter>
 #include <interfaces/torrentactivityinterface.h>
 
-
 class QAction;
 class KToggleAction;
 class KComboBox;
@@ -50,19 +49,19 @@ namespace kt
         Q_OBJECT
     public:
         TorrentActivity(Core* core, GUI* gui, QWidget* parent);
-        virtual ~TorrentActivity();
+        ~TorrentActivity();
 
         /// Get the group view
         GroupView* getGroupView() {return group_view;}
 
-        virtual void loadState(KSharedConfigPtr cfg);
-        virtual void saveState(KSharedConfigPtr cfg);
-        virtual const bt::TorrentInterface* getCurrentTorrent() const;
-        virtual bt::TorrentInterface* getCurrentTorrent();
-        virtual void updateActions();
-        virtual void addToolWidget(QWidget* widget, const QString& text, const QString& icon, const QString& tooltip);
-        virtual void removeToolWidget(QWidget* widget);
-        virtual Group* addNewGroup();
+        void loadState(KSharedConfigPtr cfg);
+        void saveState(KSharedConfigPtr cfg);
+        const bt::TorrentInterface* getCurrentTorrent() const  override;
+        bt::TorrentInterface* getCurrentTorrent() override;
+        void updateActions() override;
+        void addToolWidget(QWidget* widget, const QString& text, const QString& icon, const QString& tooltip) override;
+        void removeToolWidget(QWidget* widget) override;
+        Group* addNewGroup() override;
 
         /// Update the activity
         void update();

@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         ViewModel(Core* core, View* parent);
-        virtual ~ViewModel();
+        ~ViewModel();
 
         /**
          * Set the Group to filter
@@ -65,19 +65,19 @@ namespace kt
          */
         void setFilterString(const QString& filter);
 
-        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-        virtual QVariant data(const QModelIndex& index, int role) const;
-        virtual bool removeRows(int row, int count, const QModelIndex& parent);
-        virtual bool insertRows(int row, int count, const QModelIndex& parent);
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-        virtual QStringList mimeTypes() const;
-        virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
-        virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-        virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
-        virtual Qt::DropActions supportedDropActions() const;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool removeRows(int row, int count, const QModelIndex& parent) override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        QStringList mimeTypes() const override;
+        QMimeData* mimeData(const QModelIndexList& indexes) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+        Qt::DropActions supportedDropActions() const override;
 
         /**
          * Emit the data changed signal
@@ -140,7 +140,7 @@ namespace kt
     public slots:
         void addTorrent(bt::TorrentInterface* ti);
         void removeTorrent(bt::TorrentInterface* ti);
-        void sort(int col, Qt::SortOrder order);
+        void sort(int col, Qt::SortOrder order) override;
         void onExit();
 
     signals:

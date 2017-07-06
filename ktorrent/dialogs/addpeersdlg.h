@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent);
-        virtual ~AddPeersDlg();
+        ~AddPeersDlg();
 
     private slots:
         void addPressed();
