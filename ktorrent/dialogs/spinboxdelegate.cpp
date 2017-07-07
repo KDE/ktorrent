@@ -75,8 +75,9 @@ namespace kt
 
     QSize SpinBoxDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
     {
-        QSpinBox tmp;
-        return tmp.sizeHint();
+        Q_UNUSED(option)
+        Q_UNUSED(index)
+        return QSpinBox().sizeHint();
     }
 }
 

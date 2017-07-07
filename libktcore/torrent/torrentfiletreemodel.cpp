@@ -382,7 +382,7 @@ namespace kt
         return n->children.count();
     }
 
-    int TorrentFileTreeModel::columnCount(const QModelIndex& parent) const
+    int TorrentFileTreeModel::columnCount(const QModelIndex&) const
     {
         return 2;
     }

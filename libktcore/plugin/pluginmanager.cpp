@@ -110,6 +110,7 @@ namespace kt
 
     void PluginManager::load(const KPluginInfo& pi, int idx)
     {
+        Q_UNUSED(pi)
         KPluginLoader loader(pluginsMetaData.at(idx).fileName());
         KPluginFactory *factory = loader.factory();
         if (!factory)
@@ -145,7 +146,7 @@ namespace kt
 
     void PluginManager::unload(const KPluginInfo& pi, int idx)
     {
-        Q_UNUSED(pi);
+        Q_UNUSED(pi)
 
         Plugin* p = loaded.find(idx);
         if (!p)
