@@ -28,6 +28,7 @@
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
 
+class QDBusInterface;
 class QProgressBar;
 
 class KJob;
@@ -271,7 +272,7 @@ namespace kt
         kt::MagnetManager* mman;
         QMap<KJob*, QUrl> custom_save_locations; // map to store save locations
         QMap<QUrl, QString> add_to_groups; // Map to keep track of which group to add a torrent to
-        int sleep_suppression_cookie;
+        quint32 sleep_suppression_cookie;
         QMap<bt::TorrentInterface*, bool> delayed_removal;
         bool exiting;
         bool reordering_queue;

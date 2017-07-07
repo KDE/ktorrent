@@ -30,6 +30,7 @@
 #include <Phonon/VolumeSlider>
 
 class QAction;
+class QDBusInterface;
 class QLabel;
 class QStackedWidget;
 class KToolBar;
@@ -89,8 +90,8 @@ namespace kt
         Phonon::VolumeSlider* volume;
         VideoChunkBar* chunk_bar;
         bool fullscreen;
-        uint screensaver_cookie;
-        int powermanagement_cookie;
+        quint32 screensaver_cookie;
+        quint32 powermanagement_cookie;
     };
 
 }

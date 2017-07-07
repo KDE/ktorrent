@@ -22,6 +22,9 @@ set(ktmediaplayerplugin_SRC
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
 qt5_add_dbus_interface(ktmediaplayerplugin_SRC ${screensaver_xml} screensaver_interface)
 
+set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
+qt5_add_dbus_interface(ktmediaplayerplugin_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
+
 ki18n_wrap_ui(ktmediaplayerplugin_SRC mediacontroller.ui)
 kconfig_add_kcfg_files(ktmediaplayerplugin_SRC mediaplayerpluginsettings.kcfgc)
 add_library(ktorrent_mediaplayer MODULE ${ktmediaplayerplugin_SRC})

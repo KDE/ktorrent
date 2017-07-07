@@ -21,9 +21,6 @@
 
 #include "core.h"
 
-#include <QDBusConnection>
-#include <QDBusInterface>
-#include <QDBusReply>
 #include <QDir>
 #include <QNetworkInterface>
 #include <QProgressBar>
@@ -62,6 +59,7 @@
 #include "dialogs/fileselectdlg.h"
 #include "dialogs/missingfilesdlg.h"
 #include "gui.h"
+#include "powermanagementinhibit_interface.h"
 
 
 using namespace bt;
@@ -73,7 +71,7 @@ namespace kt
     Core::Core(kt::GUI* gui)
         : gui(gui),
           keep_seeding(true),
-          sleep_suppression_cookie(-1),
+          sleep_suppression_cookie(0),
           exiting(false),
           reordering_queue(false)
     {
@@ -128,7 +126,7 @@ namespace kt
 
         mman->loadMagnets(kt::DataDir() + QLatin1String("magnets"));
 
-        connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()), this, SLOT(onExit()));
+        connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Core::onExit);
     }
 
     Core::~Core()
@@ -631,7 +629,7 @@ namespace kt
 
     void Core::pause(QList<bt::TorrentInterface*>& todo)
     {
-        foreach (bt::TorrentInterface* tc, todo)
+        for (bt::TorrentInterface* tc : qAsConst(todo))
         {
             tc->pause();
         }
@@ -970,21 +968,20 @@ namespace kt
         {
             Out(SYS_GEN | LOG_DEBUG) << "Started update timer" << endl;
             update_timer.start(CORE_UPDATE_INTERVAL);
-            if (Settings::suppressSleep() && sleep_suppression_cookie == -1)
+            if (Settings::suppressSleep() && sleep_suppression_cookie == 0)
             {
-                QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
-                QDBusReply<int> reply = freeDesktopInterface.call( QStringLiteral("Inhibit"), QStringLiteral("ktorrent"), i18n("KTorrent is running one or more torrents"));
-                if ( reply.isValid() )
-                    sleep_suppression_cookie = reply.value();
-
-                if (sleep_suppression_cookie == -1)
-                {
-                    Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
-                }
-                else
-                {
-                    Out(SYS_GEN | LOG_DEBUG) << "Suppressing sleep" << endl;
-                }
+                org::freedesktop::PowerManagement::Inhibit powerManagement(QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QDBusConnection::sessionBus());
+                QDBusPendingReply<quint32> pendingReply = powerManagement.Inhibit(QStringLiteral("ktorrent"), i18n("KTorrent is running one or more torrents"));
+                auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
+                connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+                    QDBusPendingReply<quint32> reply = *callWatcher;
+                    if (reply.isValid()) {
+                        sleep_suppression_cookie = reply.value();
+                        Out(SYS_GEN | LOG_DEBUG) << "Suppressing sleep" << endl;
+                    }
+                    else
+                        Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
+                });
             }
         }
     }
@@ -1016,13 +1013,21 @@ namespace kt
             {
                 Out(SYS_GEN | LOG_DEBUG) << "Stopped update timer" << endl;
                 update_timer.stop(); // stop timer when not necessary
-                if (sleep_suppression_cookie != -1)
-                {
-                    QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
-                    freeDesktopInterface.call( QStringLiteral("UnInhibit"), sleep_suppression_cookie);
 
-                    Out(SYS_GEN | LOG_DEBUG) << "Stopped suppressing sleep" << endl;
-                    sleep_suppression_cookie = -1;
+                if (sleep_suppression_cookie)
+                {
+                    org::freedesktop::PowerManagement::Inhibit powerManagement(QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QDBusConnection::sessionBus());
+                    auto pendingReply = powerManagement.UnInhibit(sleep_suppression_cookie);
+                    auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
+                    connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+                        QDBusPendingReply<void> reply = *callWatcher;
+                        if (reply.isValid()) {
+                            sleep_suppression_cookie = 0;
+                            Out(SYS_GEN | LOG_DEBUG) << "Stopped suppressing sleep" << endl;
+                        }
+                        else
+                            Out(SYS_GEN | LOG_IMPORTANT) << "Failed to stop suppressing sleep" << endl;
+                    });
                 }
             }
             else

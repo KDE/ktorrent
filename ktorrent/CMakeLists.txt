@@ -78,6 +78,9 @@ ki18n_wrap_ui(ktorrent_SRC
 #file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-ktorrent.png")
 #ecm_add_app_icon(ktorrent_SRC ICONS ${ICONS_SRCS})
 
+set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
+qt5_add_dbus_interface(ktorrent_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
+
 add_executable(ktorrent_app ${ktorrent_SRC})
 set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
 

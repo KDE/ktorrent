@@ -44,6 +44,7 @@
 #include "mediaplayer.h"
 #include "videochunkbar.h"
 #include "screensaver_interface.h"
+#include "powermanagementinhibit_interface.h"
 
 
 using namespace bt;
@@ -111,6 +112,7 @@ namespace kt
         connect(player->media0bject(), SIGNAL(tick(qint64)), this, SLOT(timerTick(qint64)));
         connect(player, SIGNAL(playing(MediaFileRef)), this, SLOT(playing(MediaFileRef)));
         connect(player, SIGNAL(enableActions(unsigned int)), this, SLOT(enableActions(unsigned int)));
+
         inhibitScreenSaver(true);
     }
 
@@ -199,30 +201,61 @@ namespace kt
 
     void VideoWidget::inhibitScreenSaver(bool on)
     {
-        QString interface(QStringLiteral("org.freedesktop.ScreenSaver"));
-        org::freedesktop::ScreenSaver screensaver(interface, QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus());
+        org::freedesktop::ScreenSaver screensaver(QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus());
+        org::freedesktop::PowerManagement::Inhibit powerManagement(QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QDBusConnection::sessionBus());
         if (on)
         {
             QString msg = i18n("KTorrent is playing a video.");
-            screensaver_cookie = screensaver.Inhibit(QStringLiteral("ktorrent"), msg);
-            Out(SYS_MPL | LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
+            auto pendingReply = screensaver.Inhibit(QStringLiteral("ktorrent"), msg);
+            auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
+            connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+                QDBusPendingReply<quint32> reply = *callWatcher;
+                if (reply.isValid()) {
+                    screensaver_cookie = reply.value();
+                    Out(SYS_MPL | LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
+                }
+                else
+                    Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress screensaver" << endl;
+            });
 
-            QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
-            QDBusReply<int> reply = freeDesktopInterface.call( QStringLiteral("Inhibit"), QStringLiteral("ktorrent"), msg);
-            if ( reply.isValid() )
-                powermanagement_cookie = reply.value();
-
-            Out(SYS_MPL | LOG_NOTICE) << "PowerManagement inhibited (cookie " << powermanagement_cookie << ")" << endl;
+            auto pendingReply2 = powerManagement.Inhibit(QStringLiteral("ktorrent"), msg);
+            auto pendingCallWatcher2 = new QDBusPendingCallWatcher(pendingReply2, this);
+            connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+                QDBusPendingReply<quint32> reply = *callWatcher;
+                if (reply.isValid()) {
+                    screensaver_cookie = reply.value();
+                    Out(SYS_MPL | LOG_NOTICE) << "PowerManagement inhibited (cookie " << powermanagement_cookie << ")" << endl;
+                }
+                else
+                    Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
+            });
         }
         else
         {
-            screensaver.UnInhibit(screensaver_cookie);
+            auto pendingReply = screensaver.UnInhibit(screensaver_cookie);
+            auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
+            connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+                QDBusPendingReply<void> reply = *callWatcher;
+                if (reply.isValid()) {
+                    screensaver_cookie = 0;
+                    Out(SYS_MPL | LOG_NOTICE) << "Screensaver uninhibited" << endl;
+                }
+                else
+                    Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit screensaver" << endl;
+            });
 
-            QDBusInterface freeDesktopInterface( QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QDBusConnection::sessionBus() );
-            freeDesktopInterface.call( QStringLiteral("UnInhibit"), powermanagement_cookie);
+            auto pendingReply2 = powerManagement.UnInhibit(powermanagement_cookie);
+            auto pendingCallWatcher2 = new QDBusPendingCallWatcher(pendingReply2, this);
+            connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+                QDBusPendingReply<void> reply = *callWatcher;
+                if (reply.isValid()) {
+                    powermanagement_cookie = 0;
+                    Out(SYS_MPL | LOG_NOTICE) << "Power management uninhibited" << endl;
+                }
+                else
+                    Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit power management" << endl;
+            });
 
-            Out(SYS_MPL | LOG_NOTICE) << "Screensaver uninhibited" << endl;
-            Out(SYS_MPL | LOG_NOTICE) << "PowerManagement uninhibited" << endl;
         }
     }
 
