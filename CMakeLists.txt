@@ -49,16 +49,6 @@ find_package(KF5DocTools ${KF5_MIN_VERSION})
 find_package(KF5Torrent 1.9.50 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 
-find_package(KF5KDELibs4Support ${KF5_REQUIRED_VERSION})
-set_package_properties(KF5KDELibs4Support
-  PROPERTIES
-  TYPE OPTIONAL
-  PURPOSE "Required for KTorrent's shutdown plugin"
-)
-if(KF5KDELibs4Support_FOUND)
-  set(HAVE_KDELibs4Support 1)
-endif()
-
 find_package(KF5TextWidgets ${KF5_REQUIRED_VERSION})
 set_package_properties(KF5TextWidgets
   PROPERTIES
@@ -197,6 +187,7 @@ add_definitions(
   -DQT_NO_CAST_TO_BYTEARRAY
 #   -DQT_NO_SIGNALS_SLOTS_KEYWORDS
   -DQT_USE_FAST_OPERATOR_PLUS
+  -DQT_DISABLE_DEPRECATED_BEFORE=0 # FIXME
 )
 
 set (KTORRENT_DBUS_XML_DIR ${KTORRENT_SOURCE_DIR}/dbus_xml)
