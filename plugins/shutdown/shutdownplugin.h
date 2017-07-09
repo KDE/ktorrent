@@ -43,7 +43,6 @@ namespace kt
     public slots:
         void shutdownComputer();
         void lock();
-        void standby();
         void suspendToDisk();
         void suspendToRam();
 

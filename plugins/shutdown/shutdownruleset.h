@@ -46,7 +46,6 @@ namespace kt
     {
         SHUTDOWN,
         LOCK,
-        STANDBY,
         SUSPEND_TO_DISK,
         SUSPEND_TO_RAM
     };

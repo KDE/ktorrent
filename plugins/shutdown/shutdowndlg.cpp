@@ -17,13 +17,14 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
+
 #include "shutdowndlg.h"
 
 #include <KConfigGroup>
-#include <Solid/PowerManagement>
 #include <QVBoxLayout>
 
 #include "shutdowntorrentmodel.h"
+#include "powermanagement_interface.h"
 
 namespace kt
 {
@@ -35,25 +36,29 @@ namespace kt
         setWindowTitle(i18nc("@title:window", "Configure Shutdown"));
         model = new ShutdownTorrentModel(core, this);
 
-        m_action->addItem(QIcon::fromTheme(QStringLiteral("system-shutdown")), i18n("Shutdown"));
-        m_action->addItem(QIcon::fromTheme(QStringLiteral("system-lock-screen")), i18n("Lock"));
+        m_action->addItem(QIcon::fromTheme(QStringLiteral("system-shutdown")), i18n("Shutdown"), SHUTDOWN);
+        m_action->addItem(QIcon::fromTheme(QStringLiteral("system-lock-screen")), i18n("Lock"), LOCK);
 
-        QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
-        if (spdMethods.contains(Solid::PowerManagement::StandbyState))
-            m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend")), i18n("Standby"));
+        org::freedesktop::PowerManagement powerManagement(QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement"), QDBusConnection::sessionBus());
 
-        if (spdMethods.contains(Solid::PowerManagement::SuspendState))
-            m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend")), i18n("Sleep (suspend to RAM)"));
+        auto pendingSuspendReply = powerManagement.CanSuspend();
+        pendingSuspendReply.waitForFinished();
+        if (!pendingSuspendReply.isError())
+            if (pendingSuspendReply.value())
+                m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend")), i18n("Sleep (suspend to RAM)"), SUSPEND_TO_RAM);
 
-        if (spdMethods.contains(Solid::PowerManagement::HibernateState))
-            m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend-hibernate")), i18n("Hibernate (suspend to disk)"));
+        auto pendingHibernateReply = powerManagement.CanHibernate();
+        pendingHibernateReply.waitForFinished();
+        if (!pendingHibernateReply.isError())
+            if (pendingHibernateReply.value())
+                m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend-hibernate")), i18n("Hibernate (suspend to disk)"), SUSPEND_TO_DISK);
 
         m_time_to_execute->addItem(i18n("When all torrents finish downloading"));
         m_time_to_execute->addItem(i18n("When all torrents finish seeding"));
         m_time_to_execute->addItem(i18n("When the events below happen"));
         m_all_rules_must_be_hit->setChecked(rules->allRulesMustBeHit());
 
-        connect(m_time_to_execute, SIGNAL(currentIndexChanged(int)), this, SLOT(timeToExecuteChanged(int)));
+        connect(m_time_to_execute, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ShutdownDlg::timeToExecuteChanged);
         m_torrent_list->setEnabled(false);
         m_torrent_list->setModel(model);
         m_torrent_list->setRootIsDecorated(false);
@@ -112,27 +117,13 @@ namespace kt
 
     kt::Action ShutdownDlg::indexToAction(int idx)
     {
-        int next = 2;
-        int stand_by = -1;
-        int suspend_to_ram = -1;
-        int suspend_to_disk = -1;
-
-        QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
-        if (spdMethods.contains(Solid::PowerManagement::StandbyState))
-            stand_by = next++;
-
-        if (spdMethods.contains(Solid::PowerManagement::SuspendState))
-            suspend_to_ram = next++;
-
-        if (spdMethods.contains(Solid::PowerManagement::HibernateState))
-            suspend_to_disk = next++;
+        int suspend_to_ram = m_action->findData(SUSPEND_TO_RAM);
+        int suspend_to_disk = m_action->findData(SUSPEND_TO_DISK);
 
         if (idx == 0)
             return SHUTDOWN;
         else if (idx == 1)
             return LOCK;
-        else if (idx == stand_by)
-            return STANDBY;
         else if (idx == suspend_to_ram)
             return SUSPEND_TO_RAM;
         else if (idx == suspend_to_disk)
@@ -143,26 +134,13 @@ namespace kt
 
     int ShutdownDlg::actionToIndex(Action act)
     {
-        int next = 2;
-        int stand_by = -1;
-        int suspend_to_ram = -1;
-        int suspend_to_disk = -1;
-
-        QSet<Solid::PowerManagement::SleepState> spdMethods = Solid::PowerManagement::supportedSleepStates();
-        if (spdMethods.contains(Solid::PowerManagement::StandbyState))
-            stand_by = next++;
-
-        if (spdMethods.contains(Solid::PowerManagement::SuspendState))
-            suspend_to_ram = next++;
-
-        if (spdMethods.contains(Solid::PowerManagement::HibernateState))
-            suspend_to_disk = next++;
+        int suspend_to_ram = m_action->findData(SUSPEND_TO_RAM);
+        int suspend_to_disk = m_action->findData(SUSPEND_TO_DISK);
 
         switch (act)
         {
         case SHUTDOWN: return 0;
         case LOCK: return 1;
-        case STANDBY: return stand_by;
         case SUSPEND_TO_RAM: return suspend_to_ram;
         case SUSPEND_TO_DISK: return suspend_to_disk;
         default:

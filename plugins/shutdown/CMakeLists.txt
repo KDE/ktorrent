@@ -3,6 +3,10 @@ set(ktshutdownplugin_SRC shutdownruleset.cpp shutdowntorrentmodel.cpp shutdowndl
 
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
 qt5_add_dbus_interface(ktshutdownplugin_SRC ${screensaver_xml} screensaver_interface)
+
+set(powermanagement_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.xml)
+qt5_add_dbus_interface(ktshutdownplugin_SRC ${powermanagement_xml} powermanagement_interface)
+
 ki18n_wrap_ui(ktshutdownplugin_SRC shutdowndlg.ui)
 
 add_library(ktorrent_shutdown MODULE ${ktshutdownplugin_SRC})
@@ -17,7 +21,6 @@ target_link_libraries(
     KF5::I18n
     KF5::XmlGui
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
 )
 
 install(TARGETS ktorrent_shutdown  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

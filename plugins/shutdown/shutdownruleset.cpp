@@ -110,7 +110,6 @@ namespace kt
             {
             case SHUTDOWN: emit shutdown(); break;
             case LOCK: emit lock(); break;
-            case STANDBY: emit standby(); break;
             case SUSPEND_TO_DISK: emit suspendToDisk(); break;
             case SUSPEND_TO_RAM: emit suspendToRAM(); break;
             }
@@ -276,9 +275,6 @@ namespace kt
             case LOCK:
                 msg = i18n("Lock");
                 break;
-            case STANDBY:
-                msg = i18n("Standby");
-                break;
             case SUSPEND_TO_RAM:
                 msg = i18n("Sleep (suspend to RAM)");
                 break;
@@ -294,7 +290,7 @@ namespace kt
                 msg += i18n(" when one of the following events occur:<br/><br/> ");
 
             QStringList items;
-            foreach (const ShutdownRule& r, rules)
+            for (const ShutdownRule& r : qAsConst(rules))
             {
                 items += QStringLiteral("- ") + r.toolTip();
             }

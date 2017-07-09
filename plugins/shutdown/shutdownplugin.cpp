@@ -26,13 +26,13 @@
 #include <KPluginFactory>
 #include <KToggleAction>
 #include <kworkspace.h>
-#include <Solid/PowerManagement>
 
 #include <util/log.h>
 #include <interfaces/functions.h>
 #include "screensaver_interface.h"
 #include "shutdowndlg.h"
 #include "shutdownruleset.h"
+#include "powermanagement_interface.h"
 
 K_PLUGIN_FACTORY_WITH_JSON(ktorrent_shutdown, "ktorrent_shutdown.json", registerPlugin<kt::ShutdownPlugin>();)
 
@@ -67,7 +67,7 @@ namespace kt
 
     void ShutdownPlugin::unload()
     {
-        rules->save(kt::DataDir() + QLatin1String("shutdown_rules"));
+        rules->save(kt::DataDir() + QStringLiteral("shutdown_rules"));
         delete rules;
         rules = nullptr;
     }
@@ -75,12 +75,11 @@ namespace kt
     void ShutdownPlugin::load()
     {
         rules = new ShutdownRuleSet(getCore(), this);
-        rules->load(kt::DataDir() + QLatin1String("shutdown_rules"));
+        rules->load(kt::DataDir() + QStringLiteral("shutdown_rules"));
         if (rules->enabled())
             shutdown_enabled->setChecked(true);
         connect(rules, SIGNAL(shutdown()), this, SLOT(shutdownComputer()));
         connect(rules, SIGNAL(lock()), this, SLOT(lock()));
-        connect(rules, SIGNAL(standby()), this, SLOT(standby()));
         connect(rules, SIGNAL(suspendToDisk()), this, SLOT(suspendToDisk()));
         connect(rules, SIGNAL(suspendToRAM()), this, SLOT(suspendToRam()));
         updateAction();
@@ -102,21 +101,16 @@ namespace kt
 
     void ShutdownPlugin::suspendToDisk()
     {
+        org::freedesktop::PowerManagement powerManagement(QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement"), QDBusConnection::sessionBus());
         Out(SYS_GEN | LOG_NOTICE) << "Suspending to disk ..." << endl;
-        Solid::PowerManagement::requestSleep(Solid::PowerManagement::HibernateState, nullptr, nullptr);
+        powerManagement.Hibernate();
    }
 
     void ShutdownPlugin::suspendToRam()
     {
+        org::freedesktop::PowerManagement powerManagement(QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement"), QDBusConnection::sessionBus());
         Out(SYS_GEN | LOG_NOTICE) << "Suspending to RAM ..." << endl;
-        Solid::PowerManagement::requestSleep(Solid::PowerManagement::SuspendState, nullptr, nullptr);
-    }
-
-    void ShutdownPlugin::standby()
-    {
-        Out(SYS_GEN | LOG_NOTICE) << "Suspending to standby ..." << endl;
-        Solid::PowerManagement::requestSleep(Solid::PowerManagement::StandbyState, nullptr, nullptr);
-
+        powerManagement.Suspend();
     }
 
     void ShutdownPlugin::shutdownToggled(bool on)
@@ -154,10 +148,6 @@ namespace kt
         case LOCK:
             shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-lock-screen")));
             shutdown_enabled->setText(i18n("Lock"));
-            break;
-        case STANDBY:
-            shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-suspend")));
-            shutdown_enabled->setText(i18n("Standby"));
             break;
         case SUSPEND_TO_RAM:
             shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-suspend")));
