@@ -77,7 +77,7 @@ namespace kt
 
 
         QHeaderView* hv = m_item_list->header();
-        hv->setResizeMode(QHeaderView::Interactive);
+        hv->setSectionResizeMode(QHeaderView::Interactive);
         connect(m_item_list->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
                 this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
 

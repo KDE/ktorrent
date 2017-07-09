@@ -136,7 +136,7 @@ namespace kt
         test_filter = new Filter();
 
         QHeaderView* hv = m_test_results->header();
-        hv->setResizeMode(QHeaderView::ResizeToContents);
+        hv->setSectionResizeMode(QHeaderView::ResizeToContents);
     }
 
 

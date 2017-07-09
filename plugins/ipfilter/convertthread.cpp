@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <algorithm>
 #include <errno.h>
 #include <regex>
 #include <string>
@@ -115,7 +116,7 @@ namespace kt
 
     void ConvertThread::sort()
     {
-        qSort(input.begin(), input.end(), LessThan);
+        std::sort(input.begin(), input.end(), LessThan);
     }
 
     void ConvertThread::merge()

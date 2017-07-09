@@ -254,14 +254,14 @@ namespace kt
                 to_remove.append(f);
         }
 
+        beginResetModel();
         foreach (Feed* f, to_remove)
         {
             bt::Delete(f->directory(), true);
             feeds.removeAll(f);
             delete f;
         }
-
-        reset();
+        endResetModel();
     }
 
     void FeedList::feedUpdated()

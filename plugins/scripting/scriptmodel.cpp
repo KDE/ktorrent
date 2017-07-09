@@ -313,6 +313,7 @@ namespace kt
                 to_remove << s;
         }
 
+        beginResetModel();
         foreach (Script* s, to_remove)
         {
             if (!s->packageDirectory().isEmpty())
@@ -322,6 +323,6 @@ namespace kt
             s->deleteLater();
         }
 
-        reset();
+        endResetModel();
     }
 }

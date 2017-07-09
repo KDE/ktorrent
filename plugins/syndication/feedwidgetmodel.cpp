@@ -51,6 +51,7 @@ namespace kt
 
     void FeedWidgetModel::setCurrentFeed(Feed* f)
     {
+        beginResetModel();
         items.clear();
         if (feed)
             disconnect(feed, SIGNAL(updated()), this, SLOT(updated()));
@@ -61,9 +62,9 @@ namespace kt
             Syndication::FeedPtr ptr = feed->feedData();
             if (ptr)
                 items = ptr->items();
-            connect(feed, SIGNAL(updated()), this, SLOT(updated()));
-            reset();
+            connect(feed, &kt::Feed::updated, this, &FeedWidgetModel::updated);
         }
+        endResetModel();
     }
 
     int FeedWidgetModel::rowCount(const QModelIndex& parent) const
@@ -190,11 +191,11 @@ namespace kt
         if (!feed)
             return;
 
+        beginResetModel();
         items.clear();
         Syndication::FeedPtr ptr = feed->feedData();
         if (ptr)
             items = ptr->items();
-
-        reset();
+        endResetModel();
     }
 }

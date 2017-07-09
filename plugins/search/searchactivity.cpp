@@ -17,7 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "searchactivity.h"
+
+#include <algorithm>
 
 #include <QFile>
 #include <QIcon>
@@ -93,9 +96,9 @@ namespace kt
 
     void SearchActivity::search(const QString& text, int engine)
     {
-        foreach (SearchWidget* s, searches)
+        for (SearchWidget* s : qAsConst(searches))
         {
-            if (s->getCurrentUrl() == QUrl(QLatin1String("about:ktorrent")))
+            if (s->getCurrentUrl() == QUrl(QStringLiteral("about:ktorrent")))
             {
                 s->search(text, engine);
                 tabs->setCurrentWidget(s);
@@ -110,15 +113,15 @@ namespace kt
 
     void SearchActivity::saveCurrentSearches()
     {
-        QFile fptr(kt::DataDir() + QLatin1String("current_searches"));
+        QFile fptr(kt::DataDir() + QStringLiteral("current_searches"));
         if (!fptr.open(QIODevice::WriteOnly))
             return;
 
         // Sort by order in tab widget so that they are restored in the proper order
-        qSort(searches.begin(), searches.end(), IndexOfCompare<QTabWidget, SearchWidget>(tabs));
+        std::sort(searches.begin(), searches.end(), IndexOfCompare<QTabWidget, SearchWidget>(tabs));
         bt::BEncoder enc(&fptr);
         enc.beginList();
-        foreach (SearchWidget* w, searches)
+        for (SearchWidget* w : qAsConst(searches))
         {
             enc.beginDict();
             enc.write("TEXT", w->getSearchText().toUtf8());

@@ -23,6 +23,7 @@
 #include <QStandardPaths>
 #include <QStringList>
 #include <QTextStream>
+#include <QUrlQuery>
 
 #include <KIO/CopyJob>
 #include <KLocalizedString>
@@ -82,7 +83,7 @@ namespace kt
         else
         {
             QStringList subdirs = QDir(data_dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-            foreach (const QString& sd, subdirs)
+            for (const QString& sd : qAsConst(subdirs))
             {
 
                 // Load only if there is an opensearch.xml file and not a removed file
@@ -122,7 +123,7 @@ namespace kt
             QStringList tokens = line.split(QLatin1Char(' '));
             QString name = tokens[0];
             name = name.replace(QLatin1String("%20"), QLatin1String(" "));
-            QUrl url = QUrl(tokens[1]);
+            QUrlQuery url = QUrlQuery(QUrl(tokens[1]));
 
             for (Uint32 i = 2; i < (Uint32)tokens.count(); ++i)
                 url.addQueryItem(tokens[i].section(QLatin1Char('='), 0, 0), tokens[i].section(QLatin1Char('='), 1, 1));
@@ -134,7 +135,7 @@ namespace kt
                     dir += QLatin1Char('/');
 
                 bt::MakeDir(dir);
-                addEngine(dir, url.toDisplayString().replace(QLatin1String("FOOBAR"), QLatin1String("{searchTerms}")));
+                addEngine(dir, url.toString().replace(QLatin1String("FOOBAR"), QLatin1String("{searchTerms}")));
             }
             catch (bt::Error& err)
             {
@@ -225,27 +226,28 @@ namespace kt
     void SearchEngineList::removeEngines(const QModelIndexList& sel)
     {
         QList<SearchEngine*> to_remove;
-        foreach (const QModelIndex& idx, sel)
+        for (const QModelIndex& idx : sel)
         {
             if (idx.isValid() && idx.row() >= 0 && idx.row() < engines.count())
                 to_remove.append(engines.at(idx.row()));
         }
 
-        foreach (SearchEngine* se, to_remove)
+        beginResetModel();
+        for (SearchEngine* se : qAsConst(to_remove))
         {
             bt::Touch(se->engineDir() + QStringLiteral("removed"));
             engines.removeAll(se);
             delete se;
         }
-
-        reset();
+        endResetModel();
     }
 
     void SearchEngineList::removeAllEngines()
     {
+        beginResetModel();
         removeRows(0, engines.count(), QModelIndex());
         engines.clear();
-        reset();
+        endResetModel();
     }
 
     void SearchEngineList::addDefaults()
@@ -261,7 +263,8 @@ namespace kt
             return;
         }
 
-        foreach (const QUrl &u, default_opensearch_urls)
+        beginResetModel();
+        for (const QUrl &u : qAsConst(default_opensearch_urls))
         {
             Out(SYS_SRC | LOG_DEBUG) << "Setting up default engine " << u.toDisplayString() << endl;
             QString dir = data_dir + u.host() + QLatin1Char('/');
@@ -279,7 +282,7 @@ namespace kt
 
         // also add the engines which don't have an opensearch description
         loadDefault(true);
-        reset();
+        endResetModel();
     }
 
     void SearchEngineList::loadEngine(const QString& global_dir, const QString& user_dir, bool load_removed)
@@ -318,10 +321,10 @@ namespace kt
         if (dir_list.isEmpty())
             dir_list = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
 
-        foreach (const QString& dir, dir_list)
+        for (const QString& dir : qAsConst(dir_list))
         {
-            QStringList subdirs = QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-            foreach (const QString& sd, subdirs)
+            const QStringList subdirs = QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+            for (const QString& sd : subdirs)
             {
                 loadEngine(QDir::cleanPath(dir) + QLatin1Char('/') + sd + QLatin1Char('/'), data_dir + sd + QLatin1Char('/'), removed_to);
             }
@@ -330,7 +333,7 @@ namespace kt
 
     bool SearchEngineList::alreadyLoaded(const QString& user_dir)
     {
-        foreach (const SearchEngine* se, engines)
+        for (const SearchEngine* se : qAsConst(engines))
         {
             if (se->engineDir() == user_dir)
                 return true;

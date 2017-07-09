@@ -20,6 +20,8 @@
 
 #include "playlist.h"
 
+#include <algorithm>
+
 #include <QFile>
 #include <QFileInfo>
 #include <QIcon>
@@ -257,9 +259,9 @@ namespace kt
             row = rowCount(QModelIndex());
 
         // Remove dragged rows if there are any
-        qSort(dragged_rows);
+        std::sort(dragged_rows.begin(), dragged_rows.end());
         int nr = 0;
-        foreach (int r, dragged_rows)
+        for (int r : qAsConst(dragged_rows))
         {
             r -= nr;
             removeRow(r);
@@ -268,7 +270,7 @@ namespace kt
 
         row -= nr;
 
-        foreach (const QUrl& url, urls)
+        for (const QUrl& url : qAsConst(urls))
         {
             PlayListItem item = qMakePair(collection->find(url.toLocalFile()), (TagLib::FileRef*)0);
             files.insert(row, item);
@@ -307,7 +309,7 @@ namespace kt
         }
 
         QTextStream out(&fptr);
-        foreach (const PlayListItem& f, files)
+        for (const PlayListItem& f : qAsConst(files))
             out << f.first.path() << endl;
     }
 

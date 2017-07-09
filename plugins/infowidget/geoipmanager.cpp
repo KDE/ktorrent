@@ -86,7 +86,7 @@ namespace kt
         if (!geo_ip)
             return 0;
         else
-            return GeoIP_id_by_name(geo_ip, addr.toAscii().data());
+            return GeoIP_id_by_name(geo_ip, addr.toLatin1().data());
     }
 
     QString GeoIPManager::countryCode(int country_id)

@@ -27,6 +27,7 @@
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QUrl>
+#include <QUrlQuery>
 #include <QWebHistoryInterface>
 #include <QWebHitTestResult>
 
@@ -67,7 +68,7 @@ namespace kt
             }
             else if (req.url().host() == QStringLiteral("ktorrent.searchplugin"))
             {
-                QString search_text = req.url().queryItemValue(QStringLiteral("search_text"));
+                QString search_text = QUrlQuery(req.url()).queryItemValue(QStringLiteral("search_text"));
 
                 if (!search_text.isEmpty())
                 {

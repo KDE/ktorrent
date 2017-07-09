@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "trackerview.h"
 
 #include <QClipboard>
@@ -207,7 +208,7 @@ namespace kt
 
     void TrackerView::torrentChanged(TorrentInterface* ti)
     {
-        tc = ti;
+        tc = bt::TorrentInterface::Ptr(ti);
         if (!tc)
         {
             m_add_tracker->setEnabled(false);

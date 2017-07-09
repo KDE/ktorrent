@@ -90,24 +90,26 @@ namespace kt
 
     QModelIndex DownloadOrderModel::find(const QString& text)
     {
+        beginResetModel();
         current_search_text = text;
         for (Uint32 i = 0; i < tor->getNumFiles(); i++)
         {
             if (tor->getTorrentFile(i).getUserModifiedPath().contains(current_search_text, Qt::CaseInsensitive))
             {
-                reset();
+                endResetModel();
                 return index(i);
             }
         }
 
-        reset();
+        endResetModel();
         return QModelIndex();
     }
 
     void DownloadOrderModel::clearHighLights()
     {
+        beginResetModel();
         current_search_text.clear();
-        reset();
+        endResetModel();
     }
 
     Qt::ItemFlags DownloadOrderModel::flags(const QModelIndex& index) const
@@ -224,8 +226,9 @@ namespace kt
             tmp.append(order.takeAt(row));
         }
 
+        beginResetModel();
         order = tmp + order;
-        reset();
+        endResetModel();
     }
 
     void DownloadOrderModel::moveDown(int row, int count)
@@ -252,8 +255,9 @@ namespace kt
             tmp.append(order.takeAt(row));
         }
 
+        beginResetModel();
         order = order + tmp;
-        reset();
+        endResetModel();
     }
 
     struct NameCompare
@@ -271,8 +275,9 @@ namespace kt
 
     void DownloadOrderModel::sortByName()
     {
-        qSort(order.begin(), order.end(), NameCompare(tor));
-        reset();
+        beginResetModel();
+        std::sort(order.begin(), order.end(), NameCompare(tor));
+        endResetModel();
     }
 
     struct AlbumTrackCompare
@@ -318,8 +323,9 @@ namespace kt
 
     void DownloadOrderModel::sortByAlbumTrackOrder()
     {
-        qSort(order.begin(), order.end(), AlbumTrackCompare(tor));
-        reset();
+        beginResetModel();
+        std::sort(order.begin(), order.end(), AlbumTrackCompare(tor));
+        endResetModel();
     }
 
     struct SeasonEpisodeCompare
@@ -394,7 +400,8 @@ namespace kt
 
     void DownloadOrderModel::sortBySeasonsAndEpisodes()
     {
-        qSort(order.begin(), order.end(), SeasonEpisodeCompare(tor));
-        reset();
+        beginResetModel();
+        std::sort(order.begin(), order.end(), SeasonEpisodeCompare(tor));
+        endResetModel();
     }
 }

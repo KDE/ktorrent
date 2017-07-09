@@ -21,8 +21,9 @@
 
 #include "trayicon.h"
 
+#include <algorithm>
+
 #include <QPainter>
-#include <QtAlgorithms>
 #include <QIcon>
 #include <QLocale>
 #include <QToolTip>
@@ -394,8 +395,8 @@ namespace kt
             delta += (delta >= 50) ? 50 : (delta >= 20) ? 10 : 5;
         }
 
-        qSort(values);
-        foreach (int v, values)
+        std::sort(values.begin(), values.end());
+        for (int v : qAsConst(values))
         {
             if (v >= 1)
             {

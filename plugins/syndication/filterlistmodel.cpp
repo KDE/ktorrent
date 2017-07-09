@@ -45,11 +45,11 @@ namespace kt
     void FilterListModel::removeFilter(Filter* f)
     {
         int idx = filters.indexOf(f);
+        beginResetModel();
         filters.removeAll(f);
         if (idx >= 0)
             removeRow(idx);
-        else
-            reset();
+        endResetModel();
     }
 
     Filter* FilterListModel::filterForIndex(const QModelIndex& idx)
@@ -132,7 +132,8 @@ namespace kt
 
     void FilterListModel::clear()
     {
+        beginResetModel();
         filters.clear();
-        reset();
+        endResetModel();
     }
 }

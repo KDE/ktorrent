@@ -43,19 +43,19 @@ namespace kt
 
     void TrackerModel::changeTC(bt::TorrentInterface* tc)
     {
+        beginResetModel();
         qDeleteAll(trackers);
         trackers.clear();
         this->tc = tc;
         if (tc)
         {
             QList<bt::TrackerInterface*> tracker_list = tc->getTrackersList()->getTrackers();
-            foreach (bt::TrackerInterface* trk, tracker_list)
+            for (bt::TrackerInterface* trk : qAsConst(tracker_list))
             {
                 trackers.append(new Item(trk));
             }
         }
-
-        reset();
+        endResetModel();
     }
 
     void TrackerModel::update()

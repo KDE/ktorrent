@@ -39,6 +39,7 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerslist.h>
 #include <settings.h>
+#include <algorithm>
 #include <climits>
 
 
@@ -936,7 +937,7 @@ namespace kt
 
     void QueuePtrList::sort()
     {
-        qSort(begin(), end(), QueuePtrList::biggerThan);
+        std::sort(begin(), end(), QueuePtrList::biggerThan);
     }
 
     bool QueuePtrList::biggerThan(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2)
