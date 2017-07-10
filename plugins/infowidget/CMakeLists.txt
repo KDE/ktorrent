@@ -51,7 +51,6 @@ set(ktinfowidgetplugin_SRC
 
 ki18n_wrap_ui(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
 kconfig_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
 add_library(ktorrent_infowidget MODULE ${ktinfowidgetplugin_SRC})
 
 kcoreaddons_desktop_to_json(ktorrent_infowidget ktorrent_infowidget.desktop)
