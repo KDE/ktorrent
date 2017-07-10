@@ -156,7 +156,7 @@ namespace kt
         if (curr_tc)
             expanded_state_map[curr_tc.data()] = model->saveExpandedState(proxy_model, view);
 
-        curr_tc = bt::TorrentInterface::Ptr(tc);
+        curr_tc = tc;
         setEnabled(tc != 0);
         model->changeTorrent(tc);
         if (tc)

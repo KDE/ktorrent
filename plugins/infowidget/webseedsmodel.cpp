@@ -43,7 +43,7 @@ namespace kt
 
     void WebSeedsModel::changeTC(bt::TorrentInterface* tc)
     {
-        curr_tc = bt::TorrentInterface::Ptr(tc);
+        curr_tc = tc;
         beginResetModel();
         items.clear();
         if (tc)

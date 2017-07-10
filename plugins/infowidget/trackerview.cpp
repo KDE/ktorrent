@@ -208,7 +208,7 @@ namespace kt
 
     void TrackerView::torrentChanged(TorrentInterface* ti)
     {
-        tc = bt::TorrentInterface::Ptr(ti);
+        tc = ti;
         if (!tc)
         {
             m_add_tracker->setEnabled(false);

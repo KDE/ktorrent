@@ -201,8 +201,8 @@ namespace kt
 
     void PeerViewModel::clear()
     {
-        qDeleteAll(items);
         beginResetModel();
+        qDeleteAll(items);
         items.clear();
         endResetModel();
     }

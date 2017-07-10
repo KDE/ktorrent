@@ -66,7 +66,7 @@ namespace kt
 
     void WebSeedsTab::changeTC(bt::TorrentInterface* tc)
     {
-        curr_tc = bt::TorrentInterface::Ptr(tc);
+        curr_tc = tc;
         model->changeTC(tc);
         m_add->setEnabled(tc != 0);
         m_remove->setEnabled(tc != 0);
