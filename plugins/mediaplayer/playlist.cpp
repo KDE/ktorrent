@@ -86,8 +86,9 @@ namespace kt
 
     void PlayList::clear()
     {
+        beginResetModel();
         files.clear();
-        reset();
+        endResetModel();
     }
 
 
@@ -322,6 +323,7 @@ namespace kt
             return;
         }
 
+        beginResetModel();
         QTextStream in(&fptr);
         while (!in.atEnd())
         {
@@ -329,9 +331,7 @@ namespace kt
             TagLib::FileRef* ref = new TagLib::FileRef(QFile::encodeName(file).data(), true, TagLib::AudioProperties::Fast);
             files.append(qMakePair(collection->find(file), ref));
         }
-
-
-        emit reset();
+        endResetModel();
     }
 
     void PlayList::onPlaying(const kt::MediaFileRef& file)
