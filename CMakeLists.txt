@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(KTORRENT)
 
-
 set (QT_MIN_VERSION "5.7.0")
 set (KF5_MIN_VERSION "5.15")
 
 find_package(ECM REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/")
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
