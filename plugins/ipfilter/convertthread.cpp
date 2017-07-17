@@ -106,12 +106,10 @@ namespace kt
 
     static bool LessThan(const IPBlock& a, const IPBlock& b)
     {
-        if (a.ip2 < b.ip1) // a range is before b range
-            return true;
-        else if (b.ip2 < a.ip1) // b range is before a range
-            return false;
+        if (a.ip1 == b.ip1)
+            return a.ip2 < b.ip2;
         else
-            return a.ip1 < b.ip1;// a and b intersect
+            return a.ip1 < b.ip1;
     }
 
     void ConvertThread::sort()

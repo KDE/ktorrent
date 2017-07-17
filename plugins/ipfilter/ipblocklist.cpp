@@ -76,12 +76,12 @@ namespace kt
         while (true)
         {
             if (begin == end)
-                return blocks[begin].constains(ip);
+                return blocks[begin].contains(ip);
             else if (begin == end - 1)
-                return blocks[begin].constains(ip) || blocks[end].constains(ip);
+                return blocks[begin].contains(ip) || blocks[end].contains(ip);
 
             int pivot = begin + (end - begin) / 2;
-            if (blocks[pivot].constains(ip))
+            if (blocks[pivot].contains(ip))
                 return true;
             else if (ip < blocks[pivot].ip1)
                 end = pivot - 1; // continue in the range [begin, pivot - 1]

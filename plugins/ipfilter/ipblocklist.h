@@ -39,7 +39,7 @@ namespace kt
         IPBlock(const IPBlock& block);
         IPBlock(const QString& start, const QString& end);
 
-        bool constains(bt::Uint32 ip) const
+        bool contains(bt::Uint32 ip) const
         {
             return ip1 <= ip && ip <= ip2;
         }
