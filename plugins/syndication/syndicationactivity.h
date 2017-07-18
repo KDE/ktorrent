@@ -47,10 +47,8 @@ namespace kt
         void saveState(KSharedConfigPtr cfg);
         Filter* addNewFilter();
 
-    public:
         void addFeed();
         void removeFeed();
-        void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
         void showFeed(Feed* f);
         void downloadLink(const QUrl& url, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
         void addFilter();
@@ -59,6 +57,9 @@ namespace kt
         void editFilter(Filter* f);
         void manageFilters();
         void editFeedName();
+
+    public Q_SLOT:
+        void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
 
     private:
         FeedList* feed_list;
