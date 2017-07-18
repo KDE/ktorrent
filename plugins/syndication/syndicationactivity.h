@@ -58,7 +58,7 @@ namespace kt
         void manageFilters();
         void editFeedName();
 
-    public Q_SLOT:
+    public Q_SLOTS:
         void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
 
     private:
