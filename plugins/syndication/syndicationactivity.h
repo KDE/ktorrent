@@ -39,6 +39,8 @@ namespace kt
 
     class SyndicationActivity : public kt::Activity
     {
+    Q_OBJECT
+
     public:
         SyndicationActivity(SyndicationPlugin* sp, QWidget* parent);
         ~SyndicationActivity();
