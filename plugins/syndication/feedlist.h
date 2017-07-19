@@ -37,7 +37,6 @@ namespace kt
     */
     class FeedList : public QAbstractListModel
     {
-        Q_OBJECT
     public:
         FeedList(const QString& data_dir, QObject* parent);
         ~FeedList();
@@ -58,7 +57,6 @@ namespace kt
         void filterEdited(Filter* f);
         void importOldFeeds();
 
-    private slots:
         void feedUpdated();
 
     private:

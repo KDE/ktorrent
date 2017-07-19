@@ -35,10 +35,9 @@ namespace kt
         setItemDelegate(new FeedListDelegate(this));
         setAlternatingRowColors(true);
         setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::EditKeyPressed);
-        connect(this, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(itemActivated(const QModelIndex&)));
-        connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(itemActivated(QModelIndex)));
-        connect(this->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-                this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
+        connect(this, &FeedListView::doubleClicked, this, &FeedListView::itemActivated);
+        connect(this, &FeedListView::clicked, this, &FeedListView::itemActivated);
+        connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FeedListView::selectionChanged);
     }
 
 

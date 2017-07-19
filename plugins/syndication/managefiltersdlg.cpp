@@ -46,10 +46,10 @@ namespace kt
         m_add->setText(QString());
         m_remove->setIcon(QIcon::fromTheme(QStringLiteral("go-next")));
         m_remove->setText(QString());
-        connect(m_add, SIGNAL(clicked()), this, SLOT(add()));
-        connect(m_remove, SIGNAL(clicked()), this, SLOT(remove()));
-        connect(m_remove_all, SIGNAL(clicked()), this, SLOT(removeAll()));
-        connect(m_new_filter, SIGNAL(clicked()), this, SLOT(newFilter()));
+        connect(m_add, &QPushButton::clicked, this, &ManageFiltersDlg::add);
+        connect(m_remove, &QPushButton::clicked, this, &ManageFiltersDlg::remove);
+        connect(m_remove_all, &QPushButton::clicked, this, &ManageFiltersDlg::removeAll);
+        connect(m_new_filter, &QPushButton::clicked, this, &ManageFiltersDlg::newFilter);
 
         active = new FilterListModel(this);
         available = new FilterListModel(this);
@@ -70,11 +70,11 @@ namespace kt
         }
 
         m_add->setEnabled(false);
-        connect(m_available_filters->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-                this, SLOT(availableSelectionChanged(const QItemSelection&, const QItemSelection&)));
+        connect(m_available_filters->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &ManageFiltersDlg::availableSelectionChanged);
         m_remove->setEnabled(false);
-        connect(m_active_filters->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-                this, SLOT(activeSelectionChanged(const QItemSelection&, const QItemSelection&)));
+        connect(m_active_filters->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &ManageFiltersDlg::activeSelectionChanged);
 
         m_remove_all->setEnabled(active->rowCount(QModelIndex()) > 0);
     }

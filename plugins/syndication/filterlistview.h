@@ -41,11 +41,10 @@ namespace kt
 
         QModelIndexList selectedFilters();
 
-    private slots:
         void itemActivated(const QModelIndex& idx);
         void selectionChanged(const QItemSelection& sel, const QItemSelection& desel);
 
-    signals:
+    Q_SIGNALS:
         void filterActivated(Filter* filter);
         void enableRemove(bool on);
         void enableEdit(bool on);

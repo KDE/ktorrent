@@ -32,7 +32,6 @@ namespace kt
     */
     class FilterList : public FilterListModel
     {
-        Q_OBJECT
     public:
         FilterList(QObject* parent);
         ~FilterList();

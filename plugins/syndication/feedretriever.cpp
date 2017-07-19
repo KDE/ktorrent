@@ -68,7 +68,7 @@ namespace kt
             j->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("Cookie: %1").arg(cookie));
         }
 
-        connect(j, SIGNAL(result(KJob*)), this, SLOT(finished(KJob*)));
+        connect(j, &KIO::StoredTransferJob::result, this, &FeedRetriever::finished);
         job = j;
     }
 

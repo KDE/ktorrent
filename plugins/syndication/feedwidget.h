@@ -52,7 +52,6 @@ namespace kt
         void loadState(KConfigGroup& g);
         void saveState(KConfigGroup& g);
 
-    private slots:
         void downloadClicked();
         void refreshClicked();
         void filtersClicked();
@@ -64,7 +63,7 @@ namespace kt
         void linkClicked(const QUrl& url);
         void resizeColumns();
 
-    signals:
+    Q_SIGNALS:
         void updateCaption(QWidget* w, const QString& text);
 
     private:

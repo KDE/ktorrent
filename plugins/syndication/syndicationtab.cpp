@@ -82,8 +82,7 @@ namespace kt
         feed_view_menu->addSeparator();
         feed_view_menu->addAction(ac->action(QStringLiteral("add_feed")));
         feed_view_menu->addAction(ac->action(QStringLiteral("remove_feed")));
-        connect(feed_view, SIGNAL(customContextMenuRequested(const QPoint&)),
-                this, SLOT(showFeedViewMenu(const QPoint&)));
+        connect(feed_view, &FeedListView::customContextMenuRequested, this, &SyndicationTab::showFeedViewMenu);
 
 
         filter_view_menu = new QMenu(this);
@@ -91,8 +90,7 @@ namespace kt
         filter_view_menu->addSeparator();
         filter_view_menu->addAction(ac->action(QStringLiteral("add_filter")));
         filter_view_menu->addAction(ac->action(QStringLiteral("remove_filter")));
-        connect(filter_view, SIGNAL(customContextMenuRequested(const QPoint&)),
-                this, SLOT(showFilterViewMenu(const QPoint&)));
+        connect(filter_view, &FilterListView::customContextMenuRequested, this, &SyndicationTab::showFilterViewMenu);
     }
 
 

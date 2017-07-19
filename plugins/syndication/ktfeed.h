@@ -147,22 +147,22 @@ namespace kt
         /// Set the refresh rate of the feed
         void setRefreshRate(bt::Uint32 r);
 
-    signals:
+    Q_SIGNALS:
         /// Emitted when a link must de downloaded
         void downloadLink(const QUrl& link, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
 
         /// A feed has been renamed
         void feedRenamed(Feed* f);
 
-    public slots:
+    public:
         /// Update the feed
         void refresh();
 
-    private slots:
+    private Q_SLOTS:
         void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
         void loadingFromDiskComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
 
-    signals:
+    Q_SIGNALS:
         void updated();
 
     private:

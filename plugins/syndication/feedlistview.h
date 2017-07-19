@@ -43,11 +43,10 @@ namespace kt
         /// Get all the selected feeds
         QModelIndexList selectedFeeds();
 
-    private slots:
         void itemActivated(const QModelIndex& idx);
         void selectionChanged(const QItemSelection& sel, const QItemSelection& desel);
 
-    signals:
+    Q_SIGNALS:
         void feedActivated(Feed* feed);
         void enableRemove(bool on);
 

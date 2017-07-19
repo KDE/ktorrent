@@ -31,9 +31,8 @@ namespace kt
         setContextMenuPolicy(Qt::CustomContextMenu);
         setModel(filters);
         setAlternatingRowColors(true);
-        connect(this, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(itemActivated(const QModelIndex&)));
-        connect(this->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-                this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
+        connect(this, &FilterListView::doubleClicked, this, &FilterListView::itemActivated);
+        connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FilterListView::selectionChanged);
     }
 
 

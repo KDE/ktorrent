@@ -52,12 +52,10 @@ namespace kt
     */
     class FilterEditor : public QDialog, public Ui_FilterEditor
     {
-        Q_OBJECT
     public:
         FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds, CoreInterface* core, QWidget* parent);
         ~FilterEditor();
 
-    private slots:
         void onOK();
         void checkOKButton();
         void test();

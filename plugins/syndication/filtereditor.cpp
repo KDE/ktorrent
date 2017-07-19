@@ -119,19 +119,19 @@ namespace kt
         m_exclusion_patterns->setItems(items);
         m_exclusion_reg_exp->setChecked(filter->exclusionUseRegularExpressions());
 
-        connect(m_name, SIGNAL(textChanged(const QString&)), this, SLOT(checkOKButton()));
-        connect(m_seasons, SIGNAL(textChanged(const QString&)), this, SLOT(checkOKButton()));
-        connect(m_episodes, SIGNAL(textChanged(const QString&)), this, SLOT(checkOKButton()));
-        connect(m_word_matches, SIGNAL(added(const QString&)), this, SLOT(checkOKButton()));
-        connect(m_word_matches, SIGNAL(changed()), this, SLOT(checkOKButton()));
-        connect(m_word_matches, SIGNAL(removed(const QString&)), this, SLOT(checkOKButton()));
-        connect(m_use_se_matching, SIGNAL(stateChanged(int)), this, SLOT(checkOKButton()));
+        connect(m_name, &QLineEdit::textChanged, this, &FilterEditor::checkOKButton);
+        connect(m_seasons, &QLineEdit::textChanged, this, &FilterEditor::checkOKButton);
+        connect(m_episodes, &QLineEdit::textChanged, this, &FilterEditor::checkOKButton);
+        connect(m_word_matches, &KEditListWidget::added, this, &FilterEditor::checkOKButton);
+        connect(m_word_matches, &KEditListWidget::changed, this, &FilterEditor::checkOKButton);
+        connect(m_word_matches, &KEditListWidget::removed, this, &FilterEditor::checkOKButton);
+        connect(m_use_se_matching, &QCheckBox::stateChanged, this, &FilterEditor::checkOKButton);
         okButton->setEnabled(okIsPossible());
 
         m_feed->setModel(feeds);
         m_test->setEnabled(feeds->rowCount(QModelIndex()) > 0);
         m_test_results->setEnabled(feeds->rowCount(QModelIndex()) > 0);
-        connect(m_test, SIGNAL(clicked()), this, SLOT(test()));
+        connect(m_test, &QPushButton::clicked, this, &FilterEditor::test);
         test_model = 0;
         test_filter = new Filter();
 

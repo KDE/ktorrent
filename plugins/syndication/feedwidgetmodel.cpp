@@ -54,7 +54,7 @@ namespace kt
         beginResetModel();
         items.clear();
         if (feed)
-            disconnect(feed, SIGNAL(updated()), this, SLOT(updated()));
+            disconnect(feed, &Feed::updated, this, &FeedWidgetModel::updated);
 
         feed = f;
         if (feed)
@@ -62,7 +62,7 @@ namespace kt
             Syndication::FeedPtr ptr = feed->feedData();
             if (ptr)
                 items = ptr->items();
-            connect(feed, &kt::Feed::updated, this, &FeedWidgetModel::updated);
+            connect(feed, &Feed::updated, this, &FeedWidgetModel::updated);
         }
         endResetModel();
     }

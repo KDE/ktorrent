@@ -46,7 +46,6 @@ namespace kt
         /// Start the download proces
         void start();
 
-    private slots:
         void downloadFinished(KJob* j);
         void torrentDownloadFinished(KJob* j);
 
@@ -56,7 +55,7 @@ namespace kt
         void tryNextLink();
         void tryTorrentLinks();
 
-    signals:
+    Q_SIGNALS:
         void finished(bool ok);
 
     private:

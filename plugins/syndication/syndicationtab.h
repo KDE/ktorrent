@@ -42,7 +42,6 @@ namespace kt
     */
     class SyndicationTab : public QWidget
     {
-        Q_OBJECT
     public:
         SyndicationTab(KActionCollection* ac, FeedList* feeds, FilterList* filters, QWidget* parent);
         ~SyndicationTab();
@@ -52,7 +51,6 @@ namespace kt
         void loadState(KConfigGroup& g);
         void saveState(KConfigGroup& g);
 
-    private slots:
         void showFeedViewMenu(const QPoint& pos);
         void showFilterViewMenu(const QPoint& pos);
 

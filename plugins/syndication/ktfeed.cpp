@@ -46,14 +46,14 @@ namespace kt
 
     Feed::Feed(const QString& dir) : dir(dir), status(UNLOADED), refresh_rate(DEFAULT_REFRESH_RATE)
     {
-        connect(&update_timer, SIGNAL(timeout()), this, SLOT(refresh()));
+        connect(&update_timer, &QTimer::timeout, this, &Feed::refresh);
     }
 
     Feed::Feed(const QString& feed_url, const QString& dir)
         : dir(dir), status(UNLOADED), refresh_rate(DEFAULT_REFRESH_RATE)
     {
         parseUrl(feed_url);
-        connect(&update_timer, SIGNAL(timeout()), this, SLOT(refresh()));
+        connect(&update_timer, &QTimer::timeout, this, &Feed::refresh);
         refresh();
         save();
     }
@@ -62,7 +62,7 @@ namespace kt
         : feed(feed), dir(dir), status(OK), refresh_rate(DEFAULT_REFRESH_RATE)
     {
         parseUrl(feed_url);
-        connect(&update_timer, SIGNAL(timeout()), this, SLOT(refresh()));
+        connect(&update_timer, &QTimer::timeout, this, &Feed::refresh);
         update_timer.start(refresh_rate * 60 * 1000);
     }
 

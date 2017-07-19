@@ -59,11 +59,11 @@ namespace kt
         m_splitter->setStretchFactor(0, 3);
         m_splitter->setStretchFactor(1, 1);
 
-        connect(m_download, SIGNAL(clicked()), this, SLOT(downloadClicked()));
-        connect(m_refresh, SIGNAL(clicked()), this, SLOT(refreshClicked()));
-        connect(m_filters, SIGNAL(clicked()), this, SLOT(filtersClicked()));
-        connect(m_refresh_rate, SIGNAL(valueChanged(int)), this, SLOT(refreshRateChanged(int)));
-        connect(m_cookies, SIGNAL(clicked()), this, SLOT(cookiesClicked()));
+        connect(m_download, &QPushButton::clicked, this, &FeedWidget::downloadClicked);
+        connect(m_refresh, &QPushButton::clicked, this, &FeedWidget::refreshClicked);
+        connect(m_filters, &QPushButton::clicked, this, &FeedWidget::filtersClicked);
+        connect(m_refresh_rate, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &FeedWidget::refreshRateChanged);
+        connect(m_cookies, &QPushButton::clicked, this, &FeedWidget::cookiesClicked);
 
         m_refresh->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
         m_filters->setIcon(QIcon::fromTheme(QStringLiteral("view-filter")));
@@ -78,8 +78,7 @@ namespace kt
 
         QHeaderView* hv = m_item_list->header();
         hv->setSectionResizeMode(QHeaderView::Interactive);
-        connect(m_item_list->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-                this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
+        connect(m_item_list->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FeedWidget::selectionChanged);
 
         m_download->setEnabled(false);
         m_url->clear();
@@ -88,7 +87,7 @@ namespace kt
 
         m_item_view->setEnabled(false);
         m_item_view->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
-        connect(m_item_view, SIGNAL(linkClicked(QUrl)), this, SLOT(linkClicked(QUrl)));
+        connect(m_item_view, &KWebView::linkClicked, this, &FeedWidget::linkClicked);
 
         setEnabled(false);
     }
@@ -106,7 +105,7 @@ namespace kt
         if (!state.isEmpty())
             hv->restoreState(state);
         else
-            QTimer::singleShot(3000, this, SLOT(resizeColumns()));
+            QTimer::singleShot(3000, this, &FeedWidget::resizeColumns);
     }
 
     void FeedWidget::saveState(KConfigGroup& g)
@@ -126,8 +125,8 @@ namespace kt
     {
         if (feed)
         {
-            disconnect(feed, SIGNAL(updated()), this, SLOT(updated()));
-            disconnect(feed, SIGNAL(feedRenamed(Feed*)), this, SLOT(onFeedRenamed(Feed*)));
+            disconnect(feed, &Feed::updated, this, &FeedWidget::updated);
+            disconnect(feed, &Feed::feedRenamed, this, &FeedWidget::onFeedRenamed);
             feed = 0;
         }
 
@@ -136,8 +135,8 @@ namespace kt
         model->setCurrentFeed(f);
         if (feed)
         {
-            connect(feed, SIGNAL(updated()), this, SLOT(updated()));
-            connect(feed, SIGNAL(feedRenamed(Feed*)), this, SLOT(onFeedRenamed(Feed*)));
+            connect(feed, &Feed::updated, this, &FeedWidget::updated);
+            connect(feed, &Feed::feedRenamed, this, &FeedWidget::onFeedRenamed);
 
             m_url->setText(QStringLiteral("<b>%1</b>").arg(feed->feedUrl().toDisplayString()));
             m_refresh_rate->setValue(feed->refreshRate());

@@ -114,7 +114,7 @@ namespace kt
     void LinkDownloader::start()
     {
         KIO::StoredTransferJob* j = KIO::storedGet(url, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
-        connect(j, SIGNAL(result(KJob*)), this, SLOT(downloadFinished(KJob*)));
+        connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::downloadFinished);
     }
 
     bool LinkDownloader::isTorrent(const QByteArray& data) const
@@ -184,7 +184,7 @@ namespace kt
                 Out(SYS_SYN | LOG_DEBUG) << "Trying torrent link: " << u.toDisplayString() << endl;
                 link_url = u;
                 KIO::StoredTransferJob* j = KIO::storedGet(u, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
-                connect(j, SIGNAL(result(KJob*)), this, SLOT(torrentDownloadFinished(KJob*)));
+                connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::torrentDownloadFinished);
                 links.removeAll(u);
                 return;
             }
@@ -210,7 +210,7 @@ namespace kt
         link_url = links.front();
         links.pop_front();
         KIO::StoredTransferJob* j = KIO::storedGet(link_url, KIO::Reload, KIO::HideProgressInfo);
-        connect(j, SIGNAL(result(KJob*)), this, SLOT(torrentDownloadFinished(KJob*)));
+        connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::torrentDownloadFinished);
         Out(SYS_SYN | LOG_DEBUG) << "Trying " << link_url.toDisplayString() << endl;
     }
 

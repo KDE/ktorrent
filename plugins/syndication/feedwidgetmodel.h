@@ -52,9 +52,7 @@ namespace kt
         bool insertRows(int row, int count, const QModelIndex& parent) override;
 
         Syndication::ItemPtr itemForIndex(const QModelIndex& idx);
-    private:
 
-    private slots:
         void updated();
 
     private:

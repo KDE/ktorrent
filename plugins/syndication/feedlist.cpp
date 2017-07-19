@@ -68,8 +68,7 @@ namespace kt
             try
             {
                 feed = new Feed(idir);
-                connect(feed, SIGNAL(downloadLink(const QUrl&, const QString&, const QString&, const QString&, bool)),
-                        activity, SLOT(downloadLink(const QUrl&, const QString&, const QString&, const QString&, bool)));
+                connect(feed, &Feed::downloadLink, activity, &SyndicationActivity::downloadLink);
                 feed->load(filter_list);
                 addFeed(feed);
 
@@ -151,7 +150,7 @@ namespace kt
     void FeedList::addFeed(Feed* f)
     {
         feeds.append(f);
-        connect(f, SIGNAL(updated()), this, SLOT(feedUpdated()));
+        connect(f, &Feed::updated, this, &FeedList::feedUpdated);
         insertRow(feeds.count() - 1);
     }
 

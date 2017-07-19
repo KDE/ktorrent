@@ -38,12 +38,10 @@ namespace kt
     */
     class ManageFiltersDlg : public QDialog, public Ui_ManageFiltersDlg
     {
-        Q_OBJECT
     public:
         ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationActivity* act, QWidget* parent);
         ~ManageFiltersDlg();
 
-    private slots:
         void add();
         void remove();
         void removeAll();

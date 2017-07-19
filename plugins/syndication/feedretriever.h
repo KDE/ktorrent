@@ -35,7 +35,6 @@ namespace kt
     */
     class FeedRetriever : public Syndication::DataRetriever
     {
-        Q_OBJECT
     public:
         /// Constructor, does not save a backup copy
         FeedRetriever();
@@ -52,7 +51,6 @@ namespace kt
         int errorCode() const override;
         void retrieveData(const QUrl& url) override;
 
-    private slots:
         void finished(KJob* j);
 
     private:
