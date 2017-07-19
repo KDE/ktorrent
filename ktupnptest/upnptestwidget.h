@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #ifndef UPNPTESTWIDGET_HH
 #define UPNPTESTWIDGET_HH
 
@@ -32,15 +33,10 @@ namespace bt
 
 class UPnPTestWidget : public QWidget, public Ui_UPnPTestWidget, public bt::LogMonitorInterface
 {
-    Q_OBJECT
 public:
     UPnPTestWidget(QWidget* parent = 0);
     ~UPnPTestWidget();
 
-private:
-    void message(const QString& line, unsigned int arg) override;
-
-private slots:
     void doForward();
     void undoForward();
     void findRouters();
@@ -48,6 +44,8 @@ private slots:
     void verboseModeChecked(bool on);
 
 private:
+    void message(const QString& line, unsigned int arg) override;
+
     bt::UPnPMCastSocket* mcast_socket;
     bt::UPnPRouter* router;
 };

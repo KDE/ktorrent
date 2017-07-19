@@ -71,9 +71,9 @@ namespace kt
     void QueueManager::append(bt::TorrentInterface* tc)
     {
         downloads.append(tc);
-        connect(tc, SIGNAL(diskSpaceLow(bt::TorrentInterface*, bool)), this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
-        connect(tc, SIGNAL(torrentStopped(bt::TorrentInterface*)), this, SLOT(torrentStopped(bt::TorrentInterface*)));
-        connect(tc, SIGNAL(updateQueue()), this, SLOT(orderQueue()));
+        connect(tc, &TorrentInterface::diskSpaceLow, this, &QueueManager::onLowDiskSpace);
+        connect(tc, &TorrentInterface::torrentStopped, this, &QueueManager::torrentStopped);
+        connect(tc, &TorrentInterface::updateQueue, this, &QueueManager::orderQueue);
     }
 
     void QueueManager::remove(bt::TorrentInterface* tc)

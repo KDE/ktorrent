@@ -35,12 +35,10 @@ namespace bt
 
 class MagnetTest : public QObject
 {
-    Q_OBJECT
 public:
     MagnetTest(const bt::MagnetLink& mlink, QObject* parent = 0);
     ~MagnetTest();
 
-public slots:
     void routerDiscovered(bt::UPnPRouter* router);
     void start();
     void update();

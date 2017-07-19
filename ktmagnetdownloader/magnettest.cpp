@@ -50,7 +50,7 @@ MagnetTest::MagnetTest(const bt::MagnetLink& mlink, QObject* parent) : QObject(p
     mdownloader = new MagnetDownloader(mlink, this);
     connect(mdownloader, &MagnetDownloader::foundMetadata, this, &MagnetTest::foundMetaData);
 
-    QTimer::singleShot(0, this, SLOT(start()));
+    QTimer::singleShot(0, this, &MagnetTest::start);
     connect(&timer, &QTimer::timeout, this, &MagnetTest::update);
 }
 
@@ -153,7 +153,7 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
         enc.write(QByteArrayLiteral("info"));
         fptr.write(data.data(), data.size());
         enc.end();
-        QTimer::singleShot(0, qApp, SLOT(quit()));
+        QTimer::singleShot(0, qApp, &QCoreApplication::quit);
     }
     else
     {
