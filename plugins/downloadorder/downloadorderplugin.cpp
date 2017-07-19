@@ -45,7 +45,7 @@ namespace kt
     {
         Q_UNUSED(args);
         download_order_action = new QAction(QIcon::fromTheme(QStringLiteral("view-sort-ascending")), i18n("File Download Order"), this);
-        connect(download_order_action, SIGNAL(triggered()), this, SLOT(showDownloadOrderDialog()));
+        connect(download_order_action, &QAction::triggered, this, &DownloadOrderPlugin::showDownloadOrderDialog);
         actionCollection()->addAction(QStringLiteral("download_order"), download_order_action);
         setXMLFile(QStringLiteral("ktorrent_downloadorderui.rc"));
         managers.setAutoDelete(true);

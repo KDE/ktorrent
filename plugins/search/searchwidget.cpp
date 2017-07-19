@@ -86,14 +86,14 @@ namespace kt
 
         search_text->setClearButtonEnabled(true);
 
-        connect(webview, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
-        connect(webview, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
-        connect(webview, SIGNAL(loadProgress(int)), this, SLOT(loadProgress(int)));
+        connect(webview, &WebView::loadStarted, this, &SearchWidget::loadStarted);
+        connect(webview, &WebView::loadFinished, this, &SearchWidget::loadFinished);
+        connect(webview, &WebView::loadProgress, this, &SearchWidget::loadProgress);
         connect(webview->page(), SIGNAL(unsupportedContent(QNetworkReply*)),
                 this, SLOT(unsupportedContent(QNetworkReply*)));
-        connect(webview, SIGNAL(linkMiddleOrCtrlClicked(QUrl)), this, SIGNAL(openNewTab(QUrl)));
-        connect(webview, SIGNAL(iconChanged()), this, SLOT(iconChanged()));
-        connect(webview, SIGNAL(titleChanged(QString)), this, SLOT(titleChanged(QString)));
+        connect(webview, &WebView::linkMiddleOrCtrlClicked, this, &SearchWidget::openNewTab);
+        connect(webview, &WebView::iconChanged, this, &SearchWidget::iconChanged);
+        connect(webview, &WebView::titleChanged, this, &SearchWidget::titleChanged);
     }
 
 

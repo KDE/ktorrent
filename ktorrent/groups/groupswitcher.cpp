@@ -58,23 +58,23 @@ namespace kt
         new_tab->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
         new_tab->setToolButtonStyle(Qt::ToolButtonIconOnly);
         new_tab->setToolTip(i18n("Open a new tab"));
-        connect(new_tab, SIGNAL(clicked(bool)), this, SLOT(newTab()));
+        connect(new_tab, &QToolButton::clicked, this, &GroupSwitcher::newTab);
 
         close_tab->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
         close_tab->setToolButtonStyle(Qt::ToolButtonIconOnly);
         close_tab->setToolTip(i18n("Close the current tab"));
-        connect(close_tab, SIGNAL(clicked(bool)), this, SLOT(closeTab()));
+        connect(close_tab, &QToolButton::clicked, this, static_cast<void (GroupSwitcher::*)()>(&GroupSwitcher::closeTab));
 
         edit_group_policy->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other")));
         edit_group_policy->setToolButtonStyle(Qt::ToolButtonIconOnly);
         edit_group_policy->setToolTip(i18n("Edit Group Policy"));
-        connect(edit_group_policy, SIGNAL(clicked(bool)), this, SLOT(editGroupPolicy()));
+        connect(edit_group_policy, &QToolButton::clicked, this, &GroupSwitcher::editGroupPolicy);
 
         tool_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         action_group->setExclusive(true);
-        connect(action_group, SIGNAL(triggered(QAction*)), this, SLOT(onActivated(QAction*)));
+        connect(action_group, &QActionGroup::triggered, this, &GroupSwitcher::onActivated);
 
-        connect(gman, SIGNAL(groupRemoved(Group*)), this, SLOT(groupRemoved(Group*)));
+        connect(gman, &GroupManager::groupRemoved, this, &GroupSwitcher::groupRemoved);
     }
 
     GroupSwitcher::~GroupSwitcher()
@@ -108,7 +108,7 @@ namespace kt
         }
 
         updateGroupCount();
-        connect(gman, SIGNAL(customGroupChanged()), this, SLOT(updateGroupCount()));
+        connect(gman, &GroupManager::customGroupChanged, this, &GroupSwitcher::updateGroupCount);
 
         current_tab = g.readEntry("current_tab", 0);
         if (current_tab >= 0 && current_tab < tabs.count())

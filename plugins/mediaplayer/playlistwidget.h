@@ -69,19 +69,19 @@ namespace kt
         /// Is random mode activated ?
         bool randomOrder() const {return random_mode->isChecked();}
 
-    public slots:
+    public Q_SLOTS:
         QModelIndex play();
         void addMedia();
         void clearPlayList();
 
-    private slots:
+    private Q_SLOTS:
         void onSelectionChanged(const QItemSelection& s, const QItemSelection& d);
         void doubleClicked(const QModelIndex& index);
         void showContextMenu(QPoint pos);
         void removeFiles();
         void onItemsDropped();
 
-    signals:
+    Q_SIGNALS:
         void fileSelected(const MediaFileRef& file);
         void doubleClicked(const MediaFileRef& file);
         void randomModeActivated(bool random);

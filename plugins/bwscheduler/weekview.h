@@ -94,12 +94,12 @@ namespace kt
          */
         void colorsChanged();
 
-    signals:
+    Q_SIGNALS:
         void selectionChanged();
         void editItem(ScheduleItem* item);
         void itemMoved(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day);
 
-    private slots:
+    private Q_SLOTS:
         void onSelectionChanged();
         void showContextMenu(const QPoint& pos);
         void onDoubleClicked(QGraphicsItem* i);

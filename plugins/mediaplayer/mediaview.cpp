@@ -101,7 +101,7 @@ namespace kt
         show_incomplete = tool_bar->addAction(QIcon::fromTheme(QStringLiteral("task-ongoing")), i18n("Show incomplete files"));
         show_incomplete->setCheckable(true);
         show_incomplete->setChecked(false);
-        connect(show_incomplete, SIGNAL(toggled(bool)), this, SLOT(showIncompleteChanged(bool)));
+        connect(show_incomplete, &QAction::toggled, this, &MediaView::showIncompleteChanged);
 
         refresh = tool_bar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Refresh"), filter, SLOT(refresh()));
         refresh->setToolTip(i18n("Refresh media files"));
@@ -109,7 +109,7 @@ namespace kt
         search_box = new QLineEdit(this);
         search_box->setClearButtonEnabled(true);
         search_box->setPlaceholderText(i18n("Search media files"));
-        connect(search_box, SIGNAL(textChanged(QString)), filter, SLOT(setFilterFixedString(QString)));
+        connect(search_box, &QLineEdit::textChanged, filter, &MediaViewFilter::setFilterFixedString);
         hbox->addWidget(search_box);
 
         layout->addLayout(hbox);
@@ -121,7 +121,7 @@ namespace kt
         media_tree->setAlternatingRowColors(true);
         layout->addWidget(media_tree);
 
-        connect(media_tree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onDoubleClicked(QModelIndex)));
+        connect(media_tree, &QListView::doubleClicked, this, &MediaView::onDoubleClicked);
     }
 
 

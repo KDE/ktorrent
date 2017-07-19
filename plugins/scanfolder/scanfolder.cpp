@@ -55,8 +55,8 @@ namespace kt
         config.sync();
 
         watch = new KDirWatch(this);
-        connect(watch, SIGNAL(dirty(QString)), this, SLOT(scanDir(QString)));
-        connect(watch, SIGNAL(created(QString)), this, SLOT(scanDir(QString)));
+        connect(watch, &KDirWatch::dirty, this, &ScanFolder::scanDir);
+        connect(watch, &KDirWatch::created, this, &ScanFolder::scanDir);
 
         watch->addDir(dir.toLocalFile(), recursive ? KDirWatch::WatchSubDirs : KDirWatch::WatchDirOnly);
 

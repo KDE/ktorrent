@@ -48,8 +48,8 @@ namespace kt
         root.insert(i18n("Custom Groups"), QStringLiteral("/all/custom"), index(0, 0));
         //root.dump();
 
-        connect(gman, SIGNAL(groupRemoved(Group*)), this, SLOT(groupRemoved(Group*)));
-        connect(gman, SIGNAL(groupAdded(Group*)), this, SLOT(groupAdded(Group*)));
+        connect(gman, &GroupManager::groupRemoved, this, &GroupViewModel::groupRemoved);
+        connect(gman, &GroupManager::groupAdded, this, &GroupViewModel::groupAdded);
     }
 
     GroupViewModel::~GroupViewModel()

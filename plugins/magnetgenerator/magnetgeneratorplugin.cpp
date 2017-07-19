@@ -50,7 +50,7 @@ namespace kt
         Q_UNUSED(args);
         pref = nullptr;
         generate_magnet_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-magnet")), i18n("Copy Magnet URI"), this);
-        connect(generate_magnet_action, SIGNAL(triggered()), this, SLOT(generateMagnet()));
+        connect(generate_magnet_action, &QAction::triggered, this, &MagnetGeneratorPlugin::generateMagnet);
         actionCollection()->addAction(QStringLiteral("generate_magnet"), generate_magnet_action);
         setXMLFile(QStringLiteral("ktorrent_magnetgeneratorui.rc"));
 

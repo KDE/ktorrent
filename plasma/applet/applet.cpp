@@ -86,8 +86,8 @@ namespace ktplasma
         if (!engine)
         {
             engine = dataEngine("ktorrent");
-            connect(engine, SIGNAL(sourceAdded(const QString&)), this, SLOT(sourceAdded(const QString&)));
-            connect(engine, SIGNAL(sourceRemoved(const QString&)), this, SLOT(sourceRemoved(const QString&)));
+            connect(engine, &Plasma::DataEngine::sourceAdded, this, &Applet::sourceAdded);
+            connect(engine, &Plasma::DataEngine::sourceRemoved, this, &Applet::sourceRemoved);
             engine->connectSource("core", this);
         }
     }
@@ -111,7 +111,7 @@ namespace ktplasma
         icon->setMaximumSize(icon_size, icon_size);
         icon->setMinimumSize(icon_size, icon_size);
         icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        connect(icon, SIGNAL(clicked()), this, SLOT(iconClicked()));
+        connect(icon, &Plasma::IconWidget::clicked, this, &Applet::iconClicked);
 
         title = new Plasma::Label(this);
         title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -136,8 +136,8 @@ namespace ktplasma
 
         // parent is widget (not applet), prevents show/hide flickering
         navigation = new FadingNavigationWidget(desktop_widget);
-        connect(navigation, SIGNAL(prevClicked()), this, SLOT(selectPrev()));
-        connect(navigation, SIGNAL(nextClicked()), this, SLOT(selectNext()));
+        connect(navigation, &FadingNavigationWidget::prevClicked, this, &Applet::selectPrev);
+        connect(navigation, &FadingNavigationWidget::nextClicked, this, &Applet::selectNext);
 
         return desktop_widget;
     }
@@ -363,7 +363,7 @@ namespace ktplasma
             QDBusMessage msg = QDBusMessage::createMethodCall("org.ktorrent.ktorrent", "/ktorrent/MainWindow_1", "org.kde.KMainWindow", "winId");
             QDBusPendingCall call = session_bus.asyncCall(msg, 5000);
             QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(call , this);
-            connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(dbusCallFinished(QDBusPendingCallWatcher*)));
+            connect(watcher, &QDBusPendingCallWatcher::finished, this, &Applet::dbusCallFinished);
         }
     }
 

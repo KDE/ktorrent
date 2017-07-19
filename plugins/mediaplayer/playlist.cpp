@@ -47,7 +47,7 @@ namespace kt
           collection(collection),
           player(player)
     {
-        connect(player, SIGNAL(playing(MediaFileRef)), this, SLOT(onPlaying(MediaFileRef)));
+        connect(player, &MediaPlayer::playing, this, &PlayList::onPlaying);
     }
 
     PlayList::~PlayList()

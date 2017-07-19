@@ -39,7 +39,7 @@ namespace kt
         : PrefPageInterface(WebInterfacePluginSettings::self(), i18n("Web Interface"), "network-server", parent)
     {
         setupUi(this);
-        connect(kcfg_authentication, SIGNAL(toggled(bool)), this, SLOT(authenticationToggled(bool)));
+        connect(kcfg_authentication, &QCheckBox::toggled, this, &WebInterfacePrefWidget::authenticationToggled);
 
         QStringList dirList = KGlobal::dirs()->findDirs("data", "ktorrent/www");
         if (!dirList.isEmpty())

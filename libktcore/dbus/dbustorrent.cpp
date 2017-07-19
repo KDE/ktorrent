@@ -50,13 +50,11 @@ namespace kt
         QFlags<QDBusConnection::RegisterOption> flags = QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals;
         sb.registerObject(path, this, flags);
 
-        connect(ti, SIGNAL(finished(bt::TorrentInterface*)), this, SLOT(onFinished(bt::TorrentInterface*)));
-        connect(ti, SIGNAL(stoppedByError(bt::TorrentInterface*, QString)),
-                this, SLOT(onStoppedByError(bt::TorrentInterface*, const QString&)));
-        connect(ti, SIGNAL(seedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)),
-                this, SLOT(onSeedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)));
-        connect(ti, SIGNAL(corruptedDataFound(bt::TorrentInterface*)), this, SLOT(onCorruptedDataFound(bt::TorrentInterface*)));
-        connect(ti, SIGNAL(torrentStopped(bt::TorrentInterface*)), this, SLOT(onTorrentStopped(bt::TorrentInterface*)));
+        connect(ti, &bt::TorrentInterface::finished, this, &DBusTorrent::onFinished);
+        connect(ti, &bt::TorrentInterface::stoppedByError, this, &DBusTorrent::onStoppedByError);
+        connect(ti, &bt::TorrentInterface::seedingAutoStopped, this, &DBusTorrent::onSeedingAutoStopped);
+        connect(ti, &bt::TorrentInterface::corruptedDataFound, this, &DBusTorrent::onCorruptedDataFound);
+        connect(ti, &bt::TorrentInterface::torrentStopped, this, &DBusTorrent::onTorrentStopped);
     }
 
 

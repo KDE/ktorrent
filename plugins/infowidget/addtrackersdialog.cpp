@@ -57,8 +57,8 @@ namespace kt
         trackers->lineEdit()->setCompleter(new QCompleter(tracker_hints));
 
         QDialogButtonBox* box=new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel, this);
-        connect(box,SIGNAL(accepted()),this,SLOT(accept()));
-        connect(box,SIGNAL(rejected()),this,SLOT(reject()));
+        connect(box, &QDialogButtonBox::accepted, this, &AddTrackersDialog::accept);
+        connect(box, &QDialogButtonBox::rejected, this, &AddTrackersDialog::reject);
 
         QVBoxLayout *layout = new QVBoxLayout(this);
         layout->addWidget(trackers);

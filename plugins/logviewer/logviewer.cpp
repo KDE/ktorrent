@@ -45,11 +45,11 @@ namespace kt
         layout->addWidget(output);
         output->document()->setMaximumBlockCount(max_block_count);
         output->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(output, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
+        connect(output, &QTextBrowser::customContextMenuRequested, this, &LogViewer::showMenu);
 
         suspend_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-pause")), i18n("Suspend Output"), this);
         suspend_action->setCheckable(true);
-        connect(suspend_action, SIGNAL(toggled(bool)), this, SLOT(suspend(bool)));
+        connect(suspend_action, &QAction::toggled, this, &LogViewer::suspend);
     }
 
 

@@ -61,7 +61,7 @@ namespace kt
         search->setPlaceholderText(i18n("Search"));
         search->setClearButtonEnabled(true);
         search->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        connect(search, SIGNAL(textChanged(QString)), this, SLOT(searchTextChanged(QString)));
+        connect(search, &QLineEdit::textChanged, this, &QueueManagerWidget::searchTextChanged);
         search->hide();
         vbox->addWidget(search);
         vbox->addWidget(view);
@@ -70,7 +70,7 @@ namespace kt
         show_search = toolbar->addAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("Show Search"));
         show_search->setToolTip(i18n("Show or hide the search bar"));
         show_search->setCheckable(true);
-        connect(show_search, SIGNAL(toggled(bool)), this, SLOT(showSearch(bool)));
+        connect(show_search, &QAction::toggled, this, &QueueManagerWidget::showSearch);
 
         move_top = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-top")), i18n("Move Top"), this, SLOT(moveTopClicked()));
         move_top->setToolTip(i18n("Move a torrent to the top of the queue"));
@@ -87,17 +87,17 @@ namespace kt
         show_downloads = toolbar->addAction(QIcon::fromTheme(QStringLiteral("arrow-down")), i18n("Show Downloads"));
         show_downloads->setToolTip(i18n("Show all downloads"));
         show_downloads->setCheckable(true);
-        connect(show_downloads, SIGNAL(toggled(bool)), this, SLOT(showDownloads(bool)));
+        connect(show_downloads, &QAction::toggled, this, &QueueManagerWidget::showDownloads);
 
         show_uploads = toolbar->addAction(QIcon::fromTheme(QStringLiteral("arrow-up")), i18n("Show Uploads"));
         show_uploads->setToolTip(i18n("Show all uploads"));
         show_uploads->setCheckable(true);
-        connect(show_uploads, SIGNAL(toggled(bool)), this, SLOT(showUploads(bool)));
+        connect(show_uploads, &QAction::toggled, this, &QueueManagerWidget::showUploads);
 
         show_not_queued = toolbar->addAction(QIcon::fromTheme(QStringLiteral("kt-queue-manager")), i18n("Show Not Queued"));
         show_not_queued->setToolTip(i18n("Show all not queued torrents"));
         show_not_queued->setCheckable(true);
-        connect(show_not_queued, SIGNAL(toggled(bool)), this, SLOT(showNotQueued(bool)));
+        connect(show_not_queued, &QAction::toggled, this, &QueueManagerWidget::showNotQueued);
 
         model = new QueueManagerModel(qman, this);
         view->setModel(model);

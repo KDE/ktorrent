@@ -111,7 +111,7 @@ namespace kt
         Out(SYS_INW | LOG_NOTICE) << "Downloading GeoIP database: " << geoip_url << endl;
         download_destination = kt::DataDir(CreateIfNotExists) + geoip_url.fileName();
         KIO::CopyJob* job = KIO::copy(geoip_url, QUrl::fromLocalFile(download_destination), KIO::Overwrite | KIO::HideProgressInfo);
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(databaseDownloadFinished(KJob*)));
+        connect(job, &KIO::CopyJob::result, this, &GeoIPManager::databaseDownloadFinished);
 #endif
     }
 
@@ -141,7 +141,7 @@ namespace kt
             Out(SYS_INW | LOG_NOTICE) << "GeoIP database downloaded, decompressing ...  " << endl;
             // decompress the file
             decompress_thread = new bt::DecompressThread(download_destination, kt::DataDir() + QLatin1String("geoip.dat"));
-            connect(decompress_thread, SIGNAL(finished()), this, SLOT(decompressFinished()), Qt::QueuedConnection);
+            connect(decompress_thread, &bt::DecompressThread::finished, this, &GeoIPManager::decompressFinished, Qt::QueuedConnection);
             decompress_thread->start(QThread::IdlePriority);
         }
     }

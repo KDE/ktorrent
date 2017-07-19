@@ -52,7 +52,7 @@ namespace kt
         addPrefPage(qm_pref);
         addPrefPage(new AdvancedPref(this));
 
-        connect(net_pref, SIGNAL(calculateRecommendedSettings()), this, SLOT(calculateRecommendedSettings()));
+        connect(net_pref, &NetworkPref::calculateRecommendedSettings, this, &PrefDialog::calculateRecommendedSettings);
     }
 
     PrefDialog::~PrefDialog()
@@ -62,7 +62,7 @@ namespace kt
     void PrefDialog::addPrefPage(PrefPageInterface* page)
     {
         PrefPageScrollArea* area = new PrefPageScrollArea(page, this);
-        connect(area->page, SIGNAL(updateButtons()), this, SLOT(updateButtons()));
+        connect(area->page, &PrefPageInterface::updateButtons, this, &PrefDialog::updateButtons);
 
         KPageWidgetItem* p = addPage(area, page->config(), page->pageName(), page->pageIcon());
         area->page_widget_item = p;

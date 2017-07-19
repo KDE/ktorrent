@@ -71,10 +71,10 @@ namespace kt
         QHBoxLayout* hlayout = new QHBoxLayout(nullptr);
 
         play_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-start")), i18n("Play"), this);
-        connect(play_action, SIGNAL(triggered()), this, SLOT(play()));
+        connect(play_action, &QAction::triggered, this, &VideoWidget::play);
 
         stop_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18n("Stop"), this);
-        connect(stop_action, SIGNAL(triggered()), this, SLOT(stop()));
+        connect(stop_action, &QAction::triggered, this, &VideoWidget::stop);
 
         tb = new KToolBar(this);
         tb->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -82,7 +82,7 @@ namespace kt
         tb->addAction(ac->action(QStringLiteral("media_pause")));
         tb->addAction(stop_action);
         QAction* tfs = ac->action(QStringLiteral("video_fullscreen"));
-        connect(tfs, SIGNAL(toggled(bool)), this, SIGNAL(toggleFullScreen(bool)));
+        connect(tfs, &QAction::toggled, this, &VideoWidget::toggleFullScreen);
         tb->addAction(tfs);
 
         slider = new Phonon::SeekSlider(this);
@@ -110,8 +110,8 @@ namespace kt
         vlayout->addLayout(hlayout);
 
         connect(player->media0bject(), SIGNAL(tick(qint64)), this, SLOT(timerTick(qint64)));
-        connect(player, SIGNAL(playing(MediaFileRef)), this, SLOT(playing(MediaFileRef)));
-        connect(player, SIGNAL(enableActions(unsigned int)), this, SLOT(enableActions(unsigned int)));
+        connect(player, &MediaPlayer::playing, this, &VideoWidget::playing);
+        connect(player, &MediaPlayer::enableActions, this, &VideoWidget::enableActions);
 
         inhibitScreenSaver(true);
     }
@@ -208,53 +208,21 @@ namespace kt
             QString msg = i18n("KTorrent is playing a video.");
             auto pendingReply = screensaver.Inhibit(QStringLiteral("ktorrent"), msg);
             auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
-            connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
-                QDBusPendingReply<quint32> reply = *callWatcher;
-                if (reply.isValid()) {
-                    screensaver_cookie = reply.value();
-                    Out(SYS_MPL | LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
-                }
-                else
-                    Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress screensaver" << endl;
-            });
+            connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) { QDBusPendingReply<quint32> reply = *callWatcher; if (reply.isValid()) { screensaver_cookie = reply.value(); Out(SYS_MPL | LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl; } else Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress screensaver" << endl; });
 
             auto pendingReply2 = powerManagement.Inhibit(QStringLiteral("ktorrent"), msg);
             auto pendingCallWatcher2 = new QDBusPendingCallWatcher(pendingReply2, this);
-            connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
-                QDBusPendingReply<quint32> reply = *callWatcher;
-                if (reply.isValid()) {
-                    screensaver_cookie = reply.value();
-                    Out(SYS_MPL | LOG_NOTICE) << "PowerManagement inhibited (cookie " << powermanagement_cookie << ")" << endl;
-                }
-                else
-                    Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
-            });
+            connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) { QDBusPendingReply<quint32> reply = *callWatcher; if (reply.isValid()) { screensaver_cookie = reply.value(); Out(SYS_MPL | LOG_NOTICE) << "PowerManagement inhibited (cookie " << powermanagement_cookie << ")" << endl; } else Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl; });
         }
         else
         {
             auto pendingReply = screensaver.UnInhibit(screensaver_cookie);
             auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
-            connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
-                QDBusPendingReply<void> reply = *callWatcher;
-                if (reply.isValid()) {
-                    screensaver_cookie = 0;
-                    Out(SYS_MPL | LOG_NOTICE) << "Screensaver uninhibited" << endl;
-                }
-                else
-                    Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit screensaver" << endl;
-            });
+            connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) { QDBusPendingReply<void> reply = *callWatcher; if (reply.isValid()) { screensaver_cookie = 0; Out(SYS_MPL | LOG_NOTICE) << "Screensaver uninhibited" << endl; } else Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit screensaver" << endl; });
 
             auto pendingReply2 = powerManagement.UnInhibit(powermanagement_cookie);
             auto pendingCallWatcher2 = new QDBusPendingCallWatcher(pendingReply2, this);
-            connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
-                QDBusPendingReply<void> reply = *callWatcher;
-                if (reply.isValid()) {
-                    powermanagement_cookie = 0;
-                    Out(SYS_MPL | LOG_NOTICE) << "Power management uninhibited" << endl;
-                }
-                else
-                    Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit power management" << endl;
-            });
+            connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) { QDBusPendingReply<void> reply = *callWatcher; if (reply.isValid()) { powermanagement_cookie = 0; Out(SYS_MPL | LOG_NOTICE) << "Power management uninhibited" << endl; } else Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit power management" << endl; });
 
         }
     }

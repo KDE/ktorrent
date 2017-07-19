@@ -78,11 +78,9 @@ namespace kt
         }
 
         m_add->setEnabled(false);
-        connect(m_available_filters->selectionModel(), &QItemSelectionModel::selectionChanged,
-                this, &ManageFiltersDlg::availableSelectionChanged);
+        connect(m_available_filters->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ManageFiltersDlg::availableSelectionChanged);
         m_remove->setEnabled(false);
-        connect(m_active_filters->selectionModel(), &QItemSelectionModel::selectionChanged,
-                this, &ManageFiltersDlg::activeSelectionChanged);
+        connect(m_active_filters->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ManageFiltersDlg::activeSelectionChanged);
 
         m_remove_all->setEnabled(active->rowCount(QModelIndex()) > 0);
     }

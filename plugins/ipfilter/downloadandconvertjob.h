@@ -52,11 +52,11 @@ namespace kt
 
         bool isAutoUpdate() const {return mode == Quietly;}
 
-    signals:
+    Q_SIGNALS:
         /// Emitted when the job needs to show a notification
         void notification(const QString& msg);
 
-    private slots:
+    private Q_SLOTS:
         void downloadFileFinished(KJob*);
         void convert(KJob*);
         void extract(KJob*);

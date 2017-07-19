@@ -62,18 +62,18 @@ namespace kt
         , already_downloaded(0)
     {
         setupUi(this);
-        connect(buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
-        connect(buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &FileSelectDlg::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &FileSelectDlg::reject);
 
         m_file_view->setAlternatingRowColors(true);
         filter_model = new TreeFilterModel(this);
         m_file_view->setModel(filter_model);
         //root = 0;
-        connect(m_select_all, SIGNAL(clicked()), this, SLOT(selectAll()));
-        connect(m_select_none, SIGNAL(clicked()), this, SLOT(selectNone()));
-        connect(m_invert_selection, SIGNAL(clicked()), this, SLOT(invertSelection()));
-        connect(m_collapse_all, SIGNAL(clicked()), m_file_view, SLOT(collapseAll()));
-        connect(m_expand_all, SIGNAL(clicked()), m_file_view, SLOT(expandAll()));
+        connect(m_select_all, &QPushButton::clicked, this, &FileSelectDlg::selectAll);
+        connect(m_select_none, &QPushButton::clicked, this, &FileSelectDlg::selectNone);
+        connect(m_invert_selection, &QPushButton::clicked, this, &FileSelectDlg::invertSelection);
+        connect(m_collapse_all, &QPushButton::clicked, m_file_view, &QTreeView::collapseAll);
+        connect(m_expand_all, &QPushButton::clicked, m_file_view, &QTreeView::expandAll);
 
         m_downloadLocation->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
         m_completedLocation->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
@@ -95,10 +95,10 @@ namespace kt
         QButtonGroup* bg = new QButtonGroup(this);
         m_tree->setIcon(QIcon::fromTheme(QStringLiteral("view-list-tree")));
         m_tree->setToolTip(i18n("Show a file tree"));
-        connect(m_tree, SIGNAL(clicked(bool)), this, SLOT(fileTree(bool)));
+        connect(m_tree, &QToolButton::clicked, this, &FileSelectDlg::fileTree);
         m_list->setIcon(QIcon::fromTheme(QStringLiteral("view-list-text")));
         m_list->setToolTip(i18n("Show a file list"));
-        connect(m_list, SIGNAL(clicked(bool)), this, SLOT(fileList(bool)));
+        connect(m_list, &QToolButton::clicked, this, &FileSelectDlg::fileList);
         m_tree->setCheckable(true);
         m_list->setCheckable(true);
         bg->addButton(m_tree);
@@ -107,12 +107,12 @@ namespace kt
 
         m_filter->setClearButtonEnabled(true);
         m_filter->setPlaceholderText(i18n("Filter"));
-        connect(m_filter, SIGNAL(textChanged(QString)), this, SLOT(setFilter(QString)));
+        connect(m_filter, &QLineEdit::textChanged, this, &FileSelectDlg::setFilter);
 
         m_moveCompleted->setCheckState(Settings::useCompletedDir()?Qt::Checked:Qt::Unchecked);
 
         m_completedLocation->setEnabled(Settings::useCompletedDir());
-        connect(m_moveCompleted, SIGNAL(toggled(bool)), this, SLOT(moveCompletedToggled(bool)));
+        connect(m_moveCompleted, &QCheckBox::toggled, this, &FileSelectDlg::moveCompletedToggled);
     }
 
     FileSelectDlg::~FileSelectDlg()
@@ -131,7 +131,7 @@ namespace kt
         int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
         Out(SYS_GEN | LOG_DEBUG) << "Codec: " << QString::fromLatin1(tc->getTextCodec()->name()) << " " << idx << endl;
         m_encoding->setCurrentIndex(idx);
-        connect(m_encoding, SIGNAL(currentIndexChanged(QString)), this, SLOT(onCodecChanged(QString)));
+        connect(m_encoding, static_cast<void (KComboBox::*)(const QString &)>(&KComboBox::currentIndexChanged), this, &FileSelectDlg::onCodecChanged);
 
 
         for (Uint32 i = 0; i < tc->getNumFiles(); i++)
@@ -148,8 +148,8 @@ namespace kt
 
         model->setFileNamesEditable(true);
 
-        connect(model, SIGNAL(checkStateChanged()), this, SLOT(updateSizeLabels()));
-        connect(m_downloadLocation, SIGNAL(textChanged(QString)), this, SLOT(downloadLocationChanged(QString)));
+        connect(model, &TorrentFileModel::checkStateChanged, this, &FileSelectDlg::updateSizeLabels);
+        connect(m_downloadLocation, &KUrlRequester::textChanged, this, &FileSelectDlg::downloadLocationChanged);
         filter_model->setSourceModel(model);
         filter_model->setSortRole(Qt::UserRole);
         m_file_view->setSortingEnabled(true);
@@ -464,7 +464,7 @@ namespace kt
         }
 
         m_cmbGroups->addItems(grps);
-        connect(m_cmbGroups, SIGNAL(activated(int)), this, SLOT(groupActivated(int)));
+        connect(m_cmbGroups, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &FileSelectDlg::groupActivated);
 
         if (selected > 0 && initial_group)
         {
@@ -731,7 +731,7 @@ namespace kt
             model = new TorrentFileListModel(tc, TorrentFileTreeModel::DELETE_FILES, this);
 
         model->setFileNamesEditable(true);
-        connect(model, SIGNAL(checkStateChanged()), this, SLOT(updateSizeLabels()));
+        connect(model, &TorrentFileModel::checkStateChanged, this, &FileSelectDlg::updateSizeLabels);
 
         filter_model->setSourceModel(model);
         m_file_view->header()->restoreState(hs);

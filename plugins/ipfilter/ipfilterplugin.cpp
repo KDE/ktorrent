@@ -49,7 +49,7 @@ namespace kt
         : Plugin(parent)
     {
         Q_UNUSED(args);
-        connect(&auto_update_timer, SIGNAL(timeout()), this, SLOT(checkAutoUpdate()));
+        connect(&auto_update_timer, &QTimer::timeout, this, &IPFilterPlugin::checkAutoUpdate);
         auto_update_timer.setSingleShot(true);
     }
 
@@ -62,7 +62,7 @@ namespace kt
     {
         LogSystemManager::instance().registerSystem(i18n("IP Filter"), SYS_IPF);
         pref = new IPBlockingPrefPage(this);
-        connect(pref, SIGNAL(updateFinished()), this, SLOT(checkAutoUpdate()));
+        connect(pref, &IPBlockingPrefPage::updateFinished, this, &IPFilterPlugin::checkAutoUpdate);
         getGUI()->addPrefPage(pref);
 
         if (IPBlockingPluginSettings::useLevel1())

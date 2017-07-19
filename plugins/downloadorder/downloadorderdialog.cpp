@@ -54,13 +54,13 @@ namespace kt
         m_search_files->setEnabled(false);
 
         m_move_up->setIcon(QIcon::fromTheme(QStringLiteral("go-up")));
-        connect(m_move_up, SIGNAL(clicked()), this, SLOT(moveUp()));
+        connect(m_move_up, &QPushButton::clicked, this, &DownloadOrderDialog::moveUp);
         m_move_down->setIcon(QIcon::fromTheme(QStringLiteral("go-down")));
-        connect(m_move_down, SIGNAL(clicked()), this, SLOT(moveDown()));
+        connect(m_move_down, &QPushButton::clicked, this, &DownloadOrderDialog::moveDown);
         m_move_top->setIcon(QIcon::fromTheme(QStringLiteral("go-top")));
-        connect(m_move_top, SIGNAL(clicked()), this, SLOT(moveTop()));
+        connect(m_move_top, &QPushButton::clicked, this, &DownloadOrderDialog::moveTop);
         m_move_bottom->setIcon(QIcon::fromTheme(QStringLiteral("go-bottom")));
-        connect(m_move_bottom, SIGNAL(clicked()), this, SLOT(moveBottom()));
+        connect(m_move_bottom, &QPushButton::clicked, this, &DownloadOrderDialog::moveBottom);
 
         m_order->setSelectionMode(QAbstractItemView::ContiguousSelection);
         m_order->setDragEnabled(true);
@@ -78,8 +78,8 @@ namespace kt
 
         connect(m_order->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
                 this, SLOT(itemSelectionChanged(QItemSelection, QItemSelection)));
-        connect(m_custom_order_enabled, SIGNAL(toggled(bool)), this, SLOT(customOrderEnableToggled(bool)));
-        connect(m_search_files, SIGNAL(textChanged(QString)), this, SLOT(search(QString)));
+        connect(m_custom_order_enabled, &QCheckBox::toggled, this, &DownloadOrderDialog::customOrderEnableToggled);
+        connect(m_search_files, &QLineEdit::textChanged, this, &DownloadOrderDialog::search);
 
         QMenu* sort_by_menu = new QMenu(m_sort_by);
         sort_by_menu->addAction(i18n("Name"), model, SLOT(sortByName()));
@@ -104,8 +104,7 @@ namespace kt
             if (!dom)
             {
                 dom = plugin->createManager(tor);
-                connect(tor, SIGNAL(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)),
-                        dom, SLOT(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)));
+                connect(tor, &bt::TorrentInterface::chunkDownloaded, dom, &DownloadOrderManager::chunkDownloaded);
             }
 
             dom->setDownloadOrder(model->downloadOrder());

@@ -58,14 +58,14 @@ namespace kt
         , m_pref(nullptr)
     {
         Q_UNUSED(args);
-        connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerTriggered()));
+        connect(&m_timer, &QTimer::timeout, this, &BWSchedulerPlugin::timerTriggered);
         screensaver = new org::freedesktop::ScreenSaver(QStringLiteral("org.freedesktop.ScreenSaver"),
                                                         QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus(), this);
-        connect(screensaver, SIGNAL(ActiveChanged(bool)), this, SLOT(screensaverActivated(bool)));
+        connect(screensaver, &org::freedesktop::ScreenSaver::ActiveChanged, this, &BWSchedulerPlugin::screensaverActivated);
         screensaver_on = screensaver->GetActive();
 
         QNetworkConfigurationManager* networkConfigurationManager = new QNetworkConfigurationManager(this);
-        connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SLOT(networkStatusChanged(bool)));
+        connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &BWSchedulerPlugin::networkStatusChanged);
     }
 
 
@@ -78,7 +78,7 @@ namespace kt
         LogSystemManager::instance().registerSystem(i18n("Scheduler"), SYS_SCD);
         m_schedule = new Schedule();
         m_pref = new BWPrefPage(nullptr);
-        connect(m_pref, SIGNAL(colorsChanged()), this, SLOT(colorsChanged()));
+        connect(m_pref, &BWPrefPage::colorsChanged, this, &BWSchedulerPlugin::colorsChanged);
         getGUI()->addPrefPage(m_pref);
 
         connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(colorsChanged()));
@@ -94,8 +94,8 @@ namespace kt
         }
 
         m_editor = new ScheduleEditor(0);
-        connect(m_editor, SIGNAL(loaded(Schedule*)), this, SLOT(onLoaded(Schedule*)));
-        connect(m_editor, SIGNAL(scheduleChanged()), this, SLOT(timerTriggered()));
+        connect(m_editor, &ScheduleEditor::loaded, this, &BWSchedulerPlugin::onLoaded);
+        connect(m_editor, &ScheduleEditor::scheduleChanged, this, &BWSchedulerPlugin::timerTriggered);
         getGUI()->addActivity(m_editor);
         m_editor->setSchedule(m_schedule);
 

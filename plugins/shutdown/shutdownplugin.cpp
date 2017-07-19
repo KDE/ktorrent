@@ -46,11 +46,11 @@ namespace kt
 
         KActionCollection* ac = actionCollection();
         shutdown_enabled = new KToggleAction(QIcon::fromTheme(QStringLiteral("system-shutdown")), i18n("Shutdown Enabled"), this);
-        connect(shutdown_enabled, SIGNAL(toggled(bool)), this, SLOT(shutdownToggled(bool)));
+        connect(shutdown_enabled, &KToggleAction::toggled, this, &ShutdownPlugin::shutdownToggled);
         ac->addAction(QStringLiteral("shutdown_enabled"), shutdown_enabled);
 
         configure_shutdown = new QAction(QIcon::fromTheme(QStringLiteral("preferences-other")), i18n("Configure Shutdown"), this);
-        connect(configure_shutdown, SIGNAL(triggered()), this, SLOT(configureShutdown()));
+        connect(configure_shutdown, &QAction::triggered, this, &ShutdownPlugin::configureShutdown);
         ac->addAction(QStringLiteral("shutdown_settings"), configure_shutdown);
 
         setXMLFile(QStringLiteral("ktorrent_shutdownui.rc"));
@@ -78,10 +78,10 @@ namespace kt
         rules->load(kt::DataDir() + QStringLiteral("shutdown_rules"));
         if (rules->enabled())
             shutdown_enabled->setChecked(true);
-        connect(rules, SIGNAL(shutdown()), this, SLOT(shutdownComputer()));
-        connect(rules, SIGNAL(lock()), this, SLOT(lock()));
-        connect(rules, SIGNAL(suspendToDisk()), this, SLOT(suspendToDisk()));
-        connect(rules, SIGNAL(suspendToRAM()), this, SLOT(suspendToRam()));
+        connect(rules, &ShutdownRuleSet::shutdown, this, &ShutdownPlugin::shutdownComputer);
+        connect(rules, &ShutdownRuleSet::lock, this, &ShutdownPlugin::lock);
+        connect(rules, &ShutdownRuleSet::suspendToDisk, this, &ShutdownPlugin::suspendToDisk);
+        connect(rules, &ShutdownRuleSet::suspendToRAM, this, &ShutdownPlugin::suspendToRam);
         updateAction();
     }
 

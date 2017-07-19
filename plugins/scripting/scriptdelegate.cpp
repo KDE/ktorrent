@@ -118,15 +118,15 @@ namespace kt
         QList<QWidget*> widgets;
 
         QCheckBox* enabled_check = new QCheckBox;
-        connect(enabled_check, SIGNAL(clicked(bool)), this, SLOT(toggled(bool)));
+        connect(enabled_check, &QCheckBox::clicked, this, &ScriptDelegate::toggled);
 
         QPushButton* about_button = new QPushButton;
         about_button->setIcon(QIcon::fromTheme(QStringLiteral("dialog-information")));
-        connect(about_button, SIGNAL(clicked(bool)), this, SLOT(aboutClicked()));
+        connect(about_button, &QPushButton::clicked, this, &ScriptDelegate::aboutClicked);
 
         QPushButton* configure_button = new QPushButton;
         configure_button->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
-        connect(configure_button, SIGNAL(clicked(bool)), this, SLOT(settingsClicked()));
+        connect(configure_button, &QPushButton::clicked, this, &ScriptDelegate::settingsClicked);
 
         QList<QEvent::Type> blocked;
         blocked << QEvent::MouseButtonPress << QEvent::MouseButtonRelease << QEvent::MouseButtonDblClick;

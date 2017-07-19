@@ -29,8 +29,8 @@ namespace kt
         : QDialog(parent), group(group)
     {
         setupUi(this);
-        connect(buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
-        connect(buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &GroupPolicyDlg::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &GroupPolicyDlg::reject);
         setWindowTitle(i18n("Policy for the %1 group", group->groupName()));
 
         const Group::Policy& p = group->groupPolicy();

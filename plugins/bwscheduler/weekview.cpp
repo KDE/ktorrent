@@ -38,15 +38,13 @@ namespace kt
         scene = new WeekScene(this);
         setScene(scene);
 
-        connect(scene, SIGNAL(selectionChanged()), this, SLOT(onSelectionChanged()));
-        connect(scene, SIGNAL(itemDoubleClicked(QGraphicsItem*)), this, SLOT(onDoubleClicked(QGraphicsItem*)));
-        connect(scene, SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&, int, int)),
-                this, SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&, int, int)));
+        connect(scene, &WeekScene::selectionChanged, this, &WeekView::onSelectionChanged);
+        connect(scene, &WeekScene::itemDoubleClicked, this, &WeekView::onDoubleClicked);
+        connect(scene, static_cast<void (WeekScene::*)(ScheduleItem*, const QTime&, const QTime&, int, int)>(&WeekScene::itemMoved), this, &WeekView::itemMoved);
 
         menu = new QMenu(this);
         setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
-                this, SLOT(showContextMenu(const QPoint&)));
+        connect(this, &WeekView::customContextMenuRequested, this, &WeekView::showContextMenu);
     }
 
 

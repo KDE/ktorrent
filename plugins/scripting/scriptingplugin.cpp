@@ -88,9 +88,9 @@ namespace kt
             Out(SYS_SCR | LOG_DEBUG) << s << endl;
 
         sman = new ScriptManager(model, nullptr);
-        connect(sman, SIGNAL(addScript()), this, SLOT(addScript()));
-        connect(sman, SIGNAL(removeScript()), this, SLOT(removeScript()));
-        connect(model, SIGNAL(showPropertiesDialog(Script*)), sman, SLOT(showProperties(Script*)));
+        connect(sman, &ScriptManager::addScript, this, &ScriptingPlugin::addScript);
+        connect(sman, &ScriptManager::removeScript, this, &ScriptingPlugin::removeScript);
+        connect(model, &ScriptModel::showPropertiesDialog, sman, static_cast<void (ScriptManager::*)(Script*)>(&ScriptManager::showProperties));
         getGUI()->addActivity(sman);
     }
 
@@ -202,7 +202,7 @@ namespace kt
             {
                 QString script_dir = kt::DataDir() + QStringLiteral("scripts") + bt::DirSeparator();
                 KIO::CopyJob* j = KIO::copy(url, QUrl::fromLocalFile(script_dir + url.fileName()));
-                connect(j, SIGNAL(result(KJob*)), this, SLOT(scriptDownloadFinished(KJob*)));
+                connect(j, &KIO::CopyJob::result, this, &ScriptingPlugin::scriptDownloadFinished);
             }
         }
         catch (bt::Error& err)

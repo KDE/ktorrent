@@ -40,13 +40,13 @@ namespace kt
     void ActionGroup::addAction(QAction* act)
     {
         actions.append(act);
-        connect(act, SIGNAL(toggled(bool)), this, SLOT(toggled(bool)));
+        connect(act, &QAction::toggled, this, &ActionGroup::toggled);
     }
 
     void ActionGroup::removeAction(QAction* act)
     {
         actions.removeAll(act);
-        disconnect(act, SIGNAL(toggled(bool)), this, SLOT(toggled(bool)));
+        disconnect(act, &QAction::toggled, this, &ActionGroup::toggled);
     }
 
 
@@ -76,9 +76,9 @@ namespace kt
         layout->setMargin(0);
         tab_bar = new KToolBar(this);
         tab_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        connect(tab_bar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(toolButtonStyleChanged(Qt::ToolButtonStyle)));
+        connect(tab_bar, &QToolBar::toolButtonStyleChanged, this, &TabBarWidget::toolButtonStyleChanged);
         action_group = new ActionGroup(this);
-        connect(action_group, SIGNAL(actionTriggered(QAction*)), this, SLOT(onActionTriggered(QAction*)));
+        connect(action_group, &ActionGroup::actionTriggered, this, &TabBarWidget::onActionTriggered);
         widget_stack = new QStackedWidget(splitter);
         splitter->addWidget(widget_stack);
         layout->addWidget(tab_bar);
@@ -249,7 +249,7 @@ namespace kt
     void TabBarWidget::toolButtonStyleChanged(Qt::ToolButtonStyle style)
     {
         if (style != Qt::ToolButtonTextBesideIcon)
-            QTimer::singleShot(0, this, SLOT(setToolButtonStyle()));
+            QTimer::singleShot(0, this, &TabBarWidget::setToolButtonStyle);
     }
 
     void TabBarWidget::setToolButtonStyle()

@@ -48,12 +48,11 @@ namespace kt
           show_downloads(true),
           show_not_queud(true)
     {
-        connect(qman, SIGNAL(queueOrdered()), this, SLOT(onQueueOrdered()));
+        connect(qman, &QueueManager::queueOrdered, this, &QueueManagerModel::onQueueOrdered);
         for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++)
         {
             bt::TorrentInterface* tc = *i;
-            connect(tc, SIGNAL(statusChanged(bt::TorrentInterface*)),
-                    this, SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
+            connect(tc, &bt::TorrentInterface::statusChanged, this, &QueueManagerModel::onTorrentStatusChanged);
 
             if (visible(tc))
             {
@@ -131,7 +130,7 @@ namespace kt
 
     void QueueManagerModel::onTorrentAdded(bt::TorrentInterface* tc)
     {
-        connect(tc, SIGNAL(statusChanged(bt::TorrentInterface*)), this, SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
+        connect(tc, &bt::TorrentInterface::statusChanged, this, &QueueManagerModel::onTorrentStatusChanged);
     }
 
     void QueueManagerModel::onTorrentRemoved(bt::TorrentInterface* tc)

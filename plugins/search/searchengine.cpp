@@ -127,7 +127,7 @@ namespace kt
             if (!found)
             {
                 KJob* j = KIO::storedGet(QUrl(icon_url), KIO::Reload, KIO::HideProgressInfo);
-                connect(j, SIGNAL(result(KJob*)), this, SLOT(iconDownloadFinished(KJob*)));
+                connect(j, &KJob::result, this, &SearchEngine::iconDownloadFinished);
             }
             else
             {

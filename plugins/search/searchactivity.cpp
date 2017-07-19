@@ -54,8 +54,7 @@ namespace kt
         setXMLGUIFile(QStringLiteral("ktorrent_searchui.rc"));
         setupActions();
         toolbar = new SearchToolBar(part()->actionCollection(), sp->getSearchEngineList(), this);
-        connect(toolbar, SIGNAL(search(const QString&, int, bool)),
-                sp, SLOT(search(const QString&, int, bool)));
+        connect(toolbar, &SearchToolBar::search, sp, &SearchPlugin::search);
 
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setSpacing(0);
@@ -63,16 +62,16 @@ namespace kt
         tabs = new QTabWidget(this);
         tabs->setMovable(true);
         layout->addWidget(tabs);
-        connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+        connect(tabs, &QTabWidget::currentChanged, this, &SearchActivity::currentTabChanged);
 
         QToolButton* lc = new QToolButton(tabs);
         tabs->setCornerWidget(lc, Qt::TopLeftCorner);
         QToolButton* rc = new QToolButton(tabs);
         tabs->setCornerWidget(rc, Qt::TopRightCorner);
         lc->setIcon(QIcon::fromTheme(QStringLiteral("tab-new")));
-        connect(lc, SIGNAL(clicked()), this, SLOT(openTab()));
+        connect(lc, &QToolButton::clicked, this, &SearchActivity::openTab);
         rc->setIcon(QIcon::fromTheme(QStringLiteral("tab-close")));
-        connect(rc, SIGNAL(clicked()), this, SLOT(closeTab()));
+        connect(rc, &QToolButton::clicked, this, &SearchActivity::closeTab);
     }
 
     SearchActivity::~SearchActivity()
@@ -84,7 +83,7 @@ namespace kt
         KActionCollection* ac = part()->actionCollection();
 
         search_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("Search"), this);
-        connect(search_action, SIGNAL(triggered()), this, SLOT(search()));
+        connect(search_action, &QAction::triggered, this, static_cast<void (SearchActivity::*)()>(&SearchActivity::search));
         ac->addAction(QStringLiteral("search_tab_search"), search_action);
 
         find_action = KStandardAction::find(this, SLOT(find()), this);
@@ -250,9 +249,9 @@ namespace kt
         if (!text.isEmpty())
             tabs->setTabToolTip(idx, i18n("Search for %1", text));
 
-        connect(search, SIGNAL(openNewTab(const QUrl&)), this, SLOT(openNewTab(const QUrl&)));
-        connect(search, SIGNAL(changeTitle(SearchWidget*, QString)), this, SLOT(setTabTitle(SearchWidget*, QString)));
-        connect(search, SIGNAL(changeIcon(SearchWidget*, QIcon)), this, SLOT(setTabIcon(SearchWidget*, QIcon)));
+        connect(search, &SearchWidget::openNewTab, this, &SearchActivity::openNewTab);
+        connect(search, &SearchWidget::changeTitle, this, &SearchActivity::setTabTitle);
+        connect(search, &SearchWidget::changeIcon, this, &SearchActivity::setTabIcon);
         searches.append(search);
         search->setSearchBarEngine(toolbar->currentSearchEngine());
         return search;

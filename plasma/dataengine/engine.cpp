@@ -47,10 +47,9 @@ namespace ktplasma
     {
         bt::InitLog(DataDir() + "dataengine.log", false);
         dbus = QDBusConnection::sessionBus().interface();
-        connect(dbus, SIGNAL(serviceRegistered(const QString&)), this, SLOT(dbusServiceRegistered(const QString&)));
-        connect(dbus, SIGNAL(serviceUnregistered(const QString&)), this, SLOT(dbusServiceUnregistered(const QString&)));
-        connect(dbus, SIGNAL(serviceOwnerChanged(const QString&, const QString&, const QString&)),
-                this, SLOT(dbusServiceOwnerChanged(const QString&, const QString&, const QString&)));
+        connect(dbus, &QDBusConnectionInterface::serviceRegistered, this, &Engine::dbusServiceRegistered);
+        connect(dbus, &QDBusConnectionInterface::serviceUnregistered, this, &Engine::dbusServiceUnregistered);
+        connect(dbus, &QDBusConnectionInterface::serviceOwnerChanged, this, &Engine::dbusServiceOwnerChanged);
 
         torrent_map.setAutoDelete(true);
         setData("core", "connected", false);

@@ -77,7 +77,7 @@ namespace kt
         activity->loadCurrentSearches();
         activity->loadState(KSharedConfig::openConfig());
 
-        connect(pref, SIGNAL(clearSearchHistory()), activity, SLOT(clearSearchHistory()));
+        connect(pref, &SearchPrefPage::clearSearchHistory, activity, &SearchActivity::clearSearchHistory);
     }
 
     void SearchPlugin::unload()

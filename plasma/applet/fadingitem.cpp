@@ -98,7 +98,7 @@ void FadingItem::showItem()
         animation->setStartValue(0.0);
         animation->setEndValue(1.0);
         mAnimation = animation;
-        connect(animation, SIGNAL(finished()), this, SLOT(animationFinished()));
+        connect(animation, &QPropertyAnimation::finished, this, &FadingItem::animationFinished);
     }
     else if (animation->state() == QAbstractAnimation::Running)
     {

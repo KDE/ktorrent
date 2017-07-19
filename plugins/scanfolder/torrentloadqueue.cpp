@@ -43,7 +43,7 @@ namespace kt
         : QObject(parent),
           core(core)
     {
-        connect(&timer, SIGNAL(timeout()), this, SLOT(loadOne()));
+        connect(&timer, &QTimer::timeout, this, &TorrentLoadQueue::loadOne);
         timer.setSingleShot(true);
     }
 

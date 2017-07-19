@@ -41,8 +41,8 @@ namespace kt
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setMargin(0);
         pmw = new KPluginSelector(this);
-        connect(pmw, SIGNAL(changed(bool)), this, SLOT(changed()));
-        connect(pmw, SIGNAL(configCommitted(const QByteArray&)), this, SLOT(changed()));
+        connect(pmw, &KPluginSelector::changed, this, &PluginActivity::changed);
+        connect(pmw, &KPluginSelector::configCommitted, this, &PluginActivity::changed);
         layout->addWidget(pmw);
     }
 

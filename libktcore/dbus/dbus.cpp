@@ -50,11 +50,11 @@ namespace kt
         QDBusConnection::sessionBus().registerObject(QLatin1String("/core"), this,
                 QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals);
 
-        connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(torrentAdded(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(torrentRemoved(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentStoppedByError(bt::TorrentInterface*, QString)), this, SLOT(torrentStoppedByError(bt::TorrentInterface*, QString)));
-        connect(core, SIGNAL(finished(bt::TorrentInterface*)), this, SLOT(finished(bt::TorrentInterface*)));
-        connect(core, SIGNAL(settingsChanged()), this, SIGNAL(settingsChanged()));
+        connect(core, &CoreInterface::torrentAdded, this, static_cast<void (DBus::*)(bt::TorrentInterface*)>(&DBus::torrentAdded));
+        connect(core, &CoreInterface::torrentRemoved, this, static_cast<void (DBus::*)(bt::TorrentInterface*)>(&DBus::torrentRemoved));
+        connect(core, &CoreInterface::torrentStoppedByError, this, static_cast<void (DBus::*)(bt::TorrentInterface*, QString)>(&DBus::torrentStoppedByError));
+        connect(core, &CoreInterface::finished, this, static_cast<void (DBus::*)(bt::TorrentInterface*)>(&DBus::finished));
+        connect(core, &CoreInterface::settingsChanged, this, &DBus::settingsChanged);
 
         // fill the map with torrents
         kt::QueueManager* qm = core->getQueueManager();
@@ -63,11 +63,11 @@ namespace kt
             torrentAdded(*i);
         }
 
-        connect(qm, SIGNAL(suspendStateChanged(bool)), this, SIGNAL(suspendStateChanged(bool)));
+        connect(qm, &kt::QueueManager::suspendStateChanged, this, &DBus::suspendStateChanged);
 
         kt::GroupManager* gman = core->getGroupManager();
-        connect(gman, SIGNAL(groupAdded(Group*)), this, SLOT(groupAdded(Group*)));
-        connect(gman, SIGNAL(groupRemoved(Group*)), this, SLOT(groupRemoved(Group*)));
+        connect(gman, &kt::GroupManager::groupAdded, this, &DBus::groupAdded);
+        connect(gman, &kt::GroupManager::groupRemoved, this, &DBus::groupRemoved);
         kt::GroupManager::Itr i = gman->begin();
         while (i != gman->end())
         {
@@ -249,7 +249,7 @@ namespace kt
     void DBus::removeDelayed(const QString& info_hash, bool data_to)
     {
         delayed_removal_map.insert(info_hash, data_to);
-        QTimer::singleShot(500, this, SLOT(delayedTorrentRemoval()));
+        QTimer::singleShot(500, this, &DBus::delayedTorrentRemoval);
     }
 
     void DBus::delayedTorrentRemoval()

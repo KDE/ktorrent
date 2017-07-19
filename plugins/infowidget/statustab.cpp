@@ -62,23 +62,23 @@ namespace kt
         ratio_limit->setMaximum(100.0f);
         ratio_limit->setSingleStep(0.1f);
         ratio_limit->setKeyboardTracking(false);
-        connect(ratio_limit, SIGNAL(valueChanged(double)), this, SLOT(maxRatioChanged(double)));
-        connect(use_ratio_limit, SIGNAL(toggled(bool)), this, SLOT(useRatioLimitToggled(bool)));
+        connect(ratio_limit, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, &StatusTab::maxRatioChanged);
+        connect(use_ratio_limit, &QCheckBox::toggled, this, &StatusTab::useRatioLimitToggled);
 
         time_limit->setMinimum(0.0f);
         time_limit->setMaximum(10000000.0f);
         time_limit->setSingleStep(0.05f);
         time_limit->setSpecialValueText(i18n("No limit"));
         time_limit->setKeyboardTracking(false);
-        connect(use_time_limit, SIGNAL(toggled(bool)), this, SLOT(useTimeLimitToggled(bool)));
-        connect(time_limit, SIGNAL(valueChanged(double)), this, SLOT(maxTimeChanged(double)));
+        connect(use_time_limit, &QCheckBox::toggled, this, &StatusTab::useTimeLimitToggled);
+        connect(time_limit, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, &StatusTab::maxTimeChanged);
 
         int h = (int)ceil(fontMetrics().height() * 1.25);
         downloaded_bar->setFixedHeight(h);
         availability_bar->setFixedHeight(h);
 
         comments->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard | Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
-        connect(comments, SIGNAL(linkActivated(QString)), SLOT(linkActivated(QString)));
+        connect(comments, &KSqueezedTextLabel::linkActivated, this, &StatusTab::linkActivated);
 
         // initialize everything with curr_tc == 0
         setEnabled(false);

@@ -51,23 +51,23 @@ namespace kt
 
 
         QAction* remove_action = new QAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this);
-        connect(remove_action, SIGNAL(triggered(bool)), this, SLOT(removeFiles()));
+        connect(remove_action, &QAction::triggered, this, &PlayListWidget::removeFiles);
         QAction* add_action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Add Media"), this);
-        connect(add_action, SIGNAL(triggered(bool)), this, SLOT(addMedia()));
+        connect(add_action, &QAction::triggered, this, &PlayListWidget::addMedia);
         QAction* clear_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")), i18n("Clear Playlist"), this);
-        connect(clear_action, SIGNAL(triggered(bool)), this, SLOT(clearPlayList()));
+        connect(clear_action, &QAction::triggered, this, &PlayListWidget::clearPlayList);
 
         tool_bar = new QToolBar(this);
         tool_bar->addAction(add_action);
         tool_bar->addAction(remove_action);
         tool_bar->addAction(clear_action);
         random_mode = new QCheckBox(i18n("Random play order"), tool_bar);
-        connect(random_mode, SIGNAL(toggled(bool)), this, SIGNAL(randomModeActivated(bool)));
+        connect(random_mode, &QCheckBox::toggled, this, &PlayListWidget::randomModeActivated);
         tool_bar->addWidget(random_mode);
         layout->addWidget(tool_bar);
 
         play_list = new PlayList(collection, player, this);
-        connect(play_list, SIGNAL(itemsDropped()), this, SLOT(onItemsDropped()));
+        connect(play_list, &PlayList::itemsDropped, this, &PlayListWidget::onItemsDropped);
         proxy_model = new QSortFilterProxyModel(this);
         proxy_model->setSourceModel(play_list);
         proxy_model->setSortRole(Qt::UserRole);
@@ -83,11 +83,11 @@ namespace kt
         view->setSelectionMode(QAbstractItemView::ExtendedSelection);
         view->setSortingEnabled(true);
         layout->addWidget(view);
-        connect(view, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+        connect(view, &QTreeView::customContextMenuRequested, this, &PlayListWidget::showContextMenu);
 
         connect(view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection& , const QItemSelection&)),
                 this, SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
-        connect(view, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClicked(QModelIndex)));
+        connect(view, &QTreeView::doubleClicked, this, static_cast<void (PlayListWidget::*)(const QModelIndex&)>(&PlayListWidget::doubleClicked));
 
         menu = new QMenu(this);
         menu->addAction(remove_action);

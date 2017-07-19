@@ -60,8 +60,8 @@ namespace kt
         r = m_data_url;
         r->setMode(KFile::File | KFile::Directory | KFile::LocalOnly);
 
-        connect(m_import_btn, SIGNAL(clicked()), this, SLOT(onImport()));
-        connect(m_cancel_btn, SIGNAL(clicked()), this, SLOT(cancelImport()));
+        connect(m_import_btn, &QPushButton::clicked, this, &ImportDialog::onImport);
+        connect(m_cancel_btn, &QPushButton::clicked, this, &ImportDialog::cancelImport);
         m_progress->setEnabled(false);
         m_progress->setValue(0);
         KGuiItem::assign(m_cancel_btn, KStandardGuiItem::cancel());
@@ -198,12 +198,12 @@ namespace kt
         else
             dc = new SingleDataChecker(0, tor.getNumChunks());
 
-        connect(dc, SIGNAL(progress(quint32, quint32)), this, SLOT(progress(quint32, quint32)), Qt::QueuedConnection);
+        connect(dc, &bt::DataChecker::progress, this, &ImportDialog::progress, Qt::QueuedConnection);
 
         BitSet bs(tor.getNumChunks());
         bs.setAll(false);
         dc_thread = new DataCheckerThread(dc, bs, data_url.toLocalFile(), tor, QString::null);
-        connect(dc_thread, SIGNAL(finished()), this, SLOT(finished()), Qt::QueuedConnection);
+        connect(dc_thread, &bt::DataCheckerThread::finished, this, &ImportDialog::finished, Qt::QueuedConnection);
         dc_thread->start();
     }
 
@@ -245,7 +245,7 @@ namespace kt
         {
             // download the torrent file
             KIO::StoredTransferJob* j = KIO::storedGet(tor_url);
-            connect(j, SIGNAL(result(KJob*)), this, SLOT(onTorrentGetReult(KJob*)));
+            connect(j, &KIO::StoredTransferJob::result, this, &ImportDialog::onTorrentGetReult);
         }
         else
         {

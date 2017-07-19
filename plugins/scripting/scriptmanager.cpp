@@ -70,11 +70,9 @@ namespace kt
         connect(view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
                 this, SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection)));
 
-        connect(view, SIGNAL(customContextMenuRequested(const QPoint&)),
-                this, SLOT(showContextMenu(const QPoint&)));
+        connect(view, &QListView::customContextMenuRequested, this, &ScriptManager::showContextMenu);
 
-        connect(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
-                this, SLOT(dataChanged(const QModelIndex&, const QModelIndex&)));
+        connect(model, &ScriptModel::dataChanged, this, &ScriptManager::dataChanged);
 
         add_script->setEnabled(true);
         remove_script->setEnabled(false);
@@ -97,31 +95,31 @@ namespace kt
         KActionCollection* ac = part()->actionCollection();
 
         add_script = new QAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add Script"), this);
-        connect(add_script, SIGNAL(triggered()), this, SIGNAL(addScript()));
+        connect(add_script, &QAction::triggered, this, &ScriptManager::addScript);
         ac->addAction(QStringLiteral("add_script"), add_script);
 
         remove_script = new QAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Script"), this);
-        connect(remove_script, SIGNAL(triggered()), this, SIGNAL(removeScript()));
+        connect(remove_script, &QAction::triggered, this, &ScriptManager::removeScript);
         ac->addAction(QStringLiteral("remove_script"), remove_script);
 
         run_script = new QAction(QIcon::fromTheme(QStringLiteral("system-run")), i18n("Run Script"), this);
-        connect(run_script, SIGNAL(triggered()), this, SLOT(runScript()));
+        connect(run_script, &QAction::triggered, this, &ScriptManager::runScript);
         ac->addAction(QStringLiteral("run_script"), run_script);
 
         stop_script = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18n("Stop Script"), this);
-        connect(stop_script, SIGNAL(triggered()), this, SLOT(stopScript()));
+        connect(stop_script, &QAction::triggered, this, &ScriptManager::stopScript);
         ac->addAction(QStringLiteral("stop_script"), stop_script);
 
         edit_script = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Edit Script"), this);
-        connect(edit_script, SIGNAL(triggered()), this, SLOT(editScript()));
+        connect(edit_script, &QAction::triggered, this, &ScriptManager::editScript);
         ac->addAction(QStringLiteral("edit_script"), edit_script);
 
         properties = new QAction(QIcon::fromTheme(QStringLiteral("dialog-information")), i18n("Properties"), this);
-        connect(properties, SIGNAL(triggered()), this, SLOT(showProperties()));
+        connect(properties, &QAction::triggered, this, static_cast<void (ScriptManager::*)()>(&ScriptManager::showProperties));
         ac->addAction(QStringLiteral("script_properties"), properties);
 
         configure_script = new QAction(QIcon::fromTheme(QStringLiteral("preferences-other")), i18n("Configure"), this);
-        connect(configure_script, SIGNAL(triggered()), this, SLOT(configureScript()));
+        connect(configure_script, &QAction::triggered, this, &ScriptManager::configureScript);
         ac->addAction(QStringLiteral("configure_script"), configure_script);
     }
 

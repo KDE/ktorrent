@@ -49,17 +49,17 @@ namespace kt
         /// Get the index of the current search engine
         int currentSearchEngine() const;
 
-    public slots:
+    public Q_SLOTS:
         /// Clear the search history
         void clearHistory();
 
-    protected slots:
+    protected Q_SLOTS:
         void searchNewTabPressed();
         void searchBoxReturn();
         void textChanged(const QString& str);
         void selectedEngineChanged(int idx);
 
-    signals:
+    Q_SIGNALS:
         /// Emitted when the user presses enter or clicks search
         void search(const QString& text, int engine, bool external);
 

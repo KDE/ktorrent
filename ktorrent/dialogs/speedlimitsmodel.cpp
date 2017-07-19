@@ -49,8 +49,8 @@ namespace kt
             itr++;
         }
 
-        connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(onTorrentAdded(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(onTorrentRemoved(bt::TorrentInterface*)));
+        connect(core, &Core::torrentAdded, this, &SpeedLimitsModel::onTorrentAdded);
+        connect(core, &Core::torrentRemoved, this, &SpeedLimitsModel::onTorrentRemoved);
     }
 
     SpeedLimitsModel::~SpeedLimitsModel()

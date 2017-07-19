@@ -45,10 +45,10 @@ namespace kt
     {
         setupUi(this);
         m_devices->setRootIsDecorated(false);
-        connect(m_forward, SIGNAL(clicked()), this, SLOT(onForwardBtnClicked()));
-        connect(m_undo_forward, SIGNAL(clicked()), this, SLOT(onUndoForwardBtnClicked()));
-        connect(m_rescan, SIGNAL(clicked()), this, SLOT(onRescanClicked()));
-        connect(sock, SIGNAL(discovered(bt::UPnPRouter*)), this, SLOT(addDevice(bt::UPnPRouter*)));
+        connect(m_forward, &QPushButton::clicked, this, &UPnPWidget::onForwardBtnClicked);
+        connect(m_undo_forward, &QPushButton::clicked, this, &UPnPWidget::onUndoForwardBtnClicked);
+        connect(m_rescan, &QPushButton::clicked, this, &UPnPWidget::onRescanClicked);
+        connect(sock, &bt::UPnPMCastSocket::discovered, this, &UPnPWidget::addDevice);
 
         bt::Globals::instance().getPortList().setListener(this);
 

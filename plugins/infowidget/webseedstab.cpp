@@ -36,10 +36,10 @@ namespace kt
         : QWidget(parent)
     {
         setupUi(this);
-        connect(m_add, SIGNAL(clicked()), this, SLOT(addWebSeed()));
-        connect(m_remove, SIGNAL(clicked()), this, SLOT(removeWebSeed()));
-        connect(m_disable_all, SIGNAL(clicked()), this, SLOT(disableAll()));
-        connect(m_enable_all, SIGNAL(clicked()), this, SLOT(enableAll()));
+        connect(m_add, &QPushButton::clicked, this, &WebSeedsTab::addWebSeed);
+        connect(m_remove, &QPushButton::clicked, this, &WebSeedsTab::removeWebSeed);
+        connect(m_disable_all, &QPushButton::clicked, this, &WebSeedsTab::disableAll);
+        connect(m_enable_all, &QPushButton::clicked, this, &WebSeedsTab::enableAll);
         m_add->setIcon(QIcon::fromTheme(QLatin1String("list-add")));
         m_remove->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
         m_add->setEnabled(false);
@@ -56,7 +56,7 @@ namespace kt
         connect(m_webseed_list->selectionModel(), SIGNAL(selectionChanged(const QItemSelection& , const QItemSelection&)),
                 this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
 
-        connect(m_webseed, SIGNAL(textChanged(const QString&)), this, SLOT(onWebSeedTextChanged(const QString&)));
+        connect(m_webseed, &QLineEdit::textChanged, this, &WebSeedsTab::onWebSeedTextChanged);
     }
 
 

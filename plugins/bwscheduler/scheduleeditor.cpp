@@ -64,10 +64,9 @@ namespace kt
         menu->addSeparator();
         menu->addAction(clear_action);
 
-        connect(view, SIGNAL(selectionChanged()), this, SLOT(onSelectionChanged()));
-        connect(view, SIGNAL(editItem(ScheduleItem*)), this, SLOT(editItem(ScheduleItem*)));
-        connect(view, SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&, int, int)),
-                this, SLOT(itemMoved(ScheduleItem*, const QTime&, const QTime&, int, int)));
+        connect(view, &WeekView::selectionChanged, this, &ScheduleEditor::onSelectionChanged);
+        connect(view, &WeekView::editItem, this, static_cast<void (ScheduleEditor::*)(ScheduleItem*)>(&ScheduleEditor::editItem));
+        connect(view, &WeekView::itemMoved, this, &ScheduleEditor::itemMoved);
     }
 
 
@@ -99,7 +98,7 @@ namespace kt
         enable_schedule->setToolTip(i18n("Activate or deactivate the scheduler"));
         act->setDefaultWidget(enable_schedule);
         part()->actionCollection()->addAction(QStringLiteral("schedule_active"), act);
-        connect(enable_schedule, SIGNAL(toggled(bool)), this, SLOT(enableChecked(bool)));
+        connect(enable_schedule, &QCheckBox::toggled, this, &ScheduleEditor::enableChecked);
     }
 
 

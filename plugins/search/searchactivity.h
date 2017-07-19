@@ -56,7 +56,7 @@ namespace kt
         /// Create a new empty search tab
         SearchWidget* newTab();
 
-    public slots:
+    public Q_SLOTS:
         void home();
         void openNewTab(const QUrl &url);
         void currentTabChanged(int idx);

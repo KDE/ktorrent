@@ -43,10 +43,10 @@ namespace kt
         setupUi(this);
 
         m_text->setText(text);
-        connect(m_cancel, SIGNAL(clicked()), this, SLOT(cancelPressed()));
-        connect(m_recreate, SIGNAL(clicked()), this, SLOT(recreatePressed()));
-        connect(m_dnd, SIGNAL(clicked()), this, SLOT(dndPressed()));
-        connect(m_select_new, SIGNAL(clicked()), this, SLOT(selectNewPressed()));
+        connect(m_cancel, &QPushButton::clicked, this, &MissingFilesDlg::cancelPressed);
+        connect(m_recreate, &QPushButton::clicked, this, &MissingFilesDlg::recreatePressed);
+        connect(m_dnd, &QPushButton::clicked, this, &MissingFilesDlg::dndPressed);
+        connect(m_select_new, &QPushButton::clicked, this, &MissingFilesDlg::selectNewPressed);
 
         KGuiItem::assign(m_cancel, KStandardGuiItem::cancel());
 

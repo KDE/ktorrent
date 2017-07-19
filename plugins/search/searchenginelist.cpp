@@ -271,7 +271,7 @@ namespace kt
             if (!bt::Exists(dir))
             {
                 OpenSearchDownloadJob* j = new OpenSearchDownloadJob(u, dir, m_proxy);
-                connect(j, SIGNAL(result(KJob*)), this, SLOT(openSearchDownloadJobFinished(KJob*)));
+                connect(j, &OpenSearchDownloadJob::result, this, &SearchEngineList::openSearchDownloadJobFinished);
                 j->start();
             }
             else

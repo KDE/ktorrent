@@ -149,7 +149,7 @@ namespace kt
     void HttpServer::newConnection(int fd, const net::Address& addr)
     {
         HttpClientHandler* handler = new HttpClientHandler(this, fd);
-        connect(handler, SIGNAL(closed()), this, SLOT(slotConnectionClosed()));
+        connect(handler, &HttpClientHandler::closed, this, &HttpServer::slotConnectionClosed);
         Out(SYS_WEB | LOG_NOTICE) << "connection from " << addr.toString()  << endl;
         clients.append(handler);
     }

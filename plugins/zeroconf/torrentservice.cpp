@@ -82,7 +82,7 @@ namespace kt
             srv->setType(QStringLiteral("_bittorrent._tcp"));
             srv->setSubTypes(subtypes);
 
-            connect(srv, SIGNAL(published(bool)), this, SLOT(onPublished(bool)));
+            connect(srv, &KDNSSD::PublicService::published, this, &TorrentService::onPublished);
             srv->publishAsync();
         }
 

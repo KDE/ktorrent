@@ -39,8 +39,7 @@ namespace kt
         , currentRows(0)
         , mman(magnetManager)
     {
-        connect (mman, SIGNAL(updateQueue(bt::Uint32,bt::Uint32)),
-                 this, SLOT(onUpdateQueue(bt::Uint32,bt::Uint32)));
+        connect(mman.data(), &MagnetManager::updateQueue, this, &MagnetModel::onUpdateQueue);
     }
 
     MagnetModel::~MagnetModel()

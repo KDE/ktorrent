@@ -251,7 +251,8 @@ namespace kt
 
         /// Create a torrent (Note: hash calculation should be finished, and torrent should have been saved)
         virtual bt::TorrentInterface* createTorrent(bt::TorrentCreator* tc, bool seed) = 0;
-    signals:
+
+    Q_SIGNALS:
         /**
          * A bt::TorrentInterface was added
          * @param tc

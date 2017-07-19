@@ -51,8 +51,9 @@ namespace kt
         SearchActivity* getSearchActivity() const {return activity;}
         ProxyHelper* getProxy() const {return proxy;}
 
-    private slots:
         void search(const QString& text, int engine, bool external);
+
+    private Q_SLOTS:
         void preferencesUpdated();
 
     private:

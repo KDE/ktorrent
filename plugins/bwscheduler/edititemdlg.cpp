@@ -39,8 +39,8 @@ namespace kt
         connect(m_buttonBox, &QDialogButtonBox::accepted, this, &EditItemDlg::accept);
         connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
-        connect(m_suspended, SIGNAL(toggled(bool)), this, SLOT(suspendedChanged(bool)));
-        connect(m_screensaver_limits, SIGNAL(toggled(bool)), this, SLOT(screensaverLimitsToggled(bool)));
+        connect(m_suspended, &QCheckBox::toggled, this, &EditItemDlg::suspendedChanged);
+        connect(m_screensaver_limits, &QCheckBox::toggled, this, &EditItemDlg::screensaverLimitsToggled);
 
         QLocale locale(QLocale::system());
         for (int i = 1; i <= 7; i++)
@@ -76,10 +76,10 @@ namespace kt
 
         m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
 
-        connect(m_from, SIGNAL(timeChanged(const QTime&)), this, SLOT(fromChanged(const QTime&)));
-        connect(m_to, SIGNAL(timeChanged(const QTime&)), this, SLOT(toChanged(const QTime&)));
-        connect(m_start_day, SIGNAL(activated(int)), this, SLOT(startDayChanged(int)));
-        connect(m_end_day, SIGNAL(activated(int)), this, SLOT(endDayChanged(int)));
+        connect(m_from, &QTimeEdit::timeChanged, this, &EditItemDlg::fromChanged);
+        connect(m_to, &QTimeEdit::timeChanged, this, &EditItemDlg::toChanged);
+        connect(m_start_day, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &EditItemDlg::startDayChanged);
+        connect(m_end_day, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &EditItemDlg::endDayChanged);
 
         setWindowTitle(new_item?i18n("Add an item"):i18n("Edit an item"));
     }

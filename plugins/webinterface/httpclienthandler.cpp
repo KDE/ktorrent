@@ -39,7 +39,7 @@ namespace kt
         client = new net::Socket(sock, 4);
         client->setBlocking(false);
         read_notifier = new QSocketNotifier(sock, QSocketNotifier::Read, this);
-        connect(read_notifier, SIGNAL(activated(int)), this, SLOT(readyToRead(int)));
+        connect(read_notifier, &QSocketNotifier::activated, this, &HttpClientHandler::readyToRead);
         write_notifier = new QSocketNotifier(sock, QSocketNotifier::Write, this);
         connect(write_notifier, SIGNAL(activated(int)), this, SLOT(sendOutputBuffer(int)));
         write_notifier->setEnabled(false);

@@ -43,8 +43,8 @@ namespace kt
           on(false),
           all_rules_must_be_hit(false)
     {
-        connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(torrentAdded(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(torrentRemoved(bt::TorrentInterface*)));
+        connect(core, &CoreInterface::torrentAdded, this, &ShutdownRuleSet::torrentAdded);
+        connect(core, &CoreInterface::torrentRemoved, this, &ShutdownRuleSet::torrentRemoved);
         QueueManager* qman = core->getQueueManager();
         for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++)
         {
@@ -119,9 +119,8 @@ namespace kt
 
     void ShutdownRuleSet::torrentAdded(bt::TorrentInterface* tc)
     {
-        connect(tc, SIGNAL(seedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)),
-                this, SLOT(seedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)));
-        connect(tc, SIGNAL(finished(bt::TorrentInterface*)), this, SLOT(torrentFinished(bt::TorrentInterface*)));
+        connect(tc, &bt::TorrentInterface::seedingAutoStopped, this, &ShutdownRuleSet::seedingAutoStopped);
+        connect(tc, &bt::TorrentInterface::finished, this, &ShutdownRuleSet::torrentFinished);
     }
 
 

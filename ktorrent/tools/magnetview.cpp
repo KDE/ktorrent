@@ -58,8 +58,7 @@ namespace kt
         view->setAllColumnsShowFocus(true);
         view->setSelectionMode(QAbstractItemView::ContiguousSelection);
         view->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(view, SIGNAL(customContextMenuRequested(QPoint)),
-                this, SLOT(showContextMenu(QPoint)));
+        connect(view, &QTreeView::customContextMenuRequested, this, &MagnetView::showContextMenu);
         layout->addWidget(view);
 
         // context menu

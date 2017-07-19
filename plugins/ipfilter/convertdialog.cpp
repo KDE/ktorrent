@@ -43,8 +43,8 @@ namespace kt
         setModal(false);
         adjustSize();
         canceled = false;
-        connect(m_cancel, SIGNAL(clicked()), this, SLOT(btnCancelClicked()));
-        connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+        connect(m_cancel, &QPushButton::clicked, this, &ConvertDialog::btnCancelClicked);
+        connect(&timer, &QTimer::timeout, this, &ConvertDialog::update);
 
         QTimer::singleShot(500, this, SLOT(convert()));
     }
@@ -80,7 +80,7 @@ namespace kt
             return;
 
         convert_thread = new ConvertThread(this);
-        connect(convert_thread, SIGNAL(finished()), this, SLOT(threadFinished()), Qt::QueuedConnection);
+        connect(convert_thread, &ConvertThread::finished, this, &ConvertDialog::threadFinished, Qt::QueuedConnection);
         convert_thread->start();
         timer.start(500);
     }

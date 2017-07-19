@@ -40,14 +40,13 @@ namespace kt
         setWindowTitle(i18n("Calculate Recommended Settings"));
         setupUi(this);
         connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-        connect(m_buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked,
-                this, &RecommendedSettingsDlg::apply);
-        connect(m_calculate, SIGNAL(clicked()), this, SLOT(calculate()));
-        connect(m_chk_avg_speed_slot, SIGNAL(toggled(bool)), this, SLOT(avgSpeedSlotToggled(bool)));
-        connect(m_chk_sim_torrents, SIGNAL(toggled(bool)), this, SLOT(simTorrentsToggled(bool)));
-        connect(m_chk_slots, SIGNAL(toggled(bool)), this, SLOT(slotsToggled(bool)));
-        connect(m_upload_bw, SIGNAL(valueChanged(int)), this, SLOT(uploadBWChanged(int)));
-        connect(m_download_bw, SIGNAL(valueChanged(int)), this, SLOT(downloadBWChanged(int)));
+        connect(m_buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &RecommendedSettingsDlg::apply);
+        connect(m_calculate, &QPushButton::clicked, this, &RecommendedSettingsDlg::calculate);
+        connect(m_chk_avg_speed_slot, &QCheckBox::toggled, this, &RecommendedSettingsDlg::avgSpeedSlotToggled);
+        connect(m_chk_sim_torrents, &QCheckBox::toggled, this, &RecommendedSettingsDlg::simTorrentsToggled);
+        connect(m_chk_slots, &QCheckBox::toggled, this, &RecommendedSettingsDlg::slotsToggled);
+        connect(m_upload_bw, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RecommendedSettingsDlg::uploadBWChanged);
+        connect(m_download_bw, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RecommendedSettingsDlg::downloadBWChanged);
 
         m_avg_speed_slot->setEnabled(false);
         m_slots->setEnabled(false);

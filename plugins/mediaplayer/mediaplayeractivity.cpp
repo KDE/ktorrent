@@ -88,23 +88,24 @@ namespace kt
         tabs->setCornerWidget(close_button, Qt::TopRightCorner);
         close_button->setIcon(QIcon::fromTheme(QStringLiteral("tab-close")));
         close_button->setEnabled(false);
-        connect(close_button, SIGNAL(clicked()), this, SLOT(closeTab()));
+        connect(close_button, &QToolButton::clicked, this, &MediaPlayerActivity::closeTab);
 
         //tabs->setTabBarHidden(true);
         tabs->setTabBarAutoHide(true);
 
         connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), media_model, SLOT(onTorrentAdded(bt::TorrentInterface*)));
         connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), media_model, SLOT(onTorrentRemoved(bt::TorrentInterface*)));
-        connect(media_player, SIGNAL(enableActions(unsigned int)), this, SLOT(enableActions(unsigned int)));
-        connect(media_player, SIGNAL(openVideo()), this, SLOT(openVideo()));
-        connect(media_player, SIGNAL(closeVideo()), this, SLOT(closeVideo()));
-        connect(media_player, SIGNAL(aboutToFinish()), this, SLOT(aboutToFinishPlaying()));
-        connect(play_list, SIGNAL(fileSelected(MediaFileRef)), this, SLOT(onSelectionChanged(MediaFileRef)));
-        connect(media_view, SIGNAL(doubleClicked(const MediaFileRef&)), this, SLOT(onDoubleClicked(const MediaFileRef&)));
-        connect(play_list, SIGNAL(randomModeActivated(bool)), this, SLOT(randomPlayActivated(bool)));
-        connect(play_list, SIGNAL(doubleClicked(MediaFileRef)), this, SLOT(play(MediaFileRef)));
-        connect(play_list, SIGNAL(enableNext(bool)), next_action, SLOT(setEnabled(bool)));
-        connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+        connect(media_player, &MediaPlayer::enableActions, this, &MediaPlayerActivity::enableActions);
+        connect(media_player, &MediaPlayer::openVideo, this, &MediaPlayerActivity::openVideo);
+        connect(media_player, &MediaPlayer::closeVideo, this, &MediaPlayerActivity::closeVideo);
+        connect(media_player, &MediaPlayer::aboutToFinish, this, &MediaPlayerActivity::aboutToFinishPlaying);
+        connect(play_list, &PlayListWidget::fileSelected, this, &MediaPlayerActivity::onSelectionChanged);
+        connect(media_view, &MediaView::doubleClicked, this, &MediaPlayerActivity::onDoubleClicked);
+        connect(play_list, &PlayListWidget::randomModeActivated, this, &MediaPlayerActivity::randomPlayActivated);
+        connect(play_list, static_cast<void (PlayListWidget::*)(const MediaFileRef&)>(&PlayListWidget::doubleClicked),
+                this, static_cast<void (MediaPlayerActivity::*)(const MediaFileRef&)>(&MediaPlayerActivity::play));
+        connect(play_list, &PlayListWidget::enableNext, next_action, &QAction::setEnabled);
+        connect(tabs, &QTabWidget::currentChanged, this, &MediaPlayerActivity::currentTabChanged);
     }
 
     MediaPlayerActivity::~MediaPlayerActivity()
@@ -116,35 +117,35 @@ namespace kt
     void MediaPlayerActivity::setupActions()
     {
         play_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-start")), i18n("Play"), this);
-        connect(play_action, SIGNAL(triggered()), this, SLOT(play()));
+        connect(play_action, &QAction::triggered, this, static_cast<void (MediaPlayerActivity::*)()>(&MediaPlayerActivity::play));
         ac->addAction(QStringLiteral("media_play"), play_action);
 
         pause_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-pause")), i18n("Pause"), this);
-        connect(pause_action, SIGNAL(triggered()), this, SLOT(pause()));
+        connect(pause_action, &QAction::triggered, this, &MediaPlayerActivity::pause);
         ac->addAction(QStringLiteral("media_pause"), pause_action);
 
         stop_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18n("Stop"), this);
-        connect(stop_action, SIGNAL(triggered()), this, SLOT(stop()));
+        connect(stop_action, &QAction::triggered, this, &MediaPlayerActivity::stop);
         ac->addAction(QStringLiteral("media_stop"), stop_action);
 
         prev_action = new QAction(QIcon::fromTheme(QStringLiteral("media-skip-backward")), i18n("Previous"), this);
-        connect(prev_action, SIGNAL(triggered()), this, SLOT(prev()));
+        connect(prev_action, &QAction::triggered, this, &MediaPlayerActivity::prev);
         ac->addAction(QStringLiteral("media_prev"), prev_action);
 
         next_action = new QAction(QIcon::fromTheme(QStringLiteral("media-skip-forward")), i18n("Next"), this);
-        connect(next_action, SIGNAL(triggered()), this, SLOT(next()));
+        connect(next_action, &QAction::triggered, this, &MediaPlayerActivity::next);
         ac->addAction(QStringLiteral("media_next"), next_action);
 
         show_video_action = new KToggleAction(QIcon::fromTheme(QStringLiteral("video-x-generic")), i18n("Show Video"), this);
-        connect(show_video_action, SIGNAL(toggled(bool)), this, SLOT(showVideo(bool)));
+        connect(show_video_action, &QAction::toggled, this, &MediaPlayerActivity::showVideo);
         ac->addAction(QStringLiteral("show_video"), show_video_action);
 
         add_media_action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Add Media"), this);
-        connect(add_media_action, SIGNAL(triggered()), play_list, SLOT(addMedia()));
+        connect(add_media_action, &QAction::triggered, play_list, &PlayListWidget::addMedia);
         ac->addAction(QStringLiteral("add_media"), add_media_action);
 
         clear_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")), i18n("Clear Playlist"), this);
-        connect(clear_action, SIGNAL(triggered()), play_list, SLOT(clearPlayList()));
+        connect(clear_action, &QAction::triggered, play_list, &PlayListWidget::clearPlayList);
         ac->addAction(QStringLiteral("clear_play_list"), clear_action);
 
         QAction * tfs = new QAction(QIcon::fromTheme(QStringLiteral("view-fullscreen")), i18n("Toggle Fullscreen"), this);
@@ -172,7 +173,7 @@ namespace kt
         else
         {
             video = new VideoWidget(media_player, ac, 0);
-            connect(video, SIGNAL(toggleFullScreen(bool)), this, SLOT(setVideoFullScreen(bool)));
+            connect(video, &VideoWidget::toggleFullScreen, this, &MediaPlayerActivity::setVideoFullScreen);
             int idx = tabs->addTab(video, QIcon::fromTheme(QStringLiteral("video-x-generic")), path);
             tabs->setTabToolTip(idx, i18n("Movie player"));
             tabs->setCurrentIndex(idx);

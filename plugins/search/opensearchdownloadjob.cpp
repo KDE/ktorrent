@@ -47,7 +47,7 @@ namespace kt
         m_proxy->ApplyProxy(metadata);
         j->setMetaData(metadata);
 
-        connect(j, SIGNAL(result(KJob*)), this, SLOT(getFinished(KJob*)));
+        connect(j, &KIO::StoredTransferJob::result, this, &OpenSearchDownloadJob::getFinished);
     }
 
     void OpenSearchDownloadJob::startDefault()
@@ -116,7 +116,7 @@ namespace kt
 
         // href is the opensearch description, so lets try to download it
         KIO::Job* j = KIO::copy(url, QUrl::fromLocalFile(dir + QLatin1String("opensearch.xml")), KIO::HideProgressInfo);
-        connect(j, SIGNAL(result(KJob*)), this, SLOT(xmlFileDownloadFinished(KJob*)));
+        connect(j, &KIO::Job::result, this, &OpenSearchDownloadJob::xmlFileDownloadFinished);
         return true;
     }
 

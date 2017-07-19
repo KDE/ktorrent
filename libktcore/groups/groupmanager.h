@@ -139,7 +139,7 @@ namespace kt
         */
         void torrentsLoaded(QueueManager* qman);
 
-    signals:
+    Q_SIGNALS:
         void groupRenamed(Group* g);
         void groupAdded(Group* g);
         void groupRemoved(Group* g);

@@ -148,8 +148,8 @@ namespace kt
             return 0;
 
         TorrentGroup* g = new TorrentGroup(name);
-        connect(g, SIGNAL(torrentAdded(Group*)), this, SIGNAL(customGroupChanged()));
-        connect(g, SIGNAL(torrentRemoved(Group*)), this, SIGNAL(customGroupChanged()));
+        connect(g, &TorrentGroup::torrentAdded, this, &GroupManager::customGroupChanged);
+        connect(g, static_cast<void (TorrentGroup::*)(Group*)>(&TorrentGroup::torrentRemoved), this, &GroupManager::customGroupChanged);
         groups.insert(name, g);
         emit groupAdded(g);
         return g;
@@ -253,8 +253,8 @@ namespace kt
                     continue;
 
                 TorrentGroup* g = new TorrentGroup(QStringLiteral("dummy"));
-                connect(g, SIGNAL(torrentAdded(Group*)), this, SIGNAL(customGroupChanged()));
-                connect(g, SIGNAL(torrentRemoved(Group*)), this, SIGNAL(customGroupChanged()));
+                connect(g, &TorrentGroup::torrentAdded, this, &GroupManager::customGroupChanged);
+                connect(g, static_cast<void (TorrentGroup::*)(Group*)>(&TorrentGroup::torrentRemoved), this, &GroupManager::customGroupChanged);
 
                 try
                 {

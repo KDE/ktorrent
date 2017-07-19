@@ -32,7 +32,7 @@ namespace kt
     CentralWidget::CentralWidget(QWidget* parent) : QStackedWidget(parent)
     {
         activity_switching_group = new QActionGroup(this);
-        connect(activity_switching_group, SIGNAL(triggered(QAction*)), this, SLOT(switchActivity(QAction*)));
+        connect(activity_switching_group, &QActionGroup::triggered, this, &CentralWidget::switchActivity);
     }
 
     CentralWidget::~CentralWidget()

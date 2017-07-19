@@ -37,9 +37,9 @@ namespace kt
         : PrefPageInterface(Settings::self(), i18n("Network"), QStringLiteral("preferences-system-network"), parent)
     {
         setupUi(this);
-        connect(m_recommended_settings, SIGNAL(clicked()), this, SIGNAL(calculateRecommendedSettings()));
-        connect(kcfg_utpEnabled, SIGNAL(toggled(bool)), this, SLOT(utpEnabled(bool)));
-        connect(kcfg_onlyUseUtp, SIGNAL(toggled(bool)), this, SLOT(onlyUseUtpEnabled(bool)));
+        connect(m_recommended_settings, &QPushButton::clicked, this, &NetworkPref::calculateRecommendedSettings);
+        connect(kcfg_utpEnabled, &QCheckBox::toggled, this, &NetworkPref::utpEnabled);
+        connect(kcfg_onlyUseUtp, &QCheckBox::toggled, this, &NetworkPref::onlyUseUtpEnabled);
     }
 
 

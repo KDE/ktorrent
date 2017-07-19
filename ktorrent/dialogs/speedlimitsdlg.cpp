@@ -74,9 +74,9 @@ namespace kt
 
         m_upload_rate->setValue(Settings::maxUploadRate());
         m_download_rate->setValue(Settings::maxDownloadRate());
-        connect(m_upload_rate, SIGNAL(valueChanged(int)), this, SLOT(spinBoxValueChanged(int)));
-        connect(m_download_rate, SIGNAL(valueChanged(int)), this, SLOT(spinBoxValueChanged(int)));
-        connect(m_filter, SIGNAL(textChanged(QString)), pm, SLOT(setFilterFixedString(QString)));
+        connect(m_upload_rate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &SpeedLimitsDlg::spinBoxValueChanged);
+        connect(m_download_rate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &SpeedLimitsDlg::spinBoxValueChanged);
+        connect(m_filter, &QLineEdit::textChanged, pm, &QSortFilterProxyModel::setFilterFixedString);
         loadState();
 
         // if current is specified, select it and scroll to it

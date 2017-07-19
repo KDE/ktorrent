@@ -60,7 +60,7 @@ namespace kt
             bt::Delete(temp, true);
 
         active_job = KIO::file_copy(url, QUrl::fromLocalFile(temp), -1, KIO::Overwrite);
-        connect(active_job, SIGNAL(result(KJob*)), this, SLOT(downloadFileFinished(KJob*)));
+        connect(active_job, &KJob::result, this, &DownloadAndConvertJob::downloadFileFinished);
     }
 
     void DownloadAndConvertJob::kill(KJob::KillVerbosity)
@@ -156,13 +156,13 @@ namespace kt
         else if(ptr.name() == QStringLiteral("application/gzip") || ptr.name() == QStringLiteral("application/x-bzip"))
         {
             active_job = new bt::DecompressFileJob(temp, kt::DataDir() + QStringLiteral("level1.txt"));
-            connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
+            connect(active_job, &KJob::result, this, static_cast<void (DownloadAndConvertJob::*)(KJob*)>(&DownloadAndConvertJob::convert));
             active_job->start();
         }
         else if(!isBinaryData(temp) || ptr.name() == QStringLiteral("text/plain"))
         {
             active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(kt::DataDir() + QStringLiteral("level1.txt")), -1, KIO::HideProgressInfo | KIO::Overwrite);
-            connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
+            connect(active_job, &KJob::result, this, static_cast<void (DownloadAndConvertJob::*)(KJob*)>(&DownloadAndConvertJob::convert));
         }
         else
         {
@@ -223,7 +223,7 @@ namespace kt
         if(entries.count() >= 1)
         {
             active_job = new bt::ExtractFileJob(zip, entries.front(), destination);
-            connect(active_job, SIGNAL(result(KJob*)), this, SLOT(convert(KJob*)));
+            connect(active_job, &KJob::result, this, static_cast<void (DownloadAndConvertJob::*)(KJob*)>(&DownloadAndConvertJob::convert));
             unzip = true;
             active_job->start();
         }
@@ -276,8 +276,8 @@ namespace kt
             convert_dlg = new ConvertDialog(nullptr);
             if (mode == Verbose)
                 convert_dlg->show();
-            connect(convert_dlg, SIGNAL(accepted()), this, SLOT(convertAccepted()));
-            connect(convert_dlg, SIGNAL(rejected()), this, SLOT(convertRejected()));
+            connect(convert_dlg, &ConvertDialog::accepted, this, &DownloadAndConvertJob::convertAccepted);
+            connect(convert_dlg, &ConvertDialog::rejected, this, &DownloadAndConvertJob::convertRejected);
         }
     }
 
@@ -301,7 +301,7 @@ namespace kt
         if (bt::Exists(tmp_file))
         {
             active_job = KIO::file_copy(QUrl::fromLocalFile(tmp_file), QUrl::fromLocalFile(dat_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
-            connect(active_job, SIGNAL(result(KJob*)), this, SLOT(revertBackupFinished(KJob*)));
+            connect(active_job, &KJob::result, this, &DownloadAndConvertJob::revertBackupFinished);
         }
         else
         {
@@ -321,7 +321,7 @@ namespace kt
 
 
             KIO::Job* job = KIO::file_copy(QUrl::fromLocalFile(dat_file), QUrl::fromLocalFile(tmp_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
-            connect(job, SIGNAL(result(KJob*)), this, SLOT(makeBackupFinished(KJob*)));
+            connect(job, &KIO::Job::result, this, &DownloadAndConvertJob::makeBackupFinished);
         }
         else
             makeBackupFinished(nullptr);

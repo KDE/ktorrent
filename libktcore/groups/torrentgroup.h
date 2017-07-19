@@ -53,11 +53,11 @@ namespace kt
         void remove(TorrentInterface* tor);
         void loadTorrents(QueueManager* qman);
 
-    signals:
+    Q_SIGNALS:
         /// Emitted when a torrent has been added
         void torrentAdded(Group* g);
 
-        /// Emittend when a torrent has been removed
+        /// Emitted when a torrent has been removed
         void torrentRemoved(Group* g);
 
     private:

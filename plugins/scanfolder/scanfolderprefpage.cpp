@@ -38,11 +38,11 @@ namespace kt
         : PrefPageInterface(ScanFolderPluginSettings::self(), i18nc("plugin name", "Scan Folder"), QStringLiteral("folder-open"), parent), m_plugin(plugin)
     {
         setupUi(this);
-        connect(kcfg_actionDelete, SIGNAL(toggled(bool)), kcfg_actionMove, SLOT(setDisabled(bool)));
-        connect(m_add, SIGNAL(clicked()), this, SLOT(addPressed()));
-        connect(m_remove, SIGNAL(clicked()), this, SLOT(removePressed()));
-        connect(m_folders, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
-        connect(m_group, SIGNAL(currentIndexChanged(int)), this, SLOT(currentGroupChanged(int)));
+        connect(kcfg_actionDelete, &QCheckBox::toggled, kcfg_actionMove, &QCheckBox::setDisabled);
+        connect(m_add, &QPushButton::clicked, this, &ScanFolderPrefPage::addPressed);
+        connect(m_remove, &QPushButton::clicked, this, &ScanFolderPrefPage::removePressed);
+        connect(m_folders, &QListWidget::itemSelectionChanged, this, &ScanFolderPrefPage::selectionChanged);
+        connect(m_group, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ScanFolderPrefPage::currentGroupChanged);
     }
 
 

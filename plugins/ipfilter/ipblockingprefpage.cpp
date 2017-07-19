@@ -125,8 +125,8 @@ namespace kt
 
         m_plugin->unloadAntiP2P();
         m_job = new DownloadAndConvertJob(url, m_verbose ? DownloadAndConvertJob::Verbose : DownloadAndConvertJob::Quietly);
-        connect(m_job, SIGNAL(result(KJob*)), this, SLOT(downloadAndConvertFinished(KJob*)));
-        connect(m_job, SIGNAL(notification(QString)), m_plugin, SLOT(notification(QString)));
+        connect(m_job, &DownloadAndConvertJob::result, this, &IPBlockingPrefPage::downloadAndConvertFinished);
+        connect(m_job, &DownloadAndConvertJob::notification, m_plugin, &IPFilterPlugin::notification);
         m_job->start();
     }
 
