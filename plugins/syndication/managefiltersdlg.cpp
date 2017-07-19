@@ -22,6 +22,7 @@
 #include <KLocalizedString>
 #include <KConfigGroup>
 
+#include <QDialogButtonBox>
 #include <QVBoxLayout>
 
 #include "managefiltersdlg.h"
@@ -41,6 +42,13 @@ namespace kt
         setLayout(mainLayout);
         mainLayout->addWidget(mainWidget);
         setupUi(mainWidget);
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        auto okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &ManageFiltersDlg::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &ManageFiltersDlg::reject);
+        mainLayout->addWidget(buttonBox);
         m_feed_text->setText(i18n("Feed: <b>%1</b>", feed->title()));
         m_add->setIcon(QIcon::fromTheme(QStringLiteral("go-previous")));
         m_add->setText(QString());
