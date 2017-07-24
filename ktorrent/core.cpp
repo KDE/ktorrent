@@ -52,6 +52,7 @@
 #include <groups/groupmanager.h>
 #include <groups/group.h>
 #include <dht/dht.h>
+#include <dht/dhtbase.h>
 #include <utp/utpserver.h>
 #include <net/socketmonitor.h>
 #include <torrent/jobqueue.h>
