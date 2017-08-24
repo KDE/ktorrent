@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Magnet Generator
 Name[bs]=Generator magneta
-Name[ca]=Generador de «magnet»
-Name[ca@valencia]=Generador de «magnet»
+Name[ca]=Generador de magnet
+Name[ca@valencia]=Generador de magnet
 Name[cs]=Generátor Magnet
 Name[da]=Magnet-generator
 Name[de]=Magnet-Generator
@@ -46,8 +46,8 @@ Name[zh_TW]=Magnet 產生器
 Comment=Generates magnet links
 Comment[ar]=تولّد وصلات ممغنطة
 Comment[bs]=Stvara magnetske veze
-Comment[ca]=Genera enllaços «magnet»
-Comment[ca@valencia]=Genera enllaços «magnet»
+Comment[ca]=Genera enllaços magnet
+Comment[ca@valencia]=Genera enllaços magnet
 Comment[cs]=Generuje odkazy magnet
 Comment[da]=Genererer magnet-links
 Comment[de]=Erzeugt Magnet-Verknüpfungen
