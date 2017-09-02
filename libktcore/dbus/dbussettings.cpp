@@ -775,6 +775,15 @@ namespace kt
     {
         return Settings::requeueMagnets();
     }
+    bool DBusSettings::showTotalSpeedInTitle()
+    {
+        return Settings::showTotalSpeedInTitle();
+    }
+
+    void DBusSettings::setShowTotalSpeedInTitle(bool val)
+    {
+        Settings::setShowTotalSpeedInTitle(val);
+    }
 
     void DBusSettings::setRequeueMagnets(bool val)
     {

@@ -46,6 +46,7 @@
 #include <torrent/queuemanager.h>
 #include <torrent/torrentcontrol.h>
 #include <util/log.h>
+#include <util/functions.h>
 #include <util/timer.h>
 #include <util/error.h>
 #include <dht/dhtbase.h>
@@ -444,6 +445,15 @@ namespace kt
             status_bar->updateSpeed(stats.upload_speed, stats.download_speed);
             status_bar->updateTransfer(stats.bytes_uploaded, stats.bytes_downloaded);
             status_bar->updateDHTStatus(Globals::instance().getDHT().isRunning(), Globals::instance().getDHT().getStats());
+
+            //All speed to Window status bar
+            if(Settings::showTotalSpeedInTitle())
+            {
+                QString down_up_speed = QString(i18n("D: %1 | U: %2")).arg(BytesPerSecToString((double)stats.download_speed)).arg(BytesPerSecToString((double)stats.upload_speed));
+                setCaption(down_up_speed);
+            }
+            else
+                setCaption(core->getGroupManager()->allGroup()->groupName());
 
             tray_icon->updateStats(stats);
             core->updateGuiPlugins();

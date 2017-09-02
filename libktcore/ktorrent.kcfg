@@ -66,6 +66,10 @@
 			<label>Show a system tray icon</label>
 			<default>true</default>
 		</entry>
+		<entry name="showTotalSpeedInTitle" type="Bool">
+			<label>Show a total speeds in the title</label>
+			<default>false</default>
+		</entry>
 		<entry name="showSpeedBarInTrayIcon" type="Bool">
 			<label>Show speed bar in tray icon</label>
 			<default>false</default>

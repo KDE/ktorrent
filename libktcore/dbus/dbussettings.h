@@ -188,6 +188,8 @@ namespace kt
         Q_SCRIPTABLE void setRequeueMagnets(bool val);
         Q_SCRIPTABLE int requeueMagnetsTime();
         Q_SCRIPTABLE void setRequeueMagnetsTime(int val);
+        Q_SCRIPTABLE bool showTotalSpeedInTitle();
+        Q_SCRIPTABLE void setShowTotalSpeedInTitle(bool val);
 
         Q_SCRIPTABLE void apply();
     private:
