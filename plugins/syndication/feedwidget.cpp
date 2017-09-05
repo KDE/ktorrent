@@ -19,9 +19,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QApplication>
+#include <QColor>
 #include <QHeaderView>
 #include <QInputDialog>
 #include <QLocale>
+#include <QPalette>
 
 #include <KRun>
 
@@ -39,8 +42,8 @@ namespace kt
 {
     QString FeedWidget::item_template = i18n("\
     <html>\
-    <body>\
-    <div style=\"border-style:solid; border-width:1px; margin:5px; padding:5px\">\
+    <body style=\"color:%4\">\
+    <div style=\"border-style:solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">\
     <b>Title:</b> %1<br/>\
     <b>Date:</b> %2<br/>\
     </div>\
@@ -213,7 +216,9 @@ namespace kt
                 m_item_view->setHtml(item_template
                                      .arg(item->title())
                                      .arg(QLocale().toString(QDateTime::fromTime_t(item->datePublished()), QLocale::ShortFormat))
-                                     .arg(item->description()), QUrl(feed->feedData()->link()));
+                                     .arg(item->description())
+                                     .arg(QApplication::palette().text().color().name(QColor::NameFormat::HexRgb))
+                                    , QUrl(feed->feedData()->link()));
             }
         }
     }
