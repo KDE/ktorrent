@@ -35,6 +35,7 @@
   <summary xml:lang="de">BitTorrent-Programm</summary>
   <summary xml:lang="en-GB">BitTorrent Client</summary>
   <summary xml:lang="es">Cliente de BitTorrent</summary>
+  <summary xml:lang="fr">Client BitTorrent</summary>
   <summary xml:lang="gl">Cliente de BitTorrent</summary>
   <summary xml:lang="it">Client BitTorrent</summary>
   <summary xml:lang="nl">BitTorrent-cliënt</summary>
@@ -61,6 +62,7 @@
     <p xml:lang="de">KTorrent ist ein BitTorrent-Programm von KDE. Sie können damit Dateien über das BitTorrent-Protokoll herunterladen. Mehrere Torrents lassen sich gleichzeitig ausführen. KTorrent hat zusätzliche Fähigkeiten und ist damit ein mit allen Funktionen ausgestattetes Dienstprogramm für BitTorrent.</p>
     <p xml:lang="en-GB">KTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.</p>
     <p xml:lang="es">KTorrent  es una aplicación bitTorrent de KDE que le permite descargar archivos usando el protocolo BitTorrent. Permite ejecutar varios torrents al mismo tiempo e incluye características extendidas para convertilo en un cliente completo para BitTorrent.</p>
+    <p xml:lang="fr">KTorrent est une application BitTorrent par KDE qui vous permet de télécharger des fichiers en utilisant le protocole BitTorrent. Il peut gérer plusieurs torrents en même temps et possède des fonctionnalités étendues qui en font un client complet pour BitTorrent.</p>
     <p xml:lang="gl">KTorrent é un aplicativo de BitTorrent por KDE que permítelle descargar ficheiros usando o protocolo BitTorrent. Permítelle executar varios torrents ao mesmo tempo e inclúe funcionalidades adicionais que o convirten nun cliente de BitTorrent completo.</p>
     <p xml:lang="it">KTorrent è un'applicazione BitTorrent della comunità KDE, che ti permette di scaricare i file usando il protocollo BitTorrent. Ti consente di avviare contemporaneamente torrent multipli, e ti arriva con funzionalità estese, che lo rendono un client di BitTorrent ricco di funzionalità.</p>
     <p xml:lang="nl">KTorrent is een BitTorrent-toepassing door KDE die u in staat stelt bestanden te downloaden met het BitTorrent-protocol. U kunt meerdere torrents tegelijk doen en het komt met uitgebreide functies om het een client voor BitTorrent te laten zijn met alle mogelijkheden.</p>
@@ -98,6 +100,7 @@
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">功能：</p>
     <ul>
       <li>Queuing of torrents</li>
       <li xml:lang="ca">Cua dels torrents</li>
@@ -105,6 +108,7 @@
       <li xml:lang="de">Verwaltung von Warteschlangen für Torrents</li>
       <li xml:lang="en-GB">Queuing of torrents</li>
       <li xml:lang="es">Encolado de torrents</li>
+      <li xml:lang="fr">Mise en file d'attente des torrents</li>
       <li xml:lang="gl">Consulta de torrents.</li>
       <li xml:lang="it">Accodamento dei torrent</li>
       <li xml:lang="nl">Torrents in de wachtrij zetten</li>
@@ -126,6 +130,7 @@
       <li xml:lang="de">Geschwindigkeitsbegrenzungen global und für den einzelnen Torrent</li>
       <li xml:lang="en-GB">Global and per torrent speed limits</li>
       <li xml:lang="es">Límites de velocidad globales e individuales</li>
+      <li xml:lang="fr">Limites de vitesse globales et par torrent</li>
       <li xml:lang="gl">Límites de velocidade globais e por torrent.</li>
       <li xml:lang="it">Limiti di velocità globali e per torrent</li>
       <li xml:lang="nl">Globale en per torrent snelheidslimieten</li>
@@ -147,6 +152,7 @@
       <li xml:lang="de">Eingebaute Vorschau für bestimmte Dateitypen (Video und Audio)</li>
       <li xml:lang="en-GB">Previewing of certain file types, build in (video and audio)</li>
       <li xml:lang="es">Vista previa de ciertos tipos de archivo, vídeo y audio incorporados</li>
+      <li xml:lang="fr">Aperçu en interne de certains types de fichiers (vidéo et audio)</li>
       <li xml:lang="gl">Previsualización de certos tipos de ficheiros, incluída (vídeo e son).</li>
       <li xml:lang="it">Anteprima integrata per alcuni tipi di file (video e audio)</li>
       <li xml:lang="nl">Voorbeelden van bepaalde bestandstypen bekijken, ingebouwd (video en geluid)</li>
@@ -168,6 +174,7 @@
       <li xml:lang="de">Teilweise oder vollständig heruntergeladene Dateien werden importiert</li>
       <li xml:lang="en-GB">Importing of partially or fully downloaded files</li>
       <li xml:lang="es">Importación de archivos descargados parcial o totalmente</li>
+      <li xml:lang="fr">Import de fichiers partiellement ou totalement téléchargés</li>
       <li xml:lang="gl">Importación de ficheiros descargados total ou parcialmente.</li>
       <li xml:lang="it">Importazione di file parzialmente o totalmente scaricati</li>
       <li xml:lang="nl">Gedeeltelijk of volledig gedownloade bestanden importeren</li>
@@ -189,6 +196,7 @@
       <li xml:lang="de">Dateipriorisierung für Torrents mit mehreren Dateien</li>
       <li xml:lang="en-GB">File prioritisation for multi-file torrents</li>
       <li xml:lang="es">Priorización de archivos para torrents multiarchivo</li>
+      <li xml:lang="fr">Ordre de priorité des fichiers et pour les torrents multi-fichiers</li>
       <li xml:lang="gl">Priorización de ficheiros para os torrents con varios ficheiros.</li>
       <li xml:lang="it">Priorità dei file per i torrent multi-file</li>
       <li xml:lang="nl">Bestandsprioriteit instellen multi-bestand-torrents</li>
@@ -210,6 +218,7 @@
       <li xml:lang="de">In Torrents mit mehreren Dateien können einzelne Dateien zum Herunterladen ausgewählt werden.</li>
       <li xml:lang="en-GB">Selective downloading for multi-file torrents</li>
       <li xml:lang="es">Descarga selectiva de torrents multiarchivo</li>
+      <li xml:lang="fr">Téléchargement sélectif pour les torrents multi-fichiers</li>
       <li xml:lang="gl">Descarga selectiva para torrents con varios ficheiros.</li>
       <li xml:lang="it">Scaricamento selettivo per i torrent multi-file</li>
       <li xml:lang="nl">Selectief downloaden van multi-bestand-torrents</li>
@@ -231,6 +240,7 @@
       <li xml:lang="de">Gegenstellen zwangsweise trennen oder verbannen mit Hilfe eines zusätzlichen IP-Filterdialogs. Die IP-Einträge können in diesem Dialog angezeigt und bearbeitet werden.</li>
       <li xml:lang="en-GB">Kick/ban peers with an additional IP Filter dialogue for list/edit purposes</li>
       <li xml:lang="es">Expulsión/bloqueo de pares con diálogo de filtro IP adicional para propósitos de listar/editar</li>
+      <li xml:lang="fr">Exclusion/bannissement de pairs avec une fenêtre additionnelle pour lister/modifier les filtres d'IP</li>
       <li xml:lang="gl">Expulsar e prohibir parceiros cun diálogo adicional de filtraxe por IP para listar e editar.</li>
       <li xml:lang="it">Caccia/metti al bando i nodi con un'ulteriore finestra di dialogo di filtro IP per elencarli e modificarli</li>
       <li xml:lang="nl">Start/stop peers met een extra dialoog voor IP-filteren voor weergeven/bewerken</li>
@@ -253,6 +263,7 @@
       <li xml:lang="de">Unterstützung für UDP-Tracker</li>
       <li xml:lang="en-GB">UDP tracker support</li>
       <li xml:lang="es">Uso de rastreador UDP</li>
+      <li xml:lang="fr">Gestion des trackers UDP</li>
       <li xml:lang="gl">Compatibilidade con localizadores UDP.</li>
       <li xml:lang="it">Supporto ai server traccia UDP</li>
       <li xml:lang="nl">Ondersteuning van UDP-tracker</li>
@@ -274,6 +285,7 @@
       <li xml:lang="de">Unterstützung für private Tracker und Torrents</li>
       <li xml:lang="en-GB">Support for private trackers and torrents</li>
       <li xml:lang="es">Implementación de rastreadores y torrents privados</li>
+      <li xml:lang="fr">Gestion des torrents et traqueurs privés</li>
       <li xml:lang="gl">Compatibilidade con localizadores e torrents privados.</li>
       <li xml:lang="it">Supporto per server traccia e torrent privati</li>
       <li xml:lang="nl">Ondersteuning voor privé-trackers en -torrents</li>
@@ -296,6 +308,7 @@
       <li xml:lang="de">Unterstützung für Austausch von Gegenstellen bei µTorrents</li>
       <li xml:lang="en-GB">Support for µTorrent's peer exchange</li>
       <li xml:lang="es">Implementación de intercambio de pares de µTorrent</li>
+      <li xml:lang="fr">Gestion de l'échange de pairs de µTorrent.</li>
       <li xml:lang="gl">Compatibilidade co intercambio de parceiros de µTorrent.</li>
       <li xml:lang="it">Supporto per lo scambio di nodi con µTorrent</li>
       <li xml:lang="nl">Ondersteuning voor uitwisseling van peers van µTorrent</li>
@@ -317,6 +330,7 @@
       <li xml:lang="de">Unterstützung für Protokollverschlüsselung (kompatibel mit Azureus)</li>
       <li xml:lang="en-GB">Support for protocol encryption (compatible with Azureus)</li>
       <li xml:lang="es">Implementación de cifrado de protocolo (compatible con Azureus)</li>
+      <li xml:lang="fr">Gestion du chiffrement du protocole (compatible avec Azureus)</li>
       <li xml:lang="gl">Funcionalidade de cifrado do protocolo (compatíbel con Azureus).</li>
       <li xml:lang="it">Supporto per la cifratura del protocollo (compatibile con Azureus)</li>
       <li xml:lang="nl">Ondersteuning voor protocolversleuteling (compatibel met Azureus)</li>
@@ -338,6 +352,7 @@
       <li xml:lang="de">Unterstützung für das Erstellen von Torrents ohne Tracker</li>
       <li xml:lang="en-GB">Support for creating trackerless torrents</li>
       <li xml:lang="es">Admite la creación de torrents sin rastreadores</li>
+      <li xml:lang="fr">Gestion de la création de torrents sans traqueur</li>
       <li xml:lang="gl">Creación de torrents sen localizadores.</li>
       <li xml:lang="it">Supporto per la creazione di torrent senza server traccia</li>
       <li xml:lang="nl">Ondersteuning voor aanmaken van torrents zonder tracker</li>
@@ -359,6 +374,7 @@
       <li xml:lang="de">Unterstützung für Verteilte Hashtabellen (Distributed Hash Table, DHT in der Mainline-Version)</li>
       <li xml:lang="en-GB">Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="es">Implementación de tablas de resumen distribuidas (DHT, la versión principal)</li>
+      <li xml:lang="fr">Gestion des tables de hachage distribuées (DHT, la version principale)</li>
       <li xml:lang="gl">Táboas de sumas distribuídas (DHT, a versión principal).</li>
       <li xml:lang="it">Supporto per le tabelle di hash distribuite (DHT, la versione principale)</li>
       <li xml:lang="nl">Ondersteuning voor gedistribueerde hash-tabellen (DHT, het hoofdversie)</li>
@@ -380,6 +396,7 @@
       <li xml:lang="de">Unterstützung für UPnP zur automatischen Port-Weiterleitung in Netzwerken mit dynamisch zugewiesenen Rechnern</li>
       <li xml:lang="en-GB">Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="es">Implementación de UPnP para redireccionar puertos automáticamente en una red local con servidores asignados dinámicamente</li>
+      <li xml:lang="fr">Gestion du protocole UPnP pour rediriger automatiquement des ports sur un réseau dont les hôtes sont gérés dynamiquement</li>
       <li xml:lang="gl">UPnP para redirixir automaticamente portos na rede local con servidores asignados dinamicamente.</li>
       <li xml:lang="it">Supporto UPnP per mappare automaticamente le porte sulla LAN con host dinamici assegnati</li>
       <li xml:lang="nl">Ondersteuning voor UPnP om automatisch poorten te 'forwarden' op een LAN met dynamisch toegekende hosts</li>
@@ -401,6 +418,7 @@
       <li xml:lang="de">Unterstützung für Webseeds</li>
       <li xml:lang="en-GB">Support for webseeds</li>
       <li xml:lang="es">Implementación de semillas web</li>
+      <li xml:lang="fr">Gestion des sources web</li>
       <li xml:lang="gl">Compatibiliadde con sementes web.</li>
       <li xml:lang="it">Supporto per distribuzione web</li>
       <li xml:lang="nl">Ondersteuning voor webseeds</li>
@@ -422,6 +440,7 @@
       <li xml:lang="de">Skript-Unterstützung mit Kross und Interprozess-Steuerung über die D-Bus-Schnittstelle</li>
       <li xml:lang="en-GB">Scripting support via Kross, and interprocess control via D-Bus interface</li>
       <li xml:lang="es">Admite el uso de guiones vía Kross y control de interprocesos vía la interfaz D-Bus</li>
+      <li xml:lang="fr">Scriptable par Kross et contrôle inter-processus par l'interface D-Bus</li>
       <li xml:lang="gl">Scripting mediante Kross, e control entre procesos mediante unha interface de D-Bus.</li>
       <li xml:lang="it">Supporto per lo scripting tramite Kross, e per il controllo dei processi tramite interfaccia D-Bus</li>
       <li xml:lang="nl">Ondersteuning voor scripts via Kross en interprocescontrole via het D-Bus-interface</li>
@@ -443,6 +462,7 @@
       <li xml:lang="de">Integration in den Systemabschnitt der Kontrollleiste</li>
       <li xml:lang="en-GB">System tray integration</li>
       <li xml:lang="es">Integración con la bandeja del sistema</li>
+      <li xml:lang="fr">Intégration dans la barre de notifications du système</li>
       <li xml:lang="gl">Integración coa área de notificación.</li>
       <li xml:lang="it">Integrazione nel vassoio di sistema</li>
       <li xml:lang="nl">Integratie in het systeemvak</li>
@@ -464,6 +484,7 @@
       <li xml:lang="de">Unterstützung für Tracker-Authentifizierung</li>
       <li xml:lang="en-GB">Tracker authentication support</li>
       <li xml:lang="es">Implementa autenticación del rastreador</li>
+      <li xml:lang="fr">Gestion de l'authentification des traqueurs</li>
       <li xml:lang="gl">Autenticación de localizadores.</li>
       <li xml:lang="it">Supporto per l'autenticazione sul server traccia</li>
       <li xml:lang="nl">Authenticatieondersteuning voor tracker</li>
@@ -486,6 +507,7 @@
       <li xml:lang="de">Verbindung über Proxys</li>
       <li xml:lang="en-GB">Connection through a proxy</li>
       <li xml:lang="es">Conexión a través de un proxy</li>
+      <li xml:lang="fr">Connexion à travers un proxy</li>
       <li xml:lang="gl">Conexión mediante proxy.</li>
       <li xml:lang="it">Connessione attraverso un proxy</li>
       <li xml:lang="nl">Verbinding via een proxy</li>
@@ -507,6 +529,7 @@
     <p xml:lang="de">Zusätzlich zu den eingebauten Funktionen gibt es weitere Module für KTorrent.</p>
     <p xml:lang="en-GB">In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
     <p xml:lang="es">Además de las funcionalidades incluidas, hay varios complementos disponibles para KTorrent.</p>
+    <p xml:lang="fr">En plus de ces fonctionnalités internes, des extensions sont disponibles pour KTorrent.</p>
     <p xml:lang="gl">Ademais das funcionalidades incluídas, compatibilidade con complementos instalábeis desde KTorrent.</p>
     <p xml:lang="it">In aggiunta alle funzionalità integrate, ci sono alcune estensioni disponibili per KTorrent.</p>
     <p xml:lang="nl">Naast de ingebouwde functionaliteiten zijn er enige plug-ins beschikbaar voor KTorrent.</p>
