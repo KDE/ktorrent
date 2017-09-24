@@ -353,7 +353,7 @@
       <li xml:lang="en-GB">Support for creating trackerless torrents</li>
       <li xml:lang="es">Admite la creación de torrents sin rastreadores</li>
       <li xml:lang="fr">Gestion de la création de torrents sans traqueur</li>
-      <li xml:lang="gl">Creación de torrents sen localizadores.</li>
+      <li xml:lang="gl">Funcionalidade de creación de torrents sen localizadores.</li>
       <li xml:lang="it">Supporto per la creazione di torrent senza server traccia</li>
       <li xml:lang="nl">Ondersteuning voor aanmaken van torrents zonder tracker</li>
       <li xml:lang="pl">Obsługa tworzenia torrentów bez serwera śledzącego</li>
@@ -375,7 +375,7 @@
       <li xml:lang="en-GB">Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="es">Implementación de tablas de resumen distribuidas (DHT, la versión principal)</li>
       <li xml:lang="fr">Gestion des tables de hachage distribuées (DHT, la version principale)</li>
-      <li xml:lang="gl">Táboas de sumas distribuídas (DHT, a versión principal).</li>
+      <li xml:lang="gl">Compatibilidade con táboas de sumas distribuídas (DHT, a versión principal).</li>
       <li xml:lang="it">Supporto per le tabelle di hash distribuite (DHT, la versione principale)</li>
       <li xml:lang="nl">Ondersteuning voor gedistribueerde hash-tabellen (DHT, het hoofdversie)</li>
       <li xml:lang="pl">Obsługa rozproszonych tablic haszów (DHT, wersja głównoliniowa)</li>
@@ -397,7 +397,7 @@
       <li xml:lang="en-GB">Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="es">Implementación de UPnP para redireccionar puertos automáticamente en una red local con servidores asignados dinámicamente</li>
       <li xml:lang="fr">Gestion du protocole UPnP pour rediriger automatiquement des ports sur un réseau dont les hôtes sont gérés dynamiquement</li>
-      <li xml:lang="gl">UPnP para redirixir automaticamente portos na rede local con servidores asignados dinamicamente.</li>
+      <li xml:lang="gl">Compatibilidade con UPnP para redirixir automaticamente portos na rede local con servidores asignados dinamicamente.</li>
       <li xml:lang="it">Supporto UPnP per mappare automaticamente le porte sulla LAN con host dinamici assegnati</li>
       <li xml:lang="nl">Ondersteuning voor UPnP om automatisch poorten te 'forwarden' op een LAN met dynamisch toegekende hosts</li>
       <li xml:lang="pl">Obsługa UPnP do przekierowywania portów w LANie z dynamicznie przypisanymi gospodarzami</li>
@@ -419,7 +419,7 @@
       <li xml:lang="en-GB">Support for webseeds</li>
       <li xml:lang="es">Implementación de semillas web</li>
       <li xml:lang="fr">Gestion des sources web</li>
-      <li xml:lang="gl">Compatibiliadde con sementes web.</li>
+      <li xml:lang="gl">Compatibilidade con sementes web.</li>
       <li xml:lang="it">Supporto per distribuzione web</li>
       <li xml:lang="nl">Ondersteuning voor webseeds</li>
       <li xml:lang="pl">Obsługa rozsiewania w sieci</li>
@@ -441,7 +441,7 @@
       <li xml:lang="en-GB">Scripting support via Kross, and interprocess control via D-Bus interface</li>
       <li xml:lang="es">Admite el uso de guiones vía Kross y control de interprocesos vía la interfaz D-Bus</li>
       <li xml:lang="fr">Scriptable par Kross et contrôle inter-processus par l'interface D-Bus</li>
-      <li xml:lang="gl">Scripting mediante Kross, e control entre procesos mediante unha interface de D-Bus.</li>
+      <li xml:lang="gl">Funcionalidade de scripting mediante Kross, e control entre procesos mediante unha interface de D-Bus.</li>
       <li xml:lang="it">Supporto per lo scripting tramite Kross, e per il controllo dei processi tramite interfaccia D-Bus</li>
       <li xml:lang="nl">Ondersteuning voor scripts via Kross en interprocescontrole via het D-Bus-interface</li>
       <li xml:lang="pl">Obsługa skryptów przez Kross i sterowania międzyprocesowego poprzez interfejs D-Bus</li>
@@ -485,7 +485,7 @@
       <li xml:lang="en-GB">Tracker authentication support</li>
       <li xml:lang="es">Implementa autenticación del rastreador</li>
       <li xml:lang="fr">Gestion de l'authentification des traqueurs</li>
-      <li xml:lang="gl">Autenticación de localizadores.</li>
+      <li xml:lang="gl">Funcionalidade de autenticación de localizadores.</li>
       <li xml:lang="it">Supporto per l'autenticazione sul server traccia</li>
       <li xml:lang="nl">Authenticatieondersteuning voor tracker</li>
       <li xml:lang="pl">Obsluga uwierzytelniania na serwerze śledzącym</li>
