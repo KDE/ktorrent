@@ -26,7 +26,6 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KPluginMetaData>
-#include <KServiceTypeTrader>
 
 #include <util/log.h>
 #include <util/error.h>
