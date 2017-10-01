@@ -36,7 +36,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     NotifyConfig
     KCMUtils
     Parts
-    Service
     Solid
     WidgetsAddons
     WindowSystem
