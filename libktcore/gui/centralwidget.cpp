@@ -56,17 +56,29 @@ namespace kt
                 break;
             }
         }
+
+        for (QAction* a : actions)
+        {
+            a->setPriority( (QAction::Priority) g.readEntry(QLatin1String("Priority_") + a->objectName(), (int)QAction::NormalPriority) );
+        }
     }
 
     void CentralWidget::saveState(KSharedConfigPtr cfg)
     {
         KConfigGroup g = cfg->group("MainWindow");
         g.writeEntry("current_activity", currentIndex());
+
+        for (QAction* a : activity_switching_group->actions())
+        {
+            g.writeEntry(QLatin1String("Priority_") + a->objectName(), (int)a->priority());
+        }
     }
 
     QAction * CentralWidget::addActivity(Activity* act)
     {
         QAction * a = new QAction(QIcon::fromTheme(act->icon()), act->name(), this);
+        // act->name() is i18n'ed, use <icon name, weight> as uniq id
+        a->setObjectName(act->icon() + QLatin1String("_wght_") + QString::number(act->weight()));
         activity_switching_group->addAction(a);
         a->setCheckable(true);
         a->setToolTip(act->toolTip());
