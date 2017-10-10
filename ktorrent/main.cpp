@@ -178,8 +178,6 @@ int main(int argc, char** argv)
     about.addCredit(i18n("Nick Shaforostoff"), i18n("KF5 porting"), QStringLiteral("shaforostoff@gmail.com"));
 
     KAboutData::setApplicationData(about);
-    parser.addVersionOption();
-    parser.addHelpOption();
     about.setupCommandLine(&parser);
     parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("silent"), i18n( "Silently open torrent given on URL")));
     parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("+[URL]"), i18n( "Document to open" )));
