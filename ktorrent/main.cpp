@@ -43,11 +43,7 @@
 #include <KStartupInfo>
 #include <KWindowSystem>
 
-#include <util/log.h>
 #include <torrent/globals.h>
-#include <util/functions.h>
-#include <util/error.h>
-#include <util/log.h>
 #include <interfaces/functions.h>
 #include <utp/connection.h>
 #include "gui.h"
@@ -179,6 +175,7 @@ int main(int argc, char** argv)
 
     KAboutData::setApplicationData(about);
     about.setupCommandLine(&parser);
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("verbose"), i18n("Enable logging to standard output")));
     parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("silent"), i18n( "Silently open torrent given on URL")));
     parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("+[URL]"), i18n( "Document to open" )));
     parser.process(app);
@@ -205,7 +202,8 @@ int main(int argc, char** argv)
         QObject::connect(&catcher, &bt::SignalCatcher::triggered, &app, &QApplication::quit);
 #endif
 
-        bt::InitLog(kt::DataDir(kt::CreateIfNotExists) + QLatin1String("log"), true, true, true);
+        const bool logToStdout = parser.isSet(QStringLiteral("verbose"));
+        bt::InitLog(kt::DataDir(kt::CreateIfNotExists) + QLatin1String("log"), true, true, logToStdout);
 
         kt::GUI widget;
         widget.show();
