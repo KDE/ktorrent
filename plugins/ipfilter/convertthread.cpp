@@ -78,7 +78,7 @@ namespace kt
         QTextStream stream(&source);
 
         int i = 0;
-        const std::regex rx("([0-9]{1,3}\\.){3}[0-9]{1,3}");
+        const std::regex rx("(?:[0-9]{1,3}\\.){3}[0-9]{1,3}");
 
         while (!stream.atEnd() && !abort)
         {
@@ -88,10 +88,10 @@ namespace kt
             ++i;
 
             std::vector<std::string> addresses;
-            std::smatch sm;
-            if (regex_search(line, sm, rx))
-                for (const auto &match : sm)
-                    addresses.push_back(match.str());
+            for(auto it = std::sregex_iterator(line.begin(), line.end(), rx);
+                it != std::sregex_iterator(); ++it) {
+                addresses.push_back(it->str());
+            }
 
             // if we have found two addresses, create a block out of it
             if (addresses.size() == 2)
