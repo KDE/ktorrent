@@ -522,6 +522,7 @@
       <li xml:lang="tr">Vekil sunucu üzerinden bağlantı</li>
       <li xml:lang="uk">Встановлення з’єднання крізь проксі-сервер</li>
       <li xml:lang="x-test">xxConnection through a proxyxx</li>
+      <li xml:lang="zh-CN">通过代理连接</li>
     </ul>
     <p>In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
     <p xml:lang="ca">Addicionalment a les funcionalitats integrades, hi ha diversos connectors disponibles per al KTorrent.</p>
