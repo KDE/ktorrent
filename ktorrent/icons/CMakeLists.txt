@@ -1,8 +1,8 @@
 ecm_install_icons(ICONS
+    ${KTORRENT_ICONS_PNG}
     16-actions-kt-stop-all.png
     16-actions-kt-stop.png
     16-actions-kt-upnp.png
-    16-apps-ktorrent.png
     22-actions-kt-magnet.png
     22-actions-kt-pause.png
     22-actions-kt-remove.png
@@ -13,7 +13,6 @@ ecm_install_icons(ICONS
     22-actions-kt-start.png
     22-actions-kt-stop-all.png
     22-actions-kt-stop.png
-    22-apps-ktorrent.png
     32-actions-kt-info-widget.png
     32-actions-kt-magnet.png
     32-actions-kt-pause.png
@@ -27,7 +26,6 @@ ecm_install_icons(ICONS
     32-actions-kt-stop-all.png
     32-actions-kt-stop.png
     32-actions-kt-upnp.png
-    32-apps-ktorrent.png
     48-actions-kt-bandwidth-scheduler.png
     48-actions-kt-change-tracker.png
     48-actions-kt-check-data.png
@@ -49,9 +47,7 @@ ecm_install_icons(ICONS
     48-actions-kt-stop-all.png
     48-actions-kt-stop.png
     48-actions-kt-upnp.png
-    48-apps-ktorrent.png
     64-actions-kt-magnet.png
-    64-apps-ktorrent.png
     sc-actions-kt-magnet.svgz
     sc-actions-kt-set-max-download-speed.svgz
     sc-actions-kt-set-max-upload-speed.svgz

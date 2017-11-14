@@ -13,6 +13,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
 include(GenerateExportHeader)
 include(ECMInstallIcons)
+include(ECMAddAppIcon)
 include(ECMMarkAsTest)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
