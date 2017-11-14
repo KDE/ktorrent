@@ -15,6 +15,7 @@ include(GenerateExportHeader)
 include(ECMInstallIcons)
 include(ECMAddAppIcon)
 include(ECMMarkAsTest)
+include(ECMMarkNonGuiExecutable)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
     Core
