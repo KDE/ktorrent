@@ -18,6 +18,7 @@
   <name xml:lang="pl">KTorrent</name>
   <name xml:lang="pt">KTorrent</name>
   <name xml:lang="pt-BR">KTorrent</name>
+  <name xml:lang="ru">KTorrent</name>
   <name xml:lang="sk">KTorrent</name>
   <name xml:lang="sr">К‑торент</name>
   <name xml:lang="sr-Latn">KTorrent</name>
@@ -41,6 +42,7 @@
   <summary xml:lang="nl">BitTorrent-cliënt</summary>
   <summary xml:lang="pl">Klient BitTorrent</summary>
   <summary xml:lang="pt">Cliente de BitTorrent</summary>
+  <summary xml:lang="ru">Клиент BitTorrent</summary>
   <summary xml:lang="sk">BitTorrent Klient</summary>
   <summary xml:lang="sr">Битторент клијент</summary>
   <summary xml:lang="sr-Latn">Bittorrent klijent</summary>
@@ -91,6 +93,7 @@
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Recursos:</p>
+    <p xml:lang="ru">Возможности:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sr">Могућности:</p>
     <p xml:lang="sr-Latn">Mogućnosti:</p>
@@ -114,6 +117,7 @@
       <li xml:lang="nl">Torrents in de wachtrij zetten</li>
       <li xml:lang="pl">Kolejkowanie torrentów</li>
       <li xml:lang="pt">Fila de espera de torrentes</li>
+      <li xml:lang="ru">Загрузка торрентов по очереди</li>
       <li xml:lang="sk">Zaraďovanie torrentov</li>
       <li xml:lang="sr">Стављање торената у ред.</li>
       <li xml:lang="sr-Latn">Stavljanje torenata u red.</li>
@@ -136,6 +140,7 @@
       <li xml:lang="nl">Globale en per torrent snelheidslimieten</li>
       <li xml:lang="pl">Ograniczenie prędkości globalne i na torrenta</li>
       <li xml:lang="pt">Limites de velocidades globais e por torrentes</li>
+      <li xml:lang="ru">Общие и отдельные для каждого торрента ограничения скорости</li>
       <li xml:lang="sk">Globálne a torrentové rýchlostné limity</li>
       <li xml:lang="sr">Ограничења брзине, глобална и по торенту.</li>
       <li xml:lang="sr-Latn">Ograničenja brzine, globalna i po torentu.</li>
@@ -158,6 +163,7 @@
       <li xml:lang="nl">Voorbeelden van bepaalde bestandstypen bekijken, ingebouwd (video en geluid)</li>
       <li xml:lang="pl">Podgląd pewnych rodzajów plików, wbudowany odtwarzacz filmów i dźwięku</li>
       <li xml:lang="pt">Antevisão incorporada de alguns tipos de ficheiros (vídeo e áudio)</li>
+      <li xml:lang="ru">Предварительный просмотр файлов некоторых типов (видео, звук)</li>
       <li xml:lang="sk">Náhľady určitých typov súborov (video a audio)</li>
       <li xml:lang="sr">Преглед појединих типова фајлова, уграђено (видео и аудио).</li>
       <li xml:lang="sr-Latn">Pregled pojedinih tipova fajlova, ugrađeno (video i audio).</li>
@@ -180,6 +186,7 @@
       <li xml:lang="nl">Gedeeltelijk of volledig gedownloade bestanden importeren</li>
       <li xml:lang="pl">Impot częściowo lub w pełni pobranych plików</li>
       <li xml:lang="pt">Importação de ficheiros transferidos parcialmente ou por completo</li>
+      <li xml:lang="ru">Импорт частично или полностью загруженных файлов</li>
       <li xml:lang="sk">Importovanie čiastočne alebo plne stiahnutých súborov</li>
       <li xml:lang="sr">Увоз делимично или потпуно преузетих фајлова.</li>
       <li xml:lang="sr-Latn">Uvoz delimično ili potpuno preuzetih fajlova.</li>
@@ -202,6 +209,7 @@
       <li xml:lang="nl">Bestandsprioriteit instellen multi-bestand-torrents</li>
       <li xml:lang="pl">Priorytety dla wieloplikowych torrentów</li>
       <li xml:lang="pt">Prioritização de torrentes multi-ficheiros</li>
+      <li xml:lang="ru">Приоритеты файлов для торрентов с несколькими файлами</li>
       <li xml:lang="sk">Prioritizácia súborov cez viacsúborové torrenty</li>
       <li xml:lang="sr">Задавање приоритета по фајлу у торентима са више фајлова.</li>
       <li xml:lang="sr-Latn">Zadavanje prioriteta po fajlu u torentima sa više fajlova.</li>
@@ -224,6 +232,7 @@
       <li xml:lang="nl">Selectief downloaden van multi-bestand-torrents</li>
       <li xml:lang="pl">Wybiórcze pobieranie dla wieloplikowych torrentów</li>
       <li xml:lang="pt">Transferência selectiva para torrentes multi-ficheiros</li>
+      <li xml:lang="ru">Выборочная загрузка файлов из торрентов с несколькими файлами</li>
       <li xml:lang="sk">Selektívne sťahovanie pre viacsúborové torrenty</li>
       <li xml:lang="sr">Селективно преузимање у торентима са више фајлова.</li>
       <li xml:lang="sr-Latn">Selektivno preuzimanje u torentima sa više fajlova.</li>
@@ -246,6 +255,7 @@
       <li xml:lang="nl">Start/stop peers met een extra dialoog voor IP-filteren voor weergeven/bewerken</li>
       <li xml:lang="pl">Wykopywanie/banowanie uczestników  z dodatkowym filtrem IP do celów edycji i wyświetlania</li>
       <li xml:lang="pt">Banir/expulsar as máquinas com uma janela adicional de filtros de IP's para fins de listagem/edição</li>
+      <li xml:lang="ru">Возможность отключения о блокирования пиров. Список заблокированных пиров можно редактировать в диалоге IP-фильтра.</li>
       <li xml:lang="sk">Vykopnutie/ban klientov s dodatočným dialógom IP filtra pre dôvody zoznamu/úpravy</li>
       <li xml:lang="sr">Избацивање/забрањивање вршњака преко дијалога за филтрирање ИП‑ова (листање и уређивање).</li>
       <li xml:lang="sr-Latn">Izbacivanje/zabranjivanje vršnjaka preko dijaloga za filtriranje IP‑ova (listanje i uređivanje).</li>
@@ -269,6 +279,7 @@
       <li xml:lang="nl">Ondersteuning van UDP-tracker</li>
       <li xml:lang="pl">Obsługa serwera śledzącego UDP</li>
       <li xml:lang="pt">Suporte a localizadores por UDP</li>
+      <li xml:lang="ru">Поддержка трекеров UDP</li>
       <li xml:lang="sk">Podpora trackerov UDP</li>
       <li xml:lang="sr">Подршка за УДП пратиоце.</li>
       <li xml:lang="sr-Latn">Podrška za UDP pratioce.</li>
@@ -291,6 +302,7 @@
       <li xml:lang="nl">Ondersteuning voor privé-trackers en -torrents</li>
       <li xml:lang="pl">Obsługa prywatnych serwerów śledzących i torrentów</li>
       <li xml:lang="pt">Suporte para localizadores e torrentes privadas</li>
+      <li xml:lang="ru">Поддержка частных трекеров и торрентов</li>
       <li xml:lang="sk">Podpora pre súkromné trackery a torrenty</li>
       <li xml:lang="sr">Подршка за приватне пратиоце и торенте.</li>
       <li xml:lang="sr-Latn">Podrška za privatne pratioce i torente.</li>
@@ -314,6 +326,7 @@
       <li xml:lang="nl">Ondersteuning voor uitwisseling van peers van µTorrent</li>
       <li xml:lang="pl">Obsługa wymiany uczestników µTorrenta </li>
       <li xml:lang="pt">Suporte para a troca de máquinas do µTorrent</li>
+      <li xml:lang="ru">Поддержка протокола обмена списками участников, используемого µTorrent</li>
       <li xml:lang="sk">Podpora pre výmenu peerov µTorrent</li>
       <li xml:lang="sr">Подршка за Микроторентову размену вршњака.</li>
       <li xml:lang="sr-Latn">Podrška za µTorrentovu razmenu vršnjaka.</li>
@@ -336,6 +349,7 @@
       <li xml:lang="nl">Ondersteuning voor protocolversleuteling (compatibel met Azureus)</li>
       <li xml:lang="pl">Obsługa szyfrowania protokołu (zgodna z Azureus)</li>
       <li xml:lang="pt">Suporte para a encriptação do protocolo (compatível com o Azureus)</li>
+      <li xml:lang="ru">Поддержка шифрования на уровне протокола (совместимо с Azureus)</li>
       <li xml:lang="sk">Podpora pre šifrovanie protokolu (kompatibilné s Azureus)</li>
       <li xml:lang="sr">Подршка за шифровање протокола (сагласна са Азуреусом).</li>
       <li xml:lang="sr-Latn">Podrška za šifrovanje protokola (saglasna sa Azureusom).</li>
@@ -358,6 +372,7 @@
       <li xml:lang="nl">Ondersteuning voor aanmaken van torrents zonder tracker</li>
       <li xml:lang="pl">Obsługa tworzenia torrentów bez serwera śledzącego</li>
       <li xml:lang="pt">Suporte para a criação de torrentes sem localizador</li>
+      <li xml:lang="ru">Поддержка создания торрентов, не привязанных к торрент-трекеру.</li>
       <li xml:lang="sk">Podpora pre vytváranie beztracerových torrentov</li>
       <li xml:lang="sr">Подршка за стварање торената без пратилаца.</li>
       <li xml:lang="sr-Latn">Podrška za stvaranje torenata bez pratilaca.</li>
@@ -380,6 +395,7 @@
       <li xml:lang="nl">Ondersteuning voor gedistribueerde hash-tabellen (DHT, het hoofdversie)</li>
       <li xml:lang="pl">Obsługa rozproszonych tablic haszów (DHT, wersja głównoliniowa)</li>
       <li xml:lang="pt">Suporte para tabelas de dispersão distribuídas (DHT)</li>
+      <li xml:lang="ru">Поддержка распределённых хеш-таблиц (DHT).</li>
       <li xml:lang="sk">Podpora pre distribuované hašovacie tabuľky (DHT, mainline verzia)</li>
       <li xml:lang="sr">Подршка за дистрибуиране дисперзионе табеле (мејнлајн ДХТ).</li>
       <li xml:lang="sr-Latn">Podrška za distribuirane disperzione tabele (Mainline DHT).</li>
@@ -402,6 +418,7 @@
       <li xml:lang="nl">Ondersteuning voor UPnP om automatisch poorten te 'forwarden' op een LAN met dynamisch toegekende hosts</li>
       <li xml:lang="pl">Obsługa UPnP do przekierowywania portów w LANie z dynamicznie przypisanymi gospodarzami</li>
       <li xml:lang="pt">Suporte de UPnP para encaminhar automaticamente os portos numa LAN para as máquinas atribuídas de forma dinâmica</li>
+      <li xml:lang="ru">Поддержка UPnP для автоматического перенаправления портов в локальной сети с динамическим выделением IP-адресов.</li>
       <li xml:lang="sk">Podpora pre UPnP na automatické presmerovanie portov na LAN s dynaicky priradenými hostami</li>
       <li xml:lang="sr">Подршка за аутоматско прослеђивање портова кроз УПнП у ЛАН‑у са динамички додељиваним домаћинима.</li>
       <li xml:lang="sr-Latn">Podrška za automatsko prosleđivanje portova kroz UPnP u LAN‑u sa dinamički dodeljivanim domaćinima.</li>
@@ -424,6 +441,7 @@
       <li xml:lang="nl">Ondersteuning voor webseeds</li>
       <li xml:lang="pl">Obsługa rozsiewania w sieci</li>
       <li xml:lang="pt">Suporte para fontes Web</li>
+      <li xml:lang="ru">Поддержка веб-сидов</li>
       <li xml:lang="sk">Podpora pre webové seedy</li>
       <li xml:lang="sr">Подршка за веб сејања.</li>
       <li xml:lang="sr-Latn">Podrška za veb sejanja.</li>
@@ -446,6 +464,7 @@
       <li xml:lang="nl">Ondersteuning voor scripts via Kross en interprocescontrole via het D-Bus-interface</li>
       <li xml:lang="pl">Obsługa skryptów przez Kross i sterowania międzyprocesowego poprzez interfejs D-Bus</li>
       <li xml:lang="pt">Suporte de programação através do Kross e controlo entre processos por uma interface de D-Bus</li>
+      <li xml:lang="ru">Поддержка сценариев при помощи Kross и внешнего управления через интерфейс D-Bus</li>
       <li xml:lang="sk">Podpora skriptovania cez Kross a medziprocesové ovládanie cez rozhrani D-Bus</li>
       <li xml:lang="sr">Подршка за скриптовање преко Кроса и међупроцесно управљање преко д‑бус сучеља.</li>
       <li xml:lang="sr-Latn">Podrška za skriptovanje preko Krossa i međuprocesno upravljanje preko D‑Bus sučelja.</li>
@@ -468,6 +487,7 @@
       <li xml:lang="nl">Integratie in het systeemvak</li>
       <li xml:lang="pl">Integracja z tacką systemową</li>
       <li xml:lang="pt">Integração na bandeja do sistema</li>
+      <li xml:lang="ru">Значок в системном лотке</li>
       <li xml:lang="sk">Integrácia do systémovej lišty</li>
       <li xml:lang="sr">Уклапање у системску касету.</li>
       <li xml:lang="sr-Latn">Uklapanje u sistemsku kasetu.</li>
@@ -490,6 +510,7 @@
       <li xml:lang="nl">Authenticatieondersteuning voor tracker</li>
       <li xml:lang="pl">Obsluga uwierzytelniania na serwerze śledzącym</li>
       <li xml:lang="pt">Suporte para localizadores autenticados</li>
+      <li xml:lang="ru">Поддержка аутентификации на трекере.</li>
       <li xml:lang="sk">Podpora autentifikácie trackerov</li>
       <li xml:lang="sr">Подршка за аутентификацију пратилаца.</li>
       <li xml:lang="sr-Latn">Podrška za autentifikaciju pratilaca.</li>
@@ -513,6 +534,7 @@
       <li xml:lang="nl">Verbinding via een proxy</li>
       <li xml:lang="pl">Połączenia przez serwer pośredniczący</li>
       <li xml:lang="pt">Ligação através de um 'proxy'</li>
+      <li xml:lang="ru">Подключение через прокси-сервер</li>
       <li xml:lang="sk">Pripojenie cez proxy</li>
       <li xml:lang="sr">Повезивање кроз прокси.</li>
       <li xml:lang="sr-Latn">Povezivanje kroz proksi.</li>
