@@ -1,5 +1,10 @@
 ecm_install_icons(ICONS
-    ${KTORRENT_ICONS_PNG}
+    16-apps-ktorrent.png
+    22-apps-ktorrent.png
+    32-apps-ktorrent.png
+    48-apps-ktorrent.png
+    64-apps-ktorrent.png
+    128-apps-ktorrent.png
     16-actions-kt-stop-all.png
     16-actions-kt-stop.png
     16-actions-kt-upnp.png
