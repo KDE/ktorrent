@@ -26,6 +26,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
 )
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
+  COMPONENTS
     Config
     ConfigWidgets
     CoreAddons
@@ -42,9 +43,9 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     WidgetsAddons
     WindowSystem
     XmlGui
+  OPTIONAL_COMPONENTS
+    DocTools
 )
-
-find_package(KF5DocTools ${KF5_MIN_VERSION})
 
 find_package(KF5Torrent 2.1 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
