@@ -79,6 +79,7 @@
     <p xml:lang="tr">KTorrent, KDE tarafından geliştirilen, BitTorrent protokolünü kullanarak dosyaları indirmenize izin veren bir BitTorrent uygulamasıdır. Aynı anda birden fazla torrent çalıştırabilmenizi ve BitTorrent için tam özellikli bir istemci yapabilmeniz için genişletilmiş özellikler ile birlikte geliştirilmiştir.</p>
     <p xml:lang="uk">KTorrent — програма для обміну даними торентів, створена розробниками KDE, за допомогою якої ви можете отримувати і розповсюджувати дані на основі протоколу BitTorrent. Ця програма надає вам змогу одночасно обмінюватися даними декількох торентів. Також передбачено додаткові можливості, які роблять програму повноцінною клієнтською частиною для обміну даними BitTorrent.</p>
     <p xml:lang="x-test">xxKTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.xx</p>
+    <p xml:lang="zh-CN">KTorrent 是 KDE 提供的 BT 下载应用。支持同时运行多个种子，并具有多种扩展特性，是一个全功能的 BT 客户端。</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
@@ -474,6 +475,7 @@
       <li xml:lang="tr">Kross üzerinden betik yazma desteği ve D-Bus arayüzü ile süreçler arası denetim</li>
       <li xml:lang="uk">Підтримка керування за допомогою скриптів на Kross та обміну даними між процесами за допомогою D-Bus</li>
       <li xml:lang="x-test">xxScripting support via Kross, and interprocess control via D-Bus interfacexx</li>
+      <li xml:lang="zh-CN">通过 Kross 支持脚本编程，通过 D-Bus 接口实现进程间控制</li>
       <li>System tray integration</li>
       <li xml:lang="ca">Integració amb la safata del sistema</li>
       <li xml:lang="ca-valencia">Integració amb la safata del sistema</li>
@@ -567,6 +569,7 @@
     <p xml:lang="tr">Yerleşik işlevlere ek olarak, KTorrent için kullanılabilen bazı eklentiler de bulunmaktadır.</p>
     <p xml:lang="uk">Окрім вбудованих функціональних можливостей, у KTorrent передбачено розширення можливостей за допомогою додатків.</p>
     <p xml:lang="x-test">xxIn addition to the built-in functionalities, there are some plugins available for KTorrent.xx</p>
+    <p xml:lang="zh-CN">除了一些内置的功能，KTorrent 还有一些插件可用。</p>
   </description>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=ktorrent</url>
   <url type="help">http://docs.kde.org/?application=ktorrent</url>
