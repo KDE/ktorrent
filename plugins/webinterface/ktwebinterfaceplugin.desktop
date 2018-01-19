@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Web Interface
 Name[ar]=واجهة الوبّ
+Name[ast]=Interfaz web
 Name[bg]=Уеб-интефейс
 Name[bs]=Web sučelje
 Name[ca]=Interfície web
@@ -55,6 +56,7 @@ Name[zh_CN]=网页界面
 Name[zh_TW]=網頁介面
 Comment=Allows control of KTorrent via a web interface
 Comment[ar]=تتيح لك التّحكّم ب‍«سيولك» عبر واجهة وبّ
+Comment[ast]=Permite'l control de KTorrent per un interfaz web
 Comment[bg]=Включване на управление на KTorrent през уеб-интерфейс
 Comment[bs]=Dozvoljava upravljanje KTorentom putem web sučelja
 Comment[ca]=Permet controlar el KTorrent via una interfície web

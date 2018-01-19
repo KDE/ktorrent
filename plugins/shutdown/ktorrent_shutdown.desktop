@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Shutdown
 Name[ar]=الإطفاء
+Name[ast]=Apagar
 Name[bg]=Изключване
 Name[bs]=Ugasi
 Name[ca]=Aturada
@@ -55,6 +56,7 @@ Name[zh_CN]=关机
 Name[zh_TW]=關機
 Comment=Allows you to shutdown your computer when torrents finish
 Comment[ar]=تسمح لك بإطفاء الحاسوب عند انتهاء السّيول
+Comment[ast]=Pertmítete apagar l'ordeandor cuando finen los torrents
 Comment[bg]=Позволява ви да изключите компютъра си след като приключат торентите
 Comment[bs]=Dozvoljava gašenje vašeg računara kada torenti završe
 Comment[ca]=Permet aturar l'ordinador en finalitzar els torrents
