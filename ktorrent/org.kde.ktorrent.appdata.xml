@@ -31,6 +31,7 @@
   <name xml:lang="x-test">xxKTorrentxx</name>
   <name xml:lang="zh-CN">KTorrent</name>
   <summary>BitTorrent Client</summary>
+  <summary xml:lang="ast">Veceru BitTorrent</summary>
   <summary xml:lang="ca">Client de BitTorrent</summary>
   <summary xml:lang="ca-valencia">Client de BitTorrent</summary>
   <summary xml:lang="cs">Klient pro BitTorrent</summary>
@@ -83,6 +84,7 @@
     <p xml:lang="x-test">xxKTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.xx</p>
     <p xml:lang="zh-CN">KTorrent 是 KDE 提供的 BT 下载应用。支持同时运行多个种子，并具有多种扩展特性，是一个全功能的 BT 客户端。</p>
     <p>Features:</p>
+    <p xml:lang="ast">Carauterístiques:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -133,6 +135,7 @@
       <li xml:lang="x-test">xxQueuing of torrentsxx</li>
       <li xml:lang="zh-CN">队列种子</li>
       <li>Global and per torrent speed limits</li>
+      <li xml:lang="ast">Llendes de velocidá globales y per torrent</li>
       <li xml:lang="ca">Límits de velocitat global i per torrent</li>
       <li xml:lang="ca-valencia">Límits de velocitat global i per torrent</li>
       <li xml:lang="de">Geschwindigkeitsbegrenzungen global und für den einzelnen Torrent</li>
@@ -179,6 +182,7 @@
       <li xml:lang="x-test">xxPreviewing of certain file types, build in (video and audio)xx</li>
       <li xml:lang="zh-CN">内置的文件预览功能 (视频和音频)</li>
       <li>Importing of partially or fully downloaded files</li>
+      <li xml:lang="ast">Importación de ficheros baxaos dafechu o parcialmente</li>
       <li xml:lang="ca">Importació de fitxers descarregats parcialment o del tot</li>
       <li xml:lang="ca-valencia">Importació de fitxers descarregats parcialment o del tot</li>
       <li xml:lang="de">Teilweise oder vollständig heruntergeladene Dateien werden importiert</li>
@@ -295,6 +299,7 @@
       <li xml:lang="x-test">xxUDP tracker supportxx</li>
       <li xml:lang="zh-CN">支持 UDP 追踪器</li>
       <li>Support for private trackers and torrents</li>
+      <li xml:lang="ast">Sofitu pa rastrexadores y torrents privaos</li>
       <li xml:lang="ca">Suport per a seguidors i torrents privats</li>
       <li xml:lang="ca-valencia">Suport per a seguidors i torrents privats</li>
       <li xml:lang="de">Unterstützung für private Tracker und Torrents</li>
@@ -527,6 +532,7 @@
       <li xml:lang="x-test">xxTracker authentication supportxx</li>
       <li xml:lang="zh-CN">追踪器认证支持</li>
       <li>Connection through a proxy</li>
+      <li xml:lang="ast">Conexón pente un proxy</li>
       <li xml:lang="ca">Connexió a través d'un servidor intermediari</li>
       <li xml:lang="ca-valencia">Connexió a través d'un servidor intermediari</li>
       <li xml:lang="cs">Připojení skrze proxy</li>
@@ -552,6 +558,7 @@
       <li xml:lang="zh-CN">通过代理连接</li>
     </ul>
     <p>In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
+    <p xml:lang="ast">Amás de la integración de funcionalidaes, hai dellos complementos disponibles pa KTorrent.</p>
     <p xml:lang="ca">Addicionalment a les funcionalitats integrades, hi ha diversos connectors disponibles per al KTorrent.</p>
     <p xml:lang="ca-valencia">Addicionalment a les funcionalitats integrades, hi ha diversos connectors disponibles per al KTorrent.</p>
     <p xml:lang="de">Zusätzlich zu den eingebauten Funktionen gibt es weitere Module für KTorrent.</p>
