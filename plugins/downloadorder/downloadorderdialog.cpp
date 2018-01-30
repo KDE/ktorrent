@@ -120,7 +120,6 @@ namespace kt
                 plugin->destroyManager(tor);
             }
         }
-        accept();
     }
 
     void DownloadOrderDialog::moveUp()
