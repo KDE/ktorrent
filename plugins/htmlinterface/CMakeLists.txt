@@ -18,10 +18,5 @@ target_link_libraries(
     KF5::XmlGui
 )
 
-target_link_libraries(ktorrent_htmlinterface ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY})
-target_link_libraries(ktorrent_htmlinterface z)
-target_link_libraries(ktorrent_htmlinterface ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(ktorrent_htmlinterface ${CMAKE_CURRENT_BINARY_DIR}/libhttpserver/liblibhttpserver.a)
-
 install(TARGETS ktorrent_htmlinterface  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_htmlinterface.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
