@@ -23,6 +23,7 @@
 #include <QAction>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QHeaderView>
 #include <QInputDialog>
 #include <QMenu>
 #include <QTreeWidgetItemIterator>

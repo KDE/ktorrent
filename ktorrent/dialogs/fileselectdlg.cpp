@@ -20,6 +20,7 @@
 
 #include "fileselectdlg.h"
 
+#include <QButtonGroup>
 #include <QMenu>
 #include <QPushButton>
 #include <QTextCodec>

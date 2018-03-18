@@ -21,6 +21,7 @@
 
 #include "searchprefpage.h"
 
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QFile>
 #include <QInputDialog>
