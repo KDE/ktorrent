@@ -151,5 +151,6 @@ Comment[tr]=KDE tarafından BitTorrent uygulaması
 Comment[uk]=Програма BitTorrent від KDE
 Comment[x-test]=xxA BitTorrent program by KDExx
 Comment[zh_CN]=KDE 的 BitTorrent 程序
+Comment[zh_TW]=來自 KDE 的 BitTorrent 程式
 Terminal=false
 Categories=Qt;KDE;Network;FileTransfer;P2P;
