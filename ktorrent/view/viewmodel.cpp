@@ -678,9 +678,9 @@ namespace kt
             case PERCENTAGE:
             case DOWNLOAD_LOCATION:
             case TIME_ADDED:
-                return Qt::AlignLeft;
+                return Qt::AlignLeft + Qt::AlignVCenter;
             default:
-                return Qt::AlignRight;
+                return Qt::AlignRight + Qt::AlignVCenter;
             }
         }
         else if (role == Qt::FontRole && item->highlight)
