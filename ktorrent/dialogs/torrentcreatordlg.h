@@ -23,6 +23,8 @@
 #define KT_TORRENTCREATORDLG_HH
 
 #include <QDialog>
+#include <QTimer>
+
 #include "ui_torrentcreatordlg.h"
 #include <torrent/torrentcreator.h>
 
