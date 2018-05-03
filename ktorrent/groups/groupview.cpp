@@ -26,6 +26,7 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTreeWidgetItemIterator>
+#include <QHeaderView>
 
 #include <KActionCollection>
 #include <KConfigGroup>

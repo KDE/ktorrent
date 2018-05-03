@@ -23,6 +23,7 @@
 #include <QMenu>
 #include <QPushButton>
 #include <QTextCodec>
+#include <QButtonGroup>
 
 #include <KIO/Global>
 #include <KLocalizedString>
