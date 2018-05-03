@@ -30,6 +30,7 @@
 #include <QRadioButton>
 #include <QToolTip>
 #include <QUrl>
+#include <QButtonGroup>
 
 #include <KIconLoader>
 #include <KLocalizedString>
