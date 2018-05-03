@@ -21,6 +21,7 @@
 #include <QHBoxLayout>
 #include <QInputDialog>
 #include <QToolButton>
+#include <QAction>
 
 #include <KMainWindow>
 #include <KMessageBox>
