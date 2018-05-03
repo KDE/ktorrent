@@ -277,7 +277,7 @@ namespace kt
         status = DOWNLOADING;
         update_timer.stop();
         Syndication::Loader* loader = Syndication::Loader::create(this, SLOT(loadingFromDiskComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
-        loader->loadFrom(QUrl(dir + QStringLiteral("feed.xml")));
+        loader->loadFrom(QUrl(dir + QStringLiteral("feed.xml")), new FeedRetriever());
         updated();
     }
 

@@ -21,6 +21,7 @@
 #include <QHBoxLayout>
 #include <QInputDialog>
 #include <QToolButton>
+#include <QAction>
 
 #include <KMainWindow>
 #include <KMessageBox>
@@ -135,7 +136,7 @@ namespace kt
         }
         else
         {
-            loader->loadFrom(QUrl(url));
+            loader->loadFrom(QUrl(url), new FeedRetriever());
             downloads.insert(loader, url);
         }
     }
