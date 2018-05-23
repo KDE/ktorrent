@@ -15,6 +15,7 @@
   <name xml:lang="gl">KTorrent</name>
   <name xml:lang="it">KTorrent</name>
   <name xml:lang="nl">KTorrent</name>
+  <name xml:lang="nn">KTorrent</name>
   <name xml:lang="pl">KTorrent</name>
   <name xml:lang="pt">KTorrent</name>
   <name xml:lang="pt-BR">KTorrent</name>
@@ -40,6 +41,7 @@
   <summary xml:lang="gl">Cliente de BitTorrent</summary>
   <summary xml:lang="it">Client BitTorrent</summary>
   <summary xml:lang="nl">BitTorrent-cliënt</summary>
+  <summary xml:lang="nn">Bittorrent-klient</summary>
   <summary xml:lang="pl">Klient BitTorrent</summary>
   <summary xml:lang="pt">Cliente de BitTorrent</summary>
   <summary xml:lang="ru">Клиент BitTorrent</summary>
@@ -91,6 +93,7 @@
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Recursos:</p>
