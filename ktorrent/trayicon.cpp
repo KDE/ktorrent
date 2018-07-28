@@ -218,7 +218,7 @@ namespace kt
         QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
                            "<br>Uploaded %3 at an average speed of %4.",
                            tc->getDisplayName(),
-                           QLocale().toString(s.max_share_ratio, 'g', 2),
+                           QLocale().toString(s.max_share_ratio, 'f', 2),
                            BytesToString(s.bytes_uploaded),
                            BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
@@ -236,7 +236,7 @@ namespace kt
         QString msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
                            "<br>Uploaded %3 at an average speed of %4.",
                            tc->getDisplayName(),
-                           QLocale().toString(s.max_seed_time, 'g', 2),
+                           QLocale().toString(s.max_seed_time, 'f', 2),
                            BytesToString(s.bytes_uploaded),
                            BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
@@ -277,11 +277,11 @@ namespace kt
         if (tc->overMaxRatio())
             msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
                        "<br>Remove the limit manually if you want to continue seeding.",
-                       tc->getDisplayName(), QLocale().toString(s.max_share_ratio, 'g', 2));
+                       tc->getDisplayName(), QLocale().toString(s.max_share_ratio, 'f', 2));
         else
             msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and cannot be enqueued. "
                        "<br>Remove the limit manually if you want to continue seeding.",
-                       tc->getDisplayName(), QLocale().toString(s.max_seed_time, 'g', 2));
+                       tc->getDisplayName(), QLocale().toString(s.max_seed_time, 'f', 2));
 
         KNotification::event(QStringLiteral("QueueNotPossible"), msg, QPixmap(), mwnd);
     }

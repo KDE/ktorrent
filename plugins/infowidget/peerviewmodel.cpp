@@ -114,7 +114,7 @@ namespace kt
         case 6: return stats.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No");
         case 7: return QString(QString::number((int)stats.perc_of_file) + QLatin1String(" %"));
         case 8: return QVariant();
-        case 9: return QLocale().toString(stats.aca_score, 'g', 2);
+        case 9: return QLocale().toString(stats.aca_score, 'f', 2);
         case 10: return QVariant();
         case 11: return QString(QString::number(stats.num_down_requests) + QLatin1String(" / ") + QString::number(stats.num_up_requests));
         case 12: return BytesToString(stats.bytes_downloaded);

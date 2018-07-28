@@ -189,7 +189,7 @@ namespace kt
             maxSeedTimeUpdate();
 
         static QLocale locale;
-        share_ratio->setText(QStringLiteral("<font color=\"%1\">%2</font>").arg(ratio <= Settings::greenRatio() ? QStringLiteral("#ff0000") : QStringLiteral("#1c9a1c")).arg(locale.toString(ratio, 'g', 2)));
+        share_ratio->setText(QStringLiteral("<font color=\"%1\">%2</font>").arg(ratio <= Settings::greenRatio() ? QStringLiteral("#ff0000") : QStringLiteral("#1c9a1c")).arg(locale.toString(ratio, 'f', 2)));
 
         Uint32 secs = tc->getRunningTimeUL();
         if (secs == 0)
