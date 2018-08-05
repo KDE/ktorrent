@@ -12,6 +12,7 @@
   <name xml:lang="el">KTorrent</name>
   <name xml:lang="en-GB">KTorrent</name>
   <name xml:lang="es">KTorrent</name>
+  <name xml:lang="fi">KTorrent</name>
   <name xml:lang="fr">KTorrent</name>
   <name xml:lang="gl">KTorrent</name>
   <name xml:lang="it">KTorrent</name>
@@ -40,6 +41,7 @@
   <summary xml:lang="el">Εφαρμογή BitTorrent</summary>
   <summary xml:lang="en-GB">BitTorrent Client</summary>
   <summary xml:lang="es">Cliente de BitTorrent</summary>
+  <summary xml:lang="fi">BitTorrent-asiakas</summary>
   <summary xml:lang="fr">Client BitTorrent</summary>
   <summary xml:lang="gl">Cliente de BitTorrent</summary>
   <summary xml:lang="it">Client BitTorrent</summary>
@@ -71,6 +73,7 @@
     <p xml:lang="el">Το KTorrent είναι μια εφαρμογή BitTorrent από το KDE την οποία σας επιτρέπει να κάνετε λήψεις αρχείων με χρήσητ του πρωτοκόλλου BitTorrent. Σας δίνει τη δυνατότητα να εκετελείτε πολλά torrents ταυτόχρονα και συνοδεύεται με εκτεταμένες λειτουργίες για μια πλήρη χαρακτηριστικών εφαρμογή BitTorrent.</p>
     <p xml:lang="en-GB">KTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.</p>
     <p xml:lang="es">KTorrent  es una aplicación bitTorrent de KDE que le permite descargar archivos usando el protocolo BitTorrent. Permite ejecutar varios torrents al mismo tiempo e incluye características extendidas para convertilo en un cliente completo para BitTorrent.</p>
+    <p xml:lang="fi">KTorrent on KDE:n BitTorrent-sovellus, jolla voit ladata tiedostoja BitTorrent-yhteyskäytännöllä. Sovelluksella voit suorittaa useita torrentteja samanaikaisesti, ja siinä on erityisominaisuuksia, jotka tekevät siitä täydellisen BitTorrent-asiakkaan.</p>
     <p xml:lang="fr">KTorrent est une application BitTorrent par KDE qui vous permet de télécharger des fichiers en utilisant le protocole BitTorrent. Il peut gérer plusieurs torrents en même temps et possède des fonctionnalités étendues qui en font un client complet pour BitTorrent.</p>
     <p xml:lang="gl">KTorrent é un aplicativo de BitTorrent por KDE que permítelle descargar ficheiros usando o protocolo BitTorrent. Permítelle executar varios torrents ao mesmo tempo e inclúe funcionalidades adicionais que o converten nun cliente de BitTorrent completo.</p>
     <p xml:lang="it">KTorrent è un'applicazione BitTorrent della comunità KDE, che ti permette di scaricare i file usando il protocollo BitTorrent. Ti consente di avviare contemporaneamente torrent multipli, e ti arriva con funzionalità estese, che lo rendono un client di BitTorrent ricco di funzionalità.</p>
@@ -95,6 +98,7 @@
     <p xml:lang="el">Χαρακτηριστικά:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
+    <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="it">Funzionalità:</p>
@@ -122,6 +126,7 @@
       <li xml:lang="el">Ουρές από torrents</li>
       <li xml:lang="en-GB">Queuing of torrents</li>
       <li xml:lang="es">Encolado de torrents</li>
+      <li xml:lang="fi">Torrenttien jonotus</li>
       <li xml:lang="fr">Mise en file d'attente des torrents</li>
       <li xml:lang="gl">Consulta de torrents.</li>
       <li xml:lang="it">Accodamento dei torrent</li>
@@ -146,6 +151,7 @@
       <li xml:lang="el">Καθολικά και ανά torrent όρια ταχύτητας</li>
       <li xml:lang="en-GB">Global and per torrent speed limits</li>
       <li xml:lang="es">Límites de velocidad globales e individuales</li>
+      <li xml:lang="fi">Yleinen tai torrenttikohtainen nopeusrajoitus</li>
       <li xml:lang="fr">Limites de vitesse globales et par torrent</li>
       <li xml:lang="gl">Límites de velocidade globais e por torrent.</li>
       <li xml:lang="it">Limiti di velocità globali e per torrent</li>
@@ -170,6 +176,7 @@
       <li xml:lang="el">Προεπισκόπηση συγκεκριμένων τύπων αρχείων, ενσωματωμένη (με βίντεο και ήχο)</li>
       <li xml:lang="en-GB">Previewing of certain file types, build in (video and audio)</li>
       <li xml:lang="es">Vista previa de ciertos tipos de archivo, vídeo y audio incorporados</li>
+      <li xml:lang="fi">Joidenkin (ääni- ja video-) tiedostotyyppien sisään rakennettu esikatselu</li>
       <li xml:lang="fr">Aperçu en interne de certains types de fichiers (vidéo et audio)</li>
       <li xml:lang="gl">Previsualización de certos tipos de ficheiros, incluída (vídeo e son).</li>
       <li xml:lang="it">Anteprima integrata per alcuni tipi di file (video e audio)</li>
@@ -195,6 +202,7 @@
       <li xml:lang="el">Εισαγωγή αποσπασματικώς ή πλήρως ληφθέντων αρχείων</li>
       <li xml:lang="en-GB">Importing of partially or fully downloaded files</li>
       <li xml:lang="es">Importación de archivos descargados parcial o totalmente</li>
+      <li xml:lang="fi">Osittain tai täysin ladattujen tiedostojen tuonti</li>
       <li xml:lang="fr">Import de fichiers partiellement ou totalement téléchargés</li>
       <li xml:lang="gl">Importación de ficheiros descargados total ou parcialmente.</li>
       <li xml:lang="it">Importazione di file parzialmente o totalmente scaricati</li>
@@ -219,6 +227,7 @@
       <li xml:lang="el">Παραχώρηση προτεραιότητας σε αρχείο σε torrent με πολλά αρχεία</li>
       <li xml:lang="en-GB">File prioritisation for multi-file torrents</li>
       <li xml:lang="es">Priorización de archivos para torrents multiarchivo</li>
+      <li xml:lang="fi">Useampitiedostoisten torrenttien eri tiedostojen ensisijaistus</li>
       <li xml:lang="fr">Ordre de priorité des fichiers et pour les torrents multi-fichiers</li>
       <li xml:lang="gl">Priorización de ficheiros para os torrents con varios ficheiros.</li>
       <li xml:lang="it">Priorità dei file per i torrent multi-file</li>
@@ -243,6 +252,7 @@
       <li xml:lang="el">Επιλεκτική λήψη για torrent με πολλά αρχεία</li>
       <li xml:lang="en-GB">Selective downloading for multi-file torrents</li>
       <li xml:lang="es">Descarga selectiva de torrents multiarchivo</li>
+      <li xml:lang="fi">Useampitiedostoisten torrenttien valikoiva lataus</li>
       <li xml:lang="fr">Téléchargement sélectif pour les torrents multi-fichiers</li>
       <li xml:lang="gl">Descarga selectiva para torrents con varios ficheiros.</li>
       <li xml:lang="it">Scaricamento selettivo per i torrent multi-file</li>
@@ -413,6 +423,7 @@
       <li xml:lang="el">Υποστήιριξη για κατανεμημένους πίνακες κατακερματισμού (DHT, η κύρια έκδοση)</li>
       <li xml:lang="en-GB">Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="es">Implementación de tablas de resumen distribuidas (DHT, la versión principal)</li>
+      <li xml:lang="fi">Hajautettujen tiivistetaulukoiden tuki (DHT, Mainline-versio)</li>
       <li xml:lang="fr">Gestion des tables de hachage distribuées (DHT, la version principale)</li>
       <li xml:lang="gl">Compatibilidade con táboas de sumas distribuídas (DHT, a versión principal).</li>
       <li xml:lang="it">Supporto per le tabelle di hash distribuite (DHT, la versione principale)</li>
@@ -436,6 +447,7 @@
       <li xml:lang="el">Υποστήριξη UPnP για αυτόματη προώθηση θυρών σε τοπικό δίκτυο με δυναμική αντιστοίχιση υπολογιστών</li>
       <li xml:lang="en-GB">Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="es">Implementación de UPnP para redireccionar puertos automáticamente en una red local con servidores asignados dinámicamente</li>
+      <li xml:lang="fi">UPnP-tuki LAN-porttien automaattiohjaukseen dynaamisesti verkkoon yhdistetyillä koneilla</li>
       <li xml:lang="fr">Gestion du protocole UPnP pour rediriger automatiquement des ports sur un réseau dont les hôtes sont gérés dynamiquement</li>
       <li xml:lang="gl">Compatibilidade con UPnP para redirixir automaticamente portos na rede local con servidores asignados dinamicamente.</li>
       <li xml:lang="it">Supporto UPnP per mappare automaticamente le porte sulla LAN con host dinamici assegnati</li>
@@ -459,6 +471,7 @@
       <li xml:lang="el">Υποστήριξη για πηγές ιστού</li>
       <li xml:lang="en-GB">Support for webseeds</li>
       <li xml:lang="es">Implementación de semillas web</li>
+      <li xml:lang="fi">Webseed-tuki</li>
       <li xml:lang="fr">Gestion des sources web</li>
       <li xml:lang="gl">Compatibilidade con sementes web.</li>
       <li xml:lang="it">Supporto per distribuzione web</li>
@@ -482,6 +495,7 @@
       <li xml:lang="el">Υποστήριξη συγγραφής σεναρίων με Kross και έλεγχος επικοινωνίας διεργασιών με D-Bus διεπαφή</li>
       <li xml:lang="en-GB">Scripting support via Kross, and interprocess control via D-Bus interface</li>
       <li xml:lang="es">Admite el uso de guiones vía Kross y control de interprocesos vía la interfaz D-Bus</li>
+      <li xml:lang="fi">Skriptaustuki Krossin kautta sekä prosessienvälinen hallinta D-Bus-liitännän kautta</li>
       <li xml:lang="fr">Scriptable par Kross et contrôle inter-processus par l'interface D-Bus</li>
       <li xml:lang="gl">Funcionalidade de scripting mediante Kross, e control entre procesos mediante unha interface de D-Bus.</li>
       <li xml:lang="it">Supporto per lo scripting tramite Kross, e per il controllo dei processi tramite interfaccia D-Bus</li>
@@ -507,6 +521,7 @@
       <li xml:lang="el">Ενσωμάτωση στο πλαίσιο συστήματος</li>
       <li xml:lang="en-GB">System tray integration</li>
       <li xml:lang="es">Integración con la bandeja del sistema</li>
+      <li xml:lang="fi">Ilmoitusalueintegrointi</li>
       <li xml:lang="fr">Intégration dans la barre de notifications du système</li>
       <li xml:lang="gl">Integración coa área de notificación.</li>
       <li xml:lang="it">Integrazione nel vassoio di sistema</li>
@@ -557,6 +572,7 @@
       <li xml:lang="el">Σύνδεση μέσω διαμεσολαβητή</li>
       <li xml:lang="en-GB">Connection through a proxy</li>
       <li xml:lang="es">Conexión a través de un proxy</li>
+      <li xml:lang="fi">Välityspalvelinyhteysmahdollisuus</li>
       <li xml:lang="fr">Connexion à travers un proxy</li>
       <li xml:lang="gl">Conexión mediante proxy.</li>
       <li xml:lang="it">Connessione attraverso un proxy</li>
@@ -583,6 +599,7 @@
     <p xml:lang="el">Επιπλέον των ενσωματωμένων λειτουργιών, υπάρχουν κάποια πρόσθετα διαθέσιμα για το KTorrent.</p>
     <p xml:lang="en-GB">In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
     <p xml:lang="es">Además de las funcionalidades incluidas, hay varios complementos disponibles para KTorrent.</p>
+    <p xml:lang="fi">Sisään rakennettujen toimintojen lisäksi KTorrentiin saa myös liitännäisiä.</p>
     <p xml:lang="fr">En plus de ces fonctionnalités internes, des extensions sont disponibles pour KTorrent.</p>
     <p xml:lang="gl">Ademais das funcionalidades incluídas, compatibilidade con complementos instalábeis desde KTorrent.</p>
     <p xml:lang="it">In aggiunta alle funzionalità integrate, ci sono alcune estensioni disponibili per KTorrent.</p>
