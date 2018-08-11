@@ -51,7 +51,6 @@
 
 #include "version.h"
 #include "ktversion.h"
-#include <torrent/globals.h>
 #include <util/error.h>
 #include <util/log.h>
 #include <util/functions.h>

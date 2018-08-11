@@ -122,7 +122,7 @@ class KCfgFile:
 		if kcfg_type in self.type_map:
 			return self.type_map[kcfg_type]
 		else:
-			raise "Unkown type %s" % (kcfg_type)
+			raise "Unknown type %s" % (kcfg_type)
 			
 	def writeDeclarations(self,indent,output):
 		for entry in self.entries:

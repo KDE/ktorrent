@@ -205,11 +205,11 @@ namespace kt
                 }
             }
         }
-        else if (cmd.startsWith("file_"))
+        else if (cmd.startsWith(QLatin1String("file_")))
         {
             return file(cmd, arg);
         }
-        else if (cmd.startsWith("shutdown"))
+        else if (cmd.startsWith(QLatin1String("shutdown")))
         {
             QTimer::singleShot(500, qApp, SLOT(quit()));
             return true;

@@ -130,7 +130,7 @@ namespace kt
         if (j->error() && !j->errorText().isEmpty())
         {
             error_msg->show();
-            error_msg->setText(i18n("<font color=\"red\">%1</font>").arg(j->errorText()));
+            error_msg->setText(i18n("<font color=\"red\">%1</font>", j->errorText()));
             emit resized(this);
         }
     }

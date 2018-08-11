@@ -144,7 +144,7 @@ namespace kt
         }
         else if(ptr.name() == QStringLiteral("application/x-7z-compressed"))
         {
-            QString msg = i18n("7z files are not supported", url.toDisplayString());
+            QString msg = i18n("7z files are not supported");
             if (mode == Verbose)
                 KMessageBox::error(nullptr, msg);
             else

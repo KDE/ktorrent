@@ -77,11 +77,11 @@ namespace kt
 
     void SettingsGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
     {
-        QStringList params = QString(data).split("&");
+        QStringList params = QString(data).split('&');
         foreach (const QString& p, params)
         {
             // p should look like param=value
-            QStringList items = p.split("=");
+            QStringList items = p.split('=');
             if (items.count() != 2)
                 continue;
 

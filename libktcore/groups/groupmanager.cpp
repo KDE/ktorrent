@@ -33,7 +33,6 @@
 #include <interfaces/torrentinterface.h>
 #include "torrentgroup.h"
 #include "allgroup.h"
-#include "torrentgroup.h"
 #include "ungroupedgroup.h"
 #include "functiongroup.h"
 

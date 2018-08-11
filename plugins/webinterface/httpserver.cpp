@@ -177,7 +177,7 @@ namespace kt
 
         QString username;
         QString challenge_hash;
-        QStringList params = QString(data).split("&");
+        QStringList params = QString(data).split('&');
         for (QStringList::iterator i = params.begin(); i != params.end(); i++)
         {
             QString t = *i;
@@ -401,7 +401,7 @@ namespace kt
 
             HttpResponseHeader rhdr(200, hdr.majorVersion(), hdr.minorVersion());
             setDefaultResponseHeaders(rhdr, "text/html", true);
-            if (path.endsWith("login.html"))
+            if (path.endsWith(QLatin1String("login.html")))
             {
                 // clear cookie in case of login page
                 QDateTime dt = QDateTime::currentDateTime().addDays(-1);
@@ -514,7 +514,7 @@ namespace kt
             Sunday, 06-Nov-94 08:49:37 GMT ; RFC 850, obsoleted by RFC 1036
             Sun Nov  6 08:49:37 1994       ; ANSI C's asctime() format
         */
-        QStringList sl = str.split(" ");
+        QStringList sl = str.split(' ');
         if (sl.count() == 6)
         {
             // RFC 1123 format
@@ -533,7 +533,7 @@ namespace kt
         else if (sl.count() == 4)
         {
             //  RFC 1036
-            QStringList dl = sl[1].split("-");
+            QStringList dl = sl[1].split('-');
             if (dl.count() != 3)
                 return QDateTime();
 

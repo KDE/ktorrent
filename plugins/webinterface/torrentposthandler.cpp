@@ -98,7 +98,7 @@ namespace kt
             // redirect to page mentioned in page parameter
             HttpResponseHeader rhdr(301);
             server->setDefaultResponseHeaders(rhdr, "text/html", true);
-            rhdr.setValue("Location", "/" + page);
+            rhdr.setValue("Location", '/' + page);
             hdlr->send(rhdr, QByteArray());
         }
     }
