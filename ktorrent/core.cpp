@@ -884,7 +884,7 @@ namespace kt
         try
         {
             // do nothing if new and old dir are the same
-            if (QFileInfo(data_dir).absoluteFilePath().length() && QFileInfo(data_dir).absoluteFilePath() == QFileInfo(new_dir).absoluteFilePath()
+            if ((QFileInfo(data_dir).absoluteFilePath().length() && QFileInfo(data_dir).absoluteFilePath() == QFileInfo(new_dir).absoluteFilePath())
                 || data_dir == new_dir || data_dir == (new_dir + bt::DirSeparator()))
                 return true;
 
