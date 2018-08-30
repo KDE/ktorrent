@@ -83,6 +83,7 @@ namespace kt
                 font.setBold(true);
                 return font;
             }
+            Q_FALLTHROUGH();
         default:
             return QVariant();
         }

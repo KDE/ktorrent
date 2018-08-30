@@ -97,7 +97,7 @@ namespace kt
 
     void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter* p, const BitSet& bs, const QColor& color, const QRect& contents_rect)
     {
-        int w = contents_rect.width();
+        Uint32 w = contents_rect.width();
         double chunks_per_pixel = (double)bs.getNumBits() / w;
         QVector<Range> rs;
 
