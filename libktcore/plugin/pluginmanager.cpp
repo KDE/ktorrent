@@ -91,7 +91,7 @@ namespace kt
         for (auto i = plugins.begin(); i != plugins.end(); i++)
         {
             KPluginInfo& pi = *i;
-            if (loaded.contains(idx) & !pi.isPluginEnabled())
+            if (loaded.contains(idx) && !pi.isPluginEnabled())
             {
                 // unload it
                 unload(pi, idx);
