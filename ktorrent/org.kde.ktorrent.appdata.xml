@@ -305,6 +305,7 @@
       <li xml:lang="nl">Start/stop peers met een extra dialoog voor IP-filteren voor weergeven/bewerken</li>
       <li xml:lang="pl">Wykopywanie/banowanie uczestników  z dodatkowym filtrem IP do celów edycji i wyświetlania</li>
       <li xml:lang="pt">Banir/expulsar as máquinas com uma janela adicional de filtros de IP's para fins de listagem/edição</li>
+      <li xml:lang="pt-BR">Banir/expulsar as máquinas com uma janela adicional de filtros de IPs para fins de listagem/edição</li>
       <li xml:lang="ru">Возможность отключения о блокирования пиров. Список заблокированных пиров можно редактировать в диалоге IP-фильтра.</li>
       <li xml:lang="sr">Избацивање/забрањивање вршњака преко дијалога за филтрирање ИП‑ова (листање и уређивање).</li>
       <li xml:lang="sr-Latn">Izbacivanje/zabranjivanje vršnjaka preko dijaloga za filtriranje IP‑ova (listanje i uređivanje).</li>
@@ -458,6 +459,7 @@
       <li xml:lang="nl">Ondersteuning voor gedistribueerde hash-tabellen (DHT, het hoofdversie)</li>
       <li xml:lang="pl">Obsługa rozproszonych tablic haszów (DHT, wersja głównoliniowa)</li>
       <li xml:lang="pt">Suporte para tabelas de dispersão distribuídas (DHT)</li>
+      <li xml:lang="pt-BR">Suporte para tabelas de dispersão distribuídas (DHT)</li>
       <li xml:lang="ru">Поддержка распределённых хеш-таблиц (DHT).</li>
       <li xml:lang="sr">Подршка за дистрибуиране дисперзионе табеле (мејнлајн ДХТ).</li>
       <li xml:lang="sr-Latn">Podrška za distribuirane disperzione tabele (Mainline DHT).</li>
@@ -509,6 +511,7 @@
       <li xml:lang="nl">Ondersteuning voor webseeds</li>
       <li xml:lang="pl">Obsługa rozsiewania w sieci</li>
       <li xml:lang="pt">Suporte para fontes Web</li>
+      <li xml:lang="pt-BR">Suporte para fontes Web</li>
       <li xml:lang="ru">Поддержка веб-сидов</li>
       <li xml:lang="sr">Подршка за веб сејања.</li>
       <li xml:lang="sr-Latn">Podrška za veb sejanja.</li>
