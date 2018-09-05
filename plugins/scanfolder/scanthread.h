@@ -29,6 +29,7 @@
 #include <util/ptrmap.h>
 #include "scanfolder.h"
 
+#include <atomic>
 
 class QDir;
 
@@ -88,8 +89,8 @@ namespace kt
     private:
         QMutex mutex;
         QStringList folders;
-        bool stop_requested;
-        bool recursive;
+        std::atomic<bool> stop_requested;
+        std::atomic<bool> recursive;
         bt::PtrMap<QString, ScanFolder> scan_folders;
     };
 
