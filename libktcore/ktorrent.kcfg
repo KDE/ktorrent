@@ -292,8 +292,10 @@
 		<entry name="onlyUseUtp" type="Bool">
 			<default>false</default>
 		</entry>
-		<entry name="primaryTransportProtocol" type="Int" min="0" max="1">
+		<entry name="primaryTransportProtocol" type="Int">
 			<default>0</default>
+			<min>0</min>
+			<max>1</max>
 		</entry>
 		<entry name="autoRenameSingleFileTorrents" type="Bool">
 			<default>false</default>
