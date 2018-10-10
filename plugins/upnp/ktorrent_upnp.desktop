@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=UPnP
-Name[ast]=UPnP
 Name[bg]=UPnP
 Name[bs]=UPnP
 Name[ca]=UPnP
@@ -53,7 +52,6 @@ Name[x-test]=xxUPnPxx
 Name[zh_CN]=UPnP
 Name[zh_TW]=UPnP
 Comment=Forward ports using UPnP
-Comment[ast]=Redireiciona puertos usando UPnP
 Comment[bg]=Пренасочване на портове с UPnP
 Comment[bs]=Proslijedi priključke koristeći UPnP
 Comment[ca]=Rediregeix els ports usant UPnP

@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=IP Filter
-Name[ast]=Peñera d'IPs
 Name[bg]=Филтър по IP
 Name[bs]=IP filter
 Name[ca]=Filtre d'IP
@@ -52,7 +51,6 @@ Name[x-test]=xxIP Filterxx
 Name[zh_CN]=IP 过滤器
 Name[zh_TW]=IP 過濾
 Comment=Filter IP addresses through a blocklist
-Comment[ast]=Peñera direiciones IP pente un llistáu de bloquéu
 Comment[bg]=Филтриране на IP-адресите с черен списък
 Comment[bs]=Filtrirajte IP adrese kroz listu blokiranja
 Comment[ca]=Filtra les adreces IP a través d'una llista de bloqueig

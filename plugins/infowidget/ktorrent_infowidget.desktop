@@ -1,7 +1,6 @@
 [Desktop Entry]
 Name=Information Widget
 Name[ar]=ودجة المعلومات
-Name[ast]=Widget d'información
 Name[bg]=Джаджа с данни
 Name[bs]=Widget podataka
 Name[ca]=Estri d'informació
@@ -52,7 +51,6 @@ Name[zh_CN]=信息部件
 Name[zh_TW]=資訊元件
 Comment=Displays general information about a torrent in several tabs
 Comment[ar]=تعرض معلومات عامة عن أحد السّيول في عدّة ألسنة
-Comment[ast]=Amuesa información xeneral tocante a un torrent en delles llingüetes
 Comment[bg]=Показване на различни данни за торентите в няколко подпрозореца
 Comment[bs]=Prikazuje opšte podatke o torentu u nekoliko kartica
 Comment[ca]=Mostra informació general quant a un torrent en diverses pestanyes
