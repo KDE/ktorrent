@@ -34,6 +34,7 @@
   <name xml:lang="uk">KTorrent</name>
   <name xml:lang="x-test">xxKTorrentxx</name>
   <name xml:lang="zh-CN">KTorrent</name>
+  <name xml:lang="zh-TW">KTorrent</name>
   <summary>BitTorrent Client</summary>
   <summary xml:lang="ar">عميل بِت‌تورنت</summary>
   <summary xml:lang="ca">Client de BitTorrent</summary>
@@ -65,6 +66,7 @@
   <summary xml:lang="uk">Клієнт BitTorrent</summary>
   <summary xml:lang="x-test">xxBitTorrent Clientxx</summary>
   <summary xml:lang="zh-CN">BitTorrent 客户端</summary>
+  <summary xml:lang="zh-TW">BitTorrent 客戶端</summary>
   <description>
     <p>
       KTorrent is a BitTorrent application by KDE which allows you to download files using
@@ -128,6 +130,7 @@
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
+    <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Queuing of torrents</li>
       <li xml:lang="ar">وضع السيول في طوابير</li>
@@ -349,6 +352,7 @@
       <li xml:lang="uk">Підтримка координування UDP</li>
       <li xml:lang="x-test">xxUDP tracker supportxx</li>
       <li xml:lang="zh-CN">支持 UDP 追踪器</li>
+      <li xml:lang="zh-TW">支援 UDP tracker</li>
       <li>Support for private trackers and torrents</li>
       <li xml:lang="ca">Suport per a seguidors i torrents privats</li>
       <li xml:lang="ca-valencia">Suport per a seguidors i torrents privats</li>
@@ -375,6 +379,7 @@
       <li xml:lang="uk">Підтримка приватних координаторів та торентів</li>
       <li xml:lang="x-test">xxSupport for private trackers and torrentsxx</li>
       <li xml:lang="zh-CN">支持私人追踪器和种子</li>
+      <li xml:lang="zh-TW">支援私密 tracker 和種子檔</li>
       <li>Support for µTorrent's peer exchange</li>
       <li xml:lang="ca">Suport per a l'intercanvi entre parells de µTorrent</li>
       <li xml:lang="ca-valencia">Suport per a l'intercanvi entre parells de µTorrent</li>
