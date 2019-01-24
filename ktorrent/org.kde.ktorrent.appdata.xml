@@ -306,6 +306,7 @@
       <li xml:lang="el">Αποκλεισμός κόμβων με επιπλέον διάλογο IP φίλτρου για σκοπούς λίστας/επεξεργασίας</li>
       <li xml:lang="en-GB">Kick/ban peers with an additional IP Filter dialogue for list/edit purposes</li>
       <li xml:lang="es">Expulsión/bloqueo de pares con diálogo de filtro IP adicional para propósitos de listar/editar</li>
+      <li xml:lang="fi">Torju/estä käyttäjiä IP-lisäsuodatinikkunassa (luettelu- tai muokkaustarkoituksiin)</li>
       <li xml:lang="fr">Exclusion/bannissement de pairs avec une fenêtre additionnelle pour lister/modifier les filtres d'IP</li>
       <li xml:lang="gl">Expulsar e prohibir parceiros cun diálogo adicional de filtraxe por IP para listar e editar.</li>
       <li xml:lang="id">Tendang/cegah rekan (peer) dengan sebuah dialog Filter IP tambahan untuk tujuan daftar/edit</li>
@@ -333,6 +334,7 @@
       <li xml:lang="el">Υποστήριξη ανιχνευτή UDP</li>
       <li xml:lang="en-GB">UDP tracker support</li>
       <li xml:lang="es">Uso de rastreador UDP</li>
+      <li xml:lang="fi">UDP-seurantapalvelintuki</li>
       <li xml:lang="fr">Gestion des trackers UDP</li>
       <li xml:lang="gl">Compatibilidade con localizadores UDP.</li>
       <li xml:lang="id">Mendukung UDP tracker</li>
@@ -360,6 +362,7 @@
       <li xml:lang="el">Υποστήριξη για ιδιωτικούς ανιχνευτές και torrent</li>
       <li xml:lang="en-GB">Support for private trackers and torrents</li>
       <li xml:lang="es">Implementación de rastreadores y torrents privados</li>
+      <li xml:lang="fi">Yksityisten seurantapalvelinten ja torrenttien tuki</li>
       <li xml:lang="fr">Gestion des torrents et traqueurs privés</li>
       <li xml:lang="gl">Compatibilidade con localizadores e torrents privados.</li>
       <li xml:lang="id">Dukungan untuk torrent dan tracker privat</li>
@@ -388,6 +391,7 @@
       <li xml:lang="el">Υποστήριξη για ανταλλαγή µTorrent κόμβων</li>
       <li xml:lang="en-GB">Support for µTorrent's peer exchange</li>
       <li xml:lang="es">Implementación de intercambio de pares de µTorrent</li>
+      <li xml:lang="fi">µTorrentin käyttäjävaihdon tuki</li>
       <li xml:lang="fr">Gestion de l'échange de pairs de µTorrent.</li>
       <li xml:lang="gl">Compatibilidade co intercambio de parceiros de µTorrent.</li>
       <li xml:lang="id">Dukungan untuk pertukaran para rekan  µTorrent</li>
@@ -414,6 +418,7 @@
       <li xml:lang="el">Υποστήριξη για κρυπτογράφηση πρωτοκόλλου (συμβατό με Azureus)</li>
       <li xml:lang="en-GB">Support for protocol encryption (compatible with Azureus)</li>
       <li xml:lang="es">Implementación de cifrado de protocolo (compatible con Azureus)</li>
+      <li xml:lang="fi">Yhteyskäytännön salaustuki (Azureuksen kanssa yhteensopiva)</li>
       <li xml:lang="fr">Gestion du chiffrement du protocole (compatible avec Azureus)</li>
       <li xml:lang="gl">Funcionalidade de cifrado do protocolo (compatíbel con Azureus).</li>
       <li xml:lang="id">Dukungan untuk enkripsi protokol (kompatibel dengan Azureus)</li>
@@ -440,6 +445,7 @@
       <li xml:lang="el">Υποστήριξη για δημιουργία torrent χωρίς ανιχνευτές</li>
       <li xml:lang="en-GB">Support for creating trackerless torrents</li>
       <li xml:lang="es">Admite la creación de torrents sin rastreadores</li>
+      <li xml:lang="fi">Seurantapalvelimettomien torrenttien luontituki</li>
       <li xml:lang="fr">Gestion de la création de torrents sans traqueur</li>
       <li xml:lang="gl">Funcionalidade de creación de torrents sen localizadores.</li>
       <li xml:lang="id">Dukungan untuk menciptakan ke-tracker-an torrent</li>
@@ -602,6 +608,7 @@
       <li xml:lang="el">Υποστήριξη ταυτοποίησης ανιχνευτή</li>
       <li xml:lang="en-GB">Tracker authentication support</li>
       <li xml:lang="es">Implementa autenticación del rastreador</li>
+      <li xml:lang="fi">Seurantapalvelimen todennustuki</li>
       <li xml:lang="fr">Gestion de l'authentification des traqueurs</li>
       <li xml:lang="gl">Funcionalidade de autenticación de localizadores.</li>
       <li xml:lang="id">Dukungan autentikasi tracker</li>
