@@ -156,6 +156,11 @@ namespace kt
     void ScanThread::stop()
     {
         stop_requested = true;
+
+        // XXX seems like deleting KDirWatch object(s) created in scan_folders
+        // in destructor of this QThread after it has been stopped
+        // causes memory corruption, so we delete them early
+        scan_folders.clear();
         exit();
         wait();
     }
