@@ -73,6 +73,9 @@ namespace kt
         void accept() override;
         void reject() override;
 
+        void selectFile();// required for radio button for new torrent creation
+        void selectDirectory();
+
     private:
         void loadGroups();
         void loadCompleterData();

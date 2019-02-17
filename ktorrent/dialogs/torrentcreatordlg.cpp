@@ -54,11 +54,16 @@ namespace kt
         adjustSize();
         loadGroups();
 
-        m_url->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly | KFile::Directory);
+        m_url->setMode(KFile::ExistingOnly | KFile::LocalOnly | KFile::Directory);
+        m_selectDirectory->setChecked(true);
+
         m_dht_tab->setEnabled(false);
 
         connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
         connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+        connect(m_selectDirectory, &QRadioButton::clicked, this, &TorrentCreatorDlg::selectDirectory);
+        connect(m_selectFile, &QRadioButton::clicked, this, &TorrentCreatorDlg::selectFile);
 
         connect(m_dht, &QCheckBox::toggled, this, &TorrentCreatorDlg::dhtToggled);
 
@@ -427,5 +432,16 @@ namespace kt
     {
         m_progress->setValue(mktor->getCurrentChunk());
     }
+
+    void TorrentCreatorDlg::selectFile()
+    {
+        m_url->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
+    }
+
+    void TorrentCreatorDlg::selectDirectory()
+    {
+        m_url->setMode(KFile::ExistingOnly | KFile::LocalOnly | KFile::Directory);
+    }
+
 
 }
