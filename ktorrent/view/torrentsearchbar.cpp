@@ -46,7 +46,7 @@ namespace kt
 
         search_bar = new QLineEdit(this);
         search_bar->setClearButtonEnabled(true);
-        search_bar->setPlaceholderText(i18n("Torrent filter"));
+        search_bar->setPlaceholderText(i18n("Filter..."));
         connect(search_bar, SIGNAL(textChanged(QString)), view, SLOT(setFilterString(QString)));
         connect(this, SIGNAL(filterBarShown(QString)), view, SLOT(setFilterString(QString)));
 
