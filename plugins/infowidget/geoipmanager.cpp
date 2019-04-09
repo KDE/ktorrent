@@ -1,4 +1,4 @@
-/***************************************************************************
+ /***************************************************************************
  *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
@@ -35,8 +35,11 @@ using namespace bt;
 
 namespace kt
 {
-    QUrl GeoIPManager::geoip_url = QUrl(QStringLiteral("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz"));
-
+   //legacy database discontinued.... https://bugs.kde.org/show_bug.cgi?id=403054
+  //    QUrl GeoIPManager::geoip_url = QUrl(QStringLiteral("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz"));
+  //new database is here.....    
+  QUrl GeoIPManager::geoip_url = QUrl(QStringLiteral("https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz"));
+    
     GeoIPManager::GeoIPManager(QObject* parent): QObject(parent), geo_ip(nullptr), decompress_thread(nullptr)
     {
 #ifdef USE_SYSTEM_GEOIP
