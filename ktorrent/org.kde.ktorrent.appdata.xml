@@ -707,6 +707,7 @@
   </description>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=ktorrent</url>
   <url type="help">http://docs.kde.org/?application=ktorrent</url>
+  <url type="homepage">https://kde.org/applications/internet/ktorrent/</url>
   <screenshots>
     <screenshot type="default">
       <image>https://kde.org/images/screenshots/ktorrent.png</image>
