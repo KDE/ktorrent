@@ -110,6 +110,7 @@ target_link_libraries(ktorrent_app
     KF5::WidgetsAddons
     KF5::WindowSystem
     KF5::XmlGui
+    KF5::Crash
 )
 
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
