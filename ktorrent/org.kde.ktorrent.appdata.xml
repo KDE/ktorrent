@@ -78,7 +78,7 @@
     <p xml:lang="fi">KTorrent on KDE:n BitTorrent-sovellus, jolla voit ladata tiedostoja BitTorrent-yhteyskäytännöllä. Sovelluksella voit suorittaa useita torrentteja samanaikaisesti, ja siinä on erityisominaisuuksia, jotka tekevät siitä täydellisen BitTorrent-asiakkaan.</p>
     <p xml:lang="fr">KTorrent est une application BitTorrent par KDE qui vous permet de télécharger des fichiers en utilisant le protocole BitTorrent. Il peut gérer plusieurs torrents en même temps et possède des fonctionnalités étendues qui en font un client complet pour BitTorrent.</p>
     <p xml:lang="gl">KTorrent é un aplicativo de BitTorrent por KDE que permítelle descargar ficheiros usando o protocolo BitTorrent. Permítelle executar varios torrents ao mesmo tempo e inclúe funcionalidades adicionais que o convirten nun cliente de BitTorrent completo.</p>
-    <p xml:lang="id">KTorrent adalah sebuah aplikasi BitTorrent oleh KDE yang mana memungkinkan kamu untuk mendownload file menggunakan protokol BitTorrent. Yang sanggup saat kamu menjalankan torrent secara multiple di waktu yang bersamaan dan hadir dengan fitur yang diperluas untuk membuat sebuah klien yang berfitur penuh buat BitTorrent.</p>
+    <p xml:lang="id">KTorrent adalah sebuah aplikasi BitTorrent oleh KDE yang mana memungkinkan kamu untuk mengunduh file menggunakan protokol BitTorrent. Yang sanggup saat kamu menjalankan torrent secara multiple di waktu yang bersamaan dan hadir dengan fitur yang diperluas untuk membuat sebuah klien yang berfitur penuh buat BitTorrent.</p>
     <p xml:lang="it">KTorrent è un'applicazione BitTorrent della comunità KDE, che ti permette di scaricare i file usando il protocollo BitTorrent. Ti consente di avviare contemporaneamente torrent multipli, e ti arriva con funzionalità estese, che lo rendono un client di BitTorrent ricco di funzionalità.</p>
     <p xml:lang="ko">KTorrent는 KDE의 비트토렌트 클라이언트입니다. 비트토렌트 프로토콜을 사용하여 파일을 다운로드할 수 있습니다. 여러 개의 토렌트를 동시에 다운로드할 수 있으며 다양한 추가 기능을 제공합니다.</p>
     <p xml:lang="nl">KTorrent is een BitTorrent-toepassing door KDE die u in staat stelt bestanden te downloaden met het BitTorrent-protocol. U kunt meerdere torrents tegelijk doen en het komt met uitgebreide functies om het een client voor BitTorrent te laten zijn met alle mogelijkheden.</p>
@@ -216,7 +216,7 @@
       <li xml:lang="fi">Osittain tai täysin ladattujen tiedostojen tuonti</li>
       <li xml:lang="fr">Import de fichiers partiellement ou totalement téléchargés</li>
       <li xml:lang="gl">Importación de ficheiros descargados total ou parcialmente.</li>
-      <li xml:lang="id">Mengimpor file yang didownload secara penuh atau secara parsial</li>
+      <li xml:lang="id">Mengimpor file yang diunduh secara penuh atau secara parsial</li>
       <li xml:lang="it">Importazione di file parzialmente o totalmente scaricati</li>
       <li xml:lang="ko">일부분 및 완전히 다운로드된 파일 가져오기</li>
       <li xml:lang="nl">Gedeeltelijk of volledig gedownloade bestanden importeren</li>
@@ -270,7 +270,7 @@
       <li xml:lang="fi">Useampitiedostoisten torrenttien valikoiva lataus</li>
       <li xml:lang="fr">Téléchargement sélectif pour les torrents multi-fichiers</li>
       <li xml:lang="gl">Descarga selectiva para torrents con varios ficheiros.</li>
-      <li xml:lang="id">Pendownloadan selektif untuk multi file</li>
+      <li xml:lang="id">Pengunduhan selektif untuk torrent-torrent multi file</li>
       <li xml:lang="it">Scaricamento selettivo per i torrent multi-file</li>
       <li xml:lang="ko">파일이 여러 개 있는 토렌트의 일부만 다운로드</li>
       <li xml:lang="nl">Selectief downloaden van multi-bestand-torrents</li>
