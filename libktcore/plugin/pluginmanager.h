@@ -23,6 +23,7 @@
 
 #include <QList>
 #include <QStringList>
+#include <QVector>
 
 #include <KPluginInfo>
 #include <KPluginMetaData>
