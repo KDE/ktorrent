@@ -151,7 +151,7 @@ namespace kt
                     fac = 45;
                 else
                     fac = 65;
-                c = color.light(200 - fac);
+                c = color.lighter(200 - fac);
             }
             p->setPen(QPen(c, 1, Qt::SolidLine));
             p->setBrush(c);
