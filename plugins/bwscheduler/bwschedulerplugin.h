@@ -47,7 +47,7 @@ namespace kt
         Q_OBJECT
     public:
         BWSchedulerPlugin(QObject* parent, const QVariantList& args);
-        ~BWSchedulerPlugin();
+        ~BWSchedulerPlugin() override;
 
         void load() override;
         void unload() override;

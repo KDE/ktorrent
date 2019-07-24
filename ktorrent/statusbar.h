@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         StatusBar(QWidget* parent);
-        ~StatusBar();
+        ~StatusBar() override;
 
         /// Update the speed info of the status bar (speeds are in bytes per sec)
         void updateSpeed(bt::Uint32 up, bt::Uint32 down);

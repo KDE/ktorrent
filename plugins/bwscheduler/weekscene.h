@@ -38,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         WeekScene(QObject* parent);
-        ~WeekScene();
+        ~WeekScene() override;
 
         /**
          * Set the current Schedule

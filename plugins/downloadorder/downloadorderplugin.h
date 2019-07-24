@@ -37,7 +37,7 @@ namespace kt
         Q_OBJECT
     public:
         DownloadOrderPlugin(QObject* parent, const QVariantList& args);
-        ~DownloadOrderPlugin();
+        ~DownloadOrderPlugin() override;
 
         bool versionCheck(const QString& version) const override;
         void load() override;

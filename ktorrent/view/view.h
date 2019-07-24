@@ -49,7 +49,7 @@ namespace kt
         Q_OBJECT
     public:
         View(Core* core, GUI* gui, QWidget* parent);
-        ~View();
+        ~View() override;
 
         /// Setup the actions of the view manager
         void setupActions(KActionCollection* ac);

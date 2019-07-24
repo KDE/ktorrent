@@ -46,7 +46,7 @@ namespace kt
         Q_OBJECT
     public:
         IPFilterPlugin(QObject* parent, const QVariantList& args);
-        ~IPFilterPlugin();
+        ~IPFilterPlugin() override;
 
         void load() override;
         void unload() override;

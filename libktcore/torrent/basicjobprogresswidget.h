@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
     public:
         BasicJobProgressWidget(bt::Job* job, QWidget* parent);
-        ~BasicJobProgressWidget();
+        ~BasicJobProgressWidget() override;
 
         void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2) override;
         void infoMessage(const QString& plain, const QString& rich) override;

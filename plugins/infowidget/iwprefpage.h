@@ -31,7 +31,7 @@ namespace kt
         Q_OBJECT
     public:
         IWPrefPage(QWidget* parent);
-        ~IWPrefPage();
+        ~IWPrefPage() override;
 
     };
 }

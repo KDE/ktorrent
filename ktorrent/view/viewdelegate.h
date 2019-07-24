@@ -44,7 +44,7 @@ namespace kt
     {
     public:
         ExtenderBox(QWidget* widget);
-        ~ExtenderBox();
+        ~ExtenderBox() override;
 
         /// Add an Extender
         void add(Extender* ext);
@@ -74,7 +74,7 @@ namespace kt
         Q_OBJECT
     public:
         ViewDelegate(Core* core, ViewModel* model, View* parent);
-        ~ViewDelegate();
+        ~ViewDelegate() override;
 
         /**
             Extend a torrent with a widget

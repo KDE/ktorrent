@@ -36,7 +36,7 @@ namespace kt
         Q_OBJECT
     public:
         ShutdownDlg(ShutdownRuleSet* rules, CoreInterface* core, QWidget* parent);
-        ~ShutdownDlg();
+        ~ShutdownDlg() override;
 
         void accept() override;
         void reject() override;

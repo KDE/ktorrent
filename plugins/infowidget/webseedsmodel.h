@@ -40,7 +40,7 @@ namespace kt
 
     public:
         WebSeedsModel(QObject* parent);
-        ~WebSeedsModel();
+        ~WebSeedsModel() override;
 
 
         /**

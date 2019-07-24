@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         PluginActivity(PluginManager* pman);
-        ~PluginActivity();
+        ~PluginActivity() override;
 
         void updatePluginList();
         void update();

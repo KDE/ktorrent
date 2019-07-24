@@ -42,7 +42,7 @@ namespace kt
         Q_OBJECT
     public:
         PeerView(QWidget* parent);
-        ~PeerView();
+        ~PeerView() override;
 
         /// A peer has been added
         void peerAdded(bt::PeerInterface* peer);

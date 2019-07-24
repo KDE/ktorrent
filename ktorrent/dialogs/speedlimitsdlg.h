@@ -41,7 +41,7 @@ namespace kt
 
     public:
         SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidget* parent);
-        ~SpeedLimitsDlg();
+        ~SpeedLimitsDlg() override;
 
 
     protected slots:

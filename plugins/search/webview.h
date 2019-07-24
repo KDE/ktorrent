@@ -54,7 +54,7 @@ namespace kt
         Q_OBJECT
     public:
         WebView(WebViewClient* client, ProxyHelper* proxy, QWidget* parentWidget = 0);
-        virtual ~WebView();
+        ~WebView() override;
 
         /**
          * Open a url

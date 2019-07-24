@@ -49,7 +49,7 @@ namespace kt
         Q_OBJECT
     public:
         TorrentActivity(Core* core, GUI* gui, QWidget* parent);
-        ~TorrentActivity();
+        ~TorrentActivity() override;
 
         /// Get the group view
         GroupView* getGroupView() {return group_view;}

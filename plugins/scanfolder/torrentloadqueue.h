@@ -46,7 +46,7 @@ namespace kt
         Q_OBJECT
     public:
         TorrentLoadQueue(CoreInterface* core, QObject* parent = 0);
-        ~TorrentLoadQueue();
+        ~TorrentLoadQueue() override;
 
         /// Set the loaded torrent action
         void setLoadedTorrentAction(LoadedTorrentAction act) {action = act;}

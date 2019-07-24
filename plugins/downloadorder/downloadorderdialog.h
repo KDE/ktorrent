@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent);
-        ~DownloadOrderDialog();
+        ~DownloadOrderDialog() override;
 
     private slots:
         void commitDownloadOrder();

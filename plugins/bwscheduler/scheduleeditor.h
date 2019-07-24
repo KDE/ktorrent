@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         ScheduleEditor(QWidget* parent);
-        ~ScheduleEditor();
+        ~ScheduleEditor() override;
 
         /**
          * Set the current Schedule

@@ -37,7 +37,7 @@ class MagnetTest : public QObject
 {
 public:
     MagnetTest(const bt::MagnetLink& mlink, QObject* parent = 0);
-    ~MagnetTest();
+    ~MagnetTest() override;
 
     void routerDiscovered(bt::UPnPRouter* router);
     void start();

@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         CentralWidget(QWidget* parent);
-        ~CentralWidget();
+        ~CentralWidget() override;
 
         /// Add an Activity
         QAction * addActivity(Activity* act);

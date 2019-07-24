@@ -38,7 +38,7 @@ namespace kt
         Q_CLASSINFO("D-Bus Interface", "org.ktorrent.torrentfilestream")
     public:
         DBusTorrentFileStream(bt::Uint32 file_index, DBusTorrent* tor);
-        ~DBusTorrentFileStream();
+        ~DBusTorrentFileStream() override;
 
         /// Was the stream created properly ?
         bool ok() const {return !stream.isNull();}

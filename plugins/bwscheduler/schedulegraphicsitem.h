@@ -36,7 +36,7 @@ namespace kt
     {
     public:
         ScheduleGraphicsItem(ScheduleItem* item, const QRectF& r, const QRectF& constraints, WeekScene* ws);
-        ~ScheduleGraphicsItem();
+        ~ScheduleGraphicsItem() override;
 
         QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 

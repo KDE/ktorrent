@@ -48,26 +48,26 @@ namespace kt
         Q_OBJECT
     public:
         GUI();
-        ~GUI();
+        ~GUI() override;
 
         DBus* getDBusInterface() {return dbus_iface;}
 
         // Stuff implemented from GUIInterface
-        KMainWindow* getMainWindow() {return this;}
-        void addPrefPage(PrefPageInterface* page);
-        void removePrefPage(PrefPageInterface* page);
-        void mergePluginGui(Plugin* p);
-        void removePluginGui(Plugin* p);
-        void errorMsg(const QString& err);
-        void errorMsg(KIO::Job* j);
-        void infoMsg(const QString& info);
-        StatusBarInterface* getStatusBar();
-        void addActivity(Activity* act);
-        void removeActivity(Activity* act);
-        TorrentActivityInterface* getTorrentActivity();
-        QSize sizeHint() const;
+        KMainWindow* getMainWindow() override {return this;}
+        void addPrefPage(PrefPageInterface* page) override;
+        void removePrefPage(PrefPageInterface* page) override;
+        void mergePluginGui(Plugin* p) override;
+        void removePluginGui(Plugin* p) override;
+        void errorMsg(const QString& err) override;
+        void errorMsg(KIO::Job* j) override;
+        void infoMsg(const QString& info) override;
+        StatusBarInterface* getStatusBar() override;
+        void addActivity(Activity* act) override;
+        void removeActivity(Activity* act) override;
+        TorrentActivityInterface* getTorrentActivity() override;
+        QSize sizeHint() const override;
 
-        bool event(QEvent *e);
+        bool event(QEvent *e) override;
 
         /**
         * Create a XML GUI container (menu or toolbar)
@@ -93,7 +93,7 @@ namespace kt
         void setPasteDisabled(bool on);
 
         /// Set the current activity
-        void setCurrentActivity(Activity* act);
+        void setCurrentActivity(Activity* act) override;
 
     private slots:
         void createTorrent();
@@ -104,7 +104,7 @@ namespace kt
         void showPrefDialog();
         void showIPFilter();
         void configureKeys();
-        void configureToolbars();
+        void configureToolbars() override;
         void newToolBarConfig();
         void import();
         void update();
@@ -120,7 +120,7 @@ namespace kt
 
         void loadState(KSharedConfigPtr cfg);
         void saveState(KSharedConfigPtr cfg);
-        bool queryClose();
+        bool queryClose() override;
 
     private:
         Core* core;

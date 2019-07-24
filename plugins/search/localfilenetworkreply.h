@@ -33,7 +33,7 @@ namespace kt
     {
     public:
         LocalFileNetworkReply(const QString& file, QObject* parent = 0);
-        ~LocalFileNetworkReply();
+        ~LocalFileNetworkReply() override;
 
         void abort() override;
         bool isSequential() const override {return true;}

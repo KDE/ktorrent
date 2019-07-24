@@ -42,7 +42,7 @@ namespace kt
         Q_OBJECT
     public:
         TorrentService(bt::TorrentInterface* tc);
-        ~TorrentService();
+        ~TorrentService() override;
 
         void stop(bt::WaitJob* wjob = 0) override;
         void start() override;

@@ -36,7 +36,7 @@ namespace kt
         Q_OBJECT
     public:
         TorrentFileListModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent);
-        ~TorrentFileListModel();
+        ~TorrentFileListModel() override;
 
         void changeTorrent(bt::TorrentInterface* tc) override;
         int rowCount(const QModelIndex& parent) const override;

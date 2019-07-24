@@ -54,7 +54,7 @@ namespace kt
         Q_OBJECT
     public:
         Core(GUI* gui);
-        ~Core();
+        ~Core() override;
 
         // implemented from CoreInterface
         void setKeepSeeding(bool ks) override;

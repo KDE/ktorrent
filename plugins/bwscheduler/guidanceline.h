@@ -36,7 +36,7 @@ namespace kt
     {
     public:
         GuidanceLine(qreal x, qreal y, qreal text_offset);
-        ~GuidanceLine();
+        ~GuidanceLine() override;
 
         /**
          * Update the guidance line

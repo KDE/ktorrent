@@ -50,7 +50,7 @@ namespace kt
         Q_OBJECT
     public:
         GeoIPManager(QObject* parent = 0);
-        ~GeoIPManager();
+        ~GeoIPManager() override;
 
         /**
          * Find the country given an IP address

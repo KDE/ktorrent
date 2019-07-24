@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         GroupSwitcher(View* view, GroupManager* gman, QWidget* parent);
-        ~GroupSwitcher();
+        ~GroupSwitcher() override;
 
         /**
          * Load state of widget from config

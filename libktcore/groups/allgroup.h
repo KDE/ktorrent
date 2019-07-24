@@ -33,7 +33,7 @@ namespace kt
     {
     public:
         AllGroup();
-        ~AllGroup();
+        ~AllGroup() override;
 
         bool isMember(TorrentInterface* tor) override;
 

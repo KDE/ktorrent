@@ -40,7 +40,7 @@ namespace kt
             Verbose, Quietly
         };
         DownloadAndConvertJob(const QUrl& url, Mode mode);
-        ~DownloadAndConvertJob();
+        ~DownloadAndConvertJob() override;
 
         enum ErrorCode
         {
@@ -48,7 +48,7 @@ namespace kt
         };
 
         void kill(KJob::KillVerbosity v);
-        void start();
+        void start() override;
 
         bool isAutoUpdate() const {return mode == Quietly;}
 

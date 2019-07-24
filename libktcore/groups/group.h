@@ -79,7 +79,7 @@ namespace kt
          * @param path Path in the group tree (e.g /all/downloads/foo, last item in path should be the groups internal name)
          */
         Group(const QString& name, int flags, const QString& path);
-        virtual ~Group();
+        ~Group() override;
 
         /// See if this is a standard group.
         bool isStandardGroup() const {return !(flags & CUSTOM_GROUP);}

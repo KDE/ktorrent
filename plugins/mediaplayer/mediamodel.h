@@ -55,7 +55,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaModel(CoreInterface* core, QObject* parent);
-        ~MediaModel();
+        ~MediaModel() override;
 
         int rowCount(const QModelIndex& parent) const override;
         int columnCount(const QModelIndex& parent) const override;

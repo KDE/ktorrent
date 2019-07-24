@@ -51,7 +51,7 @@ namespace kt
         Q_OBJECT
     public:
         InfoWidgetPlugin(QObject* parent, const QVariantList& args);
-        ~InfoWidgetPlugin();
+        ~InfoWidgetPlugin() override;
 
         void load() override;
         void unload() override;

@@ -38,7 +38,7 @@ namespace kt
     {
     public:
         ConvertThread(ConvertDialog* dlg);
-        ~ConvertThread();
+        ~ConvertThread() override;
 
         void run() override;
 

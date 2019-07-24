@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
     public:
         VideoChunkBar(const MediaFileRef& mfile, QWidget* parent);
-        ~VideoChunkBar();
+        ~VideoChunkBar() override;
 
         /// Set the media file
         void setMediaFile(const MediaFileRef& mf);

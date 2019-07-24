@@ -45,7 +45,7 @@ namespace kt
         Q_OBJECT
     public:
         ChunkDownloadView(QWidget* parent);
-        ~ChunkDownloadView();
+        ~ChunkDownloadView() override;
 
         /// A peer has been added
         void downloadAdded(bt::ChunkDownloadInterface* cd);

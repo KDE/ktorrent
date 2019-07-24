@@ -42,7 +42,7 @@ namespace kt
         Q_OBJECT
     public:
         MagnetView(MagnetManager* magnetManager, QWidget* parent = 0);
-        ~MagnetView();
+        ~MagnetView() override;
 
         void saveState(KSharedConfigPtr cfg);
         void loadState(KSharedConfigPtr cfg);

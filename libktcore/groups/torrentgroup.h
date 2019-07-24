@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         TorrentGroup(const QString& name);
-        ~TorrentGroup();
+        ~TorrentGroup() override;
 
         bool isMember(TorrentInterface* tor) override;
         void save(bt::BEncoder* enc) override;

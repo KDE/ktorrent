@@ -47,7 +47,7 @@ namespace kt
         Q_OBJECT
     public:
         UPnPWidget(bt::UPnPMCastSocket* sock, QWidget* parent);
-        ~UPnPWidget();
+        ~UPnPWidget() override;
 
         void shutdown(bt::WaitJob* job);
 

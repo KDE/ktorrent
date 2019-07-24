@@ -44,7 +44,7 @@ namespace kt
         Q_OBJECT
     public:
         TrackerModel(QObject* parent);
-        ~TrackerModel();
+        ~TrackerModel() override;
 
         void changeTC(bt::TorrentInterface* tc);
         void update();

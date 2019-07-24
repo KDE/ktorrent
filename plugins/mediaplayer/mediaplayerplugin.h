@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaPlayerPlugin(QObject* parent, const QVariantList& args);
-        ~MediaPlayerPlugin();
+        ~MediaPlayerPlugin() override;
 
         void load() override;
         void unload() override;

@@ -37,7 +37,7 @@ namespace kt
         Q_OBJECT
     public:
         RecommendedSettingsDlg(QWidget* parent);
-        ~RecommendedSettingsDlg();
+        ~RecommendedSettingsDlg() override;
 
     private slots:
         void calculate();

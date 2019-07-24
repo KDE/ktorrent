@@ -51,7 +51,7 @@ namespace kt
         */
         SettingsPage(QWidget* p);
         ///Destructor
-        ~SettingsPage();
+        ~SettingsPage() override;
 
     public slots:
         void updateSettings() override;

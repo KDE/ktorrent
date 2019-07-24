@@ -46,7 +46,7 @@ namespace kt
         Q_OBJECT
     public:
         RouterModel(QObject* parent);
-        ~RouterModel();
+        ~RouterModel() override;
 
         /// Add a router tot the model
         void addRouter(bt::UPnPRouter* r);

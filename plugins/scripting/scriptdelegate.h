@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
     public:
         ScriptDelegate(QAbstractItemView* parent);
-        ~ScriptDelegate();
+        ~ScriptDelegate() override;
 
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
         QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;

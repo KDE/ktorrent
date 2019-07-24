@@ -50,7 +50,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaPlayer(QObject* parent);
-        ~MediaPlayer();
+        ~MediaPlayer() override;
 
         Phonon::AudioOutput* output() {return audio;}
         Phonon::MediaObject* media0bject() {return media;}

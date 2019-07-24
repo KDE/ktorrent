@@ -44,7 +44,7 @@ namespace kt
         Q_OBJECT
     public:
         ScanThread();
-        ~ScanThread();
+        ~ScanThread() override;
 
         /**
          * Set whether to scan recursively or not

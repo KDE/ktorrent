@@ -41,7 +41,7 @@ namespace kt
 
     public:
         SearchToolBar(KActionCollection* ac, SearchEngineList* sl, QObject* parent);
-        ~SearchToolBar();
+        ~SearchToolBar() override;
 
         /// Save settings like current search engine
         void saveSettings();

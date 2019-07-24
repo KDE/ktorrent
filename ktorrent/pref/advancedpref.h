@@ -33,7 +33,7 @@ namespace kt
         Q_OBJECT
     public:
         AdvancedPref(QWidget* parent);
-        ~AdvancedPref();
+        ~AdvancedPref() override;
 
         void loadSettings() override;
         void loadDefaults() override;

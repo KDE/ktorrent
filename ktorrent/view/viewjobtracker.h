@@ -38,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         ViewJobTracker(View* parent);
-        ~ViewJobTracker();
+        ~ViewJobTracker() override;
 
         void jobUnregistered(bt::Job* j) override;
         void jobRegistered(bt::Job* j) override;

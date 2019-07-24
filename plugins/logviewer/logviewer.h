@@ -38,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         LogViewer(LogFlags* flags, QWidget* parent = 0);
-        ~LogViewer();
+        ~LogViewer() override;
 
         void message(const QString& line, unsigned int arg) override;
 

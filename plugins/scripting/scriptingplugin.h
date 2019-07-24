@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         ScriptingPlugin(QObject* parent, const QVariantList& args);
-        ~ScriptingPlugin();
+        ~ScriptingPlugin() override;
 
         void load() override;
         void unload() override;

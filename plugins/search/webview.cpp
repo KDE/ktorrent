@@ -56,7 +56,7 @@ namespace kt
             webview->getProxy()->ApplyProxy(sessionMetaData());
         }
 
-        ~NetworkAccessManager()
+        ~NetworkAccessManager() override
         {}
 
         QNetworkReply* createRequest(Operation op, const QNetworkRequest& req, QIODevice* outgoingData) override

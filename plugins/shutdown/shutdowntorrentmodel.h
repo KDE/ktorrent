@@ -37,7 +37,7 @@ namespace kt
         Q_OBJECT
     public:
         ShutdownTorrentDelegate(QObject* parent = 0);
-        ~ShutdownTorrentDelegate();
+        ~ShutdownTorrentDelegate() override;
 
         QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
         void setEditorData(QWidget* editor, const QModelIndex& index) const override;
@@ -52,7 +52,7 @@ namespace kt
         Q_OBJECT
     public:
         ShutdownTorrentModel(CoreInterface* core, QObject* parent);
-        ~ShutdownTorrentModel();
+        ~ShutdownTorrentModel() override;
 
         QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
         int columnCount(const QModelIndex& parent = QModelIndex()) const override;

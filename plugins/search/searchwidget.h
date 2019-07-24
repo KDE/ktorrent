@@ -47,7 +47,7 @@ namespace kt
         Q_OBJECT
     public:
         SearchWidget(SearchPlugin* sp);
-        ~SearchWidget();
+        ~SearchWidget() override;
 
         QString getSearchText() const {return search_text->text();}
         QUrl getCurrentUrl() const;

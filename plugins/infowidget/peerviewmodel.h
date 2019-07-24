@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         PeerViewModel(QObject* parent);
-        ~PeerViewModel();
+        ~PeerViewModel() override;
 
         /// A peer has been added
         void peerAdded(bt::PeerInterface* peer);

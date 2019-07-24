@@ -87,7 +87,7 @@ namespace kt
         */
         ConnsTabPage(QWidget* p);
         ///Destructor
-        ~ConnsTabPage();
+        ~ConnsTabPage() override;
 
 
     public slots:

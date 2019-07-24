@@ -40,7 +40,7 @@ namespace kt
         {
         }
 
-        ~OpenSearchHandler()
+        ~OpenSearchHandler() override
         {
         }
 

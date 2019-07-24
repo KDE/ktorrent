@@ -37,7 +37,7 @@ namespace kt
         Q_OBJECT
     public:
         DownloadedChunkBar(QWidget* parent);
-        ~DownloadedChunkBar();
+        ~DownloadedChunkBar() override;
 
         const bt::BitSet& getBitSet() const override;
         void updateBar(bool force = false) override;

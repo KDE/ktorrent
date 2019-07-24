@@ -32,7 +32,7 @@ namespace kt
         Q_OBJECT
     public:
         BTPref(QWidget* parent);
-        ~BTPref();
+        ~BTPref() override;
 
         void loadSettings() override;
     };

@@ -33,7 +33,7 @@ namespace kt
         Q_OBJECT
     public:
         LogPrefPage(LogFlags* flags, QWidget* parent);
-        ~LogPrefPage();
+        ~LogPrefPage() override;
 
         void loadDefaults() override;
         void loadSettings() override;

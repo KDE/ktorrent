@@ -53,7 +53,7 @@ namespace kt
 
     public:
         FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, const QString& group_hint, QWidget* parent);
-        ~FileSelectDlg();
+        ~FileSelectDlg() override;
 
         int execute(bt::TorrentInterface* tc, bool* start, bool* skip_check, const QString& location_hint);
 

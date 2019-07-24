@@ -46,7 +46,7 @@ namespace kt
         Q_OBJECT
     public:
         PrefDialog(QWidget* parent, Core* core);
-        ~PrefDialog();
+        ~PrefDialog() override;
 
         /**
          * Add a pref page to the dialog.
@@ -94,7 +94,7 @@ namespace kt
     {
     public:
         PrefPageScrollArea(PrefPageInterface* page, QWidget* parent = 0);
-        ~PrefPageScrollArea();
+        ~PrefPageScrollArea() override;
 
         PrefPageInterface* page;
         KPageWidgetItem* page_widget_item;

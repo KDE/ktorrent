@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         ScanFolderPlugin(QObject* parent, const QVariantList& args);
-        ~ScanFolderPlugin();
+        ~ScanFolderPlugin() override;
 
         void load() override;
         void unload() override;

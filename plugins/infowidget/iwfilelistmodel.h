@@ -37,7 +37,7 @@ namespace kt
         Q_OBJECT
     public:
         IWFileListModel(bt::TorrentInterface* tc, QObject* parent);
-        ~IWFileListModel();
+        ~IWFileListModel() override;
 
         void changeTorrent(bt::TorrentInterface* tc) override;
         int columnCount(const QModelIndex& parent) const override;

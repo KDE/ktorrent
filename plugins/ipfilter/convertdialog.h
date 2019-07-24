@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         ConvertDialog(QWidget* parent);
-        ~ConvertDialog();
+        ~ConvertDialog() override;
 
         /**
          * Set the message.

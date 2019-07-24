@@ -45,7 +45,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaViewFilter(QObject* parent = 0);
-        ~MediaViewFilter();
+        ~MediaViewFilter() override;
 
         bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
 
@@ -67,7 +67,7 @@ namespace kt
         Q_OBJECT
     public:
         MediaView(MediaModel* model, QWidget* parent);
-        ~MediaView();
+        ~MediaView() override;
 
         void saveState(KSharedConfig::Ptr cfg);
         void loadState(KSharedConfig::Ptr cfg);

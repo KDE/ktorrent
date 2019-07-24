@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         JobTracker(QObject* parent);
-        ~JobTracker();
+        ~JobTracker() override;
 
         void registerJob(KJob* job) override;
         void unregisterJob(KJob* job) override;

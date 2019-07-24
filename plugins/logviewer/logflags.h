@@ -41,7 +41,7 @@ namespace kt
 
     public:
         LogFlags();
-        ~LogFlags();
+        ~LogFlags() override;
 
         static LogFlags& instance();
 

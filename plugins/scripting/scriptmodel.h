@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         ScriptModel(QObject* parent);
-        ~ScriptModel();
+        ~ScriptModel() override;
 
         enum Role
         {

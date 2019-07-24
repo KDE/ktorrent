@@ -43,7 +43,7 @@ namespace kt
          * @param data_dir Directory where all the information regarding the engine is stored
          */
         SearchEngine(const QString& data_dir);
-        ~SearchEngine();
+        ~SearchEngine() override;
 
         /**
          * Load the engine from an opensearch XML file

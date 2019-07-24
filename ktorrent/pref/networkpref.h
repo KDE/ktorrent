@@ -36,7 +36,7 @@ namespace kt
         Q_OBJECT
     public:
         NetworkPref(QWidget* parent);
-        ~NetworkPref();
+        ~NetworkPref() override;
 
         void loadSettings() override;
         void loadDefaults() override;

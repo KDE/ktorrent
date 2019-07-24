@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
     public:
         QMPref(QWidget* parent);
-        ~QMPref();
+        ~QMPref() override;
 
         void loadSettings() override;
         void loadDefaults() override;
