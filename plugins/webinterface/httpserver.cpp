@@ -272,7 +272,7 @@ namespace kt
         else if (ext == "svg" || ext == "svgz")
             return "image/svg+xml";
         else
-            return QString::null;
+            return QString();
     }
 
     // HTTP needs non translated dates

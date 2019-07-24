@@ -143,7 +143,7 @@ namespace bt
             fptr = 0;
             ptr = size = 0;
             data = 0;
-            filename = QString::null;
+            filename = QString();
         }
     }
 

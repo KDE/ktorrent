@@ -113,11 +113,11 @@
 		</entry>
 		<entry name="lastSaveDir" type="String">
 			<label>Directory which was used as the last save directory</label>
-			<default code="true">QString::null</default>
+			<default code="true">QString()</default>
 		</entry>
 		<entry name="customIP" type="String">
 			<label>IP to pass to the tracker</label>
-			<default code="true">QString::null</default>
+			<default code="true">QString()</default>
 		</entry>
 		<entry name="guiUpdateInterval" type="Int">
 			<label>GUI update interval</label>
@@ -177,7 +177,7 @@
 			<default>true</default>
 		</entry>
 		<entry name="httpProxy" type="String">
-			<default code="true">QString::null</default>
+			<default code="true">QString()</default>
 		</entry>
 		<entry name="httpProxyPort" type="Int">
 			<default>8080</default>
@@ -194,7 +194,7 @@
 			<default>false</default>
 		</entry>
 		<entry name="socksProxy" type="String">
-			<default code="true">QString::null</default>
+			<default code="true">QString()</default>
 		</entry>
 		<entry name="socksPort" type="Int">
 			<default>1080</default>
@@ -210,10 +210,10 @@
 			<default>false</default>
 		</entry>
 		<entry name="socksUsername" type="String">
-			<default code="true">QString::null</default>
+			<default code="true">QString()</default>
 		</entry>
 		<entry name="socksPassword" type="String">
-			<default code="true">QString::null</default>
+			<default code="true">QString()</default>
 		</entry>
 		<entry name="diskPrealloc" type="Bool">
  			<default>true</default>

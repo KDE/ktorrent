@@ -202,7 +202,7 @@ namespace kt
 
         BitSet bs(tor.getNumChunks());
         bs.setAll(false);
-        dc_thread = new DataCheckerThread(dc, bs, data_url.toLocalFile(), tor, QString::null);
+        dc_thread = new DataCheckerThread(dc, bs, data_url.toLocalFile(), tor, QString());
         connect(dc_thread, &bt::DataCheckerThread::finished, this, &ImportDialog::finished, Qt::QueuedConnection);
         dc_thread->start();
     }

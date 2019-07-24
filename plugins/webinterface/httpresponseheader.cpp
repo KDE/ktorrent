@@ -31,7 +31,7 @@ namespace kt
         case 304: return "Not Modified";
         case 404: return "Not Found";
         }
-        return QString::null;
+        return QString();
     }
 
     HttpResponseHeader::HttpResponseHeader(int response_code, int major_version, int minor_version)
