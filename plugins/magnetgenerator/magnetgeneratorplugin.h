@@ -33,7 +33,7 @@ namespace kt
         Q_OBJECT
     public:
         MagnetGeneratorPlugin(QObject* parent, const QVariantList& args);
-        ~MagnetGeneratorPlugin();
+        ~MagnetGeneratorPlugin() override;
 
         void load() override;
         void unload() override;

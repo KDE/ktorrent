@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         UPnPPlugin(QObject* parent, const QVariantList& args);
-        ~UPnPPlugin();
+        ~UPnPPlugin() override;
 
         void load() override;
         void unload() override;

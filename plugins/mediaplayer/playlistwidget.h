@@ -46,7 +46,7 @@ namespace kt
         Q_OBJECT
     public:
         PlayListWidget(MediaFileCollection* collection, MediaPlayer* player, QWidget* parent);
-        ~PlayListWidget();
+        ~PlayListWidget() override;
 
         /// Get the play list
         PlayList* playList() {return play_list;}

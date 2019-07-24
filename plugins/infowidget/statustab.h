@@ -35,7 +35,7 @@ namespace kt
 
     public:
         StatusTab(QWidget* parent);
-        ~StatusTab();
+        ~StatusTab() override;
 
 
     public slots:

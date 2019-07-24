@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         MagnetModel(MagnetManager *magnetManager, QObject* parent = 0);
-        ~MagnetModel();
+        ~MagnetModel() override;
 
         /// Remove a magnet downloader
         void removeMagnets(int row, int count);

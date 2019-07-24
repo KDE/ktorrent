@@ -66,7 +66,7 @@ namespace kt
 
     public:
         QueueManager();
-        ~QueueManager();
+        ~QueueManager() override;
 
         void append(bt::TorrentInterface* tc);
         void remove(bt::TorrentInterface* tc);
@@ -185,7 +185,7 @@ namespace kt
          * @param ih The info hash of a torrent
          * @return true if we do, false if we don't
          */
-        bool alreadyLoaded(const bt::SHA1Hash& ih) const;
+        bool alreadyLoaded(const bt::SHA1Hash& ih) const override;
 
 
         /**
@@ -193,7 +193,7 @@ namespace kt
          * @param ih The info_hash of the torrent to merge to
          * @param trk First tier of trackers
          */
-        void mergeAnnounceList(const bt::SHA1Hash& ih, const bt::TrackerTier* trk);
+        void mergeAnnounceList(const bt::SHA1Hash& ih, const bt::TrackerTier* trk) override;
 
         /**
          * Set the maximum number of downloads

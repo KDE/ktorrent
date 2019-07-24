@@ -43,7 +43,7 @@ namespace kt
         Q_CLASSINFO("D-Bus Interface", "org.ktorrent.torrent")
     public:
         DBusTorrent(bt::TorrentInterface* ti, QObject* parent);
-        ~DBusTorrent();
+        ~DBusTorrent() override;
 
         /// Get a pointer to the actual torrent
         bt::TorrentInterface* torrent() {return ti;}

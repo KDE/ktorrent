@@ -39,7 +39,7 @@ namespace kt
          * @param parent Parent of the BufferNetworkReply
          */
         BufferNetworkReply(const QByteArray& data, const QString& content_type, QObject* parent = 0);
-        ~BufferNetworkReply();
+        ~BufferNetworkReply() override;
 
         void abort() override;
         bool isSequential() const override {return true;}

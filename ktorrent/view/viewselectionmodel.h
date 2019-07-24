@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         ViewSelectionModel(ViewModel* vm, QObject* parent);
-        ~ViewSelectionModel();
+        ~ViewSelectionModel() override;
     };
 
 }

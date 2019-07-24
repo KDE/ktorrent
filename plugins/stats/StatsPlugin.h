@@ -54,7 +54,7 @@ namespace kt
         */
         StatsPlugin(QObject* p, const QVariantList&);
         ///Destructor
-        ~StatsPlugin();
+        ~StatsPlugin() override;
 
         void load() override;
         void unload() override;

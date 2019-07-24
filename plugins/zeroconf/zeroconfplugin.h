@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         ZeroConfPlugin(QObject* parent, const QVariantList& args);
-        ~ZeroConfPlugin();
+        ~ZeroConfPlugin() override;
 
         void load() override;
         void unload() override;

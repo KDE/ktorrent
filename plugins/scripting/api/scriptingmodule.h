@@ -38,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         ScriptingModule(GUIInterface* gui, CoreInterface* core, QObject* parent);
-        ~ScriptingModule();
+        ~ScriptingModule() override;
 
     public slots:
         /// Get the scripts directory

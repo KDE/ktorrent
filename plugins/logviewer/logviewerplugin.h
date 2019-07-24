@@ -47,7 +47,7 @@ namespace kt
         Q_OBJECT
     public:
         LogViewerPlugin(QObject* parent, const QVariantList& args);
-        ~LogViewerPlugin();
+        ~LogViewerPlugin() override;
 
         void load() override;
         void unload() override;

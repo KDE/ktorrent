@@ -44,7 +44,7 @@ namespace kt
         Q_OBJECT
     public:
         ScanExtender(bt::Job* job, QWidget* parent);
-        ~ScanExtender();
+        ~ScanExtender() override;
 
         void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2) override;
         void infoMessage(const QString& plain, const QString& rich) override;

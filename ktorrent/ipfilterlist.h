@@ -38,7 +38,7 @@ namespace kt
     {
     public:
         IPFilterList();
-        ~IPFilterList();
+        ~IPFilterList() override;
 
         bool blocked(const net::Address& addr) const override;
 

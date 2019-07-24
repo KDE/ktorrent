@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         PasteDialog(Core* core, QWidget* parent = 0, Qt::WindowFlags fl = 0);
-        ~PasteDialog();
+        ~PasteDialog() override;
 
         /**
         * Load the state of the dialog

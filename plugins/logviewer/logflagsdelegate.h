@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
     public:
         LogFlagsDelegate(QObject* parent);
-        ~LogFlagsDelegate();
+        ~LogFlagsDelegate() override;
 
         QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
         void setEditorData(QWidget* editor, const QModelIndex& index) const override;

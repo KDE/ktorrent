@@ -52,7 +52,7 @@ namespace kt
         Q_OBJECT
     public:
         VideoWidget(MediaPlayer* player, KActionCollection* ac, QWidget* parent);
-        ~VideoWidget();
+        ~VideoWidget() override;
 
         /**
          * Make the widget full screen or not.

@@ -51,7 +51,7 @@ namespace kt
         Q_OBJECT
     public:
         QueueManagerWidget(QueueManager* qman, QWidget* parent);
-        ~QueueManagerWidget();
+        ~QueueManagerWidget() override;
 
         /// Save the widget state
         void saveState(KSharedConfigPtr cfg);

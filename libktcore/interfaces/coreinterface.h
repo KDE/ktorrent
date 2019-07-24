@@ -72,7 +72,7 @@ namespace kt
         Q_OBJECT
     public:
         CoreInterface();
-        ~CoreInterface();
+        ~CoreInterface() override;
 
         /**
          * Set whether or not we should keep seeding after

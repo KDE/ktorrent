@@ -112,7 +112,7 @@ namespace kt
         */
         PlainChartDrawer(QWidget* p = 0);
         ///Destructor
-        ~PlainChartDrawer();
+        ~PlainChartDrawer() override;
 
         /** \brief Widget's paint event
         \param pPevt Event

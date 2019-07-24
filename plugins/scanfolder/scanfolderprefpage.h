@@ -38,7 +38,7 @@ namespace kt
 
     public:
         ScanFolderPrefPage(ScanFolderPlugin* plugin, QWidget* parent);
-        ~ScanFolderPrefPage();
+        ~ScanFolderPrefPage() override;
 
         void loadSettings() override;
         void loadDefaults() override;

@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
     public:
         AvailabilityChunkBar(QWidget* parent);
-        ~AvailabilityChunkBar();
+        ~AvailabilityChunkBar() override;
 
         const bt::BitSet& getBitSet() const override;
 

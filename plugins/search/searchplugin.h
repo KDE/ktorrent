@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         SearchPlugin(QObject* parent, const QVariantList& args);
-        ~SearchPlugin();
+        ~SearchPlugin() override;
 
         void load() override;
         void unload() override;

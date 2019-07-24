@@ -45,7 +45,7 @@ namespace kt
         QString data_dir;
     public:
         SearchEngineList(ProxyHelper* proxy, const QString& data_dir);
-        ~SearchEngineList();
+        ~SearchEngineList() override;
 
         /// Load all engines
         void loadEngines();

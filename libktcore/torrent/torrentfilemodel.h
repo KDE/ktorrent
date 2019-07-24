@@ -48,7 +48,7 @@ namespace kt
             KEEP_FILES, DELETE_FILES
         };
         TorrentFileModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent);
-        virtual ~TorrentFileModel();
+        ~TorrentFileModel() override;
 
         /**
          * Change the current torrent

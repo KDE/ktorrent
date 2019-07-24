@@ -38,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         EditItemDlg(Schedule* schedule, ScheduleItem* item, bool new_item, QWidget* parent);
-        ~EditItemDlg();
+        ~EditItemDlg() override;
 
         /**
          * accept will only work if the item does not conflict

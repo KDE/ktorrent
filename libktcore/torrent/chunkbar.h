@@ -53,7 +53,7 @@ namespace kt
         Q_OBJECT
     public:
         ChunkBar(QWidget* parent);
-        virtual ~ChunkBar();
+        ~ChunkBar() override;
 
         virtual const bt::BitSet& getBitSet() const = 0;
         void drawContents(QPainter* p);
@@ -62,7 +62,7 @@ namespace kt
     protected:
 
         virtual void drawBarContents(QPainter* p);
-        virtual void paintEvent(QPaintEvent* ev);
+        void paintEvent(QPaintEvent* ev) override;
 
     protected:
         bt::BitSet curr;

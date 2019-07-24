@@ -145,7 +145,7 @@ namespace kt
     class PortsVisitor : public bt::UPnPRouter::Visitor
     {
     public:
-        ~PortsVisitor() {}
+        ~PortsVisitor() override {}
 
         void forwarding(const net::Port& port, bool pending, const bt::UPnPService* service) override
         {

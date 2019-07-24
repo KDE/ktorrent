@@ -32,7 +32,7 @@ namespace kt
         Q_OBJECT
     public:
         GeneralPref(QWidget* parent);
-        ~GeneralPref();
+        ~GeneralPref() override;
 
         void loadSettings() override;
         void loadDefaults() override;

@@ -48,7 +48,7 @@ namespace kt
         Q_OBJECT
     public:
         QueueManagerModel(QueueManager* qman, QObject* parent);
-        ~QueueManagerModel();
+        ~QueueManagerModel() override;
 
         void setShowUploads(bool on);
         void setShowDownloads(bool on);

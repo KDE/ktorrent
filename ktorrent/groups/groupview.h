@@ -48,7 +48,7 @@ namespace kt
         Q_OBJECT
     public:
         GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidget* parent);
-        ~GroupView();
+        ~GroupView() override;
 
         /// Save the status of the group view
         void saveState(KSharedConfigPtr cfg);

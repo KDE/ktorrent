@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         ChunkDownloadModel(QObject* parent);
-        ~ChunkDownloadModel();
+        ~ChunkDownloadModel() override;
 
         /// A peer has been added
         void downloadAdded(bt::ChunkDownloadInterface* cd);

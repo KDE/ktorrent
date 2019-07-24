@@ -35,7 +35,7 @@ class UPnPTestWidget : public QWidget, public Ui_UPnPTestWidget, public bt::LogM
 {
 public:
     UPnPTestWidget(QWidget* parent = 0);
-    ~UPnPTestWidget();
+    ~UPnPTestWidget() override;
 
     void doForward();
     void undoForward();

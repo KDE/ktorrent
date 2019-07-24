@@ -53,7 +53,7 @@ namespace kt
     {
     public:
         IPBlockList();
-        ~IPBlockList();
+        ~IPBlockList() override;
 
         bool blocked(const net::Address& addr) const override;
 

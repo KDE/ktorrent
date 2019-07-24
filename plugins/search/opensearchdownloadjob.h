@@ -39,10 +39,10 @@ namespace kt
         Q_OBJECT
     public:
         OpenSearchDownloadJob(const QUrl &url, const QString& dir, ProxyHelper *proxy);
-        ~OpenSearchDownloadJob();
+        ~OpenSearchDownloadJob() override;
 
         /// Start the job
-        void start();
+        void start() override;
 
         /// Start the job. Try to get file by default url
         void startDefault();

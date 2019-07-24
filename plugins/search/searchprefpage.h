@@ -42,7 +42,7 @@ namespace kt
         Q_OBJECT
     public:
         SearchPrefPage(SearchPlugin* plugin, SearchEngineList* sl, QWidget* parent);
-        ~SearchPrefPage();
+        ~SearchPrefPage() override;
 
         void loadSettings() override;
         void loadDefaults() override;

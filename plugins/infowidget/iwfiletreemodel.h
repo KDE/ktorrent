@@ -38,7 +38,7 @@ namespace kt
         Q_OBJECT
     public:
         IWFileTreeModel(bt::TorrentInterface* tc, QObject* parent);
-        ~IWFileTreeModel();
+        ~IWFileTreeModel() override;
 
         void changeTorrent(bt::TorrentInterface* tc) override;
         int columnCount(const QModelIndex& parent) const override;
@@ -47,8 +47,8 @@ namespace kt
         void update() override;
         void changePriority(const QModelIndexList& indexes, bt::Priority newpriority) override;
 
-        void filePercentageChanged(bt::TorrentFileInterface* file, float percentage);
-        void filePreviewChanged(bt::TorrentFileInterface* file, bool preview);
+        void filePercentageChanged(bt::TorrentFileInterface* file, float percentage) override;
+        void filePreviewChanged(bt::TorrentFileInterface* file, bool preview) override;
 
     private:
         void update(const QModelIndex& index, bt::TorrentFileInterface* file, int col);

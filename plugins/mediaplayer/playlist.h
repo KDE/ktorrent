@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         PlayList(MediaFileCollection* collection, MediaPlayer* player, QObject* parent);
-        ~PlayList();
+        ~PlayList() override;
 
         void addFile(const MediaFileRef& file);
         void removeFile(const MediaFileRef& file);

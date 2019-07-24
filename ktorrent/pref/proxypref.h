@@ -36,7 +36,7 @@ namespace kt
         Q_OBJECT
     public:
         ProxyPref(QWidget* parent);
-        ~ProxyPref();
+        ~ProxyPref() override;
 
         void loadDefaults() override;
         void loadSettings() override;

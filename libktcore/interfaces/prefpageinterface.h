@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         PrefPageInterface(KConfigSkeleton* cfg, const QString& name, const QString& icon, QWidget* parent);
-        virtual ~PrefPageInterface();
+        ~PrefPageInterface() override;
 
         /**
          * Initialize the settings.

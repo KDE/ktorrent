@@ -33,7 +33,7 @@ namespace kt
     {
     public:
         TreeFilterModel(QObject* parent = 0);
-        ~TreeFilterModel();
+        ~TreeFilterModel() override;
 
     protected:
         bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;

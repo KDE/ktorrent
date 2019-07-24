@@ -44,12 +44,12 @@ namespace kt
         Q_OBJECT
     public:
         IPBlockingPrefPage(IPFilterPlugin* p);
-        ~IPBlockingPrefPage();
+        ~IPBlockingPrefPage() override;
 
 
-        void loadSettings();
-        void loadDefaults();
-        void updateSettings();
+        void loadSettings() override;
+        void loadDefaults() override;
+        void updateSettings() override;
 
         /// Do an auto update, return false if this is not possible
         bool doAutoUpdate();

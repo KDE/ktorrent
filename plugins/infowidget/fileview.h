@@ -49,7 +49,7 @@ namespace kt
         Q_OBJECT
     public:
         FileView(QWidget* parent);
-        ~FileView();
+        ~FileView() override;
 
         void changeTC(bt::TorrentInterface* tc);
         void setShowListOfFiles(bool on);

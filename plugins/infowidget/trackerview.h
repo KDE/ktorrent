@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         TrackerView(QWidget* parent);
-        ~TrackerView();
+        ~TrackerView() override;
 
         void update();
         void changeTC(bt::TorrentInterface* ti);

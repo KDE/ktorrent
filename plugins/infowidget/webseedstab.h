@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         WebSeedsTab(QWidget* parent);
-        ~WebSeedsTab();
+        ~WebSeedsTab() override;
 
         /**
          * Switch to a different torrent.

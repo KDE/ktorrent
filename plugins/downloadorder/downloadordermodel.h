@@ -41,7 +41,7 @@ namespace kt
         Q_OBJECT
     public:
         DownloadOrderModel(bt::TorrentInterface* tor, QObject* parent);
-        ~DownloadOrderModel();
+        ~DownloadOrderModel() override;
 
         /// Initialize the order
         void initOrder(const QList<bt::Uint32> & sl) {order = sl;}

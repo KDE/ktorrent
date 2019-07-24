@@ -36,7 +36,7 @@ namespace kt
         Q_OBJECT
     public:
         WeekDayModel(QObject* parent);
-        ~WeekDayModel();
+        ~WeekDayModel() override;
 
         int rowCount(const QModelIndex& parent) const override;
         QVariant data(const QModelIndex& index, int role) const override;

@@ -42,7 +42,7 @@ namespace kt
         Q_OBJECT
     public:
         DownloadOrderManager(bt::TorrentInterface* tor);
-        ~DownloadOrderManager();
+        ~DownloadOrderManager() override;
 
         /// See if the file download order is enabled
         bool enabled() const {return order.count() > 0;}

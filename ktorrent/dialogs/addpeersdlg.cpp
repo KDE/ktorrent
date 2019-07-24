@@ -31,7 +31,7 @@ namespace kt
     {
     public:
         ManualPeerSource() {}
-        ~ManualPeerSource() {}
+        ~ManualPeerSource() override {}
 
         void start() override {}
         void stop (bt::WaitJob*) override {}

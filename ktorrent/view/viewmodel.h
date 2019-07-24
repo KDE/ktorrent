@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         ViewModel(Core* core, View* parent);
-        ~ViewModel();
+        ~ViewModel() override;
 
         /**
          * Set the Group to filter

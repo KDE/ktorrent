@@ -40,7 +40,7 @@ namespace kt
         Q_OBJECT
     public:
         TabBarWidget(QSplitter* splitter, QWidget* parent);
-        ~TabBarWidget();
+        ~TabBarWidget() override;
 
         /// Add a tab to the TabBarWidget
         void addTab(QWidget* w, const QString& text, const QString& icon, const QString& tooltip);
@@ -82,7 +82,7 @@ namespace kt
         Q_OBJECT
     public:
         ActionGroup(QObject* parent = 0);
-        ~ActionGroup();
+        ~ActionGroup() override;
 
         void addAction(QAction* act);
         void removeAction(QAction* act);

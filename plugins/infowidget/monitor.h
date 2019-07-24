@@ -45,7 +45,7 @@ namespace kt
         FileView* fv;
     public:
         Monitor(bt::TorrentInterface* tc, PeerView* pv , ChunkDownloadView* cdv, FileView* fv);
-        ~Monitor();
+        ~Monitor() override;
 
         void downloadRemoved(bt::ChunkDownloadInterface* cd) override;
         void downloadStarted(bt::ChunkDownloadInterface* cd) override;

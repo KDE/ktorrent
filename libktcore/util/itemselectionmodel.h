@@ -36,7 +36,7 @@ namespace kt
         Q_OBJECT
     public:
         ItemSelectionModel(QAbstractItemModel* model, QObject* parent);
-        ~ItemSelectionModel();
+        ~ItemSelectionModel() override;
 
         void select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command) override;
         void select(const QItemSelection& sel, QItemSelectionModel::SelectionFlags command) override;

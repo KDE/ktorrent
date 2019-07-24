@@ -39,7 +39,7 @@ namespace kt
         Q_OBJECT
     public:
         TorrentSearchBar(View* view, QWidget* parent);
-        ~TorrentSearchBar();
+        ~TorrentSearchBar() override;
 
         void loadState(KSharedConfigPtr cfg);
         void saveState(KSharedConfigPtr cfg);

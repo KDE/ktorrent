@@ -52,7 +52,7 @@ namespace kt
         Q_OBJECT
     public:
         Plugin(QObject* parent);
-        virtual ~Plugin();
+        ~Plugin() override;
 
         /**
          * This gets called, when the plugin gets loaded by KTorrent.

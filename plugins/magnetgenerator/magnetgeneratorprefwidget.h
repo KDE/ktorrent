@@ -33,7 +33,7 @@ namespace kt
         Q_OBJECT
     public:
         MagnetGeneratorPrefWidget(QWidget* parent = 0);
-        ~MagnetGeneratorPrefWidget();
+        ~MagnetGeneratorPrefWidget() override;
 
     private slots:
         void customTrackerToggled(bool on);

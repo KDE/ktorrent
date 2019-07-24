@@ -64,7 +64,7 @@ namespace kt
         */
         SpdTabPage(QWidget* p);
         ///Destructor
-        ~SpdTabPage();
+        ~SpdTabPage() override;
 
     public slots:
         void applySettings() override;

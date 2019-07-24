@@ -41,7 +41,7 @@ namespace kt
         UpdateFolderEvent() : QEvent((QEvent::Type)UPDATE_FOLDER_EVENT)
         {}
 
-        ~UpdateFolderEvent()
+        ~UpdateFolderEvent() override
         {}
     };
 
@@ -51,7 +51,7 @@ namespace kt
         RecursiveScanEvent(const QUrl& url) : QEvent((QEvent::Type)RECURSIVE_SCAN_EVENT), url(url)
         {}
 
-        ~RecursiveScanEvent()
+        ~RecursiveScanEvent() override
         {}
 
         QUrl url;

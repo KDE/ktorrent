@@ -43,7 +43,7 @@ namespace kt
         Q_OBJECT
     public:
         WeekView(QWidget* parent);
-        ~WeekView();
+        ~WeekView() override;
 
         /**
          * Set the current Schedule
