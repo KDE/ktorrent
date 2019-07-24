@@ -436,7 +436,7 @@ namespace kt
             }
 
             QString dir = locationHint(group);
-            if (dir != QString::null)
+            if (dir != QString())
                 loadFromData(j->data(), dir, group, false, j->url());
         }
     }
@@ -454,7 +454,7 @@ namespace kt
         {
             QString path = url.toLocalFile();
             QString dir = locationHint(group);
-            if (dir != QString::null)
+            if (dir != QString())
                 loadFromFile(path, dir, group, false);
         }
         else
@@ -508,7 +508,7 @@ namespace kt
             }
 
 
-            if (dir != QString::null)
+            if (dir != QString())
                 loadFromData(j->data(), dir, group, true, j->url());
         }
     }
@@ -527,7 +527,7 @@ namespace kt
             QString path = url.toLocalFile();
             QString dir = locationHint(group);
 
-            if (dir != QString::null)
+            if (dir != QString())
                 loadFromFile(path, dir, group, true);
         }
         else
@@ -548,7 +548,7 @@ namespace kt
         else
             dir = savedir;
 
-        if (dir != QString::null)
+        if (dir != QString())
             return loadFromData(data, dir, group, false, url);
         else
             return 0;
@@ -562,7 +562,7 @@ namespace kt
         else
             dir = savedir;
 
-        if (dir != QString::null)
+        if (dir != QString())
             return loadFromData(data, dir, group, true, url);
         else
             return 0;
@@ -649,7 +649,7 @@ namespace kt
             }
             i++;
         }
-        return QString::null;
+        return QString();
     }
 
     void Core::loadExistingTorrent(const QString& tor_dir)
@@ -666,7 +666,7 @@ namespace kt
         try
         {
             tc = new TorrentControl();
-            tc->init(qman, bt::LoadFile(idir + QLatin1String("torrent")), idir, QString::null);
+            tc->init(qman, bt::LoadFile(idir + QLatin1String("torrent")), idir, QString());
 
             qman->append(tc);
             connectSignals(tc);

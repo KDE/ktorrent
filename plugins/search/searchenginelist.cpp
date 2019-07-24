@@ -157,7 +157,7 @@ namespace kt
     QString SearchEngineList::getEngineName(bt::Uint32 engine) const
     {
         if (engine >= (Uint32)engines.count())
-            return QString::null;
+            return QString();
         else
             return engines[engine]->engineName();
     }

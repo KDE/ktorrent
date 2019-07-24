@@ -245,7 +245,7 @@ namespace kt
                     msg = i18n("The file <b>%1</b> was found in the completed downloads directory. Do you want to import this file?", tld);
 
                 // better ask the user if (s)he wants to delete the already existing data
-                int ret = KMessageBox::questionYesNoList(0, msg, cf, QString::null);
+                int ret = KMessageBox::questionYesNoList(0, msg, cf, QString());
                 if (ret == KMessageBox::Yes)
                 {
                     dn = cn;
@@ -310,7 +310,7 @@ namespace kt
             QString msg = i18n("You have deselected the following existing files. "
                                "You will lose all data in these files, are you sure you want to do this?");
             // better ask the user if (s)he wants to delete the already existing data
-            int ret = KMessageBox::warningYesNoList(0, msg, pe_ex, QString::null,
+            int ret = KMessageBox::warningYesNoList(0, msg, pe_ex, QString(),
                                                     KGuiItem(i18n("Yes, delete the files")),
                                                     KGuiItem(i18n("No, keep the files")));
             if (ret == KMessageBox::No)

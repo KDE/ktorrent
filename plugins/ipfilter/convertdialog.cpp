@@ -88,7 +88,7 @@ namespace kt
     void ConvertDialog::threadFinished()
     {
         QString failure = convert_thread->getFailureReason();
-        if (failure != QString::null)
+        if (failure != QString())
         {
             convert_thread->wait();
             convert_thread->deleteLater();

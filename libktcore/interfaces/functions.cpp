@@ -147,7 +147,7 @@ namespace kt
         if (Settings::useCustomIP())
             Tracker::setCustomIP(Settings::customIP());
         else
-            Tracker::setCustomIP(QString::null);
+            Tracker::setCustomIP(QString());
 
 
         QString proxy = Settings::httpProxy();
@@ -169,7 +169,7 @@ namespace kt
         if (Settings::socksUsePassword())
             net::Socks::setSocksAuthentication(Settings::socksUsername(), Settings::socksPassword());
         else
-            net::Socks::setSocksAuthentication(QString::null, QString::null);
+            net::Socks::setSocksAuthentication(QString(), QString());
 
         bt::ChunkManager::setPreviewSizes(Settings::previewSizeAudio() * 1024, Settings::previewSizeVideo() * 1024);
         bt::QueueManagerInterface::setQueueManagerEnabled(!Settings::manuallyControlTorrents());
