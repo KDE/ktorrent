@@ -75,6 +75,7 @@ Comment[lt]=Scenarijus automatiškai tęsti po kurio laiko kai sustabdymo būsen
 Comment[nb]=Et skript som gjenopptar aktiviteten etter en stund hvis hvilefunksjonen er slått på
 Comment[nds]=Dat Skript maakt automaatsch na en wiss Tiet wieder, wenn de Anhollen-Status anmaakt is.
 Comment[nl]=Script voor het automatisch verdergaan na enige tijd, als de onderbreek-status is ingeschakeld
+Comment[nn]=Skrift som automatisk held fram nedlastinga etter at ei nedlasting har stått på pause ei viss tid
 Comment[pl]=Skrypt do automatycznego wznawiania po ustalonym czasie po wstrzymaniu torrentów
 Comment[pt]=Um programa para prosseguir automaticamente, ao fim de algum tempo, quando for activado o estado suspenso
 Comment[pt_BR]=Script para reiniciar automaticamente após algum tempo, quando o estado suspender estiver habilitado
