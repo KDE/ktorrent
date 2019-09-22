@@ -22,9 +22,15 @@
 #ifndef KTVIEWMODEL_H
 #define KTVIEWMODEL_H
 
-#include <QList>
 #include <QAbstractTableModel>
-#include <interfaces/torrentinterface.h>
+#include <QList>
+
+#include <torrent/torrentstats.h>
+#include <util/constants.h>
+
+namespace bt {
+    class TorrentInterface;
+}
 
 namespace kt
 {
@@ -98,21 +104,14 @@ namespace kt
          * @param index The model index
          * @return The torrent if the index is valid and in the proper range, 0 otherwise
          */
-        const bt::TorrentInterface* torrentFromIndex(const QModelIndex& index) const;
-
-        /**
-         * Get a torrent from a model index.
-         * @param index The model index
-         * @return The torrent if the index is valid and in the proper range, 0 otherwise
-         */
-        bt::TorrentInterface* torrentFromIndex(const QModelIndex& index);
+        bt::TorrentInterface *torrentFromIndex(const QModelIndex& index) const;
 
         /**
          * Get a torrent from a row.
          * @param index The row index
          * @return The torrent if the index is valid and in the proper range, 0 otherwise
          */
-        bt::TorrentInterface* torrentFromRow(int index);
+        bt::TorrentInterface* torrentFromRow(int index) const;
 
         /**
          * Get all torrents
