@@ -26,7 +26,7 @@
 
 namespace kt
 {
-    AdvancedPref::AdvancedPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Advanced"), QStringLiteral("configure"), parent)
+    AdvancedPref::AdvancedPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Advanced"), QStringLiteral("preferences-other"), parent)
     {
         setupUi(this);
         connect(kcfg_diskPrealloc, &QGroupBox::toggled, this, &AdvancedPref::onDiskPreallocToggled);
