@@ -91,6 +91,7 @@ set(KTORRENT_ICONS_PNG
 ecm_add_app_icon(ktorrent_SRC ICONS ${KTORRENT_ICONS_PNG})
 
 add_executable(ktorrent_app ${ktorrent_SRC})
+set_property(TARGET ktorrent_app PROPERTY CXX_STANDARD 14)
 set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
 
 target_link_libraries(ktorrent_app
