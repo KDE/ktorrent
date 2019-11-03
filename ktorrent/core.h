@@ -235,7 +235,7 @@ namespace kt
         QString locationHint(const QString& group) const;
         void startServers();
         void startTCPServer(bt::Uint16 port);
-        void startUTPServer(bt::Uint16 port);
+        bool startUTPServer(bt::Uint16 port);
         bt::TorrentInterface* loadFromFile(const QString& file, const QString& dir, const QString& group, bool silently);
         bt::TorrentInterface* loadFromData(const QByteArray& data, const QString& dir, const QString& group, bool silently, const QUrl& url);
 

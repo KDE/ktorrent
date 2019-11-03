@@ -174,7 +174,7 @@ namespace kt
         }
     }
 
-    void Core::startUTPServer(bt::Uint16 port)
+    bool Core::startUTPServer(bt::Uint16 port)
     {
         if (Globals::instance().initUTPServer(port))
         {
@@ -185,7 +185,9 @@ namespace kt
             gui->errorMsg(i18n("KTorrent is unable to accept connections because the UDP port %1 is "
                                "already in use by another program.", port));
             Out(SYS_GEN | LOG_IMPORTANT) << "Cannot find free UDP port" << endl;
+            return false;
         }
+        return true;
     }
 
 
@@ -207,12 +209,10 @@ namespace kt
         else if (tcp_enabled && port != current_port)
             globals.getTCPServer().changePort(port);
 
-        if (globals.isUTPEnabled() && !utp_enabled)
+        if (globals.isUTPEnabled() && (!utp_enabled || port != current_port) )
             globals.shutdownUTPServer();
-        else if (!globals.isUTPEnabled() && utp_enabled)
+        if (!globals.isUTPEnabled() && utp_enabled)
             startUTPServer(port);
-        else if (utp_enabled && port != current_port)
-            globals.getUTPServer().changePort(port);
 
         if (utp_enabled)
             globals.getUTPServer().setTOS(Settings::dscp() << 2);
@@ -1104,20 +1104,22 @@ namespace kt
 
     bool Core::changePort(Uint16 port)
     {
+        bt::Globals& globals = bt::Globals::instance();
         bool ok = false;
         if (Settings::utpEnabled())
         {
-            utp::UTPServer& utp_srv = Globals::instance().getUTPServer();
-            ok = utp_srv.changePort(port);
+            globals.shutdownUTPServer();
+            ok = startUTPServer(port);
+
             if (!Settings::onlyUseUtp())
             {
-                bt::Server& srv = Globals::instance().getTCPServer();
+                bt::Server& srv = globals.getTCPServer();
                 ok = ok && srv.changePort(port);
             }
         }
         else
         {
-            bt::Server& srv = Globals::instance().getTCPServer();
+            bt::Server& srv = globals.getTCPServer();
             ok = srv.changePort(port);
         }
 
