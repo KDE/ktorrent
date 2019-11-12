@@ -557,6 +557,20 @@ namespace kt
 
         if (role == Qt::ForegroundRole)
         {
+            if (index.column() == NAME)
+            { // apply additional highlighting to torrent names
+                bt::TrackersStatusInfo tsi = item->tc->getTrackersList()->getTrackersStatusInfo();
+
+                if ((tsi.errors + tsi.warnings) == tsi.trackers_count)
+                { // no any OK statuses
+                    if (tsi.timeout_errors)
+                        return QColor(0,170,110);
+                    if (tsi.warnings)
+                        return QColor(255,80,0);
+                    return QColor(Qt::red);
+                }
+            }
+
             return item->color(index.column());
         }
         else if (role == Qt::DisplayRole)
