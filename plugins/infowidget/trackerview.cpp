@@ -72,6 +72,28 @@ namespace kt
         m_restore_defaults->setIcon(QIcon::fromTheme(QLatin1String("kt-restore-defaults")));
         m_change_tracker->setIcon(QIcon::fromTheme(QLatin1String("kt-change-tracker")));
 
+        m_ContextMenu = new QMenu(this);
+        QAction* copy_URL = m_ContextMenu->addAction(i18n("Copy Tracker URL"));
+        connect(copy_URL, &QAction::triggered, [=](){
+            bt::TrackerInterface* trk = selectedTracker();
+            if (trk)
+                QApplication::clipboard()->setText(trk->trackerURL().toDisplayString());
+        });
+
+        QAction* copy_status = m_ContextMenu->addAction(i18n("Copy Tracker status"));
+        connect(copy_status, &QAction::triggered, [=](){
+            bt::TrackerInterface* trk = selectedTracker();
+            if (trk)
+                QApplication::clipboard()->setText(trk->trackerStatusString());
+        });
+
+        m_tracker_list->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(m_tracker_list, &QTreeView::customContextMenuRequested, [=](const QPoint & point) {
+            QModelIndex index = m_tracker_list->indexAt(point);
+            if (index.isValid()) {
+                m_ContextMenu->exec(m_tracker_list->viewport()->mapToGlobal(point));
+            }
+        });
 
         setEnabled(false);
         torrentChanged(0);
@@ -146,16 +168,24 @@ namespace kt
         model->removeRow(current.row());
     }
 
-    void TrackerView::changeClicked()
+    bt::TrackerInterface* TrackerView::selectedTracker() const
     {
         QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
         if (!current.isValid() || tc.isNull())
-            return;
+            return nullptr;
 
-        bt::TrackersList* tlist = tc.data()->getTrackersList();
-        bt::TrackerInterface* trk = model->tracker(proxy_model->mapToSource(current));
+        return model->tracker(proxy_model->mapToSource(current));
+    }
+
+
+    void TrackerView::changeClicked()
+    {
+        bt::TrackerInterface* trk = selectedTracker();
         if (trk && trk->isEnabled())
+        {
+            bt::TrackersList* tlist = tc.data()->getTrackersList();
             tlist->setCurrentTracker(trk);
+        }
     }
 
     void TrackerView::restoreClicked()

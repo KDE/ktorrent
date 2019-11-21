@@ -26,6 +26,7 @@
 
 #include <KSharedConfig>
 #include <QSortFilterProxyModel>
+#include <QMenu>
 
 #include <interfaces/torrentinterface.h>
 
@@ -59,6 +60,7 @@ namespace kt
 
     private:
         void torrentChanged(bt::TorrentInterface* ti);
+        bt::TrackerInterface* selectedTracker() const;
 
     private:
         bt::TorrentInterface::WPtr tc;
@@ -66,6 +68,7 @@ namespace kt
         QSortFilterProxyModel* proxy_model;
         QStringList tracker_hints;
         bool header_state_loaded;
+        QMenu* m_ContextMenu;
     };
 }
 #endif
