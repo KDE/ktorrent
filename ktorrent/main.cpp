@@ -107,6 +107,7 @@ int main(int argc, char** argv)
     bt::SetClientInfo(QStringLiteral("KTorrent"), kt::MAJOR, kt::MINOR, kt::RELEASE, kt::VERSION_TYPE, QStringLiteral("KT"));
 
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     KLocalizedString::setApplicationDomain("ktorrent");
 
     QApplication app(argc, argv);

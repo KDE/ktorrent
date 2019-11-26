@@ -21,7 +21,7 @@
 #ifndef KT_WEBVIEW_H
 #define KT_WEBVIEW_H
 
-#include <KWebView>
+#include <QWebEngineView>
 
 #include <QNetworkReply>
 #include <QUrl>
@@ -40,7 +40,7 @@ namespace kt
         virtual QUrl searchUrl(const QString& search_text) = 0;
 
         /// Create a new tab
-        virtual QWebView* newTab() = 0;
+        virtual QWebEngineView* newTab() = 0;
 
         /// Handle magnet urls
         virtual void magnetUrl(const QUrl& magnet_url) = 0;
@@ -49,7 +49,7 @@ namespace kt
     /**
         WebView provides a webkit view which supports for the ktorrent homepage.
      */
-    class WebView : public KWebView
+    class WebView : public QWebEngineView
     {
         Q_OBJECT
     public:
@@ -74,12 +74,6 @@ namespace kt
          */
         QUrl searchUrl(const QString& search_text);
 
-        /**
-         * Download a response using KIO
-         * @param reply The QNetworkReply to download
-         */
-        void downloadResponse(QNetworkReply* reply);
-
         /// Get the html code of the homepage
         QString homePageData();
 
@@ -91,16 +85,23 @@ namespace kt
 
         /// Get heloper object that applies proxy settings
         ProxyHelper* getProxy() const {return m_proxy;}
+
+        void downloadFile(QWebEngineDownloadItem *download);
     protected:
         void loadHomePage();
-        QWebView* createWindow(QWebPage::WebWindowType type) override;
+        QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override;
 
     public slots:
         /**
-         * Download a netwerk request
-         * @param req The request
+         * Download a QWebEngineDownloadItem
+         * @param download The QWebEngineDownloadItem
          */
-        void downloadRequested(const QNetworkRequest& req);
+        void downloadRequested(QWebEngineDownloadItem *download);
+        void magnetUrlDetected(const QUrl &url);
+
+    signals:
+        void torrentFileDownloadRequested(QWebEngineDownloadItem *download);
+
     private:
         QString home_page_html;
         QString home_page_base_url;

@@ -89,8 +89,6 @@ namespace kt
         m_active_filters->clear();
 
         m_item_view->setEnabled(false);
-        m_item_view->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
-        connect(m_item_view, &KWebView::linkClicked, this, &FeedWidget::linkClicked);
 
         setEnabled(false);
     }
@@ -251,12 +249,6 @@ namespace kt
     void FeedWidget::onFeedRenamed(kt::Feed* f)
     {
         updateCaption(this, f->displayName());
-    }
-
-    void FeedWidget::linkClicked(const QUrl& url)
-    {
-        Out(SYS_SYN | LOG_DEBUG) << "linkClicked " << url.toString() << endl;
-        new KRun(url, QApplication::activeWindow());
     }
 
 

@@ -23,13 +23,12 @@
 #include <QAction>
 #include <QApplication>
 #include <QFileDialog>
-#include <QNetworkReply>
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QUrl>
 #include <QUrlQuery>
-#include <QWebHistoryInterface>
-#include <QWebHitTestResult>
+#include <QWebEngineView>
+#include <QWebEngineProfile>
 
 #include <KIconLoader>
 #include <KIO/AccessManager>
@@ -37,71 +36,23 @@
 #include <KIO/Job>
 #include <KLocalizedString>
 #include <KMainWindow>
-#include <KWebPage>
 
 #include <util/log.h>
-#include "buffernetworkreply.h"
-#include "localfilenetworkreply.h"
+#include "magneturlschemehandler.h"
 
 using namespace bt;
 
 namespace kt
 {
 
-    class NetworkAccessManager : public KIO::AccessManager
-    {
-    public:
-        NetworkAccessManager(WebView* parent) : KIO::AccessManager(parent), webview(parent)
-        {
-            webview->getProxy()->ApplyProxy(sessionMetaData());
-        }
-
-        ~NetworkAccessManager() override
-        {}
-
-        QNetworkReply* createRequest(Operation op, const QNetworkRequest& req, QIODevice* outgoingData) override
-        {
-            if (req.url().scheme() == QStringLiteral("magnet"))
-            {
-                webview->handleMagnetUrl(req.url());
-                return KIO::AccessManager::createRequest(op, req, outgoingData);
-            }
-            else if (req.url().host() == QStringLiteral("ktorrent.searchplugin"))
-            {
-                QString search_text = QUrlQuery(req.url()).queryItemValue(QStringLiteral("search_text"));
-
-                if (!search_text.isEmpty())
-                {
-                    QUrl url(webview->searchUrl(search_text));
-                    QNetworkRequest request(url);
-                    return KIO::AccessManager::createRequest(op, request, outgoingData);
-                }
-                else if (req.url().path() == QStringLiteral("/"))
-                {
-                    return new BufferNetworkReply(webview->homePageData().toLocal8Bit(), QStringLiteral("text/html"), this);
-                }
-                else
-                {
-                    return new LocalFileNetworkReply(webview->homePageBaseDir() + req.url().path(), this);
-                }
-            }
-
-            return KIO::AccessManager::createRequest(op, req, outgoingData);
-        }
-
-        WebView* webview;
-    };
-
-
-    //////////////////////////////////////////////////////
-
     WebView::WebView(kt::WebViewClient* client, ProxyHelper* proxy, QWidget* parentWidget)
-        : KWebView(parentWidget), client(client), m_proxy(proxy)
+        : QWebEngineView(parentWidget), client(client), m_proxy(proxy)
     {
-        page()->setNetworkAccessManager(new NetworkAccessManager(this));
-        page()->setForwardUnsupportedContent(true);
+        MagnetUrlSchemeHandler *magneturlschemehandler = new MagnetUrlSchemeHandler(this);
+        page()->profile()->installUrlSchemeHandler("magnet", magneturlschemehandler);
 
-        connect(page(), SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadRequested(QNetworkRequest)));
+        connect(magneturlschemehandler, &MagnetUrlSchemeHandler::magnetUrlDetected, this, &WebView::magnetUrlDetected);
+        connect(page()->profile(), &QWebEngineProfile::downloadRequested, this, &WebView::downloadRequested);
     }
 
     WebView::~WebView()
@@ -126,8 +77,10 @@ namespace kt
     {
         if (home_page_html.isEmpty())
             loadHomePage();
-
-        load(QUrl(QStringLiteral("http://ktorrent.searchplugin/")));
+        if(!home_page_html.isEmpty()){
+            const QString file = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/search/home"));
+            setHtml(home_page_html, QUrl(file));
+        }
     }
 
     QString WebView::homePageData()
@@ -191,26 +144,37 @@ namespace kt
             return QUrl(QStringLiteral("http://ktorrent.searchplugin/"));
     }
 
-    QWebView* WebView::createWindow(QWebPage::WebWindowType type)
+    QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type)
     {
         Q_UNUSED(type);
         return client->newTab();
     }
 
-    void WebView::downloadRequested(const QNetworkRequest& req)
+    void WebView::downloadRequested(QWebEngineDownloadItem *download)
     {
-        QString filename = QFileInfo(req.url().path()).fileName();
-        QString path = QFileDialog::getExistingDirectory(this, i18n("Save %1 to"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
-
-        if (!path.isEmpty())
-            KIO::copy(req.url(), QUrl(path));
+        if(download->mimeType() == QStringLiteral("application/x-bittorrent") || download->url().path().endsWith(QLatin1String(".torrent"))) {
+            emit torrentFileDownloadRequested(download);
+        } else {
+            downloadFile(download);
+        }
     }
 
-    void WebView::downloadResponse(QNetworkReply* reply)
+    void WebView::downloadFile(QWebEngineDownloadItem * download)
     {
-        KWebPage* p = (KWebPage*)page();
-        p->downloadResponse(reply);
+        QString filename = QFileInfo(download->url().path()).fileName();
+        QString path = QFileDialog::getExistingDirectory(this, i18n("Save %1 to"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+
+        if (!path.isEmpty()){
+            download->setPath(path);
+            download->accept();
+        }
+    }
+
+    void WebView::magnetUrlDetected(const QUrl &url)
+    {
+        client->magnetUrl(url);
     }
 
 }
+
 

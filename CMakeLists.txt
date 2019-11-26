@@ -110,14 +110,14 @@ if(KF5Syndication_FOUND)
   set(HAVE_KF5Syndication 1)
 endif()
 
-find_package(KF5WebKit ${KF5_REQUIRED_VERSION})
-set_package_properties(KF5WebKit
+find_package(Qt5WebEngineWidgets ${QT_MIN_VERSION})
+set_package_properties(Qt5WebEngineWidgets
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's search and syndication plugins"
 )
-if(KF5WebKit_FOUND)
-  set(HAVE_KF5WebKit 1)
+if(Qt5WebEngineWidgets_FOUND)
+  set(HAVE_Qt5WebEngineWidgets 1)
 endif()
 
 find_package(KF5DNSSD ${KF5_REQUIRED_VERSION})

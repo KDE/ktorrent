@@ -60,7 +60,6 @@ namespace kt
         void updated();
         void onFeedRenamed(Feed* f);
         void refreshRateChanged(int v);
-        void linkClicked(const QUrl& url);
         void resizeColumns();
 
     Q_SIGNALS:

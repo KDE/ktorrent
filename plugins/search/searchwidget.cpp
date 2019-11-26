@@ -57,7 +57,7 @@ using namespace bt;
 namespace kt
 {
 
-    SearchWidget::SearchWidget(SearchPlugin* sp) : webview(nullptr), sp(sp), prog(nullptr), torrent_download(nullptr)
+    SearchWidget::SearchWidget(SearchPlugin* sp) : webview(nullptr), sp(sp), prog(nullptr)
     {
         QVBoxLayout* layout = new QVBoxLayout(this);
         layout->setSpacing(0);
@@ -67,9 +67,9 @@ namespace kt
         KActionCollection* ac = sp->getSearchActivity()->part()->actionCollection();
         sbar = new KToolBar(this);
         sbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-        sbar->addAction(webview->pageAction(QWebPage::Back));
-        sbar->addAction(webview->pageAction(QWebPage::Forward));
-        sbar->addAction(webview->pageAction(QWebPage::Reload));
+        sbar->addAction(webview->pageAction(QWebEnginePage::Back));
+        sbar->addAction(webview->pageAction(QWebEnginePage::Forward));
+        sbar->addAction(webview->pageAction(QWebEnginePage::Reload));
         sbar->addAction(ac->action(QStringLiteral("search_home")));
         search_text = new QLineEdit(sbar);
         sbar->addWidget(search_text);
@@ -89,11 +89,9 @@ namespace kt
         connect(webview, &WebView::loadStarted, this, &SearchWidget::loadStarted);
         connect(webview, &WebView::loadFinished, this, &SearchWidget::loadFinished);
         connect(webview, &WebView::loadProgress, this, &SearchWidget::loadProgress);
-        connect(webview->page(), SIGNAL(unsupportedContent(QNetworkReply*)),
-                this, SLOT(unsupportedContent(QNetworkReply*)));
-        connect(webview, &WebView::linkMiddleOrCtrlClicked, this, &SearchWidget::openNewTab);
         connect(webview, &WebView::iconChanged, this, &SearchWidget::iconChanged);
         connect(webview, &WebView::titleChanged, this, &SearchWidget::titleChanged);
+        connect(webview, &WebView::torrentFileDownloadRequested, this, &SearchWidget::downloadTorrentFile);
     }
 
 
@@ -213,40 +211,8 @@ namespace kt
         KNotification::event(QStringLiteral("MagnetLinkDownloadStarted"), msg, QPixmap(), sp->getGUI()->getMainWindow());
     }
 
-    void SearchWidget::unsupportedContent(QNetworkReply* r)
+    void SearchWidget::downloadTorrentFile(QWebEngineDownloadItem *download)
     {
-        if (r->url().scheme() == QStringLiteral("magnet"))
-        {
-            magnetUrl(r->url());
-        }
-        else if (r->header(QNetworkRequest::ContentTypeHeader).toString() == QStringLiteral("application/x-bittorrent") ||
-                 r->url().path().endsWith(QLatin1String(".torrent")))
-        {
-            torrent_download = r;
-
-            if (!r->isFinished())
-                connect(r, SIGNAL(finished()), this, SLOT(torrentDownloadFinished()));
-            else
-                torrentDownloadFinished();
-        }
-        else
-        {
-            webview->downloadResponse(r);
-        }
-    }
-
-    void SearchWidget::torrentDownloadFinished()
-    {
-        if (!torrent_download)
-            return;
-
-        if (torrent_download->error() != QNetworkReply::NoError)
-        {
-            KMessageBox::error(this, torrent_download->errorString());
-            torrent_download = 0;
-            return;
-        }
-
         int ret = KMessageBox::questionYesNoCancel(0,
 
                   i18n("Do you want to download or save the torrent?"),
@@ -256,12 +222,11 @@ namespace kt
                   KStandardGuiItem::cancel(),
                   QStringLiteral(":TorrentDownloadFinishedQuestion"));
 
-        if (ret == KMessageBox::Yes)
-            sp->getCore()->load(torrent_download->readAll(), torrent_download->url(), QString(), QString());
-        else if (ret == KMessageBox::No)
-            webview->downloadResponse(torrent_download);
-
-        torrent_download = 0;
+        if (ret == KMessageBox::Yes){
+            sp->getCore()->load(download->url(), QString());
+        } else if (ret == KMessageBox::No) {
+            webview->downloadFile(download);
+        }
     }
 
     void SearchWidget::search()
@@ -269,7 +234,7 @@ namespace kt
         search(search_text->text(), search_engine->currentIndex());
     }
 
-    QWebView* SearchWidget::newTab()
+    QWebEngineView* SearchWidget::newTab()
     {
         return sp->getSearchActivity()->newTab()->webview;
     }
@@ -282,7 +247,6 @@ namespace kt
 
     bool SearchWidget::backAvailable() const
     {
-        return webview->pageAction(QWebPage::Back)->isEnabled();
+        return webview->pageAction(QWebEnginePage::Back)->isEnabled();
     }
 }
-

@@ -72,14 +72,13 @@ namespace kt
         void loadStarted();
         void loadFinished(bool ok);
         void loadProgress(int p);
-        void unsupportedContent(QNetworkReply* reply);
-        void torrentDownloadFinished();
         void iconChanged();
         void titleChanged(const QString& text);
+        void downloadTorrentFile(QWebEngineDownloadItem *download);
 
     private:
         QUrl searchUrl(const QString& search_text) override;
-        QWebView* newTab() override;
+        QWebEngineView* newTab() override;
         void magnetUrl(const QUrl& magnet_url) override;
 
     private:
@@ -87,7 +86,6 @@ namespace kt
         KToolBar* sbar;
         SearchPlugin* sp;
         QProgressBar* prog;
-        QNetworkReply* torrent_download;
 
         KComboBox* search_engine;
         QLineEdit* search_text;

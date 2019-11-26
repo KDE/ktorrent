@@ -25,6 +25,7 @@ kcoreaddons_desktop_to_json(ktorrent_syndication ktorrent_syndication.desktop)
 target_link_libraries(
     ktorrent_syndication
     ktcore
+    Qt5::WebEngineWidgets
     KF5::Torrent
     KF5::CoreAddons
     KF5::ConfigCore
@@ -32,7 +33,6 @@ target_link_libraries(
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::Syndication
-    KF5::WebKit
     KF5::WidgetsAddons
     KF5::XmlGui
 )

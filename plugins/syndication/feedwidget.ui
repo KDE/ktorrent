@@ -184,22 +184,12 @@
        </item>
       </layout>
      </widget>
-     <widget class="KWebView" name="m_item_view"/>
+     <widget class="QWebEngineView" name="m_item_view"/>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
-  </customwidget>
-  <customwidget>
-   <class>KWebView</class>
-   <extends>QWebView</extends>
-   <header>kwebview.h</header>
-  </customwidget>
   <customwidget>
    <class>KSqueezedTextLabel</class>
    <extends>QLabel</extends>

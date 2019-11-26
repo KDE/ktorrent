@@ -1,7 +1,5 @@
 set(ktsearchplugin_SRC 
 	webview.cpp 
-	localfilenetworkreply.cpp 
-	buffernetworkreply.cpp 
 	searchenginelist.cpp 
 	searchprefpage.cpp 
 	searchwidget.cpp 
@@ -10,7 +8,8 @@ set(ktsearchplugin_SRC
 	searchengine.cpp 
 	opensearchdownloadjob.cpp
         searchactivity.cpp
-        proxy_helper.cpp)
+        proxy_helper.cpp
+        magneturlschemehandler.cpp)
 
 ki18n_wrap_ui(ktsearchplugin_SRC searchpref.ui)
 kconfig_add_kcfg_files(ktsearchplugin_SRC searchpluginsettings.kcfgc)
@@ -21,7 +20,7 @@ kcoreaddons_desktop_to_json(ktorrent_search ktorrent_search.desktop)
 target_link_libraries(
     ktorrent_search
     ktcore
-    Qt5::WebKitWidgets
+    Qt5::WebEngineWidgets
     KF5::Torrent
     KF5::CoreAddons
     KF5::Completion
@@ -32,7 +31,6 @@ target_link_libraries(
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::Notifications
-    KF5::WebKit
     KF5::WidgetsAddons
     KF5::XmlGui
 )
