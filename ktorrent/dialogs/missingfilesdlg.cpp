@@ -27,7 +27,6 @@
 
 #include <KFileWidget>
 #include <KGuiItem>
-#include <KIconLoader>
 #include <KMessageBox>
 #include <KRecentDirs>
 #include <KStandardGuiItem>
@@ -55,7 +54,7 @@ namespace kt
         {
             QListWidgetItem* lwi = new QListWidgetItem(m_file_list);
             lwi->setText(s);
-            lwi->setIcon(SmallIcon(mimeDatabase.mimeTypeForFile(s).iconName()));
+            lwi->setIcon(QIcon::fromTheme(mimeDatabase.mimeTypeForFile(s).iconName()));
         }
 
         m_dnd->setEnabled(tc->getStats().multi_file_torrent);
