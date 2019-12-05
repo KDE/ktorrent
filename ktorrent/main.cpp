@@ -42,6 +42,7 @@
 #include <KLocalizedString>
 #include <KStartupInfo>
 #include <KWindowSystem>
+#include <kwindowsystem_version.h>
 
 #include <torrent/globals.h>
 #include <interfaces/functions.h>
@@ -214,7 +215,12 @@ int main(int argc, char** argv)
             if (!arguments.isEmpty())
             {
                 parser.parse(arguments);
+#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5,62,0)
+                widget.setAttribute(Qt::WA_NativeWindow, true);
+                KStartupInfo::setNewStartupId(widget.windowHandle(), KStartupInfo::startupId());
+#else
                 KStartupInfo::setNewStartupId(&widget, KStartupInfo::startupId());
+#endif
                 KWindowSystem::forceActiveWindow(widget.winId());
             }
             QString oldCurrent = QDir::currentPath();
