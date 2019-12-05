@@ -299,7 +299,7 @@ namespace kt
 
             if (file.doNotDownload() && file.isPreExistingFile())
             {
-                // we have excluded a preexsting file
+                // we have excluded a preexisting file
                 pe_ex.append(file.getUserModifiedPath());
             }
             file.setPathOnDisk(path);
