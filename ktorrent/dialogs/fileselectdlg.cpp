@@ -454,9 +454,9 @@ namespace kt
         //now custom ones
         while (it != gman->end())
         {
-            grps << it->first;
             if (!it->second->isStandardGroup())
             {
+                grps << it->first;
                 if (it->second == initial_group)
                     selected = cnt + 1;
                 cnt++;
