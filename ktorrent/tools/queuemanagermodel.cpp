@@ -137,6 +137,20 @@ namespace kt
     {
         disconnect(tc, SIGNAL(statusChanged(bt::TorrentInterface*)),
                    this, SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
+        int r = 0;
+        const auto queueCopy = queue;
+
+        for (const auto &i : queueCopy)
+        {
+            if (tc == i.tc)
+            {
+                queue.removeAt(r);
+                removeRow(r);
+                break;
+            }
+            r++;
+        }
+
     }
 
     void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface* tc)
