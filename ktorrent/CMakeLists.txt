@@ -8,6 +8,7 @@ set(ktorrent_SRC
 	trayicon.cpp
 	ipfilterlist.cpp
 	ipfilterwidget.cpp
+	statusbarofflineindicator.cpp
 	
 	tools/queuemanagerwidget.cpp
 	tools/queuemanagermodel.cpp

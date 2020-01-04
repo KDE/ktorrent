@@ -24,11 +24,11 @@
 #include <QLabel>
 #include <QProgressBar>
 #include <KLocalizedString>
-#include <KStatusBarOfflineIndicator>
 
 #include <util/functions.h>
 #include <dht/dhtbase.h>
 
+#include "statusbarofflineindicator.h"
 using namespace bt;
 
 namespace kt
@@ -57,7 +57,7 @@ namespace kt
         transfer->setFrameShadow(QFrame::Sunken);
         addPermanentWidget(transfer);
 
-        addPermanentWidget(new KStatusBarOfflineIndicator(this));
+        addPermanentWidget(new StatusBarOfflineIndicator(this));
     }
 
     StatusBar::~StatusBar()
