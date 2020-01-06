@@ -63,7 +63,7 @@
   <summary xml:lang="uk">Клієнт BitTorrent</summary>
   <summary xml:lang="x-test">xxBitTorrent Clientxx</summary>
   <summary xml:lang="zh-CN">BitTorrent 客户端</summary>
-  <summary xml:lang="zh-TW">BitTorrent 客戶端</summary>
+  <summary xml:lang="zh-TW">BitTorrent 用戶端</summary>
   <description>
     <p>
       KTorrent is a BitTorrent application by KDE which allows you to download files using
