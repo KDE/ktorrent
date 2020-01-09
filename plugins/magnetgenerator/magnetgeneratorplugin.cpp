@@ -23,7 +23,7 @@
 #include <KActionCollection>
 #include <KMainWindow>
 #include <KLocalizedString>
-#include <KPassivePopup>
+#include <KNotification>
 #include <KPluginFactory>
 
 #include <QClipboard>
@@ -137,8 +137,7 @@ namespace kt
 
     void MagnetGeneratorPlugin::showPopup()
     {
-        KPassivePopup::message(i18n("Magnet"), i18n("Magnet link copied to clipboard"),
-                               QIcon::fromTheme(QStringLiteral("kt-magnet")).pixmap(20, 20), getGUI()->getMainWindow(), 3000);
+        KNotification::event(QStringLiteral("MagnetLinkCopied"), i18n("Magnet link copied to clipboard"), QString(), QStringLiteral("kt-magnet"));
     }
 
 }

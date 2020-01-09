@@ -31,7 +31,6 @@
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <KNotification>
-#include <KPassivePopup>
 
 #include <util/functions.h>
 #include <net/socketmonitor.h>

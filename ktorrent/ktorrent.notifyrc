@@ -718,3 +718,7 @@ Name[x-test]=xxMagnet link download startedxx
 Name[zh_CN]=已开始磁力链下载
 Name[zh_TW]=Magnet 連結下載已開始
 Action=Sound|Popup
+
+[Event/MagnetLinkCopied]
+Name="Magnet link copied to clipboard"
+Action=Popup
