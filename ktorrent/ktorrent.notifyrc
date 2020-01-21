@@ -722,6 +722,8 @@ Action=Sound|Popup
 [Event/MagnetLinkCopied]
 Name=Magnet link copied to clipboard
 Name[ca]=L'enllaç magnet s'ha copiat al porta-retalls
+Name[cs]=Magnet link zkopírován do schránky
+Name[es]=Enlace de Magnet copiado al portapapeles
 Name[et]=Magnetlink kopeeriti lõikepuhvrisse
 Name[it]=Collegamento magnet copiato negli appunti
 Name[nl]=Magneet-koppeling gekopieerd naar klembord
