@@ -730,11 +730,11 @@
     <p xml:lang="zh-CN">除了一些内置的功能，KTorrent 还有一些插件可用。</p>
   </description>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=ktorrent</url>
-  <url type="help">http://docs.kde.org/?application=ktorrent</url>
+  <url type="help">https://docs.kde.org/?application=ktorrent</url>
   <url type="homepage">https://kde.org/applications/internet/ktorrent/</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://kde.org/images/screenshots/ktorrent.png</image>
+      <image>https://cdn.kde.org/screenshots/ktorrent/ktorrent.png</image>
     </screenshot>
   </screenshots>
   <project_group>KDE</project_group>
