@@ -208,7 +208,6 @@ int main(int argc, char** argv)
         bt::InitLog(kt::DataDir(kt::CreateIfNotExists) + QLatin1String("log"), true, true, logToStdout);
 
         kt::GUI widget;
-        widget.show();
 
         auto handleCmdLine = [&widget, &parser](const QStringList &arguments, const QString &workingDirectory)
         {
