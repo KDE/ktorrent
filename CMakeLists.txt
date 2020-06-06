@@ -47,7 +47,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     DocTools
 )
 
-find_package(KF5Torrent 2.1 CONFIG REQUIRED)
+find_package(KF5Torrent 2.2 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 
 find_package(KF5TextWidgets ${KF5_REQUIRED_VERSION})
