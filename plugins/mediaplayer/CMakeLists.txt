@@ -1,5 +1,4 @@
 find_package(Taglib REQUIRED)
-include_directories(${TAGLIB_INCLUDES})
 #find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Multimedia MultimediaWidgets)
 #include_directories(${Qt5Multimedia_INCLUDE_DIRS})
 include_directories(${PHONON_INCLUDES})
@@ -34,7 +33,7 @@ kcoreaddons_desktop_to_json(ktorrent_mediaplayer ktorrent_mediaplayer.desktop)
 target_link_libraries(
     ktorrent_mediaplayer
     ktcore
-    ${TAGLIB_LIBRARIES}
+    Taglib::Taglib
     Phonon::phonon4qt5
     KF5::Torrent
     KF5::I18n
