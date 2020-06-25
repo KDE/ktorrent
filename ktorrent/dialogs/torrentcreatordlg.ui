@@ -21,7 +21,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="KUrlRequester" name="m_url">
+       <widget class="KUrlRequester" name="m_url" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -120,6 +120,11 @@
           <item>
            <property name="text">
             <string>8 MiB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>16 MiB</string>
            </property>
           </item>
          </widget>

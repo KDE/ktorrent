@@ -314,7 +314,7 @@ namespace kt
         QUrl url = m_url->url();
         Uint32 chunk_size_table[] =
         {
-            32, 64, 128, 256, 512, 1024, 2048, 4096, 8192
+            32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384
         };
 
         int chunk_size = chunk_size_table[m_chunk_size->currentIndex()];
