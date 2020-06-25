@@ -196,6 +196,16 @@ namespace kt
         void mergeAnnounceList(const bt::SHA1Hash& ih, const bt::TrackerTier* trk) override;
 
         /**
+         * Requested by each TorrentControl during its update to
+         * get permission on saving Stats file to disk. May be
+         * overriden to balance I/O operations.
+         * @param tc Pointer to TorrentControl instance
+         * @return true if file save is permitted, false otherwise
+         */
+
+        bool permitStatsSync(bt::TorrentControl* tc) override;
+
+        /**
          * Set the maximum number of downloads
          * @param m Max downloads
          */
@@ -300,6 +310,7 @@ namespace kt
         bool exiting;
         bool ordering;
         QDateTime network_down_time;
+        bt::TimeStamp last_stats_sync_permitted;
     };
 }
 #endif

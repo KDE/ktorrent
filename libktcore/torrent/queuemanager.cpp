@@ -58,6 +58,8 @@ namespace kt
         exiting = false;
         ordering = false;
 
+        last_stats_sync_permitted = 0;
+
         QNetworkConfigurationManager* networkConfigurationManager = new QNetworkConfigurationManager(this);
         connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &QueueManager::onOnlineStateChanged);
     }
@@ -543,6 +545,26 @@ namespace kt
                 return;
             }
         }
+    }
+
+    bool QueueManager::permitStatsSync(TorrentControl *tc)
+    {
+        // we want to assure that minimum time interval delay is happen
+        // before next TorrentControl dumps its State to the file
+
+        // if you have more than 500 running torrents it's feasible to
+        // increase the period to avoid too small interval value
+        const TimeStamp max_period = (50 * 60 * 1000) * (downloads.size() / 500 + 1);
+
+        if (tc->getStatsSyncElapsedTime() >= max_period) {
+            const bt::TimeStamp now = Now();
+            const bt::TimeStamp interval = max_period / downloads.size();
+            if (now - last_stats_sync_permitted > interval) {
+                last_stats_sync_permitted = now;
+                return true;
+            }
+        }
+        return false;
     }
 
     void QueueManager::orderQueue()
