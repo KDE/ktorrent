@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(KTORRENT)
 
-set (QT_MIN_VERSION "5.7.0")
+set (QT_MIN_VERSION "5.10.0")
 set (KF5_MIN_VERSION "5.15")
 
 find_package(ECM REQUIRED NO_MODULE)
