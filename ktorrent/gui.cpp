@@ -449,7 +449,9 @@ namespace kt
             //All speed to Window status bar
             if(Settings::showTotalSpeedInTitle())
             {
-                QString down_up_speed = QString(i18n("D: %1 | U: %2")).arg(BytesPerSecToString((double)stats.download_speed)).arg(BytesPerSecToString((double)stats.upload_speed));
+                QString down_up_speed = i18n("D: %1 | U: %2",
+                                             BytesPerSecToString((double)stats.download_speed),
+                                             BytesPerSecToString((double)stats.upload_speed));
                 setCaption(down_up_speed);
             }
             else
