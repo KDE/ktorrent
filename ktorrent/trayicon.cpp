@@ -361,7 +361,10 @@ namespace kt
         int delta = 0;
         int maxBandwidthRounded;
 
-        setTitle(i18n("Speed limit in KiB/s"));
+        if (type == UPLOAD)
+            setTitle(i18n("Upload speed limit in KiB/s"));
+        else
+            setTitle(i18n("Download speed limit in KiB/s"));
 
         unlimited = addAction(i18n("Unlimited"));
         unlimited->setCheckable(true);
