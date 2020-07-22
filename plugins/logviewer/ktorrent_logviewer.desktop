@@ -104,6 +104,7 @@ X-KDE-Library=ktlogviewerplugin
 X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic
 X-KDE-PluginInfo-Email=joris.guisson@gmail.com, ivasic@gmail.com
 X-KDE-PluginInfo-Name=LogViewerPlugin
+X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-Website=http://kde.org/applications/internet/ktorrent/
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false

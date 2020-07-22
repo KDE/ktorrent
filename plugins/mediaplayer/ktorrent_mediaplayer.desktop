@@ -107,6 +107,7 @@ X-KDE-Library=ktmediaplayerplugin
 X-KDE-PluginInfo-Author=Joris Guisson
 X-KDE-PluginInfo-Email=joris.guisson@gmail.com
 X-KDE-PluginInfo-Name=MediaPlayerPlugin
+X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-Website=http://kde.org/applications/internet/ktorrent/
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false

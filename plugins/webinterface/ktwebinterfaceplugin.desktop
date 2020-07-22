@@ -106,6 +106,7 @@ X-KDE-Library=ktwebinterfaceplugin
 X-KDE-PluginInfo-Author=Diego R. Brogna
 X-KDE-PluginInfo-Email=dierbro@gmail.com
 X-KDE-PluginInfo-Name=WebInterfacePlugin
+X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-Website=http://kde.org/applications/internet/ktorrent/
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false

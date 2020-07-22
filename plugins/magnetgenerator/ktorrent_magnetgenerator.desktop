@@ -92,6 +92,7 @@ X-KDE-Library=ktmagnetgeneratorplugin
 X-KDE-PluginInfo-Author=Jonas Lundqvist
 X-KDE-PluginInfo-Email=jonas@gannon.se
 X-KDE-PluginInfo-Name=MagnetGeneratorPlugin
+X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-Website=http://kde.org/applications/internet/ktorrent/
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
