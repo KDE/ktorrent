@@ -101,7 +101,6 @@ Comment[uk]=Пошук торентів
 Comment[x-test]=xxSearch for torrentsxx
 Comment[zh_CN]=搜索种子
 Comment[zh_TW]=搜尋 torrents
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktsearchplugin
 X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic

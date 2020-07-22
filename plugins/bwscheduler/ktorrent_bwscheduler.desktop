@@ -93,7 +93,6 @@ Comment[uk]=Додаток для складання розкладу обмеж
 Comment[x-test]=xxSchedule upload and download limits over a period of a weekxx
 Comment[zh_CN]=调度一周内的上传和下载限制
 Comment[zh_TW]=排程一週以上的上傳與下載限制
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktbwschedulerplugin
 X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic

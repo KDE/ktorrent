@@ -98,7 +98,6 @@ Comment[uk]=Переспрямування портів за допомогою 
 Comment[x-test]=xxForward ports using UPnPxx
 Comment[zh_CN]=使用 UPnP 转发端口
 Comment[zh_TW]=使用 UPnP 轉送連接埠
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktupnpplugin
 X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic

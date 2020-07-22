@@ -101,7 +101,6 @@ Comment[uk]=Надає вам змогу вимкнути комп’ютер п
 Comment[x-test]=xxAllows you to shutdown your computer when torrents finishxx
 Comment[zh_CN]=允许您在种子完成时关闭计算机
 Comment[zh_TW]=允許在 torrents 完成後關閉電腦
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktshutdownplugin
 X-KDE-PluginInfo-Author=Joris Guisson

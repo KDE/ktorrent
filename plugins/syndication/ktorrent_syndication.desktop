@@ -95,7 +95,6 @@ Comment[uk]=Додаток синдикації для KTorrent, з підтри
 Comment[x-test]=xxSyndication plugin for KTorrent, supporting RSS and Atom feedsxx
 Comment[zh_CN]=KTorrent 的同步插件，支持 RSS 和 Atom 订阅
 Comment[zh_TW]=KTorrent 的 Syndication 外掛程式，支援 RSS 與 Atom。
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktsyndicationplugin
 X-KDE-PluginInfo-Author=Joris Guisson

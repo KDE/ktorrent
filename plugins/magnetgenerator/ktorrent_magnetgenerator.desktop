@@ -87,7 +87,6 @@ Comment[uk]=Створює посилання magnet
 Comment[x-test]=xxGenerates magnet linksxx
 Comment[zh_CN]=生成磁力链
 Comment[zh_TW]=產生 Magnet 連結
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktmagnetgeneratorplugin
 X-KDE-PluginInfo-Author=Jonas Lundqvist

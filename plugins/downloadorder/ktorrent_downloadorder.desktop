@@ -96,7 +96,6 @@ Comment[uk]=Додаток для визначення порядку отрим
 Comment[x-test]=xxSpecify the download order of a multi-file torrentxx
 Comment[zh_CN]=指定多文件种子的下载顺序
 Comment[zh_TW]=在多檔案的 torrent 中指定下載順序
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktdownloadorderplugin
 X-KDE-PluginInfo-Author=Joris Guisson

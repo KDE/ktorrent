@@ -97,7 +97,6 @@ Comment[uk]=Показ загальної інформації про торен
 Comment[x-test]=xxDisplays general information about a torrent in several tabsxx
 Comment[zh_CN]=在若干标签内显示一个种子的常规信息
 Comment[zh_TW]=使用數個分頁顯示 Torrent 的一般資訊
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktinfowidgetplugin
 X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic

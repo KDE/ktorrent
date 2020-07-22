@@ -101,7 +101,6 @@ Comment[uk]=Показує статистику торентів за допом
 Comment[x-test]=xxShows statistics about torrents in several graphsxx
 Comment[zh_CN]=以图表形式显示种子的统计
 Comment[zh_TW]=以不同的圖形顯示關於 Torrent 的統計
-ServiceTypes=KTorrent/Plugin
 X-KDE-Library=ktstatsplugin
 X-KDE-PluginInfo-Author=Krzysztof Kundzicz
 X-KDE-PluginInfo-Email=athantor@gmail.com

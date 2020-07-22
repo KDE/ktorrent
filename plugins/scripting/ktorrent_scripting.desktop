@@ -96,7 +96,6 @@ Comment[uk]=Уможливлює підтримку Kross
 Comment[x-test]=xxEnables Kross scripting supportxx
 Comment[zh_CN]=启用 Kross 脚本支持
 Comment[zh_TW]=Kross 文稿支援
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktscriptingplugin
 X-KDE-PluginInfo-Author=Joris Guisson

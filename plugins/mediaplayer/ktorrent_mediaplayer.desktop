@@ -102,7 +102,6 @@ Comment[uk]=Заснований на Phonon додаток програвача
 Comment[x-test]=xxPhonon-based media playerxx
 Comment[zh_CN]=基于 Phonon 的媒体播放器
 Comment[zh_TW]=Phonon 媒體播放器
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktmediaplayerplugin
 X-KDE-PluginInfo-Author=Joris Guisson

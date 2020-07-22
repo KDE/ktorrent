@@ -97,7 +97,6 @@ Comment[uk]=Знайти у теках файли торентів і заван
 Comment[x-test]=xxScan folders for torrent files and load themxx
 Comment[zh_CN]=扫描文件夹以装入其中的种子文件
 Comment[zh_TW]=掃描資料夾尋找 torrent 檔案並載入
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktscanfolderplugin
 X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic

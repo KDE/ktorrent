@@ -97,7 +97,6 @@ Comment[uk]=Фільтрувати IP-адреси за списком блок�
 Comment[x-test]=xxFilter IP addresses through a blocklistxx
 Comment[zh_CN]=通过屏蔽列表过滤 IP 地址
 Comment[zh_TW]=透過黑名單過濾 IP 位址
-ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktipfilterplugin
 X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic
