@@ -1,0 +1,21 @@
+[Desktop Entry]
+Name=Scan for lost files
+Name[en_GB]=Scan for lost files
+Name[lt]=Prarastų failų paieška
+Name[ru]=Поиск потерянных файлов
+Name[x-test]=xxScan for lost filesxx
+Comment=Display files in the selected folder that don't belong to any torrent
+Comment[en_GB]=Display files in the selected folder that don't belong to any torrent
+Comment[lt]=Parodyti failus pasirinktame aplanke, kurie nepriklauso jokiam torrentui
+Comment[ru]=Показывает файлы в выбранной папке, не принадлежащие ни одному торренту
+Comment[x-test]=xxDisplay files in the selected folder that don't belong to any torrentxx
+Type=Service
+X-KDE-Library=ktscanforlostfilesplugin
+X-KDE-PluginInfo-Author=Alexander Trufanov
+X-KDE-PluginInfo-Email=trufanovan@gmail.com
+X-KDE-PluginInfo-Name=ScanForLostFilesPlugin
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://kde.org/applications/internet/ktorrent/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Icon=edit-find
