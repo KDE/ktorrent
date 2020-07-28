@@ -72,7 +72,7 @@
       comes with extended features to make it a full-featured client for BitTorrent.
     </p>
     <p xml:lang="ca">El KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrent alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
-    <p xml:lang="ca-valencia">El KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que vos permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrents alhora i ve amb característiques esteses per fer-lo un client complet per a BitTorrent.</p>
+    <p xml:lang="ca-valencia">El KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que vos permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrent alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
     <p xml:lang="de">KTorrent ist ein BitTorrent-Programm von KDE. Sie können damit Dateien über das BitTorrent-Protokoll herunterladen. Mehrere Torrents lassen sich gleichzeitig ausführen. KTorrent hat zusätzliche Fähigkeiten und ist damit ein mit allen Funktionen ausgestattetes Dienstprogramm für BitTorrent.</p>
     <p xml:lang="en-GB">KTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.</p>
     <p xml:lang="es">KTorrent  es una aplicación bitTorrent de KDE que le permite descargar archivos usando el protocolo BitTorrent. Permite ejecutar varios torrents al mismo tiempo e incluye características extendidas para convertilo en un cliente completo para BitTorrent.</p>
@@ -129,7 +129,7 @@
     <ul>
       <li>Queuing of torrents</li>
       <li xml:lang="ca">Cua dels torrent</li>
-      <li xml:lang="ca-valencia">Cua dels torrents</li>
+      <li xml:lang="ca-valencia">Cua dels torrent</li>
       <li xml:lang="de">Verwaltung von Warteschlangen für Torrents</li>
       <li xml:lang="en-GB">Queuing of torrents</li>
       <li xml:lang="es">Encolado de torrents</li>
@@ -156,7 +156,7 @@
       <li xml:lang="zh-CN">队列种子</li>
       <li>Global and per torrent speed limits</li>
       <li xml:lang="ca">Límits de la velocitat global i per torrent</li>
-      <li xml:lang="ca-valencia">Límits de velocitat global i per torrent</li>
+      <li xml:lang="ca-valencia">Límits de la velocitat global i per torrent</li>
       <li xml:lang="de">Geschwindigkeitsbegrenzungen global und für den einzelnen Torrent</li>
       <li xml:lang="en-GB">Global and per torrent speed limits</li>
       <li xml:lang="es">Límites de velocidad globales e individuales</li>
@@ -183,7 +183,7 @@
       <li xml:lang="zh-CN">全局限速和单个种子限速</li>
       <li>Previewing of certain file types, build in (video and audio)</li>
       <li xml:lang="ca">Vista prèvia de certs tipus de fitxer, integrada en construir (vídeo i àudio)</li>
-      <li xml:lang="ca-valencia">Vista prèvia de certs tipus de fitxers, construït en (vídeo i àudio)</li>
+      <li xml:lang="ca-valencia">Vista prèvia de certs tipus de fitxer, integrada en construir (vídeo i àudio)</li>
       <li xml:lang="de">Eingebaute Vorschau für bestimmte Dateitypen (Video und Audio)</li>
       <li xml:lang="en-GB">Previewing of certain file types, build in (video and audio)</li>
       <li xml:lang="es">Vista previa de ciertos tipos de archivo, vídeo y audio incorporados</li>
@@ -237,7 +237,7 @@
       <li xml:lang="zh-CN">导入部分或完全下载的文件</li>
       <li>File prioritization for multi-file torrents</li>
       <li xml:lang="ca">Priorització de fitxers per als torrent amb múltiples fitxers</li>
-      <li xml:lang="ca-valencia">Priorització de fitxers per a torrents amb múltiples fitxers</li>
+      <li xml:lang="ca-valencia">Priorització de fitxers per als torrent amb múltiples fitxers</li>
       <li xml:lang="de">Dateipriorisierung für Torrents mit mehreren Dateien</li>
       <li xml:lang="en-GB">File prioritisation for multi-file torrents</li>
       <li xml:lang="es">Priorización de archivos para torrents multiarchivo</li>
@@ -264,7 +264,7 @@
       <li xml:lang="zh-CN">多文件种子设定文件优先级</li>
       <li>Selective downloading for multi-file torrents</li>
       <li xml:lang="ca">Descàrrega selectiva per als torrent amb múltiples fitxers</li>
-      <li xml:lang="ca-valencia">Descàrrega selectiva per a torrents amb múltiples fitxers</li>
+      <li xml:lang="ca-valencia">Descàrrega selectiva per als torrent amb múltiples fitxers</li>
       <li xml:lang="de">In Torrents mit mehreren Dateien können einzelne Dateien zum Herunterladen ausgewählt werden.</li>
       <li xml:lang="en-GB">Selective downloading for multi-file torrents</li>
       <li xml:lang="es">Descarga selectiva de torrents multiarchivo</li>
@@ -318,7 +318,7 @@
       <li xml:lang="zh-CN">踢掉/屏蔽对等点，并可以用 IP 过滤器查看和编辑列表</li>
       <li>UDP tracker support</li>
       <li xml:lang="ca">Suport per al seguidor UDP</li>
-      <li xml:lang="ca-valencia">Suport del seguidor UDP</li>
+      <li xml:lang="ca-valencia">Suport per al seguidor UDP</li>
       <li xml:lang="cs">Podpora trackerů UDP</li>
       <li xml:lang="de">Unterstützung für UDP-Tracker</li>
       <li xml:lang="en-GB">UDP tracker support</li>
@@ -347,7 +347,7 @@
       <li xml:lang="zh-TW">支援 UDP tracker</li>
       <li>Support for private trackers and torrents</li>
       <li xml:lang="ca">Suport per als seguidors i torrent privats</li>
-      <li xml:lang="ca-valencia">Suport per a seguidors i torrents privats</li>
+      <li xml:lang="ca-valencia">Suport per als seguidors i torrent privats</li>
       <li xml:lang="de">Unterstützung für private Tracker und Torrents</li>
       <li xml:lang="en-GB">Support for private trackers and torrents</li>
       <li xml:lang="es">Implementación de rastreadores y torrents privados</li>
@@ -403,7 +403,7 @@
       <li xml:lang="zh-CN">支持 µTorrent 对等点交换</li>
       <li>Support for protocol encryption (compatible with Azureus)</li>
       <li xml:lang="ca">Suport per a l'encriptatge del protocol (compatible amb Azureus)</li>
-      <li xml:lang="ca-valencia">Suport per a encriptatge del protocol (compatible amb Azureus)</li>
+      <li xml:lang="ca-valencia">Suport per a l'encriptatge del protocol (compatible amb Azureus)</li>
       <li xml:lang="de">Unterstützung für Protokollverschlüsselung (kompatibel mit Azureus)</li>
       <li xml:lang="en-GB">Support for protocol encryption (compatible with Azureus)</li>
       <li xml:lang="es">Implementación de cifrado de protocolo (compatible con Azureus)</li>
@@ -430,7 +430,7 @@
       <li xml:lang="zh-CN">支持协议加密 (兼容 Azureus)</li>
       <li>Support for creating trackerless torrents</li>
       <li xml:lang="ca">Suport per a la creació de torrent sense seguidors</li>
-      <li xml:lang="ca-valencia">Suport per a la creació de torrents sense seguidors</li>
+      <li xml:lang="ca-valencia">Suport per a la creació de torrent sense seguidors</li>
       <li xml:lang="de">Unterstützung für das Erstellen von Torrents ohne Tracker</li>
       <li xml:lang="en-GB">Support for creating trackerless torrents</li>
       <li xml:lang="es">Admite la creación de torrents sin rastreadores</li>
@@ -484,7 +484,7 @@
       <li xml:lang="zh-CN">支持分布式哈希表 (DHT，主线版本)</li>
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="ca">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
-      <li xml:lang="ca-valencia">Suport per a UPnP per desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
+      <li xml:lang="ca-valencia">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
       <li xml:lang="de">Unterstützung für UPnP zur automatischen Port-Weiterleitung in Netzwerken mit dynamisch zugewiesenen Rechnern</li>
       <li xml:lang="en-GB">Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="es">Implementación de UPnP para redireccionar puertos automáticamente en una red local con servidores asignados dinámicamente</li>
@@ -538,7 +538,7 @@
       <li xml:lang="zh-CN">支持 Webseed</li>
       <li>Scripting support via Kross, and interprocess control via D-Bus interface</li>
       <li xml:lang="ca">Suport per a crear scripts mitjançant el Kross i control entre processos a través de la interfície de D-Bus</li>
-      <li xml:lang="ca-valencia">Suport per crear scripts a través de Kross i control entre processos a través de la interfície de D-Bus</li>
+      <li xml:lang="ca-valencia">Suport per a crear scripts mitjançant el Kross i control entre processos a través de la interfície de D-Bus</li>
       <li xml:lang="de">Skript-Unterstützung mit Kross und Interprozess-Steuerung über die D-Bus-Schnittstelle</li>
       <li xml:lang="en-GB">Scripting support via Kross, and interprocess control via D-Bus interface</li>
       <li xml:lang="es">Admite el uso de guiones vía Kross y control de interprocesos vía la interfaz D-Bus</li>
@@ -593,7 +593,7 @@
       <li xml:lang="zh-CN">系统托盘整合</li>
       <li>Tracker authentication support</li>
       <li xml:lang="ca">Suport per a l'autenticació del seguidor</li>
-      <li xml:lang="ca-valencia">Suport d'autenticació del seguidor</li>
+      <li xml:lang="ca-valencia">Suport per a l'autenticació del seguidor</li>
       <li xml:lang="de">Unterstützung für Tracker-Authentifizierung</li>
       <li xml:lang="en-GB">Tracker authentication support</li>
       <li xml:lang="es">Implementa autenticación del rastreador</li>
@@ -649,7 +649,7 @@
     </ul>
     <p>In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
     <p xml:lang="ca">Addicionalment a les funcionalitats integrades en construir, hi ha alguns connectors disponibles per al KTorrent.</p>
-    <p xml:lang="ca-valencia">Addicionalment a les funcionalitats integrades, hi ha diversos connectors disponibles per al KTorrent.</p>
+    <p xml:lang="ca-valencia">Addicionalment a les funcionalitats integrades en construir, hi ha alguns connectors disponibles per al KTorrent.</p>
     <p xml:lang="de">Zusätzlich zu den eingebauten Funktionen gibt es weitere Module für KTorrent.</p>
     <p xml:lang="en-GB">In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
     <p xml:lang="es">Además de las funcionalidades incluidas, hay varios complementos disponibles para KTorrent.</p>
