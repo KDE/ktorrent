@@ -79,7 +79,7 @@ namespace kt
 
     void ExtenderBox::clear()
     {
-        foreach (Extender* ext, extenders)
+        for (Extender* ext: qAsConst(extenders))
         {
             ext->hide();
             ext->deleteLater();
@@ -335,7 +335,7 @@ namespace kt
 
     void ViewDelegate::contractAll()
     {
-        for (ExtItr i = extenders.begin(); i != extenders.end(); i++)
+        for (ExtCItr i = extenders.cbegin(); i != extenders.cend(); i++)
         {
             i.value()->clear();
             i.value()->hide();

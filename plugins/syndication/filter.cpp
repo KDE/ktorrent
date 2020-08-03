@@ -85,7 +85,7 @@ namespace kt
                    << QStringLiteral("(\\d+)\\.(\\d+)")
                    << QStringLiteral("S(\\d+)\\.E(\\d+)");
 
-        foreach (const QString& format, se_formats)
+        for (const QString& format: qAsConst(se_formats))
         {
             QRegExp exp(format, Qt::CaseInsensitive);
             int pos = exp.indexIn(title);
@@ -118,7 +118,7 @@ namespace kt
     bool Filter::match(Syndication::ItemPtr item)
     {
         bool found_match = false;
-        foreach (const QRegExp& exp, word_matches)
+        for (const QRegExp& exp: qAsConst(word_matches))
         {
             QRegExp tmp = exp;
             tmp.setCaseSensitivity(case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
@@ -141,7 +141,7 @@ namespace kt
             return false;
 
         found_match = false;
-        foreach (const QRegExp& exp, exclusion_patterns)
+        for (const QRegExp& exp: qAsConst(exclusion_patterns))
         {
             QRegExp tmp = exp;
             tmp.setCaseSensitivity(exclusion_case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
@@ -171,7 +171,7 @@ namespace kt
                 return false;
 
             bool found = false;
-            foreach (const Range& r, seasons)
+            for (const Range& r: qAsConst(seasons))
             {
                 if (season >= r.start && season <= r.end)
                 {
@@ -184,7 +184,7 @@ namespace kt
                 return false;
 
             found = false;
-            foreach (const Range& r, episodes)
+            for (const Range& r: qAsConst(episodes))
             {
                 if (episode >= r.start && episode <= r.end)
                 {
@@ -321,12 +321,12 @@ namespace kt
         enc.write(QByteArrayLiteral("exclusion_all_must_match"), exclusion_all_must_match);
         enc.write(QByteArrayLiteral("word_matches"));
         enc.beginList();
-        foreach (const QRegExp& exp, word_matches)
+        for (const QRegExp& exp: qAsConst(word_matches))
             enc.write(exp.pattern().toUtf8());
         enc.end();
         enc.write(QByteArrayLiteral("exclusion_patterns"));
         enc.beginList();
-        foreach (const QRegExp& exp, exclusion_patterns)
+        for (const QRegExp& exp: qAsConst(exclusion_patterns))
             enc.write(exp.pattern().toUtf8());
         enc.end();
         enc.write(QByteArrayLiteral("use_season_and_episode_matching"), use_season_and_episode_matching);

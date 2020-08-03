@@ -135,7 +135,7 @@ namespace kt
         int num_removeable = 0;
         int num_running = 0;
         int num_not_running = 0;
-        foreach (const QModelIndex& idx, selected)
+        for (const QModelIndex& idx: selected)
         {
             Script* s = model->scriptForIndex(idx);
             if (s)
@@ -183,8 +183,8 @@ namespace kt
 
     void ScriptManager::runScript()
     {
-        QModelIndexList sel = selectedScripts();
-        foreach (const QModelIndex& idx, sel)
+        const QModelIndexList sel = selectedScripts();
+        for (const QModelIndex& idx: sel)
         {
             if (!model->setData(idx, Qt::Checked, Qt::CheckStateRole))
                 Out(SYS_SCR | LOG_DEBUG) << "setData failed" << endl;
@@ -194,8 +194,8 @@ namespace kt
 
     void ScriptManager::stopScript()
     {
-        QModelIndexList sel = selectedScripts();
-        foreach (const QModelIndex& idx, sel)
+        const QModelIndexList sel = selectedScripts();
+        for (const QModelIndex& idx: sel)
         {
             if (!model->setData(idx, Qt::Unchecked, Qt::CheckStateRole))
                 Out(SYS_SCR | LOG_DEBUG) << "setData failed" << endl;
@@ -205,8 +205,8 @@ namespace kt
 
     void ScriptManager::editScript()
     {
-        QModelIndexList sel = selectedScripts();
-        foreach (const QModelIndex& idx, sel)
+        const QModelIndexList sel = selectedScripts();
+        for (const QModelIndex& idx: sel)
         {
             Script* s = model->scriptForIndex(idx);
             if (s)
@@ -244,7 +244,7 @@ namespace kt
         mainLayout->addWidget(buttonBox);
         dialog->setWindowTitle(i18n("Script Properties"));
         prop.setupUi(mainWidget);
-        prop.m_icon->setPixmap(DesktopIcon(s->iconName()));
+        prop.m_icon->setPixmap(QIcon::fromTheme(s->iconName()).pixmap(KIconLoader::StdSizes::SizeMedium));
         prop.m_name->setText(s->name());
         prop.m_description->setText(s->metaInfo().comment);
         prop.m_author->setText(s->metaInfo().author);

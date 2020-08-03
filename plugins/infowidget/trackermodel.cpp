@@ -49,8 +49,8 @@ namespace kt
         this->tc = tc;
         if (tc)
         {
-            QList<bt::TrackerInterface*> tracker_list = tc->getTrackersList()->getTrackers();
-            for (bt::TrackerInterface* trk : qAsConst(tracker_list))
+            const QList<bt::TrackerInterface*> tracker_list = tc->getTrackersList()->getTrackers();
+            for (bt::TrackerInterface* trk : tracker_list)
             {
                 trackers.append(new Item(trk));
             }
@@ -64,7 +64,7 @@ namespace kt
             return;
 
         int idx = 0;
-        foreach (Item* t, trackers)
+        for (Item* t: qAsConst(trackers))
         {
             if (t->update())
                 emit dataChanged(index(idx, 1), index(idx, 5));
@@ -163,7 +163,7 @@ namespace kt
             return;
 
         int row = trackers.count();
-        foreach (bt::TrackerInterface* trk, tracker_list)
+        for (bt::TrackerInterface* trk: qAsConst(tracker_list))
             trackers.append(new Item(trk));
 
         insertRows(row, tracker_list.count(), QModelIndex());

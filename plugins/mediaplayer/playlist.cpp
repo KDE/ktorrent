@@ -64,16 +64,20 @@ namespace kt
 
     void PlayList::removeFile(const MediaFileRef& file)
     {
-        int i = 0;
-        foreach (const PlayListItem& item, files)
+        int row = 0;
+        bool found = false;
+        for (const PlayListItem& item: qAsConst(files))
         {
             if (item.first == file)
             {
-                removeRow(i);
+                found = true;
                 break;
             }
-            i++;
+            row++;
         }
+
+        if (found)
+            removeRow(row);
     }
 
     MediaFileRef PlayList::fileForIndex(const QModelIndex& index) const
@@ -231,7 +235,7 @@ namespace kt
         dragged_rows.clear();
         QMimeData* data = new QMimeData();
         QList<QUrl> urls;
-        for (QModelIndex index : indexes)
+        for (const QModelIndex& index : indexes)
         {
             if (index.isValid() && index.column() == 0)
             {
@@ -249,7 +253,7 @@ namespace kt
         if (action == Qt::IgnoreAction)
             return true;
 
-        QList<QUrl> urls = data->urls();
+        const QList<QUrl> urls = data->urls();
         if (urls.count() == 0 || column > 0)
             return false;
 
@@ -271,7 +275,7 @@ namespace kt
 
         row -= nr;
 
-        for (const QUrl& url : qAsConst(urls))
+        for (const QUrl& url : urls)
         {
             PlayListItem item = qMakePair(collection->find(url.toLocalFile()), (TagLib::FileRef*)0);
             files.insert(row, item);

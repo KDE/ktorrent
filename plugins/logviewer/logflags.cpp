@@ -65,8 +65,8 @@ namespace kt
     {
         KConfigGroup cfg = KSharedConfig::openConfig()->group("LogFlags");
         log_flags.clear();
-        LogSystemManager& lsman = LogSystemManager::instance();
-        for (LogSystemManager::iterator i = lsman.begin(); i != lsman.end(); i++)
+        const LogSystemManager& lsman = LogSystemManager::instance();
+        for (LogSystemManager::const_iterator i = lsman.begin(); i != lsman.end(); i++)
         {
             LogFlag f;
             f.name = i.key();
@@ -229,7 +229,7 @@ namespace kt
     void LogFlags::unregistered(const QString& sys)
     {
         int idx = 0;
-        foreach (const LogFlag& f, log_flags)
+        for (const LogFlag& f: qAsConst(log_flags))
         {
             if (sys == f.name)
             {

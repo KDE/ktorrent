@@ -169,8 +169,8 @@ namespace kt
 
     void SyndicationActivity::removeFeed()
     {
-        QModelIndexList idx = tab->feedView()->selectedFeeds();
-        foreach (const QModelIndex& i, idx)
+        const QModelIndexList idx = tab->feedView()->selectedFeeds();
+        for (const QModelIndex& i: idx)
         {
             Feed* f = feed_list->feedForIndex(i);
             if (f && feed_widget->getFeed() == f)
@@ -246,7 +246,7 @@ namespace kt
                 to_remove.append(f);
         }
 
-        foreach (Filter* f, to_remove)
+        for (Filter* f: qAsConst(to_remove))
         {
             feed_list->filterRemoved(f);
             filter_list->removeFilter(f);

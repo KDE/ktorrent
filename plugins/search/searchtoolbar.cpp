@@ -184,10 +184,10 @@ namespace kt
 
         QTextStream out(&fptr);
         KCompletion* comp = m_search_text->completionObject();
-        QStringList items = comp->items();
-        for (QStringList::iterator i = items.begin(); i != items.end(); i++)
+        const QStringList items = comp->items();
+        for (const QString& s : items)
         {
-            out << *i << endl;
+            out << s << endl;
         }
     }
 

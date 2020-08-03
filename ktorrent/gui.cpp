@@ -213,8 +213,8 @@ namespace kt
         }
         else
         {
-            QList<KParts::Part*> parts = part_manager->parts();
-            foreach (KParts::Part* part, parts)
+            const QList<KParts::Part*> parts = part_manager->parts();
+            for (KParts::Part* part: parts)
             {
                 if (part->domDocument().documentElement().attribute(QStringLiteral("name")) == p->parentPart())
                 {
@@ -233,8 +233,8 @@ namespace kt
         }
         else
         {
-            QList<KParts::Part*> parts = part_manager->parts();
-            foreach (KParts::Part* part, parts)
+            const QList<KParts::Part*> parts = part_manager->parts();
+            for (KParts::Part* part: parts)
             {
                 if (part->domDocument().documentElement().attribute(QStringLiteral("name")) == p->parentPart())
                 {
@@ -286,7 +286,7 @@ namespace kt
         QUrl defaultUrl = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///openTorrent")), recentDirClass);
         if (!QDir(defaultUrl.toLocalFile()).exists())
             defaultUrl = QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
-        QList<QUrl> urls = QFileDialog::getOpenFileUrls(this, i18n("Open Location"), defaultUrl, kt::TorrentFileFilter(true));
+        const QList<QUrl> urls = QFileDialog::getOpenFileUrls(this, i18n("Open Location"), defaultUrl, kt::TorrentFileFilter(true));
 
         if (urls.isEmpty())
             return;
@@ -303,7 +303,7 @@ namespace kt
         else
         {
             // load multiple torrents silently
-            foreach (const QUrl& url, urls)
+            for (const QUrl& url: urls)
             {
                 if (url.isValid())
                 {

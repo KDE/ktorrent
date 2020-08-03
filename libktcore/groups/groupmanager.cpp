@@ -206,7 +206,7 @@ namespace kt
             bt::BEncoder enc(&fptr);
 
             enc.beginList();
-            for (Itr i = groups.begin(); i != groups.end(); i++)
+            for (CItr i = groups.begin(); i != groups.end(); i++)
             {
                 if (i->second->groupFlags() & Group::CUSTOM_GROUP)
                     i->second->save(&enc);
@@ -283,7 +283,7 @@ namespace kt
 
     void GroupManager::torrentRemoved(TorrentInterface* ti)
     {
-        for (Itr i = groups.begin(); i != groups.end(); i++)
+        for (CItr i = groups.begin(); i != groups.end(); i++)
         {
             i->second->torrentRemoved(ti);
         }
@@ -291,7 +291,6 @@ namespace kt
 
     void GroupManager::renameGroup(const QString& old_name, const QString& new_name)
     {
-        QString oldName = old_name;
         Group* g = find(old_name);
         if (!g)
             return;
@@ -327,7 +326,7 @@ namespace kt
 
     void GroupManager::torrentsLoaded(QueueManager* qman)
     {
-        for (Itr i = groups.begin(); i != groups.end(); i++)
+        for (CItr i = groups.begin(); i != groups.end(); i++)
         {
             if (i->second->groupFlags() & Group::CUSTOM_GROUP)
             {
@@ -340,7 +339,7 @@ namespace kt
 
     Group* GroupManager::findByPath(const QString& path)
     {
-        for (Itr i = groups.begin(); i != groups.end(); i++)
+        for (CItr i = groups.begin(); i != groups.end(); i++)
         {
             if (i->second->groupPath() == path)
                 return i->second;
@@ -351,7 +350,7 @@ namespace kt
 
     void GroupManager::updateCount(QueueManager* qman)
     {
-        for (Itr i = groups.begin(); i != groups.end(); i++)
+        for (CItr i = groups.begin(); i != groups.end(); i++)
             i->second->updateCount(qman);
     }
 

@@ -172,7 +172,7 @@ namespace kt
     void PlayListWidget::addMedia()
     {
         QString recentDirClass;
-        QStringList files = QFileDialog::getOpenFileNames(this, QString(),
+        const QStringList files = QFileDialog::getOpenFileNames(this, QString(),
                                                          KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///add_media")), recentDirClass).toLocalFile());
 
         if (files.isEmpty())
@@ -181,7 +181,7 @@ namespace kt
         if (!recentDirClass.isEmpty())
             KRecentDirs::add(recentDirClass, QFileInfo(files.first()).absolutePath());
 
-        foreach (const QString& file, files)
+        for (const QString& file: files)
             play_list->addFile(collection->find(file));
 
         enableNext(play_list->rowCount() > 0);
@@ -190,11 +190,11 @@ namespace kt
     void PlayListWidget::removeFiles()
     {
         QList<MediaFileRef> files;
-        QModelIndexList indexes = view->selectionModel()->selectedRows();
-        foreach (const QModelIndex& idx, indexes)
+        const QModelIndexList indexes = view->selectionModel()->selectedRows();
+        for (const QModelIndex& idx: indexes)
             files.append(play_list->fileForIndex(idx));
 
-        foreach (const MediaFileRef& f, files)
+        for (const MediaFileRef& f: qAsConst(files))
             play_list->removeFile(f);
 
         enableNext(play_list->rowCount() > 0);

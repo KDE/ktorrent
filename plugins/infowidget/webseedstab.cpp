@@ -108,8 +108,8 @@ namespace kt
             return;
 
         bt::TorrentInterface* tc = curr_tc.data();
-        QModelIndexList idx_list = m_webseed_list->selectionModel()->selectedRows();
-        foreach (const QModelIndex& idx, idx_list)
+        const QModelIndexList idx_list = m_webseed_list->selectionModel()->selectedRows();
+        for (const QModelIndex& idx: idx_list)
         {
             const WebSeedInterface* ws = tc->getWebSeed(proxy_model->mapToSource(idx).row());
             if (ws && ws->isUserCreated())
@@ -126,7 +126,7 @@ namespace kt
     {
         if (curr_tc)
         {
-            foreach (const QModelIndex& idx, indexes)
+            for (const QModelIndex& idx: indexes)
             {
                 const WebSeedInterface* ws = curr_tc.data()->getWebSeed(proxy_model->mapToSource(idx).row());
                 if (ws && ws->isUserCreated())

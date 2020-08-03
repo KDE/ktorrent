@@ -142,7 +142,7 @@ namespace kt
         QDataStream out(&data, QIODevice::WriteOnly);
         QList<Uint32> files;
 
-        foreach (const QModelIndex& index, indexes)
+        for (const QModelIndex& index: indexes)
         {
             if (index.isValid())
             {
@@ -194,7 +194,7 @@ namespace kt
         }
 
         // reinsert dragged files
-        foreach (Uint32 file, files)
+        for (Uint32 file: qAsConst(files))
         {
             order.insert(begin_row, file);
             begin_row++;
@@ -343,7 +343,7 @@ namespace kt
                        << QStringLiteral("S(\\d+)\\.E(\\d+)")
                        << QStringLiteral("Season\\s(\\d+).*Episode\\s(\\d+)");
 
-            foreach (const QString& format, se_formats)
+            for (const QString& format: qAsConst(se_formats))
             {
                 QRegExp exp(format, Qt::CaseInsensitive);
                 int pos = exp.indexIn(title);

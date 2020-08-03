@@ -100,8 +100,8 @@ namespace kt
 
     void WeekView::removeSelectedItems()
     {
-        QList<QGraphicsItem*> sel = scene->selectedItems();
-        foreach (QGraphicsItem* s, sel)
+        const QList<QGraphicsItem*> sel = scene->selectedItems();
+        for (QGraphicsItem* s : sel)
         {
             QMap<QGraphicsItem*, ScheduleItem*>::iterator i = item_map.find(s);
             if (i != item_map.end())

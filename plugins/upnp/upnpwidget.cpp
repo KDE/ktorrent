@@ -80,9 +80,9 @@ namespace kt
         QByteArray s = m_devices->header()->saveState();
         g.writeEntry("state", s.toBase64());
 
-        net::PortList& pl = bt::Globals::instance().getPortList();
-        for (net::PortList::iterator i = pl.begin(); i != pl.end(); i++)
-            model->undoForward(*i, job);
+        const net::PortList& pl = bt::Globals::instance().getPortList();
+        for (const net::Port& p : pl)
+            model->undoForward(p, job);
     }
 
     void UPnPWidget::addDevice(bt::UPnPRouter* r)
@@ -93,12 +93,12 @@ namespace kt
         Out(SYS_PNP | LOG_DEBUG) << "Doing port mappings for " << r->getServer() << endl;
         try
         {
-            net::PortList& pl = bt::Globals::instance().getPortList();
+            const net::PortList& pl = bt::Globals::instance().getPortList();
 
-            for (net::PortList::iterator i = pl.begin(); i != pl.end(); i++)
+            for (const net::Port& p : pl)
             {
-                if (i->forward)
-                    r->forward(*i);
+                if (p.forward)
+                    r->forward(p);
             }
         }
         catch (Error& e)
@@ -115,11 +115,10 @@ namespace kt
 
         try
         {
-            net::PortList& pl = bt::Globals::instance().getPortList();
+            const net::PortList& pl = bt::Globals::instance().getPortList();
 
-            for (net::PortList::iterator i = pl.begin(); i != pl.end(); i++)
+            for (const net::Port& p : pl)
             {
-                net::Port& p = *i;
                 if (p.forward)
                     r->forward(p);
             }
@@ -138,11 +137,10 @@ namespace kt
 
         try
         {
-            net::PortList& pl = bt::Globals::instance().getPortList();
+            const net::PortList& pl = bt::Globals::instance().getPortList();
 
-            for (net::PortList::iterator i = pl.begin(); i != pl.end(); i++)
+            for (const net::Port& p : pl)
             {
-                net::Port& p = *i;
                 if (p.forward)
                     r->undoForward(p);
             }

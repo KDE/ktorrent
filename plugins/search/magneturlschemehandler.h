@@ -29,7 +29,7 @@ class MagnetUrlSchemeHandler : public QWebEngineUrlSchemeHandler
 
 public:
     explicit MagnetUrlSchemeHandler(QObject *parent = nullptr );
-    void requestStarted(QWebEngineUrlRequestJob *request);
+    void requestStarted(QWebEngineUrlRequestJob *request) override;
 
 signals:
     void magnetUrlDetected(const QUrl &url);

@@ -151,7 +151,7 @@ namespace kt
     QString TorrentUrlFromItem(Syndication::ItemPtr item)
     {
         const QList<Syndication::EnclosurePtr> encs = item->enclosures();
-        for (Syndication::EnclosurePtr e : encs)
+        for (const Syndication::EnclosurePtr& e : encs)
         {
             if (e->type() == QStringLiteral("application/x-bittorrent") || e->url().endsWith(QStringLiteral(".torrent")))
                 return e->url();

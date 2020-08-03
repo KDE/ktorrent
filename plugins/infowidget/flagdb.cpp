@@ -92,7 +92,7 @@ const QPixmap& kt::FlagDB::getFlag(const QString& country)
 
     QImage img;
     QPixmap pixmap;
-    foreach (const FlagDBSource& s, sources)
+    for (const FlagDBSource& s: qAsConst(sources))
     {
         const QString& path = s.getPath(c);
         //e.g.: /usr/share/locale/l10n/ru/flag.png

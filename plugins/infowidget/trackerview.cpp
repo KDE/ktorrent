@@ -112,11 +112,11 @@ namespace kt
         if (dlg.exec() != QDialog::Accepted)
             return;
 
-        QStringList trackers = dlg.trackerList();
+        const QStringList trackers = dlg.trackerList();
         QList<QUrl> urls;
         QStringList invalid;
         // check for invalid urls
-        foreach (const QString& t, trackers)
+        for (const QString& t: trackers)
         {
             if (t.isEmpty())
                 continue;
@@ -141,7 +141,7 @@ namespace kt
 
         QList<QUrl> dupes;
         QList<bt::TrackerInterface*> tl;
-        foreach (const QUrl &url, urls)
+        for (const QUrl &url: qAsConst(urls))
         {
             bt::TrackerInterface* trk = tc.data()->getTrackersList()->addTracker(url, true);
             if (!trk)

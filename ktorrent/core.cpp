@@ -690,10 +690,10 @@ namespace kt
         QDir dir(data_dir);
         QStringList filters;
         filters << QStringLiteral("tor*");
-        QStringList sl = dir.entryList(filters, QDir::Dirs);
-        for (int i = 0; i < sl.count(); i++)
+        const QStringList sl = dir.entryList(filters, QDir::Dirs);
+        for (const QString& s: sl)
         {
-            QString idir = data_dir + sl.at(i);
+            QString idir = data_dir + s;
             if (!idir.endsWith(DirSeparator()))
                 idir.append(DirSeparator());
 
@@ -775,7 +775,7 @@ namespace kt
 
         stop(todo);
 
-        foreach (bt::TorrentInterface* tc, todo)
+        for (bt::TorrentInterface* tc: qAsConst(todo))
         {
             const bt::TorrentStats& s = tc->getStats();
             removed_bytes_up += s.session_bytes_uploaded;
@@ -1085,9 +1085,8 @@ namespace kt
         Uint32 speed_dl = 0, speed_ul = 0;
 
 
-        for (QList<bt::TorrentInterface*>::iterator i = qman->begin(); i != qman->end(); ++i)
+        for (bt::TorrentInterface* tc: qAsConst(*qman))
         {
-            bt::TorrentInterface* tc = *i;
             const TorrentStats& s = tc->getStats();
             speed_dl += s.download_rate;
             speed_ul += s.upload_rate;
@@ -1394,7 +1393,7 @@ namespace kt
             {
                 enc.write(QByteArrayLiteral("announce-list"));
                 enc.beginList();
-                foreach (const QUrl &tracker, trs)
+                for (const QUrl &tracker: qAsConst(trs))
                 {
                     enc.beginList();
                     enc.write(tracker.toDisplayString().toUtf8());

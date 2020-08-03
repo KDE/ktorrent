@@ -189,13 +189,21 @@ namespace kt
 
     void PeerViewModel::peerRemoved(bt::PeerInterface* peer)
     {
-        for (QVector<Item*>::iterator i = items.begin(); i != items.end(); i++)
+        int row = 0;
+        bool found = false;
+        for (Item* i: qAsConst(items))
         {
-            if ((*i)->peer == peer)
+            if (i->peer == peer)
             {
-                removeRow(i - items.begin());
+                found = true;
                 break;
             }
+            row++;
+        }
+
+        if (found)
+        {
+            removeRow(row);
         }
     }
 
@@ -213,7 +221,7 @@ namespace kt
         int lowest = -1;
         int highest = -1;
 
-        foreach (Item* i, items)
+        for (Item* i: qAsConst(items))
         {
             if (i->changed())
             {

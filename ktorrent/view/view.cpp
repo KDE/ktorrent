@@ -236,8 +236,8 @@ namespace kt
         ac->addAction(QStringLiteral("check_data"), check_data);
         ac->setDefaultShortcut(check_data, QKeySequence(Qt::SHIFT + Qt::Key_C));
 
-        GroupManager* gman = core->getGroupManager();
-        for (GroupManager::Itr i = gman->begin(); i != gman->end(); i++)
+        const GroupManager* gman = core->getGroupManager();
+        for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++)
         {
             if (!i->second->isStandardGroup())
             {

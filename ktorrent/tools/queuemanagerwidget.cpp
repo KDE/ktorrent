@@ -134,9 +134,9 @@ namespace kt
 
     void QueueManagerWidget::moveUpClicked()
     {
-        QModelIndexList sel = view->selectionModel()->selectedRows();
+        const QModelIndexList sel = view->selectionModel()->selectedRows();
         QList<int> rows;
-        foreach (const QModelIndex& idx, sel)
+        for (const QModelIndex& idx: sel)
             rows.append(idx.row());
 
         if (rows.isEmpty() || rows.front() == 0)
@@ -158,9 +158,9 @@ namespace kt
 
     void QueueManagerWidget::moveDownClicked()
     {
-        QModelIndexList sel = view->selectionModel()->selectedRows();
+        const QModelIndexList sel = view->selectionModel()->selectedRows();
         QList<int> rows;
-        foreach (const QModelIndex& idx, sel)
+        for (const QModelIndex& idx: sel)
             rows.append(idx.row());
 
         int rowcount = model->rowCount(QModelIndex());
@@ -183,9 +183,9 @@ namespace kt
 
     void QueueManagerWidget::moveTopClicked()
     {
-        QModelIndexList sel = view->selectionModel()->selectedRows();
+        const QModelIndexList sel = view->selectionModel()->selectedRows();
         QList<int> rows;
-        foreach (const QModelIndex& idx, sel)
+        for (const QModelIndex& idx: sel)
             rows.append(idx.row());
 
         if (rows.isEmpty() || rows.front() == 0)
@@ -204,9 +204,9 @@ namespace kt
 
     void QueueManagerWidget::moveBottomClicked()
     {
-        QModelIndexList sel = view->selectionModel()->selectedRows();
+        const QModelIndexList sel = view->selectionModel()->selectedRows();
         QList<int> rows;
-        foreach (const QModelIndex& idx, sel)
+        for (const QModelIndex& idx: sel)
             rows.append(idx.row());
 
         int rowcount = model->rowCount(QModelIndex());

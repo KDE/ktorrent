@@ -55,7 +55,7 @@ namespace kt
         }
 
         QTextStream out(&fptr);
-        foreach (Uint32 file, order)
+        for (Uint32 file: qAsConst(order))
             out << file << endl;
     }
 
@@ -90,7 +90,7 @@ namespace kt
     Uint32 DownloadOrderManager::nextIncompleteFile()
     {
         // Look for the next file in the order which is not 100 % complete
-        foreach (Uint32 file, order)
+        for (Uint32 file: qAsConst(order))
         {
             // skip file if it is complete
             if (qAbs(100.0f - tor->getTorrentFile(file).getDownloadPercentage()) < 0.01)
@@ -140,7 +140,7 @@ namespace kt
         bool normal_found = false;
         bool high_found = false;
         // set the priority of the file to FIRST and all the other files to NORMAL
-        foreach (Uint32 file, order)
+        for (Uint32 file: qAsConst(order))
         {
             TorrentFileInterface& tf = tor->getTorrentFile(file);
             if (tf.getPriority() < LAST_PRIORITY)

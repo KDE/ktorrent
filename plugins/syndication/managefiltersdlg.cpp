@@ -107,16 +107,16 @@ namespace kt
 
     void ManageFiltersDlg::add()
     {
-        QModelIndexList idx = m_available_filters->selectionModel()->selectedRows();
+        const QModelIndexList idx = m_available_filters->selectionModel()->selectedRows();
         QList<Filter*> to_add;
-        foreach (const QModelIndex& i, idx)
+        for (const QModelIndex& i: idx)
         {
             Filter* f = available->filterForIndex(i);
             if (f)
                 to_add.append(f);
         }
 
-        foreach (Filter* f, to_add)
+        for (Filter* f: qAsConst(to_add))
         {
             active->addFilter(f);
             available->removeFilter(f);
@@ -129,16 +129,16 @@ namespace kt
 
     void ManageFiltersDlg::remove()
     {
-        QModelIndexList idx = m_active_filters->selectionModel()->selectedRows();
+        const QModelIndexList idx = m_active_filters->selectionModel()->selectedRows();
         QList<Filter*> to_remove;
-        foreach (const QModelIndex& i, idx)
+        for (const QModelIndex& i: idx)
         {
             Filter* f = active->filterForIndex(i);
             if (f)
                 to_remove.append(f);
         }
 
-        foreach (Filter* f, to_remove)
+        for (Filter* f: qAsConst(to_remove))
         {
             available->addFilter(f);
             active->removeFilter(f);
@@ -162,7 +162,7 @@ namespace kt
             to_remove.append(f);
         }
 
-        foreach (Filter* f, to_remove)
+        for (Filter* f: qAsConst(to_remove))
         {
             available->addFilter(f);
             active->removeFilter(f);

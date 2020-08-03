@@ -101,7 +101,7 @@ namespace kt
 
         QList<QRegExp> re = filter->wordMatches();
         QStringList items;
-        foreach (const QRegExp& r, re)
+        for (const QRegExp& r: qAsConst(re))
         {
             items.append(r.pattern());
         }
@@ -111,7 +111,7 @@ namespace kt
 
         re = filter->exclusionPatterns();
         items.clear();
-        foreach (const QRegExp& r, re)
+        for (const QRegExp& r: qAsConst(re))
         {
             items.append(r.pattern());
         }

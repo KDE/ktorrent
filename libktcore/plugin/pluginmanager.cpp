@@ -65,7 +65,7 @@ namespace kt
             pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent"));
         }
 
-        for (const KPluginMetaData &module : pluginsMetaData)
+        for (const KPluginMetaData &module : qAsConst(pluginsMetaData))
         {
             KPluginInfo pi(module);
             pi.setConfig(KSharedConfig::openConfig()->group(pi.pluginName()));

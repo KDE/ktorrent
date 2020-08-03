@@ -75,7 +75,7 @@ namespace kt
         else
         {
             // make sure we don't add dupes
-            foreach (Script* s, scripts)
+            for (Script* s: qAsConst(scripts))
                 if (s->scriptFile() == file)
                     return;
 
@@ -95,7 +95,7 @@ namespace kt
         }
 
         // we don't want dupes
-        foreach (Script* os, scripts)
+        for (Script* os: qAsConst(scripts))
         {
             if (s->scriptFile() == os->scriptFile())
             {
@@ -119,8 +119,8 @@ namespace kt
         if (!dir)
             throw bt::Error(i18n("Invalid archive."));
 
-        QStringList entries = dir->entries();
-        foreach (const QString& e, entries)
+        const QStringList entries = dir->entries();
+        for (const QString& e: entries)
         {
             const KArchiveEntry* entry = dir->entry(e);
             if (entry && entry->isDirectory())
@@ -132,8 +132,8 @@ namespace kt
 
     void ScriptModel::addScriptFromArchiveDirectory(const KArchiveDirectory* dir)
     {
-        QStringList files = dir->entries();
-        foreach (const QString& file, files)
+        const QStringList files = dir->entries();
+        for (const QString& file: files)
         {
             // look for the desktop file
             if (!file.endsWith(QStringLiteral(".desktop")) && !file.endsWith(QStringLiteral(".DESKTOP")))
@@ -141,7 +141,7 @@ namespace kt
 
             // check for duplicate packages
             QString dest_dir = kt::DataDir() + QStringLiteral("scripts/") + dir->name() + QLatin1Char('/');
-            foreach (Script* s, scripts)
+            for (Script* s: qAsConst(scripts))
             {
                 if (s->packageDirectory() == dest_dir)
                     throw bt::Error(i18n("There is already a script package named %1 installed.", dir->name()));
@@ -271,7 +271,7 @@ namespace kt
     QStringList ScriptModel::scriptFiles() const
     {
         QStringList ret;
-        foreach (Script* s, scripts)
+        for (Script* s: qAsConst(scripts))
             ret << s->scriptFile();
         return ret;
     }
@@ -279,7 +279,7 @@ namespace kt
     QStringList ScriptModel::runningScriptFiles() const
     {
         QStringList ret;
-        foreach (Script* s, scripts)
+        for (Script* s: qAsConst(scripts))
         {
             if (s->running())
                 ret << s->scriptFile();
@@ -290,7 +290,7 @@ namespace kt
     void ScriptModel::runScripts(const QStringList& r)
     {
         int idx = 0;
-        foreach (Script* s, scripts)
+        for (Script* s: qAsConst(scripts))
         {
             if (r.contains(s->scriptFile()) && !s->running())
             {
@@ -314,7 +314,7 @@ namespace kt
         }
 
         beginResetModel();
-        foreach (Script* s, to_remove)
+        for (Script* s: qAsConst(to_remove))
         {
             if (!s->packageDirectory().isEmpty())
                 bt::Delete(s->packageDirectory(), true);

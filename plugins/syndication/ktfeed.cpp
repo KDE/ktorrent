@@ -104,12 +104,12 @@ namespace kt
         }
         enc.write(QByteArrayLiteral("filters"));
         enc.beginList();
-        foreach (Filter* f, filters)
+        for (Filter* f: qAsConst(filters))
             enc.write(f->filterID().toUtf8());
         enc.end();
         enc.write(QByteArrayLiteral("loaded"));
         enc.beginList();
-        foreach (const QString& id, loaded)
+        for (const QString& id: qAsConst(loaded))
             enc.write(id.toUtf8());
         enc.end();
         enc.write(QByteArrayLiteral("downloaded_se_items"));
@@ -118,10 +118,10 @@ namespace kt
         while (i != downloaded_se_items.end())
         {
             Filter* f = i.key();
-            QList<SeasonEpisodeItem> & se = i.value();
+            const QList<SeasonEpisodeItem> & se = i.value();
             enc.write(f->filterID().toUtf8());
             enc.beginList();
-            foreach (const SeasonEpisodeItem& item, se)
+            for (const SeasonEpisodeItem& item: se)
             {
                 enc.write((bt::Uint32)item.season);
                 enc.write((bt::Uint32)item.episode);
@@ -245,7 +245,7 @@ namespace kt
         // refresh cache of feed_items_ids
         feed_items_id.clear();
         const QList<Syndication::ItemPtr> feedItems = feed->items();
-        for (Syndication::ItemPtr item : feedItems)
+        for (const Syndication::ItemPtr& item : feedItems)
             feed_items_id.insert(item->id());
 
         checkLoaded();
@@ -354,11 +354,11 @@ namespace kt
             return;
 
         Out(SYS_SYN | LOG_NOTICE) << "Running filters on " << feed->title() << endl;
-        foreach (Filter* f, filters)
+        for (Filter* f: qAsConst(filters))
         {
             f->startMatching();
             const QList<Syndication::ItemPtr> items = feed->items();
-            for (Syndication::ItemPtr item : items)
+            for (const Syndication::ItemPtr& item : items)
             {
                 // Skip already loaded items
                 if (loaded.contains(item->id()))
@@ -399,7 +399,7 @@ namespace kt
         bool need_to_save = false;
 
         QList<QString> itemsToRemove;
-        foreach (const QString &loadedItem, loaded)
+        for (const QString &loadedItem: qAsConst(loaded))
         {
             if (!feed_items_id.contains(loadedItem))
             {
@@ -408,7 +408,7 @@ namespace kt
             }
         }
 
-        foreach (const QString &itemToRemove, itemsToRemove)
+        for (const QString &itemToRemove: qAsConst(itemsToRemove))
             loaded.remove(itemToRemove);
 
         if (need_to_save)
@@ -507,7 +507,7 @@ namespace kt
         if (filters.empty())
             return i18n("None");
         QStringList names;
-        foreach (Filter* f, filters)
+        for (Filter* f: qAsConst(filters))
             names << f->filterName();
         return names.join(QStringLiteral(", "));
     }

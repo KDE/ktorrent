@@ -91,9 +91,9 @@ namespace kt
         m_remove_node->setEnabled(false);
 
         // populate dht box with some nodes from our own table
-        QMap<QString, int> n = bt::Globals::instance().getDHT().getClosestGoodNodes(10);
+        const QMap<QString, int> n = bt::Globals::instance().getDHT().getClosestGoodNodes(10);
 
-        for (QMap<QString, int>::iterator it = n.begin(); it != n.end(); ++it)
+        for (QMap<QString, int>::const_iterator it = n.cbegin(); it != n.cend(); ++it)
         {
             QTreeWidgetItem* twi = new QTreeWidgetItem(m_node_list);
             twi->setText(0, it.key());
@@ -180,8 +180,8 @@ namespace kt
 
     void TorrentCreatorDlg::moveUpPressed()
     {
-        QList<QListWidgetItem*> sel = m_tracker_list->selectedItems();
-        foreach (QListWidgetItem* s, sel)
+        const QList<QListWidgetItem*> sel = m_tracker_list->selectedItems();
+        for (QListWidgetItem* s: sel)
         {
             int r = m_tracker_list->row(s);
             if (r > 0)
@@ -194,8 +194,8 @@ namespace kt
 
     void TorrentCreatorDlg::moveDownPressed()
     {
-        QList<QListWidgetItem*> sel = m_tracker_list->selectedItems();
-        foreach (QListWidgetItem* s, sel)
+        const QList<QListWidgetItem*> sel = m_tracker_list->selectedItems();
+        for (QListWidgetItem* s: sel)
         {
             int r = m_tracker_list->row(s);
             if (r + 1 < m_tracker_list->count())

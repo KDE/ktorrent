@@ -83,8 +83,8 @@ namespace kt
         loadScripts();
 
         Out(SYS_SCR | LOG_DEBUG) << "Supported interpreters : " << endl;
-        QStringList interpreters = Kross::Manager::self().interpreters();
-        foreach (const QString& s, interpreters)
+        const QStringList interpreters = Kross::Manager::self().interpreters();
+        for (const QString& s: interpreters)
             Out(SYS_SCR | LOG_DEBUG) << s << endl;
 
         sman = new ScriptManager(model, nullptr);
@@ -156,14 +156,14 @@ namespace kt
     Script* ScriptingPlugin::loadScriptDir(const QString& dir)
     {
         QDir d(dir);
-        QStringList files = d.entryList(QDir::Files);
+        const QStringList files = d.entryList(QDir::Files);
         QString desktop_file;
         QString dir_path = dir;
         if (!dir_path.endsWith(bt::DirSeparator()))
             dir_path.append(bt::DirSeparator());
 
         // look for desktop files
-        foreach (const QString& file, files)
+        for (const QString& file: files)
         {
             if (file.endsWith(QStringLiteral(".desktop")))
             {
@@ -235,8 +235,8 @@ namespace kt
     void ScriptingPlugin::removeScript()
     {
         QStringList scripts_to_delete;
-        QModelIndexList indices = sman->selectedScripts();
-        foreach (const QModelIndex& idx, indices)
+        const QModelIndexList indices = sman->selectedScripts();
+        for (const QModelIndex& idx: indices)
         {
             Script* s = model->scriptForIndex(idx);
             if (s && !s->packageDirectory().isEmpty())

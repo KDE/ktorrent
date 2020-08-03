@@ -493,6 +493,16 @@ namespace kt
         return downloads.end();
     }
 
+    QList<bt::TorrentInterface*>::const_iterator QueueManager::begin() const
+    {
+        return downloads.cbegin();
+    }
+
+    QList<bt::TorrentInterface*>::const_iterator QueueManager::end() const
+    {
+        return downloads.cend();
+    }
+
     void QueueManager::setMaxDownloads(int m)
     {
         max_downloads = m;

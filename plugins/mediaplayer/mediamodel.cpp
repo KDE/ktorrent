@@ -43,10 +43,9 @@ namespace kt
 
     MediaModel::MediaModel(CoreInterface* core, QObject* parent) : QAbstractListModel(parent), core(core)
     {
-        QueueManager* qman = core->getQueueManager();
-        for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++)
+        const QueueManager* const qman = core->getQueueManager();
+        for (bt::TorrentInterface* tc : *qman)
         {
-            bt::TorrentInterface* tc = *i;
             onTorrentAdded(tc);
         }
         qsrand(bt::CurrentTime() / 1000); // initialize random number generator with the current time in seconds
@@ -164,17 +163,17 @@ namespace kt
 
     void MediaModel::onTorrentRemoved(bt::TorrentInterface* tc)
     {
+        int row = 0;
         int start = -1;
         int cnt = 0;
-        for (QList<MediaFile::Ptr>::iterator i = items.begin(); i != items.end(); i++)
+        for (MediaFile::Ptr mf : qAsConst(items))
         {
-            MediaFile::Ptr p = *i;
-            if (p->torrent() == tc)
+            if (mf->torrent() == tc)
             {
                 if (start == -1)
                 {
                     // start of the range
-                    start = i - items.begin();
+                    start = row;
                     cnt = 1;
                 }
                 else
@@ -185,6 +184,8 @@ namespace kt
                 // We have found the end
                 break;
             }
+
+            row++;
         }
 
         if (cnt > 0)
@@ -202,7 +203,7 @@ namespace kt
     QModelIndex MediaModel::indexForPath(const QString& path) const
     {
         Uint32 idx = 0;
-        foreach (MediaFile::Ptr mf, items)
+        for (MediaFile::Ptr mf: qAsConst(items))
         {
             if (mf->path() == path)
                 return index(idx, 0, QModelIndex());
@@ -214,7 +215,7 @@ namespace kt
 
     MediaFileRef MediaModel::find(const QString& path)
     {
-        foreach (MediaFile::Ptr mf, items)
+        for (MediaFile::Ptr mf: qAsConst(items))
         {
             if (mf->path() == path)
                 return MediaFileRef(mf);
@@ -245,7 +246,7 @@ namespace kt
     {
         QMimeData* data = new QMimeData();
         QList<QUrl> urls;
-        foreach (const QModelIndex& idx, indexes)
+        for (const QModelIndex& idx: indexes)
         {
             if (!idx.isValid() || idx.row() < 0 || idx.row() >= items.count())
                 continue;

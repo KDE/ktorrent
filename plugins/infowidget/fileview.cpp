@@ -297,8 +297,8 @@ namespace kt
     void FileView::changePriority(bt::Priority newpriority)
     {
         QModelIndexList sel = view->selectionModel()->selectedRows(2);
-        for (QModelIndexList::iterator i = sel.begin(); i != sel.end(); i++)
-            *i = proxy_model->mapToSource(*i);
+        for (QModelIndex & i : sel)
+            i = proxy_model->mapToSource(i);
 
         model->changePriority(sel, newpriority);
         proxy_model->invalidate();
@@ -350,7 +350,7 @@ namespace kt
         bt::TorrentInterface* tc = curr_tc.data();
         if (tc->getStats().multi_file_torrent)
         {
-            QModelIndexList sel = view->selectionModel()->selectedRows();
+            const QModelIndexList sel = view->selectionModel()->selectedRows();
             QMap<bt::TorrentFileInterface*, QString> moves;
 
             QString recentDirClass;
@@ -363,7 +363,7 @@ namespace kt
             if (!recentDirClass.isEmpty())
                 KRecentDirs::add(recentDirClass, dir);
 
-            foreach (const QModelIndex& idx, sel)
+            for (const QModelIndex& idx: sel)
             {
                 bt::TorrentFileInterface* tfi = model->indexToFile(proxy_model->mapToSource(idx));
                 if (!tfi)
@@ -407,11 +407,11 @@ namespace kt
 
     void FileView::expandCollapseSelected(bool expand)
     {
-        QModelIndexList sel = view->selectionModel()->selectedRows();
-        for (QModelIndexList::iterator i = sel.begin(); i != sel.end(); i++)
+        const QModelIndexList sel = view->selectionModel()->selectedRows();
+        for (const QModelIndex & i : sel)
         {
-            if (proxy_model->hasChildren(*i))
-                expandCollapseTree(*i, expand);
+            if (proxy_model->hasChildren(i))
+                expandCollapseTree(i, expand);
         }
     }
 
@@ -622,7 +622,7 @@ namespace kt
 
     void FileView::checkFile()
     {
-        QModelIndexList sel = view->selectionModel()->selectedRows();
+        const QModelIndexList sel = view->selectionModel()->selectedRows();
         if (!curr_tc || sel.isEmpty())
             return;
 
@@ -630,7 +630,7 @@ namespace kt
         {
             bt::Uint32 from = curr_tc.data()->getStats().total_chunks;
             bt::Uint32 to = 0;
-            foreach (const QModelIndex& idx, sel)
+            for (const QModelIndex& idx: sel)
             {
                 bt::TorrentFileInterface* tfi = model->indexToFile(proxy_model->mapToSource(idx));
                 if (!tfi)

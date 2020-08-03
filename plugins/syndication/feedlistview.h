@@ -44,7 +44,7 @@ namespace kt
         QModelIndexList selectedFeeds();
 
         void itemActivated(const QModelIndex& idx);
-        void selectionChanged(const QItemSelection& sel, const QItemSelection& desel);
+        void selectionChanged(const QItemSelection& sel, const QItemSelection& desel) override;
 
     Q_SIGNALS:
         void feedActivated(Feed* feed);

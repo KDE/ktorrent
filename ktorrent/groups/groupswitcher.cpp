@@ -88,23 +88,23 @@ namespace kt
         QStringList default_groups;
         default_groups << QStringLiteral("/all") << QStringLiteral("/all/downloads") << QStringLiteral("/all/uploads");
 
-        QStringList groups = g.readEntry("groups", default_groups);
-        foreach (const QString& group, groups)
+        const QStringList groups = g.readEntry("groups", default_groups);
+        for (const QString& group: groups)
         {
             addTab(gman->findByPath(group));
         }
 
         if (tabs.isEmpty())
         {
-            foreach (const QString& group, default_groups)
+            for (const QString& group: qAsConst(default_groups))
                 addTab(gman->findByPath(group));
         }
 
 
         int idx = 0;
-        for (TabList::iterator i = tabs.begin(); i != tabs.end(); i++)
+        for (Tab & tab : tabs)
         {
-            i->view_settings = g.readEntry(QStringLiteral("tab%1_settings").arg(idx++), view->defaultState());
+            tab.view_settings = g.readEntry(QStringLiteral("tab%1_settings").arg(idx++), view->defaultState());
         }
 
         updateGroupCount();
@@ -134,12 +134,12 @@ namespace kt
         KConfigGroup g = cfg->group("GroupSwitcher");
         QStringList groups;
         int idx = 0;
-        for (TabList::iterator i = tabs.begin(); i != tabs.end(); i++)
+        for (Tab & tab : tabs)
         {
-            groups << i->group->groupPath();
+            groups << tab.group->groupPath();
             if (idx == current_tab)
-                i->view_settings = view->header()->saveState();
-            g.writeEntry(QStringLiteral("tab%1_settings").arg(idx++), i->view_settings);
+                tab.view_settings = view->header()->saveState();
+            g.writeEntry(QStringLiteral("tab%1_settings").arg(idx++), tab.view_settings);
         }
 
         g.writeEntry("groups", groups);
@@ -209,29 +209,30 @@ namespace kt
         tabs[current_tab].view_settings = view->header()->saveState();
 
         int idx = 0;
-        for (TabList::iterator i = tabs.begin(); i != tabs.end(); i++, idx++)
+        for (const Tab & tab : qAsConst(tabs))
         {
-            if (i->action == action)
+            if (tab.action == action)
             {
-                view->setGroup(i->group);
-                view->restoreState(i->view_settings);
+                view->setGroup(tab.group);
+                view->restoreState(tab.view_settings);
                 current_tab = idx;
-                edit_group_policy->setEnabled(!i->group->isStandardGroup());
+                edit_group_policy->setEnabled(!tab.group->isStandardGroup());
                 break;
             }
+            idx++;
         }
     }
 
     void GroupSwitcher::currentGroupChanged(Group* group)
     {
-        for (TabList::iterator i = tabs.begin(); i != tabs.end(); i++)
+        for (Tab & tab : tabs)
         {
-            if (i->action->isChecked())
+            if (tab.action->isChecked())
             {
-                i->group = group;
+                tab.group = group;
                 QString name = group->groupName() +  QStringLiteral(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
-                i->action->setText(name);
-                i->action->setIcon(group->groupIcon());
+                tab.action->setText(name);
+                tab.action->setIcon(group->groupIcon());
                 edit_group_policy->setEnabled(!group->isStandardGroup());
                 break;
             }
@@ -240,8 +241,8 @@ namespace kt
 
     void GroupSwitcher::updateGroupCount()
     {
-        for (TabList::iterator i = tabs.begin(); i != tabs.end(); i++)
-            i->action->setText(i->group->groupName() + QStringLiteral(" %1/%2").arg(i->group->runningTorrents()).arg(i->group->totalTorrents()));
+        for (Tab & tab : tabs)
+            tab.action->setText(tab.group->groupName() + QStringLiteral(" %1/%2").arg(tab.group->runningTorrents()).arg(tab.group->totalTorrents()));
     }
 
     void GroupSwitcher::groupRemoved(Group* group)

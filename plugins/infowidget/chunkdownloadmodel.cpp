@@ -123,14 +123,21 @@ namespace kt
 
     void ChunkDownloadModel::downloadRemoved(bt::ChunkDownloadInterface* cd)
     {
-        for (QVector<Item*>::iterator i = items.begin(); i != items.end(); i++)
+        int row = 0;
+        bool found = false;
+        for (Item* item : qAsConst(items))
         {
-            const Item* item = *i;
             if (item->cd == cd)
             {
-                removeRow(i - items.begin());
+                found = true;
                 break;
             }
+            row++;
+        }
+
+        if (found)
+        {
+            removeRow(row);
         }
     }
 
@@ -157,7 +164,7 @@ namespace kt
         int lowest = -1;
         int highest = -1;
 
-        foreach (Item* i, items)
+        for (Item* i: qAsConst(items))
         {
             if (i->changed())
             {

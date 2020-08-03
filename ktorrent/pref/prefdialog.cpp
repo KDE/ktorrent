@@ -73,15 +73,21 @@ namespace kt
 
     void PrefDialog::removePrefPage(PrefPageInterface* page)
     {
-        foreach (PrefPageScrollArea* area, pages)
+        PrefPageScrollArea* found = nullptr;
+        for (PrefPageScrollArea* area: qAsConst(pages))
         {
             if (area->page == page)
             {
-                area->takeWidget();
-                pages.removeAll(area);
-                removePage(area->page_widget_item);
+                found = area;
                 break;
             }
+        }
+
+        if (found)
+        {
+            found->takeWidget();
+            pages.removeAll(found);
+            removePage(found->page_widget_item);
         }
     }
 
@@ -93,19 +99,19 @@ namespace kt
 
     void PrefDialog::updateWidgets()
     {
-        foreach (PrefPageScrollArea* area, pages)
+        for (PrefPageScrollArea* area: qAsConst(pages))
             area->page->loadSettings();
     }
 
     void PrefDialog::updateWidgetsDefault()
     {
-        foreach (PrefPageScrollArea* area, pages)
+        for (PrefPageScrollArea* area: qAsConst(pages))
             area->page->loadDefaults();
     }
 
     void PrefDialog::updateSettings()
     {
-        foreach (PrefPageScrollArea* area, pages)
+        for (PrefPageScrollArea* area: qAsConst(pages))
             area->page->updateSettings();
     }
 
@@ -142,7 +148,7 @@ namespace kt
         if (KConfigDialog::hasChanged())
             return true;
 
-        foreach (PrefPageScrollArea* area, pages)
+        for (PrefPageScrollArea* area: qAsConst(pages))
             if (area->page->customWidgetsChanged())
                 return true;
 

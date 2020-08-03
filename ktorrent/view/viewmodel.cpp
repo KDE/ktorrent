@@ -316,10 +316,10 @@ namespace kt
         group = nullptr;
         num_visible = 0;
 
-        kt::QueueManager* qman = core->getQueueManager();
-        for (QList<bt::TorrentInterface*>::iterator i = qman->begin(); i != qman->end(); i++)
+        const kt::QueueManager* const qman = core->getQueueManager();
+        for (bt::TorrentInterface* i : *qman)
         {
-            torrents.append(new Item(*i));
+            torrents.append(new Item(i));
             num_visible++;
         }
     }

@@ -177,7 +177,7 @@ namespace kt
     void LinkDownloader::tryTorrentLinks()
     {
         // First try links ending with .torrent
-        foreach (QUrl u, links)
+        for (const QUrl& u: qAsConst(links))
         {
             if (u.path().endsWith(QStringLiteral(".torrent")) || u.path().endsWith(QStringLiteral(".TORRENT")))
             {

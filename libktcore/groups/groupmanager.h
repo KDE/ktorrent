@@ -92,9 +92,13 @@ namespace kt
         Group* allGroup() {return all;}
 
         typedef bt::PtrMap<QString, Group>::iterator Itr;
+        typedef bt::PtrMap<QString, Group>::const_iterator CItr;
 
         Itr begin() {return groups.begin();}
         Itr end() {return groups.end();}
+
+        CItr begin() const {return groups.begin();}
+        CItr end() const {return groups.end();}
 
         /// Find  Group given a name
         Group* find(const QString& name);

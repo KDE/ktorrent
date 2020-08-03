@@ -254,7 +254,7 @@ namespace kt
         if (!tc)
             return;
 
-        foreach (const QModelIndex& idx, indexes)
+        for (const QModelIndex& idx: indexes)
         {
             Node* n = (Node*)idx.internalPointer();
             if (n)

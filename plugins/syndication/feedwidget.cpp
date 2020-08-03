@@ -152,8 +152,8 @@ namespace kt
         if (!feed)
             return;
 
-        QModelIndexList sel = m_item_list->selectionModel()->selectedRows();
-        foreach (const QModelIndex& idx, sel)
+        const QModelIndexList sel = m_item_list->selectionModel()->selectedRows();
+        for (const QModelIndex& idx: sel)
         {
             Syndication::ItemPtr ptr = model->itemForIndex(idx);
             if (ptr)

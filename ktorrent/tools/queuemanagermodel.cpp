@@ -49,9 +49,8 @@ namespace kt
           show_not_queud(true)
     {
         connect(qman, &QueueManager::queueOrdered, this, &QueueManagerModel::onQueueOrdered);
-        for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++)
+        for (bt::TorrentInterface* tc : qAsConst(*qman))
         {
-            bt::TorrentInterface* tc = *i;
             connect(tc, &bt::TorrentInterface::statusChanged, this, &QueueManagerModel::onTorrentStatusChanged);
 
             if (visible(tc))
@@ -84,9 +83,8 @@ namespace kt
         int count = queue.count();
         queue.clear();
 
-        for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++)
+        for (bt::TorrentInterface* tc : qAsConst(*qman))
         {
-            bt::TorrentInterface* tc = *i;
             if (visible(tc))
             {
                 Item item = {tc, 0};
@@ -138,17 +136,22 @@ namespace kt
         disconnect(tc, SIGNAL(statusChanged(bt::TorrentInterface*)),
                    this, SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
         int r = 0;
-        const auto queueCopy = queue;
+        bool found = false;
 
-        for (const auto &i : queueCopy)
+        for (const auto &i : qAsConst(queue))
         {
             if (tc == i.tc)
             {
-                queue.removeAt(r);
-                removeRow(r);
+                found = true;
                 break;
             }
             r++;
+        }
+
+        if (found)
+        {
+            queue.removeAt(r);
+            removeRow(r);
         }
 
     }
@@ -156,25 +159,33 @@ namespace kt
     void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface* tc)
     {
         int r = 0;
-        foreach (const Item& i, queue)
+        bool found = false;
+        for (const Item& i: qAsConst(queue))
         {
             if (tc == i.tc)
             {
-                if (!visible(tc))
-                {
-                    queue.removeAt(r);
-                    removeRow(r);
-                }
-                else
-                {
-                    QModelIndex idx = index(r, 2);
-                    emit dataChanged(idx, idx);
-                }
-                return;
+               found = true;
+               break;
             }
 
             r++;
         }
+
+        if (found)
+        {
+            if (!visible(tc))
+            {
+                queue.removeAt(r);
+                removeRow(r);
+            }
+            else
+            {
+                QModelIndex idx = index(r, 2);
+                emit dataChanged(idx, idx);
+            }
+            return;
+        }
+
 
         if (visible(tc))
         {
@@ -322,7 +333,6 @@ namespace kt
     QMimeData* QueueManagerModel::mimeData(const QModelIndexList& indexes) const
     {
         QMimeData* mimeData = new QMimeData();
-        QByteArray encodedData;
 
         dragged_items.clear();
 
@@ -484,7 +494,7 @@ namespace kt
     void QueueManagerModel::dumpQueue()
     {
         int idx = 0;
-        foreach (const Item& item, queue)
+        for (const Item& item: qAsConst(queue))
         {
             Out(SYS_GEN | LOG_DEBUG) << "Item " << idx << ": " << item.tc->getDisplayName() << " " << item.tc->getPriority() << endl;
             idx++;
@@ -494,22 +504,22 @@ namespace kt
     void QueueManagerModel::updatePriorities()
     {
         int idx = queue.size();
-        for (QList<Item>::iterator i = queue.begin(); i != queue.end(); i++)
-            i->tc->setPriority(idx--);
+        for (const Item & i : qAsConst(queue))
+            i.tc->setPriority(idx--);
     }
 
     void QueueManagerModel::update()
     {
         TimeStamp now = bt::CurrentTime();
         int r = 0;
-        for (QList<Item>::iterator i = queue.begin(); i != queue.end(); i++)
+        for (Item & i : queue)
         {
-            bt::TorrentInterface* tc = i->tc;
+            bt::TorrentInterface* tc = i.tc;
             if (!tc->getStats().running)
             {
-                if (i->stalled_time != -1)
+                if (i.stalled_time != -1)
                 {
-                    i->stalled_time = -1;
+                    i.stalled_time = -1;
                     emit dataChanged(createIndex(r, 3), createIndex(r, 3));
                 }
             }
@@ -521,9 +531,9 @@ namespace kt
                 else
                     stalled_time = (now - tc->getStats().last_download_activity_time) / 1000;
 
-                if (i->stalled_time != stalled_time)
+                if (i.stalled_time != stalled_time)
                 {
-                    i->stalled_time = stalled_time;
+                    i.stalled_time = stalled_time;
                     emit dataChanged(createIndex(r, 3), createIndex(r, 3));
                 }
             }
@@ -542,7 +552,7 @@ namespace kt
         }
 
         int idx = 0;
-        foreach (const Item& i, queue)
+        for (const Item& i: qAsConst(queue))
         {
             bt::TorrentInterface* tc = i.tc;
             if (tc->getDisplayName().contains(text, Qt::CaseInsensitive))

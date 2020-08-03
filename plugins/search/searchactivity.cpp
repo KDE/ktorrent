@@ -204,7 +204,7 @@ namespace kt
     void SearchActivity::find()
     {
         QWidget* w = tabs->currentWidget();
-        foreach (SearchWidget* s, searches)
+        for (SearchWidget* s: qAsConst(searches))
         {
             if (w == s)
             {
@@ -217,7 +217,7 @@ namespace kt
     void SearchActivity::search()
     {
         QWidget* w = tabs->currentWidget();
-        foreach (SearchWidget* s, searches)
+        for (SearchWidget* s: qAsConst(searches))
         {
             if (w == s)
             {
@@ -231,7 +231,7 @@ namespace kt
     void SearchActivity::copy()
     {
         QWidget* w = tabs->currentWidget();
-        foreach (SearchWidget* s,searches)
+        for (SearchWidget* s: qAsConst(searches))
         {
             if (w == s)
             {
@@ -280,7 +280,7 @@ namespace kt
     void SearchActivity::home()
     {
         QWidget* w = tabs->currentWidget();
-        foreach (SearchWidget* s, searches)
+        for (SearchWidget* s: qAsConst(searches))
         {
             if (w == s)
             {
@@ -295,7 +295,7 @@ namespace kt
         if (searches.count() == 1)
             return;
 
-        foreach (SearchWidget* s, searches)
+        for (SearchWidget* s: qAsConst(searches))
         {
             if (s == tabs->currentWidget())
             {

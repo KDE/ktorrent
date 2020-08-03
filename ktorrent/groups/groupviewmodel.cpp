@@ -42,7 +42,7 @@ namespace kt
         gman(gman),
         view(view)
     {
-        for (GroupManager::Itr i = gman->begin(); i != gman->end(); i++)
+        for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++)
             root.insert(i->second, index(0, 0));
 
         root.insert(i18n("Custom Groups"), QStringLiteral("/all/custom"), index(0, 0));
@@ -146,7 +146,7 @@ namespace kt
 
         QList<TorrentInterface*> sel;
         view->getSelection(sel);
-        foreach (TorrentInterface* ti, sel)
+        for (TorrentInterface* ti: qAsConst(sel))
         {
             g->addTorrent(ti, false);
         }
@@ -183,7 +183,7 @@ namespace kt
 
     void GroupViewModel::groupRemoved(Group* g)
     {
-        QModelIndex idx = findGroup(g).parent();
+//        QModelIndex idx = findGroup(g).parent();
         root.remove(g, index(0, 0));
         //root.dump();
         view->onGroupRemoved(g);
@@ -239,8 +239,8 @@ namespace kt
         for (int i = 0; i < count; i++)
             item->children.removeAt(row);
         int row_index = 0;
-        for (QList<Item>::iterator j = item->children.begin(); j != item->children.end(); j++)
-            j->row = row_index++;
+        for (Item & i : item->children)
+            i.row = row_index++;
         endRemoveRows();
         return true;
     }
@@ -392,7 +392,7 @@ namespace kt
             groups << path();
 
         int row = 0;
-        foreach (const Item& child, children)
+        for (const Item& child: qAsConst(children))
         {
             child.expandedGroups(gview, groups, idx.child(row, 0));
             row++;
@@ -408,9 +408,9 @@ namespace kt
             gview->expand(idx);
 
         int row = 0;
-        for (QList<Item>::iterator i = children.begin(); i != children.end(); i++)
+        for (Item & i : children)
         {
-            i->expandGroups(gview, groups, idx.child(row, 0));
+            i.expandGroups(gview, groups, idx.child(row, 0));
             row++;
         }
     }
@@ -421,9 +421,9 @@ namespace kt
             return idx;
 
         int row = 0;
-        for (QList<Item>::iterator i = children.begin(); i != children.end(); i++)
+        for (Item & i : children)
         {
-            QModelIndex ret = i->findGroup(g, idx.child(row, 0));
+            QModelIndex ret = i.findGroup(g, idx.child(row, 0));
             row++;
             if (ret.isValid())
                 return ret;
@@ -443,10 +443,10 @@ namespace kt
         else
             Out(SYS_GEN | LOG_DEBUG) << indent << name << endl;
 
-        for (QList<Item>::iterator i = children.begin(); i != children.end(); i++)
+        for (Item & i : children)
         {
-            Out(SYS_GEN | LOG_DEBUG) << indent << "child " << i->row << endl;
-            i->dump();
+            Out(SYS_GEN | LOG_DEBUG) << indent << "child " << i.row << endl;
+            i.dump();
         }
     }
 

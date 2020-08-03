@@ -54,7 +54,7 @@ namespace kt
         else
             ip = addr.toIPv4Address();
 
-        foreach (const Entry& e, ip_list)
+        for (const Entry& e: qAsConst(ip_list))
         {
             if (e.start <= ip && ip <= e.end)
                 return true;

@@ -62,7 +62,7 @@ namespace kt
 
     Filter* FilterListModel::filterByName(const QString& name)
     {
-        foreach (Filter* f, filters)
+        for (Filter* f: qAsConst(filters))
             if (f->filterName() == name)
                 return f;
 
@@ -71,7 +71,7 @@ namespace kt
 
     Filter* FilterListModel::filterByID(const QString& id)
     {
-        foreach (Filter* f, filters)
+        for (Filter* f: qAsConst(filters))
             if (f->filterID() == id)
                 return f;
 

@@ -83,12 +83,12 @@ namespace kt
     void Group::updateCount(QueueManager* qman)
     {
         total = running = 0;
-        for (QueueManager::iterator j = qman->begin(); j != qman->end(); j++)
+        for (bt::TorrentInterface * tor : qAsConst(*qman))
         {
-            if (isMember(*j))
+            if (isMember(tor))
             {
                 total++;
-                if ((*j)->getStats().running)
+                if (tor->getStats().running)
                     running++;
             }
         }

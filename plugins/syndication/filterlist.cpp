@@ -66,7 +66,7 @@ namespace kt
 
         BEncoder enc(&fptr);
         enc.beginList();
-        foreach (Filter* f, filters)
+        for (Filter* f: qAsConst(filters))
             f->save(enc);
         enc.end();
     }

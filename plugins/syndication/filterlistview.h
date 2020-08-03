@@ -42,7 +42,7 @@ namespace kt
         QModelIndexList selectedFilters();
 
         void itemActivated(const QModelIndex& idx);
-        void selectionChanged(const QItemSelection& sel, const QItemSelection& desel);
+        void selectionChanged(const QItemSelection& sel, const QItemSelection& desel) override;
 
     Q_SIGNALS:
         void filterActivated(Filter* filter);

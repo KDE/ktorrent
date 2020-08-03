@@ -68,7 +68,8 @@ namespace kt
         KConfigGroup g = cfg->group("MainWindow");
         g.writeEntry("current_activity", currentIndex());
 
-        for (QAction* a : activity_switching_group->actions())
+        const QList<QAction*> actions = activity_switching_group->actions();
+        for (QAction* a : actions)
         {
             g.writeEntry(QLatin1String("Priority_") + a->objectName(), (int)a->priority());
         }
@@ -89,7 +90,7 @@ namespace kt
 
     void CentralWidget::removeActivity(Activity* act)
     {
-        QList<QAction*> actions = activity_switching_group->actions();
+        const QList<QAction*> actions = activity_switching_group->actions();
         for (QAction* a : actions)
         {
             if (a->data().value<QObject*>() == act)

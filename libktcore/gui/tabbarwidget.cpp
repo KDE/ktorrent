@@ -235,7 +235,7 @@ namespace kt
         }
 
         QString ctab = g.readPathEntry("current_tab", QString());
-        for (QMap<QWidget*, QAction*>::iterator i = widget_to_action.begin(); i != widget_to_action.end(); i++)
+        for (QMap<QWidget*, QAction*>::const_iterator i = widget_to_action.cbegin(); i != widget_to_action.cend(); i++)
         {
             if (i.value()->text() == ctab)
             {

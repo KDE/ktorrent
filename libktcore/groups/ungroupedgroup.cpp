@@ -40,7 +40,7 @@ namespace kt
 
     bool UngroupedGroup::isMember(TorrentInterface* tor)
     {
-        for (GroupManager::Itr i = gman->begin(); i != gman->end(); i++)
+        for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++)
             if ((i->second->groupFlags() & Group::CUSTOM_GROUP) && i->second->isMember(tor))
                 return false;
 

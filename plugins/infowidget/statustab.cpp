@@ -117,9 +117,8 @@ namespace kt
 
             // Make links clickable
             QStringList words = text.split(QLatin1Char(' '), QString::KeepEmptyParts);
-            for (QStringList::iterator i = words.begin(); i != words.end(); i++)
+            for (QString& w : words)
             {
-                QString& w = *i;
                 if (w.startsWith(QLatin1String("http://")) || w.startsWith(QLatin1String("https://")) || w.startsWith(QLatin1String("ftp://")))
                     w = QStringLiteral("<a href=\"") + w + QStringLiteral("\">") + w + QStringLiteral("</a>");
             }

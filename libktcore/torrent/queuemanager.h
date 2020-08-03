@@ -162,9 +162,13 @@ namespace kt
         void startAutoStartTorrents();
 
         typedef QList<bt::TorrentInterface*>::iterator iterator;
+        typedef QList<bt::TorrentInterface*>::const_iterator const_iterator;
 
         iterator begin();
         iterator end();
+
+        const_iterator begin() const;
+        const_iterator end() const;
 
         /**
          * Get the torrent at index idx in the list.

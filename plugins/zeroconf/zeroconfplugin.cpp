@@ -52,10 +52,10 @@ namespace kt
         connect(core, &CoreInterface::torrentRemoved, this, &ZeroConfPlugin::torrentRemoved);
 
         // go over existing torrents and add them
-        kt::QueueManager* qman = core->getQueueManager();
-        for (QList<bt::TorrentInterface*>::iterator i = qman->begin(); i != qman->end(); i++)
+        const kt::QueueManager* const qman = core->getQueueManager();
+        for (bt::TorrentInterface* tor : *qman)
         {
-            torrentAdded(*i);
+            torrentAdded(tor);
         }
     }
 

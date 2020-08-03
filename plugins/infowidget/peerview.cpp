@@ -77,8 +77,8 @@ namespace kt
     {
         AccessManager& aman = AccessManager::instance();
 
-        QModelIndexList indices = selectionModel()->selectedRows();
-        foreach (const QModelIndex& idx, indices)
+        const QModelIndexList indices = selectionModel()->selectedRows();
+        for (const QModelIndex& idx: indices)
         {
             bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
             if (peer)
@@ -91,8 +91,8 @@ namespace kt
 
     void PeerView::kickPeer()
     {
-        QModelIndexList indices = selectionModel()->selectedRows();
-        foreach (const QModelIndex& idx, indices)
+        const QModelIndexList indices = selectionModel()->selectedRows();
+        for (const QModelIndex& idx: indices)
         {
             bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
             if (peer)

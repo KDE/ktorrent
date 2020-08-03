@@ -79,7 +79,7 @@ namespace kt
 
         m_folders->clear();
         folders = ScanFolderPluginSettings::folders();
-        foreach (const QString& f, folders)
+        for (const QString& f: qAsConst(folders))
         {
             m_folders->addItem(new QListWidgetItem(QIcon::fromTheme(QStringLiteral("folder")), f));
         }
@@ -122,8 +122,8 @@ namespace kt
 
     void ScanFolderPrefPage::removePressed()
     {
-        QList<QListWidgetItem*> sel = m_folders->selectedItems();
-        foreach (QListWidgetItem* i, sel)
+        const QList<QListWidgetItem*> sel = m_folders->selectedItems();
+        for (QListWidgetItem* i: sel)
         {
             folders.removeAll(i->text());
             delete i;

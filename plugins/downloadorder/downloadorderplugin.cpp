@@ -70,9 +70,9 @@ namespace kt
         connect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(torrentRemoved(bt::TorrentInterface*)));
         currentTorrentChanged(ta->getCurrentTorrent());
 
-        kt::QueueManager* qman = getCore()->getQueueManager();
-        for (kt::QueueManager::iterator i = qman->begin(); i != qman->end(); i++)
-            torrentAdded(*i);
+        const kt::QueueManager* const qman = getCore()->getQueueManager();
+        for (bt::TorrentInterface* i : *qman)
+            torrentAdded(i);
     }
 
     void DownloadOrderPlugin::unload()

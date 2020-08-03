@@ -101,7 +101,7 @@ namespace kt
             mutex.unlock();
         }
 
-        foreach (const QString& line, tmp)
+        for (const QString& line: qAsConst(tmp))
         {
             QTextCharFormat fm = output->currentCharFormat();
             output->append(line);

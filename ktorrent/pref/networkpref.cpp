@@ -62,16 +62,16 @@ namespace kt
         kcfg_primaryTransportProtocol->setEnabled(Settings::utpEnabled() && !Settings::onlyUseUtp());
 
         // get all the network devices and add them to the combo box
-        QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
+        const QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
 
-        // FIXME KF5 QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
+        // FIXME KF5 const QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
 
 
         for (const QNetworkInterface& iface : iface_list)
         {
             QIcon icon = QIcon::fromTheme(QStringLiteral("network-wired"));
 #if 0 //FIXME KF5
-            foreach (const Solid::Device& device, netlist)
+            for (const Solid::Device& device: netlist)
             {
                 const Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
                 if (netdev->ifaceName() == iface.name() && netdev->isWireless())
@@ -85,7 +85,7 @@ namespace kt
 
             combo_networkInterface->addItem(icon, iface.humanReadableName());
         }
-        QString iface = Settings::networkInterface();
+        const QString iface = Settings::networkInterface();
         int idx = (iface.isEmpty())? 0 /*all*/: combo_networkInterface->findText(iface);
         if (idx < 0)
         {

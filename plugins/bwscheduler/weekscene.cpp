@@ -192,8 +192,8 @@ namespace kt
     {
         if (ev->button() == Qt::RightButton)
         {
-            QList<QGraphicsItem*> gis = items(ev->scenePos());
-            foreach (QGraphicsItem* gi, gis)
+            const QList<QGraphicsItem*> gis = items(ev->scenePos());
+            for (QGraphicsItem* gi: gis)
             {
                 if (gi->zValue() == 3)
                 {

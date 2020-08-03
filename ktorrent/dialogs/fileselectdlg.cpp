@@ -85,7 +85,7 @@ namespace kt
         m_move_when_completed_history->setPopupMode(QToolButton::MenuButtonPopup);
 
         encodings = QTextCodec::availableMibs();
-        foreach (int mib, encodings)
+        for (int mib: qAsConst(encodings))
         {
             m_encoding->addItem(QString::fromUtf8(QTextCodec::codecForMib(mib)->name()));
         }
@@ -623,8 +623,8 @@ namespace kt
         m_tree->setChecked(show_file_tree);
         m_list->setChecked(!show_file_tree);
         download_location_history = g.readEntry("download_location_history", QStringList());
-        for (int i=0; i<download_location_history.count(); i++)
-            if (download_location_history.at(i).endsWith(QLatin1String("//"))) download_location_history[i].chop(1);
+        for (QString& s : download_location_history)
+            if (s.endsWith(QLatin1String("//"))) s.chop(1);
         download_location_history.removeDuplicates();
         move_on_completion_location_history = g.readEntry("move_on_completion_location_history", QStringList());
         move_on_completion_location_history.removeDuplicates();
@@ -667,7 +667,7 @@ namespace kt
     QMenu* FileSelectDlg::createHistoryMenu(const QStringList & urls, const char* slot)
     {
         QMenu* m = new QMenu(this);
-        foreach (const QString& url, urls)
+        for (const QString& url: urls)
         {
             QAction* a = m->addAction(url);
             a->setData(url);

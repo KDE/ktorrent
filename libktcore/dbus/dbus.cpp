@@ -57,13 +57,13 @@ namespace kt
         connect(core, &CoreInterface::settingsChanged, this, &DBus::settingsChanged);
 
         // fill the map with torrents
-        kt::QueueManager* qm = core->getQueueManager();
-        for (QList<bt::TorrentInterface*>::iterator i = qm->begin(); i != qm->end(); i++)
+        const kt::QueueManager* const qman = core->getQueueManager();
+        for (bt::TorrentInterface* i : *qman)
         {
-            torrentAdded(*i);
+            torrentAdded(i);
         }
 
-        connect(qm, &kt::QueueManager::suspendStateChanged, this, &DBus::suspendStateChanged);
+        connect(qman, &kt::QueueManager::suspendStateChanged, this, &DBus::suspendStateChanged);
 
         kt::GroupManager* gman = core->getGroupManager();
         connect(gman, &kt::GroupManager::groupAdded, this, &DBus::groupAdded);
@@ -254,7 +254,7 @@ namespace kt
 
     void DBus::delayedTorrentRemoval()
     {
-        for (QMap<QString, bool>::iterator i = delayed_removal_map.begin(); i != delayed_removal_map.end(); i++)
+        for (QMap<QString, bool>::const_iterator i = delayed_removal_map.cbegin(); i != delayed_removal_map.cend(); i++)
             remove(i.key(), i.value());
 
         delayed_removal_map.clear();

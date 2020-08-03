@@ -133,7 +133,7 @@ namespace kt
             }
         }
 
-        foreach (const QString& folder, tmp)
+        for (const QString& folder: qAsConst(tmp))
         {
             if (scan_folders.find(folder))
                 continue;
@@ -179,10 +179,10 @@ namespace kt
         QStringList filters;
         filters << QStringLiteral("*.torrent");
         QDir d(dir.toLocalFile());
-        QStringList files = d.entryList(filters, QDir::Readable | QDir::Files);
+        const QStringList files = d.entryList(filters, QDir::Readable | QDir::Files);
 
         QList<QUrl> torrents;
-        foreach (const QString& tor, files)
+        for (const QString& tor: files)
         {
             if (!alreadyLoaded(d, tor))
                 torrents.append(QUrl::fromLocalFile(d.absoluteFilePath(tor)));
@@ -197,8 +197,8 @@ namespace kt
         {
             const QString loaded_localized = i18nc("folder name part", "loaded");
 
-            QStringList dirs = d.entryList(QDir::Readable | QDir::Dirs);
-            foreach (const QString& subdir, dirs)
+            const QStringList dirs = d.entryList(QDir::Readable | QDir::Dirs);
+            for (const QString& subdir: dirs)
             {
                 if (subdir != QStringLiteral(".") && subdir != QStringLiteral("..") && subdir != loaded_localized)
                 {

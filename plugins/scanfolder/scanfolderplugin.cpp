@@ -88,10 +88,10 @@ namespace kt
         QStringList folders = ScanFolderPluginSettings::folders();
 
         // make sure folders end with /
-        for (QStringList::iterator i = folders.begin(); i != folders.end(); i++)
+        for (QString& s : folders)
         {
-            if (!i->endsWith(bt::DirSeparator()))
-                (*i) += bt::DirSeparator();
+            if (s.endsWith(bt::DirSeparator()))
+                s += bt::DirSeparator();
         }
 
         if (ScanFolderPluginSettings::actionDelete())

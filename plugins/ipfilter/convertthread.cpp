@@ -174,7 +174,7 @@ namespace kt
 
         int i = 0;
         int tot = input.count();
-        foreach (const IPBlock& block, input)
+        for (const IPBlock& block: qAsConst(input))
         {
             dlg->progress(i, tot);
             target.write((char*) & block, sizeof(IPBlock));

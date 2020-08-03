@@ -56,10 +56,10 @@ namespace kt
         QDir dir(data_dir);
         QStringList filters;
         filters << QStringLiteral("feed*");
-        QStringList sl = dir.entryList(filters, QDir::Dirs);
-        for (int i = 0; i < sl.count(); i++)
+        const QStringList sl = dir.entryList(filters, QDir::Dirs);
+        for (const QString& s : sl)
         {
-            QString idir = data_dir + sl.at(i);
+            QString idir = data_dir + s;
             if (!idir.endsWith(DirSeparator()))
                 idir.append(DirSeparator());
 
@@ -125,7 +125,7 @@ namespace kt
 
             // check for duplicate URL's
             bool found = false;
-            foreach (Feed* f, feeds)
+            for (Feed* f: qAsConst(feeds))
             {
                 if (f->feedUrl() == feed_url)
                 {
@@ -220,7 +220,7 @@ namespace kt
 
     Feed* FeedList::feedForDirectory(const QString& dir)
     {
-        foreach (Feed* f, feeds)
+        for (Feed* f: qAsConst(feeds))
             if (f->directory() == dir)
                 return f;
 
@@ -246,7 +246,7 @@ namespace kt
     void FeedList::removeFeeds(const QModelIndexList& idx)
     {
         QList<Feed*> to_remove;
-        foreach (const QModelIndex& i, idx)
+        for (const QModelIndex& i: idx)
         {
             Feed* f = feedForIndex(i);
             if (f)
@@ -254,7 +254,7 @@ namespace kt
         }
 
         beginResetModel();
-        foreach (Feed* f, to_remove)
+        for (Feed* f: qAsConst(to_remove))
         {
             bt::Delete(f->directory(), true);
             feeds.removeAll(f);
@@ -273,13 +273,13 @@ namespace kt
 
     void FeedList::filterRemoved(Filter* f)
     {
-        foreach (Feed* feed, feeds)
+        for (Feed* feed: qAsConst(feeds))
             feed->removeFilter(f);
     }
 
     void FeedList::filterEdited(Filter* f)
     {
-        foreach (Feed* feed, feeds)
+        for (Feed* feed: qAsConst(feeds))
         {
             if (feed->usingFilter(f))
                 feed->runFilters();
