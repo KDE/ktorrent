@@ -59,7 +59,7 @@ namespace kt
 
     QString ScriptingModule::scriptDir(const QString& script) const
     {
-        QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/scripts") + script, QStandardPaths::LocateDirectory);
+        QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/scripts/") + script, QStandardPaths::LocateDirectory);
         if (dirs.count() == 0)
             return QString();
 
