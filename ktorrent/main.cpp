@@ -174,6 +174,7 @@ int main(int argc, char** argv)
     about.addCredit(i18n("Leszek Lesner"), i18n("Fix for bug 339584"), QStringLiteral("leszek.lesner@web.de"));
     about.addCredit(i18n("Andrius Štikonas"), i18n("KF5 porting"), QStringLiteral("andrius@stikonas.eu"));
     about.addCredit(i18n("Nick Shaforostoff"), i18n("KF5 porting"), QStringLiteral("shaforostoff@gmail.com"));
+    about.addCredit(i18n("Alexander Trufanov"), i18n("Bugfixes, cleanups and optimizations"), QStringLiteral("trufanovan@gmail.com"));
 
     KAboutData::setApplicationData(about);
     about.setupCommandLine(&parser);
