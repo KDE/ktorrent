@@ -2,6 +2,7 @@
 Name=Scan for lost files
 Name[ca]=Explora els fitxers perduts
 Name[ca@valencia]=Explora els fitxers perduts
+Name[es]=Escanear archivos perdidos
 Name[fr]=Rechercher des fichiers perdus
 Name[it]=Ricerca dei file persi
 Name[nl]=Zoek naar verloren bestanden
@@ -15,6 +16,7 @@ Name[x-test]=xxScan for lost filesxx
 Comment=Display files in the selected folder that don't belong to any torrent
 Comment[ca]=Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent
 Comment[ca@valencia]=Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent
+Comment[es]=Mostrar archivos en la carpeta seleccionada que no pertenecen a ningún torrent
 Comment[fr]=Afficher les fichiers dans le dossier sélectionné n'appartenant à aucun flux « torrent »
 Comment[it]=Visualizza i file nella cartella selezionata che non appartengono ad alcun torrent
 Comment[nl]=Bestanden in de geselecteerde map tonen die niet behoren tot een torrent
