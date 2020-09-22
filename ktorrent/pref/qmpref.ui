@@ -245,7 +245,7 @@
       <item row="4" column="0">
        <widget class="QLabel" name="label_2">
         <property name="toolTip">
-         <string>Value at which the share ratio will be displayed with a green color. Lower ratios will be displayed in red.</string>
+         <string>Value at which the share ratio will be displayed with a green color. Lower ratios will be displayed in red. Colors can be changed in color settings.</string>
         </property>
         <property name="text">
          <string>Minimum good share ratio:</string>
@@ -255,7 +255,7 @@
       <item row="4" column="2">
        <widget class="QDoubleSpinBox" name="kcfg_greenRatio">
         <property name="toolTip">
-         <string>Value at which the share ratio will be displayed with a green color. Lower ratios will be displayed in red.</string>
+         <string>Value at which the share ratio will be displayed with a green color. Lower ratios will be displayed in red. Colors can be changed in color settings.</string>
         </property>
         <property name="specialValueText">
          <string>No limit</string>

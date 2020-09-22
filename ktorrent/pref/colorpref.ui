@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ColorPref</class>
+ <widget class="QWidget" name="ColorPref">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>593</width>
+    <height>620</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="1" column="2">
+      <widget class="KColorButton" name="kcfg_stalledTorrentColor">
+       <property name="toolTip">
+        <string>Color to use for torrents when they are stalled or checking data.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="KColorButton" name="kcfg_okTorrentColor">
+       <property name="toolTip">
+        <string>Color to use for torrents while seeding or downloading.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Torrent is running:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Torrent is stalled or checking data:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="KColorButton" name="kcfg_errorTorrentColor">
+       <property name="toolTip">
+        <string>Color to use for torrents with error status.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Torrent error:</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="kcfg_highlightTorrentNameByTrackerStatus">
+     <property name="title">
+      <string>Additionally highlight torrents based on the status of their trackers (if any)</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="2">
+       <widget class="KColorButton" name="kcfg_okTrackerConnectionColor">
+        <property name="toolTip">
+         <string>Color to use when at least one tracker is connected and replied no errors or warnings.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Some of the trackers are reachable:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="KColorButton" name="kcfg_warningsTrackerConnectionColor">
+        <property name="toolTip">
+         <string>Color to use when the best attempt to connect to tracker results in warning.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>None of the trackers are reachable:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Reachable trackers report warnings:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="KColorButton" name="kcfg_noTrackerConnectionColor">
+        <property name="toolTip">
+         <string>Color to use when all trackers reply the errors or not found.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Trackers are timing out:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="KColorButton" name="kcfg_timeoutTrackerConnectionColor">
+        <property name="toolTip">
+         <string>Color to use when the best attempt to connect to tracker results in timeout. Connection will be attempted again later.</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="1" column="0" colspan="2">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Low share ratio:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Good share ratio:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="KColorButton" name="kcfg_lowShareRatioColor">
+       <property name="toolTip">
+        <string>Color to display share ratio below minimal good value.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="KColorButton" name="kcfg_goodShareRatioColor">
+       <property name="toolTip">
+        <string>Color to display share ratio above minimal good value.</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btnResetColors">
+       <property name="toolTip">
+        <string>Reset colors to their default values (other settings won't change).</string>
+       </property>
+       <property name="text">
+        <string>Reset Colors</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>575</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KColorButton</class>
+   <extends>QPushButton</extends>
+   <header>kcolorbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

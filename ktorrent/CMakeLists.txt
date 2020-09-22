@@ -32,6 +32,7 @@ set(ktorrent_SRC
 	dialogs/fileselectdlg.cpp 
 	
 	pref/prefdialog.cpp 
+	pref/colorpref.cpp
 	pref/advancedpref.cpp
 	pref/networkpref.cpp
 	pref/proxypref.cpp
@@ -67,6 +68,7 @@ ki18n_wrap_ui(ktorrent_SRC
 	pref/qmpref.ui 
 	pref/btpref.ui
 	pref/generalpref.ui 
+	pref/colorpref.ui
 	pref/advancedpref.ui 
 	pref/networkpref.ui
 	pref/proxypref.ui

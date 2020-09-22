@@ -263,6 +263,36 @@
 			<min>1</min>
 			<default>15</default>
 		</entry>
+		<entry name="okTorrentColor" type="Color">
+			<default code="true">QColor(40, 205, 40)</default>
+		</entry>
+		<entry name="stalledTorrentColor" type="Color">
+			<default code="true">QColor(255, 174, 0)</default>
+		</entry>
+		<entry name="errorTorrentColor" type="Color">
+			<default code="true">QColor(Qt::red)</default>
+		</entry>
+		<entry name="highlightTorrentNameByTrackerStatus" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="okTrackerConnectionColor" type="Color">
+			<default code="true">QColor(40, 205, 40)</default>
+		</entry>
+		<entry name="warningsTrackerConnectionColor" type="Color">
+			<default code="true">QColor(255, 80, 0)</default>
+		</entry>
+		<entry name="timeoutTrackerConnectionColor" type="Color">
+			<default code="true">QColor(0, 170, 110)</default>
+		</entry>
+		<entry name="noTrackerConnectionColor" type="Color">
+			<default code="true">QColor(Qt::red)</default>
+		</entry>
+		<entry name="goodShareRatioColor" type="Color">
+			<default code="true">QColor(40, 205, 40)</default>
+		</entry>
+		<entry name="lowShareRatioColor" type="Color">
+			<default code="true">QColor(Qt::red)</default>
+		</entry>
 		<entry name="previewSizeAudio" type="Int">
 			<min>16</min>
 			<default>256</default>

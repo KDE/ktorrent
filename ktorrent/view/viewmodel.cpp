@@ -227,21 +227,35 @@ namespace kt
     {
         if (col == NAME)
         {
-            QColor green(40, 205, 40);
-            QColor yellow(255, 174, 0);
 
             switch (status)
             {
             case bt::SEEDING :
             case bt::SUPERSEEDING:
             case bt::DOWNLOADING:
-            case bt::ALLOCATING_DISKSPACE :
-                return green;
+            case bt::ALLOCATING_DISKSPACE:
             case bt::STALLED:
-            case bt::CHECKING_DATA:
-                return yellow;
+            case bt::CHECKING_DATA: {
+                if (Settings::highlightTorrentNameByTrackerStatus())
+                { // apply additional highlighting to torrent names
+                    const bt::TrackersStatusInfo tsi = tc->getTrackersList()->getTrackersStatusInfo();
+                    if (tsi.trackers_count)
+                    {
+                        if ((tsi.errors + tsi.warnings) == tsi.trackers_count)
+                        { // no any OK statuses
+                            if (tsi.timeout_errors)
+                                return Settings::timeoutTrackerConnectionColor();
+                            if (tsi.warnings)
+                                return Settings::warningsTrackerConnectionColor();
+                            return Settings::noTrackerConnectionColor();
+                        }
+                    }
+                }
+                return (status == bt::STALLED || bt::STALLED == bt::CHECKING_DATA) ? Settings::stalledTorrentColor() :
+                                                                                     Settings::okTorrentColor();
+            }
             case bt::ERROR :
-                return QColor(Qt::red);
+                return Settings::errorTorrentColor();
             case bt::NOT_STARTED :
             case bt::STOPPED:
             case bt::QUEUED:
@@ -250,11 +264,12 @@ namespace kt
             default:
                 return QVariant();
             }
+
+
         }
         else if (col == SHARE_RATIO)
         {
-            QColor green(40, 205, 40);
-            return share_ratio >= Settings::greenRatio() ? green : Qt::red;
+            return share_ratio >= Settings::greenRatio() ? Settings::goodShareRatioColor() : Settings::lowShareRatioColor();
         }
         else
             return QVariant();
@@ -557,20 +572,6 @@ namespace kt
 
         if (role == Qt::ForegroundRole)
         {
-            if (index.column() == NAME)
-            { // apply additional highlighting to torrent names
-                bt::TrackersStatusInfo tsi = item->tc->getTrackersList()->getTrackersStatusInfo();
-
-                if ((tsi.errors + tsi.warnings) == tsi.trackers_count)
-                { // no any OK statuses
-                    if (tsi.timeout_errors)
-                        return QColor(0,170,110);
-                    if (tsi.warnings)
-                        return QColor(255,80,0);
-                    return QColor(Qt::red);
-                }
-            }
-
             return item->color(index.column());
         }
         else if (role == Qt::DisplayRole)

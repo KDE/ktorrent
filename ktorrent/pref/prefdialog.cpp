@@ -26,6 +26,7 @@
 #include "prefdialog.h"
 #include "core.h"
 #include "generalpref.h"
+#include "colorpref.h"
 #include "advancedpref.h"
 #include "networkpref.h"
 #include "proxypref.h"
@@ -50,6 +51,7 @@ namespace kt
         addPrefPage(new BTPref(this));
         qm_pref = new QMPref(this);
         addPrefPage(qm_pref);
+        addPrefPage(new ColorPref(this));
         addPrefPage(new AdvancedPref(this));
 
         connect(net_pref, &NetworkPref::calculateRecommendedSettings, this, &PrefDialog::calculateRecommendedSettings);
