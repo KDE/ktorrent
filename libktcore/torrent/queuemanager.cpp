@@ -551,7 +551,15 @@ namespace kt
             if (tor->getInfoHash() == ih)
             {
                 TrackersList* ta = tor->getTrackersList();
+                const int cnt = ta->getTrackers().count();
                 ta->merge(trk);
+                if (cnt < ta->getTrackers().count()) {
+                    // new trackers were added
+                    // do "Manual Announce" for this torrent
+                    if (tor->getStats().running) {
+                        tor->updateTracker();
+                    }
+                }
                 return;
             }
         }
