@@ -293,6 +293,25 @@ This is experimental and should only be used if you are getting a lot of connect
        </widget>
       </item>
       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+                <widget class="QLabel" name="label_4">
+                    <property name="text">
+                        <string>Tracker list URL:</string>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="QLineEdit" name="kcfg_trackerListUrl">
+                    <property name="toolTip">
+                        <string>URL of the tracker list used when adding a torrent by infohash
+NOTE: Each tracker must be on it's own line. Blank lines are ignored.</string>
+                    </property>
+                </widget>
+            </item>
+        </layout>
+      </item>
+      <item>
        <widget class="QCheckBox" name="kcfg_lookUpHostnameOfPeers">
         <property name="toolTip">
          <string>Resolve the hostname of each peer. This will result in the hostname of a peer being displayed instead of the IP address. 

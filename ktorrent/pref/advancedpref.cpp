@@ -44,6 +44,7 @@ namespace kt
         kcfg_requeueMagnets->setChecked(Settings::requeueMagnets());
         kcfg_requeueMagnetsTime->setEnabled(Settings::requeueMagnets());
         kcfg_requeueMagnetsTime->setValue(Settings::requeueMagnetsTime());
+        kcfg_trackerListUrl->setText(Settings::trackerListUrl());
     }
 
     void AdvancedPref::loadDefaults()

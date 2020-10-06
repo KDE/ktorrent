@@ -1,7 +1,9 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005 by Joris Guisson, Ivan Vasic                       *
+ *   Copyright (C) 2020 by Madhav Kanbur                                   *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
+ *   abcdjdj@gmail.com                                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,10 +23,14 @@
 
 #include "pastedialog.h"
 #include "core.h"
+#include "settings.h"
 
 #include <QApplication>
 #include <QClipboard>
 #include <QLineEdit>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QRegularExpression>
 #include <QUrl>
 
 #include <KConfigGroup>
@@ -97,7 +103,50 @@ namespace kt
 
     void PasteDialog::accept()
     {
-        QUrl url = QUrl(m_url->text());
+        QUrl url;
+
+        // Handle Infohash case
+        QRegularExpression re(QStringLiteral("^([0-9a-fA-Z]{40}|[0-9a-fA-Z]{32})$"));
+        if (re.match(m_url->text()).hasMatch())
+        {
+            QString magnetLink = QStringLiteral("magnet:?xt=urn:btih:").append(m_url->text());
+
+            if (!Settings::trackerListUrl().isEmpty())
+            {
+                QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+                QUrl trackerListUrl = QUrl(Settings::trackerListUrl());
+                QNetworkReply *reply = manager->get(QNetworkRequest(trackerListUrl));
+
+                QEventLoop loop;
+                connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+                loop.exec();
+
+                if (reply->error() == QNetworkReply::NoError)
+                {
+                    while (reply->canReadLine())
+                    {
+                        QString trackerUrl = QString::fromLatin1(reply->readLine());
+                        trackerUrl.chop(1);
+                        if (!trackerUrl.isEmpty())
+                            magnetLink.append(QStringLiteral("&tr=")).append(trackerUrl);
+                    }
+                }
+                else
+                {
+                    QMessageBox::warning(this, i18n("Error fetching tracker list"),
+                                         i18n("Please check if the URL in Settings > Advanced > Tracker list URL is reachable."));
+                }
+
+                delete manager;
+            }
+
+            url = QUrl(magnetLink);
+        }
+        else
+        {
+            url = QUrl(m_url->text());
+        }
+
         if (url.isValid())
         {
             QString group;
