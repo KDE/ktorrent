@@ -309,7 +309,7 @@
       <li xml:lang="x-test">xxSelective downloading for multi-file torrentsxx</li>
       <li xml:lang="zh-CN">多文件种子可选下载指定文件</li>
       <li>Kick/ban peers with an additional IP Filter dialog for list/edit purposes</li>
-      <li xml:lang="ca">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a propòsits de llista/edició</li>
+      <li xml:lang="ca">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a finalitats de llista/edició</li>
       <li xml:lang="ca-valencia">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a propòsits de llista/edició</li>
       <li xml:lang="da">Afbryd/bandlys peers med en yderligere IP-filterdialog til liste- og redigeringsformål</li>
       <li xml:lang="de">Gegenstellen zwangsweise trennen oder verbannen mit Hilfe eines zusätzlichen IP-Filterdialogs. Die IP-Einträge können in diesem Dialog angezeigt und bearbeitet werden.</li>
