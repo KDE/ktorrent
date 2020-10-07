@@ -305,7 +305,7 @@ This is experimental and should only be used if you are getting a lot of connect
                 <widget class="QLineEdit" name="kcfg_trackerListUrl">
                     <property name="toolTip">
                         <string>URL of the tracker list used when adding a torrent by infohash
-NOTE: Each tracker must be on it's own line. Blank lines are ignored.</string>
+NOTE: Each tracker must be on its own line. Blank lines are ignored.</string>
                     </property>
                 </widget>
             </item>
