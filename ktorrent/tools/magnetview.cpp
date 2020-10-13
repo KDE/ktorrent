@@ -31,6 +31,8 @@
 #include <QKeyEvent>
 #include <QMenu>
 #include <QTreeView>
+#include <QGuiApplication>
+#include <QClipboard>
 
 #include <torrent/magnetmanager.h>
 
@@ -63,10 +65,11 @@ namespace kt
 
         // context menu
         menu = new QMenu(this);
-        start = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18n("Start Magnet"), this, SLOT(startMagnetDownload()));
-        stop = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-stop")), i18n("Stop Magnet"), this, SLOT(stopMagnetDownload()));
+        start = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18n("Start Magnet"), this, &MagnetView::startMagnetDownload);
+        stop = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-stop")), i18n("Stop Magnet"), this, &MagnetView::stopMagnetDownload);
+        copy_url = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Magnet URL"), this, &MagnetView::copyMagnetUrl);
         menu->addSeparator();
-        remove = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-remove")), i18n("Remove Magnet"), this, SLOT(removeMagnetDownload()));
+        remove = menu->addAction(QIcon::fromTheme(QStringLiteral("kt-remove")), i18n("Remove Magnet"), this, &MagnetView::removeMagnetDownload);
     }
 
     MagnetView::~MagnetView()
@@ -131,6 +134,21 @@ namespace kt
             mman->stop(idx_list.front().row(), idx_list.size());
             view->clearSelection();
         }
+    }
+
+    void MagnetView::copyMagnetUrl()
+    {
+        QStringList sl;
+        const QModelIndexList idx_list = view->selectionModel()->selectedRows();
+        for (const QModelIndex& idx : idx_list) {
+            if (const MagnetDownloader* md = mman->getMagnetDownloader(idx.row())) {
+                sl.append(md->magnetLink().toString());
+            }
+        }
+        if (QClipboard *clipboard = QGuiApplication::clipboard()) {
+            clipboard->setText(sl.join(QStringLiteral("\n")));
+        }
+
     }
 
     void MagnetView::keyPressEvent(QKeyEvent* event)

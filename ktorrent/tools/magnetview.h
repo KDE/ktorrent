@@ -54,6 +54,7 @@ namespace kt
         void removeMagnetDownload();
         void startMagnetDownload();
         void stopMagnetDownload();
+        void copyMagnetUrl();
 
     private:
         MagnetManager* mman;
@@ -63,6 +64,7 @@ namespace kt
 
         QAction* start;
         QAction* stop;
+        QAction* copy_url;
         QAction* remove;
     };
 
