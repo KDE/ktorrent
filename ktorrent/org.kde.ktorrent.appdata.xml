@@ -795,5 +795,5 @@
     <release version="5.1.1" date="2018-08-28"/>
     <release version="5.1.0" date="2017-08-31"/>
   </releases>
-  <content_rating type="oars-1.1" />
+  <content_rating type="oars-1.1"/>
 </component>
