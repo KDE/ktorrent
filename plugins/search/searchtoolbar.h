@@ -25,6 +25,7 @@
 
 class QAction;
 class KComboBox;
+class QComboBox;
 class KActionCollection;
 
 
@@ -69,7 +70,7 @@ namespace kt
 
     private:
         KComboBox* m_search_text;
-        KComboBox* m_search_engine;
+        QComboBox* m_search_engine;
         QAction* m_search_new_tab;
         int m_current_search_engine;
     };

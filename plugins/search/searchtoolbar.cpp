@@ -22,6 +22,7 @@
 #include <QAction>
 #include <QApplication>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QFile>
 #include <QIcon>
 #include <QLabel>
@@ -55,7 +56,7 @@ namespace kt
         QObject(parent),
         m_current_search_engine(0)
     {
-        m_search_text = new KComboBox((QWidget*)0);
+        m_search_text = new KComboBox(nullptr);
         m_search_text->setEditable(true);
         m_search_text->setMaxCount(20);
         m_search_text->setInsertPolicy(QComboBox::NoInsert);
@@ -80,14 +81,14 @@ namespace kt
 
         QWidgetAction * search_engine_action = new QWidgetAction(this);
         search_engine_action->setText(i18n("Search Engine"));
-        m_search_engine = new KComboBox((QWidget*)0);
+        m_search_engine = new QComboBox(nullptr);
         search_engine_action->setDefaultWidget(m_search_engine);
         ac->addAction(QLatin1String("search_engine"), search_engine_action);
-        connect(m_search_engine, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &SearchToolBar::selectedEngineChanged);
+        connect(m_search_engine, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SearchToolBar::selectedEngineChanged);
 
         QWidgetAction * search_engine_label_action = new QWidgetAction(this);
         search_engine_label_action->setText(i18n("Search Engine Label"));
-        QLabel* l = new QLabel(i18n(" Engine: "), (QWidget*)0);
+        QLabel* l = new QLabel(i18n(" Engine: "), nullptr);
         search_engine_label_action->setDefaultWidget(l);
         ac->addAction(QLatin1String("search_engine_label"), search_engine_label_action);
 
