@@ -35,7 +35,7 @@ namespace kt
         Q_OBJECT
 
     public:
-        SpinBoxDelegate(QObject* parent = 0);
+        SpinBoxDelegate(QObject* parent = nullptr);
         ~SpinBoxDelegate() override;
 
         QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;

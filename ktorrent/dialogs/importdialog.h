@@ -46,7 +46,7 @@ namespace kt
         Q_OBJECT
 
     public:
-        ImportDialog(CoreInterface* core, QWidget* parent = 0);
+        ImportDialog(CoreInterface* core, QWidget* parent = nullptr);
         ~ImportDialog() override;
 
     public slots:

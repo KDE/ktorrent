@@ -39,7 +39,7 @@ namespace kt
     {
         Q_OBJECT
     public:
-        PasteDialog(Core* core, QWidget* parent = 0, Qt::WindowFlags fl = {});
+        PasteDialog(Core* core, QWidget* parent = nullptr, Qt::WindowFlags fl = {});
         ~PasteDialog() override;
 
         /**

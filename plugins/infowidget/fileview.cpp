@@ -486,9 +486,9 @@ namespace kt
             }
             if (doStream)
             {
-                streams << tc->createTorrentFileStream(fileIndex, true, 0);
+                streams << tc->createTorrentFileStream(fileIndex, true, nullptr);
                 if (streams.last().isNull())
-                    streams << tc->createTorrentFileStream(fileIndex, false, 0);
+                    streams << tc->createTorrentFileStream(fileIndex, false, nullptr);
             }
             if (!isPreviewAvailable)
                 return;
