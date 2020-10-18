@@ -21,10 +21,10 @@
 
 #include <QAction>
 #include <QClipboard>
-#include <QDesktopWidget>
 #include <QMenu>
 #include <QMenuBar>
 #include <QPushButton>
+#include <QScreen>
 #include <QTimer>
 
 #include <KActionCollection>
@@ -146,9 +146,8 @@ namespace kt
 
     QSize GUI::sizeHint() const
     {
-        QDesktopWidget dw;
-        QSize desktop_size = dw.screenGeometry(dw.primaryScreen()).size();
-        return KParts::MainWindow::sizeHint().expandedTo(desktop_size * 0.8);
+        QSize desktop_size = QGuiApplication::primaryScreen()->availableSize();
+        return KParts::MainWindow::sizeHint().expandedTo(desktop_size);
     }
 
 
