@@ -102,8 +102,8 @@ namespace kt
         connect(play_list, &PlayListWidget::fileSelected, this, &MediaPlayerActivity::onSelectionChanged);
         connect(media_view, &MediaView::doubleClicked, this, &MediaPlayerActivity::onDoubleClicked);
         connect(play_list, &PlayListWidget::randomModeActivated, this, &MediaPlayerActivity::randomPlayActivated);
-        connect(play_list, static_cast<void (PlayListWidget::*)(const MediaFileRef&)>(&PlayListWidget::doubleClicked),
-                this, static_cast<void (MediaPlayerActivity::*)(const MediaFileRef&)>(&MediaPlayerActivity::play));
+        connect(play_list, qOverload<const MediaFileRef&>(&PlayListWidget::doubleClicked),
+                this, qOverload<const MediaFileRef&>(&MediaPlayerActivity::play));
         connect(play_list, &PlayListWidget::enableNext, next_action, &QAction::setEnabled);
         connect(tabs, &QTabWidget::currentChanged, this, &MediaPlayerActivity::currentTabChanged);
     }
@@ -117,7 +117,7 @@ namespace kt
     void MediaPlayerActivity::setupActions()
     {
         play_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-start")), i18n("Play"), this);
-        connect(play_action, &QAction::triggered, this, static_cast<void (MediaPlayerActivity::*)()>(&MediaPlayerActivity::play));
+        connect(play_action, &QAction::triggered, this, qOverload<>(&MediaPlayerActivity::play));
         ac->addAction(QStringLiteral("media_play"), play_action);
 
         pause_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-pause")), i18n("Pause"), this);

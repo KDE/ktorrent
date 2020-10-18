@@ -65,7 +65,7 @@ namespace kt
         menu->addAction(clear_action);
 
         connect(view, &WeekView::selectionChanged, this, &ScheduleEditor::onSelectionChanged);
-        connect(view, &WeekView::editItem, this, static_cast<void (ScheduleEditor::*)(ScheduleItem*)>(&ScheduleEditor::editItem));
+        connect(view, &WeekView::editItem, this, qOverload<ScheduleItem*>(&ScheduleEditor::editItem));
         connect(view, &WeekView::itemMoved, this, &ScheduleEditor::itemMoved);
     }
 

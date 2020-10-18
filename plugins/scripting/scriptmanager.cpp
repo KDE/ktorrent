@@ -115,7 +115,7 @@ namespace kt
         ac->addAction(QStringLiteral("edit_script"), edit_script);
 
         properties = new QAction(QIcon::fromTheme(QStringLiteral("dialog-information")), i18n("Properties"), this);
-        connect(properties, &QAction::triggered, this, static_cast<void (ScriptManager::*)()>(&ScriptManager::showProperties));
+        connect(properties, &QAction::triggered, this, qOverload<>(&ScriptManager::showProperties));
         ac->addAction(QStringLiteral("script_properties"), properties);
 
         configure_script = new QAction(QIcon::fromTheme(QStringLiteral("preferences-other")), i18n("Configure"), this);

@@ -40,7 +40,7 @@ namespace kt
         connect(kcfg_useLevel1, &QCheckBox::toggled, this, &IPBlockingPrefPage::checkUseLevel1Toggled);
         connect(m_download, &QPushButton::clicked, this, &IPBlockingPrefPage::downloadClicked);
         connect(kcfg_autoUpdate, &QCheckBox::toggled, this, &IPBlockingPrefPage::autoUpdateToggled);
-        connect(kcfg_autoUpdateInterval, static_cast<void(KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &IPBlockingPrefPage::autoUpdateIntervalChanged);
+        connect(kcfg_autoUpdateInterval, qOverload<int>(&KPluralHandlingSpinBox::valueChanged), this, &IPBlockingPrefPage::autoUpdateIntervalChanged);
         kcfg_autoUpdateInterval->setSuffix(ki18np(" day", " days"));
         m_job = nullptr;
         m_verbose = true;

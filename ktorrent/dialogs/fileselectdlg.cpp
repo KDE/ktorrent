@@ -132,7 +132,7 @@ namespace kt
         int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
         Out(SYS_GEN | LOG_DEBUG) << "Codec: " << QString::fromLatin1(tc->getTextCodec()->name()) << " " << idx << endl;
         m_encoding->setCurrentIndex(idx);
-        connect(m_encoding, static_cast<void (KComboBox::*)(const QString &)>(&KComboBox::currentIndexChanged), this, &FileSelectDlg::onCodecChanged);
+        connect(m_encoding, qOverload<const QString &>(&KComboBox::currentIndexChanged), this, &FileSelectDlg::onCodecChanged);
 
 
         for (Uint32 i = 0; i < tc->getNumFiles(); i++)
@@ -465,7 +465,7 @@ namespace kt
         }
 
         m_cmbGroups->addItems(grps);
-        connect(m_cmbGroups, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &FileSelectDlg::groupActivated);
+        connect(m_cmbGroups, qOverload<int>(&QComboBox::activated), this, &FileSelectDlg::groupActivated);
 
         if (selected > 0 && initial_group)
         {

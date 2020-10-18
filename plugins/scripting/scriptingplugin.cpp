@@ -90,7 +90,7 @@ namespace kt
         sman = new ScriptManager(model, nullptr);
         connect(sman, &ScriptManager::addScript, this, &ScriptingPlugin::addScript);
         connect(sman, &ScriptManager::removeScript, this, &ScriptingPlugin::removeScript);
-        connect(model, &ScriptModel::showPropertiesDialog, sman, static_cast<void (ScriptManager::*)(Script*)>(&ScriptManager::showProperties));
+        connect(model, &ScriptModel::showPropertiesDialog, sman, qOverload<Script*>(&ScriptManager::showProperties));
         getGUI()->addActivity(sman);
     }
 

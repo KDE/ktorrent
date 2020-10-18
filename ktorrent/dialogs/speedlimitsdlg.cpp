@@ -74,8 +74,8 @@ namespace kt
 
         m_upload_rate->setValue(Settings::maxUploadRate());
         m_download_rate->setValue(Settings::maxDownloadRate());
-        connect(m_upload_rate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &SpeedLimitsDlg::spinBoxValueChanged);
-        connect(m_download_rate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &SpeedLimitsDlg::spinBoxValueChanged);
+        connect(m_upload_rate, qOverload<int>(&QSpinBox::valueChanged), this, &SpeedLimitsDlg::spinBoxValueChanged);
+        connect(m_download_rate, qOverload<int>(&QSpinBox::valueChanged), this, &SpeedLimitsDlg::spinBoxValueChanged);
         connect(m_filter, &QLineEdit::textChanged, pm, &QSortFilterProxyModel::setFilterFixedString);
         loadState();
 

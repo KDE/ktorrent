@@ -62,7 +62,7 @@ namespace kt
         ratio_limit->setMaximum(100.0f);
         ratio_limit->setSingleStep(0.1f);
         ratio_limit->setKeyboardTracking(false);
-        connect(ratio_limit, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, &StatusTab::maxRatioChanged);
+        connect(ratio_limit, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &StatusTab::maxRatioChanged);
         connect(use_ratio_limit, &QCheckBox::toggled, this, &StatusTab::useRatioLimitToggled);
 
         time_limit->setMinimum(0.0f);
@@ -71,7 +71,7 @@ namespace kt
         time_limit->setSpecialValueText(i18n("No limit"));
         time_limit->setKeyboardTracking(false);
         connect(use_time_limit, &QCheckBox::toggled, this, &StatusTab::useTimeLimitToggled);
-        connect(time_limit, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, &StatusTab::maxTimeChanged);
+        connect(time_limit, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &StatusTab::maxTimeChanged);
 
         int h = (int)ceil(fontMetrics().height() * 1.25);
         downloaded_bar->setFixedHeight(h);

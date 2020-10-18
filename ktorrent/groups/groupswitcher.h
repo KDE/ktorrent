@@ -57,7 +57,7 @@ namespace kt
          **/
         void saveState(KSharedConfig::Ptr cfg);
 
-    public slots:
+    public Q_SLOTS:
         /**
          * Add a tab
          * @param group The group of the tab

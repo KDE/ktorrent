@@ -76,7 +76,7 @@ namespace kt
         connect(tab->feedView(), &kt::FeedListView::feedActivated, this, &SyndicationActivity::showFeed);
         connect(tab->feedView(), &kt::FeedListView::enableRemove, sp->remove_feed, &QAction::setEnabled);
         connect(tab->feedView(), &kt::FeedListView::enableRemove, sp->manage_filters, &QAction::setEnabled);
-        connect(tab->filterView(), &kt::FilterListView::filterActivated, this, static_cast<void(SyndicationActivity::*)(Filter*)>(&SyndicationActivity::editFilter));
+        connect(tab->filterView(), &kt::FilterListView::filterActivated, this, qOverload<Filter*>(&SyndicationActivity::editFilter));
         connect(tab->filterView(), &kt::FilterListView::enableRemove, sp->remove_filter, &QAction::setEnabled);
         connect(tab->filterView(), &kt::FilterListView::enableEdit, sp->edit_filter, &QAction::setEnabled);
 

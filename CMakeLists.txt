@@ -17,6 +17,9 @@ include(ECMAddAppIcon)
 include(ECMMarkAsTest)
 include(ECMMarkNonGuiExecutable)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
     Core
     DBus

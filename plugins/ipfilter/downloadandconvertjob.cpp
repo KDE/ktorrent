@@ -156,13 +156,13 @@ namespace kt
         else if(ptr.name() == QStringLiteral("application/gzip") || ptr.name() == QStringLiteral("application/x-bzip"))
         {
             active_job = new bt::DecompressFileJob(temp, kt::DataDir() + QStringLiteral("level1.txt"));
-            connect(active_job, &KJob::result, this, static_cast<void (DownloadAndConvertJob::*)(KJob*)>(&DownloadAndConvertJob::convert));
+            connect(active_job, &KJob::result, this, qOverload<KJob*>(&DownloadAndConvertJob::convert));
             active_job->start();
         }
         else if(!isBinaryData(temp) || ptr.name() == QStringLiteral("text/plain"))
         {
             active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(kt::DataDir() + QStringLiteral("level1.txt")), -1, KIO::HideProgressInfo | KIO::Overwrite);
-            connect(active_job, &KJob::result, this, static_cast<void (DownloadAndConvertJob::*)(KJob*)>(&DownloadAndConvertJob::convert));
+            connect(active_job, &KJob::result, this, qOverload<KJob*>(&DownloadAndConvertJob::convert));
         }
         else
         {
@@ -223,7 +223,7 @@ namespace kt
         if(entries.count() >= 1)
         {
             active_job = new bt::ExtractFileJob(zip, entries.front(), destination);
-            connect(active_job, &KJob::result, this, static_cast<void (DownloadAndConvertJob::*)(KJob*)>(&DownloadAndConvertJob::convert));
+            connect(active_job, &KJob::result, this, qOverload<KJob*>(&DownloadAndConvertJob::convert));
             unzip = true;
             active_job->start();
         }

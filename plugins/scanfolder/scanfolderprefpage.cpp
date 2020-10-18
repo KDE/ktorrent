@@ -42,7 +42,7 @@ namespace kt
         connect(m_add, &QPushButton::clicked, this, &ScanFolderPrefPage::addPressed);
         connect(m_remove, &QPushButton::clicked, this, &ScanFolderPrefPage::removePressed);
         connect(m_folders, &QListWidget::itemSelectionChanged, this, &ScanFolderPrefPage::selectionChanged);
-        connect(m_group, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ScanFolderPrefPage::currentGroupChanged);
+        connect(m_group, qOverload<int>(&QComboBox::currentIndexChanged), this, &ScanFolderPrefPage::currentGroupChanged);
     }
 
 

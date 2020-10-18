@@ -50,10 +50,10 @@ namespace kt
         QDBusConnection::sessionBus().registerObject(QLatin1String("/core"), this,
                 QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals);
 
-        connect(core, &CoreInterface::torrentAdded, this, static_cast<void (DBus::*)(bt::TorrentInterface*)>(&DBus::torrentAdded));
-        connect(core, &CoreInterface::torrentRemoved, this, static_cast<void (DBus::*)(bt::TorrentInterface*)>(&DBus::torrentRemoved));
-        connect(core, &CoreInterface::torrentStoppedByError, this, static_cast<void (DBus::*)(bt::TorrentInterface*, QString)>(&DBus::torrentStoppedByError));
-        connect(core, &CoreInterface::finished, this, static_cast<void (DBus::*)(bt::TorrentInterface*)>(&DBus::finished));
+        connect(core, &CoreInterface::torrentAdded, this, qOverload<bt::TorrentInterface*>(&DBus::torrentAdded));
+        connect(core, &CoreInterface::torrentRemoved, this, qOverload<bt::TorrentInterface*>(&DBus::torrentRemoved));
+        connect(core, &CoreInterface::torrentStoppedByError, this, qOverload<bt::TorrentInterface*, QString>(&DBus::torrentStoppedByError));
+        connect(core, &CoreInterface::finished, this, qOverload<bt::TorrentInterface*>(&DBus::finished));
         connect(core, &CoreInterface::settingsChanged, this, &DBus::settingsChanged);
 
         // fill the map with torrents

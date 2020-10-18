@@ -64,7 +64,7 @@ namespace kt
         connect(manage_filters, &QAction::triggered, activity, &SyndicationActivity::manageFilters);
         connect(add_filter, &QAction::triggered, activity, &SyndicationActivity::addFilter);
         connect(remove_filter, &QAction::triggered, activity, &SyndicationActivity::removeFilter);
-        connect(edit_filter, &QAction::triggered, activity, static_cast<void(SyndicationActivity::*)()>(&SyndicationActivity::editFilter));
+        connect(edit_filter, &QAction::triggered, activity, qOverload<>(&SyndicationActivity::editFilter));
         connect(edit_feed_name, &QAction::triggered, activity, &SyndicationActivity::editFeedName);
         getGUI()->addActivity(activity);
         activity->loadState(KSharedConfig::openConfig());

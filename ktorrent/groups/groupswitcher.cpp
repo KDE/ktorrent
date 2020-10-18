@@ -63,7 +63,7 @@ namespace kt
         close_tab->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
         close_tab->setToolButtonStyle(Qt::ToolButtonIconOnly);
         close_tab->setToolTip(i18n("Close the current tab"));
-        connect(close_tab, &QToolButton::clicked, this, static_cast<void (GroupSwitcher::*)()>(&GroupSwitcher::closeTab));
+        connect(close_tab, &QToolButton::clicked, this, qOverload<>(&GroupSwitcher::closeTab));
 
         edit_group_policy->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other")));
         edit_group_policy->setToolButtonStyle(Qt::ToolButtonIconOnly);

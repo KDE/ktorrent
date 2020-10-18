@@ -65,7 +65,7 @@ namespace kt
         connect(m_download, &QPushButton::clicked, this, &FeedWidget::downloadClicked);
         connect(m_refresh, &QPushButton::clicked, this, &FeedWidget::refreshClicked);
         connect(m_filters, &QPushButton::clicked, this, &FeedWidget::filtersClicked);
-        connect(m_refresh_rate, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &FeedWidget::refreshRateChanged);
+        connect(m_refresh_rate, qOverload<int>(&QSpinBox::valueChanged), this, &FeedWidget::refreshRateChanged);
         connect(m_cookies, &QPushButton::clicked, this, &FeedWidget::cookiesClicked);
 
         m_refresh->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));

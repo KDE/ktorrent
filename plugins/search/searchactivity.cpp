@@ -83,7 +83,7 @@ namespace kt
         KActionCollection* ac = part()->actionCollection();
 
         search_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("Search"), this);
-        connect(search_action, &QAction::triggered, this, static_cast<void (SearchActivity::*)()>(&SearchActivity::search));
+        connect(search_action, &QAction::triggered, this, qOverload<>(&SearchActivity::search));
         ac->addAction(QStringLiteral("search_tab_search"), search_action);
 
         find_action = KStandardAction::find(this, SLOT(find()), this);

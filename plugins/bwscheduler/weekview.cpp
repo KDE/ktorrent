@@ -40,7 +40,7 @@ namespace kt
 
         connect(scene, &WeekScene::selectionChanged, this, &WeekView::onSelectionChanged);
         connect(scene, &WeekScene::itemDoubleClicked, this, &WeekView::onDoubleClicked);
-        connect(scene, static_cast<void (WeekScene::*)(ScheduleItem*, const QTime&, const QTime&, int, int)>(&WeekScene::itemMoved), this, &WeekView::itemMoved);
+        connect(scene, qOverload<ScheduleItem*, const QTime&, const QTime&, int, int>(&WeekScene::itemMoved), this, &WeekView::itemMoved);
 
         menu = new QMenu(this);
         setContextMenuPolicy(Qt::CustomContextMenu);

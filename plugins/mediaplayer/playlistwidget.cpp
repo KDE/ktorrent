@@ -88,7 +88,7 @@ namespace kt
 
         connect(view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection& , const QItemSelection&)),
                 this, SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
-        connect(view, &QTreeView::doubleClicked, this, static_cast<void (PlayListWidget::*)(const QModelIndex&)>(&PlayListWidget::doubleClicked));
+        connect(view, &QTreeView::doubleClicked, this, qOverload<const QModelIndex&>(&PlayListWidget::doubleClicked));
 
         menu = new QMenu(this);
         menu->addAction(remove_action);
