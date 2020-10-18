@@ -64,7 +64,7 @@ namespace kt
         void mouseMoveEvent(QMouseEvent* event) override;
         bool eventFilter(QObject* dst, QEvent* event) override;
 
-    private slots:
+    private Q_SLOTS:
         void play();
         void stop();
         void setControlsVisible(bool on);
@@ -72,7 +72,7 @@ namespace kt
         void playing(const MediaFileRef& mfile);
         void enableActions(unsigned int flags);
 
-    signals:
+    Q_SIGNALS:
         void toggleFullScreen(bool on);
 
     private:

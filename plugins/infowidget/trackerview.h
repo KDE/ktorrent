@@ -49,7 +49,7 @@ namespace kt
         void saveState(KSharedConfigPtr cfg);
         void loadState(KSharedConfigPtr cfg);
 
-    public slots:
+    public Q_SLOTS:
         void updateClicked();
         void restoreClicked();
         void changeClicked();

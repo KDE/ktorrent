@@ -51,14 +51,14 @@ namespace kt
 
         void shutdown(bt::WaitJob* job);
 
-    public slots:
+    public Q_SLOTS:
         /**
          * Add a device to the list.
          * @param r The device
          */
         void addDevice(bt::UPnPRouter* r);
 
-    protected slots:
+    protected Q_SLOTS:
         void onForwardBtnClicked();
         void onUndoForwardBtnClicked();
         void onRescanClicked();

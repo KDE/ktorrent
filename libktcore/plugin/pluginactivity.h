@@ -44,7 +44,7 @@ namespace kt
 
         void updatePluginList();
         void update();
-    private slots:
+    private Q_SLOTS:
         void changed();
 
     private:

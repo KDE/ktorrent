@@ -41,7 +41,7 @@ namespace kt
         QString parentPart() const override {return QStringLiteral("torrentactivity");}
         void currentTorrentChanged(bt::TorrentInterface* tc) override;
 
-    private slots:
+    private Q_SLOTS:
         void generateMagnet();
 
     private:

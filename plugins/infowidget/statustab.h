@@ -38,7 +38,7 @@ namespace kt
         ~StatusTab() override;
 
 
-    public slots:
+    public Q_SLOTS:
         void changeTC(bt::TorrentInterface* tc);
         void update();
         void maxRatioChanged(double v);

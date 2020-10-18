@@ -60,7 +60,7 @@ namespace kt
         bool removeRows(int row, int count, const QModelIndex& parent) override;
         bool insertRows(int row, int count, const QModelIndex& parent) override;
 
-   public slots:
+   public Q_SLOTS:
         void onUpdateQueue(bt::Uint32 idx, bt::Uint32 count);
 
     private:

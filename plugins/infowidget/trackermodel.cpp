@@ -67,7 +67,7 @@ namespace kt
         for (Item* t: qAsConst(trackers))
         {
             if (t->update())
-                emit dataChanged(index(idx, 1), index(idx, 5));
+                Q_EMIT dataChanged(index(idx, 1), index(idx, 5));
             idx++;
         }
 

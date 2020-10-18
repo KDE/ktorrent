@@ -45,7 +45,7 @@ namespace kt
         void updateSettings() override;
         bool customWidgetsChanged() override;
 
-    private slots:
+    private Q_SLOTS:
         void addPressed();
         void removePressed();
         void selectionChanged();

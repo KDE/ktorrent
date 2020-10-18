@@ -41,7 +41,7 @@ namespace kt
         PropertiesDlg(bt::TorrentInterface* tc, QWidget* parent);
         ~PropertiesDlg() override;
 
-    public slots:
+    public Q_SLOTS:
         void moveOnCompletionEnabled(bool on);
 
     private:

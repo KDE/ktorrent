@@ -45,7 +45,7 @@ namespace kt
         AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent);
         ~AddPeersDlg() override;
 
-    private slots:
+    private Q_SLOTS:
         void addPressed();
 
     private:

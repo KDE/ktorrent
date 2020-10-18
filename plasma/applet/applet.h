@@ -62,7 +62,7 @@ namespace ktplasma
         virtual QGraphicsWidget* graphicsWidget();
         virtual void constraintsEvent(Plasma::Constraints constraints);
 
-    private slots:
+    private Q_SLOTS:
         void dataUpdated(const QString& name, const Plasma::DataEngine::Data& data);
         void configUpdated();
         void sourceAdded(const QString& s);

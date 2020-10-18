@@ -398,8 +398,8 @@ namespace kt
     void ViewModel::emitDataChanged(int row, int col)
     {
         QModelIndex idx = createIndex(row, col);
-        emit dataChanged(idx, idx);
-        //emit dataChanged(createIndex(row,0),createIndex(row,14));
+        Q_EMIT dataChanged(idx, idx);
+        //Q_EMIT dataChanged(createIndex(row,0),createIndex(row,14));
     }
 
     bool ViewModel::update(ViewDelegate* delegate, bool force_resort)
@@ -637,7 +637,7 @@ namespace kt
 
         bt::TorrentInterface* tc = item->tc;
         tc->setDisplayName(name);
-        emit dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         if (sort_column == NAME)
             sort(sort_column, sort_order);
         return true;
@@ -807,10 +807,10 @@ namespace kt
     {
         sort_column = col;
         sort_order = order;
-        emit layoutAboutToBeChanged();
+        Q_EMIT layoutAboutToBeChanged();
         std::stable_sort(torrents.begin(), torrents.end(), ViewModelItemCmp(col, order));
-        emit layoutChanged();
-        emit sorted();
+        Q_EMIT layoutChanged();
+        Q_EMIT sorted();
     }
 }
 

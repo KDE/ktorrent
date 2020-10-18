@@ -44,11 +44,11 @@ namespace kt
         void loadState(KSharedConfigPtr cfg);
         void saveState(KSharedConfigPtr cfg);
 
-    public slots:
+    public Q_SLOTS:
         void showBar();
         void hideBar();
 
-    signals:
+    Q_SIGNALS:
         void filterBarHidden(QString str);
         void filterBarShown(QString str);
 

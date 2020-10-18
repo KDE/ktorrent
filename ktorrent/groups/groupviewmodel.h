@@ -68,7 +68,7 @@ namespace kt
         /// Update the group count
         void updateGroupCount(const QModelIndex& idx);
 
-    private slots:
+    private Q_SLOTS:
         void groupAdded(Group* g);
         void groupRemoved(Group* g);
 

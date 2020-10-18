@@ -521,7 +521,7 @@ namespace kt
         }
 
         //then emit the signal to inform trayicon to show passive popup
-        emit lowDiskSpace(tc, toStop);
+        Q_EMIT lowDiskSpace(tc, toStop);
     }
 
     void QueueManager::setMaxSeeds(int m)
@@ -590,12 +590,12 @@ namespace kt
         if (ordering || !downloads.count() || exiting)
             return;
 
-        emit orderingQueue();
+        Q_EMIT orderingQueue();
 
         downloads.sort(); // sort downloads, even when suspended so that the QM widget is updated
         if (Settings::manuallyControlTorrents() || suspended_state)
         {
-            emit queueOrdered();
+            Q_EMIT queueOrdered();
             return;
         }
 
@@ -672,7 +672,7 @@ namespace kt
             }
         }
 
-        emit queueOrdered();
+        Q_EMIT queueOrdered();
     }
 
     void QueueManager::torrentFinished(bt::TorrentInterface* tc)
@@ -759,7 +759,7 @@ namespace kt
                 }
             }
         }
-        emit suspendStateChanged(suspended_state);
+        Q_EMIT suspendStateChanged(suspended_state);
     }
 
     void QueueManager::rearrangeQueue()

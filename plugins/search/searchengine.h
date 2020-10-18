@@ -74,7 +74,7 @@ namespace kt
         /// Get the description
         QString engineDescription() const {return description;}
 
-    private slots:
+    private Q_SLOTS:
         void iconDownloadFinished(KJob* job);
 
     private:

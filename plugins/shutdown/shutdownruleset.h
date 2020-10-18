@@ -116,14 +116,15 @@ namespace kt
 
         /// Generate a tool tip for the current ruleset
         QString toolTip() const;
-    signals:
+
+    Q_SIGNALS:
         void shutdown();
         void standby();
         void lock();
         void suspendToDisk();
         void suspendToRAM();
 
-    private slots:
+    private Q_SLOTS:
         void torrentFinished(bt::TorrentInterface* tc);
         void seedingAutoStopped(bt::TorrentInterface* tc, bt::AutoStopReason reason);
         void torrentAdded(bt::TorrentInterface* tc);

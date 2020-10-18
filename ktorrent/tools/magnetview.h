@@ -49,7 +49,7 @@ namespace kt
 
         void keyPressEvent(QKeyEvent* event) override;
 
-    private slots:
+    private Q_SLOTS:
         void showContextMenu(QPoint p);
         void removeMagnetDownload();
         void startMagnetDownload();

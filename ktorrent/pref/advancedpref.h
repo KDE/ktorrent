@@ -38,7 +38,7 @@ namespace kt
         void loadSettings() override;
         void loadDefaults() override;
 
-    public slots:
+    public Q_SLOTS:
         void onDiskPreallocToggled(bool on);
     };
 }

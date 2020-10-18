@@ -47,7 +47,7 @@ namespace kt
         static void loadFilter(const QString& fn);
 
 
-    public slots:
+    public Q_SLOTS:
         void save();
         void open() override;
         void clear();

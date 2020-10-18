@@ -57,18 +57,18 @@ namespace kt
         bool backAvailable() const;
         void restore(const QUrl &url, const QString& text, const QString& sb_text, int engine);
 
-    signals:
+    Q_SIGNALS:
         void enableBack(bool on);
         void openNewTab(const QUrl &url);
         void changeTitle(SearchWidget* w, const QString& title);
         void changeIcon(SearchWidget* w, const QIcon& icon);
 
-    public slots:
+    public Q_SLOTS:
         void search(const QString& text, int engine = 0);
         void home();
         void search();
 
-    private slots:
+    private Q_SLOTS:
         void loadStarted();
         void loadFinished(bool ok);
         void loadProgress(int p);

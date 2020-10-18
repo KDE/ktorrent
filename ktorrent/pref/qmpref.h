@@ -39,7 +39,7 @@ namespace kt
 
         void loadSettings() override;
         void loadDefaults() override;
-    private slots:
+    private Q_SLOTS:
         void onControlTorrentsManuallyToggled(bool on);
     };
 

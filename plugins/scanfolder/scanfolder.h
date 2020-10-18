@@ -54,7 +54,7 @@ namespace kt
          */
         void setRecursive(bool rec);
 
-    public slots:
+    public Q_SLOTS:
         void scanDir(const QString& path);
 
     private:

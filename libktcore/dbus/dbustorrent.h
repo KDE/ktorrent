@@ -135,7 +135,7 @@ namespace kt
         void corruptedDataFound(QObject* tor);
         void torrentStopped(QObject* tor);
 
-    private slots:
+    private Q_SLOTS:
         void onFinished(bt::TorrentInterface* tor);
         void onStoppedByError(bt::TorrentInterface* tor, const QString& err);
         void onSeedingAutoStopped(bt::TorrentInterface* tor, bt::AutoStopReason reason);

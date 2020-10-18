@@ -45,7 +45,7 @@ namespace kt
          **/
         void accept() override;
 
-    private slots:
+    private Q_SLOTS:
         void fromChanged(const QTime& time);
         void toChanged(const QTime& time);
         void startDayChanged(int idx);

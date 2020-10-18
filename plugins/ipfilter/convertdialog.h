@@ -54,7 +54,7 @@ namespace kt
          */
         void progress(int val, int total);
 
-    private slots:
+    private Q_SLOTS:
         void convert();
         void threadFinished();
         void btnCancelClicked();

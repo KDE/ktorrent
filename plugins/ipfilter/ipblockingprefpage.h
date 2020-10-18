@@ -54,7 +54,7 @@ namespace kt
         /// Do an auto update, return false if this is not possible
         bool doAutoUpdate();
 
-    private slots:
+    private Q_SLOTS:
         void downloadClicked();
         void checkUseLevel1Toggled(bool);
         void restoreGUI();

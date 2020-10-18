@@ -31,7 +31,7 @@ public:
     explicit MagnetUrlSchemeHandler(QObject *parent = nullptr );
     void requestStarted(QWebEngineUrlRequestJob *request) override;
 
-signals:
+Q_SIGNALS:
     void magnetUrlDetected(const QUrl &url);
 
 };

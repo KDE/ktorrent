@@ -60,11 +60,11 @@ namespace kt
         /// Update the widget
         void update();
 
-    public slots:
+    public Q_SLOTS:
         void onTorrentAdded(bt::TorrentInterface* tc);
         void onTorrentRemoved(bt::TorrentInterface* tc);
 
-    private slots:
+    private Q_SLOTS:
         void moveUpClicked();
         void moveDownClicked();
         void moveTopClicked();

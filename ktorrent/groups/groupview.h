@@ -62,11 +62,11 @@ namespace kt
         /// Setup all the actions of the GroupView
         void setupActions(KActionCollection* col);
 
-    public slots:
+    public Q_SLOTS:
         /// Update the group count
         void updateGroupCount();
 
-    private slots:
+    private Q_SLOTS:
         void onItemClicked(const QModelIndex& index);
         void showContextMenu(const QPoint& p);
         void addGroup();
@@ -75,7 +75,7 @@ namespace kt
         void editGroupPolicy();
         void openInNewTab();
 
-    signals:
+    Q_SIGNALS:
         void currentGroupChanged(kt::Group* g);
         void openTab(Group* g);
 

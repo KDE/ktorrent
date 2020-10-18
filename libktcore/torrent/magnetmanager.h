@@ -59,10 +59,10 @@ public:
     bool isTimerActived() const;
     bool isOccupied() const;
 
-signals:
+Q_SIGNALS:
     void timeout(int magnetIdx);
 
-private slots:
+private Q_SLOTS:
     void onTimeout();
 
 private:
@@ -141,7 +141,7 @@ public:
     /// @return the magnet downloader or nullptr if idx is out of bounds
     const kt::MagnetDownloader* getMagnetDownloader(bt::Uint32 idx) const;
 
-signals:
+Q_SIGNALS:
     /// Emitted when metadata has been downloaded for a MagnetLink.
     void metadataDownloaded(const bt::MagnetLink& mlink, const QByteArray& data, const kt::MagnetLinkLoadOptions& options);
 
@@ -152,7 +152,7 @@ signals:
     /// @param count determines the number of magnets that must be updated
     void updateQueue(bt::Uint32 idx, bt::Uint32 count);
 
-private slots:
+private Q_SLOTS:
     void onDownloadFinished(bt::MagnetDownloader* md, const QByteArray& data);
     void onSlotTimeout(int magnetIdx);
 

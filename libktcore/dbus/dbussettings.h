@@ -37,7 +37,7 @@ namespace kt
         DBusSettings(CoreInterface* core, QObject* parent);
         ~DBusSettings() override;
 
-    public slots:
+    public Q_SLOTS:
         Q_SCRIPTABLE int maxDownloads();
         Q_SCRIPTABLE void setMaxDownloads(int val);
         Q_SCRIPTABLE int maxSeeds();

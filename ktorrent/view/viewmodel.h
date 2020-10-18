@@ -136,13 +136,13 @@ namespace kt
         /// Get the list of indexes which need to be updated
         const QModelIndexList& updateList() const {return update_list;}
 
-    public slots:
+    public Q_SLOTS:
         void addTorrent(bt::TorrentInterface* ti);
         void removeTorrent(bt::TorrentInterface* ti);
         void sort(int col, Qt::SortOrder order) override;
         void onExit();
 
-    signals:
+    Q_SIGNALS:
         void sorted();
 
     public:

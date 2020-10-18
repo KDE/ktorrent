@@ -53,7 +53,7 @@ namespace kt
         void unload() override;
         bool versionCheck(const QString& version) const override;
 
-    public slots:
+    public Q_SLOTS:
         void timerTriggered();
         void onLoaded(Schedule* ns);
         void colorsChanged();

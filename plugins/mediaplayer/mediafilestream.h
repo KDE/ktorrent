@@ -55,11 +55,11 @@ namespace kt
         void enoughData() override;
         void seekStream(qint64 offset) override;
 
-    signals:
+    Q_SIGNALS:
         /// Emitted when the stream state changes
         void stateChanged(int state);
 
-    private slots:
+    private Q_SLOTS:
         void dataReady();
 
     private:

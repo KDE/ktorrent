@@ -78,7 +78,7 @@ namespace kt
         if (error_msg->isVisible())
         {
             error_msg->hide();
-            emit resized(this);
+            Q_EMIT resized(this);
         }
     }
 
@@ -99,7 +99,7 @@ namespace kt
         Q_UNUSED(rich);
         error_msg->setText(plain);
         error_msg->show();
-        emit resized(this);
+        Q_EMIT resized(this);
     }
 
     void ScanExtender::warning(const QString& plain, const QString& rich)
@@ -131,7 +131,7 @@ namespace kt
         {
             error_msg->show();
             error_msg->setText(i18n("<font color=\"red\">%1</font>", j->errorText()));
-            emit resized(this);
+            Q_EMIT resized(this);
         }
     }
 

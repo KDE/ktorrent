@@ -100,7 +100,7 @@ namespace kt
         bool alreadyLoaded(const QString& user_dir);
         void loadEngine(const QString& global_dir, const QString& user_dir, bool load_removed);
 
-    private slots:
+    private Q_SLOTS:
         void openSearchDownloadJobFinished(KJob* j);
     };
 

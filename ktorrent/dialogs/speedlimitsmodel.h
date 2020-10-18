@@ -52,13 +52,13 @@ namespace kt
 
         void apply();
 
-    signals:
+    Q_SIGNALS:
         void enableApply(bool on);
 
     private:
         bt::TorrentInterface* torrentForIndex(const QModelIndex& index) const;
 
-    private slots:
+    private Q_SLOTS:
         void onTorrentAdded(bt::TorrentInterface* tc);
         void onTorrentRemoved(bt::TorrentInterface* tc);
 

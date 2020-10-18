@@ -64,7 +64,7 @@ namespace kt
         /// Whether or not the IP filter is loaded and running
         bool loadedAndRunning();
 
-    public slots:
+    public Q_SLOTS:
         void checkAutoUpdate();
         void notification(const QString& msg);
 

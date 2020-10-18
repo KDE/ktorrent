@@ -64,10 +64,10 @@ namespace kt
         /// Get the list of actions to switch between activities
         QList<QAction*> activitySwitchingActions();
 
-    private slots:
+    private Q_SLOTS:
         void switchActivity(QAction* action);
 
-    signals:
+    Q_SIGNALS:
         /// Emitted when the current Activity needs to be changed
         void changeActivity(Activity* act);
 

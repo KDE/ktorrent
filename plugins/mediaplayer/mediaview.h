@@ -52,7 +52,7 @@ namespace kt
         /// Enable or disable showing of incomplete files
         void setShowIncomplete(bool on);
 
-    public slots:
+    public Q_SLOTS:
         void refresh();
 
     private:
@@ -72,10 +72,10 @@ namespace kt
         void saveState(KSharedConfig::Ptr cfg);
         void loadState(KSharedConfig::Ptr cfg);
 
-    signals:
+    Q_SIGNALS:
         void doubleClicked(const MediaFileRef& mf);
 
-    private slots:
+    private Q_SLOTS:
         void onDoubleClicked(const QModelIndex& index);
         void showIncompleteChanged(bool on);
 

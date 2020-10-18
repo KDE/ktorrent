@@ -177,7 +177,7 @@ namespace kt
 
         // emit only one data changed signal
         if (lowest != -1)
-            emit dataChanged(index(lowest, 1), index(highest, 3));
+            Q_EMIT dataChanged(index(lowest, 1), index(highest, 3));
     }
 
     int ChunkDownloadModel::rowCount(const QModelIndex& parent) const

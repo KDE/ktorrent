@@ -63,7 +63,7 @@ namespace kt
         bool removeRows(int row, int count, const QModelIndex& parent) override;
         bool insertRows(int row, int count, const QModelIndex& parent) override;
 
-    private slots:
+    private Q_SLOTS:
         void registered(const QString& sys);
         void unregistered(const QString& sys);
 

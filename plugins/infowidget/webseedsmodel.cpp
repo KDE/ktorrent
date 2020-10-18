@@ -190,7 +190,7 @@ namespace kt
 
         bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
         ws->setEnabled((Qt::CheckState)value.toInt() == Qt::Checked),
-           emit dataChanged(index, index);
+           Q_EMIT dataChanged(index, index);
         return true;
     }
 }

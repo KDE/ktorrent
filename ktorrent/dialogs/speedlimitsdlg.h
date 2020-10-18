@@ -44,7 +44,7 @@ namespace kt
         ~SpeedLimitsDlg() override;
 
 
-    protected slots:
+    protected Q_SLOTS:
         void accept() override;
         void reject() override;
         void apply();

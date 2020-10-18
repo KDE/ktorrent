@@ -47,10 +47,10 @@ namespace kt
         void loadSettings() override;
         void loadDefaults() override;
 
-    public slots:
+    public Q_SLOTS:
         void customToggled(bool toggled);
 
-    private slots:
+    private Q_SLOTS:
         void addClicked();
         void removeClicked();
         void addDefaultClicked();
@@ -61,7 +61,7 @@ namespace kt
         void downloadJobFinished(KJob* j);
         void resetDefaultAction();
 
-    signals:
+    Q_SIGNALS:
         void clearSearchHistory();
 
     private:

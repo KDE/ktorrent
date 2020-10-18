@@ -61,7 +61,7 @@ namespace kt
         bool versionCheck(const QString& version) const override;
         void guiUpdate() override;
 
-    public slots:
+    public Q_SLOTS:
         ///Gather data
         void gatherData();
         ///Settings has been changed

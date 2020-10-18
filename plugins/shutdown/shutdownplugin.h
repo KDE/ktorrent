@@ -40,13 +40,13 @@ namespace kt
         void unload() override;
         void load() override;
 
-    public slots:
+    public Q_SLOTS:
         void shutdownComputer();
         void lock();
         void suspendToDisk();
         void suspendToRam();
 
-    private slots:
+    private Q_SLOTS:
         void shutdownToggled(bool on);
         void configureShutdown();
         void updateAction();

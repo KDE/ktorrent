@@ -204,7 +204,7 @@ namespace kt
             e.string_rep = str;
         }
 
-        emit dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         return true;
     }
 

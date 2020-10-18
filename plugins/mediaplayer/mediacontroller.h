@@ -46,7 +46,7 @@ namespace kt
         ~MediaController() override;
 
 
-    private slots:
+    private Q_SLOTS:
         void playing(const MediaFileRef& file);
         void stopped();
         void metaDataChanged();

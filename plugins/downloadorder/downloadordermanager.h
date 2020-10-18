@@ -67,7 +67,7 @@ namespace kt
         /// Set the order
         void setDownloadOrder(const Order& norder) {order = norder;}
 
-    public slots:
+    public Q_SLOTS:
         /**
          * Change file priorities if needed
          */

@@ -41,10 +41,10 @@ namespace kt
         void loadSettings() override;
         void loadDefaults() override;
         void updateSettings() override;
-    signals:
+    Q_SIGNALS:
         void calculateRecommendedSettings();
 
-    private slots:
+    private Q_SLOTS:
         void utpEnabled(bool on);
         void onlyUseUtpEnabled(bool on);
     };

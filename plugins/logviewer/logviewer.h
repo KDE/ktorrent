@@ -46,7 +46,7 @@ namespace kt
         void setMaxBlockCount(int max);
         void processPending();
 
-    public slots:
+    public Q_SLOTS:
         void showMenu(const QPoint& pos);
         void suspend(bool on);
 

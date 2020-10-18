@@ -352,7 +352,7 @@ namespace kt
 
         torrentAdded(tc);
         if (silently)
-            emit openedSilently(tc);
+            Q_EMIT openedSilently(tc);
         return true;
     }
 
@@ -844,7 +844,7 @@ namespace kt
 
     void Core::onExit()
     {
-        emit aboutToQuit();
+        Q_EMIT aboutToQuit();
         // stop timer to prevent updates during wait
         exiting = true;
         update_timer.stop();
@@ -1127,7 +1127,7 @@ namespace kt
 
     void Core::slotStoppedByError(bt::TorrentInterface* tc, QString msg)
     {
-        emit torrentStoppedByError(tc, msg);
+        Q_EMIT torrentStoppedByError(tc, msg);
     }
 
     Uint32 Core::getNumTorrentsRunning() const
@@ -1304,7 +1304,7 @@ namespace kt
 
     void Core::enqueueTorrentOverMaxRatio(bt::TorrentInterface* tc)
     {
-        emit queuingNotPossible(tc);
+        Q_EMIT queuingNotPossible(tc);
     }
 
     void Core::autoCheckData(bt::TorrentInterface* tc)
@@ -1323,7 +1323,7 @@ namespace kt
 
     void Core::onLowDiskSpace(bt::TorrentInterface* tc, bool stopped)
     {
-        emit lowDiskSpace(tc, stopped);
+        Q_EMIT lowDiskSpace(tc, stopped);
     }
 
     void Core::updateGuiPlugins()

@@ -114,7 +114,7 @@ namespace kt
          */
         void updateGuidanceLines(qreal y1, qreal y2);
 
-    signals:
+    Q_SIGNALS:
         /**
          * Emitted when an item has been double clicked.
          * @param gi Item double clicked

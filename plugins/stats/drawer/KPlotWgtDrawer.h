@@ -93,7 +93,7 @@ namespace kt
 
         bool event(QEvent*) override;
 
-    public slots:
+    public Q_SLOTS:
         void addValue(const size_t idx, const wgtunit_t val, const bool upd = false) override;
         void addDataSet(ChartDrawerData Cdd) override;
         void insertDataSet(const size_t idx, ChartDrawerData Cdd) override;
@@ -118,7 +118,7 @@ namespace kt
         void showContextMenu(const QPoint& rP) override;
         void renderToImage() override;
 
-    signals:
+    Q_SIGNALS:
         void Zeroed(ChartDrawer*);
 
     };

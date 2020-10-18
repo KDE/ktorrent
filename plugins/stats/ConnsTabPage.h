@@ -90,7 +90,7 @@ namespace kt
         ~ConnsTabPage() override;
 
 
-    public slots:
+    public Q_SLOTS:
         void applySettings() override;
         void updateAllCharts() override;
         void gatherData(Plugin*) override;

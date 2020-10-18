@@ -63,7 +63,7 @@ namespace kt
         }
 
         act->setChecked(on);
-        emit actionTriggered(act);
+        Q_EMIT actionTriggered(act);
     }
 
 

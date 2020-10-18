@@ -45,7 +45,7 @@ namespace kt
     private:
         QFont titleFont(const QFont& baseFont) const;
 
-    private slots:
+    private Q_SLOTS:
         void toggled(bool on);
         void aboutClicked();
         void settingsClicked();

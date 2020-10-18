@@ -84,7 +84,7 @@ namespace kt
 
     void SearchPrefPage::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
     {
-        Q_UNUSED(deselected);
+        Q_UNUSED(deselected)
         m_remove->setEnabled(selected.count() > 0);
     }
 
@@ -204,7 +204,7 @@ namespace kt
 
     void SearchPrefPage::clearHistory()
     {
-        emit clearSearchHistory();
+        Q_EMIT clearSearchHistory();
     }
 
     void SearchPrefPage::resetDefaultAction()

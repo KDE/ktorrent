@@ -48,10 +48,10 @@ namespace kt
         void start() override;
         void aboutToBeDestroyed() override;
 
-    signals:
+    Q_SIGNALS:
         void serviceDestroyed(TorrentService* av);
 
-    public slots:
+    public Q_SLOTS:
         void onPublished(bool ok);
         void onServiceAdded(KDNSSD::RemoteService::Ptr ptr);
         void hostResolved(net::AddressResolver* ar);

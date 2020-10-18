@@ -62,7 +62,7 @@ namespace kt
          */
         void colorsChanged();
 
-    private slots:
+    private Q_SLOTS:
         void clear();
         void save();
         void load();
@@ -74,7 +74,7 @@ namespace kt
         void itemMoved(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day);
         void enableChecked(bool on);
 
-    signals:
+    Q_SIGNALS:
         /**
          * Emitted when the user loads a new schedule.
          * @param ns The new schedule

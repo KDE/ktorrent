@@ -79,12 +79,12 @@ namespace kt
         /// Play the previous song
         MediaFileRef prev();
 
-    private slots:
+    private Q_SLOTS:
         void onStateChanged(Phonon::State cur, Phonon::State old);
         void hasVideoChanged(bool hasVideo);
         void streamStateChanged(int state);
 
-    signals:
+    Q_SIGNALS:
         /**
          * Emitted to enable or disable the play buttons.
          * @param flags Flags indicating which buttons to enable

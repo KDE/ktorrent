@@ -88,7 +88,7 @@ namespace kt
         void addScriptFromArchive(KArchive* archive);
         void addScriptFromArchiveDirectory(const KArchiveDirectory* dir);
 
-    signals:
+    Q_SIGNALS:
         void showPropertiesDialog(Script* s);
 
     private:

@@ -69,7 +69,7 @@ namespace kt
         /// Setup all actions
         void setupActions();
 
-    public slots:
+    public Q_SLOTS:
         /**
         * Called by the ViewManager when the current torrent has changed
         * @param tc The torrent
@@ -88,7 +88,7 @@ namespace kt
         void onSuspendedStateChanged(bool suspended);
 
 
-    private slots:
+    private Q_SLOTS:
         void startAllTorrents();
         void stopAllTorrents();
         void suspendQueue(bool suspend);

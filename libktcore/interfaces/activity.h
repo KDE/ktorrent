@@ -88,7 +88,7 @@ namespace kt
         */
         void setXMLGUIFile(const QString& xml_file);
 
-    signals:
+    Q_SIGNALS:
         void nameChanged(Activity* a, const QString& name);
         void iconChanged(Activity* a, const QString& icon);
 

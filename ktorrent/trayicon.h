@@ -81,7 +81,7 @@ namespace kt
     private:
         void showPassivePopup(const QString& msg, const QString& titile);
 
-    private slots:
+    private Q_SLOTS:
         /**
                  * Show a passive popup, that a torrent has been silently added.
                  * @param tc The torrent
@@ -151,7 +151,7 @@ namespace kt
         */
         void dhtNotEnabled(const QString& msg);
 
-    private slots:
+    private Q_SLOTS:
         void secondaryActivate(const QPoint& pos);
 
     private:
@@ -177,13 +177,13 @@ namespace kt
         SetMaxRate(Core* tc, Type t, QWidget* parent);
         ~SetMaxRate() override;
 
-    public slots:
+    public Q_SLOTS:
         void update();
 
     private:
         void makeMenu();
 
-    private slots:
+    private Q_SLOTS:
         void onTriggered(QAction* act);
 
     private:

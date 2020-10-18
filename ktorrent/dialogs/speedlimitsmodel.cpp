@@ -187,7 +187,7 @@ namespace kt
 
         if (ok)
         {
-            emit dataChanged(index, index);
+            Q_EMIT dataChanged(index, index);
             if (lim.up != lim.up_original || lim.down != lim.down_original ||
                     lim.assured_down != lim.assured_down_original || lim.up_original != lim.assured_up_original)
             {

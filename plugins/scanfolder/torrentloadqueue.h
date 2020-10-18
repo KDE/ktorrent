@@ -54,7 +54,7 @@ namespace kt
         /// Get the loaded torrent action
         LoadedTorrentAction loadedTorrentAction() const {return action;}
 
-    public slots:
+    public Q_SLOTS:
         /**
          * Add a torrent to load.
          */
@@ -81,7 +81,7 @@ namespace kt
          */
         void load(const QUrl& url, const QByteArray& data);
 
-    private slots:
+    private Q_SLOTS:
         /**
          * Attempt to load one torrent
          */

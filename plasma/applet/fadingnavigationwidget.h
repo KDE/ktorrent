@@ -38,7 +38,7 @@ public:
     Plasma::PushButton* nextButton();
     Plasma::PushButton* prevButton();
 
-signals:
+Q_SIGNALS:
     void prevClicked();
     void nextClicked();
 

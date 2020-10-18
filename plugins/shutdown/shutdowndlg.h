@@ -41,7 +41,7 @@ namespace kt
         void accept() override;
         void reject() override;
 
-    private slots:
+    private Q_SLOTS:
         void timeToExecuteChanged(int idx);
 
     private:

@@ -91,7 +91,7 @@ namespace kt
         void loadHomePage();
         QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override;
 
-    public slots:
+    public Q_SLOTS:
         /**
          * Download a QWebEngineDownloadItem
          * @param download The QWebEngineDownloadItem
@@ -99,7 +99,7 @@ namespace kt
         void downloadRequested(QWebEngineDownloadItem *download);
         void magnetUrlDetected(const QUrl &url);
 
-    signals:
+    Q_SIGNALS:
         void torrentFileDownloadRequested(QWebEngineDownloadItem *download);
 
     private:

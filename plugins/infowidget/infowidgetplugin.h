@@ -70,7 +70,7 @@ namespace kt
     private:
         void createMonitor(bt::TorrentInterface* tc);
 
-    private slots:
+    private Q_SLOTS:
         void applySettings();
         void torrentRemoved(bt::TorrentInterface* tc);
 

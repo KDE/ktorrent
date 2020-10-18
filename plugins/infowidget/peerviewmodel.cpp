@@ -234,7 +234,7 @@ namespace kt
 
         // emit only one data changed signal
         if (lowest != -1)
-            emit dataChanged(index(lowest, 3), index(highest, 15));
+            Q_EMIT dataChanged(index(lowest, 3), index(highest, 15));
     }
 
     QModelIndex PeerViewModel::index(int row, int column, const QModelIndex& parent) const

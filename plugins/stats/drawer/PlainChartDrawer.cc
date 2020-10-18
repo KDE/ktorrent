@@ -448,7 +448,7 @@ namespace kt
 
         findSetMax();
 
-        emit Zeroed(this);
+        Q_EMIT Zeroed(this);
     }
 
     void PlainChartDrawer::setMaxMode(const MaxMode mm)

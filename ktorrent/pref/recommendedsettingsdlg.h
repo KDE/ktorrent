@@ -39,7 +39,7 @@ namespace kt
         RecommendedSettingsDlg(QWidget* parent);
         ~RecommendedSettingsDlg() override;
 
-    private slots:
+    private Q_SLOTS:
         void calculate();
         void apply();
         void avgSpeedSlotToggled(bool on);

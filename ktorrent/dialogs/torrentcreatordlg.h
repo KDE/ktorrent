@@ -44,7 +44,7 @@ namespace kt
         TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent);
         ~TorrentCreatorDlg() override;
 
-    private slots:
+    private Q_SLOTS:
         void addTrackerPressed();
         void removeTrackerPressed();
         void moveUpPressed();

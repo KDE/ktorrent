@@ -52,7 +52,7 @@ namespace kt
         */
         void saveState(KSharedConfig::Ptr cfg);
 
-    public slots:
+    public Q_SLOTS:
         void accept() override;
 
     private:

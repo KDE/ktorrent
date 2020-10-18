@@ -108,10 +108,10 @@ namespace kt
         {
             switch (currentAction())
             {
-            case SHUTDOWN: emit shutdown(); break;
-            case LOCK: emit lock(); break;
-            case SUSPEND_TO_DISK: emit suspendToDisk(); break;
-            case SUSPEND_TO_RAM: emit suspendToRAM(); break;
+            case SHUTDOWN: Q_EMIT shutdown(); break;
+            case LOCK: Q_EMIT lock(); break;
+            case SUSPEND_TO_DISK: Q_EMIT suspendToDisk(); break;
+            case SUSPEND_TO_RAM: Q_EMIT suspendToRAM(); break;
             }
         }
     }

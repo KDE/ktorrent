@@ -176,7 +176,7 @@ namespace kt
 
     void RouterModel::update()
     {
-        emit dataChanged(index(0, 0), index(rowCount(QModelIndex()) - 1, columnCount(QModelIndex()) - 1));
+        Q_EMIT dataChanged(index(0, 0), index(rowCount(QModelIndex()) - 1, columnCount(QModelIndex()) - 1));
     }
 
     void RouterModel::forward(const net::Port& port)

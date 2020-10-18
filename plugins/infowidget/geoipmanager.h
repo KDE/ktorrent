@@ -82,7 +82,7 @@ namespace kt
         /// Download the database
         void downloadDataBase();
 
-    private slots:
+    private Q_SLOTS:
         void databaseDownloadFinished(KJob* job);
         void decompressFinished();
 

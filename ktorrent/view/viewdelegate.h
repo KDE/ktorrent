@@ -99,12 +99,12 @@ namespace kt
         /// Does the delegate have extenders
         bool hasExtenders() const {return !extenders.isEmpty();}
 
-    public slots:
+    public Q_SLOTS:
         /// Close all the extenders of a torrent
         void closeExtenders(bt::TorrentInterface* tc);
         void closeExtender(bt::TorrentInterface* tc, Extender* ext);
 
-    private slots:
+    private Q_SLOTS:
         void torrentRemoved(bt::TorrentInterface* tc);
         void closeRequested(Extender* ext);
         void resized(Extender* ext);

@@ -150,7 +150,7 @@ namespace kt
         connect(g, &TorrentGroup::torrentAdded, this, &GroupManager::customGroupChanged);
         connect(g, qOverload<Group*>(&TorrentGroup::torrentRemoved), this, &GroupManager::customGroupChanged);
         groups.insert(name, g);
-        emit groupAdded(g);
+        Q_EMIT groupAdded(g);
         return g;
     }
 
@@ -158,7 +158,7 @@ namespace kt
     {
         if (canRemove(g))
         {
-            emit groupRemoved(g);
+            Q_EMIT groupRemoved(g);
             groups.setAutoDelete(false);
             groups.erase(g->groupName());
             groups.setAutoDelete(true);
@@ -302,7 +302,7 @@ namespace kt
         groups.setAutoDelete(true);
         saveGroups();
 
-        emit groupRenamed(g);
+        Q_EMIT groupRenamed(g);
     }
 
     void GroupManager::addDefaultGroup(Group* g)
@@ -311,7 +311,7 @@ namespace kt
             return;
 
         groups.insert(g->groupName(), g);
-        emit groupAdded(g);
+        Q_EMIT groupAdded(g);
     }
 
 

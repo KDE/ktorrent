@@ -45,7 +45,7 @@ namespace kt
         DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent);
         ~DownloadOrderDialog() override;
 
-    private slots:
+    private Q_SLOTS:
         void commitDownloadOrder();
         void moveUp();
         void moveDown();

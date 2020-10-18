@@ -198,7 +198,7 @@ namespace kt
 
         Feed* f = feeds.at(index.row());
         f->setDisplayName(value.toString());
-        emit dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         return true;
     }
 
@@ -268,7 +268,7 @@ namespace kt
         Feed* f = (Feed*)sender();
         int idx = feeds.indexOf(f);
         if (idx >= 0)
-            emit dataChanged(index(idx, 0), index(idx, 0));
+            Q_EMIT dataChanged(index(idx, 0), index(idx, 0));
     }
 
     void FeedList::filterRemoved(Filter* f)

@@ -35,7 +35,7 @@ namespace kt
         MagnetGeneratorPrefWidget(QWidget* parent = 0);
         ~MagnetGeneratorPrefWidget() override;
 
-    private slots:
+    private Q_SLOTS:
         void customTrackerToggled(bool on);
         void torrentTrackerToggled(bool on);
 

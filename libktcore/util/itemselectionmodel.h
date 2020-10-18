@@ -43,7 +43,7 @@ namespace kt
         void clear() override;
         void reset() override;
 
-    public slots:
+    public Q_SLOTS:
         /**
          * Updates the selection after a sort.
          */

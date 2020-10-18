@@ -60,7 +60,7 @@ namespace kt
         /// Change the icon of a tab
         void changeTabIcon(QWidget* w, const QString& icon);
 
-    private slots:
+    private Q_SLOTS:
         void onActionTriggered(QAction* act);
         void toolButtonStyleChanged(Qt::ToolButtonStyle style);
         void setToolButtonStyle();
@@ -87,10 +87,10 @@ namespace kt
         void addAction(QAction* act);
         void removeAction(QAction* act);
 
-    private slots:
+    private Q_SLOTS:
         void toggled(bool on);
 
-    signals:
+    Q_SIGNALS:
         void actionTriggered(QAction* a);
 
     private:

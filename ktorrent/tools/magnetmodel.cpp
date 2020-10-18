@@ -75,7 +75,7 @@ namespace kt
             removeRows(idx, currentRows - rows, QModelIndex());
 
         currentRows = rows;
-        emit dataChanged(index(idx, 0), index(count, columnCount(QModelIndex())));
+        Q_EMIT dataChanged(index(idx, 0), index(count, columnCount(QModelIndex())));
     }
 
     QVariant MagnetModel::data(const QModelIndex& index, int role) const

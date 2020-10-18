@@ -68,7 +68,7 @@ namespace kt
         void moveTop(int row, int count);
         void moveBottom(int row, int count);
 
-    public slots:
+    public Q_SLOTS:
         void sortByName();
         void sortBySeasonsAndEpisodes();
         void sortByAlbumTrackOrder();

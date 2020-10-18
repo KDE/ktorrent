@@ -167,7 +167,7 @@ namespace kt
         cfg.writeEntry(QStringLiteral("sys_%1").arg(f.id), flag);
         cfg.sync();
 
-        emit dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         return true;
     }
 

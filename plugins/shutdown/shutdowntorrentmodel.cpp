@@ -60,7 +60,7 @@ namespace kt
     void ShutdownTorrentModel::torrentRemoved(bt::TorrentInterface* tc)
     {
         int idx = 0;
-        foreach (const TriggerItem& c, conds)
+        for (const TriggerItem& c : qAsConst(conds))
         {
             if (c.tc == tc)
             {
@@ -127,7 +127,7 @@ namespace kt
             TriggerItem& cond = conds[index.row()];
             Qt::CheckState checked = static_cast<Qt::CheckState>(value.toInt());
             cond.checked = checked == Qt::Checked;
-            emit dataChanged(index, index);
+            Q_EMIT dataChanged(index, index);
             return true;
         }
         else if (role == Qt::EditRole)
@@ -139,7 +139,7 @@ namespace kt
             Trigger trigger = (Trigger)v;
             TriggerItem& cond = conds[index.row()];
             cond.trigger = trigger;
-            emit dataChanged(index, index);
+            Q_EMIT dataChanged(index, index);
             return true;
         }
         return false;
@@ -196,7 +196,7 @@ namespace kt
     void ShutdownTorrentModel::applyRules(Action action, kt::ShutdownRuleSet* rules)
     {
         rules->clear();
-        foreach (const TriggerItem& c, conds)
+        for (const TriggerItem& c : qAsConst(conds))
         {
             if (c.checked)
                 rules->addRule(action, SPECIFIC_TORRENT, c.trigger, c.tc);

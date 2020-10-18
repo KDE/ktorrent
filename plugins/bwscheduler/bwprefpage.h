@@ -42,7 +42,7 @@ namespace kt
         void loadSettings() override;
         void updateSettings() override;
 
-    signals:
+    Q_SIGNALS:
         void colorsChanged();
     };
 

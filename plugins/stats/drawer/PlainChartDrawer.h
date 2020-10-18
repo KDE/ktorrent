@@ -119,7 +119,7 @@ namespace kt
         */
         void paintEvent(QPaintEvent* pPevt) override;
 
-    public slots:
+    public Q_SLOTS:
         void showContextMenu(const QPoint& rP) override;
         void renderToImage() override;
 
@@ -145,7 +145,7 @@ namespace kt
         void enableAntiAlias(bool aa) override;
         void enableBackgroundGrid(bool bg) override;
 
-    signals:
+    Q_SIGNALS:
         void Zeroed(ChartDrawer*);
 
 

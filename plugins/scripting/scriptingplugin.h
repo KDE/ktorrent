@@ -52,7 +52,7 @@ namespace kt
         void saveScripts();
         Script* loadScriptDir(const QString& dir);
 
-    private slots:
+    private Q_SLOTS:
         void addScript();
         void removeScript();
 

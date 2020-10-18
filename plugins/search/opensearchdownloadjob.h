@@ -53,7 +53,7 @@ namespace kt
         /// Get the hostname
         QString hostname() const {return url.host();}
 
-    private slots:
+    private Q_SLOTS:
         void getFinished(KJob* j);
         void xmlFileDownloadFinished(KJob* j);
 

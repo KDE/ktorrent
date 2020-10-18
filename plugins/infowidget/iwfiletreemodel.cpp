@@ -272,7 +272,7 @@ namespace kt
                 setPriority(n->children.at(i), newpriority, false);
             }
 
-            emit dataChanged(createIndex(n->row(), 0, n), createIndex(n->row(), 4, n));
+            Q_EMIT dataChanged(createIndex(n->row(), 0, n), createIndex(n->row(), 4, n));
         }
         else
         {
@@ -286,7 +286,7 @@ namespace kt
             if (newpriority != old)
             {
                 file->setPriority(newpriority);
-                emit dataChanged(createIndex(n->row(), 0, n), createIndex(n->row(), 4, n));
+                Q_EMIT dataChanged(createIndex(n->row(), 0, n), createIndex(n->row(), 4, n));
             }
         }
     }
@@ -314,7 +314,7 @@ namespace kt
         if (n->file && n->file == file)
         {
             QModelIndex i = createIndex(idx.row(), col, n);
-            emit dataChanged(i, i);
+            Q_EMIT dataChanged(i, i);
             if (col == 4)
             {
                 // update percentages along the tree
@@ -330,7 +330,7 @@ namespace kt
                 {
                     Node* nd = (Node*)parent.internalPointer();
                     i = createIndex(parent.row(), 4, nd);
-                    emit dataChanged(i, i);
+                    Q_EMIT dataChanged(i, i);
                     parent = parent.parent();
                 }
             }

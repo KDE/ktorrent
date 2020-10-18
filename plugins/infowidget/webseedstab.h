@@ -57,7 +57,7 @@ namespace kt
         void saveState(KSharedConfigPtr cfg);
         void loadState(KSharedConfigPtr cfg);
 
-    private slots:
+    private Q_SLOTS:
         void addWebSeed();
         void removeWebSeed();
         void disableAll();

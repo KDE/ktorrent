@@ -46,7 +46,7 @@ namespace kt
         void unload() override;
         bool versionCheck(const QString& version) const override;
 
-    private slots:
+    private Q_SLOTS:
         /**
          * A TorrentInterface was added
          * @param tc

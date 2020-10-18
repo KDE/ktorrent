@@ -30,5 +30,5 @@ void MagnetUrlSchemeHandler::requestStarted(QWebEngineUrlRequestJob *request) {
     request->fail(QWebEngineUrlRequestJob::RequestAborted);
     const QUrl url = request->requestUrl();
 
-    emit magnetUrlDetected(url);
+    Q_EMIT magnetUrlDetected(url);
 }

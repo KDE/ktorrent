@@ -42,7 +42,7 @@ ScanForLostFilesThread::ScanForLostFilesThread(const QString& folder, CoreInterf
 void ScanForLostFilesThread::run()
 {
     if (!m_core) {
-        emit filterReady(nullptr);
+        Q_EMIT filterReady(nullptr);
         return;
     }
 
@@ -93,7 +93,7 @@ void ScanForLostFilesThread::run()
 
     QSet<QString>* filter = new QSet<QString>();
     NodeOperations::printTree(existing_files, *filter);
-    emit filterReady(filter);
+    Q_EMIT filterReady(filter);
 
     NodeOperations::removeNode(torrent_files);
     NodeOperations::removeNode(torrent_folders);

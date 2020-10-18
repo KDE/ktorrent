@@ -52,8 +52,8 @@ namespace kt
 
     void FeedListView::selectionChanged(const QItemSelection& sel, const QItemSelection& desel)
     {
-        Q_UNUSED(desel);
-        Q_UNUSED(sel);
+        Q_UNUSED(desel)
+        Q_UNUSED(sel)
         enableRemove(selectionModel()->selectedRows().count() > 0);
     }
 

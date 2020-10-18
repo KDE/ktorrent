@@ -81,7 +81,7 @@ namespace kt
         void updateSettings() override;
         bool hasChanged() override;
 
-    private slots:
+    private Q_SLOTS:
         void calculateRecommendedSettings();
 
     private:

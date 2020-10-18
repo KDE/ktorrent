@@ -41,7 +41,7 @@ namespace kt
         void loadDefaults() override;
         void loadSettings() override;
         void updateSettings() override;
-    private slots:
+    private Q_SLOTS:
         void socksEnabledToggled(bool on);
         void usernamePasswordToggled(bool on);
     };

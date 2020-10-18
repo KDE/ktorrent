@@ -64,13 +64,13 @@ namespace kt
     {
         show();
         search_bar->setFocus();
-        emit filterBarShown(search_bar->text());
+        Q_EMIT filterBarShown(search_bar->text());
     }
 
     void TorrentSearchBar::hideBar()
     {
         hide();
-        emit filterBarHidden(QString());
+        Q_EMIT filterBarHidden(QString());
     }
 
 
@@ -90,7 +90,7 @@ namespace kt
         if (g.readEntry("hidden", true))
         {
             setHidden(true);
-            emit filterBarHidden(QString());
+            Q_EMIT filterBarHidden(QString());
         }
         else
             setHidden(false);

@@ -105,7 +105,7 @@ namespace kt
          */
         void loadPlugins();
 
-    public slots:
+    public Q_SLOTS:
         /**
          * Start the update timer
          */
@@ -166,7 +166,7 @@ namespace kt
         /// Handle the download of meta data
         void onMetadataDownloaded(const bt::MagnetLink& mlink, const QByteArray& data, const kt::MagnetLinkLoadOptions& options);
 
-    signals:
+    Q_SIGNALS:
         /**
         * TorrentCore torrents have beed updated. Stats are changed.
         **/
@@ -242,7 +242,7 @@ namespace kt
     public:
         void loadTorrents();
 
-    private slots:
+    private Q_SLOTS:
         void torrentFinished(bt::TorrentInterface* tc);
         void slotStoppedByError(bt::TorrentInterface* tc, QString msg);
         void torrentSeedAutoStopped(bt::TorrentInterface* tc, bt::AutoStopReason reason);

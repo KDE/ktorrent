@@ -55,7 +55,7 @@ namespace kt
         void saveState(KSharedConfigPtr cfg);
         void loadState(KSharedConfigPtr cfg);
 
-    public slots:
+    public Q_SLOTS:
         void play();
         void play(const MediaFileRef& file);
         void pause();

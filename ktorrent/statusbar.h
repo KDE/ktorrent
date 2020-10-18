@@ -59,7 +59,7 @@ namespace kt
 
         /// Remove a progress bar created with createProgressBar
         void removeProgressBar(QProgressBar* pb) override;
-    public slots:
+    public Q_SLOTS:
         /// Show an information message
         void message(const QString& msg) override;
 

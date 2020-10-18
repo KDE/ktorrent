@@ -146,14 +146,14 @@ namespace kt
 
     QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type)
     {
-        Q_UNUSED(type);
+        Q_UNUSED(type)
         return client->newTab();
     }
 
     void WebView::downloadRequested(QWebEngineDownloadItem *download)
     {
         if(download->mimeType() == QStringLiteral("application/x-bittorrent") || download->url().path().endsWith(QLatin1String(".torrent"))) {
-            emit torrentFileDownloadRequested(download);
+            Q_EMIT torrentFileDownloadRequested(download);
         } else {
             downloadFile(download);
         }

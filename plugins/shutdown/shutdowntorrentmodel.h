@@ -73,7 +73,7 @@ namespace kt
         */
         void addRule(const ShutdownRule& rule);
 
-    private slots:
+    private Q_SLOTS:
         void torrentAdded(bt::TorrentInterface* tc);
         void torrentRemoved(bt::TorrentInterface* tc);
 

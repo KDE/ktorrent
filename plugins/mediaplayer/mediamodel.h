@@ -76,7 +76,7 @@ namespace kt
 
         MediaFileRef find(const QString& path) override;
 
-    public slots:
+    public Q_SLOTS:
         void onTorrentAdded(bt::TorrentInterface* t);
         void onTorrentRemoved(bt::TorrentInterface* t);
 

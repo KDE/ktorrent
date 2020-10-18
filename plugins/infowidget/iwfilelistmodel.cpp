@@ -262,7 +262,7 @@ namespace kt
             return;
 
         QModelIndex idx = createIndex(file->getIndex(), 4, file);
-        emit dataChanged(idx, idx);
+        Q_EMIT dataChanged(idx, idx);
     }
 
     void IWFileListModel::filePreviewChanged(bt::TorrentFileInterface* file, bool preview)
@@ -272,7 +272,7 @@ namespace kt
             return;
 
         QModelIndex idx = createIndex(file->getIndex(), 3, file);
-        emit dataChanged(idx, idx);
+        Q_EMIT dataChanged(idx, idx);
     }
 
     void IWFileListModel::update()

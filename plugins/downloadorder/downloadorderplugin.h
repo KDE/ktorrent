@@ -54,7 +54,7 @@ namespace kt
         /// Destroy a manager
         void destroyManager(bt::TorrentInterface* tc);
 
-    private slots:
+    private Q_SLOTS:
         void showDownloadOrderDialog();
         void torrentAdded(bt::TorrentInterface* tc);
         void torrentRemoved(bt::TorrentInterface* tc);

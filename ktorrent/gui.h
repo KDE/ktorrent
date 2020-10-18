@@ -82,7 +82,7 @@ namespace kt
         /// load a torrent silently
         void loadSilently(const QUrl& url);
 
-    public slots:
+    public Q_SLOTS:
         /// Update all actions
         void updateActions();
 
@@ -95,7 +95,7 @@ namespace kt
         /// Set the current activity
         void setCurrentActivity(Activity* act) override;
 
-    private slots:
+    private Q_SLOTS:
         void createTorrent();
         void openTorrent(bool silently = false);
         void openTorrentSilently(){openTorrent(true);}

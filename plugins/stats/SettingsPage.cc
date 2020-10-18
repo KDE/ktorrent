@@ -38,7 +38,7 @@ namespace kt
 
     void SettingsPage::updateSettings()
     {
-        emit Applied();
+        Q_EMIT Applied();
     }
 
     void SettingsPage::UpdGuiUpdatesToMs(int)

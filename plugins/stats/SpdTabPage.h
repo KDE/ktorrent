@@ -66,7 +66,7 @@ namespace kt
         ///Destructor
         ~SpdTabPage() override;
 
-    public slots:
+    public Q_SLOTS:
         void applySettings() override;
         void updateAllCharts() override;
         void gatherData(Plugin*) override;

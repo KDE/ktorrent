@@ -49,11 +49,11 @@ namespace kt
         ImportDialog(CoreInterface* core, QWidget* parent = nullptr);
         ~ImportDialog() override;
 
-    public slots:
+    public Q_SLOTS:
         void onImport();
         void onTorrentGetReult(KJob* j);
 
-    private slots:
+    private Q_SLOTS:
         void progress(quint32 num, quint32 total);
         void finished();
         void cancelImport();

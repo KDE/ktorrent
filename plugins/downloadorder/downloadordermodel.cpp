@@ -213,7 +213,7 @@ namespace kt
             order.swapItemsAt(row + i, row + i - 1);
         }
 
-        emit dataChanged(createIndex(row - 1, 0), createIndex(row + count, 0));
+        Q_EMIT dataChanged(createIndex(row - 1, 0), createIndex(row + count, 0));
     }
 
     void DownloadOrderModel::moveTop(int row, int count)
@@ -242,7 +242,7 @@ namespace kt
             order.swapItemsAt(row + i, row + i + 1);
         }
 
-        emit dataChanged(createIndex(row, 0), createIndex(row + count + 1, 0));
+        Q_EMIT dataChanged(createIndex(row, 0), createIndex(row + count + 1, 0));
     }
 
     void DownloadOrderModel::moveBottom(int row, int count)

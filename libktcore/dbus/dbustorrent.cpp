@@ -302,19 +302,19 @@ namespace kt
 
     void DBusTorrent::onFinished(bt::TorrentInterface* tor)
     {
-        Q_UNUSED(tor);
-        emit finished(this);
+        Q_UNUSED(tor)
+        Q_EMIT finished(this);
     }
 
     void DBusTorrent::onStoppedByError(bt::TorrentInterface* tor, const QString& err)
     {
-        Q_UNUSED(tor);
-        emit stoppedByError(this, err);
+        Q_UNUSED(tor)
+        Q_EMIT stoppedByError(this, err);
     }
 
     void DBusTorrent::onSeedingAutoStopped(bt::TorrentInterface* tor, bt::AutoStopReason reason)
     {
-        Q_UNUSED(tor);
+        Q_UNUSED(tor)
         QString msg;
         switch (reason)
         {
@@ -325,19 +325,19 @@ namespace kt
             msg = i18n("Maximum seed time reached.");
             break;
         }
-        emit seedingAutoStopped(this, msg);
+        Q_EMIT seedingAutoStopped(this, msg);
     }
 
     void DBusTorrent::onCorruptedDataFound(bt::TorrentInterface* tor)
     {
-        Q_UNUSED(tor);
-        emit corruptedDataFound(this);
+        Q_UNUSED(tor)
+        Q_EMIT corruptedDataFound(this);
     }
 
     void DBusTorrent::onTorrentStopped(bt::TorrentInterface* tor)
     {
-        Q_UNUSED(tor);
-        //emit torrentStopped(this); //TODO emit string representation of the torrent
+        Q_UNUSED(tor)
+        //Q_EMIT torrentStopped(this); //TODO emit string representation of the torrent
     }
 
     QString DBusTorrent::filePath(uint file_index) const

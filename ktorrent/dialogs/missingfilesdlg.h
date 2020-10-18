@@ -62,7 +62,7 @@ namespace kt
          */
         ReturnCode execute();
 
-    private slots:
+    private Q_SLOTS:
         void dndPressed();
         void recreatePressed();
         void cancelPressed();

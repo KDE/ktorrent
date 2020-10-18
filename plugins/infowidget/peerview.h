@@ -59,7 +59,7 @@ namespace kt
         void saveState(KSharedConfigPtr cfg);
         void loadState(KSharedConfigPtr cfg);
 
-    private slots:
+    private Q_SLOTS:
         void showContextMenu(const QPoint& pos);
         void banPeer();
         void kickPeer();

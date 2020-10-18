@@ -231,7 +231,7 @@ namespace kt
             zero(i);
         }
 
-        emit Zeroed(this);
+        Q_EMIT Zeroed(this);
     }
 
     void KPlotWgtDrawer::setUnitName(const QString& rN)

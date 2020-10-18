@@ -104,7 +104,7 @@ namespace kt
         */
         QModelIndex find(const QString& text);
 
-    public slots:
+    public Q_SLOTS:
         void onTorrentAdded(bt::TorrentInterface* tc);
         void onTorrentRemoved(bt::TorrentInterface* tc);
         void onQueueOrdered();

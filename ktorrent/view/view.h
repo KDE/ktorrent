@@ -107,7 +107,7 @@ namespace kt
 
         void keyPressEvent(QKeyEvent* event) override;
 
-    public slots:
+    public Q_SLOTS:
         /// Set the filter string
         void setFilterString(const QString& filter);
 
@@ -160,7 +160,7 @@ namespace kt
         void addToNewGroup();
 
 
-    signals:
+    Q_SIGNALS:
         void currentTorrentChanged(bt::TorrentInterface* tc);
         void torrentSelectionChanged();
         void editingItem(bool on);

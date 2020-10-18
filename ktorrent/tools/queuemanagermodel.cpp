@@ -74,7 +74,7 @@ namespace kt
 
     void QueueManagerModel::softReset()
     {
-        emit dataChanged(index(0, 0), index(queue.count() - 1, columnCount(QModelIndex()) - 1));
+        Q_EMIT dataChanged(index(0, 0), index(queue.count() - 1, columnCount(QModelIndex()) - 1));
     }
 
 
@@ -181,7 +181,7 @@ namespace kt
             else
             {
                 QModelIndex idx = index(r, 2);
-                emit dataChanged(idx, idx);
+                Q_EMIT dataChanged(idx, idx);
             }
             return;
         }
@@ -520,7 +520,7 @@ namespace kt
                 if (i.stalled_time != -1)
                 {
                     i.stalled_time = -1;
-                    emit dataChanged(createIndex(r, 3), createIndex(r, 3));
+                    Q_EMIT dataChanged(createIndex(r, 3), createIndex(r, 3));
                 }
             }
             else
@@ -534,7 +534,7 @@ namespace kt
                 if (i.stalled_time != stalled_time)
                 {
                     i.stalled_time = stalled_time;
-                    emit dataChanged(createIndex(r, 3), createIndex(r, 3));
+                    Q_EMIT dataChanged(createIndex(r, 3), createIndex(r, 3));
                 }
             }
             r++;

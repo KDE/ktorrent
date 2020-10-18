@@ -63,10 +63,10 @@ namespace kt
         bool removeRows(int row, int count, const QModelIndex& parent) override;
         bool insertRows(int row, int count, const QModelIndex& parent) override;
 
-    private slots:
+    private Q_SLOTS:
         void onPlaying(const MediaFileRef& file);
 
-    signals:
+    Q_SIGNALS:
         void itemsDropped();
 
     private:

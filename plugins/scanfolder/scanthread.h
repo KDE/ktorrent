@@ -79,7 +79,7 @@ namespace kt
         void updateFolders();
         void customEvent(QEvent* ev) override;
 
-    signals:
+    Q_SIGNALS:
         /**
          * Emitted when one or more torrents are found.
          * @param torrents The list of torrents

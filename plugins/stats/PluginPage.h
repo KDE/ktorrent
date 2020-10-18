@@ -53,7 +53,7 @@ namespace kt
         ///Destructor
         ~PluginPage() override;
 
-    public slots:
+    public Q_SLOTS:
         ///Applies settings
         virtual void applySettings() = 0;
         ///Updates all charts

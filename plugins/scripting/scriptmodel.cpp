@@ -296,7 +296,7 @@ namespace kt
             {
                 s->execute();
                 QModelIndex i = index(idx, 0);
-                emit dataChanged(i, i);
+                Q_EMIT dataChanged(i, i);
             }
             idx++;
         }

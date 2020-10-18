@@ -28,7 +28,7 @@ class IPBlockListTest : public QObject
     Q_OBJECT
 private:
 
-private slots:
+private Q_SLOTS:
     void initTestCase()
     {
         bt::InitLog(QStringLiteral("ipblocklisttest.log"), false, true);

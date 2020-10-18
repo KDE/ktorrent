@@ -46,7 +46,7 @@ namespace kt
         /// Time has elapsed during playing, update the bar if necessary
         void timeElapsed(qint64 time);
 
-    private slots:
+    private Q_SLOTS:
         void updateChunkBar();
         void updateBitSet();
 

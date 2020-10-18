@@ -55,7 +55,7 @@ namespace kt
         void totalAmount(KJob::Unit unit, qulonglong amount) override;
         bool similar(Extender* ext) const override;
 
-    private slots:
+    private Q_SLOTS:
         void cancelPressed();
         void finished(KJob* j);
         void closeRequested();

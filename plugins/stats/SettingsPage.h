@@ -53,13 +53,13 @@ namespace kt
         ///Destructor
         ~SettingsPage() override;
 
-    public slots:
+    public Q_SLOTS:
         void updateSettings() override;
 
-    private slots:
+    private Q_SLOTS:
         void UpdGuiUpdatesToMs(int);
 
-    signals:
+    Q_SIGNALS:
         ///Settings has been applied
         void Applied();
 

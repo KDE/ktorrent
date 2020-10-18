@@ -40,7 +40,7 @@ namespace kt
         ScriptingModule(GUIInterface* gui, CoreInterface* core, QObject* parent);
         ~ScriptingModule() override;
 
-    public slots:
+    public Q_SLOTS:
         /// Get the scripts directory
         QString scriptsDir() const;
 

@@ -65,7 +65,7 @@ namespace kt
         /// Override if there are custom widgets outside which have changed
         virtual bool customWidgetsChanged() {return false;}
 
-    signals:
+    Q_SIGNALS:
         /// Emitted when buttons need to be updated
         void updateButtons();
 

@@ -138,7 +138,7 @@ namespace kt
 
         virtual void filePercentageChanged(bt::TorrentFileInterface* file, float percentage);
         virtual void filePreviewChanged(bt::TorrentFileInterface* file, bool preview);
-    signals:
+    Q_SIGNALS:
         /**
          * Emitted whenever one or more items changes check state
          */

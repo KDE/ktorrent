@@ -48,7 +48,7 @@ namespace kt
         /// Is this similar to another extender
         virtual bool similar(Extender* ext) const = 0;
 
-    signals:
+    Q_SIGNALS:
         /// Should be emitted by an extender when it wants to close itself
         void closeRequest(Extender* ext);
 

@@ -52,7 +52,7 @@ namespace kt
         if (idx < 0)
             return;
 
-        emit dataChanged(index(idx, 0), index(idx, 0));
+        Q_EMIT dataChanged(index(idx, 0), index(idx, 0));
     }
 
     void FilterList::saveFilters(const QString& file)
