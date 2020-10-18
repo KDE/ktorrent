@@ -24,9 +24,10 @@
 #include <QMenu>
 
 #include <KActionCollection>
+#include <KIO/CommandLauncherJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
-#include <KRun>
+#include <KIO/OpenUrlJob>
 #include <KSharedConfig>
 #include <KShell>
 
@@ -108,10 +109,14 @@ namespace kt
 
             QUrl url = engines->search(engine, text);
 
-            if (SearchPluginSettings::useDefaultBrowser())
-                new KRun(url, QApplication::activeWindow());
-            else
-                KRun::runCommand(SearchPluginSettings::customBrowser() + QStringLiteral(" ") + KShell::quoteArg(url.toDisplayString()), nullptr);
+            if (SearchPluginSettings::useDefaultBrowser()) {
+                auto *job = new KIO::OpenUrlJob(url, QApplication::activeWindow());
+                job->start();
+            }
+            else {
+                auto *job = new KIO::CommandLauncherJob(SearchPluginSettings::customBrowser() + QStringLiteral(" ") + KShell::quoteArg(url.toDisplayString()), nullptr);
+                job->start();
+            }
         }
         else
         {

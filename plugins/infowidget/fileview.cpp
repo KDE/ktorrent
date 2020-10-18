@@ -34,8 +34,10 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KFileWidget>
+#include <KIO/JobUiDelegate>
+#include <KIO/ApplicationLauncherJob>
+#include <KIO/OpenUrlJob>
 #include <KRecentDirs>
-#include <KRun>
 #include <KSharedConfig>
 
 #include <util/bitset.h>
@@ -285,12 +287,16 @@ namespace kt
 
     void FileView::open()
     {
-        new KRun(QUrl::fromLocalFile(preview_path), 0, true);
+        auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(preview_path));
+        job->start();
     }
 
     void FileView::openWith()
     {
-        KRun::displayOpenWithDialog({QUrl::fromLocalFile(preview_path)}, 0);
+        auto *job = new KIO::ApplicationLauncherJob();
+        job->setUrls({QUrl::fromLocalFile(preview_path)});
+        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+        job->start();
     }
 
 
@@ -493,7 +499,8 @@ namespace kt
             if (!isPreviewAvailable)
                 return;
         }
-        new KRun(QUrl::fromLocalFile(pathToOpen), 0, true);
+        auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(pathToOpen));
+        job->start();
     }
 
     void FileView::saveState(KSharedConfigPtr cfg)
