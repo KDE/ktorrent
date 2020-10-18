@@ -71,7 +71,7 @@ namespace kt
 
         pref = new SearchPrefPage(this, engines, nullptr);
         getGUI()->addPrefPage(pref);
-        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(preferencesUpdated()));
+        connect(getCore(), &CoreInterface::settingsChanged, this, &SearchPlugin::preferencesUpdated);
 
         activity = new SearchActivity(this, nullptr);
         getGUI()->addActivity(activity);
@@ -91,7 +91,7 @@ namespace kt
         getGUI()->removePrefPage(pref);
         delete pref;
         pref = nullptr;
-        disconnect(getCore(), SIGNAL(settingsChanged()), this, SLOT(preferencesUpdated()));
+        connect(getCore(), &CoreInterface::settingsChanged, this, &SearchPlugin::preferencesUpdated);
         delete engines;
         engines = nullptr;
         delete activity;

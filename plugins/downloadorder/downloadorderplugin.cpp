@@ -66,8 +66,8 @@ namespace kt
     {
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
         ta->addViewListener(this);
-        connect(getCore(), SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(torrentAdded(bt::TorrentInterface*)));
-        connect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(torrentRemoved(bt::TorrentInterface*)));
+        connect(getCore(), &CoreInterface::torrentAdded, this, &DownloadOrderPlugin::torrentAdded);
+        connect(getCore(), &CoreInterface::torrentRemoved, this, &DownloadOrderPlugin::torrentRemoved);
         currentTorrentChanged(ta->getCurrentTorrent());
 
         const kt::QueueManager* const qman = getCore()->getQueueManager();
@@ -79,8 +79,8 @@ namespace kt
     {
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
         ta->removeViewListener(this);
-        disconnect(getCore(), SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(torrentAdded(bt::TorrentInterface*)));
-        disconnect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(torrentRemoved(bt::TorrentInterface*)));
+        disconnect(getCore(), &CoreInterface::torrentAdded, this, &DownloadOrderPlugin::torrentAdded);
+        disconnect(getCore(), &CoreInterface::torrentRemoved, this, &DownloadOrderPlugin::torrentRemoved);
         managers.clear();
     }
 
@@ -127,8 +127,7 @@ namespace kt
             DownloadOrderManager* m = createManager(tc);
             m->load();
             m->update();
-            connect(tc, SIGNAL(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)),
-                    m, SLOT(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)));
+            connect(tc, &bt::TorrentInterface::chunkDownloaded, m, &DownloadOrderManager::chunkDownloaded);
         }
     }
 

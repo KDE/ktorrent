@@ -71,7 +71,7 @@ namespace kt
         hsplit = new QSplitter(Qt::Horizontal, vsplit);
 
         group_switcher = new GroupSwitcher(view, core->getGroupManager(), this);
-        connect(core->getQueueManager(), SIGNAL(queueOrdered()), this, SLOT(queueOrdered()));
+        connect(core->getQueueManager(), &QueueManager::queueOrdered, this, &TorrentActivity::queueOrdered);
 
         QVBoxLayout* vlayout = new QVBoxLayout(view_part);
         vlayout->setSpacing(0);

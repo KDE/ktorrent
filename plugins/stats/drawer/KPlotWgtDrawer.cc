@@ -41,7 +41,7 @@ namespace kt
 
         setContextMenuPolicy(Qt::CustomContextMenu);
         MakeCtxMenu();
-        connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
+        connect(this, &KPlotWgtDrawer::customContextMenuRequested, this, &KPlotWgtDrawer::showContextMenu);
 
     }
 
@@ -395,17 +395,19 @@ namespace kt
     void KPlotWgtDrawer::MakeCtxMenu()
     {
 
-        connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")), SIGNAL(triggered(bool)), this, SLOT(renderToImage()));
+        connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")),
+                &QAction::triggered, this, [this](bool) { renderToImage(); });
 
         pmCtxMenu->addSeparator();
 
-        connect(pmCtxMenu->addAction(i18nc("@action:inmenu Recalculate the 0Y axis and then redraw the chart", "Rescale")), SIGNAL(triggered(bool)), this, SLOT(findSetMax()));
+        connect(pmCtxMenu->addAction(i18nc("@action:inmenu Recalculate the 0Y axis and then redraw the chart", "Rescale")),
+                &QAction::triggered, this, [this](bool) { findSetMax(); });
 
         pmCtxMenu->addSeparator();
 
         QAction* rst = pmCtxMenu->addAction(i18nc("@action:inmenu", "Reset"));
 
-        connect(rst, SIGNAL(triggered(bool)), this, SLOT(zeroAll()));
+        connect(rst, &QAction::triggered, this, [this](bool) { zeroAll(); });
     }
 
     void KPlotWgtDrawer::showContextMenu(const QPoint& pos)

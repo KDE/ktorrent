@@ -109,7 +109,7 @@ namespace kt
         vlayout->addWidget(video);
         vlayout->addLayout(hlayout);
 
-        connect(player->media0bject(), SIGNAL(tick(qint64)), this, SLOT(timerTick(qint64)));
+        connect(player->media0bject(), &Phonon::MediaObject::tick, this, &VideoWidget::timerTick);
         connect(player, &MediaPlayer::playing, this, &VideoWidget::playing);
         connect(player, &MediaPlayer::enableActions, this, &VideoWidget::enableActions);
 

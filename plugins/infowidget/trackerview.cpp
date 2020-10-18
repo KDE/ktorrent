@@ -63,8 +63,7 @@ namespace kt
         connect(m_remove_tracker, &QPushButton::clicked, this, &TrackerView::removeClicked);
         connect(m_change_tracker, &QPushButton::clicked, this, &TrackerView::changeClicked);
         connect(m_restore_defaults, &QPushButton::clicked, this, &TrackerView::restoreClicked);
-        connect(m_tracker_list->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-                this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
+        connect(m_tracker_list->selectionModel(), &QItemSelectionModel::currentChanged, this, &TrackerView::currentChanged);
         connect(m_scrape, &QPushButton::clicked, this, &TrackerView::scrapeClicked);
 
         m_add_tracker->setIcon(QIcon::fromTheme(QLatin1String("list-add")));

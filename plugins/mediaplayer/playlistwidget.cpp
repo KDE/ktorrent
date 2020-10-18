@@ -86,8 +86,7 @@ namespace kt
         layout->addWidget(view);
         connect(view, &QTreeView::customContextMenuRequested, this, &PlayListWidget::showContextMenu);
 
-        connect(view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection& , const QItemSelection&)),
-                this, SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
+        connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &PlayListWidget::onSelectionChanged);
         connect(view, &QTreeView::doubleClicked, this, qOverload<const QModelIndex&>(&PlayListWidget::doubleClicked));
 
         menu = new QMenu(this);

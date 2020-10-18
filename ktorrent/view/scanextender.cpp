@@ -40,7 +40,7 @@ namespace kt
 
         bt::DataCheckerJob* dcj = (bt::DataCheckerJob*)job;
         setAutomaticRemove(dcj->isAutoImport());
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(finished(KJob*)));
+        connect(job, &bt::Job::result, this, &ScanExtender::finished);
 
         KGuiItem::assign(cancel_button, KStandardGuiItem::cancel());
         KGuiItem::assign(close_button, KStandardGuiItem::close());

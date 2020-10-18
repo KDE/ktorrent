@@ -70,8 +70,7 @@ namespace kt
         connect(core, &Core::lowDiskSpace, this, &TrayIcon::lowDiskSpace);
         connect(core, &Core::canNotLoadSilently, this, &TrayIcon::cannotLoadTorrentSilently);
         connect(core, &Core::dhtNotEnabled, this, &TrayIcon::dhtNotEnabled);
-        connect(core->getQueueManager(), SIGNAL(suspendStateChanged(bool)),
-                this, SLOT(suspendStateChanged(bool)));
+        connect(core->getQueueManager(), &QueueManager::suspendStateChanged, this, &TrayIcon::suspendStateChanged);
 
         suspendStateChanged(core->getQueueManager()->getSuspendedState());
     }

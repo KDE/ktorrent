@@ -79,7 +79,7 @@ namespace kt
         search_engine->setModel(sp->getSearchEngineList());
         sbar->addWidget(search_engine);
 
-        connect(search_text, SIGNAL(returnPressed()), this, SLOT(search()));;
+        connect(search_text, &QLineEdit::returnPressed, this, qOverload<>(&SearchWidget::search));
 
         layout->addWidget(sbar);
         layout->addWidget(webview);

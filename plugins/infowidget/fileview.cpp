@@ -163,8 +163,8 @@ namespace kt
         model->changeTorrent(tc);
         if (tc)
         {
-            connect(tc, SIGNAL(missingFilesMarkedDND(bt::TorrentInterface*)),
-                    this, SLOT(onMissingFileMarkedDND(bt::TorrentInterface*)));
+            connect(tc, &bt::TorrentInterface::missingFilesMarkedDND,
+                    this, &FileView::onMissingFileMarkedDND);
 
             view->setRootIsDecorated(!show_list_of_files && tc->getStats().multi_file_torrent);
             if (!show_list_of_files)

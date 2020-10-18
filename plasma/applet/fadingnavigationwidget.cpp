@@ -64,13 +64,13 @@ void FadingNavigationWidget::initFrame()
     mPrevButton->nativeWidget()->setIcon(QIcon::fromTheme("arrow-left"));
     mPrevButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     mPrevButton->setMaximumSize(IconSize(KIconLoader::MainToolbar), IconSize(KIconLoader::MainToolbar));
-    connect(mPrevButton, SIGNAL(clicked()), this , SIGNAL(prevClicked()));
+    connect(mPrevButton, &Plasma::PushButton::clicked, this , &FadingNavigationWidget::prevClicked);
     l->addItem(mPrevButton);
     mNextButton = new Plasma::PushButton(mFrame);
     mNextButton->nativeWidget()->setIcon(QIcon::fromTheme("arrow-right"));
     mNextButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     mNextButton->setMaximumSize(IconSize(KIconLoader::MainToolbar), IconSize(KIconLoader::MainToolbar));
-    connect(mNextButton, SIGNAL(clicked()), this , SIGNAL(nextClicked()));
+    connect(mNextButton, Plasma::PushButton::clicked, this , &FadingNavigationWidget::nextClicked);
     l->addItem(mNextButton);
     mFrame->setLayout(l);
     mFrame->setFrameShadow(Plasma::Frame::Raised);

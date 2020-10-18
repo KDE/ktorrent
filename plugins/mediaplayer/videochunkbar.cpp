@@ -47,7 +47,7 @@ namespace kt
         {
             bt::TorrentFileStream::Ptr stream = file->stream().toStrongRef();
             if (stream)
-                connect(stream.data(), SIGNAL(readyRead()), this, SLOT(updateChunkBar()));
+                connect(stream.data(), &bt::TorrentFileStream::readyRead, this, &VideoChunkBar::updateChunkBar);
 
             updateBitSet();
             updateChunkBar();

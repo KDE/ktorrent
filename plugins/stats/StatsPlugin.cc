@@ -51,8 +51,8 @@ namespace kt
         getGUI()->addPrefPage(pmUiSett);
         getGUI()->addPrefPage(pmDispSett);
 
-        connect(&pmTmr, SIGNAL(timeout()), dynamic_cast<StatsPlugin*>(this), SLOT(gatherData()));
-        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
+        connect(&pmTmr, &QTimer::timeout, this, &StatsPlugin::gatherData);
+        connect(getCore(), &CoreInterface::settingsChanged, this, &StatsPlugin::settingsChanged);
 
         pmTmr.start(StatsPluginSettings::dataGatherIval());
 
@@ -69,8 +69,8 @@ namespace kt
 
         pmTmr.stop();
 
-        disconnect(&pmTmr);
-        disconnect(getCore());
+        disconnect(&pmTmr, &QTimer::timeout, this, &StatsPlugin::gatherData);
+        disconnect(getCore(), &CoreInterface::settingsChanged, this, &StatsPlugin::settingsChanged);
     }
 
     bool StatsPlugin::versionCheck(const QString& version) const

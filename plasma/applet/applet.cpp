@@ -241,8 +241,8 @@ namespace ktplasma
         updateTorrentCombo(); // must come before addPage for size to be correct
         parent->setButtons(KDialog::Ok | KDialog::Cancel | KDialog::Apply);
         parent->addPage(widget, i18n("Applet"), "ktorrent");
-        connect(parent, SIGNAL(applyClicked()), this, SLOT(configUpdated()));
-        connect(parent, SIGNAL(okClicked()), this, SLOT(configUpdated()));
+        connect(parent, &KConfigDialog::applyClicked, this, &Applet::configUpdated);
+        connect(parent, &KConfigDialog::okClicked, this, &Applet::configUpdated);
     }
 
     void Applet::updateTorrentCombo()

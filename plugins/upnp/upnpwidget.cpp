@@ -63,8 +63,7 @@ namespace kt
 
         m_forward->setEnabled(false);
         m_undo_forward->setEnabled(false);
-        connect(m_devices->selectionModel(), SIGNAL(currentChanged(const QModelIndex& , const QModelIndex&)),
-                this, SLOT(onCurrentDeviceChanged(const QModelIndex&, const QModelIndex&)));
+        connect(m_devices->selectionModel(), &QItemSelectionModel::currentChanged, this, &UPnPWidget::onCurrentDeviceChanged);
     }
 
 
@@ -87,7 +86,7 @@ namespace kt
 
     void UPnPWidget::addDevice(bt::UPnPRouter* r)
     {
-        connect(r, SIGNAL(stateChanged()), this, SLOT(updatePortMappings()));
+        connect(r, &UPnPRouter::stateChanged, this, &UPnPWidget::updatePortMappings);
         model->addRouter(r);
 
         Out(SYS_PNP | LOG_DEBUG) << "Doing port mappings for " << r->getServer() << endl;

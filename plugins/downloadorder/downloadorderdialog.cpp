@@ -76,8 +76,7 @@ namespace kt
         QSize s = KSharedConfig::openConfig()->group("DownloadOrderDialog").readEntry("size", size());
         resize(s);
 
-        connect(m_order->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-                this, SLOT(itemSelectionChanged(QItemSelection, QItemSelection)));
+        connect(m_order->selectionModel(), &QItemSelectionModel::selectionChanged, this, &DownloadOrderDialog::itemSelectionChanged);
         connect(m_custom_order_enabled, &QCheckBox::toggled, this, &DownloadOrderDialog::customOrderEnableToggled);
         connect(m_search_files, &QLineEdit::textChanged, this, &DownloadOrderDialog::search);
 

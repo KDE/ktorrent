@@ -112,8 +112,8 @@ namespace kt
         view->setAutoScroll(true);
         view->setSelectionMode(QAbstractItemView::ContiguousSelection);
 
-        connect(view->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-                this, SLOT(selectionChanged(QItemSelection, QItemSelection)));
+        connect(view->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &QueueManagerWidget::selectionChanged);
 
         updateButtons();
     }

@@ -40,8 +40,6 @@ public:
 
 private:
     StatusBarOfflineIndicatorPrivate *const d;
-
-    Q_PRIVATE_SLOT(d, void _k_networkStatusChanged(bool isOnline))
 };
 
 #endif

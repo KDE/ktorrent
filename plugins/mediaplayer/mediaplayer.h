@@ -79,10 +79,11 @@ namespace kt
         /// Play the previous song
         MediaFileRef prev();
 
+        void streamStateChanged(int state);
+
     private Q_SLOTS:
         void onStateChanged(Phonon::State cur, Phonon::State old);
         void hasVideoChanged(bool hasVideo);
-        void streamStateChanged(int state);
 
     Q_SIGNALS:
         /**

@@ -41,7 +41,7 @@ namespace kt
         read_notifier = new QSocketNotifier(sock, QSocketNotifier::Read, this);
         connect(read_notifier, &QSocketNotifier::activated, this, &HttpClientHandler::readyToRead);
         write_notifier = new QSocketNotifier(sock, QSocketNotifier::Write, this);
-        connect(write_notifier, SIGNAL(activated(int)), this, SLOT(sendOutputBuffer(int)));
+        connect(write_notifier, &QSocketNotifier::activated, this, &HttpClientHandler::sendOutputBuffer);
         write_notifier->setEnabled(false);
         state = WAITING_FOR_REQUEST;
         bytes_read = 0;

@@ -46,8 +46,8 @@ namespace kt
         volume->setOrientation(Qt::Horizontal);
 
 
-        connect(player, SIGNAL(stopped()), this, SLOT(stopped()));
-        connect(player, SIGNAL(playing(MediaFileRef)), this, SLOT(playing(MediaFileRef)));
+        connect(player, &MediaPlayer::stopped, this, &MediaController::stopped);
+        connect(player, &MediaPlayer::playing, this, &MediaController::playing);
 
         play->setDefaultAction(ac->action(QStringLiteral("media_play")));
         play->setAutoRaise(true);

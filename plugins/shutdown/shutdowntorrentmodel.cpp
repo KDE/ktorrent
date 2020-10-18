@@ -39,8 +39,8 @@ namespace kt
             conds.append(cond);
         }
 
-        connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), this, SLOT(torrentAdded(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), this, SLOT(torrentRemoved(bt::TorrentInterface*)));
+        connect(core, &CoreInterface::torrentAdded, this, &ShutdownTorrentModel::torrentAdded);
+        connect(core, &CoreInterface::torrentRemoved, this, &ShutdownTorrentModel::torrentRemoved);
     }
 
     ShutdownTorrentModel::~ShutdownTorrentModel()

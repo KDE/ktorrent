@@ -53,8 +53,8 @@ namespace kt
         m_webseed_list->setSortingEnabled(true);
         m_webseed_list->setUniformRowHeights(true);
 
-        connect(m_webseed_list->selectionModel(), SIGNAL(selectionChanged(const QItemSelection& , const QItemSelection&)),
-                this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
+        connect(m_webseed_list->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, qOverload<const QItemSelection&, const QItemSelection&>(&WebSeedsTab::selectionChanged));
 
         connect(m_webseed, &QLineEdit::textChanged, this, &WebSeedsTab::onWebSeedTextChanged);
     }

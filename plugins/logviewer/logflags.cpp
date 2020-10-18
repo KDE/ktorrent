@@ -40,8 +40,8 @@ namespace kt
     {
         updateFlags();
         LogSystemManager& lsman = LogSystemManager::instance();
-        connect(&lsman, SIGNAL(registered(const QString&)), this, SLOT(registered(const QString&)));
-        connect(&lsman, SIGNAL(unregisted(const QString&)), this, SLOT(unregistered(const QString&)));
+        connect(&lsman, &bt::LogSystemManager::registered, this, &LogFlags::registered);
+        connect(&lsman, &bt::LogSystemManager::unregisted, this, &LogFlags::unregistered);
     }
 
     LogFlags::~LogFlags()

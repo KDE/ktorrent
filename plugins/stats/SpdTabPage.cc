@@ -33,8 +33,8 @@ namespace kt
             pmPeersChtWgt = new PlainChartDrawer(this);
             pmUlChtWgt = new PlainChartDrawer(this);
 
-            connect(dynamic_cast<PlainChartDrawer*>(pmDlChtWgt), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
-            connect(dynamic_cast<PlainChartDrawer*>(pmUlChtWgt), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
+            connect(dynamic_cast<PlainChartDrawer*>(pmDlChtWgt), &PlainChartDrawer::Zeroed, this, &SpdTabPage::resetAvg);
+            connect(dynamic_cast<PlainChartDrawer*>(pmUlChtWgt), &PlainChartDrawer::Zeroed, this, &SpdTabPage::resetAvg);
 
         }
         else if (StatsPluginSettings::widgetType() == 1)
@@ -43,8 +43,8 @@ namespace kt
             pmPeersChtWgt = new KPlotWgtDrawer(this);
             pmUlChtWgt = new KPlotWgtDrawer(this);
 
-            connect(dynamic_cast<KPlotWgtDrawer*>(pmDlChtWgt), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
-            connect(dynamic_cast<KPlotWgtDrawer*>(pmUlChtWgt), SIGNAL(Zeroed(ChartDrawer*)), this, SLOT(resetAvg(ChartDrawer*)));
+            connect(dynamic_cast<KPlotWgtDrawer*>(pmDlChtWgt), &KPlotWgtDrawer::Zeroed, this, &SpdTabPage::resetAvg);
+            connect(dynamic_cast<KPlotWgtDrawer*>(pmUlChtWgt), &KPlotWgtDrawer::Zeroed, this, &SpdTabPage::resetAvg);
         }
 
 

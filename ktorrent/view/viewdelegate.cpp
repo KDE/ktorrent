@@ -95,8 +95,7 @@ namespace kt
 
     ViewDelegate::ViewDelegate(Core* core, ViewModel* model, View* parent): QStyledItemDelegate(parent), model(model)
     {
-        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)),
-                this, SLOT(torrentRemoved(bt::TorrentInterface*)));
+        connect(core, &Core::torrentRemoved, this, &ViewDelegate::torrentRemoved);
     }
 
     ViewDelegate::~ViewDelegate()
@@ -128,8 +127,8 @@ namespace kt
         widget->show();
 
         scheduleUpdateViewLayout();
-        connect(widget, SIGNAL(closeRequest(Extender*)), this, SLOT(closeRequested(Extender*)));
-        connect(widget, SIGNAL(resized(Extender*)), this, SLOT(resized(Extender*)));
+        connect(widget, &Extender::closeRequest, this, &ViewDelegate::closeRequested);
+        connect(widget, &Extender::resized, this, &ViewDelegate::resized);
     }
 
     void ViewDelegate::closeExtenders(bt::TorrentInterface* tc)

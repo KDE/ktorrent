@@ -93,7 +93,7 @@ namespace kt
         connect(this, &View::customContextMenuRequested, this, &View::showMenu);
 
         header()->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(header(), SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showHeaderMenu(const QPoint&)));
+        connect(header(), &QHeaderView::customContextMenuRequested, this, &View::showHeaderMenu);
         header_menu = new QMenu(this);
         header_menu->addSection(i18n("Columns"));
 
@@ -112,10 +112,10 @@ namespace kt
 
         setModel(model);
         setSelectionModel(selection_model);
-        connect(selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-                this, SLOT(onCurrentItemChanged(const QModelIndex&, const QModelIndex&)));
-        connect(selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
-                this, SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection)));
+        connect(selectionModel(), &QItemSelectionModel::currentChanged,
+                this, &View::onCurrentItemChanged);
+        connect(selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &View::onSelectionChanged);
         connect(model, &ViewModel::sorted, selection_model, &ViewSelectionModel::sorted);
         connect(this, &View::doubleClicked, this, &View::onDoubleClicked);
 
@@ -126,9 +126,9 @@ namespace kt
 
         default_state = header()->saveState();
 
-        connect(core->getGroupManager(), SIGNAL(groupAdded(Group*)), this, SLOT(onGroupAdded(Group*)));
-        connect(core->getGroupManager(), SIGNAL(groupRemoved(Group*)), this, SLOT(onGroupRemoved(Group*)));
-        connect(core->getGroupManager(), SIGNAL(groupRenamed(Group*)), this, SLOT(onGroupRenamed(Group*)));
+        connect(core->getGroupManager(), &GroupManager::groupAdded, this, &View::onGroupAdded);
+        connect(core->getGroupManager(), &GroupManager::groupRemoved, this, &View::onGroupRemoved);
+        connect(core->getGroupManager(), &GroupManager::groupRenamed, this, &View::onGroupRenamed);
     }
 
     View::~View()

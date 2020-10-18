@@ -40,7 +40,7 @@ namespace kt
             s->reset();
             setStreamSize(s->size());
             setStreamSeekable(!s->isSequential());
-            connect(s.data(), SIGNAL(readyRead()), this, SLOT(dataReady()));
+            connect(s.data(), &TorrentFileStream::readyRead, this, &MediaFileStream::dataReady);
         }
     }
 

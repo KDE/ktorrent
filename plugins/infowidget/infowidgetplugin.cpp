@@ -71,13 +71,12 @@ namespace kt
     void InfoWidgetPlugin::load()
     {
         LogSystemManager::instance().registerSystem(i18n("Info Widget"), SYS_INW);
-        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(applySettings()));
+        connect(getCore(), &CoreInterface::settingsChanged, this, &InfoWidgetPlugin::applySettings);
 
         status_tab = new StatusTab(nullptr);
         file_view = new FileView(nullptr);
         file_view->loadState(KSharedConfig::openConfig());
-        connect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)),
-                this, SLOT(torrentRemoved(bt::TorrentInterface*)));
+        connect(getCore(), &CoreInterface::torrentRemoved, this, &InfoWidgetPlugin::torrentRemoved);
 
         pref = new IWPrefPage(nullptr);
         TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
@@ -96,9 +95,8 @@ namespace kt
     void InfoWidgetPlugin::unload()
     {
         LogSystemManager::instance().unregisterSystem(i18n("Bandwidth Scheduler"));
-        disconnect(getCore(), SIGNAL(settingsChanged()), this, SLOT(applySettings()));
-        disconnect(getCore(), SIGNAL(torrentRemoved(bt::TorrentInterface*)),
-                   this, SLOT(torrentRemoved(bt::TorrentInterface*)));
+        disconnect(getCore(), &CoreInterface::settingsChanged, this, &InfoWidgetPlugin::applySettings);
+        disconnect(getCore(), &CoreInterface::torrentRemoved, this, &InfoWidgetPlugin::torrentRemoved);
         if (cd_view)
             cd_view->saveState(KSharedConfig::openConfig());
         if (peer_view)

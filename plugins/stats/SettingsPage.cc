@@ -27,7 +27,7 @@ namespace kt
         PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Statistics"), QStringLiteral("view-statistics"), p)
     {
         setupUi(this);
-        connect(kcfg_UpdateEveryGuiUpdates, SIGNAL(valueChanged(int)), this, SLOT(UpdGuiUpdatesToMs(int)));
+        connect(kcfg_UpdateEveryGuiUpdates, qOverload<int>(&QSpinBox::valueChanged), this, &SettingsPage::UpdGuiUpdatesToMs);
         UpdGuiUpdatesToMs(0);
     }
 

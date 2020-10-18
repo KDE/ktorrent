@@ -81,7 +81,7 @@ namespace kt
         connect(m_pref, &BWPrefPage::colorsChanged, this, &BWSchedulerPlugin::colorsChanged);
         getGUI()->addPrefPage(m_pref);
 
-        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(colorsChanged()));
+        connect(getCore(), &CoreInterface::settingsChanged, this, &BWSchedulerPlugin::colorsChanged);
 
         try
         {
@@ -100,7 +100,7 @@ namespace kt
         m_editor->setSchedule(m_schedule);
 
         // make sure that schedule gets applied again if the settings change
-        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(timerTriggered()));
+        connect(getCore(), &CoreInterface::settingsChanged, this, &BWSchedulerPlugin::timerTriggered);
         timerTriggered();
     }
 
@@ -108,6 +108,8 @@ namespace kt
     {
         setNormalLimits();
         LogSystemManager::instance().unregisterSystem(i18n("Bandwidth Scheduler"));
+        disconnect(getCore(), &CoreInterface::settingsChanged, this, &BWSchedulerPlugin::colorsChanged);
+        disconnect(getCore(), &CoreInterface::settingsChanged, this, &BWSchedulerPlugin::timerTriggered);
         m_timer.stop();
 
         getGUI()->removeActivity(m_editor);

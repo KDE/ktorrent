@@ -65,7 +65,7 @@ namespace kt
         connect(scanner, &ScanThread::found, tlq, qOverload<const QList<QUrl>&>(&TorrentLoadQueue::add), Qt::QueuedConnection);
         pref = new ScanFolderPrefPage(this, nullptr);
         getGUI()->addPrefPage(pref);
-        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(updateScanFolders()));
+        connect(getCore(), &CoreInterface::settingsChanged, this, &ScanFolderPlugin::updateScanFolders);
         scanner->start(QThread::IdlePriority);
         updateScanFolders();
     }
@@ -73,6 +73,7 @@ namespace kt
     void ScanFolderPlugin::unload()
     {
         LogSystemManager::instance().unregisterSystem(i18nc("plugin name", "Scan Folder"));
+        disconnect(getCore(), &CoreInterface::settingsChanged, this, &ScanFolderPlugin::updateScanFolders);
         getGUI()->removePrefPage(pref);
         scanner->stop();
         delete scanner;

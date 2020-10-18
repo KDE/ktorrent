@@ -58,7 +58,7 @@ namespace kt
 
     void LogViewerPlugin::load()
     {
-        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(applySettings()));
+        connect(getCore(), &CoreInterface::settingsChanged, this, &LogViewerPlugin::applySettings);
         flags = new LogFlags();
         lv = new LogViewer(flags);
         pref = new LogPrefPage(flags, nullptr);
@@ -73,7 +73,7 @@ namespace kt
     void LogViewerPlugin::unload()
     {
         pref->saveState();
-        disconnect(getCore(), SIGNAL(settingsChanged()), this, SLOT(applySettings()));
+        disconnect(getCore(), &CoreInterface::settingsChanged, this, &LogViewerPlugin::applySettings);
         getGUI()->removePrefPage(pref);
         removeLogViewerFromGUI();
         RemoveLogMonitor(lv);

@@ -42,13 +42,13 @@ namespace kt
         hide_search_bar->setIcon(QIcon::fromTheme(QStringLiteral("window-close")));
         hide_search_bar->setAutoRaise(true);
         connect(hide_search_bar, &QToolButton::clicked, this, &TorrentSearchBar::hideBar);
-        connect(this, SIGNAL(filterBarHidden(QString)), view, SLOT(setFilterString(QString)));
+        connect(this, &TorrentSearchBar::filterBarHidden, view, &View::setFilterString);
 
         search_bar = new QLineEdit(this);
         search_bar->setClearButtonEnabled(true);
         search_bar->setPlaceholderText(i18n("Filter..."));
-        connect(search_bar, SIGNAL(textChanged(QString)), view, SLOT(setFilterString(QString)));
-        connect(this, SIGNAL(filterBarShown(QString)), view, SLOT(setFilterString(QString)));
+        connect(search_bar, &QLineEdit::textChanged, view, &View::setFilterString);
+        connect(this, &TorrentSearchBar::filterBarShown, view, &View::setFilterString);
 
         layout->addWidget(hide_search_bar);
         layout->addWidget(search_bar);

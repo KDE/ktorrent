@@ -67,8 +67,8 @@ namespace kt
         search_text_lineedit->setClearButtonEnabled(true);
         m_search_text->setLineEdit(search_text_lineedit);
 
-        connect(m_search_text->lineEdit(), SIGNAL(returnPressed()), this, SLOT(searchBoxReturn()));
-        connect(m_search_text->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
+        connect(m_search_text->lineEdit(), &QLineEdit::returnPressed, this, &SearchToolBar::searchBoxReturn);
+        connect(m_search_text->lineEdit(), &QLineEdit::textChanged, this, &SearchToolBar::textChanged);
 
         QWidgetAction * search_text_action = new QWidgetAction(this);
         search_text_action->setText(i18n("Search Text"));

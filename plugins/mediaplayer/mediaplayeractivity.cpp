@@ -36,6 +36,7 @@
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/coreinterface.h>
+#include <interfaces/torrentinterface.h>
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
@@ -93,8 +94,8 @@ namespace kt
         //tabs->setTabBarHidden(true);
         tabs->setTabBarAutoHide(true);
 
-        connect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)), media_model, SLOT(onTorrentAdded(bt::TorrentInterface*)));
-        connect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)), media_model, SLOT(onTorrentRemoved(bt::TorrentInterface*)));
+        connect(core, &CoreInterface::torrentAdded, media_model, &MediaModel::onTorrentAdded);
+        connect(core, &CoreInterface::torrentRemoved, media_model, &MediaModel::onTorrentRemoved);
         connect(media_player, &MediaPlayer::enableActions, this, &MediaPlayerActivity::enableActions);
         connect(media_player, &MediaPlayer::openVideo, this, &MediaPlayerActivity::openVideo);
         connect(media_player, &MediaPlayer::closeVideo, this, &MediaPlayerActivity::closeVideo);

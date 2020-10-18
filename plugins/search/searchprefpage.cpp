@@ -64,8 +64,7 @@ namespace kt
         connect(m_add_default, &QPushButton::clicked, this, &SearchPrefPage::addDefaultClicked);
         connect(m_remove_all, &QPushButton::clicked, this, &SearchPrefPage::removeAllClicked);
         connect(m_clear_history, &QPushButton::clicked, this, &SearchPrefPage::clearHistory);
-        connect(m_engines->selectionModel(), SIGNAL(selectionChanged(const QItemSelection& , const QItemSelection&)),
-                this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
+        connect(m_engines->selectionModel(), &QItemSelectionModel::selectionChanged, this, &SearchPrefPage::selectionChanged);
         connect(m_reset_default_action, &QPushButton::clicked, this, &SearchPrefPage::resetDefaultAction);
 
         connect(kcfg_useCustomBrowser, &QRadioButton::toggled, this, &SearchPrefPage::customToggled);

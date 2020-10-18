@@ -67,8 +67,7 @@ namespace kt
         view->setSelectionMode(QAbstractItemView::ExtendedSelection);
         view->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-        connect(view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
-                this, SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection)));
+        connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ScriptManager::onSelectionChanged);
 
         connect(view, &QListView::customContextMenuRequested, this, &ScriptManager::showContextMenu);
 

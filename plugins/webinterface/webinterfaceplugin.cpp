@@ -58,7 +58,7 @@ namespace kt
 
         pref = new WebInterfacePrefWidget(nullptr);
         getGUI()->addPrefPage(pref);
-        connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(preferencesUpdated()));
+        connect(getCore(), &CoreInterface::settingsChanged, this, &WebInterfacePlugin::preferencesUpdated);
     }
 
     void WebInterfacePlugin::unload()
@@ -74,7 +74,7 @@ namespace kt
         getGUI()->removePrefPage(pref);
         delete pref;
         pref = nullptr;
-        disconnect(getCore(), SIGNAL(settingsChanged()), this, SLOT(preferencesUpdated()));
+        disconnect(getCore(), &CoreInterface::settingsChanged, this, &WebInterfacePlugin::preferencesUpdated);
     }
 
     void WebInterfacePlugin::initServer()
