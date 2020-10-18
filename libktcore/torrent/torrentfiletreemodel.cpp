@@ -270,7 +270,7 @@ namespace kt
             {
                 enc->write(n->name.toUtf8());
                 enc->beginDict();
-                n->saveExpandedState(index.child(idx, 0), pm, tv, enc);
+                n->saveExpandedState(pm->index(idx, 0, index), pm, tv, enc);
                 enc->end();
             }
             idx++;
@@ -296,7 +296,7 @@ namespace kt
             if (!n->file)
             {
                 if (BDictNode* d = dict->getDict(n->name.toUtf8()))
-                    n->loadExpandedState(index.child(idx, 0), pm, tv, d);
+                    n->loadExpandedState(pm->index(idx, 0, index), pm, tv, d);
             }
             idx++;
         }
@@ -526,7 +526,7 @@ namespace kt
             for (int i = 0; i < n->children.count(); i++)
             {
                 // recurse down the tree
-                setCheckState(index.child(i, 0), state);
+                setCheckState(this->index(i, 0, index), state);
             }
 
             if (reenable)
@@ -681,7 +681,7 @@ namespace kt
             for (int i = 0; i < n->children.count(); i++)
             {
                 // recurse down the tree
-                invertCheck(idx.child(i, 0));
+                invertCheck(this->index(i, 0, idx));
             }
         }
         else

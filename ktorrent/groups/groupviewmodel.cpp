@@ -220,12 +220,12 @@ namespace kt
     void GroupViewModel::updateGroupCount(const QModelIndex& idx)
     {
         int row = 0;
-        QModelIndex child = idx.child(row, 0);
+        QModelIndex child = this->index(row, 0, idx);
         while (child.isValid())
         {
             updateGroupCount(child);
             row++;
-            child = idx.child(row, 0);
+            child = this->index(row, 0, idx);
         }
 
         dataChanged(idx, idx);
@@ -287,11 +287,11 @@ namespace kt
                 int npos = children.count();
                 model->beginInsertRows(idx, npos, npos);
                 children.append(Item(child_name, this, npos, model));
-                children.last().insert(g, idx.child(npos, 0));
+                children.last().insert(g, model->index(npos, 0, idx));
                 model->endInsertRows();
             }
             else
-                i->insert(g, idx.child(i->row, 0));
+                i->insert(g, model->index(i->row, 0, idx));
         }
     }
 
@@ -321,11 +321,11 @@ namespace kt
                 int npos = children.count();
                 model->beginInsertRows(idx, npos, npos);
                 children.append(Item(child_name, this, npos, model));
-                children.last().insert(name, p, idx.child(npos, 0));
+                children.last().insert(name, p, model->index(npos, 0, idx));
                 model->endInsertRows();
             }
             else
-                i->insert(name, p, idx.child(i->row, 0));
+                i->insert(name, p, model->index(i->row, 0, idx));
         }
     }
 
@@ -350,7 +350,7 @@ namespace kt
             QString child_name = remainder.section(QLatin1Char('/'), 1, 1);
             QList<Item>::iterator i = std::find(children.begin(), children.end(), child_name);
             if (i != children.end())
-                i->remove(g, idx.child(i->row, 0));
+                i->remove(g, model->index(i->row, 0, idx));
         }
     }
 
@@ -396,7 +396,7 @@ namespace kt
         int row = 0;
         for (const Item& child: qAsConst(children))
         {
-            child.expandedGroups(gview, groups, idx.child(row, 0));
+            child.expandedGroups(gview, groups, model->index(row, 0, idx));
             row++;
         }
     }
@@ -412,7 +412,7 @@ namespace kt
         int row = 0;
         for (Item & i : children)
         {
-            i.expandGroups(gview, groups, idx.child(row, 0));
+            i.expandGroups(gview, groups, model->index(row, 0, idx));
             row++;
         }
     }
@@ -425,7 +425,7 @@ namespace kt
         int row = 0;
         for (Item & i : children)
         {
-            QModelIndex ret = i.findGroup(g, idx.child(row, 0));
+            QModelIndex ret = i.findGroup(g, model->index(row, 0, idx));
             row++;
             if (ret.isValid())
                 return ret;

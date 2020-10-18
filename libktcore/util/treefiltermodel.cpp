@@ -40,12 +40,12 @@ namespace kt
             return false;
 
         // if we are in a leaf return filterAcceptsRow
-        if (!idx.child(0, 0).isValid())
+        if (!sourceModel()->hasIndex(0, 0, idx))
             return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 
         // now walk over each child recursively and check if one matches, if so we need to accept this
         int child = 0;
-        while (idx.child(child, 0).isValid())
+        while (sourceModel()->hasIndex(0, 0, idx))
         {
             if (filterAcceptsRow(child, idx))
                 return true;

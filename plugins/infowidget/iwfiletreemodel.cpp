@@ -340,7 +340,7 @@ namespace kt
             for (int i = 0; i < n->children.count(); i++)
             {
                 // recurse down the tree
-                update(idx.child(i, 0), file, col);
+                update(this->index(i, 0, idx), file, col);
             }
         }
     }
