@@ -633,7 +633,7 @@ namespace kt
         if (download_location_history.count())
         {
             QMenu* m = createHistoryMenu(download_location_history,
-                                         SLOT(downloadLocationHistoryTriggered(QAction*)));
+                                         &FileSelectDlg::downloadLocationHistoryTriggered);
             m_download_location_history->setMenu(m);
         }
         else
@@ -643,7 +643,7 @@ namespace kt
         {
             QMenu* m = createHistoryMenu(
                            move_on_completion_location_history,
-                           SLOT(moveOnCompletionLocationHistoryTriggered(QAction*)));
+                           &FileSelectDlg::moveOnCompletionLocationHistoryTriggered);
             m_move_when_completed_history->setMenu(m);
         }
         else
@@ -665,7 +665,7 @@ namespace kt
         g.writeEntry("file_view", m_file_view->header()->saveState());
     }
 
-    QMenu* FileSelectDlg::createHistoryMenu(const QStringList & urls, const char* slot)
+    QMenu* FileSelectDlg::createHistoryMenu(const QStringList & urls, Func slot)
     {
         QMenu* m = new QMenu(this);
         for (const QString& url: urls)
@@ -675,7 +675,7 @@ namespace kt
         }
         m->addSeparator();
         m->addAction(i18n("Clear History"));
-        connect(m, SIGNAL(triggered(QAction*)), this, slot);
+        connect(m, &QMenu::triggered, this, slot);
         return m;
     }
 

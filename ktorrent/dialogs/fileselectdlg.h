@@ -51,6 +51,8 @@ namespace kt
     {
         Q_OBJECT
 
+    typedef void (FileSelectDlg::*Func)(QAction *);
+
     public:
         FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, const QString& group_hint, QWidget* parent);
         ~FileSelectDlg() override;
@@ -85,7 +87,7 @@ namespace kt
         void setFilter(const QString& filter);
         void updateExistingFiles();
         void moveCompletedToggled(bool on);
-        QMenu* createHistoryMenu(const QStringList& urls, const char* slot);
+        QMenu* createHistoryMenu(const QStringList& urls, Func slot);
         void clearDownloadLocationHistory();
         void clearMoveOnCompletionLocationHistory();
         void downloadLocationHistoryTriggered(QAction* act);
