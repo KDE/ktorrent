@@ -24,6 +24,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QNetworkInterface>
+#include <QRandomGenerator>
 #include <QStandardPaths>
 
 #include <KLocalizedString>
@@ -90,7 +91,7 @@ namespace kt
         Uint16 start = 50000;
         while (true)
         {
-            Uint16 port = start + qrand() % 10000;
+            Uint16 port = start + QRandomGenerator::global()->bounded(10000);
             if (port != Settings::port() &&
                     port != Settings::dhtPort() &&
                     port != Settings::udpTrackerPort())

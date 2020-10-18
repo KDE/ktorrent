@@ -24,6 +24,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QHostAddress>
+#include <QRandomGenerator>
 #include <QRegExp>
 #include <QSocketNotifier>
 #include <QStringList>
@@ -580,7 +581,7 @@ namespace kt
 
     static char RandomLetterOrNumber()
     {
-        int i = qrand() % 62;
+        int i = QRandomGenerator::global()->bounded(62);
         if (i < 26)
             return 'a' + i;
         else if (i < 52)

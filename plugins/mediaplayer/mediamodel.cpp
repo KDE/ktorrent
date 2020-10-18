@@ -48,7 +48,6 @@ namespace kt
         {
             onTorrentAdded(tc);
         }
-        qsrand(bt::CurrentTime() / 1000); // initialize random number generator with the current time in seconds
     }
 
 

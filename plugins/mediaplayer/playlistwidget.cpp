@@ -24,6 +24,7 @@
 #include <QFileDialog>
 #include <QHeaderView>
 #include <QIcon>
+#include <QRandomGenerator>
 #include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 
@@ -245,9 +246,9 @@ namespace kt
         if (count <= 1)
             return QModelIndex();
 
-        int r = qrand() % count;
+        int r = QRandomGenerator::global()->bounded(count);
         while (r == idx.row())
-            r = qrand() % count;
+            r = QRandomGenerator::global()->bounded(count);
 
         return proxy_model->index(r, 0, QModelIndex());
     }

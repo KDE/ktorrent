@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QRandomGenerator>
 #include <QTextCodec>
 
 #include <util/log.h>
@@ -33,11 +34,10 @@ namespace kt
 {
     static QString RandomID()
     {
-        Uint8 data[20];
-        qsrand(time(0));
-        for (int i = 0; i < 20; i++)
-            data[i] = qrand();
-        return QStringLiteral("filter:%1").arg(SHA1Hash::generate(data, 20).toString());
+        Uint32 data[5];
+        for (int i = 0; i < 5; i++)
+            data[i] = QRandomGenerator::global()->generate();
+        return QStringLiteral("filter:%1").arg(SHA1Hash::generate(reinterpret_cast<Uint8*>(data), 20).toString());
     }
 
     Filter::Filter()
