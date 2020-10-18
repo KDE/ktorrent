@@ -133,8 +133,8 @@ namespace kt
 
     void QueueManagerModel::onTorrentRemoved(bt::TorrentInterface* tc)
     {
-        disconnect(tc, SIGNAL(statusChanged(bt::TorrentInterface*)),
-                   this, SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
+        disconnect(tc, &bt::TorrentInterface::statusChanged,
+                   this, &QueueManagerModel::onTorrentStatusChanged);
         int r = 0;
         bool found = false;
 

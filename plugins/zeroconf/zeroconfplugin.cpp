@@ -63,10 +63,8 @@ namespace kt
     {
         LogSystemManager::instance().unregisterSystem(i18n("ZeroConf"));
         CoreInterface* core = getCore();
-        disconnect(core, SIGNAL(torrentAdded(bt::TorrentInterface*)),
-                   this, SLOT(torrentAdded(bt::TorrentInterface*)));
-        disconnect(core, SIGNAL(torrentRemoved(bt::TorrentInterface*)),
-                   this, SLOT(torrentRemoved(bt::TorrentInterface*)));
+        disconnect(core, &CoreInterface::torrentAdded, this, &ZeroConfPlugin::torrentAdded);
+        disconnect(core, &CoreInterface::torrentRemoved, this, &ZeroConfPlugin::torrentRemoved);
 
         bt::PtrMap<bt::TorrentInterface*, TorrentService>::iterator i = services.begin();
         while (i != services.end())
