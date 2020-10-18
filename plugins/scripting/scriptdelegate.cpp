@@ -108,8 +108,8 @@ namespace kt
         QFont font = titleFont(option.font);
         QFontMetrics fm(font);
 
-        int w = std::max(fm.width(index.model()->data(index, Qt::DisplayRole).toString()),
-                     option.fontMetrics.width(index.model()->data(index, ScriptModel::CommentRole).toString()));
+        int w = std::max(fm.horizontalAdvance(index.model()->data(index, Qt::DisplayRole).toString()),
+                     option.fontMetrics.horizontalAdvance(index.model()->data(index, ScriptModel::CommentRole).toString()));
         int h = std::max(KIconLoader::SizeMedium + MARGIN * 2, fm.height() + option.fontMetrics.height() + MARGIN * 2);
         return QSize(w + KIconLoader::SizeMedium, h);
     }
