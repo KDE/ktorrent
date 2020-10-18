@@ -72,16 +72,16 @@ namespace kt
         show_search->setCheckable(true);
         connect(show_search, &QAction::toggled, this, &QueueManagerWidget::showSearch);
 
-        move_top = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-top")), i18n("Move Top"), this, SLOT(moveTopClicked()));
+        move_top = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-top")), i18n("Move Top"), this, &QueueManagerWidget::moveTopClicked);
         move_top->setToolTip(i18n("Move a torrent to the top of the queue"));
 
-        move_up = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-up")), i18n("Move Up"), this, SLOT(moveUpClicked()));
+        move_up = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-up")), i18n("Move Up"), this, &QueueManagerWidget::moveUpClicked);
         move_up->setToolTip(i18n("Move a torrent up in the queue"));
 
-        move_down = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-down")), i18n("Move Down"), this, SLOT(moveDownClicked()));
+        move_down = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-down")), i18n("Move Down"), this, &QueueManagerWidget::moveDownClicked);
         move_down->setToolTip(i18n("Move a torrent down in the queue"));
 
-        move_bottom = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-bottom")), i18n("Move Bottom"), this, SLOT(moveBottomClicked()));
+        move_bottom = toolbar->addAction(QIcon::fromTheme(QStringLiteral("go-bottom")), i18n("Move Bottom"), this, &QueueManagerWidget::moveBottomClicked);
         move_bottom->setToolTip(i18n("Move a torrent to the bottom of the queue"));
 
         show_downloads = toolbar->addAction(QIcon::fromTheme(QStringLiteral("arrow-down")), i18n("Show Downloads"));

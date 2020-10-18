@@ -81,9 +81,9 @@ namespace kt
         connect(m_search_files, &QLineEdit::textChanged, this, &DownloadOrderDialog::search);
 
         QMenu* sort_by_menu = new QMenu(m_sort_by);
-        sort_by_menu->addAction(i18n("Name"), model, SLOT(sortByName()));
-        sort_by_menu->addAction(i18n("Seasons and Episodes"), model, SLOT(sortBySeasonsAndEpisodes()));
-        sort_by_menu->addAction(i18n("Album Track Order"), model, SLOT(sortByAlbumTrackOrder()));
+        sort_by_menu->addAction(i18n("Name"), model, &DownloadOrderModel::sortByName);
+        sort_by_menu->addAction(i18n("Seasons and Episodes"), model, &DownloadOrderModel::sortBySeasonsAndEpisodes);
+        sort_by_menu->addAction(i18n("Album Track Order"), model, &DownloadOrderModel::sortByAlbumTrackOrder);
         m_sort_by->setMenu(sort_by_menu);
         m_sort_by->setPopupMode(QToolButton::InstantPopup);
         m_sort_by->setEnabled(false);

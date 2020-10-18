@@ -211,7 +211,7 @@ namespace kt
         }
         else if (cmd.startsWith(QLatin1String("shutdown")))
         {
-            QTimer::singleShot(500, qApp, SLOT(quit()));
+            QTimer::singleShot(500, qApp, &QCoreApplication::quit);
             return true;
         }
 

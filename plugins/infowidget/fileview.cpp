@@ -115,21 +115,21 @@ namespace kt
     void FileView::setupActions()
     {
         context_menu = new QMenu(this);
-        open_action = context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file", "Open"), this, SLOT(open()));
-        open_with_action = context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file with", "Open With"), this, SLOT(openWith()));
-        check_data = context_menu->addAction(QIcon::fromTheme(QStringLiteral("kt-check-data")), i18n("Check File"), this, SLOT(checkFile()));
+        open_action = context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file", "Open"), this, &FileView::open);
+        open_with_action = context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file with", "Open With"), this, &FileView::openWith);
+        check_data = context_menu->addAction(QIcon::fromTheme(QStringLiteral("kt-check-data")), i18n("Check File"), this, &FileView::checkFile);
         context_menu->addSeparator();
-        download_first_action = context_menu->addAction(i18n("Download first"), this, SLOT(downloadFirst()));
-        download_normal_action = context_menu->addAction(i18n("Download normally"), this, SLOT(downloadNormal()));
-        download_last_action = context_menu->addAction(i18n("Download last"), this, SLOT(downloadLast()));
+        download_first_action = context_menu->addAction(i18n("Download first"), this, &FileView::downloadFirst);
+        download_normal_action = context_menu->addAction(i18n("Download normally"), this, &FileView::downloadNormal);
+        download_last_action = context_menu->addAction(i18n("Download last"), this, &FileView::downloadLast);
         context_menu->addSeparator();
-        dnd_action = context_menu->addAction(i18n("Do not download"), this, SLOT(doNotDownload()));
-        delete_action = context_menu->addAction(i18n("Delete File(s)"), this, SLOT(deleteFiles()));
+        dnd_action = context_menu->addAction(i18n("Do not download"), this, &FileView::doNotDownload);
+        delete_action = context_menu->addAction(i18n("Delete File(s)"), this, &FileView::deleteFiles);
         context_menu->addSeparator();
-        move_files_action = context_menu->addAction(i18n("Move File"), this, SLOT(moveFiles()));
+        move_files_action = context_menu->addAction(i18n("Move File"), this, &FileView::moveFiles);
         context_menu->addSeparator();
-        collapse_action = context_menu->addAction(i18n("Collapse Folder Tree"), this, SLOT(collapseTree()));
-        expand_action = context_menu->addAction(i18n("Expand Folder Tree"), this, SLOT(expandTree()));
+        collapse_action = context_menu->addAction(i18n("Collapse Folder Tree"), this, &FileView::collapseTree);
+        expand_action = context_menu->addAction(i18n("Expand Folder Tree"), this, &FileView::expandTree);
 
         QActionGroup* ag = new QActionGroup(this);
         show_tree_action = new QAction(QIcon::fromTheme(QStringLiteral("view-list-tree")), i18n("File Tree"), this);

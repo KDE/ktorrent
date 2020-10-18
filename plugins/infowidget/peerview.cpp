@@ -56,8 +56,8 @@ namespace kt
         setModel(pm);
 
         context_menu = new QMenu(this);
-        context_menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove-user")), i18n("Kick Peer"), this, SLOT(kickPeer()));
-        context_menu->addAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Ban Peer"), this, SLOT(banPeer()));
+        context_menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove-user")), i18n("Kick Peer"), this, &PeerView::kickPeer);
+        context_menu->addAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Ban Peer"), this, &PeerView::banPeer);
         connect(this, &PeerView::customContextMenuRequested, this, &PeerView::showContextMenu);
     }
 

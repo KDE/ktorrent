@@ -46,7 +46,7 @@ namespace kt
         connect(m_cancel, &QPushButton::clicked, this, &ConvertDialog::btnCancelClicked);
         connect(&timer, &QTimer::timeout, this, &ConvertDialog::update);
 
-        QTimer::singleShot(500, this, SLOT(convert()));
+        QTimer::singleShot(500, this, &ConvertDialog::convert);
     }
 
     ConvertDialog::~ConvertDialog()

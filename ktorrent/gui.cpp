@@ -388,27 +388,27 @@ namespace kt
     void GUI::setupActions()
     {
         KActionCollection* ac = actionCollection();
-        QAction * new_action = KStandardAction::openNew(this, SLOT(createTorrent()), ac);
+        QAction * new_action = KStandardAction::openNew(this, &GUI::createTorrent, ac);
         new_action->setToolTip(i18n("Create a new torrent"));
-        QAction * open_action = KStandardAction::open(this, SLOT(openTorrent()), ac);
+        QAction * open_action = KStandardAction::open(this, &GUI::openTorrent, ac);
         open_action->setToolTip(i18n("Open a torrent"));
-        paste_action = KStandardAction::paste(this, SLOT(paste()), ac);
+        paste_action = KStandardAction::paste(this, &GUI::paste, ac);
 
         open_silently_action = new QAction(open_action->icon(), i18n("Open Silently"), this);
         open_silently_action->setToolTip(i18n("Open a torrent without asking any questions"));
         connect(open_silently_action, &QAction::triggered, this, &GUI::openTorrentSilently);
         ac->addAction(QStringLiteral("file_open_silently"), open_silently_action);
 
-        KStandardAction::quit(this, SLOT(quit()), ac);
+        KStandardAction::quit(this, &GUI::quit, ac);
 
-        show_status_bar_action = KStandardAction::showStatusbar(statusBar(), SLOT(setVisible(bool)), ac);
+        show_status_bar_action = KStandardAction::showStatusbar(statusBar(), &GUI::setVisible, ac);
         show_status_bar_action->setIcon(QIcon::fromTheme(QStringLiteral("kt-show-statusbar")));
 
-        show_menu_bar_action = KStandardAction::showMenubar(menuBar(), SLOT(setVisible(bool)), ac);
-        KStandardAction::preferences(this, SLOT(showPrefDialog()), ac);
-        KStandardAction::keyBindings(this, SLOT(configureKeys()), ac);
-        KStandardAction::configureToolbars(this, SLOT(configureToolbars()), ac);
-        KStandardAction::configureNotifications(this, SLOT(configureNotifications()), ac);
+        show_menu_bar_action = KStandardAction::showMenubar(menuBar(), &GUI::setVisible, ac);
+        KStandardAction::preferences(this, &GUI::showPrefDialog, ac);
+        KStandardAction::keyBindings(this, &GUI::configureKeys, ac);
+        KStandardAction::configureToolbars(this, &GUI::configureToolbars, ac);
+        KStandardAction::configureNotifications(this, &GUI::configureNotifications, ac);
 
         paste_url_action = new QAction(QIcon::fromTheme(QStringLiteral("document-open-remote")), i18n("Open URL"), this);
         paste_url_action->setToolTip(i18n("Open a URL which points to a torrent, magnet links are supported"));
@@ -542,7 +542,7 @@ namespace kt
         {
             saveState(KSharedConfig::openConfig());
             timer.stop();
-            QTimer::singleShot(500, qApp, SLOT(quit()));
+            QTimer::singleShot(500, qApp, &QCoreApplication::quit);
             return true;
         }
     }

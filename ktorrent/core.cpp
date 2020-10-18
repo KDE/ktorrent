@@ -703,7 +703,7 @@ namespace kt
 
         gman->torrentsLoaded(qman);
         qman->loadState(KSharedConfig::openConfig());
-        QTimer::singleShot(0, this, SLOT(delayedStart()));
+        QTimer::singleShot(0, this, &Core::delayedStart);
     }
 
     void Core::delayedStart()

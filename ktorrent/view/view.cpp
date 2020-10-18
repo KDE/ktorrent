@@ -138,7 +138,7 @@ namespace kt
 
     void View::setupActions(KActionCollection* ac)
     {
-        KStandardAction::selectAll(this, SLOT(selectAll()), ac);
+        KStandardAction::selectAll(this, &View::selectAll, ac);
 
         start_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18nc("@action Start all selected torrents in the current tab", "Start"), this);
         start_torrent->setToolTip(i18n("Start all selected torrents in the current tab"));

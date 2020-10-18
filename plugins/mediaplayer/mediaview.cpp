@@ -103,7 +103,7 @@ namespace kt
         show_incomplete->setChecked(false);
         connect(show_incomplete, &QAction::toggled, this, &MediaView::showIncompleteChanged);
 
-        refresh = tool_bar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Refresh"), filter, SLOT(refresh()));
+        refresh = tool_bar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Refresh"), filter, &MediaViewFilter::refresh);
         refresh->setToolTip(i18n("Refresh media files"));
 
         search_box = new QLineEdit(this);

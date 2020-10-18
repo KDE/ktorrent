@@ -86,10 +86,10 @@ namespace kt
         connect(search_action, &QAction::triggered, this, qOverload<>(&SearchActivity::search));
         ac->addAction(QStringLiteral("search_tab_search"), search_action);
 
-        find_action = KStandardAction::find(this, SLOT(find()), this);
+        find_action = KStandardAction::find(this, &SearchActivity::find, this);
         ac->addAction(QStringLiteral("search_tab_find"), find_action);
 
-        home_action = KStandardAction::home(this, SLOT(home()), this);
+        home_action = KStandardAction::home(this, &SearchActivity::home, this);
         ac->addAction(QStringLiteral("search_home"), home_action);
     }
 
