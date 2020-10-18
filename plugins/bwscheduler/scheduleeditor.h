@@ -38,6 +38,9 @@ namespace kt
     class ScheduleEditor : public Activity
     {
         Q_OBJECT
+
+    typedef void (ScheduleEditor::*Func)();
+
     public:
         ScheduleEditor(QWidget* parent);
         ~ScheduleEditor() override;
@@ -88,7 +91,7 @@ namespace kt
 
     private:
         void setupActions();
-        QAction* addAction(const QString& icon, const QString& text, const QString& name, QObject* obj, const char* slot);
+        QAction* addAction(const QString& icon, const QString& text, const QString& name, Func slot);
 
     private:
         WeekView* view;

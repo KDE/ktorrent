@@ -73,12 +73,11 @@ namespace kt
     ScheduleEditor::~ScheduleEditor()
     {}
 
-    QAction* ScheduleEditor::addAction(const QString& icon, const QString& text, const QString& name,
-                                       QObject* obj, const char* slot)
+    QAction* ScheduleEditor::addAction(const QString& icon, const QString& text, const QString& name, Func slot)
     {
         KActionCollection* ac = part()->actionCollection();
         QAction * a = new QAction(QIcon::fromTheme(icon), text, this);
-        connect(a, SIGNAL(triggered(bool)), obj, slot);
+        connect(a, &QAction::triggered, [this, slot](bool){ (this->*slot)(); });
         ac->addAction(name, a);
         return a;
     }
@@ -86,12 +85,12 @@ namespace kt
 
     void ScheduleEditor::setupActions()
     {
-        load_action = addAction(QStringLiteral("document-open"), i18n("Load Schedule"), QStringLiteral("schedule_load"), this, SLOT(load()));
-        save_action = addAction(QStringLiteral("document-save"), i18n("Save Schedule"), QStringLiteral("schedule_save"), this, SLOT(save()));
-        new_item_action = addAction(QStringLiteral("list-add"), i18n("New Item"), QStringLiteral("new_schedule_item"), this, SLOT(addItem()));
-        remove_item_action = addAction(QStringLiteral("list-remove"), i18n("Remove Item"), QStringLiteral("remove_schedule_item"), this, SLOT(removeItem()));
-        edit_item_action = addAction(QStringLiteral("edit-select-all"), i18n("Edit Item"), QStringLiteral("edit_schedule_item"), this, SLOT(editItem()));
-        clear_action = addAction(QStringLiteral("edit-clear"), i18n("Clear Schedule"), QStringLiteral("schedule_clear"), this, SLOT(clear()));
+        load_action = addAction(QStringLiteral("document-open"), i18n("Load Schedule"), QStringLiteral("schedule_load"), &ScheduleEditor::load);
+        save_action = addAction(QStringLiteral("document-save"), i18n("Save Schedule"), QStringLiteral("schedule_save"), &ScheduleEditor::save);
+        new_item_action = addAction(QStringLiteral("list-add"), i18n("New Item"), QStringLiteral("new_schedule_item"), &ScheduleEditor::addItem);
+        remove_item_action = addAction(QStringLiteral("list-remove"), i18n("Remove Item"), QStringLiteral("remove_schedule_item"), &ScheduleEditor::removeItem);
+        edit_item_action = addAction(QStringLiteral("edit-select-all"), i18n("Edit Item"), QStringLiteral("edit_schedule_item"), &ScheduleEditor::editItem);
+        clear_action = addAction(QStringLiteral("edit-clear"), i18n("Clear Schedule"), QStringLiteral("schedule_clear"), &ScheduleEditor::clear);
 
         QWidgetAction* act = new QWidgetAction(this);
         enable_schedule = new QCheckBox(i18n("Scheduler Active"), this);
