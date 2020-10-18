@@ -70,14 +70,14 @@ namespace kt
          */
         void saveState(KSharedConfigPtr cfg);
 
-    protected slots:
+    protected Q_SLOTS:
         void reject() override;
         void accept() override;
         void selectAll();
         void selectNone();
         void invertSelection();
         void updateSizeLabels();
-        void onCodecChanged(const QString& text);
+        void onCodecChanged(const int index);
         void groupActivated(int idx);
         void fileTree(bool on);
         void fileList(bool on);
