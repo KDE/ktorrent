@@ -87,7 +87,7 @@ namespace kt
         /// Set the suspended state
         Q_SCRIPTABLE void setSuspended(bool suspend);
 
-        /// Gets the globla suspended state
+        /// Gets the global suspended state
         Q_SCRIPTABLE bool suspended();
 
         /// Order the Queue

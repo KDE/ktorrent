@@ -113,10 +113,10 @@ namespace kt
         void configure();
 
         /// Whether or not the script can be removed
-        bool removeable() const {return can_be_removed;}
+        bool removable() const {return can_be_removed;}
 
-        /// Set the script to be removeable or not
-        void setRemoveable(bool on) {can_be_removed = on;}
+        /// Set the script to be removable or not
+        void setRemovable(bool on) {can_be_removed = on;}
 
     private:
         QString file;

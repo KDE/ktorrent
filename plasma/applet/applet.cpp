@@ -196,7 +196,7 @@ namespace ktplasma
             if (current_source.isEmpty()) // don't override dragged item
                 current_source = config().readEntry("current_source", QString());
             initSource();
-            // addSource will be called for each sorce if reconnected
+            // addSource will be called for each source if reconnected
         }
     }
 

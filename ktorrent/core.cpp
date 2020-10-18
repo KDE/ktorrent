@@ -388,7 +388,7 @@ namespace kt
 
         delete tc;
         tc = 0;
-        // delete tdir if necesarry
+        // delete tdir if necessary
         if (bt::Exists(tdir))
             bt::Delete(tdir, true);
 
@@ -489,7 +489,7 @@ namespace kt
             }
             else if (!Settings::useSaveDir())
             {
-                // incase save dir is not set, use home director
+                // in case save dir is not set, use home director
                 Out(SYS_GEN | LOG_NOTICE) << "Cannot load " << j->url() << " silently, default save location not set !" << endl;
                 Out(SYS_GEN | LOG_NOTICE) << "Using home directory instead !" << endl;
                 dir = QDir::homePath();

@@ -72,7 +72,7 @@ private:
 };
 
 /// This class manage the downloading of magnets.
-/// For this task uses a queue with a determined number of concurrent downloadings.
+/// For this task uses a queue with a determined number of concurrent downloads.
 /// All downloading magnets uses a timer that determines the maximum time
 /// that each magnet can be in the downloading state. If the magnet is not downloaded
 /// within this time, that magnet will be pushed back at the end of the queued list,
@@ -160,7 +160,7 @@ private:
     /// Start the next queued magnets and return the index of the first started magnet
     int startNextQueuedMagnets();
 
-    /// Free the download slot that is occuping the magnet with magnetIdx, updating
+    /// Free the download slot that is occupying the magnet with magnetIdx, updating
     /// the indices of the magnets in all magnets slots to keep it in sync with the magnet
     /// queue indices.
     void freeDownloadSlot(bt::Uint32 magnetIdx);

@@ -48,7 +48,7 @@ namespace kt
         /// Update the speed info of the status bar (speeds are in bytes per sec)
         void updateSpeed(bt::Uint32 up, bt::Uint32 down);
 
-        /// Update the number of bytes tranfered
+        /// Update the number of bytes transferred
         void updateTransfer(bt::Uint64 up, bt::Uint64 down);
 
         /// Update the DHT stats

@@ -309,7 +309,7 @@ namespace kt
         for (const QModelIndex& idx : indices)
         {
             Script* s = scriptForIndex(idx);
-            if (s && s->removeable())
+            if (s && s->removable())
                 to_remove << s;
         }
 

@@ -122,7 +122,7 @@ namespace kt
                     if (s)
                     {
                         // Scripts in the home directory can be deleted
-                        s->setRemoveable(absolute_path.startsWith(kt::DataDir()));
+                        s->setRemovable(absolute_path.startsWith(kt::DataDir()));
                     }
                 }
             }

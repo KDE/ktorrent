@@ -132,7 +132,7 @@ namespace kt
 
     void ScriptManager::updateActions(const QModelIndexList& selected)
     {
-        int num_removeable = 0;
+        int num_removable = 0;
         int num_running = 0;
         int num_not_running = 0;
         for (const QModelIndex& idx: selected)
@@ -144,14 +144,14 @@ namespace kt
                     num_running++;
                 else
                     num_not_running++;
-                if (s->removeable())
-                    num_removeable++;
+                if (s->removable())
+                    num_removable++;
             }
             else
                 num_not_running++;
         }
 
-        remove_script->setEnabled(num_removeable > 0);
+        remove_script->setEnabled(num_removable > 0);
         run_script->setEnabled(selected.count() > 0 && num_not_running > 0);
         stop_script->setEnabled(selected.count() > 0 && num_running > 0);
         Script* s = 0;
