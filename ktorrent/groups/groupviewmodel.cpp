@@ -21,6 +21,8 @@
 #include "groupviewmodel.h"
 #include "groupview.h"
 
+#include <algorithm>
+
 #include <QIcon>
 #include <KLocalizedString>
 
@@ -279,7 +281,7 @@ namespace kt
             else
                 child_name = remainder.section(QLatin1Char('/'), 1, 1);
 
-            QList<Item>::iterator i = qFind(children.begin(), children.end(), child_name);
+            QList<Item>::iterator i = std::find(children.begin(), children.end(), child_name);
             if (i == children.end())
             {
                 int npos = children.count();
@@ -313,7 +315,7 @@ namespace kt
             else
                 child_name = remainder.section(QLatin1Char('/'), 1, 1);
 
-            QList<Item>::iterator i = qFind(children.begin(), children.end(), child_name);
+            QList<Item>::iterator i = std::find(children.begin(), children.end(), child_name);
             if (i == children.end())
             {
                 int npos = children.count();
@@ -337,7 +339,7 @@ namespace kt
         QString remainder = group_path.remove(0, item_path.size());
         if (remainder.count(QLatin1Char('/')) == 1)
         {
-            QList<Item>::iterator i = qFind(children.begin(), children.end(), remainder.mid(1));
+            QList<Item>::iterator i = std::find(children.begin(), children.end(), remainder.mid(1));
             if (i != children.end())
             {
                 model->removeRows(i->row, 1, idx);
@@ -346,7 +348,7 @@ namespace kt
         else
         {
             QString child_name = remainder.section(QLatin1Char('/'), 1, 1);
-            QList<Item>::iterator i = qFind(children.begin(), children.end(), child_name);
+            QList<Item>::iterator i = std::find(children.begin(), children.end(), child_name);
             if (i != children.end())
                 i->remove(g, idx.child(i->row, 0));
         }

@@ -21,6 +21,8 @@
 #include "dbustorrentfilestream.h"
 #include "dbustorrent.h"
 
+#include <algorithm>
+
 #include <QDBusConnection>
 #include <util/sha1hash.h>
 
@@ -68,7 +70,7 @@ namespace kt
         if (!stream || bytesAvailable() == 0)
             return QByteArray();
 
-        qint64 to_read = qMin(maxlen, bytesAvailable());
+        qint64 to_read = std::min(maxlen, bytesAvailable());
         QByteArray ba(to_read, 0);
 
         qint64 ret = stream->read(ba.data(), to_read);

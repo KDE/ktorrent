@@ -19,6 +19,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <cmath>
+
 #include <QFile>
 #include <QTextStream>
 
@@ -93,7 +95,7 @@ namespace kt
         for (Uint32 file: qAsConst(order))
         {
             // skip file if it is complete
-            if (qAbs(100.0f - tor->getTorrentFile(file).getDownloadPercentage()) < 0.01)
+            if (std::fabs(100.0f - tor->getTorrentFile(file).getDownloadPercentage()) < 0.01)
                 continue;
 
             // skip excluded or only seed files
@@ -118,7 +120,7 @@ namespace kt
         if (in_high_priority_file_range || in_normal_priority_file_range)
         {
             // Check if high or normal are complete
-            if (qAbs(100.0f - high_priority_file.getDownloadPercentage()) < 0.01 || qAbs(100.0f - normal_priority_file.getDownloadPercentage()) < 0.01)
+            if (std::fabs(100.0f - high_priority_file.getDownloadPercentage()) < 0.01 || std::fabs(100.0f - normal_priority_file.getDownloadPercentage()) < 0.01)
             {
                 update();
             }

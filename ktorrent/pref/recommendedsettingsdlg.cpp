@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <algorithm>
 #include <cmath>
 
 #include <KFormat>
@@ -113,11 +114,11 @@ namespace kt
         max_upload_speed = floor(upload_rate * 0.8);
         max_download_speed = floor(download_rate * 0.8);
 
-        qreal avg_slot_up = ceil(qMax(pow(upload_rate / 3.5, 0.55), 4.0));
+        qreal avg_slot_up = ceil(std::max(pow(upload_rate / 3.5, 0.55), 4.0));
 
-        Uint32 max_torrents = qRound(pow(upload_rate * 0.25, 0.3));
+        Uint32 max_torrents = std::round(pow(upload_rate * 0.25, 0.3));
         max_downloads = ceil((float)(max_torrents * 2 / 3));
-        max_seeds = qMax(max_torrents - max_downloads, (bt::Uint32)1);
+        max_seeds = std::max(max_torrents - max_downloads, (bt::Uint32)1);
 
         if (m_chk_avg_speed_slot->isChecked())
             avg_slot_up = (qreal)m_avg_speed_slot->value();
@@ -126,7 +127,7 @@ namespace kt
         {
             max_downloads = m_sim_torrents->value();
             max_torrents = floor(max_downloads * 1.33);
-            max_seeds = qMax(max_torrents - max_downloads, (bt::Uint32)1);
+            max_seeds = std::max(max_torrents - max_downloads, (bt::Uint32)1);
         }
 
         max_slots = floor(upload_rate / (max_torrents * avg_slot_up));
@@ -141,9 +142,9 @@ namespace kt
         }
         else if (m_chk_avg_speed_slot->isChecked() && m_chk_slots->isChecked())
         {
-            max_torrents = qRound(max_upload_speed / (avg_slot_up * max_slots));
+            max_torrents = std::round(max_upload_speed / (avg_slot_up * max_slots));
             max_downloads = ceil((float)(max_torrents * 2 / 3));
-            max_seeds = qMax(max_torrents - max_downloads, (bt::Uint32)1);
+            max_seeds = std::max(max_torrents - max_downloads, (bt::Uint32)1);
         }
         else if (m_chk_sim_torrents->isChecked() && m_chk_slots->isChecked())
         {
@@ -151,18 +152,18 @@ namespace kt
         }
         else if (m_chk_slots->isChecked())
         {
-            avg_slot_up = ceil(qMax(pow(max_upload_speed / 3.5, 0.55), 4.0)); // basis to calculate the number of torrents
-            max_torrents = qRound(max_upload_speed / (avg_slot_up * max_slots));
+            avg_slot_up = ceil(std::max(pow(max_upload_speed / 3.5, 0.55), 4.0)); // basis to calculate the number of torrents
+            max_torrents = std::round(max_upload_speed / (avg_slot_up * max_slots));
             max_downloads = ceil((float)(max_torrents * 2 / 3));
-            max_seeds = qMax(max_torrents - max_downloads, (bt::Uint32)1);
+            max_seeds = std::max(max_torrents - max_downloads, (bt::Uint32)1);
             avg_slot_up = ceil((float)(max_upload_speed / (max_slots * max_torrents))); // real number after the slots have been multiplied with the torrents
         }
 
         if (max_downloads == 0)
             max_downloads = 1;
 
-        max_conn_glob = qRound(qMin((double)pow((int)(upload_rate * 8), 0.8) + 50, 900.0));
-        max_conn_tor = qRound(qMin((qreal)(max_conn_glob * 1.2 / max_torrents), (qreal)max_conn_glob));
+        max_conn_glob = std::round(std::min((double)pow((int)(upload_rate * 8), 0.8) + 50, 900.0));
+        max_conn_tor = std::round(std::min((qreal)(max_conn_glob * 1.2 / max_torrents), (qreal)max_conn_glob));
 
         m_max_upload->setText(QStringLiteral("<b>%1</b>").arg(BytesPerSecToString(max_upload_speed * 1024)));
         m_max_download->setText(QStringLiteral("<b>%1</b>").arg(BytesPerSecToString(max_download_speed * 1024)));

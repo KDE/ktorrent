@@ -23,6 +23,8 @@
 #include "core.h"
 #include "view.h"
 
+#include <algorithm>
+
 #include <QApplication>
 #include <QLocale>
 #include <QRect>
@@ -217,7 +219,7 @@ namespace kt
 
             QModelIndex neighborIndex(index.sibling(row, column));
             if (neighborIndex.isValid())
-                item_height = qMax(item_height, QStyledItemDelegate::sizeHint(option, neighborIndex).height());
+                item_height = std::max(item_height, QStyledItemDelegate::sizeHint(option, neighborIndex).height());
         }
 
         //we only want to reserve vertical space, the horizontal extender layout is our private business.

@@ -21,6 +21,8 @@
 
 #include "schedulegraphicsitem.h"
 
+#include <cstdlib>
+
 #include <QPen>
 #include <QBrush>
 #include <QRectF>
@@ -354,14 +356,14 @@ namespace kt
         qreal x = rect().x();
         qreal xe = x + rect().width();
         Uint32 ret = 0;
-        if (qAbs(p.y() - y) < 4)
+        if (std::abs(p.y() - y) < 4)
             ret |= Top;
-        else if (qAbs(p.y() - ye) < 4)
+        else if (std::abs(p.y() - ye) < 4)
             ret |= Bottom;
 
-        if (qAbs(p.x() - x) < 4)
+        if (std::abs(p.x() - x) < 4)
             ret |= Left;
-        else if (qAbs(p.x() - xe) < 4)
+        else if (std::abs(p.x() - xe) < 4)
             ret |= Right;
 
         return ret;

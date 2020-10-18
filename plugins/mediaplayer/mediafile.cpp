@@ -20,6 +20,8 @@
 
 #include "mediafile.h"
 
+#include <cmath>
+
 #include <QFile>
 #include <QMimeDatabase>
 #include <QStringList>
@@ -91,7 +93,7 @@ namespace kt
     {
         if (tc->getStats().multi_file_torrent)
         {
-            return idx < tc->getNumFiles() && qAbs(tc->getTorrentFile(idx).getDownloadPercentage() - 100.0f) < 0.0001f;
+            return idx < tc->getNumFiles() && std::fabs(tc->getTorrentFile(idx).getDownloadPercentage() - 100.0f) < 0.0001f;
         }
         else
         {

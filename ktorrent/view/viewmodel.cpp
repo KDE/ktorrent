@@ -21,6 +21,7 @@
 
 #include "viewmodel.h"
 
+#include <algorithm>
 #include <cmath>
 
 #include <QBrush>
@@ -807,7 +808,7 @@ namespace kt
         sort_column = col;
         sort_order = order;
         emit layoutAboutToBeChanged();
-        qStableSort(torrents.begin(), torrents.end(), ViewModelItemCmp(col, order));
+        std::stable_sort(torrents.begin(), torrents.end(), ViewModelItemCmp(col, order));
         emit layoutChanged();
         emit sorted();
     }

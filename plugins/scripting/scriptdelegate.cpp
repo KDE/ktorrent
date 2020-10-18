@@ -18,6 +18,8 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 ***************************************************************************/
 
+#include <algorithm>
+
 #include <QApplication>
 #include <QPainter>
 #include <QPushButton>
@@ -106,9 +108,9 @@ namespace kt
         QFont font = titleFont(option.font);
         QFontMetrics fm(font);
 
-        int w = qMax(fm.width(index.model()->data(index, Qt::DisplayRole).toString()),
+        int w = std::max(fm.width(index.model()->data(index, Qt::DisplayRole).toString()),
                      option.fontMetrics.width(index.model()->data(index, ScriptModel::CommentRole).toString()));
-        int h = qMax(KIconLoader::SizeMedium + MARGIN * 2, fm.height() + option.fontMetrics.height() + MARGIN * 2);
+        int h = std::max(KIconLoader::SizeMedium + MARGIN * 2, fm.height() + option.fontMetrics.height() + MARGIN * 2);
         return QSize(w + KIconLoader::SizeMedium, h);
     }
 

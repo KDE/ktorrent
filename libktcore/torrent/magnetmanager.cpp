@@ -20,6 +20,9 @@
 
 #include "magnetmanager.h"
 
+#include <algorithm>
+#include <cstdlib>
+
 #include <QFile>
 #include <QTextStream>
 
@@ -291,7 +294,7 @@ void MagnetManager::setDownloadingSlots(bt::Uint32 count)
     }
     else // remove slots
     {
-        int slotsToRemove = qAbs(slotsToAdd);
+        int slotsToRemove = std::abs(slotsToAdd);
 
         // try to remove free slots
         if (!freeDownloadingSlots.isEmpty())
@@ -528,7 +531,7 @@ int MagnetManager::startNextQueuedMagnets()
 
     int firstStartedIdx = usedDownloadingSlots.size();
     int queued = magnetQueue.size() - firstStartedIdx;
-    int magnetsToStart = qMin(freeDownloadingSlots.size(), queued);
+    int magnetsToStart = std::min(freeDownloadingSlots.size(), queued);
 
     int nextIdx = firstStartedIdx;
     while (magnetsToStart > 0)
