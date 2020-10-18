@@ -56,7 +56,7 @@ namespace kt
 
         QTextStream out(&fptr);
         for (Uint32 file: qAsConst(order))
-            out << file << endl;
+            out << file << Qt::endl;
     }
 
     void DownloadOrderManager::load()

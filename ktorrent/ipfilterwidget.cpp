@@ -177,7 +177,7 @@ namespace kt
 
         for (int i = 0; i < filter_list->rowCount(); ++i)
         {
-            out << filter_list->data(filter_list->index(i, 0), Qt::DisplayRole).toString() << ::endl;
+            out << filter_list->data(filter_list->index(i, 0), Qt::DisplayRole).toString() << Qt::endl;
         }
 
         fptr.close();

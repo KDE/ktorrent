@@ -210,7 +210,7 @@ namespace kt
 
         for (int i = 0; i < count; i++)
         {
-            order.swap(row + i, row + i - 1);
+            order.swapItemsAt(row + i, row + i - 1);
         }
 
         emit dataChanged(createIndex(row - 1, 0), createIndex(row + count, 0));
@@ -239,7 +239,7 @@ namespace kt
 
         for (int i = count - 1; i >= 0; i--)
         {
-            order.swap(row + i, row + i + 1);
+            order.swapItemsAt(row + i, row + i + 1);
         }
 
         emit dataChanged(createIndex(row, 0), createIndex(row + count + 1, 0));

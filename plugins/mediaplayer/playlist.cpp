@@ -315,7 +315,7 @@ namespace kt
 
         QTextStream out(&fptr);
         for (const PlayListItem& f : qAsConst(files))
-            out << f.first.path() << endl;
+            out << f.first.path() << Qt::endl;
     }
 
     void PlayList::load(const QString& file)

@@ -165,7 +165,7 @@ namespace kt
         QString path = QFileDialog::getExistingDirectory(this, i18n("Save %1 to"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 
         if (!path.isEmpty()){
-            download->setPath(path);
+            download->setDownloadDirectory(path);
             download->accept();
         }
     }

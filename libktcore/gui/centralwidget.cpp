@@ -83,7 +83,7 @@ namespace kt
         activity_switching_group->addAction(a);
         a->setCheckable(true);
         a->setToolTip(act->toolTip());
-        a->setData(qVariantFromValue<QObject*>(act));
+        a->setData(QVariant::fromValue(act));
         addWidget(act);
         return a;
     }

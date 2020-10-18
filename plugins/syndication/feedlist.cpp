@@ -205,7 +205,7 @@ namespace kt
     Qt::ItemFlags FeedList::flags(const QModelIndex& index) const
     {
         if (!index.isValid())
-            return 0;
+            return {};
 
         return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
     }

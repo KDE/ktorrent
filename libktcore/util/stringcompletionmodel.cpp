@@ -57,7 +57,7 @@ namespace kt
                 strings.insert(line);
         }
 
-        setStringList(strings.toList());
+        setStringList(QList<QString>(strings.begin(), strings.end()));
     }
 
     void StringCompletionModel::save()
@@ -72,7 +72,7 @@ namespace kt
         QTextStream out(&fptr);
         const QStringList sl = stringList();
         for (const QString& s : sl)
-            out << s << endl;
+            out << s << Qt::endl;
     }
 
     void StringCompletionModel::addString(const QString& s)

@@ -333,17 +333,17 @@ namespace kt
         }
 
         QTextStream out(&fptr);
-        out << "OUTPUTDIR=" << data_dir << ::endl;
-        out << "UPLOADED=0" << ::endl;
-        out << "RUNNING_TIME_DL=0" << ::endl;
-        out << "RUNNING_TIME_UL=0" << ::endl;
-        out << "PRIORITY=0" << ::endl;
-        out << "AUTOSTART=1" << ::endl;
+        out << "OUTPUTDIR=" << data_dir << Qt::endl;
+        out << "UPLOADED=0" << Qt::endl;
+        out << "RUNNING_TIME_DL=0" << Qt::endl;
+        out << "RUNNING_TIME_UL=0" << Qt::endl;
+        out << "PRIORITY=0" << Qt::endl;
+        out << "AUTOSTART=1" << Qt::endl;
         if (Settings::maxRatio() > 0)
-            out << QStringLiteral("MAX_RATIO=%1").arg(Settings::maxRatio(), 0, 'f', 2) << ::endl;
-        out << QStringLiteral("IMPORTED=%1").arg(imported) << ::endl;
+            out << QStringLiteral("MAX_RATIO=%1").arg(Settings::maxRatio(), 0, 'f', 2) << Qt::endl;
+        out << QStringLiteral("IMPORTED=%1").arg(imported) << Qt::endl;
         if (custom_output_name)
-            out << "CUSTOM_OUTPUT_NAME=1" << endl;
+            out << "CUSTOM_OUTPUT_NAME=1" << Qt::endl;
     }
 
     Uint64 ImportDialog::calcImportedBytes(const bt::BitSet& chunks, const Torrent& tor)
@@ -401,7 +401,7 @@ namespace kt
         for (Uint32 i = 0; i < num; i++)
         {
             const TorrentFile& tf = tor.getFile(i);
-            out << tf.getPathOnDisk() << ::endl;
+            out << tf.getPathOnDisk() << Qt::endl;
         }
     }
 
@@ -413,7 +413,7 @@ namespace kt
             throw Error(i18n("Failed to create %1: %2", file_map, fptr.errorString()));
 
         QTextStream out(&fptr);
-        out << ddir << ::endl;
+        out << ddir << Qt::endl;
     }
 
 }

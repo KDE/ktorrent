@@ -586,7 +586,7 @@ namespace kt
         if (a < 0 || a >= queue.count() || b < 0 || b >= queue.count())
             return;
 
-        queue.swap(a, b);
+        queue.swapItemsAt(a, b);
     }
 
 

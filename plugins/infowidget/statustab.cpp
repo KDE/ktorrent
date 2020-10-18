@@ -116,7 +116,7 @@ namespace kt
                 text = text.replace(QLatin1Char('\n'), QLatin1Char(' '));
 
             // Make links clickable
-            QStringList words = text.split(QLatin1Char(' '), QString::KeepEmptyParts);
+            QStringList words = text.split(QLatin1Char(' '), Qt::KeepEmptyParts);
             for (QString& w : words)
             {
                 if (w.startsWith(QLatin1String("http://")) || w.startsWith(QLatin1String("https://")) || w.startsWith(QLatin1String("ftp://")))

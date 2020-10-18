@@ -59,7 +59,7 @@ namespace kt
     Qt::ItemFlags TorrentFileModel::flags(const QModelIndex& index) const
     {
         if (!index.isValid())
-            return 0;
+            return {};
 
         Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
         if (tc->getStats().multi_file_torrent)

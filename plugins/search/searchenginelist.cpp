@@ -209,7 +209,7 @@ namespace kt
 
         QString tmp = url;
         tmp = tmp.replace(QLatin1Char('&'), QLatin1String("&amp;"));
-        out << xml_template.arg(kurl.host()).arg(tmp).arg(base) << endl;
+        out << xml_template.arg(kurl.host()).arg(tmp).arg(base) << Qt::endl;
 
         SearchEngine* se = new SearchEngine(dir);
 

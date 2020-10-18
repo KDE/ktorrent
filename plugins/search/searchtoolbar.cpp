@@ -187,7 +187,7 @@ namespace kt
         const QStringList items = comp->items();
         for (const QString& s : items)
         {
-            out << s << endl;
+            out << s << Qt::endl;
         }
     }
 

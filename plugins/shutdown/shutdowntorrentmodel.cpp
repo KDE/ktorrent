@@ -181,7 +181,7 @@ namespace kt
     Qt::ItemFlags ShutdownTorrentModel::flags(const QModelIndex& index) const
     {
         if (!index.isValid() || index.row() < 0 || index.row() >= conds.count())
-            return 0;
+            return {};
 
         Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
         if (index.column() == 0)
