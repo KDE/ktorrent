@@ -52,7 +52,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
 find_package(KF5Torrent 2.2 CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 
-find_package(KF5TextWidgets ${KF5_REQUIRED_VERSION})
+find_package(KF5TextWidgets ${KF5_MIN_VERSION})
 set_package_properties(KF5TextWidgets
   PROPERTIES
   TYPE OPTIONAL
@@ -62,7 +62,7 @@ if(KF5TextWidgets_FOUND)
   set(HAVE_KF5TextWidgets 1)
 endif()
 
-find_package(KF5Archive ${KF5_REQUIRED_VERSION})
+find_package(KF5Archive ${KF5_MIN_VERSION})
 set_package_properties(KF5Archive
   PROPERTIES
   TYPE OPTIONAL
@@ -72,7 +72,7 @@ if(KF5Archive_FOUND)
   set(HAVE_KF5Archive 1)
 endif()
 
-find_package(KF5ItemViews ${KF5_REQUIRED_VERSION})
+find_package(KF5ItemViews ${KF5_MIN_VERSION})
 set_package_properties(KF5ItemViews
   PROPERTIES
   TYPE OPTIONAL
@@ -82,7 +82,7 @@ if(KF5ItemViews_FOUND)
   set(HAVE_KF5ItemViews 1)
 endif()
 
-find_package(KF5Kross ${KF5_REQUIRED_VERSION})
+find_package(KF5Kross ${KF5_MIN_VERSION})
 set_package_properties(KF5Kross
   PROPERTIES
   TYPE OPTIONAL
@@ -92,7 +92,7 @@ if(KF5Kross_FOUND)
   set(HAVE_KF5Kross 1)
 endif()
 
-find_package(KF5Plotting ${KF5_REQUIRED_VERSION})
+find_package(KF5Plotting ${KF5_MIN_VERSION})
 set_package_properties(KF5Plotting
   PROPERTIES
   TYPE OPTIONAL
@@ -102,7 +102,7 @@ if(KF5Plotting_FOUND)
   set(HAVE_KF5Plotting 1)
 endif()
 
-find_package(KF5Syndication)
+find_package(KF5Syndication ${KF5_MIN_VERSION})
 set_package_properties(KF5Syndication
   PROPERTIES
   TYPE OPTIONAL
@@ -122,7 +122,7 @@ if(Qt5WebEngineWidgets_FOUND)
   set(HAVE_Qt5WebEngineWidgets 1)
 endif()
 
-find_package(KF5DNSSD ${KF5_REQUIRED_VERSION})
+find_package(KF5DNSSD ${KF5_MIN_VERSION})
 set_package_properties(KF5DNSSD
   PROPERTIES
   TYPE OPTIONAL
@@ -132,7 +132,7 @@ if(KF5DNSSD_FOUND)
   set(HAVE_KF5DNSSD 1)
 endif()
 
-find_package(KF5Completion ${KF5_REQUIRED_VERSION})
+find_package(KF5Completion ${KF5_MIN_VERSION})
 set_package_properties(KF5Completion
   PROPERTIES
   TYPE OPTIONAL
