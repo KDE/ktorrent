@@ -303,7 +303,7 @@ namespace kt
 
     void HttpServer::setDefaultResponseHeaders(HttpResponseHeader& hdr, const QString& content_type, bool with_session_info)
     {
-        hdr.setValue("Server", "KTorrent/" KT_VERSION_MACRO);
+        hdr.setValue("Server", "KTorrent/" VERSION);
         hdr.setValue("Date", DateTimeToString(QDateTime::currentDateTime().toUTC(), false));
         if (!content_type.isEmpty())
             hdr.setValue("Content-Type", content_type);

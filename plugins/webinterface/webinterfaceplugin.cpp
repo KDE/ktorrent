@@ -123,7 +123,7 @@ namespace kt
 
     bool WebInterfacePlugin::versionCheck(const QString& version) const
     {
-        return version == KT_VERSION_MACRO;
+        return version == QStringLiteral(VERSION);
     }
 }
 

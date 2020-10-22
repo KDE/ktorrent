@@ -116,7 +116,7 @@ int main(int argc, char** argv)
     KCrash::initialize();
 
     QCommandLineParser parser;
-    KAboutData about(QStringLiteral("ktorrent"), i18nc("@title", "KTorrent"), QStringLiteral(KT_VERSION_MACRO), i18n("Bittorrent client by KDE"),
+    KAboutData about(QStringLiteral("ktorrent"), i18nc("@title", "KTorrent"), QStringLiteral(VERSION), i18n("Bittorrent client by KDE"),
                      KAboutLicense::GPL, i18nc("@info:credit", "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"), QString(),
                      QStringLiteral("http://www.kde.org/applications/internet/ktorrent/"));
 

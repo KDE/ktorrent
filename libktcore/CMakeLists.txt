@@ -1,7 +1,6 @@
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-ktcore.h.cmake ${CMAKE_BINARY_DIR}/config-ktcore.h)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_BINARY_DIR})
 
 set(libktorrent_SRC 
 	util/mmapfile.cpp
@@ -69,7 +68,7 @@ target_link_libraries(ktcore PUBLIC
     KF5::XmlGui
 )
 
-target_include_directories(ktcore PUBLIC "$<BUILD_INTERFACE:${KTORRENT_SOURCE_DIR}/libktcore;${KTORRENT_BINARY_DIR}/libktcore;${KTORRENT_BINARY_DIR}>")
+target_include_directories(ktcore PUBLIC "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/libktcore;${KTORRENT_BINARY_DIR}/libktcore;${KTORRENT_BINARY_DIR}>")
 
 set_target_properties(ktcore PROPERTIES VERSION 16.0.0 SOVERSION 16 )
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)

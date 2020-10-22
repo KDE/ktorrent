@@ -124,7 +124,7 @@ namespace kt
             return;
         }
 
-        if (!plugin->versionCheck(QString::fromLatin1(kt::VERSION_STRING)))
+        if (!plugin->versionCheck(QStringLiteral(VERSION)))
         {
             Out(SYS_GEN | LOG_NOTICE) <<
                                       QStringLiteral("Plugin %1 version does not match KTorrent version, unloading it.")

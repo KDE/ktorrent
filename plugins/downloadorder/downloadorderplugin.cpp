@@ -59,7 +59,7 @@ namespace kt
 
     bool DownloadOrderPlugin::versionCheck(const QString& version) const
     {
-        return version == QStringLiteral(KT_VERSION_MACRO);
+        return version == QStringLiteral(VERSION);
     }
 
     void DownloadOrderPlugin::load()

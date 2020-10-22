@@ -18,7 +18,7 @@ target_link_libraries(
     KF5::XmlGui
 )
 
-target_include_directories(ktorrent_magnetgenerator PRIVATE "$<BUILD_INTERFACE:${KTORRENT_SOURCE_DIR}>")
+target_include_directories(ktorrent_magnetgenerator PRIVATE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>")
 
 install(TARGETS ktorrent_magnetgenerator  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_magnetgeneratorui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

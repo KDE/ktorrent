@@ -183,7 +183,7 @@ namespace kt
 
     bool InfoWidgetPlugin::versionCheck(const QString& version) const
     {
-        return version == QStringLiteral(KT_VERSION_MACRO);
+        return version == QStringLiteral(VERSION);
     }
 
     void InfoWidgetPlugin::applySettings()
