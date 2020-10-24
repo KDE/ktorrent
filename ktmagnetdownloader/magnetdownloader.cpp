@@ -38,7 +38,7 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    bt::SetClientInfo(QStringLiteral("ktmagnetdownloader"), bt::MAJOR, bt::MINOR, bt::BETA_ALPHA_RC_RELEASE, bt::BETA, QStringLiteral("KT"));
+    bt::SetClientInfo(QStringLiteral("ktmagnetdownloader"), bt::MAJOR, bt::MINOR, bt::RELEASE, bt::NORMAL, QStringLiteral("KT"));
     bt::InitLog(QStringLiteral("ktmagnetdownload.log"), false, true);
     bt::Log& log = Out();
     log.setOutputToConsole(true);
