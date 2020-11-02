@@ -278,21 +278,6 @@
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_useQHttpAnnounce">
-        <property name="toolTip">
-         <string>Disables the use of KDE's KIO library for tracker announces.
-
-This is experimental and should only be used if you are getting a lot of connection to host broken errors.</string>
-        </property>
-        <property name="text">
-         <string>Do not use KIO for tracker announces</string>
-        </property>
-        <property name="visible">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
                 <widget class="QLabel" name="label_4">

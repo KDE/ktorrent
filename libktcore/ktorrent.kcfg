@@ -313,9 +313,6 @@
 		<entry name="webseedsEnabled" type="Bool">
 			<default>true</default>
 		</entry>
-		<entry name="useQHttpAnnounce" type="Bool">
-			<default>false</default>
-		</entry>
 		<entry name="lookUpHostnameOfPeers" type="Bool">
 			<default>true</default>
 		</entry>

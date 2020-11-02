@@ -701,16 +701,6 @@ namespace kt
         Settings::setWebseedsEnabled(val);
     }
 
-    bool DBusSettings::useQHttpAnnounce()
-    {
-        return Settings::useQHttpAnnounce();
-    }
-
-    void DBusSettings::setUseQHttpAnnounce(bool val)
-    {
-        Settings::setUseQHttpAnnounce(val);
-    }
-
     bool DBusSettings::lookUpHostnameOfPeers()
     {
         return Settings::lookUpHostnameOfPeers();

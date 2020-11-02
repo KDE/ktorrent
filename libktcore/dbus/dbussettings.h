@@ -170,8 +170,6 @@ namespace kt
         Q_SCRIPTABLE void setManuallyControlTorrents(bool val);
         Q_SCRIPTABLE bool webseedsEnabled();
         Q_SCRIPTABLE void setWebseedsEnabled(bool val);
-        Q_SCRIPTABLE bool useQHttpAnnounce();
-        Q_SCRIPTABLE void setUseQHttpAnnounce(bool val);
         Q_SCRIPTABLE bool lookUpHostnameOfPeers();
         Q_SCRIPTABLE void setLookUpHostnameOfPeers(bool val);
         Q_SCRIPTABLE bool utpEnabled();
