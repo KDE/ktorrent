@@ -20,8 +20,8 @@
  ***************************************************************************/
 
 #include <QFileInfo>
-#include <QXmlDefaultHandler>
-#include <QXmlInputSource>
+#include <QStringRef>
+#include <QXmlStreamReader>
 
 #include <KIO/Job>
 
@@ -33,24 +33,24 @@ using namespace bt;
 
 namespace kt
 {
-    class OpenSearchHandler : public QXmlDefaultHandler
+    class OpenSearchHandler
     {
     public:
         OpenSearchHandler(SearchEngine* engine) : engine(engine)
         {
         }
 
-        ~OpenSearchHandler() override
+        ~OpenSearchHandler()
         {
         }
 
-        bool characters(const QString& ch) override
+        bool characters(const QStringRef& ch)
         {
             tmp += ch;
             return true;
         }
 
-        bool startElement(const QString& namespaceURI, const QString& localName, const QString& qName, const QXmlAttributes& atts) override
+        bool startElement(const QStringRef& namespaceURI, const QStringRef& localName, const QStringRef& qName, const QXmlStreamAttributes& atts)
         {
             Q_UNUSED(namespaceURI);
             Q_UNUSED(qName);
@@ -58,16 +58,17 @@ namespace kt
             if (localName == QLatin1String("Url"))
             {
                 if (atts.value(QLatin1String("type")) == QLatin1String("text/html"))
-                    engine->url = atts.value(QLatin1String("template"));
+                    engine->url = atts.value(QLatin1String("template")).toString();
             }
 
             return true;
         }
 
-        bool endElement(const QString& namespaceURI, const QString& localName, const QString& qName) override
+        bool endElement(const QStringRef& namespaceURI, const QStringRef& localName, const QStringRef& qName)
         {
-            Q_UNUSED(namespaceURI);
-            Q_UNUSED(qName);
+            Q_UNUSED(namespaceURI)
+            Q_UNUSED(localName)
+            Q_UNUSED(qName)
 
             if (localName == QLatin1String("ShortName"))
                 engine->name = tmp;
@@ -79,6 +80,44 @@ namespace kt
             return true;
         }
 
+        bool parse(const QByteArray& data)
+        {
+            QXmlStreamReader reader(data);
+
+            while (!reader.atEnd()) {
+                reader.readNext();
+                if (reader.hasError())
+                    return false;
+
+                switch (reader.tokenType()) {
+                case QXmlStreamReader::StartElement:
+                    if (!startElement(reader.namespaceUri(), reader.name(),
+                                      reader.qualifiedName(), reader.attributes())) {
+                        return false;
+                    }
+                    break;
+                case QXmlStreamReader::EndElement:
+                    if (!endElement(reader.namespaceUri(), reader.name(),
+                                    reader.qualifiedName())) {
+                        return false;
+                    }
+                    break;
+                case QXmlStreamReader::Characters:
+                    if (!reader.isWhitespace() && !reader.text().trimmed().isEmpty()) {
+                        if (!characters(reader.text()))
+                            return false;
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+
+            if (!reader.isEndDocument())
+                return false;
+
+            return true;
+        }
 
         SearchEngine* engine;
         QString tmp;
@@ -95,14 +134,15 @@ namespace kt
 
     bool SearchEngine::load(const QString& xml_file)
     {
-        QXmlSimpleReader xml_reader;
         QFile fptr(xml_file);
-        QXmlInputSource source(&fptr);
-        OpenSearchHandler hdlr(this);
-        xml_reader.setErrorHandler(&hdlr);
-        xml_reader.setContentHandler(&hdlr);
+        if (!fptr.open(QIODevice::ReadOnly))
+            return false;
 
-        if (!xml_reader.parse(&source))
+        QByteArray source = fptr.readAll();
+        OpenSearchHandler hdlr(this);
+
+        const bool success = hdlr.parse(source);
+        if (!success)
         {
             Out(SYS_SRC | LOG_NOTICE) << "Failed to parse opensearch description !" << endl;
             return false;
