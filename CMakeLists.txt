@@ -14,6 +14,7 @@ add_definitions(-D'VERSION="${RELEASE_SERVICE_VERSION}"'
 
 set (QT_MIN_VERSION "5.14")
 set (KF5_MIN_VERSION "5.71")
+set (LIBKTORRENT_MIN_VERSION "20.11.70")
 
 find_package(ECM REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/")
@@ -60,7 +61,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     DocTools
 )
 
-find_package(KF5Torrent 2.2 CONFIG REQUIRED)
+find_package(KF5Torrent ${LIBKTORRENT_MIN_VERSION} CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 
 find_package(KF5TextWidgets ${KF5_MIN_VERSION})
