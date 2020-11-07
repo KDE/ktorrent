@@ -43,7 +43,7 @@ namespace kt
     {
         KConfigDialogManager::propertyMap()->insert(QStringLiteral("KUrlRequester"), QByteArrayLiteral("url"));
         setFaceType(KPageDialog::List);
-        connect(this, &PrefDialog::settingsChanged, [&core](const QString &) {core->applySettings();});
+        connect(this, &PrefDialog::settingsChanged, [core](const QString &) {core->applySettings();});
         addPrefPage(new GeneralPref(this));
         net_pref = new NetworkPref(this);
         addPrefPage(net_pref);
