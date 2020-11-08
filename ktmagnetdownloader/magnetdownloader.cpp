@@ -14,8 +14,7 @@ using namespace bt;
 
 int main(int argc, char** argv)
 {
-    if (argc != 2)
-    {
+    if (argc != 2) {
         fprintf(stderr, "Usage: ktmagnetdownloader <magnet-link>\n");
         return 0;
     }
@@ -24,15 +23,13 @@ int main(int argc, char** argv)
     app.setApplicationName(QStringLiteral("KTMagnetDownloader"));
     app.setQuitOnLastWindowClosed(false);
 
-    if (!bt::InitLibKTorrent())
-    {
+    if (!bt::InitLibKTorrent()) {
         fprintf(stderr, "Failed to initialize libktorrent\n");
         return -1;
     }
 
     bt::MagnetLink mlink(QString::fromUtf8(argv[1]));
-    if (!mlink.isValid())
-    {
+    if (!mlink.isValid()) {
         fprintf(stderr, "Invalid magnet link %s\n\n", argv[1]);
         fprintf(stderr, "Usage: ktmagnetdownloader <magnet-link>\n");
         return 0;

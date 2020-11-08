@@ -29,50 +29,53 @@
 
 namespace kt
 {
-    class Feed;
-    class FeedWidgetModel;
-    class FilterList;
-    class SyndicationActivity;
+class Feed;
+class FeedWidgetModel;
+class FilterList;
+class SyndicationActivity;
 
-    /**
-        Displays a Feed
-    */
-    class FeedWidget : public QWidget, public Ui_FeedWidget
+/**
+    Displays a Feed
+*/
+class FeedWidget : public QWidget, public Ui_FeedWidget
+{
+    Q_OBJECT
+public:
+    FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* parent);
+    ~FeedWidget();
+
+    /// Set the Feed to show, can be 0
+    void setFeed(Feed* feed);
+
+    Feed* getFeed()
     {
-        Q_OBJECT
-    public:
-        FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* parent);
-        ~FeedWidget();
+        return feed;
+    }
 
-        /// Set the Feed to show, can be 0
-        void setFeed(Feed* feed);
+    void loadState(KConfigGroup& g);
+    void saveState(KConfigGroup& g);
 
-        Feed* getFeed() {return feed;}
+    void downloadClicked();
+    void refreshClicked();
+    void filtersClicked();
+    void cookiesClicked();
+    void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void updated();
+    void onFeedRenamed(Feed* f);
+    void refreshRateChanged(int v);
+    void resizeColumns();
 
-        void loadState(KConfigGroup& g);
-        void saveState(KConfigGroup& g);
+Q_SIGNALS:
+    void updateCaption(QWidget* w, const QString& text);
 
-        void downloadClicked();
-        void refreshClicked();
-        void filtersClicked();
-        void cookiesClicked();
-        void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-        void updated();
-        void onFeedRenamed(Feed* f);
-        void refreshRateChanged(int v);
-        void resizeColumns();
+private:
+    Feed* feed;
+    FeedWidgetModel* model;
+    FilterList* filters;
+    SyndicationActivity* act;
 
-    Q_SIGNALS:
-        void updateCaption(QWidget* w, const QString& text);
-
-    private:
-        Feed* feed;
-        FeedWidgetModel* model;
-        FilterList* filters;
-        SyndicationActivity* act;
-
-        static QString item_template;
-    };
+    static QString item_template;
+};
 
 }
 

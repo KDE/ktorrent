@@ -92,28 +92,20 @@ const QPixmap& kt::FlagDB::getFlag(const QString& country)
 
     QImage img;
     QPixmap pixmap;
-    for (const FlagDBSource& s: qAsConst(sources))
-    {
+    for (const FlagDBSource& s : qAsConst(sources)) {
         const QString& path = s.getPath(c);
         //e.g.: /usr/share/locale/l10n/ru/flag.png
-        if (QFile::exists(path) && img.load(path))
-        {
-            if (img.width() != preferredWidth || img.height() != preferredHeight)
-            {
+        if (QFile::exists(path) && img.load(path)) {
+            if (img.width() != preferredWidth || img.height() != preferredHeight) {
                 const QImage& imgScaled = img.scaled(preferredWidth, preferredHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-                if (!imgScaled.isNull())
-                {
+                if (!imgScaled.isNull()) {
                     pixmap = QPixmap::fromImage(imgScaled);
                     break;
-                }
-                else if (img.width() <= preferredWidth || img.height() <= preferredHeight)
-                {
+                } else if (img.width() <= preferredWidth || img.height() <= preferredHeight) {
                     pixmap = QPixmap::fromImage(img);
                     break;
                 }
-            }
-            else
-            {
+            } else {
                 pixmap = QPixmap::fromImage(img);
                 break;
             }

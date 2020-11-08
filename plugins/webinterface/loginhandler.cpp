@@ -28,49 +28,45 @@
 namespace kt
 {
 
-    LoginHandler::LoginHandler(HttpServer* server): WebContentGenerator(server, "/login", PUBLIC)
-    {
+LoginHandler::LoginHandler(HttpServer* server): WebContentGenerator(server, "/login", PUBLIC)
+{
+}
+
+
+LoginHandler::~LoginHandler()
+{
+}
+
+
+void LoginHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+{
+    Q_UNUSED(hdr);
+    // we shouldn't get a get request, so redirect to login page
+    server->redirectToLoginPage(hdlr);
+}
+
+void LoginHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+{
+    KUrl url;
+    url.setEncodedPathAndQuery(hdr.path());
+
+    QString page = url.queryItem("page");
+    // there needs to be a page to send back
+    if (page.isEmpty() && WebInterfacePluginSettings::authentication()) {
+        server->redirectToLoginPage(hdlr);
+        return;
     }
 
-
-    LoginHandler::~LoginHandler()
-    {
-    }
-
-
-    void LoginHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
-    {
-        Q_UNUSED(hdr);
-        // we shouldn't get a get request, so redirect to login page
+    if (server->checkLogin(hdr, data)) {
+        // login is OK, so redirect to page
+        HttpResponseHeader rhdr(301);
+        server->setDefaultResponseHeaders(rhdr, "text/html", true);
+        rhdr.setValue("Location", '/' + page);
+        hdlr->send(rhdr, QByteArray());
+    } else {
+        // login failed
         server->redirectToLoginPage(hdlr);
     }
-
-    void LoginHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
-    {
-        KUrl url;
-        url.setEncodedPathAndQuery(hdr.path());
-
-        QString page = url.queryItem("page");
-        // there needs to be a page to send back
-        if (page.isEmpty() && WebInterfacePluginSettings::authentication())
-        {
-            server->redirectToLoginPage(hdlr);
-            return;
-        }
-
-        if (server->checkLogin(hdr, data))
-        {
-            // login is OK, so redirect to page
-            HttpResponseHeader rhdr(301);
-            server->setDefaultResponseHeaders(rhdr, "text/html", true);
-            rhdr.setValue("Location", '/' + page);
-            hdlr->send(rhdr, QByteArray());
-        }
-        else
-        {
-            // login failed
-            server->redirectToLoginPage(hdlr);
-        }
-    }
+}
 
 }

@@ -25,32 +25,32 @@
 
 namespace kt
 {
-    /**
-     * @author Diego R. Brogna
-     */
-    class WebInterfacePrefWidget;
-    class HttpServer;
+/**
+ * @author Diego R. Brogna
+ */
+class WebInterfacePrefWidget;
+class HttpServer;
 
-    class WebInterfacePlugin : public Plugin
-    {
-        Q_OBJECT
-    public:
-        WebInterfacePlugin(QObject* parent, const QStringList& args);
-        ~WebInterfacePlugin();
+class WebInterfacePlugin : public Plugin
+{
+    Q_OBJECT
+public:
+    WebInterfacePlugin(QObject* parent, const QStringList& args);
+    ~WebInterfacePlugin();
 
-        void load() override;
-        void unload() override;
-        bool versionCheck(const QString& version) const override;
+    void load() override;
+    void unload() override;
+    bool versionCheck(const QString& version) const override;
 
-    private slots:
-        void preferencesUpdated();
+private slots:
+    void preferencesUpdated();
 
-    private:
-        void initServer();
+private:
+    void initServer();
 
-        WebInterfacePrefWidget* pref;
-        HttpServer* http_server;
-    };
+    WebInterfacePrefWidget* pref;
+    HttpServer* http_server;
+};
 
 }
 

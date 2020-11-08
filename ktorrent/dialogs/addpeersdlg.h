@@ -28,30 +28,30 @@
 
 namespace bt
 {
-    class TorrentInterface;
+class TorrentInterface;
 }
 
 namespace kt
 {
-    class ManualPeerSource;
+class ManualPeerSource;
 
-    /**
-        Dialog to manually add peers to a torrent
-    */
-    class AddPeersDlg : public QDialog, public Ui_AddPeersDlg
-    {
-        Q_OBJECT
-    public:
-        AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent);
-        ~AddPeersDlg() override;
+/**
+    Dialog to manually add peers to a torrent
+*/
+class AddPeersDlg : public QDialog, public Ui_AddPeersDlg
+{
+    Q_OBJECT
+public:
+    AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent);
+    ~AddPeersDlg() override;
 
-    private Q_SLOTS:
-        void addPressed();
+private Q_SLOTS:
+    void addPressed();
 
-    private:
-        bt::TorrentInterface* tc;
-        ManualPeerSource* mps;
-    };
+private:
+    bt::TorrentInterface* tc;
+    ManualPeerSource* mps;
+};
 
 }
 

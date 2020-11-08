@@ -28,40 +28,46 @@
 
 namespace kt
 {
-    class ConvertDialog;
+class ConvertDialog;
 
-    /**
-     * Thread which does the converting of the text filter file to our own format.
-     * @author Joris Guisson
-    */
-    class ConvertThread : public QThread
+/**
+ * Thread which does the converting of the text filter file to our own format.
+ * @author Joris Guisson
+*/
+class ConvertThread : public QThread
+{
+public:
+    ConvertThread(ConvertDialog* dlg);
+    ~ConvertThread() override;
+
+    void run() override;
+
+    QString getFailureReason() const
     {
-    public:
-        ConvertThread(ConvertDialog* dlg);
-        ~ConvertThread() override;
+        return failure_reason;
+    }
 
-        void run() override;
+    void stop()
+    {
+        abort = true;
+    }
 
-        QString getFailureReason() const {return failure_reason;}
+private:
+    void readInput();
+    void writeOutput();
+    void cleanUp(bool failed);
+    void sort();
+    void merge();
 
-        void stop() {abort = true;}
-
-    private:
-        void readInput();
-        void writeOutput();
-        void cleanUp(bool failed);
-        void sort();
-        void merge();
-
-    private:
-        ConvertDialog* dlg;
-        bool abort;
-        QString txt_file;
-        QString dat_file;
-        QString tmp_file;
-        QList<IPBlock> input;
-        QString failure_reason;
-    };
+private:
+    ConvertDialog* dlg;
+    bool abort;
+    QString txt_file;
+    QString dat_file;
+    QString tmp_file;
+    QList<IPBlock> input;
+    QString failure_reason;
+};
 
 }
 

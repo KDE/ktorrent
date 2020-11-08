@@ -27,15 +27,15 @@
 namespace kt
 {
 
-    class BTPref : public PrefPageInterface, public Ui_BTPref
-    {
-        Q_OBJECT
-    public:
-        BTPref(QWidget* parent);
-        ~BTPref() override;
+class BTPref : public PrefPageInterface, public Ui_BTPref
+{
+    Q_OBJECT
+public:
+    BTPref(QWidget* parent);
+    ~BTPref() override;
 
-        void loadSettings() override;
-    };
+    void loadSettings() override;
+};
 }
 
 #endif // KT_BTPREF_H

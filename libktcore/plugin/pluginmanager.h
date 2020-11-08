@@ -34,61 +34,64 @@
 
 namespace kt
 {
-    class CoreInterface;
-    class GUIInterface;
-    class PluginActivity;
+class CoreInterface;
+class GUIInterface;
+class PluginActivity;
+
+/**
+ * @author Joris Guisson
+ * @brief Class to manage plugins
+ *
+ * This class manages all plugins. Plugins are stored in a map
+ */
+class KTCORE_EXPORT PluginManager
+{
+    KPluginInfo::List plugins;
+    QVector<KPluginMetaData> pluginsMetaData;
+    CoreInterface* core;
+    GUIInterface* gui;
+    PluginActivity* prefpage;
+    bt::PtrMap<int, Plugin> loaded;
+
+public:
+    PluginManager(CoreInterface* core, GUIInterface* gui);
+    ~PluginManager();
+
 
     /**
-     * @author Joris Guisson
-     * @brief Class to manage plugins
-     *
-     * This class manages all plugins. Plugins are stored in a map
+     * Get the plugin info list.
      */
-    class KTCORE_EXPORT PluginManager
+    const KPluginInfo::List& pluginInfoList() const
     {
-        KPluginInfo::List plugins;
-        QVector<KPluginMetaData> pluginsMetaData;
-        CoreInterface* core;
-        GUIInterface* gui;
-        PluginActivity* prefpage;
-        bt::PtrMap<int, Plugin> loaded;
+        return plugins;
+    }
 
-    public:
-        PluginManager(CoreInterface* core, GUIInterface* gui);
-        ~PluginManager();
+    /**
+     * Load the list of plugins.
+     * This basically uses KTrader to get a list of available plugins, and
+     * loads those, but does not initialize them. We will consider a plugin loaded
+     * when it's load method is called.
+     */
+    void loadPluginList();
 
+    /**
+     * Check the PluginInfo of each plugin and unload or load it if necessary
+     */
+    void loadPlugins();
 
-        /**
-         * Get the plugin info list.
-         */
-        const KPluginInfo::List& pluginInfoList() const {return plugins;}
+    /**
+     * Update all plugins who need a periodical GUI update.
+     */
+    void updateGuiPlugins();
 
-        /**
-         * Load the list of plugins.
-         * This basically uses KTrader to get a list of available plugins, and
-         * loads those, but does not initialize them. We will consider a plugin loaded
-         * when it's load method is called.
-         */
-        void loadPluginList();
-
-        /**
-         * Check the PluginInfo of each plugin and unload or load it if necessary
-         */
-        void loadPlugins();
-
-        /**
-         * Update all plugins who need a periodical GUI update.
-         */
-        void updateGuiPlugins();
-
-        /**
-         * Unload all plugins.
-         */
-        void unloadAll();
-    private:
-        void load(const KPluginInfo& pi, int idx);
-        void unload(const KPluginInfo& pi, int idx);
-    };
+    /**
+     * Unload all plugins.
+     */
+    void unloadAll();
+private:
+    void load(const KPluginInfo& pi, int idx);
+    void unload(const KPluginInfo& pi, int idx);
+};
 
 }
 

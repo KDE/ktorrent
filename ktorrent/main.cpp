@@ -69,14 +69,12 @@ bool GrabPIDLock()
     QString pid_file = QDir::tempPath() + QStringLiteral("/.ktorrent_kf5_%1.lock").arg(getuid());
 
     int fd = open(QFile::encodeName(pid_file).data(), O_RDWR | O_CREAT, 0640);
-    if (fd < 0)
-    {
+    if (fd < 0) {
         fprintf(stderr, "Failed to open KT lock file %s : %s\n", pid_file.toLatin1().constData(), strerror(errno));
         return false;
     }
 
-    if (lockf(fd, F_TLOCK, 0) < 0)
-    {
+    if (lockf(fd, F_TLOCK, 0) < 0) {
         fprintf(stderr, "Failed to get lock on %s : %s\n", pid_file.toLatin1().constData(), strerror(errno));
         return false;
     }
@@ -99,8 +97,7 @@ int main(int argc, char** argv)
     signal(SIGXFSZ, SIG_IGN);
 #endif
 
-    if (!bt::InitLibKTorrent())
-    {
+    if (!bt::InitLibKTorrent()) {
         fprintf(stderr, "Failed to initialize libktorrent\n");
         return -1;
     }
@@ -179,8 +176,8 @@ int main(int argc, char** argv)
     KAboutData::setApplicationData(about);
     about.setupCommandLine(&parser);
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("verbose"), i18n("Enable logging to standard output")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("silent"), i18n( "Silently open torrent given on URL")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("+[URL]"), i18n( "Document to open" )));
+    parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("silent"), i18n("Silently open torrent given on URL")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("+[URL]"), i18n("Document to open")));
     parser.process(app);
     about.processCommandLine(&parser);
 
@@ -188,16 +185,14 @@ int main(int argc, char** argv)
 
 #if 0 //ndef Q_WS_WIN
     // need to grab lock after the fork call in start, otherwise this will not work properly
-    if (!GrabPIDLock())
-    {
+    if (!GrabPIDLock()) {
         fprintf(stderr, "ktorrent is already running !\n");
         return 0;
 
     }
 #endif
 
-    try
-    {
+    try {
 #ifndef Q_WS_WIN
         bt::SignalCatcher catcher;
         catcher.catchSignal(SIGINT);
@@ -210,10 +205,8 @@ int main(int argc, char** argv)
 
         kt::GUI widget;
 
-        auto handleCmdLine = [&widget, &parser](const QStringList &arguments, const QString &workingDirectory)
-        {
-            if (!arguments.isEmpty())
-            {
+        auto handleCmdLine = [&widget, &parser](const QStringList & arguments, const QString & workingDirectory) {
+            if (!arguments.isEmpty()) {
                 parser.parse(arguments);
 #if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5,62,0)
                 widget.setAttribute(Qt::WA_NativeWindow, true);
@@ -230,8 +223,7 @@ int main(int argc, char** argv)
             bool silent = parser.isSet(QStringLiteral("silent"));
             auto loadMethod = silent ? &kt::GUI::loadSilently : &kt::GUI::load;
             const auto positionalArguments = parser.positionalArguments();
-            for (const QString& filePath : positionalArguments)
-            {
+            for (const QString& filePath : positionalArguments) {
                 QUrl url = QFile::exists(filePath) ? QUrl::fromLocalFile(filePath) : QUrl(filePath);
                 (widget.*loadMethod)(url);
             }
@@ -244,17 +236,11 @@ int main(int argc, char** argv)
 
         app.setQuitOnLastWindowClosed(false);
         app.exec();
-    }
-    catch (bt::Error& err)
-    {
+    } catch (bt::Error& err) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Uncaught exception: " << err.toString() << endl;
-    }
-    catch (std::exception& err)
-    {
+    } catch (std::exception& err) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Uncaught exception: " << err.what() << endl;
-    }
-    catch (...)
-    {
+    } catch (...) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Uncaught unknown exception " << endl;
     }
     bt::Globals::cleanup();

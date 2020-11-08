@@ -30,25 +30,25 @@
 
 namespace kt
 {
-    class MediaPlayerActivity;
+class MediaPlayerActivity;
 
-    /**
-        @author
-    */
-    class MediaPlayerPlugin : public Plugin
-    {
-        Q_OBJECT
-    public:
-        MediaPlayerPlugin(QObject* parent, const QVariantList& args);
-        ~MediaPlayerPlugin() override;
+/**
+    @author
+*/
+class MediaPlayerPlugin : public Plugin
+{
+    Q_OBJECT
+public:
+    MediaPlayerPlugin(QObject* parent, const QVariantList& args);
+    ~MediaPlayerPlugin() override;
 
-        void load() override;
-        void unload() override;
-        bool versionCheck(const QString& version) const override;
+    void load() override;
+    void unload() override;
+    bool versionCheck(const QString& version) const override;
 
-    private:
-        MediaPlayerActivity* act;
-    };
+private:
+    MediaPlayerActivity* act;
+};
 
 }
 

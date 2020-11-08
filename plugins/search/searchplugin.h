@@ -30,38 +30,47 @@
 
 namespace kt
 {
-    class SearchPrefPage;
-    class SearchActivity;
+class SearchPrefPage;
+class SearchActivity;
 
-    /**
-    @author Joris Guisson
-    */
-    class SearchPlugin : public Plugin
+/**
+@author Joris Guisson
+*/
+class SearchPlugin : public Plugin
+{
+    Q_OBJECT
+public:
+    SearchPlugin(QObject* parent, const QVariantList& args);
+    ~SearchPlugin() override;
+
+    void load() override;
+    void unload() override;
+    bool versionCheck(const QString& version) const override;
+
+    SearchEngineList* getSearchEngineList() const
     {
-        Q_OBJECT
-    public:
-        SearchPlugin(QObject* parent, const QVariantList& args);
-        ~SearchPlugin() override;
+        return engines;
+    }
+    SearchActivity* getSearchActivity() const
+    {
+        return activity;
+    }
+    ProxyHelper* getProxy() const
+    {
+        return proxy;
+    }
 
-        void load() override;
-        void unload() override;
-        bool versionCheck(const QString& version) const override;
+    void search(const QString& text, int engine, bool external);
 
-        SearchEngineList* getSearchEngineList() const {return engines;}
-        SearchActivity* getSearchActivity() const {return activity;}
-        ProxyHelper* getProxy() const {return proxy;}
+private Q_SLOTS:
+    void preferencesUpdated();
 
-        void search(const QString& text, int engine, bool external);
-
-    private Q_SLOTS:
-        void preferencesUpdated();
-
-    private:
-        SearchActivity* activity;
-        SearchPrefPage* pref;
-        SearchEngineList* engines;
-        ProxyHelper* proxy;
-    };
+private:
+    SearchActivity* activity;
+    SearchPrefPage* pref;
+    SearchEngineList* engines;
+    ProxyHelper* proxy;
+};
 
 }
 

@@ -22,11 +22,13 @@
 #include <QWebEngineUrlSchemeHandler>
 #include <QWebEngineUrlRequestJob>
 
-MagnetUrlSchemeHandler::MagnetUrlSchemeHandler(QObject *parent ) : QWebEngineUrlSchemeHandler(parent) {
+MagnetUrlSchemeHandler::MagnetUrlSchemeHandler(QObject *parent) : QWebEngineUrlSchemeHandler(parent)
+{
 
 }
 
-void MagnetUrlSchemeHandler::requestStarted(QWebEngineUrlRequestJob *request) {
+void MagnetUrlSchemeHandler::requestStarted(QWebEngineUrlRequestJob *request)
+{
     request->fail(QWebEngineUrlRequestJob::RequestAborted);
     const QUrl url = request->requestUrl();
 

@@ -27,37 +27,37 @@
 namespace kt
 {
 
-    /**
-        ChunkBar for a video during streaming mode
-     */
-    class VideoChunkBar : public ChunkBar
-    {
-        Q_OBJECT
-    public:
-        VideoChunkBar(const MediaFileRef& mfile, QWidget* parent);
-        ~VideoChunkBar() override;
+/**
+    ChunkBar for a video during streaming mode
+ */
+class VideoChunkBar : public ChunkBar
+{
+    Q_OBJECT
+public:
+    VideoChunkBar(const MediaFileRef& mfile, QWidget* parent);
+    ~VideoChunkBar() override;
 
-        /// Set the media file
-        void setMediaFile(const MediaFileRef& mf);
+    /// Set the media file
+    void setMediaFile(const MediaFileRef& mf);
 
-        /// Get the bitset
-        const bt::BitSet& getBitSet() const override;
+    /// Get the bitset
+    const bt::BitSet& getBitSet() const override;
 
-        /// Time has elapsed during playing, update the bar if necessary
-        void timeElapsed(qint64 time);
+    /// Time has elapsed during playing, update the bar if necessary
+    void timeElapsed(qint64 time);
 
-    private Q_SLOTS:
-        void updateChunkBar();
-        void updateBitSet();
+private Q_SLOTS:
+    void updateChunkBar();
+    void updateBitSet();
 
-    private:
-        void drawBarContents(QPainter* p) override;
+private:
+    void drawBarContents(QPainter* p) override;
 
-    private:
-        MediaFileRef mfile;
-        bt::BitSet bitset;
-        bt::Uint32 current_chunk;
-    };
+private:
+    MediaFileRef mfile;
+    bt::BitSet bitset;
+    bt::Uint32 current_chunk;
+};
 
 }
 

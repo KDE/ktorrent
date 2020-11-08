@@ -22,12 +22,12 @@
 
 namespace kt
 {
-    Extender::Extender(bt::TorrentInterface* tc, QWidget* parent): QWidget(parent), tc(tc)
-    {
-    }
+Extender::Extender(bt::TorrentInterface* tc, QWidget* parent): QWidget(parent), tc(tc)
+{
+}
 
-    Extender::~Extender()
-    {
-    }
+Extender::~Extender()
+{
+}
 }
 

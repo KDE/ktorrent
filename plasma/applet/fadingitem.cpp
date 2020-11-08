@@ -41,8 +41,7 @@ void FadingItem::updatePixmap()
     mParent.fill(Qt::transparent);
     QPainter painter(&mParent);
     parentItem()->paint(&painter, &option, 0);
-    foreach (QGraphicsItem* item, parentItem()->childItems())
-    {
+    foreach (QGraphicsItem* item, parentItem()->childItems()) {
         painter.save();
         painter.translate(item->pos());
         item->paint(&painter, &option, 0);
@@ -82,8 +81,7 @@ void FadingItem::setOpacityValue(qreal opacityValue)
 
 void FadingItem::animationFinished()
 {
-    if (mShowing)
-    {
+    if (mShowing) {
         parentItem()->show();
     }
 
@@ -93,8 +91,7 @@ void FadingItem::animationFinished()
 void FadingItem::showItem()
 {
     QPropertyAnimation* animation = mAnimation.data();
-    if (!animation)
-    {
+    if (!animation) {
         animation = new QPropertyAnimation(this, "opacityValue");
         animation->setDuration(100);
         animation->setEasingCurve(QEasingCurve::InQuad);
@@ -102,9 +99,7 @@ void FadingItem::showItem()
         animation->setEndValue(1.0);
         mAnimation = animation;
         connect(animation, &QPropertyAnimation::finished, this, &FadingItem::animationFinished);
-    }
-    else if (animation->state() == QAbstractAnimation::Running)
-    {
+    } else if (animation->state() == QAbstractAnimation::Running) {
         animation->pause();
     }
 
@@ -120,12 +115,9 @@ void FadingItem::showItem()
 void FadingItem::hideItem()
 {
     QPropertyAnimation* animation = mAnimation.data();
-    if (!animation)
-    {
+    if (!animation) {
         return;
-    }
-    else if (animation->state() == QAbstractAnimation::Running)
-    {
+    } else if (animation->state() == QAbstractAnimation::Running) {
         animation->pause();
     }
 

@@ -29,38 +29,38 @@
 
 namespace bt
 {
-    class TorrentInterface;
+class TorrentInterface;
 }
 
 namespace kt
 {
-    /**
-     * Zeroconf service which publishes a torrent
-     * */
-    class TorrentService : public bt::PeerSource
-    {
-        Q_OBJECT
-    public:
-        TorrentService(bt::TorrentInterface* tc);
-        ~TorrentService() override;
+/**
+ * Zeroconf service which publishes a torrent
+ * */
+class TorrentService : public bt::PeerSource
+{
+    Q_OBJECT
+public:
+    TorrentService(bt::TorrentInterface* tc);
+    ~TorrentService() override;
 
-        void stop(bt::WaitJob* wjob = 0) override;
-        void start() override;
-        void aboutToBeDestroyed() override;
+    void stop(bt::WaitJob* wjob = 0) override;
+    void start() override;
+    void aboutToBeDestroyed() override;
 
-    Q_SIGNALS:
-        void serviceDestroyed(TorrentService* av);
+Q_SIGNALS:
+    void serviceDestroyed(TorrentService* av);
 
-    public Q_SLOTS:
-        void onPublished(bool ok);
-        void onServiceAdded(KDNSSD::RemoteService::Ptr ptr);
-        void hostResolved(net::AddressResolver* ar);
+public Q_SLOTS:
+    void onPublished(bool ok);
+    void onServiceAdded(KDNSSD::RemoteService::Ptr ptr);
+    void hostResolved(net::AddressResolver* ar);
 
-    private:
-        bt::TorrentInterface* tc;
-        KDNSSD::PublicService* srv;
-        KDNSSD::ServiceBrowser* browser;
-    };
+private:
+    bt::TorrentInterface* tc;
+    KDNSSD::PublicService* srv;
+    KDNSSD::ServiceBrowser* browser;
+};
 }
 
 #endif

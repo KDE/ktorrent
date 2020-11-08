@@ -68,11 +68,10 @@ void ScanForLostFilesThread::run()
                 if (tor->getNumFiles()) {
                     QString folderpath = tor->getTorrentFile(0).getPathOnDisk();
                     int idx = folderpath.lastIndexOf(tor->getTorrentFile(0).getUserModifiedPath());
-                    QString out_folder = folderpath.left(idx-1);
+                    QString out_folder = folderpath.left(idx - 1);
                     NodeOperations::makePath(torrent_folders, out_folder, true);
                 }
-            }
-            else
+            } else
                 NodeOperations::makePath(torrent_files, tor->getStats().output_path, false);
 
             it++;

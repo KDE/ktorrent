@@ -37,41 +37,41 @@ using namespace bt;
 namespace kt
 {
 
-    MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
-    {
-        Q_UNUSED(args);
-    }
+MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
+{
+    Q_UNUSED(args);
+}
 
 
-    MediaPlayerPlugin::~MediaPlayerPlugin()
-    {
-    }
+MediaPlayerPlugin::~MediaPlayerPlugin()
+{
+}
 
-    void MediaPlayerPlugin::load()
-    {
-        LogSystemManager::instance().registerSystem(i18n("Media Player"), SYS_MPL);
-        CoreInterface* core = getCore();
-        act = new MediaPlayerActivity(core, actionCollection(), nullptr);
-        getGUI()->addActivity(act);
-        setXMLFile(QStringLiteral("ktorrent_mediaplayerui.rc"));
-        act->enableActions(0);
-        act->loadState(KSharedConfig::openConfig());
-    }
+void MediaPlayerPlugin::load()
+{
+    LogSystemManager::instance().registerSystem(i18n("Media Player"), SYS_MPL);
+    CoreInterface* core = getCore();
+    act = new MediaPlayerActivity(core, actionCollection(), nullptr);
+    getGUI()->addActivity(act);
+    setXMLFile(QStringLiteral("ktorrent_mediaplayerui.rc"));
+    act->enableActions(0);
+    act->loadState(KSharedConfig::openConfig());
+}
 
-    void MediaPlayerPlugin::unload()
-    {
-        LogSystemManager::instance().unregisterSystem(i18n("Media Player"));
-        act->saveState(KSharedConfig::openConfig());
-        act->setVideoFullScreen(false);
-        getGUI()->removeActivity(act);
-        delete act;
-        act = nullptr;
-    }
+void MediaPlayerPlugin::unload()
+{
+    LogSystemManager::instance().unregisterSystem(i18n("Media Player"));
+    act->saveState(KSharedConfig::openConfig());
+    act->setVideoFullScreen(false);
+    getGUI()->removeActivity(act);
+    delete act;
+    act = nullptr;
+}
 
-    bool MediaPlayerPlugin::versionCheck(const QString& version) const
-    {
-        return version == QStringLiteral(VERSION);
-    }
+bool MediaPlayerPlugin::versionCheck(const QString& version) const
+{
+    return version == QStringLiteral(VERSION);
+}
 
 }
 

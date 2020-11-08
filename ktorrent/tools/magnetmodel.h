@@ -27,50 +27,50 @@
 
 namespace bt
 {
-    class MagnetDownloader;
+class MagnetDownloader;
 }
 
 namespace kt
 {
-   class MagnetManager;
+class MagnetManager;
 
-   class MagnetModel : public QAbstractTableModel
-    {
-        Q_OBJECT
-    public:
-        MagnetModel(MagnetManager *magnetManager, QObject* parent = 0);
-        ~MagnetModel() override;
+class MagnetModel : public QAbstractTableModel
+{
+    Q_OBJECT
+public:
+    MagnetModel(MagnetManager *magnetManager, QObject* parent = 0);
+    ~MagnetModel() override;
 
-        /// Remove a magnet downloader
-        void removeMagnets(int row, int count);
+    /// Remove a magnet downloader
+    void removeMagnets(int row, int count);
 
-        /// Start a magnet downloader
-        void start(int row, int count);
+    /// Start a magnet downloader
+    void start(int row, int count);
 
-        /// Stop a magnet downloader
-        void stop(int row, int count);
+    /// Stop a magnet downloader
+    void stop(int row, int count);
 
-        /// Check if the magnet downloader that correspond to row is stopped
-        bool isStopped(int row) const;
+    /// Check if the magnet downloader that correspond to row is stopped
+    bool isStopped(int row) const;
 
-        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
-        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-        bool removeRows(int row, int count, const QModelIndex& parent) override;
-        bool insertRows(int row, int count, const QModelIndex& parent) override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    bool removeRows(int row, int count, const QModelIndex& parent) override;
+    bool insertRows(int row, int count, const QModelIndex& parent) override;
 
-   public Q_SLOTS:
-        void onUpdateQueue(bt::Uint32 idx, bt::Uint32 count);
+public Q_SLOTS:
+    void onUpdateQueue(bt::Uint32 idx, bt::Uint32 count);
 
-    private:
-        QString displayName(const bt::MagnetDownloader* md) const;
-        QString status(int row) const;
+private:
+    QString displayName(const bt::MagnetDownloader* md) const;
+    QString status(int row) const;
 
-    private:
-        int currentRows;
-        QPointer<MagnetManager> mman;
-    };
+private:
+    int currentRows;
+    QPointer<MagnetManager> mman;
+};
 
 }
 

@@ -31,105 +31,110 @@
 
 namespace Phonon
 {
-    class AudioOutput;
+class AudioOutput;
 }
 
 
 namespace kt
 {
-    enum ActionFlags
+enum ActionFlags {
+    MEDIA_PLAY = 1, MEDIA_PAUSE = 2, MEDIA_STOP = 4, MEDIA_PREV = 8, MEDIA_NEXT = 16
+};
+
+/**
+    @author
+*/
+class MediaPlayer : public QObject
+{
+    Q_OBJECT
+public:
+    MediaPlayer(QObject* parent);
+    ~MediaPlayer() override;
+
+    Phonon::AudioOutput* output()
     {
-        MEDIA_PLAY = 1, MEDIA_PAUSE = 2, MEDIA_STOP = 4, MEDIA_PREV = 8, MEDIA_NEXT = 16
-    };
+        return audio;
+    }
+    Phonon::MediaObject* media0bject()
+    {
+        return media;
+    }
+
+    /// Are we paused
+    bool paused() const;
+
+    /// Resume paused stuff
+    void resume();
+
+    /// Play a file
+    void play(MediaFileRef file);
+
+    /// Queue a file
+    void queue(MediaFileRef file);
+
+    /// Pause playing
+    void pause();
+
+    /// Stop playing
+    void stop();
+
+    /// Get the current file we are playing
+    MediaFileRef getCurrentSource() const;
+
+    /// Play the previous song
+    MediaFileRef prev();
+
+    void streamStateChanged(int state);
+
+private Q_SLOTS:
+    void onStateChanged(Phonon::State cur, Phonon::State old);
+    void hasVideoChanged(bool hasVideo);
+
+Q_SIGNALS:
+    /**
+     * Emitted to enable or disable the play buttons.
+     * @param flags Flags indicating which buttons to enable
+     */
+    void enableActions(unsigned int flags);
 
     /**
-        @author
-    */
-    class MediaPlayer : public QObject
-    {
-        Q_OBJECT
-    public:
-        MediaPlayer(QObject* parent);
-        ~MediaPlayer() override;
+     * A video has been detected, create the video player window.
+     */
+    void openVideo();
 
-        Phonon::AudioOutput* output() {return audio;}
-        Phonon::MediaObject* media0bject() {return media;}
+    /**
+     * Emitted when the video widget needs to be closed.
+     */
+    void closeVideo();
 
-        /// Are we paused
-        bool paused() const;
+    /**
+     * Emitted when we have finished playing something
+     */
+    void stopped();
 
-        /// Resume paused stuff
-        void resume();
+    /**
+     * Emitted when the player is about to finish
+     */
+    void aboutToFinish();
 
-        /// Play a file
-        void play(MediaFileRef file);
+    /**
+     * Emitted when the player starts playing
+     */
+    void playing(const MediaFileRef& file);
 
-        /// Queue a file
-        void queue(MediaFileRef file);
+    /**
+     * Emitted when the video is being loaded
+     */
+    void loading();
 
-        /// Pause playing
-        void pause();
-
-        /// Stop playing
-        void stop();
-
-        /// Get the current file we are playing
-        MediaFileRef getCurrentSource() const;
-
-        /// Play the previous song
-        MediaFileRef prev();
-
-        void streamStateChanged(int state);
-
-    private Q_SLOTS:
-        void onStateChanged(Phonon::State cur, Phonon::State old);
-        void hasVideoChanged(bool hasVideo);
-
-    Q_SIGNALS:
-        /**
-         * Emitted to enable or disable the play buttons.
-         * @param flags Flags indicating which buttons to enable
-         */
-        void enableActions(unsigned int flags);
-
-        /**
-         * A video has been detected, create the video player window.
-         */
-        void openVideo();
-
-        /**
-         * Emitted when the video widget needs to be closed.
-         */
-        void closeVideo();
-
-        /**
-         * Emitted when we have finished playing something
-         */
-        void stopped();
-
-        /**
-         * Emitted when the player is about to finish
-         */
-        void aboutToFinish();
-
-        /**
-         * Emitted when the player starts playing
-         */
-        void playing(const MediaFileRef& file);
-
-        /**
-         * Emitted when the video is being loaded
-         */
-        void loading();
-
-    private:
-        Phonon::MediaObject* media;
-        Phonon::AudioOutput* audio;
-        QList<MediaFileRef> history;
-        MediaFileRef current;
-        bool buffering;
-        bool manually_paused;
-    };
+private:
+    Phonon::MediaObject* media;
+    Phonon::AudioOutput* audio;
+    QList<MediaFileRef> history;
+    MediaFileRef current;
+    bool buffering;
+    bool manually_paused;
+};
 
 }
 

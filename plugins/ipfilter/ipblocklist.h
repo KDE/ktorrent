@@ -30,53 +30,52 @@
 namespace kt
 {
 
-    struct IPBlock
+struct IPBlock {
+    bt::Uint32 ip1;
+    bt::Uint32 ip2;
+
+    IPBlock();
+    IPBlock(const IPBlock& block);
+    IPBlock(const QString& start, const QString& end);
+
+    bool contains(bt::Uint32 ip) const
     {
-        bt::Uint32 ip1;
-        bt::Uint32 ip2;
+        return ip1 <= ip && ip <= ip2;
+    }
+};
 
-        IPBlock();
-        IPBlock(const IPBlock& block);
-        IPBlock(const QString& start, const QString& end);
+/**
+ * @author Ivan Vasic <ivasic@gmail.com>
+ * @brief This class is used to manage anti-p2p filter list, so called level1.
+ */
+class IPBlockList : public bt::BlockListInterface
+{
+public:
+    IPBlockList();
+    ~IPBlockList() override;
 
-        bool contains(bt::Uint32 ip) const
-        {
-            return ip1 <= ip && ip <= ip2;
-        }
-    };
+    bool blocked(const net::Address& addr) const override;
 
     /**
-     * @author Ivan Vasic <ivasic@gmail.com>
-     * @brief This class is used to manage anti-p2p filter list, so called level1.
+     * Overloaded function. Uses Uint32 IP to be checked
+     **/
+    bool isBlockedIP(bt::Uint32 ip);
+
+    /**
+     * Loads filter file
+     * @param path The file to load
+     * @return true upon success, false otherwise
      */
-    class IPBlockList : public bt::BlockListInterface
-    {
-    public:
-        IPBlockList();
-        ~IPBlockList() override;
+    bool load(const QString& path);
 
-        bool blocked(const net::Address& addr) const override;
+    /**
+     * Add a single block
+     * @param block
+     */
+    void addBlock(const IPBlock& block);
 
-        /**
-         * Overloaded function. Uses Uint32 IP to be checked
-         **/
-        bool isBlockedIP(bt::Uint32 ip);
-
-        /**
-         * Loads filter file
-         * @param path The file to load
-         * @return true upon success, false otherwise
-         */
-        bool load(const QString& path);
-
-        /**
-         * Add a single block
-         * @param block
-         */
-        void addBlock(const IPBlock& block);
-
-    private:
-        QVector<IPBlock> blocks;
-    };
+private:
+    QVector<IPBlock> blocks;
+};
 }
 #endif

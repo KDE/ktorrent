@@ -34,158 +34,189 @@
 
 namespace kt
 {
-    class Filter;
-    class FilterList;
+class Filter;
+class FilterList;
 
-    struct SeasonEpisodeItem
-    {
-        int season;
-        int episode;
+struct SeasonEpisodeItem {
+    int season;
+    int episode;
 
-        SeasonEpisodeItem();
-        SeasonEpisodeItem(int s, int e);
-        SeasonEpisodeItem(const SeasonEpisodeItem& item);
+    SeasonEpisodeItem();
+    SeasonEpisodeItem(int s, int e);
+    SeasonEpisodeItem(const SeasonEpisodeItem& item);
 
-        bool operator == (const SeasonEpisodeItem& item) const;
-        SeasonEpisodeItem& operator = (const SeasonEpisodeItem& item);
+    bool operator == (const SeasonEpisodeItem& item) const;
+    SeasonEpisodeItem& operator = (const SeasonEpisodeItem& item);
+};
+
+
+/// Convert a syndication error into an error string
+QString SyndicationErrorString(Syndication::ErrorCode err);
+
+
+/**
+    Class to keep track of a feed.
+*/
+class Feed : public QObject
+{
+    Q_OBJECT
+public:
+    Feed(const QString& dir);
+    Feed(const QString& feed_url, const QString& dir);
+    Feed(const QString& feed_url, Syndication::FeedPtr feed, const QString& dir);
+    ~Feed();
+
+    enum Status {
+        UNLOADED, OK, FAILED_TO_DOWNLOAD, DOWNLOADING
     };
 
+    /// Get the display name of the feed
+    QString displayName() const;
 
-    /// Convert a syndication error into an error string
-    QString SyndicationErrorString(Syndication::ErrorCode err);
+    /// Set the display name
+    void setDisplayName(const QString& dname);
 
-
-    /**
-        Class to keep track of a feed.
-    */
-    class Feed : public QObject
+    /// Get the libsyndication feed
+    Syndication::FeedPtr feedData()
     {
-        Q_OBJECT
-    public:
-        Feed(const QString& dir);
-        Feed(const QString& feed_url, const QString& dir);
-        Feed(const QString& feed_url, Syndication::FeedPtr feed, const QString& dir);
-        ~Feed();
+        return feed;
+    }
 
-        enum Status
-        {
-            UNLOADED, OK, FAILED_TO_DOWNLOAD, DOWNLOADING
-        };
+    /// Get the URL of the feed
+    QUrl feedUrl() const
+    {
+        return url;
+    }
 
-        /// Get the display name of the feed
-        QString displayName() const;
+    /// Get the authentication cookie
+    const QString& authenticationCookie() const
+    {
+        return cookie;
+    }
 
-        /// Set the display name
-        void setDisplayName(const QString& dname);
+    /// Set the authentication cookie
+    void setAuthenticationCookie(const QString& nc)
+    {
+        cookie = nc;
+    }
 
-        /// Get the libsyndication feed
-        Syndication::FeedPtr feedData() {return feed;}
+    /// Is the feed OK
+    bool ok() const
+    {
+        return feed;
+    }
 
-        /// Get the URL of the feed
-        QUrl feedUrl() const {return url;}
+    /// Save the feed to it's directory
+    void save();
 
-        /// Get the authentication cookie
-        const QString& authenticationCookie() const {return cookie;}
+    /// Load the feed from it's directory
+    void load(FilterList* filter_list);
 
-        /// Set the authentication cookie
-        void setAuthenticationCookie(const QString& nc) {cookie = nc;}
+    /// Get the feed's data directory
+    QString directory() const
+    {
+        return dir;
+    }
 
-        /// Is the feed OK
-        bool ok() const {return feed;}
+    /// Get the current status of the feed
+    Status feedStatus() const
+    {
+        return status;
+    }
 
-        /// Save the feed to it's directory
-        void save();
+    /// Get the tile of the feed
+    QString title() const;
 
-        /// Load the feed from it's directory
-        void load(FilterList* filter_list);
+    /// Get the update error string
+    QString errorString() const
+    {
+        return update_error;
+    }
 
-        /// Get the feed's data directory
-        QString directory() const {return dir;}
+    /// Create a new feed directory
+    static QString newFeedDir(const QString& base);
 
-        /// Get the current status of the feed
-        Status feedStatus() const {return status;}
+    /// Add a filter to the feed
+    void addFilter(Filter* f);
 
-        /// Get the tile of the feed
-        QString title() const;
+    /// Remove a filter from the feed
+    void removeFilter(Filter* f);
 
-        /// Get the update error string
-        QString errorString() const {return update_error;}
+    /// Run filters on the feed
+    void runFilters();
 
-        /// Create a new feed directory
-        static QString newFeedDir(const QString& base);
+    /// See if the feed is using a filter
+    bool usingFilter(Filter* f) const
+    {
+        return filters.contains(f);
+    }
 
-        /// Add a filter to the feed
-        void addFilter(Filter* f);
+    /// Clear all filters
+    void clearFilters();
 
-        /// Remove a filter from the feed
-        void removeFilter(Filter* f);
+    /// Download an item from the feed
+    void downloadItem(Syndication::ItemPtr item, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
 
-        /// Run filters on the feed
-        void runFilters();
+    /// Check if an item is downloaded
+    bool downloaded(Syndication::ItemPtr item) const;
 
-        /// See if the feed is using a filter
-        bool usingFilter(Filter* f) const {return filters.contains(f);}
+    /// Get the number of filters
+    int numFilters() const
+    {
+        return filters.count();
+    }
 
-        /// Clear all filters
-        void clearFilters();
+    /// Get a comma separated string of the filter names
+    QString filterNamesString() const;
 
-        /// Download an item from the feed
-        void downloadItem(Syndication::ItemPtr item, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
+    /// Get the refresh rate (in minutes) of the feed
+    bt::Uint32 refreshRate() const
+    {
+        return refresh_rate;
+    }
 
-        /// Check if an item is downloaded
-        bool downloaded(Syndication::ItemPtr item) const;
+    /// Set the refresh rate of the feed
+    void setRefreshRate(bt::Uint32 r);
 
-        /// Get the number of filters
-        int numFilters() const {return filters.count();}
+Q_SIGNALS:
+    /// Emitted when a link must de downloaded
+    void downloadLink(const QUrl& link, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
 
-        /// Get a comma separated string of the filter names
-        QString filterNamesString() const;
+    /// A feed has been renamed
+    void feedRenamed(Feed* f);
 
-        /// Get the refresh rate (in minutes) of the feed
-        bt::Uint32 refreshRate() const {return refresh_rate;}
+public:
+    /// Update the feed
+    void refresh();
 
-        /// Set the refresh rate of the feed
-        void setRefreshRate(bt::Uint32 r);
+private Q_SLOTS:
+    void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
+    void loadingFromDiskComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
 
-    Q_SIGNALS:
-        /// Emitted when a link must de downloaded
-        void downloadLink(const QUrl& link, const QString& group, const QString& location, const QString& move_on_completion, bool silently);
+Q_SIGNALS:
+    void updated();
 
-        /// A feed has been renamed
-        void feedRenamed(Feed* f);
+private:
+    bool needToDownload(Syndication::ItemPtr item, Filter* filter);
+    void checkLoaded();
+    void loadFromDisk();
+    void parseUrl(const QString& feed_url);
 
-    public:
-        /// Update the feed
-        void refresh();
-
-    private Q_SLOTS:
-        void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
-        void loadingFromDiskComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
-
-    Q_SIGNALS:
-        void updated();
-
-    private:
-        bool needToDownload(Syndication::ItemPtr item, Filter* filter);
-        void checkLoaded();
-        void loadFromDisk();
-        void parseUrl(const QString& feed_url);
-
-    private:
-        QUrl url;
-        Syndication::FeedPtr feed;
-        QSet<QString> feed_items_id;
-        QString dir;
-        QTimer update_timer;
-        Status status;
-        QList<Filter*> filters;
-        QSet<QString> loaded;
-        QMap<Filter*, QList<SeasonEpisodeItem> > downloaded_se_items;
-        QString custom_name;
-        bt::Uint32 refresh_rate;
-        QString cookie;
-        QString update_error;
-    };
+private:
+    QUrl url;
+    Syndication::FeedPtr feed;
+    QSet<QString> feed_items_id;
+    QString dir;
+    QTimer update_timer;
+    Status status;
+    QList<Filter*> filters;
+    QSet<QString> loaded;
+    QMap<Filter*, QList<SeasonEpisodeItem> > downloaded_se_items;
+    QString custom_name;
+    bt::Uint32 refresh_rate;
+    QString cookie;
+    QString update_error;
+};
 
 }
 

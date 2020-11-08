@@ -27,33 +27,33 @@
 
 namespace kt
 {
+/**
+    Model for a QCompleter which works with a list of unique strings loaded from a file.
+*/
+class KTCORE_EXPORT StringCompletionModel : public QStringListModel
+{
+    Q_OBJECT
+public:
+    StringCompletionModel(const QString& file, QObject* parent);
+    ~StringCompletionModel() override;
+
     /**
-        Model for a QCompleter which works with a list of unique strings loaded from a file.
+        Load the list of strings.
     */
-    class KTCORE_EXPORT StringCompletionModel : public QStringListModel
-    {
-        Q_OBJECT
-    public:
-        StringCompletionModel(const QString& file, QObject* parent);
-        ~StringCompletionModel() override;
+    void load();
 
-        /**
-            Load the list of strings.
-        */
-        void load();
+    /**
+        Save the list of strings to the file
+    */
+    void save();
 
-        /**
-            Save the list of strings to the file
-        */
-        void save();
-
-        /**
-            Add a string to the list, automatically saves it.
-        */
-        void addString(const QString& s);
-    private:
-        QString file;
-    };
+    /**
+        Add a string to the list, automatically saves it.
+    */
+    void addString(const QString& s);
+private:
+    QString file;
+};
 
 }
 

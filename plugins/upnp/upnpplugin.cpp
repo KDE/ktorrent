@@ -41,52 +41,52 @@ using namespace bt;
 namespace kt
 {
 
-    UPnPPlugin::UPnPPlugin(QObject* parent, const QVariantList& /*args*/) : Plugin(parent), sock(nullptr), upnp_tab(nullptr)
-    {
-    }
+UPnPPlugin::UPnPPlugin(QObject* parent, const QVariantList& /*args*/) : Plugin(parent), sock(nullptr), upnp_tab(nullptr)
+{
+}
 
 
-    UPnPPlugin::~UPnPPlugin()
-    {
-    }
+UPnPPlugin::~UPnPPlugin()
+{
+}
 
 
-    void UPnPPlugin::load()
-    {
-        LogSystemManager::instance().registerSystem(i18n("UPnP"), SYS_PNP);
-        sock = new UPnPMCastSocket();
-        upnp_tab = new UPnPWidget(sock, nullptr);
-        GUIInterface* gui = getGUI();
-        gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QStringLiteral("kt-upnp"),
-                i18n("Shows the status of the UPnP plugin"));
-        // load the routers list
-        QString routers_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("routers"));
-        if (routers_file.length())
-            sock->loadRouters(routers_file);
-        sock->discover();
-    }
+void UPnPPlugin::load()
+{
+    LogSystemManager::instance().registerSystem(i18n("UPnP"), SYS_PNP);
+    sock = new UPnPMCastSocket();
+    upnp_tab = new UPnPWidget(sock, nullptr);
+    GUIInterface* gui = getGUI();
+    gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QStringLiteral("kt-upnp"),
+            i18n("Shows the status of the UPnP plugin"));
+    // load the routers list
+    QString routers_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("routers"));
+    if (routers_file.length())
+        sock->loadRouters(routers_file);
+    sock->discover();
+}
 
-    void UPnPPlugin::unload()
-    {
-        LogSystemManager::instance().unregisterSystem(i18n("UPnP"));
-        QString routers_file = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/routers");
-        sock->saveRouters(routers_file);
-        getGUI()->getTorrentActivity()->removeToolWidget(upnp_tab);
-        sock->close();
-        delete upnp_tab;
-        upnp_tab = nullptr;
-        delete sock;
-        sock = nullptr;
-    }
+void UPnPPlugin::unload()
+{
+    LogSystemManager::instance().unregisterSystem(i18n("UPnP"));
+    QString routers_file = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/routers");
+    sock->saveRouters(routers_file);
+    getGUI()->getTorrentActivity()->removeToolWidget(upnp_tab);
+    sock->close();
+    delete upnp_tab;
+    upnp_tab = nullptr;
+    delete sock;
+    sock = nullptr;
+}
 
-    void UPnPPlugin::shutdown(bt::WaitJob* job)
-    {
-        upnp_tab->shutdown(job);
-    }
+void UPnPPlugin::shutdown(bt::WaitJob* job)
+{
+    upnp_tab->shutdown(job);
+}
 
-    bool UPnPPlugin::versionCheck(const QString& version) const
-    {
-        return version == QStringLiteral(VERSION);
-    }
+bool UPnPPlugin::versionCheck(const QString& version) const
+{
+    return version == QStringLiteral(VERSION);
+}
 }
 #include "upnpplugin.moc"

@@ -27,35 +27,35 @@ class KToggleAction;
 
 namespace kt
 {
-    class ShutdownRuleSet;
+class ShutdownRuleSet;
 
-    class ShutdownPlugin : public kt::Plugin
-    {
-        Q_OBJECT
-    public:
-        ShutdownPlugin(QObject* parent, const QVariantList& args);
-        ~ShutdownPlugin() override;
+class ShutdownPlugin : public kt::Plugin
+{
+    Q_OBJECT
+public:
+    ShutdownPlugin(QObject* parent, const QVariantList& args);
+    ~ShutdownPlugin() override;
 
-        bool versionCheck(const QString& version) const override;
-        void unload() override;
-        void load() override;
+    bool versionCheck(const QString& version) const override;
+    void unload() override;
+    void load() override;
 
-    public Q_SLOTS:
-        void shutdownComputer();
-        void lock();
-        void suspendToDisk();
-        void suspendToRam();
+public Q_SLOTS:
+    void shutdownComputer();
+    void lock();
+    void suspendToDisk();
+    void suspendToRam();
 
-    private Q_SLOTS:
-        void shutdownToggled(bool on);
-        void configureShutdown();
-        void updateAction();
+private Q_SLOTS:
+    void shutdownToggled(bool on);
+    void configureShutdown();
+    void updateAction();
 
-    private:
-        KToggleAction* shutdown_enabled;
-        QAction * configure_shutdown;
-        ShutdownRuleSet* rules;
-    };
+private:
+    KToggleAction* shutdown_enabled;
+    QAction * configure_shutdown;
+    ShutdownRuleSet* rules;
+};
 
 }
 

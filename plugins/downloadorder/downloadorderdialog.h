@@ -27,39 +27,39 @@
 
 namespace bt
 {
-    class TorrentInterface;
+class TorrentInterface;
 }
 
 namespace kt
 {
-    class DownloadOrderPlugin;
-    class DownloadOrderModel;
+class DownloadOrderPlugin;
+class DownloadOrderModel;
 
-    /**
-        Dialog to manipulate the download order.
-    */
-    class DownloadOrderDialog : public QDialog, public Ui_DownloadOrderWidget
-    {
-        Q_OBJECT
-    public:
-        DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent);
-        ~DownloadOrderDialog() override;
+/**
+    Dialog to manipulate the download order.
+*/
+class DownloadOrderDialog : public QDialog, public Ui_DownloadOrderWidget
+{
+    Q_OBJECT
+public:
+    DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent);
+    ~DownloadOrderDialog() override;
 
-    private Q_SLOTS:
-        void commitDownloadOrder();
-        void moveUp();
-        void moveDown();
-        void moveTop();
-        void moveBottom();
-        void itemSelectionChanged(const QItemSelection& new_sel, const QItemSelection& old_sel);
-        void customOrderEnableToggled(bool on);
-        void search(const QString& text);
+private Q_SLOTS:
+    void commitDownloadOrder();
+    void moveUp();
+    void moveDown();
+    void moveTop();
+    void moveBottom();
+    void itemSelectionChanged(const QItemSelection& new_sel, const QItemSelection& old_sel);
+    void customOrderEnableToggled(bool on);
+    void search(const QString& text);
 
-    private:
-        bt::TorrentInterface* tor;
-        DownloadOrderPlugin* plugin;
-        DownloadOrderModel* model;
-    };
+private:
+    bt::TorrentInterface* tor;
+    DownloadOrderPlugin* plugin;
+    DownloadOrderModel* model;
+};
 
 }
 

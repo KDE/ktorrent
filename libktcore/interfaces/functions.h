@@ -27,15 +27,15 @@
 
 namespace kt
 {
-    enum CreationMode {DoNotCheckDirPresence, CreateIfNotExists};
-    /// Get the data directory of ktorrent (~/.local/share/ktorrent most of the time)
-    KTCORE_EXPORT QString DataDir(CreationMode mode = DoNotCheckDirPresence);
+enum CreationMode {DoNotCheckDirPresence, CreateIfNotExists};
+/// Get the data directory of ktorrent (~/.local/share/ktorrent most of the time)
+KTCORE_EXPORT QString DataDir(CreationMode mode = DoNotCheckDirPresence);
 
-    /// Apply all settings
-    KTCORE_EXPORT void ApplySettings();
+/// Apply all settings
+KTCORE_EXPORT void ApplySettings();
 
-    /// Get the filter string for torrent files used file dialogs
-    KTCORE_EXPORT QString TorrentFileFilter(bool all_files_included);
+/// Get the filter string for torrent files used file dialogs
+KTCORE_EXPORT QString TorrentFileFilter(bool all_files_included);
 
 }
 

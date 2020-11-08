@@ -72,15 +72,13 @@ void MagnetTest::routerDiscovered(bt::UPnPRouter* router)
 void MagnetTest::start()
 {
     Uint16 port = Settings::port();
-    if (port == 0)
-    {
+    if (port == 0) {
         port = 6881;
         Settings::setPort(6881);
     }
 
     // Make sure network interface is set properly before server is initialized
-    if (!Settings::networkInterface().isEmpty())
-    {
+    if (!Settings::networkInterface().isEmpty()) {
         //QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
         QString iface = Settings::networkInterface();
         SetNetworkInterface(iface);
@@ -91,12 +89,9 @@ void MagnetTest::start()
     while (!Globals::instance().initTCPServer(port + i) && i < 10)
         i++;
 
-    if (i != 10)
-    {
+    if (i != 10) {
         Out(SYS_GEN | LOG_NOTICE) << "Bound to port " << (port + i - 1) << endl;
-    }
-    else
-    {
+    } else {
         Out(SYS_GEN | LOG_IMPORTANT) << "Cannot find free port" << endl;
     }
 
@@ -113,13 +108,10 @@ void MagnetTest::start()
 
 void MagnetTest::update()
 {
-    try
-    {
+    try {
         bt::AuthenticationMonitor::instance().update();
         mdownloader->update();
-    }
-    catch (bt::Error& err)
-    {
+    } catch (bt::Error& err) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Caught bt::Error: " << err.toString() << endl;
     }
 }
@@ -130,21 +122,17 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
     Q_UNUSED(md);
     Out(SYS_GEN | LOG_IMPORTANT) << "Saving to output.torrent" << endl;
     bt::File fptr;
-    if (fptr.open(QStringLiteral("output.torrent"), QStringLiteral("wb")))
-    {
+    if (fptr.open(QStringLiteral("output.torrent"), QStringLiteral("wb"))) {
         BEncoder enc(&fptr);
         enc.beginDict();
         QList<QUrl> trs = mlink.trackers();
-        if (trs.count())
-        {
+        if (trs.count()) {
             enc.write(QByteArrayLiteral("announce"));
             enc.write(trs.first().toEncoded());
-            if (trs.count() > 1)
-            {
+            if (trs.count() > 1) {
                 enc.write(QByteArrayLiteral("announce-list"));
                 enc.beginList();
-                for (const QUrl& u : qAsConst(trs))
-                {
+                for (const QUrl& u : qAsConst(trs)) {
                     enc.write(u.toEncoded());
                 }
                 enc.end();
@@ -154,9 +142,7 @@ void MagnetTest::foundMetaData(MagnetDownloader* md, const QByteArray& data)
         fptr.write(data.data(), data.size());
         enc.end();
         QTimer::singleShot(0, qApp, &QCoreApplication::quit);
-    }
-    else
-    {
+    } else {
         Out(SYS_GEN | LOG_IMPORTANT) << "Failed to open output.torrent: " << fptr.errorString() << endl;
     }
 }

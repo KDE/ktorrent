@@ -27,22 +27,22 @@
 namespace kt
 {
 
-    /**
-    @author Joris Guisson
-    */
-    class AvailabilityChunkBar : public ChunkBar
-    {
-        Q_OBJECT
-    public:
-        AvailabilityChunkBar(QWidget* parent);
-        ~AvailabilityChunkBar() override;
+/**
+@author Joris Guisson
+*/
+class AvailabilityChunkBar : public ChunkBar
+{
+    Q_OBJECT
+public:
+    AvailabilityChunkBar(QWidget* parent);
+    ~AvailabilityChunkBar() override;
 
-        const bt::BitSet& getBitSet() const override;
+    const bt::BitSet& getBitSet() const override;
 
-        void setTC(bt::TorrentInterface* tc);
-    private:
-        bt::TorrentInterface* curr_tc;
-    };
+    void setTC(bt::TorrentInterface* tc);
+private:
+    bt::TorrentInterface* curr_tc;
+};
 }
 
 #endif

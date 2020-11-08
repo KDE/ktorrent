@@ -30,21 +30,21 @@ using namespace bt;
 namespace kt
 {
 
-    ScriptableGroup::ScriptableGroup(const QString& name, const QString& icon, const QString& path, Kross::Object::Ptr script, DBus* api) : kt::Group(name, MIXED_GROUP, path), script(script), api(api)
-    {
-        setIconByName(icon);
-    }
+ScriptableGroup::ScriptableGroup(const QString& name, const QString& icon, const QString& path, Kross::Object::Ptr script, DBus* api) : kt::Group(name, MIXED_GROUP, path), script(script), api(api)
+{
+    setIconByName(icon);
+}
 
-    ScriptableGroup::~ScriptableGroup()
-    {}
+ScriptableGroup::~ScriptableGroup()
+{}
 
-    bool ScriptableGroup::isMember(bt::TorrentInterface* tor)
-    {
-        QVariantList args;
-        args << tor->getInfoHash().toString();
-        QVariant ret = script->callMethod(QStringLiteral("isMember"), args);
-        return ret.toBool();
-    }
+bool ScriptableGroup::isMember(bt::TorrentInterface* tor)
+{
+    QVariantList args;
+    args << tor->getInfoHash().toString();
+    QVariant ret = script->callMethod(QStringLiteral("isMember"), args);
+    return ret.toBool();
+}
 
 
 }

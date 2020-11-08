@@ -31,39 +31,39 @@ class QMenu;
 namespace kt
 {
 
-    class FSProxyModel;
-    class ScanForLostFilesThread;
+class FSProxyModel;
+class ScanForLostFilesThread;
 
-    /**
-     * ScanForLostFiles plugin widget
-     */
-    class ScanForLostFilesWidget : public Activity, public Ui::ScanForLostFilesWidget
-    {
-        Q_OBJECT
+/**
+ * ScanForLostFiles plugin widget
+ */
+class ScanForLostFilesWidget : public Activity, public Ui::ScanForLostFilesWidget
+{
+    Q_OBJECT
 
-    public:
-        ScanForLostFilesWidget(ScanForLostFilesPlugin* plugin, QWidget* parent = nullptr);
-        ~ScanForLostFilesWidget() override;
+public:
+    ScanForLostFilesWidget(ScanForLostFilesPlugin* plugin, QWidget* parent = nullptr);
+    ~ScanForLostFilesWidget() override;
 
-    private Q_SLOTS:
-        void on_btnScanFolder_clicked();
-        void on_btnExpandAll_clicked();
-        void on_btnCollapseAll_clicked();
-        void on_actionDelete_on_disk_triggered();
-        void on_treeView_customContextMenuRequested(const QPoint &pos);
+private Q_SLOTS:
+    void on_btnScanFolder_clicked();
+    void on_btnExpandAll_clicked();
+    void on_btnCollapseAll_clicked();
+    void on_actionDelete_on_disk_triggered();
+    void on_treeView_customContextMenuRequested(const QPoint &pos);
 
-        void directoryLoaded(const QString& path);
+    void directoryLoaded(const QString& path);
 
-    private:
-        void setupModels();
+private:
+    void setupModels();
 
-    private:
-        ScanForLostFilesPlugin* m_plugin;
-        QFileSystemModel* m_model;
-        FSProxyModel* m_proxy;
-        QMenu* m_menu;
-        ScanForLostFilesThread* m_thread;
-    };
+private:
+    ScanForLostFilesPlugin* m_plugin;
+    QFileSystemModel* m_model;
+    FSProxyModel* m_proxy;
+    QMenu* m_menu;
+    ScanForLostFilesThread* m_thread;
+};
 
 }
 

@@ -29,45 +29,44 @@ class QDockWidget;
 
 namespace kt
 {
-    class ScanForLostFilesPrefPage;
-    class ScanForLostFilesWidget;
+class ScanForLostFilesPrefPage;
+class ScanForLostFilesWidget;
 
-    enum SFLFPosition
-    {
-        SEPARATE_ACTIVITY = 0,
-        DOCKABLE_WIDGET = 1,
-        TORRENT_ACTIVITY = 2
-    };
+enum SFLFPosition {
+    SEPARATE_ACTIVITY = 0,
+    DOCKABLE_WIDGET = 1,
+    TORRENT_ACTIVITY = 2
+};
 
-    /**
-     * @author Alexander Trufanov <trufanovan@gmail.com>
-     * @brief KTorrent ScanForLostFiles plugin
-     * Display files in selected folder that do not belong to any torrent.
-     */
-    class ScanForLostFilesPlugin : public Plugin
-    {
-        Q_OBJECT
-    public:
-        ScanForLostFilesPlugin(QObject* parent, const QVariantList& args);
-        ~ScanForLostFilesPlugin() override;
+/**
+ * @author Alexander Trufanov <trufanovan@gmail.com>
+ * @brief KTorrent ScanForLostFiles plugin
+ * Display files in selected folder that do not belong to any torrent.
+ */
+class ScanForLostFilesPlugin : public Plugin
+{
+    Q_OBJECT
+public:
+    ScanForLostFilesPlugin(QObject* parent, const QVariantList& args);
+    ~ScanForLostFilesPlugin() override;
 
-        void load() override;
-        void unload() override;
-        bool versionCheck(const QString& version) const override;
+    void load() override;
+    void unload() override;
+    bool versionCheck(const QString& version) const override;
 
-    public Q_SLOTS:
-        void updateScanForLostFiles();
+public Q_SLOTS:
+    void updateScanForLostFiles();
 
-    private:
-        void addToGUI();
-        void removeFromGUI();
+private:
+    void addToGUI();
+    void removeFromGUI();
 
-    private:
-        ScanForLostFilesWidget* m_view;
-        QDockWidget* m_dock;
-        ScanForLostFilesPrefPage* m_pref;
-        SFLFPosition m_pos;
-    };
+private:
+    ScanForLostFilesWidget* m_view;
+    QDockWidget* m_dock;
+    ScanForLostFilesPrefPage* m_pref;
+    SFLFPosition m_pos;
+};
 
 }
 

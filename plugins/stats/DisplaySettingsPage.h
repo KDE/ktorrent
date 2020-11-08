@@ -28,16 +28,16 @@
 namespace kt
 {
 
-    /**
-        @author
-    */
+/**
+    @author
+*/
 
-    class DisplaySettingsPage : public PrefPageInterface, public Ui_DisplaySettingsWgt
-    {
-    public:
-        DisplaySettingsPage(QWidget* parent);
-        ~DisplaySettingsPage() override;
-    };
+class DisplaySettingsPage : public PrefPageInterface, public Ui_DisplaySettingsWgt
+{
+public:
+    DisplaySettingsPage(QWidget* parent);
+    ~DisplaySettingsPage() override;
+};
 
 }
 

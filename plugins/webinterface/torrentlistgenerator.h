@@ -27,26 +27,26 @@ class QXmlStreamWriter;
 
 namespace kt
 {
-    class CoreInterface;
+class CoreInterface;
 
-    /**
-        Content generator which generates XML with all torrents in it.
-    */
-    class TorrentListGenerator : public WebContentGenerator
-    {
-    public:
-        TorrentListGenerator(CoreInterface* core, HttpServer* server);
-        virtual ~TorrentListGenerator();
+/**
+    Content generator which generates XML with all torrents in it.
+*/
+class TorrentListGenerator : public WebContentGenerator
+{
+public:
+    TorrentListGenerator(CoreInterface* core, HttpServer* server);
+    virtual ~TorrentListGenerator();
 
-        virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-        virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
 
-    private:
-        void writeElement(QXmlStreamWriter& out, const QString& name, const QString& value);
+private:
+    void writeElement(QXmlStreamWriter& out, const QString& name, const QString& value);
 
-    private:
-        CoreInterface* core;
-    };
+private:
+    CoreInterface* core;
+};
 
 }
 

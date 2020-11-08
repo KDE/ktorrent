@@ -36,63 +36,63 @@ class QDir;
 namespace kt
 {
 
+/**
+ * Thread which scans directories in the background and looks for torrent files.
+ */
+class ScanThread : public QThread
+{
+    Q_OBJECT
+public:
+    ScanThread();
+    ~ScanThread() override;
+
     /**
-     * Thread which scans directories in the background and looks for torrent files.
+     * Set whether to scan recursively or not
+     * @param rec Recursive or not
      */
-    class ScanThread : public QThread
-    {
-        Q_OBJECT
-    public:
-        ScanThread();
-        ~ScanThread() override;
+    void setRecursive(bool rec);
 
-        /**
-         * Set whether to scan recursively or not
-         * @param rec Recursive or not
-         */
-        void setRecursive(bool rec);
+    /**
+     * Add a directory to scan.
+     * @param url Directory
+     * @param recursive Whether or not to scan resursively
+     */
+    void addDirectory(const QUrl& url, bool recursive);
 
-        /**
-         * Add a directory to scan.
-         * @param url Directory
-         * @param recursive Whether or not to scan resursively
-         */
-        void addDirectory(const QUrl& url, bool recursive);
+    /**
+     * Stop the scanning thread.
+     */
+    void stop();
 
-        /**
-         * Stop the scanning thread.
-         */
-        void stop();
+    /**
+     * Set the list of folders to scan.
+     * @param folders List of folders
+     */
+    void setFolderList(const QStringList& folders);
 
-        /**
-         * Set the list of folders to scan.
-         * @param folders List of folders
-         */
-        void setFolderList(const QStringList& folders);
+protected:
+    void run() override;
 
-    protected:
-        void run() override;
+private:
+    void scan(const QUrl& dir, bool recursive);
+    bool alreadyLoaded(const QDir& d, const QString& torrent);
+    void updateFolders();
+    void customEvent(QEvent* ev) override;
 
-    private:
-        void scan(const QUrl& dir, bool recursive);
-        bool alreadyLoaded(const QDir& d, const QString& torrent);
-        void updateFolders();
-        void customEvent(QEvent* ev) override;
+Q_SIGNALS:
+    /**
+     * Emitted when one or more torrents are found.
+     * @param torrents The list of torrents
+     */
+    void found(const QList<QUrl>& torrents);
 
-    Q_SIGNALS:
-        /**
-         * Emitted when one or more torrents are found.
-         * @param torrents The list of torrents
-         */
-        void found(const QList<QUrl>& torrents);
-
-    private:
-        QMutex mutex;
-        QStringList folders;
-        std::atomic<bool> stop_requested;
-        std::atomic<bool> recursive;
-        bt::PtrMap<QString, ScanFolder> scan_folders;
-    };
+private:
+    QMutex mutex;
+    QStringList folders;
+    std::atomic<bool> stop_requested;
+    std::atomic<bool> recursive;
+    bt::PtrMap<QString, ScanFolder> scan_folders;
+};
 
 }
 

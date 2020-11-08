@@ -33,27 +33,27 @@
 namespace kt
 {
 
-    class MediaPlayer;
+class MediaPlayer;
 
-    /**
-     * Widget containing all the things necessary to control the media playback.
-     */
-    class MediaController : public QWidget, public Ui_MediaController
-    {
-        Q_OBJECT
-    public:
-        MediaController(MediaPlayer* player, KActionCollection* ac, QWidget* parent = 0);
-        ~MediaController() override;
+/**
+ * Widget containing all the things necessary to control the media playback.
+ */
+class MediaController : public QWidget, public Ui_MediaController
+{
+    Q_OBJECT
+public:
+    MediaController(MediaPlayer* player, KActionCollection* ac, QWidget* parent = 0);
+    ~MediaController() override;
 
 
-    private Q_SLOTS:
-        void playing(const MediaFileRef& file);
-        void stopped();
-        void metaDataChanged();
+private Q_SLOTS:
+    void playing(const MediaFileRef& file);
+    void stopped();
+    void metaDataChanged();
 
-    private:
-        MediaFileRef current_file;
-    };
+private:
+    MediaFileRef current_file;
+};
 
 }
 

@@ -31,62 +31,77 @@ class KJob;
 namespace kt
 {
 
+/**
+    Keeps track of a search engine
+*/
+class SearchEngine : public QObject
+{
+    Q_OBJECT
+public:
     /**
-        Keeps track of a search engine
-    */
-    class SearchEngine : public QObject
+     * Constructor, sets the data dir
+     * @param data_dir Directory where all the information regarding the engine is stored
+     */
+    SearchEngine(const QString& data_dir);
+    ~SearchEngine() override;
+
+    /**
+     * Load the engine from an opensearch XML file
+     * @param xml_file Local XML file
+     * @return true upon success
+     */
+    bool load(const QString& xml_file);
+
+    /**
+     * Fill in search terms into the search url and create the QUrl to use
+     * @param terms Tersm to search for
+     * @return The url
+     */
+    QUrl search(const QString& terms);
+
+    /// Get the name of the engine
+    QString engineName() const
     {
-        Q_OBJECT
-    public:
-        /**
-         * Constructor, sets the data dir
-         * @param data_dir Directory where all the information regarding the engine is stored
-         */
-        SearchEngine(const QString& data_dir);
-        ~SearchEngine() override;
+        return name;
+    }
 
-        /**
-         * Load the engine from an opensearch XML file
-         * @param xml_file Local XML file
-         * @return true upon success
-         */
-        bool load(const QString& xml_file);
+    /// Get the icon
+    QIcon engineIcon() const
+    {
+        return icon;
+    }
 
-        /**
-         * Fill in search terms into the search url and create the QUrl to use
-         * @param terms Tersm to search for
-         * @return The url
-         */
-        QUrl search(const QString& terms);
+    /// Get the engine directory
+    QString engineDir() const
+    {
+        return data_dir;
+    }
 
-        /// Get the name of the engine
-        QString engineName() const {return name;}
+    /// Get the URL
+    QString engineUrl() const
+    {
+        return url;
+    }
 
-        /// Get the icon
-        QIcon engineIcon() const {return icon;}
+    /// Get the description
+    QString engineDescription() const
+    {
+        return description;
+    }
 
-        /// Get the engine directory
-        QString engineDir() const {return data_dir;}
+private Q_SLOTS:
+    void iconDownloadFinished(KJob* job);
 
-        /// Get the URL
-        QString engineUrl() const {return url;}
+private:
+    QString data_dir;
+    QString name;
+    QString description;
+    QString url;
+    QString icon_url;
+    QIcon icon;
 
-        /// Get the description
-        QString engineDescription() const {return description;}
-
-    private Q_SLOTS:
-        void iconDownloadFinished(KJob* job);
-
-    private:
-        QString data_dir;
-        QString name;
-        QString description;
-        QString url;
-        QString icon_url;
-        QIcon icon;
-
-        friend class OpenSearchHandler;
-    };
+    friend class OpenSearchHandler;
+};
 
 }
 

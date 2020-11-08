@@ -39,92 +39,84 @@ K_EXPORT_COMPONENT_FACTORY(ktwebinterfaceplugin, KGenericFactory<kt::WebInterfac
 using namespace bt;
 namespace kt
 {
-    WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const QStringList& args) : Plugin(parent)
-    {
-        Q_UNUSED(args);
+WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+{
+    Q_UNUSED(args);
+    http_server = nullptr;
+    pref = nullptr;
+}
+
+WebInterfacePlugin::~WebInterfacePlugin()
+{
+
+}
+
+void WebInterfacePlugin::load()
+{
+    LogSystemManager::instance().registerSystem(i18n("Web Interface"), SYS_WEB);
+    initServer();
+
+    pref = new WebInterfacePrefWidget(nullptr);
+    getGUI()->addPrefPage(pref);
+    connect(getCore(), &CoreInterface::settingsChanged, this, &WebInterfacePlugin::preferencesUpdated);
+}
+
+void WebInterfacePlugin::unload()
+{
+    LogSystemManager::instance().unregisterSystem(i18n("Web Interface"));
+    if (http_server) {
+        bt::Globals::instance().getPortList().removePort(http_server->getPort(), net::TCP);
+        delete http_server;
         http_server = nullptr;
-        pref = nullptr;
     }
 
-    WebInterfacePlugin::~WebInterfacePlugin()
-    {
+    getGUI()->removePrefPage(pref);
+    delete pref;
+    pref = nullptr;
+    disconnect(getCore(), &CoreInterface::settingsChanged, this, &WebInterfacePlugin::preferencesUpdated);
+}
 
+void WebInterfacePlugin::initServer()
+{
+    bt::Uint16 port = WebInterfacePluginSettings::port();
+    bt::Uint16 i = 0;
+
+    while (i < 10) {
+        http_server = new HttpServer(getCore(), port + i);
+        if (!http_server->isOK()) {
+            delete http_server;
+            http_server = nullptr;
+        } else
+            break;
+        i++;
     }
 
-    void WebInterfacePlugin::load()
-    {
-        LogSystemManager::instance().registerSystem(i18n("Web Interface"), SYS_WEB);
+    if (http_server) {
+        if (WebInterfacePluginSettings::forward())
+            bt::Globals::instance().getPortList().addNewPort(http_server->getPort(), net::TCP, true);
+        Out(SYS_WEB | LOG_ALL) << "Web server listen on port " << http_server->getPort() << endl;
+    } else {
+        Out(SYS_WEB | LOG_ALL) << "Cannot bind to port " << port << " or the 10 following ports. WebInterface plugin cannot be loaded." << endl;
+        return;
+    }
+}
+
+void WebInterfacePlugin::preferencesUpdated()
+{
+    if (http_server && http_server->getPort() != WebInterfacePluginSettings::port()) {
+        //stop and delete http server
+        bt::Globals::instance().getPortList().removePort(http_server->getPort(), net::TCP);
+        delete http_server;
+        http_server = nullptr;
+        // reinitialize server
         initServer();
-
-        pref = new WebInterfacePrefWidget(nullptr);
-        getGUI()->addPrefPage(pref);
-        connect(getCore(), &CoreInterface::settingsChanged, this, &WebInterfacePlugin::preferencesUpdated);
     }
+}
 
-    void WebInterfacePlugin::unload()
-    {
-        LogSystemManager::instance().unregisterSystem(i18n("Web Interface"));
-        if (http_server)
-        {
-            bt::Globals::instance().getPortList().removePort(http_server->getPort(), net::TCP);
-            delete http_server;
-            http_server = nullptr;
-        }
-
-        getGUI()->removePrefPage(pref);
-        delete pref;
-        pref = nullptr;
-        disconnect(getCore(), &CoreInterface::settingsChanged, this, &WebInterfacePlugin::preferencesUpdated);
-    }
-
-    void WebInterfacePlugin::initServer()
-    {
-        bt::Uint16 port = WebInterfacePluginSettings::port();
-        bt::Uint16 i = 0;
-
-        while (i < 10)
-        {
-            http_server = new HttpServer(getCore(), port + i);
-            if (!http_server->isOK())
-            {
-                delete http_server;
-                http_server = nullptr;
-            }
-            else
-                break;
-            i++;
-        }
-
-        if (http_server)
-        {
-            if (WebInterfacePluginSettings::forward())
-                bt::Globals::instance().getPortList().addNewPort(http_server->getPort(), net::TCP, true);
-            Out(SYS_WEB | LOG_ALL) << "Web server listen on port " << http_server->getPort() << endl;
-        }
-        else
-        {
-            Out(SYS_WEB | LOG_ALL) << "Cannot bind to port " << port << " or the 10 following ports. WebInterface plugin cannot be loaded." << endl;
-            return;
-        }
-    }
-
-    void WebInterfacePlugin::preferencesUpdated()
-    {
-        if (http_server && http_server->getPort() != WebInterfacePluginSettings::port())
-        {
-            //stop and delete http server
-            bt::Globals::instance().getPortList().removePort(http_server->getPort(), net::TCP);
-            delete http_server;
-            http_server = nullptr;
-            // reinitialize server
-            initServer();
-        }
-    }
-
-    bool WebInterfacePlugin::versionCheck(const QString& version) const
-    {
-        return version == QStringLiteral(VERSION);
-    }
+bool WebInterfacePlugin::versionCheck(const QString& version) const
+{
+    return version == QStringLiteral(VERSION);
+}
 }
 
 #include "webinterfaceplugin.moc"

@@ -35,73 +35,68 @@ using namespace bt;
 namespace kt
 {
 
-    SettingsGenerator::SettingsGenerator(CoreInterface* core, HttpServer* server)
-        : WebContentGenerator(server, "/data/settings.xml", LOGIN_REQUIRED), core(core)
-    {
-    }
+SettingsGenerator::SettingsGenerator(CoreInterface* core, HttpServer* server)
+    : WebContentGenerator(server, "/data/settings.xml", LOGIN_REQUIRED), core(core)
+{
+}
 
 
-    SettingsGenerator::~SettingsGenerator()
-    {
-    }
+SettingsGenerator::~SettingsGenerator()
+{
+}
 
 
-    void SettingsGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
-    {
-        Q_UNUSED(hdr);
-        HttpResponseHeader rhdr(200);
-        server->setDefaultResponseHeaders(rhdr, "text/xml", true);
+void SettingsGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+{
+    Q_UNUSED(hdr);
+    HttpResponseHeader rhdr(200);
+    server->setDefaultResponseHeaders(rhdr, "text/xml", true);
 
-        QByteArray output_data;
-        QXmlStreamWriter out(&output_data);
-        out.setAutoFormatting(true);
-        out.writeStartDocument();
-        out.writeStartElement("settings");
-        KConfigSkeletonItem::List items = Settings::self()->items();
-        foreach (const KConfigSkeletonItem* item, items)
-        {
-            out.writeStartElement(item->name());
-            out.writeCharacters(item->property().toString());
-            out.writeEndElement();
-        }
-
-        // special webinterface settings
-        out.writeStartElement("webgui_automatic_refresh");
-        out.writeCharacters(WebInterfacePluginSettings::automaticRefresh() ? "true" : "false");
+    QByteArray output_data;
+    QXmlStreamWriter out(&output_data);
+    out.setAutoFormatting(true);
+    out.writeStartDocument();
+    out.writeStartElement("settings");
+    KConfigSkeletonItem::List items = Settings::self()->items();
+    foreach (const KConfigSkeletonItem* item, items) {
+        out.writeStartElement(item->name());
+        out.writeCharacters(item->property().toString());
         out.writeEndElement();
-
-        out.writeEndElement();
-        out.writeEndDocument();
-        hdlr->send(rhdr, output_data);
     }
 
-    void SettingsGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
-    {
-        QStringList params = QString(data).split('&');
-        foreach (const QString& p, params)
-        {
-            // p should look like param=value
-            QStringList items = p.split('=');
-            if (items.count() != 2)
-                continue;
+    // special webinterface settings
+    out.writeStartElement("webgui_automatic_refresh");
+    out.writeCharacters(WebInterfacePluginSettings::automaticRefresh() ? "true" : "false");
+    out.writeEndElement();
 
-            QString cfg_param = items.at(0);
-            QString cfg_value = items.at(1);
-            KConfigSkeletonItem* item = Settings::self()->findItem(cfg_param);
-            if (!item)
-            {
-                if (cfg_param == "webgui_automatic_refresh")
-                {
-                    WebInterfacePluginSettings::setAutomaticRefresh(cfg_value == "1");
-                    WebInterfacePluginSettings::self()->save();
-                }
+    out.writeEndElement();
+    out.writeEndDocument();
+    hdlr->send(rhdr, output_data);
+}
+
+void SettingsGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+{
+    QStringList params = QString(data).split('&');
+    foreach (const QString& p, params) {
+        // p should look like param=value
+        QStringList items = p.split('=');
+        if (items.count() != 2)
+            continue;
+
+        QString cfg_param = items.at(0);
+        QString cfg_value = items.at(1);
+        KConfigSkeletonItem* item = Settings::self()->findItem(cfg_param);
+        if (!item) {
+            if (cfg_param == "webgui_automatic_refresh") {
+                WebInterfacePluginSettings::setAutomaticRefresh(cfg_value == "1");
+                WebInterfacePluginSettings::self()->save();
             }
-            else
-                item->setProperty(cfg_value);
-        }
-        core->applySettings();
-        Settings::self()->save();
-        get(hdlr, hdr);
+        } else
+            item->setProperty(cfg_value);
     }
+    core->applySettings();
+    Settings::self()->save();
+    get(hdlr, hdr);
+}
 
 }

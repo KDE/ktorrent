@@ -26,22 +26,22 @@
 
 namespace kt
 {
-    class GroupManager;
+class GroupManager;
 
-    /**
-        @author
-    */
-    class UngroupedGroup : public Group
-    {
-    public:
-        UngroupedGroup(GroupManager* gman);
-        ~UngroupedGroup() override;
+/**
+    @author
+*/
+class UngroupedGroup : public Group
+{
+public:
+    UngroupedGroup(GroupManager* gman);
+    ~UngroupedGroup() override;
 
-        bool isMember(TorrentInterface* tor) override;
+    bool isMember(TorrentInterface* tor) override;
 
-    private:
-        GroupManager* gman;
-    };
+private:
+    GroupManager* gman;
+};
 
 }
 

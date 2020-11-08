@@ -43,126 +43,114 @@
 
 namespace kt
 {
-    PasteDialog::PasteDialog(Core* core, QWidget* parent, Qt::WindowFlags fl)
-        : QDialog(parent, fl)
-    {
-        setupUi(this);
-        setWindowTitle(i18n("Open an URL"));
+PasteDialog::PasteDialog(Core* core, QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
+{
+    setupUi(this);
+    setWindowTitle(i18n("Open an URL"));
 
-        m_core = core;
-        QClipboard* cb = QApplication::clipboard();
-        QString text = cb->text(QClipboard::Clipboard);
+    m_core = core;
+    QClipboard* cb = QApplication::clipboard();
+    QString text = cb->text(QClipboard::Clipboard);
 
-        QUrl url = QUrl(text);
+    QUrl url = QUrl(text);
 
-        connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-        connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
-        if (url.isValid())
-            m_url->setText(text);
+    if (url.isValid())
+        m_url->setText(text);
 
-        loadGroups();
+    loadGroups();
+}
+
+PasteDialog::~PasteDialog()
+{
+}
+
+void PasteDialog::loadGroups()
+{
+    GroupManager* gman = m_core->getGroupManager();
+    GroupManager::Itr it = gman->begin();
+    QStringList grps;
+    //First default group
+    grps << i18n("All Torrents");
+
+    //now custom ones
+    while (it != gman->end()) {
+        if (!it->second->isStandardGroup())
+            grps << it->first;
+        ++it;
     }
 
-    PasteDialog::~PasteDialog()
-    {
-    }
+    m_groups->addItems(grps);
+}
 
-    void PasteDialog::loadGroups()
-    {
-        GroupManager* gman = m_core->getGroupManager();
-        GroupManager::Itr it = gman->begin();
-        QStringList grps;
-        //First default group
-        grps << i18n("All Torrents");
+void PasteDialog::loadState(KSharedConfig::Ptr cfg)
+{
+    KConfigGroup g = cfg->group("PasteDlg");
+    m_silently->setChecked(g.readEntry("silently", false));
+    m_groups->setCurrentIndex(g.readEntry("group", 0));
+}
 
-        //now custom ones
-        while (it != gman->end())
-        {
-            if (!it->second->isStandardGroup())
-                grps << it->first;
-            ++it;
-        }
+void PasteDialog::saveState(KSharedConfig::Ptr cfg)
+{
+    KConfigGroup g = cfg->group("PasteDlg");
+    g.writeEntry("silently", m_silently->isChecked());
+    g.writeEntry("group", m_groups->currentIndex());
+}
 
-        m_groups->addItems(grps);
-    }
+void PasteDialog::accept()
+{
+    QUrl url;
 
-    void PasteDialog::loadState(KSharedConfig::Ptr cfg)
-    {
-        KConfigGroup g = cfg->group("PasteDlg");
-        m_silently->setChecked(g.readEntry("silently", false));
-        m_groups->setCurrentIndex(g.readEntry("group", 0));
-    }
+    // Handle Infohash case
+    QRegularExpression re(QStringLiteral("^([0-9a-fA-Z]{40}|[0-9a-fA-Z]{32})$"));
+    if (re.match(m_url->text()).hasMatch()) {
+        QString magnetLink = QStringLiteral("magnet:?xt=urn:btih:").append(m_url->text());
 
-    void PasteDialog::saveState(KSharedConfig::Ptr cfg)
-    {
-        KConfigGroup g = cfg->group("PasteDlg");
-        g.writeEntry("silently", m_silently->isChecked());
-        g.writeEntry("group", m_groups->currentIndex());
-    }
+        if (!Settings::trackerListUrl().isEmpty()) {
+            QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+            QUrl trackerListUrl = QUrl(Settings::trackerListUrl());
+            QNetworkReply *reply = manager->get(QNetworkRequest(trackerListUrl));
 
-    void PasteDialog::accept()
-    {
-        QUrl url;
+            QEventLoop loop;
+            connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+            loop.exec();
 
-        // Handle Infohash case
-        QRegularExpression re(QStringLiteral("^([0-9a-fA-Z]{40}|[0-9a-fA-Z]{32})$"));
-        if (re.match(m_url->text()).hasMatch())
-        {
-            QString magnetLink = QStringLiteral("magnet:?xt=urn:btih:").append(m_url->text());
-
-            if (!Settings::trackerListUrl().isEmpty())
-            {
-                QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-                QUrl trackerListUrl = QUrl(Settings::trackerListUrl());
-                QNetworkReply *reply = manager->get(QNetworkRequest(trackerListUrl));
-
-                QEventLoop loop;
-                connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-                loop.exec();
-
-                if (reply->error() == QNetworkReply::NoError)
-                {
-                    while (reply->canReadLine())
-                    {
-                        QString trackerUrl = QString::fromLatin1(reply->readLine());
-                        trackerUrl.chop(1);
-                        if (!trackerUrl.isEmpty())
-                            magnetLink.append(QStringLiteral("&tr=")).append(trackerUrl);
-                    }
+            if (reply->error() == QNetworkReply::NoError) {
+                while (reply->canReadLine()) {
+                    QString trackerUrl = QString::fromLatin1(reply->readLine());
+                    trackerUrl.chop(1);
+                    if (!trackerUrl.isEmpty())
+                        magnetLink.append(QStringLiteral("&tr=")).append(trackerUrl);
                 }
-                else
-                {
-                    QMessageBox::warning(this, i18n("Error fetching tracker list"),
-                                         i18n("Please check if the URL in Settings > Advanced > Tracker list URL is reachable."));
-                }
-
-                delete manager;
+            } else {
+                QMessageBox::warning(this, i18n("Error fetching tracker list"),
+                                     i18n("Please check if the URL in Settings > Advanced > Tracker list URL is reachable."));
             }
 
-            url = QUrl(magnetLink);
-        }
-        else
-        {
-            url = QUrl(m_url->text());
+            delete manager;
         }
 
-        if (url.isValid())
-        {
-            QString group;
-            if (m_groups->currentIndex() > 0)
-                group = m_groups->currentText();
-
-            if (m_silently->isChecked())
-                m_core->loadSilently(url, group);
-            else
-                m_core->load(url, group);
-            QDialog::accept();
-        }
-        else
-        {
-            KMessageBox::error(this, i18n("Invalid URL: %1", m_url->text()));
-        }
+        url = QUrl(magnetLink);
+    } else {
+        url = QUrl(m_url->text());
     }
+
+    if (url.isValid()) {
+        QString group;
+        if (m_groups->currentIndex() > 0)
+            group = m_groups->currentText();
+
+        if (m_silently->isChecked())
+            m_core->loadSilently(url, group);
+        else
+            m_core->load(url, group);
+        QDialog::accept();
+    } else {
+        KMessageBox::error(this, i18n("Invalid URL: %1", m_url->text()));
+    }
+}
 }
 

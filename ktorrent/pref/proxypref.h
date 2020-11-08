@@ -28,23 +28,23 @@
 namespace kt
 {
 
-    /**
-        @author
-    */
-    class ProxyPref : public PrefPageInterface, public Ui_ProxyPref
-    {
-        Q_OBJECT
-    public:
-        ProxyPref(QWidget* parent);
-        ~ProxyPref() override;
+/**
+    @author
+*/
+class ProxyPref : public PrefPageInterface, public Ui_ProxyPref
+{
+    Q_OBJECT
+public:
+    ProxyPref(QWidget* parent);
+    ~ProxyPref() override;
 
-        void loadDefaults() override;
-        void loadSettings() override;
-        void updateSettings() override;
-    private Q_SLOTS:
-        void socksEnabledToggled(bool on);
-        void usernamePasswordToggled(bool on);
-    };
+    void loadDefaults() override;
+    void loadSettings() override;
+    void updateSettings() override;
+private Q_SLOTS:
+    void socksEnabledToggled(bool on);
+    void usernamePasswordToggled(bool on);
+};
 
 }
 

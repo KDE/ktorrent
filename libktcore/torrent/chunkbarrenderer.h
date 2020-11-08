@@ -26,25 +26,25 @@
 
 namespace bt
 {
-    class BitSet;
+class BitSet;
 }
 
 namespace kt
 {
 
-    /**
-        Class which renders a chunkbar to a a QPainter
-    */
-    class KTCORE_EXPORT ChunkBarRenderer
-    {
-    public:
-        ChunkBarRenderer();
-        ~ChunkBarRenderer();
+/**
+    Class which renders a chunkbar to a a QPainter
+*/
+class KTCORE_EXPORT ChunkBarRenderer
+{
+public:
+    ChunkBarRenderer();
+    ~ChunkBarRenderer();
 
-        void drawEqual(QPainter* p, const bt::BitSet& bs, const QColor& color, const QRect& contents_rect);
-        void drawMoreChunksThenPixels(QPainter* p, const bt::BitSet& bs, const QColor& color, const QRect& contents_rect);
-        void drawAllOn(QPainter* p, const QColor& color, const QRect& contents_rect);
-    };
+    void drawEqual(QPainter* p, const bt::BitSet& bs, const QColor& color, const QRect& contents_rect);
+    void drawMoreChunksThenPixels(QPainter* p, const bt::BitSet& bs, const QColor& color, const QRect& contents_rect);
+    void drawAllOn(QPainter* p, const QColor& color, const QRect& contents_rect);
+};
 
 }
 

@@ -28,234 +28,343 @@
 
 namespace bt
 {
-    class BEncoder;
-    class BDictNode;
+class BEncoder;
+class BDictNode;
 }
 
 namespace kt
 {
 
 
+/**
+    Class to filter torrents from Feeds
+*/
+class Filter
+{
+public:
+    Filter();
+    Filter(const QString& name);
+    ~Filter();
+
     /**
-        Class to filter torrents from Feeds
-    */
-    class Filter
+     * Start matching items, must be called before the first call to match, when matching
+     * a list of Syndication::Item's.
+     */
+    void startMatching();
+
+    /// Get the name of the filter
+    const QString& filterName() const
     {
-    public:
-        Filter();
-        Filter(const QString& name);
-        ~Filter();
+        return name;
+    }
 
-        /**
-         * Start matching items, must be called before the first call to match, when matching
-         * a list of Syndication::Item's.
-         */
-        void startMatching();
+    /// Get the filter ID
+    const QString& filterID() const
+    {
+        return id;
+    }
 
-        /// Get the name of the filter
-        const QString& filterName() const {return name;}
+    /// Set the name of the filter
+    void setFilterName(const QString& n)
+    {
+        name = n;
+    }
 
-        /// Get the filter ID
-        const QString& filterID() const {return id;}
+    /**
+     * Check if an item matches the filter
+     * @param item The item
+     * @return true If a match is found, false otherwise
+     */
+    bool match(Syndication::ItemPtr item);
 
-        /// Set the name of the filter
-        void setFilterName(const QString& n) {name = n;}
+    /// Add a word match
+    void addWordMatch(const QRegExp& exp);
 
-        /**
-         * Check if an item matches the filter
-         * @param item The item
-         * @return true If a match is found, false otherwise
-         */
-        bool match(Syndication::ItemPtr item);
+    /// Remove a word match
+    void removeWordMatch(const QRegExp& exp);
 
-        /// Add a word match
-        void addWordMatch(const QRegExp& exp);
+    /// Add a word match
+    void addExclusionPattern(const QRegExp& exp);
 
-        /// Remove a word match
-        void removeWordMatch(const QRegExp& exp);
+    /// Remove a word match
+    void removeExclusionPattern(const QRegExp& exp);
 
-        /// Add a word match
-        void addExclusionPattern(const QRegExp& exp);
+    /// Get all word matches
+    QList<QRegExp> wordMatches() const
+    {
+        return word_matches;
+    }
 
-        /// Remove a word match
-        void removeExclusionPattern(const QRegExp& exp);
+    /// Get all word matches
+    QList<QRegExp> exclusionPatterns() const
+    {
+        return exclusion_patterns;
+    }
 
-        /// Get all word matches
-        QList<QRegExp> wordMatches() const {return word_matches;}
+    /// Clear the list of word matches
+    void clearWordMatches()
+    {
+        word_matches.clear();
+    }
 
-        /// Get all word matches
-        QList<QRegExp> exclusionPatterns() const {return exclusion_patterns;}
+    /// Clear the list of word matches
+    void clearExclusionPatterns()
+    {
+        exclusion_patterns.clear();
+    }
 
-        /// Clear the list of word matches
-        void clearWordMatches() {word_matches.clear();}
+    /// Is season and episode matching enabled
+    bool useSeasonAndEpisodeMatching() const
+    {
+        return use_season_and_episode_matching;
+    }
 
-        /// Clear the list of word matches
-        void clearExclusionPatterns() {exclusion_patterns.clear();}
+    /// Enable or disable season and episode matching
+    void setSeasonAndEpisodeMatching(bool on)
+    {
+        use_season_and_episode_matching = on;
+    }
 
-        /// Is season and episode matching enabled
-        bool useSeasonAndEpisodeMatching() const {return use_season_and_episode_matching;}
+    /// Do not download duplicate season and episode matches
+    bool noDuplicateSeasonAndEpisodeMatches() const
+    {
+        return no_duplicate_se_matches;
+    }
 
-        /// Enable or disable season and episode matching
-        void setSeasonAndEpisodeMatching(bool on) {use_season_and_episode_matching = on;}
+    /// Set whether or not to download duplicate season and episode matches
+    void setNoDuplicateSeasonAndEpisodeMatches(bool on)
+    {
+        no_duplicate_se_matches = on;
+    }
 
-        /// Do not download duplicate season and episode matches
-        bool noDuplicateSeasonAndEpisodeMatches() const {return no_duplicate_se_matches;}
+    /// Get the seasons to download represented in a string
+    QString seasonsToString() const
+    {
+        return seasons_string;
+    }
 
-        /// Set whether or not to download duplicate season and episode matches
-        void setNoDuplicateSeasonAndEpisodeMatches(bool on) {no_duplicate_se_matches = on;}
+    /// Get the episodes to download represented in a string
+    QString episodesToString() const
+    {
+        return episodes_string;
+    }
 
-        /// Get the seasons to download represented in a string
-        QString seasonsToString() const {return seasons_string;}
+    /**
+     * Set the seasons from a string
+     * @param s The string
+     * @return true if string is properly formatted
+     */
+    bool setSeasons(const QString& s);
 
-        /// Get the episodes to download represented in a string
-        QString episodesToString() const {return episodes_string;}
+    /**
+     * Set the episodes from a string
+     * @param s The string
+     * @return true if string is properly formatted
+     */
+    bool setEpisodes(const QString& s);
 
-        /**
-         * Set the seasons from a string
-         * @param s The string
-         * @return true if string is properly formatted
-         */
-        bool setSeasons(const QString& s);
+    /// Download the matching items or not
+    bool downloadMatching() const
+    {
+        return download_matching;
+    }
 
-        /**
-         * Set the episodes from a string
-         * @param s The string
-         * @return true if string is properly formatted
-         */
-        bool setEpisodes(const QString& s);
+    /// Set the download matching or not
+    void setDownloadMatching(bool on)
+    {
+        download_matching = on;
+    }
 
-        /// Download the matching items or not
-        bool downloadMatching() const {return download_matching;}
+    /// Download the non matching items or not
+    bool downloadNonMatching() const
+    {
+        return download_non_matching;
+    }
 
-        /// Set the download matching or not
-        void setDownloadMatching(bool on) {download_matching = on;}
+    /// Set the download non matching or not
+    void setDownloadNonMatching(bool on)
+    {
+        download_non_matching = on;
+    }
 
-        /// Download the non matching items or not
-        bool downloadNonMatching() const {return download_non_matching;}
+    /// Get the group
+    const QString& group() const
+    {
+        return dest_group;
+    }
 
-        /// Set the download non matching or not
-        void setDownloadNonMatching(bool on) {download_non_matching = on;}
+    /// Set the group
+    void setGroup(const QString& g)
+    {
+        dest_group = g;
+    }
 
-        /// Get the group
-        const QString& group() const {return dest_group;}
+    /// Get the download location
+    const QString& downloadLocation() const
+    {
+        return download_location;
+    }
 
-        /// Set the group
-        void setGroup(const QString& g) {dest_group = g;}
+    /// Set the download location
+    void setDownloadLocation(const QString& dl)
+    {
+        download_location = dl;
+    }
 
-        /// Get the download location
-        const QString& downloadLocation() const  {return download_location;}
+    /// Get the move on completion location (empty string means don't move on completion)
+    const QString& moveOnCompletionLocation() const
+    {
+        return move_on_completion_location;
+    }
 
-        /// Set the download location
-        void setDownloadLocation(const QString& dl) {download_location = dl;}
+    /// Set the move on completion location (empty string means don't move on completion)
+    void setMoveOnCompletionLocation(const QString& loc)
+    {
+        move_on_completion_location = loc;
+    }
 
-        /// Get the move on completion location (empty string means don't move on completion)
-        const QString& moveOnCompletionLocation() const {return move_on_completion_location;}
+    /// Open torrents silently or not
+    bool openSilently() const
+    {
+        return silent;
+    }
 
-        /// Set the move on completion location (empty string means don't move on completion)
-        void setMoveOnCompletionLocation(const QString& loc) {move_on_completion_location = loc;}
+    /// Enable or disable open silently
+    void setOpenSilently(bool on)
+    {
+        silent = on;
+    }
 
-        /// Open torrents silently or not
-        bool openSilently() const {return silent;}
+    /// Are the word matches case sensitive
+    bool caseSensitive() const
+    {
+        return case_sensitive;
+    }
 
-        /// Enable or disable open silently
-        void setOpenSilently(bool on) {silent = on;}
+    /// Set case sensitivity of word matches
+    void setCaseSensitive(bool on)
+    {
+        case_sensitive = on;
+    }
 
-        /// Are the word matches case sensitive
-        bool caseSensitive() const {return case_sensitive;}
+    /// Return whether or not all word matches must match
+    bool allWordMatchesMustMatch() const
+    {
+        return all_word_matches_must_match;
+    }
 
-        /// Set case sensitivity of word matches
-        void setCaseSensitive(bool on) {case_sensitive = on;}
+    /// Set whether or not all word matches must match
+    void setAllWordMatchesMustMatch(bool on)
+    {
+        all_word_matches_must_match = on;
+    }
 
-        /// Return whether or not all word matches must match
-        bool allWordMatchesMustMatch() const {return all_word_matches_must_match;}
+    /// Are the word matches case sensitive
+    bool exclusionCaseSensitive() const
+    {
+        return exclusion_case_sensitive;
+    }
 
-        /// Set whether or not all word matches must match
-        void setAllWordMatchesMustMatch(bool on) {all_word_matches_must_match = on;}
+    /// Set case sensitivity of word matches
+    void setExclusionCaseSensitive(bool on)
+    {
+        exclusion_case_sensitive = on;
+    }
 
-        /// Are the word matches case sensitive
-        bool exclusionCaseSensitive() const {return exclusion_case_sensitive;}
+    /// Return whether or not all word matches must match
+    bool exclusionAllMustMatch() const
+    {
+        return exclusion_all_must_match;
+    }
 
-        /// Set case sensitivity of word matches
-        void setExclusionCaseSensitive(bool on) {exclusion_case_sensitive = on;}
+    /// Set whether or not all word matches must match
+    void setExclusionAllMustMatch(bool on)
+    {
+        exclusion_all_must_match = on;
+    }
 
-        /// Return whether or not all word matches must match
-        bool exclusionAllMustMatch() const {return exclusion_all_must_match;}
+    /// Save the filter
+    void save(bt::BEncoder& enc);
 
-        /// Set whether or not all word matches must match
-        void setExclusionAllMustMatch(bool on) {exclusion_all_must_match = on;}
+    /// Load the filter
+    bool load(bt::BDictNode* dict);
 
-        /// Save the filter
-        void save(bt::BEncoder& enc);
+    /// Whether or not the string matches are regular expressions
+    bool useRegularExpressions() const
+    {
+        return use_regular_expressions;
+    }
 
-        /// Load the filter
-        bool load(bt::BDictNode* dict);
+    /// Enable or disable regular expressions
+    void setUseRegularExpressions(bool on)
+    {
+        use_regular_expressions = on;
+    }
 
-        /// Whether or not the string matches are regular expressions
-        bool useRegularExpressions() const {return use_regular_expressions;}
+    /// Whether or not the string matches are regular expressions
+    bool exclusionUseRegularExpressions() const
+    {
+        return exclusion_reg_exp;
+    }
 
-        /// Enable or disable regular expressions
-        void setUseRegularExpressions(bool on) {use_regular_expressions = on;}
+    /// Enable or disable regular expressions
+    void setExclusionUseRegularExpressions(bool on)
+    {
+        exclusion_reg_exp = on;
+    }
 
-        /// Whether or not the string matches are regular expressions
-        bool exclusionUseRegularExpressions() const {return exclusion_reg_exp;}
+    /// Is a string a valid seasons or episode string
+    static bool validSeasonOrEpisodeString(const QString& s);
 
-        /// Enable or disable regular expressions
-        void setExclusionUseRegularExpressions(bool on) {exclusion_reg_exp = on;}
-
-        /// Is a string a valid seasons or episode string
-        static bool validSeasonOrEpisodeString(const QString& s);
-
-        /// Get the season and episode of an item
-        static bool getSeasonAndEpisode(const QString& title, int& season, int& episode);
-    private:
-        struct Range
-        {
-            int start;
-            int end;
-        };
-
-        struct MatchedSeasonAndEpisode
-        {
-            int season;
-            int episode;
-
-            bool operator == (const MatchedSeasonAndEpisode& se) const
-            {
-                return season == se.season && episode == se.episode;
-            }
-        };
-
-        static bool parseNumbersString(const QString& s, QList<Range> & numbers);
-        static bool stringToRange(const QString& s, Range& r);
-
-        bool match(const QString& title, QRegExp& exp);
-
-    private:
-        QString id;
-        QString name;
-        QList<QRegExp> word_matches;
-        QList<QRegExp> exclusion_patterns;
-        bool use_season_and_episode_matching;
-        bool no_duplicate_se_matches;
-        QList<Range> seasons;
-        QString seasons_string;
-        QList<Range> episodes;
-        QString episodes_string;
-        bool download_matching;
-        bool download_non_matching;
-        QString dest_group;
-        QString download_location;
-        QString move_on_completion_location;
-        bool silent;
-        bool case_sensitive;
-        bool all_word_matches_must_match;
-        bool use_regular_expressions;
-        bool exclusion_case_sensitive;
-        bool exclusion_all_must_match;
-        bool exclusion_reg_exp;
-
-        QList<MatchedSeasonAndEpisode> se_matches;
+    /// Get the season and episode of an item
+    static bool getSeasonAndEpisode(const QString& title, int& season, int& episode);
+private:
+    struct Range {
+        int start;
+        int end;
     };
+
+    struct MatchedSeasonAndEpisode {
+        int season;
+        int episode;
+
+        bool operator == (const MatchedSeasonAndEpisode& se) const
+        {
+            return season == se.season && episode == se.episode;
+        }
+    };
+
+    static bool parseNumbersString(const QString& s, QList<Range> & numbers);
+    static bool stringToRange(const QString& s, Range& r);
+
+    bool match(const QString& title, QRegExp& exp);
+
+private:
+    QString id;
+    QString name;
+    QList<QRegExp> word_matches;
+    QList<QRegExp> exclusion_patterns;
+    bool use_season_and_episode_matching;
+    bool no_duplicate_se_matches;
+    QList<Range> seasons;
+    QString seasons_string;
+    QList<Range> episodes;
+    QString episodes_string;
+    bool download_matching;
+    bool download_non_matching;
+    QString dest_group;
+    QString download_location;
+    QString move_on_completion_location;
+    bool silent;
+    bool case_sensitive;
+    bool all_word_matches_must_match;
+    bool use_regular_expressions;
+    bool exclusion_case_sensitive;
+    bool exclusion_all_must_match;
+    bool exclusion_reg_exp;
+
+    QList<MatchedSeasonAndEpisode> se_matches;
+};
 
 }
 

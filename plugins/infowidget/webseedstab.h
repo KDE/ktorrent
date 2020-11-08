@@ -33,46 +33,46 @@
 
 namespace kt
 {
-    class WebSeedsModel;
+class WebSeedsModel;
+
+/**
+    Tab which displays the list of webseeds of a torrent, and allows you to add or remove them.
+*/
+class WebSeedsTab : public QWidget, public Ui_WebSeedsTab
+{
+    Q_OBJECT
+public:
+    WebSeedsTab(QWidget* parent);
+    ~WebSeedsTab() override;
 
     /**
-        Tab which displays the list of webseeds of a torrent, and allows you to add or remove them.
-    */
-    class WebSeedsTab : public QWidget, public Ui_WebSeedsTab
-    {
-        Q_OBJECT
-    public:
-        WebSeedsTab(QWidget* parent);
-        ~WebSeedsTab() override;
+     * Switch to a different torrent.
+     * @param tc The torrent
+     */
+    void changeTC(bt::TorrentInterface* tc);
 
-        /**
-         * Switch to a different torrent.
-         * @param tc The torrent
-         */
-        void changeTC(bt::TorrentInterface* tc);
+    /// Check to see if the GUI needs to be updated
+    void update();
 
-        /// Check to see if the GUI needs to be updated
-        void update();
+    void saveState(KSharedConfigPtr cfg);
+    void loadState(KSharedConfigPtr cfg);
 
-        void saveState(KSharedConfigPtr cfg);
-        void loadState(KSharedConfigPtr cfg);
+private Q_SLOTS:
+    void addWebSeed();
+    void removeWebSeed();
+    void disableAll();
+    void enableAll();
+    void onWebSeedTextChanged(const QString& ws);
+    void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
-    private Q_SLOTS:
-        void addWebSeed();
-        void removeWebSeed();
-        void disableAll();
-        void enableAll();
-        void onWebSeedTextChanged(const QString& ws);
-        void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+private:
+    void selectionChanged(const QModelIndexList& indexes);
 
-    private:
-        void selectionChanged(const QModelIndexList& indexes);
-
-    private:
-        bt::TorrentInterface::WPtr curr_tc;
-        WebSeedsModel* model;
-        QSortFilterProxyModel* proxy_model;
-    };
+private:
+    bt::TorrentInterface::WPtr curr_tc;
+    WebSeedsModel* model;
+    QSortFilterProxyModel* proxy_model;
+};
 
 }
 

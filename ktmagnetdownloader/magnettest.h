@@ -28,8 +28,8 @@
 
 namespace bt
 {
-    class UPnPRouter;
-    class UPnPMCastSocket;
+class UPnPRouter;
+class UPnPMCastSocket;
 }
 
 

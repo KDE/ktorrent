@@ -27,19 +27,19 @@
 namespace kt
 {
 
-    /**
-        Model to keep track of all filters
-    */
-    class FilterList : public FilterListModel
-    {
-    public:
-        FilterList(QObject* parent);
-        ~FilterList();
+/**
+    Model to keep track of all filters
+*/
+class FilterList : public FilterListModel
+{
+public:
+    FilterList(QObject* parent);
+    ~FilterList();
 
-        void saveFilters(const QString& file);
-        void loadFilters(const QString& file);
-        void filterEdited(Filter* filter);
-    };
+    void saveFilters(const QString& file);
+    void loadFilters(const QString& file);
+    void filterEdited(Filter* filter);
+};
 
 }
 

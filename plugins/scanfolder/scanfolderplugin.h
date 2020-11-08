@@ -28,35 +28,35 @@ class QString;
 
 namespace kt
 {
-    class ScanFolderPrefPage;
-    class TorrentLoadQueue;
-    class ScanThread;
+class ScanFolderPrefPage;
+class TorrentLoadQueue;
+class ScanThread;
 
 
-    /**
-     * @author Ivan Vasic <ivasic@gmail.com>
-     * @brief KTorrent ScanFolder plugin
-     * Automatically scans selected folder for torrent files and loads them.
-     */
-    class ScanFolderPlugin : public Plugin
-    {
-        Q_OBJECT
-    public:
-        ScanFolderPlugin(QObject* parent, const QVariantList& args);
-        ~ScanFolderPlugin() override;
+/**
+ * @author Ivan Vasic <ivasic@gmail.com>
+ * @brief KTorrent ScanFolder plugin
+ * Automatically scans selected folder for torrent files and loads them.
+ */
+class ScanFolderPlugin : public Plugin
+{
+    Q_OBJECT
+public:
+    ScanFolderPlugin(QObject* parent, const QVariantList& args);
+    ~ScanFolderPlugin() override;
 
-        void load() override;
-        void unload() override;
-        bool versionCheck(const QString& version) const override;
+    void load() override;
+    void unload() override;
+    bool versionCheck(const QString& version) const override;
 
-    public Q_SLOTS:
-        void updateScanFolders();
+public Q_SLOTS:
+    void updateScanFolders();
 
-    private:
-        ScanFolderPrefPage* pref;
-        TorrentLoadQueue* tlq;
-        ScanThread* scanner;
-    };
+private:
+    ScanFolderPrefPage* pref;
+    TorrentLoadQueue* tlq;
+    ScanThread* scanner;
+};
 
 }
 

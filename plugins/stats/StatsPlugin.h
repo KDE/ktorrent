@@ -40,48 +40,48 @@
 namespace kt
 {
 
-    /** \brief Statistics plugin
-    \author Krzysztof Kundzicz <athantor@gmail.com>
-    \version 1.1
+/** \brief Statistics plugin
+\author Krzysztof Kundzicz <athantor@gmail.com>
+\version 1.1
+*/
+
+class StatsPlugin : public Plugin
+{
+    Q_OBJECT
+public:
+    /** \brief Constructor
+    \param p Parent
     */
+    StatsPlugin(QObject* p, const QVariantList&);
+    ///Destructor
+    ~StatsPlugin() override;
 
-    class StatsPlugin : public Plugin
-    {
-        Q_OBJECT
-    public:
-        /** \brief Constructor
-        \param p Parent
-        */
-        StatsPlugin(QObject* p, const QVariantList&);
-        ///Destructor
-        ~StatsPlugin() override;
+    void load() override;
+    void unload() override;
+    bool versionCheck(const QString& version) const override;
+    void guiUpdate() override;
 
-        void load() override;
-        void unload() override;
-        bool versionCheck(const QString& version) const override;
-        void guiUpdate() override;
+public Q_SLOTS:
+    ///Gather data
+    void gatherData();
+    ///Settings has been changed
+    void settingsChanged();
 
-    public Q_SLOTS:
-        ///Gather data
-        void gatherData();
-        ///Settings has been changed
-        void settingsChanged();
+private:
+    ///Speeds tab
+    SpdTabPage* pmUiSpd;
+    ///Connections tab
+    ConnsTabPage* pmUiConns;
+    ///Settings Page
+    SettingsPage* pmUiSett;
+    /// Display settings page
+    DisplaySettingsPage* pmDispSett;
+    ///Timer
+    QTimer pmTmr;
 
-    private:
-        ///Speeds tab
-        SpdTabPage* pmUiSpd;
-        ///Connections tab
-        ConnsTabPage* pmUiConns;
-        ///Settings Page
-        SettingsPage* pmUiSett;
-        /// Display settings page
-        DisplaySettingsPage* pmDispSett;
-        ///Timer
-        QTimer pmTmr;
-
-        ///Updates counter
-        uint32_t mUpdCtr;
-    };
+    ///Updates counter
+    uint32_t mUpdCtr;
+};
 
 } //ns end
 

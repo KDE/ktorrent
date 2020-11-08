@@ -26,18 +26,18 @@
 
 namespace kt
 {
-    /**
-        SortFilterProxyModel for trees, which doesn't
-    */
-    class KTCORE_EXPORT TreeFilterModel : public QSortFilterProxyModel
-    {
-    public:
-        TreeFilterModel(QObject* parent = nullptr);
-        ~TreeFilterModel() override;
+/**
+    SortFilterProxyModel for trees, which doesn't
+*/
+class KTCORE_EXPORT TreeFilterModel : public QSortFilterProxyModel
+{
+public:
+    TreeFilterModel(QObject* parent = nullptr);
+    ~TreeFilterModel() override;
 
-    protected:
-        bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
-    };
+protected:
+    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
+};
 
 }
 

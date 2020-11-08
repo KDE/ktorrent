@@ -51,59 +51,59 @@
 namespace kt
 {
 
-    /** \brief Speeds tab
-    \author Krzysztof Kundzicz <athantor@gmail.com>
+/** \brief Speeds tab
+\author Krzysztof Kundzicz <athantor@gmail.com>
+*/
+
+class SpdTabPage : public PluginPage
+{
+    Q_OBJECT
+public:
+    /** \brief Constructor
+    \param p Parent
     */
+    SpdTabPage(QWidget* p);
+    ///Destructor
+    ~SpdTabPage() override;
 
-    class SpdTabPage : public PluginPage
-    {
-        Q_OBJECT
-    public:
-        /** \brief Constructor
-        \param p Parent
-        */
-        SpdTabPage(QWidget* p);
-        ///Destructor
-        ~SpdTabPage() override;
+public Q_SLOTS:
+    void applySettings() override;
+    void updateAllCharts() override;
+    void gatherData(Plugin*) override;
+    void resetAvg(ChartDrawer*) override;
 
-    public Q_SLOTS:
-        void applySettings() override;
-        void updateAllCharts() override;
-        void gatherData(Plugin*) override;
-        void resetAvg(ChartDrawer*) override;
+private:
+    /** \brief Gathers dl speeds data
+     \ param  pP kt::Plugin interfac*e *
+     */
+    void gatherDownloadSpeed(Plugin* pP);
+    /** \brief Gathers peers speeds data
+     \ param  pP kt::Plugin interfac*e *
+     */
+    void gatherPeersSpeed(Plugin* pP);
+    /** \brief Gathers Ul speeds data
+     \ param  pP kt::Plugin interfac*e *
+     */
+    void gatherUploadSpeed(Plugin* pP);
 
-    private:
-        /** \brief Gathers dl speeds data
-         \ param  pP kt::Plugin interfac*e *
-         */
-        void gatherDownloadSpeed(Plugin* pP);
-        /** \brief Gathers peers speeds data
-         \ param  pP kt::Plugin interfac*e *
-         */
-        void gatherPeersSpeed(Plugin* pP);
-        /** \brief Gathers Ul speeds data
-         \ param  pP kt::Plugin interfac*e *
-         */
-        void gatherUploadSpeed(Plugin* pP);
+    void setupUi() override;
 
-        void setupUi() override;
+private:
+    ///Page's UI
+    Ui::SpdWgt* pmUiSpd;
 
-    private:
-        ///Page's UI
-        Ui::SpdWgt* pmUiSpd;
+    ///Dl speeds chart widget
+    ChartDrawer* pmDlChtWgt;
+    ///Peers speeds chart widget
+    ChartDrawer* pmPeersChtWgt;
+    ///Ul speeds chart widget
+    ChartDrawer* pmUlChtWgt;
 
-        ///Dl speeds chart widget
-        ChartDrawer* pmDlChtWgt;
-        ///Peers speeds chart widget
-        ChartDrawer* pmPeersChtWgt;
-        ///Ul speeds chart widget
-        ChartDrawer* pmUlChtWgt;
-
-        ///Dl average
-        avg_t mDlAvg;
-        ///Ul average
-        avg_t mUlAvg;
-    };
+    ///Dl average
+    avg_t mDlAvg;
+    ///Ul average
+    avg_t mUlAvg;
+};
 
 } //ns end
 

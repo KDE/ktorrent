@@ -23,22 +23,22 @@
 namespace kt
 {
 
-    PrefPageInterface::PrefPageInterface(KConfigSkeleton* cfg, const QString& name, const QString& icon, QWidget* parent)
-        : QWidget(parent), cfg(cfg), name(name), icon(icon)
-    {}
+PrefPageInterface::PrefPageInterface(KConfigSkeleton* cfg, const QString& name, const QString& icon, QWidget* parent)
+    : QWidget(parent), cfg(cfg), name(name), icon(icon)
+{}
 
 
-    PrefPageInterface::~PrefPageInterface()
-    {}
+PrefPageInterface::~PrefPageInterface()
+{}
 
-    void PrefPageInterface::loadSettings()
-    {}
+void PrefPageInterface::loadSettings()
+{}
 
-    void PrefPageInterface::loadDefaults()
-    {}
+void PrefPageInterface::loadDefaults()
+{}
 
-    void PrefPageInterface::updateSettings()
-    {
-    }
+void PrefPageInterface::updateSettings()
+{
+}
 }
 

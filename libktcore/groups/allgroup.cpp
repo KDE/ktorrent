@@ -24,19 +24,19 @@
 namespace kt
 {
 
-    AllGroup::AllGroup() : Group(i18n("All Torrents"), MIXED_GROUP, QStringLiteral("/all"))
-    {
-        setIconByName(QStringLiteral("folder"));
-    }
+AllGroup::AllGroup() : Group(i18n("All Torrents"), MIXED_GROUP, QStringLiteral("/all"))
+{
+    setIconByName(QStringLiteral("folder"));
+}
 
 
-    AllGroup::~AllGroup()
-    {}
+AllGroup::~AllGroup()
+{}
 
 
-    bool AllGroup::isMember(TorrentInterface* tor)
-    {
-        return tor != 0;
-    }
+bool AllGroup::isMember(TorrentInterface* tor)
+{
+    return tor != 0;
+}
 
 }

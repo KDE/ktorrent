@@ -30,66 +30,66 @@
 
 namespace kt
 {
-    class StringCompletionModel;
-    class Core;
-    class GUI;
+class StringCompletionModel;
+class Core;
+class GUI;
 
-    /**
-     * Dialog to create torrents with
-     */
-    class TorrentCreatorDlg : public QDialog, public Ui_TorrentCreatorDlg
-    {
-        Q_OBJECT
-    public:
-        TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent);
-        ~TorrentCreatorDlg() override;
+/**
+ * Dialog to create torrents with
+ */
+class TorrentCreatorDlg : public QDialog, public Ui_TorrentCreatorDlg
+{
+    Q_OBJECT
+public:
+    TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent);
+    ~TorrentCreatorDlg() override;
 
-    private Q_SLOTS:
-        void addTrackerPressed();
-        void removeTrackerPressed();
-        void moveUpPressed();
-        void moveDownPressed();
+private Q_SLOTS:
+    void addTrackerPressed();
+    void removeTrackerPressed();
+    void moveUpPressed();
+    void moveDownPressed();
 
-        void addWebSeedPressed();
-        void removeWebSeedPressed();
+    void addWebSeedPressed();
+    void removeWebSeedPressed();
 
-        void addNodePressed();
-        void removeNodePressed();
+    void addNodePressed();
+    void removeNodePressed();
 
-        void dhtToggled(bool on);
+    void dhtToggled(bool on);
 
-        void nodeTextChanged(const QString& str);
-        void nodeSelectionChanged();
+    void nodeTextChanged(const QString& str);
+    void nodeSelectionChanged();
 
-        void trackerTextChanged(const QString& str);
-        void trackerSelectionChanged();
+    void trackerTextChanged(const QString& str);
+    void trackerSelectionChanged();
 
-        void webSeedTextChanged(const QString& str);
-        void webSeedSelectionChanged();
+    void webSeedTextChanged(const QString& str);
+    void webSeedSelectionChanged();
 
-        void hashCalculationDone();
-        void updateProgressBar();
+    void hashCalculationDone();
+    void updateProgressBar();
 
-        void accept() override;
-        void reject() override;
+    void accept() override;
+    void reject() override;
 
-        void selectFile();// required for radio button for new torrent creation
-        void selectDirectory();
+    void selectFile();// required for radio button for new torrent creation
+    void selectDirectory();
 
-    private:
-        void loadGroups();
-        void loadCompleterData();
-        void setProgressBarEnabled(bool on);
+private:
+    void loadGroups();
+    void loadCompleterData();
+    void setProgressBarEnabled(bool on);
 
-    private:
-        Core* core;
-        GUI* gui;
-        StringCompletionModel* tracker_completion;
-        StringCompletionModel* webseeds_completion;
-        StringCompletionModel* nodes_completion;
-        bt::TorrentCreator* mktor;
-        QTimer update_timer;
-    };
+private:
+    Core* core;
+    GUI* gui;
+    StringCompletionModel* tracker_completion;
+    StringCompletionModel* webseeds_completion;
+    StringCompletionModel* nodes_completion;
+    bt::TorrentCreator* mktor;
+    QTimer update_timer;
+};
 }
 
 

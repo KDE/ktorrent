@@ -28,38 +28,38 @@ class QAction;
 
 namespace kt
 {
-    class SyndicationActivity;
+class SyndicationActivity;
 
 
-    /**
-        @author
-    */
-    class SyndicationPlugin : public Plugin
-    {
+/**
+    @author
+*/
+class SyndicationPlugin : public Plugin
+{
 
-    public:
-        SyndicationPlugin(QObject* parent, const QVariantList& args);
-        ~SyndicationPlugin();
+public:
+    SyndicationPlugin(QObject* parent, const QVariantList& args);
+    ~SyndicationPlugin();
 
-        bool versionCheck(const QString& version) const override;
-        void load() override;
-        void unload() override;
+    bool versionCheck(const QString& version) const override;
+    void load() override;
+    void unload() override;
 
-    private:
-        void setupActions();
+private:
+    void setupActions();
 
-    private:
-        QAction * add_feed;
-        QAction * remove_feed;
-        QAction * edit_feed_name;
-        QAction * add_filter;
-        QAction * remove_filter;
-        QAction * edit_filter;
-        QAction * manage_filters;
-        SyndicationActivity* activity;
+private:
+    QAction * add_feed;
+    QAction * remove_feed;
+    QAction * edit_feed_name;
+    QAction * add_filter;
+    QAction * remove_filter;
+    QAction * edit_filter;
+    QAction * manage_filters;
+    SyndicationActivity* activity;
 
-        friend class SyndicationActivity;
-    };
+    friend class SyndicationActivity;
+};
 
 }
 

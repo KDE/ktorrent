@@ -32,43 +32,43 @@
 
 namespace kt
 {
-    class TrackerModel;
+class TrackerModel;
 
-    /**
-     * @author Ivan Vasic <ivan@ktorrent.org>
-     */
-    class TrackerView: public QWidget, public Ui_TrackerView
-    {
-        Q_OBJECT
-    public:
-        TrackerView(QWidget* parent);
-        ~TrackerView() override;
+/**
+ * @author Ivan Vasic <ivan@ktorrent.org>
+ */
+class TrackerView: public QWidget, public Ui_TrackerView
+{
+    Q_OBJECT
+public:
+    TrackerView(QWidget* parent);
+    ~TrackerView() override;
 
-        void update();
-        void changeTC(bt::TorrentInterface* ti);
-        void saveState(KSharedConfigPtr cfg);
-        void loadState(KSharedConfigPtr cfg);
+    void update();
+    void changeTC(bt::TorrentInterface* ti);
+    void saveState(KSharedConfigPtr cfg);
+    void loadState(KSharedConfigPtr cfg);
 
-    public Q_SLOTS:
-        void updateClicked();
-        void restoreClicked();
-        void changeClicked();
-        void removeClicked();
-        void addClicked();
-        void scrapeClicked();
-        void currentChanged(const QModelIndex& current, const QModelIndex& previous);
+public Q_SLOTS:
+    void updateClicked();
+    void restoreClicked();
+    void changeClicked();
+    void removeClicked();
+    void addClicked();
+    void scrapeClicked();
+    void currentChanged(const QModelIndex& current, const QModelIndex& previous);
 
-    private:
-        void torrentChanged(bt::TorrentInterface* ti);
-        bt::TrackerInterface* selectedTracker() const;
+private:
+    void torrentChanged(bt::TorrentInterface* ti);
+    bt::TrackerInterface* selectedTracker() const;
 
-    private:
-        bt::TorrentInterface::WPtr tc;
-        TrackerModel* model;
-        QSortFilterProxyModel* proxy_model;
-        QStringList tracker_hints;
-        bool header_state_loaded;
-        QMenu* m_ContextMenu;
-    };
+private:
+    bt::TorrentInterface::WPtr tc;
+    TrackerModel* model;
+    QSortFilterProxyModel* proxy_model;
+    QStringList tracker_hints;
+    bool header_state_loaded;
+    QMenu* m_ContextMenu;
+};
 }
 #endif

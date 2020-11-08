@@ -27,12 +27,12 @@ using namespace bt;
 namespace kt
 {
 
-    ViewSelectionModel::ViewSelectionModel(ViewModel* vm, QObject* parent) : ItemSelectionModel(vm, parent)
-    {
-    }
+ViewSelectionModel::ViewSelectionModel(ViewModel* vm, QObject* parent) : ItemSelectionModel(vm, parent)
+{
+}
 
 
-    ViewSelectionModel::~ViewSelectionModel()
-    {
-    }
+ViewSelectionModel::~ViewSelectionModel()
+{
+}
 }

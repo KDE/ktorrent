@@ -41,100 +41,99 @@ using namespace bt;
 
 namespace kt
 {
-    DownloadOrderPlugin::DownloadOrderPlugin(QObject* parent, const QVariantList &args): Plugin(parent)
-    {
-        Q_UNUSED(args);
-        download_order_action = new QAction(QIcon::fromTheme(QStringLiteral("view-sort-ascending")), i18n("File Download Order"), this);
-        connect(download_order_action, &QAction::triggered, this, &DownloadOrderPlugin::showDownloadOrderDialog);
-        actionCollection()->addAction(QStringLiteral("download_order"), download_order_action);
-        setXMLFile(QStringLiteral("ktorrent_downloadorderui.rc"));
-        managers.setAutoDelete(true);
-    }
+DownloadOrderPlugin::DownloadOrderPlugin(QObject* parent, const QVariantList &args): Plugin(parent)
+{
+    Q_UNUSED(args);
+    download_order_action = new QAction(QIcon::fromTheme(QStringLiteral("view-sort-ascending")), i18n("File Download Order"), this);
+    connect(download_order_action, &QAction::triggered, this, &DownloadOrderPlugin::showDownloadOrderDialog);
+    actionCollection()->addAction(QStringLiteral("download_order"), download_order_action);
+    setXMLFile(QStringLiteral("ktorrent_downloadorderui.rc"));
+    managers.setAutoDelete(true);
+}
 
 
-    DownloadOrderPlugin::~DownloadOrderPlugin()
-    {
-    }
+DownloadOrderPlugin::~DownloadOrderPlugin()
+{
+}
 
 
-    bool DownloadOrderPlugin::versionCheck(const QString& version) const
-    {
-        return version == QStringLiteral(VERSION);
-    }
+bool DownloadOrderPlugin::versionCheck(const QString& version) const
+{
+    return version == QStringLiteral(VERSION);
+}
 
-    void DownloadOrderPlugin::load()
-    {
-        TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
-        ta->addViewListener(this);
-        connect(getCore(), &CoreInterface::torrentAdded, this, &DownloadOrderPlugin::torrentAdded);
-        connect(getCore(), &CoreInterface::torrentRemoved, this, &DownloadOrderPlugin::torrentRemoved);
-        currentTorrentChanged(ta->getCurrentTorrent());
+void DownloadOrderPlugin::load()
+{
+    TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+    ta->addViewListener(this);
+    connect(getCore(), &CoreInterface::torrentAdded, this, &DownloadOrderPlugin::torrentAdded);
+    connect(getCore(), &CoreInterface::torrentRemoved, this, &DownloadOrderPlugin::torrentRemoved);
+    currentTorrentChanged(ta->getCurrentTorrent());
 
-        const kt::QueueManager* const qman = getCore()->getQueueManager();
-        for (bt::TorrentInterface* i : *qman)
-            torrentAdded(i);
-    }
+    const kt::QueueManager* const qman = getCore()->getQueueManager();
+    for (bt::TorrentInterface* i : *qman)
+        torrentAdded(i);
+}
 
-    void DownloadOrderPlugin::unload()
-    {
-        TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
-        ta->removeViewListener(this);
-        disconnect(getCore(), &CoreInterface::torrentAdded, this, &DownloadOrderPlugin::torrentAdded);
-        disconnect(getCore(), &CoreInterface::torrentRemoved, this, &DownloadOrderPlugin::torrentRemoved);
-        managers.clear();
-    }
+void DownloadOrderPlugin::unload()
+{
+    TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+    ta->removeViewListener(this);
+    disconnect(getCore(), &CoreInterface::torrentAdded, this, &DownloadOrderPlugin::torrentAdded);
+    disconnect(getCore(), &CoreInterface::torrentRemoved, this, &DownloadOrderPlugin::torrentRemoved);
+    managers.clear();
+}
 
-    void DownloadOrderPlugin::showDownloadOrderDialog()
-    {
-        bt::TorrentInterface* tor = getGUI()->getTorrentActivity()->getCurrentTorrent();
-        if (!tor || !tor->getStats().multi_file_torrent)
-            return;
+void DownloadOrderPlugin::showDownloadOrderDialog()
+{
+    bt::TorrentInterface* tor = getGUI()->getTorrentActivity()->getCurrentTorrent();
+    if (!tor || !tor->getStats().multi_file_torrent)
+        return;
 
-        DownloadOrderDialog dlg(this, tor, getGUI()->getMainWindow());
-        dlg.exec();
-    }
+    DownloadOrderDialog dlg(this, tor, getGUI()->getMainWindow());
+    dlg.exec();
+}
 
-    void DownloadOrderPlugin::currentTorrentChanged(bt::TorrentInterface* tc)
-    {
-        download_order_action->setEnabled(tc && tc->getStats().multi_file_torrent);
-    }
+void DownloadOrderPlugin::currentTorrentChanged(bt::TorrentInterface* tc)
+{
+    download_order_action->setEnabled(tc && tc->getStats().multi_file_torrent);
+}
 
-    DownloadOrderManager* DownloadOrderPlugin::manager(bt::TorrentInterface* tc)
-    {
-        return managers.find(tc);
-    }
+DownloadOrderManager* DownloadOrderPlugin::manager(bt::TorrentInterface* tc)
+{
+    return managers.find(tc);
+}
 
-    DownloadOrderManager* DownloadOrderPlugin::createManager(bt::TorrentInterface* tc)
-    {
-        DownloadOrderManager* m = manager(tc);
-        if (m)
-            return m;
-
-        m = new DownloadOrderManager(tc);
-        managers.insert(tc, m);
+DownloadOrderManager* DownloadOrderPlugin::createManager(bt::TorrentInterface* tc)
+{
+    DownloadOrderManager* m = manager(tc);
+    if (m)
         return m;
-    }
 
-    void DownloadOrderPlugin::destroyManager(bt::TorrentInterface* tc)
-    {
-        managers.erase(tc);
-    }
+    m = new DownloadOrderManager(tc);
+    managers.insert(tc, m);
+    return m;
+}
 
-    void DownloadOrderPlugin::torrentAdded(bt::TorrentInterface* tc)
-    {
-        if (bt::Exists(tc->getTorDir() + QStringLiteral("download_order")))
-        {
-            DownloadOrderManager* m = createManager(tc);
-            m->load();
-            m->update();
-            connect(tc, &bt::TorrentInterface::chunkDownloaded, m, &DownloadOrderManager::chunkDownloaded);
-        }
-    }
+void DownloadOrderPlugin::destroyManager(bt::TorrentInterface* tc)
+{
+    managers.erase(tc);
+}
 
-    void DownloadOrderPlugin::torrentRemoved(bt::TorrentInterface* tc)
-    {
-        managers.erase(tc);
+void DownloadOrderPlugin::torrentAdded(bt::TorrentInterface* tc)
+{
+    if (bt::Exists(tc->getTorDir() + QStringLiteral("download_order"))) {
+        DownloadOrderManager* m = createManager(tc);
+        m->load();
+        m->update();
+        connect(tc, &bt::TorrentInterface::chunkDownloaded, m, &DownloadOrderManager::chunkDownloaded);
     }
+}
+
+void DownloadOrderPlugin::torrentRemoved(bt::TorrentInterface* tc)
+{
+    managers.erase(tc);
+}
 }
 
 #include <downloadorderplugin.moc>

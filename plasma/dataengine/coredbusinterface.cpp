@@ -25,48 +25,46 @@
 namespace ktplasma
 {
 
-    CoreDBusInterface::CoreDBusInterface(Engine* engine)
-        : QObject(engine), engine(engine)
-    {
-        QDBusConnection con = QDBusConnection::sessionBus();
-        core = new QDBusInterface("org.ktorrent.ktorrent", "/core", "org.ktorrent.core", con, this);
-        engine->setData("core", "connected", true);
-        engine->setData("core", "num_torrents", 0);
+CoreDBusInterface::CoreDBusInterface(Engine* engine)
+    : QObject(engine), engine(engine)
+{
+    QDBusConnection con = QDBusConnection::sessionBus();
+    core = new QDBusInterface("org.ktorrent.ktorrent", "/core", "org.ktorrent.core", con, this);
+    engine->setData("core", "connected", true);
+    engine->setData("core", "num_torrents", 0);
 
-        con.connect("org.ktorrent.ktorrent", "/core", "org.ktorrent.core", "torrentAdded", this, SLOT(torrentAdded(const QString&)));
-        con.connect("org.ktorrent.ktorrent", "/core", "org.ktorrent.core", "torrentRemoved", this, SLOT(torrentRemoved(const QString&)));
-    }
+    con.connect("org.ktorrent.ktorrent", "/core", "org.ktorrent.core", "torrentAdded", this, SLOT(torrentAdded(const QString&)));
+    con.connect("org.ktorrent.ktorrent", "/core", "org.ktorrent.core", "torrentRemoved", this, SLOT(torrentRemoved(const QString&)));
+}
 
 
-    CoreDBusInterface::~CoreDBusInterface()
-    {
-    }
+CoreDBusInterface::~CoreDBusInterface()
+{
+}
 
-    void CoreDBusInterface::init()
-    {
-        QDBusReply<QStringList> r = core->call("torrents");
-        if (r.isValid())
-        {
-            QStringList torrents = r.value();
-            engine->setData("core", "num_torrents", torrents.count());
-            foreach (const QString& tor, torrents)
-            {
-                engine->addTorrent(tor);
-            }
+void CoreDBusInterface::init()
+{
+    QDBusReply<QStringList> r = core->call("torrents");
+    if (r.isValid()) {
+        QStringList torrents = r.value();
+        engine->setData("core", "num_torrents", torrents.count());
+        foreach (const QString& tor, torrents) {
+            engine->addTorrent(tor);
         }
     }
+}
 
-    void CoreDBusInterface::update()
-    {
-    }
+void CoreDBusInterface::update()
+{
+}
 
-    void CoreDBusInterface::torrentAdded(const QString& tor)
-    {
-        engine->addTorrent(tor);
-    }
+void CoreDBusInterface::torrentAdded(const QString& tor)
+{
+    engine->addTorrent(tor);
+}
 
-    void CoreDBusInterface::torrentRemoved(const QString& tor)
-    {
-        engine->removeTorrent(tor);
-    }
+void CoreDBusInterface::torrentRemoved(const QString& tor)
+{
+    engine->removeTorrent(tor);
+}
 }

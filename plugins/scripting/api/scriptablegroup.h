@@ -27,21 +27,21 @@
 
 namespace kt
 {
-    class DBus;
+class DBus;
 
-    /**
-        Group which uses objects in a script to determine if a torrent is a member of the group.
-    */
-    class ScriptableGroup : public kt::Group
-    {
-        Kross::Object::Ptr script;
-        DBus* api;
-    public:
-        ScriptableGroup(const QString& name, const QString& icon, const QString& path, Kross::Object::Ptr script, DBus* api);
-        ~ScriptableGroup() override;
+/**
+    Group which uses objects in a script to determine if a torrent is a member of the group.
+*/
+class ScriptableGroup : public kt::Group
+{
+    Kross::Object::Ptr script;
+    DBus* api;
+public:
+    ScriptableGroup(const QString& name, const QString& icon, const QString& path, Kross::Object::Ptr script, DBus* api);
+    ~ScriptableGroup() override;
 
-        bool isMember(bt::TorrentInterface* tor) override;
-    };
+    bool isMember(bt::TorrentInterface* tor) override;
+};
 
 }
 

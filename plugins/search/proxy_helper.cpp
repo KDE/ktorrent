@@ -31,12 +31,10 @@ ProxyHelper::ProxyHelper(DBusSettings* settings): m_settings(settings)
 bool ProxyHelper::ApplyProxy(KIO::MetaData& metadata) const
 {
     if (!SearchPluginSettings::openInExternal() &&
-            SearchPluginSettings::useProxySettings() &&
-            m_settings)
-    {
+        SearchPluginSettings::useProxySettings() &&
+        m_settings) {
         if (!m_settings->useKDEProxySettings() &&
-            !m_settings->httpProxy().trimmed().isEmpty())
-        {
+            !m_settings->httpProxy().trimmed().isEmpty()) {
             QString p = QStringLiteral("%1:%2").arg(m_settings->httpProxy()).arg(m_settings->httpProxyPort());
             if (!p.startsWith(QLatin1String("http://")))
                 p = QStringLiteral("http://") + p;

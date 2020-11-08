@@ -26,32 +26,32 @@
 
 namespace kt
 {
-    class Filter;
-    class FilterList;
+class Filter;
+class FilterList;
 
-    /**
-        List view to display filters.
-    */
-    class FilterListView : public QListView
-    {
-        Q_OBJECT
-    public:
-        FilterListView(FilterList* filters, QWidget* parent);
-        ~FilterListView();
+/**
+    List view to display filters.
+*/
+class FilterListView : public QListView
+{
+    Q_OBJECT
+public:
+    FilterListView(FilterList* filters, QWidget* parent);
+    ~FilterListView();
 
-        QModelIndexList selectedFilters();
+    QModelIndexList selectedFilters();
 
-        void itemActivated(const QModelIndex& idx);
-        void selectionChanged(const QItemSelection& sel, const QItemSelection& desel) override;
+    void itemActivated(const QModelIndex& idx);
+    void selectionChanged(const QItemSelection& sel, const QItemSelection& desel) override;
 
-    Q_SIGNALS:
-        void filterActivated(Filter* filter);
-        void enableRemove(bool on);
-        void enableEdit(bool on);
+Q_SIGNALS:
+    void filterActivated(Filter* filter);
+    void enableRemove(bool on);
+    void enableEdit(bool on);
 
-    private:
-        FilterList* filters;
-    };
+private:
+    FilterList* filters;
+};
 
 }
 

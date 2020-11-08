@@ -27,119 +27,133 @@
 
 namespace kt
 {
-    class QueueManager;
+class QueueManager;
 
 
-    enum Trigger
+enum Trigger {
+    DOWNLOADING_COMPLETED = 0,
+    SEEDING_COMPLETED
+};
+
+enum Target {
+    ALL_TORRENTS,
+    SPECIFIC_TORRENT
+};
+
+enum Action {
+    SHUTDOWN,
+    LOCK,
+    SUSPEND_TO_DISK,
+    SUSPEND_TO_RAM
+};
+
+struct ShutdownRule {
+    Trigger trigger;
+    Target target;
+    Action action;
+    bt::TorrentInterface* tc;
+    bool hit;
+
+    bool downloadingFinished(bt::TorrentInterface* tor, QueueManager* qman);
+    bool seedingFinished(bt::TorrentInterface* tor, QueueManager* qman);
+    QString toolTip() const;
+};
+
+/**
+    Keeps track of all shutdown rules and monitors for events (torrent finished with seeding or downloading).
+    When an event is received, it will determine the course of action.
+*/
+class ShutdownRuleSet : public QObject
+{
+    Q_OBJECT
+public:
+    ShutdownRuleSet(CoreInterface* core, QObject* parent);
+    ~ShutdownRuleSet() override;
+
+    /// Set if all rules must be hit, before actions are undertaken
+    void setAllRulesMustBeHit(bool on)
     {
-        DOWNLOADING_COMPLETED = 0,
-        SEEDING_COMPLETED
-    };
+        all_rules_must_be_hit = on;
+    }
 
-    enum Target
+    /// See if all rules must be hit, before actions are undertaken
+    bool allRulesMustBeHit() const
     {
-        ALL_TORRENTS,
-        SPECIFIC_TORRENT
-    };
+        return all_rules_must_be_hit;
+    }
 
-    enum Action
+    /// Get the current action
+    Action currentAction() const;
+
+    /// Do we have a valid ruleset
+    bool valid() const
     {
-        SHUTDOWN,
-        LOCK,
-        SUSPEND_TO_DISK,
-        SUSPEND_TO_RAM
-    };
+        return !rules.isEmpty();
+    }
 
-    struct ShutdownRule
+    /// Enable or disable the rules
+    void setEnabled(bool on);
+
+    /// Whether or not the rules are enabled
+    bool enabled() const
     {
-        Trigger trigger;
-        Target target;
-        Action action;
-        bt::TorrentInterface* tc;
-        bool hit;
-
-        bool downloadingFinished(bt::TorrentInterface* tor, QueueManager* qman);
-        bool seedingFinished(bt::TorrentInterface* tor, QueueManager* qman);
-        QString toolTip() const;
-    };
+        return on;
+    }
 
     /**
-        Keeps track of all shutdown rules and monitors for events (torrent finished with seeding or downloading).
-        When an event is received, it will determine the course of action.
+        Add a rule to the ruleset
     */
-    class ShutdownRuleSet : public QObject
+    void addRule(Action action, Target target, Trigger trigger, bt::TorrentInterface* tc = 0);
+
+    /**
+        Clear all rules
+    */
+    void clear();
+
+    /// Get the number of rules
+    int count() const
     {
-        Q_OBJECT
-    public:
-        ShutdownRuleSet(CoreInterface* core, QObject* parent);
-        ~ShutdownRuleSet() override;
+        return rules.count();
+    }
 
-        /// Set if all rules must be hit, before actions are undertaken
-        void setAllRulesMustBeHit(bool on) {all_rules_must_be_hit = on;}
+    /// Get a rule
+    const ShutdownRule& rule(int idx) const
+    {
+        return rules.at(idx);
+    }
 
-        /// See if all rules must be hit, before actions are undertaken
-        bool allRulesMustBeHit() const {return all_rules_must_be_hit;}
+    /// Save the ruleset to a file
+    void save(const QString& file);
 
-        /// Get the current action
-        Action currentAction() const;
+    /// Load the ruleset from a file
+    void load(const QString& file);
 
-        /// Do we have a valid ruleset
-        bool valid() const {return !rules.isEmpty();}
+    /// Generate a tool tip for the current ruleset
+    QString toolTip() const;
 
-        /// Enable or disable the rules
-        void setEnabled(bool on);
+Q_SIGNALS:
+    void shutdown();
+    void standby();
+    void lock();
+    void suspendToDisk();
+    void suspendToRAM();
 
-        /// Whether or not the rules are enabled
-        bool enabled() const {return on;}
+private Q_SLOTS:
+    void torrentFinished(bt::TorrentInterface* tc);
+    void seedingAutoStopped(bt::TorrentInterface* tc, bt::AutoStopReason reason);
+    void torrentAdded(bt::TorrentInterface* tc);
+    void torrentRemoved(bt::TorrentInterface* tc);
 
-        /**
-            Add a rule to the ruleset
-        */
-        void addRule(Action action, Target target, Trigger trigger, bt::TorrentInterface* tc = 0);
+private:
+    bt::TorrentInterface* torrentForHash(const QByteArray& hash);
+    void triggered(Trigger trigger, bt::TorrentInterface* tc);
 
-        /**
-            Clear all rules
-        */
-        void clear();
-
-        /// Get the number of rules
-        int count() const {return rules.count();}
-
-        /// Get a rule
-        const ShutdownRule& rule(int idx) const {return rules.at(idx);}
-
-        /// Save the ruleset to a file
-        void save(const QString& file);
-
-        /// Load the ruleset from a file
-        void load(const QString& file);
-
-        /// Generate a tool tip for the current ruleset
-        QString toolTip() const;
-
-    Q_SIGNALS:
-        void shutdown();
-        void standby();
-        void lock();
-        void suspendToDisk();
-        void suspendToRAM();
-
-    private Q_SLOTS:
-        void torrentFinished(bt::TorrentInterface* tc);
-        void seedingAutoStopped(bt::TorrentInterface* tc, bt::AutoStopReason reason);
-        void torrentAdded(bt::TorrentInterface* tc);
-        void torrentRemoved(bt::TorrentInterface* tc);
-
-    private:
-        bt::TorrentInterface* torrentForHash(const QByteArray& hash);
-        void triggered(Trigger trigger, bt::TorrentInterface* tc);
-
-    private:
-        QList<ShutdownRule> rules;
-        CoreInterface* core;
-        bool on;
-        bool all_rules_must_be_hit;
-    };
+private:
+    QList<ShutdownRule> rules;
+    CoreInterface* core;
+    bool on;
+    bool all_rules_must_be_hit;
+};
 
 }
 

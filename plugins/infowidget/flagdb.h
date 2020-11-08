@@ -26,40 +26,43 @@
 
 namespace kt
 {
-    class FlagDBSource
+class FlagDBSource
+{
+public:
+    FlagDBSource();
+    FlagDBSource(const QString& pathPattern);
+    QString getPath(const QString& country) const;
+
+    const QString& getPathPattern()
     {
-    public:
-        FlagDBSource();
-        FlagDBSource(const QString& pathPattern);
-        QString getPath(const QString& country) const;
-
-        const QString& getPathPattern() { return pathPattern; };
-
-    private:
-        QString pathPattern;
+        return pathPattern;
     };
 
-    /**
-    @author Modestas Vainius
-    */
-    class FlagDB
-    {
-    public :
-        FlagDB(int preferredWidth, int preferredHeight);
-        FlagDB(const FlagDB& m);
-        ~FlagDB();
+private:
+    QString pathPattern;
+};
 
-        void addFlagSource(const FlagDBSource& source);
-        void addFlagSource(const QString& pathPattern);
-        const QList<FlagDBSource>& listSources() const;
-        bool isFlagAvailable(const QString& country);
-        const QPixmap& getFlag(const QString& country);
-    private:
-        static const QPixmap& nullPixmap;
-        int preferredWidth, preferredHeight;
-        QList<FlagDBSource> sources;
-        QMap<QString, QPixmap> db;
-    };
+/**
+@author Modestas Vainius
+*/
+class FlagDB
+{
+public :
+    FlagDB(int preferredWidth, int preferredHeight);
+    FlagDB(const FlagDB& m);
+    ~FlagDB();
+
+    void addFlagSource(const FlagDBSource& source);
+    void addFlagSource(const QString& pathPattern);
+    const QList<FlagDBSource>& listSources() const;
+    bool isFlagAvailable(const QString& country);
+    const QPixmap& getFlag(const QString& country);
+private:
+    static const QPixmap& nullPixmap;
+    int preferredWidth, preferredHeight;
+    QList<FlagDBSource> sources;
+    QMap<QString, QPixmap> db;
+};
 }
 
 #endif

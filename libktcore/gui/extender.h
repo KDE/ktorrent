@@ -26,38 +26,41 @@
 
 namespace bt
 {
-    class TorrentInterface;
+class TorrentInterface;
 }
 
 namespace kt
 {
 
-    /**
-     * Base class for all extender widgets
-     */
-    class KTCORE_EXPORT Extender : public QWidget
+/**
+ * Base class for all extender widgets
+ */
+class KTCORE_EXPORT Extender : public QWidget
+{
+    Q_OBJECT
+public:
+    Extender(bt::TorrentInterface* tc, QWidget* parent);
+    ~Extender() override;
+
+    /// Get the torrent of this extender
+    bt::TorrentInterface* torrent()
     {
-        Q_OBJECT
-    public:
-        Extender(bt::TorrentInterface* tc, QWidget* parent);
-        ~Extender() override;
+        return tc;
+    }
 
-        /// Get the torrent of this extender
-        bt::TorrentInterface* torrent() {return tc;}
+    /// Is this similar to another extender
+    virtual bool similar(Extender* ext) const = 0;
 
-        /// Is this similar to another extender
-        virtual bool similar(Extender* ext) const = 0;
+Q_SIGNALS:
+    /// Should be emitted by an extender when it wants to close itself
+    void closeRequest(Extender* ext);
 
-    Q_SIGNALS:
-        /// Should be emitted by an extender when it wants to close itself
-        void closeRequest(Extender* ext);
+    /// Should be emitted when an extender is resized
+    void resized(Extender* ext);
 
-        /// Should be emitted when an extender is resized
-        void resized(Extender* ext);
-
-    protected:
-        bt::TorrentInterface* tc;
-    };
+protected:
+    bt::TorrentInterface* tc;
+};
 
 }
 

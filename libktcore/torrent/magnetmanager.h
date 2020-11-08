@@ -25,7 +25,8 @@
 #include <magnet/magnetdownloader.h>
 #include <bcodec/bencoder.h>
 
-namespace kt {
+namespace kt
+{
 
 /// Adds options struct to bt::MagnetDownloader
 class MagnetDownloader : public bt::MagnetDownloader
@@ -123,8 +124,7 @@ public:
     void saveMagnets(const QString& file);
 
     /// Defines the magnet state on the MagnetManager
-    enum MagnetState
-    {
+    enum MagnetState {
         DOWNLOADING,    ///< Started and downloading
         QUEUED,         ///< Started and waiting for download
         STOPPED         ///< Stopped

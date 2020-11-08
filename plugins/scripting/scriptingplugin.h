@@ -28,38 +28,38 @@ class KJob;
 
 namespace kt
 {
-    class Script;
-    class ScriptManager;
-    class ScriptModel;
+class Script;
+class ScriptManager;
+class ScriptModel;
 
-    /**
-        @author
-    */
-    class ScriptingPlugin : public Plugin
-    {
-        Q_OBJECT
-    public:
-        ScriptingPlugin(QObject* parent, const QVariantList& args);
-        ~ScriptingPlugin() override;
+/**
+    @author
+*/
+class ScriptingPlugin : public Plugin
+{
+    Q_OBJECT
+public:
+    ScriptingPlugin(QObject* parent, const QVariantList& args);
+    ~ScriptingPlugin() override;
 
-        void load() override;
-        void unload() override;
-        bool versionCheck(const QString& version) const override;
+    void load() override;
+    void unload() override;
+    bool versionCheck(const QString& version) const override;
 
-    private:
-        void scriptDownloadFinished(KJob* job);
-        void loadScripts();
-        void saveScripts();
-        Script* loadScriptDir(const QString& dir);
+private:
+    void scriptDownloadFinished(KJob* job);
+    void loadScripts();
+    void saveScripts();
+    Script* loadScriptDir(const QString& dir);
 
-    private Q_SLOTS:
-        void addScript();
-        void removeScript();
+private Q_SLOTS:
+    void addScript();
+    void removeScript();
 
-    private:
-        ScriptManager* sman;
-        ScriptModel* model;
-    };
+private:
+    ScriptManager* sman;
+    ScriptModel* model;
+};
 
 }
 

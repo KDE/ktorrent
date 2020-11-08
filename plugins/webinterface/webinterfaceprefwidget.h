@@ -28,17 +28,17 @@
 namespace kt
 {
 
-    class WebInterfacePrefWidget : public PrefPageInterface, public Ui_WebInterfacePrefWidget
-    {
-        Q_OBJECT
-    public:
-        WebInterfacePrefWidget(QWidget* parent = 0);
-        virtual ~WebInterfacePrefWidget();
+class WebInterfacePrefWidget : public PrefPageInterface, public Ui_WebInterfacePrefWidget
+{
+    Q_OBJECT
+public:
+    WebInterfacePrefWidget(QWidget* parent = 0);
+    virtual ~WebInterfacePrefWidget();
 
-    private slots:
-        void authenticationToggled(bool on);
+private slots:
+    void authenticationToggled(bool on);
 
-    };
+};
 
 }
 #endif

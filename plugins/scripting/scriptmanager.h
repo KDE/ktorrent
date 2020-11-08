@@ -30,64 +30,64 @@ class KActionCollection;
 
 namespace Kross
 {
-    class Action;
+class Action;
 }
 
 namespace kt
 {
-    class Script;
-    class ScriptModel;
-    class ScriptDelegate;
+class Script;
+class ScriptModel;
+class ScriptDelegate;
 
-    /**
-        Widget to display all scripts.
-    */
-    class ScriptManager : public Activity
-    {
-        Q_OBJECT
-    public:
-        ScriptManager(ScriptModel* model, QWidget* parent);
-        ~ScriptManager() override;
+/**
+    Widget to display all scripts.
+*/
+class ScriptManager : public Activity
+{
+    Q_OBJECT
+public:
+    ScriptManager(ScriptModel* model, QWidget* parent);
+    ~ScriptManager() override;
 
-        /// Get all selected scripts
-        QModelIndexList selectedScripts();
+    /// Get all selected scripts
+    QModelIndexList selectedScripts();
 
-        /// Update all actions and make sure they are properly enabled or disabled
-        void updateActions(const QModelIndexList& selected);
+    /// Update all actions and make sure they are properly enabled or disabled
+    void updateActions(const QModelIndexList& selected);
 
 
-    private Q_SLOTS:
-        void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-        void showContextMenu(const QPoint& p);
-        void dataChanged(const QModelIndex& f, const QModelIndex& to);
-        void runScript();
-        void stopScript();
-        void editScript();
-        void configureScript();
-        void showProperties();
-    public:
-        void showProperties(Script* script);
+private Q_SLOTS:
+    void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void showContextMenu(const QPoint& p);
+    void dataChanged(const QModelIndex& f, const QModelIndex& to);
+    void runScript();
+    void stopScript();
+    void editScript();
+    void configureScript();
+    void showProperties();
+public:
+    void showProperties(Script* script);
 
-    private:
-        void setupActions();
+private:
+    void setupActions();
 
-    Q_SIGNALS:
-        void addScript();
-        void removeScript();
+Q_SIGNALS:
+    void addScript();
+    void removeScript();
 
-    private:
-        ScriptModel* model;
-        ScriptDelegate* delegate;
-        QListView* view;
+private:
+    ScriptModel* model;
+    ScriptDelegate* delegate;
+    QListView* view;
 
-        QAction * add_script;
-        QAction * remove_script;
-        QAction * run_script;
-        QAction * stop_script;
-        QAction * edit_script;
-        QAction * properties;
-        QAction * configure_script;
-    };
+    QAction * add_script;
+    QAction * remove_script;
+    QAction * run_script;
+    QAction * stop_script;
+    QAction * edit_script;
+    QAction * properties;
+    QAction * configure_script;
+};
 
 }
 

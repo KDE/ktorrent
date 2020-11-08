@@ -26,39 +26,39 @@
 namespace kt
 {
 
-    FeedListView::FeedListView(FeedList* feeds, QWidget* parent)
-        : QListView(parent), feeds(feeds)
-    {
-        setContextMenuPolicy(Qt::CustomContextMenu);
-        setSelectionMode(QAbstractItemView::ExtendedSelection);
-        setModel(feeds);
-        setItemDelegate(new FeedListDelegate(this));
-        setAlternatingRowColors(true);
-        setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::EditKeyPressed);
-        connect(this, &FeedListView::doubleClicked, this, &FeedListView::itemActivated);
-        connect(this, &FeedListView::clicked, this, &FeedListView::itemActivated);
-        connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FeedListView::selectionChanged);
-    }
+FeedListView::FeedListView(FeedList* feeds, QWidget* parent)
+    : QListView(parent), feeds(feeds)
+{
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    setSelectionMode(QAbstractItemView::ExtendedSelection);
+    setModel(feeds);
+    setItemDelegate(new FeedListDelegate(this));
+    setAlternatingRowColors(true);
+    setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::EditKeyPressed);
+    connect(this, &FeedListView::doubleClicked, this, &FeedListView::itemActivated);
+    connect(this, &FeedListView::clicked, this, &FeedListView::itemActivated);
+    connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FeedListView::selectionChanged);
+}
 
 
-    FeedListView::~FeedListView()
-    {
-    }
+FeedListView::~FeedListView()
+{
+}
 
-    void FeedListView::itemActivated(const QModelIndex& idx)
-    {
-        feedActivated(feeds->feedForIndex(idx));
-    }
+void FeedListView::itemActivated(const QModelIndex& idx)
+{
+    feedActivated(feeds->feedForIndex(idx));
+}
 
-    void FeedListView::selectionChanged(const QItemSelection& sel, const QItemSelection& desel)
-    {
-        Q_UNUSED(desel)
-        Q_UNUSED(sel)
-        enableRemove(selectionModel()->selectedRows().count() > 0);
-    }
+void FeedListView::selectionChanged(const QItemSelection& sel, const QItemSelection& desel)
+{
+    Q_UNUSED(desel)
+    Q_UNUSED(sel)
+    enableRemove(selectionModel()->selectedRows().count() > 0);
+}
 
-    QModelIndexList FeedListView::selectedFeeds()
-    {
-        return selectionModel()->selectedRows();
-    }
+QModelIndexList FeedListView::selectedFeeds()
+{
+    return selectionModel()->selectedRows();
+}
 }

@@ -29,28 +29,28 @@
 namespace kt
 {
 
-    /**
-     * ScanForLostFiles plugin preferences page
-     */
+/**
+ * ScanForLostFiles plugin preferences page
+ */
 
-    class ScanForLostFilesPrefPage : public PrefPageInterface, public Ui::ScanForLostFilesPrefPage
-    {
-        Q_OBJECT
+class ScanForLostFilesPrefPage : public PrefPageInterface, public Ui::ScanForLostFilesPrefPage
+{
+    Q_OBJECT
 
-    public:
-        ScanForLostFilesPrefPage(ScanForLostFilesPlugin* plugin, QWidget* parent);
-        ~ScanForLostFilesPrefPage() override;
+public:
+    ScanForLostFilesPrefPage(ScanForLostFilesPlugin* plugin, QWidget* parent);
+    ~ScanForLostFilesPrefPage() override;
 
-        void loadSettings() override;
-        void loadDefaults() override;
-        void updateSettings() override;
-        bool customWidgetsChanged() override;
+    void loadSettings() override;
+    void loadDefaults() override;
+    void updateSettings() override;
+    bool customWidgetsChanged() override;
 
-        void saveSettings();
+    void saveSettings();
 
-    private:
-        ScanForLostFilesPlugin* m_plugin;
-    };
+private:
+    ScanForLostFilesPlugin* m_plugin;
+};
 
 }
 

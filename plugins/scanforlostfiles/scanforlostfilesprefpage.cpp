@@ -31,41 +31,41 @@
 namespace kt
 {
 
-    ScanForLostFilesPrefPage::ScanForLostFilesPrefPage(ScanForLostFilesPlugin* plugin, QWidget* parent)
-        : PrefPageInterface(ScanForLostFilesPluginSettings::self(), i18nc("plugin name", "Scan for lost files"), QStringLiteral("edit-find"), parent), m_plugin(plugin)
-    {
-        setupUi(this);
-    }
+ScanForLostFilesPrefPage::ScanForLostFilesPrefPage(ScanForLostFilesPlugin* plugin, QWidget* parent)
+    : PrefPageInterface(ScanForLostFilesPluginSettings::self(), i18nc("plugin name", "Scan for lost files"), QStringLiteral("edit-find"), parent), m_plugin(plugin)
+{
+    setupUi(this);
+}
 
 
-    ScanForLostFilesPrefPage::~ScanForLostFilesPrefPage()
-    {}
+ScanForLostFilesPrefPage::~ScanForLostFilesPrefPage()
+{}
 
-    void ScanForLostFilesPrefPage::loadSettings()
-    {
-        kcfg_ScanForLostFilesWidgetPosition->setCurrentIndex(ScanForLostFilesPluginSettings::scanForLostFilesWidgetPosition());
-    }
+void ScanForLostFilesPrefPage::loadSettings()
+{
+    kcfg_ScanForLostFilesWidgetPosition->setCurrentIndex(ScanForLostFilesPluginSettings::scanForLostFilesWidgetPosition());
+}
 
-    void ScanForLostFilesPrefPage::loadDefaults()
-    {
-        kcfg_ScanForLostFilesWidgetPosition->setCurrentIndex(0);
-    }
+void ScanForLostFilesPrefPage::loadDefaults()
+{
+    kcfg_ScanForLostFilesWidgetPosition->setCurrentIndex(0);
+}
 
-    void ScanForLostFilesPrefPage::saveSettings()
-    {
-        ScanForLostFilesPluginSettings::setScanForLostFilesWidgetPosition(kcfg_ScanForLostFilesWidgetPosition->currentIndex());
-        ScanForLostFilesPluginSettings::self()->save();
-    }
+void ScanForLostFilesPrefPage::saveSettings()
+{
+    ScanForLostFilesPluginSettings::setScanForLostFilesWidgetPosition(kcfg_ScanForLostFilesWidgetPosition->currentIndex());
+    ScanForLostFilesPluginSettings::self()->save();
+}
 
-    void ScanForLostFilesPrefPage::updateSettings()
-    {
-        saveSettings();
-        m_plugin->updateScanForLostFiles();
-    }
+void ScanForLostFilesPrefPage::updateSettings()
+{
+    saveSettings();
+    m_plugin->updateScanForLostFiles();
+}
 
-    bool ScanForLostFilesPrefPage::customWidgetsChanged()
-    {
-        return true;
-    }
+bool ScanForLostFilesPrefPage::customWidgetsChanged()
+{
+    return true;
+}
 
 }

@@ -32,47 +32,47 @@ class KJob;
 
 namespace kt
 {
-    class IPFilterPlugin;
-    class DownloadAndConvertJob;
+class IPFilterPlugin;
+class DownloadAndConvertJob;
 
-    /**
-     * @author Ivan Vasic
-     * @brief IPBlocking plugin interface page
-     **/
-    class IPBlockingPrefPage : public PrefPageInterface, public Ui_IPBlockingPrefPage
-    {
-        Q_OBJECT
-    public:
-        IPBlockingPrefPage(IPFilterPlugin* p);
-        ~IPBlockingPrefPage() override;
+/**
+ * @author Ivan Vasic
+ * @brief IPBlocking plugin interface page
+ **/
+class IPBlockingPrefPage : public PrefPageInterface, public Ui_IPBlockingPrefPage
+{
+    Q_OBJECT
+public:
+    IPBlockingPrefPage(IPFilterPlugin* p);
+    ~IPBlockingPrefPage() override;
 
 
-        void loadSettings() override;
-        void loadDefaults() override;
-        void updateSettings() override;
+    void loadSettings() override;
+    void loadDefaults() override;
+    void updateSettings() override;
 
-        /// Do an auto update, return false if this is not possible
-        bool doAutoUpdate();
+    /// Do an auto update, return false if this is not possible
+    bool doAutoUpdate();
 
-    private Q_SLOTS:
-        void downloadClicked();
-        void checkUseLevel1Toggled(bool);
-        void restoreGUI();
-        void downloadAndConvertFinished(KJob* j);
-        void autoUpdateToggled(bool on);
-        void autoUpdateIntervalChanged(int val);
+private Q_SLOTS:
+    void downloadClicked();
+    void checkUseLevel1Toggled(bool);
+    void restoreGUI();
+    void downloadAndConvertFinished(KJob* j);
+    void autoUpdateToggled(bool on);
+    void autoUpdateIntervalChanged(int val);
 
-    private:
-        void updateAutoUpdate();
+private:
+    void updateAutoUpdate();
 
-    Q_SIGNALS:
-        void updateFinished();
+Q_SIGNALS:
+    void updateFinished();
 
-    private:
-        CoreInterface* m_core;
-        IPFilterPlugin* m_plugin;
-        DownloadAndConvertJob* m_job;
-        bool m_verbose;
-    };
+private:
+    CoreInterface* m_core;
+    IPFilterPlugin* m_plugin;
+    DownloadAndConvertJob* m_job;
+    bool m_verbose;
+};
 }
 #endif

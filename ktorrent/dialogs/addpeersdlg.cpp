@@ -27,47 +27,47 @@
 
 namespace kt
 {
-    class ManualPeerSource : public bt::PeerSource
+class ManualPeerSource : public bt::PeerSource
+{
+public:
+    ManualPeerSource() {}
+    ~ManualPeerSource() override {}
+
+    void start() override {}
+    void stop(bt::WaitJob*) override {}
+
+    void add(const QString& ip, bt::Uint16 port)
     {
-    public:
-        ManualPeerSource() {}
-        ~ManualPeerSource() override {}
-
-        void start() override {}
-        void stop (bt::WaitJob*) override {}
-
-        void add(const QString& ip, bt::Uint16 port)
-        {
-            addPeer(net::Address(ip, port), false);
-            peersReady(this);
-        }
-    };
-
-    AddPeersDlg::AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent)
-        : QDialog(parent), tc(tc), mps(nullptr)
-    {
-        setupUi(this);
-        connect(m_close, &QPushButton::clicked, this, &AddPeersDlg::reject);
-        connect(m_add, &QPushButton::clicked, this, &AddPeersDlg::addPressed);
-
-        KGuiItem::assign(m_close, KStandardGuiItem::close());
-        KGuiItem::assign(m_add, KStandardGuiItem::add());
-
-        mps = new ManualPeerSource();
-        tc->addPeerSource(mps);
+        addPeer(net::Address(ip, port), false);
+        peersReady(this);
     }
+};
+
+AddPeersDlg::AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent)
+    : QDialog(parent), tc(tc), mps(nullptr)
+{
+    setupUi(this);
+    connect(m_close, &QPushButton::clicked, this, &AddPeersDlg::reject);
+    connect(m_add, &QPushButton::clicked, this, &AddPeersDlg::addPressed);
+
+    KGuiItem::assign(m_close, KStandardGuiItem::close());
+    KGuiItem::assign(m_add, KStandardGuiItem::add());
+
+    mps = new ManualPeerSource();
+    tc->addPeerSource(mps);
+}
 
 
-    AddPeersDlg::~AddPeersDlg()
-    {
-        tc->removePeerSource(mps);
-        delete mps;
-    }
+AddPeersDlg::~AddPeersDlg()
+{
+    tc->removePeerSource(mps);
+    delete mps;
+}
 
-    void AddPeersDlg::addPressed()
-    {
-        mps->add(m_ip->text(), m_port->value());
-    }
+void AddPeersDlg::addPressed()
+{
+    mps->add(m_ip->text(), m_port->value());
+}
 
 }
 

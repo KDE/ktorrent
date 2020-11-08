@@ -27,26 +27,26 @@
 namespace kt
 {
 
-    /**
-        @author Joris Guisson <joris.guisson@gmail.com>
-    */
-    class HttpResponseHeader
-    {
-        int response_code;
-        QMap<QString, QString> fields;
-        int major_version;
-        int minor_version;
+/**
+    @author Joris Guisson <joris.guisson@gmail.com>
+*/
+class HttpResponseHeader
+{
+    int response_code;
+    QMap<QString, QString> fields;
+    int major_version;
+    int minor_version;
 
-    public:
-        HttpResponseHeader(int response_code, int major_version = 1, int minor_version = 1);
-        HttpResponseHeader(const HttpResponseHeader& hdr);
-        virtual ~HttpResponseHeader();
+public:
+    HttpResponseHeader(int response_code, int major_version = 1, int minor_version = 1);
+    HttpResponseHeader(const HttpResponseHeader& hdr);
+    virtual ~HttpResponseHeader();
 
-        void setResponseCode(int response_code);
-        void setValue(const QString& key, const QString& value);
+    void setResponseCode(int response_code);
+    void setValue(const QString& key, const QString& value);
 
-        QString toString() const;
-    };
+    QString toString() const;
+};
 
 
 }

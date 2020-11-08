@@ -27,31 +27,31 @@
 
 namespace kt
 {
-    class CoreInterface;
-    class ShutdownTorrentModel;
+class CoreInterface;
+class ShutdownTorrentModel;
 
 
-    class ShutdownDlg : public QDialog, public Ui_ShutdownDlg
-    {
-        Q_OBJECT
-    public:
-        ShutdownDlg(ShutdownRuleSet* rules, CoreInterface* core, QWidget* parent);
-        ~ShutdownDlg() override;
+class ShutdownDlg : public QDialog, public Ui_ShutdownDlg
+{
+    Q_OBJECT
+public:
+    ShutdownDlg(ShutdownRuleSet* rules, CoreInterface* core, QWidget* parent);
+    ~ShutdownDlg() override;
 
-        void accept() override;
-        void reject() override;
+    void accept() override;
+    void reject() override;
 
-    private Q_SLOTS:
-        void timeToExecuteChanged(int idx);
+private Q_SLOTS:
+    void timeToExecuteChanged(int idx);
 
-    private:
-        Action indexToAction(int idx);
-        int actionToIndex(Action act);
+private:
+    Action indexToAction(int idx);
+    int actionToIndex(Action act);
 
-    private:
-        ShutdownRuleSet* rules;
-        ShutdownTorrentModel* model;
-    };
+private:
+    ShutdownRuleSet* rules;
+    ShutdownTorrentModel* model;
+};
 
 }
 

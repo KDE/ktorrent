@@ -28,52 +28,64 @@ class KConfigSkeleton;
 
 namespace kt
 {
+/**
+ * @author Ivan Vasic
+ * @brief Interface to add configuration dialog page.
+ *
+ * This interface allows plugins and others to add their own pages in Configuration dialog.
+ */
+class KTCORE_EXPORT PrefPageInterface : public QWidget
+{
+    Q_OBJECT
+public:
+    PrefPageInterface(KConfigSkeleton* cfg, const QString& name, const QString& icon, QWidget* parent);
+    ~PrefPageInterface() override;
+
     /**
-     * @author Ivan Vasic
-     * @brief Interface to add configuration dialog page.
-     *
-     * This interface allows plugins and others to add their own pages in Configuration dialog.
+     * Initialize the settings.
+     * Called by the settings dialog when it is created.
      */
-    class KTCORE_EXPORT PrefPageInterface : public QWidget
+    virtual void loadSettings();
+
+    /**
+     * Load default settings.
+     * Called when the defaults button is pressed in the settings dialog.
+     */
+    virtual void loadDefaults();
+
+    /**
+     * Called when user presses OK or apply.
+     */
+    virtual void updateSettings();
+
+    KConfigSkeleton* config()
     {
-        Q_OBJECT
-    public:
-        PrefPageInterface(KConfigSkeleton* cfg, const QString& name, const QString& icon, QWidget* parent);
-        ~PrefPageInterface() override;
+        return cfg;
+    }
+    const QString& pageName()
+    {
+        return name;
+    }
+    const QString& pageIcon()
+    {
+        return icon;
+    }
 
-        /**
-         * Initialize the settings.
-         * Called by the settings dialog when it is created.
-         */
-        virtual void loadSettings();
+    /// Override if there are custom widgets outside which have changed
+    virtual bool customWidgetsChanged()
+    {
+        return false;
+    }
 
-        /**
-         * Load default settings.
-         * Called when the defaults button is pressed in the settings dialog.
-         */
-        virtual void loadDefaults();
+Q_SIGNALS:
+    /// Emitted when buttons need to be updated
+    void updateButtons();
 
-        /**
-         * Called when user presses OK or apply.
-         */
-        virtual void updateSettings();
-
-        KConfigSkeleton* config() {return cfg;}
-        const QString& pageName() {return name;}
-        const QString& pageIcon() {return icon;}
-
-        /// Override if there are custom widgets outside which have changed
-        virtual bool customWidgetsChanged() {return false;}
-
-    Q_SIGNALS:
-        /// Emitted when buttons need to be updated
-        void updateButtons();
-
-    private:
-        KConfigSkeleton* cfg;
-        QString name;
-        QString icon;
-    };
+private:
+    KConfigSkeleton* cfg;
+    QString name;
+    QString icon;
+};
 }
 #endif
 

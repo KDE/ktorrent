@@ -28,33 +28,33 @@
 
 namespace kt
 {
+/**
+ * Selection model which works on internal pointers instead of indexes.
+ */
+class KTCORE_EXPORT ItemSelectionModel : public QItemSelectionModel
+{
+    Q_OBJECT
+public:
+    ItemSelectionModel(QAbstractItemModel* model, QObject* parent);
+    ~ItemSelectionModel() override;
+
+    void select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command) override;
+    void select(const QItemSelection& sel, QItemSelectionModel::SelectionFlags command) override;
+    void clear() override;
+    void reset() override;
+
+public Q_SLOTS:
     /**
-     * Selection model which works on internal pointers instead of indexes.
+     * Updates the selection after a sort.
      */
-    class KTCORE_EXPORT ItemSelectionModel : public QItemSelectionModel
-    {
-        Q_OBJECT
-    public:
-        ItemSelectionModel(QAbstractItemModel* model, QObject* parent);
-        ~ItemSelectionModel() override;
+    void sorted();
 
-        void select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command) override;
-        void select(const QItemSelection& sel, QItemSelectionModel::SelectionFlags command) override;
-        void clear() override;
-        void reset() override;
+private:
+    void doRange(const QItemSelectionRange r, QItemSelectionModel::SelectionFlags command);
 
-    public Q_SLOTS:
-        /**
-         * Updates the selection after a sort.
-         */
-        void sorted();
-
-    private:
-        void doRange(const QItemSelectionRange r, QItemSelectionModel::SelectionFlags command);
-
-    private:
-        QSet<void*> selection;
-    };
+private:
+    QSet<void*> selection;
+};
 }
 
 #endif // ITEMSELECTIONMODEL_H

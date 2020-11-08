@@ -27,21 +27,21 @@
 
 namespace kt
 {
-    class Group;
+class Group;
 
-    /**
-        @author
-    */
-    class GroupPolicyDlg : public QDialog, public Ui_GroupPolicyDlg
-    {
-    public:
-        GroupPolicyDlg(Group* group, QWidget* parent);
-        ~GroupPolicyDlg() override;
+/**
+    @author
+*/
+class GroupPolicyDlg : public QDialog, public Ui_GroupPolicyDlg
+{
+public:
+    GroupPolicyDlg(Group* group, QWidget* parent);
+    ~GroupPolicyDlg() override;
 
-        void accept() override;
-    private:
-        Group* group;
-    };
+    void accept() override;
+private:
+    Group* group;
+};
 
 }
 

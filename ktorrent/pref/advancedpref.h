@@ -28,19 +28,19 @@
 
 namespace kt
 {
-    class AdvancedPref : public PrefPageInterface, public Ui_AdvancedPref
-    {
-        Q_OBJECT
-    public:
-        AdvancedPref(QWidget* parent);
-        ~AdvancedPref() override;
+class AdvancedPref : public PrefPageInterface, public Ui_AdvancedPref
+{
+    Q_OBJECT
+public:
+    AdvancedPref(QWidget* parent);
+    ~AdvancedPref() override;
 
-        void loadSettings() override;
-        void loadDefaults() override;
+    void loadSettings() override;
+    void loadDefaults() override;
 
-    public Q_SLOTS:
-        void onDiskPreallocToggled(bool on);
-    };
+public Q_SLOTS:
+    void onDiskPreallocToggled(bool on);
+};
 }
 
 #endif

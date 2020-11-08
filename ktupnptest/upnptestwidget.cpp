@@ -71,8 +71,7 @@ void UPnPTestWidget::undoForward()
 void UPnPTestWidget::findRouters()
 {
     Out(SYS_GEN | LOG_DEBUG) << "Searching for routers ..." << endl;
-    if (!mcast_socket)
-    {
+    if (!mcast_socket) {
         mcast_socket = new UPnPMCastSocket(m_verbose->isChecked());
         connect(mcast_socket, &UPnPMCastSocket::discovered, this, &UPnPTestWidget::discovered);
     }

@@ -31,49 +31,49 @@
 
 namespace kt
 {
-    class Activity;
+class Activity;
 
-    /**
-     * The CentralWidget holds the widget stack.
-     */
-    class KTCORE_EXPORT CentralWidget : public QStackedWidget
-    {
-        Q_OBJECT
-    public:
-        CentralWidget(QWidget* parent);
-        ~CentralWidget() override;
+/**
+ * The CentralWidget holds the widget stack.
+ */
+class KTCORE_EXPORT CentralWidget : public QStackedWidget
+{
+    Q_OBJECT
+public:
+    CentralWidget(QWidget* parent);
+    ~CentralWidget() override;
 
-        /// Add an Activity
-        QAction * addActivity(Activity* act);
+    /// Add an Activity
+    QAction * addActivity(Activity* act);
 
-        /// Remove an Activity (doesn't delete it)
-        void removeActivity(Activity* act);
+    /// Remove an Activity (doesn't delete it)
+    void removeActivity(Activity* act);
 
-        /// Set the current activity
-        void setCurrentActivity(Activity* act);
+    /// Set the current activity
+    void setCurrentActivity(Activity* act);
 
-        /// Get the current activity
-        Activity* currentActivity();
+    /// Get the current activity
+    Activity* currentActivity();
 
-        /// Load the state of the widget
-        void loadState(KSharedConfigPtr cfg);
+    /// Load the state of the widget
+    void loadState(KSharedConfigPtr cfg);
 
-        /// Save the state of the widget
-        void saveState(KSharedConfigPtr cfg);
+    /// Save the state of the widget
+    void saveState(KSharedConfigPtr cfg);
 
-        /// Get the list of actions to switch between activities
-        QList<QAction*> activitySwitchingActions();
+    /// Get the list of actions to switch between activities
+    QList<QAction*> activitySwitchingActions();
 
-    private Q_SLOTS:
-        void switchActivity(QAction* action);
+private Q_SLOTS:
+    void switchActivity(QAction* action);
 
-    Q_SIGNALS:
-        /// Emitted when the current Activity needs to be changed
-        void changeActivity(Activity* act);
+Q_SIGNALS:
+    /// Emitted when the current Activity needs to be changed
+    void changeActivity(Activity* act);
 
-    private:
-        QActionGroup* activity_switching_group;
-    };
+private:
+    QActionGroup* activity_switching_group;
+};
 
 }
 

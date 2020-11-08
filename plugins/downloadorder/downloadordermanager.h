@@ -28,65 +28,74 @@
 
 namespace bt
 {
-    class TorrentInterface;
+class TorrentInterface;
 }
 
 namespace kt
 {
 
-    /**
-        Class which manages the file download order for a single torrent
-    */
-    class DownloadOrderManager : public QObject
+/**
+    Class which manages the file download order for a single torrent
+*/
+class DownloadOrderManager : public QObject
+{
+    Q_OBJECT
+public:
+    DownloadOrderManager(bt::TorrentInterface* tor);
+    ~DownloadOrderManager() override;
+
+    /// See if the file download order is enabled
+    bool enabled() const
     {
-        Q_OBJECT
-    public:
-        DownloadOrderManager(bt::TorrentInterface* tor);
-        ~DownloadOrderManager() override;
+        return order.count() > 0;
+    }
 
-        /// See if the file download order is enabled
-        bool enabled() const {return order.count() > 0;}
+    /// Save the order from torX/download_order
+    void save();
 
-        /// Save the order from torX/download_order
-        void save();
+    /// Load the order to torX/download_order
+    void load();
 
-        /// Load the order to torX/download_order
-        void load();
+    /// Enable the download order
+    void enable();
 
-        /// Enable the download order
-        void enable();
+    /// Disable the download order
+    void disable();
 
-        /// Disable the download order
-        void disable();
+    typedef QList<bt::Uint32> Order;
 
-        typedef QList<bt::Uint32> Order;
+    /// Get the download order
+    const Order& downloadOrder() const
+    {
+        return order;
+    }
 
-        /// Get the download order
-        const Order& downloadOrder() const {return order;}
+    /// Set the order
+    void setDownloadOrder(const Order& norder)
+    {
+        order = norder;
+    }
 
-        /// Set the order
-        void setDownloadOrder(const Order& norder) {order = norder;}
+public Q_SLOTS:
+    /**
+     * Change file priorities if needed
+     */
+    void update();
 
-    public Q_SLOTS:
-        /**
-         * Change file priorities if needed
-         */
-        void update();
+    /**
+     * Change file priorities if needed
+     */
+    void chunkDownloaded(bt::TorrentInterface* me, bt::Uint32 chunk);
 
-        /**
-         * Change file priorities if needed
-         */
-        void chunkDownloaded(bt::TorrentInterface* me, bt::Uint32 chunk);
+private:
+    bt::Uint32 nextIncompleteFile();
 
-    private:
-        bt::Uint32 nextIncompleteFile();
-
-    private:
-        bt::TorrentInterface* tor;
-        QList<bt::Uint32> order;
-        bt::Uint32 current_high_priority_file;
-        bt::Uint32 current_normal_priority_file;
-    };
+private:
+    bt::TorrentInterface* tor;
+    QList<bt::Uint32> order;
+    bt::Uint32 current_high_priority_file;
+    bt::Uint32 current_normal_priority_file;
+};
 
 }
 

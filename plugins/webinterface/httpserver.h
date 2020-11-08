@@ -31,83 +31,87 @@ class QSocketNotifier;
 
 namespace bt
 {
-    class MMapFile;
+class MMapFile;
 }
 
 namespace kt
 {
-    class CoreInterface;
+class CoreInterface;
 
-    /**
-     * @author Diego R. Brogna
-     */
-    struct Session
+/**
+ * @author Diego R. Brogna
+ */
+struct Session {
+    bool logged_in;
+    QTime last_access;
+    int sessionId;
+};
+
+struct HeaderField {
+    bool gzip;
+    bool keepAlive;
+    int sessionId;
+    bool ifModifiedSince;
+};
+
+class HttpClientHandler;
+class HttpResponseHeader;
+
+
+
+class HttpServer : public QObject, public net::ServerSocket::ConnectionHandler
+{
+    Q_OBJECT
+public:
+    HttpServer(CoreInterface* core, bt::Uint16 port);
+    virtual ~HttpServer();
+
+    bool isOK() const
     {
-        bool logged_in;
-        QTime last_access;
-        int sessionId;
-    };
-
-    struct HeaderField
+        return sockets.count() > 0;
+    }
+    bt::Uint16 getPort() const
     {
-        bool gzip;
-        bool keepAlive;
-        int sessionId;
-        bool ifModifiedSince;
-    };
+        return port;
+    }
 
-    class HttpClientHandler;
-    class HttpResponseHeader;
+    void handleGet(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+    void handlePost(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+    void handleUnsupportedMethod(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+    bt::MMapFile* cacheLookup(const QString& name);
+    void insertIntoCache(const QString& name, bt::MMapFile* file);
+    QString challengeString();
+    void addContentGenerator(WebContentGenerator* g);
+    void setDefaultResponseHeaders(HttpResponseHeader& hdr, const QString& content_type, bool with_session_info);
+    bool checkLogin(const QHttpRequestHeader& hdr, const QByteArray& data);
+    void redirectToLoginPage(HttpClientHandler* hdlr);
+    void logout();
+    void handleNormalFile(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QString& path);
 
+protected slots:
+    void slotConnectionClosed();
 
+private:
+    bool checkSession(const QHttpRequestHeader& hdr);
+    QDateTime parseDate(const QString& str);
+    QString skinDir() const;
+    QString commonDir() const;
+    void handleFile(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QString& path);
+    virtual void newConnection(int fd, const net::Address& addr);
 
-    class HttpServer : public QObject, public net::ServerSocket::ConnectionHandler
-    {
-        Q_OBJECT
-    public:
-        HttpServer(CoreInterface* core, bt::Uint16 port);
-        virtual ~HttpServer();
-
-        bool isOK() const {return sockets.count() > 0;}
-        bt::Uint16 getPort() const {return port;}
-
-        void handleGet(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-        void handlePost(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-        void handleUnsupportedMethod(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-        bt::MMapFile* cacheLookup(const QString& name);
-        void insertIntoCache(const QString& name, bt::MMapFile* file);
-        QString challengeString();
-        void addContentGenerator(WebContentGenerator* g);
-        void setDefaultResponseHeaders(HttpResponseHeader& hdr, const QString& content_type, bool with_session_info);
-        bool checkLogin(const QHttpRequestHeader& hdr, const QByteArray& data);
-        void redirectToLoginPage(HttpClientHandler* hdlr);
-        void logout();
-        void handleNormalFile(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QString& path);
-
-    protected slots:
-        void slotConnectionClosed();
-
-    private:
-        bool checkSession(const QHttpRequestHeader& hdr);
-        QDateTime parseDate(const QString& str);
-        QString skinDir() const;
-        QString commonDir() const;
-        void handleFile(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QString& path);
-        virtual void newConnection(int fd, const net::Address& addr);
-
-    private:
-        QList<net::ServerSocket::Ptr> sockets;
-        QString rootDir;
-        int sessionTTL;
-        Session session;
-        CoreInterface* core;
-        QCache<QString, bt::MMapFile> cache;
-        bt::Uint16 port;
-        QStringList skin_list;
-        QString challenge;
-        bt::PtrMap<QString, WebContentGenerator> content_generators;
-        QList<HttpClientHandler*> clients;
-    };
+private:
+    QList<net::ServerSocket::Ptr> sockets;
+    QString rootDir;
+    int sessionTTL;
+    Session session;
+    CoreInterface* core;
+    QCache<QString, bt::MMapFile> cache;
+    bt::Uint16 port;
+    QStringList skin_list;
+    QString challenge;
+    bt::PtrMap<QString, WebContentGenerator> content_generators;
+    QList<HttpClientHandler*> clients;
+};
 
 
 }

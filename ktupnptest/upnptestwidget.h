@@ -27,8 +27,8 @@
 
 namespace bt
 {
-    class UPnPMCastSocket;
-    class UPnPRouter;
+class UPnPMCastSocket;
+class UPnPRouter;
 }
 
 class UPnPTestWidget : public QWidget, public Ui_UPnPTestWidget, public bt::LogMonitorInterface

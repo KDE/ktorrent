@@ -31,45 +31,45 @@
 
 namespace kt
 {
-    class ConvertThread;
+class ConvertThread;
 
 
-    class ConvertDialog : public QDialog, public Ui_ConvertDialog
-    {
-        Q_OBJECT
-    public:
-        ConvertDialog(QWidget* parent);
-        ~ConvertDialog() override;
+class ConvertDialog : public QDialog, public Ui_ConvertDialog
+{
+    Q_OBJECT
+public:
+    ConvertDialog(QWidget* parent);
+    ~ConvertDialog() override;
 
-        /**
-         * Set the message.
-         * @param msg The new message
-         */
-        void message(const QString& msg);
+    /**
+     * Set the message.
+     * @param msg The new message
+     */
+    void message(const QString& msg);
 
-        /**
-         * Update progress bar
-         * @param val The value
-         * @param total The max number of steps
-         */
-        void progress(int val, int total);
+    /**
+     * Update progress bar
+     * @param val The value
+     * @param total The max number of steps
+     */
+    void progress(int val, int total);
 
-    private Q_SLOTS:
-        void convert();
-        void threadFinished();
-        void btnCancelClicked();
-        void update();
+private Q_SLOTS:
+    void convert();
+    void threadFinished();
+    void btnCancelClicked();
+    void update();
 
-    private:
-        void closeEvent(QCloseEvent* e) override;
+private:
+    void closeEvent(QCloseEvent* e) override;
 
-    private:
-        ConvertThread* convert_thread;
-        QString msg;
-        int prog, max;
-        QMutex mutex;
-        QTimer timer;
-        bool canceled;
-    };
+private:
+    ConvertThread* convert_thread;
+    QString msg;
+    int prog, max;
+    QMutex mutex;
+    QTimer timer;
+    bool canceled;
+};
 }
 #endif

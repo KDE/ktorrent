@@ -29,36 +29,36 @@
 namespace kt
 {
 
-    ChallengeGenerator::ChallengeGenerator(HttpServer* server) : WebContentGenerator(server, "/login/challenge.xml", PUBLIC)
-    {
-    }
+ChallengeGenerator::ChallengeGenerator(HttpServer* server) : WebContentGenerator(server, "/login/challenge.xml", PUBLIC)
+{
+}
 
 
-    ChallengeGenerator::~ChallengeGenerator()
-    {
-    }
+ChallengeGenerator::~ChallengeGenerator()
+{
+}
 
 
-    void ChallengeGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
-    {
-        Q_UNUSED(hdr);
-        HttpResponseHeader rhdr(200);
-        server->setDefaultResponseHeaders(rhdr, "text/xml", false);
-        QByteArray output_data;
-        QXmlStreamWriter out(&output_data);
-        out.setAutoFormatting(true);
-        out.writeStartDocument();
-        out.writeStartElement("challenge");
-        out.writeCharacters(server->challengeString());
-        out.writeEndElement();
-        out.writeEndDocument();
-        hdlr->send(rhdr, output_data);
-    }
+void ChallengeGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+{
+    Q_UNUSED(hdr);
+    HttpResponseHeader rhdr(200);
+    server->setDefaultResponseHeaders(rhdr, "text/xml", false);
+    QByteArray output_data;
+    QXmlStreamWriter out(&output_data);
+    out.setAutoFormatting(true);
+    out.writeStartDocument();
+    out.writeStartElement("challenge");
+    out.writeCharacters(server->challengeString());
+    out.writeEndElement();
+    out.writeEndDocument();
+    hdlr->send(rhdr, output_data);
+}
 
-    void ChallengeGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
-    {
-        Q_UNUSED(data);
-        get(hdlr, hdr);
-    }
+void ChallengeGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+{
+    Q_UNUSED(data);
+    get(hdlr, hdr);
+}
 
 }

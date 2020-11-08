@@ -29,71 +29,70 @@ class KArchiveDirectory;
 
 namespace kt
 {
-    class Script;
+class Script;
+
+/**
+    Model which keeps track of all scripts
+*/
+class ScriptModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    ScriptModel(QObject* parent);
+    ~ScriptModel() override;
+
+    enum Role {
+        CommentRole = Qt::UserRole,
+        ConfigurableRole,
+        ConfigureRole,
+        AboutRole
+    };
 
     /**
-        Model which keeps track of all scripts
-    */
-    class ScriptModel : public QAbstractListModel
-    {
-        Q_OBJECT
-    public:
-        ScriptModel(QObject* parent);
-        ~ScriptModel() override;
+     * Add a script to the model
+     * @param file
+     */
+    void addScript(const QString& file);
 
-        enum Role
-        {
-            CommentRole = Qt::UserRole,
-            ConfigurableRole,
-            ConfigureRole,
-            AboutRole
-        };
+    /**
+     * Add script which is described by a desktop file.
+     * @param dir The directory the script is in
+     * @param desktop_file The desktop file (relative to dir, not an absolute path)
+     * @return The Script or 0 if something goes wrong
+     */
+    Script* addScriptFromDesktopFile(const QString& dir, const QString& desktop_file);
 
-        /**
-         * Add a script to the model
-         * @param file
-         */
-        void addScript(const QString& file);
+    /// Get a script given an index
+    Script* scriptForIndex(const QModelIndex& index) const;
 
-        /**
-         * Add script which is described by a desktop file.
-         * @param dir The directory the script is in
-         * @param desktop_file The desktop file (relative to dir, not an absolute path)
-         * @return The Script or 0 if something goes wrong
-         */
-        Script* addScriptFromDesktopFile(const QString& dir, const QString& desktop_file);
+    /// Get a list of all scripts
+    QStringList scriptFiles() const;
 
-        /// Get a script given an index
-        Script* scriptForIndex(const QModelIndex& index) const;
+    /// Get a list of all running scripts
+    QStringList runningScriptFiles() const;
 
-        /// Get a list of all scripts
-        QStringList scriptFiles() const;
+    /// Remove a bunch of scripts
+    void removeScripts(const QModelIndexList& indices);
 
-        /// Get a list of all running scripts
-        QStringList runningScriptFiles() const;
+    /// Run all the scripts in the string list
+    void runScripts(const QStringList& r);
 
-        /// Remove a bunch of scripts
-        void removeScripts(const QModelIndexList& indices);
+    int rowCount(const QModelIndex& parent) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
+    bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    bool removeRows(int row, int count, const QModelIndex& parent) override;
+    bool insertRows(int row, int count, const QModelIndex& parent) override;
+private:
+    void addScriptFromArchive(KArchive* archive);
+    void addScriptFromArchiveDirectory(const KArchiveDirectory* dir);
 
-        /// Run all the scripts in the string list
-        void runScripts(const QStringList& r);
+Q_SIGNALS:
+    void showPropertiesDialog(Script* s);
 
-        int rowCount(const QModelIndex& parent) const override;
-        QVariant data(const QModelIndex& index, int role) const override;
-        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
-        Qt::ItemFlags flags(const QModelIndex& index) const override;
-        bool removeRows(int row, int count, const QModelIndex& parent) override;
-        bool insertRows(int row, int count, const QModelIndex& parent) override;
-    private:
-        void addScriptFromArchive(KArchive* archive);
-        void addScriptFromArchiveDirectory(const KArchiveDirectory* dir);
-
-    Q_SIGNALS:
-        void showPropertiesDialog(Script* s);
-
-    private:
-        QList<Script*> scripts;
-    };
+private:
+    QList<Script*> scripts;
+};
 
 }
 

@@ -51,8 +51,7 @@ int main(int argc, char** argv)
     parser.process(app);
     about.processCommandLine(&parser);
 
-    if (!bt::InitLibKTorrent())
-    {
+    if (!bt::InitLibKTorrent()) {
         fprintf(stderr, "Failed to initialize libktorrent\n");
         return -1;
     }

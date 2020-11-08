@@ -30,55 +30,54 @@ class QSocketNotifier;
 
 namespace kt
 {
-    class HttpServer;
+class HttpServer;
 
-    /**
-        @author Joris Guisson <joris.guisson@gmail.com>
-    */
-    class HttpClientHandler : public QObject
-    {
-        Q_OBJECT
-        enum State
-        {
-            WAITING_FOR_REQUEST,
-            WAITING_FOR_CONTENT
-        };
-    public:
-        HttpClientHandler(HttpServer* srv, int sock);
-        virtual ~HttpClientHandler();
-
-
-        bool sendFile(HttpResponseHeader& hdr, const QString& full_path);
-        void sendResponse(HttpResponseHeader& hdr);
-        void send404(HttpResponseHeader& hdr, const QString& path);
-        void send500(HttpResponseHeader& hdr, const QString& error);
-        void send(HttpResponseHeader& hdr, const QByteArray& data);
-        bool shouldClose() const;
-
-    private:
-        void handleRequest(int header_len);
-        void setResponseHeaders(HttpResponseHeader& hdr);
-
-    private slots:
-        void readyToRead(int);
-        void sendOutputBuffer(int fd = 0);
-
-    signals:
-        void closed();
-
-    private:
-        HttpServer* srv;
-        net::Socket* client;
-        QSocketNotifier* read_notifier;
-        QSocketNotifier* write_notifier;
-        State state;
-        QHttpRequestHeader header;
-        QByteArray data;
-        bt::Uint32 bytes_read;
-        HttpResponseHeader php_response_hdr;
-        QByteArray output_buffer;
-        bt::Uint32 written;
+/**
+    @author Joris Guisson <joris.guisson@gmail.com>
+*/
+class HttpClientHandler : public QObject
+{
+    Q_OBJECT
+    enum State {
+        WAITING_FOR_REQUEST,
+        WAITING_FOR_CONTENT
     };
+public:
+    HttpClientHandler(HttpServer* srv, int sock);
+    virtual ~HttpClientHandler();
+
+
+    bool sendFile(HttpResponseHeader& hdr, const QString& full_path);
+    void sendResponse(HttpResponseHeader& hdr);
+    void send404(HttpResponseHeader& hdr, const QString& path);
+    void send500(HttpResponseHeader& hdr, const QString& error);
+    void send(HttpResponseHeader& hdr, const QByteArray& data);
+    bool shouldClose() const;
+
+private:
+    void handleRequest(int header_len);
+    void setResponseHeaders(HttpResponseHeader& hdr);
+
+private slots:
+    void readyToRead(int);
+    void sendOutputBuffer(int fd = 0);
+
+signals:
+    void closed();
+
+private:
+    HttpServer* srv;
+    net::Socket* client;
+    QSocketNotifier* read_notifier;
+    QSocketNotifier* write_notifier;
+    State state;
+    QHttpRequestHeader header;
+    QByteArray data;
+    bt::Uint32 bytes_read;
+    HttpResponseHeader php_response_hdr;
+    QByteArray output_buffer;
+    bt::Uint32 written;
+};
 
 }
 

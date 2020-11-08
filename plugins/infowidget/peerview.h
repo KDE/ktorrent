@@ -32,43 +32,43 @@ class QMenu;
 
 namespace kt
 {
-    class PeerViewModel;
+class PeerViewModel;
 
-    /**
-     * View which shows a list of peers, of a torrent.
-     * */
-    class PeerView : public QTreeView
-    {
-        Q_OBJECT
-    public:
-        PeerView(QWidget* parent);
-        ~PeerView() override;
+/**
+ * View which shows a list of peers, of a torrent.
+ * */
+class PeerView : public QTreeView
+{
+    Q_OBJECT
+public:
+    PeerView(QWidget* parent);
+    ~PeerView() override;
 
-        /// A peer has been added
-        void peerAdded(bt::PeerInterface* peer);
+    /// A peer has been added
+    void peerAdded(bt::PeerInterface* peer);
 
-        /// A peer has been removed
-        void peerRemoved(bt::PeerInterface* peer);
+    /// A peer has been removed
+    void peerRemoved(bt::PeerInterface* peer);
 
-        /// Check to see if the GUI needs to be updated
-        void update();
+    /// Check to see if the GUI needs to be updated
+    void update();
 
-        /// Remove all items
-        void removeAll();
+    /// Remove all items
+    void removeAll();
 
-        void saveState(KSharedConfigPtr cfg);
-        void loadState(KSharedConfigPtr cfg);
+    void saveState(KSharedConfigPtr cfg);
+    void loadState(KSharedConfigPtr cfg);
 
-    private Q_SLOTS:
-        void showContextMenu(const QPoint& pos);
-        void banPeer();
-        void kickPeer();
+private Q_SLOTS:
+    void showContextMenu(const QPoint& pos);
+    void banPeer();
+    void kickPeer();
 
-    private:
-        QMenu* context_menu;
-        QSortFilterProxyModel* pm;
-        PeerViewModel* model;
-    };
+private:
+    QMenu* context_menu;
+    QSortFilterProxyModel* pm;
+    PeerViewModel* model;
+};
 }
 
 #endif

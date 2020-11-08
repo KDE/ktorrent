@@ -25,14 +25,14 @@
 
 namespace kt
 {
-    class App : public QApplication
-    {
-    public:
-        App(int argc, char** argv): QApplication(argc, argv) {}
-        ~App(){}
+class App : public QApplication
+{
+public:
+    App(int argc, char** argv): QApplication(argc, argv) {}
+    ~App() {}
 
-        //bool notify(QObject* receiver, QEvent* event);
-    };
+    //bool notify(QObject* receiver, QEvent* event);
+};
 }
 
 #endif // _KTORRENTAPP_H_

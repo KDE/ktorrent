@@ -30,35 +30,35 @@ class KJob;
 namespace kt
 {
 
-    /**
-        Class which downloads a feed and also saves a backup copy.
-    */
-    class FeedRetriever : public Syndication::DataRetriever
-    {
-    public:
-        /// Constructor, does not save a backup copy
-        FeedRetriever();
+/**
+    Class which downloads a feed and also saves a backup copy.
+*/
+class FeedRetriever : public Syndication::DataRetriever
+{
+public:
+    /// Constructor, does not save a backup copy
+    FeedRetriever();
 
-        /// Constructor, does save a backup copy
-        FeedRetriever(const QString& file_name);
+    /// Constructor, does save a backup copy
+    FeedRetriever(const QString& file_name);
 
-        ~FeedRetriever();
+    ~FeedRetriever();
 
-        /// Set the authentication cookie
-        void setAuthenticationCookie(const QString& cookie);
+    /// Set the authentication cookie
+    void setAuthenticationCookie(const QString& cookie);
 
-        void abort() override;
-        int errorCode() const override;
-        void retrieveData(const QUrl& url) override;
+    void abort() override;
+    int errorCode() const override;
+    void retrieveData(const QUrl& url) override;
 
-        void finished(KJob* j);
+    void finished(KJob* j);
 
-    private:
-        QString backup_file;
-        KJob* job;
-        int err;
-        QString cookie;
-    };
+private:
+    QString backup_file;
+    KJob* job;
+    int err;
+    QString cookie;
+};
 
 }
 

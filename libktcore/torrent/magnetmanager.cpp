@@ -34,7 +34,8 @@
 
 using namespace bt;
 
-namespace kt {
+namespace kt
+{
 
 DownloadSlot::DownloadSlot(QObject *parent)
     : magnetIdx(-1)
@@ -135,17 +136,14 @@ void MagnetManager::addMagnet(const bt::MagnetLink& mlink, const kt::MagnetLinkL
 
     int updateIndex = 0;
     int updateCount = 0;
-    if (stopped)
-    {
+    if (stopped) {
         stoppedList.append(md);
         stoppedHashes.insert(mlink.infoHash());
         magnetHashes.insert(mlink.infoHash());
 
         updateIndex = magnetHashes.size() - 1;
         updateCount = 1;
-    }
-    else
-    {
+    } else {
         magnetQueue.append(md);
         magnetHashes.insert(mlink.infoHash());
 
@@ -164,19 +162,15 @@ void MagnetManager::removeMagnets(bt::Uint32 idx, bt::Uint32 count)
     if (idx >= (Uint32) magnetHashes.size() || count < 1)
         return;
 
-    while (count > 0 && idx < (Uint32) magnetHashes.size())
-    {
+    while (count > 0 && idx < (Uint32) magnetHashes.size()) {
         MagnetDownloader* md =  0;
         Uint32 magnetQueueSize = magnetQueue.size();
-        if (idx < magnetQueueSize)
-        {
+        if (idx < magnetQueueSize) {
             md = magnetQueue.at(idx);
             magnetQueue.removeAt(idx);
             if (md->running())
                 freeDownloadSlot(idx);
-        }
-        else
-        {
+        } else {
             int stoppedIdx = idx - magnetQueueSize;
             md = stoppedList.at(stoppedIdx);
             stoppedList.removeAt(stoppedIdx);
@@ -201,8 +195,7 @@ void MagnetManager::start(bt::Uint32 idx, bt::Uint32 count)
     if (idx + count < magnetQueueSize || count < 1)
         return;
 
-    if (idx < magnetQueueSize) // jump to stopped magnets
-    {
+    if (idx < magnetQueueSize) { // jump to stopped magnets
         int alreadyStarted = magnetQueueSize - idx;
         idx += alreadyStarted;
         count -= alreadyStarted;
@@ -213,8 +206,7 @@ void MagnetManager::start(bt::Uint32 idx, bt::Uint32 count)
 
     int stoppedIdx = idx - magnetQueueSize;
     Uint32 totalMagnets = magnetHashes.size();
-    while (count > 0 && idx < totalMagnets)
-    {
+    while (count > 0 && idx < totalMagnets) {
         MagnetDownloader* md = stoppedList.at(stoppedIdx);
         stoppedList.removeAt(stoppedIdx);
         stoppedHashes.remove(md->magnetLink().infoHash());
@@ -243,11 +235,9 @@ void MagnetManager::stop(bt::Uint32 idx, bt::Uint32 count)
     Uint32 updateCount = count;
     Uint32 updateIndex = idx;
 
-    while(count > 0)
-    {
+    while (count > 0) {
         MagnetDownloader* md = magnetQueue.at(idx);
-        if (md->running())
-        {
+        if (md->running()) {
             md->stop();
             freeDownloadSlot(idx);
         }
@@ -280,10 +270,8 @@ void MagnetManager::setDownloadingSlots(bt::Uint32 count)
     int updateCount = 0;
     int totalSlots = usedDownloadingSlots.size() + freeDownloadingSlots.size();
     int slotsToAdd = count - totalSlots;
-    if (slotsToAdd > 0) // add new slots
-    {
-        for (int i = 0; i < slotsToAdd; ++i)
-        {
+    if (slotsToAdd > 0) { // add new slots
+        for (int i = 0; i < slotsToAdd; ++i) {
             DownloadSlot* slot = new DownloadSlot();
             slot->setTimerDuration(timerDuration);
             freeDownloadingSlots.push_back(slot);
@@ -291,16 +279,12 @@ void MagnetManager::setDownloadingSlots(bt::Uint32 count)
         }
         updateIndex = startNextQueuedMagnets();
         updateCount = slotsToAdd;
-    }
-    else // remove slots
-    {
+    } else { // remove slots
         int slotsToRemove = std::abs(slotsToAdd);
 
         // try to remove free slots
-        if (!freeDownloadingSlots.isEmpty())
-        {
-            while (slotsToRemove > 0 && !freeDownloadingSlots.isEmpty())
-            {
+        if (!freeDownloadingSlots.isEmpty()) {
+            while (slotsToRemove > 0 && !freeDownloadingSlots.isEmpty()) {
                 DownloadSlot* slot = freeDownloadingSlots.front();
                 freeDownloadingSlots.pop_front();
                 delete slot;
@@ -309,20 +293,16 @@ void MagnetManager::setDownloadingSlots(bt::Uint32 count)
             }
         }
 
-        if (slotsToRemove == 0)
-        {
+        if (slotsToRemove == 0) {
             // all removed slots where unused so we don't need to emit an updateQueue signal
             updateIndex = -1;
-        }
-        else // remove used slots
-        {
+        } else { // remove used slots
             updateIndex = usedDownloadingSlots.size() - slotsToRemove;
             if (updateIndex < 0)
                 updateIndex = 0;
             updateCount = slotsToRemove;
 
-            while (slotsToRemove > 0 && !usedDownloadingSlots.isEmpty())
-            {
+            while (slotsToRemove > 0 && !usedDownloadingSlots.isEmpty()) {
                 DownloadSlot* slot = usedDownloadingSlots.back();
                 usedDownloadingSlots.pop_back();
                 slot->stopTimer();
@@ -341,20 +321,14 @@ void MagnetManager::setUseSlotTimer(bool value)
 {
     useSlotTimer = value;
 
-    if (!useSlotTimer)
-    {
-        for (DownloadSlot* slot : qAsConst(usedDownloadingSlots))
-        {
+    if (!useSlotTimer) {
+        for (DownloadSlot* slot : qAsConst(usedDownloadingSlots)) {
             slot->stopTimer();
             slot->setTimerDuration(timerDuration);
         }
-    }
-    else
-    {
-        for (DownloadSlot* slot : qAsConst(usedDownloadingSlots))
-        {
-            if (!slot->isTimerActived())
-            {
+    } else {
+        for (DownloadSlot* slot : qAsConst(usedDownloadingSlots)) {
+            if (!slot->isTimerActived()) {
                 slot->setTimerDuration(timerDuration);
                 slot->startTimer();
             }
@@ -385,8 +359,7 @@ void MagnetManager::update()
 void MagnetManager::loadMagnets(const QString& file)
 {
     QFile fptr(file);
-    if (!fptr.open(QIODevice::ReadOnly))
-    {
+    if (!fptr.open(QIODevice::ReadOnly)) {
         Out(SYS_GEN | LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
         return;
     }
@@ -397,15 +370,13 @@ void MagnetManager::loadMagnets(const QString& file)
 
     BDecoder decoder(magnet_data, 0, false);
     BNode* node = 0;
-    try
-    {
+    try {
         node = decoder.decode();
         if (!node || node->getType() != BNode::LIST)
             throw Error(QStringLiteral("Corrupted magnet file"));
 
         BListNode* ml = (BListNode*)node;
-        for (Uint32 i = 0; i < ml->getNumChildren(); i++)
-        {
+        for (Uint32 i = 0; i < ml->getNumChildren(); i++) {
             BDictNode* dict = ml->getDict(i);
             MagnetLink mlink(dict->getString(QByteArrayLiteral("magnet"), 0));
             MagnetLinkLoadOptions options;
@@ -421,9 +392,7 @@ void MagnetManager::loadMagnets(const QString& file)
 
             addMagnet(mlink, options, stopped);
         }
-    }
-    catch (Error& err)
-    {
+    } catch (Error& err) {
         Out(SYS_GEN | LOG_NOTICE) << "Failed to load " << file << " : " << err.toString() << endl;
     }
     delete node;
@@ -432,8 +401,7 @@ void MagnetManager::loadMagnets(const QString& file)
 void MagnetManager::saveMagnets(const QString& file)
 {
     File fptr;
-    if (!fptr.open(file, QStringLiteral("wb")))
-    {
+    if (!fptr.open(file, QStringLiteral("wb"))) {
         Out(SYS_GEN | LOG_NOTICE) << "Failed to open " << file << " : " << fptr.errorString() << endl;
         return;
     }
@@ -534,8 +502,7 @@ int MagnetManager::startNextQueuedMagnets()
     int magnetsToStart = std::min(freeDownloadingSlots.size(), queued);
 
     int nextIdx = firstStartedIdx;
-    while (magnetsToStart > 0)
-    {
+    while (magnetsToStart > 0) {
         DownloadSlot* slot = freeDownloadingSlots.front();
         freeDownloadingSlots.pop_front();
         slot->setMagnetIndex(nextIdx);
@@ -571,13 +538,11 @@ void MagnetManager::freeDownloadSlot(bt::Uint32 magnetIdx)
 
 int MagnetManager::getMagnetIndex(kt::MagnetDownloader* md)
 {
-    if (stoppedHashes.contains(md->magnetLink().infoHash()))
-    {
+    if (stoppedHashes.contains(md->magnetLink().infoHash())) {
         int magnetIndex = magnetQueue.size() + stoppedList.indexOf(md);
         if (magnetIndex >= magnetQueue.size()) // md is inside of magnetStopList
             return magnetIndex;
-    }
-    else return magnetQueue.indexOf(md);
+    } else return magnetQueue.indexOf(md);
 
     return -1;
 }

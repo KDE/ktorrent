@@ -29,31 +29,31 @@
 namespace kt
 {
 
-    class StatusTab : public QWidget, public Ui_StatusTab
-    {
-        Q_OBJECT
+class StatusTab : public QWidget, public Ui_StatusTab
+{
+    Q_OBJECT
 
-    public:
-        StatusTab(QWidget* parent);
-        ~StatusTab() override;
+public:
+    StatusTab(QWidget* parent);
+    ~StatusTab() override;
 
 
-    public Q_SLOTS:
-        void changeTC(bt::TorrentInterface* tc);
-        void update();
-        void maxRatioChanged(double v);
-        void useRatioLimitToggled(bool on);
-        void useTimeLimitToggled(bool on);
-        void maxTimeChanged(double v);
-        void linkActivated(const QString& link);
+public Q_SLOTS:
+    void changeTC(bt::TorrentInterface* tc);
+    void update();
+    void maxRatioChanged(double v);
+    void useRatioLimitToggled(bool on);
+    void useTimeLimitToggled(bool on);
+    void maxTimeChanged(double v);
+    void linkActivated(const QString& link);
 
-    private:
-        void maxRatioUpdate();
-        void maxSeedTimeUpdate();
+private:
+    void maxRatioUpdate();
+    void maxSeedTimeUpdate();
 
-    private:
-        QPointer<bt::TorrentInterface> curr_tc;
-    };
+private:
+    QPointer<bt::TorrentInterface> curr_tc;
+};
 }
 
 #endif

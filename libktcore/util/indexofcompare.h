@@ -23,19 +23,18 @@
 
 namespace kt
 {
-    template <class Container, class Item>
-    struct IndexOfCompare
+template <class Container, class Item>
+struct IndexOfCompare {
+    IndexOfCompare(Container* container) : container(container)
+    {}
+
+    bool operator()(Item* a, Item* b)
     {
-        IndexOfCompare(Container* container) : container(container)
-        {}
+        return container->indexOf(a) < container->indexOf(b);
+    }
 
-        bool operator()(Item* a, Item* b)
-        {
-            return container->indexOf(a) < container->indexOf(b);
-        }
-
-        Container* container;
-    };
+    Container* container;
+};
 }
 
 #endif

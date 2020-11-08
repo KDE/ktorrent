@@ -25,22 +25,22 @@
 
 namespace kt
 {
-    class CoreInterface;
+class CoreInterface;
 
-    /**
-        WebContentGenerator which handles settings.
-    */
-    class SettingsGenerator : public WebContentGenerator
-    {
-    public:
-        SettingsGenerator(CoreInterface* core, HttpServer* server);
-        virtual ~SettingsGenerator();
+/**
+    WebContentGenerator which handles settings.
+*/
+class SettingsGenerator : public WebContentGenerator
+{
+public:
+    SettingsGenerator(CoreInterface* core, HttpServer* server);
+    virtual ~SettingsGenerator();
 
-        virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-        virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-    private:
-        CoreInterface* core;
-    };
+    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+private:
+    CoreInterface* core;
+};
 
 }
 

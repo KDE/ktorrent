@@ -28,18 +28,18 @@
 namespace kt
 {
 
-    class MagnetGeneratorPrefWidget : public PrefPageInterface, public Ui_MagnetGeneratorPrefWidget
-    {
-        Q_OBJECT
-    public:
-        MagnetGeneratorPrefWidget(QWidget* parent = 0);
-        ~MagnetGeneratorPrefWidget() override;
+class MagnetGeneratorPrefWidget : public PrefPageInterface, public Ui_MagnetGeneratorPrefWidget
+{
+    Q_OBJECT
+public:
+    MagnetGeneratorPrefWidget(QWidget* parent = 0);
+    ~MagnetGeneratorPrefWidget() override;
 
-    private Q_SLOTS:
-        void customTrackerToggled(bool on);
-        void torrentTrackerToggled(bool on);
+private Q_SLOTS:
+    void customTrackerToggled(bool on);
+    void torrentTrackerToggled(bool on);
 
-    };
+};
 
 }
 

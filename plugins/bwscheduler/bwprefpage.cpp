@@ -24,32 +24,32 @@
 namespace kt
 {
 
-    BWPrefPage::BWPrefPage(QWidget* parent) : PrefPageInterface(SchedulerPluginSettings::self(), i18n("Scheduler"), QStringLiteral("kt-bandwidth-scheduler"), parent)
-    {
-        setupUi(this);
-    }
+BWPrefPage::BWPrefPage(QWidget* parent) : PrefPageInterface(SchedulerPluginSettings::self(), i18n("Scheduler"), QStringLiteral("kt-bandwidth-scheduler"), parent)
+{
+    setupUi(this);
+}
 
 
-    BWPrefPage::~BWPrefPage()
-    {
-    }
+BWPrefPage::~BWPrefPage()
+{
+}
 
 
-    void BWPrefPage::loadDefaults()
-    {
-        kcfg_screensaverDownloadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
-        kcfg_screensaverUploadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
-    }
+void BWPrefPage::loadDefaults()
+{
+    kcfg_screensaverDownloadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
+    kcfg_screensaverUploadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
+}
 
-    void BWPrefPage::loadSettings()
-    {
-        kcfg_screensaverDownloadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
-        kcfg_screensaverUploadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
-    }
+void BWPrefPage::loadSettings()
+{
+    kcfg_screensaverDownloadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
+    kcfg_screensaverUploadLimit->setEnabled(SchedulerPluginSettings::screensaverLimits());
+}
 
-    void BWPrefPage::updateSettings()
-    {
-        colorsChanged();
-    }
+void BWPrefPage::updateSettings()
+{
+    colorsChanged();
+}
 
 }
