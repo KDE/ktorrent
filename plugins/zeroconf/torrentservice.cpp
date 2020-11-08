@@ -20,7 +20,8 @@
 
 #include "torrentservice.h"
 
-#include <cstdlib>
+#include <QRandomGenerator>
+
 #include <util/log.h>
 #include <util/sha1hash.h>
 #include <torrent/globals.h>
@@ -51,7 +52,7 @@ void TorrentService::onPublished(bool ok)
 
 void TorrentService::stop(bt::WaitJob* wjob)
 {
-    Q_UNUSED(wjob);
+    Q_UNUSED(wjob)
     if (srv) {
         srv->stop();
         srv->deleteLater();
@@ -67,7 +68,7 @@ void TorrentService::stop(bt::WaitJob* wjob)
 void TorrentService::start()
 {
     bt::Uint16 port = bt::ServerInterface::getPort();
-    QString name = QStringLiteral("%1__%2%3").arg(tc->getOwnPeerID().toString()).arg((rand() % 26) + 65).arg((rand() % 26) + 65);
+    QString name = QStringLiteral("%1__%2%3").arg(tc->getOwnPeerID().toString()).arg(QRandomGenerator::global()->bounded(26) + 65).arg(QRandomGenerator::global()->bounded(26) + 65);
     QStringList subtypes;
     subtypes << QLatin1Char('_') + tc->getInfoHash().toString() + QStringLiteral("._sub._bittorrent._tcp");
 
