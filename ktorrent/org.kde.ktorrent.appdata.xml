@@ -17,6 +17,7 @@
   <name xml:lang="fi">KTorrent</name>
   <name xml:lang="fr">KTorrent</name>
   <name xml:lang="gl">KTorrent</name>
+  <name xml:lang="ia">KTorrent</name>
   <name xml:lang="id">KTorrent</name>
   <name xml:lang="it">KTorrent</name>
   <name xml:lang="ko">KTorrent</name>
@@ -52,6 +53,7 @@
   <summary xml:lang="fi">BitTorrent-asiakas</summary>
   <summary xml:lang="fr">Client BitTorrent</summary>
   <summary xml:lang="gl">Cliente de BitTorrent</summary>
+  <summary xml:lang="ia">Cliente de BitTorrent</summary>
   <summary xml:lang="id">BitTorrent Client</summary>
   <summary xml:lang="it">Client BitTorrent</summary>
   <summary xml:lang="ko">비트토렌트 클라이언트</summary>
@@ -123,6 +125,7 @@
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
+    <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ko">기능:</p>
@@ -380,6 +383,7 @@
       <li xml:lang="fi">UDP-seurantapalvelintuki</li>
       <li xml:lang="fr">Gestion des trackers UDP</li>
       <li xml:lang="gl">Compatibilidade con localizadores UDP.</li>
+      <li xml:lang="ia">Supporto de traciator UDP</li>
       <li xml:lang="id">Mendukung UDP tracker</li>
       <li xml:lang="it">Supporto ai server traccia UDP</li>
       <li xml:lang="ko">UDP 트래커 지원</li>
@@ -600,6 +604,7 @@
       <li xml:lang="fi">Webseed-tuki</li>
       <li xml:lang="fr">Gestion des sources web</li>
       <li xml:lang="gl">Compatibilidade con sementes web.</li>
+      <li xml:lang="ia">Supporto per webseeds</li>
       <li xml:lang="id">Dukungan untuk webseeds</li>
       <li xml:lang="it">Supporto per distribuzione web</li>
       <li xml:lang="ko">웹 시드 지원</li>
@@ -663,6 +668,7 @@
       <li xml:lang="fi">Ilmoitusalueintegrointi</li>
       <li xml:lang="fr">Intégration dans la barre de notifications du système</li>
       <li xml:lang="gl">Integración coa área de notificación.</li>
+      <li xml:lang="ia">Integration de tabuliero de systema</li>
       <li xml:lang="id">Integrasi system tray</li>
       <li xml:lang="it">Integrazione nel vassoio di sistema</li>
       <li xml:lang="ko">시스템 트레이 통합</li>
@@ -694,6 +700,7 @@
       <li xml:lang="fi">Seurantapalvelimen todennustuki</li>
       <li xml:lang="fr">Gestion de l'authentification des traqueurs</li>
       <li xml:lang="gl">Funcionalidade de autenticación de localizadores.</li>
+      <li xml:lang="ia">Supporto de authentication de traciator</li>
       <li xml:lang="id">Dukungan autentikasi tracker</li>
       <li xml:lang="it">Supporto per l'autenticazione sul server traccia</li>
       <li xml:lang="ko">트래커 인증 지원</li>
@@ -726,6 +733,7 @@
       <li xml:lang="fi">Välityspalvelinyhteysmahdollisuus</li>
       <li xml:lang="fr">Connexion à travers un proxy</li>
       <li xml:lang="gl">Conexión mediante proxy.</li>
+      <li xml:lang="ia">Connexion per un proxy</li>
       <li xml:lang="id">Koneksi melalui sebuah proxy</li>
       <li xml:lang="it">Connessione attraverso un proxy</li>
       <li xml:lang="ko">프록시를 통한 연결</li>
