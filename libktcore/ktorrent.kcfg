@@ -88,7 +88,7 @@
 		</entry>
 		<entry name="minimizeToSystemTray" type="Bool">
 			<label>Minimize to system tray when startup.</label>
-			<default>true</default>
+			<default>false</default>
 		</entry>
 		<entry name="showPopups" type="Bool">
 			<label>Show popup messages when torrent is finished.</label>
