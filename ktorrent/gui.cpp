@@ -470,13 +470,10 @@ void GUI::loadState(KSharedConfigPtr cfg)
     show_menu_bar_action->setChecked(!menubar_hidden);
 
     bool hidden_on_exit = g.readEntry("hidden_on_exit", false);
-    if (Settings::showSystemTrayIcon()) {
-        if (hidden_on_exit) {
-            Out(SYS_GEN | LOG_DEBUG) << "Starting minimized" << endl;
-            hide();
-        } else {
-            show();
-        }
+    bool minimize_to_system_tray = hidden_on_exit || Settings::minimizeToSystemTray();
+    if (Settings::showSystemTrayIcon() && minimize_to_system_tray) {
+        Out(SYS_GEN | LOG_DEBUG) << "Starting minimized" << endl;
+        hide();
     } else {
         show();
     }

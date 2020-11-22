@@ -68,6 +68,8 @@ public Q_SLOTS:
     Q_SCRIPTABLE void setDownloadBandwidth(int val);
     Q_SCRIPTABLE int uploadBandwidth();
     Q_SCRIPTABLE void setUploadBandwidth(int val);
+    Q_SCRIPTABLE bool minimizeToSystemTray();
+    Q_SCRIPTABLE void setMinimizeToSystemTray(bool val);
     Q_SCRIPTABLE bool showPopups();
     Q_SCRIPTABLE void setShowPopups(bool val);
     Q_SCRIPTABLE bool keepSeeding();
