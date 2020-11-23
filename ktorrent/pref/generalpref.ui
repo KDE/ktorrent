@@ -95,6 +95,16 @@
      </property>
      <layout class="QVBoxLayout">
       <item>
+       <widget class="QCheckBox" name="kcfg_alwaysMinimizeToSystemTray">
+        <property name="toolTip">
+         <string>Whether or not to always minimize to system tray on startup.</string>
+        </property>
+        <property name="text">
+         <string>Always minimize to system tray on startup</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="kcfg_showPopups">
         <property name="toolTip">
          <string>Whether or not to show system tray popup messages.</string>

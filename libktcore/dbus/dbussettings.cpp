@@ -191,6 +191,16 @@ void DBusSettings::setUploadBandwidth(int val)
     Settings::setUploadBandwidth(val);
 }
 
+bool DBusSettings::alwaysMinimizeToSystemTray()
+{
+    return Settings::alwaysMinimizeToSystemTray();
+}
+
+void DBusSettings::setAlwaysMinimizeToSystemTray(bool val)
+{
+    Settings::setAlwaysMinimizeToSystemTray(val);
+}
+
 bool DBusSettings::showPopups()
 {
     return Settings::showPopups();

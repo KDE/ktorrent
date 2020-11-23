@@ -86,6 +86,10 @@
 			<min>0</min>
 			<max>1000000</max>
 		</entry>
+		<entry name="alwaysMinimizeToSystemTray" type="Bool">
+			<label>Always minimize to system tray on startup.</label>
+			<default>false</default>
+		</entry>
 		<entry name="showPopups" type="Bool">
 			<label>Show popup messages when torrent is finished.</label>
 			<default>true</default>
