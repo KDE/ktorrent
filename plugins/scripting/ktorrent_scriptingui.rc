@@ -1,5 +1,6 @@
-<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui library="libktscriptingplugin" name="ktscriptingplugin" version="1">
+<?xml version="1.0"?>
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui library="libktscriptingplugin" name="ktscriptingplugin" version="1">
 	<ToolBar name="ScriptingToolbar">
 		<text>Scripting</text>
 		<Action name="add_script" />
@@ -23,4 +24,4 @@
 		<Action name="script_properties" />
 		<Action name="configure_script" />
 	</Menu>
-</kpartgui>
+</gui>

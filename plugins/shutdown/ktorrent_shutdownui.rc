@@ -1,5 +1,6 @@
-<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui library="libktshutdownplugin" name="shutdownplugin" version="1">
+<?xml version="1.0"?>
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui library="libktshutdownplugin" name="shutdownplugin" version="1">
 
 <MenuBar>
 	<Menu name="shutdown"><text>Shutdown</text>
@@ -12,4 +13,4 @@
 	<Action name="shutdown_enabled"/>
 	<Action name="shutdown_settings"/>
 </ToolBar>
-</kpartgui>
+</gui>

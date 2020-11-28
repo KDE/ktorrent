@@ -1,5 +1,6 @@
-<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui library="libktmediaplayerplugin" name="mediaplayerplugin" version="2">
+<?xml version="1.0"?>
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui library="libktmediaplayerplugin" name="mediaplayerplugin" version="2">
 <Menu name="MediaPlayerMenu"><text>Media Player Menu</text>
 	<Action name="media_play"/>
 	<Action name="media_pause"/>
@@ -8,4 +9,4 @@
 	<Action name="media_prev"/>
 </Menu>
 
-</kpartgui>
+</gui>

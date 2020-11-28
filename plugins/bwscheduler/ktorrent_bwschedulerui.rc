@@ -1,5 +1,6 @@
-<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui library="libktbwschedulerplugin" name="ktbwschedulerplugin" version="1">
+<?xml version="1.0"?>
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui library="libktbwschedulerplugin" name="ktbwschedulerplugin" version="1">
 	<ToolBar name="SchedulerToolbar">
 		<text>Bandwidth Schedule</text>
 		<Action name="schedule_load" />
@@ -12,4 +13,4 @@
 		<Separator/>
 		<Action name="schedule_active" />
 	</ToolBar>
-</kpartgui>
+</gui>
