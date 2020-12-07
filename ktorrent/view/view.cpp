@@ -184,7 +184,7 @@ void View::setupActions(KActionCollection* ac)
     ac->addAction(QStringLiteral("view_remove_torrent_and_data"), remove_torrent_and_data);
     ac->setDefaultShortcut(remove_torrent_and_data, QKeySequence(Qt::CTRL + Qt::Key_Delete));
 
-    rename_torrent = new QAction(i18n("Rename Torrent"), this);
+    rename_torrent = new QAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18n("Rename Torrent"), this);
     connect(rename_torrent, &QAction::triggered, this, &View::renameTorrent);
     ac->addAction(QStringLiteral("view_rename_torrent"), rename_torrent);
 
