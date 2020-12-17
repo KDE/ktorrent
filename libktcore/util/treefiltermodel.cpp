@@ -45,7 +45,7 @@ bool TreeFilterModel::filterAcceptsRow(int source_row, const QModelIndex& source
 
     // now walk over each child recursively and check if one matches, if so we need to accept this
     int child = 0;
-    while (sourceModel()->hasIndex(0, 0, idx)) {
+    while (sourceModel()->hasIndex(child, 0, idx)) {
         if (filterAcceptsRow(child, idx))
             return true;
         child++;
