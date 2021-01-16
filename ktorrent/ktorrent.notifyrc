@@ -372,7 +372,7 @@ Action=Sound|Popup
 [Event/CorruptedData]
 Name=Corrupted data has been found
 Name[ar]=وُجدت بيانات معطوبة
-Name[ast]=Alcontráronse datos toyíos
+Name[ast]=Atopáronse datos toyíos
 Name[bg]=Открити са повредени данни
 Name[bs]=Pronađeni su oštećeni podaci
 Name[ca]=S'han trobat dades corruptes
