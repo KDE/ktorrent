@@ -232,6 +232,7 @@ int main(int argc, char** argv)
                 QDir::setCurrent(oldCurrent);
         };
         QObject::connect(&dbusService, &KDBusService::activateRequested, handleCmdLine);
+        QObject::connect(&dbusService, &KDBusService::activateRequested, &widget, &kt::GUI::show);
         handleCmdLine(QStringList(), QString());
 
         app.setQuitOnLastWindowClosed(false);
