@@ -1,4 +1,3 @@
-#  set(kt4_SRC app.cpp mainwindow.cpp core.cpp view.cpp viewmodel.cpp main.cpp)
 set(ktorrent_SRC 
 	main.cpp
 	core.cpp
