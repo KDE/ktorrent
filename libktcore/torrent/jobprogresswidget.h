@@ -28,14 +28,6 @@
 #include <torrent/job.h>
 #include <gui/extender.h>
 
-class QProgressBar;
-class QLabel;
-
-namespace bt
-{
-class TorrentInterface;
-}
-
 namespace kt
 {
 /**

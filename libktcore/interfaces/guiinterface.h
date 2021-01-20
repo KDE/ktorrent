@@ -33,11 +33,6 @@ namespace KIO
 class Job;
 }
 
-namespace bt
-{
-class TorrentInterface;
-}
-
 namespace kt
 {
 class PrefPageInterface;

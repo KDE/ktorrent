@@ -27,12 +27,6 @@
 #include <torrent/jobprogresswidget.h>
 #include "ui_scanextender.h"
 
-namespace bt
-{
-class TorrentInterface;
-}
-
-
 namespace kt
 {
 

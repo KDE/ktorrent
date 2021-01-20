@@ -29,9 +29,6 @@
 #include <util/constants.h>
 #include <torrent/torrentfilestream.h>
 
-
-class QObject;
-
 namespace bt
 {
 class TorrentInterface;
@@ -40,7 +37,6 @@ class TorrentFileStream;
 
 namespace kt
 {
-
 class MediaPlayer;
 
 const bt::Uint32 INVALID_INDEX = 0xFFFFFFFF;

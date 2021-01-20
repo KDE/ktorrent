@@ -24,8 +24,6 @@
 #include <QWidget>
 #include <KSharedConfig>
 
-class QItemSelection;
-class QToolBar;
 class QTreeView;
 class QMenu;
 

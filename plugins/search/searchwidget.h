@@ -27,8 +27,6 @@
 #include "webview.h"
 
 class QProgressBar;
-class QNetworkReply;
-class QMenu;
 class KComboBox;
 
 namespace kt

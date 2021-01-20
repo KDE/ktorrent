@@ -28,9 +28,6 @@
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
 
-class QDBusInterface;
-class QProgressBar;
-
 class KJob;
 
 namespace bt

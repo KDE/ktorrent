@@ -34,13 +34,9 @@ class QString;
 
 namespace kt
 {
-
 struct CurrentStats;
-
 class Core;
-
 class SetMaxRate;
-
 class GUI;
 
 struct TrayStats {

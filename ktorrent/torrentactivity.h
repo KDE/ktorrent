@@ -26,7 +26,6 @@
 
 class QAction;
 class KToggleAction;
-class KComboBox;
 
 namespace kt
 {

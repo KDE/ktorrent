@@ -30,9 +30,7 @@
 #include <Phonon/VolumeSlider>
 
 class QAction;
-class QDBusInterface;
 class QLabel;
-class QStackedWidget;
 class KToolBar;
 class KActionCollection;
 

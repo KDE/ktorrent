@@ -34,6 +34,11 @@ class QMenu;
 class QAction;
 class KActionCollection;
 
+namespace bt
+{
+class TorrentInterface;
+}
+
 namespace kt
 {
 class GUI;

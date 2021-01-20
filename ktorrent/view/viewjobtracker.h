@@ -26,8 +26,6 @@
 
 namespace kt
 {
-
-class ScanExtender;
 class View;
 
 /**

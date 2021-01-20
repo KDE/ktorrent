@@ -33,7 +33,6 @@ class QToolButton;
 namespace kt
 {
 class View;
-class QueueManager;
 
 /**
  * toolbar to switch between groups

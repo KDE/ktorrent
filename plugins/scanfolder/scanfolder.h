@@ -27,9 +27,6 @@
 
 namespace kt
 {
-
-
-class CoreInterface;
 class ScanThread;
 
 /**
