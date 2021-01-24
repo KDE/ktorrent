@@ -381,7 +381,7 @@
       <li xml:lang="es">Uso de rastreador UDP</li>
       <li xml:lang="et">UDP tracker'i toetus</li>
       <li xml:lang="fi">UDP-seurantapalvelintuki</li>
-      <li xml:lang="fr">Gestion des trackers UDP</li>
+      <li xml:lang="fr">Gestion des traqueurs « UDP »</li>
       <li xml:lang="gl">Compatibilidade con localizadores UDP.</li>
       <li xml:lang="ia">Supporto de traciator UDP</li>
       <li xml:lang="id">Mendukung UDP tracker</li>
@@ -731,7 +731,7 @@
       <li xml:lang="es">Conexión a través de un proxy</li>
       <li xml:lang="et">Ühendus läbi puhverserveri</li>
       <li xml:lang="fi">Välityspalvelinyhteysmahdollisuus</li>
-      <li xml:lang="fr">Connexion à travers un proxy</li>
+      <li xml:lang="fr">Connexion à travers un serveur mandataire</li>
       <li xml:lang="gl">Conexión mediante proxy.</li>
       <li xml:lang="ia">Connexion per un proxy</li>
       <li xml:lang="id">Koneksi melalui sebuah proxy</li>
