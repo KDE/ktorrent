@@ -28,6 +28,7 @@ include(ECMInstallIcons)
 include(ECMAddAppIcon)
 include(ECMMarkAsTest)
 include(ECMMarkNonGuiExecutable)
+include(KDEClangFormat)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -220,5 +221,8 @@ add_subdirectory(ktmagnetdownloader)
 if (KF5DocTools_FOUND)
     add_subdirectory(doc)
 endif()
+# add clang-format target for all our real source files
+file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
+kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
