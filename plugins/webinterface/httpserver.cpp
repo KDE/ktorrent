@@ -1,22 +1,22 @@
 /***************************************************************************
-*   Copyright (C) 2006 by Diego R. Brogna                                 *
-*   dierbro@gmail.com                                                     *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
-***************************************************************************/
+ *   Copyright (C) 2006 by Diego R. Brogna                                 *
+ *   dierbro@gmail.com                                                     *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
 
 #include <ctime>
 
@@ -36,33 +36,31 @@
 #include <KGlobal>
 #include <KStandardDirs>
 #include <KTemporaryFile>
-#include <k3streamsocket.h>
 #include <k3resolver.h>
+#include <k3streamsocket.h>
 
-#include <interfaces/coreinterface.h>
-#include <interfaces/torrentinterface.h>
-#include <util/log.h>
-#include <util/fileops.h>
-#include <util/functions.h>
-#include <util/mmapfile.h>
-#include <util/sha1hash.h>
-#include "ktversion.h"
-#include "httpserver.h"
+#include "actionhandler.h"
+#include "challengegenerator.h"
+#include "globaldatagenerator.h"
 #include "httpclienthandler.h"
 #include "httpresponseheader.h"
-#include "webinterfacepluginsettings.h"
-#include "torrentlistgenerator.h"
-#include "challengegenerator.h"
+#include "httpserver.h"
+#include "iconhandler.h"
+#include "ktversion.h"
 #include "loginhandler.h"
 #include "logouthandler.h"
-#include "actionhandler.h"
-#include "iconhandler.h"
-#include "torrentposthandler.h"
-#include "torrentfilesgenerator.h"
-#include "globaldatagenerator.h"
 #include "settingsgenerator.h"
-
-
+#include "torrentfilesgenerator.h"
+#include "torrentlistgenerator.h"
+#include "torrentposthandler.h"
+#include "webinterfacepluginsettings.h"
+#include <interfaces/coreinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
+#include <util/mmapfile.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
@@ -70,8 +68,10 @@ namespace kt
 {
 QString DataDir();
 
-
-HttpServer::HttpServer(CoreInterface* core, bt::Uint16 port) : core(core), cache(10), port(port)
+HttpServer::HttpServer(CoreInterface *core, bt::Uint16 port)
+    : core(core)
+    , cache(10)
+    , port(port)
 {
     qsrand(time(0));
     content_generators.setAutoDelete(true);
@@ -93,11 +93,10 @@ HttpServer::HttpServer(CoreInterface* core, bt::Uint16 port) : core(core), cache
     }
     session.logged_in = false;
 
-
     QStringList bind_addresses;
     bind_addresses << QHostAddress(QHostAddress::Any).toString();
     bind_addresses << QHostAddress(QHostAddress::AnyIPv6).toString();
-    foreach (const QString& addr, bind_addresses) {
+    foreach (const QString &addr, bind_addresses) {
         net::ServerSocket::Ptr sock(new net::ServerSocket(this));
         if (sock->bind(addr, port))
             sockets.append(sock);
@@ -141,16 +140,15 @@ QString HttpServer::commonDir() const
     return rootDir + bt::DirSeparator() + "common";
 }
 
-void HttpServer::newConnection(int fd, const net::Address& addr)
+void HttpServer::newConnection(int fd, const net::Address &addr)
 {
-    HttpClientHandler* handler = new HttpClientHandler(this, fd);
+    HttpClientHandler *handler = new HttpClientHandler(this, fd);
     connect(handler, &HttpClientHandler::closed, this, &HttpServer::slotConnectionClosed);
-    Out(SYS_WEB | LOG_NOTICE) << "connection from " << addr.toString()  << endl;
+    Out(SYS_WEB | LOG_NOTICE) << "connection from " << addr.toString() << endl;
     clients.append(handler);
 }
 
-
-bool HttpServer::checkLogin(const QHttpRequestHeader& hdr, const QByteArray& data)
+bool HttpServer::checkLogin(const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     // Authentication is disabled
     if (!WebInterfacePluginSettings::authentication()) {
@@ -186,7 +184,7 @@ bool HttpServer::checkLogin(const QHttpRequestHeader& hdr, const QByteArray& dat
     }
 
     QByteArray s = (QString(challenge + WebInterfacePluginSettings::password())).toUtf8();
-    bt::SHA1Hash hash = bt::SHA1Hash::generate((const bt::Uint8*)s.data(), s.length());
+    bt::SHA1Hash hash = bt::SHA1Hash::generate((const bt::Uint8 *)s.data(), s.length());
     if (hash.toString() == challenge_hash) {
         session.logged_in = true;
         session.sessionId = rand();
@@ -200,7 +198,6 @@ bool HttpServer::checkLogin(const QHttpRequestHeader& hdr, const QByteArray& dat
     return false;
 }
 
-
 void HttpServer::logout()
 {
     session.logged_in = false;
@@ -209,7 +206,7 @@ void HttpServer::logout()
     Out(SYS_WEB | LOG_NOTICE) << "Webgui logout" << endl;
 }
 
-bool HttpServer::checkSession(const QHttpRequestHeader& hdr)
+bool HttpServer::checkSession(const QHttpRequestHeader &hdr)
 {
     // check session in cookie
     int session_id = 0;
@@ -226,7 +223,6 @@ bool HttpServer::checkSession(const QHttpRequestHeader& hdr)
         }
     }
 
-
     if (session_id == session.sessionId) {
         // check if the session hasn't expired yet
         if (session.last_access.secsTo(QTime::currentTime()) < WebInterfacePluginSettings::sessionTTL()) {
@@ -240,7 +236,7 @@ bool HttpServer::checkSession(const QHttpRequestHeader& hdr)
     return true;
 }
 
-static QString ExtensionToContentType(const QString& ext)
+static QString ExtensionToContentType(const QString &ext)
 {
     if (ext == "html")
         return "text/html";
@@ -259,29 +255,19 @@ static QString ExtensionToContentType(const QString& ext)
 }
 
 // HTTP needs non translated dates
-static QString days[] = {
-    "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
-};
+static QString days[] = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
-static QString months[] = {
-    "Jan", "Feb", "Mar", "Apr",
-    "May", "Jun", "Jul", "Aug",
-    "Sep", "Oct", "Nov", "Dec"
-};
+static QString months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
-static QString DateTimeToString(const QDateTime& now, bool cookie)
+static QString DateTimeToString(const QDateTime &now, bool cookie)
 {
     if (!cookie)
-        return now.toString("%1, dd %2 yyyy hh:mm:ss UTC")
-               .arg(days[now.date().dayOfWeek() - 1])
-               .arg(months[now.date().month() - 1]);
+        return now.toString("%1, dd %2 yyyy hh:mm:ss UTC").arg(days[now.date().dayOfWeek() - 1]).arg(months[now.date().month() - 1]);
     else
-        return now.toString("%1, dd-%2-yyyy hh:mm:ss GMT")
-               .arg(days[now.date().dayOfWeek() - 1])
-               .arg(months[now.date().month() - 1]);
+        return now.toString("%1, dd-%2-yyyy hh:mm:ss GMT").arg(days[now.date().dayOfWeek() - 1]).arg(months[now.date().month() - 1]);
 }
 
-void HttpServer::setDefaultResponseHeaders(HttpResponseHeader& hdr, const QString& content_type, bool with_session_info)
+void HttpServer::setDefaultResponseHeaders(HttpResponseHeader &hdr, const QString &content_type, bool with_session_info)
 {
     hdr.setValue("Server", "KTorrent/" VERSION);
     hdr.setValue("Date", DateTimeToString(QDateTime::currentDateTime().toUTC(), false));
@@ -293,7 +279,7 @@ void HttpServer::setDefaultResponseHeaders(HttpResponseHeader& hdr, const QStrin
     }
 }
 
-void HttpServer::redirectToLoginPage(HttpClientHandler* hdlr)
+void HttpServer::redirectToLoginPage(HttpClientHandler *hdlr)
 {
     HttpResponseHeader rhdr(302);
     setDefaultResponseHeaders(rhdr, "text/html", false);
@@ -303,9 +289,7 @@ void HttpServer::redirectToLoginPage(HttpClientHandler* hdlr)
     Out(SYS_WEB | LOG_NOTICE) << "Redirecting to /login.html" << endl;
 }
 
-
-
-void HttpServer::handleGet(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void HttpServer::handleGet(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     if (rootDir.isEmpty()) {
         HttpResponseHeader rhdr(500, hdr.majorVersion(), hdr.minorVersion());
@@ -324,9 +308,10 @@ void HttpServer::handleGet(HttpClientHandler* hdlr, const QHttpRequestHeader& hd
     url.setEncodedPathAndQuery(file);
 
     Out(SYS_WEB | LOG_DEBUG) << "GET " << hdr.path() << endl;
-    WebContentGenerator* gen = content_generators.find(url.path());
+    WebContentGenerator *gen = content_generators.find(url.path());
     if (gen) {
-        if ((gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr))) && WebInterfacePluginSettings::authentication()) {
+        if ((gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr)))
+            && WebInterfacePluginSettings::authentication()) {
             // redirect to login page
             redirectToLoginPage(hdlr);
         } else {
@@ -342,7 +327,7 @@ void HttpServer::handleGet(HttpClientHandler* hdlr, const QHttpRequestHeader& hd
     }
 }
 
-void HttpServer::handleFile(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QString& path)
+void HttpServer::handleFile(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QString &path)
 {
     // check if the file exists (if not send 404)
     if (!bt::Exists(path)) {
@@ -359,7 +344,8 @@ void HttpServer::handleFile(HttpClientHandler* hdlr, const QHttpRequestHeader& h
         file = "/interface.html";
 
     QFileInfo fi(path);
-    QString ext = fi.suffix();;
+    QString ext = fi.suffix();
+    ;
 
     if (ext == "html") {
         // html pages require a login unless it is the login.html page
@@ -392,7 +378,7 @@ void HttpServer::handleFile(HttpClientHandler* hdlr, const QHttpRequestHeader& h
     }
 }
 
-void HttpServer::handleNormalFile(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QString& path)
+void HttpServer::handleNormalFile(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QString &path)
 {
     QFileInfo fi(path);
     QString ext = fi.suffix();
@@ -422,14 +408,15 @@ void HttpServer::handleNormalFile(HttpClientHandler* hdlr, const QHttpRequestHea
     }
 }
 
-void HttpServer::handlePost(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void HttpServer::handlePost(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     Out(SYS_WEB | LOG_DEBUG) << "POST " << hdr.path() << endl;
     KUrl url;
     url.setEncodedPathAndQuery(hdr.path());
-    WebContentGenerator* gen = content_generators.find(url.path());
+    WebContentGenerator *gen = content_generators.find(url.path());
     if (gen) {
-        if ((gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr))) && WebInterfacePluginSettings::authentication()) {
+        if ((gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr)))
+            && WebInterfacePluginSettings::authentication()) {
             // redirect to login page
             redirectToLoginPage(hdlr);
         } else {
@@ -447,7 +434,7 @@ void HttpServer::handlePost(HttpClientHandler* hdlr, const QHttpRequestHeader& h
     }
 }
 
-void HttpServer::handleUnsupportedMethod(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void HttpServer::handleUnsupportedMethod(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     HttpResponseHeader rhdr(500, hdr.majorVersion(), hdr.minorVersion());
     setDefaultResponseHeaders(rhdr, "text/html", false);
@@ -456,12 +443,12 @@ void HttpServer::handleUnsupportedMethod(HttpClientHandler* hdlr, const QHttpReq
 
 void HttpServer::slotConnectionClosed()
 {
-    HttpClientHandler* client = (HttpClientHandler*)sender();
+    HttpClientHandler *client = (HttpClientHandler *)sender();
     clients.removeAll(client);
     client->deleteLater();
 }
 
-QDateTime HttpServer::parseDate(const QString& str)
+QDateTime HttpServer::parseDate(const QString &str)
 {
     /*
     Potential date formats :
@@ -517,12 +504,12 @@ QDateTime HttpServer::parseDate(const QString& str)
         return QDateTime();
 }
 
-bt::MMapFile* HttpServer::cacheLookup(const QString& name)
+bt::MMapFile *HttpServer::cacheLookup(const QString &name)
 {
     return cache.object(name);
 }
 
-void HttpServer::insertIntoCache(const QString& name, bt::MMapFile* file)
+void HttpServer::insertIntoCache(const QString &name, bt::MMapFile *file)
 {
     cache.insert(name, file);
 }
@@ -547,7 +534,7 @@ QString HttpServer::challengeString()
     return challenge;
 }
 
-void HttpServer::addContentGenerator(WebContentGenerator* g)
+void HttpServer::addContentGenerator(WebContentGenerator *g)
 {
     content_generators.insert(g->getPath(), g);
 }

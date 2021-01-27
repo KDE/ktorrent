@@ -26,7 +26,6 @@
 class QString;
 class QDockWidget;
 
-
 namespace kt
 {
 class ScanForLostFilesPrefPage;
@@ -35,7 +34,7 @@ class ScanForLostFilesWidget;
 enum SFLFPosition {
     SEPARATE_ACTIVITY = 0,
     DOCKABLE_WIDGET = 1,
-    TORRENT_ACTIVITY = 2
+    TORRENT_ACTIVITY = 2,
 };
 
 /**
@@ -47,12 +46,12 @@ class ScanForLostFilesPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    ScanForLostFilesPlugin(QObject* parent, const QVariantList& args);
+    ScanForLostFilesPlugin(QObject *parent, const QVariantList &args);
     ~ScanForLostFilesPlugin() override;
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
 
 public Q_SLOTS:
     void updateScanForLostFiles();
@@ -62,9 +61,9 @@ private:
     void removeFromGUI();
 
 private:
-    ScanForLostFilesWidget* m_view;
-    QDockWidget* m_dock;
-    ScanForLostFilesPrefPage* m_pref;
+    ScanForLostFilesWidget *m_view;
+    QDockWidget *m_dock;
+    ScanForLostFilesPrefPage *m_pref;
     SFLFPosition m_pos;
 };
 

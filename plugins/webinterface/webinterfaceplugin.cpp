@@ -1,45 +1,45 @@
 /***************************************************************************
-*   Copyright (C) 2006 by Diego R. Brogna                                 *
-*   dierbro@gmail.com                                                     *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
-***************************************************************************/
+ *   Copyright (C) 2006 by Diego R. Brogna                                 *
+ *   dierbro@gmail.com                                                     *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ ***************************************************************************/
 
 #include <KGenericFactory>
 #include <KGlobal>
 
-#include <util/log.h>
-#include <util/logsystemmanager.h>
+#include "httpserver.h"
+#include "webinterfaceplugin.h"
+#include "webinterfacepluginsettings.h"
+#include "webinterfaceprefwidget.h"
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/torrentinterface.h>
-#include <torrent/globals.h>
 #include <net/portlist.h>
-#include "webinterfaceprefwidget.h"
-#include "webinterfaceplugin.h"
-#include "httpserver.h"
-#include "webinterfacepluginsettings.h"
-
+#include <torrent/globals.h>
+#include <util/log.h>
+#include <util/logsystemmanager.h>
 
 K_EXPORT_COMPONENT_FACTORY(ktwebinterfaceplugin, KGenericFactory<kt::WebInterfacePlugin>("ktwebinterfaceplugin"))
 
 using namespace bt;
 namespace kt
 {
-WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+WebInterfacePlugin::WebInterfacePlugin(QObject *parent, const QStringList &args)
+    : Plugin(parent)
 {
     Q_UNUSED(args);
     http_server = nullptr;
@@ -48,7 +48,6 @@ WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const QStringList& args)
 
 WebInterfacePlugin::~WebInterfacePlugin()
 {
-
 }
 
 void WebInterfacePlugin::load()
@@ -104,7 +103,7 @@ void WebInterfacePlugin::initServer()
 void WebInterfacePlugin::preferencesUpdated()
 {
     if (http_server && http_server->getPort() != WebInterfacePluginSettings::port()) {
-        //stop and delete http server
+        // stop and delete http server
         bt::Globals::instance().getPortList().removePort(http_server->getPort(), net::TCP);
         delete http_server;
         http_server = nullptr;
@@ -113,7 +112,7 @@ void WebInterfacePlugin::preferencesUpdated()
     }
 }
 
-bool WebInterfacePlugin::versionCheck(const QString& version) const
+bool WebInterfacePlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }

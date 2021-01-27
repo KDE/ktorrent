@@ -30,22 +30,20 @@
 #include <KActionCollection>
 #include <KLocalizedString>
 
-#include <util/error.h>
-#include "weekview.h"
-#include "schedule.h"
 #include "edititemdlg.h"
-
+#include "schedule.h"
+#include "weekview.h"
+#include <util/error.h>
 
 namespace kt
 {
-
-
-ScheduleEditor::ScheduleEditor(QWidget* parent)
-    : Activity(i18n("Bandwidth Schedule"), QStringLiteral("kt-bandwidth-scheduler"), 20, parent), schedule(nullptr)
+ScheduleEditor::ScheduleEditor(QWidget *parent)
+    : Activity(i18n("Bandwidth Schedule"), QStringLiteral("kt-bandwidth-scheduler"), 20, parent)
+    , schedule(nullptr)
 {
     setXMLGUIFile(QStringLiteral("ktorrent_bwschedulerui.rc"));
     setToolTip(i18n("Edit the bandwidth schedule"));
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     view = new WeekView(this);
     layout->addWidget(view);
     layout->setMargin(0);
@@ -57,7 +55,7 @@ ScheduleEditor::ScheduleEditor(QWidget* parent)
     edit_item_action->setEnabled(false);
     remove_item_action->setEnabled(false);
 
-    QMenu* menu = view->rightClickMenu();
+    QMenu *menu = view->rightClickMenu();
     menu->addAction(new_item_action);
     menu->addAction(edit_item_action);
     menu->addAction(remove_item_action);
@@ -65,25 +63,24 @@ ScheduleEditor::ScheduleEditor(QWidget* parent)
     menu->addAction(clear_action);
 
     connect(view, &WeekView::selectionChanged, this, &ScheduleEditor::onSelectionChanged);
-    connect(view, &WeekView::editItem, this, qOverload<ScheduleItem*>(&ScheduleEditor::editItem));
+    connect(view, &WeekView::editItem, this, qOverload<ScheduleItem *>(&ScheduleEditor::editItem));
     connect(view, &WeekView::itemMoved, this, &ScheduleEditor::itemMoved);
 }
 
-
 ScheduleEditor::~ScheduleEditor()
-{}
-
-QAction* ScheduleEditor::addAction(const QString& icon, const QString& text, const QString& name, Func slot)
 {
-    KActionCollection* ac = part()->actionCollection();
-    QAction * a = new QAction(QIcon::fromTheme(icon), text, this);
+}
+
+QAction *ScheduleEditor::addAction(const QString &icon, const QString &text, const QString &name, Func slot)
+{
+    KActionCollection *ac = part()->actionCollection();
+    QAction *a = new QAction(QIcon::fromTheme(icon), text, this);
     connect(a, &QAction::triggered, [this, slot](bool) {
         (this->*slot)();
     });
     ac->addAction(name, a);
     return a;
 }
-
 
 void ScheduleEditor::setupActions()
 {
@@ -94,7 +91,7 @@ void ScheduleEditor::setupActions()
     edit_item_action = addAction(QStringLiteral("edit-select-all"), i18n("Edit Item"), QStringLiteral("edit_schedule_item"), &ScheduleEditor::editItem);
     clear_action = addAction(QStringLiteral("edit-clear"), i18n("Clear Schedule"), QStringLiteral("schedule_clear"), &ScheduleEditor::clear);
 
-    QWidgetAction* act = new QWidgetAction(this);
+    QWidgetAction *act = new QWidgetAction(this);
     enable_schedule = new QCheckBox(i18n("Scheduler Active"), this);
     enable_schedule->setToolTip(i18n("Activate or deactivate the scheduler"));
     act->setDefaultWidget(enable_schedule);
@@ -102,8 +99,7 @@ void ScheduleEditor::setupActions()
     connect(enable_schedule, &QCheckBox::toggled, this, &ScheduleEditor::enableChecked);
 }
 
-
-void ScheduleEditor::setSchedule(Schedule* s)
+void ScheduleEditor::setSchedule(Schedule *s)
 {
     schedule = s;
     view->setSchedule(s);
@@ -129,7 +125,7 @@ void ScheduleEditor::save()
     if (!fn.isEmpty()) {
         try {
             schedule->save(fn);
-        } catch (bt::Error& err) {
+        } catch (bt::Error &err) {
             QMessageBox::critical(this, QString(), err.toString());
         }
     }
@@ -139,11 +135,11 @@ void ScheduleEditor::load()
 {
     QString fn = QFileDialog::getOpenFileName(this, QString(), i18n("KTorrent scheduler files") + QLatin1String(" (*.sched)"));
     if (!fn.isEmpty()) {
-        Schedule* s = new Schedule();
+        Schedule *s = new Schedule();
         try {
             s->load(fn);
             loaded(s);
-        } catch (bt::Error& err) {
+        } catch (bt::Error &err) {
             QMessageBox::critical(this, QString(), err.toString());
             delete s;
         }
@@ -152,7 +148,7 @@ void ScheduleEditor::load()
 
 void ScheduleEditor::addItem()
 {
-    ScheduleItem* item = new ScheduleItem();
+    ScheduleItem *item = new ScheduleItem();
     item->start_day = 1;
     item->end_day = 7;
     item->start = QTime(10, 0);
@@ -174,7 +170,7 @@ void ScheduleEditor::removeItem()
     scheduleChanged();
 }
 
-void ScheduleEditor::editItem(ScheduleItem* item)
+void ScheduleEditor::editItem(ScheduleItem *item)
 {
     ScheduleItem tmp = *item;
 
@@ -208,7 +204,7 @@ void ScheduleEditor::updateStatusText(int up, int down, bool suspended, bool ena
     view->updateStatusText(up, down, suspended, enabled);
 }
 
-void ScheduleEditor::itemMoved(kt::ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day)
+void ScheduleEditor::itemMoved(kt::ScheduleItem *item, const QTime &start, const QTime &end, int start_day, int end_day)
 {
     schedule->modify(item, start, end, start_day, end_day);
     view->itemChanged(item);
@@ -227,4 +223,3 @@ void ScheduleEditor::enableChecked(bool on)
 }
 
 }
-

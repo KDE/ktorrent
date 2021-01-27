@@ -21,10 +21,9 @@
 #ifndef KTUPNPPREFPAGE_H
 #define KTUPNPPREFPAGE_H
 
+#include "ui_upnpwidget.h"
 #include <QWidget>
 #include <net/portlist.h>
-#include "ui_upnpwidget.h"
-
 
 namespace bt
 {
@@ -46,32 +45,32 @@ class UPnPWidget : public QWidget, public Ui_UPnPWidget, public net::PortListene
 {
     Q_OBJECT
 public:
-    UPnPWidget(bt::UPnPMCastSocket* sock, QWidget* parent);
+    UPnPWidget(bt::UPnPMCastSocket *sock, QWidget *parent);
     ~UPnPWidget() override;
 
-    void shutdown(bt::WaitJob* job);
+    void shutdown(bt::WaitJob *job);
 
 public Q_SLOTS:
     /**
      * Add a device to the list.
      * @param r The device
      */
-    void addDevice(bt::UPnPRouter* r);
+    void addDevice(bt::UPnPRouter *r);
 
 protected Q_SLOTS:
     void onForwardBtnClicked();
     void onUndoForwardBtnClicked();
     void onRescanClicked();
     void updatePortMappings();
-    void onCurrentDeviceChanged(const QModelIndex& current, const QModelIndex& previous);
+    void onCurrentDeviceChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
-    void portAdded(const net::Port& port) override;
-    void portRemoved(const net::Port& port) override;
+    void portAdded(const net::Port &port) override;
+    void portRemoved(const net::Port &port) override;
 
 private:
-    bt::UPnPMCastSocket* sock;
-    RouterModel* model;
+    bt::UPnPMCastSocket *sock;
+    RouterModel *model;
 };
 }
 

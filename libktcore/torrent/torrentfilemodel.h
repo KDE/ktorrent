@@ -25,8 +25,8 @@
 #include <QAbstractItemModel>
 #include <QByteArray>
 
-#include <util/constants.h>
 #include <ktcore_export.h>
+#include <util/constants.h>
 
 class QTreeView;
 class QSortFilterProxyModel;
@@ -44,15 +44,16 @@ class KTCORE_EXPORT TorrentFileModel : public QAbstractItemModel
     Q_OBJECT
 public:
     enum DeselectMode {
-        KEEP_FILES, DELETE_FILES
+        KEEP_FILES,
+        DELETE_FILES,
     };
-    TorrentFileModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent);
+    TorrentFileModel(bt::TorrentInterface *tc, DeselectMode mode, QObject *parent);
     ~TorrentFileModel() override;
 
     /**
      * Change the current torrent
      */
-    virtual void changeTorrent(bt::TorrentInterface* tc) = 0;
+    virtual void changeTorrent(bt::TorrentInterface *tc) = 0;
 
     /**
      * Check all the files in the torrent.
@@ -81,7 +82,7 @@ public:
      * @param tv The QTreeView
      * @return The expanded state encoded in a byte array
      */
-    virtual QByteArray saveExpandedState(QSortFilterProxyModel* pm, QTreeView* tv);
+    virtual QByteArray saveExpandedState(QSortFilterProxyModel *pm, QTreeView *tv);
 
     /**
      * Retore the expanded state of the tree.in a QTreeView
@@ -89,28 +90,28 @@ public:
      * @param tv The QTreeView
      * @param state The encoded expanded state
      */
-    virtual void loadExpandedState(QSortFilterProxyModel* pm, QTreeView* tv, const QByteArray& state);
+    virtual void loadExpandedState(QSortFilterProxyModel *pm, QTreeView *tv, const QByteArray &state);
 
     /**
      * Convert a model index to a file.
      * @param idx The model index
      * @return The file index or 0 for a directory
      **/
-    virtual bt::TorrentFileInterface* indexToFile(const QModelIndex& idx) = 0;
+    virtual bt::TorrentFileInterface *indexToFile(const QModelIndex &idx) = 0;
 
     /**
      * Get the path of a directory (root directory not included)
      * @param idx The model index
      * @return The path
      */
-    virtual QString dirPath(const QModelIndex& idx) = 0;
+    virtual QString dirPath(const QModelIndex &idx) = 0;
 
     /**
      * Change the priority of a bunch of items.
      * @param indexes The list of items
      * @param newpriority The new priority
      */
-    virtual void changePriority(const QModelIndexList& indexes, bt::Priority newpriority) = 0;
+    virtual void changePriority(const QModelIndexList &indexes, bt::Priority newpriority) = 0;
 
     /**
      * Missing files have been marked DND, update the preview and selection information.
@@ -139,10 +140,10 @@ public:
         return file_names_editable;
     }
 
-    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
 
-    virtual void filePercentageChanged(bt::TorrentFileInterface* file, float percentage);
-    virtual void filePreviewChanged(bt::TorrentFileInterface* file, bool preview);
+    virtual void filePercentageChanged(bt::TorrentFileInterface *file, float percentage);
+    virtual void filePreviewChanged(bt::TorrentFileInterface *file, bool preview);
 Q_SIGNALS:
     /**
      * Emitted whenever one or more items changes check state
@@ -150,7 +151,7 @@ Q_SIGNALS:
     void checkStateChanged();
 
 protected:
-    bt::TorrentInterface* tc;
+    bt::TorrentInterface *tc;
     DeselectMode mode;
     bool file_names_editable;
 };

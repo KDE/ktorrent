@@ -30,17 +30,17 @@
 
 namespace kt
 {
-
 class ProxyHelper
 {
-    DBusSettings* m_settings;
+    DBusSettings *m_settings;
+
 public:
-    ProxyHelper(DBusSettings* settings);
-    void setSettings(DBusSettings* settings)
+    ProxyHelper(DBusSettings *settings);
+    void setSettings(DBusSettings *settings)
     {
         m_settings = settings;
     }
-    bool ApplyProxy(KIO::MetaData& metadata) const;
+    bool ApplyProxy(KIO::MetaData &metadata) const;
 };
 
 }

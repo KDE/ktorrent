@@ -18,57 +18,59 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <util/log.h>
-#include <util/error.h>
-#include <util/sha1hash.h>
+#include "torrentgroup.h"
 #include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
 #include <interfaces/torrentinterface.h>
-#include "torrentgroup.h"
 #include <torrent/queuemanager.h>
+#include <util/error.h>
 #include <util/fileops.h>
+#include <util/log.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-TorrentGroup::TorrentGroup(const QString& name): Group(name, MIXED_GROUP | CUSTOM_GROUP, QLatin1String("/all/custom/") + name)
+TorrentGroup::TorrentGroup(const QString &name)
+    : Group(name, MIXED_GROUP | CUSTOM_GROUP, QLatin1String("/all/custom/") + name)
 {
     setIconByName(QStringLiteral("application-x-bittorrent"));
 }
 
-
 TorrentGroup::~TorrentGroup()
-{}
+{
+}
 
-
-bool TorrentGroup::isMember(TorrentInterface* tor)
+bool TorrentGroup::isMember(TorrentInterface *tor)
 {
     return torrents.count(tor) > 0;
 }
 
-void TorrentGroup::add(TorrentInterface* tor)
+void TorrentGroup::add(TorrentInterface *tor)
 {
     torrents.insert(tor);
 }
 
-void TorrentGroup::remove(TorrentInterface* tor)
+void TorrentGroup::remove(TorrentInterface *tor)
 {
     torrents.erase(tor);
 }
 
-void TorrentGroup::save(bt::BEncoder* enc)
+void TorrentGroup::save(bt::BEncoder *enc)
 {
     enc->beginDict();
-    enc->write(QByteArrayLiteral("name")); enc->write(name.toLocal8Bit());
-    enc->write(QByteArrayLiteral("icon")); enc->write(icon_name.toLocal8Bit());
-    enc->write(QByteArrayLiteral("hashes")); enc->beginList();
-    std::set<TorrentInterface*>::iterator i = torrents.begin();
+    enc->write(QByteArrayLiteral("name"));
+    enc->write(name.toLocal8Bit());
+    enc->write(QByteArrayLiteral("icon"));
+    enc->write(icon_name.toLocal8Bit());
+    enc->write(QByteArrayLiteral("hashes"));
+    enc->beginList();
+    std::set<TorrentInterface *>::iterator i = torrents.begin();
     while (i != torrents.end()) {
-        TorrentInterface* tc = *i;
+        TorrentInterface *tc = *i;
         // write the info hash, because that will be unique for each torrent
-        const bt::SHA1Hash& h = tc->getInfoHash();
+        const bt::SHA1Hash &h = tc->getInfoHash();
         enc->write(h.getData(), 20);
         i++;
     }
@@ -78,12 +80,18 @@ void TorrentGroup::save(bt::BEncoder* enc)
         j++;
     }
     enc->end();
-    enc->write(QByteArrayLiteral("policy")); enc->beginDict();
-    enc->write(QByteArrayLiteral("default_save_location")); enc->write(policy.default_save_location.toUtf8());
-    enc->write(QByteArrayLiteral("max_share_ratio")); enc->write(QByteArray::number(policy.max_share_ratio));
-    enc->write(QByteArrayLiteral("max_seed_time")); enc->write(QByteArray::number(policy.max_seed_time));
-    enc->write(QByteArrayLiteral("max_upload_rate")); enc->write(policy.max_upload_rate);
-    enc->write(QByteArrayLiteral("max_download_rate")); enc->write(policy.max_download_rate);
+    enc->write(QByteArrayLiteral("policy"));
+    enc->beginDict();
+    enc->write(QByteArrayLiteral("default_save_location"));
+    enc->write(policy.default_save_location.toUtf8());
+    enc->write(QByteArrayLiteral("max_share_ratio"));
+    enc->write(QByteArray::number(policy.max_share_ratio));
+    enc->write(QByteArrayLiteral("max_seed_time"));
+    enc->write(QByteArray::number(policy.max_seed_time));
+    enc->write(QByteArrayLiteral("max_upload_rate"));
+    enc->write(policy.max_upload_rate);
+    enc->write(QByteArrayLiteral("max_download_rate"));
+    enc->write(policy.max_download_rate);
     enc->write(QByteArrayLiteral("only_apply_on_new_torrents"));
     enc->write((bt::Uint32)(policy.only_apply_on_new_torrents ? 1 : 0));
     enc->write(QByteArrayLiteral("default_move_on_completion_location"));
@@ -92,11 +100,11 @@ void TorrentGroup::save(bt::BEncoder* enc)
     enc->end();
 }
 
-void TorrentGroup::load(bt::BDictNode* dn)
+void TorrentGroup::load(bt::BDictNode *dn)
 {
     name = QString::fromLocal8Bit(dn->getByteArray("name"));
     setIconByName(QString::fromLocal8Bit(dn->getByteArray("icon")));
-    BListNode* ln = dn->getList("hashes");
+    BListNode *ln = dn->getList("hashes");
     if (!ln)
         return;
 
@@ -107,10 +115,10 @@ void TorrentGroup::load(bt::BDictNode* dn)
         if (ba.size() != 20)
             continue;
 
-        hashes.insert(SHA1Hash((const Uint8*)ba.data()));
+        hashes.insert(SHA1Hash((const Uint8 *)ba.data()));
     }
 
-    if (BDictNode* gp = dn->getDict(QByteArrayLiteral("policy"))) {
+    if (BDictNode *gp = dn->getDict(QByteArrayLiteral("policy"))) {
         // load the group policy
         if (gp->getValue(QByteArrayLiteral("default_save_location"))) {
             policy.default_save_location = gp->getString(QByteArrayLiteral("default_save_location"), 0);
@@ -141,18 +149,18 @@ void TorrentGroup::load(bt::BDictNode* dn)
     }
 }
 
-void TorrentGroup::torrentRemoved(TorrentInterface* tor)
+void TorrentGroup::torrentRemoved(TorrentInterface *tor)
 {
     removeTorrent(tor);
 }
 
-void TorrentGroup::removeTorrent(TorrentInterface* tor)
+void TorrentGroup::removeTorrent(TorrentInterface *tor)
 {
     torrents.erase(tor);
     torrentRemoved(this);
 }
 
-void TorrentGroup::addTorrent(TorrentInterface* tor, bool new_torrent)
+void TorrentGroup::addTorrent(TorrentInterface *tor, bool new_torrent)
 {
     torrents.insert(tor);
     // apply group policy if needed
@@ -173,9 +181,9 @@ void TorrentGroup::policyChanged()
     if (policy.only_apply_on_new_torrents)
         return;
 
-    std::set<TorrentInterface*>::iterator i = torrents.begin();
+    std::set<TorrentInterface *>::iterator i = torrents.begin();
     while (i != torrents.end()) {
-        TorrentInterface* tor = *i;
+        TorrentInterface *tor = *i;
         tor->setMaxShareRatio(policy.max_share_ratio);
         tor->setMaxSeedTime(policy.max_seed_time);
         tor->setTrafficLimits(policy.max_upload_rate * 1024, policy.max_download_rate * 1024);
@@ -183,7 +191,7 @@ void TorrentGroup::policyChanged()
     }
 }
 
-void TorrentGroup::loadTorrents(QueueManager* qman)
+void TorrentGroup::loadTorrents(QueueManager *qman)
 {
     QueueManager::iterator i = qman->begin();
     while (i != qman->end()) {

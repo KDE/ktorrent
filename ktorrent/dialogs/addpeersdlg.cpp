@@ -22,29 +22,39 @@
 #include <KGuiItem>
 #include <KStandardGuiItem>
 
-#include <interfaces/torrentinterface.h>
 #include "addpeersdlg.h"
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {
 class ManualPeerSource : public bt::PeerSource
 {
 public:
-    ManualPeerSource() {}
-    ~ManualPeerSource() override {}
+    ManualPeerSource()
+    {
+    }
+    ~ManualPeerSource() override
+    {
+    }
 
-    void start() override {}
-    void stop(bt::WaitJob*) override {}
+    void start() override
+    {
+    }
+    void stop(bt::WaitJob *) override
+    {
+    }
 
-    void add(const QString& ip, bt::Uint16 port)
+    void add(const QString &ip, bt::Uint16 port)
     {
         addPeer(net::Address(ip, port), false);
         peersReady(this);
     }
 };
 
-AddPeersDlg::AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent)
-    : QDialog(parent), tc(tc), mps(nullptr)
+AddPeersDlg::AddPeersDlg(bt::TorrentInterface *tc, QWidget *parent)
+    : QDialog(parent)
+    , tc(tc)
+    , mps(nullptr)
 {
     setupUi(this);
     connect(m_close, &QPushButton::clicked, this, &AddPeersDlg::reject);
@@ -56,7 +66,6 @@ AddPeersDlg::AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent)
     mps = new ManualPeerSource();
     tc->addPeerSource(mps);
 }
-
 
 AddPeersDlg::~AddPeersDlg()
 {
@@ -70,4 +79,3 @@ void AddPeersDlg::addPressed()
 }
 
 }
-

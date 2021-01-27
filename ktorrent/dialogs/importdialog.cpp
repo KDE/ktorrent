@@ -27,33 +27,36 @@
 #include <KMessageBox>
 #include <KStandardGuiItem>
 
-#include <util/log.h>
+#include "importdialog.h"
+#include <datachecker/datacheckerthread.h>
+#include <datachecker/multidatachecker.h>
+#include <datachecker/singledatachecker.h>
+#include <diskio/chunkmanager.h>
+#include <interfaces/coreinterface.h>
+#include <interfaces/functions.h>
+#include <settings.h>
+#include <torrent/globals.h>
+#include <torrent/torrent.h>
 #include <util/error.h>
 #include <util/file.h>
 #include <util/fileops.h>
 #include <util/functions.h>
-#include <torrent/globals.h>
-#include <torrent/torrent.h>
-#include <diskio/chunkmanager.h>
-#include <interfaces/coreinterface.h>
-#include <datachecker/datacheckerthread.h>
-#include <datachecker/singledatachecker.h>
-#include <datachecker/multidatachecker.h>
-#include <interfaces/functions.h>
-#include <settings.h>
-#include "importdialog.h"
-
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-ImportDialog::ImportDialog(CoreInterface* core, QWidget* parent)
-    : QDialog(parent), core(core), dc(nullptr), dc_thread(nullptr), canceled(false)
+ImportDialog::ImportDialog(CoreInterface *core, QWidget *parent)
+    : QDialog(parent)
+    , core(core)
+    , dc(nullptr)
+    , dc_thread(nullptr)
+    , canceled(false)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setupUi(this);
-    KUrlRequester* r = m_torrent_url;
+    KUrlRequester *r = m_torrent_url;
     r->setMode(KFile::File | KFile::LocalOnly);
     r->setFilter(kt::TorrentFileFilter(true));
 
@@ -69,7 +72,8 @@ ImportDialog::ImportDialog(CoreInterface* core, QWidget* parent)
 }
 
 ImportDialog::~ImportDialog()
-{}
+{
+}
 
 void ImportDialog::progress(quint32 num, quint32 total)
 {
@@ -120,7 +124,7 @@ void ImportDialog::finished()
                 data_dir += bt::DirSeparator();
 
             for (Uint32 i = 0; i < tor.getNumFiles(); i++) {
-                TorrentFile& tf = tor.getFile(i);
+                TorrentFile &tf = tor.getFile(i);
                 makeDirs(dnd_dir, data_dir, tf.getPath());
                 tf.setPathOnDisk(data_dir + tf.getPath());
             }
@@ -128,7 +132,7 @@ void ImportDialog::finished()
             saveFileMap(tor, tor_dir);
 
             QString durl = data_dir;
-            //if (durl.endsWith(bt::DirSeparator()))
+            // if (durl.endsWith(bt::DirSeparator()))
             durl.chop(1);
             int ds = durl.lastIndexOf(bt::DirSeparator());
             if (durl.midRef(ds + 1) == tor.getNameSuggestion()) {
@@ -149,7 +153,7 @@ void ImportDialog::finished()
 
         // everything went OK, so load the whole shabang and start downloading
         core->loadExistingTorrent(tor_dir);
-    } catch (Error& e) {
+    } catch (Error &e) {
         // delete tor_dir
         bt::Delete(tor_dir, true);
         KMessageBox::error(this, e.toString());
@@ -178,7 +182,7 @@ void ImportDialog::import()
             path += bt::DirSeparator();
 
         for (Uint32 i = 0; i < tor.getNumFiles(); i++) {
-            bt::TorrentFile& tf = tor.getFile(i);
+            bt::TorrentFile &tf = tor.getFile(i);
             tf.setPathOnDisk(path + tf.getPath());
         }
     } else
@@ -193,7 +197,7 @@ void ImportDialog::import()
     dc_thread->start();
 }
 
-void ImportDialog::onTorrentGetReult(KJob* j)
+void ImportDialog::onTorrentGetReult(KJob *j)
 {
     if (j->error()) {
         j->uiDelegate()->showErrorMessage();
@@ -201,9 +205,9 @@ void ImportDialog::onTorrentGetReult(KJob* j)
     } else {
         // try to load the torrent
         try {
-            KIO::StoredTransferJob* stj = (KIO::StoredTransferJob*)j;
+            KIO::StoredTransferJob *stj = (KIO::StoredTransferJob *)j;
             tor.load(stj->data(), false);
-        } catch (Error& e) {
+        } catch (Error &e) {
             KMessageBox::error(this, i18n("Cannot load the torrent file: %1", e.toString()));
             reject();
             return;
@@ -223,13 +227,13 @@ void ImportDialog::onImport()
     QUrl tor_url = m_torrent_url->url();
     if (!tor_url.isLocalFile()) {
         // download the torrent file
-        KIO::StoredTransferJob* j = KIO::storedGet(tor_url);
+        KIO::StoredTransferJob *j = KIO::storedGet(tor_url);
         connect(j, &KIO::StoredTransferJob::result, this, &ImportDialog::onTorrentGetReult);
     } else {
         // try to load the torrent
         try {
             tor.load(bt::LoadFile(tor_url.toLocalFile()), false);
-        } catch (Error& e) {
+        } catch (Error &e) {
             KMessageBox::error(this, i18n("Cannot load the torrent file: %1", e.toString()));
             reject();
             return;
@@ -251,8 +255,7 @@ void ImportDialog::cancelImport()
     reject();
 }
 
-
-void ImportDialog::writeIndex(const QString& file, const BitSet& chunks)
+void ImportDialog::writeIndex(const QString &file, const BitSet &chunks)
 {
     // first try to open it
     File fptr;
@@ -272,13 +275,13 @@ void ImportDialog::writeIndex(const QString& file, const BitSet& chunks)
     }
 }
 
-void ImportDialog::makeDirs(const QString& dnd_dir, const QString &data_url, const QString& fpath)
+void ImportDialog::makeDirs(const QString &dnd_dir, const QString &data_url, const QString &fpath)
 {
     QStringList sl = fpath.split(bt::DirSeparator());
 
     // create all necessary subdirs
     QString otmp = data_url;
-    //if (!otmp.endsWith(bt::DirSeparator()))
+    // if (!otmp.endsWith(bt::DirSeparator()))
     //    otmp += bt::DirSeparator();
 
     QString dtmp = dnd_dir;
@@ -294,7 +297,7 @@ void ImportDialog::makeDirs(const QString& dnd_dir, const QString &data_url, con
     }
 }
 
-void ImportDialog::saveStats(const QString& stats_file, const QString &data_dir, Uint64 imported, bool custom_output_name)
+void ImportDialog::saveStats(const QString &stats_file, const QString &data_dir, Uint64 imported, bool custom_output_name)
 {
     QFile fptr(stats_file);
     if (!fptr.open(QIODevice::WriteOnly)) {
@@ -316,7 +319,7 @@ void ImportDialog::saveStats(const QString& stats_file, const QString &data_dir,
         out << "CUSTOM_OUTPUT_NAME=1" << Qt::endl;
 }
 
-Uint64 ImportDialog::calcImportedBytes(const bt::BitSet& chunks, const Torrent& tor)
+Uint64 ImportDialog::calcImportedBytes(const bt::BitSet &chunks, const Torrent &tor)
 {
     Uint64 nb = 0;
     Uint64 ls = tor.getLastChunkSize();
@@ -333,7 +336,7 @@ Uint64 ImportDialog::calcImportedBytes(const bt::BitSet& chunks, const Torrent& 
     return nb;
 }
 
-void ImportDialog::saveFileInfo(const QString& file_info_file, QList<Uint32> & dnd)
+void ImportDialog::saveFileInfo(const QString &file_info_file, QList<Uint32> &dnd)
 {
     // saves which TorrentFile's do not need to be downloaded
     File fptr;
@@ -355,7 +358,7 @@ void ImportDialog::saveFileInfo(const QString& file_info_file, QList<Uint32> & d
     fptr.flush();
 }
 
-void ImportDialog::saveFileMap(const Torrent& tor, const QString& tor_dir)
+void ImportDialog::saveFileMap(const Torrent &tor, const QString &tor_dir)
 {
     QString file_map = tor_dir + QLatin1String("file_map");
     QFile fptr(file_map);
@@ -366,12 +369,12 @@ void ImportDialog::saveFileMap(const Torrent& tor, const QString& tor_dir)
 
     Uint32 num = tor.getNumFiles();
     for (Uint32 i = 0; i < num; i++) {
-        const TorrentFile& tf = tor.getFile(i);
+        const TorrentFile &tf = tor.getFile(i);
         out << tf.getPathOnDisk() << Qt::endl;
     }
 }
 
-void ImportDialog::saveFileMap(const QString& tor_dir, const QString& ddir)
+void ImportDialog::saveFileMap(const QString &tor_dir, const QString &ddir)
 {
     QString file_map = tor_dir + QLatin1String("file_map");
     QFile fptr(file_map);
@@ -383,5 +386,3 @@ void ImportDialog::saveFileMap(const QString& tor_dir, const QString& ddir)
 }
 
 }
-
-

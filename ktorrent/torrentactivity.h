@@ -47,23 +47,23 @@ class TorrentActivity : public TorrentActivityInterface
 {
     Q_OBJECT
 public:
-    TorrentActivity(Core* core, GUI* gui, QWidget* parent);
+    TorrentActivity(Core *core, GUI *gui, QWidget *parent);
     ~TorrentActivity() override;
 
     /// Get the group view
-    GroupView* getGroupView()
+    GroupView *getGroupView()
     {
         return group_view;
     }
 
     void loadState(KSharedConfigPtr cfg);
     void saveState(KSharedConfigPtr cfg);
-    const bt::TorrentInterface* getCurrentTorrent() const  override;
-    bt::TorrentInterface* getCurrentTorrent() override;
+    const bt::TorrentInterface *getCurrentTorrent() const override;
+    bt::TorrentInterface *getCurrentTorrent() override;
     void updateActions() override;
-    void addToolWidget(QWidget* widget, const QString& text, const QString& icon, const QString& tooltip) override;
-    void removeToolWidget(QWidget* widget) override;
-    Group* addNewGroup() override;
+    void addToolWidget(QWidget *widget, const QString &text, const QString &icon, const QString &tooltip) override;
+    void removeToolWidget(QWidget *widget) override;
+    Group *addNewGroup() override;
 
     /// Update the activity
     void update();
@@ -73,10 +73,10 @@ public:
 
 public Q_SLOTS:
     /**
-    * Called by the ViewManager when the current torrent has changed
-    * @param tc The torrent
-    * */
-    void currentTorrentChanged(bt::TorrentInterface* tc);
+     * Called by the ViewManager when the current torrent has changed
+     * @param tc The torrent
+     * */
+    void currentTorrentChanged(bt::TorrentInterface *tc);
 
     /**
         Hide or show the group view
@@ -89,7 +89,6 @@ public Q_SLOTS:
      */
     void onSuspendedStateChanged(bool suspended);
 
-
 private Q_SLOTS:
     void startAllTorrents();
     void stopAllTorrents();
@@ -97,23 +96,23 @@ private Q_SLOTS:
     void queueOrdered();
 
 private:
-    Core* core;
-    GUI* gui;
-    View* view;
-    GroupView* group_view;
-    GroupSwitcher* group_switcher;
-    QueueManagerWidget* qm;
-    QSplitter* hsplit;
-    QSplitter* vsplit;
-    TabBarWidget* tool_views;
-    MagnetView* magnet_view;
-    TorrentSearchBar* search_bar;
+    Core *core;
+    GUI *gui;
+    View *view;
+    GroupView *group_view;
+    GroupSwitcher *group_switcher;
+    QueueManagerWidget *qm;
+    QSplitter *hsplit;
+    QSplitter *vsplit;
+    TabBarWidget *tool_views;
+    MagnetView *magnet_view;
+    TorrentSearchBar *search_bar;
 
-    QAction * start_all_action;
-    QAction * stop_all_action;
-    KToggleAction* queue_suspend_action;
-    QAction * show_group_view_action;
-    QAction * filter_torrent_action;
+    QAction *start_all_action;
+    QAction *stop_all_action;
+    KToggleAction *queue_suspend_action;
+    QAction *show_group_view_action;
+    QAction *filter_torrent_action;
 };
 }
 

@@ -24,34 +24,34 @@
 
 namespace kt
 {
-
-FNode* NodeOperations::getChild(FNode* root, const QString &name, bool is_dir)
+FNode *NodeOperations::getChild(FNode *root, const QString &name, bool is_dir)
 {
-    FNode* child = root->first_child;
+    FNode *child = root->first_child;
     while (child && (child->name != name || child->is_dir != is_dir)) {
         child = child->next;
     }
     return child;
 }
 
-FNode* NodeOperations::addChild(FNode* root, const QString &name, bool is_dir)
+FNode *NodeOperations::addChild(FNode *root, const QString &name, bool is_dir)
 {
-    FNode* n = new FNode();
+    FNode *n = new FNode();
     n->parent = root;
     n->name = name;
     n->is_dir = is_dir;
     if (!root->first_child) {
         root->first_child = n;
     } else {
-        FNode* last_child = root->first_child;
-        while (last_child->next) last_child = last_child->next;
+        FNode *last_child = root->first_child;
+        while (last_child->next)
+            last_child = last_child->next;
         last_child->next = n;
         n->prev = last_child;
     }
     return n;
 }
 
-void NodeOperations::removeNode(FNode* n)
+void NodeOperations::removeNode(FNode *n)
 {
     while (n->first_child) {
         removeNode(n->first_child);
@@ -74,14 +74,15 @@ void NodeOperations::removeNode(FNode* n)
     free(n);
 }
 
-FNode* NodeOperations::makePath(FNode* root, const QString &fname, bool is_dir)
+FNode *NodeOperations::makePath(FNode *root, const QString &fname, bool is_dir)
 {
     int idx = fname.indexOf(QLatin1Char('/'));
-    FNode* existing;
+    FNode *existing;
 
     if (idx == -1) {
         existing = getChild(root, fname, is_dir);
-        if (existing) return existing;
+        if (existing)
+            return existing;
         return addChild(root, fname, is_dir);
     } else {
         existing = getChild(root, fname.left(idx), true);
@@ -91,20 +92,20 @@ FNode* NodeOperations::makePath(FNode* root, const QString &fname, bool is_dir)
     }
 }
 
-FNode* NodeOperations::findChild(FNode* root, const QString &fname, bool is_dir)
+FNode *NodeOperations::findChild(FNode *root, const QString &fname, bool is_dir)
 {
     int idx = fname.indexOf(QLatin1Char('/'));
     if (idx == -1) {
         return getChild(root, fname, is_dir);
     } else {
-        FNode* n = getChild(root, fname.left(idx), true);
+        FNode *n = getChild(root, fname.left(idx), true);
         if (n)
             n = findChild(n, fname.right(fname.size() - 1 - idx), is_dir);
         return n;
     }
 }
 
-void NodeOperations::fillFromDir(FNode* root, const QDir& dir)
+void NodeOperations::fillFromDir(FNode *root, const QDir &dir)
 {
     if (QThread::currentThread()->isInterruptionRequested()) {
         return;
@@ -112,28 +113,28 @@ void NodeOperations::fillFromDir(FNode* root, const QDir& dir)
 
     // QStringLists must be const to suppress "warning: c++11 range-loop might detach Qt container"
     const QStringList sl_f = dir.entryList(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden);
-    for (const QString& s : sl_f) {
+    for (const QString &s : sl_f) {
         addChild(root, s, false);
     }
 
     const QStringList sl_d = dir.entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Hidden);
     QDir next_dir;
-    for (const QString& s : sl_d) {
-        FNode* d = addChild(root, s, true);
+    for (const QString &s : sl_d) {
+        FNode *d = addChild(root, s, true);
         next_dir.setPath(dir.path() + QLatin1String("/") + s);
         fillFromDir(d, next_dir);
     }
 }
 
-void NodeOperations::subtractTreesOnFiles(FNode* tree1, FNode* tree2)
+void NodeOperations::subtractTreesOnFiles(FNode *tree1, FNode *tree2)
 {
     if (QThread::currentThread()->isInterruptionRequested()) {
         return;
     }
 
-    FNode* c = tree2->first_child;
+    FNode *c = tree2->first_child;
     while (c) {
-        FNode* f = getChild(tree1, c->name, c->is_dir);
+        FNode *f = getChild(tree1, c->name, c->is_dir);
         if (f) {
             if (c->is_dir)
                 subtractTreesOnFiles(f, c);
@@ -144,9 +145,9 @@ void NodeOperations::subtractTreesOnFiles(FNode* tree1, FNode* tree2)
     }
 }
 
-void NodeOperations::pruneEmptyFolders(FNode* start_folder)
+void NodeOperations::pruneEmptyFolders(FNode *start_folder)
 {
-    FNode* c = start_folder->first_child;
+    FNode *c = start_folder->first_child;
     while (c) {
         if (c->is_dir)
             pruneEmptyFolders(c);
@@ -158,16 +159,16 @@ void NodeOperations::pruneEmptyFolders(FNode* start_folder)
     }
 }
 
-void NodeOperations::pruneEmptyFolders(FNode* tree1, FNode* tree2)
+void NodeOperations::pruneEmptyFolders(FNode *tree1, FNode *tree2)
 {
     if (QThread::currentThread()->isInterruptionRequested()) {
         return;
     }
 
-    FNode* c = tree2->first_child;
+    FNode *c = tree2->first_child;
     while (c) {
         if (c->is_dir) {
-            FNode* f = getChild(tree1, c->name, c->is_dir);
+            FNode *f = getChild(tree1, c->name, c->is_dir);
             if (f) {
                 pruneEmptyFolders(f, c);
             }
@@ -180,7 +181,7 @@ void NodeOperations::pruneEmptyFolders(FNode* tree1, FNode* tree2)
     }
 }
 
-void NodeOperations::printTree(FNode* root, const QString& path, QSet<QString>& set)
+void NodeOperations::printTree(FNode *root, const QString &path, QSet<QString> &set)
 {
     if (QThread::currentThread()->isInterruptionRequested()) {
         return;
@@ -192,7 +193,7 @@ void NodeOperations::printTree(FNode* root, const QString& path, QSet<QString>& 
         set += new_path;
     }
 
-    FNode* c = root->first_child;
+    FNode *c = root->first_child;
 
     while (c) {
         if (c->is_dir) {
@@ -204,7 +205,7 @@ void NodeOperations::printTree(FNode* root, const QString& path, QSet<QString>& 
     }
 }
 
-void NodeOperations::printTree(FNode* root, QSet<QString>& set)
+void NodeOperations::printTree(FNode *root, QSet<QString> &set)
 {
     QString path;
     printTree(root, path, set);

@@ -21,12 +21,12 @@
 #ifndef KT_JOBPROGRESSWIDGET_H
 #define KT_JOBPROGRESSWIDGET_H
 
-#include <QWidget>
 #include <KJob>
+#include <QWidget>
 
+#include <gui/extender.h>
 #include <ktcore_export.h>
 #include <torrent/job.h>
-#include <gui/extender.h>
 
 namespace kt
 {
@@ -37,17 +37,17 @@ class KTCORE_EXPORT JobProgressWidget : public Extender
 {
     Q_OBJECT
 public:
-    JobProgressWidget(bt::Job* job, QWidget* parent);
+    JobProgressWidget(bt::Job *job, QWidget *parent);
     ~JobProgressWidget() override;
 
     /// Update the description
-    virtual void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2) = 0;
+    virtual void description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2) = 0;
 
     /// Show an informational message
-    virtual void infoMessage(const QString& plain, const QString& rich) = 0;
+    virtual void infoMessage(const QString &plain, const QString &rich) = 0;
 
     /// Show a warning message
-    virtual void warning(const QString& plain, const QString& rich) = 0;
+    virtual void warning(const QString &plain, const QString &rich) = 0;
 
     /// The total amount of unit has changed
     virtual void totalAmount(KJob::Unit unit, qulonglong amount) = 0;
@@ -77,7 +77,7 @@ protected:
     }
 
 protected:
-    bt::Job* job;
+    bt::Job *job;
     bool automatic_remove;
 };
 

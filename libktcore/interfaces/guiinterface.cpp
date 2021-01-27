@@ -18,17 +18,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
-#include <interfaces/torrentinterface.h>
 #include "guiinterface.h"
-
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {
-
 GUIInterface::GUIInterface()
-{}
-
+{
+}
 
 GUIInterface::~GUIInterface()
-{}
+{
+}
 }

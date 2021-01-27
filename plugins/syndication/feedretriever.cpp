@@ -21,28 +21,32 @@
 
 #include <KIO/Job>
 
+#include "feedretriever.h"
 #include <ktversion.h>
 #include <util/log.h>
-#include "feedretriever.h"
 
 using namespace bt;
 
 namespace kt
 {
-FeedRetriever::FeedRetriever() : job(nullptr), err(0)
+FeedRetriever::FeedRetriever()
+    : job(nullptr)
+    , err(0)
 {
 }
 
-FeedRetriever::FeedRetriever(const QString& file_name) : backup_file(file_name), job(nullptr), err(0)
+FeedRetriever::FeedRetriever(const QString &file_name)
+    : backup_file(file_name)
+    , job(nullptr)
+    , err(0)
 {
 }
-
 
 FeedRetriever::~FeedRetriever()
 {
 }
 
-void FeedRetriever::setAuthenticationCookie(const QString& cookie)
+void FeedRetriever::setAuthenticationCookie(const QString &cookie)
 {
     this->cookie = cookie;
 }
@@ -58,9 +62,9 @@ int FeedRetriever::errorCode() const
     return err;
 }
 
-void FeedRetriever::retrieveData(const QUrl& url)
+void FeedRetriever::retrieveData(const QUrl &url)
 {
-    KIO::StoredTransferJob* j = KIO::storedGet(url, KIO::NoReload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *j = KIO::storedGet(url, KIO::NoReload, KIO::HideProgressInfo);
     j->addMetaData(QStringLiteral("UserAgent"), bt::GetVersionString());
     if (!cookie.isEmpty()) {
         j->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
@@ -71,9 +75,9 @@ void FeedRetriever::retrieveData(const QUrl& url)
     job = j;
 }
 
-void FeedRetriever::finished(KJob* j)
+void FeedRetriever::finished(KJob *j)
 {
-    KIO::StoredTransferJob* stj = (KIO::StoredTransferJob*)j;
+    KIO::StoredTransferJob *stj = (KIO::StoredTransferJob *)j;
     err = stj->error();
     QByteArray data = stj->data();
     if (!err && !backup_file.isEmpty()) {

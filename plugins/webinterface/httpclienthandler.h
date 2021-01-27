@@ -21,10 +21,10 @@
 #ifndef KTHTTPCLIENTHANDLER_H
 #define KTHTTPCLIENTHANDLER_H
 
-#include <qhttp.h>
-#include <net/socket.h>
-#include <util/constants.h>
 #include "httpresponseheader.h"
+#include <net/socket.h>
+#include <qhttp.h>
+#include <util/constants.h>
 
 class QSocketNotifier;
 
@@ -40,23 +40,23 @@ class HttpClientHandler : public QObject
     Q_OBJECT
     enum State {
         WAITING_FOR_REQUEST,
-        WAITING_FOR_CONTENT
+        WAITING_FOR_CONTENT,
     };
+
 public:
-    HttpClientHandler(HttpServer* srv, int sock);
+    HttpClientHandler(HttpServer *srv, int sock);
     virtual ~HttpClientHandler();
 
-
-    bool sendFile(HttpResponseHeader& hdr, const QString& full_path);
-    void sendResponse(HttpResponseHeader& hdr);
-    void send404(HttpResponseHeader& hdr, const QString& path);
-    void send500(HttpResponseHeader& hdr, const QString& error);
-    void send(HttpResponseHeader& hdr, const QByteArray& data);
+    bool sendFile(HttpResponseHeader &hdr, const QString &full_path);
+    void sendResponse(HttpResponseHeader &hdr);
+    void send404(HttpResponseHeader &hdr, const QString &path);
+    void send500(HttpResponseHeader &hdr, const QString &error);
+    void send(HttpResponseHeader &hdr, const QByteArray &data);
     bool shouldClose() const;
 
 private:
     void handleRequest(int header_len);
-    void setResponseHeaders(HttpResponseHeader& hdr);
+    void setResponseHeaders(HttpResponseHeader &hdr);
 
 private slots:
     void readyToRead(int);
@@ -66,10 +66,10 @@ signals:
     void closed();
 
 private:
-    HttpServer* srv;
-    net::Socket* client;
-    QSocketNotifier* read_notifier;
-    QSocketNotifier* write_notifier;
+    HttpServer *srv;
+    net::Socket *client;
+    QSocketNotifier *read_notifier;
+    QSocketNotifier *write_notifier;
     State state;
     QHttpRequestHeader header;
     QByteArray data;

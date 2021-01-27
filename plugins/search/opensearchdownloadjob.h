@@ -29,7 +29,6 @@
 
 namespace kt
 {
-
 /**
     Job which tries to find an opensearch xml description on a website and
     download that to a directory.
@@ -38,7 +37,7 @@ class OpenSearchDownloadJob : public KIO::Job
 {
     Q_OBJECT
 public:
-    OpenSearchDownloadJob(const QUrl &url, const QString& dir, ProxyHelper *proxy);
+    OpenSearchDownloadJob(const QUrl &url, const QString &dir, ProxyHelper *proxy);
     ~OpenSearchDownloadJob() override;
 
     /// Start the job
@@ -60,18 +59,18 @@ public:
     }
 
 private Q_SLOTS:
-    void getFinished(KJob* j);
-    void xmlFileDownloadFinished(KJob* j);
+    void getFinished(KJob *j);
+    void xmlFileDownloadFinished(KJob *j);
 
 private:
-    bool checkLinkTagContent(const QString& content);
-    QString htmlParam(const QString& param, const QString& content);
-    bool startXMLDownload(const QUrl& url);
+    bool checkLinkTagContent(const QString &content);
+    QString htmlParam(const QString &param, const QString &content);
+    bool startXMLDownload(const QUrl &url);
 
 private:
     QUrl url;
     QString dir;
-    ProxyHelper* m_proxy;
+    ProxyHelper *m_proxy;
 };
 
 }

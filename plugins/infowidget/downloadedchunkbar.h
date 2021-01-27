@@ -36,16 +36,17 @@ class DownloadedChunkBar : public ChunkBar
 {
     Q_OBJECT
 public:
-    DownloadedChunkBar(QWidget* parent);
+    DownloadedChunkBar(QWidget *parent);
     ~DownloadedChunkBar() override;
 
-    const bt::BitSet& getBitSet() const override;
+    const bt::BitSet &getBitSet() const override;
     void updateBar(bool force = false) override;
-    void drawBarContents(QPainter* p) override;
+    void drawBarContents(QPainter *p) override;
 
-    void setTC(bt::TorrentInterface* tc);
+    void setTC(bt::TorrentInterface *tc);
+
 private:
-    bt::TorrentInterface* curr_tc;
+    bt::TorrentInterface *curr_tc;
     bt::BitSet curr_ebs;
 };
 }

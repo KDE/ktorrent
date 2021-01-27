@@ -26,22 +26,20 @@
 #include <KLocalizedString>
 #include <KRun>
 
+#include "availabilitychunkbar.h"
+#include "downloadedchunkbar.h"
+#include "settings.h"
+#include "statustab.h"
 #include <util/functions.h>
 #include <util/log.h>
 #include <util/sha1hash.h>
-#include "downloadedchunkbar.h"
-#include "availabilitychunkbar.h"
-#include "statustab.h"
-#include "settings.h"
-
-
 
 using namespace bt;
 
 namespace kt
 {
-
-StatusTab::StatusTab(QWidget* parent) : QWidget(parent)
+StatusTab::StatusTab(QWidget *parent)
+    : QWidget(parent)
 {
     setupUi(this);
     // do not use hardcoded colors
@@ -92,9 +90,10 @@ StatusTab::StatusTab(QWidget* parent) : QWidget(parent)
 }
 
 StatusTab::~StatusTab()
-{}
+{
+}
 
-void StatusTab::changeTC(bt::TorrentInterface* tc)
+void StatusTab::changeTC(bt::TorrentInterface *tc)
 {
     if (tc == curr_tc.data())
         return;
@@ -116,13 +115,12 @@ void StatusTab::changeTC(bt::TorrentInterface* tc)
 
         // Make links clickable
         QStringList words = text.split(QLatin1Char(' '), Qt::KeepEmptyParts);
-        for (QString& w : words) {
+        for (QString &w : words) {
             if (w.startsWith(QLatin1String("http://")) || w.startsWith(QLatin1String("https://")) || w.startsWith(QLatin1String("ftp://")))
                 w = QStringLiteral("<a href=\"") + w + QStringLiteral("\">") + w + QStringLiteral("</a>");
         }
 
         comments->setText(words.join(QStringLiteral(" ")));
-
 
         float ratio = tc->getMaxShareRatio();
         if (ratio > 0) {
@@ -164,8 +162,8 @@ void StatusTab::update()
     if (!curr_tc)
         return;
 
-    bt::TorrentInterface* tc = curr_tc.data();
-    const bt::TorrentStats& s = tc->getStats();
+    bt::TorrentInterface *tc = curr_tc.data();
+    const bt::TorrentStats &s = tc->getStats();
 
     downloaded_bar->updateBar();
     availability_bar->updateBar();
@@ -178,7 +176,9 @@ void StatusTab::update()
         maxSeedTimeUpdate();
 
     static QLocale locale;
-    share_ratio->setText(QStringLiteral("<font color=\"%1\">%2</font>").arg(ratio <= Settings::greenRatio() ? QStringLiteral("#ff0000") : QStringLiteral("#1c9a1c")).arg(locale.toString(ratio, 'f', 2)));
+    share_ratio->setText(QStringLiteral("<font color=\"%1\">%2</font>")
+                             .arg(ratio <= Settings::greenRatio() ? QStringLiteral("#ff0000") : QStringLiteral("#1c9a1c"))
+                             .arg(locale.toString(ratio, 'f', 2)));
 
     Uint32 secs = tc->getRunningTimeUL();
     if (secs == 0) {
@@ -215,7 +215,7 @@ void StatusTab::useRatioLimitToggled(bool state)
     if (!curr_tc)
         return;
 
-    bt::TorrentInterface* tc = curr_tc.data();
+    bt::TorrentInterface *tc = curr_tc.data();
 
     ratio_limit->setEnabled(state);
     if (!state) {
@@ -230,7 +230,7 @@ void StatusTab::useRatioLimitToggled(bool state)
 
         float sr = tc->getStats().shareRatio();
         if (sr >= 1.00f) {
-            //always add 1 to max share ratio to prevent stopping if torrent is running.
+            // always add 1 to max share ratio to prevent stopping if torrent is running.
             tc->setMaxShareRatio(sr + 1.00f);
             ratio_limit->setValue(sr + 1.00f);
         }
@@ -292,7 +292,7 @@ void StatusTab::useTimeLimitToggled(bool on)
     if (!curr_tc)
         return;
 
-    bt::TorrentInterface* tc = curr_tc.data();
+    bt::TorrentInterface *tc = curr_tc.data();
     time_limit->setEnabled(on);
     if (on) {
         Uint32 dl = tc->getRunningTimeDL();
@@ -311,10 +311,9 @@ void StatusTab::maxTimeChanged(double v)
         curr_tc.data()->setMaxSeedTime(v);
 }
 
-void StatusTab::linkActivated(const QString& link)
+void StatusTab::linkActivated(const QString &link)
 {
     new KRun(QUrl(link), QApplication::activeWindow());
 }
-
 
 }

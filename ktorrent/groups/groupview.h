@@ -21,8 +21,8 @@
 #ifndef KTGROUPVIEW_H
 #define KTGROUPVIEW_H
 
-#include <QTreeWidget>
 #include <KSharedConfig>
+#include <QTreeWidget>
 
 #include "groupviewmodel.h"
 
@@ -39,7 +39,6 @@ class GroupView;
 class GroupManager;
 class View;
 
-
 /**
     @author Joris Guisson <joris.guisson@gmail.com>
 */
@@ -47,7 +46,7 @@ class GroupView : public QTreeView
 {
     Q_OBJECT
 public:
-    GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidget* parent);
+    GroupView(GroupManager *gman, View *view, Core *core, GUI *gui, QWidget *parent);
     ~GroupView() override;
 
     /// Save the status of the group view
@@ -57,18 +56,18 @@ public:
     void loadState(KSharedConfigPtr cfg);
 
     /// Create a new group
-    Group* addNewGroup();
+    Group *addNewGroup();
 
     /// Setup all the actions of the GroupView
-    void setupActions(KActionCollection* col);
+    void setupActions(KActionCollection *col);
 
 public Q_SLOTS:
     /// Update the group count
     void updateGroupCount();
 
 private Q_SLOTS:
-    void onItemClicked(const QModelIndex& index);
-    void showContextMenu(const QPoint& p);
+    void onItemClicked(const QModelIndex &index);
+    void showContextMenu(const QPoint &p);
     void addGroup();
     void removeGroup();
     void editGroupName();
@@ -76,24 +75,24 @@ private Q_SLOTS:
     void openInNewTab();
 
 Q_SIGNALS:
-    void currentGroupChanged(kt::Group* g);
-    void openTab(Group* g);
+    void currentGroupChanged(kt::Group *g);
+    void openTab(Group *g);
 
 private:
-    void keyPressEvent(QKeyEvent* event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    GUI* gui;
-    Core* core;
-    View* view;
-    GroupManager* gman;
-    GroupViewModel* model;
+    GUI *gui;
+    Core *core;
+    View *view;
+    GroupManager *gman;
+    GroupViewModel *model;
 
-    QAction * open_in_new_tab;
-    QAction * new_group;
-    QAction * edit_group;
-    QAction * remove_group;
-    QAction * edit_group_policy;
+    QAction *open_in_new_tab;
+    QAction *new_group;
+    QAction *edit_group;
+    QAction *remove_group;
+    QAction *edit_group_policy;
 
     friend class GroupViewItem;
 };

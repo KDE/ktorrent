@@ -32,39 +32,40 @@
 
 #include <KActionCollection>
 #include <KComboBox>
-#include <KIconLoader>
 #include <KIO/Job>
+#include <KIconLoader>
 #include <KLocalizedString>
 #include <KMainWindow>
 #include <KMessageBox>
 #include <KNotification>
 #include <KStandardAction>
 
-#include <util/log.h>
-#include <magnet/magnetlink.h>
-#include <torrent/globals.h>
-#include <interfaces/guiinterface.h>
+#include "searchactivity.h"
+#include "searchenginelist.h"
+#include "searchplugin.h"
+#include "webview.h"
 #include <interfaces/coreinterface.h>
 #include <interfaces/functions.h>
-#include "searchplugin.h"
-#include "searchenginelist.h"
-#include "webview.h"
-#include "searchactivity.h"
-
+#include <interfaces/guiinterface.h>
+#include <magnet/magnetlink.h>
+#include <torrent/globals.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-SearchWidget::SearchWidget(SearchPlugin* sp) : webview(nullptr), sp(sp), prog(nullptr)
+SearchWidget::SearchWidget(SearchPlugin *sp)
+    : webview(nullptr)
+    , sp(sp)
+    , prog(nullptr)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
     webview = new WebView(this, sp->getProxy());
 
-    KActionCollection* ac = sp->getSearchActivity()->part()->actionCollection();
+    KActionCollection *ac = sp->getSearchActivity()->part()->actionCollection();
     sbar = new KToolBar(this);
     sbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     sbar->addAction(webview->pageAction(QWebEnginePage::Back));
@@ -94,7 +95,6 @@ SearchWidget::SearchWidget(SearchPlugin* sp) : webview(nullptr), sp(sp), prog(nu
     connect(webview, &WebView::torrentFileDownloadRequested, this, &SearchWidget::downloadTorrentFile);
 }
 
-
 SearchWidget::~SearchWidget()
 {
     if (prog) {
@@ -108,7 +108,7 @@ void SearchWidget::iconChanged()
     changeIcon(this, webview->icon());
 }
 
-void SearchWidget::titleChanged(const QString& text)
+void SearchWidget::titleChanged(const QString &text)
 {
     if (!text.isEmpty()) {
         changeTitle(this, text);
@@ -132,7 +132,7 @@ int SearchWidget::getSearchBarEngine() const
     return search_engine->currentIndex();
 }
 
-void SearchWidget::restore(const QUrl &url, const QString& text, const QString& sb_text, int engine)
+void SearchWidget::restore(const QUrl &url, const QString &text, const QString &sb_text, int engine)
 {
     Q_UNUSED(text);
 
@@ -146,7 +146,7 @@ void SearchWidget::restore(const QUrl &url, const QString& text, const QString& 
     search_engine->setCurrentIndex(engine);
 }
 
-void SearchWidget::search(const QString& text, int engine)
+void SearchWidget::search(const QString &text, int engine)
 {
     if (search_text->text() != text)
         search_text->setText(text);
@@ -159,7 +159,7 @@ void SearchWidget::search(const QString& text, int engine)
     webview->openUrl(url);
 }
 
-QUrl SearchWidget::searchUrl(const QString& search_text)
+QUrl SearchWidget::searchUrl(const QString &search_text)
 {
     return sp->getSearchEngineList()->search(search_engine->currentIndex(), search_text);
 }
@@ -198,7 +198,7 @@ void SearchWidget::loadFinished(bool ok)
     }
 }
 
-void SearchWidget::magnetUrl(const QUrl& magnet_url)
+void SearchWidget::magnetUrl(const QUrl &magnet_url)
 {
     MagnetLinkLoadOptions options;
     options.silently = false;
@@ -211,12 +211,12 @@ void SearchWidget::downloadTorrentFile(QWebEngineDownloadItem *download)
 {
     int ret = KMessageBox::questionYesNoCancel(0,
 
-              i18n("Do you want to download or save the torrent?"),
-              i18n("Download Torrent"),
-              KGuiItem(i18n("Download"), QStringLiteral("ktorrent")),
-              KStandardGuiItem::save(),
-              KStandardGuiItem::cancel(),
-              QStringLiteral(":TorrentDownloadFinishedQuestion"));
+                                               i18n("Do you want to download or save the torrent?"),
+                                               i18n("Download Torrent"),
+                                               KGuiItem(i18n("Download"), QStringLiteral("ktorrent")),
+                                               KStandardGuiItem::save(),
+                                               KStandardGuiItem::cancel(),
+                                               QStringLiteral(":TorrentDownloadFinishedQuestion"));
 
     if (ret == KMessageBox::Yes) {
         sp->getCore()->load(download->url(), QString());
@@ -230,11 +230,10 @@ void SearchWidget::search()
     search(search_text->text(), search_engine->currentIndex());
 }
 
-QWebEngineView* SearchWidget::newTab()
+QWebEngineView *SearchWidget::newTab()
 {
     return sp->getSearchActivity()->newTab()->webview;
 }
-
 
 void SearchWidget::home()
 {

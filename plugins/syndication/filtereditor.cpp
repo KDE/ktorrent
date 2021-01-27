@@ -28,19 +28,22 @@
 #include <KConfigGroup>
 #include <KMessageBox>
 
-#include <interfaces/coreinterface.h>
-#include <groups/groupmanager.h>
-#include "filtereditor.h"
-#include "filter.h"
-#include "filterlist.h"
 #include "feedlist.h"
 #include "feedwidgetmodel.h"
+#include "filter.h"
+#include "filtereditor.h"
+#include "filterlist.h"
+#include <groups/groupmanager.h>
+#include <interfaces/coreinterface.h>
 
 namespace kt
 {
-
-FilterEditor::FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds, CoreInterface* core, QWidget* parent)
-    : QDialog(parent), filter(filter), core(core), feeds(feeds), filters(filters)
+FilterEditor::FilterEditor(Filter *filter, FilterList *filters, FeedList *feeds, CoreInterface *core, QWidget *parent)
+    : QDialog(parent)
+    , filter(filter)
+    , core(core)
+    , feeds(feeds)
+    , filters(filters)
 {
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -72,7 +75,7 @@ FilterEditor::FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds,
     m_se_no_duplicates->setChecked(filter->noDuplicateSeasonAndEpisodeMatches());
 
     QString group = filter->group();
-    GroupManager* gman = core->getGroupManager();
+    GroupManager *gman = core->getGroupManager();
     QStringList groups = gman->customGroupNames();
 
     m_add_to_group->setChecked(!group.isEmpty() && groups.count() > 0);
@@ -81,7 +84,6 @@ FilterEditor::FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds,
     m_group->addItems(groups);
     if (!group.isEmpty())
         m_group->setCurrentIndex(groups.indexOf(group));
-
 
     QString dl = filter->downloadLocation();
     m_use_custom_download_location->setChecked(!dl.isEmpty());
@@ -101,7 +103,7 @@ FilterEditor::FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds,
 
     QList<QRegExp> re = filter->wordMatches();
     QStringList items;
-    for (const QRegExp& r : qAsConst(re)) {
+    for (const QRegExp &r : qAsConst(re)) {
         items.append(r.pattern());
     }
 
@@ -110,7 +112,7 @@ FilterEditor::FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds,
 
     re = filter->exclusionPatterns();
     items.clear();
-    for (const QRegExp& r : qAsConst(re)) {
+    for (const QRegExp &r : qAsConst(re)) {
         items.append(r.pattern());
     }
 
@@ -133,10 +135,9 @@ FilterEditor::FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds,
     test_model = 0;
     test_filter = new Filter();
 
-    QHeaderView* hv = m_test_results->header();
+    QHeaderView *hv = m_test_results->header();
     hv->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
-
 
 FilterEditor::~FilterEditor()
 {
@@ -145,7 +146,7 @@ FilterEditor::~FilterEditor()
 
 void FilterEditor::test()
 {
-    Feed* f = feeds->feedForIndex(feeds->index(m_feed->currentIndex(), 0));
+    Feed *f = feeds->feedForIndex(feeds->index(m_feed->currentIndex(), 0));
     if (!f)
         return;
 
@@ -178,15 +179,14 @@ bool FilterEditor::okIsPossible()
         return false;
 
     if (m_use_se_matching->isChecked()) {
-        if (!Filter::validSeasonOrEpisodeString(m_seasons->text()) ||
-            !Filter::validSeasonOrEpisodeString(m_episodes->text()))
+        if (!Filter::validSeasonOrEpisodeString(m_seasons->text()) || !Filter::validSeasonOrEpisodeString(m_episodes->text()))
             return false;
     }
 
     return true;
 }
 
-void FilterEditor::applyOnFilter(Filter* f)
+void FilterEditor::applyOnFilter(Filter *f)
 {
     f->setFilterName(m_name->text());
     f->setCaseSensitive(m_match_case_sensitive->isChecked());
@@ -236,7 +236,7 @@ void FilterEditor::applyOnFilter(Filter* f)
 
 void FilterEditor::onOK()
 {
-    Filter* tmp = filters->filterByName(m_name->text());
+    Filter *tmp = filters->filterByName(m_name->text());
     if (tmp && tmp != filter) {
         KMessageBox::error(this, i18n("There already is a filter named %1, filter names must be unique.", m_name->text()));
         return;
@@ -247,15 +247,19 @@ void FilterEditor::onOK()
 
 ////////////////////////////////////////
 
-TestFilterModel::TestFilterModel(Filter* filter, FeedWidgetModel* source, QObject* parent) : QSortFilterProxyModel(parent), filter(filter), feed_model(source)
+TestFilterModel::TestFilterModel(Filter *filter, FeedWidgetModel *source, QObject *parent)
+    : QSortFilterProxyModel(parent)
+    , filter(filter)
+    , feed_model(source)
 {
     setSourceModel(source);
 }
 
 TestFilterModel::~TestFilterModel()
-{}
+{
+}
 
-bool TestFilterModel::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
+bool TestFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     Syndication::ItemPtr item = feed_model->itemForIndex(feed_model->index(source_row, 0, source_parent));
     if (!item)

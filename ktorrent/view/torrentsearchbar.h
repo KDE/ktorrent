@@ -38,7 +38,7 @@ class TorrentSearchBar : public QWidget
 {
     Q_OBJECT
 public:
-    TorrentSearchBar(View* view, QWidget* parent);
+    TorrentSearchBar(View *view, QWidget *parent);
     ~TorrentSearchBar() override;
 
     void loadState(KSharedConfigPtr cfg);
@@ -53,11 +53,11 @@ Q_SIGNALS:
     void filterBarShown(QString str);
 
 protected:
-    bool eventFilter(QObject* obj, QEvent* ev) override;
+    bool eventFilter(QObject *obj, QEvent *ev) override;
 
 private:
-    QToolButton* hide_search_bar;
-    QLineEdit* search_bar;
+    QToolButton *hide_search_bar;
+    QLineEdit *search_bar;
 };
 }
 

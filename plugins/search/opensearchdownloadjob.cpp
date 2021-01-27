@@ -19,20 +19,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include "opensearchdownloadjob.h"
 #include <KIO/CopyJob>
 #include <util/fileops.h>
 #include <util/log.h>
-#include "opensearchdownloadjob.h"
 
 using namespace bt;
 
 namespace kt
 {
-
-OpenSearchDownloadJob::OpenSearchDownloadJob(const QUrl &url, const QString& dir, ProxyHelper *proxy) : url(url), dir(dir), m_proxy(proxy)
+OpenSearchDownloadJob::OpenSearchDownloadJob(const QUrl &url, const QString &dir, ProxyHelper *proxy)
+    : url(url)
+    , dir(dir)
+    , m_proxy(proxy)
 {
 }
-
 
 OpenSearchDownloadJob::~OpenSearchDownloadJob()
 {
@@ -41,7 +42,7 @@ OpenSearchDownloadJob::~OpenSearchDownloadJob()
 void OpenSearchDownloadJob::start()
 {
     // first try to download the html page
-    KIO::StoredTransferJob* j = KIO::storedGet(url, KIO::NoReload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *j = KIO::storedGet(url, KIO::NoReload, KIO::HideProgressInfo);
 
     KIO::MetaData metadata = j->metaData();
     m_proxy->ApplyProxy(metadata);
@@ -57,7 +58,7 @@ void OpenSearchDownloadJob::startDefault()
     start();
 }
 
-void OpenSearchDownloadJob::getFinished(KJob* j)
+void OpenSearchDownloadJob::getFinished(KJob *j)
 {
     if (j->error()) {
         setError(j->error());
@@ -65,7 +66,7 @@ void OpenSearchDownloadJob::getFinished(KJob* j)
         return;
     }
 
-    QString str = QString::fromUtf8(((KIO::StoredTransferJob*)j)->data());
+    QString str = QString::fromUtf8(((KIO::StoredTransferJob *)j)->data());
 
     if (url.path() != QStringLiteral("/opensearch.xml")) {
         // try to find the link tags
@@ -96,7 +97,7 @@ void OpenSearchDownloadJob::getFinished(KJob* j)
     startDefault();
 }
 
-bool OpenSearchDownloadJob::startXMLDownload(const QUrl& url)
+bool OpenSearchDownloadJob::startXMLDownload(const QUrl &url)
 {
     if (!bt::Exists(dir)) {
         try {
@@ -107,12 +108,12 @@ bool OpenSearchDownloadJob::startXMLDownload(const QUrl& url)
     }
 
     // href is the opensearch description, so lets try to download it
-    KIO::Job* j = KIO::copy(url, QUrl::fromLocalFile(dir + QLatin1String("opensearch.xml")), KIO::HideProgressInfo);
+    KIO::Job *j = KIO::copy(url, QUrl::fromLocalFile(dir + QLatin1String("opensearch.xml")), KIO::HideProgressInfo);
     connect(j, &KIO::Job::result, this, &OpenSearchDownloadJob::xmlFileDownloadFinished);
     return true;
 }
 
-bool OpenSearchDownloadJob::checkLinkTagContent(const QString& content)
+bool OpenSearchDownloadJob::checkLinkTagContent(const QString &content)
 {
     if (htmlParam(QStringLiteral("type"), content) != QLatin1String("application/opensearchdescription+xml"))
         return false;
@@ -130,7 +131,7 @@ bool OpenSearchDownloadJob::checkLinkTagContent(const QString& content)
     return startXMLDownload(QUrl(href));
 }
 
-QString OpenSearchDownloadJob::htmlParam(const QString& param, const QString& content)
+QString OpenSearchDownloadJob::htmlParam(const QString &param, const QString &content)
 {
     QRegExp rx(QString::fromLatin1("%1=\"?([^\">< ]*)[\" ]").arg(param), Qt::CaseInsensitive);
     if (rx.indexIn(content, 0) == -1)
@@ -139,7 +140,7 @@ QString OpenSearchDownloadJob::htmlParam(const QString& param, const QString& co
     return rx.cap(1);
 }
 
-void OpenSearchDownloadJob::xmlFileDownloadFinished(KJob* j)
+void OpenSearchDownloadJob::xmlFileDownloadFinished(KJob *j)
 {
     if (j->error()) {
         setError(j->error());

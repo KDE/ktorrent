@@ -35,17 +35,17 @@ class CoreInterface;
 class TorrentListGenerator : public WebContentGenerator
 {
 public:
-    TorrentListGenerator(CoreInterface* core, HttpServer* server);
+    TorrentListGenerator(CoreInterface *core, HttpServer *server);
     virtual ~TorrentListGenerator();
 
-    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+    virtual void get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr);
+    virtual void post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data);
 
 private:
-    void writeElement(QXmlStreamWriter& out, const QString& name, const QString& value);
+    void writeElement(QXmlStreamWriter &out, const QString &name, const QString &value);
 
 private:
-    CoreInterface* core;
+    CoreInterface *core;
 };
 
 }

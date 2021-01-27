@@ -23,7 +23,6 @@
 
 #include <torrent/jobtracker.h>
 
-
 namespace kt
 {
 class View;
@@ -35,15 +34,15 @@ class ViewJobTracker : public kt::JobTracker
 {
     Q_OBJECT
 public:
-    ViewJobTracker(View* parent);
+    ViewJobTracker(View *parent);
     ~ViewJobTracker() override;
 
-    void jobUnregistered(bt::Job* j) override;
-    void jobRegistered(bt::Job* j) override;
-    kt::JobProgressWidget* createJobWidget(bt::Job* job) override;
+    void jobUnregistered(bt::Job *j) override;
+    void jobRegistered(bt::Job *j) override;
+    kt::JobProgressWidget *createJobWidget(bt::Job *job) override;
 
 private:
-    View* view;
+    View *view;
 };
 
 }

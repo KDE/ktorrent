@@ -34,8 +34,7 @@ class BListNode;
 
 namespace kt
 {
-template<class T>
-bool between(T v, T min_val, T max_val)
+template<class T> bool between(T v, T min_val, T max_val)
 {
     return v >= min_val && v <= max_val;
 }
@@ -56,14 +55,11 @@ struct ScheduleItem {
     bt::Uint32 torrent_conn_limit;
 
     ScheduleItem();
-    ScheduleItem(const ScheduleItem& item);
+    ScheduleItem(const ScheduleItem &item);
 
     bool isValid() const
     {
-        return
-            between(start_day, 1, 7) &&
-            between(end_day, 1, 7) &&
-            start_day <= end_day;
+        return between(start_day, 1, 7) && between(end_day, 1, 7) && start_day <= end_day;
     }
 
     /**
@@ -71,24 +67,24 @@ struct ScheduleItem {
      * @param other The other
      * @return true If there is a conflict, false otherwise
      */
-    bool conflicts(const ScheduleItem& other) const;
+    bool conflicts(const ScheduleItem &other) const;
 
     /**
      * Assignment operator
      * @param item The item to copy
      * @return this
      */
-    ScheduleItem& operator = (const ScheduleItem& item);
+    ScheduleItem &operator=(const ScheduleItem &item);
 
     /**
      * Comparison operator.
      * @param item Item to compare
      * @return true if the items are the same
      */
-    bool operator == (const ScheduleItem& item) const;
+    bool operator==(const ScheduleItem &item) const;
 
     /// Whether or not a QDateTime is falls within this item
-    bool contains(const QDateTime& dt) const;
+    bool contains(const QDateTime &dt) const;
 
     /// Check if start and end time are OK
     void checkTimes();
@@ -96,7 +92,7 @@ struct ScheduleItem {
 
 /**
  * Class which holds the schedule of one week.
-*/
+ */
 class Schedule
 {
 public:
@@ -109,33 +105,32 @@ public:
      * @param file The file to load from
      * @throw Error When this fails
      */
-    void load(const QString& file);
-
+    void load(const QString &file);
 
     /**
      * Save a schedule to a file.
      * @param file The file to write to
      * @throw Error When this fails
      */
-    void save(const QString& file);
+    void save(const QString &file);
 
     /**
      * Add a ScheduleItem to the schedule
      * @param item The ScheduleItem
      * @return true upon succes, false otherwise (probably conflicts with other items)
      */
-    bool addItem(ScheduleItem* item);
+    bool addItem(ScheduleItem *item);
 
     /**
      * Get the current schedule item we should be setting.
      * @return 0 If the current time doesn't fall into any item, the item otherwise
      */
-    ScheduleItem* getCurrentItem(const QDateTime& now);
+    ScheduleItem *getCurrentItem(const QDateTime &now);
 
     /**
      * Get the time in seconds to the next time we need to update the schedule.
      */
-    int getTimeToNextScheduleEvent(const QDateTime& now);
+    int getTimeToNextScheduleEvent(const QDateTime &now);
 
     /**
      * Try to modify start, stop time and day of an item.
@@ -146,7 +141,7 @@ public:
      * @param end_day The end day
      * @return true If this succeeds (i.e. no conflicts)
      */
-    bool modify(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day);
+    bool modify(ScheduleItem *item, const QTime &start, const QTime &end, int start_day, int end_day);
 
     /**
      * Would a modify succeed ?
@@ -157,13 +152,13 @@ public:
      * @param end_day The end day
      * @return true If this succeeds (i.e. no conflicts)
      */
-    bool validModify(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day);
+    bool validModify(ScheduleItem *item, const QTime &start, const QTime &end, int start_day, int end_day);
 
     /**
      * Check for conflicts with other schedule items.
      * @param item The item
      */
-    bool conflicts(ScheduleItem* item);
+    bool conflicts(ScheduleItem *item);
 
     /**
      * Disable or enabled the schedule
@@ -180,15 +175,14 @@ public:
     void clear();
 
     /// Apply an operation on each ScheduleItem
-    template<class Operation>
-    void apply(Operation op)
+    template<class Operation> void apply(Operation op)
     {
-        for (ScheduleItem* i : qAsConst(items))
+        for (ScheduleItem *i : qAsConst(items))
             op(i);
     }
 
     /// Remove a ScheduleItem, item will be deleted
-    void removeItem(ScheduleItem* item);
+    void removeItem(ScheduleItem *item);
 
     /// Get the number of items in the schedule
     int count() const
@@ -197,12 +191,12 @@ public:
     }
 
 private:
-    bool parseItem(ScheduleItem* item, bt::BDictNode* dict);
-    void parseItems(bt::BListNode* items);
+    bool parseItem(ScheduleItem *item, bt::BDictNode *dict);
+    void parseItems(bt::BListNode *items);
 
 private:
     bool enabled;
-    QList<ScheduleItem*> items;
+    QList<ScheduleItem *> items;
 };
 
 }

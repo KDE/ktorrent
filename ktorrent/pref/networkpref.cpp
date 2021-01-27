@@ -24,16 +24,15 @@
 #include <KLocalizedString>
 #include <Solid/Device>
 
-#include <util/log.h>
 #include "networkpref.h"
 #include "settings.h"
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-NetworkPref::NetworkPref(QWidget* parent)
+NetworkPref::NetworkPref(QWidget *parent)
     : PrefPageInterface(Settings::self(), i18n("Network"), QStringLiteral("preferences-system-network"), parent)
 {
     setupUi(this);
@@ -42,11 +41,9 @@ NetworkPref::NetworkPref(QWidget* parent)
     connect(kcfg_onlyUseUtp, &QCheckBox::toggled, this, &NetworkPref::onlyUseUtpEnabled);
 }
 
-
 NetworkPref::~NetworkPref()
 {
 }
-
 
 void NetworkPref::loadSettings()
 {
@@ -66,10 +63,9 @@ void NetworkPref::loadSettings()
 
     // FIXME KF5 const QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
 
-
-    for (const QNetworkInterface& iface : iface_list) {
+    for (const QNetworkInterface &iface : iface_list) {
         QIcon icon = QIcon::fromTheme(QStringLiteral("network-wired"));
-#if 0 //FIXME KF5
+#if 0 // FIXME KF5
         for (const Solid::Device& device : netlist) {
             const Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
             if (netdev->ifaceName() == iface.name() && netdev->isWireless()) {
@@ -107,7 +103,6 @@ void NetworkPref::loadDefaults()
 {
 }
 
-
 void NetworkPref::utpEnabled(bool on)
 {
     kcfg_onlyUseUtp->setEnabled(on);
@@ -118,6 +113,5 @@ void NetworkPref::onlyUseUtpEnabled(bool on)
 {
     kcfg_primaryTransportProtocol->setEnabled(!on && kcfg_utpEnabled->isChecked());
 }
-
 
 }

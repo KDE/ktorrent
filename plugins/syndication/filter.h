@@ -34,8 +34,6 @@ class BDictNode;
 
 namespace kt
 {
-
-
 /**
     Class to filter torrents from Feeds
 */
@@ -43,7 +41,7 @@ class Filter
 {
 public:
     Filter();
-    Filter(const QString& name);
+    Filter(const QString &name);
     ~Filter();
 
     /**
@@ -53,19 +51,19 @@ public:
     void startMatching();
 
     /// Get the name of the filter
-    const QString& filterName() const
+    const QString &filterName() const
     {
         return name;
     }
 
     /// Get the filter ID
-    const QString& filterID() const
+    const QString &filterID() const
     {
         return id;
     }
 
     /// Set the name of the filter
-    void setFilterName(const QString& n)
+    void setFilterName(const QString &n)
     {
         name = n;
     }
@@ -78,16 +76,16 @@ public:
     bool match(Syndication::ItemPtr item);
 
     /// Add a word match
-    void addWordMatch(const QRegExp& exp);
+    void addWordMatch(const QRegExp &exp);
 
     /// Remove a word match
-    void removeWordMatch(const QRegExp& exp);
+    void removeWordMatch(const QRegExp &exp);
 
     /// Add a word match
-    void addExclusionPattern(const QRegExp& exp);
+    void addExclusionPattern(const QRegExp &exp);
 
     /// Remove a word match
-    void removeExclusionPattern(const QRegExp& exp);
+    void removeExclusionPattern(const QRegExp &exp);
 
     /// Get all word matches
     QList<QRegExp> wordMatches() const
@@ -154,14 +152,14 @@ public:
      * @param s The string
      * @return true if string is properly formatted
      */
-    bool setSeasons(const QString& s);
+    bool setSeasons(const QString &s);
 
     /**
      * Set the episodes from a string
      * @param s The string
      * @return true if string is properly formatted
      */
-    bool setEpisodes(const QString& s);
+    bool setEpisodes(const QString &s);
 
     /// Download the matching items or not
     bool downloadMatching() const
@@ -188,37 +186,37 @@ public:
     }
 
     /// Get the group
-    const QString& group() const
+    const QString &group() const
     {
         return dest_group;
     }
 
     /// Set the group
-    void setGroup(const QString& g)
+    void setGroup(const QString &g)
     {
         dest_group = g;
     }
 
     /// Get the download location
-    const QString& downloadLocation() const
+    const QString &downloadLocation() const
     {
         return download_location;
     }
 
     /// Set the download location
-    void setDownloadLocation(const QString& dl)
+    void setDownloadLocation(const QString &dl)
     {
         download_location = dl;
     }
 
     /// Get the move on completion location (empty string means don't move on completion)
-    const QString& moveOnCompletionLocation() const
+    const QString &moveOnCompletionLocation() const
     {
         return move_on_completion_location;
     }
 
     /// Set the move on completion location (empty string means don't move on completion)
-    void setMoveOnCompletionLocation(const QString& loc)
+    void setMoveOnCompletionLocation(const QString &loc)
     {
         move_on_completion_location = loc;
     }
@@ -284,10 +282,10 @@ public:
     }
 
     /// Save the filter
-    void save(bt::BEncoder& enc);
+    void save(bt::BEncoder &enc);
 
     /// Load the filter
-    bool load(bt::BDictNode* dict);
+    bool load(bt::BDictNode *dict);
 
     /// Whether or not the string matches are regular expressions
     bool useRegularExpressions() const
@@ -314,10 +312,11 @@ public:
     }
 
     /// Is a string a valid seasons or episode string
-    static bool validSeasonOrEpisodeString(const QString& s);
+    static bool validSeasonOrEpisodeString(const QString &s);
 
     /// Get the season and episode of an item
-    static bool getSeasonAndEpisode(const QString& title, int& season, int& episode);
+    static bool getSeasonAndEpisode(const QString &title, int &season, int &episode);
+
 private:
     struct Range {
         int start;
@@ -328,16 +327,16 @@ private:
         int season;
         int episode;
 
-        bool operator == (const MatchedSeasonAndEpisode& se) const
+        bool operator==(const MatchedSeasonAndEpisode &se) const
         {
             return season == se.season && episode == se.episode;
         }
     };
 
-    static bool parseNumbersString(const QString& s, QList<Range> & numbers);
-    static bool stringToRange(const QString& s, Range& r);
+    static bool parseNumbersString(const QString &s, QList<Range> &numbers);
+    static bool stringToRange(const QString &s, Range &r);
 
-    bool match(const QString& title, QRegExp& exp);
+    bool match(const QString &title, QRegExp &exp);
 
 private:
     QString id;

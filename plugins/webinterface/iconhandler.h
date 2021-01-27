@@ -25,19 +25,17 @@
 
 namespace kt
 {
-
 /**
     @author
 */
 class IconHandler : public WebContentGenerator
 {
 public:
-    IconHandler(HttpServer* server);
+    IconHandler(HttpServer *server);
     ~IconHandler();
 
-    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-
+    virtual void get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr);
+    virtual void post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data);
 };
 
 }

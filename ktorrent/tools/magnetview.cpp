@@ -18,7 +18,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #include "magnetview.h"
 #include "magnetmodel.h"
 
@@ -26,26 +25,25 @@
 #include <KLocalizedString>
 
 #include <QBoxLayout>
-#include <QIcon>
+#include <QClipboard>
+#include <QGuiApplication>
 #include <QHeaderView>
+#include <QIcon>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QTreeView>
-#include <QGuiApplication>
-#include <QClipboard>
 
 #include <torrent/magnetmanager.h>
 
 namespace kt
 {
-
-MagnetView::MagnetView(MagnetManager *magnetManager, QWidget* parent)
+MagnetView::MagnetView(MagnetManager *magnetManager, QWidget *parent)
     : QWidget(parent)
     , mman(magnetManager)
 {
     model = new MagnetModel(magnetManager, this);
 
-    QHBoxLayout* layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setMargin(0);
     layout->setSpacing(0);
 
@@ -81,7 +79,7 @@ void MagnetView::loadState(KSharedConfigPtr cfg)
     KConfigGroup g = cfg->group("MagnetView");
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
     if (!s.isEmpty()) {
-        QHeaderView* v = view->header();
+        QHeaderView *v = view->header();
         v->restoreState(s);
     }
 }
@@ -100,7 +98,7 @@ void MagnetView::showContextMenu(QPoint p)
     stop->setEnabled(false);
     remove->setEnabled(idx_list.count() > 0);
 
-    for (const QModelIndex& idx : idx_list) {
+    for (const QModelIndex &idx : idx_list) {
         if (!mman->isStopped(idx.row()))
             stop->setEnabled(true);
         else
@@ -138,18 +136,17 @@ void MagnetView::copyMagnetUrl()
 {
     QStringList sl;
     const QModelIndexList idx_list = view->selectionModel()->selectedRows();
-    for (const QModelIndex& idx : idx_list) {
-        if (const MagnetDownloader* md = mman->getMagnetDownloader(idx.row())) {
+    for (const QModelIndex &idx : idx_list) {
+        if (const MagnetDownloader *md = mman->getMagnetDownloader(idx.row())) {
             sl.append(md->magnetLink().toString());
         }
     }
     if (QClipboard *clipboard = QGuiApplication::clipboard()) {
         clipboard->setText(sl.join(QStringLiteral("\n")));
     }
-
 }
 
-void MagnetView::keyPressEvent(QKeyEvent* event)
+void MagnetView::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Delete) {
         removeMagnetDownload();
@@ -158,4 +155,3 @@ void MagnetView::keyPressEvent(QKeyEvent* event)
         QWidget::keyPressEvent(event);
 }
 }
-

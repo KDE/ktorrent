@@ -18,27 +18,25 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kurl.h>
-#include <kglobal.h>
-#include <kiconloader.h>
 #include "iconhandler.h"
 #include "httpclienthandler.h"
 #include "httpserver.h"
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <kurl.h>
 
 namespace kt
 {
-
-IconHandler::IconHandler(HttpServer* server) : WebContentGenerator(server, "/icon", PUBLIC)
+IconHandler::IconHandler(HttpServer *server)
+    : WebContentGenerator(server, "/icon", PUBLIC)
 {
 }
-
 
 IconHandler::~IconHandler()
 {
 }
 
-
-void IconHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void IconHandler::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     KUrl url;
     url.setEncodedPathAndQuery(hdr.path());
@@ -53,7 +51,7 @@ void IconHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
     server->handleNormalFile(hdlr, hdr, KIconLoader::global()->iconPath(name, size));
 }
 
-void IconHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void IconHandler::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     Q_UNUSED(data);
     get(hdlr, hdr);

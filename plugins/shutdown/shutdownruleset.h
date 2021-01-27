@@ -1,22 +1,22 @@
 /***************************************************************************
-*   Copyright (C) 2009 by Joris Guisson                                   *
-*   joris.guisson@gmail.com                                               *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
-***************************************************************************/
+ *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
 
 #ifndef KT_SHUTDOWNRULESET_H
 #define KT_SHUTDOWNRULESET_H
@@ -29,33 +29,32 @@ namespace kt
 {
 class QueueManager;
 
-
 enum Trigger {
     DOWNLOADING_COMPLETED = 0,
-    SEEDING_COMPLETED
+    SEEDING_COMPLETED,
 };
 
 enum Target {
     ALL_TORRENTS,
-    SPECIFIC_TORRENT
+    SPECIFIC_TORRENT,
 };
 
 enum Action {
     SHUTDOWN,
     LOCK,
     SUSPEND_TO_DISK,
-    SUSPEND_TO_RAM
+    SUSPEND_TO_RAM,
 };
 
 struct ShutdownRule {
     Trigger trigger;
     Target target;
     Action action;
-    bt::TorrentInterface* tc;
+    bt::TorrentInterface *tc;
     bool hit;
 
-    bool downloadingFinished(bt::TorrentInterface* tor, QueueManager* qman);
-    bool seedingFinished(bt::TorrentInterface* tor, QueueManager* qman);
+    bool downloadingFinished(bt::TorrentInterface *tor, QueueManager *qman);
+    bool seedingFinished(bt::TorrentInterface *tor, QueueManager *qman);
     QString toolTip() const;
 };
 
@@ -67,7 +66,7 @@ class ShutdownRuleSet : public QObject
 {
     Q_OBJECT
 public:
-    ShutdownRuleSet(CoreInterface* core, QObject* parent);
+    ShutdownRuleSet(CoreInterface *core, QObject *parent);
     ~ShutdownRuleSet() override;
 
     /// Set if all rules must be hit, before actions are undertaken
@@ -103,7 +102,7 @@ public:
     /**
         Add a rule to the ruleset
     */
-    void addRule(Action action, Target target, Trigger trigger, bt::TorrentInterface* tc = 0);
+    void addRule(Action action, Target target, Trigger trigger, bt::TorrentInterface *tc = 0);
 
     /**
         Clear all rules
@@ -117,16 +116,16 @@ public:
     }
 
     /// Get a rule
-    const ShutdownRule& rule(int idx) const
+    const ShutdownRule &rule(int idx) const
     {
         return rules.at(idx);
     }
 
     /// Save the ruleset to a file
-    void save(const QString& file);
+    void save(const QString &file);
 
     /// Load the ruleset from a file
-    void load(const QString& file);
+    void load(const QString &file);
 
     /// Generate a tool tip for the current ruleset
     QString toolTip() const;
@@ -139,18 +138,18 @@ Q_SIGNALS:
     void suspendToRAM();
 
 private Q_SLOTS:
-    void torrentFinished(bt::TorrentInterface* tc);
-    void seedingAutoStopped(bt::TorrentInterface* tc, bt::AutoStopReason reason);
-    void torrentAdded(bt::TorrentInterface* tc);
-    void torrentRemoved(bt::TorrentInterface* tc);
+    void torrentFinished(bt::TorrentInterface *tc);
+    void seedingAutoStopped(bt::TorrentInterface *tc, bt::AutoStopReason reason);
+    void torrentAdded(bt::TorrentInterface *tc);
+    void torrentRemoved(bt::TorrentInterface *tc);
 
 private:
-    bt::TorrentInterface* torrentForHash(const QByteArray& hash);
-    void triggered(Trigger trigger, bt::TorrentInterface* tc);
+    bt::TorrentInterface *torrentForHash(const QByteArray &hash);
+    void triggered(Trigger trigger, bt::TorrentInterface *tc);
 
 private:
     QList<ShutdownRule> rules;
-    CoreInterface* core;
+    CoreInterface *core;
     bool on;
     bool all_rules_must_be_hit;
 };

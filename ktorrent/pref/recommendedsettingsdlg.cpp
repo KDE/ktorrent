@@ -25,17 +25,16 @@
 #include <KFormat>
 #include <KSharedConfig>
 
-#include <util/constants.h>
-#include <util/functions.h>
 #include "recommendedsettingsdlg.h"
 #include "settings.h"
+#include <util/constants.h>
+#include <util/functions.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-RecommendedSettingsDlg::RecommendedSettingsDlg(QWidget* parent)
+RecommendedSettingsDlg::RecommendedSettingsDlg(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18n("Calculate Recommended Settings"));
@@ -57,7 +56,6 @@ RecommendedSettingsDlg::RecommendedSettingsDlg(QWidget* parent)
 
     calculate();
 }
-
 
 RecommendedSettingsDlg::~RecommendedSettingsDlg()
 {
@@ -87,7 +85,6 @@ void RecommendedSettingsDlg::saveState(KSharedConfigPtr cfg)
     g.writeEntry("slots", m_slots->value());
     g.writeEntry("sim_torrents_enabled", m_chk_sim_torrents->isChecked());
     g.writeEntry("sim_torrents", m_sim_torrents->value());
-
 }
 
 void RecommendedSettingsDlg::loadState(KSharedConfigPtr cfg)
@@ -133,7 +130,6 @@ void RecommendedSettingsDlg::calculate()
 
     if (m_chk_slots->isChecked())
         max_slots = m_slots->value();
-
 
     if (m_chk_avg_speed_slot->isChecked() && m_chk_sim_torrents->isChecked()) {
         max_slots = floor(max_upload_speed / (max_torrents * avg_slot_up));

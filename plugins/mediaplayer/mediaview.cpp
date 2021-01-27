@@ -29,19 +29,19 @@
 #include <KLocalizedString>
 #include <KToolBar>
 
-#include <util/log.h>
-#include "mediaview.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
 #include "mediaplayerpluginsettings.h"
+#include "mediaview.h"
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-MediaViewFilter::MediaViewFilter(QObject* parent)
-    : QSortFilterProxyModel(parent),
-      show_incomplete(false)
+MediaViewFilter::MediaViewFilter(QObject *parent)
+    : QSortFilterProxyModel(parent)
+    , show_incomplete(false)
 {
 }
 
@@ -55,12 +55,12 @@ void MediaViewFilter::setShowIncomplete(bool on)
     invalidateFilter();
 }
 
-bool MediaViewFilter::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
+bool MediaViewFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     if (show_incomplete)
         return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 
-    MediaModel* model = (MediaModel*)sourceModel();
+    MediaModel *model = (MediaModel *)sourceModel();
     MediaFileRef ref = model->fileForIndex(model->index(source_row));
     MediaFile::Ptr file = ref.mediaFile();
     if (file->fullyAvailable())
@@ -74,10 +74,9 @@ void MediaViewFilter::refresh()
     invalidateFilter();
 }
 
-
-
-MediaView::MediaView(MediaModel* model, QWidget* parent)
-    : QWidget(parent), model(model)
+MediaView::MediaView(MediaModel *model, QWidget *parent)
+    : QWidget(parent)
+    , model(model)
 {
     filter = new MediaViewFilter(this);
     filter->setSourceModel(model);
@@ -86,12 +85,11 @@ MediaView::MediaView(MediaModel* model, QWidget* parent)
     filter->setSortRole(Qt::UserRole + 1);
     filter->sort(0, Qt::DescendingOrder);
 
-
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
 
-    QHBoxLayout* hbox = new QHBoxLayout();
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setSpacing(0);
     hbox->setMargin(0);
 
@@ -124,12 +122,11 @@ MediaView::MediaView(MediaModel* model, QWidget* parent)
     connect(media_tree, &QListView::doubleClicked, this, &MediaView::onDoubleClicked);
 }
 
-
 MediaView::~MediaView()
 {
 }
 
-void MediaView::onDoubleClicked(const QModelIndex& index)
+void MediaView::onDoubleClicked(const QModelIndex &index)
 {
     if (!index.isValid())
         return;
@@ -151,7 +148,6 @@ void MediaView::loadState(KSharedConfig::Ptr cfg)
     KConfigGroup g = cfg->group("MediaView");
     show_incomplete->setChecked(g.readEntry("show_incomplete", false));
     search_box->setText(g.readEntry("search_text", QString()));
-
 }
 
 void MediaView::saveState(KSharedConfig::Ptr cfg)

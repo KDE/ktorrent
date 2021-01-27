@@ -23,30 +23,30 @@
 
 #include <QGraphicsItem>
 
-#include <util/log.h>
-#include <boost/bind.hpp>
-#include "weekscene.h"
 #include "schedule.h"
+#include "weekscene.h"
+#include <boost/bind.hpp>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-WeekView::WeekView(QWidget* parent) : QGraphicsView(parent), schedule(nullptr)
+WeekView::WeekView(QWidget *parent)
+    : QGraphicsView(parent)
+    , schedule(nullptr)
 {
     scene = new WeekScene(this);
     setScene(scene);
 
     connect(scene, &WeekScene::selectionChanged, this, &WeekView::onSelectionChanged);
     connect(scene, &WeekScene::itemDoubleClicked, this, &WeekView::onDoubleClicked);
-    connect(scene, qOverload<ScheduleItem*, const QTime&, const QTime&, int, int>(&WeekScene::itemMoved), this, &WeekView::itemMoved);
+    connect(scene, qOverload<ScheduleItem *, const QTime &, const QTime &, int, int>(&WeekScene::itemMoved), this, &WeekView::itemMoved);
 
     menu = new QMenu(this);
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &WeekView::customContextMenuRequested, this, &WeekView::showContextMenu);
 }
-
 
 WeekView::~WeekView()
 {
@@ -61,9 +61,9 @@ void WeekView::onSelectionChanged()
 {
     selection.clear();
 
-    const QList<QGraphicsItem*> sel = scene->selectedItems();
-    for (QGraphicsItem* s : sel) {
-        QMap<QGraphicsItem*, ScheduleItem*>::iterator i = item_map.find(s);
+    const QList<QGraphicsItem *> sel = scene->selectedItems();
+    for (QGraphicsItem *s : sel) {
+        QMap<QGraphicsItem *, ScheduleItem *>::iterator i = item_map.find(s);
         if (i != item_map.end())
             selection.append(i.value());
     }
@@ -71,7 +71,7 @@ void WeekView::onSelectionChanged()
     selectionChanged();
 }
 
-void WeekView::setSchedule(Schedule* s)
+void WeekView::setSchedule(Schedule *s)
 {
     clear();
     schedule = s;
@@ -84,9 +84,9 @@ void WeekView::setSchedule(Schedule* s)
 
 void WeekView::clear()
 {
-    QMap<QGraphicsItem*, ScheduleItem*>::iterator i = item_map.begin();
+    QMap<QGraphicsItem *, ScheduleItem *>::iterator i = item_map.begin();
     while (i != item_map.end()) {
-        QGraphicsItem* item = i.key();
+        QGraphicsItem *item = i.key();
         scene->removeItem(item);
         delete item;
         i++;
@@ -98,11 +98,11 @@ void WeekView::clear()
 
 void WeekView::removeSelectedItems()
 {
-    const QList<QGraphicsItem*> sel = scene->selectedItems();
-    for (QGraphicsItem* s : sel) {
-        QMap<QGraphicsItem*, ScheduleItem*>::iterator i = item_map.find(s);
+    const QList<QGraphicsItem *> sel = scene->selectedItems();
+    for (QGraphicsItem *s : sel) {
+        QMap<QGraphicsItem *, ScheduleItem *>::iterator i = item_map.find(s);
         if (i != item_map.end()) {
-            ScheduleItem* si = i.value();
+            ScheduleItem *si = i.value();
             scene->removeItem(s);
             item_map.erase(i);
             schedule->removeItem(si);
@@ -110,32 +110,32 @@ void WeekView::removeSelectedItems()
     }
 }
 
-void WeekView::addScheduleItem(ScheduleItem* item)
+void WeekView::addScheduleItem(ScheduleItem *item)
 {
-    QGraphicsItem* gi = scene->addScheduleItem(item);
+    QGraphicsItem *gi = scene->addScheduleItem(item);
 
     if (gi)
         item_map[gi] = item;
 }
 
-void WeekView::onDoubleClicked(QGraphicsItem* i)
+void WeekView::onDoubleClicked(QGraphicsItem *i)
 {
-    QMap<QGraphicsItem*, ScheduleItem*>::iterator itr = item_map.find(i);
+    QMap<QGraphicsItem *, ScheduleItem *>::iterator itr = item_map.find(i);
     if (itr != item_map.end())
         editItem(itr.value());
 }
 
-void WeekView::showContextMenu(const QPoint& pos)
+void WeekView::showContextMenu(const QPoint &pos)
 {
     menu->popup(viewport()->mapToGlobal(pos));
 }
 
-void WeekView::itemChanged(ScheduleItem* item)
+void WeekView::itemChanged(ScheduleItem *item)
 {
-    QMap<QGraphicsItem*, ScheduleItem*>::iterator i = item_map.begin();
+    QMap<QGraphicsItem *, ScheduleItem *>::iterator i = item_map.begin();
     while (i != item_map.end()) {
         if (item == i.value()) {
-            QGraphicsItem* gi = i.key();
+            QGraphicsItem *gi = i.key();
             scene->itemChanged(item, gi);
             break;
         }
@@ -148,4 +148,3 @@ void WeekView::colorsChanged()
     scene->colorsChanged();
 }
 }
-

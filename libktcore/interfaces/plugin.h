@@ -21,9 +21,9 @@
 #ifndef KTPLUGIN_H
 #define KTPLUGIN_H
 
-#include <ktversion.h>
-#include <ktcore_export.h>
 #include <KParts/Plugin>
+#include <ktcore_export.h>
+#include <ktversion.h>
 
 namespace bt
 {
@@ -51,7 +51,7 @@ class KTCORE_EXPORT Plugin : public KParts::Plugin
 {
     Q_OBJECT
 public:
-    Plugin(QObject* parent);
+    Plugin(QObject *parent);
     ~Plugin() override;
 
     /**
@@ -81,16 +81,16 @@ public:
      * These operations must be finished or killed by a timeout before we can proceed with unloading the plugin.
      * @param job The WaitJob which monitors the plugin
      */
-    virtual void shutdown(bt::WaitJob* job);
+    virtual void shutdown(bt::WaitJob *job);
 
     /// Get a pointer to the CoreInterface
-    CoreInterface* getCore()
+    CoreInterface *getCore()
     {
         return core;
     }
 
     /// Get a const pointer to the CoreInterface
-    const CoreInterface* getCore() const
+    const CoreInterface *getCore() const
     {
         return core;
     }
@@ -100,19 +100,19 @@ public:
      * to the core.
      * @param c Pointer to the core
      */
-    void setCore(CoreInterface* c)
+    void setCore(CoreInterface *c)
     {
         core = c;
     }
 
     /// Get a pointer to the CoreInterface
-    GUIInterface* getGUI()
+    GUIInterface *getGUI()
     {
         return gui;
     }
 
     /// Get a const pointer to the CoreInterface
-    const GUIInterface* getGUI() const
+    const GUIInterface *getGUI() const
     {
         return gui;
     }
@@ -122,7 +122,7 @@ public:
      * to the core.
      * @param c Pointer to the core
      */
-    void setGUI(GUIInterface* c)
+    void setGUI(GUIInterface *c)
     {
         gui = c;
     }
@@ -134,7 +134,7 @@ public:
     }
 
     /// Check whether the plugin matches the version of KT
-    virtual bool versionCheck(const QString& version) const = 0;
+    virtual bool versionCheck(const QString &version) const = 0;
 
     /// Returns the name of the parent part the GUI of the plugin should be created in
     virtual QString parentPart() const
@@ -143,8 +143,8 @@ public:
     }
 
 private:
-    CoreInterface* core;
-    GUIInterface* gui;
+    CoreInterface *core;
+    GUIInterface *gui;
     bool loaded;
 
     friend class PluginManager;

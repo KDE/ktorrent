@@ -20,21 +20,21 @@
 
 #include "magnetmodel.h"
 #include <KLocalizedString>
-#include <QIcon>
 #include <QFile>
+#include <QIcon>
 #include <QTextStream>
 
+#include <bcodec/bdecoder.h>
+#include <bcodec/bencoder.h>
+#include <bcodec/bnode.h>
 #include <magnet/magnetdownloader.h>
 #include <torrent/magnetmanager.h>
-#include <util/log.h>
-#include <bcodec/bencoder.h>
-#include <bcodec/bdecoder.h>
 #include <util/error.h>
-#include <bcodec/bnode.h>
+#include <util/log.h>
 
 namespace kt
 {
-MagnetModel::MagnetModel(MagnetManager *magnetManager, QObject* parent)
+MagnetModel::MagnetModel(MagnetManager *magnetManager, QObject *parent)
     : QAbstractTableModel(parent)
     , currentRows(0)
     , mman(magnetManager)
@@ -69,7 +69,7 @@ bool MagnetModel::isStopped(int row) const
 void MagnetModel::onUpdateQueue(bt::Uint32 idx, bt::Uint32 count)
 {
     int rows = mman->count();
-    if (currentRows < rows)  // add new rows
+    if (currentRows < rows) // add new rows
         insertRows(idx, rows - currentRows, QModelIndex());
     else if (currentRows > rows) // delete rows
         removeRows(idx, currentRows - rows, QModelIndex());
@@ -78,18 +78,22 @@ void MagnetModel::onUpdateQueue(bt::Uint32 idx, bt::Uint32 count)
     Q_EMIT dataChanged(index(idx, 0), index(count, columnCount(QModelIndex())));
 }
 
-QVariant MagnetModel::data(const QModelIndex& index, int role) const
+QVariant MagnetModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() < 0 || index.row() >= mman->count())
         return QVariant();
 
-    const MagnetDownloader* md = mman->getMagnetDownloader(index.row());
+    const MagnetDownloader *md = mman->getMagnetDownloader(index.row());
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
-        case 0: return displayName(md);
-        case 1: return status(index.row());
-        case 2: return md->numPeers();
-        default: return QVariant();
+        case 0:
+            return displayName(md);
+        case 1:
+            return status(index.row());
+        case 2:
+            return md->numPeers();
+        default:
+            return QVariant();
         }
     } else if (role == Qt::DecorationRole) {
         if (index.column() == 0)
@@ -109,17 +113,21 @@ QVariant MagnetModel::headerData(int section, Qt::Orientation orientation, int r
 
     if (role == Qt::DisplayRole) {
         switch (section) {
-        case 0: return i18n("Magnet Link");
-        case 1: return i18n("Status");
-        case 2: return i18n("Peers");
-        default: return QVariant();
+        case 0:
+            return i18n("Magnet Link");
+        case 1:
+            return i18n("Status");
+        case 2:
+            return i18n("Peers");
+        default:
+            return QVariant();
         }
     }
 
     return QVariant();
 }
 
-int MagnetModel::columnCount(const QModelIndex& parent) const
+int MagnetModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -127,7 +135,7 @@ int MagnetModel::columnCount(const QModelIndex& parent) const
         return 3;
 }
 
-int MagnetModel::rowCount(const QModelIndex& parent) const
+int MagnetModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid() || !mman)
         return 0;
@@ -135,8 +143,7 @@ int MagnetModel::rowCount(const QModelIndex& parent) const
         return mman->count();
 }
 
-
-bool MagnetModel::insertRows(int row, int count, const QModelIndex& parent)
+bool MagnetModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -144,7 +151,7 @@ bool MagnetModel::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool MagnetModel::removeRows(int row, int count, const QModelIndex& parent)
+bool MagnetModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
@@ -152,7 +159,7 @@ bool MagnetModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-QString MagnetModel::displayName(const bt::MagnetDownloader* md) const
+QString MagnetModel::displayName(const bt::MagnetDownloader *md) const
 {
     if (md->magnetLink().displayName().isEmpty())
         return md->magnetLink().toString();

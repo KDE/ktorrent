@@ -41,25 +41,25 @@ class TorrentService : public bt::PeerSource
 {
     Q_OBJECT
 public:
-    TorrentService(bt::TorrentInterface* tc);
+    TorrentService(bt::TorrentInterface *tc);
     ~TorrentService() override;
 
-    void stop(bt::WaitJob* wjob = 0) override;
+    void stop(bt::WaitJob *wjob = 0) override;
     void start() override;
     void aboutToBeDestroyed() override;
 
 Q_SIGNALS:
-    void serviceDestroyed(TorrentService* av);
+    void serviceDestroyed(TorrentService *av);
 
 public Q_SLOTS:
     void onPublished(bool ok);
     void onServiceAdded(KDNSSD::RemoteService::Ptr ptr);
-    void hostResolved(net::AddressResolver* ar);
+    void hostResolved(net::AddressResolver *ar);
 
 private:
-    bt::TorrentInterface* tc;
-    KDNSSD::PublicService* srv;
-    KDNSSD::ServiceBrowser* browser;
+    bt::TorrentInterface *tc;
+    KDNSSD::PublicService *srv;
+    KDNSSD::ServiceBrowser *browser;
 };
 }
 

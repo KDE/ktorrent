@@ -22,33 +22,31 @@
 #include <KLocalizedString>
 #include <QIcon>
 
-#include <util/log.h>
-#include <util/error.h>
-#include <upnp/upnprouter.h>
 #include "routermodel.h"
+#include <upnp/upnprouter.h>
+#include <util/error.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-RouterModel::RouterModel(QObject* parent)
+RouterModel::RouterModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
 }
-
 
 RouterModel::~RouterModel()
 {
 }
 
-void RouterModel::addRouter(bt::UPnPRouter* r)
+void RouterModel::addRouter(bt::UPnPRouter *r)
 {
     routers.append(r);
     insertRow(routers.count() - 1);
 }
 
-int RouterModel::rowCount(const QModelIndex& parent) const
+int RouterModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return routers.count();
@@ -56,7 +54,7 @@ int RouterModel::rowCount(const QModelIndex& parent) const
         return 0;
 }
 
-int RouterModel::columnCount(const QModelIndex& parent) const
+int RouterModel::columnCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return 2;
@@ -70,13 +68,16 @@ QVariant RouterModel::headerData(int section, Qt::Orientation orientation, int r
         return QVariant();
 
     switch (section) {
-    case 0: return i18n("Device");
-    case 1: return i18n("Ports Forwarded");
-    default: return QVariant();
+    case 0:
+        return i18n("Device");
+    case 1:
+        return i18n("Ports Forwarded");
+    default:
+        return QVariant();
     }
 }
 
-bt::UPnPRouter* RouterModel::routerForIndex(const QModelIndex& index)
+bt::UPnPRouter *RouterModel::routerForIndex(const QModelIndex &index)
 {
     if (!index.isValid())
         return 0;
@@ -84,16 +85,18 @@ bt::UPnPRouter* RouterModel::routerForIndex(const QModelIndex& index)
         return routers.at(index.row());
 }
 
-QVariant RouterModel::data(const QModelIndex& index, int role) const
+QVariant RouterModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
 
-    const bt::UPnPRouter* r = routers.at(index.row());
+    const bt::UPnPRouter *r = routers.at(index.row());
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
-        case 0: return r->getDescription().friendlyName;
-        case 1: if (!r->getError().isEmpty())
+        case 0:
+            return r->getDescription().friendlyName;
+        case 1:
+            if (!r->getError().isEmpty())
                 return r->getError();
             else
                 return ports(r);
@@ -105,11 +108,14 @@ QVariant RouterModel::data(const QModelIndex& index, int role) const
             return QIcon::fromTheme(QStringLiteral("dialog-error"));
     } else if (role == Qt::ToolTipRole) {
         if (index.column() == 0) {
-            const bt::UPnPDeviceDescription& d = r->getDescription();
+            const bt::UPnPDeviceDescription &d = r->getDescription();
             return i18n(
-                       "Model Name: <b>%1</b><br/>"
-                       "Manufacturer: <b>%2</b><br/>"
-                       "Model Description: <b>%3</b><br/>", d.modelName, d.manufacturer, d.modelDescription);
+                "Model Name: <b>%1</b><br/>"
+                "Manufacturer: <b>%2</b><br/>"
+                "Model Description: <b>%3</b><br/>",
+                d.modelName,
+                d.manufacturer,
+                d.modelDescription);
         } else if (index.column() == 1 && !r->getError().isEmpty())
             return r->getError();
     }
@@ -117,7 +123,7 @@ QVariant RouterModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool RouterModel::removeRows(int row, int count, const QModelIndex& parent)
+bool RouterModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
@@ -125,7 +131,7 @@ bool RouterModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool RouterModel::insertRows(int row, int count, const QModelIndex& parent)
+bool RouterModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -136,15 +142,17 @@ bool RouterModel::insertRows(int row, int count, const QModelIndex& parent)
 class PortsVisitor : public bt::UPnPRouter::Visitor
 {
 public:
-    ~PortsVisitor() override {}
+    ~PortsVisitor() override
+    {
+    }
 
-    void forwarding(const net::Port& port, bool pending, const bt::UPnPService* service) override
+    void forwarding(const net::Port &port, bool pending, const bt::UPnPService *service) override
     {
         Q_UNUSED(service);
         if (!pending) {
             QString ret = QString::number(port.number) + QStringLiteral(" (");
             QString prot = (port.proto == net::UDP ? QStringLiteral("UDP") : QStringLiteral("TCP"));
-            ret +=  prot + QStringLiteral(")");
+            ret += prot + QStringLiteral(")");
             ports.append(ret);
         }
     }
@@ -157,7 +165,7 @@ public:
     QStringList ports;
 };
 
-QString RouterModel::ports(const bt::UPnPRouter* r) const
+QString RouterModel::ports(const bt::UPnPRouter *r) const
 {
     PortsVisitor pv;
     r->visit(&pv);
@@ -169,22 +177,22 @@ void RouterModel::update()
     Q_EMIT dataChanged(index(0, 0), index(rowCount(QModelIndex()) - 1, columnCount(QModelIndex()) - 1));
 }
 
-void RouterModel::forward(const net::Port& port)
+void RouterModel::forward(const net::Port &port)
 {
     try {
-        for (bt::UPnPRouter* r : qAsConst(routers))
+        for (bt::UPnPRouter *r : qAsConst(routers))
             r->forward(port);
-    } catch (bt::Error& e) {
+    } catch (bt::Error &e) {
         Out(SYS_PNP | LOG_DEBUG) << "Error : " << e.toString() << endl;
     }
 }
 
-void RouterModel::undoForward(const net::Port& port, bt::WaitJob* wjob)
+void RouterModel::undoForward(const net::Port &port, bt::WaitJob *wjob)
 {
     try {
-        for (bt::UPnPRouter* r : qAsConst(routers))
+        for (bt::UPnPRouter *r : qAsConst(routers))
             r->undoForward(port, wjob);
-    } catch (Error& e) {
+    } catch (Error &e) {
         Out(SYS_PNP | LOG_DEBUG) << "Error : " << e.toString() << endl;
     }
 }

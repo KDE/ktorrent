@@ -25,8 +25,8 @@
 #include "ui_trackerview.h"
 
 #include <KSharedConfig>
-#include <QSortFilterProxyModel>
 #include <QMenu>
+#include <QSortFilterProxyModel>
 
 #include <interfaces/torrentinterface.h>
 
@@ -37,15 +37,15 @@ class TrackerModel;
 /**
  * @author Ivan Vasic <ivan@ktorrent.org>
  */
-class TrackerView: public QWidget, public Ui_TrackerView
+class TrackerView : public QWidget, public Ui_TrackerView
 {
     Q_OBJECT
 public:
-    TrackerView(QWidget* parent);
+    TrackerView(QWidget *parent);
     ~TrackerView() override;
 
     void update();
-    void changeTC(bt::TorrentInterface* ti);
+    void changeTC(bt::TorrentInterface *ti);
     void saveState(KSharedConfigPtr cfg);
     void loadState(KSharedConfigPtr cfg);
 
@@ -56,19 +56,19 @@ public Q_SLOTS:
     void removeClicked();
     void addClicked();
     void scrapeClicked();
-    void currentChanged(const QModelIndex& current, const QModelIndex& previous);
+    void currentChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
-    void torrentChanged(bt::TorrentInterface* ti);
-    bt::TrackerInterface* selectedTracker() const;
+    void torrentChanged(bt::TorrentInterface *ti);
+    bt::TrackerInterface *selectedTracker() const;
 
 private:
     bt::TorrentInterface::WPtr tc;
-    TrackerModel* model;
-    QSortFilterProxyModel* proxy_model;
+    TrackerModel *model;
+    QSortFilterProxyModel *proxy_model;
     QStringList tracker_hints;
     bool header_state_loaded;
-    QMenu* m_ContextMenu;
+    QMenu *m_ContextMenu;
 };
 }
 #endif

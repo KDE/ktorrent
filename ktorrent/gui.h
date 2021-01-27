@@ -22,12 +22,12 @@
 #ifndef KT_GUI_HH
 #define KT_GUI_HH
 
-#include <QTimer>
 #include <KParts/MainWindow>
 #include <KSharedConfig>
+#include <QTimer>
 
-#include <util/constants.h>
 #include <interfaces/guiinterface.h>
+#include <util/constants.h>
 
 class QAction;
 class KToggleAction;
@@ -42,7 +42,6 @@ class DBus;
 class TorrentActivity;
 class CentralWidget;
 
-
 class GUI : public KParts::MainWindow, public GUIInterface
 {
     Q_OBJECT
@@ -50,43 +49,43 @@ public:
     GUI();
     ~GUI() override;
 
-    DBus* getDBusInterface()
+    DBus *getDBusInterface()
     {
         return dbus_iface;
     }
 
     // Stuff implemented from GUIInterface
-    KMainWindow* getMainWindow() override
+    KMainWindow *getMainWindow() override
     {
         return this;
     }
-    void addPrefPage(PrefPageInterface* page) override;
-    void removePrefPage(PrefPageInterface* page) override;
-    void mergePluginGui(Plugin* p) override;
-    void removePluginGui(Plugin* p) override;
-    void errorMsg(const QString& err) override;
-    void errorMsg(KIO::Job* j) override;
-    void infoMsg(const QString& info) override;
-    StatusBarInterface* getStatusBar() override;
-    void addActivity(Activity* act) override;
-    void removeActivity(Activity* act) override;
-    TorrentActivityInterface* getTorrentActivity() override;
+    void addPrefPage(PrefPageInterface *page) override;
+    void removePrefPage(PrefPageInterface *page) override;
+    void mergePluginGui(Plugin *p) override;
+    void removePluginGui(Plugin *p) override;
+    void errorMsg(const QString &err) override;
+    void errorMsg(KIO::Job *j) override;
+    void infoMsg(const QString &info) override;
+    StatusBarInterface *getStatusBar() override;
+    void addActivity(Activity *act) override;
+    void removeActivity(Activity *act) override;
+    TorrentActivityInterface *getTorrentActivity() override;
     QSize sizeHint() const override;
 
     bool event(QEvent *e) override;
 
     /**
-    * Create a XML GUI container (menu or toolbar)
-    * @param name The name of the item
-    * @return The widget
-    */
-    QWidget* container(const QString& name);
+     * Create a XML GUI container (menu or toolbar)
+     * @param name The name of the item
+     * @return The widget
+     */
+    QWidget *container(const QString &name);
 
     /// load a torrent
-    void load(const QUrl& url);
+    void load(const QUrl &url);
 
     /// load a torrent silently
-    void loadSilently(const QUrl& url);
+    void loadSilently(const QUrl &url);
 
 public Q_SLOTS:
     /// Update all actions
@@ -99,7 +98,7 @@ public Q_SLOTS:
     void setPasteDisabled(bool on);
 
     /// Set the current activity
-    void setCurrentActivity(Activity* act) override;
+    void setCurrentActivity(Activity *act) override;
 
 private Q_SLOTS:
     void createTorrent();
@@ -121,7 +120,7 @@ private Q_SLOTS:
     void applySettings();
     void showOrHide();
     void configureNotifications();
-    void activePartChanged(KParts::Part* p);
+    void activePartChanged(KParts::Part *p);
     void quit();
 
 private:
@@ -132,25 +131,25 @@ private:
     bool queryClose() override;
 
 private:
-    Core* core;
+    Core *core;
     QTimer timer;
-    kt::StatusBar* status_bar;
-    TrayIcon* tray_icon;
-    DBus* dbus_iface;
-    TorrentActivity* torrent_activity;
-    CentralWidget* central;
-    PrefDialog* pref_dlg;
-    KParts::PartManager* part_manager;
+    kt::StatusBar *status_bar;
+    TrayIcon *tray_icon;
+    DBus *dbus_iface;
+    TorrentActivity *torrent_activity;
+    CentralWidget *central;
+    PrefDialog *pref_dlg;
+    KParts::PartManager *part_manager;
 
-    KToggleAction* show_status_bar_action;
-    KToggleAction* show_menu_bar_action;
-    QAction * open_silently_action;
+    KToggleAction *show_status_bar_action;
+    KToggleAction *show_menu_bar_action;
+    QAction *open_silently_action;
 
-    QAction * paste_url_action;
-    QAction * ipfilter_action;
-    QAction * import_action;
-    QAction * show_kt_action;
-    QAction * paste_action;
+    QAction *paste_url_action;
+    QAction *ipfilter_action;
+    QAction *import_action;
+    QAction *show_kt_action;
+    QAction *paste_action;
 };
 }
 

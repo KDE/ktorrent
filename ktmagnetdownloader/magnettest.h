@@ -23,8 +23,8 @@
 
 #include <QObject>
 
-#include <magnet/magnetlink.h>
 #include <magnet/magnetdownloader.h>
+#include <magnet/magnetlink.h>
 
 namespace bt
 {
@@ -32,22 +32,21 @@ class UPnPRouter;
 class UPnPMCastSocket;
 }
 
-
 class MagnetTest : public QObject
 {
 public:
-    MagnetTest(const bt::MagnetLink& mlink, QObject* parent = 0);
+    MagnetTest(const bt::MagnetLink &mlink, QObject *parent = 0);
     ~MagnetTest() override;
 
-    void routerDiscovered(bt::UPnPRouter* router);
+    void routerDiscovered(bt::UPnPRouter *router);
     void start();
     void update();
-    void foundMetaData(bt::MagnetDownloader* md, const QByteArray& data);
+    void foundMetaData(bt::MagnetDownloader *md, const QByteArray &data);
 
 private:
     bt::MagnetLink mlink;
-    bt::UPnPMCastSocket* upnp;
-    bt::MagnetDownloader* mdownloader;
+    bt::UPnPMCastSocket *upnp;
+    bt::MagnetDownloader *mdownloader;
     QTimer timer;
 };
 

@@ -21,19 +21,18 @@
 #ifndef ChartDrawerData_H_
 #define ChartDrawerData_H_
 
-#include <QString>
 #include <QPen>
 #include <QPointer>
+#include <QString>
 #include <QUuid>
 
-#include <vector>
-#include <memory>
 #include <algorithm>
+#include <memory>
 #include <utility>
+#include <vector>
 
 namespace kt
 {
-
 /** \brief „Container” for chart's data, used by ChartDrawer
 \author Krzysztof Kundzicz <athantor@gmail.com>
 */
@@ -43,30 +42,30 @@ class ChartDrawerData
     friend class ChartDrawer;
 
 public:
-    ///Type storing chart's values
+    /// Type storing chart's values
     typedef std::vector<qreal> val_t;
+
 private:
-    ///Name of the set
+    /// Name of the set
     QString pmName;
-    ///Pent of the set
+    /// Pent of the set
     QPen pmPen;
-    ///Values
+    /// Values
     val_t pmVals;
-    ///Set's UUID
+    /// Set's UUID
     QUuid pmUuid;
-    ///Mark maximum?
+    /// Mark maximum?
     bool mMax;
 
-
 public:
-    ///Constructor
+    /// Constructor
     ChartDrawerData();
-    ///Destructor
+    /// Destructor
     ~ChartDrawerData();
     /** \brief Copy constructor
     \param rCdd Source
     */
-    ChartDrawerData(const ChartDrawerData& rCdd);
+    ChartDrawerData(const ChartDrawerData &rCdd);
     /** \brief Constructor
     \param rN Name
     \param rP Pen
@@ -75,7 +74,7 @@ public:
 
     \note If there is no UUID given, it'll going be generated automagically
     */
-    ChartDrawerData(const QString& rN, const QPen& rP, const bool max, const QUuid& rU = QUuid::createUuid());
+    ChartDrawerData(const QString &rN, const QPen &rP, const bool max, const QUuid &rU = QUuid::createUuid());
 
     /** \brief Resizes set to given size
     \param size New size
@@ -83,7 +82,7 @@ public:
     */
     void setSize(const size_t size);
 
-    ///Zeros the set
+    /// Zeros the set
     void zero();
 
     /** \brief Adds value to set
@@ -94,7 +93,7 @@ public:
     /** \brief Returns valueset
     \return Values
     */
-    const val_t& getValues() const
+    const val_t &getValues() const
     {
         return pmVals;
     }
@@ -109,7 +108,7 @@ public:
     /** \brief Sets set's pen
     \param rP New pen
     */
-    void setPen(const QPen& rP)
+    void setPen(const QPen &rP)
     {
         pmPen = rP;
     }
@@ -125,7 +124,7 @@ public:
     /** \brief Sets set's name
     \param rN New name
     */
-    void setName(const QString& rN)
+    void setName(const QString &rN)
     {
         pmName = rN;
     }
@@ -140,7 +139,7 @@ public:
     /** \brief Sets set's UUID
     \param rU New UUID
     */
-    void setUuid(const QUuid& rU)
+    void setUuid(const QUuid &rU)
     {
         pmUuid = rU;
     }
@@ -155,16 +154,16 @@ public:
     void enableMarkMax(const bool max);
 
     /** \brief Finds maximum
-    * \return Maximum
-    *
-    * Function returns pair, where:
-    * - First: Maximum value
-    * - Second: Value's position in set
-    */
-    std::pair<qreal, size_t>  findMax() const ;
+     * \return Maximum
+     *
+     * Function returns pair, where:
+     * - First: Maximum value
+     * - Second: Value's position in set
+     */
+    std::pair<qreal, size_t> findMax() const;
 
     /// Dummy assignment operator for MSVC
-    bool operator=(const ChartDrawerData& /*rCdd*/)
+    bool operator=(const ChartDrawerData & /*rCdd*/)
     {
         return true;
     };

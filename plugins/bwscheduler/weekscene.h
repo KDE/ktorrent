@@ -37,14 +37,14 @@ class WeekScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    WeekScene(QObject* parent);
+    WeekScene(QObject *parent);
     ~WeekScene() override;
 
     /**
      * Set the current Schedule
      * @param s The current schedule
      */
-    void setSchedule(Schedule* s)
+    void setSchedule(Schedule *s)
     {
         schedule = s;
     }
@@ -53,7 +53,7 @@ public:
      * Add an item to the schedule.
      * @param item The item to add
      */
-    QGraphicsItem* addScheduleItem(ScheduleItem* item);
+    QGraphicsItem *addScheduleItem(ScheduleItem *item);
 
     /**
      * Update the text of the status line
@@ -69,35 +69,35 @@ public:
      * @param item The item
      * @param np New position
      */
-    void itemMoved(ScheduleItem* item, const QPointF& np);
+    void itemMoved(ScheduleItem *item, const QPointF &np);
 
     /**
      * Is a move valid, does it conflict or not ?
      * @param item The item
      * @param np New position
      */
-    bool validMove(ScheduleItem* item, const QPointF& np);
+    bool validMove(ScheduleItem *item, const QPointF &np);
 
     /**
      * An item has been resized by the user.
      * @param item The item
      * @param r It's new rectangle
      */
-    void itemResized(ScheduleItem* item, const QRectF& r);
+    void itemResized(ScheduleItem *item, const QRectF &r);
 
     /**
      * Is a resize valid, does it conflict or not ?
      * @param item The item
      * @param np New position
      */
-    bool validResize(ScheduleItem* item, const QRectF& r);
+    bool validResize(ScheduleItem *item, const QRectF &r);
 
     /**
      * An item has changed, update it.
      * @param item The item
      * @param gi The GraphicsItem
      */
-    void itemChanged(ScheduleItem* item, QGraphicsItem* gi);
+    void itemChanged(ScheduleItem *item, QGraphicsItem *gi);
 
     /**
      * The color settings have changed.
@@ -122,7 +122,7 @@ Q_SIGNALS:
      * Emitted when an item has been double clicked.
      * @param gi Item double clicked
      */
-    void itemDoubleClicked(QGraphicsItem* gi);
+    void itemDoubleClicked(QGraphicsItem *gi);
 
     /**
      * An item has been moved
@@ -131,13 +131,13 @@ Q_SIGNALS:
      * @param end The new end time
      * @param day The new day
      */
-    void itemMoved(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day);
+    void itemMoved(ScheduleItem *item, const QTime &start, const QTime &end, int start_day, int end_day);
 
 private:
     void addCalendar();
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev) override;
-    void mousePressEvent(QGraphicsSceneMouseEvent* ev) override;
-    qreal timeToY(const QTime& time);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *ev) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *ev) override;
+    qreal timeToY(const QTime &time);
     QTime yToTime(qreal y);
 
 private:
@@ -145,11 +145,11 @@ private:
     qreal yoff;
     qreal day_width;
     qreal hour_height;
-    QGraphicsTextItem* status;
-    QList<QGraphicsLineItem*> lines;
-    QList<QGraphicsRectItem*> rects;
-    GuidanceLine* gline[2]; // guidance lines
-    Schedule* schedule;
+    QGraphicsTextItem *status;
+    QList<QGraphicsLineItem *> lines;
+    QList<QGraphicsRectItem *> rects;
+    GuidanceLine *gline[2]; // guidance lines
+    Schedule *schedule;
 };
 
 }

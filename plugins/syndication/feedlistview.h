@@ -24,7 +24,6 @@
 
 #include <QListView>
 
-
 namespace kt
 {
 class Feed;
@@ -37,21 +36,21 @@ class FeedListView : public QListView
 {
     Q_OBJECT
 public:
-    FeedListView(FeedList* feeds, QWidget* parent);
+    FeedListView(FeedList *feeds, QWidget *parent);
     ~FeedListView();
 
     /// Get all the selected feeds
     QModelIndexList selectedFeeds();
 
-    void itemActivated(const QModelIndex& idx);
-    void selectionChanged(const QItemSelection& sel, const QItemSelection& desel) override;
+    void itemActivated(const QModelIndex &idx);
+    void selectionChanged(const QItemSelection &sel, const QItemSelection &desel) override;
 
 Q_SIGNALS:
-    void feedActivated(Feed* feed);
+    void feedActivated(Feed *feed);
     void enableRemove(bool on);
 
 private:
-    FeedList* feeds;
+    FeedList *feeds;
 };
 
 }

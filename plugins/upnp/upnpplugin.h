@@ -39,16 +39,17 @@ class UPnPPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    UPnPPlugin(QObject* parent, const QVariantList& args);
+    UPnPPlugin(QObject *parent, const QVariantList &args);
     ~UPnPPlugin() override;
 
     void load() override;
     void unload() override;
-    void shutdown(bt::WaitJob* job) override;
-    bool versionCheck(const QString& version) const override;
+    void shutdown(bt::WaitJob *job) override;
+    bool versionCheck(const QString &version) const override;
+
 private:
-    bt::UPnPMCastSocket* sock;
-    UPnPWidget* upnp_tab;
+    bt::UPnPMCastSocket *sock;
+    UPnPWidget *upnp_tab;
 };
 
 }

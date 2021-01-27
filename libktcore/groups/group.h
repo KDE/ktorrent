@@ -36,7 +36,6 @@ class TorrentInterface;
 
 namespace kt
 {
-
 class QueueManager;
 using bt::TorrentInterface;
 
@@ -55,7 +54,7 @@ public:
         UPLOADS_ONLY_GROUP = 1,
         DOWNLOADS_ONLY_GROUP = 2,
         MIXED_GROUP = 3,
-        CUSTOM_GROUP = 4
+        CUSTOM_GROUP = 4,
     };
 
     struct KTCORE_EXPORT Policy {
@@ -76,7 +75,7 @@ public:
      * @param flags Properties of the group
      * @param path Path in the group tree (e.g /all/downloads/foo, last item in path should be the groups internal name)
      */
-    Group(const QString& name, int flags, const QString& path);
+    Group(const QString &name, int flags, const QString &path);
     ~Group() override;
 
     /// See if this is a standard group.
@@ -95,40 +94,40 @@ public:
      * Rename the group.
      * @param nn The new name
      */
-    void rename(const QString& nn);
+    void rename(const QString &nn);
 
     /**
      * Set the group icon by name.
      * @param in The icon name
      */
-    void setIconByName(const QString& in);
+    void setIconByName(const QString &in);
 
     /// Get the name of the group
-    const QString& groupName() const
+    const QString &groupName() const
     {
         return name;
     }
 
     /// Get the icon of the group
-    const QIcon& groupIcon() const
+    const QIcon &groupIcon() const
     {
         return icon;
     }
 
     /// Name of the group icon
-    const QString& groupIconName() const
+    const QString &groupIconName() const
     {
         return icon_name;
     }
 
     /// Get the group policy
-    const Policy& groupPolicy() const
+    const Policy &groupPolicy() const
     {
         return policy;
     }
 
     /// Path in the group tree
-    const QString& groupPath() const
+    const QString &groupPath() const
     {
         return path;
     }
@@ -146,27 +145,25 @@ public:
     }
 
     /// Set the group policy
-    void setGroupPolicy(const Policy& p);
+    void setGroupPolicy(const Policy &p);
 
     /**
      * Save the torrents.The torrents should be save in a bencoded file.
      * @param enc The BEncoder
      */
-    virtual void save(bt::BEncoder* enc);
-
+    virtual void save(bt::BEncoder *enc);
 
     /**
      * Load the torrents of the group from a BDictNode.
      * @param n The BDictNode
      */
-    virtual void load(bt::BDictNode* n);
-
+    virtual void load(bt::BDictNode *n);
 
     /**
      * Test if a torrent is a member of this group.
      * @param tor The torrent
      */
-    virtual bool isMember(TorrentInterface* tor) = 0;
+    virtual bool isMember(TorrentInterface *tor) = 0;
 
     /**
      * The torrent has been removed and is about to be deleted.
@@ -174,20 +171,20 @@ public:
      * pointers to this torrent.
      * @param tor The torrent
      */
-    virtual void torrentRemoved(TorrentInterface* tor);
+    virtual void torrentRemoved(TorrentInterface *tor);
 
     /**
      * Subclasses should implement this, if they want to have torrents added to them.
      * @param tor The torrent
      * @param new_torrent Indicates whether this is a newly created or opened torrent
      */
-    virtual void addTorrent(TorrentInterface* tor, bool new_torrent);
+    virtual void addTorrent(TorrentInterface *tor, bool new_torrent);
 
     /**
      * Subclasses should implement this, if they want to have torrents removed from them.
      * @param tor The torrent
      */
-    virtual void removeTorrent(TorrentInterface* tor);
+    virtual void removeTorrent(TorrentInterface *tor);
 
     /**
      * Called when the policy has been changed.
@@ -198,7 +195,7 @@ public:
      * Update the running and total count
      * @param qman The QueueManager
      **/
-    void updateCount(QueueManager* qman);
+    void updateCount(QueueManager *qman);
 
 protected:
     QString name;

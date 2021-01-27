@@ -24,21 +24,18 @@
 
 namespace kt
 {
-
-WeekDayModel::WeekDayModel(QObject* parent)
+WeekDayModel::WeekDayModel(QObject *parent)
     : QAbstractListModel(parent)
 {
     for (int i = 0; i < 7; i++)
         checked[i] = false;
 }
 
-
 WeekDayModel::~WeekDayModel()
 {
 }
 
-
-int WeekDayModel::rowCount(const QModelIndex& parent) const
+int WeekDayModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return 7;
@@ -46,7 +43,7 @@ int WeekDayModel::rowCount(const QModelIndex& parent) const
         return 0;
 }
 
-QVariant WeekDayModel::data(const QModelIndex& index, int role) const
+QVariant WeekDayModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= 7)
         return QVariant();
@@ -60,7 +57,7 @@ QVariant WeekDayModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool WeekDayModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool WeekDayModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid() || index.row() < 0 || index.row() >= 7)
         return false;
@@ -73,7 +70,7 @@ bool WeekDayModel::setData(const QModelIndex& index, const QVariant& value, int 
     return false;
 }
 
-Qt::ItemFlags WeekDayModel::flags(const QModelIndex& index) const
+Qt::ItemFlags WeekDayModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid() || index.row() >= 7 || index.row() < 0)
         return QAbstractItemModel::flags(index);

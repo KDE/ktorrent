@@ -34,24 +34,24 @@ class Filter;
 class FilterListModel : public QAbstractListModel
 {
 public:
-    FilterListModel(QObject* parent);
+    FilterListModel(QObject *parent);
     ~FilterListModel();
 
-    int rowCount(const QModelIndex& parent) const override;
-    QVariant data(const QModelIndex& index, int role) const override;
-    bool removeRows(int row, int count, const QModelIndex& parent) override;
-    bool insertRows(int row, int count, const QModelIndex& parent) override;
+    int rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
+    bool insertRows(int row, int count, const QModelIndex &parent) override;
 
-    void addFilter(Filter* f);
-    void removeFilter(Filter* f);
-    Filter* filterForIndex(const QModelIndex& idx);
-    Filter* filterByName(const QString& name);
-    Filter* filterByRow(int row);
-    Filter* filterByID(const QString& id);
+    void addFilter(Filter *f);
+    void removeFilter(Filter *f);
+    Filter *filterForIndex(const QModelIndex &idx);
+    Filter *filterByName(const QString &name);
+    Filter *filterByRow(int row);
+    Filter *filterByID(const QString &id);
     void clear();
 
 protected:
-    QList<Filter*> filters;
+    QList<Filter *> filters;
 };
 
 }

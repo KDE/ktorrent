@@ -28,7 +28,6 @@ class KComboBox;
 class QComboBox;
 class KActionCollection;
 
-
 namespace kt
 {
 class SearchEngineList;
@@ -41,7 +40,7 @@ class SearchToolBar : public QObject
     Q_OBJECT
 
 public:
-    SearchToolBar(KActionCollection* ac, SearchEngineList* sl, QObject* parent);
+    SearchToolBar(KActionCollection *ac, SearchEngineList *sl, QObject *parent);
     ~SearchToolBar() override;
 
     /// Save settings like current search engine
@@ -57,24 +56,23 @@ public Q_SLOTS:
 protected Q_SLOTS:
     void searchNewTabPressed();
     void searchBoxReturn();
-    void textChanged(const QString& str);
+    void textChanged(const QString &str);
     void selectedEngineChanged(int idx);
 
 Q_SIGNALS:
     /// Emitted when the user presses enter or clicks search
-    void search(const QString& text, int engine, bool external);
+    void search(const QString &text, int engine, bool external);
 
 private:
     void loadSearchHistory();
     void saveSearchHistory();
 
 private:
-    KComboBox* m_search_text;
-    QComboBox* m_search_engine;
-    QAction* m_search_new_tab;
+    KComboBox *m_search_text;
+    QComboBox *m_search_engine;
+    QAction *m_search_new_tab;
     int m_current_search_engine;
 };
 }
 
 #endif
-

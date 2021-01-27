@@ -24,9 +24,9 @@
 
 #include <QDBusConnectionInterface>
 
-#include <util/ptrmap.h>
-#include <plasma/dataengine.h>
 #include "torrentdbusinterface.h"
+#include <plasma/dataengine.h>
+#include <util/ptrmap.h>
 
 namespace ktplasma
 {
@@ -40,22 +40,22 @@ class Engine : public Plasma::DataEngine
     Q_OBJECT
 
 public:
-    Engine(QObject* parent, const QVariantList& args);
+    Engine(QObject *parent, const QVariantList &args);
     virtual ~Engine();
 
-    virtual bool updateSourceEvent(const QString& source);
+    virtual bool updateSourceEvent(const QString &source);
 
-    void addTorrent(const QString& tor);
-    void removeTorrent(const QString& tor);
+    void addTorrent(const QString &tor);
+    void removeTorrent(const QString &tor);
 
 public Q_SLOTS:
-    void dbusServiceRegistered(const QString& name);
-    void dbusServiceUnregistered(const QString& name);
-    void dbusServiceOwnerChanged(const QString& name, const QString& oldOwner, const QString& newOwner);
+    void dbusServiceRegistered(const QString &name);
+    void dbusServiceUnregistered(const QString &name);
+    void dbusServiceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
 
 private:
-    QDBusConnectionInterface* dbus;
-    CoreDBusInterface* core;
+    QDBusConnectionInterface *dbus;
+    CoreDBusInterface *core;
     bt::PtrMap<QString, TorrentDBusInterface> torrent_map;
 
     friend class CoreDBusInterface;
@@ -63,6 +63,5 @@ private:
 };
 
 }
-
 
 #endif

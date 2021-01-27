@@ -21,9 +21,9 @@
 #ifndef SCANFOLDER_H
 #define SCANFOLDER_H
 
+#include <KDirWatch>
 #include <QObject>
 #include <QUrl>
-#include <KDirWatch>
 
 namespace kt
 {
@@ -31,18 +31,17 @@ class ScanThread;
 
 /**
  * Monitors a folder for changes, and passes torrents to load to the TorrentLoadQueue
-*/
+ */
 class ScanFolder : public QObject
 {
     Q_OBJECT
 public:
-
     /**
      * Default constructor.
      * @param scanner The ScanThread
      * @param dir The directory
      */
-    ScanFolder(ScanThread* scanner, const QUrl &dir, bool recursive);
+    ScanFolder(ScanThread *scanner, const QUrl &dir, bool recursive);
     ~ScanFolder() override;
 
     /**
@@ -52,12 +51,12 @@ public:
     void setRecursive(bool rec);
 
 public Q_SLOTS:
-    void scanDir(const QString& path);
+    void scanDir(const QString &path);
 
 private:
-    ScanThread* scanner;
+    ScanThread *scanner;
     QUrl scan_directory;
-    KDirWatch* watch;
+    KDirWatch *watch;
     bool recursive;
 };
 }

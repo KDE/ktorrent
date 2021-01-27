@@ -18,24 +18,22 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <KLocalizedString>
 #include <KGlobal>
 #include <KIconLoader>
+#include <KLocalizedString>
 #include <KStandardDirs>
 
 #include <net/portlist.h>
 #include <torrent/globals.h>
 
-#include "webinterfaceprefwidget.h"
 #include "webinterfacepluginsettings.h"
-
+#include "webinterfaceprefwidget.h"
 
 using namespace bt;
 
 namespace kt
 {
-
-WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget* parent)
+WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent)
     : PrefPageInterface(WebInterfacePluginSettings::self(), i18n("Web Interface"), "network-server", parent)
 {
     setupUi(this);
@@ -46,7 +44,7 @@ WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget* parent)
         QDir d(*(dirList.begin()));
 
         QStringList skinList = d.entryList(QDir::Dirs);
-        foreach (const QString& skin, skinList) {
+        foreach (const QString &skin, skinList) {
             if (skin == "." || skin == ".." || skin == "common")
                 continue;
             kcfg_skin->addItem(skin);
@@ -57,7 +55,8 @@ WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget* parent)
 }
 
 WebInterfacePrefWidget::~WebInterfacePrefWidget()
-{}
+{
+}
 
 void WebInterfacePrefWidget::authenticationToggled(bool on)
 {
@@ -65,8 +64,6 @@ void WebInterfacePrefWidget::authenticationToggled(bool on)
     kcfg_password->setEnabled(on);
 }
 
-
 }
 
 #include "webinterfaceprefwidget.moc"
-

@@ -25,24 +25,24 @@
 
 #include <KActionCollection>
 #include <KIO/CommandLauncherJob>
+#include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
-#include <KIO/OpenUrlJob>
 #include <KSharedConfig>
 #include <KShell>
 
-#include <interfaces/guiinterface.h>
-#include <interfaces/coreinterface.h>
-#include <interfaces/functions.h>
-#include <util/log.h>
-#include <util/logsystemmanager.h>
-#include <dbus/dbus.h>
-#include "searchwidget.h"
+#include "searchactivity.h"
+#include "searchenginelist.h"
+#include "searchpluginsettings.h"
 #include "searchprefpage.h"
 #include "searchtoolbar.h"
-#include "searchpluginsettings.h"
-#include "searchenginelist.h"
-#include "searchactivity.h"
+#include "searchwidget.h"
+#include <dbus/dbus.h>
+#include <interfaces/coreinterface.h>
+#include <interfaces/functions.h>
+#include <interfaces/guiinterface.h>
+#include <util/log.h>
+#include <util/logsystemmanager.h>
 
 K_PLUGIN_FACTORY_WITH_JSON(ktorrent_search, "ktorrent_search.json", registerPlugin<kt::SearchPlugin>();)
 
@@ -50,22 +50,22 @@ using namespace bt;
 
 namespace kt
 {
-
-SearchPlugin::SearchPlugin(QObject* parent, const QVariantList& args) : Plugin(parent), engines(nullptr)
+SearchPlugin::SearchPlugin(QObject *parent, const QVariantList &args)
+    : Plugin(parent)
+    , engines(nullptr)
 {
     Q_UNUSED(args);
     pref = nullptr;
 }
 
-
 SearchPlugin::~SearchPlugin()
-{}
-
+{
+}
 
 void SearchPlugin::load()
 {
     LogSystemManager::instance().registerSystem(i18nc("plugin name", "Search"), SYS_SRC);
-    proxy = new ProxyHelper((DBusSettings*) getCore()->getExternalInterface()->settings());
+    proxy = new ProxyHelper((DBusSettings *)getCore()->getExternalInterface()->settings());
     engines = new SearchEngineList(proxy, kt::DataDir() + QStringLiteral("searchengines/"));
     engines->loadEngines();
 
@@ -100,7 +100,7 @@ void SearchPlugin::unload()
     proxy = nullptr;
 }
 
-void SearchPlugin::search(const QString& text, int engine, bool external)
+void SearchPlugin::search(const QString &text, int engine, bool external)
 {
     if (external) {
         if (engine < 0 || engine >= (int)engines->getNumEngines())
@@ -112,7 +112,8 @@ void SearchPlugin::search(const QString& text, int engine, bool external)
             auto *job = new KIO::OpenUrlJob(url, QApplication::activeWindow());
             job->start();
         } else {
-            auto *job = new KIO::CommandLauncherJob(SearchPluginSettings::customBrowser() + QStringLiteral(" ") + KShell::quoteArg(url.toDisplayString()), nullptr);
+            auto *job =
+                new KIO::CommandLauncherJob(SearchPluginSettings::customBrowser() + QStringLiteral(" ") + KShell::quoteArg(url.toDisplayString()), nullptr);
             job->start();
         }
     } else {
@@ -125,7 +126,7 @@ void SearchPlugin::preferencesUpdated()
 {
 }
 
-bool SearchPlugin::versionCheck(const QString& version) const
+bool SearchPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }

@@ -30,18 +30,16 @@ namespace kt
 {
 class SyndicationActivity;
 
-
 /**
     @author
 */
 class SyndicationPlugin : public Plugin
 {
-
 public:
-    SyndicationPlugin(QObject* parent, const QVariantList& args);
+    SyndicationPlugin(QObject *parent, const QVariantList &args);
     ~SyndicationPlugin();
 
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
     void load() override;
     void unload() override;
 
@@ -49,14 +47,14 @@ private:
     void setupActions();
 
 private:
-    QAction * add_feed;
-    QAction * remove_feed;
-    QAction * edit_feed_name;
-    QAction * add_filter;
-    QAction * remove_filter;
-    QAction * edit_filter;
-    QAction * manage_filters;
-    SyndicationActivity* activity;
+    QAction *add_feed;
+    QAction *remove_feed;
+    QAction *edit_feed_name;
+    QAction *add_filter;
+    QAction *remove_filter;
+    QAction *edit_filter;
+    QAction *manage_filters;
+    SyndicationActivity *activity;
 
     friend class SyndicationActivity;
 };

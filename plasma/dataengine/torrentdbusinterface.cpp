@@ -19,19 +19,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <bcodec/bnode.h>
-#include <bcodec/bdecoder.h>
-#include <util/error.h>
 #include "torrentdbusinterface.h"
 #include "engine.h"
+#include <bcodec/bdecoder.h>
+#include <bcodec/bnode.h>
+#include <util/error.h>
 
 using namespace bt;
 
 namespace ktplasma
 {
-
-TorrentDBusInterface::TorrentDBusInterface(const QString& ih, Engine* engine)
-    : QObject(engine), info_hash(ih), engine(engine)
+TorrentDBusInterface::TorrentDBusInterface(const QString &ih, Engine *engine)
+    : QObject(engine)
+    , info_hash(ih)
+    , engine(engine)
 {
     tor = new QDBusInterface("org.ktorrent.ktorrent", "/torrent/" + ih, "org.ktorrent.torrent", QDBusConnection::sessionBus(), this);
 
@@ -42,7 +43,6 @@ TorrentDBusInterface::TorrentDBusInterface(const QString& ih, Engine* engine)
     QDBusReply<bool> priv = tor->call("isPrivate");
     engine->setData(ih, "private", priv.value());
 }
-
 
 TorrentDBusInterface::~TorrentDBusInterface()
 {
@@ -56,16 +56,16 @@ void TorrentDBusInterface::update()
 
     QByteArray v = r.value();
     BDecoder dec(v, false, 0);
-    BNode* node = 0;
+    BNode *node = 0;
     try {
         node = dec.decode();
         if (!node || node->getType() != BNode::DICT)
             throw bt::Error("Root not a dict !");
 
-        BDictNode* dict = (BDictNode*)node;
+        BDictNode *dict = (BDictNode *)node;
         const QStringList keys = dict->keys();
-        foreach (const QString& key, keys) {
-            BValueNode* vn = dict->getValue(key);
+        foreach (const QString &key, keys) {
+            BValueNode *vn = dict->getValue(key);
             if (!vn)
                 continue;
 
@@ -85,7 +85,7 @@ void TorrentDBusInterface::update()
                 }
             }
         }
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         engine->setData(info_hash, "update_error", err.toString());
     }
 

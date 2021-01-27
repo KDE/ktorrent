@@ -25,13 +25,11 @@
 
 class QString;
 
-
 namespace kt
 {
 class ScanFolderPrefPage;
 class TorrentLoadQueue;
 class ScanThread;
-
 
 /**
  * @author Ivan Vasic <ivasic@gmail.com>
@@ -42,20 +40,20 @@ class ScanFolderPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    ScanFolderPlugin(QObject* parent, const QVariantList& args);
+    ScanFolderPlugin(QObject *parent, const QVariantList &args);
     ~ScanFolderPlugin() override;
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
 
 public Q_SLOTS:
     void updateScanFolders();
 
 private:
-    ScanFolderPrefPage* pref;
-    TorrentLoadQueue* tlq;
-    ScanThread* scanner;
+    ScanFolderPrefPage *pref;
+    TorrentLoadQueue *tlq;
+    ScanThread *scanner;
 };
 
 }

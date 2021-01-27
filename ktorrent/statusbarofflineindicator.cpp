@@ -42,13 +42,13 @@ public:
     void initialize();
     void _k_networkStatusChanged(bool isOnline);
 
-    StatusBarOfflineIndicator * const q;
+    StatusBarOfflineIndicator *const q;
     QNetworkConfigurationManager *networkConfiguration;
 };
 
 StatusBarOfflineIndicator::StatusBarOfflineIndicator(QWidget *parent)
-    : QWidget(parent),
-      d(new StatusBarOfflineIndicatorPrivate(this))
+    : QWidget(parent)
+    , d(new StatusBarOfflineIndicatorPrivate(this))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(2, 2, 2, 2);
@@ -57,8 +57,7 @@ StatusBarOfflineIndicator::StatusBarOfflineIndicator(QWidget *parent)
     label->setToolTip(i18n("The desktop is offline"));
     layout->addWidget(label);
     d->initialize();
-    connect(d->networkConfiguration, &QNetworkConfigurationManager::onlineStateChanged,
-            d, &StatusBarOfflineIndicatorPrivate::_k_networkStatusChanged);
+    connect(d->networkConfiguration, &QNetworkConfigurationManager::onlineStateChanged, d, &StatusBarOfflineIndicatorPrivate::_k_networkStatusChanged);
 }
 
 StatusBarOfflineIndicator::~StatusBarOfflineIndicator()

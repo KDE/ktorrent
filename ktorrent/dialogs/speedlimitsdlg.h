@@ -21,8 +21,8 @@
 #ifndef SPEEDLIMITSDLG_H
 #define SPEEDLIMITSDLG_H
 
-#include <QDialog>
 #include "ui_speedlimitsdlg.h"
+#include <QDialog>
 
 namespace bt
 {
@@ -40,9 +40,8 @@ class SpeedLimitsDlg : public QDialog, public Ui_SpeedLimitsDlg
     Q_OBJECT
 
 public:
-    SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidget* parent);
+    SpeedLimitsDlg(bt::TorrentInterface *current, Core *core, QWidget *parent);
     ~SpeedLimitsDlg() override;
-
 
 protected Q_SLOTS:
     void accept() override;
@@ -53,11 +52,10 @@ protected Q_SLOTS:
     void loadState();
 
 private:
-    Core* core;
-    SpeedLimitsModel* model;
-    bt::TorrentInterface* current;
+    Core *core;
+    SpeedLimitsModel *model;
+    bt::TorrentInterface *current;
 };
 }
 
 #endif
-

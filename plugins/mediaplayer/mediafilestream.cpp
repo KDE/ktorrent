@@ -19,9 +19,9 @@
  ***************************************************************************/
 
 #include "mediafilestream.h"
+#include <settings.h>
 #include <torrent/torrentfilestream.h>
 #include <util/log.h>
-#include <settings.h>
 
 using namespace bt;
 
@@ -29,9 +29,10 @@ namespace kt
 {
 const Uint32 MIN_AMOUNT_NEEDED = 16 * 1024;
 
-
-MediaFileStream::MediaFileStream(bt::TorrentFileStream::WPtr stream, QObject* parent)
-    : AbstractMediaStream(parent), stream(stream), waiting_for_data(false)
+MediaFileStream::MediaFileStream(bt::TorrentFileStream::WPtr stream, QObject *parent)
+    : AbstractMediaStream(parent)
+    , stream(stream)
+    , waiting_for_data(false)
 {
     TorrentFileStream::Ptr s = stream.toStrongRef();
     if (s) {
@@ -66,7 +67,7 @@ void MediaFileStream::dataReady()
                     stateChanged(PLAYING);
                 }
             } else {
-                Out(SYS_MPL | LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable()  << " (need " << min_amount_needed <<  ")" << endl;
+                Out(SYS_MPL | LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable() << " (need " << min_amount_needed << ")" << endl;
                 stateChanged(BUFFERING);
             }
         } else
@@ -101,7 +102,7 @@ void MediaFileStream::needData()
             }
         }
     } else {
-        Out(SYS_MPL | LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable()  << " (need " << min_amount_needed <<  ")" << endl;
+        Out(SYS_MPL | LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable() << " (need " << min_amount_needed << ")" << endl;
         waiting_for_data = true;
         stateChanged(BUFFERING);
 

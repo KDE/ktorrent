@@ -28,9 +28,9 @@
 #include <KPluginInfo>
 #include <KPluginMetaData>
 
-#include <util/ptrmap.h>
 #include <interfaces/plugin.h>
 #include <ktcore_export.h>
+#include <util/ptrmap.h>
 
 namespace kt
 {
@@ -48,20 +48,19 @@ class KTCORE_EXPORT PluginManager
 {
     KPluginInfo::List plugins;
     QVector<KPluginMetaData> pluginsMetaData;
-    CoreInterface* core;
-    GUIInterface* gui;
-    PluginActivity* prefpage;
+    CoreInterface *core;
+    GUIInterface *gui;
+    PluginActivity *prefpage;
     bt::PtrMap<int, Plugin> loaded;
 
 public:
-    PluginManager(CoreInterface* core, GUIInterface* gui);
+    PluginManager(CoreInterface *core, GUIInterface *gui);
     ~PluginManager();
-
 
     /**
      * Get the plugin info list.
      */
-    const KPluginInfo::List& pluginInfoList() const
+    const KPluginInfo::List &pluginInfoList() const
     {
         return plugins;
     }
@@ -88,9 +87,10 @@ public:
      * Unload all plugins.
      */
     void unloadAll();
+
 private:
-    void load(const KPluginInfo& pi, int idx);
-    void unload(const KPluginInfo& pi, int idx);
+    void load(const KPluginInfo &pi, int idx);
+    void unload(const KPluginInfo &pi, int idx);
 };
 
 }

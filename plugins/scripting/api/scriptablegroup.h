@@ -22,8 +22,8 @@
 #ifndef KTAPISCRIPTABLEGROUP_H
 #define KTAPISCRIPTABLEGROUP_H
 
-#include <groups/group.h>
 #include <Kross/Core/Object>
+#include <groups/group.h>
 
 namespace kt
 {
@@ -35,12 +35,13 @@ class DBus;
 class ScriptableGroup : public kt::Group
 {
     Kross::Object::Ptr script;
-    DBus* api;
+    DBus *api;
+
 public:
-    ScriptableGroup(const QString& name, const QString& icon, const QString& path, Kross::Object::Ptr script, DBus* api);
+    ScriptableGroup(const QString &name, const QString &icon, const QString &path, Kross::Object::Ptr script, DBus *api);
     ~ScriptableGroup() override;
 
-    bool isMember(bt::TorrentInterface* tor) override;
+    bool isMember(bt::TorrentInterface *tor) override;
 };
 
 }

@@ -41,7 +41,7 @@ class TorrentCreatorDlg : public QDialog, public Ui_TorrentCreatorDlg
 {
     Q_OBJECT
 public:
-    TorrentCreatorDlg(Core* core, GUI* gui, QWidget* parent);
+    TorrentCreatorDlg(Core *core, GUI *gui, QWidget *parent);
     ~TorrentCreatorDlg() override;
 
 private Q_SLOTS:
@@ -58,13 +58,13 @@ private Q_SLOTS:
 
     void dhtToggled(bool on);
 
-    void nodeTextChanged(const QString& str);
+    void nodeTextChanged(const QString &str);
     void nodeSelectionChanged();
 
-    void trackerTextChanged(const QString& str);
+    void trackerTextChanged(const QString &str);
     void trackerSelectionChanged();
 
-    void webSeedTextChanged(const QString& str);
+    void webSeedTextChanged(const QString &str);
     void webSeedSelectionChanged();
 
     void hashCalculationDone();
@@ -73,7 +73,7 @@ private Q_SLOTS:
     void accept() override;
     void reject() override;
 
-    void selectFile();// required for radio button for new torrent creation
+    void selectFile(); // required for radio button for new torrent creation
     void selectDirectory();
 
 private:
@@ -82,15 +82,14 @@ private:
     void setProgressBarEnabled(bool on);
 
 private:
-    Core* core;
-    GUI* gui;
-    StringCompletionModel* tracker_completion;
-    StringCompletionModel* webseeds_completion;
-    StringCompletionModel* nodes_completion;
-    bt::TorrentCreator* mktor;
+    Core *core;
+    GUI *gui;
+    StringCompletionModel *tracker_completion;
+    StringCompletionModel *webseeds_completion;
+    StringCompletionModel *nodes_completion;
+    bt::TorrentCreator *mktor;
     QTimer update_timer;
 };
 }
-
 
 #endif

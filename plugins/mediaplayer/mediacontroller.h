@@ -18,21 +18,19 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-
 #ifndef KT_MEDIACONTROLLER_H
 #define KT_MEDIACONTROLLER_H
 
-#include <QLabel>
 #include <KActionCollection>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
+#include <QLabel>
 
 #include "mediafile.h"
 #include "ui_mediacontroller.h"
 
 namespace kt
 {
-
 class MediaPlayer;
 
 /**
@@ -42,12 +40,11 @@ class MediaController : public QWidget, public Ui_MediaController
 {
     Q_OBJECT
 public:
-    MediaController(MediaPlayer* player, KActionCollection* ac, QWidget* parent = 0);
+    MediaController(MediaPlayer *player, KActionCollection *ac, QWidget *parent = 0);
     ~MediaController() override;
 
-
 private Q_SLOTS:
-    void playing(const MediaFileRef& file);
+    void playing(const MediaFileRef &file);
     void stopped();
     void metaDataChanged();
 

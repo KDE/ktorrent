@@ -22,8 +22,8 @@
 #ifndef KTSCHEDULEGRAPHICSITEM_H
 #define KTSCHEDULEGRAPHICSITEM_H
 
-#include <QGraphicsRectItem>
 #include "schedule.h"
+#include <QGraphicsRectItem>
 
 namespace kt
 {
@@ -35,33 +35,33 @@ class WeekScene;
 class ScheduleGraphicsItem : public QGraphicsRectItem
 {
 public:
-    ScheduleGraphicsItem(ScheduleItem* item, const QRectF& r, const QRectF& constraints, WeekScene* ws);
+    ScheduleGraphicsItem(ScheduleItem *item, const QRectF &r, const QRectF &constraints, WeekScene *ws);
     ~ScheduleGraphicsItem() override;
 
-    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
     /**
      * Update the item.
      * @param r The new rect
      */
-    void update(const QRectF& r);
+    void update(const QRectF &r);
 
 private:
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-    void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
-    void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
     bt::Uint32 nearEdge(QPointF p);
     QRectF resize(QPointF scene_pos);
     void updateCursor();
 
 private:
-    ScheduleItem* item;
+    ScheduleItem *item;
     QRectF constraints;
-    WeekScene* ws;
-    QGraphicsTextItem* text_item;
+    WeekScene *ws;
+    QGraphicsTextItem *text_item;
     QPointF original_pos;
     bt::Uint32 resize_edge;
     bool ready_to_resize;

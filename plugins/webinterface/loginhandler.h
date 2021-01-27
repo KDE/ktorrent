@@ -25,19 +25,17 @@
 
 namespace kt
 {
-
 /**
     WebContentGenerator which handles logins
 */
 class LoginHandler : public WebContentGenerator
 {
 public:
-    LoginHandler(HttpServer* server);
+    LoginHandler(HttpServer *server);
     virtual ~LoginHandler();
 
-    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-
+    virtual void get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr);
+    virtual void post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data);
 };
 
 }

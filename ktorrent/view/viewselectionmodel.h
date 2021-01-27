@@ -38,7 +38,7 @@ class ViewSelectionModel : public ItemSelectionModel
 {
     Q_OBJECT
 public:
-    ViewSelectionModel(ViewModel* vm, QObject* parent);
+    ViewSelectionModel(ViewModel *vm, QObject *parent);
     ~ViewSelectionModel() override;
 };
 

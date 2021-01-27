@@ -46,27 +46,27 @@ class ScriptManager : public Activity
 {
     Q_OBJECT
 public:
-    ScriptManager(ScriptModel* model, QWidget* parent);
+    ScriptManager(ScriptModel *model, QWidget *parent);
     ~ScriptManager() override;
 
     /// Get all selected scripts
     QModelIndexList selectedScripts();
 
     /// Update all actions and make sure they are properly enabled or disabled
-    void updateActions(const QModelIndexList& selected);
-
+    void updateActions(const QModelIndexList &selected);
 
 private Q_SLOTS:
-    void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void showContextMenu(const QPoint& p);
-    void dataChanged(const QModelIndex& f, const QModelIndex& to);
+    void onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+    void showContextMenu(const QPoint &p);
+    void dataChanged(const QModelIndex &f, const QModelIndex &to);
     void runScript();
     void stopScript();
     void editScript();
     void configureScript();
     void showProperties();
+
 public:
-    void showProperties(Script* script);
+    void showProperties(Script *script);
 
 private:
     void setupActions();
@@ -76,17 +76,17 @@ Q_SIGNALS:
     void removeScript();
 
 private:
-    ScriptModel* model;
-    ScriptDelegate* delegate;
-    QListView* view;
+    ScriptModel *model;
+    ScriptDelegate *delegate;
+    QListView *view;
 
-    QAction * add_script;
-    QAction * remove_script;
-    QAction * run_script;
-    QAction * stop_script;
-    QAction * edit_script;
-    QAction * properties;
-    QAction * configure_script;
+    QAction *add_script;
+    QAction *remove_script;
+    QAction *run_script;
+    QAction *stop_script;
+    QAction *edit_script;
+    QAction *properties;
+    QAction *configure_script;
 };
 
 }

@@ -22,12 +22,15 @@
 #define FUNCTIONS_H
 
 #include <QString>
-#include <util/constants.h>
 #include <ktcore_export.h>
+#include <util/constants.h>
 
 namespace kt
 {
-enum CreationMode {DoNotCheckDirPresence, CreateIfNotExists};
+enum CreationMode {
+    DoNotCheckDirPresence,
+    CreateIfNotExists,
+};
 /// Get the data directory of ktorrent (~/.local/share/ktorrent most of the time)
 KTCORE_EXPORT QString DataDir(CreationMode mode = DoNotCheckDirPresence);
 

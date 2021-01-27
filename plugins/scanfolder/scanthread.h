@@ -26,8 +26,8 @@
 #include <QThread>
 #include <QUrl>
 
-#include <util/ptrmap.h>
 #include "scanfolder.h"
+#include <util/ptrmap.h>
 
 #include <atomic>
 
@@ -35,7 +35,6 @@ class QDir;
 
 namespace kt
 {
-
 /**
  * Thread which scans directories in the background and looks for torrent files.
  */
@@ -57,7 +56,7 @@ public:
      * @param url Directory
      * @param recursive Whether or not to scan resursively
      */
-    void addDirectory(const QUrl& url, bool recursive);
+    void addDirectory(const QUrl &url, bool recursive);
 
     /**
      * Stop the scanning thread.
@@ -68,23 +67,23 @@ public:
      * Set the list of folders to scan.
      * @param folders List of folders
      */
-    void setFolderList(const QStringList& folders);
+    void setFolderList(const QStringList &folders);
 
 protected:
     void run() override;
 
 private:
-    void scan(const QUrl& dir, bool recursive);
-    bool alreadyLoaded(const QDir& d, const QString& torrent);
+    void scan(const QUrl &dir, bool recursive);
+    bool alreadyLoaded(const QDir &d, const QString &torrent);
     void updateFolders();
-    void customEvent(QEvent* ev) override;
+    void customEvent(QEvent *ev) override;
 
 Q_SIGNALS:
     /**
      * Emitted when one or more torrents are found.
      * @param torrents The list of torrents
      */
-    void found(const QList<QUrl>& torrents);
+    void found(const QList<QUrl> &torrents);
 
 private:
     QMutex mutex;

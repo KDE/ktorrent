@@ -42,29 +42,29 @@ class QueueManager;
  * @author Joris Guisson
  *
  * Model for the QM
-*/
+ */
 class QueueManagerModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    QueueManagerModel(QueueManager* qman, QObject* parent);
+    QueueManagerModel(QueueManager *qman, QObject *parent);
     ~QueueManagerModel() override;
 
     void setShowUploads(bool on);
     void setShowDownloads(bool on);
     void setShowNotQueued(bool on);
 
-    int rowCount(const QModelIndex& parent) const override;
-    int columnCount(const QModelIndex& parent) const override;
+    int rowCount(const QModelIndex &parent) const override;
+    int columnCount(const QModelIndex &parent) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-    QVariant data(const QModelIndex& index, int role) const override;
-    bool removeRows(int row, int count, const QModelIndex& parent) override;
-    bool insertRows(int row, int count, const QModelIndex& parent) override;
-    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
+    bool insertRows(int row, int count, const QModelIndex &parent) override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
     Qt::DropActions supportedDropActions() const override;
     QStringList mimeTypes() const override;
-    QMimeData* mimeData(const QModelIndexList& indexes) const override;
-    bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+    QMimeData *mimeData(const QModelIndexList &indexes) const override;
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 
     /**
      * Move items one row up
@@ -102,26 +102,26 @@ public:
     /**
         Given a search text find a matching torrent
     */
-    QModelIndex find(const QString& text);
+    QModelIndex find(const QString &text);
 
 public Q_SLOTS:
-    void onTorrentAdded(bt::TorrentInterface* tc);
-    void onTorrentRemoved(bt::TorrentInterface* tc);
+    void onTorrentAdded(bt::TorrentInterface *tc);
+    void onTorrentRemoved(bt::TorrentInterface *tc);
     void onQueueOrdered();
-    void onTorrentStatusChanged(bt::TorrentInterface* tc);
+    void onTorrentStatusChanged(bt::TorrentInterface *tc);
 
 private:
     struct Item {
-        bt::TorrentInterface* tc;
+        bt::TorrentInterface *tc;
         bt::Int64 stalled_time;
 
-        bool operator < (const Item& item) const
+        bool operator<(const Item &item) const
         {
             return tc->getPriority() < item.tc->getPriority();
         }
     };
 
-    bool visible(const bt::TorrentInterface* tc);
+    bool visible(const bt::TorrentInterface *tc);
     void updateQueue();
     void swapItems(int a, int b);
     void dumpQueue();
@@ -129,7 +129,7 @@ private:
     void softReset();
 
 private:
-    QueueManager* qman;
+    QueueManager *qman;
     QList<Item> queue;
     mutable QList<int> dragged_items;
     QString search_text;

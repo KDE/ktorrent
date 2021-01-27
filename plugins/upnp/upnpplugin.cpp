@@ -26,10 +26,10 @@
 #include <KPluginFactory>
 
 #include <interfaces/guiinterface.h>
+#include <upnp/upnpmcastsocket.h>
 #include <util/fileops.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
-#include <upnp/upnpmcastsocket.h>
 
 #include "upnpwidget.h"
 #include <interfaces/torrentactivityinterface.h>
@@ -40,25 +40,24 @@ using namespace bt;
 
 namespace kt
 {
-
-UPnPPlugin::UPnPPlugin(QObject* parent, const QVariantList& /*args*/) : Plugin(parent), sock(nullptr), upnp_tab(nullptr)
+UPnPPlugin::UPnPPlugin(QObject *parent, const QVariantList & /*args*/)
+    : Plugin(parent)
+    , sock(nullptr)
+    , upnp_tab(nullptr)
 {
 }
-
 
 UPnPPlugin::~UPnPPlugin()
 {
 }
-
 
 void UPnPPlugin::load()
 {
     LogSystemManager::instance().registerSystem(i18n("UPnP"), SYS_PNP);
     sock = new UPnPMCastSocket();
     upnp_tab = new UPnPWidget(sock, nullptr);
-    GUIInterface* gui = getGUI();
-    gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QStringLiteral("kt-upnp"),
-            i18n("Shows the status of the UPnP plugin"));
+    GUIInterface *gui = getGUI();
+    gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QStringLiteral("kt-upnp"), i18n("Shows the status of the UPnP plugin"));
     // load the routers list
     QString routers_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("routers"));
     if (routers_file.length())
@@ -79,12 +78,12 @@ void UPnPPlugin::unload()
     sock = nullptr;
 }
 
-void UPnPPlugin::shutdown(bt::WaitJob* job)
+void UPnPPlugin::shutdown(bt::WaitJob *job)
 {
     upnp_tab->shutdown(job);
 }
 
-bool UPnPPlugin::versionCheck(const QString& version) const
+bool UPnPPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }

@@ -24,26 +24,26 @@
 
 #include <KLocalizedString>
 
-#include <util/log.h>
-#include <util/sha1hash.h>
-#include <util/bitset.h>
-#include <interfaces/torrentinterface.h>
+#include "dbustorrent.h"
+#include "dbustorrentfilestream.h"
+#include <bcodec/bencoder.h>
 #include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <interfaces/trackerinterface.h>
 #include <interfaces/trackerslist.h>
 #include <interfaces/webseedinterface.h>
-#include <bcodec/bencoder.h>
-#include "dbustorrent.h"
-#include <interfaces/trackerinterface.h>
-#include "dbustorrentfilestream.h"
+#include <util/bitset.h>
+#include <util/log.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
-DBusTorrent::DBusTorrent(bt::TorrentInterface* ti, QObject* parent)
-    : QObject(parent), ti(ti), stream(0)
+DBusTorrent::DBusTorrent(bt::TorrentInterface *ti, QObject *parent)
+    : QObject(parent)
+    , ti(ti)
+    , stream(0)
 {
     QDBusConnection sb = QDBusConnection::sessionBus();
     QString path = QLatin1String("/torrent/") + ti->getInfoHash().toString();
@@ -57,14 +57,13 @@ DBusTorrent::DBusTorrent(bt::TorrentInterface* ti, QObject* parent)
     connect(ti, &bt::TorrentInterface::torrentStopped, this, &DBusTorrent::onTorrentStopped);
 }
 
-
 DBusTorrent::~DBusTorrent()
 {
 }
 
 QString DBusTorrent::infoHash() const
 {
-    const bt::SHA1Hash& h = ti->getInfoHash();
+    const bt::SHA1Hash &h = ti->getInfoHash();
     return h.toString();
 }
 
@@ -155,20 +154,20 @@ uint DBusTorrent::leechersTotal() const
 
 QString DBusTorrent::currentTracker() const
 {
-    bt::TrackerInterface* t = ti->getTrackersList()->getCurrentTracker();
+    bt::TrackerInterface *t = ti->getTrackersList()->getCurrentTracker();
     return t ? t->trackerURL().toDisplayString() : QString();
 }
 
 QStringList DBusTorrent::trackers() const
 {
-    const QList<bt::TrackerInterface*> trackers = ti->getTrackersList()->getTrackers();
+    const QList<bt::TrackerInterface *> trackers = ti->getTrackersList()->getTrackers();
     QStringList ret;
-    for (bt::TrackerInterface* t : trackers)
+    for (bt::TrackerInterface *t : trackers)
         ret << t->trackerURL().toDisplayString();
     return ret;
 }
 
-void DBusTorrent::changeTracker(const QString& tracker_url)
+void DBusTorrent::changeTracker(const QString &tracker_url)
 {
     QUrl url(tracker_url);
     ti->getTrackersList()->setCurrentTracker(url);
@@ -184,12 +183,12 @@ void DBusTorrent::scrape()
     ti->scrapeTracker();
 }
 
-void DBusTorrent::setTrackerEnabled(const QString& tracker_url, bool enabled)
+void DBusTorrent::setTrackerEnabled(const QString &tracker_url, bool enabled)
 {
     ti->getTrackersList()->setTrackerEnabled(QUrl(tracker_url), enabled);
 }
 
-bool DBusTorrent::addTracker(const QString& tracker_url)
+bool DBusTorrent::addTracker(const QString &tracker_url)
 {
     if (ti->getStats().priv_torrent)
         return false;
@@ -197,7 +196,7 @@ bool DBusTorrent::addTracker(const QString& tracker_url)
     return ti->getTrackersList()->addTracker(QUrl(tracker_url), true) != 0;
 }
 
-bool DBusTorrent::removeTracker(const QString& tracker_url)
+bool DBusTorrent::removeTracker(const QString &tracker_url)
 {
     if (ti->getStats().priv_torrent)
         return false;
@@ -216,18 +215,18 @@ QStringList DBusTorrent::webSeeds() const
 {
     QStringList ws;
     for (Uint32 i = 0; i < ti->getNumWebSeeds(); i++) {
-        const WebSeedInterface* wsi = ti->getWebSeed(i);
+        const WebSeedInterface *wsi = ti->getWebSeed(i);
         ws << wsi->getUrl().toDisplayString();
     }
     return ws;
 }
 
-bool DBusTorrent::addWebSeed(const QString& webseed_url)
+bool DBusTorrent::addWebSeed(const QString &webseed_url)
 {
     return ti->addWebSeed(QUrl(webseed_url));
 }
 
-bool DBusTorrent::removeWebSeed(const QString& webseed_url)
+bool DBusTorrent::removeWebSeed(const QString &webseed_url)
 {
     return ti->removeWebSeed(QUrl(webseed_url));
 }
@@ -256,7 +255,7 @@ QByteArray DBusTorrent::stats() const
 {
     QByteArray ret;
     BEncoder enc(new BEncoderBufferOutput(ret));
-    const TorrentStats& s = ti->getStats();
+    const TorrentStats &s = ti->getStats();
     enc.beginDict();
     enc.write(QByteArrayLiteral("imported_bytes"), s.imported_bytes);
     enc.write(QByteArrayLiteral("bytes_downloaded"), s.bytes_downloaded);
@@ -289,29 +288,29 @@ QByteArray DBusTorrent::stats() const
     enc.write(QByteArrayLiteral("max_share_ratio"), s.max_share_ratio);
     enc.write(QByteArrayLiteral("max_seed_time"), s.max_seed_time);
     enc.write(QByteArrayLiteral("num_corrupted_chunks"), s.num_corrupted_chunks);
-    const bt::BitSet& bs = ti->downloadedChunksBitSet();
+    const bt::BitSet &bs = ti->downloadedChunksBitSet();
     enc.write(QByteArrayLiteral("downloaded_chunks"));
     enc.write(bs.getData(), bs.getNumBytes());
-    const bt::BitSet& ebs = ti->excludedChunksBitSet();
+    const bt::BitSet &ebs = ti->excludedChunksBitSet();
     enc.write(QByteArrayLiteral("excluded_chunks"));
     enc.write(ebs.getData(), ebs.getNumBytes());
     enc.end();
     return ret;
 }
 
-void DBusTorrent::onFinished(bt::TorrentInterface* tor)
+void DBusTorrent::onFinished(bt::TorrentInterface *tor)
 {
     Q_UNUSED(tor)
     Q_EMIT finished(this);
 }
 
-void DBusTorrent::onStoppedByError(bt::TorrentInterface* tor, const QString& err)
+void DBusTorrent::onStoppedByError(bt::TorrentInterface *tor, const QString &err)
 {
     Q_UNUSED(tor)
     Q_EMIT stoppedByError(this, err);
 }
 
-void DBusTorrent::onSeedingAutoStopped(bt::TorrentInterface* tor, bt::AutoStopReason reason)
+void DBusTorrent::onSeedingAutoStopped(bt::TorrentInterface *tor, bt::AutoStopReason reason)
 {
     Q_UNUSED(tor)
     QString msg;
@@ -326,16 +325,16 @@ void DBusTorrent::onSeedingAutoStopped(bt::TorrentInterface* tor, bt::AutoStopRe
     Q_EMIT seedingAutoStopped(this, msg);
 }
 
-void DBusTorrent::onCorruptedDataFound(bt::TorrentInterface* tor)
+void DBusTorrent::onCorruptedDataFound(bt::TorrentInterface *tor)
 {
     Q_UNUSED(tor)
     Q_EMIT corruptedDataFound(this);
 }
 
-void DBusTorrent::onTorrentStopped(bt::TorrentInterface* tor)
+void DBusTorrent::onTorrentStopped(bt::TorrentInterface *tor)
 {
     Q_UNUSED(tor)
-    //Q_EMIT torrentStopped(this); //TODO emit string representation of the torrent
+    // Q_EMIT torrentStopped(this); //TODO emit string representation of the torrent
 }
 
 QString DBusTorrent::filePath(uint file_index) const
@@ -501,4 +500,3 @@ bool DBusTorrent::removeStream(uint file_index)
 }
 
 }
-

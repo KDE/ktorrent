@@ -18,23 +18,22 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <KLocalizedString>
 #include "allgroup.h"
+#include <KLocalizedString>
 
 namespace kt
 {
-
-AllGroup::AllGroup() : Group(i18n("All Torrents"), MIXED_GROUP, QStringLiteral("/all"))
+AllGroup::AllGroup()
+    : Group(i18n("All Torrents"), MIXED_GROUP, QStringLiteral("/all"))
 {
     setIconByName(QStringLiteral("folder"));
 }
 
-
 AllGroup::~AllGroup()
-{}
+{
+}
 
-
-bool AllGroup::isMember(TorrentInterface* tor)
+bool AllGroup::isMember(TorrentInterface *tor)
 {
     return tor != 0;
 }

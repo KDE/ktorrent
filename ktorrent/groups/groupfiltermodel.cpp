@@ -19,25 +19,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <groups/group.h>
 #include "groupfiltermodel.h"
 #include "view/viewmodel.h"
+#include <groups/group.h>
 
 namespace kt
 {
-
-GroupFilterModel::GroupFilterModel(ViewModel* view_model, QObject* parent)
-    : QSortFilterProxyModel(parent), group(nullptr), view_model(view_model)
+GroupFilterModel::GroupFilterModel(ViewModel *view_model, QObject *parent)
+    : QSortFilterProxyModel(parent)
+    , group(nullptr)
+    , view_model(view_model)
 {
     setSourceModel(view_model);
 }
-
 
 GroupFilterModel::~GroupFilterModel()
 {
 }
 
-void GroupFilterModel::setGroup(Group* g)
+void GroupFilterModel::setGroup(Group *g)
 {
     group = g;
     invalidateFilter();
@@ -48,14 +48,14 @@ void GroupFilterModel::refilter()
     invalidateFilter();
 }
 
-bool GroupFilterModel::filterAcceptsColumn(int source_column, const QModelIndex& source_parent) const
+bool GroupFilterModel::filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const
 {
     Q_UNUSED(source_column);
     Q_UNUSED(source_parent);
     return true;
 }
 
-bool GroupFilterModel::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
+bool GroupFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     Q_UNUSED(source_parent);
     if (!group)

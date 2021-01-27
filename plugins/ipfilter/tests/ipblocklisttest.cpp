@@ -18,16 +18,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <QtTest>
-#include <util/log.h>
-#include <net/address.h>
 #include "../ipblocklist.h"
+#include <QtTest>
+#include <net/address.h>
+#include <util/log.h>
 
 class IPBlockListTest : public QObject
 {
     Q_OBJECT
 private:
-
 private Q_SLOTS:
     void initTestCase()
     {
@@ -37,7 +36,6 @@ private Q_SLOTS:
     void cleanupTestCase()
     {
     }
-
 
     void testBlockList()
     {
@@ -58,10 +56,7 @@ private Q_SLOTS:
         QVERIFY(bl.blocked(net::Address(QStringLiteral("197.25.25.25"), 0)));
     }
 
-
-
 private:
-
 };
 
 QTEST_MAIN(IPBlockListTest)

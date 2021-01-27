@@ -21,13 +21,12 @@
 #ifndef KTSCANFOLDERPREFPAGE_H
 #define KTSCANFOLDERPREFPAGE_H
 
-#include <interfaces/prefpageinterface.h>
 #include "scanfolderplugin.h"
 #include "ui_scanfolderprefpage.h"
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
-
 /**
  * ScanFolder plugin preferences page
  * @author Ivan Vasić <ivasic@gmail.com>
@@ -37,7 +36,7 @@ class ScanFolderPrefPage : public PrefPageInterface, public Ui_ScanFolderPrefPag
     Q_OBJECT
 
 public:
-    ScanFolderPrefPage(ScanFolderPlugin* plugin, QWidget* parent);
+    ScanFolderPrefPage(ScanFolderPlugin *plugin, QWidget *parent);
     ~ScanFolderPrefPage() override;
 
     void loadSettings() override;
@@ -52,7 +51,7 @@ private Q_SLOTS:
     void currentGroupChanged(int idx);
 
 private:
-    ScanFolderPlugin* m_plugin;
+    ScanFolderPlugin *m_plugin;
     QStringList folders;
 };
 

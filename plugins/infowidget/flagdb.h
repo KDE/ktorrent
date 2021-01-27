@@ -30,10 +30,10 @@ class FlagDBSource
 {
 public:
     FlagDBSource();
-    FlagDBSource(const QString& pathPattern);
-    QString getPath(const QString& country) const;
+    FlagDBSource(const QString &pathPattern);
+    QString getPath(const QString &country) const;
 
-    const QString& getPathPattern()
+    const QString &getPathPattern()
     {
         return pathPattern;
     };
@@ -47,18 +47,19 @@ private:
 */
 class FlagDB
 {
-public :
+public:
     FlagDB(int preferredWidth, int preferredHeight);
-    FlagDB(const FlagDB& m);
+    FlagDB(const FlagDB &m);
     ~FlagDB();
 
-    void addFlagSource(const FlagDBSource& source);
-    void addFlagSource(const QString& pathPattern);
-    const QList<FlagDBSource>& listSources() const;
-    bool isFlagAvailable(const QString& country);
-    const QPixmap& getFlag(const QString& country);
+    void addFlagSource(const FlagDBSource &source);
+    void addFlagSource(const QString &pathPattern);
+    const QList<FlagDBSource> &listSources() const;
+    bool isFlagAvailable(const QString &country);
+    const QPixmap &getFlag(const QString &country);
+
 private:
-    static const QPixmap& nullPixmap;
+    static const QPixmap &nullPixmap;
     int preferredWidth, preferredHeight;
     QList<FlagDBSource> sources;
     QMap<QString, QPixmap> db;

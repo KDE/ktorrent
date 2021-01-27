@@ -26,16 +26,17 @@
 
 #include <QMenu>
 
-#include <interfaces/torrentinterface.h>
 #include "downloadordermanager.h"
-#include "downloadorderplugin.h"
 #include "downloadordermodel.h"
+#include "downloadorderplugin.h"
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {
-
-DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent)
-    : QDialog(parent), tor(tor), plugin(plugin)
+DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::TorrentInterface *tor, QWidget *parent)
+    : QDialog(parent)
+    , tor(tor)
+    , plugin(plugin)
 {
     setupUi(this);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &DownloadOrderDialog::accept);
@@ -44,7 +45,7 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::Torren
     setWindowTitle(i18n("File Download Order"));
     m_top_label->setText(i18n("File download order for <b>%1</b>:", tor->getDisplayName()));
 
-    DownloadOrderManager* dom = plugin->manager(tor);
+    DownloadOrderManager *dom = plugin->manager(tor);
     m_custom_order_enabled->setChecked(dom != 0);
     m_order->setEnabled(dom != 0);
     m_move_up->setEnabled(false);
@@ -80,7 +81,7 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::Torren
     connect(m_custom_order_enabled, &QCheckBox::toggled, this, &DownloadOrderDialog::customOrderEnableToggled);
     connect(m_search_files, &QLineEdit::textChanged, this, &DownloadOrderDialog::search);
 
-    QMenu* sort_by_menu = new QMenu(m_sort_by);
+    QMenu *sort_by_menu = new QMenu(m_sort_by);
     sort_by_menu->addAction(i18n("Name"), model, &DownloadOrderModel::sortByName);
     sort_by_menu->addAction(i18n("Seasons and Episodes"), model, &DownloadOrderModel::sortBySeasonsAndEpisodes);
     sort_by_menu->addAction(i18n("Album Track Order"), model, &DownloadOrderModel::sortByAlbumTrackOrder);
@@ -88,7 +89,6 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::Torren
     m_sort_by->setPopupMode(QToolButton::InstantPopup);
     m_sort_by->setEnabled(false);
 }
-
 
 DownloadOrderDialog::~DownloadOrderDialog()
 {
@@ -98,7 +98,7 @@ DownloadOrderDialog::~DownloadOrderDialog()
 void DownloadOrderDialog::commitDownloadOrder()
 {
     if (m_custom_order_enabled->isChecked()) {
-        DownloadOrderManager* dom = plugin->manager(tor);
+        DownloadOrderManager *dom = plugin->manager(tor);
         if (!dom) {
             dom = plugin->createManager(tor);
             connect(tor, &bt::TorrentInterface::chunkDownloaded, dom, &DownloadOrderManager::chunkDownloaded);
@@ -108,7 +108,7 @@ void DownloadOrderDialog::commitDownloadOrder()
         dom->save();
         dom->update();
     } else {
-        DownloadOrderManager* dom = plugin->manager(tor);
+        DownloadOrderManager *dom = plugin->manager(tor);
         if (dom) {
             dom->disable();
             plugin->destroyManager(tor);
@@ -156,7 +156,7 @@ void DownloadOrderDialog::moveBottom()
     }
 }
 
-void DownloadOrderDialog::itemSelectionChanged(const QItemSelection& new_sel, const QItemSelection& old_sel)
+void DownloadOrderDialog::itemSelectionChanged(const QItemSelection &new_sel, const QItemSelection &old_sel)
 {
     Q_UNUSED(old_sel);
     if (new_sel.empty()) {
@@ -188,7 +188,7 @@ void DownloadOrderDialog::customOrderEnableToggled(bool on)
     }
 }
 
-void DownloadOrderDialog::search(const QString& text)
+void DownloadOrderDialog::search(const QString &text)
 {
     if (text.isEmpty()) {
         model->clearHighLights();

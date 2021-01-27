@@ -36,17 +36,17 @@ class GroupFilterModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    GroupFilterModel(ViewModel* view_model, QObject* parent);
+    GroupFilterModel(ViewModel *view_model, QObject *parent);
     ~GroupFilterModel() override;
 
-    bool filterAcceptsColumn(int source_column, const QModelIndex& source_parent) const override;
-    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
+    bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override;
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 
     /**
      * Set the group to filter
      * @param g The Group
      * */
-    void setGroup(Group* g);
+    void setGroup(Group *g);
 
     /**
      * Filter again.
@@ -54,8 +54,8 @@ public:
     void refilter();
 
 private:
-    Group* group;
-    ViewModel* view_model;
+    Group *group;
+    ViewModel *view_model;
 };
 
 }

@@ -21,8 +21,8 @@
 
 #include <QPainter>
 
-#include <util/bitset.h>
 #include "chunkbarrenderer.h"
+#include <util/bitset.h>
 
 using namespace bt;
 
@@ -37,15 +37,13 @@ ChunkBarRenderer::ChunkBarRenderer()
 {
 }
 
-
 ChunkBarRenderer::~ChunkBarRenderer()
 {
 }
 
-
-void ChunkBarRenderer::drawEqual(QPainter* p, const BitSet& bs, const QColor& color, const QRect& contents_rect)
+void ChunkBarRenderer::drawEqual(QPainter *p, const BitSet &bs, const QColor &color, const QRect &contents_rect)
 {
-    //p->setPen(QPen(colorGroup().highlight(),1,Qt::SolidLine));
+    // p->setPen(QPen(colorGroup().highlight(),1,Qt::SolidLine));
     QColor c = color;
 
     Uint32 w = contents_rect.width();
@@ -67,7 +65,7 @@ void ChunkBarRenderer::drawEqual(QPainter* p, const BitSet& bs, const QColor& co
             Range r = {i, i, 0};
             rs.append(r);
         } else {
-            Range& l = rs.last();
+            Range &l = rs.last();
             if (l.last == i - 1) {
                 l.last = i;
             } else {
@@ -80,13 +78,13 @@ void ChunkBarRenderer::drawEqual(QPainter* p, const BitSet& bs, const QColor& co
     QRect r = contents_rect;
 
     for (auto i = rs.constBegin(); i != rs.constEnd(); ++i) {
-        const Range& ra = *i;
+        const Range &ra = *i;
         int rw = ra.last - ra.first + 1;
         p->drawRect((int)(scale * ra.first), 0, (int)(rw * scale), r.height());
     }
 }
 
-void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter* p, const BitSet& bs, const QColor& color, const QRect& contents_rect)
+void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter *p, const BitSet &bs, const QColor &color, const QRect &contents_rect)
 {
     Uint32 w = contents_rect.width();
     double chunks_per_pixel = (double)bs.getNumBits() / w;
@@ -108,7 +106,7 @@ void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter* p, const BitSet& bs, c
             Range r = {i, i, fac};
             rs.append(r);
         } else {
-            Range& l = rs.last();
+            Range &l = rs.last();
             if (l.last == i - 1 && l.fac == fac) {
                 l.last = i;
             } else {
@@ -121,7 +119,7 @@ void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter* p, const BitSet& bs, c
     QRect r = contents_rect;
 
     for (auto i = rs.constBegin(); i != rs.constEnd(); ++i) {
-        const Range& ra = *i;
+        const Range &ra = *i;
         int rw = ra.last - ra.first + 1;
         int fac = ra.fac;
         QColor c = color;
@@ -139,10 +137,9 @@ void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter* p, const BitSet& bs, c
         p->setBrush(c);
         p->drawRect(ra.first, 0, rw, r.height());
     }
-
 }
 
-void ChunkBarRenderer::drawAllOn(QPainter* p, const QColor& color, const QRect& contents_rect)
+void ChunkBarRenderer::drawAllOn(QPainter *p, const QColor &color, const QRect &contents_rect)
 {
     p->setPen(QPen(color, 1, Qt::SolidLine));
     p->setBrush(color);

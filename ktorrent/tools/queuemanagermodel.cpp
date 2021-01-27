@@ -28,28 +28,25 @@
 
 #include <KLocalizedString>
 
-#include <util/log.h>
-#include <util/functions.h>
-#include <torrent/queuemanager.h>
-#include <interfaces/torrentinterface.h>
 #include "settings.h"
-
+#include <interfaces/torrentinterface.h>
+#include <torrent/queuemanager.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
-QueueManagerModel::QueueManagerModel(QueueManager* qman, QObject* parent)
-    : QAbstractTableModel(parent),
-      qman(qman),
-      show_uploads(true),
-      show_downloads(true),
-      show_not_queud(true)
+QueueManagerModel::QueueManagerModel(QueueManager *qman, QObject *parent)
+    : QAbstractTableModel(parent)
+    , qman(qman)
+    , show_uploads(true)
+    , show_downloads(true)
+    , show_not_queud(true)
 {
     connect(qman, &QueueManager::queueOrdered, this, &QueueManagerModel::onQueueOrdered);
-    for (bt::TorrentInterface* tc : qAsConst(*qman)) {
+    for (bt::TorrentInterface *tc : qAsConst(*qman)) {
         connect(tc, &bt::TorrentInterface::statusChanged, this, &QueueManagerModel::onTorrentStatusChanged);
 
         if (visible(tc)) {
@@ -58,12 +55,12 @@ QueueManagerModel::QueueManagerModel(QueueManager* qman, QObject* parent)
         }
     }
 
-    //dumpQueue();
+    // dumpQueue();
 }
 
-
 QueueManagerModel::~QueueManagerModel()
-{}
+{
+}
 
 void QueueManagerModel::onQueueOrdered()
 {
@@ -75,13 +72,12 @@ void QueueManagerModel::softReset()
     Q_EMIT dataChanged(index(0, 0), index(queue.count() - 1, columnCount(QModelIndex()) - 1));
 }
 
-
 void QueueManagerModel::updateQueue()
 {
     int count = queue.count();
     queue.clear();
 
-    for (bt::TorrentInterface* tc : qAsConst(*qman)) {
+    for (bt::TorrentInterface *tc : qAsConst(*qman)) {
         if (visible(tc)) {
             Item item = {tc, 0};
             queue.append(item);
@@ -117,15 +113,14 @@ void QueueManagerModel::setShowNotQueued(bool on)
     updateQueue();
 }
 
-void QueueManagerModel::onTorrentAdded(bt::TorrentInterface* tc)
+void QueueManagerModel::onTorrentAdded(bt::TorrentInterface *tc)
 {
     connect(tc, &bt::TorrentInterface::statusChanged, this, &QueueManagerModel::onTorrentStatusChanged);
 }
 
-void QueueManagerModel::onTorrentRemoved(bt::TorrentInterface* tc)
+void QueueManagerModel::onTorrentRemoved(bt::TorrentInterface *tc)
 {
-    disconnect(tc, &bt::TorrentInterface::statusChanged,
-               this, &QueueManagerModel::onTorrentStatusChanged);
+    disconnect(tc, &bt::TorrentInterface::statusChanged, this, &QueueManagerModel::onTorrentStatusChanged);
     int r = 0;
     bool found = false;
 
@@ -141,14 +136,13 @@ void QueueManagerModel::onTorrentRemoved(bt::TorrentInterface* tc)
         queue.removeAt(r);
         removeRow(r);
     }
-
 }
 
-void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface* tc)
+void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface *tc)
 {
     int r = 0;
     bool found = false;
-    for (const Item& i : qAsConst(queue)) {
+    for (const Item &i : qAsConst(queue)) {
         if (tc == i.tc) {
             found = true;
             break;
@@ -168,13 +162,12 @@ void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface* tc)
         return;
     }
 
-
     if (visible(tc)) {
         updateQueue();
     }
 }
 
-int QueueManagerModel::rowCount(const QModelIndex& parent) const
+int QueueManagerModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -182,7 +175,7 @@ int QueueManagerModel::rowCount(const QModelIndex& parent) const
         return queue.count();
 }
 
-int QueueManagerModel::columnCount(const QModelIndex& parent) const
+int QueueManagerModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -211,12 +204,12 @@ QVariant QueueManagerModel::headerData(int section, Qt::Orientation orientation,
     }
 }
 
-QVariant QueueManagerModel::data(const QModelIndex& index, int role) const
+QVariant QueueManagerModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() >= queue.count() || index.row() < 0)
         return QVariant();
 
-    const bt::TorrentInterface* tc = queue.at(index.row()).tc;
+    const bt::TorrentInterface *tc = queue.at(index.row()).tc;
     if (role == Qt::ForegroundRole) {
         if (index.column() == 2) {
             if (tc->getStats().running)
@@ -245,21 +238,19 @@ QVariant QueueManagerModel::data(const QModelIndex& index, int role) const
             if (!tc->getStats().running)
                 return QVariant();
 
-            Int64 stalled_time =  queue.at(index.row()).stalled_time;
+            Int64 stalled_time = queue.at(index.row()).stalled_time;
             if (stalled_time >= 1)
                 return i18n("%1", DurationToString(stalled_time));
             else
                 return QVariant();
-        }
-        break;
+        } break;
         case 4:
             return tc->getPriority();
         default:
             return QVariant();
         }
     } else if (role == Qt::ToolTipRole && index.column() == 0) {
-        return i18n("Order of a torrent in the queue.\n"
-                    "Use drag and drop or the move up and down buttons on the right to change the order.");
+        return i18n("Order of a torrent in the queue.\nUse drag and drop or the move up and down buttons on the right to change the order.");
     } else if (role == Qt::DecorationRole && index.column() == 1) {
         if (!tc->getStats().completed)
             return QIcon::fromTheme(QStringLiteral("arrow-down"));
@@ -276,7 +267,7 @@ QVariant QueueManagerModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-Qt::ItemFlags QueueManagerModel::flags(const QModelIndex& index) const
+Qt::ItemFlags QueueManagerModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractTableModel::flags(index);
 
@@ -298,13 +289,13 @@ QStringList QueueManagerModel::mimeTypes() const
     return types;
 }
 
-QMimeData* QueueManagerModel::mimeData(const QModelIndexList& indexes) const
+QMimeData *QueueManagerModel::mimeData(const QModelIndexList &indexes) const
 {
-    QMimeData* mimeData = new QMimeData();
+    QMimeData *mimeData = new QMimeData();
 
     dragged_items.clear();
 
-    for (const QModelIndex& index : indexes) {
+    for (const QModelIndex &index : indexes) {
         if (index.isValid() && !dragged_items.contains(index.row()))
             dragged_items.append(index.row());
     }
@@ -313,7 +304,7 @@ QMimeData* QueueManagerModel::mimeData(const QModelIndexList& indexes) const
     return mimeData;
 }
 
-bool QueueManagerModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent)
+bool QueueManagerModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     Q_UNUSED(column);
     if (action == Qt::IgnoreAction)
@@ -348,7 +339,6 @@ bool QueueManagerModel::dropMimeData(const QMimeData* data, Qt::DropAction actio
         }
     }
 
-
     updatePriorities();
     // reorder the queue
     qman->orderQueue();
@@ -356,7 +346,7 @@ bool QueueManagerModel::dropMimeData(const QMimeData* data, Qt::DropAction actio
     return true;
 }
 
-bool QueueManagerModel::removeRows(int row, int count, const QModelIndex& parent)
+bool QueueManagerModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -364,7 +354,7 @@ bool QueueManagerModel::removeRows(int row, int count, const QModelIndex& parent
     return true;
 }
 
-bool QueueManagerModel::insertRows(int row, int count, const QModelIndex& parent)
+bool QueueManagerModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -382,7 +372,7 @@ void QueueManagerModel::moveUp(int row, int count)
     }
 
     updatePriorities();
-    //dumpQueue();
+    // dumpQueue();
     // reorder the queue
     qman->orderQueue();
     endResetModel();
@@ -398,7 +388,7 @@ void QueueManagerModel::moveDown(int row, int count)
     }
 
     updatePriorities();
-    //dumpQueue();
+    // dumpQueue();
     // reorder the queue
     qman->orderQueue();
     endResetModel();
@@ -417,7 +407,7 @@ void QueueManagerModel::moveTop(int row, int count)
     }
 
     updatePriorities();
-    //dumpQueue();
+    // dumpQueue();
     // reorder the queue
     qman->orderQueue();
     endResetModel();
@@ -436,7 +426,7 @@ void QueueManagerModel::moveBottom(int row, int count)
     }
 
     updatePriorities();
-    //dumpQueue();
+    // dumpQueue();
     // reorder the queue
     qman->orderQueue();
     endResetModel();
@@ -445,7 +435,7 @@ void QueueManagerModel::moveBottom(int row, int count)
 void QueueManagerModel::dumpQueue()
 {
     int idx = 0;
-    for (const Item& item : qAsConst(queue)) {
+    for (const Item &item : qAsConst(queue)) {
         Out(SYS_GEN | LOG_DEBUG) << "Item " << idx << ": " << item.tc->getDisplayName() << " " << item.tc->getPriority() << endl;
         idx++;
     }
@@ -454,7 +444,7 @@ void QueueManagerModel::dumpQueue()
 void QueueManagerModel::updatePriorities()
 {
     int idx = queue.size();
-    for (const Item & i : qAsConst(queue))
+    for (const Item &i : qAsConst(queue))
         i.tc->setPriority(idx--);
 }
 
@@ -462,8 +452,8 @@ void QueueManagerModel::update()
 {
     TimeStamp now = bt::CurrentTime();
     int r = 0;
-    for (Item & i : queue) {
-        bt::TorrentInterface* tc = i.tc;
+    for (Item &i : queue) {
+        bt::TorrentInterface *tc = i.tc;
         if (!tc->getStats().running) {
             if (i.stalled_time != -1) {
                 i.stalled_time = -1;
@@ -485,8 +475,7 @@ void QueueManagerModel::update()
     }
 }
 
-
-QModelIndex QueueManagerModel::find(const QString& text)
+QModelIndex QueueManagerModel::find(const QString &text)
 {
     search_text = text;
     if (text.isEmpty()) {
@@ -495,8 +484,8 @@ QModelIndex QueueManagerModel::find(const QString& text)
     }
 
     int idx = 0;
-    for (const Item& i : qAsConst(queue)) {
-        bt::TorrentInterface* tc = i.tc;
+    for (const Item &i : qAsConst(queue)) {
+        bt::TorrentInterface *tc = i.tc;
         if (tc->getDisplayName().contains(text, Qt::CaseInsensitive)) {
             endResetModel();
             return index(idx, 0);
@@ -508,7 +497,7 @@ QModelIndex QueueManagerModel::find(const QString& text)
     return QModelIndex();
 }
 
-bool QueueManagerModel::visible(const bt::TorrentInterface* tc)
+bool QueueManagerModel::visible(const bt::TorrentInterface *tc)
 {
     if (!show_uploads && tc->getStats().completed)
         return false;
@@ -530,6 +519,4 @@ void QueueManagerModel::swapItems(int a, int b)
     queue.swapItemsAt(a, b);
 }
 
-
 }
-

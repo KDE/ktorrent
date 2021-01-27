@@ -33,30 +33,30 @@
 #include <KLocalizedString>
 #include <KStandardAction>
 
-#include <interfaces/functions.h>
-#include <util/indexofcompare.h>
-#include <util/error.h>
-#include <bcodec/bencoder.h>
 #include <bcodec/bdecoder.h>
+#include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
+#include <interfaces/functions.h>
+#include <util/error.h>
+#include <util/indexofcompare.h>
 
-#include "searchwidget.h"
 #include "searchplugin.h"
-#include <searchpluginsettings.h>
 #include "searchtoolbar.h"
-
+#include "searchwidget.h"
+#include <searchpluginsettings.h>
 
 namespace kt
 {
-SearchActivity::SearchActivity(SearchPlugin* sp, QWidget* parent)
-    : Activity(i18nc("plugin name", "Search"), QStringLiteral("edit-find"), 10, parent), sp(sp)
+SearchActivity::SearchActivity(SearchPlugin *sp, QWidget *parent)
+    : Activity(i18nc("plugin name", "Search"), QStringLiteral("edit-find"), 10, parent)
+    , sp(sp)
 {
     setXMLGUIFile(QStringLiteral("ktorrent_searchui.rc"));
     setupActions();
     toolbar = new SearchToolBar(part()->actionCollection(), sp->getSearchEngineList(), this);
     connect(toolbar, &SearchToolBar::search, sp, &SearchPlugin::search);
 
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
     tabs = new QTabWidget(this);
@@ -64,9 +64,9 @@ SearchActivity::SearchActivity(SearchPlugin* sp, QWidget* parent)
     layout->addWidget(tabs);
     connect(tabs, &QTabWidget::currentChanged, this, &SearchActivity::currentTabChanged);
 
-    QToolButton* lc = new QToolButton(tabs);
+    QToolButton *lc = new QToolButton(tabs);
     tabs->setCornerWidget(lc, Qt::TopLeftCorner);
-    QToolButton* rc = new QToolButton(tabs);
+    QToolButton *rc = new QToolButton(tabs);
     tabs->setCornerWidget(rc, Qt::TopRightCorner);
     lc->setIcon(QIcon::fromTheme(QStringLiteral("tab-new")));
     connect(lc, &QToolButton::clicked, this, &SearchActivity::openTab);
@@ -80,7 +80,7 @@ SearchActivity::~SearchActivity()
 
 void SearchActivity::setupActions()
 {
-    KActionCollection* ac = part()->actionCollection();
+    KActionCollection *ac = part()->actionCollection();
 
     search_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("Search"), this);
     connect(search_action, &QAction::triggered, this, qOverload<>(&SearchActivity::search));
@@ -93,9 +93,9 @@ void SearchActivity::setupActions()
     ac->addAction(QStringLiteral("search_home"), home_action);
 }
 
-void SearchActivity::search(const QString& text, int engine)
+void SearchActivity::search(const QString &text, int engine)
 {
-    for (SearchWidget* s : qAsConst(searches)) {
+    for (SearchWidget *s : qAsConst(searches)) {
         if (s->getCurrentUrl() == QUrl(QStringLiteral("about:ktorrent"))) {
             s->search(text, engine);
             tabs->setCurrentWidget(s);
@@ -103,7 +103,7 @@ void SearchActivity::search(const QString& text, int engine)
         }
     }
 
-    SearchWidget* sw = newSearchWidget(text);
+    SearchWidget *sw = newSearchWidget(text);
     sw->search(text, engine);
     tabs->setCurrentWidget(sw);
 }
@@ -118,7 +118,7 @@ void SearchActivity::saveCurrentSearches()
     std::sort(searches.begin(), searches.end(), IndexOfCompare<QTabWidget, SearchWidget>(tabs));
     bt::BEncoder enc(&fptr);
     enc.beginList();
-    for (SearchWidget* w : qAsConst(searches)) {
+    for (SearchWidget *w : qAsConst(searches)) {
         enc.beginDict();
         enc.write("TEXT", w->getSearchText().toUtf8());
         enc.write("URL", w->getCurrentUrl().toDisplayString().toUtf8());
@@ -132,28 +132,28 @@ void SearchActivity::saveCurrentSearches()
 void SearchActivity::loadCurrentSearches()
 {
     if (!SearchPluginSettings::restorePreviousSession()) {
-        SearchWidget* search = newSearchWidget(QString());
+        SearchWidget *search = newSearchWidget(QString());
         search->home();
         return;
     }
 
     QFile fptr(kt::DataDir() + QLatin1String("current_searches"));
     if (!fptr.open(QIODevice::ReadOnly)) {
-        SearchWidget* search = newSearchWidget(QString());
+        SearchWidget *search = newSearchWidget(QString());
         search->home();
         return;
     }
 
     QByteArray data = fptr.readAll();
     bt::BDecoder dec(data, false, 0);
-    bt::BListNode* search_list = 0;
+    bt::BListNode *search_list = 0;
     try {
         search_list = dec.decodeList();
         if (!search_list)
             throw bt::Error(QStringLiteral("Invalid current searches"));
 
         for (bt::Uint32 i = 0; i < search_list->getNumChildren(); i++) {
-            bt::BDictNode* dict = search_list->getDict(i);
+            bt::BDictNode *dict = search_list->getDict(i);
             if (!dict)
                 continue;
 
@@ -162,7 +162,7 @@ void SearchActivity::loadCurrentSearches()
             int engine = dict->getInt("ENGINE");
             QUrl url = QUrl(dict->getString("URL", 0));
 
-            SearchWidget* search = newSearchWidget(text);
+            SearchWidget *search = newSearchWidget(text);
             search->restore(url, text, sbtext, engine);
         }
 
@@ -172,7 +172,7 @@ void SearchActivity::loadCurrentSearches()
     }
 
     if (searches.count() == 0) {
-        SearchWidget* search = newSearchWidget(QString());
+        SearchWidget *search = newSearchWidget(QString());
         search->home();
     }
 }
@@ -193,10 +193,10 @@ void SearchActivity::loadState(KSharedConfigPtr cfg)
 
 void SearchActivity::find()
 {
-    QWidget* w = tabs->currentWidget();
-    for (SearchWidget* s : qAsConst(searches)) {
+    QWidget *w = tabs->currentWidget();
+    for (SearchWidget *s : qAsConst(searches)) {
         if (w == s) {
-//              s->find();
+            //              s->find();
             break;
         }
     }
@@ -204,8 +204,8 @@ void SearchActivity::find()
 
 void SearchActivity::search()
 {
-    QWidget* w = tabs->currentWidget();
-    for (SearchWidget* s : qAsConst(searches)) {
+    QWidget *w = tabs->currentWidget();
+    for (SearchWidget *s : qAsConst(searches)) {
         if (w == s) {
             s->search();
             break;
@@ -228,9 +228,9 @@ void SearchActivity::copy()
 }
 */
 
-SearchWidget* SearchActivity::newSearchWidget(const QString& text)
+SearchWidget *SearchActivity::newSearchWidget(const QString &text)
 {
-    SearchWidget* search = new SearchWidget(sp);
+    SearchWidget *search = new SearchWidget(sp);
     int idx = tabs->addTab(search, QIcon::fromTheme(QLatin1String("edit-find")), text);
     if (!text.isEmpty())
         tabs->setTabToolTip(idx, i18n("Search for %1", text));
@@ -243,16 +243,15 @@ SearchWidget* SearchActivity::newSearchWidget(const QString& text)
     return search;
 }
 
-SearchWidget* SearchActivity::newTab()
+SearchWidget *SearchActivity::newTab()
 {
     return newSearchWidget(QString());
 }
 
-
 void SearchActivity::openNewTab(const QUrl &url)
 {
     QString text = url.host();
-    SearchWidget* search = newSearchWidget(text);
+    SearchWidget *search = newSearchWidget(text);
     search->restore(url, text, QString(), toolbar->currentSearchEngine());
     tabs->setCurrentWidget(search);
 }
@@ -265,8 +264,8 @@ void SearchActivity::currentTabChanged(int idx)
 
 void SearchActivity::home()
 {
-    QWidget* w = tabs->currentWidget();
-    for (SearchWidget* s : qAsConst(searches)) {
+    QWidget *w = tabs->currentWidget();
+    for (SearchWidget *s : qAsConst(searches)) {
         if (w == s) {
             s->home();
             break;
@@ -279,7 +278,7 @@ void SearchActivity::closeTab()
     if (searches.count() == 1)
         return;
 
-    for (SearchWidget* s : qAsConst(searches)) {
+    for (SearchWidget *s : qAsConst(searches)) {
         if (s == tabs->currentWidget()) {
             tabs->removeTab(tabs->currentIndex());
             searches.removeAll(s);
@@ -293,25 +292,24 @@ void SearchActivity::closeTab()
 
 void SearchActivity::openTab()
 {
-    SearchWidget* search = newSearchWidget(QString());
+    SearchWidget *search = newSearchWidget(QString());
     search->home();
     tabs->setCurrentWidget(search);
 }
 
-void SearchActivity::setTabTitle(SearchWidget* sw, const QString& title)
+void SearchActivity::setTabTitle(SearchWidget *sw, const QString &title)
 {
     int idx = tabs->indexOf(sw);
     if (idx >= 0)
         tabs->setTabText(idx, title);
 }
 
-void SearchActivity::setTabIcon(SearchWidget* sw, const QIcon& icon)
+void SearchActivity::setTabIcon(SearchWidget *sw, const QIcon &icon)
 {
     int idx = tabs->indexOf(sw);
     if (idx >= 0)
         tabs->setTabIcon(idx, icon);
 }
-
 
 void SearchActivity::clearSearchHistory()
 {

@@ -23,9 +23,10 @@
 
 namespace kt
 {
-
-JobProgressWidget::JobProgressWidget(bt::Job* job, QWidget* parent)
-    : Extender(job->torrent(), parent), job(job), automatic_remove(true)
+JobProgressWidget::JobProgressWidget(bt::Job *job, QWidget *parent)
+    : Extender(job->torrent(), parent)
+    , job(job)
+    , automatic_remove(true)
 {
 }
 
@@ -37,6 +38,5 @@ void JobProgressWidget::emitCloseRequest()
 {
     closeRequest(this);
 }
-
 
 }

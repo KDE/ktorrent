@@ -20,37 +20,36 @@
 
 #include "fileselectdlg.h"
 
+#include <QButtonGroup>
 #include <QMenu>
 #include <QPushButton>
 #include <QTextCodec>
-#include <QButtonGroup>
 
 #include <KIO/Global>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KStandardGuiItem>
 
-#include <interfaces/torrentfileinterface.h>
-#include <interfaces/torrentinterface.h>
-#include <util/functions.h>
-#include <util/fileops.h>
-#include <util/log.h>
-#include <util/error.h>
-#include <util/treefiltermodel.h>
-#include <interfaces/functions.h>
+#include "settings.h"
 #include <groups/group.h>
 #include <groups/groupmanager.h>
+#include <interfaces/functions.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
-#include <torrent/torrentfiletreemodel.h>
 #include <torrent/torrentfilelistmodel.h>
-#include "settings.h"
+#include <torrent/torrentfiletreemodel.h>
+#include <util/error.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
+#include <util/treefiltermodel.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-FileSelectDlg::FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, const QString& group_hint, QWidget* parent)
+FileSelectDlg::FileSelectDlg(kt::QueueManager *qman, kt::GroupManager *gman, const QString &group_hint, QWidget *parent)
     : QDialog(parent)
     , tc(nullptr)
     , model(nullptr)
@@ -69,7 +68,7 @@ FileSelectDlg::FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, con
     m_file_view->setAlternatingRowColors(true);
     filter_model = new TreeFilterModel(this);
     m_file_view->setModel(filter_model);
-    //root = 0;
+    // root = 0;
     connect(m_select_all, &QPushButton::clicked, this, &FileSelectDlg::selectAll);
     connect(m_select_none, &QPushButton::clicked, this, &FileSelectDlg::selectNone);
     connect(m_invert_selection, &QPushButton::clicked, this, &FileSelectDlg::invertSelection);
@@ -92,7 +91,7 @@ FileSelectDlg::FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, con
     if (!group_hint.isNull())
         initial_group = gman->find(group_hint);
 
-    QButtonGroup* bg = new QButtonGroup(this);
+    QButtonGroup *bg = new QButtonGroup(this);
     m_tree->setIcon(QIcon::fromTheme(QStringLiteral("view-list-tree")));
     m_tree->setToolTip(i18n("Show a file tree"));
     connect(m_tree, &QToolButton::clicked, this, &FileSelectDlg::fileTree);
@@ -116,9 +115,10 @@ FileSelectDlg::FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, con
 }
 
 FileSelectDlg::~FileSelectDlg()
-{}
+{
+}
 
-int FileSelectDlg::execute(bt::TorrentInterface* tc, bool* start, bool* skip_check, const QString& location_hint)
+int FileSelectDlg::execute(bt::TorrentInterface *tc, bool *start, bool *skip_check, const QString &location_hint)
 {
     if (!tc)
         return QDialog::Rejected;
@@ -133,9 +133,8 @@ int FileSelectDlg::execute(bt::TorrentInterface* tc, bool* start, bool* skip_che
     m_encoding->setCurrentIndex(idx);
     connect(m_encoding, qOverload<int>(&KComboBox::currentIndexChanged), this, &FileSelectDlg::onCodecChanged);
 
-
     for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
-        bt::TorrentFileInterface& file = tc->getTorrentFile(i);
+        bt::TorrentFileInterface &file = tc->getTorrentFile(i);
         file.setEmitDownloadStatusChanged(false);
     }
 
@@ -182,19 +181,20 @@ void FileSelectDlg::accept()
     QStringList pe_ex;
 
     QString cn = m_completedLocation->url().toLocalFile();
-    if (!cn.endsWith(QLatin1Char('/'))) cn += QLatin1Char('/');
+    if (!cn.endsWith(QLatin1Char('/')))
+        cn += QLatin1Char('/');
     if (m_moveCompleted->isChecked() && !cn.isEmpty()) {
         move_on_completion_location_history.removeOne(cn);
         move_on_completion_location_history.prepend(cn);
     }
 
     QString dn = m_downloadLocation->url().toLocalFile();
-    if (!dn.endsWith(QLatin1Char('/'))) dn += QLatin1Char('/');
+    if (!dn.endsWith(QLatin1Char('/')))
+        dn += QLatin1Char('/');
     if (!dn.isEmpty()) {
         download_location_history.removeOne(dn);
         download_location_history.prepend(dn);
     }
-
 
     QString tld = tc->getUserModifiedFileName();
     // If the move on completion is on, check completed dir for files of the torrent
@@ -205,7 +205,7 @@ void FileSelectDlg::accept()
         QStringList cf;
         if (tc->getStats().multi_file_torrent) {
             for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
-                bt::TorrentFileInterface& file = tc->getTorrentFile(i);
+                bt::TorrentFileInterface &file = tc->getTorrentFile(i);
                 QString path = cn + tld + bt::DirSeparator() + file.getUserModifiedPath();
                 if (bt::Exists(path)) {
                     completed_files_found = true;
@@ -222,11 +222,13 @@ void FileSelectDlg::accept()
             QString msg;
             if (tc->getStats().multi_file_torrent) {
                 if (!all_found)
-                    msg = i18n("Some files of this torrent have been found in the completed downloads directory. "
-                               "Do you want to import these files and use the completed downloads directory as the location?");
+                    msg = i18n(
+                        "Some files of this torrent have been found in the completed downloads directory. " //
+                        "Do you want to import these files and use the completed downloads directory as the location?");
                 else
-                    msg = i18n("All files of this torrent have been found in the completed downloads directory. "
-                               "Do you want to import these files and use the completed downloads directory as the location?");
+                    msg = i18n(
+                        "All files of this torrent have been found in the completed downloads directory. " //
+                        "Do you want to import these files and use the completed downloads directory as the location?");
             } else
                 msg = i18n("The file <b>%1</b> was found in the completed downloads directory. Do you want to import this file?", tld);
 
@@ -244,7 +246,7 @@ void FileSelectDlg::accept()
                 MakePath(dn);
             else
                 return;
-        } catch (bt::Error& err) {
+        } catch (bt::Error &err) {
             KMessageBox::error(this, err.toString());
             QDialog::reject();
             return;
@@ -257,16 +259,15 @@ void FileSelectDlg::accept()
                 MakePath(cn);
             else
                 return;
-        } catch (bt::Error& err) {
+        } catch (bt::Error &err) {
             KMessageBox::error(this, err.toString());
             QDialog::reject();
             return;
         }
     }
 
-
     for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
-        bt::TorrentFileInterface& file = tc->getTorrentFile(i);
+        bt::TorrentFileInterface &file = tc->getTorrentFile(i);
 
         // check for preexisting files
         QString path = dn + tld + bt::DirSeparator() + file.getUserModifiedPath();
@@ -281,22 +282,19 @@ void FileSelectDlg::accept()
     }
 
     if (pe_ex.count() > 0) {
-        QString msg = i18n("You have deselected the following existing files. "
-                           "You will lose all data in these files, are you sure you want to do this?");
+        QString msg = i18n("You have deselected the following existing files. You will lose all data in these files, are you sure you want to do this?");
         // better ask the user if (s)he wants to delete the already existing data
-        int ret = KMessageBox::warningYesNoList(0, msg, pe_ex, QString(),
-                                                KGuiItem(i18n("Yes, delete the files")),
-                                                KGuiItem(i18n("No, keep the files")));
+        int ret = KMessageBox::warningYesNoList(0, msg, pe_ex, QString(), KGuiItem(i18n("Yes, delete the files")), KGuiItem(i18n("No, keep the files")));
         if (ret == KMessageBox::No) {
             for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
-                bt::TorrentFileInterface& file = tc->getTorrentFile(i);
+                bt::TorrentFileInterface &file = tc->getTorrentFile(i);
                 if (file.doNotDownload() && file.isPreExistingFile())
                     file.setDoNotDownload(false);
             }
         }
     }
 
-    //Setup custom download location
+    // Setup custom download location
     QString ddir = tc->getDataDir();
     if (!ddir.endsWith(bt::DirSeparator()))
         ddir += bt::DirSeparator();
@@ -308,20 +306,22 @@ void FileSelectDlg::accept()
 
     QStringList conflicting;
     if (qman->checkFileConflicts(tc, conflicting)) {
-        QString err = i18n("Opening the torrent <b>%1</b>, "
-                           "would share one or more files with the following torrents. "
-                           "Torrents are not allowed to write to the same files. "
-                           "Please select a different location.", tc->getDisplayName());
+        QString err = i18n(
+            "Opening the torrent <b>%1</b>, "
+            "would share one or more files with the following torrents. "
+            "Torrents are not allowed to write to the same files. "
+            "Please select a different location.",
+            tc->getDisplayName());
         KMessageBox::errorList(this, err, conflicting);
         return;
     }
 
     for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
-        bt::TorrentFileInterface& file = tc->getTorrentFile(i);
+        bt::TorrentFileInterface &file = tc->getTorrentFile(i);
         file.setEmitDownloadStatusChanged(true);
     }
 
-    //Make it user controlled if needed
+    // Make it user controlled if needed
     *start = m_chkStartTorrent->isChecked();
     *skip_check = m_skip_data_check->isChecked();
 
@@ -329,11 +329,11 @@ void FileSelectDlg::accept()
     if (Settings::autoRenameSingleFileTorrents() && !tc->getStats().multi_file_torrent)
         tc->setDisplayName(QFileInfo(tc->getUserModifiedFileName()).completeBaseName());
 
-    //Now add torrent to selected group
+    // Now add torrent to selected group
     if (m_cmbGroups->currentIndex() > 0) {
         QString groupName = m_cmbGroups->currentText();
 
-        Group* group = gman->find(groupName);
+        Group *group = gman->find(groupName);
         if (group) {
             group->addTorrent(tc, true);
             gman->saveGroups();
@@ -362,7 +362,6 @@ QString FileSelectDlg::selectedGroup() const
     return m_cmbGroups->currentText();
 }
 
-
 void FileSelectDlg::selectAll()
 {
     model->checkAll();
@@ -378,7 +377,7 @@ void FileSelectDlg::invertSelection()
     model->invertCheck();
 }
 
-void FileSelectDlg::populateFields(const QString& location_hint)
+void FileSelectDlg::populateFields(const QString &location_hint)
 {
     QString dir;
     QString comp_dir;
@@ -409,12 +408,12 @@ void FileSelectDlg::loadGroups()
 
     QStringList grps;
 
-    //First default group
+    // First default group
     grps << i18n("All Torrents");
 
     int cnt = 0;
     int selected = 0;
-    //now custom ones
+    // now custom ones
     while (it != gman->end()) {
         if (!it->second->isStandardGroup()) {
             grps << it->first;
@@ -446,7 +445,7 @@ void FileSelectDlg::groupActivated(int idx)
         return; // No group selected
 
     // find the selected group
-    Group* g = gman->find(m_cmbGroups->itemText(idx));
+    Group *g = gman->find(m_cmbGroups->itemText(idx));
     if (!g)
         return;
 
@@ -470,9 +469,9 @@ void FileSelectDlg::updateSizeLabels()
 
     updateExistingFiles();
 
-    //calculate free disk space
+    // calculate free disk space
     QUrl sdir = m_downloadLocation->url();
-    while (sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty())  && (! QDir(sdir.toLocalFile()).exists())) {
+    while (sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty()) && (!QDir(sdir.toLocalFile()).exists())) {
         sdir = KIO::upUrl(sdir);
     }
 
@@ -486,18 +485,15 @@ void FileSelectDlg::updateSizeLabels()
 
         lblFree->setText(bt::BytesToString(bytes_free));
         if (already_downloaded > 0)
-            lblRequired->setText(
-                i18n("%1 (%2 in use by existing files)",
-                     bt::BytesToString(bytes_to_download),
-                     bt::BytesToString(already_downloaded)));
+            lblRequired->setText(i18n("%1 (%2 in use by existing files)", bt::BytesToString(bytes_to_download), bt::BytesToString(already_downloaded)));
         else
             lblRequired->setText(bt::BytesToString(bytes_to_download));
 
         bytes_to_download -= already_downloaded;
         if (bytes_to_download > bytes_free)
             lblStatus->setText(
-                QLatin1String("<font color=\"#ff0000\">") + i18nc("We are %1 bytes short of what we need", "%1 short",
-                        bt::BytesToString(-1 * (long long)(bytes_free - bytes_to_download))));
+                QLatin1String("<font color=\"#ff0000\">")
+                + i18nc("We are %1 bytes short of what we need", "%1 short", bt::BytesToString(-1 * (long long)(bytes_free - bytes_to_download))));
         else
             lblStatus->setText(bt::BytesToString(bytes_free - bytes_to_download));
     }
@@ -510,7 +506,7 @@ void FileSelectDlg::updateExistingFiles()
         bt::Uint32 found = 0;
         QString path = m_downloadLocation->url().path() + QLatin1Char('/') + tc->getDisplayName() + QLatin1Char('/');
         for (bt::Uint32 i = 0; i < tc->getNumFiles(); i++) {
-            const bt::TorrentFileInterface& file = tc->getTorrentFile(i);
+            const bt::TorrentFileInterface &file = tc->getTorrentFile(i);
             if (bt::Exists(path + file.getUserModifiedPath())) {
                 found++;
                 if (!file.doNotDownload()) { // Do not include excluded files in the already downloaded calculation
@@ -540,23 +536,21 @@ void FileSelectDlg::updateExistingFiles()
     }
 }
 
-void FileSelectDlg::downloadLocationChanged(const QString& path)
+void FileSelectDlg::downloadLocationChanged(const QString &path)
 {
     Q_UNUSED(path);
     updateSizeLabels();
 }
 
-
 void FileSelectDlg::onCodecChanged(const int index)
 {
     const QString text = m_encoding->itemText(index);
-    QTextCodec* codec = QTextCodec::codecForName(text.toLocal8Bit());
+    QTextCodec *codec = QTextCodec::codecForName(text.toLocal8Bit());
     if (codec) {
         tc->changeTextCodec(codec);
         model->onCodecChange();
     }
 }
-
 
 void FileSelectDlg::loadState(KSharedConfigPtr cfg)
 {
@@ -567,23 +561,21 @@ void FileSelectDlg::loadState(KSharedConfigPtr cfg)
     m_tree->setChecked(show_file_tree);
     m_list->setChecked(!show_file_tree);
     download_location_history = g.readEntry("download_location_history", QStringList());
-    for (QString& s : download_location_history)
-        if (s.endsWith(QLatin1String("//"))) s.chop(1);
+    for (QString &s : download_location_history)
+        if (s.endsWith(QLatin1String("//")))
+            s.chop(1);
     download_location_history.removeDuplicates();
     move_on_completion_location_history = g.readEntry("move_on_completion_location_history", QStringList());
     move_on_completion_location_history.removeDuplicates();
 
     if (download_location_history.count()) {
-        QMenu* m = createHistoryMenu(download_location_history,
-                                     &FileSelectDlg::downloadLocationHistoryTriggered);
+        QMenu *m = createHistoryMenu(download_location_history, &FileSelectDlg::downloadLocationHistoryTriggered);
         m_download_location_history->setMenu(m);
     } else
         m_download_location_history->setEnabled(false);
 
     if (move_on_completion_location_history.count()) {
-        QMenu* m = createHistoryMenu(
-                       move_on_completion_location_history,
-                       &FileSelectDlg::moveOnCompletionLocationHistoryTriggered);
+        QMenu *m = createHistoryMenu(move_on_completion_location_history, &FileSelectDlg::moveOnCompletionLocationHistoryTriggered);
         m_move_when_completed_history->setMenu(m);
     } else
         m_move_when_completed_history->setEnabled(false);
@@ -592,7 +584,6 @@ void FileSelectDlg::loadState(KSharedConfigPtr cfg)
     if (state.size() > 0)
         m_file_view->header()->restoreState(state);
 }
-
 
 void FileSelectDlg::saveState(KSharedConfigPtr cfg)
 {
@@ -604,11 +595,11 @@ void FileSelectDlg::saveState(KSharedConfigPtr cfg)
     g.writeEntry("file_view", m_file_view->header()->saveState());
 }
 
-QMenu* FileSelectDlg::createHistoryMenu(const QStringList & urls, Func slot)
+QMenu *FileSelectDlg::createHistoryMenu(const QStringList &urls, Func slot)
 {
-    QMenu* m = new QMenu(this);
-    for (const QString& url : urls) {
-        QAction* a = m->addAction(url);
+    QMenu *m = new QMenu(this);
+    for (const QString &url : urls) {
+        QAction *a = m->addAction(url);
         a->setData(url);
     }
     m->addSeparator();
@@ -629,21 +620,20 @@ void FileSelectDlg::clearMoveOnCompletionLocationHistory()
     m_move_when_completed_history->setEnabled(false);
 }
 
-void FileSelectDlg::downloadLocationHistoryTriggered(QAction* act)
+void FileSelectDlg::downloadLocationHistoryTriggered(QAction *act)
 {
     if (!act->data().isNull())
         m_downloadLocation->setUrl(QUrl::fromLocalFile(act->data().toString()));
     else
         clearDownloadLocationHistory();
 }
-void FileSelectDlg::moveOnCompletionLocationHistoryTriggered(QAction* act)
+void FileSelectDlg::moveOnCompletionLocationHistoryTriggered(QAction *act)
 {
     if (!act->data().isNull())
         m_completedLocation->setUrl(QUrl::fromLocalFile(act->data().toString()));
     else
         clearMoveOnCompletionLocationHistory();
 }
-
 
 void FileSelectDlg::fileTree(bool)
 {
@@ -682,7 +672,7 @@ void FileSelectDlg::setShowFileTree(bool on)
     m_expand_all->setEnabled(show_file_tree);
 }
 
-void FileSelectDlg::setFilter(const QString& f)
+void FileSelectDlg::setFilter(const QString &f)
 {
     Q_UNUSED(f);
     filter_model->setFilterFixedString(m_filter->text());

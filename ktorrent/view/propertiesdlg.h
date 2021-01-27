@@ -21,8 +21,8 @@
 #ifndef KT_PROPERTIESDLG_H
 #define KT_PROPERTIESDLG_H
 
-#include <QDialog>
 #include "ui_propertiesdlg.h"
+#include <QDialog>
 
 namespace bt
 {
@@ -38,7 +38,7 @@ class PropertiesDlg : public QDialog, public Ui_PropertiesDlg
 {
     Q_OBJECT
 public:
-    PropertiesDlg(bt::TorrentInterface* tc, QWidget* parent);
+    PropertiesDlg(bt::TorrentInterface *tc, QWidget *parent);
     ~PropertiesDlg() override;
 
 public Q_SLOTS:
@@ -48,7 +48,7 @@ private:
     void accept() override;
 
 private:
-    bt::TorrentInterface* tc;
+    bt::TorrentInterface *tc;
 };
 
 }

@@ -21,9 +21,8 @@
 #ifndef KTWEBCONTENTGENERATOR_H
 #define KTWEBCONTENTGENERATOR_H
 
-#include <QString>
 #include <QHttpRequestHeader>
-
+#include <QString>
 
 namespace kt
 {
@@ -38,14 +37,14 @@ class WebContentGenerator
 public:
     enum Permissions {
         PUBLIC,
-        LOGIN_REQUIRED
+        LOGIN_REQUIRED,
     };
 
     /**
      * Constructor
      * @param path Path of the content e.g. /actions/foobar
      */
-    WebContentGenerator(HttpServer* server, const QString& path, Permissions per);
+    WebContentGenerator(HttpServer *server, const QString &path, Permissions per);
     virtual ~WebContentGenerator();
 
     /// Get the path
@@ -65,7 +64,7 @@ public:
      * @param hdlr Client handler
      * @param hdr HTTP Header of request
      */
-    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr) = 0;
+    virtual void get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr) = 0;
 
     /**
      * Generate HTML or XML on HTTP a get request
@@ -73,9 +72,10 @@ public:
      * @param hdr HTTP Header of request
      * @param data Data of request
      */
-    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data) = 0;
+    virtual void post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data) = 0;
+
 protected:
-    HttpServer* server;
+    HttpServer *server;
     QString path;
     Permissions permissions;
 };

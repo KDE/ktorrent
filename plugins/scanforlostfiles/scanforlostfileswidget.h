@@ -21,16 +21,15 @@
 #ifndef KTSCANFORLOSTFILESWIDGET_H
 #define KTSCANFORLOSTFILESWIDGET_H
 
-#include <interfaces/activity.h>
 #include "scanforlostfilesplugin.h"
 #include "ui_scanforlostfileswidget.h"
+#include <interfaces/activity.h>
 
 class QFileSystemModel;
 class QMenu;
 
 namespace kt
 {
-
 class FSProxyModel;
 class ScanForLostFilesThread;
 
@@ -42,7 +41,7 @@ class ScanForLostFilesWidget : public Activity, public Ui::ScanForLostFilesWidge
     Q_OBJECT
 
 public:
-    ScanForLostFilesWidget(ScanForLostFilesPlugin* plugin, QWidget* parent = nullptr);
+    ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, QWidget *parent = nullptr);
     ~ScanForLostFilesWidget() override;
 
 private Q_SLOTS:
@@ -52,17 +51,17 @@ private Q_SLOTS:
     void on_actionDelete_on_disk_triggered();
     void on_treeView_customContextMenuRequested(const QPoint &pos);
 
-    void directoryLoaded(const QString& path);
+    void directoryLoaded(const QString &path);
 
 private:
     void setupModels();
 
 private:
-    ScanForLostFilesPlugin* m_plugin;
-    QFileSystemModel* m_model;
-    FSProxyModel* m_proxy;
-    QMenu* m_menu;
-    ScanForLostFilesThread* m_thread;
+    ScanForLostFilesPlugin *m_plugin;
+    QFileSystemModel *m_model;
+    FSProxyModel *m_proxy;
+    QMenu *m_menu;
+    ScanForLostFilesThread *m_thread;
 };
 
 }

@@ -31,7 +31,6 @@ class Action;
 
 namespace kt
 {
-
 /**
     Keeps track of a script
 */
@@ -39,8 +38,8 @@ class Script : public QObject
 {
     Q_OBJECT
 public:
-    Script(QObject* parent);
-    Script(const QString& file, QObject* parent);
+    Script(QObject *parent);
+    Script(const QString &file, QObject *parent);
     ~Script() override;
 
     struct MetaInfo {
@@ -54,11 +53,7 @@ public:
 
         bool valid() const
         {
-            return !name.isEmpty() &&
-                   !comment.isEmpty() &&
-                   !icon.isEmpty() &&
-                   !author.isEmpty() &&
-                   !license.isEmpty();
+            return !name.isEmpty() && !comment.isEmpty() && !icon.isEmpty() && !author.isEmpty() && !license.isEmpty();
         }
     };
 
@@ -68,7 +63,7 @@ public:
      * @param desktop_file The desktop file itself (relative to dir)
      * @return true upon success
      */
-    bool loadFromDesktopFile(const QString& dir, const QString& desktop_file);
+    bool loadFromDesktopFile(const QString &dir, const QString &desktop_file);
 
     /**
      * Load and execute the script
@@ -109,13 +104,13 @@ public:
     }
 
     /// Set the package directory
-    void setPackageDirectory(const QString& dir)
+    void setPackageDirectory(const QString &dir)
     {
         package_directory = dir;
     }
 
     /// Get the meta info of the script
-    const MetaInfo& metaInfo() const
+    const MetaInfo &metaInfo() const
     {
         return info;
     }
@@ -140,7 +135,7 @@ public:
 
 private:
     QString file;
-    Kross::Action* action;
+    Kross::Action *action;
     bool executing;
     MetaInfo info;
     bool can_be_removed;

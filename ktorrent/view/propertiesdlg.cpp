@@ -25,9 +25,9 @@
 
 namespace kt
 {
-PropertiesDlg::PropertiesDlg(bt::TorrentInterface* tc, QWidget* parent)
-    : QDialog(parent),
-      tc(tc)
+PropertiesDlg::PropertiesDlg(bt::TorrentInterface *tc, QWidget *parent)
+    : QDialog(parent)
+    , tc(tc)
 {
     setupUi(this);
     setWindowTitle(i18n("Torrent Settings"));
@@ -46,7 +46,7 @@ PropertiesDlg::PropertiesDlg(bt::TorrentInterface* tc, QWidget* parent)
     }
 
     // disable DHT and PEX if they are globally disabled
-    const bt::TorrentStats& s = tc->getStats();
+    const bt::TorrentStats &s = tc->getStats();
     dht->setEnabled(!s.priv_torrent);
     pex->setEnabled(!s.priv_torrent);
     dht->setChecked(!s.priv_torrent && tc->isFeatureEnabled(bt::DHT_FEATURE));
@@ -79,6 +79,4 @@ void PropertiesDlg::accept()
     QDialog::accept();
 }
 
-
 }
-

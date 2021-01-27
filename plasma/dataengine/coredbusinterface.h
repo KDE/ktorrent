@@ -22,8 +22,8 @@
 #ifndef KTPLASMACOREDBUSINTERFACE_H
 #define KTPLASMACOREDBUSINTERFACE_H
 
-#include <QObject>
 #include <QDBusInterface>
+#include <QObject>
 
 namespace ktplasma
 {
@@ -36,19 +36,19 @@ class CoreDBusInterface : public QObject
 {
     Q_OBJECT
 public:
-    CoreDBusInterface(Engine* engine);
+    CoreDBusInterface(Engine *engine);
     virtual ~CoreDBusInterface();
 
     void init();
     void update();
 
 private slots:
-    void torrentAdded(const QString& tor);
-    void torrentRemoved(const QString& tor);
+    void torrentAdded(const QString &tor);
+    void torrentRemoved(const QString &tor);
 
 private:
-    QDBusInterface* core;
-    Engine* engine;
+    QDBusInterface *core;
+    Engine *engine;
 };
 
 }

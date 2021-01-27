@@ -21,8 +21,8 @@
 #ifndef KTLOGVIEWERPLUGIN_H
 #define KTLOGVIEWERPLUGIN_H
 
-#include <interfaces/plugin.h>
 #include <interfaces/activity.h>
+#include <interfaces/plugin.h>
 
 class QDockWidget;
 
@@ -35,22 +35,22 @@ class LogFlags;
 enum LogViewerPosition {
     SEPARATE_ACTIVITY = 0,
     DOCKABLE_WIDGET = 1,
-    TORRENT_ACTIVITY = 2
+    TORRENT_ACTIVITY = 2,
 };
 
 /**
  * @author Joris Guisson
-*/
+ */
 class LogViewerPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    LogViewerPlugin(QObject* parent, const QVariantList& args);
+    LogViewerPlugin(QObject *parent, const QVariantList &args);
     ~LogViewerPlugin() override;
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
     void guiUpdate() override;
 
 private Q_SLOTS:
@@ -61,10 +61,10 @@ private:
     void removeLogViewerFromGUI();
 
 private:
-    LogViewer* lv;
-    LogPrefPage* pref;
-    LogFlags* flags;
-    QDockWidget* dock;
+    LogViewer *lv;
+    LogPrefPage *pref;
+    LogFlags *flags;
+    QDockWidget *dock;
     LogViewerPosition pos;
 };
 

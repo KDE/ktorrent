@@ -42,44 +42,45 @@
 #include <KToggleAction>
 #include <KXMLGUIFactory>
 
-#include <interfaces/torrentinterface.h>
-#include <torrent/queuemanager.h>
-#include <torrent/torrentcontrol.h>
-#include <util/log.h>
-#include <util/functions.h>
-#include <util/timer.h>
-#include <util/error.h>
 #include <dht/dhtbase.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
+#include <interfaces/torrentinterface.h>
 #include <plugin/pluginmanager.h>
 #include <settings.h>
+#include <torrent/queuemanager.h>
+#include <torrent/torrentcontrol.h>
+#include <util/error.h>
+#include <util/functions.h>
+#include <util/log.h>
+#include <util/timer.h>
 
-#include <gui/centralwidget.h>
-#include "gui.h"
 #include "core.h"
-#include "view/view.h"
+#include "dbus/dbus.h"
+#include "dialogs/importdialog.h"
+#include "dialogs/pastedialog.h"
+#include "dialogs/torrentcreatordlg.h"
+#include "groups/groupview.h"
+#include "gui.h"
+#include "ipfilterwidget.h"
 #include "pref/prefdialog.h"
 #include "statusbar.h"
-#include "groups/groupview.h"
-#include "trayicon.h"
-#include "dbus/dbus.h"
-#include "dialogs/pastedialog.h"
-#include "ipfilterwidget.h"
-#include "dialogs/torrentcreatordlg.h"
-#include "dialogs/importdialog.h"
 #include "tools/queuemanagerwidget.h"
+#include "trayicon.h"
+#include "view/view.h"
+#include <gui/centralwidget.h>
 
 #include "torrentactivity.h"
 
 #include <interfaces/functions.h>
 
-
 namespace kt
 {
-GUI::GUI() : core(nullptr), pref_dlg(nullptr)
+GUI::GUI()
+    : core(nullptr)
+    , pref_dlg(nullptr)
 {
-    //Marker markk("GUI::GUI()");
+    // Marker markk("GUI::GUI()");
     part_manager = new KParts::PartManager(this);
     connect(part_manager, &KParts::PartManager::activePartChanged, this, &GUI::activePartChanged);
     core = new Core(this);
@@ -100,7 +101,7 @@ GUI::GUI() : core(nullptr), pref_dlg(nullptr)
 
     addActivity(torrent_activity);
 
-    //mark.update();
+    // mark.update();
     connect(&timer, &QTimer::timeout, this, &GUI::update);
     timer.start(Settings::guiUpdateInterval());
 
@@ -119,7 +120,7 @@ GUI::GUI() : core(nullptr), pref_dlg(nullptr)
 
     IPFilterWidget::registerFilterList();
 
-    //markk.update();
+    // markk.update();
     updateActions();
     core->startUpdateTimer();
 }
@@ -132,14 +133,14 @@ GUI::~GUI()
 bool GUI::event(QEvent *e)
 {
     if (e->type() == QEvent::DeferredDelete) {
-        //HACK to prevent ktorrent from crashing on logout/shotdown (when launched e.g. via alt+f2)
-        delete core; core = nullptr;
+        // HACK to prevent ktorrent from crashing on logout/shotdown (when launched e.g. via alt+f2)
+        delete core;
+        core = nullptr;
         return true;
     }
 
     return KParts::MainWindow::event(e);
 }
-
 
 QSize GUI::sizeHint() const
 {
@@ -147,8 +148,7 @@ QSize GUI::sizeHint() const
     return KParts::MainWindow::sizeHint().expandedTo(desktop_size);
 }
 
-
-void GUI::addActivity(Activity* act)
+void GUI::addActivity(Activity *act)
 {
     unplugActionList(QStringLiteral("activities_list"));
     central->addActivity(act);
@@ -157,7 +157,7 @@ void GUI::addActivity(Activity* act)
     plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
 }
 
-void GUI::removeActivity(Activity* act)
+void GUI::removeActivity(Activity *act)
 {
     unplugActionList(QStringLiteral("activities_list"));
     central->removeActivity(act);
@@ -166,20 +166,20 @@ void GUI::removeActivity(Activity* act)
     plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
 }
 
-void GUI::setCurrentActivity(Activity* act)
+void GUI::setCurrentActivity(Activity *act)
 {
     central->setCurrentActivity(act);
     part_manager->setActivePart(act ? act->part() : 0);
 }
 
-void GUI::activePartChanged(KParts::Part* p)
+void GUI::activePartChanged(KParts::Part *p)
 {
     unplugActionList(QStringLiteral("activities_list"));
     createGUI(p);
     plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
 }
 
-void GUI::addPrefPage(PrefPageInterface* page)
+void GUI::addPrefPage(PrefPageInterface *page)
 {
     if (!pref_dlg) {
         pref_dlg = new PrefDialog(this, core);
@@ -189,24 +189,24 @@ void GUI::addPrefPage(PrefPageInterface* page)
     pref_dlg->addPrefPage(page);
 }
 
-void GUI::removePrefPage(PrefPageInterface* page)
+void GUI::removePrefPage(PrefPageInterface *page)
 {
     if (pref_dlg)
         pref_dlg->removePrefPage(page);
 }
 
-StatusBarInterface* GUI::getStatusBar()
+StatusBarInterface *GUI::getStatusBar()
 {
     return status_bar;
 }
 
-void GUI::mergePluginGui(Plugin* p)
+void GUI::mergePluginGui(Plugin *p)
 {
     if (p->parentPart() == QStringLiteral("ktorrent")) {
         guiFactory()->addClient(p);
     } else {
-        const QList<KParts::Part*> parts = part_manager->parts();
-        for (KParts::Part* part : parts) {
+        const QList<KParts::Part *> parts = part_manager->parts();
+        for (KParts::Part *part : parts) {
             if (part->domDocument().documentElement().attribute(QStringLiteral("name")) == p->parentPart()) {
                 part->insertChildClient(p);
                 break;
@@ -215,13 +215,13 @@ void GUI::mergePluginGui(Plugin* p)
     }
 }
 
-void GUI::removePluginGui(Plugin* p)
+void GUI::removePluginGui(Plugin *p)
 {
     if (p->parentPart() == QStringLiteral("ktorrent")) {
         guiFactory()->removeClient(p);
     } else {
-        const QList<KParts::Part*> parts = part_manager->parts();
-        for (KParts::Part* part : parts) {
+        const QList<KParts::Part *> parts = part_manager->parts();
+        for (KParts::Part *part : parts) {
             if (part->domDocument().documentElement().attribute(QStringLiteral("name")) == p->parentPart()) {
                 part->removeChildClient(p);
                 break;
@@ -230,38 +230,35 @@ void GUI::removePluginGui(Plugin* p)
     }
 }
 
-
-
-void GUI::errorMsg(const QString& err)
+void GUI::errorMsg(const QString &err)
 {
     KMessageBox::error(this, err);
 }
 
-void GUI::errorMsg(KIO::Job* j)
+void GUI::errorMsg(KIO::Job *j)
 {
     if (j->error())
         j->uiDelegate()->showErrorMessage();
 }
 
-void GUI::infoMsg(const QString& info)
+void GUI::infoMsg(const QString &info)
 {
     KMessageBox::information(this, info);
 }
 
-
-void GUI::load(const QUrl& url)
+void GUI::load(const QUrl &url)
 {
     core->load(url, QString());
 }
 
-void GUI::loadSilently(const QUrl& url)
+void GUI::loadSilently(const QUrl &url)
 {
     core->loadSilently(url, QString());
 }
 
 void GUI::createTorrent()
 {
-    TorrentCreatorDlg* dlg = new TorrentCreatorDlg(core, this, this);
+    TorrentCreatorDlg *dlg = new TorrentCreatorDlg(core, this, this);
     dlg->show();
 }
 
@@ -285,7 +282,7 @@ void GUI::openTorrent(bool silently)
             load(url);
     } else {
         // load multiple torrents silently
-        for (const QUrl& url : urls) {
+        for (const QUrl &url : urls) {
             if (url.isValid()) {
                 if (silently || Settings::openMultipleTorrentsSilently())
                     loadSilently(url);
@@ -295,8 +292,6 @@ void GUI::openTorrent(bool silently)
         }
     }
 }
-
-
 
 void GUI::pasteURL()
 {
@@ -311,7 +306,7 @@ void GUI::paste()
     if (!paste_action->isEnabled())
         return;
 
-    QClipboard* cb = QApplication::clipboard();
+    QClipboard *cb = QApplication::clipboard();
     QString text = cb->text(QClipboard::Clipboard);
     if (text.length() == 0)
         return;
@@ -334,7 +329,7 @@ void GUI::showPrefDialog()
 
 void GUI::showIPFilter()
 {
-    IPFilterWidget* dlg = new IPFilterWidget(this);
+    IPFilterWidget *dlg = new IPFilterWidget(this);
     dlg->show();
 }
 
@@ -345,7 +340,7 @@ void GUI::configureKeys()
 
 void GUI::configureToolbars()
 {
-    //KF5 saveMainWindowSettings(KSharedConfig::openConfig()->group("MainWindow"));
+    // KF5 saveMainWindowSettings(KSharedConfig::openConfig()->group("MainWindow"));
     KEditToolBar dlg(factory());
     connect(&dlg, &KEditToolBar::newToolBarConfig, this, &GUI::newToolBarConfig);
     dlg.exec();
@@ -362,16 +357,16 @@ void GUI::newToolBarConfig() // This is called when OK, Apply or Defaults is cli
 
 void GUI::import()
 {
-    ImportDialog* dlg = new ImportDialog(core, this);
+    ImportDialog *dlg = new ImportDialog(core, this);
     dlg->show();
 }
 
 void GUI::setupActions()
 {
-    KActionCollection* ac = actionCollection();
-    QAction * new_action = KStandardAction::openNew(this, &GUI::createTorrent, ac);
+    KActionCollection *ac = actionCollection();
+    QAction *new_action = KStandardAction::openNew(this, &GUI::createTorrent, ac);
     new_action->setToolTip(i18n("Create a new torrent"));
-    QAction * open_action = KStandardAction::open(this, &GUI::openTorrent, ac);
+    QAction *open_action = KStandardAction::open(this, &GUI::openTorrent, ac);
     open_action->setToolTip(i18n("Open a torrent"));
     paste_action = KStandardAction::paste(this, &GUI::paste, ac);
 
@@ -425,11 +420,9 @@ void GUI::update()
         status_bar->updateTransfer(stats.bytes_uploaded, stats.bytes_downloaded);
         status_bar->updateDHTStatus(Globals::instance().getDHT().isRunning(), Globals::instance().getDHT().getStats());
 
-        //All speed to Window status bar
+        // All speed to Window status bar
         if (Settings::showTotalSpeedInTitle()) {
-            QString down_up_speed = i18n("D: %1 | U: %2",
-                                         BytesPerSecToString((double)stats.download_speed),
-                                         BytesPerSecToString((double)stats.upload_speed));
+            QString down_up_speed = i18n("D: %1 | U: %2", BytesPerSecToString((double)stats.download_speed), BytesPerSecToString((double)stats.upload_speed));
             setCaption(down_up_speed);
         } else
             setCaption(core->getGroupManager()->allGroup()->groupName());
@@ -437,14 +430,14 @@ void GUI::update()
         tray_icon->updateStats(stats);
         core->updateGuiPlugins();
         torrent_activity->update();
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Uncaught exception: " << err.toString() << endl;
     }
 }
 
 void GUI::applySettings()
 {
-    //Apply GUI update interval
+    // Apply GUI update interval
     timer.setInterval(Settings::guiUpdateInterval());
     if (Settings::showSystemTrayIcon()) {
         tray_icon->updateMaxRateMenus();
@@ -458,7 +451,6 @@ void GUI::loadState(KSharedConfigPtr cfg)
     setAutoSaveSettings(QStringLiteral("MainWindow"), true);
     central->loadState(cfg);
     torrent_activity->loadState(cfg);
-
 
     KConfigGroup g = cfg->group("MainWindow");
     bool statusbar_hidden = g.readEntry("statusbar_hidden", false);
@@ -535,12 +527,12 @@ void GUI::setPasteDisabled(bool on)
     paste_action->setEnabled(!on);
 }
 
-QWidget* GUI::container(const QString& name)
+QWidget *GUI::container(const QString &name)
 {
     return guiFactory()->container(name, this);
 }
 
-TorrentActivityInterface* GUI::getTorrentActivity()
+TorrentActivityInterface *GUI::getTorrentActivity()
 {
     return torrent_activity;
 }

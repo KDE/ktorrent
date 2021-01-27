@@ -39,25 +39,25 @@ class SyndicationActivity;
 class ManageFiltersDlg : public QDialog, public Ui_ManageFiltersDlg
 {
 public:
-    ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationActivity* act, QWidget* parent);
+    ManageFiltersDlg(Feed *feed, FilterList *filters, SyndicationActivity *act, QWidget *parent);
     ~ManageFiltersDlg();
 
     void add();
     void remove();
     void removeAll();
     void newFilter();
-    void activeSelectionChanged(const QItemSelection& sel, const QItemSelection& desel);
-    void availableSelectionChanged(const QItemSelection& sel, const QItemSelection& desel);
+    void activeSelectionChanged(const QItemSelection &sel, const QItemSelection &desel);
+    void availableSelectionChanged(const QItemSelection &sel, const QItemSelection &desel);
 
 private:
     void accept() override;
 
 private:
-    Feed* feed;
-    FilterList* filters;
-    FilterListModel* active;
-    FilterListModel* available;
-    SyndicationActivity* act;
+    Feed *feed;
+    FilterList *filters;
+    FilterListModel *active;
+    FilterListModel *available;
+    SyndicationActivity *act;
 };
 
 }

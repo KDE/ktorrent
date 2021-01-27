@@ -25,18 +25,19 @@
 
 #include <KLocalizedString>
 
-#include <taglib/tag.h>
-#include <taglib/fileref.h>
 #include "mediaplayer.h"
+#include <taglib/fileref.h>
+#include <taglib/tag.h>
 
 namespace kt
 {
-static QString t2q(const TagLib::String& t)
+static QString t2q(const TagLib::String &t)
 {
-    return QString::fromWCharArray((const wchar_t*)t.toCWString(), t.length());
+    return QString::fromWCharArray((const wchar_t *)t.toCWString(), t.length());
 }
 
-MediaController::MediaController(kt::MediaPlayer* player, KActionCollection* ac, QWidget* parent) : QWidget(parent)
+MediaController::MediaController(kt::MediaPlayer *player, KActionCollection *ac, QWidget *parent)
+    : QWidget(parent)
 {
     setupUi(this);
 
@@ -44,7 +45,6 @@ MediaController::MediaController(kt::MediaPlayer* player, KActionCollection* ac,
     seek_slider->setMediaObject(player->media0bject());
     volume->setAudioOutput(player->output());
     volume->setOrientation(Qt::Horizontal);
-
 
     connect(player, &MediaPlayer::stopped, this, &MediaController::stopped);
     connect(player, &MediaPlayer::playing, this, &MediaController::playing);
@@ -63,13 +63,11 @@ MediaController::MediaController(kt::MediaPlayer* player, KActionCollection* ac,
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 }
 
-
 MediaController::~MediaController()
 {
-
 }
 
-void MediaController::playing(const MediaFileRef& file)
+void MediaController::playing(const MediaFileRef &file)
 {
     if (file.path().isEmpty()) {
         stopped();
@@ -85,7 +83,6 @@ void MediaController::stopped()
     current_file = MediaFileRef(QString());
 }
 
-
 void MediaController::metaDataChanged()
 {
     QString extra_data;
@@ -96,14 +93,14 @@ void MediaController::metaDataChanged()
         return;
     }
 
-    TagLib::Tag* tag = ref.tag();
+    TagLib::Tag *tag = ref.tag();
     if (!tag) {
         info_label->setText(i18n("Playing: <b>%1</b>", current_file.name()));
         return;
     }
 
     QString artist = t2q(tag->artist());
-    QString title =  t2q(tag->title());
+    QString title = t2q(tag->title());
     QString album = t2q(tag->album());
 
     bool has_artist = !artist.isEmpty();

@@ -22,12 +22,11 @@
 
 namespace kt
 {
-
 CoreInterface::CoreInterface()
-{}
-
-
-CoreInterface::~CoreInterface()
-{}
+{
 }
 
+CoreInterface::~CoreInterface()
+{
+}
+}

@@ -18,28 +18,27 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include "scanforlostfilesplugin.h"
 #include "scanforlostfilesprefpage.h"
+#include "scanforlostfilesplugin.h"
 
 #include <KLocalizedString>
 
-#include <util/functions.h>
-#include <interfaces/coreinterface.h>
 #include "scanforlostfilespluginsettings.h"
-
+#include <interfaces/coreinterface.h>
+#include <util/functions.h>
 
 namespace kt
 {
-
-ScanForLostFilesPrefPage::ScanForLostFilesPrefPage(ScanForLostFilesPlugin* plugin, QWidget* parent)
-    : PrefPageInterface(ScanForLostFilesPluginSettings::self(), i18nc("plugin name", "Scan for lost files"), QStringLiteral("edit-find"), parent), m_plugin(plugin)
+ScanForLostFilesPrefPage::ScanForLostFilesPrefPage(ScanForLostFilesPlugin *plugin, QWidget *parent)
+    : PrefPageInterface(ScanForLostFilesPluginSettings::self(), i18nc("plugin name", "Scan for lost files"), QStringLiteral("edit-find"), parent)
+    , m_plugin(plugin)
 {
     setupUi(this);
 }
 
-
 ScanForLostFilesPrefPage::~ScanForLostFilesPrefPage()
-{}
+{
+}
 
 void ScanForLostFilesPrefPage::loadSettings()
 {

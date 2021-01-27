@@ -22,12 +22,11 @@
 #ifndef KTDISPLAYSETTINGSPAGE_H
 #define KTDISPLAYSETTINGSPAGE_H
 
-#include <interfaces/prefpageinterface.h>
 #include "ui_DisplaySettings.h"
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
-
 /**
     @author
 */
@@ -35,7 +34,7 @@ namespace kt
 class DisplaySettingsPage : public PrefPageInterface, public Ui_DisplaySettingsWgt
 {
 public:
-    DisplaySettingsPage(QWidget* parent);
+    DisplaySettingsPage(QWidget *parent);
     ~DisplaySettingsPage() override;
 };
 

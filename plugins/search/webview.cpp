@@ -27,26 +27,27 @@
 #include <QTextStream>
 #include <QUrl>
 #include <QUrlQuery>
-#include <QWebEngineView>
 #include <QWebEngineProfile>
+#include <QWebEngineView>
 
-#include <KIconLoader>
 #include <KIO/AccessManager>
 #include <KIO/CopyJob>
 #include <KIO/Job>
+#include <KIconLoader>
 #include <KLocalizedString>
 #include <KMainWindow>
 
-#include <util/log.h>
 #include "magneturlschemehandler.h"
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-WebView::WebView(kt::WebViewClient* client, ProxyHelper* proxy, QWidget* parentWidget)
-    : QWebEngineView(parentWidget), client(client), m_proxy(proxy)
+WebView::WebView(kt::WebViewClient *client, ProxyHelper *proxy, QWidget *parentWidget)
+    : QWebEngineView(parentWidget)
+    , client(client)
+    , m_proxy(proxy)
 {
     MagnetUrlSchemeHandler *magneturlschemehandler = new MagnetUrlSchemeHandler(this);
     page()->profile()->installUrlSchemeHandler("magnet", magneturlschemehandler);
@@ -59,7 +60,7 @@ WebView::~WebView()
 {
 }
 
-void WebView::handleMagnetUrl(const QUrl& magnet_url)
+void WebView::handleMagnetUrl(const QUrl &magnet_url)
 {
     if (client)
         client->magnetUrl(magnet_url);
@@ -91,7 +92,6 @@ QString WebView::homePageData()
     return home_page_html;
 }
 
-
 void WebView::loadHomePage()
 {
     QString file = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/search/home/home.html"));
@@ -113,24 +113,25 @@ void WebView::loadHomePage()
         } else
             home_page_html = home_page_html.arg(QString());
 
-        KIconLoader* iconloader = KIconLoader::global();
+        KIconLoader *iconloader = KIconLoader::global();
 
         int icon_size = iconloader->currentSize(KIconLoader::Desktop);
 
         home_page_html = home_page_html
-                         .arg(i18n("Home")) // %3 Title
-                         .arg(i18n("KTorrent")) // %4
-                         .arg(i18nc("KDE 4 tag line, see http://kde.org/img/kde40.png", "Be free.")) // %5
-                         .arg(i18n("Search the web for torrents.")) // %6
-                         .arg(i18n("Search")) // %7
-                         .arg(QStringLiteral("search_text")) // %8
-                         .arg(icon_size).arg(icon_size); // %9 and %10
+                             .arg(i18n("Home")) // %3 Title
+                             .arg(i18n("KTorrent")) // %4
+                             .arg(i18nc("KDE 4 tag line, see http://kde.org/img/kde40.png", "Be free.")) // %5
+                             .arg(i18n("Search the web for torrents.")) // %6
+                             .arg(i18n("Search")) // %7
+                             .arg(QStringLiteral("search_text")) // %8
+                             .arg(icon_size)
+                             .arg(icon_size); // %9 and %10
     } else {
         Out(SYS_SRC | LOG_IMPORTANT) << "Failed to load " << file << " : " << fptr.errorString() << endl;
     }
 }
 
-QUrl WebView::searchUrl(const QString& search_text)
+QUrl WebView::searchUrl(const QString &search_text)
 {
     if (client)
         return client->searchUrl(search_text);
@@ -139,7 +140,7 @@ QUrl WebView::searchUrl(const QString& search_text)
         return QUrl(QStringLiteral("http://ktorrent.searchplugin/"));
 }
 
-QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type)
+QWebEngineView *WebView::createWindow(QWebEnginePage::WebWindowType type)
 {
     Q_UNUSED(type)
     return client->newTab();
@@ -154,7 +155,7 @@ void WebView::downloadRequested(QWebEngineDownloadItem *download)
     }
 }
 
-void WebView::downloadFile(QWebEngineDownloadItem * download)
+void WebView::downloadFile(QWebEngineDownloadItem *download)
 {
     QString filename = QFileInfo(download->url().path()).fileName();
     QString path = QFileDialog::getExistingDirectory(this, i18n("Save %1 to"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
@@ -171,5 +172,3 @@ void WebView::magnetUrlDetected(const QUrl &url)
 }
 
 }
-
-

@@ -26,30 +26,28 @@
 
 #include <KLocalizedString>
 
-#include <Syndication/Item>
 #include <Syndication/Enclosure>
+#include <Syndication/Item>
 
-#include <util/log.h>
 #include "feedwidgetmodel.h"
 #include "ktfeed.h"
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-FeedWidgetModel::FeedWidgetModel(QObject* parent)
-    : QAbstractTableModel(parent),
-      feed(nullptr)
+FeedWidgetModel::FeedWidgetModel(QObject *parent)
+    : QAbstractTableModel(parent)
+    , feed(nullptr)
 {
 }
-
 
 FeedWidgetModel::~FeedWidgetModel()
 {
 }
 
-void FeedWidgetModel::setCurrentFeed(Feed* f)
+void FeedWidgetModel::setCurrentFeed(Feed *f)
 {
     beginResetModel();
     items.clear();
@@ -66,7 +64,7 @@ void FeedWidgetModel::setCurrentFeed(Feed* f)
     endResetModel();
 }
 
-int FeedWidgetModel::rowCount(const QModelIndex& parent) const
+int FeedWidgetModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return items.count();
@@ -74,7 +72,7 @@ int FeedWidgetModel::rowCount(const QModelIndex& parent) const
         return 0;
 }
 
-int FeedWidgetModel::columnCount(const QModelIndex& parent) const
+int FeedWidgetModel::columnCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return 3;
@@ -88,15 +86,18 @@ QVariant FeedWidgetModel::headerData(int section, Qt::Orientation orientation, i
         return QVariant();
 
     switch (section) {
-    case 0: return i18n("Title");
-    case 1: return i18n("Date Published");
-    case 2: return i18n("Torrent");
+    case 0:
+        return i18n("Title");
+    case 1:
+        return i18n("Date Published");
+    case 2:
+        return i18n("Torrent");
     default:
         return QVariant();
     }
 }
 
-QVariant FeedWidgetModel::data(const QModelIndex& index, int role) const
+QVariant FeedWidgetModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || !feed)
         return QVariant();
@@ -107,9 +108,12 @@ QVariant FeedWidgetModel::data(const QModelIndex& index, int role) const
     Syndication::ItemPtr item = items.at(index.row());
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
-        case 0: return item->title();
-        case 1: return QLocale().toString(QDateTime::fromTime_t(item->datePublished()), QLocale::ShortFormat);
-        case 2: return TorrentUrlFromItem(item);
+        case 0:
+            return item->title();
+        case 1:
+            return QLocale().toString(QDateTime::fromTime_t(item->datePublished()), QLocale::ShortFormat);
+        case 2:
+            return TorrentUrlFromItem(item);
         default:
             return QVariant();
         }
@@ -119,7 +123,7 @@ QVariant FeedWidgetModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool FeedWidgetModel::removeRows(int row, int count, const QModelIndex& parent)
+bool FeedWidgetModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
@@ -127,7 +131,7 @@ bool FeedWidgetModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool FeedWidgetModel::insertRows(int row, int count, const QModelIndex& parent)
+bool FeedWidgetModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -135,7 +139,7 @@ bool FeedWidgetModel::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-Syndication::ItemPtr FeedWidgetModel::itemForIndex(const QModelIndex& index)
+Syndication::ItemPtr FeedWidgetModel::itemForIndex(const QModelIndex &index)
 {
     if (index.row() < 0 || index.row() >= items.count())
         return Syndication::ItemPtr();
@@ -146,7 +150,7 @@ Syndication::ItemPtr FeedWidgetModel::itemForIndex(const QModelIndex& index)
 QString TorrentUrlFromItem(Syndication::ItemPtr item)
 {
     const QList<Syndication::EnclosurePtr> encs = item->enclosures();
-    for (const Syndication::EnclosurePtr& e : encs) {
+    for (const Syndication::EnclosurePtr &e : encs) {
         if (e->type() == QStringLiteral("application/x-bittorrent") || e->url().endsWith(QStringLiteral(".torrent")))
             return e->url();
     }
@@ -164,7 +168,7 @@ QString TorrentUrlFromItem(Syndication::ItemPtr item)
     QMultiMap<QString, QDomElement> props = item->additionalProperties();
     QMultiMap<QString, QDomElement>::iterator itr = props.begin();
     while (itr != props.end()) {
-        const QDomElement& elem = itr.value();
+        const QDomElement &elem = itr.value();
         if (elem.nodeName() == QStringLiteral("torrent")) {
             QDomElement uri = elem.firstChildElement(QStringLiteral("magnetURI"));
             if (!uri.isNull())
@@ -172,7 +176,6 @@ QString TorrentUrlFromItem(Syndication::ItemPtr item)
         }
         itr++;
     }
-
 
     return QString();
 }

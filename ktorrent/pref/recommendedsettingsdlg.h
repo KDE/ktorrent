@@ -22,13 +22,12 @@
 #ifndef KTRECOMMENDEDSETTINGSDLG_H
 #define KTRECOMMENDEDSETTINGSDLG_H
 
+#include "ui_recommendedsettingsdlg.h"
 #include <QDialog>
 #include <util/constants.h>
-#include "ui_recommendedsettingsdlg.h"
 
 namespace kt
 {
-
 /**
     Dialog to compute the best settings
 */
@@ -36,7 +35,7 @@ class RecommendedSettingsDlg : public QDialog, public Ui_RecommendedSettingsDlg
 {
     Q_OBJECT
 public:
-    RecommendedSettingsDlg(QWidget* parent);
+    RecommendedSettingsDlg(QWidget *parent);
     ~RecommendedSettingsDlg() override;
 
 private Q_SLOTS:

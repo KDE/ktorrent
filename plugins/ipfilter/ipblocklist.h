@@ -24,19 +24,18 @@
 
 #include <QVector>
 
-#include <util/constants.h>
 #include <interfaces/blocklistinterface.h>
+#include <util/constants.h>
 
 namespace kt
 {
-
 struct IPBlock {
     bt::Uint32 ip1;
     bt::Uint32 ip2;
 
     IPBlock();
-    IPBlock(const IPBlock& block);
-    IPBlock(const QString& start, const QString& end);
+    IPBlock(const IPBlock &block);
+    IPBlock(const QString &start, const QString &end);
 
     bool contains(bt::Uint32 ip) const
     {
@@ -54,7 +53,7 @@ public:
     IPBlockList();
     ~IPBlockList() override;
 
-    bool blocked(const net::Address& addr) const override;
+    bool blocked(const net::Address &addr) const override;
 
     /**
      * Overloaded function. Uses Uint32 IP to be checked
@@ -66,13 +65,13 @@ public:
      * @param path The file to load
      * @return true upon success, false otherwise
      */
-    bool load(const QString& path);
+    bool load(const QString &path);
 
     /**
      * Add a single block
      * @param block
      */
-    void addBlock(const IPBlock& block);
+    void addBlock(const IPBlock &block);
 
 private:
     QVector<IPBlock> blocks;

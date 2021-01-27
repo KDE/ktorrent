@@ -19,16 +19,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <cstdio>
 #include <csignal>
+#include <cstdio>
 #include <cstdlib>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/file.h>
 #include <errno.h>
-#include <fcntl.h>
 #include <exception>
+#include <fcntl.h>
+#include <sys/file.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <QApplication>
 #include <QCommandLineOption>
@@ -44,21 +44,19 @@
 #include <KWindowSystem>
 #include <kwindowsystem_version.h>
 
-#include <torrent/globals.h>
-#include <interfaces/functions.h>
-#include <utp/connection.h>
 #include "gui.h"
+#include <interfaces/functions.h>
+#include <torrent/globals.h>
+#include <utp/connection.h>
 
-
-#include "version.h"
 #include "ktversion.h"
+#include "version.h"
 #include <util/error.h>
-#include <util/log.h>
 #include <util/functions.h>
+#include <util/log.h>
 #ifndef Q_OS_WIN
 #include <util/signalcatcher.h>
 #endif
-
 
 using namespace bt;
 
@@ -88,8 +86,7 @@ bool GrabPIDLock()
 }
 #endif
 
-
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 #ifndef Q_WS_WIN
     // ignore SIGPIPE and SIGXFSZ
@@ -113,30 +110,44 @@ int main(int argc, char** argv)
     KCrash::initialize();
 
     QCommandLineParser parser;
-    KAboutData about(QStringLiteral("ktorrent"), i18nc("@title", "KTorrent"), QStringLiteral(VERSION), i18n("Bittorrent client by KDE"),
-                     KAboutLicense::GPL, i18nc("@info:credit", "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"), QString(),
+    KAboutData about(QStringLiteral("ktorrent"),
+                     i18nc("@title", "KTorrent"),
+                     QStringLiteral(VERSION),
+                     i18n("Bittorrent client by KDE"),
+                     KAboutLicense::GPL,
+                     i18nc("@info:credit", "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"),
+                     QString(),
                      QStringLiteral("http://www.kde.org/applications/internet/ktorrent/"));
 
     about.setOrganizationDomain(QByteArray("kde.org"));
     about.setDesktopFileName(QStringLiteral("org.kde.ktorrent"));
 
-    about.addAuthor(i18n("Joris Guisson"), QString(), QStringLiteral("joris.guisson@gmail.com"), QStringLiteral("http://kde.org/applications/internet/ktorrent"));
+    about.addAuthor(i18n("Joris Guisson"),
+                    QString(),
+                    QStringLiteral("joris.guisson@gmail.com"),
+                    QStringLiteral("http://kde.org/applications/internet/ktorrent"));
     about.addAuthor(i18n("Ivan Vasic"), QString(), QStringLiteral("ivasic@gmail.com"));
     about.addAuthor(i18n("Alan Jones"), i18n("BitFinder Plugin"), QStringLiteral("skyphyr@gmail.com"));
     about.addCredit(i18n("Diego Rosario Brogna"), i18n("Webinterface Plugin, global max share ratio patch"), QStringLiteral("dierbro@gmail.com"));
     about.addAuthor(i18n("Krzysztof Kundzicz"), i18n("Statistics Plugin"), QStringLiteral("athantor@gmail.com"));
     about.addAuthor(i18n("Christian Weilbach"), i18n("kio-magnet"), QStringLiteral("christian_weilbach@web.de"));
-    about.addCredit(i18n("Mladen Babic"),  i18n("Application icon and a couple of others"), QStringLiteral("bmladen@EUnet.yu"));
+    about.addCredit(i18n("Mladen Babic"), i18n("Application icon and a couple of others"), QStringLiteral("bmladen@EUnet.yu"));
     about.addCredit(i18n("Adam Treat"), QString(), QStringLiteral("treat@kde.org"));
     about.addCredit(i18n("Danny Allen"), i18n("1.0 application icon"), QStringLiteral("danny@dannyallen.co.uk"));
     about.addCredit(i18n("Vincent Wagelaar"), QString(), QStringLiteral("vincent@ricardis.tudelft.nl"));
     about.addCredit(i18n("Knut Morten Johansson"), QString(), QStringLiteral("knut@johansson.com"));
-    about.addCredit(i18n("Felix Berger"),  i18n("ChunkBar's tooltip and IWFileTreeItem sorting"), QStringLiteral("bflat1@gmx.net"));
+    about.addCredit(i18n("Felix Berger"), i18n("ChunkBar's tooltip and IWFileTreeItem sorting"), QStringLiteral("bflat1@gmx.net"));
     about.addCredit(i18n("Andreas Kling"), QString(), QStringLiteral("kling@impul.se"));
     about.addCredit(i18n("Felipe Sateler"), QString(), QStringLiteral("fsateler@gmail.com"));
-    about.addCredit(i18n("Maxmind"), i18n("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."), QString(), QStringLiteral("http://www.maxmind.com/"));
+    about.addCredit(i18n("Maxmind"),
+                    i18n("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."),
+                    QString(),
+                    QStringLiteral("http://www.maxmind.com/"));
     about.addCredit(i18n("Adam Forsyth"), i18n("File prioritization and some other patches"), QStringLiteral("agforsyth@gmail.com"));
-    about.addCredit(i18n("Thomas Bernard"), i18n("Miniupnp was used as an example for our own UPnP implementation"), QString(), QStringLiteral("http://miniupnp.free.fr/"));
+    about.addCredit(i18n("Thomas Bernard"),
+                    i18n("Miniupnp was used as an example for our own UPnP implementation"),
+                    QString(),
+                    QStringLiteral("http://miniupnp.free.fr/"));
     about.addCredit(i18n("Lesly Weyts"), i18n("Zeroconf enhancements"));
     about.addCredit(i18n("Kevin Andre"), i18n("Zeroconf enhancements"), QString(), QStringLiteral("http://users.edpnet.be/hyperquantum/"));
     about.addCredit(i18n("Dagur Valberg Johannsson"), i18n("Coldmilk webgui"), QStringLiteral("dagurval@pvv.ntnu.no"));
@@ -176,14 +187,14 @@ int main(int argc, char** argv)
     KAboutData::setApplicationData(about);
     about.setupCommandLine(&parser);
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("verbose"), i18n("Enable logging to standard output")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("silent"), i18n("Silently open torrent given on URL")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QStringLiteral("+[URL]"), i18n("Document to open")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("silent"), i18n("Silently open torrent given on URL")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("+[URL]"), i18n("Document to open")));
     parser.process(app);
     about.processCommandLine(&parser);
 
     const KDBusService dbusService(KDBusService::Unique);
 
-#if 0 //ndef Q_WS_WIN
+#if 0 // ndef Q_WS_WIN
     // need to grab lock after the fork call in start, otherwise this will not work properly
     if (!GrabPIDLock()) {
         fprintf(stderr, "ktorrent is already running !\n");
@@ -205,10 +216,10 @@ int main(int argc, char** argv)
 
         kt::GUI widget;
 
-        auto handleCmdLine = [&widget, &parser](const QStringList & arguments, const QString & workingDirectory) {
+        auto handleCmdLine = [&widget, &parser](const QStringList &arguments, const QString &workingDirectory) {
             if (!arguments.isEmpty()) {
                 parser.parse(arguments);
-#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5,62,0)
+#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 62, 0)
                 widget.setAttribute(Qt::WA_NativeWindow, true);
                 KStartupInfo::setNewStartupId(widget.windowHandle(), KStartupInfo::startupId());
 #else
@@ -223,7 +234,7 @@ int main(int argc, char** argv)
             bool silent = parser.isSet(QStringLiteral("silent"));
             auto loadMethod = silent ? &kt::GUI::loadSilently : &kt::GUI::load;
             const auto positionalArguments = parser.positionalArguments();
-            for (const QString& filePath : positionalArguments) {
+            for (const QString &filePath : positionalArguments) {
                 QUrl url = QFile::exists(filePath) ? QUrl::fromLocalFile(filePath) : QUrl(filePath);
                 (widget.*loadMethod)(url);
             }
@@ -237,9 +248,9 @@ int main(int argc, char** argv)
 
         app.setQuitOnLastWindowClosed(false);
         app.exec();
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Uncaught exception: " << err.toString() << endl;
-    } catch (std::exception& err) {
+    } catch (std::exception &err) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Uncaught exception: " << err.what() << endl;
     } catch (...) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Uncaught unknown exception " << endl;
@@ -247,6 +258,3 @@ int main(int argc, char** argv)
     bt::Globals::cleanup();
     return 0;
 }
-
-
-

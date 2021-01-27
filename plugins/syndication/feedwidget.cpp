@@ -28,19 +28,20 @@
 
 #include <KRun>
 
-#include <util/log.h>
-#include "ktfeed.h"
 #include "feedwidget.h"
 #include "feedwidgetmodel.h"
-#include "managefiltersdlg.h"
 #include "filterlist.h"
+#include "ktfeed.h"
+#include "managefiltersdlg.h"
 #include "syndicationplugin.h"
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-QString FeedWidget::item_template = i18n("\
+QString FeedWidget::item_template = i18n(
+    "\
     <html>\
     <body style=\"color:%4\">\
     <div style=\"border-style:solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">\
@@ -52,11 +53,11 @@ QString FeedWidget::item_template = i18n("\
     </html>\
     ");
 
-FeedWidget::FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* parent)
-    : QWidget(parent),
-      feed(nullptr),
-      filters(filters),
-      act(act)
+FeedWidget::FeedWidget(FilterList *filters, SyndicationActivity *act, QWidget *parent)
+    : QWidget(parent)
+    , feed(nullptr)
+    , filters(filters)
+    , act(act)
 {
     setupUi(this);
     m_splitter->setStretchFactor(0, 3);
@@ -78,8 +79,7 @@ FeedWidget::FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* p
     m_item_list->setAlternatingRowColors(true);
     m_item_list->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-
-    QHeaderView* hv = m_item_list->header();
+    QHeaderView *hv = m_item_list->header();
     hv->setSectionResizeMode(QHeaderView::Interactive);
     connect(m_item_list->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FeedWidget::selectionChanged);
 
@@ -97,11 +97,11 @@ FeedWidget::~FeedWidget()
 {
 }
 
-void FeedWidget::loadState(KConfigGroup& g)
+void FeedWidget::loadState(KConfigGroup &g)
 {
     m_splitter->restoreState(g.readEntry("feed_widget_splitter", QByteArray()));
 
-    QHeaderView* hv = m_item_list->header();
+    QHeaderView *hv = m_item_list->header();
     QByteArray state = g.readEntry("feed_widget_list_header", QByteArray());
     if (!state.isEmpty())
         hv->restoreState(state);
@@ -109,10 +109,10 @@ void FeedWidget::loadState(KConfigGroup& g)
         QTimer::singleShot(3000, this, &FeedWidget::resizeColumns);
 }
 
-void FeedWidget::saveState(KConfigGroup& g)
+void FeedWidget::saveState(KConfigGroup &g)
 {
     g.writeEntry("feed_widget_splitter", m_splitter->saveState());
-    QHeaderView* hv = m_item_list->header();
+    QHeaderView *hv = m_item_list->header();
     g.writeEntry("feed_widget_list_header", hv->saveState());
 }
 
@@ -121,8 +121,7 @@ void FeedWidget::resizeColumns()
     m_item_list->header()->resizeSections(QHeaderView::ResizeToContents);
 }
 
-
-void FeedWidget::setFeed(Feed* f)
+void FeedWidget::setFeed(Feed *f)
 {
     if (feed) {
         disconnect(feed, &Feed::updated, this, &FeedWidget::updated);
@@ -144,14 +143,13 @@ void FeedWidget::setFeed(Feed* f)
     }
 }
 
-
 void FeedWidget::downloadClicked()
 {
     if (!feed)
         return;
 
     const QModelIndexList sel = m_item_list->selectionModel()->selectedRows();
-    for (const QModelIndex& idx : sel) {
+    for (const QModelIndex &idx : sel) {
         Syndication::ItemPtr ptr = model->itemForIndex(idx);
         if (ptr)
             feed->downloadItem(ptr, QString(), QString(), QString(), false);
@@ -196,7 +194,7 @@ void FeedWidget::cookiesClicked()
     }
 }
 
-void FeedWidget::selectionChanged(const QItemSelection& sel, const QItemSelection& prev)
+void FeedWidget::selectionChanged(const QItemSelection &sel, const QItemSelection &prev)
 {
     Q_UNUSED(prev);
     m_download->setEnabled(sel.count() > 0);
@@ -204,12 +202,11 @@ void FeedWidget::selectionChanged(const QItemSelection& sel, const QItemSelectio
     if (sel.count() > 0 && feed) {
         Syndication::ItemPtr item = model->itemForIndex(m_item_list->selectionModel()->selectedRows().front());
         if (item) {
-            m_item_view->setHtml(item_template
-                                 .arg(item->title())
-                                 .arg(QLocale().toString(QDateTime::fromTime_t(item->datePublished()), QLocale::ShortFormat))
-                                 .arg(item->description())
-                                 .arg(QApplication::palette().text().color().name(QColor::NameFormat::HexRgb))
-                                 , QUrl(feed->feedData()->link()));
+            m_item_view->setHtml(item_template.arg(item->title())
+                                     .arg(QLocale().toString(QDateTime::fromTime_t(item->datePublished()), QLocale::ShortFormat))
+                                     .arg(item->description())
+                                     .arg(QApplication::palette().text().color().name(QColor::NameFormat::HexRgb)),
+                                 QUrl(feed->feedData()->link()));
         }
     }
 }
@@ -237,11 +234,9 @@ void FeedWidget::updated()
     m_active_filters->setText(QStringLiteral("<b>") + feed->filterNamesString() + QStringLiteral("</b>"));
 }
 
-
-void FeedWidget::onFeedRenamed(kt::Feed* f)
+void FeedWidget::onFeedRenamed(kt::Feed *f)
 {
     updateCaption(this, f->displayName());
 }
-
 
 }

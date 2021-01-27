@@ -25,36 +25,34 @@
 
 #include <KLocalizedString>
 
-#include <util/log.h>
+#include "mediamodel.h"
+#include <interfaces/coreinterface.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <torrent/queuemanager.h>
 #include <util/constants.h>
 #include <util/functions.h>
-#include <interfaces/coreinterface.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentfileinterface.h>
-#include <torrent/queuemanager.h>
-#include "mediamodel.h"
-
-
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-MediaModel::MediaModel(CoreInterface* core, QObject* parent) : QAbstractListModel(parent), core(core)
+MediaModel::MediaModel(CoreInterface *core, QObject *parent)
+    : QAbstractListModel(parent)
+    , core(core)
 {
-    const QueueManager* const qman = core->getQueueManager();
-    for (bt::TorrentInterface* tc : *qman) {
+    const QueueManager *const qman = core->getQueueManager();
+    for (bt::TorrentInterface *tc : *qman) {
         onTorrentAdded(tc);
     }
 }
-
 
 MediaModel::~MediaModel()
 {
 }
 
-int MediaModel::rowCount(const QModelIndex& parent) const
+int MediaModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return items.count();
@@ -62,7 +60,7 @@ int MediaModel::rowCount(const QModelIndex& parent) const
         return 0;
 }
 
-int MediaModel::columnCount(const QModelIndex& parent) const
+int MediaModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return 1;
@@ -76,7 +74,7 @@ QVariant MediaModel::headerData(int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
-QVariant MediaModel::data(const QModelIndex& index, int role) const
+QVariant MediaModel::data(const QModelIndex &index, int role) const
 {
     if (index.column() != 0 || index.row() < 0 || index.row() >= items.count())
         return QVariant();
@@ -85,10 +83,8 @@ QVariant MediaModel::data(const QModelIndex& index, int role) const
     switch (role) {
     case Qt::ToolTipRole: {
         QString preview = mf->previewAvailable() ? i18n("Available") : i18n("Pending");
-        return i18n("<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %",
-                    mf->name(), preview, mf->downloadPercentage());
-    }
-    break;
+        return i18n("<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %", mf->name(), preview, mf->downloadPercentage());
+    } break;
     case Qt::DisplayRole:
         return mf->name();
     case Qt::DecorationRole:
@@ -104,7 +100,7 @@ QVariant MediaModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool MediaModel::removeRows(int row, int count, const QModelIndex& parent)
+bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (parent.isValid())
         return false;
@@ -119,7 +115,7 @@ bool MediaModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool MediaModel::insertRows(int row, int count, const QModelIndex& parent)
+bool MediaModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     if (parent.isValid())
         return false;
@@ -129,7 +125,7 @@ bool MediaModel::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-void MediaModel::onTorrentAdded(bt::TorrentInterface* tc)
+void MediaModel::onTorrentAdded(bt::TorrentInterface *tc)
 {
     if (tc->getStats().multi_file_torrent) {
         int cnt = 0;
@@ -150,7 +146,7 @@ void MediaModel::onTorrentAdded(bt::TorrentInterface* tc)
     }
 }
 
-void MediaModel::onTorrentRemoved(bt::TorrentInterface* tc)
+void MediaModel::onTorrentRemoved(bt::TorrentInterface *tc)
 {
     int row = 0;
     int start = -1;
@@ -175,7 +171,7 @@ void MediaModel::onTorrentRemoved(bt::TorrentInterface* tc)
         removeRows(start, cnt, QModelIndex());
 }
 
-MediaFileRef MediaModel::fileForIndex(const QModelIndex& idx) const
+MediaFileRef MediaModel::fileForIndex(const QModelIndex &idx) const
 {
     if (idx.row() < 0 || idx.row() >= items.count())
         return MediaFileRef(QString());
@@ -183,7 +179,7 @@ MediaFileRef MediaModel::fileForIndex(const QModelIndex& idx) const
         return MediaFileRef(items.at(idx.row()));
 }
 
-QModelIndex MediaModel::indexForPath(const QString& path) const
+QModelIndex MediaModel::indexForPath(const QString &path) const
 {
     Uint32 idx = 0;
     for (MediaFile::Ptr mf : qAsConst(items)) {
@@ -195,7 +191,7 @@ QModelIndex MediaModel::indexForPath(const QString& path) const
     return QModelIndex();
 }
 
-MediaFileRef MediaModel::find(const QString& path)
+MediaFileRef MediaModel::find(const QString &path)
 {
     for (MediaFile::Ptr mf : qAsConst(items)) {
         if (mf->path() == path)
@@ -205,8 +201,7 @@ MediaFileRef MediaModel::find(const QString& path)
     return MediaFileRef(path);
 }
 
-
-Qt::ItemFlags MediaModel::flags(const QModelIndex& index) const
+Qt::ItemFlags MediaModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
 
@@ -223,11 +218,11 @@ QStringList MediaModel::mimeTypes() const
     return types;
 }
 
-QMimeData* MediaModel::mimeData(const QModelIndexList& indexes) const
+QMimeData *MediaModel::mimeData(const QModelIndexList &indexes) const
 {
-    QMimeData* data = new QMimeData();
+    QMimeData *data = new QMimeData();
     QList<QUrl> urls;
-    for (const QModelIndex& idx : indexes) {
+    for (const QModelIndex &idx : indexes) {
         if (!idx.isValid() || idx.row() < 0 || idx.row() >= items.count())
             continue;
 
@@ -238,7 +233,7 @@ QMimeData* MediaModel::mimeData(const QModelIndexList& indexes) const
     return data;
 }
 
-QModelIndex MediaModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex MediaModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (row < 0 || row >= items.count() || column != 0 || parent.isValid())
         return QModelIndex();

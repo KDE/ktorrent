@@ -27,7 +27,6 @@
 
 namespace kt
 {
-
 /**
     Line displayed when the user is resizing or moving items
     The line has a text item below it to the side
@@ -44,12 +43,13 @@ public:
      * @param ny The new y start
      * @param text The text to display
      */
-    void update(qreal nx, qreal ny, const QString& text);
+    void update(qreal nx, qreal ny, const QString &text);
+
 private:
     qreal x;
     qreal y;
     qreal text_offset;
-    QGraphicsTextItem* text;
+    QGraphicsTextItem *text;
 };
 
 }

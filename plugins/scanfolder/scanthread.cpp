@@ -29,7 +29,6 @@
 
 #include <util/fileops.h>
 
-
 namespace kt
 {
 const int UPDATE_FOLDER_EVENT = QEvent::User + 1;
@@ -38,37 +37,42 @@ const int RECURSIVE_SCAN_EVENT = QEvent::User + 2;
 class UpdateFolderEvent : public QEvent
 {
 public:
-    UpdateFolderEvent() : QEvent((QEvent::Type)UPDATE_FOLDER_EVENT)
-    {}
+    UpdateFolderEvent()
+        : QEvent((QEvent::Type)UPDATE_FOLDER_EVENT)
+    {
+    }
 
     ~UpdateFolderEvent() override
-    {}
+    {
+    }
 };
 
 class RecursiveScanEvent : public QEvent
 {
 public:
-    RecursiveScanEvent(const QUrl& url) : QEvent((QEvent::Type)RECURSIVE_SCAN_EVENT), url(url)
-    {}
+    RecursiveScanEvent(const QUrl &url)
+        : QEvent((QEvent::Type)RECURSIVE_SCAN_EVENT)
+        , url(url)
+    {
+    }
 
     ~RecursiveScanEvent() override
-    {}
+    {
+    }
 
     QUrl url;
 };
 
 ScanThread::ScanThread()
-    : stop_requested(false),
-      recursive(false)
+    : stop_requested(false)
+    , recursive(false)
 {
     scan_folders.setAutoDelete(true);
     moveToThread(this);
 }
 
-
 ScanThread::~ScanThread()
 {
-
 }
 
 void ScanThread::setRecursive(bool rec)
@@ -76,13 +80,12 @@ void ScanThread::setRecursive(bool rec)
     recursive = rec;
 }
 
-
-void ScanThread::addDirectory(const QUrl& url, bool recursive)
+void ScanThread::addDirectory(const QUrl &url, bool recursive)
 {
     scan(url, recursive);
 }
 
-void ScanThread::setFolderList(const QStringList& folders)
+void ScanThread::setFolderList(const QStringList &folders)
 {
     QMutexLocker lock(&mutex);
     if (this->folders != folders) {
@@ -92,17 +95,16 @@ void ScanThread::setFolderList(const QStringList& folders)
     }
 }
 
-void ScanThread::customEvent(QEvent* ev)
+void ScanThread::customEvent(QEvent *ev)
 {
     if (ev->type() == UPDATE_FOLDER_EVENT) {
         updateFolders();
     } else if (ev->type() == RECURSIVE_SCAN_EVENT) {
-        RecursiveScanEvent* rev = (RecursiveScanEvent*)ev;
+        RecursiveScanEvent *rev = (RecursiveScanEvent *)ev;
         scan(rev->url, true);
     }
     ev->accept();
 }
-
 
 void ScanThread::updateFolders()
 {
@@ -125,13 +127,13 @@ void ScanThread::updateFolders()
         }
     }
 
-    for (const QString& folder : qAsConst(tmp)) {
+    for (const QString &folder : qAsConst(tmp)) {
         if (scan_folders.find(folder))
             continue;
 
         if (QDir(folder).exists()) {
             // only add folder when it exists
-            ScanFolder* sf = new ScanFolder(this, QUrl::fromLocalFile(folder), recursive);
+            ScanFolder *sf = new ScanFolder(this, QUrl::fromLocalFile(folder), recursive);
             scan_folders.insert(folder, sf);
         }
     }
@@ -155,13 +157,12 @@ void ScanThread::stop()
     wait();
 }
 
-bool ScanThread::alreadyLoaded(const QDir& d, const QString& torrent)
+bool ScanThread::alreadyLoaded(const QDir &d, const QString &torrent)
 {
     return d.exists(QLatin1Char('.') + torrent);
 }
 
-
-void ScanThread::scan(const QUrl& dir, bool recursive)
+void ScanThread::scan(const QUrl &dir, bool recursive)
 {
     if (stop_requested)
         return;
@@ -172,7 +173,7 @@ void ScanThread::scan(const QUrl& dir, bool recursive)
     const QStringList files = d.entryList(filters, QDir::Readable | QDir::Files);
 
     QList<QUrl> torrents;
-    for (const QString& tor : files) {
+    for (const QString &tor : files) {
         if (!alreadyLoaded(d, tor))
             torrents.append(QUrl::fromLocalFile(d.absoluteFilePath(tor)));
     }
@@ -186,7 +187,7 @@ void ScanThread::scan(const QUrl& dir, bool recursive)
         const QString loaded_localized = i18nc("folder name part", "loaded");
 
         const QStringList dirs = d.entryList(QDir::Readable | QDir::Dirs);
-        for (const QString& subdir : dirs) {
+        for (const QString &subdir : dirs) {
             if (subdir != QStringLiteral(".") && subdir != QStringLiteral("..") && subdir != loaded_localized) {
                 QCoreApplication::postEvent(this, new RecursiveScanEvent(QUrl::fromLocalFile(d.absoluteFilePath(subdir))));
             }

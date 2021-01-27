@@ -20,8 +20,8 @@
 #ifndef KTVERSION_HH
 #define KTVERSION_HH
 
-#include <version.h>
 #include "util/constants.h"
+#include <version.h>
 
 namespace kt
 {

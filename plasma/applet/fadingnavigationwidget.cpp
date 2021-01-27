@@ -21,7 +21,8 @@
 #include "fadingnavigationwidget.h"
 #include <QGraphicsLinearLayout>
 
-FadingNavigationWidget::FadingNavigationWidget(QGraphicsWidget* parent) : QObject()
+FadingNavigationWidget::FadingNavigationWidget(QGraphicsWidget *parent)
+    : QObject()
 {
     this->parent = parent;
     parent->installEventFilter(this);
@@ -33,17 +34,17 @@ FadingNavigationWidget::~FadingNavigationWidget()
 {
 }
 
-Plasma::Frame* FadingNavigationWidget::frame()
+Plasma::Frame *FadingNavigationWidget::frame()
 {
     return mFrame;
 }
 
-Plasma::PushButton* FadingNavigationWidget::prevButton()
+Plasma::PushButton *FadingNavigationWidget::prevButton()
 {
     return mPrevButton;
 }
 
-Plasma::PushButton* FadingNavigationWidget::nextButton()
+Plasma::PushButton *FadingNavigationWidget::nextButton()
 {
     return mNextButton;
 }
@@ -59,7 +60,7 @@ void FadingNavigationWidget::initFrame()
 {
     mFrame = new Plasma::Frame(parent);
     mFrame->setZValue(10);
-    QGraphicsLinearLayout* l = new QGraphicsLinearLayout();
+    QGraphicsLinearLayout *l = new QGraphicsLinearLayout();
     mPrevButton = new Plasma::PushButton(mFrame);
     mPrevButton->nativeWidget()->setIcon(QIcon::fromTheme("arrow-left"));
     mPrevButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -80,7 +81,7 @@ void FadingNavigationWidget::initFrame()
     mFadingItem->hide();
 }
 
-bool FadingNavigationWidget::eventFilter(QObject* obj, QEvent* event)
+bool FadingNavigationWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == parent && navigation_enabled) {
         if (event->type() == QEvent::GraphicsSceneHoverEnter) {

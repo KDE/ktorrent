@@ -20,9 +20,9 @@
 
 #include "tabbarwidget.h"
 
-#include <QAction>
 #include <KConfigGroup>
 #include <KToolBar>
+#include <QAction>
 
 #include <QIcon>
 #include <QTimer>
@@ -30,33 +30,34 @@
 
 namespace kt
 {
-
-ActionGroup::ActionGroup(QObject* parent) : QObject(parent)
-{}
+ActionGroup::ActionGroup(QObject *parent)
+    : QObject(parent)
+{
+}
 
 ActionGroup::~ActionGroup()
-{}
+{
+}
 
-void ActionGroup::addAction(QAction* act)
+void ActionGroup::addAction(QAction *act)
 {
     actions.append(act);
     connect(act, &QAction::toggled, this, &ActionGroup::toggled);
 }
 
-void ActionGroup::removeAction(QAction* act)
+void ActionGroup::removeAction(QAction *act)
 {
     actions.removeAll(act);
     disconnect(act, &QAction::toggled, this, &ActionGroup::toggled);
 }
 
-
 void ActionGroup::toggled(bool on)
 {
-    QAction* act = qobject_cast<QAction*>(sender());
+    QAction *act = qobject_cast<QAction *>(sender());
     if (!act)
         return;
 
-    for (QAction* a : qAsConst(actions)) {
+    for (QAction *a : qAsConst(actions)) {
         if (a != act)
             a->setChecked(false);
     }
@@ -65,12 +66,12 @@ void ActionGroup::toggled(bool on)
     Q_EMIT actionTriggered(act);
 }
 
-
-
-TabBarWidget::TabBarWidget(QSplitter* splitter, QWidget* parent)
-    : QWidget(parent), widget_stack(nullptr), shrunken(false)
+TabBarWidget::TabBarWidget(QSplitter *splitter, QWidget *parent)
+    : QWidget(parent)
+    , widget_stack(nullptr)
+    , shrunken(false)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
     tab_bar = new KToolBar(this);
@@ -97,10 +98,9 @@ TabBarWidget::~TabBarWidget()
 {
 }
 
-
-void TabBarWidget::addTab(QWidget* ti, const QString& text, const QString& icon, const QString& tooltip)
+void TabBarWidget::addTab(QWidget *ti, const QString &text, const QString &icon, const QString &tooltip)
 {
-    QAction* act = tab_bar->addAction(QIcon::fromTheme(icon), text);
+    QAction *act = tab_bar->addAction(QIcon::fromTheme(icon), text);
     act->setCheckable(true);
     act->setToolTip(tooltip);
     act->setChecked(widget_stack->count() == 0 && !shrunken);
@@ -110,10 +110,9 @@ void TabBarWidget::addTab(QWidget* ti, const QString& text, const QString& icon,
     show();
 }
 
-
-void TabBarWidget::removeTab(QWidget* ti)
+void TabBarWidget::removeTab(QWidget *ti)
 {
-    QMap<QWidget*, QAction*>::iterator itr = widget_to_action.find(ti);
+    QMap<QWidget *, QAction *>::iterator itr = widget_to_action.find(ti);
     if (itr == widget_to_action.end())
         return;
 
@@ -133,26 +132,26 @@ void TabBarWidget::removeTab(QWidget* ti)
         widget_stack->hide();
         hide();
     } else {
-        QMap<QWidget*, QAction*>::iterator itr = widget_to_action.find(widget_stack->currentWidget());
+        QMap<QWidget *, QAction *>::iterator itr = widget_to_action.find(widget_stack->currentWidget());
         if (itr != widget_to_action.end()) {
-            QAction* act = itr.value();
+            QAction *act = itr.value();
             act->setChecked(true);
         }
     }
 }
 
-void TabBarWidget::changeTabIcon(QWidget* ti, const QString& icon)
+void TabBarWidget::changeTabIcon(QWidget *ti, const QString &icon)
 {
-    QMap<QWidget*, QAction*>::iterator itr = widget_to_action.find(ti);
+    QMap<QWidget *, QAction *>::iterator itr = widget_to_action.find(ti);
     if (itr == widget_to_action.end())
         return;
 
     itr.value()->setIcon(QIcon::fromTheme(icon));
 }
 
-void TabBarWidget::changeTabText(QWidget* ti, const QString& text)
+void TabBarWidget::changeTabText(QWidget *ti, const QString &text)
 {
-    QMap<QWidget*, QAction*>::iterator itr = widget_to_action.find(ti);
+    QMap<QWidget *, QAction *>::iterator itr = widget_to_action.find(ti);
     if (itr == widget_to_action.end())
         return;
 
@@ -171,10 +170,10 @@ void TabBarWidget::unshrink()
     shrunken = false;
 }
 
-void TabBarWidget::onActionTriggered(QAction* act)
+void TabBarWidget::onActionTriggered(QAction *act)
 {
-    QWidget* ti = nullptr;
-    QMap<QWidget*, QAction*>::iterator i = widget_to_action.begin();
+    QWidget *ti = nullptr;
+    QMap<QWidget *, QAction *>::iterator i = widget_to_action.begin();
     while (i != widget_to_action.end() && !ti) {
         if (i.value() == act)
             ti = i.key();
@@ -198,10 +197,9 @@ void TabBarWidget::onActionTriggered(QAction* act)
     }
 }
 
-
-void TabBarWidget::saveState(KSharedConfigPtr cfg, const QString& group)
+void TabBarWidget::saveState(KSharedConfigPtr cfg, const QString &group)
 {
-    QWidget* current = widget_stack->currentWidget();
+    QWidget *current = widget_stack->currentWidget();
 
     KConfigGroup g = cfg->group(group);
     g.writeEntry("shrunken", shrunken);
@@ -209,7 +207,7 @@ void TabBarWidget::saveState(KSharedConfigPtr cfg, const QString& group)
         g.writeEntry("current_tab", widget_to_action[current]->text());
 }
 
-void TabBarWidget::loadState(KSharedConfigPtr cfg, const QString& group)
+void TabBarWidget::loadState(KSharedConfigPtr cfg, const QString &group)
 {
     KConfigGroup g = cfg->group(group);
 
@@ -222,7 +220,7 @@ void TabBarWidget::loadState(KSharedConfigPtr cfg, const QString& group)
     }
 
     QString ctab = g.readPathEntry("current_tab", QString());
-    for (QMap<QWidget*, QAction*>::const_iterator i = widget_to_action.cbegin(); i != widget_to_action.cend(); i++) {
+    for (QMap<QWidget *, QAction *>::const_iterator i = widget_to_action.cbegin(); i != widget_to_action.cend(); i++) {
         if (i.value()->text() == ctab) {
             widget_stack->setCurrentWidget(i.key());
             i.value()->setChecked(!tmp);
@@ -241,6 +239,5 @@ void TabBarWidget::setToolButtonStyle()
 {
     tab_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 }
-
 
 }

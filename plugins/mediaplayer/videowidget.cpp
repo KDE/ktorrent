@@ -33,31 +33,32 @@
 #include <KToggleFullScreenAction>
 #include <KToolBar>
 
-#include <Phonon/Path>
 #include <Phonon/AudioOutput>
 #include <Phonon/Global>
+#include <Phonon/Path>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
 
-#include <util/log.h>
-#include <torrent/chunkbar.h>
 #include "mediaplayer.h"
-#include "videochunkbar.h"
-#include "screensaver_interface.h"
 #include "powermanagementinhibit_interface.h"
-
+#include "screensaver_interface.h"
+#include "videochunkbar.h"
+#include <torrent/chunkbar.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
-VideoWidget::VideoWidget(MediaPlayer* player, KActionCollection* ac, QWidget* parent)
-    : QWidget(parent), player(player), chunk_bar(nullptr), fullscreen(false),
-      screensaver_cookie(0), powermanagement_cookie(0)
+VideoWidget::VideoWidget(MediaPlayer *player, KActionCollection *ac, QWidget *parent)
+    : QWidget(parent)
+    , player(player)
+    , chunk_bar(nullptr)
+    , fullscreen(false)
+    , screensaver_cookie(0)
+    , powermanagement_cookie(0)
 {
-    QVBoxLayout* vlayout = new QVBoxLayout(this);
+    QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setMargin(0);
     vlayout->setSpacing(0);
 
@@ -68,7 +69,7 @@ VideoWidget::VideoWidget(MediaPlayer* player, KActionCollection* ac, QWidget* pa
     chunk_bar = new VideoChunkBar(player->getCurrentSource(), this);
     chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
 
-    QHBoxLayout* hlayout = new QHBoxLayout(nullptr);
+    QHBoxLayout *hlayout = new QHBoxLayout(nullptr);
 
     play_action = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-start")), i18n("Play"), this);
     connect(play_action, &QAction::triggered, this, &VideoWidget::play);
@@ -81,7 +82,7 @@ VideoWidget::VideoWidget(MediaPlayer* player, KActionCollection* ac, QWidget* pa
     tb->addAction(play_action);
     tb->addAction(ac->action(QStringLiteral("media_pause")));
     tb->addAction(stop_action);
-    QAction* tfs = ac->action(QStringLiteral("video_fullscreen"));
+    QAction *tfs = ac->action(QStringLiteral("video_fullscreen"));
     connect(tfs, &QAction::toggled, this, &VideoWidget::toggleFullScreen);
     tb->addAction(tfs);
 
@@ -116,7 +117,6 @@ VideoWidget::VideoWidget(MediaPlayer* player, KActionCollection* ac, QWidget* pa
     inhibitScreenSaver(true);
 }
 
-
 VideoWidget::~VideoWidget()
 {
     inhibitScreenSaver(false);
@@ -129,7 +129,7 @@ void VideoWidget::play()
 
 void VideoWidget::stop()
 {
-    Phonon::MediaObject* mo = player->media0bject();
+    Phonon::MediaObject *mo = player->media0bject();
     if (mo->state() == Phonon::PausedState) {
         mo->seek(0);
         mo->stop();
@@ -137,7 +137,6 @@ void VideoWidget::stop()
         mo->stop();
     }
 }
-
 
 void VideoWidget::setControlsVisible(bool on)
 {
@@ -148,17 +147,16 @@ void VideoWidget::setControlsVisible(bool on)
     time_label->setVisible(on);
 }
 
-bool VideoWidget::eventFilter(QObject* dst, QEvent* event)
+bool VideoWidget::eventFilter(QObject *dst, QEvent *event)
 {
     Q_UNUSED(dst);
     if (fullscreen && event->type() == QEvent::MouseMove)
-        mouseMoveEvent((QMouseEvent*)event);
+        mouseMoveEvent((QMouseEvent *)event);
 
     return true;
 }
 
-
-void VideoWidget::mouseMoveEvent(QMouseEvent* event)
+void VideoWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (!fullscreen)
         return;
@@ -193,49 +191,54 @@ void VideoWidget::setFullScreen(bool on)
 void VideoWidget::inhibitScreenSaver(bool on)
 {
     org::freedesktop::ScreenSaver screensaver(QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus());
-    org::freedesktop::PowerManagement::Inhibit powerManagement(QStringLiteral("org.freedesktop.PowerManagement.Inhibit"), QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"), QDBusConnection::sessionBus());
+    org::freedesktop::PowerManagement::Inhibit powerManagement(QStringLiteral("org.freedesktop.PowerManagement.Inhibit"),
+                                                               QStringLiteral("/org/freedesktop/PowerManagement/Inhibit"),
+                                                               QDBusConnection::sessionBus());
     if (on) {
         QString msg = i18n("KTorrent is playing a video.");
         auto pendingReply = screensaver.Inhibit(QStringLiteral("ktorrent"), msg);
         auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
-        connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [ = ](QDBusPendingCallWatcher * callWatcher) {
+        connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
             QDBusPendingReply<quint32> reply = *callWatcher;
             if (reply.isValid()) {
                 screensaver_cookie = reply.value();
                 Out(SYS_MPL | LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
-            } else Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress screensaver" << endl;
+            } else
+                Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress screensaver" << endl;
         });
 
         auto pendingReply2 = powerManagement.Inhibit(QStringLiteral("ktorrent"), msg);
         auto pendingCallWatcher2 = new QDBusPendingCallWatcher(pendingReply2, this);
-        connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [ = ](QDBusPendingCallWatcher * callWatcher) {
+        connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
             QDBusPendingReply<quint32> reply = *callWatcher;
             if (reply.isValid()) {
                 screensaver_cookie = reply.value();
                 Out(SYS_MPL | LOG_NOTICE) << "PowerManagement inhibited (cookie " << powermanagement_cookie << ")" << endl;
-            } else Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
+            } else
+                Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
         });
     } else {
         auto pendingReply = screensaver.UnInhibit(screensaver_cookie);
         auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
-        connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [ = ](QDBusPendingCallWatcher * callWatcher) {
+        connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
             QDBusPendingReply<void> reply = *callWatcher;
             if (reply.isValid()) {
                 screensaver_cookie = 0;
                 Out(SYS_MPL | LOG_NOTICE) << "Screensaver uninhibited" << endl;
-            } else Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit screensaver" << endl;
+            } else
+                Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit screensaver" << endl;
         });
 
         auto pendingReply2 = powerManagement.UnInhibit(powermanagement_cookie);
         auto pendingCallWatcher2 = new QDBusPendingCallWatcher(pendingReply2, this);
-        connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [ = ](QDBusPendingCallWatcher * callWatcher) {
+        connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
             QDBusPendingReply<void> reply = *callWatcher;
             if (reply.isValid()) {
                 powermanagement_cookie = 0;
                 Out(SYS_MPL | LOG_NOTICE) << "Power management uninhibited" << endl;
-            } else Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit power management" << endl;
+            } else
+                Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit power management" << endl;
         });
-
     }
 }
 
@@ -253,7 +256,7 @@ QString VideoWidget::formatTime(qint64 cur, qint64 total)
     return QStringLiteral(" %1 / %2 ").arg(ct.toString(QStringLiteral("hh:mm:ss")), tt.toString(QStringLiteral("hh:mm:ss")));
 }
 
-void VideoWidget::playing(const MediaFileRef& mfile)
+void VideoWidget::playing(const MediaFileRef &mfile)
 {
     bool stream = player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream;
     if (fullscreen && stream)

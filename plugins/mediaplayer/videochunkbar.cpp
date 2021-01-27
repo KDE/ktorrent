@@ -26,11 +26,12 @@
 #include <QStyle>
 #include <QStyleOption>
 
-
 namespace kt
 {
-VideoChunkBar::VideoChunkBar(const kt::MediaFileRef& mf, QWidget* parent)
-    : ChunkBar(parent), mfile(mf), current_chunk(0)
+VideoChunkBar::VideoChunkBar(const kt::MediaFileRef &mf, QWidget *parent)
+    : ChunkBar(parent)
+    , mfile(mf)
+    , current_chunk(0)
 {
     setMediaFile(mf);
 }
@@ -39,7 +40,7 @@ VideoChunkBar::~VideoChunkBar()
 {
 }
 
-void VideoChunkBar::setMediaFile(const kt::MediaFileRef& mf)
+void VideoChunkBar::setMediaFile(const kt::MediaFileRef &mf)
 {
     mfile = mf;
     MediaFile::Ptr file = mfile.mediaFile();
@@ -52,7 +53,6 @@ void VideoChunkBar::setMediaFile(const kt::MediaFileRef& mf)
         updateChunkBar();
     }
 }
-
 
 void VideoChunkBar::updateBitSet()
 {
@@ -89,7 +89,7 @@ void VideoChunkBar::timeElapsed(qint64 time)
         updateChunkBar();
 }
 
-void VideoChunkBar::drawBarContents(QPainter* p)
+void VideoChunkBar::drawBarContents(QPainter *p)
 {
     ChunkBar::drawBarContents(p);
 
@@ -110,15 +110,14 @@ void VideoChunkBar::drawBarContents(QPainter* p)
     option.minimum = 0;
     option.maximum = bitset.getNumBits();
     option.tickPosition = QSlider::NoTicks;
-    //option.sliderValue = current_chunk;
+    // option.sliderValue = current_chunk;
     option.sliderPosition = current_chunk;
     option.rect = QRect(x - 5, 0, 11, contentsRect().height());
 
     QApplication::style()->drawControl(QStyle::CE_ScrollBarSlider, &option, p, this);
 }
 
-
-const bt::BitSet& VideoChunkBar::getBitSet() const
+const bt::BitSet &VideoChunkBar::getBitSet() const
 {
     return bitset;
 }

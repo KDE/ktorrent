@@ -27,43 +27,43 @@
 
 #include <KLocalizedString>
 
-#include <util/log.h>
-#include <util/fileops.h>
-#include <util/functions.h>
-#include <interfaces/functions.h>
-#include "ktfeed.h"
 #include "feedlist.h"
 #include "filterlist.h"
+#include "ktfeed.h"
 #include "syndicationactivity.h"
+#include <interfaces/functions.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-FeedList::FeedList(const QString& data_dir, QObject* parent) : QAbstractListModel(parent), data_dir(data_dir)
+FeedList::FeedList(const QString &data_dir, QObject *parent)
+    : QAbstractListModel(parent)
+    , data_dir(data_dir)
 {
 }
-
 
 FeedList::~FeedList()
 {
     qDeleteAll(feeds);
 }
 
-void FeedList::loadFeeds(FilterList* filter_list, SyndicationActivity* activity)
+void FeedList::loadFeeds(FilterList *filter_list, SyndicationActivity *activity)
 {
     QDir dir(data_dir);
     QStringList filters;
     filters << QStringLiteral("feed*");
     const QStringList sl = dir.entryList(filters, QDir::Dirs);
-    for (const QString& s : sl) {
+    for (const QString &s : sl) {
         QString idir = data_dir + s;
         if (!idir.endsWith(DirSeparator()))
             idir.append(DirSeparator());
 
         Out(SYS_GEN | LOG_NOTICE) << "Loading feed from directory " << idir << endl;
-        Feed* feed = 0;
+        Feed *feed = 0;
         try {
             feed = new Feed(idir);
             connect(feed, &Feed::downloadLink, activity, &SyndicationActivity::downloadLink);
@@ -103,9 +103,7 @@ void FeedList::importOldFeeds()
         unsigned char malf;
         unsigned short port;
 
-        in >> protocol >> user >> pass >> host
-           >> path >> path_encoded >> query >>  ref_encoded
-           >> malf >> port;
+        in >> protocol >> user >> pass >> host >> path >> path_encoded >> query >> ref_encoded >> malf >> port;
         feed_url.setScheme(protocol);
         feed_url.setUserName(user);
         feed_url.setPassword(pass);
@@ -120,7 +118,7 @@ void FeedList::importOldFeeds()
 
         // check for duplicate URL's
         bool found = false;
-        for (Feed* f : qAsConst(feeds)) {
+        for (Feed *f : qAsConst(feeds)) {
             if (f->feedUrl() == feed_url) {
                 found = true;
                 break;
@@ -128,7 +126,7 @@ void FeedList::importOldFeeds()
         }
 
         if (!found) {
-            Feed* f = new Feed(feed_url.toString(), Feed::newFeedDir(data_dir));
+            Feed *f = new Feed(feed_url.toString(), Feed::newFeedDir(data_dir));
             addFeed(f);
         }
     }
@@ -139,24 +137,24 @@ void FeedList::importOldFeeds()
     bt::Move(kt::DataDir() + QStringLiteral("rssfeeds.ktr"), kt::DataDir() + QStringLiteral("imported-rssfeeds.ktr"), true, true);
 }
 
-void FeedList::addFeed(Feed* f)
+void FeedList::addFeed(Feed *f)
 {
     feeds.append(f);
     connect(f, &Feed::updated, this, &FeedList::feedUpdated);
     insertRow(feeds.count() - 1);
 }
 
-int FeedList::rowCount(const QModelIndex& parent) const
+int FeedList::rowCount(const QModelIndex &parent) const
 {
     return !parent.isValid() ? feeds.count() : 0;
 }
 
-QVariant FeedList::data(const QModelIndex& index, int role) const
+QVariant FeedList::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
 
-    Feed* f = feeds.at(index.row());
+    Feed *f = feeds.at(index.row());
     if (!f->feedData())
         return QVariant();
 
@@ -182,18 +180,18 @@ QVariant FeedList::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool FeedList::setData(const QModelIndex& index, const QVariant& value, int role)
+bool FeedList::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid() || role != Qt::EditRole || !value.canConvert<QString>())
         return false;
 
-    Feed* f = feeds.at(index.row());
+    Feed *f = feeds.at(index.row());
     f->setDisplayName(value.toString());
     Q_EMIT dataChanged(index, index);
     return true;
 }
 
-Qt::ItemFlags FeedList::flags(const QModelIndex& index) const
+Qt::ItemFlags FeedList::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return {};
@@ -201,7 +199,7 @@ Qt::ItemFlags FeedList::flags(const QModelIndex& index) const
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 }
 
-Feed* FeedList::feedForIndex(const QModelIndex& idx)
+Feed *FeedList::feedForIndex(const QModelIndex &idx)
 {
     if (!idx.isValid())
         return 0;
@@ -209,16 +207,16 @@ Feed* FeedList::feedForIndex(const QModelIndex& idx)
     return feeds.at(idx.row());
 }
 
-Feed* FeedList::feedForDirectory(const QString& dir)
+Feed *FeedList::feedForDirectory(const QString &dir)
 {
-    for (Feed* f : qAsConst(feeds))
+    for (Feed *f : qAsConst(feeds))
         if (f->directory() == dir)
             return f;
 
     return 0;
 }
 
-bool FeedList::removeRows(int row, int count, const QModelIndex& parent)
+bool FeedList::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
@@ -226,7 +224,7 @@ bool FeedList::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool FeedList::insertRows(int row, int count, const QModelIndex& parent)
+bool FeedList::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -234,17 +232,17 @@ bool FeedList::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-void FeedList::removeFeeds(const QModelIndexList& idx)
+void FeedList::removeFeeds(const QModelIndexList &idx)
 {
-    QList<Feed*> to_remove;
-    for (const QModelIndex& i : idx) {
-        Feed* f = feedForIndex(i);
+    QList<Feed *> to_remove;
+    for (const QModelIndex &i : idx) {
+        Feed *f = feedForIndex(i);
         if (f)
             to_remove.append(f);
     }
 
     beginResetModel();
-    for (Feed* f : qAsConst(to_remove)) {
+    for (Feed *f : qAsConst(to_remove)) {
         bt::Delete(f->directory(), true);
         feeds.removeAll(f);
         delete f;
@@ -254,21 +252,21 @@ void FeedList::removeFeeds(const QModelIndexList& idx)
 
 void FeedList::feedUpdated()
 {
-    Feed* f = (Feed*)sender();
+    Feed *f = (Feed *)sender();
     int idx = feeds.indexOf(f);
     if (idx >= 0)
         Q_EMIT dataChanged(index(idx, 0), index(idx, 0));
 }
 
-void FeedList::filterRemoved(Filter* f)
+void FeedList::filterRemoved(Filter *f)
 {
-    for (Feed* feed : qAsConst(feeds))
+    for (Feed *feed : qAsConst(feeds))
         feed->removeFilter(f);
 }
 
-void FeedList::filterEdited(Filter* f)
+void FeedList::filterEdited(Filter *f)
 {
-    for (Feed* feed : qAsConst(feeds)) {
+    for (Feed *feed : qAsConst(feeds)) {
         if (feed->usingFilter(f))
             feed->runFilters();
     }

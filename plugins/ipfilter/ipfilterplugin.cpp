@@ -21,22 +21,22 @@
 
 #include "ipfilterplugin.h"
 
-#include <KNotification>
 #include <KMainWindow>
+#include <KNotification>
 #include <KPluginFactory>
 
 #include <QTimer>
 
 #include <interfaces/coreinterface.h>
-#include <interfaces/guiinterface.h>
 #include <interfaces/functions.h>
+#include <interfaces/guiinterface.h>
+#include <peer/accessmanager.h>
 #include <util/constants.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
-#include <peer/accessmanager.h>
 
-#include "ipfilterpluginsettings.h"
 #include "ipblocklist.h"
+#include "ipfilterpluginsettings.h"
 
 using namespace bt;
 
@@ -44,15 +44,13 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_ipfilter, "ktorrent_ipfilter.json", register
 
 namespace kt
 {
-
-IPFilterPlugin::IPFilterPlugin(QObject* parent, const QVariantList& args)
+IPFilterPlugin::IPFilterPlugin(QObject *parent, const QVariantList &args)
     : Plugin(parent)
 {
     Q_UNUSED(args);
     connect(&auto_update_timer, &QTimer::timeout, this, &IPFilterPlugin::checkAutoUpdate);
     auto_update_timer.setSingleShot(true);
 }
-
 
 IPFilterPlugin::~IPFilterPlugin()
 {
@@ -112,7 +110,7 @@ bool IPFilterPlugin::loadedAndRunning()
     return ip_filter;
 }
 
-bool IPFilterPlugin::versionCheck(const QString& version) const
+bool IPFilterPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }
@@ -150,7 +148,7 @@ void IPFilterPlugin::checkAutoUpdate()
     }
 }
 
-void IPFilterPlugin::notification(const QString& msg)
+void IPFilterPlugin::notification(const QString &msg)
 {
     KNotification::event(QStringLiteral("PluginEvent"), msg, QPixmap(), getGUI()->getMainWindow());
 }

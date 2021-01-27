@@ -25,9 +25,9 @@
 
 namespace kt
 {
-
-FeedListView::FeedListView(FeedList* feeds, QWidget* parent)
-    : QListView(parent), feeds(feeds)
+FeedListView::FeedListView(FeedList *feeds, QWidget *parent)
+    : QListView(parent)
+    , feeds(feeds)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -40,17 +40,16 @@ FeedListView::FeedListView(FeedList* feeds, QWidget* parent)
     connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FeedListView::selectionChanged);
 }
 
-
 FeedListView::~FeedListView()
 {
 }
 
-void FeedListView::itemActivated(const QModelIndex& idx)
+void FeedListView::itemActivated(const QModelIndex &idx)
 {
     feedActivated(feeds->feedForIndex(idx));
 }
 
-void FeedListView::selectionChanged(const QItemSelection& sel, const QItemSelection& desel)
+void FeedListView::selectionChanged(const QItemSelection &sel, const QItemSelection &desel)
 {
     Q_UNUSED(desel)
     Q_UNUSED(sel)

@@ -24,7 +24,6 @@
 #include <QStringListModel>
 #include <ktcore_export.h>
 
-
 namespace kt
 {
 /**
@@ -34,7 +33,7 @@ class KTCORE_EXPORT StringCompletionModel : public QStringListModel
 {
     Q_OBJECT
 public:
-    StringCompletionModel(const QString& file, QObject* parent);
+    StringCompletionModel(const QString &file, QObject *parent);
     ~StringCompletionModel() override;
 
     /**
@@ -50,7 +49,8 @@ public:
     /**
         Add a string to the list, automatically saves it.
     */
-    void addString(const QString& s);
+    void addString(const QString &s);
+
 private:
     QString file;
 };

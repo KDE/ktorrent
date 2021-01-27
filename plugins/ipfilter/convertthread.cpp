@@ -25,25 +25,26 @@
 #include <string>
 
 #include <QFile>
-#include <QTimer>
 #include <QTextStream>
+#include <QTimer>
 
-#include <KLocalizedString>
 #include <KIO/Job>
+#include <KLocalizedString>
 
-#include <interfaces/functions.h>
-#include <util/log.h>
-#include <util/fileops.h>
-#include <util/constants.h>
-#include "convertthread.h"
 #include "convertdialog.h"
+#include "convertthread.h"
+#include <interfaces/functions.h>
+#include <util/constants.h>
+#include <util/fileops.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-ConvertThread::ConvertThread(ConvertDialog* dlg) : dlg(dlg), abort(false)
+ConvertThread::ConvertThread(ConvertDialog *dlg)
+    : dlg(dlg)
+    , abort(false)
 {
     txt_file = kt::DataDir() + QStringLiteral("level1.txt");
     dat_file = kt::DataDir() + QStringLiteral("level1.dat");
@@ -81,13 +82,12 @@ void ConvertThread::readInput()
 
     while (!stream.atEnd() && !abort) {
         std::string line = stream.readLine().toStdString();
-        i += line.length() * sizeof(char);   //rough estimation of string size
+        i += line.length() * sizeof(char); // rough estimation of string size
         dlg->progress(i, source_size);
         ++i;
 
         std::vector<std::string> addresses;
-        for (auto it = std::sregex_iterator(line.begin(), line.end(), rx);
-             it != std::sregex_iterator(); ++it) {
+        for (auto it = std::sregex_iterator(line.begin(), line.end(), rx); it != std::sregex_iterator(); ++it) {
             addresses.push_back(it->str());
         }
 
@@ -97,11 +97,11 @@ void ConvertThread::readInput()
         }
     }
     source.close();
-    Out(SYS_IPF | LOG_NOTICE) << "Loaded " << input.count() << " lines"  << endl;
+    Out(SYS_IPF | LOG_NOTICE) << "Loaded " << input.count() << " lines" << endl;
     dlg->progress(100, 100);
 }
 
-static bool LessThan(const IPBlock& a, const IPBlock& b)
+static bool LessThan(const IPBlock &a, const IPBlock &b)
 {
     if (a.ip1 == b.ip1)
         return a.ip2 < b.ip2;
@@ -123,14 +123,13 @@ void ConvertThread::merge()
     QList<IPBlock>::iterator j = i;
     j++;
     while (j != input.end() && i != input.end()) {
-        IPBlock& a = *i;
-        IPBlock& b = *j;
+        IPBlock &a = *i;
+        IPBlock &b = *j;
         if (a.ip2 < b.ip1 || b.ip2 < a.ip1) {
             // separate ranges, so go to the next pair
             i = j;
             j++;
         } else {
-
             // merge b into a
             a.ip1 = (a.ip1 < b.ip1) ? a.ip1 : b.ip1;
             a.ip2 = (a.ip2 > b.ip2) ? a.ip2 : b.ip2;
@@ -158,16 +157,14 @@ void ConvertThread::writeOutput()
         return;
     }
 
-
-
     Out(SYS_IPF | LOG_NOTICE) << "Loading finished, starting conversion..." << endl;
     dlg->message(i18n("Converting..."));
 
     int i = 0;
     int tot = input.count();
-    for (const IPBlock& block : qAsConst(input)) {
+    for (const IPBlock &block : qAsConst(input)) {
         dlg->progress(i, tot);
-        target.write((char*) & block, sizeof(IPBlock));
+        target.write((char *)&block, sizeof(IPBlock));
         if (abort) {
             return;
         }

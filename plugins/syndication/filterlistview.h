@@ -36,21 +36,21 @@ class FilterListView : public QListView
 {
     Q_OBJECT
 public:
-    FilterListView(FilterList* filters, QWidget* parent);
+    FilterListView(FilterList *filters, QWidget *parent);
     ~FilterListView();
 
     QModelIndexList selectedFilters();
 
-    void itemActivated(const QModelIndex& idx);
-    void selectionChanged(const QItemSelection& sel, const QItemSelection& desel) override;
+    void itemActivated(const QModelIndex &idx);
+    void selectionChanged(const QItemSelection &sel, const QItemSelection &desel) override;
 
 Q_SIGNALS:
-    void filterActivated(Filter* filter);
+    void filterActivated(Filter *filter);
     void enableRemove(bool on);
     void enableEdit(bool on);
 
 private:
-    FilterList* filters;
+    FilterList *filters;
 };
 
 }

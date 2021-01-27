@@ -42,14 +42,14 @@ class ScheduleEditor : public Activity
     typedef void (ScheduleEditor::*Func)();
 
 public:
-    ScheduleEditor(QWidget* parent);
+    ScheduleEditor(QWidget *parent);
     ~ScheduleEditor() override;
 
     /**
      * Set the current Schedule
      * @param s The current schedule
      */
-    void setSchedule(Schedule* s);
+    void setSchedule(Schedule *s);
 
     /**
      * Update the text of the status line
@@ -73,8 +73,8 @@ private Q_SLOTS:
     void removeItem();
     void editItem();
     void onSelectionChanged();
-    void editItem(ScheduleItem* item);
-    void itemMoved(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day);
+    void editItem(ScheduleItem *item);
+    void itemMoved(ScheduleItem *item, const QTime &start, const QTime &end, int start_day, int end_day);
     void enableChecked(bool on);
 
 Q_SIGNALS:
@@ -82,7 +82,7 @@ Q_SIGNALS:
      * Emitted when the user loads a new schedule.
      * @param ns The new schedule
      */
-    void loaded(Schedule* ns);
+    void loaded(Schedule *ns);
 
     /**
      * Emitted when something changes in the schedule.
@@ -91,19 +91,19 @@ Q_SIGNALS:
 
 private:
     void setupActions();
-    QAction* addAction(const QString& icon, const QString& text, const QString& name, Func slot);
+    QAction *addAction(const QString &icon, const QString &text, const QString &name, Func slot);
 
 private:
-    WeekView* view;
-    Schedule* schedule;
+    WeekView *view;
+    Schedule *schedule;
 
-    QAction* load_action;
-    QAction* save_action;
-    QAction* new_item_action;
-    QAction* remove_item_action;
-    QAction* edit_item_action;
-    QAction* clear_action;
-    QCheckBox* enable_schedule;
+    QAction *load_action;
+    QAction *save_action;
+    QAction *new_item_action;
+    QAction *remove_item_action;
+    QAction *edit_item_action;
+    QAction *clear_action;
+    QCheckBox *enable_schedule;
 };
 
 }

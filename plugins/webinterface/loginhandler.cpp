@@ -18,34 +18,32 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kurl.h>
 #include "loginhandler.h"
-#include "httpserver.h"
-#include "httpresponseheader.h"
 #include "httpclienthandler.h"
+#include "httpresponseheader.h"
+#include "httpserver.h"
 #include "webinterfacepluginsettings.h"
+#include <kurl.h>
 
 namespace kt
 {
-
-LoginHandler::LoginHandler(HttpServer* server): WebContentGenerator(server, "/login", PUBLIC)
+LoginHandler::LoginHandler(HttpServer *server)
+    : WebContentGenerator(server, "/login", PUBLIC)
 {
 }
-
 
 LoginHandler::~LoginHandler()
 {
 }
 
-
-void LoginHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void LoginHandler::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     Q_UNUSED(hdr);
     // we shouldn't get a get request, so redirect to login page
     server->redirectToLoginPage(hdlr);
 }
 
-void LoginHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void LoginHandler::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     KUrl url;
     url.setEncodedPathAndQuery(hdr.path());

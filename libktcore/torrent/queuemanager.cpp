@@ -26,51 +26,49 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 
-#include <util/log.h>
-#include <util/error.h>
-#include <util/sha1hash.h>
-#include <util/waitjob.h>
-#include <util/fileops.h>
-#include <util/functions.h>
-#include <torrent/globals.h>
-#include <torrent/torrent.h>
-#include <torrent/torrentcontrol.h>
-#include <torrent/jobqueue.h>
+#include <algorithm>
+#include <climits>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerslist.h>
 #include <settings.h>
-#include <algorithm>
-#include <climits>
-
+#include <torrent/globals.h>
+#include <torrent/jobqueue.h>
+#include <torrent/torrent.h>
+#include <torrent/torrentcontrol.h>
+#include <util/error.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
+#include <util/sha1hash.h>
+#include <util/waitjob.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-QueueManager::QueueManager() : QObject()
+QueueManager::QueueManager()
+    : QObject()
 {
     max_downloads = 0;
-    max_seeds = 0; //for testing. Needs to be added to Settings::
+    max_seeds = 0; // for testing. Needs to be added to Settings::
 
-    keep_seeding = true; //test. Will be passed from Core
+    keep_seeding = true; // test. Will be passed from Core
     suspended_state = false;
     exiting = false;
     ordering = false;
 
     last_stats_sync_permitted = 0;
 
-    QNetworkConfigurationManager* networkConfigurationManager = new QNetworkConfigurationManager(this);
+    QNetworkConfigurationManager *networkConfigurationManager = new QNetworkConfigurationManager(this);
     connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &QueueManager::onOnlineStateChanged);
 }
-
 
 QueueManager::~QueueManager()
 {
     qDeleteAll(downloads);
 }
 
-void QueueManager::append(bt::TorrentInterface* tc)
+void QueueManager::append(bt::TorrentInterface *tc)
 {
     downloads.append(tc);
     connect(tc, &TorrentInterface::diskSpaceLow, this, &QueueManager::onLowDiskSpace);
@@ -78,7 +76,7 @@ void QueueManager::append(bt::TorrentInterface* tc)
     connect(tc, &TorrentInterface::updateQueue, this, &QueueManager::orderQueue);
 }
 
-void QueueManager::remove(bt::TorrentInterface* tc)
+void QueueManager::remove(bt::TorrentInterface *tc)
 {
     suspended_torrents.erase(tc);
     int index = downloads.indexOf(tc);
@@ -94,30 +92,30 @@ void QueueManager::clear()
     downloads.clear();
 }
 
-TorrentStartResponse QueueManager::startInternal(bt::TorrentInterface* tc)
+TorrentStartResponse QueueManager::startInternal(bt::TorrentInterface *tc)
 {
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
 
     if (!s.completed && !checkDiskSpace(tc, false))
         return bt::NOT_ENOUGH_DISKSPACE;
     else if (s.completed && !checkLimits(tc, false))
         return bt::MAX_SHARE_RATIO_REACHED;
 
-
     Out(SYS_GEN | LOG_NOTICE) << "Starting download " << s.torrent_name << endl;
     startSafely(tc);
     return START_OK;
 }
 
-bool QueueManager::checkLimits(TorrentInterface* tc, bool interactive)
+bool QueueManager::checkLimits(TorrentInterface *tc, bool interactive)
 {
     QString msg;
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     bool max_ratio_reached = tc->overMaxRatio();
     bool max_seed_time_reached = tc->overMaxSeedTime();
 
     if (max_ratio_reached && max_seed_time_reached)
-        msg = i18n("The torrent \"%1\" has reached its maximum share ratio and its maximum seed time. Ignore the limit and start seeding anyway?", s.torrent_name);
+        msg = i18n("The torrent \"%1\" has reached its maximum share ratio and its maximum seed time. Ignore the limit and start seeding anyway?",
+                   s.torrent_name);
     else if (max_ratio_reached && !max_seed_time_reached)
         msg = i18n("The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?", s.torrent_name);
     else if (max_seed_time_reached && !max_ratio_reached)
@@ -136,20 +134,20 @@ bool QueueManager::checkLimits(TorrentInterface* tc, bool interactive)
     return false;
 }
 
-bool QueueManager::checkDiskSpace(TorrentInterface* tc, bool interactive)
+bool QueueManager::checkDiskSpace(TorrentInterface *tc, bool interactive)
 {
     if (tc->checkDiskSpace(false))
         return true;
 
-    //we're short!
+    // we're short!
     switch (Settings::startDownloadsOnLowDiskSpace()) {
-    case 0: //don't start!
+    case 0: // don't start!
         return false;
-    case 1: { //ask user
-        const TorrentStats& s = tc->getStats();
+    case 1: { // ask user
+        const TorrentStats &s = tc->getStats();
         QString msg = i18n(
-                          "You don't have enough disk space to download this torrent. "
-                          "Are you sure you want to continue?");
+            "You don't have enough disk space to download this torrent. "
+            "Are you sure you want to continue?");
 
         QString caption = i18n("Insufficient disk space for %1", s.torrent_name);
         if (!interactive || KMessageBox::questionYesNo(0, msg, caption) == KMessageBox::No)
@@ -157,22 +155,21 @@ bool QueueManager::checkDiskSpace(TorrentInterface* tc, bool interactive)
         else
             break;
     }
-    case 2: //force start
+    case 2: // force start
         break;
     }
 
     return true;
 }
 
-
-TorrentStartResponse QueueManager::start(bt::TorrentInterface* tc)
+TorrentStartResponse QueueManager::start(bt::TorrentInterface *tc)
 {
     if (tc->getJobQueue()->runningJobs()) {
         tc->setAllowedToStart(true);
         return BUSY_WITH_JOB;
     }
 
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     if (!s.completed && !checkDiskSpace(tc, true)) {
         return bt::NOT_ENOUGH_DISKSPACE;
     } else if (s.completed && !checkLimits(tc, true)) {
@@ -188,12 +185,12 @@ TorrentStartResponse QueueManager::start(bt::TorrentInterface* tc)
     }
 }
 
-void QueueManager::stop(bt::TorrentInterface* tc)
+void QueueManager::stop(bt::TorrentInterface *tc)
 {
     if (tc->getJobQueue()->runningJobs())
         return;
 
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     if (enabled())
         tc->setAllowedToStart(false);
 
@@ -203,10 +200,10 @@ void QueueManager::stop(bt::TorrentInterface* tc)
         tc->setQueued(false);
 }
 
-void QueueManager::stop(QList<bt::TorrentInterface*> & todo)
+void QueueManager::stop(QList<bt::TorrentInterface *> &todo)
 {
     ordering = true;
-    for (bt::TorrentInterface* tc : qAsConst(todo)) {
+    for (bt::TorrentInterface *tc : qAsConst(todo)) {
         stop(tc);
     }
     ordering = false;
@@ -214,14 +211,14 @@ void QueueManager::stop(QList<bt::TorrentInterface*> & todo)
         orderQueue();
 }
 
-void QueueManager::checkDiskSpace(QList<bt::TorrentInterface*> & todo)
+void QueueManager::checkDiskSpace(QList<bt::TorrentInterface *> &todo)
 {
     // first see if we need to ask the user to start torrents when diskspace is low
     if (Settings::startDownloadsOnLowDiskSpace() == 2) {
         QStringList names;
-        QList<bt::TorrentInterface*> tmp;
-        for (bt::TorrentInterface* tc : qAsConst(todo)) {
-            const TorrentStats& s = tc->getStats();
+        QList<bt::TorrentInterface *> tmp;
+        for (bt::TorrentInterface *tc : qAsConst(todo)) {
+            const TorrentStats &s = tc->getStats();
             if (!s.completed && !tc->checkDiskSpace(false)) {
                 names.append(s.torrent_name);
                 tmp.append(tc);
@@ -229,18 +226,19 @@ void QueueManager::checkDiskSpace(QList<bt::TorrentInterface*> & todo)
         }
 
         if (tmp.count() > 0) {
-            if (KMessageBox::questionYesNoList(0, i18n("Not enough disk space for the following torrents. Do you want to start them anyway?"), names) == KMessageBox::No) {
-                for (bt::TorrentInterface* tc : qAsConst(tmp))
+            if (KMessageBox::questionYesNoList(0, i18n("Not enough disk space for the following torrents. Do you want to start them anyway?"), names)
+                == KMessageBox::No) {
+                for (bt::TorrentInterface *tc : qAsConst(tmp))
                     todo.removeAll(tc);
             }
         }
     }
     // if the policy is to not start, remove torrents from todo list if diskspace is low
     else if (Settings::startDownloadsOnLowDiskSpace() == 0) {
-        QList<bt::TorrentInterface*>::iterator i = todo.begin();
+        QList<bt::TorrentInterface *>::iterator i = todo.begin();
         while (i != todo.end()) {
-            bt::TorrentInterface* tc = *i;
-            const TorrentStats& s = tc->getStats();
+            bt::TorrentInterface *tc = *i;
+            const TorrentStats &s = tc->getStats();
             if (!s.completed && !tc->checkDiskSpace(false))
                 i = todo.erase(i);
             else
@@ -249,12 +247,12 @@ void QueueManager::checkDiskSpace(QList<bt::TorrentInterface*> & todo)
     }
 }
 
-void QueueManager::checkMaxSeedTime(QList<bt::TorrentInterface*> & todo)
+void QueueManager::checkMaxSeedTime(QList<bt::TorrentInterface *> &todo)
 {
     QStringList names;
-    QList<bt::TorrentInterface*> tmp;
-    for (bt::TorrentInterface* tc : qAsConst(todo)) {
-        const TorrentStats& s = tc->getStats();
+    QList<bt::TorrentInterface *> tmp;
+    for (bt::TorrentInterface *tc : qAsConst(todo)) {
+        const TorrentStats &s = tc->getStats();
         if (s.completed && tc->overMaxSeedTime()) {
             names.append(s.torrent_name);
             tmp.append(tc);
@@ -262,22 +260,23 @@ void QueueManager::checkMaxSeedTime(QList<bt::TorrentInterface*> & todo)
     }
 
     if (tmp.count() > 0) {
-        if (KMessageBox::questionYesNoList(0, i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway?"), names) == KMessageBox::No) {
-            for (bt::TorrentInterface* tc : qAsConst(tmp))
+        if (KMessageBox::questionYesNoList(0, i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway?"), names)
+            == KMessageBox::No) {
+            for (bt::TorrentInterface *tc : qAsConst(tmp))
                 todo.removeAll(tc);
         } else {
-            for (bt::TorrentInterface* tc : qAsConst(tmp))
+            for (bt::TorrentInterface *tc : qAsConst(tmp))
                 tc->setMaxSeedTime(0.0f);
         }
     }
 }
 
-void QueueManager::checkMaxRatio(QList<bt::TorrentInterface*> & todo)
+void QueueManager::checkMaxRatio(QList<bt::TorrentInterface *> &todo)
 {
     QStringList names;
-    QList<bt::TorrentInterface*> tmp;
-    for (bt::TorrentInterface* tc : qAsConst(todo)) {
-        const TorrentStats& s = tc->getStats();
+    QList<bt::TorrentInterface *> tmp;
+    for (bt::TorrentInterface *tc : qAsConst(todo)) {
+        const TorrentStats &s = tc->getStats();
         if (s.completed && tc->overMaxRatio()) {
             names.append(s.torrent_name);
             tmp.append(tc);
@@ -285,17 +284,18 @@ void QueueManager::checkMaxRatio(QList<bt::TorrentInterface*> & todo)
     }
 
     if (tmp.count() > 0) {
-        if (KMessageBox::questionYesNoList(0, i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway?"), names) == KMessageBox::No) {
-            for (bt::TorrentInterface* tc : qAsConst(tmp))
+        if (KMessageBox::questionYesNoList(0, i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway?"), names)
+            == KMessageBox::No) {
+            for (bt::TorrentInterface *tc : qAsConst(tmp))
                 todo.removeAll(tc);
         } else {
-            for (bt::TorrentInterface* tc : qAsConst(tmp))
+            for (bt::TorrentInterface *tc : qAsConst(tmp))
                 tc->setMaxShareRatio(0.0f);
         }
     }
 }
 
-void QueueManager::start(QList<bt::TorrentInterface*> & todo)
+void QueueManager::start(QList<bt::TorrentInterface *> &todo)
 {
     if (todo.count() == 0)
         return;
@@ -314,8 +314,8 @@ void QueueManager::start(QList<bt::TorrentInterface*> & todo)
         return;
 
     // start what is left
-    for (bt::TorrentInterface* tc : qAsConst(todo)) {
-        const TorrentStats& s = tc->getStats();
+    for (bt::TorrentInterface *tc : qAsConst(todo)) {
+        const TorrentStats &s = tc->getStats();
         if (s.running)
             continue;
 
@@ -335,15 +335,15 @@ void QueueManager::start(QList<bt::TorrentInterface*> & todo)
 void QueueManager::startAll()
 {
     if (enabled()) {
-        for (bt::TorrentInterface* tc : qAsConst(downloads))
+        for (bt::TorrentInterface *tc : qAsConst(downloads))
             tc->setAllowedToStart(true);
 
         orderQueue();
     } else {
         // first get the list of torrents which need to be started
-        QList<bt::TorrentInterface*> todo;
-        for (bt::TorrentInterface* tc : qAsConst(downloads)) {
-            const TorrentStats& s = tc->getStats();
+        QList<bt::TorrentInterface *> todo;
+        for (bt::TorrentInterface *tc : qAsConst(downloads)) {
+            const TorrentStats &s = tc->getStats();
             if (s.running)
                 continue;
 
@@ -362,16 +362,15 @@ void QueueManager::stopAll()
     stop(downloads);
 }
 
-
 void QueueManager::startAutoStartTorrents()
 {
     if (enabled() || suspended_state)
         return;
 
     // first get the list of torrents which need to be started
-    QList<bt::TorrentInterface*> todo;
-    for (bt::TorrentInterface* tc : qAsConst(downloads)) {
-        const TorrentStats& s = tc->getStats();
+    QList<bt::TorrentInterface *> todo;
+    for (bt::TorrentInterface *tc : qAsConst(downloads)) {
+        const TorrentStats &s = tc->getStats();
         if (s.running || tc->getJobQueue()->runningJobs() || !s.autostart)
             continue;
 
@@ -381,13 +380,12 @@ void QueueManager::startAutoStartTorrents()
     start(todo);
 }
 
-
-void QueueManager::onExit(WaitJob* wjob)
+void QueueManager::onExit(WaitJob *wjob)
 {
     exiting = true;
-    QList<bt::TorrentInterface*>::iterator i = downloads.begin();
+    QList<bt::TorrentInterface *>::iterator i = downloads.begin();
     while (i != downloads.end()) {
-        bt::TorrentInterface* tc = *i;
+        bt::TorrentInterface *tc = *i;
         if (tc->getStats().running) {
             stopSafely(tc, wjob);
         }
@@ -413,10 +411,10 @@ int QueueManager::countSeeds()
 int QueueManager::getNumRunning(Flags flags)
 {
     int nr = 0;
-    QList<TorrentInterface*>::const_iterator i = downloads.constBegin();
+    QList<TorrentInterface *>::const_iterator i = downloads.constBegin();
     while (i != downloads.constEnd()) {
-        const TorrentInterface* tc = *i;
-        const TorrentStats& s = tc->getStats();
+        const TorrentInterface *tc = *i;
+        const TorrentStats &s = tc->getStats();
 
         if (s.running) {
             if (flags == ALL || (flags == DOWNLOADS && !s.completed) || (flags == SEEDS && s.completed))
@@ -427,7 +425,7 @@ int QueueManager::getNumRunning(Flags flags)
     return nr;
 }
 
-const bt::TorrentInterface* QueueManager::getTorrent(Uint32 idx) const
+const bt::TorrentInterface *QueueManager::getTorrent(Uint32 idx) const
 {
     if (idx >= (Uint32)downloads.count())
         return 0;
@@ -435,7 +433,7 @@ const bt::TorrentInterface* QueueManager::getTorrent(Uint32 idx) const
         return downloads[idx];
 }
 
-bt::TorrentInterface* QueueManager::getTorrent(bt::Uint32 idx)
+bt::TorrentInterface *QueueManager::getTorrent(bt::Uint32 idx)
 {
     if (idx >= (Uint32)downloads.count())
         return 0;
@@ -443,22 +441,22 @@ bt::TorrentInterface* QueueManager::getTorrent(bt::Uint32 idx)
         return downloads[idx];
 }
 
-QList<bt::TorrentInterface*>::iterator QueueManager::begin()
+QList<bt::TorrentInterface *>::iterator QueueManager::begin()
 {
     return downloads.begin();
 }
 
-QList<bt::TorrentInterface*>::iterator QueueManager::end()
+QList<bt::TorrentInterface *>::iterator QueueManager::end()
 {
     return downloads.end();
 }
 
-QList<bt::TorrentInterface*>::const_iterator QueueManager::begin() const
+QList<bt::TorrentInterface *>::const_iterator QueueManager::begin() const
 {
     return downloads.cbegin();
 }
 
-QList<bt::TorrentInterface*>::const_iterator QueueManager::end() const
+QList<bt::TorrentInterface *>::const_iterator QueueManager::end() const
 {
     return downloads.cend();
 }
@@ -468,7 +466,7 @@ void QueueManager::setMaxDownloads(int m)
     max_downloads = m;
 }
 
-void QueueManager::onLowDiskSpace(bt::TorrentInterface* tc, bool toStop)
+void QueueManager::onLowDiskSpace(bt::TorrentInterface *tc, bool toStop)
 {
     if (toStop) {
         stopSafely(tc);
@@ -478,7 +476,7 @@ void QueueManager::onLowDiskSpace(bt::TorrentInterface* tc, bool toStop)
         }
     }
 
-    //then emit the signal to inform trayicon to show passive popup
+    // then emit the signal to inform trayicon to show passive popup
     Q_EMIT lowDiskSpace(tc, toStop);
 }
 
@@ -492,20 +490,20 @@ void QueueManager::setKeepSeeding(bool ks)
     keep_seeding = ks;
 }
 
-bool QueueManager::alreadyLoaded(const bt::SHA1Hash& ih) const
+bool QueueManager::alreadyLoaded(const bt::SHA1Hash &ih) const
 {
-    for (const bt::TorrentInterface* tor : qAsConst(downloads)) {
+    for (const bt::TorrentInterface *tor : qAsConst(downloads)) {
         if (tor->getInfoHash() == ih)
             return true;
     }
     return false;
 }
 
-void QueueManager::mergeAnnounceList(const bt::SHA1Hash& ih, const TrackerTier* trk)
+void QueueManager::mergeAnnounceList(const bt::SHA1Hash &ih, const TrackerTier *trk)
 {
-    for (bt::TorrentInterface* tor : qAsConst(downloads)) {
+    for (bt::TorrentInterface *tor : qAsConst(downloads)) {
         if (tor->getInfoHash() == ih) {
-            TrackersList* ta = tor->getTrackersList();
+            TrackersList *ta = tor->getTrackersList();
             const int cnt = ta->getTrackers().count();
             ta->merge(trk);
             if (cnt < ta->getTrackers().count()) {
@@ -558,8 +556,8 @@ void QueueManager::orderQueue()
     QueuePtrList download_queue;
     QueuePtrList seed_queue;
 
-    for (TorrentInterface* tc : qAsConst(downloads)) {
-        const TorrentStats& s = tc->getStats();
+    for (TorrentInterface *tc : qAsConst(downloads)) {
+        const TorrentStats &s = tc->getStats();
         if (s.running || (tc->isAllowedToStart() && !s.stopped_by_error && !tc->getJobQueue()->runningJobs())) {
             if (s.completed) {
                 if (s.running || (!tc->overMaxRatio() && !tc->overMaxSeedTime()))
@@ -570,8 +568,8 @@ void QueueManager::orderQueue()
     }
 
     int num_running = 0;
-    for (bt::TorrentInterface* tc : qAsConst(download_queue)) {
-        const TorrentStats& s = tc->getStats();
+    for (bt::TorrentInterface *tc : qAsConst(download_queue)) {
+        const TorrentStats &s = tc->getStats();
 
         if (num_running < max_downloads || max_downloads == 0) {
             if (!s.running) {
@@ -590,8 +588,8 @@ void QueueManager::orderQueue()
     }
 
     num_running = 0;
-    for (bt::TorrentInterface* tc : qAsConst(seed_queue)) {
-        const TorrentStats& s = tc->getStats();
+    for (bt::TorrentInterface *tc : qAsConst(seed_queue)) {
+        const TorrentStats &s = tc->getStats();
         if (num_running < max_seeds || max_seeds == 0) {
             if (!s.running) {
                 Out(SYS_GEN | LOG_DEBUG) << "QM Starting: " << s.torrent_name << endl;
@@ -611,7 +609,7 @@ void QueueManager::orderQueue()
     Q_EMIT queueOrdered();
 }
 
-void QueueManager::torrentFinished(bt::TorrentInterface* tc)
+void QueueManager::torrentFinished(bt::TorrentInterface *tc)
 {
     if (!keep_seeding) {
         if (enabled())
@@ -623,12 +621,12 @@ void QueueManager::torrentFinished(bt::TorrentInterface* tc)
     orderQueue();
 }
 
-void QueueManager::torrentAdded(bt::TorrentInterface* tc, bool start_torrent)
+void QueueManager::torrentAdded(bt::TorrentInterface *tc, bool start_torrent)
 {
     if (enabled()) {
         // new torrents have the lowest priority
         // so everybody else gets a higher priority
-        for (TorrentInterface* otc : qAsConst(downloads)) {
+        for (TorrentInterface *otc : qAsConst(downloads)) {
             int p = otc->getPriority();
             otc->setPriority(p + 1);
         }
@@ -642,21 +640,20 @@ void QueueManager::torrentAdded(bt::TorrentInterface* tc, bool start_torrent)
     }
 }
 
-void QueueManager::torrentRemoved(bt::TorrentInterface* tc)
+void QueueManager::torrentRemoved(bt::TorrentInterface *tc)
 {
     remove(tc);
     rearrangeQueue();
     orderQueue();
 }
 
-void QueueManager::torrentsRemoved(QList<bt::TorrentInterface*>& tors)
+void QueueManager::torrentsRemoved(QList<bt::TorrentInterface *> &tors)
 {
-    for (bt::TorrentInterface* tc : qAsConst(tors))
+    for (bt::TorrentInterface *tc : qAsConst(tors))
         remove(tc);
     rearrangeQueue();
     orderQueue();
 }
-
 
 void QueueManager::setSuspendedState(bool suspend)
 {
@@ -666,9 +663,9 @@ void QueueManager::setSuspendedState(bool suspend)
     suspended_state = suspend;
     if (!suspend) {
         UpdateCurrentTime();
-        std::set<bt::TorrentInterface*>::iterator it = suspended_torrents.begin();
+        std::set<bt::TorrentInterface *>::iterator it = suspended_torrents.begin();
         while (it != suspended_torrents.end()) {
-            TorrentInterface* tc = *it;
+            TorrentInterface *tc = *it;
             startSafely(tc);
             it++;
         }
@@ -676,8 +673,8 @@ void QueueManager::setSuspendedState(bool suspend)
         suspended_torrents.clear();
         orderQueue();
     } else {
-        for (TorrentInterface* tc : qAsConst(downloads)) {
-            const TorrentStats& s = tc->getStats();
+        for (TorrentInterface *tc : qAsConst(downloads)) {
+            const TorrentStats &s = tc->getStats();
             if (s.running) {
                 suspended_torrents.insert(tc);
                 stopSafely(tc);
@@ -693,38 +690,34 @@ void QueueManager::rearrangeQueue()
     reindexQueue();
 }
 
-void QueueManager::startSafely(bt::TorrentInterface* tc)
+void QueueManager::startSafely(bt::TorrentInterface *tc)
 {
     try {
         tc->start();
-    } catch (bt::Error& err) {
-        const TorrentStats& s = tc->getStats();
-        QString msg =
-            i18n("Error starting torrent %1: %2",
-                 s.torrent_name, err.toString());
+    } catch (bt::Error &err) {
+        const TorrentStats &s = tc->getStats();
+        QString msg = i18n("Error starting torrent %1: %2", s.torrent_name, err.toString());
         KMessageBox::error(0, msg, i18n("Error"));
     }
 }
 
-void QueueManager::stopSafely(bt::TorrentInterface* tc, WaitJob* wjob)
+void QueueManager::stopSafely(bt::TorrentInterface *tc, WaitJob *wjob)
 {
     try {
         tc->stop(wjob);
-    } catch (bt::Error& err) {
-        const TorrentStats& s = tc->getStats();
-        QString msg =
-            i18n("Error stopping torrent %1: %2",
-                 s.torrent_name, err.toString());
+    } catch (bt::Error &err) {
+        const TorrentStats &s = tc->getStats();
+        QString msg = i18n("Error stopping torrent %1: %2", s.torrent_name, err.toString());
         KMessageBox::error(0, msg, i18n("Error"));
     }
 }
 
-void QueueManager::torrentStopped(bt::TorrentInterface*)
+void QueueManager::torrentStopped(bt::TorrentInterface *)
 {
     orderQueue();
 }
 
-static bool IsStalled(bt::TorrentInterface* tc, bt::TimeStamp now, bt::Uint32 min_stall_time)
+static bool IsStalled(bt::TorrentInterface *tc, bt::TimeStamp now, bt::Uint32 min_stall_time)
 {
     bt::Int64 stalled_time = 0;
     if (tc->getStats().completed)
@@ -745,7 +738,7 @@ void QueueManager::checkStalledTorrents(bt::TimeStamp now, bt::Uint32 min_stall_
     bool can_decrease = false;
 
     // find all stalled ones
-    for (bt::TorrentInterface* tc : qAsConst(downloads)) {
+    for (bt::TorrentInterface *tc : qAsConst(downloads)) {
         if (IsStalled(tc, now, min_stall_time)) {
             stalled.append(tc);
         } else {
@@ -758,15 +751,16 @@ void QueueManager::checkStalledTorrents(bt::TimeStamp now, bt::Uint32 min_stall_
     if (stalled.count() == 0 || stalled.count() == downloads.count() || !can_decrease)
         return;
 
-    for (bt::TorrentInterface* tc : qAsConst(stalled))
-        Out(SYS_GEN | LOG_NOTICE) << "The torrent " << tc->getStats().torrent_name << " has stalled longer than " << min_stall_time << " minutes, decreasing its priority" << endl;
+    for (bt::TorrentInterface *tc : qAsConst(stalled))
+        Out(SYS_GEN | LOG_NOTICE) << "The torrent " << tc->getStats().torrent_name << " has stalled longer than " << min_stall_time
+                                  << " minutes, decreasing its priority" << endl;
 
     downloads.clear();
     downloads += newlist;
     downloads += stalled;
     // redo priorities and then order the queue
     int prio = downloads.count();
-    for (bt::TorrentInterface* tc : qAsConst(downloads)) {
+    for (bt::TorrentInterface *tc : qAsConst(downloads)) {
         tc->setPriority(prio--);
     }
     orderQueue();
@@ -780,7 +774,7 @@ void QueueManager::onOnlineStateChanged(bool isOnline)
         // all the connections are probably stale, so tell all
         // running torrents, that they need to reannounce and kill stale peers
         if (network_down_time.isValid() && network_down_time.secsTo(QDateTime::currentDateTime()) > 120) {
-            for (bt::TorrentInterface* tc : qAsConst(downloads)) {
+            for (bt::TorrentInterface *tc : qAsConst(downloads)) {
                 if (tc->getStats().running)
                     tc->networkUp();
             }
@@ -797,7 +791,7 @@ void QueueManager::reindexQueue()
 {
     int prio = downloads.count();
     // make sure everybody has an unique priority
-    for (bt::TorrentInterface* tc : qAsConst(downloads)) {
+    for (bt::TorrentInterface *tc : qAsConst(downloads)) {
         tc->setPriority(prio--);
     }
 }
@@ -809,7 +803,7 @@ void QueueManager::loadState(KSharedConfigPtr cfg)
 
     if (suspended_state) {
         QStringList info_hash_list = g.readEntry("suspended_torrents", QStringList());
-        for (bt::TorrentInterface* t : qAsConst(downloads)) {
+        for (bt::TorrentInterface *t : qAsConst(downloads)) {
             if (info_hash_list.contains(t->getInfoHash().toString()))
                 suspended_torrents.insert(t);
         }
@@ -823,14 +817,14 @@ void QueueManager::saveState(KSharedConfigPtr cfg)
 
     if (suspended_state) {
         QStringList info_hash_list;
-        for (bt::TorrentInterface* t : qAsConst(suspended_torrents)) {
+        for (bt::TorrentInterface *t : qAsConst(suspended_torrents)) {
             info_hash_list << t->getInfoHash().toString();
         }
         g.writeEntry("suspended_torrents", info_hash_list);
     }
 }
 
-bool QueueManager::checkFileConflicts(TorrentInterface* tc, QStringList& conflicting) const
+bool QueueManager::checkFileConflicts(TorrentInterface *tc, QStringList &conflicting) const
 {
     conflicting.clear();
 
@@ -842,7 +836,7 @@ bool QueueManager::checkFileConflicts(TorrentInterface* tc, QStringList& conflic
     } else
         files.insert(tc->getStats().output_path);
 
-    for (bt::TorrentInterface* t : qAsConst(downloads)) {
+    for (bt::TorrentInterface *t : qAsConst(downloads)) {
         if (t == tc)
             continue;
 
@@ -864,22 +858,23 @@ bool QueueManager::checkFileConflicts(TorrentInterface* tc, QStringList& conflic
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-
-QueuePtrList::QueuePtrList() : QList<bt::TorrentInterface*>()
-{}
+QueuePtrList::QueuePtrList()
+    : QList<bt::TorrentInterface *>()
+{
+}
 
 QueuePtrList::~QueuePtrList()
-{}
+{
+}
 
 void QueuePtrList::sort()
 {
     std::sort(begin(), end(), QueuePtrList::biggerThan);
 }
 
-bool QueuePtrList::biggerThan(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2)
+bool QueuePtrList::biggerThan(bt::TorrentInterface *tc1, bt::TorrentInterface *tc2)
 {
     return tc1->getPriority() > tc2->getPriority();
 }
 
 }
-

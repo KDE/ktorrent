@@ -1,22 +1,22 @@
 /***************************************************************************
-*   Copyright (C) 2009 by Joris Guisson                                   *
-*   joris.guisson@gmail.com                                               *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
-***************************************************************************/
+ *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
 
 #include "shutdownplugin.h"
 
@@ -27,12 +27,12 @@
 #include <KToggleAction>
 #include <kworkspace.h>
 
-#include <util/log.h>
-#include <interfaces/functions.h>
+#include "powermanagement_interface.h"
 #include "screensaver_interface.h"
 #include "shutdowndlg.h"
 #include "shutdownruleset.h"
-#include "powermanagement_interface.h"
+#include <interfaces/functions.h>
+#include <util/log.h>
 
 K_PLUGIN_FACTORY_WITH_JSON(ktorrent_shutdown, "ktorrent_shutdown.json", registerPlugin<kt::ShutdownPlugin>();)
 
@@ -40,11 +40,12 @@ using namespace bt;
 
 namespace kt
 {
-ShutdownPlugin::ShutdownPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
+ShutdownPlugin::ShutdownPlugin(QObject *parent, const QVariantList &args)
+    : Plugin(parent)
 {
     Q_UNUSED(args);
 
-    KActionCollection* ac = actionCollection();
+    KActionCollection *ac = actionCollection();
     shutdown_enabled = new KToggleAction(QIcon::fromTheme(QStringLiteral("system-shutdown")), i18n("Shutdown Enabled"), this);
     connect(shutdown_enabled, &KToggleAction::toggled, this, &ShutdownPlugin::shutdownToggled);
     ac->addAction(QStringLiteral("shutdown_enabled"), shutdown_enabled);
@@ -60,7 +61,7 @@ ShutdownPlugin::~ShutdownPlugin()
 {
 }
 
-bool ShutdownPlugin::versionCheck(const QString& version) const
+bool ShutdownPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }
@@ -101,14 +102,18 @@ void ShutdownPlugin::lock()
 
 void ShutdownPlugin::suspendToDisk()
 {
-    org::freedesktop::PowerManagement powerManagement(QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement"), QDBusConnection::sessionBus());
+    org::freedesktop::PowerManagement powerManagement(QStringLiteral("org.freedesktop.PowerManagement"),
+                                                      QStringLiteral("/org/freedesktop/PowerManagement"),
+                                                      QDBusConnection::sessionBus());
     Out(SYS_GEN | LOG_NOTICE) << "Suspending to disk ..." << endl;
     powerManagement.Hibernate();
 }
 
 void ShutdownPlugin::suspendToRam()
 {
-    org::freedesktop::PowerManagement powerManagement(QStringLiteral("org.freedesktop.PowerManagement"), QStringLiteral("/org/freedesktop/PowerManagement"), QDBusConnection::sessionBus());
+    org::freedesktop::PowerManagement powerManagement(QStringLiteral("org.freedesktop.PowerManagement"),
+                                                      QStringLiteral("/org/freedesktop/PowerManagement"),
+                                                      QDBusConnection::sessionBus());
     Out(SYS_GEN | LOG_NOTICE) << "Suspending to RAM ..." << endl;
     powerManagement.Suspend();
 }

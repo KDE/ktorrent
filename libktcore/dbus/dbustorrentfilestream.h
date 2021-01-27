@@ -26,7 +26,6 @@
 
 namespace kt
 {
-
 class DBusTorrent;
 
 /**
@@ -37,7 +36,7 @@ class DBusTorrentFileStream : public QObject
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.ktorrent.torrentfilestream")
 public:
-    DBusTorrentFileStream(bt::Uint32 file_index, DBusTorrent* tor);
+    DBusTorrentFileStream(bt::Uint32 file_index, DBusTorrent *tor);
     ~DBusTorrentFileStream() override;
 
     /// Was the stream created properly ?
@@ -69,7 +68,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE QByteArray read(qint64 maxlen);
 
 private:
-    DBusTorrent* tor;
+    DBusTorrent *tor;
     bt::TorrentFileStream::Ptr stream;
 };
 

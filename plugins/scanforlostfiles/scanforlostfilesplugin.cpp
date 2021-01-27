@@ -26,14 +26,14 @@
 #include <util/functions.h>
 
 #include <KLocalizedString>
-#include <KPluginFactory>
 #include <KMainWindow>
+#include <KPluginFactory>
 #include <QDockWidget>
 
 #include "scanforlostfilesplugin.h"
+#include "scanforlostfilespluginsettings.h"
 #include "scanforlostfilesprefpage.h"
 #include "scanforlostfileswidget.h"
-#include "scanforlostfilespluginsettings.h"
 
 using namespace bt;
 
@@ -41,16 +41,15 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_scanforlostfiles, "ktorrent_scanforlostfiles
 
 namespace kt
 {
-
-ScanForLostFilesPlugin::ScanForLostFilesPlugin(QObject* parent, const QVariantList& args) : Plugin(parent),
-    m_view(nullptr),
-    m_dock(nullptr),
-    m_pref(nullptr),
-    m_pos(SEPARATE_ACTIVITY)
+ScanForLostFilesPlugin::ScanForLostFilesPlugin(QObject *parent, const QVariantList &args)
+    : Plugin(parent)
+    , m_view(nullptr)
+    , m_dock(nullptr)
+    , m_pref(nullptr)
+    , m_pos(SEPARATE_ACTIVITY)
 {
     Q_UNUSED(args);
 }
-
 
 ScanForLostFilesPlugin::~ScanForLostFilesPlugin()
 {
@@ -83,7 +82,7 @@ void ScanForLostFilesPlugin::unload()
 
 void ScanForLostFilesPlugin::updateScanForLostFiles()
 {
-    SFLFPosition p = (SFLFPosition) ScanForLostFilesPluginSettings::scanForLostFilesWidgetPosition();
+    SFLFPosition p = (SFLFPosition)ScanForLostFilesPluginSettings::scanForLostFilesWidgetPosition();
     if (m_pos != p) {
         removeFromGUI();
         m_pos = p;
@@ -91,7 +90,7 @@ void ScanForLostFilesPlugin::updateScanForLostFiles()
     }
 }
 
-bool ScanForLostFilesPlugin::versionCheck(const QString& version) const
+bool ScanForLostFilesPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }
@@ -103,7 +102,7 @@ void ScanForLostFilesPlugin::addToGUI()
         getGUI()->addActivity(m_view);
         break;
     case DOCKABLE_WIDGET: {
-        KMainWindow* mwnd = getGUI()->getMainWindow();
+        KMainWindow *mwnd = getGUI()->getMainWindow();
         m_dock = new QDockWidget(mwnd);
         m_dock->setWidget(m_view);
         m_dock->setObjectName(QStringLiteral("ScanForLostFilesDockWidget"));
@@ -126,7 +125,7 @@ void ScanForLostFilesPlugin::removeFromGUI()
         getGUI()->getTorrentActivity()->removeToolWidget(m_view);
         break;
     case DOCKABLE_WIDGET: {
-        KMainWindow* mwnd = getGUI()->getMainWindow();
+        KMainWindow *mwnd = getGUI()->getMainWindow();
         mwnd->removeDockWidget(m_dock);
         m_dock->setWidget(nullptr);
         m_view->setParent(nullptr);

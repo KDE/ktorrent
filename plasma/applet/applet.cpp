@@ -22,32 +22,32 @@
 #include "applet.h"
 
 #include <KConfigDialog>
+#include <KLocalizedString>
+#include <KRun>
+#include <KWindowSystem>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDBusMessage>
 #include <QFile>
 #include <QGraphicsLinearLayout>
-#include <KLocalizedString>
-#include <KRun>
-#include <KWindowSystem>
 
 #if (PLASMA_VERSION_MAJOR < 3)
 #include <Plasma/Icon>
 #else
 #include <Plasma/IconWidget>
 #endif
-#include <Plasma/Label>
-#include <util/functions.h>
 #include "chunkbar.h"
 #include "fadingnavigationwidget.h"
-
+#include <Plasma/Label>
+#include <util/functions.h>
 
 using namespace bt;
 
 namespace ktplasma
 {
-
-Applet::Applet(QObject* parent, const QVariantList& args) : Plasma::PopupApplet(parent, args), icon(0)
+Applet::Applet(QObject *parent, const QVariantList &args)
+    : Plasma::PopupApplet(parent, args)
+    , icon(0)
 {
     engine = 0;
     root_layout = 0;
@@ -89,7 +89,7 @@ void Applet::init()
     }
 }
 
-QGraphicsWidget* Applet::graphicsWidget()
+QGraphicsWidget *Applet::graphicsWidget()
 {
     if (desktop_widget)
         return desktop_widget;
@@ -97,7 +97,7 @@ QGraphicsWidget* Applet::graphicsWidget()
     root_layout = new QGraphicsLinearLayout(Qt::Vertical);
     root_layout->setOrientation(Qt::Vertical);
 
-    QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
+    QGraphicsLinearLayout *line = new QGraphicsLinearLayout(0);
 
 #if (PLASMA_VERSION_MAJOR < 3)
     icon = new Plasma::Icon(QIcon::fromTheme("ktorrent"), QString(), this);
@@ -172,8 +172,7 @@ void Applet::constraintsEvent(Plasma::Constraints constraints)
 
 void Applet::updateNavigation()
 {
-    navigation->setEnabled(connected_to_app && !sources.empty()
-                           && (sources.count() > 1 || !sources.contains(current_source)));
+    navigation->setEnabled(connected_to_app && !sources.empty() && (sources.count() > 1 || !sources.contains(current_source)));
 }
 
 void Applet::updateConnection(bool connected)
@@ -218,14 +217,14 @@ void Applet::initSource()
         clearData();
 }
 
-void Applet::saveState(KConfigGroup& config) const
+void Applet::saveState(KConfigGroup &config) const
 {
     Q_UNUSED(config);
 }
 
-void Applet::createConfigurationInterface(KConfigDialog* parent)
+void Applet::createConfigurationInterface(KConfigDialog *parent)
 {
-    QWidget* widget = new QWidget();
+    QWidget *widget = new QWidget();
     ui.setupUi(widget);
     updateTorrentCombo(); // must come before addPage for size to be correct
     parent->setButtons(KDialog::Ok | KDialog::Cancel | KDialog::Apply);
@@ -242,7 +241,7 @@ void Applet::updateTorrentCombo()
     if (sources.empty())
         return;
     QStringList names;
-    foreach (const QString& s, sources)
+    foreach (const QString &s, sources)
         names << engine->query(s).value("name").toString();
     ui.torrent_to_display->addItems(names);
     if (current_source.isEmpty())
@@ -252,7 +251,7 @@ void Applet::updateTorrentCombo()
 void Applet::configUpdated()
 {
     QString name = ui.torrent_to_display->currentText();
-    foreach (const QString& s, sources) {
+    foreach (const QString &s, sources) {
         if (engine->query(s).value("name").toString() == name) {
             setSource(s);
             break;
@@ -260,7 +259,7 @@ void Applet::configUpdated()
     }
 }
 
-void Applet::dataUpdated(const QString& name, const Plasma::DataEngine::Data& data)
+void Applet::dataUpdated(const QString &name, const Plasma::DataEngine::Data &data)
 {
     if (name == "core") {
         bool connected = data.value("connected").toBool();
@@ -271,7 +270,7 @@ void Applet::dataUpdated(const QString& name, const Plasma::DataEngine::Data& da
     }
 }
 
-void Applet::updateCurrent(const Plasma::DataEngine::Data& data)
+void Applet::updateCurrent(const Plasma::DataEngine::Data &data)
 {
     double ds = data.value("download_rate").toDouble();
     double us = data.value("upload_rate").toDouble();
@@ -284,34 +283,34 @@ void Applet::updateCurrent(const Plasma::DataEngine::Data& data)
     int lc = data.value("leechers_connected_to").toInt();
     int cd = data.value("num_chunks_downloaded").toInt();
     int ct = data.value("total_chunks").toInt();
-    KLocale* loc = KGlobal::locale();
+    KLocale *loc = KGlobal::locale();
     float share_ratio = (downloaded == 0) ? 0 : (float)uploaded / downloaded;
     float percent = 100.0 * cd / ct;
-    misc->setText(
-        i18n(
-            "<table>\
+    misc->setText(i18n("<table>\
 				<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
 				<tr><td>Upload Speed:</td><td>%6 </td><td>Leechers: </td><td>%3 (%4)</td></tr>",
-            sc, st, lc, lt, BytesPerSecToString(ds), BytesPerSecToString(us)) +
-        i18n(
-            "<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\
+                       sc,
+                       st,
+                       lc,
+                       lt,
+                       BytesPerSecToString(ds),
+                       BytesPerSecToString(us))
+                  + i18n("<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\
 				<tr><td>Uploaded:</td><td>%3 </td><td>Complete: </td><td>%4 %</td></tr>\
 				</table>",
-            BytesToString(downloaded), BytesToString(size), BytesToString(uploaded),
-            loc->formatNumber(percent, 2)));
-    title->setText(
-        i18n("<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)",
-             data.value("name").toString(),
-             data.value("status").toString(),
-             loc->formatNumber(share_ratio, 2),
-             share_ratio <= 0.8 ? "#ff0000" : "#1c9a1c"));
-    chunk_bar->updateBitSets(
-        data.value("total_chunks").toInt(),
-        data.value("downloaded_chunks").toByteArray(),
-        data.value("excluded_chunks").toByteArray());
+                         BytesToString(downloaded),
+                         BytesToString(size),
+                         BytesToString(uploaded),
+                         loc->formatNumber(percent, 2)));
+    title->setText(i18n("<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)",
+                        data.value("name").toString(),
+                        data.value("status").toString(),
+                        loc->formatNumber(share_ratio, 2),
+                        share_ratio <= 0.8 ? "#ff0000" : "#1c9a1c"));
+    chunk_bar->updateBitSets(data.value("total_chunks").toInt(), data.value("downloaded_chunks").toByteArray(), data.value("excluded_chunks").toByteArray());
 }
 
-void Applet::sourceAdded(const QString& s)
+void Applet::sourceAdded(const QString &s)
 {
     // note: we get this event for each source also when app reconnects
     if (!sources.contains(s))
@@ -323,7 +322,7 @@ void Applet::sourceAdded(const QString& s)
     updateNavigation();
 }
 
-void Applet::sourceRemoved(const QString& s)
+void Applet::sourceRemoved(const QString &s)
 {
     // note: we get this event for each source also when app disconnects
     sources.removeOne(s);
@@ -335,7 +334,7 @@ void Applet::sourceRemoved(const QString& s)
 void Applet::iconClicked()
 {
     QDBusConnection session_bus = QDBusConnection::sessionBus();
-    QDBusConnectionInterface* dbus_service = session_bus.interface();
+    QDBusConnectionInterface *dbus_service = session_bus.interface();
     if (!session_bus.isConnected() || !dbus_service || !dbus_service->isServiceRegistered("org.ktorrent.ktorrent")) {
         // can't find the window, try launching it
         KUrl::List empty;
@@ -343,12 +342,12 @@ void Applet::iconClicked()
     } else {
         QDBusMessage msg = QDBusMessage::createMethodCall("org.ktorrent.ktorrent", "/ktorrent/MainWindow_1", "org.kde.KMainWindow", "winId");
         QDBusPendingCall call = session_bus.asyncCall(msg, 5000);
-        QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(call, this);
+        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
         connect(watcher, &QDBusPendingCallWatcher::finished, this, &Applet::dbusCallFinished);
     }
 }
 
-void Applet::dbusCallFinished(QDBusPendingCallWatcher* self)
+void Applet::dbusCallFinished(QDBusPendingCallWatcher *self)
 {
     if (self->isError()) {
         // call failed, try launching it
@@ -361,22 +360,25 @@ void Applet::dbusCallFinished(QDBusPendingCallWatcher* self)
     self->deleteLater();
 }
 
-
 void Applet::clearData()
 {
-    KLocale* loc = KGlobal::locale();
-    misc->setText(
-        i18n(
-            "<table>\
+    KLocale *loc = KGlobal::locale();
+    misc->setText(i18n("<table>\
 				<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
 				<tr><td>Upload Speed:</td><td>%6 </td><td>Leechers: </td><td>%3 (%4)</td></tr>",
-            0, 0, 0, 0, BytesPerSecToString(0), BytesPerSecToString(0)) +
-        i18n(
-            "<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\
+                       0,
+                       0,
+                       0,
+                       0,
+                       BytesPerSecToString(0),
+                       BytesPerSecToString(0))
+                  + i18n("<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\
 				<tr><td>Uploaded:</td><td>%3 </td><td>Complete: </td><td>%4 %</td></tr>\
 				</table>",
-            BytesToString(0), BytesToString(0), BytesToString(0),
-            loc->formatNumber(0, 2)));
+                         BytesToString(0),
+                         BytesToString(0),
+                         BytesToString(0),
+                         loc->formatNumber(0, 2)));
     if (!connected_to_app)
         title->setText(i18n("KTorrent is not running."));
     else if (sources.empty())

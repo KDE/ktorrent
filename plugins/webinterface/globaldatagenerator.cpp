@@ -21,32 +21,30 @@
 
 #include <QXmlStreamWriter>
 
-#include <settings.h>
-#include <util/sha1hash.h>
-#include <util/functions.h>
-#include <interfaces/coreinterface.h>
-#include "httpserver.h"
-#include "httpresponseheader.h"
-#include "httpclienthandler.h"
 #include "globaldatagenerator.h"
+#include "httpclienthandler.h"
+#include "httpresponseheader.h"
+#include "httpserver.h"
+#include <interfaces/coreinterface.h>
+#include <settings.h>
+#include <util/functions.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-GlobalDataGenerator::GlobalDataGenerator(CoreInterface* core, HttpServer* server)
-    : WebContentGenerator(server, "/data/global.xml", LOGIN_REQUIRED), core(core)
+GlobalDataGenerator::GlobalDataGenerator(CoreInterface *core, HttpServer *server)
+    : WebContentGenerator(server, "/data/global.xml", LOGIN_REQUIRED)
+    , core(core)
 {
 }
-
 
 GlobalDataGenerator::~GlobalDataGenerator()
 {
 }
 
-
-void GlobalDataGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void GlobalDataGenerator::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     Q_UNUSED(hdr);
     HttpResponseHeader rhdr(200);
@@ -69,13 +67,13 @@ void GlobalDataGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader&
     hdlr->send(rhdr, output_data);
 }
 
-void GlobalDataGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void GlobalDataGenerator::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     Q_UNUSED(data);
     get(hdlr, hdr);
 }
 
-void GlobalDataGenerator::writeElement(QXmlStreamWriter& out, const QString& name, const QString& value)
+void GlobalDataGenerator::writeElement(QXmlStreamWriter &out, const QString &name, const QString &value)
 {
     out.writeStartElement(name);
     out.writeCharacters(value);

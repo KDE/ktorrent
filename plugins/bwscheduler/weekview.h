@@ -28,7 +28,6 @@
 
 #include <util/constants.h>
 
-
 namespace kt
 {
 struct ScheduleItem;
@@ -42,14 +41,14 @@ class WeekView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    WeekView(QWidget* parent);
+    WeekView(QWidget *parent);
     ~WeekView() override;
 
     /**
      * Set the current Schedule
      * @param s The current schedule
      */
-    void setSchedule(Schedule* s);
+    void setSchedule(Schedule *s);
 
     /**
      * Clear the current Schedule.
@@ -57,7 +56,7 @@ public:
     void clear();
 
     /// Get the selected items
-    QList<ScheduleItem*> selectedItems()
+    QList<ScheduleItem *> selectedItems()
     {
         return selection;
     }
@@ -66,8 +65,7 @@ public:
      * Add an item to the schedule.
      * @param item The item to add
      */
-    void addScheduleItem(ScheduleItem* item);
-
+    void addScheduleItem(ScheduleItem *item);
 
     /**
      * Remove all selected items from the schedule.
@@ -75,7 +73,7 @@ public:
     void removeSelectedItems();
 
     /// Get the right click menu
-    QMenu* rightClickMenu()
+    QMenu *rightClickMenu()
     {
         return menu;
     }
@@ -93,7 +91,7 @@ public:
      * Something has changed about an item
      * @param item
      */
-    void itemChanged(ScheduleItem* item);
+    void itemChanged(ScheduleItem *item);
 
     /**
      * The color settings have changed.
@@ -102,21 +100,21 @@ public:
 
 Q_SIGNALS:
     void selectionChanged();
-    void editItem(ScheduleItem* item);
-    void itemMoved(ScheduleItem* item, const QTime& start, const QTime& end, int start_day, int end_day);
+    void editItem(ScheduleItem *item);
+    void itemMoved(ScheduleItem *item, const QTime &start, const QTime &end, int start_day, int end_day);
 
 private Q_SLOTS:
     void onSelectionChanged();
-    void showContextMenu(const QPoint& pos);
-    void onDoubleClicked(QGraphicsItem* i);
+    void showContextMenu(const QPoint &pos);
+    void onDoubleClicked(QGraphicsItem *i);
 
 private:
-    WeekScene* scene;
+    WeekScene *scene;
 
-    Schedule* schedule;
-    QMap<QGraphicsItem*, ScheduleItem*>  item_map;
-    QList<ScheduleItem*> selection;
-    QMenu* menu;
+    Schedule *schedule;
+    QMap<QGraphicsItem *, ScheduleItem *> item_map;
+    QList<ScheduleItem *> selection;
+    QMenu *menu;
 };
 
 }

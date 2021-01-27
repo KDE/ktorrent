@@ -11,12 +11,12 @@
 
 namespace kt
 {
-
-ColorPref::ColorPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Colors"), QStringLiteral("preferences-desktop-color"), parent)
+ColorPref::ColorPref(QWidget *parent)
+    : PrefPageInterface(Settings::self(), i18n("Colors"), QStringLiteral("preferences-desktop-color"), parent)
 {
     setupUi(this);
 
-    connect(btnResetColors, &QPushButton::clicked, [ = ]() {
+    connect(btnResetColors, &QPushButton::clicked, [=]() {
         // set default values for current pref page only
         kcfg_okTorrentColor->setColor(QColor(40, 205, 40));
         kcfg_stalledTorrentColor->setColor(QColor(255, 174, 0));

@@ -22,12 +22,11 @@
 #ifndef KTPROXYPREF_H
 #define KTPROXYPREF_H
 
-#include <interfaces/prefpageinterface.h>
 #include "ui_proxypref.h"
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
-
 /**
     @author
 */
@@ -35,7 +34,7 @@ class ProxyPref : public PrefPageInterface, public Ui_ProxyPref
 {
     Q_OBJECT
 public:
-    ProxyPref(QWidget* parent);
+    ProxyPref(QWidget *parent);
     ~ProxyPref() override;
 
     void loadDefaults() override;

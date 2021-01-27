@@ -36,7 +36,6 @@
 
 namespace kt
 {
-
 /** \brief Settings page
 \author Krzysztof Kundzicz <athantor@gmail.com>
 */
@@ -49,8 +48,8 @@ public:
     /** \brief Constructor
     \param  p Parent
     */
-    SettingsPage(QWidget* p);
-    ///Destructor
+    SettingsPage(QWidget *p);
+    /// Destructor
     ~SettingsPage() override;
 
 public Q_SLOTS:
@@ -60,11 +59,10 @@ private Q_SLOTS:
     void UpdGuiUpdatesToMs(int);
 
 Q_SIGNALS:
-    ///Settings has been applied
+    /// Settings has been applied
     void Applied();
-
 };
 
-} //ns end
+} // ns end
 
 #endif

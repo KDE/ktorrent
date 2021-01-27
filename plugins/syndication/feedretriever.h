@@ -29,7 +29,6 @@ class KJob;
 
 namespace kt
 {
-
 /**
     Class which downloads a feed and also saves a backup copy.
 */
@@ -40,22 +39,22 @@ public:
     FeedRetriever();
 
     /// Constructor, does save a backup copy
-    FeedRetriever(const QString& file_name);
+    FeedRetriever(const QString &file_name);
 
     ~FeedRetriever();
 
     /// Set the authentication cookie
-    void setAuthenticationCookie(const QString& cookie);
+    void setAuthenticationCookie(const QString &cookie);
 
     void abort() override;
     int errorCode() const override;
-    void retrieveData(const QUrl& url) override;
+    void retrieveData(const QUrl &url) override;
 
-    void finished(KJob* j);
+    void finished(KJob *j);
 
 private:
     QString backup_file;
-    KJob* job;
+    KJob *job;
     int err;
     QString cookie;
 };

@@ -21,11 +21,11 @@
 #ifndef KT_PEERVIEW_HH
 #define KT_PEERVIEW_HH
 
-#include <QTreeView>
 #include <KSharedConfig>
+#include <QTreeView>
 
-#include <util/ptrmap.h>
 #include <interfaces/peerinterface.h>
+#include <util/ptrmap.h>
 
 class QSortFilterProxyModel;
 class QMenu;
@@ -41,14 +41,14 @@ class PeerView : public QTreeView
 {
     Q_OBJECT
 public:
-    PeerView(QWidget* parent);
+    PeerView(QWidget *parent);
     ~PeerView() override;
 
     /// A peer has been added
-    void peerAdded(bt::PeerInterface* peer);
+    void peerAdded(bt::PeerInterface *peer);
 
     /// A peer has been removed
-    void peerRemoved(bt::PeerInterface* peer);
+    void peerRemoved(bt::PeerInterface *peer);
 
     /// Check to see if the GUI needs to be updated
     void update();
@@ -60,14 +60,14 @@ public:
     void loadState(KSharedConfigPtr cfg);
 
 private Q_SLOTS:
-    void showContextMenu(const QPoint& pos);
+    void showContextMenu(const QPoint &pos);
     void banPeer();
     void kickPeer();
 
 private:
-    QMenu* context_menu;
-    QSortFilterProxyModel* pm;
-    PeerViewModel* model;
+    QMenu *context_menu;
+    QSortFilterProxyModel *pm;
+    PeerViewModel *model;
 };
 }
 

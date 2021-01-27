@@ -34,13 +34,13 @@ class GroupManager;
 class UngroupedGroup : public Group
 {
 public:
-    UngroupedGroup(GroupManager* gman);
+    UngroupedGroup(GroupManager *gman);
     ~UngroupedGroup() override;
 
-    bool isMember(TorrentInterface* tor) override;
+    bool isMember(TorrentInterface *tor) override;
 
 private:
-    GroupManager* gman;
+    GroupManager *gman;
 };
 
 }

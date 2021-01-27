@@ -26,20 +26,19 @@
 #include <QStringList>
 #include <QTimer>
 
-#include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
+#include <interfaces/plugin.h>
 
 #include <memory>
 
-#include <SpdTabPage.h>
 #include <ConnsTabPage.h>
-#include <SettingsPage.h>
 #include <DisplaySettingsPage.h>
+#include <SettingsPage.h>
+#include <SpdTabPage.h>
 #include <statspluginsettings.h>
 
 namespace kt
 {
-
 /** \brief Statistics plugin
 \author Krzysztof Kundzicz <athantor@gmail.com>
 \version 1.1
@@ -52,37 +51,37 @@ public:
     /** \brief Constructor
     \param p Parent
     */
-    StatsPlugin(QObject* p, const QVariantList&);
-    ///Destructor
+    StatsPlugin(QObject *p, const QVariantList &);
+    /// Destructor
     ~StatsPlugin() override;
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
     void guiUpdate() override;
 
 public Q_SLOTS:
-    ///Gather data
+    /// Gather data
     void gatherData();
-    ///Settings has been changed
+    /// Settings has been changed
     void settingsChanged();
 
 private:
-    ///Speeds tab
-    SpdTabPage* pmUiSpd;
-    ///Connections tab
-    ConnsTabPage* pmUiConns;
-    ///Settings Page
-    SettingsPage* pmUiSett;
+    /// Speeds tab
+    SpdTabPage *pmUiSpd;
+    /// Connections tab
+    ConnsTabPage *pmUiConns;
+    /// Settings Page
+    SettingsPage *pmUiSett;
     /// Display settings page
-    DisplaySettingsPage* pmDispSett;
-    ///Timer
+    DisplaySettingsPage *pmDispSett;
+    /// Timer
     QTimer pmTmr;
 
-    ///Updates counter
+    /// Updates counter
     uint32_t mUpdCtr;
 };
 
-} //ns end
+} // ns end
 
 #endif

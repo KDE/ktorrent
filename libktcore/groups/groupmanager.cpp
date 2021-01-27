@@ -22,73 +22,71 @@
 
 #include <KLocalizedString>
 
-#include <util/log.h>
-#include <util/file.h>
-#include <util/fileops.h>
-#include <util/error.h>
-#include <bcodec/bnode.h>
+#include "allgroup.h"
+#include "functiongroup.h"
+#include "torrentgroup.h"
+#include "ungroupedgroup.h"
 #include <bcodec/bdecoder.h>
 #include <bcodec/bencoder.h>
+#include <bcodec/bnode.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
-#include "torrentgroup.h"
-#include "allgroup.h"
-#include "ungroupedgroup.h"
-#include "functiongroup.h"
+#include <util/error.h>
+#include <util/file.h>
+#include <util/fileops.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-bool upload(TorrentInterface* tor)
+bool upload(TorrentInterface *tor)
 {
     return tor->getStats().completed;
 }
 
-bool download(TorrentInterface* tor)
+bool download(TorrentInterface *tor)
 {
     return !tor->getStats().completed;
 }
 
-bool queued(TorrentInterface* tor)
+bool queued(TorrentInterface *tor)
 {
     return tor->getStats().status == bt::QUEUED;
 }
 
-bool stalled(TorrentInterface* tor)
+bool stalled(TorrentInterface *tor)
 {
     return tor->getStats().status == bt::STALLED;
 }
 
-bool error(TorrentInterface* tor)
+bool error(TorrentInterface *tor)
 {
     return tor->getStats().status == bt::ERROR;
 }
 
-bool not_running(TorrentInterface* tor)
+bool not_running(TorrentInterface *tor)
 {
     return tor->getStats().running == false;
 }
 
-bool running(TorrentInterface* tor)
+bool running(TorrentInterface *tor)
 {
     return tor->getStats().running == true;
 }
 
-bool active(TorrentInterface* tor)
+bool active(TorrentInterface *tor)
 {
-    const bt::TorrentStats& s = tor->getStats();
+    const bt::TorrentStats &s = tor->getStats();
     return (s.upload_rate >= 100 || s.download_rate >= 100);
 }
 
-bool passive(TorrentInterface* tor)
+bool passive(TorrentInterface *tor)
 {
     return !active(tor);
 }
 
-template <IsMemberFunction A, IsMemberFunction B>
-bool member(TorrentInterface* tor)
+template<IsMemberFunction A, IsMemberFunction B> bool member(TorrentInterface *tor)
 {
     return A(tor) && B(tor);
 }
@@ -100,61 +98,72 @@ GroupManager::GroupManager()
     all = new AllGroup();
     groups.insert(all->groupName(), all);
 
-    QList<Group*> defaults;
+    QList<Group *> defaults;
     // uploads tree
     defaults << new FunctionGroup<upload>(i18n("Uploads"), QStringLiteral("go-up"), Group::UPLOADS_ONLY_GROUP, QStringLiteral("/all/uploads"));
-    defaults << new FunctionGroup<member<running, upload> >(
-                 i18n("Running Uploads"), QStringLiteral("kt-start"), Group::UPLOADS_ONLY_GROUP, QStringLiteral("/all/uploads/running"));
-    defaults << new FunctionGroup<member<not_running, upload> >(
-                 i18n("Not Running Uploads"), QStringLiteral("kt-stop"), Group::UPLOADS_ONLY_GROUP, QStringLiteral("/all/uploads/not_running"));
-
+    defaults << new FunctionGroup<member<running, upload>>(i18n("Running Uploads"),
+                                                           QStringLiteral("kt-start"),
+                                                           Group::UPLOADS_ONLY_GROUP,
+                                                           QStringLiteral("/all/uploads/running"));
+    defaults << new FunctionGroup<member<not_running, upload>>(i18n("Not Running Uploads"),
+                                                               QStringLiteral("kt-stop"),
+                                                               Group::UPLOADS_ONLY_GROUP,
+                                                               QStringLiteral("/all/uploads/not_running"));
 
     // downloads tree
     defaults << new FunctionGroup<download>(i18n("Downloads"), QStringLiteral("go-down"), Group::DOWNLOADS_ONLY_GROUP, QStringLiteral("/all/downloads"));
-    defaults << new FunctionGroup<member<running, download> >(
-                 i18n("Running Downloads"), QStringLiteral("kt-start"), Group::DOWNLOADS_ONLY_GROUP, QStringLiteral("/all/downloads/running"));
-    defaults << new FunctionGroup<member<not_running, download> >(
-                 i18n("Not Running Downloads"), QStringLiteral("kt-stop"), Group::DOWNLOADS_ONLY_GROUP, QStringLiteral("/all/downloads/not_running"));
+    defaults << new FunctionGroup<member<running, download>>(i18n("Running Downloads"),
+                                                             QStringLiteral("kt-start"),
+                                                             Group::DOWNLOADS_ONLY_GROUP,
+                                                             QStringLiteral("/all/downloads/running"));
+    defaults << new FunctionGroup<member<not_running, download>>(i18n("Not Running Downloads"),
+                                                                 QStringLiteral("kt-stop"),
+                                                                 Group::DOWNLOADS_ONLY_GROUP,
+                                                                 QStringLiteral("/all/downloads/not_running"));
 
-
-    defaults << new FunctionGroup<active>(
-                 i18n("Active Torrents"), QStringLiteral("network-connect"), Group::MIXED_GROUP, QStringLiteral("/all/active"));
-    defaults << new FunctionGroup<member<active, download> >(
-                 i18n("Active Downloads"), QStringLiteral("go-down"), Group::DOWNLOADS_ONLY_GROUP, QStringLiteral("/all/active/downloads"));
-    defaults << new FunctionGroup<member<active, upload> >(
-                 i18n("Active Uploads"), QStringLiteral("go-up"), Group::UPLOADS_ONLY_GROUP, QStringLiteral("/all/active/uploads"));
+    defaults << new FunctionGroup<active>(i18n("Active Torrents"), QStringLiteral("network-connect"), Group::MIXED_GROUP, QStringLiteral("/all/active"));
+    defaults << new FunctionGroup<member<active, download>>(i18n("Active Downloads"),
+                                                            QStringLiteral("go-down"),
+                                                            Group::DOWNLOADS_ONLY_GROUP,
+                                                            QStringLiteral("/all/active/downloads"));
+    defaults << new FunctionGroup<member<active, upload>>(i18n("Active Uploads"),
+                                                          QStringLiteral("go-up"),
+                                                          Group::UPLOADS_ONLY_GROUP,
+                                                          QStringLiteral("/all/active/uploads"));
 
     defaults << new FunctionGroup<passive>(i18n("Passive Torrents"), QStringLiteral("network-disconnect"), Group::MIXED_GROUP, QStringLiteral("/all/passive"));
-    defaults << new FunctionGroup<member<passive, download> >(
-                 i18n("Passive Downloads"), QStringLiteral("go-down"), Group::DOWNLOADS_ONLY_GROUP, QStringLiteral("/all/passive/downloads"));
-    defaults << new FunctionGroup<member<passive, upload> >(
-                 i18n("Passive Uploads"), QStringLiteral("go-up"), Group::UPLOADS_ONLY_GROUP, QStringLiteral("/all/passive/uploads"));
+    defaults << new FunctionGroup<member<passive, download>>(i18n("Passive Downloads"),
+                                                             QStringLiteral("go-down"),
+                                                             Group::DOWNLOADS_ONLY_GROUP,
+                                                             QStringLiteral("/all/passive/downloads"));
+    defaults << new FunctionGroup<member<passive, upload>>(i18n("Passive Uploads"),
+                                                           QStringLiteral("go-up"),
+                                                           Group::UPLOADS_ONLY_GROUP,
+                                                           QStringLiteral("/all/passive/uploads"));
     defaults << new UngroupedGroup(this);
 
-    for (Group* g : qAsConst(defaults))
+    for (Group *g : qAsConst(defaults))
         groups.insert(g->groupName(), g);
 }
-
 
 GroupManager::~GroupManager()
 {
 }
 
-
-Group* GroupManager::newGroup(const QString& name)
+Group *GroupManager::newGroup(const QString &name)
 {
     if (groups.find(name))
         return 0;
 
-    TorrentGroup* g = new TorrentGroup(name);
+    TorrentGroup *g = new TorrentGroup(name);
     connect(g, &TorrentGroup::torrentAdded, this, &GroupManager::customGroupChanged);
-    connect(g, qOverload<Group*>(&TorrentGroup::torrentRemoved), this, &GroupManager::customGroupChanged);
+    connect(g, qOverload<Group *>(&TorrentGroup::torrentRemoved), this, &GroupManager::customGroupChanged);
     groups.insert(name, g);
     Q_EMIT groupAdded(g);
     return g;
 }
 
-void GroupManager::removeGroup(Group* g)
+void GroupManager::removeGroup(Group *g)
 {
     if (canRemove(g)) {
         Q_EMIT groupRemoved(g);
@@ -165,12 +174,12 @@ void GroupManager::removeGroup(Group* g)
     }
 }
 
-bool GroupManager::canRemove(const Group* g) const
+bool GroupManager::canRemove(const Group *g) const
 {
     return g->groupFlags() & Group::CUSTOM_GROUP;
 }
 
-Group* GroupManager::find(const QString& name)
+Group *GroupManager::find(const QString &name)
 {
     return groups.find(name);
 }
@@ -207,13 +216,11 @@ void GroupManager::saveGroups()
                 i->second->save(&enc);
         }
         enc.end();
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         bt::Out(SYS_GEN | LOG_DEBUG) << "Error : " << err.toString() << endl;
         return;
     }
 }
-
-
 
 void GroupManager::loadGroups()
 {
@@ -224,7 +231,7 @@ void GroupManager::loadGroups()
         return;
     }
 
-    bt::BNode* n = 0;
+    bt::BNode *n = 0;
     try {
         Uint32 fs = bt::FileSize(fn);
         QByteArray data(fs, 0);
@@ -235,15 +242,15 @@ void GroupManager::loadGroups()
         if (!n || n->getType() != bt::BNode::LIST)
             throw bt::Error(QStringLiteral("groups file corrupt"));
 
-        BListNode* ln = (BListNode*)n;
+        BListNode *ln = (BListNode *)n;
         for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
-            BDictNode* dn = ln->getDict(i);
+            BDictNode *dn = ln->getDict(i);
             if (!dn)
                 continue;
 
-            TorrentGroup* g = new TorrentGroup(QStringLiteral("dummy"));
+            TorrentGroup *g = new TorrentGroup(QStringLiteral("dummy"));
             connect(g, &TorrentGroup::torrentAdded, this, &GroupManager::customGroupChanged);
-            connect(g, qOverload<Group*>(&TorrentGroup::torrentRemoved), this, &GroupManager::customGroupChanged);
+            connect(g, qOverload<Group *>(&TorrentGroup::torrentRemoved), this, &GroupManager::customGroupChanged);
 
             try {
                 g->load(dn);
@@ -259,23 +266,23 @@ void GroupManager::loadGroups()
         }
 
         delete n;
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         bt::Out(SYS_GEN | LOG_DEBUG) << "Error : " << err.toString() << endl;
         delete n;
         return;
     }
 }
 
-void GroupManager::torrentRemoved(TorrentInterface* ti)
+void GroupManager::torrentRemoved(TorrentInterface *ti)
 {
     for (CItr i = groups.begin(); i != groups.end(); i++) {
         i->second->torrentRemoved(ti);
     }
 }
 
-void GroupManager::renameGroup(const QString& old_name, const QString& new_name)
+void GroupManager::renameGroup(const QString &old_name, const QString &new_name)
 {
-    Group* g = find(old_name);
+    Group *g = find(old_name);
     if (!g)
         return;
 
@@ -289,7 +296,7 @@ void GroupManager::renameGroup(const QString& old_name, const QString& new_name)
     Q_EMIT groupRenamed(g);
 }
 
-void GroupManager::addDefaultGroup(Group* g)
+void GroupManager::addDefaultGroup(Group *g)
 {
     if (find(g->groupName()))
         return;
@@ -298,8 +305,7 @@ void GroupManager::addDefaultGroup(Group* g)
     Q_EMIT groupAdded(g);
 }
 
-
-void GroupManager::removeDefaultGroup(Group* g)
+void GroupManager::removeDefaultGroup(Group *g)
 {
     if (g) {
         groupRemoved(g);
@@ -307,18 +313,18 @@ void GroupManager::removeDefaultGroup(Group* g)
     }
 }
 
-void GroupManager::torrentsLoaded(QueueManager* qman)
+void GroupManager::torrentsLoaded(QueueManager *qman)
 {
     for (CItr i = groups.begin(); i != groups.end(); i++) {
         if (i->second->groupFlags() & Group::CUSTOM_GROUP) {
-            TorrentGroup* tg = dynamic_cast<TorrentGroup*>(i->second);
+            TorrentGroup *tg = dynamic_cast<TorrentGroup *>(i->second);
             if (tg)
                 tg->loadTorrents(qman);
         }
     }
 }
 
-Group* GroupManager::findByPath(const QString& path)
+Group *GroupManager::findByPath(const QString &path)
 {
     for (CItr i = groups.begin(); i != groups.end(); i++) {
         if (i->second->groupPath() == path)
@@ -328,11 +334,10 @@ Group* GroupManager::findByPath(const QString& path)
     return nullptr;
 }
 
-void GroupManager::updateCount(QueueManager* qman)
+void GroupManager::updateCount(QueueManager *qman)
 {
     for (CItr i = groups.begin(); i != groups.end(); i++)
         i->second->updateCount(qman);
 }
-
 
 }

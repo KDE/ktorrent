@@ -23,24 +23,24 @@
 
 #include "downloadedchunkbar.h"
 
-#include <util/bitset.h>
 #include <interfaces/torrentinterface.h>
+#include <util/bitset.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-DownloadedChunkBar::DownloadedChunkBar(QWidget* parent) : ChunkBar(parent), curr_tc(nullptr)
+DownloadedChunkBar::DownloadedChunkBar(QWidget *parent)
+    : ChunkBar(parent)
+    , curr_tc(nullptr)
 {
 }
 
-
 DownloadedChunkBar::~DownloadedChunkBar()
-{}
+{
+}
 
-
-const bt::BitSet& DownloadedChunkBar::getBitSet() const
+const bt::BitSet &DownloadedChunkBar::getBitSet() const
 {
     if (curr_tc)
         return curr_tc->downloadedChunksBitSet();
@@ -48,11 +48,11 @@ const bt::BitSet& DownloadedChunkBar::getBitSet() const
         return bt::BitSet::null;
 }
 
-void DownloadedChunkBar::setTC(bt::TorrentInterface* tc)
+void DownloadedChunkBar::setTC(bt::TorrentInterface *tc)
 {
     curr_tc = tc;
     QSize s = contentsRect().size();
-    //Out() << "Pixmap : " << s.width() << " " << s.height() << endl;
+    // Out() << "Pixmap : " << s.width() << " " << s.height() << endl;
     pixmap = QPixmap(s);
     pixmap.fill(palette().color(QPalette::Active, QPalette::Base));
     QPainter painter(&pixmap);
@@ -62,14 +62,13 @@ void DownloadedChunkBar::setTC(bt::TorrentInterface* tc)
 
 void DownloadedChunkBar::updateBar(bool force)
 {
-    const BitSet& bs = getBitSet();
+    const BitSet &bs = getBitSet();
     QSize s = contentsRect().size();
     bool changed = !(curr == bs);
 
     if (curr_tc) {
         BitSet ebs = curr_tc->excludedChunksBitSet();
-        ebs.orBitSet(curr_tc->onlySeedChunksBitSet()),
-                     changed = changed || !(curr_ebs == ebs);
+        ebs.orBitSet(curr_tc->onlySeedChunksBitSet()), changed = changed || !(curr_ebs == ebs);
         curr_ebs = ebs;
     }
 
@@ -82,13 +81,13 @@ void DownloadedChunkBar::updateBar(bool force)
     }
 }
 
-void DownloadedChunkBar::drawBarContents(QPainter* p)
+void DownloadedChunkBar::drawBarContents(QPainter *p)
 {
     if (!curr_tc)
         return;
 
     Uint32 w = contentsRect().width();
-    const BitSet& bs = getBitSet();
+    const BitSet &bs = getBitSet();
     curr = bs;
     QColor highlight_color = palette().color(QPalette::Active, QPalette::Highlight);
     if (bs.allOn())
@@ -98,7 +97,7 @@ void DownloadedChunkBar::drawBarContents(QPainter* p)
     else
         drawEqual(p, bs, highlight_color, contentsRect());
 
-    const TorrentStats& s = curr_tc->getStats();
+    const TorrentStats &s = curr_tc->getStats();
     if (s.num_chunks_excluded > 0) {
         QColor c = palette().color(QPalette::Active, QPalette::Mid);
         if (curr_ebs.allOn())
@@ -110,4 +109,3 @@ void DownloadedChunkBar::drawBarContents(QPainter* p)
     }
 }
 }
-

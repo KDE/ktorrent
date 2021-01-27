@@ -23,12 +23,11 @@
 
 namespace kt
 {
-
-DBusTorrentFile::DBusTorrentFile(bt::TorrentFileInterface& file, QObject* parent)
-    : QObject(parent), file(file)
+DBusTorrentFile::DBusTorrentFile(bt::TorrentFileInterface &file, QObject *parent)
+    : QObject(parent)
+    , file(file)
 {
 }
-
 
 DBusTorrentFile::~DBusTorrentFile()
 {

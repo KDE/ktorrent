@@ -19,31 +19,30 @@
  ***************************************************************************/
 #include "bwschedulerplugin.h"
 
-#include <QTimer>
 #include <QDateTime>
 #include <QNetworkConfigurationManager>
+#include <QTimer>
 
-#include <KPluginFactory>
 #include <KLocalizedString>
+#include <KPluginFactory>
 
 #include <interfaces/coreinterface.h>
+#include <interfaces/functions.h>
 #include <interfaces/guiinterface.h>
+#include <net/socketmonitor.h>
+#include <settings.h>
 #include <util/constants.h>
+#include <util/error.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
-#include <util/error.h>
-#include <net/socketmonitor.h>
-#include <interfaces/functions.h>
-#include <settings.h>
 
-
-#include "scheduleeditor.h"
-#include "schedule.h"
 #include "bwprefpage.h"
+#include "schedule.h"
+#include "scheduleeditor.h"
 
-#include <torrent/globals.h>
-#include <peer/peermanager.h>
 #include <bwschedulerpluginsettings.h>
+#include <peer/peermanager.h>
+#include <torrent/globals.h>
 
 using namespace bt;
 
@@ -51,23 +50,21 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_bwscheduler, "ktorrent_bwscheduler.json", re
 
 namespace kt
 {
-
-BWSchedulerPlugin::BWSchedulerPlugin(QObject* parent, const QVariantList& args)
+BWSchedulerPlugin::BWSchedulerPlugin(QObject *parent, const QVariantList &args)
     : Plugin(parent)
     , m_editor(nullptr)
     , m_pref(nullptr)
 {
     Q_UNUSED(args);
     connect(&m_timer, &QTimer::timeout, this, &BWSchedulerPlugin::timerTriggered);
-    screensaver = new org::freedesktop::ScreenSaver(QStringLiteral("org.freedesktop.ScreenSaver"),
-            QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus(), this);
+    screensaver =
+        new org::freedesktop::ScreenSaver(QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus(), this);
     connect(screensaver, &org::freedesktop::ScreenSaver::ActiveChanged, this, &BWSchedulerPlugin::screensaverActivated);
     screensaver_on = screensaver->GetActive();
 
-    QNetworkConfigurationManager* networkConfigurationManager = new QNetworkConfigurationManager(this);
+    QNetworkConfigurationManager *networkConfigurationManager = new QNetworkConfigurationManager(this);
     connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &BWSchedulerPlugin::networkStatusChanged);
 }
-
 
 BWSchedulerPlugin::~BWSchedulerPlugin()
 {
@@ -85,7 +82,7 @@ void BWSchedulerPlugin::load()
 
     try {
         m_schedule->load(kt::DataDir() + QLatin1String("current.sched"));
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         Out(SYS_SCD | LOG_NOTICE) << "Failed to load current.sched : " << err.toString() << endl;
         m_schedule->clear();
     }
@@ -119,7 +116,7 @@ void BWSchedulerPlugin::unload()
 
     try {
         m_schedule->save(kt::DataDir() + QLatin1String("current.sched"));
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         Out(SYS_SCD | LOG_NOTICE) << "Failed to save current.sched : " << err.toString() << endl;
     }
 
@@ -136,8 +133,7 @@ void BWSchedulerPlugin::setNormalLimits()
         dlim = SchedulerPluginSettings::screensaverDownloadLimit();
     }
 
-    Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Changing schedule to normal values : %1 down, %2 up")
-                              .arg(dlim).arg(ulim) << endl;
+    Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Changing schedule to normal values : %1 down, %2 up").arg(dlim).arg(ulim) << endl;
     // set normal limits
     getCore()->setSuspendedState(false);
     net::SocketMonitor::setDownloadCap(1024 * dlim);
@@ -148,11 +144,10 @@ void BWSchedulerPlugin::setNormalLimits()
     PeerManager::connectionLimits().setLimits(Settings::maxTotalConnections(), Settings::maxConnections());
 }
 
-
 void BWSchedulerPlugin::timerTriggered()
 {
     QDateTime now = QDateTime::currentDateTime();
-    ScheduleItem* item = m_schedule->getCurrentItem(now);
+    ScheduleItem *item = m_schedule->getCurrentItem(now);
     if (!item || !m_schedule->isEnabled()) {
         setNormalLimits();
         restartTimer();
@@ -176,8 +171,7 @@ void BWSchedulerPlugin::timerTriggered()
             dlim = item->ss_download_limit;
         }
 
-        Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Changing schedule to : %1 down, %2 up")
-                                  .arg(dlim).arg(ulim) << endl;
+        Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Changing schedule to : %1 down, %2 up").arg(dlim).arg(ulim) << endl;
         getCore()->setSuspendedState(false);
 
         net::SocketMonitor::setDownloadCap(1024 * dlim);
@@ -187,8 +181,8 @@ void BWSchedulerPlugin::timerTriggered()
     }
 
     if (item->set_conn_limits) {
-        Out(SYS_SCD | LOG_NOTICE) << QStringLiteral("Setting connection limits to : %1 per torrent, %2 global")
-                                  .arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
+        Out(SYS_SCD | LOG_NOTICE)
+            << QStringLiteral("Setting connection limits to : %1 per torrent, %2 global").arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
 
         PeerManager::connectionLimits().setLimits(item->global_conn_limit, item->torrent_conn_limit);
     } else {
@@ -210,7 +204,7 @@ void BWSchedulerPlugin::restartTimer()
     m_timer.start(wait_time);
 }
 
-void BWSchedulerPlugin::onLoaded(Schedule* ns)
+void BWSchedulerPlugin::onLoaded(Schedule *ns)
 {
     delete m_schedule;
     m_schedule = ns;
@@ -218,8 +212,7 @@ void BWSchedulerPlugin::onLoaded(Schedule* ns)
     timerTriggered();
 }
 
-
-bool BWSchedulerPlugin::versionCheck(const QString& version) const
+bool BWSchedulerPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }

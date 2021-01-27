@@ -29,12 +29,12 @@
 
 #include "view.h"
 
-
 namespace kt
 {
-TorrentSearchBar::TorrentSearchBar(View* view, QWidget* parent): QWidget(parent)
+TorrentSearchBar::TorrentSearchBar(View *view, QWidget *parent)
+    : QWidget(parent)
 {
-    QHBoxLayout* layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
 
@@ -73,10 +73,9 @@ void TorrentSearchBar::hideBar()
     Q_EMIT filterBarHidden(QString());
 }
 
-
-bool TorrentSearchBar::eventFilter(QObject* obj, QEvent* ev)
+bool TorrentSearchBar::eventFilter(QObject *obj, QEvent *ev)
 {
-    if (ev->type() == QEvent::KeyPress && ((QKeyEvent*)ev)->key() == Qt::Key_Escape)
+    if (ev->type() == QEvent::KeyPress && ((QKeyEvent *)ev)->key() == Qt::Key_Escape)
         hideBar();
 
     return QObject::eventFilter(obj, ev);
@@ -102,4 +101,3 @@ void TorrentSearchBar::saveState(KSharedConfigPtr cfg)
 }
 
 }
-

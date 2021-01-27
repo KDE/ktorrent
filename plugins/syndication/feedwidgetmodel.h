@@ -38,28 +38,28 @@ class FeedWidgetModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    FeedWidgetModel(QObject* parent);
+    FeedWidgetModel(QObject *parent);
     ~FeedWidgetModel();
 
-    Feed* currentFeed()
+    Feed *currentFeed()
     {
         return feed;
     }
-    void setCurrentFeed(Feed* f);
+    void setCurrentFeed(Feed *f);
 
-    int rowCount(const QModelIndex& parent) const override;
-    int columnCount(const QModelIndex& parent) const override;
+    int rowCount(const QModelIndex &parent) const override;
+    int columnCount(const QModelIndex &parent) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-    QVariant data(const QModelIndex& index, int role) const override;
-    bool removeRows(int row, int count, const QModelIndex& parent) override;
-    bool insertRows(int row, int count, const QModelIndex& parent) override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
+    bool insertRows(int row, int count, const QModelIndex &parent) override;
 
-    Syndication::ItemPtr itemForIndex(const QModelIndex& idx);
+    Syndication::ItemPtr itemForIndex(const QModelIndex &idx);
 
     void updated();
 
 private:
-    Feed* feed;
+    Feed *feed;
     QList<Syndication::ItemPtr> items;
 };
 

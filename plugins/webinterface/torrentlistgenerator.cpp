@@ -21,33 +21,31 @@
 
 #include <QXmlStreamWriter>
 
-#include <util/sha1hash.h>
-#include <util/functions.h>
-#include <torrent/queuemanager.h>
-#include <interfaces/coreinterface.h>
-#include <interfaces/torrentinterface.h>
+#include "httpclienthandler.h"
+#include "httpresponseheader.h"
 #include "httpserver.h"
 #include "torrentlistgenerator.h"
-#include "httpresponseheader.h"
-#include "httpclienthandler.h"
+#include <interfaces/coreinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <torrent/queuemanager.h>
+#include <util/functions.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-TorrentListGenerator::TorrentListGenerator(CoreInterface* core, HttpServer* server)
-    : WebContentGenerator(server, "/data/torrents.xml", LOGIN_REQUIRED), core(core)
+TorrentListGenerator::TorrentListGenerator(CoreInterface *core, HttpServer *server)
+    : WebContentGenerator(server, "/data/torrents.xml", LOGIN_REQUIRED)
+    , core(core)
 {
 }
-
 
 TorrentListGenerator::~TorrentListGenerator()
 {
 }
 
-
-void TorrentListGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void TorrentListGenerator::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     Q_UNUSED(hdr);
     HttpResponseHeader rhdr(200);
@@ -58,11 +56,11 @@ void TorrentListGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader
     out.setAutoFormatting(true);
     out.writeStartDocument();
     out.writeStartElement("torrents");
-    kt::QueueManager* qman = core->getQueueManager();
+    kt::QueueManager *qman = core->getQueueManager();
     kt::QueueManager::iterator i = qman->begin();
     while (i != qman->end()) {
-        bt::TorrentInterface* ti = *i;
-        const bt::TorrentStats& s = ti->getStats();
+        bt::TorrentInterface *ti = *i;
+        const bt::TorrentStats &s = ti->getStats();
         out.writeStartElement("torrent");
         writeElement(out, "name", ti->getDisplayName());
         writeElement(out, "info_hash", ti->getInfoHash().toString());
@@ -89,14 +87,14 @@ void TorrentListGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader
     hdlr->send(rhdr, output_data);
 }
 
-void TorrentListGenerator::writeElement(QXmlStreamWriter& out, const QString& name, const QString& value)
+void TorrentListGenerator::writeElement(QXmlStreamWriter &out, const QString &name, const QString &value)
 {
     out.writeStartElement(name);
     out.writeCharacters(value);
     out.writeEndElement();
 }
 
-void TorrentListGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void TorrentListGenerator::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     Q_UNUSED(data);
     get(hdlr, hdr);

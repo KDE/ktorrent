@@ -25,10 +25,8 @@
 #include <QObject>
 #include <interfaces/torrentfileinterface.h>
 
-
 namespace kt
 {
-
 /**
     @author
 */
@@ -37,7 +35,7 @@ class DBusTorrentFile : public QObject
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.ktorrent.torrentfile")
 public:
-    DBusTorrentFile(bt::TorrentFileInterface& file, QObject* parent);
+    DBusTorrentFile(bt::TorrentFileInterface &file, QObject *parent);
     ~DBusTorrentFile();
 
 public Q_SLOTS:
@@ -53,7 +51,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE void setDoNotDownload(bool dnd);
 
 private:
-    bt::TorrentFileInterface& file;
+    bt::TorrentFileInterface &file;
 };
 
 }

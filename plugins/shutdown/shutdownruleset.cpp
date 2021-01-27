@@ -1,51 +1,49 @@
 /***************************************************************************
-*   Copyright (C) 2009 by Joris Guisson                                   *
-*   joris.guisson@gmail.com                                               *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
-***************************************************************************/
+ *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
 
-#include <QFile>
 #include <KLocalizedString>
+#include <QFile>
 
-#include <util/log.h>
-#include <util/file.h>
-#include <util/error.h>
-#include <util/sha1hash.h>
-#include <bcodec/bencoder.h>
+#include "shutdownruleset.h"
 #include <bcodec/bdecoder.h>
+#include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
 #include <torrent/queuemanager.h>
-#include "shutdownruleset.h"
-
+#include <util/error.h>
+#include <util/file.h>
+#include <util/log.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-ShutdownRuleSet::ShutdownRuleSet(kt::CoreInterface* core, QObject* parent)
-    : QObject(parent),
-      core(core),
-      on(false),
-      all_rules_must_be_hit(false)
+ShutdownRuleSet::ShutdownRuleSet(kt::CoreInterface *core, QObject *parent)
+    : QObject(parent)
+    , core(core)
+    , on(false)
+    , all_rules_must_be_hit(false)
 {
     connect(core, &CoreInterface::torrentAdded, this, &ShutdownRuleSet::torrentAdded);
     connect(core, &CoreInterface::torrentRemoved, this, &ShutdownRuleSet::torrentRemoved);
-    QueueManager* qman = core->getQueueManager();
+    QueueManager *qman = core->getQueueManager();
     for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
         torrentAdded(*i);
     }
@@ -60,7 +58,7 @@ void ShutdownRuleSet::clear()
     rules.clear();
 }
 
-void ShutdownRuleSet::addRule(kt::Action action, kt::Target target, kt::Trigger trigger, bt::TorrentInterface* tc)
+void ShutdownRuleSet::addRule(kt::Action action, kt::Target target, kt::Trigger trigger, bt::TorrentInterface *tc)
 {
     ShutdownRule rule;
     rule.action = action;
@@ -71,18 +69,18 @@ void ShutdownRuleSet::addRule(kt::Action action, kt::Target target, kt::Trigger 
     rules.append(rule);
 }
 
-void ShutdownRuleSet::torrentFinished(bt::TorrentInterface* tc)
+void ShutdownRuleSet::torrentFinished(bt::TorrentInterface *tc)
 {
     triggered(DOWNLOADING_COMPLETED, tc);
 }
 
-void ShutdownRuleSet::seedingAutoStopped(bt::TorrentInterface* tc, bt::AutoStopReason reason)
+void ShutdownRuleSet::seedingAutoStopped(bt::TorrentInterface *tc, bt::AutoStopReason reason)
 {
     Q_UNUSED(reason);
     triggered(SEEDING_COMPLETED, tc);
 }
 
-void ShutdownRuleSet::triggered(Trigger trigger, TorrentInterface* tc)
+void ShutdownRuleSet::triggered(Trigger trigger, TorrentInterface *tc)
 {
     if (!on)
         return;
@@ -104,23 +102,29 @@ void ShutdownRuleSet::triggered(Trigger trigger, TorrentInterface* tc)
 
     if ((!all_rules_must_be_hit && hit) || (all_rules_must_be_hit && all_hit)) {
         switch (currentAction()) {
-        case SHUTDOWN: Q_EMIT shutdown(); break;
-        case LOCK: Q_EMIT lock(); break;
-        case SUSPEND_TO_DISK: Q_EMIT suspendToDisk(); break;
-        case SUSPEND_TO_RAM: Q_EMIT suspendToRAM(); break;
+        case SHUTDOWN:
+            Q_EMIT shutdown();
+            break;
+        case LOCK:
+            Q_EMIT lock();
+            break;
+        case SUSPEND_TO_DISK:
+            Q_EMIT suspendToDisk();
+            break;
+        case SUSPEND_TO_RAM:
+            Q_EMIT suspendToRAM();
+            break;
         }
     }
 }
 
-
-void ShutdownRuleSet::torrentAdded(bt::TorrentInterface* tc)
+void ShutdownRuleSet::torrentAdded(bt::TorrentInterface *tc)
 {
     connect(tc, &bt::TorrentInterface::seedingAutoStopped, this, &ShutdownRuleSet::seedingAutoStopped);
     connect(tc, &bt::TorrentInterface::finished, this, &ShutdownRuleSet::torrentFinished);
 }
 
-
-void ShutdownRuleSet::torrentRemoved(bt::TorrentInterface* tc)
+void ShutdownRuleSet::torrentRemoved(bt::TorrentInterface *tc)
 {
     // Throw away all rules for this torrent
     for (QList<ShutdownRule>::iterator i = rules.begin(); i != rules.end();) {
@@ -136,7 +140,7 @@ void ShutdownRuleSet::setEnabled(bool on)
     this->on = on;
 }
 
-void ShutdownRuleSet::save(const QString& file)
+void ShutdownRuleSet::save(const QString &file)
 {
     File fptr;
     if (!fptr.open(file, QStringLiteral("wt"))) {
@@ -164,7 +168,7 @@ void ShutdownRuleSet::save(const QString& file)
     enc.end();
 }
 
-void ShutdownRuleSet::load(const QString& file)
+void ShutdownRuleSet::load(const QString &file)
 {
     QFile fptr(file);
     if (!fptr.open(QIODevice::ReadOnly)) {
@@ -174,20 +178,20 @@ void ShutdownRuleSet::load(const QString& file)
 
     QByteArray data = fptr.readAll();
     BDecoder dec(data, false);
-    BNode* node = 0;
+    BNode *node = 0;
     try {
         clear();
         node = dec.decode();
         if (!node || node->getType() != BNode::LIST)
             throw bt::Error(QStringLiteral("Toplevel node not a list"));
 
-        BListNode* const l = (BListNode*)node;
+        BListNode *const l = (BListNode *)node;
         Uint32 i = 0;
         for (; i < l->getNumChildren(); ++i) {
             if (l->getChild(i)->getType() != BNode::DICT)
                 break;
 
-            BDictNode* const d = l->getDict(i);
+            BDictNode *const d = l->getDict(i);
             if (!d)
                 continue;
 
@@ -199,7 +203,7 @@ void ShutdownRuleSet::load(const QString& file)
             rule.tc = 0;
             if (d->getValue(QByteArrayLiteral("Torrent"))) {
                 const QByteArray hash = d->getByteArray(QByteArrayLiteral("Torrent"));
-                bt::TorrentInterface* const tc = torrentForHash(hash);
+                bt::TorrentInterface *const tc = torrentForHash(hash);
                 if (tc)
                     rule.tc = tc;
                 else
@@ -213,19 +217,19 @@ void ShutdownRuleSet::load(const QString& file)
             all_rules_must_be_hit = (l->getInt(i) == 1);
         else
             all_rules_must_be_hit = false;
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         Out(SYS_GEN | LOG_DEBUG) << "Failed to parse " << file << " : " << err.toString() << endl;
     }
 
     delete node;
 }
 
-bt::TorrentInterface* ShutdownRuleSet::torrentForHash(const QByteArray& hash)
+bt::TorrentInterface *ShutdownRuleSet::torrentForHash(const QByteArray &hash)
 {
-    bt::SHA1Hash ih((const bt::Uint8*)hash.data());
-    QueueManager* qman = core->getQueueManager();
+    bt::SHA1Hash ih((const bt::Uint8 *)hash.data());
+    QueueManager *qman = core->getQueueManager();
     for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
-        bt::TorrentInterface* t = *i;
+        bt::TorrentInterface *t = *i;
         if (t->getInfoHash() == ih)
             return t;
     }
@@ -263,28 +267,24 @@ QString ShutdownRuleSet::toolTip() const
             break;
         }
 
-
         if (all_rules_must_be_hit)
             msg += i18n(" when all of the following events have occurred:<br/><br/> ");
         else
             msg += i18n(" when one of the following events occur:<br/><br/> ");
 
         QStringList items;
-        for (const ShutdownRule& r : qAsConst(rules)) {
+        for (const ShutdownRule &r : qAsConst(rules)) {
             items += QStringLiteral("- ") + r.toolTip();
         }
-
 
         msg += items.join(QStringLiteral("<br/>"));
         return msg;
     }
 }
 
-
-
 //////////////////////////////////////
 
-bool ShutdownRule::downloadingFinished(bt::TorrentInterface* tor, QueueManager* qman)
+bool ShutdownRule::downloadingFinished(bt::TorrentInterface *tor, QueueManager *qman)
 {
     if (target != ALL_TORRENTS && tc != tor)
         return false;
@@ -298,8 +298,8 @@ bool ShutdownRule::downloadingFinished(bt::TorrentInterface* tor, QueueManager* 
     } else {
         // target is all torrents, so check if all torrents have completed downloading
         for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
-            bt::TorrentInterface* t = *i;
-            const bt::TorrentStats& stats = t->getStats();
+            bt::TorrentInterface *t = *i;
+            const bt::TorrentStats &stats = t->getStats();
             if (t != tor && !stats.completed && stats.running)
                 return false;
         }
@@ -309,7 +309,7 @@ bool ShutdownRule::downloadingFinished(bt::TorrentInterface* tor, QueueManager* 
     }
 }
 
-bool ShutdownRule::seedingFinished(bt::TorrentInterface* tor, QueueManager* qman)
+bool ShutdownRule::seedingFinished(bt::TorrentInterface *tor, QueueManager *qman)
 {
     if (target != ALL_TORRENTS && tc != tor)
         return false;
@@ -323,11 +323,11 @@ bool ShutdownRule::seedingFinished(bt::TorrentInterface* tor, QueueManager* qman
     } else {
         // target is all torrents, so check if all torrents have completed seeding
         for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
-            bt::TorrentInterface* t = *i;
+            bt::TorrentInterface *t = *i;
             if (t == tor)
                 continue;
 
-            const bt::TorrentStats& stats = t->getStats();
+            const bt::TorrentStats &stats = t->getStats();
             if (stats.running)
                 return false;
         }
@@ -351,7 +351,4 @@ QString ShutdownRule::toolTip() const
         return QString();
 }
 
-
-
 }
-

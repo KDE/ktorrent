@@ -25,20 +25,26 @@ namespace kt
 static QString ResponseCodeToString(int r)
 {
     switch (r) {
-    case 200: return "OK";
-    case 301: return "Moved Permanently";
-    case 304: return "Not Modified";
-    case 404: return "Not Found";
+    case 200:
+        return "OK";
+    case 301:
+        return "Moved Permanently";
+    case 304:
+        return "Not Modified";
+    case 404:
+        return "Not Found";
     }
     return QString();
 }
 
 HttpResponseHeader::HttpResponseHeader(int response_code, int major_version, int minor_version)
-    : response_code(response_code), major_version(major_version), minor_version(minor_version)
+    : response_code(response_code)
+    , major_version(major_version)
+    , minor_version(minor_version)
 {
 }
 
-HttpResponseHeader::HttpResponseHeader(const HttpResponseHeader& hdr)
+HttpResponseHeader::HttpResponseHeader(const HttpResponseHeader &hdr)
 {
     response_code = hdr.response_code;
     fields = hdr.fields;
@@ -55,7 +61,7 @@ void HttpResponseHeader::setResponseCode(int rc)
     response_code = rc;
 }
 
-void HttpResponseHeader::setValue(const QString& key, const QString& value)
+void HttpResponseHeader::setValue(const QString &key, const QString &value)
 {
     fields[key] = value;
 }
@@ -73,7 +79,5 @@ QString HttpResponseHeader::toString() const
     str += "\r\n";
     return str;
 }
-
-
 
 }

@@ -22,13 +22,12 @@
 #ifndef KTMEDIAVIEW_H
 #define KTMEDIAVIEW_H
 
-#include <QListView>
-#include <QCheckBox>
-#include <QSortFilterProxyModel>
 #include <KSharedConfig>
+#include <QCheckBox>
+#include <QListView>
+#include <QSortFilterProxyModel>
 
 #include "mediafile.h"
-
 
 class QLineEdit;
 class KToolBar;
@@ -44,10 +43,10 @@ class MediaViewFilter : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    MediaViewFilter(QObject* parent = 0);
+    MediaViewFilter(QObject *parent = 0);
     ~MediaViewFilter() override;
 
-    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 
     /// Enable or disable showing of incomplete files
     void setShowIncomplete(bool on);
@@ -66,27 +65,27 @@ class MediaView : public QWidget
 {
     Q_OBJECT
 public:
-    MediaView(MediaModel* model, QWidget* parent);
+    MediaView(MediaModel *model, QWidget *parent);
     ~MediaView() override;
 
     void saveState(KSharedConfig::Ptr cfg);
     void loadState(KSharedConfig::Ptr cfg);
 
 Q_SIGNALS:
-    void doubleClicked(const MediaFileRef& mf);
+    void doubleClicked(const MediaFileRef &mf);
 
 private Q_SLOTS:
-    void onDoubleClicked(const QModelIndex& index);
+    void onDoubleClicked(const QModelIndex &index);
     void showIncompleteChanged(bool on);
 
 private:
-    MediaModel* model;
-    QListView* media_tree;
-    QLineEdit* search_box;
-    MediaViewFilter* filter;
-    KToolBar* tool_bar;
-    QAction* show_incomplete;
-    QAction* refresh;
+    MediaModel *model;
+    QListView *media_tree;
+    QLineEdit *search_box;
+    MediaViewFilter *filter;
+    KToolBar *tool_bar;
+    QAction *show_incomplete;
+    QAction *refresh;
 };
 
 }

@@ -23,16 +23,17 @@
 
 #include <KLocalizedString>
 
-#include <interfaces/torrentfileinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
+#include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-ChunkDownloadModel::Item::Item(ChunkDownloadInterface* cd, const QString& files) : cd(cd), files(files)
+ChunkDownloadModel::Item::Item(ChunkDownloadInterface *cd, const QString &files)
+    : cd(cd)
+    , files(files)
 {
     cd->getStats(stats);
 }
@@ -41,10 +42,7 @@ bool ChunkDownloadModel::Item::changed() const
 {
     ChunkDownloadInterface::Stats s;
     cd->getStats(s);
-    bool ret =
-        s.pieces_downloaded != stats.pieces_downloaded ||
-        s.download_speed != stats.download_speed ||
-        s.current_peer_id != stats.current_peer_id;
+    bool ret = s.pieces_downloaded != stats.pieces_downloaded || s.download_speed != stats.download_speed || s.current_peer_id != stats.current_peer_id;
 
     stats = s;
     return ret;
@@ -53,11 +51,16 @@ bool ChunkDownloadModel::Item::changed() const
 QVariant ChunkDownloadModel::Item::data(int col) const
 {
     switch (col) {
-    case 0: return stats.chunk_index;
-    case 1: return QStringLiteral("%1 / %2").arg(stats.pieces_downloaded).arg(stats.total_pieces);
-    case 2: return stats.current_peer_id;
-    case 3: return BytesPerSecToString(stats.download_speed);
-    case 4: return files;
+    case 0:
+        return stats.chunk_index;
+    case 1:
+        return QStringLiteral("%1 / %2").arg(stats.pieces_downloaded).arg(stats.total_pieces);
+    case 2:
+        return stats.current_peer_id;
+    case 3:
+        return BytesPerSecToString(stats.download_speed);
+    case 4:
+        return files;
     }
     return QVariant();
 }
@@ -65,29 +68,34 @@ QVariant ChunkDownloadModel::Item::data(int col) const
 QVariant ChunkDownloadModel::Item::sortData(int col) const
 {
     switch (col) {
-    case 0: return stats.chunk_index;
-    case 1: return stats.pieces_downloaded;
-    case 2: return stats.current_peer_id;
-    case 3: return stats.download_speed;
-    case 4: return files;
-    default: return QVariant();
+    case 0:
+        return stats.chunk_index;
+    case 1:
+        return stats.pieces_downloaded;
+    case 2:
+        return stats.current_peer_id;
+    case 3:
+        return stats.download_speed;
+    case 4:
+        return files;
+    default:
+        return QVariant();
     }
 }
 
 /////////////////////////////////////////////////////////////
 
-ChunkDownloadModel::ChunkDownloadModel(QObject* parent)
+ChunkDownloadModel::ChunkDownloadModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
 }
-
 
 ChunkDownloadModel::~ChunkDownloadModel()
 {
     qDeleteAll(items);
 }
 
-void ChunkDownloadModel::downloadAdded(bt::ChunkDownloadInterface* cd)
+void ChunkDownloadModel::downloadAdded(bt::ChunkDownloadInterface *cd)
 {
     if (!tc)
         return;
@@ -98,7 +106,7 @@ void ChunkDownloadModel::downloadAdded(bt::ChunkDownloadInterface* cd)
     int n = 0;
     if (tc.data()->getStats().multi_file_torrent) {
         for (Uint32 i = 0; i < tc.data()->getNumFiles(); i++) {
-            const bt::TorrentFileInterface& tf = tc.data()->getTorrentFile(i);
+            const bt::TorrentFileInterface &tf = tc.data()->getTorrentFile(i);
             if (stats.chunk_index >= tf.getFirstChunk() && stats.chunk_index <= tf.getLastChunk()) {
                 if (n > 0)
                     files += QStringLiteral(", ");
@@ -110,16 +118,16 @@ void ChunkDownloadModel::downloadAdded(bt::ChunkDownloadInterface* cd)
         }
     }
 
-    Item* nitem = new Item(cd, files);
+    Item *nitem = new Item(cd, files);
     items.append(nitem);
     insertRow(items.count() - 1);
 }
 
-void ChunkDownloadModel::downloadRemoved(bt::ChunkDownloadInterface* cd)
+void ChunkDownloadModel::downloadRemoved(bt::ChunkDownloadInterface *cd)
 {
     int row = 0;
     bool found = false;
-    for (Item* item : qAsConst(items)) {
+    for (Item *item : qAsConst(items)) {
         if (item->cd == cd) {
             found = true;
             break;
@@ -132,7 +140,7 @@ void ChunkDownloadModel::downloadRemoved(bt::ChunkDownloadInterface* cd)
     }
 }
 
-void ChunkDownloadModel::changeTC(bt::TorrentInterface* tc)
+void ChunkDownloadModel::changeTC(bt::TorrentInterface *tc)
 {
     beginResetModel();
     qDeleteAll(items);
@@ -155,7 +163,7 @@ void ChunkDownloadModel::update()
     int lowest = -1;
     int highest = -1;
 
-    for (Item* i : qAsConst(items)) {
+    for (Item *i : qAsConst(items)) {
         if (i->changed()) {
             if (lowest == -1)
                 lowest = idx;
@@ -169,7 +177,7 @@ void ChunkDownloadModel::update()
         Q_EMIT dataChanged(index(lowest, 1), index(highest, 3));
 }
 
-int ChunkDownloadModel::rowCount(const QModelIndex& parent) const
+int ChunkDownloadModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -177,7 +185,7 @@ int ChunkDownloadModel::rowCount(const QModelIndex& parent) const
         return items.count();
 }
 
-int ChunkDownloadModel::columnCount(const QModelIndex& parent) const
+int ChunkDownloadModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -192,28 +200,40 @@ QVariant ChunkDownloadModel::headerData(int section, Qt::Orientation orientation
 
     if (role == Qt::DisplayRole) {
         switch (section) {
-        case 0: return i18n("Chunk");
-        case 1: return i18n("Progress");
-        case 2: return i18n("Peer");
-        case 3: return i18n("Down Speed");
-        case 4: return i18n("Files");
-        default: return QVariant();
+        case 0:
+            return i18n("Chunk");
+        case 1:
+            return i18n("Progress");
+        case 2:
+            return i18n("Peer");
+        case 3:
+            return i18n("Down Speed");
+        case 4:
+            return i18n("Files");
+        default:
+            return QVariant();
         }
     } else if (role == Qt::ToolTipRole) {
         switch (section) {
-        case 0: return i18n("Number of the chunk");
-        case 1: return i18n("Download progress of the chunk");
-        case 2: return i18n("Which peer we are downloading it from");
-        case 3: return i18n("Download speed of the chunk");
-        case 4: return i18n("Which files the chunk is located in");
-        default: return QVariant();
+        case 0:
+            return i18n("Number of the chunk");
+        case 1:
+            return i18n("Download progress of the chunk");
+        case 2:
+            return i18n("Which peer we are downloading it from");
+        case 3:
+            return i18n("Download speed of the chunk");
+        case 4:
+            return i18n("Which files the chunk is located in");
+        default:
+            return QVariant();
         }
     }
 
     return QVariant();
 }
 
-QModelIndex ChunkDownloadModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex ChunkDownloadModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent) || parent.isValid())
         return QModelIndex();
@@ -221,7 +241,7 @@ QModelIndex ChunkDownloadModel::index(int row, int column, const QModelIndex& pa
         return createIndex(row, column, items[row]);
 }
 
-QVariant ChunkDownloadModel::data(const QModelIndex& index, int role) const
+QVariant ChunkDownloadModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() >= items.count() || index.row() < 0)
         return QVariant();
@@ -234,7 +254,7 @@ QVariant ChunkDownloadModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool ChunkDownloadModel::removeRows(int row, int count, const QModelIndex& /*parent*/)
+bool ChunkDownloadModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
 {
     beginRemoveRows(QModelIndex(), row, row + count - 1);
     for (int i = 0; i < count; i++)
@@ -244,7 +264,7 @@ bool ChunkDownloadModel::removeRows(int row, int count, const QModelIndex& /*par
     return true;
 }
 
-bool ChunkDownloadModel::insertRows(int row, int count, const QModelIndex& /*parent*/)
+bool ChunkDownloadModel::insertRows(int row, int count, const QModelIndex & /*parent*/)
 {
     beginInsertRows(QModelIndex(), row, row + count - 1);
     endInsertRows();

@@ -40,18 +40,18 @@ class LinkDownloader : public QObject
 {
     Q_OBJECT
 public:
-    LinkDownloader(const QUrl& url, CoreInterface* core, bool verbose, const QString& group, const QString& location, const QString& move_on_completion);
+    LinkDownloader(const QUrl &url, CoreInterface *core, bool verbose, const QString &group, const QString &location, const QString &move_on_completion);
     ~LinkDownloader();
 
     /// Start the download proces
     void start();
 
-    void downloadFinished(KJob* j);
-    void torrentDownloadFinished(KJob* j);
+    void downloadFinished(KJob *j);
+    void torrentDownloadFinished(KJob *j);
 
 private:
-    bool isTorrent(const QByteArray& data) const;
-    void handleHtmlPage(const QByteArray& data);
+    bool isTorrent(const QByteArray &data) const;
+    void handleHtmlPage(const QByteArray &data);
     void tryNextLink();
     void tryTorrentLinks();
 
@@ -60,7 +60,7 @@ Q_SIGNALS:
 
 private:
     QUrl url;
-    CoreInterface* core;
+    CoreInterface *core;
     bool verbose;
     QUrl link_url;
     QList<QUrl> links;

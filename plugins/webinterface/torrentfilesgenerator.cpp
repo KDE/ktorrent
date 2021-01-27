@@ -18,52 +18,48 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QXmlStreamWriter>
-#include <util/sha1hash.h>
-#include <util/functions.h>
-#include <torrent/queuemanager.h>
-#include <interfaces/coreinterface.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentfileinterface.h>
-#include "httpserver.h"
-#include "httpresponseheader.h"
-#include "httpclienthandler.h"
 #include "torrentfilesgenerator.h"
+#include "httpclienthandler.h"
+#include "httpresponseheader.h"
+#include "httpserver.h"
+#include <QXmlStreamWriter>
+#include <interfaces/coreinterface.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <torrent/queuemanager.h>
+#include <util/functions.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-TorrentFilesGenerator::TorrentFilesGenerator(CoreInterface* core, HttpServer* server)
-    : WebContentGenerator(server, "/data/torrent/files.xml", LOGIN_REQUIRED), core(core)
+TorrentFilesGenerator::TorrentFilesGenerator(CoreInterface *core, HttpServer *server)
+    : WebContentGenerator(server, "/data/torrent/files.xml", LOGIN_REQUIRED)
+    , core(core)
 {
 }
-
 
 TorrentFilesGenerator::~TorrentFilesGenerator()
 {
 }
 
-
-void TorrentFilesGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void TorrentFilesGenerator::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     Q_UNUSED(hdr);
     HttpResponseHeader rhdr(200);
     server->setDefaultResponseHeaders(rhdr, "text/xml", true);
-
-
 
     QByteArray output_data;
     QXmlStreamWriter out(&output_data);
     out.setAutoFormatting(true);
     out.writeStartDocument();
     out.writeStartElement("torrent");
-    bt::TorrentInterface* ti = findTorrent(hdr.path());
+    bt::TorrentInterface *ti = findTorrent(hdr.path());
     if (ti) {
         for (Uint32 i = 0; i != ti->getNumFiles(); i++) {
             out.writeStartElement("file");
-            const bt::TorrentFileInterface& file = ti->getTorrentFile(i);
+            const bt::TorrentFileInterface &file = ti->getTorrentFile(i);
             writeElement(out, "path", file.getUserModifiedPath());
             writeElement(out, "priority", QString::number(file.getPriority()));
             writeElement(out, "percentage", QString::number(file.getDownloadPercentage(), 'f', 2));
@@ -76,20 +72,20 @@ void TorrentFilesGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeade
     hdlr->send(rhdr, output_data);
 }
 
-void TorrentFilesGenerator::writeElement(QXmlStreamWriter& out, const QString& name, const QString& value)
+void TorrentFilesGenerator::writeElement(QXmlStreamWriter &out, const QString &name, const QString &value)
 {
     out.writeStartElement(name);
     out.writeCharacters(value);
     out.writeEndElement();
 }
 
-void TorrentFilesGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void TorrentFilesGenerator::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     Q_UNUSED(data);
     get(hdlr, hdr);
 }
 
-bt::TorrentInterface* TorrentFilesGenerator::findTorrent(const QString& path)
+bt::TorrentInterface *TorrentFilesGenerator::findTorrent(const QString &path)
 {
     KUrl url;
     url.setEncodedPathAndQuery(path);
@@ -99,7 +95,7 @@ bt::TorrentInterface* TorrentFilesGenerator::findTorrent(const QString& path)
         tor = tmp.toInt();
 
     int cnt = 0;
-    kt::QueueManager* qman = core->getQueueManager();
+    kt::QueueManager *qman = core->getQueueManager();
     kt::QueueManager::iterator i = qman->begin();
     while (i != qman->end()) {
         if (cnt == tor)

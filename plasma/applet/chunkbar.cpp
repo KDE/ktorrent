@@ -19,16 +19,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include "chunkbar.h"
 #include <QStyleOptionGraphicsItem>
 #include <plasma/theme.h>
-#include "chunkbar.h"
 
 using namespace bt;
 
 namespace ktplasma
 {
-
-ChunkBar::ChunkBar(QGraphicsItem* parent): QGraphicsWidget(parent), downloaded_chunks(100)
+ChunkBar::ChunkBar(QGraphicsItem *parent)
+    : QGraphicsWidget(parent)
+    , downloaded_chunks(100)
 {
     setAttribute(Qt::WA_NoSystemBackground);
     QFontMetricsF fm(Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont));
@@ -40,10 +41,10 @@ ChunkBar::~ChunkBar()
 {
 }
 
-void ChunkBar::updateBitSets(int num_chunks, const QByteArray& downloaded, const QByteArray& excluded)
+void ChunkBar::updateBitSets(int num_chunks, const QByteArray &downloaded, const QByteArray &excluded)
 {
-    bt::BitSet dc((const bt::Uint8*)downloaded.data(), num_chunks);
-    bt::BitSet ec((const bt::Uint8*)excluded.data(), num_chunks);
+    bt::BitSet dc((const bt::Uint8 *)downloaded.data(), num_chunks);
+    bt::BitSet ec((const bt::Uint8 *)excluded.data(), num_chunks);
 
     if (downloaded_chunks != dc || excluded_chunks != ec) {
         downloaded_chunks = dc;
@@ -52,8 +53,7 @@ void ChunkBar::updateBitSets(int num_chunks, const QByteArray& downloaded, const
     }
 }
 
-void ChunkBar::paintChunks(QPainter* p, const QStyleOptionGraphicsItem* option,
-                           const QColor& color, const bt::BitSet& chunks)
+void ChunkBar::paintChunks(QPainter *p, const QStyleOptionGraphicsItem *option, const QColor &color, const bt::BitSet &chunks)
 {
     Uint32 w = option->rect.width();
     if (chunks.allOn())
@@ -64,7 +64,7 @@ void ChunkBar::paintChunks(QPainter* p, const QStyleOptionGraphicsItem* option,
         drawEqual(p, chunks, color, option->rect);
 }
 
-void ChunkBar::paint(QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget)
+void ChunkBar::paint(QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(widget);
     QColor highlight_color = palette().color(QPalette::Active, QPalette::Highlight);

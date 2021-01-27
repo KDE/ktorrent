@@ -21,8 +21,8 @@
 #ifndef KT_MAGNETVIEW_H
 #define KT_MAGNETVIEW_H
 
-#include <QWidget>
 #include <KSharedConfig>
+#include <QWidget>
 
 class QTreeView;
 class QMenu;
@@ -39,13 +39,13 @@ class MagnetView : public QWidget
 {
     Q_OBJECT
 public:
-    MagnetView(MagnetManager* magnetManager, QWidget* parent = 0);
+    MagnetView(MagnetManager *magnetManager, QWidget *parent = 0);
     ~MagnetView() override;
 
     void saveState(KSharedConfigPtr cfg);
     void loadState(KSharedConfigPtr cfg);
 
-    void keyPressEvent(QKeyEvent* event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private Q_SLOTS:
     void showContextMenu(QPoint p);
@@ -55,15 +55,15 @@ private Q_SLOTS:
     void copyMagnetUrl();
 
 private:
-    MagnetManager* mman;
-    MagnetModel* model;
-    QTreeView* view;
-    QMenu* menu;
+    MagnetManager *mman;
+    MagnetModel *model;
+    QTreeView *view;
+    QMenu *menu;
 
-    QAction* start;
-    QAction* stop;
-    QAction* copy_url;
-    QAction* remove;
+    QAction *start;
+    QAction *stop;
+    QAction *copy_url;
+    QAction *remove;
 };
 
 }

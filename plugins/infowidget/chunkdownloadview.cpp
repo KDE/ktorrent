@@ -27,20 +27,19 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentfileinterface.h>
+#include "chunkdownloadmodel.h"
 #include <interfaces/chunkdownloadinterface.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 #include <util/functions.h>
 #include <util/log.h>
-#include "chunkdownloadmodel.h"
 
 using namespace bt;
 
 namespace kt
 {
-
-
-ChunkDownloadView::ChunkDownloadView(QWidget* parent) : QWidget(parent)
+ChunkDownloadView::ChunkDownloadView(QWidget *parent)
+    : QWidget(parent)
 {
     setupUi(this);
 
@@ -70,12 +69,12 @@ ChunkDownloadView::~ChunkDownloadView()
 {
 }
 
-void ChunkDownloadView::downloadAdded(ChunkDownloadInterface* cd)
+void ChunkDownloadView::downloadAdded(ChunkDownloadInterface *cd)
 {
     model->downloadAdded(cd);
 }
 
-void ChunkDownloadView::downloadRemoved(ChunkDownloadInterface* cd)
+void ChunkDownloadView::downloadRemoved(ChunkDownloadInterface *cd)
 {
     model->downloadRemoved(cd);
 }
@@ -86,21 +85,21 @@ void ChunkDownloadView::update()
         return;
 
     model->update();
-    const TorrentStats& s = curr_tc.data()->getStats();
+    const TorrentStats &s = curr_tc.data()->getStats();
     m_chunks_downloading->setText(QString::number(s.num_chunks_downloading));
     m_chunks_downloaded->setText(QString::number(s.num_chunks_downloaded));
     m_excluded_chunks->setText(QString::number(s.num_chunks_excluded));
     m_chunks_left->setText(QString::number(s.num_chunks_left));
 }
 
-void ChunkDownloadView::changeTC(TorrentInterface* tc)
+void ChunkDownloadView::changeTC(TorrentInterface *tc)
 {
     curr_tc = tc;
     if (!curr_tc) {
         setEnabled(false);
     } else {
         setEnabled(true);
-        const TorrentStats& s = curr_tc.data()->getStats();
+        const TorrentStats &s = curr_tc.data()->getStats();
         m_total_chunks->setText(QString::number(s.total_chunks));
         m_size_chunks->setText(BytesToString(s.chunk_size));
     }
@@ -124,11 +123,10 @@ void ChunkDownloadView::loadState(KSharedConfigPtr cfg)
     KConfigGroup g = cfg->group("ChunkDownloadView");
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
     if (!s.isEmpty()) {
-        QHeaderView* v = m_chunk_view->header();
+        QHeaderView *v = m_chunk_view->header();
         v->restoreState(s);
         m_chunk_view->sortByColumn(v->sortIndicatorSection(), v->sortIndicatorOrder());
         model->sort(v->sortIndicatorSection(), v->sortIndicatorOrder());
     }
 }
 }
-

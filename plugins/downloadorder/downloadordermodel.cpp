@@ -29,29 +29,29 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 
-#include <util/log.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentfileinterface.h>
 #include "downloadordermodel.h"
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-DownloadOrderModel::DownloadOrderModel(bt::TorrentInterface* tor, QObject* parent) : QAbstractListModel(parent), tor(tor)
+DownloadOrderModel::DownloadOrderModel(bt::TorrentInterface *tor, QObject *parent)
+    : QAbstractListModel(parent)
+    , tor(tor)
 {
     for (Uint32 i = 0; i < tor->getNumFiles(); i++) {
         order.append(i);
     }
 }
 
-
 DownloadOrderModel::~DownloadOrderModel()
 {
 }
 
-int DownloadOrderModel::rowCount(const QModelIndex& parent) const
+int DownloadOrderModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return tor->getNumFiles();
@@ -59,7 +59,7 @@ int DownloadOrderModel::rowCount(const QModelIndex& parent) const
         return 0;
 }
 
-QVariant DownloadOrderModel::data(const QModelIndex& index, int role) const
+QVariant DownloadOrderModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -67,7 +67,6 @@ QVariant DownloadOrderModel::data(const QModelIndex& index, int role) const
     Uint32 idx = order.at(index.row());
     if (idx >= tor->getNumFiles())
         return QVariant();
-
 
     switch (role) {
     case Qt::DisplayRole:
@@ -86,7 +85,7 @@ QVariant DownloadOrderModel::data(const QModelIndex& index, int role) const
     }
 }
 
-QModelIndex DownloadOrderModel::find(const QString& text)
+QModelIndex DownloadOrderModel::find(const QString &text)
 {
     beginResetModel();
     current_search_text = text;
@@ -108,7 +107,7 @@ void DownloadOrderModel::clearHighLights()
     endResetModel();
 }
 
-Qt::ItemFlags DownloadOrderModel::flags(const QModelIndex& index) const
+Qt::ItemFlags DownloadOrderModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractListModel::flags(index);
 
@@ -130,14 +129,14 @@ QStringList DownloadOrderModel::mimeTypes() const
     return types;
 }
 
-QMimeData* DownloadOrderModel::mimeData(const QModelIndexList& indexes) const
+QMimeData *DownloadOrderModel::mimeData(const QModelIndexList &indexes) const
 {
-    QMimeData* mimeData = new QMimeData();
+    QMimeData *mimeData = new QMimeData();
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
     QList<Uint32> files;
 
-    for (const QModelIndex& index : indexes) {
+    for (const QModelIndex &index : indexes) {
         if (index.isValid()) {
             files.append(order.at(index.row()));
         }
@@ -147,7 +146,7 @@ QMimeData* DownloadOrderModel::mimeData(const QModelIndexList& indexes) const
     return mimeData;
 }
 
-bool DownloadOrderModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent)
+bool DownloadOrderModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     Q_UNUSED(column);
     if (action == Qt::IgnoreAction)
@@ -173,7 +172,7 @@ bool DownloadOrderModel::dropMimeData(const QMimeData* data, Qt::DropAction acti
     int r = 0;
     for (QList<Uint32>::iterator i = order.begin(); i != order.end();) {
         if (files.contains(*i)) {
-            if (r < begin_row)   // if we remove something before the begin row, the row to insert decreases
+            if (r < begin_row) // if we remove something before the begin row, the row to insert decreases
                 begin_row--;
 
             i = order.erase(i);
@@ -190,7 +189,6 @@ bool DownloadOrderModel::dropMimeData(const QMimeData* data, Qt::DropAction acti
     }
     return true;
 }
-
 
 void DownloadOrderModel::moveUp(int row, int count)
 {
@@ -247,15 +245,17 @@ void DownloadOrderModel::moveBottom(int row, int count)
 }
 
 struct NameCompare {
-    NameCompare(bt::TorrentInterface* tor) : tor(tor)
-    {}
+    NameCompare(bt::TorrentInterface *tor)
+        : tor(tor)
+    {
+    }
 
     bool operator()(Uint32 a, Uint32 b)
     {
         return tor->getTorrentFile(a).getUserModifiedPath() < tor->getTorrentFile(b).getUserModifiedPath();
     }
 
-    bt::TorrentInterface* tor;
+    bt::TorrentInterface *tor;
 };
 
 void DownloadOrderModel::sortByName()
@@ -266,10 +266,12 @@ void DownloadOrderModel::sortByName()
 }
 
 struct AlbumTrackCompare {
-    AlbumTrackCompare(bt::TorrentInterface* tor) : tor(tor)
-    {}
+    AlbumTrackCompare(bt::TorrentInterface *tor)
+        : tor(tor)
+    {
+    }
 
-    int getTrack(const QString& title)
+    int getTrack(const QString &title)
     {
         QRegExp exp(QLatin1String(".*(\\d+)\\s.*\\.\\w*"), Qt::CaseInsensitive);
         int pos = exp.indexIn(title);
@@ -301,7 +303,7 @@ struct AlbumTrackCompare {
             return ta < tb;
     }
 
-    bt::TorrentInterface* tor;
+    bt::TorrentInterface *tor;
 };
 
 void DownloadOrderModel::sortByAlbumTrackOrder()
@@ -312,24 +314,23 @@ void DownloadOrderModel::sortByAlbumTrackOrder()
 }
 
 struct SeasonEpisodeCompare {
-    SeasonEpisodeCompare(bt::TorrentInterface* tor) : tor(tor)
-    {}
+    SeasonEpisodeCompare(bt::TorrentInterface *tor)
+        : tor(tor)
+    {
+    }
 
-    bool getSeasonAndEpisode(const QString& title, int& season, int& episode)
+    bool getSeasonAndEpisode(const QString &title, int &season, int &episode)
     {
         QStringList se_formats;
-        se_formats << QStringLiteral("(\\d+)x(\\d+)")
-                   << QStringLiteral("S(\\d+)E(\\d+)")
-                   << QStringLiteral("(\\d+)\\.(\\d+)")
-                   << QStringLiteral("S(\\d+)\\.E(\\d+)")
-                   << QStringLiteral("Season\\s(\\d+).*Episode\\s(\\d+)");
+        se_formats << QStringLiteral("(\\d+)x(\\d+)") << QStringLiteral("S(\\d+)E(\\d+)") << QStringLiteral("(\\d+)\\.(\\d+)")
+                   << QStringLiteral("S(\\d+)\\.E(\\d+)") << QStringLiteral("Season\\s(\\d+).*Episode\\s(\\d+)");
 
-        for (const QString& format : qAsConst(se_formats)) {
+        for (const QString &format : qAsConst(se_formats)) {
             QRegExp exp(format, Qt::CaseInsensitive);
             int pos = exp.indexIn(title);
             if (pos > -1) {
                 QString s = exp.cap(1); // Season
-                QString e = exp.cap(2);  // Episode
+                QString e = exp.cap(2); // Episode
                 bool ok = false;
                 season = s.toInt(&ok);
                 if (!ok)
@@ -368,7 +369,7 @@ struct SeasonEpisodeCompare {
         }
     }
 
-    bt::TorrentInterface* tor;
+    bt::TorrentInterface *tor;
 };
 
 void DownloadOrderModel::sortBySeasonsAndEpisodes()

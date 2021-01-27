@@ -21,18 +21,17 @@
 
 #include "webseedstab.h"
 
-#include <QHeaderView>
 #include <KMessageBox>
+#include <QHeaderView>
 
-#include <interfaces/webseedinterface.h>
 #include "webseedsmodel.h"
+#include <interfaces/webseedinterface.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-WebSeedsTab::WebSeedsTab(QWidget* parent)
+WebSeedsTab::WebSeedsTab(QWidget *parent)
     : QWidget(parent)
 {
     setupUi(this);
@@ -53,18 +52,19 @@ WebSeedsTab::WebSeedsTab(QWidget* parent)
     m_webseed_list->setSortingEnabled(true);
     m_webseed_list->setUniformRowHeights(true);
 
-    connect(m_webseed_list->selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, qOverload<const QItemSelection&, const QItemSelection&>(&WebSeedsTab::selectionChanged));
+    connect(m_webseed_list->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            qOverload<const QItemSelection &, const QItemSelection &>(&WebSeedsTab::selectionChanged));
 
     connect(m_webseed, &QLineEdit::textChanged, this, &WebSeedsTab::onWebSeedTextChanged);
 }
-
 
 WebSeedsTab::~WebSeedsTab()
 {
 }
 
-void WebSeedsTab::changeTC(bt::TorrentInterface* tc)
+void WebSeedsTab::changeTC(bt::TorrentInterface *tc)
 {
     curr_tc = tc;
     model->changeTC(tc);
@@ -86,7 +86,7 @@ void WebSeedsTab::addWebSeed()
     if (!curr_tc)
         return;
 
-    bt::TorrentInterface* tc = curr_tc.data();
+    bt::TorrentInterface *tc = curr_tc.data();
     QUrl url(m_webseed->text());
     if (tc && url.isValid() && url.scheme() == QLatin1String("http")) {
         if (tc->addWebSeed(url)) {
@@ -103,10 +103,10 @@ void WebSeedsTab::removeWebSeed()
     if (!curr_tc)
         return;
 
-    bt::TorrentInterface* tc = curr_tc.data();
+    bt::TorrentInterface *tc = curr_tc.data();
     const QModelIndexList idx_list = m_webseed_list->selectionModel()->selectedRows();
-    for (const QModelIndex& idx : idx_list) {
-        const WebSeedInterface* ws = tc->getWebSeed(proxy_model->mapToSource(idx).row());
+    for (const QModelIndex &idx : idx_list) {
+        const WebSeedInterface *ws = tc->getWebSeed(proxy_model->mapToSource(idx).row());
         if (ws && ws->isUserCreated()) {
             if (!tc->removeWebSeed(ws->getUrl()))
                 KMessageBox::error(this, i18n("Cannot remove webseed %1, it is part of the torrent.", ws->getUrl().toDisplayString()));
@@ -116,11 +116,11 @@ void WebSeedsTab::removeWebSeed()
     model->changeTC(tc);
 }
 
-void WebSeedsTab::selectionChanged(const QModelIndexList& indexes)
+void WebSeedsTab::selectionChanged(const QModelIndexList &indexes)
 {
     if (curr_tc) {
-        for (const QModelIndex& idx : indexes) {
-            const WebSeedInterface* ws = curr_tc.data()->getWebSeed(proxy_model->mapToSource(idx).row());
+        for (const QModelIndex &idx : indexes) {
+            const WebSeedInterface *ws = curr_tc.data()->getWebSeed(proxy_model->mapToSource(idx).row());
             if (ws && ws->isUserCreated()) {
                 m_remove->setEnabled(true);
                 return;
@@ -131,7 +131,7 @@ void WebSeedsTab::selectionChanged(const QModelIndexList& indexes)
     m_remove->setEnabled(false);
 }
 
-void WebSeedsTab::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void WebSeedsTab::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(deselected);
     if (!curr_tc)
@@ -140,7 +140,7 @@ void WebSeedsTab::selectionChanged(const QItemSelection& selected, const QItemSe
     selectionChanged(selected.indexes());
 }
 
-void WebSeedsTab::onWebSeedTextChanged(const QString& ws)
+void WebSeedsTab::onWebSeedTextChanged(const QString &ws)
 {
     QUrl url(ws);
     m_add->setEnabled(!curr_tc.isNull() && url.isValid() && url.scheme() == QLatin1String("http"));

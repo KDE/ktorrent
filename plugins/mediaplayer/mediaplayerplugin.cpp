@@ -24,11 +24,10 @@
 #include <KLocalizedString>
 #include <KPluginFactory>
 
+#include "mediaplayeractivity.h"
+#include <interfaces/guiinterface.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
-#include <interfaces/guiinterface.h>
-#include "mediaplayeractivity.h"
-
 
 K_PLUGIN_FACTORY_WITH_JSON(ktorrent_mediaplayer, "ktorrent_mediaplayer.json", registerPlugin<kt::MediaPlayerPlugin>();)
 
@@ -36,12 +35,11 @@ using namespace bt;
 
 namespace kt
 {
-
-MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QVariantList& args) : Plugin(parent)
+MediaPlayerPlugin::MediaPlayerPlugin(QObject *parent, const QVariantList &args)
+    : Plugin(parent)
 {
     Q_UNUSED(args);
 }
-
 
 MediaPlayerPlugin::~MediaPlayerPlugin()
 {
@@ -50,7 +48,7 @@ MediaPlayerPlugin::~MediaPlayerPlugin()
 void MediaPlayerPlugin::load()
 {
     LogSystemManager::instance().registerSystem(i18n("Media Player"), SYS_MPL);
-    CoreInterface* core = getCore();
+    CoreInterface *core = getCore();
     act = new MediaPlayerActivity(core, actionCollection(), nullptr);
     getGUI()->addActivity(act);
     setXMLFile(QStringLiteral("ktorrent_mediaplayerui.rc"));
@@ -68,7 +66,7 @@ void MediaPlayerPlugin::unload()
     act = nullptr;
 }
 
-bool MediaPlayerPlugin::versionCheck(const QString& version) const
+bool MediaPlayerPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }

@@ -30,37 +30,34 @@
 #include <KLocalizedString>
 #include <Solid/Device>
 
-#include <util/functions.h>
+#include "settings.h"
+#include <dht/dhtbase.h>
+#include <diskio/cache.h>
+#include <diskio/chunkmanager.h>
 #include <download/downloader.h>
 #include <download/webseed.h>
-#include <torrent/choker.h>
-#include <peer/authenticationmonitor.h>
-#include <peer/peermanager.h>
-#include <peer/peerconnector.h>
-#include <peer/utpex.h>
-#include <peer/connectionlimit.h>
+#include <interfaces/queuemanagerinterface.h>
+#include <mse/encryptedpacketsocket.h>
 #include <net/socketmonitor.h>
 #include <net/socks.h>
-#include <dht/dhtbase.h>
-#include <mse/encryptedpacketsocket.h>
-#include <tracker/httptracker.h>
-#include <tracker/udptrackersocket.h>
-#include <diskio/chunkmanager.h>
-#include <diskio/cache.h>
-#include <torrent/torrentcontrol.h>
-#include <util/log.h>
+#include <peer/authenticationmonitor.h>
+#include <peer/connectionlimit.h>
+#include <peer/peerconnector.h>
+#include <peer/peermanager.h>
+#include <peer/utpex.h>
+#include <torrent/choker.h>
 #include <torrent/server.h>
 #include <torrent/timeestimator.h>
-#include <interfaces/queuemanagerinterface.h>
-#include "settings.h"
-
+#include <torrent/torrentcontrol.h>
+#include <tracker/httptracker.h>
+#include <tracker/udptrackersocket.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
 QString DataDir(CreationMode mode)
 {
     QString dataDirPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
@@ -77,9 +74,9 @@ QString DataDir(CreationMode mode)
                 fileInfo.dir().mkdir(fileInfo.fileName());
         }
     }
-    //if (!str.endsWith(bt::DirSeparator()))
+    // if (!str.endsWith(bt::DirSeparator()))
     return dataDirPath + bt::DirSeparator();
-    //else
+    // else
     //    return str;
 }
 
@@ -88,9 +85,7 @@ Uint16 RandomGoodPort()
     Uint16 start = 50000;
     while (true) {
         Uint16 port = start + QRandomGenerator::global()->bounded(10000);
-        if (port != Settings::port() &&
-            port != Settings::dhtPort() &&
-            port != Settings::udpTrackerPort())
+        if (port != Settings::port() && port != Settings::dhtPort() && port != Settings::udpTrackerPort())
             return port;
     }
 }
@@ -114,7 +109,7 @@ void ApplySettings()
     UDPTrackerSocket::setPort(Settings::udpTrackerPort());
     Choker::setNumUploadSlots(Settings::numUploadSlots());
 
-    dht::DHTBase& ht = Globals::instance().getDHT();
+    dht::DHTBase &ht = Globals::instance().getDHT();
     if (Settings::dhtSupport() && !ht.isRunning()) {
         ht.start(kt::DataDir() + QLatin1String("dht_table"), kt::DataDir() + QLatin1String("dht_key"), Settings::dhtPort());
     } else if (!Settings::dhtSupport() && ht.isRunning()) {
@@ -137,7 +132,6 @@ void ApplySettings()
         Tracker::setCustomIP(Settings::customIP());
     else
         Tracker::setCustomIP(QString());
-
 
     QString proxy = Settings::httpProxy();
 
@@ -172,6 +166,5 @@ QString TorrentFileFilter(bool all_files_included)
         ret += QLatin1String(";;") + i18n("All files") + QLatin1String(" (*)");
     return ret;
 }
-
 
 }

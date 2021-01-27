@@ -32,11 +32,11 @@ namespace kt
 class KTCORE_EXPORT TreeFilterModel : public QSortFilterProxyModel
 {
 public:
-    TreeFilterModel(QObject* parent = nullptr);
+    TreeFilterModel(QObject *parent = nullptr);
     ~TreeFilterModel() override;
 
 protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 };
 
 }

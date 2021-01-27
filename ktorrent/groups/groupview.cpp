@@ -23,40 +23,38 @@
 #include <QAction>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QHeaderView>
 #include <QInputDialog>
 #include <QMenu>
 #include <QTreeWidgetItemIterator>
-#include <QHeaderView>
 
 #include <KActionCollection>
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
 
-#include <util/log.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentactivityinterface.h>
+#include "core.h"
+#include "grouppolicydlg.h"
+#include "gui.h"
+#include "view/view.h"
 #include <groups/group.h>
 #include <groups/groupmanager.h>
 #include <groups/torrentgroup.h>
-#include "view/view.h"
-#include "grouppolicydlg.h"
-#include "gui.h"
-#include "core.h"
-
+#include <interfaces/torrentactivityinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-GroupView::GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidget* parent)
-    : QTreeView(parent),
-      gui(gui),
-      core(core),
-      view(view),
-      gman(gman),
-      model(new GroupViewModel(gman, view, parent))
+GroupView::GroupView(GroupManager *gman, View *view, Core *core, GUI *gui, QWidget *parent)
+    : QTreeView(parent)
+    , gui(gui)
+    , core(core)
+    , view(view)
+    , gman(gman)
+    , model(new GroupViewModel(gman, view, parent))
 {
     setRootIsDecorated(false);
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -73,12 +71,11 @@ GroupView::GroupView(GroupManager* gman, View* view, Core* core, GUI* gui, QWidg
     setDragDropMode(QAbstractItemView::DropOnly);
 }
 
-
 GroupView::~GroupView()
 {
 }
 
-void GroupView::setupActions(KActionCollection* col)
+void GroupView::setupActions(KActionCollection *col)
 {
     open_in_new_tab = new QAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Open In New Tab"), this);
     connect(open_in_new_tab, &QAction::triggered, this, &GroupView::openInNewTab);
@@ -106,7 +103,7 @@ void GroupView::addGroup()
     addNewGroup();
 }
 
-Group* GroupView::addNewGroup()
+Group *GroupView::addNewGroup()
 {
     bool ok = false;
     QString name = QInputDialog::getText(this, QString(), i18n("Please enter the group name."), QLineEdit::Normal, QString(), &ok);
@@ -119,14 +116,14 @@ Group* GroupView::addNewGroup()
         return nullptr;
     }
 
-    Group* g = gman->newGroup(name);
+    Group *g = gman->newGroup(name);
     gman->saveGroups();
     return g;
 }
 
 void GroupView::removeGroup()
 {
-    Group* g = model->groupForIndex(selectionModel()->currentIndex());
+    Group *g = model->groupForIndex(selectionModel()->currentIndex());
     if (g) {
         gman->removeGroup(g);
         gman->saveGroups();
@@ -138,9 +135,9 @@ void GroupView::editGroupName()
     edit(selectionModel()->currentIndex());
 }
 
-void GroupView::showContextMenu(const QPoint& p)
+void GroupView::showContextMenu(const QPoint &p)
 {
-    Group* g = model->groupForIndex(selectionModel()->currentIndex());
+    Group *g = model->groupForIndex(selectionModel()->currentIndex());
 
     bool enable = g && gman->canRemove(g);
     edit_group->setEnabled(enable);
@@ -149,21 +146,21 @@ void GroupView::showContextMenu(const QPoint& p)
 
     open_in_new_tab->setEnabled(g != 0);
 
-    QMenu* menu = gui->getTorrentActivity()->part()->menu(QStringLiteral("GroupsMenu"));
+    QMenu *menu = gui->getTorrentActivity()->part()->menu(QStringLiteral("GroupsMenu"));
     if (menu)
         menu->popup(viewport()->mapToGlobal(p));
 }
 
-void GroupView::onItemClicked(const QModelIndex& index)
+void GroupView::onItemClicked(const QModelIndex &index)
 {
-    Group* g = model->groupForIndex(index);
+    Group *g = model->groupForIndex(index);
     if (g)
         currentGroupChanged(g);
 }
 
 void GroupView::editGroupPolicy()
 {
-    Group* g = model->groupForIndex(selectionModel()->currentIndex());
+    Group *g = model->groupForIndex(selectionModel()->currentIndex());
     if (g) {
         GroupPolicyDlg dlg(g, this);
         if (dlg.exec() == QDialog::Accepted)
@@ -178,24 +175,19 @@ void GroupView::saveState(KSharedConfigPtr cfg)
     g.writeEntry("visible", isVisible());
 }
 
-
 void GroupView::loadState(KSharedConfigPtr cfg)
 {
     KConfigGroup g = cfg->group("GroupView");
     QStringList default_expanded;
-    default_expanded << QStringLiteral("/all")
-                     << QStringLiteral("/all/downloads")
-                     << QStringLiteral("/all/uploads")
-                     << QStringLiteral("/all/active")
-                     << QStringLiteral("/all/passive")
-                     << QStringLiteral("/all/custom");
+    default_expanded << QStringLiteral("/all") << QStringLiteral("/all/downloads") << QStringLiteral("/all/uploads") << QStringLiteral("/all/active")
+                     << QStringLiteral("/all/passive") << QStringLiteral("/all/custom");
     QStringList slist = g.readEntry("expanded", default_expanded);
     model->expandGroups(this, slist);
     setVisible(g.readEntry("visible", true));
     expand(model->index(0, 0));
 }
 
-void GroupView::keyPressEvent(QKeyEvent* event)
+void GroupView::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
         onItemClicked(selectionModel()->currentIndex());
@@ -210,9 +202,8 @@ void GroupView::updateGroupCount()
 
 void GroupView::openInNewTab()
 {
-    Group* g = model->groupForIndex(selectionModel()->currentIndex());
+    Group *g = model->groupForIndex(selectionModel()->currentIndex());
     if (g)
         openTab(g);
 }
 }
-

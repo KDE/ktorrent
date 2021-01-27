@@ -19,27 +19,26 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <KLocalizedString>
 #include <KConfigDialogManager>
+#include <KLocalizedString>
+#include <KSharedConfig>
 
-#include "settings.h"
-#include "prefdialog.h"
+#include "advancedpref.h"
+#include "btpref.h"
+#include "colorpref.h"
 #include "core.h"
 #include "generalpref.h"
-#include "colorpref.h"
-#include "advancedpref.h"
 #include "networkpref.h"
+#include "prefdialog.h"
 #include "proxypref.h"
 #include "qmpref.h"
-#include "btpref.h"
 #include "recommendedsettingsdlg.h"
+#include "settings.h"
 
 namespace kt
 {
-
-
-
-PrefDialog::PrefDialog(QWidget* parent, Core* core) : KConfigDialog(parent, QStringLiteral("settings"), Settings::self())
+PrefDialog::PrefDialog(QWidget *parent, Core *core)
+    : KConfigDialog(parent, QStringLiteral("settings"), Settings::self())
 {
     KConfigDialogManager::propertyMap()->insert(QStringLiteral("KUrlRequester"), QByteArrayLiteral("url"));
     setFaceType(KPageDialog::List);
@@ -63,22 +62,22 @@ PrefDialog::~PrefDialog()
 {
 }
 
-void PrefDialog::addPrefPage(PrefPageInterface* page)
+void PrefDialog::addPrefPage(PrefPageInterface *page)
 {
-    PrefPageScrollArea* area = new PrefPageScrollArea(page, this);
+    PrefPageScrollArea *area = new PrefPageScrollArea(page, this);
     connect(area->page, &PrefPageInterface::updateButtons, this, &PrefDialog::updateButtons);
 
-    KPageWidgetItem* p = addPage(area, page->config(), page->pageName(), page->pageIcon());
+    KPageWidgetItem *p = addPage(area, page->config(), page->pageName(), page->pageIcon());
     area->page_widget_item = p;
     pages.append(area);
     if (!isHidden())
         page->loadSettings();
 }
 
-void PrefDialog::removePrefPage(PrefPageInterface* page)
+void PrefDialog::removePrefPage(PrefPageInterface *page)
 {
-    PrefPageScrollArea* found = nullptr;
-    for (PrefPageScrollArea* area : qAsConst(pages)) {
+    PrefPageScrollArea *found = nullptr;
+    for (PrefPageScrollArea *area : qAsConst(pages)) {
         if (area->page == page) {
             found = area;
             break;
@@ -100,19 +99,19 @@ void PrefDialog::updateWidgetsAndShow()
 
 void PrefDialog::updateWidgets()
 {
-    for (PrefPageScrollArea* area : qAsConst(pages))
+    for (PrefPageScrollArea *area : qAsConst(pages))
         area->page->loadSettings();
 }
 
 void PrefDialog::updateWidgetsDefault()
 {
-    for (PrefPageScrollArea* area : qAsConst(pages))
+    for (PrefPageScrollArea *area : qAsConst(pages))
         area->page->loadDefaults();
 }
 
 void PrefDialog::updateSettings()
 {
-    for (PrefPageScrollArea* area : qAsConst(pages))
+    for (PrefPageScrollArea *area : qAsConst(pages))
         area->page->updateSettings();
 }
 
@@ -148,17 +147,19 @@ bool PrefDialog::hasChanged()
     if (KConfigDialog::hasChanged())
         return true;
 
-    for (PrefPageScrollArea* area : qAsConst(pages))
+    for (PrefPageScrollArea *area : qAsConst(pages))
         if (area->page->customWidgetsChanged())
             return true;
 
     return false;
 }
 
-
 ///////////////////////////////////////
 
-PrefPageScrollArea::PrefPageScrollArea(kt::PrefPageInterface* page, QWidget* parent) : QScrollArea(parent), page(page), page_widget_item(nullptr)
+PrefPageScrollArea::PrefPageScrollArea(kt::PrefPageInterface *page, QWidget *parent)
+    : QScrollArea(parent)
+    , page(page)
+    , page_widget_item(nullptr)
 {
     setWidget(page);
     setWidgetResizable(true);
@@ -169,7 +170,6 @@ PrefPageScrollArea::PrefPageScrollArea(kt::PrefPageInterface* page, QWidget* par
 PrefPageScrollArea::~PrefPageScrollArea()
 {
 }
-
 
 }
 

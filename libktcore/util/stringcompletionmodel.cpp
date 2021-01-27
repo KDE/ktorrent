@@ -30,11 +30,11 @@ using namespace bt;
 
 namespace kt
 {
-
-StringCompletionModel::StringCompletionModel(const QString& file, QObject* parent): QStringListModel(parent), file(file)
+StringCompletionModel::StringCompletionModel(const QString &file, QObject *parent)
+    : QStringListModel(parent)
+    , file(file)
 {
 }
-
 
 StringCompletionModel::~StringCompletionModel()
 {
@@ -68,11 +68,11 @@ void StringCompletionModel::save()
 
     QTextStream out(&fptr);
     const QStringList sl = stringList();
-    for (const QString& s : sl)
+    for (const QString &s : sl)
         out << s << Qt::endl;
 }
 
-void StringCompletionModel::addString(const QString& s)
+void StringCompletionModel::addString(const QString &s)
 {
     QStringList curr = stringList();
     if (!curr.contains(s)) {
@@ -82,4 +82,3 @@ void StringCompletionModel::addString(const QString& s)
 }
 
 }
-

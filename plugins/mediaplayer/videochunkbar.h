@@ -21,12 +21,11 @@
 #ifndef KT_VIDEOCHUNKBAR_H
 #define KT_VIDEOCHUNKBAR_H
 
-#include <torrent/chunkbar.h>
 #include "mediafile.h"
+#include <torrent/chunkbar.h>
 
 namespace kt
 {
-
 /**
     ChunkBar for a video during streaming mode
  */
@@ -34,14 +33,14 @@ class VideoChunkBar : public ChunkBar
 {
     Q_OBJECT
 public:
-    VideoChunkBar(const MediaFileRef& mfile, QWidget* parent);
+    VideoChunkBar(const MediaFileRef &mfile, QWidget *parent);
     ~VideoChunkBar() override;
 
     /// Set the media file
-    void setMediaFile(const MediaFileRef& mf);
+    void setMediaFile(const MediaFileRef &mf);
 
     /// Get the bitset
-    const bt::BitSet& getBitSet() const override;
+    const bt::BitSet &getBitSet() const override;
 
     /// Time has elapsed during playing, update the bar if necessary
     void timeElapsed(qint64 time);
@@ -51,7 +50,7 @@ private Q_SLOTS:
     void updateBitSet();
 
 private:
-    void drawBarContents(QPainter* p) override;
+    void drawBarContents(QPainter *p) override;
 
 private:
     MediaFileRef mfile;

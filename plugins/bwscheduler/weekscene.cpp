@@ -33,31 +33,29 @@
 #include <QGraphicsTextItem>
 #include <QPalette>
 
-#include <util/functions.h>
-#include <util/log.h>
-#include "schedule.h"
-#include "schedulegraphicsitem.h"
 #include "bwschedulerpluginsettings.h"
 #include "guidanceline.h"
-
+#include "schedule.h"
+#include "schedulegraphicsitem.h"
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-WeekScene::WeekScene(QObject* parent)
-    : QGraphicsScene(parent),
-      schedule(nullptr)
+WeekScene::WeekScene(QObject *parent)
+    : QGraphicsScene(parent)
+    , schedule(nullptr)
 {
     addCalendar();
 }
 
-
 WeekScene::~WeekScene()
-{}
+{
+}
 
-qreal LongestDayWidth(const QFontMetricsF& fm)
+qreal LongestDayWidth(const QFontMetricsF &fm)
 {
     qreal wd = 0;
     for (int i = 1; i <= 7; i++) {
@@ -75,8 +73,7 @@ void WeekScene::updateStatusText(int up, int down, bool suspended, bool enabled)
     if (suspended)
         msg = i18n("Current schedule: suspended");
     else if (up > 0 && down > 0)
-        msg = i18n("Current schedule: %1/s download, %2/s upload",
-                   format.formatByteSize(down * 1024), format.formatByteSize(up * 1024));
+        msg = i18n("Current schedule: %1/s download, %2/s upload", format.formatByteSize(down * 1024), format.formatByteSize(up * 1024));
     else if (up > 0)
         msg = i18n("Current schedule: unlimited download, %1/s upload", format.formatByteSize(up * 1024));
     else if (down > 0)
@@ -92,11 +89,10 @@ void WeekScene::updateStatusText(int up, int down, bool suspended, bool enabled)
 
 void WeekScene::addCalendar()
 {
-    QGraphicsTextItem* tmp = addText(QStringLiteral("Dinges"));
+    QGraphicsTextItem *tmp = addText(QStringLiteral("Dinges"));
     QFontMetricsF fm(tmp->font());
     removeItem(tmp);
     delete tmp;
-
 
     // first add 7 rectangles for each day of the week
     xoff = fm.width(QStringLiteral("00:00")) + 10;
@@ -112,7 +108,7 @@ void WeekScene::addCalendar()
     QBrush brush(SchedulerPluginSettings::scheduleBackgroundColor());
 
     for (int i = 0; i < 7; i++) {
-        QGraphicsRectItem* item = addRect(xoff + day_width * i, yoff, day_width, 24 * hour_height, pen, brush);
+        QGraphicsRectItem *item = addRect(xoff + day_width * i, yoff, day_width, 24 * hour_height, pen, brush);
         item->setZValue(1);
 
         QString day = QLocale::system().dayName(i + 1);
@@ -122,7 +118,7 @@ void WeekScene::addCalendar()
         qreal mid = xoff + day_width * (i + 0.5);
         qreal start = mid - dlen * 0.5;
 
-        QGraphicsTextItem* t = addText(day);
+        QGraphicsTextItem *t = addText(day);
         t->setPos(QPointF(start, fm.height() + 5));
         t->setZValue(2);
 
@@ -131,11 +127,11 @@ void WeekScene::addCalendar()
 
     // draw hour lines
     for (int i = 0; i <= 24; i++) {
-        QGraphicsLineItem* item = addLine(0, yoff + i * hour_height, xoff + 7 * day_width, yoff + i * hour_height, pen);
+        QGraphicsLineItem *item = addLine(0, yoff + i * hour_height, xoff + 7 * day_width, yoff + i * hour_height, pen);
         item->setZValue(2);
 
         if (i < 24) {
-            QGraphicsTextItem* t = addText(QStringLiteral("%1:00").arg(i));
+            QGraphicsTextItem *t = addText(QStringLiteral("%1:00").arg(i));
             t->setPos(QPointF(0, yoff + i * hour_height));
             t->setZValue(2);
         }
@@ -155,26 +151,26 @@ void WeekScene::addCalendar()
     setSceneRect(r);
 }
 
-QGraphicsItem* WeekScene::addScheduleItem(ScheduleItem* item)
+QGraphicsItem *WeekScene::addScheduleItem(ScheduleItem *item)
 {
     QTime midnight(0, 0, 0, 0);
     qreal x = xoff + (item->start_day - 1) * day_width;
-//      qreal min_h = hour_height / 60.0;
+    //      qreal min_h = hour_height / 60.0;
     qreal y = timeToY(item->start);
     qreal ye = timeToY(item->end);
 
     QRectF rect(x, y, day_width * (item->end_day - item->start_day + 1), ye - y);
     QRectF cst(xoff, yoff, 7 * day_width, 24 * hour_height);
-    ScheduleGraphicsItem* gi = new ScheduleGraphicsItem(item, rect, cst, this);
+    ScheduleGraphicsItem *gi = new ScheduleGraphicsItem(item, rect, cst, this);
     addItem(gi);
     gi->update(rect);
     return gi;
 }
 
-void WeekScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev)
+void WeekScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *ev)
 {
-    const QList<QGraphicsItem*> gis = items(ev->scenePos());
-    for (QGraphicsItem* gi : gis) {
+    const QList<QGraphicsItem *> gis = items(ev->scenePos());
+    for (QGraphicsItem *gi : gis) {
         if (gi->zValue() == 3) {
             itemDoubleClicked(gi);
             break;
@@ -182,11 +178,11 @@ void WeekScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev)
     }
 }
 
-void WeekScene::mousePressEvent(QGraphicsSceneMouseEvent* ev)
+void WeekScene::mousePressEvent(QGraphicsSceneMouseEvent *ev)
 {
     if (ev->button() == Qt::RightButton) {
-        const QList<QGraphicsItem*> gis = items(ev->scenePos());
-        for (QGraphicsItem* gi : gis) {
+        const QList<QGraphicsItem *> gis = items(ev->scenePos());
+        for (QGraphicsItem *gi : gis) {
             if (gi->zValue() == 3) {
                 clearSelection();
                 gi->setSelected(true);
@@ -197,7 +193,7 @@ void WeekScene::mousePressEvent(QGraphicsSceneMouseEvent* ev)
         QGraphicsScene::mousePressEvent(ev);
 }
 
-qreal WeekScene::timeToY(const QTime& time)
+qreal WeekScene::timeToY(const QTime &time)
 {
     QTime midnight(0, 0, 0, 0);
     qreal min_h = hour_height / 60.0;
@@ -211,7 +207,7 @@ QTime WeekScene::yToTime(qreal y)
     return QTime(0, 0, 0, 0).addSecs((y / min_h) * 60);
 }
 
-void WeekScene::itemMoved(ScheduleItem* item, const QPointF& np)
+void WeekScene::itemMoved(ScheduleItem *item, const QPointF &np)
 {
     QTime start = yToTime(np.y());
     int d = item->start.secsTo(item->end); // duration in seconds
@@ -231,7 +227,7 @@ void WeekScene::itemMoved(ScheduleItem* item, const QPointF& np)
     itemMoved(item, start, end, start_day, end_day);
 }
 
-bool WeekScene::validMove(ScheduleItem* item, const QPointF& np)
+bool WeekScene::validMove(ScheduleItem *item, const QPointF &np)
 {
     if (!schedule)
         return true;
@@ -247,8 +243,7 @@ bool WeekScene::validMove(ScheduleItem* item, const QPointF& np)
     return schedule->validModify(item, start, end, start_day, end_day);
 }
 
-
-void WeekScene::itemResized(ScheduleItem* item, const QRectF& r)
+void WeekScene::itemResized(ScheduleItem *item, const QRectF &r)
 {
     QTime start = yToTime(r.y());
     QTime end = yToTime(r.y() + r.height());
@@ -268,17 +263,16 @@ void WeekScene::itemResized(ScheduleItem* item, const QRectF& r)
     itemMoved(item, start, end, start_day, end_day);
 }
 
-bool WeekScene::validResize(ScheduleItem* item, const QRectF& r)
+bool WeekScene::validResize(ScheduleItem *item, const QRectF &r)
 {
     QTime start = yToTime(r.y());
     QTime end = yToTime(r.y() + r.height());
     return schedule->validModify(item, start, end, item->start_day, item->end_day);
 }
 
-
-void WeekScene::itemChanged(ScheduleItem* item, QGraphicsItem* gi)
+void WeekScene::itemChanged(ScheduleItem *item, QGraphicsItem *gi)
 {
-    ScheduleGraphicsItem* sgi = (ScheduleGraphicsItem*)gi;
+    ScheduleGraphicsItem *sgi = (ScheduleGraphicsItem *)gi;
     qreal x = xoff + (item->start_day - 1) * day_width;
     qreal y = timeToY(item->start);
     qreal ye = timeToY(item->end);
@@ -290,10 +284,10 @@ void WeekScene::colorsChanged()
     QPen pen(SchedulerPluginSettings::scheduleLineColor());
     QBrush brush(SchedulerPluginSettings::scheduleBackgroundColor());
 
-    for (QGraphicsLineItem* line : qAsConst(lines))
+    for (QGraphicsLineItem *line : qAsConst(lines))
         line->setPen(pen);
 
-    for (QGraphicsRectItem* rect : qAsConst(rects)) {
+    for (QGraphicsRectItem *rect : qAsConst(rects)) {
         rect->setPen(pen);
         rect->setBrush(brush);
     }
@@ -316,4 +310,3 @@ void WeekScene::updateGuidanceLines(qreal y1, qreal y2)
     gline[1]->update(xoff, y2, yToTime(y2).toString(FORMAT));
 }
 }
-

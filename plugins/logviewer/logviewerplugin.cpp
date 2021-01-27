@@ -20,21 +20,20 @@
 
 #include <QDockWidget>
 
-#include <KPluginFactory>
 #include <KLocalizedString>
 #include <KMainWindow>
+#include <KPluginFactory>
 
-#include <util/log.h>
-#include <torrent/globals.h>
-#include <interfaces/guiinterface.h>
-#include <interfaces/coreinterface.h>
-#include <interfaces/torrentactivityinterface.h>
-#include "logviewerplugin.h"
-#include "logviewer.h"
-#include "logprefpage.h"
 #include "logflags.h"
+#include "logprefpage.h"
+#include "logviewer.h"
+#include "logviewerplugin.h"
 #include "logviewerpluginsettings.h"
-
+#include <interfaces/coreinterface.h>
+#include <interfaces/guiinterface.h>
+#include <interfaces/torrentactivityinterface.h>
+#include <torrent/globals.h>
+#include <util/log.h>
 
 using namespace bt;
 
@@ -42,7 +41,8 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_logviewer, "ktorrent_logviewer.json", regist
 
 namespace kt
 {
-LogViewerPlugin::LogViewerPlugin(QObject* parent, const QVariantList&) : Plugin(parent)
+LogViewerPlugin::LogViewerPlugin(QObject *parent, const QVariantList &)
+    : Plugin(parent)
     , lv(nullptr)
     , pref(nullptr)
     , flags(nullptr)
@@ -51,10 +51,9 @@ LogViewerPlugin::LogViewerPlugin(QObject* parent, const QVariantList&) : Plugin(
 {
 }
 
-
 LogViewerPlugin::~LogViewerPlugin()
-{}
-
+{
+}
 
 void LogViewerPlugin::load()
 {
@@ -104,7 +103,7 @@ void LogViewerPlugin::addLogViewerToGUI()
         getGUI()->addActivity(lv);
         break;
     case DOCKABLE_WIDGET: {
-        KMainWindow* mwnd = getGUI()->getMainWindow();
+        KMainWindow *mwnd = getGUI()->getMainWindow();
         dock = new QDockWidget(mwnd);
         dock->setWidget(lv);
         dock->setObjectName(QStringLiteral("LogViewerDockWidget"));
@@ -127,7 +126,7 @@ void LogViewerPlugin::removeLogViewerFromGUI()
         getGUI()->getTorrentActivity()->removeToolWidget(lv);
         break;
     case DOCKABLE_WIDGET: {
-        KMainWindow* mwnd = getGUI()->getMainWindow();
+        KMainWindow *mwnd = getGUI()->getMainWindow();
         mwnd->removeDockWidget(dock);
         dock->setWidget(nullptr);
         lv->setParent(nullptr);
@@ -144,7 +143,7 @@ void LogViewerPlugin::guiUpdate()
         lv->processPending();
 }
 
-bool LogViewerPlugin::versionCheck(const QString& version) const
+bool LogViewerPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }

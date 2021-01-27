@@ -21,20 +21,18 @@
 #include "scanforlostfilesthread.h"
 
 #include "nodeoperations.h"
-#include <interfaces/torrentfileinterface.h>
 #include <interfaces/coreinterface.h>
+#include <interfaces/torrentfileinterface.h>
 #include <torrent/queuemanager.h>
 
 namespace kt
 {
-
-
-ScanForLostFilesThread::ScanForLostFilesThread(const QString& folder, CoreInterface* core, QObject *parent): QThread(parent),
-    m_core(core)
+ScanForLostFilesThread::ScanForLostFilesThread(const QString &folder, CoreInterface *core, QObject *parent)
+    : QThread(parent)
+    , m_core(core)
 {
     m_root_folder = folder;
-    while (m_root_folder.endsWith(QLatin1String("/")) &&
-           m_root_folder != QLatin1String("/")) {
+    while (m_root_folder.endsWith(QLatin1String("/")) && m_root_folder != QLatin1String("/")) {
         m_root_folder.chop(1);
     }
 }
@@ -46,21 +44,18 @@ void ScanForLostFilesThread::run()
         return;
     }
 
-
-    FNode* torrent_files = new FNode();
-    FNode* torrent_folders = new FNode();
+    FNode *torrent_files = new FNode();
+    FNode *torrent_folders = new FNode();
     NodeOperations::makePath(torrent_files, m_root_folder, true);
 
-
-    kt::QueueManager* qman = m_core->getQueueManager();
+    kt::QueueManager *qman = m_core->getQueueManager();
     if (qman) {
-        QList<bt::TorrentInterface*>::iterator it = qman->begin();
+        QList<bt::TorrentInterface *>::iterator it = qman->begin();
         while (it != qman->end()) {
-
             if (isInterruptionRequested())
                 break;
 
-            bt::TorrentInterface* tor = *it;
+            bt::TorrentInterface *tor = *it;
             if (tor->getStats().multi_file_torrent) {
                 for (bt::Uint32 i = 0; i < tor->getNumFiles(); i++) {
                     NodeOperations::makePath(torrent_files, tor->getTorrentFile(i).getPathOnDisk(), false);
@@ -78,9 +73,8 @@ void ScanForLostFilesThread::run()
         }
     }
 
-
-    FNode* existing_files = new FNode();
-    FNode* folder_node = NodeOperations::makePath(existing_files, m_root_folder, true);
+    FNode *existing_files = new FNode();
+    FNode *folder_node = NodeOperations::makePath(existing_files, m_root_folder, true);
     QDir dir(m_root_folder);
 
     if (!isInterruptionRequested()) {
@@ -89,15 +83,13 @@ void ScanForLostFilesThread::run()
         NodeOperations::pruneEmptyFolders(existing_files, torrent_folders);
     }
 
-
-    QSet<QString>* filter = new QSet<QString>();
+    QSet<QString> *filter = new QSet<QString>();
     NodeOperations::printTree(existing_files, *filter);
     Q_EMIT filterReady(filter);
 
     NodeOperations::removeNode(torrent_files);
     NodeOperations::removeNode(torrent_folders);
     NodeOperations::removeNode(existing_files);
-
 }
 
 }

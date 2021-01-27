@@ -20,16 +20,14 @@
 
 #include <torrent/globals.h>
 
-#include "magnetgeneratorprefwidget.h"
 #include "magnetgeneratorpluginsettings.h"
-
+#include "magnetgeneratorprefwidget.h"
 
 using namespace bt;
 
 namespace kt
 {
-
-MagnetGeneratorPrefWidget::MagnetGeneratorPrefWidget(QWidget* parent)
+MagnetGeneratorPrefWidget::MagnetGeneratorPrefWidget(QWidget *parent)
     : PrefPageInterface(MagnetGeneratorPluginSettings::self(), i18n("Magnet Generator"), QStringLiteral("kt-magnet"), parent)
 {
     setupUi(this);
@@ -39,7 +37,8 @@ MagnetGeneratorPrefWidget::MagnetGeneratorPrefWidget(QWidget* parent)
 }
 
 MagnetGeneratorPrefWidget::~MagnetGeneratorPrefWidget()
-{}
+{
+}
 
 void MagnetGeneratorPrefWidget::customTrackerToggled(bool on)
 {
@@ -58,4 +57,3 @@ void MagnetGeneratorPrefWidget::torrentTrackerToggled(bool on)
 }
 
 }
-

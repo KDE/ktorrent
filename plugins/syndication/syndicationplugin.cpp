@@ -25,11 +25,11 @@
 #include <KLocalizedString>
 #include <KPluginFactory>
 
+#include "syndicationactivity.h"
+#include "syndicationplugin.h"
+#include <interfaces/guiinterface.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
-#include <interfaces/guiinterface.h>
-#include "syndicationplugin.h"
-#include "syndicationactivity.h"
 
 K_PLUGIN_FACTORY_WITH_JSON(ktorrent_syndication, "ktorrent_syndication.json", registerPlugin<kt::SyndicationPlugin>();)
 
@@ -37,8 +37,9 @@ using namespace bt;
 
 namespace kt
 {
-
-SyndicationPlugin::SyndicationPlugin(QObject* parent, const QVariantList& args): Plugin(parent), add_feed(nullptr)
+SyndicationPlugin::SyndicationPlugin(QObject *parent, const QVariantList &args)
+    : Plugin(parent)
+    , add_feed(nullptr)
 {
     Q_UNUSED(args);
     setupActions();
@@ -51,7 +52,7 @@ SyndicationPlugin::~SyndicationPlugin()
     LogSystemManager::instance().unregisterSystem(i18n("Syndication"));
 }
 
-bool SyndicationPlugin::versionCheck(const QString& version) const
+bool SyndicationPlugin::versionCheck(const QString &version) const
 {
     return version == QStringLiteral(VERSION);
 }
@@ -78,10 +79,9 @@ void SyndicationPlugin::unload()
     activity = nullptr;
 }
 
-
 void SyndicationPlugin::setupActions()
 {
-    KActionCollection* ac = actionCollection();
+    KActionCollection *ac = actionCollection();
 
     add_feed = new QAction(QIcon::fromTheme(QStringLiteral("kt-add-feeds")), i18n("Add Feed"), this);
     ac->addAction(QStringLiteral("add_feed"), add_feed);

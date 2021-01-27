@@ -22,18 +22,21 @@
 
 #include <QRandomGenerator>
 
-#include <util/log.h>
-#include <util/sha1hash.h>
+#include <interfaces/torrentinterface.h>
+#include <peer/peerid.h>
 #include <torrent/globals.h>
 #include <torrent/server.h>
-#include <peer/peerid.h>
-#include <interfaces/torrentinterface.h>
+#include <util/log.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
 namespace kt
 {
-TorrentService::TorrentService(TorrentInterface* tc) : tc(tc), srv(nullptr), browser(nullptr)
+TorrentService::TorrentService(TorrentInterface *tc)
+    : tc(tc)
+    , srv(nullptr)
+    , browser(nullptr)
 {
 }
 
@@ -47,10 +50,10 @@ void TorrentService::onPublished(bool ok)
     if (ok)
         Out(SYS_ZCO | LOG_NOTICE) << "ZC: " << tc->getStats().torrent_name << " was published" << endl;
     else
-        Out(SYS_ZCO | LOG_NOTICE) << "ZC: failed to publish " << tc->getStats().torrent_name  << endl;
+        Out(SYS_ZCO | LOG_NOTICE) << "ZC: failed to publish " << tc->getStats().torrent_name << endl;
 }
 
-void TorrentService::stop(bt::WaitJob* wjob)
+void TorrentService::stop(bt::WaitJob *wjob)
 {
     Q_UNUSED(wjob)
     if (srv) {
@@ -68,7 +71,10 @@ void TorrentService::stop(bt::WaitJob* wjob)
 void TorrentService::start()
 {
     bt::Uint16 port = bt::ServerInterface::getPort();
-    QString name = QStringLiteral("%1__%2%3").arg(tc->getOwnPeerID().toString()).arg(QRandomGenerator::global()->bounded(26) + 65).arg(QRandomGenerator::global()->bounded(26) + 65);
+    QString name = QStringLiteral("%1__%2%3")
+                       .arg(tc->getOwnPeerID().toString())
+                       .arg(QRandomGenerator::global()->bounded(26) + 65)
+                       .arg(QRandomGenerator::global()->bounded(26) + 65);
     QStringList subtypes;
     subtypes << QLatin1Char('_') + tc->getInfoHash().toString() + QStringLiteral("._sub._bittorrent._tcp");
 
@@ -83,7 +89,6 @@ void TorrentService::start()
         connect(srv, &KDNSSD::PublicService::published, this, &TorrentService::onPublished);
         srv->publishAsync();
     }
-
 
     if (!browser) {
         browser = new KDNSSD::ServiceBrowser(QLatin1Char('_') + tc->getInfoHash().toString() + QStringLiteral("._sub._bittorrent._tcp"), true);
@@ -100,11 +105,13 @@ void TorrentService::onServiceAdded(KDNSSD::RemoteService::Ptr ptr)
         bt::Uint16 port = ptr->port();
         Out(SYS_ZCO | LOG_NOTICE) << "ZC: found local peer " << host << ":" << port << endl;
         // resolve host name before adding it
+        // clang-format off
         net::AddressResolver::resolve(host, port, this, SLOT(hostResolved(net::AddressResolver*)));
+        // clang-format on
     }
 }
 
-void TorrentService::hostResolved(net::AddressResolver* ar)
+void TorrentService::hostResolved(net::AddressResolver *ar)
 {
     if (ar->succeeded()) {
         addPeer(ar->address(), true);
@@ -117,4 +124,3 @@ void TorrentService::aboutToBeDestroyed()
     serviceDestroyed(this);
 }
 }
-

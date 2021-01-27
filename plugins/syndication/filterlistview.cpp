@@ -24,9 +24,9 @@
 
 namespace kt
 {
-
-FilterListView::FilterListView(FilterList* filters, QWidget* parent)
-    : QListView(parent), filters(filters)
+FilterListView::FilterListView(FilterList *filters, QWidget *parent)
+    : QListView(parent)
+    , filters(filters)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     setModel(filters);
@@ -35,17 +35,16 @@ FilterListView::FilterListView(FilterList* filters, QWidget* parent)
     connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FilterListView::selectionChanged);
 }
 
-
 FilterListView::~FilterListView()
 {
 }
 
-void FilterListView::itemActivated(const QModelIndex& idx)
+void FilterListView::itemActivated(const QModelIndex &idx)
 {
     filterActivated(filters->filterForIndex(idx));
 }
 
-void FilterListView::selectionChanged(const QItemSelection& sel, const QItemSelection& desel)
+void FilterListView::selectionChanged(const QItemSelection &sel, const QItemSelection &desel)
 {
     Q_UNUSED(desel);
     Q_UNUSED(sel);

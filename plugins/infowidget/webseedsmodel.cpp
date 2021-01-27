@@ -30,25 +30,23 @@ using namespace bt;
 
 namespace kt
 {
-
-WebSeedsModel::WebSeedsModel(QObject* parent)
+WebSeedsModel::WebSeedsModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
 }
-
 
 WebSeedsModel::~WebSeedsModel()
 {
 }
 
-void WebSeedsModel::changeTC(bt::TorrentInterface* tc)
+void WebSeedsModel::changeTC(bt::TorrentInterface *tc)
 {
     curr_tc = tc;
     beginResetModel();
     items.clear();
     if (tc) {
         for (Uint32 i = 0; i < tc->getNumWebSeeds(); i++) {
-            const bt::WebSeedInterface* ws = tc->getWebSeed(i);
+            const bt::WebSeedInterface *ws = tc->getWebSeed(i);
             Item item;
             item.status = ws->getStatus();
             item.downloaded = ws->getTotalDownloaded();
@@ -64,12 +62,12 @@ bool WebSeedsModel::update()
     if (!curr_tc)
         return false;
 
-    bt::TorrentInterface* tc = curr_tc.data();
+    bt::TorrentInterface *tc = curr_tc.data();
     bool ret = false;
 
     for (Uint32 i = 0; i < tc->getNumWebSeeds(); i++) {
-        const bt::WebSeedInterface* ws = tc->getWebSeed(i);
-        Item& item = items[i];
+        const bt::WebSeedInterface *ws = tc->getWebSeed(i);
+        Item &item = items[i];
         bool changed = false;
         if (item.status != ws->getStatus()) {
             changed = true;
@@ -95,7 +93,7 @@ bool WebSeedsModel::update()
     return ret;
 }
 
-int WebSeedsModel::rowCount(const QModelIndex& parent) const
+int WebSeedsModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -103,7 +101,7 @@ int WebSeedsModel::rowCount(const QModelIndex& parent) const
         return curr_tc ? curr_tc.data()->getNumWebSeeds() : 0;
 }
 
-int WebSeedsModel::columnCount(const QModelIndex& parent) const
+int WebSeedsModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -117,46 +115,59 @@ QVariant WebSeedsModel::headerData(int section, Qt::Orientation orientation, int
         return QVariant();
 
     switch (section) {
-    case 0: return i18n("URL");
-    case 1: return i18n("Speed");
-    case 2: return i18n("Downloaded");
-    case 3: return i18n("Status");
-    default: return QVariant();
+    case 0:
+        return i18n("URL");
+    case 1:
+        return i18n("Speed");
+    case 2:
+        return i18n("Downloaded");
+    case 3:
+        return i18n("Status");
+    default:
+        return QVariant();
     }
 }
 
-QVariant WebSeedsModel::data(const QModelIndex& index, int role) const
+QVariant WebSeedsModel::data(const QModelIndex &index, int role) const
 {
     if (!curr_tc)
         return QVariant();
 
-    if (!index.isValid() || index.row() >= (int) curr_tc.data()->getNumWebSeeds() || index.row() < 0)
+    if (!index.isValid() || index.row() >= (int)curr_tc.data()->getNumWebSeeds() || index.row() < 0)
         return QVariant();
 
     if (role == Qt::DisplayRole) {
-        const bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
+        const bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
         switch (index.column()) {
-        case 0: return ws->getUrl().toDisplayString();
-        case 1: return bt::BytesPerSecToString(ws->getDownloadRate());
-        case 2: return bt::BytesToString(ws->getTotalDownloaded());
-        case 3: return ws->getStatus();
+        case 0:
+            return ws->getUrl().toDisplayString();
+        case 1:
+            return bt::BytesPerSecToString(ws->getDownloadRate());
+        case 2:
+            return bt::BytesToString(ws->getTotalDownloaded());
+        case 3:
+            return ws->getStatus();
         }
     } else if (role == Qt::CheckStateRole && index.column() == 0) {
-        const bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
+        const bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
         return ws->isEnabled() ? Qt::Checked : Qt::Unchecked;
     } else if (role == Qt::UserRole) {
-        const bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
+        const bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
         switch (index.column()) {
-        case 0: return ws->getUrl().toDisplayString();
-        case 1: return ws->getDownloadRate();
-        case 2: return ws->getTotalDownloaded();
-        case 3: return ws->getStatus();
+        case 0:
+            return ws->getUrl().toDisplayString();
+        case 1:
+            return ws->getDownloadRate();
+        case 2:
+            return ws->getTotalDownloaded();
+        case 3:
+            return ws->getStatus();
         }
     }
     return QVariant();
 }
 
-Qt::ItemFlags WebSeedsModel::flags(const QModelIndex& index) const
+Qt::ItemFlags WebSeedsModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags flags = QAbstractTableModel::flags(index);
     if (index.column() == 0)
@@ -165,17 +176,16 @@ Qt::ItemFlags WebSeedsModel::flags(const QModelIndex& index) const
     return flags;
 }
 
-bool WebSeedsModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool WebSeedsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!curr_tc || role != Qt::CheckStateRole)
         return false;
 
-    if (!index.isValid() || index.row() >= (int) curr_tc.data()->getNumWebSeeds() || index.row() < 0)
+    if (!index.isValid() || index.row() >= (int)curr_tc.data()->getNumWebSeeds() || index.row() < 0)
         return false;
 
-    bt::WebSeedInterface* ws = curr_tc.data()->getWebSeed(index.row());
-    ws->setEnabled((Qt::CheckState)value.toInt() == Qt::Checked),
-    Q_EMIT dataChanged(index, index);
+    bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
+    ws->setEnabled((Qt::CheckState)value.toInt() == Qt::Checked), Q_EMIT dataChanged(index, index);
     return true;
 }
 }

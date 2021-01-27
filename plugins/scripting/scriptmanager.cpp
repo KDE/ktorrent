@@ -30,29 +30,29 @@
 #include <KConfigGroup>
 #include <KIconLoader>
 #include <KLocalizedString>
-#include <Kross/Core/Manager>
 #include <KRun>
+#include <Kross/Core/Manager>
 
-#include <util/log.h>
-#include "scriptmanager.h"
-#include "scriptmodel.h"
 #include "script.h"
 #include "scriptdelegate.h"
+#include "scriptmanager.h"
+#include "scriptmodel.h"
 #include "ui_scriptproperties.h"
+#include <util/log.h>
 
 using namespace Kross;
 using namespace bt;
 
 namespace kt
 {
-
-ScriptManager::ScriptManager(ScriptModel* model, QWidget* parent)
-    : Activity(i18n("Scripts"), QStringLiteral("text-x-script"), 40, parent), model(model)
+ScriptManager::ScriptManager(ScriptModel *model, QWidget *parent)
+    : Activity(i18n("Scripts"), QStringLiteral("text-x-script"), 40, parent)
+    , model(model)
 {
     setXMLGUIFile(QStringLiteral("ktorrent_scriptingui.rc"));
     setupActions();
     setToolTip(i18n("Widget to start, stop and manage scripts"));
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
 
@@ -82,16 +82,14 @@ ScriptManager::ScriptManager(ScriptModel* model, QWidget* parent)
     configure_script->setEnabled(false);
 }
 
-
 ScriptManager::~ScriptManager()
 {
     delete delegate;
 }
 
-
 void ScriptManager::setupActions()
 {
-    KActionCollection* ac = part()->actionCollection();
+    KActionCollection *ac = part()->actionCollection();
 
     add_script = new QAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add Script"), this);
     connect(add_script, &QAction::triggered, this, &ScriptManager::addScript);
@@ -122,20 +120,20 @@ void ScriptManager::setupActions()
     ac->addAction(QStringLiteral("configure_script"), configure_script);
 }
 
-void ScriptManager::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void ScriptManager::onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(deselected);
     Q_UNUSED(selected);
     updateActions(selectedScripts());
 }
 
-void ScriptManager::updateActions(const QModelIndexList& selected)
+void ScriptManager::updateActions(const QModelIndexList &selected)
 {
     int num_removable = 0;
     int num_running = 0;
     int num_not_running = 0;
-    for (const QModelIndex& idx : selected) {
-        Script* s = model->scriptForIndex(idx);
+    for (const QModelIndex &idx : selected) {
+        Script *s = model->scriptForIndex(idx);
         if (s) {
             if (s->running())
                 num_running++;
@@ -150,7 +148,7 @@ void ScriptManager::updateActions(const QModelIndexList& selected)
     remove_script->setEnabled(num_removable > 0);
     run_script->setEnabled(selected.count() > 0 && num_not_running > 0);
     stop_script->setEnabled(selected.count() > 0 && num_running > 0);
-    Script* s = 0;
+    Script *s = 0;
     if (selected.count() > 0)
         s = model->scriptForIndex(selected.front());
     properties->setEnabled(selected.count() == 1 && s && s->metaInfo().valid());
@@ -163,14 +161,14 @@ QModelIndexList ScriptManager::selectedScripts()
     return view->selectionModel()->selectedRows();
 }
 
-void ScriptManager::showContextMenu(const QPoint& p)
+void ScriptManager::showContextMenu(const QPoint &p)
 {
-    QMenu* m = part()->menu(QStringLiteral("ScriptingMenu"));
+    QMenu *m = part()->menu(QStringLiteral("ScriptingMenu"));
     if (m)
         m->popup(view->viewport()->mapToGlobal(p));
 }
 
-void ScriptManager::dataChanged(const QModelIndex& from, const QModelIndex& to)
+void ScriptManager::dataChanged(const QModelIndex &from, const QModelIndex &to)
 {
     Q_UNUSED(from);
     Q_UNUSED(to);
@@ -180,7 +178,7 @@ void ScriptManager::dataChanged(const QModelIndex& from, const QModelIndex& to)
 void ScriptManager::runScript()
 {
     const QModelIndexList sel = selectedScripts();
-    for (const QModelIndex& idx : sel) {
+    for (const QModelIndex &idx : sel) {
         if (!model->setData(idx, Qt::Checked, Qt::CheckStateRole))
             Out(SYS_SCR | LOG_DEBUG) << "setData failed" << endl;
     }
@@ -190,7 +188,7 @@ void ScriptManager::runScript()
 void ScriptManager::stopScript()
 {
     const QModelIndexList sel = selectedScripts();
-    for (const QModelIndex& idx : sel) {
+    for (const QModelIndex &idx : sel) {
         if (!model->setData(idx, Qt::Unchecked, Qt::CheckStateRole))
             Out(SYS_SCR | LOG_DEBUG) << "setData failed" << endl;
     }
@@ -200,12 +198,11 @@ void ScriptManager::stopScript()
 void ScriptManager::editScript()
 {
     const QModelIndexList sel = selectedScripts();
-    for (const QModelIndex& idx : sel) {
-        Script* s = model->scriptForIndex(idx);
+    for (const QModelIndex &idx : sel) {
+        Script *s = model->scriptForIndex(idx);
         if (s)
             new KRun(QUrl::fromLocalFile(s->scriptFile()), 0);
     }
-
 }
 
 void ScriptManager::showProperties()
@@ -214,17 +211,17 @@ void ScriptManager::showProperties()
     if (sel.count() != 1)
         return;
 
-    Script* s = model->scriptForIndex(sel.front());
+    Script *s = model->scriptForIndex(sel.front());
     if (!s || !s->metaInfo().valid())
         return;
 
     showProperties(s);
 }
 
-void ScriptManager::showProperties(kt::Script* s)
+void ScriptManager::showProperties(kt::Script *s)
 {
     Ui_ScriptProperties prop;
-    QDialog* dialog = new QDialog(this);
+    QDialog *dialog = new QDialog(this);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -248,14 +245,13 @@ void ScriptManager::showProperties(kt::Script* s)
     delete dialog;
 }
 
-
 void ScriptManager::configureScript()
 {
     QModelIndexList sel = selectedScripts();
     if (sel.count() != 1)
         return;
 
-    Script* s = model->scriptForIndex(sel.front());
+    Script *s = model->scriptForIndex(sel.front());
     if (!s || !s->metaInfo().valid() || !s->hasConfigure())
         return;
 

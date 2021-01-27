@@ -25,24 +25,26 @@
 
 #include <KToolBar>
 
-#include <kactioncollection.h>
-#include "syndicationtab.h"
 #include "feedlistview.h"
 #include "filterlistview.h"
+#include "syndicationtab.h"
+#include <kactioncollection.h>
 
 namespace kt
 {
-
-SyndicationTab::SyndicationTab(KActionCollection* ac, FeedList* feeds, FilterList* filters, QWidget* parent)
-    : QWidget(parent), feeds(feeds), splitter(nullptr), filters(filters)
+SyndicationTab::SyndicationTab(KActionCollection *ac, FeedList *feeds, FilterList *filters, QWidget *parent)
+    : QWidget(parent)
+    , feeds(feeds)
+    , splitter(nullptr)
+    , filters(filters)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
     splitter = new QSplitter(Qt::Vertical, this);
     layout->addWidget(splitter);
 
-    QWidget* widget = new QWidget(splitter);
+    QWidget *widget = new QWidget(splitter);
     layout = new QVBoxLayout(widget);
     layout->setSpacing(0);
     layout->setMargin(0);
@@ -84,7 +86,6 @@ SyndicationTab::SyndicationTab(KActionCollection* ac, FeedList* feeds, FilterLis
     feed_view_menu->addAction(ac->action(QStringLiteral("remove_feed")));
     connect(feed_view, &FeedListView::customContextMenuRequested, this, &SyndicationTab::showFeedViewMenu);
 
-
     filter_view_menu = new QMenu(this);
     filter_view_menu->addAction(ac->action(QStringLiteral("edit_filter")));
     filter_view_menu->addSeparator();
@@ -93,27 +94,26 @@ SyndicationTab::SyndicationTab(KActionCollection* ac, FeedList* feeds, FilterLis
     connect(filter_view, &FilterListView::customContextMenuRequested, this, &SyndicationTab::showFilterViewMenu);
 }
 
-
 SyndicationTab::~SyndicationTab()
 {
 }
 
-void SyndicationTab::showFeedViewMenu(const QPoint& pos)
+void SyndicationTab::showFeedViewMenu(const QPoint &pos)
 {
     feed_view_menu->popup(feed_view->viewport()->mapToGlobal(pos));
 }
 
-void SyndicationTab::showFilterViewMenu(const QPoint& pos)
+void SyndicationTab::showFilterViewMenu(const QPoint &pos)
 {
     filter_view_menu->popup(filter_view->viewport()->mapToGlobal(pos));
 }
 
-void SyndicationTab::loadState(KConfigGroup& g)
+void SyndicationTab::loadState(KConfigGroup &g)
 {
     splitter->restoreState(g.readEntry("ver_splitter", QByteArray()));
 }
 
-void SyndicationTab::saveState(KConfigGroup& g)
+void SyndicationTab::saveState(KConfigGroup &g)
 {
     g.writeEntry("ver_splitter", splitter->saveState());
 }

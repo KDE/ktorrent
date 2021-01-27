@@ -21,6 +21,7 @@
 
 #include "searchprefpage.h"
 
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QFile>
 #include <QInputDialog>
@@ -30,31 +31,32 @@
 #include <QRadioButton>
 #include <QToolTip>
 #include <QUrl>
-#include <QButtonGroup>
 
+#include <KIO/CopyJob>
+#include <KIO/JobUiDelegate>
 #include <KIconLoader>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KIO/CopyJob>
-#include <KIO/JobUiDelegate>
 
-#include <util/log.h>
-#include <util/constants.h>
-#include <util/functions.h>
-#include <util/fileops.h>
-#include <util/error.h>
-#include <interfaces/functions.h>
-#include "searchplugin.h"
-#include "searchenginelist.h"
-#include "searchpluginsettings.h"
 #include "opensearchdownloadjob.h"
+#include "searchenginelist.h"
+#include "searchplugin.h"
+#include "searchpluginsettings.h"
+#include <interfaces/functions.h>
+#include <util/constants.h>
+#include <util/error.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-SearchPrefPage::SearchPrefPage(SearchPlugin* plugin, SearchEngineList* sl, QWidget* parent)
-    : PrefPageInterface(SearchPluginSettings::self(), i18nc("plugin name", "Search"), QStringLiteral("edit-find"), parent), plugin(plugin), engines(sl)
+SearchPrefPage::SearchPrefPage(SearchPlugin *plugin, SearchEngineList *sl, QWidget *parent)
+    : PrefPageInterface(SearchPluginSettings::self(), i18nc("plugin name", "Search"), QStringLiteral("edit-find"), parent)
+    , plugin(plugin)
+    , engines(sl)
 {
     setupUi(this);
     m_engines->setModel(sl);
@@ -69,7 +71,7 @@ SearchPrefPage::SearchPrefPage(SearchPlugin* plugin, SearchEngineList* sl, QWidg
 
     connect(kcfg_useCustomBrowser, &QRadioButton::toggled, this, &SearchPrefPage::customToggled);
     connect(kcfg_openInExternal, &QCheckBox::toggled, this, &SearchPrefPage::openInExternalToggled);
-    QButtonGroup* bg = new QButtonGroup(this);
+    QButtonGroup *bg = new QButtonGroup(this);
     bg->addButton(kcfg_useCustomBrowser);
     bg->addButton(kcfg_useDefaultBrowser);
 
@@ -77,11 +79,11 @@ SearchPrefPage::SearchPrefPage(SearchPlugin* plugin, SearchEngineList* sl, QWidg
     m_remove->setEnabled(false);
 }
 
-
 SearchPrefPage::~SearchPrefPage()
-{}
+{
+}
 
-void SearchPrefPage::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void SearchPrefPage::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(deselected)
     m_remove->setEnabled(selected.count() > 0);
@@ -99,8 +101,7 @@ void SearchPrefPage::loadDefaults()
 
 void SearchPrefPage::addClicked()
 {
-    QString name = QInputDialog::getText(this, i18n("Add a Search Engine"),
-                                         i18n("Enter the hostname of the search engine (for example www.google.com):"));
+    QString name = QInputDialog::getText(this, i18n("Add a Search Engine"), i18n("Enter the hostname of the search engine (for example www.google.com):"));
     if (name.isEmpty())
         return;
 
@@ -118,22 +119,24 @@ void SearchPrefPage::addClicked()
 
     try {
         bt::MakeDir(dir, false);
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         KMessageBox::error(this, err.toString());
         return;
     }
 
-    OpenSearchDownloadJob* j = new OpenSearchDownloadJob(url, dir, plugin->getProxy());
+    OpenSearchDownloadJob *j = new OpenSearchDownloadJob(url, dir, plugin->getProxy());
     connect(j, &OpenSearchDownloadJob::result, this, &SearchPrefPage::downloadJobFinished);
     j->start();
 }
 
-void SearchPrefPage::downloadJobFinished(KJob* j)
+void SearchPrefPage::downloadJobFinished(KJob *j)
 {
-    OpenSearchDownloadJob* osdj = (OpenSearchDownloadJob*)j;
+    OpenSearchDownloadJob *osdj = (OpenSearchDownloadJob *)j;
     if (osdj->error()) {
-        QString msg = i18n("Opensearch is not supported by %1, you will need to enter the search URL manually. "
-                           "The URL should contain {searchTerms}, ktorrent will replace this by the thing you are searching for.", osdj->hostname());
+        QString msg = i18n(
+            "Opensearch is not supported by %1, you will need to enter the search URL manually. "
+            "The URL should contain {searchTerms}, ktorrent will replace this by the thing you are searching for.",
+            osdj->hostname());
         QString url = QInputDialog::getText(this, i18n("Add a Search Engine"), msg);
         if (!url.isEmpty()) {
             if (!url.contains(QLatin1String("{searchTerms}"))) {
@@ -141,7 +144,7 @@ void SearchPrefPage::downloadJobFinished(KJob* j)
             } else {
                 try {
                     engines->addEngine(osdj->directory(), url);
-                } catch (bt::Error& err) {
+                } catch (bt::Error &err) {
                     KMessageBox::error(this, err.toString());
                     bt::Delete(osdj->directory(), true);
                 }

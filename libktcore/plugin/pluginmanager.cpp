@@ -24,23 +24,24 @@
 #include <QTextStream>
 
 #include <KLocalizedString>
-#include <KSharedConfig>
 #include <KPluginMetaData>
+#include <KSharedConfig>
 
-#include <util/log.h>
+#include "pluginactivity.h"
+#include <interfaces/guiinterface.h>
+#include <torrent/globals.h>
 #include <util/error.h>
 #include <util/fileops.h>
+#include <util/log.h>
 #include <util/waitjob.h>
-#include <torrent/globals.h>
-#include <interfaces/guiinterface.h>
-#include "pluginactivity.h"
 
 using namespace bt;
 
 namespace kt
 {
-
-PluginManager::PluginManager(CoreInterface* core, GUIInterface* gui) : core(core), gui(gui)
+PluginManager::PluginManager(CoreInterface *core, GUIInterface *gui)
+    : core(core)
+    , gui(gui)
 {
     prefpage = 0;
     loaded.setAutoDelete(true);
@@ -55,7 +56,7 @@ void PluginManager::loadPluginList()
 {
     pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent"));
     if (pluginsMetaData.isEmpty()) {
-        //simple workaround for the situation i have in debian --Nick
+        // simple workaround for the situation i have in debian --Nick
         QStringList paths = QCoreApplication::libraryPaths();
         if (paths.isEmpty())
             paths << QLatin1String("/usr/lib/x86_64-linux-gnu/plugins");
@@ -86,7 +87,7 @@ void PluginManager::loadPlugins()
 {
     int idx = 0;
     for (auto i = plugins.begin(); i != plugins.end(); i++) {
-        KPluginInfo& pi = *i;
+        KPluginInfo &pi = *i;
         if (loaded.contains(idx) && !pi.isPluginEnabled()) {
             // unload it
             unload(pi, idx);
@@ -100,7 +101,7 @@ void PluginManager::loadPlugins()
     }
 }
 
-void PluginManager::load(const KPluginInfo& pi, int idx)
+void PluginManager::load(const KPluginInfo &pi, int idx)
 {
     Q_UNUSED(pi)
     KPluginLoader loader(pluginsMetaData.at(idx).fileName());
@@ -108,18 +109,15 @@ void PluginManager::load(const KPluginInfo& pi, int idx)
     if (!factory)
         return;
 
-    Plugin* plugin = factory->create<kt::Plugin>();
+    Plugin *plugin = factory->create<kt::Plugin>();
     if (!plugin) {
-        Out(SYS_GEN | LOG_NOTICE) <<
-                                  QStringLiteral("Creating instance of plugin %1 failed !")
-                                  .arg(pluginsMetaData.at(idx).fileName()) << endl;
+        Out(SYS_GEN | LOG_NOTICE) << QStringLiteral("Creating instance of plugin %1 failed !").arg(pluginsMetaData.at(idx).fileName()) << endl;
         return;
     }
 
     if (!plugin->versionCheck(QStringLiteral(VERSION))) {
-        Out(SYS_GEN | LOG_NOTICE) <<
-                                  QStringLiteral("Plugin %1 version does not match KTorrent version, unloading it.")
-                                  .arg(pluginsMetaData.at(idx).fileName()) << endl;
+        Out(SYS_GEN | LOG_NOTICE) << QStringLiteral("Plugin %1 version does not match KTorrent version, unloading it.").arg(pluginsMetaData.at(idx).fileName())
+                                  << endl;
 
         delete plugin;
     } else {
@@ -132,23 +130,23 @@ void PluginManager::load(const KPluginInfo& pi, int idx)
     }
 }
 
-void PluginManager::unload(const KPluginInfo& pi, int idx)
+void PluginManager::unload(const KPluginInfo &pi, int idx)
 {
     Q_UNUSED(pi)
 
-    Plugin* p = loaded.find(idx);
+    Plugin *p = loaded.find(idx);
     if (!p)
         return;
 
     // first shut it down properly
-    bt::WaitJob* wjob = new WaitJob(2000);
+    bt::WaitJob *wjob = new WaitJob(2000);
     try {
         p->shutdown(wjob);
         if (wjob->needToWait())
             bt::WaitJob::execute(wjob);
         else
             delete wjob;
-    } catch (Error& err) {
+    } catch (Error &err) {
         Out(SYS_GEN | LOG_NOTICE) << "Error when unloading plugin: " << err.toString() << endl;
     }
 
@@ -158,16 +156,14 @@ void PluginManager::unload(const KPluginInfo& pi, int idx)
     loaded.erase(idx);
 }
 
-
-
 void PluginManager::unloadAll()
 {
     // first properly shutdown all plugins
-    bt::WaitJob* wjob = new WaitJob(2000);
+    bt::WaitJob *wjob = new WaitJob(2000);
     try {
         bt::PtrMap<int, Plugin>::iterator i = loaded.begin();
         while (i != loaded.end()) {
-            Plugin* p = i->second;
+            Plugin *p = i->second;
             p->shutdown(wjob);
             i++;
         }
@@ -175,14 +171,14 @@ void PluginManager::unloadAll()
             bt::WaitJob::execute(wjob);
         else
             delete wjob;
-    } catch (Error& err) {
+    } catch (Error &err) {
         Out(SYS_GEN | LOG_NOTICE) << "Error when unloading all plugins: " << err.toString() << endl;
     }
 
     // then unload them
     bt::PtrMap<int, Plugin>::iterator i = loaded.begin();
     while (i != loaded.end()) {
-        Plugin* p = i->second;
+        Plugin *p = i->second;
         gui->removePluginGui(p);
         p->unload();
         p->loaded = false;
@@ -195,7 +191,7 @@ void PluginManager::updateGuiPlugins()
 {
     bt::PtrMap<int, Plugin>::iterator i = loaded.begin();
     while (i != loaded.end()) {
-        Plugin* p = i->second;
+        Plugin *p = i->second;
         p->guiUpdate();
         i++;
     }

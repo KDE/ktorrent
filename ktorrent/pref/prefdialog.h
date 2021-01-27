@@ -45,20 +45,20 @@ class PrefDialog : public KConfigDialog
 {
     Q_OBJECT
 public:
-    PrefDialog(QWidget* parent, Core* core);
+    PrefDialog(QWidget *parent, Core *core);
     ~PrefDialog() override;
 
     /**
      * Add a pref page to the dialog.
      * @param page The page
      * */
-    void addPrefPage(PrefPageInterface* page);
+    void addPrefPage(PrefPageInterface *page);
 
     /**
      * Remove a pref page.
      * @param page The page
      * */
-    void removePrefPage(PrefPageInterface* page);
+    void removePrefPage(PrefPageInterface *page);
 
     /**
      * Update the widgets and show
@@ -85,21 +85,20 @@ private Q_SLOTS:
     void calculateRecommendedSettings();
 
 private:
-    QList<PrefPageScrollArea*> pages;
-    NetworkPref* net_pref;
-    QMPref* qm_pref;
+    QList<PrefPageScrollArea *> pages;
+    NetworkPref *net_pref;
+    QMPref *qm_pref;
 };
 
 class PrefPageScrollArea : public QScrollArea
 {
 public:
-    PrefPageScrollArea(PrefPageInterface* page, QWidget* parent = 0);
+    PrefPageScrollArea(PrefPageInterface *page, QWidget *parent = 0);
     ~PrefPageScrollArea() override;
 
-    PrefPageInterface* page;
-    KPageWidgetItem* page_widget_item;
+    PrefPageInterface *page;
+    KPageWidgetItem *page_widget_item;
 };
 }
-
 
 #endif

@@ -21,19 +21,18 @@
 #ifndef ChartDrawer_H_
 #define ChartDrawer_H_
 
-#include <QString>
-#include <QPen>
-#include <QUuid>
 #include <QPaintEvent>
+#include <QPen>
+#include <QString>
+#include <QUuid>
 
-#include <memory>
 #include <cstdint>
+#include <memory>
 
 #include <ChartDrawerData.h>
 
 namespace kt
 {
-
 /**
 \brief Base class for chart widgets used by plugin
 \author Krzysztof Kundzicz <athantor@gmail.com>
@@ -41,23 +40,22 @@ namespace kt
 
 class ChartDrawer
 {
-
 public:
-    ///Mode of setting maximum on the chart's OY axis
+    /// Mode of setting maximum on the chart's OY axis
     enum MaxMode {
         MM_Top, ///< Max ever achieved
-        MM_Exact ///< Max visible on chart
+        MM_Exact, ///< Max visible on chart
     };
 
-    ///Type used as values on charts
+    /// Type used as values on charts
     typedef qreal wgtunit_t;
-    ///Type holding chart's data values
-    typedef std::vector< ChartDrawerData > val_t;
+    /// Type holding chart's data values
+    typedef std::vector<ChartDrawerData> val_t;
 
     /** \brief Constructor
-    */
+     */
     ChartDrawer();
-    ///Destructor
+    /// Destructor
     virtual ~ChartDrawer();
 
     /** \brief Get maximum on OX
@@ -95,7 +93,7 @@ public:
 
     Implement here the drawing of the chart.
     */
-    virtual void paintEvent(QPaintEvent* pPevt) = 0;
+    virtual void paintEvent(QPaintEvent *pPevt) = 0;
 
     /** \brief Amount of dataset shown on chart
     \return Datasets count
@@ -125,7 +123,7 @@ public:
     \param idx Index of the dataset to zero
     */
     virtual void zero(const size_t idx) = 0;
-    ///Zeroes all datasets in the chart
+    /// Zeroes all datasets in the chart
     virtual void zeroAll() = 0;
     /** \brief Sets maximum mode
     \param mm Mode
@@ -134,24 +132,24 @@ public:
     /** \brief Sets name of an unit shown on the chart
     \param rN Unit's name
     */
-    virtual void setUnitName(const QString& rN) = 0;
+    virtual void setUnitName(const QString &rN) = 0;
     /** \brief Sets pen of the dataset
     \param idx Index of the dataset which pen is beeng changed
     \param rP New pen
     */
-    virtual void setPen(const size_t idx, const QPen& rP) = 0;
+    virtual void setPen(const size_t idx, const QPen &rP) = 0;
     /** \brief Sets UUID of the dataset
     \param idx Index of the dataset which pen is beeng changed
     \param rQ New UUID
     */
-    virtual void setUuid(const size_t idx, const QUuid& rQ) = 0;
+    virtual void setUuid(const size_t idx, const QUuid &rQ) = 0;
     /** \brief Finds given UUID in the set
     \param rQ UUID to find
     \return Index of the set
     \retval -1 UUID not found
     \retval >0 Found index
     */
-    virtual int16_t findUuidInSet(const QUuid& rQ) const = 0;
+    virtual int16_t findUuidInSet(const QUuid &rQ) const = 0;
     /** \brief Enable antialiasing
     \param aa Enable?
     */
@@ -171,42 +169,42 @@ public:
     */
     virtual void setYMax(const wgtunit_t y) = 0;
 
-    ///Automagically finds maximum from data in sets and sets it on OY scale
+    /// Automagically finds maximum from data in sets and sets it on OY scale
     virtual void findSetMax() = 0;
 
-    ///Function generating legend string
+    /// Function generating legend string
     virtual QString makeLegendString() = 0;
 
     /** \brief Function settng a legend
     \param rL Legend's text
     */
-    virtual void setLegend(const QString& rL) = 0;
-    ///Updates the widget
+    virtual void setLegend(const QString &rL) = 0;
+    /// Updates the widget
     virtual void update() = 0;
 
     /** \brief Shows context menu @ point
     \param rP Point where to show menu
     */
-    virtual void showContextMenu(const QPoint& rP) = 0;
+    virtual void showContextMenu(const QPoint &rP) = 0;
     /** \brief Renders chart to image
     \note This function will show modal KFileDialog
     */
     virtual void renderToImage() = 0;
 
 protected:
-    ///Pointer to chart's data container
+    /// Pointer to chart's data container
     val_t pmVals;
-    ///Pointer to a name of the unit used on chart
+    /// Pointer to a name of the unit used on chart
     QString pmUnitName;
-    ///Current maximum mode
+    /// Current maximum mode
     MaxMode mCurrMaxMode;
-    ///Current maximum on OX
+    /// Current maximum on OX
     wgtunit_t mXMax;
-    ///Current maximum on OY
+    /// Current maximum on OY
     wgtunit_t mYMax;
-    ///Use antialiasing?
+    /// Use antialiasing?
     bool mAntiAlias;
-    ///Draw bgd grid?
+    /// Draw bgd grid?
     bool mBgdGrid;
 };
 

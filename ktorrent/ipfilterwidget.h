@@ -29,23 +29,22 @@ namespace kt
 class IPFilterList;
 
 /**
-* @author Ivan Vasic <ivasic@gmail.com>
-* @brief Integrated IPFilter GUI class.
-* Used to show, add and remove banned peers from blacklist.
-*/
-class IPFilterWidget: public QDialog, public Ui_IPFilterWidget
+ * @author Ivan Vasic <ivasic@gmail.com>
+ * @brief Integrated IPFilter GUI class.
+ * Used to show, add and remove banned peers from blacklist.
+ */
+class IPFilterWidget : public QDialog, public Ui_IPFilterWidget
 {
     Q_OBJECT
 public:
-    IPFilterWidget(QWidget* parent);
+    IPFilterWidget(QWidget *parent);
     ~IPFilterWidget() override;
 
     /// Register the filter list
     static void registerFilterList();
 
-    void saveFilter(const QString& fn);
-    static void loadFilter(const QString& fn);
-
+    void saveFilter(const QString &fn);
+    static void loadFilter(const QString &fn);
 
 public Q_SLOTS:
     void save();
@@ -58,7 +57,7 @@ public Q_SLOTS:
 private:
     void setupConnections();
 
-    static IPFilterList* filter_list;
+    static IPFilterList *filter_list;
 };
 }
 

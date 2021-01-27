@@ -29,11 +29,10 @@
 
 namespace kt
 {
-
-EditItemDlg::EditItemDlg(kt::Schedule* schedule, ScheduleItem* item, bool new_item, QWidget* parent)
-    : QDialog(parent),
-      schedule(schedule),
-      item(item)
+EditItemDlg::EditItemDlg(kt::Schedule *schedule, ScheduleItem *item, bool new_item, QWidget *parent)
+    : QDialog(parent)
+    , schedule(schedule)
+    , item(item)
 {
     setupUi(this);
     connect(m_buttonBox, &QDialogButtonBox::accepted, this, &EditItemDlg::accept);
@@ -83,11 +82,11 @@ EditItemDlg::EditItemDlg(kt::Schedule* schedule, ScheduleItem* item, bool new_it
     setWindowTitle(new_item ? i18n("Add an item") : i18n("Edit an item"));
 }
 
-
 EditItemDlg::~EditItemDlg()
-{}
+{
+}
 
-void EditItemDlg::fromChanged(const QTime& time)
+void EditItemDlg::fromChanged(const QTime &time)
 {
     // ensure that from is always smaller then to
     if (time >= m_to->time())
@@ -97,7 +96,7 @@ void EditItemDlg::fromChanged(const QTime& time)
     m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
 }
 
-void EditItemDlg::toChanged(const QTime& time)
+void EditItemDlg::toChanged(const QTime &time)
 {
     // ensure that from is always smaller then to
     if (time <= m_from->time())
@@ -167,4 +166,3 @@ void EditItemDlg::fillItem()
 }
 
 }
-

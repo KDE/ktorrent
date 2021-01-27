@@ -30,7 +30,6 @@ class KJob;
 
 namespace kt
 {
-
 /**
     Keeps track of a search engine
 */
@@ -42,7 +41,7 @@ public:
      * Constructor, sets the data dir
      * @param data_dir Directory where all the information regarding the engine is stored
      */
-    SearchEngine(const QString& data_dir);
+    SearchEngine(const QString &data_dir);
     ~SearchEngine() override;
 
     /**
@@ -50,14 +49,14 @@ public:
      * @param xml_file Local XML file
      * @return true upon success
      */
-    bool load(const QString& xml_file);
+    bool load(const QString &xml_file);
 
     /**
      * Fill in search terms into the search url and create the QUrl to use
      * @param terms Tersm to search for
      * @return The url
      */
-    QUrl search(const QString& terms);
+    QUrl search(const QString &terms);
 
     /// Get the name of the engine
     QString engineName() const
@@ -90,7 +89,7 @@ public:
     }
 
 private Q_SLOTS:
-    void iconDownloadFinished(KJob* job);
+    void iconDownloadFinished(KJob *job);
 
 private:
     QString data_dir;

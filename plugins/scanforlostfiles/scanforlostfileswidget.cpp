@@ -18,30 +18,31 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include "scanforlostfilesplugin.h"
 #include "scanforlostfileswidget.h"
-#include <QMenu>
-#include <QClipboard>
-#include <KRun>
-#include <KMessageBox>
+#include "scanforlostfilesplugin.h"
 #include <KIO/DeleteJob>
+#include <KMessageBox>
+#include <KRun>
+#include <QClipboard>
+#include <QMenu>
 
-#include "scanforlostfilesthread.h"
 #include "fsproxymodel.h"
-#include <QtGlobal>
-#include <QFileSystemModel>
+#include "scanforlostfilesthread.h"
 #include <KLocalizedString>
+#include <QFileSystemModel>
+#include <QtGlobal>
 
-#include <util/functions.h>
+#include "scanforlostfilespluginsettings.h"
 #include <groups/groupmanager.h>
 #include <interfaces/coreinterface.h>
-#include "scanforlostfilespluginsettings.h"
-
+#include <util/functions.h>
 
 namespace kt
 {
-
-ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin* plugin, QWidget *parent) : Activity(i18n("Scan for lost files"), QStringLiteral("edit-find"), 1000, parent), m_plugin(plugin), m_thread(nullptr)
+ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, QWidget *parent)
+    : Activity(i18n("Scan for lost files"), QStringLiteral("edit-find"), 1000, parent)
+    , m_plugin(plugin)
+    , m_thread(nullptr)
 {
     setupUi(this);
 
@@ -50,19 +51,19 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin* plugin, Q
 
     m_proxy = new FSProxyModel(this);
 
-    connect(cbShowAllFiles, &QCheckBox::stateChanged, [ = ](int val) {
+    connect(cbShowAllFiles, &QCheckBox::stateChanged, [=](int val) {
         m_proxy->setFiltered(!val);
         setupModels();
     });
 
-    connect(actionCopy_to_clipboard, &QAction::triggered, [ = ]() {
+    connect(actionCopy_to_clipboard, &QAction::triggered, [=]() {
         QModelIndex m = treeView->currentIndex();
         m = m_proxy->mapToSource(m);
         const QString fname = m_model->fileName(m);
         QGuiApplication::clipboard()->setText(fname);
     });
 
-    connect(actionOpen_file, &QAction::triggered, [ = ]() {
+    connect(actionOpen_file, &QAction::triggered, [=]() {
         QModelIndex index = treeView->currentIndex();
         new KRun(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(index))), 0, true);
     });
@@ -81,9 +82,9 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin* plugin, Q
     reqFolder->setMode(KFile::Directory | KFile::ExistingOnly);
     connect(reqFolder, &KUrlRequester::urlSelected, btnScanFolder, &QPushButton::click);
     connect(reqFolder, QOverload<>::of(&KUrlRequester::returnPressed), btnScanFolder, &QPushButton::click);
-    if (CoreInterface* c = m_plugin->getCore()) {
-        if (GroupManager* gm = c->getGroupManager()) {
-            if (Group* all = gm->allGroup()) {
+    if (CoreInterface *c = m_plugin->getCore()) {
+        if (GroupManager *gm = c->getGroupManager()) {
+            if (Group *all = gm->allGroup()) {
                 const QString default_save_location = all->groupPolicy().default_save_location;
                 if (!default_save_location.isEmpty()) {
                     reqFolder->setUrl(QUrl::fromLocalFile(default_save_location));
@@ -92,7 +93,6 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin* plugin, Q
         }
     }
 }
-
 
 void ScanForLostFilesWidget::setupModels()
 {
@@ -111,11 +111,11 @@ void ScanForLostFilesWidget::setupModels()
     }
 }
 
-
 ScanForLostFilesWidget::~ScanForLostFilesWidget()
-{}
+{
+}
 
-void ScanForLostFilesWidget::directoryLoaded(const QString& path)
+void ScanForLostFilesWidget::directoryLoaded(const QString &path)
 {
     QModelIndex m = m_model->index(path);
     if (m_model->canFetchMore(m)) {
@@ -156,21 +156,29 @@ void ScanForLostFilesWidget::on_btnScanFolder_clicked()
     btnScanFolder->setText(i18n("Cancel"));
     progressBar->setVisible(true);
 
+    connect(
+        m_thread,
+        &ScanForLostFilesThread::finished,
+        this,
+        [=]() {
+            btnScanFolder->setText(i18n("Scan"));
+            progressBar->setVisible(false);
+            m_thread->deleteLater();
+            m_thread = nullptr;
+        },
+        Qt::QueuedConnection);
 
-    connect(m_thread, &ScanForLostFilesThread::finished, this, [ = ]() {
-        btnScanFolder->setText(i18n("Scan"));
-        progressBar->setVisible(false);
-        m_thread->deleteLater();
-        m_thread = nullptr;
-    },  Qt::QueuedConnection);
-
-    connect(m_thread, &ScanForLostFilesThread::filterReady, this, [ = ](QSet<QString>* filter) {
-        if (filter) {
-            m_proxy->setFilter(filter);
-            setupModels();
-        }
-    },  Qt::QueuedConnection);
-
+    connect(
+        m_thread,
+        &ScanForLostFilesThread::filterReady,
+        this,
+        [=](QSet<QString> *filter) {
+            if (filter) {
+                m_proxy->setFilter(filter);
+                setupModels();
+            }
+        },
+        Qt::QueuedConnection);
 
     m_thread->start();
 }
@@ -185,16 +193,16 @@ void ScanForLostFilesWidget::on_actionDelete_on_disk_triggered()
     }
 
     QString msg = i18np("You will lose all data in this file, are you sure you want to do this?",
-                        "You will lose all data in these files, are you sure you want to do this?", n);
+                        "You will lose all data in these files, are you sure you want to do this?",
+                        n);
 
     QList<QUrl> to_del;
     if (KMessageBox::warningYesNo(0, msg) == KMessageBox::Yes) {
-        for (const QModelIndex& m : sel) {
+        for (const QModelIndex &m : sel) {
             to_del.append(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(m))));
         }
         KIO::del(to_del);
     }
-
 }
 
 void ScanForLostFilesWidget::on_treeView_customContextMenuRequested(const QPoint &pos)
@@ -205,6 +213,4 @@ void ScanForLostFilesWidget::on_treeView_customContextMenuRequested(const QPoint
     m_menu->exec(treeView->mapToGlobal(pos));
 }
 
-
 }
-

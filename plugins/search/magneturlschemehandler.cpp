@@ -19,12 +19,12 @@
  */
 
 #include "magneturlschemehandler.h"
-#include <QWebEngineUrlSchemeHandler>
 #include <QWebEngineUrlRequestJob>
+#include <QWebEngineUrlSchemeHandler>
 
-MagnetUrlSchemeHandler::MagnetUrlSchemeHandler(QObject *parent) : QWebEngineUrlSchemeHandler(parent)
+MagnetUrlSchemeHandler::MagnetUrlSchemeHandler(QObject *parent)
+    : QWebEngineUrlSchemeHandler(parent)
 {
-
 }
 
 void MagnetUrlSchemeHandler::requestStarted(QWebEngineUrlRequestJob *request)

@@ -22,11 +22,11 @@
 #ifndef IPBLOCKINGPREFPAGE_H
 #define IPBLOCKINGPREFPAGE_H
 
-#include <interfaces/prefpageinterface.h>
-#include <interfaces/coreinterface.h>
-#include <QThread>
-#include "ui_ipblockingprefpage.h"
 #include "ipfilterplugin.h"
+#include "ui_ipblockingprefpage.h"
+#include <QThread>
+#include <interfaces/coreinterface.h>
+#include <interfaces/prefpageinterface.h>
 
 class KJob;
 
@@ -43,9 +43,8 @@ class IPBlockingPrefPage : public PrefPageInterface, public Ui_IPBlockingPrefPag
 {
     Q_OBJECT
 public:
-    IPBlockingPrefPage(IPFilterPlugin* p);
+    IPBlockingPrefPage(IPFilterPlugin *p);
     ~IPBlockingPrefPage() override;
-
 
     void loadSettings() override;
     void loadDefaults() override;
@@ -58,7 +57,7 @@ private Q_SLOTS:
     void downloadClicked();
     void checkUseLevel1Toggled(bool);
     void restoreGUI();
-    void downloadAndConvertFinished(KJob* j);
+    void downloadAndConvertFinished(KJob *j);
     void autoUpdateToggled(bool on);
     void autoUpdateIntervalChanged(int val);
 
@@ -69,9 +68,9 @@ Q_SIGNALS:
     void updateFinished();
 
 private:
-    CoreInterface* m_core;
-    IPFilterPlugin* m_plugin;
-    DownloadAndConvertJob* m_job;
+    CoreInterface *m_core;
+    IPFilterPlugin *m_plugin;
+    DownloadAndConvertJob *m_job;
     bool m_verbose;
 };
 }

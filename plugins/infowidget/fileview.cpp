@@ -31,40 +31,41 @@
 #include <QToolBar>
 
 #include <KConfigGroup>
+#include <KFileWidget>
+#include <KIO/ApplicationLauncherJob>
+#include <KIO/JobUiDelegate>
+#include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KFileWidget>
-#include <KIO/JobUiDelegate>
-#include <KIO/ApplicationLauncherJob>
-#include <KIO/OpenUrlJob>
 #include <KRecentDirs>
 #include <KSharedConfig>
 
+#include "iwfilelistmodel.h"
+#include "iwfiletreemodel.h"
+#include <interfaces/functions.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 #include <util/bitset.h>
 #include <util/error.h>
 #include <util/functions.h>
-#include <util/treefiltermodel.h>
-#include <interfaces/functions.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentfileinterface.h>
 #include <util/log.h>
 #include <util/timer.h>
-#include "iwfiletreemodel.h"
-#include "iwfilelistmodel.h"
-
-
+#include <util/treefiltermodel.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-FileView::FileView(QWidget* parent) : QWidget(parent), model(nullptr), show_list_of_files(false), header_state_loaded(false)
+FileView::FileView(QWidget *parent)
+    : QWidget(parent)
+    , model(nullptr)
+    , show_list_of_files(false)
+    , header_state_loaded(false)
 {
-    QHBoxLayout* layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setMargin(0);
     layout->setSpacing(0);
-    QVBoxLayout* vbox = new QVBoxLayout();
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->setMargin(0);
     vbox->setSpacing(0);
     view = new QTreeView(this);
@@ -106,17 +107,18 @@ FileView::FileView(QWidget* parent) : QWidget(parent), model(nullptr), show_list
     connect(view, &QTreeView::doubleClicked, this, &FileView::onDoubleClicked);
 
     setEnabled(false);
-
 }
 
 FileView::~FileView()
-{}
+{
+}
 
 void FileView::setupActions()
 {
     context_menu = new QMenu(this);
     open_action = context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file", "Open"), this, &FileView::open);
-    open_with_action = context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file with", "Open With"), this, &FileView::openWith);
+    open_with_action =
+        context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file with", "Open With"), this, &FileView::openWith);
     check_data = context_menu->addAction(QIcon::fromTheme(QStringLiteral("kt-check-data")), i18n("Check File"), this, &FileView::checkFile);
     context_menu->addSeparator();
     download_first_action = context_menu->addAction(i18n("Download first"), this, &FileView::downloadFirst);
@@ -131,7 +133,7 @@ void FileView::setupActions()
     collapse_action = context_menu->addAction(i18n("Collapse Folder Tree"), this, &FileView::collapseTree);
     expand_action = context_menu->addAction(i18n("Expand Folder Tree"), this, &FileView::expandTree);
 
-    QActionGroup* ag = new QActionGroup(this);
+    QActionGroup *ag = new QActionGroup(this);
     show_tree_action = new QAction(QIcon::fromTheme(QStringLiteral("view-list-tree")), i18n("File Tree"), this);
     connect(show_tree_action, &QAction::triggered, this, &FileView::showTree);
     show_list_action = new QAction(QIcon::fromTheme(QStringLiteral("view-list-text")), i18n("File List"), this);
@@ -150,7 +152,7 @@ void FileView::setupActions()
     toolbar->addAction(show_filter_action);
 }
 
-void FileView::changeTC(bt::TorrentInterface* tc)
+void FileView::changeTC(bt::TorrentInterface *tc)
 {
     if (tc == curr_tc.data())
         return;
@@ -162,8 +164,7 @@ void FileView::changeTC(bt::TorrentInterface* tc)
     setEnabled(tc != 0);
     model->changeTorrent(tc);
     if (tc) {
-        connect(tc, &bt::TorrentInterface::missingFilesMarkedDND,
-                this, &FileView::onMissingFileMarkedDND);
+        connect(tc, &bt::TorrentInterface::missingFilesMarkedDND, this, &FileView::onMissingFileMarkedDND);
 
         view->setRootIsDecorated(!show_list_of_files && tc->getStats().multi_file_torrent);
         if (!show_list_of_files) {
@@ -185,19 +186,19 @@ void FileView::changeTC(bt::TorrentInterface* tc)
 #endif
 }
 
-void FileView::onMissingFileMarkedDND(bt::TorrentInterface* tc)
+void FileView::onMissingFileMarkedDND(bt::TorrentInterface *tc)
 {
     if (curr_tc.data() == tc)
         model->missingFilesMarkedDND();
 }
 
-void FileView::showContextMenu(const QPoint& p)
+void FileView::showContextMenu(const QPoint &p)
 {
     if (!curr_tc)
         return;
 
-    bt::TorrentInterface* tc = curr_tc.data();
-    const TorrentStats& s = tc->getStats();
+    bt::TorrentInterface *tc = curr_tc.data();
+    const TorrentStats &s = tc->getStats();
 
     QModelIndexList sel = view->selectionModel()->selectedRows();
     if (sel.count() == 0)
@@ -220,7 +221,7 @@ void FileView::showContextMenu(const QPoint& p)
     }
 
     QModelIndex item = proxy_model->mapToSource(sel.front());
-    bt::TorrentFileInterface* file = model->indexToFile(item);
+    bt::TorrentFileInterface *file = model->indexToFile(item);
 
     download_first_action->setEnabled(false);
     download_last_action->setEnabled(false);
@@ -287,17 +288,15 @@ void FileView::openWith()
     job->start();
 }
 
-
 void FileView::changePriority(bt::Priority newpriority)
 {
     QModelIndexList sel = view->selectionModel()->selectedRows(2);
-    for (QModelIndex & i : sel)
+    for (QModelIndex &i : sel)
         i = proxy_model->mapToSource(i);
 
     model->changePriority(sel, newpriority);
     proxy_model->invalidate();
 }
-
 
 void FileView::downloadFirst()
 {
@@ -329,7 +328,8 @@ void FileView::deleteFiles()
     }
 
     QString msg = i18np("You will lose all data in this file, are you sure you want to do this?",
-                        "You will lose all data in these files, are you sure you want to do this?", n);
+                        "You will lose all data in these files, are you sure you want to do this?",
+                        n);
 
     if (KMessageBox::warningYesNo(0, msg) == KMessageBox::Yes)
         changePriority(EXCLUDED);
@@ -340,14 +340,16 @@ void FileView::moveFiles()
     if (!curr_tc)
         return;
 
-    bt::TorrentInterface* tc = curr_tc.data();
+    bt::TorrentInterface *tc = curr_tc.data();
     if (tc->getStats().multi_file_torrent) {
         const QModelIndexList sel = view->selectionModel()->selectedRows();
-        QMap<bt::TorrentFileInterface*, QString> moves;
+        QMap<bt::TorrentFileInterface *, QString> moves;
 
         QString recentDirClass;
-        QString dir = QFileDialog::getExistingDirectory(this, i18n("Select a directory to move the data to."),
-                      KFileWidget::getStartUrl(QUrl(QLatin1String("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
+        QString dir =
+            QFileDialog::getExistingDirectory(this,
+                                              i18n("Select a directory to move the data to."),
+                                              KFileWidget::getStartUrl(QUrl(QLatin1String("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
         if (dir.isEmpty())
             return;
@@ -355,8 +357,8 @@ void FileView::moveFiles()
         if (!recentDirClass.isEmpty())
             KRecentDirs::add(recentDirClass, dir);
 
-        for (const QModelIndex& idx : sel) {
-            bt::TorrentFileInterface* tfi = model->indexToFile(proxy_model->mapToSource(idx));
+        for (const QModelIndex &idx : sel) {
+            bt::TorrentFileInterface *tfi = model->indexToFile(proxy_model->mapToSource(idx));
             if (!tfi)
                 continue;
 
@@ -368,8 +370,10 @@ void FileView::moveFiles()
         }
     } else {
         QString recentDirClass;
-        QString dir = QFileDialog::getExistingDirectory(this, i18n("Select a directory to move the data to."),
-                      KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
+        QString dir =
+            QFileDialog::getExistingDirectory(this,
+                                              i18n("Select a directory to move the data to."),
+                                              KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
         if (dir.isEmpty())
             return;
@@ -381,11 +385,11 @@ void FileView::moveFiles()
     }
 }
 
-void FileView::expandCollapseTree(const QModelIndex& idx, bool expand)
+void FileView::expandCollapseTree(const QModelIndex &idx, bool expand)
 {
     int rowCount = proxy_model->rowCount(idx);
     for (int i = 0; i < rowCount; i++) {
-        const QModelIndex& ridx = proxy_model->index(i, 0, idx);
+        const QModelIndex &ridx = proxy_model->index(i, 0, idx);
         if (proxy_model->hasChildren(ridx))
             expandCollapseTree(ridx, expand);
     }
@@ -395,7 +399,7 @@ void FileView::expandCollapseTree(const QModelIndex& idx, bool expand)
 void FileView::expandCollapseSelected(bool expand)
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
-    for (const QModelIndex & i : sel) {
+    for (const QModelIndex &i : sel) {
         if (proxy_model->hasChildren(i))
             expandCollapseTree(i, expand);
     }
@@ -411,13 +415,13 @@ void FileView::expandTree()
     expandCollapseSelected(true);
 }
 
-void FileView::onDoubleClicked(const QModelIndex& index)
+void FileView::onDoubleClicked(const QModelIndex &index)
 {
     if (!curr_tc)
         return;
 
-    bt::TorrentInterface* tc = curr_tc.data();
-    const TorrentStats& s = tc->getStats();
+    bt::TorrentInterface *tc = curr_tc.data();
+    const TorrentStats &s = tc->getStats();
 
     QString pathToOpen;
     bool isMultimedia = false;
@@ -426,7 +430,7 @@ void FileView::onDoubleClicked(const QModelIndex& index)
     int fileIndex = 0;
 
     if (s.multi_file_torrent) {
-        bt::TorrentFileInterface* file = model->indexToFile(proxy_model->mapToSource(index));
+        bt::TorrentFileInterface *file = model->indexToFile(proxy_model->mapToSource(index));
         if (!file) {
             // directory
             pathToOpen = s.output_path + model->dirPath(proxy_model->mapToSource(index));
@@ -442,7 +446,8 @@ void FileView::onDoubleClicked(const QModelIndex& index)
     } else {
         isMultimedia = tc->isMultimedia();
         isPreviewAvailable = tc->readyForPreview();
-        if (s.total_bytes) downloadPercentage = 100 - 100 * s.total_bytes_to_download / s.total_bytes;
+        if (s.total_bytes)
+            downloadPercentage = 100 - 100 * s.total_bytes_to_download / s.total_bytes;
         pathToOpen = s.output_path;
     }
 
@@ -450,13 +455,16 @@ void FileView::onDoubleClicked(const QModelIndex& index)
         static QList<TorrentFileStream::Ptr> streams;
         bool doStream = false;
         if (!isPreviewAvailable) {
-            doStream = KMessageBox::Yes == KMessageBox::questionYesNo(this,
-                       i18n("Not enough data downloaded for opening the file.\n\n"
-                            "Enable sequential download mode for it to obtain necessary data with a higher priority?"),
-                       QString(), KStandardGuiItem::yes(), KStandardGuiItem::no());
+            doStream = KMessageBox::Yes
+                == KMessageBox::questionYesNo(this,
+                                              i18n("Not enough data downloaded for opening the file.\n\n"
+                                                   "Enable sequential download mode for it to obtain necessary data with a higher priority?"),
+                                              QString(),
+                                              KStandardGuiItem::yes(),
+                                              KStandardGuiItem::no());
         } else if (downloadPercentage < 90) {
             doStream = true;
-            //doStream = KMessageBox::Yes==KMessageBox::questionYesNo(this, i18n("Enable sequential download mode for this file?"),
+            // doStream = KMessageBox::Yes==KMessageBox::questionYesNo(this, i18n("Enable sequential download mode for this file?"),
             //    QString(), KStandardGuiItem::yes(), KStandardGuiItem::no(), QStringLiteral("SequentialModeOnFileOpen"));
         }
         if (doStream) {
@@ -487,7 +495,7 @@ void FileView::loadState(KSharedConfigPtr cfg)
     KConfigGroup g = cfg->group("FileView");
     QByteArray s = g.readEntry("state", QByteArray());
     if (!s.isEmpty()) {
-        QHeaderView* v = view->header();
+        QHeaderView *v = view->header();
         v->restoreState(QByteArray::fromBase64(s));
         view->sortByColumn(v->sortIndicatorSection(), v->sortIndicatorOrder());
         header_state_loaded = true;
@@ -507,7 +515,7 @@ void FileView::update()
         model->update();
 }
 
-void FileView::onTorrentRemoved(bt::TorrentInterface* tc)
+void FileView::onTorrentRemoved(bt::TorrentInterface *tc)
 {
     expanded_state_map.remove(tc);
 }
@@ -532,7 +540,7 @@ void FileView::setShowListOfFiles(bool on)
         return;
     }
 
-    bt::TorrentInterface* tc = curr_tc.data();
+    bt::TorrentInterface *tc = curr_tc.data();
     if (on)
         expanded_state_map[tc] = model->saveExpandedState(proxy_model, view);
 
@@ -573,20 +581,19 @@ void FileView::showList()
         setShowListOfFiles(true);
 }
 
-void FileView::filePercentageChanged(bt::TorrentFileInterface* file, float percentage)
+void FileView::filePercentageChanged(bt::TorrentFileInterface *file, float percentage)
 {
     if (model)
         model->filePercentageChanged(file, percentage);
 }
 
-void FileView::filePreviewChanged(bt::TorrentFileInterface* file, bool preview)
+void FileView::filePreviewChanged(bt::TorrentFileInterface *file, bool preview)
 {
     if (model)
         model->filePreviewChanged(file, preview);
 }
 
-
-void FileView::setFilter(const QString& f)
+void FileView::setFilter(const QString &f)
 {
     Q_UNUSED(f);
     proxy_model->setFilterFixedString(filter->text());
@@ -601,8 +608,8 @@ void FileView::checkFile()
     if (curr_tc.data()->getStats().multi_file_torrent) {
         bt::Uint32 from = curr_tc.data()->getStats().total_chunks;
         bt::Uint32 to = 0;
-        for (const QModelIndex& idx : sel) {
-            bt::TorrentFileInterface* tfi = model->indexToFile(proxy_model->mapToSource(idx));
+        for (const QModelIndex &idx : sel) {
+            bt::TorrentFileInterface *tfi = model->indexToFile(proxy_model->mapToSource(idx));
             if (!tfi)
                 continue;
 

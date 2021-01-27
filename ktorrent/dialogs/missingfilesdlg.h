@@ -22,8 +22,8 @@
 #ifndef KTMISSINGFILESDLG_H
 #define KTMISSINGFILESDLG_H
 
-#include <QDialog>
 #include "ui_missingfilesdlg.h"
+#include <QDialog>
 
 namespace bt
 {
@@ -32,7 +32,6 @@ class TorrentInterface;
 
 namespace kt
 {
-
 /**
     Dialog to show when files are missing.
 */
@@ -40,7 +39,6 @@ class MissingFilesDlg : public QDialog, public Ui_MissingFilesDlg
 {
     Q_OBJECT
 public:
-
     /**
      * Constructor
      * @param text Text to show above file list
@@ -48,11 +46,14 @@ public:
      * @param tc The torrent
      * @param parent The parent widget
      */
-    MissingFilesDlg(const QString& text, const QStringList& missing, bt::TorrentInterface* tc, QWidget* parent);
+    MissingFilesDlg(const QString &text, const QStringList &missing, bt::TorrentInterface *tc, QWidget *parent);
     ~MissingFilesDlg() override;
 
     enum ReturnCode {
-        RECREATE, DO_NOT_DOWNLOAD, CANCEL, NEW_LOCATION_SELECTED
+        RECREATE,
+        DO_NOT_DOWNLOAD,
+        CANCEL,
+        NEW_LOCATION_SELECTED,
     };
 
     /**
@@ -69,7 +70,7 @@ private Q_SLOTS:
 
 private:
     ReturnCode ret;
-    bt::TorrentInterface* tc;
+    bt::TorrentInterface *tc;
 };
 
 }

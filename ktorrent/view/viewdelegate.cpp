@@ -19,9 +19,9 @@
  ***************************************************************************/
 
 #include "viewdelegate.h"
-#include "viewmodel.h"
 #include "core.h"
 #include "view.h"
+#include "viewmodel.h"
 
 #include <algorithm>
 
@@ -32,14 +32,12 @@
 
 #include <gui/extender.h>
 
-
 namespace kt
 {
-
-
 //////////////////////////
 
-ExtenderBox::ExtenderBox(QWidget* widget): QWidget(widget)
+ExtenderBox::ExtenderBox(QWidget *widget)
+    : QWidget(widget)
 {
     layout = new QVBoxLayout(this);
 }
@@ -49,13 +47,13 @@ ExtenderBox::~ExtenderBox()
     clear();
 }
 
-void ExtenderBox::add(Extender* ext)
+void ExtenderBox::add(Extender *ext)
 {
     layout->addWidget(ext);
     extenders.append(ext);
 }
 
-void ExtenderBox::remove(Extender* ext)
+void ExtenderBox::remove(Extender *ext)
 {
     layout->removeWidget(ext);
     extenders.removeAll(ext);
@@ -63,9 +61,9 @@ void ExtenderBox::remove(Extender* ext)
     ext->deleteLater();
 }
 
-void ExtenderBox::removeSimilar(Extender* ext)
+void ExtenderBox::removeSimilar(Extender *ext)
 {
-    for (QList<Extender*>::iterator i = extenders.begin(); i != extenders.end();) {
+    for (QList<Extender *>::iterator i = extenders.begin(); i != extenders.end();) {
         if (ext->similar(*i)) {
             (*i)->hide();
             (*i)->deleteLater();
@@ -75,10 +73,9 @@ void ExtenderBox::removeSimilar(Extender* ext)
     }
 }
 
-
 void ExtenderBox::clear()
 {
-    for (Extender* ext : qAsConst(extenders)) {
+    for (Extender *ext : qAsConst(extenders)) {
         ext->hide();
         ext->deleteLater();
     }
@@ -86,10 +83,11 @@ void ExtenderBox::clear()
     extenders.clear();
 }
 
-
 //////////////////////////
 
-ViewDelegate::ViewDelegate(Core* core, ViewModel* model, View* parent): QStyledItemDelegate(parent), model(model)
+ViewDelegate::ViewDelegate(Core *core, ViewModel *model, View *parent)
+    : QStyledItemDelegate(parent)
+    , model(model)
 {
     connect(core, &Core::torrentRemoved, this, &ViewDelegate::torrentRemoved);
 }
@@ -99,13 +97,12 @@ ViewDelegate::~ViewDelegate()
     contractAll();
 }
 
-
-void ViewDelegate::extend(bt::TorrentInterface* tc, kt::Extender* widget, bool close_similar)
+void ViewDelegate::extend(bt::TorrentInterface *tc, kt::Extender *widget, bool close_similar)
 {
-    ExtenderBox* ext = 0;
+    ExtenderBox *ext = 0;
     ExtItr itr = extenders.find(tc);
     if (itr == extenders.end()) {
-        QAbstractItemView* aiv = qobject_cast<QAbstractItemView*>(parent());
+        QAbstractItemView *aiv = qobject_cast<QAbstractItemView *>(parent());
         ext = new ExtenderBox(aiv->viewport());
         extenders.insert(tc, ext);
     } else {
@@ -124,11 +121,11 @@ void ViewDelegate::extend(bt::TorrentInterface* tc, kt::Extender* widget, bool c
     connect(widget, &Extender::resized, this, &ViewDelegate::resized);
 }
 
-void ViewDelegate::closeExtenders(bt::TorrentInterface* tc)
+void ViewDelegate::closeExtenders(bt::TorrentInterface *tc)
 {
     ExtItr itr = extenders.find(tc);
     if (itr != extenders.end()) {
-        ExtenderBox* ext = itr.value();
+        ExtenderBox *ext = itr.value();
         ext->clear();
         ext->hide();
         ext->deleteLater();
@@ -138,11 +135,11 @@ void ViewDelegate::closeExtenders(bt::TorrentInterface* tc)
     scheduleUpdateViewLayout();
 }
 
-void ViewDelegate::closeExtender(bt::TorrentInterface* tc, Extender* ext)
+void ViewDelegate::closeExtender(bt::TorrentInterface *tc, Extender *ext)
 {
     ExtItr itr = extenders.find(tc);
     if (itr != extenders.end()) {
-        ExtenderBox* box = itr.value();
+        ExtenderBox *box = itr.value();
         box->remove(ext);
         if (box->count() == 0) {
             box->hide();
@@ -154,24 +151,23 @@ void ViewDelegate::closeExtender(bt::TorrentInterface* tc, Extender* ext)
     scheduleUpdateViewLayout();
 }
 
-void ViewDelegate::closeRequested(Extender* ext)
+void ViewDelegate::closeRequested(Extender *ext)
 {
     closeExtender(ext->torrent(), ext);
 }
 
-void ViewDelegate::torrentRemoved(bt::TorrentInterface* tc)
+void ViewDelegate::torrentRemoved(bt::TorrentInterface *tc)
 {
     closeExtenders(tc);
 }
 
-void ViewDelegate::resized(Extender* ext)
+void ViewDelegate::resized(Extender *ext)
 {
     Q_UNUSED(ext);
     scheduleUpdateViewLayout();
 }
 
-
-QSize ViewDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize ViewDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QSize ret;
 
@@ -183,24 +179,24 @@ QSize ViewDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelInd
     return ret;
 }
 
-QSize ViewDelegate::maybeExtendedSize(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize ViewDelegate::maybeExtendedSize(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    bt::TorrentInterface* tc = model->torrentFromIndex(index);
+    bt::TorrentInterface *tc = model->torrentFromIndex(index);
     QSize size(QStyledItemDelegate::sizeHint(option, index));
     if (!tc)
         return size;
 
     ExtCItr itr = extenders.find(tc);
-    const QWidget* ext = itr == extenders.end() ? 0 : itr.value();
+    const QWidget *ext = itr == extenders.end() ? 0 : itr.value();
     if (!ext)
         return size;
 
-    //add extender height to maximum height of any column in our row
+    // add extender height to maximum height of any column in our row
     int item_height = size.height();
     int row = index.row();
     int this_column = index.column();
 
-    //this is quite slow, but Qt is smart about when to call sizeHint().
+    // this is quite slow, but Qt is smart about when to call sizeHint().
     for (int column = 0; model->columnCount() < column; column++) {
         if (column == this_column)
             continue;
@@ -210,13 +206,12 @@ QSize ViewDelegate::maybeExtendedSize(const QStyleOptionViewItem& option, const 
             item_height = std::max(item_height, QStyledItemDelegate::sizeHint(option, neighborIndex).height());
     }
 
-    //we only want to reserve vertical space, the horizontal extender layout is our private business.
+    // we only want to reserve vertical space, the horizontal extender layout is our private business.
     size.rheight() = item_height + ext->sizeHint().height();
     return size;
 }
 
-
-void ViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void ViewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QStyleOptionViewItem indicatorOption(option);
     initStyleOption(&indicatorOption, index);
@@ -236,43 +231,40 @@ void ViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, 
     else
         itemOption.viewItemPosition = QStyleOptionViewItem::Middle;
 
-
-    bt::TorrentInterface* tc = model->torrentFromIndex(index);
+    bt::TorrentInterface *tc = model->torrentFromIndex(index);
     if (!tc || !extenders.contains(tc)) {
         normalPaint(painter, itemOption, index);
         return;
     }
 
-    QWidget* extender = extenders[tc];
+    QWidget *extender = extenders[tc];
     int extenderHeight = extender->sizeHint().height();
 
-
-    //an extender is present - make two rectangles: one to paint the original item, one for the extender
+    // an extender is present - make two rectangles: one to paint the original item, one for the extender
     QStyleOptionViewItem extOption(option);
     initStyleOption(&extOption, index);
     extOption.rect = extenderRect(extender, option, index);
     extender->setGeometry(extOption.rect);
-    //if we show it before, it will briefly flash in the wrong location.
-    //the downside is, of course, that an api user effectively can't hide it.
+    // if we show it before, it will briefly flash in the wrong location.
+    // the downside is, of course, that an api user effectively can't hide it.
     extender->show();
 
     indicatorOption.rect.setHeight(option.rect.height() - extenderHeight);
     itemOption.rect.setHeight(option.rect.height() - extenderHeight);
-    //tricky:make sure that the modified options' rect really has the
-    //same height as the unchanged option.rect if no extender is present
+    // tricky:make sure that the modified options' rect really has the
+    // same height as the unchanged option.rect if no extender is present
     //(seems to work OK)
 
     normalPaint(painter, itemOption, index);
 }
 
-
-void ViewDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void ViewDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    bt::TorrentInterface* tc = model->torrentFromIndex(index);
+    bt::TorrentInterface *tc = model->torrentFromIndex(index);
     if (!tc || !extenders.contains(tc)) {
         QStyledItemDelegate::updateEditorGeometry(editor, option, index);
     } else {
-        QWidget* extender = extenders[tc];
+        QWidget *extender = extenders[tc];
         int extenderHeight = extender->sizeHint().height();
 
         QStyleOptionViewItem itemOption(option);
@@ -282,14 +274,13 @@ void ViewDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewI
     }
 }
 
-
-QRect ViewDelegate::extenderRect(QWidget* extender, const QStyleOptionViewItem& option, const QModelIndex& index) const
+QRect ViewDelegate::extenderRect(QWidget *extender, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QRect rect(option.rect);
     rect.setTop(rect.bottom() + 1 - extender->sizeHint().height());
 
     rect.setLeft(0);
-    if (QTreeView* tv = qobject_cast<QTreeView*>(parent())) {
+    if (QTreeView *tv = qobject_cast<QTreeView *>(parent())) {
         int steps = 0;
         for (QModelIndex idx(index.parent()); idx.isValid(); idx = idx.parent())
             steps++;
@@ -300,22 +291,20 @@ QRect ViewDelegate::extenderRect(QWidget* extender, const QStyleOptionViewItem& 
         rect.setLeft(steps * tv->indentation());
     }
 
-    QAbstractScrollArea* container = qobject_cast<QAbstractScrollArea*>(parent());
+    QAbstractScrollArea *container = qobject_cast<QAbstractScrollArea *>(parent());
     rect.setRight(container->viewport()->width() - 1);
     return rect;
 }
 
-
 void ViewDelegate::scheduleUpdateViewLayout()
 {
-    QAbstractItemView* aiv = qobject_cast<QAbstractItemView*>(parent());
-    //prevent crashes during destruction of the view
+    QAbstractItemView *aiv = qobject_cast<QAbstractItemView *>(parent());
+    // prevent crashes during destruction of the view
     if (aiv) {
-        //dirty hack to call aiv's protected scheduleDelayedItemsLayout()
+        // dirty hack to call aiv's protected scheduleDelayedItemsLayout()
         aiv->setRootIndex(aiv->rootIndex());
     }
 }
-
 
 void ViewDelegate::contractAll()
 {
@@ -327,22 +316,19 @@ void ViewDelegate::contractAll()
     extenders.clear();
 }
 
-
-bool ViewDelegate::extended(bt::TorrentInterface* tc) const
+bool ViewDelegate::extended(bt::TorrentInterface *tc) const
 {
     return extenders.contains(tc);
 }
 
-
-void ViewDelegate::hideExtender(bt::TorrentInterface* tc)
+void ViewDelegate::hideExtender(bt::TorrentInterface *tc)
 {
     ExtItr i = extenders.find(tc);
     if (i != extenders.end())
         i.value()->hide();
 }
 
-
-void ViewDelegate::paintProgressBar(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     int progress = index.data().toInt();
 
@@ -360,8 +346,7 @@ void ViewDelegate::paintProgressBar(QPainter* painter, const QStyleOptionViewIte
     QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
 }
 
-
-void ViewDelegate::normalPaint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void ViewDelegate::normalPaint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.column() == ViewModel::PERCENTAGE)
         paintProgressBar(painter, option, index);
@@ -370,4 +355,3 @@ void ViewDelegate::normalPaint(QPainter* painter, const QStyleOptionViewItem& op
 }
 
 }
-

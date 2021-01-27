@@ -22,29 +22,34 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <errno.h>
 #include <fcntl.h>
-#include <unistd.h>
-#include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
-#include <errno.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <QFile>
 
 #include <KFileItem>
 #include <KLocalizedString>
 
+#include "mmapfile.h"
+#include <torrent/globals.h>
 #include <util/error.h>
 #include <util/log.h>
-#include <torrent/globals.h>
-#include "mmapfile.h"
 
 namespace bt
 {
-
-MMapFile::MMapFile() : fptr(nullptr), data(0), size(0), file_size(0), ptr(0), mode(QIODevice::ReadOnly)
-{}
-
+MMapFile::MMapFile()
+    : fptr(nullptr)
+    , data(0)
+    , size(0)
+    , file_size(0)
+    , ptr(0)
+    , mode(QIODevice::ReadOnly)
+{
+}
 
 MMapFile::~MMapFile()
 {
@@ -52,7 +57,7 @@ MMapFile::~MMapFile()
         close();
 }
 
-bool MMapFile::open(const QString& file, QIODevice::OpenModeFlag mode)
+bool MMapFile::open(const QString &file, QIODevice::OpenModeFlag mode)
 {
     // close already open file
     if (fptr && fptr->isOpen()) {
@@ -93,9 +98,9 @@ bool MMapFile::open(const QString& file, QIODevice::OpenModeFlag mode)
 #ifndef Q_WS_WIN
     int fd = fptr->handle();
 #ifdef HAVE_MMAP64
-    data = (Uint8*)mmap64(0, size, mmap_flag, MAP_SHARED, fd, 0);
+    data = (Uint8 *)mmap64(0, size, mmap_flag, MAP_SHARED, fd, 0);
 #else
-    data = (Uint8*)mmap(0, size, mmap_flag, MAP_SHARED, fd, 0);
+    data = (Uint8 *)mmap(0, size, mmap_flag, MAP_SHARED, fd, 0);
 #endif
     if (data == MAP_FAILED) {
         ::close(fd);
@@ -107,7 +112,7 @@ bool MMapFile::open(const QString& file, QIODevice::OpenModeFlag mode)
     ptr = 0;
     return true;
 #else // Q_WS_WIN
-    data = (Uint8*)fptr->map(0, size);
+    data = (Uint8 *)fptr->map(0, size);
 
     if (!data) {
         fptr->close();
@@ -151,7 +156,7 @@ void MMapFile::flush()
 #endif
 }
 
-Uint32 MMapFile::write(const void* buf, Uint32 buf_size)
+Uint32 MMapFile::write(const void *buf, Uint32 buf_size)
 {
     if (!fptr || mode == QIODevice::ReadOnly)
         return 0;
@@ -188,7 +193,7 @@ void MMapFile::growFile(Uint64 new_size)
     memset(buf, 0, 1024);
     // write data until to_write is 0
     while (to_write > 0) {
-        ssize_t w = fptr->write((const char*)buf, to_write > 1024 ? 1024 : to_write);
+        ssize_t w = fptr->write((const char *)buf, to_write > 1024 ? 1024 : to_write);
         if (w > 0)
             to_write -= w;
         else if (w < 0)
@@ -197,7 +202,7 @@ void MMapFile::growFile(Uint64 new_size)
     file_size = new_size;
 }
 
-Uint32 MMapFile::read(void* buf, Uint32 buf_size)
+Uint32 MMapFile::read(void *buf, Uint32 buf_size)
 {
     if (!fptr || mode == QIODevice::WriteOnly)
         return 0;
@@ -225,26 +230,24 @@ Uint64 MMapFile::seek(SeekPos from, Int64 num)
             ptr = 0;
             break;
         }
-        if (np >= (Int64) size) {
+        if (np >= (Int64)size) {
             ptr = size - 1;
             break;
         }
         ptr = np;
-    }
-    break;
+    } break;
     case CURRENT: {
         Int64 np = ptr + num;
         if (np < 0) {
             ptr = 0;
             break;
         }
-        if (np >= (Int64) size) {
+        if (np >= (Int64)size) {
             ptr = size - 1;
             break;
         }
         ptr = np;
-    }
-    break;
+    } break;
     }
     return ptr;
 }
@@ -269,11 +272,10 @@ Uint64 MMapFile::getSize() const
     return size;
 }
 
-Uint8* MMapFile::getData(Uint64 off)
+Uint8 *MMapFile::getData(Uint64 off)
 {
     if (off >= size)
         return nullptr;
     return &data[off];
 }
 }
-

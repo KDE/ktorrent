@@ -22,8 +22,8 @@
 #ifndef KTFEEDWIDGET_H
 #define KTFEEDWIDGET_H
 
-#include <QWidget>
 #include <KConfigGroup>
+#include <QWidget>
 
 #include "ui_feedwidget.h"
 
@@ -41,38 +41,38 @@ class FeedWidget : public QWidget, public Ui_FeedWidget
 {
     Q_OBJECT
 public:
-    FeedWidget(FilterList* filters, SyndicationActivity* act, QWidget* parent);
+    FeedWidget(FilterList *filters, SyndicationActivity *act, QWidget *parent);
     ~FeedWidget();
 
     /// Set the Feed to show, can be 0
-    void setFeed(Feed* feed);
+    void setFeed(Feed *feed);
 
-    Feed* getFeed()
+    Feed *getFeed()
     {
         return feed;
     }
 
-    void loadState(KConfigGroup& g);
-    void saveState(KConfigGroup& g);
+    void loadState(KConfigGroup &g);
+    void saveState(KConfigGroup &g);
 
     void downloadClicked();
     void refreshClicked();
     void filtersClicked();
     void cookiesClicked();
-    void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void updated();
-    void onFeedRenamed(Feed* f);
+    void onFeedRenamed(Feed *f);
     void refreshRateChanged(int v);
     void resizeColumns();
 
 Q_SIGNALS:
-    void updateCaption(QWidget* w, const QString& text);
+    void updateCaption(QWidget *w, const QString &text);
 
 private:
-    Feed* feed;
-    FeedWidgetModel* model;
-    FilterList* filters;
-    SyndicationActivity* act;
+    Feed *feed;
+    FeedWidgetModel *model;
+    FilterList *filters;
+    SyndicationActivity *act;
 
     static QString item_template;
 };

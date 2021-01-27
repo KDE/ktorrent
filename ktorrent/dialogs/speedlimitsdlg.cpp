@@ -24,35 +24,32 @@
 
 #include <KLocalizedString>
 
-#include <util/constants.h>
-#include <util/log.h>
+#include "core.h"
+#include "speedlimitsdlg.h"
+#include "speedlimitsmodel.h"
+#include "spinboxdelegate.h"
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <settings.h>
-#include "core.h"
-#include "speedlimitsmodel.h"
-#include "speedlimitsdlg.h"
-#include "spinboxdelegate.h"
 #include <torrent/queuemanager.h>
-
+#include <util/constants.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
-
-
-SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidget* parent)
-    : QDialog(parent), core(core), current(current)
+SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface *current, Core *core, QWidget *parent)
+    : QDialog(parent)
+    , core(core)
+    , current(current)
 {
     setupUi(this);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kt-speed-limits")));
     setWindowTitle(i18n("Speed Limits"));
 
     model = new SpeedLimitsModel(core, this);
-    QSortFilterProxyModel* pm = new QSortFilterProxyModel(this);
+    QSortFilterProxyModel *pm = new QSortFilterProxyModel(this);
     pm->setSourceModel(model);
     pm->setSortRole(Qt::UserRole);
 
@@ -65,7 +62,7 @@ SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidge
     m_speed_limits_view->header()->setSectionsClickable(true);
     m_speed_limits_view->setAlternatingRowColors(true);
 
-    QPushButton* apply_btn = m_buttonBox->button(QDialogButtonBox::Apply);
+    QPushButton *apply_btn = m_buttonBox->button(QDialogButtonBox::Apply);
     apply_btn->setEnabled(false);
     connect(model, &SpeedLimitsModel::enableApply, apply_btn, &QPushButton::setEnabled);
     connect(apply_btn, &QPushButton::clicked, this, &SpeedLimitsDlg::apply);
@@ -81,9 +78,9 @@ SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidge
 
     // if current is specified, select it and scroll to it
     if (current) {
-        kt::QueueManager* qman = core->getQueueManager();
+        kt::QueueManager *qman = core->getQueueManager();
         int idx = 0;
-        QList<bt::TorrentInterface*>::iterator itr = qman->begin();
+        QList<bt::TorrentInterface *>::iterator itr = qman->begin();
         while (itr != qman->end()) {
             if (*itr == current)
                 break;
@@ -93,7 +90,7 @@ SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidge
         }
 
         if (itr != qman->end()) {
-            QItemSelectionModel* sel = m_speed_limits_view->selectionModel();
+            QItemSelectionModel *sel = m_speed_limits_view->selectionModel();
             QModelIndex midx = pm->mapFromSource(model->index(idx, 0));
             QModelIndex midx2 = pm->mapFromSource(model->index(idx, 4));
             sel->select(QItemSelection(midx, midx2), QItemSelectionModel::Select);
@@ -103,7 +100,8 @@ SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface* current, Core* core, QWidge
 }
 
 SpeedLimitsDlg::~SpeedLimitsDlg()
-{}
+{
+}
 
 void SpeedLimitsDlg::saveState()
 {
@@ -168,4 +166,3 @@ void SpeedLimitsDlg::spinBoxValueChanged(int)
 }
 
 }
-

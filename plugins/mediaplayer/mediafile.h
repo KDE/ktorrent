@@ -21,13 +21,13 @@
 #ifndef KT_MEDIAFILE_H
 #define KT_MEDIAFILE_H
 
+#include <Phonon/MediaSource>
 #include <QSharedPointer>
 #include <QString>
 #include <QWeakPointer>
-#include <Phonon/MediaSource>
 
-#include <util/constants.h>
 #include <torrent/torrentfilestream.h>
+#include <util/constants.h>
 
 namespace bt
 {
@@ -51,20 +51,20 @@ public:
         Constructor for single file torrents
         @param tc The TorrentInterface
     */
-    MediaFile(bt::TorrentInterface* tc);
+    MediaFile(bt::TorrentInterface *tc);
 
     /**
         Constructor for multi file torrents
         @param tc The TorrentInterface
         @param idx The index of the file in the torrent
     */
-    MediaFile(bt::TorrentInterface* tc, int idx);
+    MediaFile(bt::TorrentInterface *tc, int idx);
 
     /**
         Copy constructor
         @param mf The MediaFile to copy
     */
-    MediaFile(const MediaFile& mf);
+    MediaFile(const MediaFile &mf);
     ~MediaFile();
 
     /// Get the path of the MediaFile
@@ -83,7 +83,7 @@ public:
     float downloadPercentage() const;
 
     /// Get the torrent of this MediaFile
-    bt::TorrentInterface* torrent() const
+    bt::TorrentInterface *torrent() const
     {
         return tc;
     }
@@ -105,8 +105,9 @@ public:
 
     typedef QSharedPointer<MediaFile> Ptr;
     typedef QWeakPointer<MediaFile> WPtr;
+
 private:
-    bt::TorrentInterface* tc;
+    bt::TorrentInterface *tc;
     bt::Uint32 idx;
     bt::TorrentFileStream::Ptr tfs;
 };
@@ -126,13 +127,13 @@ public:
     MediaFileRef();
 
     /// Simple file mode constructor
-    MediaFileRef(const QString& p);
+    MediaFileRef(const QString &p);
 
     /// Strong pointer constructor
     MediaFileRef(MediaFile::Ptr ptr);
 
     /// Copy constructor
-    MediaFileRef(const MediaFileRef& other);
+    MediaFileRef(const MediaFileRef &other);
     ~MediaFileRef();
 
     /// Get the MediaFile
@@ -151,16 +152,16 @@ public:
     QString name() const;
 
     /// Assignment operator
-    MediaFileRef& operator = (const MediaFileRef& other);
+    MediaFileRef &operator=(const MediaFileRef &other);
 
     /// Comparison operator
-    bool operator == (const MediaFileRef& other) const;
+    bool operator==(const MediaFileRef &other) const;
 
     /// Negative comparison operator
-    bool operator != (const MediaFileRef& other) const;
+    bool operator!=(const MediaFileRef &other) const;
 
     /// Create a Phonon::MediaSource for this MediaFileRef
-    Phonon::MediaSource createMediaSource(MediaPlayer* p);
+    Phonon::MediaSource createMediaSource(MediaPlayer *p);
 
 private:
     MediaFile::WPtr ptr;

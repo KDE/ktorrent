@@ -23,32 +23,30 @@
 
 #include <algorithm>
 
-#include <QPainter>
 #include <QIcon>
 #include <QLocale>
+#include <QPainter>
 #include <QToolTip>
 
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <KNotification>
 
-#include <util/functions.h>
-#include <net/socketmonitor.h>
-#include <util/log.h>
-#include <settings.h>
-#include <interfaces/torrentactivityinterface.h>
-#include <torrent/queuemanager.h>
 #include "core.h"
 #include "gui.h"
-
+#include <interfaces/torrentactivityinterface.h>
+#include <net/socketmonitor.h>
+#include <settings.h>
+#include <torrent/queuemanager.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
-TrayIcon::TrayIcon(Core* core, GUI* parent) : QObject(parent)
+TrayIcon::TrayIcon(Core *core, GUI *parent)
+    : QObject(parent)
     , core(core)
     , mwnd(parent)
     , previousDownloadHeight(0)
@@ -76,7 +74,8 @@ TrayIcon::TrayIcon(Core* core, GUI* parent) : QObject(parent)
 }
 
 TrayIcon::~TrayIcon()
-{}
+{
+}
 
 void TrayIcon::hide()
 {
@@ -109,7 +108,7 @@ void TrayIcon::show()
     menu->addMenu(max_upload_rate);
     menu->addSeparator();
 
-    KActionCollection* ac = mwnd->getTorrentActivity()->part()->actionCollection();
+    KActionCollection *ac = mwnd->getTorrentActivity()->part()->actionCollection();
     menu->addAction(ac->action(QStringLiteral("start_all")));
     menu->addAction(ac->action(QStringLiteral("stop_all")));
     menu->addAction(ac->action(QStringLiteral("queue_suspend")));
@@ -122,7 +121,6 @@ void TrayIcon::show()
     menu->addAction(ac->action(QString::fromUtf8(KStandardAction::name(KStandardAction::Preferences))));
     menu->addSeparator();
 
-
     status_notifier_item->setIconByName(QStringLiteral("ktorrent"));
     status_notifier_item->setCategory(KStatusNotifierItem::ApplicationStatus);
     status_notifier_item->setStatus(KStatusNotifierItem::Passive);
@@ -134,33 +132,33 @@ void TrayIcon::show()
         status_notifier_item->setOverlayIconByName(QStringLiteral("kt-pause"));
 }
 
-
-void TrayIcon::updateStats(const CurrentStats& stats)
+void TrayIcon::updateStats(const CurrentStats &stats)
 {
     if (!status_notifier_item)
         return;
 
-    status_notifier_item->setStatus(core->getQueueManager()->getNumRunning(QueueManager::DOWNLOADS) > 0 ?
-                                    KStatusNotifierItem::Active : KStatusNotifierItem::Passive);
-    QString tip = i18n("Download speed: <b>%1</b><br/>"
-                       "Upload speed: <b>%2</b><br/>"
-                       "Received: <b>%3</b><br/>"
-                       "Transmitted: <b>%4</b>",
-                       BytesPerSecToString((double)stats.download_speed),
-                       BytesPerSecToString((double)stats.upload_speed),
-                       BytesToString(stats.bytes_downloaded),
-                       BytesToString(stats.bytes_uploaded));
+    status_notifier_item->setStatus(core->getQueueManager()->getNumRunning(QueueManager::DOWNLOADS) > 0 ? KStatusNotifierItem::Active
+                                                                                                        : KStatusNotifierItem::Passive);
+    QString tip = i18n(
+        "Download speed: <b>%1</b><br/>"
+        "Upload speed: <b>%2</b><br/>"
+        "Received: <b>%3</b><br/>"
+        "Transmitted: <b>%4</b>",
+        BytesPerSecToString((double)stats.download_speed),
+        BytesPerSecToString((double)stats.upload_speed),
+        BytesToString(stats.bytes_downloaded),
+        BytesToString(stats.bytes_uploaded));
 
     status_notifier_item->setToolTip(QStringLiteral("ktorrent"), i18n("Status"), tip);
 }
 
-void TrayIcon::showPassivePopup(const QString& msg, const QString& title)
+void TrayIcon::showPassivePopup(const QString &msg, const QString &title)
 {
     if (status_notifier_item)
         status_notifier_item->showMessage(title, msg, QStringLiteral("ktorrent"));
 }
 
-void TrayIcon::cannotLoadTorrentSilently(const QString& msg)
+void TrayIcon::cannotLoadTorrentSilently(const QString &msg)
 {
     if (!Settings::showPopups())
         return;
@@ -168,7 +166,7 @@ void TrayIcon::cannotLoadTorrentSilently(const QString& msg)
     KNotification::event(QStringLiteral("CannotLoadSilently"), msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::dhtNotEnabled(const QString& msg)
+void TrayIcon::dhtNotEnabled(const QString &msg)
 {
     if (!Settings::showPopups())
         return;
@@ -176,114 +174,121 @@ void TrayIcon::dhtNotEnabled(const QString& msg)
     KNotification::event(QStringLiteral("DHTNotEnabled"), msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::torrentSilentlyOpened(bt::TorrentInterface* tc)
+void TrayIcon::torrentSilentlyOpened(bt::TorrentInterface *tc)
 {
     if (!Settings::showPopups())
         return;
 
-    QString msg = i18n("<b>%1</b> was silently opened.",
-                       tc->getDisplayName());
+    QString msg = i18n("<b>%1</b> was silently opened.", tc->getDisplayName());
     KNotification::event(QStringLiteral("TorrentSilentlyOpened"), msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::finished(bt::TorrentInterface* tc)
+void TrayIcon::finished(bt::TorrentInterface *tc)
 {
     if (!Settings::showPopups())
         return;
 
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     double speed_up = (double)s.bytes_uploaded;
     double speed_down = (double)(s.bytes_downloaded - s.imported_bytes);
 
-    QString msg = i18n("<b>%1</b> has completed downloading."
-                       "<br>Average speed: %2 DL / %3 UL.",
-                       tc->getDisplayName(),
-                       BytesPerSecToString(speed_down / tc->getRunningTimeDL()),
-                       BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
+    QString msg = i18n(
+        "<b>%1</b> has completed downloading."
+        "<br>Average speed: %2 DL / %3 UL.",
+        tc->getDisplayName(),
+        BytesPerSecToString(speed_down / tc->getRunningTimeDL()),
+        BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
     KNotification::event(QStringLiteral("TorrentFinished"), msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::maxShareRatioReached(bt::TorrentInterface* tc)
+void TrayIcon::maxShareRatioReached(bt::TorrentInterface *tc)
 {
     if (!Settings::showPopups())
         return;
 
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     double speed_up = (double)s.bytes_uploaded;
 
-    QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
-                       "<br>Uploaded %3 at an average speed of %4.",
-                       tc->getDisplayName(),
-                       QLocale().toString(s.max_share_ratio, 'f', 2),
-                       BytesToString(s.bytes_uploaded),
-                       BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
+    QString msg = i18n(
+        "<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
+        "<br>Uploaded %3 at an average speed of %4.",
+        tc->getDisplayName(),
+        QLocale().toString(s.max_share_ratio, 'f', 2),
+        BytesToString(s.bytes_uploaded),
+        BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
     KNotification::event(QStringLiteral("MaxShareRatioReached"), msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::maxSeedTimeReached(bt::TorrentInterface* tc)
+void TrayIcon::maxSeedTimeReached(bt::TorrentInterface *tc)
 {
     if (!Settings::showPopups())
         return;
 
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     double speed_up = (double)s.bytes_uploaded;
 
-    QString msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
-                       "<br>Uploaded %3 at an average speed of %4.",
-                       tc->getDisplayName(),
-                       QLocale().toString(s.max_seed_time, 'f', 2),
-                       BytesToString(s.bytes_uploaded),
-                       BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
+    QString msg = i18n(
+        "<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
+        "<br>Uploaded %3 at an average speed of %4.",
+        tc->getDisplayName(),
+        QLocale().toString(s.max_seed_time, 'f', 2),
+        BytesToString(s.bytes_uploaded),
+        BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
     KNotification::event(QStringLiteral("MaxSeedTimeReached"), msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::torrentStoppedByError(bt::TorrentInterface* tc, QString msg)
+void TrayIcon::torrentStoppedByError(bt::TorrentInterface *tc, QString msg)
 {
     if (!Settings::showPopups())
         return;
 
-    QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2",
-                           tc->getDisplayName(), msg);
+    QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2", tc->getDisplayName(), msg);
 
     KNotification::event(QStringLiteral("TorrentStoppedByError"), err_msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::corruptedData(bt::TorrentInterface* tc)
+void TrayIcon::corruptedData(bt::TorrentInterface *tc)
 {
     if (!Settings::showPopups())
         return;
 
-    QString err_msg = i18n("Corrupted data has been found in the torrent <b>%1</b>"
-                           "<br>It would be a good idea to do a data integrity check on the torrent.", tc->getDisplayName());
+    QString err_msg = i18n(
+        "Corrupted data has been found in the torrent <b>%1</b>"
+        "<br>It would be a good idea to do a data integrity check on the torrent.",
+        tc->getDisplayName());
 
     KNotification::event(QStringLiteral("CorruptedData"), err_msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::queuingNotPossible(bt::TorrentInterface* tc)
+void TrayIcon::queuingNotPossible(bt::TorrentInterface *tc)
 {
     if (!Settings::showPopups())
         return;
 
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
 
     QString msg;
 
     if (tc->overMaxRatio())
-        msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
-                   "<br>Remove the limit manually if you want to continue seeding.",
-                   tc->getDisplayName(), QLocale().toString(s.max_share_ratio, 'f', 2));
+        msg = i18n(
+            "<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
+            "<br>Remove the limit manually if you want to continue seeding.",
+            tc->getDisplayName(),
+            QLocale().toString(s.max_share_ratio, 'f', 2));
     else
-        msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and cannot be enqueued. "
-                   "<br>Remove the limit manually if you want to continue seeding.",
-                   tc->getDisplayName(), QLocale().toString(s.max_seed_time, 'f', 2));
+        msg = i18n(
+            "<b>%1</b> has reached its maximum seed time of %2 hours and cannot be enqueued. "
+            "<br>Remove the limit manually if you want to continue seeding.",
+            tc->getDisplayName(),
+            QLocale().toString(s.max_seed_time, 'f', 2));
 
     KNotification::event(QStringLiteral("QueueNotPossible"), msg, QPixmap(), mwnd);
 }
 
-void TrayIcon::canNotStart(bt::TorrentInterface* tc, bt::TorrentStartResponse reason)
+void TrayIcon::canNotStart(bt::TorrentInterface *tc, bt::TorrentStartResponse reason)
 {
     if (!Settings::showPopups())
         return;
@@ -293,11 +298,9 @@ void TrayIcon::canNotStart(bt::TorrentInterface* tc, bt::TorrentStartResponse re
     case bt::QM_LIMITS_REACHED:
         if (tc->getStats().bytes_left_to_download == 0) {
             // is a seeder
-            msg += i18np("Cannot seed more than 1 torrent. <br>",
-                         "Cannot seed more than %1 torrents. <br>", Settings::maxSeeds());
+            msg += i18np("Cannot seed more than 1 torrent. <br>", "Cannot seed more than %1 torrents. <br>", Settings::maxSeeds());
         } else {
-            msg += i18np("Cannot download more than 1 torrent. <br>",
-                         "Cannot download more than %1 torrents. <br>", Settings::maxDownloads());
+            msg += i18np("Cannot download more than 1 torrent. <br>", "Cannot download more than %1 torrents. <br>", Settings::maxDownloads());
         }
         msg += i18n("Go to Settings -> Configure KTorrent, if you want to change the limits.");
         KNotification::event(QStringLiteral("CannotStart"), msg, QPixmap(), mwnd);
@@ -311,7 +314,7 @@ void TrayIcon::canNotStart(bt::TorrentInterface* tc, bt::TorrentStartResponse re
     }
 }
 
-void TrayIcon::lowDiskSpace(bt::TorrentInterface* tc, bool stopped)
+void TrayIcon::lowDiskSpace(bt::TorrentInterface *tc, bool stopped)
 {
     if (!Settings::showPopups())
         return;
@@ -332,9 +335,8 @@ void TrayIcon::updateMaxRateMenus()
     }
 }
 
-
-
-SetMaxRate::SetMaxRate(Core* core, Type t, QWidget* parent) : QMenu(parent)
+SetMaxRate::SetMaxRate(Core *core, Type t, QWidget *parent)
+    : QMenu(parent)
 {
     setIcon(t == UPLOAD ? QIcon::fromTheme(QStringLiteral("kt-set-max-upload-speed")) : QIcon::fromTheme(QStringLiteral("kt-set-max-download-speed")));
     m_core = core;
@@ -345,12 +347,13 @@ SetMaxRate::SetMaxRate(Core* core, Type t, QWidget* parent) : QMenu(parent)
 }
 
 SetMaxRate::~SetMaxRate()
-{}
+{
+}
 
 void SetMaxRate::makeMenu()
 {
     int rate = (type == UPLOAD) ? net::SocketMonitor::getUploadCap() / 1024 : net::SocketMonitor::getDownloadCap() / 1024;
-    int maxBandwidth = (rate > 0) ? rate : (type == UPLOAD) ? 0 : 20 ;
+    int maxBandwidth = (rate > 0) ? rate : (type == UPLOAD) ? 0 : 20;
     int delta = 0;
     int maxBandwidthRounded;
 
@@ -388,7 +391,7 @@ void SetMaxRate::makeMenu()
     std::sort(values.begin(), values.end());
     for (int v : qAsConst(values)) {
         if (v >= 1) {
-            QAction* act = addAction(QString::number(v));
+            QAction *act = addAction(QString::number(v));
             act->setCheckable(true);
             act->setChecked(rate == v);
         }
@@ -401,7 +404,7 @@ void SetMaxRate::update()
     makeMenu();
 }
 
-void SetMaxRate::onTriggered(QAction* act)
+void SetMaxRate::onTriggered(QAction *act)
 {
     int rate;
     if (act == unlimited)
@@ -426,7 +429,7 @@ void TrayIcon::suspendStateChanged(bool suspended)
         status_notifier_item->setOverlayIconByName(suspended ? QStringLiteral("kt-pause") : QString());
 }
 
-void TrayIcon::secondaryActivate(const QPoint& pos)
+void TrayIcon::secondaryActivate(const QPoint &pos)
 {
     Q_UNUSED(pos);
     core->setSuspendedState(!core->getSuspendedState());

@@ -20,31 +20,36 @@
 
 #ifndef FSPROXYMODEL_H
 #define FSPROXYMODEL_H
-#include <QSortFilterProxyModel>
 #include <QFileSystemModel>
 #include <QSet>
+#include <QSortFilterProxyModel>
 
 namespace kt
 {
-
 /**
  * A simple proxy model that may filter out all data
  * that isn't presented in its filter
  */
-class FSProxyModel: public QSortFilterProxyModel
+class FSProxyModel : public QSortFilterProxyModel
 {
 public:
-    FSProxyModel(QObject *parent = nullptr): QSortFilterProxyModel(parent), m_filter(nullptr), m_filtered(true) {}
+    FSProxyModel(QObject *parent = nullptr)
+        : QSortFilterProxyModel(parent)
+        , m_filter(nullptr)
+        , m_filtered(true)
+    {
+    }
 
     ~FSProxyModel()
     {
-        if (m_filter) delete m_filter;
+        if (m_filter)
+            delete m_filter;
     }
 
     /**
      * @return a pointer to the filter set.
      */
-    const QSet<QString>* filter() const
+    const QSet<QString> *filter() const
     {
         return m_filter;
     }
@@ -53,7 +58,7 @@ public:
      * Sets a new filter. The previous one is destroyed.
      * @param filter   A pointer to the new filter.
      */
-    void setFilter(QSet<QString>* filter)
+    void setFilter(QSet<QString> *filter)
     {
         if (m_filter && m_filter != filter)
             delete m_filter;
@@ -81,7 +86,7 @@ protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override
     {
         if (m_filter && m_filtered) {
-            QFileSystemModel* m = reinterpret_cast<QFileSystemModel*>(sourceModel());
+            QFileSystemModel *m = reinterpret_cast<QFileSystemModel *>(sourceModel());
             QModelIndex i = m->index(source_row, 0, source_parent);
             QString fpath = m->filePath(i);
             return m_filter->contains(fpath);
@@ -89,11 +94,11 @@ protected:
             return !m_filtered;
         }
     }
+
 private:
-    QSet<QString>* m_filter;
+    QSet<QString> *m_filter;
     bool m_filtered;
 };
-
 
 }
 

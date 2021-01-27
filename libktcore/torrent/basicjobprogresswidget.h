@@ -21,9 +21,8 @@
 #ifndef KT_BASICJOBPROGRESSWIDGET_H
 #define KT_BASICJOBPROGRESSWIDGET_H
 
-#include <torrent/jobprogresswidget.h>
 #include "ui_basicjobprogresswidget.h"
-
+#include <torrent/jobprogresswidget.h>
 
 namespace kt
 {
@@ -34,18 +33,18 @@ class BasicJobProgressWidget : public kt::JobProgressWidget, public Ui_BasicJobP
 {
     Q_OBJECT
 public:
-    BasicJobProgressWidget(bt::Job* job, QWidget* parent);
+    BasicJobProgressWidget(bt::Job *job, QWidget *parent);
     ~BasicJobProgressWidget() override;
 
-    void description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2) override;
-    void infoMessage(const QString& plain, const QString& rich) override;
-    void warning(const QString& plain, const QString& rich) override;
+    void description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2) override;
+    void infoMessage(const QString &plain, const QString &rich) override;
+    void warning(const QString &plain, const QString &rich) override;
     void totalAmount(KJob::Unit unit, qulonglong amount) override;
     void processedAmount(KJob::Unit unit, qulonglong amount) override;
     void percent(long unsigned int percent) override;
     void speed(long unsigned int value) override;
 
-    bool similar(Extender* ext) const override
+    bool similar(Extender *ext) const override
     {
         Q_UNUSED(ext);
         return false;

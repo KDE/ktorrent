@@ -25,9 +25,9 @@
 
 #include <KIO/Job>
 
+#include "searchengine.h"
 #include <util/fileops.h>
 #include <util/log.h>
-#include "searchengine.h"
 
 using namespace bt;
 
@@ -36,7 +36,8 @@ namespace kt
 class OpenSearchHandler
 {
 public:
-    OpenSearchHandler(SearchEngine* engine) : engine(engine)
+    OpenSearchHandler(SearchEngine *engine)
+        : engine(engine)
     {
     }
 
@@ -44,13 +45,13 @@ public:
     {
     }
 
-    bool characters(const QStringRef& ch)
+    bool characters(const QStringRef &ch)
     {
         tmp += ch;
         return true;
     }
 
-    bool startElement(const QStringRef& namespaceURI, const QStringRef& localName, const QStringRef& qName, const QXmlStreamAttributes& atts)
+    bool startElement(const QStringRef &namespaceURI, const QStringRef &localName, const QStringRef &qName, const QXmlStreamAttributes &atts)
     {
         Q_UNUSED(namespaceURI);
         Q_UNUSED(qName);
@@ -63,7 +64,7 @@ public:
         return true;
     }
 
-    bool endElement(const QStringRef& namespaceURI, const QStringRef& localName, const QStringRef& qName)
+    bool endElement(const QStringRef &namespaceURI, const QStringRef &localName, const QStringRef &qName)
     {
         Q_UNUSED(namespaceURI)
         Q_UNUSED(localName)
@@ -79,7 +80,7 @@ public:
         return true;
     }
 
-    bool parse(const QByteArray& data)
+    bool parse(const QByteArray &data)
     {
         QXmlStreamReader reader(data);
 
@@ -90,14 +91,12 @@ public:
 
             switch (reader.tokenType()) {
             case QXmlStreamReader::StartElement:
-                if (!startElement(reader.namespaceUri(), reader.name(),
-                                  reader.qualifiedName(), reader.attributes())) {
+                if (!startElement(reader.namespaceUri(), reader.name(), reader.qualifiedName(), reader.attributes())) {
                     return false;
                 }
                 break;
             case QXmlStreamReader::EndElement:
-                if (!endElement(reader.namespaceUri(), reader.name(),
-                                reader.qualifiedName())) {
+                if (!endElement(reader.namespaceUri(), reader.name(), reader.qualifiedName())) {
                     return false;
                 }
                 break;
@@ -118,20 +117,20 @@ public:
         return true;
     }
 
-    SearchEngine* engine;
+    SearchEngine *engine;
     QString tmp;
 };
 
-SearchEngine::SearchEngine(const QString& data_dir) : data_dir(data_dir)
+SearchEngine::SearchEngine(const QString &data_dir)
+    : data_dir(data_dir)
 {
 }
-
 
 SearchEngine::~SearchEngine()
 {
 }
 
-bool SearchEngine::load(const QString& xml_file)
+bool SearchEngine::load(const QString &xml_file)
 {
     QFile fptr(xml_file);
     if (!fptr.open(QIODevice::ReadOnly))
@@ -160,9 +159,8 @@ bool SearchEngine::load(const QString& xml_file)
             found = bt::Exists(icon_filename);
         }
 
-
         if (!found) {
-            KJob* j = KIO::storedGet(QUrl(icon_url), KIO::Reload, KIO::HideProgressInfo);
+            KJob *j = KIO::storedGet(QUrl(icon_url), KIO::Reload, KIO::HideProgressInfo);
             connect(j, &KJob::result, this, &SearchEngine::iconDownloadFinished);
         } else {
             // load the icon
@@ -173,18 +171,18 @@ bool SearchEngine::load(const QString& xml_file)
     return true;
 }
 
-QUrl SearchEngine::search(const QString& terms)
+QUrl SearchEngine::search(const QString &terms)
 {
     QString r = url;
     r = r.replace(QLatin1String("{searchTerms}"), terms);
     return QUrl(r);
 }
 
-void SearchEngine::iconDownloadFinished(KJob* job)
+void SearchEngine::iconDownloadFinished(KJob *job)
 {
     if (!job->error()) {
         QString icon_name = QUrl(icon_url).fileName();
-        KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
+        KIO::StoredTransferJob *j = (KIO::StoredTransferJob *)job;
         QFile fptr(data_dir + icon_name);
         if (!fptr.open(QIODevice::WriteOnly)) {
             Out(SYS_SRC | LOG_NOTICE) << "Failed to save icon: " << fptr.errorString() << endl;

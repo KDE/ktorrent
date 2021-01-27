@@ -22,11 +22,11 @@
 #include <QRandomGenerator>
 #include <QTextCodec>
 
-#include <util/log.h>
-#include <util/sha1hash.h>
+#include "filter.h"
 #include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
-#include "filter.h"
+#include <util/log.h>
+#include <util/sha1hash.h>
 
 using namespace bt;
 
@@ -37,7 +37,7 @@ static QString RandomID()
     Uint32 data[5];
     for (int i = 0; i < 5; i++)
         data[i] = QRandomGenerator::global()->generate();
-    return QStringLiteral("filter:%1").arg(SHA1Hash::generate(reinterpret_cast<Uint8*>(data), 20).toString());
+    return QStringLiteral("filter:%1").arg(SHA1Hash::generate(reinterpret_cast<Uint8 *>(data), 20).toString());
 }
 
 Filter::Filter()
@@ -56,7 +56,8 @@ Filter::Filter()
     no_duplicate_se_matches = true;
 }
 
-Filter::Filter(const QString& name) : name(name)
+Filter::Filter(const QString &name)
+    : name(name)
 {
     id = RandomID();
     use_season_and_episode_matching = false;
@@ -72,25 +73,22 @@ Filter::Filter(const QString& name) : name(name)
     no_duplicate_se_matches = true;
 }
 
-
 Filter::~Filter()
 {
 }
 
-bool Filter::getSeasonAndEpisode(const QString& title, int& season, int& episode)
+bool Filter::getSeasonAndEpisode(const QString &title, int &season, int &episode)
 {
     QStringList se_formats;
-    se_formats << QStringLiteral("(\\d+)x(\\d+)")
-               << QStringLiteral("S(\\d+)E(\\d+)")
-               << QStringLiteral("(\\d+)\\.(\\d+)")
+    se_formats << QStringLiteral("(\\d+)x(\\d+)") << QStringLiteral("S(\\d+)E(\\d+)") << QStringLiteral("(\\d+)\\.(\\d+)")
                << QStringLiteral("S(\\d+)\\.E(\\d+)");
 
-    for (const QString& format : qAsConst(se_formats)) {
+    for (const QString &format : qAsConst(se_formats)) {
         QRegExp exp(format, Qt::CaseInsensitive);
         int pos = exp.indexIn(title);
         if (pos > -1) {
             QString s = exp.cap(1); // Season
-            QString e = exp.cap(2);  // Episode
+            QString e = exp.cap(2); // Episode
             bool ok = false;
             season = s.toInt(&ok);
             if (!ok)
@@ -107,7 +105,7 @@ bool Filter::getSeasonAndEpisode(const QString& title, int& season, int& episode
     return false;
 }
 
-bool Filter::match(const QString& title, QRegExp& exp)
+bool Filter::match(const QString &title, QRegExp &exp)
 {
     int pos = 0;
     return ((pos = exp.indexIn(title, pos)) != -1);
@@ -116,7 +114,7 @@ bool Filter::match(const QString& title, QRegExp& exp)
 bool Filter::match(Syndication::ItemPtr item)
 {
     bool found_match = false;
-    for (const QRegExp& exp : qAsConst(word_matches)) {
+    for (const QRegExp &exp : qAsConst(word_matches)) {
         QRegExp tmp = exp;
         tmp.setCaseSensitivity(case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
         tmp.setPatternSyntax(use_regular_expressions ? QRegExp::RegExp : QRegExp::Wildcard);
@@ -135,7 +133,7 @@ bool Filter::match(Syndication::ItemPtr item)
         return false;
 
     found_match = false;
-    for (const QRegExp& exp : qAsConst(exclusion_patterns)) {
+    for (const QRegExp &exp : qAsConst(exclusion_patterns)) {
         QRegExp tmp = exp;
         tmp.setCaseSensitivity(exclusion_case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
         tmp.setPatternSyntax(exclusion_reg_exp ? QRegExp::RegExp : QRegExp::Wildcard);
@@ -159,7 +157,7 @@ bool Filter::match(Syndication::ItemPtr item)
             return false;
 
         bool found = false;
-        for (const Range& r : qAsConst(seasons)) {
+        for (const Range &r : qAsConst(seasons)) {
             if (season >= r.start && season <= r.end) {
                 found = true;
                 break;
@@ -170,7 +168,7 @@ bool Filter::match(Syndication::ItemPtr item)
             return false;
 
         found = false;
-        for (const Range& r : qAsConst(episodes)) {
+        for (const Range &r : qAsConst(episodes)) {
             if (episode >= r.start && episode <= r.end) {
                 found = true;
                 break;
@@ -192,27 +190,27 @@ bool Filter::match(Syndication::ItemPtr item)
     return true;
 }
 
-void Filter::addWordMatch(const QRegExp& exp)
+void Filter::addWordMatch(const QRegExp &exp)
 {
     word_matches.append(exp);
 }
 
-void Filter::removeWordMatch(const QRegExp& exp)
+void Filter::removeWordMatch(const QRegExp &exp)
 {
     word_matches.removeAll(exp);
 }
 
-void Filter::addExclusionPattern(const QRegExp& exp)
+void Filter::addExclusionPattern(const QRegExp &exp)
 {
     exclusion_patterns.append(exp);
 }
 
-void Filter::removeExclusionPattern(const QRegExp& exp)
+void Filter::removeExclusionPattern(const QRegExp &exp)
 {
     exclusion_patterns.removeAll(exp);
 }
 
-bool Filter::stringToRange(const QString& s, Range& r)
+bool Filter::stringToRange(const QString &s, Range &r)
 {
     QString tmp = s.trimmed(); // Get rid of whitespace
     if (tmp.contains(QLatin1Char('-'))) {
@@ -246,11 +244,11 @@ bool Filter::stringToRange(const QString& s, Range& r)
     return true;
 }
 
-bool Filter::parseNumbersString(const QString& s, QList<Range> & numbers)
+bool Filter::parseNumbersString(const QString &s, QList<Range> &numbers)
 {
     QList<Range> results;
     const QStringList parts = s.split(QStringLiteral(","));
-    for (const QString& p : parts) {
+    for (const QString &p : parts) {
         Range r = {0, 0};
         if (stringToRange(p, r))
             results.append(r);
@@ -263,13 +261,13 @@ bool Filter::parseNumbersString(const QString& s, QList<Range> & numbers)
     return true;
 }
 
-bool Filter::validSeasonOrEpisodeString(const QString& s)
+bool Filter::validSeasonOrEpisodeString(const QString &s)
 {
     QList<Range> tmp;
     return Filter::parseNumbersString(s, tmp);
 }
 
-bool Filter::setSeasons(const QString& s)
+bool Filter::setSeasons(const QString &s)
 {
     if (parseNumbersString(s, seasons)) {
         seasons_string = s;
@@ -278,7 +276,7 @@ bool Filter::setSeasons(const QString& s)
     return false;
 }
 
-bool Filter::setEpisodes(const QString& s)
+bool Filter::setEpisodes(const QString &s)
 {
     if (parseNumbersString(s, episodes)) {
         episodes_string = s;
@@ -287,7 +285,7 @@ bool Filter::setEpisodes(const QString& s)
     return false;
 }
 
-void Filter::save(bt::BEncoder& enc)
+void Filter::save(bt::BEncoder &enc)
 {
     enc.beginDict();
     enc.write(QByteArrayLiteral("id"), id.toUtf8());
@@ -298,12 +296,12 @@ void Filter::save(bt::BEncoder& enc)
     enc.write(QByteArrayLiteral("exclusion_all_must_match"), exclusion_all_must_match);
     enc.write(QByteArrayLiteral("word_matches"));
     enc.beginList();
-    for (const QRegExp& exp : qAsConst(word_matches))
+    for (const QRegExp &exp : qAsConst(word_matches))
         enc.write(exp.pattern().toUtf8());
     enc.end();
     enc.write(QByteArrayLiteral("exclusion_patterns"));
     enc.beginList();
-    for (const QRegExp& exp : qAsConst(exclusion_patterns))
+    for (const QRegExp &exp : qAsConst(exclusion_patterns))
         enc.write(exp.pattern().toUtf8());
     enc.end();
     enc.write(QByteArrayLiteral("use_season_and_episode_matching"), use_season_and_episode_matching);
@@ -324,10 +322,10 @@ void Filter::save(bt::BEncoder& enc)
     enc.end();
 }
 
-bool Filter::load(bt::BDictNode* dict)
+bool Filter::load(bt::BDictNode *dict)
 {
-    QTextCodec* codec = QTextCodec::codecForName("UTF-8");
-    BValueNode* vn = dict->getValue("name");
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    BValueNode *vn = dict->getValue("name");
     if (!vn)
         return false;
 
@@ -357,7 +355,7 @@ bool Filter::load(bt::BDictNode* dict)
     if (vn)
         exclusion_all_must_match = vn->data().toInt() == 1;
 
-    BListNode* ln = dict->getList("word_matches");
+    BListNode *ln = dict->getList("word_matches");
     if (!ln)
         return false;
 

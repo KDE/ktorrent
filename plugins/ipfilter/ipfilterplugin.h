@@ -22,10 +22,10 @@
 #ifndef KTIPFILTERPLUGIN_H
 #define KTIPFILTERPLUGIN_H
 
-#include <QTimer>
-#include <interfaces/plugin.h>
 #include "ipblockingprefpage.h"
 #include "ipblocklist.h"
+#include <QTimer>
+#include <interfaces/plugin.h>
 
 class QString;
 
@@ -45,20 +45,20 @@ class IPFilterPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    IPFilterPlugin(QObject* parent, const QVariantList& args);
+    IPFilterPlugin(QObject *parent, const QVariantList &args);
     ~IPFilterPlugin() override;
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
 
-    ///Loads the KT format list filter
+    /// Loads the KT format list filter
     void loadFilters();
 
-    ///Loads the anti-p2p filter list
+    /// Loads the anti-p2p filter list
     bool loadAntiP2P();
 
-    ///Unloads the anti-p2p filter list
+    /// Unloads the anti-p2p filter list
     bool unloadAntiP2P();
 
     /// Whether or not the IP filter is loaded and running
@@ -66,10 +66,10 @@ public:
 
 public Q_SLOTS:
     void checkAutoUpdate();
-    void notification(const QString& msg);
+    void notification(const QString &msg);
 
 private:
-    IPBlockingPrefPage* pref;
+    IPBlockingPrefPage *pref;
     QScopedPointer<IPBlockList> ip_filter;
     QTimer auto_update_timer;
 };

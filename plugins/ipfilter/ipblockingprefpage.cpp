@@ -21,20 +21,19 @@
 
 #include <KLocalizedString>
 
-#include <util/log.h>
-#include "ipblockingprefpage.h"
-#include "ipfilterpluginsettings.h"
-#include "ipfilterplugin.h"
 #include "downloadandconvertjob.h"
-
+#include "ipblockingprefpage.h"
+#include "ipfilterplugin.h"
+#include "ipfilterpluginsettings.h"
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-IPBlockingPrefPage::IPBlockingPrefPage(IPFilterPlugin* p)
-    : PrefPageInterface(IPBlockingPluginSettings::self(), i18n("IP Filter"), QStringLiteral("view-filter"), nullptr), m_plugin(p)
+IPBlockingPrefPage::IPBlockingPrefPage(IPFilterPlugin *p)
+    : PrefPageInterface(IPBlockingPluginSettings::self(), i18n("IP Filter"), QStringLiteral("view-filter"), nullptr)
+    , m_plugin(p)
 {
     setupUi(this);
     connect(kcfg_useLevel1, &QCheckBox::toggled, this, &IPBlockingPrefPage::checkUseLevel1Toggled);
@@ -47,7 +46,8 @@ IPBlockingPrefPage::IPBlockingPrefPage(IPFilterPlugin* p)
 }
 
 IPBlockingPrefPage::~IPBlockingPrefPage()
-{}
+{
+}
 
 void IPBlockingPrefPage::checkUseLevel1Toggled(bool check)
 {
@@ -152,7 +152,7 @@ void IPBlockingPrefPage::restoreGUI()
         m_status->setText(i18n("Status: Not loaded."));
 }
 
-void IPBlockingPrefPage::downloadAndConvertFinished(KJob* j)
+void IPBlockingPrefPage::downloadAndConvertFinished(KJob *j)
 {
     if (j != m_job)
         return;
@@ -220,4 +220,3 @@ void IPBlockingPrefPage::autoUpdateIntervalChanged(int val)
 }
 
 }
-

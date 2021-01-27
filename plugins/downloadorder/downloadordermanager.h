@@ -33,7 +33,6 @@ class TorrentInterface;
 
 namespace kt
 {
-
 /**
     Class which manages the file download order for a single torrent
 */
@@ -41,7 +40,7 @@ class DownloadOrderManager : public QObject
 {
     Q_OBJECT
 public:
-    DownloadOrderManager(bt::TorrentInterface* tor);
+    DownloadOrderManager(bt::TorrentInterface *tor);
     ~DownloadOrderManager() override;
 
     /// See if the file download order is enabled
@@ -65,13 +64,13 @@ public:
     typedef QList<bt::Uint32> Order;
 
     /// Get the download order
-    const Order& downloadOrder() const
+    const Order &downloadOrder() const
     {
         return order;
     }
 
     /// Set the order
-    void setDownloadOrder(const Order& norder)
+    void setDownloadOrder(const Order &norder)
     {
         order = norder;
     }
@@ -85,13 +84,13 @@ public Q_SLOTS:
     /**
      * Change file priorities if needed
      */
-    void chunkDownloaded(bt::TorrentInterface* me, bt::Uint32 chunk);
+    void chunkDownloaded(bt::TorrentInterface *me, bt::Uint32 chunk);
 
 private:
     bt::Uint32 nextIncompleteFile();
 
 private:
-    bt::TorrentInterface* tor;
+    bt::TorrentInterface *tor;
     QList<bt::Uint32> order;
     bt::Uint32 current_high_priority_file;
     bt::Uint32 current_normal_priority_file;

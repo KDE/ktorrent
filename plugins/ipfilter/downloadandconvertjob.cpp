@@ -27,27 +27,27 @@
 #include <KMessageBox>
 #include <KZip>
 
-#include <util/log.h>
-#include <util/functions.h>
-#include <util/fileops.h>
-#include <util/error.h>
-#include <util/decompressfilejob.h>
-#include <util/extractfilejob.h>
-#include <interfaces/functions.h>
 #include "convertdialog.h"
 #include "downloadandconvertjob.h"
+#include <interfaces/functions.h>
+#include <util/decompressfilejob.h>
+#include <util/error.h>
+#include <util/extractfilejob.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
-
 namespace kt
 {
-
-DownloadAndConvertJob::DownloadAndConvertJob(const QUrl& url, Mode mode)
-    : url(url), unzip(false), convert_dlg(nullptr), mode(mode)
+DownloadAndConvertJob::DownloadAndConvertJob(const QUrl &url, Mode mode)
+    : url(url)
+    , unzip(false)
+    , convert_dlg(nullptr)
+    , mode(mode)
 {
 }
-
 
 DownloadAndConvertJob::~DownloadAndConvertJob()
 {
@@ -71,7 +71,7 @@ void DownloadAndConvertJob::kill(KJob::KillVerbosity)
         convert_dlg->reject();
 }
 
-void DownloadAndConvertJob::convert(KJob* j)
+void DownloadAndConvertJob::convert(KJob *j)
 {
     active_job = nullptr;
     if (j->error()) {
@@ -92,7 +92,7 @@ static bool isBinaryData(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {
-        return false;    // err, whatever
+        return false; // err, whatever
     }
     // Check the first 32 bytes (see shared-mime spec)
     const QByteArray data = file.read(32);
@@ -105,7 +105,7 @@ static bool isBinaryData(const QString &fileName)
     return false;
 }
 
-void DownloadAndConvertJob::downloadFileFinished(KJob* j)
+void DownloadAndConvertJob::downloadFileFinished(KJob *j)
 {
     active_job = nullptr;
     if (j->error()) {
@@ -124,12 +124,15 @@ void DownloadAndConvertJob::downloadFileFinished(KJob* j)
 
     QString temp = kt::DataDir() + QStringLiteral("tmp-") + url.fileName();
 
-    //now determine if it's ZIP or TXT file
+    // now determine if it's ZIP or TXT file
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForFile(temp, QMimeDatabase::MatchContent);
     Out(SYS_IPF | LOG_NOTICE) << "Mimetype: " << ptr.name() << endl;
     if (ptr.name() == QStringLiteral("application/zip")) {
-        active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(QString(kt::DataDir() + QLatin1String("level1.zip"))), -1, KIO::HideProgressInfo | KIO::Overwrite);
+        active_job = KIO::file_move(QUrl::fromLocalFile(temp),
+                                    QUrl::fromLocalFile(QString(kt::DataDir() + QLatin1String("level1.zip"))),
+                                    -1,
+                                    KIO::HideProgressInfo | KIO::Overwrite);
         connect(active_job, &KJob::result, this, &DownloadAndConvertJob::extract);
     } else if (ptr.name() == QStringLiteral("application/x-7z-compressed")) {
         QString msg = i18n("7z files are not supported");
@@ -142,11 +145,14 @@ void DownloadAndConvertJob::downloadFileFinished(KJob* j)
         emitResult();
     } else if (ptr.name() == QStringLiteral("application/gzip") || ptr.name() == QStringLiteral("application/x-bzip")) {
         active_job = new bt::DecompressFileJob(temp, kt::DataDir() + QStringLiteral("level1.txt"));
-        connect(active_job, &KJob::result, this, qOverload<KJob*>(&DownloadAndConvertJob::convert));
+        connect(active_job, &KJob::result, this, qOverload<KJob *>(&DownloadAndConvertJob::convert));
         active_job->start();
     } else if (!isBinaryData(temp) || ptr.name() == QStringLiteral("text/plain")) {
-        active_job = KIO::file_move(QUrl::fromLocalFile(temp), QUrl::fromLocalFile(kt::DataDir() + QStringLiteral("level1.txt")), -1, KIO::HideProgressInfo | KIO::Overwrite);
-        connect(active_job, &KJob::result, this, qOverload<KJob*>(&DownloadAndConvertJob::convert));
+        active_job = KIO::file_move(QUrl::fromLocalFile(temp),
+                                    QUrl::fromLocalFile(kt::DataDir() + QStringLiteral("level1.txt")),
+                                    -1,
+                                    KIO::HideProgressInfo | KIO::Overwrite);
+        connect(active_job, &KJob::result, this, qOverload<KJob *>(&DownloadAndConvertJob::convert));
     } else {
         QString msg = i18n("Cannot determine file type of <b>%1</b>", url.toDisplayString());
         if (mode == Verbose)
@@ -159,7 +165,7 @@ void DownloadAndConvertJob::downloadFileFinished(KJob* j)
     }
 }
 
-void DownloadAndConvertJob::extract(KJob* j)
+void DownloadAndConvertJob::extract(KJob *j)
 {
     active_job = nullptr;
     if (j->error()) {
@@ -176,7 +182,7 @@ void DownloadAndConvertJob::extract(KJob* j)
     }
 
     QString zipfile = kt::DataDir() + QStringLiteral("level1.zip");
-    KZip* zip = new KZip(zipfile);
+    KZip *zip = new KZip(zipfile);
     if (!zip->open(QIODevice::ReadOnly) || !zip->directory()) {
         Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: cannot open zip file " << zipfile << endl;
         if (mode == Verbose) {
@@ -196,7 +202,7 @@ void DownloadAndConvertJob::extract(KJob* j)
     QStringList entries = zip->directory()->entries();
     if (entries.count() >= 1) {
         active_job = new bt::ExtractFileJob(zip, entries.front(), destination);
-        connect(active_job, &KJob::result, this, qOverload<KJob*>(&DownloadAndConvertJob::convert));
+        connect(active_job, &KJob::result, this, qOverload<KJob *>(&DownloadAndConvertJob::convert));
         unzip = true;
         active_job->start();
     } else {
@@ -214,7 +220,7 @@ void DownloadAndConvertJob::extract(KJob* j)
     }
 }
 
-void DownloadAndConvertJob::revertBackupFinished(KJob*)
+void DownloadAndConvertJob::revertBackupFinished(KJob *)
 {
     active_job = 0;
     cleanUpFiles();
@@ -222,7 +228,7 @@ void DownloadAndConvertJob::revertBackupFinished(KJob*)
     emitResult();
 }
 
-void DownloadAndConvertJob::makeBackupFinished(KJob* j)
+void DownloadAndConvertJob::makeBackupFinished(KJob *j)
 {
     if (j && j->error()) {
         Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: " << j->errorString() << endl;
@@ -277,8 +283,7 @@ void DownloadAndConvertJob::convert()
         QString dat_file = kt::DataDir() + QStringLiteral("level1.dat");
         QString tmp_file = kt::DataDir() + QStringLiteral("level1.dat.tmp");
 
-
-        KIO::Job* job = KIO::file_copy(QUrl::fromLocalFile(dat_file), QUrl::fromLocalFile(tmp_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
+        KIO::Job *job = KIO::file_copy(QUrl::fromLocalFile(dat_file), QUrl::fromLocalFile(tmp_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
         connect(job, &KIO::Job::result, this, &DownloadAndConvertJob::makeBackupFinished);
     } else
         makeBackupFinished(nullptr);
@@ -293,7 +298,7 @@ void DownloadAndConvertJob::cleanUpFiles()
     cleanUp(kt::DataDir() + QStringLiteral("level1.dat.tmp"));
 }
 
-void DownloadAndConvertJob::cleanUp(const QString& path)
+void DownloadAndConvertJob::cleanUp(const QString &path)
 {
     if (bt::Exists(path))
         bt::Delete(path, true);

@@ -49,11 +49,10 @@ using namespace bt;
 
 namespace kt
 {
-
-
-ViewModel::Item::Item(bt::TorrentInterface* tc) : tc(tc)
+ViewModel::Item::Item(bt::TorrentInterface *tc)
+    : tc(tc)
 {
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     status = s.status;
     bytes_downloaded = s.bytes_downloaded;
     total_bytes_to_download = s.total_bytes_to_download;
@@ -75,13 +74,12 @@ ViewModel::Item::Item(bt::TorrentInterface* tc) : tc(tc)
     highlight = false;
 }
 
-
-bool ViewModel::Item::update(int row, int sort_column, QModelIndexList& to_update, kt::ViewModel* model)
+bool ViewModel::Item::update(int row, int sort_column, QModelIndexList &to_update, kt::ViewModel *model)
 {
     bool ret = false;
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
 
-    const auto update_if_differs = [&](auto & target, const auto & source, int column) {
+    const auto update_if_differs = [&](auto &target, const auto &source, int column) {
         if (target != source) {
             to_update.append(model->index(row, column));
             target = source;
@@ -89,7 +87,7 @@ bool ViewModel::Item::update(int row, int sort_column, QModelIndexList& to_updat
         }
     };
 
-    const auto update_if_differs_float = [&](auto & target, const auto & source, int column) {
+    const auto update_if_differs_float = [&](auto &target, const auto &source, int column) {
         if (fabs(target - source) > 0.001) {
             to_update.append(model->index(row, column));
             target = source;
@@ -114,9 +112,11 @@ bool ViewModel::Item::update(int row, int sort_column, QModelIndexList& to_updat
     update_if_differs_float(share_ratio, s.shareRatio(), SHARE_RATIO);
 
     update_if_differs(runtime_dl, tc->getRunningTimeDL(), DOWNLOAD_TIME);
+    // clang-format off
     const auto rul = (tc->getRunningTimeUL() >= tc->getRunningTimeDL()
                       ? tc->getRunningTimeUL() - tc->getRunningTimeDL()
                       : 0);
+    // clang-format on
     update_if_differs(runtime_ul, rul, SEED_TIME);
 
     return ret;
@@ -125,7 +125,7 @@ bool ViewModel::Item::update(int row, int sort_column, QModelIndexList& to_updat
 QVariant ViewModel::Item::data(int col) const
 {
     static QLocale locale;
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     switch (col) {
     case NAME:
         return tc->getDisplayName();
@@ -176,7 +176,7 @@ QVariant ViewModel::Item::data(int col) const
     }
 }
 
-bool ViewModel::Item::lessThan(int col, const Item* other) const
+bool ViewModel::Item::lessThan(int col, const Item *other) const
 {
     switch (col) {
     case NAME:
@@ -225,9 +225,8 @@ bool ViewModel::Item::lessThan(int col, const Item* other) const
 QVariant ViewModel::Item::color(int col) const
 {
     if (col == NAME) {
-
         switch (status) {
-        case bt::SEEDING :
+        case bt::SEEDING:
         case bt::SUPERSEEDING:
         case bt::DOWNLOADING:
         case bt::ALLOCATING_DISKSPACE:
@@ -247,20 +246,18 @@ QVariant ViewModel::Item::color(int col) const
                     }
                 }
             }
-            return (status == bt::STALLED || bt::STALLED == bt::CHECKING_DATA) ? Settings::stalledTorrentColor() :
-                   Settings::okTorrentColor();
+            return (status == bt::STALLED || bt::STALLED == bt::CHECKING_DATA) ? Settings::stalledTorrentColor() : Settings::okTorrentColor();
         }
-        case bt::ERROR :
+        case bt::ERROR:
             return Settings::errorTorrentColor();
-        case bt::NOT_STARTED :
+        case bt::NOT_STARTED:
         case bt::STOPPED:
         case bt::QUEUED:
-        case bt::DOWNLOAD_COMPLETE :
-        case bt::SEEDING_COMPLETE :
+        case bt::DOWNLOAD_COMPLETE:
+        case bt::SEEDING_COMPLETE:
         default:
             return QVariant();
         }
-
 
     } else if (col == SHARE_RATIO) {
         return share_ratio >= Settings::greenRatio() ? Settings::goodShareRatioColor() : Settings::lowShareRatioColor();
@@ -268,7 +265,7 @@ QVariant ViewModel::Item::color(int col) const
         return QVariant();
 }
 
-bool ViewModel::Item::visible(Group* group, const QString& filter_string) const
+bool ViewModel::Item::visible(Group *group, const QString &filter_string) const
 {
     if (group && !group->isMember(tc))
         return false;
@@ -313,7 +310,10 @@ QVariant ViewModel::Item::statusIcon() const
 
 ////////////////////////////////////////////////////////
 
-ViewModel::ViewModel(Core* core, View* parent) : QAbstractTableModel(parent), core(core), view(parent)
+ViewModel::ViewModel(Core *core, View *parent)
+    : QAbstractTableModel(parent)
+    , core(core)
+    , view(parent)
 {
     connect(core, &Core::aboutToQuit, this, &ViewModel::onExit); // model must be in core's thread to be notified in time
     connect(core, &Core::torrentAdded, this, &ViewModel::addTorrent);
@@ -323,32 +323,31 @@ ViewModel::ViewModel(Core* core, View* parent) : QAbstractTableModel(parent), co
     group = nullptr;
     num_visible = 0;
 
-    const kt::QueueManager* const qman = core->getQueueManager();
-    for (bt::TorrentInterface* i : *qman) {
+    const kt::QueueManager *const qman = core->getQueueManager();
+    for (bt::TorrentInterface *i : *qman) {
         torrents.append(new Item(i));
         num_visible++;
     }
 }
-
 
 ViewModel::~ViewModel()
 {
     qDeleteAll(torrents);
 }
 
-void ViewModel::setGroup(Group* g)
+void ViewModel::setGroup(Group *g)
 {
     group = g;
 }
 
-void ViewModel::addTorrent(bt::TorrentInterface* ti)
+void ViewModel::addTorrent(bt::TorrentInterface *ti)
 {
-    Item* i = new Item(ti);
+    Item *i = new Item(ti);
     if (Settings::highlightNewTorrents()) {
         i->highlight = true;
 
         // Turn off highlight for previously highlighted torrents
-        for (Item* item : qAsConst(torrents))
+        for (Item *item : qAsConst(torrents))
             if (item->highlight)
                 item->highlight = false;
     }
@@ -358,7 +357,7 @@ void ViewModel::addTorrent(bt::TorrentInterface* ti)
 
     // Scroll to new torrent
     int idx = 0;
-    for (Item* item : qAsConst(torrents)) {
+    for (Item *item : qAsConst(torrents)) {
         if (item->tc == ti) {
             view->scrollTo(index(idx, 0));
             break;
@@ -367,10 +366,10 @@ void ViewModel::addTorrent(bt::TorrentInterface* ti)
     }
 }
 
-void ViewModel::removeTorrent(bt::TorrentInterface* ti)
+void ViewModel::removeTorrent(bt::TorrentInterface *ti)
 {
     int idx = 0;
-    for (Item* item : qAsConst(torrents)) {
+    for (Item *item : qAsConst(torrents)) {
         if (item->tc == ti) {
             removeRow(idx);
             update(view->viewDelegate(), true);
@@ -384,17 +383,17 @@ void ViewModel::emitDataChanged(int row, int col)
 {
     QModelIndex idx = createIndex(row, col);
     Q_EMIT dataChanged(idx, idx);
-    //Q_EMIT dataChanged(createIndex(row,0),createIndex(row,14));
+    // Q_EMIT dataChanged(createIndex(row,0),createIndex(row,14));
 }
 
-bool ViewModel::update(ViewDelegate* delegate, bool force_resort)
+bool ViewModel::update(ViewDelegate *delegate, bool force_resort)
 {
     update_list.clear();
     bool resort = force_resort;
     num_visible = 0;
 
     int row = 0;
-    for (Item* i : qAsConst(torrents)) {
+    for (Item *i : qAsConst(torrents)) {
         bool hidden = !i->visible(group, filter_string);
         if (!hidden && i->update(row, sort_column, update_list, this))
             resort = true;
@@ -422,12 +421,12 @@ bool ViewModel::update(ViewDelegate* delegate, bool force_resort)
     return false;
 }
 
-void ViewModel::setFilterString(const QString& filter)
+void ViewModel::setFilterString(const QString &filter)
 {
     filter_string = filter;
 }
 
-int ViewModel::rowCount(const QModelIndex& parent) const
+int ViewModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -435,7 +434,7 @@ int ViewModel::rowCount(const QModelIndex& parent) const
         return num_visible;
 }
 
-int ViewModel::columnCount(const QModelIndex& parent) const
+int ViewModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -527,7 +526,7 @@ QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int rol
     return QVariant();
 }
 
-QModelIndex ViewModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex ViewModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (parent.isValid())
         return QModelIndex();
@@ -538,13 +537,13 @@ QModelIndex ViewModel::index(int row, int column, const QModelIndex& parent) con
         return createIndex(row, column, torrents[row]);
 }
 
-QVariant ViewModel::data(const QModelIndex& index, int role) const
+QVariant ViewModel::data(const QModelIndex &index, int role) const
 {
-    //there is no point checking index.row() < 0 because isValid already does this
+    // there is no point checking index.row() < 0 because isValid already does this
     if (!index.isValid() || index.row() >= torrents.count())
         return QVariant();
 
-    Item* item = reinterpret_cast<Item*>(index.internalPointer());
+    Item *item = reinterpret_cast<Item *>(index.internalPointer());
     if (!item)
         return QVariant();
 
@@ -558,7 +557,7 @@ QVariant ViewModel::data(const QModelIndex& index, int role) const
         return item->statusIcon();
     } else if (role == Qt::ToolTipRole && index.column() == NAME) {
         QString tooltip;
-        bt::TorrentInterface* tc = item->tc;
+        bt::TorrentInterface *tc = item->tc;
         if (tc->loadUrl().isValid())
             tooltip = i18n("%1<br>Url: <b>%2</b>", tc->getDisplayName(), tc->loadUrl().toDisplayString());
         else
@@ -588,17 +587,17 @@ QVariant ViewModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool ViewModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool ViewModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid() || index.row() >= torrents.count() || role != Qt::EditRole || index.column() != NAME)
         return false;
 
     QString name = value.toString();
-    Item* item = reinterpret_cast<Item*>(index.internalPointer());
+    Item *item = reinterpret_cast<Item *>(index.internalPointer());
     if (!item)
         return false;
 
-    bt::TorrentInterface* tc = item->tc;
+    bt::TorrentInterface *tc = item->tc;
     tc->setDisplayName(name);
     Q_EMIT dataChanged(index, index);
     if (sort_column == NAME)
@@ -606,7 +605,7 @@ bool ViewModel::setData(const QModelIndex& index, const QVariant& value, int rol
     return true;
 }
 
-Qt::ItemFlags ViewModel::flags(const QModelIndex& index) const
+Qt::ItemFlags ViewModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid() || index.row() >= torrents.count())
         return QAbstractTableModel::flags(index) | Qt::ItemIsDropEnabled;
@@ -626,18 +625,18 @@ QStringList ViewModel::mimeTypes() const
     return types;
 }
 
-QMimeData* ViewModel::mimeData(const QModelIndexList& indexes) const
+QMimeData *ViewModel::mimeData(const QModelIndexList &indexes) const
 {
-    QMimeData* mime_data = new QMimeData();
+    QMimeData *mime_data = new QMimeData();
     QByteArray encoded_data;
 
     QDataStream stream(&encoded_data, QIODevice::WriteOnly);
     QStringList hashes;
-    for (const QModelIndex& index : indexes) {
+    for (const QModelIndex &index : indexes) {
         if (!index.isValid())
             continue;
 
-        const bt::TorrentInterface* ti = torrentFromIndex(index);
+        const bt::TorrentInterface *ti = torrentFromIndex(index);
         if (ti) {
             QString hash = ti->getInfoHash().toString();
             if (!hashes.contains(hash)) {
@@ -646,14 +645,14 @@ QMimeData* ViewModel::mimeData(const QModelIndexList& indexes) const
         }
     }
 
-    for (const QString& s : qAsConst(hashes))
+    for (const QString &s : qAsConst(hashes))
         stream << s;
 
     mime_data->setData(QStringLiteral("application/x-ktorrent-drag-object"), encoded_data);
     return mime_data;
 }
 
-bool ViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent)
+bool ViewModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     Q_UNUSED(row);
     Q_UNUSED(column);
@@ -677,16 +676,16 @@ Qt::DropActions ViewModel::supportedDropActions() const
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-void ViewModel::torrentsFromIndexList(const QModelIndexList& idx, QList<bt::TorrentInterface*> & tlist)
+void ViewModel::torrentsFromIndexList(const QModelIndexList &idx, QList<bt::TorrentInterface *> &tlist)
 {
-    for (const QModelIndex& i : idx) {
-        bt::TorrentInterface* tc = torrentFromIndex(i);
+    for (const QModelIndex &i : idx) {
+        bt::TorrentInterface *tc = torrentFromIndex(i);
         if (tc)
             tlist.append(tc);
     }
 }
 
-bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex& index) const
+bt::TorrentInterface *ViewModel::torrentFromIndex(const QModelIndex &index) const
 {
     if (index.isValid() && index.row() < torrents.count())
         return torrents[index.row()]->tc;
@@ -694,7 +693,7 @@ bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex& index) cons
         return nullptr;
 }
 
-bt::TorrentInterface* ViewModel::torrentFromRow(int index) const
+bt::TorrentInterface *ViewModel::torrentFromRow(int index) const
 {
     if (index < torrents.count() && index >= 0)
         return torrents[index]->tc;
@@ -702,15 +701,15 @@ bt::TorrentInterface* ViewModel::torrentFromRow(int index) const
         return nullptr;
 }
 
-void ViewModel::allTorrents(QList<bt::TorrentInterface*> & tlist) const
+void ViewModel::allTorrents(QList<bt::TorrentInterface *> &tlist) const
 {
-    for (Item* item : qAsConst(torrents)) {
+    for (Item *item : qAsConst(torrents)) {
         if (item->visible(group, filter_string))
             tlist.append(item->tc);
     }
 }
 
-bool ViewModel::insertRows(int row, int count, const QModelIndex& parent)
+bool ViewModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -718,12 +717,12 @@ bool ViewModel::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool ViewModel::removeRows(int row, int count, const QModelIndex& parent)
+bool ViewModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
     for (int i = 0; i < count; i++) {
-        Item* item = torrents[row + i];
+        Item *item = torrents[row + i];
         delete item;
     }
     torrents.remove(row, count);
@@ -740,10 +739,13 @@ void ViewModel::onExit()
 class ViewModelItemCmp
 {
 public:
-    ViewModelItemCmp(int col, Qt::SortOrder order) : col(col), order(order)
-    {}
+    ViewModelItemCmp(int col, Qt::SortOrder order)
+        : col(col)
+        , order(order)
+    {
+    }
 
-    bool operator()(ViewModel::Item* a, ViewModel::Item* b)
+    bool operator()(ViewModel::Item *a, ViewModel::Item *b)
     {
         if (a->hidden)
             return false;
@@ -769,4 +771,3 @@ void ViewModel::sort(int col, Qt::SortOrder order)
     Q_EMIT sorted();
 }
 }
-

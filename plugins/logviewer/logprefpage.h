@@ -21,8 +21,8 @@
 #ifndef KTLOGPREFPAGE_H
 #define KTLOGPREFPAGE_H
 
-#include <interfaces/prefpageinterface.h>
 #include "ui_logprefwidget.h"
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
@@ -32,7 +32,7 @@ class LogPrefPage : public PrefPageInterface, public Ui_LogPrefWidget
 {
     Q_OBJECT
 public:
-    LogPrefPage(LogFlags* flags, QWidget* parent);
+    LogPrefPage(LogFlags *flags, QWidget *parent);
     ~LogPrefPage() override;
 
     void loadDefaults() override;
@@ -41,6 +41,7 @@ public:
 
     void saveState();
     void loadState();
+
 private:
     bool state_loaded;
 };

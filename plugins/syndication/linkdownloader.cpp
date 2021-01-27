@@ -19,37 +19,39 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <QMimeType>
 #include <QMimeDatabase>
+#include <QMimeType>
 #include <QRegExp>
 
-#include <KLocalizedString>
-#include <KMessageBox>
 #include <KIO/Job>
 #include <KIO/JobUiDelegate>
+#include <KLocalizedString>
+#include <KMessageBox>
 
-#include <magnet/magnetlink.h>
+#include "linkdownloader.h"
+#include <bcodec/bdecoder.h>
+#include <bcodec/bnode.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
+#include <magnet/magnetlink.h>
 #include <util/log.h>
-#include <bcodec/bnode.h>
-#include <bcodec/bdecoder.h>
-#include "linkdownloader.h"
-
 
 using namespace bt;
 
 namespace kt
 {
-
-LinkDownloader::LinkDownloader(const QUrl& url,
-                               kt::CoreInterface* core,
+LinkDownloader::LinkDownloader(const QUrl &url,
+                               kt::CoreInterface *core,
                                bool verbose,
-                               const QString& group,
-                               const QString& location,
-                               const QString& move_on_completion)
-    : url(url), core(core), verbose(verbose), group(group),
-      location(location), move_on_completion(move_on_completion)
+                               const QString &group,
+                               const QString &location,
+                               const QString &move_on_completion)
+    : url(url)
+    , core(core)
+    , verbose(verbose)
+    , group(group)
+    , location(location)
+    , move_on_completion(move_on_completion)
 {
     base_url = url.scheme() + QStringLiteral("://") + url.host();
     if (url.port(80) != 80)
@@ -68,14 +70,13 @@ LinkDownloader::LinkDownloader(const QUrl& url,
         base_url += QLatin1Char('/');
 }
 
-
 LinkDownloader::~LinkDownloader()
 {
 }
 
-void LinkDownloader::downloadFinished(KJob* j)
+void LinkDownloader::downloadFinished(KJob *j)
 {
-    KIO::StoredTransferJob* job = (KIO::StoredTransferJob*)j;
+    KIO::StoredTransferJob *job = (KIO::StoredTransferJob *)j;
     if (job->error()) {
         Out(SYS_SYN | LOG_NOTICE) << "Failed to download " << url.toDisplayString() << " : " << job->errorString() << endl;
         if (verbose)
@@ -87,7 +88,7 @@ void LinkDownloader::downloadFinished(KJob* j)
     }
 
     if (isTorrent(job->data())) {
-        bt::TorrentInterface* tc = 0;
+        bt::TorrentInterface *tc = 0;
         if (verbose)
             tc = core->load(job->data(), url, group, location);
         else
@@ -107,16 +108,16 @@ void LinkDownloader::downloadFinished(KJob* j)
 
 void LinkDownloader::start()
 {
-    KIO::StoredTransferJob* j = KIO::storedGet(url, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
+    KIO::StoredTransferJob *j = KIO::storedGet(url, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
     connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::downloadFinished);
 }
 
-bool LinkDownloader::isTorrent(const QByteArray& data) const
+bool LinkDownloader::isTorrent(const QByteArray &data) const
 {
     bool ret = false;
     try {
         BDecoder decoder(data, false);
-        BNode* node = decoder.decode();
+        BNode *node = decoder.decode();
         if (node)
             ret = true;
 
@@ -127,7 +128,7 @@ bool LinkDownloader::isTorrent(const QByteArray& data) const
     return ret;
 }
 
-void LinkDownloader::handleHtmlPage(const QByteArray& data)
+void LinkDownloader::handleHtmlPage(const QByteArray &data)
 {
     QRegExp rx(QLatin1String("href\\s*=\"([^\"]*)\""), Qt::CaseInsensitive);
     QString str(QString::fromUtf8(data));
@@ -164,11 +165,11 @@ void LinkDownloader::handleHtmlPage(const QByteArray& data)
 void LinkDownloader::tryTorrentLinks()
 {
     // First try links ending with .torrent
-    for (const QUrl& u : qAsConst(links)) {
+    for (const QUrl &u : qAsConst(links)) {
         if (u.path().endsWith(QStringLiteral(".torrent")) || u.path().endsWith(QStringLiteral(".TORRENT"))) {
             Out(SYS_SYN | LOG_DEBUG) << "Trying torrent link: " << u.toDisplayString() << endl;
             link_url = u;
-            KIO::StoredTransferJob* j = KIO::storedGet(u, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
+            KIO::StoredTransferJob *j = KIO::storedGet(u, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
             connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::torrentDownloadFinished);
             links.removeAll(u);
             return;
@@ -193,14 +194,14 @@ void LinkDownloader::tryNextLink()
 
     link_url = links.front();
     links.pop_front();
-    KIO::StoredTransferJob* j = KIO::storedGet(link_url, KIO::Reload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *j = KIO::storedGet(link_url, KIO::Reload, KIO::HideProgressInfo);
     connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::torrentDownloadFinished);
     Out(SYS_SYN | LOG_DEBUG) << "Trying " << link_url.toDisplayString() << endl;
 }
 
-void LinkDownloader::torrentDownloadFinished(KJob* j)
+void LinkDownloader::torrentDownloadFinished(KJob *j)
 {
-    KIO::StoredTransferJob* job = (KIO::StoredTransferJob*)j;
+    KIO::StoredTransferJob *job = (KIO::StoredTransferJob *)j;
     if (j->error()) {
         if (links.count() == 0) {
             Out(SYS_SYN | LOG_NOTICE) << "Failed to download torrent: " << job->errorString() << endl;
@@ -212,7 +213,7 @@ void LinkDownloader::torrentDownloadFinished(KJob* j)
         } else
             tryTorrentLinks();
     } else if (isTorrent(job->data())) {
-        bt::TorrentInterface* tc = 0;
+        bt::TorrentInterface *tc = 0;
         if (verbose)
             tc = core->load(job->data(), link_url, group, location);
         else

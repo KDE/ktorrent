@@ -21,22 +21,25 @@
 #ifndef MAGNETMANAGER_H
 #define MAGNETMANAGER_H
 
+#include <bcodec/bencoder.h>
 #include <interfaces/coreinterface.h>
 #include <magnet/magnetdownloader.h>
-#include <bcodec/bencoder.h>
 
 namespace kt
 {
-
 /// Adds options struct to bt::MagnetDownloader
 class MagnetDownloader : public bt::MagnetDownloader
 {
     Q_OBJECT
 public:
-    MagnetDownloader(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options, QObject* parent)
+    MagnetDownloader(const bt::MagnetLink &mlink, const MagnetLinkLoadOptions &options, QObject *parent)
         : bt::MagnetDownloader(mlink, parent)
-        , options(options) {}
-    ~MagnetDownloader() override {}
+        , options(options)
+    {
+    }
+    ~MagnetDownloader() override
+    {
+    }
 
     MagnetLinkLoadOptions options;
 };
@@ -69,7 +72,7 @@ private Q_SLOTS:
 private:
     int magnetIdx;
     unsigned int timerDuration;
-    QTimer* timer;
+    QTimer *timer;
 };
 
 /// This class manage the downloading of magnets.
@@ -83,14 +86,14 @@ class KTCORE_EXPORT MagnetManager : public QObject
 {
     Q_OBJECT
 public:
-    MagnetManager(QObject* parent = nullptr);
+    MagnetManager(QObject *parent = nullptr);
     ~MagnetManager() override;
 
     /// Adds a magnet link to the queue
     /// @param mlink magnet link to be added
     /// @param options magnet link options
     /// @param stopped whether this magnet should be added to the queue stopped
-    void addMagnet(const bt::MagnetLink& mlink, const MagnetLinkLoadOptions& options, bool stopped);
+    void addMagnet(const bt::MagnetLink &mlink, const MagnetLinkLoadOptions &options, bool stopped);
 
     /// Removes count successive magnets, starting on idx
     void removeMagnets(bt::Uint32 idx, bt::Uint32 count);
@@ -118,16 +121,16 @@ public:
     void update();
 
     /// Load all magnets from a file
-    void loadMagnets(const QString& file);
+    void loadMagnets(const QString &file);
 
     /// Save all magnets to a file
-    void saveMagnets(const QString& file);
+    void saveMagnets(const QString &file);
 
     /// Defines the magnet state on the MagnetManager
     enum MagnetState {
-        DOWNLOADING,    ///< Started and downloading
-        QUEUED,         ///< Started and waiting for download
-        STOPPED         ///< Stopped
+        DOWNLOADING, ///< Started and downloading
+        QUEUED, ///< Started and waiting for download
+        STOPPED, ///< Stopped
     };
 
     /// Return the state of the magnet corresponding to idx
@@ -139,11 +142,11 @@ public:
     /// Get the magnet downloader at index idx in the list
     /// @param idx index of the magnet
     /// @return the magnet downloader or nullptr if idx is out of bounds
-    const kt::MagnetDownloader* getMagnetDownloader(bt::Uint32 idx) const;
+    const kt::MagnetDownloader *getMagnetDownloader(bt::Uint32 idx) const;
 
 Q_SIGNALS:
     /// Emitted when metadata has been downloaded for a MagnetLink.
-    void metadataDownloaded(const bt::MagnetLink& mlink, const QByteArray& data, const kt::MagnetLinkLoadOptions& options);
+    void metadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &data, const kt::MagnetLinkLoadOptions &options);
 
     /// Emitted when the queue has been altered in some form, so the
     /// magnets order and/or number could be altered.
@@ -153,7 +156,7 @@ Q_SIGNALS:
     void updateQueue(bt::Uint32 idx, bt::Uint32 count);
 
 private Q_SLOTS:
-    void onDownloadFinished(bt::MagnetDownloader* md, const QByteArray& data);
+    void onDownloadFinished(bt::MagnetDownloader *md, const QByteArray &data);
     void onSlotTimeout(int magnetIdx);
 
 private:
@@ -166,17 +169,17 @@ private:
     void freeDownloadSlot(bt::Uint32 magnetIdx);
 
     /// Return the magnet index in the queue + the stopped list
-    int getMagnetIndex(kt::MagnetDownloader* md);
+    int getMagnetIndex(kt::MagnetDownloader *md);
 
     /// Writes the encoder info of one magnet
-    void writeEncoderInfo(bt::BEncoder &enc, kt::MagnetDownloader* md);
+    void writeEncoderInfo(bt::BEncoder &enc, kt::MagnetDownloader *md);
 
     bool useSlotTimer;
     int timerDuration;
-    QList<DownloadSlot*> usedDownloadingSlots;
-    QList<DownloadSlot*> freeDownloadingSlots;
-    QList<kt::MagnetDownloader*> magnetQueue;
-    QList<kt::MagnetDownloader*> stoppedList;
+    QList<DownloadSlot *> usedDownloadingSlots;
+    QList<DownloadSlot *> freeDownloadingSlots;
+    QList<kt::MagnetDownloader *> magnetQueue;
+    QList<kt::MagnetDownloader *> stoppedList;
     QSet<bt::SHA1Hash> magnetHashes;
     QSet<bt::SHA1Hash> stoppedHashes;
 };

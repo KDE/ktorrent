@@ -21,22 +21,22 @@
 #ifndef FADINGNAVIGATIONWIDGET_H
 #define FADINGNAVIGATIONWIDGET_H
 
-#include <QPushButton>
-#include <QGraphicsWidget>
-#include <Plasma/PushButton>
-#include <Plasma/Frame>
 #include "fadingitem.h"
+#include <Plasma/Frame>
+#include <Plasma/PushButton>
+#include <QGraphicsWidget>
+#include <QPushButton>
 
 class FadingNavigationWidget : public QObject
 {
     Q_OBJECT
 public:
-    FadingNavigationWidget(QGraphicsWidget* parent);
+    FadingNavigationWidget(QGraphicsWidget *parent);
     virtual ~FadingNavigationWidget();
     void setEnabled(bool enabled);
-    Plasma::Frame* frame();
-    Plasma::PushButton* nextButton();
-    Plasma::PushButton* prevButton();
+    Plasma::Frame *frame();
+    Plasma::PushButton *nextButton();
+    Plasma::PushButton *prevButton();
 
 Q_SIGNALS:
     void prevClicked();
@@ -44,15 +44,15 @@ Q_SIGNALS:
 
 protected:
     void initFrame();
-    virtual bool eventFilter(QObject* obj, QEvent* event);
+    virtual bool eventFilter(QObject *obj, QEvent *event);
 
 private:
     bool navigation_enabled;
-    QGraphicsWidget* parent;
-    Plasma::Frame* mFrame;
-    FadingItem* mFadingItem;
-    Plasma::PushButton* mPrevButton;
-    Plasma::PushButton* mNextButton;
+    QGraphicsWidget *parent;
+    Plasma::Frame *mFrame;
+    FadingItem *mFadingItem;
+    Plasma::PushButton *mPrevButton;
+    Plasma::PushButton *mNextButton;
 };
 
 #endif

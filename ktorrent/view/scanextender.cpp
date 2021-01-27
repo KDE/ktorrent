@@ -24,21 +24,18 @@
 #include <KLocalizedString>
 #include <KStandardGuiItem>
 
-#include <torrent/job.h>
-#include <interfaces/torrentinterface.h>
 #include <datachecker/datacheckerjob.h>
-
-
+#include <interfaces/torrentinterface.h>
+#include <torrent/job.h>
 
 namespace kt
 {
-
-ScanExtender::ScanExtender(bt::Job* job, QWidget* parent)
+ScanExtender::ScanExtender(bt::Job *job, QWidget *parent)
     : JobProgressWidget(job, parent)
 {
     setupUi(this);
 
-    bt::DataCheckerJob* dcj = (bt::DataCheckerJob*)job;
+    bt::DataCheckerJob *dcj = (bt::DataCheckerJob *)job;
     setAutomaticRemove(dcj->isAutoImport());
     connect(job, &bt::Job::result, this, &ScanExtender::finished);
 
@@ -67,7 +64,7 @@ ScanExtender::~ScanExtender()
 {
 }
 
-void ScanExtender::description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2)
+void ScanExtender::description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2)
 {
     Q_UNUSED(title);
     chunks_failed->setText(field1.first);
@@ -93,7 +90,7 @@ void ScanExtender::totalAmount(KJob::Unit unit, qulonglong amount)
     progress_bar->setMaximum(amount);
 }
 
-void ScanExtender::infoMessage(const QString& plain, const QString& rich)
+void ScanExtender::infoMessage(const QString &plain, const QString &rich)
 {
     Q_UNUSED(rich);
     error_msg->setText(plain);
@@ -101,7 +98,7 @@ void ScanExtender::infoMessage(const QString& plain, const QString& rich)
     Q_EMIT resized(this);
 }
 
-void ScanExtender::warning(const QString& plain, const QString& rich)
+void ScanExtender::warning(const QString &plain, const QString &rich)
 {
     Q_UNUSED(rich);
     Q_UNUSED(plain);
@@ -117,9 +114,7 @@ void ScanExtender::percent(long unsigned int percent)
     Q_UNUSED(percent);
 }
 
-
-
-void ScanExtender::finished(KJob* j)
+void ScanExtender::finished(KJob *j)
 {
     progress_bar->setValue(progress_bar->maximum());
     progress_bar->setEnabled(false);
@@ -144,10 +139,9 @@ void ScanExtender::closeRequested()
     closeRequest(this);
 }
 
-bool ScanExtender::similar(Extender* ext) const
+bool ScanExtender::similar(Extender *ext) const
 {
-    return qobject_cast<ScanExtender*>(ext) != 0;
+    return qobject_cast<ScanExtender *>(ext) != 0;
 }
 
 }
-

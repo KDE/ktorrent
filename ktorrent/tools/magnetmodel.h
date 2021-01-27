@@ -38,7 +38,7 @@ class MagnetModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    MagnetModel(MagnetManager *magnetManager, QObject* parent = 0);
+    MagnetModel(MagnetManager *magnetManager, QObject *parent = 0);
     ~MagnetModel() override;
 
     /// Remove a magnet downloader
@@ -54,17 +54,17 @@ public:
     bool isStopped(int row) const;
 
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    bool removeRows(int row, int count, const QModelIndex& parent) override;
-    bool insertRows(int row, int count, const QModelIndex& parent) override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
+    bool insertRows(int row, int count, const QModelIndex &parent) override;
 
 public Q_SLOTS:
     void onUpdateQueue(bt::Uint32 idx, bt::Uint32 count);
 
 private:
-    QString displayName(const bt::MagnetDownloader* md) const;
+    QString displayName(const bt::MagnetDownloader *md) const;
     QString status(int row) const;
 
 private:

@@ -19,32 +19,29 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <QStringList>
 #include <KLocalizedString>
+#include <QStringList>
 
+#include "ipfilterlist.h"
 #include <arpa/inet.h>
 #include <net/address.h>
-#include <util/log.h>
 #include <util/error.h>
-#include "ipfilterlist.h"
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
 IPFilterList::IPFilterList()
     : bt::BlockListInterface()
 {
 }
 
-
 IPFilterList::~IPFilterList()
 {
 }
 
-bool IPFilterList::blocked(const net::Address& addr) const
+bool IPFilterList::blocked(const net::Address &addr) const
 {
     quint32 ip = 0;
     if (addr.isIPv4Mapped())
@@ -54,7 +51,7 @@ bool IPFilterList::blocked(const net::Address& addr) const
     else
         ip = addr.toIPv4Address();
 
-    for (const Entry& e : qAsConst(ip_list)) {
+    for (const Entry &e : qAsConst(ip_list)) {
         if (e.start <= ip && ip <= e.end)
             return true;
     }
@@ -62,7 +59,7 @@ bool IPFilterList::blocked(const net::Address& addr) const
     return false;
 }
 
-bool IPFilterList::parseIPWithWildcards(const QString& str, bt::Uint32& start, bt::Uint32& end)
+bool IPFilterList::parseIPWithWildcards(const QString &str, bt::Uint32 &start, bt::Uint32 &end)
 {
     QStringList ip_comps = str.split(QLatin1Char('.'));
     if (ip_comps.count() != 4)
@@ -92,7 +89,7 @@ bool IPFilterList::parseIPWithWildcards(const QString& str, bt::Uint32& start, b
     }
 }
 
-bool IPFilterList::addIP(const QString& str)
+bool IPFilterList::addIP(const QString &str)
 {
     Entry e;
     e.string_rep = str;
@@ -103,8 +100,7 @@ bool IPFilterList::addIP(const QString& str)
     return true;
 }
 
-
-bool IPFilterList::addIPRange(const QString& str)
+bool IPFilterList::addIPRange(const QString &str)
 {
     QStringList range = str.split(QLatin1Char('-'));
     if (range.count() != 2)
@@ -121,8 +117,7 @@ bool IPFilterList::addIPRange(const QString& str)
     return true;
 }
 
-
-bool IPFilterList::add(const QString& str)
+bool IPFilterList::add(const QString &str)
 {
     int pos = ip_list.count();
     beginInsertRows(QModelIndex(), pos, pos + 1);
@@ -145,7 +140,7 @@ void IPFilterList::clear()
     endResetModel();
 }
 
-int IPFilterList::rowCount(const QModelIndex& parent) const
+int IPFilterList::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return ip_list.count();
@@ -153,12 +148,12 @@ int IPFilterList::rowCount(const QModelIndex& parent) const
         return 0;
 }
 
-QVariant IPFilterList::data(const QModelIndex& index, int role) const
+QVariant IPFilterList::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() >= ip_list.count() || index.row() < 0)
         return QVariant();
 
-    const Entry& e = ip_list.at(index.row());
+    const Entry &e = ip_list.at(index.row());
     switch (role) {
     case Qt::DisplayRole:
     case Qt::EditRole:
@@ -168,12 +163,12 @@ QVariant IPFilterList::data(const QModelIndex& index, int role) const
     }
 }
 
-bool IPFilterList::setData(const QModelIndex& index, const QVariant& value, int role)
+bool IPFilterList::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid() || index.row() >= ip_list.count() || index.row() < 0 || role != Qt::EditRole)
         return false;
 
-    Entry& e = ip_list[index.row()];
+    Entry &e = ip_list[index.row()];
     QString str = value.toString();
     QStringList range = str.split(QLatin1Char('-'));
     if (range.count() != 2) {
@@ -196,7 +191,7 @@ bool IPFilterList::setData(const QModelIndex& index, const QVariant& value, int 
     return true;
 }
 
-bool IPFilterList::insertRows(int row, int count, const QModelIndex& parent)
+bool IPFilterList::insertRows(int row, int count, const QModelIndex &parent)
 {
     if (parent.isValid())
         return false;
@@ -206,7 +201,7 @@ bool IPFilterList::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool IPFilterList::removeRows(int row, int count, const QModelIndex& parent)
+bool IPFilterList::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (parent.isValid())
         return false;
@@ -218,7 +213,7 @@ bool IPFilterList::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-Qt::ItemFlags IPFilterList::flags(const QModelIndex& index) const
+Qt::ItemFlags IPFilterList::flags(const QModelIndex &index) const
 {
     if (!index.isValid() || index.row() >= ip_list.count() || index.row() < 0)
         return QAbstractItemModel::flags(index);

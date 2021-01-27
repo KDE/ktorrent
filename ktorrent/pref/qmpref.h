@@ -21,12 +21,11 @@
 #ifndef KTQMPREF_H
 #define KTQMPREF_H
 
-#include <interfaces/prefpageinterface.h>
 #include "ui_qmpref.h"
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
-
 /**
     Preference page for the queue manager
 */
@@ -34,7 +33,7 @@ class QMPref : public PrefPageInterface, public Ui_QMPref
 {
     Q_OBJECT
 public:
-    QMPref(QWidget* parent);
+    QMPref(QWidget *parent);
     ~QMPref() override;
 
     void loadSettings() override;

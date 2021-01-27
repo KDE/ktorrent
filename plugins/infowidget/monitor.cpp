@@ -20,26 +20,27 @@
 
 #include "monitor.h"
 
-#include <interfaces/peerinterface.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentfileinterface.h>
-#include <interfaces/chunkdownloadinterface.h>
-#include "peerview.h"
 #include "chunkdownloadview.h"
 #include "fileview.h"
+#include "peerview.h"
+#include <interfaces/chunkdownloadinterface.h>
+#include <interfaces/peerinterface.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-Monitor::Monitor(bt::TorrentInterface* tc, PeerView* pv, ChunkDownloadView* cdv, FileView* fv)
-    : tc(tc), pv(pv), cdv(cdv), fv(fv)
+Monitor::Monitor(bt::TorrentInterface *tc, PeerView *pv, ChunkDownloadView *cdv, FileView *fv)
+    : tc(tc)
+    , pv(pv)
+    , cdv(cdv)
+    , fv(fv)
 {
     if (tc)
         tc->setMonitor(this);
 }
-
 
 Monitor::~Monitor()
 {
@@ -47,26 +48,25 @@ Monitor::~Monitor()
         tc->setMonitor(0);
 }
 
-
-void Monitor::downloadRemoved(bt::ChunkDownloadInterface* cd)
+void Monitor::downloadRemoved(bt::ChunkDownloadInterface *cd)
 {
     if (cdv)
         cdv->downloadRemoved(cd);
 }
 
-void Monitor::downloadStarted(bt::ChunkDownloadInterface* cd)
+void Monitor::downloadStarted(bt::ChunkDownloadInterface *cd)
 {
     if (cdv)
         cdv->downloadAdded(cd);
 }
 
-void Monitor::peerAdded(bt::PeerInterface* peer)
+void Monitor::peerAdded(bt::PeerInterface *peer)
 {
     if (pv)
         pv->peerAdded(peer);
 }
 
-void Monitor::peerRemoved(bt::PeerInterface* peer)
+void Monitor::peerRemoved(bt::PeerInterface *peer)
 {
     if (pv)
         pv->peerRemoved(peer);
@@ -89,13 +89,13 @@ void Monitor::destroyed()
     tc = 0;
 }
 
-void Monitor::filePercentageChanged(bt::TorrentFileInterface* file, float percentage)
+void Monitor::filePercentageChanged(bt::TorrentFileInterface *file, float percentage)
 {
     if (fv)
         fv->filePercentageChanged(file, percentage);
 }
 
-void Monitor::filePreviewChanged(bt::TorrentFileInterface* file, bool preview)
+void Monitor::filePreviewChanged(bt::TorrentFileInterface *file, bool preview)
 {
     if (fv)
         fv->filePreviewChanged(file, preview);

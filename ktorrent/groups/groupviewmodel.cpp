@@ -23,32 +23,31 @@
 
 #include <algorithm>
 
-#include <QIcon>
 #include <KLocalizedString>
+#include <QIcon>
 
-#include <groups/groupmanager.h>
 #include <groups/group.h>
+#include <groups/groupmanager.h>
 #include <groups/torrentgroup.h>
 #include <torrent/queuemanager.h>
-#include <view/view.h>
 #include <util/log.h>
+#include <view/view.h>
 
 using namespace bt;
 
-
 namespace kt
 {
-GroupViewModel::GroupViewModel(kt::GroupManager* gman, View* view, QObject* parent) :
-    QAbstractItemModel(parent),
-    root(QStringLiteral("all"), nullptr, 0, this),
-    gman(gman),
-    view(view)
+GroupViewModel::GroupViewModel(kt::GroupManager *gman, View *view, QObject *parent)
+    : QAbstractItemModel(parent)
+    , root(QStringLiteral("all"), nullptr, 0, this)
+    , gman(gman)
+    , view(view)
 {
     for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++)
         root.insert(i->second, index(0, 0));
 
     root.insert(i18n("Custom Groups"), QStringLiteral("/all/custom"), index(0, 0));
-    //root.dump();
+    // root.dump();
 
     connect(gman, &GroupManager::groupRemoved, this, &GroupViewModel::groupRemoved);
     connect(gman, &GroupManager::groupAdded, this, &GroupViewModel::groupAdded);
@@ -58,9 +57,9 @@ GroupViewModel::~GroupViewModel()
 {
 }
 
-QVariant GroupViewModel::data(const QModelIndex& index, int role) const
+QVariant GroupViewModel::data(const QModelIndex &index, int role) const
 {
-    Item* item = (Item*)index.internalPointer();
+    Item *item = (Item *)index.internalPointer();
     if (!item)
         return QVariant();
 
@@ -74,16 +73,16 @@ QVariant GroupViewModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool GroupViewModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool GroupViewModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (role != Qt::EditRole)
         return false;
 
-    Item* item = (Item*)index.internalPointer();
+    Item *item = (Item *)index.internalPointer();
     if (!item)
         return false;
 
-    Group* group = item->group;
+    Group *group = item->group;
     QString new_name = value.toString();
     if (new_name.isEmpty() || gman->find(new_name))
         return false;
@@ -94,60 +93,59 @@ bool GroupViewModel::setData(const QModelIndex& index, const QVariant& value, in
     return true;
 }
 
-
-int GroupViewModel::columnCount(const QModelIndex& parent) const
+int GroupViewModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return 1;
 }
 
-int GroupViewModel::rowCount(const QModelIndex& parent) const
+int GroupViewModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return 1;
 
-    Item* item = (Item*)parent.internalPointer();
+    Item *item = (Item *)parent.internalPointer();
     if (!item)
         return 0;
     else
         return item->children.size();
 }
 
-QModelIndex GroupViewModel::parent(const QModelIndex& child) const
+QModelIndex GroupViewModel::parent(const QModelIndex &child) const
 {
-    Item* item = (Item*)child.internalPointer();
+    Item *item = (Item *)child.internalPointer();
     if (!item || !item->parent)
         return QModelIndex();
     else
-        return createIndex(item->parent->row, 0, (void*)item->parent);
+        return createIndex(item->parent->row, 0, (void *)item->parent);
 }
 
-QModelIndex GroupViewModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex GroupViewModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!parent.isValid())
-        return createIndex(row, column, (void*)&root);
+        return createIndex(row, column, (void *)&root);
 
-    Item* item = (Item*)parent.internalPointer();
+    Item *item = (Item *)parent.internalPointer();
     if (!item || row < 0 || row >= item->children.count())
         return QModelIndex();
 
-    return createIndex(row, column, (void*)&item->children.at(row));
+    return createIndex(row, column, (void *)&item->children.at(row));
 }
 
-bool GroupViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent)
+bool GroupViewModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     Q_UNUSED(data);
     Q_UNUSED(action);
     if (row != -1 || column != -1)
         return false;
 
-    TorrentGroup* g = dynamic_cast<TorrentGroup*>(groupForIndex(parent));
+    TorrentGroup *g = dynamic_cast<TorrentGroup *>(groupForIndex(parent));
     if (!g)
         return false;
 
-    QList<TorrentInterface*> sel;
+    QList<TorrentInterface *> sel;
     view->getSelection(sel);
-    for (TorrentInterface* ti : qAsConst(sel)) {
+    for (TorrentInterface *ti : qAsConst(sel)) {
         g->addTorrent(ti, false);
     }
     gman->saveGroups();
@@ -166,42 +164,41 @@ QStringList GroupViewModel::mimeTypes() const
     return sl;
 }
 
-
-Qt::ItemFlags GroupViewModel::flags(const QModelIndex& index) const
+Qt::ItemFlags GroupViewModel::flags(const QModelIndex &index) const
 {
-    Item* item = (Item*)index.internalPointer();
+    Item *item = (Item *)index.internalPointer();
     if (item && item->group && !item->group->isStandardGroup())
         return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDropEnabled;
     else
         return Qt::ItemIsEnabled;
 }
 
-void GroupViewModel::groupAdded(Group* g)
+void GroupViewModel::groupAdded(Group *g)
 {
     root.insert(g, index(0, 0));
 }
 
-void GroupViewModel::groupRemoved(Group* g)
+void GroupViewModel::groupRemoved(Group *g)
 {
-//        QModelIndex idx = findGroup(g).parent();
+    //        QModelIndex idx = findGroup(g).parent();
     root.remove(g, index(0, 0));
-    //root.dump();
+    // root.dump();
     view->onGroupRemoved(g);
 }
 
-Group* GroupViewModel::groupForIndex(const QModelIndex& index) const
+Group *GroupViewModel::groupForIndex(const QModelIndex &index) const
 {
-    Item* item = (Item*)index.internalPointer();
+    Item *item = (Item *)index.internalPointer();
     return item ? item->group : 0;
 }
 
-QModelIndex GroupViewModel::findGroup(Group* g)
+QModelIndex GroupViewModel::findGroup(Group *g)
 {
     QModelIndex idx = index(0, 0);
     return root.findGroup(g, idx);
 }
 
-QStringList GroupViewModel::expandedGroups(GroupView* gview)
+QStringList GroupViewModel::expandedGroups(GroupView *gview)
 {
     QStringList ret;
     QModelIndex idx = createIndex(0, 0, &root);
@@ -209,13 +206,13 @@ QStringList GroupViewModel::expandedGroups(GroupView* gview)
     return ret;
 }
 
-void GroupViewModel::expandGroups(GroupView* gview, const QStringList& groups)
+void GroupViewModel::expandGroups(GroupView *gview, const QStringList &groups)
 {
     QModelIndex idx = createIndex(0, 0, &root);
     root.expandGroups(gview, groups, idx);
 }
 
-void GroupViewModel::updateGroupCount(const QModelIndex& idx)
+void GroupViewModel::updateGroupCount(const QModelIndex &idx)
 {
     int row = 0;
     QModelIndex child = this->index(row, 0, idx);
@@ -228,9 +225,9 @@ void GroupViewModel::updateGroupCount(const QModelIndex& idx)
     dataChanged(idx, idx);
 }
 
-bool GroupViewModel::removeRows(int row, int count, const QModelIndex& parent)
+bool GroupViewModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    Item* item = (Item*)parent.internalPointer();
+    Item *item = (Item *)parent.internalPointer();
     if (!item)
         return false;
 
@@ -238,27 +235,25 @@ bool GroupViewModel::removeRows(int row, int count, const QModelIndex& parent)
     for (int i = 0; i < count; i++)
         item->children.removeAt(row);
     int row_index = 0;
-    for (Item & i : item->children)
+    for (Item &i : item->children)
         i.row = row_index++;
     endRemoveRows();
     return true;
 }
 
-
 /////////////////////////////////////////::
 
-GroupViewModel::Item::Item(const QString& name, kt::GroupViewModel::Item* parent, int row, kt::GroupViewModel* model) :
-    name(name),
-    display_name(name),
-    parent(parent),
-    row(row),
-    group(nullptr),
-    model(model)
+GroupViewModel::Item::Item(const QString &name, kt::GroupViewModel::Item *parent, int row, kt::GroupViewModel *model)
+    : name(name)
+    , display_name(name)
+    , parent(parent)
+    , row(row)
+    , group(nullptr)
+    , model(model)
 {
-
 }
 
-void GroupViewModel::Item::insert(Group* g, const QModelIndex& idx)
+void GroupViewModel::Item::insert(Group *g, const QModelIndex &idx)
 {
     QString group_path = g->groupPath();
     QString item_path = path();
@@ -287,7 +282,7 @@ void GroupViewModel::Item::insert(Group* g, const QModelIndex& idx)
     }
 }
 
-void GroupViewModel::Item::insert(const QString& name, const QString& p, const QModelIndex& idx)
+void GroupViewModel::Item::insert(const QString &name, const QString &p, const QModelIndex &idx)
 {
     QString item_path = path();
     if (!p.startsWith(item_path))
@@ -316,7 +311,7 @@ void GroupViewModel::Item::insert(const QString& name, const QString& p, const Q
     }
 }
 
-void GroupViewModel::Item::remove(kt::Group* g, const QModelIndex& idx)
+void GroupViewModel::Item::remove(kt::Group *g, const QModelIndex &idx)
 {
     QString group_path = g->groupPath();
     QString item_path = path();
@@ -337,8 +332,7 @@ void GroupViewModel::Item::remove(kt::Group* g, const QModelIndex& idx)
     }
 }
 
-
-bool GroupViewModel::Item::operator==(const QString& n) const
+bool GroupViewModel::Item::operator==(const QString &n) const
 {
     return name == n;
 }
@@ -367,8 +361,7 @@ QString GroupViewModel::Item::path() const
         return parent->path() + QLatin1Char('/') + name;
 }
 
-
-void GroupViewModel::Item::expandedGroups(GroupView* gview, QStringList& groups, const QModelIndex& idx) const
+void GroupViewModel::Item::expandedGroups(GroupView *gview, QStringList &groups, const QModelIndex &idx) const
 {
     if (children.empty())
         return;
@@ -377,13 +370,13 @@ void GroupViewModel::Item::expandedGroups(GroupView* gview, QStringList& groups,
         groups << path();
 
     int row = 0;
-    for (const Item& child : qAsConst(children)) {
+    for (const Item &child : qAsConst(children)) {
         child.expandedGroups(gview, groups, model->index(row, 0, idx));
         row++;
     }
 }
 
-void GroupViewModel::Item::expandGroups(kt::GroupView* gview, const QStringList& groups, const QModelIndex& idx)
+void GroupViewModel::Item::expandGroups(kt::GroupView *gview, const QStringList &groups, const QModelIndex &idx)
 {
     if (children.empty())
         return;
@@ -392,19 +385,19 @@ void GroupViewModel::Item::expandGroups(kt::GroupView* gview, const QStringList&
         gview->expand(idx);
 
     int row = 0;
-    for (Item & i : children) {
+    for (Item &i : children) {
         i.expandGroups(gview, groups, model->index(row, 0, idx));
         row++;
     }
 }
 
-QModelIndex GroupViewModel::Item::findGroup(Group* g, const QModelIndex& idx)
+QModelIndex GroupViewModel::Item::findGroup(Group *g, const QModelIndex &idx)
 {
     if (group == g)
         return idx;
 
     int row = 0;
-    for (Item & i : children) {
+    for (Item &i : children) {
         QModelIndex ret = i.findGroup(g, model->index(row, 0, idx));
         row++;
         if (ret.isValid())
@@ -419,18 +412,16 @@ void GroupViewModel::Item::dump()
     QString p = path();
     int indentation = p.count(QLatin1Char('/')) - 1;
     QString indent = QStringLiteral("\t").repeated(indentation);
-    Out(SYS_GEN | LOG_DEBUG) << indent <<  path() << endl;
+    Out(SYS_GEN | LOG_DEBUG) << indent << path() << endl;
     if (group)
-        Out(SYS_GEN | LOG_DEBUG) << indent << group->groupName()  << endl;
+        Out(SYS_GEN | LOG_DEBUG) << indent << group->groupName() << endl;
     else
         Out(SYS_GEN | LOG_DEBUG) << indent << name << endl;
 
-    for (Item & i : children) {
+    for (Item &i : children) {
         Out(SYS_GEN | LOG_DEBUG) << indent << "child " << i.row << endl;
         i.dump();
     }
 }
 
-
 }
-

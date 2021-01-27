@@ -21,20 +21,23 @@
 #include <QSocketNotifier>
 #include <qhttp.h>
 
-#include <util/log.h>
-#include <util/mmapfile.h>
-#include <klocalizedstring.h>
-#include "httpserver.h"
 #include "httpclienthandler.h"
 #include "httpresponseheader.h"
-
+#include "httpserver.h"
+#include <klocalizedstring.h>
+#include <util/log.h>
+#include <util/mmapfile.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-HttpClientHandler::HttpClientHandler(HttpServer* srv, int sock) : srv(srv), client(nullptr), read_notifier(nullptr), write_notifier(nullptr), php_response_hdr(200)
+HttpClientHandler::HttpClientHandler(HttpServer *srv, int sock)
+    : srv(srv)
+    , client(nullptr)
+    , read_notifier(nullptr)
+    , write_notifier(nullptr)
+    , php_response_hdr(200)
 {
     client = new net::Socket(sock, 4);
     client->setBlocking(false);
@@ -49,7 +52,6 @@ HttpClientHandler::HttpClientHandler(HttpServer* srv, int sock) : srv(srv), clie
     output_buffer.reserve(4096);
     written = 0;
 }
-
 
 HttpClientHandler::~HttpClientHandler()
 {
@@ -69,7 +71,7 @@ void HttpClientHandler::readyToRead(int)
     if (state == WAITING_FOR_REQUEST) {
         Uint32 off = data.size();
         data.resize(data.size() + ba);
-        client->recv((Uint8*)data.data() + off, ba);
+        client->recv((Uint8 *)data.data() + off, ba);
 
         int end_of_req = data.indexOf("\r\n\r\n");
         if (end_of_req > 0) {
@@ -81,13 +83,13 @@ void HttpClientHandler::readyToRead(int)
         if (ba + bytes_read < header.contentLength()) {
             Uint32 off = data.size();
             data.resize(off + ba);
-            client->recv((Uint8*)data.data() + off, ba);
+            client->recv((Uint8 *)data.data() + off, ba);
             bytes_read += ba;
         } else {
             Uint32 left = header.contentLength() - bytes_read;
             Uint32 off = data.size();
             data.resize(off + left);
-            client->recv((Uint8*)data.data() + off, left);
+            client->recv((Uint8 *)data.data() + off, left);
             bytes_read += left;
             srv->handlePost(this, header, data);
 
@@ -129,12 +131,12 @@ void HttpClientHandler::handleRequest(int header_len)
     }
 }
 
-bool HttpClientHandler::sendFile(HttpResponseHeader& hdr, const QString& full_path)
+bool HttpClientHandler::sendFile(HttpResponseHeader &hdr, const QString &full_path)
 {
     //  Out(SYS_WEB|LOG_DEBUG) << "Sending file " << full_path << endl;
     setResponseHeaders(hdr);
     // first look in cache
-    MMapFile* c = srv->cacheLookup(full_path);
+    MMapFile *c = srv->cacheLookup(full_path);
 
     if (!c) {
         // not in cache so load it
@@ -150,7 +152,7 @@ bool HttpClientHandler::sendFile(HttpResponseHeader& hdr, const QString& full_pa
     //  Out(SYS_WEB|LOG_DEBUG) << "HTTP header : " << endl;
     //  Out(SYS_WEB|LOG_DEBUG) << hdr.toString() << endl;
 
-    QByteArray data((const char*)c->getDataPointer(), c->getSize());
+    QByteArray data((const char *)c->getDataPointer(), c->getSize());
     hdr.setValue("Content-Length", QString::number(data.size()));
     output_buffer.append(hdr.toString().toUtf8());
     output_buffer.append(data);
@@ -163,8 +165,7 @@ bool HttpClientHandler::sendFile(HttpResponseHeader& hdr, const QString& full_pa
 #define HTTP_404_ERROR "<html><head><title>404 Not Found</title></head><body>The requested file %1 was not found !</body></html>"
 #define HTTP_500_ERROR "<html><head><title>500 Internal Server Error</title></head><body><h1>Internal Server Error</h1><p>%1</p></body></html>"
 
-
-void HttpClientHandler::send404(HttpResponseHeader& hdr, const QString& path)
+void HttpClientHandler::send404(HttpResponseHeader &hdr, const QString &path)
 {
     setResponseHeaders(hdr);
     //  Out(SYS_WEB|LOG_DEBUG) << "Sending 404 " << path << endl;
@@ -176,7 +177,7 @@ void HttpClientHandler::send404(HttpResponseHeader& hdr, const QString& path)
     sendOutputBuffer();
 }
 
-void HttpClientHandler::send500(HttpResponseHeader& hdr, const QString& error)
+void HttpClientHandler::send500(HttpResponseHeader &hdr, const QString &error)
 {
     setResponseHeaders(hdr);
     //  Out(SYS_WEB|LOG_DEBUG) << "Sending 500 " << endl;
@@ -189,7 +190,7 @@ void HttpClientHandler::send500(HttpResponseHeader& hdr, const QString& error)
     sendOutputBuffer();
 }
 
-void HttpClientHandler::sendResponse(HttpResponseHeader& hdr)
+void HttpClientHandler::sendResponse(HttpResponseHeader &hdr)
 {
     setResponseHeaders(hdr);
     //  Out(SYS_WEB|LOG_DEBUG) << "Sending response " << hdr.toString() << endl;
@@ -197,7 +198,7 @@ void HttpClientHandler::sendResponse(HttpResponseHeader& hdr)
     sendOutputBuffer();
 }
 
-void HttpClientHandler::send(HttpResponseHeader& hdr, const QByteArray& data)
+void HttpClientHandler::send(HttpResponseHeader &hdr, const QByteArray &data)
 {
     setResponseHeaders(hdr);
     hdr.setValue("Content-Length", QString::number(data.length()));
@@ -208,8 +209,8 @@ void HttpClientHandler::send(HttpResponseHeader& hdr, const QByteArray& data)
 
 void HttpClientHandler::sendOutputBuffer(int)
 {
-    int r = client->send((const Uint8*)output_buffer.data() + written, output_buffer.size() - written);
-    //Out(SYS_WEB|LOG_DEBUG) << "sendOutputBuffer : " << r << " " << written << " " << output_buffer.size() << endl;
+    int r = client->send((const Uint8 *)output_buffer.data() + written, output_buffer.size() - written);
+    // Out(SYS_WEB|LOG_DEBUG) << "sendOutputBuffer : " << r << " " << written << " " << output_buffer.size() << endl;
     if (r <= 0) {
         // error happened, close the connection
         closed();
@@ -249,7 +250,7 @@ bool HttpClientHandler::shouldClose() const
     return false;
 }
 
-void HttpClientHandler::setResponseHeaders(HttpResponseHeader& hdr)
+void HttpClientHandler::setResponseHeaders(HttpResponseHeader &hdr)
 {
     if (shouldClose()) {
         if (header.majorVersion() == 1 && header.minorVersion() == 0)
@@ -267,4 +268,3 @@ void HttpClientHandler::setResponseHeaders(HttpResponseHeader& hdr)
 }
 
 #include "httpclienthandler.moc"
-

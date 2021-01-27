@@ -33,13 +33,14 @@ class CoreInterface;
 class SettingsGenerator : public WebContentGenerator
 {
 public:
-    SettingsGenerator(CoreInterface* core, HttpServer* server);
+    SettingsGenerator(CoreInterface *core, HttpServer *server);
     virtual ~SettingsGenerator();
 
-    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+    virtual void get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr);
+    virtual void post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data);
+
 private:
-    CoreInterface* core;
+    CoreInterface *core;
 };
 
 }

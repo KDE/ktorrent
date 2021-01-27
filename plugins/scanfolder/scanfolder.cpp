@@ -24,28 +24,25 @@
 
 #include <KConfigGroup>
 #include <KFileItem>
+#include <KIO/Job>
 #include <KLocalizedString>
 #include <KSharedConfig>
-#include <KIO/Job>
 
-#include <util/log.h>
-#include <util/functions.h>
-#include <util/fileops.h>
-#include "torrentloadqueue.h"
 #include "scanthread.h"
-
-
+#include "torrentloadqueue.h"
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-ScanFolder::ScanFolder(ScanThread* scanner, const QUrl &dir, bool recursive)
-    : scanner(scanner),
-      scan_directory(dir),
-      watch(nullptr),
-      recursive(recursive)
+ScanFolder::ScanFolder(ScanThread *scanner, const QUrl &dir, bool recursive)
+    : scanner(scanner)
+    , scan_directory(dir)
+    , watch(nullptr)
+    , recursive(recursive)
 {
     bt::Out(SYS_SNF | LOG_NOTICE) << "ScanFolder: scanning " << dir << endl;
 
@@ -63,12 +60,11 @@ ScanFolder::ScanFolder(ScanThread* scanner, const QUrl &dir, bool recursive)
     scanner->addDirectory(dir, recursive);
 }
 
-
 ScanFolder::~ScanFolder()
 {
 }
 
-void ScanFolder::scanDir(const QString& path)
+void ScanFolder::scanDir(const QString &path)
 {
     if (!QFileInfo(path).isDir())
         return;

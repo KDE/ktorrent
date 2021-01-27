@@ -30,20 +30,21 @@
 
 namespace kt
 {
-
 class WebViewClient
 {
 public:
-    virtual ~WebViewClient() {}
+    virtual ~WebViewClient()
+    {
+    }
 
     /// Get a search url for a search text
-    virtual QUrl searchUrl(const QString& search_text) = 0;
+    virtual QUrl searchUrl(const QString &search_text) = 0;
 
     /// Create a new tab
-    virtual QWebEngineView* newTab() = 0;
+    virtual QWebEngineView *newTab() = 0;
 
     /// Handle magnet urls
-    virtual void magnetUrl(const QUrl& magnet_url) = 0;
+    virtual void magnetUrl(const QUrl &magnet_url) = 0;
 };
 
 /**
@@ -53,7 +54,7 @@ class WebView : public QWebEngineView
 {
     Q_OBJECT
 public:
-    WebView(WebViewClient* client, ProxyHelper* proxy, QWidget* parentWidget = 0);
+    WebView(WebViewClient *client, ProxyHelper *proxy, QWidget *parentWidget = 0);
     ~WebView() override;
 
     /**
@@ -72,7 +73,7 @@ public:
      * @param search_text The text to search
      * @return A QUrl to load
      */
-    QUrl searchUrl(const QString& search_text);
+    QUrl searchUrl(const QString &search_text);
 
     /// Get the html code of the homepage
     QString homePageData();
@@ -84,18 +85,19 @@ public:
     }
 
     /// Handle magnet url
-    void handleMagnetUrl(const QUrl& magnet_url);
+    void handleMagnetUrl(const QUrl &magnet_url);
 
     /// Get heloper object that applies proxy settings
-    ProxyHelper* getProxy() const
+    ProxyHelper *getProxy() const
     {
         return m_proxy;
     }
 
     void downloadFile(QWebEngineDownloadItem *download);
+
 protected:
     void loadHomePage();
-    QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override;
+    QWebEngineView *createWindow(QWebEnginePage::WebWindowType type) override;
 
 public Q_SLOTS:
     /**
@@ -111,10 +113,10 @@ Q_SIGNALS:
 private:
     QString home_page_html;
     QString home_page_base_url;
-    WebViewClient* client;
+    WebViewClient *client;
     QUrl clicked_url;
     QUrl image_url;
-    ProxyHelper* m_proxy;
+    ProxyHelper *m_proxy;
 };
 
 }

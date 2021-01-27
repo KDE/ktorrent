@@ -35,14 +35,15 @@ class Engine;
 class TorrentDBusInterface : public QObject
 {
 public:
-    TorrentDBusInterface(const QString& ih, Engine* engine);
+    TorrentDBusInterface(const QString &ih, Engine *engine);
     virtual ~TorrentDBusInterface();
 
     void update();
+
 private:
     QString info_hash;
-    Engine* engine;
-    QDBusInterface* tor;
+    Engine *engine;
+    QDBusInterface *tor;
 };
 
 }

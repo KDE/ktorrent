@@ -19,13 +19,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <QDBusInterface>
 #include <KStandardDirs>
+#include <QDBusInterface>
 
-#include <util/log.h>
-#include "engine.h"
 #include "coredbusinterface.h"
+#include "engine.h"
 #include "torrentdbusinterface.h"
+#include <util/log.h>
 
 K_EXPORT_PLASMA_DATAENGINE(ktorrent, ktplasma::Engine)
 
@@ -42,8 +42,9 @@ QString DataDir()
         return str;
 }
 
-Engine::Engine(QObject* parent, const QVariantList& args)
-    : Plasma::DataEngine(parent, args), core(0)
+Engine::Engine(QObject *parent, const QVariantList &args)
+    : Plasma::DataEngine(parent, args)
+    , core(0)
 {
     bt::InitLog(DataDir() + "dataengine.log", false);
     dbus = QDBusConnection::sessionBus().interface();
@@ -59,12 +60,11 @@ Engine::Engine(QObject* parent, const QVariantList& args)
         dbusServiceRegistered("org.ktorrent.ktorrent");
 }
 
-
 Engine::~Engine()
 {
 }
 
-bool Engine::updateSourceEvent(const QString& source)
+bool Engine::updateSourceEvent(const QString &source)
 {
     if (torrent_map.contains(source)) {
         torrent_map.find(source)->update();
@@ -77,7 +77,7 @@ bool Engine::updateSourceEvent(const QString& source)
     return false;
 }
 
-void Engine::dbusServiceRegistered(const QString& name)
+void Engine::dbusServiceRegistered(const QString &name)
 {
     bt::Out(SYS_GEN | LOG_DEBUG) << "Engine::dbusServiceRegistered " << name << endl;
     if (name != "org.ktorrent.ktorrent")
@@ -89,7 +89,7 @@ void Engine::dbusServiceRegistered(const QString& name)
     }
 }
 
-void Engine::dbusServiceUnregistered(const QString& name)
+void Engine::dbusServiceUnregistered(const QString &name)
 {
     bt::Out(SYS_GEN | LOG_DEBUG) << "Engine::dbusServiceUnregistered " << name << endl;
     if (name != "org.ktorrent.ktorrent")
@@ -106,7 +106,7 @@ void Engine::dbusServiceUnregistered(const QString& name)
     torrent_map.clear();
 }
 
-void Engine::dbusServiceOwnerChanged(const QString& name, const QString& oldOwner, const QString& newOwner)
+void Engine::dbusServiceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner)
 {
     bt::Out(SYS_GEN | LOG_DEBUG) << "Engine::dbusServiceOwnerChanged " << name << " " << oldOwner << " " << newOwner << endl;
     if (name != "org.ktorrent.ktorrent")
@@ -120,14 +120,14 @@ void Engine::dbusServiceOwnerChanged(const QString& name, const QString& oldOwne
         dbusServiceRegistered(name);
 }
 
-void Engine::addTorrent(const QString& tor)
+void Engine::addTorrent(const QString &tor)
 {
     torrent_map.insert(tor, new TorrentDBusInterface(tor, this));
     updateSourceEvent(tor);
     setData("core", "num_torrents", torrent_map.count());
 }
 
-void Engine::removeTorrent(const QString& tor)
+void Engine::removeTorrent(const QString &tor)
 {
     torrent_map.erase(tor);
     removeAllData(tor);

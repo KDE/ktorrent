@@ -23,10 +23,10 @@
 
 #include <QList>
 
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
-#include "searchenginelist.h"
 #include "proxy_helper.h"
+#include "searchenginelist.h"
+#include <interfaces/guiinterface.h>
+#include <interfaces/plugin.h>
 
 namespace kt
 {
@@ -40,36 +40,36 @@ class SearchPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    SearchPlugin(QObject* parent, const QVariantList& args);
+    SearchPlugin(QObject *parent, const QVariantList &args);
     ~SearchPlugin() override;
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
 
-    SearchEngineList* getSearchEngineList() const
+    SearchEngineList *getSearchEngineList() const
     {
         return engines;
     }
-    SearchActivity* getSearchActivity() const
+    SearchActivity *getSearchActivity() const
     {
         return activity;
     }
-    ProxyHelper* getProxy() const
+    ProxyHelper *getProxy() const
     {
         return proxy;
     }
 
-    void search(const QString& text, int engine, bool external);
+    void search(const QString &text, int engine, bool external);
 
 private Q_SLOTS:
     void preferencesUpdated();
 
 private:
-    SearchActivity* activity;
-    SearchPrefPage* pref;
-    SearchEngineList* engines;
-    ProxyHelper* proxy;
+    SearchActivity *activity;
+    SearchPrefPage *pref;
+    SearchEngineList *engines;
+    ProxyHelper *proxy;
 };
 
 }

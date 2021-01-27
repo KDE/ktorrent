@@ -20,17 +20,15 @@
 
 #ifndef NODE_OPERATIONS_H
 #define NODE_OPERATIONS_H
-#include <QString>
 #include <QDir>
 #include <QSet>
-
+#include <QString>
 
 /**
  * A structure to represent a filetree in memory and a set of operations on it
  */
 namespace kt
 {
-
 /**
  * A node in a linked list which represents directory or file
  */
@@ -43,16 +41,15 @@ struct FNode {
     QString name;
     bool is_dir;
 
-    FNode* parent;
-    FNode* prev;
-    FNode* next;
-    FNode* first_child;
+    FNode *parent;
+    FNode *prev;
+    FNode *next;
+    FNode *first_child;
 };
 
 class NodeOperations
 {
 public:
-
     /**
      * Find a child node with a specified name (not recursive).
      *
@@ -62,7 +59,7 @@ public:
      *
      * @return pointer to node found or nullptr otherwise.
      */
-    static FNode* getChild(FNode* root, const QString& name, bool is_dir);
+    static FNode *getChild(FNode *root, const QString &name, bool is_dir);
 
     /**
      * Create a child node. Does not check if node already exists.
@@ -73,13 +70,13 @@ public:
      *
      * @return pointer to new node.
      */
-    static FNode* addChild(FNode* root, const QString& name, bool is_dir);
+    static FNode *addChild(FNode *root, const QString &name, bool is_dir);
 
     /**
      * Remove and destroy node and all its children (recursive).
      * @param n   A node to remove.
      */
-    static void removeNode(FNode* n);
+    static void removeNode(FNode *n);
 
     /**
      * Creates a subtree that represents a given filepath starting
@@ -94,7 +91,7 @@ public:
      * @return pointer to the node that represents last file or
      *         folder in filepath
      */
-    static FNode* makePath(FNode* root, const QString& fname, bool is_dir);
+    static FNode *makePath(FNode *root, const QString &fname, bool is_dir);
 
     /**
      * Find a child node that corresponds to the folder or file with
@@ -106,7 +103,7 @@ public:
      *
      * @return pointer to node found or nullptr otherwise.
      */
-    static FNode* findChild(FNode* root, const QString& fname, bool is_dir);
+    static FNode *findChild(FNode *root, const QString &fname, bool is_dir);
 
     /**
      * Creates a subtree that represents a content of a directory
@@ -116,7 +113,7 @@ public:
      * @param dir    A QDir that is set to directory whose content
      *               should be represented under the root.
      */
-    static void fillFromDir(FNode* root, const QDir& dir);
+    static void fillFromDir(FNode *root, const QDir &dir);
 
     /**
      * Removes all file nodes in tree1 that are exist in tree2.
@@ -125,7 +122,7 @@ public:
      * @param tree1  Pointer to parent node of first filetree.
      * @param tree2  Pointer to parent node of subtracted filetree.
      */
-    static void subtractTreesOnFiles(FNode* tree1, FNode* tree2);
+    static void subtractTreesOnFiles(FNode *tree1, FNode *tree2);
 
     /**
      * Removes all folder nodes that contain no file
@@ -136,7 +133,7 @@ public:
      * @param tree1  Pointer to parent node of first filetree.
      * @param tree2  Pointer to parent node of mask filetree.
      */
-    static void pruneEmptyFolders(FNode* tree1, FNode* tree2);
+    static void pruneEmptyFolders(FNode *tree1, FNode *tree2);
 
     /**
      * Add a filepath to every node in tree to the set.
@@ -145,11 +142,11 @@ public:
      * @param set    Reference to set that shall keep resulting
      *               filepaths.
      */
-    static void printTree(FNode* root, QSet<QString>& set);
+    static void printTree(FNode *root, QSet<QString> &set);
 
 private:
-    static void pruneEmptyFolders(FNode* start_folder);
-    static void printTree(FNode* root, const QString& path, QSet<QString>& set);
+    static void pruneEmptyFolders(FNode *start_folder);
+    static void printTree(FNode *root, const QString &path, QSet<QString> &set);
 };
 }
 #endif // NODE_OPERATIONS_H

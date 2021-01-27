@@ -22,9 +22,9 @@
 #ifndef KTADDPEERSDLG_H
 #define KTADDPEERSDLG_H
 
+#include "ui_addpeersdlg.h"
 #include <QDialog>
 #include <interfaces/peersource.h>
-#include "ui_addpeersdlg.h"
 
 namespace bt
 {
@@ -42,15 +42,15 @@ class AddPeersDlg : public QDialog, public Ui_AddPeersDlg
 {
     Q_OBJECT
 public:
-    AddPeersDlg(bt::TorrentInterface* tc, QWidget* parent);
+    AddPeersDlg(bt::TorrentInterface *tc, QWidget *parent);
     ~AddPeersDlg() override;
 
 private Q_SLOTS:
     void addPressed();
 
 private:
-    bt::TorrentInterface* tc;
-    ManualPeerSource* mps;
+    bt::TorrentInterface *tc;
+    ManualPeerSource *mps;
 };
 
 }

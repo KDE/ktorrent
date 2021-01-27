@@ -28,22 +28,20 @@
 
 namespace ktplasma
 {
-
 /**
     ChunkBar for the plasma applet
 */
 class ChunkBar : public QGraphicsWidget, public kt::ChunkBarRenderer
 {
 public:
-    ChunkBar(QGraphicsItem* parent);
+    ChunkBar(QGraphicsItem *parent);
     virtual ~ChunkBar();
 
-    void updateBitSets(int num_chunks, const QByteArray& downloaded, const QByteArray& excluded);
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+    void updateBitSets(int num_chunks, const QByteArray &downloaded, const QByteArray &excluded);
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    void paintChunks(QPainter* p, const QStyleOptionGraphicsItem* option,
-                     const QColor& color, const bt::BitSet& chunks);
+    void paintChunks(QPainter *p, const QStyleOptionGraphicsItem *option, const QColor &color, const bt::BitSet &chunks);
 
 private:
     bt::BitSet downloaded_chunks;

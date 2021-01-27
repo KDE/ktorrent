@@ -21,25 +21,23 @@
 
 #include <QXmlStreamWriter>
 
-#include "httpserver.h"
 #include "challengegenerator.h"
-#include "httpresponseheader.h"
 #include "httpclienthandler.h"
+#include "httpresponseheader.h"
+#include "httpserver.h"
 
 namespace kt
 {
-
-ChallengeGenerator::ChallengeGenerator(HttpServer* server) : WebContentGenerator(server, "/login/challenge.xml", PUBLIC)
+ChallengeGenerator::ChallengeGenerator(HttpServer *server)
+    : WebContentGenerator(server, "/login/challenge.xml", PUBLIC)
 {
 }
-
 
 ChallengeGenerator::~ChallengeGenerator()
 {
 }
 
-
-void ChallengeGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void ChallengeGenerator::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     Q_UNUSED(hdr);
     HttpResponseHeader rhdr(200);
@@ -55,7 +53,7 @@ void ChallengeGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& 
     hdlr->send(rhdr, output_data);
 }
 
-void ChallengeGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void ChallengeGenerator::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     Q_UNUSED(data);
     get(hdlr, hdr);

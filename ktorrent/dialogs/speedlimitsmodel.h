@@ -35,20 +35,20 @@ class Core;
 
 /**
  * Model for the SpeedLimitsDlg main list view
-*/
+ */
 class SpeedLimitsModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    SpeedLimitsModel(Core* core, QObject* parent);
+    SpeedLimitsModel(Core *core, QObject *parent);
     ~SpeedLimitsModel() override;
 
-    int rowCount(const QModelIndex& parent) const override;
-    int columnCount(const QModelIndex& parent) const override;
+    int rowCount(const QModelIndex &parent) const override;
+    int columnCount(const QModelIndex &parent) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-    QVariant data(const QModelIndex& index, int role) const override;
-    bool setData(const QModelIndex& index, const QVariant& value, int role) override;
-    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     void apply();
 
@@ -56,11 +56,11 @@ Q_SIGNALS:
     void enableApply(bool on);
 
 private:
-    bt::TorrentInterface* torrentForIndex(const QModelIndex& index) const;
+    bt::TorrentInterface *torrentForIndex(const QModelIndex &index) const;
 
 private Q_SLOTS:
-    void onTorrentAdded(bt::TorrentInterface* tc);
-    void onTorrentRemoved(bt::TorrentInterface* tc);
+    void onTorrentAdded(bt::TorrentInterface *tc);
+    void onTorrentRemoved(bt::TorrentInterface *tc);
 
 private:
     struct Limits {
@@ -74,8 +74,8 @@ private:
         bt::Uint32 assured_down_original;
     };
 
-    Core* core;
-    QMap<bt::TorrentInterface*, Limits> limits;
+    Core *core;
+    QMap<bt::TorrentInterface *, Limits> limits;
 };
 
 }

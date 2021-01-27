@@ -28,17 +28,18 @@
 
 namespace kt
 {
-
-SpinBoxDelegate::SpinBoxDelegate(QObject* parent) : QItemDelegate(parent)
-{}
-
+SpinBoxDelegate::SpinBoxDelegate(QObject *parent)
+    : QItemDelegate(parent)
+{
+}
 
 SpinBoxDelegate::~SpinBoxDelegate()
-{}
-
-QWidget* SpinBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& index) const
 {
-    QSpinBox* editor = new QSpinBox(parent);
+}
+
+QWidget *SpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &, const QModelIndex &index) const
+{
+    QSpinBox *editor = new QSpinBox(parent);
     editor->setSuffix(i18n(" KiB/s"));
     if (index.column() < 3)
         editor->setSpecialValueText(i18n("No limit"));
@@ -49,23 +50,23 @@ QWidget* SpinBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewIt
     return editor;
 }
 
-void SpinBoxDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+void SpinBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     int value = index.model()->data(index, Qt::EditRole).toInt();
-    QSpinBox* spinBox = static_cast<QSpinBox*>(editor);
+    QSpinBox *spinBox = static_cast<QSpinBox *>(editor);
     spinBox->setValue(value);
 }
 
-void SpinBoxDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
+void SpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    QSpinBox* spinBox = static_cast<QSpinBox*>(editor);
+    QSpinBox *spinBox = static_cast<QSpinBox *>(editor);
     spinBox->interpretText();
     int value = spinBox->value();
 
     model->setData(index, value, Qt::EditRole);
 }
 
-void SpinBoxDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex&) const
+void SpinBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const
 {
     QRect r = option.rect;
     if (option.rect.height() < editor->sizeHint().height())
@@ -73,11 +74,10 @@ void SpinBoxDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionVi
     editor->setGeometry(r);
 }
 
-QSize SpinBoxDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize SpinBoxDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(option)
     Q_UNUSED(index)
     return QSpinBox().sizeHint();
 }
 }
-

@@ -24,18 +24,18 @@
 #include <QFile>
 #include <QTextStream>
 
-#include <util/log.h>
-#include <util/fileops.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentfileinterface.h>
 #include "downloadordermanager.h"
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <util/fileops.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-DownloadOrderManager::DownloadOrderManager(bt::TorrentInterface* tor) : tor(tor)
+DownloadOrderManager::DownloadOrderManager(bt::TorrentInterface *tor)
+    : tor(tor)
 {
     current_normal_priority_file = current_high_priority_file = tor->getNumFiles();
 }
@@ -51,7 +51,7 @@ void DownloadOrderManager::save()
 
     QFile fptr(tor->getTorDir() + QStringLiteral("download_order"));
     if (!fptr.open(QIODevice::WriteOnly)) {
-        Out(SYS_DIO | LOG_IMPORTANT) << "Cannot open download_order file of " << tor->getDisplayName() << " : " << fptr.errorString() <<  endl;
+        Out(SYS_DIO | LOG_IMPORTANT) << "Cannot open download_order file of " << tor->getDisplayName() << " : " << fptr.errorString() << endl;
         return;
     }
 
@@ -104,14 +104,14 @@ Uint32 DownloadOrderManager::nextIncompleteFile()
     return tor->getNumFiles();
 }
 
-void DownloadOrderManager::chunkDownloaded(bt::TorrentInterface* me, Uint32 chunk)
+void DownloadOrderManager::chunkDownloaded(bt::TorrentInterface *me, Uint32 chunk)
 {
     if (!enabled() || tor->getStats().completed || tor != me)
         return;
 
-    bt::TorrentFileInterface& high_priority_file = tor->getTorrentFile(current_high_priority_file);
+    bt::TorrentFileInterface &high_priority_file = tor->getTorrentFile(current_high_priority_file);
     bool in_high_priority_file_range = chunk >= high_priority_file.getFirstChunk() && chunk <= high_priority_file.getLastChunk();
-    bt::TorrentFileInterface& normal_priority_file = tor->getTorrentFile(current_normal_priority_file);
+    bt::TorrentFileInterface &normal_priority_file = tor->getTorrentFile(current_normal_priority_file);
     bool in_normal_priority_file_range = chunk >= normal_priority_file.getFirstChunk() && chunk <= normal_priority_file.getLastChunk();
     if (in_high_priority_file_range || in_normal_priority_file_range) {
         // Check if high or normal are complete
@@ -137,7 +137,7 @@ void DownloadOrderManager::update()
     bool high_found = false;
     // set the priority of the file to FIRST and all the other files to NORMAL
     for (Uint32 file : qAsConst(order)) {
-        TorrentFileInterface& tf = tor->getTorrentFile(file);
+        TorrentFileInterface &tf = tor->getTorrentFile(file);
         if (tf.getPriority() < LAST_PRIORITY)
             continue;
 

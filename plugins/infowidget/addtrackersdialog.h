@@ -25,10 +25,8 @@
 
 #include <KEditListWidget>
 
-
 namespace kt
 {
-
 /**
  * Dialog to add trackers
  */
@@ -36,14 +34,14 @@ class AddTrackersDialog : public QDialog
 {
     Q_OBJECT
 public:
-    AddTrackersDialog(QWidget* parent, const QStringList& tracker_hints);
+    AddTrackersDialog(QWidget *parent, const QStringList &tracker_hints);
     ~AddTrackersDialog() override;
 
     /// Get the tracker list
     QStringList trackerList() const;
 
 private:
-    KEditListWidget* trackers;
+    KEditListWidget *trackers;
 };
 
 }

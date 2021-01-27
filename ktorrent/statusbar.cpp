@@ -21,23 +21,30 @@
 
 #include "statusbar.h"
 
+#include <KLocalizedString>
 #include <QLabel>
 #include <QProgressBar>
-#include <KLocalizedString>
 
-#include <util/functions.h>
 #include <dht/dhtbase.h>
+#include <util/functions.h>
 
 #include "statusbarofflineindicator.h"
 using namespace bt;
 
 namespace kt
 {
-StatusBar::StatusBar(QWidget* parent)
-    : QStatusBar(parent),
-      speed(nullptr), up_speed(0), down_speed(0),
-      transfer(nullptr), up_transfer(0), down_transfer(0),
-      dht_status(nullptr), dht_peers(0), dht_tasks(0), dht_on(false)
+StatusBar::StatusBar(QWidget *parent)
+    : QStatusBar(parent)
+    , speed(nullptr)
+    , up_speed(0)
+    , down_speed(0)
+    , transfer(nullptr)
+    , up_transfer(0)
+    , down_transfer(0)
+    , dht_status(nullptr)
+    , dht_peers(0)
+    , dht_tasks(0)
+    , dht_on(false)
 {
     QString s = i18n("Speed down: %1 / up: %2", BytesPerSecToString((double)down_speed), BytesPerSecToString((double)up_speed));
     QString t = i18n("Transferred down: %1 / up: %2", BytesToString(down_transfer), BytesToString(up_transfer));
@@ -86,7 +93,7 @@ void StatusBar::updateTransfer(bt::Uint64 up, bt::Uint64 down)
     transfer->setText(t);
 }
 
-void StatusBar::updateDHTStatus(bool on, const dht::Stats& s)
+void StatusBar::updateDHTStatus(bool on, const dht::Stats &s)
 {
     if (on == dht_on && dht_peers == s.num_peers && dht_tasks == s.num_tasks)
         return;
@@ -100,21 +107,21 @@ void StatusBar::updateDHTStatus(bool on, const dht::Stats& s)
         dht_status->setText(i18n("DHT: off"));
 }
 
-QProgressBar* StatusBar::createProgressBar()
+QProgressBar *StatusBar::createProgressBar()
 {
-    QProgressBar* pb = new QProgressBar(this);
+    QProgressBar *pb = new QProgressBar(this);
     pb->setMaximumHeight(height());
     addPermanentWidget(pb);
     return pb;
 }
 
-void StatusBar::removeProgressBar(QProgressBar* pb)
+void StatusBar::removeProgressBar(QProgressBar *pb)
 {
     removeWidget(pb);
     pb->deleteLater();
 }
 
-void StatusBar::message(const QString& msg)
+void StatusBar::message(const QString &msg)
 {
     showMessage(msg, 30 * 1000);
 }

@@ -19,30 +19,28 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <QIcon>
 #include "filterlistmodel.h"
 #include "filter.h"
+#include <QIcon>
 
 namespace kt
 {
-
-FilterListModel::FilterListModel(QObject* parent)
+FilterListModel::FilterListModel(QObject *parent)
     : QAbstractListModel(parent)
 {
 }
-
 
 FilterListModel::~FilterListModel()
 {
 }
 
-void FilterListModel::addFilter(Filter* f)
+void FilterListModel::addFilter(Filter *f)
 {
     filters.append(f);
     insertRow(filters.count() - 1);
 }
 
-void FilterListModel::removeFilter(Filter* f)
+void FilterListModel::removeFilter(Filter *f)
 {
     int idx = filters.indexOf(f);
     beginResetModel();
@@ -52,7 +50,7 @@ void FilterListModel::removeFilter(Filter* f)
     endResetModel();
 }
 
-Filter* FilterListModel::filterForIndex(const QModelIndex& idx)
+Filter *FilterListModel::filterForIndex(const QModelIndex &idx)
 {
     if (!idx.isValid())
         return 0;
@@ -60,25 +58,25 @@ Filter* FilterListModel::filterForIndex(const QModelIndex& idx)
     return filters.at(idx.row());
 }
 
-Filter* FilterListModel::filterByName(const QString& name)
+Filter *FilterListModel::filterByName(const QString &name)
 {
-    for (Filter* f : qAsConst(filters))
+    for (Filter *f : qAsConst(filters))
         if (f->filterName() == name)
             return f;
 
     return 0;
 }
 
-Filter* FilterListModel::filterByID(const QString& id)
+Filter *FilterListModel::filterByID(const QString &id)
 {
-    for (Filter* f : qAsConst(filters))
+    for (Filter *f : qAsConst(filters))
         if (f->filterID() == id)
             return f;
 
     return 0;
 }
 
-Filter* FilterListModel::filterByRow(int row)
+Filter *FilterListModel::filterByRow(int row)
 {
     if (row < 0 || row >= filters.count())
         return 0;
@@ -86,7 +84,7 @@ Filter* FilterListModel::filterByRow(int row)
         return filters.at(row);
 }
 
-int FilterListModel::rowCount(const QModelIndex& parent) const
+int FilterListModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -94,12 +92,12 @@ int FilterListModel::rowCount(const QModelIndex& parent) const
         return filters.count();
 }
 
-QVariant FilterListModel::data(const QModelIndex& index, int role) const
+QVariant FilterListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() < 0 || index.row() >= filters.count())
         return QVariant();
 
-    Filter* f = filters.at(index.row());
+    Filter *f = filters.at(index.row());
     if (!f)
         return QVariant();
 
@@ -113,7 +111,7 @@ QVariant FilterListModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool FilterListModel::removeRows(int row, int count, const QModelIndex& parent)
+bool FilterListModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
@@ -121,7 +119,7 @@ bool FilterListModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool FilterListModel::insertRows(int row, int count, const QModelIndex& parent)
+bool FilterListModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);

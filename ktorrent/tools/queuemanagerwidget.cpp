@@ -25,29 +25,29 @@
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QLineEdit>
-#include <QTreeView>
 #include <QToolBar>
+#include <QTreeView>
 
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KStandardGuiItem>
 
+#include "queuemanagermodel.h"
 #include <torrent/queuemanager.h>
 #include <util/log.h>
-#include "queuemanagermodel.h"
-
 
 using namespace bt;
 
 namespace kt
 {
-
-QueueManagerWidget::QueueManagerWidget(QueueManager* qman, QWidget* parent) : QWidget(parent), qman(qman)
+QueueManagerWidget::QueueManagerWidget(QueueManager *qman, QWidget *parent)
+    : QWidget(parent)
+    , qman(qman)
 {
-    QHBoxLayout* layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setMargin(0);
     layout->setSpacing(0);
-    QVBoxLayout* vbox = new QVBoxLayout();
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->setMargin(0);
     vbox->setSpacing(0);
     view = new QTreeView(this);
@@ -112,22 +112,21 @@ QueueManagerWidget::QueueManagerWidget(QueueManager* qman, QWidget* parent) : QW
     view->setAutoScroll(true);
     view->setSelectionMode(QAbstractItemView::ContiguousSelection);
 
-    connect(view->selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, &QueueManagerWidget::selectionChanged);
+    connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &QueueManagerWidget::selectionChanged);
 
     updateButtons();
 }
 
-
 QueueManagerWidget::~QueueManagerWidget()
-{}
+{
+}
 
-void QueueManagerWidget::onTorrentAdded(bt::TorrentInterface* tc)
+void QueueManagerWidget::onTorrentAdded(bt::TorrentInterface *tc)
 {
     model->onTorrentAdded(tc);
 }
 
-void QueueManagerWidget::onTorrentRemoved(bt::TorrentInterface* tc)
+void QueueManagerWidget::onTorrentRemoved(bt::TorrentInterface *tc)
 {
     model->onTorrentRemoved(tc);
 }
@@ -136,7 +135,7 @@ void QueueManagerWidget::moveUpClicked()
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
     QList<int> rows;
-    for (const QModelIndex& idx : sel)
+    for (const QModelIndex &idx : sel)
         rows.append(idx.row());
 
     if (rows.isEmpty() || rows.front() == 0)
@@ -160,7 +159,7 @@ void QueueManagerWidget::moveDownClicked()
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
     QList<int> rows;
-    for (const QModelIndex& idx : sel)
+    for (const QModelIndex &idx : sel)
         rows.append(idx.row());
 
     int rowcount = model->rowCount(QModelIndex());
@@ -185,7 +184,7 @@ void QueueManagerWidget::moveTopClicked()
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
     QList<int> rows;
-    for (const QModelIndex& idx : sel)
+    for (const QModelIndex &idx : sel)
         rows.append(idx.row());
 
     if (rows.isEmpty() || rows.front() == 0)
@@ -206,7 +205,7 @@ void QueueManagerWidget::moveBottomClicked()
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
     QList<int> rows;
-    for (const QModelIndex& idx : sel)
+    for (const QModelIndex &idx : sel)
         rows.append(idx.row());
 
     int rowcount = model->rowCount(QModelIndex());
@@ -258,7 +257,7 @@ void QueueManagerWidget::update()
     model->update();
 }
 
-void QueueManagerWidget::searchTextChanged(const QString& t)
+void QueueManagerWidget::searchTextChanged(const QString &t)
 {
     QModelIndex idx = model->find(t);
     if (idx.isValid()) {
@@ -286,13 +285,13 @@ void QueueManagerWidget::showNotQueued(bool on)
     model->setShowNotQueued(on);
 }
 
-bool QueueManagerWidget::indexVisible(const QModelIndex& idx)
+bool QueueManagerWidget::indexVisible(const QModelIndex &idx)
 {
     QRect r = view->visualRect(idx);
     return view->viewport()->rect().contains(r);
 }
 
-void QueueManagerWidget::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void QueueManagerWidget::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(selected);
     Q_UNUSED(deselected);
@@ -318,4 +317,3 @@ void QueueManagerWidget::updateButtons()
 }
 
 }
-

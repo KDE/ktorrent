@@ -25,7 +25,6 @@
 
 namespace kt
 {
-
 /**
     @author Joris Guisson <joris.guisson@gmail.com>
 */
@@ -35,8 +34,7 @@ public:
     AllGroup();
     ~AllGroup() override;
 
-    bool isMember(TorrentInterface* tor) override;
-
+    bool isMember(TorrentInterface *tor) override;
 };
 
 }

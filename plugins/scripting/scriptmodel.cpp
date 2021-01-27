@@ -27,30 +27,28 @@
 #include <KTar>
 #include <KZip>
 
+#include <interfaces/functions.h>
 #include <util/error.h>
 #include <util/fileops.h>
 #include <util/log.h>
-#include <interfaces/functions.h>
 
-#include "scriptmodel.h"
 #include "script.h"
+#include "scriptmodel.h"
 
 using namespace bt;
 
 namespace kt
 {
-
-ScriptModel::ScriptModel(QObject* parent)
+ScriptModel::ScriptModel(QObject *parent)
     : QAbstractListModel(parent)
 {
 }
-
 
 ScriptModel::~ScriptModel()
 {
 }
 
-void ScriptModel::addScript(const QString& file)
+void ScriptModel::addScript(const QString &file)
 {
     Out(SYS_SCR | LOG_NOTICE) << "Adding script from " << file << endl;
     QMimeDatabase db;
@@ -69,26 +67,26 @@ void ScriptModel::addScript(const QString& file)
         }
     } else {
         // make sure we don't add dupes
-        for (Script* s : qAsConst(scripts))
+        for (Script *s : qAsConst(scripts))
             if (s->scriptFile() == file)
                 return;
 
-        Script* s = new Script(file, this);
+        Script *s = new Script(file, this);
         scripts.append(s);
         insertRow(scripts.count() - 1);
     }
 }
 
-Script* ScriptModel::addScriptFromDesktopFile(const QString& dir, const QString& desktop_file)
+Script *ScriptModel::addScriptFromDesktopFile(const QString &dir, const QString &desktop_file)
 {
-    Script* s = new Script(this);
+    Script *s = new Script(this);
     if (!s->loadFromDesktopFile(dir, desktop_file)) {
         delete s;
         return 0;
     }
 
     // we don't want dupes
-    for (Script* os : qAsConst(scripts)) {
+    for (Script *os : qAsConst(scripts)) {
         if (s->scriptFile() == os->scriptFile()) {
             delete s;
             return 0;
@@ -101,35 +99,35 @@ Script* ScriptModel::addScriptFromDesktopFile(const QString& dir, const QString&
     return s;
 }
 
-void ScriptModel::addScriptFromArchive(KArchive* archive)
+void ScriptModel::addScriptFromArchive(KArchive *archive)
 {
     if (!archive->open(QIODevice::ReadOnly))
         throw bt::Error(i18n("Cannot open archive for reading."));
 
-    const KArchiveDirectory* dir = archive->directory();
+    const KArchiveDirectory *dir = archive->directory();
     if (!dir)
         throw bt::Error(i18n("Invalid archive."));
 
     const QStringList entries = dir->entries();
-    for (const QString& e : entries) {
-        const KArchiveEntry* entry = dir->entry(e);
+    for (const QString &e : entries) {
+        const KArchiveEntry *entry = dir->entry(e);
         if (entry && entry->isDirectory()) {
-            addScriptFromArchiveDirectory((const KArchiveDirectory*)entry);
+            addScriptFromArchiveDirectory((const KArchiveDirectory *)entry);
         }
     }
 }
 
-void ScriptModel::addScriptFromArchiveDirectory(const KArchiveDirectory* dir)
+void ScriptModel::addScriptFromArchiveDirectory(const KArchiveDirectory *dir)
 {
     const QStringList files = dir->entries();
-    for (const QString& file : files) {
+    for (const QString &file : files) {
         // look for the desktop file
         if (!file.endsWith(QStringLiteral(".desktop")) && !file.endsWith(QStringLiteral(".DESKTOP")))
             continue;
 
         // check for duplicate packages
         QString dest_dir = kt::DataDir() + QStringLiteral("scripts/") + dir->name() + QLatin1Char('/');
-        for (Script* s : qAsConst(scripts)) {
+        for (Script *s : qAsConst(scripts)) {
             if (s->packageDirectory() == dest_dir)
                 throw bt::Error(i18n("There is already a script package named %1 installed.", dir->name()));
         }
@@ -145,15 +143,14 @@ void ScriptModel::addScriptFromArchiveDirectory(const KArchiveDirectory* dir)
     throw bt::Error(i18n("No script found in archive."));
 }
 
-
-int ScriptModel::rowCount(const QModelIndex& parent) const
+int ScriptModel::rowCount(const QModelIndex &parent) const
 {
     return parent.isValid() ? 0 : scripts.count();
 }
 
-QVariant ScriptModel::data(const QModelIndex& index, int role) const
+QVariant ScriptModel::data(const QModelIndex &index, int role) const
 {
-    Script* s = scriptForIndex(index);
+    Script *s = scriptForIndex(index);
     if (!s)
         return QVariant();
 
@@ -168,9 +165,10 @@ QVariant ScriptModel::data(const QModelIndex& index, int role) const
         if (s->executeable())
             return i18n("<b>%1</b><br/><br/>%2", s->name(), s->metaInfo().comment);
         else
-            return i18n("No interpreter for this script could be found, so it cannot be executed. "
-                        "Please make sure the right interpreter is installed.<br/><br/>"
-                        "<b>Hint:</b> All standard ktorrent scripts require krosspython");
+            return i18n(
+                "No interpreter for this script could be found, so it cannot be executed. "
+                "Please make sure the right interpreter is installed.<br/><br/>"
+                "<b>Hint:</b> All standard ktorrent scripts require krosspython");
     case CommentRole:
         return s->metaInfo().comment;
     case ConfigurableRole:
@@ -180,12 +178,12 @@ QVariant ScriptModel::data(const QModelIndex& index, int role) const
     }
 }
 
-bool ScriptModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool ScriptModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid())
         return false;
 
-    Script* s = scriptForIndex(index);
+    Script *s = scriptForIndex(index);
     if (!s)
         return false;
 
@@ -207,12 +205,12 @@ bool ScriptModel::setData(const QModelIndex& index, const QVariant& value, int r
     return false;
 }
 
-Qt::ItemFlags ScriptModel::flags(const QModelIndex& index) const
+Qt::ItemFlags ScriptModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return QAbstractItemModel::flags(index);
 
-    Script* s = scriptForIndex(index);
+    Script *s = scriptForIndex(index);
     if (!s)
         return QAbstractItemModel::flags(index);
 
@@ -222,7 +220,7 @@ Qt::ItemFlags ScriptModel::flags(const QModelIndex& index) const
         return Qt::ItemIsSelectable | Qt::ItemIsUserCheckable;
 }
 
-Script* ScriptModel::scriptForIndex(const QModelIndex& index) const
+Script *ScriptModel::scriptForIndex(const QModelIndex &index) const
 {
     if (!index.isValid())
         return 0;
@@ -233,7 +231,7 @@ Script* ScriptModel::scriptForIndex(const QModelIndex& index) const
     return scripts[index.row()];
 }
 
-bool ScriptModel::removeRows(int row, int count, const QModelIndex& parent)
+bool ScriptModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
@@ -241,7 +239,7 @@ bool ScriptModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool ScriptModel::insertRows(int row, int count, const QModelIndex& parent)
+bool ScriptModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -252,7 +250,7 @@ bool ScriptModel::insertRows(int row, int count, const QModelIndex& parent)
 QStringList ScriptModel::scriptFiles() const
 {
     QStringList ret;
-    for (Script* s : qAsConst(scripts))
+    for (Script *s : qAsConst(scripts))
         ret << s->scriptFile();
     return ret;
 }
@@ -260,17 +258,17 @@ QStringList ScriptModel::scriptFiles() const
 QStringList ScriptModel::runningScriptFiles() const
 {
     QStringList ret;
-    for (Script* s : qAsConst(scripts)) {
+    for (Script *s : qAsConst(scripts)) {
         if (s->running())
             ret << s->scriptFile();
     }
     return ret;
 }
 
-void ScriptModel::runScripts(const QStringList& r)
+void ScriptModel::runScripts(const QStringList &r)
 {
     int idx = 0;
-    for (Script* s : qAsConst(scripts)) {
+    for (Script *s : qAsConst(scripts)) {
         if (r.contains(s->scriptFile()) && !s->running()) {
             s->execute();
             QModelIndex i = index(idx, 0);
@@ -280,18 +278,18 @@ void ScriptModel::runScripts(const QStringList& r)
     }
 }
 
-void ScriptModel::removeScripts(const QModelIndexList& indices)
+void ScriptModel::removeScripts(const QModelIndexList &indices)
 {
-    QList<Script*> to_remove;
+    QList<Script *> to_remove;
 
-    for (const QModelIndex& idx : indices) {
-        Script* s = scriptForIndex(idx);
+    for (const QModelIndex &idx : indices) {
+        Script *s = scriptForIndex(idx);
         if (s && s->removable())
             to_remove << s;
     }
 
     beginResetModel();
-    for (Script* s : qAsConst(to_remove)) {
+    for (Script *s : qAsConst(to_remove)) {
         if (!s->packageDirectory().isEmpty())
             bt::Delete(s->packageDirectory(), true);
         scripts.removeAll(s);

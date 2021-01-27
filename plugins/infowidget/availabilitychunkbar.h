@@ -21,12 +21,11 @@
 #ifndef AVAILABILITYCHUNKBAR_H
 #define AVAILABILITYCHUNKBAR_H
 
-#include <torrent/chunkbar.h>
 #include <interfaces/torrentinterface.h>
+#include <torrent/chunkbar.h>
 
 namespace kt
 {
-
 /**
 @author Joris Guisson
 */
@@ -34,14 +33,15 @@ class AvailabilityChunkBar : public ChunkBar
 {
     Q_OBJECT
 public:
-    AvailabilityChunkBar(QWidget* parent);
+    AvailabilityChunkBar(QWidget *parent);
     ~AvailabilityChunkBar() override;
 
-    const bt::BitSet& getBitSet() const override;
+    const bt::BitSet &getBitSet() const override;
 
-    void setTC(bt::TorrentInterface* tc);
+    void setTC(bt::TorrentInterface *tc);
+
 private:
-    bt::TorrentInterface* curr_tc;
+    bt::TorrentInterface *curr_tc;
 };
 }
 

@@ -38,11 +38,11 @@ class SearchActivity : public kt::Activity
 {
     Q_OBJECT
 public:
-    SearchActivity(SearchPlugin* sp, QWidget* parent);
+    SearchActivity(SearchPlugin *sp, QWidget *parent);
     ~SearchActivity() override;
 
     /// Add a SearchWidget
-    void search(const QString& text, int engine);
+    void search(const QString &text, int engine);
 
     /// Save all current searches
     void saveCurrentSearches();
@@ -54,7 +54,7 @@ public:
     void saveState(KSharedConfigPtr cfg);
 
     /// Create a new empty search tab
-    SearchWidget* newTab();
+    SearchWidget *newTab();
 
 public Q_SLOTS:
     void home();
@@ -62,25 +62,25 @@ public Q_SLOTS:
     void currentTabChanged(int idx);
     void closeTab();
     void openTab();
-    void setTabTitle(SearchWidget* sw, const QString& title);
-    void setTabIcon(SearchWidget* sw, const QIcon& icon);
+    void setTabTitle(SearchWidget *sw, const QString &title);
+    void setTabIcon(SearchWidget *sw, const QIcon &icon);
     void clearSearchHistory();
     void search();
     void find();
 
 private:
-    SearchWidget* newSearchWidget(const QString& text);
+    SearchWidget *newSearchWidget(const QString &text);
     void setupActions();
 
 private:
-    QTabWidget* tabs;
-    QList<SearchWidget*> searches;
-    SearchPlugin* sp;
-    SearchToolBar* toolbar;
+    QTabWidget *tabs;
+    QList<SearchWidget *> searches;
+    SearchPlugin *sp;
+    SearchToolBar *toolbar;
 
-    QAction * find_action;
-    QAction * search_action;
-    QAction * home_action;
+    QAction *find_action;
+    QAction *search_action;
+    QAction *home_action;
 };
 }
 

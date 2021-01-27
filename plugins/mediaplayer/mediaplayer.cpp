@@ -19,22 +19,23 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <Phonon/Path>
+#include <KLocalizedString>
 #include <Phonon/AudioOutput>
 #include <Phonon/Global>
-#include <KLocalizedString>
+#include <Phonon/Path>
 
-#include <util/log.h>
-#include <torrent/torrentfilestream.h>
 #include "mediaplayer.h"
+#include <torrent/torrentfilestream.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-MediaPlayer::MediaPlayer(QObject* parent)
-    : QObject(parent), buffering(false), manually_paused(false)
+MediaPlayer::MediaPlayer(QObject *parent)
+    : QObject(parent)
+    , buffering(false)
+    , manually_paused(false)
 {
     media = new Phonon::MediaObject(this);
     audio = new Phonon::AudioOutput(this);
@@ -45,7 +46,6 @@ MediaPlayer::MediaPlayer(QObject* parent)
     connect(media, &Phonon::MediaObject::aboutToFinish, this, &MediaPlayer::aboutToFinish);
     media->setTickInterval(1000);
 }
-
 
 MediaPlayer::~MediaPlayer()
 {
@@ -86,7 +86,6 @@ void MediaPlayer::play(kt::MediaFileRef file)
     media->play();
 }
 
-
 void MediaPlayer::queue(kt::MediaFileRef file)
 {
     Out(SYS_MPL | LOG_NOTICE) << "MediaPlayer: enqueue " << file.path() << endl;
@@ -126,7 +125,7 @@ MediaFileRef MediaPlayer::prev()
     if (media->state() == Phonon::PausedState || media->state() == Phonon::PlayingState) {
         if (history.count() >= 2) {
             history.pop_back(); // remove the currently playing file
-            MediaFileRef& file = history.back();
+            MediaFileRef &file = history.back();
             media->setCurrentSource(file.createMediaSource(this));
             media->play();
             Out(SYS_MPL | LOG_NOTICE) << "MediaPlayer: playing previous file " << file.path() << endl;
@@ -134,7 +133,7 @@ MediaFileRef MediaPlayer::prev()
         }
     } else {
         if (history.count() > 0) {
-            MediaFileRef& file = history.back();
+            MediaFileRef &file = history.back();
             media->setCurrentSource(file.createMediaSource(this));
             media->play();
             Out(SYS_MPL | LOG_NOTICE) << "MediaPlayer: playing previous file " << file.path() << endl;
@@ -213,7 +212,6 @@ void MediaPlayer::streamStateChanged(int state)
             media->play();
     }
 }
-
 
 MediaFileRef MediaPlayer::getCurrentSource() const
 {

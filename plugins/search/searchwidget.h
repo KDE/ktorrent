@@ -23,8 +23,8 @@
 
 #include <QLineEdit>
 
-#include <ktoolbar.h>
 #include "webview.h"
+#include <ktoolbar.h>
 
 class QProgressBar;
 class KComboBox;
@@ -33,7 +33,6 @@ namespace kt
 {
 class SearchWidget;
 class SearchPlugin;
-
 
 /**
     @author Joris Guisson
@@ -44,7 +43,7 @@ class SearchWidget : public QWidget, public WebViewClient
 {
     Q_OBJECT
 public:
-    SearchWidget(SearchPlugin* sp);
+    SearchWidget(SearchPlugin *sp);
     ~SearchWidget() override;
 
     QString getSearchText() const
@@ -56,16 +55,16 @@ public:
     int getSearchBarEngine() const;
     void setSearchBarEngine(int engine);
     bool backAvailable() const;
-    void restore(const QUrl &url, const QString& text, const QString& sb_text, int engine);
+    void restore(const QUrl &url, const QString &text, const QString &sb_text, int engine);
 
 Q_SIGNALS:
     void enableBack(bool on);
     void openNewTab(const QUrl &url);
-    void changeTitle(SearchWidget* w, const QString& title);
-    void changeIcon(SearchWidget* w, const QIcon& icon);
+    void changeTitle(SearchWidget *w, const QString &title);
+    void changeIcon(SearchWidget *w, const QIcon &icon);
 
 public Q_SLOTS:
-    void search(const QString& text, int engine = 0);
+    void search(const QString &text, int engine = 0);
     void home();
     void search();
 
@@ -74,22 +73,22 @@ private Q_SLOTS:
     void loadFinished(bool ok);
     void loadProgress(int p);
     void iconChanged();
-    void titleChanged(const QString& text);
+    void titleChanged(const QString &text);
     void downloadTorrentFile(QWebEngineDownloadItem *download);
 
 private:
-    QUrl searchUrl(const QString& search_text) override;
-    QWebEngineView* newTab() override;
-    void magnetUrl(const QUrl& magnet_url) override;
+    QUrl searchUrl(const QString &search_text) override;
+    QWebEngineView *newTab() override;
+    void magnetUrl(const QUrl &magnet_url) override;
 
 private:
-    WebView* webview;
-    KToolBar* sbar;
-    SearchPlugin* sp;
-    QProgressBar* prog;
+    WebView *webview;
+    KToolBar *sbar;
+    SearchPlugin *sp;
+    QProgressBar *prog;
 
-    KComboBox* search_engine;
-    QLineEdit* search_text;
+    KComboBox *search_engine;
+    QLineEdit *search_text;
 };
 
 }

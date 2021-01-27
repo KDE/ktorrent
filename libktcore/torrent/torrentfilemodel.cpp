@@ -21,25 +21,31 @@
 
 #include "torrentfilemodel.h"
 
-#include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {
-TorrentFileModel::TorrentFileModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent)
-    : QAbstractItemModel(parent), tc(tc), mode(mode), file_names_editable(false)
-{}
+TorrentFileModel::TorrentFileModel(bt::TorrentInterface *tc, DeselectMode mode, QObject *parent)
+    : QAbstractItemModel(parent)
+    , tc(tc)
+    , mode(mode)
+    , file_names_editable(false)
+{
+}
 
 TorrentFileModel::~TorrentFileModel()
-{}
+{
+}
 
-QByteArray TorrentFileModel::saveExpandedState(QSortFilterProxyModel*, QTreeView*)
+QByteArray TorrentFileModel::saveExpandedState(QSortFilterProxyModel *, QTreeView *)
 {
     return QByteArray();
 }
 
-void TorrentFileModel::loadExpandedState(QSortFilterProxyModel*, QTreeView*, const QByteArray&)
-{}
+void TorrentFileModel::loadExpandedState(QSortFilterProxyModel *, QTreeView *, const QByteArray &)
+{
+}
 
 void TorrentFileModel::missingFilesMarkedDND()
 {
@@ -48,7 +54,8 @@ void TorrentFileModel::missingFilesMarkedDND()
 }
 
 void TorrentFileModel::update()
-{}
+{
+}
 
 void TorrentFileModel::onCodecChange()
 {
@@ -56,7 +63,7 @@ void TorrentFileModel::onCodecChange()
     endResetModel();
 }
 
-Qt::ItemFlags TorrentFileModel::flags(const QModelIndex& index) const
+Qt::ItemFlags TorrentFileModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return {};
@@ -71,16 +78,15 @@ Qt::ItemFlags TorrentFileModel::flags(const QModelIndex& index) const
     return flags;
 }
 
-void TorrentFileModel::filePercentageChanged(bt::TorrentFileInterface* file, float percentage)
+void TorrentFileModel::filePercentageChanged(bt::TorrentFileInterface *file, float percentage)
 {
     Q_UNUSED(file);
     Q_UNUSED(percentage);
 }
 
-void TorrentFileModel::filePreviewChanged(bt::TorrentFileInterface* file, bool preview)
+void TorrentFileModel::filePreviewChanged(bt::TorrentFileInterface *file, bool preview)
 {
     Q_UNUSED(file);
     Q_UNUSED(preview);
 }
 }
-

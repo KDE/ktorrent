@@ -26,7 +26,6 @@
 
 namespace kt
 {
-
 /**
     @author Joris Guisson <joris.guisson@gmail.com>
 */
@@ -39,15 +38,14 @@ class HttpResponseHeader
 
 public:
     HttpResponseHeader(int response_code, int major_version = 1, int minor_version = 1);
-    HttpResponseHeader(const HttpResponseHeader& hdr);
+    HttpResponseHeader(const HttpResponseHeader &hdr);
     virtual ~HttpResponseHeader();
 
     void setResponseCode(int response_code);
-    void setValue(const QString& key, const QString& value);
+    void setValue(const QString &key, const QString &value);
 
     QString toString() const;
 };
-
 
 }
 

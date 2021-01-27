@@ -23,10 +23,8 @@
 #define KTMEDIAPLAYERPLUGIN_H
 
 #include <QModelIndex>
-#include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
-
-
+#include <interfaces/plugin.h>
 
 namespace kt
 {
@@ -39,15 +37,15 @@ class MediaPlayerPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    MediaPlayerPlugin(QObject* parent, const QVariantList& args);
+    MediaPlayerPlugin(QObject *parent, const QVariantList &args);
     ~MediaPlayerPlugin() override;
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
 
 private:
-    MediaPlayerActivity* act;
+    MediaPlayerActivity *act;
 };
 
 }

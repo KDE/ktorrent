@@ -25,26 +25,26 @@
 
 #include <KLocalizedString>
 
-#include <util/bitset.h>
 #include <interfaces/torrentinterface.h>
+#include <util/bitset.h>
 
 namespace kt
 {
-
-AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent) : ChunkBar(parent), curr_tc(nullptr)
+AvailabilityChunkBar::AvailabilityChunkBar(QWidget *parent)
+    : ChunkBar(parent)
+    , curr_tc(nullptr)
 {
-    setToolTip(i18n("<img src=\"available_color\">&nbsp; - Available Chunks<br>"
-                    "<img src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br>"
-                    "<img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
+    setToolTip(
+        i18n("<img src=\"available_color\">&nbsp; - Available Chunks<br>"
+             "<img src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br>"
+             "<img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
 }
-
 
 AvailabilityChunkBar::~AvailabilityChunkBar()
 {
 }
 
-
-const bt::BitSet& AvailabilityChunkBar::getBitSet() const
+const bt::BitSet &AvailabilityChunkBar::getBitSet() const
 {
     if (curr_tc)
         return curr_tc->availableChunksBitSet();
@@ -52,11 +52,11 @@ const bt::BitSet& AvailabilityChunkBar::getBitSet() const
         return bt::BitSet::null;
 }
 
-void AvailabilityChunkBar::setTC(bt::TorrentInterface* tc)
+void AvailabilityChunkBar::setTC(bt::TorrentInterface *tc)
 {
     curr_tc = tc;
     QSize s = contentsRect().size();
-    //Out() << "Pixmap : " << s.width() << " " << s.height() << endl;
+    // Out() << "Pixmap : " << s.width() << " " << s.height() << endl;
     pixmap = QPixmap(s);
     pixmap.fill(palette().color(QPalette::Active, QPalette::Base));
     QPainter painter(&pixmap);
@@ -64,4 +64,3 @@ void AvailabilityChunkBar::setTC(bt::TorrentInterface* tc)
     update();
 }
 }
-

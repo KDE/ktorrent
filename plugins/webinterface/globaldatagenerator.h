@@ -37,16 +37,17 @@ class CoreInterface;
 class GlobalDataGenerator : public WebContentGenerator
 {
 public:
-    GlobalDataGenerator(CoreInterface* core, HttpServer* server);
+    GlobalDataGenerator(CoreInterface *core, HttpServer *server);
     virtual ~GlobalDataGenerator();
 
-    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-private:
-    void writeElement(QXmlStreamWriter& out, const QString& name, const QString& value);
+    virtual void get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr);
+    virtual void post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data);
 
 private:
-    CoreInterface* core;
+    void writeElement(QXmlStreamWriter &out, const QString &name, const QString &value);
+
+private:
+    CoreInterface *core;
 };
 
 }

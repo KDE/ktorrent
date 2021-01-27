@@ -23,13 +23,13 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QtGlobal>
 #include <QFile>
 #include <QIcon>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTextStream>
+#include <QtGlobal>
 
 #include <KActionCollection>
 #include <KComboBox>
@@ -41,21 +41,20 @@
 #include <KStandardGuiItem>
 #include <KToolBarLabelAction>
 
+#include "searchenginelist.h"
+#include "searchplugin.h"
+#include "searchpluginsettings.h"
 #include <interfaces/functions.h>
 #include <util/fileops.h>
 #include <util/log.h>
-#include "searchenginelist.h"
-#include "searchpluginsettings.h"
-#include "searchplugin.h"
 
 using namespace bt;
 
 namespace kt
 {
-
-SearchToolBar::SearchToolBar(KActionCollection* ac, kt::SearchEngineList* sl, QObject* parent) :
-    QObject(parent),
-    m_current_search_engine(0)
+SearchToolBar::SearchToolBar(KActionCollection *ac, kt::SearchEngineList *sl, QObject *parent)
+    : QObject(parent)
+    , m_current_search_engine(0)
 {
     m_search_text = new KComboBox(nullptr);
     m_search_text->setEditable(true);
@@ -63,14 +62,14 @@ SearchToolBar::SearchToolBar(KActionCollection* ac, kt::SearchEngineList* sl, QO
     m_search_text->setInsertPolicy(QComboBox::NoInsert);
     m_search_text->setMinimumWidth(150);
 
-    QLineEdit* search_text_lineedit = new QLineEdit(m_search_text);
+    QLineEdit *search_text_lineedit = new QLineEdit(m_search_text);
     search_text_lineedit->setClearButtonEnabled(true);
     m_search_text->setLineEdit(search_text_lineedit);
 
     connect(m_search_text->lineEdit(), &QLineEdit::returnPressed, this, &SearchToolBar::searchBoxReturn);
     connect(m_search_text->lineEdit(), &QLineEdit::textChanged, this, &SearchToolBar::textChanged);
 
-    QWidgetAction * search_text_action = new QWidgetAction(this);
+    QWidgetAction *search_text_action = new QWidgetAction(this);
     search_text_action->setText(i18n("Search Text"));
     search_text_action->setDefaultWidget(m_search_text);
     ac->addAction(QLatin1String("search_text"), search_text_action);
@@ -80,16 +79,16 @@ SearchToolBar::SearchToolBar(KActionCollection* ac, kt::SearchEngineList* sl, QO
     m_search_new_tab->setEnabled(false);
     ac->addAction(QLatin1String("search"), m_search_new_tab);
 
-    QWidgetAction * search_engine_action = new QWidgetAction(this);
+    QWidgetAction *search_engine_action = new QWidgetAction(this);
     search_engine_action->setText(i18n("Search Engine"));
     m_search_engine = new QComboBox(nullptr);
     search_engine_action->setDefaultWidget(m_search_engine);
     ac->addAction(QLatin1String("search_engine"), search_engine_action);
     connect(m_search_engine, qOverload<int>(&QComboBox::currentIndexChanged), this, &SearchToolBar::selectedEngineChanged);
 
-    QWidgetAction * search_engine_label_action = new QWidgetAction(this);
+    QWidgetAction *search_engine_label_action = new QWidgetAction(this);
     search_engine_label_action->setText(i18n("Search Engine Label"));
-    QLabel* l = new QLabel(i18n(" Engine: "), nullptr);
+    QLabel *l = new QLabel(i18n(" Engine: "), nullptr);
     search_engine_label_action->setDefaultWidget(l);
     ac->addAction(QLatin1String("search_engine_label"), search_engine_label_action);
 
@@ -128,7 +127,7 @@ void SearchToolBar::saveSettings()
 void SearchToolBar::searchBoxReturn()
 {
     QString str = m_search_text->currentText();
-    KCompletion* comp = m_search_text->completionObject();
+    KCompletion *comp = m_search_text->completionObject();
     if (!m_search_text->contains(str)) {
         comp->addItem(str);
         m_search_text->addItem(str);
@@ -143,7 +142,7 @@ void SearchToolBar::searchNewTabPressed()
     searchBoxReturn();
 }
 
-void SearchToolBar::textChanged(const QString& str)
+void SearchToolBar::textChanged(const QString &str)
 {
     m_search_new_tab->setEnabled(str.length());
 }
@@ -154,7 +153,7 @@ void SearchToolBar::loadSearchHistory()
     if (!fptr.open(QIODevice::ReadOnly))
         return;
 
-    KCompletion* comp = m_search_text->completionObject();
+    KCompletion *comp = m_search_text->completionObject();
 
     Uint32 cnt = 0;
     QTextStream in(&fptr);
@@ -180,9 +179,9 @@ void SearchToolBar::saveSearchHistory()
         return;
 
     QTextStream out(&fptr);
-    KCompletion* comp = m_search_text->completionObject();
+    KCompletion *comp = m_search_text->completionObject();
     const QStringList items = comp->items();
-    for (const QString& s : items) {
+    for (const QString &s : items) {
         out << s << Qt::endl;
     }
 }
@@ -190,10 +189,9 @@ void SearchToolBar::saveSearchHistory()
 void SearchToolBar::clearHistory()
 {
     bt::Delete(kt::DataDir() + QLatin1String("search_history"), true);
-    KCompletion* comp = m_search_text->completionObject();
+    KCompletion *comp = m_search_text->completionObject();
     m_search_text->clear();
     comp->clear();
 }
 
 }
-

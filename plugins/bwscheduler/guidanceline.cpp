@@ -20,15 +20,17 @@
  ***************************************************************************/
 #include "guidanceline.h"
 
-#include <QPen>
-#include <QFontMetricsF>
 #include "bwschedulerpluginsettings.h"
+#include <QFontMetricsF>
+#include <QPen>
 
 namespace kt
 {
-
 GuidanceLine::GuidanceLine(qreal x, qreal y, qreal text_offset)
-    : QGraphicsLineItem(), x(x), y(y), text_offset(text_offset)
+    : QGraphicsLineItem()
+    , x(x)
+    , y(y)
+    , text_offset(text_offset)
 {
     QPen pen(SchedulerPluginSettings::scheduleLineColor());
     pen.setStyle(Qt::DashLine);
@@ -44,12 +46,11 @@ GuidanceLine::GuidanceLine(qreal x, qreal y, qreal text_offset)
     setLine(x, y, xe, y);
 }
 
-
 GuidanceLine::~GuidanceLine()
 {
 }
 
-void GuidanceLine::update(qreal nx, qreal ny, const QString& txt)
+void GuidanceLine::update(qreal nx, qreal ny, const QString &txt)
 {
     x = nx;
     y = ny;

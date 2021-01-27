@@ -21,19 +21,18 @@
 #ifndef KT_TORRENTLOADQUEUE_H
 #define KT_TORRENTLOADQUEUE_H
 
-#include <QUrl>
 #include <QTimer>
+#include <QUrl>
 
 namespace kt
 {
-
 class CoreInterface;
 
 /// Action to perform after loading torrent.
 enum LoadedTorrentAction {
     DeleteAction,
     MoveAction,
-    DefaultAction
+    DefaultAction,
 };
 
 /**
@@ -44,7 +43,7 @@ class TorrentLoadQueue : public QObject
 {
     Q_OBJECT
 public:
-    TorrentLoadQueue(CoreInterface* core, QObject* parent = 0);
+    TorrentLoadQueue(CoreInterface *core, QObject *parent = 0);
     ~TorrentLoadQueue() override;
 
     /// Set the loaded torrent action
@@ -63,12 +62,12 @@ public Q_SLOTS:
     /**
      * Add a torrent to load.
      */
-    void add(const QUrl& url);
+    void add(const QUrl &url);
 
     /**
      * Add a list of torrents
      */
-    void add(const QList<QUrl>& urls);
+    void add(const QList<QUrl> &urls);
 
 private:
     /**
@@ -77,14 +76,14 @@ private:
      * @param data The torrent data will be put into this array upon success
      * @return true upon success, false otherwise
      */
-    bool validateTorrent(const QUrl& url, QByteArray& data);
+    bool validateTorrent(const QUrl &url, QByteArray &data);
 
     /**
      * Load a torrent
      * @param url The file url
      * @param data The torrent data
      */
-    void load(const QUrl& url, const QByteArray& data);
+    void load(const QUrl &url, const QByteArray &data);
 
 private Q_SLOTS:
     /**
@@ -97,10 +96,10 @@ private:
      * Loading of a torrent has finished.
      * @param url The url
      */
-    void loadingFinished(const QUrl& url);
+    void loadingFinished(const QUrl &url);
 
 private:
-    CoreInterface* core;
+    CoreInterface *core;
     QList<QUrl> to_load;
     LoadedTorrentAction action;
     QTimer timer;

@@ -21,17 +21,16 @@
 #ifndef KTGENERALPREF_H
 #define KTGENERALPREF_H
 
-#include <interfaces/prefpageinterface.h>
 #include "ui_generalpref.h"
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
-
 class GeneralPref : public PrefPageInterface, public Ui_GeneralPref
 {
     Q_OBJECT
 public:
-    GeneralPref(QWidget* parent);
+    GeneralPref(QWidget *parent);
     ~GeneralPref() override;
 
     void loadSettings() override;

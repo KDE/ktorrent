@@ -24,19 +24,17 @@
 
 namespace kt
 {
-
-ProxyPref::ProxyPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Proxy"), QStringLiteral("preferences-system-network-proxy"), parent)
+ProxyPref::ProxyPref(QWidget *parent)
+    : PrefPageInterface(Settings::self(), i18n("Proxy"), QStringLiteral("preferences-system-network-proxy"), parent)
 {
     setupUi(this);
     connect(kcfg_socksEnabled, &QCheckBox::toggled, this, &ProxyPref::socksEnabledToggled);
     connect(kcfg_socksUsePassword, &QCheckBox::toggled, this, &ProxyPref::usernamePasswordToggled);
 }
 
-
 ProxyPref::~ProxyPref()
 {
 }
-
 
 void ProxyPref::loadDefaults()
 {
@@ -76,4 +74,3 @@ void ProxyPref::usernamePasswordToggled(bool on)
     kcfg_socksUsername->setEnabled(on && kcfg_socksEnabled->isChecked());
 }
 }
-

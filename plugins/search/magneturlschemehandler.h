@@ -33,7 +33,6 @@ public:
 
 Q_SIGNALS:
     void magnetUrlDetected(const QUrl &url);
-
 };
 
 #endif // MAGNETURLSCHEMEHANDLER_H

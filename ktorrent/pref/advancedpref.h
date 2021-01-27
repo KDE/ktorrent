@@ -22,9 +22,8 @@
 #ifndef KT_ADVNACEDPREF_HH
 #define KT_ADVNACEDPREF_HH
 
-#include <interfaces/prefpageinterface.h>
 #include "ui_advancedpref.h"
-
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
@@ -32,7 +31,7 @@ class AdvancedPref : public PrefPageInterface, public Ui_AdvancedPref
 {
     Q_OBJECT
 public:
-    AdvancedPref(QWidget* parent);
+    AdvancedPref(QWidget *parent);
     ~AdvancedPref() override;
 
     void loadSettings() override;

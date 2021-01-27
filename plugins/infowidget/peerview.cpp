@@ -29,18 +29,17 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 
+#include "peerviewmodel.h"
 #include <interfaces/peerinterface.h>
 #include <peer/accessmanager.h>
 #include <util/functions.h>
-#include "peerviewmodel.h"
 
 using namespace bt;
 
 namespace kt
 {
-
-
-PeerView::PeerView(QWidget* parent) : QTreeView(parent)
+PeerView::PeerView(QWidget *parent)
+    : QTreeView(parent)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     setRootIsDecorated(false);
@@ -65,7 +64,7 @@ PeerView::~PeerView()
 {
 }
 
-void PeerView::showContextMenu(const QPoint& pos)
+void PeerView::showContextMenu(const QPoint &pos)
 {
     if (selectionModel()->selectedRows().count() == 0)
         return;
@@ -75,11 +74,11 @@ void PeerView::showContextMenu(const QPoint& pos)
 
 void PeerView::banPeer()
 {
-    AccessManager& aman = AccessManager::instance();
+    AccessManager &aman = AccessManager::instance();
 
     const QModelIndexList indices = selectionModel()->selectedRows();
-    for (const QModelIndex& idx : indices) {
-        bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
+    for (const QModelIndex &idx : indices) {
+        bt::PeerInterface *peer = model->indexToPeer(pm->mapToSource(idx));
         if (peer) {
             aman.banPeer(peer->getStats().ip_address);
             peer->kill();
@@ -90,19 +89,19 @@ void PeerView::banPeer()
 void PeerView::kickPeer()
 {
     const QModelIndexList indices = selectionModel()->selectedRows();
-    for (const QModelIndex& idx : indices) {
-        bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
+    for (const QModelIndex &idx : indices) {
+        bt::PeerInterface *peer = model->indexToPeer(pm->mapToSource(idx));
         if (peer)
             peer->kill();
     }
 }
 
-void PeerView::peerAdded(PeerInterface* peer)
+void PeerView::peerAdded(PeerInterface *peer)
 {
     model->peerAdded(peer);
 }
 
-void PeerView::peerRemoved(PeerInterface* peer)
+void PeerView::peerRemoved(PeerInterface *peer)
 {
     model->peerRemoved(peer);
 }
@@ -129,11 +128,10 @@ void PeerView::loadState(KSharedConfigPtr cfg)
     KConfigGroup g = cfg->group("PeerView");
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
     if (!s.isEmpty()) {
-        QHeaderView* v = header();
+        QHeaderView *v = header();
         v->restoreState(s);
         sortByColumn(v->sortIndicatorSection(), v->sortIndicatorOrder());
         pm->sort(v->sortIndicatorSection(), v->sortIndicatorOrder());
     }
 }
 }
-

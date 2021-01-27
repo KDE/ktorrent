@@ -18,32 +18,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QFile>
-#include <util/log.h>
-#include <interfaces/functions.h>
-#include <interfaces/coreinterface.h>
 #include "torrentposthandler.h"
-#include "httpresponseheader.h"
 #include "httpclienthandler.h"
+#include "httpresponseheader.h"
 #include "httpserver.h"
+#include <QFile>
+#include <interfaces/coreinterface.h>
+#include <interfaces/functions.h>
 #include <klocalizedstring.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-TorrentPostHandler::TorrentPostHandler(CoreInterface* core, HttpServer* server) : WebContentGenerator(server, "/torrent/load", LOGIN_REQUIRED), core(core)
+TorrentPostHandler::TorrentPostHandler(CoreInterface *core, HttpServer *server)
+    : WebContentGenerator(server, "/torrent/load", LOGIN_REQUIRED)
+    , core(core)
 {
 }
-
 
 TorrentPostHandler::~TorrentPostHandler()
 {
 }
 
-
-void TorrentPostHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void TorrentPostHandler::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     Q_UNUSED(hdr);
     // Send internal server error
@@ -52,9 +51,9 @@ void TorrentPostHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& 
     hdlr->send500(rhdr, i18n("HTTP Get not supported when uploading a torrent"));
 }
 
-void TorrentPostHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void TorrentPostHandler::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
-    const char* ptr = data.data();
+    const char *ptr = data.data();
     int len = data.size();
     int pos = QString(data).indexOf("\r\n\r\n");
 

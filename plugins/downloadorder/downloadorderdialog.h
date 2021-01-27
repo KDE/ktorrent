@@ -22,8 +22,8 @@
 #ifndef KTDOWNLOADORDERDIALOG_H
 #define KTDOWNLOADORDERDIALOG_H
 
-#include <QDialog>
 #include "ui_downloadorderwidget.h"
+#include <QDialog>
 
 namespace bt
 {
@@ -42,7 +42,7 @@ class DownloadOrderDialog : public QDialog, public Ui_DownloadOrderWidget
 {
     Q_OBJECT
 public:
-    DownloadOrderDialog(DownloadOrderPlugin* plugin, bt::TorrentInterface* tor, QWidget* parent);
+    DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::TorrentInterface *tor, QWidget *parent);
     ~DownloadOrderDialog() override;
 
 private Q_SLOTS:
@@ -51,14 +51,14 @@ private Q_SLOTS:
     void moveDown();
     void moveTop();
     void moveBottom();
-    void itemSelectionChanged(const QItemSelection& new_sel, const QItemSelection& old_sel);
+    void itemSelectionChanged(const QItemSelection &new_sel, const QItemSelection &old_sel);
     void customOrderEnableToggled(bool on);
-    void search(const QString& text);
+    void search(const QString &text);
 
 private:
-    bt::TorrentInterface* tor;
-    DownloadOrderPlugin* plugin;
-    DownloadOrderModel* model;
+    bt::TorrentInterface *tor;
+    DownloadOrderPlugin *plugin;
+    DownloadOrderModel *model;
 };
 
 }

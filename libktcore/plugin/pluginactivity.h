@@ -34,12 +34,12 @@ class PluginManager;
  * @author Joris Guisson
  *
  * Pref page which allows to load and unload plugins.
-*/
+ */
 class PluginActivity : public Activity
 {
     Q_OBJECT
 public:
-    PluginActivity(PluginManager* pman);
+    PluginActivity(PluginManager *pman);
     ~PluginActivity() override;
 
     void updatePluginList();
@@ -48,8 +48,8 @@ private Q_SLOTS:
     void changed();
 
 private:
-    PluginManager* pman;
-    KPluginSelector* pmw;
+    PluginManager *pman;
+    KPluginSelector *pmw;
 };
 
 }

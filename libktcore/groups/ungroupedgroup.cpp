@@ -26,19 +26,18 @@
 
 namespace kt
 {
-
-UngroupedGroup::UngroupedGroup(GroupManager* gman) : Group(i18n("Ungrouped Torrents"), MIXED_GROUP, QStringLiteral("/all/ungrouped")), gman(gman)
+UngroupedGroup::UngroupedGroup(GroupManager *gman)
+    : Group(i18n("Ungrouped Torrents"), MIXED_GROUP, QStringLiteral("/all/ungrouped"))
+    , gman(gman)
 {
     setIconByName(QStringLiteral("application-x-bittorrent"));
 }
-
 
 UngroupedGroup::~UngroupedGroup()
 {
 }
 
-
-bool UngroupedGroup::isMember(TorrentInterface* tor)
+bool UngroupedGroup::isMember(TorrentInterface *tor)
 {
     for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++)
         if ((i->second->groupFlags() & Group::CUSTOM_GROUP) && i->second->isMember(tor))

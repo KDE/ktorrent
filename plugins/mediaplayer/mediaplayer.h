@@ -22,23 +22,25 @@
 #ifndef KTAUDIOPLAYER_H
 #define KTAUDIOPLAYER_H
 
-#include <QStringList>
-#include <QTimer>
-#include <Phonon/MediaObject>
 #include "mediafile.h"
 #include "mediafilestream.h"
-
+#include <Phonon/MediaObject>
+#include <QStringList>
+#include <QTimer>
 
 namespace Phonon
 {
 class AudioOutput;
 }
 
-
 namespace kt
 {
 enum ActionFlags {
-    MEDIA_PLAY = 1, MEDIA_PAUSE = 2, MEDIA_STOP = 4, MEDIA_PREV = 8, MEDIA_NEXT = 16
+    MEDIA_PLAY = 1,
+    MEDIA_PAUSE = 2,
+    MEDIA_STOP = 4,
+    MEDIA_PREV = 8,
+    MEDIA_NEXT = 16,
 };
 
 /**
@@ -48,14 +50,14 @@ class MediaPlayer : public QObject
 {
     Q_OBJECT
 public:
-    MediaPlayer(QObject* parent);
+    MediaPlayer(QObject *parent);
     ~MediaPlayer() override;
 
-    Phonon::AudioOutput* output()
+    Phonon::AudioOutput *output()
     {
         return audio;
     }
-    Phonon::MediaObject* media0bject()
+    Phonon::MediaObject *media0bject()
     {
         return media;
     }
@@ -120,7 +122,7 @@ Q_SIGNALS:
     /**
      * Emitted when the player starts playing
      */
-    void playing(const MediaFileRef& file);
+    void playing(const MediaFileRef &file);
 
     /**
      * Emitted when the video is being loaded
@@ -128,8 +130,8 @@ Q_SIGNALS:
     void loading();
 
 private:
-    Phonon::MediaObject* media;
-    Phonon::AudioOutput* audio;
+    Phonon::MediaObject *media;
+    Phonon::AudioOutput *audio;
     QList<MediaFileRef> history;
     MediaFileRef current;
     bool buffering;

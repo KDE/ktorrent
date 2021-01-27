@@ -24,19 +24,18 @@
 #include <QFile>
 #include <QString>
 
-#include <util/constants.h>
 #include <ktcore_export.h>
+#include <util/constants.h>
 
 namespace bt
 {
-
 /**
  * @author Joris Guisson
  * @brief Memory mapped file
  *
  * This class allows to access memory mapped files. It's pretty similar to
  * File.
-*/
+ */
 class KTCORE_EXPORT MMapFile
 {
 public:
@@ -50,7 +49,7 @@ public:
      * @param mode Mode (READ, WRITE or RW)
      * @return true upon succes
      */
-    bool open(const QString& file, QIODevice::OpenModeFlag mode);
+    bool open(const QString &file, QIODevice::OpenModeFlag mode);
 
     /**
      * Close the file. Undoes the memory mapping.
@@ -68,7 +67,7 @@ public:
      * @param size Size of the data
      * @return The number of bytes written
      */
-    Uint32 write(const void* buf, Uint32 size);
+    Uint32 write(const void *buf, Uint32 size);
 
     /**
      * Read a bunch of data
@@ -76,12 +75,12 @@ public:
      * @param size Size of the buffer
      * @return The number of bytes read
      */
-    Uint32 read(void* buf, Uint32 size);
+    Uint32 read(void *buf, Uint32 size);
 
     enum SeekPos {
         BEGIN,
         END,
-        CURRENT
+        CURRENT,
     };
 
     /**
@@ -104,26 +103,26 @@ public:
     /// Get the file size
     Uint64 getSize() const;
 
-
     /**
      * Get a pointer to the mmapped region of data.
      * @param off Offset into buffer, if invalid 0 will be returned
      * @return Pointer to a location in the mmapped region
      */
-    Uint8* getData(Uint64 off);
+    Uint8 *getData(Uint64 off);
 
     /// Gets the data pointer
-    void* getDataPointer()
+    void *getDataPointer()
     {
         return data;
     }
+
 private:
     void growFile(Uint64 new_size);
 
 private:
-    QFile* fptr;
-    Uint8* data;
-    Uint64 size;    // size of mmapping
+    QFile *fptr;
+    Uint8 *data;
+    Uint64 size; // size of mmapping
     Uint64 file_size; // size of file
     Uint64 ptr;
     QString filename;
@@ -131,6 +130,5 @@ private:
 };
 
 }
-
 
 #endif

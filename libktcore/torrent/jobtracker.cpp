@@ -23,7 +23,8 @@
 
 namespace kt
 {
-JobTracker::JobTracker(QObject* parent) : KJobTrackerInterface(parent)
+JobTracker::JobTracker(QObject *parent)
+    : KJobTrackerInterface(parent)
 {
     bt::Job::setJobTracker(this);
 }
@@ -33,9 +34,9 @@ JobTracker::~JobTracker()
     bt::Job::setJobTracker(0);
 }
 
-void JobTracker::registerJob(KJob* job)
+void JobTracker::registerJob(KJob *job)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -43,9 +44,9 @@ void JobTracker::registerJob(KJob* job)
     jobRegistered(j);
 }
 
-void JobTracker::unregisterJob(KJob* job)
+void JobTracker::unregisterJob(KJob *job)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -54,32 +55,31 @@ void JobTracker::unregisterJob(KJob* job)
     widgets.remove(j);
 }
 
-JobProgressWidget* JobTracker::createJobWidget(bt::Job* job)
+JobProgressWidget *JobTracker::createJobWidget(bt::Job *job)
 {
-    JobProgressWidget* p = new BasicJobProgressWidget(job, 0);
+    JobProgressWidget *p = new BasicJobProgressWidget(job, 0);
     widgets[job] = p;
     return p;
 }
 
-
-void JobTracker::finished(KJob* job)
+void JobTracker::finished(KJob *job)
 {
     KJobTrackerInterface::finished(job);
 }
 
-void JobTracker::suspended(KJob* job)
+void JobTracker::suspended(KJob *job)
 {
     KJobTrackerInterface::suspended(job);
 }
 
-void JobTracker::resumed(KJob* job)
+void JobTracker::resumed(KJob *job)
 {
     KJobTrackerInterface::resumed(job);
 }
 
-void JobTracker::description(KJob* job, const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2)
+void JobTracker::description(KJob *job, const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -88,9 +88,9 @@ void JobTracker::description(KJob* job, const QString& title, const QPair< QStri
         i.value()->description(title, field1, field2);
 }
 
-void JobTracker::infoMessage(KJob* job, const QString& plain, const QString& rich)
+void JobTracker::infoMessage(KJob *job, const QString &plain, const QString &rich)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -99,9 +99,9 @@ void JobTracker::infoMessage(KJob* job, const QString& plain, const QString& ric
         i.value()->infoMessage(plain, rich);
 }
 
-void JobTracker::warning(KJob* job, const QString& plain, const QString& rich)
+void JobTracker::warning(KJob *job, const QString &plain, const QString &rich)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -110,9 +110,9 @@ void JobTracker::warning(KJob* job, const QString& plain, const QString& rich)
         i.value()->warning(plain, rich);
 }
 
-void JobTracker::totalAmount(KJob* job, KJob::Unit unit, qulonglong amount)
+void JobTracker::totalAmount(KJob *job, KJob::Unit unit, qulonglong amount)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -121,9 +121,9 @@ void JobTracker::totalAmount(KJob* job, KJob::Unit unit, qulonglong amount)
         i.value()->totalAmount(unit, amount);
 }
 
-void JobTracker::processedAmount(KJob* job, KJob::Unit unit, qulonglong amount)
+void JobTracker::processedAmount(KJob *job, KJob::Unit unit, qulonglong amount)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -132,9 +132,9 @@ void JobTracker::processedAmount(KJob* job, KJob::Unit unit, qulonglong amount)
         i.value()->processedAmount(unit, amount);
 }
 
-void JobTracker::percent(KJob* job, long unsigned int percent)
+void JobTracker::percent(KJob *job, long unsigned int percent)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -143,9 +143,9 @@ void JobTracker::percent(KJob* job, long unsigned int percent)
         i.value()->percent(percent);
 }
 
-void JobTracker::speed(KJob* job, long unsigned int value)
+void JobTracker::speed(KJob *job, long unsigned int value)
 {
-    bt::Job* j = dynamic_cast<bt::Job*>(job);
+    bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
         return;
 
@@ -154,5 +154,3 @@ void JobTracker::speed(KJob* job, long unsigned int value)
         i.value()->speed(value);
 }
 }
-
-

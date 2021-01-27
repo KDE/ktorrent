@@ -22,18 +22,17 @@
 
 namespace kt
 {
-
-TreeFilterModel::TreeFilterModel(QObject* parent): QSortFilterProxyModel(parent)
+TreeFilterModel::TreeFilterModel(QObject *parent)
+    : QSortFilterProxyModel(parent)
 {
     setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
-
 
 TreeFilterModel::~TreeFilterModel()
 {
 }
 
-bool TreeFilterModel::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
+bool TreeFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex idx = sourceModel()->index(source_row, 0, source_parent);
     if (!idx.isValid())

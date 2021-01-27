@@ -40,8 +40,6 @@ class DecompressThread;
 
 namespace kt
 {
-
-
 /**
  * Manages GeoIP database. Downloads it from the internet and handles all queries to it.
  */
@@ -49,7 +47,7 @@ class GeoIPManager : public QObject
 {
     Q_OBJECT
 public:
-    GeoIPManager(QObject* parent = 0);
+    GeoIPManager(QObject *parent = 0);
     ~GeoIPManager() override;
 
     /**
@@ -57,7 +55,7 @@ public:
      * @param addr The IP address
      * @return The country ID
      */
-    int findCountry(const QString& addr);
+    int findCountry(const QString &addr);
 
     /**
      * Get the name of the country
@@ -86,17 +84,16 @@ public:
     void downloadDataBase();
 
 private Q_SLOTS:
-    void databaseDownloadFinished(KJob* job);
+    void databaseDownloadFinished(KJob *job);
     void decompressFinished();
 
 private:
-    GeoIP* geo_ip;
+    GeoIP *geo_ip;
     QString geoip_data_file;
     QString download_destination;
-    bt::DecompressThread* decompress_thread;
+    bt::DecompressThread *decompress_thread;
     static QUrl geoip_url;
 };
-
 
 }
 

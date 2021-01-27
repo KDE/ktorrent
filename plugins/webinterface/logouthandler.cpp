@@ -19,30 +19,28 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "logouthandler.h"
-#include "httpserver.h"
 #include "httpclienthandler.h"
+#include "httpserver.h"
 
 namespace kt
 {
-
-LogoutHandler::LogoutHandler(HttpServer* server): WebContentGenerator(server, "/logout", LOGIN_REQUIRED)
+LogoutHandler::LogoutHandler(HttpServer *server)
+    : WebContentGenerator(server, "/logout", LOGIN_REQUIRED)
 {
 }
-
 
 LogoutHandler::~LogoutHandler()
 {
 }
 
-
-void LogoutHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void LogoutHandler::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     Q_UNUSED(hdr);
     server->logout();
     server->redirectToLoginPage(hdlr);
 }
 
-void LogoutHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void LogoutHandler::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     Q_UNUSED(data);
     get(hdlr, hdr);

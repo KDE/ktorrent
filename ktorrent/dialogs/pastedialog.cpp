@@ -43,14 +43,14 @@
 
 namespace kt
 {
-PasteDialog::PasteDialog(Core* core, QWidget* parent, Qt::WindowFlags fl)
+PasteDialog::PasteDialog(Core *core, QWidget *parent, Qt::WindowFlags fl)
     : QDialog(parent, fl)
 {
     setupUi(this);
     setWindowTitle(i18n("Open an URL"));
 
     m_core = core;
-    QClipboard* cb = QApplication::clipboard();
+    QClipboard *cb = QApplication::clipboard();
     QString text = cb->text(QClipboard::Clipboard);
 
     QUrl url = QUrl(text);
@@ -70,13 +70,13 @@ PasteDialog::~PasteDialog()
 
 void PasteDialog::loadGroups()
 {
-    GroupManager* gman = m_core->getGroupManager();
+    GroupManager *gman = m_core->getGroupManager();
     GroupManager::Itr it = gman->begin();
     QStringList grps;
-    //First default group
+    // First default group
     grps << i18n("All Torrents");
 
-    //now custom ones
+    // now custom ones
     while (it != gman->end()) {
         if (!it->second->isStandardGroup())
             grps << it->first;
@@ -126,7 +126,8 @@ void PasteDialog::accept()
                         magnetLink.append(QStringLiteral("&tr=")).append(trackerUrl);
                 }
             } else {
-                QMessageBox::warning(this, i18n("Error fetching tracker list"),
+                QMessageBox::warning(this,
+                                     i18n("Error fetching tracker list"),
                                      i18n("Please check if the URL in Settings > Advanced > Tracker list URL is reachable."));
             }
 
@@ -153,4 +154,3 @@ void PasteDialog::accept()
     }
 }
 }
-

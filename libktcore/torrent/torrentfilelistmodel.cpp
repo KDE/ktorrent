@@ -28,34 +28,31 @@
 #include <QMimeType>
 #include <QTreeView>
 
-#include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 #include <util/functions.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
-TorrentFileListModel::TorrentFileListModel(bt::TorrentInterface* tc, DeselectMode mode, QObject* parent)
+TorrentFileListModel::TorrentFileListModel(bt::TorrentInterface *tc, DeselectMode mode, QObject *parent)
     : TorrentFileModel(tc, mode, parent)
 {
 }
 
-
 TorrentFileListModel::~TorrentFileListModel()
-{}
+{
+}
 
-void TorrentFileListModel::changeTorrent(bt::TorrentInterface* tc)
+void TorrentFileListModel::changeTorrent(bt::TorrentInterface *tc)
 {
     beginResetModel();
     this->tc = tc;
     endResetModel();
 }
 
-
-int TorrentFileListModel::rowCount(const QModelIndex& parent) const
+int TorrentFileListModel::rowCount(const QModelIndex &parent) const
 {
     if (tc && !parent.isValid())
         return tc->getStats().multi_file_torrent ? tc->getNumFiles() : 1;
@@ -63,7 +60,7 @@ int TorrentFileListModel::rowCount(const QModelIndex& parent) const
         return 0;
 }
 
-int TorrentFileListModel::columnCount(const QModelIndex& parent) const
+int TorrentFileListModel::columnCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return 2;
@@ -77,18 +74,19 @@ QVariant TorrentFileListModel::headerData(int section, Qt::Orientation orientati
         return QVariant();
 
     switch (section) {
-    case 0: return i18n("File");
-    case 1: return i18n("Size");
+    case 0:
+        return i18n("File");
+    case 1:
+        return i18n("Size");
     default:
         return QVariant();
     }
 }
 
-QVariant TorrentFileListModel::data(const QModelIndex& index, int role) const
+QVariant TorrentFileListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || !tc)
         return QVariant();
-
 
     int r = index.row();
     int nfiles = rowCount(QModelIndex());
@@ -96,7 +94,7 @@ QVariant TorrentFileListModel::data(const QModelIndex& index, int role) const
     if (r >= nfiles)
         return QVariant();
 
-    const TorrentStats& s = tc->getStats();
+    const TorrentStats &s = tc->getStats();
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
         switch (index.column()) {
         case 0:
@@ -109,7 +107,8 @@ QVariant TorrentFileListModel::data(const QModelIndex& index, int role) const
                 return BytesToString(tc->getTorrentFile(r).getSize());
             else
                 return BytesToString(s.total_bytes);
-        default: return QVariant();
+        default:
+            return QVariant();
         }
     } else if (role == Qt::UserRole) { // sorting
         switch (index.column()) {
@@ -123,43 +122,44 @@ QVariant TorrentFileListModel::data(const QModelIndex& index, int role) const
                 return tc->getTorrentFile(r).getSize();
             else
                 return s.total_bytes;
-        default: return QVariant();
+        default:
+            return QVariant();
         }
     } else if (role == Qt::DecorationRole && index.column() == 0) {
         // if this is an empty folder then we are in the single file case
         return QIcon::fromTheme(QMimeDatabase().mimeTypeForFile(multi ? tc->getTorrentFile(r).getPath() : s.torrent_name).iconName());
     } else if (role == Qt::CheckStateRole && index.column() == 0 && multi) {
-        const TorrentFileInterface& file = tc->getTorrentFile(r);
+        const TorrentFileInterface &file = tc->getTorrentFile(r);
         return file.doNotDownload() || file.getPriority() == ONLY_SEED_PRIORITY ? Qt::Unchecked : Qt::Checked;
     }
 
     return QVariant();
 }
 
-QModelIndex TorrentFileListModel::parent(const QModelIndex& index) const
+QModelIndex TorrentFileListModel::parent(const QModelIndex &index) const
 {
     Q_UNUSED(index);
     return QModelIndex();
 }
 
-QModelIndex TorrentFileListModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex TorrentFileListModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!tc || !hasIndex(row, column, parent))
         return QModelIndex();
     else {
-        bt::TorrentFileInterface* f = &tc->getTorrentFile(row);
+        bt::TorrentFileInterface *f = &tc->getTorrentFile(row);
         return createIndex(row, column, f);
     }
 }
 
-bool TorrentFileListModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool TorrentFileListModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!tc || !index.isValid())
         return false;
 
     if (role == Qt::CheckStateRole) {
         Qt::CheckState newState = static_cast<Qt::CheckState>(value.toInt());
-        bt::TorrentFileInterface& file = tc->getTorrentFile(index.row());
+        bt::TorrentFileInterface &file = tc->getTorrentFile(index.row());
         if (newState == Qt::Checked) {
             if (file.getPriority() == ONLY_SEED_PRIORITY)
                 file.setPriority(NORMAL_PRIORITY);
@@ -180,7 +180,7 @@ bool TorrentFileListModel::setData(const QModelIndex& index, const QVariant& val
             return false;
 
         if (tc->getStats().multi_file_torrent) {
-            bt::TorrentFileInterface& file = tc->getTorrentFile(index.row());
+            bt::TorrentFileInterface &file = tc->getTorrentFile(index.row());
 
             // Check if we are not changing into somebody elses path
             bt::Uint32 num_files = tc->getNumFiles();
@@ -230,7 +230,7 @@ void TorrentFileListModel::invertCheck()
         invertCheck(index(i, 0, QModelIndex()));
 }
 
-void TorrentFileListModel::invertCheck(const QModelIndex& idx)
+void TorrentFileListModel::invertCheck(const QModelIndex &idx)
 {
     if (!tc)
         return;
@@ -249,7 +249,7 @@ bt::Uint64 TorrentFileListModel::bytesToDownload()
     if (tc->getStats().multi_file_torrent) {
         bt::Uint64 ret = 0;
         for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
-            const bt::TorrentFileInterface& file = tc->getTorrentFile(i);
+            const bt::TorrentFileInterface &file = tc->getTorrentFile(i);
             if (!file.doNotDownload())
                 ret += file.getSize();
         }
@@ -258,7 +258,7 @@ bt::Uint64 TorrentFileListModel::bytesToDownload()
         return tc->getStats().total_bytes;
 }
 
-bt::TorrentFileInterface* TorrentFileListModel::indexToFile(const QModelIndex& idx)
+bt::TorrentFileInterface *TorrentFileListModel::indexToFile(const QModelIndex &idx)
 {
     if (!tc || !idx.isValid())
         return 0;
@@ -270,7 +270,7 @@ bt::TorrentFileInterface* TorrentFileListModel::indexToFile(const QModelIndex& i
         return &tc->getTorrentFile(r);
 }
 
-QString TorrentFileListModel::dirPath(const QModelIndex& idx)
+QString TorrentFileListModel::dirPath(const QModelIndex &idx)
 {
     if (!tc || !idx.isValid())
         return QString();
@@ -282,11 +282,10 @@ QString TorrentFileListModel::dirPath(const QModelIndex& idx)
         return tc->getTorrentFile(r).getPath();
 }
 
-void TorrentFileListModel::changePriority(const QModelIndexList& indexes, bt::Priority newpriority)
+void TorrentFileListModel::changePriority(const QModelIndexList &indexes, bt::Priority newpriority)
 {
-    for (const QModelIndex& idx : indexes) {
+    for (const QModelIndex &idx : indexes) {
         setData(idx, newpriority, Qt::UserRole);
     }
 }
 }
-

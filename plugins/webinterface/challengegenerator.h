@@ -26,19 +26,17 @@
 
 namespace kt
 {
-
 /**
     Generates XML containing the challenge field for login pages
 */
 class ChallengeGenerator : public WebContentGenerator
 {
 public:
-    ChallengeGenerator(HttpServer* server);
+    ChallengeGenerator(HttpServer *server);
     virtual ~ChallengeGenerator();
 
-    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-
+    virtual void get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr);
+    virtual void post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data);
 };
 
 }

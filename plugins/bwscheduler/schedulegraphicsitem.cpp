@@ -21,25 +21,25 @@
 
 #include "schedulegraphicsitem.h"
 
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
 
-#include <QPen>
 #include <QBrush>
-#include <QRectF>
 #include <QCursor>
 #include <QFontMetricsF>
-#include <QGraphicsTextItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsTextItem>
+#include <QPen>
+#include <QRectF>
 
 #include <KCursor>
 #include <KLocalizedString>
 
-#include <util/log.h>
-#include <util/functions.h>
+#include "bwschedulerpluginsettings.h"
 #include "schedule.h"
 #include "weekscene.h"
-#include "bwschedulerpluginsettings.h"
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
@@ -55,7 +55,7 @@ const Uint32 TopLeft = Top | Left;
 const Uint32 BottomRight = Bottom | Right;
 const Uint32 BottomLeft = Bottom | Left;
 
-ScheduleGraphicsItem::ScheduleGraphicsItem(ScheduleItem* item, const QRectF& r, const QRectF& constraints, WeekScene* ws)
+ScheduleGraphicsItem::ScheduleGraphicsItem(ScheduleItem *item, const QRectF &r, const QRectF &constraints, WeekScene *ws)
     : QGraphicsRectItem(r)
     , item(item)
     , constraints(constraints)
@@ -70,19 +70,16 @@ ScheduleGraphicsItem::ScheduleGraphicsItem(ScheduleItem* item, const QRectF& r, 
     setZValue(3);
     setHandlesChildEvents(true);
 
-    setBrush(QBrush(item->suspended ?
-                    SchedulerPluginSettings::suspendedColor()
-                    : SchedulerPluginSettings::itemColor()));
+    setBrush(QBrush(item->suspended ? SchedulerPluginSettings::suspendedColor() : SchedulerPluginSettings::itemColor()));
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, true);
 }
-
 
 ScheduleGraphicsItem::~ScheduleGraphicsItem()
 {
 }
 
-void ScheduleGraphicsItem::update(const QRectF& r)
+void ScheduleGraphicsItem::update(const QRectF &r)
 {
     setRect(r);
     setPos(QPointF(0, 0));
@@ -116,7 +113,7 @@ void ScheduleGraphicsItem::update(const QRectF& r)
     }
 }
 
-QVariant ScheduleGraphicsItem::itemChange(GraphicsItemChange change, const QVariant& value)
+QVariant ScheduleGraphicsItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if (change == ItemPositionChange && scene()) {
         QPointF new_pos = value.toPointF();
@@ -219,8 +216,7 @@ QRectF ScheduleGraphicsItem::resize(QPointF scene_pos)
     return cur;
 }
 
-
-void ScheduleGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+void ScheduleGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (!resizing) {
         QGraphicsItem::mouseMoveEvent(event);
@@ -239,7 +235,7 @@ void ScheduleGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void ScheduleGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void ScheduleGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (!ready_to_resize || !(event->button() & Qt::LeftButton)) {
         QGraphicsRectItem::mousePressEvent(event);
@@ -254,7 +250,7 @@ void ScheduleGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
     setZValue(4);
 }
 
-void ScheduleGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void ScheduleGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (resizing) {
         resizing = false;
@@ -276,21 +272,21 @@ void ScheduleGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     setCursor(Qt::ArrowCursor);
 }
 
-void ScheduleGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+void ScheduleGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     ready_to_resize = true;
     resize_edge = nearEdge(event->scenePos());
     updateCursor();
 }
 
-void ScheduleGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
+void ScheduleGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event);
     setCursor(Qt::ArrowCursor);
     ready_to_resize = false;
 }
 
-void ScheduleGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
+void ScheduleGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
     resize_edge = nearEdge(event->scenePos());
     ready_to_resize = resize_edge != 0;
@@ -313,7 +309,6 @@ void ScheduleGraphicsItem::updateCursor()
     setCursor(shape);
 }
 
-
 Uint32 ScheduleGraphicsItem::nearEdge(QPointF p)
 {
     qreal y = rect().y();
@@ -333,6 +328,5 @@ Uint32 ScheduleGraphicsItem::nearEdge(QPointF p)
 
     return ret;
 }
-
 
 }

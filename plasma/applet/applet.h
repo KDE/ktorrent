@@ -22,10 +22,10 @@
 #ifndef KTPLASMAAPPLET_H
 #define KTPLASMAAPPLET_H
 
-#include <plasma/popupapplet.h>
-#include <plasma/dataengine.h>
-#include "ui_appletconfig.h"
 #include "fadingnavigationwidget.h"
+#include "ui_appletconfig.h"
+#include <plasma/dataengine.h>
+#include <plasma/popupapplet.h>
 
 class QGraphicsLinearLayout;
 class QDBusPendingCallWatcher;
@@ -40,7 +40,6 @@ class IconWidget;
 class Label;
 }
 
-
 namespace ktplasma
 {
 class ChunkBar;
@@ -53,28 +52,28 @@ class Applet : public Plasma::PopupApplet
     Q_OBJECT
 
 public:
-    Applet(QObject* parent, const QVariantList& args);
+    Applet(QObject *parent, const QVariantList &args);
     virtual ~Applet();
 
     virtual void init();
-    virtual void createConfigurationInterface(KConfigDialog* parent);
-    virtual void saveState(KConfigGroup& config) const;
-    virtual QGraphicsWidget* graphicsWidget();
+    virtual void createConfigurationInterface(KConfigDialog *parent);
+    virtual void saveState(KConfigGroup &config) const;
+    virtual QGraphicsWidget *graphicsWidget();
     virtual void constraintsEvent(Plasma::Constraints constraints);
 
 private Q_SLOTS:
-    void dataUpdated(const QString& name, const Plasma::DataEngine::Data& data);
+    void dataUpdated(const QString &name, const Plasma::DataEngine::Data &data);
     void configUpdated();
-    void sourceAdded(const QString& s);
-    void sourceRemoved(const QString& s);
+    void sourceAdded(const QString &s);
+    void sourceRemoved(const QString &s);
     void iconClicked();
     void selectPrev();
     void selectNext();
-    void dbusCallFinished(QDBusPendingCallWatcher* self);
+    void dbusCallFinished(QDBusPendingCallWatcher *self);
 
 private:
     void updateTorrentCombo();
-    void updateCurrent(const Plasma::DataEngine::Data& data);
+    void updateCurrent(const Plasma::DataEngine::Data &data);
     void setSource(QString source);
     void initSource();
     void clearData();
@@ -84,26 +83,24 @@ private:
 
 private:
     Ui_AppletConfig ui;
-    QGraphicsWidget* desktop_widget;
-    QGraphicsLinearLayout* root_layout;
+    QGraphicsWidget *desktop_widget;
+    QGraphicsLinearLayout *root_layout;
 #if (PLASMA_VERSION_MAJOR < 3)
-    Plasma::Icon* icon;
+    Plasma::Icon *icon;
 #else
-    Plasma::IconWidget* icon;
+    Plasma::IconWidget *icon;
 #endif
-    Plasma::Label* title;
-    Plasma::Label* misc;
-    ChunkBar* chunk_bar;
-    FadingNavigationWidget* navigation;
+    Plasma::Label *title;
+    Plasma::Label *misc;
+    ChunkBar *chunk_bar;
+    FadingNavigationWidget *navigation;
 
-    Plasma::DataEngine* engine;
+    Plasma::DataEngine *engine;
     bool connected_to_app;
     QString current_source;
     QStringList sources;
 };
 
 }
-
-
 
 #endif

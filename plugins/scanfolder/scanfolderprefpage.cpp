@@ -18,24 +18,22 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include "scanfolderplugin.h"
 #include "scanfolderprefpage.h"
+#include "scanfolderplugin.h"
 
-#include <QFileDialog>
 #include <KLocalizedString>
+#include <QFileDialog>
 
-#include <util/functions.h>
+#include "scanfolderpluginsettings.h"
 #include <groups/groupmanager.h>
 #include <interfaces/coreinterface.h>
-#include "scanfolderpluginsettings.h"
-
-
+#include <util/functions.h>
 
 namespace kt
 {
-
-ScanFolderPrefPage::ScanFolderPrefPage(ScanFolderPlugin* plugin, QWidget* parent)
-    : PrefPageInterface(ScanFolderPluginSettings::self(), i18nc("plugin name", "Scan Folder"), QStringLiteral("folder-open"), parent), m_plugin(plugin)
+ScanFolderPrefPage::ScanFolderPrefPage(ScanFolderPlugin *plugin, QWidget *parent)
+    : PrefPageInterface(ScanFolderPluginSettings::self(), i18nc("plugin name", "Scan Folder"), QStringLiteral("folder-open"), parent)
+    , m_plugin(plugin)
 {
     setupUi(this);
     connect(kcfg_actionDelete, &QCheckBox::toggled, kcfg_actionMove, &QCheckBox::setDisabled);
@@ -45,9 +43,9 @@ ScanFolderPrefPage::ScanFolderPrefPage(ScanFolderPlugin* plugin, QWidget* parent
     connect(m_group, qOverload<int>(&QComboBox::currentIndexChanged), this, &ScanFolderPrefPage::currentGroupChanged);
 }
 
-
 ScanFolderPrefPage::~ScanFolderPrefPage()
-{}
+{
+}
 
 void ScanFolderPrefPage::loadSettings()
 {
@@ -55,12 +53,12 @@ void ScanFolderPrefPage::loadSettings()
 
     m_group->clear();
 
-    GroupManager* gman = m_plugin->getCore()->getGroupManager();
+    GroupManager *gman = m_plugin->getCore()->getGroupManager();
     QStringList grps;
     GroupManager::Itr it = gman->begin();
     int current = 0;
     int cnt = 0;
-    //now custom ones
+    // now custom ones
     while (it != gman->end()) {
         if (it->second->groupFlags() & Group::CUSTOM_GROUP) {
             grps << it->first;
@@ -77,7 +75,7 @@ void ScanFolderPrefPage::loadSettings()
 
     m_folders->clear();
     folders = ScanFolderPluginSettings::folders();
-    for (const QString& f : qAsConst(folders)) {
+    for (const QString &f : qAsConst(folders)) {
         m_folders->addItem(new QListWidgetItem(QIcon::fromTheme(QStringLiteral("folder")), f));
     }
     selectionChanged();
@@ -118,8 +116,8 @@ void ScanFolderPrefPage::addPressed()
 
 void ScanFolderPrefPage::removePressed()
 {
-    const QList<QListWidgetItem*> sel = m_folders->selectedItems();
-    for (QListWidgetItem* i : sel) {
+    const QList<QListWidgetItem *> sel = m_folders->selectedItems();
+    for (QListWidgetItem *i : sel) {
         folders.removeAll(i->text());
         delete i;
     }
@@ -140,7 +138,6 @@ void ScanFolderPrefPage::currentGroupChanged(int idx)
 
 bool ScanFolderPrefPage::customWidgetsChanged()
 {
-    return ScanFolderPluginSettings::group() != m_group->currentText() ||
-           folders != ScanFolderPluginSettings::folders();
+    return ScanFolderPluginSettings::group() != m_group->currentText() || folders != ScanFolderPluginSettings::folders();
 }
 }

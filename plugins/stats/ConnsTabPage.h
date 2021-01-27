@@ -20,30 +20,29 @@
 #ifndef ConnsTabPage_H_
 #define ConnsTabPage_H_
 
-#include <QWidget>
 #include <QUuid>
+#include <QWidget>
 
-#include <interfaces/plugin.h>
-#include <torrent/globals.h>
 #include <dht/dhtbase.h>
 #include <interfaces/coreinterface.h>
+#include <interfaces/plugin.h>
 #include <interfaces/torrentinterface.h>
+#include <torrent/globals.h>
 #include <torrent/queuemanager.h>
 
-#include <memory>
 #include <cstdint>
+#include <memory>
 
 #include <ui_Conns.h>
 
 #include <PluginPage.h>
 #include <drawer/ChartDrawer.h>
-#include <drawer/PlainChartDrawer.h>
 #include <drawer/KPlotWgtDrawer.h>
+#include <drawer/PlainChartDrawer.h>
 #include <statspluginsettings.h>
 
 namespace kt
 {
-
 /** \brief Connections tab
 \author Krzysztof Kundzicz <athantor@gmail.com>
 */
@@ -53,13 +52,13 @@ class ConnsTabPage : public PluginPage
     Q_OBJECT
 
 private:
-    ///Tab's UI
-    Ui::ConnsWgt* pmConnsUi;
+    /// Tab's UI
+    Ui::ConnsWgt *pmConnsUi;
 
-    ///Connections chart widget
-    ChartDrawer* pmConnsChtWgt;
-    ///DHT chart widget
-    ChartDrawer* pmDhtChtWgt;
+    /// Connections chart widget
+    ChartDrawer *pmConnsChtWgt;
+    /// DHT chart widget
+    ChartDrawer *pmDhtChtWgt;
 
     /** \brief Leechers in swarms dataset UUID
 
@@ -75,26 +74,26 @@ private:
     /** \brief Gathers data about connections
     \param  pPlug kt::Plugin interface
     */
-    void GatherConnStats(Plugin* pPlug);
+    void GatherConnStats(Plugin *pPlug);
     /** \brief Gathers data about DHT
-    */
+     */
     void GatherDhtStats();
 
     void setupUi() override;
+
 public:
     /** \brief Constructor
     \param  p Parent
     */
-    ConnsTabPage(QWidget* p);
-    ///Destructor
+    ConnsTabPage(QWidget *p);
+    /// Destructor
     ~ConnsTabPage() override;
-
 
 public Q_SLOTS:
     void applySettings() override;
     void updateAllCharts() override;
-    void gatherData(Plugin*) override;
-    void resetAvg(ChartDrawer*) override;
+    void gatherData(Plugin *) override;
+    void resetAvg(ChartDrawer *) override;
 };
 
 } // ns end

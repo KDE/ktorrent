@@ -18,14 +18,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <interfaces/functions.h>
 #include "generalpref.h"
 #include "settings.h"
+#include <interfaces/functions.h>
 
 namespace kt
 {
-
-GeneralPref::GeneralPref(QWidget* parent) : PrefPageInterface(Settings::self(), i18n("Application"), QStringLiteral("ktorrent"), parent)
+GeneralPref::GeneralPref(QWidget *parent)
+    : PrefPageInterface(Settings::self(), i18n("Application"), QStringLiteral("ktorrent"), parent)
 {
     setupUi(this);
     kcfg_tempDir->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
@@ -68,8 +68,8 @@ void GeneralPref::loadSettings()
     else
         kcfg_completedDir->setText(Settings::completedDir());
 
-//          kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
-//          kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
+    //          kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
+    //          kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
 }
 
 void GeneralPref::loadDefaults()

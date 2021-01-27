@@ -28,8 +28,8 @@
 #include <KConfigGroup>
 #include <KSharedConfig>
 
-#include <interfaces/torrentinterface.h>
 #include "ui_webseedstab.h"
+#include <interfaces/torrentinterface.h>
 
 namespace kt
 {
@@ -42,14 +42,14 @@ class WebSeedsTab : public QWidget, public Ui_WebSeedsTab
 {
     Q_OBJECT
 public:
-    WebSeedsTab(QWidget* parent);
+    WebSeedsTab(QWidget *parent);
     ~WebSeedsTab() override;
 
     /**
      * Switch to a different torrent.
      * @param tc The torrent
      */
-    void changeTC(bt::TorrentInterface* tc);
+    void changeTC(bt::TorrentInterface *tc);
 
     /// Check to see if the GUI needs to be updated
     void update();
@@ -62,16 +62,16 @@ private Q_SLOTS:
     void removeWebSeed();
     void disableAll();
     void enableAll();
-    void onWebSeedTextChanged(const QString& ws);
-    void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void onWebSeedTextChanged(const QString &ws);
+    void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
 private:
-    void selectionChanged(const QModelIndexList& indexes);
+    void selectionChanged(const QModelIndexList &indexes);
 
 private:
     bt::TorrentInterface::WPtr curr_tc;
-    WebSeedsModel* model;
-    QSortFilterProxyModel* proxy_model;
+    WebSeedsModel *model;
+    QSortFilterProxyModel *proxy_model;
 };
 
 }

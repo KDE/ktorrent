@@ -22,12 +22,11 @@
 #ifndef KTNETWORKPREF_H
 #define KTNETWORKPREF_H
 
-#include <interfaces/prefpageinterface.h>
 #include "ui_networkpref.h"
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
-
 /**
     Preference page for network settings.
 */
@@ -35,7 +34,7 @@ class NetworkPref : public PrefPageInterface, public Ui_NetworkPref
 {
     Q_OBJECT
 public:
-    NetworkPref(QWidget* parent);
+    NetworkPref(QWidget *parent);
     ~NetworkPref() override;
 
     void loadSettings() override;

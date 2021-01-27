@@ -21,23 +21,19 @@
 
 #include <QDBusConnection>
 
+#include "dbusgroup.h"
 #include <groups/group.h>
 #include <groups/groupmanager.h>
-#include "dbusgroup.h"
 
 namespace kt
 {
-static bool ValidCharacter(const QChar& c)
+static bool ValidCharacter(const QChar &c)
 {
     ushort u = c.unicode();
-    return (u >= 'a' && u <= 'z')
-           || (u >= 'A' && u <= 'Z')
-           || (u >= '0' && u <= '9')
-           || (u == '_');
+    return (u >= 'a' && u <= 'z') || (u >= 'A' && u <= 'Z') || (u >= '0' && u <= '9') || (u == '_');
 }
 
-
-static bool ValidDBusName(const QString& s)
+static bool ValidDBusName(const QString &s)
 {
     if (s.isEmpty())
         return false;
@@ -55,8 +51,10 @@ static bool ValidDBusName(const QString& s)
     return true;
 }
 
-DBusGroup::DBusGroup(Group* g, GroupManager* gman, QObject* parent)
-    : QObject(parent), group(g), gman(gman)
+DBusGroup::DBusGroup(Group *g, GroupManager *gman, QObject *parent)
+    : QObject(parent)
+    , group(g)
+    , gman(gman)
 {
     QString name = g->groupName();
     if (!ValidDBusName(name)) {
@@ -68,10 +66,8 @@ DBusGroup::DBusGroup(Group* g, GroupManager* gman, QObject* parent)
         }
     }
     QString path = QStringLiteral("/group/") + name;
-    QDBusConnection::sessionBus().registerObject(path, this,
-            QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals);
+    QDBusConnection::sessionBus().registerObject(path, this, QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals);
 }
-
 
 DBusGroup::~DBusGroup()
 {
@@ -89,11 +85,11 @@ QString DBusGroup::icon() const
 
 QString DBusGroup::defaultSaveLocation() const
 {
-    const Group::Policy& p = group->groupPolicy();
+    const Group::Policy &p = group->groupPolicy();
     return p.default_save_location;
 }
 
-void DBusGroup::setDefaultSaveLocation(const QString& dir)
+void DBusGroup::setDefaultSaveLocation(const QString &dir)
 {
     Group::Policy p = group->groupPolicy();
     p.default_save_location = dir;
@@ -103,11 +99,11 @@ void DBusGroup::setDefaultSaveLocation(const QString& dir)
 
 QString DBusGroup::defaultMoveOnCompletionLocation() const
 {
-    const Group::Policy& p = group->groupPolicy();
+    const Group::Policy &p = group->groupPolicy();
     return p.default_move_on_completion_location;
 }
 
-void DBusGroup::setDefaultMoveOnCompletionLocation(const QString& dir)
+void DBusGroup::setDefaultMoveOnCompletionLocation(const QString &dir)
 {
     Group::Policy p = group->groupPolicy();
     p.default_move_on_completion_location = dir;
@@ -117,7 +113,7 @@ void DBusGroup::setDefaultMoveOnCompletionLocation(const QString& dir)
 
 double DBusGroup::maxShareRatio() const
 {
-    const Group::Policy& p = group->groupPolicy();
+    const Group::Policy &p = group->groupPolicy();
     return p.max_share_ratio;
 }
 
@@ -131,7 +127,7 @@ void DBusGroup::setMaxShareRatio(double ratio)
 
 double DBusGroup::maxSeedTime() const
 {
-    const Group::Policy& p = group->groupPolicy();
+    const Group::Policy &p = group->groupPolicy();
     return p.max_seed_time;
 }
 
@@ -145,7 +141,7 @@ void DBusGroup::setMaxSeedTime(double hours)
 
 uint DBusGroup::maxUploadSpeed() const
 {
-    const Group::Policy& p = group->groupPolicy();
+    const Group::Policy &p = group->groupPolicy();
     return p.max_upload_rate;
 }
 
@@ -159,7 +155,7 @@ void DBusGroup::setMaxUploadSpeed(uint speed)
 
 uint DBusGroup::maxDownloadSpeed() const
 {
-    const Group::Policy& p = group->groupPolicy();
+    const Group::Policy &p = group->groupPolicy();
     return p.max_download_rate;
 }
 
@@ -173,7 +169,7 @@ void DBusGroup::setMaxDownloadSpeed(uint speed)
 
 bool DBusGroup::onlyApplyOnNewTorrents() const
 {
-    const Group::Policy& p = group->groupPolicy();
+    const Group::Policy &p = group->groupPolicy();
     return p.only_apply_on_new_torrents;
 }
 

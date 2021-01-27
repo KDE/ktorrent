@@ -25,11 +25,11 @@
 #include <QFileInfo>
 #include <QStandardPaths>
 
-#include <util/log.h>
-#include <util/decompressfilejob.h>
-#include <interfaces/functions.h>
-#include <util/fileops.h>
 #include "geoipmanager.h"
+#include <interfaces/functions.h>
+#include <util/decompressfilejob.h>
+#include <util/fileops.h>
+#include <util/log.h>
 
 using namespace bt;
 
@@ -37,7 +37,10 @@ namespace kt
 {
 QUrl GeoIPManager::geoip_url = QUrl(QStringLiteral("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz"));
 
-GeoIPManager::GeoIPManager(QObject* parent): QObject(parent), geo_ip(nullptr), decompress_thread(nullptr)
+GeoIPManager::GeoIPManager(QObject *parent)
+    : QObject(parent)
+    , geo_ip(nullptr)
+    , decompress_thread(nullptr)
 {
 #ifdef USE_SYSTEM_GEOIP
     geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
@@ -75,7 +78,7 @@ GeoIPManager::~GeoIPManager()
     }
 }
 
-int GeoIPManager::findCountry(const QString& addr)
+int GeoIPManager::findCountry(const QString &addr)
 {
     if (!geo_ip)
         return 0;
@@ -104,12 +107,12 @@ void GeoIPManager::downloadDataBase()
 #ifndef USE_SYSTEM_GEOIP
     Out(SYS_INW | LOG_NOTICE) << "Downloading GeoIP database: " << geoip_url << endl;
     download_destination = kt::DataDir(CreateIfNotExists) + geoip_url.fileName();
-    KIO::CopyJob* job = KIO::copy(geoip_url, QUrl::fromLocalFile(download_destination), KIO::Overwrite | KIO::HideProgressInfo);
+    KIO::CopyJob *job = KIO::copy(geoip_url, QUrl::fromLocalFile(download_destination), KIO::Overwrite | KIO::HideProgressInfo);
     connect(job, &KIO::CopyJob::result, this, &GeoIPManager::databaseDownloadFinished);
 #endif
 }
 
-void GeoIPManager::databaseDownloadFinished(KJob* job)
+void GeoIPManager::databaseDownloadFinished(KJob *job)
 {
     if (job->error()) {
         Out(SYS_INW | LOG_IMPORTANT) << "Failed to download GeoIP database: " << job->errorString() << endl;
@@ -154,7 +157,6 @@ void GeoIPManager::decompressFinished()
     decompress_thread = nullptr;
 }
 
-
 void GeoIPManager::setGeoIPUrl(const QUrl &url)
 {
     geoip_url = url;
@@ -162,8 +164,4 @@ void GeoIPManager::setGeoIPUrl(const QUrl &url)
 
 ///////////////////////////////////
 
-
-
-
 }
-

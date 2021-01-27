@@ -24,50 +24,45 @@
 
 #include <KApplication>
 
-#include <settings.h>
-#include <dht/dhtbase.h>
-#include <net/socketmonitor.h>
-#include <torrent/globals.h>
-#include <torrent/server.h>
-#include <torrent/choker.h>
-#include <torrent/queuemanager.h>
-#include <peer/peermanager.h>
-#include <util/log.h>
-#include <tracker/udptrackersocket.h>
-#include <interfaces/coreinterface.h>
-#include <interfaces/torrentfileinterface.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/functions.h>
 #include "actionhandler.h"
 #include "httpclienthandler.h"
 #include "httpresponseheader.h"
 #include "httpserver.h"
+#include <dht/dhtbase.h>
+#include <interfaces/coreinterface.h>
+#include <interfaces/functions.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <net/socketmonitor.h>
+#include <peer/peermanager.h>
+#include <settings.h>
+#include <torrent/choker.h>
+#include <torrent/globals.h>
+#include <torrent/queuemanager.h>
+#include <torrent/server.h>
+#include <tracker/udptrackersocket.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-
-
-
-ActionHandler::ActionHandler(CoreInterface* core, HttpServer* server)
-    : WebContentGenerator(server, "/action", LOGIN_REQUIRED), core(core)
+ActionHandler::ActionHandler(CoreInterface *core, HttpServer *server)
+    : WebContentGenerator(server, "/action", LOGIN_REQUIRED)
+    , core(core)
 {
 }
-
 
 ActionHandler::~ActionHandler()
 {
 }
 
-
-void ActionHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void ActionHandler::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     KUrl url;
     url.setEncodedPathAndQuery(hdr.path());
     bool ret = false;
-    const QMap<QString, QString> & params = url.queryItems();
+    const QMap<QString, QString> &params = url.queryItems();
     for (QMap<QString, QString>::const_iterator it = params.begin(); it != params.end(); ++it) {
         ret = doCommand(it.key(), it.value());
         if (!ret)
@@ -88,7 +83,7 @@ void ActionHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
     hdlr->send(rhdr, output_data);
 }
 
-bool ActionHandler::doCommand(const QString& cmd, const QString& arg)
+bool ActionHandler::doCommand(const QString &cmd, const QString &arg)
 {
     if (cmd == "dht")
         return dht(arg);
@@ -137,7 +132,7 @@ bool ActionHandler::doCommand(const QString& cmd, const QString& arg)
         UDPTrackerSocket::setPort(Settings::udpTrackerPort());
         return true;
     } else if (cmd == "remove") {
-        QList<TorrentInterface*>::iterator i = core->getQueueManager()->begin();
+        QList<TorrentInterface *>::iterator i = core->getQueueManager()->begin();
         for (int k = 0; i != core->getQueueManager()->end(); i++, k++) {
             if (arg.toInt() == k) {
                 core->remove((*i), false);
@@ -151,7 +146,7 @@ bool ActionHandler::doCommand(const QString& cmd, const QString& arg)
         core->startAll();
         return true;
     } else if (cmd == "stop") {
-        QList<TorrentInterface*>::iterator i = core->getQueueManager()->begin();
+        QList<TorrentInterface *>::iterator i = core->getQueueManager()->begin();
         for (int k = 0; i != core->getQueueManager()->end(); i++, k++) {
             if (arg.toInt() == k) {
                 core->stop(*i);
@@ -159,7 +154,7 @@ bool ActionHandler::doCommand(const QString& cmd, const QString& arg)
             }
         }
     } else if (cmd == "start") {
-        QList<TorrentInterface*>::iterator i = core->getQueueManager()->begin();
+        QList<TorrentInterface *>::iterator i = core->getQueueManager()->begin();
         for (int k = 0; i != core->getQueueManager()->end(); i++, k++) {
             if (arg.toInt() == k) {
                 core->start(*i);
@@ -176,13 +171,13 @@ bool ActionHandler::doCommand(const QString& cmd, const QString& arg)
     return false;
 }
 
-void ActionHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void ActionHandler::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     Q_UNUSED(data);
     get(hdlr, hdr);
 }
 
-bool ActionHandler::dht(const QString& arg)
+bool ActionHandler::dht(const QString &arg)
 {
     if (arg == "start") {
         Settings::setDhtSupport(true);
@@ -190,7 +185,7 @@ bool ActionHandler::dht(const QString& arg)
         Settings::setDhtSupport(false);
     }
 
-    dht::DHTBase& ht = Globals::instance().getDHT();
+    dht::DHTBase &ht = Globals::instance().getDHT();
     if (Settings::dhtSupport() && !ht.isRunning()) {
         ht.start(kt::DataDir() + "dht_table", kt::DataDir() + "dht_key", Settings::dhtPort());
         return true;
@@ -206,7 +201,7 @@ bool ActionHandler::dht(const QString& arg)
     return false;
 }
 
-bool ActionHandler::encryption(const QString& arg)
+bool ActionHandler::encryption(const QString &arg)
 {
     if (arg == "start") {
         Settings::setUseEncryption(true);
@@ -222,11 +217,11 @@ bool ActionHandler::encryption(const QString& arg)
     return true;
 }
 
-bool ActionHandler::file(const QString& cmd, const QString& arg)
+bool ActionHandler::file(const QString &cmd, const QString &arg)
 {
     QString torrent_num;
     QString file_num;
-    //parse argument into torrent number and file number
+    // parse argument into torrent number and file number
     int separator_loc = arg.indexOf('-');
     QString parse = arg;
 
@@ -234,37 +229,37 @@ bool ActionHandler::file(const QString& cmd, const QString& arg)
     file_num.append(parse.right(parse.length() - (separator_loc + 1)));
 
     if (cmd == "file_lp") {
-        QList<TorrentInterface*>::iterator i = core->getQueueManager()->begin();
+        QList<TorrentInterface *>::iterator i = core->getQueueManager()->begin();
         for (int k = 0; i != core->getQueueManager()->end(); i++, k++) {
             if (torrent_num.toInt() == k) {
-                TorrentFileInterface& file = (*i)->getTorrentFile(file_num.toInt());
+                TorrentFileInterface &file = (*i)->getTorrentFile(file_num.toInt());
                 file.setPriority(LAST_PRIORITY);
                 return true;
             }
         }
     } else if (cmd == "file_np") {
-        QList<TorrentInterface*>::iterator i = core->getQueueManager()->begin();
+        QList<TorrentInterface *>::iterator i = core->getQueueManager()->begin();
         for (int k = 0; i != core->getQueueManager()->end(); i++, k++) {
             if (torrent_num.toInt() == k) {
-                TorrentFileInterface& file = (*i)->getTorrentFile(file_num.toInt());
+                TorrentFileInterface &file = (*i)->getTorrentFile(file_num.toInt());
                 file.setPriority(NORMAL_PRIORITY);
                 return true;
             }
         }
     } else if (cmd == "file_hp") {
-        QList<TorrentInterface*>::iterator i = core->getQueueManager()->begin();
+        QList<TorrentInterface *>::iterator i = core->getQueueManager()->begin();
         for (int k = 0; i != core->getQueueManager()->end(); i++, k++) {
             if (torrent_num.toInt() == k) {
-                TorrentFileInterface& file = (*i)->getTorrentFile(file_num.toInt());
+                TorrentFileInterface &file = (*i)->getTorrentFile(file_num.toInt());
                 file.setPriority(FIRST_PRIORITY);
                 return true;
             }
         }
     } else if (cmd == "file_stop") {
-        QList<TorrentInterface*>::iterator i = core->getQueueManager()->begin();
+        QList<TorrentInterface *>::iterator i = core->getQueueManager()->begin();
         for (int k = 0; i != core->getQueueManager()->end(); i++, k++) {
             if (torrent_num.toInt() == k) {
-                TorrentFileInterface& file = (*i)->getTorrentFile(file_num.toInt());
+                TorrentFileInterface &file = (*i)->getTorrentFile(file_num.toInt());
                 file.setPriority(ONLY_SEED_PRIORITY);
                 return true;
             }

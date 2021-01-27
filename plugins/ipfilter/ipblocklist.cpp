@@ -21,16 +21,15 @@
 
 #include "ipblocklist.h"
 #include <QFile>
-#include <util/log.h>
-#include <util/constants.h>
 #include <net/address.h>
-
+#include <util/constants.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-static Uint32 StringToUint32(const QString& ip)
+static Uint32 StringToUint32(const QString &ip)
 {
     bool test;
     Uint32 ret = ip.section(QLatin1Char('.'), 0, 0).toULongLong(&test);
@@ -44,13 +43,19 @@ static Uint32 StringToUint32(const QString& ip)
     return ret;
 }
 
-IPBlock::IPBlock() : ip1(0), ip2(0)
-{}
+IPBlock::IPBlock()
+    : ip1(0)
+    , ip2(0)
+{
+}
 
-IPBlock::IPBlock(const IPBlock& block) : ip1(block.ip1), ip2(block.ip2)
-{}
+IPBlock::IPBlock(const IPBlock &block)
+    : ip1(block.ip1)
+    , ip2(block.ip2)
+{
+}
 
-IPBlock::IPBlock(const QString& start, const QString& end)
+IPBlock::IPBlock(const QString &start, const QString &end)
 {
     ip1 = StringToUint32(start);
     ip2 = StringToUint32(end);
@@ -64,7 +69,7 @@ IPBlockList::~IPBlockList()
 {
 }
 
-bool IPBlockList::blocked(const net::Address& addr) const
+bool IPBlockList::blocked(const net::Address &addr) const
 {
     if (addr.protocol() == QAbstractSocket::IPv6Protocol || blocks.empty())
         return false;
@@ -90,7 +95,7 @@ bool IPBlockList::blocked(const net::Address& addr) const
     return false;
 }
 
-bool IPBlockList::load(const QString& path)
+bool IPBlockList::load(const QString &path)
 {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -103,7 +108,7 @@ bool IPBlockList::load(const QString& path)
     blocks.reserve(num_blocks);
     while (!file.atEnd() && blocks.size() < num_blocks) {
         IPBlock block;
-        if (file.read((char*)&block, sizeof(IPBlock)) == sizeof(IPBlock))
+        if (file.read((char *)&block, sizeof(IPBlock)) == sizeof(IPBlock))
             addBlock(block);
         else
             break;
@@ -113,7 +118,7 @@ bool IPBlockList::load(const QString& path)
     return true;
 }
 
-void IPBlockList::addBlock(const IPBlock& block)
+void IPBlockList::addBlock(const IPBlock &block)
 {
     blocks.append(block);
 }

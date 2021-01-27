@@ -20,16 +20,17 @@
 
 #include "logprefpage.h"
 
-#include <QHeaderView>
 #include <KSharedConfig>
+#include <QHeaderView>
 
-#include "logviewerpluginsettings.h"
 #include "logflags.h"
 #include "logflagsdelegate.h"
+#include "logviewerpluginsettings.h"
 
 namespace kt
 {
-LogPrefPage::LogPrefPage(LogFlags* flags, QWidget* parent) : PrefPageInterface(LogViewerPluginSettings::self(), i18n("Log Viewer"), QStringLiteral("utilities-log-viewer"), parent)
+LogPrefPage::LogPrefPage(LogFlags *flags, QWidget *parent)
+    : PrefPageInterface(LogViewerPluginSettings::self(), i18n("Log Viewer"), QStringLiteral("utilities-log-viewer"), parent)
 {
     setupUi(this);
     m_logging_flags->setModel(flags);

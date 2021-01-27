@@ -30,40 +30,36 @@
 #include <KLocalizedString>
 #include <KToggleAction>
 
-#include <util/log.h>
-#include <gui/tabbarwidget.h>
-#include <groups/groupmanager.h>
-#include "gui.h"
 #include "core.h"
-#include "view/view.h"
-#include "view/torrentsearchbar.h"
-#include "groups/groupview.h"
 #include "groups/groupswitcher.h"
-#include "tools/queuemanagerwidget.h"
+#include "groups/groupview.h"
+#include "gui.h"
 #include "tools/magnetview.h"
+#include "tools/queuemanagerwidget.h"
 #include "torrent/queuemanager.h"
-
+#include "view/torrentsearchbar.h"
+#include "view/view.h"
+#include <groups/groupmanager.h>
+#include <gui/tabbarwidget.h>
+#include <util/log.h>
 
 using namespace bt;
 
-
 namespace kt
 {
-
-
-TorrentActivity::TorrentActivity(Core* core, GUI* gui, QWidget* parent)
-    : TorrentActivityInterface(i18n("Torrents"), QStringLiteral("torrents"), parent),
-      core(core),
-      gui(gui)
+TorrentActivity::TorrentActivity(Core *core, GUI *gui, QWidget *parent)
+    : TorrentActivityInterface(i18n("Torrents"), QStringLiteral("torrents"), parent)
+    , core(core)
+    , gui(gui)
 {
     setXMLGUIFile(QStringLiteral("kttorrentactivityui.rc"));
-    QWidget* view_part = new QWidget(this);
+    QWidget *view_part = new QWidget(this);
     view = new View(core, gui, view_part);
     connect(view, &View::currentTorrentChanged, this, &TorrentActivity::currentTorrentChanged);
     search_bar = new TorrentSearchBar(view, view_part);
     search_bar->setHidden(true);
 
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
     vsplit = new QSplitter(Qt::Vertical, this);
@@ -73,7 +69,7 @@ TorrentActivity::TorrentActivity(Core* core, GUI* gui, QWidget* parent)
     group_switcher = new GroupSwitcher(view, core->getGroupManager(), this);
     connect(core->getQueueManager(), &QueueManager::queueOrdered, this, &TorrentActivity::queueOrdered);
 
-    QVBoxLayout* vlayout = new QVBoxLayout(view_part);
+    QVBoxLayout *vlayout = new QVBoxLayout(view_part);
     vlayout->setSpacing(0);
     vlayout->setMargin(0);
     vlayout->addWidget(group_switcher);
@@ -103,10 +99,9 @@ TorrentActivity::TorrentActivity(Core* core, GUI* gui, QWidget* parent)
     tool_views->addTab(qm, i18n("Queue Manager"), QStringLiteral("kt-queue-manager"), i18n("Widget to manage the torrent queue"));
 
     magnet_view = new MagnetView(core->getMagnetManager(), this);
-    tool_views->addTab(magnet_view, i18n("Magnet Downloader"), QStringLiteral("kt-magnet"),
-                       i18n("Displays the currently downloading magnet links"));
+    tool_views->addTab(magnet_view, i18n("Magnet Downloader"), QStringLiteral("kt-magnet"), i18n("Displays the currently downloading magnet links"));
 
-    QueueManager* qman = core->getQueueManager();
+    QueueManager *qman = core->getQueueManager();
     connect(qman, &QueueManager::suspendStateChanged, this, &TorrentActivity::onSuspendedStateChanged);
 
     queue_suspend_action->setChecked(core->getSuspendedState());
@@ -118,7 +113,7 @@ TorrentActivity::~TorrentActivity()
 
 void TorrentActivity::setupActions()
 {
-    KActionCollection* ac = part()->actionCollection();
+    KActionCollection *ac = part()->actionCollection();
     start_all_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-start-all")), i18n("Start All"), this);
     start_all_action->setToolTip(i18n("Start all torrents"));
     connect(start_all_action, &QAction::triggered, this, &TorrentActivity::startAllTorrents);
@@ -133,7 +128,7 @@ void TorrentActivity::setupActions()
     ac->addAction(QStringLiteral("queue_suspend"), queue_suspend_action);
     ac->setDefaultShortcut(queue_suspend_action, QKeySequence(Qt::SHIFT + Qt::Key_P));
     queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
-    //KF5 queue_suspend_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_P));
+    // KF5 queue_suspend_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_P));
     connect(queue_suspend_action, &KToggleAction::toggled, this, &TorrentActivity::suspendQueue);
 
     show_group_view_action = new KToggleAction(QIcon::fromTheme(QStringLiteral("view-list-tree")), i18n("Group View"), this);
@@ -150,12 +145,12 @@ void TorrentActivity::setupActions()
     view->setupActions(ac);
 }
 
-void TorrentActivity::addToolWidget(QWidget* widget, const QString& text, const QString& icon, const QString& tooltip)
+void TorrentActivity::addToolWidget(QWidget *widget, const QString &text, const QString &icon, const QString &tooltip)
 {
     tool_views->addTab(widget, text, icon, tooltip);
 }
 
-void TorrentActivity::removeToolWidget(QWidget* widget)
+void TorrentActivity::removeToolWidget(QWidget *widget)
 {
     tool_views->removeTab(widget);
 }
@@ -207,17 +202,17 @@ void TorrentActivity::saveState(KSharedConfigPtr cfg)
     }
 }
 
-const TorrentInterface* TorrentActivity::getCurrentTorrent() const
+const TorrentInterface *TorrentActivity::getCurrentTorrent() const
 {
     return view->getCurrentTorrent();
 }
 
-bt::TorrentInterface* TorrentActivity::getCurrentTorrent()
+bt::TorrentInterface *TorrentActivity::getCurrentTorrent()
 {
     return view->getCurrentTorrent();
 }
 
-void TorrentActivity::currentTorrentChanged(bt::TorrentInterface* tc)
+void TorrentActivity::currentTorrentChanged(bt::TorrentInterface *tc)
 {
     notifyViewListeners(tc);
 }
@@ -266,7 +261,7 @@ void TorrentActivity::onSuspendedStateChanged(bool suspended)
     queue_suspend_action->setChecked(suspended);
 }
 
-Group* TorrentActivity::addNewGroup()
+Group *TorrentActivity::addNewGroup()
 {
     return group_view->addNewGroup();
 }

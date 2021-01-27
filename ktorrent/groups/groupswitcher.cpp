@@ -21,34 +21,33 @@
 #include <KConfigGroup>
 
 #include <QAction>
-#include <QIcon>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QIcon>
 #include <QToolButton>
 
-#include "groupswitcher.h"
 #include "grouppolicydlg.h"
-#include <view/view.h>
+#include "groupswitcher.h"
 #include <torrent/queuemanager.h>
 #include <util/log.h>
+#include <view/view.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-GroupSwitcher::GroupSwitcher(View* view, GroupManager* gman, QWidget* parent)
-    : QWidget(parent),
-      new_tab(new QToolButton(this)),
-      close_tab(new QToolButton(this)),
-      edit_group_policy(new QToolButton(this)),
-      tool_bar(new KToolBar(this)),
-      action_group(new QActionGroup(this)),
-      gman(gman),
-      view(view),
-      current_tab(0)
+GroupSwitcher::GroupSwitcher(View *view, GroupManager *gman, QWidget *parent)
+    : QWidget(parent)
+    , new_tab(new QToolButton(this))
+    , close_tab(new QToolButton(this))
+    , edit_group_policy(new QToolButton(this))
+    , tool_bar(new KToolBar(this))
+    , action_group(new QActionGroup(this))
+    , gman(gman)
+    , view(view)
+    , current_tab(0)
 {
-    QHBoxLayout* layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(new_tab);
     layout->addWidget(edit_group_policy);
     layout->addWidget(tool_bar);
@@ -89,18 +88,17 @@ void GroupSwitcher::loadState(KSharedConfig::Ptr cfg)
     default_groups << QStringLiteral("/all") << QStringLiteral("/all/downloads") << QStringLiteral("/all/uploads");
 
     const QStringList groups = g.readEntry("groups", default_groups);
-    for (const QString& group : groups) {
+    for (const QString &group : groups) {
         addTab(gman->findByPath(group));
     }
 
     if (tabs.isEmpty()) {
-        for (const QString& group : qAsConst(default_groups))
+        for (const QString &group : qAsConst(default_groups))
             addTab(gman->findByPath(group));
     }
 
-
     int idx = 0;
-    for (Tab & tab : tabs) {
+    for (Tab &tab : tabs) {
         tab.view_settings = g.readEntry(QStringLiteral("tab%1_settings").arg(idx++), view->defaultState());
     }
 
@@ -109,7 +107,7 @@ void GroupSwitcher::loadState(KSharedConfig::Ptr cfg)
 
     current_tab = g.readEntry("current_tab", 0);
     if (current_tab >= 0 && current_tab < tabs.count()) {
-        Tab& ct = tabs[current_tab];
+        Tab &ct = tabs[current_tab];
         ct.action->setChecked(true);
         view->setGroup(ct.group);
         view->restoreState(ct.view_settings);
@@ -128,7 +126,7 @@ void GroupSwitcher::saveState(KSharedConfig::Ptr cfg)
     KConfigGroup g = cfg->group("GroupSwitcher");
     QStringList groups;
     int idx = 0;
-    for (Tab & tab : tabs) {
+    for (Tab &tab : tabs) {
         groups << tab.group->groupPath();
         if (idx == current_tab)
             tab.view_settings = view->header()->saveState();
@@ -139,13 +137,13 @@ void GroupSwitcher::saveState(KSharedConfig::Ptr cfg)
     g.writeEntry("current_tab", current_tab);
 }
 
-void GroupSwitcher::addTab(Group* group)
+void GroupSwitcher::addTab(Group *group)
 {
     if (!group)
         return;
 
-    QString name = group->groupName() +  QStringLiteral(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
-    QAction* action = tool_bar->addAction(group->groupIcon(), name);
+    QString name = group->groupName() + QStringLiteral(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
+    QAction *action = tool_bar->addAction(group->groupIcon(), name);
     action->setCheckable(true);
     action_group->addAction(action);
     tabs.append(Tab(group, action));
@@ -177,7 +175,6 @@ GroupSwitcher::TabList::iterator GroupSwitcher::closeTab(TabList::iterator i)
     return ret;
 }
 
-
 void GroupSwitcher::closeTab()
 {
     if (tabs.size() <= 1) // Need at least one tab visible
@@ -195,12 +192,12 @@ void GroupSwitcher::closeTab()
     close_tab->setEnabled(tabs.count() > 1);
 }
 
-void GroupSwitcher::onActivated(QAction* action)
+void GroupSwitcher::onActivated(QAction *action)
 {
     tabs[current_tab].view_settings = view->header()->saveState();
 
     int idx = 0;
-    for (const Tab & tab : qAsConst(tabs)) {
+    for (const Tab &tab : qAsConst(tabs)) {
         if (tab.action == action) {
             view->setGroup(tab.group);
             view->restoreState(tab.view_settings);
@@ -212,12 +209,12 @@ void GroupSwitcher::onActivated(QAction* action)
     }
 }
 
-void GroupSwitcher::currentGroupChanged(Group* group)
+void GroupSwitcher::currentGroupChanged(Group *group)
 {
-    for (Tab & tab : tabs) {
+    for (Tab &tab : tabs) {
         if (tab.action->isChecked()) {
             tab.group = group;
-            QString name = group->groupName() +  QStringLiteral(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
+            QString name = group->groupName() + QStringLiteral(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
             tab.action->setText(name);
             tab.action->setIcon(group->groupIcon());
             edit_group_policy->setEnabled(!group->isStandardGroup());
@@ -228,11 +225,11 @@ void GroupSwitcher::currentGroupChanged(Group* group)
 
 void GroupSwitcher::updateGroupCount()
 {
-    for (Tab & tab : tabs)
+    for (Tab &tab : tabs)
         tab.action->setText(tab.group->groupName() + QStringLiteral(" %1/%2").arg(tab.group->runningTorrents()).arg(tab.group->totalTorrents()));
 }
 
-void GroupSwitcher::groupRemoved(Group* group)
+void GroupSwitcher::groupRemoved(Group *group)
 {
     for (TabList::iterator i = tabs.begin(); i != tabs.end();) {
         if (i->group == group) {
@@ -251,7 +248,7 @@ void GroupSwitcher::groupRemoved(Group* group)
 
 void GroupSwitcher::editGroupPolicy()
 {
-    Group* g = tabs[current_tab].group;
+    Group *g = tabs[current_tab].group;
     if (g) {
         GroupPolicyDlg dlg(g, this);
         if (dlg.exec() == QDialog::Accepted)

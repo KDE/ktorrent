@@ -34,24 +34,24 @@ namespace kt
 {
 class CoreInterface;
 
-
 /**
     @author
 */
 class TorrentFilesGenerator : public WebContentGenerator
 {
 public:
-    TorrentFilesGenerator(CoreInterface* core, HttpServer* server);
+    TorrentFilesGenerator(CoreInterface *core, HttpServer *server);
     virtual ~TorrentFilesGenerator();
 
-    virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
-    virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
-private:
-    bt::TorrentInterface* findTorrent(const QString& path);
-    void writeElement(QXmlStreamWriter& out, const QString& name, const QString& value);
+    virtual void get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr);
+    virtual void post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data);
 
 private:
-    CoreInterface* core;
+    bt::TorrentInterface *findTorrent(const QString &path);
+    void writeElement(QXmlStreamWriter &out, const QString &name, const QString &value);
+
+private:
+    CoreInterface *core;
 };
 
 }

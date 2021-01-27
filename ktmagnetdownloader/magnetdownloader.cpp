@@ -3,16 +3,15 @@
 
 #include <QApplication>
 
-#include <version.h>
-#include <util/log.h>
 #include <util/functions.h>
+#include <util/log.h>
+#include <version.h>
 
 #include "magnettest.h"
 
 using namespace bt;
 
-
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     if (argc != 2) {
         fprintf(stderr, "Usage: ktmagnetdownloader <magnet-link>\n");
@@ -37,7 +36,7 @@ int main(int argc, char** argv)
 
     bt::SetClientInfo(QStringLiteral("ktmagnetdownloader"), bt::MAJOR, bt::MINOR, bt::RELEASE, bt::NORMAL, QStringLiteral("KT"));
     bt::InitLog(QStringLiteral("ktmagnetdownload.log"), false, true);
-    bt::Log& log = Out();
+    bt::Log &log = Out();
     log.setOutputToConsole(true);
     log << "Downloading " << mlink.toString() << bt::endl;
 

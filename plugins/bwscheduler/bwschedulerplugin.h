@@ -21,15 +21,13 @@
 #ifndef KTschedulerPLUGIN_H
 #define KTschedulerPLUGIN_H
 
+#include "screensaver_interface.h"
 #include <QAction>
 #include <QTimer>
-#include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
-#include "screensaver_interface.h"
-
+#include <interfaces/plugin.h>
 
 class QString;
-
 
 namespace kt
 {
@@ -46,16 +44,16 @@ class BWSchedulerPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    BWSchedulerPlugin(QObject* parent, const QVariantList& args);
+    BWSchedulerPlugin(QObject *parent, const QVariantList &args);
     ~BWSchedulerPlugin() override;
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString& version) const override;
+    bool versionCheck(const QString &version) const override;
 
 public Q_SLOTS:
     void timerTriggered();
-    void onLoaded(Schedule* ns);
+    void onLoaded(Schedule *ns);
     void colorsChanged();
     void screensaverActivated(bool on);
     void networkStatusChanged(bool online);
@@ -66,10 +64,10 @@ private:
 
 private:
     QTimer m_timer;
-    ScheduleEditor* m_editor;
-    Schedule* m_schedule;
-    BWPrefPage* m_pref;
-    org::freedesktop::ScreenSaver* screensaver;
+    ScheduleEditor *m_editor;
+    Schedule *m_schedule;
+    BWPrefPage *m_pref;
+    org::freedesktop::ScreenSaver *screensaver;
     bool screensaver_on;
 };
 

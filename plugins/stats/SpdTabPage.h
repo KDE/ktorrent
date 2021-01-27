@@ -22,35 +22,34 @@
 #define SpdTabPage_H_
 
 #include <QList>
-#include <QString>
 #include <QPen>
+#include <QString>
 #include <QWidget>
 
-#include <interfaces/plugin.h>
 #include <interfaces/coreinterface.h>
-#include <torrent/torrentcontrol.h>
-#include <interfaces/torrentinterface.h>
-#include <torrent/queuemanager.h>
-#include <peer/peermanager.h>
-#include <peer/peer.h>
 #include <interfaces/peerinterface.h>
+#include <interfaces/plugin.h>
+#include <interfaces/torrentinterface.h>
+#include <peer/peer.h>
+#include <peer/peermanager.h>
 #include <settings.h>
+#include <torrent/queuemanager.h>
+#include <torrent/torrentcontrol.h>
 
-#include <memory>
 #include <cstdint>
+#include <memory>
 
 #include <PluginPage.h>
 #include <drawer/ChartDrawer.h>
-#include <drawer/PlainChartDrawer.h>
-#include <drawer/KPlotWgtDrawer.h>
 #include <drawer/ChartDrawerData.h>
+#include <drawer/KPlotWgtDrawer.h>
+#include <drawer/PlainChartDrawer.h>
 #include <statspluginsettings.h>
 
 #include <ui_Spd.h>
 
 namespace kt
 {
-
 /** \brief Speeds tab
 \author Krzysztof Kundzicz <athantor@gmail.com>
 */
@@ -62,49 +61,49 @@ public:
     /** \brief Constructor
     \param p Parent
     */
-    SpdTabPage(QWidget* p);
-    ///Destructor
+    SpdTabPage(QWidget *p);
+    /// Destructor
     ~SpdTabPage() override;
 
 public Q_SLOTS:
     void applySettings() override;
     void updateAllCharts() override;
-    void gatherData(Plugin*) override;
-    void resetAvg(ChartDrawer*) override;
+    void gatherData(Plugin *) override;
+    void resetAvg(ChartDrawer *) override;
 
 private:
     /** \brief Gathers dl speeds data
      \ param  pP kt::Plugin interfac*e *
      */
-    void gatherDownloadSpeed(Plugin* pP);
+    void gatherDownloadSpeed(Plugin *pP);
     /** \brief Gathers peers speeds data
      \ param  pP kt::Plugin interfac*e *
      */
-    void gatherPeersSpeed(Plugin* pP);
+    void gatherPeersSpeed(Plugin *pP);
     /** \brief Gathers Ul speeds data
      \ param  pP kt::Plugin interfac*e *
      */
-    void gatherUploadSpeed(Plugin* pP);
+    void gatherUploadSpeed(Plugin *pP);
 
     void setupUi() override;
 
 private:
-    ///Page's UI
-    Ui::SpdWgt* pmUiSpd;
+    /// Page's UI
+    Ui::SpdWgt *pmUiSpd;
 
-    ///Dl speeds chart widget
-    ChartDrawer* pmDlChtWgt;
-    ///Peers speeds chart widget
-    ChartDrawer* pmPeersChtWgt;
-    ///Ul speeds chart widget
-    ChartDrawer* pmUlChtWgt;
+    /// Dl speeds chart widget
+    ChartDrawer *pmDlChtWgt;
+    /// Peers speeds chart widget
+    ChartDrawer *pmPeersChtWgt;
+    /// Ul speeds chart widget
+    ChartDrawer *pmUlChtWgt;
 
-    ///Dl average
+    /// Dl average
     avg_t mDlAvg;
-    ///Ul average
+    /// Ul average
     avg_t mUlAvg;
 };
 
-} //ns end
+} // ns end
 
 #endif

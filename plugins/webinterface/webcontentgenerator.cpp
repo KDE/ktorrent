@@ -22,15 +22,15 @@
 
 namespace kt
 {
-
-WebContentGenerator::WebContentGenerator(HttpServer* server, const QString& path, Permissions per) : server(server), path(path), permissions(per)
+WebContentGenerator::WebContentGenerator(HttpServer *server, const QString &path, Permissions per)
+    : server(server)
+    , path(path)
+    , permissions(per)
 {
 }
-
 
 WebContentGenerator::~WebContentGenerator()
 {
 }
-
 
 }

@@ -21,32 +21,30 @@
 
 #include <QXmlStreamWriter>
 
-#include <util/log.h>
-#include <interfaces/coreinterface.h>
-#include "httpserver.h"
 #include "httpclienthandler.h"
 #include "httpresponseheader.h"
-#include "settingsgenerator.h"
+#include "httpserver.h"
 #include "settings.h"
+#include "settingsgenerator.h"
 #include "webinterfacepluginsettings.h"
+#include <interfaces/coreinterface.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-SettingsGenerator::SettingsGenerator(CoreInterface* core, HttpServer* server)
-    : WebContentGenerator(server, "/data/settings.xml", LOGIN_REQUIRED), core(core)
+SettingsGenerator::SettingsGenerator(CoreInterface *core, HttpServer *server)
+    : WebContentGenerator(server, "/data/settings.xml", LOGIN_REQUIRED)
+    , core(core)
 {
 }
-
 
 SettingsGenerator::~SettingsGenerator()
 {
 }
 
-
-void SettingsGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+void SettingsGenerator::get(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr)
 {
     Q_UNUSED(hdr);
     HttpResponseHeader rhdr(200);
@@ -58,7 +56,7 @@ void SettingsGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& h
     out.writeStartDocument();
     out.writeStartElement("settings");
     KConfigSkeletonItem::List items = Settings::self()->items();
-    foreach (const KConfigSkeletonItem* item, items) {
+    foreach (const KConfigSkeletonItem *item, items) {
         out.writeStartElement(item->name());
         out.writeCharacters(item->property().toString());
         out.writeEndElement();
@@ -74,10 +72,10 @@ void SettingsGenerator::get(HttpClientHandler* hdlr, const QHttpRequestHeader& h
     hdlr->send(rhdr, output_data);
 }
 
-void SettingsGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+void SettingsGenerator::post(HttpClientHandler *hdlr, const QHttpRequestHeader &hdr, const QByteArray &data)
 {
     QStringList params = QString(data).split('&');
-    foreach (const QString& p, params) {
+    foreach (const QString &p, params) {
         // p should look like param=value
         QStringList items = p.split('=');
         if (items.count() != 2)
@@ -85,7 +83,7 @@ void SettingsGenerator::post(HttpClientHandler* hdlr, const QHttpRequestHeader& 
 
         QString cfg_param = items.at(0);
         QString cfg_value = items.at(1);
-        KConfigSkeletonItem* item = Settings::self()->findItem(cfg_param);
+        KConfigSkeletonItem *item = Settings::self()->findItem(cfg_param);
         if (!item) {
             if (cfg_param == "webgui_automatic_refresh") {
                 WebInterfacePluginSettings::setAutomaticRefresh(cfg_value == "1");

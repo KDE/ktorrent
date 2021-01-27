@@ -28,11 +28,9 @@
 
 #include <util/functions.h>
 
-
 namespace kt
 {
-
-BasicJobProgressWidget::BasicJobProgressWidget(bt::Job* job, QWidget* parent)
+BasicJobProgressWidget::BasicJobProgressWidget(bt::Job *job, QWidget *parent)
     : JobProgressWidget(job, parent)
 {
     setupUi(this);
@@ -45,17 +43,16 @@ BasicJobProgressWidget::BasicJobProgressWidget(bt::Job* job, QWidget* parent)
 
 BasicJobProgressWidget::~BasicJobProgressWidget()
 {
-
 }
 
-void BasicJobProgressWidget::description(const QString& title, const QPair< QString, QString >& field1, const QPair< QString, QString >& field2)
+void BasicJobProgressWidget::description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2)
 {
     job_title->setText(title);
     job_description->setText(i18n("%1: %2<br/>%3: %4", field1.first, field1.second, field2.first, field2.second));
     resized(this);
 }
 
-void BasicJobProgressWidget::infoMessage(const QString& plain, const QString& rich)
+void BasicJobProgressWidget::infoMessage(const QString &plain, const QString &rich)
 {
     Q_UNUSED(plain);
     msg->setText(rich);
@@ -63,7 +60,7 @@ void BasicJobProgressWidget::infoMessage(const QString& plain, const QString& ri
     resized(this);
 }
 
-void BasicJobProgressWidget::warning(const QString& plain, const QString& rich)
+void BasicJobProgressWidget::warning(const QString &plain, const QString &rich)
 {
     Q_UNUSED(plain);
     msg->setText(i18n("Warning: %1", rich));

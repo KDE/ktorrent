@@ -22,8 +22,8 @@
 #ifndef KTEDITITEMDLG_H
 #define KTEDITITEMDLG_H
 
-#include <QDialog>
 #include "ui_edititemdlg.h"
+#include <QDialog>
 
 namespace kt
 {
@@ -37,7 +37,7 @@ class EditItemDlg : public QDialog, public Ui_EditItemDlg
 {
     Q_OBJECT
 public:
-    EditItemDlg(Schedule* schedule, ScheduleItem* item, bool new_item, QWidget* parent);
+    EditItemDlg(Schedule *schedule, ScheduleItem *item, bool new_item, QWidget *parent);
     ~EditItemDlg() override;
 
     /**
@@ -46,8 +46,8 @@ public:
     void accept() override;
 
 private Q_SLOTS:
-    void fromChanged(const QTime& time);
-    void toChanged(const QTime& time);
+    void fromChanged(const QTime &time);
+    void toChanged(const QTime &time);
     void startDayChanged(int idx);
     void endDayChanged(int idx);
     void suspendedChanged(bool on);
@@ -57,8 +57,8 @@ private:
     void fillItem();
 
 private:
-    Schedule* schedule;
-    ScheduleItem* item;
+    Schedule *schedule;
+    ScheduleItem *item;
 };
 
 }

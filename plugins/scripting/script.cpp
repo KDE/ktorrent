@@ -24,32 +24,40 @@
 
 #include <KConfigGroup>
 #include <KDesktopFile>
-#include <Kross/Core/Manager>
 #include <Kross/Core/ActionCollection>
+#include <Kross/Core/Manager>
 
+#include "script.h"
 #include <util/fileops.h>
 #include <util/log.h>
-#include "script.h"
 
 using namespace bt;
 
 namespace kt
 {
-Script::Script(QObject* parent) : QObject(parent), action(nullptr), executing(false), can_be_removed(true)
+Script::Script(QObject *parent)
+    : QObject(parent)
+    , action(nullptr)
+    , executing(false)
+    , can_be_removed(true)
 {
 }
 
-Script::Script(const QString& file, QObject* parent) : QObject(parent), file(file), action(nullptr), executing(false), can_be_removed(true)
+Script::Script(const QString &file, QObject *parent)
+    : QObject(parent)
+    , file(file)
+    , action(nullptr)
+    , executing(false)
+    , can_be_removed(true)
 {
 }
-
 
 Script::~Script()
 {
     stop();
 }
 
-bool Script::loadFromDesktopFile(const QString& dir, const QString& desktop_file)
+bool Script::loadFromDesktopFile(const QString &dir, const QString &desktop_file)
 {
     KDesktopFile df(dir + desktop_file);
     // check if everything is OK
@@ -116,7 +124,7 @@ void Script::stop()
         action->callFunction(QStringLiteral("unload"), args);
     }
 
-    Kross::ActionCollection* col = Kross::Manager::self().actionCollection();
+    Kross::ActionCollection *col = Kross::Manager::self().actionCollection();
     col->removeAction(action->file());
     action->deleteLater();
     action = nullptr;

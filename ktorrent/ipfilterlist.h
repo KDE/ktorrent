@@ -22,15 +22,14 @@
 #ifndef KTIPFILTERLIST_H
 #define KTIPFILTERLIST_H
 
-#include <QList>
 #include <QAbstractListModel>
+#include <QList>
 
-#include <util/constants.h>
 #include <interfaces/blocklistinterface.h>
+#include <util/constants.h>
 
 namespace kt
 {
-
 /**
     Blocklist for the IPFilterWidget
 */
@@ -40,10 +39,10 @@ public:
     IPFilterList();
     ~IPFilterList() override;
 
-    bool blocked(const net::Address& addr) const override;
+    bool blocked(const net::Address &addr) const override;
 
     /// Add an IP address with a mask.
-    bool add(const QString& ip);
+    bool add(const QString &ip);
 
     /// Remove the IP address at a given row and count items following that
     void remove(int row, int count);
@@ -51,17 +50,17 @@ public:
     /// Clear the list
     void clear();
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex& index, int role) const override;
-    bool setData(const QModelIndex& index, const QVariant& value, int role) override;
-    bool insertRows(int row, int count, const QModelIndex& parent) override;
-    bool removeRows(int row, int count, const QModelIndex& parent) override;
-    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    bool insertRows(int row, int count, const QModelIndex &parent) override;
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 private:
-    bool addIP(const QString& str);
-    bool addIPRange(const QString& str);
-    bool parseIPWithWildcards(const QString& str, bt::Uint32& start, bt::Uint32& end);
+    bool addIP(const QString &str);
+    bool addIPRange(const QString &str);
+    bool parseIPWithWildcards(const QString &str, bt::Uint32 &start, bt::Uint32 &end);
 
 private:
     struct Entry {

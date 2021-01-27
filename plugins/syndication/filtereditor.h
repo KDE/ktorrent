@@ -38,13 +38,14 @@ class FeedWidgetModel;
 class TestFilterModel : public QSortFilterProxyModel
 {
 public:
-    TestFilterModel(Filter* filter, FeedWidgetModel* source, QObject* parent);
+    TestFilterModel(Filter *filter, FeedWidgetModel *source, QObject *parent);
     ~TestFilterModel();
 
-    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+
 private:
-    Filter* filter;
-    FeedWidgetModel* feed_model;
+    Filter *filter;
+    FeedWidgetModel *feed_model;
 };
 
 /**
@@ -53,7 +54,7 @@ private:
 class FilterEditor : public QDialog, public Ui_FilterEditor
 {
 public:
-    FilterEditor(Filter* filter, FilterList* filters, FeedList* feeds, CoreInterface* core, QWidget* parent);
+    FilterEditor(Filter *filter, FilterList *filters, FeedList *feeds, CoreInterface *core, QWidget *parent);
     ~FilterEditor();
 
     void onOK();
@@ -62,16 +63,16 @@ public:
 
 private:
     bool okIsPossible();
-    void applyOnFilter(Filter* f);
+    void applyOnFilter(Filter *f);
 
 private:
-    Filter* filter;
-    Filter* test_filter;
-    CoreInterface* core;
-    FeedList* feeds;
-    FeedWidgetModel* test_model;
-    TestFilterModel* filter_model;
-    FilterList* filters;
+    Filter *filter;
+    Filter *test_filter;
+    CoreInterface *core;
+    FeedList *feeds;
+    FeedWidgetModel *test_model;
+    TestFilterModel *filter_model;
+    FilterList *filters;
 
     QPushButton *okButton;
 };

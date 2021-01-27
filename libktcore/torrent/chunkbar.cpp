@@ -31,21 +31,19 @@
 
 #include <cmath>
 
-#include <util/log.h>
-#include <interfaces/torrentinterface.h>
-#include <util/bitset.h>
-#include <torrent/globals.h>
 #include "chunkbar.h"
 #include "chunkbarrenderer.h"
+#include <interfaces/torrentinterface.h>
+#include <torrent/globals.h>
+#include <util/bitset.h>
+#include <util/log.h>
 
 using namespace bt;
 using namespace kt;
 
 namespace kt
 {
-
-
-#if 0 //KF5
+#if 0 // KF5
 static void FillAndFrameBlack(QImage* image, const QColor& color, int size)
 {
     image->fill(color.rgb());
@@ -80,7 +78,7 @@ static void InitializeToolTipImages(ChunkBar* bar)
 }
 #endif
 
-ChunkBar::ChunkBar(QWidget* parent)
+ChunkBar::ChunkBar(QWidget *parent)
     : QFrame(parent)
 {
     setFrameShape(StyledPanel);
@@ -88,7 +86,7 @@ ChunkBar::ChunkBar(QWidget* parent)
     setLineWidth(3);
     setMidLineWidth(3);
 
-#if 0 //KF5
+#if 0 // KF5
     InitializeToolTipImages(this);
     setToolTip(i18n("<img src=\"available_color\">&nbsp; - Downloaded Chunks<br>"
                     "<img src=\"unavailable_color\">&nbsp; - Chunks to Download<br>"
@@ -96,13 +94,13 @@ ChunkBar::ChunkBar(QWidget* parent)
 #endif
 }
 
-
 ChunkBar::~ChunkBar()
-{}
+{
+}
 
 void ChunkBar::updateBar(bool force)
 {
-    const BitSet& bs = getBitSet();
+    const BitSet &bs = getBitSet();
     QSize s = contentsRect().size();
 
     bool changed = !(curr == bs);
@@ -116,30 +114,28 @@ void ChunkBar::updateBar(bool force)
     }
 }
 
-void ChunkBar::paintEvent(QPaintEvent* ev)
+void ChunkBar::paintEvent(QPaintEvent *ev)
 {
     QFrame::paintEvent(ev);
     QPainter p(this);
     drawContents(&p);
 }
 
-void ChunkBar::drawContents(QPainter* p)
+void ChunkBar::drawContents(QPainter *p)
 {
     // first draw background
     bool enable = isEnabled();
     p->setBrush(palette().color(enable ? QPalette::Active : QPalette::Inactive, QPalette::Base));
-    p->setPen(Qt::NoPen); //p->setPen(QPen(Qt::red));
+    p->setPen(Qt::NoPen); // p->setPen(QPen(Qt::red));
     p->drawRect(contentsRect());
     if (enable)
         p->drawPixmap(contentsRect(), pixmap);
 }
 
-
-
-void ChunkBar::drawBarContents(QPainter* p)
+void ChunkBar::drawBarContents(QPainter *p)
 {
     Uint32 w = contentsRect().width();
-    const BitSet& bs = getBitSet();
+    const BitSet &bs = getBitSet();
     curr = bs;
     QColor highlight_color = palette().color(QPalette::Active, QPalette::Highlight);
     if (bs.allOn())
@@ -149,6 +145,5 @@ void ChunkBar::drawBarContents(QPainter* p)
     else
         drawEqual(p, bs, highlight_color, contentsRect());
 }
-
 
 }

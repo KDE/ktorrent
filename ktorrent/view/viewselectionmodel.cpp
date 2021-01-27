@@ -18,19 +18,18 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <util/log.h>
 #include "viewselectionmodel.h"
 #include "viewmodel.h"
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-
-ViewSelectionModel::ViewSelectionModel(ViewModel* vm, QObject* parent) : ItemSelectionModel(vm, parent)
+ViewSelectionModel::ViewSelectionModel(ViewModel *vm, QObject *parent)
+    : ItemSelectionModel(vm, parent)
 {
 }
-
 
 ViewSelectionModel::~ViewSelectionModel()
 {

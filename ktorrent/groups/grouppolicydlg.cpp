@@ -24,16 +24,16 @@
 
 namespace kt
 {
-
-GroupPolicyDlg::GroupPolicyDlg(Group* group, QWidget* parent)
-    : QDialog(parent), group(group)
+GroupPolicyDlg::GroupPolicyDlg(Group *group, QWidget *parent)
+    : QDialog(parent)
+    , group(group)
 {
     setupUi(this);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &GroupPolicyDlg::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &GroupPolicyDlg::reject);
     setWindowTitle(i18n("Policy for the %1 group", group->groupName()));
 
-    const Group::Policy& p = group->groupPolicy();
+    const Group::Policy &p = group->groupPolicy();
     m_default_location_enabled->setChecked(!p.default_save_location.isEmpty());
     m_default_location->setEnabled(!p.default_save_location.isEmpty());
     m_default_location->setUrl(QUrl::fromLocalFile(p.default_save_location));
@@ -50,7 +50,6 @@ GroupPolicyDlg::GroupPolicyDlg(Group* group, QWidget* parent)
     m_max_upload_rate->setValue(p.max_upload_rate);
     m_max_download_rate->setValue(p.max_download_rate);
 }
-
 
 GroupPolicyDlg::~GroupPolicyDlg()
 {

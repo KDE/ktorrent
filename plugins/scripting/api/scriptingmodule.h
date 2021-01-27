@@ -21,9 +21,9 @@
 #ifndef KTSCRIPTINGMODULE_H
 #define KTSCRIPTINGMODULE_H
 
+#include "scriptablegroup.h"
 #include <QObject>
 #include <kross/core/object.h>
-#include "scriptablegroup.h"
 
 namespace kt
 {
@@ -37,7 +37,7 @@ class ScriptingModule : public QObject
 {
     Q_OBJECT
 public:
-    ScriptingModule(GUIInterface* gui, CoreInterface* core, QObject* parent);
+    ScriptingModule(GUIInterface *gui, CoreInterface *core, QObject *parent);
     ~ScriptingModule() override;
 
 public Q_SLOTS:
@@ -45,36 +45,36 @@ public Q_SLOTS:
     QString scriptsDir() const;
 
     /// Get the data directory of a script
-    QString scriptDir(const QString& script) const;
+    QString scriptDir(const QString &script) const;
 
     /// Read a config entry
-    QString readConfigEntry(const QString& group, const QString& name, const QString& default_value);
-    int readConfigEntryInt(const QString& group, const QString& name, int default_value);
-    float readConfigEntryFloat(const QString& group, const QString& name, float default_value);
-    bool readConfigEntryBool(const QString& group, const QString& name, bool default_value);
+    QString readConfigEntry(const QString &group, const QString &name, const QString &default_value);
+    int readConfigEntryInt(const QString &group, const QString &name, int default_value);
+    float readConfigEntryFloat(const QString &group, const QString &name, float default_value);
+    bool readConfigEntryBool(const QString &group, const QString &name, bool default_value);
 
     /// Write a config entry
-    void writeConfigEntry(const QString& group, const QString& name, const QString& value);
-    void writeConfigEntryInt(const QString& group, const QString& name, int value);
-    void writeConfigEntryFloat(const QString& group, const QString& name, float value);
-    void writeConfigEntryBool(const QString& group, const QString& name, bool value);
+    void writeConfigEntry(const QString &group, const QString &name, const QString &value);
+    void writeConfigEntryInt(const QString &group, const QString &name, int value);
+    void writeConfigEntryFloat(const QString &group, const QString &name, float value);
+    void writeConfigEntryBool(const QString &group, const QString &name, bool value);
 
     /// Sync a group
-    void syncConfig(const QString& group);
+    void syncConfig(const QString &group);
 
     /// Create a timer
-    QObject* createTimer(bool single_shot);
+    QObject *createTimer(bool single_shot);
 
     /// Add a new scriptable group
-    bool addGroup(const QString& name, const QString& icon, const QString& path, Kross::Object::Ptr obj);
+    bool addGroup(const QString &name, const QString &icon, const QString &path, Kross::Object::Ptr obj);
 
     /// Remove a previously added group
-    void removeGroup(const QString& name);
+    void removeGroup(const QString &name);
 
 private:
-    GUIInterface* gui;
-    CoreInterface* core;
-    QMap<QString, ScriptableGroup*> sgroups;
+    GUIInterface *gui;
+    CoreInterface *core;
+    QMap<QString, ScriptableGroup *> sgroups;
 };
 
 }

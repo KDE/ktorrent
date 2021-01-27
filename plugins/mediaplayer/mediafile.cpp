@@ -26,24 +26,29 @@
 #include <QMimeDatabase>
 #include <QStringList>
 
-#include <interfaces/torrentinterface.h>
-#include <interfaces/torrentfileinterface.h>
-#include <util/functions.h>
 #include "mediafilestream.h"
 #include "mediaplayer.h"
-
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <util/functions.h>
 
 namespace kt
 {
-MediaFile::MediaFile(bt::TorrentInterface* tc) : tc(tc), idx(INVALID_INDEX)
+MediaFile::MediaFile(bt::TorrentInterface *tc)
+    : tc(tc)
+    , idx(INVALID_INDEX)
 {
 }
 
-MediaFile::MediaFile(bt::TorrentInterface* tc, int idx) : tc(tc), idx(idx)
+MediaFile::MediaFile(bt::TorrentInterface *tc, int idx)
+    : tc(tc)
+    , idx(idx)
 {
 }
 
-MediaFile::MediaFile(const kt::MediaFile& mf) : tc(mf.tc), idx(mf.idx)
+MediaFile::MediaFile(const kt::MediaFile &mf)
+    : tc(mf.tc)
+    , idx(mf.idx)
 {
 }
 
@@ -67,7 +72,6 @@ QString MediaFile::name() const
         return tc->getDisplayName();
     }
 }
-
 
 QString MediaFile::path() const
 {
@@ -169,22 +173,25 @@ bool MediaFile::isVideo() const
     }
 }
 
-
 ///////////////////////////////////////////////////////
 MediaFileRef::MediaFileRef()
 {
 }
 
-MediaFileRef::MediaFileRef(const QString& p) : file_path(p)
+MediaFileRef::MediaFileRef(const QString &p)
+    : file_path(p)
 {
 }
 
-MediaFileRef::MediaFileRef(MediaFile::Ptr ptr) : ptr(ptr)
+MediaFileRef::MediaFileRef(MediaFile::Ptr ptr)
+    : ptr(ptr)
 {
     file_path = ptr->path();
 }
 
-MediaFileRef::MediaFileRef(const kt::MediaFileRef& other) : ptr(other.ptr), file_path(other.file_path)
+MediaFileRef::MediaFileRef(const kt::MediaFileRef &other)
+    : ptr(other.ptr)
+    , file_path(other.file_path)
 {
 }
 
@@ -192,28 +199,28 @@ MediaFileRef::~MediaFileRef()
 {
 }
 
-MediaFileRef& MediaFileRef::operator=(const kt::MediaFileRef& other)
+MediaFileRef &MediaFileRef::operator=(const kt::MediaFileRef &other)
 {
     ptr = other.ptr;
     file_path = other.file_path;
     return *this;
 }
 
-bool MediaFileRef::operator!=(const kt::MediaFileRef& other) const
+bool MediaFileRef::operator!=(const kt::MediaFileRef &other) const
 {
     return file_path != other.path();
 }
 
-bool MediaFileRef::operator==(const kt::MediaFileRef& other) const
+bool MediaFileRef::operator==(const kt::MediaFileRef &other) const
 {
     return file_path == other.path();
 }
 
-Phonon::MediaSource MediaFileRef::createMediaSource(MediaPlayer* player)
+Phonon::MediaSource MediaFileRef::createMediaSource(MediaPlayer *player)
 {
     MediaFile::Ptr mf = mediaFile();
     if (mf && !mf->fullyAvailable()) {
-        MediaFileStream* stream = new MediaFileStream(mf->stream());
+        MediaFileStream *stream = new MediaFileStream(mf->stream());
         QObject::connect(stream, &MediaFileStream::stateChanged, player, &MediaPlayer::streamStateChanged);
 
         Phonon::MediaSource ms(stream);
@@ -232,6 +239,4 @@ QString MediaFileRef::name() const
         return file_path;
 }
 
-
 }
-

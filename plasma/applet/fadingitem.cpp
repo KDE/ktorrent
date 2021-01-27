@@ -21,16 +21,16 @@
 
 #include <algorithm>
 
-#include <QPropertyAnimation>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
 #include <KDebug>
 #include <Plasma/Animator>
+#include <QPainter>
+#include <QPropertyAnimation>
+#include <QStyleOptionGraphicsItem>
 
-FadingItem::FadingItem(QGraphicsItem* parent)
-    : QGraphicsItem(parent),
-      mOpacity(0.0),
-      mShowing(false)
+FadingItem::FadingItem(QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+    , mOpacity(0.0)
+    , mShowing(false)
 {
 }
 
@@ -41,7 +41,7 @@ void FadingItem::updatePixmap()
     mParent.fill(Qt::transparent);
     QPainter painter(&mParent);
     parentItem()->paint(&painter, &option, 0);
-    foreach (QGraphicsItem* item, parentItem()->childItems()) {
+    foreach (QGraphicsItem *item, parentItem()->childItems()) {
         painter.save();
         painter.translate(item->pos());
         item->paint(&painter, &option, 0);
@@ -54,7 +54,7 @@ QRectF FadingItem::boundingRect() const
     return parentItem()->boundingRect();
 }
 
-void FadingItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+void FadingItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
@@ -90,7 +90,7 @@ void FadingItem::animationFinished()
 
 void FadingItem::showItem()
 {
-    QPropertyAnimation* animation = mAnimation.data();
+    QPropertyAnimation *animation = mAnimation.data();
     if (!animation) {
         animation = new QPropertyAnimation(this, "opacityValue");
         animation->setDuration(100);
@@ -109,12 +109,11 @@ void FadingItem::showItem()
 
     animation->setDirection(QAbstractAnimation::Forward);
     animation->start();
-
 }
 
 void FadingItem::hideItem()
 {
-    QPropertyAnimation* animation = mAnimation.data();
+    QPropertyAnimation *animation = mAnimation.data();
     if (!animation) {
         return;
     } else if (animation->state() == QAbstractAnimation::Running) {

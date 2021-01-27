@@ -22,28 +22,28 @@
 
 namespace kt
 {
-TorrentActivityInterface::TorrentActivityInterface(const QString& name, const QString& icon, QWidget* parent)
+TorrentActivityInterface::TorrentActivityInterface(const QString &name, const QString &icon, QWidget *parent)
     : Activity(name, icon, 0, parent)
 {
 }
 
 TorrentActivityInterface::~TorrentActivityInterface()
-{}
-
-void TorrentActivityInterface::notifyViewListeners(bt::TorrentInterface* tc)
 {
-    for (ViewListener* vl : qAsConst(listeners))
+}
+
+void TorrentActivityInterface::notifyViewListeners(bt::TorrentInterface *tc)
+{
+    for (ViewListener *vl : qAsConst(listeners))
         vl->currentTorrentChanged(tc);
 }
 
-void TorrentActivityInterface::addViewListener(ViewListener* vl)
+void TorrentActivityInterface::addViewListener(ViewListener *vl)
 {
     listeners.append(vl);
 }
 
-void TorrentActivityInterface::removeViewListener(ViewListener* vl)
+void TorrentActivityInterface::removeViewListener(ViewListener *vl)
 {
     listeners.removeAll(vl);
 }
 }
-

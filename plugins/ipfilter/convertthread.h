@@ -22,9 +22,8 @@
 #ifndef KTCONVERTTHREAD_H
 #define KTCONVERTTHREAD_H
 
-#include <QThread>
 #include "ipblocklist.h"
-
+#include <QThread>
 
 namespace kt
 {
@@ -33,11 +32,11 @@ class ConvertDialog;
 /**
  * Thread which does the converting of the text filter file to our own format.
  * @author Joris Guisson
-*/
+ */
 class ConvertThread : public QThread
 {
 public:
-    ConvertThread(ConvertDialog* dlg);
+    ConvertThread(ConvertDialog *dlg);
     ~ConvertThread() override;
 
     void run() override;
@@ -60,7 +59,7 @@ private:
     void merge();
 
 private:
-    ConvertDialog* dlg;
+    ConvertDialog *dlg;
     bool abort;
     QString txt_file;
     QString dat_file;

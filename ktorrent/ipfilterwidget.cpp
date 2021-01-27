@@ -20,12 +20,12 @@
 
 #include "ipfilterwidget.h"
 
+#include <interfaces/functions.h>
 #include <peer/accessmanager.h>
 #include <torrent/globals.h>
-#include <util/log.h>
-#include <util/error.h>
 #include <util/constants.h>
-#include <interfaces/functions.h>
+#include <util/error.h>
+#include <util/log.h>
 
 #include <regex>
 
@@ -44,11 +44,9 @@ using namespace bt;
 
 namespace kt
 {
+IPFilterList *IPFilterWidget::filter_list = 0;
 
-IPFilterList* IPFilterWidget::filter_list = 0;
-
-
-IPFilterWidget::IPFilterWidget(QWidget* parent)
+IPFilterWidget::IPFilterWidget(QWidget *parent)
     : QDialog(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -83,7 +81,6 @@ void IPFilterWidget::registerFilterList()
     }
 }
 
-
 void IPFilterWidget::setupConnections()
 {
     connect(m_add, &QPushButton::clicked, this, &IPFilterWidget::add);
@@ -97,19 +94,22 @@ void IPFilterWidget::setupConnections()
 void IPFilterWidget::add()
 {
     try {
-        std::regex rx("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
-                      "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
-                      "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
+        std::regex rx(
+            "(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
+            "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
+            "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
 
         QString ip = m_ip_to_add->text();
 
         if (!regex_match(ip.toStdString(), rx) || !filter_list->add(ip)) {
-            KMessageBox::sorry(this, i18n("Invalid IP address <b>%1</b>. IP addresses must be in the format 'XXX.XXX.XXX.XXX'."
-                                          "<br/><br/>You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-200.10.10.40'.").arg(ip));
+            KMessageBox::sorry(this,
+                               i18n("Invalid IP address <b>%1</b>. IP addresses must be in the format 'XXX.XXX.XXX.XXX'."
+                                    "<br/><br/>You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-200.10.10.40'.")
+                                   .arg(ip));
 
             return;
         }
-    } catch (bt::Error& err) {
+    } catch (bt::Error &err) {
         KMessageBox::sorry(this, err.toString());
     }
 }
@@ -130,8 +130,7 @@ void IPFilterWidget::clear()
 
 void IPFilterWidget::open()
 {
-    QString lf = QFileDialog::getOpenFileName(this, i18n("Choose a file"),
-                 i18n("Text files") + QLatin1String(" (*.txt)"));
+    QString lf = QFileDialog::getOpenFileName(this, i18n("Choose a file"), i18n("Text files") + QLatin1String(" (*.txt)"));
 
     if (lf.isEmpty())
         return;
@@ -143,8 +142,7 @@ void IPFilterWidget::open()
 
 void IPFilterWidget::save()
 {
-    QString sf = QFileDialog::getSaveFileName(this, i18n("Choose a filename to save under"),
-                 i18n("Text files") + QStringLiteral(" (*.txt)"));
+    QString sf = QFileDialog::getSaveFileName(this, i18n("Choose a filename to save under"), i18n("Text files") + QStringLiteral(" (*.txt)"));
 
     if (sf.isEmpty())
         return;
@@ -158,7 +156,7 @@ void IPFilterWidget::accept()
     QDialog::accept();
 }
 
-void IPFilterWidget::saveFilter(const QString& fn)
+void IPFilterWidget::saveFilter(const QString &fn)
 {
     QFile fptr(fn);
 
@@ -176,16 +174,17 @@ void IPFilterWidget::saveFilter(const QString& fn)
     fptr.close();
 }
 
-void IPFilterWidget::loadFilter(const QString& fn)
+void IPFilterWidget::loadFilter(const QString &fn)
 {
     QFile dat(fn);
     dat.open(QIODevice::ReadOnly);
 
     QTextStream stream(&dat);
     QString line;
-    std::regex rx("(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
-                  "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
-                  "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
+    std::regex rx(
+        "(([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}))"
+        "|(([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})-"
+        "([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}))");
 
     bool err = false;
 

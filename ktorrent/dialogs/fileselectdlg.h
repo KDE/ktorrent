@@ -26,9 +26,8 @@
 
 #include <KSharedConfig>
 
-#include <util/constants.h>
 #include "ui_fileselectdlg.h"
-
+#include <util/constants.h>
 
 namespace bt
 {
@@ -54,10 +53,10 @@ class FileSelectDlg : public QDialog, public Ui_FileSelectDlg
     typedef void (FileSelectDlg::*Func)(QAction *);
 
 public:
-    FileSelectDlg(kt::QueueManager* qman, kt::GroupManager* gman, const QString& group_hint, QWidget* parent);
+    FileSelectDlg(kt::QueueManager *qman, kt::GroupManager *gman, const QString &group_hint, QWidget *parent);
     ~FileSelectDlg() override;
 
-    int execute(bt::TorrentInterface* tc, bool* start, bool* skip_check, const QString& location_hint);
+    int execute(bt::TorrentInterface *tc, bool *start, bool *skip_check, const QString &location_hint);
 
     /// Which group did the user select
     QString selectedGroup() const;
@@ -84,31 +83,31 @@ protected Q_SLOTS:
     void fileTree(bool on);
     void fileList(bool on);
     void setShowFileTree(bool on);
-    void setFilter(const QString& filter);
+    void setFilter(const QString &filter);
     void updateExistingFiles();
     void moveCompletedToggled(bool on);
-    QMenu* createHistoryMenu(const QStringList& urls, Func slot);
+    QMenu *createHistoryMenu(const QStringList &urls, Func slot);
     void clearDownloadLocationHistory();
     void clearMoveOnCompletionLocationHistory();
-    void downloadLocationHistoryTriggered(QAction* act);
-    void moveOnCompletionLocationHistoryTriggered(QAction* act);
-    void downloadLocationChanged(const QString& path);
+    void downloadLocationHistoryTriggered(QAction *act);
+    void moveOnCompletionLocationHistoryTriggered(QAction *act);
+    void downloadLocationChanged(const QString &path);
 
 private:
-    void populateFields(const QString& location_hint);
+    void populateFields(const QString &location_hint);
     void loadGroups();
 
 private:
-    bt::TorrentInterface* tc;
-    TorrentFileModel* model;
-    kt::QueueManager* qman;
-    kt::GroupManager* gman;
-    bool* start;
-    bool* skip_check;
+    bt::TorrentInterface *tc;
+    TorrentFileModel *model;
+    kt::QueueManager *qman;
+    kt::GroupManager *gman;
+    bool *start;
+    bool *skip_check;
     QList<int> encodings;
-    kt::Group* initial_group;
+    kt::Group *initial_group;
     bool show_file_tree;
-    QSortFilterProxyModel* filter_model;
+    QSortFilterProxyModel *filter_model;
     QStringList download_location_history;
     QStringList move_on_completion_location_history;
     bt::Uint64 already_downloaded;
@@ -116,4 +115,3 @@ private:
 }
 
 #endif
-

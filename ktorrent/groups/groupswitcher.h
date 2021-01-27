@@ -41,7 +41,7 @@ class GroupSwitcher : public QWidget
 {
     Q_OBJECT
 public:
-    GroupSwitcher(View* view, GroupManager* gman, QWidget* parent);
+    GroupSwitcher(View *view, GroupManager *gman, QWidget *parent);
     ~GroupSwitcher() override;
 
     /**
@@ -61,7 +61,7 @@ public Q_SLOTS:
      * Add a tab
      * @param group The group of the tab
      **/
-    void addTab(Group* group);
+    void addTab(Group *group);
 
     /**
      * Add a new tab showing the all group.
@@ -77,13 +77,13 @@ public Q_SLOTS:
      * An action was activated
      * @param action The action
      **/
-    void onActivated(QAction* action);
+    void onActivated(QAction *action);
 
     /**
      * The current group has changed
      * @param group The new group
      **/
-    void currentGroupChanged(kt::Group* group);
+    void currentGroupChanged(kt::Group *group);
 
     /**
      * Update the group count
@@ -94,7 +94,7 @@ public Q_SLOTS:
      * A group has been removed
      * @param group The group
      **/
-    void groupRemoved(Group* group);
+    void groupRemoved(Group *group);
 
     /**
      * Edit the group policy
@@ -103,12 +103,15 @@ public Q_SLOTS:
 
 private:
     struct Tab {
-        Group* group;
-        QAction* action;
+        Group *group;
+        QAction *action;
         QByteArray view_settings;
 
-        Tab(Group* group, QAction* action) : group(group), action(action)
-        {}
+        Tab(Group *group, QAction *action)
+            : group(group)
+            , action(action)
+        {
+        }
     };
 
     typedef QList<Tab> TabList;
@@ -116,13 +119,13 @@ private:
     TabList::iterator closeTab(TabList::iterator i);
 
 private:
-    QToolButton* new_tab;
-    QToolButton* close_tab;
-    QToolButton* edit_group_policy;
-    KToolBar* tool_bar;
-    QActionGroup* action_group;
-    GroupManager* gman;
-    View* view;
+    QToolButton *new_tab;
+    QToolButton *close_tab;
+    QToolButton *edit_group_policy;
+    KToolBar *tool_bar;
+    QActionGroup *action_group;
+    GroupManager *gman;
+    View *view;
     TabList tabs;
     int current_tab;
 };

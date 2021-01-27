@@ -19,22 +19,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#include <KLocalizedString>
 #include <KConfigGroup>
+#include <KLocalizedString>
 
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 
-#include "managefiltersdlg.h"
-#include "filterlistmodel.h"
 #include "filterlist.h"
+#include "filterlistmodel.h"
 #include "ktfeed.h"
+#include "managefiltersdlg.h"
 #include "syndicationactivity.h"
 
 namespace kt
 {
-
-ManageFiltersDlg::ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationActivity* act, QWidget* parent) : QDialog(parent), feed(feed), filters(filters), act(act)
+ManageFiltersDlg::ManageFiltersDlg(Feed *feed, FilterList *filters, SyndicationActivity *act, QWidget *parent)
+    : QDialog(parent)
+    , feed(feed)
+    , filters(filters)
+    , act(act)
 {
     setWindowTitle(i18n("Add/Remove Filters"));
     QWidget *mainWidget = new QWidget(this);
@@ -66,7 +69,7 @@ ManageFiltersDlg::ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationA
 
     int nfilters = filters->rowCount(QModelIndex());
     for (int i = 0; i < nfilters; i++) {
-        Filter* f = filters->filterByRow(i);
+        Filter *f = filters->filterByRow(i);
         if (!f)
             continue;
 
@@ -84,7 +87,6 @@ ManageFiltersDlg::ManageFiltersDlg(Feed* feed, FilterList* filters, SyndicationA
     m_remove_all->setEnabled(active->rowCount(QModelIndex()) > 0);
 }
 
-
 ManageFiltersDlg::~ManageFiltersDlg()
 {
 }
@@ -94,7 +96,7 @@ void ManageFiltersDlg::accept()
     feed->clearFilters();
     int nfilters = active->rowCount(QModelIndex());
     for (int i = 0; i < nfilters; i++) {
-        Filter* f = active->filterByRow(i);
+        Filter *f = active->filterByRow(i);
         if (!f)
             continue;
 
@@ -106,14 +108,14 @@ void ManageFiltersDlg::accept()
 void ManageFiltersDlg::add()
 {
     const QModelIndexList idx = m_available_filters->selectionModel()->selectedRows();
-    QList<Filter*> to_add;
-    for (const QModelIndex& i : idx) {
-        Filter* f = available->filterForIndex(i);
+    QList<Filter *> to_add;
+    for (const QModelIndex &i : idx) {
+        Filter *f = available->filterForIndex(i);
         if (f)
             to_add.append(f);
     }
 
-    for (Filter* f : qAsConst(to_add)) {
+    for (Filter *f : qAsConst(to_add)) {
         active->addFilter(f);
         available->removeFilter(f);
     }
@@ -126,14 +128,14 @@ void ManageFiltersDlg::add()
 void ManageFiltersDlg::remove()
 {
     const QModelIndexList idx = m_active_filters->selectionModel()->selectedRows();
-    QList<Filter*> to_remove;
-    for (const QModelIndex& i : idx) {
-        Filter* f = active->filterForIndex(i);
+    QList<Filter *> to_remove;
+    for (const QModelIndex &i : idx) {
+        Filter *f = active->filterForIndex(i);
         if (f)
             to_remove.append(f);
     }
 
-    for (Filter* f : qAsConst(to_remove)) {
+    for (Filter *f : qAsConst(to_remove)) {
         available->addFilter(f);
         active->removeFilter(f);
     }
@@ -146,16 +148,16 @@ void ManageFiltersDlg::remove()
 void ManageFiltersDlg::removeAll()
 {
     int nfilters = active->rowCount(QModelIndex());
-    QList<Filter*> to_remove;
+    QList<Filter *> to_remove;
     for (int i = 0; i < nfilters; i++) {
-        Filter* f = active->filterByRow(i);
+        Filter *f = active->filterByRow(i);
         if (!f)
             continue;
 
         to_remove.append(f);
     }
 
-    for (Filter* f : qAsConst(to_remove)) {
+    for (Filter *f : qAsConst(to_remove)) {
         available->addFilter(f);
         active->removeFilter(f);
     }
@@ -165,20 +167,20 @@ void ManageFiltersDlg::removeAll()
 
 void ManageFiltersDlg::newFilter()
 {
-    Filter* f = act->addNewFilter();
+    Filter *f = act->addNewFilter();
     if (f) {
         available->addFilter(f);
     }
 }
 
-void ManageFiltersDlg::activeSelectionChanged(const QItemSelection& sel, const QItemSelection& desel)
+void ManageFiltersDlg::activeSelectionChanged(const QItemSelection &sel, const QItemSelection &desel)
 {
     Q_UNUSED(sel);
     Q_UNUSED(desel);
     m_remove->setEnabled(m_active_filters->selectionModel()->selectedRows().count() > 0);
 }
 
-void ManageFiltersDlg::availableSelectionChanged(const QItemSelection& sel, const QItemSelection& desel)
+void ManageFiltersDlg::availableSelectionChanged(const QItemSelection &sel, const QItemSelection &desel)
 {
     Q_UNUSED(sel);
     Q_UNUSED(desel);

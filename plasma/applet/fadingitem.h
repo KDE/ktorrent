@@ -33,12 +33,11 @@ class FadingItem : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 #endif
 public:
-    FadingItem(QGraphicsItem* parent);
+    FadingItem(QGraphicsItem *parent);
 
     void updatePixmap();
     virtual QRectF boundingRect() const;
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
-                       QWidget* widget = 0);
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     void showItem();
     void hideItem();
     bool isVisible() const;

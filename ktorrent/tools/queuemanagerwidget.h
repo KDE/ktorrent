@@ -22,8 +22,8 @@
 #ifndef KTQUEUEMANAGERWIDGET_H
 #define KTQUEUEMANAGERWIDGET_H
 
-#include <QWidget>
 #include <KSharedConfig>
+#include <QWidget>
 
 class QItemSelection;
 class QModelIndex;
@@ -45,12 +45,12 @@ class QueueManagerModel;
  * @author Joris Guisson
  *
  * Widget for the QueueManager
-*/
+ */
 class QueueManagerWidget : public QWidget
 {
     Q_OBJECT
 public:
-    QueueManagerWidget(QueueManager* qman, QWidget* parent);
+    QueueManagerWidget(QueueManager *qman, QWidget *parent);
     ~QueueManagerWidget() override;
 
     /// Save the widget state
@@ -61,41 +61,41 @@ public:
     void update();
 
 public Q_SLOTS:
-    void onTorrentAdded(bt::TorrentInterface* tc);
-    void onTorrentRemoved(bt::TorrentInterface* tc);
+    void onTorrentAdded(bt::TorrentInterface *tc);
+    void onTorrentRemoved(bt::TorrentInterface *tc);
 
 private Q_SLOTS:
     void moveUpClicked();
     void moveDownClicked();
     void moveTopClicked();
     void moveBottomClicked();
-    void searchTextChanged(const QString& t);
+    void searchTextChanged(const QString &t);
     void showSearch(bool on);
     void showDownloads(bool on);
     void showUploads(bool on);
     void showNotQueued(bool on);
-    void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
 private:
-    bool indexVisible(const QModelIndex& idx);
+    bool indexVisible(const QModelIndex &idx);
     void updateButtons();
 
 private:
-    QueueManagerModel* model;
-    QueueManager* qman;
-    QTreeView* view;
-    QToolBar* toolbar;
-    QLineEdit* search;
+    QueueManagerModel *model;
+    QueueManager *qman;
+    QTreeView *view;
+    QToolBar *toolbar;
+    QLineEdit *search;
 
-    QAction* show_search;
-    QAction* move_top;
-    QAction* move_up;
-    QAction* move_down;
-    QAction* move_bottom;
+    QAction *show_search;
+    QAction *move_top;
+    QAction *move_up;
+    QAction *move_down;
+    QAction *move_bottom;
 
-    QAction* show_uploads;
-    QAction* show_downloads;
-    QAction* show_not_queued;
+    QAction *show_uploads;
+    QAction *show_downloads;
+    QAction *show_not_queued;
 };
 }
 

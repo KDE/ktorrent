@@ -1,22 +1,22 @@
 /***************************************************************************
-*   Copyright (C) 2009 by Joris Guisson                                   *
-*   joris.guisson@gmail.com                                               *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
-***************************************************************************/
+ *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
 
 #include "playlist.h"
 
@@ -33,19 +33,18 @@
 
 #include <KLocalizedString>
 
+#include "mediaplayer.h"
 #include <taglib/tag.h>
 #include <util/log.h>
-#include "mediaplayer.h"
-
 
 using namespace bt;
 
 namespace kt
 {
-PlayList::PlayList(kt::MediaFileCollection* collection, kt::MediaPlayer* player, QObject* parent)
-    : QAbstractItemModel(parent),
-      collection(collection),
-      player(player)
+PlayList::PlayList(kt::MediaFileCollection *collection, kt::MediaPlayer *player, QObject *parent)
+    : QAbstractItemModel(parent)
+    , collection(collection)
+    , player(player)
 {
     connect(player, &MediaPlayer::playing, this, &PlayList::onPlaying);
 }
@@ -54,19 +53,19 @@ PlayList::~PlayList()
 {
 }
 
-void PlayList::addFile(const MediaFileRef& file)
+void PlayList::addFile(const MediaFileRef &file)
 {
     QByteArray name = QFile::encodeName(file.path());
-    TagLib::FileRef* ref = new TagLib::FileRef(name.data(), true, TagLib::AudioProperties::Fast);
+    TagLib::FileRef *ref = new TagLib::FileRef(name.data(), true, TagLib::AudioProperties::Fast);
     files.append(qMakePair(file, ref));
     insertRow(files.count() - 1);
 }
 
-void PlayList::removeFile(const MediaFileRef& file)
+void PlayList::removeFile(const MediaFileRef &file)
 {
     int row = 0;
     bool found = false;
-    for (const PlayListItem& item : qAsConst(files)) {
+    for (const PlayListItem &item : qAsConst(files)) {
         if (item.first == file) {
             found = true;
             break;
@@ -78,7 +77,7 @@ void PlayList::removeFile(const MediaFileRef& file)
         removeRow(row);
 }
 
-MediaFileRef PlayList::fileForIndex(const QModelIndex& index) const
+MediaFileRef PlayList::fileForIndex(const QModelIndex &index) const
 {
     if (!index.isValid() || index.row() < 0 || index.row() >= files.count())
         return MediaFileRef(QString());
@@ -93,31 +92,35 @@ void PlayList::clear()
     endResetModel();
 }
 
-
-
 QVariant PlayList::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (orientation == Qt::Vertical || role != Qt::DisplayRole)
         return QVariant();
 
     switch (section) {
-    case 0: return i18n("Title");
-    case 1: return i18n("Artist");
-    case 2: return i18n("Album");
-    case 3: return i18n("Length");
-    case 4: return i18n("Year");
-    default: return QVariant();
+    case 0:
+        return i18n("Title");
+    case 1:
+        return i18n("Artist");
+    case 2:
+        return i18n("Album");
+    case 3:
+        return i18n("Length");
+    case 4:
+        return i18n("Year");
+    default:
+        return QVariant();
     }
 }
 
-QVariant PlayList::data(const QModelIndex& index, int role) const
+QVariant PlayList::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::UserRole && role != Qt::DecorationRole))
         return QVariant();
 
-    const PlayListItem& item = files.at(index.row());
-    const MediaFileRef& file = item.first;
-    const TagLib::FileRef* ref = item.second;
+    const PlayListItem &item = files.at(index.row());
+    const MediaFileRef &file = item.first;
+    const TagLib::FileRef *ref = item.second;
     if (!ref) {
         QByteArray name = QFile::encodeName(file.path());
         files[index.row()].second = new TagLib::FileRef(name.data(), true, TagLib::AudioProperties::Fast);
@@ -131,7 +134,7 @@ QVariant PlayList::data(const QModelIndex& index, int role) const
             return QVariant();
     }
 
-    TagLib::Tag* tag = ref->tag();
+    TagLib::Tag *tag = ref->tag();
     if (!tag) {
         if (index.column() == 0)
             return QFileInfo(file.path()).fileName();
@@ -145,8 +148,10 @@ QVariant PlayList::data(const QModelIndex& index, int role) const
             QString title = TStringToQString(tag->title());
             return title.isEmpty() ? QFileInfo(file.path()).fileName() : title;
         }
-        case 1: return TStringToQString(tag->artist());
-        case 2: return TStringToQString(tag->album());
+        case 1:
+            return TStringToQString(tag->artist());
+        case 2:
+            return TStringToQString(tag->album());
         case 3:
             if (role == Qt::UserRole) {
                 return ref->audioProperties()->length();
@@ -155,8 +160,10 @@ QVariant PlayList::data(const QModelIndex& index, int role) const
                 t = t.addSecs(ref->audioProperties()->length());
                 return t.toString(QStringLiteral("m:ss"));
             }
-        case 4: return tag->year() == 0 ? QVariant() : tag->year();
-        default: return QVariant();
+        case 4:
+            return tag->year() == 0 ? QVariant() : tag->year();
+        default:
+            return QVariant();
         }
     }
 
@@ -168,7 +175,7 @@ QVariant PlayList::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-int PlayList::columnCount(const QModelIndex& parent) const
+int PlayList::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -176,18 +183,18 @@ int PlayList::columnCount(const QModelIndex& parent) const
         return 5;
 }
 
-int PlayList::rowCount(const QModelIndex& parent) const
+int PlayList::rowCount(const QModelIndex &parent) const
 {
     return parent.isValid() ? 0 : files.count();
 }
 
-QModelIndex PlayList::parent(const QModelIndex& child) const
+QModelIndex PlayList::parent(const QModelIndex &child) const
 {
     Q_UNUSED(child);
     return QModelIndex();
 }
 
-QModelIndex PlayList::index(int row, int column, const QModelIndex& parent) const
+QModelIndex PlayList::index(int row, int column, const QModelIndex &parent) const
 {
     if (parent.isValid())
         return QModelIndex();
@@ -200,7 +207,7 @@ Qt::DropActions PlayList::supportedDropActions() const
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-Qt::ItemFlags PlayList::flags(const QModelIndex& index) const
+Qt::ItemFlags PlayList::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
 
@@ -217,12 +224,12 @@ QStringList PlayList::mimeTypes() const
     return types;
 }
 
-QMimeData* PlayList::mimeData(const QModelIndexList& indexes) const
+QMimeData *PlayList::mimeData(const QModelIndexList &indexes) const
 {
     dragged_rows.clear();
-    QMimeData* data = new QMimeData();
+    QMimeData *data = new QMimeData();
     QList<QUrl> urls;
-    for (const QModelIndex& index : indexes) {
+    for (const QModelIndex &index : indexes) {
         if (index.isValid() && index.column() == 0) {
             urls << QUrl::fromLocalFile(files.at(index.row()).first.path());
             dragged_rows.append(index.row());
@@ -233,7 +240,7 @@ QMimeData* PlayList::mimeData(const QModelIndexList& indexes) const
     return data;
 }
 
-bool PlayList::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent)
+bool PlayList::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     if (action == Qt::IgnoreAction)
         return true;
@@ -259,8 +266,8 @@ bool PlayList::dropMimeData(const QMimeData* data, Qt::DropAction action, int ro
 
     row -= nr;
 
-    for (const QUrl& url : urls) {
-        PlayListItem item = qMakePair(collection->find(url.toLocalFile()), (TagLib::FileRef*)0);
+    for (const QUrl &url : urls) {
+        PlayListItem item = qMakePair(collection->find(url.toLocalFile()), (TagLib::FileRef *)0);
         files.insert(row, item);
     }
     insertRows(row, urls.count(), QModelIndex());
@@ -269,7 +276,7 @@ bool PlayList::dropMimeData(const QMimeData* data, Qt::DropAction action, int ro
     return true;
 }
 
-bool PlayList::insertRows(int row, int count, const QModelIndex& parent)
+bool PlayList::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), row, row + count - 1);
@@ -277,7 +284,7 @@ bool PlayList::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool PlayList::removeRows(int row, int count, const QModelIndex& parent)
+bool PlayList::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
@@ -287,7 +294,7 @@ bool PlayList::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-void PlayList::save(const QString& file)
+void PlayList::save(const QString &file)
 {
     QFile fptr(file);
     if (!fptr.open(QIODevice::WriteOnly)) {
@@ -296,11 +303,11 @@ void PlayList::save(const QString& file)
     }
 
     QTextStream out(&fptr);
-    for (const PlayListItem& f : qAsConst(files))
+    for (const PlayListItem &f : qAsConst(files))
         out << f.first.path() << Qt::endl;
 }
 
-void PlayList::load(const QString& file)
+void PlayList::load(const QString &file)
 {
     QFile fptr(file);
     if (!fptr.open(QIODevice::ReadOnly)) {
@@ -312,13 +319,13 @@ void PlayList::load(const QString& file)
     QTextStream in(&fptr);
     while (!in.atEnd()) {
         QString file = in.readLine();
-        TagLib::FileRef* ref = new TagLib::FileRef(QFile::encodeName(file).data(), true, TagLib::AudioProperties::Fast);
+        TagLib::FileRef *ref = new TagLib::FileRef(QFile::encodeName(file).data(), true, TagLib::AudioProperties::Fast);
         files.append(qMakePair(collection->find(file), ref));
     }
     endResetModel();
 }
 
-void PlayList::onPlaying(const kt::MediaFileRef& file)
+void PlayList::onPlaying(const kt::MediaFileRef &file)
 {
     Q_UNUSED(file);
     dataChanged(index(0, 0), index(files.count() - 1, 0));

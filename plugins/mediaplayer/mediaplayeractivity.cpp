@@ -1,22 +1,22 @@
 /***************************************************************************
-*   Copyright (C) 2009 by Joris Guisson                                   *
-*   joris.guisson@gmail.com                                               *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
-***************************************************************************/
+ *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
 
 #include "mediaplayeractivity.h"
 
@@ -31,29 +31,28 @@
 #include <KLocalizedString>
 #include <KToggleAction>
 
-#include <util/log.h>
-#include <util/fileops.h>
-#include <util/functions.h>
-#include <interfaces/functions.h>
-#include <interfaces/coreinterface.h>
-#include <interfaces/torrentinterface.h>
-#include "mediaview.h"
+#include "mediacontroller.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
-#include "videowidget.h"
 #include "mediaplayerpluginsettings.h"
-#include "playlistwidget.h"
+#include "mediaview.h"
 #include "playlist.h"
-#include "mediacontroller.h"
-
-
+#include "playlistwidget.h"
+#include "videowidget.h"
+#include <interfaces/coreinterface.h>
+#include <interfaces/functions.h>
+#include <interfaces/torrentinterface.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 using namespace bt;
 
 namespace kt
 {
-MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core, KActionCollection* ac, QWidget* parent)
-    : Activity(i18n("Media Player"), QStringLiteral("applications-multimedia"), 90, parent), ac(ac)
+MediaPlayerActivity::MediaPlayerActivity(CoreInterface *core, KActionCollection *ac, QWidget *parent)
+    : Activity(i18n("Media Player"), QStringLiteral("applications-multimedia"), 90, parent)
+    , ac(ac)
 {
     action_flags = 0;
     video = 0;
@@ -63,22 +62,20 @@ MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core, KActionCollection*
     media_model = new MediaModel(core, this);
     media_player = new MediaPlayer(this);
 
-    QHBoxLayout* layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setMargin(0);
     tabs = new QTabWidget(this);
     layout->addWidget(tabs);
 
-
-    QWidget* tab = new QWidget(tabs);
+    QWidget *tab = new QWidget(tabs);
     tabs->addTab(tab, QIcon::fromTheme(QStringLiteral("applications-multimedia")), i18n("Media Player"));
-    QVBoxLayout* vbox = new QVBoxLayout(tab);
+    QVBoxLayout *vbox = new QVBoxLayout(tab);
 
     splitter = new QSplitter(Qt::Horizontal, tab);
     media_view = new MediaView(media_model, splitter);
     play_list = new PlayListWidget(media_model, media_player, tabs);
     setupActions();
     controller = new MediaController(media_player, ac, tab);
-
 
     splitter->addWidget(media_view);
     splitter->addWidget(play_list);
@@ -91,7 +88,7 @@ MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core, KActionCollection*
     close_button->setEnabled(false);
     connect(close_button, &QToolButton::clicked, this, &MediaPlayerActivity::closeTab);
 
-    //tabs->setTabBarHidden(true);
+    // tabs->setTabBarHidden(true);
     tabs->setTabBarAutoHide(true);
 
     connect(core, &CoreInterface::torrentAdded, media_model, &MediaModel::onTorrentAdded);
@@ -103,8 +100,7 @@ MediaPlayerActivity::MediaPlayerActivity(CoreInterface* core, KActionCollection*
     connect(play_list, &PlayListWidget::fileSelected, this, &MediaPlayerActivity::onSelectionChanged);
     connect(media_view, &MediaView::doubleClicked, this, &MediaPlayerActivity::onDoubleClicked);
     connect(play_list, &PlayListWidget::randomModeActivated, this, &MediaPlayerActivity::randomPlayActivated);
-    connect(play_list, qOverload<const MediaFileRef&>(&PlayListWidget::doubleClicked),
-            this, qOverload<const MediaFileRef&>(&MediaPlayerActivity::play));
+    connect(play_list, qOverload<const MediaFileRef &>(&PlayListWidget::doubleClicked), this, qOverload<const MediaFileRef &>(&MediaPlayerActivity::play));
     connect(play_list, &PlayListWidget::enableNext, next_action, &QAction::setEnabled);
     connect(tabs, &QTabWidget::currentChanged, this, &MediaPlayerActivity::currentTabChanged);
 }
@@ -149,7 +145,7 @@ void MediaPlayerActivity::setupActions()
     connect(clear_action, &QAction::triggered, play_list, &PlayListWidget::clearPlayList);
     ac->addAction(QStringLiteral("clear_play_list"), clear_action);
 
-    QAction * tfs = new QAction(QIcon::fromTheme(QStringLiteral("view-fullscreen")), i18n("Toggle Fullscreen"), this);
+    QAction *tfs = new QAction(QIcon::fromTheme(QStringLiteral("view-fullscreen")), i18n("Toggle Fullscreen"), this);
     tfs->setCheckable(true);
     ac->addAction(QStringLiteral("video_fullscreen"), tfs);
     ac->setDefaultShortcut(tfs, QKeySequence(Qt::Key_F));
@@ -176,7 +172,7 @@ void MediaPlayerActivity::openVideo()
         tabs->setTabToolTip(idx, i18n("Movie player"));
         tabs->setCurrentIndex(idx);
     }
-    //tabs->setTabBarHidden(false);
+    // tabs->setTabBarHidden(false);
 
     if (!show_video_action->isChecked())
         show_video_action->setChecked(true);
@@ -188,7 +184,7 @@ void MediaPlayerActivity::closeVideo()
         tabs->removeTab(tabs->indexOf(video));
         if (show_video_action->isChecked())
             show_video_action->setChecked(false);
-        //tabs->setTabBarHidden(true);
+        // tabs->setTabBarHidden(true);
         video->deleteLater();
         video = 0;
     }
@@ -216,7 +212,7 @@ void MediaPlayerActivity::play()
     }
 }
 
-void MediaPlayerActivity::play(const MediaFileRef& file)
+void MediaPlayerActivity::play(const MediaFileRef &file)
 {
     media_player->play(file);
     QModelIndex idx = play_list->indexForFile(file.path());
@@ -228,7 +224,7 @@ void MediaPlayerActivity::play(const MediaFileRef& file)
     }
 }
 
-void MediaPlayerActivity::onDoubleClicked(const MediaFileRef& file)
+void MediaPlayerActivity::onDoubleClicked(const MediaFileRef &file)
 {
     if (bt::Exists(file.path())) {
         play(file);
@@ -274,7 +270,7 @@ void MediaPlayerActivity::enableActions(unsigned int flags)
 
     QModelIndex idx = play_list->selectedItem();
     if (idx.isValid()) {
-        PlayList* pl = play_list->playList();
+        PlayList *pl = play_list->playList();
         MediaFileRef file = pl->fileForIndex(idx);
         if (bt::Exists(file.path()))
             play_action->setEnabled((flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
@@ -287,7 +283,7 @@ void MediaPlayerActivity::enableActions(unsigned int flags)
     action_flags = flags;
 }
 
-void MediaPlayerActivity::onSelectionChanged(const MediaFileRef& file)
+void MediaPlayerActivity::onSelectionChanged(const MediaFileRef &file)
 {
     if (bt::Exists(file.path()))
         play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
@@ -391,4 +387,3 @@ void MediaPlayerActivity::currentTabChanged(int idx)
 }
 
 }
-

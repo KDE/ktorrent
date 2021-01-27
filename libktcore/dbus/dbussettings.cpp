@@ -27,14 +27,18 @@
 
 namespace kt
 {
-DBusSettings::DBusSettings(CoreInterface* core, QObject* parent) : QObject(parent), core(core)
+DBusSettings::DBusSettings(CoreInterface *core, QObject *parent)
+    : QObject(parent)
+    , core(core)
 {
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/settings"), this,
-            QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/settings"),
+                                                 this,
+                                                 QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals);
 }
 
 DBusSettings::~DBusSettings()
-{}
+{
+}
 
 void DBusSettings::apply()
 {

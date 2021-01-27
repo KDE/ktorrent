@@ -20,28 +20,26 @@
 
 #include "torrentloadqueue.h"
 
+#include <QDateTime>
 #include <QDir>
 #include <QFileInfo>
-#include <QDateTime>
 
-#include <KLocalizedString>
 #include <KIO/Job>
+#include <KLocalizedString>
 
-#include <bcodec/bnode.h>
-#include <bcodec/bdecoder.h>
-#include <interfaces/coreinterface.h>
-#include <util/functions.h>
-#include <util/fileops.h>
-#include <util/log.h>
 #include "scanfolderpluginsettings.h"
-
-
+#include <bcodec/bdecoder.h>
+#include <bcodec/bnode.h>
+#include <interfaces/coreinterface.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/log.h>
 
 namespace kt
 {
-TorrentLoadQueue::TorrentLoadQueue(CoreInterface* core, QObject* parent)
-    : QObject(parent),
-      core(core)
+TorrentLoadQueue::TorrentLoadQueue(CoreInterface *core, QObject *parent)
+    : QObject(parent)
+    , core(core)
 {
     connect(&timer, &QTimer::timeout, this, &TorrentLoadQueue::loadOne);
     timer.setSingleShot(true);
@@ -49,25 +47,23 @@ TorrentLoadQueue::TorrentLoadQueue(CoreInterface* core, QObject* parent)
 
 TorrentLoadQueue::~TorrentLoadQueue()
 {
-
 }
 
-void TorrentLoadQueue::add(const QUrl& url)
+void TorrentLoadQueue::add(const QUrl &url)
 {
     to_load.append(url);
     if (!timer.isActive())
         timer.start(1000);
 }
 
-void TorrentLoadQueue::add(const QList<QUrl>& urls)
+void TorrentLoadQueue::add(const QList<QUrl> &urls)
 {
     to_load.append(urls);
     if (!timer.isActive())
         timer.start(1000);
 }
 
-
-bool TorrentLoadQueue::validateTorrent(const QUrl& url, QByteArray& data)
+bool TorrentLoadQueue::validateTorrent(const QUrl &url, QByteArray &data)
 {
     // try to decode file, if it is syntactically correct, we can try to load it
     QFile fptr(url.toLocalFile());
@@ -78,7 +74,7 @@ bool TorrentLoadQueue::validateTorrent(const QUrl& url, QByteArray& data)
         data = fptr.readAll();
 
         bt::BDecoder dec(data, false);
-        bt::BNode* n = dec.decode();
+        bt::BNode *n = dec.decode();
         if (n) {
             // valid node, so file is complete
             delete n;
@@ -119,7 +115,7 @@ void TorrentLoadQueue::loadOne()
         timer.start(1000);
 }
 
-void TorrentLoadQueue::load(const QUrl& url, const QByteArray& data)
+void TorrentLoadQueue::load(const QUrl &url, const QByteArray &data)
 {
     bt::Out(SYS_SNF | LOG_NOTICE) << "ScanFolder: loading " << url.toDisplayString() << bt::endl;
     QString group;
@@ -134,7 +130,7 @@ void TorrentLoadQueue::load(const QUrl& url, const QByteArray& data)
     loadingFinished(url);
 }
 
-void TorrentLoadQueue::loadingFinished(const QUrl& url)
+void TorrentLoadQueue::loadingFinished(const QUrl &url)
 {
     QString name = url.fileName();
     QString dirname = QFileInfo(url.toLocalFile()).absolutePath();

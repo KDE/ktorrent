@@ -21,8 +21,8 @@
 #ifndef KTIWPREFPAGE_HH
 #define KTIWPREFPAGE_HH
 
-#include <interfaces/prefpageinterface.h>
 #include "ui_iwprefpage.h"
+#include <interfaces/prefpageinterface.h>
 
 namespace kt
 {
@@ -30,11 +30,9 @@ class IWPrefPage : public PrefPageInterface, public Ui_IWPrefPage
 {
     Q_OBJECT
 public:
-    IWPrefPage(QWidget* parent);
+    IWPrefPage(QWidget *parent);
     ~IWPrefPage() override;
-
 };
 }
 
 #endif
-

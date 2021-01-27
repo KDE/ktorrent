@@ -21,9 +21,9 @@
 #ifndef UPNPTESTWIDGET_HH
 #define UPNPTESTWIDGET_HH
 
+#include "ui_upnptestwidget.h"
 #include <QWidget>
 #include <interfaces/logmonitorinterface.h>
-#include "ui_upnptestwidget.h"
 
 namespace bt
 {
@@ -34,20 +34,20 @@ class UPnPRouter;
 class UPnPTestWidget : public QWidget, public Ui_UPnPTestWidget, public bt::LogMonitorInterface
 {
 public:
-    UPnPTestWidget(QWidget* parent = 0);
+    UPnPTestWidget(QWidget *parent = 0);
     ~UPnPTestWidget() override;
 
     void doForward();
     void undoForward();
     void findRouters();
-    void discovered(bt::UPnPRouter* r);
+    void discovered(bt::UPnPRouter *r);
     void verboseModeChecked(bool on);
 
 private:
-    void message(const QString& line, unsigned int arg) override;
+    void message(const QString &line, unsigned int arg) override;
 
-    bt::UPnPMCastSocket* mcast_socket;
-    bt::UPnPRouter* router;
+    bt::UPnPMCastSocket *mcast_socket;
+    bt::UPnPRouter *router;
 };
 
 #endif

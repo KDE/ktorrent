@@ -1,22 +1,22 @@
 /***************************************************************************
-*   Copyright (C) 2009 by Joris Guisson                                   *
-*   joris.guisson@gmail.com                                               *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
-***************************************************************************/
+ *   Copyright (C) 2009 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
 
 #include "playlistwidget.h"
 
@@ -28,8 +28,8 @@
 #include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 
-#include <KLocalizedString>
 #include <KFileWidget>
+#include <KLocalizedString>
 #include <KRecentDirs>
 #include <KToolBar>
 
@@ -37,25 +37,23 @@
 #include "mediaplayerpluginsettings.h"
 #include "playlist.h"
 
-
 namespace kt
 {
-PlayListWidget::PlayListWidget(kt::MediaFileCollection* collection, kt::MediaPlayer* player, QWidget* parent)
-    : QWidget(parent),
-      player(player),
-      menu(nullptr),
-      collection(collection)
+PlayListWidget::PlayListWidget(kt::MediaFileCollection *collection, kt::MediaPlayer *player, QWidget *parent)
+    : QWidget(parent)
+    , player(player)
+    , menu(nullptr)
+    , collection(collection)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
     layout->setSpacing(0);
 
-
-    QAction* remove_action = new QAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this);
+    QAction *remove_action = new QAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this);
     connect(remove_action, &QAction::triggered, this, &PlayListWidget::removeFiles);
-    QAction* add_action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Add Media"), this);
+    QAction *add_action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("Add Media"), this);
     connect(add_action, &QAction::triggered, this, &PlayListWidget::addMedia);
-    QAction* clear_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")), i18n("Clear Playlist"), this);
+    QAction *clear_action = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")), i18n("Clear Playlist"), this);
     connect(clear_action, &QAction::triggered, this, &PlayListWidget::clearPlayList);
 
     tool_bar = new QToolBar(this);
@@ -87,7 +85,7 @@ PlayListWidget::PlayListWidget(kt::MediaFileCollection* collection, kt::MediaPla
     connect(view, &QTreeView::customContextMenuRequested, this, &PlayListWidget::showContextMenu);
 
     connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &PlayListWidget::onSelectionChanged);
-    connect(view, &QTreeView::doubleClicked, this, qOverload<const QModelIndex&>(&PlayListWidget::doubleClicked));
+    connect(view, &QTreeView::doubleClicked, this, qOverload<const QModelIndex &>(&PlayListWidget::doubleClicked));
 
     menu = new QMenu(this);
     menu->addAction(remove_action);
@@ -109,7 +107,7 @@ QModelIndex PlayListWidget::selectedItem() const
         return QModelIndex();
 }
 
-void PlayListWidget::onSelectionChanged(const QItemSelection& s, const QItemSelection& d)
+void PlayListWidget::onSelectionChanged(const QItemSelection &s, const QItemSelection &d)
 {
     Q_UNUSED(d);
     QModelIndexList idx = s.indexes();
@@ -130,7 +128,7 @@ QModelIndex PlayListWidget::play()
     return pidx;
 }
 
-void PlayListWidget::doubleClicked(const QModelIndex& index)
+void PlayListWidget::doubleClicked(const QModelIndex &index)
 {
     MediaFileRef file = play_list->fileForIndex(proxy_model->mapToSource(index));
     if (!file.path().isEmpty())
@@ -140,7 +138,7 @@ void PlayListWidget::doubleClicked(const QModelIndex& index)
 void PlayListWidget::saveState(KSharedConfigPtr cfg)
 {
     KConfigGroup g = cfg->group("PlayListWidget");
-    QHeaderView* v = view->header();
+    QHeaderView *v = view->header();
     g.writeEntry("play_list_state", v->saveState());
     g.writeEntry("random_mode", random_mode->isChecked());
 }
@@ -171,8 +169,8 @@ void PlayListWidget::clearPlayList()
 void PlayListWidget::addMedia()
 {
     QString recentDirClass;
-    const QStringList files = QFileDialog::getOpenFileNames(this, QString(),
-                              KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///add_media")), recentDirClass).toLocalFile());
+    const QString startURL = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///add_media")), recentDirClass).toLocalFile();
+    const QStringList files = QFileDialog::getOpenFileNames(this, QString(), startURL);
 
     if (files.isEmpty())
         return;
@@ -180,7 +178,7 @@ void PlayListWidget::addMedia()
     if (!recentDirClass.isEmpty())
         KRecentDirs::add(recentDirClass, QFileInfo(files.first()).absolutePath());
 
-    for (const QString& file : files)
+    for (const QString &file : files)
         play_list->addFile(collection->find(file));
 
     enableNext(play_list->rowCount() > 0);
@@ -190,10 +188,10 @@ void PlayListWidget::removeFiles()
 {
     QList<MediaFileRef> files;
     const QModelIndexList indexes = view->selectionModel()->selectedRows();
-    for (const QModelIndex& idx : indexes)
+    for (const QModelIndex &idx : indexes)
         files.append(play_list->fileForIndex(idx));
 
-    for (const MediaFileRef& f : qAsConst(files))
+    for (const MediaFileRef &f : qAsConst(files))
         play_list->removeFile(f);
 
     enableNext(play_list->rowCount() > 0);
@@ -204,7 +202,7 @@ void PlayListWidget::onItemsDropped()
     enableNext(play_list->rowCount() > 0);
 }
 
-QModelIndex PlayListWidget::next(const QModelIndex& idx, bool random) const
+QModelIndex PlayListWidget::next(const QModelIndex &idx, bool random) const
 {
     if (play_list->rowCount() == 0)
         return QModelIndex();
@@ -222,7 +220,7 @@ QModelIndex PlayListWidget::next(const QModelIndex& idx, bool random) const
     }
 }
 
-QModelIndex PlayListWidget::next(const QModelIndex& idx) const
+QModelIndex PlayListWidget::next(const QModelIndex &idx) const
 {
     if (idx.isValid())
         return idx.sibling(idx.row() + 1, 0); // take a look at the next sibling
@@ -230,7 +228,7 @@ QModelIndex PlayListWidget::next(const QModelIndex& idx) const
         return play_list->index(0, 0);
 }
 
-QModelIndex PlayListWidget::randomNext(const QModelIndex& idx) const
+QModelIndex PlayListWidget::randomNext(const QModelIndex &idx) const
 {
     int count = play_list->rowCount();
     if (count <= 1)
@@ -243,14 +241,12 @@ QModelIndex PlayListWidget::randomNext(const QModelIndex& idx) const
     return proxy_model->index(r, 0, QModelIndex());
 }
 
-
-QString PlayListWidget::fileForIndex(const QModelIndex& index) const
+QString PlayListWidget::fileForIndex(const QModelIndex &index) const
 {
     return play_list->fileForIndex(proxy_model->mapToSource(index)).path();
 }
 
-
-QModelIndex PlayListWidget::indexForFile(const QString& file) const
+QModelIndex PlayListWidget::indexForFile(const QString &file) const
 {
     int count = proxy_model->rowCount();
     for (int i = 0; i < count; i++) {
@@ -261,6 +257,5 @@ QModelIndex PlayListWidget::indexForFile(const QString& file) const
 
     return QModelIndex();
 }
-
 
 }

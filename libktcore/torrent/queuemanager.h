@@ -24,11 +24,11 @@
 
 #include <set>
 
-#include <QObject>
 #include <KSharedConfig>
+#include <QObject>
 
-#include <interfaces/torrentinterface.h>
 #include <interfaces/queuemanagerinterface.h>
+#include <interfaces/torrentinterface.h>
 #include <ktcore_export.h>
 
 namespace bt
@@ -40,8 +40,7 @@ class WaitJob;
 
 namespace kt
 {
-
-class KTCORE_EXPORT QueuePtrList : public QList<bt::TorrentInterface*>
+class KTCORE_EXPORT QueuePtrList : public QList<bt::TorrentInterface *>
 {
 public:
     QueuePtrList();
@@ -53,7 +52,7 @@ public:
     void sort();
 
 protected:
-    static bool biggerThan(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2);
+    static bool biggerThan(bt::TorrentInterface *tc1, bt::TorrentInterface *tc2);
 };
 
 /**
@@ -68,8 +67,8 @@ public:
     QueueManager();
     ~QueueManager() override;
 
-    void append(bt::TorrentInterface* tc);
-    void remove(bt::TorrentInterface* tc);
+    void append(bt::TorrentInterface *tc);
+    void remove(bt::TorrentInterface *tc);
     void clear();
 
     /**
@@ -96,25 +95,25 @@ public:
      * @param tc The torrent
      * @return What happened
      */
-    bt::TorrentStartResponse start(bt::TorrentInterface* tc);
+    bt::TorrentStartResponse start(bt::TorrentInterface *tc);
 
     /**
      * Stop a torrent
      * @param tc The torrent
      */
-    void stop(bt::TorrentInterface* tc);
+    void stop(bt::TorrentInterface *tc);
 
     /**
      * Start a list of torrents.
      * @param todo The list of torrents
      */
-    void start(QList<bt::TorrentInterface*> & todo);
+    void start(QList<bt::TorrentInterface *> &todo);
 
     /**
      * Stop a list of torrents
      * @param todo The list of torrents
      */
-    void stop(QList<bt::TorrentInterface*> & todo);
+    void stop(QList<bt::TorrentInterface *> &todo);
 
     /// Stop all torrents
     void stopAll();
@@ -126,7 +125,7 @@ public:
      * Stop all running torrents
      * @param wjob WaitJob which waits for stopped events to reach the tracker
      */
-    void onExit(bt::WaitJob* wjob);
+    void onExit(bt::WaitJob *wjob);
 
     /// Get the number of torrents
     int count()
@@ -143,7 +142,7 @@ public:
     enum Flags {
         SEEDS = 1,
         DOWNLOADS = 2,
-        ALL = 3
+        ALL = 3,
     };
 
     /**
@@ -163,8 +162,8 @@ public:
     */
     void startAutoStartTorrents();
 
-    typedef QList<bt::TorrentInterface*>::iterator iterator;
-    typedef QList<bt::TorrentInterface*>::const_iterator const_iterator;
+    typedef QList<bt::TorrentInterface *>::iterator iterator;
+    typedef QList<bt::TorrentInterface *>::const_iterator const_iterator;
 
     iterator begin();
     iterator end();
@@ -177,29 +176,28 @@ public:
      * @param idx Index of the torrent
      * @return The torrent or 0 if the index is out of bounds
      */
-    const bt::TorrentInterface* getTorrent(bt::Uint32 idx) const;
+    const bt::TorrentInterface *getTorrent(bt::Uint32 idx) const;
 
     /**
      * Get the torrent at index idx in the list.
      * @param idx Index of the torrent
      * @return The torrent or 0 if the index is out of bounds
      */
-    bt::TorrentInterface* getTorrent(bt::Uint32 idx);
+    bt::TorrentInterface *getTorrent(bt::Uint32 idx);
 
     /**
      * See if we already loaded a torrent.
      * @param ih The info hash of a torrent
      * @return true if we do, false if we don't
      */
-    bool alreadyLoaded(const bt::SHA1Hash& ih) const override;
-
+    bool alreadyLoaded(const bt::SHA1Hash &ih) const override;
 
     /**
      * Merge announce lists to a torrent
      * @param ih The info_hash of the torrent to merge to
      * @param trk First tier of trackers
      */
-    void mergeAnnounceList(const bt::SHA1Hash& ih, const bt::TrackerTier* trk) override;
+    void mergeAnnounceList(const bt::SHA1Hash &ih, const bt::TrackerTier *trk) override;
 
     /**
      * Requested by each TorrentControl during its update to
@@ -209,7 +207,7 @@ public:
      * @return true if file save is permitted, false otherwise
      */
 
-    bool permitStatsSync(bt::TorrentControl* tc) override;
+    bool permitStatsSync(bt::TorrentControl *tc) override;
 
     /**
      * Set the maximum number of downloads
@@ -252,7 +250,7 @@ public:
      * @param tc The torrent
      * @param conflicting List of conflicting torrents
      */
-    bool checkFileConflicts(bt::TorrentInterface* tc, QStringList& conflicting) const;
+    bool checkFileConflicts(bt::TorrentInterface *tc, QStringList &conflicting) const;
 
     /**
      * Places all torrents from downloads in the right order in queue.
@@ -262,25 +260,25 @@ public:
 
 Q_SIGNALS:
     /**
-    * User tried to enqueue a torrent that has reached max share ratio. It's not possible.
-    * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info.
-    * @param tc The torrent in question.
-    */
-    void queuingNotPossible(bt::TorrentInterface* tc);
+     * User tried to enqueue a torrent that has reached max share ratio. It's not possible.
+     * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info.
+     * @param tc The torrent in question.
+     */
+    void queuingNotPossible(bt::TorrentInterface *tc);
 
     /**
-    * Diskspace is running low.
-    * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info.
-    * @param tc The torrent in question.
-    */
-    void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
+     * Diskspace is running low.
+     * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info.
+     * @param tc The torrent in question.
+     */
+    void lowDiskSpace(bt::TorrentInterface *tc, bool stopped);
 
     /// Emitted before the queue is reordered
     void orderingQueue();
 
     /**
-    * Emitted when the QM has reordered it's queue
-    */
+     * Emitted when the QM has reordered it's queue
+     */
     void queueOrdered();
 
     /**
@@ -290,28 +288,28 @@ Q_SIGNALS:
     void suspendStateChanged(bool suspended);
 
 public Q_SLOTS:
-    void torrentFinished(bt::TorrentInterface* tc);
-    void torrentAdded(bt::TorrentInterface* tc, bool start_torrent);
-    void torrentRemoved(bt::TorrentInterface* tc);
-    void torrentsRemoved(QList<bt::TorrentInterface*> & tors);
-    void torrentStopped(bt::TorrentInterface* tc);
-    void onLowDiskSpace(bt::TorrentInterface* tc, bool toStop);
+    void torrentFinished(bt::TorrentInterface *tc);
+    void torrentAdded(bt::TorrentInterface *tc, bool start_torrent);
+    void torrentRemoved(bt::TorrentInterface *tc);
+    void torrentsRemoved(QList<bt::TorrentInterface *> &tors);
+    void torrentStopped(bt::TorrentInterface *tc);
+    void onLowDiskSpace(bt::TorrentInterface *tc, bool toStop);
     void onOnlineStateChanged(bool);
 
 private:
-    void startSafely(bt::TorrentInterface* tc);
-    void stopSafely(bt::TorrentInterface* tc, bt::WaitJob* wjob = 0);
-    void checkDiskSpace(QList<bt::TorrentInterface*> & todo);
-    void checkMaxSeedTime(QList<bt::TorrentInterface*> & todo);
-    void checkMaxRatio(QList<bt::TorrentInterface*> & todo);
+    void startSafely(bt::TorrentInterface *tc);
+    void stopSafely(bt::TorrentInterface *tc, bt::WaitJob *wjob = 0);
+    void checkDiskSpace(QList<bt::TorrentInterface *> &todo);
+    void checkMaxSeedTime(QList<bt::TorrentInterface *> &todo);
+    void checkMaxRatio(QList<bt::TorrentInterface *> &todo);
     void rearrangeQueue();
-    bt::TorrentStartResponse startInternal(bt::TorrentInterface* tc);
-    bool checkLimits(bt::TorrentInterface* tc, bool interactive);
-    bool checkDiskSpace(bt::TorrentInterface* tc, bool interactive);
+    bt::TorrentStartResponse startInternal(bt::TorrentInterface *tc);
+    bool checkLimits(bt::TorrentInterface *tc, bool interactive);
+    bool checkDiskSpace(bt::TorrentInterface *tc, bool interactive);
 
 private:
     QueuePtrList downloads;
-    std::set<bt::TorrentInterface*> suspended_torrents;
+    std::set<bt::TorrentInterface *> suspended_torrents;
     int max_downloads;
     int max_seeds;
     bool suspended_state;

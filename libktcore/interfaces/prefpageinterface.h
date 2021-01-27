@@ -38,7 +38,7 @@ class KTCORE_EXPORT PrefPageInterface : public QWidget
 {
     Q_OBJECT
 public:
-    PrefPageInterface(KConfigSkeleton* cfg, const QString& name, const QString& icon, QWidget* parent);
+    PrefPageInterface(KConfigSkeleton *cfg, const QString &name, const QString &icon, QWidget *parent);
     ~PrefPageInterface() override;
 
     /**
@@ -58,15 +58,15 @@ public:
      */
     virtual void updateSettings();
 
-    KConfigSkeleton* config()
+    KConfigSkeleton *config()
     {
         return cfg;
     }
-    const QString& pageName()
+    const QString &pageName()
     {
         return name;
     }
-    const QString& pageIcon()
+    const QString &pageIcon()
     {
         return icon;
     }
@@ -82,10 +82,9 @@ Q_SIGNALS:
     void updateButtons();
 
 private:
-    KConfigSkeleton* cfg;
+    KConfigSkeleton *cfg;
     QString name;
     QString icon;
 };
 }
 #endif
-
