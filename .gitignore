@@ -2,3 +2,6 @@ build
 .kdev4/
 ktorrent.kdev4
 CMakeLists.txt.user
+/.idea
+cmake-build-*
+/.clang-format
