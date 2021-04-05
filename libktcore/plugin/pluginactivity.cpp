@@ -23,13 +23,15 @@
 #include <QVBoxLayout>
 
 #include <KLocalizedString>
-#include <KPluginSelector>
+#include <KPluginWidget>
 
 #include "pluginactivity.h"
 #include "pluginmanager.h"
 #include "settings.h"
 #include <util/constants.h>
 #include <util/log.h>
+
+#include <iostream>
 
 using namespace bt;
 
@@ -41,9 +43,10 @@ PluginActivity::PluginActivity(PluginManager *pman)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
-    pmw = new KPluginSelector(this);
-    connect(pmw, &KPluginSelector::changed, this, &PluginActivity::changed);
-    connect(pmw, &KPluginSelector::configCommitted, this, &PluginActivity::changed);
+    pmw = new KPluginWidget(this);
+    pmw->setConfig(KSharedConfig::openConfig()->group(QLatin1String("Plugins")));
+    connect(pmw, &KPluginWidget::changed, this, &PluginActivity::changed);
+    connect(pmw, &KPluginWidget::configCommitted, this, &PluginActivity::changed);
     layout->addWidget(pmw);
 }
 
@@ -53,17 +56,19 @@ PluginActivity::~PluginActivity()
 
 void PluginActivity::updatePluginList()
 {
-    pmw->addPlugins(pman->pluginInfoList(), KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
+    pmw->addPlugins(KPluginInfo::toMetaData(pman->pluginInfoList()), i18n("Plugins"));
 }
 
 void PluginActivity::update()
 {
-    pmw->updatePluginsState();
+    //     pmw->updatePluginsState();
+    pmw->save();
     pman->loadPlugins();
 }
 
 void PluginActivity::changed()
 {
+    std::cout << "Changed" << std::endl;
     update();
 }
 }

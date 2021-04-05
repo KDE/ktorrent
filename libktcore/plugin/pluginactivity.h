@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <interfaces/activity.h>
 
-class KPluginSelector;
+class KPluginWidget;
 
 namespace kt
 {
@@ -49,7 +49,7 @@ private Q_SLOTS:
 
 private:
     PluginManager *pman;
-    KPluginSelector *pmw;
+    KPluginWidget *pmw;
 };
 
 }
