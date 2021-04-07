@@ -88,6 +88,7 @@ void PluginManager::loadPlugins()
     int idx = 0;
     for (auto i = plugins.begin(); i != plugins.end(); i++) {
         KPluginInfo &pi = *i;
+        pi.load(KSharedConfig::openConfig()->group(QStringLiteral("Plugins")));
         if (loaded.contains(idx) && !pi.isPluginEnabled()) {
             // unload it
             unload(pi, idx);

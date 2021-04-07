@@ -31,8 +31,6 @@
 #include <util/constants.h>
 #include <util/log.h>
 
-#include <iostream>
-
 using namespace bt;
 
 namespace kt
@@ -61,14 +59,12 @@ void PluginActivity::updatePluginList()
 
 void PluginActivity::update()
 {
-    //     pmw->updatePluginsState();
     pmw->save();
     pman->loadPlugins();
 }
 
 void PluginActivity::changed()
 {
-    std::cout << "Changed" << std::endl;
     update();
 }
 }
