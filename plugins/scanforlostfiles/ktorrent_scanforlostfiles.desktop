@@ -22,6 +22,7 @@ Name[x-test]=xxScan for lost filesxx
 Comment=Display files in the selected folder that don't belong to any torrent
 Comment[ca]=Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent
 Comment[ca@valencia]=Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent
+Comment[cs]=Zobrazit ve vybrané složce soubory, které nepatří žádnému torrentu
 Comment[el]=Να εμφανίζονται αρχεία στον επιλεγμένο φάκελο που δεν ανήκουν σε κανένα torrent
 Comment[en_GB]=Display files in the selected folder that don't belong to any torrent
 Comment[es]=Mostrar archivos en la carpeta seleccionada que no pertenecen a ningún torrent
