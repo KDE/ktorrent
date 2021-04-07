@@ -89,8 +89,8 @@ public:
     void unloadAll();
 
 private:
-    void load(const KPluginInfo &pi, int idx);
-    void unload(const KPluginInfo &pi, int idx);
+    void load(int idx);
+    void unload(int idx);
 };
 
 }

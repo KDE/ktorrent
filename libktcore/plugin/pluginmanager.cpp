@@ -91,20 +91,19 @@ void PluginManager::loadPlugins()
         pi.load(KSharedConfig::openConfig()->group(QStringLiteral("Plugins")));
         if (loaded.contains(idx) && !pi.isPluginEnabled()) {
             // unload it
-            unload(pi, idx);
+            unload(idx);
             pi.save();
         } else if (!loaded.contains(idx) && pi.isPluginEnabled()) {
             // load it
-            load(pi, idx);
+            load(idx);
             pi.save();
         }
         idx++;
     }
 }
 
-void PluginManager::load(const KPluginInfo &pi, int idx)
+void PluginManager::load(int idx)
 {
-    Q_UNUSED(pi)
     KPluginLoader loader(pluginsMetaData.at(idx).fileName());
     KPluginFactory *factory = loader.factory();
     if (!factory)
@@ -131,10 +130,8 @@ void PluginManager::load(const KPluginInfo &pi, int idx)
     }
 }
 
-void PluginManager::unload(const KPluginInfo &pi, int idx)
+void PluginManager::unload(int idx)
 {
-    Q_UNUSED(pi)
-
     Plugin *p = loaded.find(idx);
     if (!p)
         return;
