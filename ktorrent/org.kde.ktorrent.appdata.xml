@@ -152,6 +152,7 @@
       <li xml:lang="ar">وضع السيول في طوابير</li>
       <li xml:lang="ca">Cua dels torrent</li>
       <li xml:lang="ca-valencia">Cua dels torrent</li>
+      <li xml:lang="cs">Řazení torrentů do fronty</li>
       <li xml:lang="da">Sæt torrents i kø</li>
       <li xml:lang="de">Verwaltung von Warteschlangen für Torrents</li>
       <li xml:lang="el">Ουρές από torrents</li>
@@ -407,6 +408,7 @@
       <li>Support for private trackers and torrents</li>
       <li xml:lang="ca">Suport per als seguidors i torrent privats</li>
       <li xml:lang="ca-valencia">Suport per als seguidors i torrent privats</li>
+      <li xml:lang="cs">Podpora pro soukromé trackery a torrenty</li>
       <li xml:lang="da">Understøtter private trackere og torrents</li>
       <li xml:lang="de">Unterstützung für private Tracker und Torrents</li>
       <li xml:lang="el">Υποστήριξη για ιδιωτικούς ανιχνευτές και torrent</li>
@@ -471,6 +473,7 @@
       <li>Support for protocol encryption (compatible with Azureus)</li>
       <li xml:lang="ca">Suport per a l'encriptatge del protocol (compatible amb Azureus)</li>
       <li xml:lang="ca-valencia">Suport per a l'encriptatge del protocol (compatible amb Azureus)</li>
+      <li xml:lang="cs">Podpora pro šifrování protokolu (kompatibilní s Azureus)</li>
       <li xml:lang="da">Understøttelse af protokolkryptering (kompatibel med Azureus)</li>
       <li xml:lang="de">Unterstützung für Protokollverschlüsselung (kompatibel mit Azureus)</li>
       <li xml:lang="el">Υποστήριξη για κρυπτογράφηση πρωτοκόλλου (συμβατό με Azureus)</li>
@@ -502,6 +505,7 @@
       <li>Support for creating trackerless torrents</li>
       <li xml:lang="ca">Suport per a la creació de torrent sense seguidors</li>
       <li xml:lang="ca-valencia">Suport per a la creació de torrent sense seguidors</li>
+      <li xml:lang="cs">Podpora pro vytvoření torrentů bez trackerů</li>
       <li xml:lang="da">Understøttelse af oprettelse af trackerløse torrents</li>
       <li xml:lang="de">Unterstützung für das Erstellen von Torrents ohne Tracker</li>
       <li xml:lang="el">Υποστήριξη για δημιουργία torrent χωρίς ανιχνευτές</li>
@@ -533,6 +537,7 @@
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="ca">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
       <li xml:lang="ca-valencia">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
+      <li xml:lang="cs">Podpora pro distribuované tabulky hash (DHT, hlavní verze)</li>
       <li xml:lang="da">Understøttelse af distribuerede hast-tabeller (DHT, mainline-versionen)</li>
       <li xml:lang="de">Unterstützung für Verteilte Hashtabellen (Distributed Hash Table, DHT in der Mainline-Version)</li>
       <li xml:lang="el">Υποστήιριξη για κατανεμημένους πίνακες κατακερματισμού (DHT, η κύρια έκδοση)</li>
@@ -564,6 +569,7 @@
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="ca">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
       <li xml:lang="ca-valencia">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
+      <li xml:lang="cs">Podpora automatické přeposílání portů na LAN s dynamicky přidělovanými hostiteli v UPnP</li>
       <li xml:lang="da">Understøttelse af UPnP til automatisk at åbne porte på et LAN med dynamisk tildelte værter</li>
       <li xml:lang="de">Unterstützung für UPnP zur automatischen Port-Weiterleitung in Netzwerken mit dynamisch zugewiesenen Rechnern</li>
       <li xml:lang="el">Υποστήριξη UPnP για αυτόματη προώθηση θυρών σε τοπικό δίκτυο με δυναμική αντιστοίχιση υπολογιστών</li>
@@ -595,6 +601,7 @@
       <li>Support for webseeds</li>
       <li xml:lang="ca">Suport per a sembradors web</li>
       <li xml:lang="ca-valencia">Suport per a sembradors web</li>
+      <li xml:lang="cs">Podpora pro webové sdílení</li>
       <li xml:lang="da">Understøttelse af webseeds</li>
       <li xml:lang="de">Unterstützung für Webseeds</li>
       <li xml:lang="el">Υποστήριξη για πηγές ιστού</li>
