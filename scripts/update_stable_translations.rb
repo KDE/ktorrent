@@ -2,8 +2,8 @@
 #
 # Ruby script for updating stable translations of ktorrent with those from trunk
 #
-# (c) 2009 Joris Guisson
-# License: GNU General Public License V2
+# SPDX-FileCopyrightText: 2009 Joris Guisson
+# SPDX-License-Identifier: GPL-2.0-only
 
 # variables
 svnbase = "svn+ssh://guisson@svn.kde.org/home/kde/"

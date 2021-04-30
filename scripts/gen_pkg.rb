@@ -2,10 +2,10 @@
 #
 # Ruby script for generating amaroK tarball releases from KDE SVN
 #
-# (c) 2005 Mark Kretschmann <markey@web.de>
-# (c) 2006-2007 Tom Albers <tomalbers@kde.nl>
+# SPDX-FileCopyrightText: 2005 Mark Kretschmann <markey@web.de>
+# SPDX-FileCopyrightText: 2006-2007 Tom Albers <tomalbers@kde.nl>
 # Some parts of this code taken from cvs2dist
-# License: GNU General Public License V2
+SPDX-License-Identifier: GPL-2.0-only
 if ARGV.length != 2
 	puts "Usage: gen_kde4_pkg_stable.rb <version> <i18n-branch>"
 	exit
