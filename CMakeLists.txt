@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 # KDE Application Version, managed by release script
 set (RELEASE_SERVICE_VERSION_MAJOR "21")
@@ -12,9 +12,10 @@ add_definitions(-D'VERSION="${RELEASE_SERVICE_VERSION}"'
                 -D'VERSION_MINOR=${RELEASE_SERVICE_VERSION_MINOR}'
                 -D'VERSION_MICRO=${RELEASE_SERVICE_VERSION_MICRO}')
 
-set (QT_MIN_VERSION "5.14")
-set (KF5_MIN_VERSION "5.72")
+set (QT_MIN_VERSION "5.15.0")
+set (KF5_MIN_VERSION "5.82")
 set (LIBKTORRENT_MIN_VERSION "20.11.70")
+set (Boost_MIN_VERSION "1.71.0")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH})
@@ -29,11 +30,9 @@ include(ECMAddAppIcon)
 include(ECMMarkAsTest)
 include(ECMMarkNonGuiExecutable)
 include(KDEClangFormat)
-if(ECM_VERSION VERSION_GREATER_EQUAL 5.79)
-    include(KDEGitCommitHooks)
-endif()
+include(KDEGitCommitHooks)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
@@ -66,7 +65,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
 )
 
 find_package(KF5Torrent ${LIBKTORRENT_MIN_VERSION} CONFIG REQUIRED)
-find_package(Boost REQUIRED)
+find_package(Boost ${Boost_MIN_VERSION} REQUIRED)
 
 find_package(KF5TextWidgets ${KF5_MIN_VERSION})
 set_package_properties(KF5TextWidgets
@@ -168,22 +167,26 @@ if(LibKWorkspace_FOUND)
   set(HAVE_LibKWorkspace 1)
 endif()
 
-find_package(Taglib)
-if(TAGLIB_FOUND)
-  set(HAVE_Taglib 1)
-endif()
 #find_package(Qt5 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
-find_package(Phonon4Qt5)
+
+find_package(Taglib)
 set_package_properties(Taglib
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's multimedia plugin"
 )
+
+if(TAGLIB_FOUND)
+  set(HAVE_Taglib 1)
+endif()
+
+find_package(Phonon4Qt5)
 set_package_properties(Phonon4Qt5
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's multimedia plugin"
 )
+
 
 #
 # checks for functions and stuff
@@ -211,9 +214,7 @@ add_definitions(
 set (KTORRENT_DBUS_XML_DIR ${CMAKE_SOURCE_DIR}/dbus_xml)
 set (KTORRENT_PLUGIN_INSTALL_DIR ${PLUGIN_INSTALL_DIR}/ktorrent)
 
-include_directories(
-   ${Boost_INCLUDE_DIR}
-)
+include_directories(Boost::boost)
 
 add_subdirectory(libktcore)
 add_subdirectory(plugins)
@@ -227,8 +228,7 @@ endif()
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
-if(ECM_VERSION VERSION_GREATER_EQUAL 5.79)
-    kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
-endif()
+kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
