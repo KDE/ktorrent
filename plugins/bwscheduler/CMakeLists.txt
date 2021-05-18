@@ -23,7 +23,7 @@ kcoreaddons_desktop_to_json(ktorrent_bwscheduler ktorrent_bwscheduler.desktop)
 target_link_libraries(
     ktorrent_bwscheduler
     ktcore
-	Boost::boost
+    Boost::boost
     KF5::Torrent
     KF5::CoreAddons
     KF5::I18n
