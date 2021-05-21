@@ -18,7 +18,6 @@
 
 #include "chunkdownloadview.h"
 #include "fileview.h"
-#include "geoipmanager.h"
 #include "infowidgetpluginsettings.h"
 #include "iwprefpage.h"
 #include "monitor.h"

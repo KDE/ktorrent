@@ -61,7 +61,12 @@ public:
         QString country;
         QIcon flag;
 
-        Item(bt::PeerInterface *peer, GeoIPManager *geo_ip);
+        Item(bt::PeerInterface *peer
+#if BUILD_WITH_GEOIP
+             ,
+             GeoIPManager *geo_ip
+#endif
+        );
 
         bool changed() const;
         QVariant data(int col) const;
@@ -71,7 +76,9 @@ public:
 
 private:
     QVector<Item *> items;
-    GeoIPManager *geo_ip;
+#if BUILD_WITH_GEOIP
+    GeoIPManager *geo_ip = nullptr;
+#endif
 };
 
 }

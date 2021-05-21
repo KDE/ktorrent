@@ -1,30 +1,23 @@
-# Add an option to compile & link against system GeoIP (off by default)
-option(WITH_SYSTEM_GEOIP 
+# Add an option to compile & link against system GeoIP
+option(BUILD_WITH_GEOIP
 	"Link InfoWidget plugin against system GeoIP library and use system-wide default GeoIP Country database"
-	OFF)
+	ON)
 
-if (WITH_SYSTEM_GEOIP)
+if (BUILD_WITH_GEOIP)
 	find_path(GEOIP_INCLUDE_DIR NAMES GeoIP.h PATHS / ${INCLUDE_INSTALL_DIR}/)
-	find_library(GEOIP_LIBRARY NAMES GeoIP PATHS ${KDE4_LIB_DIR} ${LIB_INSTALL_DIR})
+	find_library(GEOIP_LIBRARY NAMES GeoIP PATHS ${LIB_INSTALL_DIR})
 	
 	if (NOT GEOIP_INCLUDE_DIR OR NOT GEOIP_LIBRARY)
-		set(WITH_SYSTEM_GEOIP OFF CACHE BOOL
+		set(BUILD_WITH_GEOIP OFF CACHE BOOL
 		  "GeoIP development files could not be found on this system. Forcing this option to OFF"
 		  FORCE)
-		message(SEND_ERROR
-		  "GeoIP library development files could not be found on your system. Embedding a local copy of GeoIP instead")
-	endif(NOT GEOIP_INCLUDE_DIR OR NOT GEOIP_LIBRARY)
-endif(WITH_SYSTEM_GEOIP)
-
-if (WITH_SYSTEM_GEOIP)
-	message(STATUS "   Linking InfoWidget against system GeoIP library")
-	add_definitions( -DUSE_SYSTEM_GEOIP )
-	include_directories(GEOIP_INCLUDE_DIR)
-	set(geoip_link ${GEOIP_LIBRARY})
-else(WITH_SYSTEM_GEOIP)
-	message(STATUS "   Compiling GeoIP support directly into InfoWidget plugin")
-	set(geoip_src GeoIP.c)
-endif(WITH_SYSTEM_GEOIP)    
+		message(WARNING "GeoIP library development files could not be found on your system.")
+	else()
+        message(STATUS "   Linking InfoWidget against system GeoIP library")
+        include_directories(GEOIP_INCLUDE_DIR)
+        set(geoip_link ${GEOIP_LIBRARY})
+    endif()
+endif(BUILD_WITH_GEOIP)
 
 set(ktinfowidgetplugin_SRC 
 	infowidgetplugin.cpp 
@@ -41,13 +34,18 @@ set(ktinfowidgetplugin_SRC
 	trackerview.cpp
 	trackermodel.cpp
 	addtrackersdialog.cpp
-	${geoip_src}
-	geoipmanager.cpp
 	flagdb.cpp
 	iwfiletreemodel.cpp
 	iwfilelistmodel.cpp
 	webseedstab.cpp
 	webseedsmodel.cpp)
+
+if (BUILD_WITH_GEOIP)
+    set(ktinfowidgetplugin_SRC ${ktinfowidgetplugin_SRC} geoipmanager.cpp)
+    add_definitions(-DBUILD_WITH_GEOIP=1)
+else()
+    add_definitions(-DBUILD_WITH_GEOIP=0)
+endif()
 
 ki18n_wrap_ui(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
 kconfig_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)

@@ -13,9 +13,12 @@
 #include <KLocalizedString>
 
 #include "flagdb.h"
-#include "geoipmanager.h"
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
+
+#if BUILD_WITH_GEOIP
+#include "geoipmanager.h"
+#endif
 
 using namespace bt;
 
@@ -25,7 +28,12 @@ static QIcon yes, no;
 static bool icons_loaded = false;
 static FlagDB flagDB(22, 18);
 
-PeerViewModel::Item::Item(bt::PeerInterface *peer, GeoIPManager *geo_ip)
+PeerViewModel::Item::Item(bt::PeerInterface *peer
+#if BUILD_WITH_GEOIP
+                          ,
+                          GeoIPManager *geo_ip
+#endif
+                          )
     : peer(peer)
 {
     stats = peer->getStats();
@@ -39,13 +47,13 @@ PeerViewModel::Item::Item(bt::PeerInterface *peer, GeoIPManager *geo_ip)
             flagDB.addFlagSource(path + QStringLiteral("/%1/flag.png"));
     }
 
-    if (geo_ip) {
-        int country_id = geo_ip->findCountry(stats.ip_address);
-        if (country_id > 0) {
-            country = geo_ip->countryName(country_id);
-            flag = flagDB.getFlag(geo_ip->countryCode(country_id));
-        }
+#if BUILD_WITH_GEOIP
+    int country_id = geo_ip->findCountry(stats.ip_address);
+    if (country_id > 0) {
+        country = geo_ip->countryName(country_id);
+        flag = flagDB.getFlag(geo_ip->countryCode(country_id));
     }
+#endif
 }
 
 bool PeerViewModel::Item::changed() const
@@ -183,9 +191,10 @@ QVariant PeerViewModel::Item::decoration(int col) const
 
 PeerViewModel::PeerViewModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , geo_ip(nullptr)
 {
+#if BUILD_WITH_GEOIP
     geo_ip = new GeoIPManager(this);
+#endif
 }
 
 PeerViewModel::~PeerViewModel()
@@ -195,7 +204,12 @@ PeerViewModel::~PeerViewModel()
 
 void PeerViewModel::peerAdded(bt::PeerInterface *peer)
 {
-    items.append(new Item(peer, geo_ip));
+    items.append(new Item(peer
+#if BUILD_WITH_GEOIP
+                          ,
+                          geo_ip
+#endif
+                          ));
     insertRow(items.count() - 1);
 }
 

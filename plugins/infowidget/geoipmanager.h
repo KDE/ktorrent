@@ -7,21 +7,7 @@
 #define KT_GEOIPMANAGER_H
 
 #include <QObject>
-#include <QThread>
-#include <QUrl>
-
-#ifdef USE_SYSTEM_GEOIP
 #include <GeoIP.h>
-#else
-#include "GeoIP.h"
-#endif
-
-class KJob;
-
-namespace bt
-{
-class DecompressThread;
-}
 
 namespace kt
 {
@@ -56,28 +42,8 @@ public:
      */
     QString countryCode(int country_id);
 
-    /// Get the database URL
-    static QUrl geoIPUrl()
-    {
-        return geoip_url;
-    }
-
-    /// Set the database URL
-    static void setGeoIPUrl(const QUrl &url);
-
-    /// Download the database
-    void downloadDataBase();
-
-private Q_SLOTS:
-    void databaseDownloadFinished(KJob *job);
-    void decompressFinished();
-
 private:
     GeoIP *geo_ip;
-    QString geoip_data_file;
-    QString download_destination;
-    bt::DecompressThread *decompress_thread;
-    static QUrl geoip_url;
 };
 
 }
