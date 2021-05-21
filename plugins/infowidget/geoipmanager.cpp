@@ -104,6 +104,8 @@ QString GeoIPManager::countryName(int country_id)
 
 void GeoIPManager::downloadDataBase()
 {
+    Out(SYS_INW | LOG_IMPORTANT) << "The download GeoIP database loading is defunct, skipping download" << endl;
+    return;
 #ifndef USE_SYSTEM_GEOIP
     Out(SYS_INW | LOG_NOTICE) << "Downloading GeoIP database: " << geoip_url << endl;
     download_destination = kt::DataDir(CreateIfNotExists) + geoip_url.fileName();
