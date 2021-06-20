@@ -25,7 +25,6 @@
 #include <QStringList>
 #include <QVector>
 
-#include <KPluginInfo>
 #include <KPluginMetaData>
 
 #include <interfaces/plugin.h>
@@ -46,7 +45,6 @@ class PluginActivity;
  */
 class KTCORE_EXPORT PluginManager
 {
-    KPluginInfo::List plugins;
     QVector<KPluginMetaData> pluginsMetaData;
     CoreInterface *core;
     GUIInterface *gui;
@@ -57,12 +55,9 @@ public:
     PluginManager(CoreInterface *core, GUIInterface *gui);
     ~PluginManager();
 
-    /**
-     * Get the plugin info list.
-     */
-    const KPluginInfo::List &pluginInfoList() const
+    QVector<KPluginMetaData> pluginsList() const
     {
-        return plugins;
+        return pluginsMetaData;
     }
 
     /**

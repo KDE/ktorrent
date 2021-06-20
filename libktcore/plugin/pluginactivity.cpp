@@ -54,7 +54,7 @@ PluginActivity::~PluginActivity()
 
 void PluginActivity::updatePluginList()
 {
-    pmw->addPlugins(KPluginInfo::toMetaData(pman->pluginInfoList()), i18n("Plugins"));
+    pmw->addPlugins(pman->pluginsList(), i18n("Plugins"));
 }
 
 void PluginActivity::update()

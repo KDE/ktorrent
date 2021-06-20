@@ -20,10 +20,14 @@
 
 #include "pluginmanager.h"
 
+#include <QCoreApplication>
 #include <QFile>
 #include <QTextStream>
 
+#include <KConfigGroup>
 #include <KLocalizedString>
+#include <KPluginFactory>
+#include <KPluginLoader>
 #include <KPluginMetaData>
 #include <KSharedConfig>
 
@@ -65,14 +69,6 @@ void PluginManager::loadPluginList()
         pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent"));
     }
 
-    for (const KPluginMetaData &module : qAsConst(pluginsMetaData)) {
-        KPluginInfo pi(module);
-        pi.setConfig(KSharedConfig::openConfig()->group(pi.pluginName()));
-        pi.load();
-
-        plugins << pi;
-    }
-
     if (!prefpage) {
         prefpage = new PluginActivity(this);
         gui->addActivity(prefpage);
@@ -86,17 +82,20 @@ void PluginManager::loadPluginList()
 void PluginManager::loadPlugins()
 {
     int idx = 0;
-    for (auto i = plugins.begin(); i != plugins.end(); i++) {
-        KPluginInfo &pi = *i;
-        pi.load(KSharedConfig::openConfig()->group(QStringLiteral("Plugins")));
-        if (loaded.contains(idx) && !pi.isPluginEnabled()) {
+
+    const KConfigGroup pluginsConfig = KSharedConfig::openConfig()->group(QStringLiteral("Plugins"));
+
+    for (auto i = pluginsMetaData.begin(); i != pluginsMetaData.end(); i++) {
+        KPluginMetaData &pi = *i;
+
+        const bool enabled = pluginsConfig.readEntry(pi.pluginId() + QLatin1String("Enabled"), pi.isEnabledByDefault());
+
+        if (loaded.contains(idx) && !enabled) {
             // unload it
             unload(idx);
-            pi.save();
-        } else if (!loaded.contains(idx) && pi.isPluginEnabled()) {
+        } else if (!loaded.contains(idx) && enabled) {
             // load it
             load(idx);
-            pi.save();
         }
         idx++;
     }
