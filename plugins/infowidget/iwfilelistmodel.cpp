@@ -72,14 +72,16 @@ QVariant IWFileListModel::headerData(int section, Qt::Orientation orientation, i
 static QString PriorityString(const bt::TorrentFileInterface *file)
 {
     switch (file->getPriority()) {
+    case FIRST_PREVIEW_PRIORITY:
     case FIRST_PRIORITY:
         return i18nc("Download first", "First");
+    case LAST_PREVIEW_PRIORITY:
     case LAST_PRIORITY:
         return i18nc("Download last", "Last");
     case ONLY_SEED_PRIORITY:
     case EXCLUDED:
-    case PREVIEW_PRIORITY:
         return QString();
+    case NORMAL_PREVIEW_PRIORITY:
     default:
         return i18nc("Download Normal (not as first or last)", "Normal");
     }
@@ -96,15 +98,17 @@ QVariant IWFileListModel::data(const QModelIndex &index, int role) const
     if (role == Qt::ForegroundRole && index.column() == 2 && tc->getStats().multi_file_torrent) {
         const bt::TorrentFileInterface *file = &tc->getTorrentFile(index.row());
         switch (file->getPriority()) {
+        case FIRST_PREVIEW_PRIORITY:
         case FIRST_PRIORITY:
             return InfoWidgetPluginSettings::firstColor();
+        case LAST_PREVIEW_PRIORITY:
         case LAST_PRIORITY:
             return InfoWidgetPluginSettings::lastColor();
+        case NORMAL_PREVIEW_PRIORITY:
         case NORMAL_PRIORITY:
             return QVariant();
         case ONLY_SEED_PRIORITY:
         case EXCLUDED:
-        case PREVIEW_PRIORITY:
         default:
             return QVariant();
         }
