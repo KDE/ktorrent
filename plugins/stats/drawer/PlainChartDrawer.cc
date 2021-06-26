@@ -441,7 +441,7 @@ void PlainChartDrawer::setPen(const size_t idx, const QPen& rP)
 QUuid PlainChartDrawer::getUuid(const size_t idx) const
 {
     if (idx >= pmVals.size()) {
-        return 0;
+        return nullptr;
     }
 
     return pmVals.at(idx).getUuid();

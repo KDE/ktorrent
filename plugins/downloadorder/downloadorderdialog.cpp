@@ -31,8 +31,8 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::Torren
     m_top_label->setText(i18n("File download order for <b>%1</b>:", tor->getDisplayName()));
 
     DownloadOrderManager *dom = plugin->manager(tor);
-    m_custom_order_enabled->setChecked(dom != 0);
-    m_order->setEnabled(dom != 0);
+    m_custom_order_enabled->setChecked(dom != nullptr);
+    m_order->setEnabled(dom != nullptr);
     m_move_up->setEnabled(false);
     m_move_down->setEnabled(false);
     m_move_top->setEnabled(false);

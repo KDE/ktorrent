@@ -322,7 +322,7 @@ void TorrentCreatorDlg::accept()
         m_progress->setMaximum(mktor->getNumChunks());
     } catch (bt::Error &err) {
         delete mktor;
-        mktor = 0;
+        mktor = nullptr;
         Out(SYS_GEN | LOG_IMPORTANT) << "Error: " << err.toString() << endl;
         gui->errorMsg(err.toString());
     }

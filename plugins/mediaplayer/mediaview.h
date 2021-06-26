@@ -28,7 +28,7 @@ class MediaViewFilter : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    MediaViewFilter(QObject *parent = 0);
+    MediaViewFilter(QObject *parent = nullptr);
     ~MediaViewFilter() override;
 
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;

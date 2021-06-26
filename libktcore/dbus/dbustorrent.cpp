@@ -28,7 +28,7 @@ namespace kt
 DBusTorrent::DBusTorrent(bt::TorrentInterface *ti, QObject *parent)
     : QObject(parent)
     , ti(ti)
-    , stream(0)
+    , stream(nullptr)
 {
     QDBusConnection sb = QDBusConnection::sessionBus();
     QString path = QLatin1String("/torrent/") + ti->getInfoHash().toString();
@@ -178,7 +178,7 @@ bool DBusTorrent::addTracker(const QString &tracker_url)
     if (ti->getStats().priv_torrent)
         return false;
 
-    return ti->getTrackersList()->addTracker(QUrl(tracker_url), true) != 0;
+    return ti->getTrackersList()->addTracker(QUrl(tracker_url), true) != nullptr;
 }
 
 bool DBusTorrent::removeTracker(const QString &tracker_url)
@@ -467,7 +467,7 @@ bool DBusTorrent::createStream(uint file_index)
     stream = new DBusTorrentFileStream(file_index, this);
     if (!stream->ok()) {
         delete stream;
-        stream = 0;
+        stream = nullptr;
         return false;
     }
 
@@ -480,7 +480,7 @@ bool DBusTorrent::removeStream(uint file_index)
     Q_UNUSED(file_index);
 
     delete stream;
-    stream = 0;
+    stream = nullptr;
     return true;
 }
 

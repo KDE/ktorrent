@@ -138,7 +138,7 @@ GroupManager::~GroupManager()
 Group *GroupManager::newGroup(const QString &name)
 {
     if (groups.find(name))
-        return 0;
+        return nullptr;
 
     TorrentGroup *g = new TorrentGroup(name);
     connect(g, &TorrentGroup::torrentAdded, this, &GroupManager::customGroupChanged);
@@ -216,7 +216,7 @@ void GroupManager::loadGroups()
         return;
     }
 
-    bt::BNode *n = 0;
+    bt::BNode *n = nullptr;
     try {
         Uint32 fs = bt::FileSize(fn);
         QByteArray data(fs, 0);

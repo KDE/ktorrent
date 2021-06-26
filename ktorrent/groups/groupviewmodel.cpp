@@ -174,7 +174,7 @@ void GroupViewModel::groupRemoved(Group *g)
 Group *GroupViewModel::groupForIndex(const QModelIndex &index) const
 {
     Item *item = (Item *)index.internalPointer();
-    return item ? item->group : 0;
+    return item ? item->group : nullptr;
 }
 
 QModelIndex GroupViewModel::findGroup(Group *g)

@@ -133,7 +133,7 @@ void ScriptManager::updateActions(const QModelIndexList &selected)
     remove_script->setEnabled(num_removable > 0);
     run_script->setEnabled(selected.count() > 0 && num_not_running > 0);
     stop_script->setEnabled(selected.count() > 0 && num_running > 0);
-    Script *s = 0;
+    Script *s = nullptr;
     if (selected.count() > 0)
         s = model->scriptForIndex(selected.front());
     properties->setEnabled(selected.count() == 1 && s && s->metaInfo().valid());
@@ -186,7 +186,7 @@ void ScriptManager::editScript()
     for (const QModelIndex &idx : sel) {
         Script *s = model->scriptForIndex(idx);
         if (s)
-            new KRun(QUrl::fromLocalFile(s->scriptFile()), 0);
+            new KRun(QUrl::fromLocalFile(s->scriptFile()), nullptr);
     }
 }
 

@@ -154,7 +154,7 @@ void GUI::removeActivity(Activity *act)
 void GUI::setCurrentActivity(Activity *act)
 {
     central->setCurrentActivity(act);
-    part_manager->setActivePart(act ? act->part() : 0);
+    part_manager->setActivePart(act ? act->part() : nullptr);
 }
 
 void GUI::activePartChanged(KParts::Part *p)

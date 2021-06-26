@@ -28,7 +28,7 @@ PluginManager::PluginManager(CoreInterface *core, GUIInterface *gui)
     : core(core)
     , gui(gui)
 {
-    prefpage = 0;
+    prefpage = nullptr;
     loaded.setAutoDelete(true);
 }
 

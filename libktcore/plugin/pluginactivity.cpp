@@ -21,7 +21,7 @@ using namespace bt;
 namespace kt
 {
 PluginActivity::PluginActivity(PluginManager *pman)
-    : Activity(i18n("Plugins"), QStringLiteral("plugins"), 5, 0)
+    : Activity(i18n("Plugins"), QStringLiteral("plugins"), 5, nullptr)
     , pman(pman)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);

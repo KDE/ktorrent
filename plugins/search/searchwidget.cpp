@@ -84,7 +84,7 @@ SearchWidget::~SearchWidget()
 {
     if (prog) {
         sp->getGUI()->getStatusBar()->removeProgressBar(prog);
-        prog = 0;
+        prog = nullptr;
     }
 }
 
@@ -179,7 +179,7 @@ void SearchWidget::loadFinished(bool ok)
 
     if (prog) {
         sp->getGUI()->getStatusBar()->removeProgressBar(prog);
-        prog = 0;
+        prog = nullptr;
     }
 }
 
@@ -194,7 +194,7 @@ void SearchWidget::magnetUrl(const QUrl &magnet_url)
 
 void SearchWidget::downloadTorrentFile(QWebEngineDownloadItem *download)
 {
-    int ret = KMessageBox::questionYesNoCancel(0,
+    int ret = KMessageBox::questionYesNoCancel(nullptr,
 
                                                i18n("Do you want to download or save the torrent?"),
                                                i18n("Download Torrent"),

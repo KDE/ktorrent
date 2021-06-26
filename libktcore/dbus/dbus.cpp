@@ -171,7 +171,7 @@ QStringList DBus::groups() const
 bool DBus::addGroup(const QString &group)
 {
     kt::GroupManager *gman = core->getGroupManager();
-    return gman->newGroup(group) != 0;
+    return gman->newGroup(group) != nullptr;
 }
 
 bool DBus::removeGroup(const QString &group)
@@ -210,7 +210,7 @@ QObject *DBus::group(const QString &name)
             return group_map.find(i->second);
         i++;
     }
-    return 0;
+    return nullptr;
 }
 
 void DBus::log(const QString &line)

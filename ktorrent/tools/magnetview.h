@@ -24,7 +24,7 @@ class MagnetView : public QWidget
 {
     Q_OBJECT
 public:
-    MagnetView(MagnetManager *magnetManager, QWidget *parent = 0);
+    MagnetView(MagnetManager *magnetManager, QWidget *parent = nullptr);
     ~MagnetView() override;
 
     void saveState(KSharedConfigPtr cfg);

@@ -65,7 +65,7 @@ QVariant RouterModel::headerData(int section, Qt::Orientation orientation, int r
 bt::UPnPRouter *RouterModel::routerForIndex(const QModelIndex &index)
 {
     if (!index.isValid())
-        return 0;
+        return nullptr;
     else
         return routers.at(index.row());
 }

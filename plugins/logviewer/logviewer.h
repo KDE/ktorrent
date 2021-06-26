@@ -21,7 +21,7 @@ class LogViewer : public Activity, public bt::LogMonitorInterface
 {
     Q_OBJECT
 public:
-    LogViewer(LogFlags *flags, QWidget *parent = 0);
+    LogViewer(LogFlags *flags, QWidget *parent = nullptr);
     ~LogViewer() override;
 
     void message(const QString &line, unsigned int arg) override;

@@ -106,22 +106,22 @@ void TorrentGroup::load(bt::BDictNode *dn)
     if (BDictNode *gp = dn->getDict(QByteArrayLiteral("policy"))) {
         // load the group policy
         if (gp->getValue(QByteArrayLiteral("default_save_location"))) {
-            policy.default_save_location = gp->getString(QByteArrayLiteral("default_save_location"), 0);
+            policy.default_save_location = gp->getString(QByteArrayLiteral("default_save_location"), nullptr);
             if (policy.default_save_location.length() == 0)
                 policy.default_save_location = QString(); // make sure that 0 length strings are loaded as null strings
         }
 
         if (gp->getValue(QByteArrayLiteral("default_move_on_completion_location"))) {
-            policy.default_move_on_completion_location = gp->getString(QByteArrayLiteral("default_move_on_completion_location"), 0);
+            policy.default_move_on_completion_location = gp->getString(QByteArrayLiteral("default_move_on_completion_location"), nullptr);
             if (policy.default_move_on_completion_location.length() == 0)
                 policy.default_move_on_completion_location = QString(); // make sure that 0 length strings are loaded as null strings
         }
 
         if (gp->getValue(QByteArrayLiteral("max_share_ratio")))
-            policy.max_share_ratio = gp->getString(QByteArrayLiteral("max_share_ratio"), 0).toFloat();
+            policy.max_share_ratio = gp->getString(QByteArrayLiteral("max_share_ratio"), nullptr).toFloat();
 
         if (gp->getValue(QByteArrayLiteral("max_seed_time")))
-            policy.max_seed_time = gp->getString(QByteArrayLiteral("max_seed_time"), 0).toFloat();
+            policy.max_seed_time = gp->getString(QByteArrayLiteral("max_seed_time"), nullptr).toFloat();
 
         if (gp->getValue(QByteArrayLiteral("max_upload_rate")))
             policy.max_upload_rate = gp->getInt(QByteArrayLiteral("max_upload_rate"));

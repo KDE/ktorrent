@@ -67,14 +67,14 @@ Script *ScriptModel::addScriptFromDesktopFile(const QString &dir, const QString 
     Script *s = new Script(this);
     if (!s->loadFromDesktopFile(dir, desktop_file)) {
         delete s;
-        return 0;
+        return nullptr;
     }
 
     // we don't want dupes
     for (Script *os : qAsConst(scripts)) {
         if (s->scriptFile() == os->scriptFile()) {
             delete s;
-            return 0;
+            return nullptr;
         }
     }
 
@@ -208,10 +208,10 @@ Qt::ItemFlags ScriptModel::flags(const QModelIndex &index) const
 Script *ScriptModel::scriptForIndex(const QModelIndex &index) const
 {
     if (!index.isValid())
-        return 0;
+        return nullptr;
 
     if (index.row() < 0 || index.row() >= scripts.count())
-        return 0;
+        return nullptr;
 
     return scripts[index.row()];
 }

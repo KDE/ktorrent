@@ -84,7 +84,7 @@ ViewDelegate::~ViewDelegate()
 
 void ViewDelegate::extend(bt::TorrentInterface *tc, kt::Extender *widget, bool close_similar)
 {
-    ExtenderBox *ext = 0;
+    ExtenderBox *ext = nullptr;
     ExtItr itr = extenders.find(tc);
     if (itr == extenders.end()) {
         QAbstractItemView *aiv = qobject_cast<QAbstractItemView *>(parent());
@@ -172,7 +172,7 @@ QSize ViewDelegate::maybeExtendedSize(const QStyleOptionViewItem &option, const 
         return size;
 
     ExtCItr itr = extenders.find(tc);
-    const QWidget *ext = itr == extenders.end() ? 0 : itr.value();
+    const QWidget *ext = itr == extenders.end() ? nullptr : itr.value();
     if (!ext)
         return size;
 

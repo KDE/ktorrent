@@ -41,7 +41,7 @@ void ViewJobTracker::jobRegistered(bt::Job *j)
 kt::JobProgressWidget *ViewJobTracker::createJobWidget(bt::Job *job)
 {
     if (job->torrentStatus() == bt::CHECKING_DATA) {
-        ScanExtender *ext = new ScanExtender(job, 0);
+        ScanExtender *ext = new ScanExtender(job, nullptr);
         widgets[job] = ext;
         return ext;
     } else

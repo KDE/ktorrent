@@ -30,7 +30,7 @@ Monitor::Monitor(bt::TorrentInterface *tc, PeerView *pv, ChunkDownloadView *cdv,
 Monitor::~Monitor()
 {
     if (tc)
-        tc->setMonitor(0);
+        tc->setMonitor(nullptr);
 }
 
 void Monitor::downloadRemoved(bt::ChunkDownloadInterface *cd)
@@ -71,7 +71,7 @@ void Monitor::destroyed()
         pv->removeAll();
     if (cdv)
         cdv->removeAll();
-    tc = 0;
+    tc = nullptr;
 }
 
 void Monitor::filePercentageChanged(bt::TorrentFileInterface *file, float percentage)

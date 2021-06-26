@@ -25,7 +25,7 @@ class ShutdownTorrentDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    ShutdownTorrentDelegate(QObject *parent = 0);
+    ShutdownTorrentDelegate(QObject *parent = nullptr);
     ~ShutdownTorrentDelegate() override;
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

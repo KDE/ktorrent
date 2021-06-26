@@ -78,7 +78,7 @@ private:
 class PrefPageScrollArea : public QScrollArea
 {
 public:
-    PrefPageScrollArea(PrefPageInterface *page, QWidget *parent = 0);
+    PrefPageScrollArea(PrefPageInterface *page, QWidget *parent = nullptr);
     ~PrefPageScrollArea() override;
 
     PrefPageInterface *page;

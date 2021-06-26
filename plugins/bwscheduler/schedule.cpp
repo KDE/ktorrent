@@ -118,7 +118,7 @@ void Schedule::load(const QString &file)
 
     QByteArray data = fptr.readAll();
     BDecoder dec(data, false, 0);
-    BNode *node = 0;
+    BNode *node = nullptr;
     try {
         node = dec.decode();
     } catch (bt::Error &err) {
@@ -304,7 +304,7 @@ ScheduleItem *Schedule::getCurrentItem(const QDateTime &now)
             return i;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 int Schedule::getTimeToNextScheduleEvent(const QDateTime &now)

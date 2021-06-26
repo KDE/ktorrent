@@ -117,7 +117,7 @@ FilterEditor::FilterEditor(Filter *filter, FilterList *filters, FeedList *feeds,
     m_test->setEnabled(feeds->rowCount(QModelIndex()) > 0);
     m_test_results->setEnabled(feeds->rowCount(QModelIndex()) > 0);
     connect(m_test, &QPushButton::clicked, this, &FilterEditor::test);
-    test_model = 0;
+    test_model = nullptr;
     test_filter = new Filter();
 
     QHeaderView *hv = m_test_results->header();

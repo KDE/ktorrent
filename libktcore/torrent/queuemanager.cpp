@@ -107,7 +107,7 @@ bool QueueManager::checkLimits(TorrentInterface *tc, bool interactive)
     else
         return true;
 
-    if (interactive && KMessageBox::questionYesNo(0, msg, i18n("Limits reached.")) == KMessageBox::Yes) {
+    if (interactive && KMessageBox::questionYesNo(nullptr, msg, i18n("Limits reached.")) == KMessageBox::Yes) {
         if (max_ratio_reached)
             tc->setMaxShareRatio(0.00f);
         if (max_seed_time_reached)
@@ -134,7 +134,7 @@ bool QueueManager::checkDiskSpace(TorrentInterface *tc, bool interactive)
             "Are you sure you want to continue?");
 
         QString caption = i18n("Insufficient disk space for %1", s.torrent_name);
-        if (!interactive || KMessageBox::questionYesNo(0, msg, caption) == KMessageBox::No)
+        if (!interactive || KMessageBox::questionYesNo(nullptr, msg, caption) == KMessageBox::No)
             return false;
         else
             break;
@@ -210,7 +210,7 @@ void QueueManager::checkDiskSpace(QList<bt::TorrentInterface *> &todo)
         }
 
         if (tmp.count() > 0) {
-            if (KMessageBox::questionYesNoList(0, i18n("Not enough disk space for the following torrents. Do you want to start them anyway?"), names)
+            if (KMessageBox::questionYesNoList(nullptr, i18n("Not enough disk space for the following torrents. Do you want to start them anyway?"), names)
                 == KMessageBox::No) {
                 for (bt::TorrentInterface *tc : qAsConst(tmp))
                     todo.removeAll(tc);
@@ -244,7 +244,9 @@ void QueueManager::checkMaxSeedTime(QList<bt::TorrentInterface *> &todo)
     }
 
     if (tmp.count() > 0) {
-        if (KMessageBox::questionYesNoList(0, i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway?"), names)
+        if (KMessageBox::questionYesNoList(nullptr,
+                                           i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway?"),
+                                           names)
             == KMessageBox::No) {
             for (bt::TorrentInterface *tc : qAsConst(tmp))
                 todo.removeAll(tc);
@@ -268,7 +270,9 @@ void QueueManager::checkMaxRatio(QList<bt::TorrentInterface *> &todo)
     }
 
     if (tmp.count() > 0) {
-        if (KMessageBox::questionYesNoList(0, i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway?"), names)
+        if (KMessageBox::questionYesNoList(nullptr,
+                                           i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway?"),
+                                           names)
             == KMessageBox::No) {
             for (bt::TorrentInterface *tc : qAsConst(tmp))
                 todo.removeAll(tc);
@@ -412,7 +416,7 @@ int QueueManager::getNumRunning(Flags flags)
 const bt::TorrentInterface *QueueManager::getTorrent(Uint32 idx) const
 {
     if (idx >= (Uint32)downloads.count())
-        return 0;
+        return nullptr;
     else
         return downloads[idx];
 }
@@ -420,7 +424,7 @@ const bt::TorrentInterface *QueueManager::getTorrent(Uint32 idx) const
 bt::TorrentInterface *QueueManager::getTorrent(bt::Uint32 idx)
 {
     if (idx >= (Uint32)downloads.count())
-        return 0;
+        return nullptr;
     else
         return downloads[idx];
 }
@@ -681,7 +685,7 @@ void QueueManager::startSafely(bt::TorrentInterface *tc)
     } catch (bt::Error &err) {
         const TorrentStats &s = tc->getStats();
         QString msg = i18n("Error starting torrent %1: %2", s.torrent_name, err.toString());
-        KMessageBox::error(0, msg, i18n("Error"));
+        KMessageBox::error(nullptr, msg, i18n("Error"));
     }
 }
 
@@ -692,7 +696,7 @@ void QueueManager::stopSafely(bt::TorrentInterface *tc, WaitJob *wjob)
     } catch (bt::Error &err) {
         const TorrentStats &s = tc->getStats();
         QString msg = i18n("Error stopping torrent %1: %2", s.torrent_name, err.toString());
-        KMessageBox::error(0, msg, i18n("Error"));
+        KMessageBox::error(nullptr, msg, i18n("Error"));
     }
 }
 

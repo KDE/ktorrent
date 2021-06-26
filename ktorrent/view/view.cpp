@@ -525,7 +525,7 @@ void View::previewTorrents()
     getSelection(sel);
     for (bt::TorrentInterface *tc : qAsConst(sel)) {
         if (tc->readyForPreview() && !tc->getStats().multi_file_torrent) {
-            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
+            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), nullptr, true);
         }
     }
 }
@@ -536,9 +536,9 @@ void View::openDataDir()
     getSelection(sel);
     for (bt::TorrentInterface *tc : qAsConst(sel)) {
         if (tc->getStats().multi_file_torrent)
-            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
+            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), nullptr, true);
         else
-            new KRun(QUrl::fromLocalFile(tc->getDataDir()), 0, true);
+            new KRun(QUrl::fromLocalFile(tc->getDataDir()), nullptr, true);
     }
 }
 
@@ -547,7 +547,7 @@ void View::openTorDir()
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
     for (bt::TorrentInterface *tc : qAsConst(sel)) {
-        new KRun(QUrl::fromLocalFile(tc->getTorDir()), 0, true);
+        new KRun(QUrl::fromLocalFile(tc->getTorDir()), nullptr, true);
     }
 }
 
@@ -719,9 +719,9 @@ void View::onDoubleClicked(const QModelIndex &index)
     bt::TorrentInterface *tc = model->torrentFromIndex(index);
     if (tc) {
         if (tc->getStats().multi_file_torrent)
-            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), 0, true);
+            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), nullptr, true);
         else
-            new KRun(QUrl::fromLocalFile(tc->getDataDir()), 0, true);
+            new KRun(QUrl::fromLocalFile(tc->getDataDir()), nullptr, true);
     }
 }
 
@@ -772,7 +772,7 @@ void View::onGroupRenamed(Group *g)
 void View::addToGroupItemTriggered()
 {
     QAction *s = (QAction *)sender();
-    Group *g = 0;
+    Group *g = nullptr;
     QMap<Group *, QAction *>::iterator j = group_actions.begin();
     while (j != group_actions.end() && !g) {
         if (j.value() == s)
@@ -823,7 +823,7 @@ void View::speedLimits()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    SpeedLimitsDlg dlg(sel.count() > 0 ? sel.front() : 0, core, gui->getMainWindow());
+    SpeedLimitsDlg dlg(sel.count() > 0 ? sel.front() : nullptr, core, gui->getMainWindow());
     dlg.exec();
 }
 

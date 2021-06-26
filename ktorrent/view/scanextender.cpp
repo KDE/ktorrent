@@ -126,7 +126,7 @@ void ScanExtender::closeRequested()
 
 bool ScanExtender::similar(Extender *ext) const
 {
-    return qobject_cast<ScanExtender *>(ext) != 0;
+    return qobject_cast<ScanExtender *>(ext) != nullptr;
 }
 
 }

@@ -131,7 +131,7 @@ void SearchActivity::loadCurrentSearches()
 
     QByteArray data = fptr.readAll();
     bt::BDecoder dec(data, false, 0);
-    bt::BListNode *search_list = 0;
+    bt::BListNode *search_list = nullptr;
     try {
         search_list = dec.decodeList();
         if (!search_list)
@@ -142,10 +142,10 @@ void SearchActivity::loadCurrentSearches()
             if (!dict)
                 continue;
 
-            QString text = dict->getString("TEXT", 0);
-            QString sbtext = dict->getString("SBTEXT", 0);
+            QString text = dict->getString("TEXT", nullptr);
+            QString sbtext = dict->getString("SBTEXT", nullptr);
             int engine = dict->getInt("ENGINE");
-            QUrl url = QUrl(dict->getString("URL", 0));
+            QUrl url = QUrl(dict->getString("URL", nullptr));
 
             SearchWidget *search = newSearchWidget(text);
             search->restore(url, text, sbtext, engine);

@@ -78,7 +78,7 @@ void WeekView::clear()
     }
     item_map.clear();
     selection.clear();
-    schedule = 0;
+    schedule = nullptr;
 }
 
 void WeekView::removeSelectedItems()

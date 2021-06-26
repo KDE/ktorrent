@@ -322,7 +322,7 @@ QString KPlotWgtDrawer::makeLegendString()
 QUuid KPlotWgtDrawer::getUuid(const size_t idx) const
 {
     if (idx >= static_cast<size_t>(plotObjects().size())) {
-        return 0;
+        return nullptr;
     }
 
     return pmUuids.at(idx);

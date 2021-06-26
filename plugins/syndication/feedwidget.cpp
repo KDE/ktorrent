@@ -111,11 +111,11 @@ void FeedWidget::setFeed(Feed *f)
     if (feed) {
         disconnect(feed, &Feed::updated, this, &FeedWidget::updated);
         disconnect(feed, &Feed::feedRenamed, this, &FeedWidget::onFeedRenamed);
-        feed = 0;
+        feed = nullptr;
     }
 
     feed = f;
-    setEnabled(feed != 0);
+    setEnabled(feed != nullptr);
     model->setCurrentFeed(f);
     if (feed) {
         connect(feed, &Feed::updated, this, &FeedWidget::updated);
@@ -172,7 +172,7 @@ void FeedWidget::cookiesClicked()
 
     bool ok = false;
     QString cookie = feed->authenticationCookie();
-    QString nc = QInputDialog::getText(0, i18n("Authentication Cookie"), i18n("Enter the new authentication cookie"), QLineEdit::Normal, cookie, &ok);
+    QString nc = QInputDialog::getText(nullptr, i18n("Authentication Cookie"), i18n("Enter the new authentication cookie"), QLineEdit::Normal, cookie, &ok);
     if (ok) {
         feed->setAuthenticationCookie(nc);
         feed->save();

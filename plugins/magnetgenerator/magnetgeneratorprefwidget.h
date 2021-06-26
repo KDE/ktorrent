@@ -15,7 +15,7 @@ class MagnetGeneratorPrefWidget : public PrefPageInterface, public Ui_MagnetGene
 {
     Q_OBJECT
 public:
-    MagnetGeneratorPrefWidget(QWidget *parent = 0);
+    MagnetGeneratorPrefWidget(QWidget *parent = nullptr);
     ~MagnetGeneratorPrefWidget() override;
 
 private Q_SLOTS:

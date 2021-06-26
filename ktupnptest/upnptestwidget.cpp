@@ -19,8 +19,8 @@ UPnPTestWidget::UPnPTestWidget(QWidget *parent)
     connect(m_forward, &QPushButton::clicked, this, &UPnPTestWidget::doForward);
     connect(m_undo_forward, &QPushButton::clicked, this, &UPnPTestWidget::undoForward);
     connect(m_verbose, &QCheckBox::toggled, this, &UPnPTestWidget::verboseModeChecked);
-    mcast_socket = 0;
-    router = 0;
+    mcast_socket = nullptr;
+    router = nullptr;
 
     m_forward->setEnabled(false);
     m_undo_forward->setEnabled(false);

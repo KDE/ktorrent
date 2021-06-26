@@ -94,7 +94,7 @@ public:
     /** \brief Constructor
     \param p Parent
     */
-    PlainChartDrawer(QWidget *p = 0);
+    PlainChartDrawer(QWidget *p = nullptr);
     /// Destructor
     ~PlainChartDrawer() override;
 

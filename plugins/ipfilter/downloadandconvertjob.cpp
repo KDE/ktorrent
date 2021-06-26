@@ -207,7 +207,7 @@ void DownloadAndConvertJob::extract(KJob *j)
 
 void DownloadAndConvertJob::revertBackupFinished(KJob *)
 {
-    active_job = 0;
+    active_job = nullptr;
     cleanUpFiles();
     setError(CANCELED);
     emitResult();

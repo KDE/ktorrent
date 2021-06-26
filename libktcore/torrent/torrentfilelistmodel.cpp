@@ -246,11 +246,11 @@ bt::Uint64 TorrentFileListModel::bytesToDownload()
 bt::TorrentFileInterface *TorrentFileListModel::indexToFile(const QModelIndex &idx)
 {
     if (!tc || !idx.isValid())
-        return 0;
+        return nullptr;
 
     int r = idx.row();
     if (r >= rowCount(QModelIndex()))
-        return 0;
+        return nullptr;
     else
         return &tc->getTorrentFile(r);
 }

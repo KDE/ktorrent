@@ -40,8 +40,8 @@ MediaPlayerActivity::MediaPlayerActivity(CoreInterface *core, KActionCollection 
     , ac(ac)
 {
     action_flags = 0;
-    video = 0;
-    play_action = pause_action = stop_action = prev_action = next_action = 0;
+    video = nullptr;
+    play_action = pause_action = stop_action = prev_action = next_action = nullptr;
     fullscreen_mode = false;
 
     media_model = new MediaModel(core, this);
@@ -151,7 +151,7 @@ void MediaPlayerActivity::openVideo()
         tabs->setTabText(idx, path);
         tabs->setCurrentIndex(idx);
     } else {
-        video = new VideoWidget(media_player, ac, 0);
+        video = new VideoWidget(media_player, ac, nullptr);
         connect(video, &VideoWidget::toggleFullScreen, this, &MediaPlayerActivity::setVideoFullScreen);
         int idx = tabs->addTab(video, QIcon::fromTheme(QStringLiteral("video-x-generic")), path);
         tabs->setTabToolTip(idx, i18n("Movie player"));
@@ -171,7 +171,7 @@ void MediaPlayerActivity::closeVideo()
             show_video_action->setChecked(false);
         // tabs->setTabBarHidden(true);
         video->deleteLater();
-        video = 0;
+        video = nullptr;
     }
 }
 
@@ -316,7 +316,7 @@ void MediaPlayerActivity::setVideoFullScreen(bool on)
 
     if (on && !fullscreen_mode) {
         tabs->removeTab(tabs->indexOf(video));
-        video->setParent(0);
+        video->setParent(nullptr);
         video->setFullScreen(true);
         video->show();
         fullscreen_mode = true;

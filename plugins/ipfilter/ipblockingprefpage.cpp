@@ -152,7 +152,7 @@ void IPBlockingPrefPage::downloadAndConvertFinished(KJob *j)
 
     g.sync();
 
-    m_job = 0;
+    m_job = nullptr;
     m_plugin->loadAntiP2P();
     restoreGUI();
     updateAutoUpdate();

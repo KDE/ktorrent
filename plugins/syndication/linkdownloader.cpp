@@ -73,7 +73,7 @@ void LinkDownloader::downloadFinished(KJob *j)
     }
 
     if (isTorrent(job->data())) {
-        bt::TorrentInterface *tc = 0;
+        bt::TorrentInterface *tc = nullptr;
         if (verbose)
             tc = core->load(job->data(), url, group, location);
         else
@@ -170,7 +170,7 @@ void LinkDownloader::tryNextLink()
     if (links.count() == 0) {
         Out(SYS_SYN | LOG_DEBUG) << "Couldn't find a valid link to a torrent on " << url.toDisplayString() << endl;
         if (verbose)
-            KMessageBox::error(0, i18n("Could not find a valid link to a torrent on %1", url.toDisplayString()));
+            KMessageBox::error(nullptr, i18n("Could not find a valid link to a torrent on %1", url.toDisplayString()));
 
         finished(false);
         deleteLater();
@@ -198,7 +198,7 @@ void LinkDownloader::torrentDownloadFinished(KJob *j)
         } else
             tryTorrentLinks();
     } else if (isTorrent(job->data())) {
-        bt::TorrentInterface *tc = 0;
+        bt::TorrentInterface *tc = nullptr;
         if (verbose)
             tc = core->load(job->data(), link_url, group, location);
         else

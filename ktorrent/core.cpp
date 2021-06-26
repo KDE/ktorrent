@@ -311,7 +311,7 @@ bool Core::init(TorrentControl *tc, const QString &group, const QString &locatio
 bt::TorrentInterface *Core::loadFromData(const QByteArray &data, const QString &dir, const QString &group, bool silently, const QUrl &url)
 {
     QString tdir = findNewTorrentDir();
-    TorrentControl *tc = 0;
+    TorrentControl *tc = nullptr;
     try {
         tc = new TorrentControl();
         tc->setLoadUrl(url);
@@ -333,12 +333,12 @@ bt::TorrentInterface *Core::loadFromData(const QByteArray &data, const QString &
     }
 
     delete tc;
-    tc = 0;
+    tc = nullptr;
     // delete tdir if necessary
     if (bt::Exists(tdir))
         bt::Delete(tdir, true);
 
-    return 0;
+    return nullptr;
 }
 
 bt::TorrentInterface *Core::loadFromFile(const QString &target, const QString &dir, const QString &group, bool silently)
@@ -352,7 +352,7 @@ bt::TorrentInterface *Core::loadFromFile(const QString &target, const QString &d
             gui->errorMsg(err.toString());
         else
             canNotLoadSilently(err.toString());
-        return 0;
+        return nullptr;
     }
 }
 
@@ -468,7 +468,7 @@ bt::TorrentInterface *Core::load(const QByteArray &data, const QUrl &url, const 
     if (dir != QString())
         return loadFromData(data, dir, group, false, url);
     else
-        return 0;
+        return nullptr;
 }
 
 bt::TorrentInterface *Core::loadSilently(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir)
@@ -482,7 +482,7 @@ bt::TorrentInterface *Core::loadSilently(const QByteArray &data, const QUrl &url
     if (dir != QString())
         return loadFromData(data, dir, group, true, url);
     else
-        return 0;
+        return nullptr;
 }
 
 void Core::start(bt::TorrentInterface *tc)
@@ -559,7 +559,7 @@ QString Core::findNewTorrentDir() const
 
 void Core::loadExistingTorrent(const QString &tor_dir)
 {
-    TorrentControl *tc = 0;
+    TorrentControl *tc = nullptr;
 
     QString idir = tor_dir;
     if (!idir.endsWith(bt::DirSeparator()))
@@ -930,7 +930,7 @@ bt::TorrentInterface *Core::createTorrent(bt::TorrentCreator *mktor, bool seed)
         // Show error message
         gui->errorMsg(i18n("Cannot create torrent: %1", e.toString()));
     }
-    return 0;
+    return nullptr;
 }
 
 CurrentStats Core::getStats()
@@ -1048,7 +1048,7 @@ bool Core::checkMissingFiles(TorrentInterface *tc)
             "Do you want to recreate them, or do you want to not download them?",
             tc->getStats().torrent_name);
 
-        MissingFilesDlg dlg(msg, missing, tc, 0);
+        MissingFilesDlg dlg(msg, missing, tc, nullptr);
 
         switch (dlg.execute()) {
         case MissingFilesDlg::CANCEL:
@@ -1069,7 +1069,7 @@ bool Core::checkMissingFiles(TorrentInterface *tc)
                 // recreate them
                 tc->recreateMissingFiles();
             } catch (bt::Error &e) {
-                KMessageBox::error(0, i18n("Cannot recreate missing files: %1", e.toString()));
+                KMessageBox::error(nullptr, i18n("Cannot recreate missing files: %1", e.toString()));
                 tc->handleError(i18n("Data files are missing"));
                 return false;
             }
@@ -1082,7 +1082,7 @@ bool Core::checkMissingFiles(TorrentInterface *tc)
             "The file where the data is saved of the torrent \"%1\" is missing.\n"
             "Do you want to recreate it?",
             tc->getStats().torrent_name);
-        MissingFilesDlg dlg(msg, missing, tc, 0);
+        MissingFilesDlg dlg(msg, missing, tc, nullptr);
 
         switch (dlg.execute()) {
         case MissingFilesDlg::CANCEL:
@@ -1229,7 +1229,7 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
 
     QUrl url(mlink.toString());
 
-    bt::TorrentInterface *tc = 0;
+    bt::TorrentInterface *tc = nullptr;
     if (options.silently)
         tc = loadSilently(tmp, url, options.group, options.location);
     else
@@ -1245,7 +1245,7 @@ QString Core::locationHint(const QString &group) const
 
     // First see if we can use the group settings
     Group *g = gman->find(group);
-    QString group_save_location = g != 0 ? g->groupPolicy().default_save_location : QString();
+    QString group_save_location = g != nullptr ? g->groupPolicy().default_save_location : QString();
     if (!group_save_location.isEmpty() && bt::Exists(group_save_location))
         dir = g->groupPolicy().default_save_location;
     else if (Settings::useSaveDir())

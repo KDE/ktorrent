@@ -129,7 +129,7 @@ void GroupView::showContextMenu(const QPoint &p)
     remove_group->setEnabled(enable);
     edit_group_policy->setEnabled(enable);
 
-    open_in_new_tab->setEnabled(g != 0);
+    open_in_new_tab->setEnabled(g != nullptr);
 
     QMenu *menu = gui->getTorrentActivity()->part()->menu(QStringLiteral("GroupsMenu"));
     if (menu)

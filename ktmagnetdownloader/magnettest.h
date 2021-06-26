@@ -20,7 +20,7 @@ class UPnPMCastSocket;
 class MagnetTest : public QObject
 {
 public:
-    MagnetTest(const bt::MagnetLink &mlink, QObject *parent = 0);
+    MagnetTest(const bt::MagnetLink &mlink, QObject *parent = nullptr);
     ~MagnetTest() override;
 
     void routerDiscovered(bt::UPnPRouter *router);

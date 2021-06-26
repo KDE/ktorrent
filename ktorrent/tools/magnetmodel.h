@@ -23,7 +23,7 @@ class MagnetModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    MagnetModel(MagnetManager *magnetManager, QObject *parent = 0);
+    MagnetModel(MagnetManager *magnetManager, QObject *parent = nullptr);
     ~MagnetModel() override;
 
     /// Remove a magnet downloader

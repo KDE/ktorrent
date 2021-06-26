@@ -87,7 +87,7 @@ public:
     /**
         Add a rule to the ruleset
     */
-    void addRule(Action action, Target target, Trigger trigger, bt::TorrentInterface *tc = 0);
+    void addRule(Action action, Target target, Trigger trigger, bt::TorrentInterface *tc = nullptr);
 
     /**
         Clear all rules

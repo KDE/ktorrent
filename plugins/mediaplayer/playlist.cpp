@@ -252,7 +252,7 @@ bool PlayList::dropMimeData(const QMimeData *data, Qt::DropAction action, int ro
     row -= nr;
 
     for (const QUrl &url : urls) {
-        PlayListItem item = qMakePair(collection->find(url.toLocalFile()), (TagLib::FileRef *)0);
+        PlayListItem item = qMakePair(collection->find(url.toLocalFile()), (TagLib::FileRef *)nullptr);
         files.insert(row, item);
     }
     insertRows(row, urls.count(), QModelIndex());

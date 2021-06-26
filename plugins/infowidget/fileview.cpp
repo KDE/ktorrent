@@ -80,9 +80,9 @@ FileView::FileView(QWidget *parent)
     proxy_model = new TreeFilterModel(this);
     proxy_model->setSortRole(Qt::UserRole);
     if (show_list_of_files)
-        model = new IWFileListModel(0, this);
+        model = new IWFileListModel(nullptr, this);
     else
-        model = new IWFileTreeModel(0, this);
+        model = new IWFileTreeModel(nullptr, this);
     proxy_model->setSourceModel(model);
     view->setModel(proxy_model);
 
@@ -146,7 +146,7 @@ void FileView::changeTC(bt::TorrentInterface *tc)
         expanded_state_map[curr_tc.data()] = model->saveExpandedState(proxy_model, view);
 
     curr_tc = tc;
-    setEnabled(tc != 0);
+    setEnabled(tc != nullptr);
     model->changeTorrent(tc);
     if (tc) {
         connect(tc, &bt::TorrentInterface::missingFilesMarkedDND, this, &FileView::onMissingFileMarkedDND);
@@ -316,7 +316,7 @@ void FileView::deleteFiles()
                         "You will lose all data in these files, are you sure you want to do this?",
                         n);
 
-    if (KMessageBox::warningYesNo(0, msg) == KMessageBox::Yes)
+    if (KMessageBox::warningYesNo(nullptr, msg) == KMessageBox::Yes)
         changePriority(EXCLUDED);
 }
 
@@ -514,12 +514,12 @@ void FileView::setShowListOfFiles(bool on)
     show_list_of_files = on;
     if (!curr_tc) {
         // no torrent, but still need to change the model
-        proxy_model->setSourceModel(0);
+        proxy_model->setSourceModel(nullptr);
         delete model;
         if (show_list_of_files)
-            model = new IWFileListModel(0, this);
+            model = new IWFileListModel(nullptr, this);
         else
-            model = new IWFileTreeModel(0, this);
+            model = new IWFileTreeModel(nullptr, this);
         proxy_model->setSourceModel(model);
         view->header()->restoreState(header_state);
         return;
@@ -529,9 +529,9 @@ void FileView::setShowListOfFiles(bool on)
     if (on)
         expanded_state_map[tc] = model->saveExpandedState(proxy_model, view);
 
-    proxy_model->setSourceModel(0);
+    proxy_model->setSourceModel(nullptr);
     delete model;
-    model = 0;
+    model = nullptr;
 
     if (show_list_of_files)
         model = new IWFileListModel(tc, this);

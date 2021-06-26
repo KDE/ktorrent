@@ -154,7 +154,7 @@ void SyndicationActivity::removeFeed()
     for (const QModelIndex &i : idx) {
         Feed *f = feed_list->feedForIndex(i);
         if (f && feed_widget->getFeed() == f) {
-            feed_widget->setFeed(0);
+            feed_widget->setFeed(nullptr);
         }
     }
     feed_list->removeFeeds(idx);
@@ -194,7 +194,7 @@ Filter *SyndicationActivity::addNewFilter()
         return filter;
     } else {
         delete filter;
-        return 0;
+        return nullptr;
     }
 }
 

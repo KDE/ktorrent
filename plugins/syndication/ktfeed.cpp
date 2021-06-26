@@ -140,15 +140,15 @@ void Feed::load(FilterList *filter_list)
     BDictNode *dict = (BDictNode *)n;
 
     try {
-        url = QUrl(dict->getString("url", 0));
-        cookie = dict->getValue("cookie") ? dict->getString("cookie", 0) : QString();
-        custom_name = dict->getValue("custom_name") ? dict->getString("custom_name", 0) : QString();
+        url = QUrl(dict->getString("url", nullptr));
+        cookie = dict->getValue("cookie") ? dict->getString("cookie", nullptr) : QString();
+        custom_name = dict->getValue("custom_name") ? dict->getString("custom_name", nullptr) : QString();
         refresh_rate = dict->getValue("refresh_rate") ? dict->getInt("refresh_rate") : DEFAULT_REFRESH_RATE;
 
         BListNode *fl = dict->getList("filters");
         if (fl) {
             for (Uint32 i = 0; i < fl->getNumChildren(); i++) {
-                Filter *f = filter_list->filterByID(fl->getString(i, 0));
+                Filter *f = filter_list->filterByID(fl->getString(i, nullptr));
                 if (f)
                     filters.append(f);
             }
@@ -157,7 +157,7 @@ void Feed::load(FilterList *filter_list)
         BListNode *ll = dict->getList("loaded");
         if (ll) {
             for (Uint32 i = 0; i < ll->getNumChildren(); i++) {
-                loaded.insert(ll->getString(i, 0));
+                loaded.insert(ll->getString(i, nullptr));
             }
         }
 
@@ -168,7 +168,7 @@ void Feed::load(FilterList *filter_list)
                 if (!se)
                     continue;
 
-                Filter *f = filter_list->filterByID(se_list->getString(i, 0));
+                Filter *f = filter_list->filterByID(se_list->getString(i, nullptr));
                 if (!f)
                     continue;
 

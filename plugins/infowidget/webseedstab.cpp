@@ -53,12 +53,12 @@ void WebSeedsTab::changeTC(bt::TorrentInterface *tc)
 {
     curr_tc = tc;
     model->changeTC(tc);
-    m_add->setEnabled(tc != 0);
-    m_remove->setEnabled(tc != 0);
-    m_webseed_list->setEnabled(tc != 0);
-    m_webseed->setEnabled(tc != 0);
-    m_enable_all->setEnabled(tc != 0);
-    m_disable_all->setEnabled(tc != 0);
+    m_add->setEnabled(tc != nullptr);
+    m_remove->setEnabled(tc != nullptr);
+    m_webseed_list->setEnabled(tc != nullptr);
+    m_webseed->setEnabled(tc != nullptr);
+    m_enable_all->setEnabled(tc != nullptr);
+    m_disable_all->setEnabled(tc != nullptr);
     onWebSeedTextChanged(m_webseed->text());
 
     // see if we need to enable or disable the remove button

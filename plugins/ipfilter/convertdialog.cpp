@@ -76,13 +76,13 @@ void ConvertDialog::threadFinished()
     if (failure != QString()) {
         convert_thread->wait();
         convert_thread->deleteLater();
-        convert_thread = 0;
+        convert_thread = nullptr;
         KMessageBox::error(this, failure);
         reject();
     } else {
         convert_thread->wait();
         convert_thread->deleteLater();
-        convert_thread = 0;
+        convert_thread = nullptr;
         if (canceled)
             reject();
         else

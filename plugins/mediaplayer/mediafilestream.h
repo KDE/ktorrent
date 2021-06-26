@@ -23,7 +23,7 @@ class MediaFileStream : public Phonon::AbstractMediaStream
 {
     Q_OBJECT
 public:
-    MediaFileStream(bt::TorrentFileStream::WPtr stream, QObject *parent = 0);
+    MediaFileStream(bt::TorrentFileStream::WPtr stream, QObject *parent = nullptr);
     ~MediaFileStream() override;
 
     enum StreamState {

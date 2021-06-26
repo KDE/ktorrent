@@ -282,7 +282,7 @@ public Q_SLOTS:
 
 private:
     void startSafely(bt::TorrentInterface *tc);
-    void stopSafely(bt::TorrentInterface *tc, bt::WaitJob *wjob = 0);
+    void stopSafely(bt::TorrentInterface *tc, bt::WaitJob *wjob = nullptr);
     void checkDiskSpace(QList<bt::TorrentInterface *> &todo);
     void checkMaxSeedTime(QList<bt::TorrentInterface *> &todo);
     void checkMaxRatio(QList<bt::TorrentInterface *> &todo);

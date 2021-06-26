@@ -87,7 +87,7 @@ void StatusTab::changeTC(bt::TorrentInterface *tc)
 
     downloaded_bar->setTC(tc);
     availability_bar->setTC(tc);
-    setEnabled(tc != 0);
+    setEnabled(tc != nullptr);
 
     if (curr_tc) {
         info_hash->setText(tc->getInfoHash().toString());

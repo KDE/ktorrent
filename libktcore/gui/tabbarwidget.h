@@ -66,7 +66,7 @@ class ActionGroup : public QObject
 {
     Q_OBJECT
 public:
-    ActionGroup(QObject *parent = 0);
+    ActionGroup(QObject *parent = nullptr);
     ~ActionGroup() override;
 
     void addAction(QAction *act);

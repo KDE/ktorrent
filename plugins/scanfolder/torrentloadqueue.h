@@ -28,7 +28,7 @@ class TorrentLoadQueue : public QObject
 {
     Q_OBJECT
 public:
-    TorrentLoadQueue(CoreInterface *core, QObject *parent = 0);
+    TorrentLoadQueue(CoreInterface *core, QObject *parent = nullptr);
     ~TorrentLoadQueue() override;
 
     /// Set the loaded torrent action

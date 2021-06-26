@@ -38,7 +38,7 @@ void FilterListModel::removeFilter(Filter *f)
 Filter *FilterListModel::filterForIndex(const QModelIndex &idx)
 {
     if (!idx.isValid())
-        return 0;
+        return nullptr;
 
     return filters.at(idx.row());
 }
@@ -49,7 +49,7 @@ Filter *FilterListModel::filterByName(const QString &name)
         if (f->filterName() == name)
             return f;
 
-    return 0;
+    return nullptr;
 }
 
 Filter *FilterListModel::filterByID(const QString &id)
@@ -58,13 +58,13 @@ Filter *FilterListModel::filterByID(const QString &id)
         if (f->filterID() == id)
             return f;
 
-    return 0;
+    return nullptr;
 }
 
 Filter *FilterListModel::filterByRow(int row)
 {
     if (row < 0 || row >= filters.count())
-        return 0;
+        return nullptr;
     else
         return filters.at(row);
 }

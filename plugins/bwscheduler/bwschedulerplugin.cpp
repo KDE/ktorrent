@@ -72,7 +72,7 @@ void BWSchedulerPlugin::load()
         m_schedule->clear();
     }
 
-    m_editor = new ScheduleEditor(0);
+    m_editor = new ScheduleEditor(nullptr);
     connect(m_editor, &ScheduleEditor::loaded, this, &BWSchedulerPlugin::onLoaded);
     connect(m_editor, &ScheduleEditor::scheduleChanged, this, &BWSchedulerPlugin::timerTriggered);
     getGUI()->addActivity(m_editor);

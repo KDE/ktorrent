@@ -20,7 +20,7 @@ AllGroup::~AllGroup()
 
 bool AllGroup::isMember(TorrentInterface *tor)
 {
-    return tor != 0;
+    return tor != nullptr;
 }
 
 }

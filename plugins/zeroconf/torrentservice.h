@@ -29,7 +29,7 @@ public:
     TorrentService(bt::TorrentInterface *tc);
     ~TorrentService() override;
 
-    void stop(bt::WaitJob *wjob = 0) override;
+    void stop(bt::WaitJob *wjob = nullptr) override;
     void start() override;
     void aboutToBeDestroyed() override;
 

@@ -16,7 +16,7 @@ JobTracker::JobTracker(QObject *parent)
 
 JobTracker::~JobTracker()
 {
-    bt::Job::setJobTracker(0);
+    bt::Job::setJobTracker(nullptr);
 }
 
 void JobTracker::registerJob(KJob *job)
@@ -42,7 +42,7 @@ void JobTracker::unregisterJob(KJob *job)
 
 JobProgressWidget *JobTracker::createJobWidget(bt::Job *job)
 {
-    JobProgressWidget *p = new BasicJobProgressWidget(job, 0);
+    JobProgressWidget *p = new BasicJobProgressWidget(job, nullptr);
     widgets[job] = p;
     return p;
 }

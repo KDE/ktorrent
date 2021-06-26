@@ -29,7 +29,7 @@ using namespace bt;
 
 namespace kt
 {
-IPFilterList *IPFilterWidget::filter_list = 0;
+IPFilterList *IPFilterWidget::filter_list = nullptr;
 
 IPFilterWidget::IPFilterWidget(QWidget *parent)
     : QDialog(parent)

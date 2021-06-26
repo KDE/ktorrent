@@ -163,7 +163,7 @@ void ShutdownRuleSet::load(const QString &file)
 
     QByteArray data = fptr.readAll();
     BDecoder dec(data, false);
-    BNode *node = 0;
+    BNode *node = nullptr;
     try {
         clear();
         node = dec.decode();
@@ -185,7 +185,7 @@ void ShutdownRuleSet::load(const QString &file)
             rule.target = (Target)d->getInt(QByteArrayLiteral("Target"));
             rule.trigger = (Trigger)d->getInt(QByteArrayLiteral("Trigger"));
             rule.hit = d->keys().contains(QByteArrayLiteral("hit")) && d->getInt(QByteArrayLiteral("hit")) == 1;
-            rule.tc = 0;
+            rule.tc = nullptr;
             if (d->getValue(QByteArrayLiteral("Torrent"))) {
                 const QByteArray hash = d->getByteArray(QByteArrayLiteral("Torrent"));
                 bt::TorrentInterface *const tc = torrentForHash(hash);
@@ -219,7 +219,7 @@ bt::TorrentInterface *ShutdownRuleSet::torrentForHash(const QByteArray &hash)
             return t;
     }
 
-    return 0;
+    return nullptr;
 }
 
 kt::Action ShutdownRuleSet::currentAction() const

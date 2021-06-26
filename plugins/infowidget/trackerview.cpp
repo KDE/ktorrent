@@ -77,7 +77,7 @@ TrackerView::TrackerView(QWidget *parent)
     });
 
     setEnabled(false);
-    torrentChanged(0);
+    torrentChanged(nullptr);
 }
 
 TrackerView::~TrackerView()
@@ -126,9 +126,9 @@ void TrackerView::addClicked()
     }
 
     if (dupes.size() == 1)
-        KMessageBox::sorry(0, i18n("There already is a tracker named <b>%1</b>.", dupes.front().toDisplayString()));
+        KMessageBox::sorry(nullptr, i18n("There already is a tracker named <b>%1</b>.", dupes.front().toDisplayString()));
     else if (dupes.size() > 1)
-        KMessageBox::informationList(0, i18n("The following duplicate trackers were not added:"), QUrl::toStringList(dupes));
+        KMessageBox::informationList(nullptr, i18n("The following duplicate trackers were not added:"), QUrl::toStringList(dupes));
 
     if (!tl.isEmpty())
         model->addTrackers(tl);
@@ -191,7 +191,7 @@ void TrackerView::changeTC(TorrentInterface *ti)
     if (tc.data() == ti)
         return;
 
-    setEnabled(ti != 0);
+    setEnabled(ti != nullptr);
     torrentChanged(ti);
     update();
 
@@ -216,7 +216,7 @@ void TrackerView::torrentChanged(TorrentInterface *ti)
         m_restore_defaults->setEnabled(false);
         m_change_tracker->setEnabled(false);
         m_scrape->setEnabled(false);
-        model->changeTC(0);
+        model->changeTC(nullptr);
     } else {
         m_add_tracker->setEnabled(true);
         m_remove_tracker->setEnabled(true);

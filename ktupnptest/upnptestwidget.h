@@ -19,7 +19,7 @@ class UPnPRouter;
 class UPnPTestWidget : public QWidget, public Ui_UPnPTestWidget, public bt::LogMonitorInterface
 {
 public:
-    UPnPTestWidget(QWidget *parent = 0);
+    UPnPTestWidget(QWidget *parent = nullptr);
     ~UPnPTestWidget() override;
 
     void doForward();

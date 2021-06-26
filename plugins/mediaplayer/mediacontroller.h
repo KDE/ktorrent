@@ -25,7 +25,7 @@ class MediaController : public QWidget, public Ui_MediaController
 {
     Q_OBJECT
 public:
-    MediaController(MediaPlayer *player, KActionCollection *ac, QWidget *parent = 0);
+    MediaController(MediaPlayer *player, KActionCollection *ac, QWidget *parent = nullptr);
     ~MediaController() override;
 
 private Q_SLOTS:

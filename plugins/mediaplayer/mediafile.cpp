@@ -140,9 +140,9 @@ bt::TorrentFileStream::WPtr MediaFile::stream()
 {
     if (!tfs) {
         // If some file is already in streaming mode, then try unstreamed mode
-        tfs = tc->createTorrentFileStream(idx, true, 0);
+        tfs = tc->createTorrentFileStream(idx, true, nullptr);
         if (!tfs)
-            tfs = tc->createTorrentFileStream(idx, false, 0);
+            tfs = tc->createTorrentFileStream(idx, false, nullptr);
     }
 
     return bt::TorrentFileStream::WPtr(tfs);

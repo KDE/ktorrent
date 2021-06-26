@@ -28,7 +28,7 @@ namespace bt
 {
 MMapFile::MMapFile()
     : fptr(nullptr)
-    , data(0)
+    , data(nullptr)
     , size(0)
     , file_size(0)
     , ptr(0)
@@ -85,11 +85,11 @@ bool MMapFile::open(const QString &file, QIODevice::OpenModeFlag mode)
 #ifdef HAVE_MMAP64
     data = (Uint8 *)mmap64(0, size, mmap_flag, MAP_SHARED, fd, 0);
 #else
-    data = (Uint8 *)mmap(0, size, mmap_flag, MAP_SHARED, fd, 0);
+    data = (Uint8 *)mmap(nullptr, size, mmap_flag, MAP_SHARED, fd, 0);
 #endif
     if (data == MAP_FAILED) {
         ::close(fd);
-        data = 0;
+        data = nullptr;
         fd = -1;
         ptr = 0;
         return false;
@@ -124,9 +124,9 @@ void MMapFile::close()
 #endif
         fptr->close();
         delete fptr;
-        fptr = 0;
+        fptr = nullptr;
         ptr = size = 0;
-        data = 0;
+        data = nullptr;
         filename = QString();
     }
 }

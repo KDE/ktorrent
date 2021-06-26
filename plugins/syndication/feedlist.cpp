@@ -48,7 +48,7 @@ void FeedList::loadFeeds(FilterList *filter_list, SyndicationActivity *activity)
             idir.append(DirSeparator());
 
         Out(SYS_GEN | LOG_NOTICE) << "Loading feed from directory " << idir << endl;
-        Feed *feed = 0;
+        Feed *feed = nullptr;
         try {
             feed = new Feed(idir);
             connect(feed, &Feed::downloadLink, activity, &SyndicationActivity::downloadLink);
@@ -187,7 +187,7 @@ Qt::ItemFlags FeedList::flags(const QModelIndex &index) const
 Feed *FeedList::feedForIndex(const QModelIndex &idx)
 {
     if (!idx.isValid())
-        return 0;
+        return nullptr;
 
     return feeds.at(idx.row());
 }
@@ -198,7 +198,7 @@ Feed *FeedList::feedForDirectory(const QString &dir)
         if (f->directory() == dir)
             return f;
 
-    return 0;
+    return nullptr;
 }
 
 bool FeedList::removeRows(int row, int count, const QModelIndex &parent)

@@ -124,7 +124,7 @@ void SpdTabPage::gatherPeersSpeed(Plugin* pPlug)
 {
     kt::QueueManager* qm_iface = pPlug->getCore()->getQueueManager();
 
-    if (qm_iface == 0) {
+    if (qm_iface == nullptr) {
         return;
     }
 

@@ -39,7 +39,7 @@ class WebView : public QWebEngineView
 {
     Q_OBJECT
 public:
-    WebView(WebViewClient *client, ProxyHelper *proxy, QWidget *parentWidget = 0);
+    WebView(WebViewClient *client, ProxyHelper *proxy, QWidget *parentWidget = nullptr);
     ~WebView() override;
 
     /**

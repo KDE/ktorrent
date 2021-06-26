@@ -45,7 +45,7 @@ void ScriptDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     int x_offset = check_box->sizeHint().width();
 
     painter->save();
-    QApplication::style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, 0);
+    QApplication::style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, nullptr);
 
     int iconSize = option.rect.height() - MARGIN * 2;
 

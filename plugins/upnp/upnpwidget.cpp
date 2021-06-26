@@ -51,7 +51,7 @@ UPnPWidget::UPnPWidget(UPnPMCastSocket *sock, QWidget *parent)
 
 UPnPWidget::~UPnPWidget()
 {
-    bt::Globals::instance().getPortList().setListener(0);
+    bt::Globals::instance().getPortList().setListener(nullptr);
 }
 
 void UPnPWidget::shutdown(bt::WaitJob *job)

@@ -205,7 +205,7 @@ bt::TorrentInterface *SpeedLimitsModel::torrentForIndex(const QModelIndex &index
     itr += r;
 
     if (itr == qman->end())
-        return 0;
+        return nullptr;
     else
         return *itr;
 }

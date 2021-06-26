@@ -436,7 +436,7 @@ QModelIndex TorrentFileTreeModel::index(int row, int column, const QModelIndex &
     if (!tc || row < 0 || row >= rowCount(parent) || column < 0 || column >= columnCount(parent))
         return QModelIndex();
 
-    Node *p = 0;
+    Node *p = nullptr;
 
     if (!parent.isValid())
         return createIndex(row, column, root);
@@ -646,7 +646,7 @@ void TorrentFileTreeModel::loadExpandedState(QSortFilterProxyModel *pm, QTreeVie
         return;
 
     BDecoder dec(state, false, 0);
-    BNode *n = 0;
+    BNode *n = nullptr;
     try {
         n = dec.decode();
         if (n && n->getType() == BNode::DICT) {
@@ -661,11 +661,11 @@ void TorrentFileTreeModel::loadExpandedState(QSortFilterProxyModel *pm, QTreeVie
 bt::TorrentFileInterface *TorrentFileTreeModel::indexToFile(const QModelIndex &idx)
 {
     if (!tc || !idx.isValid())
-        return 0;
+        return nullptr;
 
     Node *n = (Node *)idx.internalPointer();
     if (!n)
-        return 0;
+        return nullptr;
 
     return n->file;
 }

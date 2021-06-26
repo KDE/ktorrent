@@ -33,7 +33,7 @@ void CentralWidget::loadState(KSharedConfigPtr cfg)
 
     const QList<QAction *> actions = activity_switching_group->actions();
     for (QAction *a : actions) {
-        if (a->data().value<QObject *>() == act || act == 0) {
+        if (a->data().value<QObject *>() == act || act == nullptr) {
             a->setChecked(true);
             break;
         }

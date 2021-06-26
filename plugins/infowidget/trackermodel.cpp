@@ -197,7 +197,7 @@ QUrl TrackerModel::trackerUrl(const QModelIndex &index)
 bt::TrackerInterface *TrackerModel::tracker(const QModelIndex &index)
 {
     if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count())
-        return 0;
+        return nullptr;
 
     return ((Item *)index.internalPointer())->trk;
 }

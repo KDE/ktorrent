@@ -50,7 +50,7 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, Q
 
     connect(actionOpen_file, &QAction::triggered, [=]() {
         QModelIndex index = treeView->currentIndex();
-        new KRun(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(index))), 0, true);
+        new KRun(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(index))), nullptr, true);
     });
 
     treeView->setSortingEnabled(true);
@@ -182,7 +182,7 @@ void ScanForLostFilesWidget::on_actionDelete_on_disk_triggered()
                         n);
 
     QList<QUrl> to_del;
-    if (KMessageBox::warningYesNo(0, msg) == KMessageBox::Yes) {
+    if (KMessageBox::warningYesNo(nullptr, msg) == KMessageBox::Yes) {
         for (const QModelIndex &m : sel) {
             to_del.append(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(m))));
         }

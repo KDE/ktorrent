@@ -146,7 +146,7 @@ void MagnetManager::removeMagnets(bt::Uint32 idx, bt::Uint32 count)
         return;
 
     while (count > 0 && idx < (Uint32)magnetHashes.size()) {
-        MagnetDownloader *md = 0;
+        MagnetDownloader *md = nullptr;
         Uint32 magnetQueueSize = magnetQueue.size();
         if (idx < magnetQueueSize) {
             md = magnetQueue.at(idx);
@@ -354,7 +354,7 @@ void MagnetManager::loadMagnets(const QString &file)
         return;
 
     BDecoder decoder(magnet_data, 0, false);
-    BNode *node = 0;
+    BNode *node = nullptr;
     try {
         node = decoder.decode();
         if (!node || node->getType() != BNode::LIST)
@@ -363,17 +363,17 @@ void MagnetManager::loadMagnets(const QString &file)
         BListNode *ml = (BListNode *)node;
         for (Uint32 i = 0; i < ml->getNumChildren(); i++) {
             BDictNode *dict = ml->getDict(i);
-            MagnetLink mlink(dict->getString(QByteArrayLiteral("magnet"), 0));
+            MagnetLink mlink(dict->getString(QByteArrayLiteral("magnet"), nullptr));
             MagnetLinkLoadOptions options;
             bool stopped = dict->getInt(QByteArrayLiteral("stopped")) == 1;
             options.silently = dict->getInt(QByteArrayLiteral("silent")) == 1;
 
             if (dict->keys().contains("group"))
-                options.group = dict->getString(QByteArrayLiteral("group"), 0);
+                options.group = dict->getString(QByteArrayLiteral("group"), nullptr);
             if (dict->keys().contains("location"))
-                options.location = dict->getString(QByteArrayLiteral("location"), 0);
+                options.location = dict->getString(QByteArrayLiteral("location"), nullptr);
             if (dict->keys().contains("move_on_completion"))
-                options.move_on_completion = dict->getString(QByteArrayLiteral("move_on_completion"), 0);
+                options.move_on_completion = dict->getString(QByteArrayLiteral("move_on_completion"), nullptr);
 
             addMagnet(mlink, options, stopped);
         }

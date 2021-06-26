@@ -142,7 +142,7 @@ Script *ScriptingPlugin::loadScriptDir(const QString &dir)
         }
     }
 
-    return 0;
+    return nullptr;
 }
 
 void ScriptingPlugin::saveScripts()

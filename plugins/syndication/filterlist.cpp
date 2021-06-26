@@ -63,7 +63,7 @@ void FilterList::loadFilters(const QString &file)
 
     QByteArray data = fptr.readAll();
     BDecoder dec(data, false);
-    BNode *n = 0;
+    BNode *n = nullptr;
     try {
         n = dec.decode();
         if (!n || n->getType() != BNode::LIST) {
