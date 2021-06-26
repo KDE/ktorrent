@@ -1,4 +1,11 @@
-set(ktbwschedulerplugin_SRC 
+add_library(ktorrent_bwscheduler MODULE)
+
+set(ktbwschedulerplugin_dbus_SRC)
+set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
+qt5_add_dbus_interface(ktbwschedulerplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
+
+target_sources(ktorrent_bwscheduler PRIVATE
+	${ktbwschedulerplugin_dbus_SRC}
 	bwschedulerplugin.cpp 
 	weekview.cpp 
 	weekscene.cpp 
@@ -11,12 +18,8 @@ set(ktbwschedulerplugin_SRC
 	weekdaymodel.cpp
 )
 
-set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
-qt5_add_dbus_interface(ktbwschedulerplugin_SRC ${screensaver_xml} screensaver_interface)
-
-ki18n_wrap_ui(ktbwschedulerplugin_SRC edititemdlg.ui bwprefpage.ui)
-kconfig_add_kcfg_files(ktbwschedulerplugin_SRC bwschedulerpluginsettings.kcfgc)
-add_library(ktorrent_bwscheduler MODULE ${ktbwschedulerplugin_SRC})
+ki18n_wrap_ui(ktorrent_bwscheduler edititemdlg.ui bwprefpage.ui)
+kconfig_add_kcfg_files(ktorrent_bwscheduler bwschedulerpluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_bwscheduler ktorrent_bwscheduler.desktop)
 

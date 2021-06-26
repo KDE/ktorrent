@@ -1,4 +1,6 @@
-set(ktsyndicationplugin_SRC 
+add_library(ktorrent_syndication MODULE)
+
+target_sources(ktorrent_syndication PRIVATE
 	syndicationplugin.cpp 
 	syndicationactivity.cpp
 	syndicationtab.cpp
@@ -17,8 +19,7 @@ set(ktsyndicationplugin_SRC
 	filterlistmodel.cpp
 	filtereditor.cpp)
 
-ki18n_wrap_ui(ktsyndicationplugin_SRC feedwidget.ui managefiltersdlg.ui filtereditor.ui)
-add_library(ktorrent_syndication MODULE ${ktsyndicationplugin_SRC})
+ki18n_wrap_ui(ktorrent_syndication feedwidget.ui managefiltersdlg.ui filtereditor.ui)
 
 kcoreaddons_desktop_to_json(ktorrent_syndication ktorrent_syndication.desktop)
 

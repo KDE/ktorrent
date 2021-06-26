@@ -1,10 +1,11 @@
-set(ktmagnetgeneratorplugin_SRC 
+add_library(ktorrent_magnetgenerator MODULE)
+
+target_sources(ktorrent_magnetgenerator PRIVATE
 	magnetgeneratorprefwidget.cpp
 	magnetgeneratorplugin.cpp)
 
-ki18n_wrap_ui(ktmagnetgeneratorplugin_SRC magnetgeneratorprefwidget.ui)
-kconfig_add_kcfg_files(ktmagnetgeneratorplugin_SRC magnetgeneratorpluginsettings.kcfgc)
-add_library(ktorrent_magnetgenerator MODULE ${ktmagnetgeneratorplugin_SRC})
+ki18n_wrap_ui(ktorrent_magnetgenerator magnetgeneratorprefwidget.ui)
+kconfig_add_kcfg_files(ktorrent_magnetgenerator magnetgeneratorpluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_magnetgenerator ktorrent_magnetgenerator.desktop)
 

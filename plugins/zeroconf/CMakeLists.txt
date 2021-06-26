@@ -1,8 +1,12 @@
-set(ktzeroconfplugin_SRC zeroconfplugin.cpp torrentservice.cpp)
+add_library(ktorrent_zeroconf MODULE)
 
-# ki18n_wrap_ui(ktzeroconfplugin_SRC zeroconfpref.ui searchbar.ui)
-#kconfig_add_kcfg_files(ktzeroconfplugin_SRC zeroconfpluginsettings.kcfgc)
-add_library(ktorrent_zeroconf MODULE ${ktzeroconfplugin_SRC})
+target_sources(ktorrent_zeroconf PRIVATE
+    zeroconfplugin.cpp
+    torrentservice.cpp
+)
+
+# ki18n_wrap_ui(ktorrent_zeroconf zeroconfpref.ui searchbar.ui)
+#kconfig_add_kcfg_files(ktorrent_zeroconf zeroconfpluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_zeroconf ktorrent_zeroconf.desktop)
 

@@ -1,8 +1,13 @@
-set(ktupnpplugin_SRC upnpplugin.cpp upnpwidget.cpp routermodel.cpp)
+add_library(ktorrent_upnp MODULE)
 
-ki18n_wrap_ui(ktupnpplugin_SRC upnpwidget.ui)
-kconfig_add_kcfg_files(ktupnpplugin_SRC upnppluginsettings.kcfgc)
-add_library(ktorrent_upnp MODULE ${ktupnpplugin_SRC})
+target_sources(ktorrent_upnp PRIVATE
+    upnpplugin.cpp
+    upnpwidget.cpp
+    routermodel.cpp
+)
+
+ki18n_wrap_ui(ktorrent_upnp upnpwidget.ui)
+kconfig_add_kcfg_files(ktorrent_upnp upnppluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_upnp ktorrent_upnp.desktop)
 

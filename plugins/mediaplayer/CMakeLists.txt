@@ -3,7 +3,17 @@ find_package(Taglib REQUIRED)
 #include_directories(${Qt5Multimedia_INCLUDE_DIRS})
 include_directories(${PHONON_INCLUDES})
 
-set(ktmediaplayerplugin_SRC
+add_library(ktorrent_mediaplayer MODULE)
+
+set(ktmediaplayerplugin_dbus_SRC)
+set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
+qt5_add_dbus_interface(ktmediaplayerplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
+
+set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
+qt5_add_dbus_interface(ktmediaplayerplugin_dbus_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
+
+target_sources(ktorrent_mediaplayer PRIVATE
+	${ktmediaplayerplugin_dbus_SRC}
 	mediacontroller.cpp
 	playlist.cpp
 	playlistwidget.cpp
@@ -18,15 +28,8 @@ set(ktmediaplayerplugin_SRC
 	videochunkbar.cpp
 )
 
-set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
-qt5_add_dbus_interface(ktmediaplayerplugin_SRC ${screensaver_xml} screensaver_interface)
-
-set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
-qt5_add_dbus_interface(ktmediaplayerplugin_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
-
-ki18n_wrap_ui(ktmediaplayerplugin_SRC mediacontroller.ui)
-kconfig_add_kcfg_files(ktmediaplayerplugin_SRC mediaplayerpluginsettings.kcfgc)
-add_library(ktorrent_mediaplayer MODULE ${ktmediaplayerplugin_SRC})
+ki18n_wrap_ui(ktorrent_mediaplayer mediacontroller.ui)
+kconfig_add_kcfg_files(ktorrent_mediaplayer mediaplayerpluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_mediaplayer ktorrent_mediaplayer.desktop)
 

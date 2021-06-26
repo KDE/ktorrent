@@ -1,8 +1,13 @@
-set(ktdownloadorderplugin_SRC downloadorderplugin.cpp downloadorderdialog.cpp downloadordermanager.cpp downloadordermodel.cpp)
+add_library(ktorrent_downloadorder MODULE)
 
-ki18n_wrap_ui(ktdownloadorderplugin_SRC downloadorderwidget.ui)
+target_sources(ktorrent_downloadorder PRIVATE
+    downloadorderplugin.cpp
+    downloadorderdialog.cpp
+    downloadordermanager.cpp
+    downloadordermodel.cpp
+)
 
-add_library(ktorrent_downloadorder MODULE ${ktdownloadorderplugin_SRC})
+ki18n_wrap_ui(ktorrent_downloadorder downloadorderwidget.ui)
 
 kcoreaddons_desktop_to_json(ktorrent_downloadorder  ktorrent_downloadorder.desktop)
 

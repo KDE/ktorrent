@@ -1,8 +1,16 @@
-set(ktipfilterplugin_SRC ipblocklist.cpp ipblockingprefpage.cpp convertthread.cpp convertdialog.cpp ipfilterplugin.cpp downloadandconvertjob.cpp)
+add_library(ktorrent_ipfilter MODULE)
 
-ki18n_wrap_ui(ktipfilterplugin_SRC ipblockingprefpage.ui convertdialog.ui)
-kconfig_add_kcfg_files(ktipfilterplugin_SRC ipfilterpluginsettings.kcfgc)
-add_library(ktorrent_ipfilter MODULE ${ktipfilterplugin_SRC})
+target_sources(ktorrent_ipfilter PRIVATE
+    ipblocklist.cpp
+    ipblockingprefpage.cpp
+    convertthread.cpp
+    convertdialog.cpp
+    ipfilterplugin.cpp
+    downloadandconvertjob.cpp
+)
+
+ki18n_wrap_ui(ktorrent_ipfilter ipblockingprefpage.ui convertdialog.ui)
+kconfig_add_kcfg_files(ktorrent_ipfilter ipfilterpluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_ipfilter ktorrent_ipfilter.desktop)
 

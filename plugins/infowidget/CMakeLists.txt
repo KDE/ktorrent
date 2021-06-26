@@ -19,7 +19,9 @@ if (BUILD_WITH_GEOIP)
     endif()
 endif(BUILD_WITH_GEOIP)
 
-set(ktinfowidgetplugin_SRC 
+add_library(ktorrent_infowidget MODULE)
+
+target_sources(ktorrent_infowidget PRIVATE
 	infowidgetplugin.cpp 
 	iwprefpage.cpp 
 	monitor.cpp 
@@ -41,15 +43,14 @@ set(ktinfowidgetplugin_SRC
 	webseedsmodel.cpp)
 
 if (BUILD_WITH_GEOIP)
-    set(ktinfowidgetplugin_SRC ${ktinfowidgetplugin_SRC} geoipmanager.cpp)
+    target_sources(ktorrent_infowidget PRIVATE geoipmanager.cpp)
     add_definitions(-DBUILD_WITH_GEOIP=1)
 else()
     add_definitions(-DBUILD_WITH_GEOIP=0)
 endif()
 
-ki18n_wrap_ui(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
-kconfig_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)
-add_library(ktorrent_infowidget MODULE ${ktinfowidgetplugin_SRC})
+ki18n_wrap_ui(ktorrent_infowidget iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
+kconfig_add_kcfg_files(ktorrent_infowidget infowidgetpluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_infowidget ktorrent_infowidget.desktop)
 

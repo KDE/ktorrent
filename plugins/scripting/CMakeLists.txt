@@ -1,6 +1,8 @@
 add_subdirectory(scripts)
 
-set(ktscriptingplugin_SRC
+add_library(ktorrent_scripting MODULE)
+
+target_sources(ktorrent_scripting PRIVATE
 	api/scriptingmodule.cpp
 	api/scriptablegroup.cpp
 	scriptingplugin.cpp 
@@ -9,9 +11,7 @@ set(ktscriptingplugin_SRC
 	scriptdelegate.cpp 
 	script.cpp)
 
-ki18n_wrap_ui(ktscriptingplugin_SRC scriptproperties.ui)
-
-add_library(ktorrent_scripting MODULE ${ktscriptingplugin_SRC})
+ki18n_wrap_ui(ktorrent_scripting scriptproperties.ui)
 
 kcoreaddons_desktop_to_json(ktorrent_scripting ktorrent_scripting.desktop)
 

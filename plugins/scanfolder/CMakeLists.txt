@@ -1,13 +1,14 @@
-set(ktscanfolderplugin_SRC 
+add_library(ktorrent_scanfolder MODULE)
+
+target_sources(ktorrent_scanfolder PRIVATE
 	scanthread.cpp 
 	torrentloadqueue.cpp 
 	scanfolder.cpp 
 	scanfolderplugin.cpp 
 	scanfolderprefpage.cpp)
 
-ki18n_wrap_ui(ktscanfolderplugin_SRC scanfolderprefpage.ui)
-kconfig_add_kcfg_files(ktscanfolderplugin_SRC scanfolderpluginsettings.kcfgc)
-add_library(ktorrent_scanfolder MODULE ${ktscanfolderplugin_SRC})
+ki18n_wrap_ui(ktorrent_scanfolder scanfolderprefpage.ui)
+kconfig_add_kcfg_files(ktorrent_scanfolder scanfolderpluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_scanfolder ktorrent_scanfolder.desktop)
 

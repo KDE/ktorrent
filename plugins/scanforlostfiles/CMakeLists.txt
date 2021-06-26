@@ -1,13 +1,14 @@
-set(ktscanforlostfilesplugin_SRC
+add_library(ktorrent_scanforlostfiles MODULE)
+
+target_sources(ktorrent_scanforlostfiles PRIVATE
 	scanforlostfilesplugin.cpp
 	scanforlostfileswidget.cpp
 	scanforlostfilesprefpage.cpp
 	scanforlostfilesthread.cpp
 	nodeoperations.cpp)
 
-ki18n_wrap_ui(ktscanforlostfilesplugin_SRC scanforlostfilesprefpage.ui scanforlostfileswidget.ui)
-kconfig_add_kcfg_files(ktscanforlostfilesplugin_SRC scanforlostfilespluginsettings.kcfgc)
-add_library(ktorrent_scanforlostfiles MODULE ${ktscanforlostfilesplugin_SRC})
+ki18n_wrap_ui(ktorrent_scanforlostfiles scanforlostfilesprefpage.ui scanforlostfileswidget.ui)
+kconfig_add_kcfg_files(ktorrent_scanforlostfiles scanforlostfilespluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_scanforlostfiles ktorrent_scanforlostfiles.desktop)
 

@@ -1,4 +1,16 @@
-set(ktorrent_SRC 
+add_executable(ktorrent_app)
+set_target_properties(ktorrent_app  PROPERTIES
+    OUTPUT_NAME ktorrent
+    CXX_STANDARD 14
+)
+
+set(ktorrent_dbus_SRC)
+set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
+qt5_add_dbus_interface(ktorrent_dbus_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
+
+target_sources(ktorrent_app PRIVATE
+	${ktorrent_dbus_SRC}
+
 	main.cpp
 	core.cpp
 	gui.cpp
@@ -50,8 +62,7 @@ set(ktorrent_SRC
 	view/torrentsearchbar.cpp 
 )
 
-
-ki18n_wrap_ui(ktorrent_SRC
+ki18n_wrap_ui(ktorrent_app
 	ipfilterwidget.ui 
 	
 	dialogs/speedlimitsdlg.ui 
@@ -77,9 +88,6 @@ ki18n_wrap_ui(ktorrent_SRC
 	view/propertiesdlg.ui
 )
 
-set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
-qt5_add_dbus_interface(ktorrent_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
-
 # collect icons
 set(KTORRENT_ICONS_PNG
     icons/16-apps-ktorrent.png
@@ -90,11 +98,7 @@ set(KTORRENT_ICONS_PNG
     icons/128-apps-ktorrent.png
 )
 
-ecm_add_app_icon(ktorrent_SRC ICONS ${KTORRENT_ICONS_PNG})
-
-add_executable(ktorrent_app ${ktorrent_SRC})
-set_property(TARGET ktorrent_app PROPERTY CXX_STANDARD 14)
-set_target_properties(ktorrent_app  PROPERTIES OUTPUT_NAME ktorrent)
+ecm_add_app_icon(ktorrent_app ICONS ${KTORRENT_ICONS_PNG})
 
 target_link_libraries(ktorrent_app
     ktcore

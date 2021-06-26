@@ -2,7 +2,13 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-ktcore.h.cmake ${CMAKE_BINARY_
 
 include_directories(${CMAKE_BINARY_DIR})
 
-set(libktorrent_SRC 
+add_library(ktcore)
+set_target_properties(ktcore PROPERTIES
+    VERSION 16.0.0
+    SOVERSION 16
+)
+
+target_sources(ktcore PRIVATE
 	util/mmapfile.cpp
 	util/itemselectionmodel.cpp
 	util/stringcompletionmodel.cpp
@@ -50,11 +56,8 @@ set(libktorrent_SRC
 	ktorrent.kcfg
 )
 
-set(libktorrent_UI torrent/basicjobprogresswidget.ui )
-
-ki18n_wrap_ui(libktorrent_SRC ${libktorrent_UI})
-kconfig_add_kcfg_files(libktorrent_SRC settings.kcfgc)
-add_library(ktcore ${libktorrent_SRC})
+ki18n_wrap_ui(ktcore torrent/basicjobprogresswidget.ui)
+kconfig_add_kcfg_files(ktcore settings.kcfgc)
 generate_export_header(ktcore BASE_NAME ktcore)
 
 target_link_libraries(ktcore PUBLIC
@@ -70,6 +73,5 @@ target_link_libraries(ktcore PUBLIC
 
 target_include_directories(ktcore PUBLIC "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/libktcore;${KTORRENT_BINARY_DIR}/libktcore;${KTORRENT_BINARY_DIR}>")
 
-set_target_properties(ktcore PROPERTIES VERSION 16.0.0 SOVERSION 16 )
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 

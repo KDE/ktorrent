@@ -1,4 +1,6 @@
-set(ktsearchplugin_SRC 
+add_library(ktorrent_search MODULE)
+
+target_sources(ktorrent_search PRIVATE
 	webview.cpp 
 	searchenginelist.cpp 
 	searchprefpage.cpp 
@@ -11,9 +13,8 @@ set(ktsearchplugin_SRC
         proxy_helper.cpp
         magneturlschemehandler.cpp)
 
-ki18n_wrap_ui(ktsearchplugin_SRC searchpref.ui)
-kconfig_add_kcfg_files(ktsearchplugin_SRC searchpluginsettings.kcfgc)
-add_library(ktorrent_search MODULE ${ktsearchplugin_SRC})
+ki18n_wrap_ui(ktorrent_search searchpref.ui)
+kconfig_add_kcfg_files(ktorrent_search searchpluginsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(ktorrent_search ktorrent_search.desktop)
 

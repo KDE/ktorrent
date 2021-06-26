@@ -1,7 +1,8 @@
-set(ktupnptest_SRC main.cpp upnptestwidget.cpp)
+add_executable(ktupnptest)
 
-ki18n_wrap_ui(ktupnptest_SRC upnptestwidget.ui)
-add_executable(ktupnptest ${ktupnptest_SRC})
+target_sources(ktupnptest PRIVATE main.cpp upnptestwidget.cpp)
+
+ki18n_wrap_ui(ktupnptest upnptestwidget.ui)
 
 target_link_libraries(
     ktupnptest

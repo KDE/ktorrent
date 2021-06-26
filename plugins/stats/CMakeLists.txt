@@ -2,7 +2,9 @@ include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/drawer)
 
-set(Drawer_SRC
+add_library(ktorrent_stats MODULE)
+
+target_sources(ktorrent_stats PRIVATE
 	drawer/ChartDrawer.cc
 	drawer/ChartDrawerData.cc
 	drawer/ChartDrawerData.h
@@ -11,10 +13,7 @@ set(Drawer_SRC
 	drawer/PlainChartDrawer.h
 	drawer/KPlotWgtDrawer.cc
 	drawer/KPlotWgtDrawer.h
-)
 
-set(ktstatsplugin_SRC 
-	${Drawer_SRC} 
 	StatsPlugin.cc 
 	PluginPage.cc 
 	SpdTabPage.cc 
@@ -23,9 +22,8 @@ set(ktstatsplugin_SRC
 	DisplaySettingsPage.cc
 )
 
-ki18n_wrap_ui(ktstatsplugin_SRC Spd.ui Conns.ui Settings.ui DisplaySettings.ui)
-kconfig_add_kcfg_files(ktstatsplugin_SRC statspluginsettings.kcfgc)
-add_library(ktorrent_stats MODULE ${ktstatsplugin_SRC})
+ki18n_wrap_ui(ktorrent_stats Spd.ui Conns.ui Settings.ui DisplaySettings.ui)
+kconfig_add_kcfg_files(ktorrent_stats statspluginsettings.kcfgc)
 kcoreaddons_desktop_to_json(ktorrent_stats ktorrent_stats.desktop)
 
 target_link_libraries(
