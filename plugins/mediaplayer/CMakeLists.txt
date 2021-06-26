@@ -1,7 +1,7 @@
 find_package(Taglib REQUIRED)
 #find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Multimedia MultimediaWidgets)
 #include_directories(${Qt5Multimedia_INCLUDE_DIRS})
-include_directories(${PHONON_INCLUDES})
+include_directories(SYSTEM ${PHONON_INCLUDES})
 
 add_library(ktorrent_mediaplayer MODULE)
 
