@@ -6,11 +6,17 @@
 #ifndef KT_TORRENTSERVICE_HH
 #define KT_TORRENTSERVICE_HH
 
-#include <DNSSD/PublicService>
-#include <DNSSD/ServiceBrowser>
-
 #include <interfaces/peersource.h>
 #include <net/addressresolver.h>
+
+#include <kdnssd_version.h>
+#if KDNSSD_VERSION >= QT_VERSION_CHECK(5, 84, 0)
+#include <KDNSSD/PublicService>
+#include <KDNSSD/ServiceBrowser>
+#else
+#include <DNSSD/PublicService>
+#include <DNSSD/ServiceBrowser>
+#endif
 
 namespace bt
 {
