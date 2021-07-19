@@ -56,7 +56,7 @@ QString DataDir(CreationMode mode)
                     ktorrent4DataFolder.clear();
             }
             if (ktorrent4DataFolder.isEmpty() || !QFile::rename(ktorrent4DataFolder, dataDirPath))
-                fileInfo.dir().mkdir(fileInfo.fileName());
+                fileInfo.dir().mkpath(fileInfo.fileName());
         }
     }
     // if (!str.endsWith(bt::DirSeparator()))
