@@ -749,5 +749,6 @@ Name[sl]=Povezava s spletiščem Magnet je bila skopirana v odložišče
 Name[sv]=Magnetisk länk kopierad till klippbordet
 Name[uk]=Маґнет-посилання скопійовано до буфера обміну
 Name[x-test]=xxMagnet link copied to clipboardxx
+Name[zh_CN]=磁力链接已复制到剪贴板
 Name[zh_TW]=已複製 Magnet 連結到剪貼簿
 Action=Popup
