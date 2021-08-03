@@ -334,6 +334,10 @@ void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewIte
     progressBarOption.textVisible = true;
     progressBarOption.direction = option.direction;
 
+    // ProgressBars have no concept of being selected (AFAIK), so the color of its text has to be changed manually
+    if (option.state & QStyle::State_Selected)
+        progressBarOption.palette.setColor(QPalette::Active, QPalette::WindowText, option.palette.highlightedText().color());
+
     QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
 }
 
