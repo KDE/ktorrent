@@ -146,10 +146,10 @@
       <item>
        <widget class="QCheckBox" name="kcfg_suppressSleep">
         <property name="toolTip">
-         <string>Prevent computer from going into a sleep state when torrents are running.</string>
+         <string>Prevent computer from going into a sleep state or locking the screen when torrents are running.</string>
         </property>
         <property name="text">
-         <string>Suppress sleep when torrents are running</string>
+         <string>Suppress sleep and automatic screen locking when torrents are running</string>
         </property>
        </widget>
       </item>
