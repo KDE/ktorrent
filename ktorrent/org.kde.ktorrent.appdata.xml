@@ -403,7 +403,7 @@
       <li xml:lang="tr">UDP izleme desteği</li>
       <li xml:lang="uk">Підтримка координування UDP</li>
       <li xml:lang="x-test">xxUDP tracker supportxx</li>
-      <li xml:lang="zh-CN">支持 UDP 追踪器</li>
+      <li xml:lang="zh-CN">支持 UDP tracker</li>
       <li xml:lang="zh-TW">支援 UDP tracker</li>
       <li>Support for private trackers and torrents</li>
       <li xml:lang="ca">Suport per als seguidors i torrent privats</li>
@@ -436,7 +436,7 @@
       <li xml:lang="tr">Özel izleyici ve torrent desteği</li>
       <li xml:lang="uk">Підтримка приватних координаторів та торентів</li>
       <li xml:lang="x-test">xxSupport for private trackers and torrentsxx</li>
-      <li xml:lang="zh-CN">支持私人追踪器和种子</li>
+      <li xml:lang="zh-CN">支持私有 tracker 和种子</li>
       <li xml:lang="zh-TW">支援私密 tracker 和種子檔</li>
       <li>Support for µTorrent's peer exchange</li>
       <li xml:lang="ca">Suport per a l'intercanvi entre parells de µTorrent</li>
@@ -533,7 +533,7 @@
       <li xml:lang="tr">İzleyicisiz torrentler için destek</li>
       <li xml:lang="uk">Підтримка створення торентів без координації</li>
       <li xml:lang="x-test">xxSupport for creating trackerless torrentsxx</li>
-      <li xml:lang="zh-CN">支持创建无追踪器种子</li>
+      <li xml:lang="zh-CN">支持创建无 tracker 种子</li>
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="ca">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
       <li xml:lang="ca-valencia">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
@@ -726,7 +726,7 @@
       <li xml:lang="tr">İzleyici kimlik doğrulama desteği</li>
       <li xml:lang="uk">Підтримка розпізнавання для координації</li>
       <li xml:lang="x-test">xxTracker authentication supportxx</li>
-      <li xml:lang="zh-CN">追踪器认证支持</li>
+      <li xml:lang="zh-CN">支持 tracker 认证</li>
       <li>Connection through a proxy</li>
       <li xml:lang="ca">Connexió a través d'un servidor intermediari</li>
       <li xml:lang="ca-valencia">Connexió a través d'un servidor intermediari</li>
