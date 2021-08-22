@@ -56,11 +56,10 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 <listitem><para>Support for distributed hash tables (DHT, the Mainline version)</para></listitem>
 <listitem><para>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</para></listitem>
 <listitem><para>Support for webseeds</para></listitem>
-<listitem><para>Scripting support via Kross and interprocess control via DBus interface</para></listitem>
 <listitem><para>System tray integration</para></listitem>
 <listitem><para>Tracker authentication support</para></listitem>
 <listitem><para>Connection though a proxy</para></listitem>
-<listitem><para>Scripting support via Kross and interprocess control via DBus interface</para></listitem>
+<listitem><para>Interprocess control via DBus interface</para></listitem>
 </itemizedlist>
 
 <itemizedlist>

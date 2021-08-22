@@ -97,16 +97,6 @@ if(KF5ItemViews_FOUND)
   set(HAVE_KF5ItemViews 1)
 endif()
 
-find_package(KF5Kross ${KF5_MIN_VERSION})
-set_package_properties(KF5Kross
-  PROPERTIES
-  TYPE OPTIONAL
-  PURPOSE "Required for KTorrent's scripting plugin"
-)
-if(KF5Kross_FOUND)
-  set(HAVE_KF5Kross 1)
-endif()
-
 find_package(KF5Plotting ${KF5_MIN_VERSION})
 set_package_properties(KF5Plotting
   PROPERTIES

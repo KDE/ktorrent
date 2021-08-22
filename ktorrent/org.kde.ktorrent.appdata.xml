@@ -631,37 +631,6 @@
       <li xml:lang="uk">Підтримка вебпоширення</li>
       <li xml:lang="x-test">xxSupport for webseedsxx</li>
       <li xml:lang="zh-CN">支持 Webseed</li>
-      <li>Scripting support via Kross, and interprocess control via D-Bus interface</li>
-      <li xml:lang="ca">Suport per a crear scripts mitjançant el Kross i control entre processos a través de la interfície de D-Bus</li>
-      <li xml:lang="ca-valencia">Suport per a crear scripts mitjançant el Kross i control entre processos a través de la interfície de D-Bus</li>
-      <li xml:lang="da">Scripting-understøttelse via Kross og interproceskontrol via D-Bus-grænseflade</li>
-      <li xml:lang="de">Skript-Unterstützung mit Kross und Interprozess-Steuerung über die D-Bus-Schnittstelle</li>
-      <li xml:lang="el">Υποστήριξη συγγραφής σεναρίων με Kross και έλεγχος επικοινωνίας διεργασιών με D-Bus διεπαφή</li>
-      <li xml:lang="en-GB">Scripting support via Kross, and interprocess control via D-Bus interface</li>
-      <li xml:lang="es">Admite el uso de guiones vía Kross y control de interprocesos vía la interfaz D-Bus</li>
-      <li xml:lang="et">Skriptimise toetus Krossi kaudu ja protsesside juhtimine D-Busi liidese abil</li>
-      <li xml:lang="fi">Skriptaustuki Krossin kautta sekä prosessienvälinen hallinta D-Bus-liitännän kautta</li>
-      <li xml:lang="fr">Scriptable par Kross et contrôle inter-processus par l'interface D-Bus</li>
-      <li xml:lang="gl">Funcionalidade de scripting mediante Kross, e control entre procesos mediante unha interface de D-Bus.</li>
-      <li xml:lang="id">Dukungan penskripan via Kross, dan kendali interproses via D-Bus interface</li>
-      <li xml:lang="it">Supporto per lo scripting tramite Kross, e per il controllo dei processi tramite interfaccia D-Bus</li>
-      <li xml:lang="ko">Kross를 통한 스크립팅 및 D-Bus 인터페이스를 통한 원격 제어 지원</li>
-      <li xml:lang="nl">Ondersteuning voor scripts via Kross en interprocescontrole via het D-Bus-interface</li>
-      <li xml:lang="pl">Obsługa skryptów przez Kross i sterowania międzyprocesowego poprzez interfejs D-Bus</li>
-      <li xml:lang="pt">Suporte de programação através do Kross e controlo entre processos por uma interface de D-Bus</li>
-      <li xml:lang="pt-BR">Suporte a scripts via Kross e controle de interprocessos via interface D-Bus</li>
-      <li xml:lang="ru">Поддержка сценариев при помощи Kross и внешнего управления через интерфейс D-Bus</li>
-      <li xml:lang="sk">Podpora skriptovania cez Kross a medziprocesové ovládanie cez rozhrani D-Bus</li>
-      <li xml:lang="sl">Podpora za skripte prek Kross-a in medprocesni nadzor prek vmesnika D-Bus</li>
-      <li xml:lang="sr">Подршка за скриптовање преко Кроса и међупроцесно управљање преко д‑бус сучеља.</li>
-      <li xml:lang="sr-Latn">Podrška za skriptovanje preko Krossa i međuprocesno upravljanje preko D‑Bus sučelja.</li>
-      <li xml:lang="sr-ijekavian">Подршка за скриптовање преко Кроса и међупроцесно управљање преко д‑бус сучеља.</li>
-      <li xml:lang="sr-ijekavianlatin">Podrška za skriptovanje preko Krossa i međuprocesno upravljanje preko D‑Bus sučelja.</li>
-      <li xml:lang="sv">Skriptstöd via Kross och styrning mellan processer via D-Bus gränssnitt</li>
-      <li xml:lang="tr">Kross üzerinden betik yazma desteği ve D-Bus arayüzü ile süreçler arası denetim</li>
-      <li xml:lang="uk">Підтримка керування за допомогою скриптів на Kross та обміну даними між процесами за допомогою D-Bus</li>
-      <li xml:lang="x-test">xxScripting support via Kross, and interprocess control via D-Bus interfacexx</li>
-      <li xml:lang="zh-CN">通过 Kross 支持脚本编程，通过 D-Bus 接口实现进程间控制</li>
       <li>System tray integration</li>
       <li xml:lang="ca">Integració amb la safata del sistema</li>
       <li xml:lang="ca-valencia">Integració amb la safata del sistema</li>
