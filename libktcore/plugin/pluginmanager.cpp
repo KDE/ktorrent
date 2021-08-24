@@ -10,7 +10,6 @@
 
 #include <KLocalizedString>
 #include <KPluginMetaData>
-#include <KSharedConfig>
 
 #include "pluginactivity.h"
 #include <interfaces/guiinterface.h>
@@ -41,14 +40,6 @@ void PluginManager::loadPluginList()
 {
     pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent"));
 
-    for (const KPluginMetaData &module : qAsConst(pluginsMetaData)) {
-        KPluginInfo pi(module);
-        pi.setConfig(KSharedConfig::openConfig()->group(pi.pluginName()));
-        pi.load();
-
-        plugins << pi;
-    }
-
     if (!prefpage) {
         prefpage = new PluginActivity(this);
         gui->addActivity(prefpage);
@@ -59,28 +50,30 @@ void PluginManager::loadPluginList()
     prefpage->update();
 }
 
+inline bool isPluginEnabled(const KPluginMetaData &data)
+{
+    return KSharedConfig::openConfig()->group(data.pluginId()).readEntry(data.pluginId() + QLatin1String("Enabled"), data.isEnabledByDefault());
+}
+
 void PluginManager::loadPlugins()
 {
     int idx = 0;
-    for (auto i = plugins.begin(); i != plugins.end(); i++) {
-        KPluginInfo &pi = *i;
-        if (loaded.contains(idx) && !pi.isPluginEnabled()) {
+    for (const KPluginMetaData &data : qAsConst(pluginsMetaData)) {
+        if (loaded.contains(idx) && !isPluginEnabled(data)) {
             // unload it
-            unload(pi, idx);
-            pi.save();
-        } else if (!loaded.contains(idx) && pi.isPluginEnabled()) {
+            unload(data, idx);
+        } else if (!loaded.contains(idx) && isPluginEnabled(data)) {
             // load it
-            load(pi, idx);
-            pi.save();
+            load(data, idx);
         }
         idx++;
     }
 }
 
-void PluginManager::load(const KPluginInfo &pi, int idx)
+void PluginManager::load(const KPluginMetaData &data, int idx)
 {
-    Q_UNUSED(pi)
-    KPluginLoader loader(pluginsMetaData.at(idx).fileName());
+    Q_UNUSED(data)
+    KPluginLoader loader(data.fileName());
     KPluginFactory *factory = loader.factory();
     if (!factory)
         return;
@@ -106,9 +99,9 @@ void PluginManager::load(const KPluginInfo &pi, int idx)
     }
 }
 
-void PluginManager::unload(const KPluginInfo &pi, int idx)
+void PluginManager::unload(const KPluginMetaData &data, int idx)
 {
-    Q_UNUSED(pi)
+    Q_UNUSED(data)
 
     Plugin *p = loaded.find(idx);
     if (!p)

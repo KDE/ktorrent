@@ -30,6 +30,7 @@ PluginActivity::PluginActivity(PluginManager *pman)
     connect(pmw, &KPluginSelector::changed, this, &PluginActivity::changed);
     connect(pmw, &KPluginSelector::configCommitted, this, &PluginActivity::changed);
     layout->addWidget(pmw);
+    list = pman->pluginInfoList();
 }
 
 PluginActivity::~PluginActivity()
@@ -38,13 +39,16 @@ PluginActivity::~PluginActivity()
 
 void PluginActivity::updatePluginList()
 {
-    pmw->addPlugins(pman->pluginInfoList(), KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
+    pmw->addPlugins(list, KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
 }
 
 void PluginActivity::update()
 {
     pmw->updatePluginsState();
     pman->loadPlugins();
+    for (auto &i : list) {
+        i.save();
+    }
 }
 
 void PluginActivity::changed()

@@ -12,6 +12,7 @@
 
 #include <KPluginInfo>
 #include <KPluginMetaData>
+#include <KSharedConfig>
 
 #include <interfaces/plugin.h>
 #include <ktcore_export.h>
@@ -31,7 +32,6 @@ class PluginActivity;
  */
 class KTCORE_EXPORT PluginManager
 {
-    KPluginInfo::List plugins;
     QVector<KPluginMetaData> pluginsMetaData;
     CoreInterface *core;
     GUIInterface *gui;
@@ -45,9 +45,18 @@ public:
     /**
      * Get the plugin info list.
      */
-    const KPluginInfo::List &pluginInfoList() const
+    KPluginInfo::List pluginInfoList() const
     {
-        return plugins;
+        // This should be removed when the KPluginSelector alternative which is based
+        // on KPluginMetaData is published, see https://phabricator.kde.org/T12265
+        KPluginInfo::List list;
+        for (const KPluginMetaData &data : qAsConst(pluginsMetaData)) {
+            KPluginInfo info = KPluginInfo::fromMetaData(data);
+            info.setConfig(KSharedConfig::openConfig()->group(data.pluginId()));
+            info.load();
+            list << info;
+        }
+        return list;
     }
 
     /**
@@ -74,8 +83,8 @@ public:
     void unloadAll();
 
 private:
-    void load(const KPluginInfo &pi, int idx);
-    void unload(const KPluginInfo &pi, int idx);
+    void load(const KPluginMetaData &data, int idx);
+    void unload(const KPluginMetaData &data, int idx);
 };
 
 }
