@@ -118,6 +118,11 @@ public:
         return loaded;
     }
 
+    void setIsLoaded(bool isLoaded)
+    {
+        loaded = isLoaded;
+    }
+
     /// Returns the name of the parent part the GUI of the plugin should be created in
     virtual QString parentPart() const
     {
@@ -128,8 +133,6 @@ private:
     CoreInterface *core;
     GUIInterface *gui;
     bool loaded;
-
-    friend class PluginManager;
 };
 
 }

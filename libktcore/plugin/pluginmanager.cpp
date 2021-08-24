@@ -88,7 +88,7 @@ void PluginManager::load(const KPluginMetaData &data, int idx)
     plugin->setGUI(gui);
     plugin->load();
     gui->mergePluginGui(plugin);
-    plugin->loaded = true;
+    plugin->setIsLoaded(true);
     loaded.insert(idx, plugin, true);
 }
 
@@ -114,7 +114,7 @@ void PluginManager::unload(const KPluginMetaData &data, int idx)
 
     gui->removePluginGui(p);
     p->unload();
-    p->loaded = false;
+    p->setIsLoaded(false);
     loaded.erase(idx);
 }
 
@@ -143,7 +143,7 @@ void PluginManager::unloadAll()
         Plugin *p = i->second;
         gui->removePluginGui(p);
         p->unload();
-        p->loaded = false;
+        p->setIsLoaded(false);
         i++;
     }
     loaded.clear();
