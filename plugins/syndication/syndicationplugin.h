@@ -31,14 +31,14 @@ private:
     void setupActions();
 
 private:
-    QAction *add_feed;
-    QAction *remove_feed;
-    QAction *edit_feed_name;
-    QAction *add_filter;
-    QAction *remove_filter;
-    QAction *edit_filter;
-    QAction *manage_filters;
-    SyndicationActivity *activity;
+    QAction *add_feed = nullptr;
+    QAction *remove_feed = nullptr;
+    QAction *edit_feed_name = nullptr;
+    QAction *add_filter = nullptr;
+    QAction *remove_filter = nullptr;
+    QAction *edit_filter = nullptr;
+    QAction *manage_filters = nullptr;
+    SyndicationActivity *activity = nullptr;
 
     friend class SyndicationActivity;
 };

@@ -32,8 +32,8 @@ public:
     void shutdown(bt::WaitJob *job) override;
 
 private:
-    bt::UPnPMCastSocket *sock;
-    UPnPWidget *upnp_tab;
+    bt::UPnPMCastSocket *sock = nullptr;
+    UPnPWidget *upnp_tab = nullptr;
 };
 
 }

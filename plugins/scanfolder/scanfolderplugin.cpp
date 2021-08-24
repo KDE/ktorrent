@@ -31,7 +31,6 @@ namespace kt
 {
 ScanFolderPlugin::ScanFolderPlugin(QObject *parent, const QVariantList &args)
     : Plugin(parent)
-    , tlq(nullptr)
 {
     Q_UNUSED(args);
 }

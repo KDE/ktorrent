@@ -35,9 +35,9 @@ public Q_SLOTS:
     void updateScanFolders();
 
 private:
-    ScanFolderPrefPage *pref;
-    TorrentLoadQueue *tlq;
-    ScanThread *scanner;
+    ScanFolderPrefPage *pref = nullptr;
+    TorrentLoadQueue *tlq = nullptr;
+    ScanThread *scanner = nullptr;
 };
 
 }

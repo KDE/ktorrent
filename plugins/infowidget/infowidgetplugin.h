@@ -58,15 +58,15 @@ private Q_SLOTS:
     void torrentRemoved(bt::TorrentInterface *tc);
 
 private:
-    PeerView *peer_view;
-    ChunkDownloadView *cd_view;
-    TrackerView *tracker_view;
-    FileView *file_view;
-    StatusTab *status_tab;
-    WebSeedsTab *webseeds_tab;
-    Monitor *monitor;
+    PeerView *peer_view = nullptr;
+    ChunkDownloadView *cd_view = nullptr;
+    TrackerView *tracker_view = nullptr;
+    FileView *file_view = nullptr;
+    StatusTab *status_tab = nullptr;
+    WebSeedsTab *webseeds_tab = nullptr;
+    Monitor *monitor = nullptr;
 
-    IWPrefPage *pref;
+    IWPrefPage *pref = nullptr;
 };
 
 }

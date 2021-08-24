@@ -28,11 +28,6 @@ namespace kt
 {
 LogViewerPlugin::LogViewerPlugin(QObject *parent, const QVariantList &)
     : Plugin(parent)
-    , lv(nullptr)
-    , pref(nullptr)
-    , flags(nullptr)
-    , dock(nullptr)
-    , pos(SEPARATE_ACTIVITY)
 {
 }
 

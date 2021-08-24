@@ -130,9 +130,9 @@ public:
     }
 
 private:
-    CoreInterface *core;
-    GUIInterface *gui;
-    bool loaded;
+    CoreInterface *core = nullptr;
+    GUIInterface *gui = nullptr;
+    bool loaded = false;
 };
 
 }

@@ -50,10 +50,10 @@ private Q_SLOTS:
     void preferencesUpdated();
 
 private:
-    SearchActivity *activity;
-    SearchPrefPage *pref;
-    SearchEngineList *engines;
-    ProxyHelper *proxy;
+    SearchActivity *activity = nullptr;
+    SearchPrefPage *pref = nullptr;
+    SearchEngineList *engines = nullptr;
+    ProxyHelper *proxy = nullptr;
 };
 
 }

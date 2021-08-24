@@ -27,8 +27,6 @@ namespace kt
 {
 UPnPPlugin::UPnPPlugin(QObject *parent, const QVariantList & /*args*/)
     : Plugin(parent)
-    , sock(nullptr)
-    , upnp_tab(nullptr)
 {
 }
 

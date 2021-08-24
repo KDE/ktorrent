@@ -10,9 +10,6 @@ namespace kt
 Plugin::Plugin(QObject *parent)
     : KParts::Plugin(parent)
 {
-    core = nullptr;
-    gui = nullptr;
-    loaded = false;
 }
 
 Plugin::~Plugin()

@@ -45,10 +45,10 @@ private:
     void removeFromGUI();
 
 private:
-    ScanForLostFilesWidget *m_view;
-    QDockWidget *m_dock;
-    ScanForLostFilesPrefPage *m_pref;
-    SFLFPosition m_pos;
+    ScanForLostFilesWidget *m_view = nullptr;
+    QDockWidget *m_dock = nullptr;
+    ScanForLostFilesPrefPage *m_pref = nullptr;
+    SFLFPosition m_pos = SEPARATE_ACTIVITY;
 };
 
 }

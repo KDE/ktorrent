@@ -37,10 +37,8 @@ namespace kt
 {
 SearchPlugin::SearchPlugin(QObject *parent, const QVariantList &args)
     : Plugin(parent)
-    , engines(nullptr)
 {
     Q_UNUSED(args);
-    pref = nullptr;
 }
 
 SearchPlugin::~SearchPlugin()

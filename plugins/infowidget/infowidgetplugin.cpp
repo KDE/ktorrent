@@ -34,14 +34,6 @@ namespace kt
 {
 InfoWidgetPlugin::InfoWidgetPlugin(QObject *parent, const QVariantList &)
     : Plugin(parent)
-    , peer_view(nullptr)
-    , cd_view(nullptr)
-    , tracker_view(nullptr)
-    , file_view(nullptr)
-    , status_tab(nullptr)
-    , webseeds_tab(nullptr)
-    , monitor(nullptr)
-    , pref(nullptr)
 {
 }
 

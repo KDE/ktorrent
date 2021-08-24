@@ -45,11 +45,11 @@ private:
     void removeLogViewerFromGUI();
 
 private:
-    LogViewer *lv;
-    LogPrefPage *pref;
-    LogFlags *flags;
-    QDockWidget *dock;
-    LogViewerPosition pos;
+    LogViewer *lv = nullptr;
+    LogPrefPage *pref = nullptr;
+    LogFlags *flags = nullptr;
+    QDockWidget *dock = nullptr;
+    LogViewerPosition pos = SEPARATE_ACTIVITY;
 };
 
 }

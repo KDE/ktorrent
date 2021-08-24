@@ -24,7 +24,6 @@ namespace kt
 {
 SyndicationPlugin::SyndicationPlugin(QObject *parent, const QVariantList &args)
     : Plugin(parent)
-    , add_feed(nullptr)
 {
     Q_UNUSED(args);
     setupActions();

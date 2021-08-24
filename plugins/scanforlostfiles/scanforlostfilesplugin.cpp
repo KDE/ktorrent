@@ -28,10 +28,6 @@ namespace kt
 {
 ScanForLostFilesPlugin::ScanForLostFilesPlugin(QObject *parent, const QVariantList &args)
     : Plugin(parent)
-    , m_view(nullptr)
-    , m_dock(nullptr)
-    , m_pref(nullptr)
-    , m_pos(SEPARATE_ACTIVITY)
 {
     Q_UNUSED(args);
 }
