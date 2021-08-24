@@ -25,10 +25,9 @@ using namespace bt;
 
 namespace kt
 {
-DownloadOrderPlugin::DownloadOrderPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+DownloadOrderPlugin::DownloadOrderPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
     download_order_action = new QAction(QIcon::fromTheme(QStringLiteral("view-sort-ascending")), i18n("File Download Order"), this);
     connect(download_order_action, &QAction::triggered, this, &DownloadOrderPlugin::showDownloadOrderDialog);
     actionCollection()->addAction(QStringLiteral("download_order"), download_order_action);

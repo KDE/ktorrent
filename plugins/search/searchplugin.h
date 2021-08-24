@@ -25,7 +25,7 @@ class SearchPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    SearchPlugin(QObject *parent, const QVariantList &args);
+    SearchPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~SearchPlugin() override;
 
     void load() override;

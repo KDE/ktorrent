@@ -25,7 +25,7 @@ class ScanFolderPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    ScanFolderPlugin(QObject *parent, const QVariantList &args);
+    ScanFolderPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~ScanFolderPlugin() override;
 
     void load() override;

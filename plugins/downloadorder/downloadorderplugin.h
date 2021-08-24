@@ -21,7 +21,7 @@ class DownloadOrderPlugin : public Plugin, public ViewListener
 {
     Q_OBJECT
 public:
-    DownloadOrderPlugin(QObject *parent, const QVariantList &args);
+    DownloadOrderPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~DownloadOrderPlugin() override;
 
     void load() override;

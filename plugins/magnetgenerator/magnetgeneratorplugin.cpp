@@ -30,10 +30,9 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_magnetgenerator, "ktorrent_magnetgenerator.j
 using namespace bt;
 namespace kt
 {
-MagnetGeneratorPlugin::MagnetGeneratorPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+MagnetGeneratorPlugin::MagnetGeneratorPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
     pref = nullptr;
     generate_magnet_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-magnet")), i18n("Copy Magnet URI"), this);
     connect(generate_magnet_action, &QAction::triggered, this, &MagnetGeneratorPlugin::generateMagnet);

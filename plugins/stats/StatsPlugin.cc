@@ -11,8 +11,9 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_stats, "ktorrent_stats.json", registerPlugin
 
 namespace kt
 {
-
-StatsPlugin::StatsPlugin(QObject* p, const QVariantList&) : Plugin(p), mUpdCtr(1)
+StatsPlugin::StatsPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
+    , mUpdCtr(1)
 {
     pmUiSett = nullptr;
     pmDispSett = nullptr;

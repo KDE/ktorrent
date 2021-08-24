@@ -29,7 +29,7 @@ class IPFilterPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    IPFilterPlugin(QObject *parent, const QVariantList &args);
+    IPFilterPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~IPFilterPlugin() override;
 
     void load() override;

@@ -25,8 +25,8 @@ using namespace bt;
 
 namespace kt
 {
-UPnPPlugin::UPnPPlugin(QObject *parent, const QVariantList & /*args*/)
-    : Plugin(parent)
+UPnPPlugin::UPnPPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
 }
 

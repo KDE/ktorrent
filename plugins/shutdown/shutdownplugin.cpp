@@ -25,11 +25,9 @@ using namespace bt;
 
 namespace kt
 {
-ShutdownPlugin::ShutdownPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+ShutdownPlugin::ShutdownPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
-
     KActionCollection *ac = actionCollection();
     shutdown_enabled = new KToggleAction(QIcon::fromTheme(QStringLiteral("system-shutdown")), i18n("Shutdown Enabled"), this);
     connect(shutdown_enabled, &KToggleAction::toggled, this, &ShutdownPlugin::shutdownToggled);

@@ -24,7 +24,7 @@ class UPnPPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    UPnPPlugin(QObject *parent, const QVariantList &args);
+    UPnPPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~UPnPPlugin() override;
 
     void load() override;

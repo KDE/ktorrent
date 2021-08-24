@@ -29,10 +29,9 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_scanfolder, "ktorrent_scanfolder.json", regi
 
 namespace kt
 {
-ScanFolderPlugin::ScanFolderPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+ScanFolderPlugin::ScanFolderPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
 }
 
 ScanFolderPlugin::~ScanFolderPlugin()

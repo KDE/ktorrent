@@ -26,10 +26,9 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_scanforlostfiles, "ktorrent_scanforlostfiles
 
 namespace kt
 {
-ScanForLostFilesPlugin::ScanForLostFilesPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+ScanForLostFilesPlugin::ScanForLostFilesPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
 }
 
 ScanForLostFilesPlugin::~ScanForLostFilesPlugin()

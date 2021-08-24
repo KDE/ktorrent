@@ -32,8 +32,8 @@ using namespace bt;
 
 namespace kt
 {
-InfoWidgetPlugin::InfoWidgetPlugin(QObject *parent, const QVariantList &)
-    : Plugin(parent)
+InfoWidgetPlugin::InfoWidgetPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
 }
 

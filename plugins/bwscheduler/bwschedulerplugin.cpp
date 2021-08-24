@@ -35,12 +35,11 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_bwscheduler, "ktorrent_bwscheduler.json", re
 
 namespace kt
 {
-BWSchedulerPlugin::BWSchedulerPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+BWSchedulerPlugin::BWSchedulerPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
     , m_editor(nullptr)
     , m_pref(nullptr)
 {
-    Q_UNUSED(args);
     connect(&m_timer, &QTimer::timeout, this, &BWSchedulerPlugin::timerTriggered);
     screensaver =
         new org::freedesktop::ScreenSaver(QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("/ScreenSaver"), QDBusConnection::sessionBus(), this);

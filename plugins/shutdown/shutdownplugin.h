@@ -18,7 +18,7 @@ class ShutdownPlugin : public kt::Plugin
 {
     Q_OBJECT
 public:
-    ShutdownPlugin(QObject *parent, const QVariantList &args);
+    ShutdownPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~ShutdownPlugin() override;
 
     void unload() override;

@@ -30,7 +30,7 @@ class LogViewerPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    LogViewerPlugin(QObject *parent, const QVariantList &args);
+    LogViewerPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~LogViewerPlugin() override;
 
     void load() override;

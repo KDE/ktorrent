@@ -26,8 +26,8 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_logviewer, "ktorrent_logviewer.json", regist
 
 namespace kt
 {
-LogViewerPlugin::LogViewerPlugin(QObject *parent, const QVariantList &)
-    : Plugin(parent)
+LogViewerPlugin::LogViewerPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
 }
 

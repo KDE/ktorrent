@@ -36,7 +36,7 @@ public:
     /** \brief Constructor
     \param p Parent
     */
-    StatsPlugin(QObject *p, const QVariantList &);
+    StatsPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     /// Destructor
     ~StatsPlugin() override;
 

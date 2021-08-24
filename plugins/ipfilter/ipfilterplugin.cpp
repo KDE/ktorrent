@@ -28,10 +28,9 @@ K_PLUGIN_FACTORY_WITH_JSON(ktorrent_ipfilter, "ktorrent_ipfilter.json", register
 
 namespace kt
 {
-IPFilterPlugin::IPFilterPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+IPFilterPlugin::IPFilterPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
     connect(&auto_update_timer, &QTimer::timeout, this, &IPFilterPlugin::checkAutoUpdate);
     auto_update_timer.setSingleShot(true);
 }

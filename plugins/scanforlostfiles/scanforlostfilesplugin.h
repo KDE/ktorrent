@@ -31,7 +31,7 @@ class ScanForLostFilesPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    ScanForLostFilesPlugin(QObject *parent, const QVariantList &args);
+    ScanForLostFilesPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~ScanForLostFilesPlugin() override;
 
     void load() override;

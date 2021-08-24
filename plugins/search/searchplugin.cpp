@@ -35,10 +35,9 @@ using namespace bt;
 
 namespace kt
 {
-SearchPlugin::SearchPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+SearchPlugin::SearchPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
 }
 
 SearchPlugin::~SearchPlugin()

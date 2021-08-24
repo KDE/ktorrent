@@ -20,10 +20,9 @@ using namespace bt;
 
 namespace kt
 {
-MediaPlayerPlugin::MediaPlayerPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+MediaPlayerPlugin::MediaPlayerPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
 }
 
 MediaPlayerPlugin::~MediaPlayerPlugin()

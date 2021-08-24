@@ -22,10 +22,9 @@ using namespace bt;
 
 namespace kt
 {
-SyndicationPlugin::SyndicationPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+SyndicationPlugin::SyndicationPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
     setupActions();
     //  setXMLFile("ktsyndicationpluginui.rc");
     LogSystemManager::instance().registerSystem(i18n("Syndication"), SYS_SYN);

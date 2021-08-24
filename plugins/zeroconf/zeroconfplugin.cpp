@@ -18,10 +18,9 @@ using namespace bt;
 
 namespace kt
 {
-ZeroConfPlugin::ZeroConfPlugin(QObject *parent, const QVariantList &args)
-    : Plugin(parent)
+ZeroConfPlugin::ZeroConfPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : Plugin(parent, data, args)
 {
-    Q_UNUSED(args);
     services.setAutoDelete(true);
 }
 

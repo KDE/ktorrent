@@ -17,7 +17,7 @@ class MagnetGeneratorPlugin : public Plugin, public ViewListener
 {
     Q_OBJECT
 public:
-    MagnetGeneratorPlugin(QObject *parent, const QVariantList &args);
+    MagnetGeneratorPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~MagnetGeneratorPlugin() override;
 
     void load() override;

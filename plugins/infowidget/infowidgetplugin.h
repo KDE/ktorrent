@@ -33,7 +33,7 @@ class InfoWidgetPlugin : public Plugin, public ViewListener
 {
     Q_OBJECT
 public:
-    InfoWidgetPlugin(QObject *parent, const QVariantList &args);
+    InfoWidgetPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~InfoWidgetPlugin() override;
 
     void load() override;

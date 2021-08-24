@@ -21,7 +21,7 @@ class SyndicationActivity;
 class SyndicationPlugin : public Plugin
 {
 public:
-    SyndicationPlugin(QObject *parent, const QVariantList &args);
+    SyndicationPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~SyndicationPlugin();
 
     void load() override;

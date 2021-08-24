@@ -24,7 +24,7 @@ class ZeroConfPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    ZeroConfPlugin(QObject *parent, const QVariantList &args);
+    ZeroConfPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~ZeroConfPlugin() override;
 
     void load() override;

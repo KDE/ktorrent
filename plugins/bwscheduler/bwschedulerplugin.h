@@ -29,7 +29,7 @@ class BWSchedulerPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    BWSchedulerPlugin(QObject *parent, const QVariantList &args);
+    BWSchedulerPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~BWSchedulerPlugin() override;
 
     void load() override;

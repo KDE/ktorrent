@@ -22,7 +22,7 @@ class MediaPlayerPlugin : public Plugin
 {
     Q_OBJECT
 public:
-    MediaPlayerPlugin(QObject *parent, const QVariantList &args);
+    MediaPlayerPlugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~MediaPlayerPlugin() override;
 
     void load() override;

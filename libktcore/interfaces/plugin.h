@@ -36,7 +36,7 @@ class KTCORE_EXPORT Plugin : public KParts::Plugin
 {
     Q_OBJECT
 public:
-    Plugin(QObject *parent);
+    Plugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
     ~Plugin() override;
 
     /**
