@@ -40,15 +40,6 @@ PluginManager::~PluginManager()
 void PluginManager::loadPluginList()
 {
     pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent"));
-    if (pluginsMetaData.isEmpty()) {
-        // simple workaround for the situation i have in debian --Nick
-        QStringList paths = QCoreApplication::libraryPaths();
-        if (paths.isEmpty())
-            paths << QLatin1String("/usr/lib/x86_64-linux-gnu/plugins");
-
-        QCoreApplication::addLibraryPath(paths.first().remove(QLatin1String("qt5/")));
-        pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent"));
-    }
 
     for (const KPluginMetaData &module : qAsConst(pluginsMetaData)) {
         KPluginInfo pi(module);
