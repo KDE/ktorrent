@@ -197,11 +197,6 @@ void BWSchedulerPlugin::onLoaded(Schedule *ns)
     timerTriggered();
 }
 
-bool BWSchedulerPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void BWSchedulerPlugin::colorsChanged()
 {
     if (m_editor) {

@@ -84,19 +84,12 @@ void PluginManager::load(const KPluginMetaData &data, int idx)
         return;
     }
 
-    if (!plugin->versionCheck(QStringLiteral(VERSION))) {
-        Out(SYS_GEN | LOG_NOTICE) << QStringLiteral("Plugin %1 version does not match KTorrent version, unloading it.").arg(pluginsMetaData.at(idx).fileName())
-                                  << endl;
-
-        delete plugin;
-    } else {
-        plugin->setCore(core);
-        plugin->setGUI(gui);
-        plugin->load();
-        gui->mergePluginGui(plugin);
-        plugin->loaded = true;
-        loaded.insert(idx, plugin, true);
-    }
+    plugin->setCore(core);
+    plugin->setGUI(gui);
+    plugin->load();
+    gui->mergePluginGui(plugin);
+    plugin->loaded = true;
+    loaded.insert(idx, plugin, true);
 }
 
 void PluginManager::unload(const KPluginMetaData &data, int idx)

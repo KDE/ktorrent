@@ -37,11 +37,6 @@ SyndicationPlugin::~SyndicationPlugin()
     LogSystemManager::instance().unregisterSystem(i18n("Syndication"));
 }
 
-bool SyndicationPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void SyndicationPlugin::load()
 {
     activity = new SyndicationActivity(this, nullptr);

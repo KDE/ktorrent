@@ -75,11 +75,6 @@ void ScanForLostFilesPlugin::updateScanForLostFiles()
     }
 }
 
-bool ScanForLostFilesPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void ScanForLostFilesPlugin::addToGUI()
 {
     switch (m_pos) {

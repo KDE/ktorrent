@@ -111,11 +111,6 @@ void SearchPlugin::preferencesUpdated()
 {
 }
 
-bool SearchPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 }
 
 #include "searchplugin.moc"

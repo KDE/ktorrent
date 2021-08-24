@@ -34,7 +34,6 @@ public:
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString &version) const override;
 
     /// Loads the KT format list filter
     void loadFilters();

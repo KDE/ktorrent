@@ -68,9 +68,5 @@ void UPnPPlugin::shutdown(bt::WaitJob *job)
     upnp_tab->shutdown(job);
 }
 
-bool UPnPPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
 }
 #include "upnpplugin.moc"

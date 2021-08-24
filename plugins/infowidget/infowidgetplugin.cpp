@@ -160,11 +160,6 @@ void InfoWidgetPlugin::currentTorrentChanged(bt::TorrentInterface *tc)
     createMonitor(tc);
 }
 
-bool InfoWidgetPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void InfoWidgetPlugin::applySettings()
 {
     // if the colors are invalid, set the default colors

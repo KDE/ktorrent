@@ -94,11 +94,6 @@ bool IPFilterPlugin::loadedAndRunning()
     return ip_filter;
 }
 
-bool IPFilterPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void IPFilterPlugin::checkAutoUpdate()
 {
     auto_update_timer.stop();

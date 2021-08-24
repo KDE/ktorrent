@@ -30,7 +30,6 @@ public:
     void load() override;
     void unload() override;
     void shutdown(bt::WaitJob *job) override;
-    bool versionCheck(const QString &version) const override;
 
 private:
     bt::UPnPMCastSocket *sock;

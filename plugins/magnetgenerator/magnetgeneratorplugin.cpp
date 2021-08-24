@@ -54,11 +54,6 @@ void MagnetGeneratorPlugin::load()
     currentTorrentChanged(ta->getCurrentTorrent());
 }
 
-bool MagnetGeneratorPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void MagnetGeneratorPlugin::unload()
 {
     getGUI()->removePrefPage(pref);

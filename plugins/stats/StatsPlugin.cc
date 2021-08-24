@@ -58,11 +58,6 @@ void StatsPlugin::unload()
     disconnect(getCore(), &CoreInterface::settingsChanged, this, &StatsPlugin::settingsChanged);
 }
 
-bool StatsPlugin::versionCheck(const QString& version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void StatsPlugin::guiUpdate()
 {
     if (mUpdCtr >= StatsPluginSettings::updateEveryGuiUpdates()) {

@@ -24,7 +24,6 @@ public:
     SyndicationPlugin(QObject *parent, const QVariantList &args);
     ~SyndicationPlugin();
 
-    bool versionCheck(const QString &version) const override;
     void load() override;
     void unload() override;
 

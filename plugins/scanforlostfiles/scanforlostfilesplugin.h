@@ -36,7 +36,6 @@ public:
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString &version) const override;
 
 public Q_SLOTS:
     void updateScanForLostFiles();

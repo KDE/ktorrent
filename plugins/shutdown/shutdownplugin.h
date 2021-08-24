@@ -21,7 +21,6 @@ public:
     ShutdownPlugin(QObject *parent, const QVariantList &args);
     ~ShutdownPlugin() override;
 
-    bool versionCheck(const QString &version) const override;
     void unload() override;
     void load() override;
 

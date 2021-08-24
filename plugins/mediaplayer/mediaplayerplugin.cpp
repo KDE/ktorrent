@@ -51,11 +51,6 @@ void MediaPlayerPlugin::unload()
     act = nullptr;
 }
 
-bool MediaPlayerPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 }
 
 #include "mediaplayerplugin.moc"

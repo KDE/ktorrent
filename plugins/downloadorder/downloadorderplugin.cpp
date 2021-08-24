@@ -40,11 +40,6 @@ DownloadOrderPlugin::~DownloadOrderPlugin()
 {
 }
 
-bool DownloadOrderPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void DownloadOrderPlugin::load()
 {
     TorrentActivityInterface *ta = getGUI()->getTorrentActivity();

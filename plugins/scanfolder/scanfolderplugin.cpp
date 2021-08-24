@@ -88,10 +88,6 @@ void ScanFolderPlugin::updateScanFolders()
     scanner->setFolderList(folders);
 }
 
-bool ScanFolderPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
 }
 
 #include "scanfolderplugin.moc"

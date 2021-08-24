@@ -128,10 +128,5 @@ void LogViewerPlugin::guiUpdate()
         lv->processPending();
 }
 
-bool LogViewerPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 }
 #include "logviewerplugin.moc"

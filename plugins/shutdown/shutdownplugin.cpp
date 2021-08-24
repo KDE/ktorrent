@@ -46,11 +46,6 @@ ShutdownPlugin::~ShutdownPlugin()
 {
 }
 
-bool ShutdownPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
-
 void ShutdownPlugin::unload()
 {
     rules->save(kt::DataDir() + QStringLiteral("shutdown_rules"));

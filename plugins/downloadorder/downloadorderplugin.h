@@ -24,7 +24,6 @@ public:
     DownloadOrderPlugin(QObject *parent, const QVariantList &args);
     ~DownloadOrderPlugin() override;
 
-    bool versionCheck(const QString &version) const override;
     void load() override;
     void unload() override;
     void currentTorrentChanged(bt::TorrentInterface *tc) override;

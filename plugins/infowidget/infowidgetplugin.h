@@ -40,7 +40,6 @@ public:
     void unload() override;
     void guiUpdate() override;
     void currentTorrentChanged(bt::TorrentInterface *tc) override;
-    bool versionCheck(const QString &version) const override;
 
     /// Show PeerView in main window
     void showPeerView(bool show);

@@ -42,7 +42,6 @@ public:
 
     void load() override;
     void unload() override;
-    bool versionCheck(const QString &version) const override;
     void guiUpdate() override;
 
 public Q_SLOTS:

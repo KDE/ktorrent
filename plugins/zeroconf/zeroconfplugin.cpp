@@ -98,9 +98,5 @@ void ZeroConfPlugin::avahiServiceDestroyed(TorrentService *av)
     services.setAutoDelete(true);
 }
 
-bool ZeroConfPlugin::versionCheck(const QString &version) const
-{
-    return version == QStringLiteral(VERSION);
-}
 }
 #include "zeroconfplugin.moc"
