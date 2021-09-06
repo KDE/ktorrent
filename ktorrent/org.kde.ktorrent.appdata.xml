@@ -372,7 +372,7 @@
       <li xml:lang="x-test">xxKick/ban peers with an additional IP Filter dialog for list/edit purposesxx</li>
       <li xml:lang="zh-CN">踢掉/屏蔽对等点，并可以用 IP 过滤器查看和编辑列表</li>
       <li>UDP tracker support</li>
-      <li xml:lang="ca">Suport per al seguidor UDP</li>
+      <li xml:lang="ca">Suport del seguidor UDP</li>
       <li xml:lang="ca-valencia">Suport per al seguidor UDP</li>
       <li xml:lang="cs">Podpora trackerů UDP</li>
       <li xml:lang="da">Understøttelse af UDP-tracker</li>
@@ -632,7 +632,7 @@
       <li xml:lang="x-test">xxSupport for webseedsxx</li>
       <li xml:lang="zh-CN">支持 Webseed</li>
       <li>Scripting support via Kross, and interprocess control via D-Bus interface</li>
-      <li xml:lang="ca">Suport per a crear scripts mitjançant el Kross i control entre processos a través de la interfície de D-Bus</li>
+      <li xml:lang="ca">Suport de creació de scripts mitjançant el Kross i control entre processos a través de la interfície de D-Bus</li>
       <li xml:lang="ca-valencia">Suport per a crear scripts mitjançant el Kross i control entre processos a través de la interfície de D-Bus</li>
       <li xml:lang="da">Scripting-understøttelse via Kross og interproceskontrol via D-Bus-grænseflade</li>
       <li xml:lang="de">Skript-Unterstützung mit Kross und Interprozess-Steuerung über die D-Bus-Schnittstelle</li>
@@ -696,7 +696,7 @@
       <li xml:lang="x-test">xxSystem tray integrationxx</li>
       <li xml:lang="zh-CN">系统托盘整合</li>
       <li>Tracker authentication support</li>
-      <li xml:lang="ca">Suport per a l'autenticació del seguidor</li>
+      <li xml:lang="ca">Suport d'autenticació del seguidor</li>
       <li xml:lang="ca-valencia">Suport per a l'autenticació del seguidor</li>
       <li xml:lang="da">Understøttelse af tracker-autentificering</li>
       <li xml:lang="de">Unterstützung für Tracker-Authentifizierung</li>
