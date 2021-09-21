@@ -19,7 +19,7 @@ if (BUILD_WITH_GEOIP)
     endif()
 endif(BUILD_WITH_GEOIP)
 
-add_library(ktorrent_infowidget MODULE)
+kcoreaddons_add_plugin(ktorrent_infowidget INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_infowidget PRIVATE
 	infowidgetplugin.cpp 
@@ -65,5 +65,3 @@ target_link_libraries(
     KF5::WidgetsAddons
     ${geoip_link}
 )
-install(TARGETS ktorrent_infowidget DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
-

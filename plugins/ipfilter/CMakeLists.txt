@@ -1,4 +1,4 @@
-add_library(ktorrent_ipfilter MODULE)
+kcoreaddons_add_plugin(ktorrent_ipfilter INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_ipfilter PRIVATE
     ipblocklist.cpp
@@ -26,7 +26,6 @@ target_link_libraries(
     KF5::TextWidgets
     KF5::WidgetsAddons
 )
-install(TARGETS ktorrent_ipfilter DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 
 find_package(Qt5Test ${QT5_REQUIRED_VERSION})
 if (Qt5Test_DIR)

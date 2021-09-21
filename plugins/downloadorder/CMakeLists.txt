@@ -1,4 +1,4 @@
-add_library(ktorrent_downloadorder MODULE)
+kcoreaddons_add_plugin(ktorrent_downloadorder INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_downloadorder PRIVATE
     downloadorderplugin.cpp
@@ -20,5 +20,4 @@ target_link_libraries(
     KF5::I18n
     KF5::XmlGui
 )
-install(TARGETS ktorrent_downloadorder  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_downloadorderui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

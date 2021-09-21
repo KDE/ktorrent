@@ -1,4 +1,4 @@
-add_library(ktorrent_magnetgenerator MODULE)
+kcoreaddons_add_plugin(ktorrent_magnetgenerator INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_magnetgenerator PRIVATE
 	magnetgeneratorprefwidget.cpp
@@ -21,5 +21,4 @@ target_link_libraries(
 
 target_include_directories(ktorrent_magnetgenerator PRIVATE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>")
 
-install(TARGETS ktorrent_magnetgenerator  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_magnetgeneratorui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

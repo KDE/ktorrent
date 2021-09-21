@@ -1,4 +1,4 @@
-add_library(ktorrent_logviewer MODULE)
+kcoreaddons_add_plugin(ktorrent_logviewer INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_logviewer PRIVATE
     logviewerplugin.cpp
@@ -21,5 +21,3 @@ target_link_libraries(
     KF5::I18n
     KF5::XmlGui
 )
-install(TARGETS ktorrent_logviewer DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
-

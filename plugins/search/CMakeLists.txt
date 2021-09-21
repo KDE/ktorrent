@@ -1,4 +1,4 @@
-add_library(ktorrent_search MODULE)
+kcoreaddons_add_plugin(ktorrent_search INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_search PRIVATE
 	webview.cpp 
@@ -36,7 +36,6 @@ target_link_libraries(
     KF5::XmlGui
 )
 
-install(TARGETS ktorrent_search  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_searchui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 
 add_subdirectory(opensearch)

@@ -2,7 +2,7 @@ include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/drawer)
 
-add_library(ktorrent_stats MODULE)
+kcoreaddons_add_plugin(ktorrent_stats INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_stats PRIVATE
 	drawer/ChartDrawer.cc
@@ -35,4 +35,3 @@ target_link_libraries(
     KF5::Plotting
     KF5::WidgetsAddons
 )
-install(TARGETS ktorrent_stats  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )

@@ -1,4 +1,4 @@
-add_library(ktorrent_zeroconf MODULE)
+kcoreaddons_add_plugin(ktorrent_zeroconf INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_zeroconf PRIVATE
     zeroconfplugin.cpp
@@ -17,5 +17,3 @@ target_link_libraries(ktorrent_zeroconf
     KF5::DNSSD
     KF5::I18n
 )
-install(TARGETS ktorrent_zeroconf  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
-

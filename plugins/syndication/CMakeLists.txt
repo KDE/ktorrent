@@ -1,4 +1,4 @@
-add_library(ktorrent_syndication MODULE)
+kcoreaddons_add_plugin(ktorrent_syndication INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_syndication PRIVATE
 	syndicationplugin.cpp 
@@ -37,7 +37,6 @@ target_link_libraries(
     KF5::WidgetsAddons
     KF5::XmlGui
 )
-install(TARGETS ktorrent_syndication DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_syndicationui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 
 add_subdirectory(icons)

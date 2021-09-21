@@ -1,6 +1,6 @@
 include_directories(${CMAKE_BINARY_DIR})
 
-add_library(ktorrent_shutdown MODULE)
+kcoreaddons_add_plugin(ktorrent_shutdown INSTALL_NAMESPACE "ktorrent")
 
 set(ktshutdownplugin_dbus_SRC)
 
@@ -33,5 +33,4 @@ target_link_libraries(
     KF5::WidgetsAddons
 )
 
-install(TARGETS ktorrent_shutdown  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_shutdownui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

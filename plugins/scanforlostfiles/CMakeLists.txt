@@ -1,4 +1,4 @@
-add_library(ktorrent_scanforlostfiles MODULE)
+kcoreaddons_add_plugin(ktorrent_scanforlostfiles INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_scanforlostfiles PRIVATE
 	scanforlostfilesplugin.cpp
@@ -21,5 +21,3 @@ target_link_libraries(
     KF5::I18n
     KF5::KIOCore
 )
-install(TARGETS ktorrent_scanforlostfiles  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
-

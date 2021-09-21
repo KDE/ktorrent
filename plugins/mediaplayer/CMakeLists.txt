@@ -3,7 +3,7 @@ find_package(Taglib REQUIRED)
 #include_directories(${Qt5Multimedia_INCLUDE_DIRS})
 include_directories(SYSTEM ${PHONON_INCLUDES})
 
-add_library(ktorrent_mediaplayer MODULE)
+kcoreaddons_add_plugin(ktorrent_mediaplayer INSTALL_NAMESPACE "ktorrent")
 
 set(ktmediaplayerplugin_dbus_SRC)
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
@@ -45,5 +45,4 @@ target_link_libraries(
     KF5::WidgetsAddons
 #    Qt5::MultimediaWidgets
     )
-install(TARGETS ktorrent_mediaplayer DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_mediaplayerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )

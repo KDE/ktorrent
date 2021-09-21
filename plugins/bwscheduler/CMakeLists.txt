@@ -1,4 +1,4 @@
-add_library(ktorrent_bwscheduler MODULE)
+kcoreaddons_add_plugin(ktorrent_bwscheduler  INSTALL_NAMESPACE "ktorrent")
 
 set(ktbwschedulerplugin_dbus_SRC)
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
@@ -33,6 +33,5 @@ target_link_libraries(
     KF5::XmlGui
     KF5::WidgetsAddons
 )
-install(TARGETS ktorrent_bwscheduler  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
 install(FILES ktorrent_bwschedulerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 

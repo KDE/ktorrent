@@ -1,4 +1,4 @@
-add_library(ktorrent_upnp MODULE)
+kcoreaddons_add_plugin(ktorrent_upnp INSTALL_NAMESPACE "ktorrent")
 
 target_sources(ktorrent_upnp PRIVATE
     upnpplugin.cpp
@@ -20,5 +20,3 @@ target_link_libraries(
     KF5::I18n
     KF5::WidgetsAddons
 )
-install(TARGETS ktorrent_upnp  DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
-
