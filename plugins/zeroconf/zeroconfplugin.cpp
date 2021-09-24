@@ -12,7 +12,7 @@
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_zeroconf, "ktorrent_zeroconf.json", registerPlugin<kt::ZeroConfPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::ZeroConfPlugin, "ktorrent_zeroconf.json")
 
 using namespace bt;
 

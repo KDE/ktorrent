@@ -19,7 +19,7 @@
 #include <interfaces/functions.h>
 #include <util/log.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_shutdown, "ktorrent_shutdown.json", registerPlugin<kt::ShutdownPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::ShutdownPlugin, "ktorrent_shutdown.json")
 
 using namespace bt;
 

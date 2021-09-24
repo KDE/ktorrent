@@ -19,7 +19,7 @@
 #include "upnpwidget.h"
 #include <interfaces/torrentactivityinterface.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_upnp, "ktorrent_upnp.json", registerPlugin<kt::UPnPPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::UPnPPlugin, "ktorrent_upnp.json")
 
 using namespace bt;
 

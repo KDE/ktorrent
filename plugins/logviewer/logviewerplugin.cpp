@@ -22,7 +22,7 @@
 
 using namespace bt;
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_logviewer, "ktorrent_logviewer.json", registerPlugin<kt::LogViewerPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::LogViewerPlugin, "ktorrent_logviewer.json")
 
 namespace kt
 {

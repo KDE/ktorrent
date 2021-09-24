@@ -22,7 +22,7 @@
 
 using namespace bt;
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_scanforlostfiles, "ktorrent_scanforlostfiles.json", registerPlugin<kt::ScanForLostFilesPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::ScanForLostFilesPlugin, "ktorrent_scanforlostfiles.json")
 
 namespace kt
 {

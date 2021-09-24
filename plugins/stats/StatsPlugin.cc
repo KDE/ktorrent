@@ -7,7 +7,7 @@
 #include <interfaces/torrentactivityinterface.h>
 #include <KPluginFactory>
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_stats, "ktorrent_stats.json", registerPlugin<kt::StatsPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::StatsPlugin, "ktorrent_stats.json")
 
 namespace kt
 {

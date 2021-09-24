@@ -25,7 +25,7 @@
 #include <tracker/tracker.h>
 #include <util/sha1hash.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_magnetgenerator, "ktorrent_magnetgenerator.json", registerPlugin<kt::MagnetGeneratorPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::MagnetGeneratorPlugin, "ktorrent_magnetgenerator.json")
 
 using namespace bt;
 namespace kt

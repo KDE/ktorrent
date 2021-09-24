@@ -14,7 +14,7 @@
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_mediaplayer, "ktorrent_mediaplayer.json", registerPlugin<kt::MediaPlayerPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::MediaPlayerPlugin, "ktorrent_mediaplayer.json")
 
 using namespace bt;
 

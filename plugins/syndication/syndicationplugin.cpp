@@ -16,7 +16,7 @@
 #include <util/log.h>
 #include <util/logsystemmanager.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_syndication, "ktorrent_syndication.json", registerPlugin<kt::SyndicationPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::SyndicationPlugin, "ktorrent_syndication.json")
 
 using namespace bt;
 

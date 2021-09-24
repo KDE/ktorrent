@@ -19,7 +19,7 @@
 #include <torrent/queuemanager.h>
 #include <util/fileops.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_downloadorder, "ktorrent_downloadorder.json", registerPlugin<kt::DownloadOrderPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::DownloadOrderPlugin, "ktorrent_downloadorder.json")
 
 using namespace bt;
 

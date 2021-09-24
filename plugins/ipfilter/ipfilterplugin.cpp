@@ -24,7 +24,7 @@
 
 using namespace bt;
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_ipfilter, "ktorrent_ipfilter.json", registerPlugin<kt::IPFilterPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::IPFilterPlugin, "ktorrent_ipfilter.json")
 
 namespace kt
 {

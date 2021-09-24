@@ -25,7 +25,7 @@
 
 using namespace bt;
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_scanfolder, "ktorrent_scanfolder.json", registerPlugin<kt::ScanFolderPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::ScanFolderPlugin, "ktorrent_scanfolder.json")
 
 namespace kt
 {

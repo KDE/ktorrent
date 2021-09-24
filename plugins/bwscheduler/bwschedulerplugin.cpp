@@ -31,7 +31,7 @@
 
 using namespace bt;
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_bwscheduler, "ktorrent_bwscheduler.json", registerPlugin<kt::BWSchedulerPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::BWSchedulerPlugin, "ktorrent_bwscheduler.json")
 
 namespace kt
 {

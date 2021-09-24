@@ -26,7 +26,7 @@
 #include "trackerview.h"
 #include "webseedstab.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(ktorrent_infowidget, "ktorrent_infowidget.json", registerPlugin<kt::InfoWidgetPlugin>();)
+K_PLUGIN_CLASS_WITH_JSON(kt::InfoWidgetPlugin, "ktorrent_infowidget.json")
 
 using namespace bt;
 
