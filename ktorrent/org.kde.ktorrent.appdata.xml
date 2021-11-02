@@ -84,7 +84,7 @@
       comes with extended features to make it a full-featured client for BitTorrent.
     </p>
     <p xml:lang="ar">يتيح لك «سيولك» (وهو تطبيق ”بِت‌تورنت“ من «كدي») تنزيل الملفات مستخدما ميفاق ”بِت‌تورنت“. يسمح لك التطبيق بتشغيل عدد من السيول في الوقت نفسه وهو يأتي مع مزايا عدّة تجعله عميلًا كامل المواصفات لميفاق ”بِت‌تورنت“.</p>
-    <p xml:lang="ca">El KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrent alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
+    <p xml:lang="ca">El KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrents alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
     <p xml:lang="ca-valencia">El KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que vos permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrent alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
     <p xml:lang="da">KTorrent er et BitTorrent-program fra KDE, som lader dig downloade filer med BitTorrent-protokollen. Den lader dig køre flere torrents på samme tid og har udvidet funktionalitet som gør det til en komplet BitTorrent-klient.</p>
     <p xml:lang="de">KTorrent ist ein BitTorrent-Programm von KDE. Sie können damit Dateien über das BitTorrent-Protokoll herunterladen. Mehrere Torrents lassen sich gleichzeitig ausführen. KTorrent hat zusätzliche Fähigkeiten und ist damit ein mit allen Funktionen ausgestattetes Dienstprogramm für BitTorrent.</p>
@@ -154,7 +154,7 @@
     <ul>
       <li>Queuing of torrents</li>
       <li xml:lang="ar">وضع السيول في طوابير</li>
-      <li xml:lang="ca">Cua dels torrent</li>
+      <li xml:lang="ca">Cua dels torrents</li>
       <li xml:lang="ca-valencia">Cua dels torrent</li>
       <li xml:lang="cs">Řazení torrentů do fronty</li>
       <li xml:lang="da">Sæt torrents i kø</li>
@@ -287,7 +287,7 @@
       <li xml:lang="zh-CN">导入部分或完全下载的文件</li>
       <li>File prioritization for multi-file torrents</li>
       <li xml:lang="ar">تحديد أولويات الملفات للسيول التي فيها عدة ملفات</li>
-      <li xml:lang="ca">Priorització de fitxers per als torrent amb múltiples fitxers</li>
+      <li xml:lang="ca">Priorització de fitxers per als torrents amb múltiples fitxers</li>
       <li xml:lang="ca-valencia">Priorització de fitxers per als torrent amb múltiples fitxers</li>
       <li xml:lang="da">Filprioritering for torrents med flere filer</li>
       <li xml:lang="de">Dateipriorisierung für Torrents mit mehreren Dateien</li>
@@ -319,7 +319,7 @@
       <li xml:lang="x-test">xxFile prioritization for multi-file torrentsxx</li>
       <li xml:lang="zh-CN">多文件种子设定文件优先级</li>
       <li>Selective downloading for multi-file torrents</li>
-      <li xml:lang="ca">Descàrrega selectiva per als torrent amb múltiples fitxers</li>
+      <li xml:lang="ca">Descàrrega selectiva per als torrents amb múltiples fitxers</li>
       <li xml:lang="ca-valencia">Descàrrega selectiva per als torrent amb múltiples fitxers</li>
       <li xml:lang="da">Selektiv download ved torrents med flere filer</li>
       <li xml:lang="de">In Torrents mit mehreren Dateien können einzelne Dateien zum Herunterladen ausgewählt werden.</li>
@@ -418,7 +418,7 @@
       <li xml:lang="zh-CN">支持 UDP tracker</li>
       <li xml:lang="zh-TW">支援 UDP tracker</li>
       <li>Support for private trackers and torrents</li>
-      <li xml:lang="ca">Suport per als seguidors i torrent privats</li>
+      <li xml:lang="ca">Suport per als seguidors i torrents privats</li>
       <li xml:lang="ca-valencia">Suport per als seguidors i torrent privats</li>
       <li xml:lang="cs">Podpora pro soukromé trackery a torrenty</li>
       <li xml:lang="da">Understøtter private trackere og torrents</li>
@@ -518,7 +518,7 @@
       <li xml:lang="x-test">xxSupport for protocol encryption (compatible with Azureus)xx</li>
       <li xml:lang="zh-CN">支持协议加密 (兼容 Azureus)</li>
       <li>Support for creating trackerless torrents</li>
-      <li xml:lang="ca">Suport per a la creació de torrent sense seguidors</li>
+      <li xml:lang="ca">Suport per a la creació de torrents sense seguidors</li>
       <li xml:lang="ca-valencia">Suport per a la creació de torrent sense seguidors</li>
       <li xml:lang="cs">Podpora pro vytvoření torrentů bez trackerů</li>
       <li xml:lang="da">Understøttelse af oprettelse af trackerløse torrents</li>
