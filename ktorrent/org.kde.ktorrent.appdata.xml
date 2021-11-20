@@ -103,6 +103,7 @@
     <p xml:lang="pl">KTorrent jest aplikacją BitTorrent stworzoną w ramach KDE, która umożliwia ci pobieranie przy użyciu protokołu BitTorrent. Umożliwia ci uruchamianie wielu torrentów w tym samym czasie i jest wyposażona w dodatkowe możliwości tworzące z niej pełnego klienta dla BitTorrent.</p>
     <p xml:lang="pt">O KTorrent é uma aplicação de BitTorrent do KDE que lhe permite obter ficheiros pelo protocolo BitTorrent. Ele permite-lhe executar várias torrentes ao mesmo tempo e vem com funcionalidades alargadas que o tornam um cliente pleno de funcionalidades para o BitTorrent.</p>
     <p xml:lang="pt-BR">O KTorrent é um aplicativo BitTorrent do KDE que permite a você baixar arquivos usando o protocolo BitTorrent. Ele permite baixar múltiplos torrents ao mesmo tempo e vem com recursos estendidos para torná-lo cliente com recursos completos para o BitTorrent.</p>
+    <p xml:lang="ru">KTorrent — это приложение BitTorrent, разработанное KDE, которое предназначено для загрузки файлов с использованием протокола BitTorrent. Оно позволяет запускать несколько торрентов одновременно и оснащено расширенными функциями, что делает его полнофункциональным клиентом для BitTorrent.</p>
     <p xml:lang="sk">KTorrent je BitTorrentová aplikácia od KDE, ktorá vám umožní stiahnuť súbory pomocou protokolu BitTorrent. Umožní vám spustiť viac torrentov súčasne a obsahuje rôzne funkcie, čo z nej robí plnohodnotného klienta pre BitTorrent.</p>
     <p xml:lang="sl">KTorrent je program za BitTorrent v KDE, ki omogoča prenos datoteke s protokolom BitTorrent. Omogoča vam zagon več sočasnih tokovhkrati pa ima razširjene funkcije, da postane popoln odjemalec za BitTorrent.</p>
     <p xml:lang="sr">К‑торент је програм из КДЕ‑а којим можете да преузимате фајлове преко протокола битторент. Омогућава покретање више торената истовремено и пружа разноврсне проширене могућности, што га чини га свеобухватним битторент клијентом.</p>
@@ -370,7 +371,7 @@
       <li xml:lang="pl">Wykopywanie/banowanie uczestników  z dodatkowym filtrem IP do celów edycji i wyświetlania</li>
       <li xml:lang="pt">Banir/expulsar as máquinas com uma janela adicional de filtros de IP's para fins de listagem/edição</li>
       <li xml:lang="pt-BR">Banir/expulsar as máquinas com uma janela adicional de filtros de IPs para fins de listagem/edição</li>
-      <li xml:lang="ru">Возможность отключения о блокирования пиров. Список заблокированных пиров можно редактировать в диалоге IP-фильтра.</li>
+      <li xml:lang="ru">Возможность отключения или блокирования пиров. Список заблокированных пиров можно редактировать в диалоге IP-фильтра.</li>
       <li xml:lang="sk">Vykopnutie/ban klientov s dodatočným dialógom IP filtra pre dôvody zoznamu/úpravy</li>
       <li xml:lang="sl">Preklop/prepoved vrstnikov z dodatnim pogovornim oknom filtra IP za namene urejanja/seznama</li>
       <li xml:lang="sr">Избацивање/забрањивање вршњака преко дијалога за филтрирање ИП‑ова (листање и уређивање).</li>
@@ -472,7 +473,7 @@
       <li xml:lang="pl">Obsługa wymiany uczestników µTorrenta </li>
       <li xml:lang="pt">Suporte para a troca de máquinas do µTorrent</li>
       <li xml:lang="pt-BR">Suporte a troca de pares do µTorrent</li>
-      <li xml:lang="ru">Поддержка протокола обмена списками участников, используемого µTorrent</li>
+      <li xml:lang="ru">Поддержка протокола обмена списками пиров, используемого µTorrent</li>
       <li xml:lang="sk">Podpora pre výmenu peerov µTorrent</li>
       <li xml:lang="sl">Podpora za medsebojno izmenjavo µTorrent</li>
       <li xml:lang="sr">Подршка за Микроторентову размену вршњака.</li>
@@ -538,7 +539,7 @@
       <li xml:lang="pl">Obsługa tworzenia torrentów bez serwera śledzącego</li>
       <li xml:lang="pt">Suporte para a criação de torrentes sem localizador</li>
       <li xml:lang="pt-BR">Suporte a criação de torrents sem rastreadores</li>
-      <li xml:lang="ru">Поддержка создания торрентов, не привязанных к торрент-трекеру.</li>
+      <li xml:lang="ru">Поддержка создания торрентов, не привязанных к торрент-трекеру</li>
       <li xml:lang="sk">Podpora pre vytváranie beztracerových torrentov</li>
       <li xml:lang="sl">Podpora za ustvarjanje tokov brez sledi</li>
       <li xml:lang="sr">Подршка за стварање торената без пратилаца.</li>
@@ -571,7 +572,7 @@
       <li xml:lang="pl">Obsługa rozproszonych tablic haszów (DHT, wersja głównoliniowa)</li>
       <li xml:lang="pt">Suporte para tabelas de dispersão distribuídas (DHT)</li>
       <li xml:lang="pt-BR">Suporte para tabelas de dispersão distribuídas (DHT)</li>
-      <li xml:lang="ru">Поддержка распределённых хеш-таблиц (DHT).</li>
+      <li xml:lang="ru">Поддержка распределённых хеш-таблиц (DHT)</li>
       <li xml:lang="sk">Podpora pre distribuované hašovacie tabuľky (DHT, mainline verzia)</li>
       <li xml:lang="sl">Podpora za porazdeljene razpršene tabele (DHT, verzija glavne linije)</li>
       <li xml:lang="sr">Подршка за дистрибуиране дисперзионе табеле (мејнлајн ДХТ).</li>
@@ -604,7 +605,7 @@
       <li xml:lang="pl">Obsługa UPnP do przekierowywania portów w LANie z dynamicznie przypisanymi gospodarzami</li>
       <li xml:lang="pt">Suporte de UPnP para encaminhar automaticamente os portos numa LAN para as máquinas atribuídas de forma dinâmica</li>
       <li xml:lang="pt-BR">Suporte ao UPnP para encaminhar automaticamente portas em uma LAN com host atribuídos dinamicamente</li>
-      <li xml:lang="ru">Поддержка UPnP для автоматического перенаправления портов в локальной сети с динамическим выделением IP-адресов.</li>
+      <li xml:lang="ru">Поддержка UPnP для автоматического перенаправления портов в локальной сети с динамическим выделением IP-адресов</li>
       <li xml:lang="sk">Podpora pre UPnP na automatické presmerovanie portov na LAN s dynaicky priradenými hostami</li>
       <li xml:lang="sl">Podpora za UPnP za samodejno posredovanje vrat v omrežju LAN z dinamično dodeljenimi gostitelji</li>
       <li xml:lang="sr">Подршка за аутоматско прослеђивање портова кроз УПнП у ЛАН‑у са динамички додељиваним домаћинима.</li>
@@ -705,7 +706,7 @@
       <li xml:lang="pl">Obsluga uwierzytelniania na serwerze śledzącym</li>
       <li xml:lang="pt">Suporte para localizadores autenticados</li>
       <li xml:lang="pt-BR">Suporte a autenticação de rastreadores</li>
-      <li xml:lang="ru">Поддержка аутентификации на трекере.</li>
+      <li xml:lang="ru">Поддержка аутентификации на трекере</li>
       <li xml:lang="sk">Podpora autentifikácie trackerov</li>
       <li xml:lang="sl">Podpora za preverjanje pristnosti sledilcev</li>
       <li xml:lang="sr">Подршка за аутентификацију пратилаца.</li>
@@ -772,6 +773,7 @@
     <p xml:lang="pl">Dodatkowo do wbudowanych możliwości, dostępne są także wtyczki dla KTorrenta.</p>
     <p xml:lang="pt">Para além das funcionalidades incorporadas, existem alguns 'plugins' disponíveis para o KTorrent.</p>
     <p xml:lang="pt-BR">Adicionalmente as funcionalidades embutidas, existem alguns plugins disponíveis para o KTorrent.</p>
+    <p xml:lang="ru">В дополнение к встроенным функциям доступны также некоторые модули.</p>
     <p xml:lang="sk">Okrem zabudovaných funkcií sú k dispozícii aj niektoré pluginy pre KTorrent.</p>
     <p xml:lang="sl">Poleg vgrajenih funkcionalnosti je nekaj vtičnikov na voljo za KTorrent.</p>
     <p xml:lang="sr">Поред уграђених функција, доступни су и разни прикључци за К‑торент.</p>
