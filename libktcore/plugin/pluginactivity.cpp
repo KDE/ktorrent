@@ -8,7 +8,7 @@
 #include <QVBoxLayout>
 
 #include <KLocalizedString>
-#include <KPluginSelector>
+#include <KPluginWidget>
 
 #include "pluginactivity.h"
 #include "pluginmanager.h"
@@ -26,11 +26,11 @@ PluginActivity::PluginActivity(PluginManager *pman)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
-    pmw = new KPluginSelector(this);
-    connect(pmw, &KPluginSelector::changed, this, &PluginActivity::changed);
-    connect(pmw, &KPluginSelector::configCommitted, this, &PluginActivity::changed);
+    pmw = new KPluginWidget(this);
+    connect(pmw, &KPluginWidget::changed, this, &PluginActivity::update);
+    connect(pmw, &KPluginWidget::pluginConfigSaved, this, &PluginActivity::update);
     layout->addWidget(pmw);
-    list = pman->pluginInfoList();
+    list = pman->pluginsMetaDataList();
 }
 
 PluginActivity::~PluginActivity()
@@ -39,20 +39,14 @@ PluginActivity::~PluginActivity()
 
 void PluginActivity::updatePluginList()
 {
-    pmw->addPlugins(list, KPluginSelector::IgnoreConfigFile, i18n("Plugins"));
+    pmw->clear();
+    pmw->setConfig(KSharedConfig::openConfig()->group("Plugins"));
+    pmw->addPlugins(list, i18n("Plugins"));
 }
 
 void PluginActivity::update()
 {
-    pmw->updatePluginsState();
+    pmw->save();
     pman->loadPlugins();
-    for (auto &i : list) {
-        i.save();
-    }
-}
-
-void PluginActivity::changed()
-{
-    update();
 }
 }

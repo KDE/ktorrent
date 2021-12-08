@@ -42,21 +42,9 @@ public:
     PluginManager(CoreInterface *core, GUIInterface *gui);
     ~PluginManager();
 
-    /**
-     * Get the plugin info list.
-     */
-    KPluginInfo::List pluginInfoList() const
+    QVector<KPluginMetaData> pluginsMetaDataList() const
     {
-        // This should be removed when the KPluginSelector alternative which is based
-        // on KPluginMetaData is published, see https://phabricator.kde.org/T12265
-        KPluginInfo::List list;
-        for (const KPluginMetaData &data : qAsConst(pluginsMetaData)) {
-            KPluginInfo info = KPluginInfo::fromMetaData(data);
-            info.setConfig(KSharedConfig::openConfig()->group(data.pluginId()));
-            info.load();
-            list << info;
-        }
-        return list;
+        return pluginsMetaData;
     }
 
     /**

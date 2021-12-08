@@ -22,9 +22,11 @@
 #include <QFile>
 
 #include <KAboutData>
+#include <KConfigGroup>
 #include <KCrash>
 #include <KDBusService>
 #include <KLocalizedString>
+#include <KSharedConfig>
 #include <KStartupInfo>
 #include <KWindowSystem>
 #include <kwindowsystem_version.h>
@@ -176,6 +178,22 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("+[URL]"), i18n("Document to open")));
     parser.process(app);
     about.processCommandLine(&parser);
+
+    // config migration code
+    auto config = KSharedConfig::openConfig();
+    if (!config->hasGroup("Plugins")) {
+        KConfigGroup pluginsGroup = config->group("Plugins");
+        const QStringList groups = config->groupList();
+        for (const QString &grpName : groups) {
+            const QString entryName = grpName + QLatin1String("Enabled");
+            KConfigGroup grp = config->group(grpName);
+            if (grp.hasKey(entryName)) {
+                // bool is just for typing reasons - we know that there is a value
+                pluginsGroup.writeEntry(entryName, grp.readEntry(entryName, true));
+                grp.deleteEntry(entryName);
+            }
+        }
+    }
 
     const KDBusService dbusService(KDBusService::Unique);
 

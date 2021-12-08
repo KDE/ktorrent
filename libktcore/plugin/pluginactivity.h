@@ -10,7 +10,7 @@
 #include <QWidget>
 #include <interfaces/activity.h>
 
-class KPluginSelector;
+class KPluginWidget;
 
 namespace kt
 {
@@ -30,13 +30,11 @@ public:
 
     void updatePluginList();
     void update();
-private Q_SLOTS:
-    void changed();
 
 private:
     PluginManager *pman;
-    KPluginSelector *pmw;
-    KPluginInfo::List list;
+    KPluginWidget *pmw;
+    QVector<KPluginMetaData> list;
 };
 
 }

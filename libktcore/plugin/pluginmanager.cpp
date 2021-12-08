@@ -12,6 +12,7 @@
 #include <KPluginMetaData>
 
 #include "pluginactivity.h"
+#include <KSharedConfig>
 #include <interfaces/guiinterface.h>
 #include <torrent/globals.h>
 #include <util/error.h>
@@ -50,19 +51,16 @@ void PluginManager::loadPluginList()
     prefpage->update();
 }
 
-inline bool isPluginEnabled(const KPluginMetaData &data)
-{
-    return KSharedConfig::openConfig()->group(data.pluginId()).readEntry(data.pluginId() + QLatin1String("Enabled"), data.isEnabledByDefault());
-}
 
 void PluginManager::loadPlugins()
 {
+    const KConfigGroup cfg = KSharedConfig::openConfig()->group("Plugins");
     int idx = 0;
     for (const KPluginMetaData &data : qAsConst(pluginsMetaData)) {
-        if (loaded.contains(idx) && !isPluginEnabled(data)) {
+        if (loaded.contains(idx) && !data.isEnabled(cfg)) {
             // unload it
             unload(data, idx);
-        } else if (!loaded.contains(idx) && isPluginEnabled(data)) {
+        } else if (!loaded.contains(idx) && data.isEnabled(cfg)) {
             // load it
             load(data, idx);
         }
