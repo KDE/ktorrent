@@ -32,7 +32,7 @@ class GUIInterface;
  * (setting an int to 0 is ok, creating widgets isn't).
  * Only the name, author and description may be set in the constructor.
  */
-class KTCORE_EXPORT Plugin : public KParts::Plugin
+class KTCORE_EXPORT Plugin : public QObject, public KXMLGUIClient
 {
     Q_OBJECT
 public:

@@ -8,9 +8,9 @@
 namespace kt
 {
 Plugin::Plugin(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
-    : KParts::Plugin(parent)
+    : QObject(parent)
 {
-    setMetaData(data);
+    Q_UNUSED(data);
     Q_UNUSED(args)
 }
 
