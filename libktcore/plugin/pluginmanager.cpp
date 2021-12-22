@@ -39,7 +39,7 @@ PluginManager::~PluginManager()
 
 void PluginManager::loadPluginList()
 {
-    pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent"));
+    pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent_plugins"));
 
     if (!prefpage) {
         prefpage = new PluginActivity(this);

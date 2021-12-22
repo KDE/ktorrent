@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_scanforlostfiles INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_scanforlostfiles)
 
 target_sources(ktorrent_scanforlostfiles PRIVATE
 	scanforlostfilesplugin.cpp

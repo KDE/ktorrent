@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_zeroconf INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_zeroconf)
 
 target_sources(ktorrent_zeroconf PRIVATE
     zeroconfplugin.cpp

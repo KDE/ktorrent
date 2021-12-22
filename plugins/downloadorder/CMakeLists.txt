@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_downloadorder INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_downloadorder)
 
 target_sources(ktorrent_downloadorder PRIVATE
     downloadorderplugin.cpp

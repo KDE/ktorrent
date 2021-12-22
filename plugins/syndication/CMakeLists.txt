@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_syndication INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_syndication)
 
 target_sources(ktorrent_syndication PRIVATE
 	syndicationplugin.cpp 

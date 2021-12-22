@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_magnetgenerator INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_magnetgenerator)
 
 target_sources(ktorrent_magnetgenerator PRIVATE
 	magnetgeneratorprefwidget.cpp

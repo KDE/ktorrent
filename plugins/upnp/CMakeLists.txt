@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_upnp INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_upnp)
 
 target_sources(ktorrent_upnp PRIVATE
     upnpplugin.cpp

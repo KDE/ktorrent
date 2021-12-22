@@ -19,7 +19,7 @@ if (BUILD_WITH_GEOIP)
     endif()
 endif(BUILD_WITH_GEOIP)
 
-kcoreaddons_add_plugin(ktorrent_infowidget INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_infowidget)
 
 target_sources(ktorrent_infowidget PRIVATE
 	infowidgetplugin.cpp 

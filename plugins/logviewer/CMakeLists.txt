@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_logviewer INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_logviewer)
 
 target_sources(ktorrent_logviewer PRIVATE
     logviewerplugin.cpp

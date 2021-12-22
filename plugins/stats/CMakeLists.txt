@@ -2,7 +2,7 @@ include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/drawer)
 
-kcoreaddons_add_plugin(ktorrent_stats INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_stats)
 
 target_sources(ktorrent_stats PRIVATE
 	drawer/ChartDrawer.cc

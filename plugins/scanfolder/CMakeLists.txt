@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_scanfolder INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_scanfolder)
 
 target_sources(ktorrent_scanfolder PRIVATE
 	scanthread.cpp 

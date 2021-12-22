@@ -8,6 +8,10 @@ else (${_option})
 endif (${_option})
 ENDMACRO (MACRO_KT_PLUGIN)
 
+function(ktorrent_add_plugin name)
+    kcoreaddons_add_plugin(${name} INSTALL_NAMESPACE "ktorrent_plugins")
+endfunction()
+
 macro_kt_plugin(ENABLE_LOGVIEWER_PLUGIN logviewer logviewer)
 macro_kt_plugin(ENABLE_INFOWIDGET_PLUGIN infowidget infowidget)
 if (HAVE_KF5Completion)

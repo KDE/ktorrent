@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_ipfilter INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_ipfilter)
 
 target_sources(ktorrent_ipfilter PRIVATE
     ipblocklist.cpp

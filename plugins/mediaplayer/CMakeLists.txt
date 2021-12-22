@@ -3,7 +3,7 @@ find_package(Taglib REQUIRED)
 #include_directories(${Qt5Multimedia_INCLUDE_DIRS})
 include_directories(SYSTEM ${PHONON_INCLUDES})
 
-kcoreaddons_add_plugin(ktorrent_mediaplayer INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_mediaplayer)
 
 set(ktmediaplayerplugin_dbus_SRC)
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)

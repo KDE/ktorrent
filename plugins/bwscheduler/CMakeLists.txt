@@ -1,4 +1,4 @@
-kcoreaddons_add_plugin(ktorrent_bwscheduler  INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_bwscheduler)
 
 set(ktbwschedulerplugin_dbus_SRC)
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)

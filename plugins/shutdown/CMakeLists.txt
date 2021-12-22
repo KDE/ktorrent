@@ -1,6 +1,6 @@
 include_directories(${CMAKE_BINARY_DIR})
 
-kcoreaddons_add_plugin(ktorrent_shutdown INSTALL_NAMESPACE "ktorrent")
+ktorrent_add_plugin(ktorrent_shutdown)
 
 set(ktshutdownplugin_dbus_SRC)
 
