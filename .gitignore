@@ -5,3 +5,5 @@ CMakeLists.txt.user
 /.idea
 cmake-build-*
 /.clang-format
+.cache
+compile_commands.json
