@@ -77,7 +77,7 @@ QVariant MediaModel::data(const QModelIndex &index, int role) const
     case Qt::UserRole: // user role is for finding out if a torrent is complete
         return mf->fullyAvailable();
     case Qt::UserRole + 1:
-        return QFileInfo(mf->path()).lastModified().toTime_t();
+        return QFileInfo(mf->path()).lastModified().toSecsSinceEpoch();
     default:
         return QVariant();
     }

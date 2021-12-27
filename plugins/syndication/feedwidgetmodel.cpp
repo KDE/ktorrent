@@ -96,7 +96,7 @@ QVariant FeedWidgetModel::data(const QModelIndex &index, int role) const
         case 0:
             return item->title();
         case 1:
-            return QLocale().toString(QDateTime::fromTime_t(item->datePublished()), QLocale::ShortFormat);
+            return QLocale().toString(QDateTime::fromSecsSinceEpoch(item->datePublished()), QLocale::ShortFormat);
         case 2:
             return TorrentUrlFromItem(item);
         default:
