@@ -8,8 +8,9 @@
 #include <QCheckBox>
 #include <QDateTime>
 
+#include <KIO/JobUiDelegate>
+#include <KIO/OpenUrlJob>
 #include <KLocalizedString>
-#include <KRun>
 
 #include "availabilitychunkbar.h"
 #include "downloadedchunkbar.h"
@@ -298,7 +299,9 @@ void StatusTab::maxTimeChanged(double v)
 
 void StatusTab::linkActivated(const QString &link)
 {
-    new KRun(QUrl(link), QApplication::activeWindow());
+    auto job = new KIO::OpenUrlJob(QUrl(link));
+    job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, QApplication::activeWindow()));
+    job->start();
 }
 
 }

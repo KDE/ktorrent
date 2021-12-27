@@ -11,8 +11,6 @@
 #include <QLocale>
 #include <QPalette>
 
-#include <KRun>
-
 #include "feedwidget.h"
 #include "feedwidgetmodel.h"
 #include "filterlist.h"

@@ -17,10 +17,11 @@
 
 #include <KActionCollection>
 #include <KFileWidget>
+#include <KIO/JobUiDelegate>
+#include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KRecentDirs>
-#include <KRun>
 #include <KSharedConfig>
 #include <KStandardAction>
 
@@ -48,6 +49,13 @@ using namespace bt;
 
 namespace kt
 {
+void openUrl(const QUrl &url)
+{
+    auto job = new KIO::OpenUrlJob(url);
+    job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
+    job->start();
+}
+
 View::View(Core *core, GUI *gui, QWidget *parent)
     : QTreeView(parent)
     , core(core)
@@ -525,7 +533,7 @@ void View::previewTorrents()
     getSelection(sel);
     for (bt::TorrentInterface *tc : qAsConst(sel)) {
         if (tc->readyForPreview() && !tc->getStats().multi_file_torrent) {
-            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), nullptr, true);
+            openUrl(QUrl::fromLocalFile(tc->getStats().output_path));
         }
     }
 }
@@ -536,9 +544,9 @@ void View::openDataDir()
     getSelection(sel);
     for (bt::TorrentInterface *tc : qAsConst(sel)) {
         if (tc->getStats().multi_file_torrent)
-            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), nullptr, true);
+            openUrl(QUrl::fromLocalFile(tc->getStats().output_path));
         else
-            new KRun(QUrl::fromLocalFile(tc->getDataDir()), nullptr, true);
+            openUrl(QUrl::fromLocalFile(tc->getDataDir()));
     }
 }
 
@@ -547,7 +555,7 @@ void View::openTorDir()
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
     for (bt::TorrentInterface *tc : qAsConst(sel)) {
-        new KRun(QUrl::fromLocalFile(tc->getTorDir()), nullptr, true);
+        openUrl(QUrl::fromLocalFile(tc->getTorDir()));
     }
 }
 
@@ -719,9 +727,9 @@ void View::onDoubleClicked(const QModelIndex &index)
     bt::TorrentInterface *tc = model->torrentFromIndex(index);
     if (tc) {
         if (tc->getStats().multi_file_torrent)
-            new KRun(QUrl::fromLocalFile(tc->getStats().output_path), nullptr, true);
+            openUrl(QUrl::fromLocalFile(tc->getStats().output_path));
         else
-            new KRun(QUrl::fromLocalFile(tc->getDataDir()), nullptr, true);
+            openUrl(QUrl::fromLocalFile(tc->getDataDir()));
     }
 }
 
