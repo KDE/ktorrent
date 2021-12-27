@@ -48,7 +48,7 @@ MediaPlayerActivity::MediaPlayerActivity(CoreInterface *core, KActionCollection 
     media_player = new MediaPlayer(this);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     tabs = new QTabWidget(this);
     layout->addWidget(tabs);
 

@@ -21,7 +21,7 @@ TorrentSearchBar::TorrentSearchBar(View *view, QWidget *parent)
 {
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     hide_search_bar = new QToolButton(this);
     hide_search_bar->setIcon(QIcon::fromTheme(QStringLiteral("window-close")));

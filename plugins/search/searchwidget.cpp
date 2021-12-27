@@ -47,7 +47,7 @@ SearchWidget::SearchWidget(SearchPlugin *sp)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     webview = new WebView(this, sp->getProxy());
 
     KActionCollection *ac = sp->getSearchActivity()->part()->actionCollection();

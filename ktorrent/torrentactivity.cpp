@@ -46,7 +46,7 @@ TorrentActivity::TorrentActivity(Core *core, GUI *gui, QWidget *parent)
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     vsplit = new QSplitter(Qt::Vertical, this);
     layout->addWidget(vsplit);
     hsplit = new QSplitter(Qt::Horizontal, vsplit);
@@ -56,7 +56,7 @@ TorrentActivity::TorrentActivity(Core *core, GUI *gui, QWidget *parent)
 
     QVBoxLayout *vlayout = new QVBoxLayout(view_part);
     vlayout->setSpacing(0);
-    vlayout->setMargin(0);
+    vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->addWidget(group_switcher);
     vlayout->addWidget(search_bar);
     vlayout->addWidget(view);

@@ -25,14 +25,14 @@ SyndicationTab::SyndicationTab(KActionCollection *ac, FeedList *feeds, FilterLis
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     splitter = new QSplitter(Qt::Vertical, this);
     layout->addWidget(splitter);
 
     QWidget *widget = new QWidget(splitter);
     layout = new QVBoxLayout(widget);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     feed_tool_bar = new KToolBar(widget);
     feed_tool_bar->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -49,7 +49,7 @@ SyndicationTab::SyndicationTab(KActionCollection *ac, FeedList *feeds, FilterLis
     widget = new QWidget(splitter);
     layout = new QVBoxLayout(widget);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     filter_tool_bar = new KToolBar(widget);
     filter_tool_bar->setToolButtonStyle(Qt::ToolButtonIconOnly);

@@ -31,7 +31,7 @@ PlayListWidget::PlayListWidget(kt::MediaFileCollection *collection, kt::MediaPla
     , collection(collection)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     QAction *remove_action = new QAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this);

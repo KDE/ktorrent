@@ -25,7 +25,7 @@ PluginActivity::PluginActivity(PluginManager *pman)
     , pman(pman)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     pmw = new KPluginWidget(this);
     connect(pmw, &KPluginWidget::changed, this, &PluginActivity::update);
     connect(pmw, &KPluginWidget::pluginConfigSaved, this, &PluginActivity::update);

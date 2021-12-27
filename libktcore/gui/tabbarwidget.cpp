@@ -58,7 +58,7 @@ TabBarWidget::TabBarWidget(QSplitter *splitter, QWidget *parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     tab_bar = new KToolBar(this);
     tab_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     connect(tab_bar, &QToolBar::toolButtonStyleChanged, this, &TabBarWidget::toolButtonStyleChanged);

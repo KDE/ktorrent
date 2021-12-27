@@ -29,7 +29,7 @@ MagnetView::MagnetView(MagnetManager *magnetManager, QWidget *parent)
     model = new MagnetModel(magnetManager, this);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     // magnets view

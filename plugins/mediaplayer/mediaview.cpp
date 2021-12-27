@@ -72,11 +72,11 @@ MediaView::MediaView(MediaModel *model, QWidget *parent)
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setSpacing(0);
-    hbox->setMargin(0);
+    hbox->setContentsMargins(0, 0, 0, 0);
 
     tool_bar = new KToolBar(this);
     hbox->addWidget(tool_bar);

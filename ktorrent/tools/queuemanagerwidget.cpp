@@ -30,10 +30,10 @@ QueueManagerWidget::QueueManagerWidget(QueueManager *qman, QWidget *parent)
     , qman(qman)
 {
     QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->setMargin(0);
+    vbox->setContentsMargins(0, 0, 0, 0);
     vbox->setSpacing(0);
     view = new QTreeView(this);
     view->setUniformRowHeights(true);

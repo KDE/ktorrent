@@ -44,7 +44,7 @@ VideoWidget::VideoWidget(MediaPlayer *player, KActionCollection *ac, QWidget *pa
     , powermanagement_cookie(0)
 {
     QVBoxLayout *vlayout = new QVBoxLayout(this);
-    vlayout->setMargin(0);
+    vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
 
     video = new Phonon::VideoWidget(this);
