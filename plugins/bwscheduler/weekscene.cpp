@@ -44,7 +44,7 @@ qreal LongestDayWidth(const QFontMetricsF &fm)
 {
     qreal wd = 0;
     for (int i = 1; i <= 7; i++) {
-        qreal w = fm.width(QLocale::system().dayName(i));
+        qreal w = fm.horizontalAdvance(QLocale::system().dayName(i));
         if (w > wd)
             wd = w;
     }
@@ -80,7 +80,7 @@ void WeekScene::addCalendar()
     delete tmp;
 
     // first add 7 rectangles for each day of the week
-    xoff = fm.width(QStringLiteral("00:00")) + 10;
+    xoff = fm.horizontalAdvance(QStringLiteral("00:00")) + 10;
     yoff = 2 * fm.height() + 10;
     day_width = LongestDayWidth(fm) * 1.5;
     hour_height = fm.height() * 1.5;
@@ -99,7 +99,7 @@ void WeekScene::addCalendar()
         QString day = QLocale::system().dayName(i + 1);
 
         // make sure day is centered in the middle of the column
-        qreal dlen = fm.width(day);
+        qreal dlen = fm.horizontalAdvance(day);
         qreal mid = xoff + day_width * (i + 0.5);
         qreal start = mid - dlen * 0.5;
 

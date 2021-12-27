@@ -27,7 +27,7 @@ GuidanceLine::GuidanceLine(qreal x, qreal y, qreal text_offset)
     text->setPos(text_offset, y);
 
     QFontMetricsF fm(text->font());
-    qreal xe = text_offset + fm.width(ZERO);
+    qreal xe = text_offset + fm.horizontalAdvance(ZERO);
     setLine(x, y, xe, y);
 }
 
@@ -42,7 +42,7 @@ void GuidanceLine::update(qreal nx, qreal ny, const QString &txt)
     text->setPlainText(txt);
     text->setPos(text_offset, y);
     QFontMetricsF fm(text->font());
-    qreal xe = text_offset + fm.width(txt);
+    qreal xe = text_offset + fm.horizontalAdvance(txt);
     setLine(x, y, xe, y);
 }
 
