@@ -6,8 +6,9 @@
 #include "scanforlostfileswidget.h"
 #include "scanforlostfilesplugin.h"
 #include <KIO/DeleteJob>
+#include <KIO/JobUiDelegate>
+#include <KIO/OpenUrlJob>
 #include <KMessageBox>
-#include <KRun>
 #include <QClipboard>
 #include <QMenu>
 
@@ -50,7 +51,9 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, Q
 
     connect(actionOpen_file, &QAction::triggered, [=]() {
         QModelIndex index = treeView->currentIndex();
-        new KRun(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(index))), nullptr, true);
+        auto job = new KIO::OpenUrlJob(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(index))));
+        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
+        job->start();
     });
 
     treeView->setSortingEnabled(true);
@@ -66,7 +69,9 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, Q
 
     reqFolder->setMode(KFile::Directory | KFile::ExistingOnly);
     connect(reqFolder, &KUrlRequester::urlSelected, btnScanFolder, &QPushButton::click);
-    connect(reqFolder, QOverload<>::of(&KUrlRequester::returnPressed), btnScanFolder, &QPushButton::click);
+    connect(reqFolder, &KUrlRequester::returnPressed, btnScanFolder, [this]() {
+        btnScanFolder->click();
+    });
     if (CoreInterface *c = m_plugin->getCore()) {
         if (GroupManager *gm = c->getGroupManager()) {
             if (Group *all = gm->allGroup()) {
