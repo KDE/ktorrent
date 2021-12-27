@@ -7,8 +7,6 @@ target_sources(ktorrent_magnetgenerator PRIVATE
 ki18n_wrap_ui(ktorrent_magnetgenerator magnetgeneratorprefwidget.ui)
 kconfig_add_kcfg_files(ktorrent_magnetgenerator magnetgeneratorpluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_magnetgenerator ktorrent_magnetgenerator.desktop)
-
 target_link_libraries(
     ktorrent_magnetgenerator
     ktcore

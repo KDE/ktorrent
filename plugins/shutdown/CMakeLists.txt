@@ -20,7 +20,6 @@ target_sources(ktorrent_shutdown PRIVATE
 
 ki18n_wrap_ui(ktorrent_shutdown shutdowndlg.ui)
 
-kcoreaddons_desktop_to_json(ktorrent_shutdown ktorrent_shutdown.desktop)
 target_link_libraries(
     ktorrent_shutdown
     ktcore

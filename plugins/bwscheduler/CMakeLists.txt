@@ -21,8 +21,6 @@ target_sources(ktorrent_bwscheduler PRIVATE
 ki18n_wrap_ui(ktorrent_bwscheduler edititemdlg.ui bwprefpage.ui)
 kconfig_add_kcfg_files(ktorrent_bwscheduler bwschedulerpluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_bwscheduler ktorrent_bwscheduler.desktop)
-
 target_link_libraries(
     ktorrent_bwscheduler
     ktcore

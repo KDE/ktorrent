@@ -11,8 +11,6 @@ target_sources(ktorrent_logviewer PRIVATE
 ki18n_wrap_ui(ktorrent_logviewer logprefwidget.ui)
 kconfig_add_kcfg_files(ktorrent_logviewer logviewerpluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_logviewer ktorrent_logviewer.desktop)
-
 target_link_libraries(
     ktorrent_logviewer
     ktcore

@@ -10,8 +10,6 @@ target_sources(ktorrent_scanfolder PRIVATE
 ki18n_wrap_ui(ktorrent_scanfolder scanfolderprefpage.ui)
 kconfig_add_kcfg_files(ktorrent_scanfolder scanfolderpluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_scanfolder ktorrent_scanfolder.desktop)
-
 target_link_libraries(
     ktorrent_scanfolder
     ktcore

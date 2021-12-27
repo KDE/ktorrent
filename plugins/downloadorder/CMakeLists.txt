@@ -9,8 +9,6 @@ target_sources(ktorrent_downloadorder PRIVATE
 
 ki18n_wrap_ui(ktorrent_downloadorder downloadorderwidget.ui)
 
-kcoreaddons_desktop_to_json(ktorrent_downloadorder  ktorrent_downloadorder.desktop)
-
 target_link_libraries(
     ktorrent_downloadorder
     ktcore

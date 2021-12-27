@@ -10,8 +10,6 @@ target_sources(ktorrent_scanforlostfiles PRIVATE
 ki18n_wrap_ui(ktorrent_scanforlostfiles scanforlostfilesprefpage.ui scanforlostfileswidget.ui)
 kconfig_add_kcfg_files(ktorrent_scanforlostfiles scanforlostfilespluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_scanforlostfiles ktorrent_scanforlostfiles.desktop)
-
 target_link_libraries(
     ktorrent_scanforlostfiles
     ktcore

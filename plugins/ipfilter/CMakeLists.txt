@@ -12,8 +12,6 @@ target_sources(ktorrent_ipfilter PRIVATE
 ki18n_wrap_ui(ktorrent_ipfilter ipblockingprefpage.ui convertdialog.ui)
 kconfig_add_kcfg_files(ktorrent_ipfilter ipfilterpluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_ipfilter ktorrent_ipfilter.desktop)
-
 target_link_libraries(
     ktorrent_ipfilter
     ktcore

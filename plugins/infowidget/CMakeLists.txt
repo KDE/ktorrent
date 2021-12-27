@@ -52,8 +52,6 @@ endif()
 ki18n_wrap_ui(ktorrent_infowidget iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
 kconfig_add_kcfg_files(ktorrent_infowidget infowidgetpluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_infowidget ktorrent_infowidget.desktop)
-
 target_link_libraries(
     ktorrent_infowidget
     ktcore

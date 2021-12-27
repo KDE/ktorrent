@@ -31,8 +31,6 @@ target_sources(ktorrent_mediaplayer PRIVATE
 ki18n_wrap_ui(ktorrent_mediaplayer mediacontroller.ui)
 kconfig_add_kcfg_files(ktorrent_mediaplayer mediaplayerpluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_mediaplayer ktorrent_mediaplayer.desktop)
-
 target_link_libraries(
     ktorrent_mediaplayer
     ktcore

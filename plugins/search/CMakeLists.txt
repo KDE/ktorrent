@@ -16,8 +16,6 @@ target_sources(ktorrent_search PRIVATE
 ki18n_wrap_ui(ktorrent_search searchpref.ui)
 kconfig_add_kcfg_files(ktorrent_search searchpluginsettings.kcfgc)
 
-kcoreaddons_desktop_to_json(ktorrent_search ktorrent_search.desktop)
-
 target_link_libraries(
     ktorrent_search
     ktcore

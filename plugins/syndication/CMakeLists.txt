@@ -21,8 +21,6 @@ target_sources(ktorrent_syndication PRIVATE
 
 ki18n_wrap_ui(ktorrent_syndication feedwidget.ui managefiltersdlg.ui filtereditor.ui)
 
-kcoreaddons_desktop_to_json(ktorrent_syndication ktorrent_syndication.desktop)
-
 target_link_libraries(
     ktorrent_syndication
     ktcore

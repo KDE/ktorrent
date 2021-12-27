@@ -24,7 +24,6 @@ target_sources(ktorrent_stats PRIVATE
 
 ki18n_wrap_ui(ktorrent_stats Spd.ui Conns.ui Settings.ui DisplaySettings.ui)
 kconfig_add_kcfg_files(ktorrent_stats statspluginsettings.kcfgc)
-kcoreaddons_desktop_to_json(ktorrent_stats ktorrent_stats.desktop)
 
 target_link_libraries(
     ktorrent_stats
