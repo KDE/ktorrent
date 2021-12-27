@@ -10,9 +10,9 @@
 
 #include <KLocalizedString>
 #include <KPluginMetaData>
+#include <KSharedConfig>
 
 #include "pluginactivity.h"
-#include <KSharedConfig>
 #include <interfaces/guiinterface.h>
 #include <torrent/globals.h>
 #include <util/error.h>
@@ -39,7 +39,7 @@ PluginManager::~PluginManager()
 
 void PluginManager::loadPluginList()
 {
-    pluginsMetaData = KPluginLoader::findPlugins(QStringLiteral("ktorrent_plugins"));
+    pluginsMetaData = KPluginMetaData::findPlugins(QStringLiteral("ktorrent_plugins"));
 
     if (!prefpage) {
         prefpage = new PluginActivity(this);
@@ -70,13 +70,7 @@ void PluginManager::loadPlugins()
 
 void PluginManager::load(const KPluginMetaData &data, int idx)
 {
-    KPluginLoader loader(data.fileName());
-    KPluginFactory *factory = loader.factory();
-    if (!factory)
-        return;
-
-    factory->setMetaData(data);
-    Plugin *plugin = factory->create<kt::Plugin>();
+    auto plugin = KPluginFactory::instantiatePlugin<kt::Plugin>(data).plugin;
     if (!plugin) {
         Out(SYS_GEN | LOG_NOTICE) << QStringLiteral("Creating instance of plugin %1 failed !").arg(pluginsMetaData.at(idx).fileName()) << endl;
         return;
