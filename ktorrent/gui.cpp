@@ -320,7 +320,7 @@ void GUI::showIPFilter()
 
 void GUI::configureKeys()
 {
-    KShortcutsDialog::configure(actionCollection());
+    KShortcutsDialog::showDialog(actionCollection());
 }
 
 void GUI::configureToolbars()
