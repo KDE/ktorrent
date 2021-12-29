@@ -3,10 +3,22 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
-                "Name": "Joris Guisson, Ivan Vasic"
+                "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ca]": "Joris Guisson, Ivan Vasic",
+                "Name[hu]": "Joris Guisson, Ivan Vasic",
+                "Name[ia]": "Joris Guisson, Ivan Vasic",
+                "Name[nl]": "Joris Guisson, Ivan Vasic",
+                "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx"
             }
         ],
         "Description": "Displays the logging output",
+        "Description[ca]": "Mostra la sortida del registre",
+        "Description[hu]": "A naplózás kimenetének megjelenítése",
+        "Description[ia]": "Monstra le exito de registrar",
+        "Description[nl]": "Toon de log-uitvoer",
+        "Description[uk]": "Показати відомості з журналу",
+        "Description[x-test]": "xxDisplays the logging outputxx",
         "EnabledByDefault": false,
         "Icon": "utilities-log-viewer",
         "Id": "LogViewerPlugin",

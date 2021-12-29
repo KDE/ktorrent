@@ -3,10 +3,22 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com",
-                "Name": "Joris Guisson"
+                "Name": "Joris Guisson",
+                "Name[ca]": "Joris Guisson",
+                "Name[hu]": "Joris Guisson",
+                "Name[ia]": "Joris Guisson",
+                "Name[nl]": "Joris Guisson",
+                "Name[uk]": "Joris Guisson",
+                "Name[x-test]": "xxJoris Guissonxx"
             }
         ],
         "Description": "Specify the download order of a multi-file torrent",
+        "Description[ca]": "Especifica l'ordre de baixada d'un torrent amb múltiples fitxers",
+        "Description[hu]": "Többfájlos torrentek letöltési sorrendjének megadása",
+        "Description[ia]": "Specifica le ordine de discargar de un torrent multi-file",
+        "Description[nl]": "Specificeer de volgorde voor het downloaden van een multi-bestands-torrent",
+        "Description[uk]": "Додаток для визначення порядку отримання багатофайлового торента",
+        "Description[x-test]": "xxSpecify the download order of a multi-file torrentxx",
         "EnabledByDefault": false,
         "Icon": "view-sort-ascending",
         "Id": "DownloadOrderPlugin",

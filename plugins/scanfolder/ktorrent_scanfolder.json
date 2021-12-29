@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
-                "Name": "Joris Guisson, Ivan Vasic"
+                "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ca]": "Joris Guisson, Ivan Vasic",
+                "Name[hu]": "Joris Guisson, Ivan Vasic",
+                "Name[ia]": "Joris Guisson, Ivan Vasic",
+                "Name[nl]": "Joris Guisson, Ivan Vasic",
+                "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx"
             }
         ],
         "Description": "Scan folders for torrent files and load them",
+        "Description[ca]": "Explora les carpetes cercant fitxers torrent i els carrega",
+        "Description[hu]": "Mappák figyelése és a torrentfájlok betöltése",
+        "Description[nl]": "Scan mappen op torrentbestanden en laad deze",
+        "Description[uk]": "Знайти у теках файли торентів і завантажити їх",
+        "Description[x-test]": "xxScan folders for torrent files and load themxx",
         "EnabledByDefault": false,
         "Icon": "folder-open",
         "Id": "ScanFolderPlugin",

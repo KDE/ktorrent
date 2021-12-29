@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
-                "Name": "Joris Guisson, Ivan Vasic"
+                "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ca]": "Joris Guisson, Ivan Vasic",
+                "Name[hu]": "Joris Guisson, Ivan Vasic",
+                "Name[ia]": "Joris Guisson, Ivan Vasic",
+                "Name[nl]": "Joris Guisson, Ivan Vasic",
+                "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx"
             }
         ],
         "Description": "Forward ports using UPnP",
+        "Description[ca]": "Redirigeix els ports usant UPnP",
+        "Description[hu]": "Portátirányítás UPnP használatával",
+        "Description[nl]": "Forward poorten met behulp van UPnP",
+        "Description[uk]": "Переспрямування портів за допомогою UPnP",
+        "Description[x-test]": "xxForward ports using UPnPxx",
         "EnabledByDefault": false,
         "Icon": "kt-upnp",
         "Id": "UPnPPlugin",

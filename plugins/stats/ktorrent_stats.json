@@ -3,10 +3,22 @@
         "Authors": [
             {
                 "Email": "athantor@gmail.com",
-                "Name": "Krzysztof Kundzicz"
+                "Name": "Krzysztof Kundzicz",
+                "Name[ca]": "Krzysztof Kundzicz",
+                "Name[hu]": "Krzysztof Kundzicz",
+                "Name[ia]": "Krzysztof Kundzicz",
+                "Name[nl]": "Krzysztof Kundzicz",
+                "Name[uk]": "Krzysztof Kundzicz",
+                "Name[x-test]": "xxKrzysztof Kundziczxx"
             }
         ],
         "Description": "Shows statistics about torrents in several graphs",
+        "Description[ca]": "Mostra les estadístiques sobre els torrents en diverses gràfiques",
+        "Description[hu]": "Statisztikák megjelenítése a torrentekről több grafikonon",
+        "Description[ia]": "Monstra Statistica sur le torrentes in multe graphicos",
+        "Description[nl]": "Geeft statistieken weer over torrents in verschillende grafieken",
+        "Description[uk]": "Показує статистику торентів за допомогою декількох графіків",
+        "Description[x-test]": "xxShows statistics about torrents in several graphsxx",
         "EnabledByDefault": false,
         "Icon": "view-statistics",
         "Id": "StatsPlugin",

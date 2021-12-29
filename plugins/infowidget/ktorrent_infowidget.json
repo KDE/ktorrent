@@ -3,10 +3,22 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
-                "Name": "Joris Guisson, Ivan Vasic"
+                "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ca]": "Joris Guisson, Ivan Vasic",
+                "Name[hu]": "Joris Guisson, Ivan Vasic",
+                "Name[ia]": "Joris Guisson, Ivan Vasic",
+                "Name[nl]": "Joris Guisson, Ivan Vasic",
+                "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx"
             }
         ],
         "Description": "Displays general information about a torrent in several tabs",
+        "Description[ca]": "Mostra informació general quant a un torrent en diverses pestanyes",
+        "Description[hu]": "Általános információk megjelenítése több lapon egy torrentről",
+        "Description[ia]": "Monstra information general re un torrnt in multe schedas",
+        "Description[nl]": "Geef informatie over een torrent, verdeeld over meerdere tabbladen",
+        "Description[uk]": "Показ загальної інформації про торент у декількох вкладках",
+        "Description[x-test]": "xxDisplays general information about a torrent in several tabsxx",
         "EnabledByDefault": true,
         "Icon": "kt-info-widget",
         "Id": "InfoWidgetPlugin",

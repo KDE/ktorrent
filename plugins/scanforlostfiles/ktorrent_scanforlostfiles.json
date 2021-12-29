@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "trufanovan@gmail.com",
-                "Name": "Alexander Trufanov"
+                "Name": "Alexander Trufanov",
+                "Name[ca]": "Alexander Trufanov",
+                "Name[hu]": "Alexander Trufanov",
+                "Name[ia]": "Alexander Trufanov",
+                "Name[nl]": "Alexander Trufanov",
+                "Name[uk]": "Alexander Trufanov",
+                "Name[x-test]": "xxAlexander Trufanovxx"
             }
         ],
         "Description": "Display files in the selected folder that don't belong to any torrent",
+        "Description[ca]": "Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent",
+        "Description[hu]": "Fájlok megjelenítése a kijelölt mappában, amik nem tartoznak egy torrenthez sem",
+        "Description[nl]": "Bestanden in de geselecteerde map tonen die niet behoren tot een torrent",
+        "Description[uk]": "Показати файли у вибраній теці, які не належать до жодного торента",
+        "Description[x-test]": "xxDisplay files in the selected folder that don't belong to any torrentxx",
         "EnabledByDefault": false,
         "Icon": "edit-find",
         "Id": "ScanForLostFilesPlugin",
@@ -22,6 +33,7 @@
         "Name[fi]": "Etsi kadonneita tiedostoja",
         "Name[fr]": "Rechercher des fichiers perdus",
         "Name[hu]": "Elveszett fájlok keresése",
+        "Name[ia]": "Scande per files perdite",
         "Name[it]": "Ricerca dei file persi",
         "Name[ko]": "잃어버린 파일 검색",
         "Name[nl]": "Zoek naar verloren bestanden",

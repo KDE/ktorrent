@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com",
-                "Name": "Joris Guisson"
+                "Name": "Joris Guisson",
+                "Name[ca]": "Joris Guisson",
+                "Name[hu]": "Joris Guisson",
+                "Name[ia]": "Joris Guisson",
+                "Name[nl]": "Joris Guisson",
+                "Name[uk]": "Joris Guisson",
+                "Name[x-test]": "xxJoris Guissonxx"
             }
         ],
         "Description": "Syndication plugin for KTorrent, supporting RSS and Atom feeds",
+        "Description[ca]": "Connector de sindicació per al KTorrent, permet canals RSS i Atom",
+        "Description[hu]": "RSS- és Atom-hírforrásokat támogató hírgyűjtő bővítmény KTorrenthez",
+        "Description[nl]": "Syndication-plugin voor KTorrent, ondersteunt RSS en Atom-feeds",
+        "Description[uk]": "Додаток синдикації для KTorrent, з підтримкою подач RSS і Atom",
+        "Description[x-test]": "xxSyndication plugin for KTorrent, supporting RSS and Atom feedsxx",
         "EnabledByDefault": false,
         "Icon": "application-rss+xml",
         "Id": "SyndicationPlugin",
@@ -29,6 +40,7 @@
         "Name[ga]": "Sindeacáitiú",
         "Name[gl]": "Sindicación",
         "Name[hu]": "Hírgyűjtő",
+        "Name[ia]": "Syndication",
         "Name[is]": "Fréttastraumar",
         "Name[it]": "Sottoscrizioni",
         "Name[ja]": "シンジケーション",

@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
-                "Name": "Joris Guisson, Ivan Vasic"
+                "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ca]": "Joris Guisson, Ivan Vasic",
+                "Name[hu]": "Joris Guisson, Ivan Vasic",
+                "Name[ia]": "Joris Guisson, Ivan Vasic",
+                "Name[nl]": "Joris Guisson, Ivan Vasic",
+                "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx"
             }
         ],
         "Description": "Search for torrents",
+        "Description[ca]": "Cerca de torrents",
+        "Description[hu]": "Torrentek keresése",
+        "Description[nl]": "Zoeken naar torrents",
+        "Description[uk]": "Пошук торентів",
+        "Description[x-test]": "xxSearch for torrentsxx",
         "EnabledByDefault": false,
         "Icon": "edit-find",
         "Id": "SearchPlugin",

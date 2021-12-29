@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "jonas@gannon.se",
-                "Name": "Jonas Lundqvist"
+                "Name": "Jonas Lundqvist",
+                "Name[ca]": "Jonas Lundqvist",
+                "Name[hu]": "Jonas Lundqvist",
+                "Name[ia]": "Jonas Lundqvist",
+                "Name[nl]": "Jonas Lundqvist",
+                "Name[uk]": "Jonas Lundqvist",
+                "Name[x-test]": "xxJonas Lundqvistxx"
             }
         ],
         "Description": "Generates magnet links",
+        "Description[ca]": "Genera enllaços magnet",
+        "Description[hu]": "Magnet-hivatkozások generálása",
+        "Description[nl]": "Genereert magneetlinks",
+        "Description[uk]": "Створює посилання magnet",
+        "Description[x-test]": "xxGenerates magnet linksxx",
         "EnabledByDefault": false,
         "Icon": "kt-magnet",
         "Id": "MagnetGeneratorPlugin",

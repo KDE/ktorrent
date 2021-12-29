@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
-                "Name": "Joris Guisson, Ivan Vasic"
+                "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ca]": "Joris Guisson, Ivan Vasic",
+                "Name[hu]": "Joris Guisson, Ivan Vasic",
+                "Name[ia]": "Joris Guisson, Ivan Vasic",
+                "Name[nl]": "Joris Guisson, Ivan Vasic",
+                "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx"
             }
         ],
         "Description": "Filter IP addresses through a blocklist",
+        "Description[ca]": "Filtra les adreces IP a través d'una llista de bloqueig",
+        "Description[hu]": "IP-címek szűrése tiltólista alapján",
+        "Description[nl]": "Filter IP-adressen via een blokkeerlijst",
+        "Description[uk]": "Фільтрувати IP-адреси за списком блокування",
+        "Description[x-test]": "xxFilter IP addresses through a blocklistxx",
         "EnabledByDefault": false,
         "Icon": "view-filter",
         "Id": "IPFilterPlugin",

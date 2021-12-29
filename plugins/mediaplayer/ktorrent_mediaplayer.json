@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "joris.guisson@gmail.com",
-                "Name": "Joris Guisson"
+                "Name": "Joris Guisson",
+                "Name[ca]": "Joris Guisson",
+                "Name[hu]": "Joris Guisson",
+                "Name[ia]": "Joris Guisson",
+                "Name[nl]": "Joris Guisson",
+                "Name[uk]": "Joris Guisson",
+                "Name[x-test]": "xxJoris Guissonxx"
             }
         ],
         "Description": "Phonon-based media player",
+        "Description[ca]": "Reproductor de suports basat en el Phonon",
+        "Description[hu]": "Phonon-alapú médialejátszó",
+        "Description[nl]": "Phonon-gebaseerde mediaspeler",
+        "Description[uk]": "Заснований на Phonon додаток програвача для KTorrent",
+        "Description[x-test]": "xxPhonon-based media playerxx",
         "EnabledByDefault": false,
         "Icon": "applications-multimedia",
         "Id": "MediaPlayerPlugin",
