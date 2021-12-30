@@ -69,7 +69,7 @@ SearchToolBar::SearchToolBar(KActionCollection *ac, kt::SearchEngineList *sl, QO
     m_search_engine = new QComboBox(nullptr);
     search_engine_action->setDefaultWidget(m_search_engine);
     ac->addAction(QLatin1String("search_engine"), search_engine_action);
-    connect(m_search_engine, qOverload<int>(&QComboBox::currentIndexChanged), this, &SearchToolBar::selectedEngineChanged);
+    connect(m_search_engine, &QComboBox::currentIndexChanged, this, &SearchToolBar::selectedEngineChanged);
 
     QWidgetAction *search_engine_label_action = new QWidgetAction(this);
     search_engine_label_action->setText(i18n("Search Engine Label"));

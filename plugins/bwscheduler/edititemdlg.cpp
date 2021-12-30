@@ -61,8 +61,8 @@ EditItemDlg::EditItemDlg(kt::Schedule *schedule, ScheduleItem *item, bool new_it
 
     connect(m_from, &QTimeEdit::timeChanged, this, &EditItemDlg::fromChanged);
     connect(m_to, &QTimeEdit::timeChanged, this, &EditItemDlg::toChanged);
-    connect(m_start_day, qOverload<int>(&QComboBox::activated), this, &EditItemDlg::startDayChanged);
-    connect(m_end_day, qOverload<int>(&QComboBox::activated), this, &EditItemDlg::endDayChanged);
+    connect(m_start_day, &QComboBox::activated, this, &EditItemDlg::startDayChanged);
+    connect(m_end_day, &QComboBox::activated, this, &EditItemDlg::endDayChanged);
 
     setWindowTitle(new_item ? i18n("Add an item") : i18n("Edit an item"));
 }

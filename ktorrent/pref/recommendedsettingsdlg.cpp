@@ -30,8 +30,8 @@ RecommendedSettingsDlg::RecommendedSettingsDlg(QWidget *parent)
     connect(m_chk_avg_speed_slot, &QCheckBox::toggled, this, &RecommendedSettingsDlg::avgSpeedSlotToggled);
     connect(m_chk_sim_torrents, &QCheckBox::toggled, this, &RecommendedSettingsDlg::simTorrentsToggled);
     connect(m_chk_slots, &QCheckBox::toggled, this, &RecommendedSettingsDlg::slotsToggled);
-    connect(m_upload_bw, qOverload<int>(&QSpinBox::valueChanged), this, &RecommendedSettingsDlg::uploadBWChanged);
-    connect(m_download_bw, qOverload<int>(&QSpinBox::valueChanged), this, &RecommendedSettingsDlg::downloadBWChanged);
+    connect(m_upload_bw, &QSpinBox::valueChanged, this, &RecommendedSettingsDlg::uploadBWChanged);
+    connect(m_download_bw, &QSpinBox::valueChanged, this, &RecommendedSettingsDlg::downloadBWChanged);
 
     m_avg_speed_slot->setEnabled(false);
     m_slots->setEnabled(false);

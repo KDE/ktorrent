@@ -116,7 +116,7 @@ int FileSelectDlg::execute(bt::TorrentInterface *tc, bool *start, bool *skip_che
     int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
     Out(SYS_GEN | LOG_DEBUG) << "Codec: " << QString::fromLatin1(tc->getTextCodec()->name()) << " " << idx << endl;
     m_encoding->setCurrentIndex(idx);
-    connect(m_encoding, qOverload<int>(&KComboBox::currentIndexChanged), this, &FileSelectDlg::onCodecChanged);
+    connect(m_encoding, &KComboBox::currentIndexChanged, this, &FileSelectDlg::onCodecChanged);
 
     for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
         bt::TorrentFileInterface &file = tc->getTorrentFile(i);
@@ -410,7 +410,7 @@ void FileSelectDlg::loadGroups()
     }
 
     m_cmbGroups->addItems(grps);
-    connect(m_cmbGroups, qOverload<int>(&QComboBox::activated), this, &FileSelectDlg::groupActivated);
+    connect(m_cmbGroups, &QComboBox::activated, this, &FileSelectDlg::groupActivated);
 
     if (selected > 0 && initial_group) {
         m_cmbGroups->setCurrentIndex(selected);

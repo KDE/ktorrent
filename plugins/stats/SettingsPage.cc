@@ -12,7 +12,7 @@ SettingsPage::SettingsPage(QWidget* p) :
     PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Statistics"), QStringLiteral("view-statistics"), p)
 {
     setupUi(this);
-    connect(kcfg_UpdateEveryGuiUpdates, qOverload<int>(&QSpinBox::valueChanged), this, &SettingsPage::UpdGuiUpdatesToMs);
+    connect(kcfg_UpdateEveryGuiUpdates, &QSpinBox::valueChanged, this, &SettingsPage::UpdGuiUpdatesToMs);
     UpdGuiUpdatesToMs(0);
 }
 
