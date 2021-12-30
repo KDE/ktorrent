@@ -206,7 +206,6 @@ add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055900)
 set (KTORRENT_DBUS_XML_DIR ${CMAKE_SOURCE_DIR}/dbus_xml)
 set (KTORRENT_PLUGIN_INSTALL_DIR ${PLUGIN_INSTALL_DIR}/ktorrent)
 
-include_directories(Boost::boost)
 
 add_subdirectory(libktcore)
 add_subdirectory(plugins)
