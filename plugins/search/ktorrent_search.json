@@ -24,7 +24,7 @@
             }
         ],
         "Description": "Search for torrents",
-        "Description[ca@valencia]": "Cerca de torrents",
+        "Description[ca@valencia]": "Busca de torrents",
         "Description[ca]": "Cerca de torrents",
         "Description[cs]": "Hledat torrenty",
         "Description[en_GB]": "Search for torrents",
@@ -49,7 +49,7 @@
         "Name[ast]": "Busca",
         "Name[bg]": "Търсене",
         "Name[bs]": "Traži",
-        "Name[ca@valencia]": "Cerca",
+        "Name[ca@valencia]": "Busca",
         "Name[ca]": "Cerca",
         "Name[cs]": "Hledat",
         "Name[da]": "Søg",

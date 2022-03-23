@@ -24,7 +24,7 @@
             }
         ],
         "Description": "Scan folders for torrent files and load them",
-        "Description[ca@valencia]": "Explora les carpetes cercant fitxers torrent i els carrega",
+        "Description[ca@valencia]": "Explora les carpetes buscant fitxers torrent i els carrega",
         "Description[ca]": "Explora les carpetes cercant fitxers torrent i els carrega",
         "Description[cs]": "Vyhledávat ve složkách a načítat torrenty",
         "Description[en_GB]": "Scan folders for torrent files and load them",
