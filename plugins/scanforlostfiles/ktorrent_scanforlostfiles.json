@@ -21,7 +21,8 @@
                 "Name[sl]": "Alexander Trufanov",
                 "Name[sv]": "Alexander Trufanov",
                 "Name[uk]": "Alexander Trufanov",
-                "Name[x-test]": "xxAlexander Trufanovxx"
+                "Name[x-test]": "xxAlexander Trufanovxx",
+                "Name[zh_CN]": "Alexander Trufanov"
             }
         ],
         "Description": "Display files in the selected folder that don't belong to any torrent",
@@ -42,6 +43,7 @@
         "Description[sv]": "Visa filer i den markerade katalogen som inte hör till något dataflöde",
         "Description[uk]": "Показати файли у вибраній теці, які не належать до жодного торента",
         "Description[x-test]": "xxDisplay files in the selected folder that don't belong to any torrentxx",
+        "Description[zh_CN]": "显示所选文件夹中不属于任何种子的文件",
         "EnabledByDefault": false,
         "Icon": "edit-find",
         "Id": "ScanForLostFilesPlugin",

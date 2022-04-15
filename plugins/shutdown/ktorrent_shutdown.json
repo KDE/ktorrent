@@ -21,11 +21,12 @@
                 "Name[sl]": "Joris Guisson",
                 "Name[sv]": "Joris Guisson",
                 "Name[uk]": "Joris Guisson",
-                "Name[x-test]": "xxJoris Guissonxx"
+                "Name[x-test]": "xxJoris Guissonxx",
+                "Name[zh_CN]": "Joris Guisson"
             }
         ],
         "Description": "Allows you to shutdown your computer when torrents finish",
-        "Description[ca@valencia]": "Permet aturar l'ordinador en finalitzar els torrents",
+        "Description[ca@valencia]": "Permet aturar l'ordinador en finalitzar els torrent",
         "Description[ca]": "Permet aturar l'ordinador en finalitzar els torrents",
         "Description[cs]": "Umožní vypnutí počítače po dokončení stahování torrentu",
         "Description[en_GB]": "Allows you to shutdown your computer when torrents finish",
@@ -42,6 +43,7 @@
         "Description[sv]": "Låter dig stänga av datorn när dataflöden är klara",
         "Description[uk]": "Надає вам змогу вимкнути комп’ютер після завершення отримання торента",
         "Description[x-test]": "xxAllows you to shutdown your computer when torrents finishxx",
+        "Description[zh_CN]": "允许您在种子完成时关闭计算机",
         "EnabledByDefault": false,
         "Icon": "system-shutdown",
         "Id": "ShutdownPlugin",
