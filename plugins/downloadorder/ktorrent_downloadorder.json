@@ -21,7 +21,8 @@
                 "Name[sl]": "Joris Guisson",
                 "Name[sv]": "Joris Guisson",
                 "Name[uk]": "Joris Guisson",
-                "Name[x-test]": "xxJoris Guissonxx"
+                "Name[x-test]": "xxJoris Guissonxx",
+                "Name[zh_CN]": "Joris Guisson"
             }
         ],
         "Description": "Specify the download order of a multi-file torrent",
@@ -43,6 +44,7 @@
         "Description[sv]": "Ange nerladdningsordningen för ett dataflöde med flera filer",
         "Description[uk]": "Додаток для визначення порядку отримання багатофайлового торента",
         "Description[x-test]": "xxSpecify the download order of a multi-file torrentxx",
+        "Description[zh_CN]": "指定多文件种子的下载顺序",
         "EnabledByDefault": false,
         "Icon": "view-sort-ascending",
         "Id": "DownloadOrderPlugin",

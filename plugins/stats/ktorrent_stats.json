@@ -21,11 +21,12 @@
                 "Name[sl]": "Krzysztof Kundzicz",
                 "Name[sv]": "Krzysztof Kundzicz",
                 "Name[uk]": "Krzysztof Kundzicz",
-                "Name[x-test]": "xxKrzysztof Kundziczxx"
+                "Name[x-test]": "xxKrzysztof Kundziczxx",
+                "Name[zh_CN]": "Krzysztof Kundzicz"
             }
         ],
         "Description": "Shows statistics about torrents in several graphs",
-        "Description[ca@valencia]": "Mostra les estadístiques sobre els torrents en diverses gràfiques",
+        "Description[ca@valencia]": "Mostra les estadístiques sobre els torrent en diverses gràfiques",
         "Description[ca]": "Mostra les estadístiques sobre els torrents en diverses gràfiques",
         "Description[cs]": "Zobrazení statistiky o torrentech v několika grafech",
         "Description[en_GB]": "Shows statistics about torrents in several graphs",
@@ -43,6 +44,7 @@
         "Description[sv]": "Visa statistik om dataflöden i flera diagram",
         "Description[uk]": "Показує статистику торентів за допомогою декількох графіків",
         "Description[x-test]": "xxShows statistics about torrents in several graphsxx",
+        "Description[zh_CN]": "以图表形式显示种子的统计数据",
         "EnabledByDefault": false,
         "Icon": "view-statistics",
         "Id": "StatsPlugin",

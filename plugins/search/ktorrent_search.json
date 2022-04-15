@@ -21,11 +21,12 @@
                 "Name[sl]": "Joris Guisson, Ivan Vasic",
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
-                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx"
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
+                "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
         "Description": "Search for torrents",
-        "Description[ca@valencia]": "Busca de torrents",
+        "Description[ca@valencia]": "Busca de torrent",
         "Description[ca]": "Cerca de torrents",
         "Description[cs]": "Hledat torrenty",
         "Description[en_GB]": "Search for torrents",
@@ -42,6 +43,7 @@
         "Description[sv]": "Sök efter dataflöden",
         "Description[uk]": "Пошук торентів",
         "Description[x-test]": "xxSearch for torrentsxx",
+        "Description[zh_CN]": "搜索种子",
         "EnabledByDefault": false,
         "Icon": "edit-find",
         "Id": "SearchPlugin",

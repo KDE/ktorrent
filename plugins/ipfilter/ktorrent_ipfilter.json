@@ -21,7 +21,8 @@
                 "Name[sl]": "Joris Guisson, Ivan Vasic",
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
-                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx"
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
+                "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
         "Description": "Filter IP addresses through a blocklist",
@@ -42,6 +43,7 @@
         "Description[sv]": "Filtrera IP-adresser med en blockeringslista",
         "Description[uk]": "Фільтрувати IP-адреси за списком блокування",
         "Description[x-test]": "xxFilter IP addresses through a blocklistxx",
+        "Description[zh_CN]": "通过屏蔽列表过滤 IP 地址",
         "EnabledByDefault": false,
         "Icon": "view-filter",
         "Id": "IPFilterPlugin",
