@@ -22,6 +22,7 @@
                 "Name[pt_BR]": "Joris Guisson",
                 "Name[sl]": "Joris Guisson",
                 "Name[sv]": "Joris Guisson",
+                "Name[tr]": "Joris Guisson",
                 "Name[uk]": "Joris Guisson",
                 "Name[x-test]": "xxJoris Guissonxx",
                 "Name[zh_CN]": "Joris Guisson"
@@ -45,6 +46,7 @@
         "Description[pt_BR]": "Permite-lhe desligar seu computador ao concluir os torrents",
         "Description[sl]": "Omogoči izklop računalnika, ko se torrenti zaključijo",
         "Description[sv]": "Låter dig stänga av datorn när dataflöden är klara",
+        "Description[tr]": "Torrentler bittiği zaman bilgisayarınızın otomatik olarak kapanmasına izin verir",
         "Description[uk]": "Надає вам змогу вимкнути комп’ютер після завершення отримання торента",
         "Description[x-test]": "xxAllows you to shutdown your computer when torrents finishxx",
         "Description[zh_CN]": "允许您在种子完成时关闭计算机",

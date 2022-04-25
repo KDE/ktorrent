@@ -22,6 +22,7 @@
                 "Name[pt_BR]": "Jonas Lundqvist",
                 "Name[sl]": "Jonas Lundqvist",
                 "Name[sv]": "Jonas Lundqvist",
+                "Name[tr]": "Jonas Lundqvist",
                 "Name[uk]": "Jonas Lundqvist",
                 "Name[x-test]": "xxJonas Lundqvistxx",
                 "Name[zh_CN]": "Jonas Lundqvist"
@@ -45,6 +46,7 @@
         "Description[pt_BR]": "Gera links magnéticos",
         "Description[sl]": "Ustvari magnetne povezave",
         "Description[sv]": "Skapar magnetiska länkar",
+        "Description[tr]": "Mıknatıslı bağlantılar üretir",
         "Description[uk]": "Створює посилання magnet",
         "Description[x-test]": "xxGenerates magnet linksxx",
         "Description[zh_CN]": "生成磁力链",
