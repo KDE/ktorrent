@@ -22,6 +22,7 @@
                 "Name[sk]": "Joris Guisson, Ivan Vasic",
                 "Name[sl]": "Joris Guisson, Ivan Vasic",
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
+                "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
                 "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
@@ -45,6 +46,7 @@
         "Description[sk]": "Hľadať torrenty",
         "Description[sl]": "Iskanje torrentov",
         "Description[sv]": "Sök efter dataflöden",
+        "Description[tr]": "Torrentler ara",
         "Description[uk]": "Пошук торентів",
         "Description[x-test]": "xxSearch for torrentsxx",
         "Description[zh_CN]": "搜索种子",
