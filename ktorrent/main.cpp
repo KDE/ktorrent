@@ -220,16 +220,7 @@ int main(int argc, char **argv)
         kt::GUI widget;
 
         auto handleCmdLine = [&widget, &parser](const QStringList &arguments, const QString &workingDirectory) {
-            if (!arguments.isEmpty()) {
-                parser.parse(arguments);
-#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 62, 0)
-                widget.setAttribute(Qt::WA_NativeWindow, true);
-                KStartupInfo::setNewStartupId(widget.windowHandle(), KStartupInfo::startupId());
-#else
-                KStartupInfo::setNewStartupId(&widget, KStartupInfo::startupId());
-#endif
-                KWindowSystem::forceActiveWindow(widget.winId());
-            }
+            parser.parse(arguments);
             QString oldCurrent = QDir::currentPath();
             if (!workingDirectory.isEmpty())
                 QDir::setCurrent(workingDirectory);
@@ -246,7 +237,14 @@ int main(int argc, char **argv)
                 QDir::setCurrent(oldCurrent);
         };
         QObject::connect(&dbusService, &KDBusService::activateRequested, handleCmdLine);
-        QObject::connect(&dbusService, &KDBusService::activateRequested, &widget, &kt::GUI::show);
+        QObject::connect(&dbusService, &KDBusService::activateRequested, &widget, [&widget] {
+            if (!widget.isVisible()) {
+                widget.show();
+            } else {
+                KWindowSystem::updateStartupId(widget.windowHandle());
+                KWindowSystem::activateWindow(widget.windowHandle());
+            }
+        });
         handleCmdLine(QStringList(), QString());
 
         app.setQuitOnLastWindowClosed(false);
