@@ -214,7 +214,10 @@ add_subdirectory(ktupnptest)
 add_subdirectory(ktmagnetdownloader)
 if (KF5DocTools_FOUND)
     add_subdirectory(doc)
+    kdoctools_install(po)
 endif()
+ki18n_install(po)
+
 # add clang-format target for all our real source files
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
