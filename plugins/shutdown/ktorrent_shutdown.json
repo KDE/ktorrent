@@ -29,7 +29,7 @@
             }
         ],
         "Description": "Allows you to shutdown your computer when torrents finish",
-        "Description[ca@valencia]": "Permet parar l'ordinador en finalitzar els torrent",
+        "Description[ca@valencia]": "Permet parar l'ordinador en finalisar els torrent",
         "Description[ca]": "Permet aturar l'ordinador en finalitzar els torrents",
         "Description[cs]": "Umožní vypnutí počítače po dokončení stahování torrentu",
         "Description[de]": "Ermöglicht es, den Rechner herunterzufahren, wenn die Torrents abgeschlossen wurden",
