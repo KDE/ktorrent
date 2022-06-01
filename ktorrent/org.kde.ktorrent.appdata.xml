@@ -552,7 +552,7 @@
       <li xml:lang="zh-CN">支持创建无 tracker 种子</li>
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="ca">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
-      <li xml:lang="ca-valencia">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
+      <li xml:lang="ca-valencia">Suport per a taules de resum distribuïdes (DHT, la versió de la llínea principal)</li>
       <li xml:lang="cs">Podpora pro distribuované tabulky hash (DHT, hlavní verze)</li>
       <li xml:lang="da">Understøttelse af distribuerede hast-tabeller (DHT, mainline-versionen)</li>
       <li xml:lang="de">Unterstützung für Verteilte Hashtabellen (Distributed Hash Table, DHT in der Mainline-Version)</li>
