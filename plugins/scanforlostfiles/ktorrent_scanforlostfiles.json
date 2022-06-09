@@ -30,7 +30,7 @@
             }
         ],
         "Description": "Display files in the selected folder that don't belong to any torrent",
-        "Description[ca@valencia]": "Mostra els fichers de la carpeta seleccionada que no pertanyen a cap torrent",
+        "Description[ca@valencia]": "Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent",
         "Description[ca]": "Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent",
         "Description[cs]": "Zobrazit ve vybrané složce soubory, které nepatří žádnému torrentu",
         "Description[de]": "Dateien im ausgewählten Ordner anzeigen, die zu keinem Torrent gehören",
@@ -57,7 +57,7 @@
         "Id": "ScanForLostFilesPlugin",
         "License": "GPL",
         "Name": "Scan for lost files",
-        "Name[ca@valencia]": "Explora els fichers perduts",
+        "Name[ca@valencia]": "Explora els fitxers perduts",
         "Name[ca]": "Explora els fitxers perduts",
         "Name[cs]": "Vyhledávat ztracené soubory",
         "Name[de]": "Suchen nach verlorenen Dateien",

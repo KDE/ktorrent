@@ -30,7 +30,7 @@
             }
         ],
         "Description": "Specify the download order of a multi-file torrent",
-        "Description[ca@valencia]": "Especifica l'ordre de baixada d'un torrent amb múltiples fichers",
+        "Description[ca@valencia]": "Especifica l'ordre de baixada d'un torrent amb múltiples fitxers",
         "Description[ca]": "Especifica l'ordre de baixada d'un torrent amb múltiples fitxers",
         "Description[cs]": "Zvolení pořadí stahovaných souborů u torrentů obsahujících více souborů",
         "Description[de]": "Download-Reihenfolge bei Torrents festlegen, die aus mehreren Dateien bestehen",
