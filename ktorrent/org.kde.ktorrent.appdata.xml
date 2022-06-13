@@ -85,7 +85,7 @@
     </p>
     <p xml:lang="ar">يتيح لك «سيولك» (وهو تطبيق ”بِت‌تورنت“ من «كدي») تنزيل الملفات مستخدما ميفاق ”بِت‌تورنت“. يسمح لك التطبيق بتشغيل عدد من السيول في الوقت نفسه وهو يأتي مع مزايا عدّة تجعله عميلًا كامل المواصفات لميفاق ”بِت‌تورنت“.</p>
     <p xml:lang="ca">El KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrents alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
-    <p xml:lang="ca-valencia">KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilisant el protocol BitTorrent. Permet executar múltiples torrent alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
+    <p xml:lang="ca-valencia">KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrent alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
     <p xml:lang="da">KTorrent er et BitTorrent-program fra KDE, som lader dig downloade filer med BitTorrent-protokollen. Den lader dig køre flere torrents på samme tid og har udvidet funktionalitet som gør det til en komplet BitTorrent-klient.</p>
     <p xml:lang="de">KTorrent ist ein BitTorrent-Programm von KDE. Sie können damit Dateien über das BitTorrent-Protokoll herunterladen. Mehrere Torrents lassen sich gleichzeitig ausführen. KTorrent hat zusätzliche Fähigkeiten und ist damit ein mit allen Funktionen ausgestattetes Dienstprogramm für BitTorrent.</p>
     <p xml:lang="el">Το KTorrent είναι μια εφαρμογή BitTorrent από το KDE την οποία σας επιτρέπει να κάνετε λήψεις αρχείων με χρήσητ του πρωτοκόλλου BitTorrent. Σας δίνει τη δυνατότητα να εκετελείτε πολλά torrents ταυτόχρονα και συνοδεύεται με εκτεταμένες λειτουργίες για μια πλήρη χαρακτηριστικών εφαρμογή BitTorrent.</p>
@@ -353,7 +353,7 @@
       <li xml:lang="zh-CN">多文件种子可选下载指定文件</li>
       <li>Kick/ban peers with an additional IP Filter dialog for list/edit purposes</li>
       <li xml:lang="ca">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a finalitats de llista/edició</li>
-      <li xml:lang="ca-valencia">Expulsa/veta els parells amb un diàlec de filtre d'IP adicional per a finalitats de llista/edició</li>
+      <li xml:lang="ca-valencia">Expulsa/veta els parells amb un diàlec de filtre d'IP addicional per a finalitats de llista/edició</li>
       <li xml:lang="da">Afbryd/bandlys peers med en yderligere IP-filterdialog til liste- og redigeringsformål</li>
       <li xml:lang="de">Gegenstellen zwangsweise trennen oder verbannen mit Hilfe eines zusätzlichen IP-Filterdialogs. Die IP-Einträge können in diesem Dialog angezeigt und bearbeitet werden.</li>
       <li xml:lang="el">Αποκλεισμός κόμβων με επιπλέον διάλογο IP φίλτρου για σκοπούς λίστας/επεξεργασίας</li>
@@ -385,7 +385,7 @@
       <li xml:lang="zh-CN">踢掉/屏蔽对等点，并可以用 IP 过滤器查看和编辑列表</li>
       <li>UDP tracker support</li>
       <li xml:lang="ca">Suport del seguidor UDP</li>
-      <li xml:lang="ca-valencia">Soport del seguidor UDP</li>
+      <li xml:lang="ca-valencia">Suport del seguidor UDP</li>
       <li xml:lang="cs">Podpora trackerů UDP</li>
       <li xml:lang="da">Understøttelse af UDP-tracker</li>
       <li xml:lang="de">Unterstützung für UDP-Tracker</li>
@@ -420,7 +420,7 @@
       <li xml:lang="zh-TW">支援 UDP tracker</li>
       <li>Support for private trackers and torrents</li>
       <li xml:lang="ca">Suport per als seguidors i torrents privats</li>
-      <li xml:lang="ca-valencia">Soport per als seguidors i torrent privats</li>
+      <li xml:lang="ca-valencia">Suport per als seguidors i torrent privats</li>
       <li xml:lang="cs">Podpora pro soukromé trackery a torrenty</li>
       <li xml:lang="da">Understøtter private trackere og torrents</li>
       <li xml:lang="de">Unterstützung für private Tracker und Torrents</li>
@@ -454,7 +454,7 @@
       <li xml:lang="zh-TW">支援私密 tracker 和種子檔</li>
       <li>Support for µTorrent's peer exchange</li>
       <li xml:lang="ca">Suport per a l'intercanvi entre parells de µTorrent</li>
-      <li xml:lang="ca-valencia">Soport per a l'intercanvi entre parells de µTorrent</li>
+      <li xml:lang="ca-valencia">Suport per a l'intercanvi entre parells de µTorrent</li>
       <li xml:lang="cs">Podpora výměny protějšků µTorrent</li>
       <li xml:lang="da">Understøttelse af µTorrent's peer-udveksling</li>
       <li xml:lang="de">Unterstützung für Austausch von Gegenstellen bei µTorrents</li>
@@ -487,7 +487,7 @@
       <li xml:lang="zh-CN">支持 µTorrent 对等点交换</li>
       <li>Support for protocol encryption (compatible with Azureus)</li>
       <li xml:lang="ca">Suport per a l'encriptatge del protocol (compatible amb Azureus)</li>
-      <li xml:lang="ca-valencia">Soport per a l'encriptació del protocol (compatible amb Azureus)</li>
+      <li xml:lang="ca-valencia">Suport per a l'encriptació del protocol (compatible amb Azureus)</li>
       <li xml:lang="cs">Podpora pro šifrování protokolu (kompatibilní s Azureus)</li>
       <li xml:lang="da">Understøttelse af protokolkryptering (kompatibel med Azureus)</li>
       <li xml:lang="de">Unterstützung für Protokollverschlüsselung (kompatibel mit Azureus)</li>
@@ -520,7 +520,7 @@
       <li xml:lang="zh-CN">支持协议加密 (兼容 Azureus)</li>
       <li>Support for creating trackerless torrents</li>
       <li xml:lang="ca">Suport per a la creació de torrents sense seguidors</li>
-      <li xml:lang="ca-valencia">Soport per a la creació de torrent sense seguidors</li>
+      <li xml:lang="ca-valencia">Suport per a la creació de torrent sense seguidors</li>
       <li xml:lang="cs">Podpora pro vytvoření torrentů bez trackerů</li>
       <li xml:lang="da">Understøttelse af oprettelse af trackerløse torrents</li>
       <li xml:lang="de">Unterstützung für das Erstellen von Torrents ohne Tracker</li>
@@ -553,7 +553,7 @@
       <li xml:lang="zh-CN">支持创建无 tracker 种子</li>
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="ca">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
-      <li xml:lang="ca-valencia">Soport per a taules de resum distribuïdes (DHT, la versió de la llínea principal)</li>
+      <li xml:lang="ca-valencia">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
       <li xml:lang="cs">Podpora pro distribuované tabulky hash (DHT, hlavní verze)</li>
       <li xml:lang="da">Understøttelse af distribuerede hast-tabeller (DHT, mainline-versionen)</li>
       <li xml:lang="de">Unterstützung für Verteilte Hashtabellen (Distributed Hash Table, DHT in der Mainline-Version)</li>
@@ -586,7 +586,7 @@
       <li xml:lang="zh-CN">支持分布式哈希表 (DHT，主线版本)</li>
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="ca">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
-      <li xml:lang="ca-valencia">Soport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
+      <li xml:lang="ca-valencia">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
       <li xml:lang="cs">Podpora automatické přeposílání portů na LAN s dynamicky přidělovanými hostiteli v UPnP</li>
       <li xml:lang="da">Understøttelse af UPnP til automatisk at åbne porte på et LAN med dynamisk tildelte værter</li>
       <li xml:lang="de">Unterstützung für UPnP zur automatischen Port-Weiterleitung in Netzwerken mit dynamisch zugewiesenen Rechnern</li>
@@ -619,7 +619,7 @@
       <li xml:lang="zh-CN">支持 UPnP 局域网自动转发端口的动态主机名</li>
       <li>Support for webseeds</li>
       <li xml:lang="ca">Suport per a sembradors web</li>
-      <li xml:lang="ca-valencia">Soport per a sembradors web</li>
+      <li xml:lang="ca-valencia">Suport per a sembradors web</li>
       <li xml:lang="cs">Podpora pro webové sdílení</li>
       <li xml:lang="da">Understøttelse af webseeds</li>
       <li xml:lang="de">Unterstützung für Webseeds</li>
@@ -687,7 +687,7 @@
       <li xml:lang="zh-CN">系统托盘整合</li>
       <li>Tracker authentication support</li>
       <li xml:lang="ca">Suport d'autenticació del seguidor</li>
-      <li xml:lang="ca-valencia">Soport d'autenticació del seguidor</li>
+      <li xml:lang="ca-valencia">Suport d'autenticació del seguidor</li>
       <li xml:lang="da">Understøttelse af tracker-autentificering</li>
       <li xml:lang="de">Unterstützung für Tracker-Authentifizierung</li>
       <li xml:lang="el">Υποστήριξη ταυτοποίησης ανιχνευτή</li>
@@ -755,7 +755,7 @@
     </ul>
     <p>In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
     <p xml:lang="ca">Addicionalment a les funcionalitats integrades en construir, hi ha alguns connectors disponibles per al KTorrent.</p>
-    <p xml:lang="ca-valencia">De manera adicional a les funcionalitats integrades en construir, hi ha alguns conectors disponibles per a KTorrent.</p>
+    <p xml:lang="ca-valencia">De manera addicional a les funcionalitats integrades en construir, hi ha alguns connectors disponibles per a KTorrent.</p>
     <p xml:lang="da">Udover den indbyggede funktionalitet er der nogle plugins tilgængelige til KTorrent.</p>
     <p xml:lang="de">Zusätzlich zu den eingebauten Funktionen gibt es weitere Module für KTorrent.</p>
     <p xml:lang="el">Επιπλέον των ενσωματωμένων λειτουργιών, υπάρχουν κάποια πρόσθετα διαθέσιμα για το KTorrent.</p>
