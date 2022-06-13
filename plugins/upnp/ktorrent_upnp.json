@@ -30,7 +30,7 @@
             }
         ],
         "Description": "Forward ports using UPnP",
-        "Description[ca@valencia]": "Redirigeix els ports utilisant UPnP",
+        "Description[ca@valencia]": "Redirigeix els ports utilitzant UPnP",
         "Description[ca]": "Redirigeix els ports usant UPnP",
         "Description[cs]": "Předávání portů pomocí UPnP",
         "Description[de]": "Port-Weiterleitung unter Verwendung von UPnP",
