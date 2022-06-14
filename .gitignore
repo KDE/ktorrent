@@ -1,4 +1,4 @@
-build
+/build*
 .kdev4/
 ktorrent.kdev4
 CMakeLists.txt.user
@@ -7,3 +7,4 @@ cmake-build-*
 /.clang-format
 .cache
 compile_commands.json
+
