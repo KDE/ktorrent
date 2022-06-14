@@ -7,10 +7,10 @@ ktorrent_add_plugin(ktorrent_mediaplayer)
 
 set(ktmediaplayerplugin_dbus_SRC)
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
-qt5_add_dbus_interface(ktmediaplayerplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
+qt_add_dbus_interface(ktmediaplayerplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
 
 set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
-qt5_add_dbus_interface(ktmediaplayerplugin_dbus_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
+qt_add_dbus_interface(ktmediaplayerplugin_dbus_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
 
 target_sources(ktorrent_mediaplayer PRIVATE
 	${ktmediaplayerplugin_dbus_SRC}
@@ -35,7 +35,7 @@ target_link_libraries(
     ktorrent_mediaplayer
     ktcore
     Taglib::Taglib
-    Phonon::phonon4qt5
+    Phonon::phonon4qt${QT_MAJOR_VERSION}
     KF5::Torrent
     KF5::I18n
     KF5::KIOFileWidgets

@@ -35,7 +35,7 @@ include(KDEGitCommitHooks)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
+find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED
     Core
     DBus
     Network
@@ -170,8 +170,8 @@ if(TAGLIB_FOUND)
   set(HAVE_Taglib 1)
 endif()
 
-find_package(Phonon4Qt5)
-set_package_properties(Phonon4Qt5
+find_package(Phonon4Qt${QT_MAJOR_VERSION})
+set_package_properties(Phonon4Qt${QT_MAJOR_VERSION}
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's multimedia plugin"

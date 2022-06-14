@@ -1,6 +1,6 @@
 file(GLOB icons "*.png")
 ecm_install_icons(
     ICONS ${icons}
-    DESTINATION ${ICON_INSTALL_DIR}
+    DESTINATION ${KDE_INSTALL_ICONDIR}
     THEME hicolor
 )

@@ -6,7 +6,7 @@ set_target_properties(ktorrent_app  PROPERTIES
 
 set(ktorrent_dbus_SRC)
 set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
-qt5_add_dbus_interface(ktorrent_dbus_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
+qt_add_dbus_interface(ktorrent_dbus_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
 
 target_sources(ktorrent_app PRIVATE
 	${ktorrent_dbus_SRC}
@@ -122,10 +122,10 @@ target_link_libraries(ktorrent_app
 )
 
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS org.kde.ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install(PROGRAMS org.kde.ktorrent.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 install(FILES ktorrentui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
 install(FILES kttorrentactivityui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
-install(FILES ktorrent.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR} )
+install(FILES ktorrent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
 install(FILES org.kde.ktorrent.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
 
 add_subdirectory(icons)

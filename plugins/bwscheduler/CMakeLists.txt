@@ -2,7 +2,7 @@ ktorrent_add_plugin(ktorrent_bwscheduler)
 
 set(ktbwschedulerplugin_dbus_SRC)
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
-qt5_add_dbus_interface(ktbwschedulerplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
+qt_add_dbus_interface(ktbwschedulerplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
 
 target_sources(ktorrent_bwscheduler PRIVATE
 	${ktbwschedulerplugin_dbus_SRC}

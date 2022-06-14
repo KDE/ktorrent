@@ -5,10 +5,10 @@ ktorrent_add_plugin(ktorrent_shutdown)
 set(ktshutdownplugin_dbus_SRC)
 
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
-qt5_add_dbus_interface(ktshutdownplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
+qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
 
 set(powermanagement_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.xml)
-qt5_add_dbus_interface(ktshutdownplugin_dbus_SRC ${powermanagement_xml} powermanagement_interface)
+qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${powermanagement_xml} powermanagement_interface)
 
 target_sources(ktorrent_shutdown PRIVATE
     ${ktshutdownplugin_dbus_SRC}
