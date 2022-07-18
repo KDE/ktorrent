@@ -325,7 +325,7 @@ void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewIte
 
     QStyleOptionProgressBar progressBarOption;
     progressBarOption.palette = option.palette;
-    progressBarOption.state = option.state;
+    progressBarOption.state = option.state | QStyle::State_Horizontal;
     progressBarOption.rect = option.rect;
     progressBarOption.minimum = 0;
     progressBarOption.maximum = 100;
