@@ -4,7 +4,6 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include <KConfigDialogManager>
 #include <KLocalizedString>
 #include <KSharedConfig>
 
@@ -25,7 +24,6 @@ namespace kt
 PrefDialog::PrefDialog(QWidget *parent, Core *core)
     : KConfigDialog(parent, QStringLiteral("settings"), Settings::self())
 {
-    KConfigDialogManager::propertyMap()->insert(QStringLiteral("KUrlRequester"), QByteArrayLiteral("url"));
     setFaceType(KPageDialog::List);
     connect(this, &PrefDialog::settingsChanged, [core](const QString &) {
         core->applySettings();
