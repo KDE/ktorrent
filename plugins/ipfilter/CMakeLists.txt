@@ -25,7 +25,7 @@ target_link_libraries(
     KF5::WidgetsAddons
 )
 
-find_package(Qt5Test ${QT5_REQUIRED_VERSION})
-if (Qt5Test_DIR)
+find_package(Qt${QT_MAJOR_VERSION}Test ${QT5_REQUIRED_VERSION})
+if (Qt${QT_MAJOR_VERSION}Test_DIR)
     add_subdirectory(tests)
 endif()

@@ -41,6 +41,6 @@ target_link_libraries(
     KF5::KIOFileWidgets
     KF5::XmlGui
     KF5::WidgetsAddons
-#    Qt5::MultimediaWidgets
+#    Qt:::MultimediaWidgets
     )
 install(FILES ktorrent_mediaplayerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
