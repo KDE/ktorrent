@@ -1,0 +1,180 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Spanish "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+> <firstname
+>Raúl</firstname
+> <surname
+>González</surname
+> <affiliation
+><address
+><email
+>raulgf83@gmail.com</email
+></address
+></affiliation
+> <contrib
+>Traductor</contrib
+> </othercredit
+> <othercredit role="translator"
+> <firstname
+>Javier</firstname
+> <surname
+>Viñal</surname
+> <affiliation
+><address
+><email
+>fjvinal@gmail.com</email
+></address
+></affiliation
+> <contrib
+>Traductor</contrib
+> </othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>27-10-2010</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; es una aplicación bittorrent para KDE que le permite descargar archivos utilizando el protocolo BitTorrent. Permite ejecutar varios torrents al mismo tiempo y está dotada con funcionalidades extendidas que le convierten en un cliente completo para BitTorrent.</para>
+
+<itemizedlist>
+<title
+>Funcionalidades</title>
+<listitem
+><para
+>Cola de torrents</para
+></listitem>
+<listitem
+><para
+>Límite de velocidad global y por torrent</para
+></listitem>
+<listitem
+><para
+>Vista previa de ciertos tipos de archivos incorporada (video y audio)</para
+></listitem>
+<listitem
+><para
+>Importación de archivos parcial o completamente descargados</para
+></listitem>
+<listitem
+><para
+>Priorización de archivos para torrents con varios archivos</para
+></listitem>
+<listitem
+><para
+>Descarga selectiva para torrents con varios archivos</para
+></listitem>
+<listitem
+><para
+>Expulsión/Prohibición de pares con un diálogo de filtrado de IP adicional para propósitos de listado/edición</para
+></listitem>
+<listitem
+><para
+>Admite rastreadores UDP</para
+></listitem>
+<listitem
+><para
+>Admite rastreadores y torrents privados</para
+></listitem>
+<listitem
+><para
+>Admite el intercambio de pares de µTorrent</para
+></listitem>
+<listitem
+><para
+>Admite el cifrado del protocolo (compatible con Azureus)</para
+></listitem>
+<listitem
+><para
+>Admite la creación de torrents sin rastreador</para
+></listitem>
+<listitem
+><para
+>Admite las tablas hash distribuidas (DHT, la versión de la línea principal)</para
+></listitem>
+<listitem
+><para
+>Implementación de UPnP para abrir puertos de forma automática en redes LAN con servidores asignados dinámicamente</para
+></listitem>
+<listitem
+><para
+>Admite semillas web</para
+></listitem>
+<listitem
+><para
+>Integración con la bandeja del sistema</para
+></listitem>
+<listitem
+><para
+>Implementación de autenticación del rastreador</para
+></listitem>
+<listitem
+><para
+>Conexión a través de un proxy</para
+></listitem>
+<listitem
+><para
+>Control entre procesos a través de la interfaz DBus</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Recursos de ayuda en línea</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>KTorrent en UserBase</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>Foros de la comunidad KDE</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

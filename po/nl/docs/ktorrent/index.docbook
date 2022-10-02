@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+&Freek.de.Kruijf; 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2010-10-27</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; is een bittorrent-toepassing door KDE die u in staat stelt bestanden te downloaden met het BitTorrent-protocol. U kunt meerdere torrents tegelijk doen en het komt met uitgebreide functies om het een client voor BitTorrent te laten zijn met alle mogelijkheden.</para>
+
+<itemizedlist>
+<title
+>Mogelijkheden</title>
+<listitem
+><para
+>Torrents in de wachtrij zetten</para
+></listitem>
+<listitem
+><para
+>Globale en per torrent snelheidslimieten</para
+></listitem>
+<listitem
+><para
+>Voorbeelden van bepaalde bestandstypen bekijken, ingebouwd (video en geluid)</para
+></listitem>
+<listitem
+><para
+>Gedeeltelijk of volledig gedownloade bestanden importeren</para
+></listitem>
+<listitem
+><para
+>Bestandsprioriteit instellen multi-bestand-torrents</para
+></listitem>
+<listitem
+><para
+>Selectief downloaden van multi-bestand-torrents</para
+></listitem>
+<listitem
+><para
+>Start/stop peers met een extra dialoog voor IP-filteren voor weergeven/bewerken</para
+></listitem>
+<listitem
+><para
+>Ondersteuning van UDP-tracker</para
+></listitem>
+<listitem
+><para
+>Ondersteuning voor privé-trackers en -torrents</para
+></listitem>
+<listitem
+><para
+>Ondersteuning voor uitwisseling van peers van µTorrent</para
+></listitem>
+<listitem
+><para
+>Ondersteuning voor protocolversleuteling (compatibel met Azureus)</para
+></listitem>
+<listitem
+><para
+>Ondersteuning voor aanmaken van torrents zonder tracker</para
+></listitem>
+<listitem
+><para
+>Ondersteuning voor gedistribueerde hash-tabellen (DHT, het hoofdversie)</para
+></listitem>
+<listitem
+><para
+>Ondersteuning voor UPnP om automatisch poorten te 'forwarden' op een LAN met dynamisch toegekende hosts</para
+></listitem>
+<listitem
+><para
+>Ondersteuning voor webseeds</para
+></listitem>
+<listitem
+><para
+>Integratie in het systeemvak</para
+></listitem>
+<listitem
+><para
+>Authenticatieondersteuning voor tracker</para
+></listitem>
+<listitem
+><para
+>Verbinding via een proxy</para
+></listitem>
+<listitem
+><para
+>Interprocescontrole via het DBus-interface</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Online hulp</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>KTorrent op UserBase</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>KDE Forums van de gemeenschap</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

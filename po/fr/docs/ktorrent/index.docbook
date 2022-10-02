@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % French "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+><firstname
+>Peter</firstname
+><surname
+>Potrowl</surname
+><affiliation
+><address
+><email
+>peter.potrowl@gmail.com</email
+></address
+></affiliation
+><contrib
+>Traduction française&nbsp;</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>27/10/2010</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; est un programme bittorrent de KDE qui vous permet de télécharger des fichiers en utilisant le protocole BitTorrent. Il vous permet de télécharger plusieurs torrent à la fois et comporte des fonctionnalités étendues, ce qui en fait un client BitTorrent complet.</para>
+
+<itemizedlist>
+<title
+>Fonctionnalités</title>
+<listitem
+><para
+>File d'attente pour les torrents</para
+></listitem>
+<listitem
+><para
+>Limitations de vitesse globales et par torrent</para
+></listitem>
+<listitem
+><para
+>Aperçu intégré de certains types de fichiers (audio et vidéo)</para
+></listitem>
+<listitem
+><para
+>Import de fichiers partiellement ou complètement téléchargés</para
+></listitem>
+<listitem
+><para
+>Priorités par fichier dans les torrents multi-fichiers</para
+></listitem>
+<listitem
+><para
+>Téléchargement sélectif pour les torrents multi-fichiers</para
+></listitem>
+<listitem
+><para
+>Rejet / bannissement des pairs avec, en plus, une fenêtre pour lister et modifier les règles du filtre IP</para
+></listitem>
+<listitem
+><para
+>Gestion des traqueurs UDP</para
+></listitem>
+<listitem
+><para
+>Gestion des traqueurs et torrents privés</para
+></listitem>
+<listitem
+><para
+>Gestion des échanges de pairs de µTorrent</para
+></listitem>
+<listitem
+><para
+>Gestion des protocoles de chiffrement (compatible avec Azureus)</para
+></listitem>
+<listitem
+><para
+>Gestion de la création de torrents sans traqueur</para
+></listitem>
+<listitem
+><para
+>Gestion des tables de hachage distribuées (DHT, version principale)</para
+></listitem>
+<listitem
+><para
+>Gestion permettant à UPnP de rediriger automatiquement les ports sur un réseau local dont les hôtes sont assignés dynamiquement</para
+></listitem>
+<listitem
+><para
+>Gestion des sources web</para
+></listitem>
+<listitem
+><para
+>Intégration dans la boîte à miniatures</para
+></listitem>
+<listitem
+><para
+>Gestion de l'authentification des traqueurs</para
+></listitem>
+<listitem
+><para
+>Connexion à travers un serveur mandataire</para
+></listitem>
+<listitem
+><para
+>Contrôle inter-processus grâce à l'interface D-Bus</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Ressources d'aide en ligne</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>KTorrent sur UserBase</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>Forum de la communauté KDE</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

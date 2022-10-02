@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Catalan  "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>&ktorrent;</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>27 d'octubre de 2010</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>El &ktorrent; és una aplicació de bittorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrents alhora i ve amb característiques esteses per fer-lo un client complet per a BitTorrent.</para>
+
+<itemizedlist>
+<title
+>Característiques</title>
+<listitem
+><para
+>Cua dels torrents</para
+></listitem>
+<listitem
+><para
+>Límits de velocitat global i per torrent</para
+></listitem>
+<listitem
+><para
+>Vista prèvia de certs tipus de fitxers, construït en (vídeo i àudio)</para
+></listitem>
+<listitem
+><para
+>Importació de fitxers descarregats parcialment o del tot</para
+></listitem>
+<listitem
+><para
+>Priorització de fitxers per a torrents amb múltiples fitxers</para
+></listitem>
+<listitem
+><para
+>Descàrrega selectiva per a torrents amb múltiples fitxers</para
+></listitem>
+<listitem
+><para
+>Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a finalitats de llista/edició</para
+></listitem>
+<listitem
+><para
+>Suport del seguidor UDP</para
+></listitem>
+<listitem
+><para
+>Suport per a seguidors i torrents privats</para
+></listitem>
+<listitem
+><para
+>Suport per a l'intercanvi entre parells de µTorrent</para
+></listitem>
+<listitem
+><para
+>Suport per a encriptatge del protocol (compatible amb Azureus)</para
+></listitem>
+<listitem
+><para
+>Suport per a la creació de torrents sense seguidors</para
+></listitem>
+<listitem
+><para
+>Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</para
+></listitem>
+<listitem
+><para
+>Suport per a UPnP per desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</para
+></listitem>
+<listitem
+><para
+>Suport per a sembradors web</para
+></listitem>
+<listitem
+><para
+>Integració amb la safata del sistema</para
+></listitem>
+<listitem
+><para
+>Suport d'autenticació del seguidor</para
+></listitem>
+<listitem
+><para
+>Connexió a través d'un servidor intermediari</para
+></listitem>
+<listitem
+><para
+>Control entre processos a través de la interfície de DBus</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Recursos d'ajuda a la xarxa</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>KTorrent a Userbase</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>Fòrums de la comunitat KDE</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

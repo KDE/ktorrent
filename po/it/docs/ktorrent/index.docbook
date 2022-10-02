@@ -1,0 +1,180 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Italian "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+><firstname
+>Innocenzo</firstname
+><surname
+>Ventre</surname
+><affiliation
+><address
+><email
+>innocenzo.ventre@gmail.com</email
+></address
+></affiliation
+><contrib
+>Traduzione italiana</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Pino</firstname
+><surname
+>Toscano</surname
+><affiliation
+><address
+><email
+>toscano.pino@tiscali.it</email
+></address
+></affiliation
+><contrib
+>Traduzione italiana</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2010-10-27</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; è un'applicazione BitTorrent di KDE che ti permette di scaricare file utilizzando il protocollo BitTorrent. Ti permette di gestire più torrent contemporaneamente ed è dotato di funzionalità avanzate per renderlo un client completo per BitTorrent.</para>
+
+<itemizedlist>
+<title
+>Funzionalità</title>
+<listitem
+><para
+>Accodamento di torrent</para
+></listitem>
+<listitem
+><para
+>Limiti di velocità globali e per torrent</para
+></listitem>
+<listitem
+><para
+>Anteprima integrata di alcuni tipi di file (video e audio)</para
+></listitem>
+<listitem
+><para
+>Importazione di file parzialmente o totalmente scaricati</para
+></listitem>
+<listitem
+><para
+>Sistema di priorità dei file per i torrent con file multipli</para
+></listitem>
+<listitem
+><para
+>Scaricamento selettivo per i torrent con file multipli</para
+></listitem>
+<listitem
+><para
+>Cacciata/messa al bando di nodi con una ulteriore finestra di dialogo di filtro IP per elencarli e modificarli</para
+></listitem>
+<listitem
+><para
+>Supporto ai server traccia UDP</para
+></listitem>
+<listitem
+><para
+>Supporto per server traccia e torrent privati</para
+></listitem>
+<listitem
+><para
+>Supporto per lo scambio di nodi con µTorrent</para
+></listitem>
+<listitem
+><para
+>Supporto per la cifratura del protocollo (compatibile con Azureus)</para
+></listitem>
+<listitem
+><para
+>Supporto per la creazione di torrent senza server traccia</para
+></listitem>
+<listitem
+><para
+>Supporto per le tabelle di hash distribuite (DHT, la versione principale)</para
+></listitem>
+<listitem
+><para
+>Supporto UPnP per mappare automaticamente le porte sulla LAN con host dinamici assegnati</para
+></listitem>
+<listitem
+><para
+>Supporto per distribuzione web</para
+></listitem>
+<listitem
+><para
+>Integrazione nel vassoio di sistema</para
+></listitem>
+<listitem
+><para
+>Supporto per l'autenticazione sul server traccia</para
+></listitem>
+<listitem
+><para
+>Connessione tramite proxy</para
+></listitem>
+<listitem
+><para
+>Controllo dei processi tramite interfaccia &DBus;</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Risorse per la guida in linea</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>Pagina di KTorrent su UserBase</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>Forum della comunità di KDE</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>Ktorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2010-10-27</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; är ett dataflödesprogram av KDE som låter dig ladda ner filer med protokollet BitTorrent. Det möjliggör att hantera flera dataflöden samtidigt och levereras med utökade funktioner som gör det till en fullfjädrad klient för BitTorrent.</para>
+
+<itemizedlist>
+<title
+>Funktioner</title>
+<listitem
+><para
+>Köa dataflöden</para
+></listitem>
+<listitem
+><para
+>Hastighetsbegränsningar, allmänna och per dataflöde</para
+></listitem>
+<listitem
+><para
+>Förhandsgranskning av vissa filtyper inbyggd (video och ljud)</para
+></listitem>
+<listitem
+><para
+>Import av partiellt eller fullständigt nerladdade filer</para
+></listitem>
+<listitem
+><para
+>Filprioritering för dataflöden med flera filer</para
+></listitem>
+<listitem
+><para
+>Selektiv nerladdning för dataflöden med flera filer</para
+></listitem>
+<listitem
+><para
+>Sparka ut eller förbjud deltagare med en ytterligare IP-filtreringsdialogruta i listnings- och redigeringssyfte.</para
+></listitem>
+<listitem
+><para
+>Stöd för UDP-spårare</para
+></listitem>
+<listitem
+><para
+>Stöd för privata spårare och dataflöden</para
+></listitem>
+<listitem
+><para
+>Stöd för µTorrents utbyte mellan deltagare</para
+></listitem>
+<listitem
+><para
+>Stöd för protokollkryptering (kompatibel med Azureus)</para
+></listitem>
+<listitem
+><para
+>Stöd för att skapa dataflöden utan spårare</para
+></listitem>
+<listitem
+><para
+>Stöd för distribuerade kondensattabeller (DHT, huvudversionen)</para
+></listitem>
+<listitem
+><para
+>Stöd för UPnP för att automatiskt vidarebefordra portar på ett lokalt nätverk med dynamiskt tilldelade värddatorer</para
+></listitem>
+<listitem
+><para
+>Stöd för webberbjudanden</para
+></listitem>
+<listitem
+><para
+>Integrering med systembricka</para
+></listitem>
+<listitem
+><para
+>Stöd för behörighetskontroll av spårare</para
+></listitem>
+<listitem
+><para
+>Anslutning via en proxy</para
+></listitem>
+<listitem
+><para
+>Styrning mellan processer via D-Bus gränssnitt</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Direkthjälpresurser</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>Ktorrent på användarbasen</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>KDE-gemenskapens forum</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

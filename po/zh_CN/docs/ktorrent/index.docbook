@@ -1,0 +1,162 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Continental-Chinese "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<author
+><firstname
+>Yunhe</firstname
+> <surname
+>Guo</surname
+></author
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2010-10-27</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; 是 KDE 提供的 BT 下载应用。支持同时运行多个种子，并具有多种扩展特性，是一个全功能的 BT 客户端。</para>
+
+<itemizedlist>
+<title
+>特性</title>
+<listitem
+><para
+>队列种子</para
+></listitem>
+<listitem
+><para
+>全局限速和单个种子限速</para
+></listitem>
+<listitem
+><para
+>内置的文件预览功能 (视频和音频)</para
+></listitem>
+<listitem
+><para
+>导入部分或完全下载的文件</para
+></listitem>
+<listitem
+><para
+>多文件种子设定文件优先级</para
+></listitem>
+<listitem
+><para
+>多文件种子可选下载指定文件</para
+></listitem>
+<listitem
+><para
+>踢掉/屏蔽对等点，并可以用 IP 过滤器查看和编辑列表</para
+></listitem>
+<listitem
+><para
+>支持 UDP 追踪器</para
+></listitem>
+<listitem
+><para
+>支持私人追踪器和种子</para
+></listitem>
+<listitem
+><para
+>支持 µTorrent 对等点交换</para
+></listitem>
+<listitem
+><para
+>支持协议加密 (兼容 Azureus)</para
+></listitem>
+<listitem
+><para
+>支持创建无追踪器种子</para
+></listitem>
+<listitem
+><para
+>支持分布式哈希表 (DHT，主线版本)</para
+></listitem>
+<listitem
+><para
+>支持 UPnP 局域网自动转发端口的动态主机名</para
+></listitem>
+<listitem
+><para
+>支持 Webseed</para
+></listitem>
+<listitem
+><para
+>通过 Kross 支持脚本编程，通过 DBus 接口实现进程间控制</para
+></listitem>
+<listitem
+><para
+>系统托盘整合</para
+></listitem>
+<listitem
+><para
+>追踪器认证支持</para
+></listitem>
+<listitem
+><para
+>通过代理连接</para
+></listitem>
+<listitem
+><para
+>通过 Kross 支持脚本编程，通过 DBus 接口实现进程间控制</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>在线帮助资源</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>KDE UserBase 上的 KTorrent</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>KDE 社区论坛</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

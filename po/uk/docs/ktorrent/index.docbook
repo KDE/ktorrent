@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Ukrainian "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>27 жовтня 2010 року</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; — програма для обміну даними торентів, створена розробниками KDE, за допомогою якої ви можете отримувати і розповсюджувати дані на основі протоколу BitTorrent. Ця програма надає вам змогу одночасно обмінюватися даними декількох торентів. Також передбачено додаткові можливості, які роблять програму повноцінною клієнтською частиною для обміну даними BitTorrent.</para>
+
+<itemizedlist>
+<title
+>Можливості</title>
+<listitem
+><para
+>Обробка черги торентів</para
+></listitem>
+<listitem
+><para
+>Встановлення загальних обмежень та обмежень на окремі торенти</para
+></listitem>
+<listitem
+><para
+>Перегляд даних файлів деяких типів, вбудований (відео і звукові дані)</para
+></listitem>
+<listitem
+><para
+>Імпортування частково або повністю отриманих файлів</para
+></listitem>
+<listitem
+><para
+>Визначення пріоритетів файлів у торентах, які складаються з декількох файлів</para
+></listitem>
+<listitem
+><para
+>Вибіркове отримання даних торентів, які складаються з декількох файлів</para
+></listitem>
+<listitem
+><para
+>Викидання/Блокування вузлів за допомогою додаткового діалогового вікна фільтрування за IP (список і редагування записів)</para
+></listitem>
+<listitem
+><para
+>Підтримка координування UDP</para
+></listitem>
+<listitem
+><para
+>Підтримка приватних координаторів та торентів</para
+></listitem>
+<listitem
+><para
+>Підтримка обміну вузлами у форматі µTorrent</para
+></listitem>
+<listitem
+><para
+>Підтримка шифрування даних протоколів (сумісна з Azureus)</para
+></listitem>
+<listitem
+><para
+>Підтримка створення торентів без координації</para
+></listitem>
+<listitem
+><para
+>Підтримка розподілених таблиць хешів (distributed hash tables або DHT, основної версії)</para
+></listitem>
+<listitem
+><para
+>Підтримка UPnP з метою автоматичного переспрямування портів у локальній мережі з динамічним призначенням назв вузлів</para
+></listitem>
+<listitem
+><para
+>Підтримка вебпоширення</para
+></listitem>
+<listitem
+><para
+>Можливість роботи у системному лотку</para
+></listitem>
+<listitem
+><para
+>Підтримка розпізнавання для координації</para
+></listitem>
+<listitem
+><para
+>З’єднання за посередництва проксі-сервера</para
+></listitem>
+<listitem
+><para
+>Підтримка обміну даними між процесами за допомогою DBus</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Довідкові ресурси у мережі</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>Сторінка KTorrent на UserBase</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>Форуми спільноти KDE</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

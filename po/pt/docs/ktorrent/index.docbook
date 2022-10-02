@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Portuguese "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+><firstname
+>José</firstname
+><surname
+>Pires</surname
+><affiliation
+><address
+><email
+>zepires@gmail.com</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2010-10-27</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>O &ktorrent; é uma aplicação de BitTorrent do KDE, que lhe permite transferir ficheiros através do protocolo BitTorrent. Permite-lhe executar várias torrentes ao mesmo tempo e vem com funcionalidades extendidas que o tornam um cliente completo para o BitTorrent.</para>
+
+<itemizedlist>
+<title
+>Características</title>
+<listitem
+><para
+>Fila de espera de torrentes</para
+></listitem>
+<listitem
+><para
+>Limites de velocidades globais e por torrentes</para
+></listitem>
+<listitem
+><para
+>Antevisão incorporada de alguns tipos de ficheiros (vídeo e áudio)</para
+></listitem>
+<listitem
+><para
+>Importação de ficheiros transferidos parcialmente ou por completo</para
+></listitem>
+<listitem
+><para
+>Prioritização de torrentes multi-ficheiros</para
+></listitem>
+<listitem
+><para
+>Transferência selectiva para torrentes multi-ficheiros</para
+></listitem>
+<listitem
+><para
+>Banir/expulsar as máquinas com uma janela adicional de filtros de IP's para fins de listagem/edição</para
+></listitem>
+<listitem
+><para
+>Suporte a localizadores por UDP</para
+></listitem>
+<listitem
+><para
+>Suporte para localizadores e torrentes privadas</para
+></listitem>
+<listitem
+><para
+>Suporte para a troca de máquinas do µTorrent</para
+></listitem>
+<listitem
+><para
+>Suporte para a encriptação do protocolo (compatível com o Azureus)</para
+></listitem>
+<listitem
+><para
+>Suporte para a criação de torrentes sem localizador</para
+></listitem>
+<listitem
+><para
+>Suporte para tabelas de dispersão distribuídas (DHT)</para
+></listitem>
+<listitem
+><para
+>Suporte de UPnP para encaminhar automaticamente os portos numa LAN para as máquinas atribuídas de forma dinâmica</para
+></listitem>
+<listitem
+><para
+>Suporte para fontes Web</para
+></listitem>
+<listitem
+><para
+>Suporte para programação com o Kross e controlo inter-processos com a interface de D-Bus</para
+></listitem>
+<listitem
+><para
+>Integração na bandeja do sistema</para
+></listitem>
+<listitem
+><para
+>Suporte para localizadores autenticados</para
+></listitem>
+<listitem
+><para
+>Ligação através de 'proxies'</para
+></listitem>
+<listitem
+><para
+>Suporte para programação com o Kross e controlo inter-processos com a interface de D-Bus</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Recursos de Ajuda 'Online'</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>O KTorrent na Base de Utilizadores</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>Fóruns da Comunidade do KDE</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>

@@ -1,0 +1,171 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Estonian  "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2010-10-27</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; on KDE BitTorrenti rakendus, mis võimaldab faili alla laadida BitTorrenti protokolli kasutades. See lubab käivitada mitmeid torrente korraga ning pakub ohtralt võimalusi, et olla täiemahuline BitTorrenti klient.</para>
+
+<itemizedlist>
+<title
+>Võimalused</title>
+<listitem
+><para
+>Torrentide seadmine järjekorda</para
+></listitem>
+<listitem
+><para
+>Üldised ja torrentipõhised kiirusepiirangud</para
+></listitem>
+<listitem
+><para
+>Teatud failitüüpide sisseehitatud eelvaatlus (video ja heli)</para
+></listitem>
+<listitem
+><para
+>Osaliselt või täielikult allalaaditud failide import</para
+></listitem>
+<listitem
+><para
+>Failide prioriteedi määramine mitmefaililiste torrentide korral</para
+></listitem>
+<listitem
+><para
+>Valikuline allalaadimine mitmefaililiste torrentide korral</para
+></listitem>
+<listitem
+><para
+>Masinate keelamine ja pagendamine täiendava IP-filtri dialoogiga</para
+></listitem>
+<listitem
+><para
+>UDP tracker'i toetus</para
+></listitem>
+<listitem
+><para
+>Era-tracker'ite ja -torrentide toetus</para
+></listitem>
+<listitem
+><para
+>µTorrent'i masinate suhtlemise toetus</para
+></listitem>
+<listitem
+><para
+>Protokolli krüptimise toetus (ühildub Azureusega)</para
+></listitem>
+<listitem
+><para
+>Tracker'ivabade torrentide loomise toetus</para
+></listitem>
+<listitem
+><para
+>Distributiivse räsitabeli (DHT, põhiversioon) toetus</para
+></listitem>
+<listitem
+><para
+>UPnP toetus portide automaatseks edasisuunamiseks dünaamiliselt omistatavate masinatega kohtvõrgus</para
+></listitem>
+<listitem
+><para
+>Veebilevituse toetus</para
+></listitem>
+<listitem
+><para
+>Skriptimise toetus Krossi vahendusel ja protsessidevaheline juhtimine D-Busi liidese abil</para
+></listitem>
+<listitem
+><para
+>Lõimimine süsteemisalvega</para
+></listitem>
+<listitem
+><para
+>Tracker'i autentimise toetus</para
+></listitem>
+<listitem
+><para
+>Ühendus läbi puhverserveri</para
+></listitem>
+<listitem
+><para
+>Skriptimise toetus Krossi vahendusel ja protsessidevaheline juhtimine D-Busi liidese abil</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Abimaterjalid</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>KTorrent UserBase'is</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>KDE kogukonna foorumid</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>
