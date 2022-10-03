@@ -1929,7 +1929,7 @@ msgstr "Jonas Lundqvist"
 #: ktorrent/main.cpp:164
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
-msgstr "Funcionalitat per a desactivar l'autenticació a la interfície web"
+msgstr "Funcionalitat per a desactivar l'autenticació en la interfície web"
 
 #: ktorrent/main.cpp:165
 #, kde-format
@@ -5519,8 +5519,8 @@ msgid ""
 msgstr ""
 "No s'han baixat dades suficients per a obrir el fitxer.\n"
 "\n"
-"Active el mode de baixada seqüencial per a obtindre les dades necessàries "
-"amb una prioritat més alta?"
+"Voleu activar el mode de baixada seqüencial per a obtindre les dades "
+"necessàries amb una prioritat més alta?"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
