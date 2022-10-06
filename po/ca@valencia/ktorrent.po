@@ -1439,13 +1439,13 @@ msgstr "Anomena i guarda..."
 #: ktorrent/ktorrentui.rc:5
 #, kde-format
 msgid "&File"
-msgstr "&Fitxer"
+msgstr "Fi&txer"
 
 #. i18n: ectx: Menu (view)
 #: ktorrent/ktorrentui.rc:16
 #, kde-format
 msgid "&View"
-msgstr "&Visualitza"
+msgstr "Vi&sualitza"
 
 #. i18n: ectx: ToolBar (mainToolBar)
 #: ktorrent/ktorrentui.rc:25
@@ -2170,7 +2170,7 @@ msgstr " min"
 #: ktorrent/pref/advancedpref.ui:210 ktorrent/pref/generalpref.ui:123
 #, kde-format
 msgid "Miscellaneous"
-msgstr "Miscelànea"
+msgstr "Miscel·lània"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/advancedpref.ui:220
