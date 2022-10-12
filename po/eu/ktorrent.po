@@ -14,29 +14,27 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-12-31 00:43+0000\n"
-"PO-Revision-Date: 2022-09-12 23:26+0200\n"
+"PO-Revision-Date: 2022-10-11 16:03+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.08.0\n"
+"X-Generator: Lokalize 22.08.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
-"Marcos Goyeneche, Ion Gaztañaga, Iñigo Salvador Azurmendi, Hizkuntza "
+"Iñigo Salvador Azurmendi,Marcos Goyeneche,Ion Gaztañaga,Hizkuntza "
 "Politikarako Sailburuordetza"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
-"marcos@euskalgnu.org, igaztanaga@gmail.com, xalba@euskalnet.net, hizpol@ej-"
-"gv.es"
+msgstr "xalba@ni.eus,marcos@euskalgnu.org,igaztanaga@gmail.com,hizpol@ej-gv.es"
 
 #: ktorrent/core.cpp:143
 #, kde-format
@@ -146,7 +144,7 @@ msgstr "Ezin da berriz sortu datu-fitxategi hau: %1"
 #: ktorrent/core.cpp:1196
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
-msgstr "Magnet BitTorrent esteka baliogabea: %1"
+msgstr "BitTorrent iman esteka baliogabea: %1"
 
 #: ktorrent/core.cpp:1199
 #, kde-format
@@ -154,7 +152,7 @@ msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
 "optimum results enable DHT."
 msgstr ""
-"Magnet esteka bat deskargatzen saiatzen ari zara, eta DHT ez dago gaituta. "
+"Iman esteka bat deskargatzen saiatzen ari zara, eta DHT ez dago gaituta. "
 "Emaitza onenak lortzeko, gaitu DHT."
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, AddPeersDlg)
@@ -1331,7 +1329,7 @@ msgstr "Ireki URLa"
 #: ktorrent/gui.cpp:375
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
-msgstr "Ireki torrent bat adierazten duen URLa. Magnet estekak onartzen dira"
+msgstr "Ireki torrent bat adierazten duen URLa. Iman estekak onartzen dira"
 
 #: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
@@ -1392,7 +1390,7 @@ msgid "Text files"
 msgstr "Testu-fitxategiak"
 
 #: ktorrent/ipfilterwidget.cpp:130
-#, fuzzy, kde-format
+#, kde-format
 msgid "Choose a filename to save under"
 msgstr "Hautatu gordetzeko fitxategi-izen bat"
 
@@ -1517,17 +1515,15 @@ msgid "KTorrent"
 msgstr "KTorrent"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgid "Bittorrent client for KDE"
+#, kde-format
 msgid "Bittorrent client by KDE"
-msgstr "Bittorrent-enKDErako Bittorrent bezeroa"
+msgstr "KDEren bittorrent-en bezeroa"
 
 #: ktorrent/main.cpp:105
-#, fuzzy, kde-format
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgstr "(C) 2005 - 2011 Joris Guisson eta Ivan Vasic"
 
 #: ktorrent/main.cpp:112
 #, kde-format
@@ -1971,49 +1967,47 @@ msgstr "305379 akatsarentzako konponketa"
 #: ktorrent/main.cpp:168
 #, kde-format
 msgid "Rex Dieter"
-msgstr ""
+msgstr "Rex Dieter"
 
 #: ktorrent/main.cpp:168
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
-msgstr ""
+msgstr "Gehitu x-scheme-handler/magnet MIME-motarako euskarria"
 
 #: ktorrent/main.cpp:169
 #, kde-format
 msgid "Leszek Lesner"
-msgstr ""
+msgstr "Leszek Lesner"
 
 #: ktorrent/main.cpp:169
-#, fuzzy, kde-format
-#| msgid "Fix for bug 305379"
+#, kde-format
 msgid "Fix for bug 339584"
-msgstr "305379 akatsarentzako konponketa"
+msgstr "339584 akatsaren konponketa"
 
 #: ktorrent/main.cpp:170
 #, kde-format
 msgid "Andrius Štikonas"
-msgstr ""
+msgstr "Andrius Štikonas"
 
 #: ktorrent/main.cpp:170 ktorrent/main.cpp:171
 #, kde-format
 msgid "KF5 porting"
-msgstr ""
+msgstr "KF5 eratorpena"
 
 #: ktorrent/main.cpp:171
 #, kde-format
 msgid "Nick Shaforostoff"
-msgstr ""
+msgstr "Nick Shaforostoff"
 
 #: ktorrent/main.cpp:172
-#, fuzzy, kde-format
-#| msgid "Alexander Dymo"
+#, kde-format
 msgid "Alexander Trufanov"
-msgstr "Alexander Dymo"
+msgstr "Alexander Trufanov"
 
 #: ktorrent/main.cpp:172
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
-msgstr ""
+msgstr "Akats-konponketak, garbiketak eta optimizazioak"
 
 #: ktorrent/main.cpp:176
 #, kde-format
@@ -2134,24 +2128,24 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
-#, fuzzy, kde-format
-#| msgid "Magnet"
+#, kde-format
 msgid "Magnets Queue"
-msgstr "Magnet"
+msgstr "Imanen ilara"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/advancedpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Number of upload slots:"
+#, kde-format
 msgid "Number of downloading slots:"
-msgstr "Kargatze-erreten kopurua:"
+msgstr "Zama-jaisteko tarte kopurua:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_numMagnetDownloadingSlots)
 #: ktorrent/pref/advancedpref.ui:147
 #, fuzzy, kde-format
 #| msgid "Maximum number of downloads (0 = no limit)"
 msgid "Maximum number of concurrent downloading magnets at the same time."
-msgstr "Gehienezko deskarga kopurua (0 = mugarik ez)"
+msgstr ""
+"Aldi berean zama-jaisten egon daitekeenGehienezko deskarga kopurua (0 = "
+"mugarik ez)"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:163
@@ -2178,11 +2172,9 @@ msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
-#, fuzzy, kde-format
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgid " min"
-msgstr " minutu"
+msgstr " min"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
@@ -2465,33 +2457,31 @@ msgstr "Txikitu trabatuta denbora gehiegi egon den torrent-en lehentasuna"
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
 msgstr ""
+"Torrentak erein edo zama-jaitsi bitartean haiekin erabili beharreko kolorea."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
-#, fuzzy, kde-format
-#| msgid "KTorrent is not running."
+#, kde-format
 msgid "Torrent is running:"
-msgstr "KTorrent ez da exekutatzen ari."
+msgstr "Torrent ibiltzen ari da:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/colorpref.ui:40
 #, kde-format
 msgid "Torrent is stalled or checking data:"
-msgstr ""
+msgstr "Torrent geldituta dago edo datuak egiaztatzen ari da:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
-#, fuzzy, kde-format
-#| msgid "Color to use for first priority files."
+#, kde-format
 msgid "Color to use for torrents with error status."
-msgstr "Lehentasun handiena duten fitxategietarako erabili beharreko kolorea."
+msgstr "Errore egoera duten torrentekin erabili beharreko kolorea."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/colorpref.ui:54
-#, fuzzy, kde-format
-#| msgid "Torrent:"
+#, kde-format
 msgid "Torrent error:"
-msgstr "Torrent-a:"
+msgstr "Torrent errorea:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2572,10 +2562,9 @@ msgstr "Partekatze-proportzio apala:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Minimum good share ratio:"
+#, kde-format
 msgid "Good share ratio:"
-msgstr "Gutxieneko partekatze-erlazio ona:"
+msgstr "Partekatze-proportzio ona:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
@@ -2597,10 +2586,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
-#, fuzzy, kde-format
-#| msgid "Colors"
+#, kde-format
 msgid "Reset Colors"
-msgstr "Koloreak"
+msgstr "Berrezarri koloreak"
 
 #: ktorrent/pref/generalpref.cpp:13
 #, kde-format
@@ -2684,7 +2672,7 @@ msgstr "Sistema-erretiluan ikonoa erakutsi edo ez."
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr ""
+msgstr "Beti ikonotu sistemako erretilura abiatzean"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -2781,7 +2769,7 @@ msgstr "Nabarmendu torrent berriak"
 #: ktorrent/pref/generalpref.ui:180
 #, kde-format
 msgid "Show total speed in the window title"
-msgstr ""
+msgstr "Erakutsi abiaduraren guztizkoa leihoaren tituluan"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
@@ -3533,12 +3521,12 @@ msgstr "DHT: %1, %2"
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format
 msgid "The desktop is offline"
-msgstr ""
+msgstr "Mahaigaina lerroz kanpo dago"
 
 #: ktorrent/tools/magnetmodel.cpp:102
 #, kde-format
 msgid "Magnet Link"
-msgstr "Magnet esteka"
+msgstr "Iman esteka"
 
 #: ktorrent/tools/magnetmodel.cpp:104 ktorrent/tools/queuemanagermodel.cpp:182
 #: ktorrent/trayicon.cpp:137 plugins/infowidget/trackermodel.cpp:123
@@ -3571,23 +3559,22 @@ msgstr "Geldituta"
 #: ktorrent/tools/magnetview.cpp:51
 #, kde-format
 msgid "Start Magnet"
-msgstr "Abiarazi Magnet esteka"
+msgstr "Abiarazi imana"
 
 #: ktorrent/tools/magnetview.cpp:52
 #, kde-format
 msgid "Stop Magnet"
-msgstr "Gelditu Magnet esteka"
+msgstr "Gelditu imana"
 
 #: ktorrent/tools/magnetview.cpp:53
-#, fuzzy, kde-format
-#| msgid "Copy Magnet URI"
+#, kde-format
 msgid "Copy Magnet URL"
-msgstr "Kopiatu Magnet URIa"
+msgstr "Kopiatu iman URLa"
 
 #: ktorrent/tools/magnetview.cpp:55
 #, kde-format
 msgid "Remove Magnet"
-msgstr "Kendu Magnet esteka"
+msgstr "Kendu imana"
 
 #: ktorrent/tools/queuemanagermodel.cpp:178
 #, kde-format
@@ -3721,15 +3708,14 @@ msgid "Widget to manage the torrent queue"
 msgstr "Torrent-en ilara kudeatzeko trepeta"
 
 #: ktorrent/torrentactivity.cpp:87
-#, fuzzy, kde-format
-#| msgid "KTMagnetDownloader"
+#, kde-format
 msgid "Magnet Downloader"
-msgstr "KTMagnetDownloader"
+msgstr "Iman zama-jaistekoa"
 
 #: ktorrent/torrentactivity.cpp:87
 #, kde-format
 msgid "Displays the currently downloading magnet links"
-msgstr "Unean deskargatzen ari diren Magnet estekak bistaratzen ditu"
+msgstr "Unean zama-jaisten ari diren iman estekak azaltzen ditu"
 
 #: ktorrent/torrentactivity.cpp:102
 #, kde-format
@@ -3763,10 +3749,9 @@ msgid "Suspend all running torrents"
 msgstr "Exekutatzen ari diren torrent guztiak egonean utzi"
 
 #: ktorrent/torrentactivity.cpp:119
-#, fuzzy, kde-format
-#| msgid "Group View Visible"
+#, kde-format
 msgid "Group View"
-msgstr "Talde-ikuspegia ikusgai"
+msgstr "Talde-ikuspegia"
 
 #: ktorrent/torrentactivity.cpp:120
 #, kde-format
@@ -3799,6 +3784,8 @@ msgid ""
 "Download speed: <b>%1</b><br/>Upload speed: <b>%2</b><br/>Received: <b>%3</"
 "b><br/>Transmitted: <b>%4</b>"
 msgstr ""
+"Zama-jaisteko abiadura: <b>%1</b><br/>-igotzeko abiadura: <b>%2</b><br/"
+">Jasota: <b>%3</b><br/>Transmitituta: <b>%4</b>"
 
 #: ktorrent/trayicon.cpp:167
 #, kde-format
@@ -3907,16 +3894,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr "Torrent-a gelditu egin da.<br />"
 
 #: ktorrent/trayicon.cpp:346
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "Abiadura-muga KiB/s-tan"
+msgstr "Zama-igotzeko abiadura-muga KiB/s-tan"
 
 #: ktorrent/trayicon.cpp:348
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "Abiadura-muga KiB/s-tan"
+msgstr "Zama-jaisteko abiadura-muga KiB/s-tan"
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -4096,10 +4081,9 @@ msgid "Errors:"
 msgstr "Erroreak:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgid "Filter..."
-msgstr "Iragazkia"
+msgstr "Iragazi..."
 
 #: ktorrent/view/view.cpp:131
 #, kde-format
@@ -4500,10 +4484,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "KTorrent-en UPnP probako aplikazioa"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2007 Joris Guisson eta Ivan Vasic"
+msgstr "&copy; 2005 - 2007 Joris Guisson eta Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -4635,8 +4618,7 @@ msgid "Ungrouped Torrents"
 msgstr "Torrent bananduak"
 
 #: libktcore/interfaces/functions.cpp:149
-#, fuzzy, kde-format
-#| msgid "Torrents"
+#, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrent-ak"
@@ -4704,7 +4686,7 @@ msgstr "Erakutsi sistema-erretiluko ikono bat"
 #: libktcore/ktorrent.kcfg:70
 #, kde-format
 msgid "Show a total speeds in the title"
-msgstr ""
+msgstr "Erakutsi abiaduraren guztizkoa titulu-barran"
 
 #. i18n: ectx: label, entry (showSpeedBarInTrayIcon), group (downloads)
 #: libktcore/ktorrent.kcfg:74
@@ -4728,7 +4710,7 @@ msgstr "Kargatzearen banda-zabalera (kb/s-tan):"
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr ""
+msgstr "Beti ikonotu sistemako erretilura abiatzean."
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
@@ -6653,31 +6635,31 @@ msgstr "Torrent publikoetan soilik gaitu"
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:37
 #, kde-format
 msgid "Copy Magnet URI"
-msgstr "Kopiatu Magnet URIa"
+msgstr "Kopiatu iman URIa"
 
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:115
 #, kde-format
 msgid "Magnet link copied to clipboard"
-msgstr "Magnet esteka kopiatu da arbelean"
+msgstr "iman esteka arbelera kopiatu da"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_x2)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.cpp:16
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:32
 #, kde-format
 msgid "Magnet Generator"
-msgstr "Magnet esteken sorgailua"
+msgstr "Iman sortzailea"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, MagnetGeneratorPrefWidget)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:26
 #, kde-format
 msgid "Magnet Generator Preferences"
-msgstr "Magnet esteken sorgailuaren hobespenak"
+msgstr "Iman sortzailearen hobespenak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_torrenttracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:43
 #, kde-format
 msgid "Add a tracker from the torrent file"
-msgstr "Gehitu kontrolatzaile bat torrent fitxategi batetik"
+msgstr "Gehitu aztarnari bat torrent fitxategitik"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_customtracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:50
@@ -6695,13 +6677,13 @@ msgstr "Gehitu aztarnari-URL pertsonalizatu bat"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:60
 #, kde-format
 msgid "The tracker URL that will be a part of the magnet link"
-msgstr "«Magnet» estekaren atal bat izango den aztarnariaren URLa"
+msgstr "Iman estekaren atala izango den aztarnariaren URLa"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_dn)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:67
 #, kde-format
 msgid "Add the torrent name in the URI"
-msgstr "Torrent-aren izena URIan gehitu"
+msgstr "Gehitu torrent-aren izena URIan"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_dn)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:70
@@ -6713,13 +6695,13 @@ msgstr "Gehitu izena"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:80
 #, kde-format
 msgid "Disable the menu item for private torrents"
-msgstr "Desgaitu menu-elementua torrent pribatuetarako"
+msgstr "Ezgaitu torrent pribatuetarako menu-elementua"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_popup)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:87
 #, kde-format
 msgid "Give feedback in form of a popup"
-msgstr "Oharrak egin mezu gainerakor bidez"
+msgstr "Berrelikadura eman leiho gainerakor bidez"
 
 #. i18n: ectx: Menu (MediaPlayerMenu)
 #: plugins/mediaplayer/ktorrent_mediaplayerui.rc:4
@@ -6920,11 +6902,10 @@ msgstr "Aztertu direktorioak errekurtsiboki."
 #: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
 #: plugins/scanfolder/torrentloadqueue.cpp:142
-#, fuzzy, kde-format
-#| msgid "loaded"
+#, kde-format
 msgctxt "folder name part"
 msgid "loaded"
-msgstr "kargatutakoak"
+msgstr "Zamatuta"
 
 #: plugins/scanfolder/scanfolderplugin.cpp:43
 #: plugins/scanfolder/scanfolderplugin.cpp:56
@@ -7042,73 +7023,67 @@ msgstr "Torrent-ak gehitu beharreko taldea."
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan for lost files"
-msgstr ""
+msgstr "Aztertu galdutako fitxategi bila"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
-#, fuzzy, kde-format
-#| msgid "Log widget position:"
+#, kde-format
 msgid "Widget position:"
-msgstr "Erregistro-trepetaren posizioa:"
+msgstr "Trepetaren kokalekua:"
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
-msgstr ""
+msgstr "Aztertu galdutako fitxategi bila"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
-msgstr ""
+msgstr "Aztertu"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select folder:"
-msgstr "&Hautatu dena"
+msgstr "Hautatu karpeta:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:107
-#, fuzzy, kde-format
-#| msgid "Show a file list"
+#, kde-format
 msgid "Show all files"
-msgstr "Erakutsi fitxategi-zerrenda"
+msgstr "Erakutsi fitxategi guztiak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
-#, fuzzy, kde-format
-#| msgid "Open silently"
+#, kde-format
 msgid "Open file"
-msgstr "Ireki modu isilean"
+msgstr "Ireki fitxategia"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:130
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgid "Delete on disk"
-msgstr "Ezabatu fitxategia(k)"
+msgstr "Ezabatu diskoan"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
 #, kde-format
 msgid "Ctrl+Del"
-msgstr ""
+msgstr "Ktrl+Eza"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:142
-#, fuzzy, kde-format
-#| msgid "Magnet link copied to clipboard"
+#, kde-format
 msgid "Copy to clipboard"
-msgstr "Magnet esteka kopiatu da arbelean"
+msgstr "Kopiatu arbelera"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:145
 #, kde-format
 msgid "Ctrl+C"
-msgstr ""
+msgstr "Ktrl+C"
 
 #. i18n: ectx: ToolBar (SearchToolBar)
 #: plugins/search/ktorrent_searchui.rc:4
@@ -7879,10 +7854,9 @@ msgstr "Irudia gordetzeko bide-izena hautatu..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
-#, fuzzy, kde-format
-#| msgid "Torrent Files"
+#, kde-format
 msgid "Image files"
-msgstr "Uholde fitxategiak"
+msgstr "Irudi fitxategiak"
 
 #. i18n: ectx: label, entry (UpdateEveryGuiUpdates), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:10
@@ -8274,20 +8248,17 @@ msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
 
 #: plugins/syndication/feedwidget.cpp:27
-#, fuzzy, kde-format
-#| msgid ""
-#| "    <html>    <body>    <div style=\"border-style:solid; border-"
-#| "width:1px; margin:5px; padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:"
-#| "</b> %2<br/>    </div>    <p>%3</p>    </body>    </html>    "
+#, kde-format
 msgid ""
 "    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
 "border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Title:</"
 "b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
 "html>    "
 msgstr ""
-"    <html>    <body>    <div style=\"border-style:solid; border-width:1px; "
-"margin:5px; padding:5px\">    <b>Izenburua:</b> %1<br/>    <b>Data:</b> "
-"%2<br/>    </div>    <p>%3</p>    </body>    </html>    "
+"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
+"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Titulua:"
+"</b> %1<br/>    <b>Data:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
+"html>    "
 
 #: plugins/syndication/feedwidget.cpp:173
 #, kde-format
