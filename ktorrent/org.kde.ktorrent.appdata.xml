@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">KTorrent</name>
   <name xml:lang="es">KTorrent</name>
   <name xml:lang="et">KTorrent</name>
+  <name xml:lang="eu">KTorrent</name>
   <name xml:lang="fi">KTorrent</name>
   <name xml:lang="fr">KTorrent</name>
   <name xml:lang="gl">KTorrent</name>
@@ -51,6 +52,7 @@
   <summary xml:lang="en-GB">BitTorrent Client</summary>
   <summary xml:lang="es">Cliente de BitTorrent</summary>
   <summary xml:lang="et">BitTorrenti klient</summary>
+  <summary xml:lang="eu">BitTorrent bezeroa</summary>
   <summary xml:lang="fi">BitTorrent-asiakas</summary>
   <summary xml:lang="fr">Client BitTorrent</summary>
   <summary xml:lang="gl">Cliente de BitTorrent</summary>
@@ -126,6 +128,7 @@
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="et">Omadused:</p>
+    <p xml:lang="eu">Ezaugarriak:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
@@ -164,6 +167,7 @@
       <li xml:lang="en-GB">Queuing of torrents</li>
       <li xml:lang="es">Encolado de torrents</li>
       <li xml:lang="et">Torrentide seadmine järjekorda</li>
+      <li xml:lang="eu">Torrentak ilaran ipintzea</li>
       <li xml:lang="fi">Torrenttien jonotus</li>
       <li xml:lang="fr">Mise en file d'attente des torrents</li>
       <li xml:lang="gl">Consulta de torrents.</li>
@@ -197,6 +201,7 @@
       <li xml:lang="en-GB">Global and per torrent speed limits</li>
       <li xml:lang="es">Límites de velocidad globales e individuales</li>
       <li xml:lang="et">Kiiruse üldine ja torrentipõhine piiramine</li>
+      <li xml:lang="eu">Abiadura muga orokorra eta torrent bakoitzeko abiadura muga</li>
       <li xml:lang="fi">Yleinen tai torrenttikohtainen nopeusrajoitus</li>
       <li xml:lang="fr">Limites de vitesse globales et par torrent</li>
       <li xml:lang="gl">Límites de velocidade globais e por torrent.</li>
@@ -230,6 +235,7 @@
       <li xml:lang="en-GB">Previewing of certain file types, build in (video and audio)</li>
       <li xml:lang="es">Vista previa de ciertos tipos de archivo, vídeo y audio incorporados</li>
       <li xml:lang="et">Teatavate failitüüpide eelvaatlus (video ja audio)</li>
+      <li xml:lang="eu">Fitxategi-mota jakin batzuk aurreikustea barneratua dago (bideoa eta audioa)</li>
       <li xml:lang="fi">Joidenkin (ääni- ja video-) tiedostotyyppien sisään rakennettu esikatselu</li>
       <li xml:lang="fr">Aperçu en interne de certains types de fichiers (vidéo et audio)</li>
       <li xml:lang="gl">Previsualización de certos tipos de ficheiros, incluída (vídeo e son).</li>
@@ -263,6 +269,7 @@
       <li xml:lang="en-GB">Importing of partially or fully downloaded files</li>
       <li xml:lang="es">Importación de archivos descargados parcial o totalmente</li>
       <li xml:lang="et">Osaliselt või täielikult alla laaditud failide import</li>
+      <li xml:lang="eu">Hein batean edo osorik zama-jaitsitako fitxategiak inportatzea</li>
       <li xml:lang="fi">Osittain tai täysin ladattujen tiedostojen tuonti</li>
       <li xml:lang="fr">Import de fichiers partiellement ou totalement téléchargés</li>
       <li xml:lang="gl">Importación de ficheiros descargados total ou parcialmente.</li>
@@ -393,6 +400,7 @@
       <li xml:lang="en-GB">UDP tracker support</li>
       <li xml:lang="es">Uso de rastreador UDP</li>
       <li xml:lang="et">UDP tracker'i toetus</li>
+      <li xml:lang="eu">UDP aztarnarien euskarria</li>
       <li xml:lang="fi">UDP-seurantapalvelintuki</li>
       <li xml:lang="fr">Gestion des traqueurs « UDP »</li>
       <li xml:lang="gl">Compatibilidade con localizadores UDP.</li>
@@ -428,6 +436,7 @@
       <li xml:lang="en-GB">Support for private trackers and torrents</li>
       <li xml:lang="es">Implementación de rastreadores y torrents privados</li>
       <li xml:lang="et">Privaatsete tracker'ite ja torrentide toetus</li>
+      <li xml:lang="eu">Aztarnari eta torrent pribatuetarako euskarria</li>
       <li xml:lang="fi">Yksityisten seurantapalvelinten ja torrenttien tuki</li>
       <li xml:lang="fr">Gestion des torrents et traqueurs privés</li>
       <li xml:lang="gl">Compatibilidade con localizadores e torrents privados.</li>
@@ -495,6 +504,7 @@
       <li xml:lang="en-GB">Support for protocol encryption (compatible with Azureus)</li>
       <li xml:lang="es">Implementación de cifrado de protocolo (compatible con Azureus)</li>
       <li xml:lang="et">Protokolli krüptimise toetus (ühilduv Azureusega)</li>
+      <li xml:lang="eu">Protokoloa zifratzeko euskarria (Azureus-ekin bateragarria)</li>
       <li xml:lang="fi">Yhteyskäytännön salaustuki (Azureuksen kanssa yhteensopiva)</li>
       <li xml:lang="fr">Gestion du chiffrement du protocole (compatible avec Azureus)</li>
       <li xml:lang="gl">Funcionalidade de cifrado do protocolo (compatíbel con Azureus).</li>
@@ -528,6 +538,7 @@
       <li xml:lang="en-GB">Support for creating trackerless torrents</li>
       <li xml:lang="es">Admite la creación de torrents sin rastreadores</li>
       <li xml:lang="et">Tracker'ivabade torrentide loomise toetus</li>
+      <li xml:lang="eu">Aztarnaririk gabeko torrentak sortzeko euskarria</li>
       <li xml:lang="fi">Seurantapalvelimettomien torrenttien luontituki</li>
       <li xml:lang="fr">Gestion de la création de torrents sans traqueur</li>
       <li xml:lang="gl">Funcionalidade de creación de torrents sen localizadores.</li>
@@ -627,6 +638,7 @@
       <li xml:lang="en-GB">Support for webseeds</li>
       <li xml:lang="es">Implementación de semillas web</li>
       <li xml:lang="et">Veebilevituse toetus</li>
+      <li xml:lang="eu">web-hazien euskarria</li>
       <li xml:lang="fi">Webseed-tuki</li>
       <li xml:lang="fr">Gestion des sources web</li>
       <li xml:lang="gl">Compatibilidade con sementes web.</li>
@@ -661,6 +673,7 @@
       <li xml:lang="en-GB">System tray integration</li>
       <li xml:lang="es">Integración con la bandeja del sistema</li>
       <li xml:lang="et">Lõimimine süsteemisalve</li>
+      <li xml:lang="eu">Sistema-erretiluan bateratzea</li>
       <li xml:lang="fi">Ilmoitusalueintegrointi</li>
       <li xml:lang="fr">Intégration dans la barre de notifications du système</li>
       <li xml:lang="gl">Integración coa área de notificación.</li>
@@ -694,6 +707,7 @@
       <li xml:lang="en-GB">Tracker authentication support</li>
       <li xml:lang="es">Implementa autenticación del rastreador</li>
       <li xml:lang="et">Trakcer'ite autentimise toetus</li>
+      <li xml:lang="eu">Aztarnari autentifikazio euskarria</li>
       <li xml:lang="fi">Seurantapalvelimen todennustuki</li>
       <li xml:lang="fr">Gestion de l'authentification des traqueurs</li>
       <li xml:lang="gl">Funcionalidade de autenticación de localizadores.</li>
@@ -728,6 +742,7 @@
       <li xml:lang="en-GB">Connection through a proxy</li>
       <li xml:lang="es">Conexión a través de un proxy</li>
       <li xml:lang="et">Ühendus läbi puhverserveri</li>
+      <li xml:lang="eu">Ordezkari baten bidez konektatzea</li>
       <li xml:lang="fi">Välityspalvelinyhteysmahdollisuus</li>
       <li xml:lang="fr">Connexion à travers un serveur mandataire</li>
       <li xml:lang="gl">Conexión mediante proxy.</li>
@@ -762,6 +777,7 @@
     <p xml:lang="en-GB">In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
     <p xml:lang="es">Además de las funcionalidades incluidas, hay varios complementos disponibles para KTorrent.</p>
     <p xml:lang="et">Lisaks on KTorrentil ka mitmeid pluginaid.</p>
+    <p xml:lang="eu">Barneratutako funtzionaltasunez gain, KTorrent-erako plugin batzuk erabilgarri daude.</p>
     <p xml:lang="fi">Sisään rakennettujen toimintojen lisäksi KTorrentiin saa myös liitännäisiä.</p>
     <p xml:lang="fr">En plus de ces fonctionnalités internes, des extensions sont disponibles pour KTorrent.</p>
     <p xml:lang="gl">Ademais das funcionalidades incluídas, compatibilidade con complementos instalábeis desde KTorrent.</p>
