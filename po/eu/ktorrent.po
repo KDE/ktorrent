@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-12-31 00:43+0000\n"
-"PO-Revision-Date: 2022-10-11 16:03+0200\n"
+"PO-Revision-Date: 2022-10-12 16:52+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -1551,10 +1551,11 @@ msgid "Diego Rosario Brogna"
 msgstr "Diego Rosario Brogna"
 
 #: ktorrent/main.cpp:118
-#, fuzzy, kde-format
-#| msgid "Global max share ratio patch"
+#, kde-format
 msgid "Webinterface Plugin, global max share ratio patch"
-msgstr "Gehieneko partekatze-erlazio orokorraren adabakia"
+msgstr ""
+"web-interfazerako plugina, partekatzeko gehienezko proportzio orokorrerako "
+"adabakia"
 
 #: ktorrent/main.cpp:119
 #, kde-format
@@ -2012,7 +2013,7 @@ msgstr "Akats-konponketak, garbiketak eta optimizazioak"
 #: ktorrent/main.cpp:176
 #, kde-format
 msgid "Enable logging to standard output"
-msgstr ""
+msgstr "Gaitu egunkariko sarrerak irteera estandarrera bideratzea"
 
 #: ktorrent/main.cpp:177
 #, kde-format
@@ -2095,17 +2096,7 @@ msgstr "Sare-hariak lo egongo diren denbora-tartea:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_cpuUsage)
 #: ktorrent/pref/advancedpref.ui:95
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Amount of time the network threads will sleep when they are speed "
-#| "limited. This has absolutely no effect when there are no speed limits.</"
-#| "p>\n"
-#| "<p><span style=\" font-weight:600;\">Note:</span> The lower this is the "
-#| "more CPU is used. Setting it high can lead to lower speeds in high "
-#| "bandwith situations. </p>\n"
-#| "<p>For example on an 100 Mbit LAN, if you set a limit of 3000 KiB/s, you "
-#| "might not actually reach this speed when this value is too high. Without "
-#| "a limit you can easily get above 3000 KiB/s on a LAN.</p>"
+#, kde-format
 msgid ""
 "<p>Amount of time the network threads will sleep when they are speed "
 "limited. This has absolutely no effect when there are no speed limits.</p>\n"
@@ -2116,15 +2107,15 @@ msgid ""
 "might not actually reach this speed when this value is too high. Without a "
 "limit you can easily get above 3000 KiB/s on a LAN.</p>"
 msgstr ""
-"<p>Sare-hariak lo egongo diren denbora-tartea, abiadura mugatua dutenean. "
-"Honek ez du eraginik abiadura-mugarik ez dagoenean.</p>\n"
-"<p><span style=\" font-weight:600;\">Oharra:</span> hau zenbat eta txikiagoa "
-"izan, orduan eta PUZ gehiago erabiliko da. Balio altua ezartzeak abiadura "
-"txikitu dezake banda-zabalera handiko egoeretan. </p>\n"
-"<p>Adibidez, 100 Mbiteko sare lokal batean, 3.000 KiB/s-ko muga ezartzen "
-"baduzu, baliteke abiadura horretara benetan ez iristea balio hau altuegia "
-"denean. Mugarik gabe, aldiz, erraz gaindi dezakezu 3.000 KiB/s-ko abiadura "
-"sare lokal batean.</p>"
+"<p>Sareko hariak, abiadura mugatua dutenean, lo egongo diren denbora-tartea. "
+"Honek ez du inolako eraginik abiadura-mugarik ez dagoenean.</p>\n"
+"<p><span style=\" font-weight:600;\">Oharra:</span> Hau zenbat eta "
+"txikiagoa, PUZa orduan eta gehiago erabiliko da. Balio altua ezartzeak "
+"abiadura txikitu dezake banda-zabalera handiko egoeretan.</p>\n"
+"<p>Adibidez, 100 Mbiteko LAN batean, 3.000 KiB/s-ko muga ezartzen baduzu, "
+"baliteke abiadura horretara benetan ez iristea balio hau altuegia denean. "
+"Mugarik gabe, aldiz, sare lokal batean, erraz gaindi dezakezu 3.000 KiB/s-ko "
+"abiadura.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
@@ -2140,12 +2131,9 @@ msgstr "Zama-jaisteko tarte kopurua:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_numMagnetDownloadingSlots)
 #: ktorrent/pref/advancedpref.ui:147
-#, fuzzy, kde-format
-#| msgid "Maximum number of downloads (0 = no limit)"
+#, kde-format
 msgid "Maximum number of concurrent downloading magnets at the same time."
-msgstr ""
-"Aldi berean zama-jaisten egon daitekeenGehienezko deskarga kopurua (0 = "
-"mugarik ez)"
+msgstr "Aldi berean zama-jaisten egon daitekeen gehienezko iman kopurua."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:163
@@ -2154,13 +2142,14 @@ msgid ""
 "Whether or not the magnets that are not downloaded after a maximum period of "
 "time must be pushed back at the end of the queue."
 msgstr ""
+"Gehienezko denbora tarte batean zama-jaitsi ez diren imanak ilara bukaerara "
+"bultzatu behar diren edo ez."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:166
-#, fuzzy, kde-format
-#| msgid "Auto resume after:"
+#, kde-format
 msgid "Requeue magnets after:"
-msgstr "Berrekin automatikoki denbora hau igaro ondoren:"
+msgstr "Imanak berriz ilaran ipini hau igarotakoan:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:173
@@ -2169,6 +2158,8 @@ msgid ""
 "Maximum time that a magnet can occupy a downloading slot before it will be "
 "pushed back in the queue."
 msgstr ""
+"Ilaran atzera bultzatua izan aurretik, iman batek zama-jaisteko tarte bat "
+"gehienez har dezakeen denbora."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
@@ -2447,10 +2438,11 @@ msgstr "Koloreak"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_stalledTorrentColor)
 #: ktorrent/pref/colorpref.ui:19
-#, fuzzy, kde-format
-#| msgid "Decrease priority of torrents which are stalled for too long"
+#, kde-format
 msgid "Color to use for torrents when they are stalled or checking data."
-msgstr "Txikitu trabatuta denbora gehiegi egon den torrent-en lehentasuna"
+msgstr ""
+"Trabatuta edo datuak egiaztatzen ari diren torrent-ekin erabili beharreko "
+"kolorea"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTorrentColor)
 #: ktorrent/pref/colorpref.ui:26
@@ -2571,18 +2563,23 @@ msgstr "Partekatze-proportzio ona:"
 #, kde-format
 msgid "Color to display share ratio below minimal good value."
 msgstr ""
+"Gutxieneko balioaren azpitik dagoen partekatze proportzioa azaltzeko kolorea."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_goodShareRatioColor)
 #: ktorrent/pref/colorpref.ui:154
 #, kde-format
 msgid "Color to display share ratio above minimal good value."
 msgstr ""
+"Gutxieneko balioaren gainetik dagoen partekatze proportzioa azaltzeko "
+"kolorea."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
 msgstr ""
+"Berrezarri koloreak haien balio lehenetsietara (beste ezarpenak ez dira "
+"aldatuko)."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
@@ -2663,10 +2660,9 @@ msgstr "Sistema-erretiluko ikonoa"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
-#, fuzzy, kde-format
-#| msgid "Whether or not to show an icon in the system tray."
+#, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
-msgstr "Sistema-erretiluan ikonoa erakutsi edo ez."
+msgstr "Abioan beti sistemako erretilura ikonotu behar duen edo ez."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
@@ -2716,21 +2712,21 @@ msgstr "Ireki torrent guztiak modu isilean"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:149
-#, fuzzy, kde-format
-#| msgid ""
-#| "Prevent computer from going into a sleep state when torrents are running."
+#, kde-format
 msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
 msgstr ""
-"Ez utzi ordenagailuari lo-egoeran sartzen, torrent-ak exekutatzen ari direla."
+"Eragotzi ordenagailua lo-egoeran sartzea edo pantaila giltzatzea torrent-ak "
+"ibiltzen ari direnean."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
-#, fuzzy, kde-format
-#| msgid "Suppress sleep when torrents are running"
+#, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr "Ez jarri lotan, torrent-ak exekutatzen ari direla"
+msgstr ""
+"Lokartzea eta pantaila automatikoki giltzatzea indargabetu torrent-ak "
+"ibiltzen ari direnean."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -3275,10 +3271,11 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:134
-#, fuzzy, kde-format
-#| msgid "Decrease priority of torrents which are stalled for too long"
+#, kde-format
 msgid "Decrease priority of torrents which are stalled for more than:"
-msgstr "Txikitu trabatuta denbora gehiegi egon den torrent-en lehentasuna"
+msgstr ""
+"Hau baino denbora luzeagoa trabatuta daramaten torrent-en lehentasuna "
+"txikiagotu:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_stallTimer)
 #: ktorrent/pref/qmpref.ui:141
@@ -3374,16 +3371,13 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QLabel, label_2)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_greenRatio)
 #: ktorrent/pref/qmpref.ui:248 ktorrent/pref/qmpref.ui:258
-#, fuzzy, kde-format
-#| msgid ""
-#| "Value at which the share ratio will be displayed with a green color. "
-#| "Lower ratios will be displayed in red."
+#, kde-format
 msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
-"Balio horretan partekatze-erlazioa berdez bistaratuko da. Hori baino "
-"txikiagoak diren erlazioak gorriz bistaratuko dira."
+"Partekatze proportzioa kolore berdez azalduko den balioa. Proportzio "
+"txikiagoak gorriz azalduko dira. Koloreak kolore-ezarpenetatik alda daitezke."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
@@ -5529,6 +5523,10 @@ msgid ""
 "Enable sequential download mode for it to obtain necessary data with a "
 "higher priority?"
 msgstr ""
+"Ez da zama-jaitsi fitxategia irekitzeko behar adina daturik.\n"
+"\n"
+"Beharrezko datuak lehentasun handiagoarekin lor ditzan zama-jaiste "
+"sekuentziala gaitu?"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
