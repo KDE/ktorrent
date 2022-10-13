@@ -94,6 +94,7 @@
     <p xml:lang="en-GB">KTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.</p>
     <p xml:lang="es">KTorrent  es una aplicación BitTorrent de KDE que le permite descargar archivos usando el protocolo BitTorrent. Permite ejecutar varios torrents al mismo tiempo e incluye características extendidas para convertirlo en un cliente completo para BitTorrent.</p>
     <p xml:lang="et">KTorrent on KDE BitTorrenti rakendus, mis võimaldab faile alla laadida BitTorrenti protokolli kasutades. Korraga saab käitada mitut torrentit ning rakendus pakub ohtralt võimalusi, olles niisiis igati täiuslik BitTorrenti klient.</p>
+    <p xml:lang="eu">KTorrent KDEren BitTorrent aplikazio bat da, BitTorrent protokoloa erabiliz fitxategiak zama-jaisteko erabil daitekeena. Aldi berean torrent anizkoitzak ibiltzen uzten dizu eta ezaugarri hedatuak ditu, BitTorrent-en ezaugarri guztiak dituen bezeroa izateko.</p>
     <p xml:lang="fi">KTorrent on KDE:n BitTorrent-sovellus, jolla voit ladata tiedostoja BitTorrent-yhteyskäytännöllä. Sovelluksella voit suorittaa useita torrentteja samanaikaisesti, ja siinä on erityisominaisuuksia, jotka tekevät siitä täydellisen BitTorrent-asiakkaan.</p>
     <p xml:lang="fr">KTorrent est une application BitTorrent par KDE qui vous permet de télécharger des fichiers en utilisant le protocole BitTorrent. Il peut gérer plusieurs torrents en même temps et possède des fonctionnalités étendues qui en font un client complet pour BitTorrent.</p>
     <p xml:lang="gl">KTorrent é unha aplicación de BitTorrent por KDE que permítelle descargar ficheiros usando o protocolo BitTorrent. Permítelle executar varios torrents ao mesmo tempo e inclúe funcionalidades adicionais que o converten nun cliente de BitTorrent completo.</p>
@@ -303,6 +304,7 @@
       <li xml:lang="en-GB">File prioritisation for multi-file torrents</li>
       <li xml:lang="es">Priorización de archivos para torrents multiarchivo</li>
       <li xml:lang="et">Paljude failidega torrentide failide seadmine tähtsuse järjekorda</li>
+      <li xml:lang="eu">Fitxategi anizkoitzeko «torrent»en lehenespena</li>
       <li xml:lang="fi">Useampitiedostoisten torrenttien eri tiedostojen ensisijaistus</li>
       <li xml:lang="fr">Ordre de priorité des fichiers et pour les torrents multi-fichiers</li>
       <li xml:lang="gl">Priorización de ficheiros para os torrents con varios ficheiros.</li>
@@ -335,6 +337,7 @@
       <li xml:lang="en-GB">Selective downloading for multi-file torrents</li>
       <li xml:lang="es">Descarga selectiva de torrents multiarchivo</li>
       <li xml:lang="et">Paljude failidega torrentide valikuline allalaadimine</li>
+      <li xml:lang="eu">Fitxategi anizkoitzetan zama-jaiste hautakorra</li>
       <li xml:lang="fi">Useampitiedostoisten torrenttien valikoiva lataus</li>
       <li xml:lang="fr">Téléchargement sélectif pour les torrents multi-fichiers</li>
       <li xml:lang="gl">Descarga selectiva para torrents con varios ficheiros.</li>
@@ -367,6 +370,7 @@
       <li xml:lang="en-GB">Kick/ban peers with an additional IP Filter dialogue for list/edit purposes</li>
       <li xml:lang="es">Expulsión/bloqueo de pares con diálogo de filtro IP adicional para propósitos de listar/editar</li>
       <li xml:lang="et">Masinate pagendamine/keelamine täiendavas IP filtrite dialoogis</li>
+      <li xml:lang="eu">Ostikoa/debekua zerrendatzeko/editatzeko IP iragazki elkarrizketa-koadro osagarri bat duten parekoak</li>
       <li xml:lang="fi">Torju/estä käyttäjiä IP-lisäsuodatinikkunassa (luettelu- tai muokkaustarkoituksiin)</li>
       <li xml:lang="fr">Exclusion/bannissement de pairs avec une fenêtre additionnelle pour lister/modifier les filtres d'IP</li>
       <li xml:lang="gl">Expulsar e prohibir parceiros cun diálogo adicional de filtraxe por IP para listar e editar.</li>
@@ -471,6 +475,7 @@
       <li xml:lang="en-GB">Support for µTorrent's peer exchange</li>
       <li xml:lang="es">Implementación de intercambio de pares de µTorrent</li>
       <li xml:lang="et">µTorrentiga ühilduva masinate suhtlemise toetus</li>
+      <li xml:lang="eu">µTorrent-en pareen arteko trukerako euskarria</li>
       <li xml:lang="fi">µTorrentin käyttäjävaihdon tuki</li>
       <li xml:lang="fr">Gestion de l'échange de pairs de µTorrent.</li>
       <li xml:lang="gl">Compatibilidade co intercambio de parceiros de µTorrent.</li>
@@ -572,6 +577,7 @@
       <li xml:lang="en-GB">Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="es">Implementación de tablas de resumen distribuidas (DHT, la versión principal)</li>
       <li xml:lang="et">Jagatavate räsitabelite toetus (DHT, Mainline versioon)</li>
+      <li xml:lang="eu">«hash» taula banatuen euskarria (DHT, lerro nagusiko bertsioa)</li>
       <li xml:lang="fi">Hajautettujen tiivistetaulukoiden tuki (DHT, Mainline-versio)</li>
       <li xml:lang="fr">Gestion des tables de hachage distribuées (DHT, la version principale)</li>
       <li xml:lang="gl">Compatibilidade con táboas de sumas distribuídas (DHT, a versión principal).</li>
@@ -605,6 +611,7 @@
       <li xml:lang="en-GB">Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="es">Implementación de UPnP para redireccionar puertos automáticamente en una red local con servidores asignados dinámicamente</li>
       <li xml:lang="et">UPnP toetus portide automaatseks edastamiseks dünaamiliselt omistatud masinatega kohtvõrgus</li>
+      <li xml:lang="eu">«UPnP»ek dinamikoki esleitutako ostalariak dituen LAN bateko atakak automatikoki birbidaltzeko euskarria</li>
       <li xml:lang="fi">UPnP-tuki LAN-porttien automaattiohjaukseen dynaamisesti verkkoon yhdistetyillä koneilla</li>
       <li xml:lang="fr">Gestion du protocole UPnP pour rediriger automatiquement des ports sur un réseau dont les hôtes sont gérés dynamiquement</li>
       <li xml:lang="gl">Compatibilidade con UPnP para redirixir automaticamente portos na rede local con servidores asignados dinamicamente.</li>
