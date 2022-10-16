@@ -22,6 +22,7 @@
   <name xml:lang="ia">KTorrent</name>
   <name xml:lang="id">KTorrent</name>
   <name xml:lang="it">KTorrent</name>
+  <name xml:lang="ka">KTorrent</name>
   <name xml:lang="ko">KTorrent</name>
   <name xml:lang="nl">KTorrent</name>
   <name xml:lang="nn">KTorrent</name>
@@ -60,6 +61,7 @@
   <summary xml:lang="ia">Cliente de BitTorrent</summary>
   <summary xml:lang="id">BitTorrent Client</summary>
   <summary xml:lang="it">Client BitTorrent</summary>
+  <summary xml:lang="ka">BitTorrent -ის კლიენტი</summary>
   <summary xml:lang="ko">비트토렌트 클라이언트</summary>
   <summary xml:lang="nl">BitTorrent-cliënt</summary>
   <summary xml:lang="nn">Bittorrent-klient</summary>
@@ -137,6 +139,7 @@
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="nn">Funksjonar:</p>
@@ -175,6 +178,7 @@
       <li xml:lang="hu">Torrentek sorba állítása</li>
       <li xml:lang="id">Pengatrean torrent</li>
       <li xml:lang="it">Accodamento dei torrent</li>
+      <li xml:lang="ka">ტორენტების რიგი</li>
       <li xml:lang="ko">토렌트 대기열</li>
       <li xml:lang="nl">Torrents in de wachtrij zetten</li>
       <li xml:lang="pl">Kolejkowanie torrentów</li>
@@ -209,6 +213,7 @@
       <li xml:lang="hu">Globális és torrentenkénti sebességkorlátok</li>
       <li xml:lang="id">Batas kecepatan per torrent dan global</li>
       <li xml:lang="it">Limiti di velocità globali e per torrent</li>
+      <li xml:lang="ka">გლობალური და სათითაო ტორენტის სიჩქარის ლიმიტი</li>
       <li xml:lang="ko">전역 및 토렌트별 속도 제한</li>
       <li xml:lang="nl">Globale en per torrent snelheidslimieten</li>
       <li xml:lang="pl">Ograniczenie prędkości globalne i na torrenta</li>
@@ -688,6 +693,7 @@
       <li xml:lang="ia">Integration de tabuliero de systema</li>
       <li xml:lang="id">Integrasi system tray</li>
       <li xml:lang="it">Integrazione nel vassoio di sistema</li>
+      <li xml:lang="ka">სისტემის კუთხეში ხატულის მორგება</li>
       <li xml:lang="ko">시스템 트레이 통합</li>
       <li xml:lang="nl">Integratie in het systeemvak</li>
       <li xml:lang="pl">Integracja z tacką systemową</li>
@@ -757,6 +763,7 @@
       <li xml:lang="ia">Connexion per un proxy</li>
       <li xml:lang="id">Koneksi melalui sebuah proxy</li>
       <li xml:lang="it">Connessione attraverso un proxy</li>
+      <li xml:lang="ka">პროქსის გავლით მიერთება</li>
       <li xml:lang="ko">프록시를 통한 연결</li>
       <li xml:lang="nl">Verbinding via een proxy</li>
       <li xml:lang="pl">Połączenia przez serwer pośredniczący</li>
