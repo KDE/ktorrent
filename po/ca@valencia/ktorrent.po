@@ -2021,7 +2021,7 @@ msgstr "Obri silenciosament el torrent indicat en un URL"
 #: ktorrent/main.cpp:178
 #, kde-format
 msgid "Document to open"
-msgstr "Document que s'obrirà"
+msgstr "Document que s'ha d'obrir"
 
 #. i18n: ectx: property (toolTip), widget (QGroupBox, kcfg_diskPrealloc)
 #: ktorrent/pref/advancedpref.ui:17
@@ -2420,8 +2420,8 @@ msgid ""
 "Custom IP address or hostname to send to the tracker. Hostnames will be "
 "resolved at runtime and the resolved IP address will be sent to the tracker."
 msgstr ""
-"Adreça IP personalitzada o nom de màquina a enviar al seguidor. Els noms de "
-"màquina es resoldran en temps d'execució i les adreces IP resoltes "
+"Adreça IP personalitzada o nom de màquina que s'enviarà al seguidor. Els "
+"noms de màquina es resoldran en temps d'execució i les adreces IP resoltes "
 "s'enviaran al seguidor."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
@@ -4762,7 +4762,7 @@ msgstr "El directori que es va emprar com a últim directori de guardada"
 #: libktcore/ktorrent.kcfg:127
 #, kde-format
 msgid "IP to pass to the tracker"
-msgstr "IP a passar al seguidor"
+msgstr "IP que s'ha de passar al seguidor"
 
 #. i18n: ectx: label, entry (guiUpdateInterval), group (downloads)
 #: libktcore/ktorrent.kcfg:131
@@ -6157,8 +6157,8 @@ msgid ""
 "weight:600;\">Note: </span>Only http webseeds are supported.</p>"
 msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Sembrador web a afegir al "
-"torrent.</p>\n"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Sembrador web que "
+"s'afegirà al torrent.</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
 "p>\n"
@@ -6218,7 +6218,7 @@ msgstr "S'està carregant el fitxer txt..."
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
 msgid "There are no IP addresses to convert in %1"
-msgstr "No hi ha adreces IP a convertir en %1"
+msgstr "No hi ha adreces IP que s'hagen de convertir en %1"
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:67
 #: plugins/ipfilter/downloadandconvertjob.cpp:101
@@ -6914,7 +6914,7 @@ msgstr "Exploració de carpetes"
 #: plugins/scanfolder/scanfolderprefpage.ui:17
 #, kde-format
 msgid "Folders to scan for torrents:"
-msgstr "Carpeta que s'ha d'explorar per als torrent:"
+msgstr "Carpeta on explorar per als torrent:"
 
 #. i18n: ectx: property (toolTip), widget (QListWidget, m_folders)
 #: plugins/scanfolder/scanfolderprefpage.ui:26
@@ -7434,7 +7434,7 @@ msgstr "Configuració de la parada"
 #: plugins/shutdown/shutdowndlg.ui:34
 #, kde-format
 msgid "Action to execute:"
-msgstr "Acció a executar:"
+msgstr "Acció que s'ha d'executar:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/shutdown/shutdowndlg.ui:44
@@ -8421,8 +8421,8 @@ msgid ""
 "the *.torrent will match any item which ends in .torrent. </p>"
 msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">La cadena a buscar en el "
-"títol d'un element. S'accepta una sintaxi de comodins senzilla:</p>\n"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">La cadena que es buscarà "
+"en el títol d'un element. S'accepta una sintaxi de comodins senzilla:</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
 "p>\n"
@@ -8552,8 +8552,8 @@ msgid ""
 "\n"
 "Will download seasons 1, 3, 4, 5, 6 and 9"
 msgstr ""
-"Indiqueu les temporades a baixar. Es poden separar diverses temporades amb "
-"«,» i també es poden utilitzar intervals amb «-»\n"
+"Indiqueu les temporades que es baixaran. Es poden separar diverses "
+"temporades amb «,» i també es poden utilitzar intervals amb «-»\n"
 "\n"
 "Per exemple: 1, 3-6, 9\n"
 "\n"
@@ -8576,8 +8576,8 @@ msgid ""
 "\n"
 "Will download episodes 1, 3, 4, 5, 6 and 9"
 msgstr ""
-"Indiqueu els episodis a baixar. Es poden separar episodis diferents amb «,» "
-"i també es poden utilitzar intervals amb «-»\n"
+"Indiqueu els episodis que es baixaran. Es poden separar episodis diferents "
+"amb «,» i també es poden utilitzar intervals amb «-»\n"
 "\n"
 "Per exemple: 1, 3-6, 9\n"
 "\n"
