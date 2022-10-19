@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-12-31 00:43+0000\n"
-"PO-Revision-Date: 2022-10-13 02:38+0300\n"
+"PO-Revision-Date: 2022-10-18 05:49+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -7289,7 +7289,7 @@ msgstr "İndir"
 #: plugins/search/webview.cpp:106
 #, kde-format
 msgid "Home"
-msgstr "Ev Dizini"
+msgstr "Ana Klasör"
 
 #: plugins/search/webview.cpp:107
 #, kde-format
