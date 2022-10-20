@@ -60,7 +60,6 @@
         "Id": "IPFilterPlugin",
         "License": "GPL",
         "Name": "IP Filter",
-        "Name[ast]": "Peñera d'IPs",
         "Name[bg]": "Филтър по IP",
         "Name[bs]": "IP filter",
         "Name[ca@valencia]": "Filtre d'IP",
