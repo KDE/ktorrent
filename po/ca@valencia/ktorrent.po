@@ -2954,7 +2954,7 @@ msgid ""
 "The primary transport protocol to use, when attempting to setup a connection "
 "with a peer, this protocol is chosen first."
 msgstr ""
-"El protocol de transport primari a utilitzar, en intentar establir una "
+"El protocol de transport primari que s'utilitzarà, en intentar establir una "
 "connexió amb un parell, primer se seleccionarà este protocol."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
@@ -3021,7 +3021,8 @@ msgstr "Servidor intermediari:"
 #: ktorrent/pref/proxypref.ui:42
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
-msgstr "Adreça IP o nom de màquina del servidor intermediari HTTP a utilitzar."
+msgstr ""
+"Adreça IP o nom de màquina del servidor intermediari HTTP que s'utilitzarà."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
@@ -6340,7 +6341,8 @@ msgstr "Fitxer de filtres d'IP:"
 #, kde-format
 msgid "Filter file to use, this can be a local file or a remote file."
 msgstr ""
-"Fitxer de filtres a utilitzar, pot ser un fitxer local o un fitxer remot."
+"Fitxer de filtres que s'utilitzarà, pot ser un fitxer local o un fitxer "
+"remot."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_download)
 #: plugins/ipfilter/ipblockingprefpage.ui:81
@@ -7163,7 +7165,7 @@ msgstr "Neteja l'historial de busques"
 #, kde-format
 msgid "Reset the default action taken when a torrent is downloaded."
 msgstr ""
-"Reinicia a l'acció predeterminada a utilitzar quan s'haja finalitzat la "
+"Reinicia a l'acció predeterminada que s'utilitzarà quan s'haja finalitzat la "
 "baixada d'un torrent."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_reset_default_action)
