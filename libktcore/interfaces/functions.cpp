@@ -45,7 +45,7 @@ namespace kt
 {
 QString DataDir(CreationMode mode)
 {
-    QString dataDirPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString dataDirPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     if (mode == CreateIfNotExists) {
         QFileInfo fileInfo(dataDirPath);
         if (!fileInfo.exists()) {
