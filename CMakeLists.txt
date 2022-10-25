@@ -123,14 +123,14 @@ if(KF5Syndication_FOUND)
   set(HAVE_KF5Syndication 1)
 endif()
 
-find_package(Qt5WebEngineWidgets ${QT_MIN_VERSION})
-set_package_properties(Qt5WebEngineWidgets
+find_package(Qt${QT_MAJOR_VERSION}WebEngineWidgets ${QT_MIN_VERSION})
+set_package_properties(Qt${QT_MAJOR_VERSION}WebEngineWidgets
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's search and syndication plugins"
 )
-if(Qt5WebEngineWidgets_FOUND)
-  set(HAVE_Qt5WebEngineWidgets 1)
+if(Qt${QT_MAJOR_VERSION}WebEngineWidgets_FOUND)
+  set(HAVE_Qt${QT_MAJOR_VERSION}WebEngineWidgets 1)
 endif()
 
 find_package(KF5DNSSD ${KF5_MIN_VERSION})
@@ -163,7 +163,7 @@ if(LibKWorkspace_FOUND)
   set(HAVE_LibKWorkspace 1)
 endif()
 
-#find_package(Qt5 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
+#find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
 
 find_package(Taglib)
 set_package_properties(Taglib
