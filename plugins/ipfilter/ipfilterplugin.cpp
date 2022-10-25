@@ -90,7 +90,7 @@ bool IPFilterPlugin::unloadAntiP2P()
 
 bool IPFilterPlugin::loadedAndRunning()
 {
-    return ip_filter;
+    return !ip_filter.isNull();
 }
 
 void IPFilterPlugin::checkAutoUpdate()
