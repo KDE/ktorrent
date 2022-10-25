@@ -54,7 +54,7 @@ void PlainChartDrawer::paintEvent(QPaintEvent*)
 {
 
     QStyleOption opt;
-    opt.init(this);
+    opt.initFrom(this);
 
     QPainter pnt(this);
 
