@@ -5,6 +5,7 @@
 
 #include "fileview.h"
 
+#include <QActionGroup>
 #include <QDebug>
 #include <QFileDialog>
 #include <QFileInfo>

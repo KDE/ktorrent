@@ -9,6 +9,7 @@
 #include <QTextStream>
 
 #include <KLocalizedString>
+#include <KPluginFactory>
 #include <KPluginMetaData>
 #include <KSharedConfig>
 

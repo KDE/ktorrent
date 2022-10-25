@@ -6,6 +6,7 @@
 
 #include <QAction>
 #include <QClipboard>
+#include <QDomDocument>
 #include <QMenu>
 #include <QMenuBar>
 #include <QPushButton>

@@ -6,9 +6,13 @@
 #ifndef KTPLUGIN_H
 #define KTPLUGIN_H
 
-#include <KParts/Plugin>
 #include <ktcore_export.h>
 #include <ktversion.h>
+
+#include <QObject>
+
+#include <KPluginMetaData>
+#include <KXMLGUIClient>
 
 namespace bt
 {

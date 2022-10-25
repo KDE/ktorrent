@@ -13,6 +13,7 @@
 #include <QMimeData>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QRegExp>
 
 #include "downloadordermodel.h"
 #include <interfaces/torrentfileinterface.h>

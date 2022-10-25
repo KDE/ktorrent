@@ -7,6 +7,7 @@
 #define KTGROUP_H
 
 #include <QIcon>
+#include <QObject>
 #include <QString>
 
 #include <ktcore_export.h>
