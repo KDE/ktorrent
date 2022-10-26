@@ -2739,7 +2739,7 @@ msgstr ""
 #, kde-format
 msgid "Rename single file torrents with the name of its only file"
 msgstr ""
-"Canvia el nom els fitxers torrent d'un únic fitxer amb el nom del seu únic "
+"Canvia el nom dels fitxers torrent d'un únic fitxer amb el nom del seu únic "
 "fitxer"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_highlightNewTorrents)
@@ -4160,7 +4160,7 @@ msgstr "Elimina el torrent i les dades"
 #: ktorrent/view/view.cpp:181
 #, kde-format
 msgid "Rename Torrent"
-msgstr "Canvia el nom el torrent"
+msgstr "Canvia el nom del torrent"
 
 #: ktorrent/view/view.cpp:185
 #, kde-format
