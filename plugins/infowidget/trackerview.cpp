@@ -126,7 +126,7 @@ void TrackerView::addClicked()
     }
 
     if (dupes.size() == 1)
-        KMessageBox::sorry(nullptr, i18n("There already is a tracker named <b>%1</b>.", dupes.front().toDisplayString()));
+        KMessageBox::error(nullptr, i18n("There already is a tracker named <b>%1</b>.", dupes.front().toDisplayString()));
     else if (dupes.size() > 1)
         KMessageBox::informationList(nullptr, i18n("The following duplicate trackers were not added:"), QUrl::toStringList(dupes));
 

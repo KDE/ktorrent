@@ -87,7 +87,7 @@ void IPFilterWidget::add()
         QString ip = m_ip_to_add->text();
 
         if (!regex_match(ip.toStdString(), rx) || !filter_list->add(ip)) {
-            KMessageBox::sorry(this,
+            KMessageBox::error(this,
                                i18n("Invalid IP address <b>%1</b>. IP addresses must be in the format 'XXX.XXX.XXX.XXX'."
                                     "<br/><br/>You can also use wildcards like '127.0.0.*' or specify ranges like '200.10.10.0-200.10.10.40'.")
                                    .arg(ip));
@@ -95,7 +95,7 @@ void IPFilterWidget::add()
             return;
         }
     } catch (bt::Error &err) {
-        KMessageBox::sorry(this, err.toString());
+        KMessageBox::error(this, err.toString());
     }
 }
 
