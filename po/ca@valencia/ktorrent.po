@@ -1919,7 +1919,7 @@ msgstr "Andrei Barbu"
 #: ktorrent/main.cpp:163
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
-msgstr "Funcionalitat que afig la data de quan s'ha afegit un torrent"
+msgstr "Característica que afig la data de quan s'ha afegit un torrent"
 
 #: ktorrent/main.cpp:164
 #, kde-format
@@ -1929,7 +1929,7 @@ msgstr "Jonas Lundqvist"
 #: ktorrent/main.cpp:164
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
-msgstr "Funcionalitat per a desactivar l'autenticació en la interfície web"
+msgstr "Característica per a desactivar l'autenticació en la interfície web"
 
 #: ktorrent/main.cpp:165
 #, kde-format
