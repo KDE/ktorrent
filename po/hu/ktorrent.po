@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-12-31 00:43+0000\n"
+"POT-Creation-Date: 2022-11-17 00:45+0000\n"
 "PO-Revision-Date: 2021-10-12 12:08+0200\n"
 "Last-Translator: Kristof Kiszel <kiszel.kristof@gmail.com>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -234,7 +234,7 @@ msgstr "Fastruktúra megjelenítése"
 msgid "Show a file list"
 msgstr "Fájllista megjelenítése"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:63
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "Szűrő"
@@ -717,7 +717,7 @@ msgstr ""
 "URL elérhető-e."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:304
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Érvénytelen URL: %1"
@@ -1285,71 +1285,71 @@ msgstr "Már létezik %1 nevű csoport."
 msgid "Custom Groups"
 msgstr "Egyedi csoportok"
 
-#: ktorrent/gui.cpp:256
+#: ktorrent/gui.cpp:257
 #, kde-format
 msgid "Open Location"
 msgstr "Cím megnyitása"
 
-#: ktorrent/gui.cpp:353
+#: ktorrent/gui.cpp:354
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Új torrent létrehozása"
 
-#: ktorrent/gui.cpp:355
+#: ktorrent/gui.cpp:356
 #, kde-format
 msgid "Open a torrent"
 msgstr "Torrent megnyitása"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:359
 #, kde-format
 msgid "Open Silently"
 msgstr "Megnyitás a háttérben"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Torrent megnyitása minden kérdés nélkül"
 
-#: ktorrent/gui.cpp:374
+#: ktorrent/gui.cpp:375
 #, kde-format
 msgid "Open URL"
 msgstr "Hivatkozás megnyitása"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr ""
 "Torrentfájlra mutató hivatkozás megnyitása (mágneses hivatkozások "
 "támogatottak)"
 
-#: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP-szűrő"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:382
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Blokkolt IP-címek listájának megjelenítése"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:387
 #, kde-format
 msgid "Import Torrent"
 msgstr "Torrent importálása"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Import a torrent"
 msgstr "Torrent importálása"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "A program megjelenítése/elrejtése"
 
-#: ktorrent/gui.cpp:410
+#: ktorrent/gui.cpp:411
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "L: %1 | F: %2"
@@ -4236,8 +4236,8 @@ msgstr ""
 msgid "Remove Torrent"
 msgstr "Eltávolítás"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:336
-#: plugins/infowidget/fileview.cpp:360
+#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
+#: plugins/infowidget/fileview.cpp:361
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Válassza ki az adatok célkönyvtárát."
@@ -5385,79 +5385,79 @@ msgstr "Hátra van:"
 msgid "Size:"
 msgstr "Méret:"
 
-#: plugins/infowidget/fileview.cpp:104
+#: plugins/infowidget/fileview.cpp:105
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Megnyitás"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:107
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Megnyitás ezzel"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, kde-format
 msgid "Check File"
 msgstr "Fájl ellenőrzése"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:110
 #, kde-format
 msgid "Download first"
 msgstr "Letöltés elsőként"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgid "Download normally"
 msgstr "Normál letöltés"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgid "Download last"
 msgstr "Letöltés utoljára"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgid "Do not download"
 msgstr "Letöltés kihagyása"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Fájlok törlése"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Move File"
 msgstr "Fájl áthelyezése"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Könyvtárfa összecsukása"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "Könyvtárfa kibontása"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "File Tree"
 msgstr "Fastruktúra"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "File List"
 msgstr "Fájllista"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, kde-format
 msgid "Show Filter"
 msgstr "Szűrő megjelenítése"
 
-#: plugins/infowidget/fileview.cpp:315
+#: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5466,7 +5466,7 @@ msgid_plural ""
 msgstr[0] "A fájlban minden adat el fog veszni! Biztosan ezt szeretné?"
 msgstr[1] "A fájlokban minden adat el fog veszni! Biztosan ezt szeretné?"
 
-#: plugins/infowidget/fileview.cpp:445
+#: plugins/infowidget/fileview.cpp:446
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-12-31 00:43+0000\n"
+"POT-Creation-Date: 2022-11-17 00:45+0000\n"
 "PO-Revision-Date: 2009-11-17 11:13+0100\n"
 "Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -230,7 +230,7 @@ msgstr "Por konservo de torento, elektu dosieron"
 msgid "Show a file list"
 msgstr "Montri dosierliston"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:63
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "Filtrilo"
@@ -727,7 +727,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:304
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
 #, fuzzy, kde-format
 #| msgid "Invalid tracker URL"
 msgid "Invalid URL: %1"
@@ -1298,75 +1298,75 @@ msgstr "La grupo %1 jam ekzistas."
 msgid "Custom Groups"
 msgstr "Propraj grupoj"
 
-#: ktorrent/gui.cpp:256
+#: ktorrent/gui.cpp:257
 #, kde-format
 msgid "Open Location"
 msgstr "Malfermi lokon"
 
-#: ktorrent/gui.cpp:353
+#: ktorrent/gui.cpp:354
 #, fuzzy, kde-format
 #| msgid "Create a torrent"
 msgid "Create a new torrent"
 msgstr "Krei fontan torenton"
 
-#: ktorrent/gui.cpp:355
+#: ktorrent/gui.cpp:356
 #, fuzzy, kde-format
 #| msgid "Create a torrent"
 msgid "Open a torrent"
 msgstr "Krei fontan torenton"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:359
 #, kde-format
 msgid "Open Silently"
 msgstr "Malfermi silente"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:360
 #, fuzzy, kde-format
 #| msgid "Open the torrents without asking any questions."
 msgid "Open a torrent without asking any questions"
 msgstr "Senpete malfermas torentojn."
 
-#: ktorrent/gui.cpp:374
+#: ktorrent/gui.cpp:375
 #, fuzzy, kde-format
 #| msgid "Open an URL"
 msgid "Open URL"
 msgstr "Malfermi retadreson"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr ""
 
-#: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IPFiltrilo"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:382
 #, fuzzy, kde-format
 #| msgid "Show list of trackers"
 msgid "Show the list of blocked IP addresses"
 msgstr "Montri liston de kunordigaj serviloj"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:387
 #, kde-format
 msgid "Import Torrent"
 msgstr "Importi torenton"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:388
 #, fuzzy, kde-format
 #| msgid "Import Torrent"
 msgid "Import a torrent"
 msgstr "Importi torenton"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Montri/kaŝi KTorrent"
 
-#: ktorrent/gui.cpp:410
+#: ktorrent/gui.cpp:411
 #, fuzzy, kde-format
 #| msgid "DHT: %1 nodes, %2 tasks"
 msgid "D: %1 | U: %2"
@@ -4273,8 +4273,8 @@ msgstr ""
 msgid "Remove Torrent"
 msgstr "Elpreni torenton"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:336
-#: plugins/infowidget/fileview.cpp:360
+#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
+#: plugins/infowidget/fileview.cpp:361
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Elektu dosierujon al kie vi volas movi la datumojn."
@@ -5510,85 +5510,85 @@ msgstr "Maldekstra:"
 msgid "Size:"
 msgstr "Grando:"
 
-#: plugins/infowidget/fileview.cpp:104
+#: plugins/infowidget/fileview.cpp:105
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Malfermi"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:107
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Malfermu per"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, fuzzy, kde-format
 #| msgid "Move File"
 msgid "Check File"
 msgstr "Movi dosieron"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:110
 #, kde-format
 msgid "Download first"
 msgstr "Elŝuti unue"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgid "Download normally"
 msgstr "Elŝuti laŭkutime"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgid "Download last"
 msgstr "Elŝuti laste"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, fuzzy, kde-format
 #| msgid "Do Not Download"
 msgid "Do not download"
 msgstr "Ne Elŝuti"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Forigi dosiero(j)n"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Move File"
 msgstr "Movi dosieron"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, fuzzy, kde-format
 #| msgid "Scan Folder"
 msgid "Expand Folder Tree"
 msgstr "Serĉi dosierujon"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:123
 #, fuzzy, kde-format
 #| msgid "IP Filter"
 msgid "File Tree"
 msgstr "IPFiltrilo"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, fuzzy, kde-format
 #| msgid "File Exists"
 msgid "File List"
 msgstr "Dosiero ekzistas"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, fuzzy, kde-format
 #| msgid "Add Folder"
 msgid "Show Filter"
 msgstr "Aldoni dosierujon"
 
-#: plugins/infowidget/fileview.cpp:315
+#: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, fuzzy, kde-format
 #| msgid ""
@@ -5603,7 +5603,7 @@ msgstr[1] ""
 "Vi perdos ĉiujn datumojn en ĉi tiu dosiero. Ĉu vi certas ke vi volas fari "
 "tion?"
 
-#: plugins/infowidget/fileview.cpp:445
+#: plugins/infowidget/fileview.cpp:446
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"

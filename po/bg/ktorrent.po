@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-12-31 00:43+0000\n"
+"POT-Creation-Date: 2022-11-17 00:45+0000\n"
 "PO-Revision-Date: 2022-06-28 09:53+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -220,7 +220,7 @@ msgstr "Изберете файл за записване на торент"
 msgid "Show a file list"
 msgstr "Изберете файл"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:63
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "Филтър"
@@ -687,7 +687,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:304
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Неправилен URL-адрес: %1"
@@ -1238,69 +1238,69 @@ msgstr "Вече има група %1."
 msgid "Custom Groups"
 msgstr "Потребителски групи"
 
-#: ktorrent/gui.cpp:256
+#: ktorrent/gui.cpp:257
 #, kde-format
 msgid "Open Location"
 msgstr "Отваряне на местоположение"
 
-#: ktorrent/gui.cpp:353
+#: ktorrent/gui.cpp:354
 #, fuzzy, kde-format
 msgid "Create a new torrent"
 msgstr "Създаване на торент"
 
-#: ktorrent/gui.cpp:355
+#: ktorrent/gui.cpp:356
 #, fuzzy, kde-format
 msgid "Open a torrent"
 msgstr "Създаване на торент"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:359
 #, fuzzy, kde-format
 msgid "Open Silently"
 msgstr "Отваряне на торентите &тихо"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr ""
 
-#: ktorrent/gui.cpp:374
+#: ktorrent/gui.cpp:375
 #, fuzzy, kde-format
 msgid "Open URL"
 msgstr "Отваряне на подпрозорец"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr ""
 
-#: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP-филтър"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:382
 #, fuzzy, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Показване на списъка с координиращи сървъри"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:387
 #, fuzzy, kde-format
 msgid "Import Torrent"
 msgstr "Премахване на торент"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:388
 #, fuzzy, kde-format
 msgid "Import a torrent"
 msgstr "Премахване на торент"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:393
 #, fuzzy, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Сваляне на торент"
 
-#: ktorrent/gui.cpp:410
+#: ktorrent/gui.cpp:411
 #, fuzzy, kde-format
 msgid "D: %1 | U: %2"
 msgstr "DHT: %1 възела, %2 задачи"
@@ -4035,8 +4035,8 @@ msgstr ""
 msgid "Remove Torrent"
 msgstr "Премахване на торент"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:336
-#: plugins/infowidget/fileview.cpp:360
+#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
+#: plugins/infowidget/fileview.cpp:361
 #, fuzzy, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Файлът или папката, която искате да направите торент:"
@@ -5167,79 +5167,79 @@ msgstr "Оставащи:"
 msgid "Size:"
 msgstr "Размер:"
 
-#: plugins/infowidget/fileview.cpp:104
+#: plugins/infowidget/fileview.cpp:105
 #, fuzzy, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Отваряне на подпрозорец"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:107
 #, fuzzy, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Отваряне на торентите &тихо"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, fuzzy, kde-format
 msgid "Check File"
 msgstr "Торент файлове"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:110
 #, fuzzy, kde-format
 msgid "Download first"
 msgstr "Сваляне първо"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, fuzzy, kde-format
 msgid "Download normally"
 msgstr "Свалянето нормално"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, fuzzy, kde-format
 msgid "Download last"
 msgstr "Сваляне последно"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, fuzzy, kde-format
 msgid "Do not download"
 msgstr "Без сваляне"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Изтриване на файла(овете)"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, fuzzy, kde-format
 msgid "Move File"
 msgstr "Торент файлове"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, fuzzy, kde-format
 msgid "Expand Folder Tree"
 msgstr "Директории за сканиране"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:123
 #, fuzzy, kde-format
 msgid "File Tree"
 msgstr "IP-филтър"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, fuzzy, kde-format
 msgid "File List"
 msgstr "Файлът съществува"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, fuzzy, kde-format
 msgid "Show Filter"
 msgstr "Директории"
 
-#: plugins/infowidget/fileview.cpp:315
+#: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, fuzzy, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5250,7 +5250,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Ще загубите всички свалени данни. Сигурни ли сте, че искате да го направите?"
 
-#: plugins/infowidget/fileview.cpp:445
+#: plugins/infowidget/fileview.cpp:446
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"

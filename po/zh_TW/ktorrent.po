@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-12-31 00:43+0000\n"
+"POT-Creation-Date: 2022-11-17 00:45+0000\n"
 "PO-Revision-Date: 2022-07-10 17:45+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -226,7 +226,7 @@ msgstr "顯示檔案樹狀圖"
 msgid "Show a file list"
 msgstr "顯示檔案清單"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:63
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "過濾器"
@@ -695,7 +695,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:304
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "無效的URL: %1"
@@ -1253,69 +1253,69 @@ msgstr "群組 %1 已存在"
 msgid "Custom Groups"
 msgstr "自定群組"
 
-#: ktorrent/gui.cpp:256
+#: ktorrent/gui.cpp:257
 #, kde-format
 msgid "Open Location"
 msgstr "開啟位置"
 
-#: ktorrent/gui.cpp:353
+#: ktorrent/gui.cpp:354
 #, kde-format
 msgid "Create a new torrent"
 msgstr "建立新的 torrent"
 
-#: ktorrent/gui.cpp:355
+#: ktorrent/gui.cpp:356
 #, kde-format
 msgid "Open a torrent"
 msgstr "開啟 torrent"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:359
 #, kde-format
 msgid "Open Silently"
 msgstr "無聲地開啟"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "開啟 torrent 時不詢問任何問題。"
 
-#: ktorrent/gui.cpp:374
+#: ktorrent/gui.cpp:375
 #, kde-format
 msgid "Open URL"
 msgstr "開啟網址"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "開啟指向一個 torrent 的網址，magnet 連結亦支援"
 
-#: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP 過濾"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:382
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "顯示被阻擋 IP 位址列表"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:387
 #, kde-format
 msgid "Import Torrent"
 msgstr "匯入 Torrent"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Import a torrent"
 msgstr "匯入 Torrent"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "顯示/隱藏 KTorrent"
 
-#: ktorrent/gui.cpp:410
+#: ktorrent/gui.cpp:411
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "D: %1 | U: %2"
@@ -4124,8 +4124,8 @@ msgstr "您將會失去以下的 torrents 所有已下載的資料。您確定�
 msgid "Remove Torrent"
 msgstr "移除torrent"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:336
-#: plugins/infowidget/fileview.cpp:360
+#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
+#: plugins/infowidget/fileview.cpp:361
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "選擇把資料移到那個"
@@ -5245,79 +5245,79 @@ msgstr "剩餘:"
 msgid "Size:"
 msgstr "大小:"
 
-#: plugins/infowidget/fileview.cpp:104
+#: plugins/infowidget/fileview.cpp:105
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "開啟"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:107
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "開啟方式"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, kde-format
 msgid "Check File"
 msgstr "檢查檔案"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:110
 #, kde-format
 msgid "Download first"
 msgstr "優先下載"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgid "Download normally"
 msgstr "正常下載"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgid "Download last"
 msgstr "最後下載"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgid "Do not download"
 msgstr "不要下載"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Delete File(s)"
 msgstr "刪除檔案"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Move File"
 msgstr "移動檔案"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "折疊資料夾樹"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "展開資料夾樹"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "File Tree"
 msgstr "檔案樹狀圖"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "File List"
 msgstr "檔案清單"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, kde-format
 msgid "Show Filter"
 msgstr "顯示過濾器"
 
-#: plugins/infowidget/fileview.cpp:315
+#: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5325,7 +5325,7 @@ msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] "您會失去這些檔案的所有資料。您確定要這樣做嗎？"
 
-#: plugins/infowidget/fileview.cpp:445
+#: plugins/infowidget/fileview.cpp:446
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"

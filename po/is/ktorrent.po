@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-12-31 00:43+0000\n"
+"POT-Creation-Date: 2022-11-17 00:45+0000\n"
 "PO-Revision-Date: 2015-01-29 09:07+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -219,7 +219,7 @@ msgstr "allir \" a"
 msgid "Show a file list"
 msgstr "Veldu skrá"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:63
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, fuzzy, kde-format
 msgid "Filter"
 msgstr "Sía"
@@ -680,7 +680,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:304
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
 #, fuzzy, kde-format
 msgid "Invalid URL: %1"
 msgstr "Ógild slóð: %1"
@@ -1232,69 +1232,69 @@ msgstr "Hópurinn %1 er þegar til."
 msgid "Custom Groups"
 msgstr "Sérsniðnir hópar"
 
-#: ktorrent/gui.cpp:256
+#: ktorrent/gui.cpp:257
 #, fuzzy, kde-format
 msgid "Open Location"
 msgstr "Opna slóð"
 
-#: ktorrent/gui.cpp:353
+#: ktorrent/gui.cpp:354
 #, fuzzy, kde-format
 msgid "Create a new torrent"
 msgstr "Búa til a nýtt"
 
-#: ktorrent/gui.cpp:355
+#: ktorrent/gui.cpp:356
 #, fuzzy, kde-format
 msgid "Open a torrent"
 msgstr "Opna a"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:359
 #, fuzzy, kde-format
 msgid "Open Silently"
 msgstr "Opna"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:360
 #, fuzzy, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Opna a"
 
-#: ktorrent/gui.cpp:374
+#: ktorrent/gui.cpp:375
 #, fuzzy, kde-format
 msgid "Open URL"
 msgstr "Opna slóð"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:376
 #, fuzzy, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Opna a Slóð punktar til a"
 
-#: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, fuzzy, kde-format
 msgid "IP Filter"
 msgstr "IP Sía"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:382
 #, fuzzy, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Sýna af IP"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:387
 #, fuzzy, kde-format
 msgid "Import Torrent"
 msgstr "Flytja inn"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:388
 #, fuzzy, kde-format
 msgid "Import a torrent"
 msgstr "Flytja inn a"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:393
 #, fuzzy, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Sýna Fela"
 
-#: ktorrent/gui.cpp:410
+#: ktorrent/gui.cpp:411
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr ""
@@ -4031,8 +4031,8 @@ msgstr "Þú allir til?"
 msgid "Remove Torrent"
 msgstr "Fjarlægja"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:336
-#: plugins/infowidget/fileview.cpp:360
+#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
+#: plugins/infowidget/fileview.cpp:361
 #, fuzzy, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Veldu möppu til að gæra gögnin yfir í."
@@ -5145,80 +5145,80 @@ msgstr "Vinstri:"
 msgid "Size:"
 msgstr "Stærð:"
 
-#: plugins/infowidget/fileview.cpp:104
+#: plugins/infowidget/fileview.cpp:105
 #, fuzzy, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Opna"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:107
 #, fuzzy, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Opna"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, fuzzy, kde-format
 msgid "Check File"
 msgstr "Færa skrá"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:110
 #, fuzzy, kde-format
 msgid "Download first"
 msgstr "Hala niður fyrst"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, fuzzy, kde-format
 msgid "Download normally"
 msgstr "Hala niður eðlilega"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, fuzzy, kde-format
 msgid "Download last"
 msgstr "Hala niður síðast"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, fuzzy, kde-format
 msgid "Do not download"
 msgstr "Ekki sækja"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, fuzzy, kde-format
 msgid "Delete File(s)"
 msgstr "Eyða skrá(m)"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, fuzzy, kde-format
 msgid "Move File"
 msgstr "Færa skrá"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:119
 #, fuzzy, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Fella saman möppugrein"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, fuzzy, kde-format
 msgid "Expand Folder Tree"
 msgstr "Fella út möppugrein"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:123
 #, fuzzy, kde-format
 msgid "File Tree"
 msgstr "Skráatré"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, fuzzy, kde-format
 #| msgid "File Exists"
 msgid "File List"
 msgstr "Skráarlisti"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, fuzzy, kde-format
 msgid "Show Filter"
 msgstr "Ný sía"
 
-#: plugins/infowidget/fileview.cpp:315
+#: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, fuzzy, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5231,7 +5231,7 @@ msgstr[1] ""
 "Þú munt tapa öllum gögnum í þessari skrá, ertu viss um að þú viljir gera "
 "þetta?"
 
-#: plugins/infowidget/fileview.cpp:445
+#: plugins/infowidget/fileview.cpp:446
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"

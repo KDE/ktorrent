@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-12-31 00:43+0000\n"
+"POT-Creation-Date: 2022-11-17 00:45+0000\n"
 "PO-Revision-Date: 2021-11-19 12:55+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -240,7 +240,7 @@ msgstr "Отображать как дерево файлов"
 msgid "Show a file list"
 msgstr "Отображать как список файлов"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:63
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "Фильтр"
@@ -724,7 +724,7 @@ msgstr ""
 "Адрес списка трекеров."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:304
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Неверный URL: %1"
@@ -1291,70 +1291,70 @@ msgstr "Группа «%1» уже существует."
 msgid "Custom Groups"
 msgstr "Группы"
 
-#: ktorrent/gui.cpp:256
+#: ktorrent/gui.cpp:257
 #, kde-format
 msgid "Open Location"
 msgstr "Открыть адрес"
 
-#: ktorrent/gui.cpp:353
+#: ktorrent/gui.cpp:354
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Создать новый торрент"
 
-#: ktorrent/gui.cpp:355
+#: ktorrent/gui.cpp:356
 #, kde-format
 msgid "Open a torrent"
 msgstr "Открыть торрент"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:359
 #, kde-format
 msgid "Open Silently"
 msgstr "Открыть без подтверждений"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Открыть торрент не задавая дополнительных вопросов"
 
-#: ktorrent/gui.cpp:374
+#: ktorrent/gui.cpp:375
 #, kde-format
 msgid "Open URL"
 msgstr "Открыть URL"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Открыть URL ссылающийся на торрент, magnet-ссылки также поддерживаются"
 
-#: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP-фильтр"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:382
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Показать список заблокированных IP-адресов"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:387
 #, kde-format
 msgid "Import Torrent"
 msgstr "Импортировать торрент"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Import a torrent"
 msgstr "Импортировать торрент"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Скрыть или показать KTorrent"
 
 # З=загрузка, О=отдача --aspotashev
-#: ktorrent/gui.cpp:410
+#: ktorrent/gui.cpp:411
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "З: %1 | О: %2"
@@ -4255,8 +4255,8 @@ msgstr ""
 msgid "Remove Torrent"
 msgstr "Удалить торрент"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:336
-#: plugins/infowidget/fileview.cpp:360
+#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
+#: plugins/infowidget/fileview.cpp:361
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Выберите каталог, в который следует переместить данные."
@@ -5401,79 +5401,79 @@ msgstr "Осталось:"
 msgid "Size:"
 msgstr "Размер:"
 
-#: plugins/infowidget/fileview.cpp:104
+#: plugins/infowidget/fileview.cpp:105
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Открыть"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:107
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Открыть с помощью..."
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, kde-format
 msgid "Check File"
 msgstr "Проверить файл"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:110
 #, kde-format
 msgid "Download first"
 msgstr "Высокий приоритет"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgid "Download normally"
 msgstr "Нормальный приоритет"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgid "Download last"
 msgstr "Низкий приоритет"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgid "Do not download"
 msgstr "Не загружать"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Удалить файл(ы)"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Move File"
 msgstr "Переместить файл"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Свернуть дерево папок"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "Развернуть дерево папок"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "File Tree"
 msgstr "Дерево файлов"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "File List"
 msgstr "Список файлов"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, kde-format
 msgid "Show Filter"
 msgstr "Показать фильтр"
 
-#: plugins/infowidget/fileview.cpp:315
+#: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5484,7 +5484,7 @@ msgstr[1] "Будут потеряны все данные в этих файл�
 msgstr[2] "Будут потеряны все данные в этих файлах. Продолжить?"
 msgstr[3] "Будут потеряны все данные в этом файле. Продолжить?"
 
-#: plugins/infowidget/fileview.cpp:445
+#: plugins/infowidget/fileview.cpp:446
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"

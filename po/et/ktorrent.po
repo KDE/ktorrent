@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-12-31 00:43+0000\n"
+"POT-Creation-Date: 2022-11-17 00:45+0000\n"
 "PO-Revision-Date: 2020-02-06 14:37+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -229,7 +229,7 @@ msgstr "Failipuu näitamine"
 msgid "Show a file list"
 msgstr "Faililoendi näitamine"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:63
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "Filter"
@@ -714,7 +714,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:304
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Vigane URL: %1"
@@ -1276,69 +1276,69 @@ msgstr "Grupp %1 on juba olemas."
 msgid "Custom Groups"
 msgstr "Kohandatud grupid"
 
-#: ktorrent/gui.cpp:256
+#: ktorrent/gui.cpp:257
 #, kde-format
 msgid "Open Location"
 msgstr "Asukoha avamine"
 
-#: ktorrent/gui.cpp:353
+#: ktorrent/gui.cpp:354
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Uue torrenti loomine"
 
-#: ktorrent/gui.cpp:355
+#: ktorrent/gui.cpp:356
 #, kde-format
 msgid "Open a torrent"
 msgstr "Torrenti avamine"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:359
 #, kde-format
 msgid "Open Silently"
 msgstr "Avamine vaikselt"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Torrenti avamine küsimusi esitamata"
 
-#: ktorrent/gui.cpp:374
+#: ktorrent/gui.cpp:375
 #, kde-format
 msgid "Open URL"
 msgstr "Ava URL"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Torrentile osutava URL-i avamine, toetatud on ka magnetlingid"
 
-#: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP filter"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:382
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Blokeeritud IP-aadresside nimekirja näitamine"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:387
 #, kde-format
 msgid "Import Torrent"
 msgstr "Impordi torrent"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Import a torrent"
 msgstr "Torrenti import"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "KTorrenti näitamine/peitmine"
 
-#: ktorrent/gui.cpp:410
+#: ktorrent/gui.cpp:411
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "A: %1 | Ü: %2"
@@ -4222,8 +4222,8 @@ msgstr ""
 msgid "Remove Torrent"
 msgstr "Eemalda torrent"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:336
-#: plugins/infowidget/fileview.cpp:360
+#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
+#: plugins/infowidget/fileview.cpp:361
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Vali kataloog, kuhu andmed liigutada."
@@ -5371,79 +5371,79 @@ msgstr "Jäänud:"
 msgid "Size:"
 msgstr "Suurus:"
 
-#: plugins/infowidget/fileview.cpp:104
+#: plugins/infowidget/fileview.cpp:105
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Ava"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:107
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Ava rakendusega"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, kde-format
 msgid "Check File"
 msgstr "Kontrolli faili"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:110
 #, kde-format
 msgid "Download first"
 msgstr "Allalaadimine esimesena"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgid "Download normally"
 msgstr "Tavaline allalaadimine"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgid "Download last"
 msgstr "Allalaadimine viimasena"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgid "Do not download"
 msgstr "Ära laadi alla"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Failide kustutamine"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Move File"
 msgstr "Failide liigutamine"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Keri kataloogipuu kokku"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "Keri kataloogipuu lahti"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "File Tree"
 msgstr "Failipuu"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "File List"
 msgstr "Faililoend"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, kde-format
 msgid "Show Filter"
 msgstr "Näita filtrit"
 
-#: plugins/infowidget/fileview.cpp:315
+#: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5452,7 +5452,7 @@ msgid_plural ""
 msgstr[0] "Kaotad kõik selle faili andmed. Kas tõesti soovid seda?"
 msgstr[1] "Kaotad kõik nende failide andmed. Kas tõesti soovid seda?"
 
-#: plugins/infowidget/fileview.cpp:445
+#: plugins/infowidget/fileview.cpp:446
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
