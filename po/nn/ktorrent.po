@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-12-31 00:43+0000\n"
+"POT-Creation-Date: 2022-11-17 00:45+0000\n"
 "PO-Revision-Date: 2020-12-13 13:52+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -235,7 +235,7 @@ msgstr "Vis eit filtre"
 msgid "Show a file list"
 msgstr "Vis ei filliste"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:63
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "Filtrer"
@@ -718,7 +718,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:304
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Ugyldig adresse: %1"
@@ -1283,69 +1283,69 @@ msgstr "Gruppa «%1» finst frå før."
 msgid "Custom Groups"
 msgstr "Sjølvvalde grupper"
 
-#: ktorrent/gui.cpp:256
+#: ktorrent/gui.cpp:257
 #, kde-format
 msgid "Open Location"
 msgstr "Opna plassering"
 
-#: ktorrent/gui.cpp:353
+#: ktorrent/gui.cpp:354
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Lag ein ny torrent"
 
-#: ktorrent/gui.cpp:355
+#: ktorrent/gui.cpp:356
 #, kde-format
 msgid "Open a torrent"
 msgstr "Opna ein torrent"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:359
 #, kde-format
 msgid "Open Silently"
 msgstr "Opna stilt"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Opna ein torrent utan å stilla spørsmål"
 
-#: ktorrent/gui.cpp:374
+#: ktorrent/gui.cpp:375
 #, kde-format
 msgid "Open URL"
 msgstr "Opna adresse"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Opna ei adresse som peikar til ein torrent (magnet-lenkjer er støtta)."
 
-#: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP-filter"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:382
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Vis lista over blokkerte IP-adresser"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:387
 #, kde-format
 msgid "Import Torrent"
 msgstr "Importer torrent"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Import a torrent"
 msgstr "Importer ein torrent"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Vis/gøym KTorrent"
 
-#: ktorrent/gui.cpp:410
+#: ktorrent/gui.cpp:411
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "N: %1 | O: %2"
@@ -3643,8 +3643,8 @@ msgid ""
 "Download speed: <b>%1</b><br/>Upload speed: <b>%2</b><br/>Received: <b>%3</"
 "b><br/>Transmitted: <b>%4</b>"
 msgstr ""
-"Nedlastingsfart: <b>%1</b><br/>Opplastingsfart: <b>%2</b><br/>Motteke: <b>"
-"%3</b><br/>Sendt: <b>%4</b>"
+"Nedlastingsfart: <b>%1</b><br/>Opplastingsfart: <b>%2</b><br/>Motteke: "
+"<b>%3</b><br/>Sendt: <b>%4</b>"
 
 #: ktorrent/trayicon.cpp:167
 #, kde-format
@@ -4116,8 +4116,8 @@ msgstr ""
 msgid "Remove Torrent"
 msgstr "Fjern torrent"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:336
-#: plugins/infowidget/fileview.cpp:360
+#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
+#: plugins/infowidget/fileview.cpp:361
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Vel ei mappe å flytta dataa til."
@@ -4694,13 +4694,13 @@ msgstr "Åtvaring: %1"
 #: libktcore/torrent/chunkbar.cpp:76
 #, kde-format
 msgid ""
-"<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-"\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-"\"excluded_color\">&nbsp; - Excluded Chunks"
+"<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img "
+"src=\"unavailable_color\">&nbsp; - Chunks to Download<br><img "
+"src=\"excluded_color\">&nbsp; - Excluded Chunks"
 msgstr ""
-"<img src=\"available_color\">&nbsp; – blokker som er lasta ned<br/><img src="
-"\"unavailable_color\">&nbsp; – blokker som skal lastast ned<br/><img src="
-"\"excluded_color\">&nbsp; – blokker som ikkje skal lastast ned"
+"<img src=\"available_color\">&nbsp; – blokker som er lasta ned<br/><img "
+"src=\"unavailable_color\">&nbsp; – blokker som skal lastast ned<br/><img "
+"src=\"excluded_color\">&nbsp; – blokker som ikkje skal lastast ned"
 
 #: libktcore/torrent/queuemanager.cpp:101
 #, kde-format
@@ -5188,9 +5188,9 @@ msgstr ""
 #: plugins/infowidget/availabilitychunkbar.cpp:23
 #, kde-format
 msgid ""
-"<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-"\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-"\"excluded_color\">&nbsp; - Excluded Chunks"
+"<img src=\"available_color\">&nbsp; - Available Chunks<br><img "
+"src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img "
+"src=\"excluded_color\">&nbsp; - Excluded Chunks"
 msgstr ""
 "<img src=\"available_color\">&nbsp; – blokker som er tilgjengelege<br/><img "
 "src=\"unavailable_color\">&nbsp; – blokker som er utilgjengelege<br/><img "
@@ -5280,79 +5280,79 @@ msgstr "Igjen:"
 msgid "Size:"
 msgstr "Storleik:"
 
-#: plugins/infowidget/fileview.cpp:104
+#: plugins/infowidget/fileview.cpp:105
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Opna"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:107
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Opna med"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, kde-format
 msgid "Check File"
 msgstr "Sjekk fil"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:110
 #, kde-format
 msgid "Download first"
 msgstr "Last ned først"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgid "Download normally"
 msgstr "Last ned som vanleg"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgid "Download last"
 msgstr "Last ned til slutt"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgid "Do not download"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Slett fil(er)"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Move File"
 msgstr "Flytt fil"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Fald saman mappetreet"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "Utvid mappetreet"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "File Tree"
 msgstr "Filtre"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "File List"
 msgstr "Filliste"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, kde-format
 msgid "Show Filter"
 msgstr "Vis filter"
 
-#: plugins/infowidget/fileview.cpp:315
+#: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5363,7 +5363,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Du vil mista alle data i desse filene. Er du sikker på at du vil halda fram?"
 
-#: plugins/infowidget/fileview.cpp:445
+#: plugins/infowidget/fileview.cpp:446
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -8173,13 +8173,13 @@ msgid ""
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
 "p>\n"
 "<table border=\"0\" style=\" margin-top:0px; margin-bottom:0px; margin-"
-"left:0px; margin-right:0px;\" align=\"center\" cellspacing=\"1\" cellpadding="
-"\"2\">\n"
+"left:0px; margin-right:0px;\" align=\"center\" cellspacing=\"1\" "
+"cellpadding=\"2\">\n"
 "<tr>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
-"\" font-weight:600;\">c</span></p></td>\n"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span "
+"style=\" font-weight:600;\">c</span></p></td>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\">Any character represents "
@@ -8189,8 +8189,8 @@ msgid ""
 "<tr>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
-"\" font-weight:600;\">?</span></p></td>\n"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span "
+"style=\" font-weight:600;\">?</span></p></td>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">Matches any "
@@ -8198,8 +8198,8 @@ msgid ""
 "<tr>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
-"\" font-weight:600;\">*</span></p></td>\n"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span "
+"style=\" font-weight:600;\">*</span></p></td>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">Matches "
@@ -8207,8 +8207,8 @@ msgid ""
 "<tr>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
-"\" font-weight:600;\">[...]</span></p></td>\n"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span "
+"style=\" font-weight:600;\">[...]</span></p></td>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">Sets of "
@@ -8545,8 +8545,8 @@ msgstr "Portane vart vidaresende"
 #: plugins/upnp/routermodel.cpp:98
 #, kde-format
 msgid ""
-"Model Name: <b>%1</b><br/>Manufacturer: <b>%2</b><br/>Model Description: <b>"
-"%3</b><br/>"
+"Model Name: <b>%1</b><br/>Manufacturer: <b>%2</b><br/>Model Description: "
+"<b>%3</b><br/>"
 msgstr ""
 "Modellnamn: <b>%1</b><br/>Produsent: <b>%2</b><br/>Modellskildring: <b>%3</"
 "b><br/>"
