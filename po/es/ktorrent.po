@@ -8,7 +8,7 @@
 # Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005, 2006, 2007, 2008, 2009, 2010, 2012.
 # Jaime Robles <jaime@kde.org>, 2007, 2008.
 # Enrique Matias Sanchez (Quique) <cronopios@gmail.com>, 2008, 2009, 2010.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2011, 2012, 2015, 2019, 2020.
+# Eloy Cuadra <ecuadra@eloihr.net>, 2011, 2012, 2015, 2019, 2020, 2022.
 # Raul Gonzalez <raulgf83@gmail.com>, 2012, 2013, 2014.
 # Javier Vinal <fjvinal@gmail.com>, 2015, 2016, 2017, 2018, 2019.
 # Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2020, 2021, 2022.
@@ -17,14 +17,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-17 00:45+0000\n"
-"PO-Revision-Date: 2022-01-22 16:16+0100\n"
-"Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
+"PO-Revision-Date: 2022-11-26 14:47+0100\n"
+"Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 22.11.80\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2729,15 +2729,15 @@ msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
 msgstr ""
-"Impedir que el equipo entre en estado de suspensión o bloquee la pantalla "
-"cuando haya torrents en ejecución."
+"Impedir que el equipo entre en estado de reposo o bloquee la pantalla cuando "
+"haya torrents en ejecución."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
 #, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
 msgstr ""
-"Suprimir la suspensión y el bloqueo automático de la pantalla cuando haya "
+"Suprimir el reposo y el bloqueo automático de la pantalla cuando haya "
 "torrents en ejecución"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
@@ -7423,7 +7423,7 @@ msgstr "Bloquear"
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
-msgstr "Dormir (suspender en memoria)"
+msgstr "Reposo (suspender en memoria)"
 
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:137
 #: plugins/shutdown/shutdownruleset.cpp:251
