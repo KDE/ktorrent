@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-17 00:45+0000\n"
-"PO-Revision-Date: 2022-11-15 05:12+0300\n"
+"PO-Revision-Date: 2022-12-03 19:53+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -8445,7 +8445,7 @@ msgstr "Öge, içereceği tüm karakter dizisi ile eşleşmesi gerekiyor"
 #: plugins/syndication/filtereditor.ui:160
 #, kde-format
 msgid "Case sensitive matching"
-msgstr "Büyük küçük harfe duyarlı eşleme"
+msgstr "BÜYÜK/küçük harf duyarlı eşleşme"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_5)
 #: plugins/syndication/filtereditor.ui:103
