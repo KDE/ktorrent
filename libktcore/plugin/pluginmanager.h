@@ -10,7 +10,6 @@
 #include <QStringList>
 #include <QVector>
 
-#include <KPluginInfo>
 #include <KPluginMetaData>
 #include <KSharedConfig>
 

@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QTextStream>
 
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KPluginFactory>
 #include <KPluginMetaData>

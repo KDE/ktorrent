@@ -6,7 +6,6 @@
 #ifndef KTPLUGINACTIVITY_H
 #define KTPLUGINACTIVITY_H
 
-#include <KPluginInfo>
 #include <QWidget>
 #include <interfaces/activity.h>
 
