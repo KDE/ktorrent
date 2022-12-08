@@ -3002,7 +3002,7 @@ msgstr "HTTP"
 #, kde-format
 msgid "Use the HTTP proxy settings configured in the settings of KDE."
 msgstr ""
-"Utilitza la configuració del servidor intermediari HTTP configurat a la "
+"Utilitza la configuració del servidor intermediari HTTP configurat en la "
 "configuració de KDE."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKDEProxySettings)
@@ -3373,8 +3373,8 @@ msgid ""
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
 "Valor a partir del qual es mostrarà de color verd la ràtio de compartició. "
-"Les ràtios més baixes es mostraran en roig. Els colors es poden canviar a la "
-"configuració de color."
+"Les ràtios més baixes es mostraran en roig. Els colors es poden canviar en "
+"la configuració de color."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
@@ -3612,7 +3612,7 @@ msgid ""
 "Use drag and drop or the move up and down buttons on the right to change the "
 "order."
 msgstr ""
-"Ordre d'un torrent a la cua.\n"
+"Ordre d'un torrent en la cua.\n"
 "Arrossegueu i deixeu anar o utilitzeu els botons amunt i avall de la dreta "
 "per a canviar l'ordre."
 
@@ -3646,7 +3646,7 @@ msgstr "Mou un torrent cap a dalt de tot de la cua"
 #: ktorrent/tools/queuemanagerwidget.cpp:64
 #, kde-format
 msgid "Move a torrent up in the queue"
-msgstr "Mou cap amunt un torrent a la cua"
+msgstr "Mou cap amunt un torrent en la cua"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:67
 #, kde-format
@@ -4376,7 +4376,7 @@ msgstr "Quantes dades se n'han pujat"
 #: ktorrent/view/viewmodel.cpp:482
 #, kde-format
 msgid "How much data left to download"
-msgstr "Quantes dades queden per baixar"
+msgstr "Quantes dades queden per a baixar"
 
 #: ktorrent/view/viewmodel.cpp:484
 #, kde-format
@@ -4972,7 +4972,7 @@ msgid ""
 "ones configured in the network settings."
 msgstr ""
 "Utilitza estos límits globals quan el salvapantalla estiga actiu, en lloc "
-"dels configurats a la configuració de la xarxa."
+"dels configurats en la configuració de la xarxa."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_screensaverLimits)
 #: plugins/bwscheduler/bwprefpage.ui:25
@@ -6605,7 +6605,7 @@ msgstr "Canvia si s'utilitza un seguidor personalitzat"
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:18
 #, kde-format
 msgid "The default tracker"
-msgstr "El seguidor per defecte"
+msgstr "El seguidor predeterminat"
 
 #. i18n: ectx: label, entry (dn), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:22
@@ -7271,7 +7271,7 @@ msgstr "&Elimina-ho tot"
 #: plugins/search/searchpref.ui:210
 #, kde-format
 msgid "Add all default search engines."
-msgstr "Afig tots els motors de busca per defecte."
+msgstr "Afig tots els motors predeterminats de busca."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_default)
 #: plugins/search/searchpref.ui:213
