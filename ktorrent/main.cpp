@@ -27,7 +27,6 @@
 #include <KDBusService>
 #include <KLocalizedString>
 #include <KSharedConfig>
-#include <KStartupInfo>
 #include <KWindowSystem>
 #include <kwindowsystem_version.h>
 
