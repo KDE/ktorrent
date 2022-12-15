@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-17 00:45+0000\n"
+"POT-Creation-Date: 2022-12-15 00:47+0000\n"
 "PO-Revision-Date: 2013-03-28 14:37+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -1427,512 +1427,512 @@ msgstr ""
 msgid "Columns"
 msgstr ""
 
-#: ktorrent/main.cpp:101
+#: ktorrent/main.cpp:100
 #, fuzzy, kde-format
 #| msgid "KTorrent"
 msgctxt "@title"
 msgid "KTorrent"
 msgstr "के-टोरंट"
 
-#: ktorrent/main.cpp:103
+#: ktorrent/main.cpp:102
 #, kde-format
 msgid "Bittorrent client by KDE"
 msgstr ""
 
-#: ktorrent/main.cpp:105
+#: ktorrent/main.cpp:104
 #, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgstr ""
 
-#: ktorrent/main.cpp:112
+#: ktorrent/main.cpp:111
 #, kde-format
 msgid "Joris Guisson"
 msgstr ""
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "Ivan Vasic"
 msgstr ""
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "Alan Jones"
 msgstr ""
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "BitFinder Plugin"
 msgstr ""
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Diego Rosario Brogna"
 msgstr ""
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Webinterface Plugin, global max share ratio patch"
 msgstr ""
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "Krzysztof Kundzicz"
 msgstr ""
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "Statistics Plugin"
 msgstr ""
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Christian Weilbach"
 msgstr ""
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "kio-magnet"
 msgstr ""
 
-#: ktorrent/main.cpp:121
+#: ktorrent/main.cpp:120
 #, kde-format
 msgid "Mladen Babic"
 msgstr ""
 
-#: ktorrent/main.cpp:121
+#: ktorrent/main.cpp:120
 #, kde-format
 msgid "Application icon and a couple of others"
 msgstr ""
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "Adam Treat"
 msgstr ""
 
-#: ktorrent/main.cpp:123
+#: ktorrent/main.cpp:122
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: ktorrent/main.cpp:123
+#: ktorrent/main.cpp:122
 #, kde-format
 msgid "1.0 application icon"
 msgstr ""
 
-#: ktorrent/main.cpp:124
+#: ktorrent/main.cpp:123
 #, kde-format
 msgid "Vincent Wagelaar"
 msgstr ""
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "Knut Morten Johansson"
 msgstr ""
 
-#: ktorrent/main.cpp:126
+#: ktorrent/main.cpp:125
 #, kde-format
 msgid "Felix Berger"
 msgstr ""
 
-#: ktorrent/main.cpp:126
+#: ktorrent/main.cpp:125
 #, kde-format
 msgid "ChunkBar's tooltip and IWFileTreeItem sorting"
 msgstr ""
 
-#: ktorrent/main.cpp:127
+#: ktorrent/main.cpp:126
 #, kde-format
 msgid "Andreas Kling"
 msgstr ""
 
-#: ktorrent/main.cpp:128
+#: ktorrent/main.cpp:127
 #, kde-format
 msgid "Felipe Sateler"
 msgstr ""
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:128
 #, kde-format
 msgid "Maxmind"
 msgstr ""
 
-#: ktorrent/main.cpp:130
+#: ktorrent/main.cpp:129
 #, kde-format
 msgid ""
 "Country locator for InfoWidget plugin. Flags are taken from http://flags."
 "blogpotato.de/ so thanks to them too."
 msgstr ""
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:132
 #, kde-format
 msgid "Adam Forsyth"
 msgstr ""
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:132
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr ""
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "Thomas Bernard"
 msgstr ""
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr ""
 
-#: ktorrent/main.cpp:138
+#: ktorrent/main.cpp:137
 #, kde-format
 msgid "Lesly Weyts"
 msgstr ""
 
-#: ktorrent/main.cpp:138 ktorrent/main.cpp:139
+#: ktorrent/main.cpp:137 ktorrent/main.cpp:138
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr ""
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:138
 #, kde-format
 msgid "Kevin Andre"
 msgstr ""
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:139
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr ""
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:139
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr ""
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Alexander Dymo"
 msgstr ""
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr ""
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Scott Wolchok"
 msgstr ""
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr ""
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr ""
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr ""
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Goten Xiao"
 msgstr ""
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr ""
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Rapsys"
 msgstr ""
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr ""
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Athantor"
 msgstr ""
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr ""
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "twisted_fall"
 msgstr ""
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr ""
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Lucke"
 msgstr ""
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr ""
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Modestas Vainius"
 msgstr ""
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Several patches"
 msgstr ""
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Stefan Monov"
 msgstr ""
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr ""
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "The_Kernel"
 msgstr ""
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr ""
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr ""
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Several webgui patches"
 msgstr ""
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Ozzi"
 msgstr ""
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr ""
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Markus Brueffer"
 msgstr ""
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr ""
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr ""
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr ""
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Rickard Närström"
 msgstr ""
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr ""
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "caruccio"
 msgstr ""
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr ""
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Lee Olson"
 msgstr ""
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "New set of icons"
 msgstr ""
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "एरॉन जे. सीगो"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr ""
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Ian Higginson"
 msgstr ""
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr ""
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Amichai Rothman"
 msgstr ""
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr ""
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Leo Trubach"
 msgstr ""
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr ""
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Andrei Barbu"
 msgstr ""
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr ""
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr ""
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr ""
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr ""
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr ""
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr ""
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr ""
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr ""
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr ""
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Rex Dieter"
 msgstr ""
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr ""
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Leszek Lesner"
 msgstr ""
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr ""
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr ""
 
-#: ktorrent/main.cpp:170 ktorrent/main.cpp:171
+#: ktorrent/main.cpp:169 ktorrent/main.cpp:170
 #, kde-format
 msgid "KF5 porting"
 msgstr ""
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr ""
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr ""
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr ""
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Enable logging to standard output"
 msgstr ""
 
-#: ktorrent/main.cpp:177
+#: ktorrent/main.cpp:176
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr ""
 
-#: ktorrent/main.cpp:178
+#: ktorrent/main.cpp:177
 #, kde-format
 msgid "Document to open"
 msgstr ""
