@@ -1,166 +1,70 @@
 <?xml version="1.0" ?>
 <!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY ktorrent "<application
->KTorrent</application
->">
+  <!ENTITY ktorrent "<application>KTorrent</application>">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % German "INCLUDE">
+  <!ENTITY % English "INCLUDE">
 ]>
 <article id="ktorrent" lang="&language;">
-<title
->KTorrent</title>
+<title>KTorrent</title>
 <articleinfo>
 <authorgroup>
-<author
-><firstname
->Luca</firstname
-> <surname
->Beltrame</surname
-> <affiliation
-> <address
-><email
->einar@heavensinferno.net</email
-></address>
+<author><firstname>Luca</firstname>
+<surname>Beltrame</surname>
+<affiliation>
+<address><email>einar@heavensinferno.net</email></address>
 </affiliation>
 </author>
 
 <!--
-<author
->&Marco.Martin;&Marco.Martin.mail;</author>
+<author>&Marco.Martin;&Marco.Martin.mail;</author>
 using this format does not work properly, the email is missing in the 
 generated html file 
 2010-10-27 lueck
 -->
 
-<othercredit role="translator"
-><firstname
->Burkhard</firstname
-><surname
->Lück</surname
-><affiliation
-><address
-><email
->lueck@hube-lueck.de</email
-></address
-></affiliation
-><contrib
->Übersetzung</contrib
-></othercredit
-> 
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
 <!-- Date of the documentation
 Don't forget to include this last date.
 Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
 -->
-<date
->2010-10-27</date>
+<date>2010-10-27</date>
 <!--version information of the application and kde this documentation is valid for.
 either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
 -->
-<releaseinfo
->4.0 &kde; 4.5</releaseinfo>
+<releaseinfo>4.0 &kde; 4.5</releaseinfo>
 
 </articleinfo>
 
-<para
->&ktorrent; ist ein BitTorrent-Programm von &kde;. Sie können damit Dateien über das BitTorrent-Protokoll herunterladen. Mehrere Torrents lassen sich gleichzeitig ausführen. &ktorrent; hat zusätzliche Fähigkeiten und ist damit ein mit allen Funktionen ausgestattetes Dienstprogramm für BitTorrent.</para>
+<para>&ktorrent; is a bittorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.</para>
 
 <itemizedlist>
-<title
->Funktionen</title>
-<listitem
-><para
->Verwaltung von Warteschlangen für Torrents</para
-></listitem>
-<listitem
-><para
->Geschwindigkeitsbegrenzungen global und für den einzelnen Torrent</para
-></listitem>
-<listitem
-><para
->Eingebaute Vorschau für bestimmte Dateitypen (Video und Audio)</para
-></listitem>
-<listitem
-><para
->Teilweise oder vollständig heruntergeladene Dateien werden importiert</para
-></listitem>
-<listitem
-><para
->Dateipriorisierung für Torrents mit mehreren Dateien</para
-></listitem>
-<listitem
-><para
->In Torrents mit mehreren Dateien können einzelne Dateien zum Herunterladen ausgewählt werden.</para
-></listitem>
-<listitem
-><para
->Gegenstellen zwangsweise trennen oder verbannen mit Hilfe eines zusätzlichen IP-Filterdialogs. Die IP-Einträge können in diesem Dialog angezeigt und bearbeitet werden.</para
-></listitem>
-<listitem
-><para
->Unterstützung für UDP-Tracker</para
-></listitem>
-<listitem
-><para
->Unterstützung für private Tracker und Torrents</para
-></listitem>
-<listitem
-><para
->Unterstützung für Austausch von Gegenstellen bei µTorrents</para
-></listitem>
-<listitem
-><para
->Unterstützung für Protokollverschlüsselung (kompatibel mit Azureus)</para
-></listitem>
-<listitem
-><para
->Unterstützung für das Erstellen von Torrents ohne Tracker</para
-></listitem>
-<listitem
-><para
->Unterstützung für Verteilte Hashtabellen (Distributed Hash Table, DHT in der Mainline-Version)</para
-></listitem>
-<listitem
-><para
->Unterstützung für UPnP zur automatischen Port-Weiterleitung in Netzwerken mit dynamisch zugewiesenen Rechnern</para
-></listitem>
-<listitem
-><para
->Unterstützung für Webseeds</para
-></listitem>
-<listitem
-><para
->Integration in den Systemabschnitt der Kontrollleiste</para
-></listitem>
-<listitem
-><para
->Unterstützung für Tracker-Authentifizierung</para
-></listitem>
-<listitem
-><para
->Verbindung über Proxys</para
-></listitem>
-<listitem
-><para
->Interprozess-Steuerung über die &DBus;-Schnittstelle</para
-></listitem>
+<title>Features</title>
+<listitem><para>Queuing of torrents</para></listitem>
+<listitem><para>Global and per torrent speed limits</para></listitem>
+<listitem><para>Previewing of certain file types, build in (video and audio)</para></listitem>
+<listitem><para>Importing of partially or fully downloaded files</para></listitem>
+<listitem><para>File prioritization for multi-file torrents</para></listitem>
+<listitem><para>Selective downloading for multi-file torrents</para></listitem>
+<listitem><para>Kick/ban peers with an additional IP Filter dialog for list/edit purposes</para></listitem>
+<listitem><para>UDP tracker support</para></listitem>
+<listitem><para>Support for private trackers and torrents</para></listitem>
+<listitem><para>Support for µTorrent's peer exchange</para></listitem>
+<listitem><para>Support for protocol encryption (compatible with Azureus)</para></listitem>
+<listitem><para>Support for creating trackerless torrents</para></listitem>
+<listitem><para>Support for distributed hash tables (DHT, the Mainline version)</para></listitem>
+<listitem><para>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</para></listitem>
+<listitem><para>Support for webseeds</para></listitem>
+<listitem><para>System tray integration</para></listitem>
+<listitem><para>Tracker authentication support</para></listitem>
+<listitem><para>Connection though a proxy</para></listitem>
+<listitem><para>Interprocess control via DBus interface</para></listitem>
 </itemizedlist>
 
 <itemizedlist>
-<title
->Online-Hilfe</title>
-<listitem
-><para
-><ulink url="https://userbase.kde.org/KTorrent"
->KTorrent auf UserBase</ulink
-></para
-></listitem>
-<listitem
-><para
-><ulink url="http://forum.kde.org/viewforum.php?f=18"
->Forum der KDE-Gemeinschaft</ulink
-></para
-></listitem>
+<title>Online Help Resources</title>
+<listitem><para><ulink url="https://userbase.kde.org/KTorrent">KTorrent on UserBase</ulink></para></listitem>
+<listitem><para><ulink url="http://forum.kde.org/viewforum.php?f=18">KDE Community Forums</ulink></para></listitem>
 </itemizedlist>
 </article>
