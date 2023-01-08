@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com",
                 "Name": "Joris Guisson",
+                "Name[bg]": "Joris Guisson",
                 "Name[ca@valencia]": "Joris Guisson",
                 "Name[ca]": "Joris Guisson",
                 "Name[cs]": "Joris Guisson",
@@ -32,6 +33,7 @@
             }
         ],
         "Description": "Specify the download order of a multi-file torrent",
+        "Description[bg]": "Задаване реда на изтегляне за многофайлов торент",
         "Description[ca@valencia]": "Especifica l'ordre de baixada d'un torrent amb múltiples fitxers",
         "Description[ca]": "Especifica l'ordre de baixada d'un torrent amb múltiples fitxers",
         "Description[cs]": "Zvolení pořadí stahovaných souborů u torrentů obsahujících více souborů",
