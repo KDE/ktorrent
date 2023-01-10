@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com",
                 "Name": "Joris Guisson",
+                "Name[bg]": "Joris Guisson",
                 "Name[ca@valencia]": "Joris Guisson",
                 "Name[ca]": "Joris Guisson",
                 "Name[cs]": "Joris Guisson",
@@ -32,6 +33,7 @@
             }
         ],
         "Description": "Allows you to shutdown your computer when torrents finish",
+        "Description[bg]": "Позволява ви да изключите компютъра си, след приключване на торентите",
         "Description[ca@valencia]": "Permet parar l'ordinador en finalitzar els torrent",
         "Description[ca]": "Permet aturar l'ordinador en finalitzar els torrents",
         "Description[cs]": "Umožní vypnutí počítače po dokončení stahování torrentu",

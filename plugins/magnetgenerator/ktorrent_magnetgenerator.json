@@ -4,6 +4,7 @@
             {
                 "Email": "jonas@gannon.se",
                 "Name": "Jonas Lundqvist",
+                "Name[bg]": "Jonas Lundqvist",
                 "Name[ca@valencia]": "Jonas Lundqvist",
                 "Name[ca]": "Jonas Lundqvist",
                 "Name[cs]": "Jonas Lundqvist",
@@ -32,6 +33,7 @@
             }
         ],
         "Description": "Generates magnet links",
+        "Description[bg]": "Създаване на магнитни връзки",
         "Description[ca@valencia]": "Genera enllaços magnet",
         "Description[ca]": "Genera enllaços magnet",
         "Description[cs]": "Generuje odkazy magnet",
@@ -60,6 +62,7 @@
         "Id": "MagnetGeneratorPlugin",
         "License": "GPL",
         "Name": "Magnet Generator",
+        "Name[bg]": "Генератор на магнитни връзки",
         "Name[bs]": "Generator magneta",
         "Name[ca@valencia]": "Generador de magnet",
         "Name[ca]": "Generador de magnet",

@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
                 "Name": "Joris Guisson, Ivan Vasic",
+                "Name[bg]": "Joris Guisson, Ivan Vasic",
                 "Name[ca@valencia]": "Joris Guisson, Ivan Vasic",
                 "Name[ca]": "Joris Guisson, Ivan Vasic",
                 "Name[cs]": "Joris Guisson, Ivan Vasic",
@@ -32,6 +33,7 @@
             }
         ],
         "Description": "Scan folders for torrent files and load them",
+        "Description[bg]": "Претърсване на папки за торент-файлове за добавяне",
         "Description[ca@valencia]": "Explora les carpetes buscant fitxers torrent i els carrega",
         "Description[ca]": "Explora les carpetes cercant fitxers torrent i els carrega",
         "Description[cs]": "Vyhledávat ve složkách a načítat torrenty",
@@ -60,7 +62,7 @@
         "Id": "ScanFolderPlugin",
         "License": "GPL",
         "Name": "Scan Folder",
-        "Name[bg]": "Претърсване на директория",
+        "Name[bg]": "Претърсване на папка",
         "Name[bs]": "Pretraga direktorija",
         "Name[ca@valencia]": "Explora les carpetes",
         "Name[ca]": "Explora les carpetes",

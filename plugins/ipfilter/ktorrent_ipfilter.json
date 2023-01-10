@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
                 "Name": "Joris Guisson, Ivan Vasic",
+                "Name[bg]": "Joris Guisson, Ivan Vasic",
                 "Name[ca@valencia]": "Joris Guisson, Ivan Vasic",
                 "Name[ca]": "Joris Guisson, Ivan Vasic",
                 "Name[cs]": "Joris Guisson, Ivan Vasic",
@@ -32,6 +33,7 @@
             }
         ],
         "Description": "Filter IP addresses through a blocklist",
+        "Description[bg]": "Филтриране на IP-адресите с черен списък",
         "Description[ca@valencia]": "Filtra les adreces IP a través d'una llista de bloqueig",
         "Description[ca]": "Filtra les adreces IP a través d'una llista de bloqueig",
         "Description[cs]": "Filtrovat IP adresy podle seznamu blokovaných",

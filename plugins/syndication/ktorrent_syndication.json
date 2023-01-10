@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com",
                 "Name": "Joris Guisson",
+                "Name[bg]": "Joris Guisson",
                 "Name[ca@valencia]": "Joris Guisson",
                 "Name[ca]": "Joris Guisson",
                 "Name[cs]": "Joris Guisson",
@@ -32,6 +33,7 @@
             }
         ],
         "Description": "Syndication plugin for KTorrent, supporting RSS and Atom feeds",
+        "Description[bg]": "Приставка за синдикиране на KTorrent, поддържаща емисии RSS и ATOM",
         "Description[ca@valencia]": "Connector de sindicació per a KTorrent, permet canals RSS i Atom",
         "Description[ca]": "Connector de sindicació per al KTorrent, permet canals RSS i Atom",
         "Description[cs]": "Modul pro publikování pro KTorrent podporující RSS a kanály Atom",
