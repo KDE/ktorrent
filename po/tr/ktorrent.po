@@ -11,13 +11,13 @@
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014, 2015, 2017, 2018, 2021.
 # Yavuz BAYRAK, 2007.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-15 00:47+0000\n"
-"PO-Revision-Date: 2022-12-17 18:55+0300\n"
+"PO-Revision-Date: 2023-01-14 22:39+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3446,12 +3446,12 @@ msgstr "Önerilen ayarlar:"
 #: ktorrent/statusbar.cpp:34 ktorrent/statusbar.cpp:66
 #, kde-format
 msgid "Speed down: %1 / up: %2"
-msgstr "İndirme hızı: %1 / Gönderme hızı: %2"
+msgstr "İndirme hızı: %1 / yükleme hızı: %2"
 
 #: ktorrent/statusbar.cpp:35 ktorrent/statusbar.cpp:77
 #, kde-format
 msgid "Transferred down: %1 / up: %2"
-msgstr "İndirilen veri: %1 / Gönderilen veri: %2"
+msgstr "Aktarılan indirme: %1 / yükleme: %2"
 
 #: ktorrent/statusbar.cpp:37 ktorrent/statusbar.cpp:92
 #, kde-format
@@ -3934,14 +3934,14 @@ msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Not:</span> Bu, yalnızca küme tam olarak kurulmamışsa "
-"kullanılabilir. Ortamda birden çok etkin gönderici var ise bu kip işe "
+"kullanılabilir. Ortamda birden çok etkin besleyici var ise bu kip işe "
 "yaramaz hale gelir.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, superseeding)
 #: ktorrent/view/propertiesdlg.ui:45
 #, kde-format
 msgid "Use superseeding mode for seeding"
-msgstr "Gönderim için süper besleme kipini kullan"
+msgstr "Besleme için süper besleme kipini kullan"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, move_on_completion_enabled)
 #: ktorrent/view/propertiesdlg.ui:52
@@ -4275,7 +4275,7 @@ msgstr "İndirme Hızı"
 #: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Up Speed"
-msgstr "Gönderme Hızı"
+msgstr "Yükleme Hızı"
 
 #: ktorrent/view/viewmodel.cpp:452
 #, kde-format
@@ -5960,7 +5960,7 @@ msgstr "Tür:"
 #: plugins/infowidget/statustab.ui:100
 #, kde-format
 msgid "Average up speed:"
-msgstr "Ortalama gönderme hızı:"
+msgstr "Ortalama yükleme hızı:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/infowidget/statustab.ui:123
@@ -6120,7 +6120,7 @@ msgstr ""
 #: plugins/infowidget/webseedstab.ui:26
 #, kde-format
 msgid "Add Webseed"
-msgstr "Web Paylaşımcısı Ekle"
+msgstr "Web Beslemesi Ekle"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove)
 #: plugins/infowidget/webseedstab.ui:48
