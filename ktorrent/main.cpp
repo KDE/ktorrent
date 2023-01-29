@@ -174,7 +174,7 @@ int main(int argc, char **argv)
     about.setupCommandLine(&parser);
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("verbose"), i18n("Enable logging to standard output")));
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("silent"), i18n("Silently open torrent given on URL")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("+[URL]"), i18n("Document to open")));
+    parser.addPositionalArgument(QStringLiteral("+[URL]"), i18n("Document to open"));
     parser.process(app);
     about.processCommandLine(&parser);
 
