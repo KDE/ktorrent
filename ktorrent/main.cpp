@@ -244,7 +244,7 @@ int main(int argc, char **argv)
                 KWindowSystem::activateWindow(widget.windowHandle());
             }
         });
-        handleCmdLine(QStringList(), QString());
+        handleCmdLine(app.arguments(), QString());
 
         app.setQuitOnLastWindowClosed(false);
         app.exec();
