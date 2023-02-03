@@ -933,7 +933,7 @@ msgstr "Heu d'afegir almenys un node."
 #: ktorrent/dialogs/torrentcreatordlg.cpp:338
 #, kde-format
 msgid "Choose a file to save the torrent"
-msgstr "Seleccioneu un fitxer per que es guardarà el torrent"
+msgstr "Seleccioneu un fitxer per a guardar el torrent"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, TorrentCreatorDlg)
 #: ktorrent/dialogs/torrentcreatordlg.ui:14
@@ -1141,10 +1141,10 @@ msgid ""
 "location in the dialog will be set to this. You can still override it, if "
 "you want to."
 msgstr ""
-"Ubicació predeterminada per que es guardarà els torrent d'este grup. <br/"
-"><br/>Açò només s'utilitza en el diàleg de selecció de fitxers, quan es "
-"canvia el grup, servirà per a definir la ubicació de baixada. Si voleu, "
-"encara podeu substituir-ho."
+"Ubicació predeterminada per a guardar els torrent d'este grup. <br/><br/>Açò "
+"només s'utilitza en el diàleg de selecció de fitxers, quan es canvia el "
+"grup, servirà per a definir la ubicació de baixada. Si voleu, encara podeu "
+"substituir-ho."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_location_enabled)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSaveDir)
@@ -1389,7 +1389,7 @@ msgstr "Fitxers de text"
 #: ktorrent/ipfilterwidget.cpp:130
 #, kde-format
 msgid "Choose a filename to save under"
-msgstr "Escolliu un nom de fitxer per que es guardarà-lo"
+msgstr "Escolliu un nom de fitxer per a guardar-lo"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, IPFilterWidget)
 #: ktorrent/ipfilterwidget.ui:14
@@ -2595,7 +2595,7 @@ msgstr "Carpetes"
 #: ktorrent/pref/generalpref.ui:23
 #, kde-format
 msgid "Folder to store torrent information:"
-msgstr "Carpeta per que es guardarà la informació del torrent:"
+msgstr "Carpeta per a guardar la informació del torrent:"
 
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, kcfg_tempDir)
 #: ktorrent/pref/generalpref.ui:30
@@ -2613,8 +2613,8 @@ msgstr ""
 #, kde-format
 msgid "Directory to use as a default save location for all data."
 msgstr ""
-"Directori que s'utilitzarà com a ubicació predeterminada per que es guardarà "
-"totes les dades."
+"Directori que s'utilitzarà com a ubicació predeterminada per a guardar totes "
+"les dades."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useCompletedDir)
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, kcfg_completedDir)
@@ -4718,7 +4718,7 @@ msgstr "Mantín el sembrat després d'haver finalitzat la baixada"
 #: libktcore/ktorrent.kcfg:102
 #, kde-format
 msgid "Folder to store temporary files"
-msgstr "Carpeta per que es guardarà els fitxers temporals"
+msgstr "Carpeta per a guardar els fitxers temporals"
 
 #. i18n: ectx: label, entry (useSaveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:105
@@ -4731,7 +4731,7 @@ msgstr ""
 #: libktcore/ktorrent.kcfg:109
 #, kde-format
 msgid "Folder to store downloaded files"
-msgstr "Carpeta per que es guardarà els fitxers baixats"
+msgstr "Carpeta per a guardar els fitxers baixats"
 
 #. i18n: ectx: label, entry (useTorrentCopyDir), group (downloads)
 #: libktcore/ktorrent.kcfg:112
@@ -7361,7 +7361,7 @@ msgstr "KTorrent"
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
-msgstr "Sigues lliure."
+msgstr "Sigueu lliure."
 
 #: plugins/search/webview.cpp:109
 #, kde-format
@@ -7849,7 +7849,7 @@ msgstr "Reinicia"
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
 #, kde-format
 msgid "Select path to save image…"
-msgstr "Seleccioneu el camí per que es guardarà la imatge…"
+msgstr "Seleccioneu el camí per a guardar la imatge…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
