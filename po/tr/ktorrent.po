@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-12-31 00:43+0000\n"
-"PO-Revision-Date: 2023-01-14 22:39+0300\n"
+"PO-Revision-Date: 2023-02-05 16:39+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -423,7 +423,7 @@ msgstr "Torrent indirilmesi bittiğinde dosyaları belirtilmiş alana taşı."
 #: plugins/syndication/filtereditor.ui:308
 #, kde-format
 msgid "Move when completed to:"
-msgstr "Tamamlandığında Taşı:"
+msgstr "Tamamlandığında şuraya taşı:"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_move_when_completed_history)
 #: ktorrent/dialogs/fileselectdlg.ui:74
@@ -437,7 +437,7 @@ msgstr ""
 #: ktorrent/dialogs/fileselectdlg.ui:105
 #, kde-format
 msgid "Text encoding:"
-msgstr "Metin kodlama:"
+msgstr "Metin kodlaması:"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_file_view)
 #: ktorrent/dialogs/fileselectdlg.ui:132
@@ -3446,12 +3446,12 @@ msgstr "Önerilen ayarlar:"
 #: ktorrent/statusbar.cpp:34 ktorrent/statusbar.cpp:66
 #, kde-format
 msgid "Speed down: %1 / up: %2"
-msgstr "İndirme hızı: %1 / yükleme hızı: %2"
+msgstr "İndirme hızı: %1, yükleme hızı: %2"
 
 #: ktorrent/statusbar.cpp:35 ktorrent/statusbar.cpp:77
 #, kde-format
 msgid "Transferred down: %1 / up: %2"
-msgstr "Aktarılan indirme: %1 / yükleme: %2"
+msgstr "Aktarılan indirme: %1, yükleme: %2"
 
 #: ktorrent/statusbar.cpp:37 ktorrent/statusbar.cpp:92
 #, kde-format
@@ -3634,12 +3634,12 @@ msgstr "Bir torrenti kuyruğun en altına taşı"
 #: ktorrent/tools/queuemanagerwidget.cpp:72
 #, kde-format
 msgid "Show Downloads"
-msgstr "İndirilenleri Göster"
+msgstr "İndirmeleri Göster"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:73
 #, kde-format
 msgid "Show all downloads"
-msgstr "Tüm indirilenleri göster"
+msgstr "Tüm indirmeleri göster"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:77
 #, kde-format
@@ -4257,7 +4257,7 @@ msgstr "Boyut"
 #: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Uploaded"
-msgstr "Karşıya Yüklenen"
+msgstr "Yüklenen"
 
 #: ktorrent/view/viewmodel.cpp:446
 #, kde-format
@@ -4518,17 +4518,17 @@ msgstr "Çalışmayan Karşıya Yüklemeler"
 #: libktcore/groups/groupmanager.cpp:99
 #, kde-format
 msgid "Downloads"
-msgstr "İndirilenler"
+msgstr "İndirmeler"
 
 #: libktcore/groups/groupmanager.cpp:100
 #, kde-format
 msgid "Running Downloads"
-msgstr "Çalışan İndirilenler"
+msgstr "Çalışan İndirmeler"
 
 #: libktcore/groups/groupmanager.cpp:104
 #, kde-format
 msgid "Not Running Downloads"
-msgstr "Çalışmayan İndirilenler"
+msgstr "Çalışmayan İndirmeler"
 
 #: libktcore/groups/groupmanager.cpp:109
 #, kde-format
@@ -4553,7 +4553,7 @@ msgstr "Pasif Torrentler"
 #: libktcore/groups/groupmanager.cpp:120
 #, kde-format
 msgid "Passive Downloads"
-msgstr "Pasif İndirilenler"
+msgstr "Pasif İndirmeler"
 
 #: libktcore/groups/groupmanager.cpp:124
 #, kde-format
@@ -4683,7 +4683,7 @@ msgstr "Geçici dosyaların saklanacağı klasör"
 #, kde-format
 msgid "Whether to automatically save downloads to saveDir"
 msgstr ""
-"İndirilenlerin otomatik olarak saveDir dizinine kaydedilip kaydedilmeyeceği"
+"İndirmelerin otomatik olarak saveDir dizinine kaydedilip kaydedilmeyeceği"
 
 #. i18n: ectx: label, entry (saveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:109
