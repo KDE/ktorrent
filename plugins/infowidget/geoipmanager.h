@@ -18,7 +18,7 @@ class GeoIPManager : public QObject
 {
     Q_OBJECT
 public:
-    GeoIPManager(QObject *parent = 0);
+    GeoIPManager(QObject *parent = nullptr);
     ~GeoIPManager() override;
 
     /**
