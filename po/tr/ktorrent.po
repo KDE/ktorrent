@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-15 00:47+0000\n"
-"PO-Revision-Date: 2023-02-05 16:39+0300\n"
+"PO-Revision-Date: 2023-02-07 19:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -854,7 +854,7 @@ msgstr "Sınır yok"
 #: plugins/bwscheduler/edititemdlg.ui:196
 #, kde-format
 msgid " KiB/s"
-msgstr " KB/sn"
+msgstr " KiB/sn"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -3399,13 +3399,13 @@ msgstr "Kullanılabilir  indirme bant genişliği:"
 #: ktorrent/pref/recommendedsettingsdlg.ui:76
 #, kde-format
 msgid "(= 32 KiB/s)"
-msgstr "(= 32 KB/sn)"
+msgstr "(= 32 KiB/sn)"
 
 #. i18n: ectx: property (text), widget (QLabel, m_download_bw_display)
 #: ktorrent/pref/recommendedsettingsdlg.ui:83
 #, kde-format
 msgid "(= 500 KiB/s)"
-msgstr "(= 500 KB/sn)"
+msgstr "(= 500 KiB/sn)"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_calculate)
 #: ktorrent/pref/recommendedsettingsdlg.ui:94
@@ -7736,7 +7736,7 @@ msgstr "Göster"
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
 msgid "KiB/s"
-msgstr "KB/sn"
+msgstr "KiB/sn"
 
 #: plugins/stats/drawer/ChartDrawerData.cc:13
 #, kde-format
