@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-12-31 00:43+0000\n"
-"PO-Revision-Date: 2023-02-08 11:30+0100\n"
+"PO-Revision-Date: 2023-02-11 07:08+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -199,7 +199,7 @@ msgstr "დამატება"
 #: ktorrent/view/scanextender.ui:221
 #, kde-format
 msgid "Close"
-msgstr "დაკეტვა"
+msgstr "დახურვა"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:81
 #, kde-format
