@@ -111,7 +111,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 ></listitem>
 <listitem
 ><para
->Suporte para a encriptação do protocolo (compatível com o Azureus)</para
+>Suporte para a criptografia do protocolo (compatível com o Azureus)</para
 ></listitem>
 <listitem
 ><para
@@ -131,10 +131,6 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 ></listitem>
 <listitem
 ><para
->Suporte para programação com o Kross e controle inter-processos com a interface de D-Bus</para
-></listitem>
-<listitem
-><para
 >Integração na área de notificação</para
 ></listitem>
 <listitem
@@ -147,7 +143,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 ></listitem>
 <listitem
 ><para
->Suporte para programação com o Kross e controle inter-processos com a interface de D-Bus</para
+>Controle inter-processos com a interface de D-Bus</para
 ></listitem>
 </itemizedlist>
 
