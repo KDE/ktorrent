@@ -14,19 +14,20 @@
 # Mthw <jari_45@hotmail.com>, 2019.
 # Matej Mrenica <matejm98mthw@gmail.com>, 2019, 2020.
 # Dušan Kazik <prescott66@gmail.com>, 2020.
+# Ferdinand Galko <galko.ferdinand@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-15 00:47+0000\n"
-"PO-Revision-Date: 2020-10-29 11:45+0100\n"
-"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
-"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2023-02-25 11:47+0100\n"
+"Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
+"Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.08.2\n"
+"X-Generator: Lokalize 21.12.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, kde-format
@@ -716,7 +717,7 @@ msgstr "Otvoriť URL"
 #: ktorrent/dialogs/pastedialog.cpp:114
 #, kde-format
 msgid "Error fetching tracker list"
-msgstr ""
+msgstr "Chyba pri načítavaní zoznamu trackerov"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
 #, kde-format
@@ -724,6 +725,8 @@ msgid ""
 "Please check if the URL in Settings > Advanced > Tracker list URL is "
 "reachable."
 msgstr ""
+"Prosím, skontrolujte, či je URL v Nastavenie > Pokročilé > URL zoznamu "
+"trackerov dosiahnuteľná."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
@@ -1810,7 +1813,7 @@ msgstr "Ozzi"
 #: ktorrent/main.cpp:152
 #, kde-format
 msgid "Fixes for several warnings"
-msgstr "Opravy niekoľkých varovaní"
+msgstr "Opravy niekoľkých upozornení"
 
 #: ktorrent/main.cpp:153
 #, kde-format
@@ -2201,10 +2204,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
-#, fuzzy, kde-format
-#| msgid "Copy Tracker URL"
+#, kde-format
 msgid "Tracker list URL:"
-msgstr "Kopírovať URL Trackera"
+msgstr "URL zoznamu trackerov:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2213,6 +2215,9 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"URL zoznamu trackerov použitá pri pridávaní torrentu pomocou infohash\n"
+"POZNÁMKA: Každý tracker musí byť na vlastnom riadku. Prázdne riadky sa "
+"ignorujú."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2426,7 +2431,7 @@ msgstr "Farba pre torrenty, keď sú nečinné alebo prebieha kontrola dát."
 #: ktorrent/pref/colorpref.ui:26
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
-msgstr ""
+msgstr "Farba pre torrenty pri zdieľaní alebo sťahovaní."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
@@ -2438,7 +2443,7 @@ msgstr "KTorrent beží:"
 #: ktorrent/pref/colorpref.ui:40
 #, kde-format
 msgid "Torrent is stalled or checking data:"
-msgstr ""
+msgstr "Torrent je nečinný alebo prebieha kontrola dát:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
@@ -2459,6 +2464,7 @@ msgid ""
 "Additionally highlight torrents based on the status of their trackers (if "
 "any)"
 msgstr ""
+"Dodatočne zvýrazniť torrenty na základe stavu ich trackerov (ak existujú)"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:72
@@ -2467,12 +2473,14 @@ msgid ""
 "Color to use when at least one tracker is connected and replied no errors or "
 "warnings."
 msgstr ""
+"Farba, ktorá sa použije, keď je pripojený aspoň jeden tracker a neodpovedá "
+"žiadne chyby ani upozornenia."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/colorpref.ui:79
 #, kde-format
 msgid "Some of the trackers are reachable:"
-msgstr ""
+msgstr "Niektorí trackery sú dostupní:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_warningsTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:86
@@ -2480,30 +2488,34 @@ msgstr ""
 msgid ""
 "Color to use when the best attempt to connect to tracker results in warning."
 msgstr ""
+"Farba, ktorá sa použije, keď sa najlepší pokus o pripojenie k trackeru "
+"skončí upozornením."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/colorpref.ui:93
 #, kde-format
 msgid "None of the trackers are reachable:"
-msgstr ""
+msgstr "Žiadny z trackerov nie je dostupný:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: ktorrent/pref/colorpref.ui:100
 #, kde-format
 msgid "Reachable trackers report warnings:"
-msgstr ""
+msgstr "Dostupní trackery hlásia upozornenia:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
 #, kde-format
 msgid "Color to use when all trackers reply the errors or not found."
 msgstr ""
+"Farba, ktorá sa použije, keď všetky trackery odpovedajú chybami alebo neboli "
+"nájdené."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
 #, kde-format
 msgid "Trackers are timing out:"
-msgstr ""
+msgstr "Trackery sú časovo obmedzené:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_timeoutTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:121
@@ -2512,38 +2524,38 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"Farba, ktorá sa použije, keď sa najlepší pokus o pripojenie k trackeru "
+"skončí vypršaním času. Pokus o pripojenie sa uskutoční neskôr."
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
-#, fuzzy, kde-format
-#| msgid "Share ratio:"
+#, kde-format
 msgid "Low share ratio:"
-msgstr "Pomer zdieľania:"
+msgstr "Nízky pomer zdieľania:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Minimum good share ratio:"
+#, kde-format
 msgid "Good share ratio:"
-msgstr "Minimálny dobrý pomer zdieľania:"
+msgstr "Dobrý pomer zdieľania:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
 #, kde-format
 msgid "Color to display share ratio below minimal good value."
-msgstr ""
+msgstr "Farba na zobrazenie pomeru zdieľania pod minimálnou dobrou hodnotou."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_goodShareRatioColor)
 #: ktorrent/pref/colorpref.ui:154
 #, kde-format
 msgid "Color to display share ratio above minimal good value."
-msgstr ""
+msgstr "Farba na zobrazenie pomeru zdieľania nad minimálnou dobrou hodnotou."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
-msgstr ""
+msgstr "Obnoviť predvolené hodnoty farieb (ostatné nastavenia sa nezmenia)."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
@@ -2623,16 +2635,16 @@ msgstr "Ikona v systémovej časti panelu"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
-#, fuzzy, kde-format
-#| msgid "Whether or not to show an icon in the system tray."
+#, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
-msgstr "Zobraziť alebo nezobraziť ikonu v systémovej oblasti panelu."
+msgstr ""
+"Či sa má alebo nemá vždy minimalizovať do systémového panela pri spustení."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr ""
+msgstr "Vždy minimalizovať do systémového panela pri spustení"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -2676,20 +2688,20 @@ msgstr "Otvárať všetky torrenty potichu"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:149
-#, fuzzy, kde-format
-#| msgid ""
-#| "Prevent computer from going into a sleep state when torrents are running."
+#, kde-format
 msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
-msgstr "Zabrániť počítaču prejsť do režimu spánku počas behu torrentov."
+msgstr ""
+"Zabrániť prechodu počítača do stavu spánku alebo uzamknutiu obrazovky, keď "
+"sú spustené torrenty."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
-#, fuzzy, kde-format
-#| msgid "Suppress sleep when torrents are running"
+#, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr "Zakázať uspanie, keď torrenty bežia"
+msgstr ""
+"Potlačiť uspanie a automatické uzamykanie obrazovky, keď sú spustené torrenty"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -4655,7 +4667,7 @@ msgstr "Rýchlosť odosielania (v kb/s):"
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr ""
+msgstr "Vždy minimalizovať do systémového panela pri spustení."
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
@@ -6021,7 +6033,7 @@ msgstr "Kopírovať URL Trackera"
 #: plugins/infowidget/trackerview.cpp:64
 #, kde-format
 msgid "Copy Tracker status"
-msgstr "Kopírovať status Trackera"
+msgstr "Kopírovať stav trackera"
 
 #: plugins/infowidget/trackerview.cpp:115
 #, kde-format
