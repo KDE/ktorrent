@@ -1486,7 +1486,7 @@ msgstr "سيل.ك"
 #, fuzzy, kde-format
 #| msgid "Bittorrent client for KDE"
 msgid "Bittorrent client by KDE"
-msgstr "عميل بِت‌تورنت لِكدي"
+msgstr "عميل بِت‌تورنت لِكِيدِي"
 
 #: ktorrent/main.cpp:105
 #, fuzzy, kde-format
@@ -2898,13 +2898,13 @@ msgstr "HTTP"
 #: ktorrent/pref/proxypref.ui:23
 #, kde-format
 msgid "Use the HTTP proxy settings configured in the settings of KDE."
-msgstr "استخدم إعدادات وسيط HTTP المضبوطة في إعدادات كدي."
+msgstr "استخدم إعدادات وسيط HTTP المضبوطة في إعدادات كِيدِي."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKDEProxySettings)
 #: ktorrent/pref/proxypref.ui:26
 #, kde-format
 msgid "Use KDE proxy settings"
-msgstr "استخدم إعدادات وسيط كدي"
+msgstr "استخدم إعدادات وسيط كِيدِي"
 
 #. i18n: ectx: property (text), widget (QLabel, label_10)
 #: ktorrent/pref/proxypref.ui:35
@@ -6947,7 +6947,7 @@ msgstr "محرّك البحث الحالي"
 #, fuzzy, kde-format
 #| msgid "Use KDE proxy settings"
 msgid "Use proxy settings for search"
-msgstr "استخدم إعدادات وسيط كدي"
+msgstr "استخدم إعدادات وسيط كِيدِي"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useDefaultBrowser)
 #. i18n: ectx: label, entry (useDefaultBrowser), group (general)
@@ -7621,7 +7621,7 @@ msgstr "أصلي"
 #: plugins/stats/DisplaySettings.ui:945
 #, kde-format
 msgid "KDE"
-msgstr "كدي"
+msgstr "كِيدِي"
 
 #. i18n: ectx: property (text), widget (QLabel, label_33)
 #: plugins/stats/DisplaySettings.ui:953
@@ -8992,15 +8992,16 @@ msgstr "ZeroConf"
 #~ msgid_plural ""
 #~ "KTorrent has found %1 torrents from the KDE3 version of KTorrent, do you "
 #~ "want to import them?"
-#~ msgstr[0] "لم يجد سيل.ك أيّ سيل من إصدار كدي3 لِسيل.ك، لا داعٍ للاستيراد صحيح؟"
-#~ msgstr[1] "وجد سيل.ك سيل واحد من إصدار كدي3 لِسيل.ك، هل تريد استيراده؟"
-#~ msgstr[2] "وجد سيل.ك سيلان من إصدار كدي3 لِسيل.ك، هل تريد استيرادهما؟"
-#~ msgstr[3] "وجد سيل.ك %1 سيول من إصدار كدي3 لِسيل.ك، هل تريد استيرادها؟"
-#~ msgstr[4] "وجد سيل.ك %1 سيلًا من إصدار كدي3 لِسيل.ك، هل تريد استيرادها؟"
-#~ msgstr[5] "وجد سيل.ك %1 سيل من إصدار كدي3 لِسيل.ك، هل تريد استيرادها؟"
+#~ msgstr[0] ""
+#~ "لم يجد سيل.ك أيّ سيل من إصدار كِيدِي3 لِسيل.ك، لا داعٍ للاستيراد صحيح؟"
+#~ msgstr[1] "وجد سيل.ك سيل واحد من إصدار كِيدِي3 لِسيل.ك، هل تريد استيراده؟"
+#~ msgstr[2] "وجد سيل.ك سيلان من إصدار كِيدِي3 لِسيل.ك، هل تريد استيرادهما؟"
+#~ msgstr[3] "وجد سيل.ك %1 سيول من إصدار كِيدِي3 لِسيل.ك، هل تريد استيرادها؟"
+#~ msgstr[4] "وجد سيل.ك %1 سيلًا من إصدار كِيدِي3 لِسيل.ك، هل تريد استيرادها؟"
+#~ msgstr[5] "وجد سيل.ك %1 سيل من إصدار كِيدِي3 لِسيل.ك، هل تريد استيرادها؟"
 
 #~ msgid "No torrents from the KDE3 version were found."
-#~ msgstr "لم تُعثر على سيول من إصدار كدي3."
+#~ msgstr "لم تُعثر على سيول من إصدار كِيدِي3."
 
 #~ msgid "Importing 1 torrent ..."
 #~ msgid_plural "Importing %1 torrents ..."
@@ -9033,13 +9034,13 @@ msgstr "ZeroConf"
 #~ msgstr "يستورد..."
 
 #~ msgid "Importing torrents from KDE3 version:"
-#~ msgstr "يستورد السيول من إصدار كدي3:"
+#~ msgstr "يستورد السيول من إصدار كِيدِي3:"
 
 #~ msgid "Import KDE3 Torrents"
-#~ msgstr "استورد سيول كدي3"
+#~ msgstr "استورد سيول كِيدِي3"
 
 #~ msgid "Import all torrents from the KDE3 version of KTorrent"
-#~ msgstr "استورد كل السيول من إصدار كدي3 لِـسيل.ك"
+#~ msgstr "استورد كل السيول من إصدار كِيدِي3 لِـسيل.ك"
 
 #, fuzzy
 #~ msgid "Current speed"
@@ -10965,7 +10966,7 @@ msgstr "ZeroConf"
 #~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
 #~ "font-weight:400; font-style:normal;\">\n"
 #~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"> بدلا من ذلك من كدي "
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"> بدلا من ذلك من كِيدِي "
 #~ "وكيل\n"
 #~ "مفوض خصائص استخدام HTTP وكيل\n"
 #~ "مفوض أسفل</p></body></html>"
@@ -11837,7 +11838,7 @@ msgstr "ZeroConf"
 #~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
 #~ "font-weight:400; font-style:normal;\">\n"
 #~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"> بدلا من ذلك من كدي "
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"> بدلا من ذلك من كِيدِي "
 #~ "وكيل\n"
 #~ "مفوض خصائص استخدام HTTP وكيل\n"
 #~ "مفوض أسفل</p></body></html>"
