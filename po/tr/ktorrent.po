@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-12-31 00:43+0000\n"
-"PO-Revision-Date: 2023-02-07 19:15+0300\n"
+"PO-Revision-Date: 2023-03-07 20:38+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1320,12 +1320,12 @@ msgstr "Hiçbir soru sormadan bir torrent aç"
 #: ktorrent/gui.cpp:374
 #, kde-format
 msgid "Open URL"
-msgstr "Adres Aç"
+msgstr "URL Aç"
 
 #: ktorrent/gui.cpp:375
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
-msgstr "Bir torrente işaret eden adresi aç, mıknatıs bağlantıları desteklenir"
+msgstr "Bir torrente işaret eden URL'yi aç, mıknatıs bağlantıları desteklenir"
 
 #: ktorrent/gui.cpp:380 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
@@ -2009,7 +2009,7 @@ msgstr "Standart çıktıya günlük göstermeyi etkinleştir"
 #: ktorrent/main.cpp:177
 #, kde-format
 msgid "Silently open torrent given on URL"
-msgstr "Adreste verilen torrenti sessizce açar"
+msgstr "URL'de verilen torrenti sessizce açar"
 
 #: ktorrent/main.cpp:178
 #, kde-format
@@ -4185,7 +4185,7 @@ msgstr "Bir torrentin tüm verisini denetle"
 #: ktorrent/view/view.cpp:247
 #, kde-format
 msgid "Copy Torrent URL"
-msgstr "Torrent Adresini Kopyala"
+msgstr "Torrent URL'sini Kopyala"
 
 #: ktorrent/view/view.cpp:251
 #, kde-format
@@ -4414,7 +4414,7 @@ msgstr "Torrent ne zaman eklendi"
 #: ktorrent/view/viewmodel.cpp:547
 #, kde-format
 msgid "%1<br>Url: <b>%2</b>"
-msgstr "%1<br>Adres: <b>%2</b>"
+msgstr "%1<br>URL: <b>%2</b>"
 
 #: ktorrent/view/viewmodel.cpp:553
 #, kde-format
@@ -6034,7 +6034,7 @@ msgstr "İzleyici durumunu kopyala"
 #: plugins/infowidget/trackerview.cpp:115
 #, kde-format
 msgid "Several URL's could not be added because they are malformed:"
-msgstr "Birçok bağlantı adresi bozuk olduğu için eklenemedi:"
+msgstr "Birçok bağlantı URL'si bozuk olduğu için eklenemedi:"
 
 #: plugins/infowidget/trackerview.cpp:129
 #, kde-format
@@ -6352,7 +6352,7 @@ msgstr "Sonraki güncelleme:"
 #: plugins/ipfilter/ktipfilterplugin.kcfg:10
 #, kde-format
 msgid "Level1 filter url"
-msgstr "Düzey1 süzgeç adresi"
+msgstr "Düzey1 süzgeç URL'si"
 
 #. i18n: ectx: label, entry (useLevel1), group (general)
 #: plugins/ipfilter/ktipfilterplugin.kcfg:14
@@ -6612,13 +6612,13 @@ msgstr "Nasıl izleyici ekleneceğini tanımla"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:53
 #, kde-format
 msgid "Add a custom tracker URL"
-msgstr "Özel bir izleyici bağlantı adresi ekle"
+msgstr "Özel bir izleyici URL'si ekle"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_tr)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:60
 #, kde-format
 msgid "The tracker URL that will be a part of the magnet link"
-msgstr "İzleyici bağlantı adresi, mıknatıs bağlantısının parçası olacaktır"
+msgstr "İzleyici URL'si, mıknatıs bağlantısının parçası olacaktır"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_dn)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:67
@@ -7085,7 +7085,7 @@ msgstr "%1 ayrıştırılamıyor"
 #: plugins/search/searchenginelist.cpp:314
 #, kde-format
 msgid "URL: <b>%1</b>"
-msgstr "Adres: <b>%1</b>"
+msgstr "URL: <b>%1</b>"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SearchPref)
 #: plugins/search/searchpref.ui:26
@@ -7236,14 +7236,14 @@ msgid ""
 "manually. The URL should contain {searchTerms}, ktorrent will replace this "
 "by the thing you are searching for."
 msgstr ""
-"Açıkarama %1 tarafından desteklenmiyor, arama adresini el ile girmeniz "
-"gerekecek. Adres {searchTerms} içermeli, ktorrent bunu aradığınız şeyle "
+"Opensearch %1 tarafından desteklenmiyor, arama URL'sini el ile girmeniz "
+"gerekecek. URL, {searchTerms} içermeli, ktorrent bunu aradığınız şeyle "
 "değiştirecektir."
 
 #: plugins/search/searchprefpage.cpp:128
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
-msgstr "%1 adresi {searchTerms} içermiyor."
+msgstr "%1 URL'si. {searchTerms} içermiyor."
 
 #: plugins/search/searchtoolbar.cpp:58
 #, kde-format
@@ -8672,12 +8672,12 @@ msgstr "RSS ve Atom kaynaklarını yönetir"
 #: plugins/syndication/syndicationactivity.cpp:108
 #, kde-format
 msgid "Enter the URL"
-msgstr "Adresi Gir"
+msgstr "URL'yi gir"
 
 #: plugins/syndication/syndicationactivity.cpp:109
 #, kde-format
 msgid "Please enter the URL of the RSS or Atom feed."
-msgstr "Lütfen RSS ya da Atom adresini girin."
+msgstr "Lütfen RSS ya da Atom URL'sini girin."
 
 #: plugins/syndication/syndicationactivity.cpp:133
 #, kde-format
