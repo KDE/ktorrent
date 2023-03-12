@@ -447,8 +447,7 @@ void GUI::loadState(KSharedConfigPtr cfg)
     menuBar()->setHidden(menubar_hidden);
     show_menu_bar_action->setChecked(!menubar_hidden);
 
-    bool hidden_on_exit = g.readEntry("hidden_on_exit", false);
-    bool minimize_to_system_tray = Settings::alwaysMinimizeToSystemTray() || hidden_on_exit;
+    bool minimize_to_system_tray = Settings::alwaysMinimizeToSystemTray();
     if (Settings::showSystemTrayIcon() && minimize_to_system_tray) {
         Out(SYS_GEN | LOG_DEBUG) << "Starting minimized" << endl;
         hide();
@@ -465,7 +464,6 @@ void GUI::saveState(KSharedConfigPtr cfg)
     saveMainWindowSettings(g);
     g.writeEntry("statusbar_hidden", status_bar->isHidden());
     g.writeEntry("menubar_hidden", menuBar()->isHidden());
-    g.writeEntry("hidden_on_exit", isHidden());
     torrent_activity->saveState(cfg);
     central->saveState(cfg);
     if (pref_dlg)
