@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-15 00:47+0000\n"
-"PO-Revision-Date: 2023-03-07 20:38+0300\n"
+"PO-Revision-Date: 2023-03-21 15:18+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -80,8 +80,8 @@ msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
 "they need to be mounted."
 msgstr ""
-"Bir veya daha fazla depolama birimi bağlı değil. Bu torrentin başlatılması "
-"için bağlanmaları gereklidir."
+"Bir veya daha fazla depolama disk bölümü bağlı değil. Bu torrentin "
+"başlatılması için bağlanmaları gereklidir."
 
 #: ktorrent/core.cpp:1028
 #, kde-format
@@ -91,12 +91,12 @@ msgstr "Yeniden Dene"
 #: ktorrent/core.cpp:1034
 #, kde-format
 msgid "Storage volume %1 is not mounted"
-msgstr "%1 depolama birimi bağlı değil"
+msgstr "%1 depolama disk bölümü bağlı değil"
 
 #: ktorrent/core.cpp:1036
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
-msgstr "%1 depolama birimleri bağlı değil"
+msgstr "%1 depolama disk bölümleri bağlı değil"
 
 #: ktorrent/core.cpp:1047
 #, kde-format
