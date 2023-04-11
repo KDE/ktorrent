@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-15 00:47+0000\n"
-"PO-Revision-Date: 2023-04-07 10:09+0100\n"
+"PO-Revision-Date: 2023-04-10 12:21+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -180,8 +180,8 @@ msgid ""
 msgstr ""
 "<p>La IP-adreso aŭ gastiga nomo de la kundividanto al kiu vi volas "
 "konektiĝi, devus esti metita ĉi tie.</p>\n"
-"<p><span style=\" font-weight:600;\">Noto:</p> span> Ni akceptas ambaŭ "
-"adresojn IPv4 kaj IPv6</p>\n"
+"<p><span style=\" font-weight:600;\">Noto:</span> Ni akceptas ambaŭ adresojn "
+"IPv4 kaj IPv6</p>\n"
 
 #. i18n: ectx: property (text), widget (QLineEdit, m_ip)
 #. i18n: ectx: property (text), widget (QLineEdit, m_ip_to_add)
@@ -5459,7 +5459,11 @@ msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] ""
+"Vi perdos ĉiujn datumojn en ĉi tiu dosiero, ĉu vi certas ke vi volas fari "
+"tion?"
 msgstr[1] ""
+"Vi perdos ĉiujn datumojn en ĉi tiuj dosieroj, ĉu vi certas ke vi volas fari "
+"tion?"
 
 #: plugins/infowidget/fileview.cpp:446
 #, kde-format
