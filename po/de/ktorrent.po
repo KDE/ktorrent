@@ -6,14 +6,14 @@
 # Panagiotis Papadopoulos <pano_90@gmx.net>, 2009, 2010.
 # Burkhard Lück <lueck@hube-lueck.de>, 2009, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021.
 # Markus Slopianka <markus.s@kdemail.net>, 2009, 2010.
-# Frederik Schwarzer <schwarzer@kde.org>, 2010, 2011, 2012, 2014, 2016, 2022.
+# Frederik Schwarzer <schwarzer@kde.org>, 2010, 2011, 2012, 2014, 2016, 2022, 2023.
 # Torbjörn Klatt <torbjoern.k@googlemail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-15 00:47+0000\n"
-"PO-Revision-Date: 2022-07-02 12:30+0200\n"
+"PO-Revision-Date: 2023-04-18 22:41+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.04.1\n"
+"X-Generator: Lokalize 22.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2663,7 +2663,7 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr ""
+msgstr "Beim Start immer in den Systemabschnitt der Kontrollleiste minimieren"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -4721,7 +4721,7 @@ msgstr "Upload-Bandbreite (in kb/s):"
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr ""
+msgstr "Beim Start immer in den Systemabschnitt der Kontrollleiste minimieren."
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
