@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-15 00:47+0000\n"
-"PO-Revision-Date: 2023-04-21 12:11+0300\n"
+"PO-Revision-Date: 2023-05-08 11:27+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -43,7 +43,7 @@ msgid ""
 "KTorrent is unable to accept connections because the TCP port %1 is already "
 "in use by another program."
 msgstr ""
-"%1 TCP kapısı başka bir uygulama tarafından kullanıldıgı için KTorrent "
+"%1 TCP kapısı başka bir uygulama tarafından kullanıldıgı için K Torrent "
 "bağlantıları kabul edemiyor."
 
 #: ktorrent/core.cpp:153
@@ -52,7 +52,7 @@ msgid ""
 "KTorrent is unable to accept connections because the UDP port %1 is already "
 "in use by another program."
 msgstr ""
-"%1 UDP kapısı başka bir uygulama tarafından kullanıldıgı için KTorrent "
+"%1 UDP kapısı başka bir uygulama tarafından kullanıldıgı için K Torrent "
 "bağlantıları kabul edemiyor."
 
 #: ktorrent/core.cpp:251
@@ -67,7 +67,7 @@ msgstr ""
 #: ktorrent/core.cpp:846
 #, kde-format
 msgid "KTorrent is running one or more torrents"
-msgstr "KTorrent bir veya daha fazla torrenti çalıştırıyor"
+msgstr "K Torrent bir veya daha fazla torrenti çalıştırıyor"
 
 #: ktorrent/core.cpp:931
 #, kde-format
@@ -1352,7 +1352,7 @@ msgstr "İçe bir torrent aktar"
 #: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Show/Hide KTorrent"
-msgstr "KTorrent'i Göster/Gizle"
+msgstr "K Torrent'i Göster/Gizle"
 
 #: ktorrent/gui.cpp:411
 #, kde-format
@@ -1394,7 +1394,7 @@ msgstr "Kaydetmek için bir dosya adı seçin"
 #: ktorrent/ipfilterwidget.ui:14
 #, kde-format
 msgid "KTorrent Blacklisted Peers"
-msgstr "KTorrent Kara Listesindeki Eşler"
+msgstr "K Torrent Kara Listesindeki Eşler"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/ipfilterwidget.ui:22
@@ -1508,7 +1508,7 @@ msgstr "Sütunlar"
 #, kde-format
 msgctxt "@title"
 msgid "KTorrent"
-msgstr "KTorrent"
+msgstr "K Torrent"
 
 #: ktorrent/main.cpp:102
 #, kde-format
@@ -2585,7 +2585,7 @@ msgid ""
 "Directory to store information about all torrents currently opened in "
 "KTorrent."
 msgstr ""
-"KTorrent içinde şu anda açık olan tüm torrentler hakkındaki bilginin "
+"K Torrent içinde şu anda açık olan tüm torrentler hakkındaki bilginin "
 "depolanacağı dizin."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useSaveDir)
@@ -2614,7 +2614,7 @@ msgstr "Tamamlanmış indirmeleri buraya taşı:"
 #, kde-format
 msgid "Directory to copy all torrent files in, which are opened by KTorrent."
 msgstr ""
-"KTorrent tarafından açılan tüm torrent dosyalarının kopyalanacağı dizin."
+"K Torrent tarafından açılan tüm torrent dosyalarının kopyalanacağı dizin."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useTorrentCopyDir)
 #: ktorrent/pref/generalpref.ui:74
@@ -2952,7 +2952,7 @@ msgid ""
 "Let KTorrent calculate the recommended settings based upon the bandwidth you "
 "have available."
 msgstr ""
-"KTorrent'in sahip olduğunuz bant genişliğinize dayanarak tavsiye edilen "
+"K Torrent'in sahip olduğunuz bant genişliğinize dayanarak tavsiye edilen "
 "ayarları hesaplamasına izin verin."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
@@ -3829,7 +3829,7 @@ msgstr[1] "%1 torrentten fazlası indirilemez. <br>"
 #, kde-format
 msgid "Go to Settings -> Configure KTorrent, if you want to change the limits."
 msgstr ""
-"Limitleri değiştirmek istiyorsanız Ayarlar -> KTorrent'i Yapılandır "
+"Limitleri değiştirmek istiyorsanız Ayarlar -> K Torrent'i Yapılandır "
 "seçeneğini seçin."
 
 #: ktorrent/trayicon.cpp:294
@@ -4429,7 +4429,7 @@ msgstr "KTUPnP Testi"
 #: ktupnptest/main.cpp:27
 #, kde-format
 msgid "KTorrent's UPnP test application"
-msgstr "KTorrent'in UPnP Test Uygulaması"
+msgstr "K Torrent'in UPnP Test Uygulaması"
 
 #: ktupnptest/main.cpp:29
 #, kde-format
@@ -4751,7 +4751,7 @@ msgstr "Karşıya yükleme yuvası sayısı"
 #: libktcore/ktorrent.kcfg:182
 #, kde-format
 msgid "Columns shown in KTorrentView"
-msgstr "KTorrentGöstericisi tarafından gösterilen sütunlar"
+msgstr "K TorrentGöstericisi tarafından gösterilen sütunlar"
 
 #. i18n: ectx: label, entry (minDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:233
@@ -5109,7 +5109,7 @@ msgstr "%1 dosyası açılamıyor: %2"
 #: plugins/bwscheduler/schedule.cpp:127 plugins/bwscheduler/schedule.cpp:132
 #, kde-format
 msgid "The file %1 is corrupted or not a proper KTorrent schedule file."
-msgstr "%1 dosyası bozuk ya da düzgün bir KTorrent zamanlayıcı dosyası değil."
+msgstr "%1 dosyası bozuk ya da düzgün bir K Torrent zamanlayıcı dosyası değil."
 
 #: plugins/bwscheduler/scheduleeditor.cpp:30
 #, kde-format
@@ -5894,7 +5894,7 @@ msgstr "Eşte DHT'nin etkin olup olmadığı"
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
-"Paylaşımcının puanı; KTorrent, bunu kime yükleyeceğini belirlemek için "
+"Paylaşımcının puanı; K Torrent, bunu kime yükleyeceğini belirlemek için "
 "kullanır"
 
 #: plugins/infowidget/peerviewmodel.cpp:350
@@ -6151,7 +6151,7 @@ msgstr "Dönüştürülüyor..."
 #, kde-format
 msgid "Converting block list to KTorrent format. This might take some time."
 msgstr ""
-"Engel listesi KTorrent biçimine dönüştürülüyor. İşlem biraz zaman alabilir."
+"Engel listesi K Torrent biçimine dönüştürülüyor. İşlem biraz zaman alabilir."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: plugins/ipfilter/convertdialog.ui:95
@@ -6514,7 +6514,7 @@ msgstr "Günlük Kaydı"
 #: plugins/logviewer/logviewer.cpp:29
 #, kde-format
 msgid "View the logging output generated by KTorrent"
-msgstr "KTorrent tarafından oluşturulmuş günlük çıktısını göster"
+msgstr "K Torrent tarafından oluşturulmuş günlük çıktısını göster"
 
 #: plugins/logviewer/logviewer.cpp:39
 #, kde-format
@@ -6813,7 +6813,7 @@ msgstr "rastgele çalma düzeni"
 #: plugins/mediaplayer/videowidget.cpp:183
 #, kde-format
 msgid "KTorrent is playing a video."
-msgstr "KTorrent bir video oynatıyor."
+msgstr "K Torrent bir video oynatıyor."
 
 #. i18n: ectx: label, entry (openSilently), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:13
@@ -7294,7 +7294,7 @@ msgstr "Ana Klasör"
 #: plugins/search/webview.cpp:107
 #, kde-format
 msgid "KTorrent"
-msgstr "KTorrent"
+msgstr "K Torrent"
 
 #: plugins/search/webview.cpp:108
 #, kde-format
