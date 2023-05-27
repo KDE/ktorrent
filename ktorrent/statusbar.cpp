@@ -96,6 +96,7 @@ QProgressBar *StatusBar::createProgressBar()
 {
     QProgressBar *pb = new QProgressBar(this);
     pb->setMaximumHeight(height());
+    pb->setFormat(i18nc("Progress bar percentage label", "%p%"));
     addPermanentWidget(pb);
     return pb;
 }
