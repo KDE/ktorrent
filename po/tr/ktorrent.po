@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-15 00:47+0000\n"
-"PO-Revision-Date: 2023-05-08 11:27+0300\n"
+"PO-Revision-Date: 2023-05-28 02:04+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -105,7 +105,7 @@ msgid ""
 "Do you want to recreate them, or do you want to not download them?"
 msgstr ""
 "\"%1\" torrenti için bazı veri dosyaları eksik. \n"
-"Bu dosyaları yeniden oluşturmak mı yoksa yeniden indirmek mi istersiniz?"
+"Bu dosyaları yeniden oluşturmak mı yoksa yeniden indirmek mi istiyorsunuz?"
 
 #: ktorrent/core.cpp:1055 ktorrent/core.cpp:1063 ktorrent/core.cpp:1073
 #, kde-format
@@ -128,8 +128,8 @@ msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
 "Do you want to recreate it?"
 msgstr ""
-"\"%1\" torrenti için kaydedilmiş dosya kayıptır.\n"
-"Yeninden oluşturmak ister misiniz?"
+"\"%1\" torrenti için kaydedilmiş dosya kayıp.\n"
+"Yeniden oluşturmak istiyor musunuz?"
 
 #: ktorrent/core.cpp:1089 ktorrent/core.cpp:1096
 #, kde-format
@@ -257,9 +257,9 @@ msgid ""
 "directory. Do you want to import these files and use the completed downloads "
 "directory as the location?"
 msgstr ""
-"Bu torrentle gelen bazı dosyalar tamamlanmış indirmeler dizininde bulundu. "
-"Bu dosyaları almak ve konum olarak tamamlanmış indirmeler dizinini kullanmak "
-"ister misiniz?"
+"Bu torrentin bazı dosyaları tamamlanmış indirmeler dizininde bulundu. Bu "
+"dosyaları içe aktarmak ve konum olarak tamamlanmış indirmeler dizinini "
+"kullanmak istiyor musunuz?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:215
 #, kde-format
@@ -268,9 +268,9 @@ msgid ""
 "directory. Do you want to import these files and use the completed downloads "
 "directory as the location?"
 msgstr ""
-"Bu torrentle gelen tüm dosyalar tamamlanmış indirmeler dizininde bulundu. Bu "
-"dosyaları almak ve konum olarak tamamlanmış indirmeler dizinini kullanmak "
-"ister misiniz?"
+"Bu torrentin tüm dosyaları tamamlanmış indirmeler dizininde bulundu. Bu "
+"dosyaları içe aktarmak ve konum olarak tamamlanmış indirmeler dizinini "
+"kullanmak istiyor musunuz?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:218
 #, kde-format
@@ -278,14 +278,14 @@ msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
 "want to import this file?"
 msgstr ""
-"<b>%1</b> dosyası tamamlanmış indirmeler dizininde bulundu. Bu dosyayı almak "
-"istiyor musunuz?"
+"<b>%1</b> dosyası tamamlanmış indirmeler dizininde bulundu. Bu dosyayı içe "
+"aktarmak istiyor musunuz?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:230
 #: ktorrent/dialogs/fileselectdlg.cpp:243
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
-msgstr "%1 dizini yok, oluşturmak ister misiniz?"
+msgstr "%1 dizini yok, oluşturmak istiyor musunuz?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:270
 #, kde-format
@@ -315,7 +315,7 @@ msgid ""
 msgstr ""
 "<b>%1</b> torrentini açmak aşağıdaki torrentlerden bir veya daha fazla "
 "dosyayı paylaşacaktır. Torrentler aynı dosyalara yazamazlar. Lütfen başka "
-"bir konum seçiniz."
+"bir konum seçin."
 
 #: ktorrent/dialogs/fileselectdlg.cpp:397 ktorrent/dialogs/pastedialog.cpp:61
 #: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
@@ -352,7 +352,7 @@ msgstr "Var olan dosyalar: <b>Tümü</b>"
 #: ktorrent/dialogs/fileselectdlg.cpp:512
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
-msgstr "Var olan dosya: <b>%2</b> dosyanın <b>%1</b> kadarı"
+msgstr "Var olan dosyalar: <b>%1</b>/<b>%2</b>"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:516
 #, kde-format
@@ -624,8 +624,8 @@ msgid ""
 "The data files are not present in the location you selected. Do you want to "
 "create all the files in the selected directory?"
 msgstr ""
-"Veri dosyaları seçtiğiniz konumda değil. Tüm dosyaları seçili dizinde "
-"oluşturmak ister misiniz?"
+"Veri dosyaları seçtiğiniz konumda değil. Seçili dizinde tüm dosyaları "
+"oluşturmak istiyor musunuz?"
 
 #: ktorrent/dialogs/missingfilesdlg.cpp:91
 #, kde-format
@@ -642,8 +642,8 @@ msgid ""
 "The data file is not present in the location you selected. Do you want to "
 "create the file in the selected directory?"
 msgstr ""
-"Veri dosyası seçtiğiniz konumda değil. Dosyayı seçili dizinde oluşturmak "
-"ister misiniz?"
+"Veri dosyası seçtiğiniz konumda değil. Seçili dizinde dosyayı oluşturmak "
+"istiyor musunuz?"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, MissingFilesDlg)
 #: ktorrent/dialogs/missingfilesdlg.ui:14
@@ -1167,10 +1167,10 @@ msgid ""
 "the move when completed location in the dialog will be set to this. You can "
 "still override it, if you want to."
 msgstr ""
-"Bu gruptan olan torrentlerin tamamlandıklarında taşınacağı konum. <br/><br/> "
-"Bu, yalnızca dosya seçim penceresinde kullanılır. Grup değiştirildiğinde "
-"pencere içerisindeki indirme konumu bu konum olarak ayarlanır. Eğer "
-"isterseniz bunu yine de değiştirebilirsiniz."
+"Bu gruptan olan torrentlerin tamamlandıklarında taşınacağı konum. <br/><br/"
+">Bu, yalnızca dosya seçim penceresinde kullanılır. Grup değiştirildiğinde "
+"pencere içindeki indirme konumu bu konum olarak ayarlanır. Eğer isterseniz "
+"bunu yine de değiştirebilirsiniz."
 
 #. i18n: ectx: property (toolTip), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:63
@@ -1347,7 +1347,7 @@ msgstr "Torrent İçe Aktar"
 #: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Import a torrent"
-msgstr "İçe bir torrent aktar"
+msgstr "Bir torrenti içe aktar"
 
 #: ktorrent/gui.cpp:393
 #, kde-format
@@ -1357,7 +1357,7 @@ msgstr "K Torrent'i Göster/Gizle"
 #: ktorrent/gui.cpp:411
 #, kde-format
 msgid "D: %1 | U: %2"
-msgstr "İ: %1 | G: %2"
+msgstr "İ: %1 | Y: %2"
 
 #: ktorrent/ipfilterwidget.cpp:39
 #, kde-format
@@ -3785,8 +3785,7 @@ msgid ""
 "Corrupted data has been found in the torrent <b>%1</b><br>It would be a good "
 "idea to do a data integrity check on the torrent."
 msgstr ""
-"Torrent <b>%1</b><br> içinde kötü veriler bulundu. Veri denetlemesi "
-"önerilmektedir."
+"Torrent <b>%1</b><br> içinde kötü veri bulundu. Veri denetimi önerilir."
 
 #: ktorrent/trayicon.cpp:262
 #, kde-format
@@ -4203,8 +4202,8 @@ msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
 "the incomplete data, too?"
 msgstr ""
-"<b>%1</b> torrenti tamamen indirilmemiş. Yarım kalmış verileri silmek ister "
-"misiniz?"
+"<b>%1</b> torrenti tamamen indirilmemiş. Yarım kalmış verileri silmek "
+"istiyor musunuz?"
 
 #: ktorrent/view/view.cpp:455
 #, kde-format
@@ -4862,8 +4861,8 @@ msgid ""
 "Not enough disk space for the following torrents. Do you want to start them "
 "anyway?"
 msgstr ""
-"Aşağıdaki torrentler için yeterli disk alanı yok. Yine de başlatmak ister "
-"misiniz?"
+"Aşağıdaki torrentler için yeterli disk alanı yok. Yine de başlatmak istiyor "
+"musunuz?"
 
 #: libktcore/torrent/queuemanager.cpp:248
 #, kde-format
@@ -4871,7 +4870,7 @@ msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
 "start them anyway?"
 msgstr ""
-"Bu torrentler en yüksek besleme sürelerine ulaşmışlardır. Yine de bunları "
+"Bu torrentler en yüksek besleme sürelerine ulaştılar. Yine de bunları "
 "başlatmak istiyor musunuz?"
 
 #: libktcore/torrent/queuemanager.cpp:274
@@ -4880,7 +4879,7 @@ msgid ""
 "The following torrents have reached their maximum share ratio. Do you want "
 "to start them anyway?"
 msgstr ""
-"Bu torrentler maksimum paylaşım oranına ulaşmışlardır. Yine de bunları "
+"Bu torrentler en yüksek paylaşım oranına ulaştılar. Yine de bunları "
 "başlatmak istiyor musunuz?"
 
 #: libktcore/torrent/queuemanager.cpp:687
@@ -5545,7 +5544,7 @@ msgstr "Önizleme"
 #, kde-format
 msgctxt "Percent of File Downloaded"
 msgid "% Complete"
-msgstr "% Tamamlandı"
+msgstr "Tamamlanan %"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:77
 #: plugins/infowidget/iwfiletreemodel.cpp:87
@@ -5600,7 +5599,7 @@ msgstr "Hayır"
 #: plugins/infowidget/iwfiletreemodel.cpp:177
 #, kde-format
 msgid "%1 %"
-msgstr "% %1"
+msgstr "%​%1"
 
 #: plugins/infowidget/iwfiletreemodel.cpp:96
 #, kde-format
@@ -6691,7 +6690,7 @@ msgstr "Bekletiliyor"
 #: plugins/mediaplayer/mediamodel.cpp:71
 #, kde-format
 msgid "<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %"
-msgstr "<b>%1</b><br/>Önizleme: %2<br/>İndirilen: %3 %"
+msgstr "<b>%1</b><br/>Önizleme: %2<br/>İndirilen: %​%3"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:39
 #: plugins/mediaplayer/mediaplayeractivity.cpp:56
@@ -6825,13 +6824,13 @@ msgstr "Torrentin sessiz açılıp açılmayacağı."
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:18
 #, kde-format
 msgid "Delete action checked."
-msgstr "Seçilen davranışı sil."
+msgstr "Seçili davranışı silin."
 
 #. i18n: ectx: label, entry (actionMove), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:23
 #, kde-format
 msgid "Move action checked."
-msgstr "Seçilen davranışı taşı."
+msgstr "Seçili davranışı taşıyın."
 
 #. i18n: ectx: label, entry (recursive), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:28
@@ -7187,7 +7186,7 @@ msgstr "Yeni bir arama motoru ekle."
 #: plugins/search/searchpref.ui:177
 #, kde-format
 msgid "Remove all selected search engines."
-msgstr "Seçilen tüm arama motorlarını kaldır."
+msgstr "Seçili tüm arama motorlarını kaldırın."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove)
 #: plugins/search/searchpref.ui:180
