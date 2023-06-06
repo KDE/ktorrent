@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-15 00:47+0000\n"
+"POT-Creation-Date: 2023-06-06 00:46+0000\n"
 "PO-Revision-Date: 2022-11-26 14:47+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -230,7 +230,7 @@ msgstr "Añadir"
 #. i18n: ectx: property (text), widget (QPushButton, close_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_close)
 #: ktorrent/dialogs/addpeersdlg.ui:116 ktorrent/ipfilterwidget.ui:106
-#: ktorrent/view/scanextender.ui:221
+#: ktorrent/view/scanextender.ui:224
 #, kde-format
 msgid "Close"
 msgstr "Cerrar"
@@ -586,37 +586,49 @@ msgid "Failed to create %1: %2"
 msgstr "Ha fallado al crear %1: %2"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ImportDialog)
-#: ktorrent/dialogs/importdialog.ui:13
+#: ktorrent/dialogs/importdialog.ui:14
 #, kde-format
 msgid "Import an existing torrent"
 msgstr "Importar un torrent existente"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ktorrent/dialogs/importdialog.ui:29
+#: ktorrent/dialogs/importdialog.ui:30
 #, kde-format
 msgid "Torrent:"
 msgstr "Torrent:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ktorrent/dialogs/importdialog.ui:45
+#: ktorrent/dialogs/importdialog.ui:46
 #, kde-format
 msgid "Data:"
 msgstr "Datos:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ktorrent/dialogs/importdialog.ui:69
+#: ktorrent/dialogs/importdialog.ui:70
 #, kde-format
 msgid "Select the torrent file and the data which belongs with it."
 msgstr "Seleccione el archivo torrent y los datos que le pertenezcan."
 
+#. i18n: ectx: property (format), widget (QProgressBar, progress_bar)
+#. i18n: ectx: property (format), widget (QProgressBar, m_progress)
+#. i18n: ectx: property (format), widget (QProgressBar, progress)
+#. i18n: ectx: property (format), widget (QProgressBar, m_progress_bar)
+#: ktorrent/dialogs/importdialog.ui:80
+#: ktorrent/dialogs/torrentcreatordlg.ui:399 ktorrent/view/scanextender.ui:210
+#: libktcore/torrent/basicjobprogresswidget.ui:43
+#: plugins/ipfilter/convertdialog.ui:64
+#, no-c-format, kde-format
+msgid "%p%"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
-#: ktorrent/dialogs/importdialog.ui:108
+#: ktorrent/dialogs/importdialog.ui:112
 #, kde-format
 msgid "&Import"
 msgstr "&Importar"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel_btn)
-#: ktorrent/dialogs/importdialog.ui:115
+#: ktorrent/dialogs/importdialog.ui:119
 #, kde-format
 msgid "Ca&ncel"
 msgstr "Ca&ncelar"
@@ -714,7 +726,7 @@ msgstr "Cancelar, no iniciar el torrent."
 
 #. i18n: ectx: property (text), widget (QPushButton, cancel_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
-#: ktorrent/dialogs/missingfilesdlg.ui:80 ktorrent/view/scanextender.ui:214
+#: ktorrent/dialogs/missingfilesdlg.ui:80 ktorrent/view/scanextender.ui:217
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
 #, kde-format
 msgid "Cancel"
@@ -3528,6 +3540,12 @@ msgstr[1] "%1 tareas"
 msgid "DHT: %1, %2"
 msgstr "DHT: %1, %2"
 
+#: ktorrent/statusbar.cpp:99
+#, kde-format
+msgctxt "Progress bar percentage label"
+msgid "%p%"
+msgstr ""
+
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format
 msgid "The desktop is offline"
@@ -4088,7 +4106,7 @@ msgid "The number of chunks which have been downloaded, and which are OK."
 msgstr "El número de trozos que se han descargado, y que son correctos."
 
 #. i18n: ectx: property (text), widget (QLabel, error_msg)
-#: ktorrent/view/scanextender.ui:230
+#: ktorrent/view/scanextender.ui:233
 #, kde-format
 msgid "Errors:"
 msgstr "Errores:"
@@ -6215,13 +6233,13 @@ msgid "Disable All"
 msgstr "Desactivar todo"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
-#: plugins/ipfilter/convertdialog.ui:19 plugins/ipfilter/convertthread.cpp:146
+#: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
 #, kde-format
 msgid "Converting..."
 msgstr "Convirtiendo..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: plugins/ipfilter/convertdialog.ui:28
+#: plugins/ipfilter/convertdialog.ui:29
 #, kde-format
 msgid "Converting block list to KTorrent format. This might take some time."
 msgstr ""
@@ -6229,7 +6247,7 @@ msgstr ""
 "algún tiempo."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
-#: plugins/ipfilter/convertdialog.ui:95
+#: plugins/ipfilter/convertdialog.ui:99
 #, kde-format
 msgid "C&ancel"
 msgstr "C&ancelar"
