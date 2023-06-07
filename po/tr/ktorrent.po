@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-06 00:46+0000\n"
-"PO-Revision-Date: 2023-06-04 01:21+0300\n"
+"PO-Revision-Date: 2023-06-06 05:25+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -610,7 +610,7 @@ msgstr "Veriyi ve ait olduğu torrent dosyasını seçin."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%​%p"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -3493,7 +3493,7 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%​%p"
 
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format

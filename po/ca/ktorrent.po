@@ -1,7 +1,7 @@
 # Translation of ktorrent.po to Catalan
-# Copyright (C) 2006-2022 This_file_is_part_of_KDE
+# Copyright (C) 2006-2023 This_file_is_part_of_KDE
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2006, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2006, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Xavier Batlle Pelach <tevi@eltercer.cat>, 2006, 2007, 2008.
 # Manuel Tortosa <manutortosa@gmail.com>, 2009, 2011.
 # Joan Maspons <joanmaspons@gmail.com>, 2010, 2011.
@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-06 00:46+0000\n"
-"PO-Revision-Date: 2022-12-07 12:56+0100\n"
-"Last-Translator: Antoni Bella <antonibella5@yahoo.com>\n"
+"PO-Revision-Date: 2023-06-06 08:44+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Kate 22.08.3\n"
+"X-Generator: Lokalize 20.12.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -610,7 +610,7 @@ msgstr "Seleccioneu el fitxer torrent i les dades que hi pertanyen."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -3518,7 +3518,7 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format
@@ -8841,356 +8841,3 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Scripting"
-#~ msgstr "Creació de scripts"
-
-#~ msgid "Scripts"
-#~ msgstr "Scripts"
-
-#~ msgid "KTorrent Script Packages"
-#~ msgstr "Paquets de script del KTorrent"
-
-#~ msgid ""
-#~ "Removing these scripts will fully delete them from your disk. Are you "
-#~ "sure you want to do this?"
-#~ msgstr ""
-#~ "En eliminar aquests scripts els suprimireu completament del disc. Esteu "
-#~ "segur que voleu fer això?"
-
-#~ msgid "Widget to start, stop and manage scripts"
-#~ msgstr "Giny per a iniciar, aturar i gestionar els scripts"
-
-#~ msgid "Add Script"
-#~ msgstr "Afegeix un script"
-
-#~ msgid "Remove Script"
-#~ msgstr "Elimina l'script"
-
-#~ msgid "Run Script"
-#~ msgstr "Executa l'script"
-
-#~ msgid "Stop Script"
-#~ msgstr "Atura l'script"
-
-#~ msgid "Edit Script"
-#~ msgstr "Edita l'script"
-
-#~ msgid "Configure"
-#~ msgstr "Configura"
-
-#~ msgid "Script Properties"
-#~ msgstr "Propietats de l'script"
-
-#~ msgid "Cannot open archive for reading."
-#~ msgstr "No s'ha pogut obrir el fitxer per a lectura."
-
-#~ msgid "Invalid archive."
-#~ msgstr "Arxiu no vàlid."
-
-#~ msgid "There is already a script package named %1 installed."
-#~ msgstr "Ja hi ha un paquet de script instal·lat anomenat %1."
-
-#~ msgid ""
-#~ "Failed to load script from archive. There is something wrong with the "
-#~ "desktop file."
-#~ msgstr ""
-#~ "Ha fallat en carregar l'script des de l'arxiu. Hi ha alguna cosa errònia "
-#~ "en el fitxer desktop."
-
-#~ msgid "No script found in archive."
-#~ msgstr "No s'ha trobat cap script a l'arxiu."
-
-#~ msgid ""
-#~ "No interpreter for this script could be found, so it cannot be executed. "
-#~ "Please make sure the right interpreter is installed.<br/><br/><b>Hint:</"
-#~ "b> All standard ktorrent scripts require krosspython"
-#~ msgstr ""
-#~ "No s'ha trobat cap intèrpret per a aquest script, per tant no s'ha "
-#~ "executat. Assegureu-vos que es troba instal·lat l'intèrpret adequat.<br/"
-#~ "><br/><b>Consell:</b> tots els scripts estàndard del KTorrent requereixen "
-#~ "el krosspython"
-
-#~ msgid "Description:"
-#~ msgstr "Descripció:"
-
-#~ msgid "License:"
-#~ msgstr "Llicència:"
-
-#~ msgid "Author:"
-#~ msgstr "Autor:"
-
-#~ msgid "E-Mail:"
-#~ msgstr "Correu:"
-
-#~ msgid "Website:"
-#~ msgstr "Lloc web:"
-
-#~ msgid "Auto Remove Settings"
-#~ msgstr "Arranjament de l'eliminació automàtica"
-
-#~ msgid "Auto Remove"
-#~ msgstr "Eliminació automàtica"
-
-#~ msgid "Auto Resume Settings"
-#~ msgstr "Arranjament de la represa automàtica"
-
-#~ msgid "Auto remove a torrent when:"
-#~ msgstr "Elimina automàticament un torrent quan:"
-
-#~ msgid "The torrent finishes downloading"
-#~ msgstr "El torrent ha acabat la baixada"
-
-#~ msgid "The torrent finishes seeding"
-#~ msgstr "El torrent ha acabat de sembrar"
-
-#~ msgid "Auto Resume"
-#~ msgstr "Represa automàtica"
-
-#~ msgid "Auto resume after:"
-#~ msgstr "Reprèn automàticament després de:"
-
-#~ msgid " hours"
-#~ msgstr " hores"
-
-#~ msgid " seconds"
-#~ msgstr " segons"
-
-#~ msgid "E-Mail Script Settings"
-#~ msgstr "Arranjament de scripts de correu electrònic"
-
-#~ msgid "E-Mail Settings"
-#~ msgstr "Arranjament del correu electrònic"
-
-#~ msgid "EMail Settings"
-#~ msgstr "Arranjament del correu electrònic"
-
-#~ msgid "SMTP Server"
-#~ msgstr "Servidor SMTP"
-
-#~ msgid "SMTP server:"
-#~ msgstr "Servidor SMTP:"
-
-#~ msgid "Use SSL/TLS encryption"
-#~ msgstr "Usa l'encriptatge SSL/TLS"
-
-#~ msgid "Destination"
-#~ msgstr "Destinació"
-
-#~ msgid "Send mails to:"
-#~ msgstr "Envia els correus a:"
-
-#~ msgid "Add CC:"
-#~ msgstr "Afegeix una CC:"
-
-#~ msgid "Add BCC:"
-#~ msgstr "Afegeix una BCC:"
-
-#~ msgid "Applet"
-#~ msgstr "Miniaplicació"
-
-#~ msgid ""
-#~ "<table>\t\t\t\t<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </"
-#~ "td><td>%1 (%2)</td></tr>\t\t\t\t<tr><td>Upload Speed:</td><td>%6 </"
-#~ "td><td>Leechers: </td><td>%3 (%4)</td></tr>"
-#~ msgstr ""
-#~ "<table>\t\t\t\t<tr><td>Velocitat de baixada:</td><td>%5 </"
-#~ "td><td>Sembradors: </td><td>%1 (%2)</td></tr>\t\t\t\t<tr><td>Velocitat de "
-#~ "pujada:</td><td>%6 </td><td>Sangoneres: </td><td>%3 (%4)</td>"
-
-#~ msgid ""
-#~ "<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\t\t\t"
-#~ "\t<tr><td>Uploaded:</td><td>%3 </td><td>Complete: </td><td>%4 %</td></tr>"
-#~ "\t\t\t\t</table>"
-#~ msgstr ""
-#~ "<td>Baixat:</td><td>%1 </td><td>Mida: </td>%2</td></tr>\t\t\t"
-#~ "\t<tr><td>Pujat:</td><td>%3 </td><td>Complet: </td><td>%4%</td></tr>\t\t\t"
-#~ "\t</table>"
-
-#~ msgid "<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)"
-#~ msgstr ""
-#~ "<b>%1</b><br/>%2 (Ràtio de compartició: <font color=\"%4\">%3</font>)"
-
-#~ msgid "KTorrent is not running."
-#~ msgstr "No s'està executant el KTorrent."
-
-#~ msgid "No torrents loaded."
-#~ msgstr "No s'ha carregat cap torrent."
-
-#~ msgid "Selected torrent is unavailable."
-#~ msgstr "El torrent seleccionat no es troba disponible."
-
-#~ msgid "Torrent to display:"
-#~ msgstr "Torrent a visualitzar:"
-
-#~ msgid "An internal server error occurred: %1"
-#~ msgstr "Ha ocorregut un error intern del servidor: %1"
-
-#~ msgid "Unsupported HTTP method"
-#~ msgstr "Mètode HTTP no admès"
-
-#~ msgid "Port number"
-#~ msgstr "Número de port"
-
-#~ msgid "forward Port"
-#~ msgstr "port de redirecció"
-
-#~ msgid "Session time to live"
-#~ msgstr "Temps per a mantenir viva la sessió"
-
-#~ msgid "interface skin"
-#~ msgstr "Aparença de la interfície"
-
-#~ msgid "username"
-#~ msgstr "nom d'usuari"
-
-#~ msgid "password"
-#~ msgstr "contrasenya"
-
-#~ msgid "HTTP Get not supported when uploading a torrent"
-#~ msgstr "L'obtenció HTTP no està permesa quan s'està pujant un torrent"
-
-#~ msgid "Invalid data received"
-#~ msgstr "S'han rebut dades no vàlides"
-
-#~ msgid "Failed to open temporary file"
-#~ msgstr "Ha fallat en obrir el fitxer temporal"
-
-#~ msgid "Web Interface"
-#~ msgstr "Interfície web"
-
-#~ msgid "Web interface skin:"
-#~ msgstr "Aparença de la interfície web:"
-
-#~ msgid "Which interface to use."
-#~ msgstr "La interfície a usar."
-
-#~ msgid ""
-#~ "If login required is enabled, you need to enter a username and a "
-#~ "password.\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#~ "weight:600;\">Attention: </span>You should not disable this when the "
-#~ "webinterface is accessible from the internet. It will allow anybody "
-#~ "access to it.</p>"
-#~ msgstr ""
-#~ "Si està actiu el requisit d'iniciar una sessió, cal que introduïu un nom "
-#~ "d'usuari i una contrasenya.\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#~ "weight:600;\">Atenció: </span>No heu de desactivar això quan la "
-#~ "interfície web és accessible des d'Internet. Això permetria l'accés a "
-#~ "tothom.</p>"
-
-#~ msgid "Login required"
-#~ msgstr "Es requereix iniciar la sessió"
-
-#~ msgid "Username you need to use in the login page of the webinterface."
-#~ msgstr ""
-#~ "El nom d'usuari necessari per a la pàgina d'entrada de la interfície web."
-
-#~ msgid ""
-#~ "The password for the webinterface login page. By default this is set to "
-#~ "ktorrent."
-#~ msgstr ""
-#~ "La contrasenya per a la pàgina de connexió de la interfície web. Per "
-#~ "omissió, és «ktorrent»."
-
-#~ msgid "Web Server"
-#~ msgstr "Servidor web"
-
-#~ msgid "The port the webinterface listens on."
-#~ msgstr "El port que escoltarà la interfície web."
-
-#~ msgid ""
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">If you are behind a "
-#~ "router and you want to access the webinterface from somewhere on the "
-#~ "Internet you need to forward the correct port.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">This checkbox will "
-#~ "ensure that the UPnP plugin automatically forwards the port. The UPnP "
-#~ "plugin needs to be loaded for this to work.</p>"
-#~ msgstr ""
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Si esteu darrere d'un "
-#~ "encaminador i voleu accedir a la interfície web des d'algun lloc "
-#~ "d'Internet cal redirigir al port correcte.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Aquesta casella de "
-#~ "selecció assegurarà que el connector UPnP redirigeixi automàticament el "
-#~ "port. El connector UPnP necessita estar carregat per a aquesta feina.</p>"
-
-#~ msgid "Forward port"
-#~ msgstr "Port de redirecció"
-
-#~ msgid "Session TTL:"
-#~ msgstr "TTL de sessió:"
-
-#~ msgid "How long a session is valid (in seconds)."
-#~ msgstr "Quant de temps és vàlida una sessió (en segons)."
-
-#~ msgid " secs"
-#~ msgstr " segons"
-
-#~ msgid ""
-#~ "Disables the use of KDE's KIO library for tracker announces.\n"
-#~ "\n"
-#~ "This is experimental and should only be used if you are getting a lot of "
-#~ "connection to host broken errors."
-#~ msgstr ""
-#~ "Desactiva l'ús de la biblioteca KIO del KDE per als anuncis dels "
-#~ "seguidors.\n"
-#~ "\n"
-#~ "Això és experimental i només s'hauria d'usar si esteu rebent molts errors "
-#~ "d'interrupció en les connexions amb les màquines."
-
-#~ msgid "Do not use KIO for tracker announces"
-#~ msgstr "No empris el KIO per als anuncis dels seguidors"
-
-#~ msgid "Magnet"
-#~ msgstr "Magnet"
-
-#~ msgid "Torrent filter"
-#~ msgstr "Filtre de torrent"
-
-#~ msgid "Standby"
-#~ msgstr "En espera"
-
-#~ msgid " Engine:"
-#~ msgstr " Motor:"
-
-#~ msgid "KTMagnetDownloader"
-#~ msgstr "KTMagnetDownloader"
-
-#~ msgid "KTorrent's magnet link downloader"
-#~ msgstr "Descarregador d'enllaços «magnet» del KTorrent"
-
-#~ msgid "(C) 2009 Joris Guisson"
-#~ msgstr "(C) 2009 Joris Guisson"
-
-#~ msgid "Show system tray icon"
-#~ msgstr "Mostra una icona a la safata del sistema"
-
-#~ msgid ""
-#~ "<table><tr><td>Download&nbsp;speed:</td><td><b>%1</b></td></"
-#~ "tr><tr><td>Upload&nbsp;speed:</td><td><b>%2</b></td></tr><tr><td>Received:"
-#~ "</td><td><b>%3</b></td></tr><tr><td>Transmitted:</td><td><b>%4</b></td></"
-#~ "tr></table>"
-#~ msgstr ""
-#~ "<table><tr><td>Velocitat&nbsp;de&nbsp;baixada:</td><td><b>%1</b></td></"
-#~ "tr><tr><td>Velocitat&nbsp;de&nbsp;pujada:</td><td><b>%2</b></td></"
-#~ "tr><tr><td>Rebut:</td><td><b>%3</b></td></tr><tr><td>Transmès:</td><td><b>"
-#~ "%4</b></td></tr></table>"
