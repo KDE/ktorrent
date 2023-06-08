@@ -1076,14 +1076,14 @@ msgstr "Elimina"
 #: ktorrent/tools/queuemanagerwidget.cpp:63
 #, kde-format
 msgid "Move Up"
-msgstr "Mou amunt"
+msgstr "Mou cap amunt"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_move_down)
 #: ktorrent/dialogs/torrentcreatordlg.ui:217
 #: ktorrent/tools/queuemanagerwidget.cpp:66
 #, kde-format
 msgid "Move Down"
-msgstr "Mou avall"
+msgstr "Mou cap avall"
 
 #. i18n: ectx: attribute (title), widget (QWidget, m_dht_tab)
 #: ktorrent/dialogs/torrentcreatordlg.ui:240
