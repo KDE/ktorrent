@@ -10,14 +10,14 @@
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013, 2014.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2012, 2015, 2016, 2017.
 # Miguel Branco <mgl.branco@gmail.com>, 2013.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-06 00:46+0000\n"
-"PO-Revision-Date: 2020-01-12 11:17+0100\n"
+"PO-Revision-Date: 2023-06-11 22:05+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -25,20 +25,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.08.3\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
-"mvillarino, Xosé Calvo, Adrián Chaves Fernández (Gallaecio), Miguel Branco"
+msgstr "mvillarino, Xosé Calvo, Adrián Chaves (Gallaecio), Miguel Branco"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"mvillarino@users.sourceforge.net, xosecalvo@gmail.com,  adriyetichaves@gmail."
-"com, mgl.branco@gmail.com"
+"mvillarino@users.sourceforge.net, xosecalvo@gmail.com,  adrian@chaves.io, "
+"mgl.branco@gmail.com"
 
 #: ktorrent/core.cpp:143
 #, kde-format
@@ -612,7 +611,7 @@ msgstr "Escolla o ficheiro torrent e os datos que lle pertencen."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -730,7 +729,7 @@ msgstr "Abrir un URL"
 #: ktorrent/dialogs/pastedialog.cpp:114
 #, kde-format
 msgid "Error fetching tracker list"
-msgstr ""
+msgstr "Erro ao obter a lista de localizadores"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
 #, kde-format
@@ -738,6 +737,8 @@ msgid ""
 "Please check if the URL in Settings > Advanced > Tracker list URL is "
 "reachable."
 msgstr ""
+"Comprobe se se pode acceder ao URL de «Configuración → Avanzado → URL da "
+"lista de localizadores»."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
@@ -1033,10 +1034,9 @@ msgstr "8 MiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:127
-#, fuzzy, kde-format
-#| msgid "1 MiB"
+#, kde-format
 msgid "16 MiB"
-msgstr "1 MiB"
+msgstr "16 MiB"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_start_seeding)
 #: ktorrent/dialogs/torrentcreatordlg.ui:137
@@ -2016,15 +2016,14 @@ msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
 #: ktorrent/main.cpp:171
-#, fuzzy, kde-format
-#| msgid "Alexander Dymo"
+#, kde-format
 msgid "Alexander Trufanov"
-msgstr "Alexander Dymo"
+msgstr "Alexander Trufanov"
 
 #: ktorrent/main.cpp:171
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
-msgstr ""
+msgstr "Correccións, limpeza e optimizacións."
 
 #: ktorrent/main.cpp:175
 #, kde-format
@@ -2230,10 +2229,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
-#, fuzzy, kde-format
-#| msgid "Copy Tracker URL"
+#, kde-format
 msgid "Tracker list URL:"
-msgstr "Copiar o URL do localizador"
+msgstr "URL da lista de localizadores:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2242,6 +2240,10 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"URL da lista de localizadores que se usan ao engadir un torrent por suma de "
+"comprobación.\n"
+"Nota: Cada localizador debe estar nunha liña de seu. As liñas baleiras "
+"ignóranse."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2449,43 +2451,39 @@ msgstr "Cores"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_stalledTorrentColor)
 #: ktorrent/pref/colorpref.ui:19
-#, fuzzy, kde-format
-#| msgid "Decrease priority of torrents which are stalled for more than:"
+#, kde-format
 msgid "Color to use for torrents when they are stalled or checking data."
-msgstr "Diminuír a prioridade dos torrents que leven detidos máis de:"
+msgstr "Cor para torrents inactivos ou comprobando os datos."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTorrentColor)
 #: ktorrent/pref/colorpref.ui:26
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
-msgstr ""
+msgstr "Cor dos torrents durante o envío ou descarga."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
-#, fuzzy, kde-format
-#| msgid "KTorrent is not running."
+#, kde-format
 msgid "Torrent is running:"
-msgstr "KTorrent non se está a executar."
+msgstr "O torrent está en execución:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/colorpref.ui:40
 #, kde-format
 msgid "Torrent is stalled or checking data:"
-msgstr ""
+msgstr "O torrente está inactivo ou comprobando os datos:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
-#, fuzzy, kde-format
-#| msgid "Color to use for first priority files."
+#, kde-format
 msgid "Color to use for torrents with error status."
-msgstr "Cor a usar para os ficheiros de maior prioridade."
+msgstr "Cor para torrents cun erro."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/colorpref.ui:54
-#, fuzzy, kde-format
-#| msgid "Torrent:"
+#, kde-format
 msgid "Torrent error:"
-msgstr "Torrent:"
+msgstr "Erro do torrent:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2493,7 +2491,7 @@ msgstr "Torrent:"
 msgid ""
 "Additionally highlight torrents based on the status of their trackers (if "
 "any)"
-msgstr ""
+msgstr "Realzar tamén torrents segundo o estado dos seus localizadores."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:72
@@ -2502,12 +2500,14 @@ msgid ""
 "Color to use when at least one tracker is connected and replied no errors or "
 "warnings."
 msgstr ""
+"Cor cando hai polo menos un localizador conectado cunha resposta sen erros "
+"ou avisos."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/colorpref.ui:79
 #, kde-format
 msgid "Some of the trackers are reachable:"
-msgstr ""
+msgstr "Pode accederse a algúns dos localizadores:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_warningsTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:86
@@ -2515,30 +2515,31 @@ msgstr ""
 msgid ""
 "Color to use when the best attempt to connect to tracker results in warning."
 msgstr ""
+"Cor cando o mellor intento de conexión a un localizador devolve un aviso."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/colorpref.ui:93
 #, kde-format
 msgid "None of the trackers are reachable:"
-msgstr ""
+msgstr "Non se pode acceder a ningún dos localizadores:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: ktorrent/pref/colorpref.ui:100
 #, kde-format
 msgid "Reachable trackers report warnings:"
-msgstr ""
+msgstr "Os localizadores aos que se pode acceder devolven avisos:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
 #, kde-format
 msgid "Color to use when all trackers reply the errors or not found."
-msgstr ""
+msgstr "Cor cando os localizadores devolvan erros ou non se atopen."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
 #, kde-format
 msgid "Trackers are timing out:"
-msgstr ""
+msgstr "Os localizadores esgotan o tempo límite:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_timeoutTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:121
@@ -2547,45 +2548,46 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"Cor cando o mellor intento de conexión a un localizador esgota o tempo "
+"límite. A conexión intentarase de novo máis tarde."
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
-#, fuzzy, kde-format
-#| msgid "Share ratio:"
+#, kde-format
 msgid "Low share ratio:"
-msgstr "Taxa de compartición:"
+msgstr "Taxa de compartición baixa:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Minimum good share ratio:"
+#, kde-format
 msgid "Good share ratio:"
-msgstr "Mínima taxa boa de compartición:"
+msgstr "Taxa de compartición boa:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
 #, kde-format
 msgid "Color to display share ratio below minimal good value."
-msgstr ""
+msgstr "Cor para amosar un taxa de compartición inferior á mínima boa."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_goodShareRatioColor)
 #: ktorrent/pref/colorpref.ui:154
 #, kde-format
 msgid "Color to display share ratio above minimal good value."
-msgstr ""
+msgstr "Cor para amosar un taxa de compartición superior á mínima boa."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
 msgstr ""
+"Restabelecer as cores aos seus valores predeterminados (outras opcións non "
+"se cambiarán)."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
-#, fuzzy, kde-format
-#| msgid "Colors"
+#, kde-format
 msgid "Reset Colors"
-msgstr "Cores"
+msgstr "Restaurar as cores"
 
 #: ktorrent/pref/generalpref.cpp:13
 #, kde-format
@@ -2656,16 +2658,15 @@ msgstr "Icona da bandexa do sistema"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
-#, fuzzy, kde-format
-#| msgid "Whether or not to show an icon in the system tray."
+#, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
-msgstr "Indica se mostrar ou non unha icona na bandexa do sistema."
+msgstr "Se minimizar á área de notificacións no inicio."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr ""
+msgstr "Minimizar á área de notificacións no inicio."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -2708,22 +2709,20 @@ msgstr "Abrir todos os torrents silandeiramente."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:149
-#, fuzzy, kde-format
-#| msgid ""
-#| "Prevent computer from going into a sleep state when torrents are running."
+#, kde-format
 msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
 msgstr ""
-"Evitar que o computador entre en repouso cando se estean a transferir "
-"torrents."
+"Evitar que o computador entre en repouso ou bloquee a pantalla cando se "
+"estean a transferir torrents."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
-#, fuzzy, kde-format
-#| msgid "Suppress sleep when torrents are running"
+#, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr "Reprimir durmir cando haxa torrents en execución"
+msgstr ""
+"Impedir durmir ou bloquear a pantalla cando haxa torrents en execución."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -2983,7 +2982,7 @@ msgid ""
 "have available."
 msgstr ""
 "Permítelle a KTorrent calcular a configuración recomendada con base na "
-"largurade banda que teña dispoñíbel."
+"largura de banda que teña dispoñíbel."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
@@ -3266,7 +3265,7 @@ msgid ""
 "is doing nothing.</p>"
 msgstr ""
 "<p>Con isto activado, o xestor da fila diminuirá a prioridade dos torrents "
-"que leven detidos demasiado tempo.</p>\n"
+"que leven inactivos demasiado tempo.</p>\n"
 "<p>Isto permite que o xestor da fila execute outros torrents cando un non "
 "estea a facer nada.</p>"
 
@@ -3274,7 +3273,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:134
 #, kde-format
 msgid "Decrease priority of torrents which are stalled for more than:"
-msgstr "Diminuír a prioridade dos torrents que leven detidos máis de:"
+msgstr "Diminuír a prioridade dos torrents que leven inactivos máis de:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_stallTimer)
 #: ktorrent/pref/qmpref.ui:141
@@ -3370,16 +3369,14 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QLabel, label_2)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_greenRatio)
 #: ktorrent/pref/qmpref.ui:248 ktorrent/pref/qmpref.ui:258
-#, fuzzy, kde-format
-#| msgid ""
-#| "Value at which the share ratio will be displayed with a green color. "
-#| "Lower ratios will be displayed in red."
+#, kde-format
 msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
 "Valor a partir do cal a taxa de compartición se mostrará nunha cor verde. Os "
-"valores que estean por debaixo mostraranse en vermello."
+"valores que estean por debaixo mostraranse en vermello. As cores poden "
+"cambiarse na configuración."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
@@ -3518,12 +3515,12 @@ msgstr "DHT: %1, %2."
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format
 msgid "The desktop is offline"
-msgstr ""
+msgstr "O escritorio está sen conexión"
 
 #: ktorrent/tools/magnetmodel.cpp:102
 #, kde-format
@@ -3569,10 +3566,9 @@ msgid "Stop Magnet"
 msgstr "Deter o magnet"
 
 #: ktorrent/tools/magnetview.cpp:53
-#, fuzzy, kde-format
-#| msgid "Copy Magnet URI"
+#, kde-format
 msgid "Copy Magnet URL"
-msgstr "Copiar a ligazón magnet"
+msgstr "Copiar o URL magnet"
 
 #: ktorrent/tools/magnetview.cpp:55
 #, kde-format
@@ -3593,7 +3589,7 @@ msgstr "Nome"
 #: ktorrent/tools/queuemanagermodel.cpp:184
 #, kde-format
 msgid "Time Stalled"
-msgstr "Tempo detido"
+msgstr "Tempo inactivo"
 
 #: ktorrent/tools/queuemanagermodel.cpp:186
 #: plugins/infowidget/iwfilelistmodel.cpp:61
@@ -3895,16 +3891,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr "Detívose o torrent.<br />"
 
 #: ktorrent/trayicon.cpp:346
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "Límite de velocidade en KiB/s"
+msgstr "Límite de velocidade de envío en KiB/s"
 
 #: ktorrent/trayicon.cpp:348
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "Límite de velocidade en KiB/s"
+msgstr "Límite de velocidade de descarga en KiB/s"
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -3930,7 +3924,7 @@ msgid ""
 "DHT is a distributed database which can be used to find more peers for a "
 "torrent."
 msgstr ""
-"DTH é unha base de datos distribuída que se pode empregar para atopar máis "
+"DHT é unha base de datos distribuída que se pode empregar para atopar máis "
 "parceiros para un torrent."
 
 #. i18n: ectx: property (text), widget (QCheckBox, dht)
@@ -4046,7 +4040,7 @@ msgstr "0"
 #: ktorrent/view/scanextender.ui:66
 #, kde-format
 msgid "Failed:"
-msgstr "Fallidos:"
+msgstr "Errados:"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, chunks_failed)
 #: ktorrent/view/scanextender.ui:82
@@ -4507,7 +4501,7 @@ msgstr "Router:"
 #: ktupnptest/upnptestwidget.ui:40
 #, kde-format
 msgid "No routers found."
-msgstr "Non se atopou ningún router."
+msgstr "Non se atopou ningún encamiñador."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_find_routers)
 #: ktupnptest/upnptestwidget.ui:49
@@ -4713,7 +4707,7 @@ msgstr "Largura de banda de envío (en kb/s):"
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr ""
+msgstr "Minimizar á área de notificacións no inicio."
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
@@ -5738,7 +5732,7 @@ msgstr "Cores da prioridade do ficheiro"
 #: plugins/infowidget/iwprefpage.ui:72
 #, kde-format
 msgid "First priority:"
-msgstr "Primeira prioridade:"
+msgstr "Máxima prioridade:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_firstColor)
 #: plugins/infowidget/iwprefpage.ui:79
@@ -6026,7 +6020,7 @@ msgstr "Velocidade media de envío:"
 #: plugins/infowidget/statustab.ui:123
 #, kde-format
 msgid "Info hash:"
-msgstr "Hash:"
+msgstr "Suma de comprobación:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/infowidget/statustab.ui:188
@@ -7030,73 +7024,67 @@ msgstr "O grupo ao que engadir os torrents."
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan for lost files"
-msgstr ""
+msgstr "Buscar ficheiros perdidos"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
-#, fuzzy, kde-format
-#| msgid "Log widget position:"
+#, kde-format
 msgid "Widget position:"
-msgstr "Posición do trebello do rexistro:"
+msgstr "Posición do trebello:"
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
-msgstr ""
+msgstr "Buscar ficheiros perdidos"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
-msgstr ""
+msgstr "Examinar"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
-#, fuzzy, kde-format
-#| msgid "Select File"
+#, kde-format
 msgid "Select folder:"
-msgstr "Seleccionar un ficheiro"
+msgstr "Escolla un cartafol"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:107
-#, fuzzy, kde-format
-#| msgid "Show a file list"
+#, kde-format
 msgid "Show all files"
-msgstr "Mostrar unha lista de ficheiros"
+msgstr "Amosar todos os ficheiros"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
-#, fuzzy, kde-format
-#| msgid "Open silently"
+#, kde-format
 msgid "Open file"
-msgstr "Abrir silandeiramente"
+msgstr "Abrir un ficheiro"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:130
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgid "Delete on disk"
-msgstr "Eliminar os ficheiros"
+msgstr "Eliminar do disco"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
 #, kde-format
 msgid "Ctrl+Del"
-msgstr ""
+msgstr "Ctrl+Supr"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:142
-#, fuzzy, kde-format
-#| msgid "Magnet link copied to clipboard"
+#, kde-format
 msgid "Copy to clipboard"
-msgstr "A ligazón magnet copiouse no portapapeis."
+msgstr "Copiar no portapapeis"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:145
 #, kde-format
 msgid "Ctrl+C"
-msgstr ""
+msgstr "Ctrl+C"
 
 #. i18n: ectx: ToolBar (SearchToolBar)
 #: plugins/search/ktorrent_searchui.rc:4
