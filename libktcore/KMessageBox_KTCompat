@@ -40,7 +40,7 @@ inline ButtonCode questionTwoActionsList(QWidget *parent, const QString &text,
                                          const KGuiItem &primaryAction,
                                          const KGuiItem &secondaryAction,
                                          const QString &dontAskAgainName = QString(),
-                                         Options options = Notify))
+                                         Options options = Notify)
 {
     return questionYesNoList(parent, text, strlist, title, primaryAction, secondaryAction, dontAskAgainName, options);
 }
