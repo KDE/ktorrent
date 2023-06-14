@@ -43,7 +43,7 @@ ImportDialog::ImportDialog(CoreInterface *core, QWidget *parent)
     setupUi(this);
     KUrlRequester *r = m_torrent_url;
     r->setMode(KFile::File | KFile::LocalOnly);
-    r->setFilter(kt::TorrentFileFilter(true));
+    r->setFilter(kt::TorrentFileFilter(true, FilterKUrlRequester));
 
     r = m_data_url;
     r->setMode(KFile::File | KFile::Directory | KFile::LocalOnly);

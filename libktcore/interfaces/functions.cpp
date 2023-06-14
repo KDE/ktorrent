@@ -144,8 +144,14 @@ void ApplySettings()
     bt::Peer::setResolveHostnames(Settings::lookUpHostnameOfPeers());
 }
 
-QString TorrentFileFilter(bool all_files_included)
+QString TorrentFileFilter(bool all_files_included, FileFilterType fileFilterType)
 {
+    if (fileFilterType == FilterKUrlRequester) {
+        QString ret = QLatin1String("*.torrent|") + i18nc("*.torrent", "Torrents");
+        if (all_files_included)
+            ret += QLatin1String("\n*|") + i18n("All files");
+        return ret;
+    }
     QString ret = i18nc("*.torrent", "Torrents") + QLatin1String(" (*.torrent)");
     if (all_files_included)
         ret += QLatin1String(";;") + i18n("All files") + QLatin1String(" (*)");
