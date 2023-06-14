@@ -22,9 +22,12 @@ KTCORE_EXPORT QString DataDir(CreationMode mode = DoNotCheckDirPresence);
 /// Apply all settings
 KTCORE_EXPORT void ApplySettings();
 
+enum FileFilterType {
+    FilterQFileDialog,
+    FilterKUrlRequester,
+};
 /// Get the filter string for torrent files used file dialogs
-KTCORE_EXPORT QString TorrentFileFilter(bool all_files_included);
-
+KTCORE_EXPORT QString TorrentFileFilter(bool all_files_included, FileFilterType fileFilterType = FilterQFileDialog);
 }
 
 #endif
