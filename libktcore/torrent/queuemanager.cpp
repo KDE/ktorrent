@@ -9,6 +9,7 @@
 
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KMessageBox_KTCompat>
 
 #include <algorithm>
 #include <climits>
@@ -107,7 +108,13 @@ bool QueueManager::checkLimits(TorrentInterface *tc, bool interactive)
     else
         return true;
 
-    if (interactive && KMessageBox::questionYesNo(nullptr, msg, i18n("Limits reached.")) == KMessageBox::Yes) {
+    if (interactive
+        && KMessageBox::questionTwoActions(nullptr,
+                                           msg,
+                                           i18n("Limits reached."),
+                                           KGuiItem(i18nc("@action:button", "Start"), QStringLiteral("kt-start")),
+                                           KStandardGuiItem::cancel())
+            == KMessageBox::PrimaryAction) {
         if (max_ratio_reached)
             tc->setMaxShareRatio(0.00f);
         if (max_seed_time_reached)
@@ -134,7 +141,8 @@ bool QueueManager::checkDiskSpace(TorrentInterface *tc, bool interactive)
             "Are you sure you want to continue?");
 
         QString caption = i18n("Insufficient disk space for %1", s.torrent_name);
-        if (!interactive || KMessageBox::questionYesNo(nullptr, msg, caption) == KMessageBox::No)
+        if (!interactive
+            || KMessageBox::questionTwoActions(nullptr, msg, caption, KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::SecondaryAction)
             return false;
         else
             break;
@@ -210,8 +218,13 @@ void QueueManager::checkDiskSpace(QList<bt::TorrentInterface *> &todo)
         }
 
         if (tmp.count() > 0) {
-            if (KMessageBox::questionYesNoList(nullptr, i18n("Not enough disk space for the following torrents. Do you want to start them anyway?"), names)
-                == KMessageBox::No) {
+            if (KMessageBox::questionTwoActionsList(nullptr,
+                                                    i18n("Not enough disk space for the following torrents. Do you want to start them anyway?"),
+                                                    names,
+                                                    QString(),
+                                                    KGuiItem(i18nc("@action:button", "Start"), QStringLiteral("kt-start")),
+                                                    KStandardGuiItem::cancel())
+                == KMessageBox::SecondaryAction) {
                 for (bt::TorrentInterface *tc : qAsConst(tmp))
                     todo.removeAll(tc);
             }
@@ -244,10 +257,13 @@ void QueueManager::checkMaxSeedTime(QList<bt::TorrentInterface *> &todo)
     }
 
     if (tmp.count() > 0) {
-        if (KMessageBox::questionYesNoList(nullptr,
-                                           i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway?"),
-                                           names)
-            == KMessageBox::No) {
+        if (KMessageBox::questionTwoActionsList(nullptr,
+                                                i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway?"),
+                                                names,
+                                                QString(),
+                                                KGuiItem(i18nc("@action:button", "Start"), QStringLiteral("kt-start")),
+                                                KStandardGuiItem::cancel())
+            == KMessageBox::SecondaryAction) {
             for (bt::TorrentInterface *tc : qAsConst(tmp))
                 todo.removeAll(tc);
         } else {
@@ -270,10 +286,13 @@ void QueueManager::checkMaxRatio(QList<bt::TorrentInterface *> &todo)
     }
 
     if (tmp.count() > 0) {
-        if (KMessageBox::questionYesNoList(nullptr,
-                                           i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway?"),
-                                           names)
-            == KMessageBox::No) {
+        if (KMessageBox::questionTwoActionsList(nullptr,
+                                                i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway?"),
+                                                names,
+                                                QString(),
+                                                KGuiItem(i18nc("@action:button", "Start"), QStringLiteral("kt-start")),
+                                                KStandardGuiItem::cancel())
+            == KMessageBox::SecondaryAction) {
             for (bt::TorrentInterface *tc : qAsConst(tmp))
                 todo.removeAll(tc);
         } else {

@@ -13,6 +13,7 @@
 #include <KIO/Global>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KMessageBox_KTCompat>
 #include <KStandardGuiItem>
 
 #include "settings.h"
@@ -218,8 +219,13 @@ void FileSelectDlg::accept()
                 msg = i18n("The file <b>%1</b> was found in the completed downloads directory. Do you want to import this file?", tld);
 
             // better ask the user if (s)he wants to delete the already existing data
-            int ret = KMessageBox::questionYesNoList(nullptr, msg, cf, QString());
-            if (ret == KMessageBox::Yes) {
+            int ret = KMessageBox::questionTwoActionsList(nullptr,
+                                                          msg,
+                                                          cf,
+                                                          QString(),
+                                                          KGuiItem(i18nc("@action:button", "Import"), QStringLiteral("document-import")),
+                                                          KStandardGuiItem::cancel());
+            if (ret == KMessageBox::PrimaryAction) {
                 dn = cn;
             }
         }
@@ -227,7 +233,12 @@ void FileSelectDlg::accept()
 
     if (!bt::Exists(dn)) {
         try {
-            if (KMessageBox::questionYesNo(this, i18n("The directory %1 does not exist, do you want to create it?", dn)) == KMessageBox::Yes)
+            if (KMessageBox::questionTwoActions(this,
+                                                i18n("The directory %1 does not exist, do you want to create it?", dn),
+                                                QString(),
+                                                KGuiItem(i18nc("@action:button", "Create"), QStringLiteral("folder-new")),
+                                                KStandardGuiItem::cancel())
+                == KMessageBox::PrimaryAction)
                 MakePath(dn);
             else
                 return;
@@ -240,7 +251,12 @@ void FileSelectDlg::accept()
 
     if (!bt::Exists(cn)) {
         try {
-            if (KMessageBox::questionYesNo(this, i18n("The directory %1 does not exist, do you want to create it?", cn)) == KMessageBox::Yes)
+            if (KMessageBox::questionTwoActions(this,
+                                                i18n("The directory %1 does not exist, do you want to create it?", cn),
+                                                QString(),
+                                                KGuiItem(i18nc("@action:button", "Create"), QStringLiteral("folder-new")),
+                                                KStandardGuiItem::cancel())
+                == KMessageBox::PrimaryAction)
                 MakePath(cn);
             else
                 return;
@@ -269,8 +285,13 @@ void FileSelectDlg::accept()
     if (pe_ex.count() > 0) {
         QString msg = i18n("You have deselected the following existing files. You will lose all data in these files, are you sure you want to do this?");
         // better ask the user if (s)he wants to delete the already existing data
-        int ret = KMessageBox::warningYesNoList(nullptr, msg, pe_ex, QString(), KGuiItem(i18n("Yes, delete the files")), KGuiItem(i18n("No, keep the files")));
-        if (ret == KMessageBox::No) {
+        int ret = KMessageBox::warningTwoActionsList(nullptr,
+                                                     msg,
+                                                     pe_ex,
+                                                     QString(),
+                                                     KGuiItem(i18nc("@action:button", "Delete the Files")),
+                                                     KGuiItem(i18nc("@action:button", "Keep the Files")));
+        if (ret == KMessageBox::SecondaryAction) {
             for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
                 bt::TorrentFileInterface &file = tc->getTorrentFile(i);
                 if (file.doNotDownload() && file.isPreExistingFile())

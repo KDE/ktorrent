@@ -22,6 +22,7 @@
 #include <KLocalizedString>
 #include <KMainWindow>
 #include <KMessageBox>
+#include <KMessageBox_KTCompat>
 #include <KNotification>
 #include <KStandardAction>
 
@@ -194,18 +195,18 @@ void SearchWidget::magnetUrl(const QUrl &magnet_url)
 
 void SearchWidget::downloadTorrentFile(QWebEngineDownloadItem *download)
 {
-    int ret = KMessageBox::questionYesNoCancel(nullptr,
+    int ret = KMessageBox::questionTwoActionsCancel(nullptr,
 
-                                               i18n("Do you want to download or save the torrent?"),
-                                               i18n("Download Torrent"),
-                                               KGuiItem(i18n("Download"), QStringLiteral("ktorrent")),
-                                               KStandardGuiItem::save(),
-                                               KStandardGuiItem::cancel(),
-                                               QStringLiteral(":TorrentDownloadFinishedQuestion"));
+                                                    i18n("Do you want to download or save the torrent?"),
+                                                    i18n("Download Torrent"),
+                                                    KGuiItem(i18n("Download"), QStringLiteral("ktorrent")),
+                                                    KStandardGuiItem::save(),
+                                                    KStandardGuiItem::cancel(),
+                                                    QStringLiteral(":TorrentDownloadFinishedQuestion"));
 
-    if (ret == KMessageBox::Yes) {
+    if (ret == KMessageBox::PrimaryAction) {
         sp->getCore()->load(download->url(), QString());
-    } else if (ret == KMessageBox::No) {
+    } else if (ret == KMessageBox::SecondaryAction) {
         webview->downloadFile(download);
     }
 }

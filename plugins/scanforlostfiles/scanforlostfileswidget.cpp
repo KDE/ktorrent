@@ -9,6 +9,7 @@
 #include <KIO/JobUiDelegate>
 #include <KIO/OpenUrlJob>
 #include <KMessageBox>
+#include <KMessageBox_KTCompat>
 #include <QClipboard>
 #include <QMenu>
 
@@ -187,7 +188,7 @@ void ScanForLostFilesWidget::on_actionDelete_on_disk_triggered()
                         n);
 
     QList<QUrl> to_del;
-    if (KMessageBox::warningYesNo(nullptr, msg) == KMessageBox::Yes) {
+    if (KMessageBox::warningTwoActions(nullptr, msg, QString(), KStandardGuiItem::del(), KStandardGuiItem::cancel()) == KMessageBox::PrimaryAction) {
         for (const QModelIndex &m : sel) {
             to_del.append(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(m))));
         }

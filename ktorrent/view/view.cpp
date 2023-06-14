@@ -21,6 +21,7 @@
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KMessageBox_KTCompat>
 #include <KRecentDirs>
 #include <KSharedConfig>
 #include <KStandardAction>
@@ -450,15 +451,15 @@ void View::removeTorrents()
                     "The torrent <b>%1</b> has not finished downloading, "
                     "do you want to delete the incomplete data, too?",
                     tc->getDisplayName());
-                int ret = KMessageBox::questionYesNoCancel(this,
-                                                           msg,
-                                                           i18n("Remove Download"),
-                                                           KGuiItem(i18n("Delete Data")),
-                                                           KGuiItem(i18n("Keep Data")),
-                                                           KStandardGuiItem::cancel());
+                int ret = KMessageBox::questionTwoActionsCancel(this,
+                                                                msg,
+                                                                i18n("Remove Download"),
+                                                                KGuiItem(i18n("Delete Data")),
+                                                                KGuiItem(i18n("Keep Data")),
+                                                                KStandardGuiItem::cancel());
                 if (ret == KMessageBox::Cancel)
                     return;
-                else if (ret == KMessageBox::Yes)
+                else if (ret == KMessageBox::PrimaryAction)
                     data_to = true;
             }
             core->remove(tc, data_to);
@@ -479,7 +480,8 @@ void View::removeTorrentsAndData()
     }
 
     QString msg = i18n("You will lose all the downloaded data of the following torrents. Are you sure you want to do this?");
-    if (KMessageBox::warningYesNoList(this, msg, names, i18n("Remove Torrent"), KStandardGuiItem::remove(), KStandardGuiItem::cancel()) == KMessageBox::Yes) {
+    if (KMessageBox::warningTwoActionsList(this, msg, names, i18n("Remove Torrent"), KStandardGuiItem::remove(), KStandardGuiItem::cancel())
+        == KMessageBox::PrimaryAction) {
         core->remove(sel, true);
     }
 }

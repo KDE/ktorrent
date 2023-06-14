@@ -10,6 +10,7 @@
 
 #include <KFileWidget>
 #include <KMessageBox>
+#include <KMessageBox_KTCompat>
 #include <KRecentDirs>
 
 #include "core.h"
@@ -276,7 +277,8 @@ void TorrentCreatorDlg::accept()
         QString msg = i18n(
             "You have not added a tracker, "
             "are you sure you want to create this torrent?");
-        if (KMessageBox::warningYesNo(gui, msg) == KMessageBox::No)
+        if (KMessageBox::warningTwoActions(gui, msg, QString(), KGuiItem(i18nc("@action:button", "Create")), KStandardGuiItem::cancel())
+            == KMessageBox::SecondaryAction)
             return;
     }
 

@@ -13,6 +13,7 @@
 #include <KFileWidget>
 #include <KGuiItem>
 #include <KMessageBox>
+#include <KMessageBox_KTCompat>
 #include <KRecentDirs>
 #include <KStandardGuiItem>
 
@@ -81,17 +82,24 @@ void MissingFilesDlg::selectNewPressed()
         tc->changeOutputDir(dir, bt::TorrentInterface::FULL_PATH);
         QStringList dummy;
         if (tc->hasMissingFiles(dummy)) {
-            int ans = KMessageBox::No;
+            int ans = KMessageBox::SecondaryAction;
             if ((bt::Uint32)dummy.count() == tc->getNumFiles())
-                ans = KMessageBox::questionYesNo(
+                ans = KMessageBox::questionTwoActions(
                     this,
-                    i18n("The data files are not present in the location you selected. Do you want to create all the files in the selected directory?"));
+                    i18n("The data files are not present in the location you selected. Do you want to create all the files in the selected directory?"),
+                    QString(),
+                    KGuiItem(i18nc("@action:button", "Create"), QStringLiteral("document-new")),
+                    KStandardGuiItem::cancel());
             else
-                ans = KMessageBox::questionYesNo(this,
-                                                 i18n("Not all files were found in the new location; some are still missing. Do you want to create the missing "
-                                                      "files in the selected directory?"));
+                ans = KMessageBox::questionTwoActions(
+                    this,
+                    i18n("Not all files were found in the new location; some are still missing. Do you want to create the missing "
+                         "files in the selected directory?"),
+                    QString(),
+                    KGuiItem(i18nc("@action:button", "Create"), QStringLiteral("document-new")),
+                    KStandardGuiItem::cancel());
 
-            if (ans == KMessageBox::Yes) {
+            if (ans == KMessageBox::PrimaryAction) {
                 tc->recreateMissingFiles();
                 ret = NEW_LOCATION_SELECTED;
                 accept();
@@ -118,10 +126,13 @@ void MissingFilesDlg::selectNewPressed()
         tc->changeOutputDir(dir, 0);
         QStringList dummy;
         if (tc->hasMissingFiles(dummy)) {
-            if (KMessageBox::questionYesNo(
+            if (KMessageBox::questionTwoActions(
                     this,
-                    i18n("The data file is not present in the location you selected. Do you want to create the file in the selected directory?"))
-                == KMessageBox::Yes) {
+                    i18n("The data file is not present in the location you selected. Do you want to create the file in the selected directory?"),
+                    QString(),
+                    KGuiItem(i18nc("@action:button", "Create"), QStringLiteral("document-new")),
+                    KStandardGuiItem::cancel())
+                == KMessageBox::PrimaryAction) {
                 tc->recreateMissingFiles();
                 ret = NEW_LOCATION_SELECTED;
                 accept();

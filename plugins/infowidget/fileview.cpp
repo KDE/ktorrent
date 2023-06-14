@@ -23,6 +23,7 @@
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KMessageBox_KTCompat>
 #include <KRecentDirs>
 #include <KSharedConfig>
 
@@ -317,7 +318,7 @@ void FileView::deleteFiles()
                         "You will lose all data in these files, are you sure you want to do this?",
                         n);
 
-    if (KMessageBox::warningYesNo(nullptr, msg) == KMessageBox::Yes)
+    if (KMessageBox::warningTwoActions(nullptr, msg, QString(), KStandardGuiItem::del(), KStandardGuiItem::cancel()) == KMessageBox::PrimaryAction)
         changePriority(EXCLUDED);
 }
 
@@ -441,13 +442,13 @@ void FileView::onDoubleClicked(const QModelIndex &index)
         static QList<TorrentFileStream::Ptr> streams;
         bool doStream = false;
         if (!isPreviewAvailable) {
-            doStream = KMessageBox::Yes
-                == KMessageBox::questionYesNo(this,
-                                              i18n("Not enough data downloaded for opening the file.\n\n"
-                                                   "Enable sequential download mode for it to obtain necessary data with a higher priority?"),
-                                              QString(),
-                                              KStandardGuiItem::yes(),
-                                              KStandardGuiItem::no());
+            doStream = KMessageBox::PrimaryAction
+                == KMessageBox::questionTwoActions(this,
+                                                   i18n("Not enough data downloaded for opening the file.\n\n"
+                                                        "Enable sequential download mode for it to obtain necessary data with a higher priority?"),
+                                                   QString(),
+                                                   KGuiItem(i18nc("@action:button", "Enable Sequential Download Mode"), QStringLiteral("dialog-ok")),
+                                                   KStandardGuiItem::cancel());
         } else if (downloadPercentage < 90) {
             doStream = true;
             // doStream = KMessageBox::Yes==KMessageBox::questionYesNo(this, i18n("Enable sequential download mode for this file?"),
