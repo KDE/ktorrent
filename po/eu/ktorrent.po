@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-06 00:46+0000\n"
+"POT-Creation-Date: 2023-06-15 00:46+0000\n"
 "PO-Revision-Date: 2022-10-12 16:52+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -230,27 +230,27 @@ msgstr "Gehitu"
 msgid "Close"
 msgstr "Itxi"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:81
+#: ktorrent/dialogs/fileselectdlg.cpp:82
 #, kde-format
 msgid "Show a file tree"
 msgstr "Erakutsi fitxategi-zuhaitza"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:84
+#: ktorrent/dialogs/fileselectdlg.cpp:85
 #, kde-format
 msgid "Show a file list"
 msgstr "Erakutsi fitxategi-zerrenda"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
+#: ktorrent/dialogs/fileselectdlg.cpp:94 plugins/infowidget/fileview.cpp:65
 #, kde-format
 msgid "Filter"
 msgstr "Iragazkia"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:111
+#: ktorrent/dialogs/fileselectdlg.cpp:112
 #, kde-format
 msgid "Opening %1"
 msgstr "%1 irekitzen"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:211
+#: ktorrent/dialogs/fileselectdlg.cpp:212
 #, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -261,7 +261,7 @@ msgstr ""
 "direktorioan. Fitxategi horiek inportatu nahi dituzu eta deskargatzen "
 "amaitutakoen direktorioa kokaleku gisa erabili?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:215
+#: ktorrent/dialogs/fileselectdlg.cpp:216
 #, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -272,7 +272,7 @@ msgstr ""
 "direktorioan. Fitxategi horiek inportatu nahi dituzu eta deskargatzen "
 "amaitutakoen direktorioa kokaleku gisa erabili?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:218
+#: ktorrent/dialogs/fileselectdlg.cpp:219
 #, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
@@ -281,13 +281,31 @@ msgstr ""
 "<b>%1</b> fitxategia aurkitu da deskargatzen amaitutakoen direktorioan. "
 "Fitxategi hori inportatu nahi duzu?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:230
-#: ktorrent/dialogs/fileselectdlg.cpp:243
+#: ktorrent/dialogs/fileselectdlg.cpp:226
+#, fuzzy, kde-format
+#| msgid "&Import"
+msgctxt "@action:button"
+msgid "Import"
+msgstr "&Inportatu"
+
+#: ktorrent/dialogs/fileselectdlg.cpp:237
+#: ktorrent/dialogs/fileselectdlg.cpp:255
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "%1 direktorioa ez da existitzen. Sortu nahi duzu?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:270
+#: ktorrent/dialogs/fileselectdlg.cpp:239
+#: ktorrent/dialogs/fileselectdlg.cpp:257
+#: ktorrent/dialogs/missingfilesdlg.cpp:91
+#: ktorrent/dialogs/missingfilesdlg.cpp:99
+#: ktorrent/dialogs/missingfilesdlg.cpp:133
+#: ktorrent/dialogs/torrentcreatordlg.cpp:280
+#, fuzzy, kde-format
+msgctxt "@action:button"
+msgid "Create"
+msgstr "So&rtu"
+
+#: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
@@ -296,17 +314,21 @@ msgstr ""
 "Lehendik dauden fitxategi hauek desautatu egin dituzu. Fitxategi hauetako "
 "datu guztiak galduko dituzu. Ziur zaude hori egin nahi duzula?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:272
-#, kde-format
-msgid "Yes, delete the files"
-msgstr "Bai, ezabatu fitxategiak"
+#: ktorrent/dialogs/fileselectdlg.cpp:292
+#, fuzzy, kde-format
+#| msgid "Delete File(s)"
+msgctxt "@action:button"
+msgid "Delete the Files"
+msgstr "Ezabatu fitxategia(k)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:272
-#, kde-format
-msgid "No, keep the files"
+#: ktorrent/dialogs/fileselectdlg.cpp:293
+#, fuzzy, kde-format
+#| msgid "No, keep the files"
+msgctxt "@action:button"
+msgid "Keep the Files"
 msgstr "Ez, mantendu fitxategiak"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:295
+#: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -317,54 +339,54 @@ msgstr ""
 "fitxategi bat edo gehiago. Torrent batek baino gehiagok ezin dute fitxategi "
 "berean idatzi. Hautatu beste kokaleku bat."
 
-#: ktorrent/dialogs/fileselectdlg.cpp:397 ktorrent/dialogs/pastedialog.cpp:61
-#: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
+#: ktorrent/dialogs/fileselectdlg.cpp:418 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "Torrent guztiak"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:466
+#: ktorrent/dialogs/fileselectdlg.cpp:487
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr "<b>Ezin da zehaztu zenbat leku dagoen libre</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:473
+#: ktorrent/dialogs/fileselectdlg.cpp:494
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr "%1 (lehendik dauden fitxategiak %2 erabiltzen ari dira)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:481
+#: ktorrent/dialogs/fileselectdlg.cpp:502
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "%1 laburra"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:508
+#: ktorrent/dialogs/fileselectdlg.cpp:529
 #, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "Lehendik dauden fitxategiak: <b>Bat ere ez</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:510
+#: ktorrent/dialogs/fileselectdlg.cpp:531
 #, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "Lehendik dauden fitxategiak: <b>Denak</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:512
+#: ktorrent/dialogs/fileselectdlg.cpp:533
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "Lehendik dauden fitxategiak: <b>%1</b> / <b>%2</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:516
+#: ktorrent/dialogs/fileselectdlg.cpp:537
 #, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "Lehendik dauden fitxategiak: <b>Ez</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:519
+#: ktorrent/dialogs/fileselectdlg.cpp:540
 #, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "Lehendik dauden fitxategiak: <b>Bai</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:591
+#: ktorrent/dialogs/fileselectdlg.cpp:612
 #, kde-format
 msgid "Clear History"
 msgstr "Garbitu historia"
@@ -625,13 +647,13 @@ msgstr "&Inportatu"
 msgid "Ca&ncel"
 msgstr "&Utzi"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:71
-#: ktorrent/dialogs/missingfilesdlg.cpp:108
+#: ktorrent/dialogs/missingfilesdlg.cpp:72
+#: ktorrent/dialogs/missingfilesdlg.cpp:116
 #, kde-format
 msgid "Select the directory where the data now is."
 msgstr "Hautatu datuak orain dituen direktorioa."
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:88
+#: ktorrent/dialogs/missingfilesdlg.cpp:89
 #, kde-format
 msgid ""
 "The data files are not present in the location you selected. Do you want to "
@@ -640,7 +662,7 @@ msgstr ""
 "Datu-fitxategiak ez daude zuk hautatutako kokalekuan. Fitxategi guztiak "
 "hautatutako direktorioan sortu nahi dituzu?"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:91
+#: ktorrent/dialogs/missingfilesdlg.cpp:96
 #, kde-format
 msgid ""
 "Not all files were found in the new location; some are still missing. Do you "
@@ -650,7 +672,7 @@ msgstr ""
 "dira oraindik. Falta diren fitxategiak hautatutako direktorioan sortu nahi "
 "dituzu?"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:123
+#: ktorrent/dialogs/missingfilesdlg.cpp:131
 #, kde-format
 msgid ""
 "The data file is not present in the location you selected. Do you want to "
@@ -717,7 +739,7 @@ msgstr "Utzi bertan behera, ez abiarazi torrent-a."
 #. i18n: ectx: property (text), widget (QPushButton, cancel_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: ktorrent/dialogs/missingfilesdlg.ui:80 ktorrent/view/scanextender.ui:217
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:147
 #, kde-format
 msgid "Cancel"
 msgstr "Utzi"
@@ -743,7 +765,7 @@ msgstr ""
 "URLa irisgarria den."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:305
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "URL baliogabea: %1"
@@ -765,7 +787,7 @@ msgstr "Ireki modu isilean"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:255
+#: ktorrent/view/view.cpp:256
 #, kde-format
 msgid "Speed Limits"
 msgstr "Abiadura-mugak"
@@ -917,33 +939,33 @@ msgstr "Kargatze-abiadura ziurtatua:"
 msgid "No assured speed"
 msgstr "Ez dago abiadura ziurtaturik"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:40
+#: ktorrent/dialogs/torrentcreatordlg.cpp:41
 #, kde-format
 msgid "Create A Torrent"
 msgstr "Sortu torrent bat"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:244
+#: ktorrent/dialogs/torrentcreatordlg.cpp:245
 #, kde-format
 msgid "Only HTTP is supported for webseeding."
 msgstr "HTTP da web-ereiteko euskarria duen bakarra.-"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:271
+#: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "Fitxategi edo karpeta bat hautatu behar duzu."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:277
+#: ktorrent/dialogs/torrentcreatordlg.cpp:278
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
 msgstr "Ez duzu aztarnaririk gehitu, ziur zaude torrent hau sortu nahi duzula?"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:284
+#: ktorrent/dialogs/torrentcreatordlg.cpp:286
 #, kde-format
 msgid "You must add at least one node."
 msgstr "Nodo bat sortu behar duzu gutxienez."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:338
+#: ktorrent/dialogs/torrentcreatordlg.cpp:340
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "Aukeratu torrent-a gordetzeko fitxategi bat"
@@ -1273,7 +1295,7 @@ msgstr "Editatu talde-politika"
 msgid "Open In New Tab"
 msgstr "Ireki beste fitxa batean"
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:222
+#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:223
 #, kde-format
 msgid "New Group"
 msgstr "Talde berria"
@@ -1497,13 +1519,13 @@ msgid "Advanced"
 msgstr "Aurreratua"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:241
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
 #, kde-format
 msgid "Open Directory"
 msgstr "Direktorioa ireki"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:244
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
 #, kde-format
 msgid "Add to Group"
 msgstr "Taldera erantsi"
@@ -1515,7 +1537,7 @@ msgid "Configure Columns"
 msgstr "Zutabeak konfiguratu"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:89
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
 #, kde-format
 msgid "Columns"
 msgstr "Zutabeak"
@@ -4097,165 +4119,165 @@ msgstr "Erroreak:"
 msgid "Filter..."
 msgstr "Iragazi..."
 
-#: ktorrent/view/view.cpp:131
+#: ktorrent/view/view.cpp:132
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "Abiarazi"
 
-#: ktorrent/view/view.cpp:132
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "Abiarazi uneko fitxan hautatuta dauden torrent guztiak"
 
-#: ktorrent/view/view.cpp:138
+#: ktorrent/view/view.cpp:139
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "Behartu abiaraztea"
 
-#: ktorrent/view/view.cpp:139
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "Behartu uneko fitxan hautatuta dauden torrent guztiak abiaraztea"
 
-#: ktorrent/view/view.cpp:143
+#: ktorrent/view/view.cpp:144
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "Gelditu"
 
-#: ktorrent/view/view.cpp:144
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "Gelditu uneko fitxan hautatuta dauden torrent guztiak"
 
-#: ktorrent/view/view.cpp:150
+#: ktorrent/view/view.cpp:151
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "Pausarazi"
 
-#: ktorrent/view/view.cpp:152
+#: ktorrent/view/view.cpp:153
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "Pausarazi uneko fitxan hautatuta dauden torrent guztiak"
 
-#: ktorrent/view/view.cpp:157
+#: ktorrent/view/view.cpp:158
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "Kendu"
 
-#: ktorrent/view/view.cpp:159
+#: ktorrent/view/view.cpp:160
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "Kendu uneko fitxan hautatuta dauden torrent guztiak"
 
-#: ktorrent/view/view.cpp:164
+#: ktorrent/view/view.cpp:165
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "Abiarazi guztiak"
 
-#: ktorrent/view/view.cpp:165
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "Abiarazi uneko fitxako torrent guztiak"
 
-#: ktorrent/view/view.cpp:170
+#: ktorrent/view/view.cpp:171
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "Gelditu guztiak"
 
-#: ktorrent/view/view.cpp:171
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "Gelditu uneko fitxako torrent guztiak"
 
-#: ktorrent/view/view.cpp:176
+#: ktorrent/view/view.cpp:177
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "Kendu torrenta eta datuak"
 
-#: ktorrent/view/view.cpp:181
+#: ktorrent/view/view.cpp:182
 #, kde-format
 msgid "Rename Torrent"
 msgstr "Berrizendatu torrent"
 
-#: ktorrent/view/view.cpp:185
+#: ktorrent/view/view.cpp:186
 #, kde-format
 msgid "Add Peers"
 msgstr "Gehitu pareak"
 
-#: ktorrent/view/view.cpp:189
+#: ktorrent/view/view.cpp:190
 #, kde-format
 msgid "Manual Announce"
 msgstr "Eskuzko iragarpena"
 
-#: ktorrent/view/view.cpp:194
+#: ktorrent/view/view.cpp:195
 #, kde-format
 msgid "Scrape"
 msgstr "Harraskatu"
 
-#: ktorrent/view/view.cpp:198
+#: ktorrent/view/view.cpp:199
 #, kde-format
 msgid "Preview"
 msgstr "Aurrebista"
 
-#: ktorrent/view/view.cpp:202
+#: ktorrent/view/view.cpp:203
 #, kde-format
 msgid "Data Directory"
 msgstr "Datu-direktorioa"
 
-#: ktorrent/view/view.cpp:206
+#: ktorrent/view/view.cpp:207
 #, kde-format
 msgid "Temporary Directory"
 msgstr "Aldi baterako direktorioa"
 
-#: ktorrent/view/view.cpp:210
+#: ktorrent/view/view.cpp:211
 #, kde-format
 msgid "Move Data"
 msgstr "Eraman datuak"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:214 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "Ezarpenak"
 
-#: ktorrent/view/view.cpp:218
+#: ktorrent/view/view.cpp:219
 #, kde-format
 msgid "Remove from Group"
 msgstr "Kendu taldetik"
 
-#: ktorrent/view/view.cpp:226
+#: ktorrent/view/view.cpp:227
 #, kde-format
 msgid "Check Data"
 msgstr "Egiaztatu datuak"
 
-#: ktorrent/view/view.cpp:227
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "Egiaztatu torrent-eko datu guztiak"
 
-#: ktorrent/view/view.cpp:247
+#: ktorrent/view/view.cpp:248
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "Kopiatu torrent-aren URLa"
 
-#: ktorrent/view/view.cpp:251
+#: ktorrent/view/view.cpp:252
 #, kde-format
 msgid "Export Torrent"
 msgstr "Esportatu torrent-a"
 
-#: ktorrent/view/view.cpp:256
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "Ezarri banakako torrent-en abiadura-mugak"
 
-#: ktorrent/view/view.cpp:450
+#: ktorrent/view/view.cpp:451
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
@@ -4264,22 +4286,22 @@ msgstr ""
 "Ez da amaitu <b>%1</b> torrent-a deskargatzen. Datu osatugabeak ere ezabatu "
 "nahi dituzu?"
 
-#: ktorrent/view/view.cpp:455
+#: ktorrent/view/view.cpp:456
 #, kde-format
 msgid "Remove Download"
 msgstr "Kendu deskarga"
 
-#: ktorrent/view/view.cpp:456
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Delete Data"
 msgstr "Ezabatu datuak"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Keep Data"
 msgstr "Mantendu datuak"
 
-#: ktorrent/view/view.cpp:481
+#: ktorrent/view/view.cpp:482
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
@@ -4288,13 +4310,13 @@ msgstr ""
 "Hurrengo torrent-en datu deskargatu guztiak galduko dituzu. Ziur zaude hori "
 "egin nahi duzula?"
 
-#: ktorrent/view/view.cpp:482
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid "Remove Torrent"
 msgstr "Kendu torrent-a"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
-#: plugins/infowidget/fileview.cpp:361
+#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:338
+#: plugins/infowidget/fileview.cpp:362
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Hautatu direktorio bat datuak eramateko."
@@ -4629,13 +4651,15 @@ msgstr "Kargatutako pasiboak"
 msgid "Ungrouped Torrents"
 msgstr "Torrent bananduak"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:150
+#: libktcore/interfaces/functions.cpp:155
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrent-ak"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:152
+#: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
 msgstr "Fitxategi guztiak"
@@ -4870,7 +4894,7 @@ msgstr ""
 "\"unavailable_color\">&nbsp; - Deskargatu beharreko zatiak<br><img src="
 "\"excluded_color\">&nbsp; - Zati baztertuak"
 
-#: libktcore/torrent/queuemanager.cpp:101
+#: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
@@ -4879,7 +4903,7 @@ msgstr ""
 "\"%1\" torrent-a iritsi da dagokion gehieneko partekatze-erlaziora eta "
 "ereite-denborara. Hala ere, mugari ez ikusi egin eta ereiten hasi nahi duzu?"
 
-#: libktcore/torrent/queuemanager.cpp:104
+#: libktcore/torrent/queuemanager.cpp:105
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
@@ -4888,7 +4912,7 @@ msgstr ""
 "\"%1\" torrent-a iritsi da dagokion gehieneko partekatze-erlaziora. Hala "
 "ere, mugari ez ikusi egin eta ereiten hasi nahi duzu?"
 
-#: libktcore/torrent/queuemanager.cpp:106
+#: libktcore/torrent/queuemanager.cpp:107
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
@@ -4897,12 +4921,23 @@ msgstr ""
 "\"%1\" torrent-a iritsi da dagokion gehieneko ereite-denborara. Hala ere, "
 "mugari ez ikusi egin eta ereiten hasi nahi duzu?"
 
-#: libktcore/torrent/queuemanager.cpp:110
+#: libktcore/torrent/queuemanager.cpp:114
 #, kde-format
 msgid "Limits reached."
 msgstr "Iritsi da mugetara."
 
-#: libktcore/torrent/queuemanager.cpp:133
+#: libktcore/torrent/queuemanager.cpp:115
+#: libktcore/torrent/queuemanager.cpp:225
+#: libktcore/torrent/queuemanager.cpp:264
+#: libktcore/torrent/queuemanager.cpp:293
+#, fuzzy, kde-format
+#| msgctxt "@action Start all selected torrents in the current tab"
+#| msgid "Start"
+msgctxt "@action:button"
+msgid "Start"
+msgstr "Abiarazi"
+
+#: libktcore/torrent/queuemanager.cpp:140
 #, kde-format
 msgid ""
 "You don't have enough disk space to download this torrent. Are you sure you "
@@ -4911,12 +4946,12 @@ msgstr ""
 "Ez duzu nahikoa leku libre diskoan torrent hau deskargatzeko. Ziur zaude "
 "jarraitu nahi duzula?"
 
-#: libktcore/torrent/queuemanager.cpp:136
+#: libktcore/torrent/queuemanager.cpp:143
 #, kde-format
 msgid "Insufficient disk space for %1"
 msgstr "Diskoan ez dago nahikoa leku %1(r)entzat."
 
-#: libktcore/torrent/queuemanager.cpp:213
+#: libktcore/torrent/queuemanager.cpp:222
 #, kde-format
 msgid ""
 "Not enough disk space for the following torrents. Do you want to start them "
@@ -4925,7 +4960,7 @@ msgstr ""
 "Ez dago nahikoa leku libre diskoan hurrengo torrent-etarako. Hala ere, "
 "abiarazi nahi dituzu?"
 
-#: libktcore/torrent/queuemanager.cpp:248
+#: libktcore/torrent/queuemanager.cpp:261
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
@@ -4934,7 +4969,7 @@ msgstr ""
 "Hurrengo torrent-ak gehieneko ereite-denborara iritsi dira. Hala ere, "
 "abiarazi nahi dituzu?"
 
-#: libktcore/torrent/queuemanager.cpp:274
+#: libktcore/torrent/queuemanager.cpp:290
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum share ratio. Do you want "
@@ -4943,18 +4978,18 @@ msgstr ""
 "Hurrengo torrent-ak gehieneko partekatze-erlaziora iritsi dira. Hala ere, "
 "abiarazi nahi dituzu?"
 
-#: libktcore/torrent/queuemanager.cpp:687
+#: libktcore/torrent/queuemanager.cpp:706
 #, kde-format
 msgid "Error starting torrent %1: %2"
 msgstr "Errorea gertatu da %1 torrent-a abiaraztean: %2"
 
-#: libktcore/torrent/queuemanager.cpp:688
-#: libktcore/torrent/queuemanager.cpp:699
+#: libktcore/torrent/queuemanager.cpp:707
+#: libktcore/torrent/queuemanager.cpp:718
 #, kde-format
 msgid "Error"
 msgstr "Errorea"
 
-#: libktcore/torrent/queuemanager.cpp:698
+#: libktcore/torrent/queuemanager.cpp:717
 #, kde-format
 msgid "Error stopping torrent %1: %2"
 msgstr "Errorea gertatu da %1 torrent-a gelditzean: %2"
@@ -5448,80 +5483,80 @@ msgstr "Falta dena:"
 msgid "Size:"
 msgstr "Tamaina:"
 
-#: plugins/infowidget/fileview.cpp:105
+#: plugins/infowidget/fileview.cpp:106
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Ireki"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Ireki honekin"
 
-#: plugins/infowidget/fileview.cpp:108
+#: plugins/infowidget/fileview.cpp:109
 #, kde-format
 msgid "Check File"
 msgstr "Egiaztatu fitxategia"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgid "Download first"
 msgstr "Lehenbizi deskargatu"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgid "Download normally"
 msgstr "Normal deskargatu"
 
-#: plugins/infowidget/fileview.cpp:112
+#: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgid "Download last"
 msgstr "Azkena deskargatu"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Do not download"
 msgstr "Ez zama-jaitsi"
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:116
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Ezabatu fitxategia(k)"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Move File"
 msgstr "Eraman fitxategia"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Tolestu karpeta-zuhaitza"
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "Zabaldu karpeta-zuhaitza"
 
-#: plugins/infowidget/fileview.cpp:123
+#: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "File Tree"
 msgstr "Fitxategi-zuhaitza"
 
-#: plugins/infowidget/fileview.cpp:125
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "File List"
 msgstr "Fitxategi-zerrenda"
 
-#: plugins/infowidget/fileview.cpp:135
+#: plugins/infowidget/fileview.cpp:136
 #, kde-format
 msgid "Show Filter"
 msgstr "Erakutsi iragazkia"
 
-#: plugins/infowidget/fileview.cpp:316
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
+#: plugins/infowidget/fileview.cpp:317
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
@@ -5533,7 +5568,7 @@ msgstr[1] ""
 "Fitxategi horietako datu guztiak galduko dituzu. Ziur zaude hori egin nahi "
 "duzula?"
 
-#: plugins/infowidget/fileview.cpp:446
+#: plugins/infowidget/fileview.cpp:447
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5545,6 +5580,12 @@ msgstr ""
 "\n"
 "Beharrezko datuak lehentasun handiagoarekin lor ditzan zama-jaiste "
 "sekuentziala gaitu?"
+
+#: plugins/infowidget/fileview.cpp:450
+#, kde-format
+msgctxt "@action:button"
+msgid "Enable Sequential Download Mode"
+msgstr ""
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -7047,13 +7088,13 @@ msgstr "Aztertu galdutako fitxategi bila"
 msgid "Widget position:"
 msgstr "Trepetaren kokalekua:"
 
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:30
 #, kde-format
 msgid "Scan for lost files"
 msgstr "Aztertu galdutako fitxategi bila"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:155
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
@@ -7335,28 +7376,28 @@ msgstr "Bilatzailea"
 msgid "Search Engine Label"
 msgstr "Bilatzailearen etiketa"
 
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
+#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:64
 #, kde-format
 msgid " Engine: "
 msgstr " Bilatzailea:"
 
-#: plugins/search/searchwidget.cpp:191
+#: plugins/search/searchwidget.cpp:192
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Deskargatzen:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:199
+#: plugins/search/searchwidget.cpp:200
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Torrent-a deskargatu edo gorde nahi duzu?"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:201
 #, kde-format
 msgid "Download Torrent"
 msgstr "Torrent-a deskargatu"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:202 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Deskargatu"
@@ -8855,6 +8896,9 @@ msgstr "Berraztertu"
 msgid "ZeroConf"
 msgstr "ZeroConf"
 
+#~ msgid "Yes, delete the files"
+#~ msgstr "Bai, ezabatu fitxategiak"
+
 #~ msgid "Scripting"
 #~ msgstr "Scriptgintza"
 
@@ -10321,10 +10365,6 @@ msgstr "ZeroConf"
 
 #~ msgid "1024"
 #~ msgstr "1024"
-
-#, fuzzy
-#~ msgid "&Create"
-#~ msgstr "So&rtu"
 
 #, fuzzy
 #~ msgid "Advanced Preferences"

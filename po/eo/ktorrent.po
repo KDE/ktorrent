@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-06 00:46+0000\n"
+"POT-Creation-Date: 2023-06-15 00:46+0000\n"
 "PO-Revision-Date: 2023-04-10 12:21+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -222,27 +222,27 @@ msgstr "Aldoni"
 msgid "Close"
 msgstr "Fermi"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:81
+#: ktorrent/dialogs/fileselectdlg.cpp:82
 #, kde-format
 msgid "Show a file tree"
 msgstr "Montri dosierarbon"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:84
+#: ktorrent/dialogs/fileselectdlg.cpp:85
 #, kde-format
 msgid "Show a file list"
 msgstr "Montri dosierliston"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
+#: ktorrent/dialogs/fileselectdlg.cpp:94 plugins/infowidget/fileview.cpp:65
 #, kde-format
 msgid "Filter"
 msgstr "Filtrilo"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:111
+#: ktorrent/dialogs/fileselectdlg.cpp:112
 #, kde-format
 msgid "Opening %1"
 msgstr "Malfermas %1"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:211
+#: ktorrent/dialogs/fileselectdlg.cpp:212
 #, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -253,7 +253,7 @@ msgstr ""
 "dosierujo. Ĉu vi volas importi ĉi tiujn dosierojn kaj uzi la kompletigitan "
 "elŝuta dosierujo kiel la loko?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:215
+#: ktorrent/dialogs/fileselectdlg.cpp:216
 #, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -264,7 +264,7 @@ msgstr ""
 "dosierujo. Ĉu vi volas importi ĉi tiujn dosierojn kaj uzi la kompletigitan "
 "elŝuta dosierujo kiel la loko?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:218
+#: ktorrent/dialogs/fileselectdlg.cpp:219
 #, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
@@ -273,13 +273,32 @@ msgstr ""
 "La dosiero <b>%1</b> estis trovita en la finita elŝuta dosierujo. Ĉu vi "
 "volas importi ĉi tiun dosieron?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:230
-#: ktorrent/dialogs/fileselectdlg.cpp:243
+#: ktorrent/dialogs/fileselectdlg.cpp:226
+#, fuzzy, kde-format
+#| msgid "&Import"
+msgctxt "@action:button"
+msgid "Import"
+msgstr "&Importi"
+
+#: ktorrent/dialogs/fileselectdlg.cpp:237
+#: ktorrent/dialogs/fileselectdlg.cpp:255
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "La dosierujo %1 ne ekzistas, ĉu vi volas krei ĝin?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:270
+#: ktorrent/dialogs/fileselectdlg.cpp:239
+#: ktorrent/dialogs/fileselectdlg.cpp:257
+#: ktorrent/dialogs/missingfilesdlg.cpp:91
+#: ktorrent/dialogs/missingfilesdlg.cpp:99
+#: ktorrent/dialogs/missingfilesdlg.cpp:133
+#: ktorrent/dialogs/torrentcreatordlg.cpp:280
+#, fuzzy, kde-format
+#| msgid "Recreate"
+msgctxt "@action:button"
+msgid "Create"
+msgstr "Rekrei"
+
+#: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
@@ -288,17 +307,21 @@ msgstr ""
 "Vi malelektis la jenajn ekzistantajn dosierojn. Vi perdos ĉiujn datumojn en "
 "ĉi tiuj dosieroj, ĉu vi certas, ke vi volas fari tion?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:272
-#, kde-format
-msgid "Yes, delete the files"
-msgstr "Jes, forigi la dosierojn"
+#: ktorrent/dialogs/fileselectdlg.cpp:292
+#, fuzzy, kde-format
+#| msgid "Delete File(s)"
+msgctxt "@action:button"
+msgid "Delete the Files"
+msgstr "Forigi dosiero(j)n"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:272
-#, kde-format
-msgid "No, keep the files"
+#: ktorrent/dialogs/fileselectdlg.cpp:293
+#, fuzzy, kde-format
+#| msgid "No, keep the files"
+msgctxt "@action:button"
+msgid "Keep the Files"
 msgstr "Ne, konservi la dosierojn"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:295
+#: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -309,55 +332,55 @@ msgstr ""
 "sekvaj torentoj. Torentos ne rajtas skribi al la samaj dosieroj. Bonvolu "
 "elekti alian lokon."
 
-#: ktorrent/dialogs/fileselectdlg.cpp:397 ktorrent/dialogs/pastedialog.cpp:61
-#: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
+#: ktorrent/dialogs/fileselectdlg.cpp:418 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "Ĉiuj torentoj"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:466
+#: ktorrent/dialogs/fileselectdlg.cpp:487
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr "<b>Ne eblas determini liberan spacon</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:473
+#: ktorrent/dialogs/fileselectdlg.cpp:494
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr "%1 (%2 uzata de ekzistantaj dosieroj)"
 
 # FUZZY MATCH (%1 short / %1 short!)
-#: ktorrent/dialogs/fileselectdlg.cpp:481
+#: ktorrent/dialogs/fileselectdlg.cpp:502
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "%1 ne atingis!"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:508
+#: ktorrent/dialogs/fileselectdlg.cpp:529
 #, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "Ekzistantaj dosieroj: <b>Neniu</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:510
+#: ktorrent/dialogs/fileselectdlg.cpp:531
 #, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "Ekzistantaj dosieroj: <b>Ĉiuj</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:512
+#: ktorrent/dialogs/fileselectdlg.cpp:533
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "Ekzistantaj dosieroj: <b>%1</b> de <b>%2</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:516
+#: ktorrent/dialogs/fileselectdlg.cpp:537
 #, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "Ekzistanta dosiero: <b>Ne</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:519
+#: ktorrent/dialogs/fileselectdlg.cpp:540
 #, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "Ekzistanta dosiero: <b>Jes</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:591
+#: ktorrent/dialogs/fileselectdlg.cpp:612
 #, kde-format
 msgid "Clear History"
 msgstr "Forviŝi la historion"
@@ -616,13 +639,13 @@ msgstr "&Importi"
 msgid "Ca&ncel"
 msgstr "Rezig&ni"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:71
-#: ktorrent/dialogs/missingfilesdlg.cpp:108
+#: ktorrent/dialogs/missingfilesdlg.cpp:72
+#: ktorrent/dialogs/missingfilesdlg.cpp:116
 #, kde-format
 msgid "Select the directory where the data now is."
 msgstr "Elektu la dosierujon kie la datumoj nune troviĝas."
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:88
+#: ktorrent/dialogs/missingfilesdlg.cpp:89
 #, kde-format
 msgid ""
 "The data files are not present in the location you selected. Do you want to "
@@ -631,7 +654,7 @@ msgstr ""
 "La datumdosieroj ne ĉeestas en la loko, kiun vi elektis. Ĉu vi volas krei "
 "ĉiujn dosierojn en la elektita dosierujo?"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:91
+#: ktorrent/dialogs/missingfilesdlg.cpp:96
 #, kde-format
 msgid ""
 "Not all files were found in the new location; some are still missing. Do you "
@@ -640,7 +663,7 @@ msgstr ""
 "Ne ĉiuj dosieroj estis trovitaj en la nova loko; kelkaj ankoraŭ mankas. Ĉu "
 "vi volas krei la mankantajn dosierojn en la elektita dosierujo?"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:123
+#: ktorrent/dialogs/missingfilesdlg.cpp:131
 #, kde-format
 msgid ""
 "The data file is not present in the location you selected. Do you want to "
@@ -706,7 +729,7 @@ msgstr "Nuligi, ne lanĉi la torenton."
 #. i18n: ectx: property (text), widget (QPushButton, cancel_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: ktorrent/dialogs/missingfilesdlg.ui:80 ktorrent/view/scanextender.ui:217
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:147
 #, kde-format
 msgid "Cancel"
 msgstr "Rezigni"
@@ -732,7 +755,7 @@ msgstr ""
 "atingebla."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:305
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:305
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Nevalida URL: %1"
@@ -754,7 +777,7 @@ msgstr "Malfermi silente"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:255
+#: ktorrent/view/view.cpp:256
 #, kde-format
 msgid "Speed Limits"
 msgstr "Limigo de rapido"
@@ -905,34 +928,34 @@ msgstr "Certigita Alŝuta Rapido"
 msgid "No assured speed"
 msgstr "Neniu certigita rapideco"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:40
+#: ktorrent/dialogs/torrentcreatordlg.cpp:41
 #, kde-format
 msgid "Create A Torrent"
 msgstr "Krei Torenton"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:244
+#: ktorrent/dialogs/torrentcreatordlg.cpp:245
 #, kde-format
 msgid "Only HTTP is supported for webseeding."
 msgstr "Nur HTTP estas subtenata por retsemado."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:271
+#: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "Vi devas elekti dosieron aŭ dosierujon."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:277
+#: ktorrent/dialogs/torrentcreatordlg.cpp:278
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
 msgstr ""
 "Vi ne aldonis spurilon, ĉu vi certas, ke vi volas krei ĉi tiun torenton?"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:284
+#: ktorrent/dialogs/torrentcreatordlg.cpp:286
 #, kde-format
 msgid "You must add at least one node."
 msgstr "Vi devas aldoni almenaŭ unu nodon."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:338
+#: ktorrent/dialogs/torrentcreatordlg.cpp:340
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "Por konservo de torento, elektu dosieron"
@@ -1260,7 +1283,7 @@ msgstr "Redakti Gruppolitikon"
 msgid "Open In New Tab"
 msgstr "Malfermi En Nova Langeto"
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:222
+#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:223
 #, kde-format
 msgid "New Group"
 msgstr "Nova grupo"
@@ -1484,13 +1507,13 @@ msgid "Advanced"
 msgstr "Speciala"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:241
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
 #, kde-format
 msgid "Open Directory"
 msgstr "Malfermi dosierujon"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:244
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
 #, kde-format
 msgid "Add to Group"
 msgstr "Aldoni al grupo"
@@ -1502,7 +1525,7 @@ msgid "Configure Columns"
 msgstr "Agordi Kolumnojn"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:89
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
 #, kde-format
 msgid "Columns"
 msgstr "Kolumnoj"
@@ -4049,165 +4072,165 @@ msgstr "Eraroj:"
 msgid "Filter..."
 msgstr "Filtrilo"
 
-#: ktorrent/view/view.cpp:131
+#: ktorrent/view/view.cpp:132
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "Komenci"
 
-#: ktorrent/view/view.cpp:132
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "Komenci ĉiujn elektitajn torentojn en la nuna langeto"
 
-#: ktorrent/view/view.cpp:138
+#: ktorrent/view/view.cpp:139
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "Forto Komenco"
 
-#: ktorrent/view/view.cpp:139
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "Devigi lanĉi ĉiujn elektitajn torentojn en la nuna langeto"
 
-#: ktorrent/view/view.cpp:143
+#: ktorrent/view/view.cpp:144
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "Ĉesi"
 
-#: ktorrent/view/view.cpp:144
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "Ĉesi ĉiujn elektitajn torentojn en la nuna langeto"
 
-#: ktorrent/view/view.cpp:150
+#: ktorrent/view/view.cpp:151
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "Paŭzita"
 
-#: ktorrent/view/view.cpp:152
+#: ktorrent/view/view.cpp:153
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "Paŭzi ĉiujn elektitajn torentojn en la nuna langeto"
 
-#: ktorrent/view/view.cpp:157
+#: ktorrent/view/view.cpp:158
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "Forpreni"
 
-#: ktorrent/view/view.cpp:159
+#: ktorrent/view/view.cpp:160
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "Forigi ĉiujn elektitajn torentojn en la nuna langeto"
 
-#: ktorrent/view/view.cpp:164
+#: ktorrent/view/view.cpp:165
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "Komenci ĉiujn"
 
-#: ktorrent/view/view.cpp:165
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "Komenci ĉiujn torentojn en la nuna langeto"
 
-#: ktorrent/view/view.cpp:170
+#: ktorrent/view/view.cpp:171
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "Ĉesigi ĉiujn"
 
-#: ktorrent/view/view.cpp:171
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "Halti ĉiujn torentojn en la nuna langeto"
 
-#: ktorrent/view/view.cpp:176
+#: ktorrent/view/view.cpp:177
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "Elpreni torenton kaj datumojn"
 
-#: ktorrent/view/view.cpp:181
+#: ktorrent/view/view.cpp:182
 #, kde-format
 msgid "Rename Torrent"
 msgstr "Alinomi Torento"
 
-#: ktorrent/view/view.cpp:185
+#: ktorrent/view/view.cpp:186
 #, kde-format
 msgid "Add Peers"
 msgstr "Aldoni kundividantojn"
 
-#: ktorrent/view/view.cpp:189
+#: ktorrent/view/view.cpp:190
 #, kde-format
 msgid "Manual Announce"
 msgstr "Permana konekto"
 
-#: ktorrent/view/view.cpp:194
+#: ktorrent/view/view.cpp:195
 #, kde-format
 msgid "Scrape"
 msgstr "Informpeti"
 
-#: ktorrent/view/view.cpp:198
+#: ktorrent/view/view.cpp:199
 #, kde-format
 msgid "Preview"
 msgstr "Antaŭvido"
 
-#: ktorrent/view/view.cpp:202
+#: ktorrent/view/view.cpp:203
 #, kde-format
 msgid "Data Directory"
 msgstr "Datuma dosierujo"
 
-#: ktorrent/view/view.cpp:206
+#: ktorrent/view/view.cpp:207
 #, kde-format
 msgid "Temporary Directory"
 msgstr "Provizora dosierujo"
 
-#: ktorrent/view/view.cpp:210
+#: ktorrent/view/view.cpp:211
 #, kde-format
 msgid "Move Data"
 msgstr "Movi datumojn"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:214 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "Agordo"
 
-#: ktorrent/view/view.cpp:218
+#: ktorrent/view/view.cpp:219
 #, kde-format
 msgid "Remove from Group"
 msgstr "Elpreni el grupo"
 
-#: ktorrent/view/view.cpp:226
+#: ktorrent/view/view.cpp:227
 #, kde-format
 msgid "Check Data"
 msgstr "Kontroli datumojn"
 
-#: ktorrent/view/view.cpp:227
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "Kontroli ĉiujn datumojn de torento"
 
-#: ktorrent/view/view.cpp:247
+#: ktorrent/view/view.cpp:248
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "Kopii Torento-URL"
 
-#: ktorrent/view/view.cpp:251
+#: ktorrent/view/view.cpp:252
 #, kde-format
 msgid "Export Torrent"
 msgstr "Eksporti Torenton"
 
-#: ktorrent/view/view.cpp:256
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "Meti la rapidlimojn de individuaj torentoj"
 
-#: ktorrent/view/view.cpp:450
+#: ktorrent/view/view.cpp:451
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
@@ -4216,22 +4239,22 @@ msgstr ""
 "Torento <b>%1</b> ne finas la elŝuton, ĉu vi volas forigi ties nekompletajn "
 "datumojn?"
 
-#: ktorrent/view/view.cpp:455
+#: ktorrent/view/view.cpp:456
 #, kde-format
 msgid "Remove Download"
 msgstr "Forigi elŝuton"
 
-#: ktorrent/view/view.cpp:456
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Delete Data"
 msgstr "Forigi datumojn"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Keep Data"
 msgstr "Konservi datumojn"
 
-#: ktorrent/view/view.cpp:481
+#: ktorrent/view/view.cpp:482
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
@@ -4240,13 +4263,13 @@ msgstr ""
 "Vi perdos ĉiujn elŝutitajn datumojn de la sekvaj torentoj. Ĉu vi certas, ke "
 "vi volas fari ĉi tion?"
 
-#: ktorrent/view/view.cpp:482
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid "Remove Torrent"
 msgstr "Forigi torenton"
 
-#: ktorrent/view/view.cpp:572 plugins/infowidget/fileview.cpp:337
-#: plugins/infowidget/fileview.cpp:361
+#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:338
+#: plugins/infowidget/fileview.cpp:362
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Elektu dosierujon al kie vi volas movi la datumojn."
@@ -4582,13 +4605,15 @@ msgstr "Pasivaj Alŝutoj"
 msgid "Ungrouped Torrents"
 msgstr "Negrupigitaj Torentoj"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:150
+#: libktcore/interfaces/functions.cpp:155
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrents"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:152
+#: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
 msgstr "Ĉiuj dosieroj"
@@ -4824,7 +4849,7 @@ msgstr ""
 "\"unavailable_color\">&nbsp; - Elŝutotaj pecoj<br><img src=\"excluded_color"
 "\">&nbsp; - Ekskluzivitaj pecoj"
 
-#: libktcore/torrent/queuemanager.cpp:101
+#: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
@@ -4833,7 +4858,7 @@ msgstr ""
 "La torento \"%1\" atingis sian maksimuman kundividon kaj sian maksimuman "
 "seman tempon. Ignori la limon kaj komenci semi ĉiuokaze?"
 
-#: libktcore/torrent/queuemanager.cpp:104
+#: libktcore/torrent/queuemanager.cpp:105
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
@@ -4842,7 +4867,7 @@ msgstr ""
 "La torento \"%1\" atingis sian maksimuman kundividon. Ignori la limon kaj "
 "komenci semi ĉiuokaze?"
 
-#: libktcore/torrent/queuemanager.cpp:106
+#: libktcore/torrent/queuemanager.cpp:107
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
@@ -4851,12 +4876,23 @@ msgstr ""
 "La torento \"%1\" atingis sian maksimuman seman tempon. Ignori la limon kaj "
 "komenci semi ĉiuokaze?"
 
-#: libktcore/torrent/queuemanager.cpp:110
+#: libktcore/torrent/queuemanager.cpp:114
 #, kde-format
 msgid "Limits reached."
 msgstr "Limoj atingitaj."
 
-#: libktcore/torrent/queuemanager.cpp:133
+#: libktcore/torrent/queuemanager.cpp:115
+#: libktcore/torrent/queuemanager.cpp:225
+#: libktcore/torrent/queuemanager.cpp:264
+#: libktcore/torrent/queuemanager.cpp:293
+#, fuzzy, kde-format
+#| msgctxt "@action Start all selected torrents in the current tab"
+#| msgid "Start"
+msgctxt "@action:button"
+msgid "Start"
+msgstr "Komenci"
+
+#: libktcore/torrent/queuemanager.cpp:140
 #, kde-format
 msgid ""
 "You don't have enough disk space to download this torrent. Are you sure you "
@@ -4865,12 +4901,12 @@ msgstr ""
 "Vi ne havas sufiĉan diskspacon por elŝuti ĉi tiun torenton. Ĉu vi certas ke "
 "vi volas daŭri?"
 
-#: libktcore/torrent/queuemanager.cpp:136
+#: libktcore/torrent/queuemanager.cpp:143
 #, kde-format
 msgid "Insufficient disk space for %1"
 msgstr "Nesufiĉa diskspaco por %1"
 
-#: libktcore/torrent/queuemanager.cpp:213
+#: libktcore/torrent/queuemanager.cpp:222
 #, kde-format
 msgid ""
 "Not enough disk space for the following torrents. Do you want to start them "
@@ -4878,7 +4914,7 @@ msgid ""
 msgstr ""
 "Ne sufiĉa diskospaco por la sekvaj torentoj. Ĉu vi tamen volas komenci ilin?"
 
-#: libktcore/torrent/queuemanager.cpp:248
+#: libktcore/torrent/queuemanager.cpp:261
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
@@ -4887,7 +4923,7 @@ msgstr ""
 "La sekvaj torentoj atingis sian maksimuman seman tempon. Ĉu vi tamen volas "
 "komenci ilin?"
 
-#: libktcore/torrent/queuemanager.cpp:274
+#: libktcore/torrent/queuemanager.cpp:290
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum share ratio. Do you want "
@@ -4896,18 +4932,18 @@ msgstr ""
 "La sekvaj torentoj atingis sian maksimuman kundividon. Ĉu vi tamen volas "
 "komenci ilin?"
 
-#: libktcore/torrent/queuemanager.cpp:687
+#: libktcore/torrent/queuemanager.cpp:706
 #, kde-format
 msgid "Error starting torrent %1: %2"
 msgstr "Eraro dum lanĉado de torento %1: %2"
 
-#: libktcore/torrent/queuemanager.cpp:688
-#: libktcore/torrent/queuemanager.cpp:699
+#: libktcore/torrent/queuemanager.cpp:707
+#: libktcore/torrent/queuemanager.cpp:718
 #, kde-format
 msgid "Error"
 msgstr "Eraro"
 
-#: libktcore/torrent/queuemanager.cpp:698
+#: libktcore/torrent/queuemanager.cpp:717
 #, kde-format
 msgid "Error stopping torrent %1: %2"
 msgstr "Eraro ĉesigante torenton %1: %2"
@@ -5398,80 +5434,80 @@ msgstr "Maldekstra:"
 msgid "Size:"
 msgstr "Grando:"
 
-#: plugins/infowidget/fileview.cpp:105
+#: plugins/infowidget/fileview.cpp:106
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Malfermi"
 
-#: plugins/infowidget/fileview.cpp:107
+#: plugins/infowidget/fileview.cpp:108
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Malfermi per"
 
-#: plugins/infowidget/fileview.cpp:108
+#: plugins/infowidget/fileview.cpp:109
 #, kde-format
 msgid "Check File"
 msgstr "Kontroli Dosieron"
 
-#: plugins/infowidget/fileview.cpp:110
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgid "Download first"
 msgstr "Elŝuti unue"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgid "Download normally"
 msgstr "Elŝuti laŭkutime"
 
-#: plugins/infowidget/fileview.cpp:112
+#: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgid "Download last"
 msgstr "Elŝuti laste"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Do not download"
 msgstr "Ne elŝuti"
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:116
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Forigi dosiero(j)n"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Move File"
 msgstr "Movi dosieron"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Kolapsa Dosierujo Arbo"
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "Vastigi Dosierujo-Arbon"
 
-#: plugins/infowidget/fileview.cpp:123
+#: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "File Tree"
 msgstr "Dosiera Arbo"
 
-#: plugins/infowidget/fileview.cpp:125
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "File List"
 msgstr "Dosiera Listo"
 
-#: plugins/infowidget/fileview.cpp:135
+#: plugins/infowidget/fileview.cpp:136
 #, kde-format
 msgid "Show Filter"
 msgstr "Montri Filtrilon"
 
-#: plugins/infowidget/fileview.cpp:316
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
+#: plugins/infowidget/fileview.cpp:317
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
@@ -5483,7 +5519,7 @@ msgstr[1] ""
 "Vi perdos ĉiujn datumojn en ĉi tiuj dosieroj, ĉu vi certas ke vi volas fari "
 "tion?"
 
-#: plugins/infowidget/fileview.cpp:446
+#: plugins/infowidget/fileview.cpp:447
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5495,6 +5531,12 @@ msgstr ""
 "\n"
 "Ĉu ebligi sinsekvan elŝut-reĝimon por ke ĝi akiru necesajn datumojn kun pli "
 "alta prioritato?"
+
+#: plugins/infowidget/fileview.cpp:450
+#, kde-format
+msgctxt "@action:button"
+msgid "Enable Sequential Download Mode"
+msgstr ""
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -6993,13 +7035,13 @@ msgstr "Skani por perditaj dosieroj"
 msgid "Widget position:"
 msgstr "Pozicio de la fenestraĵo:"
 
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:30
 #, kde-format
 msgid "Scan for lost files"
 msgstr "Skani por perditaj dosieroj"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:155
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
@@ -7280,28 +7322,28 @@ msgstr "Serĉilo"
 msgid "Search Engine Label"
 msgstr "Titoleto por serĉilo"
 
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
+#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:64
 #, kde-format
 msgid " Engine: "
 msgstr " Serĉilo: "
 
-#: plugins/search/searchwidget.cpp:191
+#: plugins/search/searchwidget.cpp:192
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Elŝuto:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:199
+#: plugins/search/searchwidget.cpp:200
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Ĉu vi volas elŝuti aŭ konservi la fontan torenton?"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:201
 #, kde-format
 msgid "Download Torrent"
 msgstr "Elŝuti torenton"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:202 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Elŝuti"
@@ -8782,3 +8824,6 @@ msgstr "Reserĉi"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Yes, delete the files"
+#~ msgstr "Jes, forigi la dosierojn"
