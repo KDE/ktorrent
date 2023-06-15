@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-15 00:47+0000\n"
+"POT-Creation-Date: 2023-06-15 02:44+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -4426,14 +4426,16 @@ msgstr "නිශ්ක්‍රීය අපගත"
 msgid "Ungrouped Torrents"
 msgstr "සමූහ නොකල ටොරෙන්ට්"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:150
+#: libktcore/interfaces/functions.cpp:155
 #, fuzzy, kde-format
 #| msgid "Torrents"
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "ටොරෙන්ට"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:152
+#: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
 msgstr "සියලු ගොනු"

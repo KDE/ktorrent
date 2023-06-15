@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-15 00:47+0000\n"
+"POT-Creation-Date: 2023-06-15 02:44+0000\n"
 "PO-Revision-Date: 2021-08-08 10:12+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -4764,13 +4764,15 @@ msgstr "Envois inactifs"
 msgid "Ungrouped Torrents"
 msgstr "Torrents non groupés"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:150
+#: libktcore/interfaces/functions.cpp:155
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrents"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:152
+#: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
 msgstr "Tous les fichiers"

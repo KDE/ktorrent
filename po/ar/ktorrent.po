@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-15 00:47+0000\n"
+"POT-Creation-Date: 2023-06-15 02:44+0000\n"
 "PO-Revision-Date: 2022-02-12 12:11+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -4471,14 +4471,16 @@ msgstr "المرفوعات السلبية"
 msgid "Ungrouped Torrents"
 msgstr "السيول غير المُجمَّعة"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:150
+#: libktcore/interfaces/functions.cpp:155
 #, fuzzy, kde-format
 #| msgid "Torrents"
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "السيول"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:152
+#: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
 msgstr "كلّ الملفات"

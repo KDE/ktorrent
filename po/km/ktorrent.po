@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-15 00:47+0000\n"
+"POT-Creation-Date: 2023-06-15 02:44+0000\n"
 "PO-Revision-Date: 2012-07-04 08:46+0700\n"
 "Last-Translator: Sophea <sophea@khmeros.info>\n"
 "Language-Team: Khmer <>\n"
@@ -4542,14 +4542,16 @@ msgstr "ការ​ផ្ទុកឡើង​អសកម្ម"
 msgid "Ungrouped Torrents"
 msgstr "Torrent មិនបាន​ដាក់​ជា​ក្រុម"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:150
+#: libktcore/interfaces/functions.cpp:155
 #, fuzzy, kde-format
 #| msgid "Torrents"
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrent"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:152
+#: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
 msgstr "ឯកសារ​ទាំងអស់"

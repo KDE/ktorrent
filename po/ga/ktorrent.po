@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network/ktorrent.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-15 00:47+0000\n"
+"POT-Creation-Date: 2023-06-15 02:44+0000\n"
 "PO-Revision-Date: 2007-08-07 07:02-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -4486,14 +4486,16 @@ msgstr "Uasluchtuithe Neamhghníomhacha"
 msgid "Ungrouped Torrents"
 msgstr "Torrents Gan Ghrúpa"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:150
+#: libktcore/interfaces/functions.cpp:155
 #, fuzzy, kde-format
 #| msgid "Torrents"
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrents"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:152
+#: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
 msgstr "Gach comhad"
