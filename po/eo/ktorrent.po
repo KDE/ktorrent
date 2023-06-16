@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-04-10 12:21+0100\n"
+"PO-Revision-Date: 2023-06-15 20:03+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -274,11 +274,10 @@ msgstr ""
 "volas importi ĉi tiun dosieron?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Importi"
+msgstr "Importi"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -292,11 +291,10 @@ msgstr "La dosierujo %1 ne ekzistas, ĉu vi volas krei ĝin?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Rekrei"
+msgstr "Krei"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -308,18 +306,16 @@ msgstr ""
 "ĉi tiuj dosieroj, ĉu vi certas, ke vi volas fari tion?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Forigi dosiero(j)n"
+msgstr "Forigi la dosierojn"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Ne, konservi la dosierojn"
+msgstr "Konservi la dosierojn"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -329,7 +325,7 @@ msgid ""
 "Please select a different location."
 msgstr ""
 "Malfermi la torenton <b>%1</b>, kunhavigus unu aŭ plurajn dosierojn kun la "
-"sekvaj torentoj. Torentos ne rajtas skribi al la samaj dosieroj. Bonvolu "
+"sekvaj torentoj. Torentoj ne rajtas skribi al la samaj dosieroj. Bonvolu "
 "elekti alian lokon."
 
 #: ktorrent/dialogs/fileselectdlg.cpp:418 ktorrent/dialogs/pastedialog.cpp:61
@@ -625,7 +621,7 @@ msgstr "Elektu la torentdosieron kaj la apartenantajn datumojn."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -3506,7 +3502,7 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format
@@ -4885,12 +4881,10 @@ msgstr "Limoj atingitaj."
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
-msgstr "Komenci"
+msgstr "Startigi"
 
 #: libktcore/torrent/queuemanager.cpp:140
 #, kde-format
@@ -5536,7 +5530,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "Ebligi sinsekvan elŝut-reĝimon"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -8824,6 +8818,3 @@ msgstr "Reserĉi"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Yes, delete the files"
-#~ msgstr "Jes, forigi la dosierojn"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-06-09 23:18+0100\n"
+"PO-Revision-Date: 2023-06-15 11:50+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
 "Language: pt\n"
@@ -322,11 +322,10 @@ msgstr ""
 "Deseja importar esse ficheiro?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Importar"
+msgstr "Importar"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -340,11 +339,10 @@ msgstr "A pasta %1 não existe; deseja criá-la?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Criar de novo"
+msgstr "Criar"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -356,18 +354,16 @@ msgstr ""
 "destes ficheiros; tem a certeza que quer fazer isto?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "Remover os Ficheiros"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Não, manter os ficheiros"
+msgstr "Manter os Ficheiros"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -4970,9 +4966,7 @@ msgstr "Foi atingido o limite."
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Iniciar"
@@ -5623,7 +5617,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "Activar o Modo de Transferência Sequencial"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -8923,6 +8917,3 @@ msgstr "Pesquisar de Novo"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Yes, delete the files"
-#~ msgstr "Sim, remover os ficheiros"

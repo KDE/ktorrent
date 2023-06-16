@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-06-06 23:24+0200\n"
+"PO-Revision-Date: 2023-06-15 13:58+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -282,11 +282,10 @@ msgstr ""
 "worden. Möchten Sie diese Datei importieren?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Importieren"
+msgstr "Importieren"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -300,11 +299,10 @@ msgstr "Der Ordner %1 existiert nicht. Möchten Sie ihn erstellen?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "&Create"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Ers&tellen"
+msgstr "Erstellen"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -317,18 +315,16 @@ msgstr ""
 "Sie sicher, dass Sie dies möchten?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Datei(en) löschen"
+msgstr "Dateien löschen"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Nein, Dateien behalten"
+msgstr "Dateien behalten"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -2688,8 +2684,7 @@ msgstr "Symbol im Systemabschnitt der Kontrollleiste"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
-#, fuzzy, kde-format
-#| msgid "Whether or not to show an icon in the system tray."
+#, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
 msgstr ""
 "Gibt an, ob ein Symbol im Systemabschnitt der Kontrollleiste angezeigt wird."

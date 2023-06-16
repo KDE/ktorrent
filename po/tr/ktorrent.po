@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-06-06 05:25+0300\n"
+"PO-Revision-Date: 2023-06-15 22:40+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -282,11 +282,10 @@ msgstr ""
 "aktarmak istiyor musunuz?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&İçe Aktar"
+msgstr "İçe Aktar"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -300,11 +299,10 @@ msgstr "%1 dizini yok, oluşturmak istiyor musunuz?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Yeniden Oluştur"
+msgstr "Oluştur"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -316,18 +314,16 @@ msgstr ""
 "kaybedeceksiniz, bunu yapmak istediğinizden emin misiniz?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Dosya(ları) Sil"
+msgstr "Dosyaları Sil"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Hayır, dosyaları koru"
+msgstr "Dosyaları Tut"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -4888,9 +4884,7 @@ msgstr "Sınırlara ulaşıldı."
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Başlat"
@@ -5537,7 +5531,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "Sıralı İndirme Kipini Etkinleştir"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12

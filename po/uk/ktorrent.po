@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-06-06 07:49+0300\n"
+"PO-Revision-Date: 2023-06-15 08:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -276,11 +276,10 @@ msgstr ""
 "імпортувати цей файл?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Імпортувати"
+msgstr "Імпортувати"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -294,11 +293,10 @@ msgstr "Каталог %1 не існує, бажаєте його створи�
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Створити заново"
+msgstr "Створити"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -310,18 +308,16 @@ msgstr ""
 "файлах. Ви справді хочете це робити?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Вилучити файл(и)"
+msgstr "Вилучити файли"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Ні, залишити файли"
+msgstr "Залишити файли"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -4951,12 +4947,10 @@ msgstr "Перевищено обмеження."
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
-msgstr "Запустити"
+msgstr "Пуск"
 
 #: libktcore/torrent/queuemanager.cpp:140
 #, kde-format
@@ -5610,7 +5604,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "Увімкнути режим послідовного отримання"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
