@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-02-03 16:10+0100\n"
+"PO-Revision-Date: 2023-06-16 06:41+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -91,7 +91,7 @@ msgstr ""
 #: ktorrent/core.cpp:1055 ktorrent/core.cpp:1063 ktorrent/core.cpp:1073
 #, kde-format
 msgid "Data files are missing"
-msgstr ""
+msgstr "მონაცემების ფაილები აღმოჩენილი არაა"
 
 #: ktorrent/core.cpp:1062
 #, kde-format
@@ -113,12 +113,12 @@ msgstr ""
 #: ktorrent/core.cpp:1089 ktorrent/core.cpp:1096
 #, kde-format
 msgid "Data file is missing"
-msgstr ""
+msgstr "მონაცემების ფაილი აღმოჩენილი არაა"
 
 #: ktorrent/core.cpp:1095
 #, kde-format
 msgid "Cannot recreate data file: %1"
-msgstr ""
+msgstr "მონაცემების ფაილის შექმნის შეცდომა: %1"
 
 #: ktorrent/core.cpp:1196
 #, kde-format
@@ -245,11 +245,10 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&იმპორტი"
+msgstr "შემოტანა"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -263,11 +262,10 @@ msgstr ""
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "თავიდან შექმნა"
+msgstr "შექმნა"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -277,18 +275,16 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "ფაილების წაშლა"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "არა, დაიტოვე ფაილები"
+msgstr "ფაილების შენარჩუნება"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -312,7 +308,7 @@ msgstr "<b>თავისუფალი ადგილსი განსა�
 #: ktorrent/dialogs/fileselectdlg.cpp:494
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
-msgstr ""
+msgstr "%1 (%2 გამოიყენება არსებული ფაილების იერ)"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:502
 #, kde-format
@@ -553,7 +549,7 @@ msgstr "%1-ის შექმნის შეცდომა: %2"
 #: ktorrent/dialogs/importdialog.ui:14
 #, kde-format
 msgid "Import an existing torrent"
-msgstr ""
+msgstr "არსებული ტორენტის შემოტანა"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ktorrent/dialogs/importdialog.ui:30
@@ -583,13 +579,13 @@ msgstr ""
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
 #, kde-format
 msgid "&Import"
-msgstr "&იმპორტი"
+msgstr "&შემოტანა"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel_btn)
 #: ktorrent/dialogs/importdialog.ui:119
@@ -670,7 +666,7 @@ msgstr ""
 #: ktorrent/dialogs/missingfilesdlg.ui:57
 #, kde-format
 msgid "Select New Location"
-msgstr ""
+msgstr "აირჩიეთ ახალი მდებარეობა"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_cancel)
 #: ktorrent/dialogs/missingfilesdlg.ui:77
@@ -985,19 +981,19 @@ msgstr "2 მიბ"
 #: ktorrent/dialogs/torrentcreatordlg.ui:117
 #, kde-format
 msgid "4 MiB"
-msgstr ""
+msgstr "4 მიბ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:122
 #, kde-format
 msgid "8 MiB"
-msgstr ""
+msgstr "8 მიბ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:127
 #, kde-format
 msgid "16 MiB"
-msgstr ""
+msgstr "16 მიბ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_start_seeding)
 #: ktorrent/dialogs/torrentcreatordlg.ui:137
@@ -1267,7 +1263,7 @@ msgstr ""
 #: ktorrent/gui.cpp:356
 #, kde-format
 msgid "Open a torrent"
-msgstr ""
+msgstr "ტორენტის გახსნა"
 
 #: ktorrent/gui.cpp:359
 #, kde-format
@@ -1324,7 +1320,7 @@ msgstr "გ: %1 | ა: %2"
 #: ktorrent/ipfilterwidget.cpp:39
 #, kde-format
 msgid "IP Filter List"
-msgstr ""
+msgstr "IP ფილტრების სია"
 
 #: ktorrent/ipfilterwidget.cpp:91
 #, kde-format
@@ -2166,7 +2162,7 @@ msgstr ""
 #: ktorrent/pref/btpref.cpp:14
 #, kde-format
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #. i18n: ectx: property (title), widget (QGroupBox, dhtGroupBox)
 #: ktorrent/pref/btpref.ui:17
@@ -2357,7 +2353,7 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:54
 #, kde-format
 msgid "Torrent error:"
-msgstr ""
+msgstr "ტორენტის შეცდომა:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -4234,7 +4230,7 @@ msgstr ""
 #: ktupnptest/upnptestwidget.ui:24
 #, kde-format
 msgid "Router:"
-msgstr ""
+msgstr "რაუტერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, m_router)
 #: ktupnptest/upnptestwidget.ui:40
@@ -4291,7 +4287,7 @@ msgstr ""
 #: libktcore/groups/groupmanager.cpp:88
 #, kde-format
 msgid "Uploads"
-msgstr ""
+msgstr "ატვირთვები"
 
 #: libktcore/groups/groupmanager.cpp:89
 #, kde-format
@@ -4526,7 +4522,7 @@ msgstr ""
 #: libktcore/ktorrent.kcfg:141
 #, kde-format
 msgid "DHT port"
-msgstr ""
+msgstr "DHT-ის პორტი"
 
 #. i18n: ectx: label, entry (numUploadSlots), group (downloads)
 #: libktcore/ktorrent.kcfg:150
@@ -4620,9 +4616,7 @@ msgstr ""
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "გაშვება"
@@ -5142,7 +5136,7 @@ msgstr "გამორიცხული:"
 #: plugins/infowidget/chunkdownloadview.ui:170
 #, kde-format
 msgid "Left:"
-msgstr ""
+msgstr "დარჩენილია:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_8)
 #: plugins/infowidget/chunkdownloadview.ui:206
@@ -5160,7 +5154,7 @@ msgstr ""
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
-msgstr ""
+msgstr "გახსნა"
 
 #: plugins/infowidget/fileview.cpp:109
 #, kde-format
@@ -6465,7 +6459,7 @@ msgstr ""
 #: plugins/mediaplayer/playlistwidget.cpp:41
 #, kde-format
 msgid "Clear Playlist"
-msgstr ""
+msgstr "დასაკრავი სიის გასუფთავება"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:133
 #, kde-format
@@ -7986,7 +7980,7 @@ msgstr "სახელი:"
 #: plugins/syndication/filtereditor.ui:38
 #, kde-format
 msgid "String Matching"
-msgstr ""
+msgstr "სტრიქონების დამთხვევა"
 
 #. i18n: ectx: property (toolTip), widget (KEditListWidget, m_word_matches)
 #. i18n: ectx: property (toolTip), widget (KEditListWidget, m_exclusion_patterns)
@@ -8200,7 +8194,7 @@ msgstr ""
 #: plugins/syndication/ktfeed.cpp:452
 #, kde-format
 msgid "Unknown hostname"
-msgstr ""
+msgstr "უცნობი ჰოსტის სახელი"
 
 #: plugins/syndication/ktfeed.cpp:454
 #, kde-format
