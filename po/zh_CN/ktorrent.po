@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-05-22 14:01\n"
+"PO-Revision-Date: 2023-06-17 04:11\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -257,11 +257,10 @@ msgid ""
 msgstr "完成下载目录发现文件 <b>%1</b> ，您想要导入该文件吗？"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "导入(&I)"
+msgstr "导入"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -275,11 +274,10 @@ msgstr "文件夹 %1 不存在，您想要创建它吗？"
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "重建"
+msgstr "创建"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -290,18 +288,16 @@ msgstr ""
 "您已反选了以下已有文件。您将丢失这些文件中的全部数据，您确定要这么做吗？"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "删除文件"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "否，保留文件"
+msgstr "保留文件"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -600,7 +596,7 @@ msgstr "请选择种子文件和属于它的数据。"
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -3398,7 +3394,7 @@ msgstr "DHT：%1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format
@@ -4736,9 +4732,7 @@ msgstr "达到限制。"
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "开始"
@@ -5361,13 +5355,13 @@ msgid ""
 msgstr ""
 "尚未下载足够的数据，因此无法打开文件。\n"
 "\n"
-"是否要启用顺序下载模式，优先获取必要的数据？"
+"是否要启用顺序下载模式，以优先获取必要的数据？"
 
 #: plugins/infowidget/fileview.cpp:450
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "启用顺序下载模式"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -6185,7 +6179,7 @@ msgid ""
 "NOTE: archive files like zip and tar.gz or tar.bz2 are supported."
 msgstr ""
 "从 bluetack.co.uk 或 iblocklist.org 下载 PeerGuardian 过滤文件。\n"
-"提示：支持诸如 zip、tar.gz 或者 tar.bz2 这样的压缩包文件。"
+"提示：支持 zip、tar.gz 或者 tar.bz2 等压缩文件格式。"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_auto_update_group_box)
 #: plugins/ipfilter/ipblockingprefpage.ui:117
@@ -8619,6 +8613,3 @@ msgstr "重新扫描"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
-
-#~ msgid "Yes, delete the files"
-#~ msgstr "是，删除文件"
