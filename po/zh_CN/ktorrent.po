@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 02:44+0000\n"
-"PO-Revision-Date: 2023-05-22 14:03\n"
+"PO-Revision-Date: 2023-06-17 04:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -5309,7 +5309,7 @@ msgid ""
 msgstr ""
 "尚未下载足够的数据，因此无法打开文件。\n"
 "\n"
-"是否要启用顺序下载模式，优先获取必要的数据？"
+"是否要启用顺序下载模式，以优先获取必要的数据？"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -6127,7 +6127,7 @@ msgid ""
 "NOTE: archive files like zip and tar.gz or tar.bz2 are supported."
 msgstr ""
 "从 bluetack.co.uk 或 iblocklist.org 下载 PeerGuardian 过滤文件。\n"
-"提示：支持诸如 zip、tar.gz 或者 tar.bz2 这样的压缩包文件。"
+"提示：支持 zip、tar.gz 或者 tar.bz2 等压缩文件格式。"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_auto_update_group_box)
 #: plugins/ipfilter/ipblockingprefpage.ui:117

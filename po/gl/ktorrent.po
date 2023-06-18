@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 02:44+0000\n"
-"PO-Revision-Date: 2023-06-11 22:05+0200\n"
+"PO-Revision-Date: 2023-06-17 13:59+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -301,7 +301,7 @@ msgstr ""
 #: ktorrent/dialogs/fileselectdlg.cpp:272
 #, kde-format
 msgid "Yes, delete the files"
-msgstr "Borrar os ficheiros"
+msgstr "Eliminar os ficheiros"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:272
 #, kde-format
@@ -6607,7 +6607,7 @@ msgstr "Mostrar o nome de dominio"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:90
 #, kde-format
 msgid "Show popup"
-msgstr "Mostrar unha xanela emerxente"
+msgstr "Mostrar un diálogo emerxente"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_onlypublic)
 #. i18n: ectx: label, entry (onlypublic), group (general)
@@ -6686,7 +6686,7 @@ msgstr "Desactivar o elemento de menú para os torrents privados."
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:87
 #, kde-format
 msgid "Give feedback in form of a popup"
-msgstr "Achegar información nunha xanela emerxente."
+msgstr "Achegar información desde un diálogo emerxente."
 
 #. i18n: ectx: Menu (MediaPlayerMenu)
 #: plugins/mediaplayer/ktorrent_mediaplayerui.rc:4
@@ -6869,7 +6869,7 @@ msgstr "Se abrir os torrents silandeiramente"
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:18
 #, kde-format
 msgid "Delete action checked."
-msgstr "Marcouse a acción de borrar."
+msgstr "Marcouse a acción de eliminar."
 
 #. i18n: ectx: label, entry (actionMove), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:23
@@ -6967,7 +6967,7 @@ msgid ""
 "When a torrent file has been found and loaded, delete it.<br/><br/>\n"
 "Warning: you will permanently lose this file."
 msgstr ""
-"Cando se atope e cargue un ficheiro torrent, borralo.<br/><br/>\n"
+"Cando se atope e cargue un ficheiro torrent, eliminalo.<br/><br/>\n"
 "Advertencia: perderá o ficheiro para sempre."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_actionDelete)
