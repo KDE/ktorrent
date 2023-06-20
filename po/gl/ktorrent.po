@@ -235,12 +235,12 @@ msgstr "Pechar"
 #: ktorrent/dialogs/fileselectdlg.cpp:81
 #, kde-format
 msgid "Show a file tree"
-msgstr "Mostrar unha árbore de ficheiros"
+msgstr "Amosar unha árbore de ficheiros"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:84
 #, kde-format
 msgid "Show a file list"
-msgstr "Mostrar unha lista de ficheiros"
+msgstr "Amosar unha lista de ficheiros"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
@@ -1143,8 +1143,8 @@ msgid ""
 "you want to."
 msgstr ""
 "Lugar de descarga predeterminado para os torrents deste grupo.<br/><br/> Iso "
-"só se emprega no diálogo de selección de ficheiros, onde ao cambiar o grupo "
-"o lugar de descarga do diálogo actualizarase con este valor. Pero despois de "
+"só se usa no diálogo de selección de ficheiros, onde ao cambiar o grupo o "
+"lugar de descarga do diálogo actualizarase con este valor. Pero despois de "
 "escoller o grupo aínda pode cambiar o lugar de descarga, se quere."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_location_enabled)
@@ -1170,10 +1170,10 @@ msgid ""
 "still override it, if you want to."
 msgstr ""
 "Lugar predeterminado ao que mover os torrents deste grupo unha vez "
-"descargados. <br/><br/>Iso só se emprega no diálogo de selección de "
-"ficheiros, onde ao cambiar o grupo o lugar ao que mover os datos unha vez "
-"descargados do diálogo actualizarase con este valor. Pero despois de "
-"escoller o grupo aínda pode cambiar o lugar de descarga, se quere."
+"descargados. <br/><br/>Iso só se usa no diálogo de selección de ficheiros, "
+"onde ao cambiar o grupo o lugar ao que mover os datos unha vez descargados "
+"do diálogo actualizarase con este valor. Pero despois de escoller o grupo "
+"aínda pode cambiar o lugar de descarga, se quere."
 
 #. i18n: ectx: property (toolTip), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:63
@@ -1340,7 +1340,7 @@ msgstr "Filtro de IP"
 #: ktorrent/gui.cpp:382
 #, kde-format
 msgid "Show the list of blocked IP addresses"
-msgstr "Mostrar a lista de enderezos IP bloqueados"
+msgstr "Amosar a lista de enderezos IP bloqueados"
 
 #: ktorrent/gui.cpp:387
 #, kde-format
@@ -1355,7 +1355,7 @@ msgstr "Importar un torrent"
 #: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Show/Hide KTorrent"
-msgstr "Mostrar/Agochar KTorrent"
+msgstr "Amosar/Agochar KTorrent"
 
 #: ktorrent/gui.cpp:411
 #, kde-format
@@ -1721,7 +1721,7 @@ msgstr "Bryan Burns de Juniper Networks"
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr ""
-"Descubriu dous problemas de seguranza (ambos os dous están corrixidos)."
+"Descubriu dous problemas de seguridade (ambos os dous están corrixidos)."
 
 #: ktorrent/main.cpp:143
 #, kde-format
@@ -1761,7 +1761,7 @@ msgstr "twisted_fall"
 #: ktorrent/main.cpp:146
 #, kde-format
 msgid "Patch to not show very low speeds"
-msgstr "Parche para non mostrar velocidades moi baixas."
+msgstr "Parche para non amosar velocidades moi baixas."
 
 #: ktorrent/main.cpp:147
 #, kde-format
@@ -2311,7 +2311,7 @@ msgstr "Se usar ou non o intercambio de parceiros compatíbel con µTorrent."
 #: ktorrent/pref/btpref.ui:64
 #, kde-format
 msgid "Use peer exchange"
-msgstr "Empregar o intercambio de parceiros."
+msgstr "Usar o intercambio de parceiros."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_webseedsEnabled)
 #: ktorrent/pref/btpref.ui:71
@@ -2326,7 +2326,7 @@ msgstr ""
 #: ktorrent/pref/btpref.ui:74
 #, kde-format
 msgid "Use webseeds"
-msgstr "Empregar sementes web."
+msgstr "Usar sementes web."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_checkWhenFinished)
 #: ktorrent/pref/btpref.ui:81
@@ -2403,7 +2403,7 @@ msgid ""
 "tracker which IP address to use. Use this when you are behind a proxy."
 msgstr ""
 "En vez de deixar que os localizadores determines o seu enderezo IP, "
-"dicirlles que enderezo empregar. Use isto cando estea detrás dun proxy."
+"dicirlles que enderezo usar. Use isto cando estea detrás dun proxy."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomIP)
 #: ktorrent/pref/btpref.ui:133
@@ -2660,13 +2660,13 @@ msgstr "Minimizar á área de notificacións no inicio."
 #: ktorrent/pref/generalpref.ui:110
 #, kde-format
 msgid "Whether or not to show system tray popup messages."
-msgstr "Indica se mostrar ou non notificacións na bandexa do sistema."
+msgstr "Indica se amosar ou non notificacións na bandexa do sistema."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:113
 #, kde-format
 msgid "Show system tray popup messages"
-msgstr "Mostrar notificacións na bandexa do sistema."
+msgstr "Amosar notificacións na bandexa do sistema."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_openMultipleTorrentsSilently)
 #: ktorrent/pref/generalpref.ui:129
@@ -2750,7 +2750,7 @@ msgstr "Salientar os torrentes novos."
 #: ktorrent/pref/generalpref.ui:180
 #, kde-format
 msgid "Show total speed in the window title"
-msgstr "Mostrar a velocidade total no título da xanela."
+msgstr "Amosar a velocidade total no título da xanela."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
@@ -2906,14 +2906,13 @@ msgid ""
 "interfere with other traffic, while still using up all unused bandwidth."
 msgstr ""
 "O protocolo de transporte µTorrent funciona por UDP e está optimizado para "
-"non interferir con outro tráfico, pero empregando toda a largura de banda "
-"libre."
+"non interferir con outro tráfico, pero usando toda a largura de banda libre."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_utpEnabled)
 #: ktorrent/pref/networkpref.ui:235
 #, kde-format
 msgid "Use the µTorrent transport protocol (µTP)"
-msgstr "Empregar o protocolo de transporte µTorrent (µTP)."
+msgstr "Usar o protocolo de transporte µTorrent (µTP)."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_onlyUseUtp)
 #: ktorrent/pref/networkpref.ui:242
@@ -2923,7 +2922,7 @@ msgid ""
 "can lead to slower speeds, seeing that not all bittorrent clients support "
 "µTP."
 msgstr ""
-"Non empregar TCP para as conexións BitTorrent, só o protocolo µTP. Isto pode "
+"Non usar TCP para as conexións BitTorrent, só o protocolo µTP. Isto pode "
 "provocar velocidades menores, dado que non todos os clientes BitTorrent son "
 "compatíbeis con µTP."
 
@@ -2931,7 +2930,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:245
 #, kde-format
 msgid "Only use µTP"
-msgstr "Empregar só µTP."
+msgstr "Usar só µTP."
 
 #. i18n: ectx: property (text), widget (QLabel, label_10)
 #: ktorrent/pref/networkpref.ui:254
@@ -2946,8 +2945,8 @@ msgid ""
 "The primary transport protocol to use, when attempting to setup a connection "
 "with a peer, this protocol is chosen first."
 msgstr ""
-"O protocolo de transporte principal a empregar ao estabelecer unha conexión "
-"cun parceiro."
+"O protocolo de transporte principal a usar ao estabelecer unha conexión cun "
+"parceiro."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -2994,7 +2993,7 @@ msgstr "HTTP"
 #, kde-format
 msgid "Use the HTTP proxy settings configured in the settings of KDE."
 msgstr ""
-"Empregar a configuración do proxy de HTTP tal como está definida na "
+"Usar a configuración do proxy de HTTP tal como está definida na "
 "configuración de KDE."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKDEProxySettings)
@@ -3013,7 +3012,7 @@ msgstr "Proxy:"
 #: ktorrent/pref/proxypref.ui:42
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
-msgstr "O enderezo IP ou nome do servidor do proxy HTTP a empregar."
+msgstr "O enderezo IP ou nome do servidor do proxy HTTP a usar."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
@@ -3026,7 +3025,7 @@ msgstr "O porto do proxy HTTP."
 #, kde-format
 msgid "Whether or not to use the HTTP proxy for webseed connections."
 msgstr ""
-"Indica se debe empregar o proxy HTTP para as conexións de espalladores web."
+"Indica se debe usar o proxy HTTP para as conexións de espalladores web."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxyForWebSeeds)
 #: ktorrent/pref/proxypref.ui:77
@@ -3060,16 +3059,16 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Note: </span>This is not used for "
 "tracker connections</p>"
 msgstr ""
-"<p>Usar un servidor proxy de SOCKS para as conexións mediante BitTorrent.</"
-"p>\n"
-"<p><span style=\" font-weight:600;\">Nota: </span>isto non se emprega para "
-"as conexións cos localizadores.</p>"
+"<p>Usar un servidor mandatario de SOCKS para as conexións mediante "
+"BitTorrent.</p>\n"
+"<p><span style=\" font-weight:600;\">Nota: </span>isto non se usa para as "
+"conexións cos localizadores.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_socksEnabled)
 #: ktorrent/pref/proxypref.ui:107
 #, kde-format
 msgid "Use a SOCKS proxy server:"
-msgstr "Usar un servidor proxy de SOCKS:"
+msgstr "Usar un servidor mandatario de SOCKS:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: ktorrent/pref/proxypref.ui:116
@@ -3087,7 +3086,7 @@ msgstr "O enderezo IP ou nome do servidor SOCKS."
 #: ktorrent/pref/proxypref.ui:137
 #, kde-format
 msgid "Port used by the SOCKS server."
-msgstr "Porto empregado polo servidor proxy SOCKS."
+msgstr "Porto empregado polo servidor mandatario SOCKS."
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: ktorrent/pref/proxypref.ui:144
@@ -3121,7 +3120,7 @@ msgstr "Usuario:"
 #: ktorrent/pref/proxypref.ui:177
 #, kde-format
 msgid "Username for the SOCKS proxy server."
-msgstr "Usuario para o servidor proxy SOCKS."
+msgstr "Usuario para o servidor mandatario SOCKS."
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: ktorrent/pref/proxypref.ui:184
@@ -3133,7 +3132,7 @@ msgstr "Contrasinal:"
 #: ktorrent/pref/proxypref.ui:191
 #, kde-format
 msgid "Password for the SOCKS proxy server."
-msgstr "Contrasinal para o servidor proxy SOCKS."
+msgstr "Contrasinal para o servidor mandatario SOCKS."
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
@@ -3362,7 +3361,7 @@ msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
-"Valor a partir do cal a taxa de compartición se mostrará nunha cor verde. Os "
+"Valor a partir do cal a taxa de compartición se amosará nunha cor verde. Os "
 "valores que estean por debaixo mostraranse en vermello. As cores poden "
 "cambiarse na configuración."
 
@@ -3615,12 +3614,12 @@ msgstr "Busca"
 #: ktorrent/tools/queuemanagerwidget.cpp:55
 #, kde-format
 msgid "Show Search"
-msgstr "Mostrar a busca"
+msgstr "Amosar a busca"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:56
 #, kde-format
 msgid "Show or hide the search bar"
-msgstr "Mostrar ou agochar a barra de busca."
+msgstr "Amosar ou agochar a barra de busca."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:60
 #, kde-format
@@ -3655,32 +3654,32 @@ msgstr "Poñer o torrent de último na lista."
 #: ktorrent/tools/queuemanagerwidget.cpp:72
 #, kde-format
 msgid "Show Downloads"
-msgstr "Mostrar as descargas"
+msgstr "Amosar as descargas"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:73
 #, kde-format
 msgid "Show all downloads"
-msgstr "Mostrar todas as descargas."
+msgstr "Amosar todas as descargas."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:77
 #, kde-format
 msgid "Show Uploads"
-msgstr "Mostrar os envíos"
+msgstr "Amosar os envíos"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:78
 #, kde-format
 msgid "Show all uploads"
-msgstr "Mostrar todos os envíos."
+msgstr "Amosar todos os envíos."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:82
 #, kde-format
 msgid "Show Not Queued"
-msgstr "Mostrar os fóra da fila"
+msgstr "Amosar os fóra da fila"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:83
 #, kde-format
 msgid "Show all not queued torrents"
-msgstr "Mostrar todos os torrents que estean fóra da fila."
+msgstr "Amosar todos os torrents que estean fóra da fila."
 
 #: ktorrent/torrentactivity.cpp:84
 #, kde-format
@@ -3736,7 +3735,7 @@ msgstr "Vista do grupo"
 #: ktorrent/torrentactivity.cpp:120
 #, kde-format
 msgid "Show or hide the group view"
-msgstr "Mostrar ou agochar a vista dos grupos."
+msgstr "Amosar ou agochar a vista dos grupos."
 
 #: ktorrent/torrentactivity.cpp:124
 #, kde-format
@@ -3906,14 +3905,14 @@ msgid ""
 "DHT is a distributed database which can be used to find more peers for a "
 "torrent."
 msgstr ""
-"DHT é unha base de datos distribuída que se pode empregar para atopar máis "
+"DHT é unha base de datos distribuída que se pode usar para atopar máis "
 "parceiros para un torrent."
 
 #. i18n: ectx: property (text), widget (QCheckBox, dht)
 #: ktorrent/view/propertiesdlg.ui:23
 #, kde-format
 msgid "Use DHT to find more peers"
-msgstr "Empregar DHT para atopar parceiros adicionais."
+msgstr "Usar DHT para atopar parceiros adicionais."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, pex)
 #: ktorrent/view/propertiesdlg.ui:30
@@ -3929,7 +3928,7 @@ msgstr ""
 #: ktorrent/view/propertiesdlg.ui:33
 #, kde-format
 msgid "Use peer exchange to find more peers"
-msgstr "Empregar o intercambio de parceiros para atopar parceiros adicionais."
+msgstr "Usar o intercambio de parceiros para atopar parceiros adicionais."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, superseeding)
 #: ktorrent/view/propertiesdlg.ui:42
@@ -3966,7 +3965,7 @@ msgstr ""
 #: ktorrent/view/propertiesdlg.ui:45
 #, kde-format
 msgid "Use superseeding mode for seeding"
-msgstr "Empregar o modo de propagación."
+msgstr "Usar o modo de propagación."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, move_on_completion_enabled)
 #: ktorrent/view/propertiesdlg.ui:52
@@ -4661,19 +4660,19 @@ msgstr "Taxa máxima de compartición (0 = sen límites)"
 #: libktcore/ktorrent.kcfg:66
 #, kde-format
 msgid "Show a system tray icon"
-msgstr "Mostrar a icona na bandexa do sistema."
+msgstr "Amosar a icona na bandexa do sistema."
 
 #. i18n: ectx: label, entry (showTotalSpeedInTitle), group (downloads)
 #: libktcore/ktorrent.kcfg:70
 #, kde-format
 msgid "Show a total speeds in the title"
-msgstr "Mostrar as velocidades totais no título."
+msgstr "Amosar as velocidades totais no título."
 
 #. i18n: ectx: label, entry (showSpeedBarInTrayIcon), group (downloads)
 #: libktcore/ktorrent.kcfg:74
 #, kde-format
 msgid "Show speed bar in tray icon"
-msgstr "Mostrar a barra de velocidade na icona da área de notificación"
+msgstr "Amosar a barra de velocidade na icona da área de notificación"
 
 #. i18n: ectx: label, entry (downloadBandwidth), group (downloads)
 #: libktcore/ktorrent.kcfg:78
@@ -4697,7 +4696,7 @@ msgstr "Minimizar á área de notificacións no inicio."
 #: libktcore/ktorrent.kcfg:94
 #, kde-format
 msgid "Show popup messages when torrent is finished."
-msgstr "Mostrar mensaxes emerxentes cando rematen os torrentes."
+msgstr "Amosar mensaxes emerxentes cando rematen os torrentes."
 
 #. i18n: ectx: label, entry (keepSeeding), group (downloads)
 #: libktcore/ktorrent.kcfg:98
@@ -4739,8 +4738,7 @@ msgstr "Cartafol no que copiar os ficheiros torrent"
 #: libktcore/ktorrent.kcfg:119
 #, kde-format
 msgid "Whether to use a custom IP to pass to the tracker"
-msgstr ""
-"Marcar para empregar un IP personalizado para lle pasar aos localizadores."
+msgstr "Marcar para usar un IP personalizado para lle pasar aos localizadores."
 
 #. i18n: ectx: label, entry (lastSaveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:123
@@ -4958,15 +4956,14 @@ msgid ""
 "Use these global limits when the screensaver is activated, instead of the "
 "ones configured in the network settings."
 msgstr ""
-"Empregar estes límites globais cando se active o salvapantallas, no canto "
-"dos indicados na configuración da rede."
+"Usar estes límites globais cando se active o salvapantallas, no canto dos "
+"indicados na configuración da rede."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_screensaverLimits)
 #: plugins/bwscheduler/bwprefpage.ui:25
 #, kde-format
 msgid "Use different speed limits when the screensaver is activated"
-msgstr ""
-"Empregar límites de velocidade distintos cando se active o salvapantallas."
+msgstr "Usar límites de velocidade distintos cando se active o salvapantallas."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_screensaverUploadLimit)
 #: plugins/bwscheduler/bwprefpage.ui:49
@@ -5122,7 +5119,7 @@ msgstr "Límites da conexión"
 #: plugins/bwscheduler/edititemdlg.ui:217
 #, kde-format
 msgid "Set connection limits"
-msgstr "Estabelecer os límites da conexión"
+msgstr "Definir os límites da conexión"
 
 #. i18n: ectx: ToolBar (SchedulerToolbar)
 #: plugins/bwscheduler/ktorrent_bwschedulerui.rc:5
@@ -5487,7 +5484,7 @@ msgstr "Lista de ficheiros"
 #: plugins/infowidget/fileview.cpp:135
 #, kde-format
 msgid "Show Filter"
-msgstr "Mostrar o filtro"
+msgstr "Amosar o filtro"
 
 #: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
@@ -5658,53 +5655,51 @@ msgstr "Separadores"
 #, kde-format
 msgid "Whether or not to show the peers tab in the bottom of the window."
 msgstr ""
-"Marcar para mostrar o separador dos parceiros na parte inferior da xanela."
+"Marcar para amosar o separador dos parceiros na parte inferior da xanela."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showPeerView)
 #: plugins/infowidget/iwprefpage.ui:26
 #, kde-format
 msgid "Show list of peers"
-msgstr "Mostrar a lista dos parceiros."
+msgstr "Amosar a lista dos parceiros."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showChunkView)
 #: plugins/infowidget/iwprefpage.ui:33
 #, kde-format
 msgid "Whether or not to show the chunks tab in the bottom of the window."
-msgstr ""
-"Marcar para mostrar o separador dos ananos na parte inferior da xanela."
+msgstr "Marcar para amosar o separador dos ananos na parte inferior da xanela."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showChunkView)
 #: plugins/infowidget/iwprefpage.ui:36
 #, kde-format
 msgid "Show list of chunks currently downloading"
-msgstr "Mostrar a lista de anacos a descargar."
+msgstr "Amosar a lista de anacos a descargar."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showTrackersView)
 #: plugins/infowidget/iwprefpage.ui:43
 #, kde-format
 msgid "Whether or not to show the trackers tab in the bottom of the window."
 msgstr ""
-"Marcar para mostrar o separador dos localizadores na parte inferior da "
-"xanela."
+"Marcar para amosar o separador dos localizadores na parte inferior da xanela."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showTrackersView)
 #: plugins/infowidget/iwprefpage.ui:46
 #, kde-format
 msgid "Show list of trackers"
-msgstr "Mostrar a lista dos localizadores."
+msgstr "Amosar a lista dos localizadores."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showWebSeedsTab)
 #: plugins/infowidget/iwprefpage.ui:53
 #, kde-format
 msgid "Whether or not to show the webseeds tab at the bottom of the window."
 msgstr ""
-"Marcar para mostrar o separador das sementes web na parte inferior da xanela."
+"Marcar para amosar o separador das sementes web na parte inferior da xanela."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showWebSeedsTab)
 #: plugins/infowidget/iwprefpage.ui:56
 #, kde-format
 msgid "Show list of webseeds"
-msgstr "Mostrar a lista das sementes web."
+msgstr "Amosar a lista das sementes web."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: plugins/infowidget/iwprefpage.ui:66
@@ -5740,14 +5735,14 @@ msgstr "Cor a usar para os ficheiros de menor prioridade."
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:10
 #, kde-format
 msgid "Show peer view tab in main window"
-msgstr "Mostrar o separador de visualización dos parceiros na xanela principal"
+msgstr "Amosar o separador de visualización dos parceiros na xanela principal"
 
 #. i18n: ectx: label, entry (showChunkView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:14
 #, kde-format
 msgid "Show chunk download view tab in main window"
 msgstr ""
-"Mostrar o separador de visualización dos anacos a descargar na xanela "
+"Amosar o separador de visualización dos anacos a descargar na xanela "
 "principal"
 
 #. i18n: ectx: label, entry (showTrackersView), group (general)
@@ -5755,7 +5750,7 @@ msgstr ""
 #, kde-format
 msgid "Show trackers view tab in main window"
 msgstr ""
-"Mostrar o separador de visualización dos localizadores na xanela principal"
+"Amosar o separador de visualización dos localizadores na xanela principal"
 
 #: plugins/infowidget/peerview.cpp:43
 #, kde-format
@@ -5893,7 +5888,7 @@ msgstr "O país no que está o parceiro."
 #: plugins/infowidget/peerviewmodel.cpp:334
 #, kde-format
 msgid "Which client the peer is using"
-msgstr "O cliente que está a empregar o parceiro."
+msgstr "O cliente que está a usar o parceiro."
 
 #: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
@@ -5933,8 +5928,7 @@ msgstr "Indica se o parceiro ten o DHT activado ou non."
 #: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
-msgstr ""
-"A puntuación do parceiro, KTorrent emprégaa para determinar a quen enviar."
+msgstr "A puntuación do parceiro, KTorrent úsaa para determinar a quen enviar."
 
 #: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
@@ -6329,7 +6323,7 @@ msgstr "Ficheiro de filtro de IP:"
 #: plugins/ipfilter/ipblockingprefpage.ui:54
 #, kde-format
 msgid "Filter file to use, this can be a local file or a remote file."
-msgstr "O ficheiro de filtro a empregar. Pode ser un ficheiro local ou remoto."
+msgstr "O ficheiro de filtro a usar. Pode ser un ficheiro local ou remoto."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_download)
 #: plugins/ipfilter/ipblockingprefpage.ui:81
@@ -6400,7 +6394,7 @@ msgstr "URL do filtro level1"
 #: plugins/ipfilter/ktipfilterplugin.kcfg:14
 #, kde-format
 msgid "Use level1 filter?"
-msgstr "Empregar o filtro level1?"
+msgstr "Usar o filtro level1?"
 
 #. i18n: ectx: label, entry (useRichText), group (general)
 #: plugins/logviewer/ktlogviewerplugin.kcfg:11
@@ -6482,17 +6476,17 @@ msgstr ""
 "p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Todo:</span> móstranse todas as mensaxes.</p>\n"
+"weight:600;\">Todo:</span> amósanse todas as mensaxes.</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Importante:</span> só se mostran as mensaxes importantes.</p>\n"
+"weight:600;\">Importante:</span> só se amosan as mensaxes importantes.</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Notificación:</span> só se mostran as mensaxes importantes e "
-"as notificacións.</p>\n"
+"weight:600;\">Notificación:</span> só se amosan as mensaxes importantes e as "
+"notificacións.</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Depuración:</span> móstranse as mensaxes de depuración, "
+"weight:600;\">Depuración:</span> amósanse as mensaxes de depuración, "
 "notificacións e importantes.</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
@@ -6506,7 +6500,7 @@ msgid ""
 "shown in the logviewer."
 msgstr ""
 "Indica se usar texto enriquecido ou texto simple para os rexistros que se "
-"mostran no visor do rexistro."
+"amosan no visor do rexistro."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:45
@@ -6599,7 +6593,7 @@ msgstr "O localizador predeterminado"
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:22
 #, kde-format
 msgid "Show dn"
-msgstr "Mostrar o nome de dominio"
+msgstr "Amosar o nome de dominio"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_popup)
 #. i18n: ectx: label, entry (popup), group (general)
@@ -6607,7 +6601,7 @@ msgstr "Mostrar o nome de dominio"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:90
 #, kde-format
 msgid "Show popup"
-msgstr "Mostrar un diálogo emerxente"
+msgstr "Amosar un diálogo emerxente"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_onlypublic)
 #. i18n: ectx: label, entry (onlypublic), group (general)
@@ -6777,7 +6771,7 @@ msgstr "Seguinte"
 #: plugins/mediaplayer/mediaplayeractivity.cpp:121
 #, kde-format
 msgid "Show Video"
-msgstr "Mostrar o vídeo"
+msgstr "Amosar o vídeo"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:125
 #: plugins/mediaplayer/playlistwidget.cpp:39
@@ -6805,7 +6799,7 @@ msgstr "Reprodutor de filmes"
 #: plugins/mediaplayer/mediaview.cpp:84
 #, kde-format
 msgid "Show incomplete files"
-msgstr "Mostrar os ficheiros incompletos"
+msgstr "Amosar os ficheiros incompletos"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_refresh)
 #: plugins/mediaplayer/mediaview.cpp:89 plugins/syndication/feedwidget.ui:124
@@ -7094,13 +7088,13 @@ msgstr "Usar a configuración de proxy para as buscas."
 #: plugins/search/ktsearchplugin.kcfg:18 plugins/search/searchpref.ui:102
 #, kde-format
 msgid "Use default browser"
-msgstr "Empregar o navegador predeterminado"
+msgstr "Usar o navegador predeterminado"
 
 #. i18n: ectx: label, entry (useCustomBrowser), group (general)
 #: plugins/search/ktsearchplugin.kcfg:22
 #, kde-format
 msgid "Use custom browser"
-msgstr "Empregar un navegador personalizado"
+msgstr "Usar un navegador personalizado"
 
 #. i18n: ectx: label, entry (customBrowser), group (general)
 #: plugins/search/ktsearchplugin.kcfg:26
@@ -7195,14 +7189,13 @@ msgstr "Se usar ou non a configuración de proxy HTTP para as buscas."
 #: plugins/search/searchpref.ui:99
 #, kde-format
 msgid "Use the default browser configured in the system settings."
-msgstr ""
-"Empregar o navegador predeterminado que estiver configurado no sistema."
+msgstr "Usar o navegador predeterminado que estiver configurado no sistema."
 
 #. i18n: ectx: property (toolTip), widget (QRadioButton, kcfg_useCustomBrowser)
 #: plugins/search/searchpref.ui:114
 #, kde-format
 msgid "Use a custom browser."
-msgstr "Empregar un navegador personalizado."
+msgstr "Usar un navegador personalizado."
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useCustomBrowser)
 #: plugins/search/searchpref.ui:117
@@ -7744,7 +7737,7 @@ msgstr "Usar suavizado de fontes"
 #: plugins/stats/DisplaySettings.ui:920
 #, kde-format
 msgid "Draw background grid"
-msgstr "Mostrar unha grade de fondo"
+msgstr "Amosar unha grade de fondo"
 
 #. i18n: ectx: property (text), widget (QLabel, label_18)
 #: plugins/stats/DisplaySettings.ui:932
@@ -7862,43 +7855,43 @@ msgstr "Método para determinar o valor máximo da escala."
 #: plugins/stats/ktstatsplugin.kcfg:25
 #, kde-format
 msgid "Whether to show seeds in swarms"
-msgstr "Se mostrar as sementes en enxames"
+msgstr "Se amosar as sementes en enxames"
 
 #. i18n: ectx: label, entry (ShowLeechersInSwarms), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:30
 #, kde-format
 msgid "Whether to show leachers in swarms"
-msgstr "Se mostrar os parceiros incompletos en enxames"
+msgstr "Se amosar os parceiros incompletos en enxames"
 
 #. i18n: ectx: label, entry (DlSpdSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:35
 #, kde-format
 msgid "Samples to show on download chart"
-msgstr "Exemplos para mostrar na gráfica de descarga."
+msgstr "Exemplos para amosar na gráfica de descarga."
 
 #. i18n: ectx: label, entry (PeersSpdSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:40
 #, kde-format
 msgid "Samples to show on peers chart"
-msgstr "Exemplos para mostrar na gráfica de parceiros."
+msgstr "Exemplos para amosar na gráfica de parceiros."
 
 #. i18n: ectx: label, entry (UlSpdSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:45
 #, kde-format
 msgid "Samples to show on upload chart"
-msgstr "Exemplos para mostrar na gráfica de envío."
+msgstr "Exemplos para amosar na gráfica de envío."
 
 #. i18n: ectx: label, entry (ConnsSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:50
 #, kde-format
 msgid "Samples to show on connections chart"
-msgstr "Exemplos que mostrar na gráfica de conexións."
+msgstr "Exemplos que amosar na gráfica de conexións."
 
 #. i18n: ectx: label, entry (DhtSpdSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:55
 #, kde-format
 msgid "Samples to show on DHT chart"
-msgstr "Exemplos para mostrar na gráfica de DHT."
+msgstr "Exemplos para amosar na gráfica de DHT."
 
 #. i18n: ectx: label, entry (DlSpdColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:60
@@ -8051,7 +8044,7 @@ msgstr "Debuxar unha grade fea gris de fondo?"
 #: plugins/stats/ktstatsplugin.kcfg:175
 #, kde-format
 msgid "Type of widget used for chart drawing"
-msgstr "Tipo de trebello empregado para mostrar as gráficas."
+msgstr "Tipo de trebello empregado para amosar as gráficas."
 
 #. i18n: ectx: property (title), widget (QGroupBox, UpdateGbw)
 #: plugins/stats/Settings.ui:19
@@ -8132,13 +8125,13 @@ msgstr "Conexións de pares"
 #: plugins/stats/Settings.ui:296
 #, kde-format
 msgid "Show seeds in swarms"
-msgstr "Mostrar os parceiros en enxames."
+msgstr "Amosar os parceiros en enxames."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLeechersInSwarms)
 #: plugins/stats/Settings.ui:303
 #, kde-format
 msgid "Show leechers in swarms"
-msgstr "Mostrar os parceiros incompletos en enxames."
+msgstr "Amosar os parceiros incompletos en enxames."
 
 #: plugins/stats/SettingsPage.cc:12
 #, kde-format
@@ -8469,7 +8462,7 @@ msgid ""
 "expressions, this needs to be enabled."
 msgstr ""
 "O texto só admitirá caracteres de substitución de maneira predeterminada, "
-"para empregar expresión regulares terá que activar esta opción."
+"para usar expresión regulares terá que activar esta opción."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_reg_exp)
@@ -8515,7 +8508,7 @@ msgstr "Temporadas e episodios"
 #: plugins/syndication/filtereditor.ui:174
 #, kde-format
 msgid "Use season and episode matching"
-msgstr "Empregar a coincidencia de temporadas e episodios."
+msgstr "Usar a coincidencia de temporadas e episodios."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/syndication/filtereditor.ui:183
@@ -8535,7 +8528,7 @@ msgid ""
 "Will download seasons 1, 3, 4, 5, 6 and 9"
 msgstr ""
 "Indica as temporadas a descargar. Pode indicar varias separándoas mediante "
-"unha coma e tamén pode empregar intervalos mediante un guión (-).\n"
+"unha coma e tamén pode usar intervalos mediante un guión (-).\n"
 "\n"
 "Por exemplo: 1, 3-6, 9\n"
 "\n"
@@ -8559,7 +8552,7 @@ msgid ""
 "Will download episodes 1, 3, 4, 5, 6 and 9"
 msgstr ""
 "Indica os episodios a descargar. Pode indicar varios separándoos mediante "
-"unha coma e tamén pode empregar intervalos mediante un guión (-).\n"
+"unha coma e tamén pode usar intervalos mediante un guión (-).\n"
 "\n"
 "Por exemplo: 1, 3-6, 9\n"
 "\n"
@@ -8769,7 +8762,7 @@ msgstr "Eliminar o filtro"
 #: plugins/upnp/ktupnpplugin.kcfg:10
 #, kde-format
 msgid "Default UPnP device to use"
-msgstr "Dispositivo UPnP predeterminado a empregar."
+msgstr "Dispositivo UPnP predeterminado a usar."
 
 #: plugins/upnp/routermodel.cpp:57
 #, kde-format
