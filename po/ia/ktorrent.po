@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# giovanni <g.sora@tiscali.it>, 2017, 2020, 2021.
+# giovanni <g.sora@tiscali.it>, 2017, 2020, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2021-11-10 22:42+0100\n"
+"PO-Revision-Date: 2023-06-21 21:48+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.08.3\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -244,11 +244,10 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Importa"
+msgstr "Importa"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -265,7 +264,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr ""
+msgstr "Crea"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -275,18 +274,16 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Dele file(s)"
+msgstr "Dele le files"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Dele file(s)"
+msgstr "Mantene le files"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -414,7 +411,7 @@ msgstr ""
 #: ktorrent/dialogs/fileselectdlg.ui:105
 #, kde-format
 msgid "Text encoding:"
-msgstr ""
+msgstr "Codifica de texto:"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_file_view)
 #: ktorrent/dialogs/fileselectdlg.ui:132
@@ -581,7 +578,7 @@ msgstr ""
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -1119,7 +1116,7 @@ msgstr ""
 #: ktorrent/groups/grouppolicydlg.ui:35 ktorrent/pref/generalpref.ui:40
 #, kde-format
 msgid "Default save location:"
-msgstr ""
+msgstr "Location predefinite ubi salveguardar:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_move_on_completion_enabled)
 #: ktorrent/groups/grouppolicydlg.ui:49
@@ -1225,7 +1222,7 @@ msgstr "Nove gruppo"
 #: ktorrent/groups/groupview.cpp:73
 #, kde-format
 msgid "Edit Name"
-msgstr ""
+msgstr "Modifica nomine"
 
 #: ktorrent/groups/groupview.cpp:77
 #, kde-format
@@ -1507,7 +1504,7 @@ msgstr ""
 #: ktorrent/main.cpp:118
 #, kde-format
 msgid "Krzysztof Kundzicz"
-msgstr ""
+msgstr "Krzysztof Kundzicz"
 
 #: ktorrent/main.cpp:118
 #, kde-format
@@ -1869,7 +1866,7 @@ msgstr ""
 #: ktorrent/main.cpp:163
 #, kde-format
 msgid "Jonas Lundqvist"
-msgstr ""
+msgstr "Jonas Lundqvist"
 
 #: ktorrent/main.cpp:163
 #, kde-format
@@ -1944,7 +1941,7 @@ msgstr "Nick Shaforostoff"
 #: ktorrent/main.cpp:171
 #, kde-format
 msgid "Alexander Trufanov"
-msgstr ""
+msgstr "Alexander Trufanov"
 
 #: ktorrent/main.cpp:171
 #, kde-format
@@ -3302,7 +3299,7 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format
@@ -4416,7 +4413,7 @@ msgstr ""
 #: libktcore/ktorrent.kcfg:66
 #, kde-format
 msgid "Show a system tray icon"
-msgstr ""
+msgstr "Monstra un icone de tabuliero de systema"
 
 #. i18n: ectx: label, entry (showTotalSpeedInTitle), group (downloads)
 #: libktcore/ktorrent.kcfg:70
@@ -4618,9 +4615,7 @@ msgstr ""
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Initia"
@@ -6682,7 +6677,7 @@ msgstr ""
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan for lost files"
-msgstr ""
+msgstr "Scande per files perdite"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
@@ -6693,7 +6688,7 @@ msgstr ""
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:30
 #, kde-format
 msgid "Scan for lost files"
-msgstr ""
+msgstr "Scande per files perdite"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:155
@@ -6962,7 +6957,7 @@ msgstr ""
 #: plugins/search/searchtoolbar.cpp:58
 #, kde-format
 msgid "Search Text"
-msgstr ""
+msgstr "Cerca texto"
 
 #: plugins/search/searchtoolbar.cpp:68
 #, kde-format
@@ -8113,7 +8108,7 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:183
 #, kde-format
 msgid "Seasons: "
-msgstr ""
+msgstr "Seasones: "
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_seasons)
 #: plugins/syndication/filtereditor.ui:194
@@ -8167,7 +8162,7 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:264
 #, kde-format
 msgid "Add to group:"
-msgstr ""
+msgstr "Adde a gruppo:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_silently)
 #: plugins/syndication/filtereditor.ui:320
@@ -8202,7 +8197,7 @@ msgstr ""
 #: plugins/syndication/ktfeed.cpp:452
 #, kde-format
 msgid "Unknown hostname"
-msgstr ""
+msgstr "Nome de hospite incognite"
 
 #: plugins/syndication/ktfeed.cpp:454
 #, kde-format
@@ -8239,7 +8234,7 @@ msgstr ""
 #: plugins/syndication/syndicationplugin.cpp:70
 #, kde-format
 msgid "Add/Remove Filters"
-msgstr ""
+msgstr "Adde/Remove Filtros"
 
 #: plugins/syndication/managefiltersdlg.cpp:40
 #, kde-format
@@ -8250,7 +8245,7 @@ msgstr "Syndication: <b>%1</b>"
 #: plugins/syndication/managefiltersdlg.ui:13
 #, kde-format
 msgid "Manage Filters"
-msgstr ""
+msgstr "Gere Filtros"
 
 #. i18n: ectx: property (text), widget (QLabel, m_feed_text)
 #: plugins/syndication/managefiltersdlg.ui:22
@@ -8262,7 +8257,7 @@ msgstr "Syndication:"
 #: plugins/syndication/managefiltersdlg.ui:33
 #, kde-format
 msgid "Active filters:"
-msgstr ""
+msgstr "Filtros Active:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/managefiltersdlg.ui:91
@@ -8288,7 +8283,7 @@ msgstr "Nove filtro"
 #: plugins/syndication/syndicationplugin.cpp:35
 #, kde-format
 msgid "Syndication"
-msgstr ""
+msgstr "Syndication"
 
 #: plugins/syndication/syndicationactivity.cpp:46
 #, kde-format
@@ -8318,7 +8313,7 @@ msgstr ""
 #: plugins/syndication/syndicationactivity.cpp:190
 #, kde-format
 msgid "Add New Filter"
-msgstr ""
+msgstr "Adde Nove Filtro"
 
 #: plugins/syndication/syndicationplugin.cpp:64
 #, kde-format
@@ -8349,7 +8344,7 @@ msgstr "Remove filtro"
 #: plugins/upnp/ktupnpplugin.kcfg:10
 #, kde-format
 msgid "Default UPnP device to use"
-msgstr ""
+msgstr "Dispositivo UPnP predefinite a usar"
 
 #: plugins/upnp/routermodel.cpp:57
 #, kde-format
