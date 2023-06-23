@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 02:44+0000\n"
-"PO-Revision-Date: 2022-01-11 19:16+0100\n"
-"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
+"PO-Revision-Date: 2023-06-22 15:55+0200\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -752,7 +752,7 @@ msgstr "Omezení rychlosti"
 #: ktorrent/dialogs/speedlimitsdlg.ui:20
 #, kde-format
 msgid "Speed limits for individual torrents (double click to edit):"
-msgstr "Omezení rychlosti pro individuální torrenty (poklikejte pro změnu):"
+msgstr "Omezení rychlosti pro individuální torrenty (dvojklik pro upravení):"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/dialogs/speedlimitsdlg.ui:32
@@ -1852,7 +1852,7 @@ msgstr "Aaron J. Seigo"
 #: ktorrent/main.cpp:158
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
-msgstr "Podpora Drag and drop pro plasma applet"
+msgstr "Podpora Drag and drop pro applet Plasma"
 
 #: ktorrent/main.cpp:159
 #, kde-format
@@ -2311,7 +2311,7 @@ msgid ""
 "<p>The encryption will prevent your bittorrent traffic to be flagged as "
 "bittorrent traffic, and so the ISP will not slow it down.</p>"
 msgstr ""
-"<p>Šifrování protokolu je pužitečné pokud váš poskytovatel zpomaluje spojení "
+"<p>Šifrování protokolu je užitečné pokud váš poskytovatel zpomaluje spojení "
 "přes bittorrent. </p>\n"
 "<p>Šifrování zabrání aby byl přenos přes bittorrent označen jako takový a "
 "zpomalen.</p>"
@@ -3082,8 +3082,8 @@ msgid ""
 "When enabled, the queue manager will be totally disabled, allowing you to "
 "fully control all torrents manually."
 msgstr ""
-"Když je povolen, bude správce fronty zakázán, ponechávajíce vám plnou "
-"kontrolu nad všemi torrenty."
+"Když je povolen, bude správce fronty zakázán a ponechá vám plnou kontrolu "
+"nad všemi torrenty."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_manuallyControlTorrents)
 #: ktorrent/pref/qmpref.ui:20
@@ -5939,7 +5939,7 @@ msgstr "Poměr sdílení:"
 #: plugins/infowidget/statustab.ui:299
 #, kde-format
 msgid "Ratio limit:"
-msgstr "Sdílecí limit:"
+msgstr "Limit poměru sdílení:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, use_time_limit)
 #: plugins/infowidget/statustab.ui:325
