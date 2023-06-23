@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-06-07 12:01+0200\n"
+"PO-Revision-Date: 2023-06-22 15:55+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -277,11 +277,10 @@ msgstr ""
 "importovat tento soubor?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Importovat"
+msgstr "Importovat"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -295,11 +294,10 @@ msgstr "Adresář %1 neexistuje. Přejete si jej vytvořit?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Vytvořit znovu"
+msgstr "Vytvořit"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -311,18 +309,16 @@ msgstr ""
 "těchto souborech, skutečně si to přejete provést?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Odstranit soubor(y)"
+msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Ne, ponechat soubory"
+msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -787,7 +783,7 @@ msgstr "Omezení rychlosti"
 #: ktorrent/dialogs/speedlimitsdlg.ui:20
 #, kde-format
 msgid "Speed limits for individual torrents (double click to edit):"
-msgstr "Omezení rychlosti pro individuální torrenty (poklikejte pro změnu):"
+msgstr "Omezení rychlosti pro individuální torrenty (dvojklik pro upravení):"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/dialogs/speedlimitsdlg.ui:32
@@ -1887,7 +1883,7 @@ msgstr "Aaron J. Seigo"
 #: ktorrent/main.cpp:158
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
-msgstr "Podpora Drag and drop pro plasma applet"
+msgstr "Podpora Drag and drop pro applet Plasma"
 
 #: ktorrent/main.cpp:159
 #, kde-format
@@ -2346,7 +2342,7 @@ msgid ""
 "<p>The encryption will prevent your bittorrent traffic to be flagged as "
 "bittorrent traffic, and so the ISP will not slow it down.</p>"
 msgstr ""
-"<p>Šifrování protokolu je pužitečné pokud váš poskytovatel zpomaluje spojení "
+"<p>Šifrování protokolu je užitečné pokud váš poskytovatel zpomaluje spojení "
 "přes bittorrent. </p>\n"
 "<p>Šifrování zabrání aby byl přenos přes bittorrent označen jako takový a "
 "zpomalen.</p>"
@@ -3117,8 +3113,8 @@ msgid ""
 "When enabled, the queue manager will be totally disabled, allowing you to "
 "fully control all torrents manually."
 msgstr ""
-"Když je povolen, bude správce fronty zakázán, ponechávajíce vám plnou "
-"kontrolu nad všemi torrenty."
+"Když je povolen, bude správce fronty zakázán a ponechá vám plnou kontrolu "
+"nad všemi torrenty."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_manuallyControlTorrents)
 #: ktorrent/pref/qmpref.ui:20
@@ -4830,12 +4826,10 @@ msgstr "Dosaženy meze."
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
-msgstr "Spustit"
+msgstr ""
 
 #: libktcore/torrent/queuemanager.cpp:140
 #, kde-format
@@ -5997,7 +5991,7 @@ msgstr "Poměr sdílení:"
 #: plugins/infowidget/statustab.ui:299
 #, kde-format
 msgid "Ratio limit:"
-msgstr "Sdílecí limit:"
+msgstr "Limit poměru sdílení:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, use_time_limit)
 #: plugins/infowidget/statustab.ui:325
@@ -8763,6 +8757,3 @@ msgstr "Znovu projít"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Yes, delete the files"
-#~ msgstr "Ano, smazat soubory"
