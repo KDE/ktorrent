@@ -977,7 +977,7 @@ msgstr "Crear un torrent"
 #: ktorrent/dialogs/torrentcreatordlg.ui:20
 #, kde-format
 msgid "File or directory to create torrent from:"
-msgstr "Ficheiro ou directorio do que crear o torrent:"
+msgstr "Ficheiro ou cartafol do que crear o torrent:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectDirectory)
 #: ktorrent/dialogs/torrentcreatordlg.ui:44
@@ -3024,7 +3024,7 @@ msgstr "HTTP"
 #, kde-format
 msgid "Use the HTTP proxy settings configured in the settings of KDE."
 msgstr ""
-"Usar a configuración do proxy de HTTP tal como está definida na "
+"Usar a configuración do mandatario de HTTP tal como está definida na "
 "configuración de KDE."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKDEProxySettings)
@@ -3043,38 +3043,38 @@ msgstr "Proxy:"
 #: ktorrent/pref/proxypref.ui:42
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
-msgstr "O enderezo IP ou nome do servidor do proxy HTTP a usar."
+msgstr "O enderezo IP ou nome do servidor do mandatario HTTP a usar."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
 #, kde-format
 msgid "Port of the HTTP proxy."
-msgstr "O porto do proxy HTTP."
+msgstr "O porto do mandatario HTTP."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxyForWebSeeds)
 #: ktorrent/pref/proxypref.ui:74
 #, kde-format
 msgid "Whether or not to use the HTTP proxy for webseed connections."
 msgstr ""
-"Indica se debe usar o proxy HTTP para as conexións de espalladores web."
+"Indica se debe usar o mandatario HTTP para as conexións de espalladores web."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxyForWebSeeds)
 #: ktorrent/pref/proxypref.ui:77
 #, kde-format
 msgid "Use proxy for webseed connections"
-msgstr "Usar o proxy para as conexións de espalladores web."
+msgstr "Usar o mandatario para as conexións de espalladores web."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxyForTracker)
 #: ktorrent/pref/proxypref.ui:84
 #, kde-format
 msgid "Whether or not to use the HTTP proxy for tracker connections."
-msgstr "Se usar ou non o proxy HTTP para as conexións cos localizadores."
+msgstr "Se usar ou non o mandatario HTTP para as conexións cos localizadores."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxyForTracker)
 #: ktorrent/pref/proxypref.ui:87
 #, kde-format
 msgid "Use proxy for tracker connections"
-msgstr "Usar o proxy para as conexión cos localizadores."
+msgstr "Usar o mandatario para as conexión cos localizadores."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/proxypref.ui:97
@@ -3393,7 +3393,7 @@ msgid ""
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
 "Valor a partir do cal a taxa de compartición se amosará nunha cor verde. Os "
-"valores que estean por debaixo mostraranse en vermello. As cores poden "
+"valores que estean por debaixo amosaranse en vermello. As cores poden "
 "cambiarse na configuración."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
@@ -5577,7 +5577,7 @@ msgstr "Estado"
 #: plugins/infowidget/infowidgetplugin.cpp:57
 #, kde-format
 msgid "Displays status information about a torrent"
-msgstr "Mostra información sobre o estado dun torrent."
+msgstr "Amosa información sobre o estado dun torrent."
 
 #: plugins/infowidget/infowidgetplugin.cpp:58
 #, kde-format
@@ -5598,12 +5598,12 @@ msgstr "Lista os parceiros aos que está conectado para un torrent."
 #: plugins/infowidget/infowidgetplugin.cpp:204
 #, kde-format
 msgid "Displays all the chunks you are downloading, of a torrent"
-msgstr "Mostra todos os anacos dun torrent que está a descargar."
+msgstr "Amosa todos os anacos dun torrent que está a descargar."
 
 #: plugins/infowidget/infowidgetplugin.cpp:223
 #, kde-format
 msgid "Displays information about all the trackers of a torrent"
-msgstr "Mostra información sobre todos os localizadores dun torrent."
+msgstr "Amosa información sobre todos os localizadores dun torrent."
 
 #: plugins/infowidget/infowidgetplugin.cpp:239
 #, kde-format
@@ -7133,7 +7133,7 @@ msgstr "Motor de busca actual"
 #: plugins/search/ktsearchplugin.kcfg:14 plugins/search/searchpref.ui:92
 #, kde-format
 msgid "Use proxy settings for search"
-msgstr "Usar a configuración de proxy para as buscas."
+msgstr "Usar a configuración de mandatario para as buscas."
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useDefaultBrowser)
 #. i18n: ectx: label, entry (useDefaultBrowser), group (general)
@@ -7235,7 +7235,7 @@ msgstr "Abrir as buscas nun navegador externo."
 #: plugins/search/searchpref.ui:89
 #, kde-format
 msgid "Whether or not to use the HTTP proxy settings for search."
-msgstr "Se usar ou non a configuración de proxy HTTP para as buscas."
+msgstr "Se usar ou non a configuración de mandatario HTTP para as buscas."
 
 #. i18n: ectx: property (toolTip), widget (QRadioButton, kcfg_useDefaultBrowser)
 #: plugins/search/searchpref.ui:99
@@ -8235,7 +8235,7 @@ msgstr "Gráficas de velocidade"
 #: plugins/stats/StatsPlugin.cc:34
 #, kde-format
 msgid "Displays charts about download and upload speed"
-msgstr "Mostra gráficas sobre a velocidade de descarga e envío"
+msgstr "Amosa gráficas sobre a velocidade de descarga e envío"
 
 #: plugins/stats/StatsPlugin.cc:35
 #, kde-format
@@ -8245,7 +8245,7 @@ msgstr "Gráficas das conexións"
 #: plugins/stats/StatsPlugin.cc:35
 #, kde-format
 msgid "Displays charts about connections"
-msgstr "Mostra gráficas sobre as conexións."
+msgstr "Amosa gráficas sobre as conexións."
 
 #: plugins/syndication/feedlist.cpp:151
 #, kde-format
@@ -8845,7 +8845,7 @@ msgstr "UPnP"
 #: plugins/upnp/upnpplugin.cpp:43
 #, kde-format
 msgid "Shows the status of the UPnP plugin"
-msgstr "Mostra o estado do complemento de UPnP."
+msgstr "Amosa o estado do complemento de UPnP."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_rescan)
 #: plugins/upnp/upnpwidget.ui:54
