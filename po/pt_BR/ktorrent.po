@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-06-07 10:51-0300\n"
+"PO-Revision-Date: 2023-06-26 16:55-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -29,12 +29,13 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "doutor.zero, André Marcelo Alvarenga"
+msgstr "doutor.zero, André Marcelo Alvarenga, Geraldo Simião"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "doutor.zero@gmail.com, alvarenga@kde.org"
+msgstr ""
+"doutor.zero@gmail.com, alvarenga@kde.org, geraldosimiao@fedoraproject.org"
 
 #: ktorrent/core.cpp:143
 #, kde-format
@@ -281,11 +282,10 @@ msgstr ""
 "importar esse arquivo?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Importar"
+msgstr "Importar"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -299,11 +299,10 @@ msgstr "A pasta %1 não existe. Deseja criá-la?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Recriar"
+msgstr "Criar"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -315,18 +314,16 @@ msgstr ""
 "destes arquivos. Tem certeza de que deseja fazer isso?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Excluir arquivo(s)"
+msgstr "Excluir os arquivos"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Não, manter os arquivos"
+msgstr "Manter os arquivos"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -4936,9 +4933,7 @@ msgstr "Limites alcançados"
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Iniciar"
@@ -5533,7 +5528,7 @@ msgstr "Excluir arquivo(s)"
 #: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Move File"
-msgstr "Mover Arquivo"
+msgstr "Mover arquivo"
 
 #: plugins/infowidget/fileview.cpp:120
 #, kde-format
@@ -5543,22 +5538,22 @@ msgstr "Recolher árvore de pastas"
 #: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Expand Folder Tree"
-msgstr "Expandir Arvore de Pastas"
+msgstr "Expandir árvore de pastas"
 
 #: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "File Tree"
-msgstr "Árvore de Arquivos"
+msgstr "Árvore de arquivos"
 
 #: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "File List"
-msgstr "Lista de Arquivos"
+msgstr "Lista de arquivos"
 
 #: plugins/infowidget/fileview.cpp:136
 #, kde-format
 msgid "Show Filter"
-msgstr "Mostrar Filtro"
+msgstr "Mostrar filtro"
 
 #: plugins/infowidget/fileview.cpp:317
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
@@ -5589,7 +5584,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "Habilitar modo de download sequencial"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -5656,7 +5651,7 @@ msgstr "Pré-visualização"
 #, kde-format
 msgctxt "Percent of File Downloaded"
 msgid "% Complete"
-msgstr "% Concluído"
+msgstr "% concluído"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:77
 #: plugins/infowidget/iwfiletreemodel.cpp:87
