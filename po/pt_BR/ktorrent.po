@@ -7,7 +7,7 @@
 # Henrique Marks <henriquemarks@gmail.com>, 2008.
 # Doutor Zero <doutor.zero@gmail.com>, 2008, 2009.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020.
-# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2010, 2012, 2017, 2018, 2019, 2020, 2021.
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2010, 2012, 2017, 2018, 2019, 2020, 2021, 2023.
 # Marcus Vinícius de Andrade Gama <marcus.gama@gmail.com>, 2010.
 # Aracele Torres <araceletorres@gmail.com>, 2010, 2011.
 # Marcus Gama <marcus.gama@gmail.com>, 2011, 2012.
@@ -16,25 +16,26 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 02:44+0000\n"
-"PO-Revision-Date: 2021-08-17 16:10-0300\n"
+"PO-Revision-Date: 2023-06-26 16:55-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
-"Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "doutor.zero, André Marcelo Alvarenga"
+msgstr "doutor.zero, André Marcelo Alvarenga, Geraldo Simião"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "doutor.zero@gmail.com, alvarenga@kde.org"
+msgstr ""
+"doutor.zero@gmail.com, alvarenga@kde.org, geraldosimiao@fedoraproject.org"
 
 #: ktorrent/core.cpp:143
 #, kde-format
@@ -5481,7 +5482,7 @@ msgstr "Excluir arquivo(s)"
 #: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Move File"
-msgstr "Mover Arquivo"
+msgstr "Mover arquivo"
 
 #: plugins/infowidget/fileview.cpp:119
 #, kde-format
@@ -5491,22 +5492,22 @@ msgstr "Recolher árvore de pastas"
 #: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Expand Folder Tree"
-msgstr "Expandir Arvore de Pastas"
+msgstr "Expandir árvore de pastas"
 
 #: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "File Tree"
-msgstr "Árvore de Arquivos"
+msgstr "Árvore de arquivos"
 
 #: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "File List"
-msgstr "Lista de Arquivos"
+msgstr "Lista de arquivos"
 
 #: plugins/infowidget/fileview.cpp:135
 #, kde-format
 msgid "Show Filter"
-msgstr "Mostrar Filtro"
+msgstr "Mostrar filtro"
 
 #: plugins/infowidget/fileview.cpp:316
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
@@ -5598,7 +5599,7 @@ msgstr "Pré-visualização"
 #, kde-format
 msgctxt "Percent of File Downloaded"
 msgid "% Complete"
-msgstr "% Concluído"
+msgstr "% concluído"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:77
 #: plugins/infowidget/iwfiletreemodel.cpp:87

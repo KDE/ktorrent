@@ -4744,7 +4744,7 @@ msgstr "Marcar para usar un IP personalizado para lle pasar aos localizadores."
 #: libktcore/ktorrent.kcfg:123
 #, kde-format
 msgid "Directory which was used as the last save directory"
-msgstr "Directorio que se empregou como último de garda"
+msgstr "Directorio que se usou como último de garda"
 
 #. i18n: ectx: label, entry (customIP), group (downloads)
 #: libktcore/ktorrent.kcfg:127
