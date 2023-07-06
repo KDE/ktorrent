@@ -63,3 +63,5 @@ void LogPrefPage::updateSettings()
 {
 }
 }
+
+#include "moc_logprefpage.cpp"

@@ -46,3 +46,5 @@ QModelIndexList FeedListView::selectedFeeds()
     return selectionModel()->selectedRows();
 }
 }
+
+#include "moc_feedlistview.cpp"

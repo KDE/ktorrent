@@ -136,3 +136,5 @@ void OpenSearchDownloadJob::xmlFileDownloadFinished(KJob *j)
     }
 }
 }
+
+#include "moc_opensearchdownloadjob.cpp"

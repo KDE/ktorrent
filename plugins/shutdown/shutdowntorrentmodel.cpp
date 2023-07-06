@@ -245,3 +245,5 @@ void ShutdownTorrentDelegate::updateEditorGeometry(QWidget *editor, const QStyle
 }
 
 }
+
+#include "moc_shutdowntorrentmodel.cpp"

@@ -58,3 +58,5 @@ void ColorPref::loadDefaults()
 }
 
 }
+
+#include "moc_colorpref.cpp"

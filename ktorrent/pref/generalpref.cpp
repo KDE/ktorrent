@@ -67,3 +67,5 @@ void GeneralPref::loadDefaults()
 }
 
 }
+
+#include "moc_generalpref.cpp"

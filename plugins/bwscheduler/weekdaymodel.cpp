@@ -73,3 +73,5 @@ QList<int> WeekDayModel::checkedDays() const
 }
 
 }
+
+#include "moc_weekdaymodel.cpp"

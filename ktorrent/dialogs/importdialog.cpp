@@ -371,3 +371,5 @@ void ImportDialog::saveFileMap(const QString &tor_dir, const QString &ddir)
 }
 
 }
+
+#include "moc_importdialog.cpp"

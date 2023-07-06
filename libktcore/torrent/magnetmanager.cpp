@@ -535,3 +535,5 @@ int MagnetManager::getMagnetIndex(kt::MagnetDownloader *md)
 }
 
 }
+
+#include "moc_magnetmanager.cpp"

@@ -65,3 +65,5 @@ void PropertiesDlg::accept()
 }
 
 }
+
+#include "moc_propertiesdlg.cpp"

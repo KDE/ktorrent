@@ -140,3 +140,5 @@ void MagnetView::keyPressEvent(QKeyEvent *event)
         QWidget::keyPressEvent(event);
 }
 }
+
+#include "moc_magnetview.cpp"

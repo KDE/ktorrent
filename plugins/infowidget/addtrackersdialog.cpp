@@ -56,3 +56,5 @@ QStringList AddTrackersDialog::trackerList() const
 }
 
 }
+
+#include "moc_addtrackersdialog.cpp"

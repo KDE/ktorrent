@@ -151,3 +151,5 @@ void UPnPWidget::onCurrentDeviceChanged(const QModelIndex &current, const QModel
 }
 
 }
+
+#include "moc_upnpwidget.cpp"

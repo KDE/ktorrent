@@ -184,3 +184,5 @@ void DownloadOrderDialog::search(const QString &text)
     }
 }
 }
+
+#include "moc_downloadorderdialog.cpp"

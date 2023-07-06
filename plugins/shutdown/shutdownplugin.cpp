@@ -144,3 +144,5 @@ void ShutdownPlugin::updateAction()
 }
 
 #include "shutdownplugin.moc"
+
+#include "moc_shutdownplugin.cpp"

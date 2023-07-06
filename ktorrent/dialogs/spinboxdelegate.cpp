@@ -66,3 +66,5 @@ QSize SpinBoxDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
     return QSpinBox().sizeHint();
 }
 }
+
+#include "moc_spinboxdelegate.cpp"

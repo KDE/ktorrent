@@ -28,3 +28,5 @@ void BTPref::loadSettings()
 }
 
 }
+
+#include "moc_btpref.cpp"

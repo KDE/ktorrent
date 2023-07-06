@@ -49,3 +49,5 @@ void AvailabilityChunkBar::setTC(bt::TorrentInterface *tc)
     update();
 }
 }
+
+#include "moc_availabilitychunkbar.cpp"

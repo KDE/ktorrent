@@ -74,3 +74,5 @@ bool DBusTorrentFile::isMultiMedia() const
     return file.isMultimedia();
 }
 }
+
+#include "moc_dbustorrentfile.cpp"

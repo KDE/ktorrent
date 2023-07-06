@@ -231,3 +231,5 @@ void SpeedLimitsModel::apply()
     }
 }
 }
+
+#include "moc_speedlimitsmodel.cpp"

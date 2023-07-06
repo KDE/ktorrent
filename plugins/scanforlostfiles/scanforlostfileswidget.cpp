@@ -205,3 +205,5 @@ void ScanForLostFilesWidget::on_treeView_customContextMenuRequested(const QPoint
 }
 
 }
+
+#include "moc_scanforlostfileswidget.cpp"

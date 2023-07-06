@@ -160,3 +160,5 @@ void DownloadOrderManager::disable()
 }
 
 }
+
+#include "moc_downloadordermanager.cpp"

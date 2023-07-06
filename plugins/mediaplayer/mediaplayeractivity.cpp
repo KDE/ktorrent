@@ -372,3 +372,5 @@ void MediaPlayerActivity::currentTabChanged(int idx)
 }
 
 }
+
+#include "moc_mediaplayeractivity.cpp"

@@ -108,3 +108,5 @@ void CentralWidget::switchActivity(QAction *action)
 }
 
 }
+
+#include "moc_centralwidget.cpp"

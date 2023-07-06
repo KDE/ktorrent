@@ -100,3 +100,5 @@ void NetworkPref::onlyUseUtpEnabled(bool on)
 }
 
 }
+
+#include "moc_networkpref.cpp"

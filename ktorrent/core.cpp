@@ -1260,3 +1260,5 @@ QString Core::locationHint(const QString &group) const
 }
 
 }
+
+#include "moc_core.cpp"

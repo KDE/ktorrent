@@ -86,3 +86,5 @@ void TorrentSearchBar::saveState(KSharedConfigPtr cfg)
 }
 
 }
+
+#include "moc_torrentsearchbar.cpp"

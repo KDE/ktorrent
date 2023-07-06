@@ -107,3 +107,5 @@ void MediaController::metaDataChanged()
 }
 
 }
+
+#include "moc_mediacontroller.cpp"

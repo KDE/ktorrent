@@ -273,3 +273,5 @@ void IWFileListModel::update()
     }
 }
 }
+
+#include "moc_iwfilelistmodel.cpp"

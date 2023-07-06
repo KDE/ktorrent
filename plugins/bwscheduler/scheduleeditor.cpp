@@ -208,3 +208,5 @@ void ScheduleEditor::enableChecked(bool on)
 }
 
 }
+
+#include "moc_scheduleeditor.cpp"

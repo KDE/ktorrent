@@ -404,3 +404,5 @@ void TorrentCreatorDlg::selectDirectory()
 }
 
 }
+
+#include "moc_torrentcreatordlg.cpp"

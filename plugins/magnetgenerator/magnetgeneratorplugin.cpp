@@ -118,3 +118,5 @@ void MagnetGeneratorPlugin::showPopup()
 }
 
 #include "magnetgeneratorplugin.moc"
+
+#include "moc_magnetgeneratorplugin.cpp"

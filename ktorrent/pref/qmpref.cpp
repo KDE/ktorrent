@@ -39,3 +39,5 @@ void QMPref::onControlTorrentsManuallyToggled(bool on)
 }
 
 }
+
+#include "moc_qmpref.cpp"

@@ -25,3 +25,5 @@ void JobProgressWidget::emitCloseRequest()
 }
 
 }
+
+#include "moc_jobprogresswidget.cpp"

@@ -42,3 +42,5 @@ QModelIndexList FilterListView::selectedFilters()
     return selectionModel()->selectedRows();
 }
 }
+
+#include "moc_filterlistview.cpp"

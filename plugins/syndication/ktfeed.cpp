@@ -476,3 +476,5 @@ QString Feed::filterNamesString() const
 }
 
 }
+
+#include "moc_ktfeed.cpp"

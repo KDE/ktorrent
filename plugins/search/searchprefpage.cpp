@@ -186,3 +186,5 @@ void SearchPrefPage::resetDefaultAction()
 }
 
 }
+
+#include "moc_searchprefpage.cpp"

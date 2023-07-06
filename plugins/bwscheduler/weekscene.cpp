@@ -295,3 +295,5 @@ void WeekScene::updateGuidanceLines(qreal y1, qreal y2)
     gline[1]->update(xoff, y2, yToTime(y2).toString(FORMAT));
 }
 }
+
+#include "moc_weekscene.cpp"

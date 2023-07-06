@@ -258,3 +258,5 @@ void TorrentActivity::queueOrdered()
 }
 
 }
+
+#include "moc_torrentactivity.cpp"

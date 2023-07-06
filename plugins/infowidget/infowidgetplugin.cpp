@@ -273,3 +273,5 @@ void InfoWidgetPlugin::torrentRemoved(bt::TorrentInterface *tc)
 }
 
 #include "infowidgetplugin.moc"
+
+#include "moc_infowidgetplugin.cpp"

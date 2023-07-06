@@ -15,3 +15,5 @@ CoreInterface::~CoreInterface()
 {
 }
 }
+
+#include "moc_coreinterface.cpp"

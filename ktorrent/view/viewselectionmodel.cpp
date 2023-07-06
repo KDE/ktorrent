@@ -20,3 +20,5 @@ ViewSelectionModel::~ViewSelectionModel()
 {
 }
 }
+
+#include "moc_viewselectionmodel.cpp"

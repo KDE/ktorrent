@@ -291,3 +291,5 @@ QVariant TrackerModel::Item::sortData(int column) const
 }
 
 }
+
+#include "moc_trackermodel.cpp"

@@ -111,3 +111,5 @@ void SearchPlugin::preferencesUpdated()
 }
 
 #include "searchplugin.moc"
+
+#include "moc_searchplugin.cpp"

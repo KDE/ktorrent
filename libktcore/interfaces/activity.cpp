@@ -71,3 +71,5 @@ bool Activity::lessThan(Activity *l, Activity *r)
         return l->weight() < r->weight();
 }
 }
+
+#include "moc_activity.cpp"

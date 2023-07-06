@@ -282,3 +282,5 @@ QObject *DBus::settings()
 }
 
 }
+
+#include "moc_dbus.cpp"

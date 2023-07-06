@@ -138,3 +138,5 @@ void PasteDialog::accept()
     }
 }
 }
+
+#include "moc_pastedialog.cpp"

@@ -87,3 +87,5 @@ QSize LogFlagsDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     return QSize(100, tmp.sizeHint().height());
 }
 }
+
+#include "moc_logflagsdelegate.cpp"

@@ -167,3 +167,5 @@ QString MagnetModel::status(int row) const
     }
 }
 }
+
+#include "moc_magnetmodel.cpp"

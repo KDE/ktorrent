@@ -244,3 +244,5 @@ QModelIndex PlayListWidget::indexForFile(const QString &file) const
 }
 
 }
+
+#include "moc_playlistwidget.cpp"

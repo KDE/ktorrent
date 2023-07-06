@@ -289,3 +289,5 @@ void DownloadAndConvertJob::cleanUp(const QString &path)
         bt::Delete(path, true);
 }
 }
+
+#include "moc_downloadandconvertjob.cpp"

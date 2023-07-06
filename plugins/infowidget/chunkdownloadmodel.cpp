@@ -256,3 +256,5 @@ bool ChunkDownloadModel::insertRows(int row, int count, const QModelIndex & /*pa
     return true;
 }
 }
+
+#include "moc_chunkdownloadmodel.cpp"

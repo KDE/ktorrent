@@ -106,3 +106,5 @@ void ConvertDialog::btnCancelClicked()
 }
 
 }
+
+#include "moc_convertdialog.cpp"

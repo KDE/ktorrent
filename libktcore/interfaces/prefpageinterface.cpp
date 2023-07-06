@@ -31,3 +31,5 @@ void PrefPageInterface::updateSettings()
 {
 }
 }
+
+#include "moc_prefpageinterface.cpp"

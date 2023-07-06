@@ -68,3 +68,5 @@ void UPnPPlugin::shutdown(bt::WaitJob *job)
 
 }
 #include "upnpplugin.moc"
+
+#include "moc_upnpplugin.cpp"

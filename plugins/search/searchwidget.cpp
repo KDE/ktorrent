@@ -231,3 +231,5 @@ bool SearchWidget::backAvailable() const
     return webview->pageAction(QWebEnginePage::Back)->isEnabled();
 }
 }
+
+#include "moc_searchwidget.cpp"

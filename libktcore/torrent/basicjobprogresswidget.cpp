@@ -77,3 +77,5 @@ void BasicJobProgressWidget::speed(long unsigned int value)
 }
 
 }
+
+#include "moc_basicjobprogresswidget.cpp"

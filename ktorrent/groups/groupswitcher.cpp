@@ -242,3 +242,5 @@ void GroupSwitcher::editGroupPolicy()
 }
 
 }
+
+#include "moc_groupswitcher.cpp"

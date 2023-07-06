@@ -50,3 +50,5 @@ void PluginActivity::update()
     pman->loadPlugins();
 }
 }
+
+#include "moc_pluginactivity.cpp"

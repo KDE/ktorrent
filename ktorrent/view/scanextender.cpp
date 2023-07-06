@@ -130,3 +130,5 @@ bool ScanExtender::similar(Extender *ext) const
 }
 
 }
+
+#include "moc_scanextender.cpp"

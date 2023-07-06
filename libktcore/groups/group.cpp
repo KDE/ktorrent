@@ -81,3 +81,5 @@ void Group::updateCount(QueueManager *qman)
     }
 }
 }
+
+#include "moc_group.cpp"

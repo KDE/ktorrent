@@ -125,3 +125,5 @@ void LogViewer::suspend(bool on)
 }
 
 }
+
+#include "moc_logviewer.cpp"

@@ -213,3 +213,5 @@ void SpdTabPage::resetAvg(ChartDrawer* c)
 }
 
 } //ns e
+
+#include "moc_SpdTabPage.cpp"

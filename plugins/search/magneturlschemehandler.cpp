@@ -19,3 +19,5 @@ void MagnetUrlSchemeHandler::requestStarted(QWebEngineUrlRequestJob *request)
 
     Q_EMIT magnetUrlDetected(url);
 }
+
+#include "moc_magneturlschemehandler.cpp"

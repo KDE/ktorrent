@@ -157,3 +157,5 @@ void WebView::magnetUrlDetected(const QUrl &url)
 }
 
 }
+
+#include "moc_webview.cpp"

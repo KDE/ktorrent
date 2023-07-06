@@ -64,3 +64,5 @@ void AddPeersDlg::addPressed()
 }
 
 }
+
+#include "moc_addpeersdlg.cpp"

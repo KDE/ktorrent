@@ -204,3 +204,5 @@ void IPBlockingPrefPage::autoUpdateIntervalChanged(int val)
 }
 
 }
+
+#include "moc_ipblockingprefpage.cpp"

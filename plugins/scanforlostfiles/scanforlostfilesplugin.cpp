@@ -113,3 +113,5 @@ void ScanForLostFilesPlugin::removeFromGUI()
 }
 
 #include "scanforlostfilesplugin.moc"
+
+#include "moc_scanforlostfilesplugin.cpp"

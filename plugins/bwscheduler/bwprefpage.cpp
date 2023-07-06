@@ -36,3 +36,5 @@ void BWPrefPage::updateSettings()
 }
 
 }
+
+#include "moc_bwprefpage.cpp"

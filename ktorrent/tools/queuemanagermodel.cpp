@@ -505,3 +505,5 @@ void QueueManagerModel::swapItems(int a, int b)
 }
 
 }
+
+#include "moc_queuemanagermodel.cpp"

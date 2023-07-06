@@ -350,3 +350,5 @@ void ViewDelegate::normalPaint(QPainter *painter, const QStyleOptionViewItem &op
 }
 
 }
+
+#include "moc_viewdelegate.cpp"

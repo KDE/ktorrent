@@ -143,3 +143,5 @@ void MediaView::saveState(KSharedConfig::Ptr cfg)
 }
 
 }
+
+#include "moc_mediaview.cpp"

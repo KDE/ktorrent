@@ -166,3 +166,5 @@ void DBusGroup::setOnlyApplyOnNewTorrents(bool on)
     gman->saveGroups();
 }
 }
+
+#include "moc_dbusgroup.cpp"

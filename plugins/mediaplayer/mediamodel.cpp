@@ -227,3 +227,5 @@ QModelIndex MediaModel::index(int row, int column, const QModelIndex &parent) co
 }
 
 }
+
+#include "moc_mediamodel.cpp"

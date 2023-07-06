@@ -181,3 +181,5 @@ void ScanThread::scan(const QUrl &dir, bool recursive)
 }
 
 }
+
+#include "moc_scanthread.cpp"

@@ -17,3 +17,5 @@ Extender::~Extender()
 {
 }
 }
+
+#include "moc_extender.cpp"

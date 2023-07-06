@@ -42,3 +42,5 @@ void MagnetGeneratorPrefWidget::torrentTrackerToggled(bool on)
 }
 
 }
+
+#include "moc_magnetgeneratorprefwidget.cpp"

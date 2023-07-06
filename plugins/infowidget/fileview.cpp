@@ -611,3 +611,5 @@ void FileView::checkFile()
 }
 
 }
+
+#include "moc_fileview.cpp"

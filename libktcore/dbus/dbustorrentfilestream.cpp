@@ -76,3 +76,5 @@ qint64 DBusTorrentFileStream::size() const
 }
 
 }
+
+#include "moc_dbustorrentfilestream.cpp"

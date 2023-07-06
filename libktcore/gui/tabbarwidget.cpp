@@ -226,3 +226,5 @@ void TabBarWidget::setToolButtonStyle()
 }
 
 }
+
+#include "moc_tabbarwidget.cpp"

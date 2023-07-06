@@ -174,3 +174,5 @@ bool WebSeedsModel::setData(const QModelIndex &index, const QVariant &value, int
     return true;
 }
 }
+
+#include "moc_webseedsmodel.cpp"

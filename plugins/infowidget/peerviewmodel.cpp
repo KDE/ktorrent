@@ -408,3 +408,5 @@ bt::PeerInterface *PeerViewModel::indexToPeer(const QModelIndex &index)
 }
 
 }
+
+#include "moc_peerviewmodel.cpp"

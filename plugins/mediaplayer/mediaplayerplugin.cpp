@@ -53,3 +53,5 @@ void MediaPlayerPlugin::unload()
 }
 
 #include "mediaplayerplugin.moc"
+
+#include "moc_mediaplayerplugin.cpp"

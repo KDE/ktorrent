@@ -114,3 +114,5 @@ void DownloadOrderPlugin::torrentRemoved(bt::TorrentInterface *tc)
 }
 
 #include <downloadorderplugin.moc>
+
+#include "moc_downloadorderplugin.cpp"

@@ -182,3 +182,5 @@ void SearchEngine::iconDownloadFinished(KJob *job)
     }
 }
 }
+
+#include "moc_searchengine.cpp"

@@ -305,3 +305,5 @@ void StatusTab::linkActivated(const QString &link)
 }
 
 }
+
+#include "moc_statustab.cpp"

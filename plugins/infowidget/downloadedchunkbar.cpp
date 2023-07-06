@@ -94,3 +94,5 @@ void DownloadedChunkBar::drawBarContents(QPainter *p)
     }
 }
 }
+
+#include "moc_downloadedchunkbar.cpp"

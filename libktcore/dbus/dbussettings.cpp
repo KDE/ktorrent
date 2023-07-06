@@ -789,3 +789,5 @@ void DBusSettings::setRequeueMagnetsTime(int val)
     Settings::setRequeueMagnetsTime(val);
 }
 }
+
+#include "moc_dbussettings.cpp"

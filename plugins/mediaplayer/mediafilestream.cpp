@@ -120,3 +120,5 @@ void MediaFileStream::seekStream(qint64 offset)
     s->seek(offset);
 }
 }
+
+#include "moc_mediafilestream.cpp"

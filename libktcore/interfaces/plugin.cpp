@@ -26,3 +26,5 @@ void Plugin::shutdown(bt::WaitJob *)
 {
 }
 }
+
+#include "moc_plugin.cpp"

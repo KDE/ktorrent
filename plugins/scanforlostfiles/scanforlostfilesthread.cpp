@@ -78,3 +78,5 @@ void ScanForLostFilesThread::run()
 }
 
 }
+
+#include "moc_scanforlostfilesthread.cpp"

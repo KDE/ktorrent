@@ -134,3 +134,5 @@ void IPFilterPlugin::notification(const QString &msg)
 }
 
 #include <ipfilterplugin.moc>
+
+#include "moc_ipfilterplugin.cpp"

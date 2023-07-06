@@ -410,3 +410,5 @@ void GroupViewModel::Item::dump()
 }
 
 }
+
+#include "moc_groupviewmodel.cpp"

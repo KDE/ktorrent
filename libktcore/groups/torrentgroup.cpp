@@ -189,3 +189,5 @@ void TorrentGroup::loadTorrents(QueueManager *qman)
 }
 
 }
+
+#include "moc_torrentgroup.cpp"

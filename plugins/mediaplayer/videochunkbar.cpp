@@ -107,3 +107,5 @@ const bt::BitSet &VideoChunkBar::getBitSet() const
     return bitset;
 }
 }
+
+#include "moc_videochunkbar.cpp"

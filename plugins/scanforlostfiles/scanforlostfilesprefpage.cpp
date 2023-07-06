@@ -53,3 +53,5 @@ bool ScanForLostFilesPrefPage::customWidgetsChanged()
 }
 
 }
+
+#include "moc_scanforlostfilesprefpage.cpp"

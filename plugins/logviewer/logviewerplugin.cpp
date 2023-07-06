@@ -125,3 +125,5 @@ void LogViewerPlugin::guiUpdate()
 
 }
 #include "logviewerplugin.moc"
+
+#include "moc_logviewerplugin.cpp"

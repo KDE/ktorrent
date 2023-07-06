@@ -302,3 +302,5 @@ void QueueManagerWidget::updateButtons()
 }
 
 }
+
+#include "moc_queuemanagerwidget.cpp"

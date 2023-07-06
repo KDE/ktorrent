@@ -18,3 +18,5 @@ PluginPage::~PluginPage()
 }
 
 } //ns end
+
+#include "moc_PluginPage.cpp"

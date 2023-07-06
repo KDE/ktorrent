@@ -221,3 +221,5 @@ void BWSchedulerPlugin::networkStatusChanged(bool online)
 }
 
 #include <bwschedulerplugin.moc>
+
+#include "moc_bwschedulerplugin.cpp"

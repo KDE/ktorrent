@@ -178,3 +178,5 @@ void FeedWidgetModel::updated()
     endResetModel();
 }
 }
+
+#include "moc_feedwidgetmodel.cpp"

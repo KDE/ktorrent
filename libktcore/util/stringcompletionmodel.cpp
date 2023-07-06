@@ -67,3 +67,5 @@ void StringCompletionModel::addString(const QString &s)
 }
 
 }
+
+#include "moc_stringcompletionmodel.cpp"

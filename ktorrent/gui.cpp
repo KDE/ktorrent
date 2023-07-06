@@ -522,3 +522,5 @@ TorrentActivityInterface *GUI::getTorrentActivity()
 }
 
 }
+
+#include "moc_gui.cpp"

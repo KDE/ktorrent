@@ -163,3 +163,5 @@ MissingFilesDlg::ReturnCode MissingFilesDlg::execute()
     return ret;
 }
 }
+
+#include "moc_missingfilesdlg.cpp"

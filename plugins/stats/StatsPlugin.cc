@@ -87,3 +87,5 @@ void StatsPlugin::settingsChanged()
 } //Ns end
 
 #include "StatsPlugin.moc"
+
+#include "moc_StatsPlugin.cpp"

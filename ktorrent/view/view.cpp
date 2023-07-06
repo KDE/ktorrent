@@ -876,3 +876,5 @@ void View::keyPressEvent(QKeyEvent *event)
 }
 
 }
+
+#include "moc_view.cpp"

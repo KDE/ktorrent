@@ -133,3 +133,5 @@ int ShutdownDlg::actionToIndex(Action act)
 }
 
 }
+
+#include "moc_shutdowndlg.cpp"

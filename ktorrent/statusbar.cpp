@@ -112,3 +112,5 @@ void StatusBar::message(const QString &msg)
     showMessage(msg, 30 * 1000);
 }
 }
+
+#include "moc_statusbar.cpp"

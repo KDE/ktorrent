@@ -59,3 +59,5 @@ void ProxyPref::usernamePasswordToggled(bool on)
     kcfg_socksUsername->setEnabled(on && kcfg_socksEnabled->isChecked());
 }
 }
+
+#include "moc_proxypref.cpp"

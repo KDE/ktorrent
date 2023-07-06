@@ -215,3 +215,5 @@ void MediaPlayer::hasVideoChanged(bool hasVideo)
 }
 
 }
+
+#include "moc_mediaplayer.cpp"

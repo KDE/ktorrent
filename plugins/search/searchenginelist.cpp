@@ -338,3 +338,5 @@ bool SearchEngineList::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 }
+
+#include "moc_searchenginelist.cpp"

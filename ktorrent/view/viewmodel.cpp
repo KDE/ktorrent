@@ -756,3 +756,5 @@ void ViewModel::sort(int col, Qt::SortOrder order)
     Q_EMIT sorted();
 }
 }
+
+#include "moc_viewmodel.cpp"

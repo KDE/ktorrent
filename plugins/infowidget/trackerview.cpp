@@ -268,3 +268,5 @@ void TrackerView::loadState(KSharedConfigPtr cfg)
     tracker_hints = g.readEntry("tracker_hints", default_hints);
 }
 }
+
+#include "moc_trackerview.cpp"

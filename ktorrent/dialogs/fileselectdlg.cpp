@@ -689,3 +689,5 @@ void FileSelectDlg::moveCompletedToggled(bool on)
     m_completedLocation->setEnabled(on);
 }
 }
+
+#include "moc_fileselectdlg.cpp"

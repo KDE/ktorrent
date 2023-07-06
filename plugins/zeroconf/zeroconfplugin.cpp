@@ -99,3 +99,5 @@ void ZeroConfPlugin::avahiServiceDestroyed(TorrentService *av)
 
 }
 #include "zeroconfplugin.moc"
+
+#include "moc_zeroconfplugin.cpp"

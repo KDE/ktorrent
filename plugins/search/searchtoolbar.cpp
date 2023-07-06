@@ -180,3 +180,5 @@ void SearchToolBar::clearHistory()
 }
 
 }
+
+#include "moc_searchtoolbar.cpp"

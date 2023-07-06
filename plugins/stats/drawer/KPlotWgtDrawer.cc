@@ -416,3 +416,5 @@ void KPlotWgtDrawer::MarkMax()
 }
 
 }// ns end
+
+#include "moc_KPlotWgtDrawer.cpp"

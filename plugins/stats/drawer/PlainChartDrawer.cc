@@ -519,3 +519,5 @@ void PlainChartDrawer::enableBackgroundGrid(bool bg)
 
 } //NS end
 
+
+#include "moc_PlainChartDrawer.cpp"

@@ -89,3 +89,5 @@ void ScanFolderPlugin::updateScanFolders()
 }
 
 #include "scanfolderplugin.moc"
+
+#include "moc_scanfolderplugin.cpp"

@@ -156,4 +156,6 @@ PrefPageScrollArea::~PrefPageScrollArea()
 
 }
 
+#include "moc_prefdialog.cpp"
+
 // kate: indent-mode cstyle; indent-width 4; replace-tabs on; mixed-indent off;

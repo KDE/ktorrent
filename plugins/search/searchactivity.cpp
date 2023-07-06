@@ -302,3 +302,5 @@ void SearchActivity::clearSearchHistory()
 }
 
 }
+
+#include "moc_searchactivity.cpp"

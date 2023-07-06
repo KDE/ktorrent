@@ -182,3 +182,5 @@ void RouterModel::undoForward(const net::Port &port, bt::WaitJob *wjob)
     }
 }
 }
+
+#include "moc_routermodel.cpp"

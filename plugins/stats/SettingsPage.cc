@@ -32,3 +32,5 @@ void SettingsPage::UpdGuiUpdatesToMs(int)
 }
 
 } //ns end
+
+#include "moc_SettingsPage.cpp"

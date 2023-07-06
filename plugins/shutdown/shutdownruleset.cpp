@@ -337,3 +337,5 @@ QString ShutdownRule::toolTip() const
 }
 
 }
+
+#include "moc_shutdownruleset.cpp"

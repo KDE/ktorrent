@@ -109,3 +109,5 @@ void TorrentService::aboutToBeDestroyed()
     serviceDestroyed(this);
 }
 }
+
+#include "moc_torrentservice.cpp"

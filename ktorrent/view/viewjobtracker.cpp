@@ -48,3 +48,5 @@ kt::JobProgressWidget *ViewJobTracker::createJobWidget(bt::Job *job)
         return kt::JobTracker::createJobWidget(job);
 }
 }
+
+#include "moc_viewjobtracker.cpp"

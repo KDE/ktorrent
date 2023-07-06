@@ -226,3 +226,5 @@ void LogFlags::unregistered(const QString &sys)
     }
 }
 }
+
+#include "moc_logflags.cpp"

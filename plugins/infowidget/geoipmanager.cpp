@@ -57,3 +57,5 @@ QString GeoIPManager::countryName(int country_id)
 }
 
 }
+
+#include "moc_geoipmanager.cpp"

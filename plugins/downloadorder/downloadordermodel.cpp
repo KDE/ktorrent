@@ -365,3 +365,5 @@ void DownloadOrderModel::sortBySeasonsAndEpisodes()
     endResetModel();
 }
 }
+
+#include "moc_downloadordermodel.cpp"

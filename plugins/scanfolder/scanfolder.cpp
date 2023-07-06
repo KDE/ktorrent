@@ -76,3 +76,5 @@ void ScanFolder::setRecursive(bool rec)
 }
 
 }
+
+#include "moc_scanfolder.cpp"

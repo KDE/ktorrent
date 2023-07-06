@@ -213,3 +213,5 @@ void LinkDownloader::torrentDownloadFinished(KJob *j)
         tryTorrentLinks();
 }
 }
+
+#include "moc_linkdownloader.cpp"

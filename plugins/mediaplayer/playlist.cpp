@@ -317,3 +317,5 @@ void PlayList::onPlaying(const kt::MediaFileRef &file)
 }
 
 }
+
+#include "moc_playlist.cpp"

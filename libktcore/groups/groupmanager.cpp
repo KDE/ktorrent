@@ -326,3 +326,5 @@ void GroupManager::updateCount(QueueManager *qman)
 }
 
 }
+
+#include "moc_groupmanager.cpp"

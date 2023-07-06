@@ -151,3 +151,5 @@ void EditItemDlg::fillItem()
 }
 
 }
+
+#include "moc_edititemdlg.cpp"

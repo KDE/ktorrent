@@ -151,3 +151,5 @@ void TorrentLoadQueue::loadingFinished(const QUrl &url)
     }
 }
 }
+
+#include "moc_torrentloadqueue.cpp"

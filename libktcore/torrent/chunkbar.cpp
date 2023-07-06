@@ -132,3 +132,5 @@ void ChunkBar::drawBarContents(QPainter *p)
 }
 
 }
+
+#include "moc_chunkbar.cpp"

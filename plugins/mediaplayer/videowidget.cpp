@@ -259,3 +259,5 @@ void VideoWidget::enableActions(unsigned int flags)
 }
 
 }
+
+#include "moc_videowidget.cpp"

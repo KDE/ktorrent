@@ -223,3 +223,5 @@ void FeedWidget::onFeedRenamed(kt::Feed *f)
 }
 
 }
+
+#include "moc_feedwidget.cpp"

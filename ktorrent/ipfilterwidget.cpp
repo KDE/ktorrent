@@ -192,3 +192,5 @@ void IPFilterWidget::loadFilter(const QString &fn)
     dat.close();
 }
 }
+
+#include "moc_ipfilterwidget.cpp"

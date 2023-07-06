@@ -85,3 +85,5 @@ void ItemSelectionModel::sorted()
     select(ns, QItemSelectionModel::ClearAndSelect);
 }
 }
+
+#include "moc_itemselectionmodel.cpp"

@@ -151,3 +151,5 @@ void SpeedLimitsDlg::spinBoxValueChanged(int)
 }
 
 }
+
+#include "moc_speedlimitsdlg.cpp"

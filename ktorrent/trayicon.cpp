@@ -421,3 +421,5 @@ void TrayIcon::secondaryActivate(const QPoint &pos)
 }
 
 }
+
+#include "moc_trayicon.cpp"

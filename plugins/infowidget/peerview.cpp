@@ -120,3 +120,5 @@ void PeerView::loadState(KSharedConfigPtr cfg)
     }
 }
 }
+
+#include "moc_peerview.cpp"

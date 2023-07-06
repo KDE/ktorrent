@@ -267,3 +267,5 @@ void SyndicationActivity::editFeedName()
         tab->feedView()->edit(idx.front());
 }
 }
+
+#include "moc_syndicationactivity.cpp"

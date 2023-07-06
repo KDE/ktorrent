@@ -133,3 +133,5 @@ void WeekView::colorsChanged()
     scene->colorsChanged();
 }
 }
+
+#include "moc_weekview.cpp"

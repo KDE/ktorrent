@@ -167,3 +167,5 @@ void WebSeedsTab::enableAll()
 }
 
 }
+
+#include "moc_webseedstab.cpp"

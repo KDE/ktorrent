@@ -18,3 +18,5 @@ IWPrefPage::~IWPrefPage()
 {
 }
 }
+
+#include "moc_iwprefpage.cpp"

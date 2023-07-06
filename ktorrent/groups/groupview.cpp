@@ -192,3 +192,5 @@ void GroupView::openInNewTab()
         openTab(g);
 }
 }
+
+#include "moc_groupview.cpp"

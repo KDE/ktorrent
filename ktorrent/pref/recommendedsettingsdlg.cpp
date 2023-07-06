@@ -211,3 +211,5 @@ void RecommendedSettingsDlg::downloadBWChanged(int val)
     m_download_bw_display->setText(i18n("(= %1/s)", KFormat().formatByteSize(val * 128)));
 }
 }
+
+#include "moc_recommendedsettingsdlg.cpp"

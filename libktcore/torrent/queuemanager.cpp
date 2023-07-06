@@ -885,3 +885,5 @@ bool QueuePtrList::biggerThan(bt::TorrentInterface *tc1, bt::TorrentInterface *t
 }
 
 }
+
+#include "moc_queuemanager.cpp"

@@ -485,3 +485,5 @@ bool DBusTorrent::removeStream(uint file_index)
 }
 
 }
+
+#include "moc_dbustorrent.cpp"

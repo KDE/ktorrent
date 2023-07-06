@@ -126,3 +126,5 @@ bool ScanFolderPrefPage::customWidgetsChanged()
     return ScanFolderPluginSettings::group() != m_group->currentText() || folders != ScanFolderPluginSettings::folders();
 }
 }
+
+#include "moc_scanfolderprefpage.cpp"

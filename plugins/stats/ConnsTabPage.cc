@@ -262,3 +262,5 @@ void ConnsTabPage::GatherConnStats(Plugin* pPlug)
 }
 
 } //ns end
+
+#include "moc_ConnsTabPage.cpp"

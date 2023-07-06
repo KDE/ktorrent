@@ -50,3 +50,5 @@ bool GroupFilterModel::filterAcceptsRow(int source_row, const QModelIndex &sourc
 }
 
 }
+
+#include "moc_groupfiltermodel.cpp"

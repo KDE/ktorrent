@@ -139,3 +139,5 @@ void JobTracker::speed(KJob *job, long unsigned int value)
         i.value()->speed(value);
 }
 }
+
+#include "moc_jobtracker.cpp"
