@@ -39,7 +39,7 @@
   <name xml:lang="sr-ijekavian">К‑торент</name>
   <name xml:lang="sr-ijekavianlatin">KTorrent</name>
   <name xml:lang="sv">Ktorrent</name>
-  <name xml:lang="tr">K Torrent</name>
+  <name xml:lang="tr">KTorrent</name>
   <name xml:lang="uk">KTorrent</name>
   <name xml:lang="x-test">xxKTorrentxx</name>
   <name xml:lang="zh-CN">KTorrent</name>
@@ -122,7 +122,7 @@
     <p xml:lang="sr-ijekavian">К‑торент је програм из КДЕ‑а којим можете да преузимате фајлове преко протокола битторент. Омогућава покретање више торената истовремено и пружа разноврсне проширене могућности, што га чини га свеобухватним битторент клијентом.</p>
     <p xml:lang="sr-ijekavianlatin">KTorrent je program iz KDE‑a kojim možete da preuzimate fajlove preko protokola Bittorrent. Omogućava pokretanje više torenata istovremeno i pruža raznovrsne proširene mogućnosti, što ga čini ga sveobuhvatnim bittorrent klijentom.</p>
     <p xml:lang="sv">Ktorrent är ett dataflödesprogram av KDE som låter dig ladda ner filer med protokollet BitTorrent. Det möjliggör att hantera flera dataflöden samtidigt och levereras med utökade funktioner som gör det till en fullfjädrad klient för BitTorrent.</p>
-    <p xml:lang="tr">K Torrent, KDE tarafından geliştirilen, BitTorrent protokolünü kullanarak dosyaları indirmenize izin veren bir BitTorrent uygulamasıdır. Aynı anda birden fazla torrent çalıştırabilmenizi ve BitTorrent için tam özellikli bir istemci yapabilmeniz için genişletilmiş özellikler ile birlikte geliştirilmiştir.</p>
+    <p xml:lang="tr">KTorrent, KDE tarafından geliştirilen, BitTorrent protokolünü kullanarak dosyaları indirmenize izin veren bir BitTorrent uygulamasıdır. Aynı anda birden fazla torrent çalıştırabilmenizi ve BitTorrent için tam özellikli bir istemci yapabilmeniz için genişletilmiş özellikler ile birlikte geliştirilmiştir.</p>
     <p xml:lang="uk">KTorrent — програма для обміну даними торентів, створена розробниками KDE, за допомогою якої ви можете отримувати і розповсюджувати дані на основі протоколу BitTorrent. Ця програма надає вам змогу одночасно обмінюватися даними декількох торентів. Також передбачено додаткові можливості, які роблять програму повноцінною клієнтською частиною для обміну даними BitTorrent.</p>
     <p xml:lang="x-test">xxKTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.xx</p>
     <p xml:lang="zh-CN">KTorrent 是 KDE 提供的 BT 下载应用。支持同时运行多个种子，并具有多种扩展特性，是一个全功能的 BT 客户端。</p>
@@ -857,7 +857,7 @@
     <p xml:lang="sr-ijekavian">Поред уграђених функција, доступни су и разни прикључци за К‑торент.</p>
     <p xml:lang="sr-ijekavianlatin">Pored ugrađenih funkcija, dostupni su i razni priključci za KTorrent.</p>
     <p xml:lang="sv">Förutom inbyggd funktionalitet, finns några insticksprogram tillgängliga för Ktorrent.</p>
-    <p xml:lang="tr">Yerleşik işlevlere ek olarak, K Torrent için kullanılabilen bazı eklentiler de bulunmaktadır.</p>
+    <p xml:lang="tr">Yerleşik işlevlere ek olarak, KTorrent için kullanılabilen bazı eklentiler de bulunmaktadır.</p>
     <p xml:lang="uk">Окрім вбудованих функціональних можливостей, у KTorrent передбачено розширення можливостей за допомогою додатків.</p>
     <p xml:lang="x-test">xxIn addition to the built-in functionalities, there are some plugins available for KTorrent.xx</p>
     <p xml:lang="zh-CN">除了一些内置的功能，KTorrent 还有一些插件可用。</p>
