@@ -2563,7 +2563,7 @@ msgstr "색 초기화"
 #: ktorrent/pref/generalpref.cpp:13
 #, kde-format
 msgid "Application"
-msgstr "프로그램"
+msgstr "앱"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/generalpref.ui:17
@@ -4408,7 +4408,7 @@ msgstr "KTorrent UPnP 테스트"
 #: ktupnptest/main.cpp:27
 #, kde-format
 msgid "KTorrent's UPnP test application"
-msgstr "KTorrent의 UPnP 테스트 프로그램"
+msgstr "KTorrent의 UPnP 테스트 앱"
 
 #: ktupnptest/main.cpp:29
 #, kde-format
@@ -4419,7 +4419,7 @@ msgstr "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
 #: ktupnptest/upnptestwidget.ui:14
 #, kde-format
 msgid "UPnP Test Application"
-msgstr "UPnP 테스트 프로그램"
+msgstr "UPnP 테스트 앱"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktupnptest/upnptestwidget.ui:24
