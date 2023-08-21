@@ -48,16 +48,24 @@ TorrentActivity::TorrentActivity(Core *core, GUI *gui, QWidget *parent)
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
     vsplit = new QSplitter(Qt::Vertical, this);
+    vsplit->setProperty("_breeze_show_handle", true);
     layout->addWidget(vsplit);
     hsplit = new QSplitter(Qt::Horizontal, vsplit);
+    hsplit->setProperty("_breeze_show_handle", true);
 
     group_switcher = new GroupSwitcher(view, core->getGroupManager(), this);
     connect(core->getQueueManager(), &QueueManager::queueOrdered, this, &TorrentActivity::queueOrdered);
+
+    auto separator = new QFrame(this);
+    separator->setLineWidth(1);
+    separator->setFixedHeight(1);
+    separator->setFrameShape(QFrame::HLine);
 
     QVBoxLayout *vlayout = new QVBoxLayout(view_part);
     vlayout->setSpacing(0);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->addWidget(group_switcher);
+    vlayout->addWidget(separator);
     vlayout->addWidget(search_bar);
     vlayout->addWidget(view);
 

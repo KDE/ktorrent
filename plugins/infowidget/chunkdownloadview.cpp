@@ -39,6 +39,10 @@ ChunkDownloadView::ChunkDownloadView(QWidget *parent)
     m_chunk_view->setSortingEnabled(true);
     m_chunk_view->setAlternatingRowColors(true);
     m_chunk_view->setUniformRowHeights(true);
+    m_chunk_view->setFrameShape(QFrame::NoFrame);
+
+    m_header->insertSpacing(0, 6);
+    m_header->addSpacing(6);
 
     QFont f = font();
     f.setBold(true);

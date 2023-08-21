@@ -81,6 +81,7 @@ View::View(Core *core, GUI *gui, QWidget *parent)
     setAcceptDrops(true);
     setDragDropMode(DragDrop);
     setUniformRowHeights(true);
+    setFrameShape(QFrame::NoFrame);
 
     connect(this, &View::customContextMenuRequested, this, &View::showMenu);
 
