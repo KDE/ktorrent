@@ -37,7 +37,7 @@ GroupSwitcher::GroupSwitcher(View *view, GroupManager *gman, QWidget *parent)
     layout->addWidget(edit_group_policy);
     layout->addWidget(tool_bar);
     layout->addWidget(close_tab);
-    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins(6, 0, 6, 0);
 
     new_tab->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
     new_tab->setToolButtonStyle(Qt::ToolButtonIconOnly);
