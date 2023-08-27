@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-08-22 23:10+0300\n"
+"PO-Revision-Date: 2023-08-26 12:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4789,7 +4789,7 @@ msgstr "Karşıya yükleme yuvası sayısı"
 #: libktcore/ktorrent.kcfg:182
 #, kde-format
 msgid "Columns shown in KTorrentView"
-msgstr "K TorrentGöstericisi tarafından gösterilen sütunlar"
+msgstr "KTorrentView'da gösterilen sütunlar"
 
 #. i18n: ectx: label, entry (minDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:233
@@ -6701,7 +6701,7 @@ msgstr "Açılır penceredeki formdan geri bildirim verin"
 #: plugins/mediaplayer/ktorrent_mediaplayerui.rc:4
 #, kde-format
 msgid "Media Player Menu"
-msgstr "Ortam Oynatıcı Menüsü"
+msgstr "Ortam Oynatıcısı Menüsü"
 
 #: plugins/mediaplayer/mediacontroller.cpp:29
 #: plugins/mediaplayer/mediacontroller.cpp:67
@@ -6754,7 +6754,7 @@ msgstr "<b>%1</b><br/>Önizleme: %2<br/>İndirilen: %​%3"
 #: plugins/mediaplayer/mediaplayerplugin.cpp:45
 #, kde-format
 msgid "Media Player"
-msgstr "Ortam Oynatıcı"
+msgstr "Ortam Oynatıcısı"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:101
 #: plugins/mediaplayer/videowidget.cpp:59
