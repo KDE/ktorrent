@@ -1823,7 +1823,7 @@ msgstr "Stefan Monov"
 #: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to hide menu bar"
-msgstr "Parche para agochar a barra do menú."
+msgstr "Parche para agochar a barra de menú."
 
 #: ktorrent/main.cpp:150
 #, kde-format
