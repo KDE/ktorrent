@@ -1,5 +1,7 @@
 ktorrent_add_plugin(ktorrent_ipfilter)
 
+find_package(KF5Archive ${KF5_MIN_VERSION} REQUIRED)
+
 target_sources(ktorrent_ipfilter PRIVATE
     ipblocklist.cpp
     ipblockingprefpage.cpp

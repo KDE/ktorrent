@@ -83,16 +83,6 @@ if(KF5TextWidgets_FOUND)
   set(HAVE_KF5TextWidgets 1)
 endif()
 
-find_package(KF5Archive ${KF5_MIN_VERSION})
-set_package_properties(KF5Archive
-  PROPERTIES
-  TYPE OPTIONAL
-  PURPOSE "Required for KTorrent's scripting plugin"
-)
-if(KF5Archive_FOUND)
-  set(HAVE_KF5Archive 1)
-endif()
-
 find_package(KF5ItemViews ${KF5_MIN_VERSION})
 set_package_properties(KF5ItemViews
   PROPERTIES
