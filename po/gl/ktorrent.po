@@ -2540,7 +2540,7 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:93
 #, kde-format
 msgid "None of the trackers are reachable:"
-msgstr "Non se pode acceder a ningún dos localizadores:"
+msgstr "Non é posíbel acceder a ningún dos localizadores:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: ktorrent/pref/colorpref.ui:100
@@ -2673,7 +2673,7 @@ msgstr "Copiar os ficheiros torrent en:"
 #: ktorrent/pref/generalpref.ui:91
 #, kde-format
 msgid "System Tray Icon"
-msgstr "Icona da bandexa do sistema"
+msgstr "Icona da área de notificación"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
@@ -2691,13 +2691,13 @@ msgstr "Minimizar á área de notificacións no inicio."
 #: ktorrent/pref/generalpref.ui:110
 #, kde-format
 msgid "Whether or not to show system tray popup messages."
-msgstr "Indica se amosar ou non notificacións na bandexa do sistema."
+msgstr "Indica se amosar ou non notificacións na área de notificación."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:113
 #, kde-format
 msgid "Show system tray popup messages"
-msgstr "Amosar notificacións na bandexa do sistema."
+msgstr "Amosar notificacións na área de notificación."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_openMultipleTorrentsSilently)
 #: ktorrent/pref/generalpref.ui:129
@@ -4697,7 +4697,7 @@ msgstr "Taxa máxima de compartición (0 = sen límites)"
 #: libktcore/ktorrent.kcfg:66
 #, kde-format
 msgid "Show a system tray icon"
-msgstr "Amosar a icona na bandexa do sistema."
+msgstr "Amosar a icona na área de notificación."
 
 #. i18n: ectx: label, entry (showTotalSpeedInTitle), group (downloads)
 #: libktcore/ktorrent.kcfg:70
