@@ -6692,7 +6692,7 @@ msgstr "Copia l'URI del magnet"
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:115
 #, kde-format
 msgid "Magnet link copied to clipboard"
-msgstr "L'enllaç magnet s'ha copiat al porta-retalls"
+msgstr "L'enllaç magnet s'ha copiat a dins del porta-retalls"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_x2)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.cpp:16
