@@ -8998,6 +8998,3 @@ msgstr "再スキャン"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Yes, delete the files"
-#~ msgstr "はい、ファイルを削除します"
