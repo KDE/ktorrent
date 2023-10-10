@@ -8863,6 +8863,3 @@ msgstr "Ново сканиране"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
-
-#~ msgid "Yes, delete the files"
-#~ msgstr "Да, изтриване на файловете"
