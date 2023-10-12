@@ -3133,13 +3133,13 @@ msgid ""
 "enable this box."
 msgstr ""
 "Active esta opción se o servidor SOCKS require autenticación mediante un "
-"nome de usuario e contrasinal."
+"nome de usuaria e contrasinal."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_socksUsePassword)
 #: ktorrent/pref/proxypref.ui:159
 #, kde-format
 msgid "Username and password required"
-msgstr "Precísase un nome de usuario e un contrasinal."
+msgstr "Precísase un nome de usuaria e un contrasinal."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/proxypref.ui:170
