@@ -444,7 +444,7 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:308
 #, kde-format
 msgid "Move when completed to:"
-msgstr "En completar, moure a:"
+msgstr "En completar, moure cap a:"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_move_when_completed_history)
 #: ktorrent/dialogs/fileselectdlg.ui:74
@@ -1201,8 +1201,8 @@ msgid ""
 msgstr ""
 "Ubicació predeterminada per a moure els torrent d'este grup. <br/><br/>Açò "
 "només s'utilitza en el diàleg de selecció de fitxers, quan es canvia el "
-"grup, servirà per a definir a on s'ha de moure la baixada en finalitzar. Si "
-"voleu, encara podeu substituir-ho."
+"grup, servirà per a definir cap a on s'ha de moure la baixada en finalitzar. "
+"Si voleu, encara podeu substituir-ho."
 
 #. i18n: ectx: property (toolTip), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:63
@@ -1357,7 +1357,7 @@ msgstr "Obri un URL"
 #: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
-msgstr "Obri un URL que apunta a un torrent, es permeten enllaços magnet"
+msgstr "Obri un URL que apunta cap a un torrent, es permeten enllaços magnet"
 
 #: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
@@ -2659,7 +2659,7 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:57
 #, kde-format
 msgid "Move completed downloads to:"
-msgstr "Moure les baixades completes a:"
+msgstr "Moure les baixades completes cap a:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useTorrentCopyDir)
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, kcfg_torrentCopyDir)
@@ -3673,7 +3673,7 @@ msgstr "Mostra o oculta la barra de busca"
 #: ktorrent/tools/queuemanagerwidget.cpp:60
 #, kde-format
 msgid "Move Top"
-msgstr "Mou a dalt de tot"
+msgstr "Mou cap a dalt de tot"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:61
 #, kde-format
@@ -4312,7 +4312,7 @@ msgstr "Elimina el torrent"
 #: plugins/infowidget/fileview.cpp:362
 #, kde-format
 msgid "Select a directory to move the data to."
-msgstr "Seleccioneu un directori a on s'han de moure les dades."
+msgstr "Seleccioneu un directori cap a on s'han de moure les dades."
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:317
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -6025,7 +6025,7 @@ msgstr "Quantes dades hem pujat a este parell"
 #: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
-msgstr "Si el parell està interessat a baixar dades des de nosaltres"
+msgstr "Si el parell està interessat en baixar dades des de nosaltres"
 
 #: plugins/infowidget/peerviewmodel.cpp:360
 #, kde-format
@@ -7128,7 +7128,7 @@ msgstr "Ctrl+Supr"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:142
 #, kde-format
 msgid "Copy to clipboard"
-msgstr "Copia al porta-retalls"
+msgstr "Copia a dins del porta-retalls"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:145
