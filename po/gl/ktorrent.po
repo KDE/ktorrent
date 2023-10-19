@@ -313,7 +313,7 @@ msgid ""
 "these files, are you sure you want to do this?"
 msgstr ""
 "Desmarcou os seguintes ficheiros, e como consecuencia perderanse todos os "
-"seus datos. Está seguro de que quere proseguir?"
+"seus datos. Seguro que quere proseguir?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
 #, kde-format
@@ -954,8 +954,7 @@ msgstr "Debe escoller un ficheiro ou cartafol."
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
-msgstr ""
-"Non engadiu ningún localizador, está seguro de que quere crear o torrent?"
+msgstr "Non engadiu ningún localizador, seguro que quere crear o torrent?"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:286
 #, kde-format
@@ -4290,8 +4289,8 @@ msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr ""
-"Perderá todos os datos descargados dos seguintes torrents. Está seguro de "
-"que quere proseguir?"
+"Perderá todos os datos descargados dos seguintes torrents. Seguro que quere "
+"proseguir?"
 
 #: ktorrent/view/view.cpp:483
 #, kde-format
@@ -4921,7 +4920,7 @@ msgid ""
 "You don't have enough disk space to download this torrent. Are you sure you "
 "want to continue?"
 msgstr ""
-"Non ten espazo de abondo para descargar o torrent. Está seguro de que quere "
+"Non ten espazo de abondo para descargar o torrent. Seguro que quere "
 "proseguir?"
 
 #: libktcore/torrent/queuemanager.cpp:143
@@ -5538,10 +5537,8 @@ msgstr "Amosar o filtro"
 msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
-msgstr[0] ""
-"Perderá todos os datos do ficheiro; está seguro de que quere proseguir?"
-msgstr[1] ""
-"Perderá todos os datos dos ficheiros; está seguro de que quere proseguir?"
+msgstr[0] "Perderá todos os datos do ficheiro; seguro que quere proseguir?"
+msgstr[1] "Perderá todos os datos dos ficheiros; seguro que quere proseguir?"
 
 #: plugins/infowidget/fileview.cpp:447
 #, kde-format
