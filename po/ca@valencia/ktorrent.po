@@ -665,7 +665,7 @@ msgid ""
 "Not all files were found in the new location; some are still missing. Do you "
 "want to create the missing files in the selected directory?"
 msgstr ""
-"No s'han trobat tots els fitxers a la nova ubicació, encara en falten "
+"No s'han trobat tots els fitxers en la ubicació nova, encara en falten "
 "alguns. Voleu crear els fitxers que falten en el directori seleccionat?"
 
 #: ktorrent/dialogs/missingfilesdlg.cpp:131
@@ -718,7 +718,8 @@ msgstr "No els baixes"
 #, kde-format
 msgid "The files have been moved to another location, select the new location."
 msgstr ""
-"Els fitxers s'han mogut a una altra ubicació, seleccioneu la nova ubicació."
+"Els fitxers s'han mogut cap a una altra ubicació, seleccioneu la ubicació "
+"nova."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_new)
 #: ktorrent/dialogs/missingfilesdlg.ui:57
@@ -2022,7 +2023,7 @@ msgstr "Andrius Štikonas"
 #: ktorrent/main.cpp:169 ktorrent/main.cpp:170
 #, kde-format
 msgid "KF5 porting"
-msgstr "Adaptació al KF5"
+msgstr "Adaptació a KF5"
 
 #: ktorrent/main.cpp:170
 #, kde-format
@@ -2143,8 +2144,9 @@ msgstr ""
 "CPU. Un valor alt pot comportar velocitats més baixes en situacions d'alta "
 "amplada de banda. </p>\n"
 "<p>Per exemple, en una LAN de 100 Mbit, si establiu un límit de 3000 KiB/s, "
-"podríeu no arribar a esta velocitat si este valor és massa alt. Sense cap "
-"límit, es pot arribar amb facilitat per damunt de 3000 KiB/s en una LAN.</p>"
+"podríeu no arribar fins a esta velocitat si este valor és massa alt. Sense "
+"cap límit, es pot arribar amb facilitat per damunt de 3000 KiB/s en una LAN."
+"</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
@@ -3898,7 +3900,8 @@ msgstr[1] "No es poden baixar més de %1 torrent. <br>"
 #, kde-format
 msgid "Go to Settings -> Configure KTorrent, if you want to change the limits."
 msgstr ""
-"Aneu a «Configuració -> Configura KTorrent» si voleu canviar els límits."
+"Aneu fins a «Configuració -> Configura KTorrent...» si voleu canviar els "
+"límits."
 
 #: ktorrent/trayicon.cpp:294
 #, kde-format
@@ -4431,8 +4434,8 @@ msgid ""
 "How much time is left before the torrent is finished or before the maximum "
 "share ratio is reached, if that is enabled"
 msgstr ""
-"Quant temps queda abans d'acabar el torrent o abans d'arribar a la ràtio "
-"màxima de compartició, si està activada"
+"Quant temps queda abans de finalitzar el torrent o abans d'arribar fins a la "
+"ràtio màxima de compartició, si està activada"
 
 #: ktorrent/view/viewmodel.cpp:490
 #, kde-format
@@ -4777,14 +4780,14 @@ msgstr "Carpeta per a guardar els fitxers baixats"
 #, kde-format
 msgid "Whether to automatically copy .torrent files to torrentCopyDir"
 msgstr ""
-"Si copiar o no automàticament els fitxers .torrent en un directori de còpia "
-"dels torrent"
+"Si copiar o no automàticament els fitxers «.torrent» en un directori de "
+"còpia dels torrent"
 
 #. i18n: ectx: label, entry (torrentCopyDir), group (downloads)
 #: libktcore/ktorrent.kcfg:116
 #, kde-format
 msgid "Folder to copy .torrent files to"
-msgstr "Carpeta per a copiar els fitxers .torrent"
+msgstr "Carpeta per a copiar els fitxers «.torrent»"
 
 #. i18n: ectx: label, entry (useCustomIP), group (downloads)
 #: libktcore/ktorrent.kcfg:119
@@ -8530,8 +8533,8 @@ msgstr ""
 "td></tr></table>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">Per "
-"exemple, *.torrent coincidirà amb qualsevol element que acabe amb .torrent. "
-"</p>"
+"exemple, «*.torrent» coincidirà amb qualsevol element que acabe amb «."
+"torrent». </p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_exclusion_reg_exp)
