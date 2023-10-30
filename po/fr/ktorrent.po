@@ -15,7 +15,7 @@
 # Anne-Marie Mahfouf <annemarie.mahfouf@free.fr>, 2008.
 # Mickael Sibelle <kimael@gmail.com>, 2008.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
-# xavier <xavier.besnard@neuf.fr>, 2012, 2020, 2021.
+# SPDX-FileCopyrightText: 2012, 2020, 2021, 2023 xavier <xavier.besnard@neuf.fr>
 # Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
 # Thomas Vergnaud <thomas.vergnaud@mailo.eu>, 2023.
 #
@@ -24,15 +24,15 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-06-18 21:00+0200\n"
-"Last-Translator: Thomas Vergnaud <thomas.vergnaud@mailo.eu>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2023-10-28 22:12+0200\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -1905,7 +1905,7 @@ msgstr "Correctif pour changer les priorités des queues dans l'interface web"
 #: ktorrent/main.cpp:151
 #, kde-format
 msgid "Rafał Miłecki"
-msgstr "Rafał Miłecki"
+msgstr "Rafal Milecki"
 
 #: ktorrent/main.cpp:151
 #, kde-format
@@ -2078,7 +2078,7 @@ msgstr "Rex Dieter"
 #: ktorrent/main.cpp:167
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
-msgstr "Ajout de la gestion du type MIME x-scheme-handler/magnet"
+msgstr "Ajout de la gestion du type « MIME x-scheme-handler/magnet »"
 
 #: ktorrent/main.cpp:168
 #, kde-format
@@ -3863,7 +3863,7 @@ msgstr "Composant graphique pour gérer la file d'attente des torrents"
 #: ktorrent/torrentactivity.cpp:87
 #, kde-format
 msgid "Magnet Downloader"
-msgstr "Téléchargeur de fichiers « Magnet »"
+msgstr "Outil de téléchargement avec des fichiers « Magnet »"
 
 #: ktorrent/torrentactivity.cpp:87
 #, kde-format
@@ -4666,7 +4666,7 @@ msgstr "L'application de test UPnP de KTorrent"
 #: ktupnptest/main.cpp:29
 #, kde-format
 msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgstr "&copy; 2005 - 2007 Joris Guisson et Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -7685,7 +7685,7 @@ msgstr "KTorrent"
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
-msgstr "Be free."
+msgstr "Soyez libre."
 
 #: plugins/search/webview.cpp:109
 #, kde-format
