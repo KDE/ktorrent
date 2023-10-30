@@ -5,7 +5,7 @@
 
 #include "queuemanager.h"
 
-#include <QNetworkConfigurationManager>
+#include <QNetworkInformation>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -44,8 +44,11 @@ QueueManager::QueueManager()
 
     last_stats_sync_permitted = 0;
 
-    QNetworkConfigurationManager *networkConfigurationManager = new QNetworkConfigurationManager(this);
-    connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &QueueManager::onOnlineStateChanged);
+    if (QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability)) {
+        connect(QNetworkInformation::instance(), &QNetworkInformation::reachabilityChanged, this, [this](QNetworkInformation::Reachability newReachability) {
+            onOnlineStateChanged(newReachability == QNetworkInformation::Reachability::Online);
+        });
+    }
 }
 
 QueueManager::~QueueManager()

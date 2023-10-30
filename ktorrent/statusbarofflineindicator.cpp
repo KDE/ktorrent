@@ -11,14 +11,13 @@
 #include <klocalizedstring.h>
 
 #include <QIcon>
-#include <QNetworkConfigurationManager>
+#include <QNetworkInformation>
 
 class StatusBarOfflineIndicatorPrivate : public QObject
 {
 public:
     explicit StatusBarOfflineIndicatorPrivate(StatusBarOfflineIndicator *parent)
         : q(parent)
-        , networkConfiguration(new QNetworkConfigurationManager(parent))
     {
     }
 
@@ -26,7 +25,6 @@ public:
     void _k_networkStatusChanged(bool isOnline);
 
     StatusBarOfflineIndicator *const q;
-    QNetworkConfigurationManager *networkConfiguration;
 };
 
 StatusBarOfflineIndicator::StatusBarOfflineIndicator(QWidget *parent)
@@ -40,7 +38,12 @@ StatusBarOfflineIndicator::StatusBarOfflineIndicator(QWidget *parent)
     label->setToolTip(i18n("The desktop is offline"));
     layout->addWidget(label);
     d->initialize();
-    connect(d->networkConfiguration, &QNetworkConfigurationManager::onlineStateChanged, d, &StatusBarOfflineIndicatorPrivate::_k_networkStatusChanged);
+
+    if (QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability)) {
+        connect(QNetworkInformation::instance(), &QNetworkInformation::reachabilityChanged, this, [this](QNetworkInformation::Reachability newReachability) {
+            d->_k_networkStatusChanged(newReachability == QNetworkInformation::Reachability::Online);
+        });
+    }
 }
 
 StatusBarOfflineIndicator::~StatusBarOfflineIndicator()
@@ -50,7 +53,9 @@ StatusBarOfflineIndicator::~StatusBarOfflineIndicator()
 
 void StatusBarOfflineIndicatorPrivate::initialize()
 {
-    _k_networkStatusChanged(networkConfiguration->isOnline());
+    const bool supportsReachability = QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability);
+    const bool isOnline = supportsReachability ? QNetworkInformation::instance()->reachability() == QNetworkInformation::Reachability::Online : false;
+    _k_networkStatusChanged(isOnline);
 }
 
 void StatusBarOfflineIndicatorPrivate::_k_networkStatusChanged(bool isOnline)

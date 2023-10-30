@@ -5,7 +5,7 @@
 #include "bwschedulerplugin.h"
 
 #include <QDateTime>
-#include <QNetworkConfigurationManager>
+#include <QNetworkInformation>
 #include <QTimer>
 
 #include <KLocalizedString>
@@ -46,8 +46,11 @@ BWSchedulerPlugin::BWSchedulerPlugin(QObject *parent, const KPluginMetaData &dat
     connect(screensaver, &org::freedesktop::ScreenSaver::ActiveChanged, this, &BWSchedulerPlugin::screensaverActivated);
     screensaver_on = screensaver->GetActive();
 
-    QNetworkConfigurationManager *networkConfigurationManager = new QNetworkConfigurationManager(this);
-    connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &BWSchedulerPlugin::networkStatusChanged);
+    if (QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability)) {
+        connect(QNetworkInformation::instance(), &QNetworkInformation::reachabilityChanged, this, [this](QNetworkInformation::Reachability newReachability) {
+            networkStatusChanged(newReachability == QNetworkInformation::Reachability::Online);
+        });
+    }
 }
 
 BWSchedulerPlugin::~BWSchedulerPlugin()
