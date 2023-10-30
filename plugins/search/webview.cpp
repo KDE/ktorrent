@@ -15,7 +15,6 @@
 #include <QWebEngineProfile>
 #include <QWebEngineView>
 
-#include <KIO/AccessManager>
 #include <KIO/CopyJob>
 #include <KIO/Job>
 #include <KIconLoader>
