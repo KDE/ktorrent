@@ -190,7 +190,7 @@ void SearchWidget::magnetUrl(const QUrl &magnet_url)
     options.silently = false;
     sp->getCore()->load(bt::MagnetLink(magnet_url.toString()), options);
     QString msg = i18n("Downloading:<br/><b>%1</b>", magnet_url.toString());
-    KNotification::event(QStringLiteral("MagnetLinkDownloadStarted"), msg, QPixmap(), sp->getGUI()->getMainWindow());
+    KNotification::event(QStringLiteral("MagnetLinkDownloadStarted"), msg, QPixmap());
 }
 
 void SearchWidget::downloadTorrentFile(QWebEngineDownloadRequest *download)

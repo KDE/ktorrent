@@ -128,7 +128,7 @@ void IPFilterPlugin::checkAutoUpdate()
 
 void IPFilterPlugin::notification(const QString &msg)
 {
-    KNotification::event(QStringLiteral("PluginEvent"), msg, QPixmap(), getGUI()->getMainWindow());
+    KNotification::event(QStringLiteral("PluginEvent"), msg, QPixmap());
 }
 
 }

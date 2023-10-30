@@ -148,7 +148,7 @@ void TrayIcon::cannotLoadTorrentSilently(const QString &msg)
     if (!Settings::showPopups())
         return;
 
-    KNotification::event(QStringLiteral("CannotLoadSilently"), msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("CannotLoadSilently"), msg, QPixmap());
 }
 
 void TrayIcon::dhtNotEnabled(const QString &msg)
@@ -156,7 +156,7 @@ void TrayIcon::dhtNotEnabled(const QString &msg)
     if (!Settings::showPopups())
         return;
 
-    KNotification::event(QStringLiteral("DHTNotEnabled"), msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("DHTNotEnabled"), msg, QPixmap());
 }
 
 void TrayIcon::torrentSilentlyOpened(bt::TorrentInterface *tc)
@@ -165,7 +165,7 @@ void TrayIcon::torrentSilentlyOpened(bt::TorrentInterface *tc)
         return;
 
     QString msg = i18n("<b>%1</b> was silently opened.", tc->getDisplayName());
-    KNotification::event(QStringLiteral("TorrentSilentlyOpened"), msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("TorrentSilentlyOpened"), msg, QPixmap());
 }
 
 void TrayIcon::finished(bt::TorrentInterface *tc)
@@ -184,7 +184,7 @@ void TrayIcon::finished(bt::TorrentInterface *tc)
         BytesPerSecToString(speed_down / tc->getRunningTimeDL()),
         BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
-    KNotification::event(QStringLiteral("TorrentFinished"), msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("TorrentFinished"), msg, QPixmap());
 }
 
 void TrayIcon::maxShareRatioReached(bt::TorrentInterface *tc)
@@ -203,7 +203,7 @@ void TrayIcon::maxShareRatioReached(bt::TorrentInterface *tc)
         BytesToString(s.bytes_uploaded),
         BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
-    KNotification::event(QStringLiteral("MaxShareRatioReached"), msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("MaxShareRatioReached"), msg, QPixmap());
 }
 
 void TrayIcon::maxSeedTimeReached(bt::TorrentInterface *tc)
@@ -222,7 +222,7 @@ void TrayIcon::maxSeedTimeReached(bt::TorrentInterface *tc)
         BytesToString(s.bytes_uploaded),
         BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
-    KNotification::event(QStringLiteral("MaxSeedTimeReached"), msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("MaxSeedTimeReached"), msg, QPixmap());
 }
 
 void TrayIcon::torrentStoppedByError(bt::TorrentInterface *tc, QString msg)
@@ -232,7 +232,7 @@ void TrayIcon::torrentStoppedByError(bt::TorrentInterface *tc, QString msg)
 
     QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2", tc->getDisplayName(), msg);
 
-    KNotification::event(QStringLiteral("TorrentStoppedByError"), err_msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("TorrentStoppedByError"), err_msg, QPixmap());
 }
 
 void TrayIcon::corruptedData(bt::TorrentInterface *tc)
@@ -245,7 +245,7 @@ void TrayIcon::corruptedData(bt::TorrentInterface *tc)
         "<br>It would be a good idea to do a data integrity check on the torrent.",
         tc->getDisplayName());
 
-    KNotification::event(QStringLiteral("CorruptedData"), err_msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("CorruptedData"), err_msg, QPixmap());
 }
 
 void TrayIcon::queuingNotPossible(bt::TorrentInterface *tc)
@@ -270,7 +270,7 @@ void TrayIcon::queuingNotPossible(bt::TorrentInterface *tc)
             tc->getDisplayName(),
             QLocale().toString(s.max_seed_time, 'f', 2));
 
-    KNotification::event(QStringLiteral("QueueNotPossible"), msg, QPixmap(), mwnd);
+    KNotification::event(QStringLiteral("QueueNotPossible"), msg, QPixmap());
 }
 
 void TrayIcon::canNotStart(bt::TorrentInterface *tc, bt::TorrentStartResponse reason)
@@ -288,11 +288,11 @@ void TrayIcon::canNotStart(bt::TorrentInterface *tc, bt::TorrentStartResponse re
             msg += i18np("Cannot download more than 1 torrent. <br>", "Cannot download more than %1 torrents. <br>", Settings::maxDownloads());
         }
         msg += i18n("Go to Settings -> Configure KTorrent, if you want to change the limits.");
-        KNotification::event(QStringLiteral("CannotStart"), msg, QPixmap(), mwnd);
+        KNotification::event(QStringLiteral("CannotStart"), msg, QPixmap());
         break;
     case bt::NOT_ENOUGH_DISKSPACE:
         msg += i18n("There is not enough diskspace available.");
-        KNotification::event(QStringLiteral("CannotStart"), msg, QPixmap(), mwnd);
+        KNotification::event(QStringLiteral("CannotStart"), msg, QPixmap());
         break;
     default:
         break;
