@@ -130,7 +130,7 @@ QWebEngineView *WebView::createWindow(QWebEnginePage::WebWindowType type)
     return client->newTab();
 }
 
-void WebView::downloadRequested(QWebEngineDownloadItem *download)
+void WebView::downloadRequested(QWebEngineDownloadRequest *download)
 {
     if (download->mimeType() == QStringLiteral("application/x-bittorrent") || download->url().path().endsWith(QLatin1String(".torrent"))) {
         Q_EMIT torrentFileDownloadRequested(download);
@@ -139,7 +139,7 @@ void WebView::downloadRequested(QWebEngineDownloadItem *download)
     }
 }
 
-void WebView::downloadFile(QWebEngineDownloadItem *download)
+void WebView::downloadFile(QWebEngineDownloadRequest *download)
 {
     QString filename = QFileInfo(download->url().path()).fileName();
     QString path = QFileDialog::getExistingDirectory(this, i18n("Save %1 to"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));

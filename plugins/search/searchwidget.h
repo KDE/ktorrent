@@ -59,7 +59,7 @@ private Q_SLOTS:
     void loadProgress(int p);
     void iconChanged();
     void titleChanged(const QString &text);
-    void downloadTorrentFile(QWebEngineDownloadItem *download);
+    void downloadTorrentFile(QWebEngineDownloadRequest *download);
 
 private:
     QUrl searchUrl(const QString &search_text) override;

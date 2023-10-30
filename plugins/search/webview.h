@@ -78,7 +78,7 @@ public:
         return m_proxy;
     }
 
-    void downloadFile(QWebEngineDownloadItem *download);
+    void downloadFile(QWebEngineDownloadRequest *download);
 
 protected:
     void loadHomePage();
@@ -86,14 +86,14 @@ protected:
 
 public Q_SLOTS:
     /**
-     * Download a QWebEngineDownloadItem
-     * @param download The QWebEngineDownloadItem
+     * Download a QWebEngineDownloadRequest
+     * @param download The QWebEngineDownloadRequest
      */
-    void downloadRequested(QWebEngineDownloadItem *download);
+    void downloadRequested(QWebEngineDownloadRequest *download);
     void magnetUrlDetected(const QUrl &url);
 
 Q_SIGNALS:
-    void torrentFileDownloadRequested(QWebEngineDownloadItem *download);
+    void torrentFileDownloadRequested(QWebEngineDownloadRequest *download);
 
 private:
     QString home_page_html;

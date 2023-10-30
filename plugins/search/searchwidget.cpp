@@ -193,7 +193,7 @@ void SearchWidget::magnetUrl(const QUrl &magnet_url)
     KNotification::event(QStringLiteral("MagnetLinkDownloadStarted"), msg, QPixmap(), sp->getGUI()->getMainWindow());
 }
 
-void SearchWidget::downloadTorrentFile(QWebEngineDownloadItem *download)
+void SearchWidget::downloadTorrentFile(QWebEngineDownloadRequest *download)
 {
     int ret = KMessageBox::questionTwoActionsCancel(nullptr,
 
