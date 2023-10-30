@@ -8,7 +8,7 @@
 #include <QCheckBox>
 #include <QDateTime>
 
-#include <KIO/JobUiDelegate>
+#include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 
@@ -300,7 +300,7 @@ void StatusTab::maxTimeChanged(double v)
 void StatusTab::linkActivated(const QString &link)
 {
     auto job = new KIO::OpenUrlJob(QUrl(link));
-    job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, QApplication::activeWindow()));
+    job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, QApplication::activeWindow()));
     job->start();
 }
 

@@ -17,7 +17,7 @@
 
 #include <KActionCollection>
 #include <KFileWidget>
-#include <KIO/JobUiDelegate>
+#include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -53,7 +53,7 @@ namespace kt
 void openUrl(const QUrl &url)
 {
     auto job = new KIO::OpenUrlJob(url);
-    job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
+    job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
     job->start();
 }
 

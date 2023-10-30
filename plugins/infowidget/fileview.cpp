@@ -19,7 +19,7 @@
 #include <KConfigGroup>
 #include <KFileWidget>
 #include <KIO/ApplicationLauncherJob>
-#include <KIO/JobUiDelegate>
+#include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -271,7 +271,7 @@ void FileView::openWith()
 {
     auto *job = new KIO::ApplicationLauncherJob();
     job->setUrls({QUrl::fromLocalFile(preview_path)});
-    job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+    job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
     job->start();
 }
 

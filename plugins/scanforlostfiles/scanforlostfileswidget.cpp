@@ -6,7 +6,7 @@
 #include "scanforlostfileswidget.h"
 #include "scanforlostfilesplugin.h"
 #include <KIO/DeleteJob>
-#include <KIO/JobUiDelegate>
+#include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 #include <KMessageBox>
 #include <KMessageBox_KTCompat>
@@ -53,7 +53,7 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, Q
     connect(actionOpen_file, &QAction::triggered, [=]() {
         QModelIndex index = treeView->currentIndex();
         auto job = new KIO::OpenUrlJob(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(index))));
-        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
         job->start();
     });
 
