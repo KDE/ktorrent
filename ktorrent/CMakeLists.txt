@@ -115,6 +115,7 @@ target_link_libraries(ktorrent_app
     KF6::NotifyConfig
     KF6::Parts
     KF6::Solid
+    KF6::StatusNotifierItem
     KF6::WidgetsAddons
     KF6::WindowSystem
     KF6::XmlGui

@@ -23,5 +23,6 @@ Dependencies:
     'frameworks/kdnssd' : '@latest-kf6'
     'frameworks/kcompletion' : '@latest-kf6'
     'frameworks/kglobalaccel' : '@latest-kf6'
+    'frameworks/kstatusnotifieritem' : '@latest-kf6'
     'libraries/phonon' : '@latest-kf6'
     'network/libktorrent' : '@same'

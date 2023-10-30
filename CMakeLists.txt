@@ -64,6 +64,7 @@ find_package(KF6 ${KF_MIN_VERSION} REQUIRED
     KCMUtils
     Parts
     Solid
+    StatusNotifierItem
     WidgetsAddons
     WindowSystem
     XmlGui
