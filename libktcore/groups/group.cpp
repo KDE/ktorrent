@@ -39,7 +39,7 @@ void Group::load(bt::BDictNode *)
 void Group::setIconByName(const QString &in)
 {
     icon_name = in;
-    // KF5 icon = SmallIcon(in);
+    icon = QIcon::fromTheme(in);
 }
 
 void Group::rename(const QString &nn)
