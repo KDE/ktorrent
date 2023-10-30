@@ -19,10 +19,7 @@ AvailabilityChunkBar::AvailabilityChunkBar(QWidget *parent)
     : ChunkBar(parent)
     , curr_tc(nullptr)
 {
-    setToolTip(
-        i18n("<img src=\"available_color\">&nbsp; - Available Chunks<br>"
-             "<img src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br>"
-             "<img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
+    generateLegend({{available_color, i18n("Available Chunks")}, {unavailable_color, i18n("Unavailable Chunks")}, {excluded_color, i18n("Excluded Chunks")}});
 }
 
 AvailabilityChunkBar::~AvailabilityChunkBar()

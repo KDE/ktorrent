@@ -46,8 +46,18 @@ protected:
     void paintEvent(QPaintEvent *ev) override;
 
 protected:
+    struct LegendItem {
+        QColor color;
+        QString label;
+    };
+
+    void generateLegend(const QList<LegendItem> &legendItems);
+
     bt::BitSet curr;
     QPixmap pixmap;
+    QColor available_color;
+    QColor unavailable_color;
+    QColor excluded_color;
 };
 }
 

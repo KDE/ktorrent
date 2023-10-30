@@ -5,6 +5,7 @@
 */
 
 #include <QBrush>
+#include <QBuffer>
 #include <QImage>
 #include <QList>
 #include <QPainter>
@@ -28,55 +29,37 @@ using namespace kt;
 
 namespace kt
 {
-#if 0 // KF5
-static void FillAndFrameBlack(QImage* image, const QColor& color, int size)
+
+struct LegendItem {
+    QColor color;
+    QString label;
+};
+
+static QImage FramedColorBlock(const QColor &color, const int size = 16)
 {
-    image->fill(color.rgb());
+    QImage image(size, size, QImage::Format_RGB32);
+    image.fill(color.rgb());
     for (int i = 0; i < size; i++) {
-        image->setPixel(0, i, 0);
-        image->setPixel(size - 1, i, 0);
-        image->setPixel(i, 0, 0);
-        image->setPixel(i, size - 1, 0);
+        image.setPixel(0, i, 0);
+        image.setPixel(size - 1, i, 0);
+        image.setPixel(i, 0, 0);
+        image.setPixel(i, size - 1, 0);
     }
+    return image;
 }
-
-static void InitializeToolTipImages(ChunkBar* bar)
-{
-    static bool images_initialized = false;
-    if (images_initialized)
-        return;
-    images_initialized = true;
-
-    Q3MimeSourceFactory* factory = Q3MimeSourceFactory::defaultFactory();
-
-    QImage excluded(16, 16, QImage::Format_RGB32);
-    FillAndFrameBlack(&excluded, bar->palette().color(QPalette::Active, QPalette::Mid), 16);
-    factory->setImage("excluded_color", excluded);
-
-    QImage available(16, 16, QImage::Format_RGB32);
-    FillAndFrameBlack(&available, bar->palette().color(QPalette::Active, QPalette::Highlight), 16);
-    factory->setImage("available_color", available);
-
-    QImage unavailable(16, 16, QImage::Format_RGB32);
-    FillAndFrameBlack(&unavailable, bar->palette().color(QPalette::Active, QPalette::Base), 16);
-    factory->setImage("unavailable_color", unavailable);
-}
-#endif
 
 ChunkBar::ChunkBar(QWidget *parent)
     : QFrame(parent)
+    , available_color{palette().color(QPalette::Active, QPalette::Highlight)}
+    , unavailable_color{palette().color(QPalette::Active, QPalette::Base)}
+    , excluded_color{palette().color(QPalette::Active, QPalette::Mid)}
 {
     setFrameShape(StyledPanel);
     setFrameShadow(Sunken);
     setLineWidth(3);
     setMidLineWidth(3);
 
-#if 0 // KF5
-    InitializeToolTipImages(this);
-    setToolTip(i18n("<img src=\"available_color\">&nbsp; - Downloaded Chunks<br>"
-                    "<img src=\"unavailable_color\">&nbsp; - Chunks to Download<br>"
-                    "<img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
-#endif
+    generateLegend({{available_color, i18n("Downloaded Chunks")}, {unavailable_color, i18n("Chunks to Download")}, {excluded_color, i18n("Excluded Chunks")}});
 }
 
 ChunkBar::~ChunkBar()
@@ -131,6 +114,19 @@ void ChunkBar::drawBarContents(QPainter *p)
         drawEqual(p, bs, highlight_color, contentsRect());
 }
 
+void ChunkBar::generateLegend(const QList<LegendItem> &legend_items)
+{
+    QStringList legend;
+    for (const auto &legend_item : legend_items) {
+        const auto legend_image = FramedColorBlock(legend_item.color);
+        QByteArray image_byte_array;
+        QBuffer image_buffer(&image_byte_array);
+        legend_image.save(&image_buffer, "PNG");
+        const auto image_string = QString::fromLatin1(image_byte_array.toBase64().data());
+        legend << QStringLiteral("<img align=middle src='data:image/png;base64, %1'> - %2").arg(image_string, legend_item.label);
+    }
+    setToolTip(legend.join(QStringLiteral("<br>")));
+}
 }
 
 #include "moc_chunkbar.cpp"
