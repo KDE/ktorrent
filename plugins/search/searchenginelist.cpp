@@ -267,7 +267,7 @@ void SearchEngineList::loadDefault(bool removed_to)
     QStringList dir_list =
         QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
     if (dir_list.isEmpty())
-        dir_list = QStandardPaths::locateAll(QStandardPaths::DataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
+        dir_list = QStandardPaths::locateAll(QStandardPaths::AppLocalDataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
     if (dir_list.isEmpty())
         dir_list = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
 
