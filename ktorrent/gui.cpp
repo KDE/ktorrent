@@ -17,6 +17,7 @@
 #include <KConfig>
 #include <KEditToolBar>
 #include <KFileWidget>
+#include <KGlobalAccel>
 #include <KIO/Job>
 #include <KIO/JobUiDelegate>
 #include <KMessageBox>
@@ -393,7 +394,7 @@ void GUI::setupActions()
     show_kt_action = new QAction(QIcon::fromTheme(QStringLiteral("kt-show-hide")), i18n("Show/Hide KTorrent"), this);
     connect(show_kt_action, &QAction::triggered, this, &GUI::showOrHide);
     ac->addAction(QStringLiteral("show_kt"), show_kt_action);
-    // KF5 show_kt_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_T));
+    KGlobalAccel::setGlobalShortcut(show_kt_action, QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_T));
 
     setStandardToolBarMenuEnabled(true);
 }

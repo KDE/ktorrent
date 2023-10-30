@@ -22,5 +22,6 @@ Dependencies:
     'frameworks/syndication' : '@stable'
     'frameworks/kdnssd' : '@stable'
     'frameworks/kcompletion' : '@stable'
+    'frameworks/kglobalaccel' : '@stable'
     'libraries/phonon' : '@stable'
     'network/libktorrent' : '@same'

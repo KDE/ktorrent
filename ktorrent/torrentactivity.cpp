@@ -12,6 +12,7 @@
 #include <KActionCollection>
 #include <KComboBox>
 #include <KConfigGroup>
+#include <KGlobalAccel>
 #include <KLocalizedString>
 #include <KToggleAction>
 
@@ -121,7 +122,7 @@ void TorrentActivity::setupActions()
     ac->addAction(QStringLiteral("queue_suspend"), queue_suspend_action);
     ac->setDefaultShortcut(queue_suspend_action, QKeySequence(Qt::SHIFT + Qt::Key_P));
     queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
-    // KF5 queue_suspend_action->setGlobalShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_P));
+    KGlobalAccel::setGlobalShortcut(queue_suspend_action, QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_P));
     connect(queue_suspend_action, &KToggleAction::toggled, this, &TorrentActivity::suspendQueue);
 
     show_group_view_action = new KToggleAction(QIcon::fromTheme(QStringLiteral("view-list-tree")), i18n("Group View"), this);

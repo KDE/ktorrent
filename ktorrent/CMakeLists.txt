@@ -107,6 +107,7 @@ target_link_libraries(ktorrent_app
     KF5::ConfigCore
     KF5::ConfigGui
     KF5::DBusAddons
+    KF5::GlobalAccel
     KF5::I18n
     KF5::IconThemes
     KF5::KIOCore
