@@ -484,7 +484,7 @@ int MagnetManager::startNextQueuedMagnets()
 
     int firstStartedIdx = usedDownloadingSlots.size();
     int queued = magnetQueue.size() - firstStartedIdx;
-    int magnetsToStart = std::min(freeDownloadingSlots.size(), queued);
+    int magnetsToStart = std::min(freeDownloadingSlots.size(), static_cast<qsizetype>(queued));
 
     int nextIdx = firstStartedIdx;
     while (magnetsToStart > 0) {
