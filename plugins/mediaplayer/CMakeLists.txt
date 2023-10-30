@@ -35,12 +35,12 @@ target_link_libraries(
     ktorrent_mediaplayer
     ktcore
     Taglib::Taglib
-    Phonon::phonon4qt${QT_MAJOR_VERSION}
+    Phonon::phonon4qt6
     KF5::Torrent
-    KF5::I18n
-    KF5::KIOFileWidgets
-    KF5::XmlGui
-    KF5::WidgetsAddons
+    KF6::I18n
+    KF6::KIOFileWidgets
+    KF6::XmlGui
+    KF6::WidgetsAddons
 #    Qt:::MultimediaWidgets
     )
 install(FILES ktorrent_mediaplayerui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )

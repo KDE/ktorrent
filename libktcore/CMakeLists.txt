@@ -62,18 +62,18 @@ kconfig_add_kcfg_files(ktcore settings.kcfgc)
 generate_export_header(ktcore BASE_NAME ktcore)
 
 target_link_libraries(ktcore PUBLIC
-    KF5::ConfigCore
-    KF5::CoreAddons
-    KF5::I18n
-    KF5::KCMUtils
-    KF5::Parts
-    KF5::Solid
+    KF6::ConfigCore
+    KF6::CoreAddons
+    KF6::I18n
+    KF6::KCMUtils
+    KF6::Parts
+    KF6::Solid
     KF5::Torrent
-    KF5::XmlGui
+    KF6::XmlGui
 )
 
-find_package(Qt${QT_MAJOR_VERSION}Test ${QT5_REQUIRED_VERSION})
-if (Qt${QT_MAJOR_VERSION}Test_DIR)
+find_package(Qt6Test ${QT_MIN_VERSION})
+if (Qt6Test_DIR)
     add_subdirectory(autotests)
 endif()
 

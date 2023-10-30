@@ -58,10 +58,10 @@ target_link_libraries(
     ktorrent_infowidget
     ktcore
     KF5::Torrent
-    KF5::ConfigCore
-    KF5::I18n
-    KF5::KIOFileWidgets
-    KF5::KIOWidgets
-    KF5::WidgetsAddons
+    KF6::ConfigCore
+    KF6::I18n
+    KF6::KIOFileWidgets
+    KF6::KIOWidgets
+    KF6::WidgetsAddons
     ${geoip_link}
 )

@@ -1,6 +1,6 @@
 ktorrent_add_plugin(ktorrent_ipfilter)
 
-find_package(KF5Archive ${KF5_MIN_VERSION} REQUIRED)
+find_package(KF6Archive ${KF_MIN_VERSION} REQUIRED)
 
 target_sources(ktorrent_ipfilter PRIVATE
     ipblocklist.cpp
@@ -18,16 +18,16 @@ target_link_libraries(
     ktorrent_ipfilter
     ktcore
     KF5::Torrent
-    KF5::Archive
-    KF5::CoreAddons
-    KF5::I18n
-    KF5::KIOWidgets
-    KF5::Notifications
-    KF5::TextWidgets
-    KF5::WidgetsAddons
+    KF6::Archive
+    KF6::CoreAddons
+    KF6::I18n
+    KF6::KIOWidgets
+    KF6::Notifications
+    KF6::TextWidgets
+    KF6::WidgetsAddons
 )
 
-find_package(Qt${QT_MAJOR_VERSION}Test ${QT5_REQUIRED_VERSION})
-if (Qt${QT_MAJOR_VERSION}Test_DIR)
+find_package(Qt6Test ${QT_MIN_VERSION})
+if (Qt6Test_DIR)
     add_subdirectory(tests)
 endif()

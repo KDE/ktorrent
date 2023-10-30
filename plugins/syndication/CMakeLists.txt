@@ -26,14 +26,14 @@ target_link_libraries(
     ktcore
     Qt::WebEngineWidgets
     KF5::Torrent
-    KF5::CoreAddons
-    KF5::ConfigCore
-    KF5::I18n
-    KF5::KIOCore
-    KF5::KIOWidgets
-    KF5::Syndication
-    KF5::WidgetsAddons
-    KF5::XmlGui
+    KF6::CoreAddons
+    KF6::ConfigCore
+    KF6::I18n
+    KF6::KIOCore
+    KF6::KIOWidgets
+    KF6::Syndication
+    KF6::WidgetsAddons
+    KF6::XmlGui
 )
 install(FILES ktorrent_syndicationui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )
 

@@ -10,7 +10,7 @@
 #include <KMessageBox>
 
 // Temporary private porting helper to avoid if-else cluttering of the codebase.
-// Once KF5_MIN_VERSION >= 5.100 is reached:
+// Once KF_MIN_VERSION >= 5.100 is reached:
 // * rm all #include <KMessageBox_KTCompat>
 // * git rm libktcore/KMessageBox_KTCompat
 #if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 100, 0)

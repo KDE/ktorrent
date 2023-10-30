@@ -21,17 +21,17 @@ target_link_libraries(
     ktcore
     Qt::WebEngineWidgets
     KF5::Torrent
-    KF5::CoreAddons
-    KF5::Completion
-    KF5::ConfigCore
-    KF5::ConfigGui
-    KF5::I18n
-    KF5::IconThemes
-    KF5::KIOCore
-    KF5::KIOWidgets
-    KF5::Notifications
-    KF5::WidgetsAddons
-    KF5::XmlGui
+    KF6::CoreAddons
+    KF6::Completion
+    KF6::ConfigCore
+    KF6::ConfigGui
+    KF6::I18n
+    KF6::IconThemes
+    KF6::KIOCore
+    KF6::KIOWidgets
+    KF6::Notifications
+    KF6::WidgetsAddons
+    KF6::XmlGui
 )
 
 install(FILES ktorrent_searchui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )

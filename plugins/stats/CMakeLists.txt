@@ -29,8 +29,8 @@ target_link_libraries(
     ktorrent_stats
     ktcore
     KF5::Torrent
-    KF5::CoreAddons
-    KF5::I18n
-    KF5::Plotting
-    KF5::WidgetsAddons
+    KF6::CoreAddons
+    KF6::I18n
+    KF6::Plotting
+    KF6::WidgetsAddons
 )

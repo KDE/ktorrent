@@ -102,23 +102,23 @@ ecm_add_app_icon(ktorrent_app ICONS ${KTORRENT_ICONS_PNG})
 target_link_libraries(ktorrent_app
     ktcore
     KF5::Torrent
-    KF5::Crash
-    KF5::ConfigCore
-    KF5::ConfigGui
-    KF5::DBusAddons
-    KF5::GlobalAccel
-    KF5::I18n
-    KF5::IconThemes
-    KF5::KIOCore
-    KF5::KIOFileWidgets
-    KF5::Notifications
-    KF5::NotifyConfig
-    KF5::Parts
-    KF5::Solid
-    KF5::WidgetsAddons
-    KF5::WindowSystem
-    KF5::XmlGui
-    KF5::Crash
+    KF6::Crash
+    KF6::ConfigCore
+    KF6::ConfigGui
+    KF6::DBusAddons
+    KF6::GlobalAccel
+    KF6::I18n
+    KF6::IconThemes
+    KF6::KIOCore
+    KF6::KIOFileWidgets
+    KF6::Notifications
+    KF6::NotifyConfig
+    KF6::Parts
+    KF6::Solid
+    KF6::WidgetsAddons
+    KF6::WindowSystem
+    KF6::XmlGui
+    KF6::Crash
 )
 
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})

@@ -18,12 +18,12 @@ add_definitions(-D'VERSION="${RELEASE_SERVICE_VERSION}"'
                 -D'VERSION_MINOR=${RELEASE_SERVICE_VERSION_MINOR_INT}'
                 -D'VERSION_MICRO=${RELEASE_SERVICE_VERSION_MICRO}')
 
-set (QT_MIN_VERSION "5.15.2")
-set (KF5_MIN_VERSION "5.91")
+set (QT_MIN_VERSION "6.5.0")
+set (KF_MIN_VERSION "5.240.0")
 set (LIBKTORRENT_MIN_VERSION "20.11.70")
 set (Boost_MIN_VERSION "1.71.0")
 
-find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
+find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH})
 
 include(KDEInstallDirs)
@@ -41,14 +41,14 @@ include(KDEGitCommitHooks)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED
+find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED
     Core
     DBus
     Network
     Widgets
 )
 
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
+find_package(KF6 ${KF_MIN_VERSION} REQUIRED
   COMPONENTS
     Config
     ConfigWidgets
@@ -71,80 +71,87 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     DocTools
 )
 
+find_package(Qt6Core5Compat ${QT_MIN_VERSION})
+set_package_properties(Qt6Core5Compat
+  PROPERTIES
+  TYPE REQUIRED
+  PURPOSE "PUBLIC Required for libktorrent"
+)
+
 find_package(KF5Torrent ${LIBKTORRENT_MIN_VERSION} CONFIG REQUIRED)
 find_package(Boost ${Boost_MIN_VERSION} REQUIRED)
 
-find_package(KF5TextWidgets ${KF5_MIN_VERSION})
-set_package_properties(KF5TextWidgets
+find_package(KF6TextWidgets ${KF_MIN_VERSION})
+set_package_properties(KF6TextWidgets
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's IP Filter plugin"
 )
-if(KF5TextWidgets_FOUND)
-  set(HAVE_KF5TextWidgets 1)
+if(KF6TextWidgets_FOUND)
+  set(HAVE_KF6TextWidgets 1)
 endif()
 
-find_package(KF5ItemViews ${KF5_MIN_VERSION})
-set_package_properties(KF5ItemViews
+find_package(KF6ItemViews ${KF_MIN_VERSION})
+set_package_properties(KF6ItemViews
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's scripting plugin"
 )
-if(KF5ItemViews_FOUND)
-  set(HAVE_KF5ItemViews 1)
+if(KF6ItemViews_FOUND)
+  set(HAVE_KF6ItemViews 1)
 endif()
 
-find_package(KF5Plotting ${KF5_MIN_VERSION})
-set_package_properties(KF5Plotting
+find_package(KF6Plotting ${KF_MIN_VERSION})
+set_package_properties(KF6Plotting
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's statistics plugin"
 )
-if(KF5Plotting_FOUND)
-  set(HAVE_KF5Plotting 1)
+if(KF6Plotting_FOUND)
+  set(HAVE_KF6Plotting 1)
 endif()
 
-find_package(KF5Syndication ${KF5_MIN_VERSION})
-set_package_properties(KF5Syndication
+find_package(KF6Syndication ${KF_MIN_VERSION})
+set_package_properties(KF6Syndication
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's syndication plugin"
 )
-if(KF5Syndication_FOUND)
-  set(HAVE_KF5Syndication 1)
+if(KF6Syndication_FOUND)
+  set(HAVE_KF6Syndication 1)
 endif()
 
-find_package(Qt${QT_MAJOR_VERSION}WebEngineWidgets ${QT_MIN_VERSION})
-set_package_properties(Qt${QT_MAJOR_VERSION}WebEngineWidgets
+find_package(Qt6WebEngineWidgets ${QT_MIN_VERSION})
+set_package_properties(Qt6WebEngineWidgets
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's search and syndication plugins"
 )
-if(Qt${QT_MAJOR_VERSION}WebEngineWidgets_FOUND)
-  set(HAVE_Qt${QT_MAJOR_VERSION}WebEngineWidgets 1)
+if(Qt6WebEngineWidgets_FOUND)
+  set(HAVE_Qt6WebEngineWidgets 1)
 endif()
 
-find_package(KF5DNSSD ${KF5_MIN_VERSION})
-set_package_properties(KF5DNSSD
+find_package(KF6DNSSD ${KF_MIN_VERSION})
+set_package_properties(KF6DNSSD
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's Zeroconf plugin"
 )
-if(KF5DNSSD_FOUND)
-  set(HAVE_KF5DNSSD 1)
+if(KF6DNSSD_FOUND)
+  set(HAVE_KF6DNSSD 1)
 endif()
 
-find_package(KF5Completion ${KF5_MIN_VERSION})
-set_package_properties(KF5Completion
+find_package(KF6Completion ${KF_MIN_VERSION})
+set_package_properties(KF6Completion
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's UPnP plugin"
 )
-if(KF5Completion_FOUND)
-  set(HAVE_KF5Completion 1)
+if(KF6Completion_FOUND)
+  set(HAVE_KF6Completion 1)
 endif()
 
-#find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
+#find_package(Qt6 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
 
 find_package(Taglib)
 set_package_properties(Taglib
@@ -157,8 +164,8 @@ if(TAGLIB_FOUND)
   set(HAVE_Taglib 1)
 endif()
 
-find_package(Phonon4Qt${QT_MAJOR_VERSION})
-set_package_properties(Phonon4Qt${QT_MAJOR_VERSION}
+find_package(Phonon4Qt6)
+set_package_properties(Phonon4Qt6
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's multimedia plugin"
@@ -199,7 +206,7 @@ add_subdirectory(plugins)
 add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)
 add_subdirectory(ktmagnetdownloader)
-if (KF5DocTools_FOUND)
+if (KF6DocTools_FOUND)
     add_subdirectory(doc)
     kdoctools_install(po)
 endif()

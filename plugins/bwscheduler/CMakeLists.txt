@@ -26,10 +26,10 @@ target_link_libraries(
     ktcore
     Boost::boost
     KF5::Torrent
-    KF5::CoreAddons
-    KF5::I18n
-    KF5::XmlGui
-    KF5::WidgetsAddons
+    KF6::CoreAddons
+    KF6::I18n
+    KF6::XmlGui
+    KF6::WidgetsAddons
 )
 install(FILES ktorrent_bwschedulerui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )
 
