@@ -327,7 +327,8 @@ void GUI::configureKeys()
 
 void GUI::configureToolbars()
 {
-    // KF5 saveMainWindowSettings(KSharedConfig::openConfig()->group("MainWindow"));
+    auto main_window_group = KSharedConfig::openConfig()->group("MainWindow");
+    saveMainWindowSettings(main_window_group);
     KEditToolBar dlg(factory());
     connect(&dlg, &KEditToolBar::newToolBarConfig, this, &GUI::newToolBarConfig);
     dlg.exec();
