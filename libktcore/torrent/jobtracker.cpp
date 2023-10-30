@@ -73,7 +73,7 @@ void JobTracker::description(KJob *job, const QString &title, const QPair<QStrin
         i.value()->description(title, field1, field2);
 }
 
-void JobTracker::infoMessage(KJob *job, const QString &plain, const QString &rich)
+void JobTracker::infoMessage(KJob *job, const QString &message)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
@@ -81,10 +81,10 @@ void JobTracker::infoMessage(KJob *job, const QString &plain, const QString &ric
 
     ActiveJobs::iterator i = widgets.find(j);
     if (i != widgets.end())
-        i.value()->infoMessage(plain, rich);
+        i.value()->infoMessage(message);
 }
 
-void JobTracker::warning(KJob *job, const QString &plain, const QString &rich)
+void JobTracker::warning(KJob *job, const QString &message)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j)
@@ -92,7 +92,7 @@ void JobTracker::warning(KJob *job, const QString &plain, const QString &rich)
 
     ActiveJobs::iterator i = widgets.find(j);
     if (i != widgets.end())
-        i.value()->warning(plain, rich);
+        i.value()->warning(message);
 }
 
 void JobTracker::totalAmount(KJob *job, KJob::Unit unit, qulonglong amount)

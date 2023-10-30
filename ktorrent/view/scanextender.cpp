@@ -75,18 +75,16 @@ void ScanExtender::totalAmount(KJob::Unit unit, qulonglong amount)
     progress_bar->setMaximum(amount);
 }
 
-void ScanExtender::infoMessage(const QString &plain, const QString &rich)
+void ScanExtender::infoMessage(const QString &message)
 {
-    Q_UNUSED(rich);
-    error_msg->setText(plain);
+    error_msg->setText(message);
     error_msg->show();
     Q_EMIT resized(this);
 }
 
-void ScanExtender::warning(const QString &plain, const QString &rich)
+void ScanExtender::warning(const QString &message)
 {
-    Q_UNUSED(rich);
-    Q_UNUSED(plain);
+    Q_UNUSED(message);
 }
 
 void ScanExtender::speed(long unsigned int value)

@@ -37,18 +37,16 @@ void BasicJobProgressWidget::description(const QString &title, const QPair<QStri
     Q_EMIT resized(this);
 }
 
-void BasicJobProgressWidget::infoMessage(const QString &plain, const QString &rich)
+void BasicJobProgressWidget::infoMessage(const QString &message)
 {
-    Q_UNUSED(plain);
-    msg->setText(rich);
+    msg->setText(message);
     msg->setVisible(true);
     Q_EMIT resized(this);
 }
 
-void BasicJobProgressWidget::warning(const QString &plain, const QString &rich)
+void BasicJobProgressWidget::warning(const QString &message)
 {
-    Q_UNUSED(plain);
-    msg->setText(i18n("Warning: %1", rich));
+    msg->setText(i18n("Warning: %1", message));
     msg->setVisible(true);
     Q_EMIT resized(this);
 }

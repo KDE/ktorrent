@@ -22,8 +22,8 @@ public:
     ~BasicJobProgressWidget() override;
 
     void description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2) override;
-    void infoMessage(const QString &plain, const QString &rich) override;
-    void warning(const QString &plain, const QString &rich) override;
+    void infoMessage(const QString &message) override;
+    void warning(const QString &message) override;
     void totalAmount(KJob::Unit unit, qulonglong amount) override;
     void processedAmount(KJob::Unit unit, qulonglong amount) override;
     void percent(long unsigned int percent) override;

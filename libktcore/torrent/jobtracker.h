@@ -42,8 +42,8 @@ protected:
     void suspended(KJob *job) override;
     void resumed(KJob *job) override;
     void description(KJob *job, const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2) override;
-    void infoMessage(KJob *job, const QString &plain, const QString &rich) override;
-    void warning(KJob *job, const QString &plain, const QString &rich) override;
+    void infoMessage(KJob *job, const QString &message) override;
+    void warning(KJob *job, const QString &message) override;
     void totalAmount(KJob *job, KJob::Unit unit, qulonglong amount) override;
     void processedAmount(KJob *job, KJob::Unit unit, qulonglong amount) override;
     void percent(KJob *job, long unsigned int percent) override;
