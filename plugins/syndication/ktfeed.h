@@ -89,7 +89,7 @@ public:
     /// Is the feed OK
     bool ok() const
     {
-        return feed;
+        return !feed.isNull();
     }
 
     /// Save the feed to it's directory
