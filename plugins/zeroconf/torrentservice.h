@@ -9,14 +9,9 @@
 #include <interfaces/peersource.h>
 #include <net/addressresolver.h>
 
-#include <kdnssd_version.h>
-#if KDNSSD_VERSION >= QT_VERSION_CHECK(5, 84, 0)
 #include <KDNSSD/PublicService>
 #include <KDNSSD/ServiceBrowser>
-#else
-#include <DNSSD/PublicService>
-#include <DNSSD/ServiceBrowser>
-#endif
+#include <kdnssd_version.h>
 
 namespace bt
 {

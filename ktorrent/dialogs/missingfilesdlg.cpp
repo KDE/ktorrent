@@ -13,7 +13,6 @@
 #include <KFileWidget>
 #include <KGuiItem>
 #include <KMessageBox>
-#include <KMessageBox_KTCompat>
 #include <KRecentDirs>
 #include <KStandardGuiItem>
 

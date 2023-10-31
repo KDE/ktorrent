@@ -13,7 +13,6 @@
 #include <KIO/Global>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KMessageBox_KTCompat>
 #include <KStandardGuiItem>
 
 #include "settings.h"

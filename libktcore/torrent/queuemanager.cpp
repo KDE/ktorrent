@@ -9,7 +9,6 @@
 
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KMessageBox_KTCompat>
 
 #include <algorithm>
 #include <climits>

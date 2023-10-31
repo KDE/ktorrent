@@ -9,7 +9,6 @@
 #include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 #include <KMessageBox>
-#include <KMessageBox_KTCompat>
 #include <QClipboard>
 #include <QMenu>
 

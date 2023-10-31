@@ -22,7 +22,6 @@
 #include <KLocalizedString>
 #include <KMainWindow>
 #include <KMessageBox>
-#include <KMessageBox_KTCompat>
 #include <KNotification>
 #include <KStandardAction>
 

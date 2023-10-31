@@ -21,7 +21,6 @@
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KMessageBox_KTCompat>
 #include <KRecentDirs>
 #include <KSharedConfig>
 #include <KStandardAction>

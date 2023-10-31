@@ -10,7 +10,6 @@
 
 #include <KFileWidget>
 #include <KMessageBox>
-#include <KMessageBox_KTCompat>
 #include <KRecentDirs>
 
 #include "core.h"
