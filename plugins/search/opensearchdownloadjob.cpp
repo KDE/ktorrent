@@ -9,6 +9,8 @@
 #include <util/fileops.h>
 #include <util/log.h>
 
+#include <QRegularExpression>
+
 using namespace bt;
 
 namespace kt
@@ -55,16 +57,14 @@ void OpenSearchDownloadJob::getFinished(KJob *j)
 
     if (url.path() != QStringLiteral("/opensearch.xml")) {
         // try to find the link tags
-        QRegExp rx(QLatin1String("<link([^<>]*)"), Qt::CaseInsensitive);
-        int pos = 0;
+        static const QRegularExpression rx{QLatin1String("<link([^<>]*)"), QRegularExpression::CaseInsensitiveOption};
+        QRegularExpressionMatchIterator i = rx.globalMatch(str);
 
-        while ((pos = rx.indexIn(str, pos)) != -1) {
-            QString link_tag = rx.cap(1);
+        while (i.hasNext()) {
+            QString link_tag = i.next().captured(1);
             // exit when we find the description
             if (checkLinkTagContent(link_tag))
                 return;
-
-            pos += rx.matchedLength();
         }
     } else {
         if (str.contains(QStringLiteral("<OpenSearchDescription")) && str.contains(QStringLiteral("</OpenSearchDescription>"))) {
@@ -118,11 +118,9 @@ bool OpenSearchDownloadJob::checkLinkTagContent(const QString &content)
 
 QString OpenSearchDownloadJob::htmlParam(const QString &param, const QString &content)
 {
-    QRegExp rx(QString::fromLatin1("%1=\"?([^\">< ]*)[\" ]").arg(param), Qt::CaseInsensitive);
-    if (rx.indexIn(content, 0) == -1)
-        return QString();
-
-    return rx.cap(1);
+    const QRegularExpression rx{QString::fromLatin1("%1=\"?([^\">< ]*)[\" ]").arg(param), QRegularExpression::CaseInsensitiveOption};
+    QRegularExpressionMatchIterator i = rx.globalMatch(content);
+    return i.hasNext() ? i.next().captured(1) : QString();
 }
 
 void OpenSearchDownloadJob::xmlFileDownloadFinished(KJob *j)
