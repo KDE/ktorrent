@@ -120,9 +120,9 @@ void TorrentActivity::setupActions()
 
     queue_suspend_action = new KToggleAction(QIcon::fromTheme(QStringLiteral("kt-pause")), i18n("Suspend Torrents"), this);
     ac->addAction(QStringLiteral("queue_suspend"), queue_suspend_action);
-    ac->setDefaultShortcut(queue_suspend_action, QKeySequence(Qt::SHIFT + Qt::Key_P));
+    ac->setDefaultShortcut(queue_suspend_action, QKeySequence(Qt::SHIFT | Qt::Key_P));
     queue_suspend_action->setToolTip(i18n("Suspend all running torrents"));
-    KGlobalAccel::setGlobalShortcut(queue_suspend_action, QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_P));
+    KGlobalAccel::setGlobalShortcut(queue_suspend_action, QKeySequence(Qt::ALT | Qt::SHIFT | Qt::Key_P));
     connect(queue_suspend_action, &KToggleAction::toggled, this, &TorrentActivity::suspendQueue);
 
     show_group_view_action = new KToggleAction(QIcon::fromTheme(QStringLiteral("view-list-tree")), i18n("Group View"), this);
@@ -134,7 +134,7 @@ void TorrentActivity::setupActions()
     filter_torrent_action->setToolTip(i18n("Filter torrents based on filter string"));
     connect(filter_torrent_action, &QAction::triggered, search_bar, &TorrentSearchBar::showBar);
     ac->addAction(QStringLiteral("filter_torrent"), filter_torrent_action);
-    ac->setDefaultShortcut(filter_torrent_action, QKeySequence(Qt::CTRL + Qt::Key_F));
+    ac->setDefaultShortcut(filter_torrent_action, QKeySequence(Qt::CTRL | Qt::Key_F));
 
     view->setupActions(ac);
 }

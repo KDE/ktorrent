@@ -559,9 +559,9 @@ QVariant ViewModel::data(const QModelIndex &index, int role) const
         case PERCENTAGE:
         case DOWNLOAD_LOCATION:
         case TIME_ADDED:
-            return Qt::AlignLeft + Qt::AlignVCenter;
+            return static_cast<Qt::Alignment::Int>(Qt::AlignLeft | Qt::AlignVCenter);
         default:
-            return Qt::AlignRight + Qt::AlignVCenter;
+            return static_cast<Qt::Alignment::Int>(Qt::AlignRight | Qt::AlignVCenter);
         }
     } else if (role == Qt::FontRole && item->highlight) {
         QFont f = view->font();

@@ -134,7 +134,7 @@ void View::setupActions(KActionCollection *ac)
     start_torrent->setToolTip(i18n("Start all selected torrents in the current tab"));
     connect(start_torrent, &QAction::triggered, this, &View::startTorrents);
     ac->addAction(QStringLiteral("start"), start_torrent);
-    ac->setDefaultShortcut(start_torrent, QKeySequence(Qt::CTRL + Qt::Key_S));
+    ac->setDefaultShortcut(start_torrent, QKeySequence(Qt::CTRL | Qt::Key_S));
 
     force_start_torrent =
         new QAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18nc("@action Force start all selected torrents in the current tab", "Force Start"), this);
@@ -146,7 +146,7 @@ void View::setupActions(KActionCollection *ac)
     stop_torrent->setToolTip(i18n("Stop all selected torrents in the current tab"));
     connect(stop_torrent, &QAction::triggered, this, &View::stopTorrents);
     ac->addAction(QStringLiteral("stop"), stop_torrent);
-    ac->setDefaultShortcut(stop_torrent, QKeySequence(Qt::CTRL + Qt::Key_H));
+    ac->setDefaultShortcut(stop_torrent, QKeySequence(Qt::CTRL | Qt::Key_H));
 
     pause_torrent = new QAction(QIcon::fromTheme(QStringLiteral("media-playback-pause")), //
                                 i18nc("@action Pause all selected torrents in the current tab", "Pause"),
@@ -161,24 +161,24 @@ void View::setupActions(KActionCollection *ac)
     remove_torrent->setToolTip(i18n("Remove all selected torrents in the current tab"));
     connect(remove_torrent, &QAction::triggered, this, &View::removeTorrents);
     ac->addAction(QStringLiteral("remove"), remove_torrent);
-    ac->setDefaultShortcut(remove_torrent, QKeySequence(Qt::SHIFT + Qt::Key_Delete));
+    ac->setDefaultShortcut(remove_torrent, QKeySequence(Qt::SHIFT | Qt::Key_Delete));
 
     start_all = new QAction(QIcon::fromTheme(QStringLiteral("kt-start-all")), i18nc("@action Start all torrents in the current tab", "Start All"), this);
     start_all->setToolTip(i18n("Start all torrents in the current tab"));
     connect(start_all, &QAction::triggered, this, &View::startAllTorrents);
     ac->addAction(QStringLiteral("start_all"), start_all);
-    ac->setDefaultShortcut(start_all, QKeySequence(Qt::SHIFT + Qt::Key_S));
+    ac->setDefaultShortcut(start_all, QKeySequence(Qt::SHIFT | Qt::Key_S));
 
     stop_all = new QAction(QIcon::fromTheme(QStringLiteral("kt-stop-all")), i18nc("@action Stop all torrents in the current tab", "Stop All"), this);
     stop_all->setToolTip(i18n("Stop all torrents in the current tab"));
     connect(stop_all, &QAction::triggered, this, &View::stopAllTorrents);
     ac->addAction(QStringLiteral("stop_all"), stop_all);
-    ac->setDefaultShortcut(stop_all, QKeySequence(Qt::SHIFT + Qt::Key_H));
+    ac->setDefaultShortcut(stop_all, QKeySequence(Qt::SHIFT | Qt::Key_H));
 
     remove_torrent_and_data = new QAction(QIcon::fromTheme(QStringLiteral("kt-remove")), i18n("Remove Torrent and Data"), this);
     connect(remove_torrent_and_data, &QAction::triggered, this, &View::removeTorrentsAndData);
     ac->addAction(QStringLiteral("view_remove_torrent_and_data"), remove_torrent_and_data);
-    ac->setDefaultShortcut(remove_torrent_and_data, QKeySequence(Qt::CTRL + Qt::Key_Delete));
+    ac->setDefaultShortcut(remove_torrent_and_data, QKeySequence(Qt::CTRL | Qt::Key_Delete));
 
     rename_torrent = new QAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18n("Rename Torrent"), this);
     connect(rename_torrent, &QAction::triggered, this, &View::renameTorrent);
@@ -191,7 +191,7 @@ void View::setupActions(KActionCollection *ac)
     manual_announce = new QAction(i18n("Manual Announce"), this);
     connect(manual_announce, &QAction::triggered, this, &View::manualAnnounce);
     ac->addAction(QStringLiteral("view_announce"), manual_announce);
-    ac->setDefaultShortcut(manual_announce, QKeySequence(Qt::SHIFT + Qt::Key_A));
+    ac->setDefaultShortcut(manual_announce, QKeySequence(Qt::SHIFT | Qt::Key_A));
 
     do_scrape = new QAction(i18n("Scrape"), this);
     connect(do_scrape, &QAction::triggered, this, &View::scrape);
@@ -229,7 +229,7 @@ void View::setupActions(KActionCollection *ac)
     check_data->setToolTip(i18n("Check all the data of a torrent"));
     connect(check_data, &QAction::triggered, this, &View::checkData);
     ac->addAction(QStringLiteral("check_data"), check_data);
-    ac->setDefaultShortcut(check_data, QKeySequence(Qt::SHIFT + Qt::Key_C));
+    ac->setDefaultShortcut(check_data, QKeySequence(Qt::SHIFT | Qt::Key_C));
 
     const GroupManager *gman = core->getGroupManager();
     for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++) {
@@ -258,7 +258,7 @@ void View::setupActions(KActionCollection *ac)
     speed_limits->setToolTip(i18n("Set the speed limits of individual torrents"));
     connect(speed_limits, &QAction::triggered, this, &View::speedLimits);
     ac->addAction(QStringLiteral("speed_limits"), speed_limits);
-    ac->setDefaultShortcut(speed_limits, QKeySequence(Qt::CTRL + Qt::Key_L));
+    ac->setDefaultShortcut(speed_limits, QKeySequence(Qt::CTRL | Qt::Key_L));
 }
 
 struct StartAndStopAllVisitor {
