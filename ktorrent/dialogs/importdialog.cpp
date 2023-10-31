@@ -120,7 +120,7 @@ void ImportDialog::finished()
             // if (durl.endsWith(bt::DirSeparator()))
             durl.chop(1);
             int ds = durl.lastIndexOf(bt::DirSeparator());
-            if (durl.midRef(ds + 1) == tor.getNameSuggestion()) {
+            if (QStringView{durl}.sliced(ds + 1) == tor.getNameSuggestion()) {
                 durl.truncate(ds);
                 saveStats(tor_dir + QStringLiteral("stats"), durl, imported, false);
             } else {

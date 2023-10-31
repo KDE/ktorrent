@@ -46,7 +46,7 @@ QString MediaFile::name() const
     if (tc->getStats().multi_file_torrent) {
         if (idx < tc->getNumFiles()) {
             QString path = tc->getTorrentFile(idx).getUserModifiedPath();
-            QVector<QStringRef> parts = path.splitRef(QLatin1Char('/'));
+            const auto parts = QStringView{path}.split(QLatin1Char('/'));
             if (parts.count() == 0)
                 return path;
             else

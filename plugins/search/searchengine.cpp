@@ -30,13 +30,13 @@ public:
     {
     }
 
-    bool characters(const QStringRef &ch)
+    bool characters(const QStringView ch)
     {
         tmp += ch;
         return true;
     }
 
-    bool startElement(const QStringRef &namespaceURI, const QStringRef &localName, const QStringRef &qName, const QXmlStreamAttributes &atts)
+    bool startElement(const QStringView namespaceURI, const QStringView localName, const QStringView qName, const QXmlStreamAttributes &atts)
     {
         Q_UNUSED(namespaceURI);
         Q_UNUSED(qName);
@@ -49,7 +49,7 @@ public:
         return true;
     }
 
-    bool endElement(const QStringRef &namespaceURI, const QStringRef &localName, const QStringRef &qName)
+    bool endElement(const QStringView namespaceURI, const QStringView localName, const QStringView qName)
     {
         Q_UNUSED(namespaceURI)
         Q_UNUSED(localName)
