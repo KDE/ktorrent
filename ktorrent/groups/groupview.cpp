@@ -156,7 +156,7 @@ void GroupView::editGroupPolicy()
 void GroupView::saveState(KSharedConfigPtr cfg)
 {
     KConfigGroup g = cfg->group("GroupView");
-    g.writeEntry("expanded", model->expandedGroups(this));
+    g.writeEntry("expanded", expandedGroupPaths());
     g.writeEntry("visible", isVisible());
 }
 
@@ -167,9 +167,39 @@ void GroupView::loadState(KSharedConfigPtr cfg)
     default_expanded << QStringLiteral("/all") << QStringLiteral("/all/downloads") << QStringLiteral("/all/uploads") << QStringLiteral("/all/active")
                      << QStringLiteral("/all/passive") << QStringLiteral("/all/custom");
     QStringList slist = g.readEntry("expanded", default_expanded);
-    model->expandGroups(this, slist);
+    expandGroups(slist);
     setVisible(g.readEntry("visible", true));
     expand(model->index(0, 0));
+}
+
+QStringList GroupView::expandedGroupPaths() const
+{
+    QStringList groupPaths;
+    expandedGroupPaths(groupPaths, model->index(0, 0));
+    return groupPaths;
+}
+
+void GroupView::expandedGroupPaths(QStringList &groups, const QModelIndex &index) const
+{
+    if (model->rowCount(index) == 0 || !isExpanded(index)) {
+        return;
+    }
+
+    groups << model->data(index, GroupViewModel::PathRole).toString();
+
+    for (int row = 0; row < model->rowCount(index); ++row) {
+        expandedGroupPaths(groups, model->index(row, 0, index));
+    }
+}
+
+void GroupView::expandGroups(const QStringList &groupPaths)
+{
+    for (const auto &groupPath : groupPaths) {
+        const auto indexMatches = model->match(model->index(0, 0), GroupViewModel::PathRole, groupPath, 1, Qt::MatchRecursive | Qt::MatchExactly);
+        if (!indexMatches.isEmpty() && indexMatches.first().isValid()) {
+            expand(indexMatches.first());
+        }
+    }
 }
 
 void GroupView::keyPressEvent(QKeyEvent *event)

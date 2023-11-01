@@ -40,6 +40,15 @@ public:
     /// Load status from config
     void loadState(KSharedConfigPtr cfg);
 
+    /// Get a list of all expanded groups in the tree
+    QStringList expandedGroupPaths() const;
+
+    /// Appends the group given by index if it is expanded, and recursively adds any children of index
+    void expandedGroupPaths(QStringList &groups, const QModelIndex &index) const;
+
+    /// Expand the list of groups given by their paths
+    void expandGroups(const QStringList &groupPaths);
+
     /// Create a new group
     Group *addNewGroup();
 

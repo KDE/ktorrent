@@ -11,7 +11,6 @@
 
 namespace kt
 {
-class GroupView;
 
 class View;
 class Group;
@@ -24,6 +23,8 @@ class GroupViewModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
+    enum ColumnRoles { PathRole = Qt::UserRole + 1 };
+
     GroupViewModel(GroupManager *gman, View *view, QObject *parent);
     ~GroupViewModel() override;
 
@@ -42,12 +43,6 @@ public:
     /// Get the group given an index
     Group *groupForIndex(const QModelIndex &index) const;
 
-    /// Get all the expanded groups
-    QStringList expandedGroups(GroupView *gview);
-
-    /// Expand all items in the tree which are in the groups list
-    void expandGroups(GroupView *gview, const QStringList &groups);
-
     /// Update the group count
     void updateGroupCount(const QModelIndex &idx);
 
@@ -65,8 +60,6 @@ private:
         bool operator==(const QString &n) const;
         QVariant displayData();
         QVariant decoration();
-        void expandedGroups(GroupView *gview, QStringList &groups, const QModelIndex &idx) const;
-        void expandGroups(GroupView *gview, const QStringList &groups, const QModelIndex &idx);
         QString path() const;
         void dump();
         QModelIndex findGroup(Group *g, const QModelIndex &idx);

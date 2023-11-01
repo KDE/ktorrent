@@ -4,7 +4,6 @@
 */
 
 #include "groupviewmodel.h"
-#include "groupview.h"
 
 #include <algorithm>
 
@@ -53,6 +52,8 @@ QVariant GroupViewModel::data(const QModelIndex &index, int role) const
         return item->displayData();
     case Qt::DecorationRole:
         return item->decoration();
+    case PathRole:
+        return item->path();
     }
 
     return QVariant();
@@ -181,20 +182,6 @@ QModelIndex GroupViewModel::findGroup(Group *g)
 {
     QModelIndex idx = index(0, 0);
     return root.findGroup(g, idx);
-}
-
-QStringList GroupViewModel::expandedGroups(GroupView *gview)
-{
-    QStringList ret;
-    QModelIndex idx = createIndex(0, 0, &root);
-    root.expandedGroups(gview, ret, idx);
-    return ret;
-}
-
-void GroupViewModel::expandGroups(GroupView *gview, const QStringList &groups)
-{
-    QModelIndex idx = createIndex(0, 0, &root);
-    root.expandGroups(gview, groups, idx);
 }
 
 void GroupViewModel::updateGroupCount(const QModelIndex &idx)
@@ -344,36 +331,6 @@ QString GroupViewModel::Item::path() const
         return QLatin1Char('/') + name;
     else
         return parent->path() + QLatin1Char('/') + name;
-}
-
-void GroupViewModel::Item::expandedGroups(GroupView *gview, QStringList &groups, const QModelIndex &idx) const
-{
-    if (children.empty())
-        return;
-
-    if (gview->isExpanded(idx))
-        groups << path();
-
-    int row = 0;
-    for (const Item &child : qAsConst(children)) {
-        child.expandedGroups(gview, groups, model->index(row, 0, idx));
-        row++;
-    }
-}
-
-void GroupViewModel::Item::expandGroups(kt::GroupView *gview, const QStringList &groups, const QModelIndex &idx)
-{
-    if (children.empty())
-        return;
-
-    if (groups.contains(path()))
-        gview->expand(idx);
-
-    int row = 0;
-    for (Item &i : children) {
-        i.expandGroups(gview, groups, model->index(row, 0, idx));
-        row++;
-    }
 }
 
 QModelIndex GroupViewModel::Item::findGroup(Group *g, const QModelIndex &idx)
