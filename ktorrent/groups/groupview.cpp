@@ -39,7 +39,7 @@ GroupView::GroupView(GroupManager *gman, View *view, Core *core, GUI *gui, QWidg
     , core(core)
     , view(view)
     , gman(gman)
-    , model(new GroupViewModel(gman, parent))
+    , model(new GroupTreeModel(gman, parent))
 {
     setRootIsDecorated(false);
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -50,7 +50,7 @@ GroupView::GroupView(GroupManager *gman, View *view, Core *core, GUI *gui, QWidg
     connect(this, &GroupView::customContextMenuRequested, this, &GroupView::showContextMenu);
     connect(this, &GroupView::currentGroupChanged, view, &View::onCurrentGroupChanged);
     connect(gman, &GroupManager::customGroupChanged, this, &GroupView::updateGroupCount);
-    connect(model, &GroupViewModel::addTorrentSelectionToGroup, this, &GroupView::addTorrentSelectionToGroup);
+    connect(model, &GroupTreeModel::addTorrentSelectionToGroup, this, &GroupView::addTorrentSelectionToGroup);
 
     setAcceptDrops(true);
     setDropIndicatorShown(true);
@@ -186,7 +186,7 @@ void GroupView::expandedGroupPaths(QStringList &groups, const QModelIndex &index
         return;
     }
 
-    groups << model->data(index, GroupViewModel::PathRole).toString();
+    groups << model->data(index, GroupTreeModel::PathRole).toString();
 
     for (int row = 0; row < model->rowCount(index); ++row) {
         expandedGroupPaths(groups, model->index(row, 0, index));
@@ -196,7 +196,7 @@ void GroupView::expandedGroupPaths(QStringList &groups, const QModelIndex &index
 void GroupView::expandGroups(const QStringList &groupPaths)
 {
     for (const auto &groupPath : groupPaths) {
-        const auto indexMatches = model->match(model->index(0, 0), GroupViewModel::PathRole, groupPath, 1, Qt::MatchRecursive | Qt::MatchExactly);
+        const auto indexMatches = model->match(model->index(0, 0), GroupTreeModel::PathRole, groupPath, 1, Qt::MatchRecursive | Qt::MatchExactly);
         if (!indexMatches.isEmpty() && indexMatches.first().isValid()) {
             expand(indexMatches.first());
         }

@@ -29,7 +29,7 @@ target_sources(ktorrent_app PRIVATE
 	groups/grouppolicydlg.cpp
 	groups/groupfiltermodel.cpp
 	groups/groupview.cpp
-	groups/groupviewmodel.cpp
+	groups/grouptreemodel.cpp
 	groups/groupswitcher.cpp
 	
 	dialogs/pastedialog.cpp

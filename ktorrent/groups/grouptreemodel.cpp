@@ -3,7 +3,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "groupviewmodel.h"
+#include "grouptreemodel.h"
 
 #include <algorithm>
 
@@ -19,7 +19,7 @@ using namespace bt;
 
 namespace kt
 {
-GroupViewModel::GroupViewModel(kt::GroupManager *gman, QObject *parent)
+GroupTreeModel::GroupTreeModel(kt::GroupManager *gman, QObject *parent)
     : QAbstractItemModel(parent)
     , root(QStringLiteral("all"), nullptr, 0, this)
     , gman(gman)
@@ -30,15 +30,15 @@ GroupViewModel::GroupViewModel(kt::GroupManager *gman, QObject *parent)
     root.insert(i18n("Custom Groups"), QStringLiteral("/all/custom"), index(0, 0));
     // root.dump();
 
-    connect(gman, &GroupManager::groupRemoved, this, &GroupViewModel::groupRemoved);
-    connect(gman, &GroupManager::groupAdded, this, &GroupViewModel::groupAdded);
+    connect(gman, &GroupManager::groupRemoved, this, &GroupTreeModel::groupRemoved);
+    connect(gman, &GroupManager::groupAdded, this, &GroupTreeModel::groupAdded);
 }
 
-GroupViewModel::~GroupViewModel()
+GroupTreeModel::~GroupTreeModel()
 {
 }
 
-QVariant GroupViewModel::data(const QModelIndex &index, int role) const
+QVariant GroupTreeModel::data(const QModelIndex &index, int role) const
 {
     Item *item = (Item *)index.internalPointer();
     if (!item)
@@ -56,7 +56,7 @@ QVariant GroupViewModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool GroupViewModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool GroupTreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (role != Qt::EditRole)
         return false;
@@ -76,13 +76,13 @@ bool GroupViewModel::setData(const QModelIndex &index, const QVariant &value, in
     return true;
 }
 
-int GroupViewModel::columnCount(const QModelIndex &parent) const
+int GroupTreeModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return 1;
 }
 
-int GroupViewModel::rowCount(const QModelIndex &parent) const
+int GroupTreeModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return 1;
@@ -94,7 +94,7 @@ int GroupViewModel::rowCount(const QModelIndex &parent) const
         return item->children.size();
 }
 
-QModelIndex GroupViewModel::parent(const QModelIndex &child) const
+QModelIndex GroupTreeModel::parent(const QModelIndex &child) const
 {
     Item *item = (Item *)child.internalPointer();
     if (!item || !item->parent)
@@ -103,7 +103,7 @@ QModelIndex GroupViewModel::parent(const QModelIndex &child) const
         return createIndex(item->parent->row, 0, (void *)item->parent);
 }
 
-QModelIndex GroupViewModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex GroupTreeModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!parent.isValid())
         return createIndex(row, column, (void *)&root);
@@ -115,7 +115,7 @@ QModelIndex GroupViewModel::index(int row, int column, const QModelIndex &parent
     return createIndex(row, column, (void *)&item->children.at(row));
 }
 
-bool GroupViewModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+bool GroupTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     Q_UNUSED(data);
     Q_UNUSED(action);
@@ -130,19 +130,19 @@ bool GroupViewModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
     return true;
 }
 
-Qt::DropActions GroupViewModel::supportedDropActions() const
+Qt::DropActions GroupTreeModel::supportedDropActions() const
 {
     return Qt::CopyAction;
 }
 
-QStringList GroupViewModel::mimeTypes() const
+QStringList GroupTreeModel::mimeTypes() const
 {
     QStringList sl;
     sl << QStringLiteral("application/x-ktorrent-drag-object");
     return sl;
 }
 
-Qt::ItemFlags GroupViewModel::flags(const QModelIndex &index) const
+Qt::ItemFlags GroupTreeModel::flags(const QModelIndex &index) const
 {
     Item *item = (Item *)index.internalPointer();
     if (item && item->group && !item->group->isStandardGroup())
@@ -151,31 +151,31 @@ Qt::ItemFlags GroupViewModel::flags(const QModelIndex &index) const
         return Qt::ItemIsEnabled;
 }
 
-void GroupViewModel::groupAdded(Group *g)
+void GroupTreeModel::groupAdded(Group *g)
 {
     root.insert(g, index(0, 0));
 }
 
-void GroupViewModel::groupRemoved(Group *g)
+void GroupTreeModel::groupRemoved(Group *g)
 {
     //        QModelIndex idx = findGroup(g).parent();
     root.remove(g, index(0, 0));
     // root.dump();
 }
 
-Group *GroupViewModel::groupForIndex(const QModelIndex &index) const
+Group *GroupTreeModel::groupForIndex(const QModelIndex &index) const
 {
     Item *item = (Item *)index.internalPointer();
     return item ? item->group : nullptr;
 }
 
-QModelIndex GroupViewModel::findGroup(Group *g)
+QModelIndex GroupTreeModel::findGroup(Group *g)
 {
     QModelIndex idx = index(0, 0);
     return root.findGroup(g, idx);
 }
 
-void GroupViewModel::updateGroupCount(const QModelIndex &idx)
+void GroupTreeModel::updateGroupCount(const QModelIndex &idx)
 {
     int row = 0;
     QModelIndex child = this->index(row, 0, idx);
@@ -188,7 +188,7 @@ void GroupViewModel::updateGroupCount(const QModelIndex &idx)
     Q_EMIT dataChanged(idx, idx);
 }
 
-bool GroupViewModel::removeRows(int row, int count, const QModelIndex &parent)
+bool GroupTreeModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Item *item = (Item *)parent.internalPointer();
     if (!item)
@@ -206,7 +206,7 @@ bool GroupViewModel::removeRows(int row, int count, const QModelIndex &parent)
 
 /////////////////////////////////////////::
 
-GroupViewModel::Item::Item(const QString &name, kt::GroupViewModel::Item *parent, int row, kt::GroupViewModel *model)
+GroupTreeModel::Item::Item(const QString &name, kt::GroupTreeModel::Item *parent, int row, kt::GroupTreeModel *model)
     : name(name)
     , display_name(name)
     , parent(parent)
@@ -216,7 +216,7 @@ GroupViewModel::Item::Item(const QString &name, kt::GroupViewModel::Item *parent
 {
 }
 
-void GroupViewModel::Item::insert(Group *g, const QModelIndex &idx)
+void GroupTreeModel::Item::insert(Group *g, const QModelIndex &idx)
 {
     QString group_path = g->groupPath();
     QString item_path = path();
@@ -245,7 +245,7 @@ void GroupViewModel::Item::insert(Group *g, const QModelIndex &idx)
     }
 }
 
-void GroupViewModel::Item::insert(const QString &name, const QString &p, const QModelIndex &idx)
+void GroupTreeModel::Item::insert(const QString &name, const QString &p, const QModelIndex &idx)
 {
     QString item_path = path();
     if (!p.startsWith(item_path))
@@ -274,7 +274,7 @@ void GroupViewModel::Item::insert(const QString &name, const QString &p, const Q
     }
 }
 
-void GroupViewModel::Item::remove(kt::Group *g, const QModelIndex &idx)
+void GroupTreeModel::Item::remove(kt::Group *g, const QModelIndex &idx)
 {
     QString group_path = g->groupPath();
     QString item_path = path();
@@ -295,12 +295,12 @@ void GroupViewModel::Item::remove(kt::Group *g, const QModelIndex &idx)
     }
 }
 
-bool GroupViewModel::Item::operator==(const QString &n) const
+bool GroupTreeModel::Item::operator==(const QString &n) const
 {
     return name == n;
 }
 
-QVariant GroupViewModel::Item::displayData()
+QVariant GroupTreeModel::Item::displayData()
 {
     if (group)
         return QStringLiteral("%1 (%2/%3)").arg(group->groupName()).arg(group->runningTorrents()).arg(group->totalTorrents());
@@ -308,7 +308,7 @@ QVariant GroupViewModel::Item::displayData()
         return display_name;
 }
 
-QVariant GroupViewModel::Item::decoration()
+QVariant GroupTreeModel::Item::decoration()
 {
     if (group)
         return group->groupIcon();
@@ -316,7 +316,7 @@ QVariant GroupViewModel::Item::decoration()
         return QIcon::fromTheme(QStringLiteral("folder"));
 }
 
-QString GroupViewModel::Item::path() const
+QString GroupTreeModel::Item::path() const
 {
     if (!parent)
         return QLatin1Char('/') + name;
@@ -324,7 +324,7 @@ QString GroupViewModel::Item::path() const
         return parent->path() + QLatin1Char('/') + name;
 }
 
-QModelIndex GroupViewModel::Item::findGroup(Group *g, const QModelIndex &idx)
+QModelIndex GroupTreeModel::Item::findGroup(Group *g, const QModelIndex &idx)
 {
     if (group == g)
         return idx;
@@ -340,7 +340,7 @@ QModelIndex GroupViewModel::Item::findGroup(Group *g, const QModelIndex &idx)
     return QModelIndex();
 }
 
-void GroupViewModel::Item::dump()
+void GroupTreeModel::Item::dump()
 {
     QString p = path();
     int indentation = p.count(QLatin1Char('/')) - 1;
@@ -359,4 +359,4 @@ void GroupViewModel::Item::dump()
 
 }
 
-#include "moc_groupviewmodel.cpp"
+#include "moc_grouptreemodel.cpp"

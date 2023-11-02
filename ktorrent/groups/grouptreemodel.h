@@ -3,8 +3,8 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KT_GROUPVIEWMODEL_H
-#define KT_GROUPVIEWMODEL_H
+#ifndef KT_GROUPTREEMODEL_H
+#define KT_GROUPTREEMODEL_H
 
 #include <QAbstractItemModel>
 #include <QStringList>
@@ -19,14 +19,14 @@ class TorrentGroup;
 /**
  * Model for the GroupView
  **/
-class GroupViewModel : public QAbstractItemModel
+class GroupTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
     enum ColumnRoles { PathRole = Qt::UserRole + 1 };
 
-    GroupViewModel(GroupManager *gman, QObject *parent);
-    ~GroupViewModel() override;
+    GroupTreeModel(GroupManager *gman, QObject *parent);
+    ~GroupTreeModel() override;
 
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -55,7 +55,7 @@ private Q_SLOTS:
 
 private:
     struct Item {
-        Item(const QString &name, Item *parent, int row, GroupViewModel *model);
+        Item(const QString &name, Item *parent, int row, GroupTreeModel *model);
 
         void insert(const QString &name, const QString &p, const QModelIndex &idx);
         void insert(Group *g, const QModelIndex &idx);
@@ -73,7 +73,7 @@ private:
         int row;
         Group *group;
         QList<Item> children;
-        GroupViewModel *model;
+        GroupTreeModel *model;
     };
 
     QModelIndex findGroup(Group *g);
@@ -85,4 +85,4 @@ private:
 
 }
 
-#endif // KT_GROUPVIEWMODEL_H
+#endif // KT_GROUPTREEMODEL_H

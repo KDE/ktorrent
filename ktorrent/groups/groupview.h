@@ -9,7 +9,7 @@
 #include <KSharedConfig>
 #include <QTreeWidget>
 
-#include "groupviewmodel.h"
+#include "grouptreemodel.h"
 
 class QAction;
 class KActionCollection;
@@ -82,7 +82,7 @@ private:
     Core *core;
     View *view;
     GroupManager *gman;
-    GroupViewModel *model;
+    GroupTreeModel *model;
 
     QAction *open_in_new_tab;
     QAction *new_group;
