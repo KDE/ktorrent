@@ -9,7 +9,7 @@
 #include <KSharedConfig>
 #include <QTreeWidget>
 
-#include "grouptreemodel.h"
+#include <groups/grouptreemodel.h>
 
 class QAction;
 class KActionCollection;

@@ -6,6 +6,8 @@
 #ifndef KT_GROUPTREEMODEL_H
 #define KT_GROUPTREEMODEL_H
 
+#include <ktcore_export.h>
+
 #include <QAbstractItemModel>
 #include <QStringList>
 
@@ -19,7 +21,7 @@ class TorrentGroup;
 /**
  * Model for the GroupView
  **/
-class GroupTreeModel : public QAbstractItemModel
+class KTCORE_EXPORT GroupTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:

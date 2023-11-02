@@ -39,6 +39,7 @@ target_sources(ktcore PRIVATE
 	groups/ungroupedgroup.cpp
 	groups/groupmanager.cpp
 	groups/functiongroup.cpp
+	groups/grouptreemodel.cpp
 	
 	dbus/dbus.cpp
 	dbus/dbustorrent.cpp
