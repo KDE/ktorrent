@@ -96,6 +96,10 @@ int GroupTreeModel::rowCount(const QModelIndex &parent) const
 
 QModelIndex GroupTreeModel::parent(const QModelIndex &child) const
 {
+    if (!child.isValid()) {
+        return QModelIndex();
+    }
+
     Item *item = (Item *)child.internalPointer();
     if (!item || !item->parent)
         return QModelIndex();
@@ -144,6 +148,10 @@ QStringList GroupTreeModel::mimeTypes() const
 
 Qt::ItemFlags GroupTreeModel::flags(const QModelIndex &index) const
 {
+    if (!index.isValid()) {
+        return Qt::NoItemFlags;
+    }
+
     Item *item = (Item *)index.internalPointer();
     if (item && item->group && !item->group->isStandardGroup())
         return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDropEnabled;
@@ -194,7 +202,7 @@ bool GroupTreeModel::removeRows(int row, int count, const QModelIndex &parent)
     if (!item)
         return false;
 
-    beginRemoveRows(parent, row, row + count);
+    beginRemoveRows(parent, row, row + count - 1);
     for (int i = 0; i < count; i++)
         item->children.removeAt(row);
     int row_index = 0;

@@ -11,3 +11,12 @@ ecm_add_test(${groupManagerTest_SOURCES}
     TEST_NAME "groupManagerTest"
     LINK_LIBRARIES Qt::Test ktcore
 )
+
+set(groupTreeModelTest_SOURCES
+    grouptreemodeltest.cpp
+)
+
+ecm_add_test(${groupTreeModelTest_SOURCES}
+    TEST_NAME "groupTreeModelTest"
+    LINK_LIBRARIES Qt::Test ktcore
+)
