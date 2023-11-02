@@ -169,7 +169,6 @@ void GroupViewModel::groupRemoved(Group *g)
     //        QModelIndex idx = findGroup(g).parent();
     root.remove(g, index(0, 0));
     // root.dump();
-    view->onGroupRemoved(g);
 }
 
 Group *GroupViewModel::groupForIndex(const QModelIndex &index) const
