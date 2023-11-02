@@ -100,13 +100,13 @@ void TorrentService::hostResolved(net::AddressResolver *ar)
 {
     if (ar->succeeded()) {
         addPeer(ar->address(), true);
-        peersReady(this);
+        Q_EMIT peersReady(this);
     }
 }
 
 void TorrentService::aboutToBeDestroyed()
 {
-    serviceDestroyed(this);
+    Q_EMIT serviceDestroyed(this);
 }
 }
 

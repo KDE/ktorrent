@@ -324,7 +324,7 @@ void IWFileTreeModel::update()
         }
 
         if (changed)
-            dataChanged(createIndex(0, 2), createIndex(0, 4));
+            Q_EMIT dataChanged(createIndex(0, 2), createIndex(0, 4));
     }
 }
 }

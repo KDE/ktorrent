@@ -163,7 +163,7 @@ void ScanThread::scan(const QUrl &dir, bool recursive)
             torrents.append(QUrl::fromLocalFile(d.absoluteFilePath(tor)));
     }
 
-    found(torrents);
+    Q_EMIT found(torrents);
 
     if (stop_requested)
         return;

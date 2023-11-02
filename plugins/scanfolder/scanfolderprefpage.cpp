@@ -96,7 +96,7 @@ void ScanFolderPrefPage::addPressed()
         folders.append(p);
     }
 
-    updateButtons();
+    Q_EMIT updateButtons();
 }
 
 void ScanFolderPrefPage::removePressed()
@@ -107,7 +107,7 @@ void ScanFolderPrefPage::removePressed()
         delete i;
     }
 
-    updateButtons();
+    Q_EMIT updateButtons();
 }
 
 void ScanFolderPrefPage::selectionChanged()
@@ -118,7 +118,7 @@ void ScanFolderPrefPage::selectionChanged()
 void ScanFolderPrefPage::currentGroupChanged(int idx)
 {
     Q_UNUSED(idx);
-    updateButtons();
+    Q_EMIT updateButtons();
 }
 
 bool ScanFolderPrefPage::customWidgetsChanged()

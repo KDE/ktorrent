@@ -293,7 +293,7 @@ void GroupManager::addDefaultGroup(Group *g)
 void GroupManager::removeDefaultGroup(Group *g)
 {
     if (g) {
-        groupRemoved(g);
+        Q_EMIT groupRemoved(g);
         groups.erase(g->groupName());
     }
 }

@@ -70,7 +70,7 @@ bool WebSeedsModel::update()
         }
 
         if (changed) {
-            dataChanged(createIndex(i, 1), createIndex(i, 3));
+            Q_EMIT dataChanged(createIndex(i, 1), createIndex(i, 3));
             ret = true;
         }
     }

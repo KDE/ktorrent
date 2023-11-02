@@ -32,7 +32,7 @@ void BWPrefPage::loadSettings()
 
 void BWPrefPage::updateSettings()
 {
-    colorsChanged();
+    Q_EMIT colorsChanged();
 }
 
 }

@@ -120,7 +120,7 @@ void MediaView::onDoubleClicked(const QModelIndex &index)
     if (!idx.isValid())
         return;
 
-    doubleClicked(model->fileForIndex(idx));
+    Q_EMIT doubleClicked(model->fileForIndex(idx));
 }
 
 void MediaView::showIncompleteChanged(bool on)

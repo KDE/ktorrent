@@ -204,7 +204,7 @@ void Feed::loadingComplete(Syndication::Loader *loader, Syndication::FeedPtr fee
         Out(SYS_SYN | LOG_NOTICE) << "Failed to load feed " << url.toDisplayString() << ": " << update_error << endl;
         this->status = FAILED_TO_DOWNLOAD;
         update_timer.start(refresh_rate * 60 * 1000);
-        updated();
+        Q_EMIT updated();
         return;
     }
 
@@ -221,7 +221,7 @@ void Feed::loadingComplete(Syndication::Loader *loader, Syndication::FeedPtr fee
 
     checkLoaded();
     runFilters();
-    updated();
+    Q_EMIT updated();
 }
 
 void Feed::refresh()
@@ -234,7 +234,7 @@ void Feed::refresh()
     if (!cookie.isEmpty())
         retr->setAuthenticationCookie(cookie);
     loader->loadFrom(url, retr);
-    updated();
+    Q_EMIT updated();
 }
 
 void Feed::loadingFromDiskComplete(Syndication::Loader *loader, Syndication::FeedPtr feed, Syndication::ErrorCode status)
@@ -250,7 +250,7 @@ void Feed::loadFromDisk()
     Syndication::Loader *loader =
         Syndication::Loader::create(this, SLOT(loadingFromDiskComplete(Syndication::Loader *, Syndication::FeedPtr, Syndication::ErrorCode)));
     loader->loadFrom(QUrl(dir + QStringLiteral("feed.xml")), new FeedRetriever());
-    updated();
+    Q_EMIT updated();
 }
 
 QString Feed::title() const
@@ -277,14 +277,14 @@ QString Feed::newFeedDir(const QString &base)
 void Feed::addFilter(Filter *f)
 {
     filters.append(f);
-    updated();
+    Q_EMIT updated();
 }
 
 void Feed::removeFilter(Filter *f)
 {
     filters.removeAll(f);
     downloaded_se_items.remove(f);
-    updated();
+    Q_EMIT updated();
 }
 
 bool Feed::needToDownload(Syndication::ItemPtr item, Filter *filter)
@@ -343,16 +343,16 @@ void Feed::downloadItem(Syndication::ItemPtr item, const QString &group, const Q
     loaded.insert(item->id());
     QString url = TorrentUrlFromItem(item);
     if (!url.isEmpty())
-        downloadLink(QUrl(url), group, location, move_on_completion, silently);
+        Q_EMIT downloadLink(QUrl(url), group, location, move_on_completion, silently);
     else
-        downloadLink(QUrl(item->link()), group, location, move_on_completion, silently);
+        Q_EMIT downloadLink(QUrl(item->link()), group, location, move_on_completion, silently);
     save();
 }
 
 void Feed::clearFilters()
 {
     filters.clear();
-    updated();
+    Q_EMIT updated();
 }
 
 void Feed::checkLoaded()
@@ -396,7 +396,7 @@ void Feed::setDisplayName(const QString &dname)
     if (custom_name != dname) {
         custom_name = dname;
         save();
-        feedRenamed(this);
+        Q_EMIT feedRenamed(this);
     }
 }
 

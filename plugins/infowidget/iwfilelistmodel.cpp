@@ -223,7 +223,7 @@ bool IWFileListModel::setData(const QModelIndex &index, const QVariant &value, i
 
     if (prio != old) {
         file.setPriority(prio);
-        dataChanged(createIndex(index.row(), 0), createIndex(index.row(), 4));
+        Q_EMIT dataChanged(createIndex(index.row(), 0), createIndex(index.row(), 4));
     }
 
     return true;
@@ -269,7 +269,7 @@ void IWFileListModel::update()
         }
 
         if (changed)
-            dataChanged(createIndex(0, 0), createIndex(0, 4));
+            Q_EMIT dataChanged(createIndex(0, 0), createIndex(0, 4));
     }
 }
 }

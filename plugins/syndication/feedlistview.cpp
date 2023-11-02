@@ -31,14 +31,14 @@ FeedListView::~FeedListView()
 
 void FeedListView::itemActivated(const QModelIndex &idx)
 {
-    feedActivated(feeds->feedForIndex(idx));
+    Q_EMIT feedActivated(feeds->feedForIndex(idx));
 }
 
 void FeedListView::selectionChanged(const QItemSelection &sel, const QItemSelection &desel)
 {
     Q_UNUSED(desel)
     Q_UNUSED(sel)
-    enableRemove(selectionModel()->selectedRows().count() > 0);
+    Q_EMIT enableRemove(selectionModel()->selectedRows().count() > 0);
 }
 
 QModelIndexList FeedListView::selectedFeeds()

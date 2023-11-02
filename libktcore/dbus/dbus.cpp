@@ -114,7 +114,7 @@ void DBus::torrentAdded(bt::TorrentInterface *tc)
 {
     DBusTorrent *db = new DBusTorrent(tc, this);
     torrent_map.insert(db->infoHash(), db);
-    torrentAdded(db->infoHash());
+    Q_EMIT torrentAdded(db->infoHash());
 }
 
 void DBus::torrentRemoved(bt::TorrentInterface *tc)
@@ -122,7 +122,7 @@ void DBus::torrentRemoved(bt::TorrentInterface *tc)
     DBusTorrent *db = torrent_map.find(tc->getInfoHash().toString());
     if (db) {
         QString ih = db->infoHash();
-        torrentRemoved(ih);
+        Q_EMIT torrentRemoved(ih);
         torrent_map.erase(ih);
     }
 }
@@ -132,7 +132,7 @@ void DBus::finished(bt::TorrentInterface *tc)
     DBusTorrent *db = torrent_map.find(tc->getInfoHash().toString());
     if (db) {
         QString ih = db->infoHash();
-        finished(ih);
+        Q_EMIT finished(ih);
     }
 }
 
@@ -141,7 +141,7 @@ void DBus::torrentStoppedByError(bt::TorrentInterface *tc, QString msg)
     DBusTorrent *db = torrent_map.find(tc->getInfoHash().toString());
     if (db) {
         QString ih = db->infoHash();
-        torrentStoppedByError(ih, msg);
+        Q_EMIT torrentStoppedByError(ih, msg);
     }
 }
 

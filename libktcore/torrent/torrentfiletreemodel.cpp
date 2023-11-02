@@ -486,15 +486,15 @@ bool TorrentFileTreeModel::setCheckState(const QModelIndex &index, Qt::CheckStat
             else
                 file->setDoNotDownload(true);
         }
-        dataChanged(createIndex(index.row(), 0), createIndex(index.row(), columnCount(index) - 1));
+        Q_EMIT dataChanged(createIndex(index.row(), 0), createIndex(index.row(), columnCount(index) - 1));
 
         QModelIndex parent = index.parent();
         if (parent.isValid())
-            dataChanged(parent, parent); // parent needs to be updated to
+            Q_EMIT dataChanged(parent, parent); // parent needs to be updated to
     }
 
     if (emit_check_state_change)
-        checkStateChanged();
+        Q_EMIT checkStateChanged();
     return true;
 }
 
@@ -525,7 +525,7 @@ bool TorrentFileTreeModel::setName(const QModelIndex &index, const QString &name
         // single file case so we only need to change the user modified name
         tc->setUserModifiedFileName(name);
         n->name = name;
-        dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         return true;
     }
 
@@ -543,7 +543,7 @@ bool TorrentFileTreeModel::setName(const QModelIndex &index, const QString &name
         }
 
         n->name = name;
-        dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         // modify the path of all files
         modifyPathOfFiles(n, n->path());
         return true;
@@ -556,7 +556,7 @@ bool TorrentFileTreeModel::setName(const QModelIndex &index, const QString &name
 
         n->name = name;
         n->file->setUserModifiedPath(n->path());
-        dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         return true;
     }
 }

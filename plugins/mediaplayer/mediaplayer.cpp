@@ -62,11 +62,11 @@ void MediaPlayer::play(kt::MediaFileRef file)
     MediaFile::Ptr ptr = file.mediaFile();
     if (ptr && ptr->isVideo()) {
         Out(SYS_MPL | LOG_DEBUG) << "Opening video widget !" << endl;
-        openVideo();
+        Q_EMIT openVideo();
     }
 
     history.append(file);
-    playing(file);
+    Q_EMIT playing(file);
     current = file;
     media->play();
 }
@@ -90,7 +90,7 @@ void MediaPlayer::pause()
         if (history.count() > 1)
             flags |= MEDIA_PREV;
 
-        enableActions(flags);
+        Q_EMIT enableActions(flags);
     }
 }
 
@@ -138,8 +138,8 @@ void MediaPlayer::onStateChanged(Phonon::State cur, Phonon::State)
         if (history.count() > 0)
             flags |= MEDIA_PREV;
 
-        enableActions(flags);
-        loading();
+        Q_EMIT enableActions(flags);
+        Q_EMIT loading();
         break;
     case Phonon::StoppedState:
         Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: stopped" << endl;
@@ -147,8 +147,8 @@ void MediaPlayer::onStateChanged(Phonon::State cur, Phonon::State)
         if (history.count() > 0)
             flags |= MEDIA_PREV;
 
-        enableActions(flags);
-        stopped();
+        Q_EMIT enableActions(flags);
+        Q_EMIT stopped();
         break;
     case Phonon::PlayingState:
         Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: playing " << getCurrentSource().path() << endl;
@@ -156,9 +156,9 @@ void MediaPlayer::onStateChanged(Phonon::State cur, Phonon::State)
         if (history.count() > 1)
             flags |= MEDIA_PREV;
 
-        enableActions(flags);
+        Q_EMIT enableActions(flags);
         hasVideoChanged(media->hasVideo());
-        playing(getCurrentSource());
+        Q_EMIT playing(getCurrentSource());
         break;
     case Phonon::BufferingState:
         Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: buffering" << endl;
@@ -170,7 +170,7 @@ void MediaPlayer::onStateChanged(Phonon::State cur, Phonon::State)
             if (history.count() > 1)
                 flags |= MEDIA_PREV;
 
-            enableActions(flags);
+            Q_EMIT enableActions(flags);
         }
         break;
     case Phonon::ErrorState:
@@ -179,7 +179,7 @@ void MediaPlayer::onStateChanged(Phonon::State cur, Phonon::State)
         if (history.count() > 0)
             flags |= MEDIA_PREV;
 
-        enableActions(flags);
+        Q_EMIT enableActions(flags);
         break;
     }
 }
@@ -209,9 +209,9 @@ MediaFileRef MediaPlayer::getCurrentSource() const
 void MediaPlayer::hasVideoChanged(bool hasVideo)
 {
     if (hasVideo)
-        openVideo();
+        Q_EMIT openVideo();
     else
-        closeVideo();
+        Q_EMIT closeVideo();
 }
 
 }

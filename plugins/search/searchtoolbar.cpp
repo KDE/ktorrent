@@ -119,7 +119,7 @@ void SearchToolBar::searchBoxReturn()
     }
     m_search_text->lineEdit()->clear();
     saveSearchHistory();
-    search(str, m_search_engine->currentIndex(), SearchPluginSettings::openInExternal());
+    Q_EMIT search(str, m_search_engine->currentIndex(), SearchPluginSettings::openInExternal());
 }
 
 void SearchToolBar::searchNewTabPressed()

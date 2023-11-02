@@ -142,7 +142,7 @@ void TorrentGroup::torrentRemoved(TorrentInterface *tor)
 void TorrentGroup::removeTorrent(TorrentInterface *tor)
 {
     torrents.erase(tor);
-    torrentRemoved(this);
+    Q_EMIT torrentRemoved(this);
 }
 
 void TorrentGroup::addTorrent(TorrentInterface *tor, bool new_torrent)
@@ -158,7 +158,7 @@ void TorrentGroup::addTorrent(TorrentInterface *tor, bool new_torrent)
     tor->setMaxSeedTime(policy.max_seed_time);
     tor->setTrafficLimits(policy.max_upload_rate * 1024, policy.max_download_rate * 1024);
 
-    torrentAdded(this);
+    Q_EMIT torrentAdded(this);
 }
 
 void TorrentGroup::policyChanged()

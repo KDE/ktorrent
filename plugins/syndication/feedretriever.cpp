@@ -73,7 +73,7 @@ void FeedRetriever::finished(KJob *j)
         }
     }
 
-    dataRetrieved(data, err == 0);
+    Q_EMIT dataRetrieved(data, err == 0);
 }
 
 }

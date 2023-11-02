@@ -156,8 +156,8 @@ bool TorrentFileListModel::setData(const QModelIndex &index, const QVariant &val
             else
                 file.setDoNotDownload(true);
         }
-        dataChanged(createIndex(index.row(), 0), createIndex(index.row(), columnCount(index) - 1));
-        checkStateChanged();
+        Q_EMIT dataChanged(createIndex(index.row(), 0), createIndex(index.row(), columnCount(index) - 1));
+        Q_EMIT checkStateChanged();
         return true;
     } else if (role == Qt::EditRole) {
         QString path = value.toString();
@@ -183,7 +183,7 @@ bool TorrentFileListModel::setData(const QModelIndex &index, const QVariant &val
             // change the name of the file or toplevel directory
             tc->setUserModifiedFileName(path);
         }
-        dataChanged(createIndex(index.row(), 0), createIndex(index.row(), columnCount(index) - 1));
+        Q_EMIT dataChanged(createIndex(index.row(), 0), createIndex(index.row(), columnCount(index) - 1));
         return true;
     }
 

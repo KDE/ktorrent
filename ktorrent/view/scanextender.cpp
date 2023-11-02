@@ -121,7 +121,7 @@ void ScanExtender::cancelPressed()
 
 void ScanExtender::closeRequested()
 {
-    closeRequest(this);
+    Q_EMIT closeRequest(this);
 }
 
 bool ScanExtender::similar(Extender *ext) const

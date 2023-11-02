@@ -101,7 +101,7 @@ void ScheduleEditor::clear()
     clear_action->setEnabled(false);
     edit_item_action->setEnabled(false);
     remove_item_action->setEnabled(false);
-    scheduleChanged();
+    Q_EMIT scheduleChanged();
 }
 
 void ScheduleEditor::save()
@@ -123,7 +123,7 @@ void ScheduleEditor::load()
         Schedule *s = new Schedule();
         try {
             s->load(fn);
-            loaded(s);
+            Q_EMIT loaded(s);
         } catch (bt::Error &err) {
             QMessageBox::critical(this, QString(), err.toString());
             delete s;
@@ -143,7 +143,7 @@ void ScheduleEditor::addItem()
     if (dlg.exec() == QDialog::Accepted && schedule->addItem(item)) {
         clear_action->setEnabled(true);
         view->addScheduleItem(item);
-        scheduleChanged();
+        Q_EMIT scheduleChanged();
     } else
         delete item;
 }
@@ -152,7 +152,7 @@ void ScheduleEditor::removeItem()
 {
     view->removeSelectedItems();
     clear_action->setEnabled(schedule->count() > 0);
-    scheduleChanged();
+    Q_EMIT scheduleChanged();
 }
 
 void ScheduleEditor::editItem(ScheduleItem *item)
@@ -168,7 +168,7 @@ void ScheduleEditor::editItem(ScheduleItem *item)
             view->itemChanged(item);
         }
         clear_action->setEnabled(schedule->count() > 0);
-        scheduleChanged();
+        Q_EMIT scheduleChanged();
     }
 }
 
@@ -193,7 +193,7 @@ void ScheduleEditor::itemMoved(kt::ScheduleItem *item, const QTime &start, const
 {
     schedule->modify(item, start, end, start_day, end_day);
     view->itemChanged(item);
-    scheduleChanged();
+    Q_EMIT scheduleChanged();
 }
 
 void ScheduleEditor::colorsChanged()
@@ -204,7 +204,7 @@ void ScheduleEditor::colorsChanged()
 void ScheduleEditor::enableChecked(bool on)
 {
     schedule->setEnabled(on);
-    scheduleChanged();
+    Q_EMIT scheduleChanged();
 }
 
 }

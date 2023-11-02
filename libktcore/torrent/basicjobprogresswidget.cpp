@@ -34,7 +34,7 @@ void BasicJobProgressWidget::description(const QString &title, const QPair<QStri
 {
     job_title->setText(title);
     job_description->setText(i18n("%1: %2<br/>%3: %4", field1.first, field1.second, field2.first, field2.second));
-    resized(this);
+    Q_EMIT resized(this);
 }
 
 void BasicJobProgressWidget::infoMessage(const QString &plain, const QString &rich)
@@ -42,7 +42,7 @@ void BasicJobProgressWidget::infoMessage(const QString &plain, const QString &ri
     Q_UNUSED(plain);
     msg->setText(rich);
     msg->setVisible(true);
-    resized(this);
+    Q_EMIT resized(this);
 }
 
 void BasicJobProgressWidget::warning(const QString &plain, const QString &rich)
@@ -50,7 +50,7 @@ void BasicJobProgressWidget::warning(const QString &plain, const QString &rich)
     Q_UNUSED(plain);
     msg->setText(i18n("Warning: %1", rich));
     msg->setVisible(true);
-    resized(this);
+    Q_EMIT resized(this);
 }
 
 void BasicJobProgressWidget::totalAmount(KJob::Unit unit, qulonglong amount)

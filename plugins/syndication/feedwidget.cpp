@@ -213,13 +213,13 @@ void FeedWidget::updated()
         m_status->setText(i18n("<b>Downloading</b>"));
         break;
     }
-    updateCaption(this, feed->title());
+    Q_EMIT updateCaption(this, feed->title());
     m_active_filters->setText(QStringLiteral("<b>") + feed->filterNamesString() + QStringLiteral("</b>"));
 }
 
 void FeedWidget::onFeedRenamed(kt::Feed *f)
 {
-    updateCaption(this, f->displayName());
+    Q_EMIT updateCaption(this, f->displayName());
 }
 
 }

@@ -202,7 +202,7 @@ void Core::applySettings()
     mman->setTimerDuration(Settings::requeueMagnetsTime());
     mman->setDownloadingSlots(Settings::numMagnetDownloadingSlots());
 
-    settingsChanged();
+    Q_EMIT settingsChanged();
 }
 
 void Core::loadPlugins()
@@ -302,7 +302,7 @@ bool Core::init(TorrentControl *tc, const QString &group, const QString &locatio
         }
     }
 
-    torrentAdded(tc);
+    Q_EMIT torrentAdded(tc);
     if (silently)
         Q_EMIT openedSilently(tc);
     return true;
@@ -323,13 +323,13 @@ bt::TorrentInterface *Core::loadFromData(const QByteArray &data, const QString &
         }
     } catch (bt::Warning &warning) {
         bt::Out(SYS_GEN | LOG_NOTICE) << warning.toString() << endl;
-        canNotLoadSilently(warning.toString());
+        Q_EMIT canNotLoadSilently(warning.toString());
     } catch (bt::Error &err) {
         bt::Out(SYS_GEN | LOG_IMPORTANT) << err.toString() << endl;
         if (!silently)
             gui->errorMsg(err.toString());
         else
-            canNotLoadSilently(err.toString());
+            Q_EMIT canNotLoadSilently(err.toString());
     }
 
     delete tc;
@@ -351,7 +351,7 @@ bt::TorrentInterface *Core::loadFromFile(const QString &target, const QString &d
         if (!silently)
             gui->errorMsg(err.toString());
         else
-            canNotLoadSilently(err.toString());
+            Q_EMIT canNotLoadSilently(err.toString());
         return nullptr;
     }
 }
@@ -407,7 +407,7 @@ void Core::downloadFinishedSilently(KJob *job)
     if (err == KIO::ERR_USER_CANCELED) {
         // do nothing
     } else if (err) {
-        canNotLoadSilently(j->errorString());
+        Q_EMIT canNotLoadSilently(j->errorString());
     } else {
         QString dir;
         if (custom_save_locations.contains(j)) {
@@ -492,7 +492,7 @@ void Core::start(bt::TorrentInterface *tc)
     } else {
         TorrentStartResponse reason = qman->start(tc);
         if (reason == NOT_ENOUGH_DISKSPACE || reason == QM_LIMITS_REACHED)
-            canNotStart(tc, reason);
+            Q_EMIT canNotStart(tc, reason);
     }
 
     startUpdateTimer(); // restart update timer
@@ -574,13 +574,13 @@ void Core::loadExistingTorrent(const QString &tor_dir)
 
         qman->append(tc);
         connectSignals(tc);
-        torrentAdded(tc);
+        Q_EMIT torrentAdded(tc);
     } catch (bt::Error &err) {
         gui->errorMsg(err.toString());
         delete tc;
     } catch (bt::Warning &warning) {
         bt::Out(SYS_GEN | LOG_NOTICE) << warning.toString() << endl;
-        canNotLoadSilently(warning.toString());
+        Q_EMIT canNotLoadSilently(warning.toString());
         bt::Delete(tor_dir, true);
     }
 }
@@ -636,7 +636,7 @@ void Core::remove(bt::TorrentInterface *tc, bool data_to)
             gui->errorMsg(e.toString());
         }
 
-        torrentRemoved(tc);
+        Q_EMIT torrentRemoved(tc);
         gman->torrentRemoved(tc);
         qman->torrentRemoved(tc);
         gui->updateActions();
@@ -677,7 +677,7 @@ void Core::remove(QList<bt::TorrentInterface *> &todo, bool data_to)
             gui->errorMsg(e.toString());
         }
 
-        torrentRemoved(tc);
+        Q_EMIT torrentRemoved(tc);
         gman->torrentRemoved(tc);
         try {
             bt::Delete(dir, false);
@@ -713,7 +713,7 @@ void Core::torrentFinished(bt::TorrentInterface *tc)
     if (!keep_seeding)
         tc->stop();
 
-    finished(tc);
+    Q_EMIT finished(tc);
     qman->torrentFinished(tc);
 }
 
@@ -919,7 +919,7 @@ bt::TorrentInterface *Core::createTorrent(bt::TorrentCreator *mktor, bool seed)
             qman->append(tc);
             if (seed)
                 start(tc);
-            torrentAdded(tc);
+            Q_EMIT torrentAdded(tc);
             return tc;
         }
     } catch (bt::Error &e) {
@@ -998,9 +998,9 @@ void Core::torrentSeedAutoStopped(bt::TorrentInterface *tc, AutoStopReason reaso
 {
     qman->startNext();
     if (reason == MAX_RATIO_REACHED)
-        maxShareRatioReached(tc);
+        Q_EMIT maxShareRatioReached(tc);
     else
-        maxSeedTimeReached(tc);
+        Q_EMIT maxSeedTimeReached(tc);
     startUpdateTimer();
 }
 
@@ -1114,7 +1114,7 @@ void Core::aboutToBeStarted(bt::TorrentInterface *tc, bool &ret)
 
 void Core::emitCorruptedData(bt::TorrentInterface *tc)
 {
-    corruptedData(tc);
+    Q_EMIT corruptedData(tc);
 }
 
 void Core::connectSignals(bt::TorrentInterface *tc)
@@ -1196,7 +1196,7 @@ void Core::load(const bt::MagnetLink &mlink, const MagnetLinkLoadOptions &option
         gui->errorMsg(i18n("Invalid magnet bittorrent link: %1", mlink.toString()));
     } else {
         if (!Globals::instance().getDHT().isRunning())
-            dhtNotEnabled(i18n("You are attempting to download a magnet link, and DHT is not enabled. For optimum results enable DHT."));
+            Q_EMIT dhtNotEnabled(i18n("You are attempting to download a magnet link, and DHT is not enabled. For optimum results enable DHT."));
         mman->addMagnet(mlink, options, false);
         startUpdateTimer();
     }

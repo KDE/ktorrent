@@ -21,7 +21,7 @@ JobProgressWidget::~JobProgressWidget()
 
 void JobProgressWidget::emitCloseRequest()
 {
-    closeRequest(this);
+    Q_EMIT closeRequest(this);
 }
 
 }

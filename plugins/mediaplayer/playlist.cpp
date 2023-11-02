@@ -257,7 +257,7 @@ bool PlayList::dropMimeData(const QMimeData *data, Qt::DropAction action, int ro
     }
     insertRows(row, urls.count(), QModelIndex());
     dragged_rows.clear();
-    itemsDropped();
+    Q_EMIT itemsDropped();
     return true;
 }
 
@@ -313,7 +313,7 @@ void PlayList::load(const QString &file)
 void PlayList::onPlaying(const kt::MediaFileRef &file)
 {
     Q_UNUSED(file);
-    dataChanged(index(0, 0), index(files.count() - 1, 0));
+    Q_EMIT dataChanged(index(0, 0), index(files.count() - 1, 0));
 }
 
 }

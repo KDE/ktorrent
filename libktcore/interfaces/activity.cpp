@@ -54,13 +54,13 @@ void Activity::setXMLGUIFile(const QString &xml_file)
 void Activity::setName(const QString &name)
 {
     activity_name = name;
-    nameChanged(this, name);
+    Q_EMIT nameChanged(this, name);
 }
 
 void Activity::setIcon(const QString &icon)
 {
     activity_icon = icon;
-    iconChanged(this, icon);
+    Q_EMIT iconChanged(this, icon);
 }
 
 bool Activity::lessThan(Activity *l, Activity *r)

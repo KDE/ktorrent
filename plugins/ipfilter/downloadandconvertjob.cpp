@@ -65,7 +65,7 @@ void DownloadAndConvertJob::convert(KJob *j)
             j->uiDelegate()->showErrorMessage();
         } else {
             QString msg = i18n("Automatic update of IP filter failed: %1", j->errorString());
-            notification(msg);
+            Q_EMIT notification(msg);
         }
         setError(unzip ? UNZIP_FAILED : MOVE_FAILED);
         emitResult();
@@ -99,7 +99,7 @@ void DownloadAndConvertJob::downloadFileFinished(KJob *j)
             j->uiDelegate()->showErrorMessage();
         } else {
             QString msg = i18n("Automatic update of IP filter failed: %1", j->errorString());
-            notification(msg);
+            Q_EMIT notification(msg);
         }
 
         setError(DOWNLOAD_FAILED);
@@ -124,7 +124,7 @@ void DownloadAndConvertJob::downloadFileFinished(KJob *j)
         if (mode == Verbose)
             KMessageBox::error(nullptr, msg);
         else
-            notification(msg);
+            Q_EMIT notification(msg);
 
         setError(UNZIP_FAILED);
         emitResult();
@@ -143,7 +143,7 @@ void DownloadAndConvertJob::downloadFileFinished(KJob *j)
         if (mode == Verbose)
             KMessageBox::error(nullptr, msg);
         else
-            notification(msg);
+            Q_EMIT notification(msg);
 
         setError(UNZIP_FAILED);
         emitResult();
@@ -159,7 +159,7 @@ void DownloadAndConvertJob::extract(KJob *j)
             j->uiDelegate()->showErrorMessage();
         } else {
             QString msg = i18n("Automatic update of IP filter failed: %1", j->errorString());
-            notification(msg);
+            Q_EMIT notification(msg);
         }
         setError(MOVE_FAILED);
         emitResult();
@@ -174,7 +174,7 @@ void DownloadAndConvertJob::extract(KJob *j)
             KMessageBox::error(nullptr, i18n("Cannot open zip file %1.", zipfile));
         } else {
             QString msg = i18n("Automatic update of IP filter failed: cannot open zip file %1", zipfile);
-            notification(msg);
+            Q_EMIT notification(msg);
         }
 
         setError(UNZIP_FAILED);
@@ -196,7 +196,7 @@ void DownloadAndConvertJob::extract(KJob *j)
             KMessageBox::error(nullptr, i18n("Cannot find blocklist in zip file %1.", zipfile));
         } else {
             QString msg = i18n("Automatic update of IP filter failed: cannot find blocklist in zip file %1", zipfile);
-            notification(msg);
+            Q_EMIT notification(msg);
         }
 
         setError(UNZIP_FAILED);
@@ -221,7 +221,7 @@ void DownloadAndConvertJob::makeBackupFinished(KJob *j)
             j->uiDelegate()->showErrorMessage();
         } else {
             QString msg = i18n("Automatic update of IP filter failed: %1", j->errorString());
-            notification(msg);
+            Q_EMIT notification(msg);
         }
         setError(BACKUP_FAILED);
         emitResult();

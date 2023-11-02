@@ -49,7 +49,7 @@ bool WeekDayModel::setData(const QModelIndex &index, const QVariant &value, int 
 
     if (role == Qt::CheckStateRole) {
         checked[index.row()] = (Qt::CheckState)value.toUInt() == Qt::Checked;
-        dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         return true;
     }
     return false;

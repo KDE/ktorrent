@@ -140,7 +140,7 @@ void GroupView::onItemClicked(const QModelIndex &index)
 {
     Group *g = model->groupForIndex(index);
     if (g)
-        currentGroupChanged(g);
+        Q_EMIT currentGroupChanged(g);
 }
 
 void GroupView::editGroupPolicy()
@@ -189,7 +189,7 @@ void GroupView::openInNewTab()
 {
     Group *g = model->groupForIndex(selectionModel()->currentIndex());
     if (g)
-        openTab(g);
+        Q_EMIT openTab(g);
 }
 }
 

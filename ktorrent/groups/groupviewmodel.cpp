@@ -74,7 +74,7 @@ bool GroupViewModel::setData(const QModelIndex &index, const QVariant &value, in
 
     item->name = new_name;
     gman->renameGroup(group->groupName(), new_name);
-    dataChanged(index, index);
+    Q_EMIT dataChanged(index, index);
     return true;
 }
 
@@ -207,7 +207,7 @@ void GroupViewModel::updateGroupCount(const QModelIndex &idx)
         child = this->index(row, 0, idx);
     }
 
-    dataChanged(idx, idx);
+    Q_EMIT dataChanged(idx, idx);
 }
 
 bool GroupViewModel::removeRows(int row, int count, const QModelIndex &parent)

@@ -156,7 +156,7 @@ void IPBlockingPrefPage::downloadAndConvertFinished(KJob *j)
     m_plugin->loadAntiP2P();
     restoreGUI();
     updateAutoUpdate();
-    updateFinished();
+    Q_EMIT updateFinished();
 }
 
 void IPBlockingPrefPage::updateAutoUpdate()

@@ -620,7 +620,7 @@ void View::renameTorrent()
 
     QModelIndex idx = indices.front();
     QTreeView::edit(model->index(idx.row(), 0));
-    editingItem(true);
+    Q_EMIT editingItem(true);
 }
 
 void View::checkData()
@@ -687,7 +687,7 @@ void View::onCurrentItemChanged(const QModelIndex &current, const QModelIndex & 
 {
     // Out(SYS_GEN|LOG_DEBUG) << "onCurrentItemChanged " << current.row() << endl;
     bt::TorrentInterface *tc = model->torrentFromIndex(current);
-    currentTorrentChanged(tc);
+    Q_EMIT currentTorrentChanged(tc);
 }
 
 void View::onHeaderMenuItemTriggered(QAction *act)
@@ -702,13 +702,13 @@ void View::onHeaderMenuItemTriggered(QAction *act)
 void View::onSelectionChanged(const QItemSelection & /*selected*/, const QItemSelection & /*deselected*/)
 {
     updateActions();
-    torrentSelectionChanged();
+    Q_EMIT torrentSelectionChanged();
 }
 
 void View::closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
     QTreeView::closeEditor(editor, hint);
-    editingItem(false);
+    Q_EMIT editingItem(false);
     setFocus();
 }
 
@@ -716,7 +716,7 @@ bool View::edit(const QModelIndex &index, EditTrigger trigger, QEvent *event)
 {
     bool ret = QTreeView::edit(index, trigger, event);
     if (ret)
-        editingItem(true);
+        Q_EMIT editingItem(true);
 
     return ret;
 }

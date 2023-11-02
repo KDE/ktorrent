@@ -91,15 +91,15 @@ SearchWidget::~SearchWidget()
 
 void SearchWidget::iconChanged()
 {
-    changeIcon(this, webview->icon());
+    Q_EMIT changeIcon(this, webview->icon());
 }
 
 void SearchWidget::titleChanged(const QString &text)
 {
     if (!text.isEmpty()) {
-        changeTitle(this, text);
+        Q_EMIT changeTitle(this, text);
     } else { // no empty tab titles allowed
-        changeTitle(this, webview->url().toString());
+        Q_EMIT changeTitle(this, webview->url().toString());
     }
 }
 

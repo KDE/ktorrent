@@ -49,11 +49,11 @@ void MediaFileStream::dataReady()
                 if (!data.isEmpty()) {
                     writeData(data);
                     waiting_for_data = false;
-                    stateChanged(PLAYING);
+                    Q_EMIT stateChanged(PLAYING);
                 }
             } else {
                 Out(SYS_MPL | LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable() << " (need " << min_amount_needed << ")" << endl;
-                stateChanged(BUFFERING);
+                Q_EMIT stateChanged(BUFFERING);
             }
         } else
             endOfData();
@@ -83,13 +83,13 @@ void MediaFileStream::needData()
             writeData(data);
             if (waiting_for_data) {
                 waiting_for_data = false;
-                stateChanged(PLAYING);
+                Q_EMIT stateChanged(PLAYING);
             }
         }
     } else {
         Out(SYS_MPL | LOG_DEBUG) << "Not enough data available: " << s->bytesAvailable() << " (need " << min_amount_needed << ")" << endl;
         waiting_for_data = true;
-        stateChanged(BUFFERING);
+        Q_EMIT stateChanged(BUFFERING);
 
         // Send some more data, otherwise phonon seems to get stuck
         QByteArray data = s->read(4096);

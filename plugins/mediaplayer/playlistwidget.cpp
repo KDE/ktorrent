@@ -97,9 +97,9 @@ void PlayListWidget::onSelectionChanged(const QItemSelection &s, const QItemSele
     Q_UNUSED(d);
     QModelIndexList idx = s.indexes();
     if (idx.count() > 0)
-        fileSelected(fileForIndex(idx.front()));
+        Q_EMIT fileSelected(fileForIndex(idx.front()));
     else
-        fileSelected(MediaFileRef());
+        Q_EMIT fileSelected(MediaFileRef());
 }
 
 QModelIndex PlayListWidget::play()
@@ -117,7 +117,7 @@ void PlayListWidget::doubleClicked(const QModelIndex &index)
 {
     MediaFileRef file = play_list->fileForIndex(proxy_model->mapToSource(index));
     if (!file.path().isEmpty())
-        doubleClicked(file);
+        Q_EMIT doubleClicked(file);
 }
 
 void PlayListWidget::saveState(KSharedConfigPtr cfg)
@@ -147,8 +147,8 @@ void PlayListWidget::showContextMenu(QPoint pos)
 void PlayListWidget::clearPlayList()
 {
     play_list->clear();
-    enableNext(false);
-    fileSelected(MediaFileRef());
+    Q_EMIT enableNext(false);
+    Q_EMIT fileSelected(MediaFileRef());
 }
 
 void PlayListWidget::addMedia()
@@ -166,7 +166,7 @@ void PlayListWidget::addMedia()
     for (const QString &file : files)
         play_list->addFile(collection->find(file));
 
-    enableNext(play_list->rowCount() > 0);
+    Q_EMIT enableNext(play_list->rowCount() > 0);
 }
 
 void PlayListWidget::removeFiles()
@@ -179,12 +179,12 @@ void PlayListWidget::removeFiles()
     for (const MediaFileRef &f : qAsConst(files))
         play_list->removeFile(f);
 
-    enableNext(play_list->rowCount() > 0);
+    Q_EMIT enableNext(play_list->rowCount() > 0);
 }
 
 void PlayListWidget::onItemsDropped()
 {
-    enableNext(play_list->rowCount() > 0);
+    Q_EMIT enableNext(play_list->rowCount() > 0);
 }
 
 QModelIndex PlayListWidget::next(const QModelIndex &idx, bool random) const

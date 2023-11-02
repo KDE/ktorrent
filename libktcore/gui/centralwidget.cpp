@@ -101,7 +101,7 @@ void CentralWidget::switchActivity(QAction *action)
     for (int i = 0; i < count(); i++) {
         Activity *act = (Activity *)widget(i);
         if (action->data().value<QObject *>() == act) {
-            changeActivity(act);
+            Q_EMIT changeActivity(act);
             break;
         }
     }

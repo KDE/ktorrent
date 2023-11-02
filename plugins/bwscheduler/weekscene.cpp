@@ -157,7 +157,7 @@ void WeekScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *ev)
     const QList<QGraphicsItem *> gis = items(ev->scenePos());
     for (QGraphicsItem *gi : gis) {
         if (gi->zValue() == 3) {
-            itemDoubleClicked(gi);
+            Q_EMIT itemDoubleClicked(gi);
             break;
         }
     }
@@ -209,7 +209,7 @@ void WeekScene::itemMoved(ScheduleItem *item, const QPointF &np)
         end_day = 1;
     else if (end_day > 7)
         end_day = 7;
-    itemMoved(item, start, end, start_day, end_day);
+    Q_EMIT itemMoved(item, start, end, start_day, end_day);
 }
 
 bool WeekScene::validMove(ScheduleItem *item, const QPointF &np)
@@ -245,7 +245,7 @@ void WeekScene::itemResized(ScheduleItem *item, const QRectF &r)
     else if (end_day > 7)
         end_day = 7;
 
-    itemMoved(item, start, end, start_day, end_day);
+    Q_EMIT itemMoved(item, start, end, start_day, end_day);
 }
 
 bool WeekScene::validResize(ScheduleItem *item, const QRectF &r)

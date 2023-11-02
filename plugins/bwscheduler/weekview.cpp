@@ -53,7 +53,7 @@ void WeekView::onSelectionChanged()
             selection.append(i.value());
     }
 
-    selectionChanged();
+    Q_EMIT selectionChanged();
 }
 
 void WeekView::setSchedule(Schedule *s)
@@ -107,7 +107,7 @@ void WeekView::onDoubleClicked(QGraphicsItem *i)
 {
     QMap<QGraphicsItem *, ScheduleItem *>::iterator itr = item_map.find(i);
     if (itr != item_map.end())
-        editItem(itr.value());
+        Q_EMIT editItem(itr.value());
 }
 
 void WeekView::showContextMenu(const QPoint &pos)

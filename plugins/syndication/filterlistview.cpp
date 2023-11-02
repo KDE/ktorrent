@@ -26,15 +26,15 @@ FilterListView::~FilterListView()
 
 void FilterListView::itemActivated(const QModelIndex &idx)
 {
-    filterActivated(filters->filterForIndex(idx));
+    Q_EMIT filterActivated(filters->filterForIndex(idx));
 }
 
 void FilterListView::selectionChanged(const QItemSelection &sel, const QItemSelection &desel)
 {
     Q_UNUSED(desel);
     Q_UNUSED(sel);
-    enableRemove(selectionModel()->selectedRows().count() > 0);
-    enableEdit(selectionModel()->selectedRows().count() == 1);
+    Q_EMIT enableRemove(selectionModel()->selectedRows().count() > 0);
+    Q_EMIT enableEdit(selectionModel()->selectedRows().count() == 1);
 }
 
 QModelIndexList FilterListView::selectedFilters()

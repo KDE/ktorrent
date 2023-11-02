@@ -32,7 +32,7 @@ public:
     void add(const QString &ip, bt::Uint16 port)
     {
         addPeer(net::Address(ip, port), false);
-        peersReady(this);
+        Q_EMIT peersReady(this);
     }
 };
 
