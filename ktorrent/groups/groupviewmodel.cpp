@@ -15,17 +15,14 @@
 #include <groups/torrentgroup.h>
 #include <torrent/queuemanager.h>
 #include <util/log.h>
-#include <view/view.h>
-
 using namespace bt;
 
 namespace kt
 {
-GroupViewModel::GroupViewModel(kt::GroupManager *gman, View *view, QObject *parent)
+GroupViewModel::GroupViewModel(kt::GroupManager *gman, QObject *parent)
     : QAbstractItemModel(parent)
     , root(QStringLiteral("all"), nullptr, 0, this)
     , gman(gman)
-    , view(view)
 {
     for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++)
         root.insert(i->second, index(0, 0));
@@ -129,12 +126,7 @@ bool GroupViewModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
     if (!g)
         return false;
 
-    QList<TorrentInterface *> sel;
-    view->getSelection(sel);
-    for (TorrentInterface *ti : qAsConst(sel)) {
-        g->addTorrent(ti, false);
-    }
-    gman->saveGroups();
+    Q_EMIT addTorrentSelectionToGroup(g);
     return true;
 }
 

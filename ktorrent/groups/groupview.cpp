@@ -39,7 +39,7 @@ GroupView::GroupView(GroupManager *gman, View *view, Core *core, GUI *gui, QWidg
     , core(core)
     , view(view)
     , gman(gman)
-    , model(new GroupViewModel(gman, view, parent))
+    , model(new GroupViewModel(gman, parent))
 {
     setRootIsDecorated(false);
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -50,6 +50,7 @@ GroupView::GroupView(GroupManager *gman, View *view, Core *core, GUI *gui, QWidg
     connect(this, &GroupView::customContextMenuRequested, this, &GroupView::showContextMenu);
     connect(this, &GroupView::currentGroupChanged, view, &View::onCurrentGroupChanged);
     connect(gman, &GroupManager::customGroupChanged, this, &GroupView::updateGroupCount);
+    connect(model, &GroupViewModel::addTorrentSelectionToGroup, this, &GroupView::addTorrentSelectionToGroup);
 
     setAcceptDrops(true);
     setDropIndicatorShown(true);

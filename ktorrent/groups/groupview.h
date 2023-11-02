@@ -22,6 +22,7 @@ class View;
 class Group;
 class GroupView;
 class GroupManager;
+class TorrentGroup;
 class View;
 
 /**
@@ -71,6 +72,7 @@ private Q_SLOTS:
 Q_SIGNALS:
     void currentGroupChanged(kt::Group *g);
     void openTab(Group *g);
+    void addTorrentSelectionToGroup(TorrentGroup *g);
 
 private:
     void keyPressEvent(QKeyEvent *event) override;

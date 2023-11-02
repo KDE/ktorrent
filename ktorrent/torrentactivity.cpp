@@ -26,6 +26,7 @@
 #include "view/torrentsearchbar.h"
 #include "view/view.h"
 #include <groups/groupmanager.h>
+#include <groups/torrentgroup.h>
 #include <gui/tabbarwidget.h>
 #include <util/log.h>
 
@@ -74,6 +75,7 @@ TorrentActivity::TorrentActivity(Core *core, GUI *gui, QWidget *parent)
     group_view->setupActions(part()->actionCollection());
     connect(group_view, &GroupView::currentGroupChanged, group_switcher, &GroupSwitcher::currentGroupChanged);
     connect(group_view, &GroupView::openTab, group_switcher, &GroupSwitcher::addTab);
+    connect(group_view, &GroupView::addTorrentSelectionToGroup, this, &TorrentActivity::addTorrentSelectionToGroup);
 
     setupActions();
 
@@ -266,6 +268,15 @@ void TorrentActivity::queueOrdered()
     group_switcher->updateGroupCount();
 }
 
+void TorrentActivity::addTorrentSelectionToGroup(TorrentGroup *g)
+{
+    QList<TorrentInterface *> sel;
+    view->getSelection(sel);
+    for (TorrentInterface *ti : qAsConst(sel)) {
+        g->addTorrent(ti, false);
+    }
+    core->getGroupManager()->saveGroups();
+}
 }
 
 #include "moc_torrentactivity.cpp"

@@ -12,9 +12,9 @@
 namespace kt
 {
 
-class View;
 class Group;
 class GroupManager;
+class TorrentGroup;
 
 /**
  * Model for the GroupView
@@ -25,7 +25,7 @@ class GroupViewModel : public QAbstractItemModel
 public:
     enum ColumnRoles { PathRole = Qt::UserRole + 1 };
 
-    GroupViewModel(GroupManager *gman, View *view, QObject *parent);
+    GroupViewModel(GroupManager *gman, QObject *parent);
     ~GroupViewModel() override;
 
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
@@ -45,6 +45,9 @@ public:
 
     /// Update the group count
     void updateGroupCount(const QModelIndex &idx);
+
+Q_SIGNALS:
+    void addTorrentSelectionToGroup(TorrentGroup *g);
 
 private Q_SLOTS:
     void groupAdded(Group *g);
@@ -78,7 +81,6 @@ private:
 private:
     Item root;
     GroupManager *gman;
-    View *view;
 };
 
 }

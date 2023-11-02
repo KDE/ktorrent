@@ -22,6 +22,7 @@ class GroupView;
 class QueueManagerWidget;
 class TabBarWidget;
 class Group;
+class TorrentGroup;
 class TorrentSearchBar;
 class GroupSwitcher;
 
@@ -79,6 +80,7 @@ private Q_SLOTS:
     void stopAllTorrents();
     void suspendQueue(bool suspend);
     void queueOrdered();
+    void addTorrentSelectionToGroup(TorrentGroup *g);
 
 private:
     Core *core;
