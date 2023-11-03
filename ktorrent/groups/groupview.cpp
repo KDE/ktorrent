@@ -124,7 +124,7 @@ void GroupView::showContextMenu(const QPoint &p)
 {
     Group *g = model->groupForIndex(selectionModel()->currentIndex());
 
-    bool enable = g && gman->canRemove(g);
+    bool enable = gman->canRemove(g);
     edit_group->setEnabled(enable);
     remove_group->setEnabled(enable);
     edit_group_policy->setEnabled(enable);

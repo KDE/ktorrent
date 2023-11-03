@@ -161,7 +161,7 @@ void GroupManager::removeGroup(Group *g)
 
 bool GroupManager::canRemove(const Group *g) const
 {
-    return g->groupFlags() & Group::CUSTOM_GROUP;
+    return g && g->groupFlags() & Group::CUSTOM_GROUP;
 }
 
 Group *GroupManager::find(const QString &name)

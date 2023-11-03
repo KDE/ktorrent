@@ -71,6 +71,11 @@ target_link_libraries(ktcore PUBLIC
     KF5::XmlGui
 )
 
+find_package(Qt${QT_MAJOR_VERSION}Test ${QT5_REQUIRED_VERSION})
+if (Qt${QT_MAJOR_VERSION}Test_DIR)
+    add_subdirectory(autotests)
+endif()
+
 target_include_directories(ktcore PUBLIC "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/libktcore>")
 
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
