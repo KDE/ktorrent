@@ -6,6 +6,7 @@
 #include "grouptreemodel.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <KLocalizedString>
 #include <QIcon>
@@ -113,10 +114,18 @@ QModelIndex GroupTreeModel::index(int row, int column, const QModelIndex &parent
         return createIndex(row, column, (void *)&root);
 
     Item *item = (Item *)parent.internalPointer();
-    if (!item || row < 0 || row >= item->children.count())
+    if (!item || row < 0 || row >= static_cast<int>(item->children.size()))
         return QModelIndex();
 
-    return createIndex(row, column, (void *)&item->children.at(row));
+    auto childItr = std::find_if(item->children.begin(), item->children.end(), [=](const auto &child) {
+        return child.row == row;
+    });
+
+    if (childItr == item->children.end()) {
+        return QModelIndex{};
+    }
+
+    return createIndex(row, column, (void *)&*childItr);
 }
 
 bool GroupTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
@@ -202,9 +211,15 @@ bool GroupTreeModel::removeRows(int row, int count, const QModelIndex &parent)
     if (!item)
         return false;
 
-    beginRemoveRows(parent, row, row + count - 1);
-    for (int i = 0; i < count; i++)
-        item->children.removeAt(row);
+    const int lastIndex = row + count - 1;
+    if (row < 0 || lastIndex >= static_cast<int>(item->children.size()) || count < 1) {
+        return false;
+    }
+
+    const auto firstIt = std::next(item->children.cbegin(), row);
+    const auto lastIt = std::next(firstIt, count);
+    beginRemoveRows(parent, row, lastIndex);
+    item->children.erase(firstIt, lastIt);
     int row_index = 0;
     for (Item &i : item->children)
         i.row = row_index++;
@@ -241,12 +256,12 @@ void GroupTreeModel::Item::insert(Group *g, const QModelIndex &idx)
         else
             child_name = remainder.section(QLatin1Char('/'), 1, 1);
 
-        QList<Item>::iterator i = std::find(children.begin(), children.end(), child_name);
+        auto i = std::find(children.begin(), children.end(), child_name);
         if (i == children.end()) {
-            int npos = children.count();
+            int npos = children.size();
             model->beginInsertRows(idx, npos, npos);
-            children.append(Item(child_name, this, npos, model));
-            children.last().insert(g, model->index(npos, 0, idx));
+            children.emplace_back(child_name, this, npos, model);
+            children.back().insert(g, model->index(npos, 0, idx));
             model->endInsertRows();
         } else
             i->insert(g, model->index(i->row, 0, idx));
@@ -270,12 +285,12 @@ void GroupTreeModel::Item::insert(const QString &name, const QString &p, const Q
         else
             child_name = remainder.section(QLatin1Char('/'), 1, 1);
 
-        QList<Item>::iterator i = std::find(children.begin(), children.end(), child_name);
+        auto i = std::find(children.begin(), children.end(), child_name);
         if (i == children.end()) {
-            int npos = children.count();
+            int npos = children.size();
             model->beginInsertRows(idx, npos, npos);
-            children.append(Item(child_name, this, npos, model));
-            children.last().insert(name, p, model->index(npos, 0, idx));
+            children.emplace_back(child_name, this, npos, model);
+            children.back().insert(name, p, model->index(npos, 0, idx));
             model->endInsertRows();
         } else
             i->insert(name, p, model->index(i->row, 0, idx));
@@ -291,13 +306,13 @@ void GroupTreeModel::Item::remove(kt::Group *g, const QModelIndex &idx)
 
     QString remainder = group_path.remove(0, item_path.size());
     if (remainder.count(QLatin1Char('/')) == 1) {
-        QList<Item>::iterator i = std::find(children.begin(), children.end(), remainder.mid(1));
+        auto i = std::find(children.begin(), children.end(), remainder.mid(1));
         if (i != children.end()) {
             model->removeRows(i->row, 1, idx);
         }
     } else {
         QString child_name = remainder.section(QLatin1Char('/'), 1, 1);
-        QList<Item>::iterator i = std::find(children.begin(), children.end(), child_name);
+        auto i = std::find(children.begin(), children.end(), child_name);
         if (i != children.end())
             i->remove(g, model->index(i->row, 0, idx));
     }

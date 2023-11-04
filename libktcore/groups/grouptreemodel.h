@@ -74,7 +74,7 @@ private:
         Item *parent;
         int row;
         Group *group;
-        QList<Item> children;
+        std::list<Item> children;
         GroupTreeModel *model;
     };
 
