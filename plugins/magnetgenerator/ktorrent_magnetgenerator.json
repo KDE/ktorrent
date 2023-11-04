@@ -31,7 +31,6 @@
                 "Name[sv]": "Jonas Lundqvist",
                 "Name[tr]": "Jonas Lundqvist",
                 "Name[uk]": "Jonas Lundqvist",
-                "Name[x-test]": "xxJonas Lundqvistxx",
                 "Name[zh_CN]": "Jonas Lundqvist"
             }
         ],
@@ -61,7 +60,6 @@
         "Description[sv]": "Skapar magnetiska länkar",
         "Description[tr]": "Mıknatıs bağlantıları üretir",
         "Description[uk]": "Створює посилання magnet",
-        "Description[x-test]": "xxGenerates magnet linksxx",
         "Description[zh_CN]": "生成磁力链",
         "EnabledByDefault": false,
         "Icon": "kt-magnet",
@@ -112,7 +110,6 @@
         "Name[tr]": "Mıknatıs Üreticisi",
         "Name[ug]": "ماگنىت ھاسىللىغۇچ",
         "Name[uk]": "Породжувач Magnet",
-        "Name[x-test]": "xxMagnet Generatorxx",
         "Name[zh_CN]": "磁力链生成器",
         "Name[zh_TW]": "Magnet 產生器",
         "Version": "0.1",
