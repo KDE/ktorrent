@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
@@ -61,6 +62,7 @@
         "Description[sv]": "Schemalägg uppladdnings- och nerladdningsgränser under en veckoperiod",
         "Description[tr]": "Bir haftalık periyotlarla gönderme ve indirme sınırlarını zamanla",
         "Description[uk]": "Додаток для складання розкладу обмежень на отримання на тиждень",
+        "Description[x-test]": "xxSchedule upload and download limits over a period of a weekxx",
         "Description[zh_CN]": "安排一周内的上传和下载限制",
         "EnabledByDefault": false,
         "Icon": "kt-bandwidth-scheduler",
@@ -113,6 +115,7 @@
         "Name[tr]": "Zamanlayıcı",
         "Name[ug]": "پىلانچى",
         "Name[uk]": "Планування",
+        "Name[x-test]": "xxSchedulerxx",
         "Name[zh_CN]": "调度器",
         "Name[zh_TW]": "排程器",
         "Version": "0.1",

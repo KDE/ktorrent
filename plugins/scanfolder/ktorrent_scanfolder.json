@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
@@ -60,6 +61,7 @@
         "Description[sv]": "Sök igenom kataloger efter dataflödesfiler och ladda dem",
         "Description[tr]": "Klasörleri torrent dosyaları için tara ve bulunan dosyaları yükle",
         "Description[uk]": "Знайти у теках файли торентів і завантажити їх",
+        "Description[x-test]": "xxScan folders for torrent files and load themxx",
         "Description[zh_CN]": "扫描文件夹以加载其中的种子文件",
         "EnabledByDefault": false,
         "Icon": "folder-open",
@@ -116,6 +118,7 @@
         "Name[tr]": "Dizin Tara",
         "Name[ug]": "قىسقۇچ تەكشۈر",
         "Name[uk]": "Сканувати теку",
+        "Name[x-test]": "xxScan Folderxx",
         "Name[zh_CN]": "扫描文件夹",
         "Name[zh_TW]": "掃描資料夾",
         "Version": "0.1",

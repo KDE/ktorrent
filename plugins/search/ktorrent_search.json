@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
@@ -61,6 +62,7 @@
         "Description[sv]": "Sök efter dataflöden",
         "Description[tr]": "Torrentler ara",
         "Description[uk]": "Пошук торентів",
+        "Description[x-test]": "xxSearch for torrentsxx",
         "Description[zh_CN]": "搜索种子",
         "EnabledByDefault": false,
         "Icon": "edit-find",
@@ -118,6 +120,7 @@
         "Name[tr]": "Ara",
         "Name[ug]": "ئىزدە",
         "Name[uk]": "Пошук",
+        "Name[x-test]": "xxSearchxx",
         "Name[zh_CN]": "查找",
         "Name[zh_TW]": "搜尋",
         "Version": "0.1",

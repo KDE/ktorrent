@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson",
                 "Name[tr]": "Joris Guisson",
                 "Name[uk]": "Joris Guisson",
+                "Name[x-test]": "xxJoris Guissonxx",
                 "Name[zh_CN]": "Joris Guisson"
             }
         ],
@@ -60,6 +61,7 @@
         "Description[sv]": "Phonon-baserad mediaspelare",
         "Description[tr]": "Phonon tabanlı ortam oynatıcısı",
         "Description[uk]": "Заснований на Phonon додаток програвача для KTorrent",
+        "Description[x-test]": "xxPhonon-based media playerxx",
         "Description[zh_CN]": "基于 Phonon 的媒体播放器",
         "EnabledByDefault": false,
         "Icon": "applications-multimedia",
@@ -118,6 +120,7 @@
         "Name[tr]": "Ortam Oynatıcısı",
         "Name[ug]": "ۋاسىتە قويغۇ",
         "Name[uk]": "Медіапрогравач",
+        "Name[x-test]": "xxMedia Playerxx",
         "Name[zh_CN]": "媒体播放器",
         "Name[zh_TW]": "媒體播放器",
         "Version": "0.1",

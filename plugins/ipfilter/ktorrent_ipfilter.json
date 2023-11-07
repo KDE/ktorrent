@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
@@ -60,6 +61,7 @@
         "Description[sv]": "Filtrera IP-adresser med en blockeringslista",
         "Description[tr]": "Bir engel listesiyle IP adreslerini süzgeçten geçir",
         "Description[uk]": "Фільтрувати IP-адреси за списком блокування",
+        "Description[x-test]": "xxFilter IP addresses through a blocklistxx",
         "Description[zh_CN]": "通过屏蔽列表过滤 IP 地址",
         "EnabledByDefault": false,
         "Icon": "view-filter",
@@ -116,6 +118,7 @@
         "Name[tr]": "IP Süzgeci",
         "Name[ug]": "IP سۈزگۈچ",
         "Name[uk]": "Фільтр IP",
+        "Name[x-test]": "xxIP Filterxx",
         "Name[zh_CN]": "IP 过滤",
         "Name[zh_TW]": "IP 過濾",
         "Version": "0.1",

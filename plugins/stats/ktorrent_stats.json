@@ -31,6 +31,7 @@
                 "Name[sv]": "Krzysztof Kundzicz",
                 "Name[tr]": "Krzysztof Kundzicz",
                 "Name[uk]": "Krzysztof Kundzicz",
+                "Name[x-test]": "xxKrzysztof Kundziczxx",
                 "Name[zh_CN]": "Krzysztof Kundzicz"
             }
         ],
@@ -61,6 +62,7 @@
         "Description[sv]": "Visa statistik om dataflöden i flera diagram",
         "Description[tr]": "Çeşitli grafiklerde torrentlerle ilgili istatistikleri gösterir",
         "Description[uk]": "Показує статистику торентів за допомогою декількох графіків",
+        "Description[x-test]": "xxShows statistics about torrents in several graphsxx",
         "Description[zh_CN]": "以图表形式显示种子的统计数据",
         "EnabledByDefault": false,
         "Icon": "view-statistics",
@@ -119,6 +121,7 @@
         "Name[tr]": "İstatistik",
         "Name[ug]": "ستاتىستىكا",
         "Name[uk]": "Статистика",
+        "Name[x-test]": "xxStatisticsxx",
         "Name[zh_CN]": "详情",
         "Name[zh_TW]": "統計",
         "Version": "0.1",

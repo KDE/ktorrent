@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson",
                 "Name[tr]": "Joris Guisson",
                 "Name[uk]": "Joris Guisson",
+                "Name[x-test]": "xxJoris Guissonxx",
                 "Name[zh_CN]": "Joris Guisson"
             }
         ],
@@ -60,6 +61,7 @@
         "Description[sv]": "Syndikeringsinsticksprogram för Ktorrent, med stöd för RSS- och Atom-kanaler",
         "Description[tr]": "RSS ve Atom kaynakları destekleyen K Torrent için dayanışma eklentisi",
         "Description[uk]": "Додаток синдикації для KTorrent, з підтримкою подач RSS і Atom",
+        "Description[x-test]": "xxSyndication plugin for KTorrent, supporting RSS and Atom feedsxx",
         "Description[zh_CN]": "KTorrent 的聚合插件，支持 RSS 和 Atom 订阅",
         "EnabledByDefault": false,
         "Icon": "application-rss+xml",
@@ -113,6 +115,7 @@
         "Name[tr]": "Dayanışma",
         "Name[ug]": "قەدەمداشلاش",
         "Name[uk]": "Синдикація",
+        "Name[x-test]": "xxSyndicationxx",
         "Name[zh_CN]": "同步",
         "Name[zh_TW]": "Syndication",
         "Version": "0.1",

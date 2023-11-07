@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
@@ -61,6 +62,7 @@
         "Description[sv]": "Visa allmän information om ett dataflöde under flera flikar",
         "Description[tr]": "Çeşitli sekmelerde bir torrent hakkındaki genel bilgileri göster",
         "Description[uk]": "Показ загальної інформації про торент у декількох вкладках",
+        "Description[x-test]": "xxDisplays general information about a torrent in several tabsxx",
         "Description[zh_CN]": "在若干标签内显示一个种子的常规信息",
         "EnabledByDefault": true,
         "Icon": "kt-info-widget",
@@ -117,6 +119,7 @@
         "Name[sv]": "Informationskomponent",
         "Name[tr]": "Bilgi Penceresi",
         "Name[uk]": "Інформаційний віджет",
+        "Name[x-test]": "xxInformation Widgetxx",
         "Name[zh_CN]": "信息部件",
         "Name[zh_TW]": "資訊元件",
         "Version": "0.1",

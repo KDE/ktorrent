@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
@@ -61,6 +62,7 @@
         "Description[sv]": "Visar loggutmatning",
         "Description[tr]": "Günlük kaydı çıktısını görüntüler",
         "Description[uk]": "Показати відомості з журналу",
+        "Description[x-test]": "xxDisplays the logging outputxx",
         "Description[zh_CN]": "显示日志输出",
         "EnabledByDefault": false,
         "Icon": "utilities-log-viewer",
@@ -119,6 +121,7 @@
         "Name[tr]": "Günlük Görüntüleyicisi",
         "Name[ug]": "خاتىرە كۆرگۈچ",
         "Name[uk]": "Переглядач журналу",
+        "Name[x-test]": "xxLog Viewerxx",
         "Name[zh_CN]": "日志查看器",
         "Name[zh_TW]": "紀錄檢視器",
         "Version": "0.1",

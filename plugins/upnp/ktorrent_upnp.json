@@ -31,6 +31,7 @@
                 "Name[sv]": "Joris Guisson, Ivan Vasic",
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
+                "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }
         ],
@@ -61,6 +62,7 @@
         "Description[sv]": "Vidarebefordra portar genom att använda UPnP",
         "Description[tr]": "UPnP kullanarak kapıları yönlendirir",
         "Description[uk]": "Переспрямування портів за допомогою UPnP",
+        "Description[x-test]": "xxForward ports using UPnPxx",
         "Description[zh_CN]": "使用 UPnP 转发端口",
         "EnabledByDefault": false,
         "Icon": "kt-upnp",
@@ -118,6 +120,7 @@
         "Name[tr]": "UPnP",
         "Name[ug]": "UPnP",
         "Name[uk]": "UPnP",
+        "Name[x-test]": "xxUPnPxx",
         "Name[zh_CN]": "UPnP",
         "Name[zh_TW]": "UPnP",
         "Version": "0.1",
