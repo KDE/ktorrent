@@ -88,7 +88,7 @@ int main(int argc, char **argv)
     bt::SetClientInfo(QStringLiteral("KTorrent"), kt::MAJOR, kt::MINOR, kt::RELEASE, kt::VERSION_TYPE, QStringLiteral("KT"));
 
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
-    KLocalizedString::setApplicationDomain("ktorrent");
+    KLocalizedString::setApplicationDomain(QByteArrayLiteral("ktorrent"));
 
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("ktorrent")));
