@@ -52,8 +52,25 @@ protected:
         void updatePercentage(const bt::BitSet &havechunks);
         void initPercentage(const bt::TorrentInterface *tc, const bt::BitSet &havechunks);
 
-        void saveExpandedState(const QModelIndex &index, QSortFilterProxyModel *pm, QTreeView *tv, bt::BEncoder *enc);
-        void loadExpandedState(const QModelIndex &index, QSortFilterProxyModel *pm, QTreeView *tv, bt::BNode *node);
+        /**
+         * Save the expanded state of the tree
+         * @param index The index that belongs to the real model and refers to this Node
+         * @param real_model The real model that owns this Node
+         * @param pm Proxy model of the view
+         * @param tv The QTreeView
+         * @param enc The current state of the tree expansion
+         */
+        void saveExpandedState(const QModelIndex &index, TorrentFileTreeModel *real_model, QSortFilterProxyModel *pm, QTreeView *tv, bt::BEncoder *enc) const;
+
+        /**
+         * Restore the expanded state of the tree
+         * @param index The index that belongs to the real model and refers to this Node
+         * @param real_model The real model that owns this Node
+         * @param pm Proxy model of the view
+         * @param tv The QTreeView
+         * @param enc The BEncoded node that refers to this Node's expansion state
+         */
+        void loadExpandedState(const QModelIndex &index, TorrentFileTreeModel *real_model, QSortFilterProxyModel *pm, QTreeView *tv, bt::BNode *node) const;
     };
 
 public:
@@ -66,7 +83,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     QVariant data(const QModelIndex &index, int role) const override;
     QModelIndex parent(const QModelIndex &index) const override;
-    QModelIndex index(int row, int column, const QModelIndex &parent) const override;
+    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     void checkAll() override;
     void uncheckAll() override;

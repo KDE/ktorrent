@@ -214,7 +214,11 @@ Qt::CheckState TorrentFileTreeModel::Node::checkState(const bt::TorrentInterface
     }
 }
 
-void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex &index, QSortFilterProxyModel *pm, QTreeView *tv, BEncoder *enc)
+void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex &index,
+                                                   TorrentFileTreeModel *real_model,
+                                                   QSortFilterProxyModel *pm,
+                                                   QTreeView *tv,
+                                                   BEncoder *enc) const
 {
     if (file)
         return;
@@ -227,14 +231,18 @@ void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex &index, QSo
         if (!n->file) {
             enc->write(n->name.toUtf8());
             enc->beginDict();
-            n->saveExpandedState(pm->index(idx, 0, index), pm, tv, enc);
+            n->saveExpandedState(real_model->index(idx, 0, index), real_model, pm, tv, enc);
             enc->end();
         }
         idx++;
     }
 }
 
-void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex &index, QSortFilterProxyModel *pm, QTreeView *tv, BNode *n)
+void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex &index,
+                                                   TorrentFileTreeModel *real_model,
+                                                   QSortFilterProxyModel *pm,
+                                                   QTreeView *tv,
+                                                   BNode *n) const
 {
     if (file)
         return;
@@ -251,7 +259,7 @@ void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex &index, QSo
     for (Node *n : qAsConst(children)) {
         if (!n->file) {
             if (BDictNode *d = dict->getDict(n->name.toUtf8()))
-                n->loadExpandedState(pm->index(idx, 0, index), pm, tv, d);
+                n->loadExpandedState(real_model->index(idx, 0, index), real_model, pm, tv, d);
         }
         idx++;
     }
@@ -635,7 +643,7 @@ QByteArray TorrentFileTreeModel::saveExpandedState(QSortFilterProxyModel *pm, QT
     QByteArray data;
     BEncoder enc(new BEncoderBufferOutput(data));
     enc.beginDict();
-    root->saveExpandedState(index(0, 0, QModelIndex()), pm, tv, &enc);
+    root->saveExpandedState(index(0, 0, QModelIndex()), this, pm, tv, &enc);
     enc.end();
     return data;
 }
@@ -650,7 +658,7 @@ void TorrentFileTreeModel::loadExpandedState(QSortFilterProxyModel *pm, QTreeVie
     try {
         n = dec.decode();
         if (n && n->getType() == BNode::DICT) {
-            root->loadExpandedState(index(0, 0, QModelIndex()), pm, tv, n);
+            root->loadExpandedState(index(0, 0, QModelIndex()), this, pm, tv, n);
         }
     } catch (bt::Error &err) {
         Out(SYS_GEN | LOG_DEBUG) << "Failed to load expanded state" << endl;
