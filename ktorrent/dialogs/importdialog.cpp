@@ -69,7 +69,7 @@ void ImportDialog::progress(quint32 num, quint32 total)
 void ImportDialog::finished()
 {
     QString data_dir = m_data_url->url().toLocalFile();
-    QUrl tor_url = m_torrent_url->url();
+    QString torrent_path = m_torrent_url->url().toLocalFile();
     if (canceled || !dc_thread->getError().isEmpty()) {
         if (!canceled)
             KMessageBox::error(this, dc_thread->getError());
@@ -92,7 +92,7 @@ void ImportDialog::finished()
         writeIndex(tor_dir + QStringLiteral("index"), dc->getResult());
 
         // copy the torrent file
-        bt::CopyFile(tor_url.url(), tor_dir + QStringLiteral("torrent"));
+        bt::CopyFile(torrent_path, tor_dir + QStringLiteral("torrent"));
 
         Uint64 imported = calcImportedBytes(dc->getResult(), tor);
 
