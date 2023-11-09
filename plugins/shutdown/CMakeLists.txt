@@ -32,4 +32,4 @@ target_link_libraries(
     KF5::WidgetsAddons
 )
 
-install(FILES ktorrent_shutdownui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
+install(FILES ktorrent_shutdownui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )

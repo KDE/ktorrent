@@ -35,6 +35,6 @@ target_link_libraries(
     KF5::WidgetsAddons
     KF5::XmlGui
 )
-install(FILES ktorrent_syndicationui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
+install(FILES ktorrent_syndicationui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )
 
 add_subdirectory(icons)

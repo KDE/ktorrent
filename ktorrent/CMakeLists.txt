@@ -124,8 +124,8 @@ target_link_libraries(ktorrent_app
 
 install(TARGETS ktorrent_app ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS org.kde.ktorrent.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
-install(FILES ktorrentui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
-install(FILES kttorrentactivityui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
+install(FILES ktorrentui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )
+install(FILES kttorrentactivityui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )
 install(FILES ktorrent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
 install(FILES org.kde.ktorrent.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
 

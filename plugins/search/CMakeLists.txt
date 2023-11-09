@@ -34,7 +34,7 @@ target_link_libraries(
     KF5::XmlGui
 )
 
-install(FILES ktorrent_searchui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
+install(FILES ktorrent_searchui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )
 
 add_subdirectory(opensearch)
 add_subdirectory(home)

@@ -31,5 +31,5 @@ target_link_libraries(
     KF5::XmlGui
     KF5::WidgetsAddons
 )
-install(FILES ktorrent_bwschedulerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
+install(FILES ktorrent_bwschedulerui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )
 

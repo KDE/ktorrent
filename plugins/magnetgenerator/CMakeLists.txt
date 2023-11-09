@@ -19,4 +19,4 @@ target_link_libraries(
 
 target_include_directories(ktorrent_magnetgenerator PRIVATE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>")
 
-install(FILES ktorrent_magnetgeneratorui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
+install(FILES ktorrent_magnetgeneratorui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )

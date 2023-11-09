@@ -43,4 +43,4 @@ target_link_libraries(
     KF5::WidgetsAddons
 #    Qt:::MultimediaWidgets
     )
-install(FILES ktorrent_mediaplayerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/ktorrent )
+install(FILES ktorrent_mediaplayerui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )

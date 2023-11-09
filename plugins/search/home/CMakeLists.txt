@@ -15,4 +15,4 @@ set(home_FILES
 	box-top-middle.png
 )
 
-install(FILES ${home_FILES} DESTINATION ${DATA_INSTALL_DIR}/ktorrent/search/home )
+install(FILES ${home_FILES} DESTINATION ${KDE_INSTALL_DATAROOTDIR}/ktorrent/search/home )
