@@ -4,9 +4,9 @@ option(BUILD_WITH_GEOIP
 	ON)
 
 if (BUILD_WITH_GEOIP)
-	find_path(GEOIP_INCLUDE_DIR NAMES GeoIP.h PATHS / ${INCLUDE_INSTALL_DIR}/)
-	find_library(GEOIP_LIBRARY NAMES GeoIP PATHS ${LIB_INSTALL_DIR})
-	
+	find_path(GEOIP_INCLUDE_DIR NAMES maxminddb.h PATHS / ${INCLUDE_INSTALL_DIR}/)
+	find_library(GEOIP_LIBRARY NAMES libmaxminddb PATHS ${LIB_INSTALL_DIR})
+
 	if (NOT GEOIP_INCLUDE_DIR OR NOT GEOIP_LIBRARY)
 		set(BUILD_WITH_GEOIP OFF CACHE BOOL
 		  "GeoIP development files could not be found on this system. Forcing this option to OFF"

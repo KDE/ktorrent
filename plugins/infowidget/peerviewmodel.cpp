@@ -48,11 +48,9 @@ PeerViewModel::Item::Item(bt::PeerInterface *peer
     }
 
 #if BUILD_WITH_GEOIP
-    int country_id = geo_ip->findCountry(stats.ip_address);
-    if (country_id > 0) {
-        country = geo_ip->countryName(country_id);
-        flag = flagDB.getFlag(geo_ip->countryCode(country_id));
-    }
+    const Country c = geo_ip->findCountry(stats.ip_address);
+    country = c.name;
+    flag = flagDB.getFlag(c.code);
 #endif
 }
 

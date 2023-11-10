@@ -125,10 +125,13 @@ int main(int argc, char **argv)
     about.addCredit(i18n("Felix Berger"), i18n("ChunkBar's tooltip and IWFileTreeItem sorting"), QStringLiteral("bflat1@gmx.net"));
     about.addCredit(i18n("Andreas Kling"), QString(), QStringLiteral("kling@impul.se"));
     about.addCredit(i18n("Felipe Sateler"), QString(), QStringLiteral("fsateler@gmail.com"));
-    about.addCredit(i18n("Maxmind"),
-                    i18n("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."),
-                    QString(),
-                    QStringLiteral("http://www.maxmind.com/"));
+    about.addCredit(
+        i18n("DB-IP.com"),
+        i18n("Provider of the IP-Country database used in the InfoWidget plugin. The data is licensed under the Creative Commons Attribution 4.0 International "
+             "License https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."),
+        QString(),
+        QStringLiteral("https://db-ip.com/"));
+    about.addCredit(i18n("Maxmind"), i18n("The maxminddb library used for the InfoWidget plugin."), QString(), QStringLiteral("https://www.maxmind.com/"));
     about.addCredit(i18n("Adam Forsyth"), i18n("File prioritization and some other patches"), QStringLiteral("agforsyth@gmail.com"));
     about.addCredit(i18n("Thomas Bernard"),
                     i18n("Miniupnp was used as an example for our own UPnP implementation"),
