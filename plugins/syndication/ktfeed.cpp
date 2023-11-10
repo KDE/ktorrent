@@ -249,7 +249,7 @@ void Feed::loadFromDisk()
     update_timer.stop();
     Syndication::Loader *loader =
         Syndication::Loader::create(this, SLOT(loadingFromDiskComplete(Syndication::Loader *, Syndication::FeedPtr, Syndication::ErrorCode)));
-    loader->loadFrom(QUrl(dir + QStringLiteral("feed.xml")), new FeedRetriever());
+    loader->loadFrom(QUrl::fromLocalFile(dir + QStringLiteral("feed.xml")), new FeedRetriever());
     Q_EMIT updated();
 }
 
