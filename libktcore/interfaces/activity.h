@@ -75,8 +75,6 @@ public:
         return activity_weight;
     }
 
-    static bool lessThan(Activity *l, Activity *r);
-
 protected:
     /**
         Activities wishing to provide toolbar and menu entries, should

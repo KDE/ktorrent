@@ -62,14 +62,6 @@ void Activity::setIcon(const QString &icon)
     activity_icon = icon;
     Q_EMIT iconChanged(this, icon);
 }
-
-bool Activity::lessThan(Activity *l, Activity *r)
-{
-    if (l->weight() == r->weight())
-        return QString::compare(l->name(), r->name()) < 0; // KF5 QCollator
-    else
-        return l->weight() < r->weight();
-}
 }
 
 #include "moc_activity.cpp"
