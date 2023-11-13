@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:33+0000\n"
+"POT-Creation-Date: 2023-11-13 00:42+0000\n"
 "PO-Revision-Date: 2023-07-25 01:05+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -740,7 +740,7 @@ msgstr ""
 "설정 > 고급 > 트래커 목록 URL에 있는 URL에 접근할 수 있는지 확인하십시오."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:305
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:306
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "잘못된 URL: %1"
@@ -762,7 +762,7 @@ msgstr "조용히 열기"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:256
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Speed Limits"
 msgstr "속도 제한"
@@ -1264,7 +1264,7 @@ msgstr "그룹 정책 편집"
 msgid "Open In New Tab"
 msgstr "새 탭으로 열기"
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:223
+#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr "새 그룹"
@@ -1299,69 +1299,69 @@ msgstr "그룹 %1이(가) 이미 존재합니다."
 msgid "Custom Groups"
 msgstr "사용자 정의 그룹"
 
-#: ktorrent/gui.cpp:257
+#: ktorrent/gui.cpp:258
 #, kde-format
 msgid "Open Location"
 msgstr "위치 열기"
 
-#: ktorrent/gui.cpp:354
+#: ktorrent/gui.cpp:356
 #, kde-format
 msgid "Create a new torrent"
 msgstr "새 토렌트 만들기"
 
-#: ktorrent/gui.cpp:356
+#: ktorrent/gui.cpp:358
 #, kde-format
 msgid "Open a torrent"
 msgstr "토렌트 열기"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:361
 #, kde-format
 msgid "Open Silently"
 msgstr "조용히 열기"
 
-#: ktorrent/gui.cpp:360
+#: ktorrent/gui.cpp:362
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "어떤 질문도 없이 토렌트 열기"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:377
 #, kde-format
 msgid "Open URL"
 msgstr "URL 열기"
 
-#: ktorrent/gui.cpp:376
+#: ktorrent/gui.cpp:378
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "토렌트 파일이 있는 URL을 엽니다. 마그넷 링크도 지원됩니다."
 
-#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:383 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP 필터"
 
-#: ktorrent/gui.cpp:382
+#: ktorrent/gui.cpp:384
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "차단된 IP 주소 목록 보기"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:389
 #, kde-format
 msgid "Import Torrent"
 msgstr "토렌트 가져오기"
 
-#: ktorrent/gui.cpp:388
+#: ktorrent/gui.cpp:390
 #, kde-format
 msgid "Import a torrent"
 msgstr "토렌트 가져오기"
 
-#: ktorrent/gui.cpp:393
+#: ktorrent/gui.cpp:395
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "KTorrent 표시/숨기기"
 
-#: ktorrent/gui.cpp:411
+#: ktorrent/gui.cpp:413
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "D: %1 | U: %2"
@@ -1462,7 +1462,7 @@ msgstr "주 화면"
 #. i18n: ectx: Menu (Torrents)
 #. i18n: ectx: ToolBar (TorrentsToolBar)
 #: ktorrent/kttorrentactivityui.rc:8 ktorrent/kttorrentactivityui.rc:84
-#: ktorrent/torrentactivity.cpp:36
+#: ktorrent/torrentactivity.cpp:37
 #, kde-format
 msgid "Torrents"
 msgstr "토렌트"
@@ -1488,13 +1488,13 @@ msgid "Advanced"
 msgstr "고급"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
 #, kde-format
 msgid "Open Directory"
 msgstr "폴더 열기"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
 #, kde-format
 msgid "Add to Group"
 msgstr "그룹에 추가"
@@ -1506,7 +1506,7 @@ msgid "Configure Columns"
 msgstr "항목 설정"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
 #, kde-format
 msgid "Columns"
 msgstr "항목"
@@ -2008,16 +2008,24 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "버그 수정, 정리, 최적화"
 
 #: ktorrent/main.cpp:175
-#, kde-format
-msgid "Enable logging to standard output"
-msgstr "표준 출력 로그 활성화"
+#, fuzzy, kde-format
+#| msgid "Enable All"
+msgid "Enable logging"
+msgstr "모두 활성화"
 
 #: ktorrent/main.cpp:176
+#, kde-format
+msgid ""
+"Enable logging to standard output. Requires --enable-logging to be specified "
+"as well."
+msgstr ""
+
+#: ktorrent/main.cpp:177
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "주어진 URL을 이용하여 토렌트 조용히 열기"
 
-#: ktorrent/main.cpp:177
+#: ktorrent/main.cpp:178
 #, kde-format
 msgid "Document to open"
 msgstr "열 문서"
@@ -3100,7 +3108,7 @@ msgstr "SOCKS 프록시 서버에 필요한 암호입니다."
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:84
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Queue Manager"
 msgstr "대기열 관리자"
@@ -3639,68 +3647,68 @@ msgstr "대기열에 없는 토렌트 보기"
 msgid "Show all not queued torrents"
 msgstr "대기열에 없는 모든 토렌트 보기"
 
-#: ktorrent/torrentactivity.cpp:84
+#: ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr "토렌트 대기열을 관리하는 위젯"
 
-#: ktorrent/torrentactivity.cpp:87
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Magnet Downloader"
 msgstr "마그넷 다운로드 도구"
 
-#: ktorrent/torrentactivity.cpp:87
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Displays the currently downloading magnet links"
 msgstr "현재 다운로드 중인 마그넷 링크 표시"
 
-#: ktorrent/torrentactivity.cpp:102
+#: ktorrent/torrentactivity.cpp:111
 #, kde-format
 msgid "Start All"
 msgstr "모두 시작"
 
-#: ktorrent/torrentactivity.cpp:103
+#: ktorrent/torrentactivity.cpp:112
 #, kde-format
 msgid "Start all torrents"
 msgstr "모든 토렌트 시작"
 
-#: ktorrent/torrentactivity.cpp:107
+#: ktorrent/torrentactivity.cpp:116
 #, kde-format
 msgid "Stop All"
 msgstr "모두 정지"
 
-#: ktorrent/torrentactivity.cpp:108
+#: ktorrent/torrentactivity.cpp:117
 #, kde-format
 msgid "Stop all torrents"
 msgstr "모든 토렌트 정지"
 
-#: ktorrent/torrentactivity.cpp:112
+#: ktorrent/torrentactivity.cpp:121
 #, kde-format
 msgid "Suspend Torrents"
 msgstr "토렌트 일시 정지"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:115 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
 msgstr "모든 실행 중인 토렌트 일시 정지"
 
-#: ktorrent/torrentactivity.cpp:119
+#: ktorrent/torrentactivity.cpp:128
 #, kde-format
 msgid "Group View"
 msgstr "그룹 보기"
 
-#: ktorrent/torrentactivity.cpp:120
+#: ktorrent/torrentactivity.cpp:129
 #, kde-format
 msgid "Show or hide the group view"
 msgstr "그룹 보기 표시/숨기기"
 
-#: ktorrent/torrentactivity.cpp:124
+#: ktorrent/torrentactivity.cpp:133
 #, kde-format
 msgid "Filter Torrents"
 msgstr "토렌트 필터링"
 
-#: ktorrent/torrentactivity.cpp:125
+#: ktorrent/torrentactivity.cpp:134
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr "필터 문자열로 토렌트 필터링"
@@ -4012,165 +4020,165 @@ msgstr "오류:"
 msgid "Filter..."
 msgstr "필터..."
 
-#: ktorrent/view/view.cpp:132
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "시작"
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:134
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "현재 탭의 선택된 토렌트 시작"
 
-#: ktorrent/view/view.cpp:139
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "강제로 시작"
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:141
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "현재 탭의 선택된 토렌트 강제로 시작"
 
-#: ktorrent/view/view.cpp:144
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "정지"
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:146
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "현재 탭의 선택된 토렌트 정지"
 
-#: ktorrent/view/view.cpp:151
+#: ktorrent/view/view.cpp:152
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "일시 정지"
 
-#: ktorrent/view/view.cpp:153
+#: ktorrent/view/view.cpp:154
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "현재 탭의 선택된 토렌트 일시 정지"
 
-#: ktorrent/view/view.cpp:158
+#: ktorrent/view/view.cpp:159
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "삭제"
 
-#: ktorrent/view/view.cpp:160
+#: ktorrent/view/view.cpp:161
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "현재 탭의 선택된 토렌트 삭제"
 
-#: ktorrent/view/view.cpp:165
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "모두 시작"
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:167
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "현재 탭의 모든 토렌트 시작"
 
-#: ktorrent/view/view.cpp:171
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "모두 정지"
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:173
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "현재 탭의 모든 토렌트 정지"
 
-#: ktorrent/view/view.cpp:177
+#: ktorrent/view/view.cpp:178
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "토렌트와 데이터 삭제"
 
-#: ktorrent/view/view.cpp:182
+#: ktorrent/view/view.cpp:183
 #, kde-format
 msgid "Rename Torrent"
 msgstr "토렌트 이름 바꾸기"
 
-#: ktorrent/view/view.cpp:186
+#: ktorrent/view/view.cpp:187
 #, kde-format
 msgid "Add Peers"
 msgstr "피어 추가"
 
-#: ktorrent/view/view.cpp:190
+#: ktorrent/view/view.cpp:191
 #, kde-format
 msgid "Manual Announce"
 msgstr "수동 알림"
 
-#: ktorrent/view/view.cpp:195
+#: ktorrent/view/view.cpp:196
 #, kde-format
 msgid "Scrape"
 msgstr "긁어오기"
 
-#: ktorrent/view/view.cpp:199
+#: ktorrent/view/view.cpp:200
 #, kde-format
 msgid "Preview"
 msgstr "미리 보기"
 
-#: ktorrent/view/view.cpp:203
+#: ktorrent/view/view.cpp:204
 #, kde-format
 msgid "Data Directory"
 msgstr "데이터 폴더"
 
-#: ktorrent/view/view.cpp:207
+#: ktorrent/view/view.cpp:208
 #, kde-format
 msgid "Temporary Directory"
 msgstr "임시 폴더"
 
-#: ktorrent/view/view.cpp:211
+#: ktorrent/view/view.cpp:212
 #, kde-format
 msgid "Move Data"
 msgstr "데이터 이동"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "설정"
 
-#: ktorrent/view/view.cpp:219
+#: ktorrent/view/view.cpp:220
 #, kde-format
 msgid "Remove from Group"
 msgstr "그룹에서 제외"
 
-#: ktorrent/view/view.cpp:227
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check Data"
 msgstr "데이터 무결성 검사"
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:229
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "토렌트의 모든 데이터 검사"
 
-#: ktorrent/view/view.cpp:248
+#: ktorrent/view/view.cpp:249
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "토렌트 URL 복사"
 
-#: ktorrent/view/view.cpp:252
+#: ktorrent/view/view.cpp:253
 #, kde-format
 msgid "Export Torrent"
 msgstr "토렌트 내보내기"
 
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:258
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "각 토렌트에 속도 제한 설정"
 
-#: ktorrent/view/view.cpp:451
+#: ktorrent/view/view.cpp:452
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
@@ -4179,34 +4187,34 @@ msgstr ""
 "토렌트 <b>%1</b>이(가) 아직 다운로드되지 않았습니다. 완료되지 않은 데이터도 "
 "삭제하시겠습니까?"
 
-#: ktorrent/view/view.cpp:456
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Remove Download"
 msgstr "다운로드 삭제"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Delete Data"
 msgstr "데이터 삭제"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:459
 #, kde-format
 msgid "Keep Data"
 msgstr "데이터 유지"
 
-#: ktorrent/view/view.cpp:482
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr "다운로드한 데이터를 잃게 됩니다. 계속하시겠습니까?"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:484
 #, kde-format
 msgid "Remove Torrent"
 msgstr "토렌트 삭제"
 
-#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:338
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:338
 #: plugins/infowidget/fileview.cpp:362
 #, kde-format
 msgid "Select a directory to move the data to."
@@ -4769,16 +4777,24 @@ msgstr "%1: %2<br/>%3: %4"
 msgid "Warning: %1"
 msgstr "경고: %1"
 
-#: libktcore/torrent/chunkbar.cpp:76
-#, kde-format
-msgid ""
-"<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-"\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-"\"excluded_color\">&nbsp; - Excluded Chunks"
-msgstr ""
-"<img src=\"available_color\">&nbsp; - 다운로드 완료된 파일 조각<br><img src="
-"\"unavailable_color\">&nbsp; - 다운로드할 파일 조각<br><img src="
-"\"excluded_color\">&nbsp; - 제외된 파일 조각"
+#: libktcore/torrent/chunkbar.cpp:62
+#, fuzzy, kde-format
+#| msgid "Downloaded chunks:"
+msgid "Downloaded Chunks"
+msgstr "다운로드된 파일 조각:"
+
+#: libktcore/torrent/chunkbar.cpp:62
+#, fuzzy, kde-format
+#| msgid "Show Downloads"
+msgid "Chunks to Download"
+msgstr "다운로드 보기"
+
+#: libktcore/torrent/chunkbar.cpp:62
+#: plugins/infowidget/availabilitychunkbar.cpp:22
+#, fuzzy, kde-format
+#| msgid "Excluded:"
+msgid "Excluded Chunks"
+msgstr "제외됨:"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5261,16 +5277,17 @@ msgstr ""
 msgid "Add Trackers"
 msgstr "트래커 추가"
 
-#: plugins/infowidget/availabilitychunkbar.cpp:23
-#, kde-format
-msgid ""
-"<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-"\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-"\"excluded_color\">&nbsp; - Excluded Chunks"
-msgstr ""
-"<img src=\"available_color\">&nbsp; - 사용 가능한 파일 조각<br><img src="
-"\"unavailable_color\">&nbsp; - 사용 불가능한 파일 조각<br><img src="
-"\"excluded_color\">&nbsp; - 제외된 파일 조각"
+#: plugins/infowidget/availabilitychunkbar.cpp:22
+#, fuzzy, kde-format
+#| msgid "Available chunks:"
+msgid "Available Chunks"
+msgstr "사용 가능한 파일 조각:"
+
+#: plugins/infowidget/availabilitychunkbar.cpp:22
+#, fuzzy, kde-format
+#| msgid "Available chunks:"
+msgid "Unavailable Chunks"
+msgstr "사용 가능한 파일 조각:"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -8720,6 +8737,27 @@ msgstr "재탐색"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Enable logging to standard output"
+#~ msgstr "표준 출력 로그 활성화"
+
+#~ msgid ""
+#~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
+#~ "\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
+#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
+#~ msgstr ""
+#~ "<img src=\"available_color\">&nbsp; - 다운로드 완료된 파일 조각<br><img "
+#~ "src=\"unavailable_color\">&nbsp; - 다운로드할 파일 조각<br><img src="
+#~ "\"excluded_color\">&nbsp; - 제외된 파일 조각"
+
+#~ msgid ""
+#~ "<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
+#~ "\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
+#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
+#~ msgstr ""
+#~ "<img src=\"available_color\">&nbsp; - 사용 가능한 파일 조각<br><img src="
+#~ "\"unavailable_color\">&nbsp; - 사용 불가능한 파일 조각<br><img src="
+#~ "\"excluded_color\">&nbsp; - 제외된 파일 조각"
 
 #~ msgid "Yes, delete the files"
 #~ msgstr "네, 파일을 삭제합니다"

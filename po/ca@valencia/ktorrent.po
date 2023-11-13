@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:33+0000\n"
+"POT-Creation-Date: 2023-11-13 00:42+0000\n"
 "PO-Revision-Date: 2023-08-07 21:19+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -762,7 +762,7 @@ msgstr ""
 "de la llista de seguidors."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:305
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:306
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "URL no vàlid: %1"
@@ -784,7 +784,7 @@ msgstr "Obri silenciosament"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:256
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Speed Limits"
 msgstr "Límits de velocitat"
@@ -1290,7 +1290,7 @@ msgstr "Editeu la política de grup"
 msgid "Open In New Tab"
 msgstr "Obri en una pestanya nova"
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:223
+#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr "Grup nou"
@@ -1325,69 +1325,69 @@ msgstr "El grup %1 ja existix."
 msgid "Custom Groups"
 msgstr "Grups personalitzats"
 
-#: ktorrent/gui.cpp:257
+#: ktorrent/gui.cpp:258
 #, kde-format
 msgid "Open Location"
 msgstr "Obri la ubicació"
 
-#: ktorrent/gui.cpp:354
+#: ktorrent/gui.cpp:356
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Crea un torrent nou"
 
-#: ktorrent/gui.cpp:356
+#: ktorrent/gui.cpp:358
 #, kde-format
 msgid "Open a torrent"
 msgstr "Obri un torrent"
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:361
 #, kde-format
 msgid "Open Silently"
 msgstr "Obri silenciosament"
 
-#: ktorrent/gui.cpp:360
+#: ktorrent/gui.cpp:362
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Obri un torrent sense preguntar cap qüestió"
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:377
 #, kde-format
 msgid "Open URL"
 msgstr "Obri un URL"
 
-#: ktorrent/gui.cpp:376
+#: ktorrent/gui.cpp:378
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Obri un URL que apunta cap a un torrent, es permeten enllaços magnet"
 
-#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:383 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "Filtre d'IP"
 
-#: ktorrent/gui.cpp:382
+#: ktorrent/gui.cpp:384
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Mostra la llista d'adreces IP bloquejades"
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:389
 #, kde-format
 msgid "Import Torrent"
 msgstr "Importació de torrent"
 
-#: ktorrent/gui.cpp:388
+#: ktorrent/gui.cpp:390
 #, kde-format
 msgid "Import a torrent"
 msgstr "Importa un torrent"
 
-#: ktorrent/gui.cpp:393
+#: ktorrent/gui.cpp:395
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Mostra/oculta KTorrent"
 
-#: ktorrent/gui.cpp:411
+#: ktorrent/gui.cpp:413
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "B: %1 | P: %2"
@@ -1488,7 +1488,7 @@ msgstr "Principal"
 #. i18n: ectx: Menu (Torrents)
 #. i18n: ectx: ToolBar (TorrentsToolBar)
 #: ktorrent/kttorrentactivityui.rc:8 ktorrent/kttorrentactivityui.rc:84
-#: ktorrent/torrentactivity.cpp:36
+#: ktorrent/torrentactivity.cpp:37
 #, kde-format
 msgid "Torrents"
 msgstr "Torrent"
@@ -1514,13 +1514,13 @@ msgid "Advanced"
 msgstr "Avançat"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
 #, kde-format
 msgid "Open Directory"
 msgstr "Obri un directori"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
 #, kde-format
 msgid "Add to Group"
 msgstr "Afig al grup"
@@ -1532,7 +1532,7 @@ msgid "Configure Columns"
 msgstr "Configura les columnes"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
 #, kde-format
 msgid "Columns"
 msgstr "Columnes"
@@ -2041,16 +2041,24 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Correccions d'errors, neteges i optimitzacions"
 
 #: ktorrent/main.cpp:175
-#, kde-format
-msgid "Enable logging to standard output"
-msgstr "Activa el registre a l'eixida estàndard"
+#, fuzzy, kde-format
+#| msgid "Enable All"
+msgid "Enable logging"
+msgstr "Activa-ho tot"
 
 #: ktorrent/main.cpp:176
+#, kde-format
+msgid ""
+"Enable logging to standard output. Requires --enable-logging to be specified "
+"as well."
+msgstr ""
+
+#: ktorrent/main.cpp:177
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "Obri silenciosament el torrent indicat en un URL"
 
-#: ktorrent/main.cpp:177
+#: ktorrent/main.cpp:178
 #, kde-format
 msgid "Document to open"
 msgstr "Document que s'ha d'obrir"
@@ -3182,7 +3190,7 @@ msgstr "Contrasenya per al servidor intermediari SOCKS."
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:84
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Queue Manager"
 msgstr "Gestor de la cua"
@@ -3732,68 +3740,68 @@ msgstr "Mostra els no posats a la cua"
 msgid "Show all not queued torrents"
 msgstr "Mostra tots els torrent no posats a la cua"
 
-#: ktorrent/torrentactivity.cpp:84
+#: ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr "Giny per a gestionar la cua dels torrent"
 
-#: ktorrent/torrentactivity.cpp:87
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Magnet Downloader"
 msgstr "Descarregador de magnet"
 
-#: ktorrent/torrentactivity.cpp:87
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Displays the currently downloading magnet links"
 msgstr "Mostra els enllaços magnet que esteu baixant actualment"
 
-#: ktorrent/torrentactivity.cpp:102
+#: ktorrent/torrentactivity.cpp:111
 #, kde-format
 msgid "Start All"
 msgstr "Inicia'ls tots"
 
-#: ktorrent/torrentactivity.cpp:103
+#: ktorrent/torrentactivity.cpp:112
 #, kde-format
 msgid "Start all torrents"
 msgstr "Inicia tots els torrent"
 
-#: ktorrent/torrentactivity.cpp:107
+#: ktorrent/torrentactivity.cpp:116
 #, kde-format
 msgid "Stop All"
 msgstr "Para'ls tots"
 
-#: ktorrent/torrentactivity.cpp:108
+#: ktorrent/torrentactivity.cpp:117
 #, kde-format
 msgid "Stop all torrents"
 msgstr "Para tots els torrent"
 
-#: ktorrent/torrentactivity.cpp:112
+#: ktorrent/torrentactivity.cpp:121
 #, kde-format
 msgid "Suspend Torrents"
 msgstr "Suspén els torrent"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:115 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
 msgstr "Suspén tots els torrent en execució"
 
-#: ktorrent/torrentactivity.cpp:119
+#: ktorrent/torrentactivity.cpp:128
 #, kde-format
 msgid "Group View"
 msgstr "Vista de grup"
 
-#: ktorrent/torrentactivity.cpp:120
+#: ktorrent/torrentactivity.cpp:129
 #, kde-format
 msgid "Show or hide the group view"
 msgstr "Mostra o oculta la vista de grup"
 
-#: ktorrent/torrentactivity.cpp:124
+#: ktorrent/torrentactivity.cpp:133
 #, kde-format
 msgid "Filter Torrents"
 msgstr "Filtra els torrent"
 
-#: ktorrent/torrentactivity.cpp:125
+#: ktorrent/torrentactivity.cpp:134
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr "Filtra els torrent basant-se en una cadena de filtratge"
@@ -4115,165 +4123,165 @@ msgstr "Errors:"
 msgid "Filter..."
 msgstr "Filtre..."
 
-#: ktorrent/view/view.cpp:132
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "Inicia"
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:134
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "Inicia tots els torrent seleccionats a la pestanya actual"
 
-#: ktorrent/view/view.cpp:139
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "Força l'iniciada"
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:141
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "Força l'iniciada de tots els torrent seleccionats a la pestanya actual"
 
-#: ktorrent/view/view.cpp:144
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "Para"
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:146
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "Para tots els torrent seleccionats a la pestanya actual"
 
-#: ktorrent/view/view.cpp:151
+#: ktorrent/view/view.cpp:152
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "Pausa"
 
-#: ktorrent/view/view.cpp:153
+#: ktorrent/view/view.cpp:154
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "Posa en pausa tots els torrent seleccionats a la pestanya actual"
 
-#: ktorrent/view/view.cpp:158
+#: ktorrent/view/view.cpp:159
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "Elimina"
 
-#: ktorrent/view/view.cpp:160
+#: ktorrent/view/view.cpp:161
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "Elimina tots els torrent seleccionats a la pestanya actual"
 
-#: ktorrent/view/view.cpp:165
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "Inicia'ls tots"
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:167
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "Inicia tots els torrent a la pestanya actual"
 
-#: ktorrent/view/view.cpp:171
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "Para'ls tots"
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:173
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "Para tots els torrent a la pestanya actual"
 
-#: ktorrent/view/view.cpp:177
+#: ktorrent/view/view.cpp:178
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "Elimina el torrent i les dades"
 
-#: ktorrent/view/view.cpp:182
+#: ktorrent/view/view.cpp:183
 #, kde-format
 msgid "Rename Torrent"
 msgstr "Canvia el nom del torrent"
 
-#: ktorrent/view/view.cpp:186
+#: ktorrent/view/view.cpp:187
 #, kde-format
 msgid "Add Peers"
 msgstr "Afig parells"
 
-#: ktorrent/view/view.cpp:190
+#: ktorrent/view/view.cpp:191
 #, kde-format
 msgid "Manual Announce"
 msgstr "Anunci manual"
 
-#: ktorrent/view/view.cpp:195
+#: ktorrent/view/view.cpp:196
 #, kde-format
 msgid "Scrape"
 msgstr "Rascada"
 
-#: ktorrent/view/view.cpp:199
+#: ktorrent/view/view.cpp:200
 #, kde-format
 msgid "Preview"
 msgstr "Vista prèvia"
 
-#: ktorrent/view/view.cpp:203
+#: ktorrent/view/view.cpp:204
 #, kde-format
 msgid "Data Directory"
 msgstr "Directori de dades"
 
-#: ktorrent/view/view.cpp:207
+#: ktorrent/view/view.cpp:208
 #, kde-format
 msgid "Temporary Directory"
 msgstr "Directori temporal"
 
-#: ktorrent/view/view.cpp:211
+#: ktorrent/view/view.cpp:212
 #, kde-format
 msgid "Move Data"
 msgstr "Mou les dades"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "Configuració"
 
-#: ktorrent/view/view.cpp:219
+#: ktorrent/view/view.cpp:220
 #, kde-format
 msgid "Remove from Group"
 msgstr "Elimina del grup"
 
-#: ktorrent/view/view.cpp:227
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check Data"
 msgstr "Comprova les dades"
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:229
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "Comprova totes les dades d'un torrent"
 
-#: ktorrent/view/view.cpp:248
+#: ktorrent/view/view.cpp:249
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "Copia l'URL d'un torrent"
 
-#: ktorrent/view/view.cpp:252
+#: ktorrent/view/view.cpp:253
 #, kde-format
 msgid "Export Torrent"
 msgstr "Exporta un torrent"
 
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:258
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "Establix els límits de velocitat dels torrent individuals"
 
-#: ktorrent/view/view.cpp:451
+#: ktorrent/view/view.cpp:452
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
@@ -4282,22 +4290,22 @@ msgstr ""
 "El torrent <b>%1</b> no ha acabat de baixar, voleu suprimir també les dades "
 "incompletes?"
 
-#: ktorrent/view/view.cpp:456
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Remove Download"
 msgstr "Elimina la baixada"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Delete Data"
 msgstr "Suprimix les dades"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:459
 #, kde-format
 msgid "Keep Data"
 msgstr "Mantín les dades"
 
-#: ktorrent/view/view.cpp:482
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
@@ -4306,12 +4314,12 @@ msgstr ""
 "Perdreu totes les dades baixades dels torrent següents. Segur que voleu fer "
 "açò?"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:484
 #, kde-format
 msgid "Remove Torrent"
 msgstr "Elimina el torrent"
 
-#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:338
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:338
 #: plugins/infowidget/fileview.cpp:362
 #, kde-format
 msgid "Select a directory to move the data to."
@@ -4883,16 +4891,24 @@ msgstr "%1: %2<br/>%3: %4"
 msgid "Warning: %1"
 msgstr "Atenció: %1"
 
-#: libktcore/torrent/chunkbar.cpp:76
-#, kde-format
-msgid ""
-"<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-"\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-"\"excluded_color\">&nbsp; - Excluded Chunks"
-msgstr ""
-"<img src=\"available_color\">&nbsp; - Fragments baixats<br><img src="
-"\"unavailable_color\">&nbsp; - Fragments per a baixar<br><img src="
-"\"excluded_color\">&nbsp; - Fragments exclosos"
+#: libktcore/torrent/chunkbar.cpp:62
+#, fuzzy, kde-format
+#| msgid "Downloaded chunks:"
+msgid "Downloaded Chunks"
+msgstr "Fragments baixats:"
+
+#: libktcore/torrent/chunkbar.cpp:62
+#, fuzzy, kde-format
+#| msgid "Show Downloads"
+msgid "Chunks to Download"
+msgstr "Mostra les baixades"
+
+#: libktcore/torrent/chunkbar.cpp:62
+#: plugins/infowidget/availabilitychunkbar.cpp:22
+#, fuzzy, kde-format
+#| msgid "Excluded:"
+msgid "Excluded Chunks"
+msgstr "Exclòs:"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5385,16 +5401,17 @@ msgstr ""
 msgid "Add Trackers"
 msgstr "Afig seguidors"
 
-#: plugins/infowidget/availabilitychunkbar.cpp:23
-#, kde-format
-msgid ""
-"<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-"\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-"\"excluded_color\">&nbsp; - Excluded Chunks"
-msgstr ""
-"<img src=\"available_color\">&nbsp; - Fragments disponibles<br><img src="
-"\"unavailable_color\">&nbsp; - Fragments no disponibles<br><img src="
-"\"excluded_color\">&nbsp; - Fragments exclosos"
+#: plugins/infowidget/availabilitychunkbar.cpp:22
+#, fuzzy, kde-format
+#| msgid "Available chunks:"
+msgid "Available Chunks"
+msgstr "Fragments disponibles:"
+
+#: plugins/infowidget/availabilitychunkbar.cpp:22
+#, fuzzy, kde-format
+#| msgid "Available chunks:"
+msgid "Unavailable Chunks"
+msgstr "Fragments disponibles:"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -8891,3 +8908,24 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Enable logging to standard output"
+#~ msgstr "Activa el registre a l'eixida estàndard"
+
+#~ msgid ""
+#~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
+#~ "\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
+#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
+#~ msgstr ""
+#~ "<img src=\"available_color\">&nbsp; - Fragments baixats<br><img src="
+#~ "\"unavailable_color\">&nbsp; - Fragments per a baixar<br><img src="
+#~ "\"excluded_color\">&nbsp; - Fragments exclosos"
+
+#~ msgid ""
+#~ "<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
+#~ "\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
+#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
+#~ msgstr ""
+#~ "<img src=\"available_color\">&nbsp; - Fragments disponibles<br><img src="
+#~ "\"unavailable_color\">&nbsp; - Fragments no disponibles<br><img src="
+#~ "\"excluded_color\">&nbsp; - Fragments exclosos"
