@@ -204,9 +204,11 @@ void GUI::mergePluginGui(Plugin *p)
 
 void GUI::removePluginGui(Plugin *p)
 {
-    if (p->parentPart() == QStringLiteral("ktorrent")) {
-        guiFactory()->removeClient(p);
-    } else {
+    if (p->factory()) {
+        p->factory()->removeClient(p);
+    }
+
+    if (p->parentPart() != QStringLiteral("ktorrent")) {
         const QList<KParts::Part *> parts = part_manager->parts();
         for (KParts::Part *part : parts) {
             if (part->domDocument().documentElement().attribute(QStringLiteral("name")) == p->parentPart()) {
