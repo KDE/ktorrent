@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-13 00:42+0000\n"
-"PO-Revision-Date: 2023-08-07 21:19+0200\n"
+"PO-Revision-Date: 2023-11-13 13:21+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -168,7 +168,7 @@ msgstr "Diàleg"
 msgid ""
 "Enter the IP address or hostname and port number of the peer you wish to add:"
 msgstr ""
-"Introduïu l'adreça IP o el nom de màquina i el número de port del parell que "
+"Introduïu l'adreça IP o el nom d'amfitrió i el número de port del parell que "
 "voleu afegir:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
@@ -186,7 +186,7 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Note:</span> We accept both IPv4 and "
 "IPv6 addresses</p>\n"
 msgstr ""
-"<p>L'adreça IP o nom de màquina del parell amb el qual voleu connectar, "
+"<p>L'adreça IP o nom d'amfitrió del parell amb el qual voleu connectar, "
 "s'hauria de posar ací.</p>\n"
 "<p><span style=\" font-weight:600;\">Nota:</span> S'accepten adreces IPv4 i "
 "IPv6</p>\n"
@@ -1133,7 +1133,7 @@ msgstr "Node:"
 #: ktorrent/dialogs/torrentcreatordlg.ui:294
 #, kde-format
 msgid "IP or Hostname"
-msgstr "IP o nom de màquina"
+msgstr "IP o nom d'amfitrió"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, m_node_list)
 #. i18n: ectx: label, entry (port), group (downloads)
@@ -1258,11 +1258,11 @@ msgid ""
 "If this is not enabled, the settings will always be applied when you add a "
 "torrent to this group. "
 msgstr ""
-"Quan açò s'activa, estos paràmetres només s'aplicaran quan s'afija un "
+"Quan se selecciona, estos paràmetres només s'aplicaran quan s'afija un "
 "torrent al grup en el diàleg de selecció de fitxers o en el diàleg de "
 "creació d'un torrent.<p>\n"
-"Si no s'activa, els paràmetres s'aplicaran sempre quan afegiu un torrent a "
-"este grup."
+"Si no se selecciona, els paràmetres s'aplicaran sempre quan afegiu un "
+"torrent a este grup."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_only_new)
 #: ktorrent/groups/grouppolicydlg.ui:163
@@ -1385,7 +1385,7 @@ msgstr "Importa un torrent"
 #: ktorrent/gui.cpp:395
 #, kde-format
 msgid "Show/Hide KTorrent"
-msgstr "Mostra/oculta KTorrent"
+msgstr "Mostra o oculta KTorrent"
 
 #: ktorrent/gui.cpp:413
 #, kde-format
@@ -2023,7 +2023,7 @@ msgstr "Andrius Štikonas"
 #: ktorrent/main.cpp:169 ktorrent/main.cpp:170
 #, kde-format
 msgid "KF5 porting"
-msgstr "Adaptació a KF5"
+msgstr "Adaptació als KF5"
 
 #: ktorrent/main.cpp:170
 #, kde-format
@@ -2041,10 +2041,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Correccions d'errors, neteges i optimitzacions"
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Activa-ho tot"
+msgstr "Activa el registre"
 
 #: ktorrent/main.cpp:176
 #, kde-format
@@ -2052,6 +2051,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Activa el registre a l'eixida estàndard. També requerix que s'especifique --"
+"enable-logging."
 
 #: ktorrent/main.cpp:177
 #, kde-format
@@ -2280,8 +2281,8 @@ msgid ""
 "It can be disabled if you do not like the additional network traffic it "
 "generates"
 msgstr ""
-"Resol el nom de la màquina de cada parell. Açò farà que es mostre el nom de "
-"la màquina del parell en lloc de l'adreça IP. \n"
+"Resol el nom d'amfitrió de cada parell. Açò farà que es mostre el nom "
+"d'amfitrió del parell en lloc de l'adreça IP. \n"
 "\n"
 "Es pot desactivar si no voleu el trànsit de xarxa addicional que genera"
 
@@ -2289,7 +2290,7 @@ msgstr ""
 #: ktorrent/pref/advancedpref.ui:307
 #, kde-format
 msgid "Resolve hostnames of peers"
-msgstr "Resol els noms de les màquines dels parells"
+msgstr "Resol els noms d'amfitrió dels parells"
 
 #: ktorrent/pref/btpref.cpp:14
 #, kde-format
@@ -2336,7 +2337,7 @@ msgstr ""
 "<p>Port UDP que utilitzarà el protocol DHT.</p>\n"
 "<p><span style=\" font-weight:600;\">Atenció:</span> Si esteu darrere d'un "
 "encaminador, este port s'haurà de redirigir per a acceptar les sol·licituds "
-"DHT entrants. El connector UPnP pot fer açò per vós.</p>"
+"DHT entrants. El connector UPnP pot fer açò per tu.</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_pexEnabled)
 #: ktorrent/pref/btpref.ui:61
@@ -2415,8 +2416,8 @@ msgid ""
 "option enabled."
 msgstr ""
 "No tots els clients permeten l'encriptació, i alguna gent té l'encriptació "
-"desactivat. Si voleu connectar amb estos parells, cal tindre activada esta "
-"opció."
+"desactivada. Si voleu connectar amb estos parells, cal tindre seleccionada "
+"esta opció."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_allowUnencryptedConnections)
 #. i18n: ectx: label, entry (allowUnencryptedConnections), group (downloads)
@@ -2446,13 +2447,13 @@ msgstr ""
 #: ktorrent/pref/btpref.ui:133
 #, kde-format
 msgid "Send the tracker a custom IP address or hostname"
-msgstr "Envia al seguidor una adreça IP personalitzada o un nom de màquina"
+msgstr "Envia al seguidor una adreça IP o un nom d'amfitrió personalitzat"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/btpref.ui:142
 #, kde-format
 msgid "Custom IP address or hostname:"
-msgstr "Adreça IP personalitzada o nom de màquina:"
+msgstr "Adreça IP o nom d'amfitrió personalitzat:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_customIP)
 #: ktorrent/pref/btpref.ui:149
@@ -2461,8 +2462,8 @@ msgid ""
 "Custom IP address or hostname to send to the tracker. Hostnames will be "
 "resolved at runtime and the resolved IP address will be sent to the tracker."
 msgstr ""
-"Adreça IP personalitzada o nom de màquina que s'enviarà al seguidor. Els "
-"noms de màquina es resoldran en temps d'execució i les adreces IP resoltes "
+"Adreça IP o nom d'amfitrió personalitzat que s'enviarà al seguidor. Els noms "
+"d'amfitrió es resoldran en temps d'execució i les adreces IP resoltes "
 "s'enviaran al seguidor."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
@@ -2830,7 +2831,7 @@ msgstr ""
 "<p>Port que utilitzarà el protocol bittorrent.</p>\n"
 "<p><span style=\" font-weight:600;\">Atenció:</span> Si esteu al darrere "
 "d'un encaminador, este port s'haurà de redirigir per a acceptar sol·licituds "
-"de connexions entrants. El connector UPnP pot fer açò per vós.</p>"
+"de connexions entrants. El connector UPnP pot fer açò per tu.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/networkpref.ui:47
@@ -2850,7 +2851,7 @@ msgstr ""
 "<p>Port que utilitzarà el protocol del seguidor UDP.</p>\n"
 "<p><span style=\" font-weight:600;\">Atenció:</span> Si esteu al darrere "
 "d'un encaminador, este port s'haurà de redirigir. El connector UPnP pot fer "
-"açò per vós.</p>"
+"açò per tu.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: ectx: property (text), widget (QLabel, label_3)
@@ -3063,7 +3064,7 @@ msgstr "Servidor intermediari:"
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
 msgstr ""
-"Adreça IP o nom de màquina del servidor intermediari HTTP que s'utilitzarà."
+"Adreça IP o nom d'amfitrió del servidor intermediari HTTP que s'utilitzarà."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
@@ -3133,7 +3134,7 @@ msgstr "Servidor:"
 #: ktorrent/pref/proxypref.ui:123
 #, kde-format
 msgid "IP address or hostname of the SOCKS server."
-msgstr "Adreça IP o nom de màquina del servidor SOCKS."
+msgstr "Adreça IP o nom d'amfitrió del servidor SOCKS."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_socksPort)
 #: ktorrent/pref/proxypref.ui:137
@@ -3154,8 +3155,8 @@ msgid ""
 "If the SOCKS server requires authentication via a username and a password, "
 "enable this box."
 msgstr ""
-"Marqueu esta casella si el servidor SOCKS requerix autenticació amb un nom "
-"d'usuari i una contrasenya."
+"Seleccioneu esta casella si el servidor SOCKS requerix autenticació amb un "
+"nom d'usuari i una contrasenya."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_socksUsePassword)
 #: ktorrent/pref/proxypref.ui:159
@@ -3202,7 +3203,7 @@ msgid ""
 "When enabled, the queue manager will be totally disabled, allowing you to "
 "fully control all torrents manually."
 msgstr ""
-"Quan està activat, el gestor de la cua es desactivarà completament, "
+"Quan se selecciona, el gestor de la cua es desactivarà completament, "
 "permetent-vos controlar totalment els torrent manualment."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_manuallyControlTorrents)
@@ -3304,8 +3305,8 @@ msgid ""
 "<p>This will allow the queue manager to run other torrents, when a torrent "
 "is doing nothing.</p>"
 msgstr ""
-"<p>Amb açò activat, el gestor de la cua disminuirà la prioritat d'un torrent "
-"que ha sigut estancat durant molt temps.</p>\n"
+"<p>Amb açò seleccionat, el gestor de la cua disminuirà la prioritat d'un "
+"torrent que ha sigut estancat durant molt temps.</p>\n"
 "<p>Açò permetrà que el gestor de la cua execute altres torrent quan un "
 "torrent no faça res.</p>"
 
@@ -3339,7 +3340,7 @@ msgid ""
 "When a download is finished, continue seeding it. If this is disabled, the "
 "torrent will be stopped."
 msgstr ""
-"Quan una baixada ha finalitzat, continuarà sembrada. Si es desactiva, es "
+"Quan una baixada ha finalitzat, continuarà sembrada. Si es desselecciona, es "
 "pararà el torrent."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_keepSeeding)
@@ -4443,7 +4444,7 @@ msgid ""
 "share ratio is reached, if that is enabled"
 msgstr ""
 "Quant temps queda abans de finalitzar el torrent o abans d'arribar fins a la "
-"ràtio màxima de compartició, si està activada"
+"ràtio màxima de compartició, si està seleccionada"
 
 #: ktorrent/view/viewmodel.cpp:490
 #, kde-format
@@ -4892,23 +4893,20 @@ msgid "Warning: %1"
 msgstr "Atenció: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Fragments baixats:"
+msgstr "Fragments baixats"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Mostra les baixades"
+msgstr "Fragments que s'han de baixar"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Exclòs:"
+msgstr "Fragments exclosos"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5402,16 +5400,14 @@ msgid "Add Trackers"
 msgstr "Afig seguidors"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Fragments disponibles:"
+msgstr "Fragments disponibles"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Fragments disponibles:"
+msgstr "Fragments no disponibles"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -6397,7 +6393,7 @@ msgstr "Fitxer de filtres de PeerGuardian "
 #: plugins/ipfilter/ipblockingprefpage.ui:29
 #, kde-format
 msgid "Enable this if you want the IP filter plugin to work."
-msgstr "Activeu-la si voleu que funcione el connector de filtres d'IP."
+msgstr "Seleccioneu-la si voleu que funcione el connector de filtres d'IP."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useLevel1)
 #: plugins/ipfilter/ipblockingprefpage.ui:32
@@ -6451,7 +6447,8 @@ msgstr "Actualització automàtica"
 #: plugins/ipfilter/ipblockingprefpage.ui:125
 #, kde-format
 msgid "Enable this if you want to automatically update the filter file."
-msgstr "Activeu-la si voleu actualitzar automàticament el fitxer de filtres."
+msgstr ""
+"Seleccioneu-la si voleu actualitzar automàticament el fitxer de filtres."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_autoUpdate)
 #: plugins/ipfilter/ipblockingprefpage.ui:128
@@ -6956,13 +6953,13 @@ msgstr "Si obrir o no els torrent en silenci."
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:18
 #, kde-format
 msgid "Delete action checked."
-msgstr "S'ha marcat l'acció de suprimir."
+msgstr "S'ha seleccionat l'acció de suprimir."
 
 #. i18n: ectx: label, entry (actionMove), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:23
 #, kde-format
 msgid "Move action checked."
-msgstr "S'ha marcat l'acció de moure."
+msgstr "S'ha seleccionat l'acció de moure."
 
 #. i18n: ectx: label, entry (recursive), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:28
@@ -7363,7 +7360,7 @@ msgstr "Afig un motor de busca"
 #, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr ""
-"Introduïu el nom de màquina del motor de busca (per exemple www.google.com):"
+"Introduïu el nom d'amfitrió del motor de busca (per exemple www.google.com):"
 
 #: plugins/search/searchprefpage.cpp:122
 #, kde-format
@@ -8564,7 +8561,7 @@ msgid ""
 "expressions, this needs to be enabled."
 msgstr ""
 "De manera predeterminada, les cadenes utilitzaran la coincidència de "
-"comodins. Si voleu utilitzar expressions regulars, cal activar açò."
+"comodins. Si voleu utilitzar expressions regulars, cal seleccionar açò."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_reg_exp)
@@ -8717,7 +8714,7 @@ msgstr "Temps límit excedit en baixar el canal"
 #: plugins/syndication/ktfeed.cpp:452
 #, kde-format
 msgid "Unknown hostname"
-msgstr "Nom d'ordinador desconegut"
+msgstr "Nom d'amfitrió desconegut"
 
 #: plugins/syndication/ktfeed.cpp:454
 #, kde-format
@@ -8908,24 +8905,3 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Enable logging to standard output"
-#~ msgstr "Activa el registre a l'eixida estàndard"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - Fragments baixats<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Fragments per a baixar<br><img src="
-#~ "\"excluded_color\">&nbsp; - Fragments exclosos"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - Fragments disponibles<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Fragments no disponibles<br><img src="
-#~ "\"excluded_color\">&nbsp; - Fragments exclosos"

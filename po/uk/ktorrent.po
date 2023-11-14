@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-13 00:42+0000\n"
-"PO-Revision-Date: 2023-06-15 08:28+0300\n"
+"PO-Revision-Date: 2023-11-13 17:54+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -2035,10 +2035,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Виправлення помилок, чищення коду та оптимізація"
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Увімкнути всі"
+msgstr "Увімкнути журнал"
 
 #: ktorrent/main.cpp:176
 #, kde-format
@@ -2046,6 +2045,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Увімкнути ведення журналу до стандартного виведення даних. Потребує "
+"додавання параметра --enable-logging."
 
 #: ktorrent/main.cpp:177
 #, kde-format
@@ -4908,23 +4909,20 @@ msgid "Warning: %1"
 msgstr "Попередження: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Отримані шматки:"
+msgstr "Отримані шматки"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Показати отримання"
+msgstr "Шматки, які ще не отримано"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Виключено:"
+msgstr "Виключені шматки"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5418,16 +5416,14 @@ msgid "Add Trackers"
 msgstr "Додати координатори"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Доступні шматки:"
+msgstr "Доступні шматки"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Доступні шматки:"
+msgstr "Недоступні шматки"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format

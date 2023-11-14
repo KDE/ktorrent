@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-13 00:42+0000\n"
-"PO-Revision-Date: 2023-08-26 12:30+0300\n"
+"PO-Revision-Date: 2023-11-13 05:23+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2033,10 +2033,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Hata düzeltmeleri, temizlikler ve eniyilemeler"
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Tümünü Etkinleştir"
+msgstr "Günlüklemeyi etkinleştir"
 
 #: ktorrent/main.cpp:176
 #, kde-format
@@ -2044,6 +2043,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Standart çıktıya günlüklemeyi etkinleştirin. --enable-logging'in "
+"belirtilmesini de gerektirir."
 
 #: ktorrent/main.cpp:177
 #, kde-format
@@ -2991,8 +2992,8 @@ msgid ""
 "Let KTorrent calculate the recommended settings based upon the bandwidth you "
 "have available."
 msgstr ""
-"K Torrent'in sahip olduğunuz bant genişliğinize dayanarak tavsiye edilen "
-"ayarları hesaplamasına izin verin."
+"K Torrent'in sahip olduğunuz bant genişliğinize dayanarak önerilen ayarları "
+"hesaplamasına izin verin."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
@@ -3432,7 +3433,7 @@ msgstr " kb/sn"
 #: ktorrent/pref/recommendedsettingsdlg.ui:50
 #, kde-format
 msgid "Available download bandwidth:"
-msgstr "Kullanılabilir  indirme bant genişliği:"
+msgstr "Kullanılabilir indirme bant genişliği:"
 
 #. i18n: ectx: property (text), widget (QLabel, m_upload_bw_display)
 #: ktorrent/pref/recommendedsettingsdlg.ui:76
@@ -4374,7 +4375,7 @@ msgstr "Karşıdan ne kadar veri yükledik"
 #: ktorrent/view/viewmodel.cpp:478
 #, kde-format
 msgid "Total size of the torrent, excluded files are not included"
-msgstr "Torrentin toplam boyutu, hariç bırakılan dosyalar dahil değil"
+msgstr "Torrentin toplam boyutu, dışarıda tutulan dosyalar içerilmez"
 
 #: ktorrent/view/viewmodel.cpp:480
 #, kde-format
@@ -4425,8 +4426,8 @@ msgid ""
 "The percentage of data we have of the whole torrent, not including excluded "
 "files"
 msgstr ""
-"Tüm torrentten sahip olduğumuz veri yüzdesi; hariç bırakılan dosyalar "
-"içerilmiyor"
+"Tüm torrentten sahip olduğumuz veri yüzdesi; dışarıda tutulan dosyalar "
+"içerilmez"
 
 #: ktorrent/view/viewmodel.cpp:497
 #, kde-format
@@ -4807,7 +4808,7 @@ msgid ""
 "space is less than this value, the torrent will be stopped."
 msgstr ""
 "Hiç alan kalmadığında ve kullanılabilir alan bu değerden daha az olduğunda "
-"torrent durdurulacaktır."
+"torrent durdurulur."
 
 #. i18n: ectx: label, entry (useCompletedDir), group (downloads)
 #: libktcore/ktorrent.kcfg:244
@@ -4846,23 +4847,20 @@ msgid "Warning: %1"
 msgstr "Uyarı: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "İndirilmiş parçalar:"
+msgstr "İndirilen Parçalar"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "İndirmeleri Göster"
+msgstr "İndirilecek Parçalar"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Hariç tutulanlar:"
+msgstr "Dışarıda Tutulan Parçalar"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5041,7 +5039,7 @@ msgstr "Zamanlayıcıdaki tüm satırların rengi."
 #: plugins/bwscheduler/bwprefpage.ui:148
 #, kde-format
 msgid "Schedule Item color:"
-msgstr "Zamanlayıcı Ögesi rengi:"
+msgstr "Zamanlayıcı ögesi rengi:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_itemColor)
 #: plugins/bwscheduler/bwprefpage.ui:155
@@ -5351,16 +5349,14 @@ msgid "Add Trackers"
 msgstr "İzleyici Ekle"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Erişilebilir parçalar:"
+msgstr "Kullanılabilir Parçalar"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Erişilebilir parçalar:"
+msgstr "Kullanılamayan Parçalar"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -5432,7 +5428,7 @@ msgstr "Şu anda indiriliyor:"
 #: plugins/infowidget/chunkdownloadview.ui:134
 #, kde-format
 msgid "Excluded:"
-msgstr "Hariç tutulanlar:"
+msgstr "Dışarıda tutulanlar:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_4_2)
 #: plugins/infowidget/chunkdownloadview.ui:170
@@ -5643,7 +5639,7 @@ msgstr "Normal"
 #, kde-format
 msgctxt "Preview available"
 msgid "Available"
-msgstr "Erişilebilir"
+msgstr "Kullanılabilir"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:137
 #: plugins/infowidget/iwfilelistmodel.cpp:156
@@ -5682,7 +5678,7 @@ msgstr "Normal"
 #, kde-format
 msgctxt "preview available"
 msgid "Available"
-msgstr "Erişilebilir"
+msgstr "Kullanılabilir"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: plugins/infowidget/iwprefpage.ui:17
@@ -6048,7 +6044,7 @@ msgstr "İndirilmiş parçalar:"
 #: plugins/infowidget/statustab.ui:211
 #, kde-format
 msgid "Available chunks:"
-msgstr "Erişilebilir parçalar:"
+msgstr "Kullanılabilir parçalar:"
 
 #. i18n: ectx: property (text), widget (QLabel, hdr_sharing)
 #: plugins/infowidget/statustab.ui:273
@@ -6751,7 +6747,7 @@ msgstr "<b>%1</b>"
 #: plugins/mediaplayer/mediamodel.cpp:70
 #, kde-format
 msgid "Available"
-msgstr "Erişilebilir"
+msgstr "Kullanılabilir"
 
 #: plugins/mediaplayer/mediamodel.cpp:70
 #, kde-format

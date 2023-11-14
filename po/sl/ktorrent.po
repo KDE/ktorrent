@@ -9,17 +9,17 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-13 00:42+0000\n"
-"PO-Revision-Date: 2023-06-17 22:14+0200\n"
+"PO-Revision-Date: 2023-11-13 09:45+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
+"%100<=4 ? 2 : 3);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2025,10 +2025,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Popravljanje napak, čiščenje kode in optimizacija"
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Omogoči vse"
+msgstr "Omogoči beleženje dnevnika"
 
 #: ktorrent/main.cpp:176
 #, kde-format
@@ -2036,6 +2035,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Omogoči beleženje dnevnika na standardni izhod. Zahteva tudi specifikacijo --"
+"enable-logging."
 
 #: ktorrent/main.cpp:177
 #, kde-format
@@ -4845,23 +4846,20 @@ msgid "Warning: %1"
 msgstr "Opozorilo: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Prejeti delčki:"
+msgstr "Prejeti delčki"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Pokaži prejemanja"
+msgstr "Delčki za prejemanje"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Izločeni:"
+msgstr "Izločeni delčki"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5352,16 +5350,14 @@ msgid "Add Trackers"
 msgstr "Dodaj sledilnike"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Razpoložljivi delčki:"
+msgstr "Razpoložljivi delčki"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Razpoložljivi delčki:"
+msgstr "Nerazpoložljivi delčki"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format

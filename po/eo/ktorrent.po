@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-13 00:42+0000\n"
-"PO-Revision-Date: 2023-06-15 20:03+0100\n"
+"PO-Revision-Date: 2023-11-13 18:53+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -2023,10 +2023,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Cimoj, purigadoj kaj optimumigoj"
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Ŝalti ĉiujn"
+msgstr "Ŝalti protokoladon"
 
 #: ktorrent/main.cpp:176
 #, kde-format
@@ -2034,6 +2033,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Ebligi protokoladon al norma eligo. Bezonas specifon de --enable-logging "
+"plue."
 
 #: ktorrent/main.cpp:177
 #, kde-format
@@ -4843,23 +4844,20 @@ msgid "Warning: %1"
 msgstr "Averto: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Elŝutitaj pecoj:"
+msgstr "Elŝutitaj Pecoj"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Montri Elŝutojn"
+msgstr "Pecoj Elŝutendaj"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Ekskluzivis:"
+msgstr "Preterlasitaj Pecoj"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5350,16 +5348,14 @@ msgid "Add Trackers"
 msgstr "Aldoni Spurilojn"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Disponeblaj pecoj:"
+msgstr "Disponeblaj Pecoj"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Disponeblaj pecoj:"
+msgstr "Nedisponeblaj Pecoj"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -8543,7 +8539,7 @@ msgstr "Uzi sezonan kaj epizodan kongruon"
 #: plugins/syndication/filtereditor.ui:183
 #, kde-format
 msgid "Seasons: "
-msgstr "Sezonoj:"
+msgstr "Sezonoj: "
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_seasons)
 #: plugins/syndication/filtereditor.ui:194
@@ -8765,7 +8761,7 @@ msgstr "Aldoni Novan Filtrilon"
 #: plugins/syndication/syndicationplugin.cpp:64
 #, kde-format
 msgid "Add Feed"
-msgstr "Aldonu Feed"
+msgstr "Aldoni Feed"
 
 #: plugins/syndication/syndicationplugin.cpp:67
 #, kde-format
@@ -8835,24 +8831,3 @@ msgstr "Reserĉi"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Enable logging to standard output"
-#~ msgstr "Ebligu ensalutadon al norma eligo"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - Elŝutitaj pecoj<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Elŝutotaj pecoj<br><img src="
-#~ "\"excluded_color\">&nbsp; - Ekskluzivitaj pecoj"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - Disponeblaj pecoj<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Nedisponeblaj pecoj<br><img src="
-#~ "\"excluded_color\">&nbsp; - Ekskluzivitaj pecoj"
