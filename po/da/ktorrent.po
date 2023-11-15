@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-13 00:42+0000\n"
+"POT-Creation-Date: 2023-11-15 00:43+0000\n"
 "PO-Revision-Date: 2020-02-15 15:47+0100\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -3629,7 +3629,7 @@ msgstr ""
 
 #: ktorrent/tools/queuemanagerwidget.cpp:46
 #: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:110
+#: plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "Søg"
@@ -7366,28 +7366,28 @@ msgstr "Download torrent"
 msgid "Download"
 msgstr "Download"
 
-#: plugins/search/webview.cpp:106
+#: plugins/search/webview.cpp:105
 #, kde-format
 msgid "Home"
 msgstr "Hjem"
 
-#: plugins/search/webview.cpp:107
+#: plugins/search/webview.cpp:106
 #, kde-format
 msgid "KTorrent"
 msgstr "KTorrent"
 
-#: plugins/search/webview.cpp:108
+#: plugins/search/webview.cpp:107
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
 msgstr "Vær fri."
 
-#: plugins/search/webview.cpp:109
+#: plugins/search/webview.cpp:108
 #, kde-format
 msgid "Search the web for torrents."
 msgstr "Søg efter torrents på nettet."
 
-#: plugins/search/webview.cpp:146
+#: plugins/search/webview.cpp:145
 #, kde-format
 msgid "Save %1 to"
 msgstr "Gem %1 til"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-13 00:42+0000\n"
-"PO-Revision-Date: 2023-06-16 06:41+0200\n"
+"POT-Creation-Date: 2023-11-15 00:43+0000\n"
+"PO-Revision-Date: 2023-11-14 05:37+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1952,7 +1952,7 @@ msgstr ""
 #: ktorrent/main.cpp:175
 #, kde-format
 msgid "Enable logging"
-msgstr ""
+msgstr "ჟურნალის ჩანაწერების ჩართვა"
 
 #: ktorrent/main.cpp:176
 #, kde-format
@@ -3415,7 +3415,7 @@ msgstr ""
 
 #: ktorrent/tools/queuemanagerwidget.cpp:46
 #: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:110
+#: plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr ""
@@ -3468,7 +3468,7 @@ msgstr ""
 #: ktorrent/tools/queuemanagerwidget.cpp:73
 #, kde-format
 msgid "Show all downloads"
-msgstr ""
+msgstr "ყველა გადმოწერის ჩვენება"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:77
 #, kde-format
@@ -4367,7 +4367,7 @@ msgstr "ტორენტი"
 #: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
-msgstr ""
+msgstr "ყველა ფაილი"
 
 #. i18n: ectx: label, entry (maxDownloads), group (downloads)
 #: libktcore/ktorrent.kcfg:10
@@ -4586,23 +4586,20 @@ msgid "Warning: %1"
 msgstr "გაფრთხილება: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "გადმოწერილია"
+msgstr "გადმოწერილი ნაგლეჯები"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Do Not Download"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "არ ჩამოტვირთვა"
+msgstr "გადმოსაწერი ნაგლეჯები"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "გამორიცხული:"
+msgstr "ამოღებული ნაგლეჯები"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5071,10 +5068,9 @@ msgid "Add Trackers"
 msgstr ""
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available"
+#, kde-format
 msgid "Available Chunks"
-msgstr "ხელმისაწვდომი"
+msgstr "ხელმისაწვდომი ნაგლეჯები"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
@@ -6097,7 +6093,7 @@ msgstr ""
 #: plugins/ipfilter/ipblockingprefpage.ui:167
 #, kde-format
 msgid "Last updated:"
-msgstr ""
+msgstr "ბოლო განახლება:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/ipfilter/ipblockingprefpage.ui:187
@@ -6151,7 +6147,7 @@ msgstr "მნიშვნელოვანი"
 #: plugins/logviewer/logflags.cpp:194 plugins/logviewer/logflagsdelegate.cpp:28
 #, kde-format
 msgid "All"
-msgstr ""
+msgstr "Alt"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
 #: plugins/syndication/ktfeed.cpp:471
@@ -7011,28 +7007,28 @@ msgstr ""
 msgid "Download"
 msgstr "ჩამოტვირთვა"
 
-#: plugins/search/webview.cpp:106
+#: plugins/search/webview.cpp:105
 #, kde-format
 msgid "Home"
 msgstr "საწყისი"
 
-#: plugins/search/webview.cpp:107
+#: plugins/search/webview.cpp:106
 #, kde-format
 msgid "KTorrent"
 msgstr "KTorrent"
 
-#: plugins/search/webview.cpp:108
+#: plugins/search/webview.cpp:107
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
 msgstr "იყავით თავისუფალი."
 
-#: plugins/search/webview.cpp:109
+#: plugins/search/webview.cpp:108
 #, kde-format
 msgid "Search the web for torrents."
 msgstr ""
 
-#: plugins/search/webview.cpp:146
+#: plugins/search/webview.cpp:145
 #, kde-format
 msgid "Save %1 to"
 msgstr ""

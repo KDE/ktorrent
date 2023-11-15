@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-13 00:42+0000\n"
-"PO-Revision-Date: 2023-06-26 16:55-0300\n"
+"POT-Creation-Date: 2023-11-15 00:43+0000\n"
+"PO-Revision-Date: 2023-11-14 12:10-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -2048,10 +2048,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Correções, limpezas e otimizações"
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Habilitar Todos"
+msgstr "Habilitar logs"
 
 #: ktorrent/main.cpp:176
 #, kde-format
@@ -2059,6 +2058,7 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Habilita logs na saída padrão. Requer que --enable-logging seja especificado."
 
 #: ktorrent/main.cpp:177
 #, kde-format
@@ -3664,7 +3664,7 @@ msgstr ""
 
 #: ktorrent/tools/queuemanagerwidget.cpp:46
 #: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:110
+#: plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "Pesquisar"
@@ -4895,23 +4895,20 @@ msgid "Warning: %1"
 msgstr "Aviso: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Blocos baixados:"
+msgstr "Blocos baixados"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Mostrar downloads"
+msgstr "Blocos a baixar"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Excluídos:"
+msgstr "Blocos excluídos"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5405,16 +5402,14 @@ msgid "Add Trackers"
 msgstr "Adicionar rastreadores"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Blocos disponíveis:"
+msgstr "Blocos disponíveis"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Blocos disponíveis:"
+msgstr "Blocos indisponíveis"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -6499,7 +6494,7 @@ msgstr "Sistema"
 #: plugins/logviewer/logflags.cpp:106
 #, kde-format
 msgid "Log Level"
-msgstr "Nível de Log"
+msgstr "Nível de log"
 
 #: plugins/logviewer/logflags.cpp:188 plugins/logviewer/logflagsdelegate.cpp:31
 #, kde-format
@@ -6530,7 +6525,7 @@ msgstr "Nenhuma"
 #: plugins/logviewer/logprefpage.cpp:18
 #, kde-format
 msgid "Log Viewer"
-msgstr "Visualizador de Log"
+msgstr "Visualizador de log"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_logging_flags)
 #: plugins/logviewer/logprefwidget.ui:23
@@ -7416,28 +7411,28 @@ msgstr "Baixar Torrent"
 msgid "Download"
 msgstr "Download"
 
-#: plugins/search/webview.cpp:106
+#: plugins/search/webview.cpp:105
 #, kde-format
 msgid "Home"
 msgstr "Início"
 
-#: plugins/search/webview.cpp:107
+#: plugins/search/webview.cpp:106
 #, kde-format
 msgid "KTorrent"
 msgstr "KTorrent"
 
-#: plugins/search/webview.cpp:108
+#: plugins/search/webview.cpp:107
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
 msgstr "Seja livre."
 
-#: plugins/search/webview.cpp:109
+#: plugins/search/webview.cpp:108
 #, kde-format
 msgid "Search the web for torrents."
 msgstr "Pesquisar torrents na Web."
 
-#: plugins/search/webview.cpp:146
+#: plugins/search/webview.cpp:145
 #, kde-format
 msgid "Save %1 to"
 msgstr "Salvar o %1 em"
