@@ -643,7 +643,7 @@
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="bg">Поддръжка на UPnP за автоматично пренасочване на портове в локална мрежа с динамично зададени хостове</li>
       <li xml:lang="ca">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
-      <li xml:lang="ca-valencia">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
+      <li xml:lang="ca-valencia">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica d'amfitrions</li>
       <li xml:lang="cs">Podpora automatické přeposílání portů na LAN s dynamicky přidělovanými hostiteli v UPnP</li>
       <li xml:lang="da">Understøttelse af UPnP til automatisk at åbne porte på et LAN med dynamisk tildelte værter</li>
       <li xml:lang="de">Unterstützung für UPnP zur automatischen Port-Weiterleitung in Netzwerken mit dynamisch zugewiesenen Rechnern</li>
