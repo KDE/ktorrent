@@ -10,8 +10,8 @@ qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${screensaver_xml} screensaver_i
 set(powermanagement_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.xml)
 qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${powermanagement_xml} powermanagement_interface)
 
-set(plasmashutdown_xml ${KTORRENT_DBUS_XML_DIR}/org.kde.Shutdown.xml)
-qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${plasmashutdown_xml} plasmashutdown_interface)
+set(plasmalogoutprompt_xml ${KTORRENT_DBUS_XML_DIR}/org.kde.LogoutPrompt.xml)
+qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${plasmalogoutprompt_xml} plasmalogoutprompt_interface)
 
 target_sources(ktorrent_shutdown PRIVATE
     ${ktshutdownplugin_dbus_SRC}

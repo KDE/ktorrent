@@ -11,7 +11,7 @@
 #include <KPluginFactory>
 #include <KToggleAction>
 
-#include "plasmashutdown_interface.h"
+#include "plasmalogoutprompt_interface.h"
 #include "powermanagement_interface.h"
 #include "screensaver_interface.h"
 #include "shutdowndlg.h"
@@ -67,9 +67,9 @@ void ShutdownPlugin::load()
 void ShutdownPlugin::shutdownComputer()
 {
     Out(SYS_GEN | LOG_NOTICE) << "Shutting down computer ..." << endl;
-    org::kde::Shutdown shudown(QStringLiteral("org.kde.Shutdown"), QStringLiteral("/org/kde/Shutdown"), QDBusConnection::sessionBus());
+    org::kde::LogoutPrompt logout(QStringLiteral("org.kde.LogoutPrompt"), QStringLiteral("/org/kde/LogoutPrompt"), QDBusConnection::sessionBus());
 
-    shudown.logoutAndShutdown();
+    logout.promptShutDown();
 }
 
 void ShutdownPlugin::lock()
