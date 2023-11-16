@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-15 00:43+0000\n"
+"POT-Creation-Date: 2023-11-16 00:43+0000\n"
 "PO-Revision-Date: 2023-11-13 13:27+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -751,7 +751,7 @@ msgstr ""
 "със сървъри: е достъпен."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:306
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Неправилен URL-адрес: %1"
@@ -1277,110 +1277,105 @@ msgstr "Затваряне на текущия раздел"
 msgid "Edit Group Policy"
 msgstr "Редактиране на груповата политика"
 
-#: ktorrent/groups/groupview.cpp:65
+#: ktorrent/groups/groupview.cpp:66
 #, kde-format
 msgid "Open In New Tab"
 msgstr "Отваряне в нов раздел"
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:224
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr "Нова група"
 
-#: ktorrent/groups/groupview.cpp:73
+#: ktorrent/groups/groupview.cpp:74
 #, kde-format
 msgid "Edit Name"
 msgstr "Редактиране на името"
 
-#: ktorrent/groups/groupview.cpp:77
+#: ktorrent/groups/groupview.cpp:78
 #, kde-format
 msgid "Remove Group"
 msgstr "Премахване на група"
 
-#: ktorrent/groups/groupview.cpp:81
+#: ktorrent/groups/groupview.cpp:82
 #, kde-format
 msgid "Group Policy"
 msgstr "Групова политика"
 
-#: ktorrent/groups/groupview.cpp:94
+#: ktorrent/groups/groupview.cpp:95
 #, kde-format
 msgid "Please enter the group name."
 msgstr "Моля, въведете името на групата."
 
-#: ktorrent/groups/groupview.cpp:100
+#: ktorrent/groups/groupview.cpp:101
 #, kde-format
 msgid "The group %1 already exists."
 msgstr "Вече има група %1."
 
-#: ktorrent/groups/groupviewmodel.cpp:34
-#, kde-format
-msgid "Custom Groups"
-msgstr "Потребителски групи"
-
-#: ktorrent/gui.cpp:258
+#: ktorrent/gui.cpp:260
 #, kde-format
 msgid "Open Location"
 msgstr "Отваряне на местоположение"
 
-#: ktorrent/gui.cpp:356
+#: ktorrent/gui.cpp:358
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Създаване на нов торент"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent"
 msgstr "Отваряне на торент"
 
-#: ktorrent/gui.cpp:361
+#: ktorrent/gui.cpp:363
 #, kde-format
 msgid "Open Silently"
 msgstr "Тихо отваряне"
 
-#: ktorrent/gui.cpp:362
+#: ktorrent/gui.cpp:364
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Отваряне на торент без задаване на въпроси"
 
-#: ktorrent/gui.cpp:377
+#: ktorrent/gui.cpp:379
 #, kde-format
 msgid "Open URL"
 msgstr "Отваряне на адрес"
 
-#: ktorrent/gui.cpp:378
+#: ktorrent/gui.cpp:380
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr ""
 "Отворете URL адрес, който сочи към торент, поддържат се магнитни връзки"
 
-#: ktorrent/gui.cpp:383 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP-филтър"
 
-#: ktorrent/gui.cpp:384
+#: ktorrent/gui.cpp:386
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Показване на списъка с блокирани IP адреси"
 
-#: ktorrent/gui.cpp:389
+#: ktorrent/gui.cpp:391
 #, kde-format
 msgid "Import Torrent"
 msgstr "Внасяне на торент"
 
-#: ktorrent/gui.cpp:390
+#: ktorrent/gui.cpp:392
 #, kde-format
 msgid "Import a torrent"
 msgstr "Внасяне на торент"
 
-#: ktorrent/gui.cpp:395
+#: ktorrent/gui.cpp:397
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Показване/Скриване на KTorrent"
 
-#: ktorrent/gui.cpp:413
+#: ktorrent/gui.cpp:415
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "С: %1 | К: %2"
@@ -1481,7 +1476,7 @@ msgstr "Основна лента"
 #. i18n: ectx: Menu (Torrents)
 #. i18n: ectx: ToolBar (TorrentsToolBar)
 #: ktorrent/kttorrentactivityui.rc:8 ktorrent/kttorrentactivityui.rc:84
-#: ktorrent/torrentactivity.cpp:37
+#: ktorrent/torrentactivity.cpp:38
 #, kde-format
 msgid "Torrents"
 msgstr "Торенти"
@@ -3183,7 +3178,7 @@ msgstr "Парола за сървъра-посредник SOCKS."
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:95
 #, kde-format
 msgid "Queue Manager"
 msgstr "Мениджър на опашката"
@@ -3737,68 +3732,68 @@ msgstr "Показване на файловете извън опашката"
 msgid "Show all not queued torrents"
 msgstr "Показване на всички торенти, които са извън опашката"
 
-#: ktorrent/torrentactivity.cpp:93
+#: ktorrent/torrentactivity.cpp:95
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr "Инструмент за управление на опашката от торенти"
 
-#: ktorrent/torrentactivity.cpp:96
+#: ktorrent/torrentactivity.cpp:98
 #, kde-format
 msgid "Magnet Downloader"
 msgstr "Изтегляне на магнитни връзки"
 
-#: ktorrent/torrentactivity.cpp:96
+#: ktorrent/torrentactivity.cpp:98
 #, kde-format
 msgid "Displays the currently downloading magnet links"
 msgstr "Показва текущо изтегляните магнитни връзки"
 
-#: ktorrent/torrentactivity.cpp:111
+#: ktorrent/torrentactivity.cpp:113
 #, kde-format
 msgid "Start All"
 msgstr "Стартиране на всичски"
 
-#: ktorrent/torrentactivity.cpp:112
+#: ktorrent/torrentactivity.cpp:114
 #, kde-format
 msgid "Start all torrents"
 msgstr "Стартиране на всички торенти"
 
-#: ktorrent/torrentactivity.cpp:116
+#: ktorrent/torrentactivity.cpp:118
 #, kde-format
 msgid "Stop All"
 msgstr "Спиране на всички"
 
-#: ktorrent/torrentactivity.cpp:117
+#: ktorrent/torrentactivity.cpp:119
 #, kde-format
 msgid "Stop all torrents"
 msgstr "Спиране на всички торенти"
 
-#: ktorrent/torrentactivity.cpp:121
+#: ktorrent/torrentactivity.cpp:123
 #, kde-format
 msgid "Suspend Torrents"
 msgstr "Преустановяване на торенти"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:126 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
 msgstr "Преустановяване на всички пуснати торенти"
 
-#: ktorrent/torrentactivity.cpp:128
+#: ktorrent/torrentactivity.cpp:130
 #, kde-format
 msgid "Group View"
 msgstr "Групов изглед"
 
-#: ktorrent/torrentactivity.cpp:129
+#: ktorrent/torrentactivity.cpp:131
 #, kde-format
 msgid "Show or hide the group view"
 msgstr "Показване или скриване на груповия изглед"
 
-#: ktorrent/torrentactivity.cpp:133
+#: ktorrent/torrentactivity.cpp:135
 #, kde-format
 msgid "Filter Torrents"
 msgstr "Филтриране на торенти"
 
-#: ktorrent/torrentactivity.cpp:134
+#: ktorrent/torrentactivity.cpp:136
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr "Показване на торенти въз основа на низ за филтриране"
@@ -4331,7 +4326,7 @@ msgstr "Изтеглени"
 
 #: ktorrent/view/viewmodel.cpp:442
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:351
+#: libktcore/torrent/torrentfiletreemodel.cpp:359
 #, kde-format
 msgid "Size"
 msgstr "Размер"
@@ -4643,6 +4638,11 @@ msgstr "Неактивни сваляния"
 #, kde-format
 msgid "Passive Uploads"
 msgstr "Неактивни качвания"
+
+#: libktcore/groups/grouptreemodel.cpp:31
+#, kde-format
+msgid "Custom Groups"
+msgstr "Потребителски групи"
 
 #: libktcore/groups/ungroupedgroup.cpp:15
 #, kde-format
@@ -4995,7 +4995,7 @@ msgid "Error stopping torrent %1: %2"
 msgstr "Грешка при спиране на торент %1 : %2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:349
+#: libktcore/torrent/torrentfiletreemodel.cpp:357
 #, kde-format
 msgid "File"
 msgstr "Файл"

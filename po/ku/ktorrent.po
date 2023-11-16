@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-15 00:43+0000\n"
+"POT-Creation-Date: 2023-11-16 00:43+0000\n"
 "PO-Revision-Date: 2008-09-23 17:28+0300\n"
 "Last-Translator: Erdal Ronahi <erdal.ronahi@nospam.gmail.com>\n"
 "Language-Team: Kurdish <kde-i18n-doc@lists.kde.org>\n"
@@ -727,7 +727,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:306
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr ""
@@ -1265,112 +1265,107 @@ msgstr "Daneyên ku di danişîna heyî de hatine şandin"
 msgid "Edit Group Policy"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:65
+#: ktorrent/groups/groupview.cpp:66
 #, kde-format
 msgid "Open In New Tab"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:224
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:73
+#: ktorrent/groups/groupview.cpp:74
 #, kde-format
 msgid "Edit Name"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:77
+#: ktorrent/groups/groupview.cpp:78
 #, kde-format
 msgid "Remove Group"
 msgstr "Komê jê bibe"
 
-#: ktorrent/groups/groupview.cpp:81
+#: ktorrent/groups/groupview.cpp:82
 #, kde-format
 msgid "Group Policy"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:94
+#: ktorrent/groups/groupview.cpp:95
 #, kde-format
 msgid "Please enter the group name."
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:100
+#: ktorrent/groups/groupview.cpp:101
 #, fuzzy, kde-format
 msgid "The group %1 already exists."
 msgstr "Koma &1 jixwe heye."
 
-#: ktorrent/groups/groupviewmodel.cpp:34
-#, kde-format
-msgid "Custom Groups"
-msgstr "Komên Taybet"
-
-#: ktorrent/gui.cpp:258
+#: ktorrent/gui.cpp:260
 #, kde-format
 msgid "Open Location"
 msgstr "Ciyî Veke"
 
-#: ktorrent/gui.cpp:356
+#: ktorrent/gui.cpp:358
 #, fuzzy, kde-format
 #| msgid "Create Torrent"
 msgid "Create a new torrent"
 msgstr "Torrent biafirîne"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:360
 #, fuzzy, kde-format
 #| msgid "Open Location"
 msgid "Open a torrent"
 msgstr "Ciyî Veke"
 
-#: ktorrent/gui.cpp:361
+#: ktorrent/gui.cpp:363
 #, kde-format
 msgid "Open Silently"
 msgstr ""
 
-#: ktorrent/gui.cpp:362
+#: ktorrent/gui.cpp:364
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr ""
 
-#: ktorrent/gui.cpp:377
+#: ktorrent/gui.cpp:379
 #, kde-format
 msgid "Open URL"
 msgstr ""
 
-#: ktorrent/gui.cpp:378
+#: ktorrent/gui.cpp:380
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr ""
 
-#: ktorrent/gui.cpp:383 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr ""
 
-#: ktorrent/gui.cpp:384
+#: ktorrent/gui.cpp:386
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr ""
 
-#: ktorrent/gui.cpp:389
+#: ktorrent/gui.cpp:391
 #, kde-format
 msgid "Import Torrent"
 msgstr ""
 
-#: ktorrent/gui.cpp:390
+#: ktorrent/gui.cpp:392
 #, fuzzy, kde-format
 #| msgid "Corrupted torrent!"
 msgid "Import a torrent"
 msgstr "Torrenta xerab!"
 
-#: ktorrent/gui.cpp:395
+#: ktorrent/gui.cpp:397
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr ""
 
-#: ktorrent/gui.cpp:413
+#: ktorrent/gui.cpp:415
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr ""
@@ -1477,7 +1472,7 @@ msgstr ""
 #. i18n: ectx: Menu (Torrents)
 #. i18n: ectx: ToolBar (TorrentsToolBar)
 #: ktorrent/kttorrentactivityui.rc:8 ktorrent/kttorrentactivityui.rc:84
-#: ktorrent/torrentactivity.cpp:37
+#: ktorrent/torrentactivity.cpp:38
 #, fuzzy, kde-format
 #| msgid "Torrent"
 msgid "Torrents"
@@ -3065,7 +3060,7 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:95
 #, kde-format
 msgid "Queue Manager"
 msgstr "Rêvebirê Rêzê"
@@ -3605,74 +3600,74 @@ msgstr "Leza Daxistinê"
 msgid "Show all not queued torrents"
 msgstr "Ji bo tomarkirina torrentê pel hilbijêre"
 
-#: ktorrent/torrentactivity.cpp:93
+#: ktorrent/torrentactivity.cpp:95
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:96
+#: ktorrent/torrentactivity.cpp:98
 #, fuzzy, kde-format
 #| msgid "Downloaded"
 msgid "Magnet Downloader"
 msgstr "Hatiye daxistin"
 
-#: ktorrent/torrentactivity.cpp:96
+#: ktorrent/torrentactivity.cpp:98
 #, kde-format
 msgid "Displays the currently downloading magnet links"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:111
+#: ktorrent/torrentactivity.cpp:113
 #, kde-format
 msgid "Start All"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:112
+#: ktorrent/torrentactivity.cpp:114
 #, fuzzy, kde-format
 #| msgid "Active torrents"
 msgid "Start all torrents"
 msgstr "Torrentên çalak"
 
-#: ktorrent/torrentactivity.cpp:116
+#: ktorrent/torrentactivity.cpp:118
 #, kde-format
 msgid "Stop All"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:117
+#: ktorrent/torrentactivity.cpp:119
 #, kde-format
 msgid "Stop all torrents"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:121
+#: ktorrent/torrentactivity.cpp:123
 #, fuzzy, kde-format
 #| msgid "Active torrents"
 msgid "Suspend Torrents"
 msgstr "Torrentên çalak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:126 plugins/bwscheduler/edititemdlg.ui:106
 #, fuzzy, kde-format
 #| msgid "Open Location"
 msgid "Suspend all running torrents"
 msgstr "Ciyî Veke"
 
-#: ktorrent/torrentactivity.cpp:128
+#: ktorrent/torrentactivity.cpp:130
 #, fuzzy, kde-format
 #| msgid "Group:"
 msgid "Group View"
 msgstr "Kom:"
 
-#: ktorrent/torrentactivity.cpp:129
+#: ktorrent/torrentactivity.cpp:131
 #, kde-format
 msgid "Show or hide the group view"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:133
+#: ktorrent/torrentactivity.cpp:135
 #, fuzzy, kde-format
 #| msgid "Active torrents"
 msgid "Filter Torrents"
 msgstr "Torrentên çalak"
 
-#: ktorrent/torrentactivity.cpp:134
+#: ktorrent/torrentactivity.cpp:136
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr ""
@@ -4186,7 +4181,7 @@ msgstr "Hatiye daxistin"
 
 #: ktorrent/view/viewmodel.cpp:442
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:351
+#: libktcore/torrent/torrentfiletreemodel.cpp:359
 #, kde-format
 msgid "Size"
 msgstr "Mezinahî"
@@ -4509,6 +4504,11 @@ msgstr "Daxistinên çalak"
 #| msgid "Active uploads"
 msgid "Passive Uploads"
 msgstr "Daxistinên çalak"
+
+#: libktcore/groups/grouptreemodel.cpp:31
+#, kde-format
+msgid "Custom Groups"
+msgstr "Komên Taybet"
 
 #: libktcore/groups/ungroupedgroup.cpp:15
 #, kde-format
@@ -4862,7 +4862,7 @@ msgid "Error stopping torrent %1: %2"
 msgstr ""
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:349
+#: libktcore/torrent/torrentfiletreemodel.cpp:357
 #, kde-format
 msgid "File"
 msgstr "Pel"

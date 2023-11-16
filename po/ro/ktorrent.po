@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent(2)\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-15 00:43+0000\n"
+"POT-Creation-Date: 2023-11-16 00:43+0000\n"
 "PO-Revision-Date: 2022-02-15 11:09+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian\n"
@@ -752,7 +752,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:306
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "URL nevalid: %1"
@@ -1264,110 +1264,105 @@ msgstr "Închide fila curentă"
 msgid "Edit Group Policy"
 msgstr "Modifică politica grupului"
 
-#: ktorrent/groups/groupview.cpp:65
+#: ktorrent/groups/groupview.cpp:66
 #, kde-format
 msgid "Open In New Tab"
 msgstr "Deschide în filă nouă"
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:224
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr "Grup nou"
 
-#: ktorrent/groups/groupview.cpp:73
+#: ktorrent/groups/groupview.cpp:74
 #, kde-format
 msgid "Edit Name"
 msgstr "Editează numele"
 
-#: ktorrent/groups/groupview.cpp:77
+#: ktorrent/groups/groupview.cpp:78
 #, kde-format
 msgid "Remove Group"
 msgstr "Elimină grupul"
 
-#: ktorrent/groups/groupview.cpp:81
+#: ktorrent/groups/groupview.cpp:82
 #, kde-format
 msgid "Group Policy"
 msgstr "Politica grupului"
 
-#: ktorrent/groups/groupview.cpp:94
+#: ktorrent/groups/groupview.cpp:95
 #, kde-format
 msgid "Please enter the group name."
 msgstr "Introduceți denumirea grupului."
 
-#: ktorrent/groups/groupview.cpp:100
+#: ktorrent/groups/groupview.cpp:101
 #, kde-format
 msgid "The group %1 already exists."
 msgstr "Grupul %1 există deja."
 
-#: ktorrent/groups/groupviewmodel.cpp:34
-#, kde-format
-msgid "Custom Groups"
-msgstr "Grupuri personalizate"
-
-#: ktorrent/gui.cpp:258
+#: ktorrent/gui.cpp:260
 #, kde-format
 msgid "Open Location"
 msgstr "Deschide amplasarea"
 
-#: ktorrent/gui.cpp:356
+#: ktorrent/gui.cpp:358
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Creează un torent nou"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent"
 msgstr "Deschide un torent"
 
-#: ktorrent/gui.cpp:361
+#: ktorrent/gui.cpp:363
 #, kde-format
 msgid "Open Silently"
 msgstr "Deschidere silențioasă"
 
-#: ktorrent/gui.cpp:362
+#: ktorrent/gui.cpp:364
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Deschide torentele fără a pune alte întrebări"
 
-#: ktorrent/gui.cpp:377
+#: ktorrent/gui.cpp:379
 #, kde-format
 msgid "Open URL"
 msgstr "Deschide URL"
 
-#: ktorrent/gui.cpp:378
+#: ktorrent/gui.cpp:380
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr ""
 "Deschide un URL ce indică spre un torent; legăturile-magnet sînt susținute"
 
-#: ktorrent/gui.cpp:383 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "Filtru IP"
 
-#: ktorrent/gui.cpp:384
+#: ktorrent/gui.cpp:386
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Arată lista adreselor IP blocate"
 
-#: ktorrent/gui.cpp:389
+#: ktorrent/gui.cpp:391
 #, kde-format
 msgid "Import Torrent"
 msgstr "Import torente"
 
-#: ktorrent/gui.cpp:390
+#: ktorrent/gui.cpp:392
 #, kde-format
 msgid "Import a torrent"
 msgstr "Importă un torent"
 
-#: ktorrent/gui.cpp:395
+#: ktorrent/gui.cpp:397
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Arată/ascunde KTorrent"
 
-#: ktorrent/gui.cpp:413
+#: ktorrent/gui.cpp:415
 #, fuzzy, kde-format
 #| msgid "DHT: %1, %2"
 msgid "D: %1 | U: %2"
@@ -1472,7 +1467,7 @@ msgstr "Principal"
 #. i18n: ectx: Menu (Torrents)
 #. i18n: ectx: ToolBar (TorrentsToolBar)
 #: ktorrent/kttorrentactivityui.rc:8 ktorrent/kttorrentactivityui.rc:84
-#: ktorrent/torrentactivity.cpp:37
+#: ktorrent/torrentactivity.cpp:38
 #, kde-format
 msgid "Torrents"
 msgstr "Torente"
@@ -3103,7 +3098,7 @@ msgstr "Folosește un server proxy SOCKS"
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:95
 #, kde-format
 msgid "Queue Manager"
 msgstr "Gestionar coadă"
@@ -3648,71 +3643,71 @@ msgstr "Arată în afara cozii"
 msgid "Show all not queued torrents"
 msgstr "Arată toate torentele din afara cozii"
 
-#: ktorrent/torrentactivity.cpp:93
+#: ktorrent/torrentactivity.cpp:95
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr "Controlul care gestionează coada torentului"
 
-#: ktorrent/torrentactivity.cpp:96
+#: ktorrent/torrentactivity.cpp:98
 #, fuzzy, kde-format
 #| msgid "KTMagnetDownloader"
 msgid "Magnet Downloader"
 msgstr "KTMagnetDownloader"
 
-#: ktorrent/torrentactivity.cpp:96
+#: ktorrent/torrentactivity.cpp:98
 #, fuzzy, kde-format
 #| msgid "Displays all the chunks you are downloading, of a torrent"
 msgid "Displays the currently downloading magnet links"
 msgstr "Afișează toate bucățile unui torent pe care le descărcați"
 
-#: ktorrent/torrentactivity.cpp:111
+#: ktorrent/torrentactivity.cpp:113
 #, kde-format
 msgid "Start All"
 msgstr "Pornește toate"
 
-#: ktorrent/torrentactivity.cpp:112
+#: ktorrent/torrentactivity.cpp:114
 #, kde-format
 msgid "Start all torrents"
 msgstr "Pornește toate torentele"
 
-#: ktorrent/torrentactivity.cpp:116
+#: ktorrent/torrentactivity.cpp:118
 #, kde-format
 msgid "Stop All"
 msgstr "Oprește toate"
 
-#: ktorrent/torrentactivity.cpp:117
+#: ktorrent/torrentactivity.cpp:119
 #, kde-format
 msgid "Stop all torrents"
 msgstr "Oprește toate torentele"
 
-#: ktorrent/torrentactivity.cpp:121
+#: ktorrent/torrentactivity.cpp:123
 #, kde-format
 msgid "Suspend Torrents"
 msgstr "Suspendă torentele"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:126 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
 msgstr "Suspendă toate torentele ce rulează"
 
-#: ktorrent/torrentactivity.cpp:128
+#: ktorrent/torrentactivity.cpp:130
 #, fuzzy, kde-format
 #| msgid "Group View Visible"
 msgid "Group View"
 msgstr "Vizualizare pe grupuri"
 
-#: ktorrent/torrentactivity.cpp:129
+#: ktorrent/torrentactivity.cpp:131
 #, kde-format
 msgid "Show or hide the group view"
 msgstr "Arată sau ascunde vizualizarea pe grupuri"
 
-#: ktorrent/torrentactivity.cpp:133
+#: ktorrent/torrentactivity.cpp:135
 #, kde-format
 msgid "Filter Torrents"
 msgstr "Filtrează torente"
 
-#: ktorrent/torrentactivity.cpp:134
+#: ktorrent/torrentactivity.cpp:136
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr "Filtrează torentele pe baza unui șir de filtrare"
@@ -4272,7 +4267,7 @@ msgstr "Descărcat"
 
 #: ktorrent/view/viewmodel.cpp:442
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:351
+#: libktcore/torrent/torrentfiletreemodel.cpp:359
 #, kde-format
 msgid "Size"
 msgstr "Dimensiune"
@@ -4589,6 +4584,11 @@ msgstr "Descărcări pasive"
 #, kde-format
 msgid "Passive Uploads"
 msgstr "Încărcări pasive"
+
+#: libktcore/groups/grouptreemodel.cpp:31
+#, kde-format
+msgid "Custom Groups"
+msgstr "Grupuri personalizate"
 
 #: libktcore/groups/ungroupedgroup.cpp:15
 #, kde-format
@@ -4945,7 +4945,7 @@ msgid "Error stopping torrent %1: %2"
 msgstr "Eroare la oprirea torentului %1: %2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:349
+#: libktcore/torrent/torrentfiletreemodel.cpp:357
 #, kde-format
 msgid "File"
 msgstr "Fișier"

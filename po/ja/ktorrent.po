@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-15 00:43+0000\n"
+"POT-Creation-Date: 2023-11-16 00:43+0000\n"
 "PO-Revision-Date: 2009-10-31 23:24+0900\n"
 "Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -749,7 +749,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:306
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "無効な URL: %1"
@@ -1269,110 +1269,105 @@ msgstr "現在のタブのすべての torrent を停止します"
 msgid "Edit Group Policy"
 msgstr "グループポリシー"
 
-#: ktorrent/groups/groupview.cpp:65
+#: ktorrent/groups/groupview.cpp:66
 #, kde-format
 msgid "Open In New Tab"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:224
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr "新しいグループ"
 
-#: ktorrent/groups/groupview.cpp:73
+#: ktorrent/groups/groupview.cpp:74
 #, kde-format
 msgid "Edit Name"
 msgstr "名前を編集"
 
-#: ktorrent/groups/groupview.cpp:77
+#: ktorrent/groups/groupview.cpp:78
 #, kde-format
 msgid "Remove Group"
 msgstr "グループを削除"
 
-#: ktorrent/groups/groupview.cpp:81
+#: ktorrent/groups/groupview.cpp:82
 #, kde-format
 msgid "Group Policy"
 msgstr "グループポリシー"
 
-#: ktorrent/groups/groupview.cpp:94
+#: ktorrent/groups/groupview.cpp:95
 #, kde-format
 msgid "Please enter the group name."
 msgstr "グループの名前を入力してください。"
 
-#: ktorrent/groups/groupview.cpp:100
+#: ktorrent/groups/groupview.cpp:101
 #, kde-format
 msgid "The group %1 already exists."
 msgstr "グループ “%1” は既に存在します。"
 
-#: ktorrent/groups/groupviewmodel.cpp:34
-#, kde-format
-msgid "Custom Groups"
-msgstr "カスタムグループ"
-
-#: ktorrent/gui.cpp:258
+#: ktorrent/gui.cpp:260
 #, kde-format
 msgid "Open Location"
 msgstr "場所を開く"
 
-#: ktorrent/gui.cpp:356
+#: ktorrent/gui.cpp:358
 #, kde-format
 msgid "Create a new torrent"
 msgstr "新しい torrent を作成します"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent"
 msgstr "torrent を開きます"
 
-#: ktorrent/gui.cpp:361
+#: ktorrent/gui.cpp:363
 #, kde-format
 msgid "Open Silently"
 msgstr "質問せずに開く"
 
-#: ktorrent/gui.cpp:362
+#: ktorrent/gui.cpp:364
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "何も質問せずに torrent を開きます"
 
-#: ktorrent/gui.cpp:377
+#: ktorrent/gui.cpp:379
 #, kde-format
 msgid "Open URL"
 msgstr "URL を開く"
 
-#: ktorrent/gui.cpp:378
+#: ktorrent/gui.cpp:380
 #, fuzzy, kde-format
 #| msgid "Open a URL which points to a torrent"
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "torrent の URL を開きます"
 
-#: ktorrent/gui.cpp:383 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP フィルタ"
 
-#: ktorrent/gui.cpp:384
+#: ktorrent/gui.cpp:386
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "ブロックした IP アドレスの一覧を表示します"
 
-#: ktorrent/gui.cpp:389
+#: ktorrent/gui.cpp:391
 #, kde-format
 msgid "Import Torrent"
 msgstr "torrent をインポート"
 
-#: ktorrent/gui.cpp:390
+#: ktorrent/gui.cpp:392
 #, kde-format
 msgid "Import a torrent"
 msgstr "torrent をインポートします"
 
-#: ktorrent/gui.cpp:395
+#: ktorrent/gui.cpp:397
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "KTorrent を表示/隠す"
 
-#: ktorrent/gui.cpp:413
+#: ktorrent/gui.cpp:415
 #, fuzzy, kde-format
 #| msgid "DHT: %1 nodes, %2 tasks"
 msgid "D: %1 | U: %2"
@@ -1479,7 +1474,7 @@ msgstr "Maxmind"
 #. i18n: ectx: Menu (Torrents)
 #. i18n: ectx: ToolBar (TorrentsToolBar)
 #: ktorrent/kttorrentactivityui.rc:8 ktorrent/kttorrentactivityui.rc:84
-#: ktorrent/torrentactivity.cpp:37
+#: ktorrent/torrentactivity.cpp:38
 #, kde-format
 msgid "Torrents"
 msgstr "Torrent"
@@ -3105,7 +3100,7 @@ msgstr "SOCKS プロキシサーバを使う:"
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:95
 #, kde-format
 msgid "Queue Manager"
 msgstr "キューマネージャ"
@@ -3660,74 +3655,74 @@ msgstr "待機中でない"
 msgid "Show all not queued torrents"
 msgstr "すべての torrent を停止する"
 
-#: ktorrent/torrentactivity.cpp:93
+#: ktorrent/torrentactivity.cpp:95
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr "torrent のキューを管理するウィジェット"
 
-#: ktorrent/torrentactivity.cpp:96
+#: ktorrent/torrentactivity.cpp:98
 #, fuzzy, kde-format
 #| msgid "Time Downloaded"
 msgid "Magnet Downloader"
 msgstr "ダウンロード時間"
 
-#: ktorrent/torrentactivity.cpp:96
+#: ktorrent/torrentactivity.cpp:98
 #, fuzzy, kde-format
 #| msgid "Displays all the chunks you are downloading, of a torrent"
 msgid "Displays the currently downloading magnet links"
 msgstr "torrent ごとにダウンロード中のすべてのピースを表示します"
 
-#: ktorrent/torrentactivity.cpp:111
+#: ktorrent/torrentactivity.cpp:113
 #, kde-format
 msgid "Start All"
 msgstr "すべて開始"
 
-#: ktorrent/torrentactivity.cpp:112
+#: ktorrent/torrentactivity.cpp:114
 #, kde-format
 msgid "Start all torrents"
 msgstr "すべての torrent を開始します"
 
-#: ktorrent/torrentactivity.cpp:116
+#: ktorrent/torrentactivity.cpp:118
 #, kde-format
 msgid "Stop All"
 msgstr "すべて停止"
 
-#: ktorrent/torrentactivity.cpp:117
+#: ktorrent/torrentactivity.cpp:119
 #, kde-format
 msgid "Stop all torrents"
 msgstr "すべての torrent を停止する"
 
-#: ktorrent/torrentactivity.cpp:121
+#: ktorrent/torrentactivity.cpp:123
 #, fuzzy, kde-format
 #| msgid "Pause KTorrent"
 msgid "Suspend Torrents"
 msgstr "KTorrent を一時停止"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:126 plugins/bwscheduler/edititemdlg.ui:106
 #, fuzzy, kde-format
 #| msgid "Pause all running torrents"
 msgid "Suspend all running torrents"
 msgstr "実行中のすべての torrent を一時停止します"
 
-#: ktorrent/torrentactivity.cpp:128
+#: ktorrent/torrentactivity.cpp:130
 #, fuzzy, kde-format
 #| msgid "Group View Visible"
 msgid "Group View"
 msgstr "グループビューの表示"
 
-#: ktorrent/torrentactivity.cpp:129
+#: ktorrent/torrentactivity.cpp:131
 #, kde-format
 msgid "Show or hide the group view"
 msgstr "グループビューを表示/隠す"
 
-#: ktorrent/torrentactivity.cpp:133
+#: ktorrent/torrentactivity.cpp:135
 #, fuzzy, kde-format
 #| msgid "All Torrents"
 msgid "Filter Torrents"
 msgstr "すべての torrent"
 
-#: ktorrent/torrentactivity.cpp:134
+#: ktorrent/torrentactivity.cpp:136
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr ""
@@ -4277,7 +4272,7 @@ msgstr "ダウンロード済み"
 
 #: ktorrent/view/viewmodel.cpp:442
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:351
+#: libktcore/torrent/torrentfiletreemodel.cpp:359
 #, kde-format
 msgid "Size"
 msgstr "サイズ"
@@ -4594,6 +4589,11 @@ msgstr "受動的なダウンロード"
 #, kde-format
 msgid "Passive Uploads"
 msgstr "受動的なアップロード"
+
+#: libktcore/groups/grouptreemodel.cpp:31
+#, kde-format
+msgid "Custom Groups"
+msgstr "カスタムグループ"
 
 #: libktcore/groups/ungroupedgroup.cpp:15
 #, kde-format
@@ -4959,7 +4959,7 @@ msgid "Error stopping torrent %1: %2"
 msgstr "torrent <resource>%1</resource> の停止エラー: %2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:349
+#: libktcore/torrent/torrentfiletreemodel.cpp:357
 #, kde-format
 msgid "File"
 msgstr "ファイル"

@@ -1,0 +1,180 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Turkish "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>K Torrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+><firstname
+>İşbaran</firstname
+><surname
+>Akçayır</surname
+><affiliation
+><address
+><email
+>isbaran@gmail.com</email
+></address
+></affiliation
+><contrib
+>-</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Emir</firstname
+><surname
+>SARI</surname
+><affiliation
+><address
+><email
+>emir_sari@icloud.com</email
+></address
+></affiliation
+><contrib
+>-</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2010-10-27</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent;, BitTorrent iletişim kuralını kullanarak dosyalar indirmenizi sağlayan bir KDE Bittorrent uygulamasıdır. Aynı anda birden çok torrent çalıştırmanızı sağlar ve tam kapsamlı bir BitTorrent istemcisi yapacak gelişmiş özelliklerle gelir.</para>
+
+<itemizedlist>
+<title
+>Özellikler</title>
+<listitem
+><para
+>Torrentlerin kuyruklanması</para
+></listitem>
+<listitem
+><para
+>Global ve torrent başı hız sınırları</para
+></listitem>
+<listitem
+><para
+>Belirli dosya türlerinin önizlemesi (video ve ses)</para
+></listitem>
+<listitem
+><para
+>Kısımsal veya tümüyle indirilmiş dosyaların içe aktarımı</para
+></listitem>
+<listitem
+><para
+>Çok dosyalı torrentlerde dosya öncelikleri</para
+></listitem>
+<listitem
+><para
+>Çok dosyalı torrentlerde seçimle indirme</para
+></listitem>
+<listitem
+><para
+>Listeleme/düzenleme amacıyla ek IP süzgecine sahip eşleri kovma/engelleme</para
+></listitem>
+<listitem
+><para
+>UDP izleyicisi desteği</para
+></listitem>
+<listitem
+><para
+>Özel izleyiciler ve torrentler için destek</para
+></listitem>
+<listitem
+><para
+>µTorrent'in eş değişimi için destek</para
+></listitem>
+<listitem
+><para
+>İletişim kuralı şifreleme desteği (Azureus ile uyumlu)</para
+></listitem>
+<listitem
+><para
+>İzleyicisiz torrentler oluşturmak için destek</para
+></listitem>
+<listitem
+><para
+>Dağıtılmış özet tabloları için destek (DHT, Mainline sürümü)</para
+></listitem>
+<listitem
+><para
+>Devingen atamalı makinelere sahip bir LAN üzerinde bağlantı noktalarını kendiliğinden aktarmak için UPnP desteği</para
+></listitem>
+<listitem
+><para
+>webseed desteği</para
+></listitem>
+<listitem
+><para
+>Sistem tepsisi tümleştirmesi</para
+></listitem>
+<listitem
+><para
+>İzleyici kimlik doğrulama desteği</para
+></listitem>
+<listitem
+><para
+>Bir vekil aracılığıyla bağlantı</para
+></listitem>
+<listitem
+><para
+>DBus arayüzü aracılığıyla süreç arası denetim</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Çevrimiçi Yardım Özkaynakları</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>Userbase'de K Torrent</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>KDE Topluluk Forumları</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>
