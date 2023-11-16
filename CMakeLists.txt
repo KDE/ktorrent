@@ -144,16 +144,6 @@ if(KF5Completion_FOUND)
   set(HAVE_KF5Completion 1)
 endif()
 
-find_package(LibKWorkspace CONFIG)
-set_package_properties(LibKWorkspace
-  PROPERTIES
-  TYPE OPTIONAL
-  PURPOSE "Required for KTorrent's shutdown plugin"
-)
-if(LibKWorkspace_FOUND)
-  set(HAVE_LibKWorkspace 1)
-endif()
-
 #find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
 
 find_package(Taglib)

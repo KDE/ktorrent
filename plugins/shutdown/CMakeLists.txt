@@ -10,6 +10,9 @@ qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${screensaver_xml} screensaver_i
 set(powermanagement_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.xml)
 qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${powermanagement_xml} powermanagement_interface)
 
+set(plasmashutdown_xml ${KTORRENT_DBUS_XML_DIR}/org.kde.Shutdown.xml)
+qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${plasmashutdown_xml} plasmashutdown_interface)
+
 target_sources(ktorrent_shutdown PRIVATE
     ${ktshutdownplugin_dbus_SRC}
     shutdownruleset.cpp
@@ -24,7 +27,6 @@ target_link_libraries(
     ktorrent_shutdown
     ktcore
     KF5::Torrent
-    PW::KWorkspace
     KF5::ConfigCore
     KF5::CoreAddons
     KF5::I18n

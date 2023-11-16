@@ -10,8 +10,8 @@
 #include <KMessageBox>
 #include <KPluginFactory>
 #include <KToggleAction>
-#include <kworkspace.h>
 
+#include "plasmashutdown_interface.h"
 #include "powermanagement_interface.h"
 #include "screensaver_interface.h"
 #include "shutdowndlg.h"
@@ -67,7 +67,9 @@ void ShutdownPlugin::load()
 void ShutdownPlugin::shutdownComputer()
 {
     Out(SYS_GEN | LOG_NOTICE) << "Shutting down computer ..." << endl;
-    KWorkSpace::requestShutDown(KWorkSpace::ShutdownConfirmYes, KWorkSpace::ShutdownTypeHalt);
+    org::kde::Shutdown shudown(QStringLiteral("org.kde.Shutdown"), QStringLiteral("/org/kde/Shutdown"), QDBusConnection::sessionBus());
+
+    shudown.logoutAndShutdown();
 }
 
 void ShutdownPlugin::lock()
