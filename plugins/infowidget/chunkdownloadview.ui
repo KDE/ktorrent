@@ -253,19 +253,6 @@
     </layout>
    </item>
    <item>
-    <widget class="QFrame">
-     <property name="lineWidth" >
-      <number>1</number>
-     </property>
-     <property name="fixedHeight" >
-      <number>1</number>
-     </property>
-     <property name="frameShape" >
-      <set>QFrame::HLine</set>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QTreeView" name="m_chunk_view" >
      <property name="alternatingRowColors" >
       <bool>true</bool>
@@ -275,19 +262,6 @@
      </property>
      <property name="sortingEnabled" >
       <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QFrame">
-     <property name="lineWidth" >
-      <number>1</number>
-     </property>
-     <property name="fixedHeight" >
-      <number>1</number>
-     </property>
-     <property name="frameShape" >
-      <set>QFrame::HLine</set>
      </property>
     </widget>
    </item>

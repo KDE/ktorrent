@@ -10,7 +10,7 @@
     <height>300</height>
    </rect>
   </property>
-  <layout class="QGridLayout">
+  <layout class="QGridLayout" name="m_gridLayout">
    <item row="0" column="0">
     <widget class="QLineEdit" name="m_webseed">
      <property name="toolTip">

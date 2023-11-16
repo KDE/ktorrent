@@ -182,6 +182,7 @@ void InfoWidgetPlugin::showPeerView(bool show)
 
     if (show && !peer_view) {
         peer_view = new PeerView(nullptr);
+        peer_view->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::BottomEdge}));
         ta->addToolWidget(peer_view, i18n("Peers"), QStringLiteral("system-users"), i18n("Displays all the peers you are connected to for a torrent"));
         peer_view->loadState(KSharedConfig::openConfig());
         createMonitor(tc);

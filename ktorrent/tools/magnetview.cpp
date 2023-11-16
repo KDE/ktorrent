@@ -43,6 +43,7 @@ MagnetView::MagnetView(MagnetManager *magnetManager, QWidget *parent)
     view->setAllColumnsShowFocus(true);
     view->setSelectionMode(QAbstractItemView::ContiguousSelection);
     view->setContextMenuPolicy(Qt::CustomContextMenu);
+    view->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags<Qt::Edge>{Qt::BottomEdge}));
     connect(view, &QTreeView::customContextMenuRequested, this, &MagnetView::showContextMenu);
     layout->addWidget(view);
 

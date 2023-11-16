@@ -18,6 +18,7 @@
 #include <KStandardGuiItem>
 
 #include "queuemanagermodel.h"
+#include <qframe.h>
 #include <torrent/queuemanager.h>
 #include <util/log.h>
 
@@ -29,18 +30,23 @@ QueueManagerWidget::QueueManagerWidget(QueueManager *qman, QWidget *parent)
     : QWidget(parent)
     , qman(qman)
 {
-    QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
+    auto mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
+    QHBoxLayout *layout = new QHBoxLayout();
+    mainLayout->addLayout(layout);
     QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->setContentsMargins(0, 0, 0, 0);
-    vbox->setSpacing(0);
     view = new QTreeView(this);
     view->setUniformRowHeights(true);
     toolbar = new QToolBar(this);
     toolbar->setOrientation(Qt::Vertical);
     toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     layout->addWidget(toolbar);
+
+    auto separator = new QFrame(this);
+    separator->setFrameShape(QFrame::HLine);
+    separator->setFixedHeight(1);
+    mainLayout->addWidget(separator);
 
     search = new QLineEdit(this);
     search->setPlaceholderText(i18n("Search"));
@@ -96,6 +102,7 @@ QueueManagerWidget::QueueManagerWidget(QueueManager *qman, QWidget *parent)
     view->setDropIndicatorShown(true);
     view->setAutoScroll(true);
     view->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    view->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags<Qt::Edge>{Qt::LeftEdge}));
 
     connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &QueueManagerWidget::selectionChanged);
 

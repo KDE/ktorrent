@@ -8,6 +8,7 @@
 
 #include <KMessageBox>
 #include <QHeaderView>
+#include <QStyle>
 
 #include "webseedsmodel.h"
 #include <interfaces/webseedinterface.h>
@@ -20,6 +21,10 @@ WebSeedsTab::WebSeedsTab(QWidget *parent)
     : QWidget(parent)
 {
     setupUi(this);
+    m_gridLayout->setContentsMargins(style()->pixelMetric(QStyle::PM_LayoutLeftMargin),
+                                     style()->pixelMetric(QStyle::PM_LayoutTopMargin),
+                                     style()->pixelMetric(QStyle::PM_LayoutRightMargin),
+                                     0);
     connect(m_add, &QPushButton::clicked, this, &WebSeedsTab::addWebSeed);
     connect(m_remove, &QPushButton::clicked, this, &WebSeedsTab::removeWebSeed);
     connect(m_disable_all, &QPushButton::clicked, this, &WebSeedsTab::disableAll);

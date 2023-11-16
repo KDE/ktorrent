@@ -49,12 +49,12 @@ FileView::FileView(QWidget *parent)
     , show_list_of_files(false)
     , header_state_loaded(false)
 {
+    auto mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
     QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
+    mainLayout->addLayout(layout);
     QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->setContentsMargins(0, 0, 0, 0);
-    vbox->setSpacing(0);
     view = new QTreeView(this);
     toolbar = new QToolBar(this);
     toolbar->setOrientation(Qt::Vertical);
@@ -71,6 +71,11 @@ FileView::FileView(QWidget *parent)
     vbox->addWidget(view);
     layout->addItem(vbox);
 
+    auto separator = new QFrame(this);
+    separator->setFrameShape(QFrame::HLine);
+    separator->setFixedHeight(1);
+    mainLayout->addWidget(separator);
+
     view->setContextMenuPolicy(Qt::CustomContextMenu);
     view->setRootIsDecorated(false);
     view->setSortingEnabled(true);
@@ -78,6 +83,7 @@ FileView::FileView(QWidget *parent)
     view->setSelectionMode(QAbstractItemView::ExtendedSelection);
     view->setSelectionBehavior(QAbstractItemView::SelectRows);
     view->setUniformRowHeights(true);
+    view->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags<Qt::Edge>{Qt::LeftEdge}));
 
     proxy_model = new TreeFilterModel(this);
     proxy_model->setSortRole(Qt::UserRole);

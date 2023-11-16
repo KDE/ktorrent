@@ -39,10 +39,10 @@ ChunkDownloadView::ChunkDownloadView(QWidget *parent)
     m_chunk_view->setSortingEnabled(true);
     m_chunk_view->setAlternatingRowColors(true);
     m_chunk_view->setUniformRowHeights(true);
-    m_chunk_view->setFrameShape(QFrame::NoFrame);
+    m_chunk_view->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge | Qt::BottomEdge}));
 
-    m_header->insertSpacing(0, 6);
-    m_header->addSpacing(6);
+    m_header->insertSpacing(0, style()->pixelMetric(QStyle::PM_LayoutLeftMargin));
+    m_header->addSpacing(style()->pixelMetric(QStyle::PM_LayoutHorizontalSpacing));
 
     QFont f = font();
     f.setBold(true);
