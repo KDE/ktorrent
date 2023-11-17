@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-16 00:43+0000\n"
+"POT-Creation-Date: 2023-11-17 00:42+0000\n"
 "PO-Revision-Date: 2022-07-10 17:45+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -1053,7 +1053,7 @@ msgstr "將 torrent 加入到群組："
 
 #. i18n: ectx: attribute (title), widget (QWidget, m_tracker_tab)
 #: ktorrent/dialogs/torrentcreatordlg.ui:182
-#: plugins/infowidget/infowidgetplugin.cpp:223
+#: plugins/infowidget/infowidgetplugin.cpp:224
 #, kde-format
 msgid "Trackers"
 msgstr "追蹤器"
@@ -1073,14 +1073,14 @@ msgstr "移除"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_move_up)
 #: ktorrent/dialogs/torrentcreatordlg.ui:210
-#: ktorrent/tools/queuemanagerwidget.cpp:63
+#: ktorrent/tools/queuemanagerwidget.cpp:69
 #, kde-format
 msgid "Move Up"
 msgstr "上移"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_move_down)
 #: ktorrent/dialogs/torrentcreatordlg.ui:217
-#: ktorrent/tools/queuemanagerwidget.cpp:66
+#: ktorrent/tools/queuemanagerwidget.cpp:72
 #, kde-format
 msgid "Move Down"
 msgstr "下移"
@@ -3073,7 +3073,7 @@ msgstr "SOCKS 代理伺服器的密碼。"
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:95
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Queue Manager"
 msgstr "佇列管理員"
@@ -3442,7 +3442,7 @@ msgid "Status"
 msgstr "狀態"
 
 #: ktorrent/tools/magnetmodel.cpp:106
-#: plugins/infowidget/infowidgetplugin.cpp:185
+#: plugins/infowidget/infowidgetplugin.cpp:186
 #, kde-format
 msgid "Peers"
 msgstr "端點"
@@ -3462,23 +3462,23 @@ msgstr "已排入佇列"
 msgid "Stopped"
 msgstr "已停止"
 
-#: ktorrent/tools/magnetview.cpp:51
+#: ktorrent/tools/magnetview.cpp:52
 #, kde-format
 msgid "Start Magnet"
 msgstr "開始 Magnet"
 
-#: ktorrent/tools/magnetview.cpp:52
+#: ktorrent/tools/magnetview.cpp:53
 #, kde-format
 msgid "Stop Magnet"
 msgstr "停止 Magnet"
 
-#: ktorrent/tools/magnetview.cpp:53
+#: ktorrent/tools/magnetview.cpp:54
 #, fuzzy, kde-format
 #| msgid "Copy Magnet URI"
 msgid "Copy Magnet URL"
 msgstr "複製 Magnet 網址"
 
-#: ktorrent/tools/magnetview.cpp:55
+#: ktorrent/tools/magnetview.cpp:56
 #, kde-format
 msgid "Remove Magnet"
 msgstr "移除 Magnet"
@@ -3531,145 +3531,145 @@ msgstr ""
 "將佇列中的 torrent 排序。\n"
 "用拖放的，或是用左方的上下按鍵來改變順序。"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:46
+#: ktorrent/tools/queuemanagerwidget.cpp:52
 #: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
 #: plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "搜尋"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:55
+#: ktorrent/tools/queuemanagerwidget.cpp:61
 #, kde-format
 msgid "Show Search"
 msgstr "顯示搜尋"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:56
+#: ktorrent/tools/queuemanagerwidget.cpp:62
 #, kde-format
 msgid "Show or hide the search bar"
 msgstr "顯示或隱藏搜尋列"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:60
+#: ktorrent/tools/queuemanagerwidget.cpp:66
 #, kde-format
 msgid "Move Top"
 msgstr "移動到頂端"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:61
+#: ktorrent/tools/queuemanagerwidget.cpp:67
 #, kde-format
 msgid "Move a torrent to the top of the queue"
 msgstr "將某個 torrent 移到佇列最頂端"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:64
+#: ktorrent/tools/queuemanagerwidget.cpp:70
 #, kde-format
 msgid "Move a torrent up in the queue"
 msgstr "在佇列中將某個 torrent 上移"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:67
+#: ktorrent/tools/queuemanagerwidget.cpp:73
 #, kde-format
 msgid "Move a torrent down in the queue"
 msgstr "在佇列中將某個 torrent 下移"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:69
+#: ktorrent/tools/queuemanagerwidget.cpp:75
 #, kde-format
 msgid "Move Bottom"
 msgstr "移動到底端"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:70
+#: ktorrent/tools/queuemanagerwidget.cpp:76
 #, kde-format
 msgid "Move a torrent to the bottom of the queue"
 msgstr "將某個 torrent 移到佇列最底端"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:72
+#: ktorrent/tools/queuemanagerwidget.cpp:78
 #, kde-format
 msgid "Show Downloads"
 msgstr "顯示下載"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:73
+#: ktorrent/tools/queuemanagerwidget.cpp:79
 #, kde-format
 msgid "Show all downloads"
 msgstr "顯示所有下載"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:77
+#: ktorrent/tools/queuemanagerwidget.cpp:83
 #, kde-format
 msgid "Show Uploads"
 msgstr "顯示上傳"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:78
+#: ktorrent/tools/queuemanagerwidget.cpp:84
 #, kde-format
 msgid "Show all uploads"
 msgstr "顯示所有上傳"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:82
+#: ktorrent/tools/queuemanagerwidget.cpp:88
 #, kde-format
 msgid "Show Not Queued"
 msgstr "顯示未排入佇列"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:83
+#: ktorrent/tools/queuemanagerwidget.cpp:89
 #, kde-format
 msgid "Show all not queued torrents"
 msgstr "顯示所有未排入佇列"
 
-#: ktorrent/torrentactivity.cpp:95
+#: ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr "管理 torrent 佇列的元件"
 
-#: ktorrent/torrentactivity.cpp:98
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Magnet Downloader"
 msgstr "Magnet 下載器"
 
-#: ktorrent/torrentactivity.cpp:98
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Displays the currently downloading magnet links"
 msgstr "顯示您正在下載的 magnet 連結"
 
-#: ktorrent/torrentactivity.cpp:113
+#: ktorrent/torrentactivity.cpp:111
 #, kde-format
 msgid "Start All"
 msgstr "全部開始"
 
-#: ktorrent/torrentactivity.cpp:114
+#: ktorrent/torrentactivity.cpp:112
 #, kde-format
 msgid "Start all torrents"
 msgstr "開始所有的 torrent"
 
-#: ktorrent/torrentactivity.cpp:118
+#: ktorrent/torrentactivity.cpp:116
 #, kde-format
 msgid "Stop All"
 msgstr "全部停止"
 
-#: ktorrent/torrentactivity.cpp:119
+#: ktorrent/torrentactivity.cpp:117
 #, kde-format
 msgid "Stop all torrents"
 msgstr "停止所有 torrent"
 
-#: ktorrent/torrentactivity.cpp:123
+#: ktorrent/torrentactivity.cpp:121
 #, kde-format
 msgid "Suspend Torrents"
 msgstr "暫停 torrent"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:126 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
 msgstr "暫停所有運行中的 torrents"
 
-#: ktorrent/torrentactivity.cpp:130
+#: ktorrent/torrentactivity.cpp:128
 #, kde-format
 msgid "Group View"
 msgstr "群組檢視"
 
-#: ktorrent/torrentactivity.cpp:131
+#: ktorrent/torrentactivity.cpp:129
 #, kde-format
 msgid "Show or hide the group view"
 msgstr "顯示或隱藏群組顯示"
 
-#: ktorrent/torrentactivity.cpp:135
+#: ktorrent/torrentactivity.cpp:133
 #, kde-format
 msgid "Filter Torrents"
 msgstr "過濾 Torrents"
 
-#: ktorrent/torrentactivity.cpp:136
+#: ktorrent/torrentactivity.cpp:134
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr "依據過濾字串來過濾 torrents"
@@ -4168,8 +4168,8 @@ msgstr "您將會失去以下的 torrents 所有已下載的資料。您確定�
 msgid "Remove Torrent"
 msgstr "移除torrent"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:338
-#: plugins/infowidget/fileview.cpp:362
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:344
+#: plugins/infowidget/fileview.cpp:368
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "選擇把資料移到那個"
@@ -5280,7 +5280,7 @@ msgstr "此區塊是位於哪一個檔案"
 #. i18n: ectx: property (text), widget (QLabel, hdr_chunks)
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChunkDownloadView)
 #: plugins/infowidget/chunkdownloadview.ui:13
-#: plugins/infowidget/infowidgetplugin.cpp:204
+#: plugins/infowidget/infowidgetplugin.cpp:205
 #: plugins/infowidget/statustab.ui:181
 #, kde-format
 msgid "Chunks"
@@ -5316,79 +5316,79 @@ msgstr "剩餘:"
 msgid "Size:"
 msgstr "大小:"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "開啟"
 
-#: plugins/infowidget/fileview.cpp:108
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "開啟方式"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Check File"
 msgstr "檢查檔案"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Download first"
 msgstr "優先下載"
 
-#: plugins/infowidget/fileview.cpp:112
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Download normally"
 msgstr "正常下載"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Download last"
 msgstr "最後下載"
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Do not download"
 msgstr "不要下載"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:122
 #, kde-format
 msgid "Delete File(s)"
 msgstr "刪除檔案"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Move File"
 msgstr "移動檔案"
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "折疊資料夾樹"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:127
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "展開資料夾樹"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:130
 #, kde-format
 msgid "File Tree"
 msgstr "檔案樹狀圖"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:132
 #, kde-format
 msgid "File List"
 msgstr "檔案清單"
 
-#: plugins/infowidget/fileview.cpp:136
+#: plugins/infowidget/fileview.cpp:142
 #, kde-format
 msgid "Show Filter"
 msgstr "顯示過濾器"
 
-#: plugins/infowidget/fileview.cpp:317
+#: plugins/infowidget/fileview.cpp:323
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5396,7 +5396,7 @@ msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] "您會失去這些檔案的所有資料。您確定要這樣做嗎？"
 
-#: plugins/infowidget/fileview.cpp:447
+#: plugins/infowidget/fileview.cpp:453
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5408,7 +5408,7 @@ msgstr ""
 "\n"
 "啟用序列下載模式以讓必要的資料以較高的優先程度下載？"
 
-#: plugins/infowidget/fileview.cpp:450
+#: plugins/infowidget/fileview.cpp:456
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -5442,27 +5442,27 @@ msgstr "檔案"
 msgid "Shows all the files in a torrent"
 msgstr "顯示 torrent 中所有檔案"
 
-#: plugins/infowidget/infowidgetplugin.cpp:185
+#: plugins/infowidget/infowidgetplugin.cpp:186
 #, kde-format
 msgid "Displays all the peers you are connected to for a torrent"
 msgstr "顯示您為此 torrent 連線的所有端點"
 
-#: plugins/infowidget/infowidgetplugin.cpp:204
+#: plugins/infowidget/infowidgetplugin.cpp:205
 #, kde-format
 msgid "Displays all the chunks you are downloading, of a torrent"
 msgstr "顯示您正在下載此 torrent 的所有區塊"
 
-#: plugins/infowidget/infowidgetplugin.cpp:223
+#: plugins/infowidget/infowidgetplugin.cpp:224
 #, kde-format
 msgid "Displays information about all the trackers of a torrent"
 msgstr "顯示此 torrent 所有追蹤器的資訊"
 
-#: plugins/infowidget/infowidgetplugin.cpp:239
+#: plugins/infowidget/infowidgetplugin.cpp:240
 #, kde-format
 msgid "Webseeds"
 msgstr "Webseeds"
 
-#: plugins/infowidget/infowidgetplugin.cpp:239
+#: plugins/infowidget/infowidgetplugin.cpp:240
 #, kde-format
 msgid "Displays all the webseeds of a torrent"
 msgstr "顯示此 torrent 的所有網頁種子"
@@ -6008,12 +6008,12 @@ msgstr "還原預設值"
 msgid "Speed"
 msgstr "速度"
 
-#: plugins/infowidget/webseedstab.cpp:81
+#: plugins/infowidget/webseedstab.cpp:86
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
 msgstr "無法新增 webseed %1。它已經是 webseed 清單中的一部份了。"
 
-#: plugins/infowidget/webseedstab.cpp:97
+#: plugins/infowidget/webseedstab.cpp:102
 #, kde-format
 msgid "Cannot remove webseed %1, it is part of the torrent."
 msgstr "無法移除 webseed %1，它是 torrent 的一部份。"
@@ -7234,7 +7234,7 @@ msgstr "儲存 %1 到"
 
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
-#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:125
+#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:127
 #: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Shutdown"
@@ -7252,19 +7252,19 @@ msgctxt "@title:window"
 msgid "Configure Shutdown"
 msgstr "設定關機"
 
-#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:129
+#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
 #: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Lock"
 msgstr "鎖定"
 
-#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:133
+#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "睡眠（暫停並儲存到記憶體）"
 
-#: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:137
+#: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
 #: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Hibernate (suspend to disk)"

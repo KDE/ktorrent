@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-16 00:43+0000\n"
+"POT-Creation-Date: 2023-11-17 00:42+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -1038,7 +1038,7 @@ msgstr "සමුහයට ටොරෙන්ට් එක් කරන්න:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, m_tracker_tab)
 #: ktorrent/dialogs/torrentcreatordlg.ui:182
-#: plugins/infowidget/infowidgetplugin.cpp:223
+#: plugins/infowidget/infowidgetplugin.cpp:224
 #, kde-format
 msgid "Trackers"
 msgstr "හඹායන්නෝ"
@@ -1058,14 +1058,14 @@ msgstr "ඉවත් කරන්න"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_move_up)
 #: ktorrent/dialogs/torrentcreatordlg.ui:210
-#: ktorrent/tools/queuemanagerwidget.cpp:63
+#: ktorrent/tools/queuemanagerwidget.cpp:69
 #, kde-format
 msgid "Move Up"
 msgstr "ඉහළට ගෙනයන්න"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_move_down)
 #: ktorrent/dialogs/torrentcreatordlg.ui:217
-#: ktorrent/tools/queuemanagerwidget.cpp:66
+#: ktorrent/tools/queuemanagerwidget.cpp:72
 #, kde-format
 msgid "Move Down"
 msgstr "පහළට ගෙනයන්න"
@@ -3022,7 +3022,7 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:95
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Queue Manager"
 msgstr "පෙළගැසුම් පරිපාලක"
@@ -3394,7 +3394,7 @@ msgid "Status"
 msgstr "තත්වය"
 
 #: ktorrent/tools/magnetmodel.cpp:106
-#: plugins/infowidget/infowidgetplugin.cpp:185
+#: plugins/infowidget/infowidgetplugin.cpp:186
 #, kde-format
 msgid "Peers"
 msgstr "ලබන්නන්"
@@ -3414,23 +3414,23 @@ msgstr "පෙළගැසූ"
 msgid "Stopped"
 msgstr "නවතා ඇත"
 
-#: ktorrent/tools/magnetview.cpp:51
+#: ktorrent/tools/magnetview.cpp:52
 #, kde-format
 msgid "Start Magnet"
 msgstr "චුම්භක අරඹන්න"
 
-#: ktorrent/tools/magnetview.cpp:52
+#: ktorrent/tools/magnetview.cpp:53
 #, kde-format
 msgid "Stop Magnet"
 msgstr "චුම්භක නවතන්න"
 
-#: ktorrent/tools/magnetview.cpp:53
+#: ktorrent/tools/magnetview.cpp:54
 #, fuzzy, kde-format
 #| msgid "Copy Magnet URI"
 msgid "Copy Magnet URL"
 msgstr "චුම්භක URI පිටපත්"
 
-#: ktorrent/tools/magnetview.cpp:55
+#: ktorrent/tools/magnetview.cpp:56
 #, kde-format
 msgid "Remove Magnet"
 msgstr "චුම්භක ඉවත් කරන්න"
@@ -3481,147 +3481,147 @@ msgid ""
 "order."
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:46
+#: ktorrent/tools/queuemanagerwidget.cpp:52
 #: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
 #: plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "සෙවුම"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:55
+#: ktorrent/tools/queuemanagerwidget.cpp:61
 #, kde-format
 msgid "Show Search"
 msgstr "සෙවුම පෙන්වන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:56
+#: ktorrent/tools/queuemanagerwidget.cpp:62
 #, kde-format
 msgid "Show or hide the search bar"
 msgstr "සෙවුම් තීරුව පෙන්වන්න හෝ සඟවන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:60
+#: ktorrent/tools/queuemanagerwidget.cpp:66
 #, kde-format
 msgid "Move Top"
 msgstr "ඉහළටම ගෙනයන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:61
+#: ktorrent/tools/queuemanagerwidget.cpp:67
 #, kde-format
 msgid "Move a torrent to the top of the queue"
 msgstr "ටොරෙන්ටය පෙළගැස්මේ ඉහළටම ගෙනයන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:64
+#: ktorrent/tools/queuemanagerwidget.cpp:70
 #, kde-format
 msgid "Move a torrent up in the queue"
 msgstr "ටොරෙන්ටය පෙළගැස්මේ ඉහළට ගෙනයන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:67
+#: ktorrent/tools/queuemanagerwidget.cpp:73
 #, kde-format
 msgid "Move a torrent down in the queue"
 msgstr "ටොරෙන්ටය පෙළගැස්මේ පහළට ගෙනයන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:69
+#: ktorrent/tools/queuemanagerwidget.cpp:75
 #, kde-format
 msgid "Move Bottom"
 msgstr "අන්තයට ගෙනයන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:70
+#: ktorrent/tools/queuemanagerwidget.cpp:76
 #, kde-format
 msgid "Move a torrent to the bottom of the queue"
 msgstr "ටොරෙන්ටය පෙළගැස්මේ අන්තයට ගෙනයන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:72
+#: ktorrent/tools/queuemanagerwidget.cpp:78
 #, kde-format
 msgid "Show Downloads"
 msgstr "බාගැනීම් පෙන්වන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:73
+#: ktorrent/tools/queuemanagerwidget.cpp:79
 #, kde-format
 msgid "Show all downloads"
 msgstr "සියළු බාගැනීම් පෙන්වන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:77
+#: ktorrent/tools/queuemanagerwidget.cpp:83
 #, kde-format
 msgid "Show Uploads"
 msgstr "අපගතකිරීම් පෙන්වන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:78
+#: ktorrent/tools/queuemanagerwidget.cpp:84
 #, kde-format
 msgid "Show all uploads"
 msgstr "සියළු අපගතකිරිම් පෙන්වන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:82
+#: ktorrent/tools/queuemanagerwidget.cpp:88
 #, kde-format
 msgid "Show Not Queued"
 msgstr "පෙළ නොගැසූ පෙන්වන්න"
 
-#: ktorrent/tools/queuemanagerwidget.cpp:83
+#: ktorrent/tools/queuemanagerwidget.cpp:89
 #, kde-format
 msgid "Show all not queued torrents"
 msgstr "සියළු පෙළ නොගැසූ ටොරෙන්ට පෙන්වන්න"
 
-#: ktorrent/torrentactivity.cpp:95
+#: ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr "ටොරෙන්ට් පෙළගැස්ම පාලනයට විජෙට්ටුව"
 
-#: ktorrent/torrentactivity.cpp:98
+#: ktorrent/torrentactivity.cpp:96
 #, fuzzy, kde-format
 #| msgid "KTMagnetDownloader"
 msgid "Magnet Downloader"
 msgstr "KTMagnetDownloader"
 
-#: ktorrent/torrentactivity.cpp:98
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Displays the currently downloading magnet links"
 msgstr "දැනට බාගැනෙන චුම්භක සබැඳි පෙන්වයි"
 
-#: ktorrent/torrentactivity.cpp:113
+#: ktorrent/torrentactivity.cpp:111
 #, kde-format
 msgid "Start All"
 msgstr "සියල්ල අරඹන්න"
 
-#: ktorrent/torrentactivity.cpp:114
+#: ktorrent/torrentactivity.cpp:112
 #, kde-format
 msgid "Start all torrents"
 msgstr "සියළු ටොරෙන්ට් අරඹන්න"
 
-#: ktorrent/torrentactivity.cpp:118
+#: ktorrent/torrentactivity.cpp:116
 #, kde-format
 msgid "Stop All"
 msgstr "සියල්ල නවතන්න"
 
-#: ktorrent/torrentactivity.cpp:119
+#: ktorrent/torrentactivity.cpp:117
 #, kde-format
 msgid "Stop all torrents"
 msgstr "සියළු ටොරෙන්ට් නවතන්න"
 
-#: ktorrent/torrentactivity.cpp:123
+#: ktorrent/torrentactivity.cpp:121
 #, kde-format
 msgid "Suspend Torrents"
 msgstr "ටොරෙන්ට් රඳවන්න"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:126 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
 msgstr "සියළු ධාවනය වන ටොරෙන්ට් රඳවන්න"
 
-#: ktorrent/torrentactivity.cpp:130
+#: ktorrent/torrentactivity.cpp:128
 #, fuzzy, kde-format
 #| msgid "Group View Visible"
 msgid "Group View"
 msgstr "සමූහ දසුන දෘශ්‍යයි"
 
-#: ktorrent/torrentactivity.cpp:131
+#: ktorrent/torrentactivity.cpp:129
 #, kde-format
 msgid "Show or hide the group view"
 msgstr "සමූහ දසුන පෙන්වන්න හෝ සඟවන්න"
 
-#: ktorrent/torrentactivity.cpp:135
+#: ktorrent/torrentactivity.cpp:133
 #, kde-format
 msgid "Filter Torrents"
 msgstr "ටොරෙන්ට පෙරන්න"
 
-#: ktorrent/torrentactivity.cpp:136
+#: ktorrent/torrentactivity.cpp:134
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr ""
@@ -4139,8 +4139,8 @@ msgstr ""
 msgid "Remove Torrent"
 msgstr "ටොරන්ට් ඉවත් කරන්න"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:338
-#: plugins/infowidget/fileview.cpp:362
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:344
+#: plugins/infowidget/fileview.cpp:368
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "දත්ත මාරු කිරීමට බහලුමක් තෝරන්න."
@@ -5265,7 +5265,7 @@ msgstr "chunk ගබඩාකර ඇති ගොනු"
 #. i18n: ectx: property (text), widget (QLabel, hdr_chunks)
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChunkDownloadView)
 #: plugins/infowidget/chunkdownloadview.ui:13
-#: plugins/infowidget/infowidgetplugin.cpp:204
+#: plugins/infowidget/infowidgetplugin.cpp:205
 #: plugins/infowidget/statustab.ui:181
 #, kde-format
 msgid "Chunks"
@@ -5301,80 +5301,80 @@ msgstr "වම:"
 msgid "Size:"
 msgstr "ප්‍රමාණය:"
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "විවෘත කරන්න"
 
-#: plugins/infowidget/fileview.cpp:108
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "සමඟ විවෘත කරන්න"
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Check File"
 msgstr "ගොනුව පිරික්සන්න"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Download first"
 msgstr "ප්‍රථමයෙන් බාගන්න"
 
-#: plugins/infowidget/fileview.cpp:112
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Download normally"
 msgstr "සාමාන්‍ය ලෙස බාගන්න"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Download last"
 msgstr "අවසන බාගන්න"
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:121
 #, fuzzy, kde-format
 #| msgid "Do Not Download"
 msgid "Do not download"
 msgstr "බාගන්න එපා"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:122
 #, kde-format
 msgid "Delete File(s)"
 msgstr "ගොනු(ව) මකන්න"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Move File"
 msgstr "ගොනුව ගෙනයන්න"
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "බහලුම් වෘක්‍ෂය හකුළන්න"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:127
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "බහලුම් වෘක්‍ෂය දිගහරින්න"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:130
 #, kde-format
 msgid "File Tree"
 msgstr "ගොනු වෘක්‍ෂය"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:132
 #, kde-format
 msgid "File List"
 msgstr "ගොනු ලැයිස්තුව"
 
-#: plugins/infowidget/fileview.cpp:136
+#: plugins/infowidget/fileview.cpp:142
 #, kde-format
 msgid "Show Filter"
 msgstr "පෙරහන පෙන්වන්න"
 
-#: plugins/infowidget/fileview.cpp:317
+#: plugins/infowidget/fileview.cpp:323
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5383,7 +5383,7 @@ msgid_plural ""
 msgstr[0] "ඔබට මෙම ගොනුවේ සියළු දත්ත අහිමි වනු ඇත. ඔබට මෙය සිදුකිරීමට ඇවැසිද?"
 msgstr[1] "ඔබට මෙම ගොනුවල සියළු දත්ත අහිමි වනු ඇත. ඔබට මෙය සිදුකිරීමට ඇවැසිද?"
 
-#: plugins/infowidget/fileview.cpp:447
+#: plugins/infowidget/fileview.cpp:453
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5392,7 +5392,7 @@ msgid ""
 "higher priority?"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:450
+#: plugins/infowidget/fileview.cpp:456
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -5426,27 +5426,27 @@ msgstr "ගොනු"
 msgid "Shows all the files in a torrent"
 msgstr "ටොරෙන්ට් හි සියළුම ගොනු පෙන්වන්න"
 
-#: plugins/infowidget/infowidgetplugin.cpp:185
+#: plugins/infowidget/infowidgetplugin.cpp:186
 #, kde-format
 msgid "Displays all the peers you are connected to for a torrent"
 msgstr "ටොරෙන්ට් සඳහා සබඳවී ඇති සියළු ලබන්නන් පෙන්වයි"
 
-#: plugins/infowidget/infowidgetplugin.cpp:204
+#: plugins/infowidget/infowidgetplugin.cpp:205
 #, kde-format
 msgid "Displays all the chunks you are downloading, of a torrent"
 msgstr "ඔබ බාගන්නා සියළු chunk පෙන්වයි"
 
-#: plugins/infowidget/infowidgetplugin.cpp:223
+#: plugins/infowidget/infowidgetplugin.cpp:224
 #, kde-format
 msgid "Displays information about all the trackers of a torrent"
 msgstr "ටොරෙන්ටයක හඹායන්නන් පිළිබඳ සියළු තොරතුරු පෙන්වයි"
 
-#: plugins/infowidget/infowidgetplugin.cpp:239
+#: plugins/infowidget/infowidgetplugin.cpp:240
 #, kde-format
 msgid "Webseeds"
 msgstr "ජාල සීඩ්"
 
-#: plugins/infowidget/infowidgetplugin.cpp:239
+#: plugins/infowidget/infowidgetplugin.cpp:240
 #, kde-format
 msgid "Displays all the webseeds of a torrent"
 msgstr "ටොරෙන්ටයේ සියළු ජාල සීඩ් පෙන්වන්න"
@@ -6002,12 +6002,12 @@ msgstr "පෙරනිමි වෙත ප්‍රථිස්ථාපනය"
 msgid "Speed"
 msgstr "වේගය"
 
-#: plugins/infowidget/webseedstab.cpp:81
+#: plugins/infowidget/webseedstab.cpp:86
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
 msgstr "ජාල සීඩ් %1 එක්කල නොහැක, එය දැනටමත් ජාල සීඩ් ලැයිස්තුවේ පවතී."
 
-#: plugins/infowidget/webseedstab.cpp:97
+#: plugins/infowidget/webseedstab.cpp:102
 #, kde-format
 msgid "Cannot remove webseed %1, it is part of the torrent."
 msgstr "ජාල සීඩ් %1 ඉවත්කල නොහැක, එය ටොරෙන්ට් හි කොටසකි."
@@ -7232,7 +7232,7 @@ msgstr "%1 සුරකින්න"
 
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
-#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:125
+#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:127
 #: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Shutdown"
@@ -7250,19 +7250,19 @@ msgctxt "@title:window"
 msgid "Configure Shutdown"
 msgstr "වසාදැමීම සකසන්න"
 
-#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:129
+#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
 #: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Lock"
 msgstr "අගුළු දමන්න"
 
-#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:133
+#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "නිද්‍රා (RAM වෙත අත්හිටුවන්න)"
 
-#: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:137
+#: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
 #: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Hibernate (suspend to disk)"
