@@ -5,9 +5,9 @@
 */
 
 #include <KLocalizedString>
-#include <Phonon/AudioOutput>
-#include <Phonon/Global>
-#include <Phonon/Path>
+#include <phonon/AudioOutput>
+#include <phonon/Global>
+#include <phonon/Path>
 
 #include "mediaplayer.h"
 #include <torrent/torrentfilestream.h>

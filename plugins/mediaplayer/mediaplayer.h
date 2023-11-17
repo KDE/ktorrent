@@ -9,9 +9,9 @@
 
 #include "mediafile.h"
 #include "mediafilestream.h"
-#include <Phonon/MediaObject>
 #include <QStringList>
 #include <QTimer>
+#include <phonon/MediaObject>
 
 namespace Phonon
 {

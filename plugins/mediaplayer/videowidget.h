@@ -7,12 +7,12 @@
 #ifndef KTVIDEOWIDGET_H
 #define KTVIDEOWIDGET_H
 
-#include <Phonon/MediaObject>
-#include <Phonon/SeekSlider>
-#include <Phonon/VideoWidget>
-#include <Phonon/VolumeSlider>
 #include <QAction>
 #include <QWidget>
+#include <phonon/MediaObject>
+#include <phonon/SeekSlider>
+#include <phonon/VideoWidget>
+#include <phonon/VolumeSlider>
 
 class QAction;
 class QLabel;

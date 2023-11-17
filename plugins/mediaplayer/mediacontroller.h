@@ -7,9 +7,9 @@
 #define KT_MEDIACONTROLLER_H
 
 #include <KActionCollection>
-#include <Phonon/SeekSlider>
-#include <Phonon/VolumeSlider>
 #include <QLabel>
+#include <phonon/SeekSlider>
+#include <phonon/VolumeSlider>
 
 #include "mediafile.h"
 #include "ui_mediacontroller.h"

@@ -18,11 +18,11 @@
 #include <KToggleFullScreenAction>
 #include <KToolBar>
 
-#include <Phonon/AudioOutput>
-#include <Phonon/Global>
-#include <Phonon/Path>
-#include <Phonon/SeekSlider>
-#include <Phonon/VolumeSlider>
+#include <phonon/AudioOutput>
+#include <phonon/Global>
+#include <phonon/Path>
+#include <phonon/SeekSlider>
+#include <phonon/VolumeSlider>
 
 #include "mediaplayer.h"
 #include "powermanagementinhibit_interface.h"
