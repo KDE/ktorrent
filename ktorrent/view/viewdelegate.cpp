@@ -315,11 +315,8 @@ void ViewDelegate::hideExtender(bt::TorrentInterface *tc)
 
 void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    // first filling the background as if it was an empty cell
-    QStyleOptionViewItem dummyOption = option;
-    dummyOption.text = QLatin1String("");
-    dummyOption.index = QModelIndex();
-    QStyledItemDelegate::paint(painter, dummyOption, QModelIndex());
+    // first fill the cell background
+    QApplication::style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter);
 
     int progress = index.data().toInt();
 
