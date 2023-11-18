@@ -1,46 +1,48 @@
 # Add an option to compile & link against system GeoIP
 option(BUILD_WITH_GEOIP
-	"Link InfoWidget plugin against system GeoIP library and use system-wide default GeoIP Country database"
-	ON)
+    "Link InfoWidget plugin against system GeoIP library and use system-wide default GeoIP Country database"
+    ON)
 
 if (BUILD_WITH_GEOIP)
-	find_path(GEOIP_INCLUDE_DIR NAMES maxminddb.h PATHS / ${INCLUDE_INSTALL_DIR}/)
-	find_library(GEOIP_LIBRARY NAMES libmaxminddb PATHS ${LIB_INSTALL_DIR})
-
-	if (NOT GEOIP_INCLUDE_DIR OR NOT GEOIP_LIBRARY)
-		set(BUILD_WITH_GEOIP OFF CACHE BOOL
-		  "GeoIP development files could not be found on this system. Forcing this option to OFF"
-		  FORCE)
-		message(WARNING "GeoIP library development files could not be found on your system.")
-	else()
+    set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+    find_package(MaxmindDB)
+    set_package_properties(MaxmindDB PROPERTIES
+        TYPE OPTIONAL
+        PURPOSE "Required for KTorrent's infowidget plugin"
+    )
+    if (MaxmindDB_FOUND)
         message(STATUS "   Linking InfoWidget against system GeoIP library")
-        include_directories(${GEOIP_INCLUDE_DIR})
-        set(geoip_link ${GEOIP_LIBRARY})
+        set(geoip_link ${MaxmindDB_LIBRARIES})
+    else()
+        set(BUILD_WITH_GEOIP OFF CACHE BOOL
+          "GeoIP development files could not be found on this system. Forcing this option to OFF"
+          FORCE)
+        message(WARNING "GeoIP library development files could not be found on your system.")
     endif()
-endif(BUILD_WITH_GEOIP)
+endif()
 
 ktorrent_add_plugin(ktorrent_infowidget)
 
 target_sources(ktorrent_infowidget PRIVATE
-	infowidgetplugin.cpp 
-	iwprefpage.cpp 
-	monitor.cpp 
-	availabilitychunkbar.cpp 
-	downloadedchunkbar.cpp 
-	statustab.cpp
-	fileview.cpp
-	peerview.cpp
-	peerviewmodel.cpp
-	chunkdownloadview.cpp
-	chunkdownloadmodel.cpp
-	trackerview.cpp
-	trackermodel.cpp
-	addtrackersdialog.cpp
-	flagdb.cpp
-	iwfiletreemodel.cpp
-	iwfilelistmodel.cpp
-	webseedstab.cpp
-	webseedsmodel.cpp)
+    infowidgetplugin.cpp
+    iwprefpage.cpp
+    monitor.cpp
+    availabilitychunkbar.cpp
+    downloadedchunkbar.cpp
+    statustab.cpp
+    fileview.cpp
+    peerview.cpp
+    peerviewmodel.cpp
+    chunkdownloadview.cpp
+    chunkdownloadmodel.cpp
+    trackerview.cpp
+    trackermodel.cpp
+    addtrackersdialog.cpp
+    flagdb.cpp
+    iwfiletreemodel.cpp
+    iwfilelistmodel.cpp
+    webseedstab.cpp
+    webseedsmodel.cpp)
 
 if (BUILD_WITH_GEOIP)
     target_sources(ktorrent_infowidget PRIVATE geoipmanager.cpp)
