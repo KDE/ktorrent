@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 00:42+0000\n"
+"POT-Creation-Date: 2023-11-18 00:42+0000\n"
 "PO-Revision-Date: 2013-08-27 05:45+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1639,400 +1639,410 @@ msgstr "Andreas Kling"
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:128
+#: ktorrent/main.cpp:129
+#, kde-format
+msgid "DB-IP.com"
+msgstr ""
+
+#: ktorrent/main.cpp:130
+#, kde-format
+msgid ""
+"Provider of the IP-Country database used in the InfoWidget plugin. The data "
+"is licensed under the Creative Commons Attribution 4.0 International License "
+"https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
+"flags.blogpotato.de/ so thanks to them too."
+msgstr ""
+
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:134
 #, kde-format
-msgid ""
-"Country locator for InfoWidget plugin. Flags are taken from http://flags."
-"blogpotato.de/ so thanks to them too."
+msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
-"InfoWidget плагиннің ел көрсеткіші. Жалаулары http://flags.blogpotato.de/ "
-"сайтынан, рақымет оларға."
 
-#: ktorrent/main.cpp:132
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:132
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "Файлдар кезектесуі және басқа бірнеше жамаулар"
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:137
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "Біздің UPnP іске асырылғанда үлгі ретінде Miniupnp қолданылған"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:137 ktorrent/main.cpp:138
+#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Zeroconf жетілдірулері"
 
-#: ktorrent/main.cpp:138
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Coldmilk веб-интерфейсі"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Alexander Dymo"
 msgstr " "
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "KDevelop-тың IDEAI коды"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "ipfilter плагиндегі аудару жылдамдығын көтеруі"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Bryan Burns (Juniper Networks)"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "2 қауіпсіздік кетігін тапқан (екеуі де жөнделген)"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "Сақтау орынға сұрамай жүктеу жамауы"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "Веб-интерфейс плагиннің PHP кодын түзету"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "XFS қатысты диск орынды арнау"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "Өте баяулықты көрсету жамауы"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "Желіаралық қалқанға қатысты жағдайының жамауы"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Several patches"
 msgstr "Бірнеше жамау"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "Мәзір панелін жасыру жамауы"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "`Веб-интерфейсінде файл артықшылығын өзгерту жамауы"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Several webgui patches"
 msgstr "Бірнеше веб-интерфейс жамауы"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "Бірнеше ескертулерді түзеген"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "FreeBSD-дегі бос орын қатесін түзеген"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "ChunkDownloadView-дегі қирау қатесін түзеген"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "Бір-екі қате түзеген"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "Командалық жолынан сұрамай торрентті жүктеу жамауы"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "New set of icons"
 msgstr "Жаңа таңбашалар жиыны"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Plasma апплетте сүйреп әкелу әдісін қолдануы"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "Плагин тізімін тазалау жамауы"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "Plasma апплетін қалқымалы апплет қылу жамауы"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Leo Trubach"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "IP сүзгі диалогында IP ауықымдарын қолдау жамауы"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrei Barbu"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "Торрент қосылған кезін белгілеу мүмкіндігі"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundqvist"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "Веб-инттерфейсінде аутентификацияны бұғаттау мүмкіндігі"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslaw Swierczynski"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "Ақпарларды жариялау плагинде кірмеу өрнектерін қолдануы"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Alexey Shildyakov "
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "Жалғыз файл торрентті файлдың атауына өзгерту жамауы"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "Maarten De Meyer"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr ""
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Rex Dieter"
 msgstr ""
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr ""
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Leszek Lesner"
 msgstr ""
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr ""
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr ""
 
-#: ktorrent/main.cpp:169 ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
 #, kde-format
 msgid "KF5 porting"
 msgstr ""
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr ""
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:174
 #, fuzzy, kde-format
 #| msgid "Alexander Dymo"
 msgid "Alexander Trufanov"
 msgstr " "
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr ""
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:178
 #, fuzzy, kde-format
 #| msgid "Enable All"
 msgid "Enable logging"
 msgstr "Бүкілін рұқсат ету"
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:179
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
 
-#: ktorrent/main.cpp:177
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "URL сілтеген торрентті сұрамай ашу"
 
-#: ktorrent/main.cpp:178
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid "Document to open"
 msgstr "Ашатын құжат"
@@ -4264,7 +4274,7 @@ msgstr "Торрентті өшіру"
 msgid "Select a directory to move the data to."
 msgstr "Деректі қай қапшыққа жылжытатынын таңдаңыз."
 
-#: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:317
+#: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "Downloaded"
@@ -4277,7 +4287,7 @@ msgstr "Жүктеп алынғаны"
 msgid "Size"
 msgstr "Өлшемі"
 
-#: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:319
+#: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Uploaded"
 msgstr "Жүктеп берілгені"
@@ -4290,12 +4300,12 @@ msgstr "Қалғаны"
 
 #: ktorrent/view/viewmodel.cpp:448
 #: plugins/infowidget/chunkdownloadmodel.cpp:195
-#: plugins/infowidget/peerviewmodel.cpp:299
+#: plugins/infowidget/peerviewmodel.cpp:297
 #, kde-format
 msgid "Down Speed"
 msgstr "Алу легі"
 
-#: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:301
+#: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:299
 #, kde-format
 msgid "Up Speed"
 msgstr "Беру легі"
@@ -5775,145 +5785,145 @@ msgstr "Қатарластан ажырау"
 msgid "Ban Peer"
 msgstr "Қатарласқа тыйым салу"
 
-#: plugins/infowidget/peerviewmodel.cpp:87
+#: plugins/infowidget/peerviewmodel.cpp:85
 #, kde-format
 msgid " (µTP)"
 msgstr " (µTP)"
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
 msgctxt "Choked"
 msgid "Yes"
 msgstr "Иә"
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
 msgctxt "Not choked"
 msgid "No"
 msgstr "Жоқ"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:105
 #, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
 msgstr "Иә"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:105
 #, kde-format
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "Жоқ"
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
 msgctxt "Interested"
 msgid "Yes"
 msgstr "Иә"
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
 msgctxt "Not Interested"
 msgid "No"
 msgstr "Жоқ"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:123
 #, kde-format
 msgctxt "Interesting"
 msgid "Yes"
 msgstr "Иә"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:123
 #, kde-format
 msgctxt "Not Interesting"
 msgid "No"
 msgstr "Жоқ"
 
-#: plugins/infowidget/peerviewmodel.cpp:293
+#: plugins/infowidget/peerviewmodel.cpp:291
 #, kde-format
 msgid "Address"
 msgstr "Адрес"
 
-#: plugins/infowidget/peerviewmodel.cpp:295
+#: plugins/infowidget/peerviewmodel.cpp:293
 #, kde-format
 msgid "Country"
 msgstr "Ел"
 
-#: plugins/infowidget/peerviewmodel.cpp:297
+#: plugins/infowidget/peerviewmodel.cpp:295
 #, kde-format
 msgid "Client"
 msgstr "Клиент"
 
-#: plugins/infowidget/peerviewmodel.cpp:303
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Choked"
 msgstr "Басып тасталған"
 
-#: plugins/infowidget/peerviewmodel.cpp:305
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, kde-format
 msgid "Snubbed"
 msgstr "Үзілген"
 
-#: plugins/infowidget/peerviewmodel.cpp:307
+#: plugins/infowidget/peerviewmodel.cpp:305
 #, kde-format
 msgid "Availability"
 msgstr "Мүмкіндік"
 
-#: plugins/infowidget/peerviewmodel.cpp:309
+#: plugins/infowidget/peerviewmodel.cpp:307
 #, kde-format
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:311
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Score"
 msgstr "Ұпайы"
 
-#: plugins/infowidget/peerviewmodel.cpp:313
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Upload Slot"
 msgstr "Жүктеп беретін орын"
 
-#: plugins/infowidget/peerviewmodel.cpp:315
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "Requests"
 msgstr "Талаптар"
 
-#: plugins/infowidget/peerviewmodel.cpp:321
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Interested"
 msgstr "Мүдделі"
 
-#: plugins/infowidget/peerviewmodel.cpp:323
+#: plugins/infowidget/peerviewmodel.cpp:321
 #, kde-format
 msgid "Interesting"
 msgstr "Мүдделіміз"
 
-#: plugins/infowidget/peerviewmodel.cpp:330
+#: plugins/infowidget/peerviewmodel.cpp:328
 #, kde-format
 msgid "IP address of the peer"
 msgstr "Қатарластың IP адресі"
 
-#: plugins/infowidget/peerviewmodel.cpp:332
+#: plugins/infowidget/peerviewmodel.cpp:330
 #, kde-format
 msgid "Country the peer is in"
 msgstr "Қатарластың елі"
 
-#: plugins/infowidget/peerviewmodel.cpp:334
+#: plugins/infowidget/peerviewmodel.cpp:332
 #, kde-format
 msgid "Which client the peer is using"
 msgstr "Қатарластың қолданатын бағдарламасы"
 
-#: plugins/infowidget/peerviewmodel.cpp:336
+#: plugins/infowidget/peerviewmodel.cpp:334
 #, kde-format
 msgid "Download speed"
 msgstr "Жүктеп алу легі"
 
-#: plugins/infowidget/peerviewmodel.cpp:338
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
 msgid "Upload speed"
 msgstr "Жүктеп беру легі"
 
-#: plugins/infowidget/peerviewmodel.cpp:340
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
@@ -5922,54 +5932,54 @@ msgstr ""
 "Қатарлас бізді басып тастады ма, жоқ па. Басып тастаса, ол бізге ештеңе "
 "жібермейді"
 
-#: plugins/infowidget/peerviewmodel.cpp:342
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr "'Үзілген'  -  қатарлас соңғы 2 минут бізге ештеңе жібермеді деген сөз."
 
-#: plugins/infowidget/peerviewmodel.cpp:344
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "Қатарласта торренттің қанша дерегі бар"
 
-#: plugins/infowidget/peerviewmodel.cpp:346
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "Қатарласта DHT рұқсат етілген бе, жоқ па"
 
-#: plugins/infowidget/peerviewmodel.cpp:348
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
 "Қатарластың ұпайы. Осыған жүгініп, KTorrent қайсысына жүктеп беретінін "
 "ұйғарады"
 
-#: plugins/infowidget/peerviewmodel.cpp:350
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr "Жүктеп беруге слоты бар қатарластар ғана бізден деректерді алады"
 
-#: plugins/infowidget/peerviewmodel.cpp:352
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
 msgid "The number of download and upload requests"
 msgstr "Жүктеп алу мен беру талаптар саны"
 
-#: plugins/infowidget/peerviewmodel.cpp:354
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "Қатарластан қаншама дерек жүктеп алынғаны"
 
-#: plugins/infowidget/peerviewmodel.cpp:356
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "Қатарласқа қаншама дерек жүктеп берілгені"
 
-#: plugins/infowidget/peerviewmodel.cpp:358
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr "Қатарлас бізден деректі жүктеп алуға мұдделі ме, жоқ па"
 
-#: plugins/infowidget/peerviewmodel.cpp:360
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr "Қатарластан біз деректі жүктеп алуға мұдделіміз бе, жоқ па"
@@ -8816,6 +8826,13 @@ msgstr "Қайта зерттеу"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid ""
+#~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."
+#~ "blogpotato.de/ so thanks to them too."
+#~ msgstr ""
+#~ "InfoWidget плагиннің ел көрсеткіші. Жалаулары http://flags.blogpotato.de/ "
+#~ "сайтынан, рақымет оларға."
 
 #~ msgid ""
 #~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="

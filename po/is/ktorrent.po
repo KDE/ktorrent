@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 00:42+0000\n"
+"POT-Creation-Date: 2023-11-18 00:42+0000\n"
 "PO-Revision-Date: 2015-01-29 09:07+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -1597,396 +1597,408 @@ msgstr "Andreas Kling"
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:128
+#: ktorrent/main.cpp:129
+#, kde-format
+msgid "DB-IP.com"
+msgstr ""
+
+#: ktorrent/main.cpp:130
+#, kde-format
+msgid ""
+"Provider of the IP-Country database used in the InfoWidget plugin. The data "
+"is licensed under the Creative Commons Attribution 4.0 International License "
+"https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
+"flags.blogpotato.de/ so thanks to them too."
+msgstr ""
+
+#: ktorrent/main.cpp:134
 #, fuzzy, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-msgid ""
-"Country locator for InfoWidget plugin. Flags are taken from http://flags."
-"blogpotato.de/ so thanks to them too."
-msgstr "Land fyrir íforrit Flögg fráhttp://flags.blogpotato.de/ til."
+#: ktorrent/main.cpp:134
+#, kde-format
+msgid "The maxminddb library used for the InfoWidget plugin."
+msgstr ""
 
-#: ktorrent/main.cpp:132
+#: ktorrent/main.cpp:135
 #, fuzzy, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:132
+#: ktorrent/main.cpp:135
 #, fuzzy, kde-format
 msgid "File prioritization and some other patches"
 msgstr "Skrá og eitthvað annað"
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:136
 #, fuzzy, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:137
 #, fuzzy, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "sem fyrir"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:140
 #, fuzzy, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:137 ktorrent/main.cpp:138
+#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
 #, fuzzy, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Zeroconf viðbætur"
 
-#: ktorrent/main.cpp:138
+#: ktorrent/main.cpp:141
 #, fuzzy, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:142
 #, fuzzy, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:142
 #, fuzzy, kde-format
 msgid "Coldmilk webgui"
 msgstr "Coldmilk vefviðmót"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:143
 #, fuzzy, kde-format
 msgid "Alexander Dymo"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:143
 #, fuzzy, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "frá KDevelop"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:144
 #, fuzzy, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:144
 #, fuzzy, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "Umbreyting \" íforrit"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:145
 #, fuzzy, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Bryan Burns frá Juniper Networks"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:145
 #, fuzzy, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "lagað"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:146
 #, fuzzy, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:146
 #, fuzzy, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "til með a"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:147
 #, fuzzy, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:147
 #, fuzzy, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "\" PHP af"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:148
 #, fuzzy, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:148
 #, fuzzy, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "diskur"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:149
 #, fuzzy, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:149
 #, fuzzy, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "til ekki lár"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:150
 #, fuzzy, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:150
 #, fuzzy, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "til staða"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:151
 #, fuzzy, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:151
 #, fuzzy, kde-format
 msgid "Several patches"
 msgstr "Ýmsar betrumbætur"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:152
 #, fuzzy, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:152
 #, fuzzy, kde-format
 msgid "Patch to hide menu bar"
 msgstr "til"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:153
 #, fuzzy, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:153
 #, fuzzy, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "til \""
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:154
 #, fuzzy, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:154
 #, fuzzy, kde-format
 msgid "Several webgui patches"
 msgstr "Ýmsar betrumbætur vefviðmóts"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:155
 #, fuzzy, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:155
 #, fuzzy, kde-format
 msgid "Fixes for several warnings"
 msgstr "fyrir"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:156
 #, fuzzy, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:156
 #, fuzzy, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "til á"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:157
 #, fuzzy, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:157
 #, fuzzy, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "til a \""
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:158
 #, fuzzy, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:158
 #, fuzzy, kde-format
 msgid "A couple of bugfixes"
 msgstr "A af"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:159
 #, fuzzy, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:159
 #, fuzzy, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "til frá lína"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:160
 #, fuzzy, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:160
 #, fuzzy, kde-format
 msgid "New set of icons"
 msgstr "Nýtt af táknmyndir"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:161
 #, fuzzy, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:161
 #, fuzzy, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Draga og fyrir"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:162
 #, fuzzy, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:162
 #, fuzzy, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "til íforrit"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:163
 #, fuzzy, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:163
 #, fuzzy, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "til a"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Leo Trubach"
 msgstr ""
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr ""
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Andrei Barbu"
 msgstr ""
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:165
 #, fuzzy, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "allir yfirborð"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr ""
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr ""
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr ""
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr ""
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr ""
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:168
 #, fuzzy, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "til \""
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr ""
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr ""
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Rex Dieter"
 msgstr ""
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr ""
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Leszek Lesner"
 msgstr ""
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr ""
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr ""
 
-#: ktorrent/main.cpp:169 ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
 #, kde-format
 msgid "KF5 porting"
 msgstr ""
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr ""
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:174
 #, fuzzy, kde-format
 msgid "Alexander Trufanov"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr ""
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:178
 #, fuzzy, kde-format
 msgid "Enable logging"
 msgstr "Virkja allar"
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:179
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
 
-#: ktorrent/main.cpp:177
+#: ktorrent/main.cpp:180
 #, fuzzy, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "á Slóð"
 
-#: ktorrent/main.cpp:178
+#: ktorrent/main.cpp:181
 #, fuzzy, kde-format
 msgid "Document to open"
 msgstr "Skjal sem á að opna"
@@ -4076,7 +4088,7 @@ msgstr "Fjarlægja"
 msgid "Select a directory to move the data to."
 msgstr "Veldu möppu til að gæra gögnin yfir í."
 
-#: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:317
+#: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, fuzzy, kde-format
 msgid "Downloaded"
@@ -4089,7 +4101,7 @@ msgstr "Hlaðið inn"
 msgid "Size"
 msgstr "Stærð"
 
-#: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:319
+#: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:317
 #, fuzzy, kde-format
 msgid "Uploaded"
 msgstr "Hlaðið inn"
@@ -4102,12 +4114,12 @@ msgstr "Vinstri"
 
 #: ktorrent/view/viewmodel.cpp:448
 #: plugins/infowidget/chunkdownloadmodel.cpp:195
-#: plugins/infowidget/peerviewmodel.cpp:299
+#: plugins/infowidget/peerviewmodel.cpp:297
 #, fuzzy, kde-format
 msgid "Down Speed"
 msgstr "Innhraði"
 
-#: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:301
+#: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:299
 #, fuzzy, kde-format
 msgid "Up Speed"
 msgstr "Upphraði"
@@ -5555,199 +5567,199 @@ msgstr "Sparka jafningja"
 msgid "Ban Peer"
 msgstr "Banna jafningja"
 
-#: plugins/infowidget/peerviewmodel.cpp:87
+#: plugins/infowidget/peerviewmodel.cpp:85
 #, fuzzy, kde-format
 msgid " (µTP)"
 msgstr "µTP"
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:103
 #, fuzzy, kde-format
 msgctxt "Choked"
 msgid "Yes"
 msgstr "Já"
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:103
 #, fuzzy, kde-format
 msgctxt "Not choked"
 msgid "No"
 msgstr "Nei"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:105
 #, fuzzy, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
 msgstr "Já"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:105
 #, fuzzy, kde-format
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "Nei"
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:121
 #, fuzzy, kde-format
 msgctxt "Interested"
 msgid "Yes"
 msgstr "Já"
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:121
 #, fuzzy, kde-format
 msgctxt "Not Interested"
 msgid "No"
 msgstr "Nei"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:123
 #, fuzzy, kde-format
 msgctxt "Interesting"
 msgid "Yes"
 msgstr "Já"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:123
 #, fuzzy, kde-format
 msgctxt "Not Interesting"
 msgid "No"
 msgstr "Nei"
 
-#: plugins/infowidget/peerviewmodel.cpp:293
+#: plugins/infowidget/peerviewmodel.cpp:291
 #, fuzzy, kde-format
 msgid "Address"
 msgstr "Vistfang"
 
-#: plugins/infowidget/peerviewmodel.cpp:295
+#: plugins/infowidget/peerviewmodel.cpp:293
 #, fuzzy, kde-format
 msgid "Country"
 msgstr "Land"
 
-#: plugins/infowidget/peerviewmodel.cpp:297
+#: plugins/infowidget/peerviewmodel.cpp:295
 #, fuzzy, kde-format
 msgid "Client"
 msgstr "Biðlari"
 
-#: plugins/infowidget/peerviewmodel.cpp:303
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, fuzzy, kde-format
 msgid "Choked"
 msgstr "Yfirfylltist"
 
-#: plugins/infowidget/peerviewmodel.cpp:305
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, fuzzy, kde-format
 msgid "Snubbed"
 msgstr "Sniðgengið"
 
-#: plugins/infowidget/peerviewmodel.cpp:307
+#: plugins/infowidget/peerviewmodel.cpp:305
 #, fuzzy, kde-format
 msgid "Availability"
 msgstr "Aðgengi"
 
-#: plugins/infowidget/peerviewmodel.cpp:309
+#: plugins/infowidget/peerviewmodel.cpp:307
 #, fuzzy, kde-format
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:311
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Score"
 msgstr "Stig"
 
-#: plugins/infowidget/peerviewmodel.cpp:313
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Upload Slot"
 msgstr "Senda hólf"
 
-#: plugins/infowidget/peerviewmodel.cpp:315
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "Requests"
 msgstr "Beiðnir"
 
-#: plugins/infowidget/peerviewmodel.cpp:321
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Interested"
 msgstr "Áhugasamur"
 
-#: plugins/infowidget/peerviewmodel.cpp:323
+#: plugins/infowidget/peerviewmodel.cpp:321
 #, fuzzy, kde-format
 msgid "Interesting"
 msgstr "Áhugavert"
 
-#: plugins/infowidget/peerviewmodel.cpp:330
+#: plugins/infowidget/peerviewmodel.cpp:328
 #, fuzzy, kde-format
 msgid "IP address of the peer"
 msgstr "IP vistfang jafningja"
 
-#: plugins/infowidget/peerviewmodel.cpp:332
+#: plugins/infowidget/peerviewmodel.cpp:330
 #, fuzzy, kde-format
 msgid "Country the peer is in"
 msgstr "Land er \""
 
-#: plugins/infowidget/peerviewmodel.cpp:334
+#: plugins/infowidget/peerviewmodel.cpp:332
 #, fuzzy, kde-format
 msgid "Which client the peer is using"
 msgstr "Hvaða forrit jafningi notar"
 
-#: plugins/infowidget/peerviewmodel.cpp:336
+#: plugins/infowidget/peerviewmodel.cpp:334
 #, kde-format
 msgid "Download speed"
 msgstr "Niðurhalshraði"
 
-#: plugins/infowidget/peerviewmodel.cpp:338
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
 msgid "Upload speed"
 msgstr "Sendingarhraði"
 
-#: plugins/infowidget/peerviewmodel.cpp:340
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, fuzzy, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
 "send us any data"
 msgstr "eða ekki euro ekki euro"
 
-#: plugins/infowidget/peerviewmodel.cpp:342
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, fuzzy, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 "Að vera sniðgenginn þýðir að jafninginn hefur ekki sent okkur nein gögn "
 "síðustu 2 mínúturnar"
 
-#: plugins/infowidget/peerviewmodel.cpp:344
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, fuzzy, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "af"
 
-#: plugins/infowidget/peerviewmodel.cpp:346
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, fuzzy, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "Hvort jafninginn sé með DHT virkjað"
 
-#: plugins/infowidget/peerviewmodel.cpp:348
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, fuzzy, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr "stig af til til til"
 
-#: plugins/infowidget/peerviewmodel.cpp:350
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, fuzzy, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr "Einungis jafningjar sem eiga sendingarhólf fá gögn frá okkur"
 
-#: plugins/infowidget/peerviewmodel.cpp:352
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, fuzzy, kde-format
 msgid "The number of download and upload requests"
 msgstr "Fjöldi fyrirspurna um niðurhal og sendingar"
 
-#: plugins/infowidget/peerviewmodel.cpp:354
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, fuzzy, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "Hversu mikið af gögnum við erum búin að ná í frá þessum jafningja"
 
-#: plugins/infowidget/peerviewmodel.cpp:356
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, fuzzy, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "Hversu mikið af gögnum við erum búin að senda til þessa jafningja"
 
-#: plugins/infowidget/peerviewmodel.cpp:358
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, fuzzy, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr "Hvort jafninginn hefur áhuga á gögnum frá okkur"
 
-#: plugins/infowidget/peerviewmodel.cpp:360
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, fuzzy, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr "Hvort við höfum áhuga á gögnum frá þessum jafningja"
@@ -8568,6 +8580,12 @@ msgstr "Skanna aftur"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#, fuzzy
+#~ msgid ""
+#~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."
+#~ "blogpotato.de/ so thanks to them too."
+#~ msgstr "Land fyrir íforrit Flögg fráhttp://flags.blogpotato.de/ til."
 
 #, fuzzy
 #~ msgid ""

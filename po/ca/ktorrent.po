@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 00:42+0000\n"
+"POT-Creation-Date: 2023-11-18 00:42+0000\n"
 "PO-Revision-Date: 2023-11-13 13:21+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1653,392 +1653,402 @@ msgstr "Andreas Kling"
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:128
+#: ktorrent/main.cpp:129
+#, kde-format
+msgid "DB-IP.com"
+msgstr ""
+
+#: ktorrent/main.cpp:130
+#, kde-format
+msgid ""
+"Provider of the IP-Country database used in the InfoWidget plugin. The data "
+"is licensed under the Creative Commons Attribution 4.0 International License "
+"https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
+"flags.blogpotato.de/ so thanks to them too."
+msgstr ""
+
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:134
 #, kde-format
-msgid ""
-"Country locator for InfoWidget plugin. Flags are taken from http://flags."
-"blogpotato.de/ so thanks to them too."
+msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
-"Localitzador de països per al connector InfoWidget. Les banderes són de "
-"https://flags.blogpotato.de/, així que gràcies a ells també."
 
-#: ktorrent/main.cpp:132
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:132
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "Priorització dels fitxers i altres pedaços"
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:137
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "S'ha usat miniupnp com a exemple per a la nostra implementació UPnP"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:137 ktorrent/main.cpp:138
+#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Millores del Zeroconf"
 
-#: ktorrent/main.cpp:138
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Interfície web coldmilk"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "Codi IDEAl des del KDevelop"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "Millora en la conversió de velocitats del connector filtre d'IP"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Bryan Burns de Juniper Networks"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "Va trobar 2 vulnerabilitats de seguretat (esmenades)"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "Pedaç per a carregar silenciosament a una ubicació de desament"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "Millores en el codi PHP de la interfície web"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "Reserva d'espai específica de XFS"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "Pedaç per a no mostrar velocitats molt baixes"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "Pedaç que detecta la possibilitat d'estar darrere d'un tallafoc"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Several patches"
 msgstr "Diversos pedaços"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "Pedaç per a ocultar la barra de menús"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "Pedaç per a modificar les prioritats del fitxer en la interfície web"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Several webgui patches"
 msgstr "Diversos pedaços de la interfície web"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "Esmenes per a diversos avisos"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "Pedaç per a esmenar el càlcul de l'espai lliure al disc a FreeBSD"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "Pedaç per a solucionar una fallada a «ChunkDownloadView»"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "Un parell d'errors esmenats"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr ""
 "Pedaç per a carregar silenciosament els torrents des de la línia d'ordres"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "New set of icons"
 msgstr "Conjunt d'icones nou"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr ""
 "Implementació d'arrossegar i deixar anar per a la miniaplicació del Plasma"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "Pedaç per a netejar la llista de connectors"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr ""
 "Pedaç per a fer que la miniaplicació del Plasma sigui una miniaplicació "
 "emergent"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Leo Trubach"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "Pedaç per a permetre intervals d'IP en el diàleg de filtres d'IP"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrei Barbu"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "Funcionalitat que afegeix la data de quan s'ha afegit un torrent"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundqvist"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "Funcionalitat per a desactivar l'autenticació a la interfície web"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslaw Swierczynski"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "Patrons d'exclusió al connector de sindicació"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Alexey Shildyakov "
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr ""
 "Pedaç per a reanomenar els torrents d'un sol fitxer amb el nom del fitxer "
 "que contenen"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "Maarten De Meyer"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "Esmena de l'error 305379"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Rex Dieter"
 msgstr "Rex Dieter"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "Va afegir la implementació per al tipus MIME «x-scheme-handler/magnet»"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "Leszek Lesner"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "Esmena de l'error 339584"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "Andrius Štikonas"
 
-#: ktorrent/main.cpp:169 ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
 #, kde-format
 msgid "KF5 porting"
 msgstr "Adaptació al KF5"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr "Alexander Trufanov"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr "Correccions d'errors, neteges i optimitzacions"
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:178
 #, kde-format
 msgid "Enable logging"
 msgstr "Activa el registre"
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:179
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
@@ -2047,12 +2057,12 @@ msgstr ""
 "Activa el registre a la sortida estàndard. També requereix que s'especifiqui "
 "--enable-logging."
 
-#: ktorrent/main.cpp:177
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "Obre silenciosament el torrent indicat en un URL"
 
-#: ktorrent/main.cpp:178
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid "Document to open"
 msgstr "Document a obrir"
@@ -4311,7 +4321,7 @@ msgstr "Elimina el torrent"
 msgid "Select a directory to move the data to."
 msgstr "Seleccioneu un directori a on moure les dades."
 
-#: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:317
+#: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "Downloaded"
@@ -4324,7 +4334,7 @@ msgstr "Baixat"
 msgid "Size"
 msgstr "Mida"
 
-#: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:319
+#: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Uploaded"
 msgstr "Pujat"
@@ -4337,12 +4347,12 @@ msgstr "Pendent"
 
 #: ktorrent/view/viewmodel.cpp:448
 #: plugins/infowidget/chunkdownloadmodel.cpp:195
-#: plugins/infowidget/peerviewmodel.cpp:299
+#: plugins/infowidget/peerviewmodel.cpp:297
 #, kde-format
 msgid "Down Speed"
 msgstr "Baixant a"
 
-#: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:301
+#: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:299
 #, kde-format
 msgid "Up Speed"
 msgstr "Pujant a"
@@ -5836,145 +5846,145 @@ msgstr "Expulsa el parell"
 msgid "Ban Peer"
 msgstr "Prohibeix el parell"
 
-#: plugins/infowidget/peerviewmodel.cpp:87
+#: plugins/infowidget/peerviewmodel.cpp:85
 #, kde-format
 msgid " (µTP)"
 msgstr " (µTP)"
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
 msgctxt "Choked"
 msgid "Yes"
 msgstr "Sí"
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
 msgctxt "Not choked"
 msgid "No"
 msgstr "No"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:105
 #, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
 msgstr "Sí"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:105
 #, kde-format
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "No"
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
 msgctxt "Interested"
 msgid "Yes"
 msgstr "Sí"
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
 msgctxt "Not Interested"
 msgid "No"
 msgstr "No"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:123
 #, kde-format
 msgctxt "Interesting"
 msgid "Yes"
 msgstr "Sí"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:123
 #, kde-format
 msgctxt "Not Interesting"
 msgid "No"
 msgstr "No"
 
-#: plugins/infowidget/peerviewmodel.cpp:293
+#: plugins/infowidget/peerviewmodel.cpp:291
 #, kde-format
 msgid "Address"
 msgstr "Adreça"
 
-#: plugins/infowidget/peerviewmodel.cpp:295
+#: plugins/infowidget/peerviewmodel.cpp:293
 #, kde-format
 msgid "Country"
 msgstr "País"
 
-#: plugins/infowidget/peerviewmodel.cpp:297
+#: plugins/infowidget/peerviewmodel.cpp:295
 #, kde-format
 msgid "Client"
 msgstr "Client"
 
-#: plugins/infowidget/peerviewmodel.cpp:303
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Choked"
 msgstr "Obturat"
 
-#: plugins/infowidget/peerviewmodel.cpp:305
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, kde-format
 msgid "Snubbed"
 msgstr "Rebutjat"
 
-#: plugins/infowidget/peerviewmodel.cpp:307
+#: plugins/infowidget/peerviewmodel.cpp:305
 #, kde-format
 msgid "Availability"
 msgstr "Disponibilitat"
 
-#: plugins/infowidget/peerviewmodel.cpp:309
+#: plugins/infowidget/peerviewmodel.cpp:307
 #, kde-format
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:311
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Score"
 msgstr "Puntuació"
 
-#: plugins/infowidget/peerviewmodel.cpp:313
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Upload Slot"
 msgstr "Ranura de pujada"
 
-#: plugins/infowidget/peerviewmodel.cpp:315
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "Requests"
 msgstr "Peticions"
 
-#: plugins/infowidget/peerviewmodel.cpp:321
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Interested"
 msgstr "Interessat"
 
-#: plugins/infowidget/peerviewmodel.cpp:323
+#: plugins/infowidget/peerviewmodel.cpp:321
 #, kde-format
 msgid "Interesting"
 msgstr "Interessant"
 
-#: plugins/infowidget/peerviewmodel.cpp:330
+#: plugins/infowidget/peerviewmodel.cpp:328
 #, kde-format
 msgid "IP address of the peer"
 msgstr "Adreça IP del parell"
 
-#: plugins/infowidget/peerviewmodel.cpp:332
+#: plugins/infowidget/peerviewmodel.cpp:330
 #, kde-format
 msgid "Country the peer is in"
 msgstr "País en el qual es troba el parell"
 
-#: plugins/infowidget/peerviewmodel.cpp:334
+#: plugins/infowidget/peerviewmodel.cpp:332
 #, kde-format
 msgid "Which client the peer is using"
 msgstr "El client que usa el parell"
 
-#: plugins/infowidget/peerviewmodel.cpp:336
+#: plugins/infowidget/peerviewmodel.cpp:334
 #, kde-format
 msgid "Download speed"
 msgstr "Velocitat de baixada"
 
-#: plugins/infowidget/peerviewmodel.cpp:338
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
 msgid "Upload speed"
 msgstr "Velocitat de pujada"
 
-#: plugins/infowidget/peerviewmodel.cpp:340
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
@@ -5983,56 +5993,56 @@ msgstr ""
 "Si el parell ens ha embussat -quan estiguem embussats el parell no ens "
 "enviarà cap dada-"
 
-#: plugins/infowidget/peerviewmodel.cpp:342
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 "Rebutjat significa que el parell no ens ha enviat cap dada en els darrers 2 "
 "minuts"
 
-#: plugins/infowidget/peerviewmodel.cpp:344
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "Quantes dades del torrent té el parell"
 
-#: plugins/infowidget/peerviewmodel.cpp:346
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "Si el parell té el DHT activat"
 
-#: plugins/infowidget/peerviewmodel.cpp:348
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
 "La puntuació del parell, el KTorrent l'usa per a determinar amb qui puja"
 
-#: plugins/infowidget/peerviewmodel.cpp:350
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr ""
 "Només els parells que tenen una ranura de pujada obtindran dades de nosaltres"
 
-#: plugins/infowidget/peerviewmodel.cpp:352
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
 msgid "The number of download and upload requests"
 msgstr "El nombre de sol·licituds de baixada i de pujada"
 
-#: plugins/infowidget/peerviewmodel.cpp:354
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "Quantes dades hem baixat des d'aquest parell"
 
-#: plugins/infowidget/peerviewmodel.cpp:356
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "Quantes dades hem pujat a aquest parell"
 
-#: plugins/infowidget/peerviewmodel.cpp:358
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr "Si el parell està interessat a baixar dades des de nosaltres"
 
-#: plugins/infowidget/peerviewmodel.cpp:360
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr "Si nosaltres estem interessats a baixar dades des d'aquest parell"
@@ -8891,3 +8901,10 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid ""
+#~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."
+#~ "blogpotato.de/ so thanks to them too."
+#~ msgstr ""
+#~ "Localitzador de països per al connector InfoWidget. Les banderes són de "
+#~ "https://flags.blogpotato.de/, així que gràcies a ells també."
