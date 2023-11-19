@@ -1,6 +1,6 @@
 # translation of ktorrent.po to Swedish
 #
-# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2005, 2006, 2007, 2008, 2009, 2010.
+# SPDX-FileCopyrightText: 2005, 2006, 2007, 2008, 2009, 2010, 2023 Stefan Asserhäll <stefan.asserhall@bredband.net>
 # Arve Eriksson <031299870@telia.com>, 2010, 2011.
 # Stefan Asserhall <stefan.asserhall@bredband.net>, 2011, 2012, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2023.
 msgid ""
@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-18 00:42+0000\n"
-"PO-Revision-Date: 2023-07-31 10:21+0200\n"
+"PO-Revision-Date: 2023-11-18 22:34+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.08.1\n"
+"X-Generator: Lokalize 23.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1650,7 +1650,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:129
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:130
 #, kde-format
@@ -1660,6 +1660,11 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Leverantör av databasen med  IP-land använd av insticksprogrammet "
+"Informationskomponent. Data är licensierad i enlighet med Creative Commons "
+"Attribution 4.0 internationella licens https://creativecommons.org/licenses/"
+"by/4.0/. Flaggor kommer från http://flags.blogpotato.de/, så även tack till "
+"dem."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1670,6 +1675,7 @@ msgstr "Maxmind"
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
+"Biblioteket maxminddb använt av insticksprogrammet Informationskomponent."
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -2039,10 +2045,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Felrättningar, städning och optimeringar"
 
 #: ktorrent/main.cpp:178
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Aktivera alla"
+msgstr "Aktivera loggning"
 
 #: ktorrent/main.cpp:179
 #, kde-format
@@ -2050,6 +2055,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Aktivera loggning på standardutmatningen. Kräver också att --enable-logging "
+"anges."
 
 #: ktorrent/main.cpp:180
 #, kde-format
@@ -4879,23 +4886,20 @@ msgid "Warning: %1"
 msgstr "Varning: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Nerladdade delar:"
+msgstr "Nerladdade delar"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Chunks not downloaded:"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Inte nerladdade delar:"
+msgstr "Delar att ladda ner"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Undantagna:"
+msgstr "Undantagna delar"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5385,16 +5389,14 @@ msgid "Add Trackers"
 msgstr "Lägg till spårare"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Tillgängliga delar:"
+msgstr "Tillgängliga delar"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Tillgängliga delar:"
+msgstr "Otillgängliga delar"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format

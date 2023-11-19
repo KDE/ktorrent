@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-18 00:42+0000\n"
-"PO-Revision-Date: 2023-11-13 18:53+0100\n"
+"PO-Revision-Date: 2023-11-18 21:07+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -1646,7 +1646,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:129
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:130
 #, kde-format
@@ -1656,6 +1656,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Provizanto de la IP-Country datumbazo uzata en la InfoWidget-kromaĵo. La "
+"datumoj estas licencitaj laŭ la Creative Commons Attribution 4.0 Internacia "
+"Licenco https://creativecommons.org/licenses/by/4.0/. Flagoj estas prenitaj "
+"de http://flags.blogpotato.de/ do ankaŭ dankon al ili."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1665,7 +1669,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:134
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "La maxminddb-biblioteko uzita por la InfoWidget-kromprogramo."
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -8841,10 +8845,3 @@ msgstr "Reserĉi"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid ""
-#~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."
-#~ "blogpotato.de/ so thanks to them too."
-#~ msgstr ""
-#~ "Landa lokilo por la InfoWidget-kromprogrameto. Flagoj devenas de http://"
-#~ "flags.blogpotato.de/ do ni salutas ilin."

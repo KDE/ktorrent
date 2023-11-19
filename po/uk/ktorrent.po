@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-18 00:42+0000\n"
-"PO-Revision-Date: 2023-11-13 17:54+0200\n"
+"PO-Revision-Date: 2023-11-18 09:16+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1654,7 +1654,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:129
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:130
 #, kde-format
@@ -1664,6 +1664,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Надавач даних бази даних IP-країна використано у додатку InfoWidget. Дані "
+"ліцензовано за умов дотримання Creative Commons Attribution 4.0 "
+"International License https://creativecommons.org/licenses/by/4.0/. Прапорці "
+"запозичено з http://flags.blogpotato.de/, тому також дякуємо за них."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1673,7 +1677,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:134
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "Бібліотеку maxminddb використано для додатка InfoWidget."
 
 #: ktorrent/main.cpp:135
 #, kde-format

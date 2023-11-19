@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:46+0000\n"
+"POT-Creation-Date: 2023-11-18 00:42+0000\n"
 "PO-Revision-Date: 2007-09-11 22:44+0200\n"
 "Last-Translator: Northern Sami translation team <i18n-sme@lister.ping.uio."
 "no>\n"
@@ -702,7 +702,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:305
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr ""
@@ -724,7 +724,7 @@ msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:256
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Speed Limits"
 msgstr ""
@@ -1024,7 +1024,7 @@ msgstr ""
 
 #. i18n: ectx: attribute (title), widget (QWidget, m_tracker_tab)
 #: ktorrent/dialogs/torrentcreatordlg.ui:182
-#: plugins/infowidget/infowidgetplugin.cpp:223
+#: plugins/infowidget/infowidgetplugin.cpp:224
 #, kde-format
 msgid "Trackers"
 msgstr ""
@@ -1044,14 +1044,14 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_move_up)
 #: ktorrent/dialogs/torrentcreatordlg.ui:210
-#: ktorrent/tools/queuemanagerwidget.cpp:63
+#: ktorrent/tools/queuemanagerwidget.cpp:69
 #, kde-format
 msgid "Move Up"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_move_down)
 #: ktorrent/dialogs/torrentcreatordlg.ui:217
-#: ktorrent/tools/queuemanagerwidget.cpp:66
+#: ktorrent/tools/queuemanagerwidget.cpp:72
 #, kde-format
 msgid "Move Down"
 msgstr ""
@@ -1211,109 +1211,104 @@ msgstr ""
 msgid "Edit Group Policy"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:65
+#: ktorrent/groups/groupview.cpp:66
 #, kde-format
 msgid "Open In New Tab"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:69 ktorrent/view/view.cpp:223
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:73
+#: ktorrent/groups/groupview.cpp:74
 #, kde-format
 msgid "Edit Name"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:77
+#: ktorrent/groups/groupview.cpp:78
 #, kde-format
 msgid "Remove Group"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:81
+#: ktorrent/groups/groupview.cpp:82
 #, kde-format
 msgid "Group Policy"
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:94
+#: ktorrent/groups/groupview.cpp:95
 #, kde-format
 msgid "Please enter the group name."
 msgstr ""
 
-#: ktorrent/groups/groupview.cpp:100
+#: ktorrent/groups/groupview.cpp:101
 #, kde-format
 msgid "The group %1 already exists."
 msgstr ""
 
-#: ktorrent/groups/groupviewmodel.cpp:34
-#, kde-format
-msgid "Custom Groups"
-msgstr ""
-
-#: ktorrent/gui.cpp:257
+#: ktorrent/gui.cpp:260
 #, kde-format
 msgid "Open Location"
 msgstr ""
 
-#: ktorrent/gui.cpp:354
+#: ktorrent/gui.cpp:358
 #, kde-format
 msgid "Create a new torrent"
 msgstr ""
 
-#: ktorrent/gui.cpp:356
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Open a torrent"
 msgstr ""
 
-#: ktorrent/gui.cpp:359
+#: ktorrent/gui.cpp:363
 #, kde-format
 msgid "Open Silently"
 msgstr ""
 
-#: ktorrent/gui.cpp:360
+#: ktorrent/gui.cpp:364
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr ""
 
-#: ktorrent/gui.cpp:375
+#: ktorrent/gui.cpp:379
 #, kde-format
 msgid "Open URL"
 msgstr ""
 
-#: ktorrent/gui.cpp:376
+#: ktorrent/gui.cpp:380
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr ""
 
-#: ktorrent/gui.cpp:381 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr ""
 
-#: ktorrent/gui.cpp:382
+#: ktorrent/gui.cpp:386
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr ""
 
-#: ktorrent/gui.cpp:387
+#: ktorrent/gui.cpp:391
 #, kde-format
 msgid "Import Torrent"
 msgstr ""
 
-#: ktorrent/gui.cpp:388
+#: ktorrent/gui.cpp:392
 #, kde-format
 msgid "Import a torrent"
 msgstr ""
 
-#: ktorrent/gui.cpp:393
+#: ktorrent/gui.cpp:397
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr ""
 
-#: ktorrent/gui.cpp:411
+#: ktorrent/gui.cpp:415
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr ""
@@ -1407,7 +1402,7 @@ msgstr ""
 #. i18n: ectx: Menu (Torrents)
 #. i18n: ectx: ToolBar (TorrentsToolBar)
 #: ktorrent/kttorrentactivityui.rc:8 ktorrent/kttorrentactivityui.rc:84
-#: ktorrent/torrentactivity.cpp:36
+#: ktorrent/torrentactivity.cpp:38
 #, kde-format
 msgid "Torrents"
 msgstr ""
@@ -1433,13 +1428,13 @@ msgid "Advanced"
 msgstr ""
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
 #, kde-format
 msgid "Open Directory"
 msgstr ""
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
 #, kde-format
 msgid "Add to Group"
 msgstr ""
@@ -1451,7 +1446,7 @@ msgid "Configure Columns"
 msgstr ""
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
 #, kde-format
 msgid "Columns"
 msgstr ""
@@ -1578,389 +1573,408 @@ msgstr ""
 msgid "Felipe Sateler"
 msgstr ""
 
-#: ktorrent/main.cpp:128
-#, kde-format
-msgid "Maxmind"
-msgstr ""
-
 #: ktorrent/main.cpp:129
 #, kde-format
+msgid "DB-IP.com"
+msgstr ""
+
+#: ktorrent/main.cpp:130
+#, kde-format
 msgid ""
-"Country locator for InfoWidget plugin. Flags are taken from http://flags."
-"blogpotato.de/ so thanks to them too."
-msgstr ""
-
-#: ktorrent/main.cpp:132
-#, kde-format
-msgid "Adam Forsyth"
-msgstr ""
-
-#: ktorrent/main.cpp:132
-#, kde-format
-msgid "File prioritization and some other patches"
-msgstr ""
-
-#: ktorrent/main.cpp:133
-#, kde-format
-msgid "Thomas Bernard"
+"Provider of the IP-Country database used in the InfoWidget plugin. The data "
+"is licensed under the Creative Commons Attribution 4.0 International License "
+"https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
+"flags.blogpotato.de/ so thanks to them too."
 msgstr ""
 
 #: ktorrent/main.cpp:134
 #, kde-format
-msgid "Miniupnp was used as an example for our own UPnP implementation"
+msgid "Maxmind"
+msgstr ""
+
+#: ktorrent/main.cpp:134
+#, kde-format
+msgid "The maxminddb library used for the InfoWidget plugin."
+msgstr ""
+
+#: ktorrent/main.cpp:135
+#, kde-format
+msgid "Adam Forsyth"
+msgstr ""
+
+#: ktorrent/main.cpp:135
+#, kde-format
+msgid "File prioritization and some other patches"
+msgstr ""
+
+#: ktorrent/main.cpp:136
+#, kde-format
+msgid "Thomas Bernard"
 msgstr ""
 
 #: ktorrent/main.cpp:137
 #, kde-format
+msgid "Miniupnp was used as an example for our own UPnP implementation"
+msgstr ""
+
+#: ktorrent/main.cpp:140
+#, kde-format
 msgid "Lesly Weyts"
 msgstr ""
 
-#: ktorrent/main.cpp:137 ktorrent/main.cpp:138
+#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr ""
 
-#: ktorrent/main.cpp:138
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Kevin Andre"
 msgstr ""
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr ""
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr ""
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Alexander Dymo"
 msgstr ""
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr ""
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Scott Wolchok"
 msgstr ""
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr ""
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr ""
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr ""
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Goten Xiao"
 msgstr ""
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr ""
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Rapsys"
 msgstr ""
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr ""
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Athantor"
 msgstr ""
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr ""
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "twisted_fall"
 msgstr ""
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr ""
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Lucke"
 msgstr ""
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr ""
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Modestas Vainius"
 msgstr ""
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Several patches"
 msgstr ""
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Stefan Monov"
 msgstr ""
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr ""
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "The_Kernel"
 msgstr ""
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr ""
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr ""
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Several webgui patches"
 msgstr ""
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Ozzi"
 msgstr ""
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr ""
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Markus Brueffer"
 msgstr ""
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr ""
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr ""
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr ""
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Rickard Närström"
 msgstr ""
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr ""
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "caruccio"
 msgstr ""
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr ""
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Lee Olson"
 msgstr ""
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "New set of icons"
 msgstr ""
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr ""
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr ""
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Ian Higginson"
 msgstr ""
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr ""
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Amichai Rothman"
 msgstr ""
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr ""
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Leo Trubach"
 msgstr ""
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr ""
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Andrei Barbu"
 msgstr ""
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr ""
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr ""
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr ""
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr ""
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr ""
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr ""
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr ""
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr ""
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr ""
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Rex Dieter"
 msgstr ""
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr ""
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Leszek Lesner"
 msgstr ""
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr ""
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr ""
 
-#: ktorrent/main.cpp:169 ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
 #, kde-format
 msgid "KF5 porting"
 msgstr ""
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr ""
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr ""
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr ""
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:178
 #, kde-format
-msgid "Enable logging to standard output"
+msgid "Enable logging"
 msgstr ""
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:179
+#, kde-format
+msgid ""
+"Enable logging to standard output. Requires --enable-logging to be specified "
+"as well."
+msgstr ""
+
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr ""
 
-#: ktorrent/main.cpp:177
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid "Document to open"
 msgstr ""
@@ -2965,7 +2979,7 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.cpp:12 ktorrent/pref/qmpref.ui:27
-#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:84
+#: ktorrent/pref/recommendedsettingsdlg.ui:264 ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Queue Manager"
 msgstr ""
@@ -3321,7 +3335,7 @@ msgid "Status"
 msgstr ""
 
 #: ktorrent/tools/magnetmodel.cpp:106
-#: plugins/infowidget/infowidgetplugin.cpp:185
+#: plugins/infowidget/infowidgetplugin.cpp:186
 #, kde-format
 msgid "Peers"
 msgstr ""
@@ -3341,22 +3355,22 @@ msgstr ""
 msgid "Stopped"
 msgstr ""
 
-#: ktorrent/tools/magnetview.cpp:51
+#: ktorrent/tools/magnetview.cpp:52
 #, kde-format
 msgid "Start Magnet"
 msgstr ""
 
-#: ktorrent/tools/magnetview.cpp:52
+#: ktorrent/tools/magnetview.cpp:53
 #, kde-format
 msgid "Stop Magnet"
 msgstr ""
 
-#: ktorrent/tools/magnetview.cpp:53
+#: ktorrent/tools/magnetview.cpp:54
 #, kde-format
 msgid "Copy Magnet URL"
 msgstr ""
 
-#: ktorrent/tools/magnetview.cpp:55
+#: ktorrent/tools/magnetview.cpp:56
 #, kde-format
 msgid "Remove Magnet"
 msgstr ""
@@ -3407,145 +3421,145 @@ msgid ""
 "order."
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:46
+#: ktorrent/tools/queuemanagerwidget.cpp:52
 #: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:110
+#: plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:55
+#: ktorrent/tools/queuemanagerwidget.cpp:61
 #, kde-format
 msgid "Show Search"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:56
+#: ktorrent/tools/queuemanagerwidget.cpp:62
 #, kde-format
 msgid "Show or hide the search bar"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:60
+#: ktorrent/tools/queuemanagerwidget.cpp:66
 #, kde-format
 msgid "Move Top"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:61
+#: ktorrent/tools/queuemanagerwidget.cpp:67
 #, kde-format
 msgid "Move a torrent to the top of the queue"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:64
+#: ktorrent/tools/queuemanagerwidget.cpp:70
 #, kde-format
 msgid "Move a torrent up in the queue"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:67
+#: ktorrent/tools/queuemanagerwidget.cpp:73
 #, kde-format
 msgid "Move a torrent down in the queue"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:69
+#: ktorrent/tools/queuemanagerwidget.cpp:75
 #, kde-format
 msgid "Move Bottom"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:70
+#: ktorrent/tools/queuemanagerwidget.cpp:76
 #, kde-format
 msgid "Move a torrent to the bottom of the queue"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:72
+#: ktorrent/tools/queuemanagerwidget.cpp:78
 #, kde-format
 msgid "Show Downloads"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:73
+#: ktorrent/tools/queuemanagerwidget.cpp:79
 #, kde-format
 msgid "Show all downloads"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:77
+#: ktorrent/tools/queuemanagerwidget.cpp:83
 #, kde-format
 msgid "Show Uploads"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:78
+#: ktorrent/tools/queuemanagerwidget.cpp:84
 #, kde-format
 msgid "Show all uploads"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:82
+#: ktorrent/tools/queuemanagerwidget.cpp:88
 #, kde-format
 msgid "Show Not Queued"
 msgstr ""
 
-#: ktorrent/tools/queuemanagerwidget.cpp:83
+#: ktorrent/tools/queuemanagerwidget.cpp:89
 #, kde-format
 msgid "Show all not queued torrents"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:84
+#: ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Widget to manage the torrent queue"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:87
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Magnet Downloader"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:87
+#: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Displays the currently downloading magnet links"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:102
+#: ktorrent/torrentactivity.cpp:111
 #, kde-format
 msgid "Start All"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:103
+#: ktorrent/torrentactivity.cpp:112
 #, kde-format
 msgid "Start all torrents"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:107
+#: ktorrent/torrentactivity.cpp:116
 #, kde-format
 msgid "Stop All"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:108
+#: ktorrent/torrentactivity.cpp:117
 #, kde-format
 msgid "Stop all torrents"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:112
+#: ktorrent/torrentactivity.cpp:121
 #, kde-format
 msgid "Suspend Torrents"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
-#: ktorrent/torrentactivity.cpp:115 plugins/bwscheduler/edititemdlg.ui:106
+#: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:119
+#: ktorrent/torrentactivity.cpp:128
 #, kde-format
 msgid "Group View"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:120
+#: ktorrent/torrentactivity.cpp:129
 #, kde-format
 msgid "Show or hide the group view"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:124
+#: ktorrent/torrentactivity.cpp:133
 #, kde-format
 msgid "Filter Torrents"
 msgstr ""
 
-#: ktorrent/torrentactivity.cpp:125
+#: ktorrent/torrentactivity.cpp:134
 #, kde-format
 msgid "Filter torrents based on filter string"
 msgstr ""
@@ -3832,205 +3846,205 @@ msgstr ""
 msgid "Filter..."
 msgstr ""
 
-#: ktorrent/view/view.cpp:132
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr ""
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:134
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr ""
 
-#: ktorrent/view/view.cpp:139
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr ""
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:141
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr ""
 
-#: ktorrent/view/view.cpp:144
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr ""
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:146
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr ""
 
-#: ktorrent/view/view.cpp:151
+#: ktorrent/view/view.cpp:152
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr ""
 
-#: ktorrent/view/view.cpp:153
+#: ktorrent/view/view.cpp:154
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr ""
 
-#: ktorrent/view/view.cpp:158
+#: ktorrent/view/view.cpp:159
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr ""
 
-#: ktorrent/view/view.cpp:160
+#: ktorrent/view/view.cpp:161
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr ""
 
-#: ktorrent/view/view.cpp:165
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr ""
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:167
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr ""
 
-#: ktorrent/view/view.cpp:171
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr ""
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:173
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr ""
 
-#: ktorrent/view/view.cpp:177
+#: ktorrent/view/view.cpp:178
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr ""
 
-#: ktorrent/view/view.cpp:182
+#: ktorrent/view/view.cpp:183
 #, kde-format
 msgid "Rename Torrent"
 msgstr ""
 
-#: ktorrent/view/view.cpp:186
+#: ktorrent/view/view.cpp:187
 #, kde-format
 msgid "Add Peers"
 msgstr ""
 
-#: ktorrent/view/view.cpp:190
+#: ktorrent/view/view.cpp:191
 #, kde-format
 msgid "Manual Announce"
 msgstr ""
 
-#: ktorrent/view/view.cpp:195
+#: ktorrent/view/view.cpp:196
 #, kde-format
 msgid "Scrape"
 msgstr ""
 
-#: ktorrent/view/view.cpp:199
+#: ktorrent/view/view.cpp:200
 #, kde-format
 msgid "Preview"
 msgstr ""
 
-#: ktorrent/view/view.cpp:203
+#: ktorrent/view/view.cpp:204
 #, kde-format
 msgid "Data Directory"
 msgstr ""
 
-#: ktorrent/view/view.cpp:207
+#: ktorrent/view/view.cpp:208
 #, kde-format
 msgid "Temporary Directory"
 msgstr ""
 
-#: ktorrent/view/view.cpp:211
+#: ktorrent/view/view.cpp:212
 #, kde-format
 msgid "Move Data"
 msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr ""
 
-#: ktorrent/view/view.cpp:219
+#: ktorrent/view/view.cpp:220
 #, kde-format
 msgid "Remove from Group"
 msgstr ""
 
-#: ktorrent/view/view.cpp:227
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check Data"
 msgstr ""
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:229
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr ""
 
-#: ktorrent/view/view.cpp:248
+#: ktorrent/view/view.cpp:249
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr ""
 
-#: ktorrent/view/view.cpp:252
+#: ktorrent/view/view.cpp:253
 #, kde-format
 msgid "Export Torrent"
 msgstr ""
 
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:258
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr ""
 
-#: ktorrent/view/view.cpp:451
+#: ktorrent/view/view.cpp:452
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
 "the incomplete data, too?"
 msgstr ""
 
-#: ktorrent/view/view.cpp:456
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Remove Download"
 msgstr ""
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Delete Data"
 msgstr ""
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:459
 #, kde-format
 msgid "Keep Data"
 msgstr ""
 
-#: ktorrent/view/view.cpp:482
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr ""
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:484
 #, kde-format
 msgid "Remove Torrent"
 msgstr ""
 
-#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:338
-#: plugins/infowidget/fileview.cpp:362
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:344
+#: plugins/infowidget/fileview.cpp:368
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:317
+#: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "Downloaded"
@@ -4038,12 +4052,12 @@ msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:442
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:351
+#: libktcore/torrent/torrentfiletreemodel.cpp:359
 #, kde-format
 msgid "Size"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:319
+#: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Uploaded"
 msgstr ""
@@ -4056,12 +4070,12 @@ msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:448
 #: plugins/infowidget/chunkdownloadmodel.cpp:195
-#: plugins/infowidget/peerviewmodel.cpp:299
+#: plugins/infowidget/peerviewmodel.cpp:297
 #, kde-format
 msgid "Down Speed"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:301
+#: ktorrent/view/viewmodel.cpp:450 plugins/infowidget/peerviewmodel.cpp:299
 #, kde-format
 msgid "Up Speed"
 msgstr ""
@@ -4345,6 +4359,11 @@ msgstr ""
 msgid "Passive Uploads"
 msgstr ""
 
+#: libktcore/groups/grouptreemodel.cpp:31
+#, kde-format
+msgid "Custom Groups"
+msgstr ""
+
 #: libktcore/groups/ungroupedgroup.cpp:15
 #, kde-format
 msgid "Ungrouped Torrents"
@@ -4579,12 +4598,20 @@ msgstr ""
 msgid "Warning: %1"
 msgstr ""
 
-#: libktcore/torrent/chunkbar.cpp:76
+#: libktcore/torrent/chunkbar.cpp:62
 #, kde-format
-msgid ""
-"<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img "
-"src=\"unavailable_color\">&nbsp; - Chunks to Download<br><img "
-"src=\"excluded_color\">&nbsp; - Excluded Chunks"
+msgid "Downloaded Chunks"
+msgstr ""
+
+#: libktcore/torrent/chunkbar.cpp:62
+#, kde-format
+msgid "Chunks to Download"
+msgstr ""
+
+#: libktcore/torrent/chunkbar.cpp:62
+#: plugins/infowidget/availabilitychunkbar.cpp:22
+#, kde-format
+msgid "Excluded Chunks"
 msgstr ""
 
 #: libktcore/torrent/queuemanager.cpp:102
@@ -4672,7 +4699,7 @@ msgid "Error stopping torrent %1: %2"
 msgstr ""
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:349
+#: libktcore/torrent/torrentfiletreemodel.cpp:357
 #, kde-format
 msgid "File"
 msgstr ""
@@ -5053,12 +5080,14 @@ msgstr ""
 msgid "Add Trackers"
 msgstr ""
 
-#: plugins/infowidget/availabilitychunkbar.cpp:23
+#: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
-msgid ""
-"<img src=\"available_color\">&nbsp; - Available Chunks<br><img "
-"src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img "
-"src=\"excluded_color\">&nbsp; - Excluded Chunks"
+msgid "Available Chunks"
+msgstr ""
+
+#: plugins/infowidget/availabilitychunkbar.cpp:22
+#, kde-format
+msgid "Unavailable Chunks"
 msgstr ""
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
@@ -5109,7 +5138,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, hdr_chunks)
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChunkDownloadView)
 #: plugins/infowidget/chunkdownloadview.ui:13
-#: plugins/infowidget/infowidgetplugin.cpp:204
+#: plugins/infowidget/infowidgetplugin.cpp:205
 #: plugins/infowidget/statustab.ui:181
 #, kde-format
 msgid "Chunks"
@@ -5145,79 +5174,79 @@ msgstr ""
 msgid "Size:"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:106
+#: plugins/infowidget/fileview.cpp:112
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:108
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:109
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgid "Check File"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Download first"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:112
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Download normally"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Download last"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Do not download"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:122
 #, kde-format
 msgid "Delete File(s)"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Move File"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:127
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:130
 #, kde-format
 msgid "File Tree"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:132
 #, kde-format
 msgid "File List"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:136
+#: plugins/infowidget/fileview.cpp:142
 #, kde-format
 msgid "Show Filter"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:317
+#: plugins/infowidget/fileview.cpp:323
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5226,7 +5255,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugins/infowidget/fileview.cpp:447
+#: plugins/infowidget/fileview.cpp:453
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5235,7 +5264,7 @@ msgid ""
 "higher priority?"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:450
+#: plugins/infowidget/fileview.cpp:456
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -5269,27 +5298,27 @@ msgstr ""
 msgid "Shows all the files in a torrent"
 msgstr ""
 
-#: plugins/infowidget/infowidgetplugin.cpp:185
+#: plugins/infowidget/infowidgetplugin.cpp:186
 #, kde-format
 msgid "Displays all the peers you are connected to for a torrent"
 msgstr ""
 
-#: plugins/infowidget/infowidgetplugin.cpp:204
+#: plugins/infowidget/infowidgetplugin.cpp:205
 #, kde-format
 msgid "Displays all the chunks you are downloading, of a torrent"
 msgstr ""
 
-#: plugins/infowidget/infowidgetplugin.cpp:223
+#: plugins/infowidget/infowidgetplugin.cpp:224
 #, kde-format
 msgid "Displays information about all the trackers of a torrent"
 msgstr ""
 
-#: plugins/infowidget/infowidgetplugin.cpp:239
+#: plugins/infowidget/infowidgetplugin.cpp:240
 #, kde-format
 msgid "Webseeds"
 msgstr ""
 
-#: plugins/infowidget/infowidgetplugin.cpp:239
+#: plugins/infowidget/infowidgetplugin.cpp:240
 #, kde-format
 msgid "Displays all the webseeds of a torrent"
 msgstr ""
@@ -5487,197 +5516,197 @@ msgstr ""
 msgid "Ban Peer"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:87
+#: plugins/infowidget/peerviewmodel.cpp:85
 #, kde-format
 msgid " (µTP)"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
 msgctxt "Choked"
 msgid "Yes"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
 msgctxt "Not choked"
 msgid "No"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:105
 #, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:105
 #, kde-format
 msgctxt "Not snubbed"
 msgid "No"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
 msgctxt "Interested"
 msgid "Yes"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
 msgctxt "Not Interested"
 msgid "No"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:123
 #, kde-format
 msgctxt "Interesting"
 msgid "Yes"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:123
 #, kde-format
 msgctxt "Not Interesting"
 msgid "No"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:293
+#: plugins/infowidget/peerviewmodel.cpp:291
 #, kde-format
 msgid "Address"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:295
+#: plugins/infowidget/peerviewmodel.cpp:293
 #, kde-format
 msgid "Country"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:297
+#: plugins/infowidget/peerviewmodel.cpp:295
 #, kde-format
 msgid "Client"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:303
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Choked"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:305
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, kde-format
 msgid "Snubbed"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:307
+#: plugins/infowidget/peerviewmodel.cpp:305
 #, kde-format
 msgid "Availability"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:309
+#: plugins/infowidget/peerviewmodel.cpp:307
 #, kde-format
 msgid "DHT"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:311
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Score"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:313
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Upload Slot"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:315
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "Requests"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:321
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Interested"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:323
+#: plugins/infowidget/peerviewmodel.cpp:321
 #, kde-format
 msgid "Interesting"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:330
+#: plugins/infowidget/peerviewmodel.cpp:328
 #, kde-format
 msgid "IP address of the peer"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:332
+#: plugins/infowidget/peerviewmodel.cpp:330
 #, kde-format
 msgid "Country the peer is in"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:334
+#: plugins/infowidget/peerviewmodel.cpp:332
 #, kde-format
 msgid "Which client the peer is using"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:336
+#: plugins/infowidget/peerviewmodel.cpp:334
 #, kde-format
 msgid "Download speed"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:338
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
 msgid "Upload speed"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:340
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
 "send us any data"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:342
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:344
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:346
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:348
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:350
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:352
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
 msgid "The number of download and upload requests"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:354
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:356
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:358
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:360
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr ""
@@ -5835,12 +5864,12 @@ msgstr ""
 msgid "Speed"
 msgstr ""
 
-#: plugins/infowidget/webseedstab.cpp:81
+#: plugins/infowidget/webseedstab.cpp:86
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
 msgstr ""
 
-#: plugins/infowidget/webseedstab.cpp:97
+#: plugins/infowidget/webseedstab.cpp:102
 #, kde-format
 msgid "Cannot remove webseed %1, it is part of the torrent."
 msgstr ""
@@ -6991,35 +7020,35 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: plugins/search/webview.cpp:106
+#: plugins/search/webview.cpp:105
 #, kde-format
 msgid "Home"
 msgstr ""
 
-#: plugins/search/webview.cpp:107
+#: plugins/search/webview.cpp:106
 #, kde-format
 msgid "KTorrent"
 msgstr ""
 
-#: plugins/search/webview.cpp:108
+#: plugins/search/webview.cpp:107
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
 msgstr ""
 
-#: plugins/search/webview.cpp:109
+#: plugins/search/webview.cpp:108
 #, kde-format
 msgid "Search the web for torrents."
 msgstr ""
 
-#: plugins/search/webview.cpp:146
+#: plugins/search/webview.cpp:145
 #, kde-format
 msgid "Save %1 to"
 msgstr ""
 
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
-#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:125
+#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:127
 #: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Shutdown"
@@ -7037,19 +7066,19 @@ msgctxt "@title:window"
 msgid "Configure Shutdown"
 msgstr ""
 
-#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:129
+#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
 #: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Lock"
 msgstr ""
 
-#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:133
+#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr ""
 
-#: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:137
+#: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
 #: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Hibernate (suspend to disk)"

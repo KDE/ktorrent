@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-18 00:42+0000\n"
-"PO-Revision-Date: 2023-11-13 05:23+0300\n"
+"PO-Revision-Date: 2023-11-18 14:08+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1655,7 +1655,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:129
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:130
 #, kde-format
@@ -1665,6 +1665,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"InfoWidget eklentisinde kullanılan IP-Ülke veritabanının sağlayıcısı. Veri, "
+"Creative Commons Atıf 4.0 Uluslararası Lisansı https://creativecommons.org/"
+"licenses/by/4.0/. altında lisanslıdır. Bayraklar ise http://flags.blogpotato."
+"de/ sitesinden alınmıştır, çok teşekkürler."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1674,7 +1678,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:134
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "InfoWidget eklentisi için kullanılan maxminddb kitaplığı."
 
 #: ktorrent/main.cpp:135
 #, kde-format
