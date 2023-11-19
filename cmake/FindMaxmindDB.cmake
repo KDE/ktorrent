@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2006 Laurent Montel <montel@kde.org>
 # SPDX-FileCopyrightText: 2019 Heiko Becker <heirecka@exherbo.org>
 # SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+# SPDX-FileCopyrightText: 2023 Gustavo Alvarez <sl1pkn07@gmail.com>
 #
 # SPDX-License-Identifier: BSD-3-Clause
 
@@ -15,6 +16,8 @@ This will define the following variables:
 ``MaxmindDB_FOUND``
       True if the system has the libmaxminddb library of at least the minimum
       version specified by the version parameter to find_package()
+``MaxmindDB_VERSION``
+      The version of libmaxminddb
 ``MaxmindDB_INCLUDE_DIRS``
       The libmaxminddb include dirs for use with target_include_directories
 ``MaxmindDB_LIBRARIES``
@@ -31,6 +34,7 @@ target:
 find_package(PkgConfig QUIET)
 
 pkg_check_modules(PC_MAXMINDDB QUIET libmaxminddb)
+set(MaxmindDB_VERSION ${PC_MAXMINDDB_VERSION})
 
 find_path(MaxmindDB_INCLUDE_DIRS
     NAMES maxminddb.h
@@ -49,6 +53,8 @@ find_package_handle_standard_args(MaxmindDB
     REQUIRED_VARS
         MaxmindDB_LIBRARIES
         MaxmindDB_INCLUDE_DIRS
+    VERSION_VAR
+        MaxmindDB_VERSION
 )
 
 if (MaxmindDB_FOUND AND NOT TARGET MaxmindDB::MaxmindDB)
@@ -59,7 +65,7 @@ if (MaxmindDB_FOUND AND NOT TARGET MaxmindDB::MaxmindDB)
     )
 endif()
 
-mark_as_advanced(MaxmindDB_LIBRARIES MaxmindDB_INCLUDE_DIRS)
+mark_as_advanced(MaxmindDB_LIBRARIES MaxmindDB_INCLUDE_DIRS MaxmindDB_VERSION)
 
 include(FeatureSummary)
 set_package_properties(MaxmindDB PROPERTIES
