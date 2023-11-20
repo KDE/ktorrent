@@ -10,7 +10,7 @@ kconfig_add_kcfg_files(ktorrent_magnetgenerator magnetgeneratorpluginsettings.kc
 target_link_libraries(
     ktorrent_magnetgenerator
     ktcore
-    KF5::Torrent
+    KF6::Torrent
     KF6::CoreAddons
     KF6::I18n
     KF6::Notifications

@@ -36,7 +36,7 @@ target_link_libraries(
     ktcore
     Taglib::Taglib
     Phonon::phonon4qt6
-    KF5::Torrent
+    KF6::Torrent
     KF6::I18n
     KF6::KIOFileWidgets
     KF6::XmlGui

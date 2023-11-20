@@ -28,7 +28,7 @@ kconfig_add_kcfg_files(ktorrent_stats statspluginsettings.kcfgc)
 target_link_libraries(
     ktorrent_stats
     ktcore
-    KF5::Torrent
+    KF6::Torrent
     KF6::CoreAddons
     KF6::I18n
     KF6::Plotting

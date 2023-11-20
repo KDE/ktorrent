@@ -24,8 +24,8 @@ ki18n_wrap_ui(ktorrent_syndication feedwidget.ui managefiltersdlg.ui filteredito
 target_link_libraries(
     ktorrent_syndication
     ktcore
-    Qt::WebEngineWidgets
-    KF5::Torrent
+    Qt6::WebEngineWidgets
+    KF6::Torrent
     KF6::CoreAddons
     KF6::ConfigCore
     KF6::I18n
