@@ -17,14 +17,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-18 00:42+0000\n"
-"PO-Revision-Date: 2023-06-24 17:41+0200\n"
+"PO-Revision-Date: 2023-11-18 18:33+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1671,7 +1671,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:129
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:130
 #, kde-format
@@ -1681,6 +1681,11 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Suministrador de la base de datos de IP-País usado por el complemento "
+"InfoWidget. Los datos se encuentran licenciados bajo la licencia "
+"internacional Creative Commons Attribution 4.0 https://creativecommons.org/"
+"licenses/by/4.0/. Las banderas se han sacado de http://flags.blogpotato.de/, "
+"gracias a ellos también."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1690,7 +1695,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:134
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "La librería maxminddb usada por el complemento InfoWidget."
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -2061,10 +2066,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "Error de fallos, limpieza y optimizaciones"
 
 #: ktorrent/main.cpp:178
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Activar todo"
+msgstr "Activar registro"
 
 #: ktorrent/main.cpp:179
 #, kde-format
@@ -2072,6 +2076,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Activar registro en la salida estándar. Necesita que --enable-logging se "
+"haya especificado."
 
 #: ktorrent/main.cpp:180
 #, kde-format
@@ -4919,23 +4925,20 @@ msgid "Warning: %1"
 msgstr "Advertencia: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Trozos descargados:"
+msgstr "Trozos descargados"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Mostrar las descargas"
+msgstr "Trozos por descargar"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Excluido:"
+msgstr "Trozos excluidos"
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5431,16 +5434,14 @@ msgid "Add Trackers"
 msgstr "Añadir rastreadores"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Trozos disponibles:"
+msgstr "Trozos disponibles"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Trozos disponibles:"
+msgstr "Trozos no disponibles"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -8934,31 +8935,3 @@ msgstr "Explorar de nuevo"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
-
-#~ msgid ""
-#~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."
-#~ "blogpotato.de/ so thanks to them too."
-#~ msgstr ""
-#~ "Localizador de países del complemento InfoWidget. Las banderas se han "
-#~ "obtenido de http://flags.blogpotato.de/, así que gracias a ellos también."
-
-#~ msgid "Enable logging to standard output"
-#~ msgstr "Activar registro a la salida estándar"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - Trozos descargados<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Trozos a descargar<br><img src="
-#~ "\"excluded_color\">&nbsp; - Trozos excluidos"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - Trozos disponibles<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Trozos no disponibles<br><img src="
-#~ "\"excluded_color\">&nbsp; - Trozos excluidos"

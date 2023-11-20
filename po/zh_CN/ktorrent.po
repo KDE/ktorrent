@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-18 00:42+0000\n"
-"PO-Revision-Date: 2023-10-21 13:54\n"
+"PO-Revision-Date: 2023-11-19 03:40\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1992,10 +1992,9 @@ msgid "Bugfixes, cleanups and optimizations"
 msgstr "错误修复、清理和优化"
 
 #: ktorrent/main.cpp:178
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "全部启用"
+msgstr ""
 
 #: ktorrent/main.cpp:179
 #, kde-format
@@ -4710,23 +4709,20 @@ msgid "Warning: %1"
 msgstr "警告：%1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "已下载数据块："
+msgstr ""
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "显示下载"
+msgstr ""
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "已排除："
+msgstr ""
 
 #: libktcore/torrent/queuemanager.cpp:102
 #, kde-format
@@ -5197,16 +5193,14 @@ msgid "Add Trackers"
 msgstr "添加 Tracker"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "可用数据块："
+msgstr ""
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "可用数据块："
+msgstr ""
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -8640,31 +8634,3 @@ msgstr "重新扫描"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
-
-#~ msgid ""
-#~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."
-#~ "blogpotato.de/ so thanks to them too."
-#~ msgstr ""
-#~ "InfoWidget 插件的国家定位程序。国旗使用了 http://flags.blogpotato.de/ 网站"
-#~ "的素材，特别感谢。"
-
-#~ msgid "Enable logging to standard output"
-#~ msgstr "启用标准输出的日志记录"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - 已下载数据块<br><img src="
-#~ "\"unavailable_color\">&nbsp; - 待下载数据块<br><img src=\"excluded_color"
-#~ "\">&nbsp; - 已排除数据块"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - 可用数据块<br><img src="
-#~ "\"unavailable_color\">&nbsp; - 不可用数据块<br><img src=\"excludec_color"
-#~ "\">&nbsp; - 已排除数据块"
