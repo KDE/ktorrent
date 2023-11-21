@@ -101,7 +101,7 @@ ecm_add_app_icon(ktorrent_app ICONS ${KTORRENT_ICONS_PNG})
 
 target_link_libraries(ktorrent_app
     ktcore
-    KF6::Torrent
+    KTorrent6
     KF6::Crash
     KF6::ConfigCore
     KF6::ConfigGui

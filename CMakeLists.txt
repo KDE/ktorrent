@@ -79,7 +79,7 @@ set_package_properties(Qt6Core5Compat
   PURPOSE "PUBLIC Required for libktorrent"
 )
 
-find_package(KF6Torrent ${LIBKTORRENT_MIN_VERSION} CONFIG REQUIRED)
+find_package(KTorrent6 ${LIBKTORRENT_MIN_VERSION} CONFIG REQUIRED)
 find_package(Boost ${Boost_MIN_VERSION} REQUIRED)
 
 find_package(KF6TextWidgets ${KF_MIN_VERSION})

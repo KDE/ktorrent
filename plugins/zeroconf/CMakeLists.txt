@@ -10,7 +10,7 @@ target_sources(ktorrent_zeroconf PRIVATE
 
 target_link_libraries(ktorrent_zeroconf
     ktcore
-    KF6::Torrent
+    KTorrent6
     KF6::CoreAddons
     KF6::DNSSD
     KF6::I18n

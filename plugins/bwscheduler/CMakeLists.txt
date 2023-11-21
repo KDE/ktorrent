@@ -25,7 +25,7 @@ target_link_libraries(
     ktorrent_bwscheduler
     ktcore
     Boost::boost
-    KF6::Torrent
+    KTorrent6
     KF6::CoreAddons
     KF6::I18n
     KF6::XmlGui

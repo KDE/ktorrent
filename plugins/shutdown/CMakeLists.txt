@@ -26,7 +26,7 @@ ki18n_wrap_ui(ktorrent_shutdown shutdowndlg.ui)
 target_link_libraries(
     ktorrent_shutdown
     ktcore
-    KF6::Torrent
+    KTorrent6
     KF6::ConfigCore
     KF6::CoreAddons
     KF6::I18n

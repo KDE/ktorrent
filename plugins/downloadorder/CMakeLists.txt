@@ -12,7 +12,7 @@ ki18n_wrap_ui(ktorrent_downloadorder downloadorderwidget.ui)
 target_link_libraries(
     ktorrent_downloadorder
     ktcore
-    KF6::Torrent
+    KTorrent6
     KF6::ConfigCore
     KF6::CoreAddons
     KF6::I18n

@@ -25,7 +25,7 @@ target_link_libraries(
     ktorrent_syndication
     ktcore
     Qt6::WebEngineWidgets
-    KF6::Torrent
+    KTorrent6
     KF6::CoreAddons
     KF6::ConfigCore
     KF6::I18n

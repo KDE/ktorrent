@@ -20,7 +20,7 @@ target_link_libraries(
     ktorrent_search
     ktcore
     Qt6::WebEngineWidgets
-    KF6::Torrent
+    KTorrent6
     KF6::CoreAddons
     KF6::Completion
     KF6::ConfigCore

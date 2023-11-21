@@ -13,7 +13,7 @@ kconfig_add_kcfg_files(ktorrent_scanforlostfiles scanforlostfilespluginsettings.
 target_link_libraries(
     ktorrent_scanforlostfiles
     ktcore
-    KF6::Torrent
+    KTorrent6
     KF6::ConfigCore
     KF6::CoreAddons
     KF6::I18n
