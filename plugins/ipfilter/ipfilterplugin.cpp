@@ -99,7 +99,7 @@ void IPFilterPlugin::checkAutoUpdate()
     if (!loadedAndRunning() || !IPBlockingPluginSettings::autoUpdate())
         return;
 
-    KConfigGroup g = KSharedConfig::openConfig()->group("IPFilterAutoUpdate");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("IPFilterAutoUpdate"));
     bool ok = g.readEntry("last_update_ok", false);
     QDateTime now = QDateTime::currentDateTime();
     if (!ok) {

@@ -67,7 +67,7 @@ GroupSwitcher::~GroupSwitcher()
 
 void GroupSwitcher::loadState(KSharedConfig::Ptr cfg)
 {
-    KConfigGroup g = cfg->group("GroupSwitcher");
+    KConfigGroup g = cfg->group(QStringLiteral("GroupSwitcher"));
 
     QStringList default_groups;
     default_groups << QStringLiteral("/all") << QStringLiteral("/all/downloads") << QStringLiteral("/all/uploads");
@@ -108,7 +108,7 @@ void GroupSwitcher::loadState(KSharedConfig::Ptr cfg)
 
 void GroupSwitcher::saveState(KSharedConfig::Ptr cfg)
 {
-    KConfigGroup g = cfg->group("GroupSwitcher");
+    KConfigGroup g = cfg->group(QStringLiteral("GroupSwitcher"));
     QStringList groups;
     int idx = 0;
     for (Tab &tab : tabs) {

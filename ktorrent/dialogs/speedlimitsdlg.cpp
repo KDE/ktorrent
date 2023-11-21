@@ -90,7 +90,7 @@ SpeedLimitsDlg::~SpeedLimitsDlg()
 
 void SpeedLimitsDlg::saveState()
 {
-    KConfigGroup g = KSharedConfig::openConfig()->group("SpeedLimitsDlg");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("SpeedLimitsDlg"));
     QByteArray s = m_speed_limits_view->header()->saveState();
     g.writeEntry("view_state", s.toBase64());
     g.writeEntry("size", size());
@@ -98,7 +98,7 @@ void SpeedLimitsDlg::saveState()
 
 void SpeedLimitsDlg::loadState()
 {
-    KConfigGroup g = KSharedConfig::openConfig()->group("SpeedLimitsDlg");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("SpeedLimitsDlg"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("view_state", QByteArray()));
     if (!s.isEmpty()) {
         m_speed_limits_view->header()->restoreState(s);

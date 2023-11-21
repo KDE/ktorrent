@@ -39,7 +39,7 @@ UPnPWidget::UPnPWidget(UPnPMCastSocket *sock, QWidget *parent)
     m_devices->setModel(model);
 
     // load the state of the devices treewidget
-    KConfigGroup g = KSharedConfig::openConfig()->group("UPnPDevicesList");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("UPnPDevicesList"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
     if (!s.isEmpty())
         m_devices->header()->restoreState(s);
@@ -57,7 +57,7 @@ UPnPWidget::~UPnPWidget()
 void UPnPWidget::shutdown(bt::WaitJob *job)
 {
     // save the state of the devices treewidget
-    KConfigGroup g = KSharedConfig::openConfig()->group("UPnPDevicesList");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("UPnPDevicesList"));
     QByteArray s = m_devices->header()->saveState();
     g.writeEntry("state", s.toBase64());
 

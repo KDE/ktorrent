@@ -29,7 +29,7 @@ LogPrefPage::~LogPrefPage()
 
 void LogPrefPage::saveState()
 {
-    KConfigGroup g = KSharedConfig::openConfig()->group("LogFlags");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("LogFlags"));
     QByteArray s = m_logging_flags->header()->saveState();
     g.writeEntry("logging_flags_view_state", s.toBase64());
     g.sync();
@@ -37,7 +37,7 @@ void LogPrefPage::saveState()
 
 void LogPrefPage::loadState()
 {
-    KConfigGroup g = KSharedConfig::openConfig()->group("LogFlags");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("LogFlags"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("logging_flags_view_state", QByteArray()));
     if (!s.isEmpty())
         m_logging_flags->header()->restoreState(s);

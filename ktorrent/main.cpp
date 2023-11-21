@@ -184,8 +184,8 @@ int main(int argc, char **argv)
 
     // config migration code
     auto config = KSharedConfig::openConfig();
-    if (!config->hasGroup("Plugins")) {
-        KConfigGroup pluginsGroup = config->group("Plugins");
+    if (!config->hasGroup(QStringLiteral("Plugins"))) {
+        KConfigGroup pluginsGroup = config->group(QStringLiteral("Plugins"));
         const QStringList groups = config->groupList();
         for (const QString &grpName : groups) {
             const QString entryName = grpName + QLatin1String("Enabled");

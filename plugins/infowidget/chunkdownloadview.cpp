@@ -102,14 +102,14 @@ void ChunkDownloadView::removeAll()
 
 void ChunkDownloadView::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("ChunkDownloadView");
+    KConfigGroup g = cfg->group(QStringLiteral("ChunkDownloadView"));
     QByteArray s = m_chunk_view->header()->saveState();
     g.writeEntry("state", s.toBase64());
 }
 
 void ChunkDownloadView::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("ChunkDownloadView");
+    KConfigGroup g = cfg->group(QStringLiteral("ChunkDownloadView"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
     if (!s.isEmpty()) {
         QHeaderView *v = m_chunk_view->header();

@@ -47,7 +47,7 @@ bool LogFlags::checkFlags(unsigned int arg)
 
 void LogFlags::updateFlags()
 {
-    KConfigGroup cfg = KSharedConfig::openConfig()->group("LogFlags");
+    KConfigGroup cfg = KSharedConfig::openConfig()->group(QStringLiteral("LogFlags"));
     log_flags.clear();
     const LogSystemManager &lsman = LogSystemManager::instance();
     for (LogSystemManager::const_iterator i = lsman.begin(); i != lsman.end(); i++) {
@@ -144,7 +144,7 @@ bool LogFlags::setData(const QModelIndex &index, const QVariant &value, int role
     LogFlag &f = log_flags[index.row()];
     f.flag = flag;
 
-    KConfigGroup cfg = KSharedConfig::openConfig()->group("LogFlags");
+    KConfigGroup cfg = KSharedConfig::openConfig()->group(QStringLiteral("LogFlags"));
     cfg.writeEntry(QStringLiteral("sys_%1").arg(f.id), flag);
     cfg.sync();
 
@@ -201,7 +201,7 @@ QString LogFlags::flagToString(bt::Uint32 flag) const
 
 void LogFlags::registered(const QString &sys)
 {
-    KConfigGroup cfg = KSharedConfig::openConfig()->group("LogFlags");
+    KConfigGroup cfg = KSharedConfig::openConfig()->group(QStringLiteral("LogFlags"));
 
     LogSystemManager &lsman = LogSystemManager::instance();
     LogFlag f;

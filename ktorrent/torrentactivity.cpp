@@ -151,7 +151,7 @@ void TorrentActivity::removeToolWidget(QWidget *widget)
 
 void TorrentActivity::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("TorrentActivitySplitters");
+    KConfigGroup g = cfg->group(QStringLiteral("TorrentActivitySplitters"));
     if (vsplit) {
         QByteArray data;
         data = QByteArray::fromBase64(g.readEntry("vsplit", data));
@@ -184,7 +184,7 @@ void TorrentActivity::saveState(KSharedConfigPtr cfg)
     tool_views->saveState(cfg, QStringLiteral("TorrentActivityBottomTabBar"));
     magnet_view->saveState(cfg);
 
-    KConfigGroup g = cfg->group("TorrentActivitySplitters");
+    KConfigGroup g = cfg->group(QStringLiteral("TorrentActivitySplitters"));
     if (vsplit) {
         QByteArray data = vsplit->saveState();
         g.writeEntry("vsplit", data.toBase64());

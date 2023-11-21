@@ -329,7 +329,7 @@ void GUI::configureKeys()
 
 void GUI::configureToolbars()
 {
-    auto main_window_group = KSharedConfig::openConfig()->group("MainWindow");
+    auto main_window_group = KSharedConfig::openConfig()->group(QStringLiteral("MainWindow"));
     saveMainWindowSettings(main_window_group);
     KEditToolBar dlg(factory());
     connect(&dlg, &KEditToolBar::newToolBarConfig, this, &GUI::newToolBarConfig);
@@ -342,7 +342,7 @@ void GUI::configureToolbars()
 
 void GUI::newToolBarConfig() // This is called when OK, Apply or Defaults is clicked
 {
-    applyMainWindowSettings(KSharedConfig::openConfig()->group("MainWindow"));
+    applyMainWindowSettings(KSharedConfig::openConfig()->group(QStringLiteral("MainWindow")));
 }
 
 void GUI::import()
@@ -442,7 +442,7 @@ void GUI::loadState(KSharedConfigPtr cfg)
     central->loadState(cfg);
     torrent_activity->loadState(cfg);
 
-    KConfigGroup g = cfg->group("MainWindow");
+    KConfigGroup g = cfg->group(QStringLiteral("MainWindow"));
     bool statusbar_hidden = g.readEntry("statusbar_hidden", false);
     status_bar->setHidden(statusbar_hidden);
     show_status_bar_action->setChecked(!statusbar_hidden);
@@ -464,7 +464,7 @@ void GUI::loadState(KSharedConfigPtr cfg)
 
 void GUI::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("MainWindow");
+    KConfigGroup g = cfg->group(QStringLiteral("MainWindow"));
     saveMainWindowSettings(g);
     g.writeEntry("statusbar_hidden", status_bar->isHidden());
     g.writeEntry("menubar_hidden", menuBar()->isHidden());

@@ -559,7 +559,7 @@ void FileSelectDlg::onCodecChanged(const int index)
 
 void FileSelectDlg::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("FileSelectDlg");
+    KConfigGroup g = cfg->group(QStringLiteral("FileSelectDlg"));
     QSize s = g.readEntry("size", sizeHint());
     resize(s);
     show_file_tree = g.readEntry("show_file_tree", true);
@@ -592,7 +592,7 @@ void FileSelectDlg::loadState(KSharedConfigPtr cfg)
 
 void FileSelectDlg::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("FileSelectDlg");
+    KConfigGroup g = cfg->group(QStringLiteral("FileSelectDlg"));
     g.writeEntry("size", size());
     g.writeEntry("show_file_tree", show_file_tree);
     g.writeEntry("download_location_history", download_location_history);

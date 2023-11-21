@@ -40,7 +40,7 @@ PluginActivity::~PluginActivity()
 void PluginActivity::updatePluginList()
 {
     pmw->clear();
-    pmw->setConfig(KSharedConfig::openConfig()->group("Plugins"));
+    pmw->setConfig(KSharedConfig::openConfig()->group(QStringLiteral("Plugins")));
     pmw->addPlugins(list, i18n("Plugins"));
 }
 

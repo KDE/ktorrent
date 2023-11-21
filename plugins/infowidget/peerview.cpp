@@ -103,14 +103,14 @@ void PeerView::removeAll()
 
 void PeerView::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("PeerView");
+    KConfigGroup g = cfg->group(QStringLiteral("PeerView"));
     QByteArray s = header()->saveState();
     g.writeEntry("state", s.toBase64());
 }
 
 void PeerView::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("PeerView");
+    KConfigGroup g = cfg->group(QStringLiteral("PeerView"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
     if (!s.isEmpty()) {
         QHeaderView *v = header();

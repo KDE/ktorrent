@@ -114,14 +114,14 @@ void PrefDialog::calculateRecommendedSettings()
 
 void PrefDialog::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("PrefDialog");
+    KConfigGroup g = cfg->group(QStringLiteral("PrefDialog"));
     QSize s = g.readEntry("size", sizeHint());
     resize(s);
 }
 
 void PrefDialog::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("PrefDialog");
+    KConfigGroup g = cfg->group(QStringLiteral("PrefDialog"));
     g.writeEntry("size", size());
 }
 

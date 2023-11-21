@@ -76,7 +76,7 @@ SyndicationActivity::~SyndicationActivity()
 
 void SyndicationActivity::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("SyndicationActivity");
+    KConfigGroup g = cfg->group(QStringLiteral("SyndicationActivity"));
     QString current = g.readEntry("current_feed", QString());
 
     Feed *f = feed_list->feedForDirectory(current);
@@ -93,7 +93,7 @@ void SyndicationActivity::saveState(KSharedConfigPtr cfg)
 {
     Feed *feed = feed_widget->getFeed();
 
-    KConfigGroup g = cfg->group("SyndicationActivity");
+    KConfigGroup g = cfg->group(QStringLiteral("SyndicationActivity"));
     g.writeEntry("current_feed", feed ? feed->directory() : QString());
     g.writeEntry("splitter", splitter->saveState());
     tab->saveState(g);

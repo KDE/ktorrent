@@ -164,14 +164,14 @@ void SearchActivity::loadCurrentSearches()
 
 void SearchActivity::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("SearchActivity");
+    KConfigGroup g = cfg->group(QStringLiteral("SearchActivity"));
     g.writeEntry("current_search", tabs->currentIndex());
     toolbar->saveSettings();
 }
 
 void SearchActivity::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("SearchActivity");
+    KConfigGroup g = cfg->group(QStringLiteral("SearchActivity"));
     int idx = g.readEntry("current_search", 0);
     tabs->setCurrentIndex(idx);
 }

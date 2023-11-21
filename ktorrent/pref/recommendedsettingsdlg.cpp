@@ -61,7 +61,7 @@ void RecommendedSettingsDlg::apply()
 
 void RecommendedSettingsDlg::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("RecommendedSettingsDlg");
+    KConfigGroup g = cfg->group(QStringLiteral("RecommendedSettingsDlg"));
     g.writeEntry("upload_bw", m_upload_bw->value());
     g.writeEntry("download_bw", m_download_bw->value());
     g.writeEntry("avg_speed_slot_enabled", m_chk_avg_speed_slot->isChecked());
@@ -74,7 +74,7 @@ void RecommendedSettingsDlg::saveState(KSharedConfigPtr cfg)
 
 void RecommendedSettingsDlg::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("RecommendedSettingsDlg");
+    KConfigGroup g = cfg->group(QStringLiteral("RecommendedSettingsDlg"));
     m_upload_bw->setValue(g.readEntry("upload_bw", 256));
     m_download_bw->setValue(g.readEntry("download_bw", 4000));
     m_chk_avg_speed_slot->setChecked(g.readEntry("avg_speed_slot_enabled", false));

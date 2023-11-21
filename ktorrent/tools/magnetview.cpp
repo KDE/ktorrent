@@ -62,7 +62,7 @@ MagnetView::~MagnetView()
 
 void MagnetView::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("MagnetView");
+    KConfigGroup g = cfg->group(QStringLiteral("MagnetView"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
     if (!s.isEmpty()) {
         QHeaderView *v = view->header();
@@ -72,7 +72,7 @@ void MagnetView::loadState(KSharedConfigPtr cfg)
 
 void MagnetView::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("MagnetView");
+    KConfigGroup g = cfg->group(QStringLiteral("MagnetView"));
     g.writeEntry("state", view->header()->saveState().toBase64());
 }
 

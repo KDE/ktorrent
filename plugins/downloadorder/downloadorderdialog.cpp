@@ -59,7 +59,7 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::Torren
         model->initOrder(dom->downloadOrder());
     m_order->setModel(model);
 
-    QSize s = KSharedConfig::openConfig()->group("DownloadOrderDialog").readEntry("size", size());
+    QSize s = KSharedConfig::openConfig()->group(QStringLiteral("DownloadOrderDialog")).readEntry("size", size());
     resize(s);
 
     connect(m_order->selectionModel(), &QItemSelectionModel::selectionChanged, this, &DownloadOrderDialog::itemSelectionChanged);
@@ -77,7 +77,7 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::Torren
 
 DownloadOrderDialog::~DownloadOrderDialog()
 {
-    KSharedConfig::openConfig()->group("DownloadOrderDialog").writeEntry("size", size());
+    KSharedConfig::openConfig()->group(QStringLiteral("DownloadOrderDialog")).writeEntry("size", size());
 }
 
 void DownloadOrderDialog::commitDownloadOrder()

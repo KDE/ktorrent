@@ -144,14 +144,14 @@ void WebSeedsTab::update()
 
 void WebSeedsTab::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("WebSeedsTab");
+    KConfigGroup g = cfg->group(QStringLiteral("WebSeedsTab"));
     QByteArray s = m_webseed_list->header()->saveState();
     g.writeEntry("state", s.toBase64());
 }
 
 void WebSeedsTab::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("WebSeedsTab");
+    KConfigGroup g = cfg->group(QStringLiteral("WebSeedsTab"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
     if (!s.isEmpty())
         m_webseed_list->header()->restoreState(s);

@@ -476,7 +476,7 @@ void FileView::saveState(KSharedConfigPtr cfg)
     if (!model)
         return;
 
-    KConfigGroup g = cfg->group("FileView");
+    KConfigGroup g = cfg->group(QStringLiteral("FileView"));
     QByteArray s = view->header()->saveState();
     g.writeEntry("state", s.toBase64());
     g.writeEntry("show_list_of_files", show_list_of_files);
@@ -484,7 +484,7 @@ void FileView::saveState(KSharedConfigPtr cfg)
 
 void FileView::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("FileView");
+    KConfigGroup g = cfg->group(QStringLiteral("FileView"));
     QByteArray s = g.readEntry("state", QByteArray());
     if (!s.isEmpty()) {
         QHeaderView *v = view->header();

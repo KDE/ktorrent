@@ -68,7 +68,7 @@ bool TorrentSearchBar::eventFilter(QObject *obj, QEvent *ev)
 
 void TorrentSearchBar::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("TorrentSearchBar");
+    KConfigGroup g = cfg->group(QStringLiteral("TorrentSearchBar"));
     search_bar->setText(g.readEntry("text", QString()));
 
     if (g.readEntry("hidden", true)) {
@@ -80,7 +80,7 @@ void TorrentSearchBar::loadState(KSharedConfigPtr cfg)
 
 void TorrentSearchBar::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("TorrentSearchBar");
+    KConfigGroup g = cfg->group(QStringLiteral("TorrentSearchBar"));
     g.writeEntry("hidden", isHidden());
     g.writeEntry("text", search_bar->text());
 }

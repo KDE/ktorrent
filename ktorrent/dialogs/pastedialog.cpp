@@ -72,14 +72,14 @@ void PasteDialog::loadGroups()
 
 void PasteDialog::loadState(KSharedConfig::Ptr cfg)
 {
-    KConfigGroup g = cfg->group("PasteDlg");
+    KConfigGroup g = cfg->group(QStringLiteral("PasteDlg"));
     m_silently->setChecked(g.readEntry("silently", false));
     m_groups->setCurrentIndex(g.readEntry("group", 0));
 }
 
 void PasteDialog::saveState(KSharedConfig::Ptr cfg)
 {
-    KConfigGroup g = cfg->group("PasteDlg");
+    KConfigGroup g = cfg->group(QStringLiteral("PasteDlg"));
     g.writeEntry("silently", m_silently->isChecked());
     g.writeEntry("group", m_groups->currentIndex());
 }

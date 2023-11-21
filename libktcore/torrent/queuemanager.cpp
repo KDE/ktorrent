@@ -807,7 +807,7 @@ void QueueManager::reindexQueue()
 
 void QueueManager::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("QueueManager");
+    KConfigGroup g = cfg->group(QStringLiteral("QueueManager"));
     suspended_state = g.readEntry("suspended", false);
 
     if (suspended_state) {
@@ -821,7 +821,7 @@ void QueueManager::loadState(KSharedConfigPtr cfg)
 
 void QueueManager::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("QueueManager");
+    KConfigGroup g = cfg->group(QStringLiteral("QueueManager"));
     g.writeEntry("suspended", suspended_state);
 
     if (suspended_state) {

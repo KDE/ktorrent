@@ -31,7 +31,7 @@ ScanFolder::ScanFolder(ScanThread *scanner, const QUrl &dir, bool recursive)
 {
     bt::Out(SYS_SNF | LOG_NOTICE) << "ScanFolder: scanning " << dir << endl;
 
-    KConfigGroup config(KSharedConfig::openConfig(), "DirWatch");
+    KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("DirWatch"));
     config.writeEntry("NFSPollInterval", 5000);
     config.writeEntry("nfsPreferredMethod", "Stat"); // Force the usage of Stat method for NFS
     config.sync();

@@ -25,7 +25,7 @@ CentralWidget::~CentralWidget()
 
 void CentralWidget::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("MainWindow");
+    KConfigGroup g = cfg->group(QStringLiteral("MainWindow"));
     int idx = g.readEntry("current_activity", 0);
     Activity *act = (Activity *)widget(idx);
     if (act)
@@ -46,7 +46,7 @@ void CentralWidget::loadState(KSharedConfigPtr cfg)
 
 void CentralWidget::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("MainWindow");
+    KConfigGroup g = cfg->group(QStringLiteral("MainWindow"));
     g.writeEntry("current_activity", currentIndex());
 
     const QList<QAction *> actions = activity_switching_group->actions();

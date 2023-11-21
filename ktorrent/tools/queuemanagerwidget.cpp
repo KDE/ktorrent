@@ -217,7 +217,7 @@ void QueueManagerWidget::moveBottomClicked()
 
 void QueueManagerWidget::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("QueueManagerWidget");
+    KConfigGroup g = cfg->group(QStringLiteral("QueueManagerWidget"));
     QByteArray s = view->header()->saveState();
     g.writeEntry("view_state", s.toBase64());
     g.writeEntry("search_text", search->text());
@@ -229,7 +229,7 @@ void QueueManagerWidget::saveState(KSharedConfigPtr cfg)
 
 void QueueManagerWidget::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("QueueManagerWidget");
+    KConfigGroup g = cfg->group(QStringLiteral("QueueManagerWidget"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("view_state", QByteArray()));
     if (!s.isEmpty())
         view->header()->restoreState(s);

@@ -247,7 +247,7 @@ void TrackerView::currentChanged(const QModelIndex &current, const QModelIndex &
 
 void TrackerView::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("TrackerView");
+    KConfigGroup g = cfg->group(QStringLiteral("TrackerView"));
     QByteArray s = m_tracker_list->header()->saveState();
     g.writeEntry("state", s.toBase64());
     g.writeEntry("tracker_hints", tracker_hints);
@@ -255,7 +255,7 @@ void TrackerView::saveState(KSharedConfigPtr cfg)
 
 void TrackerView::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("TrackerView");
+    KConfigGroup g = cfg->group(QStringLiteral("TrackerView"));
     QByteArray s = g.readEntry("state", QByteArray());
     if (!s.isEmpty()) {
         QHeaderView *v = m_tracker_list->header();

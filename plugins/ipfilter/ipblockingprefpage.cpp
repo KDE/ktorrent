@@ -141,7 +141,7 @@ void IPBlockingPrefPage::downloadAndConvertFinished(KJob *j)
     if (j != m_job)
         return;
 
-    KConfigGroup g = KSharedConfig::openConfig()->group("IPFilterAutoUpdate");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("IPFilterAutoUpdate"));
     if (!j->error()) {
         g.writeEntry("last_updated", QDateTime::currentDateTime());
         g.writeEntry("last_update_ok", true);
@@ -167,7 +167,7 @@ void IPBlockingPrefPage::updateAutoUpdate()
         return;
     }
 
-    KConfigGroup g = KSharedConfig::openConfig()->group("IPFilterAutoUpdate");
+    KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("IPFilterAutoUpdate"));
     bool ok = g.readEntry("last_update_ok", true);
     QDate last_updated = g.readEntry("last_updated", QDate());
 

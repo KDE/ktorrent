@@ -156,14 +156,14 @@ void GroupView::editGroupPolicy()
 
 void GroupView::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("GroupView");
+    KConfigGroup g = cfg->group(QStringLiteral("GroupView"));
     g.writeEntry("expanded", expandedGroupPaths());
     g.writeEntry("visible", isVisible());
 }
 
 void GroupView::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("GroupView");
+    KConfigGroup g = cfg->group(QStringLiteral("GroupView"));
     QStringList default_expanded;
     default_expanded << QStringLiteral("/all") << QStringLiteral("/all/downloads") << QStringLiteral("/all/uploads") << QStringLiteral("/all/active")
                      << QStringLiteral("/all/passive") << QStringLiteral("/all/custom");
