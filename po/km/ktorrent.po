@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-18 00:42+0000\n"
+"POT-Creation-Date: 2023-11-21 01:34+0000\n"
 "PO-Revision-Date: 2012-07-04 08:46+0700\n"
 "Last-Translator: Sophea <sophea@khmeros.info>\n"
 "Language-Team: Khmer <>\n"
@@ -224,27 +224,27 @@ msgstr "បន្ថែម"
 msgid "Close"
 msgstr "បិទ​"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:82
+#: ktorrent/dialogs/fileselectdlg.cpp:81
 #, kde-format
 msgid "Show a file tree"
 msgstr "បង្ហាញ​មែក​ធាង​របស់​​ឯកសារ​"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:85
+#: ktorrent/dialogs/fileselectdlg.cpp:84
 #, kde-format
 msgid "Show a file list"
 msgstr "បង្ហាញ​បញ្ជី​របស់​ឯកសារ​"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:94 plugins/infowidget/fileview.cpp:65
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "តម្រង​"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:112
+#: ktorrent/dialogs/fileselectdlg.cpp:111
 #, kde-format
 msgid "Opening %1"
 msgstr "បើក %1"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:212
+#: ktorrent/dialogs/fileselectdlg.cpp:211
 #, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -254,7 +254,7 @@ msgstr ""
 "ឯកសារ​មួយ​ចំនួន​របស់​ torrent នេះ ត្រូវ​បាន​រក​ឃើញ​ក្នុង​ថត​​ទាញ​យក​ដែល​បាន​បញ្ចប់​​ ។ តើ​អ្នក​ចង់​នាំចូល​ឯកសារ​"
 "ទាំងនេះ និង​ប្រើ​​ថត​​​​ទាញ​យក​បាន​​បញ្ចប់​ជា​ទីតាំង​ឬទេ ?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:216
+#: ktorrent/dialogs/fileselectdlg.cpp:215
 #, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -264,7 +264,7 @@ msgstr ""
 "ឯកសារ​ទាំងអស់​របស់​ torrent នេះ ត្រូវ​បាន​រក​ឃើញ​​​ក្នុង​ថត​ទាញ​យក​ដែល​បាន​បញ្ចប់​ ។ តើ​អ្នក​ចង់​នាំ​ចូល​ឯកសារ​"
 "ទាំងនេះ​ និង​ប្រើ​ថត​ទាញ​យក​ដែល​បាន​បញ្ចប់​ជា​ទីតាំង​​ឬទេ ?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:219
+#: ktorrent/dialogs/fileselectdlg.cpp:218
 #, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
@@ -272,32 +272,32 @@ msgid ""
 msgstr ""
 "បាន​រក​ឃើញ​ឯកសារ​ <b>%1</b> ​​ក្នុង​ថត​​ទាញ​យក​ដែល​បាន​បញ្ចប់​ ។ តើ​អ្នក​ចង់​នាំចូល​ឯកសារ​នេះ​ឬ​ទេ​​​ ?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:226
+#: ktorrent/dialogs/fileselectdlg.cpp:225
 #, fuzzy, kde-format
 #| msgid "&Import"
 msgctxt "@action:button"
 msgid "Import"
 msgstr "នាំចូល"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:237
-#: ktorrent/dialogs/fileselectdlg.cpp:255
+#: ktorrent/dialogs/fileselectdlg.cpp:236
+#: ktorrent/dialogs/fileselectdlg.cpp:254
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "គ្មាន​ថត​​ %1 ឡើយ​​​ តើ​អ្នក​​ចង់​បង្កើត​​ថត​នេះ​​ឬ ?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:239
-#: ktorrent/dialogs/fileselectdlg.cpp:257
-#: ktorrent/dialogs/missingfilesdlg.cpp:91
-#: ktorrent/dialogs/missingfilesdlg.cpp:99
-#: ktorrent/dialogs/missingfilesdlg.cpp:133
-#: ktorrent/dialogs/torrentcreatordlg.cpp:280
+#: ktorrent/dialogs/fileselectdlg.cpp:238
+#: ktorrent/dialogs/fileselectdlg.cpp:256
+#: ktorrent/dialogs/missingfilesdlg.cpp:90
+#: ktorrent/dialogs/missingfilesdlg.cpp:98
+#: ktorrent/dialogs/missingfilesdlg.cpp:132
+#: ktorrent/dialogs/torrentcreatordlg.cpp:279
 #, fuzzy, kde-format
 #| msgid "Recreate"
 msgctxt "@action:button"
 msgid "Create"
 msgstr "បង្កើត​ឡើង​វិញ"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:286
+#: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
@@ -306,21 +306,21 @@ msgstr ""
 "អ្នក​បាន​ដោះ​ជ្រើស​ឯកសារ​ដែល​មាន​ស្រាប់​ដូច​​ដូច​ខាងក្រោម ។ អ្នក​នឹង​បាត់បង់​ទិន្នន័យ​ទាំងអស់​ក្នុង​ឯកសារ​ទាំងនេះ "
 "តើ​អ្នក​ពិត​ជា​ចង់​ធ្វើ​ដូចនេះ​ឬ ?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:292
+#: ktorrent/dialogs/fileselectdlg.cpp:291
 #, fuzzy, kde-format
 #| msgid "Delete File(s)"
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "លុប​ឯកសារ"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:293
+#: ktorrent/dialogs/fileselectdlg.cpp:292
 #, fuzzy, kde-format
 #| msgid "No, keep the files"
 msgctxt "@action:button"
 msgid "Keep the Files"
 msgstr "ទេ រក្សាទុក​ឯកសារ"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:316
+#: ktorrent/dialogs/fileselectdlg.cpp:315
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -330,54 +330,54 @@ msgstr ""
 "ការ​បើក​ torrent <b>%1</b> នឹង​ចែករំលែក​ឯកសារ​មួយ​ ឬ​ច្រើន​ជាមួយ​​ torrents ដូច​ខាង​ក្រោម​ ។​ "
 "Torrents មិន​ត្រូវ​បាន​អនុញ្ញាត​ឲ្យ​​សរសេរ​ទៅកាន់​ឯកសារ​ដូច​គ្នា​ឡើយ​ ។​ សូម​ជ្រើស​ទីតាំង​ផ្សេង​មួយ​ទៀត ។"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:418 ktorrent/dialogs/pastedialog.cpp:61
-#: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
+#: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "គ្រប់​ Torrents"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:487
+#: ktorrent/dialogs/fileselectdlg.cpp:486
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr "<b>មិន​អាច​កំណត់​ទំហំ​ទំនេរ​បាន​ឡើយ​​</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:494
+#: ktorrent/dialogs/fileselectdlg.cpp:493
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr "%1 (%2 កំពុង​ត្រូវ​បាន​ប្រើ​ដោយ​ឯកសារ​ដែល​មាន​ស្រាប់)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:502
+#: ktorrent/dialogs/fileselectdlg.cpp:501
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "%1 ខ្លី ​ "
 
-#: ktorrent/dialogs/fileselectdlg.cpp:529
+#: ktorrent/dialogs/fileselectdlg.cpp:528
 #, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "ឯកសារ​ដែល​មានស្រាប់​ ៖​​ <b>គ្មាន​​</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:531
+#: ktorrent/dialogs/fileselectdlg.cpp:530
 #, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "ឯកសារ​ដែល​មាន​ស្រាប់​ ៖ <b>គ្រប់​</b>​"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:533
+#: ktorrent/dialogs/fileselectdlg.cpp:532
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "ឯកសារ​ដែល​មាន​ស្រាប់​​ ៖​​ <b>%1</b> ​របស់​​ <b>%2</b>​"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:537
+#: ktorrent/dialogs/fileselectdlg.cpp:536
 #, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "ឯកសារ​ដែល​មាន​ស្រាប់​ ៖​​ <b>ទេ​​​</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:540
+#: ktorrent/dialogs/fileselectdlg.cpp:539
 #, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "ឯកសារ​ដែល​មាន​ស្រាប់​ ៖ <b>បាទ/ចាស</b>​"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:612
+#: ktorrent/dialogs/fileselectdlg.cpp:611
 #, kde-format
 msgid "Clear History"
 msgstr "សម្អាត​ប្រវត្តិ"
@@ -633,13 +633,13 @@ msgstr "នាំចូល"
 msgid "Ca&ncel"
 msgstr "បោះបង់"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:72
-#: ktorrent/dialogs/missingfilesdlg.cpp:116
+#: ktorrent/dialogs/missingfilesdlg.cpp:71
+#: ktorrent/dialogs/missingfilesdlg.cpp:115
 #, kde-format
 msgid "Select the directory where the data now is."
 msgstr "ជ្រើស​ថត ដែល​ជា​ថត​​ទិន្នន័យ ។"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:89
+#: ktorrent/dialogs/missingfilesdlg.cpp:88
 #, kde-format
 msgid ""
 "The data files are not present in the location you selected. Do you want to "
@@ -648,7 +648,7 @@ msgstr ""
 "ឯកសារ​ទិន្នន័យ​មិន​បង្ហាញ​នៅ​ក្នុង​ទីតាំង​ដែល​អ្នក​បាន​ជ្រើស​ទេ ។ តើ​អ្នក​ចង់​បង្កើត​ឯកសារ​ទាំងអស់​នៅ​ក្នុង​ថត​ដែល​"
 "បាន​ជ្រើស​ដែរឬទេ ?"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:96
+#: ktorrent/dialogs/missingfilesdlg.cpp:95
 #, kde-format
 msgid ""
 "Not all files were found in the new location; some are still missing. Do you "
@@ -657,7 +657,7 @@ msgstr ""
 "រក​មិន​ឃើញ​ឯកសារ​ទាំងអស់​នៅ​ក្នុង​ទីតាំង​ថ្មី ​បាត់​ឯកសារ​មួយ​ចំនួន​ ។ តើ​អ្នក​ចង់​បង្កើត​ឯកសារ​ដែល​បាត់​នៅ​ក្នុង​ថត​"
 "ដែល​បាន​ជ្រើស​ដែរ​ឬ​ទេ ?"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:131
+#: ktorrent/dialogs/missingfilesdlg.cpp:130
 #, kde-format
 msgid ""
 "The data file is not present in the location you selected. Do you want to "
@@ -723,7 +723,7 @@ msgstr "បោះបង់​ កុំ​ចាប់ផ្ដើម torrent �
 #. i18n: ectx: property (text), widget (QPushButton, cancel_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: ktorrent/dialogs/missingfilesdlg.ui:80 ktorrent/view/scanextender.ui:217
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:147
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
 #, kde-format
 msgid "Cancel"
 msgstr "បោះបង់"
@@ -747,7 +747,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:308
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "URL មិនត្រឹមត្រូវ ៖ %1"
@@ -769,7 +769,7 @@ msgstr "បើក​សម្ងាត់"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:256
 #, kde-format
 msgid "Speed Limits"
 msgstr "ល្បឿន​កំណត់"
@@ -920,33 +920,33 @@ msgstr "បាន​បញ្ជាក់​ល្បឿន​ផ្ទុក​
 msgid "No assured speed"
 msgstr "គ្មាន​ល្បឿន​ដែល​បាន​អះអាង"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:41
+#: ktorrent/dialogs/torrentcreatordlg.cpp:40
 #, kde-format
 msgid "Create A Torrent"
 msgstr "បង្កើត Torrent"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:245
+#: ktorrent/dialogs/torrentcreatordlg.cpp:244
 #, kde-format
 msgid "Only HTTP is supported for webseeding."
 msgstr "មានតែ HTTP ប៉ុណ្ណោះ​ត្រូវ​បាន​គាំទ្រ ​សម្រាប់​ការ​បណ្ដុះ​បណ្ដាញ ។"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:272
+#: ktorrent/dialogs/torrentcreatordlg.cpp:271
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "អ្នក​ត្រូវ​តែ​ជ្រើស​ឯកសារ ឬ​ថត​ ។​"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:278
+#: ktorrent/dialogs/torrentcreatordlg.cpp:277
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
 msgstr "អ្នក​មិន​បាន​បន្ថែម​ឧបករណ៍​តាមដាន​ទេ តើ​អ្នក​ពិតជា​ចង់​បង្កើត torrent នេះ​ឬ ?"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:286
+#: ktorrent/dialogs/torrentcreatordlg.cpp:285
 #, kde-format
 msgid "You must add at least one node."
 msgstr "អ្នក​ត្រូវ​បន្ថែម​ថ្នាំង​​យ៉ាង​ហោច​មួយ​ ។​"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:340
+#: ktorrent/dialogs/torrentcreatordlg.cpp:339
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "ជ្រើស​ឯកសារ ដើម្បី​រក្សាទុក torrent"
@@ -1274,7 +1274,7 @@ msgstr "កែសម្រួល​គោលការណ៍​ក្រុម"
 msgid "Open In New Tab"
 msgstr "បើក​នៅ​ក្នុង​ផ្ទាំង​ថ្មី"
 
-#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:223
 #, kde-format
 msgid "New Group"
 msgstr "ក្រុម​ថ្មី"
@@ -1494,13 +1494,13 @@ msgid "Advanced"
 msgstr "កម្រិត​ខ្ពស់"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
 #, kde-format
 msgid "Open Directory"
 msgstr "បើក​ថត"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
 #, kde-format
 msgid "Add to Group"
 msgstr "បន្ថែម​ទៅ​ក្រុម"
@@ -1512,143 +1512,143 @@ msgid "Configure Columns"
 msgstr "កំណត់​រចនា​សម្ព័ន្ធ​ជួរ​ឈរ"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
 #, kde-format
 msgid "Columns"
 msgstr "ជួរឈរ"
 
-#: ktorrent/main.cpp:100
+#: ktorrent/main.cpp:99
 #, fuzzy, kde-format
 #| msgid "KTorrent"
 msgctxt "@title"
 msgid "KTorrent"
 msgstr "KTorrent"
 
-#: ktorrent/main.cpp:102
+#: ktorrent/main.cpp:101
 #, fuzzy, kde-format
 #| msgid "Bittorrent client for KDE"
 msgid "Bittorrent client by KDE"
 msgstr "ម៉ាស៊ីន​ភ្ញៀវ Bittorrent សម្រាប់ KDE"
 
-#: ktorrent/main.cpp:104
+#: ktorrent/main.cpp:103
 #, fuzzy, kde-format
 #| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgstr "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៥ - ២០១០ Joris Guisson និង​ Ivan Vasic"
 
-#: ktorrent/main.cpp:111
+#: ktorrent/main.cpp:110
 #, kde-format
 msgid "Joris Guisson"
 msgstr "Joris Guisson"
 
-#: ktorrent/main.cpp:115
+#: ktorrent/main.cpp:114
 #, kde-format
 msgid "Ivan Vasic"
 msgstr "Ivan Vasic"
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "Alan Jones"
 msgstr "Alan Jones"
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "BitFinder Plugin"
 msgstr "កម្មវិធី​ជំនួយ BitFinder"
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "Diego Rosario Brogna"
 msgstr "Diego Rosario Brogna"
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, fuzzy, kde-format
 #| msgid "Global max share ratio patch"
 msgid "Webinterface Plugin, global max share ratio patch"
 msgstr "បំណះ​សមាមាត្រចែករំលែក​អតិ.សកល"
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Krzysztof Kundzicz"
 msgstr "Krzysztof Kundzicz"
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Statistics Plugin"
 msgstr "កម្មវិធី​ជំនួយ​ស្ថិតិ"
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "Christian Weilbach"
 msgstr "Christian Weilbach"
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "kio-magnet"
 msgstr "kio-magnet"
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Mladen Babic"
 msgstr "Mladen Babic"
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Application icon and a couple of others"
 msgstr "រូប​តំណាង​កម្មវិធី"
 
-#: ktorrent/main.cpp:121
+#: ktorrent/main.cpp:120
 #, kde-format
 msgid "Adam Treat"
 msgstr "Adam Treat"
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "1.0 application icon"
 msgstr "រូប​តំណាង​កម្មវិធី ១.០​"
 
-#: ktorrent/main.cpp:123
+#: ktorrent/main.cpp:122
 #, kde-format
 msgid "Vincent Wagelaar"
 msgstr "Vincent Wagelaar"
 
-#: ktorrent/main.cpp:124
+#: ktorrent/main.cpp:123
 #, kde-format
 msgid "Knut Morten Johansson"
 msgstr "Knut Morten Johansson"
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "Felix Berger"
 msgstr "Felix Berger"
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "ChunkBar's tooltip and IWFileTreeItem sorting"
 msgstr "ព័ត៌មាន​ជំនួយ​របស់​ ChunkBar និង​ការ​​តម្រៀប IWFileTreeItem"
 
-#: ktorrent/main.cpp:126
+#: ktorrent/main.cpp:125
 #, kde-format
 msgid "Andreas Kling"
 msgstr "Andreas Kling"
 
-#: ktorrent/main.cpp:127
+#: ktorrent/main.cpp:126
 #, kde-format
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
 msgstr ""
 
-#: ktorrent/main.cpp:130
+#: ktorrent/main.cpp:129
 #, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin. The data "
@@ -1657,375 +1657,385 @@ msgid ""
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "អាទិភាព​ឯកសារ និង​បំណះ​ផ្សេងៗ​មួយ​ចំនួន"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "Miniupnp ត្រូវ​បាន​ប្រើជា​ឧទាហរណ៍​សម្រាប់​ការ​ប្រត្តិបតិ​ UPnP ផ្ទាល់​ខ្លួន​របស់​យើង"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:139
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
+#: ktorrent/main.cpp:139 ktorrent/main.cpp:140
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "ការ​ធ្វើ​ឲ្យ Zeroconf ប្រសើរ"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Coldmilk webgui"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "កូដ IDEAl ពី KDevelop"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "បង្កើន​ល្បឿន​បម្លែង​ក្នុង​កម្មវិធី​ជំនួយ ipfilter"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Bryan Burns នៃ​បណ្ដាញ Juniper"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "បាន​រក​ឃើញ​ភាព​ទទួលរង​នូវ​សុវត្ថិភាព ២ (ទាំង​ពីរ​គឺ​ត្រូវ​បាន​ជួសជុល)"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "បំណះ​ដែល​ត្រូវ​រក្សាទុក​ជាមួយ​នឹង​ទីតាំង​រក្សាទុក"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "ជួសជុល​ជា​កូដ PHP នៃ​ចំណុច​ប្រទាក់​បណ្ដាញ"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "ការ​បម្រុង​ទុក​ថាស​ជាក់លាក់ XFS"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "បំណះ​ដែល​មិនត្រូវ​បង្ហាញ​​នៅ​ល្បឿន​យឺត"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "បំណះ​ដែលត្រូវបង្ហាញ​ស្ថានភាព​ដែល​ជាប់​ជញ្ជាំង​ភ្លើង​តាម​សក្ដានុភាព"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Several patches"
 msgstr "បំណះ​ច្រើន"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "បំណះ​ដែល​ត្រូវ​លាក់​របារ​ម៉ឺនុយ"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "បំណះ​ដែល​ត្រូវ​ផ្លាស់ប្ដូរ​លក្ខណៈ​សម្បត្តិ​ឯកសារ​នៅ​ក្នុង​ចំណុច​ប្រទាក់​អ្នកប្រើ​ក្រាហ្វិក​បណ្ដាញ"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Several webgui patches"
 msgstr "បំណះ​ចំណុច​ប្រទាក់​អ្នកប្រើ​ក្រាហ្វិក​បណ្ដាញ​ច្រើន"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "ការ​ជួសជុល​សម្រាប់​ការ​ព្រមាន​ច្រើន"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "បំណះ​ដែលត្រូវ​ជួសជុល​ការ​គណនា​ទំហំ​ថាស​ទំនេរ​នៅលើ FreeBSD"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "បំណះ​ដែល​ត្រូវ​ជួសជុល​ការ​គាំង​នៅ​ក្នុង ChunkDownloadView"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "ការ​បំបាត់​កំហុស"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "បំណះ​ដែល​ត្រូវ​ផ្ទុក torrents ពី​បន្ទាត់​ពាក្យ​បញ្ជា"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "New set of icons"
 msgstr "សំណុំ​រូបតំណាង​ថ្មី"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "អូស និង​ទម្លាក់​ការ​គាំទ្រ​សម្រាប់​អាប់ភ្លេត​ប្លាស្មា"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "បំណះ ដែល​ត្រូវ​​សម្អាត​​បញ្ជី​កម្មវិធី​ជំនួយ"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "ប៉ះ​បំណះ ដើម្បី​ធ្វើ​ឲ្យ​អាប់ភ្លេត​ប្លាស្មា ក្លាយ​ជា​អាប់ភ្លេត​លេច​ឡើង"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Leo Trubach"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "ប៉ះ​បំណះ ដើម្បី​បន្ថែម​ការ​គាំ​ទ្រ​សម្រាប់​ជួរ IP ក្នុង​ប្រអប់​តម្រង IP"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrei Barbu"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "លក្ខណៈ​ពិសេស​ដែល​បន្ថែម​កាល​បរិច្ឆេទ​នៅ​ពេល​ដែល torrent ត្រូវ​បាន​បន្ថែម"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundqvist"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "លក្ខណៈ​ពិសេស​ដែល​ត្រូវ​បិទ​ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ​ក្នុង​ចំណុចប្រទាក់​បណ្ដាញ"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslaw Swierczynski"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "លំនាំ​ដែល​មិន​រួមបញ្ចូល​ក្នុង​កម្មវិធី​ជំនួយ​សហគមន៍"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Alexey Shildyakov "
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "ប៉ះ​បំណះ ដើម្បី​ប្ដូរ​ឈ្មោះ​ឯកសារ torrents តែ​មួយ​ទៅ​ឯកសារ​ដែល​នៅ​ខាងក្នុង"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr ""
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr ""
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Rex Dieter"
 msgstr ""
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr ""
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Leszek Lesner"
 msgstr ""
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr ""
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr ""
 
-#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
+#: ktorrent/main.cpp:171 ktorrent/main.cpp:172
 #, kde-format
 msgid "KF5 porting"
 msgstr ""
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr ""
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, fuzzy, kde-format
 #| msgid "Alexander Dymo"
 msgid "Alexander Trufanov"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
+msgstr ""
+
+#: ktorrent/main.cpp:174
+#, kde-format
+msgid "Jack Hill"
+msgstr ""
+
+#: ktorrent/main.cpp:174
+#, kde-format
+msgid "KF6 porting"
 msgstr ""
 
 #: ktorrent/main.cpp:178
@@ -3508,7 +3518,7 @@ msgctxt "Progress bar percentage label"
 msgid "%p%"
 msgstr ""
 
-#: ktorrent/statusbarofflineindicator.cpp:40
+#: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
 msgid "The desktop is offline"
 msgstr ""
@@ -3993,7 +4003,7 @@ msgstr "ទីតាំង​ដែល​ត្រូវ​ផ្លាស់ទ
 msgid "Checked %v of %m chunks"
 msgstr "បាន​ពិនិត្យ​ %v របស់​កំណាត់ %m"
 
-#: ktorrent/view/scanextender.cpp:111
+#: ktorrent/view/scanextender.cpp:109
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
 msgstr "<font color=\"red\">%1</font>"
@@ -4070,165 +4080,165 @@ msgstr "កំហុស ៖"
 msgid "Filter..."
 msgstr "តម្រង​"
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:132
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "ចាប់ផ្ដើម"
 
-#: ktorrent/view/view.cpp:134
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "ចាប់ផ្ដើម torrents ដែល​បាន​ជ្រើស​ទាំងអស់​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:139
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "ចាប់ផ្ដើម​បង្ខំ"
 
-#: ktorrent/view/view.cpp:141
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "ចាប់ផ្ដើម​បង្ខំ torrents ដែល​បាន​ជ្រើស​ទាំងអស់​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:144
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "បញ្ឈប់"
 
-#: ktorrent/view/view.cpp:146
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "បញ្ឈប់ torrents ដែល​បាន​ជ្រើស​ទាំងអស់​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: ktorrent/view/view.cpp:152
+#: ktorrent/view/view.cpp:151
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "ផ្អាក"
 
-#: ktorrent/view/view.cpp:154
+#: ktorrent/view/view.cpp:153
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "ផ្អាក torrents ដែល​បាន​ជ្រើស​ទាំងអស់​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: ktorrent/view/view.cpp:159
+#: ktorrent/view/view.cpp:158
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "យក​ចេញ"
 
-#: ktorrent/view/view.cpp:161
+#: ktorrent/view/view.cpp:160
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "យក torrent ដែល​បាន​ជ្រើស​ទាំងអស់​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន​ចេញ"
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:165
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "ចាប់ផ្ដើម​ទាំងអស់"
 
-#: ktorrent/view/view.cpp:167
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "ចាប់ផ្ដើម torrent ទាំងអស់​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:171
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "បញ្ឈប់​ទាំងអស់"
 
-#: ktorrent/view/view.cpp:173
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "បញ្ឈប់​ torrents ទាំង​អស់​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: ktorrent/view/view.cpp:178
+#: ktorrent/view/view.cpp:177
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "យក Torrent និង​ទិន្នន័យ​ចេញ"
 
-#: ktorrent/view/view.cpp:183
+#: ktorrent/view/view.cpp:182
 #, kde-format
 msgid "Rename Torrent"
 msgstr "ប្ដូរ​​ឈ្មោះ Torrent"
 
-#: ktorrent/view/view.cpp:187
+#: ktorrent/view/view.cpp:186
 #, kde-format
 msgid "Add Peers"
 msgstr "បន្ថែម​ម៉ាស៊ីន​ដូចគ្នា"
 
-#: ktorrent/view/view.cpp:191
+#: ktorrent/view/view.cpp:190
 #, kde-format
 msgid "Manual Announce"
 msgstr "ប្រកាស​ដោយ​ដៃ​"
 
-#: ktorrent/view/view.cpp:196
+#: ktorrent/view/view.cpp:195
 #, kde-format
 msgid "Scrape"
 msgstr "Scrape"
 
-#: ktorrent/view/view.cpp:200
+#: ktorrent/view/view.cpp:199
 #, kde-format
 msgid "Preview"
 msgstr "មើល​ជា​​​មុន"
 
-#: ktorrent/view/view.cpp:204
+#: ktorrent/view/view.cpp:203
 #, kde-format
 msgid "Data Directory"
 msgstr "ថត​ទិន្នន័យ"
 
-#: ktorrent/view/view.cpp:208
+#: ktorrent/view/view.cpp:207
 #, kde-format
 msgid "Temporary Directory"
 msgstr "ថត​បណ្តោះអាសន្ន"
 
-#: ktorrent/view/view.cpp:212
+#: ktorrent/view/view.cpp:211
 #, kde-format
 msgid "Move Data"
 msgstr "ផ្លាស់ទី​ទិន្នន័យ"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "ការ​កំណត់"
 
-#: ktorrent/view/view.cpp:220
+#: ktorrent/view/view.cpp:219
 #, kde-format
 msgid "Remove from Group"
 msgstr "យកចេញ​ពីក្រុម"
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:227
 #, kde-format
 msgid "Check Data"
 msgstr "ពិនិត្យ​ទិន្នន័យ"
 
-#: ktorrent/view/view.cpp:229
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "ពិនិត្យ​មើល​ទិន្នន័យទាំងអស់​​របស់ torrent"
 
-#: ktorrent/view/view.cpp:249
+#: ktorrent/view/view.cpp:248
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "ចម្លង URL របស់ Torrent"
 
-#: ktorrent/view/view.cpp:253
+#: ktorrent/view/view.cpp:252
 #, kde-format
 msgid "Export Torrent"
 msgstr "Torrent នាំចេញ"
 
-#: ktorrent/view/view.cpp:258
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "កំណត់​ល្បឿន​កំណត់​របស់ torrent នីមួយៗ"
 
-#: ktorrent/view/view.cpp:452
+#: ktorrent/view/view.cpp:451
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
@@ -4237,35 +4247,35 @@ msgstr ""
 "torrent <b>%1</b> មិនទាន់​បាន​បញ្ចាប់​ការ​ទាញយក​នៅឡើយ​ទេ តើ​អ្នក​ពិតជា​ចង់​លុប​ទិន្នន័យ​ដែល​មិនទាន់​"
 "ចប់សព្វ​គ្រប់​នោះ​ឬ ?"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:456
 #, kde-format
 msgid "Remove Download"
 msgstr "យក​ការ​ទាញយក​ចេញ"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Delete Data"
 msgstr "លុប​ទិន្នន័យ"
 
-#: ktorrent/view/view.cpp:459
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Keep Data"
 msgstr "ទុក​ទិន្នន័យ"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:482
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr "អ្នក​នឹង​បាត់បង់​ទិន្នន័យ​ដែល​បាន​ទាញ​យក​ទាំងអស់ ។ តើ​អ្នក​ពិតជា​ចង់​ធ្វើ​ដូចនេះ​ឬ ?"
 
-#: ktorrent/view/view.cpp:484
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid "Remove Torrent"
 msgstr "យក Torrent ចេញ"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:344
-#: plugins/infowidget/fileview.cpp:368
+#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:343
+#: plugins/infowidget/fileview.cpp:367
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "ជ្រើស​​ថត ដែល​ត្រូវ​ផ្លាស់ទី​ទិន្នន័យ​ទៅ ។"
@@ -4828,7 +4838,7 @@ msgstr "កម្មវិធី​ជំនួយ"
 msgid "%1: %2<br/>%3: %4"
 msgstr "%1 ៖ %2<br/>%3 ៖ %4"
 
-#: libktcore/torrent/basicjobprogresswidget.cpp:51
+#: libktcore/torrent/basicjobprogresswidget.cpp:49
 #, kde-format
 msgid "Warning: %1"
 msgstr "ការ​ព្រមាន ៖ %1"
@@ -4852,7 +4862,7 @@ msgstr "បង្ហាញ​ការ​ទាញ​យក"
 msgid "Excluded Chunks"
 msgstr "មិន​រួមបញ្ចូល ៖"
 
-#: libktcore/torrent/queuemanager.cpp:102
+#: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
@@ -4861,7 +4871,7 @@ msgstr ""
 "Torrent \"%1\" បាន​ទៅ​ដល់​សមាមាត្រ​ចែករំលែក​អតិបរមា​របស់​វា​ និង​ពេលវេលា​បណ្ដុះ​អតិបរមា ។ "
 "ទោះជាយ៉ាងណាក៏ដោយ មិន​អើពើ​ដែន​កំណត់ ហើយ​ចាប់ផ្ដើម​ការ​បណ្ដុះ​ ?"
 
-#: libktcore/torrent/queuemanager.cpp:105
+#: libktcore/torrent/queuemanager.cpp:107
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
@@ -4870,7 +4880,7 @@ msgstr ""
 "Torrent \"%1\" បាន​ដល់​សមាមាត្រ​ចែករំលែក​អតិបរមា​របស់​វា​ ។ ទោះជាយ៉ាងណាក៏ដោយ មិន​អើពើ​ដែន​កំណត់ "
 "ហើយ​ចាប់ផ្ដើម​​ការ​បណ្ដុះ​ឬ ?"
 
-#: libktcore/torrent/queuemanager.cpp:107
+#: libktcore/torrent/queuemanager.cpp:109
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
@@ -4879,15 +4889,15 @@ msgstr ""
 "torrent \"%1\" បាន​ដល់​ពេលវេលា​បណ្ដុះ​អតិបរមា​របស់​វា​ហើយ ។ ទោះជាយ៉ាងណាក៏ដោយ មិន​អើពើ​នឹង​ដែន​"
 "កំណត់ ហើយ​ចាប់ផ្ដើម​ការ​បណ្ដុះ​ឬ ?"
 
-#: libktcore/torrent/queuemanager.cpp:114
+#: libktcore/torrent/queuemanager.cpp:116
 #, kde-format
 msgid "Limits reached."
 msgstr "បាន​ដល់​ព្រំដែន​ ។"
 
-#: libktcore/torrent/queuemanager.cpp:115
-#: libktcore/torrent/queuemanager.cpp:225
-#: libktcore/torrent/queuemanager.cpp:264
-#: libktcore/torrent/queuemanager.cpp:293
+#: libktcore/torrent/queuemanager.cpp:117
+#: libktcore/torrent/queuemanager.cpp:227
+#: libktcore/torrent/queuemanager.cpp:266
+#: libktcore/torrent/queuemanager.cpp:295
 #, fuzzy, kde-format
 #| msgctxt "@action Start all selected torrents in the current tab"
 #| msgid "Start"
@@ -4895,19 +4905,19 @@ msgctxt "@action:button"
 msgid "Start"
 msgstr "ចាប់ផ្ដើម"
 
-#: libktcore/torrent/queuemanager.cpp:140
+#: libktcore/torrent/queuemanager.cpp:142
 #, kde-format
 msgid ""
 "You don't have enough disk space to download this torrent. Are you sure you "
 "want to continue?"
 msgstr "អ្នក​មិនមាន​ទំហំ​ថាស​គ្រប់គ្រាន់​ដើម្បី​ទាញយក torrent នេះ​ទេ ។ តើ​អ្នក​ពិត​ជា​ចង់​បន្ត​ឬ ?"
 
-#: libktcore/torrent/queuemanager.cpp:143
+#: libktcore/torrent/queuemanager.cpp:145
 #, kde-format
 msgid "Insufficient disk space for %1"
 msgstr "ទំហំថាស​មិនគ្រប់គ្រាន់​សម្រាប់ %1"
 
-#: libktcore/torrent/queuemanager.cpp:222
+#: libktcore/torrent/queuemanager.cpp:224
 #, kde-format
 msgid ""
 "Not enough disk space for the following torrents. Do you want to start them "
@@ -4916,7 +4926,7 @@ msgstr ""
 "គ្មាន​ទំហំ​ថាស​គ្រប់គ្រាន់​សម្រាប់ torrents ដូច​ខាងក្រោម​ទេ ។ ទោះជាយ៉ាងណាក៏ដោយ តើ​អ្នក​ចង់​ចាប់ផ្ដើម​"
 "ពួកវា​ឬ ?"
 
-#: libktcore/torrent/queuemanager.cpp:261
+#: libktcore/torrent/queuemanager.cpp:263
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
@@ -4925,7 +4935,7 @@ msgstr ""
 "torrents ខាងក្រោម​បាន​ដល់​ពេលវេលា​បណ្ដុះ​អតិបរមា​របស់​វា​ហើយ ។ ទោះជាយ៉ាងណាក៏ដោយ តើ​អ្នក​ចង់​"
 "ចាប់ផ្ដើម​ពួកវា​ឬ​ទេ ?"
 
-#: libktcore/torrent/queuemanager.cpp:290
+#: libktcore/torrent/queuemanager.cpp:292
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum share ratio. Do you want "
@@ -4934,18 +4944,18 @@ msgstr ""
 "torrents ខាងក្រោម​បាន​ដល់​សមាមាត្រ​ចែករំលែក​អតិបរមា​របស់​ពួកវា​ហើយ ។ ទោះជាយ៉ាងណាក៏ដោយ តើ​អ្នក​ចង់​"
 "ចាប់ផ្ដើម​ពួកវា​ឬ ?"
 
-#: libktcore/torrent/queuemanager.cpp:706
+#: libktcore/torrent/queuemanager.cpp:708
 #, kde-format
 msgid "Error starting torrent %1: %2"
 msgstr "កំហុស​ក្នុង​ការ​ចាប់ផ្ដើម torrent %1 ៖ %2"
 
-#: libktcore/torrent/queuemanager.cpp:707
-#: libktcore/torrent/queuemanager.cpp:718
+#: libktcore/torrent/queuemanager.cpp:709
+#: libktcore/torrent/queuemanager.cpp:720
 #, kde-format
 msgid "Error"
 msgstr "កំហុស"
 
-#: libktcore/torrent/queuemanager.cpp:717
+#: libktcore/torrent/queuemanager.cpp:719
 #, kde-format
 msgid "Error stopping torrent %1: %2"
 msgstr "កំហុស​ក្នុង​ការ​បញ្ឈប់ torrent %1 ៖​ %2"
@@ -4962,7 +4972,7 @@ msgid "Cannot write beyond end of the mmap buffer."
 msgstr "មិន​អាច​សរសេរ​ផុត​​ចុង​របស់​​អង្គចងចាំ​​បណ្ដោះ​អាសន្ន mmap បាន​ឡើយ​ ។"
 
 #: plugins/bwscheduler/bwprefpage.cpp:12
-#: plugins/bwscheduler/bwschedulerplugin.cpp:59
+#: plugins/bwscheduler/bwschedulerplugin.cpp:62
 #, kde-format
 msgid "Scheduler"
 msgstr "កម្មវិធី​រៀបចំ​កាលវិភាគ"
@@ -5049,7 +5059,7 @@ msgstr "បាន​ផ្អាក​ពណ៌​ធាតុ​កាលវិ
 msgid "Color of each suspended item on the schedule."
 msgstr "ពណ៌​ធាតុ​ដែល​បាន​ផ្អាក​នីមួយៗ​នៅ​លើ​កាលវិភាគ ។"
 
-#: plugins/bwscheduler/bwschedulerplugin.cpp:88
+#: plugins/bwscheduler/bwschedulerplugin.cpp:91
 #: plugins/infowidget/infowidgetplugin.cpp:68
 #, kde-format
 msgid "Bandwidth Scheduler"
@@ -5434,88 +5444,88 @@ msgstr "ឆ្វេង ៖"
 msgid "Size:"
 msgstr "ទំហំ ៖"
 
-#: plugins/infowidget/fileview.cpp:112
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "បើក"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "បើក​ជាមួយ"
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgid "Check File"
 msgstr "ពិនិត្យមើល​ឯកសារ"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:116
 #, kde-format
 msgid "Download first"
 msgstr "ទាញយក​ដំបូង​គេ"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Download normally"
 msgstr "ទាញយក​តាម​ធម្មតា"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Download last"
 msgstr "ទាញយក​ចុងក្រោយ​គេ"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:120
 #, fuzzy, kde-format
 #| msgid "Do Not Download"
 msgid "Do not download"
 msgstr "កុំ​ទាញយក"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Delete File(s)"
 msgstr "លុប​ឯកសារ"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "Move File"
 msgstr "ផ្លាស់ទី​ឯកសារ"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "វេញ​មែកធាង​ថត"
 
-#: plugins/infowidget/fileview.cpp:127
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "ពង្រីក​មែកធាង​ថត"
 
-#: plugins/infowidget/fileview.cpp:130
+#: plugins/infowidget/fileview.cpp:129
 #, kde-format
 msgid "File Tree"
 msgstr "មែកធាង​ឯកសារ​"
 
-#: plugins/infowidget/fileview.cpp:132
+#: plugins/infowidget/fileview.cpp:131
 #, kde-format
 msgid "File List"
 msgstr "បញ្ជី​ឯកសារ​"
 
-#: plugins/infowidget/fileview.cpp:142
+#: plugins/infowidget/fileview.cpp:141
 #, kde-format
 msgid "Show Filter"
 msgstr "បង្ហាញ​តម្រង"
 
-#: plugins/infowidget/fileview.cpp:323
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
+#: plugins/infowidget/fileview.cpp:322
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] "អ្នក​នឹង​បាត់បង់​ទិន្នន័យ​ទាំងអស់​នៅ​ក្នុង​ឯកសារ​នេះ តើ​អ្នក​ពិតជាចង់​ធ្វើ​ដូចនេះ​ឬ ?"
 
-#: plugins/infowidget/fileview.cpp:453
+#: plugins/infowidget/fileview.cpp:452
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5524,7 +5534,7 @@ msgid ""
 "higher priority?"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:456
+#: plugins/infowidget/fileview.cpp:455
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -7020,13 +7030,13 @@ msgstr ""
 msgid "Widget position:"
 msgstr "ទីតាំង​ធាតុ​ក្រាហ្វិក​ចុះ​កំណត់ហេតុ ៖"
 
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:30
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:155
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
@@ -7313,28 +7323,28 @@ msgstr "កម្មវិធី​ស្វែងរក"
 msgid "Search Engine Label"
 msgstr "ស្លាក​ម៉ាស៊ីន​ស្វែងរក"
 
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:64
+#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
 #, kde-format
 msgid " Engine: "
 msgstr " ម៉ាស៊ីន ៖ "
 
-#: plugins/search/searchwidget.cpp:192
+#: plugins/search/searchwidget.cpp:191
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "ទាញ​យក ៖<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:199
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "តើ​អ្នក​ចង់​ទាញយក ឬ​រក្សាទុក torrent ឬ ?"
 
-#: plugins/search/searchwidget.cpp:201
+#: plugins/search/searchwidget.cpp:200
 #, kde-format
 msgid "Download Torrent"
 msgstr "ទាញយក Torrent"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:202 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "ទាញយក"

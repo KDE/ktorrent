@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-18 00:42+0000\n"
+"POT-Creation-Date: 2023-11-21 01:34+0000\n"
 "PO-Revision-Date: 2022-07-10 17:45+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -216,27 +216,27 @@ msgstr "加入"
 msgid "Close"
 msgstr "關閉"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:82
+#: ktorrent/dialogs/fileselectdlg.cpp:81
 #, kde-format
 msgid "Show a file tree"
 msgstr "顯示檔案樹狀圖"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:85
+#: ktorrent/dialogs/fileselectdlg.cpp:84
 #, kde-format
 msgid "Show a file list"
 msgstr "顯示檔案清單"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:94 plugins/infowidget/fileview.cpp:65
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "過濾器"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:112
+#: ktorrent/dialogs/fileselectdlg.cpp:111
 #, kde-format
 msgid "Opening %1"
 msgstr "開啟 %1 中"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:212
+#: ktorrent/dialogs/fileselectdlg.cpp:211
 #, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -246,7 +246,7 @@ msgstr ""
 "此 torrent 的部份檔案在已下載完成的目錄中有找到。您要匯入這些檔案到完整下載目"
 "錄中嗎？"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:216
+#: ktorrent/dialogs/fileselectdlg.cpp:215
 #, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -256,39 +256,39 @@ msgstr ""
 "此 torrent 的所有檔案在已下載完成的目錄中有找到。您要匯入這些檔案到完整下載目"
 "錄中嗎？"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:219
+#: ktorrent/dialogs/fileselectdlg.cpp:218
 #, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
 "want to import this file?"
 msgstr "檔案 <b>%1</b> 在已下載完成的目錄中有找到。您要匯入該檔案嗎？"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:226
+#: ktorrent/dialogs/fileselectdlg.cpp:225
 #, fuzzy, kde-format
 #| msgid "&Import"
 msgctxt "@action:button"
 msgid "Import"
 msgstr "匯入(&I)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:237
-#: ktorrent/dialogs/fileselectdlg.cpp:255
+#: ktorrent/dialogs/fileselectdlg.cpp:236
+#: ktorrent/dialogs/fileselectdlg.cpp:254
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "目錄 %1 不存在，您要建立它嗎？"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:239
-#: ktorrent/dialogs/fileselectdlg.cpp:257
-#: ktorrent/dialogs/missingfilesdlg.cpp:91
-#: ktorrent/dialogs/missingfilesdlg.cpp:99
-#: ktorrent/dialogs/missingfilesdlg.cpp:133
-#: ktorrent/dialogs/torrentcreatordlg.cpp:280
+#: ktorrent/dialogs/fileselectdlg.cpp:238
+#: ktorrent/dialogs/fileselectdlg.cpp:256
+#: ktorrent/dialogs/missingfilesdlg.cpp:90
+#: ktorrent/dialogs/missingfilesdlg.cpp:98
+#: ktorrent/dialogs/missingfilesdlg.cpp:132
+#: ktorrent/dialogs/torrentcreatordlg.cpp:279
 #, fuzzy, kde-format
 #| msgid "Recreate"
 msgctxt "@action:button"
 msgid "Create"
 msgstr "重建"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:286
+#: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
@@ -296,21 +296,21 @@ msgid ""
 msgstr ""
 "您已取消選取以下的檔案。您將會失去所有這些檔案中的資料。您確定要這樣做嗎？"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:292
+#: ktorrent/dialogs/fileselectdlg.cpp:291
 #, fuzzy, kde-format
 #| msgid "Delete File(s)"
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "刪除檔案"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:293
+#: ktorrent/dialogs/fileselectdlg.cpp:292
 #, fuzzy, kde-format
 #| msgid "No, keep the files"
 msgctxt "@action:button"
 msgid "Keep the Files"
 msgstr "不，把檔案保留"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:316
+#: ktorrent/dialogs/fileselectdlg.cpp:315
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -320,54 +320,54 @@ msgstr ""
 "Torrent <b>%1</b> 與以下的 torrents 有一個以上的共同的檔案。但是它們不允許寫"
 "入相同的檔案。請選擇其它的位置。"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:418 ktorrent/dialogs/pastedialog.cpp:61
-#: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
+#: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "所有 Torrents"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:487
+#: ktorrent/dialogs/fileselectdlg.cpp:486
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr "<b>無法決定可用的空間</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:494
+#: ktorrent/dialogs/fileselectdlg.cpp:493
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr "%1（%2 正被現有的檔案使用）"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:502
+#: ktorrent/dialogs/fileselectdlg.cpp:501
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "少了 %1"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:529
+#: ktorrent/dialogs/fileselectdlg.cpp:528
 #, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "已存在的檔案：<b>無</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:531
+#: ktorrent/dialogs/fileselectdlg.cpp:530
 #, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "已存在的檔案：<b>全部</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:533
+#: ktorrent/dialogs/fileselectdlg.cpp:532
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "已存在的檔案：<b>%1</b> 個，共 <b>%2</b> 個"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:537
+#: ktorrent/dialogs/fileselectdlg.cpp:536
 #, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "已存在的檔案：<b>否</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:540
+#: ktorrent/dialogs/fileselectdlg.cpp:539
 #, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "已存在的檔案：<b>是</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:612
+#: ktorrent/dialogs/fileselectdlg.cpp:611
 #, kde-format
 msgid "Clear History"
 msgstr "清除搜尋歷史"
@@ -622,27 +622,27 @@ msgstr "匯入(&I)"
 msgid "Ca&ncel"
 msgstr "取消(&N)"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:72
-#: ktorrent/dialogs/missingfilesdlg.cpp:116
+#: ktorrent/dialogs/missingfilesdlg.cpp:71
+#: ktorrent/dialogs/missingfilesdlg.cpp:115
 #, kde-format
 msgid "Select the directory where the data now is."
 msgstr "選擇目前資料所在的目錄"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:89
+#: ktorrent/dialogs/missingfilesdlg.cpp:88
 #, kde-format
 msgid ""
 "The data files are not present in the location you selected. Do you want to "
 "create all the files in the selected directory?"
 msgstr "資料檔並沒有在您選取的目錄中。您要在選取的目錄中新建這些檔案嗎？"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:96
+#: ktorrent/dialogs/missingfilesdlg.cpp:95
 #, kde-format
 msgid ""
 "Not all files were found in the new location; some are still missing. Do you "
 "want to create the missing files in the selected directory?"
 msgstr "新位置中並未找到所有的檔案。您要在選取的目錄新建這些找不到的檔案嗎？"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:131
+#: ktorrent/dialogs/missingfilesdlg.cpp:130
 #, kde-format
 msgid ""
 "The data file is not present in the location you selected. Do you want to "
@@ -706,7 +706,7 @@ msgstr "取消，不要開始 torrent。"
 #. i18n: ectx: property (text), widget (QPushButton, cancel_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: ktorrent/dialogs/missingfilesdlg.ui:80 ktorrent/view/scanextender.ui:217
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:147
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
 #, kde-format
 msgid "Cancel"
 msgstr "取消"
@@ -730,7 +730,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:308
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "無效的URL: %1"
@@ -752,7 +752,7 @@ msgstr "無聲開啟"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:256
 #, kde-format
 msgid "Speed Limits"
 msgstr "速度限制"
@@ -903,33 +903,33 @@ msgstr "確定上傳速度"
 msgid "No assured speed"
 msgstr "沒有確定的速度"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:41
+#: ktorrent/dialogs/torrentcreatordlg.cpp:40
 #, kde-format
 msgid "Create A Torrent"
 msgstr "建立 torrent"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:245
+#: ktorrent/dialogs/torrentcreatordlg.cpp:244
 #, kde-format
 msgid "Only HTTP is supported for webseeding."
 msgstr "webseeding 只支援 HTTP。"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:272
+#: ktorrent/dialogs/torrentcreatordlg.cpp:271
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "請指定一個檔案或資料夾."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:278
+#: ktorrent/dialogs/torrentcreatordlg.cpp:277
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
 msgstr "您尚未新增追蹤器。您確定要建立此 torrent 嗎？"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:286
+#: ktorrent/dialogs/torrentcreatordlg.cpp:285
 #, kde-format
 msgid "You must add at least one node."
 msgstr "您必須新增至少一個節點。"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:340
+#: ktorrent/dialogs/torrentcreatordlg.cpp:339
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "選擇要儲存的 torrent"
@@ -1253,7 +1253,7 @@ msgstr "編輯群組政策"
 msgid "Open In New Tab"
 msgstr "在新分頁開啟"
 
-#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:223
 #, kde-format
 msgid "New Group"
 msgstr "建立新群組"
@@ -1471,13 +1471,13 @@ msgid "Advanced"
 msgstr "進階"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
 #, kde-format
 msgid "Open Directory"
 msgstr "開啟目錄"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
 #, kde-format
 msgid "Add to Group"
 msgstr "加入到群組"
@@ -1489,139 +1489,139 @@ msgid "Configure Columns"
 msgstr "設定欄位"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
 #, kde-format
 msgid "Columns"
 msgstr "欄"
 
-#: ktorrent/main.cpp:100
+#: ktorrent/main.cpp:99
 #, kde-format
 msgctxt "@title"
 msgid "KTorrent"
 msgstr "KTorrent"
 
-#: ktorrent/main.cpp:102
+#: ktorrent/main.cpp:101
 #, kde-format
 msgid "Bittorrent client by KDE"
 msgstr "來自 KDE 的 Bittorent 用戶端"
 
-#: ktorrent/main.cpp:104
+#: ktorrent/main.cpp:103
 #, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005 - 2011 Joris Guisson 和 Ivan Vasic"
 
-#: ktorrent/main.cpp:111
+#: ktorrent/main.cpp:110
 #, kde-format
 msgid "Joris Guisson"
 msgstr "Joris Guisson"
 
-#: ktorrent/main.cpp:115
+#: ktorrent/main.cpp:114
 #, kde-format
 msgid "Ivan Vasic"
 msgstr "Ivan Vasic"
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "Alan Jones"
 msgstr "Alan Jones"
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "BitFinder Plugin"
 msgstr "BitFinder 外掛程式"
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "Diego Rosario Brogna"
 msgstr "Diego Rosario Brogna"
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "Webinterface Plugin, global max share ratio patch"
 msgstr "Web 介面外掛程式，全域最大分享率限制修補程式"
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Krzysztof Kundzicz"
 msgstr "Krzysztof Kundzicz "
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Statistics Plugin"
 msgstr "統計外掛程式"
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "Christian Weilbach"
 msgstr "Christian Weilbach"
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "kio-magnet"
 msgstr "kio-magnet"
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Mladen Babic"
 msgstr "Mladen Babic"
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Application icon and a couple of others"
 msgstr "本程式和另外一些的圖示"
 
-#: ktorrent/main.cpp:121
+#: ktorrent/main.cpp:120
 #, kde-format
 msgid "Adam Treat"
 msgstr "Adam Treat"
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "1.0 application icon"
 msgstr "1.0 版本的圖示"
 
-#: ktorrent/main.cpp:123
+#: ktorrent/main.cpp:122
 #, kde-format
 msgid "Vincent Wagelaar"
 msgstr "Vincent Wagelaar"
 
-#: ktorrent/main.cpp:124
+#: ktorrent/main.cpp:123
 #, kde-format
 msgid "Knut Morten Johansson"
 msgstr "Knut Morten Johansson"
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "Felix Berger"
 msgstr "Felix Berger"
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "ChunkBar's tooltip and IWFileTreeItem sorting"
 msgstr "區塊列的工具提示，IWFileTreeItem 排序"
 
-#: ktorrent/main.cpp:126
+#: ktorrent/main.cpp:125
 #, kde-format
 msgid "Andreas Kling"
 msgstr "Andreas Kling"
 
-#: ktorrent/main.cpp:127
+#: ktorrent/main.cpp:126
 #, kde-format
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
 msgstr ""
 
-#: ktorrent/main.cpp:130
+#: ktorrent/main.cpp:129
 #, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin. The data "
@@ -1630,376 +1630,387 @@ msgid ""
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "檔案優先權，以及一些其它的修補"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "Miniupnp 是用作我們自己的 UPnP 實作的範例"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:139
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
+#: ktorrent/main.cpp:139 ktorrent/main.cpp:140
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Zeroconf 的改進"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Coldmilk 網頁介面"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "從 KDevelop 取得 IDEA1 程式碼"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "在 ipfilter 外掛程式中轉換改進速度"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Juniper Networks 的 Bryan Burns"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "發現兩個安全問題 (已修正)"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "載入儲存位置的修補程式"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "網頁介面中的 PHP 程式碼修正"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "XFS 中磁碟空間預先配置"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "修補程式，在極低速時不要顯示"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "顯示可能的防火牆狀態的修補程式"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Several patches"
 msgstr "一些修補程式"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "隱藏選單列的修補程式"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "在網頁介面中改變檔案優先權的修補程式"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Several webgui patches"
 msgstr "一些網頁介面的修補程式"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "修正了一些警告"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "FreeBSD 上計算磁碟剩餘空間的修補程式"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "修正 ChunkDownloadView 中會當掉的問題"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "一些錯誤修正"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "從命令列載入 torrent 的修補程式"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "New set of icons"
 msgstr "新的圖示集"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Plasma 小程式中支援拖放"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "修補並整理外掛程式清單"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "讓 plasma 小程式成為彈出式小程式"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Leo Trubach"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "提供修補，讓 IP 過濾器可以支援指定 IP 範圍"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrei Barbu"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "某個 torrent 被新增的日期"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundqvist"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "關閉網頁介面中的認證功能"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslaw Swierczynski"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "在 syndication 外掛程式中的排除樣式"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Alexey Shildyakov "
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "將內部只有單一檔案的 torrents 更名為內部檔案的檔名的修補"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "Maarten De Meyer"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "修正 bug 305379"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Rex Dieter"
 msgstr "Rex Dieter"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "加入對 x-scheme-handler/magnet mime 類型的支援"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "Leszek Lesner"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "修正 bug 339584"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "Andrius Štikonas"
 
-#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
+#: ktorrent/main.cpp:171 ktorrent/main.cpp:172
 #, kde-format
 msgid "KF5 porting"
 msgstr "KF5 移植"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, fuzzy, kde-format
 #| msgid "Alexander Dymo"
 msgid "Alexander Trufanov"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr ""
+
+#: ktorrent/main.cpp:174
+#, kde-format
+msgid "Jack Hill"
+msgstr ""
+
+#: ktorrent/main.cpp:174
+#, fuzzy, kde-format
+#| msgid "KF5 porting"
+msgid "KF6 porting"
+msgstr "KF5 移植"
 
 #: ktorrent/main.cpp:178
 #, fuzzy, kde-format
@@ -3434,7 +3445,7 @@ msgctxt "Progress bar percentage label"
 msgid "%p%"
 msgstr ""
 
-#: ktorrent/statusbarofflineindicator.cpp:40
+#: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
 msgid "The desktop is offline"
 msgstr "桌面處於離線狀態"
@@ -3910,7 +3921,7 @@ msgstr "把資料移到那裡。"
 msgid "Checked %v of %m chunks"
 msgstr "已檢查 %v 個區塊，共 %m 個"
 
-#: ktorrent/view/scanextender.cpp:111
+#: ktorrent/view/scanextender.cpp:109
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
 msgstr "<font color=\"red\">%1</font>"
@@ -3986,200 +3997,200 @@ msgstr "錯誤："
 msgid "Filter..."
 msgstr "篩選…"
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:132
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "開始"
 
-#: ktorrent/view/view.cpp:134
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "開始目前分頁中所有選取的 torrent"
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:139
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "強制開始"
 
-#: ktorrent/view/view.cpp:141
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "強制開始目前分頁中所有選取的 torrent"
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:144
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "停止"
 
-#: ktorrent/view/view.cpp:146
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "停止目前分頁中所有選取的 torrent"
 
-#: ktorrent/view/view.cpp:152
+#: ktorrent/view/view.cpp:151
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "暫停"
 
-#: ktorrent/view/view.cpp:154
+#: ktorrent/view/view.cpp:153
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "暫停目前分頁中所有選取的 torrent"
 
-#: ktorrent/view/view.cpp:159
+#: ktorrent/view/view.cpp:158
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "移除"
 
-#: ktorrent/view/view.cpp:161
+#: ktorrent/view/view.cpp:160
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "移除目前分頁中所有選取的 torrent"
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:165
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "全部開始"
 
-#: ktorrent/view/view.cpp:167
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "開始目前分頁中所有的 torrent"
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:171
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "全部停止"
 
-#: ktorrent/view/view.cpp:173
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "停止目前分頁中所有的 torrent"
 
-#: ktorrent/view/view.cpp:178
+#: ktorrent/view/view.cpp:177
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "移除torrent 和已下載資料"
 
-#: ktorrent/view/view.cpp:183
+#: ktorrent/view/view.cpp:182
 #, kde-format
 msgid "Rename Torrent"
 msgstr "重新命名 torrent"
 
-#: ktorrent/view/view.cpp:187
+#: ktorrent/view/view.cpp:186
 #, kde-format
 msgid "Add Peers"
 msgstr "新增端點"
 
-#: ktorrent/view/view.cpp:191
+#: ktorrent/view/view.cpp:190
 #, kde-format
 msgid "Manual Announce"
 msgstr "手動宣告"
 
-#: ktorrent/view/view.cpp:196
+#: ktorrent/view/view.cpp:195
 #, kde-format
 msgid "Scrape"
 msgstr "Scrape"
 
-#: ktorrent/view/view.cpp:200
+#: ktorrent/view/view.cpp:199
 #, kde-format
 msgid "Preview"
 msgstr "預覽"
 
-#: ktorrent/view/view.cpp:204
+#: ktorrent/view/view.cpp:203
 #, kde-format
 msgid "Data Directory"
 msgstr "KTorrent 排程檔案"
 
-#: ktorrent/view/view.cpp:208
+#: ktorrent/view/view.cpp:207
 #, kde-format
 msgid "Temporary Directory"
 msgstr "暫存資料目錄"
 
-#: ktorrent/view/view.cpp:212
+#: ktorrent/view/view.cpp:211
 #, kde-format
 msgid "Move Data"
 msgstr "搬移資料"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "設定"
 
-#: ktorrent/view/view.cpp:220
+#: ktorrent/view/view.cpp:219
 #, kde-format
 msgid "Remove from Group"
 msgstr "從群組中移除"
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:227
 #, kde-format
 msgid "Check Data"
 msgstr "檢查資料"
 
-#: ktorrent/view/view.cpp:229
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "檢查 torrent 中所有資料"
 
-#: ktorrent/view/view.cpp:249
+#: ktorrent/view/view.cpp:248
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "複製 torrent 網址"
 
-#: ktorrent/view/view.cpp:253
+#: ktorrent/view/view.cpp:252
 #, kde-format
 msgid "Export Torrent"
 msgstr "匯出 Torrent"
 
-#: ktorrent/view/view.cpp:258
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "設定個別 torrent 的速度限制"
 
-#: ktorrent/view/view.cpp:452
+#: ktorrent/view/view.cpp:451
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
 "the incomplete data, too?"
 msgstr "Torrent %1 尚未完成下載，您要一起刪除不完整的資料嗎？"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:456
 #, kde-format
 msgid "Remove Download"
 msgstr "移除下載"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Delete Data"
 msgstr "删除資料"
 
-#: ktorrent/view/view.cpp:459
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Keep Data"
 msgstr "保存資料"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:482
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr "您將會失去以下的 torrents 所有已下載的資料。您確定要這樣做?"
 
-#: ktorrent/view/view.cpp:484
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid "Remove Torrent"
 msgstr "移除torrent"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:344
-#: plugins/infowidget/fileview.cpp:368
+#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:343
+#: plugins/infowidget/fileview.cpp:367
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "選擇把資料移到那個"
@@ -4735,7 +4746,7 @@ msgstr "外掛程式"
 msgid "%1: %2<br/>%3: %4"
 msgstr "%1：%2<br/>%3：%4"
 
-#: libktcore/torrent/basicjobprogresswidget.cpp:51
+#: libktcore/torrent/basicjobprogresswidget.cpp:49
 #, kde-format
 msgid "Warning: %1"
 msgstr "警告：%1"
@@ -4759,7 +4770,7 @@ msgstr "顯示下載"
 msgid "Excluded Chunks"
 msgstr "已排除"
 
-#: libktcore/torrent/queuemanager.cpp:102
+#: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
@@ -4767,29 +4778,29 @@ msgid ""
 msgstr ""
 "<b>%1</b> 已達最大分享比例已及最大播種時間。要忽略這些限制，並開始播種嗎？"
 
-#: libktcore/torrent/queuemanager.cpp:105
+#: libktcore/torrent/queuemanager.cpp:107
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
 "start seeding anyway?"
 msgstr "<b>%1</b> 已達最大分享比例。要忽略這些限制，並開始播種嗎？"
 
-#: libktcore/torrent/queuemanager.cpp:107
+#: libktcore/torrent/queuemanager.cpp:109
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
 "start seeding anyway?"
 msgstr "<b>%1</b> 已達最大播種時間。要忽略這些限制，並開始播種嗎？"
 
-#: libktcore/torrent/queuemanager.cpp:114
+#: libktcore/torrent/queuemanager.cpp:116
 #, kde-format
 msgid "Limits reached."
 msgstr "已達到上限。"
 
-#: libktcore/torrent/queuemanager.cpp:115
-#: libktcore/torrent/queuemanager.cpp:225
-#: libktcore/torrent/queuemanager.cpp:264
-#: libktcore/torrent/queuemanager.cpp:293
+#: libktcore/torrent/queuemanager.cpp:117
+#: libktcore/torrent/queuemanager.cpp:227
+#: libktcore/torrent/queuemanager.cpp:266
+#: libktcore/torrent/queuemanager.cpp:295
 #, fuzzy, kde-format
 #| msgctxt "@action Start all selected torrents in the current tab"
 #| msgid "Start"
@@ -4797,51 +4808,51 @@ msgctxt "@action:button"
 msgid "Start"
 msgstr "開始"
 
-#: libktcore/torrent/queuemanager.cpp:140
+#: libktcore/torrent/queuemanager.cpp:142
 #, kde-format
 msgid ""
 "You don't have enough disk space to download this torrent. Are you sure you "
 "want to continue?"
 msgstr "你沒有足夠的硬碟空間進行下載此torrent。是否繼續?"
 
-#: libktcore/torrent/queuemanager.cpp:143
+#: libktcore/torrent/queuemanager.cpp:145
 #, kde-format
 msgid "Insufficient disk space for %1"
 msgstr "%1 上的空間不足夠"
 
-#: libktcore/torrent/queuemanager.cpp:222
+#: libktcore/torrent/queuemanager.cpp:224
 #, kde-format
 msgid ""
 "Not enough disk space for the following torrents. Do you want to start them "
 "anyway?"
 msgstr "你沒有足夠的硬碟空間進行下載以下的 torrent。您是否要繼續？"
 
-#: libktcore/torrent/queuemanager.cpp:261
+#: libktcore/torrent/queuemanager.cpp:263
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
 "start them anyway?"
 msgstr "以下的 torrent 已達到它們的最大播種時間。您還是要開始嗎？"
 
-#: libktcore/torrent/queuemanager.cpp:290
+#: libktcore/torrent/queuemanager.cpp:292
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum share ratio. Do you want "
 "to start them anyway?"
 msgstr "以下的 torrent 已達到它們的最大分享比例。您還是要開始嗎？"
 
-#: libktcore/torrent/queuemanager.cpp:706
+#: libktcore/torrent/queuemanager.cpp:708
 #, kde-format
 msgid "Error starting torrent %1: %2"
 msgstr "啟動 torrent %1 時發生錯誤：%2"
 
-#: libktcore/torrent/queuemanager.cpp:707
-#: libktcore/torrent/queuemanager.cpp:718
+#: libktcore/torrent/queuemanager.cpp:709
+#: libktcore/torrent/queuemanager.cpp:720
 #, kde-format
 msgid "Error"
 msgstr "錯誤"
 
-#: libktcore/torrent/queuemanager.cpp:717
+#: libktcore/torrent/queuemanager.cpp:719
 #, kde-format
 msgid "Error stopping torrent %1: %2"
 msgstr "停止 torrent %1 時發生錯誤：%2"
@@ -4858,7 +4869,7 @@ msgid "Cannot write beyond end of the mmap buffer."
 msgstr "無法寫入 mmap 緩衝器之外。"
 
 #: plugins/bwscheduler/bwprefpage.cpp:12
-#: plugins/bwscheduler/bwschedulerplugin.cpp:59
+#: plugins/bwscheduler/bwschedulerplugin.cpp:62
 #, kde-format
 msgid "Scheduler"
 msgstr "排程器"
@@ -4943,7 +4954,7 @@ msgstr "已暫停排程項目顏色："
 msgid "Color of each suspended item on the schedule."
 msgstr "排程內每個暫停項目的顏色。"
 
-#: plugins/bwscheduler/bwschedulerplugin.cpp:88
+#: plugins/bwscheduler/bwschedulerplugin.cpp:91
 #: plugins/infowidget/infowidgetplugin.cpp:68
 #, kde-format
 msgid "Bandwidth Scheduler"
@@ -5326,87 +5337,87 @@ msgstr "剩餘:"
 msgid "Size:"
 msgstr "大小:"
 
-#: plugins/infowidget/fileview.cpp:112
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "開啟"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "開啟方式"
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgid "Check File"
 msgstr "檢查檔案"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:116
 #, kde-format
 msgid "Download first"
 msgstr "優先下載"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Download normally"
 msgstr "正常下載"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Download last"
 msgstr "最後下載"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Do not download"
 msgstr "不要下載"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Delete File(s)"
 msgstr "刪除檔案"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "Move File"
 msgstr "移動檔案"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "折疊資料夾樹"
 
-#: plugins/infowidget/fileview.cpp:127
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "展開資料夾樹"
 
-#: plugins/infowidget/fileview.cpp:130
+#: plugins/infowidget/fileview.cpp:129
 #, kde-format
 msgid "File Tree"
 msgstr "檔案樹狀圖"
 
-#: plugins/infowidget/fileview.cpp:132
+#: plugins/infowidget/fileview.cpp:131
 #, kde-format
 msgid "File List"
 msgstr "檔案清單"
 
-#: plugins/infowidget/fileview.cpp:142
+#: plugins/infowidget/fileview.cpp:141
 #, kde-format
 msgid "Show Filter"
 msgstr "顯示過濾器"
 
-#: plugins/infowidget/fileview.cpp:323
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
+#: plugins/infowidget/fileview.cpp:322
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] "您會失去這些檔案的所有資料。您確定要這樣做嗎？"
 
-#: plugins/infowidget/fileview.cpp:453
+#: plugins/infowidget/fileview.cpp:452
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5418,7 +5429,7 @@ msgstr ""
 "\n"
 "啟用序列下載模式以讓必要的資料以較高的優先程度下載？"
 
-#: plugins/infowidget/fileview.cpp:456
+#: plugins/infowidget/fileview.cpp:455
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -6899,13 +6910,13 @@ msgstr ""
 msgid "Widget position:"
 msgstr "紀錄元件位置："
 
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:30
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:155
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
@@ -7190,28 +7201,28 @@ msgstr "搜尋引擎"
 msgid "Search Engine Label"
 msgstr "搜尋引擎標籤"
 
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:64
+#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
 #, kde-format
 msgid " Engine: "
 msgstr "引擎："
 
-#: plugins/search/searchwidget.cpp:192
+#: plugins/search/searchwidget.cpp:191
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "下載中：<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:199
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "您要下載還是要儲存此 torrent？"
 
-#: plugins/search/searchwidget.cpp:201
+#: plugins/search/searchwidget.cpp:200
 #, kde-format
 msgid "Download Torrent"
 msgstr "下載 torrent"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:202 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "下載"

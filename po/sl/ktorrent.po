@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-18 00:42+0000\n"
+"POT-Creation-Date: 2023-11-21 01:34+0000\n"
 "PO-Revision-Date: 2023-11-18 09:34+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -224,27 +224,27 @@ msgstr "Dodaj"
 msgid "Close"
 msgstr "Zapri"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:82
+#: ktorrent/dialogs/fileselectdlg.cpp:81
 #, kde-format
 msgid "Show a file tree"
 msgstr "Pokaži drevo datotek"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:85
+#: ktorrent/dialogs/fileselectdlg.cpp:84
 #, kde-format
 msgid "Show a file list"
 msgstr "Pokaži seznam datotek"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:94 plugins/infowidget/fileview.cpp:65
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
 msgid "Filter"
 msgstr "Filter"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:112
+#: ktorrent/dialogs/fileselectdlg.cpp:111
 #, kde-format
 msgid "Opening %1"
 msgstr "Odpiranje %1"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:212
+#: ktorrent/dialogs/fileselectdlg.cpp:211
 #, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -255,7 +255,7 @@ msgstr ""
 "prejemi. Ali želite uvoziti te datoteke in za mesto uporabiti mapo z "
 "zaključenimi prejemi?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:216
+#: ktorrent/dialogs/fileselectdlg.cpp:215
 #, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -266,7 +266,7 @@ msgstr ""
 "Ali želite uvoziti te datoteke in za mesto uporabiti mapo z zaključenimi "
 "prejemi?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:219
+#: ktorrent/dialogs/fileselectdlg.cpp:218
 #, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
@@ -275,30 +275,30 @@ msgstr ""
 "Datoteka <b>%1</b> je bila najdena v mapi z zaključenimi prejemi. Ali želite "
 "uvoziti to datoteko?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:226
+#: ktorrent/dialogs/fileselectdlg.cpp:225
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "Uvozi"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:237
-#: ktorrent/dialogs/fileselectdlg.cpp:255
+#: ktorrent/dialogs/fileselectdlg.cpp:236
+#: ktorrent/dialogs/fileselectdlg.cpp:254
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "Mapa %1 ne obstaja. Ali jo želite ustvariti?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:239
-#: ktorrent/dialogs/fileselectdlg.cpp:257
-#: ktorrent/dialogs/missingfilesdlg.cpp:91
-#: ktorrent/dialogs/missingfilesdlg.cpp:99
-#: ktorrent/dialogs/missingfilesdlg.cpp:133
-#: ktorrent/dialogs/torrentcreatordlg.cpp:280
+#: ktorrent/dialogs/fileselectdlg.cpp:238
+#: ktorrent/dialogs/fileselectdlg.cpp:256
+#: ktorrent/dialogs/missingfilesdlg.cpp:90
+#: ktorrent/dialogs/missingfilesdlg.cpp:98
+#: ktorrent/dialogs/missingfilesdlg.cpp:132
+#: ktorrent/dialogs/torrentcreatordlg.cpp:279
 #, kde-format
 msgctxt "@action:button"
 msgid "Create"
 msgstr "Ustvari"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:286
+#: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
@@ -307,19 +307,19 @@ msgstr ""
 "Odstranili ste izbor naslednjih obstoječih datotek. Če nadaljujete bodo "
 "podatki v njih izgubljeni. Ali res želite nadaljevati?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:292
+#: ktorrent/dialogs/fileselectdlg.cpp:291
 #, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "Izbriši datoteko(e)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:293
+#: ktorrent/dialogs/fileselectdlg.cpp:292
 #, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
 msgstr "Ohranjaj datoteke"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:316
+#: ktorrent/dialogs/fileselectdlg.cpp:315
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -330,54 +330,54 @@ msgstr ""
 "torrenti. Torrentom ni dovoljeno pisati v enake datoteke. Izberite drugo "
 "mesto."
 
-#: ktorrent/dialogs/fileselectdlg.cpp:418 ktorrent/dialogs/pastedialog.cpp:61
-#: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
+#: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "Vsi torrenti"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:487
+#: ktorrent/dialogs/fileselectdlg.cpp:486
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr "<b>Količine neporabljenega prostora ni mogoče ugotoviti</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:494
+#: ktorrent/dialogs/fileselectdlg.cpp:493
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr "%1 (%2 uporabljajo obstoječe datoteke)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:502
+#: ktorrent/dialogs/fileselectdlg.cpp:501
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "manjka %1"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:529
+#: ktorrent/dialogs/fileselectdlg.cpp:528
 #, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "Obstoječe datoteke: <b>nobene</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:531
+#: ktorrent/dialogs/fileselectdlg.cpp:530
 #, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "Obstoječe datoteke: <b>vse</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:533
+#: ktorrent/dialogs/fileselectdlg.cpp:532
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "Obstoječe datoteke: <b>%1</b> od <b>%2</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:537
+#: ktorrent/dialogs/fileselectdlg.cpp:536
 #, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "Obstoječa datoteka: <b>ne</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:540
+#: ktorrent/dialogs/fileselectdlg.cpp:539
 #, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "Obstoječa datoteka: <b>da</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:612
+#: ktorrent/dialogs/fileselectdlg.cpp:611
 #, kde-format
 msgid "Clear History"
 msgstr "Počisti zgodovino"
@@ -634,13 +634,13 @@ msgstr "Uvozi"
 msgid "Ca&ncel"
 msgstr "Prekliči"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:72
-#: ktorrent/dialogs/missingfilesdlg.cpp:116
+#: ktorrent/dialogs/missingfilesdlg.cpp:71
+#: ktorrent/dialogs/missingfilesdlg.cpp:115
 #, kde-format
 msgid "Select the directory where the data now is."
 msgstr "Izberite mapo, kjer so podatki sedaj."
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:89
+#: ktorrent/dialogs/missingfilesdlg.cpp:88
 #, kde-format
 msgid ""
 "The data files are not present in the location you selected. Do you want to "
@@ -649,7 +649,7 @@ msgstr ""
 "V izbrani mapi ni datotek s podatki. Ali želite v izbrani mapi ustvariti vse "
 "datoteke?"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:96
+#: ktorrent/dialogs/missingfilesdlg.cpp:95
 #, kde-format
 msgid ""
 "Not all files were found in the new location; some are still missing. Do you "
@@ -658,7 +658,7 @@ msgstr ""
 "V novi mapi ni mogoče najti vseh datotek: nekatere še vedno manjkajo. Ali "
 "želite v izbrani mapi ustvariti manjkajoče datoteke?"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:131
+#: ktorrent/dialogs/missingfilesdlg.cpp:130
 #, kde-format
 msgid ""
 "The data file is not present in the location you selected. Do you want to "
@@ -724,7 +724,7 @@ msgstr "Prekliči, ne zaženi torrenta."
 #. i18n: ectx: property (text), widget (QPushButton, cancel_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: ktorrent/dialogs/missingfilesdlg.ui:80 ktorrent/view/scanextender.ui:217
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:147
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
 #, kde-format
 msgid "Cancel"
 msgstr "Prekliči"
@@ -750,7 +750,7 @@ msgstr ""
 "dosegljiv."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:308
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Neveljaven URL: %1"
@@ -772,7 +772,7 @@ msgstr "Odpri potiho"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:256
 #, kde-format
 msgid "Speed Limits"
 msgstr "Omejitve hitrosti"
@@ -923,33 +923,33 @@ msgstr "Zagotovljena hitrost pošiljanja"
 msgid "No assured speed"
 msgstr "Brez zagotovljene hitrosti"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:41
+#: ktorrent/dialogs/torrentcreatordlg.cpp:40
 #, kde-format
 msgid "Create A Torrent"
 msgstr "Ustvari torrent"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:245
+#: ktorrent/dialogs/torrentcreatordlg.cpp:244
 #, kde-format
 msgid "Only HTTP is supported for webseeding."
 msgstr "Za spletno sejanje je podprt le HTTP."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:272
+#: ktorrent/dialogs/torrentcreatordlg.cpp:271
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "Izbrati morate datoteko ali mapo."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:278
+#: ktorrent/dialogs/torrentcreatordlg.cpp:277
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
 msgstr "Niste dodali nobenega sledilnika. Ali res želite ustvariti ta torrent?"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:286
+#: ktorrent/dialogs/torrentcreatordlg.cpp:285
 #, kde-format
 msgid "You must add at least one node."
 msgstr "Dodati morate vsaj eno vozlišče."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:340
+#: ktorrent/dialogs/torrentcreatordlg.cpp:339
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "Izberite datoteko za shranitev torrenta"
@@ -1276,7 +1276,7 @@ msgstr "Uredi pravilnik za skupino"
 msgid "Open In New Tab"
 msgstr "Odpri v novem zavihku"
 
-#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:223
 #, kde-format
 msgid "New Group"
 msgstr "Nova skupina"
@@ -1495,13 +1495,13 @@ msgid "Advanced"
 msgstr "Napredno"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
 #, kde-format
 msgid "Open Directory"
 msgstr "Odpri mapo"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
 #, kde-format
 msgid "Add to Group"
 msgstr "Dodaj v skupino"
@@ -1513,141 +1513,141 @@ msgid "Configure Columns"
 msgstr "Nastavi stolpce"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
 #, kde-format
 msgid "Columns"
 msgstr "Stolpci"
 
-#: ktorrent/main.cpp:100
+#: ktorrent/main.cpp:99
 #, kde-format
 msgctxt "@title"
 msgid "KTorrent"
 msgstr "KTorrent"
 
-#: ktorrent/main.cpp:102
+#: ktorrent/main.cpp:101
 #, kde-format
 msgid "Bittorrent client by KDE"
 msgstr "Odjemalec BitTorrent s strani KDE"
 
-#: ktorrent/main.cpp:104
+#: ktorrent/main.cpp:103
 #, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005 - 2011 Joris Guisson in Ivan Vasic"
 
-#: ktorrent/main.cpp:111
+#: ktorrent/main.cpp:110
 #, kde-format
 msgid "Joris Guisson"
 msgstr "Joris Guisson"
 
-#: ktorrent/main.cpp:115
+#: ktorrent/main.cpp:114
 #, kde-format
 msgid "Ivan Vasic"
 msgstr "Ivan Vasic"
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "Alan Jones"
 msgstr "Alan Jones"
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "BitFinder Plugin"
 msgstr "Vstavek BitFinder"
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "Diego Rosario Brogna"
 msgstr "Diego Rosario Brogna"
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "Webinterface Plugin, global max share ratio patch"
 msgstr ""
 "Vstavek spletnega vmesnika, popravek za splošni maksimum delilnega razmerja"
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Krzysztof Kundzicz"
 msgstr "Krzysztof Kundzicz"
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Statistics Plugin"
 msgstr "Vstavek Statistika"
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "Christian Weilbach"
 msgstr "Christian Weilbach"
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "kio-magnet"
 msgstr "kio-magnet"
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Mladen Babic"
 msgstr "Mladen Babic"
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Application icon and a couple of others"
 msgstr "Ikona programa in nekatere druge ikone"
 
-#: ktorrent/main.cpp:121
+#: ktorrent/main.cpp:120
 #, kde-format
 msgid "Adam Treat"
 msgstr "Adam Treat"
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "1.0 application icon"
 msgstr "Ikona programa različice 1.0"
 
-#: ktorrent/main.cpp:123
+#: ktorrent/main.cpp:122
 #, kde-format
 msgid "Vincent Wagelaar"
 msgstr "Vincent Wagelaar"
 
-#: ktorrent/main.cpp:124
+#: ktorrent/main.cpp:123
 #, kde-format
 msgid "Knut Morten Johansson"
 msgstr "Knut Morten Johansson"
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "Felix Berger"
 msgstr "Felix Berger"
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "ChunkBar's tooltip and IWFileTreeItem sorting"
 msgstr ""
 "Orodni namig za gradnik ChunkBar in razvrščanje za gradnik IWFileTreeItem"
 
-#: ktorrent/main.cpp:126
+#: ktorrent/main.cpp:125
 #, kde-format
 msgid "Andreas Kling"
 msgstr "Andreas Kling"
 
-#: ktorrent/main.cpp:127
+#: ktorrent/main.cpp:126
 #, kde-format
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
-#: ktorrent/main.cpp:130
+#: ktorrent/main.cpp:129
 #, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin. The data "
@@ -1660,378 +1660,389 @@ msgstr ""
 "4.0 https://creativecommons.org/licenses/by/4.0/. Zastave so vzete iz http://"
 "flags.blogpotato.de/, tako da zahhvala tudi njim."
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr "Knjižnica maxminddb uporabljena za vtičnik InfoWidget."
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "Dodeljevanje prednosti datotekam in nekateri drugi popravki"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "Miniupnp je služil kot primer za našo lastno izvedbo UPnP"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:139
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
+#: ktorrent/main.cpp:139 ktorrent/main.cpp:140
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Izboljšave za ZeroConf"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Spletni vmesnik Coldmilk"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "Koda za IDEAI iz KDevelop"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "Pohitritev pretvorbe v vstavku IPFilter"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Bryan Burns iz Juniper Networks"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "Odkril je 2 varnostni pomanjkljivosti (sta odpravljeni)"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "Popravek za tiho nalaganje z mestom za shranjevanje"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "Popravki kode PHP za spletni vmesnik"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "Vnaprejšnje dodeljevanje diska za XFS"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "Popravek za skrivanje zelo nizkih hitrosti"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "Popravek za prikaz možnosti nahajanja za požarnim zidom"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Several patches"
 msgstr "Več popravkov"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "Popravek za skrivanje menijske vrstice"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "Popravek za spreminjanje prednosti datotek iz spletnega vmesnika"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Several webgui patches"
 msgstr "Več popravkov za spletni vmesnik"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "Popravki za več opozoril"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "Popravek za izračunavanje prostega prostora na disku v FreeBSD"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "Popravek sesutja v gradniku ChunkDownloadView"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "Več popravkov"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "Popravek za tiho nalaganje torrentov iz ukazne vrstice"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "New set of icons"
 msgstr "Nov nabor ikon"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Podpora povleci in spusti za aplet za Plasmo"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "Popravek, ki je počistil seznam vstavkov"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "Popravek, ki aplet za Plasmo spremeni v pojavni aplet"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Leo Trubach"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr ""
 "Popravek, ki je v pogovorno okno za filtriranje IP-jev dodal podporo za "
 "obsege IP-jev"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrei Barbu"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "Dodal podporo za datum, ko je bil torrent dodan"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundqvist"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "Zmožnost izklopa overjanja v spletnem vmesniku"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslaw Swierczynski"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "Vzorci za izločanje v vstavku za zbiranje"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Alexey Shildyakov "
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr ""
 "Popravek za preimenovanje torrentov z eno datoteko v datoteko, ki je znotraj"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "Maarten De Meyer"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "Popravek za hrošč 305379"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Rex Dieter"
 msgstr "Rex Dieter"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "Podpora za vrsto MIME x-scheme-handler/magnet"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "Leszek Lesner"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "Popravek za hrošč 339584"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "Andrius Štikonas"
 
-#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
+#: ktorrent/main.cpp:171 ktorrent/main.cpp:172
 #, kde-format
 msgid "KF5 porting"
 msgstr "Predelava za KF5"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr "Alexander Trufanov"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr "Popravljanje napak, čiščenje kode in optimizacija"
+
+#: ktorrent/main.cpp:174
+#, kde-format
+msgid "Jack Hill"
+msgstr ""
+
+#: ktorrent/main.cpp:174
+#, fuzzy, kde-format
+#| msgid "KF5 porting"
+msgid "KF6 porting"
+msgstr "Predelava za KF5"
 
 #: ktorrent/main.cpp:178
 #, kde-format
@@ -3525,7 +3536,7 @@ msgctxt "Progress bar percentage label"
 msgid "%p%"
 msgstr "%p%"
 
-#: ktorrent/statusbarofflineindicator.cpp:40
+#: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
 msgid "The desktop is offline"
 msgstr "Namizje je brez povezave"
@@ -4014,7 +4025,7 @@ msgstr "Mesto kamor bodo premaknjene datoteke."
 msgid "Checked %v of %m chunks"
 msgstr "Preverjenih %v od %m delčkov"
 
-#: ktorrent/view/scanextender.cpp:111
+#: ktorrent/view/scanextender.cpp:109
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
 msgstr "<font color=\"red\">%1</font>"
@@ -4090,165 +4101,165 @@ msgstr "Napake:"
 msgid "Filter..."
 msgstr "Filter..."
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:132
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "Zaženi"
 
-#: ktorrent/view/view.cpp:134
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "Zaženi vse izbrane torrente iz trenutnega zavihka"
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:139
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "Vsili zagon"
 
-#: ktorrent/view/view.cpp:141
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "Vsili zagon vseh izbranih torrentov iz trenutnega zavihka"
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:144
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "Zaustavi"
 
-#: ktorrent/view/view.cpp:146
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "Zaustavi vse izbrane torrente iz trenutnega zavihka"
 
-#: ktorrent/view/view.cpp:152
+#: ktorrent/view/view.cpp:151
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "Premor"
 
-#: ktorrent/view/view.cpp:154
+#: ktorrent/view/view.cpp:153
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "Premor vseh izbranih torrentov iz trenutnega zavihka"
 
-#: ktorrent/view/view.cpp:159
+#: ktorrent/view/view.cpp:158
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "Odstrani"
 
-#: ktorrent/view/view.cpp:161
+#: ktorrent/view/view.cpp:160
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "Odstrani vse izbrane torrente iz trenutnega zavihka"
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:165
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "Zaženi vse"
 
-#: ktorrent/view/view.cpp:167
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "Zaženi vse torrente iz trenutnega zavihka"
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:171
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "Zaustavi vse"
 
-#: ktorrent/view/view.cpp:173
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "Zaustavi vse torrente iz trenutnega zavihka"
 
-#: ktorrent/view/view.cpp:178
+#: ktorrent/view/view.cpp:177
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "Odstrani torrent in podatke"
 
-#: ktorrent/view/view.cpp:183
+#: ktorrent/view/view.cpp:182
 #, kde-format
 msgid "Rename Torrent"
 msgstr "Preimenuj torrent"
 
-#: ktorrent/view/view.cpp:187
+#: ktorrent/view/view.cpp:186
 #, kde-format
 msgid "Add Peers"
 msgstr "Dodaj soležnike"
 
-#: ktorrent/view/view.cpp:191
+#: ktorrent/view/view.cpp:190
 #, kde-format
 msgid "Manual Announce"
 msgstr "Ročna najava"
 
-#: ktorrent/view/view.cpp:196
+#: ktorrent/view/view.cpp:195
 #, kde-format
 msgid "Scrape"
 msgstr "Posodobi"
 
-#: ktorrent/view/view.cpp:200
+#: ktorrent/view/view.cpp:199
 #, kde-format
 msgid "Preview"
 msgstr "Predogled"
 
-#: ktorrent/view/view.cpp:204
+#: ktorrent/view/view.cpp:203
 #, kde-format
 msgid "Data Directory"
 msgstr "Mapa s podatki"
 
-#: ktorrent/view/view.cpp:208
+#: ktorrent/view/view.cpp:207
 #, kde-format
 msgid "Temporary Directory"
 msgstr "Začasna mapa"
 
-#: ktorrent/view/view.cpp:212
+#: ktorrent/view/view.cpp:211
 #, kde-format
 msgid "Move Data"
 msgstr "Premakni podatke"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "Nastavitve"
 
-#: ktorrent/view/view.cpp:220
+#: ktorrent/view/view.cpp:219
 #, kde-format
 msgid "Remove from Group"
 msgstr "Odstrani iz skupine"
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:227
 #, kde-format
 msgid "Check Data"
 msgstr "Preveri podatke"
 
-#: ktorrent/view/view.cpp:229
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "Preveri vse podatke torrenta"
 
-#: ktorrent/view/view.cpp:249
+#: ktorrent/view/view.cpp:248
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "Kopiraj naslov URL torrenta"
 
-#: ktorrent/view/view.cpp:253
+#: ktorrent/view/view.cpp:252
 #, kde-format
 msgid "Export Torrent"
 msgstr "Izvozi torrent"
 
-#: ktorrent/view/view.cpp:258
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "Nastavi omejitve hitrosti za posamezne torrente"
 
-#: ktorrent/view/view.cpp:452
+#: ktorrent/view/view.cpp:451
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
@@ -4257,22 +4268,22 @@ msgstr ""
 "Prejemanje torrenta <b>%1</b> se še ni zaključilo. Ali želite izbrisati tudi "
 "nepopolne podatke?"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:456
 #, kde-format
 msgid "Remove Download"
 msgstr "Odstrani prejem"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Delete Data"
 msgstr "Izbriši podatke"
 
-#: ktorrent/view/view.cpp:459
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Keep Data"
 msgstr "Ohrani podatke"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:482
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
@@ -4281,13 +4292,13 @@ msgstr ""
 "Izgubili boste vse prejete podatke iz naslednjih torrentov. Ali ste "
 "prepričani, da želite to storiti?"
 
-#: ktorrent/view/view.cpp:484
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid "Remove Torrent"
 msgstr "Odstrani torrent"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:344
-#: plugins/infowidget/fileview.cpp:368
+#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:343
+#: plugins/infowidget/fileview.cpp:367
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Izberite mapo, v katero bodo premaknjeni podatki."
@@ -4854,7 +4865,7 @@ msgstr "Vstavki"
 msgid "%1: %2<br/>%3: %4"
 msgstr "%1: %2<br/>%3: %4"
 
-#: libktcore/torrent/basicjobprogresswidget.cpp:51
+#: libktcore/torrent/basicjobprogresswidget.cpp:49
 #, kde-format
 msgid "Warning: %1"
 msgstr "Opozorilo: %1"
@@ -4875,7 +4886,7 @@ msgstr "Delčki za prejemanje"
 msgid "Excluded Chunks"
 msgstr "Izločeni delčki"
 
-#: libktcore/torrent/queuemanager.cpp:102
+#: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
@@ -4884,7 +4895,7 @@ msgstr ""
 "Torrent »%1« je dosegel največje delilno razmerje in najdaljši čas sejanja. "
 "Ali naj spregledam omejitve in vseeno začnem sejanje?"
 
-#: libktcore/torrent/queuemanager.cpp:105
+#: libktcore/torrent/queuemanager.cpp:107
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
@@ -4893,7 +4904,7 @@ msgstr ""
 "Torrent »%1« je dosegel največje delilno razmerje. Ali naj spregledam "
 "omejitev in vseeno začnem sejanje?"
 
-#: libktcore/torrent/queuemanager.cpp:107
+#: libktcore/torrent/queuemanager.cpp:109
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
@@ -4902,21 +4913,21 @@ msgstr ""
 "Torrent »%1« je dosegel najdaljši čas sejanja. Ali naj spregledam omejitev "
 "in vseeno začnem sejanje?"
 
-#: libktcore/torrent/queuemanager.cpp:114
+#: libktcore/torrent/queuemanager.cpp:116
 #, kde-format
 msgid "Limits reached."
 msgstr "Dosežene omejitve."
 
-#: libktcore/torrent/queuemanager.cpp:115
-#: libktcore/torrent/queuemanager.cpp:225
-#: libktcore/torrent/queuemanager.cpp:264
-#: libktcore/torrent/queuemanager.cpp:293
+#: libktcore/torrent/queuemanager.cpp:117
+#: libktcore/torrent/queuemanager.cpp:227
+#: libktcore/torrent/queuemanager.cpp:266
+#: libktcore/torrent/queuemanager.cpp:295
 #, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Zaženi"
 
-#: libktcore/torrent/queuemanager.cpp:140
+#: libktcore/torrent/queuemanager.cpp:142
 #, kde-format
 msgid ""
 "You don't have enough disk space to download this torrent. Are you sure you "
@@ -4925,12 +4936,12 @@ msgstr ""
 "Za prejem tega torrenta nimate dovolj prostora na disku. Ali res želite "
 "nadaljevati?"
 
-#: libktcore/torrent/queuemanager.cpp:143
+#: libktcore/torrent/queuemanager.cpp:145
 #, kde-format
 msgid "Insufficient disk space for %1"
 msgstr "Ni dovolj prostora za %1"
 
-#: libktcore/torrent/queuemanager.cpp:222
+#: libktcore/torrent/queuemanager.cpp:224
 #, kde-format
 msgid ""
 "Not enough disk space for the following torrents. Do you want to start them "
@@ -4939,7 +4950,7 @@ msgstr ""
 "Za naslednje torrente ni na voljo dovolj prostora na disku. Ali jih želite "
 "vseeno zagnati?"
 
-#: libktcore/torrent/queuemanager.cpp:261
+#: libktcore/torrent/queuemanager.cpp:263
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
@@ -4948,7 +4959,7 @@ msgstr ""
 "Naslednji torrenti so dosegli najdaljši čas sejanja. Ali jih vseeno želite "
 "zagnati?"
 
-#: libktcore/torrent/queuemanager.cpp:290
+#: libktcore/torrent/queuemanager.cpp:292
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum share ratio. Do you want "
@@ -4957,18 +4968,18 @@ msgstr ""
 "Naslednji torrenti so dosegli največje delilno razmerje. Ali jih vseeno "
 "želite zagnati?"
 
-#: libktcore/torrent/queuemanager.cpp:706
+#: libktcore/torrent/queuemanager.cpp:708
 #, kde-format
 msgid "Error starting torrent %1: %2"
 msgstr "Napaka med začenjanjem torrenta %1: %2"
 
-#: libktcore/torrent/queuemanager.cpp:707
-#: libktcore/torrent/queuemanager.cpp:718
+#: libktcore/torrent/queuemanager.cpp:709
+#: libktcore/torrent/queuemanager.cpp:720
 #, kde-format
 msgid "Error"
 msgstr "Napaka"
 
-#: libktcore/torrent/queuemanager.cpp:717
+#: libktcore/torrent/queuemanager.cpp:719
 #, kde-format
 msgid "Error stopping torrent %1: %2"
 msgstr "Napaka med zaustavljanjem torrenta %1: %2"
@@ -4985,7 +4996,7 @@ msgid "Cannot write beyond end of the mmap buffer."
 msgstr "Ni mogoče pisati za koncem medpomnilnika mmap."
 
 #: plugins/bwscheduler/bwprefpage.cpp:12
-#: plugins/bwscheduler/bwschedulerplugin.cpp:59
+#: plugins/bwscheduler/bwschedulerplugin.cpp:62
 #, kde-format
 msgid "Scheduler"
 msgstr "Razporejevalnik"
@@ -5072,7 +5083,7 @@ msgstr "Barva predmeta na razporedu, ki je v pripravljenosti:"
 msgid "Color of each suspended item on the schedule."
 msgstr "Barva vsakega predmeta na razporedu, ki je v pripravljenosti."
 
-#: plugins/bwscheduler/bwschedulerplugin.cpp:88
+#: plugins/bwscheduler/bwschedulerplugin.cpp:91
 #: plugins/infowidget/infowidgetplugin.cpp:68
 #, kde-format
 msgid "Bandwidth Scheduler"
@@ -5457,80 +5468,80 @@ msgstr "Preostali:"
 msgid "Size:"
 msgstr "Velikost:"
 
-#: plugins/infowidget/fileview.cpp:112
+#: plugins/infowidget/fileview.cpp:111
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Odpri"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Odpri z"
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgid "Check File"
 msgstr "Preveri datoteko"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:116
 #, kde-format
 msgid "Download first"
 msgstr "Prejmi najprej"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Download normally"
 msgstr "Prejmi običajno"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Download last"
 msgstr "Prejmi nazadnje"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Do not download"
 msgstr "Ne prejmi"
 
-#: plugins/infowidget/fileview.cpp:122
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Izbriši datoteko(e)"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "Move File"
 msgstr "Premakni datoteko"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Zloži drevo mape"
 
-#: plugins/infowidget/fileview.cpp:127
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "Razširi drevo mape"
 
-#: plugins/infowidget/fileview.cpp:130
+#: plugins/infowidget/fileview.cpp:129
 #, kde-format
 msgid "File Tree"
 msgstr "Drevo datotek"
 
-#: plugins/infowidget/fileview.cpp:132
+#: plugins/infowidget/fileview.cpp:131
 #, kde-format
 msgid "File List"
 msgstr "Seznam datotek"
 
-#: plugins/infowidget/fileview.cpp:142
+#: plugins/infowidget/fileview.cpp:141
 #, kde-format
 msgid "Show Filter"
 msgstr "Prikaži filter"
 
-#: plugins/infowidget/fileview.cpp:323
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
+#: plugins/infowidget/fileview.cpp:322
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
@@ -5544,7 +5555,7 @@ msgstr[2] ""
 msgstr[3] ""
 "Izgubili boste vse podatke iz teh datotek. Ali res želite nadaljevati?"
 
-#: plugins/infowidget/fileview.cpp:453
+#: plugins/infowidget/fileview.cpp:452
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5557,7 +5568,7 @@ msgstr ""
 "Omogočim zaporedni način prejemanja, da se zahtevani podatki prenesejo z "
 "višjo prednostjo?"
 
-#: plugins/infowidget/fileview.cpp:456
+#: plugins/infowidget/fileview.cpp:455
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -7056,13 +7067,13 @@ msgstr "Preišči za izgubljenimi datotekami"
 msgid "Widget position:"
 msgstr "Položaj gradnika:"
 
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:30
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
 msgstr "Preišči za izgubljenimi datotekami"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:155
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
@@ -7344,28 +7355,28 @@ msgstr "Iskalnik"
 msgid "Search Engine Label"
 msgstr "Oznaka iskalnika"
 
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:64
+#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
 #, kde-format
 msgid " Engine: "
 msgstr " Iskalnik: "
 
-#: plugins/search/searchwidget.cpp:192
+#: plugins/search/searchwidget.cpp:191
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Prejemanje:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:199
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Ali želite prejeti, ali shraniti torrent?"
 
-#: plugins/search/searchwidget.cpp:201
+#: plugins/search/searchwidget.cpp:200
 #, kde-format
 msgid "Download Torrent"
 msgstr "Prejmi torrent"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:202 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Prejemanje"
