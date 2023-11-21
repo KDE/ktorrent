@@ -165,7 +165,7 @@ void RouterModel::update()
 void RouterModel::forward(const net::Port &port)
 {
     try {
-        for (bt::UPnPRouter *r : qAsConst(routers))
+        for (bt::UPnPRouter *r : std::as_const(routers))
             r->forward(port);
     } catch (bt::Error &e) {
         Out(SYS_PNP | LOG_DEBUG) << "Error : " << e.toString() << endl;
@@ -175,7 +175,7 @@ void RouterModel::forward(const net::Port &port)
 void RouterModel::undoForward(const net::Port &port, bt::WaitJob *wjob)
 {
     try {
-        for (bt::UPnPRouter *r : qAsConst(routers))
+        for (bt::UPnPRouter *r : std::as_const(routers))
             r->undoForward(port, wjob);
     } catch (Error &e) {
         Out(SYS_PNP | LOG_DEBUG) << "Error : " << e.toString() << endl;

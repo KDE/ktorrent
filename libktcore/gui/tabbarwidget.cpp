@@ -42,7 +42,7 @@ void ActionGroup::toggled(bool on)
     if (!act)
         return;
 
-    for (QAction *a : qAsConst(actions)) {
+    for (QAction *a : std::as_const(actions)) {
         if (a != act)
             a->setChecked(false);
     }

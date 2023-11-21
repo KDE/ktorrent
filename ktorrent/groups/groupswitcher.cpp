@@ -78,7 +78,7 @@ void GroupSwitcher::loadState(KSharedConfig::Ptr cfg)
     }
 
     if (tabs.isEmpty()) {
-        for (const QString &group : qAsConst(default_groups))
+        for (const QString &group : std::as_const(default_groups))
             addTab(gman->findByPath(group));
     }
 
@@ -182,7 +182,7 @@ void GroupSwitcher::onActivated(QAction *action)
     tabs[current_tab].view_settings = view->header()->saveState();
 
     int idx = 0;
-    for (const Tab &tab : qAsConst(tabs)) {
+    for (const Tab &tab : std::as_const(tabs)) {
         if (tab.action == action) {
             view->setGroup(tab.group);
             view->restoreState(tab.view_settings);

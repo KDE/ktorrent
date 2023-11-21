@@ -103,7 +103,7 @@ void FeedList::importOldFeeds()
 
         // check for duplicate URL's
         bool found = false;
-        for (Feed *f : qAsConst(feeds)) {
+        for (Feed *f : std::as_const(feeds)) {
             if (f->feedUrl() == feed_url) {
                 found = true;
                 break;
@@ -194,7 +194,7 @@ Feed *FeedList::feedForIndex(const QModelIndex &idx)
 
 Feed *FeedList::feedForDirectory(const QString &dir)
 {
-    for (Feed *f : qAsConst(feeds))
+    for (Feed *f : std::as_const(feeds))
         if (f->directory() == dir)
             return f;
 
@@ -227,7 +227,7 @@ void FeedList::removeFeeds(const QModelIndexList &idx)
     }
 
     beginResetModel();
-    for (Feed *f : qAsConst(to_remove)) {
+    for (Feed *f : std::as_const(to_remove)) {
         bt::Delete(f->directory(), true);
         feeds.removeAll(f);
         delete f;
@@ -245,13 +245,13 @@ void FeedList::feedUpdated()
 
 void FeedList::filterRemoved(Filter *f)
 {
-    for (Feed *feed : qAsConst(feeds))
+    for (Feed *feed : std::as_const(feeds))
         feed->removeFilter(f);
 }
 
 void FeedList::filterEdited(Filter *f)
 {
-    for (Feed *feed : qAsConst(feeds)) {
+    for (Feed *feed : std::as_const(feeds)) {
         if (feed->usingFilter(f))
             feed->runFilters();
     }

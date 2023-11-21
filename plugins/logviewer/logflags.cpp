@@ -216,7 +216,7 @@ void LogFlags::registered(const QString &sys)
 void LogFlags::unregistered(const QString &sys)
 {
     int idx = 0;
-    for (const LogFlag &f : qAsConst(log_flags)) {
+    for (const LogFlag &f : std::as_const(log_flags)) {
         if (sys == f.name) {
             removeRow(idx);
             log_flags.removeAt(idx);

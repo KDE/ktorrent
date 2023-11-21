@@ -150,7 +150,7 @@ void LinkDownloader::handleHtmlPage(const QByteArray &data)
 void LinkDownloader::tryTorrentLinks()
 {
     // First try links ending with .torrent
-    for (const QUrl &u : qAsConst(links)) {
+    for (const QUrl &u : std::as_const(links)) {
         if (u.path().endsWith(QStringLiteral(".torrent")) || u.path().endsWith(QStringLiteral(".TORRENT"))) {
             Out(SYS_SYN | LOG_DEBUG) << "Trying torrent link: " << u.toDisplayString() << endl;
             link_url = u;

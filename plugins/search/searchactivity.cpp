@@ -80,7 +80,7 @@ void SearchActivity::setupActions()
 
 void SearchActivity::search(const QString &text, int engine)
 {
-    for (SearchWidget *s : qAsConst(searches)) {
+    for (SearchWidget *s : std::as_const(searches)) {
         if (s->getCurrentUrl() == QUrl(QStringLiteral("about:ktorrent"))) {
             s->search(text, engine);
             tabs->setCurrentWidget(s);
@@ -103,7 +103,7 @@ void SearchActivity::saveCurrentSearches()
     std::sort(searches.begin(), searches.end(), IndexOfCompare<QTabWidget, SearchWidget>(tabs));
     bt::BEncoder enc(&fptr);
     enc.beginList();
-    for (SearchWidget *w : qAsConst(searches)) {
+    for (SearchWidget *w : std::as_const(searches)) {
         enc.beginDict();
         enc.write("TEXT", w->getSearchText().toUtf8());
         enc.write("URL", w->getCurrentUrl().toDisplayString().toUtf8());
@@ -179,7 +179,7 @@ void SearchActivity::loadState(KSharedConfigPtr cfg)
 void SearchActivity::find()
 {
     QWidget *w = tabs->currentWidget();
-    for (SearchWidget *s : qAsConst(searches)) {
+    for (SearchWidget *s : std::as_const(searches)) {
         if (w == s) {
             //              s->find();
             break;
@@ -190,7 +190,7 @@ void SearchActivity::find()
 void SearchActivity::search()
 {
     QWidget *w = tabs->currentWidget();
-    for (SearchWidget *s : qAsConst(searches)) {
+    for (SearchWidget *s : std::as_const(searches)) {
         if (w == s) {
             s->search();
             break;
@@ -202,7 +202,7 @@ void SearchActivity::search()
 void SearchActivity::copy()
 {
     QWidget* w = tabs->currentWidget();
-    for (SearchWidget* s: qAsConst(searches))
+    for (SearchWidget* s: std::as_const(searches))
     {
         if (w == s)
         {
@@ -250,7 +250,7 @@ void SearchActivity::currentTabChanged(int idx)
 void SearchActivity::home()
 {
     QWidget *w = tabs->currentWidget();
-    for (SearchWidget *s : qAsConst(searches)) {
+    for (SearchWidget *s : std::as_const(searches)) {
         if (w == s) {
             s->home();
             break;
@@ -263,7 +263,7 @@ void SearchActivity::closeTab()
     if (searches.count() == 1)
         return;
 
-    for (SearchWidget *s : qAsConst(searches)) {
+    for (SearchWidget *s : std::as_const(searches)) {
         if (s == tabs->currentWidget()) {
             tabs->removeTab(tabs->currentIndex());
             searches.removeAll(s);

@@ -237,7 +237,7 @@ void Schedule::save(const QString &file)
     enc.write(QByteArrayLiteral("enabled"), enabled);
     enc.write(QByteArrayLiteral("items"));
     enc.beginList();
-    for (ScheduleItem *i : qAsConst(items)) {
+    for (ScheduleItem *i : std::as_const(items)) {
         enc.beginDict();
         enc.write(QByteArrayLiteral("start_day"));
         enc.write((Uint32)i->start_day);
@@ -282,7 +282,7 @@ bool Schedule::addItem(ScheduleItem *item)
     if (!item->isValid() || item->end <= item->start)
         return false;
 
-    for (ScheduleItem *i : qAsConst(items)) {
+    for (ScheduleItem *i : std::as_const(items)) {
         if (item->conflicts(*i))
             return false;
     }
@@ -299,7 +299,7 @@ void Schedule::removeItem(ScheduleItem *item)
 
 ScheduleItem *Schedule::getCurrentItem(const QDateTime &now)
 {
-    for (ScheduleItem *i : qAsConst(items)) {
+    for (ScheduleItem *i : std::as_const(items)) {
         if (i->contains(now)) {
             return i;
         }
@@ -316,7 +316,7 @@ int Schedule::getTimeToNextScheduleEvent(const QDateTime &now)
 
     // lets look at all schedule items on the same day
     // and find the next one
-    for (ScheduleItem *i : qAsConst(items)) {
+    for (ScheduleItem *i : std::as_const(items)) {
         if (between(now.date().dayOfWeek(), i->start_day, i->end_day) && i->start > now.time()) {
             if (!item || i->start < item->start)
                 item = i;
@@ -378,7 +378,7 @@ bool Schedule::validModify(ScheduleItem *item, const QTime &start, const QTime &
 
 bool Schedule::conflicts(ScheduleItem *item)
 {
-    for (ScheduleItem *i : qAsConst(items)) {
+    for (ScheduleItem *i : std::as_const(items)) {
         if (i != item && (i->conflicts(*item) || item->conflicts(*i)))
             return true;
     }

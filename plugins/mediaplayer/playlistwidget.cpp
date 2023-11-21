@@ -176,7 +176,7 @@ void PlayListWidget::removeFiles()
     for (const QModelIndex &idx : indexes)
         files.append(play_list->fileForIndex(idx));
 
-    for (const MediaFileRef &f : qAsConst(files))
+    for (const MediaFileRef &f : std::as_const(files))
         play_list->removeFile(f);
 
     Q_EMIT enableNext(play_list->rowCount() > 0);

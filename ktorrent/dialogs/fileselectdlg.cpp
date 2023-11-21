@@ -69,7 +69,7 @@ FileSelectDlg::FileSelectDlg(kt::QueueManager *qman, kt::GroupManager *gman, con
     m_move_when_completed_history->setPopupMode(QToolButton::MenuButtonPopup);
 
     encodings = QTextCodec::availableMibs();
-    for (int mib : qAsConst(encodings)) {
+    for (int mib : std::as_const(encodings)) {
         m_encoding->addItem(QString::fromUtf8(QTextCodec::codecForMib(mib)->name()));
     }
 

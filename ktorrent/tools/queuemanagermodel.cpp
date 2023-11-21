@@ -31,7 +31,7 @@ QueueManagerModel::QueueManagerModel(QueueManager *qman, QObject *parent)
     , show_not_queud(true)
 {
     connect(qman, &QueueManager::queueOrdered, this, &QueueManagerModel::onQueueOrdered);
-    for (bt::TorrentInterface *tc : qAsConst(*qman)) {
+    for (bt::TorrentInterface *tc : std::as_const(*qman)) {
         connect(tc, &bt::TorrentInterface::statusChanged, this, &QueueManagerModel::onTorrentStatusChanged);
 
         if (visible(tc)) {
@@ -62,7 +62,7 @@ void QueueManagerModel::updateQueue()
     int count = queue.count();
     queue.clear();
 
-    for (bt::TorrentInterface *tc : qAsConst(*qman)) {
+    for (bt::TorrentInterface *tc : std::as_const(*qman)) {
         if (visible(tc)) {
             Item item = {tc, 0};
             queue.append(item);
@@ -109,7 +109,7 @@ void QueueManagerModel::onTorrentRemoved(bt::TorrentInterface *tc)
     int r = 0;
     bool found = false;
 
-    for (const auto &i : qAsConst(queue)) {
+    for (const auto &i : std::as_const(queue)) {
         if (tc == i.tc) {
             found = true;
             break;
@@ -127,7 +127,7 @@ void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface *tc)
 {
     int r = 0;
     bool found = false;
-    for (const Item &i : qAsConst(queue)) {
+    for (const Item &i : std::as_const(queue)) {
         if (tc == i.tc) {
             found = true;
             break;
@@ -420,7 +420,7 @@ void QueueManagerModel::moveBottom(int row, int count)
 void QueueManagerModel::dumpQueue()
 {
     int idx = 0;
-    for (const Item &item : qAsConst(queue)) {
+    for (const Item &item : std::as_const(queue)) {
         Out(SYS_GEN | LOG_DEBUG) << "Item " << idx << ": " << item.tc->getDisplayName() << " " << item.tc->getPriority() << endl;
         idx++;
     }
@@ -429,7 +429,7 @@ void QueueManagerModel::dumpQueue()
 void QueueManagerModel::updatePriorities()
 {
     int idx = queue.size();
-    for (const Item &i : qAsConst(queue))
+    for (const Item &i : std::as_const(queue))
         i.tc->setPriority(idx--);
 }
 
@@ -469,7 +469,7 @@ QModelIndex QueueManagerModel::find(const QString &text)
     }
 
     int idx = 0;
-    for (const Item &i : qAsConst(queue)) {
+    for (const Item &i : std::as_const(queue)) {
         bt::TorrentInterface *tc = i.tc;
         if (tc->getDisplayName().contains(text, Qt::CaseInsensitive)) {
             endResetModel();

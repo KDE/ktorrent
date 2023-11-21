@@ -117,7 +117,7 @@ void TrackerView::addClicked()
 
     QList<QUrl> dupes;
     QList<bt::TrackerInterface *> tl;
-    for (const QUrl &url : qAsConst(urls)) {
+    for (const QUrl &url : std::as_const(urls)) {
         bt::TrackerInterface *trk = tc.data()->getTrackersList()->addTracker(url, true);
         if (!trk)
             dupes.append(url);

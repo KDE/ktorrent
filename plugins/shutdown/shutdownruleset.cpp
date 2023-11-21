@@ -258,7 +258,7 @@ QString ShutdownRuleSet::toolTip() const
             msg += i18n(" when one of the following events occur:<br/><br/> ");
 
         QStringList items;
-        for (const ShutdownRule &r : qAsConst(rules)) {
+        for (const ShutdownRule &r : std::as_const(rules)) {
             items += QStringLiteral("- ") + r.toolTip();
         }
 

@@ -77,7 +77,7 @@ const QPixmap &kt::FlagDB::getFlag(const QString &country)
 
     QImage img;
     QPixmap pixmap;
-    for (const FlagDBSource &s : qAsConst(sources)) {
+    for (const FlagDBSource &s : std::as_const(sources)) {
         const QString &path = s.getPath(c);
         // e.g.: /usr/share/locale/l10n/ru/flag.png
         if (QFile::exists(path) && img.load(path)) {

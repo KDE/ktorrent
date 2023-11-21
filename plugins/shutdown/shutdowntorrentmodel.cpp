@@ -45,7 +45,7 @@ void ShutdownTorrentModel::torrentAdded(bt::TorrentInterface *tc)
 void ShutdownTorrentModel::torrentRemoved(bt::TorrentInterface *tc)
 {
     int idx = 0;
-    for (const TriggerItem &c : qAsConst(conds)) {
+    for (const TriggerItem &c : std::as_const(conds)) {
         if (c.tc == tc) {
             removeRow(idx);
             break;
@@ -172,7 +172,7 @@ Qt::ItemFlags ShutdownTorrentModel::flags(const QModelIndex &index) const
 void ShutdownTorrentModel::applyRules(Action action, kt::ShutdownRuleSet *rules)
 {
     rules->clear();
-    for (const TriggerItem &c : qAsConst(conds)) {
+    for (const TriggerItem &c : std::as_const(conds)) {
         if (c.checked)
             rules->addRule(action, SPECIFIC_TORRENT, c.trigger, c.tc);
     }

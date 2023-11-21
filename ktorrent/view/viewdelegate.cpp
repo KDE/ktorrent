@@ -60,7 +60,7 @@ void ExtenderBox::removeSimilar(Extender *ext)
 
 void ExtenderBox::clear()
 {
-    for (Extender *ext : qAsConst(extenders)) {
+    for (Extender *ext : std::as_const(extenders)) {
         ext->hide();
         ext->deleteLater();
     }

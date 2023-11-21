@@ -215,7 +215,7 @@ void PeerViewModel::peerRemoved(bt::PeerInterface *peer)
 {
     int row = 0;
     bool found = false;
-    for (Item *i : qAsConst(items)) {
+    for (Item *i : std::as_const(items)) {
         if (i->peer == peer) {
             found = true;
             break;
@@ -242,7 +242,7 @@ void PeerViewModel::update()
     int lowest = -1;
     int highest = -1;
 
-    for (Item *i : qAsConst(items)) {
+    for (Item *i : std::as_const(items)) {
         if (i->changed()) {
             if (lowest == -1)
                 lowest = idx;

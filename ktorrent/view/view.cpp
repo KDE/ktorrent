@@ -299,7 +299,7 @@ void View::updateActions()
     bool en_add_peer = false;
     bool en_pause = false;
 
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         const TorrentStats &s = tc->getStats();
 
         if (tc->readyForPreview() && !s.multi_file_torrent)
@@ -414,7 +414,7 @@ void View::forceStartTorrents()
         // Give everybody in the selection a high priority
         int prio = qm->count();
         int idx = 0;
-        for (bt::TorrentInterface *tc : qAsConst(sel))
+        for (bt::TorrentInterface *tc : std::as_const(sel))
             tc->setPriority(prio + sel.count() - idx++);
 
         core->start(sel);
@@ -442,7 +442,7 @@ void View::removeTorrents()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         if (tc && !tc->getJobQueue()->runningJobs()) {
             const TorrentStats &s = tc->getStats();
             bool data_to = false;
@@ -475,7 +475,7 @@ void View::removeTorrentsAndData()
         return;
 
     QStringList names;
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         names.append(tc->getDisplayName());
     }
 
@@ -514,7 +514,7 @@ void View::manualAnnounce()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         if (tc->getStats().running)
             tc->updateTracker();
     }
@@ -524,7 +524,7 @@ void View::scrape()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         tc->scrapeTracker();
     }
 }
@@ -533,7 +533,7 @@ void View::previewTorrents()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         if (tc->readyForPreview() && !tc->getStats().multi_file_torrent) {
             openUrl(QUrl::fromLocalFile(tc->getStats().output_path));
         }
@@ -544,7 +544,7 @@ void View::openDataDir()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         if (tc->getStats().multi_file_torrent)
             openUrl(QUrl::fromLocalFile(tc->getStats().output_path));
         else
@@ -556,7 +556,7 @@ void View::openTorDir()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         openUrl(QUrl::fromLocalFile(tc->getTorDir()));
     }
 }
@@ -580,7 +580,7 @@ void View::moveData()
     if (!recentDirClass.isEmpty())
         KRecentDirs::add(recentDirClass, dir);
 
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         if (core->checkMissingFiles(tc))
             tc->changeOutputDir(dir, bt::TorrentInterface::MOVE_FILES);
     }
@@ -604,7 +604,7 @@ void View::removeFromGroup()
 
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel))
+    for (bt::TorrentInterface *tc : std::as_const(sel))
         group->removeTorrent(tc);
     core->getGroupManager()->saveGroups();
     update();
@@ -627,7 +627,7 @@ void View::checkData()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         if (tc->getStats().status != bt::ALLOCATING_DISKSPACE)
             core->doDataCheck(tc);
     }
@@ -795,7 +795,7 @@ void View::addToGroupItemTriggered()
 
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : qAsConst(sel)) {
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         g->addTorrent(tc, false);
     }
     core->getGroupManager()->saveGroups();
@@ -807,7 +807,7 @@ void View::addToNewGroup()
     if (g) {
         QList<bt::TorrentInterface *> sel;
         getSelection(sel);
-        for (bt::TorrentInterface *tc : qAsConst(sel)) {
+        for (bt::TorrentInterface *tc : std::as_const(sel)) {
             g->addTorrent(tc, false);
         }
         core->getGroupManager()->saveGroups();

@@ -112,7 +112,7 @@ void ScanThread::updateFolders()
         }
     }
 
-    for (const QString &folder : qAsConst(tmp)) {
+    for (const QString &folder : std::as_const(tmp)) {
         if (scan_folders.find(folder))
             continue;
 

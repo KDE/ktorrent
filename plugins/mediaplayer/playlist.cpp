@@ -50,7 +50,7 @@ void PlayList::removeFile(const MediaFileRef &file)
 {
     int row = 0;
     bool found = false;
-    for (const PlayListItem &item : qAsConst(files)) {
+    for (const PlayListItem &item : std::as_const(files)) {
         if (item.first == file) {
             found = true;
             break;
@@ -243,7 +243,7 @@ bool PlayList::dropMimeData(const QMimeData *data, Qt::DropAction action, int ro
     // Remove dragged rows if there are any
     std::sort(dragged_rows.begin(), dragged_rows.end());
     int nr = 0;
-    for (int r : qAsConst(dragged_rows)) {
+    for (int r : std::as_const(dragged_rows)) {
         r -= nr;
         removeRow(r);
         nr++;
@@ -288,7 +288,7 @@ void PlayList::save(const QString &file)
     }
 
     QTextStream out(&fptr);
-    for (const PlayListItem &f : qAsConst(files))
+    for (const PlayListItem &f : std::as_const(files))
         out << f.first.path() << Qt::endl;
 }
 

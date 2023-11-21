@@ -72,7 +72,7 @@ void Group::policyChanged()
 void Group::updateCount(QueueManager *qman)
 {
     total = running = 0;
-    for (bt::TorrentInterface *tor : qAsConst(*qman)) {
+    for (bt::TorrentInterface *tor : std::as_const(*qman)) {
         if (isMember(tor)) {
             total++;
             if (tor->getStats().running)

@@ -100,7 +100,7 @@ void ManageFiltersDlg::add()
             to_add.append(f);
     }
 
-    for (Filter *f : qAsConst(to_add)) {
+    for (Filter *f : std::as_const(to_add)) {
         active->addFilter(f);
         available->removeFilter(f);
     }
@@ -120,7 +120,7 @@ void ManageFiltersDlg::remove()
             to_remove.append(f);
     }
 
-    for (Filter *f : qAsConst(to_remove)) {
+    for (Filter *f : std::as_const(to_remove)) {
         available->addFilter(f);
         active->removeFilter(f);
     }
@@ -142,7 +142,7 @@ void ManageFiltersDlg::removeAll()
         to_remove.append(f);
     }
 
-    for (Filter *f : qAsConst(to_remove)) {
+    for (Filter *f : std::as_const(to_remove)) {
         available->addFilter(f);
         active->removeFilter(f);
     }

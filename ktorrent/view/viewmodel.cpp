@@ -332,7 +332,7 @@ void ViewModel::addTorrent(bt::TorrentInterface *ti)
         i->highlight = true;
 
         // Turn off highlight for previously highlighted torrents
-        for (Item *item : qAsConst(torrents))
+        for (Item *item : std::as_const(torrents))
             if (item->highlight)
                 item->highlight = false;
     }
@@ -342,7 +342,7 @@ void ViewModel::addTorrent(bt::TorrentInterface *ti)
 
     // Scroll to new torrent
     int idx = 0;
-    for (Item *item : qAsConst(torrents)) {
+    for (Item *item : std::as_const(torrents)) {
         if (item->tc == ti) {
             view->scrollTo(index(idx, 0));
             break;
@@ -354,7 +354,7 @@ void ViewModel::addTorrent(bt::TorrentInterface *ti)
 void ViewModel::removeTorrent(bt::TorrentInterface *ti)
 {
     int idx = 0;
-    for (Item *item : qAsConst(torrents)) {
+    for (Item *item : std::as_const(torrents)) {
         if (item->tc == ti) {
             removeRow(idx);
             update(view->viewDelegate(), true);
@@ -378,7 +378,7 @@ bool ViewModel::update(ViewDelegate *delegate, bool force_resort)
     num_visible = 0;
 
     int row = 0;
-    for (Item *i : qAsConst(torrents)) {
+    for (Item *i : std::as_const(torrents)) {
         bool hidden = !i->visible(group, filter_string);
         if (!hidden && i->update(row, sort_column, update_list, this))
             resort = true;
@@ -630,7 +630,7 @@ QMimeData *ViewModel::mimeData(const QModelIndexList &indexes) const
         }
     }
 
-    for (const QString &s : qAsConst(hashes))
+    for (const QString &s : std::as_const(hashes))
         stream << s;
 
     mime_data->setData(QStringLiteral("application/x-ktorrent-drag-object"), encoded_data);
@@ -688,7 +688,7 @@ bt::TorrentInterface *ViewModel::torrentFromRow(int index) const
 
 void ViewModel::allTorrents(QList<bt::TorrentInterface *> &tlist) const
 {
-    for (Item *item : qAsConst(torrents)) {
+    for (Item *item : std::as_const(torrents)) {
         if (item->visible(group, filter_string))
             tlist.append(item->tc);
     }

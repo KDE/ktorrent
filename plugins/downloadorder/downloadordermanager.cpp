@@ -41,7 +41,7 @@ void DownloadOrderManager::save()
     }
 
     QTextStream out(&fptr);
-    for (Uint32 file : qAsConst(order))
+    for (Uint32 file : std::as_const(order))
         out << file << Qt::endl;
 }
 
@@ -74,7 +74,7 @@ void DownloadOrderManager::load()
 Uint32 DownloadOrderManager::nextIncompleteFile()
 {
     // Look for the next file in the order which is not 100 % complete
-    for (Uint32 file : qAsConst(order)) {
+    for (Uint32 file : std::as_const(order)) {
         // skip file if it is complete
         if (std::fabs(100.0f - tor->getTorrentFile(file).getDownloadPercentage()) < 0.01)
             continue;
@@ -121,7 +121,7 @@ void DownloadOrderManager::update()
     bool normal_found = false;
     bool high_found = false;
     // set the priority of the file to FIRST and all the other files to NORMAL
-    for (Uint32 file : qAsConst(order)) {
+    for (Uint32 file : std::as_const(order)) {
         TorrentFileInterface &tf = tor->getTorrentFile(file);
         if (tf.getPriority() < LAST_PRIORITY)
             continue;

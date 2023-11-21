@@ -147,7 +147,7 @@ void ConvertThread::writeOutput()
 
     int i = 0;
     int tot = input.count();
-    for (const IPBlock &block : qAsConst(input)) {
+    for (const IPBlock &block : std::as_const(input)) {
         dlg->progress(i, tot);
         target.write((char *)&block, sizeof(IPBlock));
         if (abort) {

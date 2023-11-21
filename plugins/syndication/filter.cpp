@@ -68,7 +68,7 @@ bool Filter::getSeasonAndEpisode(const QString &title, int &season, int &episode
     se_formats << QStringLiteral("(\\d+)x(\\d+)") << QStringLiteral("S(\\d+)E(\\d+)") << QStringLiteral("(\\d+)\\.(\\d+)")
                << QStringLiteral("S(\\d+)\\.E(\\d+)");
 
-    for (const QString &format : qAsConst(se_formats)) {
+    for (const QString &format : std::as_const(se_formats)) {
         QRegExp exp(format, Qt::CaseInsensitive);
         int pos = exp.indexIn(title);
         if (pos > -1) {
@@ -99,7 +99,7 @@ bool Filter::match(const QString &title, QRegExp &exp)
 bool Filter::match(Syndication::ItemPtr item)
 {
     bool found_match = false;
-    for (const QRegExp &exp : qAsConst(word_matches)) {
+    for (const QRegExp &exp : std::as_const(word_matches)) {
         QRegExp tmp = exp;
         tmp.setCaseSensitivity(case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
         tmp.setPatternSyntax(use_regular_expressions ? QRegExp::RegExp : QRegExp::Wildcard);
@@ -118,7 +118,7 @@ bool Filter::match(Syndication::ItemPtr item)
         return false;
 
     found_match = false;
-    for (const QRegExp &exp : qAsConst(exclusion_patterns)) {
+    for (const QRegExp &exp : std::as_const(exclusion_patterns)) {
         QRegExp tmp = exp;
         tmp.setCaseSensitivity(exclusion_case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
         tmp.setPatternSyntax(exclusion_reg_exp ? QRegExp::RegExp : QRegExp::Wildcard);
@@ -142,7 +142,7 @@ bool Filter::match(Syndication::ItemPtr item)
             return false;
 
         bool found = false;
-        for (const Range &r : qAsConst(seasons)) {
+        for (const Range &r : std::as_const(seasons)) {
             if (season >= r.start && season <= r.end) {
                 found = true;
                 break;
@@ -153,7 +153,7 @@ bool Filter::match(Syndication::ItemPtr item)
             return false;
 
         found = false;
-        for (const Range &r : qAsConst(episodes)) {
+        for (const Range &r : std::as_const(episodes)) {
             if (episode >= r.start && episode <= r.end) {
                 found = true;
                 break;
@@ -281,12 +281,12 @@ void Filter::save(bt::BEncoder &enc)
     enc.write(QByteArrayLiteral("exclusion_all_must_match"), exclusion_all_must_match);
     enc.write(QByteArrayLiteral("word_matches"));
     enc.beginList();
-    for (const QRegExp &exp : qAsConst(word_matches))
+    for (const QRegExp &exp : std::as_const(word_matches))
         enc.write(exp.pattern().toUtf8());
     enc.end();
     enc.write(QByteArrayLiteral("exclusion_patterns"));
     enc.beginList();
-    for (const QRegExp &exp : qAsConst(exclusion_patterns))
+    for (const QRegExp &exp : std::as_const(exclusion_patterns))
         enc.write(exp.pattern().toUtf8());
     enc.end();
     enc.write(QByteArrayLiteral("use_season_and_episode_matching"), use_season_and_episode_matching);

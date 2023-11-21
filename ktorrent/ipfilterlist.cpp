@@ -36,7 +36,7 @@ bool IPFilterList::blocked(const net::Address &addr) const
     else
         ip = addr.toIPv4Address();
 
-    for (const Entry &e : qAsConst(ip_list)) {
+    for (const Entry &e : std::as_const(ip_list)) {
         if (e.start <= ip && ip <= e.end)
             return true;
     }

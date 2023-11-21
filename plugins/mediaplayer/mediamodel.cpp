@@ -136,7 +136,7 @@ void MediaModel::onTorrentRemoved(bt::TorrentInterface *tc)
     int row = 0;
     int start = -1;
     int cnt = 0;
-    for (MediaFile::Ptr mf : qAsConst(items)) {
+    for (MediaFile::Ptr mf : std::as_const(items)) {
         if (mf->torrent() == tc) {
             if (start == -1) {
                 // start of the range
@@ -167,7 +167,7 @@ MediaFileRef MediaModel::fileForIndex(const QModelIndex &idx) const
 QModelIndex MediaModel::indexForPath(const QString &path) const
 {
     Uint32 idx = 0;
-    for (MediaFile::Ptr mf : qAsConst(items)) {
+    for (MediaFile::Ptr mf : std::as_const(items)) {
         if (mf->path() == path)
             return index(idx, 0, QModelIndex());
         idx++;
@@ -178,7 +178,7 @@ QModelIndex MediaModel::indexForPath(const QString &path) const
 
 MediaFileRef MediaModel::find(const QString &path)
 {
-    for (MediaFile::Ptr mf : qAsConst(items)) {
+    for (MediaFile::Ptr mf : std::as_const(items)) {
         if (mf->path() == path)
             return MediaFileRef(mf);
     }

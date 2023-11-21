@@ -45,7 +45,7 @@ Filter *FilterListModel::filterForIndex(const QModelIndex &idx)
 
 Filter *FilterListModel::filterByName(const QString &name)
 {
-    for (Filter *f : qAsConst(filters))
+    for (Filter *f : std::as_const(filters))
         if (f->filterName() == name)
             return f;
 
@@ -54,7 +54,7 @@ Filter *FilterListModel::filterByName(const QString &name)
 
 Filter *FilterListModel::filterByID(const QString &id)
 {
-    for (Filter *f : qAsConst(filters))
+    for (Filter *f : std::as_const(filters))
         if (f->filterID() == id)
             return f;
 

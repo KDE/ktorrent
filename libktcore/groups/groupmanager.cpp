@@ -127,7 +127,7 @@ GroupManager::GroupManager()
                                                            QStringLiteral("/all/passive/uploads"));
     defaults << new UngroupedGroup(this);
 
-    for (Group *g : qAsConst(defaults))
+    for (Group *g : std::as_const(defaults))
         groups.insert(g->groupName(), g);
 }
 

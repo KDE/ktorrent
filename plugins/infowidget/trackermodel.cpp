@@ -48,7 +48,7 @@ void TrackerModel::update()
         return;
 
     int idx = 0;
-    for (Item *t : qAsConst(trackers)) {
+    for (Item *t : std::as_const(trackers)) {
         if (t->update())
             Q_EMIT dataChanged(index(idx, 1), index(idx, 5));
         idx++;
@@ -140,7 +140,7 @@ void TrackerModel::addTrackers(QList<bt::TrackerInterface *> &tracker_list)
         return;
 
     int row = trackers.count();
-    for (bt::TrackerInterface *trk : qAsConst(tracker_list))
+    for (bt::TrackerInterface *trk : std::as_const(tracker_list))
         trackers.append(new Item(trk));
 
     insertRows(row, tracker_list.count(), QModelIndex());

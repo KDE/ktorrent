@@ -58,7 +58,7 @@ void PluginManager::loadPlugins()
 {
     const KConfigGroup cfg = KSharedConfig::openConfig()->group(QStringLiteral("Plugins"));
     int idx = 0;
-    for (const KPluginMetaData &data : qAsConst(pluginsMetaData)) {
+    for (const KPluginMetaData &data : std::as_const(pluginsMetaData)) {
         if (loaded.contains(idx) && !data.isEnabled(cfg)) {
             // unload it
             unload(data, idx);

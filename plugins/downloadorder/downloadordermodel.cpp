@@ -169,7 +169,7 @@ bool DownloadOrderModel::dropMimeData(const QMimeData *data, Qt::DropAction acti
     }
 
     // reinsert dragged files
-    for (Uint32 file : qAsConst(files)) {
+    for (Uint32 file : std::as_const(files)) {
         order.insert(begin_row, file);
         begin_row++;
     }
@@ -311,7 +311,7 @@ struct SeasonEpisodeCompare {
         se_formats << QStringLiteral("(\\d+)x(\\d+)") << QStringLiteral("S(\\d+)E(\\d+)") << QStringLiteral("(\\d+)\\.(\\d+)")
                    << QStringLiteral("S(\\d+)\\.E(\\d+)") << QStringLiteral("Season\\s(\\d+).*Episode\\s(\\d+)");
 
-        for (const QString &format : qAsConst(se_formats)) {
+        for (const QString &format : std::as_const(se_formats)) {
             QRegExp exp(format, Qt::CaseInsensitive);
             int pos = exp.indexIn(title);
             if (pos > -1) {

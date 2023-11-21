@@ -60,7 +60,7 @@ void ScanFolderPrefPage::loadSettings()
 
     m_folders->clear();
     folders = ScanFolderPluginSettings::folders();
-    for (const QString &f : qAsConst(folders)) {
+    for (const QString &f : std::as_const(folders)) {
         m_folders->addItem(new QListWidgetItem(QIcon::fromTheme(QStringLiteral("folder")), f));
     }
     selectionChanged();

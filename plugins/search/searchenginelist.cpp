@@ -56,7 +56,7 @@ void SearchEngineList::loadEngines()
         }
     } else {
         QStringList subdirs = QDir(data_dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-        for (const QString &sd : qAsConst(subdirs)) {
+        for (const QString &sd : std::as_const(subdirs)) {
             // Load only if there is an opensearch.xml file and not a removed file
             if (bt::Exists(data_dir + sd + QStringLiteral("/opensearch.xml")) && !bt::Exists(data_dir + sd + QStringLiteral("/removed"))) {
                 Out(SYS_SRC | LOG_DEBUG) << "Loading " << sd << endl;
@@ -194,7 +194,7 @@ void SearchEngineList::removeEngines(const QModelIndexList &sel)
     }
 
     beginResetModel();
-    for (SearchEngine *se : qAsConst(to_remove)) {
+    for (SearchEngine *se : std::as_const(to_remove)) {
         bt::Touch(se->engineDir() + QStringLiteral("removed"));
         engines.removeAll(se);
         delete se;
@@ -221,7 +221,7 @@ void SearchEngineList::addDefaults()
     }
 
     beginResetModel();
-    for (const QUrl &u : qAsConst(default_opensearch_urls)) {
+    for (const QUrl &u : std::as_const(default_opensearch_urls)) {
         Out(SYS_SRC | LOG_DEBUG) << "Setting up default engine " << u.toDisplayString() << endl;
         QString dir = data_dir + u.host() + QLatin1Char('/');
         if (!bt::Exists(dir)) {
@@ -271,7 +271,7 @@ void SearchEngineList::loadDefault(bool removed_to)
     if (dir_list.isEmpty())
         dir_list = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
 
-    for (const QString &dir : qAsConst(dir_list)) {
+    for (const QString &dir : std::as_const(dir_list)) {
         const QStringList subdirs = QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
         for (const QString &sd : subdirs) {
             loadEngine(QDir::cleanPath(dir) + QLatin1Char('/') + sd + QLatin1Char('/'), data_dir + sd + QLatin1Char('/'), removed_to);
@@ -281,7 +281,7 @@ void SearchEngineList::loadDefault(bool removed_to)
 
 bool SearchEngineList::alreadyLoaded(const QString &user_dir)
 {
-    for (const SearchEngine *se : qAsConst(engines)) {
+    for (const SearchEngine *se : std::as_const(engines)) {
         if (se->engineDir() == user_dir)
             return true;
     }

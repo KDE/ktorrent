@@ -374,7 +374,7 @@ void SetMaxRate::makeMenu()
     }
 
     std::sort(values.begin(), values.end());
-    for (int v : qAsConst(values)) {
+    for (int v : std::as_const(values)) {
         if (v >= 1) {
             QAction *act = addAction(QString::number(v));
             act->setCheckable(true);

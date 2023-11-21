@@ -60,7 +60,7 @@ void PrefDialog::addPrefPage(PrefPageInterface *page)
 void PrefDialog::removePrefPage(PrefPageInterface *page)
 {
     PrefPageScrollArea *found = nullptr;
-    for (PrefPageScrollArea *area : qAsConst(pages)) {
+    for (PrefPageScrollArea *area : std::as_const(pages)) {
         if (area->page == page) {
             found = area;
             break;
@@ -82,19 +82,19 @@ void PrefDialog::updateWidgetsAndShow()
 
 void PrefDialog::updateWidgets()
 {
-    for (PrefPageScrollArea *area : qAsConst(pages))
+    for (PrefPageScrollArea *area : std::as_const(pages))
         area->page->loadSettings();
 }
 
 void PrefDialog::updateWidgetsDefault()
 {
-    for (PrefPageScrollArea *area : qAsConst(pages))
+    for (PrefPageScrollArea *area : std::as_const(pages))
         area->page->loadDefaults();
 }
 
 void PrefDialog::updateSettings()
 {
-    for (PrefPageScrollArea *area : qAsConst(pages))
+    for (PrefPageScrollArea *area : std::as_const(pages))
         area->page->updateSettings();
 }
 
@@ -130,7 +130,7 @@ bool PrefDialog::hasChanged()
     if (KConfigDialog::hasChanged())
         return true;
 
-    for (PrefPageScrollArea *area : qAsConst(pages))
+    for (PrefPageScrollArea *area : std::as_const(pages))
         if (area->page->customWidgetsChanged())
             return true;
 

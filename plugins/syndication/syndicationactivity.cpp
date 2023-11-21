@@ -213,7 +213,7 @@ void SyndicationActivity::removeFilter()
             to_remove.append(f);
     }
 
-    for (Filter *f : qAsConst(to_remove)) {
+    for (Filter *f : std::as_const(to_remove)) {
         feed_list->filterRemoved(f);
         filter_list->removeFilter(f);
         delete f;

@@ -112,7 +112,7 @@ void ChunkDownloadModel::downloadRemoved(bt::ChunkDownloadInterface *cd)
 {
     int row = 0;
     bool found = false;
-    for (Item *item : qAsConst(items)) {
+    for (Item *item : std::as_const(items)) {
         if (item->cd == cd) {
             found = true;
             break;
@@ -148,7 +148,7 @@ void ChunkDownloadModel::update()
     int lowest = -1;
     int highest = -1;
 
-    for (Item *i : qAsConst(items)) {
+    for (Item *i : std::as_const(items)) {
         if (i->changed()) {
             if (lowest == -1)
                 lowest = idx;

@@ -538,7 +538,7 @@ void Core::pause(TorrentInterface *tc)
 
 void Core::pause(QList<bt::TorrentInterface *> &todo)
 {
-    for (bt::TorrentInterface *tc : qAsConst(todo)) {
+    for (bt::TorrentInterface *tc : std::as_const(todo)) {
         tc->pause();
     }
 }
@@ -663,7 +663,7 @@ void Core::remove(QList<bt::TorrentInterface *> &todo, bool data_to)
 
     stop(todo);
 
-    for (bt::TorrentInterface *tc : qAsConst(todo)) {
+    for (bt::TorrentInterface *tc : std::as_const(todo)) {
         const bt::TorrentStats &s = tc->getStats();
         removed_bytes_up += s.session_bytes_uploaded;
         removed_bytes_down += s.session_bytes_downloaded;
@@ -939,7 +939,7 @@ CurrentStats Core::getStats()
     Uint64 bytes_dl = 0, bytes_ul = 0;
     Uint32 speed_dl = 0, speed_ul = 0;
 
-    for (bt::TorrentInterface *tc : qAsConst(*qman)) {
+    for (bt::TorrentInterface *tc : std::as_const(*qman)) {
         const TorrentStats &s = tc->getStats();
         speed_dl += s.download_rate;
         speed_ul += s.upload_rate;
@@ -1215,7 +1215,7 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
         if (trs.count() > 1) {
             enc.write(QByteArrayLiteral("announce-list"));
             enc.beginList();
-            for (const QUrl &tracker : qAsConst(trs)) {
+            for (const QUrl &tracker : std::as_const(trs)) {
                 enc.beginList();
                 enc.write(tracker.toDisplayString().toUtf8());
                 enc.end();

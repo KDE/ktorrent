@@ -90,12 +90,12 @@ void Feed::save()
     }
     enc.write(QByteArrayLiteral("filters"));
     enc.beginList();
-    for (Filter *f : qAsConst(filters))
+    for (Filter *f : std::as_const(filters))
         enc.write(f->filterID().toUtf8());
     enc.end();
     enc.write(QByteArrayLiteral("loaded"));
     enc.beginList();
-    for (const QString &id : qAsConst(loaded))
+    for (const QString &id : std::as_const(loaded))
         enc.write(id.toUtf8());
     enc.end();
     enc.write(QByteArrayLiteral("downloaded_se_items"));
@@ -320,7 +320,7 @@ void Feed::runFilters()
         return;
 
     Out(SYS_SYN | LOG_NOTICE) << "Running filters on " << feed->title() << endl;
-    for (Filter *f : qAsConst(filters)) {
+    for (Filter *f : std::as_const(filters)) {
         f->startMatching();
         const QList<Syndication::ItemPtr> items = feed->items();
         for (const Syndication::ItemPtr &item : items) {
@@ -362,14 +362,14 @@ void Feed::checkLoaded()
     bool need_to_save = false;
 
     QList<QString> itemsToRemove;
-    for (const QString &loadedItem : qAsConst(loaded)) {
+    for (const QString &loadedItem : std::as_const(loaded)) {
         if (!feed_items_id.contains(loadedItem)) {
             itemsToRemove.push_front(loadedItem);
             need_to_save = true;
         }
     }
 
-    for (const QString &itemToRemove : qAsConst(itemsToRemove))
+    for (const QString &itemToRemove : std::as_const(itemsToRemove))
         loaded.remove(itemToRemove);
 
     if (need_to_save)
@@ -470,7 +470,7 @@ QString Feed::filterNamesString() const
     if (filters.empty())
         return i18n("None");
     QStringList names;
-    for (Filter *f : qAsConst(filters))
+    for (Filter *f : std::as_const(filters))
         names << f->filterName();
     return names.join(QStringLiteral(", "));
 }

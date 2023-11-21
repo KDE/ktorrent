@@ -84,7 +84,7 @@ void LogViewer::processPending()
         mutex.unlock();
     }
 
-    for (const QString &line : qAsConst(tmp)) {
+    for (const QString &line : std::as_const(tmp)) {
         QTextCharFormat fm = output->currentCharFormat();
         output->append(line);
         output->setCurrentCharFormat(fm);

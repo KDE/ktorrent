@@ -88,7 +88,7 @@ FilterEditor::FilterEditor(Filter *filter, FilterList *filters, FeedList *feeds,
 
     QList<QRegExp> re = filter->wordMatches();
     QStringList items;
-    for (const QRegExp &r : qAsConst(re)) {
+    for (const QRegExp &r : std::as_const(re)) {
         items.append(r.pattern());
     }
 
@@ -97,7 +97,7 @@ FilterEditor::FilterEditor(Filter *filter, FilterList *filters, FeedList *feeds,
 
     re = filter->exclusionPatterns();
     items.clear();
-    for (const QRegExp &r : qAsConst(re)) {
+    for (const QRegExp &r : std::as_const(re)) {
         items.append(r.pattern());
     }
 

@@ -115,7 +115,7 @@ void MagnetTest::foundMetaData(MagnetDownloader *md, const QByteArray &data)
             if (trs.count() > 1) {
                 enc.write(QByteArrayLiteral("announce-list"));
                 enc.beginList();
-                for (const QUrl &u : qAsConst(trs)) {
+                for (const QUrl &u : std::as_const(trs)) {
                     enc.write(u.toEncoded());
                 }
                 enc.end();

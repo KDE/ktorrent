@@ -269,10 +269,10 @@ void WeekScene::colorsChanged()
     QPen pen(SchedulerPluginSettings::scheduleLineColor());
     QBrush brush(SchedulerPluginSettings::scheduleBackgroundColor());
 
-    for (QGraphicsLineItem *line : qAsConst(lines))
+    for (QGraphicsLineItem *line : std::as_const(lines))
         line->setPen(pen);
 
-    for (QGraphicsRectItem *rect : qAsConst(rects)) {
+    for (QGraphicsRectItem *rect : std::as_const(rects)) {
         rect->setPen(pen);
         rect->setBrush(brush);
     }

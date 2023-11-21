@@ -162,7 +162,7 @@ public:
     /// Apply an operation on each ScheduleItem
     template<class Operation> void apply(Operation op)
     {
-        for (ScheduleItem *i : qAsConst(items))
+        for (ScheduleItem *i : std::as_const(items))
             op(i);
     }
 

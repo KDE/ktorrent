@@ -64,7 +64,7 @@ void TorrentFileTreeModel::Node::insert(const QString &path, bt::TorrentFileInte
         children.append(new Node(this, file, path, num_chunks));
     } else {
         QString subdir = path.left(p);
-        for (Node *n : qAsConst(children)) {
+        for (Node *n : std::as_const(children)) {
             if (n->name == subdir) {
                 n->insert(path.mid(p + 1), file, num_chunks);
                 return;
@@ -92,7 +92,7 @@ bt::Uint64 TorrentFileTreeModel::Node::fileSize(const bt::TorrentInterface *tc)
 
     if (!file) {
         // directory
-        for (Node *n : qAsConst(children))
+        for (Node *n : std::as_const(children))
             size += n->fileSize(tc);
     } else {
         size = file->getSize();
@@ -106,7 +106,7 @@ void TorrentFileTreeModel::Node::fillChunks()
         return;
 
     if (!file) {
-        for (Node *n : qAsConst(children)) {
+        for (Node *n : std::as_const(children)) {
             n->fillChunks();
             chunks.orBitSet(n->chunks);
         }
@@ -169,7 +169,7 @@ void TorrentFileTreeModel::Node::initPercentage(const bt::TorrentInterface *tc, 
             percentage = 100.0f * ((float)tmp.numOnBits() / (float)chunks.numOnBits());
         }
 
-        for (Node *n : qAsConst(children))
+        for (Node *n : std::as_const(children))
             n->initPercentage(tc, havechunks); // update the percentage of the children
     }
 }
@@ -180,7 +180,7 @@ bt::Uint64 TorrentFileTreeModel::Node::bytesToDownload(const bt::TorrentInterfac
 
     if (!file) {
         // directory
-        for (Node *n : qAsConst(children))
+        for (Node *n : std::as_const(children))
             s += n->bytesToDownload(tc);
     } else {
         if (!file->doNotDownload())
@@ -195,7 +195,7 @@ Qt::CheckState TorrentFileTreeModel::Node::checkState(const bt::TorrentInterface
         bool found_checked = false;
         bool found_unchecked = false;
         // directory
-        for (Node *n : qAsConst(children)) {
+        for (Node *n : std::as_const(children)) {
             Qt::CheckState s = n->checkState(tc);
             if (s == Qt::PartiallyChecked)
                 return s;
@@ -227,7 +227,7 @@ void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex &index,
     enc->write((Uint32)(tv->isExpanded(pm->mapFromSource(index)) ? 1 : 0));
 
     int idx = 0;
-    for (Node *n : qAsConst(children)) {
+    for (Node *n : std::as_const(children)) {
         if (!n->file) {
             enc->write(n->name.toUtf8());
             enc->beginDict();
@@ -256,7 +256,7 @@ void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex &index,
         tv->setExpanded(pm->mapFromSource(index), v->data().toInt() == 1);
 
     int idx = 0;
-    for (Node *n : qAsConst(children)) {
+    for (Node *n : std::as_const(children)) {
         if (!n->file) {
             if (BDictNode *d = dict->getDict(n->name.toUtf8()))
                 n->loadExpandedState(real_model->index(idx, 0, index), real_model, pm, tv, d);
@@ -544,7 +544,7 @@ bool TorrentFileTreeModel::setName(const QModelIndex &index, const QString &name
             tc->setUserModifiedFileName(name);
         } else {
             // Check if there is a sibling with the same name
-            for (const Node *sibling : qAsConst(n->parent->children)) {
+            for (const Node *sibling : std::as_const(n->parent->children)) {
                 if (sibling != n && sibling->name == name)
                     return false;
             }
@@ -557,7 +557,7 @@ bool TorrentFileTreeModel::setName(const QModelIndex &index, const QString &name
         return true;
     } else {
         // Check if there is a sibling with the same name
-        for (const Node *sibling : qAsConst(n->parent->children)) {
+        for (const Node *sibling : std::as_const(n->parent->children)) {
             if (sibling != n && sibling->name == name)
                 return false;
         }

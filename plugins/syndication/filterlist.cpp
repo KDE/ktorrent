@@ -48,7 +48,7 @@ void FilterList::saveFilters(const QString &file)
 
     BEncoder enc(&fptr);
     enc.beginList();
-    for (Filter *f : qAsConst(filters))
+    for (Filter *f : std::as_const(filters))
         f->save(enc);
     enc.end();
 }

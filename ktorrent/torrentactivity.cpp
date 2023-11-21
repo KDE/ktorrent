@@ -270,7 +270,7 @@ void TorrentActivity::addTorrentSelectionToGroup(TorrentGroup *g)
 {
     QList<TorrentInterface *> sel;
     view->getSelection(sel);
-    for (TorrentInterface *ti : qAsConst(sel)) {
+    for (TorrentInterface *ti : std::as_const(sel)) {
         g->addTorrent(ti, false);
     }
     core->getGroupManager()->saveGroups();

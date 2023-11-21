@@ -110,7 +110,7 @@ public:
      */
     template<class Action> void visit(Action &a)
     {
-        for (Item *item : qAsConst(torrents)) {
+        for (Item *item : std::as_const(torrents)) {
             if (item->visible(group, filter_string))
                 if (!a(item->tc))
                     break;

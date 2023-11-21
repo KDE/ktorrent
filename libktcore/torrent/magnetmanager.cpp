@@ -102,10 +102,10 @@ MagnetManager::MagnetManager(QObject *parent)
 
 MagnetManager::~MagnetManager()
 {
-    for (DownloadSlot *slot : qAsConst(usedDownloadingSlots))
+    for (DownloadSlot *slot : std::as_const(usedDownloadingSlots))
         delete slot;
 
-    for (DownloadSlot *slot : qAsConst(freeDownloadingSlots))
+    for (DownloadSlot *slot : std::as_const(freeDownloadingSlots))
         delete slot;
 }
 
@@ -307,12 +307,12 @@ void MagnetManager::setUseSlotTimer(bool value)
     useSlotTimer = value;
 
     if (!useSlotTimer) {
-        for (DownloadSlot *slot : qAsConst(usedDownloadingSlots)) {
+        for (DownloadSlot *slot : std::as_const(usedDownloadingSlots)) {
             slot->stopTimer();
             slot->setTimerDuration(timerDuration);
         }
     } else {
-        for (DownloadSlot *slot : qAsConst(usedDownloadingSlots)) {
+        for (DownloadSlot *slot : std::as_const(usedDownloadingSlots)) {
             if (!slot->isTimerActived()) {
                 slot->setTimerDuration(timerDuration);
                 slot->startTimer();
@@ -324,10 +324,10 @@ void MagnetManager::setUseSlotTimer(bool value)
 void MagnetManager::setTimerDuration(bt::Uint32 duration)
 {
     timerDuration = duration * 60000; // convert to milliseconds
-    for (DownloadSlot *slot : qAsConst(usedDownloadingSlots))
+    for (DownloadSlot *slot : std::as_const(usedDownloadingSlots))
         slot->setTimerDuration(timerDuration);
 
-    for (DownloadSlot *slot : qAsConst(freeDownloadingSlots))
+    for (DownloadSlot *slot : std::as_const(freeDownloadingSlots))
         slot->setTimerDuration(timerDuration);
 
     Q_EMIT updateQueue(0, usedDownloadingSlots.size());
@@ -335,7 +335,7 @@ void MagnetManager::setTimerDuration(bt::Uint32 duration)
 
 void MagnetManager::update()
 {
-    for (DownloadSlot *slot : qAsConst(usedDownloadingSlots))
+    for (DownloadSlot *slot : std::as_const(usedDownloadingSlots))
         magnetQueue.at(slot->getMagnetIndex())->update();
 
     Q_EMIT updateQueue(0, usedDownloadingSlots.size());
@@ -394,10 +394,10 @@ void MagnetManager::saveMagnets(const QString &file)
     BEncoder enc(&fptr);
     enc.beginList();
 
-    for (MagnetDownloader *md : qAsConst(magnetQueue))
+    for (MagnetDownloader *md : std::as_const(magnetQueue))
         writeEncoderInfo(enc, md);
 
-    for (MagnetDownloader *md : qAsConst(stoppedList))
+    for (MagnetDownloader *md : std::as_const(stoppedList))
         writeEncoderInfo(enc, md);
 
     enc.end();
