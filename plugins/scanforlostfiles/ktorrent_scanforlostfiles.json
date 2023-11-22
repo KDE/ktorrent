@@ -50,6 +50,7 @@
         "Description[gl]": "Amosar os ficheiros do cartafol seleccionado que non corresponden a ningún torrent.",
         "Description[hu]": "Fájlok megjelenítése a kijelölt mappában, amik nem tartoznak egy torrenthez sem",
         "Description[it]": "Visualizza i file nella cartella selezionata che non appartengono ad alcun torrent",
+        "Description[ka]": "მონიშნულ საქაღალდეში იმ ფაილების ჩვენება, რომლებიც არც ერთ ტორენტს არ მიეუთვნება",
         "Description[ko]": "선택한 폴더에 있는 파일 중 토렌트에 속하지 않은 파일 표시",
         "Description[nl]": "Bestanden in de geselecteerde map tonen die niet behoren tot een torrent",
         "Description[pl]": "Pokaż pliki w zaznaczonym katalogu, które nie należą do żadnego torrenta.",

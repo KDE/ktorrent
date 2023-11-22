@@ -50,6 +50,7 @@
         "Description[gl]": "Descubrir parceiros na rede local mediante o protocolo Zeroconf.",
         "Description[hu]": "Partnerek keresése a helyi hálózaton a Zeroconf protokollal",
         "Description[it]": "Scopri i nodi nella rete locale attraverso il protocollo Zeroconf",
+        "Description[ka]": "აღმოაჩინეთ პარტნიორები ლოკალურ ქსელში პროტოკოლით Zeroconf",
         "Description[ko]": "Zeroconf 프로토콜로 로컬 네트워크의 피어 찾기",
         "Description[nl]": "Ontdek peers op een lokaal netwerk met behulp van het zeroconf-protocol",
         "Description[pl]": "Wyszukiwanie rozsiewających w sieci lokalnej na podstawie protokołu Zeroconf",
