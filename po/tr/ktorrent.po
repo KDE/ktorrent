@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-18 14:08+0300\n"
+"PO-Revision-Date: 2023-11-21 11:37+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1708,7 +1708,7 @@ msgstr "Lesly Weyts"
 #: ktorrent/main.cpp:139 ktorrent/main.cpp:140
 #, kde-format
 msgid "Zeroconf enhancements"
-msgstr "Sıfır Ayar geliştirmeleri"
+msgstr "Zeroconf geliştirmeleri"
 
 #: ktorrent/main.cpp:140
 #, kde-format
@@ -2044,13 +2044,12 @@ msgstr "Hata düzeltmeleri, temizlikler ve eniyilemeler"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "KF5 geçişi"
+msgstr "KF6 geçişi"
 
 #: ktorrent/main.cpp:178
 #, kde-format

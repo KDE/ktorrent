@@ -50,7 +50,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 </articleinfo>
 
 <para
->El &ktorrent; és una aplicació de bittorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrents alhora i ve amb característiques esteses per fer-lo un client complet per a BitTorrent.</para>
+>El &ktorrent; és una aplicació de bittorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrents alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</para>
 
 <itemizedlist>
 <title
@@ -109,7 +109,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 ></listitem>
 <listitem
 ><para
->Suport per a UPnP per desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</para
+>Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</para
 ></listitem>
 <listitem
 ><para

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-13 15:39+0100\n"
+"PO-Revision-Date: 2023-11-21 10:52+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1433,9 +1433,9 @@ msgstr "Aperi directorio"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
 #: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add to Group"
-msgstr "Adde a gruppo:"
+msgstr "Adde a gruppo"
 
 #. i18n: ectx: Menu (ColumnsMenu)
 #: ktorrent/kttorrentactivityui.rc:77
@@ -1961,10 +1961,9 @@ msgid "Jack Hill"
 msgstr ""
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "Portar a KF5"
+msgstr "Portar a KF 6"
 
 #: ktorrent/main.cpp:178
 #, kde-format
@@ -4608,23 +4607,20 @@ msgid "Warning: %1"
 msgstr "Aviso: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Discargate"
+msgstr "Pecias Discargate"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Do Not Download"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Non discarga"
+msgstr "Pecias a discargar"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Excludite:"
+msgstr "Pecias Excludite"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -5093,10 +5089,9 @@ msgid "Add Trackers"
 msgstr ""
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Disponibile"
+msgstr "Pecias Disponibile"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
@@ -5532,9 +5527,9 @@ msgid "Ban Peer"
 msgstr "Prohibi par"
 
 #: plugins/infowidget/peerviewmodel.cpp:85
-#, fuzzy, kde-format
+#, kde-format
 msgid " (µTP)"
-msgstr "µTP"
+msgstr " (µTP)"
 
 #: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
@@ -5772,13 +5767,13 @@ msgstr ""
 #: plugins/infowidget/statustab.ui:188
 #, kde-format
 msgid "Downloaded chunks:"
-msgstr ""
+msgstr "Pecias Discargate:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/infowidget/statustab.ui:211
 #, kde-format
 msgid "Available chunks:"
-msgstr ""
+msgstr "Pecias Disponibile:"
 
 #. i18n: ectx: property (text), widget (QLabel, hdr_sharing)
 #: plugins/infowidget/statustab.ui:273
@@ -7908,7 +7903,11 @@ msgid_plural ""
 "%2\n"
 "%1 active filters"
 msgstr[0] ""
+"%2\n"
+"1 filtro active"
 msgstr[1] ""
+"%2\n"
+"%1 filtros active"
 
 #: plugins/syndication/feedlist.cpp:159
 #, kde-format
@@ -7918,7 +7917,7 @@ msgstr "<b>%1</b><br/><br/>Discargamento fallite: <b>%2</b>"
 #: plugins/syndication/feedlist.cpp:161
 #, kde-format
 msgid "<b>%1</b><br/><br/>%2"
-msgstr ""
+msgstr "<b>%1</b><br/><br/>%2"
 
 #: plugins/syndication/feedwidget.cpp:27
 #, kde-format
@@ -7928,16 +7927,20 @@ msgid ""
 "b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
 "html>    "
 msgstr ""
+"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
+"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Titulo:</"
+"b> %1<br/>    <b>Data:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
+"html>    "
 
 #: plugins/syndication/feedwidget.cpp:173
 #, kde-format
 msgid "Authentication Cookie"
-msgstr ""
+msgstr "Cookie de authentication"
 
 #: plugins/syndication/feedwidget.cpp:173
 #, kde-format
 msgid "Enter the new authentication cookie"
-msgstr ""
+msgstr "Inserta le nove cookie de authentication"
 
 #: plugins/syndication/feedwidget.cpp:204
 #, kde-format
@@ -7967,7 +7970,7 @@ msgstr "Stato:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/syndication/feedwidget.ui:85
-#, fuzzy, kde-format
+#, kde-format
 msgid "Active Filters:"
 msgstr "Filtros Active:"
 
@@ -8004,7 +8007,7 @@ msgstr "Filtros"
 #: plugins/syndication/feedwidgetmodel.cpp:77
 #, kde-format
 msgid "Date Published"
-msgstr ""
+msgstr "Data publicate"
 
 #: plugins/syndication/filtereditor.cpp:38
 #: plugins/syndication/syndicationplugin.cpp:82
@@ -8015,7 +8018,7 @@ msgstr "Modifica filtro"
 #: plugins/syndication/filtereditor.cpp:226
 #, kde-format
 msgid "There already is a filter named %1, filter names must be unique."
-msgstr ""
+msgstr "Il ha ja un filtro appellate %1, nomines de filtro debe esser unic."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/syndication/filtereditor.ui:22
@@ -8122,19 +8125,19 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:160
 #, kde-format
 msgid "Case sensitive matching"
-msgstr ""
+msgstr "Corresponder al differentia inter majusculas e minusculas"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_5)
 #: plugins/syndication/filtereditor.ui:103
 #, kde-format
 msgid "Exclusion Patterns"
-msgstr ""
+msgstr "Patronos de exclusion"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_all_must_match)
 #: plugins/syndication/filtereditor.ui:153
 #, kde-format
 msgid "Item must match all strings to be excluded"
-msgstr ""
+msgstr "Elemento debe corresponder a omne catenas per esser excludite"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: plugins/syndication/filtereditor.ui:168
@@ -8406,6 +8409,8 @@ msgid ""
 "Model Name: <b>%1</b><br/>Manufacturer: <b>%2</b><br/>Model Description: <b>"
 "%3</b><br/>"
 msgstr ""
+"Nomine de modello: <b>%1</b><br/>Fabricante: <b>%2</b><br/>Description de "
+"modello: <b>%3</b><br/>"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPWidget)
 #: plugins/upnp/upnpplugin.cpp:39 plugins/upnp/upnpplugin.cpp:43
@@ -8417,7 +8422,7 @@ msgstr "UPnP"
 #: plugins/upnp/upnpplugin.cpp:43
 #, kde-format
 msgid "Shows the status of the UPnP plugin"
-msgstr ""
+msgstr "Monstra le stato del plugin UPnP"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_rescan)
 #: plugins/upnp/upnpwidget.ui:54

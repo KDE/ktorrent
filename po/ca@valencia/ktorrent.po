@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-18 10:35+0100\n"
+"PO-Revision-Date: 2023-11-21 12:29+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2053,13 +2053,12 @@ msgstr "Correccions d'errors, neteges i optimitzacions"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "Adaptació als KF5"
+msgstr "Adaptació als KF6"
 
 #: ktorrent/main.cpp:178
 #, kde-format
@@ -2500,8 +2499,8 @@ msgstr "Colors"
 #, kde-format
 msgid "Color to use for torrents when they are stalled or checking data."
 msgstr ""
-"Color que s'utilitzarà per als torrent que s'han estancat o verificant les "
-"dades."
+"Color que s'utilitzarà per als torrent que s'han estancat o estan verificant "
+"les dades."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTorrentColor)
 #: ktorrent/pref/colorpref.ui:26
@@ -4729,13 +4728,13 @@ msgstr "Nombre màxim de connexions per a tots els torrent (0 = sense límit) "
 #: libktcore/ktorrent.kcfg:35
 #, kde-format
 msgid "Maximum upload speed in KiB/sec (0 = no limit)"
-msgstr "Velocitat màxima de pujada en KiB/seg (0 = sense límit)"
+msgstr "Velocitat màxima de pujada en KiB/s (0 = sense límit)"
 
 #. i18n: ectx: label, entry (maxDownloadRate), group (downloads)
 #: libktcore/ktorrent.kcfg:40
 #, kde-format
 msgid "Maximum download speed in KiB/sec (0 = no limit)"
-msgstr "Velocitat màxima de baixada en KiB/seg (0 = sense límit)"
+msgstr "Velocitat màxima de baixada en KiB/s (0 = sense límit)"
 
 #. i18n: ectx: label, entry (maxRatio), group (downloads)
 #: libktcore/ktorrent.kcfg:45
@@ -6165,7 +6164,7 @@ msgstr "Nombre de baixades"
 #: plugins/infowidget/trackermodel.cpp:131
 #, kde-format
 msgid "Next Update"
-msgstr "Propera actualització"
+msgstr "Pròxima actualització"
 
 #: plugins/infowidget/trackerview.cpp:57
 #, kde-format
@@ -6498,7 +6497,7 @@ msgstr "Última actualització:"
 #: plugins/ipfilter/ipblockingprefpage.ui:187
 #, kde-format
 msgid "Next update:"
-msgstr "Propera actualització:"
+msgstr "Pròxima actualització:"
 
 #. i18n: ectx: label, entry (filterURL), group (general)
 #: plugins/ipfilter/ktipfilterplugin.kcfg:10
