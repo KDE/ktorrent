@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-13 13:27+0100\n"
+"PO-Revision-Date: 2023-11-22 10:42+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
-"Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
+"Language-Team: \n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1652,7 +1652,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1662,6 +1662,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Доставчик на базата данни IP-държави, използвана в приставката InfoWidget. "
+"Данните са лицензирани под международния лиценз Creative Commons Attribution "
+"4.0 https://creativecommons.org/licenses/by/4.0/. Флаговете са взети от "
+"http://flags.blogpotato.de/, така че благодаря и на тях."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1671,7 +1675,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "Библиотеката maxminddb, използвана за приставката InfoWidget."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -2042,13 +2046,12 @@ msgstr "Поправки на гпрограмни грешки, изчиств�
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "Порт на KF5"
+msgstr "Порт на KF6"
 
 #: ktorrent/main.cpp:178
 #, kde-format
