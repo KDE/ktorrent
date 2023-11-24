@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-15 18:46+0100\n"
+"PO-Revision-Date: 2023-11-23 17:33+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -1659,7 +1659,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1669,6 +1669,11 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Fornecedor da base de datos de enderezos IP e países que se usa no "
+"complemento de trebello de información. Os datos teñen licenza Creative "
+"Commons Recoñecemento 4.0 Internacional (https://creativecommons.org/"
+"licenses/by/4.0/). As bandeiras veñen de http://flags.blogpotato.de/ a quen "
+"tamén damos as grazas."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1679,6 +1684,8 @@ msgstr "Maxmind"
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
+"A biblioteca maxminddb que se usa para o complemento de trebello de "
+"información."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -2050,13 +2057,12 @@ msgstr "Correccións, limpeza e optimizacións."
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "Adaptación a KF5."
+msgstr "Adaptación a KF6."
 
 #: ktorrent/main.cpp:178
 #, kde-format
