@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-23 20:47+0100\n"
+"PO-Revision-Date: 2023-11-24 17:27+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1655,6 +1655,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"InfoWidget დამატების მიერ გამოყენებული IP-ქვეყნის ბაზის მომწოდებელი. "
+"მონაცემების ლიცენზიაა Creative Commons Attribution 4.0 International License "
+"https://creativecommons.org/licenses/by/4.0/. ალმები ავიღეთ საიტიდან http://"
+"flags.blogpotato.de/ , ასე რომ მათაც მადლობა."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -2167,6 +2171,8 @@ msgid ""
 "Whether or not the magnets that are not downloaded after a maximum period of "
 "time must be pushed back at the end of the queue."
 msgstr ""
+"გადავა თუ არა მაგნიტები, რომლებიც არ გადმოწერილა დროის მაქსიმალური შუალედის "
+"ამოწურვის შემდეგ, რიგის ბოლოში."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:166
@@ -2181,6 +2187,8 @@ msgid ""
 "Maximum time that a magnet can occupy a downloading slot before it will be "
 "pushed back in the queue."
 msgstr ""
+"მაქსიმალური დრო, რომელიც მაგნიტს შეუძლია, გადმოწერის სლოტი დაიკავოს, სანამ "
+"უკან, რიგში დაბრუნდება."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
@@ -2208,6 +2216,8 @@ msgid ""
 "<p>The amount of data at the beginning and end of an audio file, which will "
 "be prioritized for previewing.</p>"
 msgstr ""
+"<p>მონაცემები აუდიო ფაილის დასაწყისში და ბოლოში, რომელსაც, მინიატურის "
+"შესაქმნელად, უფრო დიდი პრიორიტეტი ექნება.</p>"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_previewSizeAudio)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_previewSizeVideo)
@@ -2229,6 +2239,8 @@ msgid ""
 "<p>The amount of data at the beginning and end of a video file, which will "
 "be prioritized for previewing.</p>"
 msgstr ""
+"<p>მონაცემები ვიდეო ფაილის დასაწყისში და ბოლოში, რომელსაც, მინიატურის "
+"შესაქმნელად, უფრო დიდი პრიორიტეტი ექნება.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
@@ -2243,6 +2255,10 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"ტრეკერები სიის ბმული, რომელიც საინფორმაციო ჰეშში ტორენტის ჩამატებისთვის "
+"გამოიყენება.\n"
+"გაფრთხილება: თითოეული ტრეკერი ცალკე ხაზზე უნდა იყოს. ცარიელი ხაზები "
+"გამოტოვებულია."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2254,6 +2270,10 @@ msgid ""
 "It can be disabled if you do not like the additional network traffic it "
 "generates"
 msgstr ""
+"პარტნიორის ჰოსტის სახელის ამოხსნა. ეს გამოიწვევს, რომ პარტნიორის IP "
+"მისამართის მაგიერ ჰოსტის სახელი გამოჩნდება.\n"
+"\n"
+"თუ არ მოგწონთ, ეს დამატებით ტრაფიკს რომ ხარჯავს, შეგიძლიათ გამორთოთ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:307
@@ -2373,6 +2393,9 @@ msgid ""
 "disabled. If you want to connect to those peers, you need to have this "
 "option enabled."
 msgstr ""
+"დაშიფვრის მხარდაჭერა ყველა კლიენტს არ გააჩნია და არის ხალხი, ვისაც დაშიფვრა "
+"გამორთული აქვს. თუ გნებავთ, ამ პარტნიორებს მიუერთდეთ, ეს პარამეტრი ჩართული "
+"უნდა გქონდეთ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_allowUnencryptedConnections)
 #. i18n: ectx: label, entry (allowUnencryptedConnections), group (downloads)
@@ -2394,6 +2417,9 @@ msgid ""
 "Instead of allowing the tracker to determine your IP address, tell the "
 "tracker which IP address to use. Use this when you are behind a proxy."
 msgstr ""
+"იმის მაგიერ, რომ თქვენი IP მისამართის დადგენა ტრეკერს მიანდოთ, შეგიძლიათ "
+"ტრეკერს თქვენი IP მისამართი თქვენვე მიაწოდოთ. გამოიყენეთ ეს, როცა პროქსის "
+"უკნიდან მუშაობთ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomIP)
 #: ktorrent/pref/btpref.ui:133
@@ -2414,6 +2440,9 @@ msgid ""
 "Custom IP address or hostname to send to the tracker. Hostnames will be "
 "resolved at runtime and the resolved IP address will be sent to the tracker."
 msgstr ""
+"ხელით მითითებული IP მისამართი ან ჰოსტის სახელი ტრეკერისთვის გასაგზავნად. "
+"ჰოსტის სახელები დამუშავებისას ამოიხსნება და ამოხსნილი IP მისამართი ტრეკერს "
+"გაეგზავნება."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, ColorsGbw)
@@ -2529,6 +2558,8 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"ფერი, რომელიც გამოიყენება როცა საუკეთესო მცდელობა, ტრეკერს დავკავშირებოდი, "
+"ვადის ამოწურვით დასრულდა. დაკავშირებას ისევ ვცდი, მოგვიანებით."
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
@@ -2546,19 +2577,19 @@ msgstr "კარგი გაზიარების ფარდობა:"
 #: ktorrent/pref/colorpref.ui:147
 #, kde-format
 msgid "Color to display share ratio below minimal good value."
-msgstr ""
+msgstr "ფერი გაზიარების ფარდობის მინიმალურ კარგ მნიშვნელობაზე ქვემოთ ყოფნისას."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_goodShareRatioColor)
 #: ktorrent/pref/colorpref.ui:154
 #, kde-format
 msgid "Color to display share ratio above minimal good value."
-msgstr ""
+msgstr "ფერი გაზიარების ფარდობის მინიმალურ კარგ მნიშვნელობაზე ზემოთ ყოფნისას."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
-msgstr ""
+msgstr "ფერების ჩამოყრა საწყის მნიშვნელობებზე (სხვა პარამეტრები არ შეიცვლება)."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
@@ -2780,6 +2811,10 @@ msgid ""
 "router, this port needs to be forwarded. The UPnP plugin can do this for you."
 "</p>"
 msgstr ""
+"<p>UDP ტრეკერის პროტოკოლის მიერ გამოყენებული პორტი.</p>\n"
+"<p><span style=\" font-weight:600;\">ყურადღება:</span> თუ რაუტერის მიღმა "
+"ზიხართ, საჭიროა, ეს პორტი გადმოამოსამართოთ. ეს თქვენთვის UPnP დამატებს "
+"შეუძლია, გააკეთოს./p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: ectx: property (text), widget (QLabel, label_3)
@@ -2835,6 +2870,8 @@ msgid ""
 "This value will be filled in the DSCP field of all the IP packets sent for "
 "the bittorrent protocol."
 msgstr ""
+"ეს მნიშვნელობა შეივსება DSCP ველში ყველა IP პაკეტისთვის, რომელიც bittorrent "
+"პროტოკოლისთვის გაიგზავნება."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/networkpref.ui:185
@@ -2866,6 +2903,9 @@ msgid ""
 "<p><span style=\"font-weight:600;\">Note: </span>Requires a restart to take "
 "effect.</p>"
 msgstr ""
+"<p>რომელ ქსელურ ინტერფეისზე მოვუსმინო შემომავალ მიერთებებს.</p>\n"
+"<p><span style=\"font-weight:600;\">შენიშვნა: </span>ძალაში შესასვლელად "
+"აუცილებელია გადატვირთვა.</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_utpEnabled)
 #: ktorrent/pref/networkpref.ui:232
@@ -2874,6 +2914,8 @@ msgid ""
 "The µTorrent transport protocol runs over UDP and is optimized to not "
 "interfere with other traffic, while still using up all unused bandwidth."
 msgstr ""
+"ტრანსპორტის პროტოკოლი µTorrent UDP-ით მუშაობს და ოპტიმიზირებულია, სხვა "
+"ტრაფიკს ხელი არ შეუშალოს იმ დროს, როცა ის მთელ დარჩენილ ტრაფიკს იყენებს."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_utpEnabled)
 #: ktorrent/pref/networkpref.ui:235
@@ -2889,6 +2931,9 @@ msgid ""
 "can lead to slower speeds, seeing that not all bittorrent clients support "
 "µTP."
 msgstr ""
+"TCP bittorrent-ის მიერთებების გამოყენებული არ იქნება. მხოლოდ µTorrent. ამან, "
+"შეიძლება, უფრო დაბალ სიჩქარეებამდე მიგიყვანოთ, რადგან, როგორც ჩანს, ყველა "
+"bittorrent-ის კლიენტს µTorrent-ის მხარდაჭერა არ გააჩნია."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_onlyUseUtp)
 #: ktorrent/pref/networkpref.ui:245
@@ -2932,6 +2977,8 @@ msgid ""
 "Let KTorrent calculate the recommended settings based upon the bandwidth you "
 "have available."
 msgstr ""
+"KTorrent-სთვის პარამეტრების თქვენთვის ხელმისაწვდომ გამტარობაზე "
+"დამოკიდებულებით გამოთვლის უფლების მიცემა."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
@@ -3018,6 +3065,9 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Note: </span>This is not used for "
 "tracker connections</p>"
 msgstr ""
+"<p>SOCKS პროქსი სერვერის გამოყენება bittorrent მიერთებებისთვის.</p>\n"
+"<p><span style=\" font-weight:600;\">შენიშვნა: </span>ეს ტრეკერთან "
+"მიერთებისთვის არ გამოიყენება</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_socksEnabled)
 #: ktorrent/pref/proxypref.ui:107
@@ -3221,6 +3271,8 @@ msgid ""
 "<p>Time used for the stall timer. When a torrent is stalled longer than "
 "this, its priority will be decreased.</p>"
 msgstr ""
+"<p>გაჭედვის წამმზომისთვის გამოყენებული დრო. როცა ტორენტი ამ დროზე უფრო დიდი "
+"ხნით დაეკიდება, მისი პრიორიტეტი შემცირდება.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
@@ -3293,6 +3345,9 @@ msgid ""
 "be stopped. This is only applied to newly opened torrents, existing torrents "
 "will not be affected by changing this."
 msgstr ""
+"მაქსიმალური სიდის დრო, საათებში. როცა ამ დროს მიაღწევთ, ტორენტი გაგრძელდება. "
+"ეს, მხოლოდ, ახლად გახსნილ ტორენტებზე გამოიყენება. ამის შეცვლით არსებული "
+"ტორენტები არ შეიცვლება."
 
 #. i18n: ectx: property (toolTip), widget (QLabel, label_2)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_greenRatio)
@@ -3545,6 +3600,9 @@ msgid ""
 "Use drag and drop or the move up and down buttons on the right to change the "
 "order."
 msgstr ""
+"ტორენტის მიმდევრობა რიგში.\n"
+"გადააადგილეთ ისინი თაგუნათი ან ზემო/ქვემო ღილაკებით მარჯვენა მხარეს, რათა "
+"მიმდევრობა შეცვალოთ."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
 #: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
@@ -3705,6 +3763,8 @@ msgid ""
 "Download speed: <b>%1</b><br/>Upload speed: <b>%2</b><br/>Received: <b>%3</"
 "b><br/>Transmitted: <b>%4</b>"
 msgstr ""
+"გადმოწერის სიჩქარე: <b>%1</b><br/>ატვირთვის სიჩქარე: <b>%2</b><br/"
+">მიღებულია: <b>%3</b><br/>გადაცემულია: <b>%4</b>"
 
 #: ktorrent/trayicon.cpp:167
 #, kde-format
@@ -3722,6 +3782,8 @@ msgid ""
 "<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
 "<br>Uploaded %3 at an average speed of %4."
 msgstr ""
+"<b>%1</b>-მა მიაღწია თავის მაქსიმალურ გაზიარების ფარდობას %2 და გაჩერდა."
+"<br>ატვირთულია %3 საშუალო სიჩქარით %4."
 
 #: ktorrent/trayicon.cpp:218
 #, kde-format
@@ -3729,6 +3791,8 @@ msgid ""
 "<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
 "<br>Uploaded %3 at an average speed of %4."
 msgstr ""
+"<b>%1</b>-მა სიდირების მაქსიმალურ %2 საათს მიაღწია და გაჩერდა. "
+"<br>ატვირთულია %3 საშუალო სიჩქარით %4."
 
 #: ktorrent/trayicon.cpp:233
 #, kde-format
@@ -3741,6 +3805,8 @@ msgid ""
 "Corrupted data has been found in the torrent <b>%1</b><br>It would be a good "
 "idea to do a data integrity check on the torrent."
 msgstr ""
+"ტორენტში <b>%1</b> აღმოჩენილია დაზიანებული მონაცემები<br>მგონი, ტორენტის "
+"მონაცემების მთლიანობის შემოწმება კარგი იდეაა."
 
 #: ktorrent/trayicon.cpp:262
 #, kde-format
@@ -3791,6 +3857,8 @@ msgid ""
 "Your disk is running out of space.<br /><b>%1</b> is being downloaded to "
 "'%2'."
 msgstr ""
+"თქვენს დისკზე მალე ადგილი აღარ დაგრჩებათ.<br />მიმდინარეობს <b>%1</b>-ის "
+"გადმოწერა საქაღლდეში '%2'."
 
 #: ktorrent/trayicon.cpp:310
 #, kde-format
@@ -3831,6 +3899,8 @@ msgid ""
 "DHT is a distributed database which can be used to find more peers for a "
 "torrent."
 msgstr ""
+"DHT განაწილებული ბაზაა, რომელიც ტორენტისთვის დამატებითი პარტნიორების ძებნაში "
+"შეგიძლიათ გამოიყენოთ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, dht)
 #: ktorrent/view/propertiesdlg.ui:23
@@ -3845,6 +3915,8 @@ msgid ""
 "Peer exchange results in more peers being found, by exchanging information "
 "about peers with other peers."
 msgstr ""
+"პარტნიორების მიმოცვლა მეტი პარტნიორის ძებნაში დაგვეხმარება, მათ შესახებ "
+"ინფორმაციის მიმოცვლის საშუალებით."
 
 #. i18n: ectx: property (text), widget (QCheckBox, pex)
 #: ktorrent/view/propertiesdlg.ui:33
@@ -4300,6 +4372,7 @@ msgid ""
 "How many seeders we are connected to (How many seeders there are according "
 "to the tracker)"
 msgstr ""
+"რამდენ სიდერთან ვართ მიერთებული (რამენი სიდი არსებობს, ტრეკერზე დაყრდნობით)"
 
 #: ktorrent/view/viewmodel.cpp:492
 #, kde-format
@@ -4307,6 +4380,7 @@ msgid ""
 "How many leechers we are connected to (How many leechers there are according "
 "to the tracker)"
 msgstr ""
+"რამდენ ლიჩერთან ვართ მიერთებული (რამენი ლიჩერი არსებობს, ტრეკერზე დაყრდნობით)"
 
 #: ktorrent/view/viewmodel.cpp:495
 #, kde-format
@@ -4314,6 +4388,8 @@ msgid ""
 "The percentage of data we have of the whole torrent, not including excluded "
 "files"
 msgstr ""
+"მთლიანი ტორენტის პროცენტული ნაწილი, რომელიც უკვე გვაქვს, ამოღებული ფაილების "
+"არჩათვლით"
 
 #: ktorrent/view/viewmodel.cpp:497
 #, kde-format
@@ -4321,6 +4397,8 @@ msgid ""
 "Share ratio is the number of bytes uploaded divided by the number of bytes "
 "downloaded"
 msgstr ""
+"გაზიარების ფარდობა წარმოადგენს რიცხვს, რომელიც ატვირთული ბაიტების რაოდენობის "
+"გადმოწერილი ბაიტების რაოდენობაზე გაყოფით მიიღება"
 
 #: ktorrent/view/viewmodel.cpp:499
 #, kde-format
@@ -4644,7 +4722,7 @@ msgstr "საქაღალდე .torrent ფაილების დას�
 #: libktcore/ktorrent.kcfg:119
 #, kde-format
 msgid "Whether to use a custom IP to pass to the tracker"
-msgstr ""
+msgstr "გამოვიყენო თუ არა ტრეკერისთვის გადასაცემად ხელით მითითებული IP"
 
 #. i18n: ectx: label, entry (lastSaveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:123
@@ -4695,12 +4773,14 @@ msgid ""
 "When there is no space left to complete download, and the available disk "
 "space is less than this value, the torrent will be stopped."
 msgstr ""
+"როცა გადმოწერის დასასრულებლად ადგილი აღარ დარჩება და ხელმისაწვდომი ადგილი ამ "
+"მნიშვნელობაზე ნაკლებია, ტორენტი შეჩერდება."
 
 #. i18n: ectx: label, entry (useCompletedDir), group (downloads)
 #: libktcore/ktorrent.kcfg:244
 #, kde-format
 msgid "Whether to automatically move completed downloads to completedDir"
-msgstr ""
+msgstr "გადავიტანო თუ არა ავტომატურად დასრულებული გადმოწერები CompletedDir-ში"
 
 #. i18n: ectx: label, entry (completedDir), group (downloads)
 #: libktcore/ktorrent.kcfg:248
@@ -4752,6 +4832,8 @@ msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
 "time. Ignore the limit and start seeding anyway?"
 msgstr ""
+"ტორენტმა \"%1\" მიაღწია თავის მაქსიმალური გაზიარების ფარდობას და თავის "
+"მაქსიმალურ სიდის დროს. გამოვტოვო შეზღუდვა და დავიწყო სიდინგი მაინც?"
 
 #: libktcore/torrent/queuemanager.cpp:107
 #, kde-format
@@ -4759,6 +4841,8 @@ msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
+"ტორენტმა \"%1\" თავის მაქსიმალურ გაზიარების ფარდობას მიაღწია. გამოვტოვო "
+"შეზღუდვა და დავიწყო სიდინგი მაინც?"
 
 #: libktcore/torrent/queuemanager.cpp:109
 #, kde-format
@@ -4766,6 +4850,8 @@ msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
+"ტორენტმა \"%1\" თავის მაქსიმალურ სიდინგის დროს მიაღწია. გამოვტოვო შეზღუდვა "
+"და დავიწყო სიდინგი მაინც?"
 
 #: libktcore/torrent/queuemanager.cpp:116
 #, kde-format
@@ -5817,6 +5903,8 @@ msgstr ""
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
+"დაკიდებულია ნიშნავს, რომ პარტნიორს მონაცემები ბოლო 2 წუთის განმავლობაში არ "
+"გამოუგზავნია"
 
 #: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
@@ -5837,6 +5925,8 @@ msgstr ""
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr ""
+"მხოლოდ, პარტნიორები, რომლებსაც ატვირთვის სლოტი აქვს, მიღებენ ჩვენგან "
+"მონაცემებს"
 
 #: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
@@ -5856,12 +5946,12 @@ msgstr "რამდენი მონაცემები ავტვირ�
 #: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
-msgstr ""
+msgstr "არის თუ არა პარტნიორი დაინტერესებული, ჩვენგან გადაიწეროს"
 
 #: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
-msgstr ""
+msgstr "ვართ თუ არა დაინტერესებული, ამ პარტნიორისგან გადმოვიწეროთ"
 
 #: plugins/infowidget/statustab.cpp:95
 #, kde-format
@@ -5970,6 +6060,7 @@ msgstr "ტრეკერის სტატუსის კოპირებ�
 #, kde-format
 msgid "Several URL's could not be added because they are malformed:"
 msgstr ""
+"რამდენიმე ბმულის დამატება შეუძლებელია, რადგან ისინი ცუდადაა ჩამოყალიბებული:"
 
 #: plugins/infowidget/trackerview.cpp:129
 #, kde-format
@@ -6019,7 +6110,7 @@ msgstr "სიჩქარე"
 #: plugins/infowidget/webseedstab.cpp:86
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
-msgstr ""
+msgstr "ვებსიდი %1 ვერ დავამატე, რადგან ის უკვე ვებსიდების სიის ნაწილია."
 
 #: plugins/infowidget/webseedstab.cpp:102
 #, kde-format
@@ -6085,6 +6176,8 @@ msgstr "გადაყვანა..."
 #, kde-format
 msgid "Converting block list to KTorrent format. This might take some time."
 msgstr ""
+"ბლოკების სის KTorrent-ის ფორმატში გადაყვანა. ამას საკმაო დრო შეიძლება "
+"დასჭირდეს."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: plugins/ipfilter/convertdialog.ui:99
@@ -6362,6 +6455,28 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p>"
 msgstr ""
+"ორჯერ დააწკაპუნეთ ჟურნალის დონეზე, რომ შეცვალოთ ის. შესაძლო დონეებია :\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">ყველა: </span>ნაჩვენებია ყველა შეტყობინება</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">მნიშვნელოვანი: </span>ნაჩვენებია, მხოლოდ, მნიშვნელოვანი "
+"შეტყობინებები</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">გაფრთხილება:</span>ნაჩვენებია, მხოლოდ, გაფრთხილების და "
+"მნიშვნელოვანი შეტყობინებები</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">გამართვა: </span>ნაჩვენებია, გამართვის, გაფრთხილებისა და "
+"მნიშვნელოვანი შეტყობინებები</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">არაფერი:</span> შეტყობინებები ნაჩვენები არაა</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
@@ -6773,7 +6888,7 @@ msgstr "საქაღალდეები ტორენტის ფაი�
 #: plugins/scanfolder/scanfolderprefpage.ui:26
 #, kde-format
 msgid "List of folders which will be scanned for torrents by this plugin."
-msgstr ""
+msgstr "საქაღალდეების სია, რომელშიც ეს დამატება ტორენტის ფაილებს მოძებნის."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_add)
 #: plugins/scanfolder/scanfolderprefpage.ui:35
@@ -7142,7 +7257,7 @@ msgstr ""
 #: plugins/search/searchprefpage.cpp:128
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
-msgstr ""
+msgstr "ბმული %1 {searchTerms}-ს არ შეიცავს."
 
 #: plugins/search/searchtoolbar.cpp:58
 #, kde-format
@@ -7314,12 +7429,12 @@ msgstr "ავტომატური გამორთვა აქტიუ�
 #: plugins/shutdown/shutdownruleset.cpp:256
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
-msgstr ""
+msgstr " როცა ყველა შემდეგი მოვლენა მოხდება:<br/><br/> "
 
 #: plugins/shutdown/shutdownruleset.cpp:258
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
-msgstr ""
+msgstr " როცა მოხდება ერთ-ერთი მოვლენებიდან:<br/><br/> "
 
 #: plugins/shutdown/shutdownruleset.cpp:328
 #, kde-format
@@ -7394,7 +7509,7 @@ msgstr "კვანძები"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers connected"
-msgstr ""
+msgstr "მიერთებული ლიჩერები"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: plugins/stats/ConnsTabPage.cc:46 plugins/stats/ConnsTabPage.cc:94
@@ -7402,14 +7517,14 @@ msgstr ""
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers in swarms"
-msgstr ""
+msgstr "ლიჩერები სულ"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: plugins/stats/ConnsTabPage.cc:50 plugins/stats/DisplaySettings.ui:583
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds connected"
-msgstr ""
+msgstr "მიერთებული სიდერები"
 
 #. i18n: ectx: property (text), widget (QLabel, label_26)
 #: plugins/stats/ConnsTabPage.cc:54 plugins/stats/ConnsTabPage.cc:105
@@ -7417,33 +7532,33 @@ msgstr ""
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds in swarms"
-msgstr ""
+msgstr "სიდერები სულ"
 
 #. i18n: ectx: property (text), widget (QLabel, label_27)
 #: plugins/stats/ConnsTabPage.cc:58 plugins/stats/DisplaySettings.ui:653
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per torrent"
-msgstr ""
+msgstr "საშუალოდ მიერთებული ლიჩერები თითოეული ტორენტისთვის"
 
 #. i18n: ectx: property (text), widget (QLabel, label_28)
 #: plugins/stats/ConnsTabPage.cc:61 plugins/stats/DisplaySettings.ui:688
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per torrent"
-msgstr ""
+msgstr "საშუალოდ მერთებული სიდერები თითოეული ტორენტისთვის"
 
 #: plugins/stats/ConnsTabPage.cc:64
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per running torrent"
-msgstr ""
+msgstr "საშუალოდ მიერთებული ლიჩერები თითოეული გაშვებული ტორენტისთვის"
 
 #: plugins/stats/ConnsTabPage.cc:67
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per running torrent"
-msgstr ""
+msgstr "საშუალოდ მიერთებული სიდი თითოეული გაშვებული ტორენტისთვის"
 
 #. i18n: ectx: property (text), widget (QLabel, label_31)
 #: plugins/stats/ConnsTabPage.cc:72 plugins/stats/DisplaySettings.ui:806
@@ -7505,35 +7620,35 @@ msgstr "პარტნიორები"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from leechers"
-msgstr ""
+msgstr "საშუალო ლიჩერებისგან"
 
 #. i18n: ectx: property (text), widget (QLabel, label_19)
 #: plugins/stats/DisplaySettings.ui:208 plugins/stats/SpdTabPage.cc:59
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average to leechers"
-msgstr ""
+msgstr "საშუალო ლიჩერებამდე"
 
 #. i18n: ectx: property (text), widget (QLabel, label_20)
 #: plugins/stats/DisplaySettings.ui:243 plugins/stats/SpdTabPage.cc:60
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from seeds"
-msgstr ""
+msgstr "საშუალო სიდებიდან"
 
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: plugins/stats/DisplaySettings.ui:278 plugins/stats/SpdTabPage.cc:61
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From leechers"
-msgstr ""
+msgstr "ლიჩერებიდან"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: plugins/stats/DisplaySettings.ui:313 plugins/stats/SpdTabPage.cc:62
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From seeds"
-msgstr ""
+msgstr "სიდებიდან"
 
 #. i18n: ectx: property (title), widget (QGroupBox, UlSpdGbw)
 #. i18n: ectx: property (text), widget (QLabel, label_10)
@@ -7571,14 +7686,14 @@ msgstr "ზღვარი"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Avg. leechers connected per running torr."
-msgstr ""
+msgstr "საშ. ლიჩერი თითოეული გაშვ. ტორენტისთვის."
 
 #. i18n: ectx: property (text), widget (QLabel, label_30)
 #: plugins/stats/DisplaySettings.ui:758
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Avg. seeds connected per running torrent"
-msgstr ""
+msgstr "საშ. სიდები მიერთებული თითოეული გაშვებულ ტორენტისთვის"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
@@ -7714,13 +7829,13 @@ msgstr "მასშტაბის მაქსიმალური მნი�
 #: plugins/stats/ktstatsplugin.kcfg:25
 #, kde-format
 msgid "Whether to show seeds in swarms"
-msgstr ""
+msgstr "ვაჩვენო თუ არა სიდები ერთად"
 
 #. i18n: ectx: label, entry (ShowLeechersInSwarms), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:30
 #, kde-format
 msgid "Whether to show leachers in swarms"
-msgstr ""
+msgstr "ვაჩვენო თუ არა ლიჩერები ერთად"
 
 #. i18n: ectx: label, entry (DlSpdSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:35
@@ -7774,85 +7889,87 @@ msgstr "ლიმიტის ფერი გადმოწერის გრ
 #: plugins/stats/ktstatsplugin.kcfg:75
 #, kde-format
 msgid "Color of the avg from leecher on peers chart"
-msgstr ""
+msgstr "საშუალო ლიჩერებიდან ფერი პარტნიორების გრაფიკზე"
 
 #. i18n: ectx: label, entry (PrAvgToLColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:80
 #, kde-format
 msgid "Color of the avg to leecher on peers chart"
-msgstr ""
+msgstr "საშუალო ლიჩერებისკენ ფერი პარტნიორების გრაფიკზე"
 
 #. i18n: ectx: label, entry (PrAvgFromSColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:85
 #, kde-format
 msgid "Color of the avg from seeds on peers chart"
-msgstr ""
+msgstr "საშუალო ფერი სიდებიდან პარტნიორების გრაფიკზე"
 
 #. i18n: ectx: label, entry (PrFromLColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:90
 #, kde-format
 msgid "Color of the leechers on peers chart"
-msgstr ""
+msgstr "ლიჩერების ფერი პარტნიორების გრაფიკზე"
 
 #. i18n: ectx: label, entry (PrFromSColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:95
 #, kde-format
 msgid "Color of the seeds on peers chart"
-msgstr ""
+msgstr "სიდების ფერი პარტნიორების გრაფიკზე"
 
 #. i18n: ectx: label, entry (UlSpdColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:100
 #, kde-format
 msgid "Color of the speed on upload chart"
-msgstr ""
+msgstr "სიჩქარის ფერი ატვირთვის გრაფიკზე"
 
 #. i18n: ectx: label, entry (UlAvgColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:105
 #, kde-format
 msgid "Color of the avg on upload chart"
-msgstr ""
+msgstr "საშუალოს ფერ ატვირთვის გრაფიკზე"
 
 #. i18n: ectx: label, entry (UlLimitColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:110
 #, kde-format
 msgid "Color of the limit on upload chart"
-msgstr ""
+msgstr "შეზღუდვის ფერი ატვირთვის გრაფიკზე"
 
 #. i18n: ectx: label, entry (CnLConnColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:115
 #, kde-format
 msgid "Color of the connected leechers on connections chart"
-msgstr ""
+msgstr "მოერთებული ლიჩერების ფერი მიერთებების გრაფიკზე"
 
 #. i18n: ectx: label, entry (CnLSwarmsColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:120
 #, kde-format
 msgid "Color of the leechers in swarms on connections chart"
-msgstr ""
+msgstr "ჯამური ლიჩერების ფერი მიერთებების გრაფიკზე"
 
 #. i18n: ectx: label, entry (CnSConnColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:125
 #, kde-format
 msgid "Color of the connected seeds on connections chart"
-msgstr ""
+msgstr "მიერთებუი სიდების ფერი მიერთებების გრაფიკზე"
 
 #. i18n: ectx: label, entry (CnSSwarmsColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:130
 #, kde-format
 msgid "Color of the seeds in swarms on connections chart"
-msgstr ""
+msgstr "ჯამური სიდების ფერი მიერთებების გრაფიკზე"
 
 #. i18n: ectx: label, entry (CnAvgLConnPerTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:135
 #, kde-format
 msgid "Color of the avg connected leecher per torrent on connections chart"
 msgstr ""
+"საშ. მიერთებული ლიჩერის ფერი თითოეული ტორენტისთვის მიერთებების გრაფიკზე"
 
 #. i18n: ectx: label, entry (CnAvgSConnPerTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:140
 #, kde-format
 msgid "Color of the avg connected seeds per torrent on connections chart"
 msgstr ""
+"საშ. მიერთებული სიდების ფერი თითოეული ტორენტისთვის მიერთებების გრაფიკზე"
 
 #. i18n: ectx: label, entry (CnAvgLConnPerRunTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:145
@@ -7860,6 +7977,7 @@ msgstr ""
 msgid ""
 "Color of the avg connected leechers per running torrent on connections chart"
 msgstr ""
+"საშ. მიერთებული ლიჩერების ფერი თითოეული ტორენტისთვის მიერთებების გრაფიკზე"
 
 #. i18n: ectx: label, entry (CnAvgSConnPerRunTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:150
@@ -7867,18 +7985,19 @@ msgstr ""
 msgid ""
 "Color of the avg connected seeds per running torrent on connections chart"
 msgstr ""
+"საშ. მიერთებული სიდებების ფერი თითოეული ტორენტისთვის მიერთებების გრაფიკზე"
 
 #. i18n: ectx: label, entry (DhtNodesColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:155
 #, kde-format
 msgid "Color of the nodes on DHT chart"
-msgstr ""
+msgstr "კვანძების ფერი DHT-ის გრაფიკზე"
 
 #. i18n: ectx: label, entry (DhtTasksColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:160
 #, kde-format
 msgid "Color of the tasks on DHT chart"
-msgstr ""
+msgstr "ამოცანების ფერი DHT-ის გრაფიკზე"
 
 #. i18n: ectx: label, entry (AntiAliasing), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:165
@@ -7890,13 +8009,13 @@ msgstr "გამოვიყენო მომრგვალება გრ�
 #: plugins/stats/ktstatsplugin.kcfg:170
 #, kde-format
 msgid "Draw ugly grey background grid?"
-msgstr ""
+msgstr "დავხატო მახინჯი ნაცრისფერი ფონის ბადე?"
 
 #. i18n: ectx: label, entry (WidgetType), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:175
 #, kde-format
 msgid "Type of widget used for chart drawing"
-msgstr ""
+msgstr "გრაფიკის დასახატად გამოყენებული ვიჯეტის ტიპი"
 
 #. i18n: ectx: property (title), widget (QGroupBox, UpdateGbw)
 #: plugins/stats/Settings.ui:19
@@ -7938,7 +8057,7 @@ msgstr "მილიწამი"
 #: plugins/stats/Settings.ui:108
 #, kde-format
 msgid "Measurements counts"
-msgstr ""
+msgstr "რიცხვითი მნიშვნელობები"
 
 #. i18n: ectx: property (title), widget (QGroupBox, MaxModeGbw)
 #: plugins/stats/Settings.ui:247
@@ -7977,13 +8096,13 @@ msgstr "პარტნიორთან მიერთებები"
 #: plugins/stats/Settings.ui:296
 #, kde-format
 msgid "Show seeds in swarms"
-msgstr ""
+msgstr "სიდების ერთად ჩვენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLeechersInSwarms)
 #: plugins/stats/Settings.ui:303
 #, kde-format
 msgid "Show leechers in swarms"
-msgstr ""
+msgstr "ლიჩერების ერთად ჩვენება"
 
 #: plugins/stats/SettingsPage.cc:12
 #, kde-format
@@ -8035,7 +8154,7 @@ msgstr "სიჩქარის გრაფიკები"
 #: plugins/stats/StatsPlugin.cc:34
 #, kde-format
 msgid "Displays charts about download and upload speed"
-msgstr ""
+msgstr "გადმოწერისა და ატვირთვის სიჩქარის გრაფიკების ჩვენება"
 
 #: plugins/stats/StatsPlugin.cc:35
 #, kde-format
@@ -8045,7 +8164,7 @@ msgstr "მიერთების გრაფიკები"
 #: plugins/stats/StatsPlugin.cc:35
 #, kde-format
 msgid "Displays charts about connections"
-msgstr ""
+msgstr "მიერთებების გრაფიკების ჩენება"
 
 #: plugins/syndication/feedlist.cpp:151
 #, kde-format
@@ -8137,7 +8256,7 @@ msgstr "განახლება:"
 #: plugins/syndication/feedwidget.ui:138
 #, kde-format
 msgid "Time between automatic refreshes of the feed."
-msgstr ""
+msgstr "დრო ლენტის ავტომატურ განახლებებს შორის."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:141
@@ -8171,7 +8290,7 @@ msgstr "ფილტრის ჩასწორება"
 #: plugins/syndication/filtereditor.cpp:226
 #, kde-format
 msgid "There already is a filter named %1, filter names must be unique."
-msgstr ""
+msgstr "ფილტრი სახელით %1 უკვე არსებობს. ფილტრის სახელები არ უნდა მეორდებოდეს."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/syndication/filtereditor.ui:22
@@ -8257,6 +8376,8 @@ msgid ""
 "By default strings will use wildcard matching. If you want to use regular "
 "expressions, this needs to be enabled."
 msgstr ""
+"ნაგულისხმევად სტრიქონები ვაილდკარდით დამთხვევას იყენებენ. თუ გნებავთ, "
+"რეგულარული გამოსახულებები გამოიყენოთ, ეს ცალკე უნდა ჩართოთ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_reg_exp)
@@ -8270,7 +8391,7 @@ msgstr "სტრიქონები რეგულარული გამ�
 #: plugins/syndication/filtereditor.ui:88
 #, kde-format
 msgid "Item must match all strings to be included"
-msgstr ""
+msgstr "ჩასასმელად, ელემენტი ყველა სტრიქონს უნდა ემთხვეოდეს"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_match_case_sensitive)
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_case_sensitive)
@@ -8290,7 +8411,7 @@ msgstr "ამოღების ნიმუშები"
 #: plugins/syndication/filtereditor.ui:153
 #, kde-format
 msgid "Item must match all strings to be excluded"
-msgstr ""
+msgstr "ამოსაღებად, ელემენტი ყველა სტრიქონს უნდა ემთხვეოდეს"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: plugins/syndication/filtereditor.ui:168
@@ -8344,19 +8465,19 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:221
 #, kde-format
 msgid "Do not download multiple items with the same season and episode"
-msgstr ""
+msgstr "არ გადმოწერო ერთზე მეტი ელემენტი იგივე სეზონისა და ეპიზოდის ნომრით"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_download_matches)
 #: plugins/syndication/filtereditor.ui:248
 #, kde-format
 msgid "Download torrents of matching items"
-msgstr ""
+msgstr "ტორენტების გადმოწერა ელემენტების დამთხვევისას"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_download_non_matches)
 #: plugins/syndication/filtereditor.ui:255
 #, kde-format
 msgid "Download torrents of non matching items"
-msgstr ""
+msgstr "ტორენტების გადმოწერა, როცა ელემენტები არ ემთხვევა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_add_to_group)
 #: plugins/syndication/filtereditor.ui:264
@@ -8428,7 +8549,7 @@ msgstr "სინდიკაციის პანელი"
 #: plugins/syndication/linkdownloader.cpp:173
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
-msgstr ""
+msgstr "%1-ზე ტორენტის სწორი ბმული ვერ ვიპოვე"
 
 #: plugins/syndication/managefiltersdlg.cpp:27
 #: plugins/syndication/syndicationplugin.cpp:70
