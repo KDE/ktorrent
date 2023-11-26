@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-19 03:40\n"
+"PO-Revision-Date: 2023-11-25 02:26\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/ktorrent/ktorrent.pot\n"
-"X-Crowdin-File-ID: 5950\n"
+"X-Crowdin-File: /kf6-trunk/messages/ktorrent/ktorrent.pot\n"
+"X-Crowdin-File-ID: 48662\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1610,7 +1610,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1994,18 +1994,17 @@ msgstr "错误修复、清理和优化"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "KF5 移植"
+msgstr "KF6 移植"
 
 #: ktorrent/main.cpp:178
 #, kde-format
 msgid "Enable logging"
-msgstr ""
+msgstr "启用日志记录"
 
 #: ktorrent/main.cpp:179
 #, kde-format
@@ -4722,18 +4721,18 @@ msgstr "警告：%1"
 #: libktcore/torrent/chunkbar.cpp:62
 #, kde-format
 msgid "Downloaded Chunks"
-msgstr ""
+msgstr "已下载的数据块"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #, kde-format
 msgid "Chunks to Download"
-msgstr ""
+msgstr "未下载的数据块"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
 msgid "Excluded Chunks"
-msgstr ""
+msgstr "排除的数据块"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -5206,12 +5205,12 @@ msgstr "添加 Tracker"
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
 msgid "Available Chunks"
-msgstr ""
+msgstr "可用的数据块"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
 msgid "Unavailable Chunks"
-msgstr ""
+msgstr "不可用的数据块"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format

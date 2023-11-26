@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-24 17:27+0100\n"
+"PO-Revision-Date: 2023-11-25 09:52+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2145,6 +2145,16 @@ msgid ""
 "might not actually reach this speed when this value is too high. Without a "
 "limit you can easily get above 3000 KiB/s on a LAN.</p>"
 msgstr ""
+"<p>დროის ხანგრძლივობა, რომლის განმავლობაშიც ქსელის ნაკადები დაიძინებენ, როცა "
+"ისინი სიჩქარეზეა შეზღუდული. ამას არანაირი გავლენა არ აქვს, თუ სიჩქარე "
+"შეზღუდული არაა.</p>\n"
+"<p><span style=\" font-weight:600;\">შენიშვნა:</span> რაც ნაკლებია ეს "
+"მნიშვნელობა, მით მეტია პროცესორის გამოყენება. მაღალმა მნიშვნელობებმა კი დიდი "
+"გამტარობის შემთხვევაშიც კი გადმოწერის სიჩქარე შეუძლიათ, შეამცირონ</p>\n"
+"<p>მაგალითად, 100 მბიტ/წმ ლოკალურ ქსელზე, თუ დააყენებთ შეზღუდვას 3000 კიბ/"
+"წმ, ამ სიჩქარეს, შეიძლება, ვერც მიაღწიოთ, როცა ეს მნიშვნელობა ძალიან დიდია. "
+"შეზღუდვის არარსევიბუბს შეთხვევაში კი ლოკალურ ქსელში 30000 კიბ/წმ-ს იოლად "
+"ასცდებით</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
@@ -2323,6 +2333,10 @@ msgid ""
 "router, this port needs to be forwarded to accept incoming DHT requests. The "
 "UPnP plugin can do this for you.</p>"
 msgstr ""
+"<p>DHT პროტოკოლისთვის გამოყენებული UDP პორტი.</p>\n"
+"<p><span style=\" font-weight:600;\">გაფრთხილება:</span> თუ რაუტერის უკან "
+"ზიხართ, ამ პორტებს გადამისამართება სჭირდებათ, რათა შემომავალი DHT მოთხოვნები "
+"მიიღოს. ამის გაკეთება თქვენთვის UPnP დამატებას შეუძლია.</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_pexEnabled)
 #: ktorrent/pref/btpref.ui:61
@@ -2377,6 +2391,10 @@ msgid ""
 "<p>The encryption will prevent your bittorrent traffic to be flagged as "
 "bittorrent traffic, and so the ISP will not slow it down.</p>"
 msgstr ""
+"<p>პროტოკოლის დაშიფვრა სასარგებლოა, როცა თქვენი ISP bittorrent-ის მიერთებებს "
+"ანელებს. </p>\n"
+"<p>დაშიფვრა ხეს შეუშლის bittorrent-ის პროტოკოლის ამოცნობას და თქვენი ISP "
+"ვეღარ შეანელებს მას. </p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useEncryption)
 #. i18n: ectx: label, entry (useEncryption), group (downloads)
@@ -2742,6 +2760,10 @@ msgid ""
 "desktop.iso</span>, the torrent will be displayed as <span style=\" font-"
 "weight:600;\">linux-desktop.</span></p>"
 msgstr ""
+"<p>გადაერქვას სახელი ერთფაილიან ტორენტს მისი ფაილის სახელზე.</p>\n"
+"<p>მაგალითად, თუ ფაილს ჰქვია <span style=\" font-weight:600;\">Linux-desktop."
+"iso</span>, ტორენტი ნაჩვენები იქნება, როგორც <span style=\" font-weight:600;"
+"\">linux-desktop.</span></p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:163
@@ -2795,6 +2817,10 @@ msgid ""
 "router, this port needs to be forwarded to accept incoming connections. The "
 "UPnP plugin can do this for you.</p>"
 msgstr ""
+"<p>bittorrent-ის პროტოკოლისთვის გამოყენებული პორტი.</p>\n"
+"<p><span style=\" font-weight:600;\">გაფრთხილება:</span> თუ ზიხართ რაუტერის "
+"მიღმა, ამ პორტს, შემომავალი მიერთებების მისაღებად, გადმომისამართება "
+"სჭირდება. UPnP-ის დამატებას ეს შეუძლია, თქვენთვის ქნას.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/networkpref.ui:47
@@ -2888,6 +2914,10 @@ msgid ""
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
+"<p>გამავალი მიერთებების მაქსიმალური რაოდენობა, რომელსაც KTorrent სცდის, "
+"შექმნას.</p>\n"
+"<p>თუ გაქვთ პრობლემა, რომ KTorrent სხვა ქსელურ ტრაფიკს გიბლოკავთ, სცადეთ, "
+"შეამციროთ ეს რიცხვი.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -3257,6 +3287,10 @@ msgid ""
 "<p>This will allow the queue manager to run other torrents, when a torrent "
 "is doing nothing.</p>"
 msgstr ""
+"<p>თუ ეს ჩართულია, რიგის მმართველი შეამცირებს იმ ტორენტების პრიორიტეტს, "
+"რომლებიც ძალიან დიდხანსაა დაკიდებული. </p>\n"
+"<p>ეს საშუალებას მისცემს რიგის მმართველს, სხვა ტორენტები გაუშვას, როცა "
+"ტორენტი არაფერს აკეთებს. </p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:134
@@ -3330,6 +3364,11 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Attention: </span>This is not used when "
 "downloading, only when seeding.</p>"
 msgstr ""
+"<p>მაქსიმალური გაზიარების ფარდობა. თუ ამ მნიშვნელობას მიაღწევს, სიდინგი "
+"გაჩერდებაეს მხოლოდ ახალ გახსნილ ტორენტებს შეეხება. უკვე გახსნილების "
+"პარამეტრები კი იგივე დარჩება.</p>\n"
+"<p><span style=\" font-weight:600;\">გაფრთხილება: </span>ეს არ გამოიყენება "
+"გადმოწერისას, არამედ, მხოლოდ ატვირთვისას.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/qmpref.ui:222
@@ -3357,6 +3396,9 @@ msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
+"მნიშვნელობა, რომლის შემთხვევაშიც გაზიარების ფარდობა მწვანედ გამოჩნდება. უფრო "
+"დაბალი მნიშვნელობები კი წითლად. ფერების შეცვლა ფერების მორგების ფანჯარაში "
+"შეგიძლიათ."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
@@ -3814,6 +3856,8 @@ msgid ""
 "<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
 "<br>Remove the limit manually if you want to continue seeding."
 msgstr ""
+"<b>%1</b>-მა მაქსიმალური გაზიარების ფარდობას (%2) მიაღწია და რიგში ვერ "
+"ჩააყენებთ. <br>თუ გნებავთ, სიდინგი გააგრძელოთ, შეზღუდვა ხელით მოხსენით."
 
 #: ktorrent/trayicon.cpp:268
 #, kde-format
@@ -3821,6 +3865,8 @@ msgid ""
 "<b>%1</b> has reached its maximum seed time of %2 hours and cannot be "
 "enqueued. <br>Remove the limit manually if you want to continue seeding."
 msgstr ""
+"<b>%1</b>-მა თავის მაქსიამალურ სიდირების %2 საათს მიაღწია და რიგში ვერ "
+"ჩააყენებთ. <br>თუ გნებავთ, სიდირება გააგრძელოთ, შეზღუდვა ხელით მოხსენით."
 
 #: ktorrent/trayicon.cpp:281
 #, kde-format
@@ -3941,6 +3987,18 @@ msgid ""
 "fully been established. Once there are multiple active seeders, this mode "
 "becomes useless.</p>"
 msgstr ""
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">სუპერსიდები რეჟიმია, "
+"რომელიც საშუალებას გაძლევთ, სიდერობის გაცილებით მაღალ ეფექტურობას მიაღწიოთ. "
+"ეს კი ტორენტის გავრცელებისას ნაკლებ გამტარობას მოითხოვს.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">შენიშვნა: </span>ეს, მხოლოდ, მაშინ უნდა გამოიყენოთ, თუ ნაკრები "
+"ჯერ არ შედგენილა. მაშინ, როცა არსებობს ბევრი აქტიური სიდერი, ამ რეჟიმს აზრი "
+"ეკარგება.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, superseeding)
 #: ktorrent/view/propertiesdlg.ui:45
@@ -5898,6 +5956,8 @@ msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
 "send us any data"
 msgstr ""
+"გვახრჩობდა თუ არა ეს პარტნიორი - როცა ჩვენ ვიხრჩობით, პარტნიორი მონაცემებს "
+"არ გვიგზავნის"
 
 #: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
@@ -5920,6 +5980,7 @@ msgstr "აქვს თუა რა პარტნიორს ჩართ�
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
+"პარტნიორის ქულები. KTorrent ამას იმის დასადგენად იყენებს, ვისთან ატვირთოს"
 
 #: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
@@ -6333,6 +6394,9 @@ msgid ""
 "Download PeerGuardian filter from bluetack.co.uk or iblocklist.org.\n"
 "NOTE: archive files like zip and tar.gz or tar.bz2 are supported."
 msgstr ""
+"გადმოწერეთ PeerGuardian-ის ფილტრები bluetack.co.uk-დან ან iblocklist.org-"
+"დან.\n"
+"შენიშვნა: არქივის ფაილები, როგორიცაა zip, tar.gz ან tar.bz2, მხარდაჭერილია."
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_auto_update_group_box)
 #: plugins/ipfilter/ipblockingprefpage.ui:117
@@ -6485,6 +6549,7 @@ msgid ""
 "Whether or not to use rich text or just plain text, for the logging output "
 "shown in the logviewer."
 msgstr ""
+"გამოვიყენო თუ არა მდიდარი ტექსტი თუ უბრალო ტექსტი, ჟურნალის დათვალიერებისას."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:45
@@ -6929,6 +6994,8 @@ msgid ""
 "Scan the folder recursively for torrents. <br/><br/>\n"
 "Note: This will not be done for any folder named loaded."
 msgstr ""
+"საქაღალდეში ტორენტების რეკურსიული ძებნა <br/><br/>\n"
+"შენიშვნა: ეს არ მოხდება საქაღალდეებისთვის სახელად 'loaded'."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_recursive)
 #: plugins/scanfolder/scanfolderprefpage.ui:92
@@ -6943,6 +7010,8 @@ msgid ""
 "When a torrent file has been found and loaded, delete it.<br/><br/>\n"
 "Warning: you will permanently lose this file."
 msgstr ""
+"როცა ტორენტის ფაილი ნაპოვნი და ჩატვირთულია, ის წაიშლება.<br/><br/>\n"
+"გაფრთხილება: ამ ფაილს სამუდამოდ დაკარგავთ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_actionDelete)
 #: plugins/scanfolder/scanfolderprefpage.ui:103
@@ -7253,6 +7322,9 @@ msgid ""
 "manually. The URL should contain {searchTerms}, ktorrent will replace this "
 "by the thing you are searching for."
 msgstr ""
+"Opensearch %1-ის მიერ მხარდაჭერილი არაა. საჭიროა, ძებნის ბმული ხელით "
+"შეიყვანოთ. ბმული უნდა შეიცავდეს ცვლადს {searchTerms}. KTorrent, ამას, იმით "
+"შეცვლის, რასაც ეძებთ."
 
 #: plugins/search/searchprefpage.cpp:128
 #, kde-format
@@ -7404,6 +7476,8 @@ msgid ""
 "When enabled, execute the action when all events have happened. When not "
 "enabled, execute when any of the above events have happened."
 msgstr ""
+"თუ ჩართულია, ქმედების შესრულება, როცა ყველა ეს მოვლენა მოხდება. როცა ჩართული "
+"არაა, ქმედება ნებისმიერი მოვლენის მოხდენისას შესრულდება."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_all_rules_must_be_hit)
 #: plugins/shutdown/shutdowndlg.ui:62
@@ -8366,6 +8440,61 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">For example "
 "the *.torrent will match any item which ends in .torrent. </p>"
 msgstr ""
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">სტრიქონი ელემენტი სათაურში "
+"მოსაძებნად. მხარდაჭერილია მარტივი ვაილდკარდის სინტაქსი :</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<table border=\"0\" style=\" margin-top:0px; margin-bottom:0px; margin-"
+"left:0px; margin-right:0px;\" align=\"center\" cellspacing=\"1\" cellpadding="
+"\"2\">\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">c</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">ნებისმიერი სიმბოლო თავის "
+"თავს წარმოადგენს, მათ გარდა, რომლებიც ქვემოთაა ჩამოთვლილი. ასე რომ, <span "
+"style=\" font-weight:600;\">c</span> ემთხვევა სიმბოლოს <span style=\" font-"
+"style:italic;\">c</span>.</p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">?</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">ემთხვევა "
+"ნებისმიერ ერთ სიმბოლოს. </p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">*</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">ემთხვევა "
+"ნულ ან მეტ ნებისმიერ სიმბოლოს.</p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">[...]</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">სიმბოლოს "
+"სეტები შეგძლიათ კვადრატულ ფრჩხილებში ჩასვათ. სიმბოლოების კლასის შიგნით, "
+"ისევე როგორც გარეთ, უკანა დახრილ ხაზს სპეციალური მნიშვნელობა არ გააჩნია..</"
+"p></td></tr></table>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">მაგალითად, "
+"*.torrent დაემთხვევა ყველა ელემენტს, რომელიც .torrent-ით მთავრდება. </p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_exclusion_reg_exp)
@@ -8442,6 +8571,12 @@ msgid ""
 "\n"
 "Will download seasons 1, 3, 4, 5, 6 and 9"
 msgstr ""
+"მიუთითეთ გადმოსაწერი სეზონები. ერთზე მეტი სეზონი, შეგიძლიათ მძიმით გამოჰყოთ "
+"და შუალედების მითითება - -ით შეგიძლიათ\n"
+"\n"
+"მაგალითად, 1, 3-6, 9\n"
+"\n"
+"გადმოიწერს სეზონებს 1 3 4 5 6 და 9"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/syndication/filtereditor.ui:201
@@ -8460,6 +8595,12 @@ msgid ""
 "\n"
 "Will download episodes 1, 3, 4, 5, 6 and 9"
 msgstr ""
+"მიუთითეთ გადმოსაწერი ეპიზოდები. ერთზე მეტი ეპიზოდის მითითება მძიმით "
+"გამოყოფით შეგიძლიათ, შუალედების მითითება კი ტირეთი -\n"
+"\n"
+"მაგალითად, 1, 3-6, 9\n"
+"\n"
+"გადმოწერს ეპიზოდებს 1, 3, 4, 5, 6 და 9"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_se_no_duplicates)
 #: plugins/syndication/filtereditor.ui:221
