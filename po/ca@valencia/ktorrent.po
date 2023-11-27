@@ -6509,7 +6509,7 @@ msgstr "URL del filtre nivell1"
 #: plugins/ipfilter/ktipfilterplugin.kcfg:14
 #, kde-format
 msgid "Use level1 filter?"
-msgstr "Utilitze el filtre nivell1?"
+msgstr "Voleu utilitzar el filtre nivell1?"
 
 #. i18n: ectx: label, entry (useRichText), group (general)
 #: plugins/logviewer/ktlogviewerplugin.kcfg:11
@@ -8155,13 +8155,13 @@ msgstr "Color de les tasques en la gràfica del DHT"
 #: plugins/stats/ktstatsplugin.kcfg:165
 #, kde-format
 msgid "Use anti aliasing on charts?"
-msgstr "Utilitze antialiàsing en les gràfiques?"
+msgstr "Voleu utilitzar antialiàsing en les gràfiques?"
 
 #. i18n: ectx: label, entry (DrawBgdGrid), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:170
 #, kde-format
 msgid "Draw ugly grey background grid?"
-msgstr "Dibuixe una quadrícula grisa i lletja de fons?"
+msgstr "Voleu dibuixar una quadrícula grisa i lletja de fons?"
 
 #. i18n: ectx: label, entry (WidgetType), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:175
