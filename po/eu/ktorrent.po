@@ -1,7 +1,7 @@
 # Translation for ktorrent.po to Euskara/Basque (eu).
 # Copyright (C) 2010-2023 This file is copyright:
 # This file is distributed under the same license as de ktorrent package.
-# KDE euskaratzeko proiekuko arduraduna <xalba@ni.eus>.
+# SPDX-FileCopyrightText: 2023 KDE euskaratzeko proiekuko arduraduna <xalba@ni.eus>
 #
 # Translators:
 # Marcos  <marcos@euskalgnu.org>, 2006.
@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-07-30 21:58+0200\n"
+"PO-Revision-Date: 2023-11-27 07:39+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -1660,7 +1660,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1670,6 +1670,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"«InfoWidget» pluginean erabilitako «IP-Country» datu-basearen hornitzailea. "
+"Datuak «Creative Commons Attribution 4.0 International License»  « https://"
+"creativecommons.org/licenses/by/4.0/ » lizentziapean dago.Banderak hemendik, "
+"« http://flags.blogpotato.de/ », hartzen dira, beraz eskerrak beraiei ere."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1679,7 +1683,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "«InfoWidget» pluginerako erabilitako «maxminddb» liburutegia."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -2048,19 +2052,17 @@ msgstr "Akats-konponketak, garbiketak eta optimizazioak"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "KF5 eratorpena"
+msgstr "KF6 eratorpena"
 
 #: ktorrent/main.cpp:178
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Gaitu guztiak"
+msgstr "Gaitu egunkari-erregistroa"
 
 #: ktorrent/main.cpp:179
 #, kde-format
@@ -2068,6 +2070,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Gaitu egunkari-erregistroa irteera estandarrera bideratzea. « --enable-"
+"logging » ere adieraztea beharrezkoa da."
 
 #: ktorrent/main.cpp:180
 #, kde-format
@@ -4909,23 +4913,20 @@ msgid "Warning: %1"
 msgstr "Abisua: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Deskargatutako zatiak:"
+msgstr "Zama-jaitsitako pusketak"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Chunks not downloaded:"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Jaitsi ez diren pusketak:"
+msgstr "Jaitsi beharreko pusketak"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Baztertuta:"
+msgstr "Baztertutako pusketak"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -5420,16 +5421,14 @@ msgid "Add Trackers"
 msgstr "Gehitu aztarnariak"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Zati erabilgarriak:"
+msgstr "Pusketa erabilgarriak"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Zati erabilgarriak:"
+msgstr "Pusketa eskuraezinak"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
