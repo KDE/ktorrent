@@ -1,6 +1,6 @@
 include_directories(${CMAKE_BINARY_DIR})
 
-ktorrent_add_plugin(ktorrent_shutdown)
+ktorrent_add_plugin(ShutdownPlugin)
 
 set(ktshutdownplugin_dbus_SRC)
 
@@ -13,7 +13,7 @@ qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${powermanagement_xml} powermana
 set(plasmalogoutprompt_xml ${KTORRENT_DBUS_XML_DIR}/org.kde.LogoutPrompt.xml)
 qt_add_dbus_interface(ktshutdownplugin_dbus_SRC ${plasmalogoutprompt_xml} plasmalogoutprompt_interface)
 
-target_sources(ktorrent_shutdown PRIVATE
+target_sources(ShutdownPlugin PRIVATE
     ${ktshutdownplugin_dbus_SRC}
     shutdownruleset.cpp
     shutdowntorrentmodel.cpp
@@ -21,10 +21,10 @@ target_sources(ktorrent_shutdown PRIVATE
     shutdownplugin.cpp
 )
 
-ki18n_wrap_ui(ktorrent_shutdown shutdowndlg.ui)
+ki18n_wrap_ui(ShutdownPlugin shutdowndlg.ui)
 
 target_link_libraries(
-    ktorrent_shutdown
+    ShutdownPlugin
     ktcore
     KTorrent6
     KF6::ConfigCore

@@ -69,7 +69,6 @@
         "Description[zh_TW]": "使用數個分頁顯示 Torrent 的一般資訊",
         "EnabledByDefault": true,
         "Icon": "kt-info-widget",
-        "Id": "InfoWidgetPlugin",
         "License": "GPL",
         "Name": "Information Widget",
         "Name[ar]": "ودجة المعلومات",

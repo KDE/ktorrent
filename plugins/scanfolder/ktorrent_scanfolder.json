@@ -68,7 +68,6 @@
         "Description[zh_TW]": "掃描資料夾尋找 torrent 檔案並載入",
         "EnabledByDefault": false,
         "Icon": "folder-open",
-        "Id": "ScanFolderPlugin",
         "License": "GPL",
         "Name": "Scan Folder",
         "Name[bg]": "Претърсване на папка",

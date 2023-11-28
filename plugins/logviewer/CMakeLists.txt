@@ -1,6 +1,6 @@
-ktorrent_add_plugin(ktorrent_logviewer)
+ktorrent_add_plugin(LogViewerPlugin)
 
-target_sources(ktorrent_logviewer PRIVATE
+target_sources(LogViewerPlugin PRIVATE
     logviewerplugin.cpp
     logflags.cpp
     logviewer.cpp
@@ -8,11 +8,11 @@ target_sources(ktorrent_logviewer PRIVATE
     logflagsdelegate.cpp
 )
 
-ki18n_wrap_ui(ktorrent_logviewer logprefwidget.ui)
-kconfig_add_kcfg_files(ktorrent_logviewer logviewerpluginsettings.kcfgc)
+ki18n_wrap_ui(LogViewerPlugin logprefwidget.ui)
+kconfig_add_kcfg_files(LogViewerPlugin logviewerpluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_logviewer
+    LogViewerPlugin
     ktcore
     KTorrent6
     KF6::ConfigCore

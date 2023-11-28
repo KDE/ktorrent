@@ -68,7 +68,6 @@
         "Description[zh_TW]": "允許在 torrents 完成後關閉電腦",
         "EnabledByDefault": false,
         "Icon": "system-shutdown",
-        "Id": "ShutdownPlugin",
         "License": "GPL",
         "Name": "Shutdown",
         "Name[ar]": "الإطفاء",

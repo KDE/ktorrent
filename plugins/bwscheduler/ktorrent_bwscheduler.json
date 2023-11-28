@@ -69,7 +69,6 @@
         "Description[zh_TW]": "排程一週以上的上傳與下載限制",
         "EnabledByDefault": false,
         "Icon": "kt-bandwidth-scheduler",
-        "Id": "BandwidthSchedulerPlugin",
         "License": "GPL",
         "Name": "Scheduler",
         "Name[bg]": "Разписание",

@@ -21,9 +21,9 @@ if (BUILD_WITH_GEOIP)
     endif()
 endif()
 
-ktorrent_add_plugin(ktorrent_infowidget)
+ktorrent_add_plugin(InfoWidgetPlugin)
 
-target_sources(ktorrent_infowidget PRIVATE
+target_sources(InfoWidgetPlugin PRIVATE
     infowidgetplugin.cpp
     iwprefpage.cpp
     monitor.cpp
@@ -45,17 +45,17 @@ target_sources(ktorrent_infowidget PRIVATE
     webseedsmodel.cpp)
 
 if (BUILD_WITH_GEOIP)
-    target_sources(ktorrent_infowidget PRIVATE geoipmanager.cpp)
+    target_sources(InfoWidgetPlugin PRIVATE geoipmanager.cpp)
     add_definitions(-DBUILD_WITH_GEOIP=1)
 else()
     add_definitions(-DBUILD_WITH_GEOIP=0)
 endif()
 
-ki18n_wrap_ui(ktorrent_infowidget iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
-kconfig_add_kcfg_files(ktorrent_infowidget infowidgetpluginsettings.kcfgc)
+ki18n_wrap_ui(InfoWidgetPlugin iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
+kconfig_add_kcfg_files(InfoWidgetPlugin infowidgetpluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_infowidget
+    InfoWidgetPlugin
     ktcore
     KTorrent6
     KF6::ConfigCore

@@ -68,7 +68,6 @@
         "Description[zh_TW]": "KTorrent 的 Syndication 外掛程式，支援 RSS 與 Atom。",
         "EnabledByDefault": false,
         "Icon": "application-rss+xml",
-        "Id": "SyndicationPlugin",
         "License": "GPL",
         "Name": "Syndication",
         "Name[bg]": "Синдикиране",

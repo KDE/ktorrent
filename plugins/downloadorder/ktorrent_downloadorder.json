@@ -69,7 +69,6 @@
         "Description[zh_TW]": "在多檔案的 torrent 中指定下載順序",
         "EnabledByDefault": false,
         "Icon": "view-sort-ascending",
-        "Id": "DownloadOrderPlugin",
         "License": "GPL",
         "Name": "Download Order",
         "Name[ar]": "ترتيب التّنزيل",

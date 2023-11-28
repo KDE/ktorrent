@@ -68,7 +68,6 @@
         "Description[zh_TW]": "搜尋 torrents",
         "EnabledByDefault": false,
         "Icon": "edit-find",
-        "Id": "SearchPlugin",
         "License": "GPL",
         "Name": "Search",
         "Name[ar]": "البحث",

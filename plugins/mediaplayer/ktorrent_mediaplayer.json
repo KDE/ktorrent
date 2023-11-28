@@ -68,7 +68,6 @@
         "Description[zh_TW]": "基於 Phonon 的媒體播放器",
         "EnabledByDefault": false,
         "Icon": "applications-multimedia",
-        "Id": "MediaPlayerPlugin",
         "License": "GPL",
         "Name": "Media Player",
         "Name[ar]": "مشغّل الوسائط",

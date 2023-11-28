@@ -2,9 +2,9 @@ include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/drawer)
 
-ktorrent_add_plugin(ktorrent_stats)
+ktorrent_add_plugin(StatsPlugin)
 
-target_sources(ktorrent_stats PRIVATE
+target_sources(StatsPlugin PRIVATE
 	drawer/ChartDrawer.cc
 	drawer/ChartDrawerData.cc
 	drawer/ChartDrawerData.h
@@ -22,11 +22,11 @@ target_sources(ktorrent_stats PRIVATE
 	DisplaySettingsPage.cc
 )
 
-ki18n_wrap_ui(ktorrent_stats Spd.ui Conns.ui Settings.ui DisplaySettings.ui)
-kconfig_add_kcfg_files(ktorrent_stats statspluginsettings.kcfgc)
+ki18n_wrap_ui(StatsPlugin Spd.ui Conns.ui Settings.ui DisplaySettings.ui)
+kconfig_add_kcfg_files(StatsPlugin statspluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_stats
+    StatsPlugin
     ktcore
     KTorrent6
     KF6::CoreAddons

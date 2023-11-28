@@ -1,16 +1,16 @@
-ktorrent_add_plugin(ktorrent_downloadorder)
+ktorrent_add_plugin(DownloadOrderPlugin)
 
-target_sources(ktorrent_downloadorder PRIVATE
+target_sources(DownloadOrderPlugin PRIVATE
     downloadorderplugin.cpp
     downloadorderdialog.cpp
     downloadordermanager.cpp
     downloadordermodel.cpp
 )
 
-ki18n_wrap_ui(ktorrent_downloadorder downloadorderwidget.ui)
+ki18n_wrap_ui(DownloadOrderPlugin downloadorderwidget.ui)
 
 target_link_libraries(
-    ktorrent_downloadorder
+    DownloadOrderPlugin
     ktcore
     KTorrent6
     KF6::ConfigCore

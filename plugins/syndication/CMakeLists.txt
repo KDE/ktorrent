@@ -1,6 +1,6 @@
-ktorrent_add_plugin(ktorrent_syndication)
+ktorrent_add_plugin(SyndicationPlugin)
 
-target_sources(ktorrent_syndication PRIVATE
+target_sources(SyndicationPlugin PRIVATE
 	syndicationplugin.cpp 
 	syndicationactivity.cpp
 	syndicationtab.cpp
@@ -19,10 +19,10 @@ target_sources(ktorrent_syndication PRIVATE
 	filterlistmodel.cpp
 	filtereditor.cpp)
 
-ki18n_wrap_ui(ktorrent_syndication feedwidget.ui managefiltersdlg.ui filtereditor.ui)
+ki18n_wrap_ui(SyndicationPlugin feedwidget.ui managefiltersdlg.ui filtereditor.ui)
 
 target_link_libraries(
-    ktorrent_syndication
+    SyndicationPlugin
     ktcore
     Qt6::WebEngineWidgets
     KTorrent6

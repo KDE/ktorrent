@@ -1,16 +1,16 @@
-ktorrent_add_plugin(ktorrent_upnp)
+ktorrent_add_plugin(UPnPPlugin)
 
-target_sources(ktorrent_upnp PRIVATE
+target_sources(UPnPPlugin PRIVATE
     upnpplugin.cpp
     upnpwidget.cpp
     routermodel.cpp
 )
 
-ki18n_wrap_ui(ktorrent_upnp upnpwidget.ui)
-kconfig_add_kcfg_files(ktorrent_upnp upnppluginsettings.kcfgc)
+ki18n_wrap_ui(UPnPPlugin upnpwidget.ui)
+kconfig_add_kcfg_files(UPnPPlugin upnppluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_upnp
+    UPnPPlugin
     ktcore
     KTorrent6
     KF6::ConfigCore

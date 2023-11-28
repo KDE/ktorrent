@@ -1,17 +1,17 @@
-ktorrent_add_plugin(ktorrent_scanfolder)
+ktorrent_add_plugin(ScanFolderPlugin)
 
-target_sources(ktorrent_scanfolder PRIVATE
+target_sources(ScanFolderPlugin PRIVATE
 	scanthread.cpp 
 	torrentloadqueue.cpp 
 	scanfolder.cpp 
 	scanfolderplugin.cpp 
 	scanfolderprefpage.cpp)
 
-ki18n_wrap_ui(ktorrent_scanfolder scanfolderprefpage.ui)
-kconfig_add_kcfg_files(ktorrent_scanfolder scanfolderpluginsettings.kcfgc)
+ki18n_wrap_ui(ScanFolderPlugin scanfolderprefpage.ui)
+kconfig_add_kcfg_files(ScanFolderPlugin scanfolderpluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_scanfolder
+    ScanFolderPlugin
     ktcore
     KTorrent6
     KF6::ConfigCore

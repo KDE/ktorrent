@@ -68,7 +68,6 @@
         "Description[zh_TW]": "使用 zeroconf 協定尋找本地網路上的端點",
         "EnabledByDefault": false,
         "Icon": "preferences-plugin",
-        "Id": "ZeroconfPlugin",
         "License": "GPL",
         "Name": "Zeroconf",
         "Name[bg]": "Zeroconf",

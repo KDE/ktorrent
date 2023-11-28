@@ -69,7 +69,6 @@
         "Description[zh_TW]": "以不同的圖形顯示關於 Torrent 的統計",
         "EnabledByDefault": false,
         "Icon": "view-statistics",
-        "Id": "StatsPlugin",
         "License": "GPL",
         "Name": "Statistics",
         "Name[ar]": "الإحصائيّات",

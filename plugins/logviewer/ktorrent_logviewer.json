@@ -69,7 +69,6 @@
         "Description[zh_TW]": "顯示紀錄輸出",
         "EnabledByDefault": false,
         "Icon": "utilities-log-viewer",
-        "Id": "LogViewerPlugin",
         "License": "GPL",
         "Name": "Log Viewer",
         "Name[ar]": "عارض السّجلات",

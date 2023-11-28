@@ -1,17 +1,17 @@
-ktorrent_add_plugin(ktorrent_scanforlostfiles)
+ktorrent_add_plugin(ScanForLostFilesPlugin)
 
-target_sources(ktorrent_scanforlostfiles PRIVATE
+target_sources(ScanForLostFilesPlugin PRIVATE
 	scanforlostfilesplugin.cpp
 	scanforlostfileswidget.cpp
 	scanforlostfilesprefpage.cpp
 	scanforlostfilesthread.cpp
 	nodeoperations.cpp)
 
-ki18n_wrap_ui(ktorrent_scanforlostfiles scanforlostfilesprefpage.ui scanforlostfileswidget.ui)
-kconfig_add_kcfg_files(ktorrent_scanforlostfiles scanforlostfilespluginsettings.kcfgc)
+ki18n_wrap_ui(ScanForLostFilesPlugin scanforlostfilesprefpage.ui scanforlostfileswidget.ui)
+kconfig_add_kcfg_files(ScanForLostFilesPlugin scanforlostfilespluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_scanforlostfiles
+    ScanForLostFilesPlugin
     ktcore
     KTorrent6
     KF6::ConfigCore

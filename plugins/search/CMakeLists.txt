@@ -1,6 +1,6 @@
-ktorrent_add_plugin(ktorrent_search)
+ktorrent_add_plugin(SearchPlugin)
 
-target_sources(ktorrent_search PRIVATE
+target_sources(SearchPlugin PRIVATE
 	webview.cpp 
 	searchenginelist.cpp 
 	searchprefpage.cpp 
@@ -13,11 +13,11 @@ target_sources(ktorrent_search PRIVATE
         proxy_helper.cpp
         magneturlschemehandler.cpp)
 
-ki18n_wrap_ui(ktorrent_search searchpref.ui)
-kconfig_add_kcfg_files(ktorrent_search searchpluginsettings.kcfgc)
+ki18n_wrap_ui(SearchPlugin searchpref.ui)
+kconfig_add_kcfg_files(SearchPlugin searchpluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_search
+    SearchPlugin
     ktcore
     Qt6::WebEngineWidgets
     KTorrent6

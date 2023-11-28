@@ -1,8 +1,8 @@
-ktorrent_add_plugin(ktorrent_ipfilter)
+ktorrent_add_plugin(IPFilterPlugin)
 
 find_package(KF6Archive ${KF_MIN_VERSION} REQUIRED)
 
-target_sources(ktorrent_ipfilter PRIVATE
+target_sources(IPFilterPlugin PRIVATE
     ipblocklist.cpp
     ipblockingprefpage.cpp
     convertthread.cpp
@@ -11,11 +11,11 @@ target_sources(ktorrent_ipfilter PRIVATE
     downloadandconvertjob.cpp
 )
 
-ki18n_wrap_ui(ktorrent_ipfilter ipblockingprefpage.ui convertdialog.ui)
-kconfig_add_kcfg_files(ktorrent_ipfilter ipfilterpluginsettings.kcfgc)
+ki18n_wrap_ui(IPFilterPlugin ipblockingprefpage.ui convertdialog.ui)
+kconfig_add_kcfg_files(IPFilterPlugin ipfilterpluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_ipfilter
+    IPFilterPlugin
     ktcore
     KTorrent6
     KF6::Archive

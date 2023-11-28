@@ -68,7 +68,6 @@
         "Description[zh_TW]": "產生 Magnet 連結",
         "EnabledByDefault": false,
         "Icon": "kt-magnet",
-        "Id": "MagnetGeneratorPlugin",
         "License": "GPL",
         "Name": "Magnet Generator",
         "Name[bg]": "Генератор на магнитни връзки",

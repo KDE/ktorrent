@@ -3,7 +3,7 @@ find_package(Taglib REQUIRED)
 #include_directories(${Qt5Multimedia_INCLUDE_DIRS})
 include_directories(SYSTEM ${PHONON_INCLUDE_DIR})
 
-ktorrent_add_plugin(ktorrent_mediaplayer)
+ktorrent_add_plugin(MediaPlayerPlugin)
 
 set(ktmediaplayerplugin_dbus_SRC)
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
@@ -12,7 +12,7 @@ qt_add_dbus_interface(ktmediaplayerplugin_dbus_SRC ${screensaver_xml} screensave
 set(powermanagementinhibit_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.PowerManagement.Inhibit.xml)
 qt_add_dbus_interface(ktmediaplayerplugin_dbus_SRC ${powermanagementinhibit_xml} powermanagementinhibit_interface)
 
-target_sources(ktorrent_mediaplayer PRIVATE
+target_sources(MediaPlayerPlugin PRIVATE
 	${ktmediaplayerplugin_dbus_SRC}
 	mediacontroller.cpp
 	playlist.cpp
@@ -28,11 +28,11 @@ target_sources(ktorrent_mediaplayer PRIVATE
 	videochunkbar.cpp
 )
 
-ki18n_wrap_ui(ktorrent_mediaplayer mediacontroller.ui)
-kconfig_add_kcfg_files(ktorrent_mediaplayer mediaplayerpluginsettings.kcfgc)
+ki18n_wrap_ui(MediaPlayerPlugin mediacontroller.ui)
+kconfig_add_kcfg_files(MediaPlayerPlugin mediaplayerpluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_mediaplayer
+    MediaPlayerPlugin
     ktcore
     Taglib::Taglib
     Phonon::phonon4qt6

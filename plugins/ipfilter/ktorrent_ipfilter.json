@@ -68,7 +68,6 @@
         "Description[zh_TW]": "透過黑名單過濾 IP 位址",
         "EnabledByDefault": false,
         "Icon": "view-filter",
-        "Id": "IPFilterPlugin",
         "License": "GPL",
         "Name": "IP Filter",
         "Name[bg]": "Филтър по IP",

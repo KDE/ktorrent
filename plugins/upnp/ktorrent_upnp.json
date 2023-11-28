@@ -68,7 +68,6 @@
         "Description[zh_TW]": "使用 UPnP 轉送連接埠",
         "EnabledByDefault": false,
         "Icon": "kt-upnp",
-        "Id": "UPnPPlugin",
         "License": "GPL",
         "Name": "UPnP",
         "Name[bg]": "UPnP",

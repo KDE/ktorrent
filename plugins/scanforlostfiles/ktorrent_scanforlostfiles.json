@@ -68,7 +68,6 @@
         "Description[zh_TW]": "顯示選取資料夾中不屬於任何 torrent 的檔案",
         "EnabledByDefault": false,
         "Icon": "edit-find",
-        "Id": "ScanForLostFilesPlugin",
         "License": "GPL",
         "Name": "Scan for lost files",
         "Name[bg]": "Сканиране за изгубени файлове",

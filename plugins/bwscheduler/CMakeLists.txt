@@ -1,10 +1,10 @@
-ktorrent_add_plugin(ktorrent_bwscheduler)
+ktorrent_add_plugin(BandwidthSchedulerPlugin)
 
 set(ktbwschedulerplugin_dbus_SRC)
 set(screensaver_xml ${KTORRENT_DBUS_XML_DIR}/org.freedesktop.ScreenSaver.xml)
 qt_add_dbus_interface(ktbwschedulerplugin_dbus_SRC ${screensaver_xml} screensaver_interface)
 
-target_sources(ktorrent_bwscheduler PRIVATE
+target_sources(BandwidthSchedulerPlugin PRIVATE
 	${ktbwschedulerplugin_dbus_SRC}
 	bwschedulerplugin.cpp 
 	weekview.cpp 
@@ -18,11 +18,11 @@ target_sources(ktorrent_bwscheduler PRIVATE
 	weekdaymodel.cpp
 )
 
-ki18n_wrap_ui(ktorrent_bwscheduler edititemdlg.ui bwprefpage.ui)
-kconfig_add_kcfg_files(ktorrent_bwscheduler bwschedulerpluginsettings.kcfgc)
+ki18n_wrap_ui(BandwidthSchedulerPlugin edititemdlg.ui bwprefpage.ui)
+kconfig_add_kcfg_files(BandwidthSchedulerPlugin bwschedulerpluginsettings.kcfgc)
 
 target_link_libraries(
-    ktorrent_bwscheduler
+    BandwidthSchedulerPlugin
     ktcore
     Boost::boost
     KTorrent6
