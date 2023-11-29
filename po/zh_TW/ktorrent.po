@@ -8,31 +8,31 @@
 # Jeff Huang <s8321414@gmail.com>, 2016.
 # pan93412 <pan93412@gmail.com>, 2018, 2019, 2020.
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2008, 2009, 2010.
-# Kisaragi Hiu <mail@kisaragi-hiu.com>, 2022.
+# SPDX-FileCopyrightText: 2022, 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2022-07-10 17:45+0900\n"
+"PO-Revision-Date: 2023-11-29 17:33+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
-"Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 23.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Everest Law, Jeff Huang"
+msgstr "Everest Law, Jeff Huang, Kisaragi Hiu"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "tyuuuu2001@yahoo.com.hk, s8321414@gmail.com"
+msgstr "tyuuuu2001@yahoo.com.hk, s8321414@gmail.com, mail@kisaragi-hiu.com"
 
 #: ktorrent/core.cpp:143
 #, kde-format
@@ -264,11 +264,10 @@ msgid ""
 msgstr "檔案 <b>%1</b> 在已下載完成的目錄中有找到。您要匯入該檔案嗎？"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:225
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "匯入(&I)"
+msgstr "匯入"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:236
 #: ktorrent/dialogs/fileselectdlg.cpp:254
@@ -282,11 +281,10 @@ msgstr "目錄 %1 不存在，您要建立它嗎？"
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
 #: ktorrent/dialogs/torrentcreatordlg.cpp:279
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "重建"
+msgstr "建立"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
@@ -297,18 +295,16 @@ msgstr ""
 "您已取消選取以下的檔案。您將會失去所有這些檔案中的資料。您確定要這樣做嗎？"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:291
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "刪除檔案"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "不，把檔案保留"
+msgstr "保留檔案"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:315
 #, kde-format
@@ -720,7 +716,7 @@ msgstr "開啟網址"
 #: ktorrent/dialogs/pastedialog.cpp:114
 #, kde-format
 msgid "Error fetching tracker list"
-msgstr ""
+msgstr "取得 tracker 列表時發生錯誤"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
 #, kde-format
@@ -856,7 +852,7 @@ msgstr "無限制"
 #: plugins/bwscheduler/edititemdlg.ui:196
 #, kde-format
 msgid " KiB/s"
-msgstr " KB/秒"
+msgstr " KiB/秒"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -968,62 +964,61 @@ msgstr "每個區塊的大小"
 #: ktorrent/dialogs/torrentcreatordlg.ui:82
 #, kde-format
 msgid "32 KiB"
-msgstr "32 KB"
+msgstr "32 KiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:87
 #, kde-format
 msgid "64 KiB"
-msgstr "64 KB"
+msgstr "64 KiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:92
 #, kde-format
 msgid "128 KiB"
-msgstr "128 KB"
+msgstr "128 KiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:97
 #, kde-format
 msgid "256 KiB"
-msgstr "256 KB"
+msgstr "256 KiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:102
 #, kde-format
 msgid "512 KiB"
-msgstr "512 KB"
+msgstr "512 KiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:107
 #, kde-format
 msgid "1 MiB"
-msgstr "1 MB"
+msgstr "1 MiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:112
 #, kde-format
 msgid "2 MiB"
-msgstr "2 MB"
+msgstr "2 MiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:117
 #, kde-format
 msgid "4 MiB"
-msgstr "4 MB"
+msgstr "4 MiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:122
 #, kde-format
 msgid "8 MiB"
-msgstr "8 MB"
+msgstr "8 MiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:127
-#, fuzzy, kde-format
-#| msgid "1 MiB"
+#, kde-format
 msgid "16 MiB"
-msgstr "1 MB"
+msgstr "16 MiB"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_start_seeding)
 #: ktorrent/dialogs/torrentcreatordlg.ui:137
@@ -1619,7 +1614,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1991,39 +1986,36 @@ msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
 #: ktorrent/main.cpp:173
-#, fuzzy, kde-format
-#| msgid "Alexander Dymo"
+#, kde-format
 msgid "Alexander Trufanov"
-msgstr "Alexander Dymo"
+msgstr "Alexander Trufanov"
 
 #: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
-msgstr ""
+msgstr "程式錯誤修補、清理以及最佳化"
 
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "KF5 移植"
+msgstr "KF6 移植"
 
 #: ktorrent/main.cpp:178
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "全部開啟"
+msgstr "啟用紀錄"
 
 #: ktorrent/main.cpp:179
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
-msgstr ""
+msgstr "啟用將紀錄傳送至標準輸出。同時需要指定 --enable-logging。"
 
 #: ktorrent/main.cpp:180
 #, kde-format
@@ -2119,9 +2111,9 @@ msgstr ""
 "p>\n"
 "<p><span style=\" font-weight:600;\">注意：</span>此值越低，CPU 使用率就越"
 "高。不過將此值設較高，有可能在網路頻寬夠高的環境下反而會降低速度。</p>\n"
-"<p>例如在 100 Mbit 的 LAN 裡，若將限制設在 3000 KB/s，則此值設得太高，可能速"
-"度根本就上不了 3000 KB/s。若不限制速度，則在 LAN 的環境下可以輕易超過 3000 "
-"KB/s。</p>"
+"<p>例如在 100 Mbit 的 LAN 裡，若將限制設在 3000 KiB/s，則此值設得太高，可能速"
+"度根本就上不了 3000 KiB/s。若不限制速度，則在 LAN 的環境下可以輕易超過 3000 "
+"KiB/s。</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
@@ -2195,7 +2187,7 @@ msgstr "<p>音效檔開頭與結尾的資料量，用來計算預覽優先權。
 #: ktorrent/pref/advancedpref.ui:230 ktorrent/pref/advancedpref.ui:253
 #, kde-format
 msgid " KiB"
-msgstr " KB"
+msgstr " KiB"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/advancedpref.ui:243
@@ -2213,10 +2205,9 @@ msgstr "<p>影像檔開頭與結尾的資料量，用來計算預覽優先權。
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
-#, fuzzy, kde-format
-#| msgid "Copy Tracker URL"
+#, kde-format
 msgid "Tracker list URL:"
-msgstr "複製 Tracker 網址"
+msgstr "Tracker 列表網址："
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2419,43 +2410,39 @@ msgstr "顏色"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_stalledTorrentColor)
 #: ktorrent/pref/colorpref.ui:19
-#, fuzzy, kde-format
-#| msgid "Decrease priority of torrents which are stalled for more than:"
+#, kde-format
 msgid "Color to use for torrents when they are stalled or checking data."
-msgstr "停滯超過多久的 torrent 降低其優先權："
+msgstr "停滯中或是在檢查資料的 torrent 用的顏色。"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTorrentColor)
 #: ktorrent/pref/colorpref.ui:26
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
-msgstr ""
+msgstr "播種中或下載中的 torrent 用的顏色。"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
-#, fuzzy, kde-format
-#| msgid "KTorrent is not running."
+#, kde-format
 msgid "Torrent is running:"
-msgstr "KTorrent 未執行。"
+msgstr "Torrent 執行中："
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/colorpref.ui:40
 #, kde-format
 msgid "Torrent is stalled or checking data:"
-msgstr ""
+msgstr "Torrent 已停滯或正在檢查資料："
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
-#, fuzzy, kde-format
-#| msgid "Color to use for first priority files."
+#, kde-format
 msgid "Color to use for torrents with error status."
-msgstr "第一優先權檔案的顏色。"
+msgstr "狀態為錯誤的 torrent 用的顏色。"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/colorpref.ui:54
-#, fuzzy, kde-format
-#| msgid "Torrent:"
+#, kde-format
 msgid "Torrent error:"
-msgstr "Torrent："
+msgstr "Torrent 錯誤："
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2520,17 +2507,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
-#, fuzzy, kde-format
-#| msgid "Share ratio:"
+#, kde-format
 msgid "Low share ratio:"
-msgstr "分享比例:"
+msgstr "低分享比例:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Minimum good share ratio:"
+#, kde-format
 msgid "Good share ratio:"
-msgstr "最低合格分享比例："
+msgstr "好的分享比例："
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
@@ -2548,14 +2533,13 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
-msgstr ""
+msgstr "將顏色重設到預設值（不會變更其他設定）"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
-#, fuzzy, kde-format
-#| msgid "Colors"
+#, kde-format
 msgid "Reset Colors"
-msgstr "顏色"
+msgstr "重設顏色"
 
 #: ktorrent/pref/generalpref.cpp:13
 #, kde-format
@@ -2623,16 +2607,15 @@ msgstr "系統匣圖示"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
-#, fuzzy, kde-format
-#| msgid "Whether or not to show system tray popup messages."
+#, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
-msgstr "是否要顯示系統匣的彈出式訊息。"
+msgstr "啟動時是否要最小化到系統匣。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr ""
+msgstr "啟動時總是最小化到系統匣"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -2674,20 +2657,17 @@ msgstr "無聲地開啟所有 torrent 檔"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:149
-#, fuzzy, kde-format
-#| msgid ""
-#| "Prevent computer from going into a sleep state when torrents are running."
+#, kde-format
 msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
-msgstr "Torrent 執行時避免電腦進入睡眠模式"
+msgstr "Torrent 執行時防止電腦進入睡眠模式或是鎖定螢幕。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
-#, fuzzy, kde-format
-#| msgid "Suppress sleep when torrents are running"
+#, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr "Torrent 執行時不進入睡眠模式"
+msgstr "Torrent 執行時阻擋睡眠及自動螢幕鎖定"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -2808,13 +2788,13 @@ msgstr "所有 torrent 總合的全域連線限制。"
 #: ktorrent/pref/networkpref.ui:118
 #, kde-format
 msgid "The maximum download speed in KiB/s."
-msgstr "最大下載速度 (KB/s)"
+msgstr "最大下載速度 (KiB/s)"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxUploadRate)
 #: ktorrent/pref/networkpref.ui:141
 #, kde-format
 msgid "The maximum upload speed in KiB/s"
-msgstr "最大上傳速度 (KB/s)"
+msgstr "最大上傳速度 (KiB/s)"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: ktorrent/pref/networkpref.ui:168
@@ -3191,7 +3171,7 @@ msgstr "當硬碟空間低於多少時停止所有的 torrent 下載。"
 #: ktorrent/pref/qmpref.ui:114
 #, kde-format
 msgid " MiB"
-msgstr " MB"
+msgstr " MiB"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:131
@@ -3351,7 +3331,7 @@ msgstr " Kbps"
 #: ktorrent/pref/recommendedsettingsdlg.ui:60
 #, kde-format
 msgid " kb/s"
-msgstr " Kb/秒"
+msgstr " kb/秒"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/recommendedsettingsdlg.ui:50
@@ -3363,13 +3343,13 @@ msgstr "可用的下載頻寬："
 #: ktorrent/pref/recommendedsettingsdlg.ui:76
 #, kde-format
 msgid "(= 32 KiB/s)"
-msgstr "（= 32 KB/秒）"
+msgstr "（= 32 KiB/秒）"
 
 #. i18n: ectx: property (text), widget (QLabel, m_download_bw_display)
 #: ktorrent/pref/recommendedsettingsdlg.ui:83
 #, kde-format
 msgid "(= 500 KiB/s)"
-msgstr "（= 500 KB/秒）"
+msgstr "（= 500 KiB/秒）"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_calculate)
 #: ktorrent/pref/recommendedsettingsdlg.ui:94
@@ -3443,7 +3423,7 @@ msgstr "DHT：%1，%2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
@@ -3494,8 +3474,7 @@ msgid "Stop Magnet"
 msgstr "停止 Magnet"
 
 #: ktorrent/tools/magnetview.cpp:54
-#, fuzzy, kde-format
-#| msgid "Copy Magnet URI"
+#, kde-format
 msgid "Copy Magnet URL"
 msgstr "複製 Magnet 網址"
 
@@ -3811,16 +3790,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr "Torrent 已被停止 <br />"
 
 #: ktorrent/trayicon.cpp:346
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "速度限制 (KB/秒)"
+msgstr "上傳速度限制 (KiB/秒)"
 
 #: ktorrent/trayicon.cpp:348
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "速度限制 (KB/秒)"
+msgstr "下載速度限制 (KiB/秒)"
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -4077,7 +4054,7 @@ msgstr "停止目前分頁中所有的 torrent"
 #: ktorrent/view/view.cpp:177
 #, kde-format
 msgid "Remove Torrent and Data"
-msgstr "移除torrent 和已下載資料"
+msgstr "移除 torrent 和已下載資料"
 
 #: ktorrent/view/view.cpp:182
 #, kde-format
@@ -4170,7 +4147,7 @@ msgstr "移除下載"
 #: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Delete Data"
-msgstr "删除資料"
+msgstr "刪除資料"
 
 #: ktorrent/view/view.cpp:458
 #, kde-format
@@ -4187,7 +4164,7 @@ msgstr "您將會失去以下的 torrents 所有已下載的資料。您確定�
 #: ktorrent/view/view.cpp:483
 #, kde-format
 msgid "Remove Torrent"
-msgstr "移除torrent"
+msgstr "移除 torrent"
 
 #: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:343
 #: plugins/infowidget/fileview.cpp:367
@@ -4567,13 +4544,13 @@ msgstr "所有 torrent 允許的最大連線數量（0 表示不限制）"
 #: libktcore/ktorrent.kcfg:35
 #, kde-format
 msgid "Maximum upload speed in KiB/sec (0 = no limit)"
-msgstr "最大上傳速度 (KB/s)（0 表示不限制）"
+msgstr "最大上傳速度 (KiB/s)（0 表示不限制）"
 
 #. i18n: ectx: label, entry (maxDownloadRate), group (downloads)
 #: libktcore/ktorrent.kcfg:40
 #, kde-format
 msgid "Maximum download speed in KiB/sec (0 = no limit)"
-msgstr "最大下載速度 (KB/s)（0 表示不限制）"
+msgstr "最大下載速度 (KiB/s)（0 表示不限制）"
 
 #. i18n: ectx: label, entry (maxRatio), group (downloads)
 #: libktcore/ktorrent.kcfg:45
@@ -4603,13 +4580,13 @@ msgstr "在系統匣顯示速度列"
 #: libktcore/ktorrent.kcfg:78
 #, kde-format
 msgid "Download bandwidth (in kb/s):"
-msgstr "下載頻寬（KB/s）："
+msgstr "下載頻寬（kb/s）："
 
 #. i18n: ectx: label, entry (uploadBandwidth), group (downloads)
 #: libktcore/ktorrent.kcfg:84
 #, kde-format
 msgid "Upload bandwidth (in kb/s):"
-msgstr "上傳頻寬（KB/s）："
+msgstr "上傳頻寬（kb/s）："
 
 #. i18n: ectx: label, entry (alwaysMinimizeToSystemTray), group (downloads)
 #: libktcore/ktorrent.kcfg:90
@@ -4752,23 +4729,20 @@ msgid "Warning: %1"
 msgstr "警告：%1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "已下載區塊:"
+msgstr "已下載區塊"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "顯示下載"
+msgstr "要下載的區塊"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "已排除"
+msgstr "已排除區塊"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -4801,9 +4775,7 @@ msgstr "已達到上限。"
 #: libktcore/torrent/queuemanager.cpp:227
 #: libktcore/torrent/queuemanager.cpp:266
 #: libktcore/torrent/queuemanager.cpp:295
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "開始"
@@ -5242,16 +5214,14 @@ msgid "Add Trackers"
 msgstr "加入追蹤器"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "可用區塊:"
+msgstr "可用區塊"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "可用區塊:"
+msgstr "不可用區塊"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -5433,7 +5403,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "啟用序列下載模式"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -6901,73 +6871,67 @@ msgstr "要新增到哪個群組。"
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan for lost files"
-msgstr ""
+msgstr "掃描遺失的檔案"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
-#, fuzzy, kde-format
-#| msgid "Log widget position:"
+#, kde-format
 msgid "Widget position:"
-msgstr "紀錄元件位置："
+msgstr "元件位置："
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
-msgstr ""
+msgstr "掃描遺失的檔案"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
-msgstr ""
+msgstr "掃描"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
-#, fuzzy, kde-format
-#| msgid "Select File"
+#, kde-format
 msgid "Select folder:"
-msgstr "選擇檔案"
+msgstr "選擇資料夾："
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:107
-#, fuzzy, kde-format
-#| msgid "Show a file list"
+#, kde-format
 msgid "Show all files"
-msgstr "顯示檔案清單"
+msgstr "顯示所有檔案"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
-#, fuzzy, kde-format
-#| msgid "Open silently"
+#, kde-format
 msgid "Open file"
-msgstr "無聲開啟"
+msgstr "開啟檔案"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:130
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgid "Delete on disk"
-msgstr "刪除檔案"
+msgstr "在磁碟上刪除"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
 #, kde-format
 msgid "Ctrl+Del"
-msgstr ""
+msgstr "Ctrl+Del"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:142
-#, fuzzy, kde-format
-#| msgid "Magnet link copied to clipboard"
+#, kde-format
 msgid "Copy to clipboard"
-msgstr "Magnet 連結已複製到剪貼簿"
+msgstr "複製到剪貼簿"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:145
 #, kde-format
 msgid "Ctrl+C"
-msgstr ""
+msgstr "Ctrl+C"
 
 #. i18n: ectx: ToolBar (SearchToolBar)
 #: plugins/search/ktorrent_searchui.rc:4
@@ -7676,7 +7640,7 @@ msgstr "顯示"
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
 msgid "KiB/s"
-msgstr "KB/秒"
+msgstr "KiB/秒"
 
 #: plugins/stats/drawer/ChartDrawerData.cc:13
 #, kde-format
