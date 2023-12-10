@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-25 02:26\n"
+"PO-Revision-Date: 2023-12-09 09:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1227,12 +1227,12 @@ msgstr "仅对新打开或创建的种子应用设置"
 #: ktorrent/groups/groupswitcher.cpp:44
 #, kde-format
 msgid "Open a new tab"
-msgstr "在新标签中打开"
+msgstr "新建标签页"
 
 #: ktorrent/groups/groupswitcher.cpp:49
 #, kde-format
 msgid "Close the current tab"
-msgstr "关闭当前标签"
+msgstr "关闭当前标签页"
 
 #: ktorrent/groups/groupswitcher.cpp:54
 #, kde-format
@@ -1242,7 +1242,7 @@ msgstr "编辑组策略"
 #: ktorrent/groups/groupview.cpp:66
 #, kde-format
 msgid "Open In New Tab"
-msgstr "在新标签中打开"
+msgstr "在新标签页中打开"
 
 #: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:223
 #, kde-format
@@ -3985,7 +3985,7 @@ msgstr "强制开始"
 #: ktorrent/view/view.cpp:140
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
-msgstr "强制开始当前标签中的全部选定种子"
+msgstr "强制开始当前标签页中的全部选定种子"
 
 #: ktorrent/view/view.cpp:144
 #, kde-format
@@ -3996,7 +3996,7 @@ msgstr "停止"
 #: ktorrent/view/view.cpp:145
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
-msgstr "停止当前标签页中全部选定种子"
+msgstr "停止当前标签页中的全部选定种子"
 
 #: ktorrent/view/view.cpp:151
 #, kde-format
@@ -4007,7 +4007,7 @@ msgstr "暂停"
 #: ktorrent/view/view.cpp:153
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
-msgstr "暂停当前标签页中全部选定种子"
+msgstr "暂停当前标签页中的全部选定种子"
 
 #: ktorrent/view/view.cpp:158
 #, kde-format
@@ -4018,7 +4018,7 @@ msgstr "移除"
 #: ktorrent/view/view.cpp:160
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
-msgstr "移除当前标签页中全部选定种子"
+msgstr "移除当前标签页中的全部选定种子"
 
 #: ktorrent/view/view.cpp:165
 #, kde-format
@@ -4029,7 +4029,7 @@ msgstr "全部开始"
 #: ktorrent/view/view.cpp:166
 #, kde-format
 msgid "Start all torrents in the current tab"
-msgstr "启动当前标签页中全部种子"
+msgstr "启动当前标签页中的全部种子"
 
 #: ktorrent/view/view.cpp:171
 #, kde-format
@@ -4040,7 +4040,7 @@ msgstr "全部停止"
 #: ktorrent/view/view.cpp:172
 #, kde-format
 msgid "Stop all torrents in the current tab"
-msgstr "停止当前标签页中全部种子"
+msgstr "停止当前标签页中的全部种子"
 
 #: ktorrent/view/view.cpp:177
 #, kde-format
@@ -5532,13 +5532,13 @@ msgstr "可用"
 #: plugins/infowidget/iwprefpage.ui:17
 #, kde-format
 msgid "Tabs"
-msgstr "标签"
+msgstr "标签页"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPeerView)
 #: plugins/infowidget/iwprefpage.ui:23
 #, kde-format
 msgid "Whether or not to show the peers tab in the bottom of the window."
-msgstr "是否在窗口底部显示对等点标签。"
+msgstr "是否在窗口底部显示对等点标签页。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showPeerView)
 #: plugins/infowidget/iwprefpage.ui:26
@@ -5550,7 +5550,7 @@ msgstr "显示对等点列表"
 #: plugins/infowidget/iwprefpage.ui:33
 #, kde-format
 msgid "Whether or not to show the chunks tab in the bottom of the window."
-msgstr "是否在窗口底部显示数据块标签。"
+msgstr "是否在窗口底部显示数据块标签页。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showChunkView)
 #: plugins/infowidget/iwprefpage.ui:36
@@ -5574,7 +5574,7 @@ msgstr "显示 tracker 列表"
 #: plugins/infowidget/iwprefpage.ui:53
 #, kde-format
 msgid "Whether or not to show the webseeds tab at the bottom of the window."
-msgstr "是否在窗口底部显示网络对等点标签。"
+msgstr "是否在窗口底部显示网络对等点标签页。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showWebSeedsTab)
 #: plugins/infowidget/iwprefpage.ui:56
@@ -5616,13 +5616,13 @@ msgstr "最低优先级文件使用的颜色。"
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:10
 #, kde-format
 msgid "Show peer view tab in main window"
-msgstr "在主窗口中显示对等点视图标签"
+msgstr "在主窗口中显示对等点视图标签页"
 
 #. i18n: ectx: label, entry (showChunkView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:14
 #, kde-format
 msgid "Show chunk download view tab in main window"
-msgstr "在主窗口中显示数据块下载标签"
+msgstr "在主窗口中显示数据块下载标签页"
 
 #. i18n: ectx: label, entry (showTrackersView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:18
