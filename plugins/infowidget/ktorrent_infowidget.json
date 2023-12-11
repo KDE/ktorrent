@@ -63,7 +63,7 @@
         "Description[tr]": "Çeşitli sekmelerde bir torrent hakkındaki genel bilgileri göster",
         "Description[uk]": "Показ загальної інформації про торент у декількох вкладках",
         "Description[x-test]": "xxDisplays general information about a torrent in several tabsxx",
-        "Description[zh_CN]": "在若干标签内显示一个种子的常规信息",
+        "Description[zh_CN]": "在若干标签页内显示一个种子的常规信息",
         "EnabledByDefault": true,
         "Icon": "kt-info-widget",
         "Id": "InfoWidgetPlugin",
