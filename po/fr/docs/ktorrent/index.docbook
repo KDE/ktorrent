@@ -64,7 +64,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 </articleinfo>
 
 <para
->&ktorrent; est un programme bittorrent de KDE qui vous permet de télécharger des fichiers en utilisant le protocole BitTorrent. Il vous permet de télécharger plusieurs torrent à la fois et comporte des fonctionnalités étendues, ce qui en fait un client BitTorrent complet.</para>
+>&ktorrent; est un programme « bittorrent » pour KDE vous permettant de télécharger des fichiers en utilisant le protocole BitTorrent. Il vous permet de télécharger plusieurs torrent à la fois et comporte des fonctionnalités étendues, ce qui en fait un client BitTorrent complet.</para>
 
 <itemizedlist>
 <title

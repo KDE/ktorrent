@@ -10,7 +10,7 @@
 # Jiri Eischmann <jiri@eischmann.cz>, 2009.
 # Lukáš Tinkl <ltinkl@redhat.com>, 2009.
 # Milan Baša <minkob@mail.t-com.sk>, 2009.
-# Roman Paholík <wizzardsk@gmail.com>, 2012, 2013, 2014, 2016, 2019.
+# SPDX-FileCopyrightText: 2012, 2013, 2014, 2016, 2019, 2023 Roman Paholík <wizzardsk@gmail.com>
 # Mthw <jari_45@hotmail.com>, 2019.
 # Matej Mrenica <matejm98mthw@gmail.com>, 2019, 2020.
 # Dušan Kazik <prescott66@gmail.com>, 2020.
@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:46+0000\n"
-"PO-Revision-Date: 2023-02-25 11:47+0100\n"
-"Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
+"PO-Revision-Date: 2023-12-10 15:00+0100\n"
+"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, kde-format
@@ -287,11 +287,10 @@ msgstr ""
 "importovať tento súbor?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:226
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Importovať"
+msgstr "Importovať"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:237
 #: ktorrent/dialogs/fileselectdlg.cpp:255
@@ -305,11 +304,10 @@ msgstr "Adresár %1 neexistuje. Chcete ho vytvoriť?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:99
 #: ktorrent/dialogs/missingfilesdlg.cpp:133
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Znovu vytvoriť"
+msgstr "Vytvoriť"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:286
 #, kde-format
@@ -321,18 +319,16 @@ msgstr ""
 "súboroch, skutočne si to prajete urobiť?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Odstrániť súbor(y)"
+msgstr "Odstrániť súbory"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:293
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Nie, ponechať súbory"
+msgstr "Ponechať súbory"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:316
 #, kde-format
@@ -634,7 +630,7 @@ msgstr "Vyberte súbor torrentu a údaje, ktoré k nemu patria."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -3519,7 +3515,7 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:40
 #, kde-format
@@ -4893,9 +4889,7 @@ msgstr "Dosiahnuté medze."
 #: libktcore/torrent/queuemanager.cpp:225
 #: libktcore/torrent/queuemanager.cpp:264
 #: libktcore/torrent/queuemanager.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Spustiť"
@@ -5544,7 +5538,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "Povoliť sekvenčný režim sťahovania"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
