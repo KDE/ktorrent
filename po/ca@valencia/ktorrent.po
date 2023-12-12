@@ -2697,7 +2697,7 @@ msgstr "Moure les baixades completes cap a:"
 #: ktorrent/pref/generalpref.ui:71 ktorrent/pref/generalpref.ui:81
 #, kde-format
 msgid "Directory to copy all torrent files in, which are opened by KTorrent."
-msgstr "Directori on copiar les dades que s'òbriguen amb KTorrent."
+msgstr "Directori on copiar les dades que s'obrin amb KTorrent."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useTorrentCopyDir)
 #: ktorrent/pref/generalpref.ui:74
