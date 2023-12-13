@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-21 01:34+0000\n"
-"PO-Revision-Date: 2023-11-29 17:33+0900\n"
+"PO-Revision-Date: 2023-12-12 18:18+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6658,7 +6658,7 @@ msgstr "清除播放清單"
 #: plugins/mediaplayer/mediaplayeractivity.cpp:133
 #, kde-format
 msgid "Toggle Fullscreen"
-msgstr "切換全鎣幕"
+msgstr "切換全螢幕"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:157
 #: plugins/mediaplayer/mediaplayeractivity.cpp:336
