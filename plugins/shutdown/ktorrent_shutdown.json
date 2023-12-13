@@ -50,6 +50,7 @@
         "Description[gl]": "Permite apagar o computador cando rematan os torrentes.",
         "Description[hu]": "Lehetővé teszi a számítógép leállítását, ha a torrentek befejeződtek",
         "Description[it]": "Permette lo spegnimento del computer quando termina un torrent",
+        "Description[ka]": "საშუალებას გაძლევთ, გამორთოთ კომპიუტერი, როცა ტორენტები დასრულდება",
         "Description[ko]": "토렌트가 완료되었을 때 컴퓨터 끄기",
         "Description[nl]": "Staat u toe uw computer af te sluiten na het beëindigen van torrents",
         "Description[pl]": "Umożliwia wyłączenie komputera po zakończeniu działania torrenta",
