@@ -32,7 +32,8 @@
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
                 "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
-                "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
+                "Name[zh_CN]": "Joris Guisson、Ivan Vasic",
+                "Name[zh_TW]": "Joris Guisson, Ivan Vasic"
             }
         ],
         "Description": "Displays the logging output",
@@ -65,6 +66,7 @@
         "Description[uk]": "Показати відомості з журналу",
         "Description[x-test]": "xxDisplays the logging outputxx",
         "Description[zh_CN]": "显示日志输出",
+        "Description[zh_TW]": "顯示紀錄輸出",
         "EnabledByDefault": false,
         "Icon": "utilities-log-viewer",
         "Id": "LogViewerPlugin",

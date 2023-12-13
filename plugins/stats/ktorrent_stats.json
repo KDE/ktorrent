@@ -32,7 +32,8 @@
                 "Name[tr]": "Krzysztof Kundzicz",
                 "Name[uk]": "Krzysztof Kundzicz",
                 "Name[x-test]": "xxKrzysztof Kundziczxx",
-                "Name[zh_CN]": "Krzysztof Kundzicz"
+                "Name[zh_CN]": "Krzysztof Kundzicz",
+                "Name[zh_TW]": "Krzysztof Kundzicz"
             }
         ],
         "Description": "Shows statistics about torrents in several graphs",
@@ -65,6 +66,7 @@
         "Description[uk]": "Показує статистику торентів за допомогою декількох графіків",
         "Description[x-test]": "xxShows statistics about torrents in several graphsxx",
         "Description[zh_CN]": "以图表形式显示种子的统计数据",
+        "Description[zh_TW]": "以不同的圖形顯示關於 Torrent 的統計",
         "EnabledByDefault": false,
         "Icon": "view-statistics",
         "Id": "StatsPlugin",

@@ -32,7 +32,8 @@
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
                 "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
-                "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
+                "Name[zh_CN]": "Joris Guisson、Ivan Vasic",
+                "Name[zh_TW]": "Joris Guisson, Ivan Vasic"
             }
         ],
         "Description": "Displays general information about a torrent in several tabs",
@@ -65,6 +66,7 @@
         "Description[uk]": "Показ загальної інформації про торент у декількох вкладках",
         "Description[x-test]": "xxDisplays general information about a torrent in several tabsxx",
         "Description[zh_CN]": "在若干标签页内显示一个种子的常规信息",
+        "Description[zh_TW]": "使用數個分頁顯示 Torrent 的一般資訊",
         "EnabledByDefault": true,
         "Icon": "kt-info-widget",
         "Id": "InfoWidgetPlugin",

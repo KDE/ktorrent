@@ -32,7 +32,8 @@
                 "Name[tr]": "Jonas Lundqvist",
                 "Name[uk]": "Jonas Lundqvist",
                 "Name[x-test]": "xxJonas Lundqvistxx",
-                "Name[zh_CN]": "Jonas Lundqvist"
+                "Name[zh_CN]": "Jonas Lundqvist",
+                "Name[zh_TW]": "Jonas Lundqvist"
             }
         ],
         "Description": "Generates magnet links",
@@ -64,6 +65,7 @@
         "Description[uk]": "Створює посилання magnet",
         "Description[x-test]": "xxGenerates magnet linksxx",
         "Description[zh_CN]": "生成磁力链",
+        "Description[zh_TW]": "產生 Magnet 連結",
         "EnabledByDefault": false,
         "Icon": "kt-magnet",
         "Id": "MagnetGeneratorPlugin",

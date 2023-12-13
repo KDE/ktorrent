@@ -32,7 +32,8 @@
                 "Name[tr]": "Joris Guisson",
                 "Name[uk]": "Joris Guisson",
                 "Name[x-test]": "xxJoris Guissonxx",
-                "Name[zh_CN]": "Joris Guisson"
+                "Name[zh_CN]": "Joris Guisson",
+                "Name[zh_TW]": "Joris Guisson"
             }
         ],
         "Description": "Syndication plugin for KTorrent, supporting RSS and Atom feeds",
@@ -64,6 +65,7 @@
         "Description[uk]": "Додаток синдикації для KTorrent, з підтримкою подач RSS і Atom",
         "Description[x-test]": "xxSyndication plugin for KTorrent, supporting RSS and Atom feedsxx",
         "Description[zh_CN]": "KTorrent 的聚合插件，支持 RSS 和 Atom 订阅",
+        "Description[zh_TW]": "KTorrent 的 Syndication 外掛程式，支援 RSS 與 Atom。",
         "EnabledByDefault": false,
         "Icon": "application-rss+xml",
         "Id": "SyndicationPlugin",

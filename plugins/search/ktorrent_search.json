@@ -32,7 +32,8 @@
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
                 "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
-                "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
+                "Name[zh_CN]": "Joris Guisson、Ivan Vasic",
+                "Name[zh_TW]": "Joris Guisson, Ivan Vasic"
             }
         ],
         "Description": "Search for torrents",
@@ -64,6 +65,7 @@
         "Description[uk]": "Пошук торентів",
         "Description[x-test]": "xxSearch for torrentsxx",
         "Description[zh_CN]": "搜索种子",
+        "Description[zh_TW]": "搜尋 torrents",
         "EnabledByDefault": false,
         "Icon": "edit-find",
         "Id": "SearchPlugin",

@@ -32,7 +32,8 @@
                 "Name[tr]": "Alexander Trufanov",
                 "Name[uk]": "Alexander Trufanov",
                 "Name[x-test]": "xxAlexander Trufanovxx",
-                "Name[zh_CN]": "Alexander Trufanov"
+                "Name[zh_CN]": "Alexander Trufanov",
+                "Name[zh_TW]": "Alexander Trufanov"
             }
         ],
         "Description": "Display files in the selected folder that don't belong to any torrent",
@@ -64,6 +65,7 @@
         "Description[uk]": "Показати файли у вибраній теці, які не належать до жодного торента",
         "Description[x-test]": "xxDisplay files in the selected folder that don't belong to any torrentxx",
         "Description[zh_CN]": "显示所选文件夹中不属于任何种子的文件",
+        "Description[zh_TW]": "顯示選取資料夾中不屬於任何 torrent 的檔案",
         "EnabledByDefault": false,
         "Icon": "edit-find",
         "Id": "ScanForLostFilesPlugin",
@@ -99,6 +101,7 @@
         "Name[uk]": "Пошук втрачених файлів",
         "Name[x-test]": "xxScan for lost filesxx",
         "Name[zh_CN]": "扫描遗落的文件",
+        "Name[zh_TW]": "掃描遺失的檔案",
         "Version": "0.1",
         "Website": "http://kde.org/applications/internet/ktorrent/"
     }

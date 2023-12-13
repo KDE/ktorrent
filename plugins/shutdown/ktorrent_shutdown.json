@@ -32,7 +32,8 @@
                 "Name[tr]": "Joris Guisson",
                 "Name[uk]": "Joris Guisson",
                 "Name[x-test]": "xxJoris Guissonxx",
-                "Name[zh_CN]": "Joris Guisson"
+                "Name[zh_CN]": "Joris Guisson",
+                "Name[zh_TW]": "Joris Guisson"
             }
         ],
         "Description": "Allows you to shutdown your computer when torrents finish",
@@ -64,6 +65,7 @@
         "Description[uk]": "Надає вам змогу вимкнути комп’ютер після завершення отримання торента",
         "Description[x-test]": "xxAllows you to shutdown your computer when torrents finishxx",
         "Description[zh_CN]": "允许您在种子完成时关闭计算机",
+        "Description[zh_TW]": "允許在 torrents 完成後關閉電腦",
         "EnabledByDefault": false,
         "Icon": "system-shutdown",
         "Id": "ShutdownPlugin",

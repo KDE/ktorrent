@@ -32,7 +32,8 @@
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
                 "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
-                "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
+                "Name[zh_CN]": "Joris Guisson、Ivan Vasic",
+                "Name[zh_TW]": "Joris Guisson, Ivan Vasic"
             }
         ],
         "Description": "Schedule upload and download limits over a period of a week",

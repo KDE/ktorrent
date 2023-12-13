@@ -32,7 +32,8 @@
                 "Name[tr]": "Joris Guisson, Ivan Vasic",
                 "Name[uk]": "Joris Guisson, Ivan Vasic",
                 "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
-                "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
+                "Name[zh_CN]": "Joris Guisson、Ivan Vasic",
+                "Name[zh_TW]": "Joris Guisson, Ivan Vasic"
             }
         ],
         "Description": "Forward ports using UPnP",
@@ -64,6 +65,7 @@
         "Description[uk]": "Переспрямування портів за допомогою UPnP",
         "Description[x-test]": "xxForward ports using UPnPxx",
         "Description[zh_CN]": "使用 UPnP 转发端口",
+        "Description[zh_TW]": "使用 UPnP 轉送連接埠",
         "EnabledByDefault": false,
         "Icon": "kt-upnp",
         "Id": "UPnPPlugin",
