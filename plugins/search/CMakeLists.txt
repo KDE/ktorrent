@@ -5,7 +5,6 @@ target_sources(SearchPlugin PRIVATE
 	searchenginelist.cpp 
 	searchprefpage.cpp 
 	searchwidget.cpp 
-	searchtoolbar.cpp 
 	searchplugin.cpp 
 	searchengine.cpp 
 	opensearchdownloadjob.cpp

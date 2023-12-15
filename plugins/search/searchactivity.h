@@ -44,8 +44,7 @@ public:
 public Q_SLOTS:
     void home();
     void openNewTab(const QUrl &url);
-    void currentTabChanged(int idx);
-    void closeTab();
+    void closeTab(int index);
     void openTab();
     void setTabTitle(SearchWidget *sw, const QString &title);
     void setTabIcon(SearchWidget *sw, const QIcon &icon);
@@ -61,7 +60,6 @@ private:
     QTabWidget *tabs;
     QList<SearchWidget *> searches;
     SearchPlugin *sp;
-    SearchToolBar *toolbar;
 
     QAction *find_action;
     QAction *search_action;

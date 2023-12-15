@@ -20,7 +20,6 @@
 #include "searchenginelist.h"
 #include "searchpluginsettings.h"
 #include "searchprefpage.h"
-#include "searchtoolbar.h"
 #include "searchwidget.h"
 #include <dbus/dbus.h>
 #include <interfaces/coreinterface.h>

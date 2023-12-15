@@ -23,10 +23,10 @@
 #include <bcodec/bnode.h>
 #include <interfaces/functions.h>
 #include <util/error.h>
+#include <util/fileops.h>
 #include <util/indexofcompare.h>
 
 #include "searchplugin.h"
-#include "searchtoolbar.h"
 #include "searchwidget.h"
 #include <searchpluginsettings.h>
 
@@ -38,25 +38,20 @@ SearchActivity::SearchActivity(SearchPlugin *sp, QWidget *parent)
 {
     setXMLGUIFile(QStringLiteral("ktorrent_searchui.rc"));
     setupActions();
-    toolbar = new SearchToolBar(part()->actionCollection(), sp->getSearchEngineList(), this);
-    connect(toolbar, &SearchToolBar::search, sp, &SearchPlugin::search);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
     tabs = new QTabWidget(this);
+    tabs->setDocumentMode(true);
     tabs->setMovable(true);
+    connect(tabs, &QTabWidget::tabCloseRequested, this, &SearchActivity::closeTab);
     layout->addWidget(tabs);
-    connect(tabs, &QTabWidget::currentChanged, this, &SearchActivity::currentTabChanged);
 
-    QToolButton *lc = new QToolButton(tabs);
-    tabs->setCornerWidget(lc, Qt::TopLeftCorner);
-    QToolButton *rc = new QToolButton(tabs);
-    tabs->setCornerWidget(rc, Qt::TopRightCorner);
-    lc->setIcon(QIcon::fromTheme(QStringLiteral("tab-new")));
-    connect(lc, &QToolButton::clicked, this, &SearchActivity::openTab);
-    rc->setIcon(QIcon::fromTheme(QStringLiteral("tab-close")));
-    connect(rc, &QToolButton::clicked, this, &SearchActivity::closeTab);
+    auto newTabButton = new QToolButton(tabs);
+    newTabButton->setIcon(QIcon::fromTheme(QStringLiteral("tab-new")));
+    connect(newTabButton, &QToolButton::clicked, this, &SearchActivity::openTab);
+    tabs->setCornerWidget(newTabButton, Qt::TopRightCorner);
 }
 
 SearchActivity::~SearchActivity()
@@ -166,7 +161,6 @@ void SearchActivity::saveState(KSharedConfigPtr cfg)
 {
     KConfigGroup g = cfg->group(QStringLiteral("SearchActivity"));
     g.writeEntry("current_search", tabs->currentIndex());
-    toolbar->saveSettings();
 }
 
 void SearchActivity::loadState(KSharedConfigPtr cfg)
@@ -224,7 +218,6 @@ SearchWidget *SearchActivity::newSearchWidget(const QString &text)
     connect(search, &SearchWidget::changeTitle, this, &SearchActivity::setTabTitle);
     connect(search, &SearchWidget::changeIcon, this, &SearchActivity::setTabIcon);
     searches.append(search);
-    search->setSearchBarEngine(toolbar->currentSearchEngine());
     return search;
 }
 
@@ -237,14 +230,8 @@ void SearchActivity::openNewTab(const QUrl &url)
 {
     QString text = url.host();
     SearchWidget *search = newSearchWidget(text);
-    search->restore(url, text, QString(), toolbar->currentSearchEngine());
+    search->restore(url, text, QString(), 1);
     tabs->setCurrentWidget(search);
-}
-
-void SearchActivity::currentTabChanged(int idx)
-{
-    Q_UNUSED(idx);
-    tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(searches.count() > 1);
 }
 
 void SearchActivity::home()
@@ -258,21 +245,17 @@ void SearchActivity::home()
     }
 }
 
-void SearchActivity::closeTab()
+void SearchActivity::closeTab(int index)
 {
     if (searches.count() == 1)
         return;
 
-    for (SearchWidget *s : std::as_const(searches)) {
-        if (s == tabs->currentWidget()) {
-            tabs->removeTab(tabs->currentIndex());
-            searches.removeAll(s);
-            delete s;
-            break;
-        }
-    }
+    auto searchWidget = searches[index];
+    tabs->removeTab(index);
+    searches.remove(index);
+    delete searchWidget;
 
-    tabs->cornerWidget(Qt::TopRightCorner)->setEnabled(searches.count() > 1);
+    tabs->setTabsClosable(searches.count() > 1);
 }
 
 void SearchActivity::openTab()
@@ -280,6 +263,8 @@ void SearchActivity::openTab()
     SearchWidget *search = newSearchWidget(QString());
     search->home();
     tabs->setCurrentWidget(search);
+
+    tabs->setTabsClosable(true);
 }
 
 void SearchActivity::setTabTitle(SearchWidget *sw, const QString &title)
@@ -298,9 +283,11 @@ void SearchActivity::setTabIcon(SearchWidget *sw, const QIcon &icon)
 
 void SearchActivity::clearSearchHistory()
 {
-    toolbar->clearHistory();
+    bt::Delete(kt::DataDir() + QLatin1String("search_history"), true);
+    for (SearchWidget *s : std::as_const(searches)) {
+        s->clearHistory();
+    }
 }
-
 }
 
 #include "moc_searchactivity.cpp"

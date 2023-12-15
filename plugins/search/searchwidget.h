@@ -6,13 +6,13 @@
 #ifndef BTSEARCHWIDGET_H
 #define BTSEARCHWIDGET_H
 
+#include <KComboBox>
+#include <KToolBar>
 #include <QLineEdit>
 
 #include "webview.h"
-#include <ktoolbar.h>
 
 class QProgressBar;
-class KComboBox;
 
 namespace kt
 {
@@ -33,7 +33,7 @@ public:
 
     QString getSearchText() const
     {
-        return search_text->text();
+        return search_text->lineEdit()->text();
     }
     QUrl getCurrentUrl() const;
     QString getSearchBarText() const;
@@ -52,6 +52,7 @@ public Q_SLOTS:
     void search(const QString &text, int engine = 0);
     void home();
     void search();
+    void clearHistory();
 
 private Q_SLOTS:
     void loadStarted();
@@ -65,6 +66,8 @@ private:
     QUrl searchUrl(const QString &search_text) override;
     QWebEngineView *newTab() override;
     void magnetUrl(const QUrl &magnet_url) override;
+    void loadSearchHistory();
+    void saveSearchHistory();
 
 private:
     WebView *webview;
@@ -73,7 +76,7 @@ private:
     QProgressBar *prog;
 
     KComboBox *search_engine;
-    QLineEdit *search_text;
+    KComboBox *search_text;
 };
 
 }

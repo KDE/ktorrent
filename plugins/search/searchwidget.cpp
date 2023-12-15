@@ -8,6 +8,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QFile>
 #include <QLabel>
 #include <QMenu>
 #include <QNetworkReply>
@@ -37,6 +38,7 @@
 #include <util/log.h>
 
 using namespace bt;
+using namespace Qt::Literals::StringLiterals;
 
 namespace kt
 {
@@ -53,11 +55,27 @@ SearchWidget::SearchWidget(SearchPlugin *sp)
     KActionCollection *ac = sp->getSearchActivity()->part()->actionCollection();
     sbar = new KToolBar(this);
     sbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    sbar->addAction(webview->pageAction(QWebEnginePage::Back));
-    sbar->addAction(webview->pageAction(QWebEnginePage::Forward));
-    sbar->addAction(webview->pageAction(QWebEnginePage::Reload));
+
+    auto backAction = webview->pageAction(QWebEnginePage::Back);
+    backAction->setIcon(QIcon::fromTheme(u"draw-arrow-back"_s));
+    sbar->addAction(backAction);
+
+    auto forwardAction = webview->pageAction(QWebEnginePage::Forward);
+    forwardAction->setIcon(QIcon::fromTheme(u"draw-arrow-forward"_s));
+    sbar->addAction(forwardAction);
+
+    auto reloadAction = webview->pageAction(QWebEnginePage::Reload);
+    reloadAction->setIcon(QIcon::fromTheme(u"view-refresh"_s));
+    sbar->addAction(reloadAction);
+
     sbar->addAction(ac->action(QStringLiteral("search_home")));
-    search_text = new QLineEdit(sbar);
+    search_text = new KComboBox(nullptr);
+    search_text->setEditable(true);
+    search_text->setMaxCount(20);
+    search_text->setInsertPolicy(QComboBox::NoInsert);
+    search_text->setMinimumWidth(150);
+    search_text->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     sbar->addWidget(search_text);
     sbar->addAction(ac->action(QStringLiteral("search_tab_search")));
     sbar->addWidget(new QLabel(i18n(" Engine: "))); // same i18n string as in SearchToolBar()
@@ -65,12 +83,15 @@ SearchWidget::SearchWidget(SearchPlugin *sp)
     search_engine->setModel(sp->getSearchEngineList());
     sbar->addWidget(search_engine);
 
-    connect(search_text, &QLineEdit::returnPressed, this, qOverload<>(&SearchWidget::search));
+    connect(search_text->lineEdit(), &QLineEdit::returnPressed, this, qOverload<>(&SearchWidget::search));
+
+    auto separator = new QFrame(this);
+    separator->setFrameShape(QFrame::HLine);
+    separator->setFixedHeight(1);
 
     layout->addWidget(sbar);
+    layout->addWidget(separator);
     layout->addWidget(webview);
-
-    search_text->setClearButtonEnabled(true);
 
     connect(webview, &WebView::loadStarted, this, &SearchWidget::loadStarted);
     connect(webview, &WebView::loadFinished, this, &SearchWidget::loadFinished);
@@ -78,6 +99,8 @@ SearchWidget::SearchWidget(SearchPlugin *sp)
     connect(webview, &WebView::iconChanged, this, &SearchWidget::iconChanged);
     connect(webview, &WebView::titleChanged, this, &SearchWidget::titleChanged);
     connect(webview, &WebView::torrentFileDownloadRequested, this, &SearchWidget::downloadTorrentFile);
+
+    loadSearchHistory();
 }
 
 SearchWidget::~SearchWidget()
@@ -109,7 +132,7 @@ QUrl SearchWidget::getCurrentUrl() const
 
 QString SearchWidget::getSearchBarText() const
 {
-    return search_text->text();
+    return search_text->lineEdit()->text();
 }
 
 int SearchWidget::getSearchBarEngine() const
@@ -126,20 +149,28 @@ void SearchWidget::restore(const QUrl &url, const QString &text, const QString &
     else
         webview->openUrl(url);
 
-    search_text->setText(sb_text);
+    search_text->lineEdit()->setText(sb_text);
 
     search_engine->setCurrentIndex(engine);
 }
 
 void SearchWidget::search(const QString &text, int engine)
 {
-    if (search_text->text() != text)
-        search_text->setText(text);
+    if (search_text->lineEdit()->text() != text)
+        search_text->lineEdit()->setText(text);
 
     if (search_engine->currentIndex() != engine)
         search_engine->setCurrentIndex(engine);
 
     QUrl url = sp->getSearchEngineList()->search(engine, text);
+
+    KCompletion *comp = search_text->completionObject();
+    if (!search_text->contains(text)) {
+        comp->addItem(text);
+        search_text->addItem(text);
+    }
+    search_text->lineEdit()->clear();
+    saveSearchHistory();
 
     webview->openUrl(url);
 }
@@ -212,7 +243,7 @@ void SearchWidget::downloadTorrentFile(QWebEngineDownloadRequest *download)
 
 void SearchWidget::search()
 {
-    search(search_text->text(), search_engine->currentIndex());
+    search(search_text->lineEdit()->text(), search_engine->currentIndex());
 }
 
 QWebEngineView *SearchWidget::newTab()
@@ -228,6 +259,52 @@ void SearchWidget::home()
 bool SearchWidget::backAvailable() const
 {
     return webview->pageAction(QWebEnginePage::Back)->isEnabled();
+}
+
+void SearchWidget::loadSearchHistory()
+{
+    QFile fptr(kt::DataDir() + QLatin1String("search_history"));
+    if (!fptr.open(QIODevice::ReadOnly))
+        return;
+
+    KCompletion *comp = search_text->completionObject();
+
+    Uint32 cnt = 0;
+    QTextStream in(&fptr);
+    while (!in.atEnd() && cnt < 50) {
+        QString line = in.readLine();
+        if (line.isEmpty())
+            break;
+
+        if (!search_text->contains(line)) {
+            comp->addItem(line);
+            search_text->addItem(line);
+        }
+        cnt++;
+    }
+
+    search_text->lineEdit()->clear();
+}
+
+void SearchWidget::saveSearchHistory()
+{
+    QFile fptr(kt::DataDir() + QLatin1String("search_history"));
+    if (!fptr.open(QIODevice::WriteOnly))
+        return;
+
+    QTextStream out(&fptr);
+    KCompletion *comp = search_text->completionObject();
+    const QStringList items = comp->items();
+    for (const QString &s : items) {
+        out << s << Qt::endl;
+    }
+}
+
+void SearchWidget::clearHistory()
+{
+    KCompletion *comp = search_text->completionObject();
+    search_text->clear();
+    comp->clear();
 }
 }
 
