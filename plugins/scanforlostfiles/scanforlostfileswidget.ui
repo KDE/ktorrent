@@ -93,22 +93,13 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Options</string>
+    <widget class="QCheckBox" name="cbShowAllFiles">
+     <property name="toolTip">
+      <string>Open the torrents without asking any questions.</string>
      </property>
-     <layout class="QVBoxLayout">
-      <item>
-       <widget class="QCheckBox" name="cbShowAllFiles">
-        <property name="toolTip">
-         <string>Open the torrents without asking any questions.</string>
-        </property>
-        <property name="text">
-         <string>Show all files</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <property name="text">
+      <string>Show all files</string>
+     </property>
     </widget>
    </item>
   </layout>
