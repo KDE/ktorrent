@@ -479,12 +479,14 @@ void GUI::saveState(KSharedConfigPtr cfg)
 
 bool GUI::queryClose()
 {
+    if (window()->windowHandle()->isVisible()) {
+        saveState(KSharedConfig::openConfig());
+    }
+
     if (Settings::showSystemTrayIcon() && !qApp->isSavingSession()) {
         window()->windowHandle()->hide();
-        saveState(KSharedConfig::openConfig());
         return false;
     } else {
-        saveState(KSharedConfig::openConfig());
         timer.stop();
         QTimer::singleShot(500, qApp, &QCoreApplication::quit);
         return true;
@@ -493,7 +495,6 @@ bool GUI::queryClose()
 
 void GUI::quit()
 {
-    saveState(KSharedConfig::openConfig());
     qApp->quit();
 }
 
