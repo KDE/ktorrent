@@ -341,7 +341,7 @@ void MediaPlayerActivity::setVideoFullScreen(bool on)
 
 void MediaPlayerActivity::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("MediaPlayerActivity");
+    KConfigGroup g = cfg->group(QStringLiteral("MediaPlayerActivity"));
     g.writeEntry("splitter_state", splitter->saveState());
     play_list->saveState(cfg);
     play_list->playList()->save(kt::DataDir() + QLatin1String("playlist"));
@@ -351,7 +351,7 @@ void MediaPlayerActivity::saveState(KSharedConfigPtr cfg)
 
 void MediaPlayerActivity::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("MediaPlayerActivity");
+    KConfigGroup g = cfg->group(QStringLiteral("MediaPlayerActivity"));
     QByteArray d = g.readEntry("splitter_state", QByteArray());
     if (!d.isEmpty())
         splitter->restoreState(d);
