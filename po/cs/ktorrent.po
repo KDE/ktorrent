@@ -2018,7 +2018,7 @@ msgstr "Opravy chyb, čištění kódu a optimalizace"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
 #, fuzzy, kde-format
