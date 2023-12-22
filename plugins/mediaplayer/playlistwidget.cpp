@@ -122,7 +122,7 @@ void PlayListWidget::doubleClicked(const QModelIndex &index)
 
 void PlayListWidget::saveState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("PlayListWidget");
+    KConfigGroup g = cfg->group(QStringLiteral("PlayListWidget"));
     QHeaderView *v = view->header();
     g.writeEntry("play_list_state", v->saveState());
     g.writeEntry("random_mode", random_mode->isChecked());
@@ -130,7 +130,7 @@ void PlayListWidget::saveState(KSharedConfigPtr cfg)
 
 void PlayListWidget::loadState(KSharedConfigPtr cfg)
 {
-    KConfigGroup g = cfg->group("PlayListWidget");
+    KConfigGroup g = cfg->group(QStringLiteral("PlayListWidget"));
     QByteArray d = g.readEntry("play_list_state", QByteArray());
     if (!d.isEmpty())
         view->header()->restoreState(d);

@@ -130,14 +130,14 @@ void MediaView::showIncompleteChanged(bool on)
 
 void MediaView::loadState(KSharedConfig::Ptr cfg)
 {
-    KConfigGroup g = cfg->group("MediaView");
+    KConfigGroup g = cfg->group(QStringLiteral("MediaView"));
     show_incomplete->setChecked(g.readEntry("show_incomplete", false));
     search_box->setText(g.readEntry("search_text", QString()));
 }
 
 void MediaView::saveState(KSharedConfig::Ptr cfg)
 {
-    KConfigGroup g = cfg->group("MediaView");
+    KConfigGroup g = cfg->group(QStringLiteral("MediaView"));
     g.writeEntry("show_incomplete", show_incomplete->isChecked());
     g.writeEntry("search_text", search_box->text());
 }
