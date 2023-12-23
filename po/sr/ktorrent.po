@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-21 01:34+0000\n"
+"POT-Creation-Date: 2023-12-23 01:45+0000\n"
 "PO-Revision-Date: 2017-12-17 18:00+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -504,7 +504,6 @@ msgstr "Постојећи фајлови нису нађени"
 #: ktorrent/dialogs/torrentcreatordlg.ui:63
 #: plugins/logviewer/logprefwidget.ui:36
 #: plugins/scanfolder/scanfolderprefpage.ui:72
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:98
 #: plugins/syndication/filtereditor.ui:242
 #, kde-format
 msgid "Options"
@@ -7006,7 +7005,7 @@ msgstr "Уклони фасциклу"
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_openSilently)
 #. i18n: ectx: property (toolTip), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanfolder/scanfolderprefpage.ui:78
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:104
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:98
 #, kde-format
 msgid "Open the torrents without asking any questions."
 msgstr "Отвори торенте без икаквих питања."
@@ -7104,41 +7103,41 @@ msgid "Select folder:"
 msgstr "Изабери &све"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:107
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
 #, fuzzy, kde-format
 #| msgid "Show a file list"
 msgid "Show all files"
 msgstr "Прикажи списак фајлова"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:112
 #, fuzzy, kde-format
 #| msgid "Open silently"
 msgid "Open file"
 msgstr "Отвори тихо"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:130
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
 #, fuzzy, kde-format
 #| msgid "Delete File(s)"
 msgid "Delete on disk"
 msgstr "Обриши фајлове"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:124
 #, kde-format
 msgid "Ctrl+Del"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:142
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
 #, fuzzy, kde-format
 #| msgid "Magnet link copied to clipboard"
 msgid "Copy to clipboard"
 msgstr "Магнетска веза копирана у клипборд"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:145
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:136
 #, kde-format
 msgid "Ctrl+C"
 msgstr ""
@@ -7493,19 +7492,19 @@ msgid "Shutdown Settings"
 msgstr "Поставке гашења"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: plugins/shutdown/shutdowndlg.ui:34
+#: plugins/shutdown/shutdowndlg.ui:22
 #, kde-format
 msgid "Action to execute:"
 msgstr "Радња за извршавање:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: plugins/shutdown/shutdowndlg.ui:44
+#: plugins/shutdown/shutdowndlg.ui:32
 #, kde-format
 msgid "Execute action when:"
 msgstr "Изврши радњу:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_all_rules_must_be_hit)
-#: plugins/shutdown/shutdowndlg.ui:59
+#: plugins/shutdown/shutdowndlg.ui:47
 #, kde-format
 msgid ""
 "When enabled, execute the action when all events have happened. When not "
@@ -7515,7 +7514,7 @@ msgstr ""
 "укључено, извршава када се бар један од горњих догађаја одигра."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_all_rules_must_be_hit)
-#: plugins/shutdown/shutdowndlg.ui:62
+#: plugins/shutdown/shutdowndlg.ui:50
 #, kde-format
 msgid "All events must have happened"
 msgstr "Морају се одиграти сви догађаји"

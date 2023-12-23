@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-21 01:34+0000\n"
+"POT-Creation-Date: 2023-12-23 01:45+0000\n"
 "PO-Revision-Date: 2008-03-30 16:43+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@yahoo.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
@@ -480,7 +480,6 @@ msgstr ""
 #: ktorrent/dialogs/torrentcreatordlg.ui:63
 #: plugins/logviewer/logprefwidget.ui:36
 #: plugins/scanfolder/scanfolderprefpage.ui:72
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:98
 #: plugins/syndication/filtereditor.ui:242
 #, kde-format
 msgid "Options"
@@ -6922,7 +6921,7 @@ msgstr "फ़ोल्डर मिटाएँ"
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_openSilently)
 #. i18n: ectx: property (toolTip), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanfolder/scanfolderprefpage.ui:78
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:104
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:98
 #, kde-format
 msgid "Open the torrents without asking any questions."
 msgstr ""
@@ -7015,39 +7014,39 @@ msgid "Select folder:"
 msgstr "सभी चुनें (&A)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:107
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
 #, fuzzy, kde-format
 #| msgid "Choose a file"
 msgid "Show all files"
 msgstr "एक फ़ाइल चुनें"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:112
 #, fuzzy, kde-format
 #| msgid "KTorrent"
 msgid "Open file"
 msgstr "केटोरेंट"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:130
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
 #, kde-format
 msgid "Delete on disk"
 msgstr ""
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:124
 #, kde-format
 msgid "Ctrl+Del"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:142
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
 #, kde-format
 msgid "Copy to clipboard"
 msgstr ""
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
-#: plugins/scanforlostfiles/scanforlostfileswidget.ui:145
+#: plugins/scanforlostfiles/scanforlostfileswidget.ui:136
 #, kde-format
 msgid "Ctrl+C"
 msgstr ""
@@ -7407,19 +7406,19 @@ msgid "Shutdown Settings"
 msgstr "विन्यास"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: plugins/shutdown/shutdowndlg.ui:34
+#: plugins/shutdown/shutdowndlg.ui:22
 #, kde-format
 msgid "Action to execute:"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: plugins/shutdown/shutdowndlg.ui:44
+#: plugins/shutdown/shutdowndlg.ui:32
 #, kde-format
 msgid "Execute action when:"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_all_rules_must_be_hit)
-#: plugins/shutdown/shutdowndlg.ui:59
+#: plugins/shutdown/shutdowndlg.ui:47
 #, kde-format
 msgid ""
 "When enabled, execute the action when all events have happened. When not "
@@ -7427,7 +7426,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_all_rules_must_be_hit)
-#: plugins/shutdown/shutdowndlg.ui:62
+#: plugins/shutdown/shutdowndlg.ui:50
 #, kde-format
 msgid "All events must have happened"
 msgstr ""
