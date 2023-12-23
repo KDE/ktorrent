@@ -314,7 +314,7 @@ int Schedule::getTimeToNextScheduleEvent(const QDateTime &now)
     if (item)
         return now.time().secsTo(item->end) + 5; // change the schedule 5 seconds after it expires
 
-    // lets look at all schedule items on the same day
+    // let us look at all schedule items on the same day
     // and find the next one
     for (ScheduleItem *i : std::as_const(items)) {
         if (between(now.date().dayOfWeek(), i->start_day, i->end_day) && i->start > now.time()) {

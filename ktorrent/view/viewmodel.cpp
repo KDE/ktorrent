@@ -222,7 +222,7 @@ QVariant ViewModel::Item::color(int col) const
                 const bt::TrackersStatusInfo tsi = tc->getTrackersList()->getTrackersStatusInfo();
                 if (tsi.trackers_count) {
                     if ((tsi.errors + tsi.warnings) == tsi.trackers_count) {
-                        // no any OK statuses
+                        // no OK statuses
                         if (tsi.timeout_errors)
                             return Settings::timeoutTrackerConnectionColor();
                         if (tsi.warnings)

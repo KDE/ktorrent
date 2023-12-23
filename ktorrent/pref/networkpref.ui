@@ -189,7 +189,7 @@
         <item row="1" column="1">
          <widget class="QSpinBox" name="kcfg_maxConnectingSockets">
           <property name="toolTip">
-           <string>&lt;p&gt;The maximum number of outgoing connections ktorrent will try to setup simultaneously.&lt;/p&gt;
+           <string>&lt;p&gt;The maximum number of outgoing connections ktorrent will try to set up simultaneously.&lt;/p&gt;
 &lt;p&gt;If you are having trouble with ktorrent blocking other internet traffic, try setting this number a bit lower.&lt;/p&gt;</string>
           </property>
           <property name="minimum">
@@ -258,7 +258,7 @@
         <item>
          <widget class="QComboBox" name="kcfg_primaryTransportProtocol">
           <property name="toolTip">
-           <string>The primary transport protocol to use, when attempting to setup a connection with a peer, this protocol is chosen first.</string>
+           <string>The primary transport protocol to use, when attempting to set up a connection with a peer, this protocol is chosen first.</string>
           </property>
           <item>
            <property name="text">

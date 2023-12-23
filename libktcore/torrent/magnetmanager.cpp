@@ -526,7 +526,7 @@ int MagnetManager::getMagnetIndex(kt::MagnetDownloader *md)
 {
     if (stoppedHashes.contains(md->magnetLink().infoHash())) {
         int magnetIndex = magnetQueue.size() + stoppedList.indexOf(md);
-        if (magnetIndex >= magnetQueue.size()) // md is inside of magnetStopList
+        if (magnetIndex >= magnetQueue.size()) // md is inside magnetStopList
             return magnetIndex;
     } else
         return magnetQueue.indexOf(md);

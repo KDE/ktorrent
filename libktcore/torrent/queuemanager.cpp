@@ -799,7 +799,7 @@ void QueueManager::onOnlineStateChanged(bool isOnline)
 void QueueManager::reindexQueue()
 {
     int prio = downloads.count();
-    // make sure everybody has an unique priority
+    // make sure everybody has a unique priority
     for (bt::TorrentInterface *tc : std::as_const(downloads)) {
         tc->setPriority(prio--);
     }

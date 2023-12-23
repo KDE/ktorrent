@@ -125,14 +125,14 @@ void TorrentLoadQueue::loadingFinished(const QUrl &url)
 
     switch (action) {
     case DeleteAction:
-        // If torrent has it's hidden complement - remove it too.
+        // If torrent has hidden complement - remove it too.
         if (bt::Exists(dirname + QLatin1Char('.') + name))
             bt::Delete(dirname + QLatin1Char('.') + name, true);
 
         bt::Delete(url.toLocalFile(), true);
         break;
     case MoveAction:
-        // If torrent has it's hidden complement - remove it too.
+        // If torrent has hidden complement - remove it too.
         if (bt::Exists(dirname + QLatin1Char('.') + name))
             bt::Delete(dirname + QLatin1Char('.') + name, true);
 

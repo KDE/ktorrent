@@ -84,7 +84,7 @@ void TorrentService::start()
 
 void TorrentService::onServiceAdded(KDNSSD::RemoteService::Ptr ptr)
 {
-    // lets not connect to ourselves
+    // let us not connect to ourselves
     if (!ptr->serviceName().startsWith(tc->getOwnPeerID().toString())) {
         QString host = ptr->hostName();
         bt::Uint16 port = ptr->port();

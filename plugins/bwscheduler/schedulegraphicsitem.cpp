@@ -92,7 +92,7 @@ void ScheduleGraphicsItem::update(const QRectF &r)
     setToolTip(text);
 
     if (text_item->boundingRect().height() > r.height()) {
-        // Text is to big for rect
+        // Text is too big for rect
         delete text_item;
         text_item = nullptr;
     }

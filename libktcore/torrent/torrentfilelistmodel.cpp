@@ -167,7 +167,7 @@ bool TorrentFileListModel::setData(const QModelIndex &index, const QVariant &val
         if (tc->getStats().multi_file_torrent) {
             bt::TorrentFileInterface &file = tc->getTorrentFile(index.row());
 
-            // Check if we are not changing into somebody elses path
+            // Check if we are not changing into somebody else's path
             bt::Uint32 num_files = tc->getNumFiles();
             for (bt::Uint32 i = 0; i < num_files; i++) {
                 if ((int)i == index.row())
