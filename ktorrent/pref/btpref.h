@@ -15,7 +15,7 @@ class BTPref : public PrefPageInterface, public Ui_BTPref
 {
     Q_OBJECT
 public:
-    BTPref(QWidget *parent);
+    explicit BTPref(QWidget *parent);
     ~BTPref() override;
 
     void loadSettings() override;

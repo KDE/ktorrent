@@ -21,7 +21,7 @@ class ChunkDownloadModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    ChunkDownloadModel(QObject *parent);
+    explicit ChunkDownloadModel(QObject *parent);
     ~ChunkDownloadModel() override;
 
     /// A peer has been added

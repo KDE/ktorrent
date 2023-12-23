@@ -70,7 +70,7 @@ public:
     /** \brief Constructor
     \param  p Parent
     */
-    ConnsTabPage(QWidget *p);
+    explicit ConnsTabPage(QWidget *p);
     /// Destructor
     ~ConnsTabPage() override;
 

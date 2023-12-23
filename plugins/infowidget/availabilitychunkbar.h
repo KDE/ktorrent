@@ -18,7 +18,7 @@ class AvailabilityChunkBar : public ChunkBar
 {
     Q_OBJECT
 public:
-    AvailabilityChunkBar(QWidget *parent);
+    explicit AvailabilityChunkBar(QWidget *parent);
     ~AvailabilityChunkBar() override;
 
     const bt::BitSet &getBitSet() const override;

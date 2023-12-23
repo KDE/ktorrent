@@ -35,7 +35,7 @@ class Core : public CoreInterface
 {
     Q_OBJECT
 public:
-    Core(GUI *gui);
+    explicit Core(GUI *gui);
     ~Core() override;
 
     // implemented from CoreInterface

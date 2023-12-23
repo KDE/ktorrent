@@ -21,7 +21,7 @@ class ConvertDialog;
 class ConvertThread : public QThread
 {
 public:
-    ConvertThread(ConvertDialog *dlg);
+    explicit ConvertThread(ConvertDialog *dlg);
     ~ConvertThread() override;
 
     void run() override;

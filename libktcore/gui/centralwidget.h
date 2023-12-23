@@ -24,7 +24,7 @@ class KTCORE_EXPORT CentralWidget : public QStackedWidget
 {
     Q_OBJECT
 public:
-    CentralWidget(QWidget *parent);
+    explicit CentralWidget(QWidget *parent);
     ~CentralWidget() override;
 
     /// Add an Activity

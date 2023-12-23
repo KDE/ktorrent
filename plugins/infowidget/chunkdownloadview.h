@@ -26,7 +26,7 @@ class ChunkDownloadView : public QWidget, public Ui_ChunkDownloadView
 {
     Q_OBJECT
 public:
-    ChunkDownloadView(QWidget *parent);
+    explicit ChunkDownloadView(QWidget *parent);
     ~ChunkDownloadView() override;
 
     /// A peer has been added

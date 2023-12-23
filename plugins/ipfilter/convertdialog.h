@@ -22,7 +22,7 @@ class ConvertDialog : public QDialog, public Ui_ConvertDialog
 {
     Q_OBJECT
 public:
-    ConvertDialog(QWidget *parent);
+    explicit ConvertDialog(QWidget *parent);
     ~ConvertDialog() override;
 
     /**

@@ -25,7 +25,7 @@ class KTCORE_EXPORT ActivityPart : public KParts::Part
 {
     Q_OBJECT
 public:
-    ActivityPart(Activity *parent);
+    explicit ActivityPart(Activity *parent);
     ~ActivityPart() override;
 
     /// Set the XML GUI file of the part

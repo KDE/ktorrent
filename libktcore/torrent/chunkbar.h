@@ -34,7 +34,7 @@ class KTCORE_EXPORT ChunkBar : public QFrame, public ChunkBarRenderer
 {
     Q_OBJECT
 public:
-    ChunkBar(QWidget *parent);
+    explicit ChunkBar(QWidget *parent);
     ~ChunkBar() override;
 
     virtual const bt::BitSet &getBitSet() const = 0;

@@ -19,7 +19,7 @@ class BWPrefPage : public PrefPageInterface, public Ui_BWPrefPage
 {
     Q_OBJECT
 public:
-    BWPrefPage(QWidget *parent);
+    explicit BWPrefPage(QWidget *parent);
     ~BWPrefPage() override;
 
     void loadDefaults() override;

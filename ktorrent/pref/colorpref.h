@@ -15,7 +15,7 @@ class ColorPref : public PrefPageInterface, public Ui_ColorPref
 {
     Q_OBJECT
 public:
-    ColorPref(QWidget *parent);
+    explicit ColorPref(QWidget *parent);
     ~ColorPref() override;
 
     void loadSettings() override;

@@ -16,7 +16,7 @@ class AdvancedPref : public PrefPageInterface, public Ui_AdvancedPref
 {
     Q_OBJECT
 public:
-    AdvancedPref(QWidget *parent);
+    explicit AdvancedPref(QWidget *parent);
     ~AdvancedPref() override;
 
     void loadSettings() override;
