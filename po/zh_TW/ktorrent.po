@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-23 01:45+0000\n"
-"PO-Revision-Date: 2023-12-12 18:18+0900\n"
+"PO-Revision-Date: 2023-12-27 17:55+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -4591,7 +4591,7 @@ msgstr "上傳頻寬（kb/s）："
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr ""
+msgstr "啟動時總是最小化到系統匣。"
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
