@@ -9,6 +9,7 @@
 #include <QDir>
 #include <QFileInfo>
 
+#include <KIO/FileCopyJob>
 #include <KIO/Job>
 #include <KLocalizedString>
 

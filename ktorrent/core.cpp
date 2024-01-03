@@ -11,7 +11,8 @@
 #include <QProgressBar>
 
 #include <KIO/CopyJob>
-#include <KIO/Job>
+#include <KIO/StoredTransferJob>
+#include <KIO/TransferJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KStandardGuiItem>

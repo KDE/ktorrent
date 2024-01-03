@@ -17,6 +17,7 @@
 
 #include <KActionCollection>
 #include <KFileWidget>
+#include <KIO/FileCopyJob>
 #include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>

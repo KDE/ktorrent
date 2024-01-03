@@ -8,6 +8,7 @@
 #include <KGuiItem>
 #include <KIO/Job>
 #include <KIO/JobUiDelegate>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KStandardGuiItem>

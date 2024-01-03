@@ -7,6 +7,7 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 
+#include <KIO/FileCopyJob>
 #include <KIO/JobUiDelegate>
 #include <KLocalizedString>
 #include <KMessageBox>

@@ -8,7 +8,7 @@
 #include <QStringRef>
 #include <QXmlStreamReader>
 
-#include <KIO/Job>
+#include <KIO/StoredTransferJob>
 
 #include "searchengine.h"
 #include <util/fileops.h>

@@ -8,8 +8,8 @@
 #include <QMimeType>
 #include <QRegExp>
 
-#include <KIO/Job>
 #include <KIO/JobUiDelegate>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 

@@ -4,7 +4,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include <KIO/Job>
+#include <KIO/StoredTransferJob>
 
 #include "feedretriever.h"
 #include <ktversion.h>

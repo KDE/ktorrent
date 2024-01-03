@@ -6,6 +6,7 @@
 
 #include "opensearchdownloadjob.h"
 #include <KIO/CopyJob>
+#include <KIO/StoredTransferJob>
 #include <util/fileops.h>
 #include <util/log.h>
 
