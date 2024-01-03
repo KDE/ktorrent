@@ -71,7 +71,8 @@ bool passive(TorrentInterface *tor)
     return !active(tor);
 }
 
-template<IsMemberFunction A, IsMemberFunction B> bool member(TorrentInterface *tor)
+template<IsMemberFunction A, IsMemberFunction B>
+bool member(TorrentInterface *tor)
 {
     return A(tor) && B(tor);
 }

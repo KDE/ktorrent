@@ -16,7 +16,8 @@ typedef bool (*IsMemberFunction)(TorrentInterface *tor);
 /**
     Group which calls a function pointer to test for membership
 */
-template<IsMemberFunction fn> class FunctionGroup : public Group
+template<IsMemberFunction fn>
+class FunctionGroup : public Group
 {
 public:
     FunctionGroup(const QString &name, const QString &icon, int flags, const QString &path)

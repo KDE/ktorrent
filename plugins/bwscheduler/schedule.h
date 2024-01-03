@@ -19,7 +19,8 @@ class BListNode;
 
 namespace kt
 {
-template<class T> bool between(T v, T min_val, T max_val)
+template<class T>
+bool between(T v, T min_val, T max_val)
 {
     return v >= min_val && v <= max_val;
 }
@@ -160,7 +161,8 @@ public:
     void clear();
 
     /// Apply an operation on each ScheduleItem
-    template<class Operation> void apply(Operation op)
+    template<class Operation>
+    void apply(Operation op)
     {
         for (ScheduleItem *i : std::as_const(items))
             op(i);

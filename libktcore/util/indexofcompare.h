@@ -8,7 +8,8 @@
 
 namespace kt
 {
-template<class Container, class Item> struct IndexOfCompare {
+template<class Container, class Item>
+struct IndexOfCompare {
     IndexOfCompare(Container *container)
         : container(container)
     {

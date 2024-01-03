@@ -108,7 +108,8 @@ public:
     /**
      * Visit all visible torrents in the model, and apply an action to them
      */
-    template<class Action> void visit(Action &a)
+    template<class Action>
+    void visit(Action &a)
     {
         for (Item *item : std::as_const(torrents)) {
             if (item->visible(group, filter_string))

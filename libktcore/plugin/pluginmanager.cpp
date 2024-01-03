@@ -53,7 +53,6 @@ void PluginManager::loadPluginList()
     prefpage->update();
 }
 
-
 void PluginManager::loadPlugins()
 {
     const KConfigGroup cfg = KSharedConfig::openConfig()->group(QStringLiteral("Plugins"));

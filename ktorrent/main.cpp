@@ -176,7 +176,8 @@ int main(int argc, char **argv)
     KAboutData::setApplicationData(about);
     about.setupCommandLine(&parser);
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("enable-logging"), i18n("Enable logging")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("verbose"), i18n("Enable logging to standard output. Requires --enable-logging to be specified as well.")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("verbose"),
+                                        i18n("Enable logging to standard output. Requires --enable-logging to be specified as well.")));
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("silent"), i18n("Silently open torrent given on URL")));
     parser.addPositionalArgument(QStringLiteral("+[URL]"), i18n("Document to open"));
     parser.process(app);
