@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-23 01:45+0000\n"
+"POT-Creation-Date: 2024-01-03 01:36+0000\n"
 "PO-Revision-Date: 2023-11-21 10:45+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -33,7 +33,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "rinsedevries@kde.nl,mvanvliet@gmail.com,freekdekruijf@kde.nl"
 
-#: ktorrent/core.cpp:143
+#: ktorrent/core.cpp:144
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the TCP port %1 is already "
@@ -42,7 +42,7 @@ msgstr ""
 "KTorrent is op het moment niet in staat om verbindingen aan te nemen omdat "
 "TCP-poort %1 reeds in gebruik is door een ander programma."
 
-#: ktorrent/core.cpp:153
+#: ktorrent/core.cpp:154
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the UDP port %1 is already "
@@ -51,7 +51,7 @@ msgstr ""
 "KTorrent is op het moment niet in staat om verbindingen aan te nemen omdat "
 "UDP-poort %1 reeds in gebruik is door een ander programma."
 
-#: ktorrent/core.cpp:251
+#: ktorrent/core.cpp:252
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -61,17 +61,17 @@ msgstr ""
 "volgende torrents. Het is torrents niet toegestaan naar meer dan één bestand "
 "te schrijven."
 
-#: ktorrent/core.cpp:846
+#: ktorrent/core.cpp:847
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent draait nu één of meerdere torrents"
 
-#: ktorrent/core.cpp:931
+#: ktorrent/core.cpp:932
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "De torrent %1 kan niet worden aangemaakt."
 
-#: ktorrent/core.cpp:1027
+#: ktorrent/core.cpp:1028
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -80,22 +80,22 @@ msgstr ""
 "Een of meer opslagmedia zijn niet aangekoppeld. Om deze torrent te starten "
 "moeten ze aangekoppeld worden."
 
-#: ktorrent/core.cpp:1028
+#: ktorrent/core.cpp:1029
 #, kde-format
 msgid "Retry"
 msgstr "Opnieuw proberen"
 
-#: ktorrent/core.cpp:1034
+#: ktorrent/core.cpp:1035
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "Opslagvolume %1 is niet aangekoppeld"
 
-#: ktorrent/core.cpp:1036
+#: ktorrent/core.cpp:1037
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Opslagvolumes %1 zijn niet aangekoppeld"
 
-#: ktorrent/core.cpp:1047
+#: ktorrent/core.cpp:1048
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -104,22 +104,22 @@ msgstr ""
 "Er ontbreken één of meer gegevensbestanden in de torrent \"%1\".\n"
 "Wilt u deze bestanden opnieuw aanmaken, of wilt u deze niet downloaden?"
 
-#: ktorrent/core.cpp:1055 ktorrent/core.cpp:1063 ktorrent/core.cpp:1073
+#: ktorrent/core.cpp:1056 ktorrent/core.cpp:1064 ktorrent/core.cpp:1074
 #, kde-format
 msgid "Data files are missing"
 msgstr "Bestandsgegevens ontbreken"
 
-#: ktorrent/core.cpp:1062
+#: ktorrent/core.cpp:1063
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "Kan geen ontbrekende bestanden deselecteren: %1"
 
-#: ktorrent/core.cpp:1072
+#: ktorrent/core.cpp:1073
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "Kan de ontbrekende bestanden niet opnieuw aanmaken: %1"
 
-#: ktorrent/core.cpp:1082
+#: ktorrent/core.cpp:1083
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -129,22 +129,22 @@ msgstr ""
 "ontbreekt.\n"
 "Wilt u dit bestand opnieuw aanmaken?"
 
-#: ktorrent/core.cpp:1089 ktorrent/core.cpp:1096
+#: ktorrent/core.cpp:1090 ktorrent/core.cpp:1097
 #, kde-format
 msgid "Data file is missing"
 msgstr "Bestand ontbreekt"
 
-#: ktorrent/core.cpp:1095
+#: ktorrent/core.cpp:1096
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "Kan het bestand %1 niet opnieuw aanmaken."
 
-#: ktorrent/core.cpp:1196
+#: ktorrent/core.cpp:1197
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Ongeldige magneet-bittorrent-koppeling: %1"
 
-#: ktorrent/core.cpp:1199
+#: ktorrent/core.cpp:1200
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -576,19 +576,19 @@ msgstr "Beschikbaar:"
 msgid "After download:"
 msgstr "Na afronden download:"
 
-#: ktorrent/dialogs/importdialog.cpp:196 ktorrent/dialogs/importdialog.cpp:222
+#: ktorrent/dialogs/importdialog.cpp:197 ktorrent/dialogs/importdialog.cpp:223
 #, kde-format
 msgid "Cannot load the torrent file: %1"
 msgstr "Kan torrentbestand niet laden: %1"
 
-#: ktorrent/dialogs/importdialog.cpp:248 plugins/ipfilter/convertthread.cpp:55
+#: ktorrent/dialogs/importdialog.cpp:249 plugins/ipfilter/convertthread.cpp:55
 #: plugins/ipfilter/convertthread.cpp:141
 #: plugins/search/searchenginelist.cpp:157
 #, kde-format
 msgid "Cannot open %1: %2"
 msgstr "Kan %1 niet openen: %2"
 
-#: ktorrent/dialogs/importdialog.cpp:351 ktorrent/dialogs/importdialog.cpp:367
+#: ktorrent/dialogs/importdialog.cpp:352 ktorrent/dialogs/importdialog.cpp:368
 #, kde-format
 msgid "Failed to create %1: %2"
 msgstr "Niet in staat %1 aan te maken: %2"
@@ -781,7 +781,7 @@ msgstr "Stilzwijgend openen"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:256
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Speed Limits"
 msgstr "Snelheidslimieten"
@@ -1291,7 +1291,7 @@ msgstr "Groepsbeleid bewerken"
 msgid "Open In New Tab"
 msgstr "In nieuw tabblad openen"
 
-#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:223
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr "Groep aanmaken"
@@ -1512,13 +1512,13 @@ msgid "Advanced"
 msgstr "Geavanceerd"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
 #, kde-format
 msgid "Open Directory"
 msgstr "Map openen"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
 #, kde-format
 msgid "Add to Group"
 msgstr "Aan groep toevoegen"
@@ -1530,7 +1530,7 @@ msgid "Configure Columns"
 msgstr "Kolommen configureren"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
 #, kde-format
 msgid "Columns"
 msgstr "Kolommen"
@@ -2066,7 +2066,7 @@ msgstr "Overbrengen naar KF6"
 msgid "Enable logging"
 msgstr "Loggen inschakelen"
 
-#: ktorrent/main.cpp:179
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
@@ -2075,12 +2075,12 @@ msgstr ""
 "Loggen naar standaarduitvoer inschakelen. Vereist dat ook --enable-logging "
 "wordt gespecificeerd."
 
-#: ktorrent/main.cpp:180
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "Stilzwijgend torrent uit opgegeven URL-adres openen"
 
-#: ktorrent/main.cpp:181
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid "Document to open"
 msgstr "Te openen document"
@@ -4146,165 +4146,165 @@ msgstr "Fouten: "
 msgid "Filter..."
 msgstr "Filteren..."
 
-#: ktorrent/view/view.cpp:132
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "Starten"
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:134
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "Start alle geselecteerde torrents in de huidige tab"
 
-#: ktorrent/view/view.cpp:139
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "Starten forceren"
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:141
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "Alle geselecteerde torrents in het huidige tabblad geforceerd starten"
 
-#: ktorrent/view/view.cpp:144
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "Stoppen"
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:146
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "Stop alle geselecteerde torrents in de huidige tab"
 
-#: ktorrent/view/view.cpp:151
+#: ktorrent/view/view.cpp:152
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "Pauze"
 
-#: ktorrent/view/view.cpp:153
+#: ktorrent/view/view.cpp:154
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "Pauzeer alle geselecteerde torrents in de huidige tab"
 
-#: ktorrent/view/view.cpp:158
+#: ktorrent/view/view.cpp:159
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: ktorrent/view/view.cpp:160
+#: ktorrent/view/view.cpp:161
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "Verwijder alle geselecteerde torrents in de huidige tab"
 
-#: ktorrent/view/view.cpp:165
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "Alles starten"
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:167
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "Start alle torrents in de huidige tab"
 
-#: ktorrent/view/view.cpp:171
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "Alles stoppen"
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:173
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "Stop alle torrents in de huidige tab"
 
-#: ktorrent/view/view.cpp:177
+#: ktorrent/view/view.cpp:178
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "Torrent en gegevens verwijderen"
 
-#: ktorrent/view/view.cpp:182
+#: ktorrent/view/view.cpp:183
 #, kde-format
 msgid "Rename Torrent"
 msgstr "Torrent hernoemen"
 
-#: ktorrent/view/view.cpp:186
+#: ktorrent/view/view.cpp:187
 #, kde-format
 msgid "Add Peers"
 msgstr "Peers toevoegen"
 
-#: ktorrent/view/view.cpp:190
+#: ktorrent/view/view.cpp:191
 #, kde-format
 msgid "Manual Announce"
 msgstr "Handmatig aankondigen"
 
-#: ktorrent/view/view.cpp:195
+#: ktorrent/view/view.cpp:196
 #, kde-format
 msgid "Scrape"
 msgstr "Scrape"
 
-#: ktorrent/view/view.cpp:199
+#: ktorrent/view/view.cpp:200
 #, kde-format
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: ktorrent/view/view.cpp:203
+#: ktorrent/view/view.cpp:204
 #, kde-format
 msgid "Data Directory"
 msgstr "Opslaglocatie"
 
-#: ktorrent/view/view.cpp:207
+#: ktorrent/view/view.cpp:208
 #, kde-format
 msgid "Temporary Directory"
 msgstr "Tijdelijke gegevensmap"
 
-#: ktorrent/view/view.cpp:211
+#: ktorrent/view/view.cpp:212
 #, kde-format
 msgid "Move Data"
 msgstr "Gegevens verplaatsen"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "Instellingen"
 
-#: ktorrent/view/view.cpp:219
+#: ktorrent/view/view.cpp:220
 #, kde-format
 msgid "Remove from Group"
 msgstr "Uit groep verwijderen"
 
-#: ktorrent/view/view.cpp:227
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check Data"
 msgstr "Gegevens controleren"
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:229
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "Controleer alle gegevens van een torrent"
 
-#: ktorrent/view/view.cpp:248
+#: ktorrent/view/view.cpp:249
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "Kopieer een torrent-URL"
 
-#: ktorrent/view/view.cpp:252
+#: ktorrent/view/view.cpp:253
 #, kde-format
 msgid "Export Torrent"
 msgstr "Torrent exporteren"
 
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:258
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "Stel de snelheidslimieten in van de individuele torrents"
 
-#: ktorrent/view/view.cpp:451
+#: ktorrent/view/view.cpp:452
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
@@ -4313,22 +4313,22 @@ msgstr ""
 "De torrent <b>%1</b> is nog niet klaar met downloaden. Wilt u naast de "
 "torrent ook de incomplete bestandsgegevens verwijderen?"
 
-#: ktorrent/view/view.cpp:456
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Remove Download"
 msgstr "Download verwijderen"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Delete Data"
 msgstr "Gegevens verwijderen"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:459
 #, kde-format
 msgid "Keep Data"
 msgstr "Gegevens behouden"
 
-#: ktorrent/view/view.cpp:482
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
@@ -4337,12 +4337,12 @@ msgstr ""
 "Alle gedownloade gegevens van de volgende torrents zullen verloren gaan. "
 "Wilt u dit doen?"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:484
 #, kde-format
 msgid "Remove Torrent"
 msgstr "Torrent verwijderen"
 
-#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:343
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:343
 #: plugins/infowidget/fileview.cpp:367
 #, kde-format
 msgid "Select a directory to move the data to."
@@ -4614,62 +4614,62 @@ msgstr "Maximum deelverhouding is bereikt."
 msgid "Maximum seed time reached."
 msgstr "Maximum seed-tijd is bereikt."
 
-#: libktcore/groups/groupmanager.cpp:88
+#: libktcore/groups/groupmanager.cpp:89
 #, kde-format
 msgid "Uploads"
 msgstr "Uploads"
 
-#: libktcore/groups/groupmanager.cpp:89
+#: libktcore/groups/groupmanager.cpp:90
 #, kde-format
 msgid "Running Uploads"
 msgstr "Werkende uploads"
 
-#: libktcore/groups/groupmanager.cpp:93
+#: libktcore/groups/groupmanager.cpp:94
 #, kde-format
 msgid "Not Running Uploads"
 msgstr "Niet werkende uploads"
 
-#: libktcore/groups/groupmanager.cpp:99
+#: libktcore/groups/groupmanager.cpp:100
 #, kde-format
 msgid "Downloads"
 msgstr "Downloads"
 
-#: libktcore/groups/groupmanager.cpp:100
+#: libktcore/groups/groupmanager.cpp:101
 #, kde-format
 msgid "Running Downloads"
 msgstr "Werkende downloads"
 
-#: libktcore/groups/groupmanager.cpp:104
+#: libktcore/groups/groupmanager.cpp:105
 #, kde-format
 msgid "Not Running Downloads"
 msgstr "Niet werkende downloads"
 
-#: libktcore/groups/groupmanager.cpp:109
+#: libktcore/groups/groupmanager.cpp:110
 #, kde-format
 msgid "Active Torrents"
 msgstr "Actieve torrents"
 
-#: libktcore/groups/groupmanager.cpp:110
+#: libktcore/groups/groupmanager.cpp:111
 #, kde-format
 msgid "Active Downloads"
 msgstr "Actieve downloads"
 
-#: libktcore/groups/groupmanager.cpp:114
+#: libktcore/groups/groupmanager.cpp:115
 #, kde-format
 msgid "Active Uploads"
 msgstr "Actieve uploads"
 
-#: libktcore/groups/groupmanager.cpp:119
+#: libktcore/groups/groupmanager.cpp:120
 #, kde-format
 msgid "Passive Torrents"
 msgstr "Inactieve torrents"
 
-#: libktcore/groups/groupmanager.cpp:120
+#: libktcore/groups/groupmanager.cpp:121
 #, kde-format
 msgid "Passive Downloads"
 msgstr "Inactieve downloads"
 
-#: libktcore/groups/groupmanager.cpp:124
+#: libktcore/groups/groupmanager.cpp:125
 #, kde-format
 msgid "Passive Uploads"
 msgstr "Inactieve uploads"
@@ -6324,42 +6324,42 @@ msgstr "txt-bestand wordt geladen..."
 msgid "There are no IP addresses to convert in %1"
 msgstr "Er zijn geen IP-adressen om te converteren in %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:67
-#: plugins/ipfilter/downloadandconvertjob.cpp:101
-#: plugins/ipfilter/downloadandconvertjob.cpp:161
-#: plugins/ipfilter/downloadandconvertjob.cpp:223
+#: plugins/ipfilter/downloadandconvertjob.cpp:68
+#: plugins/ipfilter/downloadandconvertjob.cpp:102
+#: plugins/ipfilter/downloadandconvertjob.cpp:162
+#: plugins/ipfilter/downloadandconvertjob.cpp:224
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
 msgstr "Automatisch bijwerken van het IP-filter is mislukt: %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:123
+#: plugins/ipfilter/downloadandconvertjob.cpp:124
 #, kde-format
 msgid "7z files are not supported"
 msgstr "7z-bestanden worden niet ondersteund"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:142
+#: plugins/ipfilter/downloadandconvertjob.cpp:143
 #, kde-format
 msgid "Cannot determine file type of <b>%1</b>"
 msgstr "Kan het type bestand van <b>%1</b> niet bepalen"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:174
+#: plugins/ipfilter/downloadandconvertjob.cpp:175
 #, kde-format
 msgid "Cannot open zip file %1."
 msgstr "Kan zip-bestand %1 niet openen."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:176
+#: plugins/ipfilter/downloadandconvertjob.cpp:177
 #, kde-format
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
 msgstr ""
 "Automatisch bijwerken van het IP-filter is mislukt:  kan zip-bestand %1 niet "
 "openen"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:196
+#: plugins/ipfilter/downloadandconvertjob.cpp:197
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
 msgstr "Kan de bloklijst niet vinden in zip-bestand %1."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:198
+#: plugins/ipfilter/downloadandconvertjob.cpp:199
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
@@ -7000,9 +7000,9 @@ msgid "Scan directories recursively."
 msgstr "Mappen recursief scannen."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:142
+#: plugins/scanfolder/torrentloadqueue.cpp:140
+#: plugins/scanfolder/torrentloadqueue.cpp:143
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"

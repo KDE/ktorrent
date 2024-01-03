@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-23 01:45+0000\n"
+"POT-Creation-Date: 2024-01-03 01:36+0000\n"
 "PO-Revision-Date: 2021-09-04 09:12+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -40,7 +40,7 @@ msgstr ""
 "sng@hellug.gr, manolis@koppermind.homelinux.org, gpantsis@gmail.com, "
 "christos.kotsaris@gmail.com, pvidalis@gmail.com"
 
-#: ktorrent/core.cpp:143
+#: ktorrent/core.cpp:144
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the TCP port %1 is already "
@@ -49,7 +49,7 @@ msgstr ""
 "Το KTorrent δεν μπορεί να δεχτεί συνδέσεις γιατί η TCP θύρα %1 ήδη "
 "χρησιμοποιούνται από άλλο πρόγραμμα."
 
-#: ktorrent/core.cpp:153
+#: ktorrent/core.cpp:154
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the UDP port %1 is already "
@@ -58,7 +58,7 @@ msgstr ""
 "Το KTorrent δεν μπορεί να δεχτεί συνδέσεις γιατί η UDP θύρα %1 ήδη "
 "χρησιμοποιείται από άλλο πρόγραμμα."
 
-#: ktorrent/core.cpp:251
+#: ktorrent/core.cpp:252
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -68,17 +68,17 @@ msgstr ""
 "περισσότερων αρχείων με τα ακόλουθα torrents. Δεν επιτρέπεται στα torrents "
 "να γράφουν στα ίδια αρχεία. "
 
-#: ktorrent/core.cpp:846
+#: ktorrent/core.cpp:847
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "Το KTorrent εκτελεί ένα ή περισσότερα torrent"
 
-#: ktorrent/core.cpp:931
+#: ktorrent/core.cpp:932
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "Αδυναμία δημιουργίας torrent: %1"
 
-#: ktorrent/core.cpp:1027
+#: ktorrent/core.cpp:1028
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -87,22 +87,22 @@ msgstr ""
 "Ένας ή περισσότεροι τόμοι αποθήκευσης δεν έχουν προσαρτηθεί. Για να "
 "ξεκινήσει αυτό το torrent, θα χρειαστεί να προσαρτηθούν."
 
-#: ktorrent/core.cpp:1028
+#: ktorrent/core.cpp:1029
 #, kde-format
 msgid "Retry"
 msgstr "Επανάληψη"
 
-#: ktorrent/core.cpp:1034
+#: ktorrent/core.cpp:1035
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "Ο τόμος αποθήκευσης %1 δεν έχει προσαρτηθεί"
 
-#: ktorrent/core.cpp:1036
+#: ktorrent/core.cpp:1037
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Οι τόμοι αποθήκευσης %1 δεν έχουν προσαρτηθεί"
 
-#: ktorrent/core.cpp:1047
+#: ktorrent/core.cpp:1048
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -111,22 +111,22 @@ msgstr ""
 "Αρκετά από τα αρχεία δεδομένων του torrent \"%1\" δεν υπάρχουν. \n"
 "Επιθυμείτε την αναδημιουργία τους, ή να μη γίνει λήψη τους;"
 
-#: ktorrent/core.cpp:1055 ktorrent/core.cpp:1063 ktorrent/core.cpp:1073
+#: ktorrent/core.cpp:1056 ktorrent/core.cpp:1064 ktorrent/core.cpp:1074
 #, kde-format
 msgid "Data files are missing"
 msgstr "Λείπουν αρχεία δεδομένων"
 
-#: ktorrent/core.cpp:1062
+#: ktorrent/core.cpp:1063
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "Αδυναμία αποεπιλογής των αρχείων που λείπουν: %1"
 
-#: ktorrent/core.cpp:1072
+#: ktorrent/core.cpp:1073
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "Αδυναμία αναδημιουργίας των αρχείων που λείπουν: %1"
 
-#: ktorrent/core.cpp:1082
+#: ktorrent/core.cpp:1083
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -135,22 +135,22 @@ msgstr ""
 "Το αρχείο στο οποίο αποθηκεύτηκαν τα δεδομένα του torrent \"%1\" λείπει.\n"
 "Επιθυμείτε την αναδημιουργία του;"
 
-#: ktorrent/core.cpp:1089 ktorrent/core.cpp:1096
+#: ktorrent/core.cpp:1090 ktorrent/core.cpp:1097
 #, kde-format
 msgid "Data file is missing"
 msgstr "Λείπει το αρχείο δεδομένων"
 
-#: ktorrent/core.cpp:1095
+#: ktorrent/core.cpp:1096
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "Αδυναμία αναδημιουργίας του αρχείου δεδομένων: %1"
 
-#: ktorrent/core.cpp:1196
+#: ktorrent/core.cpp:1197
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Μη έγκυρος σύνδεσμος μαγνήτης bittorrent: %1"
 
-#: ktorrent/core.cpp:1199
+#: ktorrent/core.cpp:1200
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -587,19 +587,19 @@ msgstr "Διαθέσιμος:"
 msgid "After download:"
 msgstr "Μετά τη λήψη:"
 
-#: ktorrent/dialogs/importdialog.cpp:196 ktorrent/dialogs/importdialog.cpp:222
+#: ktorrent/dialogs/importdialog.cpp:197 ktorrent/dialogs/importdialog.cpp:223
 #, kde-format
 msgid "Cannot load the torrent file: %1"
 msgstr "Αδυναμία φόρτωσης του αρχείου torrent: %1"
 
-#: ktorrent/dialogs/importdialog.cpp:248 plugins/ipfilter/convertthread.cpp:55
+#: ktorrent/dialogs/importdialog.cpp:249 plugins/ipfilter/convertthread.cpp:55
 #: plugins/ipfilter/convertthread.cpp:141
 #: plugins/search/searchenginelist.cpp:157
 #, kde-format
 msgid "Cannot open %1: %2"
 msgstr "Αδυναμία ανοίγματος του αρχείου %1: %2"
 
-#: ktorrent/dialogs/importdialog.cpp:351 ktorrent/dialogs/importdialog.cpp:367
+#: ktorrent/dialogs/importdialog.cpp:352 ktorrent/dialogs/importdialog.cpp:368
 #, kde-format
 msgid "Failed to create %1: %2"
 msgstr "Αδυναμία δημιουργίας του %1: %2"
@@ -790,7 +790,7 @@ msgstr "Σιωπηλό άνοιγμα"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:256
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Speed Limits"
 msgstr "Όρια ταχύτητας"
@@ -1298,7 +1298,7 @@ msgstr "Επεξεργασία πολιτικής ομάδας"
 msgid "Open In New Tab"
 msgstr "Άνοιγμα σε νέα καρτέλα"
 
-#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:223
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr "Νέα ομάδα"
@@ -1520,13 +1520,13 @@ msgid "Advanced"
 msgstr "Για προχωρημένους"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
 #, kde-format
 msgid "Open Directory"
 msgstr "Άνοιγμα καταλόγου"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
 #, kde-format
 msgid "Add to Group"
 msgstr "Προσθήκη στην ομάδα"
@@ -1538,7 +1538,7 @@ msgid "Configure Columns"
 msgstr "Διαμόρφωση στηλών"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
 #, kde-format
 msgid "Columns"
 msgstr "Στήλες"
@@ -2076,19 +2076,19 @@ msgstr "Μεταφορά στο KF5"
 msgid "Enable logging"
 msgstr "Ενεργοποίηση όλων"
 
-#: ktorrent/main.cpp:179
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
 
-#: ktorrent/main.cpp:180
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "Σιωπηλό άνοιγμα torrent με δοσμένο το URL"
 
-#: ktorrent/main.cpp:181
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid "Document to open"
 msgstr "Έγγραφο για άνοιγμα"
@@ -4175,166 +4175,166 @@ msgstr "Σφάλματα:"
 msgid "Filter..."
 msgstr "Φιλτράρισμα..."
 
-#: ktorrent/view/view.cpp:132
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "Έναρξη"
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:134
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "Έναρξη όλων των επιλεγμένων torrent στην τρέχουσα καρτέλα"
 
-#: ktorrent/view/view.cpp:139
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "Εξαναγκασμός έναρξης"
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:141
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr ""
 "Εξαναγκασμός έναρξης όλων των επιλεγμένων torrent στην τρέχουσα καρτέλα"
 
-#: ktorrent/view/view.cpp:144
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "Διακοπή"
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:146
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "Διακοπή όλων των επιλεγμένων torrent στην τρέχουσα καρτέλα"
 
-#: ktorrent/view/view.cpp:151
+#: ktorrent/view/view.cpp:152
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "Παύση"
 
-#: ktorrent/view/view.cpp:153
+#: ktorrent/view/view.cpp:154
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "Παύση όλων των επιλεγμένων torrent στην τρέχουσα καρτέλα"
 
-#: ktorrent/view/view.cpp:158
+#: ktorrent/view/view.cpp:159
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: ktorrent/view/view.cpp:160
+#: ktorrent/view/view.cpp:161
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "Αφαίρεση όλων των επιλεγμένων torrent στην τρέχουσα καρτέλα"
 
-#: ktorrent/view/view.cpp:165
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "Έναρξη όλων"
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:167
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "Έναρξη όλων των torrent στην τρέχουσα καρτέλα"
 
-#: ktorrent/view/view.cpp:171
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "Διακοπή όλων"
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:173
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "Διακοπή όλων των torrent στην τρέχουσα καρτέλα"
 
-#: ktorrent/view/view.cpp:177
+#: ktorrent/view/view.cpp:178
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "Αφαίρεση Torrent και δεδομένων"
 
-#: ktorrent/view/view.cpp:182
+#: ktorrent/view/view.cpp:183
 #, kde-format
 msgid "Rename Torrent"
 msgstr "Μετονομασία Torrent"
 
-#: ktorrent/view/view.cpp:186
+#: ktorrent/view/view.cpp:187
 #, kde-format
 msgid "Add Peers"
 msgstr "Προσθήκη ομότιμων κόμβων"
 
-#: ktorrent/view/view.cpp:190
+#: ktorrent/view/view.cpp:191
 #, kde-format
 msgid "Manual Announce"
 msgstr "Χειροκίνητη ανακοίνωση"
 
-#: ktorrent/view/view.cpp:195
+#: ktorrent/view/view.cpp:196
 #, kde-format
 msgid "Scrape"
 msgstr "Αναγκαστική συγκέντρωση"
 
-#: ktorrent/view/view.cpp:199
+#: ktorrent/view/view.cpp:200
 #, kde-format
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
-#: ktorrent/view/view.cpp:203
+#: ktorrent/view/view.cpp:204
 #, kde-format
 msgid "Data Directory"
 msgstr "Κατάλογος δεδομένων"
 
-#: ktorrent/view/view.cpp:207
+#: ktorrent/view/view.cpp:208
 #, kde-format
 msgid "Temporary Directory"
 msgstr "Προσωρινός κατάλογος"
 
-#: ktorrent/view/view.cpp:211
+#: ktorrent/view/view.cpp:212
 #, kde-format
 msgid "Move Data"
 msgstr "Μετακίνηση δεδομένων"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: ktorrent/view/view.cpp:219
+#: ktorrent/view/view.cpp:220
 #, kde-format
 msgid "Remove from Group"
 msgstr "Αφαίρεση από ομάδα"
 
-#: ktorrent/view/view.cpp:227
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check Data"
 msgstr "Έλεγχος δεδομένων"
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:229
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "Έλεγχος όλων των δεδομένων ενός torrent"
 
-#: ktorrent/view/view.cpp:248
+#: ktorrent/view/view.cpp:249
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "Αντιγραφή URL του torrent"
 
-#: ktorrent/view/view.cpp:252
+#: ktorrent/view/view.cpp:253
 #, kde-format
 msgid "Export Torrent"
 msgstr "Εξαγωγή torrent"
 
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:258
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "Ορισμός των ορίων ταχύτητας μεμονωμένων torrent"
 
-#: ktorrent/view/view.cpp:451
+#: ktorrent/view/view.cpp:452
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
@@ -4343,22 +4343,22 @@ msgstr ""
 "Το torrent <b>%1</b> δεν ολοκλήρωσε τη λήψη του, επιθυμείτε επίσης τη "
 "διαγραφή των μη ολοκληρωμένων δεδομένων;"
 
-#: ktorrent/view/view.cpp:456
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Remove Download"
 msgstr "Αφαίρεση λήψης"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Delete Data"
 msgstr "Διαγραφή δεδομένων"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:459
 #, kde-format
 msgid "Keep Data"
 msgstr "Διατήρηση δεδομένων"
 
-#: ktorrent/view/view.cpp:482
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
@@ -4367,12 +4367,12 @@ msgstr ""
 "Θα χάσετε όλα τα δεδομένα που έχουν ληφθεί των ακόλουθων torrent. Είστε "
 "βέβαιοι ότι θέλετε να το κάνετε αυτό;"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:484
 #, kde-format
 msgid "Remove Torrent"
 msgstr "Αφαίρεση Torrent"
 
-#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:343
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:343
 #: plugins/infowidget/fileview.cpp:367
 #, kde-format
 msgid "Select a directory to move the data to."
@@ -4642,62 +4642,62 @@ msgstr "Στο όριο της μέγιστης αναλογίας διαμοι�
 msgid "Maximum seed time reached."
 msgstr "Στο όριο του μέγιστου χρόνου προσφοράς πηγής."
 
-#: libktcore/groups/groupmanager.cpp:88
+#: libktcore/groups/groupmanager.cpp:89
 #, kde-format
 msgid "Uploads"
 msgstr "Αποστολές"
 
-#: libktcore/groups/groupmanager.cpp:89
+#: libktcore/groups/groupmanager.cpp:90
 #, kde-format
 msgid "Running Uploads"
 msgstr "Εκτελούνται αποστολές"
 
-#: libktcore/groups/groupmanager.cpp:93
+#: libktcore/groups/groupmanager.cpp:94
 #, kde-format
 msgid "Not Running Uploads"
 msgstr "Δεν εκτελούνται αποστολές"
 
-#: libktcore/groups/groupmanager.cpp:99
+#: libktcore/groups/groupmanager.cpp:100
 #, kde-format
 msgid "Downloads"
 msgstr "Λήψεις"
 
-#: libktcore/groups/groupmanager.cpp:100
+#: libktcore/groups/groupmanager.cpp:101
 #, kde-format
 msgid "Running Downloads"
 msgstr "Εκτελούνται λήψεις"
 
-#: libktcore/groups/groupmanager.cpp:104
+#: libktcore/groups/groupmanager.cpp:105
 #, kde-format
 msgid "Not Running Downloads"
 msgstr "Δεν εκτελούνται λήψεις"
 
-#: libktcore/groups/groupmanager.cpp:109
+#: libktcore/groups/groupmanager.cpp:110
 #, kde-format
 msgid "Active Torrents"
 msgstr "Ενεργά torrents"
 
-#: libktcore/groups/groupmanager.cpp:110
+#: libktcore/groups/groupmanager.cpp:111
 #, kde-format
 msgid "Active Downloads"
 msgstr "Ενεργές λήψεις"
 
-#: libktcore/groups/groupmanager.cpp:114
+#: libktcore/groups/groupmanager.cpp:115
 #, kde-format
 msgid "Active Uploads"
 msgstr "Ενεργές αποστολές"
 
-#: libktcore/groups/groupmanager.cpp:119
+#: libktcore/groups/groupmanager.cpp:120
 #, kde-format
 msgid "Passive Torrents"
 msgstr "Παθητικά torrent"
 
-#: libktcore/groups/groupmanager.cpp:120
+#: libktcore/groups/groupmanager.cpp:121
 #, kde-format
 msgid "Passive Downloads"
 msgstr "Παθητικές λήψεις"
 
-#: libktcore/groups/groupmanager.cpp:124
+#: libktcore/groups/groupmanager.cpp:125
 #, kde-format
 msgid "Passive Uploads"
 msgstr "Παθητικές αποστολές"
@@ -6356,42 +6356,42 @@ msgstr "Φόρτωση txt αρχείου κειμένου..."
 msgid "There are no IP addresses to convert in %1"
 msgstr "Δεν υπάρχουν διευθύνσεις IP για μετατροπή σε %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:67
-#: plugins/ipfilter/downloadandconvertjob.cpp:101
-#: plugins/ipfilter/downloadandconvertjob.cpp:161
-#: plugins/ipfilter/downloadandconvertjob.cpp:223
+#: plugins/ipfilter/downloadandconvertjob.cpp:68
+#: plugins/ipfilter/downloadandconvertjob.cpp:102
+#: plugins/ipfilter/downloadandconvertjob.cpp:162
+#: plugins/ipfilter/downloadandconvertjob.cpp:224
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
 msgstr "Αποτυχία αυτόματης ενημέρωσης του IP φίλτρου: %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:123
+#: plugins/ipfilter/downloadandconvertjob.cpp:124
 #, kde-format
 msgid "7z files are not supported"
 msgstr "Τα αρχεία 7z δεν υποστηρίζονται"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:142
+#: plugins/ipfilter/downloadandconvertjob.cpp:143
 #, kde-format
 msgid "Cannot determine file type of <b>%1</b>"
 msgstr "Αδυναμία προσδιορισμού του τύπου αρχείου για το <b>%1</b>"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:174
+#: plugins/ipfilter/downloadandconvertjob.cpp:175
 #, kde-format
 msgid "Cannot open zip file %1."
 msgstr "Αδυναμία ανοίγματος του zip αρχείου %1."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:176
+#: plugins/ipfilter/downloadandconvertjob.cpp:177
 #, kde-format
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
 msgstr ""
 "Αποτυχία αυτόματης ενημέρωσης του IP φίλτρου: αδυναμία ανοίγματος του zip "
 "αρχείου %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:196
+#: plugins/ipfilter/downloadandconvertjob.cpp:197
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
 msgstr "Αδυναμία εύρεσης λίστας μπλοκαρίσματος στο zip αρχείο %1."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:198
+#: plugins/ipfilter/downloadandconvertjob.cpp:199
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
@@ -7033,9 +7033,9 @@ msgid "Scan directories recursively."
 msgstr "Αναδρομική σάρωση καταλόγων."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:142
+#: plugins/scanfolder/torrentloadqueue.cpp:140
+#: plugins/scanfolder/torrentloadqueue.cpp:143
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"

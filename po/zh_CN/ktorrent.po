@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-23 01:45+0000\n"
+"POT-Creation-Date: 2024-01-03 01:36+0000\n"
 "PO-Revision-Date: 2023-12-30 13:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -27,21 +27,21 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde-china@kde.org, i@marguerite.su"
 
-#: ktorrent/core.cpp:143
+#: ktorrent/core.cpp:144
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the TCP port %1 is already "
 "in use by another program."
 msgstr "KTorrent 无法接受连接，因为 TCP 端口 %1 已被其他程序占用。"
 
-#: ktorrent/core.cpp:153
+#: ktorrent/core.cpp:154
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the UDP port %1 is already "
 "in use by another program."
 msgstr "KTorrent 无法接受连接，因为 UDP 端口 %1 已被其他程序占用。"
 
-#: ktorrent/core.cpp:251
+#: ktorrent/core.cpp:252
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -50,39 +50,39 @@ msgstr ""
 "若打开种子 <b>%1</b> 将与以下种子共享一个或多个文件。种子间不允许写入相同文"
 "件。"
 
-#: ktorrent/core.cpp:846
+#: ktorrent/core.cpp:847
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent 正在运行一个或多个种子下载"
 
-#: ktorrent/core.cpp:931
+#: ktorrent/core.cpp:932
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "无法创建种子：%1"
 
-#: ktorrent/core.cpp:1027
+#: ktorrent/core.cpp:1028
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
 "they need to be mounted."
 msgstr "一个或多个存储卷未挂载。需要挂载它们才能启动该种子的下载。"
 
-#: ktorrent/core.cpp:1028
+#: ktorrent/core.cpp:1029
 #, kde-format
 msgid "Retry"
 msgstr "重试"
 
-#: ktorrent/core.cpp:1034
+#: ktorrent/core.cpp:1035
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "存储卷 %1 未挂载"
 
-#: ktorrent/core.cpp:1036
+#: ktorrent/core.cpp:1037
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "存储卷 %1 未挂载"
 
-#: ktorrent/core.cpp:1047
+#: ktorrent/core.cpp:1048
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -91,22 +91,22 @@ msgstr ""
 "种子 \"%1\" 的一些数据文件缺失。\n"
 "您想要重新创建它们，还是不再下载它们？"
 
-#: ktorrent/core.cpp:1055 ktorrent/core.cpp:1063 ktorrent/core.cpp:1073
+#: ktorrent/core.cpp:1056 ktorrent/core.cpp:1064 ktorrent/core.cpp:1074
 #, kde-format
 msgid "Data files are missing"
 msgstr "数据文件缺失"
 
-#: ktorrent/core.cpp:1062
+#: ktorrent/core.cpp:1063
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "无法反选缺失的文件：%1"
 
-#: ktorrent/core.cpp:1072
+#: ktorrent/core.cpp:1073
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "无法重建缺失的文件：%1"
 
-#: ktorrent/core.cpp:1082
+#: ktorrent/core.cpp:1083
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -115,22 +115,22 @@ msgstr ""
 "种子 \"%1\" 的数据保存位置文件已丢失。\n"
 "您想要重新创建它吗？"
 
-#: ktorrent/core.cpp:1089 ktorrent/core.cpp:1096
+#: ktorrent/core.cpp:1090 ktorrent/core.cpp:1097
 #, kde-format
 msgid "Data file is missing"
 msgstr "数据文件缺失"
 
-#: ktorrent/core.cpp:1095
+#: ktorrent/core.cpp:1096
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "无法重建数据文件：%1"
 
-#: ktorrent/core.cpp:1196
+#: ktorrent/core.cpp:1197
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "无效的磁力 Bittorrent 链接：%1"
 
-#: ktorrent/core.cpp:1199
+#: ktorrent/core.cpp:1200
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -544,19 +544,19 @@ msgstr "可用："
 msgid "After download:"
 msgstr "下载后："
 
-#: ktorrent/dialogs/importdialog.cpp:196 ktorrent/dialogs/importdialog.cpp:222
+#: ktorrent/dialogs/importdialog.cpp:197 ktorrent/dialogs/importdialog.cpp:223
 #, kde-format
 msgid "Cannot load the torrent file: %1"
 msgstr "无法加载种子文件：%1"
 
-#: ktorrent/dialogs/importdialog.cpp:248 plugins/ipfilter/convertthread.cpp:55
+#: ktorrent/dialogs/importdialog.cpp:249 plugins/ipfilter/convertthread.cpp:55
 #: plugins/ipfilter/convertthread.cpp:141
 #: plugins/search/searchenginelist.cpp:157
 #, kde-format
 msgid "Cannot open %1: %2"
 msgstr "无法打开 %1：%2"
 
-#: ktorrent/dialogs/importdialog.cpp:351 ktorrent/dialogs/importdialog.cpp:367
+#: ktorrent/dialogs/importdialog.cpp:352 ktorrent/dialogs/importdialog.cpp:368
 #, kde-format
 msgid "Failed to create %1: %2"
 msgstr "创建 %1 失败：%2"
@@ -742,7 +742,7 @@ msgstr "以静默方式打开"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
-#: ktorrent/view/view.cpp:256
+#: ktorrent/view/view.cpp:257
 #, kde-format
 msgid "Speed Limits"
 msgstr "速度限制"
@@ -1243,7 +1243,7 @@ msgstr "编辑组策略"
 msgid "Open In New Tab"
 msgstr "在新标签页中打开"
 
-#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:223
+#: ktorrent/groups/groupview.cpp:70 ktorrent/view/view.cpp:224
 #, kde-format
 msgid "New Group"
 msgstr "新建组"
@@ -1461,13 +1461,13 @@ msgid "Advanced"
 msgstr "高级"
 
 #. i18n: ectx: Menu (OpenDirMenu)
-#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:242
+#: ktorrent/kttorrentactivityui.rc:63 ktorrent/view/view.cpp:243
 #, kde-format
 msgid "Open Directory"
 msgstr "打开目录"
 
 #. i18n: ectx: Menu (GroupsSubMenu)
-#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:245
+#: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
 #, kde-format
 msgid "Add to Group"
 msgstr "添加到组"
@@ -1479,7 +1479,7 @@ msgid "Configure Columns"
 msgstr "配置栏"
 
 #. i18n: ectx: Menu (ColumnsMenu)
-#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:90
+#: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
 #, kde-format
 msgid "Columns"
 msgstr "列"
@@ -2005,19 +2005,19 @@ msgstr "KF6 移植"
 msgid "Enable logging"
 msgstr "启用日志记录"
 
-#: ktorrent/main.cpp:179
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
 
-#: ktorrent/main.cpp:180
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "静默打开地址给出的种子"
 
-#: ktorrent/main.cpp:181
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid "Document to open"
 msgstr "要打开的文档"
@@ -3964,199 +3964,199 @@ msgstr "错误："
 msgid "Filter..."
 msgstr "过滤..."
 
-#: ktorrent/view/view.cpp:132
+#: ktorrent/view/view.cpp:133
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
 msgstr "开始"
 
-#: ktorrent/view/view.cpp:133
+#: ktorrent/view/view.cpp:134
 #, kde-format
 msgid "Start all selected torrents in the current tab"
 msgstr "启动当前标签页中全部选定种子"
 
-#: ktorrent/view/view.cpp:139
+#: ktorrent/view/view.cpp:140
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
 msgstr "强制开始"
 
-#: ktorrent/view/view.cpp:140
+#: ktorrent/view/view.cpp:141
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
 msgstr "强制开始当前标签页中的全部选定种子"
 
-#: ktorrent/view/view.cpp:144
+#: ktorrent/view/view.cpp:145
 #, kde-format
 msgctxt "@action Stop all selected torrents in the current tab"
 msgid "Stop"
 msgstr "停止"
 
-#: ktorrent/view/view.cpp:145
+#: ktorrent/view/view.cpp:146
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
 msgstr "停止当前标签页中的全部选定种子"
 
-#: ktorrent/view/view.cpp:151
+#: ktorrent/view/view.cpp:152
 #, kde-format
 msgctxt "@action Pause all selected torrents in the current tab"
 msgid "Pause"
 msgstr "暂停"
 
-#: ktorrent/view/view.cpp:153
+#: ktorrent/view/view.cpp:154
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
 msgstr "暂停当前标签页中的全部选定种子"
 
-#: ktorrent/view/view.cpp:158
+#: ktorrent/view/view.cpp:159
 #, kde-format
 msgctxt "@action Remove all selected torrents in the current tab"
 msgid "Remove"
 msgstr "移除"
 
-#: ktorrent/view/view.cpp:160
+#: ktorrent/view/view.cpp:161
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
 msgstr "移除当前标签页中的全部选定种子"
 
-#: ktorrent/view/view.cpp:165
+#: ktorrent/view/view.cpp:166
 #, kde-format
 msgctxt "@action Start all torrents in the current tab"
 msgid "Start All"
 msgstr "全部开始"
 
-#: ktorrent/view/view.cpp:166
+#: ktorrent/view/view.cpp:167
 #, kde-format
 msgid "Start all torrents in the current tab"
 msgstr "启动当前标签页中的全部种子"
 
-#: ktorrent/view/view.cpp:171
+#: ktorrent/view/view.cpp:172
 #, kde-format
 msgctxt "@action Stop all torrents in the current tab"
 msgid "Stop All"
 msgstr "全部停止"
 
-#: ktorrent/view/view.cpp:172
+#: ktorrent/view/view.cpp:173
 #, kde-format
 msgid "Stop all torrents in the current tab"
 msgstr "停止当前标签页中的全部种子"
 
-#: ktorrent/view/view.cpp:177
+#: ktorrent/view/view.cpp:178
 #, kde-format
 msgid "Remove Torrent and Data"
 msgstr "移除种子和数据"
 
-#: ktorrent/view/view.cpp:182
+#: ktorrent/view/view.cpp:183
 #, kde-format
 msgid "Rename Torrent"
 msgstr "重命名种子"
 
-#: ktorrent/view/view.cpp:186
+#: ktorrent/view/view.cpp:187
 #, kde-format
 msgid "Add Peers"
 msgstr "增加对等点"
 
-#: ktorrent/view/view.cpp:190
+#: ktorrent/view/view.cpp:191
 #, kde-format
 msgid "Manual Announce"
 msgstr "手动通告"
 
-#: ktorrent/view/view.cpp:195
+#: ktorrent/view/view.cpp:196
 #, kde-format
 msgid "Scrape"
 msgstr "擦除"
 
-#: ktorrent/view/view.cpp:199
+#: ktorrent/view/view.cpp:200
 #, kde-format
 msgid "Preview"
 msgstr "预览"
 
-#: ktorrent/view/view.cpp:203
+#: ktorrent/view/view.cpp:204
 #, kde-format
 msgid "Data Directory"
 msgstr "数据目录"
 
-#: ktorrent/view/view.cpp:207
+#: ktorrent/view/view.cpp:208
 #, kde-format
 msgid "Temporary Directory"
 msgstr "临时目录"
 
-#: ktorrent/view/view.cpp:211
+#: ktorrent/view/view.cpp:212
 #, kde-format
 msgid "Move Data"
 msgstr "移动数据"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
-#: ktorrent/view/view.cpp:215 plugins/stats/Settings.ui:13
+#: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
 msgstr "设置"
 
-#: ktorrent/view/view.cpp:219
+#: ktorrent/view/view.cpp:220
 #, kde-format
 msgid "Remove from Group"
 msgstr "从组中移除"
 
-#: ktorrent/view/view.cpp:227
+#: ktorrent/view/view.cpp:228
 #, kde-format
 msgid "Check Data"
 msgstr "检查数据"
 
-#: ktorrent/view/view.cpp:228
+#: ktorrent/view/view.cpp:229
 #, kde-format
 msgid "Check all the data of a torrent"
 msgstr "检查种子的全部数据"
 
-#: ktorrent/view/view.cpp:248
+#: ktorrent/view/view.cpp:249
 #, kde-format
 msgid "Copy Torrent URL"
 msgstr "复制种子地址"
 
-#: ktorrent/view/view.cpp:252
+#: ktorrent/view/view.cpp:253
 #, kde-format
 msgid "Export Torrent"
 msgstr "导出种子"
 
-#: ktorrent/view/view.cpp:257
+#: ktorrent/view/view.cpp:258
 #, kde-format
 msgid "Set the speed limits of individual torrents"
 msgstr "为单个种子设定速度限制"
 
-#: ktorrent/view/view.cpp:451
+#: ktorrent/view/view.cpp:452
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
 "the incomplete data, too?"
 msgstr "种子 <b>%1</b> 尚未完成下载，您是否想要同时删除未完成的数据？"
 
-#: ktorrent/view/view.cpp:456
+#: ktorrent/view/view.cpp:457
 #, kde-format
 msgid "Remove Download"
 msgstr "移除下载"
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Delete Data"
 msgstr "删除数据"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:459
 #, kde-format
 msgid "Keep Data"
 msgstr "保留数据"
 
-#: ktorrent/view/view.cpp:482
+#: ktorrent/view/view.cpp:483
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr "您将丢失以下种子的全部已下载数据。您确定要这么做吗？"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:484
 #, kde-format
 msgid "Remove Torrent"
 msgstr "移除种子"
 
-#: ktorrent/view/view.cpp:574 plugins/infowidget/fileview.cpp:343
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:343
 #: plugins/infowidget/fileview.cpp:367
 #, kde-format
 msgid "Select a directory to move the data to."
@@ -4417,62 +4417,62 @@ msgstr "达到的最高分享率。"
 msgid "Maximum seed time reached."
 msgstr "达到的最大做种时间。"
 
-#: libktcore/groups/groupmanager.cpp:88
+#: libktcore/groups/groupmanager.cpp:89
 #, kde-format
 msgid "Uploads"
 msgstr "上传"
 
-#: libktcore/groups/groupmanager.cpp:89
+#: libktcore/groups/groupmanager.cpp:90
 #, kde-format
 msgid "Running Uploads"
 msgstr "正运行上传"
 
-#: libktcore/groups/groupmanager.cpp:93
+#: libktcore/groups/groupmanager.cpp:94
 #, kde-format
 msgid "Not Running Uploads"
 msgstr "未运行上传"
 
-#: libktcore/groups/groupmanager.cpp:99
+#: libktcore/groups/groupmanager.cpp:100
 #, kde-format
 msgid "Downloads"
 msgstr "下载"
 
-#: libktcore/groups/groupmanager.cpp:100
+#: libktcore/groups/groupmanager.cpp:101
 #, kde-format
 msgid "Running Downloads"
 msgstr "正运行下载"
 
-#: libktcore/groups/groupmanager.cpp:104
+#: libktcore/groups/groupmanager.cpp:105
 #, kde-format
 msgid "Not Running Downloads"
 msgstr "未运行下载"
 
-#: libktcore/groups/groupmanager.cpp:109
+#: libktcore/groups/groupmanager.cpp:110
 #, kde-format
 msgid "Active Torrents"
 msgstr "活动种子"
 
-#: libktcore/groups/groupmanager.cpp:110
+#: libktcore/groups/groupmanager.cpp:111
 #, kde-format
 msgid "Active Downloads"
 msgstr "活动下载"
 
-#: libktcore/groups/groupmanager.cpp:114
+#: libktcore/groups/groupmanager.cpp:115
 #, kde-format
 msgid "Active Uploads"
 msgstr "活动上传"
 
-#: libktcore/groups/groupmanager.cpp:119
+#: libktcore/groups/groupmanager.cpp:120
 #, kde-format
 msgid "Passive Torrents"
 msgstr "被动种子"
 
-#: libktcore/groups/groupmanager.cpp:120
+#: libktcore/groups/groupmanager.cpp:121
 #, kde-format
 msgid "Passive Downloads"
 msgstr "被动下载"
 
-#: libktcore/groups/groupmanager.cpp:124
+#: libktcore/groups/groupmanager.cpp:125
 #, kde-format
 msgid "Passive Uploads"
 msgstr "被动上传"
@@ -6073,40 +6073,40 @@ msgstr "正在加载文本文件..."
 msgid "There are no IP addresses to convert in %1"
 msgstr "%1 中没有要转换的 IP 地址"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:67
-#: plugins/ipfilter/downloadandconvertjob.cpp:101
-#: plugins/ipfilter/downloadandconvertjob.cpp:161
-#: plugins/ipfilter/downloadandconvertjob.cpp:223
+#: plugins/ipfilter/downloadandconvertjob.cpp:68
+#: plugins/ipfilter/downloadandconvertjob.cpp:102
+#: plugins/ipfilter/downloadandconvertjob.cpp:162
+#: plugins/ipfilter/downloadandconvertjob.cpp:224
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
 msgstr "自动更新 IP 过滤器失败：%1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:123
+#: plugins/ipfilter/downloadandconvertjob.cpp:124
 #, kde-format
 msgid "7z files are not supported"
 msgstr "不支持 7z 压缩文件"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:142
+#: plugins/ipfilter/downloadandconvertjob.cpp:143
 #, kde-format
 msgid "Cannot determine file type of <b>%1</b>"
 msgstr "无法确定文件的类型: %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:174
+#: plugins/ipfilter/downloadandconvertjob.cpp:175
 #, kde-format
 msgid "Cannot open zip file %1."
 msgstr "无法打开 zip 文件 %1。"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:176
+#: plugins/ipfilter/downloadandconvertjob.cpp:177
 #, kde-format
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
 msgstr "自动更新 IP 过滤器失败：无法打开 zip 文件 %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:196
+#: plugins/ipfilter/downloadandconvertjob.cpp:197
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
 msgstr "无法从文件 %1 中找到屏蔽列表。"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:198
+#: plugins/ipfilter/downloadandconvertjob.cpp:199
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
@@ -6736,9 +6736,9 @@ msgid "Scan directories recursively."
 msgstr "递归扫描文件夹。"
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:142
+#: plugins/scanfolder/torrentloadqueue.cpp:140
+#: plugins/scanfolder/torrentloadqueue.cpp:143
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"
