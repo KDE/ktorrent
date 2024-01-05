@@ -2,7 +2,7 @@
     "id": "org.kde.ktorrent",
     "branch": "master",
     "runtime": "org.kde.Platform",
-    "runtime-version": "5.15-22.08",
+    "runtime-version": "6.6-kf6preview",
     "sdk": "org.kde.Sdk",
     "command": "ktorrent",
     "tags": ["nightly"],
@@ -80,31 +80,13 @@
             "name": "qca",
             "buildsystem": "cmake-ninja",
             "config-opts": [
-                "-DENABLE_TESTING=OFF"
+                "-DENABLE_TESTING=OFF",
+                "-DBUILD_WITH_QT6=ON"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://invent.kde.org/libraries/qca.git"
-                }
-            ]
-        },
-        {
-            "name": "kross",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DENABLE_TESTING=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://invent.kde.org/frameworks/kross.git",
-                    "tag": "v5.92.0",
-                    "x-checker-data": {
-                        "type": "git",
-                        "tag-pattern": "^v([\\d.]+)$"
-                    },
-                    "commit": "a855fccda3fb1998517a15902eab3f3694c977d8"
                 }
             ]
         },
