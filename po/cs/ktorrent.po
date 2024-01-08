@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-03 01:36+0000\n"
+"POT-Creation-Date: 2024-01-08 01:35+0000\n"
 "PO-Revision-Date: 2023-11-14 13:10+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -3586,8 +3586,7 @@ msgstr ""
 "Přesunout níž."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
-#: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:109
+#: plugins/search/searchactivity.cpp:65 plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "Hledat"
@@ -7090,14 +7089,14 @@ msgstr "Použít vlastní prohlížeč"
 msgid "Custom browser executable path"
 msgstr "Vlastní cesta k prohlížeči"
 
-#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:49
-#: plugins/search/searchplugin.cpp:68 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
 msgstr "Hledat"
 
-#: plugins/search/searchactivity.cpp:221
+#: plugins/search/searchactivity.cpp:215
 #, kde-format
 msgid "Search for %1"
 msgstr "Vyhledávám %1"
@@ -7270,43 +7269,28 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1 neobsahuje {searchTerms}."
 
-#: plugins/search/searchtoolbar.cpp:58
-#, kde-format
-msgid "Search Text"
-msgstr "Hledat text"
-
-#: plugins/search/searchtoolbar.cpp:68
-#, kde-format
-msgid "Search Engine"
-msgstr "Vyhledávací stroj"
-
-#: plugins/search/searchtoolbar.cpp:75
-#, kde-format
-msgid "Search Engine Label"
-msgstr "Popisek vyhledávače"
-
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
+#: plugins/search/searchwidget.cpp:81
 #, kde-format
 msgid " Engine: "
 msgstr " Vyhledávač: "
 
-#: plugins/search/searchwidget.cpp:191
+#: plugins/search/searchwidget.cpp:222
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Stahuje se:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:199
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Přejete si stáhnout nebo uložit torrent?"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:231
 #, kde-format
 msgid "Download Torrent"
 msgstr "Stáhnout torrent"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Stahování"
@@ -8788,6 +8772,15 @@ msgstr "Znovu projít"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Search Text"
+#~ msgstr "Hledat text"
+
+#~ msgid "Search Engine"
+#~ msgstr "Vyhledávací stroj"
+
+#~ msgid "Search Engine Label"
+#~ msgstr "Popisek vyhledávače"
 
 #~ msgid ""
 #~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."

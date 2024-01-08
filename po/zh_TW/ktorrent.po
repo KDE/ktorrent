@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-03 01:36+0000\n"
+"POT-Creation-Date: 2024-01-08 01:35+0000\n"
 "PO-Revision-Date: 2023-12-27 17:55+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3531,8 +3531,7 @@ msgstr ""
 "用拖放的，或是用左方的上下按鍵來改變順序。"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
-#: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:109
+#: plugins/search/searchactivity.cpp:65 plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "搜尋"
@@ -6970,14 +6969,14 @@ msgstr "使用自訂的瀏覽器"
 msgid "Custom browser executable path"
 msgstr "自訂瀏覽器的執行路徑"
 
-#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:49
-#: plugins/search/searchplugin.cpp:68 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
 msgstr "搜尋"
 
-#: plugins/search/searchactivity.cpp:221
+#: plugins/search/searchactivity.cpp:215
 #, kde-format
 msgid "Search for %1"
 msgstr "搜尋 %1"
@@ -7149,43 +7148,28 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "網址 %1 中並未包含 {searchTerms}。"
 
-#: plugins/search/searchtoolbar.cpp:58
-#, kde-format
-msgid "Search Text"
-msgstr "搜尋文字"
-
-#: plugins/search/searchtoolbar.cpp:68
-#, kde-format
-msgid "Search Engine"
-msgstr "搜尋引擎"
-
-#: plugins/search/searchtoolbar.cpp:75
-#, kde-format
-msgid "Search Engine Label"
-msgstr "搜尋引擎標籤"
-
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
+#: plugins/search/searchwidget.cpp:81
 #, kde-format
 msgid " Engine: "
 msgstr "引擎："
 
-#: plugins/search/searchwidget.cpp:191
+#: plugins/search/searchwidget.cpp:222
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "下載中：<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:199
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "您要下載還是要儲存此 torrent？"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:231
 #, kde-format
 msgid "Download Torrent"
 msgstr "下載 torrent"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "下載"
@@ -8655,6 +8639,15 @@ msgstr "重新掃描"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
+
+#~ msgid "Search Text"
+#~ msgstr "搜尋文字"
+
+#~ msgid "Search Engine"
+#~ msgstr "搜尋引擎"
+
+#~ msgid "Search Engine Label"
+#~ msgstr "搜尋引擎標籤"
 
 #~ msgid ""
 #~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."

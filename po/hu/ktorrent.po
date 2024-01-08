@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-03 01:36+0000\n"
+"POT-Creation-Date: 2024-01-08 01:35+0000\n"
 "PO-Revision-Date: 2021-10-12 12:08+0200\n"
 "Last-Translator: Kristof Kiszel <kiszel.kristof@gmail.com>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -3644,8 +3644,7 @@ msgstr ""
 "módosításához."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
-#: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:109
+#: plugins/search/searchactivity.cpp:65 plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "Keresés"
@@ -7159,14 +7158,14 @@ msgstr "Egyéni böngésző használata"
 msgid "Custom browser executable path"
 msgstr "Egyéni böngésző elérési útja"
 
-#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:49
-#: plugins/search/searchplugin.cpp:68 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
 msgstr "Keresés"
 
-#: plugins/search/searchactivity.cpp:221
+#: plugins/search/searchactivity.cpp:215
 #, kde-format
 msgid "Search for %1"
 msgstr "%1 keresése"
@@ -7341,43 +7340,28 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "%1 - a hivatkozás nem tartalmazza a {searchTerms} karaktersort."
 
-#: plugins/search/searchtoolbar.cpp:58
-#, kde-format
-msgid "Search Text"
-msgstr "Szöveg keresése"
-
-#: plugins/search/searchtoolbar.cpp:68
-#, kde-format
-msgid "Search Engine"
-msgstr "Keresőmotor"
-
-#: plugins/search/searchtoolbar.cpp:75
-#, kde-format
-msgid "Search Engine Label"
-msgstr "Keresőmotor címkéje"
-
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
+#: plugins/search/searchwidget.cpp:81
 #, kde-format
 msgid " Engine: "
 msgstr " Szolgáltató: "
 
-#: plugins/search/searchwidget.cpp:191
+#: plugins/search/searchwidget.cpp:222
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Letöltés:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:199
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Le szeretné tölteni, vagy menteni a torrentet?"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:231
 #, kde-format
 msgid "Download Torrent"
 msgstr "Torrent letöltése"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Letöltés"
@@ -8864,6 +8848,15 @@ msgstr "Újraolvasás"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Search Text"
+#~ msgstr "Szöveg keresése"
+
+#~ msgid "Search Engine"
+#~ msgstr "Keresőmotor"
+
+#~ msgid "Search Engine Label"
+#~ msgstr "Keresőmotor címkéje"
 
 #~ msgid ""
 #~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-03 01:36+0000\n"
+"POT-Creation-Date: 2024-01-08 01:35+0000\n"
 "PO-Revision-Date: 2023-11-16 16:54+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -3659,8 +3659,7 @@ msgstr ""
 "Используйте перетаскивание или кнопки «Вверх» и «Вниз» для изменения порядка."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
-#: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:109
+#: plugins/search/searchactivity.cpp:65 plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "Поиск"
@@ -7163,14 +7162,14 @@ msgstr "Использовать указанный браузер"
 msgid "Custom browser executable path"
 msgstr "Путь к браузеру"
 
-#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:49
-#: plugins/search/searchplugin.cpp:68 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
 msgstr "Поиск"
 
-#: plugins/search/searchactivity.cpp:221
+#: plugins/search/searchactivity.cpp:215
 #, kde-format
 msgid "Search for %1"
 msgstr "Поиск %1"
@@ -7343,43 +7342,28 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1 не содержит выражения {searchTerms}."
 
-#: plugins/search/searchtoolbar.cpp:58
-#, kde-format
-msgid "Search Text"
-msgstr "Искомый текст"
-
-#: plugins/search/searchtoolbar.cpp:68
-#, kde-format
-msgid "Search Engine"
-msgstr "Поисковая машина"
-
-#: plugins/search/searchtoolbar.cpp:75
-#, kde-format
-msgid "Search Engine Label"
-msgstr "Название поисковой машины"
-
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
+#: plugins/search/searchwidget.cpp:81
 #, kde-format
 msgid " Engine: "
 msgstr " Поисковик: "
 
-#: plugins/search/searchwidget.cpp:191
+#: plugins/search/searchwidget.cpp:222
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Загрузка:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:199
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Загрузить или сохранить торрент?"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:231
 #, kde-format
 msgid "Download Torrent"
 msgstr "Загрузить торрент"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Загрузка"
@@ -8882,6 +8866,15 @@ msgstr "Повторно сканировать"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
+
+#~ msgid "Search Text"
+#~ msgstr "Искомый текст"
+
+#~ msgid "Search Engine"
+#~ msgstr "Поисковая машина"
+
+#~ msgid "Search Engine Label"
+#~ msgstr "Название поисковой машины"
 
 #~ msgid ""
 #~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."

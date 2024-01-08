@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-03 01:36+0000\n"
+"POT-Creation-Date: 2024-01-08 01:35+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -3503,8 +3503,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
-#: plugins/search/searchactivity.cpp:70 plugins/search/searchtoolbar.cpp:62
-#: plugins/search/webview.cpp:109
+#: plugins/search/searchactivity.cpp:65 plugins/search/webview.cpp:109
 #, kde-format
 msgid "Search"
 msgstr "සෙවුම"
@@ -7005,14 +7004,14 @@ msgstr "රුචි ගවේශකයක් භාවිත කරන්න"
 msgid "Custom browser executable path"
 msgstr "රුචි ගවේශක ක්‍රියාත්මක මඟ"
 
-#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:49
-#: plugins/search/searchplugin.cpp:68 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
 msgstr "සොයන්න"
 
-#: plugins/search/searchactivity.cpp:221
+#: plugins/search/searchactivity.cpp:215
 #, kde-format
 msgid "Search for %1"
 msgstr "%1 සඳහා සොයන්න"
@@ -7183,44 +7182,29 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1 හි {සෙවුම් වදන්} ඇතුළත් නොවේ ."
 
-#: plugins/search/searchtoolbar.cpp:58
-#, kde-format
-msgid "Search Text"
-msgstr "සෙචුම් පෙළ"
-
-#: plugins/search/searchtoolbar.cpp:68
-#, kde-format
-msgid "Search Engine"
-msgstr "සෙචුම් එළවුම"
-
-#: plugins/search/searchtoolbar.cpp:75
-#, kde-format
-msgid "Search Engine Label"
-msgstr "සෙවුම් එළවුම් ලේබලය"
-
-#: plugins/search/searchtoolbar.cpp:76 plugins/search/searchwidget.cpp:63
+#: plugins/search/searchwidget.cpp:81
 #, kde-format
 msgid " Engine: "
 msgstr " එළවුම: "
 
-#: plugins/search/searchwidget.cpp:191
+#: plugins/search/searchwidget.cpp:222
 #, fuzzy, kde-format
 #| msgid "<b>Downloading</b>"
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "<b>බාගනිමින්</b>"
 
-#: plugins/search/searchwidget.cpp:199
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "ඔබට ටොරෙන්ටය බාගැනීමට හෝ සුරැකීමට ඇවැසිද?"
 
-#: plugins/search/searchwidget.cpp:200
+#: plugins/search/searchwidget.cpp:231
 #, kde-format
 msgid "Download Torrent"
 msgstr "ටොරෙන්ට් බාගන්න"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:201 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "බාගන්න"
@@ -8694,6 +8678,15 @@ msgstr "නැවත පරිලෝකනය"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Search Text"
+#~ msgstr "සෙචුම් පෙළ"
+
+#~ msgid "Search Engine"
+#~ msgstr "සෙචුම් එළවුම"
+
+#~ msgid "Search Engine Label"
+#~ msgstr "සෙවුම් එළවුම් ලේබලය"
 
 #~ msgid "Yes, delete the files"
 #~ msgstr "ඔව්, ගොනු මකන්න"
