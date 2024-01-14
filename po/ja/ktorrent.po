@@ -9018,12 +9018,3 @@ msgstr "再スキャン"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Search Text"
-#~ msgstr "検索テキスト"
-
-#~ msgid "Search Engine"
-#~ msgstr "検索エンジン"
-
-#~ msgid "Search Engine Label"
-#~ msgstr "検索エンジン名"
