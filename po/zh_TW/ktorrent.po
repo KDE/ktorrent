@@ -8,13 +8,13 @@
 # Jeff Huang <s8321414@gmail.com>, 2016.
 # pan93412 <pan93412@gmail.com>, 2018, 2019, 2020.
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2008, 2009, 2010.
-# SPDX-FileCopyrightText: 2022, 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-08 01:35+0000\n"
-"PO-Revision-Date: 2023-12-27 17:55+0900\n"
+"PO-Revision-Date: 2024-01-15 00:11+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.01.90\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -603,7 +603,7 @@ msgstr "選擇 torrent 檔，以及屬於它的資料。"
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -722,7 +722,7 @@ msgstr "取得 tracker 列表時發生錯誤"
 msgid ""
 "Please check if the URL in Settings > Advanced > Tracker list URL is "
 "reachable."
-msgstr ""
+msgstr "請檢查「設定 > 進階 > Tracker 列表網址」所設定的網址是否可連線。"
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:308
@@ -3278,14 +3278,12 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QLabel, label_2)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_greenRatio)
 #: ktorrent/pref/qmpref.ui:248 ktorrent/pref/qmpref.ui:258
-#, fuzzy, kde-format
-#| msgid ""
-#| "Value at which the share ratio will be displayed with a green color. "
-#| "Lower ratios will be displayed in red."
+#, kde-format
 msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
-msgstr "分享比例超過多少時顯示為綠色。低於此比例則顯示為紅色。"
+msgstr ""
+"分享比例超過多少時顯示為綠色。低於此比例則顯示為紅色。顏色可以在設定中變更。"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
