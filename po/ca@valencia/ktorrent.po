@@ -8913,12 +8913,3 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Search Text"
-#~ msgstr "Text de la busca"
-
-#~ msgid "Search Engine"
-#~ msgstr "Motor de busca"
-
-#~ msgid "Search Engine Label"
-#~ msgstr "Etiqueta del motor de busca"
