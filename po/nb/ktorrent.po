@@ -8791,12 +8791,3 @@ msgstr "Søk på nytt"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Search Text"
-#~ msgstr "Søketekst"
-
-#~ msgid "Search Engine"
-#~ msgstr "Søkemotor"
-
-#~ msgid "Search Engine Label"
-#~ msgstr "Navn på søkemotor"
