@@ -8643,12 +8643,3 @@ msgstr "Sjekk på nytt"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Search Text"
-#~ msgstr "Søkjetekst"
-
-#~ msgid "Search Engine"
-#~ msgstr "Søkjemotor"
-
-#~ msgid "Search Engine Label"
-#~ msgstr "Namn på søkjemotor"
