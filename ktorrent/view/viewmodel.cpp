@@ -283,7 +283,7 @@ QVariant ViewModel::Item::statusIcon() const
     case NO_SPACE_LEFT:
         return QIcon::fromTheme(QStringLiteral("dialog-error"));
     case QUEUED:
-        return QIcon::fromTheme(QStringLiteral("download-later"));
+        return QIcon::fromTheme(tc->getStats().completed ? QStringLiteral("upload-later") : QStringLiteral("download-later"));
     case CHECKING_DATA:
         return QIcon::fromTheme(QStringLiteral("kt-check-data"));
     case PAUSED:
