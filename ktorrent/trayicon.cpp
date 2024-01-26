@@ -106,7 +106,7 @@ void TrayIcon::show()
     menu->addAction(ac->action(KStandardAction::name(KStandardAction::Preferences)));
     menu->addSeparator();
 
-    status_notifier_item->setIconByName(QStringLiteral("ktorrent"));
+    status_notifier_item->setIconByName(QStringLiteral("ktorrent-symbolic"));
     status_notifier_item->setCategory(KStatusNotifierItem::ApplicationStatus);
     status_notifier_item->setStatus(KStatusNotifierItem::Passive);
     status_notifier_item->setStandardActionsEnabled(true);
