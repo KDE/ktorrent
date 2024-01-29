@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-08 01:35+0000\n"
-"PO-Revision-Date: 2024-01-15 00:11+0900\n"
+"PO-Revision-Date: 2024-01-28 20:26+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.01.90\n"
+"X-Generator: Lokalize 24.01.95\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1623,6 +1623,9 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"InfoWidget 外掛程式中使用的 IP 位址-國家 資料庫的提供者。資料以創用 CC 姓名標"
+"示 4.0 國際授權條款 (https://creativecommons.org/licenses/by/4.0/) 釋出。旗幟"
+"取自 http://flags.blogpotato.de/，也感謝他們。"
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1632,7 +1635,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "InfoWidget 外掛程式中所使用的 maxminddb 函式庫。"
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -2215,6 +2218,8 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"以 infohash 新增 torrent 時使用的 tracker 列表網址\n"
+"請注意：每個 tracker 必須自己一行。空行會被忽略。"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2449,7 +2454,7 @@ msgstr "Torrent 錯誤："
 msgid ""
 "Additionally highlight torrents based on the status of their trackers (if "
 "any)"
-msgstr ""
+msgstr "另外依 torrent 的 tracker 的狀態（如果有的話）突顯 torrent"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:72
@@ -2457,44 +2462,44 @@ msgstr ""
 msgid ""
 "Color to use when at least one tracker is connected and replied no errors or "
 "warnings."
-msgstr ""
+msgstr "與至少一個 tracker 正常連線且沒有錯誤或警告時使用的顏色。"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/colorpref.ui:79
 #, kde-format
 msgid "Some of the trackers are reachable:"
-msgstr ""
+msgstr "有些 tracker 可連線："
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_warningsTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:86
 #, kde-format
 msgid ""
 "Color to use when the best attempt to connect to tracker results in warning."
-msgstr ""
+msgstr "嘗試連線到 tracker 出現警告的時候使用的顏色。"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/colorpref.ui:93
 #, kde-format
 msgid "None of the trackers are reachable:"
-msgstr ""
+msgstr "沒有可連線的 tracker："
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: ktorrent/pref/colorpref.ui:100
 #, kde-format
 msgid "Reachable trackers report warnings:"
-msgstr ""
+msgstr "可連線的 tracker 回報了錯誤："
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
 #, kde-format
 msgid "Color to use when all trackers reply the errors or not found."
-msgstr ""
+msgstr "所有 tracker 皆回報錯誤或找不到的時候所使用的顏色。"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
 #, kde-format
 msgid "Trackers are timing out:"
-msgstr ""
+msgstr "Tracker 開始逾時："
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_timeoutTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:121
@@ -2503,6 +2508,7 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"嘗試連線到 tracker 仍然出現逾時的時候使用的顏色。一段時間之後會再次嘗試連線。"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
@@ -2520,13 +2526,13 @@ msgstr "好的分享比例："
 #: ktorrent/pref/colorpref.ui:147
 #, kde-format
 msgid "Color to display share ratio below minimal good value."
-msgstr ""
+msgstr "分享比例低於最低的好的數值時用的顏色。"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_goodShareRatioColor)
 #: ktorrent/pref/colorpref.ui:154
 #, kde-format
 msgid "Color to display share ratio above minimal good value."
-msgstr ""
+msgstr "分享比例高於最低的好的數值時用的顏色。"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:165
