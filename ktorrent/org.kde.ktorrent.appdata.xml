@@ -434,6 +434,7 @@
       <li xml:lang="uk">Викидання/Блокування вузлів за допомогою додаткового діалогового вікна фільтрування за IP (список і редагування записів)</li>
       <li xml:lang="x-test">xxKick/ban peers with an additional IP Filter dialog for list/edit purposesxx</li>
       <li xml:lang="zh-CN">踢掉/屏蔽对等点，并可以用 IP 过滤器查看和编辑列表</li>
+      <li xml:lang="zh-TW">用清單/編輯用的 IP 位址過濾對話框來踢出/封鎖端點</li>
       <li>UDP tracker support</li>
       <li xml:lang="bg">Поддръжка на UDP координиращи сървъри</li>
       <li xml:lang="ca">Suport del seguidor UDP</li>
@@ -662,6 +663,7 @@
       <li xml:lang="uk">Підтримка розподілених таблиць хешів (distributed hash tables або DHT, основної версії)</li>
       <li xml:lang="x-test">xxSupport for distributed hash tables (DHT, the Mainline version)xx</li>
       <li xml:lang="zh-CN">支持分布式哈希表 (DHT，主线版本)</li>
+      <li xml:lang="zh-TW">支援分散式雜湊表（DHT，Mainline 版本）</li>
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
       <li xml:lang="bg">Поддръжка на UPnP за автоматично пренасочване на портове в локална мрежа с динамично зададени хостове</li>
       <li xml:lang="ca">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
@@ -699,6 +701,7 @@
       <li xml:lang="uk">Підтримка UPnP з метою автоматичного переспрямування портів у локальній мережі з динамічним призначенням назв вузлів</li>
       <li xml:lang="x-test">xxSupport for UPnP to automatically forward ports on a LAN with dynamic assigned hostsxx</li>
       <li xml:lang="zh-CN">支持 UPnP 局域网自动转发端口的动态主机名</li>
+      <li xml:lang="zh-TW">支援 UPnP 來在動態指派主機的區域網路中自動轉遞連接埠</li>
       <li>Support for webseeds</li>
       <li xml:lang="bg">Поддръжка на webseeds</li>
       <li xml:lang="ca">Suport per a sembradors web</li>
