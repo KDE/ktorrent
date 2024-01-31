@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-08 01:35+0000\n"
-"PO-Revision-Date: 2023-08-26 18:30+0300\n"
+"PO-Revision-Date: 2023-12-11 17:57+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -1652,7 +1652,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1662,6 +1662,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Tietosovelmaliitännäisen käyttämän IP-maatietokannan tarjoaja. Tiedot on "
+"lisensoitu Creative Common Attribution 4.0 International -lisenssillä "
+"https://creativecommons.org/licences/by/4.0/. Lippujen alkuperä on https://"
+"flags.blogpotato.de/, joten kiitetään heitäkin."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1671,7 +1675,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "Tietosovelmaliitännäisen käyttämä maxminddb-kirjasto."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -2038,19 +2042,17 @@ msgstr "Viankorjaukset, siivoukset ja optimoinnit"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "KF5-sovitus"
+msgstr "KF6-sovitus"
 
 #: ktorrent/main.cpp:178
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Ota kaikki käyttöön"
+msgstr "Käytä lokia"
 
 #: ktorrent/main.cpp:180
 #, kde-format
@@ -2058,6 +2060,7 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Kirjoita loki vakiotulosvirtaan. Vaatii myös valitsimen --enable-logging."
 
 #: ktorrent/main.cpp:181
 #, kde-format
@@ -4862,23 +4865,20 @@ msgid "Warning: %1"
 msgstr "Varoitus: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Ladatut osat:"
+msgstr "Ladatut osat"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Näytä lataukset"
+msgstr "Ladattavia osia"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Ohitetut:"
+msgstr "Ohitetut osat"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -5369,16 +5369,14 @@ msgid "Add Trackers"
 msgstr "Lisää seurantapalvelimia"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Saatavilla olevat osat:"
+msgstr "Saatavilla olevat osat"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Saatavilla olevat osat:"
+msgstr "Saavuttamattomissa olevat osat"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
