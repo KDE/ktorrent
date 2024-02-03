@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-08 01:35+0000\n"
-"PO-Revision-Date: 2017-12-10 20:24+0000\n"
+"PO-Revision-Date: 2024-02-02 23:26+0200\n"
 "Last-Translator: Andrius Štikonas <andrius@stikonas.eu>\n"
 "Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
 "Language: lt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1525,7 +1525,7 @@ msgstr "Alan Jones"
 #: ktorrent/main.cpp:115
 #, kde-format
 msgid "BitFinder Plugin"
-msgstr "BitFinder priedas"
+msgstr "BitFinder įskiepis"
 
 #: ktorrent/main.cpp:116
 #, kde-format
@@ -1700,7 +1700,7 @@ msgstr "Scott Wolchok"
 #: ktorrent/main.cpp:143
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
-msgstr "Konvertavimo greičio pagerinimas IP filtro priede "
+msgstr "Konvertavimo greičio pagerinimas IP filtro įskiepyje"
 
 #: ktorrent/main.cpp:144
 #, kde-format
@@ -1881,7 +1881,7 @@ msgstr "Ian Higginson"
 #: ktorrent/main.cpp:161
 #, kde-format
 msgid "Patch to cleanup the plugin list"
-msgstr "Priedų sąrašo valymo pataisymas"
+msgstr "Įskiepių sąrašo valymo pataisymas"
 
 #: ktorrent/main.cpp:162
 #, kde-format
@@ -7720,7 +7720,7 @@ msgstr "KDE"
 #: plugins/stats/DisplaySettings.ui:953
 #, kde-format
 msgid "(plugin reload is needed after change)"
-msgstr "(priedo paleidimas iš naujo yra reikalingas po pakeitimo)"
+msgstr "(įskiepio paleidimas iš naujo yra reikalingas po pakeitimo)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
 #, fuzzy, kde-format
@@ -8703,7 +8703,7 @@ msgstr "UPnP"
 #: plugins/upnp/upnpplugin.cpp:43
 #, kde-format
 msgid "Shows the status of the UPnP plugin"
-msgstr "Rodo UPnP priedo būseną"
+msgstr "Rodo UPnP įskiepio būseną"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_rescan)
 #: plugins/upnp/upnpwidget.ui:54
