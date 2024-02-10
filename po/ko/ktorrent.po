@@ -1,6 +1,6 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Shinjo Park <kde@peremen.name>, 2014, 2015, 2019, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2014, 2015, 2019, 2020, 2021, 2022, 2023, 2024 Shinjo Park <kde@peremen.name>
 #
 # C6H6, 2014.
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-08 01:35+0000\n"
-"PO-Revision-Date: 2023-07-25 01:05+0200\n"
+"PO-Revision-Date: 2024-02-10 00:10+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1630,7 +1630,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1640,6 +1640,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"InfoWidget 플러그인의 IP-국가 대응 데이터베이스 공급자입니다. 데이터는 크리에"
+"이티브 커먼즈 저작자표시 4.0 국제 라이선스(CC BY)로 배포됩니다. https://"
+"creativecommons.org/licenses/by/4.0/. 깃발은 http://flags.blogpotato.de/ 사이"
+"트에서 제공했습니다."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1649,7 +1653,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "InfoWidget 플러그인에 사용할 maxminddb 라이브러리입니다."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1994,7 +1998,7 @@ msgstr "Andrius Štikonas"
 #: ktorrent/main.cpp:171 ktorrent/main.cpp:172
 #, kde-format
 msgid "KF5 porting"
-msgstr "KF5 이식"
+msgstr "KF5 포팅"
 
 #: ktorrent/main.cpp:172
 #, kde-format
@@ -2014,19 +2018,17 @@ msgstr "버그 수정, 정리, 최적화"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "KF5 이식"
+msgstr "KF6 포팅"
 
 #: ktorrent/main.cpp:178
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "모두 활성화"
+msgstr "로그 활성화"
 
 #: ktorrent/main.cpp:180
 #, kde-format
@@ -2034,6 +2036,7 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"표준 출력으로 로그를 활성화합니다. --enable-logging 옵션도 지정해야 합니다."
 
 #: ktorrent/main.cpp:181
 #, kde-format
@@ -4797,23 +4800,20 @@ msgid "Warning: %1"
 msgstr "경고: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "다운로드된 파일 조각:"
+msgstr "다운로드된 파일 조각"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "다운로드 보기"
+msgstr "다운로드할 파일 조각"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "제외됨:"
+msgstr "제외된 조각"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -5297,16 +5297,14 @@ msgid "Add Trackers"
 msgstr "트래커 추가"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "사용 가능한 파일 조각:"
+msgstr "사용 가능한 파일 조각"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "사용 가능한 파일 조각:"
+msgstr "사용할 수 없는 파일 조각"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
