@@ -105,6 +105,9 @@ Core::Core(kt::GUI *gui)
     qRegisterMetaType<bt::MagnetLink>("bt::MagnetLink");
     qRegisterMetaType<kt::MagnetLinkLoadOptions>("kt::MagnetLinkLoadOptions");
     connect(mman, &kt::MagnetManager::metadataDownloaded, this, &Core::onMetadataDownloaded, Qt::QueuedConnection);
+    connect(mman, &kt::MagnetManager::updateQueue, this, [this]() {
+        mman->saveMagnets(kt::DataDir() + QLatin1String("magnets"));
+    });
 
     mman->loadMagnets(kt::DataDir() + QLatin1String("magnets"));
 
