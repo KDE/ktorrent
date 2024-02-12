@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2023-11-25 09:52+0100\n"
+"PO-Revision-Date: 2024-02-11 02:36+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2906,12 +2906,7 @@ msgstr "დამყარებული მიერთებების მ�
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
@@ -2919,7 +2914,7 @@ msgid ""
 "try setting this number a bit lower.</p>"
 msgstr ""
 "<p>გამავალი მიერთებების მაქსიმალური რაოდენობა, რომელსაც KTorrent სცდის, "
-"შექმნას.</p>\n"
+"ერთდროულად შექმნას.</p>\n"
 "<p>თუ გაქვთ პრობლემა, რომ KTorrent სხვა ქსელურ ტრაფიკს გიბლოკავთ, სცადეთ, "
 "შეამციროთ ეს რიცხვი.</p>"
 
@@ -2983,16 +2978,13 @@ msgstr "ძირითადი ტრანსპორტის პროტ�
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
 "ძირითადი ტრანსპორტის პროტოკოლი, გამოყენებული პარტნიორთან მიერთების "
-"მცდელობისას."
+"მცდელობისას. მიერთებისას, ჯერ ამ პროტოკოლს ვცდი."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2024-01-07 21:26+0100\n"
+"PO-Revision-Date: 2024-02-11 05:31+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -2898,21 +2898,16 @@ msgstr "Maksimuma nombro de konektaj agordoj:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>La maksimuma nombro da elirantaj konektoj ktorrent provos agordi samtempe."
-"</p>\n"
-"<p>Se vi havas problemojn kun ktorrent blokanta alian interretan trafikon, "
+"<p>La maksimuma nombro da elirantaj konektoj kiujn ktorrent provos agordi "
+"samtempe.</p>\n"
+"<p>Se vi havas problemojn pri ktorrent blokante alian interretan trafikon, "
 "provu agordi ĉi tiun numeron iom pli malalta.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
@@ -2975,10 +2970,7 @@ msgstr "Ĉefa transportprotokolo:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
@@ -8846,12 +8838,3 @@ msgstr "Reserĉi"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Search Text"
-#~ msgstr "Serĉa teksto"
-
-#~ msgid "Search Engine"
-#~ msgstr "Serĉilo"
-
-#~ msgid "Search Engine Label"
-#~ msgstr "Titoleto por serĉilo"

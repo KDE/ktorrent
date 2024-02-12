@@ -1,26 +1,26 @@
 # Translation for ktorrent.po to Euskara/Basque (eu).
-# Copyright (C) 2010-2023 This file is copyright:
+# Copyright (C) 2010-2024 This file is copyright:
 # This file is distributed under the same license as de ktorrent package.
-# SPDX-FileCopyrightText: 2023 KDE euskaratzeko proiekuko arduraduna <xalba@ni.eus>
+# SPDX-FileCopyrightText: 2023, 2024 KDE euskaratzeko proiekuko arduraduna <xalba@ni.eus>
 #
 # Translators:
 # Marcos  <marcos@euskalgnu.org>, 2006.
 # Ion Gaztañaga <igaztanaga@gmail.com>, 2006.
-# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2009, 2013, 2022, 2023.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2009, 2013, 2022, 2023, 2024.
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2023-11-27 07:39+0100\n"
+"PO-Revision-Date: 2024-02-11 11:33+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -2940,22 +2940,17 @@ msgstr "Gehieneko konexio-konfigurazio kopurua:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>KTorrent aldi berean konfiguratzen saiatuko den gehieneko irteera-konexio "
+"<p>KTorrent, gehienez, aldi berean ezartzen saiatuko den irteera-konexio "
 "kopurua.</p>\n"
-"<p>Ktorrent-ekin arazoak badituzu Interneteko beste trafikoa blokeatzen "
-"duelako, saiatu zenbaki txikiagoa jarrita.</p>"
+"<p>«Ktorrent»ek Interneteko beste trafikoa oztopatzen duelako arazoa baduzu, "
+"saiatu zenbaki horren balioa pixka bat txikiagoa ezartzen.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -3018,16 +3013,13 @@ msgstr "Lehen mailako garraio-protokoloa:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
-"Erabili beharreko lehen mailako garraio-protokoloa. Pare batekin konexioa "
-"ezartzen saiatzean, protokolo hori aukeratzen da lehenbizi."
+"Erabili beharreko garraio protokolo nagusia; pare batekin konexioa ezartzen "
+"saiatzean, aurrena protokolo hau aukeratzen da."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)

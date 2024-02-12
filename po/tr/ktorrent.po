@@ -11,13 +11,13 @@
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014, 2015, 2017, 2018, 2021.
 # Yavuz BAYRAK, 2007.
-# SPDX-FileCopyrightText: 2022, 2023 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2023-12-27 14:38+0300\n"
+"PO-Revision-Date: 2024-02-11 12:08+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.01.85\n"
+"X-Generator: Lokalize 24.01.95\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2910,22 +2910,17 @@ msgstr "Bir torrent için izin verilen en fazla bağlantı:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>Ktorrent eşzamanlı dışarıya çalışacağı kuracağı bağlantıların maksimum "
-"sayısını.</p>\n"
-"<p>Eğer ki ktorrenting diğer internet trafiğini bloke etmesinden dolayı "
-"sorun yaşarsanız, bu sayıyı daha düşük ayarlamaya çalışın.</p>"
+"<p>K Torrent'in aynı anda kurmaya çalışacağı en yüksek giden bağlantı sayısı."
+"</p>\n"
+"<p>K Torrent'in diğer internet trafiğini engellemesi sorununu yaşarsanız bu "
+"sayıyı biraz daha düşük bir değere ayarlamayı deneyin.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2941,9 +2936,9 @@ msgid ""
 "<p><span style=\"font-weight:600;\">Note: </span>Requires a restart to take "
 "effect.</p>"
 msgstr ""
-"<p>Gelen bağlantılar için hangi ağ arayüzü dinlensin.</p>\n"
-"<p><span style=\"font-weight:600;\">Not: </span>Etkin olması için yeniden "
-"başlatmak gereklidir.</p>"
+"<p>Gelen bağlantılar için dinlenecek ağ arayüzü.</p>\n"
+"<p><span style=\"font-weight:600;\">Not: </span>Etkili olması için yeniden "
+"başlatma gerekir.</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_utpEnabled)
 #: ktorrent/pref/networkpref.ui:232
@@ -2987,16 +2982,13 @@ msgstr "Birincil taşıma protokolü:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
-"Birincil taşıma protokolü, Eş ile yeni bir bağlantı kurulurken ilk olarak bu "
-"protokol seçilecektir."
+"Kullanılacak birincil taşıma protokolü, bir eşle bağlantı kurmaya çalışırken "
+"ilk önce bu protokol seçilir."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -3134,7 +3126,7 @@ msgstr "SOCKS sunucusunun IP adresi ya da ana bilgisayar adı."
 #: ktorrent/pref/proxypref.ui:137
 #, kde-format
 msgid "Port used by the SOCKS server."
-msgstr "Kapı, SOCKS sunucusu tarafından kullanılıyor."
+msgstr "SOCKS sunucusu tarafından kullanılan kapı."
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: ktorrent/pref/proxypref.ui:144
