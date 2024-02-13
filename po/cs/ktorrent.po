@@ -2857,22 +2857,13 @@ msgstr "Maximální počet sestavených spojení:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>Maximální počet odchozích spojení, která ktorrent zkusí nastavit souběžně."
-"</p>\n"
-"<p>Pokud máte potíže a ktorrent blokuje ostatní internetový provoz, zkuste "
-"nastavit tuto volbu na nižší hodnotu.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2934,16 +2925,11 @@ msgstr "Primární transportní protokol:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
-"Jaký transportní protokol bude použit, při vytváření spojení s protějškem, "
-"jako první."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
