@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-08 01:35+0000\n"
-"PO-Revision-Date: 2024-01-25 13:36+0100\n"
+"PO-Revision-Date: 2024-02-12 11:01+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.01.90\n"
+"X-Generator: Lokalize 24.01.95\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1660,6 +1660,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Az Információs kisalkalmazás bővítményben használt IP-ország adatbázis "
+"szolgáltatója. Az adatok a Creative Commons Attribution 4.0 nemzetközi "
+"licenc alatt érhetők el (https://creativecommons.org/licenses/by/4.0/). A "
+"zászlók a http://flags.blogpotato.de/ oldalról származnak, nekik is köszönet."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1669,7 +1673,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "Az Információs kisalkalmazás bővítményhez használt maxmindb könyvtár."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -2052,6 +2056,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Naplózás bekapcsolása a standard kimenetre. Az --enable-logging kapcsoló "
+"megadása is szükséges."
 
 #: ktorrent/main.cpp:181
 #, kde-format
@@ -3528,7 +3534,7 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
@@ -4866,23 +4872,20 @@ msgid "Warning: %1"
 msgstr "Figyelmeztetés: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Letöltött darabok:"
+msgstr "Letöltött darabok"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Chunks not downloaded:"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Letöltetlen darabok:"
+msgstr "Letöltendő darabok"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Kizárva:"
+msgstr "Kizárt darabok"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -4920,9 +4923,7 @@ msgstr "Korlátozások elérve."
 #: libktcore/torrent/queuemanager.cpp:227
 #: libktcore/torrent/queuemanager.cpp:266
 #: libktcore/torrent/queuemanager.cpp:295
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Indítás"
@@ -5374,16 +5375,14 @@ msgid "Add Trackers"
 msgstr "Követők hozzáadása"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Elérhető darabok:"
+msgstr "Elérhető darabok"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Elérhető darabok:"
+msgstr "Nem elérhető darabok"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -5567,7 +5566,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "Szekvenciális letöltési mód engedélyezése"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
