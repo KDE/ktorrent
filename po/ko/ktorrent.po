@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2024-02-10 00:10+0100\n"
+"PO-Revision-Date: 2024-02-17 15:09+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -2864,12 +2864,7 @@ msgstr "최대 연결 설정 개수:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
@@ -2940,10 +2935,7 @@ msgstr "주 전송 프로토콜:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
