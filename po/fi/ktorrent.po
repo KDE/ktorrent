@@ -1,6 +1,6 @@
 # Copyright © 2010, 2011, 2012 This_file_is_part_of_KDE
 # This file is distributed under the same license as the ktorrent package.
-# Tommi Nieminen <translator@legisign.org>, 2010, 2015, 2019, 2020, 2021, 2023.
+# Tommi Nieminen <translator@legisign.org>, 2010, 2015, 2019, 2020, 2021, 2023, 2024.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 # KDE Finnish translation sprint participants:
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2023-12-11 17:57+0200\n"
+"PO-Revision-Date: 2024-02-14 18:51+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -2905,22 +2905,17 @@ msgstr "Yhteyden muodostamisten enimmäismäärä:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>Lähtevien yhteyksien, joita KTorrent yrittää muodostaa samanaikaisesti, "
-"enimmäismäärä.</p>\n"
-"<p>Jos KTorrent estää muuta Internet-liikennettä, kokeile asettaa tämä luku "
-"hieman pienemmäksi.</p>"
+"<p>KTorrentin samanaikaisesti yrittämien lähtevien yhteyksien enimmäismäärä."
+"</p>\n"
+"<p>Kokeile pienentää arvoa, jos KTorrent haittaa muuta internetliikennettä, ."
+"</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2981,16 +2976,13 @@ msgstr "Ensisijainen siirtoyhteyskäytäntö:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
-"Ensisijaisesti käytettävä siirtoyhteyskäytäntö toisiin käyttäjiin "
-"yhdistettäessä. Tämä valitaan ensin."
+"Ensisijainen siirtoyhteyskäytäntö: tämä valitaan ensin toisiin käyttäjiin "
+"yhdistettäessä."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
