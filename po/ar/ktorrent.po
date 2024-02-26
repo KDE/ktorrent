@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Safa Alfulaij <safaalfulaij@hotmail.com>, 2013.
-# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022.
+# SPDX-FileCopyrightText: 2022, 2024 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2022-02-12 12:11+0400\n"
+"PO-Revision-Date: 2024-02-25 21:37+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 21.07.70\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -266,7 +266,7 @@ msgstr ""
 #| msgid "&Import"
 msgctxt "@action:button"
 msgid "Import"
-msgstr "ا&ستورد"
+msgstr "استورد"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:236
 #: ktorrent/dialogs/fileselectdlg.cpp:254
@@ -284,7 +284,7 @@ msgstr "الدليل %1 غير موجود، هل تريد إنشاءه؟"
 #| msgid "Recreate"
 msgctxt "@action:button"
 msgid "Create"
-msgstr "أعد الإنشاء"
+msgstr "أنشئ"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
@@ -607,7 +607,7 @@ msgstr "اختر ملف السيل والبينات العائدة إليه."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p٪"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -953,17 +953,15 @@ msgstr "الملف أو الدليل لإنشاء السيل منه:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectDirectory)
 #: ktorrent/dialogs/torrentcreatordlg.ui:44
-#, fuzzy, kde-format
-#| msgid "Open Directory"
+#, kde-format
 msgid "Select Directory"
-msgstr "افتح الدليل"
+msgstr "اختر دليلًا"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectFile)
 #: ktorrent/dialogs/torrentcreatordlg.ui:51
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select File"
-msgstr "حدّد الك&ل"
+msgstr "اختر ملفًّا"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/torrentcreatordlg.ui:71
@@ -1030,7 +1028,7 @@ msgstr "8 م.بايت"
 #, fuzzy, kde-format
 #| msgid "1 MiB"
 msgid "16 MiB"
-msgstr "1 م.بايت"
+msgstr " م.بايت"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_start_seeding)
 #: ktorrent/dialogs/torrentcreatordlg.ui:137
@@ -1381,9 +1379,9 @@ msgid "Choose a file"
 msgstr "اختر ملفًا"
 
 #: ktorrent/ipfilterwidget.cpp:118 ktorrent/ipfilterwidget.cpp:130
-#, fuzzy, kde-format
+#, kde-format
 msgid "Text files"
-msgstr "ملفات السيول"
+msgstr "ملفّات نصيّة"
 
 #: ktorrent/ipfilterwidget.cpp:130
 #, kde-format
@@ -1468,9 +1466,9 @@ msgstr "المجموعات"
 
 #. i18n: ectx: Menu (ViewMenu)
 #: ktorrent/kttorrentactivityui.rc:40
-#, fuzzy, kde-format
+#, kde-format
 msgid "View"
-msgstr "&ملف"
+msgstr "اعرض"
 
 #. i18n: ectx: Menu (AdvancedMenu)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
@@ -1524,9 +1522,9 @@ msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgstr "C و إيفان"
 
 #: ktorrent/main.cpp:111
-#, kde-format
+#, fuzzy, kde-format
 msgid "Joris Guisson"
-msgstr ""
+msgstr "Joris Guisson"
 
 #: ktorrent/main.cpp:115
 #, fuzzy, kde-format
@@ -1536,7 +1534,7 @@ msgstr "إيفان"
 #: ktorrent/main.cpp:116
 #, fuzzy, kde-format
 msgid "Alan Jones"
-msgstr "آلان جونز"
+msgstr "ألان جونز"
 
 #: ktorrent/main.cpp:116
 #, fuzzy, kde-format
@@ -1584,14 +1582,14 @@ msgid "Application icon and a couple of others"
 msgstr "تطبيق أيقونة و a من"
 
 #: ktorrent/main.cpp:121
-#, fuzzy, kde-format
+#, kde-format
 msgid "Adam Treat"
-msgstr "آدم المتعة"
+msgstr "Adam Treat"
 
 #: ktorrent/main.cpp:122
 #, fuzzy, kde-format
 msgid "Danny Allen"
-msgstr "داني آلن (Danny Allen)"
+msgstr "Danny Allen"
 
 #: ktorrent/main.cpp:122
 #, kde-format
@@ -1619,7 +1617,7 @@ msgid "ChunkBar's tooltip and IWFileTreeItem sorting"
 msgstr "تلميحة شريط الكتل وترتيب IWFileTreeItem"
 
 #: ktorrent/main.cpp:126
-#, fuzzy, kde-format
+#, kde-format
 msgid "Andreas Kling"
 msgstr "Andreas Kling"
 
@@ -1653,9 +1651,9 @@ msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
 
 #: ktorrent/main.cpp:135
-#, fuzzy, kde-format
+#, kde-format
 msgid "Adam Forsyth"
-msgstr "آدم"
+msgstr "آدم فورسيث"
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -1698,9 +1696,9 @@ msgid "Coldmilk webgui"
 msgstr ""
 
 #: ktorrent/main.cpp:143
-#, fuzzy, kde-format
+#, kde-format
 msgid "Alexander Dymo"
-msgstr "أليكساندر"
+msgstr "Alexander Dymo"
 
 #: ktorrent/main.cpp:143
 #, kde-format
@@ -1840,7 +1838,7 @@ msgstr "رقعة لإصلاح حساب مساحة القرص الحرة على �
 #: ktorrent/main.cpp:157
 #, kde-format
 msgid "Lukas Appelhans"
-msgstr ""
+msgstr "Lukas Appelhans"
 
 #: ktorrent/main.cpp:157
 #, kde-format
@@ -1870,7 +1868,7 @@ msgstr "رقعة لتحميل السيول سكونيًّا من سطر الأو
 #: ktorrent/main.cpp:160
 #, kde-format
 msgid "Lee Olson"
-msgstr ""
+msgstr "لي ولسون"
 
 #: ktorrent/main.cpp:160
 #, kde-format
@@ -1880,7 +1878,7 @@ msgstr "طقم أيقونات جديد"
 #: ktorrent/main.cpp:161
 #, kde-format
 msgid "Aaron J. Seigo"
-msgstr ""
+msgstr "Aaron J. Seigo"
 
 #: ktorrent/main.cpp:161
 #, kde-format
@@ -1991,17 +1989,17 @@ msgstr "إصلاح العلة 305379"
 #: ktorrent/main.cpp:172
 #, kde-format
 msgid "Andrius Štikonas"
-msgstr ""
+msgstr "Andrius Štikonas"
 
 #: ktorrent/main.cpp:172 ktorrent/main.cpp:173
-#, kde-format
+#, fuzzy, kde-format
 msgid "KF5 porting"
-msgstr ""
+msgstr "النقل إلىKF 5"
 
 #: ktorrent/main.cpp:173
 #, kde-format
 msgid "Nick Shaforostoff"
-msgstr ""
+msgstr "Nick Shaforostoff"
 
 #: ktorrent/main.cpp:174
 #, fuzzy, kde-format
@@ -2016,18 +2014,17 @@ msgstr ""
 #: ktorrent/main.cpp:175
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "جاك هيل"
 
 #: ktorrent/main.cpp:175
-#, kde-format
+#, fuzzy, kde-format
 msgid "KF6 porting"
-msgstr ""
+msgstr "النقل إلىKF 5"
 
 #: ktorrent/main.cpp:179
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "مكّن الكل"
+msgstr "مكّن السجلّ"
 
 #: ktorrent/main.cpp:181
 #, kde-format
@@ -2170,9 +2167,9 @@ msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
-#, fuzzy, kde-format
+#, kde-format
 msgid " min"
-msgstr "ابحث المسارات"
+msgstr " د"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
@@ -2557,7 +2554,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Colors"
 msgid "Reset Colors"
-msgstr "الألوان"
+msgstr "صفّر الألوان"
 
 #: ktorrent/pref/generalpref.cpp:13
 #, kde-format
@@ -3337,9 +3334,9 @@ msgstr "عِرض نطاق الرفع المتوفّر:"
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_download_bw)
 #: ktorrent/pref/recommendedsettingsdlg.ui:31
 #: ktorrent/pref/recommendedsettingsdlg.ui:57
-#, fuzzy, kde-format
+#, kde-format
 msgid " Kbps"
-msgstr "ك.ب. s"
+msgstr " ك.بت/ثا"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_upload_bw)
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_download_bw)
@@ -3449,12 +3446,12 @@ msgstr "DHT: %1، %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p٪"
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
 msgid "The desktop is offline"
-msgstr ""
+msgstr "سطح المكتب خارج الخط"
 
 #: ktorrent/tools/magnetmodel.cpp:102
 #, kde-format
@@ -4006,10 +4003,9 @@ msgid "Errors:"
 msgstr "الأخطاء:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgid "Filter..."
-msgstr "رشّح"
+msgstr "رشّح..."
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4540,8 +4536,7 @@ msgstr "السيول غير المُجمَّعة"
 
 #: libktcore/interfaces/functions.cpp:150
 #: libktcore/interfaces/functions.cpp:155
-#, fuzzy, kde-format
-#| msgid "Torrents"
+#, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "السيول"
@@ -4828,9 +4823,7 @@ msgstr "وصل إلى الحدود."
 #: libktcore/torrent/queuemanager.cpp:227
 #: libktcore/torrent/queuemanager.cpp:266
 #: libktcore/torrent/queuemanager.cpp:295
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "ابدأ"
@@ -4898,9 +4891,9 @@ msgstr "لا يستطيع كتابة end من مَخزن!"
 
 #: plugins/bwscheduler/bwprefpage.cpp:12
 #: plugins/bwscheduler/bwschedulerplugin.cpp:62
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scheduler"
-msgstr "المجدول:"
+msgstr "المجدول"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: plugins/bwscheduler/bwprefpage.ui:16
@@ -5390,9 +5383,9 @@ msgid "Download first"
 msgstr "نزّل أولًا"
 
 #: plugins/infowidget/fileview.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgid "Download normally"
-msgstr "نزّل"
+msgstr "نزّل بشكل عادي"
 
 #: plugins/infowidget/fileview.cpp:118
 #, kde-format
@@ -6833,8 +6826,7 @@ msgstr "استكشف الأدلة تكراريًّا."
 #: plugins/scanfolder/torrentloadqueue.cpp:139
 #: plugins/scanfolder/torrentloadqueue.cpp:140
 #: plugins/scanfolder/torrentloadqueue.cpp:143
-#, fuzzy, kde-format
-#| msgid "loaded"
+#, kde-format
 msgctxt "folder name part"
 msgid "loaded"
 msgstr "محمّل"
@@ -6972,16 +6964,15 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
-#, kde-format
+#, fuzzy, kde-format
 msgid "Scan"
-msgstr ""
+msgstr "امسح"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select folder:"
-msgstr "حدّد الك&ل"
+msgstr "اختر مجلدًا:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
@@ -6995,7 +6986,7 @@ msgstr "أظهر قائمة الملفات"
 #, fuzzy, kde-format
 #| msgid "Open silently"
 msgid "Open file"
-msgstr "افتح سكونيًّا"
+msgstr "افتح ملفًا"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
@@ -7012,16 +7003,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
-#, fuzzy, kde-format
-#| msgid "Magnet link copied to clipboard"
+#, kde-format
 msgid "Copy to clipboard"
-msgstr "نُسخت الوصلة المُمغنطة إلى الحافظة"
+msgstr "انسخ إلى الحافظة"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:136
 #, kde-format
 msgid "Ctrl+C"
-msgstr ""
+msgstr "Ctrl+C"
 
 #. i18n: ectx: ToolBar (SearchToolBar)
 #: plugins/search/ktorrent_searchui.rc:4
@@ -7775,7 +7765,7 @@ msgstr "اختر المسار لحفظ الصورة..."
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
 #, fuzzy, kde-format
 msgid "Image files"
-msgstr "ملفات السيول"
+msgstr "ملفّات صور"
 
 #. i18n: ectx: label, entry (UpdateEveryGuiUpdates), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:10
@@ -8196,9 +8186,9 @@ msgid "Enter the new authentication cookie"
 msgstr "أدخِل كعكة استيثاق جديدة"
 
 #: plugins/syndication/feedwidget.cpp:204
-#, fuzzy, kde-format
+#, kde-format
 msgid "<b>OK</b>"
-msgstr "جاري المسح البيانات من<b></b>:"
+msgstr "<b>حسنًا</b>"
 
 #: plugins/syndication/feedwidget.cpp:207
 #, kde-format
