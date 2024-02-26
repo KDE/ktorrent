@@ -767,6 +767,7 @@ Action=Sound|Popup
 
 [Event/MagnetLinkCopied]
 Name=Magnet link copied to clipboard
+Name[ar]=نُسخت الوصلة المُمغنطة إلى الحافظة
 Name[bg]=Магнитната връзка е копирана в буфера за обмен
 Name[ca]=L'enllaç magnet s'ha copiat al porta-retalls
 Name[ca@valencia]=L'enllaç magnet s'ha copiat a dins del porta-retalls
