@@ -70,6 +70,7 @@
         "Icon": "view-filter",
         "License": "GPL",
         "Name": "IP Filter",
+        "Name[ar]": "مرشّح عنوان IP",
         "Name[bg]": "Филтър по IP",
         "Name[bs]": "IP filter",
         "Name[ca@valencia]": "Filtre d'IP",

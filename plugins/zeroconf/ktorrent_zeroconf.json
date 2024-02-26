@@ -70,6 +70,7 @@
         "Icon": "preferences-plugin",
         "License": "GPL",
         "Name": "Zeroconf",
+        "Name[ar]": "Zeroconf",
         "Name[bg]": "Zeroconf",
         "Name[bs]": "Zeroconf",
         "Name[ca@valencia]": "Zeroconf",
