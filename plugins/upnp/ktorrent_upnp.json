@@ -70,6 +70,7 @@
         "Icon": "kt-upnp",
         "License": "GPL",
         "Name": "UPnP",
+        "Name[ar]": "UPnP",
         "Name[bg]": "UPnP",
         "Name[bs]": "UPnP",
         "Name[ca@valencia]": "UPnP",

@@ -71,6 +71,7 @@
         "Icon": "kt-bandwidth-scheduler",
         "License": "GPL",
         "Name": "Scheduler",
+        "Name[ar]": "المجدول",
         "Name[bg]": "Разписание",
         "Name[bs]": "Raspoređivač",
         "Name[ca@valencia]": "Planificador",

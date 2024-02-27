@@ -70,6 +70,7 @@
         "Icon": "kt-magnet",
         "License": "GPL",
         "Name": "Magnet Generator",
+        "Name[ar]": "مولِّد المغنطة",
         "Name[bg]": "Генератор на магнитни връзки",
         "Name[bs]": "Generator magneta",
         "Name[ca@valencia]": "Generador de magnet",
