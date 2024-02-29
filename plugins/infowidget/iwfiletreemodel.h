@@ -28,6 +28,7 @@ public:
     int columnCount(const QModelIndex &parent) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     void update() override;
     void changePriority(const QModelIndexList &indexes, bt::Priority newpriority) override;
 

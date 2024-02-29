@@ -5,6 +5,8 @@
 
 #include "fileview.h"
 
+#include <KFileItem>
+#include <KIO/RenameFileDialog>
 #include <QActionGroup>
 #include <QDebug>
 #include <QFileDialog>
@@ -111,6 +113,7 @@ void FileView::setupActions()
     open_action = context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file", "Open"), this, &FileView::open);
     open_with_action =
         context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("Open file with", "Open With"), this, &FileView::openWith);
+    rename_action = context_menu->addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18nc("Rename file", "Rename"), this, &FileView::rename);
     check_data = context_menu->addAction(QIcon::fromTheme(QStringLiteral("kt-check-data")), i18n("Check File"), this, &FileView::checkFile);
     context_menu->addSeparator();
     download_first_action = context_menu->addAction(i18n("Download first"), this, &FileView::downloadFirst);
@@ -200,6 +203,7 @@ void FileView::showContextMenu(const QPoint &p)
         download_first_action->setEnabled(true);
         download_normal_action->setEnabled(true);
         download_last_action->setEnabled(true);
+        rename_action->setEnabled(false);
         open_action->setEnabled(false);
         open_with_action->setEnabled(false);
         dnd_action->setEnabled(true);
@@ -270,6 +274,26 @@ void FileView::open()
 {
     auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(preview_path));
     job->start();
+}
+
+void FileView::rename()
+{
+    QModelIndexList selectedIndexes = view->selectionModel()->selectedRows();
+    QModelIndex index = proxy_model->mapToSource(selectedIndexes.first());
+
+    QString path = preview_path;
+    // if it ends with dir separator then QUrl::fileName() will be empty
+    if (path.endsWith(bt::DirSeparator())) {
+        path.removeLast();
+    }
+
+    QUrl url{QUrl::fromUserInput(path)};
+    KFileItem item(url);
+    auto renameDialog = new KIO::RenameFileDialog(KFileItemList({item}), nullptr);
+    renameDialog->open();
+    connect(renameDialog, &KIO::RenameFileDialog::renamingFinished, this, [=](const QList<QUrl> &urls) {
+        model->setData(index, urls.first().fileName(), Qt::EditRole);
+    });
 }
 
 void FileView::openWith()

@@ -515,8 +515,10 @@ void TorrentFileTreeModel::modifyPathOfFiles(Node *n, const QString &path)
         Node *c = n->children.at(i);
         if (!c->file) // another directory, continue recursively
             modifyPathOfFiles(c, path + c->name + bt::DirSeparator());
-        else
+        else {
             c->file->setUserModifiedPath(path + c->name);
+            c->file->setPathOnDisk(tc->getStats().output_path + path + c->name);
+        }
     }
 }
 
@@ -563,6 +565,7 @@ bool TorrentFileTreeModel::setName(const QModelIndex &index, const QString &name
         }
 
         n->name = name;
+        n->file->setPathOnDisk(tc->getStats().output_path + n->name);
         n->file->setUserModifiedPath(n->path());
         Q_EMIT dataChanged(index, index);
         return true;

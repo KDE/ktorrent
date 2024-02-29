@@ -60,6 +60,7 @@ private:
 
 private Q_SLOTS:
     void open();
+    void rename();
     void openWith();
     void downloadFirst();
     void downloadLast();
@@ -79,6 +80,7 @@ private:
     TorrentFileModel *model;
 
     QMenu *context_menu;
+    QAction *rename_action;
     QAction *open_action;
     QAction *open_with_action;
     QAction *download_first_action;

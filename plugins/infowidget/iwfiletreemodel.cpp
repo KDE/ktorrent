@@ -15,6 +15,7 @@
 #include <interfaces/functions.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
+#include <torrent/torrentcontrol.h>
 #include <util/functions.h>
 
 using namespace bt;
@@ -131,6 +132,21 @@ QVariant IWFileTreeModel::data(const QModelIndex &index, int role) const
         return sortData(n, index);
 
     return QVariant();
+}
+
+bool IWFileTreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (!tc || !index.isValid())
+        return false;
+
+    if (role == Qt::EditRole) {
+        if (setName(index, value.toString())) {
+            static_cast<TorrentControl*>(tc)->afterRename();
+            return true;
+        }
+    }
+
+    return TorrentFileTreeModel::setData(index, value, role);
 }
 
 QVariant IWFileTreeModel::displayData(Node *n, const QModelIndex &index) const

@@ -10,10 +10,13 @@
 
 #include <KLocalizedString>
 
+#include <QFileInfo>
+
 #include "infowidgetpluginsettings.h"
 #include <interfaces/functions.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
+#include <torrent/torrentcontrol.h>
 #include <util/functions.h>
 
 using namespace bt;
@@ -208,6 +211,45 @@ bool IWFileListModel::setData(const QModelIndex &index, const QVariant &value, i
 {
     if (role == Qt::CheckStateRole)
         return TorrentFileListModel::setData(index, value, role);
+    else if (role == Qt::EditRole) {
+        if (value.toString().isEmpty())
+            return false;
+
+        if (tc->getStats().multi_file_torrent) {
+            bt::TorrentFileInterface &file = tc->getTorrentFile(index.row());
+
+            QFileInfo fi(file.getPathOnDisk());
+            QString path = fi.absolutePath();
+            if (!path.endsWith(bt::DirSeparator())) {
+                path += bt::DirSeparator();
+            }
+            path += value.toString();
+
+            // Check if there is a sibling with the same name
+            bt::Uint32 num_files = tc->getNumFiles();
+            for (bt::Uint32 i = 0; i < num_files; i++) {
+                if ((int)i == index.row())
+                    continue;
+
+                if (path == tc->getTorrentFile(i).getPathOnDisk())
+                    return false;
+            }
+
+            // keep track of modified paths
+            file.setPathOnDisk(path);
+            // remove the local download path since user_modified_path
+            // is a relative path inside the torrent
+            path = path.remove(tc->getStats().output_path);
+            file.setUserModifiedPath(path);
+        } else {
+            // change the name of the file or toplevel directory
+            QString path = value.toString();
+            tc->setUserModifiedFileName(path);
+        }
+        static_cast<TorrentControl*>(tc)->afterRename();
+        Q_EMIT dataChanged(index, index);
+        return true;
+    }
 
     if (!tc || !index.isValid() || role != Qt::UserRole)
         return false;

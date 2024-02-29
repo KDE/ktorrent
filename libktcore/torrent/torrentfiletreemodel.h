@@ -96,11 +96,13 @@ public:
     void changePriority(const QModelIndexList &indexes, bt::Priority newpriority) override;
     void onCodecChange() override;
 
+protected:
+    bool setName(const QModelIndex &index, const QString &name);
+
 private:
     void constructTree();
     void invertCheck(const QModelIndex &idx);
     bool setCheckState(const QModelIndex &index, Qt::CheckState state);
-    bool setName(const QModelIndex &index, const QString &name);
     void modifyPathOfFiles(Node *n, const QString &path);
 
 protected:
