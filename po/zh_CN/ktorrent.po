@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2024-02-05 11:38\n"
+"PO-Revision-Date: 2024-02-29 12:53\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2814,20 +2814,13 @@ msgstr "最大连接数的设置："
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>KTorrent 将尝试并发的最大出站连接数量。</p>\n"
-"<p>如果您遇到了 KTorrent 阻断其他互联网流量的问题，请尝试调低该数量。</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2887,14 +2880,11 @@ msgstr "主传输协议："
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
-msgstr "要使用的主要传输协议。当尝试设定一个对等点连接时将首选该协议。"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
