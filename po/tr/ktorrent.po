@@ -11,13 +11,13 @@
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014, 2015, 2017, 2018, 2021.
 # Yavuz BAYRAK, 2007.
-# SPDX-FileCopyrightText: 2022, 2023 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-08 01:35+0000\n"
-"PO-Revision-Date: 2023-12-27 14:38+0300\n"
+"PO-Revision-Date: 2024-03-01 16:04+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.01.85\n"
+"X-Generator: Lokalize 24.02.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1972,7 +1972,7 @@ msgstr "Jaroslaw Swierczynski"
 #: ktorrent/main.cpp:166
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
-msgstr "Syndication eklentisi için hariç tutma kalıbı"
+msgstr "Syndication eklentisi için dışlama dizgileri"
 
 #: ktorrent/main.cpp:167
 #, kde-format
@@ -4392,7 +4392,7 @@ msgstr "Karşıdan ne kadar veri yükledik"
 #: ktorrent/view/viewmodel.cpp:478
 #, kde-format
 msgid "Total size of the torrent, excluded files are not included"
-msgstr "Torrentin toplam boyutu, dışarıda tutulan dosyalar içerilmez"
+msgstr "Torrentin toplam boyutu, dışlanan dosyalar içerilmez"
 
 #: ktorrent/view/viewmodel.cpp:480
 #, kde-format
@@ -4443,8 +4443,7 @@ msgid ""
 "The percentage of data we have of the whole torrent, not including excluded "
 "files"
 msgstr ""
-"Tüm torrentten sahip olduğumuz veri yüzdesi; dışarıda tutulan dosyalar "
-"içerilmez"
+"Tüm torrentten sahip olduğumuz veri yüzdesi; dışlanan dosyalar içerilmez"
 
 #: ktorrent/view/viewmodel.cpp:497
 #, kde-format
@@ -4882,7 +4881,7 @@ msgstr "İndirilecek Parçalar"
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
 msgid "Excluded Chunks"
-msgstr "Dışarıda Tutulan Parçalar"
+msgstr "Dışlanan Parçalar"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -5450,7 +5449,7 @@ msgstr "Şu anda indiriliyor:"
 #: plugins/infowidget/chunkdownloadview.ui:134
 #, kde-format
 msgid "Excluded:"
-msgstr "Dışarıda tutulanlar:"
+msgstr "Dışlanan:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_4_2)
 #: plugins/infowidget/chunkdownloadview.ui:170
@@ -8524,13 +8523,13 @@ msgstr "BÜYÜK/küçük harf duyarlı eşleşme"
 #: plugins/syndication/filtereditor.ui:103
 #, kde-format
 msgid "Exclusion Patterns"
-msgstr "Ayrı Tutma Kalıbı"
+msgstr "Dışlama Dizgisi"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_all_must_match)
 #: plugins/syndication/filtereditor.ui:153
 #, kde-format
 msgid "Item must match all strings to be excluded"
-msgstr "Öge, tüm dışarıda bırakılacak dizilerle eşleşmelidir"
+msgstr "Öge, tüm dışlanan dizilerle eşleşmelidir"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: plugins/syndication/filtereditor.ui:168
