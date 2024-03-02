@@ -3,13 +3,13 @@
 #
 # Elkana Bardugo <ttv200@gmail.com>, 2016.
 # Elkana Bardugo <ttv200@gmail.com>, 2017. #zanata
-# SPDX-FileCopyrightText: 2023 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2023, 2024 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-11 00:38+0000\n"
-"PO-Revision-Date: 2023-12-05 15:35+0200\n"
+"PO-Revision-Date: 2024-03-01 16:23+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -153,14 +153,14 @@ msgstr ""
 #: ktorrent/dialogs/addpeersdlg.ui:14 ktorrent/groups/grouppolicydlg.ui:14
 #, kde-format
 msgid "Dialog"
-msgstr "דו־שיח"
+msgstr "חלונית"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/dialogs/addpeersdlg.ui:20
 #, kde-format
 msgid ""
 "Enter the IP address or hostname and port number of the peer you wish to add:"
-msgstr "הקלד את כתובת ה־IP או השרת ומספר היציאה של העמית שתרצה להוסיף:"
+msgstr "נא להקליד את כתובת ה־IP או שם המארח ומספר הפתחה של העמית להוספה:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/addpeersdlg.ui:34
@@ -170,7 +170,7 @@ msgstr "עמית:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_ip)
 #: ktorrent/dialogs/addpeersdlg.ui:43
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "<p>The IP address or hostname of the peer you want to connect to, should be "
 "put here.</p>\n"
@@ -197,7 +197,7 @@ msgstr "127.0.0.1"
 #: ktorrent/pref/proxypref.ui:130 ktupnptest/upnptestwidget.ui:65
 #, kde-format
 msgid "Port:"
-msgstr "יציאה:"
+msgstr "פתחה:"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #. i18n: ectx: property (text), widget (QPushButton, m_add_node)
@@ -210,7 +210,7 @@ msgstr "יציאה:"
 #: plugins/search/searchpref.ui:170 plugins/syndication/managefiltersdlg.ui:60
 #, kde-format
 msgid "Add"
-msgstr "הוסף"
+msgstr "הוספה"
 
 #. i18n: ectx: property (text), widget (QPushButton, close_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_close)
@@ -218,17 +218,17 @@ msgstr "הוסף"
 #: ktorrent/view/scanextender.ui:224
 #, kde-format
 msgid "Close"
-msgstr "סגור"
+msgstr "סגירה"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:81
 #, kde-format
 msgid "Show a file tree"
-msgstr "הראה עץ קבצים"
+msgstr "הצגת עץ קבצים"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:84
 #, kde-format
 msgid "Show a file list"
-msgstr "הראה רשימת קבצים"
+msgstr "הצגת רשימת קבצים"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
 #, kde-format
@@ -238,7 +238,7 @@ msgstr "מסנן"
 #: ktorrent/dialogs/fileselectdlg.cpp:111
 #, kde-format
 msgid "Opening %1"
-msgstr "פתח %1"
+msgstr "%1 נפתח"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:211
 #, kde-format
@@ -247,11 +247,11 @@ msgid ""
 "directory. Do you want to import these files and use the completed downloads "
 "directory as the location?"
 msgstr ""
-"חלק מקבצי הטורנט הזה נמצאו בתיקית ההורדות שהושלמו. התרצה להשתמש בתיקית "
-"ההורדות שהושלמו כמיקום ההורדה?"
+"חלק מקובצי הטורנט הזה נמצאו בתיקיית ההורדות שהושלמו. להשתמש בתיקיית ההורדות "
+"שהושלמו כמיקום ההורדה?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:215
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
 "directory. Do you want to import these files and use the completed downloads "
@@ -268,17 +268,16 @@ msgid ""
 msgstr "הקובץ <b>%1</b>  נמצא בתיקית ההורדות שהושלמו. לייבא את הקובץ הזה?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:225
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&יבוא"
+msgstr "ייבוא"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:236
 #: ktorrent/dialogs/fileselectdlg.cpp:254
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
-msgstr "התיקיה %1 אינה קיימת, ליצור אותה?"
+msgstr "התיקייה %1 אינה קיימת, ליצור אותה?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:238
 #: ktorrent/dialogs/fileselectdlg.cpp:256
@@ -286,34 +285,29 @@ msgstr "התיקיה %1 אינה קיימת, ליצור אותה?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
 #: ktorrent/dialogs/torrentcreatordlg.cpp:279
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "צור מחדש"
+msgstr "יצירה"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
 "these files, are you sure you want to do this?"
-msgstr ""
-"אתה ביטלת את בחירת הקבצים הקיימים הבאים. כל הקבצים האלו ימחקו, אתה בטוח שאתה "
-"רוצה לעשות את זה?"
+msgstr "ביטלת את בחירת הקבצים הקיימים הבאים. כל הקבצים האלו ימחקו, להמשיך?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:291
-#, fuzzy, kde-format
-#| msgid "Yes, delete the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "כן, מחק את הקבצים"
+msgstr "למחוק את הקבצים"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "לא, שמור את הקבצים"
+msgstr "לשמור את הקבצים"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:315
 #, kde-format
@@ -323,7 +317,7 @@ msgid ""
 "Please select a different location."
 msgstr ""
 "פתיחת הטורנט <b>%1</b>, תשתף קובץ אחד או יותר עם הטורנטים הבאים. טורנטים לא "
-"יכולים לכתוב לאותם הקבצים. אנא בחר מיקום הורדה אחר."
+"יכולים לכתוב לאותם הקבצים. נא לבחור מקום אחר להורדה."
 
 #: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
 #: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
@@ -334,7 +328,7 @@ msgstr "כל הטורנטים"
 #: ktorrent/dialogs/fileselectdlg.cpp:486
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
-msgstr "<b>לא יכול לקבוע כמה מקום פנוי</b>"
+msgstr "<b>לא ניתן לקבוע כמה מקום פנוי</b>"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:493
 #, kde-format
@@ -375,26 +369,26 @@ msgstr "קובץ קיים: <b>כן</b>"
 #: ktorrent/dialogs/fileselectdlg.cpp:611
 #, kde-format
 msgid "Clear History"
-msgstr "נקה היסטוריה"
+msgstr "פינוי היסטוריה"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, FileSelectDlg)
 #: ktorrent/dialogs/fileselectdlg.ui:14
 #, kde-format
 msgid "Select Which Files You Want to Download"
-msgstr "בחר אילו קבצים אתה רוצה להוריד"
+msgstr "נא לבחור אילו קבצים להוריד"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #. i18n: ectx: property (text), widget (QCheckBox, m_use_custom_download_location)
 #: ktorrent/dialogs/fileselectdlg.ui:34 plugins/syndication/filtereditor.ui:298
 #, kde-format
 msgid "Download to:"
-msgstr "הורד ל:"
+msgstr "הורדה אל:"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_download_location_history)
 #: ktorrent/dialogs/fileselectdlg.ui:47
 #, kde-format
 msgid "History of all recently used download locations"
-msgstr "היסטוריה של כל המיקומי הורדה האחרונים"
+msgstr "היסטוריה של כל המיקומי ההורדה האחרונים"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_download_location_history)
 #. i18n: ectx: property (text), widget (QToolButton, m_move_when_completed_history)
@@ -414,7 +408,7 @@ msgstr "היסטוריה של כל המיקומי הורדה האחרונים"
 #: plugins/mediaplayer/mediacontroller.ui:84
 #, kde-format
 msgid "..."
-msgstr "..."
+msgstr "…"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_moveCompleted)
 #: ktorrent/dialogs/fileselectdlg.ui:61
@@ -422,7 +416,7 @@ msgstr "..."
 msgid ""
 "Moves the files to the specified location when the torrent finishes "
 "downloading."
-msgstr "העבר את הקבצים למיקום הבא בסיום ההורדה."
+msgstr "העברת הקבצים למיקום הבא בסיום הורדת הטורנט."
 
 #. i18n: ectx: property (text), widget (QCheckBox, move_on_completion_enabled)
 #. i18n: ectx: property (text), widget (QCheckBox, m_moveCompleted)
@@ -431,13 +425,13 @@ msgstr "העבר את הקבצים למיקום הבא בסיום ההורדה."
 #: plugins/syndication/filtereditor.ui:308
 #, kde-format
 msgid "Move when completed to:"
-msgstr "העבר בסיום ל:"
+msgstr "העברה בסיום אל:"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_move_when_completed_history)
 #: ktorrent/dialogs/fileselectdlg.ui:74
 #, kde-format
 msgid "History of all recently used move when completed locations"
-msgstr "היסטוריה של כל המיקומי העברה לאחר הורדה האחרונים"
+msgstr "היסטוריה של כל המקומות שאליהם הועברו הקבצים שהושלמו"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/dialogs/fileselectdlg.ui:105
@@ -450,25 +444,25 @@ msgstr "קידוד טקסט:"
 #, kde-format
 msgid ""
 "All files in the torrent, you can change them by double clicking on them."
-msgstr "כל הקבצים בטורנט. אתה יכול לשמות אותם על ידי לחיצה כפולה עלהם."
+msgstr "כל הקבצים בטורנט, אפשר לשנות אותם בלחיצה כפולה עליהם."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_all)
 #: ktorrent/dialogs/fileselectdlg.ui:144
 #, kde-format
 msgid "Select &All"
-msgstr "בחר הכל"
+msgstr "בחירה בה&כול"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_none)
 #: ktorrent/dialogs/fileselectdlg.ui:151
 #, kde-format
 msgid "Select &None"
-msgstr "נקה הכל"
+msgstr "&לבטל בחירה"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_invert_selection)
 #: ktorrent/dialogs/fileselectdlg.ui:158
 #, kde-format
 msgid "Invert Selection"
-msgstr "הפוך בחירה"
+msgstr "היפוך בחירה"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_collapse_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnCollapseAll)
@@ -476,7 +470,7 @@ msgstr "הפוך בחירה"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:36
 #, kde-format
 msgid "Collapse All"
-msgstr "כווץ הכל"
+msgstr "כיווץ של הכול"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_expand_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnExpandAll)
@@ -484,7 +478,7 @@ msgstr "כווץ הכל"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:29
 #, kde-format
 msgid "Expand All"
-msgstr "הרחב הכל"
+msgstr "הרחבה של הכול"
 
 #. i18n: ectx: property (text), widget (QLabel, m_existing_found)
 #: ktorrent/dialogs/fileselectdlg.ui:196
@@ -516,11 +510,11 @@ msgstr "קבוצה:"
 #: ktorrent/dialogs/fileselectdlg.ui:256
 #, kde-format
 msgid "Start torrent"
-msgstr "התחל טורנט"
+msgstr "התחלת טורנט"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_skip_data_check)
 #: ktorrent/dialogs/fileselectdlg.ui:267
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "<p>When existing files have been found, skip the data check and assume that "
 "the files are fully downloaded.</p>\n"
@@ -535,13 +529,13 @@ msgstr ""
 #: ktorrent/dialogs/fileselectdlg.ui:270
 #, kde-format
 msgid "Skip data check if existing files are found"
-msgstr "דלג על בדיקת קבצים אם נמצאו קבצים קיימים"
+msgstr "דילוג על בדיקת קבצים אם נמצאו קבצים קיימים"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: ktorrent/dialogs/fileselectdlg.ui:280
 #, kde-format
 msgid "Disk Space"
-msgstr "נפח דיסק"
+msgstr "נפח בכונן"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ktorrent/dialogs/fileselectdlg.ui:288
@@ -564,25 +558,25 @@ msgstr "אחרי הורדה:"
 #: ktorrent/dialogs/importdialog.cpp:197 ktorrent/dialogs/importdialog.cpp:223
 #, kde-format
 msgid "Cannot load the torrent file: %1"
-msgstr "לא יכול להוריד את קובץ הטורנט: %1"
+msgstr "לא ניתן להוריד את קובץ הטורנט: %1"
 
 #: ktorrent/dialogs/importdialog.cpp:249 plugins/ipfilter/convertthread.cpp:55
 #: plugins/ipfilter/convertthread.cpp:141
 #: plugins/search/searchenginelist.cpp:157
 #, kde-format
 msgid "Cannot open %1: %2"
-msgstr "לא יכול לפתוח \"%1\": %2"
+msgstr "לא ניתן לפתוח את %1: %2"
 
 #: ktorrent/dialogs/importdialog.cpp:352 ktorrent/dialogs/importdialog.cpp:368
 #, kde-format
 msgid "Failed to create %1: %2"
-msgstr "נכשל ביצירת \"%1\": %2"
+msgstr "יצירת %1 נכשלה: %2"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ImportDialog)
 #: ktorrent/dialogs/importdialog.ui:14
 #, kde-format
 msgid "Import an existing torrent"
-msgstr "ייבא טורנט קיים"
+msgstr "ייבוא טורנט קיים"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ktorrent/dialogs/importdialog.ui:30
@@ -600,7 +594,7 @@ msgstr "נתונים:"
 #: ktorrent/dialogs/importdialog.ui:70
 #, kde-format
 msgid "Select the torrent file and the data which belongs with it."
-msgstr "בחר את קובץ הטורנט ואת הנתונים ששיכים לו."
+msgstr "נא לבחור את קובץ הטורנט ואת הנתונים ששייכים לו."
 
 #. i18n: ectx: property (format), widget (QProgressBar, progress_bar)
 #. i18n: ectx: property (format), widget (QProgressBar, m_progress)
@@ -618,19 +612,19 @@ msgstr ""
 #: ktorrent/dialogs/importdialog.ui:112
 #, kde-format
 msgid "&Import"
-msgstr "&יבוא"
+msgstr "יי&בוא"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel_btn)
 #: ktorrent/dialogs/importdialog.ui:119
 #, kde-format
 msgid "Ca&ncel"
-msgstr "&ביטול"
+msgstr "בי&טול"
 
 #: ktorrent/dialogs/missingfilesdlg.cpp:71
 #: ktorrent/dialogs/missingfilesdlg.cpp:115
 #, kde-format
 msgid "Select the directory where the data now is."
-msgstr "בחר את התיקיה בה נמצאים הנתונים עכשיו"
+msgstr "נא לבחור את התיקייה בה נמצאים הנתונים עכשיו"
 
 #: ktorrent/dialogs/missingfilesdlg.cpp:88
 #, kde-format
@@ -660,7 +654,7 @@ msgstr "קובץ הנתונים לא נמצא במיקום שבחרת. אתה ר
 #: ktorrent/dialogs/missingfilesdlg.ui:14
 #, kde-format
 msgid "Files are missing"
-msgstr "הקבצים חסרים"
+msgstr "קבצים חסרים"
 
 #. i18n: ectx: property (text), widget (QLabel, m_text)
 #: ktorrent/dialogs/missingfilesdlg.ui:20
@@ -672,43 +666,43 @@ msgstr "הקבצים הבאים חסרים:"
 #: ktorrent/dialogs/missingfilesdlg.ui:34
 #, kde-format
 msgid "They are no longer there, recreate them."
-msgstr "הם כבר לא שם, צור אותם מחדש."
+msgstr "הם כבר לא שם, ליצור אותם מחדש."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recreate)
 #: ktorrent/dialogs/missingfilesdlg.ui:37
 #, kde-format
 msgid "Recreate"
-msgstr "צור מחדש"
+msgstr "יצירה מחדש"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_dnd)
 #: ktorrent/dialogs/missingfilesdlg.ui:44
 #, kde-format
 msgid "Do not download the missing files."
-msgstr "אל תוריד את הקבצים החסרים"
+msgstr "לא להוריד את הקבצים החסרים."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_dnd)
 #: ktorrent/dialogs/missingfilesdlg.ui:47
 #, kde-format
 msgid "Do Not Download"
-msgstr "אל תוריד"
+msgstr "לא להוריד"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_select_new)
 #: ktorrent/dialogs/missingfilesdlg.ui:54
 #, kde-format
 msgid "The files have been moved to another location, select the new location."
-msgstr "הקבצים הועברו למיקום אחר, בחר את המיקום החדש."
+msgstr "הקבצים הועברו למקום אחר, נא לבחור את המקום החדש."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_new)
 #: ktorrent/dialogs/missingfilesdlg.ui:57
 #, kde-format
 msgid "Select New Location"
-msgstr "בחר מיקום חדש"
+msgstr "נא לבחור מקום חדש"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_cancel)
 #: ktorrent/dialogs/missingfilesdlg.ui:77
 #, kde-format
 msgid "Cancel, do not start the torrent."
-msgstr "בטל, אל תתחיל את ההורדה."
+msgstr "לבטל, לא להתחיל את ההורדה."
 
 #. i18n: ectx: property (text), widget (QPushButton, cancel_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
@@ -716,13 +710,13 @@ msgstr "בטל, אל תתחיל את ההורדה."
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
 #, kde-format
 msgid "Cancel"
-msgstr "בטל"
+msgstr "ביטול"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, PasteDlgBase)
 #: ktorrent/dialogs/pastedialog.cpp:34 ktorrent/dialogs/pastedlgbase.ui:14
 #, kde-format
 msgid "Open an URL"
-msgstr "פתח כתובת URL"
+msgstr "פתיחת כתובת"
 
 #: ktorrent/dialogs/pastedialog.cpp:114
 #, kde-format
@@ -740,14 +734,14 @@ msgstr ""
 #: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:308
 #, kde-format
 msgid "Invalid URL: %1"
-msgstr "כתובת ה־URL אינה תקינה: %1"
+msgstr "הכתובת שגויה: %1"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/dialogs/pastedlgbase.ui:22 plugins/syndication/feedwidget.ui:32
 #, kde-format
 msgid "URL:"
-msgstr "כתובת URL:"
+msgstr "כתובת:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_silently)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_openSilently)
@@ -755,7 +749,7 @@ msgstr "כתובת URL:"
 #: plugins/scanfolder/scanfolderprefpage.ui:81
 #, kde-format
 msgid "Open silently"
-msgstr "פתח בשקט"
+msgstr "פתיחה בשקט"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
@@ -768,7 +762,7 @@ msgstr "הגבלות מהירות"
 #: ktorrent/dialogs/speedlimitsdlg.ui:20
 #, kde-format
 msgid "Speed limits for individual torrents (double click to edit):"
-msgstr "הגבלת מהירות לטורנט ספציפי (הקשה כפולה לעריכה):"
+msgstr "הגבלת מהירות לטורנט מסוים (לחיצה כפולה לעריכה):"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/dialogs/speedlimitsdlg.ui:32
@@ -780,7 +774,7 @@ msgstr "מסנן:"
 #: ktorrent/dialogs/speedlimitsdlg.ui:61
 #, kde-format
 msgid "Global Limits"
-msgstr "הגבלה גלובלית"
+msgstr "הגבלות כלליות"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #. i18n: ectx: property (text), widget (QLabel, label_5)
@@ -790,7 +784,7 @@ msgstr "הגבלה גלובלית"
 #: plugins/bwscheduler/bwprefpage.ui:65
 #, kde-format
 msgid "Maximum download speed:"
-msgstr "מהירות הורדה מירבית:"
+msgstr "מהירות הורדה מרבית:"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_download_rate)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_upload_rate)
@@ -874,7 +868,7 @@ msgstr ""
 #: plugins/bwscheduler/bwprefpage.ui:36
 #, kde-format
 msgid "Maximum upload speed:"
-msgstr "מהירות העלאה מירבית:"
+msgstr "מהירות העלאה מרבית:"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:98
 #: plugins/shutdown/shutdowntorrentmodel.cpp:130
@@ -913,7 +907,7 @@ msgstr ""
 #: ktorrent/dialogs/torrentcreatordlg.cpp:40
 #, kde-format
 msgid "Create A Torrent"
-msgstr "צור טורנט"
+msgstr "יצירת טורנט"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:244
 #, kde-format
@@ -955,17 +949,15 @@ msgstr "קובץ או תיקיה ליצירת הטורנט ממנו:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectDirectory)
 #: ktorrent/dialogs/torrentcreatordlg.ui:44
-#, fuzzy, kde-format
-#| msgid "Open Directory"
+#, kde-format
 msgid "Select Directory"
-msgstr "פתח תיקיה"
+msgstr "נא לבחור תיקייה"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectFile)
 #: ktorrent/dialogs/torrentcreatordlg.ui:51
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select File"
-msgstr "בחר הכל"
+msgstr "נא לבחור קובץ"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/torrentcreatordlg.ui:71
@@ -1509,9 +1501,9 @@ msgid "KTorrent"
 msgstr "KTorrent"
 
 #: ktorrent/main.cpp:102
-#, fuzzy, kde-format
+#, kde-format
 msgid "Bittorrent client by KDE"
-msgstr "לקוח טורנטים של KDE"
+msgstr "לקוח ביטורנט מבית KDE"
 
 #: ktorrent/main.cpp:104
 #, kde-format
@@ -2019,10 +2011,9 @@ msgid "KF6 porting"
 msgstr ""
 
 #: ktorrent/main.cpp:179
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "אפשר הכל"
+msgstr "הפעלת תיעוד"
 
 #: ktorrent/main.cpp:181
 #, kde-format
@@ -2212,10 +2203,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Tracker list URL:"
-msgstr "העתק כתובת טורנט"
+msgstr "כתובת רשימת עוקבים:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2416,10 +2406,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
-#, fuzzy, kde-format
-#| msgid "KTorrent is running one or more torrents"
+#, kde-format
 msgid "Torrent is running:"
-msgstr "‏KTorrent מריץ טורנט אחד או יותר"
+msgstr "טורנט פעיל:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/colorpref.ui:40
@@ -2429,17 +2418,15 @@ msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
-#, fuzzy, kde-format
-#| msgid "Folder to store torrent information:"
+#, kde-format
 msgid "Color to use for torrents with error status."
-msgstr "תיקיה לשמירת מידע טורנטים:"
+msgstr "צבע לשימוש לטורנטים במצב שגיאה."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/colorpref.ui:54
-#, fuzzy, kde-format
-#| msgid "Torrent:"
+#, kde-format
 msgid "Torrent error:"
-msgstr "טורנט:"
+msgstr "שגיאת טורנט:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2504,17 +2491,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
-#, fuzzy, kde-format
-#| msgid "Share ratio:"
+#, kde-format
 msgid "Low share ratio:"
-msgstr "יחס שיתוף:"
+msgstr "יחס שיתוף נמוך:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Share ratio:"
+#, kde-format
 msgid "Good share ratio:"
-msgstr "יחס שיתוף:"
+msgstr "יחס שיתוף טוב:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
@@ -3443,10 +3428,9 @@ msgid "Stop Magnet"
 msgstr "עצור מגנט"
 
 #: ktorrent/tools/magnetview.cpp:54
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Copy Magnet URL"
-msgstr "העתק כתובת טורנט"
+msgstr "העתקת כתובת מגנט"
 
 #: ktorrent/tools/magnetview.cpp:56
 #, kde-format
@@ -3756,16 +3740,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr ""
 
 #: ktorrent/trayicon.cpp:346
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "הגבלת מהירות ב־KiB/s"
+msgstr "הגבלת מהירות העלאה ב־KiB לשנייה"
 
 #: ktorrent/trayicon.cpp:348
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "הגבלת מהירות ב־KiB/s"
+msgstr "הגבלת מהירות הורדה ב־KiB לשנייה"
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -3927,10 +3909,9 @@ msgid "Errors:"
 msgstr ""
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgid "Filter..."
-msgstr "מסנן"
+msgstr "סינון…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4685,23 +4666,20 @@ msgid "Warning: %1"
 msgstr ""
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "חלקים שהורדו:"
+msgstr "חלקים שירדו"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Do Not Download"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "אל תוריד"
+msgstr "חלקים להורדה"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "חלקים שהורדו:"
+msgstr "חלקים שהוחרגו"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -4733,12 +4711,10 @@ msgstr ""
 #: libktcore/torrent/queuemanager.cpp:227
 #: libktcore/torrent/queuemanager.cpp:266
 #: libktcore/torrent/queuemanager.cpp:295
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
-msgstr "התחל"
+msgstr "התחלה"
 
 #: libktcore/torrent/queuemanager.cpp:142
 #, kde-format
@@ -5172,16 +5148,14 @@ msgid "Add Trackers"
 msgstr "הוסף טרקר"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "חלקים זמינים:"
+msgstr "חלקים זמינים"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "חלקים זמינים:"
+msgstr "חלקים לא זמינים"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -8420,79 +8394,79 @@ msgstr ""
 #: plugins/syndication/syndicationactivity.cpp:190
 #, kde-format
 msgid "Add New Filter"
-msgstr ""
+msgstr "הוספת מסנן חדש"
 
 #: plugins/syndication/syndicationplugin.cpp:64
 #, kde-format
 msgid "Add Feed"
-msgstr ""
+msgstr "הוספת ערוץ"
 
 #: plugins/syndication/syndicationplugin.cpp:67
 #, kde-format
 msgid "Remove Feed"
-msgstr ""
+msgstr "הסרת ערוץ"
 
 #: plugins/syndication/syndicationplugin.cpp:73
 #, kde-format
 msgid "Rename"
-msgstr ""
+msgstr "שינוי שם"
 
 #: plugins/syndication/syndicationplugin.cpp:76
 #, kde-format
 msgid "Add Filter"
-msgstr ""
+msgstr "הוספת מסנן"
 
 #: plugins/syndication/syndicationplugin.cpp:79
 #, kde-format
 msgid "Remove Filter"
-msgstr ""
+msgstr "הסרת מסנן"
 
 #. i18n: ectx: label, entry (defaultDevice), group (general)
 #: plugins/upnp/ktupnpplugin.kcfg:10
 #, kde-format
 msgid "Default UPnP device to use"
-msgstr ""
+msgstr "התקן UPnP לשימוש כברירת מחדל"
 
 #: plugins/upnp/routermodel.cpp:57
 #, kde-format
 msgid "Device"
-msgstr ""
+msgstr "התקן"
 
 #: plugins/upnp/routermodel.cpp:59
 #, kde-format
 msgid "Ports Forwarded"
-msgstr ""
+msgstr "פתחות שהועברו"
 
 #: plugins/upnp/routermodel.cpp:98
 #, kde-format
 msgid ""
 "Model Name: <b>%1</b><br/>Manufacturer: <b>%2</b><br/>Model Description: <b>"
 "%3</b><br/>"
-msgstr ""
+msgstr "שם הדגם: <b>%1</b><br/>יצרן: <b>%2</b><br/>תיאור דגם: <b>%3</b><br/>"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPWidget)
 #: plugins/upnp/upnpplugin.cpp:39 plugins/upnp/upnpplugin.cpp:43
 #: plugins/upnp/upnpplugin.cpp:53 plugins/upnp/upnpwidget.ui:13
 #, kde-format
 msgid "UPnP"
-msgstr ""
+msgstr "UPnP"
 
 #: plugins/upnp/upnpplugin.cpp:43
 #, kde-format
 msgid "Shows the status of the UPnP plugin"
-msgstr ""
+msgstr "הצגת מצב תוסף ה־UPnP"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_rescan)
 #: plugins/upnp/upnpwidget.ui:54
 #, kde-format
 msgid "Rescan"
-msgstr ""
+msgstr "סריקה מחדש"
 
 #: plugins/zeroconf/zeroconfplugin.cpp:33
 #: plugins/zeroconf/zeroconfplugin.cpp:47
 #, kde-format
 msgid "ZeroConf"
-msgstr ""
+msgstr "ZeroConf"
 
 #~ msgid "Auto Remove"
 #~ msgstr "הסרה אוטמטית"
