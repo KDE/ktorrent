@@ -405,7 +405,7 @@
       <li xml:lang="eu">Ostikoa/debekua zerrendatzeko/editatzeko IP iragazki elkarrizketa-koadro osagarri bat duten parekoak</li>
       <li xml:lang="fi">Torju/estä käyttäjiä IP-lisäsuodatinikkunassa (luettelu- tai muokkaustarkoituksiin)</li>
       <li xml:lang="fr">Exclusion/bannissement de pairs avec une fenêtre additionnelle pour lister/modifier les filtres d'IP</li>
-      <li xml:lang="gl">Expulsar e prohibir parceiros cun diálogo adicional de filtraxe por IP para listar e editar.</li>
+      <li xml:lang="gl">Expulsar e prohibir parceiros cun diálogo adicional de filtro por IP para listar e editar.</li>
       <li xml:lang="hu">Partnerek kirúgása/letiltása egy további IP-szűrő párbeszédablakkal listázáshoz és szerkesztéshez</li>
       <li xml:lang="id">Tendang/cegah rekan (peer) dengan sebuah dialog Filter IP tambahan untuk tujuan daftar/edit</li>
       <li xml:lang="it">Caccia/metti al bando i nodi con un'ulteriore finestra di dialogo di filtro IP per elencarli e modificarli</li>
