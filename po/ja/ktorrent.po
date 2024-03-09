@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-11 00:38+0000\n"
+"POT-Creation-Date: 2024-03-09 00:38+0000\n"
 "PO-Revision-Date: 2009-10-31 23:24+0900\n"
 "Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -28,7 +28,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "ybando@k6.dion.ne.jp"
 
-#: ktorrent/core.cpp:144
+#: ktorrent/core.cpp:147
 #, fuzzy, kde-format
 #| msgid ""
 #| "KTorrent is unable to accept connections because the ports %1 to %2 are "
@@ -40,7 +40,7 @@ msgstr ""
 "<numid>%1</numid> から <numid>%2</numid> のポートが既に他のプログラムによって"
 "使用されているため、KTorrent は接続を受け入れられません。"
 
-#: ktorrent/core.cpp:154
+#: ktorrent/core.cpp:157
 #, fuzzy, kde-format
 #| msgid ""
 #| "KTorrent is unable to accept connections because the ports %1 to %2 are "
@@ -52,46 +52,46 @@ msgstr ""
 "<numid>%1</numid> から <numid>%2</numid> のポートが既に他のプログラムによって"
 "使用されているため、KTorrent は接続を受け入れられません。"
 
-#: ktorrent/core.cpp:252
+#: ktorrent/core.cpp:255
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
 "following torrents. Torrents are not allowed to write to the same files. "
 msgstr ""
 
-#: ktorrent/core.cpp:847
+#: ktorrent/core.cpp:850
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent は一つ以上の torrent を実行中です"
 
-#: ktorrent/core.cpp:932
+#: ktorrent/core.cpp:935
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "torrent を作成できません: %1"
 
-#: ktorrent/core.cpp:1028
+#: ktorrent/core.cpp:1031
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
 "they need to be mounted."
 msgstr ""
 
-#: ktorrent/core.cpp:1029
+#: ktorrent/core.cpp:1032
 #, kde-format
 msgid "Retry"
 msgstr ""
 
-#: ktorrent/core.cpp:1035
+#: ktorrent/core.cpp:1038
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr ""
 
-#: ktorrent/core.cpp:1037
+#: ktorrent/core.cpp:1040
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr ""
 
-#: ktorrent/core.cpp:1048
+#: ktorrent/core.cpp:1051
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -100,22 +100,22 @@ msgstr ""
 "torrent “%1” のいくつかのデータファイルが欠けています。\n"
 "それらを作成し直しますか？それとも、それらはダウンロードしませんか？"
 
-#: ktorrent/core.cpp:1056 ktorrent/core.cpp:1064 ktorrent/core.cpp:1074
+#: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
 #, kde-format
 msgid "Data files are missing"
 msgstr "データファイルがありません"
 
-#: ktorrent/core.cpp:1063
+#: ktorrent/core.cpp:1066
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "欠落したファイルを選択解除できません: %1"
 
-#: ktorrent/core.cpp:1073
+#: ktorrent/core.cpp:1076
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "欠落したファイルを作成し直せません: %1"
 
-#: ktorrent/core.cpp:1083
+#: ktorrent/core.cpp:1086
 #, fuzzy, kde-format
 #| msgid ""
 #| "The file where the data is saved of the torrent \"%1\" is missing. \n"
@@ -128,22 +128,22 @@ msgstr ""
 "ん。\n"
 "作成し直しますか？"
 
-#: ktorrent/core.cpp:1090 ktorrent/core.cpp:1097
+#: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
 #, kde-format
 msgid "Data file is missing"
 msgstr "データファイルがありません"
 
-#: ktorrent/core.cpp:1096
+#: ktorrent/core.cpp:1099
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "データファイルを作成し直せません: %1"
 
-#: ktorrent/core.cpp:1197
+#: ktorrent/core.cpp:1200
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr ""
 
-#: ktorrent/core.cpp:1200
+#: ktorrent/core.cpp:1203
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "

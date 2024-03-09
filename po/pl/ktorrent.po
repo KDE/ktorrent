@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-11 00:38+0000\n"
+"POT-Creation-Date: 2024-03-09 00:38+0000\n"
 "PO-Revision-Date: 2024-02-11 11:24+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -31,7 +31,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "artusek@wp.pl, lukasz.wojnilowicz@gmail.com"
 
-#: ktorrent/core.cpp:144
+#: ktorrent/core.cpp:147
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the TCP port %1 is already "
@@ -40,7 +40,7 @@ msgstr ""
 "KTorrent nie może ustanowić połączenia, ponieważ port TCP %1 jest używany "
 "przez inny program."
 
-#: ktorrent/core.cpp:154
+#: ktorrent/core.cpp:157
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the UDP port %1 is already "
@@ -49,7 +49,7 @@ msgstr ""
 "KTorrent nie może ustanowić połączenia, ponieważ port UDP %1 jest używany "
 "przez inny program."
 
-#: ktorrent/core.cpp:252
+#: ktorrent/core.cpp:255
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -59,17 +59,17 @@ msgstr ""
 "plików z następującymi torrentami. Torrenty nie mają pozwolenia, aby "
 "zapisywać do tych samych plików."
 
-#: ktorrent/core.cpp:847
+#: ktorrent/core.cpp:850
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "Uruchomiony jest jeden lub więcej torrentów"
 
-#: ktorrent/core.cpp:932
+#: ktorrent/core.cpp:935
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "Nie można utworzyć torrenta: %1"
 
-#: ktorrent/core.cpp:1028
+#: ktorrent/core.cpp:1031
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -78,22 +78,22 @@ msgstr ""
 "Jeden lub więcej wolumenów przechowywania nie jest zamontowanych. Aby "
 "uruchomić tego torrenta muszą one zostać zamontowane."
 
-#: ktorrent/core.cpp:1029
+#: ktorrent/core.cpp:1032
 #, kde-format
 msgid "Retry"
 msgstr "Ponów"
 
-#: ktorrent/core.cpp:1035
+#: ktorrent/core.cpp:1038
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "Wolumen przechowywania %1 nie jest zamontowany"
 
-#: ktorrent/core.cpp:1037
+#: ktorrent/core.cpp:1040
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Wolumeny przechowywania %1 nie są zamontowane"
 
-#: ktorrent/core.cpp:1048
+#: ktorrent/core.cpp:1051
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -102,22 +102,22 @@ msgstr ""
 "Brakuje niektórych plików torrenta \"%1\". \n"
 "Czy chcesz je utworzyć ponownie, czy pominąć ich pobieranie?"
 
-#: ktorrent/core.cpp:1056 ktorrent/core.cpp:1064 ktorrent/core.cpp:1074
+#: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
 #, kde-format
 msgid "Data files are missing"
 msgstr "Brakuje plików z danymi"
 
-#: ktorrent/core.cpp:1063
+#: ktorrent/core.cpp:1066
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "Nie można odznaczyć brakujących plików: %1"
 
-#: ktorrent/core.cpp:1073
+#: ktorrent/core.cpp:1076
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "Nie można odtworzyć brakujących plików: %1"
 
-#: ktorrent/core.cpp:1083
+#: ktorrent/core.cpp:1086
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -126,22 +126,22 @@ msgstr ""
 "Brakuje pliku torrenta %1, gdzie zapisywane są dane.\n"
 "Czy chcesz utworzyć go na nowo?"
 
-#: ktorrent/core.cpp:1090 ktorrent/core.cpp:1097
+#: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
 #, kde-format
 msgid "Data file is missing"
 msgstr "Brakuje pliku z danymi"
 
-#: ktorrent/core.cpp:1096
+#: ktorrent/core.cpp:1099
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "Nie można utworzyć ponownie pliku danych: %1"
 
-#: ktorrent/core.cpp:1197
+#: ktorrent/core.cpp:1200
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Niepoprawne łącze magnet bittorrent: %1"
 
-#: ktorrent/core.cpp:1200
+#: ktorrent/core.cpp:1203
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
