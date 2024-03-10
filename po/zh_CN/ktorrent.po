@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-09 00:38+0000\n"
-"PO-Revision-Date: 2024-02-29 12:53\n"
+"PO-Revision-Date: 2024-03-09 04:46\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -6456,7 +6456,7 @@ msgstr "显示下载"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:90
 #, kde-format
 msgid "Show popup"
-msgstr "显示弹出窗口"
+msgstr "显示弹窗通知"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_onlypublic)
 #. i18n: ectx: label, entry (onlypublic), group (general)
