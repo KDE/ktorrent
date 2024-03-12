@@ -1,7 +1,7 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Jure Repinc <jlp@holodeck1.com>, 2008, 2009, 2010.
+# SPDX-FileCopyrightText: 2008, 2009, 2010, 2024 Jure Repinc <jlp@holodeck1.com>
 # Andrej Mernik <andrejm@ubuntu.si>, 2012, 2013, 2014, 2016, 2017, 2018.
 # Matjaž Jeran <matjaz.jeran@amis.net>, 2020, 2021.
 msgid ""
@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-09 00:38+0000\n"
-"PO-Revision-Date: 2024-02-11 07:34+0100\n"
-"Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
+"PO-Revision-Date: 2024-03-09 19:56+0100\n"
+"Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -122,7 +122,7 @@ msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
 "Do you want to recreate it?"
 msgstr ""
-"Datoteka kamor se shranjujejo podatki torrenta \"%1\" manjka.\n"
+"Manjka datoteka, kamor se shranjujejo podatki torrenta »%1«.\n"
 "Ali jo želite ponovno ustvariti?"
 
 #: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
@@ -181,7 +181,7 @@ msgid ""
 "IPv6 addresses</p>\n"
 msgstr ""
 "<p>Sem vnesite naslov IP ali gostiteljsko ime soležnika s katerim se želite "
-"povezavi.</p>\n"
+"povezati.</p>\n"
 "<p><span style=\" font-weight:600;\">Opomba:</span> Sprejemamo tako naslov "
 "IPv4 kot tudi IPv6</p>\n"
 
@@ -419,7 +419,7 @@ msgstr "Zgodovina vseh nedavno uporabljenih mest za prejem"
 #: plugins/mediaplayer/mediacontroller.ui:84
 #, kde-format
 msgid "..."
-msgstr "..."
+msgstr "…"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_moveCompleted)
 #: ktorrent/dialogs/fileselectdlg.ui:61
@@ -1439,13 +1439,13 @@ msgstr "Počisti"
 #: ktorrent/ipfilterwidget.ui:92
 #, kde-format
 msgid "Open..."
-msgstr "Odpri ..."
+msgstr "Odpri …"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
 #, kde-format
 msgid "Save As..."
-msgstr "Shrani kot ..."
+msgstr "Shrani kot …"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1532,7 +1532,7 @@ msgstr "Odjemalec BitTorrent s strani KDE"
 #, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson in Ivan Vasic"
+msgstr "© 2005–2011 Joris Guisson in Ivan Vasic"
 
 #: ktorrent/main.cpp:111
 #, kde-format
@@ -2053,7 +2053,7 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
-"Omogoči beleženje dnevnika na standardni izhod. Zahteva tudi specifikacijo --"
+"Omogoči beleženje dnevnika na standardni izhod. Zahteva tudi uporabo --"
 "enable-logging."
 
 #: ktorrent/main.cpp:182
@@ -2579,13 +2579,13 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:133
 #, kde-format
 msgid "Low share ratio:"
-msgstr "Nizko razmerje deleža:"
+msgstr "Nizko delilno razmerje:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
 #, kde-format
 msgid "Good share ratio:"
-msgstr "Dobro razmerje deleža:"
+msgstr "Dobro delilno razmerje:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
@@ -2683,13 +2683,13 @@ msgstr "Ikona v sistemski vrstici"
 #: ktorrent/pref/generalpref.ui:100
 #, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
-msgstr "Ali naj bo ali ne vedno strnjena v sistemski vrstici ob zagonu."
+msgstr "Ali naj bo ali ne vedno skrčen v sistemski vrstici ob zagonu."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr "Vedno strnjena v sistemski vrstici ob zagonu"
+msgstr "Vedno skrčen v sistemski vrstici ob zagonu"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -2736,15 +2736,14 @@ msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
 msgstr ""
-"Prepreči prehod računalnika v hibernacijo ali zaklep zaslona, ko so zagnani "
+"Prepreči prehod računalnika v spanje ali zaklep zaslona, ko so zagnani "
 "torrenti."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
 #, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr ""
-"Prepreči prehod v hibernacijo ali zaklep zaslona, če so zagnani torrenti"
+msgstr "Prepreči prehod v spanje ali zaklep zaslona, če so zagnani torrenti"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -2907,9 +2906,9 @@ msgid ""
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>Največje število izhodnih povezav, ki jih bo KTorrent poskušal hkrati "
-"nastaviti.</p>\n"
-"<p>Če imate težave, ker ktorrent blokira drug promet na internetu, poskusite "
+"<p>Največje število izhodnih povezav, ki jih bo KTorrent poskušal nastaviti "
+"hkrati.</p>\n"
+"<p>Če imate težave, ker KTorrent blokira drug promet na internetu, poskusite "
 "to vrednost nastaviti malo nižje.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
@@ -2977,7 +2976,7 @@ msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
-"Primarni prenosni protokol, ko se poskusi vzpostaviti povezava s partnerjem, "
+"Glavni prenosni protokol, ko se poskusi vzpostaviti povezava s soležnikom, "
 "se najprej izbere ta protokol."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
@@ -3007,7 +3006,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:314
 #, kde-format
 msgid "Recommended Settings..."
-msgstr "Priporočene nastavitve ..."
+msgstr "Priporočene nastavitve …"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3388,14 +3387,14 @@ msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
-"Vrednost, pri kateri bo razmerje deleža prikazano z zeleno barvo. Nižja "
+"Vrednost, pri kateri bo delilno razmerje prikazano z zeleno barvo. Nižja "
 "razmerja bodo prikazana rdeče. Barve lahko spreminjate v nastavitvah barv."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
 #, kde-format
 msgid "Minimum good share ratio:"
-msgstr "Najnižje \"še dobro\" delilno razmerje:"
+msgstr "Najnižje »še dobro« delilno razmerje:"
 
 #: ktorrent/pref/recommendedsettingsdlg.cpp:25
 #, kde-format
@@ -3509,16 +3508,16 @@ msgstr "DHT: izklopljeno"
 #, kde-format
 msgid "%1 node"
 msgid_plural "%1 nodes"
-msgstr[0] "%1 vozlišče"
-msgstr[1] "%1 vozlišči"
-msgstr[2] "%1 vozlišča"
-msgstr[3] "%1 vozlišč"
+msgstr[0] "%1 vozlišč"
+msgstr[1] "%1 vozlišče"
+msgstr[2] "%1 vozlišči"
+msgstr[3] "%1 vozlišča"
 
 #: ktorrent/statusbar.cpp:90
 #, kde-format
 msgid "%1 task"
 msgid_plural "%1 tasks"
-msgstr[0] "%1 opravila"
+msgstr[0] "%1 opravil"
 msgstr[1] "%1 opravilo"
 msgstr[2] "%1 opravili"
 msgstr[3] "%1 opravila"
@@ -3755,7 +3754,7 @@ msgstr "Zaustavi vse torrente"
 #: ktorrent/torrentactivity.cpp:121
 #, kde-format
 msgid "Suspend Torrents"
-msgstr "Prestavi torrente v pripravljenost"
+msgstr "Zagnane v pripravljenost"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
 #: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
@@ -3872,8 +3871,8 @@ msgstr "Ni mogoče zagnati <b>%1</b>:<br>"
 #, kde-format
 msgid "Cannot seed more than 1 torrent. <br>"
 msgid_plural "Cannot seed more than %1 torrents. <br>"
-msgstr[0] "Ni mogoče sejati več kot %1 torrenta.<br>"
-msgstr[1] "Ni mogoče sejati več kot %1 torrentov.<br>"
+msgstr[0] "Ni mogoče sejati več kot %1 torrentov.<br>"
+msgstr[1] "Ni mogoče sejati več kot %1 torrenta.<br>"
 msgstr[2] "Ni mogoče sejati več kot %1 torrentov.<br>"
 msgstr[3] "Ni mogoče sejati več kot %1 torrentov.<br>"
 
@@ -3881,8 +3880,8 @@ msgstr[3] "Ni mogoče sejati več kot %1 torrentov.<br>"
 #, kde-format
 msgid "Cannot download more than 1 torrent. <br>"
 msgid_plural "Cannot download more than %1 torrents. <br>"
-msgstr[0] "Ni mogoče prejemati več kot %1 torrenta.<br>"
-msgstr[1] "Ni mogoče prejemati več kot %1 torrentov.<br>"
+msgstr[0] "Ni mogoče prejemati več kot %1 torrentov.<br>"
+msgstr[1] "Ni mogoče prejemati več kot %1 torrenta.<br>"
 msgstr[2] "Ni mogoče prejemati več kot %1 torrentov.<br>"
 msgstr[3] "Ni mogoče prejemati več kot %1 torrentov.<br>"
 
@@ -4096,7 +4095,7 @@ msgstr "Napake:"
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, kde-format
 msgid "Filter..."
-msgstr "Filter..."
+msgstr "Filter …"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4499,7 +4498,7 @@ msgstr "KTorrent-ov program za preizkus UPnP"
 #: ktupnptest/main.cpp:29
 #, kde-format
 msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 - 2007 Joris Guisson in Ivan Vasic"
+msgstr "&copy; 2005–2007 Joris Guisson in Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -4730,7 +4729,7 @@ msgstr "Razpoložljiva hitrost pošiljanja (v kb/s):"
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr "Vedno strnjena v sistemski vrstici ob zagonu."
+msgstr "Vedno skrčen v sistemski vrstici ob zagonu."
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
@@ -5544,9 +5543,9 @@ msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] ""
-"Izgubili boste vse podatke iz te datoteke. Ali res želite nadaljevati?"
-msgstr[1] ""
 "Izgubili boste vse podatke iz teh datotek. Ali res želite nadaljevati?"
+msgstr[1] ""
+"Izgubili boste vse podatke iz te datoteke. Ali res želite nadaljevati?"
 msgstr[2] ""
 "Izgubili boste vse podatke iz teh datotek. Ali res želite nadaljevati?"
 msgstr[3] ""
@@ -5775,7 +5774,7 @@ msgstr "Najprej:"
 #: plugins/infowidget/iwprefpage.ui:79
 #, kde-format
 msgid "Color to use for first priority files."
-msgstr "Barva, ki bo uporabljena za datoteke s prednostjo \"najprej\"."
+msgstr "Barva, ki bo uporabljena za datoteke s prednostjo »najprej«."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/infowidget/iwprefpage.ui:86
@@ -5787,7 +5786,7 @@ msgstr "Nazadnje:"
 #: plugins/infowidget/iwprefpage.ui:93
 #, kde-format
 msgid "Color to use for last priority files."
-msgstr "Barva, ki bo uporabljena za datoteke s prednostjo \"nazadnje\"."
+msgstr "Barva, ki bo uporabljena za datoteke s prednostjo »nazadnje«."
 
 #. i18n: ectx: label, entry (showPeerView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:10
@@ -6230,7 +6229,7 @@ msgstr "Onemogoči vse"
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
 #, kde-format
 msgid "Converting..."
-msgstr "Pretvarjanje ..."
+msgstr "Pretvarjanje …"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6249,7 +6248,7 @@ msgstr "&Prekliči"
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
 msgid "Loading txt file..."
-msgstr "Nalaganje besedilne datoteke ..."
+msgstr "Nalaganje besedilne datoteke …"
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6303,10 +6302,10 @@ msgstr ""
 #, kde-format
 msgid " day"
 msgid_plural " days"
-msgstr[0] " dan"
-msgstr[1] " dneva"
-msgstr[2] " dnevi"
-msgstr[3] " dni"
+msgstr[0] " dni"
+msgstr[1] " dan"
+msgstr[2] " dneva"
+msgstr[3] " dnevi"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:50
 #: plugins/ipfilter/ipblockingprefpage.cpp:71
@@ -6326,7 +6325,7 @@ msgstr "Stanje: ni naloženo."
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, kde-format
 msgid "Status: Downloading and converting new block list..."
-msgstr "Stanje: prejemanje in pretvarjanje seznama za blokiranje ..."
+msgstr "Stanje: prejemanje in pretvarjanje novega seznama za blokiranje …"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
@@ -6757,12 +6756,12 @@ msgstr "Predvajanje: <b>%1</b>"
 #: plugins/mediaplayer/mediacontroller.cpp:96
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
-msgstr "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
+msgstr "<b>%2</b> – <b>%1</b> (Album: <b>%3</b>)"
 
 #: plugins/mediaplayer/mediacontroller.cpp:99
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b>"
-msgstr "<b>%2</b> - <b>%1</b>"
+msgstr "<b>%2</b> – <b>%1</b>"
 
 #: plugins/mediaplayer/mediacontroller.cpp:102
 #: plugins/mediaplayer/mediacontroller.cpp:105
@@ -7844,7 +7843,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
-msgstr "Shrani kot sliko…"
+msgstr "Shrani kot sliko …"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:357
 #: plugins/stats/drawer/PlainChartDrawer.cc:310
@@ -7864,7 +7863,7 @@ msgstr "Ponastavi"
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
 #, kde-format
 msgid "Select path to save image…"
-msgstr "Izberite pot za shranjevanje slike…"
+msgstr "Izberite pot za shranjevanje slike …"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
@@ -8239,16 +8238,16 @@ msgid_plural ""
 "%1 active filters"
 msgstr[0] ""
 "%2\n"
-"%1 dejaven filter"
+"%1 dejavnih filtrov"
 msgstr[1] ""
 "%2\n"
-"%1 dejavna filtra"
+"%1 dejaven filter"
 msgstr[2] ""
 "%2\n"
-"%1 dejavni filtri"
+"%1 dejavna filtra"
 msgstr[3] ""
 "%2\n"
-"%1 dejavnih filtrov"
+"%1 dejavni filtri"
 
 #: plugins/syndication/feedlist.cpp:159
 #, kde-format
@@ -8480,7 +8479,7 @@ msgstr ""
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
-"\" font-weight:600;\">[...]</span></p></td>\n"
+"\" font-weight:600;\">[…]</span></p></td>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">Nabore "
