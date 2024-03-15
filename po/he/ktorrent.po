@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-09 00:38+0000\n"
-"PO-Revision-Date: 2024-03-01 16:23+0200\n"
+"PO-Revision-Date: 2024-03-14 07:29+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2889,7 +2889,7 @@ msgstr ""
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
 msgid "Proxy"
-msgstr "פרוקסי"
+msgstr "מתוווך"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: ktorrent/pref/proxypref.ui:17
@@ -2913,7 +2913,7 @@ msgstr ""
 #: ktorrent/pref/proxypref.ui:35
 #, kde-format
 msgid "Proxy:"
-msgstr "פרוקסי:"
+msgstr "מתווך:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_httpProxy)
 #: ktorrent/pref/proxypref.ui:42
