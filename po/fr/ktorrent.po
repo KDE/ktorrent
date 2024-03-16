@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-09 00:38+0000\n"
+"POT-Creation-Date: 2024-03-16 00:38+0000\n"
 "PO-Revision-Date: 2024-02-12 09:01+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
@@ -262,7 +262,7 @@ msgstr "Afficher l'arborescence des fichiers"
 msgid "Show a file list"
 msgstr "Afficher une liste des fichiers"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:66
 #, kde-format
 msgid "Filter"
 msgstr "Filtre"
@@ -3777,8 +3777,8 @@ msgid "Time Stalled"
 msgstr "Temps passé en pause"
 
 #: ktorrent/tools/queuemanagermodel.cpp:186
-#: plugins/infowidget/iwfilelistmodel.cpp:61
-#: plugins/infowidget/iwfiletreemodel.cpp:71
+#: plugins/infowidget/iwfilelistmodel.cpp:64
+#: plugins/infowidget/iwfiletreemodel.cpp:72
 #, kde-format
 msgid "Priority"
 msgstr "Priorité"
@@ -4485,8 +4485,8 @@ msgstr ""
 msgid "Remove Torrent"
 msgstr "Supprimer le torrent"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:343
-#: plugins/infowidget/fileview.cpp:367
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:367
+#: plugins/infowidget/fileview.cpp:391
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "Choisir le dossier où déplacer les données."
@@ -5727,80 +5727,88 @@ msgstr "Restants :"
 msgid "Size:"
 msgstr "Taille :"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Ouvrir"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "Ouvrir avec"
 
-#: plugins/infowidget/fileview.cpp:114
+# unreviewed-context
+#: plugins/infowidget/fileview.cpp:116
+#, fuzzy, kde-format
+#| msgid "Rename"
+msgctxt "Rename file"
+msgid "Rename"
+msgstr "Renommer"
+
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Check File"
 msgstr "Vérifier le fichier"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Download first"
 msgstr "Télécharger en premier"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Download normally"
 msgstr "Télécharger normalement"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Download last"
 msgstr "Télécharger en dernier"
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "Do not download"
 msgstr "Ne pas télécharger"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Delete File(s)"
 msgstr "Supprimer le(s) fichier(s)"
 
-#: plugins/infowidget/fileview.cpp:123
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Move File"
 msgstr "Déplacer le fichier"
 
-#: plugins/infowidget/fileview.cpp:125
+#: plugins/infowidget/fileview.cpp:128
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "Réduire la vue des dossiers"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:129
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "Étendre la vue des dossiers"
 
-#: plugins/infowidget/fileview.cpp:129
+#: plugins/infowidget/fileview.cpp:132
 #, kde-format
 msgid "File Tree"
 msgstr "Arborescence des fichiers"
 
-#: plugins/infowidget/fileview.cpp:131
+#: plugins/infowidget/fileview.cpp:134
 #, kde-format
 msgid "File List"
 msgstr "Liste des fichiers"
 
-#: plugins/infowidget/fileview.cpp:141
+#: plugins/infowidget/fileview.cpp:144
 #, kde-format
 msgid "Show Filter"
 msgstr "Afficher le filtre"
 
 # unreviewed-context
-#: plugins/infowidget/fileview.cpp:322
+#: plugins/infowidget/fileview.cpp:346
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5813,7 +5821,7 @@ msgstr[1] ""
 "Vous aller perdre toutes les données de ces fichiers, voulez-vous vraiment "
 "continuer ?"
 
-#: plugins/infowidget/fileview.cpp:452
+#: plugins/infowidget/fileview.cpp:476
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5827,7 +5835,7 @@ msgstr ""
 "Activer le mode de téléchargement séquentiel pour obtenir les données "
 "nécessaires avec une priorité plus haute ?"
 
-#: plugins/infowidget/fileview.cpp:455
+#: plugins/infowidget/fileview.cpp:479
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -5889,83 +5897,83 @@ msgstr "Sources web"
 msgid "Displays all the webseeds of a torrent"
 msgstr "Affiche toutes les sources web d'un torrent"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:63
-#: plugins/infowidget/iwfiletreemodel.cpp:73
+#: plugins/infowidget/iwfilelistmodel.cpp:66
+#: plugins/infowidget/iwfiletreemodel.cpp:74
 #, kde-format
 msgctxt "@title:column"
 msgid "Preview"
 msgstr "Aperçu"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:66
-#: plugins/infowidget/iwfiletreemodel.cpp:76
+#: plugins/infowidget/iwfilelistmodel.cpp:69
+#: plugins/infowidget/iwfiletreemodel.cpp:77
 #, kde-format
 msgctxt "Percent of File Downloaded"
 msgid "% Complete"
 msgstr "Pourcentage complété"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:77
-#: plugins/infowidget/iwfiletreemodel.cpp:87
+#: plugins/infowidget/iwfilelistmodel.cpp:80
+#: plugins/infowidget/iwfiletreemodel.cpp:88
 #, kde-format
 msgctxt "Download first"
 msgid "First"
 msgstr "Premier"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:80
-#: plugins/infowidget/iwfiletreemodel.cpp:90
+#: plugins/infowidget/iwfilelistmodel.cpp:83
+#: plugins/infowidget/iwfiletreemodel.cpp:91
 #, kde-format
 msgctxt "Download last"
 msgid "Last"
 msgstr "Dernier"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:86
+#: plugins/infowidget/iwfilelistmodel.cpp:89
 #, kde-format
 msgctxt "Download Normal (not as first or last)"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:135
-#: plugins/infowidget/iwfilelistmodel.cpp:154
-#: plugins/infowidget/iwfiletreemodel.cpp:166
+#: plugins/infowidget/iwfilelistmodel.cpp:138
+#: plugins/infowidget/iwfilelistmodel.cpp:157
+#: plugins/infowidget/iwfiletreemodel.cpp:182
 #, kde-format
 msgctxt "Preview available"
 msgid "Available"
 msgstr "Disponible"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:137
-#: plugins/infowidget/iwfilelistmodel.cpp:156
-#: plugins/infowidget/iwfiletreemodel.cpp:148
-#: plugins/infowidget/iwfiletreemodel.cpp:168
+#: plugins/infowidget/iwfilelistmodel.cpp:140
+#: plugins/infowidget/iwfilelistmodel.cpp:159
+#: plugins/infowidget/iwfiletreemodel.cpp:164
+#: plugins/infowidget/iwfiletreemodel.cpp:184
 #, kde-format
 msgctxt "Preview pending"
 msgid "Pending"
 msgstr "En attente"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:139
-#: plugins/infowidget/iwfilelistmodel.cpp:158
-#: plugins/infowidget/iwfiletreemodel.cpp:150
-#: plugins/infowidget/iwfiletreemodel.cpp:170
+#: plugins/infowidget/iwfilelistmodel.cpp:142
+#: plugins/infowidget/iwfilelistmodel.cpp:161
+#: plugins/infowidget/iwfiletreemodel.cpp:166
+#: plugins/infowidget/iwfiletreemodel.cpp:186
 #, kde-format
 msgctxt "No preview available"
 msgid "No"
 msgstr "Non"
 
 # unreviewed-context
-#: plugins/infowidget/iwfilelistmodel.cpp:142
-#: plugins/infowidget/iwfilelistmodel.cpp:161
-#: plugins/infowidget/iwfiletreemodel.cpp:155
-#: plugins/infowidget/iwfiletreemodel.cpp:172
-#: plugins/infowidget/iwfiletreemodel.cpp:177
+#: plugins/infowidget/iwfilelistmodel.cpp:145
+#: plugins/infowidget/iwfilelistmodel.cpp:164
+#: plugins/infowidget/iwfiletreemodel.cpp:171
+#: plugins/infowidget/iwfiletreemodel.cpp:188
+#: plugins/infowidget/iwfiletreemodel.cpp:193
 #, kde-format
 msgid "%1 %"
 msgstr "%1 %"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:96
+#: plugins/infowidget/iwfiletreemodel.cpp:97
 #, kde-format
 msgctxt "Download normally(not as first or last)"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:146
+#: plugins/infowidget/iwfiletreemodel.cpp:162
 #, kde-format
 msgctxt "preview available"
 msgid "Available"

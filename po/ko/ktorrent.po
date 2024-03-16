@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-09 00:38+0000\n"
+"POT-Creation-Date: 2024-03-16 00:38+0000\n"
 "PO-Revision-Date: 2024-02-17 15:09+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -229,7 +229,7 @@ msgstr "파일 트리 보기"
 msgid "Show a file list"
 msgstr "파일 목록 보기"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:66
 #, kde-format
 msgid "Filter"
 msgstr "필터"
@@ -3556,8 +3556,8 @@ msgid "Time Stalled"
 msgstr "마지막으로 추가된 뒤 흐른 시간"
 
 #: ktorrent/tools/queuemanagermodel.cpp:186
-#: plugins/infowidget/iwfilelistmodel.cpp:61
-#: plugins/infowidget/iwfiletreemodel.cpp:71
+#: plugins/infowidget/iwfilelistmodel.cpp:64
+#: plugins/infowidget/iwfiletreemodel.cpp:72
 #, kde-format
 msgid "Priority"
 msgstr "중요도"
@@ -4231,8 +4231,8 @@ msgstr "다운로드한 데이터를 잃게 됩니다. 계속하시겠습니까?
 msgid "Remove Torrent"
 msgstr "토렌트 삭제"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:343
-#: plugins/infowidget/fileview.cpp:367
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:367
+#: plugins/infowidget/fileview.cpp:391
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "데이터를 이동할 폴더를 선택하십시오."
@@ -5390,79 +5390,86 @@ msgstr "남음:"
 msgid "Size:"
 msgstr "크기:"
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "열기"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "다음으로 열기"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:116
+#, fuzzy, kde-format
+#| msgid "Rename"
+msgctxt "Rename file"
+msgid "Rename"
+msgstr "이름 바꾸기"
+
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Check File"
 msgstr "파일 무결성 검사"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Download first"
 msgstr "첫 번째로 다운로드"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Download normally"
 msgstr "다운로드 순위 지정 해제"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Download last"
 msgstr "맨 나중에 다운로드"
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "Do not download"
 msgstr "다운로드하지 않음"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Delete File(s)"
 msgstr "파일 삭제"
 
-#: plugins/infowidget/fileview.cpp:123
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Move File"
 msgstr "파일 이동"
 
-#: plugins/infowidget/fileview.cpp:125
+#: plugins/infowidget/fileview.cpp:128
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "폴더 트리 축소"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:129
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "폴더 트리 확장"
 
-#: plugins/infowidget/fileview.cpp:129
+#: plugins/infowidget/fileview.cpp:132
 #, kde-format
 msgid "File Tree"
 msgstr "파일 트리"
 
-#: plugins/infowidget/fileview.cpp:131
+#: plugins/infowidget/fileview.cpp:134
 #, kde-format
 msgid "File List"
 msgstr "파일 목록"
 
-#: plugins/infowidget/fileview.cpp:141
+#: plugins/infowidget/fileview.cpp:144
 #, kde-format
 msgid "Show Filter"
 msgstr "필터 보기"
 
-#: plugins/infowidget/fileview.cpp:322
+#: plugins/infowidget/fileview.cpp:346
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5470,7 +5477,7 @@ msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] "이 파일의 모든 데이터를 잃게 됩니다. 계속 하시겠습니까?"
 
-#: plugins/infowidget/fileview.cpp:452
+#: plugins/infowidget/fileview.cpp:476
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5483,7 +5490,7 @@ msgstr ""
 "순차적 다운로드 모드를 활성화하여 미리 보기에 필요한 데이터를 높은 우선 순위"
 "로 다운로드하시겠습니까?"
 
-#: plugins/infowidget/fileview.cpp:455
+#: plugins/infowidget/fileview.cpp:479
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -5542,82 +5549,82 @@ msgstr "웹 시드"
 msgid "Displays all the webseeds of a torrent"
 msgstr "이 토렌트의 모든 웹 시드를 표시합니다."
 
-#: plugins/infowidget/iwfilelistmodel.cpp:63
-#: plugins/infowidget/iwfiletreemodel.cpp:73
+#: plugins/infowidget/iwfilelistmodel.cpp:66
+#: plugins/infowidget/iwfiletreemodel.cpp:74
 #, kde-format
 msgctxt "@title:column"
 msgid "Preview"
 msgstr "미리 보기"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:66
-#: plugins/infowidget/iwfiletreemodel.cpp:76
+#: plugins/infowidget/iwfilelistmodel.cpp:69
+#: plugins/infowidget/iwfiletreemodel.cpp:77
 #, kde-format
 msgctxt "Percent of File Downloaded"
 msgid "% Complete"
 msgstr "진행 상황"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:77
-#: plugins/infowidget/iwfiletreemodel.cpp:87
+#: plugins/infowidget/iwfilelistmodel.cpp:80
+#: plugins/infowidget/iwfiletreemodel.cpp:88
 #, kde-format
 msgctxt "Download first"
 msgid "First"
 msgstr "중요함"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:80
-#: plugins/infowidget/iwfiletreemodel.cpp:90
+#: plugins/infowidget/iwfilelistmodel.cpp:83
+#: plugins/infowidget/iwfiletreemodel.cpp:91
 #, kde-format
 msgctxt "Download last"
 msgid "Last"
 msgstr "중요하지 않음"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:86
+#: plugins/infowidget/iwfilelistmodel.cpp:89
 #, kde-format
 msgctxt "Download Normal (not as first or last)"
 msgid "Normal"
 msgstr "일반적인 순위"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:135
-#: plugins/infowidget/iwfilelistmodel.cpp:154
-#: plugins/infowidget/iwfiletreemodel.cpp:166
+#: plugins/infowidget/iwfilelistmodel.cpp:138
+#: plugins/infowidget/iwfilelistmodel.cpp:157
+#: plugins/infowidget/iwfiletreemodel.cpp:182
 #, kde-format
 msgctxt "Preview available"
 msgid "Available"
 msgstr "가능함"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:137
-#: plugins/infowidget/iwfilelistmodel.cpp:156
-#: plugins/infowidget/iwfiletreemodel.cpp:148
-#: plugins/infowidget/iwfiletreemodel.cpp:168
+#: plugins/infowidget/iwfilelistmodel.cpp:140
+#: plugins/infowidget/iwfilelistmodel.cpp:159
+#: plugins/infowidget/iwfiletreemodel.cpp:164
+#: plugins/infowidget/iwfiletreemodel.cpp:184
 #, kde-format
 msgctxt "Preview pending"
 msgid "Pending"
 msgstr "대기 중"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:139
-#: plugins/infowidget/iwfilelistmodel.cpp:158
-#: plugins/infowidget/iwfiletreemodel.cpp:150
-#: plugins/infowidget/iwfiletreemodel.cpp:170
+#: plugins/infowidget/iwfilelistmodel.cpp:142
+#: plugins/infowidget/iwfilelistmodel.cpp:161
+#: plugins/infowidget/iwfiletreemodel.cpp:166
+#: plugins/infowidget/iwfiletreemodel.cpp:186
 #, kde-format
 msgctxt "No preview available"
 msgid "No"
 msgstr "없음"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:142
-#: plugins/infowidget/iwfilelistmodel.cpp:161
-#: plugins/infowidget/iwfiletreemodel.cpp:155
-#: plugins/infowidget/iwfiletreemodel.cpp:172
-#: plugins/infowidget/iwfiletreemodel.cpp:177
+#: plugins/infowidget/iwfilelistmodel.cpp:145
+#: plugins/infowidget/iwfilelistmodel.cpp:164
+#: plugins/infowidget/iwfiletreemodel.cpp:171
+#: plugins/infowidget/iwfiletreemodel.cpp:188
+#: plugins/infowidget/iwfiletreemodel.cpp:193
 #, kde-format
 msgid "%1 %"
 msgstr "%1 %"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:96
+#: plugins/infowidget/iwfiletreemodel.cpp:97
 #, kde-format
 msgctxt "Download normally(not as first or last)"
 msgid "Normal"
 msgstr "일반적인 순위"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:146
+#: plugins/infowidget/iwfiletreemodel.cpp:162
 #, kde-format
 msgctxt "preview available"
 msgid "Available"

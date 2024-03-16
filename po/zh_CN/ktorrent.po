@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-09 00:38+0000\n"
-"PO-Revision-Date: 2024-03-14 19:27\n"
+"POT-Creation-Date: 2024-03-16 00:38+0000\n"
+"PO-Revision-Date: 2024-03-15 21:00\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -219,7 +219,7 @@ msgstr "显示文件树"
 msgid "Show a file list"
 msgstr "显示文件列表"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:64
+#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:66
 #, kde-format
 msgid "Filter"
 msgstr "过滤器"
@@ -2821,6 +2821,8 @@ msgid ""
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
+"<p>KTorrent 将尝试设置出站的最大并发连接数。</p>\n"
+"<p>如果您遇到了 KTorrent 影响其他互联网连接的问题，请尝试调低该连接数。</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2884,7 +2886,7 @@ msgstr "主传输协议："
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
-msgstr ""
+msgstr "要使用的主要传输协议。当尝试设定一个对等点连接时将首选该协议。"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -3490,8 +3492,8 @@ msgid "Time Stalled"
 msgstr "已停顿时间"
 
 #: ktorrent/tools/queuemanagermodel.cpp:186
-#: plugins/infowidget/iwfilelistmodel.cpp:61
-#: plugins/infowidget/iwfiletreemodel.cpp:71
+#: plugins/infowidget/iwfilelistmodel.cpp:64
+#: plugins/infowidget/iwfiletreemodel.cpp:72
 #, kde-format
 msgid "Priority"
 msgstr "优先级"
@@ -4153,8 +4155,8 @@ msgstr "您将丢失以下种子的全部已下载数据。您确定要这么做
 msgid "Remove Torrent"
 msgstr "移除种子"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:343
-#: plugins/infowidget/fileview.cpp:367
+#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:367
+#: plugins/infowidget/fileview.cpp:391
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "请选择用于移动数据的目标文件夹。"
@@ -5292,79 +5294,86 @@ msgstr "剩余："
 msgid "Size:"
 msgstr "大小："
 
-#: plugins/infowidget/fileview.cpp:111
+#: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "打开"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "打开方式"
 
-#: plugins/infowidget/fileview.cpp:114
+#: plugins/infowidget/fileview.cpp:116
+#, fuzzy, kde-format
+#| msgid "Rename"
+msgctxt "Rename file"
+msgid "Rename"
+msgstr "重命名"
+
+#: plugins/infowidget/fileview.cpp:117
 #, kde-format
 msgid "Check File"
 msgstr "检查文件"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Download first"
 msgstr "最先下载"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Download normally"
 msgstr "正常下载"
 
-#: plugins/infowidget/fileview.cpp:118
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Download last"
 msgstr "最后下载"
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "Do not download"
 msgstr "不要下载"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Delete File(s)"
 msgstr "删除文件"
 
-#: plugins/infowidget/fileview.cpp:123
+#: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Move File"
 msgstr "移动文件"
 
-#: plugins/infowidget/fileview.cpp:125
+#: plugins/infowidget/fileview.cpp:128
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "折叠文件夹树"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:129
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "展开文件夹树"
 
-#: plugins/infowidget/fileview.cpp:129
+#: plugins/infowidget/fileview.cpp:132
 #, kde-format
 msgid "File Tree"
 msgstr "文件树"
 
-#: plugins/infowidget/fileview.cpp:131
+#: plugins/infowidget/fileview.cpp:134
 #, kde-format
 msgid "File List"
 msgstr "文件列表"
 
-#: plugins/infowidget/fileview.cpp:141
+#: plugins/infowidget/fileview.cpp:144
 #, kde-format
 msgid "Show Filter"
 msgstr "显示过滤器"
 
-#: plugins/infowidget/fileview.cpp:322
+#: plugins/infowidget/fileview.cpp:346
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
@@ -5372,7 +5381,7 @@ msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] "您将丢失这些文件中的全部数据，您确定要这样做吗？"
 
-#: plugins/infowidget/fileview.cpp:452
+#: plugins/infowidget/fileview.cpp:476
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5384,7 +5393,7 @@ msgstr ""
 "\n"
 "是否要启用顺序下载模式，以优先获取必要的数据？"
 
-#: plugins/infowidget/fileview.cpp:455
+#: plugins/infowidget/fileview.cpp:479
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -5443,82 +5452,82 @@ msgstr "网络种子"
 msgid "Displays all the webseeds of a torrent"
 msgstr "显示任务中的全部网络种子"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:63
-#: plugins/infowidget/iwfiletreemodel.cpp:73
+#: plugins/infowidget/iwfilelistmodel.cpp:66
+#: plugins/infowidget/iwfiletreemodel.cpp:74
 #, kde-format
 msgctxt "@title:column"
 msgid "Preview"
 msgstr "预览"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:66
-#: plugins/infowidget/iwfiletreemodel.cpp:76
+#: plugins/infowidget/iwfilelistmodel.cpp:69
+#: plugins/infowidget/iwfiletreemodel.cpp:77
 #, kde-format
 msgctxt "Percent of File Downloaded"
 msgid "% Complete"
 msgstr "完成百分比"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:77
-#: plugins/infowidget/iwfiletreemodel.cpp:87
+#: plugins/infowidget/iwfilelistmodel.cpp:80
+#: plugins/infowidget/iwfiletreemodel.cpp:88
 #, kde-format
 msgctxt "Download first"
 msgid "First"
 msgstr "最先"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:80
-#: plugins/infowidget/iwfiletreemodel.cpp:90
+#: plugins/infowidget/iwfilelistmodel.cpp:83
+#: plugins/infowidget/iwfiletreemodel.cpp:91
 #, kde-format
 msgctxt "Download last"
 msgid "Last"
 msgstr "最后"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:86
+#: plugins/infowidget/iwfilelistmodel.cpp:89
 #, kde-format
 msgctxt "Download Normal (not as first or last)"
 msgid "Normal"
 msgstr "正常"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:135
-#: plugins/infowidget/iwfilelistmodel.cpp:154
-#: plugins/infowidget/iwfiletreemodel.cpp:166
+#: plugins/infowidget/iwfilelistmodel.cpp:138
+#: plugins/infowidget/iwfilelistmodel.cpp:157
+#: plugins/infowidget/iwfiletreemodel.cpp:182
 #, kde-format
 msgctxt "Preview available"
 msgid "Available"
 msgstr "可用"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:137
-#: plugins/infowidget/iwfilelistmodel.cpp:156
-#: plugins/infowidget/iwfiletreemodel.cpp:148
-#: plugins/infowidget/iwfiletreemodel.cpp:168
+#: plugins/infowidget/iwfilelistmodel.cpp:140
+#: plugins/infowidget/iwfilelistmodel.cpp:159
+#: plugins/infowidget/iwfiletreemodel.cpp:164
+#: plugins/infowidget/iwfiletreemodel.cpp:184
 #, kde-format
 msgctxt "Preview pending"
 msgid "Pending"
 msgstr "等待中"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:139
-#: plugins/infowidget/iwfilelistmodel.cpp:158
-#: plugins/infowidget/iwfiletreemodel.cpp:150
-#: plugins/infowidget/iwfiletreemodel.cpp:170
+#: plugins/infowidget/iwfilelistmodel.cpp:142
+#: plugins/infowidget/iwfilelistmodel.cpp:161
+#: plugins/infowidget/iwfiletreemodel.cpp:166
+#: plugins/infowidget/iwfiletreemodel.cpp:186
 #, kde-format
 msgctxt "No preview available"
 msgid "No"
 msgstr "否"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:142
-#: plugins/infowidget/iwfilelistmodel.cpp:161
-#: plugins/infowidget/iwfiletreemodel.cpp:155
-#: plugins/infowidget/iwfiletreemodel.cpp:172
-#: plugins/infowidget/iwfiletreemodel.cpp:177
+#: plugins/infowidget/iwfilelistmodel.cpp:145
+#: plugins/infowidget/iwfilelistmodel.cpp:164
+#: plugins/infowidget/iwfiletreemodel.cpp:171
+#: plugins/infowidget/iwfiletreemodel.cpp:188
+#: plugins/infowidget/iwfiletreemodel.cpp:193
 #, kde-format
 msgid "%1 %"
 msgstr "%1 %"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:96
+#: plugins/infowidget/iwfiletreemodel.cpp:97
 #, kde-format
 msgctxt "Download normally(not as first or last)"
 msgid "Normal"
 msgstr "正常"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:146
+#: plugins/infowidget/iwfiletreemodel.cpp:162
 #, kde-format
 msgctxt "preview available"
 msgid "Available"
