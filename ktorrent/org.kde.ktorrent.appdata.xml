@@ -242,7 +242,7 @@
       <li xml:lang="sr-ijekavian">Ограничења брзине, глобална и по торенту.</li>
       <li xml:lang="sr-ijekavianlatin">Ograničenja brzine, globalna i po torentu.</li>
       <li xml:lang="sv">Hastighetsbegränsningar, allmänna och per dataflöde</li>
-      <li xml:lang="tr">Global ve torrent'e özel hız sınırı</li>
+      <li xml:lang="tr">Global ve torrent başına hız sınırı</li>
       <li xml:lang="uk">Обмеження на швидкість на загальному рівні і для окремих торентів</li>
       <li xml:lang="x-test">xxGlobal and per torrent speed limitsxx</li>
       <li xml:lang="zh-CN">全局限速和单个种子限速</li>
