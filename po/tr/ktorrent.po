@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-16 00:38+0000\n"
-"PO-Revision-Date: 2024-03-08 20:00+0300\n"
+"PO-Revision-Date: 2024-03-16 13:39+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -104,7 +104,7 @@ msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
 "Do you want to recreate them, or do you want to not download them?"
 msgstr ""
-"\"%1\" torrenti için bazı veri dosyaları eksik. \n"
+"“%1” torrenti için bazı veri dosyaları eksik. \n"
 "Bu dosyaları yeniden oluşturmak mı yoksa yeniden indirmek mi istiyorsunuz?"
 
 #: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
@@ -128,7 +128,7 @@ msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
 "Do you want to recreate it?"
 msgstr ""
-"\"%1\" torrenti için kaydedilmiş dosya kayıp.\n"
+"“%1” torrenti için kaydedilen dosya kayıp.\n"
 "Yeniden oluşturmak istiyor musunuz?"
 
 #: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
@@ -153,7 +153,7 @@ msgid ""
 "optimum results enable DHT."
 msgstr ""
 "Mıknatıs bağlantısı indirme girişiminde bulunuyorsunuz ve DHT etkin değil. "
-"En uygun sonuçlar için DHT'yi etkinleştirin."
+"En uygun sonuçlar için DHT’yi etkinleştirin."
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, AddPeersDlg)
 #. i18n: ectx: property (windowTitle), widget (QWidget, GroupPolicyDlg)
@@ -186,7 +186,7 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Note:</span> We accept both IPv4 and "
 "IPv6 addresses</p>\n"
 msgstr ""
-"<p>Bağlanmak istediğiniz eşin IP adresini ya da ana bilgisayar adını buraya "
+"<p>Bağlanmak istediğiniz eşin IP adresini veya ana bilgisayar adını buraya "
 "girmelisiniz.</p>\n"
 "<p><span style=\" font-weight:600;\">Not:</span> IPv4 and IPv6 adreslerinin "
 "ikisi de kabul edilir</p>\n"
@@ -425,7 +425,7 @@ msgstr "Kullanılmış bütün indirme konumlarının geçmişi"
 #: plugins/mediaplayer/mediacontroller.ui:84
 #, kde-format
 msgid "..."
-msgstr "..."
+msgstr "…"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_moveCompleted)
 #: ktorrent/dialogs/fileselectdlg.ui:61
@@ -543,9 +543,9 @@ msgid ""
 "absolutely sure.</p>"
 msgstr ""
 "<p>Var olan dosyalar bulunduğunda veri denetimini atla ve dosyaların tamamen "
-"indirildiğini varsay.</p>\n"
+"indirildiğini varsayın.</p>\n"
 "<p><span style=\" font-weight:600;\">Not: </span>Bunu kesinlikle emin "
-"olduğunuzda yapınız.</p>"
+"olduğunuzda yapın.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_skip_data_check)
 #: ktorrent/dialogs/fileselectdlg.ui:270
@@ -754,7 +754,7 @@ msgid ""
 "Please check if the URL in Settings > Advanced > Tracker list URL is "
 "reachable."
 msgstr ""
-"Lütfen, Ayarlar > Gelişmiş > İzleyici listesi URL'sinin erişilebilir "
+"Lütfen, Ayarlar → Gelişmiş → İzleyici listesi URL’sinin erişilebilir "
 "olduğunu denetleyin."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
@@ -1350,7 +1350,7 @@ msgstr "URL Aç"
 #: ktorrent/gui.cpp:380
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
-msgstr "Bir torrente işaret eden URL'yi aç, mıknatıs bağlantıları desteklenir"
+msgstr "Bir torrente işaret eden URL’yi aç, mıknatıs bağlantıları desteklenir"
 
 #: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
@@ -1377,7 +1377,7 @@ msgstr "Bir torrenti içe aktar"
 #: ktorrent/gui.cpp:397
 #, kde-format
 msgid "Show/Hide KTorrent"
-msgstr "K Torrent'i Göster/Gizle"
+msgstr "K Torrent’i Göster/Gizle"
 
 #: ktorrent/gui.cpp:415
 #, kde-format
@@ -1396,9 +1396,9 @@ msgid ""
 "XXX.XXX'.<br/><br/>You can also use wildcards like '127.0.0.*' or specify "
 "ranges like '200.10.10.0-200.10.10.40'."
 msgstr ""
-"<b>%1</b> IP adresi geçersizdir. IP adresi mutlaka 'XXX.XXX.XXX.XXX' "
-"biçiminde olmalıdır.<br/><br/> '127.0.0.*' gibi joker karakteri ya da "
-"'200.10.10.0-200.10.10.40' gibi belirli bir aralık kullanabilirsiniz."
+"<b>%1</b> IP adresi geçersizdir. IP adresi mutlaka “XXX.XXX.XXX.XXX” "
+"biçiminde olmalıdır.<br/><br/> “127.0.0.*” gibi joker karakteri veya "
+"“200.10.10.0-200.10.10.40” gibi belirli bir erim kullanabilirsiniz."
 
 #: ktorrent/ipfilterwidget.cpp:118
 #, kde-format
@@ -1436,10 +1436,10 @@ msgid ""
 "You can also use wildcards like '127.0.0.*' or specify ranges like "
 "'200.10.10.0-200.10.10.40'."
 msgstr ""
-"IP adresi mutlaka 'XXX.XXX.XXX.XXX' biçiminde olmalıdır.\n"
+"IP adresi mutlaka “XXX.XXX.XXX.XXX” biçiminde olmalıdır.\n"
 "                                        \n"
-"'127.0.0.*' gibi joker karakteri ya da '200.10.10.0-200.10.10.40' gibi "
-"belirli bir aralık kullanabilirsiniz."
+"“127.0.0.*” gibi joker karakteri veya “200.10.10.0-200.10.10.40” gibi "
+"belirli bir erim kullanabilirsiniz."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_clear)
 #: ktorrent/ipfilterwidget.ui:72
@@ -1451,13 +1451,13 @@ msgstr "Temizle"
 #: ktorrent/ipfilterwidget.ui:92
 #, kde-format
 msgid "Open..."
-msgstr "Aç..."
+msgstr "Aç…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
 #, kde-format
 msgid "Save As..."
-msgstr "Farklı Kaydet..."
+msgstr "Farklı Kaydet…"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1544,7 +1544,7 @@ msgstr "KDE için BitTorrent İstemcisi"
 #, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgstr "(C) 2005–2011 Joris Guisson ve Ivan Vasic"
 
 #: ktorrent/main.cpp:111
 #, kde-format
@@ -1664,7 +1664,7 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
-"InfoWidget eklentisinde kullanılan IP-Ülke veritabanının sağlayıcısı. Veri, "
+"InfoWidget eklentisinde kullanılan IP–Ülke veritabanının sağlayıcısı. Veri, "
 "Creative Commons Atıf 4.0 Uluslararası Lisansı https://creativecommons.org/"
 "licenses/by/4.0/. altında lisanslıdır. Bayraklar ise http://flags.blogpotato."
 "de/ sitesinden alınmıştır, çok teşekkürler."
@@ -1732,7 +1732,7 @@ msgstr "Alexander Dymo"
 #: ktorrent/main.cpp:143
 #, kde-format
 msgid "IDEAl code from KDevelop"
-msgstr "K Geliştir'den IDEAl kodu"
+msgstr "K Geliştir’den IDEAl kodu"
 
 #: ktorrent/main.cpp:144
 #, kde-format
@@ -1872,7 +1872,7 @@ msgstr "Lukas Appelhans"
 #: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
-msgstr "ChunkDownloadView'deki çökmeyi düzeltmek için yama"
+msgstr "ChunkDownloadView’deki çökmeyi düzeltmek için yama"
 
 #: ktorrent/main.cpp:158
 #, kde-format
@@ -2061,13 +2061,13 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
-"Standart çıktıya günlüklemeyi etkinleştirin. --enable-logging'in "
+"Standart çıktıya günlüklemeyi etkinleştirin. --enable-logging’in "
 "belirtilmesini de gerektirir."
 
 #: ktorrent/main.cpp:182
 #, kde-format
 msgid "Silently open torrent given on URL"
-msgstr "URL'de verilen torrenti sessizce açar"
+msgstr "URL’de verilen torrenti sessizce açar"
 
 #: ktorrent/main.cpp:183
 #, kde-format
@@ -2159,12 +2159,12 @@ msgstr ""
 "<p>Ağ iş parçacıkları hızları limitlendiğinde belirtilen süre boyunca "
 "beklemeye geçecektir. Hızlarında bir sınırlama olmadığında bunun hiç bir "
 "etkisi olmayacaktır.</p>\n"
-"<p><span style=\" font-weight:600;\">Not:</span> Bu süre azaltıldıgında daha "
+"<p><span style=\" font-weight:600;\">Not:</span> Bu süre azaltıldığında daha "
 "fazla işlemci kullanılacaktır. Bunu uzun bir süreye ayarlamak ise yüksek "
 "bant genişliğinde düşük hıza neden olacaktır.</p>\n"
-"<p>Örneğin 100 Mbit'lik yerel ağda 3000 KiB/sn ile sınırlarsanız bu değer "
+"<p>Örneğin 100 Mbit’lik yerel ağda 3000 KiB/sn ile sınırlarsanız bu değer "
 "yüksek olduğunda asla bu hıza ulaşamazsınız. Limit olmadığında ise yerel "
-"ağda kolaylıkla 3000 KiB/sn'i geçebilirsiniz.</p>"
+"ağda kolaylıkla 3000 KiB/sn’i geçebilirsiniz.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
@@ -2266,7 +2266,7 @@ msgstr ""
 #: ktorrent/pref/advancedpref.ui:285
 #, kde-format
 msgid "Tracker list URL:"
-msgstr "İzleyici listesi URL'si:"
+msgstr "İzleyici listesi URL’si:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2275,7 +2275,7 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
-"infohash ile bir torrent eklerken kullanılan izleyici listesinin URL'si\n"
+"infohash ile bir torrent eklerken kullanılan izleyici listesinin URL’si\n"
 "NOT: Her izleyici ayrı bir satıra yazılmalıdır. Boş satırlar yok sayılır."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
@@ -2917,9 +2917,9 @@ msgid ""
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>K Torrent'in aynı anda kurmaya çalışacağı en yüksek giden bağlantı sayısı."
+"<p>K Torrent’in aynı anda kurmaya çalışacağı en yüksek giden bağlantı sayısı."
 "</p>\n"
-"<p>K Torrent'in diğer internet trafiğini engellemesi sorununu yaşarsanız bu "
+"<p>K Torrent’in diğer internet trafiğini engellemesi sorununu yaşarsanız bu "
 "sayıyı biraz daha düşük bir değere ayarlamayı deneyin.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
@@ -2965,7 +2965,7 @@ msgid ""
 "µTP."
 msgstr ""
 "Bittorrent bağlantıları için TCP kullanma, yalnızca µTP kullan. Tüm "
-"bittorrent istemcileri µTP'yi desteklemediği için sizi daha düşük hızlara "
+"bittorrent istemcileri µTP’yi desteklemediği için sizi daha düşük hızlara "
 "yönlendirebilir."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_onlyUseUtp)
@@ -3010,14 +3010,14 @@ msgid ""
 "Let KTorrent calculate the recommended settings based upon the bandwidth you "
 "have available."
 msgstr ""
-"K Torrent'in sahip olduğunuz bant genişliğinize dayanarak önerilen ayarları "
+"K Torrent’in sahip olduğunuz bant genişliğinize dayanarak önerilen ayarları "
 "hesaplamasına izin verin."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
 #, kde-format
 msgid "Recommended Settings..."
-msgstr "Önerilen Ayarlar..."
+msgstr "Önerilen Ayarlar…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3034,7 +3034,7 @@ msgstr "HTTP"
 #: ktorrent/pref/proxypref.ui:23
 #, kde-format
 msgid "Use the HTTP proxy settings configured in the settings of KDE."
-msgstr "KDE'de ayarlanmış HTTP vekil sunucu ayarlarını kullan."
+msgstr "KDE’de ayarlanmış HTTP vekil sunucu ayarlarını kullanın."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKDEProxySettings)
 #: ktorrent/pref/proxypref.ui:26
@@ -3367,7 +3367,7 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Attention: </span>This is not used when "
 "downloading, only when seeding.</p>"
 msgstr ""
-"<p>Maksimum paylaşım oranı, eğer bu orana ulaşılmışsa besleme "
+"<p>En yüksek paylaşım oranı, eğer bu orana ulaşılmışsa besleme "
 "durdurulacaktır.</p>\n"
 "<p><span style=\" font-weight:600;\">Dikkat: </span>Bu özellik indirilirken "
 "değil yalnızca besleme yapılırken kullanılır.</p>"
@@ -3592,7 +3592,7 @@ msgstr "Mıknatısı Durdur"
 #: ktorrent/tools/magnetview.cpp:54
 #, kde-format
 msgid "Copy Magnet URL"
-msgstr "Mıknatıs URL'sini Kopyala"
+msgstr "Mıknatıs URL’sini Kopyala"
 
 #: ktorrent/tools/magnetview.cpp:56
 #, kde-format
@@ -3645,7 +3645,7 @@ msgid ""
 "order."
 msgstr ""
 "Bir torrentin kuyruktaki sırası.\n"
-"Sırayı değiştirmek için torrenti sürükleyip bırakın veya sağdaki yukarı-"
+"Sırayı değiştirmek için torrenti sürükleyip bırakın veya sağdaki yukarı–"
 "aşağı düğmelerini kullanın."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
@@ -3891,7 +3891,7 @@ msgstr[1] "%1 torrentten fazlası indirilemez. <br>"
 #, kde-format
 msgid "Go to Settings -> Configure KTorrent, if you want to change the limits."
 msgstr ""
-"Limitleri değiştirmek istiyorsanız Ayarlar -> K Torrent'i Yapılandır "
+"Limitleri değiştirmek istiyorsanız Ayarlar → K Torrent’i Yapılandır "
 "seçeneğini seçin."
 
 #: ktorrent/trayicon.cpp:294
@@ -3904,7 +3904,7 @@ msgstr "Yeterince boş disk alanı yok."
 msgid ""
 "Your disk is running out of space.<br /><b>%1</b> is being downloaded to "
 "'%2'."
-msgstr "Disk alanınız doldu.<br /><b>%1</b> dosyası '%2' konumuna indirilecek."
+msgstr "Disk alanınız doldu.<br /><b>%1</b> dosyası “%2” konumuna indirilecek."
 
 #: ktorrent/trayicon.cpp:310
 #, kde-format
@@ -4099,7 +4099,7 @@ msgstr "Hatalar:"
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, kde-format
 msgid "Filter..."
-msgstr "Süz..."
+msgstr "Süz…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4247,7 +4247,7 @@ msgstr "Bir torrentin tüm verisini denetle"
 #: ktorrent/view/view.cpp:249
 #, kde-format
 msgid "Copy Torrent URL"
-msgstr "Torrent URL'sini Kopyala"
+msgstr "Torrent URL’sini Kopyala"
 
 #: ktorrent/view/view.cpp:253
 #, kde-format
@@ -4420,7 +4420,7 @@ msgid ""
 "How much time is left before the torrent is finished or before the maximum "
 "share ratio is reached, if that is enabled"
 msgstr ""
-"Torrent indirilmeden veya en yüksek paylaşım oranına - eğer etkinse - "
+"Torrent indirilmeden veya en yüksek paylaşım oranına —eğer etkinse— "
 "ulaşılmadan önce ne kadar zaman kaldığı"
 
 #: ktorrent/view/viewmodel.cpp:490
@@ -4490,12 +4490,12 @@ msgstr "KTUPnP Testi"
 #: ktupnptest/main.cpp:27
 #, kde-format
 msgid "KTorrent's UPnP test application"
-msgstr "K Torrent'in UPnP Test Uygulaması"
+msgstr "K Torrent’in UPnP Test Uygulaması"
 
 #: ktupnptest/main.cpp:29
 #, kde-format
 msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 - 2007 Joris Guisson ve Ivan Vasic"
+msgstr "&copy; 2005–2007 Joris Guisson ve Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -4819,7 +4819,7 @@ msgstr "Karşıya yükleme yuvası sayısı"
 #: libktcore/ktorrent.kcfg:182
 #, kde-format
 msgid "Columns shown in KTorrentView"
-msgstr "KTorrentView'da gösterilen sütunlar"
+msgstr "KTorrentView’da gösterilen sütunlar"
 
 #. i18n: ectx: label, entry (minDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:233
@@ -4889,7 +4889,7 @@ msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
 "time. Ignore the limit and start seeding anyway?"
 msgstr ""
-"\"%1\" torrenti, en yüksek paylaşım oranına ve en yüksek besleme zamanına "
+"“%1” torrenti, en yüksek paylaşım oranına ve en yüksek besleme zamanına "
 "ulaştı. Sınırı yok saymak ve torrenti beslemeyi sürdürmek ister misiniz?"
 
 #: libktcore/torrent/queuemanager.cpp:107
@@ -4898,7 +4898,7 @@ msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
-"\"%1\" torrenti, en yüksek paylaşım oranına ulaştı. Sınırı yok saymak ve "
+"“%1” torrenti, en yüksek paylaşım oranına ulaştı. Sınırı yok saymak ve "
 "torrenti beslemeyi başlatmak ister misiniz?"
 
 #: libktcore/torrent/queuemanager.cpp:109
@@ -4907,7 +4907,7 @@ msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
-"\"%1\" torrenti, en yüksek besleme zamanına ulaştı. Sınırı yok saymak ve "
+"“%1” torrenti, en yüksek besleme zamanına ulaştı. Sınırı yok saymak ve "
 "torrenti beslemeyi sürdürmek ister misiniz?"
 
 #: libktcore/torrent/queuemanager.cpp:116
@@ -5360,7 +5360,7 @@ msgid ""
 "be downloaded first, followed by the second, then the third ..."
 msgstr ""
 "Bir torrentin dosyalarının indirileceği sıra. En üstteki dosya ilk önce "
-"indirilecektir, bunu ikinci, daha sonra üçüncü sıradaki dosyalar izler ..."
+"indirilecektir, bunu ikinci, daha sonra üçüncü sıradaki dosyalar izler …"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -5476,11 +5476,10 @@ msgid "Open With"
 msgstr "Birlikte Aç"
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
-msgstr "Yeniden adlandır"
+msgstr "Yeniden Adlandır"
 
 #: plugins/infowidget/fileview.cpp:117
 #, kde-format
@@ -5965,7 +5964,7 @@ msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
 "send us any data"
 msgstr ""
-"Eş tarafın bize tıkayıp tıkamadığı - tıkandığımızda bize daha fazla veri "
+"Eş tarafın bize tıkayıp tıkamadığı — tıkandığımızda bize daha fazla veri "
 "gönderemeyecektir"
 
 #: plugins/infowidget/peerviewmodel.cpp:340
@@ -5982,7 +5981,7 @@ msgstr "Paylaşımcı ne kadar torrent verisine sahip"
 #: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
-msgstr "Eşte DHT'nin etkin olup olmadığı"
+msgstr "Eşte DHT’nin etkin olup olmadığı"
 
 #: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
@@ -6118,7 +6117,7 @@ msgstr "Sonraki Güncelleme"
 #: plugins/infowidget/trackerview.cpp:57
 #, kde-format
 msgid "Copy Tracker URL"
-msgstr "İzleyici URL'sini Kopyala"
+msgstr "İzleyici URL’sini Kopyala"
 
 #: plugins/infowidget/trackerview.cpp:64
 #, kde-format
@@ -6128,7 +6127,7 @@ msgstr "İzleyici durumunu kopyala"
 #: plugins/infowidget/trackerview.cpp:115
 #, kde-format
 msgid "Several URL's could not be added because they are malformed:"
-msgstr "Birçok bağlantı URL'si bozuk olduğu için eklenemedi:"
+msgstr "Birçok bağlantı URL’si bozuk olduğu için eklenemedi:"
 
 #: plugins/infowidget/trackerview.cpp:129
 #, kde-format
@@ -6208,7 +6207,7 @@ msgstr ""
 "p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Not: </span>Yalnızca http web izleyicileri desteklenir.</p>"
+"weight:600;\">Not: </span>Yalnızca http web beslemeleri desteklenir.</p>"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add)
 #: plugins/infowidget/webseedstab.ui:26
@@ -6238,7 +6237,7 @@ msgstr "Tümünü Devre Dışı Bırak"
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
 #, kde-format
 msgid "Converting..."
-msgstr "Dönüştürülüyor..."
+msgstr "Dönüştürülüyor…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6256,7 +6255,7 @@ msgstr "İ&ptal"
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
 msgid "Loading txt file..."
-msgstr "Txt dosyası yükleniyor..."
+msgstr "Txt dosyası yükleniyor…"
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6330,7 +6329,7 @@ msgstr "Durum: Yüklenmedi."
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, kde-format
 msgid "Status: Downloading and converting new block list..."
-msgstr "Durum: Yeni engel listesi indiriliyor ve dönüştürülüyor..."
+msgstr "Durum: Yeni engel listesi indiriliyor ve dönüştürülüyor…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
@@ -6446,7 +6445,7 @@ msgstr "Sonraki güncelleme:"
 #: plugins/ipfilter/ktipfilterplugin.kcfg:10
 #, kde-format
 msgid "Level1 filter url"
-msgstr "Düzey1 süzgeç URL'si"
+msgstr "Düzey1 süzgeç URL’si"
 
 #. i18n: ectx: label, entry (useLevel1), group (general)
 #: plugins/ipfilter/ktipfilterplugin.kcfg:14
@@ -6546,7 +6545,7 @@ msgstr ""
 "gösterir</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Hiç:</span> Hiçbir iletiyi göstermez</p>"
+"weight:600;\">Yok:</span> Hiçbir iletiyi göstermez</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
@@ -6670,7 +6669,7 @@ msgstr "Yalnızca açık torrentlerde etkinleştir"
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:37
 #, kde-format
 msgid "Copy Magnet URI"
-msgstr "Mıknatıs URI'sini Kopyala"
+msgstr "Mıknatıs URI’sini Kopyala"
 
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:115
 #, kde-format
@@ -6706,13 +6705,13 @@ msgstr "Nasıl izleyici ekleneceğini tanımla"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:53
 #, kde-format
 msgid "Add a custom tracker URL"
-msgstr "Özel bir izleyici URL'si ekle"
+msgstr "Özel bir izleyici URL’si ekle"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_tr)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:60
 #, kde-format
 msgid "The tracker URL that will be a part of the magnet link"
-msgstr "İzleyici URL'si, mıknatıs bağlantısının parçası olacaktır"
+msgstr "İzleyici URL’si, mıknatıs bağlantısının parçası olacaktır"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_dn)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:67
@@ -6759,12 +6758,12 @@ msgstr "Oynatılıyor: <b>%1</b>"
 #: plugins/mediaplayer/mediacontroller.cpp:96
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
-msgstr "<b>%2</b> - <b>%1</b> (Albüm: <b>%3</b>)"
+msgstr "<b>%2</b> — <b>%1</b> (Albüm: <b>%3</b>)"
 
 #: plugins/mediaplayer/mediacontroller.cpp:99
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b>"
-msgstr "<b>%2</b> - <b>%1</b>"
+msgstr "<b>%2</b> — <b>%1</b>"
 
 #: plugins/mediaplayer/mediacontroller.cpp:102
 #: plugins/mediaplayer/mediacontroller.cpp:105
@@ -7330,14 +7329,14 @@ msgid ""
 "manually. The URL should contain {searchTerms}, ktorrent will replace this "
 "by the thing you are searching for."
 msgstr ""
-"Opensearch %1 tarafından desteklenmiyor, arama URL'sini el ile girmeniz "
-"gerekecek. URL, {searchTerms} içermeli, ktorrent bunu aradığınız şeyle "
-"değiştirecektir."
+"Opensearch %1 tarafından desteklenmiyor, arama URL’sini el ile girmeniz "
+"gerekecek. URL, {aramaTerimleri} içermelidir, ktorrent bunu aradığınız şeyle "
+"değiştirir."
 
 #: plugins/search/searchprefpage.cpp:128
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
-msgstr "%1 URL'si. {searchTerms} içermiyor."
+msgstr "%1 URL’si. {aramaTerimleri} içermiyor."
 
 #: plugins/search/searchwidget.cpp:81
 #, kde-format
@@ -7352,12 +7351,12 @@ msgstr "İndiriliyor:<br/><b>%1</b>"
 #: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Do you want to download or save the torrent?"
-msgstr "Torrent'i indirmek mi kaydetmek mi istiyorsunuz?"
+msgstr "Torrent’i indirmek mi kaydetmek mi istiyorsunuz?"
 
 #: plugins/search/searchwidget.cpp:231
 #, kde-format
 msgid "Download Torrent"
-msgstr "Torrent'i İndir"
+msgstr "Torrent’i İndir"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
 #: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
@@ -7933,7 +7932,7 @@ msgstr "Bağlantıların çizelgesini göstermek için örnekler"
 #: plugins/stats/ktstatsplugin.kcfg:55
 #, kde-format
 msgid "Samples to show on DHT chart"
-msgstr "DHT'nin çizelgesini göstermek için örnekler"
+msgstr "DHT çizelgesini göstermek için örnekler"
 
 #. i18n: ectx: label, entry (DlSpdColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:60
@@ -8437,8 +8436,8 @@ msgid ""
 "the *.torrent will match any item which ends in .torrent. </p>"
 msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Ogenin başlığında "
-"bulunacak karakter dizisi. Basit özel karakter sözdizimi desteklenir:</p>\n"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Ögenin başlığında "
+"bulunacak dizi. Basit özel karakter sözdizimi desteklenir:</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
 "p>\n"
@@ -8481,7 +8480,7 @@ msgstr ""
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
-"\" font-weight:600;\">[...]</span></p></td>\n"
+"\" font-weight:600;\">[…]</span></p></td>\n"
 "<td style=\" vertical-align:top;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">Karakter "
@@ -8567,8 +8566,8 @@ msgid ""
 "\n"
 "Will download seasons 1, 3, 4, 5, 6 and 9"
 msgstr ""
-"İndirilecek sezonları belirleyin, çoklu sezonlar bir ',' ile ayrılabilir ve "
-"'-' kullanarak aralık kullanabilirsiniz\n"
+"İndirilecek sezonları belirleyin, çoklu sezonlar bir ‘,’ ile ayrılabilir ve "
+"‘-’ kullanarak erimler belirtebilirsiniz\n"
 "\n"
 "Örneğin: 1, 3-6, 9\n"
 "\n"
@@ -8591,8 +8590,8 @@ msgid ""
 "\n"
 "Will download episodes 1, 3, 4, 5, 6 and 9"
 msgstr ""
-"İndirilecek bölümleri belirleyin, çoklu bölümler bir ',' ile ayrılabilir ve "
-"'-' kullanarak aralık kullanabilirsiniz\n"
+"İndirilecek bölümleri belirleyin, çoklu bölümler bir ‘,’ ile ayrılabilir ve "
+"‘-’ kullanarak aralık kullanabilirsiniz\n"
 "\n"
 "Örneğin: 1, 3-6, 9\n"
 "\n"
@@ -8751,12 +8750,12 @@ msgstr "RSS ve Atom kaynaklarını yönetir"
 #: plugins/syndication/syndicationactivity.cpp:108
 #, kde-format
 msgid "Enter the URL"
-msgstr "URL'yi gir"
+msgstr "URL’yi gir"
 
 #: plugins/syndication/syndicationactivity.cpp:109
 #, kde-format
 msgid "Please enter the URL of the RSS or Atom feed."
-msgstr "Lütfen RSS ya da Atom URL'sini girin."
+msgstr "Lütfen RSS ya da Atom URL’sini girin."
 
 #: plugins/syndication/syndicationactivity.cpp:133
 #, kde-format
