@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-16 00:38+0000\n"
-"PO-Revision-Date: 2024-02-11 05:31+0100\n"
+"PO-Revision-Date: 2024-03-17 05:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -5476,8 +5476,7 @@ msgid "Open With"
 msgstr "Malfermi per"
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "Alinomi"

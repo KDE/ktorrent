@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-16 00:38+0000\n"
-"PO-Revision-Date: 2024-02-11 11:24+0100\n"
+"PO-Revision-Date: 2024-03-17 11:25+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -5512,11 +5512,10 @@ msgid "Open With"
 msgstr "Otwórz w"
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
-msgstr "Zmień nazwę"
+msgstr "Przemianuj"
 
 #: plugins/infowidget/fileview.cpp:117
 #, kde-format

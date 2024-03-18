@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-16 00:38+0000\n"
-"PO-Revision-Date: 2024-03-16 20:46\n"
+"PO-Revision-Date: 2024-03-17 20:43\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1619,6 +1619,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"InfoWidget 插件使用的 IP-Country (IP 国家) 数据库。此数据库使用 Creative "
+"Commons Attribution 4.0 International (知识共享署名 4.0 国际版) 许可证 "
+"https://creativecommons.org/licenses/by/4.0/。国旗图像由 http://flags."
+"blogpotato.de/ 提供。"
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1628,7 +1632,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:134
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "InfoWidget 插件使用的 maxminddb 程序库。"
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -2010,7 +2014,7 @@ msgstr "启用日志记录"
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
-msgstr ""
+msgstr "启用记录日志到标准输出。需要同时指定 --enable-logging 参数。"
 
 #: ktorrent/main.cpp:182
 #, kde-format
