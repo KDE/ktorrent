@@ -110,6 +110,8 @@ GUI::GUI()
     // markk.update();
     updateActions();
     core->startUpdateTimer();
+
+    tray_icon->setAssociatedWindow(windowHandle());
 }
 
 GUI::~GUI()

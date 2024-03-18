@@ -58,6 +58,8 @@ public:
     /// Get the co
     QMenu *contextMenu();
 
+    void setAssociatedWindow(QWindow *window);
+
 private:
     void showPassivePopup(const QString &msg, const QString &titile);
 
