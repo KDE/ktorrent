@@ -420,6 +420,10 @@ void TrayIcon::secondaryActivate(const QPoint &pos)
     core->setSuspendedState(!core->getSuspendedState());
 }
 
+void TrayIcon::setAssociatedWindow(QWindow *window)
+{
+    status_notifier_item->setAssociatedWindow(window);
+}
 }
 
 #include "moc_trayicon.cpp"
