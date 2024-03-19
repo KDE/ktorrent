@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-16 00:38+0000\n"
+"POT-Creation-Date: 2024-03-19 00:38+0000\n"
 "PO-Revision-Date: 2015-01-29 09:07+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -710,7 +710,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:308
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:310
 #, fuzzy, kde-format
 msgid "Invalid URL: %1"
 msgstr "Ógild slóð: %1"
@@ -1257,69 +1257,69 @@ msgstr "Gefðu upp heiti hóps."
 msgid "The group %1 already exists."
 msgstr "Hópurinn %1 er þegar til."
 
-#: ktorrent/gui.cpp:260
+#: ktorrent/gui.cpp:262
 #, fuzzy, kde-format
 msgid "Open Location"
 msgstr "Opna slóð"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:360
 #, fuzzy, kde-format
 msgid "Create a new torrent"
 msgstr "Búa til a nýtt"
 
-#: ktorrent/gui.cpp:360
+#: ktorrent/gui.cpp:362
 #, fuzzy, kde-format
 msgid "Open a torrent"
 msgstr "Opna a"
 
-#: ktorrent/gui.cpp:363
+#: ktorrent/gui.cpp:365
 #, fuzzy, kde-format
 msgid "Open Silently"
 msgstr "Opna"
 
-#: ktorrent/gui.cpp:364
+#: ktorrent/gui.cpp:366
 #, fuzzy, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Opna a"
 
-#: ktorrent/gui.cpp:379
+#: ktorrent/gui.cpp:381
 #, fuzzy, kde-format
 msgid "Open URL"
 msgstr "Opna slóð"
 
-#: ktorrent/gui.cpp:380
+#: ktorrent/gui.cpp:382
 #, fuzzy, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Opna a Slóð punktar til a"
 
-#: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:387 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, fuzzy, kde-format
 msgid "IP Filter"
 msgstr "IP Sía"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:388
 #, fuzzy, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Sýna af IP"
 
-#: ktorrent/gui.cpp:391
+#: ktorrent/gui.cpp:393
 #, fuzzy, kde-format
 msgid "Import Torrent"
 msgstr "Flytja inn"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:394
 #, fuzzy, kde-format
 msgid "Import a torrent"
 msgstr "Flytja inn a"
 
-#: ktorrent/gui.cpp:397
+#: ktorrent/gui.cpp:399
 #, fuzzy, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Sýna Fela"
 
-#: ktorrent/gui.cpp:415
+#: ktorrent/gui.cpp:417
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr ""
