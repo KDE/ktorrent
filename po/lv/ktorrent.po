@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-08 01:35+0000\n"
+"POT-Creation-Date: 2024-03-19 02:29+0000\n"
 "PO-Revision-Date: 2010-09-11 19:18+0300\n"
 "Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -751,7 +751,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:308
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Nederīgs URL: %1"
@@ -1310,69 +1310,69 @@ msgstr "Lūdzu, ievadiet grupas nosaukumu."
 msgid "The group %1 already exists."
 msgstr "Grupa ar nosaukumu  %1 jau pastāv."
 
-#: ktorrent/gui.cpp:260
+#: ktorrent/gui.cpp:262
 #, kde-format
 msgid "Open Location"
 msgstr "Atvērt vietu"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Izveidot jaunu torrentu"
 
-#: ktorrent/gui.cpp:360
+#: ktorrent/gui.cpp:362
 #, kde-format
 msgid "Open a torrent"
 msgstr "Atvērt torrentu"
 
-#: ktorrent/gui.cpp:363
+#: ktorrent/gui.cpp:365
 #, kde-format
 msgid "Open Silently"
 msgstr "Atvērt klusi"
 
-#: ktorrent/gui.cpp:364
+#: ktorrent/gui.cpp:366
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Atvērt torrentu bez jautājumu uzdošanas"
 
-#: ktorrent/gui.cpp:379
+#: ktorrent/gui.cpp:381
 #, kde-format
 msgid "Open URL"
 msgstr "Atvērt URL"
 
-#: ktorrent/gui.cpp:380
+#: ktorrent/gui.cpp:382
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Atvērt URL, kas norāda uz torrentu, tiek atbalstītas arī magnet saites"
 
-#: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:387 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "IP filtrs"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Rādīt sarakstu ar bloķētajām IP adresēm"
 
-#: ktorrent/gui.cpp:391
+#: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Import Torrent"
 msgstr "Importēt torrentu"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:394
 #, kde-format
 msgid "Import a torrent"
 msgstr "Importēt torrentu"
 
-#: ktorrent/gui.cpp:397
+#: ktorrent/gui.cpp:399
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Rādīt/Slēpt KTorrent"
 
-#: ktorrent/gui.cpp:415
+#: ktorrent/gui.cpp:417
 #, fuzzy, kde-format
 #| msgid "DHT: %1 nodes, %2 tasks"
 msgid "D: %1 | U: %2"

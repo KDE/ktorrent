@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-08 01:35+0000\n"
+"POT-Creation-Date: 2024-03-19 02:29+0000\n"
 "PO-Revision-Date: 2023-11-21 12:29+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -761,7 +761,7 @@ msgstr ""
 "de la llista de seguidors."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:308
+#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "URL no vàlid: %1"
@@ -1319,69 +1319,69 @@ msgstr "Per favor, escriviu el nom del grup."
 msgid "The group %1 already exists."
 msgstr "El grup %1 ja existix."
 
-#: ktorrent/gui.cpp:260
+#: ktorrent/gui.cpp:262
 #, kde-format
 msgid "Open Location"
 msgstr "Obri la ubicació"
 
-#: ktorrent/gui.cpp:358
+#: ktorrent/gui.cpp:360
 #, kde-format
 msgid "Create a new torrent"
 msgstr "Crea un torrent nou"
 
-#: ktorrent/gui.cpp:360
+#: ktorrent/gui.cpp:362
 #, kde-format
 msgid "Open a torrent"
 msgstr "Obri un torrent"
 
-#: ktorrent/gui.cpp:363
+#: ktorrent/gui.cpp:365
 #, kde-format
 msgid "Open Silently"
 msgstr "Obri silenciosament"
 
-#: ktorrent/gui.cpp:364
+#: ktorrent/gui.cpp:366
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "Obri un torrent sense preguntar cap qüestió"
 
-#: ktorrent/gui.cpp:379
+#: ktorrent/gui.cpp:381
 #, kde-format
 msgid "Open URL"
 msgstr "Obri un URL"
 
-#: ktorrent/gui.cpp:380
+#: ktorrent/gui.cpp:382
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Obri un URL que apunta cap a un torrent, es permeten enllaços magnet"
 
-#: ktorrent/gui.cpp:385 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:387 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
 #, kde-format
 msgid "IP Filter"
 msgstr "Filtre d'IP"
 
-#: ktorrent/gui.cpp:386
+#: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "Mostra la llista d'adreces IP bloquejades"
 
-#: ktorrent/gui.cpp:391
+#: ktorrent/gui.cpp:393
 #, kde-format
 msgid "Import Torrent"
 msgstr "Importació de torrent"
 
-#: ktorrent/gui.cpp:392
+#: ktorrent/gui.cpp:394
 #, kde-format
 msgid "Import a torrent"
 msgstr "Importa un torrent"
 
-#: ktorrent/gui.cpp:397
+#: ktorrent/gui.cpp:399
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "Mostra o oculta KTorrent"
 
-#: ktorrent/gui.cpp:415
+#: ktorrent/gui.cpp:417
 #, kde-format
 msgid "D: %1 | U: %2"
 msgstr "B: %1 | P: %2"
