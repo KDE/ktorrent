@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-19 00:38+0000\n"
-"PO-Revision-Date: 2024-03-18 10:47+0200\n"
+"PO-Revision-Date: 2024-03-19 14:57+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -121,8 +121,8 @@ msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
 "Do you want to recreate it?"
 msgstr ""
-"קובץ המידע של הטורנט \"%1\" חסר.\n"
-"התרצה ליצור אותו מחדש?"
+"קובץ המידע של הטורנט „%1” חסר.\n"
+"ליצור אותו מחדש?"
 
 #: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
 #, kde-format
@@ -145,8 +145,8 @@ msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
 "optimum results enable DHT."
 msgstr ""
-"אתה מנסה להוריד קישור מגנט, וה־DHT אינו מאופשר. בשביל תוצאות טובות יותר אפשר "
-"את DHT בהגדרות."
+"ניסית להוריד קישור מגנט, וה־DHT לא פעיל. לתוצאות טובות יותר יש להפעילאת DHT "
+"בהגדרות."
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, AddPeersDlg)
 #. i18n: ectx: property (windowTitle), widget (QWidget, GroupPolicyDlg)
@@ -890,19 +890,19 @@ msgstr "הגבלת העלאה"
 #: ktorrent/dialogs/speedlimitsmodel.cpp:104
 #, kde-format
 msgid "Assured Download Speed"
-msgstr ""
+msgstr "מהירות הורדה מובטחת"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:106
 #, kde-format
 msgid "Assured Upload Speed"
-msgstr ""
+msgstr "מהירות העלאה מובטחת"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:140
 #: ktorrent/dialogs/speedlimitsmodel.cpp:145
 #: ktorrent/dialogs/spinboxdelegate.cpp:32
 #, kde-format
 msgid "No assured speed"
-msgstr ""
+msgstr "אין מהירות מובטחת"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:40
 #, kde-format
@@ -923,7 +923,7 @@ msgstr "אתה חייב לבחור קובץ או תיקיה"
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
-msgstr "לא הוספת טרקרים כלל, אתה בטוח שאתה רוצה ליצור את הטורנט הזה?"
+msgstr "לא הוספת עוקבים כלל, ליצור את הטורנט הזה?"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:285
 #, kde-format
@@ -1049,14 +1049,14 @@ msgstr "מבוזר (רק DHT)"
 #: plugins/scanfolder/scanfolderprefpage.ui:125
 #, kde-format
 msgid "Add torrent to group:"
-msgstr "הוסף טורנט לקבוצה"
+msgstr "הוספת טורנט לקבוצה:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, m_tracker_tab)
 #: ktorrent/dialogs/torrentcreatordlg.ui:182
 #: plugins/infowidget/infowidgetplugin.cpp:224
 #, kde-format
 msgid "Trackers"
-msgstr "טרקרים"
+msgstr "עוקבים"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_tracker)
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_node)
@@ -1392,7 +1392,7 @@ msgstr "‏עמיתי KTorrent ברשימה השחורה"
 #: ktorrent/ipfilterwidget.ui:22
 #, kde-format
 msgid "Add peer:"
-msgstr "הוסף עמית:"
+msgstr "הוספת עמית:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_ip_to_add)
 #: ktorrent/ipfilterwidget.ui:31
@@ -1480,7 +1480,7 @@ msgstr "פתח תיקיה"
 #: ktorrent/kttorrentactivityui.rc:69 ktorrent/view/view.cpp:246
 #, kde-format
 msgid "Add to Group"
-msgstr "הוסף לקבוצה"
+msgstr "הוספה לקבוצה"
 
 #. i18n: ectx: Menu (ColumnsMenu)
 #: ktorrent/kttorrentactivityui.rc:77
@@ -2718,7 +2718,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:47
 #, kde-format
 msgid "UDP tracker port:"
-msgstr "יציאת טרקר UDP:"
+msgstr "פתחת UDP של עוקב:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_udpTrackerPort)
 #: ktorrent/pref/networkpref.ui:55
@@ -5145,7 +5145,7 @@ msgstr ""
 #: plugins/infowidget/trackerview.ui:22
 #, kde-format
 msgid "Add Trackers"
-msgstr "הוסף טרקר"
+msgstr "הוספת עוקבים"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
@@ -5909,7 +5909,7 @@ msgstr ""
 #: plugins/infowidget/trackerview.ui:29
 #, kde-format
 msgid "Remove Tracker"
-msgstr "הסר טרקר"
+msgstr "הסרת עוקב"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_change_tracker)
 #: plugins/infowidget/trackerview.ui:36
@@ -5921,13 +5921,13 @@ msgstr ""
 #: plugins/infowidget/trackerview.ui:39
 #, kde-format
 msgid "Switch Tracker"
-msgstr "החלף טרקר"
+msgstr "החלפת עוקב"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_scrape)
 #: plugins/infowidget/trackerview.ui:46
 #, kde-format
 msgid "Update Trackers"
-msgstr "עדכן טרקר"
+msgstr "עדכון עוקבים"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_restore_defaults)
 #: plugins/infowidget/trackerview.ui:66
@@ -8250,7 +8250,7 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:264
 #, kde-format
 msgid "Add to group:"
-msgstr "הוסף לקבוצה:"
+msgstr "הוספה לקבוצה:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_silently)
 #: plugins/syndication/filtereditor.ui:320
