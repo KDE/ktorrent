@@ -104,7 +104,7 @@ QVariant PeerViewModel::Item::data(int col) const
     case 6:
         return stats.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No");
     case 7:
-        return QString(QString::number((int)stats.perc_of_file) + QLatin1String(" %"));
+        return i18nc("File percentage stat", "%1%", (int)stats.perc_of_file);
     case 8:
         return QVariant();
     case 9:

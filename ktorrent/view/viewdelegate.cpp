@@ -15,6 +15,8 @@
 #include <QRect>
 #include <QVBoxLayout>
 
+#include <KLocalizedString>
+
 #include <gui/extender.h>
 
 namespace kt
@@ -327,7 +329,7 @@ void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewIte
     progressBarOption.minimum = 0;
     progressBarOption.maximum = 100;
     progressBarOption.progress = progress;
-    progressBarOption.text = QLocale().toString(progress) + QLatin1Char('%');
+    progressBarOption.text = i18nc("Progress bar percentage label", "%p%", progress);
     progressBarOption.textVisible = true;
     progressBarOption.direction = option.direction;
 
