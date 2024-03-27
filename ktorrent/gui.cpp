@@ -455,12 +455,11 @@ void GUI::loadState(KSharedConfigPtr cfg)
 
     bool minimize_to_system_tray = Settings::alwaysMinimizeToSystemTray();
 
-    const auto w = window()->windowHandle();
     if (Settings::showSystemTrayIcon() && minimize_to_system_tray) {
         Out(SYS_GEN | LOG_DEBUG) << "Starting minimized" << endl;
-        w->hide();
+        hide();
     } else {
-        w->show();
+        show();
     }
 
     setCurrentActivity(central->currentActivity());
@@ -481,12 +480,12 @@ void GUI::saveState(KSharedConfigPtr cfg)
 
 bool GUI::queryClose()
 {
-    if (window()->windowHandle()->isVisible()) {
+    if (isVisible()) {
         saveState(KSharedConfig::openConfig());
     }
 
     if (Settings::showSystemTrayIcon() && !qApp->isSavingSession()) {
-        window()->windowHandle()->hide();
+        hide();
         return false;
     } else {
         timer.stop();
@@ -507,11 +506,7 @@ void GUI::updateActions()
 
 void GUI::showOrHide()
 {
-    const auto w = window()->windowHandle();
-    if (w->isVisible())
-        w->hide();
-    else
-        w->show();
+    setVisible(!isVisible());
 }
 
 void GUI::configureNotifications()
