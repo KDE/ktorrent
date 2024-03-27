@@ -329,7 +329,7 @@ void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewIte
     progressBarOption.minimum = 0;
     progressBarOption.maximum = 100;
     progressBarOption.progress = progress;
-    progressBarOption.text = i18nc("Progress bar percentage label", "%p%", progress);
+    progressBarOption.text = i18nc("Progress bar percentage label", "%1%", progress);
     progressBarOption.textVisible = true;
     progressBarOption.direction = option.direction;
 
