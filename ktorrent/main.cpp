@@ -20,7 +20,6 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QFile>
-#include <QWindow>
 
 #include <KAboutData>
 #include <KConfigGroup>
@@ -247,7 +246,7 @@ int main(int argc, char **argv)
         QObject::connect(&dbusService, &KDBusService::activateRequested, handleCmdLine);
         QObject::connect(&dbusService, &KDBusService::activateRequested, &widget, [&widget] {
             if (!widget.isVisible()) {
-                widget.window()->windowHandle()->show();
+                widget.show();
             } else {
                 KWindowSystem::updateStartupId(widget.windowHandle());
                 KWindowSystem::activateWindow(widget.windowHandle());
