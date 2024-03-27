@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-19 00:38+0000\n"
-"PO-Revision-Date: 2024-03-21 22:58+0300\n"
+"PO-Revision-Date: 2024-03-26 23:59+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3504,12 +3504,12 @@ msgstr "Önerilen ayarlar:"
 #: ktorrent/statusbar.cpp:34 ktorrent/statusbar.cpp:66
 #, kde-format
 msgid "Speed down: %1 / up: %2"
-msgstr "İndirme hızı: %1, yükleme hızı: %2"
+msgstr "%1 hızla indiriliyor, %2 hızla yükleniyor"
 
 #: ktorrent/statusbar.cpp:35 ktorrent/statusbar.cpp:77
 #, kde-format
 msgid "Transferred down: %1 / up: %2"
-msgstr "Aktarılan indirme: %1, yükleme: %2"
+msgstr "%1 indirildi, %2 yüklendi"
 
 #: ktorrent/statusbar.cpp:37 ktorrent/statusbar.cpp:92
 #, kde-format
@@ -3732,7 +3732,7 @@ msgstr "Torrent kuyruğunu yönetmek için bir parçacık"
 #: ktorrent/torrentactivity.cpp:96
 #, kde-format
 msgid "Magnet Downloader"
-msgstr "Mıknatıs İndirici"
+msgstr "Mıknatıs İndiricisi"
 
 #: ktorrent/torrentactivity.cpp:96
 #, kde-format
@@ -4352,7 +4352,7 @@ msgstr "Besleyiciler"
 #: ktorrent/view/viewmodel.cpp:456 plugins/infowidget/trackermodel.cpp:127
 #, kde-format
 msgid "Leechers"
-msgstr "Sömürgenler"
+msgstr "Sülükler"
 
 #: ktorrent/view/viewmodel.cpp:459
 #, no-c-format, kde-format
@@ -4435,7 +4435,7 @@ msgstr "Kaç tane beslemeye bağlıyız (izleyiciye göre kaç tane besleyici va
 msgid ""
 "How many leechers we are connected to (How many leechers there are according "
 "to the tracker)"
-msgstr "Kaç tane sömürgene bağlıyız (izleyiciye göre kaç tane sömürgen var)"
+msgstr "Kaç sülüğe bağlıyız (İzleyiciye göre kaç sülük var)"
 
 #: ktorrent/view/viewmodel.cpp:495
 #, kde-format
@@ -7576,7 +7576,7 @@ msgstr "Düğümler"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers connected"
-msgstr "İndirenler bağlandı"
+msgstr "Bağlı sülükler"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: plugins/stats/ConnsTabPage.cc:46 plugins/stats/ConnsTabPage.cc:94
@@ -7584,7 +7584,7 @@ msgstr "İndirenler bağlandı"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers in swarms"
-msgstr "İndirenler küme içinde"
+msgstr "Sürüler halinde sülükler"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: plugins/stats/ConnsTabPage.cc:50 plugins/stats/DisplaySettings.ui:583
@@ -7606,7 +7606,7 @@ msgstr "Kümede beslemeler"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per torrent"
-msgstr "Torrent başına ortalama indirenler"
+msgstr "Torrent başına ortalama bağlı sülükler"
 
 #. i18n: ectx: property (text), widget (QLabel, label_28)
 #: plugins/stats/ConnsTabPage.cc:61 plugins/stats/DisplaySettings.ui:688
@@ -7619,7 +7619,7 @@ msgstr "Torrent başına ortalama beslemeler"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per running torrent"
-msgstr "Çalışan torrent başına ortalama indirenler"
+msgstr "Çalışan torrent başına ortalama bağlı sülükler"
 
 #: plugins/stats/ConnsTabPage.cc:67
 #, kde-format
@@ -7687,14 +7687,14 @@ msgstr "Eşler"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from leechers"
-msgstr "İndirirenlerin ortalaması"
+msgstr "Sülüklerin ortalaması"
 
 #. i18n: ectx: property (text), widget (QLabel, label_19)
 #: plugins/stats/DisplaySettings.ui:208 plugins/stats/SpdTabPage.cc:59
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average to leechers"
-msgstr "İndirenler için ortalama"
+msgstr "Sülüklere ortalama"
 
 #. i18n: ectx: property (text), widget (QLabel, label_20)
 #: plugins/stats/DisplaySettings.ui:243 plugins/stats/SpdTabPage.cc:60
@@ -7708,7 +7708,7 @@ msgstr "Dağıtıcıların ortalaması"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From leechers"
-msgstr "İndirenlerden"
+msgstr "Sülüklerden"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: plugins/stats/DisplaySettings.ui:313 plugins/stats/SpdTabPage.cc:62
@@ -7753,7 +7753,7 @@ msgstr "Sınır"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Avg. leechers connected per running torr."
-msgstr "Çalışan torrent başına ortalama bağlı indirenler"
+msgstr "Çalışan torrent başına ortalama bağlı sülükler"
 
 #. i18n: ectx: property (text), widget (QLabel, label_30)
 #: plugins/stats/DisplaySettings.ui:758
@@ -7956,13 +7956,13 @@ msgstr "İndirme grafiğindeki limitin rengi"
 #: plugins/stats/ktstatsplugin.kcfg:75
 #, kde-format
 msgid "Color of the avg from leecher on peers chart"
-msgstr "Eşler grafiğindeki indirenlerden ortalama rengi"
+msgstr "Eşler grafiğindeki sülüğün ortalamasının rengi"
 
 #. i18n: ectx: label, entry (PrAvgToLColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:80
 #, kde-format
 msgid "Color of the avg to leecher on peers chart"
-msgstr "Eşler grafiğindeki indirenlere ortalama rengi"
+msgstr "Eşler grafiğindeki sülüğe ortalamanın rengi"
 
 #. i18n: ectx: label, entry (PrAvgFromSColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:85
@@ -7974,7 +7974,7 @@ msgstr "Eşler grafiğindeki beslemelerin ortalamasının rengi"
 #: plugins/stats/ktstatsplugin.kcfg:90
 #, kde-format
 msgid "Color of the leechers on peers chart"
-msgstr "Eşler grafiğindeki indirenlerin rengi"
+msgstr "Eşler grafiğindeki sülüklerin rengi"
 
 #. i18n: ectx: label, entry (PrFromSColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:95
@@ -8004,13 +8004,13 @@ msgstr "Karşıya yükleme grafiğindeki sınır çizgisi"
 #: plugins/stats/ktstatsplugin.kcfg:115
 #, kde-format
 msgid "Color of the connected leechers on connections chart"
-msgstr "Bağlantılar grafiğindeki bağlı indirenlerin rengi"
+msgstr "Bağlantı grafiğinde bağlı sülüklerin rengi"
 
 #. i18n: ectx: label, entry (CnLSwarmsColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:120
 #, kde-format
 msgid "Color of the leechers in swarms on connections chart"
-msgstr "Bağlantı grafiğindeki kümedeki indirenlerin rengi"
+msgstr "Bağlantı grafiğinde sürülerdeki sülüklerin rengi"
 
 #. i18n: ectx: label, entry (CnSConnColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:125
@@ -8028,9 +8028,7 @@ msgstr "Bağlantılar grafiğindeki kümedeki beslemelerin rengi"
 #: plugins/stats/ktstatsplugin.kcfg:135
 #, kde-format
 msgid "Color of the avg connected leecher per torrent on connections chart"
-msgstr ""
-"Bağlantılar grafiğindeki torrent başına bağlı indirenlerin ortalamasının "
-"rengi"
+msgstr "Bağlantı grafiğinde torrent başına ortalama bağlı sülüğün rengi"
 
 #. i18n: ectx: label, entry (CnAvgSConnPerTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:140
@@ -8044,8 +8042,7 @@ msgstr "Bağlantılar grafiğindeki bağlı beslemelerin ortalamasının rengi"
 msgid ""
 "Color of the avg connected leechers per running torrent on connections chart"
 msgstr ""
-"Bağlantılar grafiğindeki çalışan torrent başına bağlı indirenlerin "
-"ortalamasının rengi"
+"Bağlantı grafiğinde çalışan torrent başına ortalama bağlı sülüklerin rengi"
 
 #. i18n: ectx: label, entry (CnAvgSConnPerRunTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:150
@@ -8171,7 +8168,7 @@ msgstr "Beslemeleri kümeli göster"
 #: plugins/stats/Settings.ui:303
 #, kde-format
 msgid "Show leechers in swarms"
-msgstr "Sömürgenleri kümeli göster"
+msgstr "Sülükleri sürüler halinde göster"
 
 #: plugins/stats/SettingsPage.cc:12
 #, kde-format
