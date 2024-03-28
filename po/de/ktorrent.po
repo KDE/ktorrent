@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-19 00:38+0000\n"
+"POT-Creation-Date: 2024-03-28 00:39+0000\n"
 "PO-Revision-Date: 2023-08-14 21:55+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -4366,6 +4366,13 @@ msgstr "Torrent entfernen"
 msgid "Select a directory to move the data to."
 msgstr "Wählen Sie einen Ordner, in den die Daten verschoben werden sollen."
 
+#: ktorrent/view/viewdelegate.cpp:332
+#, fuzzy, kde-format
+#| msgid "%1 %"
+msgctxt "Progress bar percentage label"
+msgid "%1%"
+msgstr "%1 %"
+
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
@@ -5940,6 +5947,13 @@ msgstr "Ja"
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "Nein"
+
+#: plugins/infowidget/peerviewmodel.cpp:107
+#, fuzzy, kde-format
+#| msgid "%1 %"
+msgctxt "File percentage stat"
+msgid "%1%"
+msgstr "%1 %"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format

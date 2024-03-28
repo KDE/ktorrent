@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-19 00:38+0000\n"
+"POT-Creation-Date: 2024-03-28 00:39+0000\n"
 "PO-Revision-Date: 2023-12-12 19:17+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -4312,6 +4312,13 @@ msgstr "Odstrániť torrent"
 msgid "Select a directory to move the data to."
 msgstr "Zvoľte adresár, do kterého majú byť dáta presunuté."
 
+#: ktorrent/view/viewdelegate.cpp:332
+#, fuzzy, kde-format
+#| msgid "%1 %"
+msgctxt "Progress bar percentage label"
+msgid "%1%"
+msgstr "%1 %"
+
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
@@ -5859,6 +5866,13 @@ msgstr "Áno"
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "Nie"
+
+#: plugins/infowidget/peerviewmodel.cpp:107
+#, fuzzy, kde-format
+#| msgid "%1 %"
+msgctxt "File percentage stat"
+msgid "%1%"
+msgstr "%1 %"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format

@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-19 00:38+0000\n"
-"PO-Revision-Date: 2024-03-26 23:59+0300\n"
+"POT-Creation-Date: 2024-03-28 00:39+0000\n"
+"PO-Revision-Date: 2024-03-27 14:20+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4303,6 +4303,13 @@ msgstr "Torrenti Kaldır"
 msgid "Select a directory to move the data to."
 msgstr "Verinin taşınacağı bir dizin seçin."
 
+#: ktorrent/view/viewdelegate.cpp:332
+#, fuzzy, kde-format
+#| msgid "%1 %"
+msgctxt "Progress bar percentage label"
+msgid "%1%"
+msgstr "%​%1"
+
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
@@ -5407,7 +5414,7 @@ msgstr "Parça sayısı"
 #: plugins/infowidget/chunkdownloadmodel.cpp:206
 #, kde-format
 msgid "Download progress of the chunk"
-msgstr "Parçanın indirime süreci"
+msgstr "Parçanın indirme ilerlemesi"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:208
 #, kde-format
@@ -5848,6 +5855,13 @@ msgstr "Evet"
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "Hayır"
+
+#: plugins/infowidget/peerviewmodel.cpp:107
+#, fuzzy, kde-format
+#| msgid "%1 %"
+msgctxt "File percentage stat"
+msgid "%1%"
+msgstr "%​%1"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format

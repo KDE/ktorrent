@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-19 00:38+0000\n"
+"POT-Creation-Date: 2024-03-28 00:39+0000\n"
 "PO-Revision-Date: 2024-03-20 10:35+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -4340,6 +4340,13 @@ msgstr "Премахване на торент"
 msgid "Select a directory to move the data to."
 msgstr "Избиране на папка, в която да бъдат преместени данните."
 
+#: ktorrent/view/viewdelegate.cpp:332
+#, fuzzy, kde-format
+#| msgid "%1 %"
+msgctxt "Progress bar percentage label"
+msgid "%1%"
+msgstr "%1 %"
+
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
@@ -5886,6 +5893,13 @@ msgstr "Да"
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "Не"
+
+#: plugins/infowidget/peerviewmodel.cpp:107
+#, fuzzy, kde-format
+#| msgid "%1 %"
+msgctxt "File percentage stat"
+msgid "%1%"
+msgstr "%1 %"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
