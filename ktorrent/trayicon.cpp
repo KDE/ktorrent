@@ -422,7 +422,9 @@ void TrayIcon::secondaryActivate(const QPoint &pos)
 
 void TrayIcon::setAssociatedWindow(QWindow *window)
 {
-    status_notifier_item->setAssociatedWindow(window);
+    if (status_notifier_item) {
+        status_notifier_item->setAssociatedWindow(window);
+    }
 }
 }
 
