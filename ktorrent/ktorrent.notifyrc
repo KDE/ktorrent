@@ -3,6 +3,7 @@ IconName=ktorrent
 DesktopEntry=org.kde.ktorrent
 Comment=KTorrent
 Comment[ar]=سيولك
+Comment[ast]=KTorrent
 Comment[bg]=KTorrent
 Comment[bs]=KTorent
 Comment[ca]=KTorrent
