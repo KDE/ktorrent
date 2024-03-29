@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-28 00:39+0000\n"
-"PO-Revision-Date: 2024-03-27 14:20+0300\n"
+"PO-Revision-Date: 2024-03-28 14:33+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -754,8 +754,8 @@ msgid ""
 "Please check if the URL in Settings > Advanced > Tracker list URL is "
 "reachable."
 msgstr ""
-"Lütfen, Ayarlar → Gelişmiş → İzleyici listesi URL’sinin erişilebilir "
-"olduğunu denetleyin."
+"Lütfen, “Ayarlar → Gelişmiş → İzleyici listesi URL’si” alanındaki URL’nin "
+"erişilebilir olduğunu denetleyin."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:310
@@ -3046,7 +3046,7 @@ msgstr "KDE Vekil sunucu ayarlarını kullan"
 #: ktorrent/pref/proxypref.ui:35
 #, kde-format
 msgid "Proxy:"
-msgstr "Vekil Sunucu:"
+msgstr "Vekil sunucu:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_httpProxy)
 #: ktorrent/pref/proxypref.ui:42
@@ -3891,8 +3891,8 @@ msgstr[1] "%1 torrentten fazlası indirilemez. <br>"
 #, kde-format
 msgid "Go to Settings -> Configure KTorrent, if you want to change the limits."
 msgstr ""
-"Limitleri değiştirmek istiyorsanız Ayarlar → K Torrent’i Yapılandır "
-"seçeneğini seçin."
+"Limitleri değiştirmek istiyorsanız “Ayarlar → K Torrent Uygulamasını "
+"Yapılandır” yolunu izleyin."
 
 #: ktorrent/trayicon.cpp:294
 #, kde-format
@@ -3914,12 +3914,12 @@ msgstr "Torrent durdu.<br />"
 #: ktorrent/trayicon.cpp:346
 #, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "KiB/sn olarak karşıya yükleme hız sınırı"
+msgstr "Karşıya Yükleme Hızı Sınırı (KiB/sn)"
 
 #: ktorrent/trayicon.cpp:348
 #, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "KiB/sn olarak indirme hız sınırı"
+msgstr "İndirme Hızı Sınırı (KiB/sn)"
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -4304,8 +4304,7 @@ msgid "Select a directory to move the data to."
 msgstr "Verinin taşınacağı bir dizin seçin."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
 msgstr "%​%1"
@@ -4721,7 +4720,7 @@ msgstr "Sistem tepsisi hız simgesini göster"
 #: libktcore/ktorrent.kcfg:78
 #, kde-format
 msgid "Download bandwidth (in kb/s):"
-msgstr "İndirme bantgenişliği (kb/sn olarak):"
+msgstr "İndirme bant genişliği (kb/sn olarak):"
 
 #. i18n: ectx: label, entry (uploadBandwidth), group (downloads)
 #: libktcore/ktorrent.kcfg:84
@@ -5121,7 +5120,7 @@ msgstr "Kimden:"
 #: plugins/bwscheduler/edititemdlg.ui:35 plugins/bwscheduler/edititemdlg.ui:49
 #, kde-format
 msgid "hh:mm"
-msgstr "hh:mm"
+msgstr "ss:dd"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/bwscheduler/edititemdlg.ui:42
@@ -5857,8 +5856,7 @@ msgid "No"
 msgstr "Hayır"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
 msgstr "%​%1"
@@ -7014,7 +7012,7 @@ msgid ""
 "Scan the folder recursively for torrents. <br/><br/>\n"
 "Note: This will not be done for any folder named loaded."
 msgstr ""
-"Torrentler için klasörleri özyineli ara. <br/><br/>\n"
+"Torrentler için klasörleri özyineli arayın. <br/><br/>\n"
 "Not: loaded adlı klasörler için yapılmayacaktır."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_recursive)
@@ -8307,7 +8305,7 @@ msgstr "<b>Yüklenmedi</b>"
 #: plugins/syndication/feedwidget.cpp:210
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
-msgstr "<b>İndirme İşlemi Başarısız Oldu: %1</b>"
+msgstr "<b>İndirme işlemi başarısız oldu: %1</b>"
 
 #: plugins/syndication/feedwidget.cpp:213
 #, kde-format
@@ -8324,7 +8322,7 @@ msgstr "Durum:"
 #: plugins/syndication/feedwidget.ui:85
 #, kde-format
 msgid "Active Filters:"
-msgstr "Etkin Süzgeçler:"
+msgstr "Etkin süzgeçler:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/syndication/feedwidget.ui:131
