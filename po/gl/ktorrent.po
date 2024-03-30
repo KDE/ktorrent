@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-28 00:39+0000\n"
-"PO-Revision-Date: 2024-03-16 23:22+0100\n"
+"PO-Revision-Date: 2024-03-29 10:41+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.0\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4332,11 +4332,10 @@ msgid "Select a directory to move the data to."
 msgstr "Escolla un directorio ao que mover os datos."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -5891,11 +5890,10 @@ msgid "No"
 msgstr "Non"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
