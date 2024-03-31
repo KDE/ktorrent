@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-28 00:39+0000\n"
-"PO-Revision-Date: 2024-03-28 19:17\n"
+"PO-Revision-Date: 2024-03-30 19:37\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1352,8 +1352,9 @@ msgid ""
 "XXX.XXX'.<br/><br/>You can also use wildcards like '127.0.0.*' or specify "
 "ranges like '200.10.10.0-200.10.10.40'."
 msgstr ""
-"无效的 IP 地址<b>%1</b>。您必须按照“XXX.XXX.XXX.XXX”的格式输入 IP。<br/><br/>"
-"您还可以使用通配符表示范围，例如“127.0.0.*”。"
+"无效的 IP 地址 <b>%1</b>。您必须按照“XXX.XXX.XXX.XXX”的格式输入 IP。<br/><br/"
+">您还可以使用通配符或指定地址段，例如“127.0.0."
+"*”和“200.10.10.0-200.10.10.40”。"
 
 #: ktorrent/ipfilterwidget.cpp:118
 #, kde-format
@@ -1393,8 +1394,7 @@ msgid ""
 msgstr ""
 "您必须按照“XXX.XXX.XXX.XXX”的格式输入 IP。\n"
 "                                        \n"
-"您还可以使用通配符表示范围，如“127.0.0.*”。或者使"
-"用“200.10.10.0-200.10.10.40”。"
+"您还可以使用通配符或指定地址段，例如“127.0.0.*”和“200.10.10.0-200.10.10.40”。"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_clear)
 #: ktorrent/ipfilterwidget.ui:72
@@ -4169,7 +4169,7 @@ msgstr "请选择用于移动数据的目标文件夹。"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -5687,7 +5687,7 @@ msgstr "否"
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
