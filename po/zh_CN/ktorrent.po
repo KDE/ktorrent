@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-19 02:29+0000\n"
-"PO-Revision-Date: 2024-01-06 03:32\n"
+"PO-Revision-Date: 2024-03-30 19:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/ktorrent/ktorrent.pot\n"
-"X-Crowdin-File-ID: 48662\n"
+"X-Crowdin-File: /kf6-stable/messages/ktorrent/ktorrent.pot\n"
+"X-Crowdin-File-ID: 50198\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1352,8 +1352,9 @@ msgid ""
 "XXX.XXX'.<br/><br/>You can also use wildcards like '127.0.0.*' or specify "
 "ranges like '200.10.10.0-200.10.10.40'."
 msgstr ""
-"无效的 IP 地址<b>%1</b>。您必须按照“XXX.XXX.XXX.XXX”的格式输入 IP。<br/><br/>"
-"您还可以使用通配符表示范围，例如“127.0.0.*”。"
+"无效的 IP 地址 <b>%1</b>。您必须按照“XXX.XXX.XXX.XXX”的格式输入 IP。<br/><br/"
+">您还可以使用通配符或指定地址段，例如“127.0.0."
+"*”和“200.10.10.0-200.10.10.40”。"
 
 #: ktorrent/ipfilterwidget.cpp:118
 #, kde-format
@@ -1393,8 +1394,7 @@ msgid ""
 msgstr ""
 "您必须按照“XXX.XXX.XXX.XXX”的格式输入 IP。\n"
 "                                        \n"
-"您还可以使用通配符表示范围，如“127.0.0.*”。或者使"
-"用“200.10.10.0-200.10.10.40”。"
+"您还可以使用通配符或指定地址段，例如“127.0.0.*”和“200.10.10.0-200.10.10.40”。"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_clear)
 #: ktorrent/ipfilterwidget.ui:72
@@ -1619,6 +1619,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"InfoWidget 插件使用的 IP-Country (IP 国家) 数据库。此数据库使用 Creative "
+"Commons Attribution 4.0 International (知识共享署名 4.0 国际版) 许可证 "
+"https://creativecommons.org/licenses/by/4.0/。国旗图像由 http://flags."
+"blogpotato.de/ 提供。"
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1628,7 +1632,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "InfoWidget 插件使用的 maxminddb 程序库。"
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -2010,7 +2014,7 @@ msgstr "启用日志记录"
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
-msgstr ""
+msgstr "启用记录日志到标准输出。需要同时指定 --enable-logging 参数。"
 
 #: ktorrent/main.cpp:181
 #, kde-format
@@ -6458,7 +6462,7 @@ msgstr "显示下载"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:90
 #, kde-format
 msgid "Show popup"
-msgstr "显示弹出窗口"
+msgstr "显示弹窗通知"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_onlypublic)
 #. i18n: ectx: label, entry (onlypublic), group (general)
@@ -8627,12 +8631,3 @@ msgstr "重新扫描"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
-
-#~ msgid "Search Text"
-#~ msgstr "搜索文本"
-
-#~ msgid "Search Engine"
-#~ msgstr "搜索引擎"
-
-#~ msgid "Search Engine Label"
-#~ msgstr "搜索引擎标签"
