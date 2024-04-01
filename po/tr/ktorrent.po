@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-28 00:39+0000\n"
-"PO-Revision-Date: 2024-03-28 14:33+0300\n"
+"PO-Revision-Date: 2024-03-31 06:39+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.02.1\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1280,7 +1280,7 @@ msgstr "Geçerli sekmeyi kapat"
 #: ktorrent/groups/groupswitcher.cpp:54
 #, kde-format
 msgid "Edit Group Policy"
-msgstr "Grup Politikası Düzenle"
+msgstr "Grup politikasını düzenle"
 
 #: ktorrent/groups/groupview.cpp:66
 #, kde-format
@@ -4069,7 +4069,7 @@ msgstr "İndirilmiş ama düzgün olmayan parçaların sayısı."
 #: ktorrent/view/scanextender.ui:108
 #, kde-format
 msgid "Not downloaded:"
-msgstr "İndirilmemiş olanlar:"
+msgstr "İndirilmedi:"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, chunks_not_downloaded)
 #: ktorrent/view/scanextender.ui:127
@@ -4082,7 +4082,7 @@ msgstr "İndirilmemiş parçaların sayısı."
 #: ktorrent/view/scanextender.ui:153 plugins/infowidget/chunkdownloadview.ui:98
 #, kde-format
 msgid "Downloaded:"
-msgstr "İndirilmiş olanlar:"
+msgstr "İndirildi: "
 
 #. i18n: ectx: property (toolTip), widget (QLabel, chunks_downloaded)
 #: ktorrent/view/scanextender.ui:166
@@ -4196,7 +4196,7 @@ msgstr "Paylaşımcı Ekle"
 #: ktorrent/view/view.cpp:191
 #, kde-format
 msgid "Manual Announce"
-msgstr "El ile Paylaş"
+msgstr "Elle Duyur"
 
 #: ktorrent/view/view.cpp:196
 #, kde-format
@@ -4289,8 +4289,8 @@ msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr ""
-"Torrentlerin indirilmiş tüm verilerini kaybedeceksiniz. Bunu yapmak "
-"istediğinizden emin misiniz?"
+"Torrentten indirilmiş tüm veriyi kaybedeceksiniz. Bunu yapmak istediğinizden "
+"emin misiniz?"
 
 #: ktorrent/view/view.cpp:484
 #, kde-format
@@ -4570,7 +4570,7 @@ msgstr "En yüksek besleme süresine ulaşıldı."
 #: libktcore/groups/groupmanager.cpp:89
 #, kde-format
 msgid "Uploads"
-msgstr "Karşıya Yüklenenler"
+msgstr "Karşıya Yüklemeler"
 
 #: libktcore/groups/groupmanager.cpp:90
 #, kde-format
@@ -5443,31 +5443,31 @@ msgstr "Parçalar"
 #: plugins/infowidget/chunkdownloadview.ui:26
 #, kde-format
 msgid "Total:"
-msgstr "Toplam:"
+msgstr "Toplam: "
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: plugins/infowidget/chunkdownloadview.ui:62
 #, kde-format
 msgid "Currently downloading:"
-msgstr "Şu anda indiriliyor:"
+msgstr "Şu anda indirilen: "
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_4)
 #: plugins/infowidget/chunkdownloadview.ui:134
 #, kde-format
 msgid "Excluded:"
-msgstr "Dışlanan:"
+msgstr "Dışlanan: "
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_4_2)
 #: plugins/infowidget/chunkdownloadview.ui:170
 #, kde-format
 msgid "Left:"
-msgstr "Kalan:"
+msgstr "Kalan: "
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_8)
 #: plugins/infowidget/chunkdownloadview.ui:206
 #, kde-format
 msgid "Size:"
-msgstr "Boyut:"
+msgstr "Boyut: "
 
 #: plugins/infowidget/fileview.cpp:113
 #, kde-format
@@ -5495,17 +5495,17 @@ msgstr "Dosyayı Denetle"
 #: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Download first"
-msgstr "İlk önce indir"
+msgstr "İlk Önce İndir"
 
 #: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Download normally"
-msgstr "Normal indir"
+msgstr "Normal İndir"
 
 #: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Download last"
-msgstr "En son indir"
+msgstr "En Son İndir"
 
 #: plugins/infowidget/fileview.cpp:123
 #, kde-format
@@ -5515,7 +5515,7 @@ msgstr "İndirme"
 #: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Delete File(s)"
-msgstr "Dosya(ları) Sil"
+msgstr "Dosyaları Sil"
 
 #: plugins/infowidget/fileview.cpp:126
 #, kde-format
@@ -6134,7 +6134,7 @@ msgstr "İzleyici URL’sini Kopyala"
 #: plugins/infowidget/trackerview.cpp:64
 #, kde-format
 msgid "Copy Tracker status"
-msgstr "İzleyici durumunu kopyala"
+msgstr "İzleyici Durumunu Kopyala"
 
 #: plugins/infowidget/trackerview.cpp:115
 #, kde-format
@@ -7443,7 +7443,7 @@ msgstr "Hazırda Beklet (disk kullanarak askıya al)"
 #: plugins/shutdown/shutdowndlg.cpp:45
 #, kde-format
 msgid "When all torrents finish downloading"
-msgstr "Tüm torrentlerin indirilmesi tamamlandığında"
+msgstr "Tüm torrentlerin indirilmesi bittiğinde"
 
 #: plugins/shutdown/shutdowndlg.cpp:46
 #, kde-format
