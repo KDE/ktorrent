@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-28 00:39+0000\n"
-"PO-Revision-Date: 2024-03-30 19:37\n"
+"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"PO-Revision-Date: 2024-04-01 14:44\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1484,134 +1484,134 @@ msgstr "配置栏"
 msgid "Columns"
 msgstr "列"
 
-#: ktorrent/main.cpp:100
+#: ktorrent/main.cpp:99
 #, kde-format
 msgctxt "@title"
 msgid "KTorrent"
 msgstr "KTorrent"
 
-#: ktorrent/main.cpp:102
+#: ktorrent/main.cpp:101
 #, kde-format
 msgid "Bittorrent client by KDE"
 msgstr "KDE BitTorrent 客户端"
 
-#: ktorrent/main.cpp:104
+#: ktorrent/main.cpp:103
 #, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 
-#: ktorrent/main.cpp:111
+#: ktorrent/main.cpp:110
 #, kde-format
 msgid "Joris Guisson"
 msgstr "Joris Guisson"
 
-#: ktorrent/main.cpp:115
+#: ktorrent/main.cpp:114
 #, kde-format
 msgid "Ivan Vasic"
 msgstr "Ivan Vasic"
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "Alan Jones"
 msgstr "Alan Jones"
 
-#: ktorrent/main.cpp:116
+#: ktorrent/main.cpp:115
 #, kde-format
 msgid "BitFinder Plugin"
 msgstr "节点查询插件"
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "Diego Rosario Brogna"
 msgstr "Diego Rosario Brogna"
 
-#: ktorrent/main.cpp:117
+#: ktorrent/main.cpp:116
 #, kde-format
 msgid "Webinterface Plugin, global max share ratio patch"
 msgstr "Web 界面插件，全局最大分享率补丁"
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Krzysztof Kundzicz"
 msgstr "Krzysztof Kundzicz"
 
-#: ktorrent/main.cpp:118
+#: ktorrent/main.cpp:117
 #, kde-format
 msgid "Statistics Plugin"
 msgstr "状态统计插件"
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "Christian Weilbach"
 msgstr "Christian Weilbach"
 
-#: ktorrent/main.cpp:119
+#: ktorrent/main.cpp:118
 #, kde-format
 msgid "kio-magnet"
 msgstr "kio-magnet"
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Mladen Babic"
 msgstr "Mladen Babic"
 
-#: ktorrent/main.cpp:120
+#: ktorrent/main.cpp:119
 #, kde-format
 msgid "Application icon and a couple of others"
 msgstr "应用程序图标及其他"
 
-#: ktorrent/main.cpp:121
+#: ktorrent/main.cpp:120
 #, kde-format
 msgid "Adam Treat"
 msgstr "Adam Treat"
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: ktorrent/main.cpp:122
+#: ktorrent/main.cpp:121
 #, kde-format
 msgid "1.0 application icon"
 msgstr "1.0 应用程序图标"
 
-#: ktorrent/main.cpp:123
+#: ktorrent/main.cpp:122
 #, kde-format
 msgid "Vincent Wagelaar"
 msgstr "Vincent Wagelaar"
 
-#: ktorrent/main.cpp:124
+#: ktorrent/main.cpp:123
 #, kde-format
 msgid "Knut Morten Johansson"
 msgstr "Knut Morten Johansson"
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "Felix Berger"
 msgstr "Felix Berge"
 
-#: ktorrent/main.cpp:125
+#: ktorrent/main.cpp:124
 #, kde-format
 msgid "ChunkBar's tooltip and IWFileTreeItem sorting"
 msgstr "数据块栏的工具提示和文件树项目排序"
 
-#: ktorrent/main.cpp:126
+#: ktorrent/main.cpp:125
 #, kde-format
 msgid "Andreas Kling"
 msgstr "Andreas Kling"
 
-#: ktorrent/main.cpp:127
+#: ktorrent/main.cpp:126
 #, kde-format
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
-#: ktorrent/main.cpp:130
+#: ktorrent/main.cpp:129
 #, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin. The data "
@@ -1624,404 +1624,404 @@ msgstr ""
 "https://creativecommons.org/licenses/by/4.0/。国旗图像由 http://flags."
 "blogpotato.de/ 提供。"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr "InfoWidget 插件使用的 maxminddb 程序库。"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "文件优先级特性和一些其他补丁"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "Miniupnp 是用于我们自己的 UPnP 实现的一个范例"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:139
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
+#: ktorrent/main.cpp:139 ktorrent/main.cpp:140
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Zeroconf 增强"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Coldmilk Web 界面"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "IDEAI 代码来自 KDevelop"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "IP 过滤插件的交互速度改善"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Juniper Networks 的 Bryan Burns"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "发现了两个安全问题 (都已经被修复)"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "带保存位置静默加载的补丁"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "修复了 Web 界面的 PHP 代码"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "XFS 特有的磁盘预分配"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "修补了无法显示极低速率的问题"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "显示潜在防火墙状态的补丁"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Several patches"
 msgstr "一些补丁"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "隐藏菜单条的补丁"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "The_Kernel"
 msgstr "核心"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "在 Web 界面上改变文件优先级的补丁"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Several webgui patches"
 msgstr "一些 Web 界面补丁"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "一些警告信息的修复"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "用于修补在 FreeBSD 上磁盘空间计算问题的补丁"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "用于修补 ChunkDownloadView 宕机问题的补丁"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "一些 bug 修正"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "从命令行静默加载种子的补丁"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "New set of icons"
 msgstr "新图标集"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Plasma 小程序的拖放支持"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "清理插件列表的补丁"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "使 Plasma 小程序成为弹窗小程序的补丁"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Leo Trubach"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "使 IP 过滤器接受通配符的补丁"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrei Barbu"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "增加了添加种子数据的功能"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundqvist"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "在网页界面中禁用认证的特性"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslaw Swierczynski"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "聚合插件中的排除模式"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Alexey Shildyakov "
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "将单一文件种子重命名为其内部文件的文件名的补丁"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "Maarten De Meyer"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "Bug 305379 的修复"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Rex Dieter"
 msgstr "Rex Dieter"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "添加对 x-scheme-handler/magnet 的 MIME 类型支持"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "Leszek Lesner"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "Bug 339584 的修复"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "Andrius Štikonas"
 
-#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
+#: ktorrent/main.cpp:171 ktorrent/main.cpp:172
 #, kde-format
 msgid "KF5 porting"
 msgstr "KF5 移植"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr "Alexander Trufanov"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr "错误修复、清理和优化"
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
 msgstr "Jack Hill"
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "KF6 porting"
 msgstr "KF6 移植"
 
-#: ktorrent/main.cpp:179
+#: ktorrent/main.cpp:178
 #, kde-format
 msgid "Enable logging"
 msgstr "启用日志记录"
 
-#: ktorrent/main.cpp:181
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr "启用记录日志到标准输出。需要同时指定 --enable-logging 参数。"
 
-#: ktorrent/main.cpp:182
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "静默打开地址给出的种子"
 
-#: ktorrent/main.cpp:183
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid "Document to open"
 msgstr "要打开的文档"
