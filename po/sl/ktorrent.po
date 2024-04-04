@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2024-03-28 08:02+0100\n"
+"PO-Revision-Date: 2024-04-03 09:44+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -2147,8 +2147,8 @@ msgid ""
 "might not actually reach this speed when this value is too high. Without a "
 "limit you can easily get above 3000 KiB/s on a LAN.</p>"
 msgstr ""
-"<p>Kako dolgo bodo niti omrežja v pripravljenosti, ko so omejene. Ta "
-"vrednost nima vpliva, če ni vklopljenih omejitev hitrosti.</p>\n"
+"<p>Kako dolgo bodo niti omrežja spale, ko so omejene v hitrosti. Ta vrednost "
+"nima vpliva, če ni vklopljenih omejitev hitrosti.</p>\n"
 "<p><span style=\" font-weight:600;\">Note:</span> Nižja vrednost bo "
 "uporabljala manj procesorja, previsoka vrednost pa lahko zmanjša hitrosti v "
 "primerih z visoko pasovno širino. </p>\n"
@@ -3754,13 +3754,13 @@ msgstr "Zaustavi vse torrente"
 #: ktorrent/torrentactivity.cpp:121
 #, kde-format
 msgid "Suspend Torrents"
-msgstr "Zagnane v pripravljenost"
+msgstr "Začasno zaustavi torrente"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
 #: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
-msgstr "Prestavi vse zagnane torrente v pripravljenost"
+msgstr "Začasno zaustavi vse zagnane torrente"
 
 #: ktorrent/torrentactivity.cpp:128
 #, kde-format
@@ -5077,13 +5077,13 @@ msgstr "Barva vsakega običajnega predmeta na razporedu."
 #: plugins/bwscheduler/bwprefpage.ui:162
 #, kde-format
 msgid "Suspended schedule item color:"
-msgstr "Barva predmeta na razporedu, ki je v pripravljenosti:"
+msgstr "Barva predmeta na razporedu, ki je v začasno zaustavljen:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_suspendedColor)
 #: plugins/bwscheduler/bwprefpage.ui:169
 #, kde-format
 msgid "Color of each suspended item on the schedule."
-msgstr "Barva vsakega predmeta na razporedu, ki je v pripravljenosti."
+msgstr "Barva vsakega predmeta na razporedu, ki je začasno zaustavljen."
 
 #: plugins/bwscheduler/bwschedulerplugin.cpp:91
 #: plugins/infowidget/infowidgetplugin.cpp:68
@@ -5260,7 +5260,7 @@ msgstr ""
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:74
 #, kde-format
 msgid "Suspended"
-msgstr "V pripravljenosti"
+msgstr "Začasno zaustavljen"
 
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:79
 #, kde-format
@@ -5274,7 +5274,7 @@ msgstr ""
 #: plugins/bwscheduler/weekscene.cpp:59
 #, kde-format
 msgid "Current schedule: suspended"
-msgstr "Trenutni razpored: v pripravljenosti"
+msgstr "Trenutni razpored: začasno zaustavljen"
 
 #: plugins/bwscheduler/weekscene.cpp:61
 #, kde-format
@@ -6627,7 +6627,7 @@ msgstr "Prikaži KTorrent-ov izpis beleženja v dnevnik"
 #: plugins/logviewer/logviewer.cpp:39
 #, kde-format
 msgid "Suspend Output"
-msgstr "Prestavi izpisovanje v pripravljenosti"
+msgstr "Začasno zaustavi izhod"
 
 #: plugins/logviewer/logviewer.cpp:121
 #, kde-format
@@ -7436,13 +7436,13 @@ msgstr "Zakleni"
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
-msgstr "V pripravljenost"
+msgstr "Spanje (začasna zaustavitev v RAMu)"
 
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
 #: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Hibernate (suspend to disk)"
-msgstr "V mirovanje"
+msgstr "Mirovanje (začasno zaustavi na disku)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45
 #, kde-format
