@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2024-03-23 23:14+0100\n"
+"PO-Revision-Date: 2024-04-04 20:16+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -4344,11 +4344,10 @@ msgid "Select a directory to move the data to."
 msgstr "Hautatu direktorio bat datuak eramateko."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "% %1"
+msgstr "%%1"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -5905,11 +5904,10 @@ msgid "No"
 msgstr "Ez"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "% %1"
+msgstr "%%1"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
