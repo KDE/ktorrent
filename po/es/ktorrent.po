@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2024-03-23 17:42+0100\n"
+"PO-Revision-Date: 2024-03-30 16:47+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -4365,11 +4365,10 @@ msgid "Select a directory to move the data to."
 msgstr "Seleccione un directorio al que mover los datos."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -5933,11 +5932,10 @@ msgid "No"
 msgstr "No"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
@@ -8947,4 +8945,4 @@ msgstr "Explorar de nuevo"
 #: plugins/zeroconf/zeroconfplugin.cpp:47
 #, kde-format
 msgid "ZeroConf"
-msgstr "Zeroconf"
+msgstr "ZeroConf"
