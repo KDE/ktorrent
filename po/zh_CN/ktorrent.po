@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2024-04-03 19:14\n"
+"PO-Revision-Date: 2024-04-07 00:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -846,7 +846,7 @@ msgstr "无限制"
 #: plugins/bwscheduler/edititemdlg.ui:196
 #, kde-format
 msgid " KiB/s"
-msgstr " KiB/秒"
+msgstr " KiB/s"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -2788,7 +2788,7 @@ msgstr "对所有种子总共的全局连接限制。"
 #: ktorrent/pref/networkpref.ui:118
 #, kde-format
 msgid "The maximum download speed in KiB/s."
-msgstr "以 KiB/秒计的最大下载速度。"
+msgstr "以 KiB/s 计的最大下载速度。"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxUploadRate)
 #: ktorrent/pref/networkpref.ui:141
@@ -3299,7 +3299,7 @@ msgstr "计算推荐的设置"
 #: ktorrent/pref/recommendedsettingsdlg.cpp:211
 #, kde-format
 msgid "(= %1/s)"
-msgstr "(= %1/秒)"
+msgstr "(= %1/s)"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, RecommendedSettingsDlg)
 #: ktorrent/pref/recommendedsettingsdlg.ui:14
@@ -3786,7 +3786,7 @@ msgstr "任务已停止。<br />"
 #: ktorrent/trayicon.cpp:346
 #, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "以 KiB 每秒计的上传速度限制"
+msgstr "以 KiB/s 计的上传速度限制"
 
 #: ktorrent/trayicon.cpp:348
 #, kde-format
@@ -4543,13 +4543,13 @@ msgstr "所有种子允许的最大连接数 (0 = 无限制)"
 #: libktcore/ktorrent.kcfg:35
 #, kde-format
 msgid "Maximum upload speed in KiB/sec (0 = no limit)"
-msgstr "按 Kib/秒计的最大上传速度 (0 = 无限制)"
+msgstr "以 KiB/s 计的最大上传速度 (0 = 无限制)"
 
 #. i18n: ectx: label, entry (maxDownloadRate), group (downloads)
 #: libktcore/ktorrent.kcfg:40
 #, kde-format
 msgid "Maximum download speed in KiB/sec (0 = no limit)"
-msgstr "按 Kib/秒计的最大下载速度 (0 = 无限制)"
+msgstr "以 KiB/s 计的最大下载速度 (0 = 无限制)"
 
 #. i18n: ectx: label, entry (maxRatio), group (downloads)
 #: libktcore/ktorrent.kcfg:45
@@ -5115,17 +5115,17 @@ msgstr "当前调度：已暂停"
 #: plugins/bwscheduler/weekscene.cpp:61
 #, kde-format
 msgid "Current schedule: %1/s download, %2/s upload"
-msgstr "当前调度：下载 %1 KiB/秒，上传 %2 /秒"
+msgstr "当前调度：下载 %1/s，上传 %2/s"
 
 #: plugins/bwscheduler/weekscene.cpp:63
 #, kde-format
 msgid "Current schedule: unlimited download, %1/s upload"
-msgstr "当前调度：下载不限速，上传 %1 KiB/秒"
+msgstr "当前调度：下载不限速，上传 %1/s"
 
 #: plugins/bwscheduler/weekscene.cpp:65
 #, kde-format
 msgid "Current schedule: %1/s download, unlimited upload"
-msgstr "当前调度：下载 %1 KiB/秒，上传不限速"
+msgstr "当前调度：下载 %1/s，上传不限速"
 
 #: plugins/bwscheduler/weekscene.cpp:67
 #, kde-format
@@ -7635,7 +7635,7 @@ msgstr "显示"
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
 msgid "KiB/s"
-msgstr " KiB/秒"
+msgstr "KiB/s"
 
 #: plugins/stats/drawer/ChartDrawerData.cc:13
 #, kde-format
