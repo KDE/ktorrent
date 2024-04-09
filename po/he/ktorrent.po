@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2024-03-19 14:57+0200\n"
+"PO-Revision-Date: 2024-04-08 19:15+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2540,7 +2540,7 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:23
 #, kde-format
 msgid "Folder to store torrent information:"
-msgstr "תיקיה לשמירת מידע טורנטים:"
+msgstr "תיקייה לשמירת מידע טורנטים:"
 
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, kcfg_tempDir)
 #: ktorrent/pref/generalpref.ui:30
@@ -2568,7 +2568,7 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:57
 #, kde-format
 msgid "Move completed downloads to:"
-msgstr "העבר בסיום ל:"
+msgstr "העברה בסיום ל־:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useTorrentCopyDir)
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, kcfg_torrentCopyDir)
@@ -2581,7 +2581,7 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:74
 #, kde-format
 msgid "Copy torrent files to:"
-msgstr "העתק קבצי טורנט ל:"
+msgstr "העתקת קובצי טורנט ל־:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showSystemTrayIcon)
 #: ktorrent/pref/generalpref.ui:91
