@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-19 02:29+0000\n"
-"PO-Revision-Date: 2024-01-28 20:26+0900\n"
+"PO-Revision-Date: 2024-04-17 07:18+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.01.95\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -135,7 +135,7 @@ msgstr "無法重新建立資料檔：%1"
 #: ktorrent/core.cpp:1197
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
-msgstr "不合法的 magnet bittorrent 連結：%1"
+msgstr "無效的 magnet bittorrent 連結：%1"
 
 #: ktorrent/core.cpp:1200
 #, kde-format
@@ -728,7 +728,7 @@ msgstr ""
 #: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
-msgstr "無效的URL: %1"
+msgstr "無效的 URL: %1"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -1356,7 +1356,7 @@ msgid ""
 "XXX.XXX'.<br/><br/>You can also use wildcards like '127.0.0.*' or specify "
 "ranges like '200.10.10.0-200.10.10.40'."
 msgstr ""
-"IP 位址 <b>%1</b> 不合法。您必須用以下格式輸入IP :\"XXX.XXX.XXX.XXX\"。<br/"
+"IP 位址 <b>%1</b> 無效。您必須用以下格式輸入IP :\"XXX.XXX.XXX.XXX\"。<br/"
 "><br/> 您可以利用萬用字元來表示一個範圍 - 如 \"127.0.0.*\" 或 "
 "\"200.10.10.0-200.10.10.40\""
 
@@ -2195,7 +2195,7 @@ msgstr " KiB"
 #: ktorrent/pref/advancedpref.ui:243
 #, kde-format
 msgid "Preview size for video files:"
-msgstr "影像檔預覽大小："
+msgstr "影片檔預覽大小："
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_previewSizeVideo)
 #: ktorrent/pref/advancedpref.ui:250
@@ -2203,7 +2203,7 @@ msgstr "影像檔預覽大小："
 msgid ""
 "<p>The amount of data at the beginning and end of a video file, which will "
 "be prioritized for previewing.</p>"
-msgstr "<p>影像檔開頭與結尾的資料量，用來計算預覽優先權。</p>"
+msgstr "<p>影片檔開頭與結尾的資料量，預覽時會優先使用。</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
@@ -6645,7 +6645,7 @@ msgstr "下一個"
 #: plugins/mediaplayer/mediaplayeractivity.cpp:121
 #, kde-format
 msgid "Show Video"
-msgstr "顯示影像"
+msgstr "顯示影片"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:125
 #: plugins/mediaplayer/playlistwidget.cpp:39
@@ -6679,17 +6679,17 @@ msgstr "顯示不完整的檔案"
 #: plugins/mediaplayer/mediaview.cpp:89 plugins/syndication/feedwidget.ui:124
 #, kde-format
 msgid "Refresh"
-msgstr "刷新"
+msgstr "重新整理"
 
 #: plugins/mediaplayer/mediaview.cpp:90
 #, kde-format
 msgid "Refresh media files"
-msgstr "刷新媒體檔案"
+msgstr "重新整理媒體檔案"
 
 #: plugins/mediaplayer/mediaview.cpp:94
 #, kde-format
 msgid "Search media files"
-msgstr "搜索媒體檔案"
+msgstr "搜尋媒體檔案"
 
 #: plugins/mediaplayer/playlist.cpp:87
 #: plugins/syndication/feedwidgetmodel.cpp:75
@@ -7019,13 +7019,13 @@ msgstr "清除搜尋歷史"
 #: plugins/search/searchpref.ui:44
 #, kde-format
 msgid "Reset the default action taken when a torrent is downloaded."
-msgstr "重置 torrent 下載後預設要執行的動作。"
+msgstr "重設 torrent 下載後預設要執行的動作。"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_reset_default_action)
 #: plugins/search/searchpref.ui:47
 #, kde-format
 msgid "Reset Default Torrent Action"
-msgstr "重置預設動作"
+msgstr "重設預設動作"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_restorePreviousSession)
 #: plugins/search/searchpref.ui:69
@@ -7618,7 +7618,7 @@ msgstr "KDE"
 #: plugins/stats/DisplaySettings.ui:953
 #, kde-format
 msgid "(plugin reload is needed after change)"
-msgstr "(作出更變後需重新載入外掛程式)"
+msgstr "（變更後需重新載入外掛程式）"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
 #, kde-format
@@ -7675,7 +7675,7 @@ msgstr "重新掃描"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
-msgstr "重置"
+msgstr "重設"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
@@ -7687,7 +7687,7 @@ msgstr "選擇要儲存影像的路徑..."
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
 #, kde-format
 msgid "Image files"
-msgstr "映像檔"
+msgstr "影像檔"
 
 #. i18n: ectx: label, entry (UpdateEveryGuiUpdates), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:10
@@ -8470,7 +8470,7 @@ msgstr "收取時發生未知的錯誤"
 #: plugins/syndication/ktfeed.cpp:460
 #, kde-format
 msgid "Invalid feed data"
-msgstr "不合法的 feed 資料"
+msgstr "無效的 feed 資料"
 
 #: plugins/syndication/ktfeed.cpp:462
 #, kde-format
@@ -8486,7 +8486,7 @@ msgstr "Syndication 工具列"
 #: plugins/syndication/linkdownloader.cpp:173
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
-msgstr "在 %1 找不到 torrent 的合法連結"
+msgstr "在 %1 找不到 torrent 的有效連結"
 
 #: plugins/syndication/managefiltersdlg.cpp:27
 #: plugins/syndication/syndicationplugin.cpp:70
