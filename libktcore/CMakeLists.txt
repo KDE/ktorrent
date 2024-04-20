@@ -72,8 +72,7 @@ target_link_libraries(ktcore PUBLIC
     KF6::XmlGui
 )
 
-find_package(Qt6Test ${QT_MIN_VERSION})
-if (Qt6Test_DIR)
+if (BUILD_TESTING)
     add_subdirectory(autotests)
 endif()
 

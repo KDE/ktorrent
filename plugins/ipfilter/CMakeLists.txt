@@ -27,7 +27,6 @@ target_link_libraries(
     KF6::WidgetsAddons
 )
 
-find_package(Qt6Test ${QT_MIN_VERSION})
-if (Qt6Test_DIR)
+if (BUILD_TESTING)
     add_subdirectory(tests)
 endif()
