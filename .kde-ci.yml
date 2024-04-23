@@ -26,3 +26,6 @@ Dependencies:
     'frameworks/kstatusnotifieritem' : '@latest-kf6'
     'libraries/phonon' : '@latest-kf6'
     'network/libktorrent' : '@same'
+
+Options:
+  require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']
