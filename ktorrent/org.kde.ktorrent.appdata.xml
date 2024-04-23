@@ -5,6 +5,7 @@
   <project_license>GPL-2.0+</project_license>
   <name>KTorrent</name>
   <name xml:lang="ar">سيولك</name>
+  <name xml:lang="ast">KTorrent</name>
   <name xml:lang="bg">KTorrent</name>
   <name xml:lang="ca">KTorrent</name>
   <name xml:lang="ca-valencia">KTorrent</name>
@@ -26,6 +27,7 @@
   <name xml:lang="it">KTorrent</name>
   <name xml:lang="ka">KTorrent</name>
   <name xml:lang="ko">KTorrent</name>
+  <name xml:lang="lv">KTorrent</name>
   <name xml:lang="nl">KTorrent</name>
   <name xml:lang="nn">KTorrent</name>
   <name xml:lang="pl">KTorrent</name>
@@ -67,6 +69,7 @@
   <summary xml:lang="it">Client BitTorrent</summary>
   <summary xml:lang="ka">BitTorrent -ის კლიენტი</summary>
   <summary xml:lang="ko">비트토렌트 클라이언트</summary>
+  <summary xml:lang="lv">„BitTorrent“ klients</summary>
   <summary xml:lang="nl">BitTorrent-cliënt</summary>
   <summary xml:lang="nn">Bittorrent-klient</summary>
   <summary xml:lang="pl">Klient BitTorrent</summary>
@@ -111,6 +114,7 @@
     <p xml:lang="it">KTorrent è un'applicazione BitTorrent della comunità KDE, che ti permette di scaricare i file usando il protocollo BitTorrent. Ti consente di avviare contemporaneamente torrent multipli, e ti arriva con funzionalità estese, che lo rendono un client di BitTorrent ricco di funzionalità.</p>
     <p xml:lang="ka">KTorrent ტორენტის აპლიკაციაა KDE-სგან, რომელიც საშუალებას გაძლევთ, ფაილები BitTorrent პროტოკოლის გამოყენებით გადმოწეროთ. ის საშუალებას გაძლევთ, ერთდროულად ბევრი ტორენტი გაუშვათ და მოჰყვება დამატებითი ფუნქციები, რაც მას სრულად შეიარაღებულ ტორენტის კლიენტად აქცევს.</p>
     <p xml:lang="ko">KTorrent는 KDE의 비트토렌트 클라이언트입니다. 비트토렌트 프로토콜을 사용하여 파일을 다운로드할 수 있습니다. 토렌트 여러 개를 동시에 다운로드할 수 있으며 다양한 추가 기능을 제공합니다.</p>
+    <p xml:lang="lv">„KTorrent“ ir „BitTorrent“ programma KDE videi, kas ļauj lejupielādēt datnes, izmantojot  „BitTorrent“ protokolu. Tā ļauj vienlaicīgi palaist vairākus torentus un piedāvā plašas iespējas, nodrošinot pilnvērtīgu „BitTorrent“ klientu.</p>
     <p xml:lang="nl">KTorrent is een BitTorrent-toepassing door KDE die u in staat stelt bestanden te downloaden met het BitTorrent-protocol. U kunt meerdere torrents tegelijk doen en het komt met uitgebreide functies om het een client voor BitTorrent te laten zijn met alle mogelijkheden.</p>
     <p xml:lang="pl">KTorrent jest aplikacją BitTorrent stworzoną w ramach KDE, która umożliwia ci pobieranie przy użyciu protokołu BitTorrent. Umożliwia ci uruchamianie wielu torrentów w tym samym czasie i jest wyposażona w dodatkowe możliwości tworzące z niej pełnego klienta dla BitTorrent.</p>
     <p xml:lang="pt">O KTorrent é uma aplicação de BitTorrent do KDE que lhe permite obter ficheiros pelo protocolo BitTorrent. Ele permite-lhe executar várias torrentes ao mesmo tempo e vem com funcionalidades alargadas que o tornam um cliente pleno de funcionalidades para o BitTorrent.</p>
@@ -127,6 +131,7 @@
     <p xml:lang="uk">KTorrent — програма для обміну даними торентів, створена розробниками KDE, за допомогою якої ви можете отримувати і розповсюджувати дані на основі протоколу BitTorrent. Ця програма надає вам змогу одночасно обмінюватися даними декількох торентів. Також передбачено додаткові можливості, які роблять програму повноцінною клієнтською частиною для обміну даними BitTorrent.</p>
     <p xml:lang="x-test">xxKTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.xx</p>
     <p xml:lang="zh-CN">KTorrent 是 KDE 提供的 BT 下载应用。支持同时运行多个种子，并具有多种扩展特性，是一个全功能的 BT 客户端。</p>
+    <p xml:lang="zh-TW">KTorrent 是來自 KDE 的 BitTorrent 應用程式，讓您透過 BitTorrent 協定下載檔案。它讓您同時執行多個 torrent，並且包含許多功能，讓它成為一個功能完整的 BitTorrent 用戶端。</p>
     <p>Features:</p>
     <p xml:lang="ar">المزايا</p>
     <p xml:lang="bg">Функции:</p>
@@ -150,6 +155,7 @@
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
+    <p xml:lang="lv">Iespējas:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pl">Możliwości:</p>
@@ -191,6 +197,7 @@
       <li xml:lang="it">Accodamento dei torrent</li>
       <li xml:lang="ka">ტორენტების რიგი</li>
       <li xml:lang="ko">토렌트 대기열</li>
+      <li xml:lang="lv">Torentu rindošana</li>
       <li xml:lang="nl">Torrents in de wachtrij zetten</li>
       <li xml:lang="pl">Kolejkowanie torrentów</li>
       <li xml:lang="pt">Fila de espera de torrentes</li>
@@ -207,6 +214,7 @@
       <li xml:lang="uk">Черга торентів</li>
       <li xml:lang="x-test">xxQueuing of torrentsxx</li>
       <li xml:lang="zh-CN">队列种子</li>
+      <li xml:lang="zh-TW">torrent 佇列</li>
       <li>Global and per torrent speed limits</li>
       <li xml:lang="ar">حدود سرعة عمومية وخاصة لكل سيل</li>
       <li xml:lang="bg">Ограничение на скоростта глобално и на ниво отделен торент</li>
@@ -228,6 +236,7 @@
       <li xml:lang="it">Limiti di velocità globali e per torrent</li>
       <li xml:lang="ka">გლობალური და სათითაო ტორენტის სიჩქარის ლიმიტი</li>
       <li xml:lang="ko">전역 및 토렌트별 속도 제한</li>
+      <li xml:lang="lv">Globāli un katram torentam atsevišķi ātruma ierobežojumi</li>
       <li xml:lang="nl">Globale en per torrent snelheidslimieten</li>
       <li xml:lang="pl">Ograniczenie prędkości globalne i na torrenta</li>
       <li xml:lang="pt">Limites de velocidades globais e por torrentes</li>
@@ -244,6 +253,7 @@
       <li xml:lang="uk">Обмеження на швидкість на загальному рівні і для окремих торентів</li>
       <li xml:lang="x-test">xxGlobal and per torrent speed limitsxx</li>
       <li xml:lang="zh-CN">全局限速和单个种子限速</li>
+      <li xml:lang="zh-TW">全域以及個別 torrent 的速度限制</li>
       <li>Previewing of certain file types, build in (video and audio)</li>
       <li xml:lang="ar">معاينة مضمّنة لبعض أنواع الملفات (المرئية والمسموعة)</li>
       <li xml:lang="bg">Вграден преглед на определени типове файлове (видео и аудио)</li>
@@ -265,6 +275,7 @@
       <li xml:lang="it">Anteprima integrata per alcuni tipi di file (video e audio)</li>
       <li xml:lang="ka">მინიატურები ზოგიერთი ფაილის ტიპებისთვის, ჩაშენებული (ვიდეო და აუდიო)</li>
       <li xml:lang="ko">비디오 및 오디오 등 일부 파일 형식 미리 보기</li>
+      <li xml:lang="lv">Noteikta tipa datņu priekšskatījums, iebūvēts (video un audio)</li>
       <li xml:lang="nl">Voorbeelden van bepaalde bestandstypen bekijken, ingebouwd (video en geluid)</li>
       <li xml:lang="pl">Podgląd pewnych rodzajów plików, wbudowany odtwarzacz filmów i dźwięku</li>
       <li xml:lang="pt">Antevisão incorporada de alguns tipos de ficheiros (vídeo e áudio)</li>
@@ -281,6 +292,7 @@
       <li xml:lang="uk">Перегляд даних файлів деяких типів, вбудований (відео і звукові дані)</li>
       <li xml:lang="x-test">xxPreviewing of certain file types, build in (video and audio)xx</li>
       <li xml:lang="zh-CN">内置的文件预览功能 (视频和音频)</li>
+      <li xml:lang="zh-TW">某些檔案類型的預覽，內建（影片與音效）</li>
       <li>Importing of partially or fully downloaded files</li>
       <li xml:lang="ar">استيراد الملفات المنزّلة جزئيا أو كليا</li>
       <li xml:lang="bg">Внасяне на частично или изцяло изтеглени файлове</li>
@@ -302,6 +314,7 @@
       <li xml:lang="it">Importazione di file parzialmente o totalmente scaricati</li>
       <li xml:lang="ka">ნაწილობრივ ან სრულად გადმოწერილი ფაილების შემოტანა</li>
       <li xml:lang="ko">일부분 및 완전히 다운로드된 파일 가져오기</li>
+      <li xml:lang="lv">Importē daļēji vai pilnībā lejupielādētas datnes</li>
       <li xml:lang="nl">Gedeeltelijk of volledig gedownloade bestanden importeren</li>
       <li xml:lang="pl">Impot częściowo lub w pełni pobranych plików</li>
       <li xml:lang="pt">Importação de ficheiros transferidos parcialmente ou por completo</li>
@@ -318,6 +331,7 @@
       <li xml:lang="uk">Імпортування частково або повністю звантажених файлів</li>
       <li xml:lang="x-test">xxImporting of partially or fully downloaded filesxx</li>
       <li xml:lang="zh-CN">导入部分或完全下载的文件</li>
+      <li xml:lang="zh-TW">部分或完全下載的檔案的匯入</li>
       <li>File prioritization for multi-file torrents</li>
       <li xml:lang="ar">تحديد أولويات الملفات للسيول التي فيها عدة ملفات</li>
       <li xml:lang="bg">Приоритизиране на файловете при многофайлови торенти</li>
@@ -339,6 +353,7 @@
       <li xml:lang="it">Priorità dei file per i torrent multi-file</li>
       <li xml:lang="ka">ფაილების პრიორიტეტის ხელით მითითება მრავალფაილიანი ტორენტებისთვის</li>
       <li xml:lang="ko">파일이 여러 개 있는 토렌트 내부 우선 순위 부여</li>
+      <li xml:lang="lv">Datņu prioritizēšana vairāku datņu torentiem</li>
       <li xml:lang="nl">Bestandsprioriteit instellen multi-bestand-torrents</li>
       <li xml:lang="pl">Priorytety dla wieloplikowych torrentów</li>
       <li xml:lang="pt">Prioritização de torrentes multi-ficheiros</li>
@@ -355,6 +370,7 @@
       <li xml:lang="uk">Визначення пріоритетів файлів у торентах, які складаються з декількох файлів</li>
       <li xml:lang="x-test">xxFile prioritization for multi-file torrentsxx</li>
       <li xml:lang="zh-CN">多文件种子设定文件优先级</li>
+      <li xml:lang="zh-TW">多檔 torrent 的檔案優先權安排</li>
       <li>Selective downloading for multi-file torrents</li>
       <li xml:lang="bg">Избирателно изтегляне при многофайлови торенти</li>
       <li xml:lang="ca">Descàrrega selectiva per als torrents amb múltiples fitxers</li>
@@ -375,6 +391,7 @@
       <li xml:lang="it">Scaricamento selettivo per i torrent multi-file</li>
       <li xml:lang="ka">არჩევითი გადმოწერა მრავალფაილიანი ტორენტებისთვის</li>
       <li xml:lang="ko">파일이 여러 개 있는 토렌트의 일부만 다운로드</li>
+      <li xml:lang="lv">Selektīva lejupielāde vairāku datņu torentiem</li>
       <li xml:lang="nl">Selectief downloaden van multi-bestand-torrents</li>
       <li xml:lang="pl">Wybiórcze pobieranie dla wieloplikowych torrentów</li>
       <li xml:lang="pt">Transferência selectiva para torrentes multi-ficheiros</li>
@@ -391,6 +408,7 @@
       <li xml:lang="uk">Вибіркове отримання даних торентів, які складаються з декількох файлів</li>
       <li xml:lang="x-test">xxSelective downloading for multi-file torrentsxx</li>
       <li xml:lang="zh-CN">多文件种子可选下载指定文件</li>
+      <li xml:lang="zh-TW">選擇下載多檔 torrent 的一部分</li>
       <li>Kick/ban peers with an additional IP Filter dialog for list/edit purposes</li>
       <li xml:lang="bg">Изгонвяне/изхвърляне на потребители с допълнителен диалогов прозорец за филтриране по IP, за целите на показване/редактиране</li>
       <li xml:lang="ca">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a finalitats de llista/edició</li>
@@ -411,6 +429,7 @@
       <li xml:lang="it">Caccia/metti al bando i nodi con un'ulteriore finestra di dialogo di filtro IP per elencarli e modificarli</li>
       <li xml:lang="ka">პარტნიორის გაგდება/ბანის მხარდაჭერა დამატებითი IP ფილტრის დიალოგით ჩამონათვლის გამოტანის/ჩასწორების მიზნით</li>
       <li xml:lang="ko">IP 필터 대화 상자에서 피어 목록 관리/차단</li>
+      <li xml:lang="lv">Izmešana/aizliegšana ar papildu IP filtra logu uzskaites/rediģēšanas mērķiem</li>
       <li xml:lang="nl">Start/stop peers met een extra dialoog voor IP-filteren voor weergeven/bewerken</li>
       <li xml:lang="pl">Wykopywanie/banowanie uczestników  z dodatkowym filtrem IP do celów edycji i wyświetlania</li>
       <li xml:lang="pt">Banir/expulsar as máquinas com uma janela adicional de filtros de IP's para fins de listagem/edição</li>
@@ -450,6 +469,7 @@
       <li xml:lang="it">Supporto ai server traccia UDP</li>
       <li xml:lang="ka">UDP ტრეკერის მხარდაჭერა</li>
       <li xml:lang="ko">UDP 트래커 지원</li>
+      <li xml:lang="lv">UDP sekotāju atbalsts</li>
       <li xml:lang="nl">Ondersteuning van UDP-tracker</li>
       <li xml:lang="pl">Obsługa serwera śledzącego UDP</li>
       <li xml:lang="pt">Suporte a localizadores por UDP</li>
@@ -488,6 +508,7 @@
       <li xml:lang="it">Supporto per server traccia e torrent privati</li>
       <li xml:lang="ka">პირადი ტრეკერებისა და ტორენტების მხარდაჭერა</li>
       <li xml:lang="ko">비밀 트래커 및 토렌트 지원</li>
+      <li xml:lang="lv">Atbalsts privātiem sekotājiem un torentiem</li>
       <li xml:lang="nl">Ondersteuning voor privé-trackers en -torrents</li>
       <li xml:lang="pl">Obsługa prywatnych serwerów śledzących i torrentów</li>
       <li xml:lang="pt">Suporte para localizadores e torrentes privadas</li>
@@ -526,6 +547,7 @@
       <li xml:lang="it">Supporto per lo scambio di nodi con µTorrent</li>
       <li xml:lang="ka">მხარდაჭერა µTorrent-ის პარნიორების მიმოცვლისთვის</li>
       <li xml:lang="ko">µTorrent 피어 교환 지원</li>
+      <li xml:lang="lv">„µTorrent“ dalībnieku apmaiņas atbalsts</li>
       <li xml:lang="nl">Ondersteuning voor uitwisseling van peers van µTorrent</li>
       <li xml:lang="pl">Obsługa wymiany uczestników µTorrenta </li>
       <li xml:lang="pt">Suporte para a troca de máquinas do µTorrent</li>
@@ -542,6 +564,7 @@
       <li xml:lang="uk">Підтримка обміну вузлами у форматі µTorrent</li>
       <li xml:lang="x-test">xxSupport for µTorrent's peer exchangexx</li>
       <li xml:lang="zh-CN">支持 µTorrent 对等点交换</li>
+      <li xml:lang="zh-TW">支援 µTorrent 的端點交換</li>
       <li>Support for protocol encryption (compatible with Azureus)</li>
       <li xml:lang="bg">Поддръжка на криптиране на протоколи (съвместимо с Azureus)</li>
       <li xml:lang="ca">Suport per a l'encriptatge del protocol (compatible amb Azureus)</li>
@@ -563,6 +586,7 @@
       <li xml:lang="it">Supporto per la cifratura del protocollo (compatibile con Azureus)</li>
       <li xml:lang="ka">პროტოკოლის დაშიფვრის (თავსებადი Azureus-თან) მხარდაჭერა</li>
       <li xml:lang="ko">프로토콜 암호화 지원(Azureus 호환)</li>
+      <li xml:lang="lv">Protokola šifrēšanas atbalsts (saderīgs ar „Azureus“)</li>
       <li xml:lang="nl">Ondersteuning voor protocolversleuteling (compatibel met Azureus)</li>
       <li xml:lang="pl">Obsługa szyfrowania protokołu (zgodna z Azureus)</li>
       <li xml:lang="pt">Suporte para a encriptação do protocolo (compatível com o Azureus)</li>
@@ -579,6 +603,7 @@
       <li xml:lang="uk">Підтримка шифрування даних протоколів (сумісна з Azureus)</li>
       <li xml:lang="x-test">xxSupport for protocol encryption (compatible with Azureus)xx</li>
       <li xml:lang="zh-CN">支持协议加密 (兼容 Azureus)</li>
+      <li xml:lang="zh-TW">支援協定加密（與 Azureus 相容）</li>
       <li>Support for creating trackerless torrents</li>
       <li xml:lang="bg">Възможност за създаване на торенти без координиращи сървъри</li>
       <li xml:lang="ca">Suport per a la creació de torrents sense seguidors</li>
@@ -600,6 +625,7 @@
       <li xml:lang="it">Supporto per la creazione di torrent senza server traccia</li>
       <li xml:lang="ka">უტრეკერო ტორენტების შექმნის მხარდაჭერა</li>
       <li xml:lang="ko">트래커 없는 토렌트 생성 지원</li>
+      <li xml:lang="lv">Atbalsts torentu bez sekotājiem izveidošanai</li>
       <li xml:lang="nl">Ondersteuning voor aanmaken van torrents zonder tracker</li>
       <li xml:lang="pl">Obsługa tworzenia torrentów bez serwera śledzącego</li>
       <li xml:lang="pt">Suporte para a criação de torrentes sem localizador</li>
@@ -616,6 +642,7 @@
       <li xml:lang="uk">Підтримка створення торентів без координації</li>
       <li xml:lang="x-test">xxSupport for creating trackerless torrentsxx</li>
       <li xml:lang="zh-CN">支持创建无 tracker 种子</li>
+      <li xml:lang="zh-TW">支援建立無 tracker 的 torrent</li>
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="bg">Поддръжка на разпределени хеш-таблици (DHT, версия Mainline)</li>
       <li xml:lang="ca">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
@@ -637,6 +664,7 @@
       <li xml:lang="it">Supporto per le tabelle di hash distribuite (DHT, la versione principale)</li>
       <li xml:lang="ka">განაწილებული ჰეშ-ცხრილების (DHT, მთავარი ვერსია) მხარდაჭერა</li>
       <li xml:lang="ko">분산 해시 테이블(DHT, 메인라인 버전) 지원</li>
+      <li xml:lang="lv">Atbalsts sadalītām jaucējkodu tabulām (DHT, „Mainline“ versija)</li>
       <li xml:lang="nl">Ondersteuning voor gedistribueerde hash-tabellen (DHT, het hoofdversie)</li>
       <li xml:lang="pl">Obsługa rozproszonych tablic haszów (DHT, wersja głównoliniowa)</li>
       <li xml:lang="pt">Suporte para tabelas de dispersão distribuídas (DHT)</li>
@@ -675,6 +703,7 @@
       <li xml:lang="it">Supporto UPnP per mappare automaticamente le porte sulla LAN con host dinamici assegnati</li>
       <li xml:lang="ka">მხარდაჭერა UPnP-სთვის დინამიკურად მინიჭებული ჰოსტების მქონე LAN-ში პორტების ავტომატური გადამისამართებისთვის</li>
       <li xml:lang="ko">UPnP를 통한 자동 포트 포워딩 지원</li>
+      <li xml:lang="lv">Atbalsts UPnP automātiskai portu pāradresācijai LAN tīklā ar dinamiski piešķirtiem resursdatoriem</li>
       <li xml:lang="nl">Ondersteuning voor UPnP om automatisch poorten te 'forwarden' op een LAN met dynamisch toegekende hosts</li>
       <li xml:lang="pl">Obsługa UPnP do przekierowywania portów w LANie z dynamicznie przypisanymi gospodarzami</li>
       <li xml:lang="pt">Suporte de UPnP para encaminhar automaticamente os portos numa LAN para as máquinas atribuídas de forma dinâmica</li>
@@ -714,6 +743,7 @@
       <li xml:lang="it">Supporto per distribuzione web</li>
       <li xml:lang="ka">ვებსიდების მხარდაჭერა</li>
       <li xml:lang="ko">웹 시드 지원</li>
+      <li xml:lang="lv">Atbalsts tīmekļa devējiem</li>
       <li xml:lang="nl">Ondersteuning voor webseeds</li>
       <li xml:lang="pl">Obsługa rozsiewania w sieci</li>
       <li xml:lang="pt">Suporte para fontes Web</li>
@@ -730,6 +760,7 @@
       <li xml:lang="uk">Підтримка вебпоширення</li>
       <li xml:lang="x-test">xxSupport for webseedsxx</li>
       <li xml:lang="zh-CN">支持 Webseed</li>
+      <li xml:lang="zh-TW">支援 webseed 網路種子</li>
       <li>System tray integration</li>
       <li xml:lang="bg">Интеграция в системния панел</li>
       <li xml:lang="ca">Integració amb la safata del sistema</li>
@@ -752,6 +783,7 @@
       <li xml:lang="it">Integrazione nel vassoio di sistema</li>
       <li xml:lang="ka">სისტემის კუთხეში ხატულის მორგება</li>
       <li xml:lang="ko">시스템 트레이 통합</li>
+      <li xml:lang="lv">Sistēmas ikonu joslas integrācija</li>
       <li xml:lang="nl">Integratie in het systeemvak</li>
       <li xml:lang="pl">Integracja z tacką systemową</li>
       <li xml:lang="pt">Integração na bandeja do sistema</li>
@@ -768,6 +800,7 @@
       <li xml:lang="uk">Можливість роботи у системному лотку</li>
       <li xml:lang="x-test">xxSystem tray integrationxx</li>
       <li xml:lang="zh-CN">系统托盘整合</li>
+      <li xml:lang="zh-TW">系統匣整合</li>
       <li>Tracker authentication support</li>
       <li xml:lang="bg">Поддръжка на удостоверяване пред разпределящ сървър</li>
       <li xml:lang="ca">Suport d'autenticació del seguidor</li>
@@ -789,6 +822,7 @@
       <li xml:lang="it">Supporto per l'autenticazione sul server traccia</li>
       <li xml:lang="ka">ტრეკერის ავთენტიკაციის მხარდაჭერა</li>
       <li xml:lang="ko">트래커 인증 지원</li>
+      <li xml:lang="lv">Sekotāju autentifikācijas atbalsts</li>
       <li xml:lang="nl">Authenticatieondersteuning voor tracker</li>
       <li xml:lang="pl">Obsluga uwierzytelniania na serwerze śledzącym</li>
       <li xml:lang="pt">Suporte para localizadores autenticados</li>
@@ -805,6 +839,7 @@
       <li xml:lang="uk">Підтримка розпізнавання для координації</li>
       <li xml:lang="x-test">xxTracker authentication supportxx</li>
       <li xml:lang="zh-CN">支持 tracker 认证</li>
+      <li xml:lang="zh-TW">tracker 認證支援</li>
       <li>Connection through a proxy</li>
       <li xml:lang="bg">Свързване посредством сървър-посредник</li>
       <li xml:lang="ca">Connexió a través d'un servidor intermediari</li>
@@ -827,6 +862,7 @@
       <li xml:lang="it">Connessione attraverso un proxy</li>
       <li xml:lang="ka">პროქსის გავლით მიერთება</li>
       <li xml:lang="ko">프록시를 통한 연결</li>
+      <li xml:lang="lv">Savienošanās caur starpniekserveri</li>
       <li xml:lang="nl">Verbinding via een proxy</li>
       <li xml:lang="pl">Połączenia przez serwer pośredniczący</li>
       <li xml:lang="pt">Ligação através de um 'proxy'</li>
@@ -843,6 +879,7 @@
       <li xml:lang="uk">Встановлення з’єднання крізь проксі-сервер</li>
       <li xml:lang="x-test">xxConnection through a proxyxx</li>
       <li xml:lang="zh-CN">通过代理连接</li>
+      <li xml:lang="zh-TW">透過網路代理伺服器的連線</li>
     </ul>
     <p>In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
     <p xml:lang="bg">В допълнение към вградените функционалности за KTorrent са налични и някои приставки.</p>
@@ -864,6 +901,7 @@
     <p xml:lang="it">In aggiunta alle funzionalità integrate, ci sono alcune estensioni disponibili per KTorrent.</p>
     <p xml:lang="ka">ჩაშენებულ ფუნქციონალთან ერთად, KTorrent-ს დამატებებიც გააჩნია.</p>
     <p xml:lang="ko">내장 기능 외에도 KTorrent 플러그인을 사용할 수 있습니다.</p>
+    <p xml:lang="lv">Papildus iebūvētajām iespējām, „KTorrent“ ir pieejami papildu spraudņi.</p>
     <p xml:lang="nl">Naast de ingebouwde functionaliteiten zijn er enige plug-ins beschikbaar voor KTorrent.</p>
     <p xml:lang="pl">Dodatkowo do wbudowanych możliwości, dostępne są także wtyczki dla KTorrenta.</p>
     <p xml:lang="pt">Para além das funcionalidades incorporadas, existem alguns 'plugins' disponíveis para o KTorrent.</p>
@@ -880,6 +918,7 @@
     <p xml:lang="uk">Окрім вбудованих функціональних можливостей, у KTorrent передбачено розширення можливостей за допомогою додатків.</p>
     <p xml:lang="x-test">xxIn addition to the built-in functionalities, there are some plugins available for KTorrent.xx</p>
     <p xml:lang="zh-CN">除了一些内置的功能，KTorrent 还有一些插件可用。</p>
+    <p xml:lang="zh-TW">除了內建功能以外，KTorrent 也有一些可用的外掛程式。</p>
   </description>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=ktorrent</url>
   <url type="help">https://docs.kde.org/?application=ktorrent</url>
