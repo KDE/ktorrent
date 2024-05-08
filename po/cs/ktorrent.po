@@ -3,22 +3,22 @@
 # SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2023, 2024 Vít Pelčák <vit@pelcak.org>
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
-# Vit Pelcak <vit@pelcak.org>, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2023-11-14 13:10+0100\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2024-04-30 15:19+0200\n"
+"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2022,7 +2022,7 @@ msgstr "Jack Hill"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "KF6 porting"
-msgstr ""
+msgstr "Portování na KF6"
 
 #: ktorrent/main.cpp:178
 #, kde-format
@@ -2864,6 +2864,10 @@ msgid ""
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
+"<p>Maximální počet odchozích spojení, která ktorrent zkusí nastavit souběžně."
+"</p>\n"
+"<p>Pokud máte potíže a ktorrent blokuje ostatní internetový provoz, zkuste "
+"nastavit tuto volbu na nižší hodnotu.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2930,6 +2934,8 @@ msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
+"Jaký transportní protokol bude použit, při vytváření spojení s protějškem, "
+"jako první."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -4240,7 +4246,7 @@ msgstr "Zvolte adresář, do kterého mají být data přesunuta."
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -5418,7 +5424,7 @@ msgstr "Otevřít pomocí"
 #, kde-format
 msgctxt "Rename file"
 msgid "Rename"
-msgstr ""
+msgstr "Přejmenovat"
 
 #: plugins/infowidget/fileview.cpp:117
 #, kde-format
@@ -5791,7 +5797,7 @@ msgstr "Ne"
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
