@@ -5,13 +5,13 @@
 # Brendan Osborne <danborne.kde@gmail.com>, 2007.
 # Andrew Coles <andrew_coles@yahoo.co.uk>, 2009, 2010, 2011.
 # Jonathan Marten <jjm@keelhaul.me.uk>, 2011.
-# Steve Allewell <steve.allewell@gmail.com>, 2014, 2016, 2017, 2019, 2020, 2021, 2023.
+# SPDX-FileCopyrightText: 2014, 2016, 2017, 2019, 2020, 2021, 2023, 2024 Steve Allewell <steve.allewell@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2023-06-17 12:15+0100\n"
+"PO-Revision-Date: 2024-05-21 19:39+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1646,7 +1646,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1656,6 +1656,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"Provider of the IP-Country database used in the InfoWidget plugin. The data "
+"is licensed under the Creative Commons Attribution 4.0 International Licence "
+"https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
+"flags.blogpotato.de/ so thanks to them too."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1665,7 +1669,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "The maxminddb library used for the InfoWidget plugin."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -2030,19 +2034,17 @@ msgstr "Bugfixes, clean-ups and optimisations"
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "KF5 porting"
+msgstr "KF6 porting"
 
 #: ktorrent/main.cpp:178
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Enable All"
+msgstr "Enable logging"
 
 #: ktorrent/main.cpp:180
 #, kde-format
@@ -2050,6 +2052,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Enable logging to standard output. Requires --enable-logging to be specified "
+"as well."
 
 #: ktorrent/main.cpp:181
 #, kde-format
@@ -2893,19 +2897,14 @@ msgstr "Maximum number of connection setups:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>The maximum number of outgoing connections ktorrent will try to setup "
+"<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
@@ -2969,16 +2968,13 @@ msgstr "Primary transport protocol:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
-"The primary transport protocol to use, when attempting to setup a connection "
-"with a peer, this protocol is chosen first."
+"The primary transport protocol to use, when attempting to set up a "
+"connection with a peer, this protocol is chosen first."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -4298,11 +4294,10 @@ msgid "Select a directory to move the data to."
 msgstr "Select a directory to move the data to."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4871,23 +4866,20 @@ msgid "Warning: %1"
 msgstr "Warning: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Downloaded chunks:"
+msgstr "Downloaded Chunks"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Chunks not downloaded:"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Chunks not downloaded:"
+msgstr "Chunks to Download"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Excluded:"
+msgstr "Excluded Chunks"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -5377,16 +5369,14 @@ msgid "Add Trackers"
 msgstr "Add Trackers"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Available chunks:"
+msgstr "Available Chunks"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Available chunks:"
+msgstr "Unavailable Chunks"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -5485,8 +5475,7 @@ msgid "Open With"
 msgstr "Open With"
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "Rename"
@@ -5857,11 +5846,10 @@ msgid "No"
 msgstr "No"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
