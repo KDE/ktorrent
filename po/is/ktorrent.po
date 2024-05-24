@@ -5,15 +5,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Arnar Leosson <leosson@frisurf.no>, 2005.
-# Sveinn í Felli <sveinki@nett.is>, 2009, 2010, 2015.
+# Sveinn í Felli <sveinki@nett.is>, 2009, 2010, 2015, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2015-01-29 09:07+0000\n"
+"PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"Language-Team: Icelandic\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 22.04.3\n"
 
 #, fuzzy, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -75,7 +75,7 @@ msgstr ""
 #: ktorrent/core.cpp:1032
 #, kde-format
 msgid "Retry"
-msgstr ""
+msgstr "Reyna aftur"
 
 #: ktorrent/core.cpp:1038
 #, kde-format
@@ -154,10 +154,9 @@ msgstr "Enter IP heimilisfang eða og af til:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/addpeersdlg.ui:34
-#, fuzzy, kde-format
-#| msgid "Peer"
+#, kde-format
 msgid "Peer:"
-msgstr "Jafningi"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_ip)
 #: ktorrent/dialogs/addpeersdlg.ui:43
@@ -412,9 +411,9 @@ msgstr "Flytja til:"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_move_when_completed_history)
 #: ktorrent/dialogs/fileselectdlg.ui:74
-#, fuzzy, kde-format
+#, kde-format
 msgid "History of all recently used move when completed locations"
-msgstr "Flytja til:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/dialogs/fileselectdlg.ui:105
@@ -478,7 +477,7 @@ msgstr "Sleppa"
 #: plugins/logviewer/logprefwidget.ui:36
 #: plugins/scanfolder/scanfolderprefpage.ui:72
 #: plugins/syndication/filtereditor.ui:242
-#, fuzzy, kde-format
+#, kde-format
 msgid "Options"
 msgstr "Valkostir"
 
@@ -491,9 +490,9 @@ msgstr "Hópur:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_chkStartTorrent)
 #: ktorrent/dialogs/fileselectdlg.ui:256
-#, fuzzy, kde-format
+#, kde-format
 msgid "Start torrent"
-msgstr "Ræsa"
+msgstr "Byrja að sækja torrent-streymi"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_skip_data_check)
 #: ktorrent/dialogs/fileselectdlg.ui:267
@@ -562,9 +561,9 @@ msgstr "Flytja inn"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ktorrent/dialogs/importdialog.ui:30
-#, fuzzy, kde-format
+#, kde-format
 msgid "Torrent:"
-msgstr "Straumur"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ktorrent/dialogs/importdialog.ui:46
@@ -588,7 +587,7 @@ msgstr "Velja og með."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -637,9 +636,9 @@ msgstr "Skrár"
 
 #. i18n: ectx: property (text), widget (QLabel, m_text)
 #: ktorrent/dialogs/missingfilesdlg.ui:20
-#, fuzzy, kde-format
+#, kde-format
 msgid "The following files are missing:"
-msgstr "Gögn"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_recreate)
 #: ktorrent/dialogs/missingfilesdlg.ui:34
@@ -733,9 +732,9 @@ msgstr "Opna"
 #. i18n: ectx: property (windowTitle), widget (QDialog, SpeedLimitsDlg)
 #: ktorrent/dialogs/speedlimitsdlg.cpp:34 ktorrent/dialogs/speedlimitsdlg.ui:14
 #: ktorrent/view/view.cpp:257
-#, fuzzy, kde-format
+#, kde-format
 msgid "Speed Limits"
-msgstr "Hraði Takmörk"
+msgstr "Hraðatakmörk"
 
 #. i18n: ectx: property (text), widget (QLabel, m_main_caption)
 #: ktorrent/dialogs/speedlimitsdlg.ui:20
@@ -852,9 +851,9 @@ msgstr "Mesti sendingarhraði:"
 #: ktorrent/dialogs/speedlimitsmodel.cpp:98
 #: plugins/shutdown/shutdowntorrentmodel.cpp:130
 #: plugins/syndication/feedwidgetmodel.cpp:79
-#, fuzzy, kde-format
+#, kde-format
 msgid "Torrent"
-msgstr "Straumur"
+msgstr "Torrent-skrá"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:100
 #, fuzzy, kde-format
@@ -916,9 +915,9 @@ msgstr "a til"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, TorrentCreatorDlg)
 #: ktorrent/dialogs/torrentcreatordlg.ui:14
-#, fuzzy, kde-format
+#, kde-format
 msgid "Create a torrent"
-msgstr "Búa til a"
+msgstr "Búa til torrent-skrá"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/dialogs/torrentcreatordlg.ui:20
@@ -934,9 +933,9 @@ msgstr "Open Directory"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectFile)
 #: ktorrent/dialogs/torrentcreatordlg.ui:51
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select File"
-msgstr "Velja &allt"
+msgstr "Veldu skrá"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/torrentcreatordlg.ui:71
@@ -1033,9 +1032,9 @@ msgstr "Bæta við til flokkur:"
 #. i18n: ectx: attribute (title), widget (QWidget, m_tracker_tab)
 #: ktorrent/dialogs/torrentcreatordlg.ui:182
 #: plugins/infowidget/infowidgetplugin.cpp:224
-#, fuzzy, kde-format
+#, kde-format
 msgid "Trackers"
-msgstr "Skrásetjarar (trackers)"
+msgstr "Listi yfir rekjara"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_tracker)
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_node)
@@ -1072,9 +1071,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/dialogs/torrentcreatordlg.ui:248
-#, fuzzy, kde-format
+#, kde-format
 msgid "Node:"
-msgstr "Hamur:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QTreeWidget, m_node_list)
 #: ktorrent/dialogs/torrentcreatordlg.ui:294
@@ -1158,13 +1157,13 @@ msgstr "Takmörk"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/groups/grouppolicydlg.ui:74
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum download rate:"
 msgstr "Mesti sóknarhraði:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/groups/grouppolicydlg.ui:94
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum upload rate:"
 msgstr "Mesti sendingarhraði:"
 
@@ -1263,14 +1262,14 @@ msgid "Open Location"
 msgstr "Opna slóð"
 
 #: ktorrent/gui.cpp:360
-#, fuzzy, kde-format
+#, kde-format
 msgid "Create a new torrent"
-msgstr "Búa til a nýtt"
+msgstr "Búa til nýtt torrent-streymi"
 
 #: ktorrent/gui.cpp:362
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open a torrent"
-msgstr "Opna a"
+msgstr "Opna torrent-streymi"
 
 #: ktorrent/gui.cpp:365
 #, fuzzy, kde-format
@@ -1295,9 +1294,9 @@ msgstr "Opna a Slóð punktar til a"
 #: ktorrent/gui.cpp:387 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:57
-#, fuzzy, kde-format
+#, kde-format
 msgid "IP Filter"
-msgstr "IP Sía"
+msgstr "IP síun"
 
 #: ktorrent/gui.cpp:388
 #, fuzzy, kde-format
@@ -1322,7 +1321,7 @@ msgstr "Sýna Fela"
 #: ktorrent/gui.cpp:417
 #, kde-format
 msgid "D: %1 | U: %2"
-msgstr ""
+msgstr "Inn: %1 | Út: %2"
 
 #: ktorrent/ipfilterwidget.cpp:39
 #, kde-format
@@ -1360,9 +1359,9 @@ msgstr "Veldu skráarnafn til að vista undir"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, IPFilterWidget)
 #: ktorrent/ipfilterwidget.ui:14
-#, fuzzy, kde-format
+#, kde-format
 msgid "KTorrent Blacklisted Peers"
-msgstr "Skrifta Pakkar"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/ipfilterwidget.ui:22
@@ -1406,13 +1405,13 @@ msgstr "Vista sem..."
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
-#, fuzzy, kde-format
+#, kde-format
 msgid "&File"
 msgstr "&Skrá"
 
 #. i18n: ectx: Menu (view)
 #: ktorrent/ktorrentui.rc:16
-#, fuzzy, kde-format
+#, kde-format
 msgid "&View"
 msgstr "S&koða"
 
@@ -1426,9 +1425,9 @@ msgstr "Maxmind"
 #. i18n: ectx: ToolBar (TorrentsToolBar)
 #: ktorrent/kttorrentactivityui.rc:8 ktorrent/kttorrentactivityui.rc:84
 #: ktorrent/torrentactivity.cpp:38
-#, fuzzy, kde-format
+#, kde-format
 msgid "Torrents"
-msgstr "Straumar"
+msgstr "Torrent-skrár"
 
 #. i18n: ectx: Menu (GroupsMenu)
 #: ktorrent/kttorrentactivityui.rc:27
@@ -1475,7 +1474,7 @@ msgid "Columns"
 msgstr "Dálkar"
 
 #: ktorrent/main.cpp:99
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title"
 msgid "KTorrent"
 msgstr "KTorrent"
@@ -1534,12 +1533,12 @@ msgstr "Tölfræði Íforrit"
 #: ktorrent/main.cpp:118
 #, kde-format
 msgid "Christian Weilbach"
-msgstr ""
+msgstr "Christian Weilbach"
 
 #: ktorrent/main.cpp:118
-#, fuzzy, kde-format
+#, kde-format
 msgid "kio-magnet"
-msgstr "Segull"
+msgstr ""
 
 #: ktorrent/main.cpp:119
 #, fuzzy, kde-format
@@ -1599,7 +1598,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1878,7 +1877,7 @@ msgstr "til a"
 #: ktorrent/main.cpp:163
 #, kde-format
 msgid "Leo Trubach"
-msgstr ""
+msgstr "Leo Trubach"
 
 #: ktorrent/main.cpp:163
 #, kde-format
@@ -1888,7 +1887,7 @@ msgstr ""
 #: ktorrent/main.cpp:164
 #, kde-format
 msgid "Andrei Barbu"
-msgstr ""
+msgstr "Andrei Barbu"
 
 #: ktorrent/main.cpp:164
 #, fuzzy, kde-format
@@ -1898,7 +1897,7 @@ msgstr "allir yfirborð"
 #: ktorrent/main.cpp:165
 #, kde-format
 msgid "Jonas Lundqvist"
-msgstr ""
+msgstr "Jonas Lundqvist"
 
 #: ktorrent/main.cpp:165
 #, kde-format
@@ -1908,7 +1907,7 @@ msgstr ""
 #: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jaroslaw Swierczynski"
-msgstr ""
+msgstr "Jaroslaw Swierczynski"
 
 #: ktorrent/main.cpp:166
 #, kde-format
@@ -1918,7 +1917,7 @@ msgstr ""
 #: ktorrent/main.cpp:167
 #, kde-format
 msgid "Alexey Shildyakov "
-msgstr ""
+msgstr "Alexey Shildyakov "
 
 #: ktorrent/main.cpp:167
 #, fuzzy, kde-format
@@ -1928,17 +1927,17 @@ msgstr "til \""
 #: ktorrent/main.cpp:168
 #, kde-format
 msgid "Maarten De Meyer"
-msgstr ""
+msgstr "Maarten De Meyer"
 
 #: ktorrent/main.cpp:168
 #, kde-format
 msgid "Fix for bug 305379"
-msgstr ""
+msgstr "Lagfæringar á galla 305379"
 
 #: ktorrent/main.cpp:169
 #, kde-format
 msgid "Rex Dieter"
-msgstr ""
+msgstr "Rex Dieter"
 
 #: ktorrent/main.cpp:169
 #, kde-format
@@ -1948,27 +1947,27 @@ msgstr ""
 #: ktorrent/main.cpp:170
 #, kde-format
 msgid "Leszek Lesner"
-msgstr ""
+msgstr "Leszek Lesner"
 
 #: ktorrent/main.cpp:170
 #, kde-format
 msgid "Fix for bug 339584"
-msgstr ""
+msgstr "Lagfæringar á galla 339584"
 
 #: ktorrent/main.cpp:171
 #, kde-format
 msgid "Andrius Štikonas"
-msgstr ""
+msgstr "Andrius Štikonas"
 
 #: ktorrent/main.cpp:171 ktorrent/main.cpp:172
 #, kde-format
 msgid "KF5 porting"
-msgstr ""
+msgstr "KF5 aðlögun"
 
 #: ktorrent/main.cpp:172
 #, kde-format
 msgid "Nick Shaforostoff"
-msgstr ""
+msgstr "Nick Shaforostoff"
 
 #: ktorrent/main.cpp:173
 #, fuzzy, kde-format
@@ -1978,17 +1977,17 @@ msgstr "Alexander Dymo"
 #: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
-msgstr ""
+msgstr "Villuleiðréttingar, hreinsun og bestun"
 
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:174
 #, kde-format
 msgid "KF6 porting"
-msgstr ""
+msgstr "KF6 aðlögun"
 
 #: ktorrent/main.cpp:178
 #, fuzzy, kde-format
@@ -2008,7 +2007,7 @@ msgid "Silently open torrent given on URL"
 msgstr "á Slóð"
 
 #: ktorrent/main.cpp:182
-#, fuzzy, kde-format
+#, kde-format
 msgid "Document to open"
 msgstr "Skjal sem á að opna"
 
@@ -2048,9 +2047,9 @@ msgstr "Afköst"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/advancedpref.ui:53
-#, fuzzy, kde-format
+#, kde-format
 msgid "GUI update interval:"
-msgstr "Uppfæra \" dagar."
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_guiUpdateInterval)
 #: ktorrent/pref/advancedpref.ui:67
@@ -2090,9 +2089,9 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
-#, fuzzy, kde-format
+#, kde-format
 msgid "Magnets Queue"
-msgstr "Segull"
+msgstr "Biðröð segultengla"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/advancedpref.ui:140
@@ -2288,7 +2287,7 @@ msgstr "Virkja er búið"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
 #: ktorrent/pref/btpref.ui:94
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encryption"
 msgstr "Dulritun"
 
@@ -2327,9 +2326,9 @@ msgstr "Leyfa"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/btpref.ui:124
-#, fuzzy, kde-format
+#, kde-format
 msgid "Tracker"
-msgstr "Skrásetjari (tracker)"
+msgstr "Rekjari"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useCustomIP)
 #: ktorrent/pref/btpref.ui:130
@@ -2454,7 +2453,7 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:114
 #, kde-format
 msgid "Trackers are timing out:"
-msgstr ""
+msgstr "Skrásetjarar (trackers) eru að renna út:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_timeoutTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:121
@@ -2574,7 +2573,7 @@ msgstr "eða ekki til \"."
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr ""
+msgstr "Alltaf fella niður í kerfisbakka við ræsingu"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -2660,11 +2659,11 @@ msgstr "Allt"
 #: ktorrent/pref/generalpref.ui:180
 #, kde-format
 msgid "Show total speed in the window title"
-msgstr ""
+msgstr "Birta heildarhraða í titlrönd glugga"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
-#, fuzzy, kde-format
+#, kde-format
 msgid "Network"
 msgstr "Netkerfi"
 
@@ -2709,9 +2708,9 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/networkpref.ui:71 ktorrent/pref/recommendedsettingsdlg.ui:233
 #: plugins/bwscheduler/edititemdlg.ui:226
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum connections per torrent:"
-msgstr "af nei"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnections)
 #: ktorrent/pref/networkpref.ui:78
@@ -2818,13 +2817,13 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:245
 #, kde-format
 msgid "Only use µTP"
-msgstr ""
+msgstr "Nota eingöngu µTP"
 
 #. i18n: ectx: property (text), widget (QLabel, label_10)
 #: ktorrent/pref/networkpref.ui:254
 #, kde-format
 msgid "Primary transport protocol:"
-msgstr ""
+msgstr "Aðal-flutningastaðall:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
@@ -2839,11 +2838,11 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:265 ktupnptest/upnptestwidget.ui:102
 #, kde-format
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:270
-#, fuzzy, kde-format
+#, kde-format
 msgid "µTP"
 msgstr "µTP"
 
@@ -2857,9 +2856,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
+#, kde-format
 msgid "Recommended Settings..."
-msgstr "Stillingar"
+msgstr "Stillingar sem mælt er með..."
 
 #: ktorrent/pref/proxypref.cpp:13
 #, fuzzy, kde-format
@@ -3034,9 +3033,9 @@ msgstr "Control"
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: ktorrent/pref/qmpref.ui:35 ktorrent/pref/recommendedsettingsdlg.ui:286
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum downloads:"
-msgstr "Mesti sóknarhraði:"
+msgstr "Hámarksfjöldi niðurhala:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxDownloads)
 #: ktorrent/pref/qmpref.ui:42
@@ -3048,9 +3047,9 @@ msgstr "af."
 #. i18n: ectx: property (text), widget (QLabel, label_10)
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: ktorrent/pref/qmpref.ui:55 ktorrent/pref/recommendedsettingsdlg.ui:300
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum seeds:"
-msgstr "Tími:"
+msgstr "Hámarksfjöldi sæðinga:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxSeeds)
 #: ktorrent/pref/qmpref.ui:62
@@ -3136,10 +3135,10 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:group Options regarging Seeding"
 msgid "Seeding"
-msgstr "Sái"
+msgstr "Deiling"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_keepSeeding)
 #: ktorrent/pref/qmpref.ui:165
@@ -3246,7 +3245,7 @@ msgstr "Tiltækt:"
 #: ktorrent/pref/recommendedsettingsdlg.ui:57
 #, kde-format
 msgid " Kbps"
-msgstr ""
+msgstr " Kbps"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_upload_bw)
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_download_bw)
@@ -3300,15 +3299,15 @@ msgstr "Tala af:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_chk_slots)
 #: ktorrent/pref/recommendedsettingsdlg.ui:167
-#, fuzzy, kde-format
+#, kde-format
 msgid "Slots per torrent:"
-msgstr "Ræsa"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/recommendedsettingsdlg.ui:190
-#, fuzzy, kde-format
+#, kde-format
 msgid "Recommended settings:"
-msgstr "Stillingar"
+msgstr "Ráðlagðar stillingar:"
 
 #: ktorrent/statusbar.cpp:34 ktorrent/statusbar.cpp:66
 #, fuzzy, kde-format
@@ -3329,15 +3328,15 @@ msgstr "af"
 #, kde-format
 msgid "%1 node"
 msgid_plural "%1 nodes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 liður"
+msgstr[1] "%1 liðir"
 
 #: ktorrent/statusbar.cpp:90
 #, kde-format
 msgid "%1 task"
 msgid_plural "%1 tasks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 verk"
+msgstr[1] "%1 verk"
 
 #: ktorrent/statusbar.cpp:90
 #, kde-format
@@ -3348,7 +3347,7 @@ msgstr ""
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
@@ -3358,55 +3357,55 @@ msgstr ""
 #: ktorrent/tools/magnetmodel.cpp:102
 #, kde-format
 msgid "Magnet Link"
-msgstr ""
+msgstr "Segultengill"
 
 #: ktorrent/tools/magnetmodel.cpp:104 ktorrent/tools/queuemanagermodel.cpp:182
 #: ktorrent/trayicon.cpp:137 plugins/infowidget/trackermodel.cpp:123
 #: plugins/infowidget/webseedsmodel.cpp:110
-#, fuzzy, kde-format
+#, kde-format
 msgid "Status"
 msgstr "Staða"
 
 #: ktorrent/tools/magnetmodel.cpp:106
 #: plugins/infowidget/infowidgetplugin.cpp:186
-#, fuzzy, kde-format
+#, kde-format
 msgid "Peers"
 msgstr "Jafningjar"
 
 #: ktorrent/tools/magnetmodel.cpp:159
-#, fuzzy, kde-format
+#, kde-format
 msgid "Downloading"
 msgstr "Sæki"
 
 #: ktorrent/tools/magnetmodel.cpp:162 ktorrent/tools/queuemanagermodel.cpp:218
-#, fuzzy, kde-format
+#, kde-format
 msgid "Queued"
-msgstr "Í biðröð"
+msgstr "Bíður"
 
 #: ktorrent/tools/magnetmodel.cpp:166
-#, fuzzy, kde-format
+#, kde-format
 msgid "Stopped"
 msgstr "Stöðvað"
 
 #: ktorrent/tools/magnetview.cpp:52
-#, fuzzy, kde-format
+#, kde-format
 msgid "Start Magnet"
-msgstr "Ræsa"
+msgstr "Ræsa segultengil"
 
 #: ktorrent/tools/magnetview.cpp:53
 #, kde-format
 msgid "Stop Magnet"
-msgstr ""
+msgstr "Stöðva segultengil"
 
 #: ktorrent/tools/magnetview.cpp:54
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copy Magnet URL"
-msgstr "Afrita Slóð"
+msgstr "Afrita vefslóð segultengils"
 
 #: ktorrent/tools/magnetview.cpp:56
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove Magnet"
-msgstr "Fjarlægja"
+msgstr "Fjarlægja segultengil"
 
 #: ktorrent/tools/queuemanagermodel.cpp:178
 #, fuzzy, kde-format
@@ -3415,7 +3414,7 @@ msgstr "Röð"
 
 #: ktorrent/tools/queuemanagermodel.cpp:180 ktorrent/view/viewmodel.cpp:438
 #: plugins/downloadorder/downloadorderdialog.cpp:70
-#, fuzzy, kde-format
+#, kde-format
 msgid "Name"
 msgstr "Nafn"
 
@@ -3427,7 +3426,7 @@ msgstr "Tími Töf"
 #: ktorrent/tools/queuemanagermodel.cpp:186
 #: plugins/infowidget/iwfilelistmodel.cpp:64
 #: plugins/infowidget/iwfiletreemodel.cpp:72
-#, fuzzy, kde-format
+#, kde-format
 msgid "Priority"
 msgstr "Forgangur"
 
@@ -3552,9 +3551,9 @@ msgid "Start All"
 msgstr "Ræsa Allt"
 
 #: ktorrent/torrentactivity.cpp:112
-#, fuzzy, kde-format
+#, kde-format
 msgid "Start all torrents"
-msgstr "Ræsa allir"
+msgstr "Byrja að sækja allar torrent-skrárnar"
 
 #: ktorrent/torrentactivity.cpp:116
 #, fuzzy, kde-format
@@ -3719,7 +3718,7 @@ msgstr "Hraði \" KiB s"
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unlimited"
 msgstr "Ótakmarkað"
 
@@ -3797,9 +3796,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, superseeding)
 #: ktorrent/view/propertiesdlg.ui:45
-#, kde-format
+#, fuzzy, kde-format
 msgid "Use superseeding mode for seeding"
-msgstr ""
+msgstr "Í biðröð fyrir"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, move_on_completion_enabled)
 #: ktorrent/view/propertiesdlg.ui:52
@@ -3823,7 +3822,7 @@ msgstr ""
 #: ktorrent/view/scanextender.cpp:109
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
-msgstr ""
+msgstr "<font color=\"red\">%1</font>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ktorrent/view/scanextender.ui:21
@@ -3875,9 +3874,9 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #: ktorrent/view/scanextender.ui:153 plugins/infowidget/chunkdownloadview.ui:98
-#, fuzzy, kde-format
+#, kde-format
 msgid "Downloaded:"
-msgstr "Hlaðið inn:"
+msgstr "Sótt:"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, chunks_downloaded)
 #: ktorrent/view/scanextender.ui:166
@@ -4111,7 +4110,7 @@ msgstr "Hlaðið inn"
 #: ktorrent/view/viewmodel.cpp:442
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
 #: libktcore/torrent/torrentfiletreemodel.cpp:359
-#, fuzzy, kde-format
+#, kde-format
 msgid "Size"
 msgstr "Stærð"
 
@@ -4174,7 +4173,7 @@ msgid "Time Seeded"
 msgstr "Tími"
 
 #: ktorrent/view/viewmodel.cpp:467
-#, fuzzy, kde-format
+#, kde-format
 msgid "Location"
 msgstr "Staðsetning"
 
@@ -4281,7 +4280,7 @@ msgstr ""
 #: ktupnptest/main.cpp:25
 #, kde-format
 msgid "KTUPnPTest"
-msgstr ""
+msgstr "KTUPnPTest"
 
 #: ktupnptest/main.cpp:27
 #, fuzzy, kde-format
@@ -4301,9 +4300,9 @@ msgstr "Prófa Forrit"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktupnptest/upnptestwidget.ui:24
-#, fuzzy, kde-format
+#, kde-format
 msgid "Router:"
-msgstr "Finna"
+msgstr "Beinir:"
 
 #. i18n: ectx: property (text), widget (QLabel, m_router)
 #: ktupnptest/upnptestwidget.ui:40
@@ -4327,7 +4326,7 @@ msgstr "Samskiptamáti:"
 #: ktupnptest/upnptestwidget.ui:97
 #, kde-format
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_forward)
 #: ktupnptest/upnptestwidget.ui:125 plugins/upnp/upnpwidget.ui:27
@@ -4345,7 +4344,7 @@ msgstr "Afturkalla Áfram"
 #: ktupnptest/upnptestwidget.ui:139
 #, kde-format
 msgid "Verbose mode"
-msgstr ""
+msgstr "Ítarlegur hamur"
 
 #: libktcore/dbus/dbustorrent.cpp:304
 #, fuzzy, kde-format
@@ -4358,9 +4357,9 @@ msgid "Maximum seed time reached."
 msgstr "Tími."
 
 #: libktcore/groups/groupmanager.cpp:89
-#, kde-format
+#, fuzzy, kde-format
 msgid "Uploads"
-msgstr ""
+msgstr "Uppflutt gögn"
 
 #: libktcore/groups/groupmanager.cpp:90
 #, fuzzy, kde-format
@@ -4425,7 +4424,7 @@ msgstr "Sérsniðnir hópar"
 #: libktcore/groups/ungroupedgroup.cpp:15
 #, kde-format
 msgid "Ungrouped Torrents"
-msgstr ""
+msgstr "Óhópuð streymi"
 
 #: libktcore/interfaces/functions.cpp:150
 #: libktcore/interfaces/functions.cpp:155
@@ -4586,9 +4585,9 @@ msgstr "IP til til"
 
 #. i18n: ectx: label, entry (guiUpdateInterval), group (downloads)
 #: libktcore/ktorrent.kcfg:131
-#, fuzzy, kde-format
+#, kde-format
 msgid "GUI update interval"
-msgstr "Uppfæra \" dagar."
+msgstr ""
 
 #. i18n: ectx: label, entry (dhtSupport), group (downloads)
 #: libktcore/ktorrent.kcfg:137
@@ -4600,7 +4599,7 @@ msgstr "fyrir"
 #: libktcore/ktorrent.kcfg:141
 #, kde-format
 msgid "DHT port"
-msgstr ""
+msgstr "DHT-gátt"
 
 #. i18n: ectx: label, entry (numUploadSlots), group (downloads)
 #: libktcore/ktorrent.kcfg:150
@@ -4649,7 +4648,7 @@ msgstr "Íforrit"
 #: libktcore/torrent/basicjobprogresswidget.cpp:36
 #, kde-format
 msgid "%1: %2<br/>%3: %4"
-msgstr ""
+msgstr "%1: %2<br/>%3: %4"
 
 #: libktcore/torrent/basicjobprogresswidget.cpp:49
 #, fuzzy, kde-format
@@ -4696,7 +4695,7 @@ msgstr "Tími Hunsa og byrja?"
 #: libktcore/torrent/queuemanager.cpp:116
 #, kde-format
 msgid "Limits reached."
-msgstr ""
+msgstr "Takmörkum náð."
 
 #: libktcore/torrent/queuemanager.cpp:117
 #: libktcore/torrent/queuemanager.cpp:227
@@ -4748,7 +4747,7 @@ msgstr "Villa 2"
 
 #: libktcore/torrent/queuemanager.cpp:709
 #: libktcore/torrent/queuemanager.cpp:720
-#, fuzzy, kde-format
+#, kde-format
 msgid "Error"
 msgstr "Villa"
 
@@ -4759,7 +4758,7 @@ msgstr "Villa 2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
 #: libktcore/torrent/torrentfiletreemodel.cpp:357
-#, fuzzy, kde-format
+#, kde-format
 msgid "File"
 msgstr "Skrá"
 
@@ -4912,7 +4911,7 @@ msgstr "Til:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: plugins/bwscheduler/edititemdlg.ui:100
-#, fuzzy, kde-format
+#, kde-format
 msgid "Limits"
 msgstr "Takmörk"
 
@@ -5003,9 +5002,9 @@ msgid "Clear Schedule"
 msgstr "Hreinsa Vinnuáætlun"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:80
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scheduler Active"
-msgstr "Vinnuáætlun lína:"
+msgstr "Vinnuáætlun virk"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:81
 #, fuzzy, kde-format
@@ -5116,7 +5115,7 @@ msgstr "Sérsniðið virkt"
 #: plugins/downloadorder/downloadorderwidget.ui:42
 #, kde-format
 msgid "Sort By"
-msgstr ""
+msgstr "Raða eftir"
 
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, m_search_files)
 #: plugins/downloadorder/downloadorderwidget.ui:52
@@ -5126,11 +5125,11 @@ msgstr "Leitarvélar"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third ..."
-msgstr "Uppröðun \" til af a toppur 1. 2. 3.."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -5229,12 +5228,12 @@ msgstr "Vinstri:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_8)
 #: plugins/infowidget/chunkdownloadview.ui:206
-#, fuzzy, kde-format
+#, kde-format
 msgid "Size:"
 msgstr "Stærð:"
 
 #: plugins/infowidget/fileview.cpp:113
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "Opna"
@@ -5347,7 +5346,7 @@ msgid "Info Widget"
 msgstr "Upplýsingar"
 
 #: plugins/infowidget/infowidgetplugin.cpp:57
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:tab"
 msgid "Status"
 msgstr "Staða"
@@ -5358,8 +5357,7 @@ msgid "Displays status information about a torrent"
 msgstr "staða a"
 
 #: plugins/infowidget/infowidgetplugin.cpp:58
-#, fuzzy, kde-format
-#| msgid "Files"
+#, kde-format
 msgctxt "@title:tab"
 msgid "Files"
 msgstr "Skrár"
@@ -5385,9 +5383,9 @@ msgid "Displays information about all the trackers of a torrent"
 msgstr "allir af a"
 
 #: plugins/infowidget/infowidgetplugin.cpp:240
-#, fuzzy, kde-format
+#, kde-format
 msgid "Webseeds"
-msgstr "Vefsáningar"
+msgstr "Deilendur"
 
 #: plugins/infowidget/infowidgetplugin.cpp:240
 #, fuzzy, kde-format
@@ -5588,9 +5586,9 @@ msgid "Ban Peer"
 msgstr "Banna jafningja"
 
 #: plugins/infowidget/peerviewmodel.cpp:85
-#, fuzzy, kde-format
+#, kde-format
 msgid " (µTP)"
-msgstr "µTP"
+msgstr " (µTP)"
 
 #: plugins/infowidget/peerviewmodel.cpp:103
 #, fuzzy, kde-format
@@ -5647,7 +5645,7 @@ msgid "No"
 msgstr "Nei"
 
 #: plugins/infowidget/peerviewmodel.cpp:291
-#, fuzzy, kde-format
+#, kde-format
 msgid "Address"
 msgstr "Vistfang"
 
@@ -5657,7 +5655,7 @@ msgid "Country"
 msgstr "Land"
 
 #: plugins/infowidget/peerviewmodel.cpp:295
-#, fuzzy, kde-format
+#, kde-format
 msgid "Client"
 msgstr "Biðlari"
 
@@ -5791,14 +5789,14 @@ msgid "Whether we are interested in downloading from this peer"
 msgstr "Hvort við höfum áhuga á gögnum frá þessum jafningja"
 
 #: plugins/infowidget/statustab.cpp:95
-#, fuzzy, kde-format
+#, kde-format
 msgid "Private"
-msgstr "Prívat"
+msgstr "Lokað"
 
 #: plugins/infowidget/statustab.cpp:95
-#, fuzzy, kde-format
+#, kde-format
 msgid "Public"
-msgstr "Almenn"
+msgstr "Opið"
 
 #. i18n: ectx: property (text), widget (QLabel, hdr_info)
 #: plugins/infowidget/statustab.ui:32
@@ -5832,9 +5830,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/infowidget/statustab.ui:188
-#, fuzzy, kde-format
+#, kde-format
 msgid "Downloaded chunks:"
-msgstr "Hlaðið inn:"
+msgstr "Sóttir bútar:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/infowidget/statustab.ui:211
@@ -5939,7 +5937,7 @@ msgid "Restore Defaults"
 msgstr "Endurheimta sjálfgefið"
 
 #: plugins/infowidget/webseedsmodel.cpp:106
-#, fuzzy, kde-format
+#, kde-format
 msgid "Speed"
 msgstr "Hraði"
 
@@ -5993,7 +5991,7 @@ msgstr "Bæta við vefsáningu"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove)
 #: plugins/infowidget/webseedstab.ui:48
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove Webseed"
 msgstr "Fjarlægja vefsáningu"
 
@@ -6056,19 +6054,19 @@ msgid "Cannot determine file type of <b>%1</b>"
 msgstr ""
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:175
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cannot open zip file %1."
-msgstr "2"
+msgstr "Get ekki opnað zip skrána %1."
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:177
-#, fuzzy, kde-format
+#, kde-format
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
-msgstr "1"
+msgstr ""
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:197
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cannot find blocklist in zip file %1."
-msgstr "1"
+msgstr ""
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:199
 #, fuzzy, kde-format
@@ -6099,9 +6097,9 @@ msgid "Status: Not loaded."
 msgstr "Staða: Ekki hlaðið."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
+#, kde-format
 msgid "Status: Downloading and converting new block list..."
-msgstr "Staða Sæki og nýtt."
+msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, fuzzy, kde-format
@@ -6229,45 +6227,45 @@ msgid "Use rich log text"
 msgstr "Nota texti"
 
 #: plugins/logviewer/logflags.cpp:104
-#, fuzzy, kde-format
+#, kde-format
 msgid "System"
 msgstr "Kerfi"
 
 #: plugins/logviewer/logflags.cpp:106
-#, fuzzy, kde-format
+#, kde-format
 msgid "Log Level"
-msgstr "Annálar Borð"
+msgstr "Stig atvikaskráningar"
 
 #: plugins/logviewer/logflags.cpp:188 plugins/logviewer/logflagsdelegate.cpp:31
-#, fuzzy, kde-format
+#, kde-format
 msgid "Debug"
 msgstr "Aflúsa"
 
 #: plugins/logviewer/logflags.cpp:190 plugins/logviewer/logflagsdelegate.cpp:30
-#, fuzzy, kde-format
+#, kde-format
 msgid "Notice"
-msgstr "Athugaðu"
+msgstr "Athugasemd"
 
 #: plugins/logviewer/logflags.cpp:192 plugins/logviewer/logflagsdelegate.cpp:29
-#, fuzzy, kde-format
+#, kde-format
 msgid "Important"
 msgstr "Mikilvægt"
 
 #: plugins/logviewer/logflags.cpp:194 plugins/logviewer/logflagsdelegate.cpp:28
-#, fuzzy, kde-format
+#, kde-format
 msgid "All"
 msgstr "Allt"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
 #: plugins/syndication/ktfeed.cpp:471
-#, fuzzy, kde-format
+#, kde-format
 msgid "None"
 msgstr "Ekkert"
 
 #: plugins/logviewer/logprefpage.cpp:18
-#, fuzzy, kde-format
+#, kde-format
 msgid "Log Viewer"
-msgstr "Annálar Skoðari"
+msgstr "Annálaskoðari"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_logging_flags)
 #: plugins/logviewer/logprefwidget.ui:23
@@ -6353,28 +6351,28 @@ msgstr ""
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
 #: plugins/logviewer/logprefwidget.ui:73
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:38
-#, fuzzy, kde-format
+#, kde-format
 msgid "Dockable widget"
-msgstr "Tengjanlegt"
+msgstr "Tengjanlegur viðmótshluti"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ScanForLostFilesWidgetPosition)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
 #: plugins/logviewer/logprefwidget.ui:78
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:43
-#, fuzzy, kde-format
+#, kde-format
 msgid "Torrent activity"
-msgstr "Takmörk"
+msgstr "Torrent-virkni"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/logviewer/logprefwidget.ui:103
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum number of visible lines:"
-msgstr "af:"
+msgstr "Hámarksfjöldi sýnilegra lína:"
 
 #: plugins/logviewer/logviewer.cpp:22
-#, fuzzy, kde-format
+#, kde-format
 msgid "Log"
-msgstr "Annálar"
+msgstr "Atvikaskrá"
 
 #: plugins/logviewer/logviewer.cpp:29
 #, fuzzy, kde-format
@@ -6412,9 +6410,9 @@ msgstr "Skrásetjari (tracker)"
 
 #. i18n: ectx: label, entry (tr), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:18
-#, fuzzy, kde-format
+#, kde-format
 msgid "The default tracker"
-msgstr "Nota sjálfgefið"
+msgstr "Sjálfgefinn skrásetjari"
 
 #. i18n: ectx: label, entry (dn), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:22
@@ -6426,9 +6424,9 @@ msgstr "Sýna Straumur"
 #. i18n: ectx: label, entry (popup), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:26
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:90
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show popup"
-msgstr "Sýna Vídeó"
+msgstr "Birta sprettglugga"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_onlypublic)
 #. i18n: ectx: label, entry (onlypublic), group (general)
@@ -6439,9 +6437,9 @@ msgid "Only enable on public torrents"
 msgstr ""
 
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:37
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copy Magnet URI"
-msgstr "Afrita Slóð"
+msgstr "Afrita slóð segultengils"
 
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:115
 #, kde-format
@@ -6451,15 +6449,15 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_x2)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.cpp:16
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:32
-#, fuzzy, kde-format
+#, kde-format
 msgid "Magnet Generator"
-msgstr "Magnet tilbúningur"
+msgstr "Gerð segultengla"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, MagnetGeneratorPrefWidget)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:26
-#, fuzzy, kde-format
+#, kde-format
 msgid "Magnet Generator Preferences"
-msgstr "Leitarstillingar"
+msgstr "Kjörstillingar við gerð segultengla"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_torrenttracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:43
@@ -6493,10 +6491,9 @@ msgstr "Flytja a \""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_dn)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:70
-#, fuzzy, kde-format
-#| msgid "Add an item"
+#, kde-format
 msgid "Add name"
-msgstr "Bæta við hlut"
+msgstr "Bæta við nafni"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_onlypublic)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:80
@@ -6512,9 +6509,9 @@ msgstr ""
 
 #. i18n: ectx: Menu (MediaPlayerMenu)
 #: plugins/mediaplayer/ktorrent_mediaplayerui.rc:4
-#, fuzzy, kde-format
+#, kde-format
 msgid "Media Player Menu"
-msgstr "Miðill Leikmaður Valmynd"
+msgstr "Valmynd margmiðlunarspilara"
 
 #: plugins/mediaplayer/mediacontroller.cpp:29
 #: plugins/mediaplayer/mediacontroller.cpp:67
@@ -6566,64 +6563,64 @@ msgstr "<b></b><br/> Forsýn<br/>"
 #: plugins/mediaplayer/mediaplayeractivity.cpp:333
 #: plugins/mediaplayer/mediaplayerplugin.cpp:34
 #: plugins/mediaplayer/mediaplayerplugin.cpp:45
-#, fuzzy, kde-format
+#, kde-format
 msgid "Media Player"
 msgstr "Margmiðlunarspilari"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:101
 #: plugins/mediaplayer/videowidget.cpp:59
-#, fuzzy, kde-format
+#, kde-format
 msgid "Play"
 msgstr "Spila"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:105
-#, fuzzy, kde-format
+#, kde-format
 msgid "Pause"
 msgstr "Bíða"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:109
 #: plugins/mediaplayer/videowidget.cpp:62
-#, fuzzy, kde-format
+#, kde-format
 msgid "Stop"
 msgstr "Stöðva"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:113
-#, fuzzy, kde-format
+#, kde-format
 msgid "Previous"
-msgstr "Fyrri"
+msgstr "Fyrra"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgid "Next"
 msgstr "Næsta"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:121
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show Video"
-msgstr "Sýna Vídeó"
+msgstr "Birta myndskeið"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:125
 #: plugins/mediaplayer/playlistwidget.cpp:39
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add Media"
-msgstr "Bæta við Miðill"
+msgstr "Bæta við gögnum"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:129
 #: plugins/mediaplayer/playlistwidget.cpp:41
-#, fuzzy, kde-format
+#, kde-format
 msgid "Clear Playlist"
-msgstr "Hreinsa Lagalisti"
+msgstr "Hreinsa spilunarlista"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:133
-#, fuzzy, kde-format
+#, kde-format
 msgid "Toggle Fullscreen"
-msgstr "Skipta heilskjá"
+msgstr "Víxla skjáfylli af/á"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:157
 #: plugins/mediaplayer/mediaplayeractivity.cpp:336
-#, fuzzy, kde-format
+#, kde-format
 msgid "Movie player"
-msgstr "Kvikmynd"
+msgstr "Kvikmyndaspilari"
 
 #: plugins/mediaplayer/mediaview.cpp:84
 #, kde-format
@@ -6632,43 +6629,43 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_refresh)
 #: plugins/mediaplayer/mediaview.cpp:89 plugins/syndication/feedwidget.ui:124
-#, fuzzy, kde-format
+#, kde-format
 msgid "Refresh"
 msgstr "Endurlesa"
 
 #: plugins/mediaplayer/mediaview.cpp:90
-#, fuzzy, kde-format
+#, kde-format
 msgid "Refresh media files"
-msgstr "Leitarvélar"
+msgstr "Endurlesa margmiðlunarskrár"
 
 #: plugins/mediaplayer/mediaview.cpp:94
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search media files"
-msgstr "Leitarvélar"
+msgstr "Leita í margmiðlunarskrám"
 
 #: plugins/mediaplayer/playlist.cpp:87
 #: plugins/syndication/feedwidgetmodel.cpp:75
-#, fuzzy, kde-format
+#, kde-format
 msgid "Title"
 msgstr "Titill"
 
 #: plugins/mediaplayer/playlist.cpp:89
-#, fuzzy, kde-format
+#, kde-format
 msgid "Artist"
 msgstr "Flytjandi"
 
 #: plugins/mediaplayer/playlist.cpp:91
-#, fuzzy, kde-format
+#, kde-format
 msgid "Album"
 msgstr "Plata"
 
 #: plugins/mediaplayer/playlist.cpp:93
-#, fuzzy, kde-format
+#, kde-format
 msgid "Length"
 msgstr "Lengd"
 
 #: plugins/mediaplayer/playlist.cpp:95
-#, fuzzy, kde-format
+#, kde-format
 msgid "Year"
 msgstr "Ár"
 
@@ -6929,7 +6926,7 @@ msgstr "Sérsniðið"
 
 #: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
 #: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "plugin name"
 msgid "Search"
 msgstr "Leita"
@@ -6975,9 +6972,9 @@ msgstr "Mappa til til a búið."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_reset_default_action)
 #: plugins/search/searchpref.ui:47
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reset Default Torrent Action"
-msgstr "Sjálfgefið:"
+msgstr "Endurstilla sjálfgefna torrent aðgerð"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_restorePreviousSession)
 #: plugins/search/searchpref.ui:69
@@ -7053,7 +7050,7 @@ msgstr "Fjarlægja allir."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove)
 #: plugins/search/searchpref.ui:180
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Remove"
 msgstr "&Fjarlægja"
 
@@ -7128,9 +7125,9 @@ msgstr "Hlaða niður Torrent straumi"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
 #: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
-#, fuzzy, kde-format
+#, kde-format
 msgid "Download"
-msgstr "Hlaða niður"
+msgstr "Sækja"
 
 #: plugins/search/webview.cpp:105
 #, kde-format
@@ -7138,20 +7135,20 @@ msgid "Home"
 msgstr "Heim"
 
 #: plugins/search/webview.cpp:106
-#, fuzzy, kde-format
+#, kde-format
 msgid "KTorrent"
 msgstr "KTorrent"
 
 #: plugins/search/webview.cpp:107
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
 msgstr "Vertu frjáls."
 
 #: plugins/search/webview.cpp:108
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search the web for torrents."
-msgstr "Möppur til fyrir:"
+msgstr "Leita á vefnum að torrent-streymum."
 
 #: plugins/search/webview.cpp:145
 #, kde-format
@@ -7162,9 +7159,9 @@ msgstr ""
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:127
 #: plugins/shutdown/shutdownruleset.cpp:242
-#, fuzzy, kde-format
+#, kde-format
 msgid "Shutdown"
-msgstr "Slökkva"
+msgstr "Slökkva á tölvunni"
 
 #. i18n: ectx: ToolBar (ShutdownToolBar)
 #: plugins/shutdown/ktorrent_shutdownui.rc:12
@@ -7173,14 +7170,14 @@ msgid "Shutdown Toolbar"
 msgstr "Slökkva Tækjaslá"
 
 #: plugins/shutdown/shutdowndlg.cpp:23
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Configure Shutdown"
-msgstr "Stilla Slökkva"
+msgstr "Stilla hvernig slökkva skal á tölvunni"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
 #: plugins/shutdown/shutdownruleset.cpp:245
-#, fuzzy, kde-format
+#, kde-format
 msgid "Lock"
 msgstr "Læsa"
 
@@ -7225,9 +7222,9 @@ msgstr "Aðgerð til:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/shutdown/shutdowndlg.ui:32
-#, fuzzy, kde-format
+#, kde-format
 msgid "Execute action when:"
-msgstr "Keyra:"
+msgstr "Keyra aðgerð þegar:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_all_rules_must_be_hit)
 #: plugins/shutdown/shutdowndlg.ui:47
@@ -7244,14 +7241,14 @@ msgid "All events must have happened"
 msgstr ""
 
 #: plugins/shutdown/shutdownplugin.cpp:32
-#, fuzzy, kde-format
+#, kde-format
 msgid "Shutdown Enabled"
-msgstr "Slökkva Virkt"
+msgstr "Virkt að slökkva á tölvunni"
 
 #: plugins/shutdown/shutdownplugin.cpp:36
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure Shutdown"
-msgstr "Stilla Slökkva"
+msgstr "Stilla hvernig slökkva skal á tölvunni"
 
 #: plugins/shutdown/shutdownruleset.cpp:236
 #, fuzzy, kde-format
@@ -7290,9 +7287,9 @@ msgstr ""
 
 #: plugins/shutdown/shutdowntorrentmodel.cpp:74
 #: plugins/shutdown/shutdowntorrentmodel.cpp:211
-#, fuzzy, kde-format
+#, kde-format
 msgid "Downloading finishes"
-msgstr "Sæki"
+msgstr "Niðurhali lýkur"
 
 #: plugins/shutdown/shutdowntorrentmodel.cpp:76
 #: plugins/shutdown/shutdowntorrentmodel.cpp:212
@@ -7301,7 +7298,7 @@ msgid "Seeding finishes"
 msgstr "Sáningu lýkur"
 
 #: plugins/shutdown/shutdowntorrentmodel.cpp:132
-#, fuzzy, kde-format
+#, kde-format
 msgid "Event"
 msgstr "Atburður"
 
@@ -7326,7 +7323,7 @@ msgstr "Tengingar"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_5)
 #: plugins/stats/Conns.ui:31 plugins/stats/DisplaySettings.ui:796
 #: plugins/stats/Settings.ui:234
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Chart name"
 msgid "DHT"
 msgstr "DHT"
@@ -7401,38 +7398,38 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_32)
 #: plugins/stats/ConnsTabPage.cc:73 plugins/stats/DisplaySettings.ui:845
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Name of a line on chart"
 msgid "Tasks"
-msgstr "Verkefni"
+msgstr "Verk"
 
 #. i18n: ectx: property (title), widget (QGroupBox, DlSpdGbw)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
 #: plugins/stats/DisplaySettings.ui:27 plugins/stats/Settings.ui:114
 #: plugins/stats/Spd.ui:19
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Chart name"
 msgid "Download"
-msgstr "Hlaða niður"
+msgstr "Sækja"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: plugins/stats/DisplaySettings.ui:37 plugins/stats/SpdTabPage.cc:49
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Current speed"
-msgstr "Núverandi"
+msgstr "Fyrirliggjandi hraði"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: plugins/stats/DisplaySettings.ui:73
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Average"
 msgstr "Meðaltal"
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: plugins/stats/DisplaySettings.ui:112
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Limit"
 msgstr "Takmörk"
@@ -7442,7 +7439,7 @@ msgstr "Takmörk"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: plugins/stats/DisplaySettings.ui:165 plugins/stats/Settings.ui:166
 #: plugins/stats/Spd.ui:31
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Chart name"
 msgid "Peers"
 msgstr "Jafningjar"
@@ -7535,9 +7532,9 @@ msgstr "Skjár"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AntiAliasing)
 #: plugins/stats/DisplaySettings.ui:910
-#, fuzzy, kde-format
+#, kde-format
 msgid "Use anti-aliasing"
-msgstr "Nota"
+msgstr "Nota afstöllun"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DrawBgdGrid)
 #: plugins/stats/DisplaySettings.ui:920
@@ -7547,10 +7544,10 @@ msgstr "Jafntefli bakgrunnur"
 
 #. i18n: ectx: property (text), widget (QLabel, label_18)
 #: plugins/stats/DisplaySettings.ui:932
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Widget type:"
-msgstr "tegund:"
+msgstr "Gerð viðmótshluta :"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:940
@@ -7560,7 +7557,7 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:945
-#, fuzzy, kde-format
+#, kde-format
 msgid "KDE"
 msgstr "KDE"
 
@@ -7571,13 +7568,13 @@ msgid "(plugin reload is needed after change)"
 msgstr "íforrit endurlesa er"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Display"
 msgstr "Skjár"
 
 #: plugins/stats/drawer/ChartDrawer.cc:14
-#, fuzzy, kde-format
+#, kde-format
 msgid "KiB/s"
 msgstr "KiB/s"
 
@@ -7588,13 +7585,13 @@ msgstr "Óþekkt"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:310
 #: plugins/stats/drawer/PlainChartDrawer.cc:493
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
 "underline'>Legend:</h1><ul type='square'>"
 msgstr ""
-"<h1 align='center' style='font-size: large; text-decoration: underline'> "
-"Skýring</h1><ul type='square'>"
+"<h1 align='center' style='font-size: large; text-decoration: "
+"underline'>Skýring:</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:313
 #: plugins/stats/drawer/PlainChartDrawer.cc:496
@@ -7606,37 +7603,36 @@ msgstr ""
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:350
 #: plugins/stats/drawer/PlainChartDrawer.cc:303
-#, fuzzy, kde-format
-#| msgid "Save as image…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
-msgstr "Vista sem mynd..."
+msgstr "Vista sem mynd…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:357
 #: plugins/stats/drawer/PlainChartDrawer.cc:310
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
 msgid "Rescale"
-msgstr "Skanna aftur"
+msgstr "Endurkvarða"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:364
 #: plugins/stats/drawer/PlainChartDrawer.cc:317
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
 msgstr "Frumstilla"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select path to save image…"
-msgstr "Velja til mynd"
+msgstr "Veldu slóð til að vista mynd á…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
-#, fuzzy, kde-format
+#, kde-format
 msgid "Image files"
-msgstr "Skrár"
+msgstr "Myndskrár"
 
 #. i18n: ectx: label, entry (UpdateEveryGuiUpdates), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:10
@@ -7860,10 +7856,10 @@ msgstr "Uppfæra"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/stats/Settings.ui:50
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Continuation of: Update charts every [number field]"
 msgid "GUI updates"
-msgstr "Uppfæra"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/stats/Settings.ui:69
@@ -7914,10 +7910,10 @@ msgstr "af:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: plugins/stats/Settings.ui:290
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:group"
 msgid "Peers connections"
-msgstr "Tengingar"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowSeedsInSwarms)
 #: plugins/stats/Settings.ui:296
@@ -7932,8 +7928,7 @@ msgid "Show leechers in swarms"
 msgstr "Sýna \""
 
 #: plugins/stats/SettingsPage.cc:12
-#, fuzzy, kde-format
-#| msgid "Statistics"
+#, kde-format
 msgctxt "@title:window"
 msgid "Statistics"
 msgstr "Tölfræði"
@@ -7945,7 +7940,7 @@ msgstr "(= %1 ms)"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SpdWgt)
 #: plugins/stats/Spd.ui:13
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Speed"
 msgstr "Hraði"
@@ -7970,8 +7965,7 @@ msgid "Speed limit"
 msgstr "Hraðtakmörk"
 
 #: plugins/stats/SpdTabPage.cc:56
-#, fuzzy, kde-format
-#| msgid "Speed limit"
+#, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Speed limit"
 msgstr "Hraðtakmörk"
@@ -7997,14 +7991,14 @@ msgid "Displays charts about connections"
 msgstr ""
 
 #: plugins/syndication/feedlist.cpp:151
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "%2\n"
 "1 active filter"
 msgid_plural ""
 "%2\n"
 "%1 active filters"
-msgstr[0] ""
+msgstr[0] "germynd sía"
 msgstr[1] "germynd sía"
 
 #: plugins/syndication/feedlist.cpp:159
@@ -8060,21 +8054,21 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
-#, fuzzy, kde-format
+#, kde-format
 msgid "Status:"
 msgstr "Staða:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/syndication/feedwidget.ui:85
-#, fuzzy, kde-format
+#, kde-format
 msgid "Active Filters:"
-msgstr "Virk:"
+msgstr "Virkar síur:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/syndication/feedwidget.ui:131
-#, fuzzy, kde-format
+#, kde-format
 msgid "Refresh every:"
-msgstr "Endurlesa"
+msgstr "Uppfærslutíðni:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:138
@@ -8084,30 +8078,30 @@ msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:141
-#, fuzzy, kde-format
+#, kde-format
 msgid " minutes"
 msgstr " mínútur"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:170
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cookies"
-msgstr "Yfirfylltist"
+msgstr "Vefkökur"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_filters)
 #: plugins/syndication/feedwidget.ui:177
-#, fuzzy, kde-format
+#, kde-format
 msgid "Filters"
 msgstr "Síur"
 
 #: plugins/syndication/feedwidgetmodel.cpp:77
-#, fuzzy, kde-format
+#, kde-format
 msgid "Date Published"
-msgstr "Dagsetning"
+msgstr "Útgáfudagsetning"
 
 #: plugins/syndication/filtereditor.cpp:38
 #: plugins/syndication/syndicationplugin.cpp:82
-#, fuzzy, kde-format
+#, kde-format
 msgid "Edit Filter"
 msgstr "Breyta síu"
 
@@ -8118,9 +8112,9 @@ msgstr "er a sía sía."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/syndication/filtereditor.ui:22
-#, fuzzy, kde-format
+#, kde-format
 msgid "Name:"
-msgstr "Nafn:"
+msgstr "Heiti:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
 #: plugins/syndication/filtereditor.ui:38
@@ -8294,9 +8288,9 @@ msgstr "Hlutur passa við allir"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: plugins/syndication/filtereditor.ui:168
-#, fuzzy, kde-format
+#, kde-format
 msgid "Seasons && Episodes"
-msgstr "Nota og"
+msgstr "Þáttaraðir og þættir"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_use_se_matching)
 #: plugins/syndication/filtereditor.ui:174
@@ -8326,11 +8320,11 @@ msgstr "til a og a n n og 9"
 #: plugins/syndication/filtereditor.ui:201
 #, kde-format
 msgid "Episodes:"
-msgstr ""
+msgstr "Þættir:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_episodes)
 #: plugins/syndication/filtereditor.ui:212
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Specify the episodes to download, multiple episodes can be separated by a , "
 "and you can also use ranges by using a -\n"
@@ -8338,7 +8332,7 @@ msgid ""
 "For example: 1, 3-6, 9\n"
 "\n"
 "Will download episodes 1, 3, 4, 5, 6 and 9"
-msgstr "til a og a n n og 9"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_se_no_duplicates)
 #: plugins/syndication/filtereditor.ui:221
@@ -8360,21 +8354,21 @@ msgstr "Hlaða niður af hlutir"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_add_to_group)
 #: plugins/syndication/filtereditor.ui:264
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add to group:"
-msgstr "Bæta við til flokkur:"
+msgstr "Bæta við hóp:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_silently)
 #: plugins/syndication/filtereditor.ui:320
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open torrents silently"
-msgstr "Opna"
+msgstr "Opna torrent streymi hljóðlega"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
 #. i18n: ectx: property (text), widget (QPushButton, m_test)
 #: plugins/syndication/filtereditor.ui:341
 #: plugins/syndication/filtereditor.ui:349
-#, fuzzy, kde-format
+#, kde-format
 msgid "Test"
 msgstr "Prófa"
 
@@ -8395,10 +8389,9 @@ msgid "Timeout when downloading feed"
 msgstr "Virkja er búið"
 
 #: plugins/syndication/ktfeed.cpp:452
-#, fuzzy, kde-format
-#| msgid "Unknown"
+#, kde-format
 msgid "Unknown hostname"
-msgstr "Óþekkt"
+msgstr "Óþekkt vélarheiti"
 
 #: plugins/syndication/ktfeed.cpp:454
 #, kde-format
@@ -8450,32 +8443,32 @@ msgstr "Síur"
 
 #. i18n: ectx: property (text), widget (QLabel, m_feed_text)
 #: plugins/syndication/managefiltersdlg.ui:22
-#, fuzzy, kde-format
+#, kde-format
 msgid "Feed:"
-msgstr "Straumur:"
+msgstr "Streymi:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/syndication/managefiltersdlg.ui:33
-#, fuzzy, kde-format
+#, kde-format
 msgid "Active filters:"
-msgstr "Virk:"
+msgstr "Virkar síur:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/managefiltersdlg.ui:91
-#, fuzzy, kde-format
+#, kde-format
 msgid "Available filters:"
-msgstr "Tiltækt:"
+msgstr "Tiltækar síur:"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_all)
 #: plugins/syndication/managefiltersdlg.ui:107
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove All"
 msgstr "Fjarlægja allt"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
 #: plugins/syndication/syndicationactivity.cpp:188
-#, fuzzy, kde-format
+#, kde-format
 msgid "New Filter"
 msgstr "Ný sía"
 
@@ -8502,10 +8495,9 @@ msgid "Please enter the URL of the RSS or Atom feed."
 msgstr "Slóð á RSS eða Atom fréttastraum."
 
 #: plugins/syndication/syndicationactivity.cpp:133
-#, fuzzy, kde-format
-#| msgid "Failed to load feed %1."
+#, kde-format
 msgid "Failed to load feed %1: %2"
-msgstr "Tókst ekki að hlaða inn fréttastraumi %1."
+msgstr "Tókst ekki að hlaða inn streymi %1: %2"
 
 #: plugins/syndication/syndicationactivity.cpp:146
 #, fuzzy, kde-format
@@ -8513,32 +8505,32 @@ msgid "Failed to create directory for feed %1: %2"
 msgstr "Mistókst til fyrir 2"
 
 #: plugins/syndication/syndicationactivity.cpp:190
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add New Filter"
-msgstr "Bæta við Nýtt Sía"
+msgstr "Bæta við nýrri síu"
 
 #: plugins/syndication/syndicationplugin.cpp:64
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add Feed"
-msgstr "Bæta við straumi"
+msgstr "Bæta við streymi"
 
 #: plugins/syndication/syndicationplugin.cpp:67
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove Feed"
-msgstr "Fjarlægja straum"
+msgstr "Fjarlægja streymi"
 
 #: plugins/syndication/syndicationplugin.cpp:73
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rename"
 msgstr "Endurnefna"
 
 #: plugins/syndication/syndicationplugin.cpp:76
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add Filter"
-msgstr "Bæta síu við"
+msgstr "Bæta við síu"
 
 #: plugins/syndication/syndicationplugin.cpp:79
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove Filter"
 msgstr "Fjarlægja síu"
 
@@ -8554,8 +8546,7 @@ msgid "Device"
 msgstr "Tæki"
 
 #: plugins/upnp/routermodel.cpp:59
-#, fuzzy, kde-format
-#| msgid "Port Forwarded"
+#, kde-format
 msgid "Ports Forwarded"
 msgstr "Gátt framvísað"
 
@@ -8582,7 +8573,7 @@ msgstr "Sýnir stöðu UPnP íforrits"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_rescan)
 #: plugins/upnp/upnpwidget.ui:54
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rescan"
 msgstr "Skanna aftur"
 
