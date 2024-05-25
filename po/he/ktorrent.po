@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2024-05-05 12:10+0300\n"
+"PO-Revision-Date: 2024-05-24 11:36+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5259,8 +5259,7 @@ msgid "Open With"
 msgstr ""
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "שינוי שם"
@@ -8048,41 +8047,41 @@ msgstr "דקות"
 #: plugins/syndication/feedwidget.ui:170
 #, kde-format
 msgid "Cookies"
-msgstr ""
+msgstr "עוגיות"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_filters)
 #: plugins/syndication/feedwidget.ui:177
 #, kde-format
 msgid "Filters"
-msgstr ""
+msgstr "מסננים"
 
 #: plugins/syndication/feedwidgetmodel.cpp:77
 #, kde-format
 msgid "Date Published"
-msgstr ""
+msgstr "תאריך הפרסום"
 
 #: plugins/syndication/filtereditor.cpp:38
 #: plugins/syndication/syndicationplugin.cpp:82
 #, kde-format
 msgid "Edit Filter"
-msgstr ""
+msgstr "עריכת מסנן"
 
 #: plugins/syndication/filtereditor.cpp:226
 #, kde-format
 msgid "There already is a filter named %1, filter names must be unique."
-msgstr ""
+msgstr "כבר יש מסנן בשם %1, שמות מסננים חייבים להיות יחודיים."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/syndication/filtereditor.ui:22
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "שם:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
 #: plugins/syndication/filtereditor.ui:38
 #, kde-format
 msgid "String Matching"
-msgstr ""
+msgstr "התאמת מחרוזות"
 
 #. i18n: ectx: property (toolTip), widget (KEditListWidget, m_word_matches)
 #. i18n: ectx: property (toolTip), widget (KEditListWidget, m_exclusion_patterns)
@@ -8146,6 +8145,59 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">For example "
 "the *.torrent will match any item which ends in .torrent. </p>"
 msgstr ""
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">המחרוזת לאיתור בכותרת "
+"הפריט. יש תמיכה בתחביר תווי הכללה פשוט:</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<table border=\"0\" style=\" margin-top:0px; margin-bottom:0px; margin-"
+"left:0px; margin-right:0px;\" align=\"center\" cellspacing=\"1\" cellpadding="
+"\"2\">\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">c</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">כל תו מייצג את עצמו למעט "
+"למעט אלו שמצוינים להלן. כך למשל <span style=\" font-weight:600;\">ג</span> "
+"תואם לתו <span style=\" font-style:italic;\">ג</span>.</p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">?</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">תואם לכל תו "
+"בודד שהוא. </p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">*</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">תואם אפס או "
+"יותר מכל תו שהוא.</p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">[...]</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">אפשר לציין "
+"סדרות של תווים בין סוגריים מרובעים. בתוך מחלקת התווים, כמו מחוצה לה ללוכסן "
+"הפוך אין משמעות מיוחדת.</p></td></tr></table>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">למשל המחרוזת"
+" ‎*.torrent תמצ כל פריט שמסתיים ב־.torrent. </p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_exclusion_reg_exp)
@@ -8156,6 +8208,8 @@ msgid ""
 "By default strings will use wildcard matching. If you want to use regular "
 "expressions, this needs to be enabled."
 msgstr ""
+"כברירת מחדל מחרוזות ישתמשו בהתאמה לפי תווי הכללה. כדי להשתמש בביטויים "
+"רגולריים יש להפעיל את זה."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_reg_exp)
@@ -8163,13 +8217,13 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:146
 #, kde-format
 msgid "Strings are regular expressions"
-msgstr ""
+msgstr "המחרוזות הן ביטויים רגולריים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_all_words_must_match)
 #: plugins/syndication/filtereditor.ui:88
 #, kde-format
 msgid "Item must match all strings to be included"
-msgstr ""
+msgstr "על הפריט לענות על כל המחרוזות כדי שייכלל"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_match_case_sensitive)
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_case_sensitive)
@@ -8177,37 +8231,37 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:160
 #, kde-format
 msgid "Case sensitive matching"
-msgstr ""
+msgstr "התאמה תלויית רישיות"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_5)
 #: plugins/syndication/filtereditor.ui:103
 #, kde-format
 msgid "Exclusion Patterns"
-msgstr ""
+msgstr "תבניות החרגה"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_all_must_match)
 #: plugins/syndication/filtereditor.ui:153
 #, kde-format
 msgid "Item must match all strings to be excluded"
-msgstr ""
+msgstr "על הפריט לענות על כל המחרוזות כדי שיוחרג"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: plugins/syndication/filtereditor.ui:168
 #, kde-format
 msgid "Seasons && Episodes"
-msgstr ""
+msgstr "עונות ופרקים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_use_se_matching)
 #: plugins/syndication/filtereditor.ui:174
 #, kde-format
 msgid "Use season and episode matching"
-msgstr ""
+msgstr "להשתמש בתיאום עונות ופרקים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/syndication/filtereditor.ui:183
 #, kde-format
 msgid "Seasons: "
-msgstr ""
+msgstr "עונות:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_seasons)
 #: plugins/syndication/filtereditor.ui:194
@@ -8225,7 +8279,7 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:201
 #, kde-format
 msgid "Episodes:"
-msgstr ""
+msgstr "פרקים:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_episodes)
 #: plugins/syndication/filtereditor.ui:212
@@ -8243,19 +8297,19 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:221
 #, kde-format
 msgid "Do not download multiple items with the same season and episode"
-msgstr ""
+msgstr "לא להוריד מספר פריטים עם אותה העונה והפרק"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_download_matches)
 #: plugins/syndication/filtereditor.ui:248
 #, kde-format
 msgid "Download torrents of matching items"
-msgstr ""
+msgstr "להוריד טורנטים של הפריטים התואמים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_download_non_matches)
 #: plugins/syndication/filtereditor.ui:255
 #, kde-format
 msgid "Download torrents of non matching items"
-msgstr ""
+msgstr "להוריד טורנטים של הפריטים שאינם תואמים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_add_to_group)
 #: plugins/syndication/filtereditor.ui:264
@@ -8267,7 +8321,7 @@ msgstr "הוספה לקבוצה:"
 #: plugins/syndication/filtereditor.ui:320
 #, kde-format
 msgid "Open torrents silently"
-msgstr ""
+msgstr "פתיחת טורנטים בצורה שקטה"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
 #. i18n: ectx: property (text), widget (QPushButton, m_test)
@@ -8275,18 +8329,18 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:349
 #, kde-format
 msgid "Test"
-msgstr ""
+msgstr "בדיקה"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/filtereditor.ui:356
 #, kde-format
 msgid "filter on feed:"
-msgstr ""
+msgstr "סינון על הערוץ:"
 
 #: plugins/syndication/ktfeed.cpp:448
 #, kde-format
 msgid "Aborted"
-msgstr ""
+msgstr "בוטל באופן גורף"
 
 #: plugins/syndication/ktfeed.cpp:450
 #, kde-format
@@ -8296,12 +8350,12 @@ msgstr ""
 #: plugins/syndication/ktfeed.cpp:452
 #, kde-format
 msgid "Unknown hostname"
-msgstr ""
+msgstr "שם מארח לא ידוע"
 
 #: plugins/syndication/ktfeed.cpp:454
 #, kde-format
 msgid "File not found"
-msgstr ""
+msgstr "הקובץ לא נמצא"
 
 #: plugins/syndication/ktfeed.cpp:456
 #, kde-format
@@ -8344,25 +8398,25 @@ msgstr ""
 #: plugins/syndication/managefiltersdlg.ui:13
 #, kde-format
 msgid "Manage Filters"
-msgstr ""
+msgstr "ניהול מסננים"
 
 #. i18n: ectx: property (text), widget (QLabel, m_feed_text)
 #: plugins/syndication/managefiltersdlg.ui:22
 #, kde-format
 msgid "Feed:"
-msgstr ""
+msgstr "ערוץ:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/syndication/managefiltersdlg.ui:33
 #, kde-format
 msgid "Active filters:"
-msgstr ""
+msgstr "מסננים פעילים:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/managefiltersdlg.ui:91
 #, kde-format
 msgid "Available filters:"
-msgstr ""
+msgstr "מסננים זמינים:"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_all)
 #: plugins/syndication/managefiltersdlg.ui:107
@@ -8375,7 +8429,7 @@ msgstr "הסר הכל"
 #: plugins/syndication/syndicationactivity.cpp:188
 #, kde-format
 msgid "New Filter"
-msgstr ""
+msgstr "מסנן חדש"
 
 #: plugins/syndication/syndicationactivity.cpp:39
 #: plugins/syndication/syndicationplugin.cpp:30
@@ -8402,12 +8456,12 @@ msgstr ""
 #: plugins/syndication/syndicationactivity.cpp:133
 #, kde-format
 msgid "Failed to load feed %1: %2"
-msgstr ""
+msgstr "טעינת הערוץ %1 נכשלה: %2"
 
 #: plugins/syndication/syndicationactivity.cpp:146
 #, kde-format
 msgid "Failed to create directory for feed %1: %2"
-msgstr ""
+msgstr "יצירת תיקייה לערוץ %1 נכשלה: %2"
 
 #: plugins/syndication/syndicationactivity.cpp:190
 #, kde-format
