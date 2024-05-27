@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-03 00:37+0000\n"
-"PO-Revision-Date: 2024-04-17 07:18+0900\n"
+"PO-Revision-Date: 2024-05-26 23:26+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -54,8 +54,8 @@ msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
 "following torrents. Torrents are not allowed to write to the same files. "
 msgstr ""
-"Torrent <b>%1</b> 與以下的 torrents 有一個以上的共同的檔案。但是它們不允許寫"
-"入相同的檔案。"
+"Torrent <b>%1</b> 與以下的 torrent 有一個以上的共同的檔案。但是它們不允許寫入"
+"相同的檔案。"
 
 #: ktorrent/core.cpp:850
 #, kde-format
@@ -313,14 +313,14 @@ msgid ""
 "following torrents. Torrents are not allowed to write to the same files. "
 "Please select a different location."
 msgstr ""
-"Torrent <b>%1</b> 與以下的 torrents 有一個以上的共同的檔案。但是它們不允許寫"
-"入相同的檔案。請選擇其它的位置。"
+"Torrent <b>%1</b> 與以下的 torrent 有一個以上的共同的檔案。但是它們不允許寫入"
+"相同的檔案。請選擇其它的位置。"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
 #: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
-msgstr "所有 Torrents"
+msgstr "所有 torrent"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:486
 #, kde-format
@@ -1135,7 +1135,7 @@ msgid ""
 "location in the dialog will be set to this. You can still override it, if "
 "you want to."
 msgstr ""
-"此群組中的 torrents 預設的儲存位置。<br/><br/> 這只用於檔案選擇對話框。當您變"
+"此群組中的 torrent 預設的儲存位置。<br/><br/> 這只用於檔案選擇對話框。當您變"
 "更群組時，對話框中的下載位置會換成這個設定。要的話您還是可以覆蓋此設定。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_location_enabled)
@@ -1160,7 +1160,7 @@ msgid ""
 "the move when completed location in the dialog will be set to this. You can "
 "still override it, if you want to."
 msgstr ""
-"此群組中的 torrents 預設的完成後移動目的位置。<br/><br/> 這只用於檔案選擇對話"
+"此群組中的 torrent 預設的完成後移動目的位置。<br/><br/> 這只用於檔案選擇對話"
 "框。當您變更群組時，對話框中的移動目的位置會換成這個設定。要的話您還是可以覆"
 "蓋此設定。"
 
@@ -1168,7 +1168,7 @@ msgstr ""
 #: ktorrent/groups/grouppolicydlg.ui:63
 #, kde-format
 msgid "Default settings for torrents which are added to the group."
-msgstr "Torrents 加入此群組時的預設設定。"
+msgstr "torrent 加入此群組時的預設設定。"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:66
@@ -1940,7 +1940,7 @@ msgstr "Alexey Shildyakov "
 #: ktorrent/main.cpp:167
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
-msgstr "將內部只有單一檔案的 torrents 更名為內部檔案的檔名的修補"
+msgstr "將內部只有單一檔案的 torrent 更名為內部檔案的檔名的修補"
 
 #: ktorrent/main.cpp:168
 #, kde-format
@@ -2691,19 +2691,19 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:163
 #, kde-format
 msgid "Rename single file torrents with the name of its only file"
-msgstr "將內部只有單一檔案的 torrents 更名為內部檔案的檔名"
+msgstr "將內部只有單一檔案的 torrent 更名為內部檔案的檔名"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_highlightNewTorrents)
 #: ktorrent/pref/generalpref.ui:170
 #, kde-format
 msgid "Whether or not new torrents will be highlighted."
-msgstr "是否要突顯新的 torrents。"
+msgstr "是否要突顯新的 torrent。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_highlightNewTorrents)
 #: ktorrent/pref/generalpref.ui:173
 #, kde-format
 msgid "Highlight new torrents"
-msgstr "突顯新的 Torrents"
+msgstr "突顯新的 torrent"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showTotalSpeedInTitle)
 #: ktorrent/pref/generalpref.ui:180
@@ -3189,7 +3189,7 @@ msgid ""
 msgstr ""
 "<p>開啟此選項的話，佇列管理員會在某個 torrent 停滯過久時降低它的優先權。</"
 "p>\n"
-"<p>它能讓佇列管理員在 torrent 沒做任何事時去執行其它的 torrents。</p>"
+"<p>它能讓佇列管理員在 torrent 沒做任何事時去執行其它的 torrent。</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:134
@@ -3654,7 +3654,7 @@ msgstr "暫停 torrent"
 #: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
 #, kde-format
 msgid "Suspend all running torrents"
-msgstr "暫停所有運行中的 torrents"
+msgstr "暫停所有運行中的 torrent"
 
 #: ktorrent/torrentactivity.cpp:128
 #, kde-format
@@ -3669,12 +3669,12 @@ msgstr "顯示或隱藏群組顯示"
 #: ktorrent/torrentactivity.cpp:133
 #, kde-format
 msgid "Filter Torrents"
-msgstr "過濾 Torrents"
+msgstr "過濾 torrent"
 
 #: ktorrent/torrentactivity.cpp:134
 #, kde-format
 msgid "Filter torrents based on filter string"
-msgstr "依據過濾字串來過濾 torrents"
+msgstr "依據過濾字串來過濾 torrent"
 
 #: ktorrent/trayicon.cpp:89
 #, kde-format
@@ -4161,7 +4161,7 @@ msgstr "保存資料"
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
-msgstr "您將會失去以下的 torrents 所有已下載的資料。您確定要這樣做?"
+msgstr "您將會失去以下的 torrent 所有已下載的資料。您確定要這樣做?"
 
 #: ktorrent/view/view.cpp:484
 #, kde-format
@@ -4498,7 +4498,7 @@ msgstr "被動的上傳"
 #: libktcore/groups/grouptreemodel.cpp:31
 #, kde-format
 msgid "Custom Groups"
-msgstr "自定群組"
+msgstr "自訂群組"
 
 #: libktcore/groups/ungroupedgroup.cpp:15
 #, kde-format
@@ -6835,7 +6835,7 @@ msgid ""
 "Scan the folder recursively for torrents. <br/><br/>\n"
 "Note: This will not be done for any folder named loaded."
 msgstr ""
-"遞迴掃描資料夾尋找 torrents。<br/><br/>\n"
+"遞迴掃描資料夾尋找 torrent。<br/><br/>\n"
 "注意：若資料夾名稱為 loaded 則不會掃描。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_recursive)
@@ -7268,7 +7268,7 @@ msgstr "當 torrent 完成下載後"
 #: plugins/shutdown/shutdowndlg.cpp:46
 #, kde-format
 msgid "When all torrents finish seeding"
-msgstr "當所有的 torrents 完成播種時"
+msgstr "當所有的 torrent 完成播種時"
 
 #: plugins/shutdown/shutdowndlg.cpp:47
 #, kde-format
@@ -7337,12 +7337,12 @@ msgstr "當以下事件其中一件發生時：<br/><br/> "
 #: plugins/shutdown/shutdownruleset.cpp:328
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
-msgstr "<b>所有的 torrents</b> 完成下載時"
+msgstr "<b>所有的 torrent</b> 完成下載時"
 
 #: plugins/shutdown/shutdownruleset.cpp:330
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
-msgstr "<b>所有的 torrents</b> 完成播種時"
+msgstr "<b>所有的 torrent</b> 完成播種時"
 
 #: plugins/shutdown/shutdownruleset.cpp:332
 #, kde-format
@@ -8424,13 +8424,13 @@ msgstr "相同一季與相同一集的話，不要重複下載"
 #: plugins/syndication/filtereditor.ui:248
 #, kde-format
 msgid "Download torrents of matching items"
-msgstr "下載比對符合的 torrents"
+msgstr "下載比對符合的 torrent"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_download_non_matches)
 #: plugins/syndication/filtereditor.ui:255
 #, kde-format
 msgid "Download torrents of non matching items"
-msgstr "下載比對不符合的 torrents"
+msgstr "下載比對不符合的 torrent"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_add_to_group)
 #: plugins/syndication/filtereditor.ui:264

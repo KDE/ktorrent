@@ -7432,13 +7432,13 @@ msgstr "Kilitle"
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
-msgstr "Uyut (bellek kullanarak askıya al)"
+msgstr "Uyut (Bellek kullanarak askıya al)"
 
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
 #: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Hibernate (suspend to disk)"
-msgstr "Hazırda Beklet (disk kullanarak askıya al)"
+msgstr "Derin Uykuya Geçir (Disk kullanarak askıya al)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45
 #, kde-format
@@ -7465,13 +7465,13 @@ msgstr "Kapatma Ayarları"
 #: plugins/shutdown/shutdowndlg.ui:22
 #, kde-format
 msgid "Action to execute:"
-msgstr "Yapılacak eylem:"
+msgstr "Yürütülecek eylem:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/shutdown/shutdowndlg.ui:32
 #, kde-format
 msgid "Execute action when:"
-msgstr "Şu olduğunda yapılacak eylem:"
+msgstr "Şu olduğunda yürütülecek eylem:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_all_rules_must_be_hit)
 #: plugins/shutdown/shutdowndlg.ui:47
