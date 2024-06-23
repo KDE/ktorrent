@@ -3,6 +3,10 @@
   <id>org.kde.ktorrent.desktop</id>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0+</project_license>
+  <developer id="org.kde">
+    <name translate="no">KDE</name>
+  </developer>
+  <launchable type="desktop-id">org.kde.ktorrent.desktop</launchable>
   <name>KTorrent</name>
   <name xml:lang="ar">سيولك</name>
   <name xml:lang="ast">KTorrent</name>
