@@ -167,12 +167,12 @@ void MediaPlayerActivity::closeVideo()
 {
     if (video) {
         tabs->removeTab(tabs->indexOf(video));
-        if (show_video_action->isChecked())
-            show_video_action->setChecked(false);
         // tabs->setTabBarHidden(true);
         video->deleteLater();
         video = nullptr;
     }
+    if (show_video_action->isChecked())
+        show_video_action->setChecked(false);
 }
 
 void MediaPlayerActivity::showVideo(bool on)
