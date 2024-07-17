@@ -19,7 +19,6 @@
 
 #include <KIO/CopyJob>
 #include <KIO/JobUiDelegate>
-#include <KIconLoader>
 #include <KLocalizedString>
 #include <KMessageBox>
 

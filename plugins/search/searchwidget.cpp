@@ -19,7 +19,6 @@
 #include <KActionCollection>
 #include <KComboBox>
 #include <KIO/Job>
-#include <KIconLoader>
 #include <KLocalizedString>
 #include <KMainWindow>
 #include <KMessageBox>
