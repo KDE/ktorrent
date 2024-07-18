@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-18 00:39+0000\n"
 "PO-Revision-Date: 2017-12-17 18:00+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -7209,7 +7209,7 @@ msgid "Custom browser executable path"
 msgstr "Путања посебног прегледача"
 
 #: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
-#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:41
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
@@ -7362,18 +7362,18 @@ msgstr "Додај све подразумеване претраживаче."
 msgid "Add Defau&lt"
 msgstr "Додај под&разумеване"
 
-#: plugins/search/searchprefpage.cpp:89 plugins/search/searchprefpage.cpp:125
+#: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:124
 #, kde-format
 msgid "Add a Search Engine"
 msgstr "Додај претраживач"
 
-#: plugins/search/searchprefpage.cpp:89
+#: plugins/search/searchprefpage.cpp:88
 #, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr "Унесите име домаћина за претраживач (на пример www.google.com):"
 
 # literal-segment: searchTerms
-#: plugins/search/searchprefpage.cpp:122
+#: plugins/search/searchprefpage.cpp:121
 #, kde-format
 msgid ""
 "Opensearch is not supported by %1, you will need to enter the search URL "
@@ -7384,33 +7384,33 @@ msgstr ""
 "треба да садржи {searchTerms}, што ће К‑торент заменити оним што тражите."
 
 # literal-segment: searchTerms
-#: plugins/search/searchprefpage.cpp:128
+#: plugins/search/searchprefpage.cpp:127
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "УРЛ %1 не садржи {searchTerms}."
 
-#: plugins/search/searchwidget.cpp:81
+#: plugins/search/searchwidget.cpp:80
 #, kde-format
 msgid " Engine: "
 msgstr " Претраживач: "
 
-#: plugins/search/searchwidget.cpp:222
+#: plugins/search/searchwidget.cpp:221
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Преузимам:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Желите ли да преузмете или сачувате торент?"
 
-#: plugins/search/searchwidget.cpp:231
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Download Torrent"
 msgstr "Преузми торент"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Преузимање"

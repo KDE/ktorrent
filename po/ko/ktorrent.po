@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-18 00:39+0000\n"
 "PO-Revision-Date: 2024-02-17 15:09+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -7087,7 +7087,7 @@ msgid "Custom browser executable path"
 msgstr "사용자 정의 브라우저 실행 파일 경로"
 
 #: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
-#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:41
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
@@ -7240,17 +7240,17 @@ msgstr "모든 기본 검색 엔진을 추가합니다."
 msgid "Add Defau&lt"
 msgstr "기본 항목 추가(&L)"
 
-#: plugins/search/searchprefpage.cpp:89 plugins/search/searchprefpage.cpp:125
+#: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:124
 #, kde-format
 msgid "Add a Search Engine"
 msgstr "검색 엔진 추가"
 
-#: plugins/search/searchprefpage.cpp:89
+#: plugins/search/searchprefpage.cpp:88
 #, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr "검색 엔진의 호스트 이름을 입력하십시오 (예: www.google.com):"
 
-#: plugins/search/searchprefpage.cpp:122
+#: plugins/search/searchprefpage.cpp:121
 #, kde-format
 msgid ""
 "Opensearch is not supported by %1, you will need to enter the search URL "
@@ -7261,33 +7261,33 @@ msgstr ""
 "합니다. URL에는 {searchTerms} 문자열이 들어 있어야 합니다. KTorrent는 이 문자"
 "열을 검색하려고 하는 문자열로 치환합니다."
 
-#: plugins/search/searchprefpage.cpp:128
+#: plugins/search/searchprefpage.cpp:127
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1에는 {searchTerms} 문자열이 없습니다."
 
-#: plugins/search/searchwidget.cpp:81
+#: plugins/search/searchwidget.cpp:80
 #, kde-format
 msgid " Engine: "
 msgstr " 엔진: "
 
-#: plugins/search/searchwidget.cpp:222
+#: plugins/search/searchwidget.cpp:221
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "다운로드 중:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "토렌트를 다운로드하거나 저장하시겠습니까?"
 
-#: plugins/search/searchwidget.cpp:231
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Download Torrent"
 msgstr "토렌트 다운로드"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "다운로드"

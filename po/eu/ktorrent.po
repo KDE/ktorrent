@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-18 00:39+0000\n"
 "PO-Revision-Date: 2024-04-04 20:16+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -7228,7 +7228,7 @@ msgid "Custom browser executable path"
 msgstr "Arakatzaile pertsonalizatuaren exekutagarriaren bide-izena"
 
 #: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
-#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:41
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
@@ -7382,17 +7382,17 @@ msgstr "Gehitu bilatzaile lehenetsi guztiak"
 msgid "Add Defau&lt"
 msgstr "Gehitu &lehenetsia"
 
-#: plugins/search/searchprefpage.cpp:89 plugins/search/searchprefpage.cpp:125
+#: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:124
 #, kde-format
 msgid "Add a Search Engine"
 msgstr "Gehitu bilatzaile bat"
 
-#: plugins/search/searchprefpage.cpp:89
+#: plugins/search/searchprefpage.cpp:88
 #, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr "Idatzi bilatzailearen ostalari-izena (adibidez, www.google.com):"
 
-#: plugins/search/searchprefpage.cpp:122
+#: plugins/search/searchprefpage.cpp:121
 #, kde-format
 msgid ""
 "Opensearch is not supported by %1, you will need to enter the search URL "
@@ -7403,33 +7403,33 @@ msgstr ""
 "URLa. URLak {searchTerms} izan behar du, eta horren ordez bilatzen ari "
 "zarena jarriko du Ktorrent-ek."
 
-#: plugins/search/searchprefpage.cpp:128
+#: plugins/search/searchprefpage.cpp:127
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "%1 URLak ez du {searchTerms}."
 
-#: plugins/search/searchwidget.cpp:81
+#: plugins/search/searchwidget.cpp:80
 #, kde-format
 msgid " Engine: "
 msgstr " Bilatzailea:"
 
-#: plugins/search/searchwidget.cpp:222
+#: plugins/search/searchwidget.cpp:221
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Deskargatzen:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Torrent-a deskargatu edo gorde nahi duzu?"
 
-#: plugins/search/searchwidget.cpp:231
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Download Torrent"
 msgstr "Torrent-a deskargatu"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Deskargatu"

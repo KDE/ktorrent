@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-18 00:39+0000\n"
 "PO-Revision-Date: 2024-06-19 20:50+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -7206,7 +7206,7 @@ msgid "Custom browser executable path"
 msgstr "Sökväg till eget körbart webbläsarprogram"
 
 #: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
-#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:41
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
@@ -7359,17 +7359,17 @@ msgstr "Lägg till alla standardsöktjänster."
 msgid "Add Defau&lt"
 msgstr "Lägg till &standard"
 
-#: plugins/search/searchprefpage.cpp:89 plugins/search/searchprefpage.cpp:125
+#: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:124
 #, kde-format
 msgid "Add a Search Engine"
 msgstr "Lägg till en söktjänst"
 
-#: plugins/search/searchprefpage.cpp:89
+#: plugins/search/searchprefpage.cpp:88
 #, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr "Skriv in söktjänstens värddatornamn (till exempel www.google.com):"
 
-#: plugins/search/searchprefpage.cpp:122
+#: plugins/search/searchprefpage.cpp:121
 #, kde-format
 msgid ""
 "Opensearch is not supported by %1, you will need to enter the search URL "
@@ -7380,33 +7380,33 @@ msgstr ""
 "hand. Webbadressen ska innehålla {searchTerms}. Ktorrent kommer att ersätta "
 "den med det du söker efter."
 
-#: plugins/search/searchprefpage.cpp:128
+#: plugins/search/searchprefpage.cpp:127
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "Webbadressen %1 innehåller inte {searchTerms}."
 
-#: plugins/search/searchwidget.cpp:81
+#: plugins/search/searchwidget.cpp:80
 #, kde-format
 msgid " Engine: "
 msgstr " Söktjänst: "
 
-#: plugins/search/searchwidget.cpp:222
+#: plugins/search/searchwidget.cpp:221
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Laddar ner:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Vill du ladda ner eller spara dataflödet?"
 
-#: plugins/search/searchwidget.cpp:231
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Download Torrent"
 msgstr "Ladda ner dataflöde"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Ladda ner"

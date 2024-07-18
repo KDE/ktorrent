@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-18 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -6927,7 +6927,7 @@ msgid "Custom browser executable path"
 msgstr "Sérsniðið"
 
 #: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
-#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:41
 #, fuzzy, kde-format
 msgctxt "plugin name"
 msgid "Search"
@@ -7080,17 +7080,17 @@ msgstr "Bæta við allir sjálfgefið."
 msgid "Add Defau&lt"
 msgstr "Bæta við Sjá&lfgefið"
 
-#: plugins/search/searchprefpage.cpp:89 plugins/search/searchprefpage.cpp:125
+#: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:124
 #, fuzzy, kde-format
 msgid "Add a Search Engine"
 msgstr "Bæta við a Leita Vél"
 
-#: plugins/search/searchprefpage.cpp:89
+#: plugins/search/searchprefpage.cpp:88
 #, fuzzy, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr "Enter af fyrir:"
 
-#: plugins/search/searchprefpage.cpp:122
+#: plugins/search/searchprefpage.cpp:121
 #, fuzzy, kde-format
 msgid ""
 "Opensearch is not supported by %1, you will need to enter the search URL "
@@ -7098,35 +7098,35 @@ msgid ""
 "by the thing you are searching for."
 msgstr "er ekki til Slóð Slóð innihalda fyrir."
 
-#: plugins/search/searchprefpage.cpp:128
+#: plugins/search/searchprefpage.cpp:127
 #, fuzzy, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "Slóð ekki innihalda."
 
-#: plugins/search/searchwidget.cpp:81
+#: plugins/search/searchwidget.cpp:80
 #, kde-format
 msgid " Engine: "
 msgstr " Vél: "
 
-#: plugins/search/searchwidget.cpp:222
+#: plugins/search/searchwidget.cpp:221
 #, fuzzy, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr ""
 "Copy text   \t\n"
 "<b>Niðurhal</b>"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, fuzzy, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Framkvæma til eða?"
 
-#: plugins/search/searchwidget.cpp:231
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Download Torrent"
 msgstr "Hlaða niður Torrent straumi"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
 #, fuzzy, kde-format
 msgid "Download"
 msgstr "Hlaða niður"

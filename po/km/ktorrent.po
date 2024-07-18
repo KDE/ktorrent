@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-18 00:39+0000\n"
 "PO-Revision-Date: 2012-07-04 08:46+0700\n"
 "Last-Translator: Sophea <sophea@khmeros.info>\n"
 "Language-Team: Khmer <>\n"
@@ -7156,7 +7156,7 @@ msgid "Custom browser executable path"
 msgstr "ផ្លូវ​ដែល​អាច​ប្រតិបត្តិ​បាន​របស់​កម្មវិធី​រុករក​ផ្ទាល់ខ្លួន"
 
 #: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
-#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:42
+#: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:41
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
@@ -7310,17 +7310,17 @@ msgstr "បន្ថែម​ម៉ាស៊ីន​ស្វែងរក​ល
 msgid "Add Defau&lt"
 msgstr "បន្ថែម​លំនាំ​ដើម"
 
-#: plugins/search/searchprefpage.cpp:89 plugins/search/searchprefpage.cpp:125
+#: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:124
 #, kde-format
 msgid "Add a Search Engine"
 msgstr "បន្ថែម​ម៉ាស៊ីន​ស្វែងរក"
 
-#: plugins/search/searchprefpage.cpp:89
+#: plugins/search/searchprefpage.cpp:88
 #, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr "បញ្ចូល​ឈ្មោះ​ម៉ាស៊ីន​របស់​ម៉ាស៊ីន​ស្វែងរក (ឧទាហរណ៍ www.google.com) ៖"
 
-#: plugins/search/searchprefpage.cpp:122
+#: plugins/search/searchprefpage.cpp:121
 #, kde-format
 msgid ""
 "Opensearch is not supported by %1, you will need to enter the search URL "
@@ -7330,33 +7330,33 @@ msgstr ""
 "Opensearch មិន​ត្រូវ​បានគាំទ្រ​ដោយ %1 អ្នក​នឹង​ត្រូវ​បញ្ចូល​ URL ស្វែងរក​ដោយ​ដៃ ។ URL គួរ​មាន "
 "{searchTerms}, ktorrent នឹង​ជំនួស​វា​ដោយ​អ្វី​ដែលអ្នក​ស្វែងរក ។"
 
-#: plugins/search/searchprefpage.cpp:128
+#: plugins/search/searchprefpage.cpp:127
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1 មិន​មាន {searchTerms} ។"
 
-#: plugins/search/searchwidget.cpp:81
+#: plugins/search/searchwidget.cpp:80
 #, kde-format
 msgid " Engine: "
 msgstr " ម៉ាស៊ីន ៖ "
 
-#: plugins/search/searchwidget.cpp:222
+#: plugins/search/searchwidget.cpp:221
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "ទាញ​យក ៖<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "តើ​អ្នក​ចង់​ទាញយក ឬ​រក្សាទុក torrent ឬ ?"
 
-#: plugins/search/searchwidget.cpp:231
+#: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Download Torrent"
 msgstr "ទាញយក Torrent"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:232 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "ទាញយក"
