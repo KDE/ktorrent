@@ -4,6 +4,7 @@
             {
                 "Email": "trufanovan@gmail.com",
                 "Name": "Alexander Trufanov",
+                "Name[he]": "אלכסנדר טרופנוב",
                 "Name[x-test]": "xxAlexander Trufanovxx"
             }
         ],
@@ -19,6 +20,7 @@
         "Description[fi]": "Näyttää valitun kansion tiedostot, jotka eivät kuulu mihinkään torrenttiin",
         "Description[fr]": "Afficher les fichiers dans le dossier sélectionné n'appartenant à aucun flux « torrent »",
         "Description[gl]": "Amosar os ficheiros do cartafol seleccionado que non corresponden a ningún torrent.",
+        "Description[he]": "הצגת קבצים בתיקייה הנבחרת שלא שייכים לטורנט כלשהו",
         "Description[hu]": "Fájlok megjelenítése a kijelölt mappában, amik nem tartoznak egy torrenthez sem",
         "Description[it]": "Visualizza i file nella cartella selezionata che non appartengono ad alcun torrent",
         "Description[ka]": "მონიშნულ საქაღალდეში იმ ფაილების ჩვენება, რომლებიც არც ერთ ტორენტს არ მიეუთვნება",
@@ -53,6 +55,7 @@
         "Name[fi]": "Etsi kadonneita tiedostoja",
         "Name[fr]": "Rechercher des fichiers perdus",
         "Name[gl]": "Buscar ficheiros perdidos",
+        "Name[he]": "סריקה לאיתור קבצים אבודים",
         "Name[hu]": "Elveszett fájlok keresése",
         "Name[ia]": "Scande per files perdite",
         "Name[it]": "Ricerca dei file persi",
