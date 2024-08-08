@@ -5,6 +5,7 @@
                 "Email": "joris.guisson@gmail.com",
                 "Name": "Joris Guisson",
                 "Name[ar]": "يوريس غيسون",
+                "Name[he]": "יורש גיסן",
                 "Name[x-test]": "xxJoris Guissonxx"
             }
         ],
@@ -20,6 +21,7 @@
         "Description[fi]": "Sallii torrenttien valmistuttua tietokoneen sammutuksen",
         "Description[fr]": "Vous permet d'arrêter l'ordinateur lorsque les torrents sont terminés",
         "Description[gl]": "Permite apagar o computador cando rematan os torrentes.",
+        "Description[he]": "מאפשר לעבות את המחשב שלך כשהטורנט מסתיים",
         "Description[hu]": "Lehetővé teszi a számítógép leállítását, ha a torrentek befejeződtek",
         "Description[it]": "Permette lo spegnimento del computer quando termina un torrent",
         "Description[ka]": "საშუალებას გაძლევთ, გამორთოთ კომპიუტერი, როცა ტორენტები დასრულდება",
@@ -59,6 +61,7 @@
         "Name[fr]": "Arrêt",
         "Name[ga]": "Múchadh",
         "Name[gl]": "Apagado",
+        "Name[he]": "כיבוי",
         "Name[hr]": "Isključivanje",
         "Name[hu]": "Kikapcsolás",
         "Name[ia]": "Stoppa (Shutdown)",

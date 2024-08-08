@@ -5,6 +5,7 @@
                 "Email": "joris.guisson@gmail.com",
                 "Name": "Joris Guisson",
                 "Name[ar]": "يوريس غيسون",
+                "Name[he]": "יורש גיסן",
                 "Name[x-test]": "xxJoris Guissonxx"
             }
         ],
@@ -20,6 +21,7 @@
         "Description[fi]": "Määritä useampitiedostoisen torrentin latausjärjestys",
         "Description[fr]": "Spécifie l'ordre de téléchargement d'un torrent multi-fichiers",
         "Description[gl]": "Indicar a orde de descarga dos ficheiros dun torrente.",
+        "Description[he]": "ציון סדר ההורדה של טורנט מרובה קבצים",
         "Description[hu]": "Többfájlos torrentek letöltési sorrendjének megadása",
         "Description[ia]": "Specifica le ordine de discargar de un torrent multi-file",
         "Description[it]": "Specifica l'ordine di scaricamento di un torrent con più file",
@@ -60,6 +62,7 @@
         "Name[fr]": "Ordre de téléchargement",
         "Name[ga]": "Ord Íosluchtaithe",
         "Name[gl]": "Orde de descarga",
+        "Name[he]": "סדר הורדה",
         "Name[hu]": "Letöltési sorrend",
         "Name[ia]": "Ordine de discargar",
         "Name[is]": "Uppröðun niðurhals",

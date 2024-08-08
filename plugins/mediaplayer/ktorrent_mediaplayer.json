@@ -5,6 +5,7 @@
                 "Email": "joris.guisson@gmail.com",
                 "Name": "Joris Guisson",
                 "Name[ar]": "يوريس غيسون",
+                "Name[he]": "יורש גיסן",
                 "Name[x-test]": "xxJoris Guissonxx"
             }
         ],
@@ -20,6 +21,7 @@
         "Description[fi]": "Phonon-pohjainen mediasoitin",
         "Description[fr]": "Lecteur multimédia utilisant Phonon",
         "Description[gl]": "Reprodutor de imaxe e son baseado en Phonon.",
+        "Description[he]": "נגן מדיה מבוסס Phonon",
         "Description[hu]": "Phonon-alapú médialejátszó",
         "Description[it]": "Lettore multimediale basato su Phonon",
         "Description[ka]": "Phonon-ზე დაფუძნებული მედიის დამკვრელი",
@@ -58,6 +60,7 @@
         "Name[fr]": "Lecteur multimédia",
         "Name[ga]": "Seinnteoir Meán",
         "Name[gl]": "Reprodutor",
+        "Name[he]": "נגן מדיה",
         "Name[hr]": "Svirač multimedije",
         "Name[hu]": "Médialejátszó",
         "Name[ia]": "Media Player (Reproductor de Media)",
