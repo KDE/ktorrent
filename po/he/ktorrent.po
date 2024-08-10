@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-18 00:39+0000\n"
-"PO-Revision-Date: 2024-05-24 11:36+0300\n"
+"PO-Revision-Date: 2024-08-09 23:59+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -251,14 +251,14 @@ msgstr ""
 "שהושלמו כמיקום ההורדה?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:215
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
 "directory. Do you want to import these files and use the completed downloads "
 "directory as the location?"
 msgstr ""
-"כל קבצי הטורנט הזה נמצאו התיקית ההורדות שהושלמו.  התרצה להשתמש בתיקית "
-"ההורדות שהושלמו כמיקום ההורדה?"
+"כל קובצי הטורנט הזה נמצאו בתיקיית ההורדות שהושלמו. להשתמש בתיקיית ההורדות "
+"שהושלמו כמקום ההורדה?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:218
 #, kde-format
@@ -8387,12 +8387,12 @@ msgstr ""
 #: plugins/syndication/syndicationplugin.cpp:70
 #, kde-format
 msgid "Add/Remove Filters"
-msgstr ""
+msgstr "הוספת/הסרת מסננים"
 
 #: plugins/syndication/managefiltersdlg.cpp:40
 #, kde-format
 msgid "Feed: <b>%1</b>"
-msgstr ""
+msgstr "ערוץ: <b>%1</b>"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ManageFiltersDlg)
 #: plugins/syndication/managefiltersdlg.ui:13
@@ -8441,12 +8441,12 @@ msgstr ""
 #: plugins/syndication/syndicationactivity.cpp:46
 #, kde-format
 msgid "Manages RSS and Atom feeds"
-msgstr ""
+msgstr "ניהול ערוצי RSS ו־Atom"
 
 #: plugins/syndication/syndicationactivity.cpp:108
 #, kde-format
 msgid "Enter the URL"
-msgstr ""
+msgstr "נא למלא את הכתובת"
 
 #: plugins/syndication/syndicationactivity.cpp:109
 #, kde-format
