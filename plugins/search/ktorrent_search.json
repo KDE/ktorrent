@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
                 "Name": "Joris Guisson, Ivan Vasic",
+                "Name[he]": "יורש גיסן, איוון ואסיק",
                 "Name[x-test]": "xxJoris Guisson, Ivan Vasicxx",
                 "Name[zh_CN]": "Joris Guisson、Ivan Vasic"
             }

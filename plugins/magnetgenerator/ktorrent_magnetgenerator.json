@@ -4,6 +4,7 @@
             {
                 "Email": "jonas@gannon.se",
                 "Name": "Jonas Lundqvist",
+                "Name[he]": "יונאס לונדקוויסט",
                 "Name[x-test]": "xxJonas Lundqvistxx"
             }
         ],
