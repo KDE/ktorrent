@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-18 00:39+0000\n"
-"PO-Revision-Date: 2024-03-29 13:53+0100\n"
+"PO-Revision-Date: 2024-08-16 13:58+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -3981,7 +3981,8 @@ msgstr "<b>%1</b> ouvert silencieusement."
 #, kde-format
 msgid "<b>%1</b> has completed downloading.<br>Average speed: %2 DL / %3 UL."
 msgstr ""
-"<b>%1</b> est complètement téléchargé.<br>Vitesse moyenne : %2 DL / %3 UL."
+"<b>%1</b> est complètement téléchargé.<br>Vitesse moyenne : %2 en "
+"téléchargement  / %3 en envoi."
 
 #: ktorrent/trayicon.cpp:199
 #, kde-format
@@ -6212,7 +6213,7 @@ msgstr "Score"
 #: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Upload Slot"
-msgstr "Slot d'envoi"
+msgstr "Créneau d'envoi"
 
 #: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
@@ -9229,7 +9230,7 @@ msgstr "UPnP"
 #: plugins/upnp/upnpplugin.cpp:43
 #, kde-format
 msgid "Shows the status of the UPnP plugin"
-msgstr "Affiche l'état du module externe UPnP"
+msgstr "Affiche l'état du module externe » « UPnP"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_rescan)
 #: plugins/upnp/upnpwidget.ui:54
