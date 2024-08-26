@@ -2026,7 +2026,6 @@ msgstr ""
 
 #: ktorrent/main.cpp:174
 #, fuzzy, kde-format
-#| msgid "KF5 porting"
 msgid "KF6 porting"
 msgstr "Porting til KF 5"
 
@@ -4181,7 +4180,6 @@ msgstr "Vel ei mappe å flytta dataa til."
 
 #: ktorrent/view/viewdelegate.cpp:332
 #, fuzzy, kde-format
-#| msgid "%1 %"
 msgctxt "Progress bar percentage label"
 msgid "%1%"
 msgstr "%1 %"
@@ -5378,7 +5376,6 @@ msgstr "Opna med"
 
 #: plugins/infowidget/fileview.cpp:116
 #, fuzzy, kde-format
-#| msgid "Rename"
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "Endra namn"
@@ -5746,7 +5743,6 @@ msgstr "Nei"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
 #, fuzzy, kde-format
-#| msgid "%1 %"
 msgctxt "File percentage stat"
 msgid "%1%"
 msgstr "%1 %"

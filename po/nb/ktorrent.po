@@ -2873,11 +2873,6 @@ msgstr "Høyeste antall tilkoblingsoppsett:"
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
 #, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
@@ -2950,9 +2945,6 @@ msgstr "Hovedprotokoll for transport:"
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
 #, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
@@ -4269,7 +4261,6 @@ msgstr "Velg en mappe som data kan flyttes til."
 
 #: ktorrent/view/viewdelegate.cpp:332
 #, fuzzy, kde-format
-#| msgid "%1 %"
 msgctxt "Progress bar percentage label"
 msgid "%1%"
 msgstr "%1 %"
@@ -5451,7 +5442,6 @@ msgstr "Åpne med"
 
 #: plugins/infowidget/fileview.cpp:116
 #, fuzzy, kde-format
-#| msgid "Rename"
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "Endre navn"
@@ -5820,7 +5810,6 @@ msgstr "Nei"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
 #, fuzzy, kde-format
-#| msgid "%1 %"
 msgctxt "File percentage stat"
 msgid "%1%"
 msgstr "%1 %"
