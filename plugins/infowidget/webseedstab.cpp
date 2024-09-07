@@ -14,6 +14,7 @@
 #include <interfaces/webseedinterface.h>
 
 using namespace bt;
+using namespace Qt::Literals::StringLiterals;
 
 namespace kt
 {
@@ -78,7 +79,7 @@ void WebSeedsTab::addWebSeed()
 
     bt::TorrentInterface *tc = curr_tc.data();
     QUrl url(m_webseed->text());
-    if (tc && url.isValid() && url.scheme() == QLatin1String("http")) {
+    if (tc && url.isValid() && (url.scheme() == "http"_L1 || url.scheme() == "https"_L1)) {
         if (tc->addWebSeed(url)) {
             model->changeTC(tc);
             m_webseed->clear();
@@ -133,7 +134,7 @@ void WebSeedsTab::selectionChanged(const QItemSelection &selected, const QItemSe
 void WebSeedsTab::onWebSeedTextChanged(const QString &ws)
 {
     QUrl url(ws);
-    m_add->setEnabled(!curr_tc.isNull() && url.isValid() && url.scheme() == QLatin1String("http"));
+    m_add->setEnabled(!curr_tc.isNull() && url.isValid() && (url.scheme() == "http"_L1 || url.scheme() == "https"_L1));
 }
 
 void WebSeedsTab::update()

@@ -26,6 +26,7 @@
 #include <util/stringcompletionmodel.h>
 
 using namespace bt;
+using namespace Qt::Literals::StringLiterals;
 
 namespace kt
 {
@@ -240,8 +241,8 @@ void TorrentCreatorDlg::addWebSeedPressed()
         return;
     }
 
-    if (url.scheme() != QLatin1String("http")) {
-        KMessageBox::error(this, i18n("Only HTTP is supported for webseeding."));
+    if (url.scheme() != "http"_L1 && url.scheme() != "https"_L1) {
+        KMessageBox::error(this, i18n("Only HTTP(S) is supported for webseeding."));
         return;
     }
 
