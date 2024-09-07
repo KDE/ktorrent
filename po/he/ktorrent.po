@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-18 00:39+0000\n"
-"PO-Revision-Date: 2024-08-10 23:15+0300\n"
+"PO-Revision-Date: 2024-09-06 10:59+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -170,16 +170,16 @@ msgstr "עמית:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_ip)
 #: ktorrent/dialogs/addpeersdlg.ui:43
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<p>The IP address or hostname of the peer you want to connect to, should be "
 "put here.</p>\n"
 "<p><span style=\" font-weight:600;\">Note:</span> We accept both IPv4 and "
 "IPv6 addresses</p>\n"
 msgstr ""
-"‏<p>שים כאן את כתובת ה־IP או השרת של העמית שתרצה להתחבר אליו</p>\n"
-"‏<p><span style=\" font-weight:600;\">שים לב:</span> אנו מאפשרים גם כתובות "
-"IPv4 ו־IPv6</p>\n"
+"<p>את כתובת ה־IP או שם המארח של העמית לחיבור אליו יש לצייןכאן.</p>\n"
+"<p><span style=\" font-weight:600;\">לתשומת ליבך:</span> אנו מקבלים גם "
+"כתובות IPv4 וגם IPv6</p>\n"
 
 #. i18n: ectx: property (text), widget (QLineEdit, m_ip)
 #. i18n: ectx: property (text), widget (QLineEdit, m_ip_to_add)
@@ -514,16 +514,17 @@ msgstr "התחלת טורנט"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_skip_data_check)
 #: ktorrent/dialogs/fileselectdlg.ui:267
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<p>When existing files have been found, skip the data check and assume that "
 "the files are fully downloaded.</p>\n"
 "<p><span style=\" font-weight:600;\">Note: </span>only do this when you are "
 "absolutely sure.</p>"
 msgstr ""
-"<p>שנמצא קובץ שכבר קיים, דלג על בדיקה בהנחה שהוא כבר ירד במלואו</p>\n"
-"<p><span style=\" font-weight:600;\">שים לב: </span>תעשה את זה רק שאתה בטוח "
-"שהקבצים הורדו במלואם.</p>"
+"<p>כאשר נמצאים קבצים קיימים, יש לדלג על בדיקת הנתונים ולהניח שהקבצים ירדו "
+"במלואם.</p>\n"
+"<p><span style=\" font-weight:600;\">לתשומת ליבך: </span>יש לעשות את זה רק "
+"בבטחון מלא.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_skip_data_check)
 #: ktorrent/dialogs/fileselectdlg.ui:270
@@ -1133,16 +1134,16 @@ msgstr "מדיניות לקבוצה %1"
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_default_location_enabled)
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, m_default_location)
 #: ktorrent/groups/grouppolicydlg.ui:32 ktorrent/groups/grouppolicydlg.ui:42
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Default save location for torrents from this group. <br/><br/>This is only "
 "used in the file selection dialog, when you change the group, the download "
 "location in the dialog will be set to this. You can still override it, if "
 "you want to."
 msgstr ""
-"מיקום ברירת־מחדל לשמירת טורנטים בקבוצה זו. <br/><br/>זה ישומש רק לדו־שיח "
-"בחירת הקבצים, כשתשנה את הקבוצה מיקום ההורדה ישתנה למיקום זה. אך עדיין תוכל "
-"לשנות זאת אם תרצה."
+"מקום ברירת המחדל לשמירת טורנטים מהקבוצה הזאת. <br/><br/>בשימוש רק בחלונית "
+"בחירת הקבצים, בעת שינוי הקבוצה החלונית תוגדר לזה.עדיין אפשר לבחור במשהו אחר "
+"בחלונית במידת הצורך."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_location_enabled)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSaveDir)
@@ -7085,7 +7086,7 @@ msgstr ""
 #: plugins/search/searchwidget.cpp:230
 #, kde-format
 msgid "Download Torrent"
-msgstr ""
+msgstr "הורדת טורנט"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
 #: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
@@ -7096,12 +7097,12 @@ msgstr "הורדה"
 #: plugins/search/webview.cpp:105
 #, kde-format
 msgid "Home"
-msgstr ""
+msgstr "בית"
 
 #: plugins/search/webview.cpp:106
 #, kde-format
 msgid "KTorrent"
-msgstr ""
+msgstr "KTorrent"
 
 #: plugins/search/webview.cpp:107
 #, kde-format
@@ -7125,25 +7126,25 @@ msgstr ""
 #: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Shutdown"
-msgstr ""
+msgstr "כיבוי"
 
 #. i18n: ectx: ToolBar (ShutdownToolBar)
 #: plugins/shutdown/ktorrent_shutdownui.rc:12
 #, kde-format
 msgid "Shutdown Toolbar"
-msgstr ""
+msgstr "סרגל כיבוי"
 
 #: plugins/shutdown/shutdowndlg.cpp:23
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Shutdown"
-msgstr ""
+msgstr "הגדרת כיבוי"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
 #: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Lock"
-msgstr ""
+msgstr "לנעול"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
 #: plugins/shutdown/shutdownruleset.cpp:248
@@ -7160,7 +7161,7 @@ msgstr "תרדמת - השהייה לכונן"
 #: plugins/shutdown/shutdowndlg.cpp:45
 #, kde-format
 msgid "When all torrents finish downloading"
-msgstr ""
+msgstr "אחרי שההורדות של כל הטורנטים הסתיימו"
 
 #: plugins/shutdown/shutdowndlg.cpp:46
 #, kde-format
@@ -7176,19 +7177,19 @@ msgstr ""
 #: plugins/shutdown/shutdowndlg.ui:14
 #, kde-format
 msgid "Shutdown Settings"
-msgstr ""
+msgstr "הגדרות כיבוי"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/shutdown/shutdowndlg.ui:22
 #, kde-format
 msgid "Action to execute:"
-msgstr ""
+msgstr "פעולה לביצוע:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/shutdown/shutdowndlg.ui:32
 #, kde-format
 msgid "Execute action when:"
-msgstr ""
+msgstr "להריץ פקודה כאשר:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_all_rules_must_be_hit)
 #: plugins/shutdown/shutdowndlg.ui:47
@@ -7207,12 +7208,12 @@ msgstr ""
 #: plugins/shutdown/shutdownplugin.cpp:32
 #, kde-format
 msgid "Shutdown Enabled"
-msgstr ""
+msgstr "כיבוי פעיל"
 
 #: plugins/shutdown/shutdownplugin.cpp:36
 #, kde-format
 msgid "Configure Shutdown"
-msgstr ""
+msgstr "הגדרת כיבוי"
 
 #: plugins/shutdown/shutdownruleset.cpp:236
 #, kde-format
@@ -7253,7 +7254,7 @@ msgstr ""
 #: plugins/shutdown/shutdowntorrentmodel.cpp:211
 #, kde-format
 msgid "Downloading finishes"
-msgstr ""
+msgstr "ההורדה מסתיימת"
 
 #: plugins/shutdown/shutdowntorrentmodel.cpp:76
 #: plugins/shutdown/shutdowntorrentmodel.cpp:212
@@ -7264,13 +7265,13 @@ msgstr ""
 #: plugins/shutdown/shutdowntorrentmodel.cpp:132
 #, kde-format
 msgid "Event"
-msgstr ""
+msgstr "אירוע"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ConnsWgt)
 #: plugins/stats/Conns.ui:13 plugins/stats/ConnsTabPage.cc:35
 #, kde-format
 msgid "Connections"
-msgstr ""
+msgstr "חיבורים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #. i18n: ectx: property (title), widget (QGroupBox, ConnsGbw)
@@ -7280,7 +7281,7 @@ msgstr ""
 #, kde-format
 msgctxt "Chart name"
 msgid "Connections"
-msgstr ""
+msgstr "חיבורים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #. i18n: ectx: property (title), widget (QGroupBox, DhtGbw)
@@ -7290,12 +7291,12 @@ msgstr ""
 #, kde-format
 msgctxt "Chart name"
 msgid "DHT"
-msgstr ""
+msgstr "DHT"
 
 #: plugins/stats/ConnsTabPage.cc:36
 #, kde-format
 msgid "Nodes"
-msgstr ""
+msgstr "נקודות"
 
 #. i18n: ectx: property (text), widget (QLabel, label_23)
 #: plugins/stats/ConnsTabPage.cc:42 plugins/stats/DisplaySettings.ui:513
@@ -7358,14 +7359,14 @@ msgstr ""
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Nodes"
-msgstr ""
+msgstr "נקודות"
 
 #. i18n: ectx: property (text), widget (QLabel, label_32)
 #: plugins/stats/ConnsTabPage.cc:73 plugins/stats/DisplaySettings.ui:845
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Tasks"
-msgstr ""
+msgstr "משימות"
 
 #. i18n: ectx: property (title), widget (QGroupBox, DlSpdGbw)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
@@ -7375,21 +7376,21 @@ msgstr ""
 #, kde-format
 msgctxt "Chart name"
 msgid "Download"
-msgstr ""
+msgstr "הורדה"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: plugins/stats/DisplaySettings.ui:37 plugins/stats/SpdTabPage.cc:49
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Current speed"
-msgstr ""
+msgstr "מהירות נוכחית"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: plugins/stats/DisplaySettings.ui:73
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Average"
-msgstr ""
+msgstr "ממוצע"
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: plugins/stats/DisplaySettings.ui:112
@@ -7406,7 +7407,7 @@ msgstr "הגבלה"
 #, kde-format
 msgctxt "Chart name"
 msgid "Peers"
-msgstr ""
+msgstr "עמיתים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: plugins/stats/DisplaySettings.ui:173 plugins/stats/SpdTabPage.cc:58
@@ -7451,21 +7452,21 @@ msgstr ""
 #, kde-format
 msgctxt "Chart name"
 msgid "Upload"
-msgstr ""
+msgstr "העלאה"
 
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: plugins/stats/DisplaySettings.ui:374 plugins/stats/SpdTabPage.cc:50
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Current speed"
-msgstr ""
+msgstr "מהירות נוכחית"
 
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: plugins/stats/DisplaySettings.ui:413
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Average"
-msgstr ""
+msgstr "ממוצע"
 
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: plugins/stats/DisplaySettings.ui:452
@@ -7492,60 +7493,60 @@ msgstr ""
 #: plugins/stats/DisplaySettings.ui:904
 #, kde-format
 msgid "Display"
-msgstr ""
+msgstr "תצוגה"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AntiAliasing)
 #: plugins/stats/DisplaySettings.ui:910
 #, kde-format
 msgid "Use anti-aliasing"
-msgstr ""
+msgstr "להשתמש בהחלקת קצוות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DrawBgdGrid)
 #: plugins/stats/DisplaySettings.ui:920
 #, kde-format
 msgid "Draw background grid"
-msgstr ""
+msgstr "ציור רשת רקע"
 
 #. i18n: ectx: property (text), widget (QLabel, label_18)
 #: plugins/stats/DisplaySettings.ui:932
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Widget type:"
-msgstr ""
+msgstr "סוג וידג׳ט"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:940
 #, kde-format
 msgid "Native"
-msgstr ""
+msgstr "טבעי"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:945
 #, kde-format
 msgid "KDE"
-msgstr ""
+msgstr "KDE"
 
 #. i18n: ectx: property (text), widget (QLabel, label_33)
 #: plugins/stats/DisplaySettings.ui:953
 #, kde-format
 msgid "(plugin reload is needed after change)"
-msgstr ""
+msgstr "(צריך לטעון את התוסף מחדש אחרי שינוי)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
 #, kde-format
 msgctxt "@title:window"
 msgid "Display"
-msgstr ""
+msgstr "תצוגה"
 
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
 msgid "KiB/s"
-msgstr ""
+msgstr "KiB לשנייה"
 
 #: plugins/stats/drawer/ChartDrawerData.cc:13
 #, kde-format
 msgid "Unknown"
-msgstr ""
+msgstr "לא ידוע"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:310
 #: plugins/stats/drawer/PlainChartDrawer.cc:493
@@ -7554,6 +7555,8 @@ msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
 "underline'>Legend:</h1><ul type='square'>"
 msgstr ""
+"<h1 align='center' style='font-size: large; text-decoration: underline'>מקרא:"
+"</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:313
 #: plugins/stats/drawer/PlainChartDrawer.cc:496
@@ -7562,57 +7565,59 @@ msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
 "monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>"
 msgstr ""
+"<li><span style='background-color: %1; font-size: 14px; font-family: "
+"monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:350
 #: plugins/stats/drawer/PlainChartDrawer.cc:303
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
-msgstr ""
+msgstr "שמירה כתמונה…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:357
 #: plugins/stats/drawer/PlainChartDrawer.cc:310
 #, kde-format
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
 msgid "Rescale"
-msgstr ""
+msgstr "שינוי קנה־מידה"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:364
 #: plugins/stats/drawer/PlainChartDrawer.cc:317
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
-msgstr ""
+msgstr "איפוס"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
 #, kde-format
 msgid "Select path to save image…"
-msgstr ""
+msgstr "נא לבחור נתיב לשמירת התמונה…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:331
 #, kde-format
 msgid "Image files"
-msgstr ""
+msgstr "קובצי תמונות"
 
 #. i18n: ectx: label, entry (UpdateEveryGuiUpdates), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:10
 #, kde-format
 msgid "Update charts every n gui updates"
-msgstr ""
+msgstr "לעדכן את התרשימים כל n עדכוני ממשק משתמש"
 
 #. i18n: ectx: label, entry (DataGatherIval), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:15
 #, kde-format
 msgid "Interval in milliseconds between data gathering"
-msgstr ""
+msgstr "הפרש במילישניות בין איסופי נתונים"
 
 #. i18n: ectx: label, entry (MaxMode), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:20
 #, kde-format
 msgid "Method of determining maximum value of the scale"
-msgstr ""
+msgstr "שיטה לקביעת הערך המרבי של קנה המידה"
 
 #. i18n: ectx: label, entry (ShowSeedsInSwarms), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:25
@@ -7630,49 +7635,49 @@ msgstr ""
 #: plugins/stats/ktstatsplugin.kcfg:35
 #, kde-format
 msgid "Samples to show on download chart"
-msgstr ""
+msgstr "דוגמאות להצגה בתרשים ההורדות"
 
 #. i18n: ectx: label, entry (PeersSpdSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:40
 #, kde-format
 msgid "Samples to show on peers chart"
-msgstr ""
+msgstr "דוגמאות להצגה בתרשים העמיתים"
 
 #. i18n: ectx: label, entry (UlSpdSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:45
 #, kde-format
 msgid "Samples to show on upload chart"
-msgstr ""
+msgstr "דוגמאות להצגה בתרשים ההעלאה"
 
 #. i18n: ectx: label, entry (ConnsSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:50
 #, kde-format
 msgid "Samples to show on connections chart"
-msgstr ""
+msgstr "דוגמאות להצגה בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (DhtSpdSamples), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:55
 #, kde-format
 msgid "Samples to show on DHT chart"
-msgstr ""
+msgstr "דוגמאות להצגה בתרשים ה־DHT"
 
 #. i18n: ectx: label, entry (DlSpdColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:60
 #, kde-format
 msgid "Color of the speed on dl chart"
-msgstr ""
+msgstr "צבע המהירות בתרשים ההורדה"
 
 #. i18n: ectx: label, entry (DlAvgColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:65
 #, kde-format
 msgid "Color of the average on dl chart"
-msgstr ""
+msgstr "צבע הממוצע בתרשים ההורדה"
 
 #. i18n: ectx: label, entry (DlLimitColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:70
 #, kde-format
 msgid "Color of the limit on dl chart"
-msgstr ""
+msgstr "צבע המגבלה בתרשים ההורדה"
 
 #. i18n: ectx: label, entry (PrAvgFromLColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:75
@@ -7807,28 +7812,28 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Update"
-msgstr ""
+msgstr "עדכון"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/stats/Settings.ui:25
 #, kde-format
 msgctxt "Continues with: [number field] GUI updates"
 msgid "Update charts every"
-msgstr ""
+msgstr "עדכון התרשימים כל"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/stats/Settings.ui:50
 #, kde-format
 msgctxt "Continuation of: Update charts every [number field]"
 msgid "GUI updates"
-msgstr ""
+msgstr "עדכוני ממשק משתמש"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/stats/Settings.ui:69
 #, kde-format
 msgctxt "Continues with: [number field] milliseconds"
 msgid "Gather data every"
-msgstr ""
+msgstr "איסוף נתונים כל"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/stats/Settings.ui:95
@@ -7875,7 +7880,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Peers connections"
-msgstr ""
+msgstr "חיבורי עמיתים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowSeedsInSwarms)
 #: plugins/stats/Settings.ui:296
@@ -7893,31 +7898,31 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Statistics"
-msgstr ""
+msgstr "סטטיסטיקה"
 
 #: plugins/stats/SettingsPage.cc:31
 #, kde-format
 msgid "(= %1 ms)"
-msgstr ""
+msgstr "(= %1 מ״ש)"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SpdWgt)
 #: plugins/stats/Spd.ui:13
 #, kde-format
 msgctxt "@title:window"
 msgid "Speed"
-msgstr ""
+msgstr "מהירות"
 
 #: plugins/stats/SpdTabPage.cc:52
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Average speed"
-msgstr ""
+msgstr "מהירות ממוצעת"
 
 #: plugins/stats/SpdTabPage.cc:53
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Average speed"
-msgstr ""
+msgstr "מהירות ממוצעת"
 
 #: plugins/stats/SpdTabPage.cc:55
 #, kde-format
@@ -7944,7 +7949,7 @@ msgstr ""
 #: plugins/stats/StatsPlugin.cc:35
 #, kde-format
 msgid "Connections charts"
-msgstr ""
+msgstr "תרשימי חיבורים"
 
 #: plugins/stats/StatsPlugin.cc:35
 #, kde-format
@@ -7967,12 +7972,12 @@ msgstr[3] ""
 #: plugins/syndication/feedlist.cpp:159
 #, kde-format
 msgid "<b>%1</b><br/><br/>Download failed: <b>%2</b>"
-msgstr ""
+msgstr "<b>%1</b><br/><br/>הורדה נכשלה: <b>%2</b>"
 
 #: plugins/syndication/feedlist.cpp:161
 #, kde-format
 msgid "<b>%1</b><br/><br/>%2"
-msgstr ""
+msgstr "<b>%1</b><br/><br/>%2"
 
 #: plugins/syndication/feedwidget.cpp:27
 #, kde-format
@@ -7986,32 +7991,32 @@ msgstr ""
 #: plugins/syndication/feedwidget.cpp:173
 #, kde-format
 msgid "Authentication Cookie"
-msgstr ""
+msgstr "עוגיית אימות"
 
 #: plugins/syndication/feedwidget.cpp:173
 #, kde-format
 msgid "Enter the new authentication cookie"
-msgstr ""
+msgstr "נא לספק את עוגיית האימות החדשה"
 
 #: plugins/syndication/feedwidget.cpp:204
 #, kde-format
 msgid "<b>OK</b>"
-msgstr ""
+msgstr "<b>בסדר</b>"
 
 #: plugins/syndication/feedwidget.cpp:207
 #, kde-format
 msgid "<b>Not Loaded</b>"
-msgstr ""
+msgstr "<b>לא נטען</b>"
 
 #: plugins/syndication/feedwidget.cpp:210
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
-msgstr ""
+msgstr "<b>ההורדה נכשלה: %1</b>"
 
 #: plugins/syndication/feedwidget.cpp:213
 #, kde-format
 msgid "<b>Downloading</b>"
-msgstr ""
+msgstr "<b>הורדה מתבצעת</b>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
@@ -8023,13 +8028,13 @@ msgstr "מצב:"
 #: plugins/syndication/feedwidget.ui:85
 #, kde-format
 msgid "Active Filters:"
-msgstr ""
+msgstr "מסננים פעילים:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/syndication/feedwidget.ui:131
 #, kde-format
 msgid "Refresh every:"
-msgstr ""
+msgstr "רענון כל:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:138
@@ -8360,28 +8365,28 @@ msgstr "הקובץ לא נמצא"
 #: plugins/syndication/ktfeed.cpp:456
 #, kde-format
 msgid "Unknown retriever error"
-msgstr ""
+msgstr "שגיאת מאסף לא ידועה"
 
 #: plugins/syndication/ktfeed.cpp:460
 #, kde-format
 msgid "Invalid feed data"
-msgstr ""
+msgstr "נתוני הערוץ שגויים"
 
 #: plugins/syndication/ktfeed.cpp:462
 #, kde-format
 msgid "Success"
-msgstr ""
+msgstr "הצליח"
 
 #. i18n: ectx: ToolBar (SyndicationToolBar)
 #: plugins/syndication/ktorrent_syndicationui.rc:5
 #, kde-format
 msgid "Syndication Toolbar"
-msgstr ""
+msgstr "סרגל עדכון"
 
 #: plugins/syndication/linkdownloader.cpp:173
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
-msgstr ""
+msgstr "לא ניתן למצוא קישור תקף לטורנט ב־%1"
 
 #: plugins/syndication/managefiltersdlg.cpp:27
 #: plugins/syndication/syndicationplugin.cpp:70
@@ -8436,7 +8441,7 @@ msgstr "מסנן חדש"
 #: plugins/syndication/syndicationplugin.cpp:35
 #, kde-format
 msgid "Syndication"
-msgstr ""
+msgstr "עדכון"
 
 #: plugins/syndication/syndicationactivity.cpp:46
 #, kde-format
@@ -8451,7 +8456,7 @@ msgstr "נא למלא את הכתובת"
 #: plugins/syndication/syndicationactivity.cpp:109
 #, kde-format
 msgid "Please enter the URL of the RSS or Atom feed."
-msgstr ""
+msgstr "נא למלא את כתובת ערוץ ה־RSS או ה־Atom."
 
 #: plugins/syndication/syndicationactivity.cpp:133
 #, kde-format

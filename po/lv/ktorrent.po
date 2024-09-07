@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-18 00:39+0000\n"
-"PO-Revision-Date: 2024-04-04 19:37+0300\n"
+"PO-Revision-Date: 2024-09-05 11:48+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 "X-Launchpad-Export-Date: 2008-02-07 18:04+0000\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1159,10 +1159,9 @@ msgid ""
 "location in the dialog will be set to this. You can still override it, if "
 "you want to."
 msgstr ""
-"Noklusētā saglabāšanas vieta torentiem no šīs grupas.<br/<br/>Šī tiek "
-"izmantota tikai datnes atlases lodziņam. Kad maināt grupu, lejupielādes "
-"galamērķis lodziņā tiks iestatīts uz šo vietu. To joprojām varat pārrakstīt, "
-"ja vēlaties."
+"Noklusētā saglabāšanas vieta torentiem no šīs grupas.<br/><br/>To izmanto "
+"tikai datnes atlases lodziņam. Kad maināt grupu, lejupielādes galamērķis "
+"lodziņā iestatīsies uz šo vietu. To joprojām varat pārrakstīt, ja vēlaties."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_location_enabled)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSaveDir)
@@ -1186,10 +1185,10 @@ msgid ""
 "the move when completed location in the dialog will be set to this. You can "
 "still override it, if you want to."
 msgstr ""
-"Noklusējuma pārvietošanas vieta pēc lejupielādes torentiem šajā grupā. </"
-"br></br>Šis iestatījums tiek izmantots tikai datnes atlases lodziņam. Ja "
-"maināt grupu, pārvietošanas vieta pēc lejupielādes pabeigšanas tiks "
-"iestatīta uz šo vietu. To joprojām varat pārrakstīt, ja vēlaties."
+"Noklusējuma pārvietošanas vieta pēc lejupielādes torentiem šajā grupā. <br/"
+"></br>Šo iestatījumu izmanto tikai datnes atlases lodziņam. Ja maināt grupu, "
+"pārvietošanas vieta pēc lejupielādes pabeigšanas būs šī. To joprojām varat "
+"pārrakstīt, ja vēlaties."
 
 #. i18n: ectx: property (toolTip), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:63
@@ -2180,8 +2179,8 @@ msgid ""
 "Whether or not the magnets that are not downloaded after a maximum period of "
 "time must be pushed back at the end of the queue."
 msgstr ""
-"Vai „Magnet“ saites, kas nav lejupielādētas pēc maksimālā laika tiek "
-"ievietotas atpakaļ rindā."
+"Vai „Magnet“ saites, kas nav lejupielādētas pēc maksimālā laika ievieto "
+"atpakaļ rindā."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:166
@@ -2196,8 +2195,8 @@ msgid ""
 "Maximum time that a magnet can occupy a downloading slot before it will be "
 "pushed back in the queue."
 msgstr ""
-"Maksimālais laiks, ko „Magnet“ saite var pavadīt lejupielādes vietā pirms tā "
-"tiek atgriezta atpakaļ rindā."
+"Maksimālais laiks, ko „Magnet“ saite var pavadīt lejupielādes vietā pirms to "
+"atgriež atpakaļ rindā."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
@@ -2264,9 +2263,8 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
-"Sekotāju saraksta adrese, kas tiks izmantota, pievienojot torentu ar "
-"„infohash“.\n"
-"PIEZĪME: katram sekotājam ir jābūt savā rindā. Tukšās rindas tiek ignorētas."
+"Sekotāju saraksta adrese, ko izmanto, pievienojot torentu ar „infohash“.\n"
+"PIEZĪME: katram sekotājam ir jābūt savā rindā. Tukšās rindas ignorē."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2333,8 +2331,8 @@ msgid ""
 msgstr ""
 "<p>UDP ports DHT protokola izmantošanai.</p>\n"
 "<p><span style=\" font-weight:600;\">Ievērībai:</span> ja atrodaties aiz "
-"maršrutētāja, šim portam ir jātiek pāradresētam, lai tas pieņemtu ienākošos "
-"DHT pieprasījumus. To jūsu vietā var izdarīt „UPnP“ spraudnis.</p>"
+"maršrutētāja, šis ports ir jāpāradresē, lai tas pieņemtu ienākošos DHT "
+"pieprasījumus. To jūsu vietā var izdarīt „UPnP“ spraudnis.</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_pexEnabled)
 #: ktorrent/pref/btpref.ui:61
@@ -2475,7 +2473,7 @@ msgstr "Krāsa torentiem, kad tie ir apstājušies vai notiek to datu pārbaude.
 #: ktorrent/pref/colorpref.ui:26
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
-msgstr "Krāsa torentiem, kad tie tiek doti vai lejupielādēti"
+msgstr "Krāsa torentiem, kad tos dodat vai lejupielādējat"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
@@ -2801,8 +2799,8 @@ msgid ""
 msgstr ""
 "<p>Ports torentu protokolam.</p>\n"
 "<p><span style=\" font-weight:600;\">Ievērībai:</span> ja jūsu ierīce "
-"atrodas tīklā aiz maršrutētāja, šim portam ir jātiek pāradresētam ienākošiem "
-"savienojumiem. To jūsu vietā var izdarīt „UPnP“ spraudnis.</p>"
+"atrodas tīklā aiz maršrutētāja, šis ports ir jāpāradresē, lai pieņemtu "
+"ienākošos savienojumus. To jūsu vietā var izdarīt „UPnP“ spraudnis.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/networkpref.ui:47
@@ -2821,8 +2819,8 @@ msgid ""
 msgstr ""
 "<p>UDP sekošanas protokola ports.</p>\n"
 "<p><span style=\" font-weight:600;\">Ievērībai:</span> ja jūsu ierīce "
-"atrodas aiz maršrutētāja, šim portam ir jātiek pāradresētam. To jūsu vietā "
-"var izdarīt „UPnP“ spraudnis.</p>"
+"atrodas aiz maršrutētāja, šis ports ir jāpāradresē . To jūsu vietā var "
+"izdarīt „UPnP“ spraudnis.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: ectx: property (text), widget (QLabel, label_3)
@@ -3364,9 +3362,9 @@ msgid ""
 "be stopped. This is only applied to newly opened torrents, existing torrents "
 "will not be affected by changing this."
 msgstr ""
-"Maksimālais došanas ilgums stundās. Kad sasniegts šis ilgums, torents tiks "
-"apturēts. Šo vērtību izmanto tikai no jauna atvērti torenti, bet esošie "
-"netiek ietekmēti."
+"Maksimālais došanas ilgums stundās. Kad sasniegts šis ilgums, programma "
+"torentu apturēs. Šo vērtību izmanto tikai no jauna atvērti torenti, bet jau "
+"esošos neietekmē."
 
 #. i18n: ectx: property (toolTip), widget (QLabel, label_2)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_greenRatio)
@@ -3888,8 +3886,7 @@ msgstr "Nepietiek brīvas vietas diskā."
 msgid ""
 "Your disk is running out of space.<br /><b>%1</b> is being downloaded to "
 "'%2'."
-msgstr ""
-"Ierīces diskā ir maz brīvas vietas.<br /><b>%1</b> tiek lejupielādēts „%2“."
+msgstr "Ierīces diskā ir maz brīvas vietas.<br /><b>%1</b> lejupielādē „%2“."
 
 #: ktorrent/trayicon.cpp:310
 #, kde-format
@@ -4448,12 +4445,12 @@ msgstr ""
 #: ktorrent/view/viewmodel.cpp:499
 #, kde-format
 msgid "How long we have been downloading the torrent"
-msgstr "Cik ilgi tiek lejupielādēts šis torents"
+msgstr "Cik ilgi lejupielādējam šo torentu"
 
 #: ktorrent/view/viewmodel.cpp:501
 #, kde-format
 msgid "How long we have been seeding the torrent"
-msgstr "Cik ilgi tiek dots šis torents"
+msgstr "Cik ilgi dodam šo torentu"
 
 #: ktorrent/view/viewmodel.cpp:503
 #, kde-format
@@ -4918,12 +4915,12 @@ msgid ""
 "You don't have enough disk space to download this torrent. Are you sure you "
 "want to continue?"
 msgstr ""
-"Jums nepietiek vietas diskā šī torenta ielādei. Vai tiešām vēlaties turpināt?"
+"Nepietiek vietas diskā šī torenta ielādei. Vai tik un tā vēlaties turpināt?"
 
 #: libktcore/torrent/queuemanager.cpp:145
 #, kde-format
 msgid "Insufficient disk space for %1"
-msgstr "Nepietiek vietas diskā, lai saglabātu %1"
+msgstr "Nepietiek vietas diskā, lai saglabātu „%1“"
 
 #: libktcore/torrent/queuemanager.cpp:224
 #, kde-format
@@ -5399,7 +5396,7 @@ msgstr "Gabala lejupielādes progress"
 #: plugins/infowidget/chunkdownloadmodel.cpp:208
 #, kde-format
 msgid "Which peer we are downloading it from"
-msgstr "Dalībnieki, no kuriem tas tiek lejupielādēts"
+msgstr "Dalībnieki, no kuriem lejupielādē"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:210
 #, kde-format
@@ -5594,7 +5591,7 @@ msgstr "Rāda visus torenta dalībniekus, kuriem esat pieslēdzies"
 #: plugins/infowidget/infowidgetplugin.cpp:205
 #, kde-format
 msgid "Displays all the chunks you are downloading, of a torrent"
-msgstr "Rāda visus torenta gabalus, kas tiek lejupielādēti"
+msgstr "Rāda visus torenta gabalus, ko lejupielādē"
 
 #: plugins/infowidget/infowidgetplugin.cpp:224
 #, kde-format
@@ -6260,7 +6257,7 @@ msgstr "Automātiskā IP filtra atjaunināšana neizdevās: %1"
 #: plugins/ipfilter/downloadandconvertjob.cpp:124
 #, kde-format
 msgid "7z files are not supported"
-msgstr "„7z“ datnes netiek atbalstītas"
+msgstr "„7z“ datnes programma neatbalsta"
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:143
 #, kde-format
@@ -6390,7 +6387,7 @@ msgid ""
 "NOTE: archive files like zip and tar.gz or tar.bz2 are supported."
 msgstr ""
 "Lejupielādē „PeerGuardian“ filtru no „bluetack.co.uk“ vai „blocklist.org“.\n"
-"PIEZĪME: tiek atbalstītas arī „zip“, „.gz“ un „.bz2“ datnes."
+"PIEZĪME: atbalsta arī „zip“, „.gz“ un „.bz2“ datnes."
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_auto_update_group_box)
 #: plugins/ipfilter/ipblockingprefpage.ui:117
@@ -6533,7 +6530,7 @@ msgstr ""
 "p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Nav:</span> Netiek rādītas nekādas ziņas</p>"
+"weight:600;\">Nav:</span> Nerāda nekādas ziņas</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
@@ -6622,7 +6619,7 @@ msgstr "Paņem sekotāju no torenta datnes"
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:14
 #, kde-format
 msgid "Toggles if a custom tracker is used"
-msgstr "Pārslēdzas, ja tiek izmantots pielāgots sekotājs"
+msgstr "Pārslēdzas, ja izmanto pielāgotu sekotāju"
 
 #. i18n: ectx: label, entry (tr), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:18
