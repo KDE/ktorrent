@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-18 00:39+0000\n"
-"PO-Revision-Date: 2024-09-06 10:59+0300\n"
+"PO-Revision-Date: 2024-09-08 17:44+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6745,7 +6745,7 @@ msgstr ""
 #: plugins/scanfolder/scanfolderprefpage.ui:92
 #, kde-format
 msgid "Scan subfolders"
-msgstr ""
+msgstr "סריקת תת־תיקיות"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_actionDelete)
 #: plugins/scanfolder/scanfolderprefpage.ui:100
@@ -6791,25 +6791,25 @@ msgstr ""
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan for lost files"
-msgstr ""
+msgstr "סריקה לאיתור קבצים אבודים"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
 #, kde-format
 msgid "Widget position:"
-msgstr ""
+msgstr "וידג׳ט מקום:"
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
-msgstr ""
+msgstr "סריקה לאיתור קבצים אבודים"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
-msgstr ""
+msgstr "סריקה"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
@@ -6833,227 +6833,227 @@ msgstr "פתיחת קובץ"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
 #, kde-format
 msgid "Delete on disk"
-msgstr ""
+msgstr "מחיקה בכונן"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:124
 #, kde-format
 msgid "Ctrl+Del"
-msgstr ""
+msgstr "Ctrl+Del"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
 #, kde-format
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "העתקה ללוח הגזירים"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:136
 #, kde-format
 msgid "Ctrl+C"
-msgstr ""
+msgstr "Ctrl+C"
 
 #. i18n: ectx: ToolBar (SearchToolBar)
 #: plugins/search/ktorrent_searchui.rc:4
 #, kde-format
 msgid "Search Toolbar"
-msgstr ""
+msgstr "סרגל חיפוש"
 
 #. i18n: ectx: label, entry (searchEngine), group (general)
 #: plugins/search/ktsearchplugin.kcfg:10
 #, kde-format
 msgid "Current search engine"
-msgstr ""
+msgstr "מנוע החיפוש הנוכחי"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxySettings)
 #. i18n: ectx: label, entry (useProxySettings), group (general)
 #: plugins/search/ktsearchplugin.kcfg:14 plugins/search/searchpref.ui:92
 #, kde-format
 msgid "Use proxy settings for search"
-msgstr ""
+msgstr "להשתמש בהגדרות המתווך לחיפוש"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useDefaultBrowser)
 #. i18n: ectx: label, entry (useDefaultBrowser), group (general)
 #: plugins/search/ktsearchplugin.kcfg:18 plugins/search/searchpref.ui:102
 #, kde-format
 msgid "Use default browser"
-msgstr ""
+msgstr "להשתמש בדפדפן ברירת המחדל"
 
 #. i18n: ectx: label, entry (useCustomBrowser), group (general)
 #: plugins/search/ktsearchplugin.kcfg:22
 #, kde-format
 msgid "Use custom browser"
-msgstr ""
+msgstr "להשתמש בדפדפן מותאם אישית"
 
 #. i18n: ectx: label, entry (customBrowser), group (general)
 #: plugins/search/ktsearchplugin.kcfg:26
 #, kde-format
 msgid "Custom browser executable path"
-msgstr ""
+msgstr "נתיב קובץ ההפעלה של הדפדפן המותאם אישית"
 
 #: plugins/search/searchactivity.cpp:36 plugins/search/searchplugin.cpp:48
 #: plugins/search/searchplugin.cpp:67 plugins/search/searchprefpage.cpp:41
 #, kde-format
 msgctxt "plugin name"
 msgid "Search"
-msgstr ""
+msgstr "חיפוש"
 
 #: plugins/search/searchactivity.cpp:215
 #, kde-format
 msgid "Search for %1"
-msgstr ""
+msgstr "חיפוש אחר %1"
 
 #: plugins/search/searchenginelist.cpp:181
 #, kde-format
 msgid "Failed to parse %1"
-msgstr ""
+msgstr "הפענוח של %1 נכשל"
 
 #: plugins/search/searchenginelist.cpp:314
 #, kde-format
 msgid "URL: <b>%1</b>"
-msgstr ""
+msgstr "כתובת: <b>%1</b>"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SearchPref)
 #: plugins/search/searchpref.ui:26
 #, kde-format
 msgid "Search Preferences"
-msgstr ""
+msgstr "העדפות חיפוש"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_clear_history)
 #: plugins/search/searchpref.ui:34
 #, kde-format
 msgid "Clear the search history combo boxes."
-msgstr ""
+msgstr "פינוי היסטוריית החיפוש בתיבות המשולבות."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_clear_history)
 #: plugins/search/searchpref.ui:37
 #, kde-format
 msgid "Clear Search History"
-msgstr ""
+msgstr "פינוי היסטוריית החיפוש"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_reset_default_action)
 #: plugins/search/searchpref.ui:44
 #, kde-format
 msgid "Reset the default action taken when a torrent is downloaded."
-msgstr ""
+msgstr "איפוס פעולת ברירת המחדל שתתבצע עם הורדת טורנט."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_reset_default_action)
 #: plugins/search/searchpref.ui:47
 #, kde-format
 msgid "Reset Default Torrent Action"
-msgstr ""
+msgstr "איפוס פעולת ברירת המחדל לטורנט"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_restorePreviousSession)
 #: plugins/search/searchpref.ui:69
 #, kde-format
 msgid "Restore all the active searches of the last session"
-msgstr ""
+msgstr "שחזור כל החיפושים הפעילים של ההפעלה הקודמת"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_restorePreviousSession)
 #: plugins/search/searchpref.ui:72
 #, kde-format
 msgid "Restore previous searches"
-msgstr ""
+msgstr "שחזור החיפושים הקודמים"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_openInExternal)
 #: plugins/search/searchpref.ui:79
 #, kde-format
 msgid "Whether or not to open searches in an external browser."
-msgstr ""
+msgstr "האם לפתחות את החיפושים בדפדפן חיצוני או לא."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInExternal)
 #: plugins/search/searchpref.ui:82
 #, kde-format
 msgid "Open searches in external browser"
-msgstr ""
+msgstr "פתיחת חיפושים בדפדפן חיצוני"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxySettings)
 #: plugins/search/searchpref.ui:89
 #, kde-format
 msgid "Whether or not to use the HTTP proxy settings for search."
-msgstr ""
+msgstr "האם להשתמש בהגדרות מתווך ה־HTTP לחיפוש או לא."
 
 #. i18n: ectx: property (toolTip), widget (QRadioButton, kcfg_useDefaultBrowser)
 #: plugins/search/searchpref.ui:99
 #, kde-format
 msgid "Use the default browser configured in the system settings."
-msgstr ""
+msgstr "להשתמש בדפדפן ברירת המחדל שמוגדר בהגדרות המערכת."
 
 #. i18n: ectx: property (toolTip), widget (QRadioButton, kcfg_useCustomBrowser)
 #: plugins/search/searchpref.ui:114
 #, kde-format
 msgid "Use a custom browser."
-msgstr ""
+msgstr "להשתמש בדפדפן ברירת המחדל."
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useCustomBrowser)
 #: plugins/search/searchpref.ui:117
 #, kde-format
 msgid "Custom browser path:"
-msgstr ""
+msgstr "נתיב לדפדפן מותאם אישית:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_customBrowser)
 #: plugins/search/searchpref.ui:127
 #, kde-format
 msgid "Path of the custom browser."
-msgstr ""
+msgstr "נתיב לדפדפן בהתאמה אישית."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox8)
 #: plugins/search/searchpref.ui:152
 #, kde-format
 msgid "Search Engines"
-msgstr ""
+msgstr "מנועי חיפוש"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_add)
 #: plugins/search/searchpref.ui:167
 #, kde-format
 msgid "Add a new search engine."
-msgstr ""
+msgstr "הוספת מנוע חיפוש חדש."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_remove)
 #: plugins/search/searchpref.ui:177
 #, kde-format
 msgid "Remove all selected search engines."
-msgstr ""
+msgstr "הסרת כל מנועי החיפוש הנבחרים."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove)
 #: plugins/search/searchpref.ui:180
 #, kde-format
 msgid "&Remove"
-msgstr ""
+msgstr "ה&סרה"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_remove_all)
 #: plugins/search/searchpref.ui:187
 #, kde-format
 msgid "Remove all search engines."
-msgstr ""
+msgstr "הסרת כל מנועי החיפוש."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_all)
 #: plugins/search/searchpref.ui:190
 #, kde-format
 msgid "R&emove All"
-msgstr ""
+msgstr "הסרת ה&כול"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_add_default)
 #: plugins/search/searchpref.ui:210
 #, kde-format
 msgid "Add all default search engines."
-msgstr ""
+msgstr "הוספת כל מנועי החיפוש כברירת המחדל."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_default)
 #: plugins/search/searchpref.ui:213
 #, kde-format
 msgid "Add Defau&lt"
-msgstr ""
+msgstr "הוספת &ברירת מחדל"
 
 #: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:124
 #, kde-format
 msgid "Add a Search Engine"
-msgstr ""
+msgstr "הוספת מנוע חיפוש"
 
 #: plugins/search/searchprefpage.cpp:88
 #, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
-msgstr ""
+msgstr "נא למלא את שם מארח מנוע החיפוש (למשל, www.google.com):"
 
 #: plugins/search/searchprefpage.cpp:121
 #, kde-format
@@ -7062,26 +7062,28 @@ msgid ""
 "manually. The URL should contain {searchTerms}, ktorrent will replace this "
 "by the thing you are searching for."
 msgstr ""
+"ל־%1 אין תמיכה ב־Opensearch, יש להקליד את כתובת החיפוש ידנית. הכתובת צריכה "
+"להכיל את {searchTerms}, ktorrent יחליף את זה בביטוי החיפוש המבוקש."
 
 #: plugins/search/searchprefpage.cpp:127
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
-msgstr ""
+msgstr "הכתובת %1 לא מכילה {searchTerms}."
 
 #: plugins/search/searchwidget.cpp:80
 #, kde-format
 msgid " Engine: "
-msgstr ""
+msgstr " מנוע: "
 
 #: plugins/search/searchwidget.cpp:221
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
-msgstr ""
+msgstr "בהורדה:<br/><b>%1</b>"
 
 #: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Do you want to download or save the torrent?"
-msgstr ""
+msgstr "להוריד או לשמור את הטורנט?"
 
 #: plugins/search/searchwidget.cpp:230
 #, kde-format
@@ -7108,17 +7110,17 @@ msgstr "KTorrent"
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
-msgstr ""
+msgstr "החופש להיות."
 
 #: plugins/search/webview.cpp:108
 #, kde-format
 msgid "Search the web for torrents."
-msgstr ""
+msgstr "חיפוש טורנטים באינטרנט."
 
 #: plugins/search/webview.cpp:145
 #, kde-format
 msgid "Save %1 to"
-msgstr ""
+msgstr "שמירת %1 אל"
 
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
