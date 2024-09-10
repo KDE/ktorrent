@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-18 00:39+0000\n"
-"PO-Revision-Date: 2024-09-08 17:44+0300\n"
+"PO-Revision-Date: 2024-09-09 19:06+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6616,7 +6616,7 @@ msgstr ""
 #: plugins/syndication/feedwidgetmodel.cpp:75
 #, kde-format
 msgid "Title"
-msgstr ""
+msgstr "כותרת"
 
 #: plugins/mediaplayer/playlist.cpp:89
 #, kde-format
@@ -6626,22 +6626,22 @@ msgstr ""
 #: plugins/mediaplayer/playlist.cpp:91
 #, kde-format
 msgid "Album"
-msgstr ""
+msgstr "אלבום"
 
 #: plugins/mediaplayer/playlist.cpp:93
 #, kde-format
 msgid "Length"
-msgstr ""
+msgstr "משך"
 
 #: plugins/mediaplayer/playlist.cpp:95
 #, kde-format
 msgid "Year"
-msgstr ""
+msgstr "שנה"
 
 #: plugins/mediaplayer/playlistwidget.cpp:48
 #, kde-format
 msgid "Random play order"
-msgstr ""
+msgstr "סדר נגינה אקראי"
 
 #: plugins/mediaplayer/videowidget.cpp:183
 #, kde-format
