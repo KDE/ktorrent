@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-18 00:39+0000\n"
-"PO-Revision-Date: 2024-09-09 19:06+0300\n"
+"PO-Revision-Date: 2024-09-10 11:34+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6115,13 +6115,13 @@ msgstr "לעולם לא"
 #: plugins/ipfilter/ipblockingprefpage.ui:14
 #, kde-format
 msgid "IPBlocking Preferences"
-msgstr ""
+msgstr "העדפות IPBlocking"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: plugins/ipfilter/ipblockingprefpage.ui:23
 #, kde-format
 msgid "PeerGuardian Filter File "
-msgstr ""
+msgstr "קובץ סינון PeerGuardian"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useLevel1)
 #: plugins/ipfilter/ipblockingprefpage.ui:29
@@ -6133,13 +6133,13 @@ msgstr ""
 #: plugins/ipfilter/ipblockingprefpage.ui:32
 #, kde-format
 msgid "Use PeerGuardian filter"
-msgstr ""
+msgstr "להשתמש בסינון PeerGuardian"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #: plugins/ipfilter/ipblockingprefpage.ui:44
 #, kde-format
 msgid "IP filter file:"
-msgstr ""
+msgstr "קובץ סינון IP:"
 
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, kcfg_filterURL)
 #: plugins/ipfilter/ipblockingprefpage.ui:54
@@ -6151,13 +6151,13 @@ msgstr ""
 #: plugins/ipfilter/ipblockingprefpage.ui:81
 #, kde-format
 msgid "Download and convert the IP filter file."
-msgstr ""
+msgstr "הורדת והמרת קובץ סינון ה־IP."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
 #: plugins/ipfilter/ipblockingprefpage.ui:84
 #, kde-format
 msgid "Dow&nload/Convert"
-msgstr ""
+msgstr "הו&רדה/המרה"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: plugins/ipfilter/ipblockingprefpage.ui:94
@@ -6166,36 +6166,38 @@ msgid ""
 "Download PeerGuardian filter from bluetack.co.uk or iblocklist.org.\n"
 "NOTE: archive files like zip and tar.gz or tar.bz2 are supported."
 msgstr ""
+"הורדת מסנן PeerGuardian מ־bluetack.co.uk או iblocklist.org.\n"
+"לתשומת ליבך: יש תמיכה בקבצים כגון zip ו־tar.gz או tar.bz2."
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_auto_update_group_box)
 #: plugins/ipfilter/ipblockingprefpage.ui:117
 #, kde-format
 msgid "Automatic Update"
-msgstr ""
+msgstr "עדכון אוטומטי"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoUpdate)
 #: plugins/ipfilter/ipblockingprefpage.ui:125
 #, kde-format
 msgid "Enable this if you want to automatically update the filter file."
-msgstr ""
+msgstr "יש להפעיל את זה כדי לעדכן את קובץ הסינון אוטומטית."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_autoUpdate)
 #: plugins/ipfilter/ipblockingprefpage.ui:128
 #, kde-format
 msgid "Update file every:"
-msgstr ""
+msgstr "לעדכן את הקובץ כל:"
 
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, kcfg_autoUpdateInterval)
 #: plugins/ipfilter/ipblockingprefpage.ui:147
 #, kde-format
 msgid "Update interval in days."
-msgstr ""
+msgstr "הפרש בין עדכונים בימים."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/ipfilter/ipblockingprefpage.ui:167
 #, kde-format
 msgid "Last updated:"
-msgstr ""
+msgstr "עדכון אחרון:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/ipfilter/ipblockingprefpage.ui:187
@@ -6234,12 +6236,12 @@ msgstr "רמת תיעוד"
 #: plugins/logviewer/logflags.cpp:188 plugins/logviewer/logflagsdelegate.cpp:31
 #, kde-format
 msgid "Debug"
-msgstr ""
+msgstr "ניפוי שגיאות"
 
 #: plugins/logviewer/logflags.cpp:190 plugins/logviewer/logflagsdelegate.cpp:30
 #, kde-format
 msgid "Notice"
-msgstr ""
+msgstr "הודעה"
 
 #: plugins/logviewer/logflags.cpp:192 plugins/logviewer/logflagsdelegate.cpp:29
 #, kde-format
@@ -6315,7 +6317,7 @@ msgstr ""
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:33
 #, kde-format
 msgid "Separate activity"
-msgstr ""
+msgstr "פעילות נפרדת"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ScanForLostFilesWidgetPosition)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
@@ -6331,18 +6333,18 @@ msgstr ""
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:43
 #, kde-format
 msgid "Torrent activity"
-msgstr ""
+msgstr "פעילות טורנט"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/logviewer/logprefwidget.ui:103
 #, kde-format
 msgid "Maximum number of visible lines:"
-msgstr ""
+msgstr "מספר השורות הגלויות המרבי:"
 
 #: plugins/logviewer/logviewer.cpp:22
 #, kde-format
 msgid "Log"
-msgstr ""
+msgstr "יומן"
 
 #: plugins/logviewer/logviewer.cpp:29
 #, kde-format
@@ -6352,17 +6354,17 @@ msgstr ""
 #: plugins/logviewer/logviewer.cpp:39
 #, kde-format
 msgid "Suspend Output"
-msgstr ""
+msgstr "השהיית פלט"
 
 #: plugins/logviewer/logviewer.cpp:121
 #, kde-format
 msgid "<font color=\"#FF0000\">Logging output suspended</font>"
-msgstr ""
+msgstr "<font color=\"#FF0000\">תיעוד הפלט מושהה</font>"
 
 #: plugins/logviewer/logviewer.cpp:123
 #, kde-format
 msgid "<font color=\"#00FF00\">Logging output resumed</font>"
-msgstr ""
+msgstr "<font color=\"#00FF00\">תיעוד הפלט ימשיך</font>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_torrenttracker)
 #. i18n: ectx: label, entry (torrenttracker), group (general)
@@ -6370,7 +6372,7 @@ msgstr ""
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:40
 #, kde-format
 msgid "Grabs a tracker from the torrent file"
-msgstr ""
+msgstr "תפיסת עוקב מקובץ הטורנט"
 
 #. i18n: ectx: label, entry (customtracker), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:14
@@ -6382,7 +6384,7 @@ msgstr ""
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:18
 #, kde-format
 msgid "The default tracker"
-msgstr ""
+msgstr "עוקב ברירת המחדל"
 
 #. i18n: ectx: label, entry (dn), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:22
@@ -6396,7 +6398,7 @@ msgstr ""
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:90
 #, kde-format
 msgid "Show popup"
-msgstr ""
+msgstr "הצגת חלונית קופצת"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_onlypublic)
 #. i18n: ectx: label, entry (onlypublic), group (general)
@@ -6404,42 +6406,42 @@ msgstr ""
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:77
 #, kde-format
 msgid "Only enable on public torrents"
-msgstr ""
+msgstr "להפעיל על טורנטים ציבוריים בלבד"
 
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:37
 #, kde-format
 msgid "Copy Magnet URI"
-msgstr ""
+msgstr "העתקת כתובת מגנט מלאה"
 
 #: plugins/magnetgenerator/magnetgeneratorplugin.cpp:115
 #, kde-format
 msgid "Magnet link copied to clipboard"
-msgstr ""
+msgstr "קישור המגנט הועתק ללוח הגזירים"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_x2)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.cpp:16
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:32
 #, kde-format
 msgid "Magnet Generator"
-msgstr ""
+msgstr "יצרן קישורי מגנט"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, MagnetGeneratorPrefWidget)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:26
 #, kde-format
 msgid "Magnet Generator Preferences"
-msgstr ""
+msgstr "העדפות יצרן קישורי מגנט"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_torrenttracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:43
 #, kde-format
 msgid "Add a tracker from the torrent file"
-msgstr ""
+msgstr "הוספת עוקב מקובץ הטורנט"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_customtracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:50
 #, kde-format
 msgid "Define what tracker to add"
-msgstr ""
+msgstr "הגדרת איזה עוקב להוסיף"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_customtracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:53
@@ -6457,13 +6459,13 @@ msgstr ""
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:67
 #, kde-format
 msgid "Add the torrent name in the URI"
-msgstr ""
+msgstr "הוספת שם הטורנט בכתובת המלאה"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_dn)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:70
 #, kde-format
 msgid "Add name"
-msgstr ""
+msgstr "הוספת שם"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_onlypublic)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:80
@@ -6481,7 +6483,7 @@ msgstr ""
 #: plugins/mediaplayer/ktorrent_mediaplayerui.rc:4
 #, kde-format
 msgid "Media Player Menu"
-msgstr ""
+msgstr "תפריט נגן מדיה"
 
 #: plugins/mediaplayer/mediacontroller.cpp:29
 #: plugins/mediaplayer/mediacontroller.cpp:67
@@ -6493,33 +6495,33 @@ msgstr ""
 #: plugins/mediaplayer/mediacontroller.cpp:83
 #, kde-format
 msgid "Playing: <b>%1</b>"
-msgstr ""
+msgstr "מתנגן: <b>%1</b>"
 
 #: plugins/mediaplayer/mediacontroller.cpp:96
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
-msgstr ""
+msgstr "<b>%2</b> - <b>%1</b> (אלבום: <b>%3</b>)"
 
 #: plugins/mediaplayer/mediacontroller.cpp:99
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b>"
-msgstr ""
+msgstr "<b>%2</b> - <b>%1</b>"
 
 #: plugins/mediaplayer/mediacontroller.cpp:102
 #: plugins/mediaplayer/mediacontroller.cpp:105
 #, kde-format
 msgid "<b>%1</b>"
-msgstr ""
+msgstr "<b>%1</b>"
 
 #: plugins/mediaplayer/mediamodel.cpp:70
 #, kde-format
 msgid "Available"
-msgstr ""
+msgstr "זמין"
 
 #: plugins/mediaplayer/mediamodel.cpp:70
 #, kde-format
 msgid "Pending"
-msgstr ""
+msgstr "בהמתנה"
 
 #: plugins/mediaplayer/mediamodel.cpp:71
 #, kde-format
@@ -6534,13 +6536,13 @@ msgstr ""
 #: plugins/mediaplayer/mediaplayerplugin.cpp:45
 #, kde-format
 msgid "Media Player"
-msgstr ""
+msgstr "נגן מדיה"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:101
 #: plugins/mediaplayer/videowidget.cpp:59
 #, kde-format
 msgid "Play"
-msgstr ""
+msgstr "נגינה"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:105
 #, kde-format
@@ -6566,13 +6568,13 @@ msgstr "הבא"
 #: plugins/mediaplayer/mediaplayeractivity.cpp:121
 #, kde-format
 msgid "Show Video"
-msgstr ""
+msgstr "הצגת סרטון"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:125
 #: plugins/mediaplayer/playlistwidget.cpp:39
 #, kde-format
 msgid "Add Media"
-msgstr ""
+msgstr "הוספת מדיה"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:129
 #: plugins/mediaplayer/playlistwidget.cpp:41
@@ -6670,7 +6672,7 @@ msgstr ""
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:28
 #, kde-format
 msgid "Scan directories recursively."
-msgstr ""
+msgstr "סריקת תיקיות באופן רקורסיבי/נסוג."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
 #: plugins/scanfolder/torrentloadqueue.cpp:139
@@ -6679,7 +6681,7 @@ msgstr ""
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"
-msgstr ""
+msgstr "נטענה"
 
 #: plugins/scanfolder/scanfolderplugin.cpp:43
 #: plugins/scanfolder/scanfolderplugin.cpp:56
@@ -6687,37 +6689,37 @@ msgstr ""
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan Folder"
-msgstr ""
+msgstr "סריקת תיקייה"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanfolder/scanfolderprefpage.ui:17
 #, kde-format
 msgid "Folders to scan for torrents:"
-msgstr ""
+msgstr "תיקיות לסריקה אחר טורנטים:"
 
 #. i18n: ectx: property (toolTip), widget (QListWidget, m_folders)
 #: plugins/scanfolder/scanfolderprefpage.ui:26
 #, kde-format
 msgid "List of folders which will be scanned for torrents by this plugin."
-msgstr ""
+msgstr "רשימת תיקיות שתיסרקנה לאיתור טורנטים על ידי התוסף הזה."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_add)
 #: plugins/scanfolder/scanfolderprefpage.ui:35
 #, kde-format
 msgid "Add a new folder to be scanned."
-msgstr ""
+msgstr "הוספת תיקיית חדשה לסריקה."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add)
 #: plugins/scanfolder/scanfolderprefpage.ui:38
 #, kde-format
 msgid "Add Folder"
-msgstr ""
+msgstr "הוספת תיקייה"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_remove)
 #: plugins/scanfolder/scanfolderprefpage.ui:45
 #, kde-format
 msgid "Remove a folder from the list."
-msgstr ""
+msgstr "הסרת תיקייה מהרשימה."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove)
 #: plugins/scanfolder/scanfolderprefpage.ui:48
@@ -6731,7 +6733,7 @@ msgstr "הסרת תיקייה"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:98
 #, kde-format
 msgid "Open the torrents without asking any questions."
-msgstr ""
+msgstr "לפתוח את הטורנטים בלי לשאול שאלות."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_recursive)
 #: plugins/scanfolder/scanfolderprefpage.ui:89
@@ -7789,19 +7791,19 @@ msgstr ""
 #: plugins/stats/ktstatsplugin.kcfg:160
 #, kde-format
 msgid "Color of the tasks on DHT chart"
-msgstr ""
+msgstr "צבע המשימות בתרשים ה־DHT"
 
 #. i18n: ectx: label, entry (AntiAliasing), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:165
 #, kde-format
 msgid "Use anti aliasing on charts?"
-msgstr ""
+msgstr "להשתמש בהחלקת קצוות על התרשימים?"
 
 #. i18n: ectx: label, entry (DrawBgdGrid), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:170
 #, kde-format
 msgid "Draw ugly grey background grid?"
-msgstr ""
+msgstr "לצייר רקע רשת אפור מכוער?"
 
 #. i18n: ectx: label, entry (WidgetType), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:175
@@ -7849,7 +7851,7 @@ msgstr "מילישניות"
 #: plugins/stats/Settings.ui:108
 #, kde-format
 msgid "Measurements counts"
-msgstr ""
+msgstr "כמויות מדידות"
 
 #. i18n: ectx: property (title), widget (QGroupBox, MaxModeGbw)
 #: plugins/stats/Settings.ui:247
@@ -7941,12 +7943,12 @@ msgstr "הגבלת מהירות"
 #: plugins/stats/StatsPlugin.cc:34
 #, kde-format
 msgid "Speed charts"
-msgstr ""
+msgstr "תרשימי מהירות"
 
 #: plugins/stats/StatsPlugin.cc:34
 #, kde-format
 msgid "Displays charts about download and upload speed"
-msgstr ""
+msgstr "הצגת תרשימים על מהירות הורדה והעלאה"
 
 #: plugins/stats/StatsPlugin.cc:35
 #, kde-format
@@ -7956,7 +7958,7 @@ msgstr "תרשימי חיבורים"
 #: plugins/stats/StatsPlugin.cc:35
 #, kde-format
 msgid "Displays charts about connections"
-msgstr ""
+msgstr "הצגת תרשימים על חיבורים"
 
 #: plugins/syndication/feedlist.cpp:151
 #, kde-format
@@ -7967,9 +7969,17 @@ msgid_plural ""
 "%2\n"
 "%1 active filters"
 msgstr[0] ""
+"%2\n"
+"מסנן פעיל"
 msgstr[1] ""
+"%2\n"
+"שני מסננים פעילים"
 msgstr[2] ""
+"%2\n"
+"%1 מסננים פעילים"
 msgstr[3] ""
+"%2\n"
+"%1 מסננים פעילים"
 
 #: plugins/syndication/feedlist.cpp:159
 #, kde-format
