@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-18 00:39+0000\n"
+"POT-Creation-Date: 2024-09-16 02:52+0000\n"
 "PO-Revision-Date: 2011-06-28 12:49+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -4407,16 +4407,14 @@ msgstr ""
 
 # pmap: =/nom=KTorrent/gen=KTorrenta/dat=KTorrentu/
 # pmap: =/aku=KTorrent/lok=KTorrentu/ins=KTorrentom/_r=m/_b=j/
-#: libktcore/interfaces/functions.cpp:150
-#: libktcore/interfaces/functions.cpp:155
+#: libktcore/interfaces/functions.cpp:149
 #, fuzzy, kde-format
 #| msgid "KTorrent"
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "KTorrent"
 
-#: libktcore/interfaces/functions.cpp:152
-#: libktcore/interfaces/functions.cpp:157
+#: libktcore/interfaces/functions.cpp:151
 #, kde-format
 msgid "All files"
 msgstr ""
