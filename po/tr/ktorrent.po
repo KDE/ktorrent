@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-18 00:39+0000\n"
+"POT-Creation-Date: 2024-09-16 00:39+0000\n"
 "PO-Revision-Date: 2024-03-31 06:39+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -4637,15 +4637,13 @@ msgstr "Özel Gruplar"
 msgid "Ungrouped Torrents"
 msgstr "Gruplandırılmamış Torrentler"
 
-#: libktcore/interfaces/functions.cpp:150
-#: libktcore/interfaces/functions.cpp:155
+#: libktcore/interfaces/functions.cpp:149
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrentler"
 
-#: libktcore/interfaces/functions.cpp:152
-#: libktcore/interfaces/functions.cpp:157
+#: libktcore/interfaces/functions.cpp:151
 #, kde-format
 msgid "All files"
 msgstr "Tüm dosyalar"

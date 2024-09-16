@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-18 00:39+0000\n"
+"POT-Creation-Date: 2024-09-16 00:39+0000\n"
 "PO-Revision-Date: 2021-09-04 09:12+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -286,11 +286,10 @@ msgstr ""
 "την εισαγωγή του αρχείου αυτού;"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:225
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Εισαγωγή"
+msgstr "Εισαγωγή"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:236
 #: ktorrent/dialogs/fileselectdlg.cpp:254
@@ -4726,15 +4725,13 @@ msgstr "Προσαρμοσμένες ομάδες"
 msgid "Ungrouped Torrents"
 msgstr "Μη ομαδοποιημένα torrent"
 
-#: libktcore/interfaces/functions.cpp:150
-#: libktcore/interfaces/functions.cpp:155
+#: libktcore/interfaces/functions.cpp:149
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrents"
 
-#: libktcore/interfaces/functions.cpp:152
-#: libktcore/interfaces/functions.cpp:157
+#: libktcore/interfaces/functions.cpp:151
 #, kde-format
 msgid "All files"
 msgstr "Όλα τα αρχεία"
@@ -4958,10 +4955,9 @@ msgid "Warning: %1"
 msgstr "Προειδοποίηση: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Ληφθέντα κομμάτια:"
+msgstr "Ληφθέντα κομμάτια"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #, fuzzy, kde-format
@@ -5013,9 +5009,7 @@ msgstr "Προσέγγιση ορίων"
 #: libktcore/torrent/queuemanager.cpp:227
 #: libktcore/torrent/queuemanager.cpp:266
 #: libktcore/torrent/queuemanager.cpp:295
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Έναρξη"
@@ -5470,10 +5464,9 @@ msgid "Add Trackers"
 msgstr "Προσθήκη ιχνηλατών"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Διαθέσιμα κομμάτια:"
+msgstr "Διαθέσιμα κομμάτια"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, fuzzy, kde-format
@@ -5578,8 +5571,7 @@ msgid "Open With"
 msgstr "Άνοιγμα με"
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "Μετονομασία"
