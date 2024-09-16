@@ -44,6 +44,7 @@
         "Description[ca]": "Filtra les adreces IP a través d'una llista de bloqueig",
         "Description[cs]": "Filtrovat IP adresy podle seznamu blokovaných",
         "Description[de]": "IP-Adressen mit einer Blockliste filtern",
+        "Description[el]": "Φίλτρο διευθύνσεων IP μέσω μιας λίστας αποκλεισμού",
         "Description[en_GB]": "Filter IP addresses through a blocklist",
         "Description[eo]": "Filtri IP-adresojn per bloklisto",
         "Description[es]": "Filtre direcciones IP por medio de una lista de bloqueo",

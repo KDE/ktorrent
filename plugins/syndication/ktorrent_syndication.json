@@ -45,6 +45,7 @@
         "Description[ca]": "Connector de sindicació per al KTorrent, permet canals RSS i Atom",
         "Description[cs]": "Modul pro publikování pro KTorrent podporující RSS a kanály Atom",
         "Description[de]": "Syndizierungsmodul für KTorrent mit Unterstützung für RSS- und Atom-Nachrichtenquellen",
+        "Description[el]": "Πρόσθετο Syndication για το KTorrent, με υποστήριξη ροών RSS και Atom",
         "Description[en_GB]": "Syndication plugin for KTorrent, supporting RSS and Atom feeds",
         "Description[eo]": "Sindikata kromaĵo por KTorrent, subtenanta RSS kaj Atom-fluojn",
         "Description[es]": "Complemento de redifusión para KTorrent, que admite fuentes RSS y Atom",

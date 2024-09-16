@@ -45,6 +45,7 @@
         "Description[ca]": "Especifica l'ordre de baixada d'un torrent amb múltiples fitxers",
         "Description[cs]": "Zvolení pořadí stahovaných souborů u torrentů obsahujících více souborů",
         "Description[de]": "Download-Reihenfolge bei Torrents festlegen, die aus mehreren Dateien bestehen",
+        "Description[el]": "Καθορισμός της σειράς λήψης ενός torrent  πολλαπλών αρχείων",
         "Description[en_GB]": "Specify the download order of a multi-file torrent",
         "Description[eo]": "Indiki la elŝutan sinsekvon de plurdosiera torento",
         "Description[es]": "Indique el orden de descarga de un torrent de varios archivos",
