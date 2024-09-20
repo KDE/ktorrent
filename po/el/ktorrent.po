@@ -10,21 +10,21 @@
 # Petros Vidalis <p_vidalis@hotmail.com>, 2010, 2016.
 # Dimitrios Glentadakis <dglent@gmail.com>, 2011, 2012.
 # Stelios <sstavra@gmail.com>, 2011, 2012, 2014, 2017, 2020, 2021.
-# Antonis Geralis <gaantonio@civil.auth.gr>, 2013, 2014.
+# SPDX-FileCopyrightText: 2013, 2014, 2024 Antonis Geralis <gaantonio@civil.auth.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 00:39+0000\n"
-"PO-Revision-Date: 2021-09-04 09:12+0300\n"
-"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"PO-Revision-Date: 2024-09-19 17:43+0300\n"
+"Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 24.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -763,7 +763,7 @@ msgid ""
 "Please check if the URL in Settings > Advanced > Tracker list URL is "
 "reachable."
 msgstr ""
-"Ελέγξτε αν το URL στις Ρυθμίσεις > Για προχωρημένους > URL λύστας ανιχνευτών "
+"Ελέγξτε αν το URL στις Ρυθμίσεις > Για προχωρημένους > URL λίστας ανιχνευτών "
 "είναι προσβάσιμο."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
@@ -2056,7 +2056,7 @@ msgstr "Alexander Trufanov"
 #: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
-msgstr "Διορθώσεις, καθαρισμοί και νελτιστοποιήσεις"
+msgstr "Διορθώσεις, καθαρισμοί και βελτιστοποιήσεις"
 
 #: ktorrent/main.cpp:174
 #, kde-format
@@ -2227,7 +2227,7 @@ msgid ""
 "Maximum time that a magnet can occupy a downloading slot before it will be "
 "pushed back in the queue."
 msgstr ""
-"Μεγιστη χρονική περίοδος στην οποία ένας μαγνήτης μπορεί να απασχολεί μια "
+"Μέγιστη χρονική περίοδος στην οποία ένας μαγνήτης μπορεί να απασχολεί μια "
 "υποδοχή λήψης πριν μεταφερθεί πίσω στην ουρά."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
@@ -2597,7 +2597,7 @@ msgstr "Αναφορά προειδοποιήσεων από προσβάσιμ�
 #, kde-format
 msgid "Color to use when all trackers reply the errors or not found."
 msgstr ""
-"Το χρώμα όταν όλοι οι ιχνηλάτες ανταποκρίνοται σε σφάλματα ή δεν βρέθηκαν."
+"Το χρώμα όταν όλοι οι ιχνηλάτες ανταποκρίνονται σε σφάλματα ή δεν βρέθηκαν."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
@@ -3363,7 +3363,7 @@ msgstr ""
 #, kde-format
 msgid "Decrease priority of torrents which are stalled for more than:"
 msgstr ""
-"Mείωση προτεραιότητας των ακινητοποιημένων torrent για περισσότερο από:"
+"Μείωση προτεραιότητας των ακινητοποιημένων torrent για περισσότερο από:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_stallTimer)
 #: ktorrent/pref/qmpref.ui:141
@@ -7447,8 +7447,8 @@ msgid ""
 "manually. The URL should contain {searchTerms}, ktorrent will replace this "
 "by the thing you are searching for."
 msgstr ""
-"Το Opensearch δεν υποστηρίζεται από το %1, θα πρέπει να εισάγετε ένα URL  χειροκίνητα. To URL θα πρέπει να περιέχει όρους αναζήτησης {searchTerms}, "
-"ενώ το  ktorrent θα το αντικαταστήσει με το στοιχείο που αναζητάτε."
+"Το Opensearch δεν υποστηρίζεται από το %1, θα πρέπει να εισάγετε ένα URL  χειροκίνητα. Το URL θα πρέπει να περιέχει όρους αναζήτησης {searchTerms}, "
+"ενώ το ktorrent θα το αντικαταστήσει με το στοιχείο που αναζητάτε."
 
 #: plugins/search/searchprefpage.cpp:127
 #, kde-format
