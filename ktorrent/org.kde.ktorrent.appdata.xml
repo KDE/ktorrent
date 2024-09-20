@@ -104,7 +104,7 @@
     <p xml:lang="ca-valencia">KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrent alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
     <p xml:lang="da">KTorrent er et BitTorrent-program fra KDE, som lader dig downloade filer med BitTorrent-protokollen. Den lader dig køre flere torrents på samme tid og har udvidet funktionalitet som gør det til en komplet BitTorrent-klient.</p>
     <p xml:lang="de">KTorrent ist ein BitTorrent-Programm von KDE. Sie können damit Dateien über das BitTorrent-Protokoll herunterladen. Mehrere Torrents lassen sich gleichzeitig ausführen. KTorrent hat zusätzliche Fähigkeiten und ist damit ein mit allen Funktionen ausgestattetes Dienstprogramm für BitTorrent.</p>
-    <p xml:lang="el">Το KTorrent είναι μια εφαρμογή BitTorrent από το KDE την οποία σας επιτρέπει να κάνετε λήψεις αρχείων με χρήσητ του πρωτοκόλλου BitTorrent. Σας δίνει τη δυνατότητα να εκετελείτε πολλά torrents ταυτόχρονα και συνοδεύεται με εκτεταμένες λειτουργίες για μια πλήρη χαρακτηριστικών εφαρμογή BitTorrent.</p>
+    <p xml:lang="el">Το KTorrent είναι μια εφαρμογή BitTorrent από το KDE την οποία σας επιτρέπει να κάνετε λήψεις αρχείων με χρήση του πρωτοκόλλου BitTorrent. Σας δίνει τη δυνατότητα να εκτελείτε πολλά torrents ταυτόχρονα και συνοδεύεται με εκτεταμένες λειτουργίες για μια πλήρη χαρακτηριστικών εφαρμογή BitTorrent.</p>
     <p xml:lang="en-GB">KTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.</p>
     <p xml:lang="eo">KTorrent estas BitTorrent-apliko de KDE, kiu ebligas al vi elŝuti dosierojn per la BitTorrent-protokolo. Ĝi ebligas vin ruli plurajn torentojn samtempe kaj venas kun plilongigitaj funkcioj por igi ĝin plenefika kliento por BitTorrent.</p>
     <p xml:lang="es">KTorrent  es una aplicación BitTorrent de KDE que le permite descargar archivos usando el protocolo BitTorrent. Permite ejecutar varios torrents al mismo tiempo e incluye características extendidas para convertirlo en un cliente completo para BitTorrent.</p>
@@ -654,7 +654,7 @@
       <li xml:lang="cs">Podpora pro distribuované tabulky hash (DHT, hlavní verze)</li>
       <li xml:lang="da">Understøttelse af distribuerede hast-tabeller (DHT, mainline-versionen)</li>
       <li xml:lang="de">Unterstützung für Verteilte Hashtabellen (Distributed Hash Table, DHT in der Mainline-Version)</li>
-      <li xml:lang="el">Υποστήιριξη για κατανεμημένους πίνακες κατακερματισμού (DHT, η κύρια έκδοση)</li>
+      <li xml:lang="el">Υποστήριξη για κατανεμημένους πίνακες κατακερματισμού (DHT, η κύρια έκδοση)</li>
       <li xml:lang="en-GB">Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="eo">Subteno por distribuitaj hash-tabeloj (DHT, la Mainline-versio)</li>
       <li xml:lang="es">Implementación de tablas de resumen distribuidas (DHT, la versión principal)</li>
