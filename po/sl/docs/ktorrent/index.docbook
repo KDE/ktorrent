@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY ktorrent "<application
+>KTorrent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Slovenian "INCLUDE">
+]>
+<article id="ktorrent" lang="&language;">
+<title
+>KTorrent</title>
+<articleinfo>
+<authorgroup>
+<author
+><firstname
+>Luca</firstname
+> <surname
+>Beltrame</surname
+> <affiliation
+> <address
+><email
+>einar@heavensinferno.net</email
+></address>
+</affiliation>
+</author>
+
+<!--
+<author
+>&Marco.Martin;&Marco.Martin.mail;</author>
+using this format does not work properly, the email is missing in the 
+generated html file 
+2010-10-27 lueck
+-->
+
+<othercredit role="translator"
+><firstname
+>Matjaž</firstname
+><surname
+>Jeran</surname
+><affiliation
+><address
+><email
+>matjaz.jeran@amis.net</email
+></address
+></affiliation
+><contrib
+>Prevod</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Date of the documentation
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>27.10.2010</date>
+<!--version information of the application and kde this documentation is valid for.
+either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y' 
+-->
+<releaseinfo
+>4.0 &kde; 4.5</releaseinfo>
+
+</articleinfo>
+
+<para
+>&ktorrent; je bittorrent aplikacija KDE, ki omogoča prenos datotek s protokolom BitTorrent. Omogoča vam zagon več tokov hkrati in ima razširjene funkcije, da postane odjemalec z vsemi funkcijami za BitTorrent.</para>
+
+<itemizedlist>
+<title
+>Zmožnosti</title>
+<listitem
+><para
+>Čakalna vrsta tokov</para
+></listitem>
+<listitem
+><para
+>Globalne omejitve hitrosti in omejitve hitrosti na tok</para
+></listitem>
+<listitem
+><para
+>Predogled določenih vrst datotek, vgradnja (video in avdio)</para
+></listitem>
+<listitem
+><para
+>Uvoz delno ali v celoti prenesenih datotek</para
+></listitem>
+<listitem
+><para
+>Prednostna naloga datotek za tokove z več datotekami</para
+></listitem>
+<listitem
+><para
+>Selektivno nalaganje za tokove z več datotekami</para
+></listitem>
+<listitem
+><para
+>Izbriši/izključi vrstnike z dodatnim pogovornim oknom filtra IP za namene seznama/urejanja</para
+></listitem>
+<listitem
+><para
+>Podpora za sledenje UDP</para
+></listitem>
+<listitem
+><para
+>Podpora za zasebne sledilnike in tokove</para
+></listitem>
+<listitem
+><para
+>Podpora za enakovredno izmenjavo µTorrent</para
+></listitem>
+<listitem
+><para
+>Podpora za šifriranje protokola (združljivo z Azureusom)</para
+></listitem>
+<listitem
+><para
+>Podpora za ustvarjanje tokov brez sledenja</para
+></listitem>
+<listitem
+><para
+>Podpora za porazdeljene zgoščene tabele (DHT, različica Mainline)</para
+></listitem>
+<listitem
+><para
+>Podpora za UPnP za samodejno posredovanje vrat v LAN z dinamično dodeljenimi gostitelji</para
+></listitem>
+<listitem
+><para
+>Podpora za spletna semena</para
+></listitem>
+<listitem
+><para
+>Integracija sistemske vrstice</para
+></listitem>
+<listitem
+><para
+>Podpora za preverjanje pristnosti sledilnika</para
+></listitem>
+<listitem
+><para
+>Povezava prek posrednika</para
+></listitem>
+<listitem
+><para
+>Medprocesno krmiljenje prek vmesnika DBus</para
+></listitem>
+</itemizedlist>
+
+<itemizedlist>
+<title
+>Viri spletne pomoči</title>
+<listitem
+><para
+><ulink url="https://userbase.kde.org/KTorrent"
+>KTorrent na UserBase</ulink
+></para
+></listitem>
+<listitem
+><para
+><ulink url="http://forum.kde.org/viewforum.php?f=18"
+>Forumi skupnosti KDE</ulink
+></para
+></listitem>
+</itemizedlist>
+</article>
