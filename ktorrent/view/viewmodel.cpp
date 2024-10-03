@@ -155,7 +155,7 @@ QVariant ViewModel::Item::data(int col) const
     case DOWNLOAD_LOCATION:
         return tc->getStats().output_path;
     case TIME_ADDED:
-        return locale.toString(time_added);
+        return locale.toString(time_added, QLocale::ShortFormat);
     default:
         return QVariant();
     }
