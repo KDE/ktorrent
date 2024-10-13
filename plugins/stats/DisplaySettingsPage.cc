@@ -11,7 +11,7 @@ namespace kt
 {
 
 DisplaySettingsPage::DisplaySettingsPage(QWidget* parent)
-    : PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Display"), QStringLiteral("view-statistics"), parent)
+    : PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window This is about how things are displayed (colors, etc), not about a screen/display", "Display"), QStringLiteral("view-statistics"), parent)
 {
     setupUi(this);
 }
