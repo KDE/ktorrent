@@ -13,8 +13,6 @@ namespace kt
 
 PlainChartDrawer::PlainChartDrawer(QWidget* p) :  QFrame(p), ChartDrawer(), pmCtxMenu(new QMenu(this))
 {
-    setStyleSheet(QStringLiteral(" background-color: ") % QPalette().color(QPalette::Active, QPalette::Base).name() % QLatin1Char(';'));
-
     setContextMenuPolicy(Qt::CustomContextMenu);
     MakeCtxMenu();
 
@@ -50,7 +48,7 @@ inline PlainChartDrawer::wgtunit_t PlainChartDrawer::FindYScreenCoords(const wgt
     return (height() / mYMax) * y;
 }
 
-void PlainChartDrawer::paintEvent(QPaintEvent*)
+void PlainChartDrawer::paintEvent(QPaintEvent *pe)
 {
 
     QStyleOption opt;
@@ -63,6 +61,7 @@ void PlainChartDrawer::paintEvent(QPaintEvent*)
     pnt.setRenderHint(QPainter::Antialiasing, mAntiAlias);
     pnt.setRenderHint(QPainter::TextAntialiasing, mAntiAlias);
 
+    pnt.fillRect(pe->rect(), QPalette().color(QPalette::Base));
     DrawScale(pnt);
     DrawFrame(pnt);
     DrawChart(pnt);
