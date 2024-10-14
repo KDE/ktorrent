@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:39+0000\n"
+"POT-Creation-Date: 2024-10-14 00:39+0000\n"
 "PO-Revision-Date: 2023-06-15 11:50+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
@@ -338,7 +338,7 @@ msgstr "A pasta %1 não existe; deseja criá-la?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:90
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
-#: ktorrent/dialogs/torrentcreatordlg.cpp:279
+#: ktorrent/dialogs/torrentcreatordlg.cpp:280
 #, kde-format
 msgctxt "@action:button"
 msgid "Create"
@@ -377,7 +377,7 @@ msgstr ""
 "Seleccione por favor outra localização diferente."
 
 #: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
-#: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
+#: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "Todas as Torrentes"
@@ -798,7 +798,7 @@ msgstr ""
 "Localizadores está acessível."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:310
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "URL inválido: %1"
@@ -973,22 +973,23 @@ msgstr "Velocidade de Envio Assegurada"
 msgid "No assured speed"
 msgstr "Nenhuma velocidade assegurada"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:40
+#: ktorrent/dialogs/torrentcreatordlg.cpp:41
 #, kde-format
 msgid "Create A Torrent"
 msgstr "Criar uma Torrente"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:244
-#, kde-format
-msgid "Only HTTP is supported for webseeding."
+#: ktorrent/dialogs/torrentcreatordlg.cpp:245
+#, fuzzy, kde-format
+#| msgid "Only HTTP is supported for webseeding."
+msgid "Only HTTP(S) is supported for webseeding."
 msgstr "Só é suportado o HTTP para a publicação Web."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:271
+#: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "Tem de seleccionar um ficheiro ou uma pasta."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:277
+#: ktorrent/dialogs/torrentcreatordlg.cpp:278
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
@@ -996,12 +997,12 @@ msgstr ""
 "Não adicionou nenhum módulo de localização; tem a certeza que deseja criar "
 "esta torrente?"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:285
+#: ktorrent/dialogs/torrentcreatordlg.cpp:286
 #, kde-format
 msgid "You must add at least one node."
 msgstr "Tem de adicionar pelo menos um nó."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:339
+#: ktorrent/dialogs/torrentcreatordlg.cpp:340
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "Escolha um ficheiro onde gravar a torrente"
@@ -6283,14 +6284,14 @@ msgstr "Repor as Predefinições"
 msgid "Speed"
 msgstr "Velocidade"
 
-#: plugins/infowidget/webseedstab.cpp:86
+#: plugins/infowidget/webseedstab.cpp:87
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
 msgstr ""
 "Não é possível adicionar a fonte Web %1, por já fazer parte da lista de "
 "fontes Web."
 
-#: plugins/infowidget/webseedstab.cpp:102
+#: plugins/infowidget/webseedstab.cpp:103
 #, kde-format
 msgid "Cannot remove webseed %1, it is part of the torrent."
 msgstr "Não é possível remover a fonte Web %1, por fazer parte da torrente."
@@ -7884,7 +7885,11 @@ msgstr "Média de fontes ligadas por torrente em curso"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Display"
+msgctxt ""
+"This is about how things are displayed (colors, etc), not about a screen/"
+"display"
 msgid "Display"
 msgstr "Visualização"
 
@@ -7926,8 +7931,11 @@ msgid "(plugin reload is needed after change)"
 msgstr "(é necessário recarregar o 'plugin' após a alteração)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, kde-format
-msgctxt "@title:window"
+#, fuzzy, kde-format
+#| msgid "Display"
+msgctxt ""
+"@title:window This is about how things are displayed (colors, etc), not "
+"about a screen/display"
 msgid "Display"
 msgstr "Visualização"
 
@@ -7942,7 +7950,7 @@ msgid "Unknown"
 msgstr "Desconhecido"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:310
-#: plugins/stats/drawer/PlainChartDrawer.cc:493
+#: plugins/stats/drawer/PlainChartDrawer.cc:492
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -7952,7 +7960,7 @@ msgstr ""
 "underline'>Legenda:</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:313
-#: plugins/stats/drawer/PlainChartDrawer.cc:496
+#: plugins/stats/drawer/PlainChartDrawer.cc:495
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -7962,34 +7970,34 @@ msgstr ""
 "monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:350
-#: plugins/stats/drawer/PlainChartDrawer.cc:303
+#: plugins/stats/drawer/PlainChartDrawer.cc:302
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
 msgstr "Gravar como uma imagem…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:357
-#: plugins/stats/drawer/PlainChartDrawer.cc:310
+#: plugins/stats/drawer/PlainChartDrawer.cc:309
 #, kde-format
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
 msgid "Rescale"
 msgstr "Ajustar a Escala"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:364
-#: plugins/stats/drawer/PlainChartDrawer.cc:317
+#: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
 msgstr "Reiniciar"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:331
+#: plugins/stats/drawer/PlainChartDrawer.cc:330
 #, kde-format
 msgid "Select path to save image…"
 msgstr "Seleccione o local de gravação da imagem…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:331
+#: plugins/stats/drawer/PlainChartDrawer.cc:330
 #, kde-format
 msgid "Image files"
 msgstr "Ficheiros de imagem"
@@ -8965,6 +8973,10 @@ msgstr "Pesquisar de Novo"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgctxt "@title:window"
+#~ msgid "Display"
+#~ msgstr "Visualização"
 
 #~ msgid "Search Text"
 #~ msgstr "Procurar o Texto"
