@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 02:52+0000\n"
+"POT-Creation-Date: 2024-10-14 02:27+0000\n"
 "PO-Revision-Date: 2015-02-22 22:52+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team:  <bs@li.org>\n"
@@ -294,7 +294,7 @@ msgstr "Direktorij %1 ne postoji. Želite li da ga napravite?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:90
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
-#: ktorrent/dialogs/torrentcreatordlg.cpp:279
+#: ktorrent/dialogs/torrentcreatordlg.cpp:280
 #, fuzzy, kde-format
 #| msgid "Recreate"
 msgctxt "@action:button"
@@ -336,7 +336,7 @@ msgstr ""
 "drugu lokaciju."
 
 #: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
-#: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
+#: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "Svi torenti"
@@ -753,7 +753,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:310
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "Neispravan URL: %1"
@@ -932,35 +932,36 @@ msgid "No assured speed"
 msgstr "Nema obezbeđene brzine"
 
 # >> @title:window
-#: ktorrent/dialogs/torrentcreatordlg.cpp:40
+#: ktorrent/dialogs/torrentcreatordlg.cpp:41
 #, kde-format
 msgid "Create A Torrent"
 msgstr "Stvaranje torenta"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:244
-#, kde-format
-msgid "Only HTTP is supported for webseeding."
+#: ktorrent/dialogs/torrentcreatordlg.cpp:245
+#, fuzzy, kde-format
+#| msgid "Only HTTP is supported for webseeding."
+msgid "Only HTTP(S) is supported for webseeding."
 msgstr "Samo HTTP je podržan za web sijanje."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:271
+#: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "Morate izabrati datoteku ili direktorij."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:277
+#: ktorrent/dialogs/torrentcreatordlg.cpp:278
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
 msgstr ""
 "Niste dodali pratioca. Jeste li sigurni da hoćete da napravite ovaj torent ?"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:285
+#: ktorrent/dialogs/torrentcreatordlg.cpp:286
 #, kde-format
 msgid "You must add at least one node."
 msgstr "Morate dodati bar jedan čvor."
 
 # >> @title:window
-#: ktorrent/dialogs/torrentcreatordlg.cpp:339
+#: ktorrent/dialogs/torrentcreatordlg.cpp:340
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "Izaberi datoteku za upisivanje torenta"
@@ -6225,12 +6226,12 @@ msgstr "Vrati podrazumevano"
 msgid "Speed"
 msgstr "Brzina"
 
-#: plugins/infowidget/webseedstab.cpp:86
+#: plugins/infowidget/webseedstab.cpp:87
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
 msgstr "Ne mogu da dodam web sijanje %1, već je na spisku web sijanja."
 
-#: plugins/infowidget/webseedstab.cpp:102
+#: plugins/infowidget/webseedstab.cpp:103
 #, kde-format
 msgid "Cannot remove webseed %1, it is part of the torrent."
 msgstr "Ne mogu da uklonim web sijanje %1, ono je dio torenta."
@@ -7896,7 +7897,7 @@ msgstr "Nepoznat"
 
 # skip-rule: x-markup-k
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:310
-#: plugins/stats/drawer/PlainChartDrawer.cc:493
+#: plugins/stats/drawer/PlainChartDrawer.cc:492
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -7906,7 +7907,7 @@ msgstr ""
 "underline'>Legenda:</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:313
-#: plugins/stats/drawer/PlainChartDrawer.cc:496
+#: plugins/stats/drawer/PlainChartDrawer.cc:495
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -7916,21 +7917,21 @@ msgstr ""
 "monospace'>  </span> — %2</li>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:350
-#: plugins/stats/drawer/PlainChartDrawer.cc:303
+#: plugins/stats/drawer/PlainChartDrawer.cc:302
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
 msgstr "Sačuvaj kao sliku…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:357
-#: plugins/stats/drawer/PlainChartDrawer.cc:310
+#: plugins/stats/drawer/PlainChartDrawer.cc:309
 #, kde-format
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
 msgid "Rescale"
 msgstr "Ponovo skaliraj"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:364
-#: plugins/stats/drawer/PlainChartDrawer.cc:317
+#: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
@@ -7938,13 +7939,13 @@ msgstr "Vrati u početno stanje"
 
 # >> @title:window
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:331
+#: plugins/stats/drawer/PlainChartDrawer.cc:330
 #, kde-format
 msgid "Select path to save image…"
 msgstr "Izbor putanje za upisivanje slike"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:331
+#: plugins/stats/drawer/PlainChartDrawer.cc:330
 #, fuzzy, kde-format
 #| msgid "Torrent filter"
 msgid "Image files"

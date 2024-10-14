@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent(2)\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 02:52+0000\n"
+"POT-Creation-Date: 2024-10-14 02:27+0000\n"
 "PO-Revision-Date: 2022-02-15 11:09+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian\n"
@@ -295,7 +295,7 @@ msgstr "Directorul %1 nu există, doriți să îl creați?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:90
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
-#: ktorrent/dialogs/torrentcreatordlg.cpp:279
+#: ktorrent/dialogs/torrentcreatordlg.cpp:280
 #, fuzzy, kde-format
 #| msgid "Recreate"
 msgctxt "@action:button"
@@ -337,7 +337,7 @@ msgstr ""
 "fișiere. Alegeți altă amplasare."
 
 #: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
-#: ktorrent/dialogs/torrentcreatordlg.cpp:120 libktcore/groups/allgroup.cpp:12
+#: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "Toate torentele"
@@ -751,7 +751,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/pastedialog.cpp:137
-#: ktorrent/dialogs/torrentcreatordlg.cpp:239 ktorrent/gui.cpp:310
+#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "URL nevalid: %1"
@@ -925,33 +925,34 @@ msgstr "Viteză de încărcare garantată"
 msgid "No assured speed"
 msgstr "Fără garanție de viteză"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:40
+#: ktorrent/dialogs/torrentcreatordlg.cpp:41
 #, kde-format
 msgid "Create A Torrent"
 msgstr "Creează un torent"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:244
-#, kde-format
-msgid "Only HTTP is supported for webseeding."
+#: ktorrent/dialogs/torrentcreatordlg.cpp:245
+#, fuzzy, kde-format
+#| msgid "Only HTTP is supported for webseeding."
+msgid "Only HTTP(S) is supported for webseeding."
 msgstr "Doar HTTP este suportat pentru încărcare web."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:271
+#: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "Trebuie să alegeți un fișier sau dosar."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:277
+#: ktorrent/dialogs/torrentcreatordlg.cpp:278
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
 msgstr "Nu ați adăugat un tracker. Sigur doriți să creați acest torent?"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:285
+#: ktorrent/dialogs/torrentcreatordlg.cpp:286
 #, kde-format
 msgid "You must add at least one node."
 msgstr "Trebuie să adăugați cel puțin un nod."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:339
+#: ktorrent/dialogs/torrentcreatordlg.cpp:340
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "Alegeți un fișier pentru a salva torentul"
@@ -6178,12 +6179,12 @@ msgstr "Restaurare valori implicite"
 msgid "Speed"
 msgstr "Viteză"
 
-#: plugins/infowidget/webseedstab.cpp:86
+#: plugins/infowidget/webseedstab.cpp:87
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
 msgstr "Nu se poate adăuga sămînța %1, este deja parte dintre semințe."
 
-#: plugins/infowidget/webseedstab.cpp:102
+#: plugins/infowidget/webseedstab.cpp:103
 #, kde-format
 msgid "Cannot remove webseed %1, it is part of the torrent."
 msgstr "Nu se poate elimina sămînța %1, este parte din torent."
@@ -7958,7 +7959,7 @@ msgid "Unknown"
 msgstr "Nescunoscut"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:310
-#: plugins/stats/drawer/PlainChartDrawer.cc:493
+#: plugins/stats/drawer/PlainChartDrawer.cc:492
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -7968,7 +7969,7 @@ msgstr ""
 "underline'>Legendă:</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:313
-#: plugins/stats/drawer/PlainChartDrawer.cc:496
+#: plugins/stats/drawer/PlainChartDrawer.cc:495
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -7978,7 +7979,7 @@ msgstr ""
 "monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:350
-#: plugins/stats/drawer/PlainChartDrawer.cc:303
+#: plugins/stats/drawer/PlainChartDrawer.cc:302
 #, fuzzy, kde-format
 #| msgid "Save as image…"
 msgctxt "@action:inmenu"
@@ -7986,7 +7987,7 @@ msgid "Save as image…"
 msgstr "Salvare ca imagine..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:357
-#: plugins/stats/drawer/PlainChartDrawer.cc:310
+#: plugins/stats/drawer/PlainChartDrawer.cc:309
 #, fuzzy, kde-format
 #| msgid "Rescale"
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
@@ -7994,7 +7995,7 @@ msgid "Rescale"
 msgstr "Rescalează"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:364
-#: plugins/stats/drawer/PlainChartDrawer.cc:317
+#: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, fuzzy, kde-format
 #| msgid "Reset"
 msgctxt "@action:inmenu"
@@ -8002,13 +8003,13 @@ msgid "Reset"
 msgstr "Reinițializează"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:331
+#: plugins/stats/drawer/PlainChartDrawer.cc:330
 #, kde-format
 msgid "Select path to save image…"
 msgstr "Alegeți calea de salvare a imaginii..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:331
+#: plugins/stats/drawer/PlainChartDrawer.cc:330
 #, fuzzy, kde-format
 #| msgid "Torrent Files"
 msgid "Image files"
