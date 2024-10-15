@@ -7882,8 +7882,7 @@ msgstr "Μ.ο. συνδεδεμένων πηγών ανά τρέχον torrent"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7928,8 +7927,7 @@ msgid "(plugin reload is needed after change)"
 msgstr "(απαιτείται επαναφόρτωση προσθέτου μετά την τροποποίηση)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"

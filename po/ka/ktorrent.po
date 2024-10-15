@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-09-29 08:26+0200\n"
+"PO-Revision-Date: 2024-10-14 07:21+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -926,10 +926,9 @@ msgid "Create A Torrent"
 msgstr "ტორენტის შექმნა"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "ვებსიდისთვის, მხოლოდ, HTTP-ია მხარდაჭერილი."
+msgstr "ვებსიდისთვის, მხოლოდ, HTTP(S)-ია მხარდაჭერილი."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -7771,8 +7770,7 @@ msgstr "საშ. სიდები მიერთებული თით�
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7817,8 +7815,7 @@ msgid "(plugin reload is needed after change)"
 msgstr "(შეცვლის შემდეგ დამატება თავიდან უნდა ჩატვირთოთ)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
