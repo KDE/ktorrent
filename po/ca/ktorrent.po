@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 02:27+0000\n"
-"PO-Revision-Date: 2024-07-31 12:30+0200\n"
+"PO-Revision-Date: 2024-10-14 08:59+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -939,10 +939,9 @@ msgid "Create A Torrent"
 msgstr "Crea un torrent"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "Només s'accepta HTTP per al sembrat web."
+msgstr "Només s'accepta HTTP(S) per al sembrat web."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -7876,7 +7875,7 @@ msgstr "(cal tornar a carregar el connector després del canvi)"
 #, kde-format
 msgctxt "@title:window"
 msgid "Display"
-msgstr "Pantalla"
+msgstr "Visualització"
 
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format

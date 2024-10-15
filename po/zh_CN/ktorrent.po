@@ -899,10 +899,9 @@ msgid "Create A Torrent"
 msgstr "创建一个种子"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "仅支持 HTTP 的网络种子。"
+msgstr ""
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
