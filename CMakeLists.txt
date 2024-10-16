@@ -23,54 +23,87 @@ set (KF_MIN_VERSION "5.240.0")
 set (LIBKTORRENT_MIN_VERSION "24.04.70")
 set (Boost_MIN_VERSION "1.71.0")
 
-find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH})
-
-include(KDEInstallDirs)
-include(KDECMakeSettings)
-include(KDECompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
-include(GenerateExportHeader)
-include(ECMInstallIcons)
-include(ECMAddAppIcon)
-include(ECMMarkAsTest)
-include(ECMMarkNonGuiExecutable)
-include(KDEClangFormat)
-include(KDEGitCommitHooks)
+
+find_package(ECM ${KF_MIN_VERSION} NO_MODULE)
+set_package_properties(ECM PROPERTIES TYPE REQUIRED
+    URL "https://api.kde.org/ecm/"
+    DESCRIPTION "extra cmake modules")
+
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH})
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED
-    Core
-    DBus
-    Network
-    Widgets
-)
+find_package(Qt6Core ${QT_MIN_VERSION})
+set_package_properties(Qt6Core PROPERTIES TYPE REQUIRED)
 
-find_package(KF6 ${KF_MIN_VERSION} REQUIRED
-  COMPONENTS
-    Config
-    ConfigWidgets
-    CoreAddons
-    Crash
-    DBusAddons
-    GlobalAccel
-    I18n
-    IconThemes
-    KIO
-    Notifications
-    NotifyConfig
-    KCMUtils
-    Parts
-    Solid
-    StatusNotifierItem
-    WidgetsAddons
-    WindowSystem
-    XmlGui
-  OPTIONAL_COMPONENTS
-    DocTools
-)
+find_package(Qt6DBus ${QT_MIN_VERSION})
+set_package_properties(Qt6DBus PROPERTIES TYPE REQUIRED)
+
+find_package(Qt6Network ${QT_MIN_VERSION})
+set_package_properties(Qt6Network PROPERTIES TYPE REQUIRED)
+
+find_package(Qt6Widgets ${QT_MIN_VERSION})
+set_package_properties(Qt6Widgets PROPERTIES TYPE REQUIRED)
+
+find_package(KF6Config ${KF_MIN_VERSION})
+set_package_properties(KF6Config PROPERTIES TYPE REQUIRED)
+
+find_package(KF6ConfigWidgets ${KF_MIN_VERSION})
+set_package_properties(KF6ConfigWidgets PROPERTIES TYPE REQUIRED)
+
+find_package(KF6CoreAddons ${KF_MIN_VERSION})
+set_package_properties(KF6CoreAddons PROPERTIES TYPE REQUIRED)
+
+find_package(KF6Crash ${KF_MIN_VERSION})
+set_package_properties(KF6Crash PROPERTIES TYPE REQUIRED)
+
+find_package(KF6DBusAddons ${KF_MIN_VERSION})
+set_package_properties(KF6DBusAddons PROPERTIES TYPE REQUIRED)
+
+find_package(KF6GlobalAccel ${KF_MIN_VERSION})
+set_package_properties(KF6GlobalAccel PROPERTIES TYPE REQUIRED)
+
+find_package(KF6I18n ${KF_MIN_VERSION})
+set_package_properties(KF6I18n PROPERTIES TYPE REQUIRED)
+
+find_package(KF6IconThemes ${KF_MIN_VERSION})
+set_package_properties(KF6IconThemes PROPERTIES TYPE REQUIRED)
+
+find_package(KF6KIO ${KF_MIN_VERSION})
+set_package_properties(KF6KIO PROPERTIES TYPE REQUIRED)
+
+find_package(KF6Notifications ${KF_MIN_VERSION})
+set_package_properties(KF6Notifications PROPERTIES TYPE REQUIRED)
+
+find_package(KF6NotifyConfig ${KF_MIN_VERSION})
+set_package_properties(KF6NotifyConfig PROPERTIES TYPE REQUIRED)
+
+find_package(KF6KCMUtils ${KF_MIN_VERSION})
+set_package_properties(KF6KCMUtils PROPERTIES TYPE REQUIRED)
+
+find_package(KF6Parts ${KF_MIN_VERSION})
+set_package_properties(KF6Parts PROPERTIES TYPE REQUIRED)
+
+find_package(KF6Solid ${KF_MIN_VERSION})
+set_package_properties(KF6Solid PROPERTIES TYPE REQUIRED)
+
+find_package(KF6StatusNotifierItem ${KF_MIN_VERSION})
+set_package_properties(KF6StatusNotifierItem PROPERTIES TYPE REQUIRED)
+
+find_package(KF6WidgetsAddons ${KF_MIN_VERSION})
+set_package_properties(KF6WidgetsAddons PROPERTIES TYPE REQUIRED)
+
+find_package(KF6WindowSystem ${KF_MIN_VERSION})
+set_package_properties(KF6WindowSystem PROPERTIES TYPE REQUIRED)
+
+find_package(KF6XmlGui ${KF_MIN_VERSION})
+set_package_properties(KF6XmlGui PROPERTIES TYPE REQUIRED)
+
+find_package(KF6DocTools ${KF_MIN_VERSION})
+set_package_properties(KF6DocTools PROPERTIES TYPE OPTIONAL)
+
 
 find_package(Qt6Core5Compat ${QT_MIN_VERSION})
 set_package_properties(Qt6Core5Compat
@@ -89,8 +122,11 @@ if (NOT Qt6Test_FOUND)
     set(BUILD_TESTING OFF CACHE BOOL "Build the testing tree.")
 endif()
 
-find_package(KTorrent6 ${LIBKTORRENT_MIN_VERSION} CONFIG REQUIRED)
-find_package(Boost ${Boost_MIN_VERSION} REQUIRED)
+find_package(KTorrent6 ${LIBKTORRENT_MIN_VERSION} CONFIG)
+set_package_properties(KTorrent6 PROPERTIES TYPE REQUIRED)
+
+find_package(Boost ${Boost_MIN_VERSION})
+set_package_properties(Boost PROPERTIES TYPE REQUIRED)
 
 find_package(KF6TextWidgets ${KF_MIN_VERSION})
 set_package_properties(KF6TextWidgets
@@ -182,6 +218,18 @@ set_package_properties(Phonon4Qt6
   PURPOSE "Required for KTorrent's multimedia plugin"
 )
 
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+include(GenerateExportHeader)
+include(ECMInstallIcons)
+include(ECMAddAppIcon)
+include(ECMMarkAsTest)
+include(ECMMarkNonGuiExecutable)
+include(KDEClangFormat)
+include(KDEGitCommitHooks)
 
 #
 # checks for functions and stuff
@@ -211,7 +259,6 @@ add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055900)
 set (KTORRENT_DBUS_XML_DIR ${CMAKE_SOURCE_DIR}/dbus_xml)
 set (KTORRENT_PLUGIN_INSTALL_DIR ${PLUGIN_INSTALL_DIR}/ktorrent)
 
-
 add_subdirectory(libktcore)
 add_subdirectory(plugins)
 add_subdirectory(ktorrent)
@@ -227,6 +274,3 @@ ki18n_install(po)
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
-
-
-feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
