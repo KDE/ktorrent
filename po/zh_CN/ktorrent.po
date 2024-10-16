@@ -901,7 +901,7 @@ msgstr "创建一个种子"
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
 #, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr ""
+msgstr "仅支持 HTTP(S) 的网络种子。"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
