@@ -5,26 +5,26 @@
 # Copyright (C) 2005 Joris Guisson <joris.guisson@gmail.com>
 #
 # SPDX-FileCopyrightText: 2011, 2012, 2015, 2019, 2020, 2022, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
-# Pablo de Vicente <pablo.devicente@gmail.com>, 2005.
-# Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005, 2006, 2007, 2008, 2009, 2010, 2012.
-# Jaime Robles <jaime@kde.org>, 2007, 2008.
-# Enrique Matias Sanchez (Quique) <cronopios@gmail.com>, 2008, 2009, 2010.
-# Raul Gonzalez <raulgf83@gmail.com>, 2012, 2013, 2014.
-# Javier Vinal <fjvinal@gmail.com>, 2015, 2016, 2017, 2018, 2019.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2020, 2021, 2022, 2023, 2024, %Y.
+# SPDX-FileCopyrightText: 2005 Pablo de Vicente <pablo.devicente@gmail.com>
+# SPDX-FileCopyrightText: 2005, 2006, 2007, 2008, 2009, 2010, 2012 Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>
+# SPDX-FileCopyrightText: 2007, 2008 Jaime Robles <jaime@kde.org>
+# SPDX-FileCopyrightText: 2008, 2009, 2010 Enrique Matias Sanchez (Quique) <cronopios@gmail.com>
+# SPDX-FileCopyrightText: 2012, 2013, 2014 Raul Gonzalez <raulgf83@gmail.com>
+# SPDX-FileCopyrightText: 2015, 2016, 2017, 2018, 2019 Javier Vinal <fjvinal@gmail.com>
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024, 2024 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 02:27+0000\n"
-"PO-Revision-Date: 2024-03-30 16:47+0100\n"
+"PO-Revision-Date: 2024-10-19 22:37+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -950,10 +950,9 @@ msgid "Create A Torrent"
 msgstr "Crear un torrent"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "Para la siembra web solo se soporta HTTP."
+msgstr "Para la siembra web solo se soporta HTTP(S)."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
