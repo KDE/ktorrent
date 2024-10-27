@@ -8815,7 +8815,3 @@ msgstr "Søk på nytt"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgctxt "@title:window"
-#~ msgid "Display"
-#~ msgstr "Visning"
