@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-10-14 09:03+0200\n"
+"PO-Revision-Date: 2024-10-26 20:48+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.1\n"
+"X-Generator: Lokalize 24.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -3223,8 +3223,8 @@ msgid ""
 "When enabled, the queue manager will be totally disabled, allowing you to "
 "fully control all torrents manually."
 msgstr ""
-"Quan es marca, el gestor de la cua es desactivarà completament, permetent-"
-"vos controlar totalment els torrent manualment."
+"Quan es marca, el gestor de la cua es desactivarà completament, que us "
+"permet controlar totalment els torrent manualment."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_manuallyControlTorrents)
 #: ktorrent/pref/qmpref.ui:20
@@ -4510,12 +4510,12 @@ msgstr ""
 #: ktorrent/view/viewmodel.cpp:499
 #, kde-format
 msgid "How long we have been downloading the torrent"
-msgstr "Quant temps porteu baixant el torrent"
+msgstr "Quant temps heu estat baixant el torrent"
 
 #: ktorrent/view/viewmodel.cpp:501
 #, kde-format
 msgid "How long we have been seeding the torrent"
-msgstr "Quant temps porteu sembrant el torrent"
+msgstr "Quant temps heu estat sembrant el torrent"
 
 #: ktorrent/view/viewmodel.cpp:503
 #, kde-format
