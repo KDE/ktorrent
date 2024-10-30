@@ -11,21 +11,22 @@
 # Alexander Lakhin <exclusion@gmail.com>, 2013.
 # Мария Шикунова <translation-team@basealt.ru>, 2021, 2023.
 # Alexander Yavorsky <kekcuha@gmail.com>, 2024.
+# SPDX-FileCopyrightText: 2024 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-02-18 10:40+0300\n"
-"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
-"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"PO-Revision-Date: 2024-10-29 12:29+0300\n"
+"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 21.08.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -936,10 +937,9 @@ msgid "Create A Torrent"
 msgstr "Создать торрент"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "Для веб-сидирования можно использовать только HTTP."
+msgstr "Для веб-раздачи можно использовать только HTTP(S)."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -1232,7 +1232,7 @@ msgstr "Ограничить скорость отдачи:"
 #: ktorrent/groups/grouppolicydlg.ui:114
 #, kde-format
 msgid "Maximum seed time:"
-msgstr "Максимальное время сидирования:"
+msgstr "Максимальное время раздачи:"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, m_max_seed_time)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, time_limit)
@@ -2673,7 +2673,7 @@ msgstr "Каталог для сохранения по умолчанию"
 #, kde-format
 msgid "Directory to move data to when a torrent has finished downloading."
 msgstr ""
-"Каталог, в который следует переместить скачанное после окончания загрузки "
+"Каталог, в который следует переместить данные после окончания загрузки "
 "торрента"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCompletedDir)
@@ -2926,12 +2926,7 @@ msgstr "Максимальное количество устанавливаем
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
@@ -2941,7 +2936,7 @@ msgstr ""
 "<p>Максимальное количество исходящих соединений, устанавливаемых "
 "одновременно.</p>\n"
 "<p>Если KTorrent будет блокировать остальной сетевой трафик, попробуйте "
-"уменьшить этот параметр.</p>"
+"уменьшить значение этого параметра.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -3004,10 +2999,7 @@ msgstr "Основной протокол передачи"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
@@ -3390,17 +3382,16 @@ msgid ""
 "downloading, only when seeding.</p>"
 msgstr ""
 "<p>Максимальный коэффициент раздачи. Если это значение достигнуто, то "
-"сидирование будет остановлено. Это будет применено только к новым "
-"открываемым торрентам, существующие торренты не подвергнутся этим изменениям."
-"</p>\n"
-"<p><span style=\" font-weight:600;\">Внимание: </span>это не применяется во "
-"время загрузки, только при сидировании.</p>"
+"раздача будет остановлена. Этот параметр повлияет только на новые "
+"открываемые торренты, существующие торренты не подвергнутся изменениям.</p>\n"
+"<p><span style=\" font-weight:600;\">Внимание: </span>данный параметр не "
+"применяется во время загрузки, только при раздаче.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/qmpref.ui:222
 #, kde-format
 msgid "Default maximum seed time:"
-msgstr "Максимальное время сидирования по умолчанию:"
+msgstr "Максимальное время раздачи по умолчанию:"
 
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_maxSeedTime)
 #: ktorrent/pref/qmpref.ui:229
@@ -3852,8 +3843,8 @@ msgid ""
 "<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
 "<br>Uploaded %3 at an average speed of %4."
 msgstr ""
-"Коэффициент раздачи <b>%1</b> достиг максимального уровня %2 и она была "
-"остановлена.<br>Отдано %3, средняя скорость загрузки — %4."
+"Коэффициент раздачи <b>%1</b> достиг максимального уровня %2, и она была "
+"остановлена.<br>Отдано %3 на средней скорости %4."
 
 #: ktorrent/trayicon.cpp:218
 #, kde-format
@@ -3861,8 +3852,8 @@ msgid ""
 "<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
 "<br>Uploaded %3 at an average speed of %4."
 msgstr ""
-"Время раздачи <b>%1</b> превысило лимит в %2 часа(ов) и она была остановлена."
-"<br> Отдано %3 на средней скорости в %4."
+"Время раздачи <b>%1</b> превысило лимит в %2 часа(ов), и она была "
+"остановлена.<br>Отдано %3 на средней скорости в %4."
 
 #: ktorrent/trayicon.cpp:233
 #, kde-format
@@ -4019,10 +4010,9 @@ msgid ""
 "becomes useless.</p>"
 msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Режим суперсидирования, "
-"специальный режим сидирования, позволяющий резко увеличить эффективность "
-"отдачи. Для раздачи торрента будет требоваться меньшая пропускная "
-"способность сети.</p>\n"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Режим суперраздачи "
+"позволяет резко увеличить эффективность отдачи. Для раздачи торрента будет "
+"требоваться меньшая пропускная способность сети.</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
 "p>\n"
@@ -4036,7 +4026,7 @@ msgstr ""
 #: ktorrent/view/propertiesdlg.ui:45
 #, kde-format
 msgid "Use superseeding mode for seeding"
-msgstr "Использовать режим суперсидирования"
+msgstr "Использовать режим суперраздачи"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, move_on_completion_enabled)
 #: ktorrent/view/propertiesdlg.ui:52
@@ -4337,11 +4327,10 @@ msgid "Select a directory to move the data to."
 msgstr "Выберите каталог, в который следует переместить данные."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4491,8 +4480,8 @@ msgid ""
 "Share ratio is the number of bytes uploaded divided by the number of bytes "
 "downloaded"
 msgstr ""
-"Коэффициент раздачи — количество скачанных байтов поделённое на количество "
-"отданных"
+"Коэффициент раздачи — количество отданных байтов поделённое на количество "
+"загруженных"
 
 #: ktorrent/view/viewmodel.cpp:499
 #, kde-format
@@ -4601,7 +4590,7 @@ msgstr "Достигнут максимальный коэффициент ра�
 #: libktcore/dbus/dbustorrent.cpp:307
 #, kde-format
 msgid "Maximum seed time reached."
-msgstr "Достигнуто максимальное время сидирования."
+msgstr "Достигнуто максимальное время раздачи."
 
 #: libktcore/groups/groupmanager.cpp:89
 #, kde-format
@@ -4889,7 +4878,7 @@ msgstr "Каталог для перемещения загруженных фа
 #: libktcore/ktorrent.kcfg:251
 #, kde-format
 msgid "Maximum seed time in hours (0 = no limit)"
-msgstr "Максимальное время сидирования в часах (0 — без ограничений)"
+msgstr "Максимальное время раздачи в часах (0 — без ограничений)"
 
 #: libktcore/plugin/pluginactivity.cpp:24
 #: libktcore/plugin/pluginactivity.cpp:44
@@ -4947,7 +4936,7 @@ msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
-"Достигнуто максимальное время сидирования торрента «%1». Всё равно начать "
+"Достигнуто максимальное время раздачи торрента «%1». Всё равно начать "
 "раздачу?"
 
 #: libktcore/torrent/queuemanager.cpp:116
@@ -4991,8 +4980,8 @@ msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
 "start them anyway?"
 msgstr ""
-"Достигнуто максимальное время сидирования следующих торрентов. Всё равно "
-"начать раздачу?"
+"Достигнуто максимальное время раздачи следующих торрентов. Всё равно начать "
+"раздачу?"
 
 #: libktcore/torrent/queuemanager.cpp:292
 #, kde-format
@@ -5001,7 +4990,7 @@ msgid ""
 "to start them anyway?"
 msgstr ""
 "Достигнут максимальный коэффициент раздачи следующих торрентов. Всё равно "
-"начать сидирование?"
+"запустить их?"
 
 #: libktcore/torrent/queuemanager.cpp:708
 #, kde-format
@@ -5514,8 +5503,7 @@ msgid "Open With"
 msgstr "Открыть с помощью..."
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "Переименовать"
@@ -5886,11 +5874,10 @@ msgid "No"
 msgstr "Нет"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
@@ -7812,7 +7799,6 @@ msgstr "Среднее число сидов на запущенный торр�
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
 #, fuzzy, kde-format
-#| msgid "Display"
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7858,7 +7844,6 @@ msgstr "(после изменений необходима перезагруз
 
 #: plugins/stats/DisplaySettingsPage.cc:14
 #, fuzzy, kde-format
-#| msgid "Display"
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
