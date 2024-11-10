@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-10-14 15:51+0200\n"
+"PO-Revision-Date: 2024-11-09 20:09+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.11.70\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -97,7 +97,7 @@ msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
 "Do you want to recreate them, or do you want to not download them?"
 msgstr ""
-"Няколко файла с данни на торент \"%1\" липсват.\n"
+"Няколко файла с данни на торент „%1“ липсват.\n"
 "Искате ли да ги възстановите или не искате да ги изтегляте?"
 
 #: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
@@ -121,7 +121,7 @@ msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
 "Do you want to recreate it?"
 msgstr ""
-"Файлът, съхраняващ информацията за торент \"%1\", липсва.\n"
+"Файлът, съхраняващ информацията за торент „%1“, липсва.\n"
 "Искате ли да го създадете отново?"
 
 #: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
@@ -3937,7 +3937,7 @@ msgstr "Няма достатъчно свободно дисково прост
 msgid ""
 "Your disk is running out of space.<br /><b>%1</b> is being downloaded to "
 "'%2'."
-msgstr "Мястото на диска ви се изчерпва.<br /><b>%1</b> се сваля в \"%2\"."
+msgstr "Мястото на диска ви се изчерпва.<br /><b>%1</b> се сваля в „%2“."
 
 #: ktorrent/trayicon.cpp:310
 #, kde-format
@@ -4928,8 +4928,8 @@ msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
 "time. Ignore the limit and start seeding anyway?"
 msgstr ""
-"Торентът \"%1\" достигна максималните коефициент и време за качване. Искате "
-"ли да игнорирате ограниченията и да започнете качване?"
+"Торентът „%1“ достигна максималните коефициент и време за качване. Искате ли "
+"да игнорирате ограниченията и да започнете качване?"
 
 #: libktcore/torrent/queuemanager.cpp:107
 #, kde-format
@@ -4937,7 +4937,7 @@ msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
-"Торентът \"%1\" достигна максималния коефициент на споделяне. Желаете ли да "
+"Торентът „%1“ достигна максималния коефициент на споделяне. Желаете ли да "
 "игнорирате ограничението и да започнете качване?"
 
 #: libktcore/torrent/queuemanager.cpp:109
@@ -4946,7 +4946,7 @@ msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
-"Торентът \"%1\" достигна максималното време за качване. Желаете ли да "
+"Торентът „%1“ достигна максималното време за качване. Желаете ли да "
 "игнорирате ограничението и да започнете качване?"
 
 #: libktcore/torrent/queuemanager.cpp:116
