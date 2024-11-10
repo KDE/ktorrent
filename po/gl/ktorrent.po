@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-03-29 10:41+0100\n"
+"PO-Revision-Date: 2024-11-09 16:13+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.1\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -940,10 +940,9 @@ msgid "Create A Torrent"
 msgstr "Crear un torrent"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "Só se admite HTTP para o espallamento web."
+msgstr "Só se admite HTTP e HTTPS para o espallamento web."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -7811,13 +7810,12 @@ msgstr "Media de parceiros conectados por torrente activo"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
 msgid "Display"
-msgstr "Pantalla"
+msgstr "Visualización"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AntiAliasing)
 #: plugins/stats/DisplaySettings.ui:910
@@ -7857,13 +7855,12 @@ msgid "(plugin reload is needed after change)"
 msgstr "(precísase cargar de novo o complemento tras o cambio)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
 msgid "Display"
-msgstr "Pantalla"
+msgstr "Visualización"
 
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
