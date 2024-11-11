@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-11-09 20:09+0100\n"
+"PO-Revision-Date: 2024-11-10 15:19+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -369,7 +369,7 @@ msgstr "Съществуващи файлове: <b>%1</b> от <b>%2</b>"
 #: ktorrent/dialogs/fileselectdlg.cpp:536
 #, kde-format
 msgid "Existing file: <b>No</b>"
-msgstr "Съществуващ файло: <b>Не</b>"
+msgstr "Съществуващ файл: <b>Не</b>"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:539
 #, kde-format
@@ -2040,7 +2040,7 @@ msgstr "Alexander Trufanov"
 #: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
-msgstr "Поправки на гпрограмни грешки, изчистване и оптимизации"
+msgstr "Поправки на програмни грешки, изчистване и оптимизации"
 
 #: ktorrent/main.cpp:174
 #, kde-format
@@ -3165,7 +3165,7 @@ msgid ""
 "If the SOCKS server requires authentication via a username and a password, "
 "enable this box."
 msgstr ""
-"Сложете отметка, ако сървъра SOCKS изисква удостоверяване посредство има и "
+"Сложете отметка, ако сървъра SOCKS изисква удостоверяване посредством име и "
 "парола."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_socksUsePassword)
@@ -4153,7 +4153,7 @@ msgstr "Стартиране на всички избрани торенти в 
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
-msgstr "Принуделно стартиране"
+msgstr "Принудително стартиране"
 
 #: ktorrent/view/view.cpp:141
 #, kde-format
@@ -4425,7 +4425,7 @@ msgstr "Местоположение"
 #: ktorrent/view/viewmodel.cpp:469
 #, kde-format
 msgid "Added"
-msgstr "Дабавен на"
+msgstr "Добавен на"
 
 #: ktorrent/view/viewmodel.cpp:476
 #, kde-format
@@ -7936,7 +7936,7 @@ msgstr "Файлове с изображения"
 #: plugins/stats/ktstatsplugin.kcfg:10
 #, kde-format
 msgid "Update charts every n gui updates"
-msgstr "Обновяване на графиките на всеки n обновявание на ГПИ"
+msgstr "Обновяване на графиките на всеки n обновявания на ГПИ"
 
 #. i18n: ectx: label, entry (DataGatherIval), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:15
@@ -8698,7 +8698,7 @@ msgstr "Тест"
 #: plugins/syndication/filtereditor.ui:356
 #, kde-format
 msgid "filter on feed:"
-msgstr "филтър на ечисията:"
+msgstr "филтър на емисията:"
 
 #: plugins/syndication/ktfeed.cpp:448
 #, kde-format
