@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-09-10 11:34+0300\n"
+"PO-Revision-Date: 2024-11-13 08:40+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -910,10 +910,9 @@ msgid "Create A Torrent"
 msgstr "יצירת טורנט"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "רק HTTP נתמך ל־webseeding."
+msgstr "יש תמיכה ב־HTTP(S) בלבד למקור רשת."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -1117,7 +1116,7 @@ msgstr "פתחה"
 #: ktorrent/dialogs/torrentcreatordlg.ui:332
 #, kde-format
 msgid "Web Seeds"
-msgstr ""
+msgstr "מקורות רשת"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: ectx: property (text), widget (QLabel, label_17)
@@ -2291,13 +2290,13 @@ msgstr ""
 #, kde-format
 msgid ""
 "Enable or disable the use of webseeds when they are present in a torrent."
-msgstr ""
+msgstr "אפשר להפעיל או להשבית שימוש במקורות רשת כשהם קיימים בטורנט."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_webseedsEnabled)
 #: ktorrent/pref/btpref.ui:74
 #, kde-format
 msgid "Use webseeds"
-msgstr ""
+msgstr "להשתמש במקורות רשת"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_checkWhenFinished)
 #: ktorrent/pref/btpref.ui:81
@@ -2403,7 +2402,7 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:26
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
-msgstr ""
+msgstr "צבע לשימוש לטורנטים בשיתוף או הורדה."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
@@ -2932,13 +2931,13 @@ msgstr ""
 #: ktorrent/pref/proxypref.ui:74
 #, kde-format
 msgid "Whether or not to use the HTTP proxy for webseed connections."
-msgstr ""
+msgstr "האם להשתמש במתווך HTTP לחיבורי מקור רשת או לא."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxyForWebSeeds)
 #: ktorrent/pref/proxypref.ui:77
 #, kde-format
 msgid "Use proxy for webseed connections"
-msgstr ""
+msgstr "להשתמש במתווך לחיבורי מקור רשת"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxyForTracker)
 #: ktorrent/pref/proxypref.ui:84
@@ -3076,7 +3075,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:55 ktorrent/pref/recommendedsettingsdlg.ui:300
 #, kde-format
 msgid "Maximum seeds:"
-msgstr ""
+msgstr "שיתופים מרביים:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxSeeds)
 #: ktorrent/pref/qmpref.ui:62
@@ -4248,7 +4247,7 @@ msgstr ""
 msgid ""
 "How many leechers we are connected to (How many leechers there are according "
 "to the tracker)"
-msgstr ""
+msgstr "לכמה מורידים אנו מחוברים (כמה מורידים יש לפי העוקב)"
 
 #: ktorrent/view/viewmodel.cpp:495
 #, kde-format
@@ -4371,7 +4370,7 @@ msgstr ""
 #: libktcore/dbus/dbustorrent.cpp:307
 #, kde-format
 msgid "Maximum seed time reached."
-msgstr ""
+msgstr "הגעת לזמן השיתוף המרבי."
 
 #: libktcore/groups/groupmanager.cpp:89
 #, kde-format
@@ -4464,7 +4463,7 @@ msgstr ""
 #: libktcore/ktorrent.kcfg:15
 #, kde-format
 msgid "Maximum number of seeds (0 = no limit)"
-msgstr ""
+msgstr "מספר השיתופים המרבי (0 = ללא הגבלה)"
 
 #. i18n: ectx: label, entry (startDownloadsOnLowDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:20
@@ -4548,7 +4547,7 @@ msgstr ""
 #: libktcore/ktorrent.kcfg:98
 #, kde-format
 msgid "Keep seeding after download has finished"
-msgstr ""
+msgstr "להמשיך לשתף אחרי שההורדה הסתיימה"
 
 #. i18n: ectx: label, entry (tempDir), group (downloads)
 #: libktcore/ktorrent.kcfg:102
@@ -4652,7 +4651,7 @@ msgstr ""
 #: libktcore/ktorrent.kcfg:251
 #, kde-format
 msgid "Maximum seed time in hours (0 = no limit)"
-msgstr ""
+msgstr "זמן השיתוף המרבי בשעות (0 = ללא הגבלה)"
 
 #: libktcore/plugin/pluginactivity.cpp:24
 #: libktcore/plugin/pluginactivity.cpp:44
@@ -4692,6 +4691,8 @@ msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
 "time. Ignore the limit and start seeding anyway?"
 msgstr ""
+"הטורנט „%1” הגיע ליחס השיתוף המרבי שלו ולזמן השיתוף המרבי שלו. להתעלם "
+"מהמגבלה ולהתחיל לשתף בכל מקרה?"
 
 #: libktcore/torrent/queuemanager.cpp:107
 #, kde-format
@@ -4699,6 +4700,7 @@ msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
+"הטורנט „%1” הגיע ליחס השיתוף המרבי שלו. להתעלם מהמגבלה ולהתחיל לשתף בכל מקרה?"
 
 #: libktcore/torrent/queuemanager.cpp:109
 #, kde-format
@@ -4706,6 +4708,7 @@ msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
+"הטורנט „%1” הגיע לזמן השיתוף המרבי שלו. להתעלם מהמגבלה ולהתחיל לשתף בכל מקרה?"
 
 #: libktcore/torrent/queuemanager.cpp:116
 #, kde-format
@@ -4745,7 +4748,7 @@ msgstr ""
 msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
 "start them anyway?"
-msgstr ""
+msgstr "הטורנטים הבאים הגיעו לזמן השיתוף המרבי שלהם. להתחיל אותם בכל אופן?"
 
 #: libktcore/torrent/queuemanager.cpp:292
 #, kde-format
@@ -5396,12 +5399,12 @@ msgstr ""
 #: plugins/infowidget/infowidgetplugin.cpp:240
 #, kde-format
 msgid "Webseeds"
-msgstr ""
+msgstr "מקורות רשת"
 
 #: plugins/infowidget/infowidgetplugin.cpp:240
 #, kde-format
 msgid "Displays all the webseeds of a torrent"
-msgstr ""
+msgstr "הצגת כל מקורות הרשת של טורנט"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:66
 #: plugins/infowidget/iwfiletreemodel.cpp:74
@@ -5530,13 +5533,13 @@ msgstr ""
 #: plugins/infowidget/iwprefpage.ui:53
 #, kde-format
 msgid "Whether or not to show the webseeds tab at the bottom of the window."
-msgstr ""
+msgstr "האם להציג את לשונית מקורות הרשת בתחתית החלון או לא."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showWebSeedsTab)
 #: plugins/infowidget/iwprefpage.ui:56
 #, kde-format
 msgid "Show list of webseeds"
-msgstr ""
+msgstr "הצגת רשימת מקורות רשת"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: plugins/infowidget/iwprefpage.ui:66
@@ -5953,12 +5956,12 @@ msgstr "מהירות"
 #: plugins/infowidget/webseedstab.cpp:87
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
-msgstr ""
+msgstr "לא ניתן להוסיף את מקור הרשת %1, הוא כבר חלק מרשימת מקורות הרשת."
 
 #: plugins/infowidget/webseedstab.cpp:103
 #, kde-format
 msgid "Cannot remove webseed %1, it is part of the torrent."
-msgstr ""
+msgstr "לא ניתן להסיר את מקור הרשת %1, הוא חלק מהטורנט."
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_webseed)
 #: plugins/infowidget/webseedstab.ui:19
@@ -5979,13 +5982,13 @@ msgstr ""
 #: plugins/infowidget/webseedstab.ui:26
 #, kde-format
 msgid "Add Webseed"
-msgstr ""
+msgstr "הוספת מקור רשת"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove)
 #: plugins/infowidget/webseedstab.ui:48
 #, kde-format
 msgid "Remove Webseed"
-msgstr ""
+msgstr "הסרת מקור רשת"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_enable_all)
 #: plugins/infowidget/webseedstab.ui:68
@@ -7169,7 +7172,7 @@ msgstr "אחרי שההורדות של כל הטורנטים הסתיימו"
 #: plugins/shutdown/shutdowndlg.cpp:46
 #, kde-format
 msgid "When all torrents finish seeding"
-msgstr ""
+msgstr "כשכל הטורנטים מסיימים שיתוף"
 
 #: plugins/shutdown/shutdowndlg.cpp:47
 #, kde-format
@@ -7241,7 +7244,7 @@ msgstr ""
 #: plugins/shutdown/shutdownruleset.cpp:330
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
-msgstr ""
+msgstr "<b>כל הטורנטים</b> סיימו שיתוף"
 
 #: plugins/shutdown/shutdownruleset.cpp:332
 #, kde-format
@@ -7251,7 +7254,7 @@ msgstr ""
 #: plugins/shutdown/shutdownruleset.cpp:334
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
-msgstr ""
+msgstr "<b>%1</b> מסיים שיתוף"
 
 #: plugins/shutdown/shutdowntorrentmodel.cpp:74
 #: plugins/shutdown/shutdowntorrentmodel.cpp:211
@@ -7263,7 +7266,7 @@ msgstr "ההורדה מסתיימת"
 #: plugins/shutdown/shutdowntorrentmodel.cpp:212
 #, kde-format
 msgid "Seeding finishes"
-msgstr ""
+msgstr "שיתוף מסתיים"
 
 #: plugins/shutdown/shutdowntorrentmodel.cpp:132
 #, kde-format
@@ -7306,7 +7309,7 @@ msgstr "נקודות"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers connected"
-msgstr ""
+msgstr "מורידים מחוברים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: plugins/stats/ConnsTabPage.cc:46 plugins/stats/ConnsTabPage.cc:94
@@ -7314,14 +7317,14 @@ msgstr ""
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers in swarms"
-msgstr ""
+msgstr "מורידים בצבירים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: plugins/stats/ConnsTabPage.cc:50 plugins/stats/DisplaySettings.ui:583
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds connected"
-msgstr ""
+msgstr "משתפים מחוברים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_26)
 #: plugins/stats/ConnsTabPage.cc:54 plugins/stats/ConnsTabPage.cc:105
@@ -7329,33 +7332,33 @@ msgstr ""
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds in swarms"
-msgstr ""
+msgstr "משתפים בצבירים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_27)
 #: plugins/stats/ConnsTabPage.cc:58 plugins/stats/DisplaySettings.ui:653
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per torrent"
-msgstr ""
+msgstr "ממוצע מורידים מחוברים לפי טורנט"
 
 #. i18n: ectx: property (text), widget (QLabel, label_28)
 #: plugins/stats/ConnsTabPage.cc:61 plugins/stats/DisplaySettings.ui:688
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per torrent"
-msgstr ""
+msgstr "ממוצע משתפים מחוברים לפי טורנט"
 
 #: plugins/stats/ConnsTabPage.cc:64
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per running torrent"
-msgstr ""
+msgstr "ממוצע מורידים מחוברים לפי טורנט פעיל"
 
 #: plugins/stats/ConnsTabPage.cc:67
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per running torrent"
-msgstr ""
+msgstr "ממוצע משתפים מחוברים לפי טורנט פעיל"
 
 #. i18n: ectx: property (text), widget (QLabel, label_31)
 #: plugins/stats/ConnsTabPage.cc:72 plugins/stats/DisplaySettings.ui:806
@@ -7417,35 +7420,35 @@ msgstr "עמיתים"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from leechers"
-msgstr ""
+msgstr "ממוצע ממורידים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_19)
 #: plugins/stats/DisplaySettings.ui:208 plugins/stats/SpdTabPage.cc:59
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average to leechers"
-msgstr ""
+msgstr "ממוצע למורידים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_20)
 #: plugins/stats/DisplaySettings.ui:243 plugins/stats/SpdTabPage.cc:60
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from seeds"
-msgstr ""
+msgstr "ממוצע ממשתפים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: plugins/stats/DisplaySettings.ui:278 plugins/stats/SpdTabPage.cc:61
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From leechers"
-msgstr ""
+msgstr "ממורידים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: plugins/stats/DisplaySettings.ui:313 plugins/stats/SpdTabPage.cc:62
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From seeds"
-msgstr ""
+msgstr "ממשתפים"
 
 #. i18n: ectx: property (title), widget (QGroupBox, UlSpdGbw)
 #. i18n: ectx: property (text), widget (QLabel, label_10)
@@ -7483,14 +7486,14 @@ msgstr "הגבלה"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Avg. leechers connected per running torr."
-msgstr ""
+msgstr "ממוצע מורידים מחוברים לפי טורנט פעיל"
 
 #. i18n: ectx: property (text), widget (QLabel, label_30)
 #: plugins/stats/DisplaySettings.ui:758
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Avg. seeds connected per running torrent"
-msgstr ""
+msgstr "ממוצע משתפים מחוברים לפי טורנט פעיל"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
@@ -7633,7 +7636,7 @@ msgstr "שיטה לקביעת הערך המרבי של קנה המידה"
 #: plugins/stats/ktstatsplugin.kcfg:25
 #, kde-format
 msgid "Whether to show seeds in swarms"
-msgstr ""
+msgstr "האם להציג משתפים בצבירים"
 
 #. i18n: ectx: label, entry (ShowLeechersInSwarms), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:30
@@ -7693,31 +7696,31 @@ msgstr "צבע המגבלה בתרשים ההורדה"
 #: plugins/stats/ktstatsplugin.kcfg:75
 #, kde-format
 msgid "Color of the avg from leecher on peers chart"
-msgstr ""
+msgstr "צבע הממוצע ממוריד בתרשים העמיתים"
 
 #. i18n: ectx: label, entry (PrAvgToLColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:80
 #, kde-format
 msgid "Color of the avg to leecher on peers chart"
-msgstr ""
+msgstr "צבע הממוצע למוריד בתרשים העמיתים"
 
 #. i18n: ectx: label, entry (PrAvgFromSColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:85
 #, kde-format
 msgid "Color of the avg from seeds on peers chart"
-msgstr ""
+msgstr "צבע ממוצע המשתפים בתרשים העמיתים"
 
 #. i18n: ectx: label, entry (PrFromLColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:90
 #, kde-format
 msgid "Color of the leechers on peers chart"
-msgstr ""
+msgstr "צבע המורידים בתרשים העמיתים"
 
 #. i18n: ectx: label, entry (PrFromSColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:95
 #, kde-format
 msgid "Color of the seeds on peers chart"
-msgstr ""
+msgstr "צבע המשתפים בתרשים העמיתים"
 
 #. i18n: ectx: label, entry (UlSpdColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:100
@@ -7741,51 +7744,51 @@ msgstr ""
 #: plugins/stats/ktstatsplugin.kcfg:115
 #, kde-format
 msgid "Color of the connected leechers on connections chart"
-msgstr ""
+msgstr "צבע המורידים המחוברים בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (CnLSwarmsColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:120
 #, kde-format
 msgid "Color of the leechers in swarms on connections chart"
-msgstr ""
+msgstr "צבע המורידים בצבירים בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (CnSConnColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:125
 #, kde-format
 msgid "Color of the connected seeds on connections chart"
-msgstr ""
+msgstr "צבע המשתפים המחוברים בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (CnSSwarmsColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:130
 #, kde-format
 msgid "Color of the seeds in swarms on connections chart"
-msgstr ""
+msgstr "צבע המשתפים בצבירים בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (CnAvgLConnPerTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:135
 #, kde-format
 msgid "Color of the avg connected leecher per torrent on connections chart"
-msgstr ""
+msgstr "צבע המוריד המחובר הממוצע לטורנט בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (CnAvgSConnPerTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:140
 #, kde-format
 msgid "Color of the avg connected seeds per torrent on connections chart"
-msgstr ""
+msgstr "צבע המשתפים המחוברים הממוצעים לטורנט בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (CnAvgLConnPerRunTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:145
 #, kde-format
 msgid ""
 "Color of the avg connected leechers per running torrent on connections chart"
-msgstr ""
+msgstr "צבע המורידים המחוברים הממוצעים לטורנט פעיל בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (CnAvgSConnPerRunTorrColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:150
 #, kde-format
 msgid ""
 "Color of the avg connected seeds per running torrent on connections chart"
-msgstr ""
+msgstr "צבע המשתפים המחוברים הממוצעים לטורנט פעיל בתרשים החיבורים"
 
 #. i18n: ectx: label, entry (DhtNodesColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:155
@@ -7896,13 +7899,13 @@ msgstr "חיבורי עמיתים"
 #: plugins/stats/Settings.ui:296
 #, kde-format
 msgid "Show seeds in swarms"
-msgstr ""
+msgstr "הצגת משתפים בצבירים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLeechersInSwarms)
 #: plugins/stats/Settings.ui:303
 #, kde-format
 msgid "Show leechers in swarms"
-msgstr ""
+msgstr "הצגת מורידים בצבירים"
 
 #: plugins/stats/SettingsPage.cc:12
 #, kde-format
