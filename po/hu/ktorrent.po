@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-05-18 14:31+0200\n"
+"PO-Revision-Date: 2024-11-16 20:21+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -927,10 +927,9 @@ msgid "Create A Torrent"
 msgstr "Torrent létrehozása"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "A webseed-hez csak a HTTP támogatott."
+msgstr "A webseedhez csak a HTTP(S) támogatott."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -7776,8 +7775,7 @@ msgstr "Feltöltők átlagos száma aktív torrentenként"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7822,8 +7820,7 @@ msgid "(plugin reload is needed after change)"
 msgstr "(módosítás után a bővítmény újraindítása szükséges)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
