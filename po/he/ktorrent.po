@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-11-13 08:40+0200\n"
+"PO-Revision-Date: 2024-11-22 22:53+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.08.1\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6070,20 +6070,20 @@ msgid ""
 msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:27
-#, fuzzy, kde-format
+#, kde-format
 msgid " day"
 msgid_plural " days"
-msgstr[0] "יום"
-msgstr[1] "ימים"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] " יום"
+msgstr[1] " יומיים"
+msgstr[2] " ימים"
+msgstr[3] " ימים"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:50
 #: plugins/ipfilter/ipblockingprefpage.cpp:71
 #: plugins/ipfilter/ipblockingprefpage.cpp:134
 #, kde-format
 msgid "Status: Loaded and running."
-msgstr ""
+msgstr "מצב: נטען ופעיל."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:52
 #: plugins/ipfilter/ipblockingprefpage.cpp:73
@@ -6101,7 +6101,7 @@ msgstr ""
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
 msgid "No update done yet."
-msgstr ""
+msgstr "לא בוצע עדכון עדיין."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:179
 #, kde-format
@@ -6311,7 +6311,7 @@ msgstr ""
 #: plugins/logviewer/logprefwidget.ui:54
 #, kde-format
 msgid "Log widget position:"
-msgstr ""
+msgstr "תיעוד מקום וידג׳ט:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ScanForLostFilesWidgetPosition)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
@@ -6327,7 +6327,7 @@ msgstr "פעילות נפרדת"
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:38
 #, kde-format
 msgid "Dockable widget"
-msgstr ""
+msgstr "וידג׳ט מתעגן"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ScanForLostFilesWidgetPosition)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
@@ -6449,13 +6449,13 @@ msgstr "הגדרת איזה עוקב להוסיף"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:53
 #, kde-format
 msgid "Add a custom tracker URL"
-msgstr ""
+msgstr "הוספת כתובת עוקב אחרת"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_tr)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:60
 #, kde-format
 msgid "The tracker URL that will be a part of the magnet link"
-msgstr ""
+msgstr "כתובת העוקב תהיה חלק מקישור המגנט"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_dn)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:67
@@ -6473,13 +6473,13 @@ msgstr "הוספת שם"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:80
 #, kde-format
 msgid "Disable the menu item for private torrents"
-msgstr ""
+msgstr "השבתת פריטי התפריט לטורנטים פרטיים"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_popup)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:87
 #, kde-format
 msgid "Give feedback in form of a popup"
-msgstr ""
+msgstr "מתן משוב בצורת חלונית צצה"
 
 #. i18n: ectx: Menu (MediaPlayerMenu)
 #: plugins/mediaplayer/ktorrent_mediaplayerui.rc:4
@@ -6491,7 +6491,7 @@ msgstr "תפריט נגן מדיה"
 #: plugins/mediaplayer/mediacontroller.cpp:67
 #, kde-format
 msgid "Ready to play"
-msgstr ""
+msgstr "מוכן לנגינה"
 
 #: plugins/mediaplayer/mediacontroller.cpp:77
 #: plugins/mediaplayer/mediacontroller.cpp:83
@@ -6528,7 +6528,7 @@ msgstr "בהמתנה"
 #: plugins/mediaplayer/mediamodel.cpp:71
 #, kde-format
 msgid "<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %"
-msgstr ""
+msgstr "<b>%1</b><br/>תצוגה מקדימה: %2<br/>ירדו: %3 %"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:39
 #: plugins/mediaplayer/mediaplayeractivity.cpp:56
@@ -6582,18 +6582,18 @@ msgstr "הוספת מדיה"
 #: plugins/mediaplayer/playlistwidget.cpp:41
 #, kde-format
 msgid "Clear Playlist"
-msgstr ""
+msgstr "פינוי רשימת הנגינה"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:133
 #, kde-format
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "מסך מלא/חלון רגיל"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:157
 #: plugins/mediaplayer/mediaplayeractivity.cpp:336
 #, kde-format
 msgid "Movie player"
-msgstr ""
+msgstr "נגן סרטים"
 
 #: plugins/mediaplayer/mediaview.cpp:84
 #, kde-format
@@ -6604,17 +6604,17 @@ msgstr "הצגת קבצים חלקיים"
 #: plugins/mediaplayer/mediaview.cpp:89 plugins/syndication/feedwidget.ui:124
 #, kde-format
 msgid "Refresh"
-msgstr ""
+msgstr "רענון"
 
 #: plugins/mediaplayer/mediaview.cpp:90
 #, kde-format
 msgid "Refresh media files"
-msgstr ""
+msgstr "רענון קובצי מדיה"
 
 #: plugins/mediaplayer/mediaview.cpp:94
 #, kde-format
 msgid "Search media files"
-msgstr ""
+msgstr "חיפוש בקובצי המדיה"
 
 #: plugins/mediaplayer/playlist.cpp:87
 #: plugins/syndication/feedwidgetmodel.cpp:75
@@ -6625,7 +6625,7 @@ msgstr "כותרת"
 #: plugins/mediaplayer/playlist.cpp:89
 #, kde-format
 msgid "Artist"
-msgstr ""
+msgstr "אומן/אומנית"
 
 #: plugins/mediaplayer/playlist.cpp:91
 #, kde-format
@@ -6650,25 +6650,25 @@ msgstr "סדר נגינה אקראי"
 #: plugins/mediaplayer/videowidget.cpp:183
 #, kde-format
 msgid "KTorrent is playing a video."
-msgstr ""
+msgstr "KTorrent מנגן סרטון."
 
 #. i18n: ectx: label, entry (openSilently), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:13
 #, kde-format
 msgid "Whether to open torrent silently or not."
-msgstr ""
+msgstr "האם לפתוח את הטורנט בשקט או לא."
 
 #. i18n: ectx: label, entry (actionDelete), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:18
 #, kde-format
 msgid "Delete action checked."
-msgstr ""
+msgstr "פעולת המחיקה סומנה."
 
 #. i18n: ectx: label, entry (actionMove), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:23
 #, kde-format
 msgid "Move action checked."
-msgstr ""
+msgstr "פעולת ההעברה סומנה."
 
 #. i18n: ectx: label, entry (recursive), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:28
@@ -6763,7 +6763,7 @@ msgstr ""
 #: plugins/scanfolder/scanfolderprefpage.ui:103
 #, kde-format
 msgid "Remove torrent file after loading"
-msgstr ""
+msgstr "להסיר את קובץ הטורנט אחרי הטעינה"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_actionMove)
 #: plugins/scanfolder/scanfolderprefpage.ui:110
@@ -7497,8 +7497,7 @@ msgstr "ממוצע משתפים מחוברים לפי טורנט פעיל"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7543,8 +7542,7 @@ msgid "(plugin reload is needed after change)"
 msgstr "(צריך לטעון את התוסף מחדש אחרי שינוי)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
@@ -8061,7 +8059,7 @@ msgstr "רענון כל:"
 #: plugins/syndication/feedwidget.ui:138
 #, kde-format
 msgid "Time between automatic refreshes of the feed."
-msgstr ""
+msgstr "הזמן בין עדכונים אוטומטיים של ערוץ העדכונים."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:141
