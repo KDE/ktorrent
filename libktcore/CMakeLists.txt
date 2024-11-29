@@ -67,7 +67,6 @@ target_link_libraries(ktcore PUBLIC
     KF6::I18n
     KF6::KCMUtils
     KF6::Parts
-    KF6::Solid
     KTorrent6
     KF6::XmlGui
 )

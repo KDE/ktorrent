@@ -13,7 +13,6 @@
 #include <QStandardPaths>
 
 #include <KLocalizedString>
-#include <Solid/Device>
 
 #include "settings.h"
 #include <dht/dhtbase.h>

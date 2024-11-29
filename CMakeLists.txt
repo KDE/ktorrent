@@ -63,7 +63,6 @@ find_package(KF6 ${KF_MIN_VERSION} REQUIRED
     NotifyConfig
     KCMUtils
     Parts
-    Solid
     StatusNotifierItem
     WidgetsAddons
     WindowSystem

@@ -7,7 +7,6 @@
 #include <QNetworkInterface>
 
 #include <KLocalizedString>
-#include <Solid/Device>
 
 #include "networkpref.h"
 #include "settings.h"
