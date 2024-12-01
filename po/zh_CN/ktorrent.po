@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-14 00:39+0000\n"
+"POT-Creation-Date: 2024-12-01 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -2707,12 +2707,12 @@ msgid "Show total speed in the window title"
 msgstr "在窗口标题显示总速度"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
+#: ktorrent/pref/networkpref.cpp:20 ktorrent/pref/recommendedsettingsdlg.ui:199
 #, kde-format
 msgid "Network"
 msgstr "网络"
 
-#: ktorrent/pref/networkpref.cpp:41
+#: ktorrent/pref/networkpref.cpp:40
 #, kde-format
 msgid "All interfaces"
 msgstr "所有接口"
@@ -4496,13 +4496,13 @@ msgstr "自定义组"
 msgid "Ungrouped Torrents"
 msgstr "未分组种子"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:148
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "种子"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:150
 #, kde-format
 msgid "All files"
 msgstr "所有文件"

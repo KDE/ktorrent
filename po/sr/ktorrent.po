@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-14 00:39+0000\n"
+"POT-Creation-Date: 2024-12-01 00:40+0000\n"
 "PO-Revision-Date: 2017-12-17 18:00+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -2777,12 +2777,12 @@ msgid "Show total speed in the window title"
 msgstr "Укупна брзина у наслову прозора"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
+#: ktorrent/pref/networkpref.cpp:20 ktorrent/pref/recommendedsettingsdlg.ui:199
 #, kde-format
 msgid "Network"
 msgstr "Мрежа"
 
-#: ktorrent/pref/networkpref.cpp:41
+#: ktorrent/pref/networkpref.cpp:40
 #, kde-format
 msgid "All interfaces"
 msgstr "Сва сучеља"
@@ -4649,13 +4649,13 @@ msgid "Ungrouped Torrents"
 msgstr "Негруписани торенти"
 
 # >> @item
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:148
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "торенти"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:150
 #, kde-format
 msgid "All files"
 msgstr "сви фајлови"

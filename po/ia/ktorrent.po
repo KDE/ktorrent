@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-14 00:39+0000\n"
+"POT-Creation-Date: 2024-12-01 00:40+0000\n"
 "PO-Revision-Date: 2024-10-21 12:16+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -2637,12 +2637,12 @@ msgid "Show total speed in the window title"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
+#: ktorrent/pref/networkpref.cpp:20 ktorrent/pref/recommendedsettingsdlg.ui:199
 #, kde-format
 msgid "Network"
 msgstr "Rete"
 
-#: ktorrent/pref/networkpref.cpp:41
+#: ktorrent/pref/networkpref.cpp:40
 #, kde-format
 msgid "All interfaces"
 msgstr ""
@@ -4381,13 +4381,13 @@ msgstr ""
 msgid "Ungrouped Torrents"
 msgstr ""
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:148
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr ""
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:150
 #, kde-format
 msgid "All files"
 msgstr "Omne files"

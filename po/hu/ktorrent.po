@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-14 00:39+0000\n"
+"POT-Creation-Date: 2024-12-01 00:40+0000\n"
 "PO-Revision-Date: 2024-11-16 20:21+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -2793,12 +2793,12 @@ msgid "Show total speed in the window title"
 msgstr "Teljes sebesség megjelenítése az ablakcímben"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
+#: ktorrent/pref/networkpref.cpp:20 ktorrent/pref/recommendedsettingsdlg.ui:199
 #, kde-format
 msgid "Network"
 msgstr "Hálózat"
 
-#: ktorrent/pref/networkpref.cpp:41
+#: ktorrent/pref/networkpref.cpp:40
 #, kde-format
 msgid "All interfaces"
 msgstr "Minden csatoló"
@@ -4642,13 +4642,13 @@ msgstr "Egyedi csoportok"
 msgid "Ungrouped Torrents"
 msgstr "Csoporton kívüli torrentek"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:148
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrentek"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:150
 #, kde-format
 msgid "All files"
 msgstr "Minden fájl"

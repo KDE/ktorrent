@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network/ktorrent.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-14 00:39+0000\n"
+"POT-Creation-Date: 2024-12-01 00:40+0000\n"
 "PO-Revision-Date: 2007-08-07 07:02-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -2726,12 +2726,12 @@ msgid "Show total speed in the window title"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
+#: ktorrent/pref/networkpref.cpp:20 ktorrent/pref/recommendedsettingsdlg.ui:199
 #, kde-format
 msgid "Network"
 msgstr "Líonra"
 
-#: ktorrent/pref/networkpref.cpp:41
+#: ktorrent/pref/networkpref.cpp:40
 #, kde-format
 msgid "All interfaces"
 msgstr "Gach comhéadan"
@@ -4560,14 +4560,14 @@ msgstr "Grúpaí Saincheaptha"
 msgid "Ungrouped Torrents"
 msgstr "Torrents Gan Ghrúpa"
 
-#: libktcore/interfaces/functions.cpp:149
+#: libktcore/interfaces/functions.cpp:148
 #, fuzzy, kde-format
 #| msgid "Torrents"
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "Torrents"
 
-#: libktcore/interfaces/functions.cpp:151
+#: libktcore/interfaces/functions.cpp:150
 #, kde-format
 msgid "All files"
 msgstr "Gach comhad"
