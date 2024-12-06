@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-01 00:40+0000\n"
-"PO-Revision-Date: 2024-11-23 14:38+0200\n"
+"PO-Revision-Date: 2024-12-04 15:33+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6041,33 +6041,34 @@ msgstr ""
 #: plugins/ipfilter/downloadandconvertjob.cpp:124
 #, kde-format
 msgid "7z files are not supported"
-msgstr ""
+msgstr "אין תמיכה בקובצי 7z"
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:143
 #, kde-format
 msgid "Cannot determine file type of <b>%1</b>"
-msgstr ""
+msgstr "לא ניתן לאתר את סוג הקובץ של <b>%1</b>"
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:175
 #, kde-format
 msgid "Cannot open zip file %1."
-msgstr ""
+msgstr "לא ניתן לפתוח את קובץ ה־zip‏ %1."
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:177
 #, kde-format
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
-msgstr ""
+msgstr "עדכון אוטומטי של מסנן IP נכשל: לא ניתן לפתוח את קובץ ה־zip‏ %1"
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:197
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
-msgstr ""
+msgstr "לא ניתן למצוא רשימת חסימה בקובץ ה־zip‏ %1"
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:199
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
 msgstr ""
+"עדכון מסנן כתובת ה־IP האוטומטי נכשל: לא ניתן למצוא רשימת חסימה בקובץ ה־zip‏ %1"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:27
 #, kde-format
@@ -6096,7 +6097,7 @@ msgstr "מצב: לא טעון."
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, kde-format
 msgid "Status: Downloading and converting new block list..."
-msgstr ""
+msgstr "מצב: מתבצעת הורדה והמרה של רשימת חסימה חדשה…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
@@ -6106,7 +6107,7 @@ msgstr "לא בוצע עדכון עדיין."
 #: plugins/ipfilter/ipblockingprefpage.cpp:179
 #, kde-format
 msgid "%1 (Last update attempt failed.)"
-msgstr ""
+msgstr "%1 (ניסיון העדכון האחרון נכשל.)"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:190
 #, kde-format
@@ -6129,7 +6130,7 @@ msgstr "קובץ סינון PeerGuardian"
 #: plugins/ipfilter/ipblockingprefpage.ui:29
 #, kde-format
 msgid "Enable this if you want the IP filter plugin to work."
-msgstr ""
+msgstr "יש להפעיל את זה כדי שתוסף מסנן כתובת ה־IP יפעל."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useLevel1)
 #: plugins/ipfilter/ipblockingprefpage.ui:32
@@ -6147,7 +6148,7 @@ msgstr "קובץ סינון IP:"
 #: plugins/ipfilter/ipblockingprefpage.ui:54
 #, kde-format
 msgid "Filter file to use, this can be a local file or a remote file."
-msgstr ""
+msgstr "מסנן לשימוש, יכול להיות קובץ מקומי או קובץ מרוחק."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_download)
 #: plugins/ipfilter/ipblockingprefpage.ui:81
@@ -6211,19 +6212,19 @@ msgstr "העדכון הבא:"
 #: plugins/ipfilter/ktipfilterplugin.kcfg:10
 #, kde-format
 msgid "Level1 filter url"
-msgstr ""
+msgstr "כתובת מסנן ברמה 1"
 
 #. i18n: ectx: label, entry (useLevel1), group (general)
 #: plugins/ipfilter/ktipfilterplugin.kcfg:14
 #, kde-format
 msgid "Use level1 filter?"
-msgstr ""
+msgstr "להשתמש במסנן רמה 1?"
 
 #. i18n: ectx: label, entry (useRichText), group (general)
 #: plugins/logviewer/ktlogviewerplugin.kcfg:11
 #, kde-format
 msgid "Use rich log text"
-msgstr ""
+msgstr "להשתמש בטקסט יומן עשיר"
 
 #: plugins/logviewer/logflags.cpp:104
 #, kde-format
@@ -7724,19 +7725,19 @@ msgstr "צבע המשתפים בתרשים העמיתים"
 #: plugins/stats/ktstatsplugin.kcfg:100
 #, kde-format
 msgid "Color of the speed on upload chart"
-msgstr ""
+msgstr "צבע המהירות בתרשים ההעלאה"
 
 #. i18n: ectx: label, entry (UlAvgColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:105
 #, kde-format
 msgid "Color of the avg on upload chart"
-msgstr ""
+msgstr "צבע הממוצע בתרשים ההעלאה"
 
 #. i18n: ectx: label, entry (UlLimitColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:110
 #, kde-format
 msgid "Color of the limit on upload chart"
-msgstr ""
+msgstr "צבע המגבלה בתרשים ההעלאה"
 
 #. i18n: ectx: label, entry (CnLConnColor), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:115
