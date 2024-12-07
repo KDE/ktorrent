@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-01 00:40+0000\n"
-"PO-Revision-Date: 2024-12-04 15:33+0200\n"
+"PO-Revision-Date: 2024-12-06 14:20+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -4109,13 +4109,13 @@ msgstr "הסרת טורנט"
 #: plugins/infowidget/fileview.cpp:391
 #, kde-format
 msgid "Select a directory to move the data to."
-msgstr ""
+msgstr "נא לבחור תיקייה להעביר אליה את הנתונים."
 
 #: ktorrent/view/viewdelegate.cpp:332
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4128,7 +4128,7 @@ msgstr "הורדו"
 #: libktcore/torrent/torrentfiletreemodel.cpp:359
 #, kde-format
 msgid "Size"
-msgstr ""
+msgstr "גודל"
 
 #: ktorrent/view/viewmodel.cpp:444 plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
@@ -4201,32 +4201,32 @@ msgstr "נוסף"
 #: ktorrent/view/viewmodel.cpp:476
 #, kde-format
 msgid "How much data we have downloaded of the torrent"
-msgstr ""
+msgstr "כמה נתונים הורדנו מתוך הטורנט"
 
 #: ktorrent/view/viewmodel.cpp:478
 #, kde-format
 msgid "Total size of the torrent, excluded files are not included"
-msgstr ""
+msgstr "גודל הטורנט הכולל, קבצים מוחרגים לא נכללים בחישוב"
 
 #: ktorrent/view/viewmodel.cpp:480
 #, kde-format
 msgid "How much data we have uploaded"
-msgstr ""
+msgstr "כמה נתונים נשאר להעלות"
 
 #: ktorrent/view/viewmodel.cpp:482
 #, kde-format
 msgid "How much data left to download"
-msgstr ""
+msgstr "כמה נתונים נשאר להוריד"
 
 #: ktorrent/view/viewmodel.cpp:484
 #, kde-format
 msgid "Current download speed"
-msgstr ""
+msgstr "מהירות ההורדה הנוכחית"
 
 #: ktorrent/view/viewmodel.cpp:486
 #, kde-format
 msgid "Current upload speed"
-msgstr ""
+msgstr "מהירות ההעלאה הנוכחית"
 
 #: ktorrent/view/viewmodel.cpp:488
 #, kde-format
@@ -4266,42 +4266,42 @@ msgstr ""
 #: ktorrent/view/viewmodel.cpp:499
 #, kde-format
 msgid "How long we have been downloading the torrent"
-msgstr ""
+msgstr "כמה זמן הורדנו את הטורנט"
 
 #: ktorrent/view/viewmodel.cpp:501
 #, kde-format
 msgid "How long we have been seeding the torrent"
-msgstr ""
+msgstr "כמה זמן שיתפנו את הטורנט"
 
 #: ktorrent/view/viewmodel.cpp:503
 #, kde-format
 msgid "The location of the torrent's data on disk"
-msgstr ""
+msgstr "מקום נתוני הטורנט בכונן"
 
 #: ktorrent/view/viewmodel.cpp:505
 #, kde-format
 msgid "When this torrent was added"
-msgstr ""
+msgstr "כשהטורנט נוסף"
 
 #: ktorrent/view/viewmodel.cpp:547
 #, kde-format
 msgid "%1<br>Url: <b>%2</b>"
-msgstr ""
+msgstr "%1<br>כתובת: <b>%2</b>"
 
 #: ktorrent/view/viewmodel.cpp:553
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
-msgstr ""
+msgstr "<br/><br/>לא ניתן ליצור קשר עם העוקב."
 
 #: ktupnptest/main.cpp:25
 #, kde-format
 msgid "KTUPnPTest"
-msgstr ""
+msgstr "KTUPnPTest"
 
 #: ktupnptest/main.cpp:27
 #, kde-format
 msgid "KTorrent's UPnP test application"
-msgstr ""
+msgstr "יישום בדיקת UPnP של KTorrent"
 
 #: ktupnptest/main.cpp:29
 #, kde-format
@@ -4312,60 +4312,60 @@ msgstr ""
 #: ktupnptest/upnptestwidget.ui:14
 #, kde-format
 msgid "UPnP Test Application"
-msgstr ""
+msgstr "יישום בדיקת UPnP"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktupnptest/upnptestwidget.ui:24
 #, kde-format
 msgid "Router:"
-msgstr ""
+msgstr "נתב:"
 
 #. i18n: ectx: property (text), widget (QLabel, m_router)
 #: ktupnptest/upnptestwidget.ui:40
 #, kde-format
 msgid "No routers found."
-msgstr ""
+msgstr "לא נמצאו נתבים."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_find_routers)
 #: ktupnptest/upnptestwidget.ui:49
 #, kde-format
 msgid "Find Routers"
-msgstr ""
+msgstr "איתור נתבים"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktupnptest/upnptestwidget.ui:89
 #, kde-format
 msgid "Protocol:"
-msgstr ""
+msgstr "פרוטוקול:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #: ktupnptest/upnptestwidget.ui:97
 #, kde-format
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_forward)
 #: ktupnptest/upnptestwidget.ui:125 plugins/upnp/upnpwidget.ui:27
 #, kde-format
 msgid "Forward"
-msgstr ""
+msgstr "קדימה"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_undo_forward)
 #: ktupnptest/upnptestwidget.ui:132 plugins/upnp/upnpwidget.ui:34
 #, kde-format
 msgid "Undo Forward"
-msgstr ""
+msgstr "הסגת קדימה"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_verbose)
 #: ktupnptest/upnptestwidget.ui:139
 #, kde-format
 msgid "Verbose mode"
-msgstr ""
+msgstr "מצב מפורט"
 
 #: libktcore/dbus/dbustorrent.cpp:304
 #, kde-format
 msgid "Maximum share ratio reached."
-msgstr ""
+msgstr "הגעת ליחס השיתוף המרבי."
 
 #: libktcore/dbus/dbustorrent.cpp:307
 #, kde-format
@@ -4420,17 +4420,17 @@ msgstr "העלאות פעילות"
 #: libktcore/groups/groupmanager.cpp:120
 #, kde-format
 msgid "Passive Torrents"
-msgstr ""
+msgstr "טורנטים סבילים"
 
 #: libktcore/groups/groupmanager.cpp:121
 #, kde-format
 msgid "Passive Downloads"
-msgstr ""
+msgstr "הורדות סבילות"
 
 #: libktcore/groups/groupmanager.cpp:125
 #, kde-format
 msgid "Passive Uploads"
-msgstr ""
+msgstr "העלאות סבילות"
 
 #: libktcore/groups/grouptreemodel.cpp:31
 #, kde-format
@@ -4440,13 +4440,13 @@ msgstr "קבוצות מותאמות אישית"
 #: libktcore/groups/ungroupedgroup.cpp:15
 #, kde-format
 msgid "Ungrouped Torrents"
-msgstr ""
+msgstr "טורנטים מחוץ לקבוצות"
 
 #: libktcore/interfaces/functions.cpp:148
 #, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
-msgstr ""
+msgstr "טורנטים"
 
 #: libktcore/interfaces/functions.cpp:150
 #, kde-format
@@ -4457,7 +4457,7 @@ msgstr "כל הקבצים"
 #: libktcore/ktorrent.kcfg:10
 #, kde-format
 msgid "Maximum number of downloads (0 = no limit)"
-msgstr ""
+msgstr "מספר ההורדות המרבי (0 = ללא הגבלה)"
 
 #. i18n: ectx: label, entry (maxSeeds), group (downloads)
 #: libktcore/ktorrent.kcfg:15
@@ -4469,37 +4469,37 @@ msgstr "מספר השיתופים המרבי (0 = ללא הגבלה)"
 #: libktcore/ktorrent.kcfg:20
 #, kde-format
 msgid "Start downloads on low disk space?"
-msgstr ""
+msgstr "להתחיל הורדות כשהמקום בכונן אוזל?"
 
 #. i18n: ectx: label, entry (maxConnections), group (downloads)
 #: libktcore/ktorrent.kcfg:25
 #, kde-format
 msgid "Maximum number of connections per torrent (0 = no limit)"
-msgstr ""
+msgstr "מספר החיבורים המרבי לכל טורנט בנפרד (0 = בלי מגבלה)"
 
 #. i18n: ectx: label, entry (maxTotalConnections), group (downloads)
 #: libktcore/ktorrent.kcfg:30
 #, kde-format
 msgid "Maximum number of connections for all torrents (0 = no limit) "
-msgstr ""
+msgstr "מספר החיבורים המרבי לכל הטורנטים (0 = בלי מגבלה) "
 
 #. i18n: ectx: label, entry (maxUploadRate), group (downloads)
 #: libktcore/ktorrent.kcfg:35
 #, kde-format
 msgid "Maximum upload speed in KiB/sec (0 = no limit)"
-msgstr ""
+msgstr "מהירות העלאה מרבית (0 = בלי הגבלה)"
 
 #. i18n: ectx: label, entry (maxDownloadRate), group (downloads)
 #: libktcore/ktorrent.kcfg:40
 #, kde-format
 msgid "Maximum download speed in KiB/sec (0 = no limit)"
-msgstr ""
+msgstr "מהירות הורדה מרבית (0 = בלי הגבלה)"
 
 #. i18n: ectx: label, entry (maxRatio), group (downloads)
 #: libktcore/ktorrent.kcfg:45
 #, kde-format
 msgid "Maximum share ratio (0 = no limit)"
-msgstr ""
+msgstr "יחס שיתוף מרבי (0 = בלי הגבלה)"
 
 #. i18n: ectx: label, entry (showSystemTrayIcon), group (downloads)
 #: libktcore/ktorrent.kcfg:66
@@ -4511,25 +4511,25 @@ msgstr "הצגת סמל בשורת המערכת"
 #: libktcore/ktorrent.kcfg:70
 #, kde-format
 msgid "Show a total speeds in the title"
-msgstr ""
+msgstr "הצגת מהירויות כוללות בכותרת"
 
 #. i18n: ectx: label, entry (showSpeedBarInTrayIcon), group (downloads)
 #: libktcore/ktorrent.kcfg:74
 #, kde-format
 msgid "Show speed bar in tray icon"
-msgstr ""
+msgstr "הצגת סרגל מהירות בסמל בשורת המערכת"
 
 #. i18n: ectx: label, entry (downloadBandwidth), group (downloads)
 #: libktcore/ktorrent.kcfg:78
 #, kde-format
 msgid "Download bandwidth (in kb/s):"
-msgstr ""
+msgstr "רוחב פס הורדה (בק״ב לשנייה):"
 
 #. i18n: ectx: label, entry (uploadBandwidth), group (downloads)
 #: libktcore/ktorrent.kcfg:84
 #, kde-format
 msgid "Upload bandwidth (in kb/s):"
-msgstr ""
+msgstr "רוחב פס העלאה (בק״ב לשנייה):"
 
 #. i18n: ectx: label, entry (alwaysMinimizeToSystemTray), group (downloads)
 #: libktcore/ktorrent.kcfg:90
@@ -4553,37 +4553,39 @@ msgstr "להמשיך לשתף אחרי שההורדה הסתיימה"
 #: libktcore/ktorrent.kcfg:102
 #, kde-format
 msgid "Folder to store temporary files"
-msgstr ""
+msgstr "תיקייה לאחסון קבצים זמניים"
 
 #. i18n: ectx: label, entry (useSaveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:105
 #, kde-format
 msgid "Whether to automatically save downloads to saveDir"
-msgstr ""
+msgstr "האם לשמור הורדות לתיקיית השמירה (saveDir) אוטומטית"
 
 #. i18n: ectx: label, entry (saveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:109
 #, kde-format
 msgid "Folder to store downloaded files"
-msgstr ""
+msgstr "תיקייה לאחסון קבצים לאחר ההורדה"
 
 #. i18n: ectx: label, entry (useTorrentCopyDir), group (downloads)
 #: libktcore/ktorrent.kcfg:112
 #, kde-format
 msgid "Whether to automatically copy .torrent files to torrentCopyDir"
 msgstr ""
+"האם להעתיק אוטומטית את קובצי ה־‎.torrent אל תיקיית העתקת טורנטים "
+"(torrentCopyDir)"
 
 #. i18n: ectx: label, entry (torrentCopyDir), group (downloads)
 #: libktcore/ktorrent.kcfg:116
 #, kde-format
 msgid "Folder to copy .torrent files to"
-msgstr ""
+msgstr "תיקיית אליה יועתקו קובצי ‎.torrent"
 
 #. i18n: ectx: label, entry (useCustomIP), group (downloads)
 #: libktcore/ktorrent.kcfg:119
 #, kde-format
 msgid "Whether to use a custom IP to pass to the tracker"
-msgstr ""
+msgstr "האם להשתמש בכתובת IP מותאמת אישית להעברה לעוקב"
 
 #. i18n: ectx: label, entry (lastSaveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:123
@@ -4595,37 +4597,37 @@ msgstr ""
 #: libktcore/ktorrent.kcfg:127
 #, kde-format
 msgid "IP to pass to the tracker"
-msgstr ""
+msgstr "כתובת IP להעברה לעוקב"
 
 #. i18n: ectx: label, entry (guiUpdateInterval), group (downloads)
 #: libktcore/ktorrent.kcfg:131
 #, kde-format
 msgid "GUI update interval"
-msgstr ""
+msgstr "הפרש בין עדכוני ממשק משתמש"
 
 #. i18n: ectx: label, entry (dhtSupport), group (downloads)
 #: libktcore/ktorrent.kcfg:137
 #, kde-format
 msgid "Support for DHT"
-msgstr ""
+msgstr "תמיכה ב־DHT"
 
 #. i18n: ectx: label, entry (dhtPort), group (downloads)
 #: libktcore/ktorrent.kcfg:141
 #, kde-format
 msgid "DHT port"
-msgstr ""
+msgstr "פתחת DHT"
 
 #. i18n: ectx: label, entry (numUploadSlots), group (downloads)
 #: libktcore/ktorrent.kcfg:150
 #, kde-format
 msgid "Number of upload slots"
-msgstr ""
+msgstr "מספר חריצי ההעלאה"
 
 #. i18n: ectx: label, entry (shownColumns), group (downloads)
 #: libktcore/ktorrent.kcfg:182
 #, kde-format
 msgid "Columns shown in KTorrentView"
-msgstr ""
+msgstr "עמודים שמופיעים ב־KTorrentView"
 
 #. i18n: ectx: label, entry (minDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:233
@@ -4634,6 +4636,8 @@ msgid ""
 "When there is no space left to complete download, and the available disk "
 "space is less than this value, the torrent will be stopped."
 msgstr ""
+"כאשר לא נשאר מקום להשלמת הורדה והמקום הפנוי בכונן קטן מהערך הזה, הטורנט "
+"ייעצר."
 
 #. i18n: ectx: label, entry (useCompletedDir), group (downloads)
 #: libktcore/ktorrent.kcfg:244
@@ -4667,7 +4671,7 @@ msgstr ""
 #: libktcore/torrent/basicjobprogresswidget.cpp:49
 #, kde-format
 msgid "Warning: %1"
-msgstr ""
+msgstr "אזהרה: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #, kde-format
@@ -4713,7 +4717,7 @@ msgstr ""
 #: libktcore/torrent/queuemanager.cpp:116
 #, kde-format
 msgid "Limits reached."
-msgstr ""
+msgstr "הגעת למגבלות."
 
 #: libktcore/torrent/queuemanager.cpp:117
 #: libktcore/torrent/queuemanager.cpp:227
@@ -4788,13 +4792,13 @@ msgstr ""
 #: plugins/bwscheduler/bwschedulerplugin.cpp:62
 #, kde-format
 msgid "Scheduler"
-msgstr ""
+msgstr "מתזמן"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: plugins/bwscheduler/bwprefpage.ui:16
 #, kde-format
 msgid "Special Limits"
-msgstr ""
+msgstr "מגבלות מיוחדות"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_screensaverLimits)
 #: plugins/bwscheduler/bwprefpage.ui:22
@@ -4826,25 +4830,25 @@ msgstr ""
 #: plugins/bwscheduler/bwprefpage.ui:120
 #, kde-format
 msgid "Schedule background color:"
-msgstr ""
+msgstr "צבע רקע התזמון:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_scheduleBackgroundColor)
 #: plugins/bwscheduler/bwprefpage.ui:127
 #, kde-format
 msgid "Color of the schedule background."
-msgstr ""
+msgstr "צבע רקע התזמון."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/bwscheduler/bwprefpage.ui:134
 #, kde-format
 msgid "Schedule line color:"
-msgstr ""
+msgstr "צבע קו תזמון:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_scheduleLineColor)
 #: plugins/bwscheduler/bwprefpage.ui:141
 #, kde-format
 msgid "Color of all lines on the schedule."
-msgstr ""
+msgstr "צבע כל הקווים בתזמון."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/bwscheduler/bwprefpage.ui:148
@@ -4868,49 +4872,49 @@ msgstr ""
 #: plugins/bwscheduler/bwprefpage.ui:169
 #, kde-format
 msgid "Color of each suspended item on the schedule."
-msgstr ""
+msgstr "צבע של כל פריט מושהה בתזמון."
 
 #: plugins/bwscheduler/bwschedulerplugin.cpp:91
 #: plugins/infowidget/infowidgetplugin.cpp:68
 #, kde-format
 msgid "Bandwidth Scheduler"
-msgstr ""
+msgstr "מתזמן רוחב פס"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, EditItemDlg)
 #: plugins/bwscheduler/edititemdlg.cpp:67 plugins/bwscheduler/edititemdlg.ui:14
 #, kde-format
 msgid "Edit an item"
-msgstr ""
+msgstr "עריכת פריט"
 
 #: plugins/bwscheduler/edititemdlg.cpp:67
 #, kde-format
 msgid "Add an item"
-msgstr ""
+msgstr "הוספת פריט"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: plugins/bwscheduler/edititemdlg.ui:20
 #, kde-format
 msgid "Duration"
-msgstr ""
+msgstr "משך"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/bwscheduler/edititemdlg.ui:28
 #, kde-format
 msgid "From:"
-msgstr ""
+msgstr "מ־:"
 
 #. i18n: ectx: property (displayFormat), widget (QTimeEdit, m_from)
 #. i18n: ectx: property (displayFormat), widget (QTimeEdit, m_to)
 #: plugins/bwscheduler/edititemdlg.ui:35 plugins/bwscheduler/edititemdlg.ui:49
 #, kde-format
 msgid "hh:mm"
-msgstr ""
+msgstr "hh:mm"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/bwscheduler/edititemdlg.ui:42
 #, kde-format
 msgid "To:"
-msgstr ""
+msgstr "עד:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/bwscheduler/edititemdlg.ui:60
@@ -4924,7 +4928,7 @@ msgstr "מ־:"
 #, kde-format
 msgctxt "ending day"
 msgid "To:"
-msgstr ""
+msgstr "עד:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: plugins/bwscheduler/edititemdlg.ui:100
@@ -4946,13 +4950,13 @@ msgstr "הגבלת הורדה:"
 #: plugins/bwscheduler/edititemdlg.ui:186
 #, kde-format
 msgid "Upload limit:"
-msgstr ""
+msgstr "מגבלת העלאה:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_screensaver_limits)
 #: plugins/bwscheduler/edititemdlg.ui:157
 #, kde-format
 msgid "When screensaver is activated:"
-msgstr ""
+msgstr "כששומר המסך פועל:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/bwscheduler/edititemdlg.ui:211
@@ -4971,37 +4975,37 @@ msgstr "הגדרת הגבלות חיבורים"
 #: plugins/bwscheduler/scheduleeditor.cpp:26
 #, kde-format
 msgid "Bandwidth Schedule"
-msgstr ""
+msgstr "תזמון רוחב פס"
 
 #: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:230
 #, kde-format
 msgid "Cannot open file %1: %2"
-msgstr ""
+msgstr "לא ניתן לפתוח את הקובץ%1:‏ %2"
 
 #: plugins/bwscheduler/schedule.cpp:127 plugins/bwscheduler/schedule.cpp:132
 #, kde-format
 msgid "The file %1 is corrupted or not a proper KTorrent schedule file."
-msgstr ""
+msgstr "הקובץ %1 פגום ואינו קובץ תזמון תקני של KTorrent."
 
 #: plugins/bwscheduler/scheduleeditor.cpp:30
 #, kde-format
 msgid "Edit the bandwidth schedule"
-msgstr ""
+msgstr "עריכת תזמון רוחב פס"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:72
 #, kde-format
 msgid "Load Schedule"
-msgstr ""
+msgstr "טעינת תזמון"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:73
 #, kde-format
 msgid "Save Schedule"
-msgstr ""
+msgstr "שמירת תזמון"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:74
 #, kde-format
 msgid "New Item"
-msgstr ""
+msgstr "פריט חדש"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:75
 #, kde-format
@@ -5011,34 +5015,34 @@ msgstr "הסרת פריט"
 #: plugins/bwscheduler/scheduleeditor.cpp:76
 #, kde-format
 msgid "Edit Item"
-msgstr ""
+msgstr "עריכת פריט"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:77
 #, kde-format
 msgid "Clear Schedule"
-msgstr ""
+msgstr "פינוי תזמון"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:80
 #, kde-format
 msgid "Scheduler Active"
-msgstr ""
+msgstr "המתזמן פעיל"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:81
 #, kde-format
 msgid "Activate or deactivate the scheduler"
-msgstr ""
+msgstr "הפעלת או כיבוי מתזמן"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:109
 #: plugins/bwscheduler/scheduleeditor.cpp:121
 #, kde-format
 msgid "KTorrent scheduler files"
-msgstr ""
+msgstr "קובצי מתזמן של KTorrent"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:166
 #, kde-format
 msgid ""
 "This item conflicts with another item in the schedule, we cannot change it."
-msgstr ""
+msgstr "הפריט הזה סותר פריט אחר בתזמון, אי אפשר לשנות אותו."
 
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:74
 #, kde-format
@@ -5051,41 +5055,43 @@ msgid ""
 "%1 Down\n"
 "%2 Up"
 msgstr ""
+"%1 הורדה\n"
+"%2 העלאה"
 
 #: plugins/bwscheduler/weekscene.cpp:59
 #, kde-format
 msgid "Current schedule: suspended"
-msgstr ""
+msgstr "תזמון נוכחי: מושהה"
 
 #: plugins/bwscheduler/weekscene.cpp:61
 #, kde-format
 msgid "Current schedule: %1/s download, %2/s upload"
-msgstr ""
+msgstr "תזמון נוכחי: %1 לשנייה הורדה, %2 לשנייה העלאה"
 
 #: plugins/bwscheduler/weekscene.cpp:63
 #, kde-format
 msgid "Current schedule: unlimited download, %1/s upload"
-msgstr ""
+msgstr "תזמון נוכחי: אין מגבלת הורדה, %1 לשנייה העלאה"
 
 #: plugins/bwscheduler/weekscene.cpp:65
 #, kde-format
 msgid "Current schedule: %1/s download, unlimited upload"
-msgstr ""
+msgstr "תזמון נוכחי: %1 לשנייה הורדה, אין מגבלת העלאה"
 
 #: plugins/bwscheduler/weekscene.cpp:67
 #, kde-format
 msgid "Current schedule: unlimited upload and download"
-msgstr ""
+msgstr "תזמון נוכחי: אין מגבלת הורדה ואין מגבלת העלאה"
 
 #: plugins/bwscheduler/weekscene.cpp:70
 #, kde-format
 msgid " (scheduler disabled)"
-msgstr ""
+msgstr " (מתזמן מושבת)"
 
 #: plugins/bwscheduler/weekscene.cpp:88
 #, kde-format
 msgid "Current schedule:"
-msgstr ""
+msgstr "תזמון נוכחי:"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DownloadOrderWidget)
 #: plugins/downloadorder/downloadorderdialog.cpp:30
@@ -5093,46 +5099,46 @@ msgstr ""
 #: plugins/downloadorder/downloadorderwidget.ui:14
 #, kde-format
 msgid "File Download Order"
-msgstr ""
+msgstr "סדר הורדת קבצים"
 
 #: plugins/downloadorder/downloadorderdialog.cpp:31
 #, kde-format
 msgid "File download order for <b>%1</b>:"
-msgstr ""
+msgstr "סדר הורדת קבצים עבור <b>%1</b>:"
 
 #: plugins/downloadorder/downloadorderdialog.cpp:71
 #, kde-format
 msgid "Seasons and Episodes"
-msgstr ""
+msgstr "עונות ופרקים"
 
 #: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Album Track Order"
-msgstr ""
+msgstr "סדר רצועות באלבום"
 
 #. i18n: ectx: property (text), widget (QLabel, m_top_label)
 #: plugins/downloadorder/downloadorderwidget.ui:20
 #, kde-format
 msgid "File download order for:"
-msgstr ""
+msgstr "סדר הורדת קבצים עבור:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_custom_order_enabled)
 #: plugins/downloadorder/downloadorderwidget.ui:27
 #, kde-format
 msgid "Whether or not to enable a custom download order."
-msgstr ""
+msgstr "האם להפעיל סדר הורדה מותאם או לא."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_custom_order_enabled)
 #: plugins/downloadorder/downloadorderwidget.ui:30
 #, kde-format
 msgid "Custom file download order enabled"
-msgstr ""
+msgstr "סדר הורדת קבצים מותאם מופעל"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_sort_by)
 #: plugins/downloadorder/downloadorderwidget.ui:42
 #, kde-format
 msgid "Sort By"
-msgstr ""
+msgstr "סידור לפי"
 
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, m_search_files)
 #: plugins/downloadorder/downloadorderwidget.ui:52
@@ -5147,6 +5153,8 @@ msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third ..."
 msgstr ""
+"הסדר בו להוריד את הקבצים בטורנט. הקובץ שלמעלה ירד ראשון, השני אחריו, ואז "
+"השלישי וכן הלאה…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -5198,7 +5206,7 @@ msgstr "תהליך הורדה של החלק"
 #: plugins/infowidget/chunkdownloadmodel.cpp:208
 #, kde-format
 msgid "Which peer we are downloading it from"
-msgstr ""
+msgstr "אילו עמיתים מורידים ממני"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:210
 #, kde-format
@@ -5223,19 +5231,19 @@ msgstr "חלקים"
 #: plugins/infowidget/chunkdownloadview.ui:26
 #, kde-format
 msgid "Total:"
-msgstr ""
+msgstr "סך הכול:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: plugins/infowidget/chunkdownloadview.ui:62
 #, kde-format
 msgid "Currently downloading:"
-msgstr ""
+msgstr "בהורדה כרגע:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_4)
 #: plugins/infowidget/chunkdownloadview.ui:134
 #, kde-format
 msgid "Excluded:"
-msgstr ""
+msgstr "הוחרג:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_4_2)
 #: plugins/infowidget/chunkdownloadview.ui:170
@@ -5247,19 +5255,19 @@ msgstr "נותר:"
 #: plugins/infowidget/chunkdownloadview.ui:206
 #, kde-format
 msgid "Size:"
-msgstr ""
+msgstr "גודל:"
 
 #: plugins/infowidget/fileview.cpp:113
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
-msgstr ""
+msgstr "פתיחה"
 
 #: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
-msgstr ""
+msgstr "פתיחה עם"
 
 #: plugins/infowidget/fileview.cpp:116
 #, kde-format
@@ -5275,57 +5283,57 @@ msgstr "בדיקת קובץ"
 #: plugins/infowidget/fileview.cpp:119
 #, kde-format
 msgid "Download first"
-msgstr ""
+msgstr "להוריד קודם"
 
 #: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Download normally"
-msgstr ""
+msgstr "להוריד כרגיל"
 
 #: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Download last"
-msgstr ""
+msgstr "להוריד אחרון"
 
 #: plugins/infowidget/fileview.cpp:123
 #, kde-format
 msgid "Do not download"
-msgstr ""
+msgstr "לא להוריד"
 
 #: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Delete File(s)"
-msgstr ""
+msgstr "מחיקת קבצים"
 
 #: plugins/infowidget/fileview.cpp:126
 #, kde-format
 msgid "Move File"
-msgstr ""
+msgstr "העברת קובץ"
 
 #: plugins/infowidget/fileview.cpp:128
 #, kde-format
 msgid "Collapse Folder Tree"
-msgstr ""
+msgstr "צמצום עץ תיקיות"
 
 #: plugins/infowidget/fileview.cpp:129
 #, kde-format
 msgid "Expand Folder Tree"
-msgstr ""
+msgstr "הרחבת עץ תיקיות"
 
 #: plugins/infowidget/fileview.cpp:132
 #, kde-format
 msgid "File Tree"
-msgstr ""
+msgstr "עץ תיקיות"
 
 #: plugins/infowidget/fileview.cpp:134
 #, kde-format
 msgid "File List"
-msgstr ""
+msgstr "רשימת קבצים"
 
 #: plugins/infowidget/fileview.cpp:144
 #, kde-format
 msgid "Show Filter"
-msgstr ""
+msgstr "הצגת מסנן"
 
 #: plugins/infowidget/fileview.cpp:346
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
@@ -5333,10 +5341,10 @@ msgstr ""
 msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "כל הנתונים שבקובץ הזה יאבדו, להמשיך?"
+msgstr[1] "כל הנתונים שבקבצים האלה יאבדו, להמשיך?"
+msgstr[2] "כל הנתונים שבקבצים האלה יאבדו, להמשיך?"
+msgstr[3] "כל הנתונים שבקבצים האלה יאבדו, להמשיך?"
 
 #: plugins/infowidget/fileview.cpp:476
 #, kde-format
@@ -5351,7 +5359,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "הפעלת מצב הורדה רציפה"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -5368,7 +5376,7 @@ msgstr "מצב"
 #: plugins/infowidget/infowidgetplugin.cpp:57
 #, kde-format
 msgid "Displays status information about a torrent"
-msgstr ""
+msgstr "הצגת פריט מצב על טורנט"
 
 #: plugins/infowidget/infowidgetplugin.cpp:58
 #, kde-format
@@ -5379,12 +5387,12 @@ msgstr "קבצים"
 #: plugins/infowidget/infowidgetplugin.cpp:58
 #, kde-format
 msgid "Shows all the files in a torrent"
-msgstr ""
+msgstr "הצגת כל הקבצים בטורנט"
 
 #: plugins/infowidget/infowidgetplugin.cpp:186
 #, kde-format
 msgid "Displays all the peers you are connected to for a torrent"
-msgstr ""
+msgstr "הצגת כל העמיתים שיש לך חיבור מולם לפי טורנט"
 
 #: plugins/infowidget/infowidgetplugin.cpp:205
 #, kde-format
@@ -5503,7 +5511,7 @@ msgstr ""
 #: plugins/infowidget/iwprefpage.ui:26
 #, kde-format
 msgid "Show list of peers"
-msgstr ""
+msgstr "הצגת רשימת עמיתים"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showChunkView)
 #: plugins/infowidget/iwprefpage.ui:33
@@ -5527,7 +5535,7 @@ msgstr ""
 #: plugins/infowidget/iwprefpage.ui:46
 #, kde-format
 msgid "Show list of trackers"
-msgstr ""
+msgstr "הצגת רשימת עוקבים"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showWebSeedsTab)
 #: plugins/infowidget/iwprefpage.ui:53
@@ -5545,7 +5553,7 @@ msgstr "הצגת רשימת מקורות רשת"
 #: plugins/infowidget/iwprefpage.ui:66
 #, kde-format
 msgid "File Priority Colors"
-msgstr ""
+msgstr "צבעי עדיפויות קבצים"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/infowidget/iwprefpage.ui:72
@@ -5557,7 +5565,7 @@ msgstr "עדיפות ראשונה:"
 #: plugins/infowidget/iwprefpage.ui:79
 #, kde-format
 msgid "Color to use for first priority files."
-msgstr ""
+msgstr "צבע לשימוש לקבצים בעדיפות העליונה."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/infowidget/iwprefpage.ui:86
@@ -5569,13 +5577,13 @@ msgstr "עדיפות אחרונה:"
 #: plugins/infowidget/iwprefpage.ui:93
 #, kde-format
 msgid "Color to use for last priority files."
-msgstr ""
+msgstr "צבע לשימוש לקבצים בעדיפות האחרונה."
 
 #. i18n: ectx: label, entry (showPeerView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:10
 #, kde-format
 msgid "Show peer view tab in main window"
-msgstr ""
+msgstr "הצגת לשונית תצוגת עמיתים בחלון הראשי"
 
 #. i18n: ectx: label, entry (showChunkView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:14
@@ -5587,7 +5595,7 @@ msgstr ""
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:18
 #, kde-format
 msgid "Show trackers view tab in main window"
-msgstr ""
+msgstr "הצגת לשונית תצוגת עוקבים בחלון הראשי"
 
 #: plugins/infowidget/peerview.cpp:43
 #, kde-format
@@ -5632,7 +5640,7 @@ msgstr "לא"
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
@@ -5676,12 +5684,12 @@ msgstr "לקוח"
 #: plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Choked"
-msgstr ""
+msgstr "חנוק"
 
 #: plugins/infowidget/peerviewmodel.cpp:303
 #, kde-format
 msgid "Snubbed"
-msgstr ""
+msgstr "מזלזל"
 
 #: plugins/infowidget/peerviewmodel.cpp:305
 #, kde-format
@@ -5696,7 +5704,7 @@ msgstr "DHT"
 #: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Score"
-msgstr ""
+msgstr "ניקוד"
 
 #: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
@@ -5711,12 +5719,12 @@ msgstr "בקשות"
 #: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Interested"
-msgstr ""
+msgstr "מעוניין"
 
 #: plugins/infowidget/peerviewmodel.cpp:321
 #, kde-format
 msgid "Interesting"
-msgstr ""
+msgstr "מעניין"
 
 #: plugins/infowidget/peerviewmodel.cpp:328
 #, kde-format
@@ -5753,27 +5761,27 @@ msgstr ""
 #: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
-msgstr ""
+msgstr "מזלזל משמעו שהעמית לא שלח לנו נתונים כלל במשך 2 הדקות האחרונות"
 
 #: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "How much data the peer has of the torrent"
-msgstr ""
+msgstr "כמה מנתוני הטורנט נמצאים אצל העמית"
 
 #: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
-msgstr ""
+msgstr "האם DHT פעיל אצל העמית או לא"
 
 #: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
-msgstr ""
+msgstr "הניקוד של העמית KTorrent משתמש בזה כדי לקבוע למי להעלות"
 
 #: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
-msgstr ""
+msgstr "רק עמיתים שיש להם חלון הורדה יקבלו מאיתנו נתונים"
 
 #: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
@@ -5783,22 +5791,22 @@ msgstr "מספר בקשות העלאה והורדה"
 #: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "How much data we have downloaded from this peer"
-msgstr ""
+msgstr "כמה נתונים הורדנו מהעמית הזה"
 
 #: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "How much data we have uploaded to this peer"
-msgstr ""
+msgstr "כמה נתונים שלחנו לעמית הזה"
 
 #: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
-msgstr ""
+msgstr "האם העמית מעוניין להוריד מאיתנו נתונים"
 
 #: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
-msgstr ""
+msgstr "האם אנחנו מעוניינים להוריד מהעמית הזה"
 
 #: plugins/infowidget/statustab.cpp:95
 #, kde-format
@@ -5901,7 +5909,7 @@ msgstr "העתקת כתובת עוקב"
 #: plugins/infowidget/trackerview.cpp:64
 #, kde-format
 msgid "Copy Tracker status"
-msgstr ""
+msgstr "העתקת מצב עוקב"
 
 #: plugins/infowidget/trackerview.cpp:115
 #, kde-format
@@ -5911,12 +5919,12 @@ msgstr ""
 #: plugins/infowidget/trackerview.cpp:129
 #, kde-format
 msgid "There already is a tracker named <b>%1</b>."
-msgstr ""
+msgstr "כבר יש עוקב בשם <b>%1</b>."
 
 #: plugins/infowidget/trackerview.cpp:131
 #, kde-format
 msgid "The following duplicate trackers were not added:"
-msgstr ""
+msgstr "העוקבים הכפולים הבאים לא נוספו:"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_tracker)
 #: plugins/infowidget/trackerview.ui:29
@@ -5977,6 +5985,15 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Note: </span>Only http webseeds are supported.</p>"
 msgstr ""
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;direction:rtl\">מקור רשת "
+"להוספה לטורנט.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">לשימת ליבך: </span>יש תמיכה במקורות רשת בחיבור http בלבד.</p>"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add)
 #: plugins/infowidget/webseedstab.ui:26
@@ -6006,13 +6023,13 @@ msgstr "השבתה של הכול"
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
 #, kde-format
 msgid "Converting..."
-msgstr ""
+msgstr "מתבצעת המרה…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
 #, kde-format
 msgid "Converting block list to KTorrent format. This might take some time."
-msgstr ""
+msgstr "המרת רשימת חסימה לתבנית KTorrent. זה יכול לארוך זמן מה."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: plugins/ipfilter/convertdialog.ui:99
@@ -6028,7 +6045,7 @@ msgstr "טעינה מקובץ טקסט…"
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
 msgid "There are no IP addresses to convert in %1"
-msgstr ""
+msgstr "אין כתובות IP להמרה תחת %1"
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:68
 #: plugins/ipfilter/downloadandconvertjob.cpp:102
@@ -6036,7 +6053,7 @@ msgstr ""
 #: plugins/ipfilter/downloadandconvertjob.cpp:224
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
-msgstr ""
+msgstr "עדכון אוטומטי של מסנן IP נכשל: %1"
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:124
 #, kde-format
@@ -6301,12 +6318,14 @@ msgid ""
 "Whether or not to use rich text or just plain text, for the logging output "
 "shown in the logviewer."
 msgstr ""
+"האם להשתמש בטקסט עשיר או סתם בטקסט פשוט, לפלט תיעוד היומן שמופיע במציג "
+"היומנים."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:45
 #, kde-format
 msgid "Use rich text for logging output"
-msgstr ""
+msgstr "להשתמש בטקסט עשיר לפלט תיעוד יומן"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/logviewer/logprefwidget.ui:54
@@ -6352,7 +6371,7 @@ msgstr "יומן"
 #: plugins/logviewer/logviewer.cpp:29
 #, kde-format
 msgid "View the logging output generated by KTorrent"
-msgstr ""
+msgstr "הצגת פלט היומן שנוצר על ידי KTorrent"
 
 #: plugins/logviewer/logviewer.cpp:39
 #, kde-format
@@ -6759,6 +6778,8 @@ msgid ""
 "When a torrent file has been found and loaded, delete it.<br/><br/>\n"
 "Warning: you will permanently lose this file."
 msgstr ""
+"כאשר קובץ טורנט נמצא ונטען, למחוק אותו.<br/><br/>\n"
+"אזהרה: הקובץ הזה יאבד לצמיתות."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_actionDelete)
 #: plugins/scanfolder/scanfolderprefpage.ui:103
@@ -6773,24 +6794,26 @@ msgid ""
 "When a torrent file is loaded, move it to a subdirectory named loaded. If "
 "the folder does not exist, it will be created."
 msgstr ""
+"כאשר קובץ טורנט נטען, הוא יועבר לתת־תיקייה בשם נטענו (loaded). אם התיקייה לא "
+"קיימת, היא תיווצר."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_actionMove)
 #: plugins/scanfolder/scanfolderprefpage.ui:113
 #, kde-format
 msgid "Move torrent file to loaded directory"
-msgstr ""
+msgstr "העברת קובץ טורנט לתיקייה שנטענה"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_addToGroup)
 #: plugins/scanfolder/scanfolderprefpage.ui:122
 #, kde-format
 msgid "Add torrents opened with this plugin to a group."
-msgstr ""
+msgstr "הוספת טורנטים שנפתחו עם התוסף הזה לקבוצה."
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, m_group)
 #: plugins/scanfolder/scanfolderprefpage.ui:132
 #, kde-format
 msgid "Group to add torrents to."
-msgstr ""
+msgstr "קבוצה אליה להוסיף טורנטים."
 
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.cpp:18
 #, kde-format
@@ -7178,7 +7201,7 @@ msgstr "כשכל הטורנטים מסיימים שיתוף"
 #: plugins/shutdown/shutdowndlg.cpp:47
 #, kde-format
 msgid "When the events below happen"
-msgstr ""
+msgstr "כשמתרחשים האירועים הבאים"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ShutdownDlg)
 #: plugins/shutdown/shutdowndlg.ui:14
@@ -7210,7 +7233,7 @@ msgstr ""
 #: plugins/shutdown/shutdowndlg.ui:50
 #, kde-format
 msgid "All events must have happened"
-msgstr ""
+msgstr "כל האירועים חייבים להתרחש"
 
 #: plugins/shutdown/shutdownplugin.cpp:32
 #, kde-format
@@ -7225,7 +7248,7 @@ msgstr "הגדרת כיבוי"
 #: plugins/shutdown/shutdownruleset.cpp:236
 #, kde-format
 msgid "Automatic shutdown not active"
-msgstr ""
+msgstr "כיבוי אוטומטי בחוסר פעילות"
 
 #: plugins/shutdown/shutdownruleset.cpp:256
 #, kde-format
@@ -7240,7 +7263,7 @@ msgstr ""
 #: plugins/shutdown/shutdownruleset.cpp:328
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
-msgstr ""
+msgstr "הורדת <b>כל הטורנטים</b> הסתיימו"
 
 #: plugins/shutdown/shutdownruleset.cpp:330
 #, kde-format
@@ -7250,7 +7273,7 @@ msgstr "<b>כל הטורנטים</b> סיימו שיתוף"
 #: plugins/shutdown/shutdownruleset.cpp:332
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
-msgstr ""
+msgstr "<b>%1</b> מסיים את ההורדה"
 
 #: plugins/shutdown/shutdownruleset.cpp:334
 #, kde-format
@@ -7817,7 +7840,7 @@ msgstr "לצייר רקע רשת אפור מכוער?"
 #: plugins/stats/ktstatsplugin.kcfg:175
 #, kde-format
 msgid "Type of widget used for chart drawing"
-msgstr ""
+msgstr "סוג הווידג׳ט שמשמש לייצור תרשימים"
 
 #. i18n: ectx: property (title), widget (QGroupBox, UpdateGbw)
 #: plugins/stats/Settings.ui:19
