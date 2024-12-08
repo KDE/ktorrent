@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-01 00:40+0000\n"
-"PO-Revision-Date: 2024-12-06 14:20+0200\n"
+"PO-Revision-Date: 2024-12-07 11:16+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -721,7 +721,7 @@ msgstr "פתיחת כתובת"
 #: ktorrent/dialogs/pastedialog.cpp:114
 #, kde-format
 msgid "Error fetching tracker list"
-msgstr ""
+msgstr "ש"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
 #, kde-format
@@ -4008,7 +4008,7 @@ msgstr "הוספת עמיתים"
 #: ktorrent/view/view.cpp:191
 #, kde-format
 msgid "Manual Announce"
-msgstr ""
+msgstr "הכרזה ידנית"
 
 #: ktorrent/view/view.cpp:196
 #, kde-format
@@ -4023,23 +4023,23 @@ msgstr "תצוגה מקדימה"
 #: ktorrent/view/view.cpp:204
 #, kde-format
 msgid "Data Directory"
-msgstr ""
+msgstr "תיקיית נתונים"
 
 #: ktorrent/view/view.cpp:208
 #, kde-format
 msgid "Temporary Directory"
-msgstr ""
+msgstr "תיקייה זמנית"
 
 #: ktorrent/view/view.cpp:212
 #, kde-format
 msgid "Move Data"
-msgstr ""
+msgstr "העברת נתונים"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, StatsSettingsWgt)
 #: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
-msgstr ""
+msgstr "הגדרות"
 
 #: ktorrent/view/view.cpp:220
 #, kde-format
@@ -4054,7 +4054,7 @@ msgstr "בדיקת נתונים"
 #: ktorrent/view/view.cpp:229
 #, kde-format
 msgid "Check all the data of a torrent"
-msgstr ""
+msgstr "לבדוק את כל נתוני הטורנט"
 
 #: ktorrent/view/view.cpp:249
 #, kde-format
@@ -4064,12 +4064,12 @@ msgstr "העתקת כתובת טורנט"
 #: ktorrent/view/view.cpp:253
 #, kde-format
 msgid "Export Torrent"
-msgstr ""
+msgstr "ייצוא טורנט"
 
 #: ktorrent/view/view.cpp:258
 #, kde-format
 msgid "Set the speed limits of individual torrents"
-msgstr ""
+msgstr "הגדרת מגבלות המהירות על טורנטים נפרדים"
 
 #: ktorrent/view/view.cpp:452
 #, kde-format
@@ -4086,12 +4086,12 @@ msgstr "הסרת הורדה"
 #: ktorrent/view/view.cpp:458
 #, kde-format
 msgid "Delete Data"
-msgstr ""
+msgstr "מחיקת הנתונים"
 
 #: ktorrent/view/view.cpp:459
 #, kde-format
 msgid "Keep Data"
-msgstr ""
+msgstr "שמירת הנתונים"
 
 #: ktorrent/view/view.cpp:483
 #, kde-format
@@ -4666,7 +4666,7 @@ msgstr "תוספים"
 #: libktcore/torrent/basicjobprogresswidget.cpp:36
 #, kde-format
 msgid "%1: %2<br/>%3: %4"
-msgstr ""
+msgstr "%1: %2<br/>%3: %4"
 
 #: libktcore/torrent/basicjobprogresswidget.cpp:49
 #, kde-format
@@ -4738,14 +4738,14 @@ msgstr ""
 #: libktcore/torrent/queuemanager.cpp:145
 #, kde-format
 msgid "Insufficient disk space for %1"
-msgstr ""
+msgstr "אין מספיק מקום בכונן ל־%1"
 
 #: libktcore/torrent/queuemanager.cpp:224
 #, kde-format
 msgid ""
 "Not enough disk space for the following torrents. Do you want to start them "
 "anyway?"
-msgstr ""
+msgstr "אין מספיק מקום בכונן לטורנטים הבאים. להריץ אותם בכל אופן?"
 
 #: libktcore/torrent/queuemanager.cpp:263
 #, kde-format
@@ -4759,23 +4759,23 @@ msgstr "הטורנטים הבאים הגיעו לזמן השיתוף המרבי 
 msgid ""
 "The following torrents have reached their maximum share ratio. Do you want "
 "to start them anyway?"
-msgstr ""
+msgstr "הטורנטים הבאים הגיעו ליחס השיתוף המרבי שלהם. להריץ אותם בכל זאת?"
 
 #: libktcore/torrent/queuemanager.cpp:708
 #, kde-format
 msgid "Error starting torrent %1: %2"
-msgstr ""
+msgstr "שגיאה בהרצת הטורנט %1:‏ %2"
 
 #: libktcore/torrent/queuemanager.cpp:709
 #: libktcore/torrent/queuemanager.cpp:720
 #, kde-format
 msgid "Error"
-msgstr ""
+msgstr "שגיאה"
 
 #: libktcore/torrent/queuemanager.cpp:719
 #, kde-format
 msgid "Error stopping torrent %1: %2"
-msgstr ""
+msgstr "שגיאה בעצירת הטורנט %1:‏ %2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
 #: libktcore/torrent/torrentfiletreemodel.cpp:357
