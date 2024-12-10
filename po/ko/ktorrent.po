@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-01 00:40+0000\n"
-"PO-Revision-Date: 2024-08-20 00:16+0200\n"
+"PO-Revision-Date: 2024-12-10 01:08+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -918,10 +918,9 @@ msgid "Create A Torrent"
 msgstr "새 토렌트 만들기"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "웹 시딩은 HTTP만 지원합니다."
+msgstr "웹 시딩은 HTTP(S)만 지원합니다."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -7687,8 +7686,7 @@ msgstr "토렌트 당 연결된 시드 수의 평균입니다."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7733,8 +7731,7 @@ msgid "(plugin reload is needed after change)"
 msgstr "(설졍 변경 후 플러그인을 다시 로드해야 함)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
