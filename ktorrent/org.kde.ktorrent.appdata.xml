@@ -38,6 +38,7 @@
   <name xml:lang="pt">KTorrent</name>
   <name xml:lang="pt-BR">KTorrent</name>
   <name xml:lang="ru">KTorrent</name>
+  <name xml:lang="sa">KTorrent इति</name>
   <name xml:lang="sk">KTorrent</name>
   <name xml:lang="sl">KTorrent</name>
   <name xml:lang="sr">К‑торент</name>
@@ -80,6 +81,7 @@
   <summary xml:lang="pt">Cliente de BitTorrent</summary>
   <summary xml:lang="pt-BR">Cliente BitTorrent</summary>
   <summary xml:lang="ru">Клиент BitTorrent</summary>
+  <summary xml:lang="sa">BitTorrent क्लायन्ट</summary>
   <summary xml:lang="sk">BitTorrent Klient</summary>
   <summary xml:lang="sl">Odjemalec BitTorrent</summary>
   <summary xml:lang="sr">Битторент клијент</summary>
@@ -124,6 +126,7 @@
     <p xml:lang="pt">O KTorrent é uma aplicação de BitTorrent do KDE que lhe permite obter ficheiros pelo protocolo BitTorrent. Ele permite-lhe executar várias torrentes ao mesmo tempo e vem com funcionalidades alargadas que o tornam um cliente pleno de funcionalidades para o BitTorrent.</p>
     <p xml:lang="pt-BR">O KTorrent é um aplicativo BitTorrent do KDE que permite a você baixar arquivos usando o protocolo BitTorrent. Ele permite baixar múltiplos torrents ao mesmo tempo e vem com recursos estendidos para torná-lo cliente com recursos completos para o BitTorrent.</p>
     <p xml:lang="ru">KTorrent — это приложение BitTorrent, разработанное KDE, которое предназначено для загрузки файлов с использованием протокола BitTorrent. Оно позволяет запускать несколько торрентов одновременно и оснащено расширенными функциями, что делает его полнофункциональным клиентом для BitTorrent.</p>
+    <p xml:lang="sa">KTorrent KDE द्वारा BitTorrent अनुप्रयोगः अस्ति यत् BitTorrent प्रोटोकॉलस्य उपयोगेन सञ्चिकाः डाउनलोड् कर्तुं शक्नोति । एतत् भवन्तं एकस्मिन् समये बहुविधं टोरेण्ट् चालयितुं समर्थयति तथा च विस्तारितविशेषताभिः सह आगच्छति यत् इदं BitTorrent कृते पूर्णविशेषतायुक्तं क्लायन्ट् भवति ।</p>
     <p xml:lang="sk">KTorrent je BitTorrentová aplikácia od KDE, ktorá vám umožní stiahnuť súbory pomocou protokolu BitTorrent. Umožní vám spustiť viac torrentov súčasne a obsahuje rôzne funkcie, čo z nej robí plnohodnotného klienta pre BitTorrent.</p>
     <p xml:lang="sl">KTorrent je program za BitTorrent v KDE, ki omogoča prenos datotek s protokolom BitTorrent. Omogoča vam zagon več sočasnih tokov hkrati in ima razširjene možnosti, tako da je popoln odjemalec za BitTorrent.</p>
     <p xml:lang="sr">К‑торент је програм из КДЕ‑а којим можете да преузимате фајлове преко протокола битторент. Омогућава покретање више торената истовремено и пружа разноврсне проширене могућности, што га чини га свеобухватним битторент клијентом.</p>
@@ -166,6 +169,7 @@
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Recursos:</p>
     <p xml:lang="ru">Возможности:</p>
+    <p xml:lang="sa">गुणाः:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Lastnosti:</p>
     <p xml:lang="sr">Могућности:</p>
@@ -207,6 +211,7 @@
       <li xml:lang="pt">Fila de espera de torrentes</li>
       <li xml:lang="pt-BR">Enfileiramento de torrents</li>
       <li xml:lang="ru">Загрузка торрентов по очереди</li>
+      <li xml:lang="sa">धाराणां पङ्क्तिः</li>
       <li xml:lang="sk">Zaraďovanie torrentov</li>
       <li xml:lang="sl">Čakalne vrste podatkovnih tokov</li>
       <li xml:lang="sr">Стављање торената у ред.</li>
@@ -246,6 +251,7 @@
       <li xml:lang="pt">Limites de velocidades globais e por torrentes</li>
       <li xml:lang="pt-BR">Limites de velocidade global e por torrent</li>
       <li xml:lang="ru">Общие и отдельные для каждого торрента ограничения скорости</li>
+      <li xml:lang="sa">वैश्विकं तथा प्रति धारा गतिसीमा</li>
       <li xml:lang="sk">Globálne a torrentové rýchlostné limity</li>
       <li xml:lang="sl">Omejitve hitrosti prenosa za celoto in po posameznem toku</li>
       <li xml:lang="sr">Ограничења брзине, глобална и по торенту.</li>
@@ -285,6 +291,7 @@
       <li xml:lang="pt">Antevisão incorporada de alguns tipos de ficheiros (vídeo e áudio)</li>
       <li xml:lang="pt-BR">Pré-visualização embutida de certos tipos de arquivos (áudio e vídeo)</li>
       <li xml:lang="ru">Предварительный просмотр файлов некоторых типов (видео, звук)</li>
+      <li xml:lang="sa">कतिपयानां सञ्चिकाप्रकारस्य पूर्वावलोकनं, बिल्ड् इन (वीडियो तथा श्रव्य)</li>
       <li xml:lang="sk">Náhľady určitých typov súborov (video a audio)</li>
       <li xml:lang="sl">Vgrajen predogled določenih zvrsti datotek (video in avdio)</li>
       <li xml:lang="sr">Преглед појединих типова фајлова, уграђено (видео и аудио).</li>
@@ -324,6 +331,7 @@
       <li xml:lang="pt">Importação de ficheiros transferidos parcialmente ou por completo</li>
       <li xml:lang="pt-BR">Importação de arquivos baixados completamente ou parcialmente</li>
       <li xml:lang="ru">Импорт частично или полностью загруженных файлов</li>
+      <li xml:lang="sa">आंशिकरूपेण अथवा पूर्णतया डाउनलोड् कृतानां सञ्चिकानां आयातम्</li>
       <li xml:lang="sk">Importovanie čiastočne alebo plne stiahnutých súborov</li>
       <li xml:lang="sl">Uvoz delno ali v celoti prenesenih datotek</li>
       <li xml:lang="sr">Увоз делимично или потпуно преузетих фајлова.</li>
@@ -363,6 +371,7 @@
       <li xml:lang="pt">Prioritização de torrentes multi-ficheiros</li>
       <li xml:lang="pt-BR">Priorização de arquivos para torrents multi-arquivos</li>
       <li xml:lang="ru">Приоритеты файлов для торрентов с несколькими файлами</li>
+      <li xml:lang="sa">बहुसञ्चिका-प्रवाहानाम् कृते सञ्चिका-प्राथमिकता</li>
       <li xml:lang="sk">Prioritizácia súborov cez viacsúborové torrenty</li>
       <li xml:lang="sl">Upravljanje s prednostmi za tokove več datotek</li>
       <li xml:lang="sr">Задавање приоритета по фајлу у торентима са више фајлова.</li>
@@ -401,6 +410,7 @@
       <li xml:lang="pt">Transferência selectiva para torrentes multi-ficheiros</li>
       <li xml:lang="pt-BR">Download seletivo para torrents multi-arquivo</li>
       <li xml:lang="ru">Выборочная загрузка файлов из торрентов с несколькими файлами</li>
+      <li xml:lang="sa">बहुसञ्चिका-टोरेण्ट्-कृते चयनात्मकं डाउनलोड्-करणम्</li>
       <li xml:lang="sk">Selektívne sťahovanie pre viacsúborové torrenty</li>
       <li xml:lang="sl">Selektivni prenos za tokove več datotek</li>
       <li xml:lang="sr">Селективно преузимање у торентима са више фајлова.</li>
@@ -439,6 +449,7 @@
       <li xml:lang="pt">Banir/expulsar as máquinas com uma janela adicional de filtros de IP's para fins de listagem/edição</li>
       <li xml:lang="pt-BR">Banir/expulsar as máquinas com uma janela adicional de filtros de IPs para fins de listagem/edição</li>
       <li xml:lang="ru">Возможность отключения или блокирования пиров. Список заблокированных пиров можно редактировать в диалоге IP-фильтра.</li>
+      <li xml:lang="sa">सूची/सम्पादनार्थं अतिरिक्तं IP Filter संवादं सह किक/बैन् समवयस्कानाम्</li>
       <li xml:lang="sk">Vykopnutie/ban klientov s dodatočným dialógom IP filtra pre dôvody zoznamu/úpravy</li>
       <li xml:lang="sl">Preklop/prepoved vrstnikov z dodatnim pogovornim oknom filtra IP za namene urejanja/seznama</li>
       <li xml:lang="sr">Избацивање/забрањивање вршњака преко дијалога за филтрирање ИП‑ова (листање и уређивање).</li>
@@ -479,6 +490,7 @@
       <li xml:lang="pt">Suporte a localizadores por UDP</li>
       <li xml:lang="pt-BR">Suporte a rastreadores UDP</li>
       <li xml:lang="ru">Поддержка трекеров UDP</li>
+      <li xml:lang="sa">UDP ट्रैकर समर्थनम्</li>
       <li xml:lang="sk">Podpora trackerov UDP</li>
       <li xml:lang="sl">Podpora za sledilnik UDP</li>
       <li xml:lang="sr">Подршка за УДП пратиоце.</li>
@@ -518,6 +530,7 @@
       <li xml:lang="pt">Suporte para localizadores e torrentes privadas</li>
       <li xml:lang="pt-BR">Suporte para rastreadores e torrents privados</li>
       <li xml:lang="ru">Поддержка частных трекеров и торрентов</li>
+      <li xml:lang="sa">निजी ट्रैकर तथा टोरेण्ट् इत्येतयोः समर्थनम्</li>
       <li xml:lang="sk">Podpora pre súkromné trackery a torrenty</li>
       <li xml:lang="sl">Podpora zasebnim sledilcem in tokovom</li>
       <li xml:lang="sr">Подршка за приватне пратиоце и торенте.</li>
@@ -557,6 +570,7 @@
       <li xml:lang="pt">Suporte para a troca de máquinas do µTorrent</li>
       <li xml:lang="pt-BR">Suporte a troca de pares do µTorrent</li>
       <li xml:lang="ru">Поддержка протокола обмена списками пиров, используемого µTorrent</li>
+      <li xml:lang="sa">μTorrent इत्यस्य सहकर्मीविनिमयस्य समर्थनम्</li>
       <li xml:lang="sk">Podpora pre výmenu peerov µTorrent</li>
       <li xml:lang="sl">Podpora za medsebojno izmenjavo µTorrent</li>
       <li xml:lang="sr">Подршка за Микроторентову размену вршњака.</li>
@@ -596,6 +610,7 @@
       <li xml:lang="pt">Suporte para a encriptação do protocolo (compatível com o Azureus)</li>
       <li xml:lang="pt-BR">Suporte para criptografia de protocolo (compatível com Azureus)</li>
       <li xml:lang="ru">Поддержка шифрования на уровне протокола (совместимо с Azureus)</li>
+      <li xml:lang="sa">प्रोटोकॉल एन्क्रिप्शनस्य समर्थनम् (Azureus इत्यनेन सह सङ्गतम्)</li>
       <li xml:lang="sk">Podpora pre šifrovanie protokolu (kompatibilné s Azureus)</li>
       <li xml:lang="sl">Podpora za protokol šifriranja (združljivo z Azureusom)</li>
       <li xml:lang="sr">Подршка за шифровање протокола (сагласна са Азуреусом).</li>
@@ -635,6 +650,7 @@
       <li xml:lang="pt">Suporte para a criação de torrentes sem localizador</li>
       <li xml:lang="pt-BR">Suporte a criação de torrents sem rastreadores</li>
       <li xml:lang="ru">Поддержка создания торрентов, не привязанных к торрент-трекеру</li>
+      <li xml:lang="sa">trackerless torrents निर्मातुं समर्थनम्</li>
       <li xml:lang="sk">Podpora pre vytváranie beztracerových torrentov</li>
       <li xml:lang="sl">Podpora za ustvarjanje tokov brez sledi</li>
       <li xml:lang="sr">Подршка за стварање торената без пратилаца.</li>
@@ -674,6 +690,7 @@
       <li xml:lang="pt">Suporte para tabelas de dispersão distribuídas (DHT)</li>
       <li xml:lang="pt-BR">Suporte para tabelas de dispersão distribuídas (DHT)</li>
       <li xml:lang="ru">Поддержка распределённых хеш-таблиц (DHT)</li>
+      <li xml:lang="sa">वितरितहैशसारणीनां समर्थनम् (DHT, Mainline संस्करणम्)</li>
       <li xml:lang="sk">Podpora pre distribuované hašovacie tabuľky (DHT, mainline verzia)</li>
       <li xml:lang="sl">Podpora za porazdeljene razpršene tabele (DHT, verzija glavne linije)</li>
       <li xml:lang="sr">Подршка за дистрибуиране дисперзионе табеле (мејнлајн ДХТ).</li>
@@ -713,6 +730,7 @@
       <li xml:lang="pt">Suporte de UPnP para encaminhar automaticamente os portos numa LAN para as máquinas atribuídas de forma dinâmica</li>
       <li xml:lang="pt-BR">Suporte ao UPnP para encaminhar automaticamente portas em uma LAN com host atribuídos dinamicamente</li>
       <li xml:lang="ru">Поддержка UPnP для автоматического перенаправления портов в локальной сети с динамическим выделением IP-адресов</li>
+      <li xml:lang="sa">गतिशीलनिर्दिष्टहोस्ट्-सहितं LAN-मध्ये स्वयमेव पोर्ट्-अग्रे प्रेषणार्थं UPnP-इत्यस्य समर्थनम्</li>
       <li xml:lang="sk">Podpora pre UPnP na automatické presmerovanie portov na LAN s dynaicky priradenými hostami</li>
       <li xml:lang="sl">Podpora za UPnP za samodejno posredovanje vrat v omrežju LAN z dinamično dodeljenimi gostitelji</li>
       <li xml:lang="sr">Подршка за аутоматско прослеђивање портова кроз УПнП у ЛАН‑у са динамички додељиваним домаћинима.</li>
@@ -753,6 +771,7 @@
       <li xml:lang="pt">Suporte para fontes Web</li>
       <li xml:lang="pt-BR">Suporte para fontes Web</li>
       <li xml:lang="ru">Поддержка веб-сидов</li>
+      <li xml:lang="sa">जालबीजानां समर्थनम्</li>
       <li xml:lang="sk">Podpora pre webové seedy</li>
       <li xml:lang="sl">Podpora za spletne brste</li>
       <li xml:lang="sr">Подршка за веб сејања.</li>
@@ -793,6 +812,7 @@
       <li xml:lang="pt">Integração na bandeja do sistema</li>
       <li xml:lang="pt-BR">Integração na área de notificação</li>
       <li xml:lang="ru">Значок в системном лотке</li>
+      <li xml:lang="sa">प्रणाली ट्रे एकीकरण</li>
       <li xml:lang="sk">Integrácia do systémovej lišty</li>
       <li xml:lang="sl">Integracija sistemskega pulta</li>
       <li xml:lang="sr">Уклапање у системску касету.</li>
@@ -832,6 +852,7 @@
       <li xml:lang="pt">Suporte para localizadores autenticados</li>
       <li xml:lang="pt-BR">Suporte a autenticação de rastreadores</li>
       <li xml:lang="ru">Поддержка аутентификации на трекере</li>
+      <li xml:lang="sa">ट्रैकर प्रमाणीकरणसमर्थनम्</li>
       <li xml:lang="sk">Podpora autentifikácie trackerov</li>
       <li xml:lang="sl">Podpora za preverjanje pristnosti sledilcev</li>
       <li xml:lang="sr">Подршка за аутентификацију пратилаца.</li>
@@ -872,6 +893,7 @@
       <li xml:lang="pt">Ligação através de um 'proxy'</li>
       <li xml:lang="pt-BR">Conexão através de proxy</li>
       <li xml:lang="ru">Подключение через прокси-сервер</li>
+      <li xml:lang="sa">प्रॉक्सीद्वारा संयोजनम्</li>
       <li xml:lang="sk">Pripojenie cez proxy</li>
       <li xml:lang="sl">Povezava prek posrednika</li>
       <li xml:lang="sr">Повезивање кроз прокси.</li>
@@ -911,6 +933,7 @@
     <p xml:lang="pt">Para além das funcionalidades incorporadas, existem alguns 'plugins' disponíveis para o KTorrent.</p>
     <p xml:lang="pt-BR">Adicionalmente as funcionalidades embutidas, existem alguns plugins disponíveis para o KTorrent.</p>
     <p xml:lang="ru">В дополнение к встроенным функциям доступны также некоторые модули.</p>
+    <p xml:lang="sa">अन्तर्निर्मितकार्यक्षमतायाः अतिरिक्तं KTorrent कृते केचन प्लगिन्स् उपलभ्यन्ते ।</p>
     <p xml:lang="sk">Okrem zabudovaných funkcií sú k dispozícii aj niektoré pluginy pre KTorrent.</p>
     <p xml:lang="sl">Poleg vgrajenih funkcionalnosti je nekaj vtičnikov na voljo za KTorrent.</p>
     <p xml:lang="sr">Поред уграђених функција, доступни су и разни прикључци за К‑торент.</p>
