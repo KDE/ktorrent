@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-11-09 16:13+0100\n"
+"PO-Revision-Date: 2024-12-13 21:51+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -1660,6 +1660,7 @@ msgstr "Felipe Sateler"
 msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
+# skip-rule: trasno-widget_reverse
 #: ktorrent/main.cpp:129
 #, kde-format
 msgid ""
