@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-01 00:40+0000\n"
-"PO-Revision-Date: 2024-12-13 20:20+0530\n"
+"PO-Revision-Date: 2024-12-14 01:08+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -22,12 +22,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #: ktorrent/core.cpp:147
 #, kde-format
@@ -276,7 +276,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr ""
+msgstr "आयात"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:236
 #: ktorrent/dialogs/fileselectdlg.cpp:254
@@ -293,7 +293,7 @@ msgstr "%1 निर्देशिका नास्ति, भवान् �
 #, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr ""
+msgstr "निर्मियताम्"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
@@ -308,13 +308,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr ""
+msgstr "सञ्चिकाः विलोपयन्तु"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
 #, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr ""
+msgstr "सञ्चिकाः स्थापयन्तु"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:315
 #, kde-format
@@ -346,7 +346,7 @@ msgstr "%1 (%2 विद्यमानसञ्चिकाभिः प्र�
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
-msgstr ""
+msgstr "%1 ह्रस्वः"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:528
 #, kde-format
@@ -1523,7 +1523,7 @@ msgstr "KDE द्वारा Bittorrent क्लायन्ट्"
 #, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
-msgstr ""
+msgstr "(ग) २००५ - २०११ जोरिस् गुइसनः इवान् वासिच् च"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -3270,7 +3270,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group Options regarging Seeding"
 msgid "Seeding"
-msgstr ""
+msgstr "बीजकरणम्"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_keepSeeding)
 #: ktorrent/pref/qmpref.ui:165
@@ -3473,15 +3473,15 @@ msgstr "DHT: अवरम्"
 #, kde-format
 msgid "%1 node"
 msgid_plural "%1 nodes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 नोड्"
+msgstr[1] "%1 नोड्स"
 
 #: ktorrent/statusbar.cpp:90
 #, kde-format
 msgid "%1 task"
 msgid_plural "%1 tasks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 कार्यम्"
+msgstr[1] "%1 कार्याणि"
 
 #: ktorrent/statusbar.cpp:90
 #, kde-format
@@ -3830,15 +3830,15 @@ msgstr "<b>%1</b> आरभ्यतुं न शक्यते :<br>"
 #, kde-format
 msgid "Cannot seed more than 1 torrent. <br>"
 msgid_plural "Cannot seed more than %1 torrents. <br>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "१ धारात् अधिकं बीजं कर्तुं न शक्नोति।<br>"
+msgstr[1] "%1 अधिकं टोरेण्ट् बीजं कर्तुं न शक्नोति।<br>"
 
 #: ktorrent/trayicon.cpp:288
 #, kde-format
 msgid "Cannot download more than 1 torrent. <br>"
 msgid_plural "Cannot download more than %1 torrents. <br>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 torrent इत्यस्मात् अधिकं डाउनलोड् कर्तुं न शक्यते।<br>"
+msgstr[1] "%1 तः अधिकं टोरेण्ट् डाउनलोड् कर्तुं न शक्यते ।<br>"
 
 #: ktorrent/trayicon.cpp:290
 #, kde-format
@@ -4060,7 +4060,7 @@ msgstr "फ़िल्टर..."
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
-msgstr ""
+msgstr "प्रारंभः"
 
 #: ktorrent/view/view.cpp:134
 #, kde-format
@@ -4071,7 +4071,7 @@ msgstr "वर्तमान ट्याब् मध्ये सर्वा
 #, kde-format
 msgctxt "@action Force start all selected torrents in the current tab"
 msgid "Force Start"
-msgstr ""
+msgstr "बल प्रारम्भ"
 
 #: ktorrent/view/view.cpp:141
 #, kde-format
@@ -4261,7 +4261,7 @@ msgstr "दत्तांशं स्थानान्तरयितुं �
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr ""
+msgstr "%1% २."
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4285,7 +4285,7 @@ msgstr "अपलोड् कृतम्"
 #, kde-format
 msgctxt "Bytes left to downloaded"
 msgid "Left"
-msgstr ""
+msgstr "वामः"
 
 #: ktorrent/view/viewmodel.cpp:448
 #: plugins/infowidget/chunkdownloadmodel.cpp:195
@@ -4871,7 +4871,7 @@ msgstr "सीमाः प्राप्ताः।"
 #, kde-format
 msgctxt "@action:button"
 msgid "Start"
-msgstr ""
+msgstr "प्रारंभः"
 
 #: libktcore/torrent/queuemanager.cpp:142
 #, kde-format
@@ -5411,13 +5411,13 @@ msgstr "आकृति:"
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
-msgstr ""
+msgstr "उद्घाटित"
 
 #: plugins/infowidget/fileview.cpp:115
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
-msgstr ""
+msgstr "Open With इति"
 
 #: plugins/infowidget/fileview.cpp:116
 #, kde-format
@@ -5492,7 +5492,11 @@ msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] ""
+"अस्मिन् सञ्चिकायां भवन्तः सर्वाणि दत्तांशं नष्टं करिष्यन्ति, किं भवन्तः एतत् कर्तुम् इच्छन्ति इति "
+"निश्चितम्?"
 msgstr[1] ""
+"एतेषु सञ्चिकासु भवन्तः सर्वाणि दत्तांशं नष्टं करिष्यन्ति, किं भवन्तः एतत् कर्तुम् इच्छन्ति इति "
+"निश्चितम्?"
 
 #: plugins/infowidget/fileview.cpp:476
 #, kde-format
@@ -5510,7 +5514,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "क्रमिकं डाउनलोड् मोडं सक्षमं कुर्वन्तु"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -5584,20 +5588,20 @@ msgstr "% पूर्णं करोतु"
 #, kde-format
 msgctxt "Download first"
 msgid "First"
-msgstr ""
+msgstr "प्रथमः"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:83
 #: plugins/infowidget/iwfiletreemodel.cpp:91
 #, kde-format
 msgctxt "Download last"
 msgid "Last"
-msgstr ""
+msgstr "अन्तिमः"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:89
 #, kde-format
 msgctxt "Download Normal (not as first or last)"
 msgid "Normal"
-msgstr ""
+msgstr "सामान्य"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:138
 #: plugins/infowidget/iwfilelistmodel.cpp:157
@@ -5623,7 +5627,7 @@ msgstr "विचाराधीनः"
 #, kde-format
 msgctxt "No preview available"
 msgid "No"
-msgstr ""
+msgstr "नहि"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:145
 #: plugins/infowidget/iwfilelistmodel.cpp:164
@@ -5638,7 +5642,7 @@ msgstr "%1 % ."
 #, kde-format
 msgctxt "Download normally(not as first or last)"
 msgid "Normal"
-msgstr ""
+msgstr "सामान्य"
 
 #: plugins/infowidget/iwfiletreemodel.cpp:162
 #, kde-format
@@ -5767,55 +5771,55 @@ msgstr " (μTP) २."
 #, kde-format
 msgctxt "Choked"
 msgid "Yes"
-msgstr ""
+msgstr "आम्‌"
 
 #: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
 msgctxt "Not choked"
 msgid "No"
-msgstr ""
+msgstr "नहि"
 
 #: plugins/infowidget/peerviewmodel.cpp:105
 #, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
-msgstr ""
+msgstr "आम्‌"
 
 #: plugins/infowidget/peerviewmodel.cpp:105
 #, kde-format
 msgctxt "Not snubbed"
 msgid "No"
-msgstr ""
+msgstr "नहि"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr ""
+msgstr "%1% २."
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
 msgctxt "Interested"
 msgid "Yes"
-msgstr ""
+msgstr "आम्‌"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
 msgctxt "Not Interested"
 msgid "No"
-msgstr ""
+msgstr "नहि"
 
 #: plugins/infowidget/peerviewmodel.cpp:123
 #, kde-format
 msgctxt "Interesting"
 msgid "Yes"
-msgstr ""
+msgstr "आम्‌"
 
 #: plugins/infowidget/peerviewmodel.cpp:123
 #, kde-format
 msgctxt "Not Interesting"
 msgid "No"
-msgstr ""
+msgstr "नहि"
 
 #: plugins/infowidget/peerviewmodel.cpp:291
 #, kde-format
@@ -6021,7 +6025,7 @@ msgstr "उपलब्धाः खण्डाः : १."
 #, kde-format
 msgctxt "Noun, as in \"file sharing\""
 msgid "Sharing"
-msgstr ""
+msgstr "साझेदारी"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: plugins/infowidget/statustab.ui:282
@@ -6245,8 +6249,8 @@ msgstr ""
 #, kde-format
 msgid " day"
 msgid_plural " days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " दिनं"
+msgstr[1] " दिवसाः"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:50
 #: plugins/ipfilter/ipblockingprefpage.cpp:71
@@ -6874,7 +6878,7 @@ msgstr "निर्देशिकाः पुनरावर्तनीय�
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"
-msgstr ""
+msgstr "भारितम्"
 
 #: plugins/scanfolder/scanfolderplugin.cpp:43
 #: plugins/scanfolder/scanfolderplugin.cpp:56
@@ -6882,7 +6886,7 @@ msgstr ""
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan Folder"
-msgstr ""
+msgstr "स्कैन फोल्डर"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanfolder/scanfolderprefpage.ui:17
@@ -7312,7 +7316,7 @@ msgstr "KTorrent इति"
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
-msgstr ""
+msgstr "स्वतन्त्र भव।"
 
 #: plugins/search/webview.cpp:108
 #, kde-format
@@ -7509,7 +7513,7 @@ msgstr "नोड्स"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers connected"
-msgstr ""
+msgstr "लीचर्स् सम्बद्धाः"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: plugins/stats/ConnsTabPage.cc:46 plugins/stats/ConnsTabPage.cc:94
@@ -7517,14 +7521,14 @@ msgstr ""
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers in swarms"
-msgstr ""
+msgstr "लीचरः झुण्डेषु"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: plugins/stats/ConnsTabPage.cc:50 plugins/stats/DisplaySettings.ui:583
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds connected"
-msgstr ""
+msgstr "बीजानि संबद्धानि"
 
 #. i18n: ectx: property (text), widget (QLabel, label_26)
 #: plugins/stats/ConnsTabPage.cc:54 plugins/stats/ConnsTabPage.cc:105
@@ -7532,33 +7536,33 @@ msgstr ""
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds in swarms"
-msgstr ""
+msgstr "झुण्डेषु बीजानि"
 
 #. i18n: ectx: property (text), widget (QLabel, label_27)
 #: plugins/stats/ConnsTabPage.cc:58 plugins/stats/DisplaySettings.ui:653
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per torrent"
-msgstr ""
+msgstr "प्रतिधारायां सम्बद्धाः औसताः लीचराः"
 
 #. i18n: ectx: property (text), widget (QLabel, label_28)
 #: plugins/stats/ConnsTabPage.cc:61 plugins/stats/DisplaySettings.ui:688
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per torrent"
-msgstr ""
+msgstr "प्रतिधारायां सम्बद्धानि औसतबीजानि"
 
 #: plugins/stats/ConnsTabPage.cc:64
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per running torrent"
-msgstr ""
+msgstr "प्रति चालितं धारं सम्बद्धाः औसतं लीचराः"
 
 #: plugins/stats/ConnsTabPage.cc:67
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per running torrent"
-msgstr ""
+msgstr "प्रति धावन्तं प्रवाहं सम्बद्धानि औसतबीजानि"
 
 #. i18n: ectx: property (text), widget (QLabel, label_31)
 #: plugins/stats/ConnsTabPage.cc:72 plugins/stats/DisplaySettings.ui:806
@@ -7572,7 +7576,7 @@ msgstr "नोड्स"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Tasks"
-msgstr ""
+msgstr "कार्याणि"
 
 #. i18n: ectx: property (title), widget (QGroupBox, DlSpdGbw)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
@@ -7589,21 +7593,21 @@ msgstr "अवाहरन"
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Current speed"
-msgstr ""
+msgstr "वर्तमान वेग"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: plugins/stats/DisplaySettings.ui:73
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Average"
-msgstr ""
+msgstr "माध्यम्‌"
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: plugins/stats/DisplaySettings.ui:112
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Limit"
-msgstr ""
+msgstr "सीमा"
 
 #. i18n: ectx: property (title), widget (QGroupBox, PeersSpdGbw)
 #. i18n: ectx: property (text), widget (QLabel, label_7)
@@ -7620,35 +7624,35 @@ msgstr "समवयस्क"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from leechers"
-msgstr ""
+msgstr "लीचर् इत्यस्मात् औसतम्"
 
 #. i18n: ectx: property (text), widget (QLabel, label_19)
 #: plugins/stats/DisplaySettings.ui:208 plugins/stats/SpdTabPage.cc:59
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average to leechers"
-msgstr ""
+msgstr "लीचर्स् यावत् औसतम्"
 
 #. i18n: ectx: property (text), widget (QLabel, label_20)
 #: plugins/stats/DisplaySettings.ui:243 plugins/stats/SpdTabPage.cc:60
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from seeds"
-msgstr ""
+msgstr "बीजेभ्यः औसतम्"
 
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: plugins/stats/DisplaySettings.ui:278 plugins/stats/SpdTabPage.cc:61
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From leechers"
-msgstr ""
+msgstr "लीचरभ्यः"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: plugins/stats/DisplaySettings.ui:313 plugins/stats/SpdTabPage.cc:62
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From seeds"
-msgstr ""
+msgstr "बीजात्"
 
 #. i18n: ectx: property (title), widget (QGroupBox, UlSpdGbw)
 #. i18n: ectx: property (text), widget (QLabel, label_10)
@@ -7658,42 +7662,42 @@ msgstr ""
 #, kde-format
 msgctxt "Chart name"
 msgid "Upload"
-msgstr ""
+msgstr "अपलोड करें"
 
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: plugins/stats/DisplaySettings.ui:374 plugins/stats/SpdTabPage.cc:50
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Current speed"
-msgstr ""
+msgstr "वर्तमान वेग"
 
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: plugins/stats/DisplaySettings.ui:413
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Average"
-msgstr ""
+msgstr "माध्यम्‌"
 
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: plugins/stats/DisplaySettings.ui:452
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Limit"
-msgstr ""
+msgstr "सीमा"
 
 #. i18n: ectx: property (text), widget (QLabel, label_29)
 #: plugins/stats/DisplaySettings.ui:723
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Avg. leechers connected per running torr."
-msgstr ""
+msgstr "औसत। प्रति रनिंग torr सम्बद्धाः leechers."
 
 #. i18n: ectx: property (text), widget (QLabel, label_30)
 #: plugins/stats/DisplaySettings.ui:758
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Avg. seeds connected per running torrent"
-msgstr ""
+msgstr "औसत। प्रति धावन्तं प्रवाहं सम्बद्धानि बीजानि"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
@@ -7702,7 +7706,7 @@ msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
 msgid "Display"
-msgstr ""
+msgstr "प्रदर्शन"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AntiAliasing)
 #: plugins/stats/DisplaySettings.ui:910
@@ -7721,7 +7725,7 @@ msgstr "पृष्ठभूमिजालम् आकर्षयन्त�
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Widget type:"
-msgstr ""
+msgstr "विजेट् प्रकारः : १."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:940
@@ -7747,7 +7751,7 @@ msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
 msgid "Display"
-msgstr ""
+msgstr "प्रदर्शन"
 
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
@@ -7784,21 +7788,21 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
-msgstr ""
+msgstr "प्रतिबिम्बरूपेण रक्षन्तु..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:357
 #: plugins/stats/drawer/PlainChartDrawer.cc:309
 #, kde-format
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
 msgid "Rescale"
-msgstr ""
+msgstr "पुनः स्केल कर"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:364
 #: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
-msgstr ""
+msgstr "पुनः सेट् करें"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:330
@@ -8023,35 +8027,35 @@ msgstr "चार्ट-चित्रणार्थं प्रयुक्�
 #, kde-format
 msgctxt "@title:group"
 msgid "Update"
-msgstr ""
+msgstr "अद्यतन"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/stats/Settings.ui:25
 #, kde-format
 msgctxt "Continues with: [number field] GUI updates"
 msgid "Update charts every"
-msgstr ""
+msgstr "प्रत्येकं चार्ट्स् अद्यतनं कुर्वन्तु"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/stats/Settings.ui:50
 #, kde-format
 msgctxt "Continuation of: Update charts every [number field]"
 msgid "GUI updates"
-msgstr ""
+msgstr "GUI अद्यतनम्"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/stats/Settings.ui:69
 #, kde-format
 msgctxt "Continues with: [number field] milliseconds"
 msgid "Gather data every"
-msgstr ""
+msgstr "प्रत्येकं दत्तांशसङ्ग्रहणं कुर्वन्तु"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/stats/Settings.ui:95
 #, kde-format
 msgctxt "Continuation of: Gather data every [number field]"
 msgid "milliseconds"
-msgstr ""
+msgstr "मिलीसेकेण्ड्"
 
 #. i18n: The maximums of 0X axes on charts
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
@@ -8072,7 +8076,7 @@ msgstr "अधिकतम"
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Maximum speed scale mode: "
-msgstr ""
+msgstr "अधिकतमं गतिपरिमाणविधिः : १. "
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaxMode)
 #: plugins/stats/Settings.ui:272
@@ -8091,7 +8095,7 @@ msgstr "चार्टे अधिकतमं दृश्यते"
 #, kde-format
 msgctxt "@title:group"
 msgid "Peers connections"
-msgstr ""
+msgstr "सहपाठिनां संयोजनानि"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowSeedsInSwarms)
 #: plugins/stats/Settings.ui:296
@@ -8109,7 +8113,7 @@ msgstr "झुण्डेषु लीचराः दर्शयन्तु"
 #, kde-format
 msgctxt "@title:window"
 msgid "Statistics"
-msgstr ""
+msgstr "सांख्यिकी"
 
 #: plugins/stats/SettingsPage.cc:31
 #, kde-format
@@ -8127,25 +8131,25 @@ msgstr "गति"
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Average speed"
-msgstr ""
+msgstr "औसतवेग"
 
 #: plugins/stats/SpdTabPage.cc:53
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Average speed"
-msgstr ""
+msgstr "औसतवेग"
 
 #: plugins/stats/SpdTabPage.cc:55
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Speed limit"
-msgstr ""
+msgstr "गतिसीमा"
 
 #: plugins/stats/SpdTabPage.cc:56
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Speed limit"
-msgstr ""
+msgstr "गतिसीमा"
 
 #: plugins/stats/StatsPlugin.cc:34
 #, kde-format
@@ -8176,7 +8180,11 @@ msgid_plural ""
 "%2\n"
 "%1 active filters"
 msgstr[0] ""
+"%2\n"
+"१ सक्रियः छानकः"
 msgstr[1] ""
+"%2\n"
+"%1 सक्रिय-छिद्रकाः"
 
 #: plugins/syndication/feedlist.cpp:159
 #, kde-format
