@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-01 00:40+0000\n"
-"PO-Revision-Date: 2024-12-16 01:11+0100\n"
+"PO-Revision-Date: 2024-12-17 18:17+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -1809,6 +1809,7 @@ msgstr "Parche para non amosar velocidades moi baixas."
 msgid "Lucke"
 msgstr "Lucke"
 
+# skip-rule: trasno-firewall_reverse
 #: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to show potentially firewalled status"
@@ -2798,13 +2799,13 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:170
 #, kde-format
 msgid "Whether or not new torrents will be highlighted."
-msgstr "Se salientar ou non os torrentes novos."
+msgstr "Se realzar ou non os torrentes novos."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_highlightNewTorrents)
 #: ktorrent/pref/generalpref.ui:173
 #, kde-format
 msgid "Highlight new torrents"
-msgstr "Salientar os torrentes novos."
+msgstr "Realzar os torrentes novos."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showTotalSpeedInTitle)
 #: ktorrent/pref/generalpref.ui:180
