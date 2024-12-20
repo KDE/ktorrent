@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-01 00:40+0000\n"
-"PO-Revision-Date: 2024-12-14 01:08+0530\n"
+"PO-Revision-Date: 2024-12-19 21:41+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -6467,8 +6467,8 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p>"
 msgstr ""
-"तस्य परिवर्तनार्थं log level इत्यत्र डबल क्लिक् कुर्वन्तु । सम्भाव्यस्तराः सन्ति : १. <p "
-"style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-"
+"तस्य परिवर्तनार्थं log level इत्यत्र डबल क्लिक् कुर्वन्तु । सम्भाव्यस्तराः सन्ति : <p style="
+"\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-"
 "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p><p "
 "style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"> <span style=\" font-"
@@ -8076,7 +8076,7 @@ msgstr "अधिकतम"
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Maximum speed scale mode: "
-msgstr "अधिकतमं गतिपरिमाणविधिः : १. "
+msgstr "अधिकतमं गतिपरिमाणविधिः : "
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaxMode)
 #: plugins/stats/Settings.ui:272
@@ -8472,7 +8472,7 @@ msgstr "ऋतुः प्रकरणं च मेलनं कुर्व�
 #: plugins/syndication/filtereditor.ui:183
 #, kde-format
 msgid "Seasons: "
-msgstr "ऋतुः : १. "
+msgstr "ऋतुः : "
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_seasons)
 #: plugins/syndication/filtereditor.ui:194
