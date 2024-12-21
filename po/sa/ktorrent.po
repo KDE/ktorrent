@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-01 00:40+0000\n"
-"PO-Revision-Date: 2024-12-19 21:41+0530\n"
+"PO-Revision-Date: 2024-12-20 22:10+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -444,7 +444,7 @@ msgstr "सद्यः प्रयुक्तानां सर्वेष�
 #: ktorrent/dialogs/fileselectdlg.ui:105
 #, kde-format
 msgid "Text encoding:"
-msgstr "पाठसङ्केतनम् : १."
+msgstr "पाठसङ्केतनम् :"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_file_view)
 #: ktorrent/dialogs/fileselectdlg.ui:132
@@ -561,7 +561,7 @@ msgstr "उपलब्धः:"
 #: ktorrent/dialogs/fileselectdlg.ui:308
 #, kde-format
 msgid "After download:"
-msgstr "डाउनलोड् कृत्वा : १."
+msgstr "डाउनलोड् कृत्वा :"
 
 #: ktorrent/dialogs/importdialog.cpp:197 ktorrent/dialogs/importdialog.cpp:223
 #, kde-format
@@ -590,7 +590,7 @@ msgstr "विद्यमानं धारं आयातयन्तु"
 #: ktorrent/dialogs/importdialog.ui:30
 #, kde-format
 msgid "Torrent:"
-msgstr "टोरेन्ट् : १."
+msgstr "टोरेन्ट् :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ktorrent/dialogs/importdialog.ui:46
@@ -614,7 +614,7 @@ msgstr "टोरेण्ट् सञ्चिकां तस्य दत्
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr "%प% ९."
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -778,7 +778,7 @@ msgstr "व्यक्तिगत-प्रवाहानाम् गति�
 #: ktorrent/dialogs/speedlimitsdlg.ui:32
 #, kde-format
 msgid "Filter:"
-msgstr "फ़िल्टर : १."
+msgstr "फ़िल्टर :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/dialogs/speedlimitsdlg.ui:61
@@ -794,7 +794,7 @@ msgstr "वैश्विकसीमा"
 #: plugins/bwscheduler/bwprefpage.ui:65
 #, kde-format
 msgid "Maximum download speed:"
-msgstr "अधिकतमं डाउनलोड् गतिः : १."
+msgstr "अधिकतमं डाउनलोड् गतिः :"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_download_rate)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_upload_rate)
@@ -878,7 +878,7 @@ msgstr " किब/स"
 #: plugins/bwscheduler/bwprefpage.ui:36
 #, kde-format
 msgid "Maximum upload speed:"
-msgstr "अधिकतमं अपलोड् गतिः : १."
+msgstr "अधिकतमं अपलोड् गतिः :"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:98
 #: plugins/shutdown/shutdowntorrentmodel.cpp:130
@@ -973,7 +973,7 @@ msgstr "सञ्चिकां चिनोतु"
 #: ktorrent/dialogs/torrentcreatordlg.ui:71
 #, kde-format
 msgid "Size of each chunk:"
-msgstr "प्रत्येकस्य खण्डस्य आकारः : १."
+msgstr "प्रत्येकस्य खण्डस्य आकारः :"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:82
@@ -1051,7 +1051,7 @@ msgstr "निजी धारा (DHT अनुमतं नास्ति) ."
 #: ktorrent/dialogs/torrentcreatordlg.ui:154
 #, kde-format
 msgid "Decentralized (DHT only)"
-msgstr "विकेन्द्रीकृत (केवल DHT) २."
+msgstr "विकेन्द्रीकृत (केवल DHT)"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_addToGroup)
@@ -1105,7 +1105,7 @@ msgstr "DHT Nodes"
 #: ktorrent/dialogs/torrentcreatordlg.ui:248
 #, kde-format
 msgid "Node:"
-msgstr "नोडः : १."
+msgstr "नोडः :"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, m_node_list)
 #: ktorrent/dialogs/torrentcreatordlg.ui:294
@@ -1134,7 +1134,7 @@ msgstr "जालबीजानि"
 #: plugins/infowidget/statustab.ui:140
 #, kde-format
 msgid "Comments:"
-msgstr "टिप्पणियाँ : १."
+msgstr "टिप्पणियाँ :"
 
 #: ktorrent/groups/grouppolicydlg.cpp:19
 #, kde-format
@@ -1160,7 +1160,7 @@ msgstr ""
 #: ktorrent/groups/grouppolicydlg.ui:35 ktorrent/pref/generalpref.ui:40
 #, kde-format
 msgid "Default save location:"
-msgstr "पूर्वनिर्धारितं रक्षणस्थानं : १."
+msgstr "पूर्वनिर्धारितं रक्षणस्थानं :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_move_on_completion_enabled)
 #: ktorrent/groups/grouppolicydlg.ui:49
@@ -1197,19 +1197,19 @@ msgstr "टोरेण्ट् सीमाः"
 #: ktorrent/groups/grouppolicydlg.ui:74
 #, kde-format
 msgid "Maximum download rate:"
-msgstr "अधिकतमं डाउनलोड् दरः : १."
+msgstr "अधिकतमं डाउनलोड् दरः :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/groups/grouppolicydlg.ui:94
 #, kde-format
 msgid "Maximum upload rate:"
-msgstr "अधिकतमं अपलोड् दरः : १."
+msgstr "अधिकतमं अपलोड् दरः :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/groups/grouppolicydlg.ui:114
 #, kde-format
 msgid "Maximum seed time:"
-msgstr "अधिकतमं बीजसमयः : १."
+msgstr "अधिकतमं बीजसमयः :"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, m_max_seed_time)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, time_limit)
@@ -1222,7 +1222,7 @@ msgstr " घण्टानः"
 #: ktorrent/groups/grouppolicydlg.ui:137
 #, kde-format
 msgid "Maximum share ratio:"
-msgstr "अधिकतमं भागानुपातः : १."
+msgstr "अधिकतमं भागानुपातः :"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_only_new)
 #: ktorrent/groups/grouppolicydlg.ui:160
@@ -1404,7 +1404,7 @@ msgstr "KTorrent Blacklisted सहकर्मी"
 #: ktorrent/ipfilterwidget.ui:22
 #, kde-format
 msgid "Add peer:"
-msgstr "समवयस्कं योजयन्तु : १."
+msgstr "समवयस्कं योजयन्तु :"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_ip_to_add)
 #: ktorrent/ipfilterwidget.ui:31
@@ -2092,7 +2092,7 @@ msgstr "प्रदर्शनम्‌"
 #: ktorrent/pref/advancedpref.ui:53
 #, kde-format
 msgid "GUI update interval:"
-msgstr "GUI अद्यतन-अन्तरालम् : १."
+msgstr "GUI अद्यतन-अन्तरालम् :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_guiUpdateInterval)
 #: ktorrent/pref/advancedpref.ui:67
@@ -2116,7 +2116,7 @@ msgstr " ms"
 #: ktorrent/pref/advancedpref.ui:86
 #, kde-format
 msgid "Network sleep interval:"
-msgstr "संजालनिद्राान्तरम् : १."
+msgstr "संजालनिद्राान्तरम् :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_cpuUsage)
 #: ktorrent/pref/advancedpref.ui:95
@@ -2149,7 +2149,7 @@ msgstr "चुम्बकाः कतारः"
 #: ktorrent/pref/advancedpref.ui:140
 #, kde-format
 msgid "Number of downloading slots:"
-msgstr "डाउनलोड् करणस्य स्लॉट्-सङ्ख्या : १."
+msgstr "डाउनलोड् करणस्य स्लॉट्-सङ्ख्या :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_numMagnetDownloadingSlots)
 #: ktorrent/pref/advancedpref.ui:147
@@ -2171,7 +2171,7 @@ msgstr ""
 #: ktorrent/pref/advancedpref.ui:166
 #, kde-format
 msgid "Requeue magnets after:"
-msgstr "पश्चात् चुम्बकान् पुनः कतारं कुर्वन्तु : १."
+msgstr "पश्चात् चुम्बकान् पुनः कतारं कुर्वन्तु :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:173
@@ -2200,7 +2200,7 @@ msgstr "विविध"
 #: ktorrent/pref/advancedpref.ui:220
 #, kde-format
 msgid "Preview size for audio files:"
-msgstr "श्रव्यसञ्चिकानां पूर्वावलोकनस्य आकारः : १."
+msgstr "श्रव्यसञ्चिकानां पूर्वावलोकनस्य आकारः :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_previewSizeAudio)
 #: ktorrent/pref/advancedpref.ui:227
@@ -2223,7 +2223,7 @@ msgstr " किब"
 #: ktorrent/pref/advancedpref.ui:243
 #, kde-format
 msgid "Preview size for video files:"
-msgstr "विडियो सञ्चिकानां पूर्वावलोकनस्य आकारः : १."
+msgstr "विडियो सञ्चिकानां पूर्वावलोकनस्य आकारः :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_previewSizeVideo)
 #: ktorrent/pref/advancedpref.ui:250
@@ -2484,7 +2484,7 @@ msgstr "त्रुटिस्थितियुक्तानां टो�
 #: ktorrent/pref/colorpref.ui:54
 #, kde-format
 msgid "Torrent error:"
-msgstr "टोरेण्ट् त्रुटिः : १."
+msgstr "टोरेण्ट् त्रुटिः :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2508,7 +2508,7 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:79
 #, kde-format
 msgid "Some of the trackers are reachable:"
-msgstr "केचन अनुसरणकर्तारः प्राप्यन्ते : १."
+msgstr "केचन अनुसरणकर्तारः प्राप्यन्ते :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_warningsTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:86
@@ -2557,13 +2557,13 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:133
 #, kde-format
 msgid "Low share ratio:"
-msgstr "न्यूनभागानुपातः : १."
+msgstr "न्यूनभागानुपातः :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
 #, kde-format
 msgid "Good share ratio:"
-msgstr "उत्तमः भागानुपातः : १."
+msgstr "उत्तमः भागानुपातः :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
@@ -2793,7 +2793,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:47
 #, kde-format
 msgid "UDP tracker port:"
-msgstr "UDP tracker पोर्ट् : १."
+msgstr "UDP tracker पोर्ट् :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_udpTrackerPort)
 #: ktorrent/pref/networkpref.ui:55
@@ -2814,7 +2814,7 @@ msgstr ""
 #: plugins/bwscheduler/edititemdlg.ui:226
 #, kde-format
 msgid "Maximum connections per torrent:"
-msgstr "प्रति धारा अधिकतमं संयोजनम् : १."
+msgstr "प्रति धारा अधिकतमं संयोजनम् :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnections)
 #: ktorrent/pref/networkpref.ui:78
@@ -2829,7 +2829,7 @@ msgstr "प्रति टोरेण्ट् अधिकतमं संय
 #: plugins/bwscheduler/edititemdlg.ui:243
 #, kde-format
 msgid "Global connection limit:"
-msgstr "वैश्विकसंयोजनसीमा : १."
+msgstr "वैश्विकसंयोजनसीमा :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxTotalConnections)
 #: ktorrent/pref/networkpref.ui:98
@@ -2869,7 +2869,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:185
 #, kde-format
 msgid "Maximum number of connection setups:"
-msgstr "संयोजनसेटअपस्य अधिकतमसंख्या : १."
+msgstr "संयोजनसेटअपस्य अधिकतमसंख्या :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
@@ -2888,7 +2888,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:209
 #, kde-format
 msgid "Network interface:"
-msgstr "संजालस्य अन्तरफलकम् : १."
+msgstr "संजालस्य अन्तरफलकम् :"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, combo_networkInterface)
 #: ktorrent/pref/networkpref.ui:223
@@ -2939,7 +2939,7 @@ msgstr "केवलं μTP इत्यस्य उपयोगं कुर�
 #: ktorrent/pref/networkpref.ui:254
 #, kde-format
 msgid "Primary transport protocol:"
-msgstr "प्राथमिकपरिवहनप्रोटोकॉलः : १."
+msgstr "प्राथमिकपरिवहनप्रोटोकॉलः :"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
@@ -3006,7 +3006,7 @@ msgstr "KDE प्रॉक्सी सेटिंग्स् उपयुज
 #: ktorrent/pref/proxypref.ui:35
 #, kde-format
 msgid "Proxy:"
-msgstr "प्रॉक्सी : १."
+msgstr "प्रॉक्सी :"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_httpProxy)
 #: ktorrent/pref/proxypref.ui:42
@@ -3072,7 +3072,7 @@ msgstr "SOCKS प्रॉक्सी सर्वरस्य उपयोग�
 #: ktorrent/pref/proxypref.ui:116
 #, kde-format
 msgid "Server:"
-msgstr "सर्वरः : १."
+msgstr "सर्वरः :"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_socksProxy)
 #: ktorrent/pref/proxypref.ui:123
@@ -3112,7 +3112,7 @@ msgstr "उपयोक्तृनाम गुप्तशब्दं च आ
 #: ktorrent/pref/proxypref.ui:170
 #, kde-format
 msgid "Username:"
-msgstr "उपयोक्तृनाम : १."
+msgstr "उपयोक्तृनाम :"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_socksUsername)
 #: ktorrent/pref/proxypref.ui:177
@@ -3161,7 +3161,7 @@ msgstr "धारान् मैन्युअल् रूपेण निय
 #: ktorrent/pref/qmpref.ui:35 ktorrent/pref/recommendedsettingsdlg.ui:286
 #, kde-format
 msgid "Maximum downloads:"
-msgstr "अधिकतमं डाउनलोड् : १."
+msgstr "अधिकतमं डाउनलोड् :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxDownloads)
 #: ktorrent/pref/qmpref.ui:42
@@ -3175,7 +3175,7 @@ msgstr "कतारप्रबन्धकः युगपत् डाउन�
 #: ktorrent/pref/qmpref.ui:55 ktorrent/pref/recommendedsettingsdlg.ui:300
 #, kde-format
 msgid "Maximum seeds:"
-msgstr "अधिकतमं बीजानि : १."
+msgstr "अधिकतमं बीजानि :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxSeeds)
 #: ktorrent/pref/qmpref.ui:62
@@ -3293,7 +3293,7 @@ msgstr "डाउनलोड् समाप्तस्य अनन्तर�
 #: ktorrent/pref/qmpref.ui:175 ktorrent/pref/recommendedsettingsdlg.ui:272
 #, kde-format
 msgid "Number of upload slots:"
-msgstr "अपलोड् स्लॉट्-सङ्ख्या : १."
+msgstr "अपलोड् स्लॉट्-सङ्ख्या :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_numUploadSlots)
 #: ktorrent/pref/qmpref.ui:182
@@ -3309,7 +3309,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:198
 #, kde-format
 msgid "Default maximum share ratio:"
-msgstr "पूर्वनिर्धारितं अधिकतमं भागानुपातः : १."
+msgstr "पूर्वनिर्धारितं अधिकतमं भागानुपातः :"
 
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_maxRatio)
 #: ktorrent/pref/qmpref.ui:206
@@ -3330,7 +3330,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:222
 #, kde-format
 msgid "Default maximum seed time:"
-msgstr "पूर्वनिर्धारितः अधिकतमः बीजसमयः : १."
+msgstr "पूर्वनिर्धारितः अधिकतमः बीजसमयः :"
 
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_maxSeedTime)
 #: ktorrent/pref/qmpref.ui:229
@@ -3359,7 +3359,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:251
 #, kde-format
 msgid "Minimum good share ratio:"
-msgstr "न्यूनतमं उत्तमभागानुपातः : १."
+msgstr "न्यूनतमं उत्तमभागानुपातः :"
 
 #: ktorrent/pref/recommendedsettingsdlg.cpp:25
 #, kde-format
@@ -3370,7 +3370,7 @@ msgstr "अनुशंसितसेटिंग्स् गणनां क�
 #: ktorrent/pref/recommendedsettingsdlg.cpp:211
 #, kde-format
 msgid "(= %1/s)"
-msgstr "(= %1/s) २."
+msgstr "(= %1/s)"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, RecommendedSettingsDlg)
 #: ktorrent/pref/recommendedsettingsdlg.ui:14
@@ -3382,7 +3382,7 @@ msgstr "अनुशंसित सेटिंग्स्"
 #: ktorrent/pref/recommendedsettingsdlg.ui:24
 #, kde-format
 msgid "Available upload bandwidth:"
-msgstr "उपलब्धः अपलोड् बैण्डविड्थः : १."
+msgstr "उपलब्धः अपलोड् बैण्डविड्थः :"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_upload_bw)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_download_bw)
@@ -3404,19 +3404,19 @@ msgstr " kb/s"
 #: ktorrent/pref/recommendedsettingsdlg.ui:50
 #, kde-format
 msgid "Available download bandwidth:"
-msgstr "उपलब्धः डाउनलोड् बैण्डविड्थः : १."
+msgstr "उपलब्धः डाउनलोड् बैण्डविड्थः :"
 
 #. i18n: ectx: property (text), widget (QLabel, m_upload_bw_display)
 #: ktorrent/pref/recommendedsettingsdlg.ui:76
 #, kde-format
 msgid "(= 32 KiB/s)"
-msgstr "(= ३२ किब/सेकण्ड) २."
+msgstr "(= ३२ किब/सेकण्ड)"
 
 #. i18n: ectx: property (text), widget (QLabel, m_download_bw_display)
 #: ktorrent/pref/recommendedsettingsdlg.ui:83
 #, kde-format
 msgid "(= 500 KiB/s)"
-msgstr "(= ५०० किब/सेकण्ड) २."
+msgstr "(= ५०० किब/सेकण्ड)"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_calculate)
 #: ktorrent/pref/recommendedsettingsdlg.ui:94
@@ -3434,7 +3434,7 @@ msgstr "प्राधान्यानि"
 #: ktorrent/pref/recommendedsettingsdlg.ui:124
 #, kde-format
 msgid "Average speed per slot:"
-msgstr "प्रतिस्लाट् औसतवेगः : १."
+msgstr "प्रतिस्लाट् औसतवेगः :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_chk_sim_torrents)
 #: ktorrent/pref/recommendedsettingsdlg.ui:147
@@ -3446,13 +3446,13 @@ msgstr "सामान्यतया भवन्तः एकत्रैव 
 #: ktorrent/pref/recommendedsettingsdlg.ui:167
 #, kde-format
 msgid "Slots per torrent:"
-msgstr "प्रति धारा स्लॉट् : १."
+msgstr "प्रति धारा स्लॉट् :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/recommendedsettingsdlg.ui:190
 #, kde-format
 msgid "Recommended settings:"
-msgstr "अनुशंसितसेटिंग्स् : १."
+msgstr "अनुशंसितसेटिंग्स् :"
 
 #: ktorrent/statusbar.cpp:34 ktorrent/statusbar.cpp:66
 #, kde-format
@@ -3492,7 +3492,7 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr "%प% ९."
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
@@ -4024,7 +4024,7 @@ msgstr "ये खण्डाः अवतरणं कृतवन्तः, �
 #: ktorrent/view/scanextender.ui:108
 #, kde-format
 msgid "Not downloaded:"
-msgstr "न डाउनलोड् कृतम् : १."
+msgstr "न डाउनलोड् कृतम् :"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, chunks_not_downloaded)
 #: ktorrent/view/scanextender.ui:127
@@ -4037,7 +4037,7 @@ msgstr "ये खण्डाः अवतरणं न कृतवन्त�
 #: ktorrent/view/scanextender.ui:153 plugins/infowidget/chunkdownloadview.ui:98
 #, kde-format
 msgid "Downloaded:"
-msgstr "डाउनलोड् कृतम् : १."
+msgstr "डाउनलोड् कृतम् :"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, chunks_downloaded)
 #: ktorrent/view/scanextender.ui:166
@@ -4049,7 +4049,7 @@ msgstr "ये खण्डाः डाउनलोड् कृताः, य�
 #: ktorrent/view/scanextender.ui:233
 #, kde-format
 msgid "Errors:"
-msgstr "दोषाः : १."
+msgstr "दोषाः :"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, kde-format
@@ -4261,7 +4261,7 @@ msgstr "दत्तांशं स्थानान्तरयितुं �
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1% २."
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4467,7 +4467,7 @@ msgstr "UPnP परीक्षण अनुप्रयोग"
 #: ktupnptest/upnptestwidget.ui:24
 #, kde-format
 msgid "Router:"
-msgstr "रूटरः : १."
+msgstr "रूटरः :"
 
 #. i18n: ectx: property (text), widget (QLabel, m_router)
 #: ktupnptest/upnptestwidget.ui:40
@@ -4485,7 +4485,7 @@ msgstr "रूटर् अन्वेष्टुम्"
 #: ktupnptest/upnptestwidget.ui:89
 #, kde-format
 msgid "Protocol:"
-msgstr "प्रोटोकॉलः : १."
+msgstr "प्रोटोकॉलः :"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #: ktupnptest/upnptestwidget.ui:97
@@ -4612,7 +4612,7 @@ msgstr "अधिकतमं डाउनलोड्-सङ्ख्या (�
 #: libktcore/ktorrent.kcfg:15
 #, kde-format
 msgid "Maximum number of seeds (0 = no limit)"
-msgstr "अधिकतमं बीजसंख्या (० = सीमा नास्ति) २."
+msgstr "अधिकतमं बीजसंख्या (० = सीमा नास्ति)"
 
 #. i18n: ectx: label, entry (startDownloadsOnLowDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:20
@@ -4648,7 +4648,7 @@ msgstr "अधिकतमं डाउनलोड् गतिं KiB/sec म�
 #: libktcore/ktorrent.kcfg:45
 #, kde-format
 msgid "Maximum share ratio (0 = no limit)"
-msgstr "अधिकतमः भागानुपातः (० = सीमा नास्ति) २."
+msgstr "अधिकतमः भागानुपातः (० = सीमा नास्ति)"
 
 #. i18n: ectx: label, entry (showSystemTrayIcon), group (downloads)
 #: libktcore/ktorrent.kcfg:66
@@ -4802,7 +4802,7 @@ msgstr "सम्पूर्णानि डाउनलोड् कृता�
 #: libktcore/ktorrent.kcfg:251
 #, kde-format
 msgid "Maximum seed time in hours (0 = no limit)"
-msgstr "अधिकतमः बीजसमयः घण्टेषु (० = सीमा नास्ति) २."
+msgstr "अधिकतमः बीजसमयः घण्टेषु (० = सीमा नास्ति)"
 
 #: libktcore/plugin/pluginactivity.cpp:24
 #: libktcore/plugin/pluginactivity.cpp:44
@@ -4979,7 +4979,7 @@ msgstr "यदा स्क्रीनसेवर सक्रियः भव
 #: plugins/bwscheduler/bwprefpage.ui:120
 #, kde-format
 msgid "Schedule background color:"
-msgstr "समयसूची पृष्ठभूमिवर्णः : १."
+msgstr "समयसूची पृष्ठभूमिवर्णः :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_scheduleBackgroundColor)
 #: plugins/bwscheduler/bwprefpage.ui:127
@@ -4991,7 +4991,7 @@ msgstr "अनुसूची पृष्ठभूमिस्य वर्ण�
 #: plugins/bwscheduler/bwprefpage.ui:134
 #, kde-format
 msgid "Schedule line color:"
-msgstr "समयसूची रेखावर्णः : १."
+msgstr "समयसूची रेखावर्णः :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_scheduleLineColor)
 #: plugins/bwscheduler/bwprefpage.ui:141
@@ -5003,7 +5003,7 @@ msgstr "समयसूचिकायां सर्वेषां रेख�
 #: plugins/bwscheduler/bwprefpage.ui:148
 #, kde-format
 msgid "Schedule Item color:"
-msgstr "अनुसूची मदवर्णः : १."
+msgstr "अनुसूची मदवर्णः :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_itemColor)
 #: plugins/bwscheduler/bwprefpage.ui:155
@@ -5015,7 +5015,7 @@ msgstr "कार्यक्रमे प्रत्येकस्य सा�
 #: plugins/bwscheduler/bwprefpage.ui:162
 #, kde-format
 msgid "Suspended schedule item color:"
-msgstr "निलम्बितम् अनुसूची मदवर्णः : १."
+msgstr "निलम्बितम् अनुसूची मदवर्णः :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_suspendedColor)
 #: plugins/bwscheduler/bwprefpage.ui:169
@@ -5091,7 +5091,7 @@ msgstr "सीमाः"
 #: plugins/bwscheduler/edititemdlg.ui:166
 #, kde-format
 msgid "Download limit:"
-msgstr "डाउनलोड सीमा : १."
+msgstr "डाउनलोड सीमा :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, label_9)
@@ -5099,7 +5099,7 @@ msgstr "डाउनलोड सीमा : १."
 #: plugins/bwscheduler/edititemdlg.ui:186
 #, kde-format
 msgid "Upload limit:"
-msgstr "अपलोड् सीमा : १."
+msgstr "अपलोड् सीमा :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_screensaver_limits)
 #: plugins/bwscheduler/edititemdlg.ui:157
@@ -5236,12 +5236,12 @@ msgstr "वर्तमान समयसूची : असीमित अप�
 #: plugins/bwscheduler/weekscene.cpp:70
 #, kde-format
 msgid " (scheduler disabled)"
-msgstr " (निर्माता अक्षमः) २."
+msgstr " (निर्माता अक्षमः)"
 
 #: plugins/bwscheduler/weekscene.cpp:88
 #, kde-format
 msgid "Current schedule:"
-msgstr "वर्तमान समयसूची : १."
+msgstr "वर्तमान समयसूची :"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DownloadOrderWidget)
 #: plugins/downloadorder/downloadorderdialog.cpp:30
@@ -5387,13 +5387,13 @@ msgstr "कुल:"
 #: plugins/infowidget/chunkdownloadview.ui:62
 #, kde-format
 msgid "Currently downloading:"
-msgstr "सम्प्रति डाउनलोड् करणम् : १."
+msgstr "सम्प्रति डाउनलोड् करणम् :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_4)
 #: plugins/infowidget/chunkdownloadview.ui:134
 #, kde-format
 msgid "Excluded:"
-msgstr "बहिष्कृतः : १."
+msgstr "बहिष्कृतः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_4_2)
 #: plugins/infowidget/chunkdownloadview.ui:170
@@ -5714,7 +5714,7 @@ msgstr "सञ्चिका प्राथमिकता वर्ण"
 #: plugins/infowidget/iwprefpage.ui:72
 #, kde-format
 msgid "First priority:"
-msgstr "प्रथमा प्राथमिकता : १."
+msgstr "प्रथमा प्राथमिकता :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_firstColor)
 #: plugins/infowidget/iwprefpage.ui:79
@@ -5726,7 +5726,7 @@ msgstr "प्रथमप्राथमिकतासञ्चिकाना
 #: plugins/infowidget/iwprefpage.ui:86
 #, kde-format
 msgid "Last priority:"
-msgstr "अन्तिम प्राथमिकता : १."
+msgstr "अन्तिम प्राथमिकता :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lastColor)
 #: plugins/infowidget/iwprefpage.ui:93
@@ -5765,7 +5765,7 @@ msgstr "बैन पीर"
 #: plugins/infowidget/peerviewmodel.cpp:85
 #, kde-format
 msgid " (µTP)"
-msgstr " (μTP) २."
+msgstr " (μTP)"
 
 #: plugins/infowidget/peerviewmodel.cpp:103
 #, kde-format
@@ -5795,7 +5795,7 @@ msgstr "नहि"
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1% २."
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
@@ -5988,7 +5988,7 @@ msgstr "Info"
 #: plugins/infowidget/statustab.ui:41
 #, kde-format
 msgid "Average down speed:"
-msgstr "औसतं अधः वेगः : १."
+msgstr "औसतं अधः वेगः :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: plugins/infowidget/statustab.ui:64
@@ -6000,13 +6000,13 @@ msgstr "प्रकारः:"
 #: plugins/infowidget/statustab.ui:100
 #, kde-format
 msgid "Average up speed:"
-msgstr "औसत अप वेगः : १."
+msgstr "औसत अप वेगः :"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/infowidget/statustab.ui:123
 #, kde-format
 msgid "Info hash:"
-msgstr "इन्फो हैश : १."
+msgstr "इन्फो हैश :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/infowidget/statustab.ui:188
@@ -6018,7 +6018,7 @@ msgstr "डाउनलोड् कृतानि खण्डानि:"
 #: plugins/infowidget/statustab.ui:211
 #, kde-format
 msgid "Available chunks:"
-msgstr "उपलब्धाः खण्डाः : १."
+msgstr "उपलब्धाः खण्डाः :"
 
 #. i18n: ectx: property (text), widget (QLabel, hdr_sharing)
 #: plugins/infowidget/statustab.ui:273
@@ -6031,19 +6031,19 @@ msgstr "साझेदारी"
 #: plugins/infowidget/statustab.ui:282
 #, kde-format
 msgid "Share ratio:"
-msgstr "शेयर अनुपातः : १."
+msgstr "शेयर अनुपातः :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, use_ratio_limit)
 #: plugins/infowidget/statustab.ui:299
 #, kde-format
 msgid "Ratio limit:"
-msgstr "अनुपातसीमा : १."
+msgstr "अनुपातसीमा :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, use_time_limit)
 #: plugins/infowidget/statustab.ui:325
 #, kde-format
 msgid "Time limit:"
-msgstr "समयसीमा : १."
+msgstr "समयसीमा :"
 
 #: plugins/infowidget/trackermodel.cpp:121
 #: plugins/infowidget/webseedsmodel.cpp:104
@@ -6374,13 +6374,13 @@ msgstr "दिनेषु अन्तरालं अद्यतनं कु
 #: plugins/ipfilter/ipblockingprefpage.ui:167
 #, kde-format
 msgid "Last updated:"
-msgstr "अन्तिमम् अद्यतनम् : १."
+msgstr "अन्तिमम् अद्यतनम् :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/ipfilter/ipblockingprefpage.ui:187
 #, kde-format
 msgid "Next update:"
-msgstr "अग्रिमम् अद्यतनम् : १."
+msgstr "अग्रिमम् अद्यतनम् :"
 
 #. i18n: ectx: label, entry (filterURL), group (general)
 #: plugins/ipfilter/ktipfilterplugin.kcfg:10
@@ -6506,7 +6506,7 @@ msgstr "आउटपुट् लॉगिंग् कृते समृद्
 #: plugins/logviewer/logprefwidget.ui:54
 #, kde-format
 msgid "Log widget position:"
-msgstr "लॉग विजेट् स्थितिः : १."
+msgstr "लॉग विजेट् स्थितिः :"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ScanForLostFilesWidgetPosition)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
@@ -6536,7 +6536,7 @@ msgstr "टोरेण्ट् क्रियाकलापः"
 #: plugins/logviewer/logprefwidget.ui:103
 #, kde-format
 msgid "Maximum number of visible lines:"
-msgstr "दृश्यमानरेखानां अधिकतमसंख्या : १."
+msgstr "दृश्यमानरेखानां अधिकतमसंख्या :"
 
 #: plugins/logviewer/logviewer.cpp:22
 #, kde-format
@@ -7002,7 +7002,7 @@ msgstr "नष्टसञ्चिकानां कृते स्कैन�
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
 #, kde-format
 msgid "Widget position:"
-msgstr "विजेट् स्थितिः : १."
+msgstr "विजेट् स्थितिः :"
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
@@ -7020,7 +7020,7 @@ msgstr "स्कैन् कुर्वन्तु"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
 #, kde-format
 msgid "Select folder:"
-msgstr "पुटं चिनोतु : १."
+msgstr "पुटं चिनोतु :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
@@ -7194,7 +7194,7 @@ msgstr "कस्टम् ब्राउजर् इत्यस्य उप
 #: plugins/search/searchpref.ui:117
 #, kde-format
 msgid "Custom browser path:"
-msgstr "कस्टम् ब्राउजर् मार्गः : १."
+msgstr "कस्टम् ब्राउजर् मार्गः :"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_customBrowser)
 #: plugins/search/searchpref.ui:127
@@ -7358,13 +7358,13 @@ msgstr "ताल"
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
-msgstr "निद्रा (रैम प्रति निलम्बनम्) २."
+msgstr "निद्रा (रैम प्रति निलम्बनम्)"
 
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
 #: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Hibernate (suspend to disk)"
-msgstr "हाइबरनेट (डिस्कं प्रति निलम्बनम्) २."
+msgstr "हाइबरनेट (डिस्कं प्रति निलम्बनम्)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45
 #, kde-format
@@ -7391,7 +7391,7 @@ msgstr "शटडाउन सेटिंग्स्"
 #: plugins/shutdown/shutdowndlg.ui:22
 #, kde-format
 msgid "Action to execute:"
-msgstr "निष्पादनार्थं क्रिया : १."
+msgstr "निष्पादनार्थं क्रिया :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/shutdown/shutdowndlg.ui:32
@@ -7725,7 +7725,7 @@ msgstr "पृष्ठभूमिजालम् आकर्षयन्त�
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Widget type:"
-msgstr "विजेट् प्रकारः : १."
+msgstr "विजेट् प्रकारः :"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:940
@@ -8118,7 +8118,7 @@ msgstr "सांख्यिकी"
 #: plugins/stats/SettingsPage.cc:31
 #, kde-format
 msgid "(= %1 ms)"
-msgstr "(= %1 ms) २."
+msgstr "(= %1 ms)"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SpdWgt)
 #: plugins/stats/Spd.ui:13
@@ -8248,7 +8248,7 @@ msgstr "स्थितिः:"
 #: plugins/syndication/feedwidget.ui:85
 #, kde-format
 msgid "Active Filters:"
-msgstr "सक्रिय-छिद्रकाः : १."
+msgstr "सक्रिय-छिद्रकाः :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/syndication/feedwidget.ui:131
@@ -8496,7 +8496,7 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:201
 #, kde-format
 msgid "Episodes:"
-msgstr "प्रकरणाः : १."
+msgstr "प्रकरणाः :"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_episodes)
 #: plugins/syndication/filtereditor.ui:212
@@ -8538,7 +8538,7 @@ msgstr "असङ्गतवस्तूनाम् प्रवाहाः �
 #: plugins/syndication/filtereditor.ui:264
 #, kde-format
 msgid "Add to group:"
-msgstr "समूहे योजयतु : १."
+msgstr "समूहे योजयतु :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_silently)
 #: plugins/syndication/filtereditor.ui:320
@@ -8558,7 +8558,7 @@ msgstr "परीक्षा"
 #: plugins/syndication/filtereditor.ui:356
 #, kde-format
 msgid "filter on feed:"
-msgstr "फीड् इत्यत्र फ़िल्टरः : १."
+msgstr "फीड् इत्यत्र फ़िल्टरः :"
 
 #: plugins/syndication/ktfeed.cpp:448
 #, kde-format
@@ -8633,13 +8633,13 @@ msgstr "पूरयतु:"
 #: plugins/syndication/managefiltersdlg.ui:33
 #, kde-format
 msgid "Active filters:"
-msgstr "सक्रिय-छिद्रकाः : १."
+msgstr "सक्रिय-छिद्रकाः :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/managefiltersdlg.ui:91
 #, kde-format
 msgid "Available filters:"
-msgstr "उपलब्धाः छानकाः : १."
+msgstr "उपलब्धाः छानकाः :"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_remove_all)
 #: plugins/syndication/managefiltersdlg.ui:107
