@@ -5719,7 +5719,7 @@ msgstr "地址"
 #: plugins/infowidget/peerviewmodel.cpp:293
 #, kde-format
 msgid "Country"
-msgstr "国家"
+msgstr "国家/地区"
 
 #: plugins/infowidget/peerviewmodel.cpp:295
 #, kde-format
