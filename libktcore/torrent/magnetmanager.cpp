@@ -363,17 +363,17 @@ void MagnetManager::loadMagnets(const QString &file)
         BListNode *ml = (BListNode *)node;
         for (Uint32 i = 0; i < ml->getNumChildren(); i++) {
             BDictNode *dict = ml->getDict(i);
-            MagnetLink mlink(dict->getString(QByteArrayLiteral("magnet"), nullptr));
+            MagnetLink mlink(dict->getString(QByteArrayLiteral("magnet")));
             MagnetLinkLoadOptions options;
             bool stopped = dict->getInt(QByteArrayLiteral("stopped")) == 1;
             options.silently = dict->getInt(QByteArrayLiteral("silent")) == 1;
 
             if (dict->keys().contains("group"))
-                options.group = dict->getString(QByteArrayLiteral("group"), nullptr);
+                options.group = dict->getString(QByteArrayLiteral("group"));
             if (dict->keys().contains("location"))
-                options.location = dict->getString(QByteArrayLiteral("location"), nullptr);
+                options.location = dict->getString(QByteArrayLiteral("location"));
             if (dict->keys().contains("move_on_completion"))
-                options.move_on_completion = dict->getString(QByteArrayLiteral("move_on_completion"), nullptr);
+                options.move_on_completion = dict->getString(QByteArrayLiteral("move_on_completion"));
 
             addMagnet(mlink, options, stopped);
         }

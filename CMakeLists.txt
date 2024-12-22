@@ -20,7 +20,7 @@ add_definitions(-D'VERSION="${RELEASE_SERVICE_VERSION}"'
 
 set (QT_MIN_VERSION "6.5.0")
 set (KF_MIN_VERSION "5.240.0")
-set (LIBKTORRENT_MIN_VERSION "24.04.70")
+set (LIBKTORRENT_MIN_VERSION "25.03.70")
 set (Boost_MIN_VERSION "1.71.0")
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
@@ -72,11 +72,6 @@ find_package(KF6 ${KF_MIN_VERSION} REQUIRED
 )
 
 find_package(Qt6Core5Compat ${QT_MIN_VERSION})
-set_package_properties(Qt6Core5Compat
-  PROPERTIES
-  TYPE REQUIRED
-  PURPOSE "PUBLIC Required for libktorrent"
-)
 
 find_package(Qt6Test ${QT_MIN_VERSION} CONFIG QUIET)
 set_package_properties(Qt6Test PROPERTIES

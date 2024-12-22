@@ -137,10 +137,10 @@ void SearchActivity::loadCurrentSearches()
             if (!dict)
                 continue;
 
-            QString text = dict->getString("TEXT", nullptr);
-            QString sbtext = dict->getString("SBTEXT", nullptr);
+            QString text = dict->getString("TEXT");
+            QString sbtext = dict->getString("SBTEXT");
             int engine = dict->getInt("ENGINE");
-            QUrl url = QUrl(dict->getString("URL", nullptr));
+            QUrl url = QUrl(dict->getString("URL"));
 
             SearchWidget *search = newSearchWidget(text);
             search->restore(url, text, sbtext, engine);

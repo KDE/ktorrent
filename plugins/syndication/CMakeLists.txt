@@ -24,6 +24,7 @@ ki18n_wrap_ui(SyndicationPlugin feedwidget.ui managefiltersdlg.ui filtereditor.u
 target_link_libraries(
     SyndicationPlugin
     ktcore
+    Qt6::Core5Compat
     Qt6::WebEngineWidgets
     KTorrent6
     KF6::CoreAddons
