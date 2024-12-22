@@ -5,7 +5,6 @@
 */
 
 #include <QRandomGenerator>
-#include <QTextCodec>
 
 #include "filter.h"
 #include <bcodec/bencoder.h>
@@ -309,12 +308,11 @@ void Filter::save(bt::BEncoder &enc)
 
 bool Filter::load(bt::BDictNode *dict)
 {
-    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     BValueNode *vn = dict->getValue("name");
     if (!vn)
         return false;
 
-    name = vn->data().toString(codec);
+    name = vn->data().toString();
 
     vn = dict->getValue("id");
     if (vn)
@@ -347,7 +345,7 @@ bool Filter::load(bt::BDictNode *dict)
     for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
         vn = ln->getValue(i);
         if (vn)
-            word_matches.append(QRegExp(vn->data().toString(codec), case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+            word_matches.append(QRegExp(vn->data().toString(), case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
     }
 
     ln = dict->getList("exclusion_patterns");
@@ -355,7 +353,7 @@ bool Filter::load(bt::BDictNode *dict)
         for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
             vn = ln->getValue(i);
             if (vn)
-                exclusion_patterns.append(QRegExp(vn->data().toString(codec), exclusion_case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+                exclusion_patterns.append(QRegExp(vn->data().toString(), exclusion_case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
         }
     }
 
@@ -375,13 +373,13 @@ bool Filter::load(bt::BDictNode *dict)
     if (!vn)
         return false;
 
-    setSeasons(vn->data().toString(codec));
+    setSeasons(vn->data().toString());
 
     vn = dict->getValue("episodes");
     if (!vn)
         return false;
 
-    setEpisodes(vn->data().toString(codec));
+    setEpisodes(vn->data().toString());
 
     vn = dict->getValue("download_matching");
     if (!vn)
@@ -397,15 +395,15 @@ bool Filter::load(bt::BDictNode *dict)
 
     vn = dict->getValue("group");
     if (vn)
-        setGroup(vn->data().toString(codec));
+        setGroup(vn->data().toString());
 
     vn = dict->getValue("download_location");
     if (vn)
-        setDownloadLocation(vn->data().toString(codec));
+        setDownloadLocation(vn->data().toString());
 
     vn = dict->getValue("move_on_completion_location");
     if (vn)
-        setMoveOnCompletionLocation(vn->data().toString(codec));
+        setMoveOnCompletionLocation(vn->data().toString());
 
     vn = dict->getValue("silently");
     if (!vn)
