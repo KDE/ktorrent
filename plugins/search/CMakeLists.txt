@@ -18,7 +18,6 @@ kconfig_add_kcfg_files(SearchPlugin searchpluginsettings.kcfgc)
 target_link_libraries(
     SearchPlugin
     ktcore
-    Qt6::Core5Compat
     Qt6::WebEngineWidgets
     KTorrent6
     KF6::CoreAddons

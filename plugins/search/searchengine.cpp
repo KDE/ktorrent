@@ -5,7 +5,7 @@
 */
 
 #include <QFileInfo>
-#include <QStringRef>
+#include <QStringView>
 #include <QXmlStreamReader>
 
 #include <KIO/StoredTransferJob>
