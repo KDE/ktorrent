@@ -13,7 +13,7 @@
 #include <QMimeData>
 #include <QMimeDatabase>
 #include <QMimeType>
-#include <QRegExp>
+#include <QRegularExpression>
 
 #include "downloadordermodel.h"
 #include <interfaces/torrentfileinterface.h>
@@ -259,10 +259,10 @@ struct AlbumTrackCompare {
 
     int getTrack(const QString &title)
     {
-        QRegExp exp(QLatin1String(".*(\\d+)\\s.*\\.\\w*"), Qt::CaseInsensitive);
-        int pos = exp.indexIn(title);
-        if (pos > -1) {
-            QString track = exp.cap(1);
+        QRegularExpression rx(QLatin1String(R"(.*(\d+)\s.*\.\w*)"), QRegularExpression::CaseInsensitiveOption);
+        QRegularExpressionMatch match = rx.match(title);
+        if (match.hasMatch()) {
+            QString track = match.captured(1);
             bool ok = false;
             int track_number = track.toInt(&ok);
             if (ok)
@@ -312,11 +312,11 @@ struct SeasonEpisodeCompare {
                    << QStringLiteral("S(\\d+)\\.E(\\d+)") << QStringLiteral("Season\\s(\\d+).*Episode\\s(\\d+)");
 
         for (const QString &format : std::as_const(se_formats)) {
-            QRegExp exp(format, Qt::CaseInsensitive);
-            int pos = exp.indexIn(title);
-            if (pos > -1) {
-                QString s = exp.cap(1); // Season
-                QString e = exp.cap(2); // Episode
+            QRegularExpression rx(format, QRegularExpression::CaseInsensitiveOption);
+            QRegularExpressionMatch match = rx.match(title);
+            if (match.hasMatch()) {
+                QString s = match.captured(1); // Season
+                QString e = match.captured(2); // Episode
                 bool ok = false;
                 season = s.toInt(&ok);
                 if (!ok)

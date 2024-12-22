@@ -11,7 +11,6 @@ ki18n_wrap_ui(DownloadOrderPlugin downloadorderwidget.ui)
 
 target_link_libraries(
     DownloadOrderPlugin
-    Qt6::Core5Compat
     ktcore
     KTorrent6
     KF6::ConfigCore
