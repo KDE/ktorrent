@@ -8,7 +8,6 @@
 #include <QButtonGroup>
 #include <QMenu>
 #include <QPushButton>
-#include <QTextCodec>
 
 #include <KIO/Global>
 #include <KLocalizedString>
@@ -68,11 +67,6 @@ FileSelectDlg::FileSelectDlg(kt::QueueManager *qman, kt::GroupManager *gman, con
     m_move_when_completed_history->setIcon(QIcon::fromTheme(QStringLiteral("view-history")));
     m_move_when_completed_history->setPopupMode(QToolButton::MenuButtonPopup);
 
-    encodings = QTextCodec::availableMibs();
-    for (int mib : std::as_const(encodings)) {
-        m_encoding->addItem(QString::fromUtf8(QTextCodec::codecForMib(mib)->name()));
-    }
-
     if (!group_hint.isNull())
         initial_group = gman->find(group_hint);
 
@@ -112,11 +106,6 @@ int FileSelectDlg::execute(bt::TorrentInterface *tc, bool *start, bool *skip_che
     this->tc = tc;
     this->start = start;
     this->skip_check = skip_check;
-
-    int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
-    Out(SYS_GEN | LOG_DEBUG) << "Codec: " << QString::fromLatin1(tc->getTextCodec()->name()) << " " << idx << endl;
-    m_encoding->setCurrentIndex(idx);
-    connect(m_encoding, &KComboBox::currentIndexChanged, this, &FileSelectDlg::onCodecChanged);
 
     for (Uint32 i = 0; i < tc->getNumFiles(); i++) {
         bt::TorrentFileInterface &file = tc->getTorrentFile(i);
@@ -545,16 +534,6 @@ void FileSelectDlg::downloadLocationChanged(const QString &path)
 {
     Q_UNUSED(path);
     updateSizeLabels();
-}
-
-void FileSelectDlg::onCodecChanged(const int index)
-{
-    const QString text = m_encoding->itemText(index);
-    QTextCodec *codec = QTextCodec::codecForName(text.toLocal8Bit());
-    if (codec) {
-        tc->changeTextCodec(codec);
-        model->onCodecChange();
-    }
 }
 
 void FileSelectDlg::loadState(KSharedConfigPtr cfg)

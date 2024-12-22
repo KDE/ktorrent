@@ -63,7 +63,6 @@ protected Q_SLOTS:
     void selectNone();
     void invertSelection();
     void updateSizeLabels();
-    void onCodecChanged(const int index);
     void groupActivated(int idx);
     void fileTree(bool on);
     void fileList(bool on);
