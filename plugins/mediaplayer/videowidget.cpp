@@ -150,12 +150,12 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
     if (slider->isVisible()) {
         int bh = height() - slider->height();
         int th = streaming ? chunk_bar->height() : 0;
-        if (event->y() < bh - 10 && event->y() > th + 10) // use a 10 pixel safety buffer to avoid fibrilation
+        if (event->position().y() < bh - 10 && event->position().y() > th + 10) // use a 10 pixel safety buffer to avoid fibrilation
             setControlsVisible(false);
     } else {
         int bh = height() - slider->height();
         int th = streaming ? chunk_bar->height() : 0;
-        if (event->y() >= bh || event->y() <= th)
+        if (event->position().y() >= bh || event->position().y() <= th)
             setControlsVisible(true);
     }
 }
