@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-01 00:40+0000\n"
+"POT-Creation-Date: 2024-12-23 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -208,28 +208,28 @@ msgstr "Bæta við"
 msgid "Close"
 msgstr "Loka"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:81
+#: ktorrent/dialogs/fileselectdlg.cpp:75
 #, fuzzy, kde-format
 msgid "Show a file tree"
 msgstr "allir \" a"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:84
+#: ktorrent/dialogs/fileselectdlg.cpp:78
 #, fuzzy, kde-format
 #| msgid "Choose a file"
 msgid "Show a file list"
 msgstr "Veldu skrá"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:66
+#: ktorrent/dialogs/fileselectdlg.cpp:87 plugins/infowidget/fileview.cpp:66
 #, fuzzy, kde-format
 msgid "Filter"
 msgstr "Sía"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:111
+#: ktorrent/dialogs/fileselectdlg.cpp:105
 #, fuzzy, kde-format
 msgid "Opening %1"
 msgstr "1"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:211
+#: ktorrent/dialogs/fileselectdlg.cpp:200
 #, fuzzy, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -237,7 +237,7 @@ msgid ""
 "directory as the location?"
 msgstr "Skrár af \" Framkvæma til og til?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:215
+#: ktorrent/dialogs/fileselectdlg.cpp:204
 #, fuzzy, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -245,27 +245,27 @@ msgid ""
 "directory as the location?"
 msgstr "Skrár af \" Framkvæma til og til?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:218
+#: ktorrent/dialogs/fileselectdlg.cpp:207
 #, fuzzy, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
 "want to import this file?"
 msgstr "Skrár af \" Framkvæma til og til?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:225
+#: ktorrent/dialogs/fileselectdlg.cpp:214
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "&Flytja inn"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:236
-#: ktorrent/dialogs/fileselectdlg.cpp:254
+#: ktorrent/dialogs/fileselectdlg.cpp:225
+#: ktorrent/dialogs/fileselectdlg.cpp:243
 #, fuzzy, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "ekki til?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:238
-#: ktorrent/dialogs/fileselectdlg.cpp:256
+#: ktorrent/dialogs/fileselectdlg.cpp:227
+#: ktorrent/dialogs/fileselectdlg.cpp:245
 #: ktorrent/dialogs/missingfilesdlg.cpp:90
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
@@ -275,26 +275,26 @@ msgctxt "@action:button"
 msgid "Create"
 msgstr "Endurskrifa"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:285
+#: ktorrent/dialogs/fileselectdlg.cpp:274
 #, fuzzy, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
 "these files, are you sure you want to do this?"
 msgstr "Þú Þú allir \" til?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:291
+#: ktorrent/dialogs/fileselectdlg.cpp:280
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "Eyða skrá(m)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:292
+#: ktorrent/dialogs/fileselectdlg.cpp:281
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
 msgstr "Nei halda"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:315
+#: ktorrent/dialogs/fileselectdlg.cpp:304
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -302,54 +302,54 @@ msgid ""
 "Please select a different location."
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/fileselectdlg.cpp:406 ktorrent/dialogs/pastedialog.cpp:61
 #: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, fuzzy, kde-format
 msgid "All Torrents"
 msgstr "Allt"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:486
+#: ktorrent/dialogs/fileselectdlg.cpp:475
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:493
+#: ktorrent/dialogs/fileselectdlg.cpp:482
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:501
+#: ktorrent/dialogs/fileselectdlg.cpp:490
 #, fuzzy, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "short"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:528
+#: ktorrent/dialogs/fileselectdlg.cpp:517
 #, fuzzy, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "Titill<b></b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:530
+#: ktorrent/dialogs/fileselectdlg.cpp:519
 #, fuzzy, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "Titill<b></b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:532
+#: ktorrent/dialogs/fileselectdlg.cpp:521
 #, fuzzy, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "Titill<b></b><br/> Flytjandi<b></b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:536
+#: ktorrent/dialogs/fileselectdlg.cpp:525
 #, fuzzy, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "Titill<b></b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:539
+#: ktorrent/dialogs/fileselectdlg.cpp:528
 #, fuzzy, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "Titill<b></b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:611
+#: ktorrent/dialogs/fileselectdlg.cpp:590
 #, fuzzy, kde-format
 msgid "Clear History"
 msgstr "Hreinsa Leita Ferill"
@@ -416,40 +416,34 @@ msgstr "Flytja til:"
 msgid "History of all recently used move when completed locations"
 msgstr "Flytja til:"
 
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: ktorrent/dialogs/fileselectdlg.ui:105
-#, fuzzy, kde-format
-msgid "Text encoding:"
-msgstr "Texti:"
-
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_file_view)
-#: ktorrent/dialogs/fileselectdlg.ui:132
+#: ktorrent/dialogs/fileselectdlg.ui:122
 #, fuzzy, kde-format
 msgid ""
 "All files in the torrent, you can change them by double clicking on them."
 msgstr "Allt \" double á."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_all)
-#: ktorrent/dialogs/fileselectdlg.ui:144
+#: ktorrent/dialogs/fileselectdlg.ui:134
 #, fuzzy, kde-format
 msgid "Select &All"
 msgstr "Velja &allt"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_none)
-#: ktorrent/dialogs/fileselectdlg.ui:151
+#: ktorrent/dialogs/fileselectdlg.ui:141
 #, fuzzy, kde-format
 msgid "Select &None"
 msgstr "Velja e&kkert"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_invert_selection)
-#: ktorrent/dialogs/fileselectdlg.ui:158
+#: ktorrent/dialogs/fileselectdlg.ui:148
 #, fuzzy, kde-format
 msgid "Invert Selection"
 msgstr "Umhverfa vali"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_collapse_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnCollapseAll)
-#: ktorrent/dialogs/fileselectdlg.ui:165
+#: ktorrent/dialogs/fileselectdlg.ui:155
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:36
 #, fuzzy, kde-format
 msgid "Collapse All"
@@ -457,14 +451,14 @@ msgstr "Fella allt saman"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_expand_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnExpandAll)
-#: ktorrent/dialogs/fileselectdlg.ui:172
+#: ktorrent/dialogs/fileselectdlg.ui:162
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:29
 #, fuzzy, kde-format
 msgid "Expand All"
 msgstr "Opna allt"
 
 #. i18n: ectx: property (text), widget (QLabel, m_existing_found)
-#: ktorrent/dialogs/fileselectdlg.ui:196
+#: ktorrent/dialogs/fileselectdlg.ui:186
 #, fuzzy, kde-format
 msgid "No existing files are found"
 msgstr "Sleppa"
@@ -473,7 +467,7 @@ msgstr "Sleppa"
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #. i18n: ectx: attribute (title), widget (QWidget, tab_3)
-#: ktorrent/dialogs/fileselectdlg.ui:205
+#: ktorrent/dialogs/fileselectdlg.ui:195
 #: ktorrent/dialogs/torrentcreatordlg.ui:63
 #: plugins/logviewer/logprefwidget.ui:36
 #: plugins/scanfolder/scanfolderprefpage.ui:72
@@ -484,19 +478,19 @@ msgstr "Valkostir"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ktorrent/dialogs/fileselectdlg.ui:219 ktorrent/dialogs/pastedlgbase.ui:74
+#: ktorrent/dialogs/fileselectdlg.ui:209 ktorrent/dialogs/pastedlgbase.ui:74
 #, fuzzy, kde-format
 msgid "Group:"
 msgstr "Hópur:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_chkStartTorrent)
-#: ktorrent/dialogs/fileselectdlg.ui:256
+#: ktorrent/dialogs/fileselectdlg.ui:246
 #, fuzzy, kde-format
 msgid "Start torrent"
 msgstr "Ræsa"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_skip_data_check)
-#: ktorrent/dialogs/fileselectdlg.ui:267
+#: ktorrent/dialogs/fileselectdlg.ui:257
 #, kde-format
 msgid ""
 "<p>When existing files have been found, skip the data check and assume that "
@@ -506,31 +500,31 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_skip_data_check)
-#: ktorrent/dialogs/fileselectdlg.ui:270
+#: ktorrent/dialogs/fileselectdlg.ui:260
 #, fuzzy, kde-format
 msgid "Skip data check if existing files are found"
 msgstr "Sleppa"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
-#: ktorrent/dialogs/fileselectdlg.ui:280
+#: ktorrent/dialogs/fileselectdlg.ui:270
 #, fuzzy, kde-format
 msgid "Disk Space"
 msgstr "Diskpláss"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ktorrent/dialogs/fileselectdlg.ui:288
+#: ktorrent/dialogs/fileselectdlg.ui:278
 #, fuzzy, kde-format
 msgid "Required:"
 msgstr "Nauðsynlegt diskur:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
-#: ktorrent/dialogs/fileselectdlg.ui:298
+#: ktorrent/dialogs/fileselectdlg.ui:288
 #, fuzzy, kde-format
 msgid "Available:"
 msgstr "Tiltækt:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
-#: ktorrent/dialogs/fileselectdlg.ui:308
+#: ktorrent/dialogs/fileselectdlg.ui:298
 #, fuzzy, kde-format
 msgid "After download:"
 msgstr "Eftir:"
@@ -8593,6 +8587,10 @@ msgstr "Skanna aftur"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#, fuzzy
+#~ msgid "Text encoding:"
+#~ msgstr "Texti:"
 
 #, fuzzy
 #~ msgctxt "@title:window"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-01 00:40+0000\n"
+"POT-Creation-Date: 2024-12-23 00:40+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -201,27 +201,27 @@ msgstr "එක් කරන්න "
 msgid "Close"
 msgstr "වසන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:81
+#: ktorrent/dialogs/fileselectdlg.cpp:75
 #, kde-format
 msgid "Show a file tree"
 msgstr "ගොනු වෘක්‍ෂයක් පෙන්වන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:84
+#: ktorrent/dialogs/fileselectdlg.cpp:78
 #, kde-format
 msgid "Show a file list"
 msgstr "ගොනු ලැයිස්තුවක් පෙන්වන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:66
+#: ktorrent/dialogs/fileselectdlg.cpp:87 plugins/infowidget/fileview.cpp:66
 #, kde-format
 msgid "Filter"
 msgstr "පෙරහන"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:111
+#: ktorrent/dialogs/fileselectdlg.cpp:105
 #, kde-format
 msgid "Opening %1"
 msgstr "%1 විවෘතකරමින්"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:211
+#: ktorrent/dialogs/fileselectdlg.cpp:200
 #, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -229,7 +229,7 @@ msgid ""
 "directory as the location?"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:215
+#: ktorrent/dialogs/fileselectdlg.cpp:204
 #, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -237,28 +237,28 @@ msgid ""
 "directory as the location?"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:218
+#: ktorrent/dialogs/fileselectdlg.cpp:207
 #, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
 "want to import this file?"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:225
+#: ktorrent/dialogs/fileselectdlg.cpp:214
 #, fuzzy, kde-format
 #| msgid "&Import"
 msgctxt "@action:button"
 msgid "Import"
 msgstr "ආයාත කරන්න (&I)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:236
-#: ktorrent/dialogs/fileselectdlg.cpp:254
+#: ktorrent/dialogs/fileselectdlg.cpp:225
+#: ktorrent/dialogs/fileselectdlg.cpp:243
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "%1 බහලුම නොපවතී, ඔබට එය නිර්මාණය කිරීමට ඇවැසිද?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:238
-#: ktorrent/dialogs/fileselectdlg.cpp:256
+#: ktorrent/dialogs/fileselectdlg.cpp:227
+#: ktorrent/dialogs/fileselectdlg.cpp:245
 #: ktorrent/dialogs/missingfilesdlg.cpp:90
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
@@ -269,28 +269,28 @@ msgctxt "@action:button"
 msgid "Create"
 msgstr "නැවත නිර්මාණය"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:285
+#: ktorrent/dialogs/fileselectdlg.cpp:274
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
 "these files, are you sure you want to do this?"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:291
+#: ktorrent/dialogs/fileselectdlg.cpp:280
 #, fuzzy, kde-format
 #| msgid "Delete File(s)"
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "ගොනු(ව) මකන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:292
+#: ktorrent/dialogs/fileselectdlg.cpp:281
 #, fuzzy, kde-format
 #| msgid "No, keep the files"
 msgctxt "@action:button"
 msgid "Keep the Files"
 msgstr "නැහැ, ගොනු තබාගන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:315
+#: ktorrent/dialogs/fileselectdlg.cpp:304
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -298,54 +298,54 @@ msgid ""
 "Please select a different location."
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/fileselectdlg.cpp:406 ktorrent/dialogs/pastedialog.cpp:61
 #: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "සියලු ටොරන්ට්"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:486
+#: ktorrent/dialogs/fileselectdlg.cpp:475
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr "<b>නිදහස් ඉඩ හඳුනාගත නොහැකි විය</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:493
+#: ktorrent/dialogs/fileselectdlg.cpp:482
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr "%1 (%2 ක් පවතින ගොනු මගින් භාවිත වේ)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:501
+#: ktorrent/dialogs/fileselectdlg.cpp:490
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "%1 ඉතිරිව ඇත"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:528
+#: ktorrent/dialogs/fileselectdlg.cpp:517
 #, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "පවතින ගොනු: <b>නොමැත</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:530
+#: ktorrent/dialogs/fileselectdlg.cpp:519
 #, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "පවතින ගොනු: <b>සියල්ල</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:532
+#: ktorrent/dialogs/fileselectdlg.cpp:521
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "පවතින ගොනු : <b>%1</b> හි <b>%2</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:536
+#: ktorrent/dialogs/fileselectdlg.cpp:525
 #, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "පවතින ගොනු: <b>නැත</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:539
+#: ktorrent/dialogs/fileselectdlg.cpp:528
 #, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "පවතින ගොනු: <b>ඔව්</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:611
+#: ktorrent/dialogs/fileselectdlg.cpp:590
 #, kde-format
 msgid "Clear History"
 msgstr "ඉතිහාසය පිරිසිදු කරන්න"
@@ -414,40 +414,34 @@ msgstr "සම්පූර්ණ ස්ථානයේ පෙරනිමි ග
 msgid "History of all recently used move when completed locations"
 msgstr "සම්පූර්ණ ස්ථානයේ පෙරනිමි ගෙනයාම:"
 
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: ktorrent/dialogs/fileselectdlg.ui:105
-#, kde-format
-msgid "Text encoding:"
-msgstr "පෙළ සංකේතනය:"
-
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_file_view)
-#: ktorrent/dialogs/fileselectdlg.ui:132
+#: ktorrent/dialogs/fileselectdlg.ui:122
 #, kde-format
 msgid ""
 "All files in the torrent, you can change them by double clicking on them."
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_all)
-#: ktorrent/dialogs/fileselectdlg.ui:144
+#: ktorrent/dialogs/fileselectdlg.ui:134
 #, kde-format
 msgid "Select &All"
 msgstr "සියල්ල තෝරන්න (&A)"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_none)
-#: ktorrent/dialogs/fileselectdlg.ui:151
+#: ktorrent/dialogs/fileselectdlg.ui:141
 #, kde-format
 msgid "Select &None"
 msgstr "කිසිවක් තෝරන්න එපා (&N)"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_invert_selection)
-#: ktorrent/dialogs/fileselectdlg.ui:158
+#: ktorrent/dialogs/fileselectdlg.ui:148
 #, kde-format
 msgid "Invert Selection"
 msgstr "ප්‍රති තෝරාගැනීම"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_collapse_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnCollapseAll)
-#: ktorrent/dialogs/fileselectdlg.ui:165
+#: ktorrent/dialogs/fileselectdlg.ui:155
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:36
 #, kde-format
 msgid "Collapse All"
@@ -455,14 +449,14 @@ msgstr "සියල්ල හකුළන්න"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_expand_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnExpandAll)
-#: ktorrent/dialogs/fileselectdlg.ui:172
+#: ktorrent/dialogs/fileselectdlg.ui:162
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:29
 #, kde-format
 msgid "Expand All"
 msgstr "සියල්ල දිගහරින්න"
 
 #. i18n: ectx: property (text), widget (QLabel, m_existing_found)
-#: ktorrent/dialogs/fileselectdlg.ui:196
+#: ktorrent/dialogs/fileselectdlg.ui:186
 #, kde-format
 msgid "No existing files are found"
 msgstr "කිසිඳු පවතින ගොනුවක් හමු නොවිනි"
@@ -471,7 +465,7 @@ msgstr "කිසිඳු පවතින ගොනුවක් හමු න�
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #. i18n: ectx: attribute (title), widget (QWidget, tab_3)
-#: ktorrent/dialogs/fileselectdlg.ui:205
+#: ktorrent/dialogs/fileselectdlg.ui:195
 #: ktorrent/dialogs/torrentcreatordlg.ui:63
 #: plugins/logviewer/logprefwidget.ui:36
 #: plugins/scanfolder/scanfolderprefpage.ui:72
@@ -482,19 +476,19 @@ msgstr "අභිප්‍රේත"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ktorrent/dialogs/fileselectdlg.ui:219 ktorrent/dialogs/pastedlgbase.ui:74
+#: ktorrent/dialogs/fileselectdlg.ui:209 ktorrent/dialogs/pastedlgbase.ui:74
 #, kde-format
 msgid "Group:"
 msgstr "සමූහය:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_chkStartTorrent)
-#: ktorrent/dialogs/fileselectdlg.ui:256
+#: ktorrent/dialogs/fileselectdlg.ui:246
 #, kde-format
 msgid "Start torrent"
 msgstr "ටොරෙන්ට් අරඹන්න"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_skip_data_check)
-#: ktorrent/dialogs/fileselectdlg.ui:267
+#: ktorrent/dialogs/fileselectdlg.ui:257
 #, kde-format
 msgid ""
 "<p>When existing files have been found, skip the data check and assume that "
@@ -504,32 +498,32 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_skip_data_check)
-#: ktorrent/dialogs/fileselectdlg.ui:270
+#: ktorrent/dialogs/fileselectdlg.ui:260
 #, fuzzy, kde-format
 #| msgid "No existing files are found"
 msgid "Skip data check if existing files are found"
 msgstr "කිසිඳු පවතින ගොනුවක් හමු නොවිනි"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
-#: ktorrent/dialogs/fileselectdlg.ui:280
+#: ktorrent/dialogs/fileselectdlg.ui:270
 #, kde-format
 msgid "Disk Space"
 msgstr "තැටි ඉඩ"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ktorrent/dialogs/fileselectdlg.ui:288
+#: ktorrent/dialogs/fileselectdlg.ui:278
 #, kde-format
 msgid "Required:"
 msgstr "අවශ්‍යයි:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
-#: ktorrent/dialogs/fileselectdlg.ui:298
+#: ktorrent/dialogs/fileselectdlg.ui:288
 #, kde-format
 msgid "Available:"
 msgstr "භාවිතයට ඇති:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
-#: ktorrent/dialogs/fileselectdlg.ui:308
+#: ktorrent/dialogs/fileselectdlg.ui:298
 #, kde-format
 msgid "After download:"
 msgstr "බාගැනීමෙන් පසු:"
@@ -8704,6 +8698,9 @@ msgstr "නැවත පරිලෝකනය"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Text encoding:"
+#~ msgstr "පෙළ සංකේතනය:"
 
 #, fuzzy
 #~| msgid "Display"

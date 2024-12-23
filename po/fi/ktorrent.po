@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-01 00:40+0000\n"
+"POT-Creation-Date: 2024-12-23 00:40+0000\n"
 "PO-Revision-Date: 2024-11-07 16:54+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -229,27 +229,27 @@ msgstr "Lisää"
 msgid "Close"
 msgstr "Sulje"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:81
+#: ktorrent/dialogs/fileselectdlg.cpp:75
 #, kde-format
 msgid "Show a file tree"
 msgstr "Näytä tiedostopuu"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:84
+#: ktorrent/dialogs/fileselectdlg.cpp:78
 #, kde-format
 msgid "Show a file list"
 msgstr "Näytä tiedostoluettelo"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:93 plugins/infowidget/fileview.cpp:66
+#: ktorrent/dialogs/fileselectdlg.cpp:87 plugins/infowidget/fileview.cpp:66
 #, kde-format
 msgid "Filter"
 msgstr "Suodatin"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:111
+#: ktorrent/dialogs/fileselectdlg.cpp:105
 #, kde-format
 msgid "Opening %1"
 msgstr "Avataan %1"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:211
+#: ktorrent/dialogs/fileselectdlg.cpp:200
 #, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -260,7 +260,7 @@ msgstr ""
 "Haluatko tuoda nämä tiedostot ja käyttää valmistuneiden latausten kansiota "
 "torrentin sijaintina?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:215
+#: ktorrent/dialogs/fileselectdlg.cpp:204
 #, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -271,7 +271,7 @@ msgstr ""
 "Haluatko tuoda nämä tiedostot ja käyttää valmistuneiden latausten kansiota "
 "torrentin sijaintina?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:218
+#: ktorrent/dialogs/fileselectdlg.cpp:207
 #, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
@@ -280,20 +280,20 @@ msgstr ""
 "Tiedosto <b>%1</b> löytyi valmistuneiden latausten kansiosta. Haluatko tuoda "
 "sen?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:225
+#: ktorrent/dialogs/fileselectdlg.cpp:214
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "Tuo"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:236
-#: ktorrent/dialogs/fileselectdlg.cpp:254
+#: ktorrent/dialogs/fileselectdlg.cpp:225
+#: ktorrent/dialogs/fileselectdlg.cpp:243
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "Kansiota %1 ei ole olemassa, haluatko luoda sen?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:238
-#: ktorrent/dialogs/fileselectdlg.cpp:256
+#: ktorrent/dialogs/fileselectdlg.cpp:227
+#: ktorrent/dialogs/fileselectdlg.cpp:245
 #: ktorrent/dialogs/missingfilesdlg.cpp:90
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
@@ -303,7 +303,7 @@ msgctxt "@action:button"
 msgid "Create"
 msgstr "Luo"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:285
+#: ktorrent/dialogs/fileselectdlg.cpp:274
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
@@ -312,19 +312,19 @@ msgstr ""
 "Olet poistanut valinnan seuraavilta olemassa olevilta tiedostoilta; kyseiset "
 "tiedostot poistetaan. Haluatko varmasti jatkaa?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:291
+#: ktorrent/dialogs/fileselectdlg.cpp:280
 #, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "Poista tiedostot"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:292
+#: ktorrent/dialogs/fileselectdlg.cpp:281
 #, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
 msgstr "Pidä tiedostot"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:315
+#: ktorrent/dialogs/fileselectdlg.cpp:304
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -335,54 +335,54 @@ msgstr ""
 "useampaa samaa tiedostoa kuin seuraavat torrentit. Torrentien ei ole "
 "sallittua kirjoittaa samoihin tiedostoihin. Valitse toinen sijainti."
 
-#: ktorrent/dialogs/fileselectdlg.cpp:417 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/fileselectdlg.cpp:406 ktorrent/dialogs/pastedialog.cpp:61
 #: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "Kaikki torrentit"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:486
+#: ktorrent/dialogs/fileselectdlg.cpp:475
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr "<b>Vapaan levytilan määrää ei saatu selville</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:493
+#: ktorrent/dialogs/fileselectdlg.cpp:482
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr "%1 (aiemmin luodut tiedostot vievät %2 )"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:501
+#: ktorrent/dialogs/fileselectdlg.cpp:490
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "%1 puuttuu"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:528
+#: ktorrent/dialogs/fileselectdlg.cpp:517
 #, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "Aiemmin luodut tiedostot: <b>Ei mitään</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:530
+#: ktorrent/dialogs/fileselectdlg.cpp:519
 #, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "Aiemmin luodut tiedostot: <b>Kaikki</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:532
+#: ktorrent/dialogs/fileselectdlg.cpp:521
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "Aiemmin luodut tiedostot: <b>%1</b>/<b>%2</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:536
+#: ktorrent/dialogs/fileselectdlg.cpp:525
 #, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "Aiemmin luotu tiedosto: <b>Ei</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:539
+#: ktorrent/dialogs/fileselectdlg.cpp:528
 #, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "Aiemmin luotu tiedosto: <b>Kyllä</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:611
+#: ktorrent/dialogs/fileselectdlg.cpp:590
 #, kde-format
 msgid "Clear History"
 msgstr "Tyhjennä historia"
@@ -449,40 +449,34 @@ msgstr "Siirrä latauksen päätyttyä kansioon:"
 msgid "History of all recently used move when completed locations"
 msgstr "Viimeisimpien valmistuneiden latausten sijainnit"
 
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: ktorrent/dialogs/fileselectdlg.ui:105
-#, kde-format
-msgid "Text encoding:"
-msgstr "Merkistökoodaus:"
-
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_file_view)
-#: ktorrent/dialogs/fileselectdlg.ui:132
+#: ktorrent/dialogs/fileselectdlg.ui:122
 #, kde-format
 msgid ""
 "All files in the torrent, you can change them by double clicking on them."
 msgstr "Torrentin kaikki tiedostot. Voit muuttaa niitä kaksoisnapsauttamalla."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_all)
-#: ktorrent/dialogs/fileselectdlg.ui:144
+#: ktorrent/dialogs/fileselectdlg.ui:134
 #, kde-format
 msgid "Select &All"
 msgstr "Valitse k&aikki"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_none)
-#: ktorrent/dialogs/fileselectdlg.ui:151
+#: ktorrent/dialogs/fileselectdlg.ui:141
 #, kde-format
 msgid "Select &None"
 msgstr "Poista vali&nnat"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_invert_selection)
-#: ktorrent/dialogs/fileselectdlg.ui:158
+#: ktorrent/dialogs/fileselectdlg.ui:148
 #, kde-format
 msgid "Invert Selection"
 msgstr "Käänteinen valinta"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_collapse_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnCollapseAll)
-#: ktorrent/dialogs/fileselectdlg.ui:165
+#: ktorrent/dialogs/fileselectdlg.ui:155
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:36
 #, kde-format
 msgid "Collapse All"
@@ -490,14 +484,14 @@ msgstr "Supista kaikki"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_expand_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnExpandAll)
-#: ktorrent/dialogs/fileselectdlg.ui:172
+#: ktorrent/dialogs/fileselectdlg.ui:162
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:29
 #, kde-format
 msgid "Expand All"
 msgstr "Lavenna kaikki"
 
 #. i18n: ectx: property (text), widget (QLabel, m_existing_found)
-#: ktorrent/dialogs/fileselectdlg.ui:196
+#: ktorrent/dialogs/fileselectdlg.ui:186
 #, kde-format
 msgid "No existing files are found"
 msgstr "Olemassa olevia tiedostoja ei löytynyt"
@@ -506,7 +500,7 @@ msgstr "Olemassa olevia tiedostoja ei löytynyt"
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #. i18n: ectx: attribute (title), widget (QWidget, tab_3)
-#: ktorrent/dialogs/fileselectdlg.ui:205
+#: ktorrent/dialogs/fileselectdlg.ui:195
 #: ktorrent/dialogs/torrentcreatordlg.ui:63
 #: plugins/logviewer/logprefwidget.ui:36
 #: plugins/scanfolder/scanfolderprefpage.ui:72
@@ -517,19 +511,19 @@ msgstr "Valinnat"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ktorrent/dialogs/fileselectdlg.ui:219 ktorrent/dialogs/pastedlgbase.ui:74
+#: ktorrent/dialogs/fileselectdlg.ui:209 ktorrent/dialogs/pastedlgbase.ui:74
 #, kde-format
 msgid "Group:"
 msgstr "Ryhmä:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_chkStartTorrent)
-#: ktorrent/dialogs/fileselectdlg.ui:256
+#: ktorrent/dialogs/fileselectdlg.ui:246
 #, kde-format
 msgid "Start torrent"
 msgstr "Käynnistä torrent"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_skip_data_check)
-#: ktorrent/dialogs/fileselectdlg.ui:267
+#: ktorrent/dialogs/fileselectdlg.ui:257
 #, kde-format
 msgid ""
 "<p>When existing files have been found, skip the data check and assume that "
@@ -543,31 +537,31 @@ msgstr ""
 "varma.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_skip_data_check)
-#: ktorrent/dialogs/fileselectdlg.ui:270
+#: ktorrent/dialogs/fileselectdlg.ui:260
 #, kde-format
 msgid "Skip data check if existing files are found"
 msgstr "Älä tarkista tietoja, jos aiempia tiedostoja löytyy"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
-#: ktorrent/dialogs/fileselectdlg.ui:280
+#: ktorrent/dialogs/fileselectdlg.ui:270
 #, kde-format
 msgid "Disk Space"
 msgstr "Levytila"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ktorrent/dialogs/fileselectdlg.ui:288
+#: ktorrent/dialogs/fileselectdlg.ui:278
 #, kde-format
 msgid "Required:"
 msgstr "Vaaditaan:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
-#: ktorrent/dialogs/fileselectdlg.ui:298
+#: ktorrent/dialogs/fileselectdlg.ui:288
 #, kde-format
 msgid "Available:"
 msgstr "Saatavilla:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
-#: ktorrent/dialogs/fileselectdlg.ui:308
+#: ktorrent/dialogs/fileselectdlg.ui:298
 #, kde-format
 msgid "After download:"
 msgstr "Latauksen jälkeen:"
@@ -8863,6 +8857,9 @@ msgstr "Etsi laitteita"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Text encoding:"
+#~ msgstr "Merkistökoodaus:"
 
 #~ msgctxt "@title:window"
 #~ msgid "Display"
