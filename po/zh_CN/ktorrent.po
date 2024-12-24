@@ -8646,6 +8646,3 @@ msgstr "重新扫描"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
-
-#~ msgid "Text encoding:"
-#~ msgstr "文本编码："
