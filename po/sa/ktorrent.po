@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-23 00:40+0000\n"
-"PO-Revision-Date: 2024-12-24 20:39+0530\n"
+"PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -2757,7 +2757,7 @@ msgstr "विण्डो शीर्षके कुलवेगं दर्
 #: ktorrent/pref/networkpref.cpp:20 ktorrent/pref/recommendedsettingsdlg.ui:199
 #, kde-format
 msgid "Network"
-msgstr "जाल"
+msgstr "जालकृति"
 
 #: ktorrent/pref/networkpref.cpp:40
 #, kde-format
@@ -4708,7 +4708,7 @@ msgstr "स्वयमेव saveDir इत्यत्र डाउनलो�
 #: libktcore/ktorrent.kcfg:109
 #, kde-format
 msgid "Folder to store downloaded files"
-msgstr "डाउनलोड् कृतानां सञ्चिकानां संग्रहणार्थं फोल्डर्"
+msgstr "डाउनलोड् कृतानां सञ्चिकानां संग्रहणार्थं समुच्चय"
 
 #. i18n: ectx: label, entry (useTorrentCopyDir), group (downloads)
 #: libktcore/ktorrent.kcfg:112
@@ -4923,7 +4923,7 @@ msgstr "टोरेण्ट् %1 स्थगयितुं त्रुट�
 #: libktcore/torrent/torrentfiletreemodel.cpp:357
 #, kde-format
 msgid "File"
-msgstr "संचिका"
+msgstr "सञ्चिका"
 
 #: libktcore/util/mmapfile.cpp:151
 #, kde-format
@@ -6886,7 +6886,7 @@ msgstr "स्कैन फोल्डर"
 #: plugins/scanfolder/scanfolderprefpage.ui:17
 #, kde-format
 msgid "Folders to scan for torrents:"
-msgstr "टोरेण्ट्स् कृते स्कैन् कर्तुं फोल्डर्:"
+msgstr "टोरेण्ट्स् कृते स्कैन् कर्तुं समुच्चय:"
 
 #. i18n: ectx: property (toolTip), widget (QListWidget, m_folders)
 #: plugins/scanfolder/scanfolderprefpage.ui:26
@@ -6934,7 +6934,7 @@ msgid ""
 "Note: This will not be done for any folder named loaded."
 msgstr ""
 "टोरेण्ट् इत्यस्य कृते पुटं पुनरावर्तनीयरूपेण स्कैन् कुर्वन्तु ।<br/><br/> नोट्: लोड् इति नामकस्य "
-"कस्यापि फोल्डर् कृते एतत् न क्रियते ।"
+"कस्यापि समुच्चय कृते एतत् न क्रियते ।"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_recursive)
 #: plugins/scanfolder/scanfolderprefpage.ui:92
