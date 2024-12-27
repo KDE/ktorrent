@@ -8,7 +8,7 @@
 #define KTCHUNKDOWNLOADMODEL_H
 
 #include <QAbstractTableModel>
-#include <QVector>
+#include <QList>
 #include <interfaces/chunkdownloadinterface.h>
 #include <interfaces/torrentinterface.h>
 
@@ -65,7 +65,7 @@ public:
     };
 
 private:
-    QVector<Item *> items;
+    QList<Item *> items;
     bt::TorrentInterface::WPtr tc;
 };
 

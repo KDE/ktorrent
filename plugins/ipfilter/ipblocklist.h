@@ -6,7 +6,7 @@
 #ifndef ANTIP2P_H
 #define ANTIP2P_H
 
-#include <QVector>
+#include <QList>
 
 #include <interfaces/blocklistinterface.h>
 #include <util/constants.h>
@@ -58,7 +58,7 @@ public:
     void addBlock(const IPBlock &block);
 
 private:
-    QVector<IPBlock> blocks;
+    QList<IPBlock> blocks;
 };
 }
 #endif

@@ -9,7 +9,7 @@
 
 #include <QAbstractTableModel>
 #include <QIcon>
-#include <QVector>
+#include <QList>
 
 #include <interfaces/peerinterface.h>
 
@@ -75,7 +75,7 @@ public:
     };
 
 private:
-    QVector<Item *> items;
+    QList<Item *> items;
 #if BUILD_WITH_GEOIP
     GeoIPManager *geo_ip = nullptr;
 #endif

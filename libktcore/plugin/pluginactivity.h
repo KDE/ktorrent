@@ -33,7 +33,7 @@ public:
 private:
     PluginManager *pman;
     KPluginWidget *pmw;
-    QVector<KPluginMetaData> list;
+    QList<KPluginMetaData> list;
 };
 
 }

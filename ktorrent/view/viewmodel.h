@@ -190,7 +190,7 @@ public:
 private:
     Core *core;
     View *view;
-    QVector<Item *> torrents;
+    QList<Item *> torrents;
     int sort_column;
     Qt::SortOrder sort_order;
     Group *group;

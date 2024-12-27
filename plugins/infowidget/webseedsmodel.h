@@ -8,7 +8,7 @@
 #define KTWEBSEEDSMODEL_H
 
 #include <QAbstractTableModel>
-#include <QVector>
+#include <QList>
 
 #include <interfaces/torrentinterface.h>
 #include <util/constants.h>
@@ -51,7 +51,7 @@ private:
         bt::Uint32 speed;
     };
     bt::TorrentInterface::WPtr curr_tc;
-    QVector<Item> items;
+    QList<Item> items;
 };
 
 }

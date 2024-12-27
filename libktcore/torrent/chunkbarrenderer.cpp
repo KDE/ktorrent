@@ -40,7 +40,7 @@ void ChunkBarRenderer::drawEqual(QPainter *p, const BitSet &bs, const QColor &co
     p->setPen(QPen(c, 1, Qt::SolidLine));
     p->setBrush(c);
 
-    QVector<Range> rs;
+    QList<Range> rs;
 
     for (Uint32 i = 0; i < bs.getNumBits(); i++) {
         if (!bs.get(i))
@@ -73,7 +73,7 @@ void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter *p, const BitSet &bs, c
 {
     Uint32 w = contents_rect.width();
     double chunks_per_pixel = (double)bs.getNumBits() / w;
-    QVector<Range> rs;
+    QList<Range> rs;
 
     for (Uint32 i = 0; i < w; i++) {
         Uint32 num_dl = 0;

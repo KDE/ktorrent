@@ -8,7 +8,6 @@
 
 #include <QList>
 #include <QStringList>
-#include <QVector>
 
 #include <KPluginMetaData>
 #include <KSharedConfig>
@@ -31,7 +30,7 @@ class PluginActivity;
  */
 class KTCORE_EXPORT PluginManager
 {
-    QVector<KPluginMetaData> pluginsMetaData;
+    QList<KPluginMetaData> pluginsMetaData;
     CoreInterface *core;
     GUIInterface *gui;
     PluginActivity *prefpage;
@@ -41,7 +40,7 @@ public:
     PluginManager(CoreInterface *core, GUIInterface *gui);
     ~PluginManager();
 
-    QVector<KPluginMetaData> pluginsMetaDataList() const
+    QList<KPluginMetaData> pluginsMetaDataList() const
     {
         return pluginsMetaData;
     }
