@@ -99,7 +99,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://invent.kde.org/network/libktorrent.git"
+                    "url": "https://invent.kde.org/network/libktorrent.git",
+                    "branch": "release/24.12"
                 }
             ]
         },
