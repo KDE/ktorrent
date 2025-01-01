@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-23 00:40+0000\n"
-"PO-Revision-Date: 2024-10-14 07:32+0200\n"
+"PO-Revision-Date: 2024-12-31 08:02+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -7434,7 +7434,7 @@ msgstr "Spanje (začasna zaustavitev v RAMu)"
 #: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Hibernate (suspend to disk)"
-msgstr "Mirovanje (začasno zaustavi na disku)"
+msgstr "V mirovanje (začasno zaustavi na disku)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45
 #, kde-format
