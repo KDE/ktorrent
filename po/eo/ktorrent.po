@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-05-30 07:49+0200\n"
+"PO-Revision-Date: 2024-12-27 17:40+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -509,7 +509,7 @@ msgstr "Neniuj ekzistantaj dosieroj estas trovitaj"
 #: plugins/syndication/filtereditor.ui:242
 #, kde-format
 msgid "Options"
-msgstr "Opcioj"
+msgstr "Elektebloj"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
@@ -929,10 +929,9 @@ msgid "Create A Torrent"
 msgstr "Krei Torenton"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "Nur HTTP estas subtenata por retsemado."
+msgstr "Nur HTTP(S) estas subtenata por retsemado."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -1475,7 +1474,7 @@ msgstr "Ĉefa"
 #: ktorrent/torrentactivity.cpp:38
 #, kde-format
 msgid "Torrents"
-msgstr "Torrentoj"
+msgstr "Torrents"
 
 #. i18n: ectx: Menu (GroupsMenu)
 #: ktorrent/kttorrentactivityui.rc:27
@@ -2411,7 +2410,7 @@ msgid ""
 "option enabled."
 msgstr ""
 "Ne ĉiuj klientoj subtenas ĉifradon, kaj iuj personoj malebligas ĉifradon. Se "
-"vi volas konektiĝi al tiuj kundividantoj, necesas ebligi ĉi tiun opcion."
+"vi volas konektiĝi al tiuj kundividantoj, necesas ebligi ĉi tiun elekteblon."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_allowUnencryptedConnections)
 #. i18n: ectx: label, entry (allowUnencryptedConnections), group (downloads)
@@ -4099,7 +4098,7 @@ msgstr "Filtrilo"
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
-msgstr "Komenci"
+msgstr "Startigi"
 
 #: ktorrent/view/view.cpp:134
 #, kde-format
@@ -4200,7 +4199,7 @@ msgstr "Informpeti"
 #: ktorrent/view/view.cpp:200
 #, kde-format
 msgid "Preview"
-msgstr "Antaŭvido"
+msgstr "Antaŭrigardo"
 
 #: ktorrent/view/view.cpp:204
 #, kde-format
@@ -7778,13 +7777,12 @@ msgstr "Averaĝaj fontoj konektitaj por ĉiu aktiva torento"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
 msgid "Display"
-msgstr "Montri"
+msgstr "Montrado"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AntiAliasing)
 #: plugins/stats/DisplaySettings.ui:910
@@ -7824,13 +7822,12 @@ msgid "(plugin reload is needed after change)"
 msgstr "(reŝargo de kromprogrameto estas bezonita post ŝanĝo)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
 msgid "Display"
-msgstr "Montri"
+msgstr "Montrado"
 
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
@@ -8862,7 +8859,3 @@ msgstr "Reserĉi"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgctxt "@title:window"
-#~ msgid "Display"
-#~ msgstr "Montrado"
