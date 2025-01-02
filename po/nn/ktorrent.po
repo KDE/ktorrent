@@ -8659,6 +8659,3 @@ msgstr "Sjekk på nytt"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Text encoding:"
-#~ msgstr "Tekstkoding:"
