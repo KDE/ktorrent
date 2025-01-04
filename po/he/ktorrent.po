@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2025-01-01 09:24+0200\n"
+"PO-Revision-Date: 2025-01-03 22:31+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1167,6 +1167,9 @@ msgid ""
 "the move when completed location in the dialog will be set to this. You can "
 "still override it, if you want to."
 msgstr ""
+"מקום ההעברה לאחר ההשלמה לטורנטים מהקבוצה הזאת.<br/><br/>בשימוש חלונית בחירת "
+"הקבצים, בעת שינוי הקבוצה, מקום ההעברה לאחר ההשלמה בחלונית יוגדר לזה. אפשר "
+"לדרוס אותו בכל אופן, במקרה הצורך."
 
 #. i18n: ectx: property (toolTip), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:63
@@ -1602,6 +1605,7 @@ msgstr "פליקס ברגר"
 #, kde-format
 msgid "ChunkBar's tooltip and IWFileTreeItem sorting"
 msgstr ""
+"חלוניות עצה של סרגל חלקים (ChunkBar) וסידור IWFileTreeItem (פריט בעץ קבצים"
 
 #: ktorrent/main.cpp:125
 #, kde-format
@@ -1626,6 +1630,10 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"ספק למסד נתוני התאמה בין IP למדינה שמשמש את תוסף וידג׳ט המידע. הנתונים "
+"כפופים לרישיון הבינלאומי קריאייטיב קומונז ייחוס 4.0 https://creativecommons."
+"org/licenses/by/4.0/. הדגלים נלקחו מ־http://flags.blogpotato.de/ ואנו מודים "
+"להם על כך בנוסף."
 
 #: ktorrent/main.cpp:133
 #, kde-format
@@ -1640,7 +1648,7 @@ msgstr "ספריית maxminddb משמשת את תוסף InfoWidget."
 #: ktorrent/main.cpp:134
 #, kde-format
 msgid "Adam Forsyth"
-msgstr ""
+msgstr "אדם פורסיית׳"
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1675,7 +1683,7 @@ msgstr "קוון אנדרה"
 #: ktorrent/main.cpp:141
 #, kde-format
 msgid "Dagur Valberg Johannsson"
-msgstr ""
+msgstr "דאגור ולברג ג׳והנסון"
 
 #: ktorrent/main.cpp:141
 #, kde-format
@@ -1765,7 +1773,7 @@ msgstr "טלאי להצגת מצב הגנה אפשרית בחומת אש"
 #: ktorrent/main.cpp:150
 #, kde-format
 msgid "Modestas Vainius"
-msgstr ""
+msgstr "מודסטאס ואיניוס"
 
 #: ktorrent/main.cpp:150
 #, kde-format
@@ -1795,7 +1803,7 @@ msgstr "טלעי לשינוי עדיפויות הקבצים בממשק האתר"
 #: ktorrent/main.cpp:153
 #, kde-format
 msgid "Rafał Miłecki"
-msgstr ""
+msgstr "רפאו מיווצקי"
 
 #: ktorrent/main.cpp:153
 #, kde-format
@@ -1965,7 +1973,7 @@ msgstr "הוספת תמיכה בסוג התוכן/MIME‏ x-scheme-handler/magne
 #: ktorrent/main.cpp:170
 #, kde-format
 msgid "Leszek Lesner"
-msgstr ""
+msgstr "לסק לסנר"
 
 #: ktorrent/main.cpp:170
 #, kde-format
@@ -2017,7 +2025,7 @@ msgstr "הפעלת תיעוד"
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
-msgstr ""
+msgstr "הפעלת רישום לפלט התקני (stdout). דורש לציין גם את ‎--enable-logging."
 
 #: ktorrent/main.cpp:181
 #, kde-format
@@ -2094,7 +2102,7 @@ msgstr " מילישניות"
 #: ktorrent/pref/advancedpref.ui:86
 #, kde-format
 msgid "Network sleep interval:"
-msgstr ""
+msgstr "משך שנת הרשת:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_cpuUsage)
 #: ktorrent/pref/advancedpref.ui:95
@@ -2126,7 +2134,7 @@ msgstr "מספר חריצי ההורדה:"
 #: ktorrent/pref/advancedpref.ui:147
 #, kde-format
 msgid "Maximum number of concurrent downloading magnets at the same time."
-msgstr ""
+msgstr "מספר מרבי של מגנטים שיורדים בו־זמנית."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:163
@@ -2148,7 +2156,7 @@ msgstr "לסדר את המגנטים מחדש בתור לאחר:"
 msgid ""
 "Maximum time that a magnet can occupy a downloading slot before it will be "
 "pushed back in the queue."
-msgstr ""
+msgstr "כמות הזמן המרבית שמגנט יכול לתפוס חריץ הורדה לפני שיידחף בחזרה לתור."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
@@ -2211,6 +2219,8 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"כתובת רשימת העוקבים בה נעשה שימוש שמוסיפים טורנט לפי גיבוב מידע\n"
+"לתשומת ליבך: כל עוקב צריך להיות בשורה נפרדת. אין משמעות לשורות ריקות."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2251,6 +2261,7 @@ msgid ""
 "DHT is a trackerless protocol to find peers sharing the same torrents as you "
 "do."
 msgstr ""
+"DHT הוא פרוטוקול נטול עוקבים לאיתור עמיתים שחולקים את אותם הטורנטים כמוך."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_dhtSupport)
 #: ktorrent/pref/btpref.ui:26
@@ -2273,6 +2284,10 @@ msgid ""
 "router, this port needs to be forwarded to accept incoming DHT requests. The "
 "UPnP plugin can do this for you.</p>"
 msgstr ""
+"<p>פתחת UDP לשימוש לפרוטוקול DHT.</p>\n"
+"<p><span style=\" font-weight:600;\">לתשומת ליבך:</span> מאחורי נתב, יש "
+"להעביר את הפתחה הזאת כדי לקבל בקשות DHT נכנסות. תוסף UPnP יכול לעשות זאת "
+"עבורך.</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_pexEnabled)
 #: ktorrent/pref/btpref.ui:61
@@ -2327,6 +2342,9 @@ msgid ""
 "<p>The encryption will prevent your bittorrent traffic to be flagged as "
 "bittorrent traffic, and so the ISP will not slow it down.</p>"
 msgstr ""
+"<p>הצפנת פרוטוקול שימושית כאשר ספקית האינטרנט שלך מאטה חיבורי ביטורנט. </p>\n"
+"<p>ההצפנה תמנע מסימון תעבורת הביטורנט שלך כתעבורת ביטורנט, וכך ספקית "
+"האינטרנט שלך לא תדע להאט אותה.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useEncryption)
 #. i18n: ectx: label, entry (useEncryption), group (downloads)
@@ -2366,18 +2384,20 @@ msgid ""
 "Instead of allowing the tracker to determine your IP address, tell the "
 "tracker which IP address to use. Use this when you are behind a proxy."
 msgstr ""
+"במקום להרשות לעוקב לאתר את כתובת ה־IP שלך, אפשר לבקש מהעוקב באיזו כתובת IP "
+"להשתמש. יש להשתמש בזה בחיבור מאחורי מתווך."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomIP)
 #: ktorrent/pref/btpref.ui:133
 #, kde-format
 msgid "Send the tracker a custom IP address or hostname"
-msgstr ""
+msgstr "לשלוח לעוקב כתובת IP או שם מארח משלך"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/btpref.ui:142
 #, kde-format
 msgid "Custom IP address or hostname:"
-msgstr ""
+msgstr "כתובת IP או שם מארח משלך:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_customIP)
 #: ktorrent/pref/btpref.ui:149
@@ -2386,6 +2406,8 @@ msgid ""
 "Custom IP address or hostname to send to the tracker. Hostnames will be "
 "resolved at runtime and the resolved IP address will be sent to the tracker."
 msgstr ""
+"כתובת IP או שם מארח משלך לשליחה לעוקב. שמות מארחים ייפתרו בזמן הריצה וכתובת "
+"ה־IP שנפתרה תישלח לשרת."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, ColorsGbw)
@@ -2437,7 +2459,7 @@ msgstr "שגיאת טורנט:"
 msgid ""
 "Additionally highlight torrents based on the status of their trackers (if "
 "any)"
-msgstr ""
+msgstr "בנוסף, להדגיש טורנטים לפי מצב העוקבים שלהם (אם יש בכלל)"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:72
@@ -2445,7 +2467,7 @@ msgstr ""
 msgid ""
 "Color to use when at least one tracker is connected and replied no errors or "
 "warnings."
-msgstr ""
+msgstr "צבע לשימוש כשלפחות עוקב אחד מחובר והשיב ללא שגיאות או אזהרות."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/colorpref.ui:79
@@ -2458,7 +2480,7 @@ msgstr "חלק מהעוקבים זמינים:"
 #, kde-format
 msgid ""
 "Color to use when the best attempt to connect to tracker results in warning."
-msgstr ""
+msgstr "צבע לשימוש כאשר הניסיון הטוב ביותר להתחבר לעוקב הוביל לאזהרות."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/colorpref.ui:93
@@ -2491,6 +2513,8 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"צבע לשימוש כשהניסיון הטוב ביותר להתחבר לעוקב הסתיים בפקיעת זמן ההמתנה. יתבצע "
+"ניסיון חוזר להתחבר מאוחר יותר."
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
@@ -2622,7 +2646,7 @@ msgstr "הצגת הודעה קופצת בסמל שורת המערכת"
 msgid ""
 "When you select multiple torrents to be opened at the same time, open them "
 "silently."
-msgstr ""
+msgstr "כשבוחרים לפחות מספר טורנטים באותו הזמן, לפתוח אותם בשקט."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_openMultipleTorrentsSilently)
 #: ktorrent/pref/generalpref.ui:132
@@ -2670,7 +2694,7 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:163
 #, kde-format
 msgid "Rename single file torrents with the name of its only file"
-msgstr ""
+msgstr "שינוי שם של טורנטים עם קובץ אחד לשם הקובץ היחיד שלהם"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_highlightNewTorrents)
 #: ktorrent/pref/generalpref.ui:170
@@ -2716,6 +2740,10 @@ msgid ""
 "router, this port needs to be forwarded to accept incoming connections. The "
 "UPnP plugin can do this for you.</p>"
 msgstr ""
+"<p>פתחה שמשמשת לפרוטוקול ביטורנט</p>\n"
+"<p><span style=\" font-weight:600;\">לתשומת ליבך:</span> מאחורי נתב, יש "
+"להעביר את הפתחה הזאת כדי לקבל בקשות חיבורים נכנסים. תוסף UPnP יכול לעשות זאת "
+"עבורך.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/networkpref.ui:47
@@ -2766,13 +2794,13 @@ msgstr "מגבלת החיבורים הכללית לכל הטורנטים ביח�
 #: ktorrent/pref/networkpref.ui:118
 #, kde-format
 msgid "The maximum download speed in KiB/s."
-msgstr ""
+msgstr "מהירות ההורדה המירבית ב־KiB לשנייה."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxUploadRate)
 #: ktorrent/pref/networkpref.ui:141
 #, kde-format
 msgid "The maximum upload speed in KiB/s"
-msgstr ""
+msgstr "מהירות ההעלאה המירבית ב־KiB לשנייה"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: ktorrent/pref/networkpref.ui:168
@@ -2819,6 +2847,9 @@ msgid ""
 "<p><span style=\"font-weight:600;\">Note: </span>Requires a restart to take "
 "effect.</p>"
 msgstr ""
+"<p>דרך איזה מתאם רשת להאזין לחיבורים נכנסים.</p>\n"
+"<p><span style=\"font-weight:600;\">לתשומת ליבך: </span>דורש הפעלה מחדש כדי "
+"שיתחיל לפעול.</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_utpEnabled)
 #: ktorrent/pref/networkpref.ui:232
@@ -3136,6 +3167,7 @@ msgid ""
 "When the free diskspace drops below this value, stop all torrents "
 "downloading."
 msgstr ""
+"כאשר המקום הפנוי בכונן צונח מתחת לערך הזה, לעצור את הורדתם של כל הטורנטים."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_minDiskSpace)
 #: ktorrent/pref/qmpref.ui:114
@@ -3180,13 +3212,13 @@ msgstr "משתף"
 msgid ""
 "When a download is finished, continue seeding it. If this is disabled, the "
 "torrent will be stopped."
-msgstr ""
+msgstr "כשהורדה מסתיימת, להמשיך לשתף אותה. אם האפשרות כבויה, הטורנט ייעצר."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_keepSeeding)
 #: ktorrent/pref/qmpref.ui:168
 #, kde-format
 msgid "Keep seeding after download is finished"
-msgstr ""
+msgstr "להמשיך לשתף לאחר סיום ההורדה"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
@@ -3236,6 +3268,8 @@ msgid ""
 "be stopped. This is only applied to newly opened torrents, existing torrents "
 "will not be affected by changing this."
 msgstr ""
+"זמן השיתוף המרבי בשעות. לאחר שמגיעים לזמן הזה, הטורנט ייעצר. זה חל רק על "
+"טורנטים חדשים שנפתחו, טונרטים קיימים לא יושפעו משינוי האפשרות הזאת."
 
 #. i18n: ectx: property (toolTip), widget (QLabel, label_2)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_greenRatio)
@@ -3245,6 +3279,8 @@ msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
+"הערך שבו יחס השיתוף יופיע בצבע ירוק. ערכים קטנים ממנו יופיעו באדום, אפשר "
+"לשנות את הצבעים בהגדרות הצבעים."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
