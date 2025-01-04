@@ -45,7 +45,7 @@ parts:
       - libgmp10
       - libgmpxx4ldbl
     source: https://invent.kde.org/network/libktorrent.git
-    source-branch: release/24.08
+    source-branch: master
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
@@ -113,10 +113,9 @@ parts:
     build-snaps:
       - core22
       - kf6-core22
-      - qt-common-themes
     override-prime: |
       set -eux
-      for snap in "core22" "kf6-core22" "qt-common-themes"; do
+      for snap in "core22" "kf6-core22"; do
           cd "/snap/$snap/current" && find . -type f,l -exec rm -rf "${CRAFT_PRIME}/{}" \;
       done
 
