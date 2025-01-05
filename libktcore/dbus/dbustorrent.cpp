@@ -18,8 +18,8 @@
 #include <interfaces/trackerslist.h>
 #include <interfaces/webseedinterface.h>
 #include <util/bitset.h>
+#include <util/infohash.h>
 #include <util/log.h>
-#include <util/sha1hash.h>
 
 using namespace bt;
 
@@ -31,7 +31,7 @@ DBusTorrent::DBusTorrent(bt::TorrentInterface *ti, QObject *parent)
     , stream(nullptr)
 {
     QDBusConnection sb = QDBusConnection::sessionBus();
-    QString path = QLatin1String("/torrent/") + ti->getInfoHash().toString();
+    QString path = QLatin1String("/torrent/") + ti->getInfoHash().truncated().toString();
     QFlags<QDBusConnection::RegisterOption> flags = QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableSignals;
     sb.registerObject(path, this, flags);
 
@@ -48,7 +48,7 @@ DBusTorrent::~DBusTorrent()
 
 QString DBusTorrent::infoHash() const
 {
-    const bt::SHA1Hash &h = ti->getInfoHash();
+    const bt::InfoHash &h = ti->getInfoHash();
     return h.toString();
 }
 

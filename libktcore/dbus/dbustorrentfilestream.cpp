@@ -9,7 +9,7 @@
 #include <algorithm>
 
 #include <QDBusConnection>
-#include <util/sha1hash.h>
+#include <util/infohash.h>
 
 namespace kt
 {

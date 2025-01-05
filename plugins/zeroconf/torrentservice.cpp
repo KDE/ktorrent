@@ -11,8 +11,8 @@
 #include <peer/peerid.h>
 #include <torrent/globals.h>
 #include <torrent/server.h>
+#include <util/infohash.h>
 #include <util/log.h>
-#include <util/sha1hash.h>
 
 using namespace bt;
 
