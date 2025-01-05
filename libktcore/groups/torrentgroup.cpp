@@ -10,8 +10,8 @@
 #include <torrent/queuemanager.h>
 #include <util/error.h>
 #include <util/fileops.h>
+#include <util/infohash.h>
 #include <util/log.h>
-#include <util/sha1hash.h>
 
 using namespace bt;
 
@@ -55,7 +55,7 @@ void TorrentGroup::save(bt::BEncoder *enc)
     while (i != torrents.end()) {
         TorrentInterface *tc = *i;
         // write the info hash, because that will be unique for each torrent
-        const bt::SHA1Hash &h = tc->getInfoHash();
+        const bt::SHA1Hash &h = tc->getInfoHash().truncated();
         enc->write(h.getData(), 20);
         i++;
     }
@@ -180,7 +180,7 @@ void TorrentGroup::loadTorrents(QueueManager *qman)
 {
     QueueManager::iterator i = qman->begin();
     while (i != qman->end()) {
-        if (hashes.count((*i)->getInfoHash()) > 0)
+        if (hashes.count((*i)->getInfoHash().truncated()) > 0)
             torrents.insert(*i);
         i++;
     }

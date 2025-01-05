@@ -165,8 +165,8 @@ private:
     QList<DownloadSlot *> freeDownloadingSlots;
     QList<kt::MagnetDownloader *> magnetQueue;
     QList<kt::MagnetDownloader *> stoppedList;
-    QSet<bt::SHA1Hash> magnetHashes;
-    QSet<bt::SHA1Hash> stoppedHashes;
+    QSet<bt::InfoHash> magnetHashes;
+    QSet<bt::InfoHash> stoppedHashes;
 };
 
 }
