@@ -499,7 +499,7 @@ void QueueManager::setKeepSeeding(bool ks)
     keep_seeding = ks;
 }
 
-bool QueueManager::alreadyLoaded(const bt::SHA1Hash &ih) const
+bool QueueManager::alreadyLoaded(const bt::InfoHash &ih) const
 {
     for (const bt::TorrentInterface *tor : std::as_const(downloads)) {
         if (tor->getInfoHash() == ih)
@@ -508,7 +508,7 @@ bool QueueManager::alreadyLoaded(const bt::SHA1Hash &ih) const
     return false;
 }
 
-void QueueManager::mergeAnnounceList(const bt::SHA1Hash &ih, const TrackerTier *trk)
+void QueueManager::mergeAnnounceList(const bt::InfoHash &ih, const TrackerTier *trk)
 {
     for (bt::TorrentInterface *tor : std::as_const(downloads)) {
         if (tor->getInfoHash() == ih) {

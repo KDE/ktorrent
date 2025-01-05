@@ -13,8 +13,8 @@
 #include <torrent/queuemanager.h>
 #include <util/error.h>
 #include <util/file.h>
+#include <util/infohash.h>
 #include <util/log.h>
-#include <util/sha1hash.h>
 
 using namespace bt;
 
@@ -141,7 +141,7 @@ void ShutdownRuleSet::save(const QString &file)
         enc.write("Trigger", (bt::Uint32)i->trigger);
         enc.write("Target", (bt::Uint32)i->target);
         if (i->target == SPECIFIC_TORRENT) {
-            bt::SHA1Hash hash = i->tc->getInfoHash();
+            bt::SHA1Hash hash = i->tc->getInfoHash().truncated();
             enc.write(QByteArrayLiteral("Torrent"));
             enc.write(hash.getData(), 20);
         }
@@ -215,7 +215,7 @@ bt::TorrentInterface *ShutdownRuleSet::torrentForHash(const QByteArray &hash)
     QueueManager *qman = core->getQueueManager();
     for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
         bt::TorrentInterface *t = *i;
-        if (t->getInfoHash() == ih)
+        if (t->getInfoHash().truncated() == ih)
             return t;
     }
 

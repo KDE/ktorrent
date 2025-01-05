@@ -17,7 +17,7 @@
 
 namespace bt
 {
-class SHA1Hash;
+class InfoHash;
 struct TrackerTier;
 class WaitJob;
 }
@@ -174,14 +174,14 @@ public:
      * @param ih The info hash of a torrent
      * @return true if we do, false if we don't
      */
-    bool alreadyLoaded(const bt::SHA1Hash &ih) const override;
+    bool alreadyLoaded(const bt::InfoHash &ih) const override;
 
     /**
      * Merge announce lists to a torrent
      * @param ih The info_hash of the torrent to merge to
      * @param trk First tier of trackers
      */
-    void mergeAnnounceList(const bt::SHA1Hash &ih, const bt::TrackerTier *trk) override;
+    void mergeAnnounceList(const bt::InfoHash &ih, const bt::TrackerTier *trk) override;
 
     /**
      * Requested by each TorrentControl during its update to

@@ -20,8 +20,8 @@
 #include <interfaces/guiinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
+#include <util/infohash.h>
 #include <util/log.h>
-#include <util/sha1hash.h>
 
 using namespace bt;
 
@@ -119,7 +119,7 @@ void DBus::torrentAdded(bt::TorrentInterface *tc)
 
 void DBus::torrentRemoved(bt::TorrentInterface *tc)
 {
-    DBusTorrent *db = torrent_map.find(tc->getInfoHash().toString());
+    DBusTorrent *db = torrent_map.find(tc->getInfoHash().truncated().toString());
     if (db) {
         QString ih = db->infoHash();
         Q_EMIT torrentRemoved(ih);
@@ -129,7 +129,7 @@ void DBus::torrentRemoved(bt::TorrentInterface *tc)
 
 void DBus::finished(bt::TorrentInterface *tc)
 {
-    DBusTorrent *db = torrent_map.find(tc->getInfoHash().toString());
+    DBusTorrent *db = torrent_map.find(tc->getInfoHash().truncated().toString());
     if (db) {
         QString ih = db->infoHash();
         Q_EMIT finished(ih);
@@ -138,7 +138,7 @@ void DBus::finished(bt::TorrentInterface *tc)
 
 void DBus::torrentStoppedByError(bt::TorrentInterface *tc, QString msg)
 {
-    DBusTorrent *db = torrent_map.find(tc->getInfoHash().toString());
+    DBusTorrent *db = torrent_map.find(tc->getInfoHash().truncated().toString());
     if (db) {
         QString ih = db->infoHash();
         Q_EMIT torrentStoppedByError(ih, msg);

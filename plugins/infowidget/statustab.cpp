@@ -17,8 +17,8 @@
 #include "settings.h"
 #include "statustab.h"
 #include <util/functions.h>
+#include <util/infohash.h>
 #include <util/log.h>
-#include <util/sha1hash.h>
 
 using namespace bt;
 
@@ -91,7 +91,7 @@ void StatusTab::changeTC(bt::TorrentInterface *tc)
     setEnabled(tc != nullptr);
 
     if (curr_tc) {
-        info_hash->setText(tc->getInfoHash().toString());
+        info_hash->setText(tc->getInfoHash().getV1().toString());
         type->setText(tc->getStats().priv_torrent ? i18n("Private") : i18n("Public"));
 
         // Don't allow multiple lines in the comments field

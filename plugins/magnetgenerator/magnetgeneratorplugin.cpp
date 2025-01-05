@@ -23,7 +23,7 @@
 #include <interfaces/torrentinterface.h>
 #include <ktorrent/gui.h>
 #include <tracker/tracker.h>
-#include <util/sha1hash.h>
+#include <util/infohash.h>
 
 K_PLUGIN_CLASS_WITH_JSON(kt::MagnetGeneratorPlugin, "ktorrent_magnetgenerator.json")
 
@@ -74,7 +74,7 @@ void MagnetGeneratorPlugin::generateMagnet()
         return;
 
     QUrl dn(tor->getStats().torrent_name);
-    SHA1Hash ih(tor->getInfoHash());
+    SHA1Hash ih(tor->getInfoHash().getV1());
 
     QString uri = QStringLiteral("magnet:?xt=urn:btih:") + ih.toString();
 

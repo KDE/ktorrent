@@ -23,7 +23,7 @@
 #include <torrent/queuemanager.h>
 #include <torrent/timeestimator.h>
 #include <util/functions.h>
-#include <util/sha1hash.h>
+#include <util/infohash.h>
 
 #include "core.h"
 #include "settings.h"
@@ -643,7 +643,7 @@ QMimeData *ViewModel::mimeData(const QModelIndexList &indexes) const
 
         const bt::TorrentInterface *ti = torrentFromIndex(index);
         if (ti) {
-            QString hash = ti->getInfoHash().toString();
+            QString hash = ti->getInfoHash().truncated().toString();
             if (!hashes.contains(hash)) {
                 hashes.append(hash);
             }
