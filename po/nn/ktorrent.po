@@ -925,7 +925,6 @@ msgstr "Lag ein torrent"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
 #, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
 msgid "Only HTTP(S) is supported for webseeding."
 msgstr "Berre HTTP er støtta for vevkjelder."
 
@@ -7628,7 +7627,6 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
 #, fuzzy, kde-format
-#| msgid "Display"
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7674,7 +7672,6 @@ msgstr "(du må lasta om att programtillegget etter endring)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
 #, fuzzy, kde-format
-#| msgid "Display"
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"

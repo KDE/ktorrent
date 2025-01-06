@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-23 00:40+0000\n"
-"PO-Revision-Date: 2025-01-03 22:31+0200\n"
+"PO-Revision-Date: 2025-01-05 08:10+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2137,6 +2137,7 @@ msgid ""
 "Whether or not the magnets that are not downloaded after a maximum period of "
 "time must be pushed back at the end of the queue."
 msgstr ""
+"האם המגנטים שלא יורדים אחרי פרק הזמן המרבי יידחפו בחזרה לסוף התור או שלא."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:166
@@ -2433,7 +2434,7 @@ msgstr "טורנט פעיל:"
 #: ktorrent/pref/colorpref.ui:40
 #, kde-format
 msgid "Torrent is stalled or checking data:"
-msgstr ""
+msgstr "הטורנט מעוכב או שהנתונים שלו נבדקים:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
@@ -2672,7 +2673,7 @@ msgstr "למנוע מהמחשב להיכנס למצב שינה או לנעול �
 #: ktorrent/pref/generalpref.ui:152
 #, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr ""
+msgstr "הדחקת שינה ונעילת מסך אוטומטית כאשר טורנטים רצים"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -2683,6 +2684,10 @@ msgid ""
 "desktop.iso</span>, the torrent will be displayed as <span style=\" font-"
 "weight:600;\">linux-desktop.</span></p>"
 msgstr ""
+"<p>שינוי שם של טורנטים עם קובץ יחיד לשם הקובץ היחיד. </p>\n"
+"<p>אם למשל קוראים לקובץ <span style=\" font-weight:600;\">linux-desktop.iso</"
+"span>, הטורנט יוצג בתור <span style=\" font-weight:600;\">linux-desktop.</"
+"span></p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:163
@@ -2754,6 +2759,10 @@ msgid ""
 "router, this port needs to be forwarded. The UPnP plugin can do this for you."
 "</p>"
 msgstr ""
+"<p>פתחה שמשמשת לפרוטוקול עוקבים ב־UDP.</p>\n"
+"<p><span style=\" font-weight:600;\">לתשומת ליבך:</span> מאחורי נתב, יש "
+"להעביר את הפתחה הזאת כדי לקבל ברשות חיבורים נכנסים. תוסף UPnP יכול לעשות את "
+"זה עבורך.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: ectx: property (text), widget (QLabel, label_3)
@@ -2815,7 +2824,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:185
 #, kde-format
 msgid "Maximum number of connection setups:"
-msgstr ""
+msgstr "כמות הקמות חיבורים מרבית:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
@@ -2826,6 +2835,9 @@ msgid ""
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
+"<p>מספר החיבורים היוצאים המרבי ש־ktorrent ינסה ליצור בו־זמנית.</p>\n"
+"<p>אם מתעוררות בעיות בכך ש־ktorrent חוסם תעבורת אינטרנט אחרת, אפשר לנסות "
+"להגדיר את הערך הזה למספר קטן יותר.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2852,6 +2864,8 @@ msgid ""
 "The µTorrent transport protocol runs over UDP and is optimized to not "
 "interfere with other traffic, while still using up all unused bandwidth."
 msgstr ""
+"פרוטוקול התעבורה µTorrent פועל על גבי UDP והוא מותאם לא להפריע לתעבורה אחרת, "
+"תוך ניצול של כל רוחב הפס הלא מנוצל."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_utpEnabled)
 #: ktorrent/pref/networkpref.ui:235
@@ -2934,7 +2948,7 @@ msgstr "HTTP"
 #: ktorrent/pref/proxypref.ui:23
 #, kde-format
 msgid "Use the HTTP proxy settings configured in the settings of KDE."
-msgstr ""
+msgstr "להשתמש בהגדרות מתווך HTTP שהוגדר בתצורה של KDE."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKDEProxySettings)
 #: ktorrent/pref/proxypref.ui:26
@@ -2952,7 +2966,7 @@ msgstr "מתווך:"
 #: ktorrent/pref/proxypref.ui:42
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
-msgstr ""
+msgstr "כתובת IP או שם מארח של מתווך ה־HTTP לשימוש. "
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
@@ -3522,6 +3536,8 @@ msgid ""
 "Use drag and drop or the move up and down buttons on the right to change the "
 "order."
 msgstr ""
+"סדר של טורנט בתור.\n"
+"אפשר לגרור או להשתמש בכפתורים למעלה למטה שמשמאל כדי לשנות את הסדר."
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
 #: plugins/search/searchactivity.cpp:65 plugins/search/webview.cpp:109
@@ -3732,6 +3748,8 @@ msgid ""
 "<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
 "<br>Remove the limit manually if you want to continue seeding."
 msgstr ""
+"<b>%1</b> הגיע ליחס השיתוף המרבי שלו על סך %2 ואי אפשר להוסיף אותו לתור. "
+"<br>הסרת המגבלה ידנית תאפשר להמשיך לשתף."
 
 #: ktorrent/trayicon.cpp:268
 #, kde-format
@@ -3739,6 +3757,8 @@ msgid ""
 "<b>%1</b> has reached its maximum seed time of %2 hours and cannot be "
 "enqueued. <br>Remove the limit manually if you want to continue seeding."
 msgstr ""
+"<b>%1</b> הגיע לזמן השיתוף המרבי שלו על סך %2 שעות ואי אפשר להוסיף אותו "
+"לתור. <br>הסרת המגבלה ידנית תאפשר להמשיך לשתף."
 
 #: ktorrent/trayicon.cpp:281
 #, kde-format
@@ -3888,7 +3908,7 @@ msgstr "נבדקו %v מתוך %m חתיכות"
 #: ktorrent/view/scanextender.cpp:109
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
-msgstr ""
+msgstr "<font color=\"red\">%1</font>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ktorrent/view/scanextender.ui:21
@@ -4124,7 +4144,7 @@ msgstr "הגדרת מגבלות המהירות על טורנטים נפרדים"
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
 "the incomplete data, too?"
-msgstr ""
+msgstr "הורדת הטורנט <b>%1</b> לא הסתיימה, למחוק גם את הנתונים החלקיים?"
 
 #: ktorrent/view/view.cpp:457
 #, kde-format
@@ -4310,7 +4330,7 @@ msgstr "אחוז הנתונים שיש לנו מתוך כלל הטורנט, לא
 msgid ""
 "Share ratio is the number of bytes uploaded divided by the number of bytes "
 "downloaded"
-msgstr ""
+msgstr "יחס השיתוף הוא מספר הבתים שהועלו לחלק למספר הבתים שירדו"
 
 #: ktorrent/view/viewmodel.cpp:499
 #, kde-format
@@ -4915,7 +4935,7 @@ msgstr "צבע של כל פריט רגיל בתזמון."
 #: plugins/bwscheduler/bwprefpage.ui:162
 #, kde-format
 msgid "Suspended schedule item color:"
-msgstr ""
+msgstr "צבע פריט לוח שנה מושהה:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_suspendedColor)
 #: plugins/bwscheduler/bwprefpage.ui:169
@@ -6453,7 +6473,7 @@ msgstr "תפיסת עוקב מקובץ הטורנט"
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:14
 #, kde-format
 msgid "Toggles if a custom tracker is used"
-msgstr ""
+msgstr "מופעל/כבה אם נעשה שימוש בעוקב מותאם אישית"
 
 #. i18n: ectx: label, entry (tr), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:18
@@ -6817,6 +6837,8 @@ msgid ""
 "Scan the folder recursively for torrents. <br/><br/>\n"
 "Note: This will not be done for any folder named loaded."
 msgstr ""
+"לסרוק את תת־התיקיות לאיתור טורנטים. <br/><br/>\n"
+"לתשומת ליבך: לא יבוצע על תיקיות בשם loaded (נטענו)."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_recursive)
 #: plugins/scanfolder/scanfolderprefpage.ui:92
