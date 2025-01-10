@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2025-01-09 22:20+0200\n"
+"PO-Revision-Date: 2025-01-10 09:23+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3113,7 +3113,7 @@ msgid ""
 "When enabled, the queue manager will be totally disabled, allowing you to "
 "fully control all torrents manually."
 msgstr ""
-"כשהאפשרות פעילה, מנהל התורים יושבת לחלוטין, מה שיאפשר לך לשלוט בכל הטורנטים "
+"כשהאפשרות פעילה, מנהל התור יושבת לחלוטין, מה שיאפשר לך לשלוט בכל הטורנטים "
 "ידנית באופן מוחלט."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_manuallyControlTorrents)
@@ -3161,7 +3161,7 @@ msgstr "כשהמקום בכונן הולך ואוזל:"
 msgid ""
 "What to do when the diskspace is running low and the queue manager wants to "
 "start a torrent."
-msgstr "מה לעשות כשהמקום בכונן אוזל ומנהל התורים רוצה להריץ טורנט."
+msgstr "מה לעשות כשהמקום בכונן אוזל ומנהל התור רוצה להריץ טורנט."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_startDownloadsOnLowDiskSpace)
 #: ktorrent/pref/qmpref.ui:86
@@ -3211,6 +3211,9 @@ msgid ""
 "<p>This will allow the queue manager to run other torrents, when a torrent "
 "is doing nothing.</p>"
 msgstr ""
+"<p>כשהאפשרות הזאת פעילה, מנהל התור יפחית עדיפות של טורנט שעוכב למשך זמן רב. "
+"</p>\n"
+"<p>כך יתאפשר למנהל התור להריץ טורנטים אחרים כאשר טורנט לא מתקדם כלל.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:134
@@ -3225,6 +3228,8 @@ msgid ""
 "<p>Time used for the stall timer. When a torrent is stalled longer than "
 "this, its priority will be decreased.</p>"
 msgstr ""
+"<p>הזמן שישמש את מתזמן העיכוב. כאשר טורנט מעוכב ליותר ממשך הזמן הזה, העדיפות "
+"שלו תופחת.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
@@ -3280,6 +3285,10 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Attention: </span>This is not used when "
 "downloading, only when seeding.</p>"
 msgstr ""
+"<p>יחס השיתוף המרבי, אם הגענו לערך הזה השיתוף ייעצר. חל רק על טורנטים חדשים "
+"שנפתחו, טורנטים קיימים, לא יושפעו על ידי השינוי הזה.</p>\n"
+"<p><span style=\" font-weight:600;\">לתשומת ליבך: </span>אין בזה שימוש במשך "
+"ההורדה, רק בזמן השיתוף.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/qmpref.ui:222
@@ -4895,6 +4904,8 @@ msgid ""
 "Use these global limits when the screensaver is activated, instead of the "
 "ones configured in the network settings."
 msgstr ""
+"להשתמש במגבלות הכוללות האלה רק כאשר שומר המסך פעיל, במקום אלו שהוגדרו "
+"בהגדרות הרשת."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_screensaverLimits)
 #: plugins/bwscheduler/bwprefpage.ui:25
