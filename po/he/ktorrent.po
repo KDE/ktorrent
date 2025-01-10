@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2025-01-06 09:42+0200\n"
+"PO-Revision-Date: 2025-01-09 22:20+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2117,6 +2117,14 @@ msgid ""
 "might not actually reach this speed when this value is too high. Without a "
 "limit you can easily get above 3000 KiB/s on a LAN.</p>"
 msgstr ""
+"<p>כמות הזמן שתהליכוני רשת יירדמו כשהמהירות שלהם מוגבלת. אין לזה שום השפעה "
+"כשאין מגבלות מהירות.</p>\n"
+"<p><span style=\" font-weight:600;\">לתשומת ליבך:</span> ככל שהערך הזה נמוך "
+"יותר ככה המעבד ינוצל יותר. הגדרת ערך גדול יכולה להוביללמהירויות נמוכות "
+"במקרים של חיבור פס־רחב מהיר. </p>\n"
+"<p>למשל ברשת מקומית של 100 מסל״ש, הגדרת מגבלה של 3000 KiB לשנייה, יכול להיות "
+"שהמהירות הזאת לא באמת יבוא לידי ביטוי אם הערך גדול מדי. בלי מגבלה אפשר לקבל "
+"בקלות למעלה מ־3000 KiB לשנייה ברשת מקומית.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
@@ -3208,7 +3216,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:134
 #, kde-format
 msgid "Decrease priority of torrents which are stalled for more than:"
-msgstr ""
+msgstr "הקטנת עדיפות של טורנטים שמעוכבים ליותר מ־:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_stallTimer)
 #: ktorrent/pref/qmpref.ui:141
@@ -3336,7 +3344,7 @@ msgstr "רוחב פס זמין להעלאה:"
 #: ktorrent/pref/recommendedsettingsdlg.ui:57
 #, kde-format
 msgid " Kbps"
-msgstr ""
+msgstr "קסל״ש"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_upload_bw)
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_download_bw)
@@ -3344,7 +3352,7 @@ msgstr ""
 #: ktorrent/pref/recommendedsettingsdlg.ui:60
 #, kde-format
 msgid " kb/s"
-msgstr ""
+msgstr "ק״ב לשנייה"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/recommendedsettingsdlg.ui:50
