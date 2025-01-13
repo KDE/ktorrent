@@ -10,14 +10,14 @@
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013, 2014.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2012, 2015, 2016, 2017.
 # Miguel Branco <mgl.branco@gmail.com>, 2013.
-# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-12-17 18:17+0100\n"
+"PO-Revision-Date: 2025-01-12 15:44+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -588,7 +588,7 @@ msgstr "Non é posíbel cargar o ficheiro torrent: %1"
 #: plugins/search/searchenginelist.cpp:157
 #, kde-format
 msgid "Cannot open %1: %2"
-msgstr "Non é posíbel acceder a %1: %2"
+msgstr "Non é posíbel abrir %1: %2"
 
 #: ktorrent/dialogs/importdialog.cpp:352 ktorrent/dialogs/importdialog.cpp:368
 #, kde-format
@@ -2419,8 +2419,8 @@ msgid ""
 "<p>The encryption will prevent your bittorrent traffic to be flagged as "
 "bittorrent traffic, and so the ISP will not slow it down.</p>"
 msgstr ""
-"<p>O cifrado do protocolo é útil se o seu provedor de acceso a Internet "
-"amaina as conexións BitTorrent.</p>\n"
+"<p>O cifrado do protocolo é útil se o seu provedor de Internet lentifica as "
+"conexións de BitTorrent.</p>\n"
 "<p>O cifrado evita que o tráfico BitTorrent se etiquete como tal, para que o "
 "provedor non o enlenteza.</p>"
 
