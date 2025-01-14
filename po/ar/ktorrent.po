@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-#
 # Safa Alfulaij <safaalfulaij@hotmail.com>, 2013.
-# SPDX-FileCopyrightText: 2022, 2024 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2024, 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2024-05-16 13:52+0400\n"
+"PO-Revision-Date: 2025-01-13 17:39+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -17,16 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "صفا الفليج"
+msgstr "صفا الفليج,زايد السعيدي"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "safaalfulaij@hotmail.com"
+msgstr "safaalfulaij@hotmail.com,zayed.alsaidi@gmail.com"
 
 #: ktorrent/core.cpp:147
 #, kde-format
@@ -34,7 +35,7 @@ msgid ""
 "KTorrent is unable to accept connections because the TCP port %1 is already "
 "in use by another program."
 msgstr ""
-"يتعذّر على سيل.ك قبول الاتصالات لأن منفذ TCP %1 يستخدمه برنامج آخر بالفعل."
+"يتعذّر على سيولك قبول الاتصالات لأن منفذ TCP %1 يستخدمه برنامج آخر بالفعل."
 
 #: ktorrent/core.cpp:157
 #, kde-format
@@ -42,7 +43,7 @@ msgid ""
 "KTorrent is unable to accept connections because the UDP port %1 is already "
 "in use by another program."
 msgstr ""
-"يتعذّر على سيل.ك قبول الاتصالات لأن منفذ UDP %1 يستخدمه برنامج آخر بالفعل."
+"يتعذّر على سيولك قبول الاتصالات لأن منفذ UDP %1 يستخدمه برنامج آخر بالفعل."
 
 #: ktorrent/core.cpp:255
 #, kde-format
@@ -56,7 +57,7 @@ msgstr ""
 #: ktorrent/core.cpp:850
 #, kde-format
 msgid "KTorrent is running one or more torrents"
-msgstr "يشغّل سيل.ك سيل واحد أو أكثر."
+msgstr "يشغّل سيولك سيل واحد أو أكثر."
 
 #: ktorrent/core.cpp:935
 #, kde-format
@@ -69,6 +70,7 @@ msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
 "they need to be mounted."
 msgstr ""
+"لم تُضم واحدة أو أكثر من وحدات التخزين. لبدء تشغيل هذا السيل يجب تثبيتها."
 
 #: ktorrent/core.cpp:1032
 #, kde-format
@@ -152,7 +154,7 @@ msgstr "حواري"
 #, kde-format
 msgid ""
 "Enter the IP address or hostname and port number of the peer you wish to add:"
-msgstr "أدخِل عنوان IP أو اسم المضيف ورقم المنفذ للندّ الذي تودّ إضافته:"
+msgstr "أدخِل عنوان إنترنت IP أو اسم المضيف ورقم المنفذ للندّ الذي تودّ إضافته:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/addpeersdlg.ui:34
@@ -169,7 +171,8 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Note:</span> We accept both IPv4 and "
 "IPv6 addresses</p>\n"
 msgstr ""
-"<p>عنوان IP أو اسم مضيف الندّ الذي تودّ الاتصال به، يجب أن يكون هنا.</p>\n"
+"<p>عنوان إنترنت IP أو اسم مضيف الندّ الذي تودّ الاتصال به، يجب أن يكون هنا.</"
+"p>\n"
 "<p><span style=\" font-weight:600;\">ملاحظة:</span> نقبل عنوانيّ IPv4 و IPv6</"
 "p>\n"
 
@@ -293,18 +296,16 @@ msgstr ""
 "متأكد من فعل ذلك؟"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:291
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "احذف الملف(ات)"
+msgstr "احذف الملفات"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "لا، أبقِ الملفات"
+msgstr "بقِ الملفات"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:315
 #, kde-format
@@ -722,7 +723,7 @@ msgstr "افتح عنوان URL"
 #: ktorrent/dialogs/pastedialog.cpp:114
 #, kde-format
 msgid "Error fetching tracker list"
-msgstr ""
+msgstr "خطأ في جلب قائمة المتتبعين"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
 #, kde-format
@@ -730,6 +731,8 @@ msgid ""
 "Please check if the URL in Settings > Advanced > Tracker list URL is "
 "reachable."
 msgstr ""
+"يرجى التحقق مما إذا كان الرابط في الإعدادات> خيارات متقدمة> رابط قائمة "
+"المتتبّعين يمكن الوصول إليه."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
@@ -911,10 +914,9 @@ msgid "Create A Torrent"
 msgstr "أنشئ سيل"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "فقط HTTP مدعوم لمُزوِّدات الوِب."
+msgstr "فقط HTTP(S) مدعوم لمُزوِّدات الوِب."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -1346,13 +1348,12 @@ msgstr "استورد سيل"
 #: ktorrent/gui.cpp:399
 #, kde-format
 msgid "Show/Hide KTorrent"
-msgstr "أظهر/أخفِ سيل.ك"
+msgstr "أظهر/أخفِ سيولك"
 
 #: ktorrent/gui.cpp:417
-#, fuzzy, kde-format
-#| msgid "DHT: %1, %2"
+#, kde-format
 msgid "D: %1 | U: %2"
-msgstr "DHT: %1، %2"
+msgstr "ت: %1 | ر: %2"
 
 #: ktorrent/ipfilterwidget.cpp:39
 #, kde-format
@@ -1389,7 +1390,7 @@ msgstr "اختر اسمًا للملف للحفظ به"
 #: ktorrent/ipfilterwidget.ui:14
 #, kde-format
 msgid "KTorrent Blacklisted Peers"
-msgstr "أنداد سيل.ك على القائمة السوداء"
+msgstr "أنداد سيولك على القائمة السوداء"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/ipfilterwidget.ui:22
@@ -1500,23 +1501,21 @@ msgid "Columns"
 msgstr "الأعمدة"
 
 #: ktorrent/main.cpp:99
-#, fuzzy, kde-format
-#| msgid "KTorrent"
+#, kde-format
 msgctxt "@title"
 msgid "KTorrent"
-msgstr "سيل.ك"
+msgstr "سيولك"
 
 #: ktorrent/main.cpp:101
-#, fuzzy, kde-format
-#| msgid "Bittorrent client for KDE"
+#, kde-format
 msgid "Bittorrent client by KDE"
 msgstr "عميل بِت‌تورنت لِكِيدِي"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@info:credit"
 msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
-msgstr "C و إيفان"
+msgstr "(ج) 2005 - 2011 يوريس غيسون وإيفان فاسيتش"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -1524,9 +1523,9 @@ msgid "Joris Guisson"
 msgstr "يوريس غيسون"
 
 #: ktorrent/main.cpp:114
-#, fuzzy, kde-format
+#, kde-format
 msgid "Ivan Vasic"
-msgstr "إيفان"
+msgstr "إيفان فاسيتش"
 
 #: ktorrent/main.cpp:115
 #, kde-format
@@ -1534,24 +1533,24 @@ msgid "Alan Jones"
 msgstr "ألان جونز"
 
 #: ktorrent/main.cpp:115
-#, fuzzy, kde-format
+#, kde-format
 msgid "BitFinder Plugin"
-msgstr "ملحق"
+msgstr "محلقة BitFinder"
 
 #: ktorrent/main.cpp:116
-#, fuzzy, kde-format
+#, kde-format
 msgid "Diego Rosario Brogna"
-msgstr "ديجو روزاريو"
+msgstr "دييغو روزاريو بروجنا"
 
 #: ktorrent/main.cpp:116
-#, fuzzy, kde-format
+#, kde-format
 msgid "Webinterface Plugin, global max share ratio patch"
-msgstr "شامل مشاركات نسبة patch"
+msgstr "ملحقة Webinterface، تصحيح نسبة المشاركة القصوى العالمية"
 
 #: ktorrent/main.cpp:117
 #, kde-format
 msgid "Krzysztof Kundzicz"
-msgstr ""
+msgstr "كرزيستوف كوندزيتش"
 
 #: ktorrent/main.cpp:117
 #, kde-format
@@ -1561,22 +1560,22 @@ msgstr "ملحق الإحصائيات"
 #: ktorrent/main.cpp:118
 #, kde-format
 msgid "Christian Weilbach"
-msgstr ""
+msgstr "كريستيان ويلباخ"
 
 #: ktorrent/main.cpp:118
 #, kde-format
 msgid "kio-magnet"
-msgstr ""
+msgstr "كيو مغناطيس"
 
 #: ktorrent/main.cpp:119
 #, kde-format
 msgid "Mladen Babic"
-msgstr ""
+msgstr "ملادن بابيتش"
 
 #: ktorrent/main.cpp:119
-#, fuzzy, kde-format
+#, kde-format
 msgid "Application icon and a couple of others"
-msgstr "تطبيق أيقونة و a من"
+msgstr "أيقونة التطبيق و أخرى غيرها"
 
 #: ktorrent/main.cpp:120
 #, kde-format
@@ -1594,17 +1593,17 @@ msgid "1.0 application icon"
 msgstr "أيقونة التطبيق 1.0"
 
 #: ktorrent/main.cpp:122
-#, fuzzy, kde-format
+#, kde-format
 msgid "Vincent Wagelaar"
-msgstr "فنسينت"
+msgstr "فنسنت واغيلار"
 
 #: ktorrent/main.cpp:123
 #, kde-format
 msgid "Knut Morten Johansson"
-msgstr ""
+msgstr "كنوت مورتن جوهانسون"
 
 #: ktorrent/main.cpp:124
-#, fuzzy, kde-format
+#, kde-format
 msgid "Felix Berger"
 msgstr "فيليكس بيرجر"
 
@@ -1621,12 +1620,12 @@ msgstr "Andreas Kling"
 #: ktorrent/main.cpp:126
 #, kde-format
 msgid "Felipe Sateler"
-msgstr ""
+msgstr "فيليبي ساتلر"
 
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1636,16 +1635,20 @@ msgid ""
 "https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
 "flags.blogpotato.de/ so thanks to them too."
 msgstr ""
+"مقدم قاعدة بيانات IP-Country المستخدمة في البرنامج المساعد InfoWidget. تم "
+"ترخيص البيانات بموجب الترخيص الدولي للمشاع الإبداعي 4.0 https://"
+"creativecommons.org/licenses/by/4.0/. الأعلام مأخوذة من http://flags."
+"blogpotato.de/ لذا شكرًا لهم أيضًا."
 
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "Maxmind"
-msgstr ""
+msgstr "ماكس مايند"
 
 #: ktorrent/main.cpp:133
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "مكتبة maxminddb المستخدمة لملحقة InfoWidget."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1658,7 +1661,7 @@ msgid "File prioritization and some other patches"
 msgstr "تحديد أولويات الملفات وبعض الرقع الأخرى"
 
 #: ktorrent/main.cpp:135
-#, fuzzy, kde-format
+#, kde-format
 msgid "Thomas Bernard"
 msgstr "توماس برنار"
 
@@ -1670,7 +1673,7 @@ msgstr "استُخدم Miniupnp كمثال لإنجاز UPnP خاصتنا"
 #: ktorrent/main.cpp:139
 #, kde-format
 msgid "Lesly Weyts"
-msgstr ""
+msgstr "ليزلي ويتس"
 
 #: ktorrent/main.cpp:139 ktorrent/main.cpp:140
 #, kde-format
@@ -1678,19 +1681,19 @@ msgid "Zeroconf enhancements"
 msgstr "تحسينات Zeroconf"
 
 #: ktorrent/main.cpp:140
-#, fuzzy, kde-format
+#, kde-format
 msgid "Kevin Andre"
 msgstr "كيفين أندريه"
 
 #: ktorrent/main.cpp:141
 #, kde-format
 msgid "Dagur Valberg Johannsson"
-msgstr ""
+msgstr "داجور فالبيرج جوهانسون"
 
 #: ktorrent/main.cpp:141
 #, kde-format
 msgid "Coldmilk webgui"
-msgstr ""
+msgstr "كولدميلك ويبغي"
 
 #: ktorrent/main.cpp:142
 #, kde-format
@@ -1703,9 +1706,9 @@ msgid "IDEAl code from KDevelop"
 msgstr "شِفرة IDEAl من تطوير.ك"
 
 #: ktorrent/main.cpp:143
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scott Wolchok"
-msgstr "سكوت"
+msgstr "سكوت وولشوك"
 
 #: ktorrent/main.cpp:143
 #, kde-format
@@ -1713,9 +1716,9 @@ msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "تحسين سرعة التحويل في ملحق مرشّح عنوان IP"
 
 #: ktorrent/main.cpp:144
-#, fuzzy, kde-format
+#, kde-format
 msgid "Bryan Burns of Juniper Networks"
-msgstr "بريان برنز من العرعر - نبات الشبكات"
+msgstr "بريان بيرنز من شركة جونيبر نتوركس"
 
 #: ktorrent/main.cpp:144
 #, kde-format
@@ -1725,7 +1728,7 @@ msgstr "كشفَ نقطتيّ ضعف أمنيّتين (كلتاهما أُصلِ
 #: ktorrent/main.cpp:145
 #, kde-format
 msgid "Goten Xiao"
-msgstr ""
+msgstr "جوتين شياو"
 
 #: ktorrent/main.cpp:145
 #, kde-format
@@ -1735,7 +1738,7 @@ msgstr "رقعة للتحميل سكونيًّا بموقع حفظ"
 #: ktorrent/main.cpp:146
 #, kde-format
 msgid "Rapsys"
-msgstr ""
+msgstr "رابسيس"
 
 #: ktorrent/main.cpp:146
 #, kde-format
@@ -1745,17 +1748,17 @@ msgstr "إصلاحات في شِفرة واجهة الوِب"
 #: ktorrent/main.cpp:147
 #, kde-format
 msgid "Athantor"
-msgstr ""
+msgstr "أثانتور"
 
 #: ktorrent/main.cpp:147
-#, fuzzy, kde-format
+#, kde-format
 msgid "XFS specific disk preallocation"
-msgstr "قرص"
+msgstr "التخصيص المسبق للقرص الخاص بـ XFS"
 
 #: ktorrent/main.cpp:148
 #, kde-format
 msgid "twisted_fall"
-msgstr ""
+msgstr "twisted_fall"
 
 #: ktorrent/main.cpp:148
 #, kde-format
@@ -1765,17 +1768,17 @@ msgstr "رقعة لعدم إظهار السرعات القليلة للغاية"
 #: ktorrent/main.cpp:149
 #, kde-format
 msgid "Lucke"
-msgstr ""
+msgstr "لاك"
 
 #: ktorrent/main.cpp:149
-#, fuzzy, kde-format
+#, kde-format
 msgid "Patch to show potentially firewalled status"
-msgstr "الرقعة إلى إظهار الحالة"
+msgstr "تصحيح لإظهار حالة جدار الحماية المحتملة"
 
 #: ktorrent/main.cpp:150
 #, kde-format
 msgid "Modestas Vainius"
-msgstr ""
+msgstr "موديستاس فينيوس"
 
 #: ktorrent/main.cpp:150
 #, kde-format
@@ -1785,7 +1788,7 @@ msgstr "رقع متعدّدة"
 #: ktorrent/main.cpp:151
 #, kde-format
 msgid "Stefan Monov"
-msgstr ""
+msgstr "ستيفان مونوف"
 
 #: ktorrent/main.cpp:151
 #, kde-format
@@ -1795,7 +1798,7 @@ msgstr "رقعة لإخفاء شريط الأدوات الرئيسي"
 #: ktorrent/main.cpp:152
 #, kde-format
 msgid "The_Kernel"
-msgstr ""
+msgstr "النواة"
 
 #: ktorrent/main.cpp:152
 #, kde-format
@@ -1805,7 +1808,7 @@ msgstr "رقعة لتغيير أولويات الملف في واجهة الوِ
 #: ktorrent/main.cpp:153
 #, kde-format
 msgid "Rafał Miłecki"
-msgstr ""
+msgstr "رافائيل ميليكي"
 
 #: ktorrent/main.cpp:153
 #, kde-format
@@ -1815,7 +1818,7 @@ msgstr "رقع متعدّدة لواجهة الوِب"
 #: ktorrent/main.cpp:154
 #, kde-format
 msgid "Ozzi"
-msgstr ""
+msgstr "أوزي"
 
 #: ktorrent/main.cpp:154
 #, kde-format
@@ -1825,7 +1828,7 @@ msgstr "إصلاحات لتحذيرات متعدّدة"
 #: ktorrent/main.cpp:155
 #, kde-format
 msgid "Markus Brueffer"
-msgstr ""
+msgstr "ماركوس برويفر"
 
 #: ktorrent/main.cpp:155
 #, kde-format
@@ -1845,17 +1848,17 @@ msgstr "رقعة لإصلاح الانهيار في عرض تنزيل الكتل
 #: ktorrent/main.cpp:157
 #, kde-format
 msgid "Rickard Närström"
-msgstr ""
+msgstr "ريكارد نارستروم"
 
 #: ktorrent/main.cpp:157
 #, kde-format
 msgid "A couple of bugfixes"
-msgstr ""
+msgstr "زوج من الإصلاحات"
 
 #: ktorrent/main.cpp:158
 #, kde-format
 msgid "caruccio"
-msgstr ""
+msgstr "كاروتشيو"
 
 #: ktorrent/main.cpp:158
 #, kde-format
@@ -1885,7 +1888,7 @@ msgstr "دعم السحب والإفلات لبريمج البلازما"
 #: ktorrent/main.cpp:161
 #, kde-format
 msgid "Ian Higginson"
-msgstr ""
+msgstr "إيان هيجينسون"
 
 #: ktorrent/main.cpp:161
 #, kde-format
@@ -1895,7 +1898,7 @@ msgstr "رقعة لتنظيف قائمة الملحقات"
 #: ktorrent/main.cpp:162
 #, kde-format
 msgid "Amichai Rothman"
-msgstr ""
+msgstr "عميحاي روثمان"
 
 #: ktorrent/main.cpp:162
 #, kde-format
@@ -1905,7 +1908,7 @@ msgstr "رقعة لجعل بريمج بلازما يُبثِق بريمج منب
 #: ktorrent/main.cpp:163
 #, kde-format
 msgid "Leo Trubach"
-msgstr ""
+msgstr "ليو تروباخ"
 
 #: ktorrent/main.cpp:163
 #, kde-format
@@ -1915,7 +1918,7 @@ msgstr "رقعة لإضافة دعم مجالات عنوان IP في حواري 
 #: ktorrent/main.cpp:164
 #, kde-format
 msgid "Andrei Barbu"
-msgstr ""
+msgstr "أندريه باربو"
 
 #: ktorrent/main.cpp:164
 #, kde-format
@@ -1925,7 +1928,7 @@ msgstr "ميزة تضيف تاريخ إضافة السيل"
 #: ktorrent/main.cpp:165
 #, kde-format
 msgid "Jonas Lundqvist"
-msgstr ""
+msgstr "جوناس لوندكفيست"
 
 #: ktorrent/main.cpp:165
 #, kde-format
@@ -1935,7 +1938,7 @@ msgstr "ميزة لتعطيل الاستيثاق في واجهة الوِب"
 #: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jaroslaw Swierczynski"
-msgstr ""
+msgstr "ياروسلاف سويرتشينسكي"
 
 #: ktorrent/main.cpp:166
 #, kde-format
@@ -1945,7 +1948,7 @@ msgstr "استثناء الأنماط في ملحق الخلاصات"
 #: ktorrent/main.cpp:167
 #, kde-format
 msgid "Alexey Shildyakov "
-msgstr ""
+msgstr "أليكسي شيلدياكوف"
 
 #: ktorrent/main.cpp:167
 #, kde-format
@@ -1955,7 +1958,7 @@ msgstr "رقعة لإعادة تسمية سيول الملف الواحد إلى
 #: ktorrent/main.cpp:168
 #, kde-format
 msgid "Maarten De Meyer"
-msgstr ""
+msgstr "مارتن دي ماير"
 
 #: ktorrent/main.cpp:168
 #, kde-format
@@ -1965,23 +1968,22 @@ msgstr "إصلاح العلة 305379"
 #: ktorrent/main.cpp:169
 #, kde-format
 msgid "Rex Dieter"
-msgstr ""
+msgstr "ريكس ديتر"
 
 #: ktorrent/main.cpp:169
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
-msgstr ""
+msgstr "إضافة دعم لنوع mimetype x-scheme-handler/magnet"
 
 #: ktorrent/main.cpp:170
 #, kde-format
 msgid "Leszek Lesner"
-msgstr ""
+msgstr "ليسزيك ليسنر"
 
 #: ktorrent/main.cpp:170
-#, fuzzy, kde-format
-#| msgid "Fix for bug 305379"
+#, kde-format
 msgid "Fix for bug 339584"
-msgstr "إصلاح العلة 305379"
+msgstr "إصلاح العلة 339584"
 
 #: ktorrent/main.cpp:171
 #, kde-format
@@ -1999,14 +2001,14 @@ msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
 #: ktorrent/main.cpp:173
-#, fuzzy, kde-format
+#, kde-format
 msgid "Alexander Trufanov"
-msgstr "أليكساندر"
+msgstr "ألكسندر تروفانوف"
 
 #: ktorrent/main.cpp:173
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
-msgstr ""
+msgstr "إصلاحات الأخطاء وعمليات التنظيف والتحسينات"
 
 #: ktorrent/main.cpp:174
 #, kde-format
@@ -2028,12 +2030,12 @@ msgstr "مكّن السجلّ"
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
-msgstr ""
+msgstr "تمكين السجل إلى الإخراج القياسي. يتطلب تحديد --enable-logging أيضًا."
 
 #: ktorrent/main.cpp:181
-#, fuzzy, kde-format
+#, kde-format
 msgid "Silently open torrent given on URL"
-msgstr "عاجز إلى فتح ملفّ 2"
+msgstr "افتح ملف السيل بصمت على عنوان URL"
 
 #: ktorrent/main.cpp:182
 #, kde-format
@@ -2078,7 +2080,7 @@ msgstr "الأداء"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/advancedpref.ui:53
-#, fuzzy, kde-format
+#, kde-format
 msgid "GUI update interval:"
 msgstr "فترة تحديث واجهة المستخدم الرسومية:"
 
@@ -2120,25 +2122,33 @@ msgid ""
 "might not actually reach this speed when this value is too high. Without a "
 "limit you can easily get above 3000 KiB/s on a LAN.</p>"
 msgstr ""
+"<p>مدة سكون خيوط الشبكة عندما تكون سرعتها محدودة. لا يؤثر هذا مطلقًا عندما لا "
+"تكون هناك حدود للسرعة.</p>\n"
+"<p><span style=\" font-weight:600;\">ملاحظة:</span> كلما كان هذا أقل، كلما "
+"زاد استخدام وحدة المعالجة المركزية. يمكن أن يؤدي ضبطه على قيمة عالية إلى "
+"سرعات أقل في مواقف النطاق الترددي العالي. </p>\n"
+"<p>على سبيل المثال، في شبكة محلية بسرعة 100 ميجابت في الثانية، إذا قمت "
+"بتعيين حد 3000 كيلوبايت في الثانية، فقد لا تصل إلى هذه السرعة بالفعل عندما "
+"تكون هذه القيمة مرتفعة للغاية. بدون حد، يمكنك بسهولة الحصول على سرعة أعلى من "
+"3000 كيلوبايت في الثانية على شبكة محلية.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
 #, kde-format
 msgid "Magnets Queue"
-msgstr ""
+msgstr "قائمة انتظار المغناطيس"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/advancedpref.ui:140
-#, fuzzy, kde-format
+#, kde-format
 msgid "Number of downloading slots:"
-msgstr "الرقم من ارفع:"
+msgstr "عدد فتحات التنزيل:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_numMagnetDownloadingSlots)
 #: ktorrent/pref/advancedpref.ui:147
-#, fuzzy, kde-format
-#| msgid "Maximum number of downloads (0 = no limit)"
+#, kde-format
 msgid "Maximum number of concurrent downloading magnets at the same time."
-msgstr "العدد الأقصى للتنزيلات (0 = بدون حدود)"
+msgstr "الحد الأقصى لعدد مغناطيسات التنزيل المتزامنة في نفس الوقت."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:163
@@ -2147,12 +2157,14 @@ msgid ""
 "Whether or not the magnets that are not downloaded after a maximum period of "
 "time must be pushed back at the end of the queue."
 msgstr ""
+"ما إذا كان يجب إرجاع المغناطيسات التي لم تنزل بعد فترة زمنية قصوى إلى نهاية "
+"قائمة الانتظار أم لا."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:166
-#, fuzzy, kde-format
+#, kde-format
 msgid "Requeue magnets after:"
-msgstr "إنشاء a"
+msgstr "إعادة وضع المغناطيسات في قائمة الانتظار بعد:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:173
@@ -2161,6 +2173,8 @@ msgid ""
 "Maximum time that a magnet can occupy a downloading slot before it will be "
 "pushed back in the queue."
 msgstr ""
+"الحد الأقصى للوقت الذي يمكن أن يشغل فيه المغناطيس فتحة التنزيل قبل أن يعاد "
+"إلى قائمة الانتظار."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
@@ -2214,10 +2228,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Tracker list URL:"
-msgstr "انسخ عنوان URL للسيل"
+msgstr "عنوان قائمة المتتبعين:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2226,6 +2239,8 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"عنوان لقائمة المتتبّعين المستخدمة عند إضافة سيل بواسطة infohash\n"
+"ملاحظة: يجب أن يكون كل متتبع على السطر لوحده. لن تعتبر الأسطر الفارغة."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2237,6 +2252,10 @@ msgid ""
 "It can be disabled if you do not like the additional network traffic it "
 "generates"
 msgstr ""
+"حلّ اسم المضيف لكل نظير. سيؤدي هذا إلى عرض اسم المضيف لكل نظير بدلاً من عنوان "
+"الانترنت. \n"
+"\n"
+"يمكن تعطيله إذا كنت لا تحب حركة المرور الإضافية التي يولدها على الشبكة"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:307
@@ -2262,6 +2281,8 @@ msgid ""
 "DHT is a trackerless protocol to find peers sharing the same torrents as you "
 "do."
 msgstr ""
+"جدول تلبيد موزع DHT هو ميفاق لا يمكن تتبعه للعثور على أقران يتشاركون نفس "
+"ملفات السيل."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_dhtSupport)
 #: ktorrent/pref/btpref.ui:26
@@ -2360,6 +2381,8 @@ msgid ""
 "disabled. If you want to connect to those peers, you need to have this "
 "option enabled."
 msgstr ""
+"لا تدعم جميع الأجهزة التعمية، وقد قام بعض الأشخاص بتعطيل التعمية. إذا كنت "
+"تريد الاتصال بهؤلاء العملاء، فيجب عليك تمكين هذا الخيار."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_allowUnencryptedConnections)
 #. i18n: ectx: label, entry (allowUnencryptedConnections), group (downloads)
@@ -2381,14 +2404,14 @@ msgid ""
 "Instead of allowing the tracker to determine your IP address, tell the "
 "tracker which IP address to use. Use this when you are behind a proxy."
 msgstr ""
-"بدلًا من السماح للمتتبّع بتحديد عنوان IP خاصتك، أخبر المتتبّع أيَّ عنوان IP يجب "
-"استخدامه. استخدم هذا عندما تكون خلف وسيط."
+"بدلًا من السماح للمتتبّع بتحديد عنوان الإنترنت IP خاصتك، أخبر المتتبّع أيَّ عنوان "
+"IP يجب استخدامه. استخدم هذا عندما تكون خلف وكيل."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomIP)
 #: ktorrent/pref/btpref.ui:133
 #, kde-format
 msgid "Send the tracker a custom IP address or hostname"
-msgstr "أرسِل للمتتبّع عنوان IP أو اسم مضيف مخصّص"
+msgstr "أرسِل للمتتبّع عنوان الإنترنت IP أو اسم مضيف مخصّص"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/btpref.ui:142
@@ -2403,8 +2426,8 @@ msgid ""
 "Custom IP address or hostname to send to the tracker. Hostnames will be "
 "resolved at runtime and the resolved IP address will be sent to the tracker."
 msgstr ""
-"عنوان IP مخصّص أو اسم المضيف لإرساله إلى المتتبّع. أسماء المضيفين ستُحلّ في وقت "
-"التشغيل وعناوين IP ستُحلّ عند إرسالها إلى المتتبّع."
+"عنوان الإنترنت IP مخصّص أو اسم المضيف لإرساله إلى المتتبّع. أسماء المضيفين "
+"ستُحلّ في وقت التشغيل وعناوين الإنترنت IP ستُحلّ عند إرسالها إلى المتتبّع."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, ColorsGbw)
@@ -2416,43 +2439,39 @@ msgstr "الألوان"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_stalledTorrentColor)
 #: ktorrent/pref/colorpref.ui:19
-#, fuzzy, kde-format
-#| msgid "Decrease priority of torrents which are stalled for too long"
+#, kde-format
 msgid "Color to use for torrents when they are stalled or checking data."
-msgstr "قلِّل أولوية السيول المتوقّفة لوقت طويل"
+msgstr "اللون الذي سيُستخدم للسيول عند توقفها أو فحص البيانات."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTorrentColor)
 #: ktorrent/pref/colorpref.ui:26
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
-msgstr ""
+msgstr "اللون المستخدم للسيول أثناء البذر أو التنزيل."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
-#, fuzzy, kde-format
-#| msgid "KTorrent is not running."
+#, kde-format
 msgid "Torrent is running:"
-msgstr "سيل.ك لا يعمل."
+msgstr "سيولك يعمل:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/colorpref.ui:40
 #, kde-format
 msgid "Torrent is stalled or checking data:"
-msgstr ""
+msgstr "السيل متوقف أو يتحقق من البيانات:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
-#, fuzzy, kde-format
-#| msgid "Color to use for first priority files."
+#, kde-format
 msgid "Color to use for torrents with error status."
-msgstr "اللون لاستخدامه لملفات الأولوية الأولى."
+msgstr "اللون المطلوب استخدامه للسيل ذو حالة الخطأ."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/colorpref.ui:54
-#, fuzzy, kde-format
-#| msgid "Torrent:"
+#, kde-format
 msgid "Torrent error:"
-msgstr "السيل:"
+msgstr "خطأ السيل:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2460,7 +2479,7 @@ msgstr "السيل:"
 msgid ""
 "Additionally highlight torrents based on the status of their trackers (if "
 "any)"
-msgstr ""
+msgstr "بالإضافة إلى ذلك، ميّز السيول بناءً على حالة متتبعيها (إن وجدت)"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:72
@@ -2469,12 +2488,14 @@ msgid ""
 "Color to use when at least one tracker is connected and replied no errors or "
 "warnings."
 msgstr ""
+"اللون الذي سيستخدم عند توصيل متتبع واحد على الأقل وعدم الرد على أي أخطاء أو "
+"تحذيرات."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/colorpref.ui:79
 #, kde-format
 msgid "Some of the trackers are reachable:"
-msgstr ""
+msgstr "بعض المتتبعون يمكن الوصول إليهم:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_warningsTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:86
@@ -2482,30 +2503,34 @@ msgstr ""
 msgid ""
 "Color to use when the best attempt to connect to tracker results in warning."
 msgstr ""
+"اللون المطلوب استخدامه عندما تؤدي أفضل محاولة للاتصال بالمتتبع إلى ظهور "
+"تحذير."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/colorpref.ui:93
 #, kde-format
 msgid "None of the trackers are reachable:"
-msgstr ""
+msgstr "حين لا يمكن الوصول إلى أي من المتتبعين:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: ktorrent/pref/colorpref.ui:100
 #, kde-format
 msgid "Reachable trackers report warnings:"
-msgstr ""
+msgstr "حين يصدر المتتبعون الذين يمكن الوصول إليهم تحذيرات:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
 #, kde-format
 msgid "Color to use when all trackers reply the errors or not found."
 msgstr ""
+"اللون الذي سيستخدم عندما يقوم كافة المتتبعين بالرد على الأخطاء أو عدم العثور "
+"عليها."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
 #, kde-format
 msgid "Trackers are timing out:"
-msgstr ""
+msgstr "انتهت مهلة المتتبعين:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_timeoutTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:121
@@ -2514,37 +2539,38 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"اللون الذي سيستخدم عندما تؤدي أفضل محاولة للاتصال بالمتتبع إلى انتهاء "
+"المهلة. سيتصل مرة أخرى لاحقًا."
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
-#, fuzzy, kde-format
-#| msgid "Share ratio:"
+#, kde-format
 msgid "Low share ratio:"
-msgstr "نسبة المشاركة:"
+msgstr "نسبة المشاركة المنخفضة:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
+#, kde-format
 msgid "Good share ratio:"
-msgstr "الأقصى مشاركات نسبة:"
+msgstr "نسبة المشاركة الجيدة:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
 #, kde-format
 msgid "Color to display share ratio below minimal good value."
-msgstr ""
+msgstr "اللون لعرض نسبة المشاركة أقل من الحد الأدنى للقيمة الجيدة."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_goodShareRatioColor)
 #: ktorrent/pref/colorpref.ui:154
 #, kde-format
 msgid "Color to display share ratio above minimal good value."
-msgstr ""
+msgstr "لون لعرض نسبة المشاركة أعلى من الحد الأدنى للقيمة الجيدة."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
-msgstr ""
+msgstr "تصفير الألوان إلى قيمها المبدئية (لن تتغير الإعدادات الأخرى)."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
@@ -2575,7 +2601,7 @@ msgstr "المجلد لتخزين معلومات السيل:"
 msgid ""
 "Directory to store information about all torrents currently opened in "
 "KTorrent."
-msgstr "الدليل لتخزين معلومات كل السيول المفتوحة حاليًّا في سيل.ك."
+msgstr "الدليل لتخزين معلومات كل السيول المفتوحة حاليًّا في سيولك."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useSaveDir)
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, kcfg_saveDir)
@@ -2602,7 +2628,7 @@ msgstr "انقل التنزيلات المكتملة إلى:"
 #: ktorrent/pref/generalpref.ui:71 ktorrent/pref/generalpref.ui:81
 #, kde-format
 msgid "Directory to copy all torrent files in, which are opened by KTorrent."
-msgstr "الدليل لنسخ كل ملفات السيول فيه، حيث سيفتحهُ سيل.ك."
+msgstr "الدليل لنسخ كل ملفات السيول فيه، حيث سيفتحهُ سيولك."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useTorrentCopyDir)
 #: ktorrent/pref/generalpref.ui:74
@@ -2618,16 +2644,15 @@ msgstr "أيقونة صينية النظام"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
-#, fuzzy, kde-format
-#| msgid "Whether or not to show an icon in the system tray."
+#, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
-msgstr "لإظهار أو عدم إظهار أيقونة في صينية النظام."
+msgstr "ما إذا كان سيصغر دائمًا إلى صينية النظام عند بدء التشغيل أم لا."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr ""
+msgstr "صغّر دائمًا إلى صينية النظام عند بدء التشغيل"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -2669,20 +2694,17 @@ msgstr "افتح كل السيول سكونيًّا"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:149
-#, fuzzy, kde-format
-#| msgid ""
-#| "Prevent computer from going into a sleep state when torrents are running."
+#, kde-format
 msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
-msgstr "امنع الحاسوب من حالة النوم أثناء عمل السيول."
+msgstr "امنع الحاسوب من حالة النوم أو قفل الشاشة أثناء عمل السيول."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
-#, fuzzy, kde-format
-#| msgid "Suppress sleep when torrents are running"
+#, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr "اكبت النوم أثناء عمل السيول"
+msgstr "اكبت النوم وأقفل الشاشة آليا أثناء عمل السيول"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -2720,7 +2742,7 @@ msgstr "أبرز السيول الجديدة"
 #: ktorrent/pref/generalpref.ui:180
 #, kde-format
 msgid "Show total speed in the window title"
-msgstr ""
+msgstr "أظهر السرعة الإجمالية في عنوان النافذة"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/networkpref.cpp:21 ktorrent/pref/recommendedsettingsdlg.ui:199
@@ -2797,9 +2819,9 @@ msgstr "حدّ الاتصال العالمي:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxTotalConnections)
 #: ktorrent/pref/networkpref.ui:98
-#, fuzzy, kde-format
+#, kde-format
 msgid "The global connection limit for all torrents combined."
-msgstr "أقصى عدد الاتصالات لكل سيل:"
+msgstr "حد الاتصال الإجمالي لجميع السيول مجتمعة."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxDownloadRate)
 #: ktorrent/pref/networkpref.ui:118
@@ -2829,9 +2851,9 @@ msgstr "ستُملأ هذه القيمة في حقل DSCP لكل حزم عناو
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/networkpref.ui:185
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum number of connection setups:"
-msgstr "أقصى عدد الاتصالات لكل سيل:"
+msgstr "الحد الأقصى لعدد إعدادات الاتصال:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
@@ -2842,6 +2864,10 @@ msgid ""
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
+"<p>الحد الأقصى لعدد الاتصالات الصادرة التي سيحاول سيولك إعدادها في وقت واحد."
+"</p>\n"
+"<p>إذا كنت تواجه مشكلة في حظر سيولك لحركة مرور الإنترنت الأخرى، فحاول تعيين "
+"هذا الرقم أقل قليلاً.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2868,6 +2894,8 @@ msgid ""
 "The µTorrent transport protocol runs over UDP and is optimized to not "
 "interfere with other traffic, while still using up all unused bandwidth."
 msgstr ""
+"يعمل ميفاق النقل μTorrent عبر UDP وهو محسن بحيث لا يتداخل مع حركة المرور "
+"الأخرى، مع الاستمرار في استخدام كامل السرعة غير المستخدمة."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_utpEnabled)
 #: ktorrent/pref/networkpref.ui:235
@@ -2905,6 +2933,8 @@ msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
+"ميفاق النقل الأساسي المطلوب استخدامه، عند محاولة إعداد اتصال مع نظير، يتم "
+"اختيار هذا الميفاق أولاً."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -2925,7 +2955,7 @@ msgstr "µTP"
 msgid ""
 "Let KTorrent calculate the recommended settings based upon the bandwidth you "
 "have available."
-msgstr "دَع سيل.ك يحسب الإعدادات المستحسنة بناءً على عِرض الناطق الذي يتوفّر لديك."
+msgstr "دَع سيولك يحسب الإعدادات المستحسنة بناءً على عِرض الناطق الذي يتوفّر لديك."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
@@ -3205,10 +3235,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:134
-#, fuzzy, kde-format
-#| msgid "Decrease priority of torrents which are stalled for too long"
+#, kde-format
 msgid "Decrease priority of torrents which are stalled for more than:"
-msgstr "قلِّل أولوية السيول المتوقّفة لوقت طويل"
+msgstr "قلِّل أولوية السيول المتوقّفة لأكثر من:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_stallTimer)
 #: ktorrent/pref/qmpref.ui:141
@@ -3217,6 +3246,8 @@ msgid ""
 "<p>Time used for the stall timer. When a torrent is stalled longer than "
 "this, its priority will be decreased.</p>"
 msgstr ""
+"<p>الوقت المستخدم لمؤقت التوقف. عندما يتوقف ملف السيل لفترة أطول من هذا، "
+"ستقل أولويته.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
@@ -3253,6 +3284,8 @@ msgid ""
 "The number of upload slots, this determines the number of peers you can "
 "upload to simultaneously for one torrent."
 msgstr ""
+"عدد فتحات الرفع، وهذا يحدد عدد النظراء الذين يمكنك التحميل إليهم في وقت واحد "
+"لسيل واحد."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/qmpref.ui:198
@@ -3270,6 +3303,11 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Attention: </span>This is not used when "
 "downloading, only when seeding.</p>"
 msgstr ""
+"<p>نسبة المشاركة القصوى، إذا وصو إلى هذه القيمة، فستتوقف عملية التوزيع. لا "
+"يطبق هذا إلا على ملفات السيول الجديدة، ولن تتأثر ملفات السيول الموجودة "
+"بتغيير هذا.</p>\n"
+"<p><span style=\" font-weight:600;\">انتبه: </span>لا يستخدم هذا عند "
+"التنزيل، فقط عند التوزيع.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/qmpref.ui:222
@@ -3296,12 +3334,14 @@ msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
+"القيمة التي ستعرض نسبة المشاركة عندها باللون الأخضر. ستعرض النسب الأقل "
+"باللون الأحمر. يمكن تغيير الألوان في إعدادات الألوان."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
-#, fuzzy, kde-format
+#, kde-format
 msgid "Minimum good share ratio:"
-msgstr "الأقصى مشاركات نسبة:"
+msgstr "أقل نسبة مشاركة جيدة:"
 
 #: ktorrent/pref/recommendedsettingsdlg.cpp:25
 #, kde-format
@@ -3397,19 +3437,19 @@ msgid "Recommended settings:"
 msgstr "الإعدادات المستحسنة:"
 
 #: ktorrent/statusbar.cpp:34 ktorrent/statusbar.cpp:66
-#, fuzzy, kde-format
+#, kde-format
 msgid "Speed down: %1 / up: %2"
-msgstr "السرعة تنزيل: %1 / تحميل: %2"
+msgstr "السرعة تنزيل: %1 / الرفع: %2"
 
 #: ktorrent/statusbar.cpp:35 ktorrent/statusbar.cpp:77
-#, fuzzy, kde-format
+#, kde-format
 msgid "Transferred down: %1 / up: %2"
-msgstr "المنقولة نزولاً: %1 / تحميلاً: %2"
+msgstr "المنقولة نزولاً: %1 / الرفع: %2"
 
 #: ktorrent/statusbar.cpp:37 ktorrent/statusbar.cpp:92
-#, fuzzy, kde-format
+#, kde-format
 msgid "DHT: off"
-msgstr "موقف"
+msgstr "جدول تلبيد موزع: إيقاف"
 
 #: ktorrent/statusbar.cpp:90
 #, kde-format
@@ -3452,7 +3492,7 @@ msgstr "سطح المكتب خارج الخط"
 #: ktorrent/tools/magnetmodel.cpp:102
 #, kde-format
 msgid "Magnet Link"
-msgstr ""
+msgstr "رابط مغناطيس"
 
 #: ktorrent/tools/magnetmodel.cpp:104 ktorrent/tools/queuemanagermodel.cpp:182
 #: ktorrent/trayicon.cpp:137 plugins/infowidget/trackermodel.cpp:123
@@ -3483,25 +3523,24 @@ msgid "Stopped"
 msgstr "متوقّف"
 
 #: ktorrent/tools/magnetview.cpp:52
-#, fuzzy, kde-format
+#, kde-format
 msgid "Start Magnet"
-msgstr "ابدأ"
+msgstr "ابدأ المغناطيس"
 
 #: ktorrent/tools/magnetview.cpp:53
 #, kde-format
 msgid "Stop Magnet"
-msgstr ""
+msgstr "أوقف المغناطيس"
 
 #: ktorrent/tools/magnetview.cpp:54
-#, fuzzy, kde-format
-#| msgid "Copy Magnet URI"
+#, kde-format
 msgid "Copy Magnet URL"
-msgstr "انسخ مُعرَّف URI المُمغنط"
+msgstr "نسخ عنوان URL للمغناطيس"
 
 #: ktorrent/tools/magnetview.cpp:56
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove Magnet"
-msgstr "أحذف السيل"
+msgstr "أزل المغناطيس"
 
 #: ktorrent/tools/queuemanagermodel.cpp:178
 #, kde-format
@@ -3634,9 +3673,9 @@ msgid "Widget to manage the torrent queue"
 msgstr "ودجة لإدارة اصطفاف السيول"
 
 #: ktorrent/torrentactivity.cpp:96
-#, fuzzy, kde-format
+#, kde-format
 msgid "Magnet Downloader"
-msgstr "الوقت منزل"
+msgstr "مُنزّل المغناطيس"
 
 #: ktorrent/torrentactivity.cpp:96
 #, kde-format
@@ -3670,14 +3709,14 @@ msgstr "علّق السيول"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_suspended)
 #: ktorrent/torrentactivity.cpp:124 plugins/bwscheduler/edititemdlg.ui:106
-#, fuzzy, kde-format
+#, kde-format
 msgid "Suspend all running torrents"
-msgstr "ابدأ"
+msgstr "علّق كافة السيول العاملة"
 
 #: ktorrent/torrentactivity.cpp:128
-#, fuzzy, kde-format
+#, kde-format
 msgid "Group View"
-msgstr "المجموعات"
+msgstr "عرض المجموعة"
 
 #: ktorrent/torrentactivity.cpp:129
 #, kde-format
@@ -3710,6 +3749,8 @@ msgid ""
 "Download speed: <b>%1</b><br/>Upload speed: <b>%2</b><br/>Received: <b>%3</"
 "b><br/>Transmitted: <b>%4</b>"
 msgstr ""
+"سرعة التنزيل: <b>%1</b><br/>سرعة الرفع: <b>%2</b><br/>المستلم: <b>%3</b><br/"
+">المرسل: <b>%4</b>"
 
 #: ktorrent/trayicon.cpp:167
 #, kde-format
@@ -3717,23 +3758,27 @@ msgid "<b>%1</b> was silently opened."
 msgstr "<b>%1</b> فُتِح سكونيًّا."
 
 #: ktorrent/trayicon.cpp:181
-#, fuzzy, kde-format
+#, kde-format
 msgid "<b>%1</b> has completed downloading.<br>Average speed: %2 DL / %3 UL."
-msgstr "<b>%1</b> أكتمل التنزيل.<br>معدل السرعة: %2 DL / %3 UL."
+msgstr "اكتمل تنزيل <b>%1</b>.<br>متوسط ​​السرعة: %2 تنزيل / %3 رفع."
 
 #: ktorrent/trayicon.cpp:199
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
 "<br>Uploaded %3 at an average speed of %4."
-msgstr "<b></b> الأقصى مشاركات نسبة من و موقف<br> المرسل عند متوسط سرعة من."
+msgstr ""
+"وصل <b>%1</b> إلى الحد الأقصى لنسبة المشاركة البالغة %2 وتوقف.<br>رُفع %3 "
+"بمتوسط ​​سرعة %4."
 
 #: ktorrent/trayicon.cpp:218
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
 "<br>Uploaded %3 at an average speed of %4."
-msgstr "<b></b> الأقصى وقت من ساعات و موقف<br> المرسل عند متوسط سرعة من."
+msgstr ""
+"وصل <b>%1</b> إلى الحد الأقصى لوقت التوزيع البالغة %2 وتوقف.<br>رُفع %3 "
+"بمتوسط ​​سرعة %4."
 
 #: ktorrent/trayicon.cpp:233
 #, kde-format
@@ -3750,18 +3795,22 @@ msgstr ""
 "بياناته فكرة جيّدة."
 
 #: ktorrent/trayicon.cpp:262
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
 "<br>Remove the limit manually if you want to continue seeding."
-msgstr "<b></b> الأقصى مشاركات نسبة من و احذف يدويّاً IF إلى متابعة."
+msgstr ""
+"وصل <b>%1</b> إلى الحد الأقصى لنسبة المشاركة البالغة %2 ولا يمكن إدراجه في "
+"قائمة الانتظار. <br>أزل الحد يدويًا إذا كنت تريد الاستمرار في التوزيع."
 
 #: ktorrent/trayicon.cpp:268
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<b>%1</b> has reached its maximum seed time of %2 hours and cannot be "
 "enqueued. <br>Remove the limit manually if you want to continue seeding."
-msgstr "<b></b> الأقصى وقت من ساعات و احذف يدويّاً IF إلى متابعة."
+msgstr ""
+"وصل <b>%1</b> إلى الحد الأقصى لوقت المشاركة البالغة %2 ساعات ولا يمكن إدراجه "
+"في قائمة الانتظار. <br>أزل الحد يدويًا إذا كنت تريد الاستمرار في التوزيع."
 
 #: ktorrent/trayicon.cpp:281
 #, kde-format
@@ -3793,7 +3842,7 @@ msgstr[5] "لا يمكن تنزيل أكثر من %1 سيل. <br>"
 #: ktorrent/trayicon.cpp:290
 #, kde-format
 msgid "Go to Settings -> Configure KTorrent, if you want to change the limits."
-msgstr "اذهب إلى إعدادات -> اضبط سيل.ك، إن أردت تغيير الحدود."
+msgstr "اذهب إلى إعدادات -> اضبط سيولك، إن أردت تغيير الحدود."
 
 #: ktorrent/trayicon.cpp:294
 #, kde-format
@@ -3813,16 +3862,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr "أُوقِف السيل.<br />"
 
 #: ktorrent/trayicon.cpp:346
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "حدّ السرعة بِـ ك.بايت/ث"
+msgstr "حدّ سرعة الرفع بِـ ك.بايت/ث"
 
 #: ktorrent/trayicon.cpp:348
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "حدّ السرعة بِـ ك.بايت/ث"
+msgstr "حدّ سرعة التنزيل بِـ ك.بايت/ث"
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -3873,7 +3920,7 @@ msgstr "استخدم تبادل الأنداد للعثور على أنداد أ
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, superseeding)
 #: ktorrent/view/propertiesdlg.ui:42
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\">Superseeding mode, is a "
@@ -3888,25 +3935,23 @@ msgid ""
 "fully been established. Once there are multiple active seeders, this mode "
 "becomes useless.</p>"
 msgstr ""
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
-"\"> أبيض فراغ\n"
-"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
-"weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"> امسح مجلد لـ</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"right:0px; -qt-block-indent:0; text-indent:0px;\">وضع التوزيع الفائق هو وضع "
+"توزيع خاص يسمح لك بتحقيق كفاءة توزيع عالية. يؤدي هذا إلى تقليل  السرعة "
+"المستخدمة لنشر السيل.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px;"
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
 "p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\"> ملاحظة</span> هذا ليس done لـ أي منها مجلد مسمى تمَ التحميل</"
-"p></body></html>"
+"weight:600;\">ملاحظة: </span>يجب استخدام هذا فقط إذا لم ينشئ السرببشكل كامل. "
+"بمجرد وجود العديد من الموزعين النشطين، يصبح هذا الوضع عديم الفائدة.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, superseeding)
 #: ktorrent/view/propertiesdlg.ui:45
 #, kde-format
 msgid "Use superseeding mode for seeding"
-msgstr "استخدم وضع التزويد الخارق للتزويد"
+msgstr "استخدم وضع التزويد الفائق للتزويد"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, move_on_completion_enabled)
 #: ktorrent/view/propertiesdlg.ui:52
@@ -3925,7 +3970,7 @@ msgstr "الموقع لنقل الملفات إليه."
 #: ktorrent/view/scanextender.cpp:33
 #, kde-format
 msgid "Checked %v of %m chunks"
-msgstr ""
+msgstr "فُحص %v من %m قطعة"
 
 #: ktorrent/view/scanextender.cpp:109
 #, kde-format
@@ -4096,14 +4141,14 @@ msgid "Add Peers"
 msgstr "أضف أنداد"
 
 #: ktorrent/view/view.cpp:191
-#, fuzzy, kde-format
+#, kde-format
 msgid "Manual Announce"
 msgstr "إعلان يدوي"
 
 #: ktorrent/view/view.cpp:196
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scrape"
-msgstr "الورطة"
+msgstr "اكشط"
 
 #: ktorrent/view/view.cpp:200
 #, kde-format
@@ -4204,11 +4249,10 @@ msgid "Select a directory to move the data to."
 msgstr "اختر دليلًا لنقل البيانات إليه."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4335,14 +4379,14 @@ msgstr ""
 msgid ""
 "How many seeders we are connected to (How many seeders there are according "
 "to the tracker)"
-msgstr ""
+msgstr "كم عدد الموزعين التي نتصل بهم (عدد الموزعين الموجودين حسب المتتبع)"
 
 #: ktorrent/view/viewmodel.cpp:492
 #, kde-format
 msgid ""
 "How many leechers we are connected to (How many leechers there are according "
 "to the tracker)"
-msgstr ""
+msgstr "كم عدد المستهلكين الذين نرتبط بهم (عدد المستهلكين حسب المتتبع)"
 
 #: ktorrent/view/viewmodel.cpp:495
 #, kde-format
@@ -4391,17 +4435,17 @@ msgstr "<br/><br/>تعذّر الاتصال بمتتبّع."
 #: ktupnptest/main.cpp:25
 #, kde-format
 msgid "KTUPnPTest"
-msgstr ""
+msgstr "KTUPnPTest"
 
 #: ktupnptest/main.cpp:27
-#, fuzzy, kde-format
+#, kde-format
 msgid "KTorrent's UPnP test application"
-msgstr "s إختبار تطبيق"
+msgstr "تطبيق اختبار UPnP الخاص بـسيولك"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
+#, kde-format
 msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgstr "C و إيفان"
+msgstr "&copy; 2005 - 2007 يوريس غيسون وإيفان فاسيتش"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -4580,15 +4624,15 @@ msgstr "عدد الاتصالات الأقصى لكل السيول ( = لا حد
 
 #. i18n: ectx: label, entry (maxUploadRate), group (downloads)
 #: libktcore/ktorrent.kcfg:35
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum upload speed in KiB/sec (0 = no limit)"
-msgstr "الأقصى ارفع سرعة:"
+msgstr "أقصى سرعة للرفع بالكيلو بايت/ثانية (0 = لا يوجد حد)"
 
 #. i18n: ectx: label, entry (maxDownloadRate), group (downloads)
 #: libktcore/ktorrent.kcfg:40
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum download speed in KiB/sec (0 = no limit)"
-msgstr "الأقصى تنزيلات سرعة:"
+msgstr "أقصى سرعة تنزيل بالكيلو بايت/ثانية (0 = لا يوجد حد)"
 
 #. i18n: ectx: label, entry (maxRatio), group (downloads)
 #: libktcore/ktorrent.kcfg:45
@@ -4606,7 +4650,7 @@ msgstr "أظهر أيقونة صينية النظام"
 #: libktcore/ktorrent.kcfg:70
 #, kde-format
 msgid "Show a total speeds in the title"
-msgstr ""
+msgstr "أظهر إجمالي السرعات في العنوان"
 
 #. i18n: ectx: label, entry (showSpeedBarInTrayIcon), group (downloads)
 #: libktcore/ktorrent.kcfg:74
@@ -4616,25 +4660,21 @@ msgstr "أظهر شريط السرعة في أيقونة الصينية"
 
 #. i18n: ectx: label, entry (downloadBandwidth), group (downloads)
 #: libktcore/ktorrent.kcfg:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Download bandwidth (in kb/s):"
-msgstr ""
-"نزّل النطاق الترددي\n"
-"عرض النطاق:"
+msgstr "سرعة التنزيل (بالكيلو بت/الثانية):"
 
 #. i18n: ectx: label, entry (uploadBandwidth), group (downloads)
 #: libktcore/ktorrent.kcfg:84
-#, fuzzy, kde-format
+#, kde-format
 msgid "Upload bandwidth (in kb/s):"
-msgstr ""
-"نزّل النطاق الترددي\n"
-"عرض النطاق:"
+msgstr "سرعة الرفع (بالكيلو بايت/الثانية):"
 
 #. i18n: ectx: label, entry (alwaysMinimizeToSystemTray), group (downloads)
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr ""
+msgstr "صغّر دائمًا إلى صينية النظام عند بدء التشغيل."
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
@@ -4658,7 +4698,7 @@ msgstr "المجلد لتخزين الملفات المؤقتة"
 #: libktcore/ktorrent.kcfg:105
 #, kde-format
 msgid "Whether to automatically save downloads to saveDir"
-msgstr ""
+msgstr "ما إذا كان ستحفظ التنزيلات تلقائيًا إلى saveDir"
 
 #. i18n: ectx: label, entry (saveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:109
@@ -4668,9 +4708,9 @@ msgstr "المجلد لتخزين الملفات المُنزّلة"
 
 #. i18n: ectx: label, entry (useTorrentCopyDir), group (downloads)
 #: libktcore/ktorrent.kcfg:112
-#, fuzzy, kde-format
+#, kde-format
 msgid "Whether to automatically copy .torrent files to torrentCopyDir"
-msgstr "افتح سكوني"
+msgstr "ما إذا كان سينسخ ملفات .torrent تلقائيًا إلى torrentCopyDir"
 
 #. i18n: ectx: label, entry (torrentCopyDir), group (downloads)
 #: libktcore/ktorrent.kcfg:116
@@ -4682,7 +4722,7 @@ msgstr "المجلد لنسخ ملف ‎.torrent إليه"
 #: libktcore/ktorrent.kcfg:119
 #, kde-format
 msgid "Whether to use a custom IP to pass to the tracker"
-msgstr ""
+msgstr "ما إذا كان سيستخدم عنوان IP مخصص لتمريره إلى المتتبع"
 
 #. i18n: ectx: label, entry (lastSaveDir), group (downloads)
 #: libktcore/ktorrent.kcfg:123
@@ -4698,9 +4738,9 @@ msgstr "عنوان IP لتمريره إلى المتتبّع"
 
 #. i18n: ectx: label, entry (guiUpdateInterval), group (downloads)
 #: libktcore/ktorrent.kcfg:131
-#, fuzzy, kde-format
+#, kde-format
 msgid "GUI update interval"
-msgstr "فترة تحديث واجهة المستخدم الرسومية:"
+msgstr "فترة تحديث واجهة المستخدم الرسومية"
 
 #. i18n: ectx: label, entry (dhtSupport), group (downloads)
 #: libktcore/ktorrent.kcfg:137
@@ -4724,7 +4764,7 @@ msgstr "عدد شقوق الرفع"
 #: libktcore/ktorrent.kcfg:182
 #, kde-format
 msgid "Columns shown in KTorrentView"
-msgstr ""
+msgstr "الأعمدة المعروضة في KTorrentView"
 
 #. i18n: ectx: label, entry (minDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:233
@@ -4738,9 +4778,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (useCompletedDir), group (downloads)
 #: libktcore/ktorrent.kcfg:244
-#, fuzzy, kde-format
+#, kde-format
 msgid "Whether to automatically move completed downloads to completedDir"
-msgstr "نقل مكتمل إلى:"
+msgstr "ما إذا كان سينقل التنزيلات المكتملة تلقائيًا إلى CompleteDir"
 
 #. i18n: ectx: label, entry (completedDir), group (downloads)
 #: libktcore/ktorrent.kcfg:248
@@ -4776,16 +4816,15 @@ msgid "Downloaded Chunks"
 msgstr "الكتل المُنزّلة"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
+#, kde-format
 msgid "Chunks to Download"
-msgstr "الرقم من failed ليس:"
+msgstr "قطع للتحميل"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "المُستثناة:"
+msgstr "القطع المستبعدة"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -4885,9 +4924,9 @@ msgid "File"
 msgstr "الملف"
 
 #: libktcore/util/mmapfile.cpp:151
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cannot write beyond end of the mmap buffer."
-msgstr "لا يستطيع كتابة end من مَخزن!"
+msgstr "لا يمكن الكتابة بعد نهاية المخزن المؤقت mmap."
 
 #: plugins/bwscheduler/bwprefpage.cpp:12
 #: plugins/bwscheduler/bwschedulerplugin.cpp:62
@@ -4921,13 +4960,13 @@ msgstr "استخدم حدود سرعة مختلفة عندما تكون حافظ
 #: plugins/bwscheduler/bwprefpage.ui:49
 #, kde-format
 msgid "Global upload limit when the screensaver is activated."
-msgstr ""
+msgstr "حد الرفع العام عند تنشيط شاشة التوقف."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_screensaverDownloadLimit)
 #: plugins/bwscheduler/bwprefpage.ui:78
 #, kde-format
 msgid "Global download limit when the screensaver is activated."
-msgstr ""
+msgstr "حد التنزيل العام عند تنشيط شاشة التوقف."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/bwscheduler/bwprefpage.ui:120
@@ -5088,7 +5127,7 @@ msgstr "تعذّر فتح الملف %1: %2"
 #: plugins/bwscheduler/schedule.cpp:127 plugins/bwscheduler/schedule.cpp:132
 #, kde-format
 msgid "The file %1 is corrupted or not a proper KTorrent schedule file."
-msgstr "الملف %1 معطوب أو أنه ليس ملف جدولة مناسب لِسيل.ك."
+msgstr "الملف %1 معطوب أو أنه ليس ملف جدولة مناسب لِسيولك."
 
 #: plugins/bwscheduler/scheduleeditor.cpp:30
 #, kde-format
@@ -5139,7 +5178,7 @@ msgstr "فعّل أو ألغِ تفعيل الجدولة"
 #: plugins/bwscheduler/scheduleeditor.cpp:121
 #, kde-format
 msgid "KTorrent scheduler files"
-msgstr "ملفات جدولة سيل.ك"
+msgstr "ملفات جدولة سيولك"
 
 #: plugins/bwscheduler/scheduleeditor.cpp:166
 #, kde-format
@@ -5158,6 +5197,8 @@ msgid ""
 "%1 Down\n"
 "%2 Up"
 msgstr ""
+"%1 تنزيل\n"
+"%2 رفع"
 
 #: plugins/bwscheduler/weekscene.cpp:59
 #, kde-format
@@ -5265,16 +5306,14 @@ msgid "Add Trackers"
 msgstr "أضف متتبّعين"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "الكتل المتوفّرة:"
+msgstr "الكتل المتوفّرة"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "الكتل المتوفّرة:"
+msgstr "الكتل غير المتوفّرة"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -5379,9 +5418,9 @@ msgid "Rename"
 msgstr "أعد التسمية"
 
 #: plugins/infowidget/fileview.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgid "Check File"
-msgstr "ملفات السيول"
+msgstr "افحص الملف"
 
 #: plugins/infowidget/fileview.cpp:119
 #, kde-format
@@ -5459,12 +5498,16 @@ msgid ""
 "Enable sequential download mode for it to obtain necessary data with a "
 "higher priority?"
 msgstr ""
+"لا توجد بيانات كافية منزلة لفتح الملف.\n"
+"\n"
+"هل تريد تمكين وضع التنزيل المتسلسل للحصول على البيانات الضرورية ذات الأولوية "
+"الأعلى؟"
 
 #: plugins/infowidget/fileview.cpp:479
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "تمكين وضع التنزيل المتسلسل"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -5883,7 +5926,7 @@ msgstr "كَوْن أو عدم كَوْن DHT عند الندّ ممكّنًا."
 #: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
-msgstr "علامة الندّ، يستخدم سيل.ك هذا لتحديد من يجب الرفع إليه"
+msgstr "علامة الندّ، يستخدم سيولك هذا لتحديد من يجب الرفع إليه"
 
 #: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
@@ -5953,7 +5996,7 @@ msgstr "سرعة الرفع المتوسطة:"
 #: plugins/infowidget/statustab.ui:123
 #, kde-format
 msgid "Info hash:"
-msgstr ""
+msgstr "معلومات التلبيدة:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/infowidget/statustab.ui:188
@@ -6009,15 +6052,14 @@ msgid "Next Update"
 msgstr "التحديث التالي"
 
 #: plugins/infowidget/trackerview.cpp:57
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Copy Tracker URL"
-msgstr "انسخ عنوان URL للسيل"
+msgstr "انسخ عنوان URL للمتتبع"
 
 #: plugins/infowidget/trackerview.cpp:64
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copy Tracker status"
-msgstr "حالة المقتفي:"
+msgstr "انسخ حالة المتتبع"
 
 #: plugins/infowidget/trackerview.cpp:115
 #, kde-format
@@ -6137,7 +6179,7 @@ msgstr "يحوّل..."
 #: plugins/ipfilter/convertdialog.ui:29
 #, kde-format
 msgid "Converting block list to KTorrent format. This might take some time."
-msgstr "يحوّل قائمة الحظر إلى هيئة سيل.ك. قد يأخذ هذا بعض الوقت."
+msgstr "يحوّل قائمة الحظر إلى هيئة سيولك. قد يأخذ هذا بعض الوقت."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
 #: plugins/ipfilter/convertdialog.ui:99
@@ -6397,7 +6439,7 @@ msgstr "عارض السجل"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_logging_flags)
 #: plugins/logviewer/logprefwidget.ui:23
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Double click on the log level to alter it. The possible levels are :\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
@@ -6421,32 +6463,25 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p>"
 msgstr ""
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
-"\"> أبيض فراغ\n"
-"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
-"weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"> يحدّد سجل مستوى إلى "
-"استخدام لـ مكوّن</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"انقر نقرًا مزدوجًا فوق مستوى السجل لتغييره. المستويات المحتملة هي:\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px;"
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
 "p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\"> الكل</span> اعرض الكل رسائل</p>\n"
+"weight:600;\">الكل: </span>عرض جميع الرسائل</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\"> تنقيح</span> اعرض يصحح\n"
-"تنقيح تنبيه و مهم رسائل</p>\n"
+"weight:600;\">هام: </span>عرض الرسائل المهمة فقط</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\"> ملاحظة</span> اعرض تنبيه و مهم رسائل</p>\n"
+"weight:600;\">ملاحظة: </span>عرض الرسائل المهمة والإشعارات فقط</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\"> مهم</span> اعرض مهم رسائل</p>\n"
+"weight:600;\">التصحيح: </span>عرض التصحيح والإشعارات والرسائل المهمة</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\"> لا شيء</span> اعرض لا رسائل</p></body></html>"
+"weight:600;\">لا شيء:</span> لا تعرض أي رسائل</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
@@ -6508,7 +6543,7 @@ msgstr "السجل"
 #: plugins/logviewer/logviewer.cpp:29
 #, kde-format
 msgid "View the logging output generated by KTorrent"
-msgstr "اعرض خَرج السجل المُولَّد بِسيل.ك"
+msgstr "اعرض خَرج السجل المُولَّد بِسيولك"
 
 #: plugins/logviewer/logviewer.cpp:39
 #, kde-format
@@ -6535,9 +6570,9 @@ msgstr "يجذب متتبّع من ملف السيل"
 
 #. i18n: ectx: label, entry (customtracker), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:14
-#, fuzzy, kde-format
+#, kde-format
 msgid "Toggles if a custom tracker is used"
-msgstr "المقتفون"
+msgstr "تبديل في حالة استخدام متتبع مخصص"
 
 #. i18n: ectx: label, entry (tr), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:18
@@ -6547,9 +6582,9 @@ msgstr "المتتبّع الافتراضي"
 
 #. i18n: ectx: label, entry (dn), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:22
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show dn"
-msgstr "سرعة التحميل"
+msgstr "اعرض التنزيل"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_popup)
 #. i18n: ectx: label, entry (popup), group (general)
@@ -6636,7 +6671,7 @@ msgstr "عطّل عنصر القائمة للسيول الخاصة"
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:87
 #, kde-format
 msgid "Give feedback in form of a popup"
-msgstr ""
+msgstr "تقديم الملاحظات في شكل نافذة منبثقة"
 
 #. i18n: ectx: Menu (MediaPlayerMenu)
 #: plugins/mediaplayer/ktorrent_mediaplayerui.rc:4
@@ -6807,7 +6842,7 @@ msgstr "ترتيب تشغيل عشوائي"
 #: plugins/mediaplayer/videowidget.cpp:183
 #, kde-format
 msgid "KTorrent is playing a video."
-msgstr "سيل.ك يشغّل فيديو."
+msgstr "سيولك يشغّل فيديو."
 
 #. i18n: ectx: label, entry (openSilently), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:13
@@ -6819,13 +6854,13 @@ msgstr "فتح أو عدم فتح السيل سكونيًّا."
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:18
 #, kde-format
 msgid "Delete action checked."
-msgstr ""
+msgstr "حُدد إجراء الحذف."
 
 #. i18n: ectx: label, entry (actionMove), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:23
 #, kde-format
 msgid "Move action checked."
-msgstr ""
+msgstr "حُدد إجراء النقل."
 
 #. i18n: ectx: label, entry (recursive), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:28
@@ -6958,19 +6993,18 @@ msgstr "المجموعة لإضافة السيول فيها."
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan for lost files"
-msgstr ""
+msgstr "البحث عن الملفات المفقودة"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
-#, fuzzy, kde-format
-#| msgid "Log widget position:"
+#, kde-format
 msgid "Widget position:"
-msgstr "موقع ودجة السجل:"
+msgstr "موقع ودجة:"
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
-msgstr ""
+msgstr "البحث عن الملفات المفقودة"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
@@ -6987,10 +7021,9 @@ msgstr "اختر مجلدًا:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
-#, fuzzy, kde-format
-#| msgid "Show a file list"
+#, kde-format
 msgid "Show all files"
-msgstr "أظهر قائمة الملفات"
+msgstr "أظهر كل الملفات"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:112
@@ -7000,16 +7033,15 @@ msgstr "افتح ملفًا"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgid "Delete on disk"
-msgstr "احذف الملف(ات)"
+msgstr "احذف من القرص"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:124
 #, kde-format
 msgid "Ctrl+Del"
-msgstr ""
+msgstr "Ctrl+Del"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
@@ -7038,10 +7070,9 @@ msgstr "محرّك البحث الحالي"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxySettings)
 #. i18n: ectx: label, entry (useProxySettings), group (general)
 #: plugins/search/ktsearchplugin.kcfg:14 plugins/search/searchpref.ui:92
-#, fuzzy, kde-format
-#| msgid "Use KDE proxy settings"
+#, kde-format
 msgid "Use proxy settings for search"
-msgstr "استخدم إعدادات وسيط كِيدِي"
+msgstr "استخدم إعدادات الوكيل للبحث"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useDefaultBrowser)
 #. i18n: ectx: label, entry (useDefaultBrowser), group (general)
@@ -7092,9 +7123,9 @@ msgstr "تفضيلات البحث"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_clear_history)
 #: plugins/search/searchpref.ui:34
-#, fuzzy, kde-format
+#, kde-format
 msgid "Clear the search history combo boxes."
-msgstr "مسح تاريخ البحث"
+msgstr "امسح مربعات التحرير والسرد الخاصة بسجل البحث."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_clear_history)
 #: plugins/search/searchpref.ui:37
@@ -7140,10 +7171,9 @@ msgstr "افتح البحوث في متصفح خارجي"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxySettings)
 #: plugins/search/searchpref.ui:89
-#, fuzzy, kde-format
-#| msgid "Whether or not to use the HTTP proxy for webseed connections."
+#, kde-format
 msgid "Whether or not to use the HTTP proxy settings for search."
-msgstr "لاستخدام أو عدم استخدام وسيط HTTP لاتصالات مُزوِّد الوِب."
+msgstr "هل سيتم استخدام إعدادات وكيل HTTP للبحث أم لا."
 
 #. i18n: ectx: property (toolTip), widget (QRadioButton, kcfg_useDefaultBrowser)
 #: plugins/search/searchpref.ui:99
@@ -7235,7 +7265,7 @@ msgid ""
 "by the thing you are searching for."
 msgstr ""
 "%1 لا يدعم Opensearch، عليك إدخال عنوان URL للبحث يدويًّا. على عنوان URL "
-"احتواء {searchTerms}، سيستبدل سيل.ك هذا بالشيء الذي تبحث عنه."
+"احتواء {searchTerms}، سيستبدل سيولك هذا بالشيء الذي تبحث عنه."
 
 #: plugins/search/searchprefpage.cpp:127
 #, kde-format
@@ -7276,7 +7306,7 @@ msgstr "المنزل"
 #: plugins/search/webview.cpp:106
 #, kde-format
 msgid "KTorrent"
-msgstr "سيل.ك"
+msgstr "سيولك"
 
 #: plugins/search/webview.cpp:107
 #, kde-format
@@ -7667,8 +7697,7 @@ msgstr "متوسط المُزوِّدين المتصلين لكل سيل يعم�
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7713,8 +7742,7 @@ msgid "(plugin reload is needed after change)"
 msgstr "(تحتاج إلى إعادة تحميل الملحق بعد التغيير)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
@@ -8030,7 +8058,7 @@ msgstr "ميلي ثانية"
 #: plugins/stats/Settings.ui:108
 #, kde-format
 msgid "Measurements counts"
-msgstr ""
+msgstr "القياسات مهمة"
 
 #. i18n: ectx: property (title), widget (QGroupBox, MaxModeGbw)
 #: plugins/stats/Settings.ui:247
@@ -8041,16 +8069,16 @@ msgstr "الأقصى"
 #. i18n: The way the maximum of 0Y axis is calculated
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/stats/Settings.ui:255
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Maximum speed scale mode: "
-msgstr "الأقصى وقت:"
+msgstr "وضع مقياس السرعة القصوى:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaxMode)
 #: plugins/stats/Settings.ui:272
-#, fuzzy, kde-format
+#, kde-format
 msgid "Maximum ever achieved"
-msgstr "الأقصى وقت:"
+msgstr "أقصى ما حُقق على الإطلاق"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaxMode)
 #: plugins/stats/Settings.ui:277
@@ -8177,20 +8205,17 @@ msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
 
 #: plugins/syndication/feedwidget.cpp:27
-#, fuzzy, kde-format
-#| msgid ""
-#| "    <html>    <body>    <div style=\"border-style:solid; border-"
-#| "width:1px; margin:5px; padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:"
-#| "</b> %2<br/>    </div>    <p>%3</p>    </body>    </html>    "
+#, kde-format
 msgid ""
 "    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
 "border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Title:</"
 "b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
 "html>    "
 msgstr ""
-"    <html>    <body>    <div style=\"border-style:solid; border-width:1px; "
-"margin:5px; padding:5px\">    <b>العنوان:</b> %1<br/>    <b>التاريخ:</b> "
-"%2<br/>    </div>    <p>%3</p>    </body>    </html>    "
+"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
+"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>العنوان:"
+"</b> %1<br/>    <b>التاريخ:</b> %2<br/>    </div>    <p>%3</p>    </body>    "
+"</html>    "
 
 #: plugins/syndication/feedwidget.cpp:173
 #, kde-format
@@ -8354,6 +8379,59 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">For example "
 "the *.torrent will match any item which ends in .torrent. </p>"
 msgstr ""
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">السلسلة التي يجب العثور "
+"عليها فيعنوان العنصر. الأحرف البدل البسيطة مدعومة:</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px;"
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px;"
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<table border=\"0\" style=\" margin-top:0px; margin-bottom:0px; margin-"
+"left:0px; margin-right:0px;\" align=\"center\" cellspacing=\"1\" cellpadding="
+"\"2\">\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">c</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">أي حرف يمثلنفسه باستثناء "
+"تلك المذكورة أدناه. وبالتالي فإن <span style=\" font-weight:600;\">c</span> "
+"يطابق الحرف <span style=\" font-style:italic;\">c</span>.</p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">?</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">يتطابق مع "
+"أي حرف واحد. </p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">*</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">يتطابق "
+"معصفر أو أكثر من أي الأحرف.</p></td></tr>\n"
+"<tr>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\"><span style="
+"\" font-weight:600;\">[...]</span></p></td>\n"
+"<td style=\" vertical-align:top;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">يمكن تمثيل "
+"مجموعاتالأحرف بين قوسين مربعين. داخل فئة الأحرف، كما هو الحال خارجها، لا "
+"يوجد معنى خاص للشرطة المائلة العكسية.</p></td></tr></table>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;\">على سبيل "
+"المثال، سيتطابق *.torrent مع أي عنصر ينتهي بـ .torrent. </p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_exclusion_reg_exp)
