@@ -41,6 +41,7 @@
             }
         ],
         "Description": "Syndication plugin for KTorrent, supporting RSS and Atom feeds",
+        "Description[ar]": "ملحق للتوزيع على سيولك يدعم موجزات RSS وAtom",
         "Description[bg]": "Приставка за синдикиране на KTorrent, поддържаща емисии RSS и ATOM",
         "Description[ca@valencia]": "Connector de sindicació per a KTorrent, permet canals RSS i Atom",
         "Description[ca]": "Connector de sindicació per al KTorrent, permet canals RSS i Atom",
@@ -78,6 +79,7 @@
         "Icon": "application-rss+xml",
         "License": "GPL",
         "Name": "Syndication",
+        "Name[ar]": "الخلاصات",
         "Name[bg]": "Синдикиране",
         "Name[bs]": "Spajanje u sindikat",
         "Name[ca@valencia]": "Sindicació",

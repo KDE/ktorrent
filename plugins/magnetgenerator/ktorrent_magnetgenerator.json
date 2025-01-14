@@ -4,6 +4,7 @@
             {
                 "Email": "jonas@gannon.se",
                 "Name": "Jonas Lundqvist",
+                "Name[ar]": "جوناس لوندكفيست",
                 "Name[bg]": "Jonas Lundqvist",
                 "Name[ca@valencia]": "Jonas Lundqvist",
                 "Name[ca]": "Jonas Lundqvist",
@@ -40,6 +41,7 @@
             }
         ],
         "Description": "Generates magnet links",
+        "Description[ar]": "تولّد وصلات ممغنطة",
         "Description[bg]": "Създаване на магнитни връзки",
         "Description[ca@valencia]": "Genera enllaços magnet",
         "Description[ca]": "Genera enllaços magnet",

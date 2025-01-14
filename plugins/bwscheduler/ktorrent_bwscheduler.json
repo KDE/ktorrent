@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
                 "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ar]": "جوريس جيسون، إيفان فاسيتش",
                 "Name[bg]": "Joris Guisson, Ivan Vasic",
                 "Name[ca@valencia]": "Joris Guisson, Ivan Vasic",
                 "Name[ca]": "Joris Guisson, Ivan Vasic",
@@ -40,6 +41,7 @@
             }
         ],
         "Description": "Schedule upload and download limits over a period of a week",
+        "Description[ar]": "جدولة حدود الرفع والتنزيل على مدار أسبوع",
         "Description[bg]": "Планиране на лимити за качване и изтегляне за период от една седмица",
         "Description[ca@valencia]": "Planifica els límits de pujada i baixada durant un període setmanal",
         "Description[ca]": "Planifica els límits de pujada i baixada durant un període setmanal",

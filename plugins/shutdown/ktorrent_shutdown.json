@@ -41,6 +41,7 @@
             }
         ],
         "Description": "Allows you to shutdown your computer when torrents finish",
+        "Description[ar]": "تسمح لك بإطفاء الحاسوب عند انتهاء السّيول",
         "Description[bg]": "Позволява ви да изключите компютъра си, след приключване на торентите",
         "Description[ca@valencia]": "Permet parar l'ordinador en finalitzar els torrent",
         "Description[ca]": "Permet aturar l'ordinador en finalitzar els torrents",

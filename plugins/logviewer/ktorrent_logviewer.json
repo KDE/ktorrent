@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
                 "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ar]": "جوريس جيسون، إيفان فاسيتش",
                 "Name[bg]": "Joris Guisson, Ivan Vasic",
                 "Name[ca@valencia]": "Joris Guisson, Ivan Vasic",
                 "Name[ca]": "Joris Guisson, Ivan Vasic",
@@ -40,6 +41,7 @@
             }
         ],
         "Description": "Displays the logging output",
+        "Description[ar]": "يعرض مخرجات السجل",
         "Description[bg]": "Показване на изхода от дневника",
         "Description[ca@valencia]": "Mostra l'eixida del registre",
         "Description[ca]": "Mostra la sortida del registre",

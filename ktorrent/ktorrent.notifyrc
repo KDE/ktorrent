@@ -466,6 +466,7 @@ Action=Sound|Popup
 
 [Event/QueueNotPossible]
 Name=Torrent cannot be enqueued
+Name[ar]=تعذّر وضع السّيل في قائمة الانتظار
 Name[bg]=Торентът не може да бъде поставен на опашка
 Name[bs]=Ne mogu da stavim torent u red
 Name[ca]=No s'ha pogut posar el torrent a la cua

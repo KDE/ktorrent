@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
                 "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ar]": "جوريس جيسون، إيفان فاسيتش",
                 "Name[bg]": "Joris Guisson, Ivan Vasic",
                 "Name[ca@valencia]": "Joris Guisson, Ivan Vasic",
                 "Name[ca]": "Joris Guisson, Ivan Vasic",
@@ -40,6 +41,7 @@
             }
         ],
         "Description": "Forward ports using UPnP",
+        "Description[ar]": "إعادة توجيه المنافذ باستخدام UPnP",
         "Description[bg]": "Пренасочване на портове с UPnP",
         "Description[ca@valencia]": "Redirigix els ports utilitzant UPnP",
         "Description[ca]": "Redirigeix els ports usant UPnP",

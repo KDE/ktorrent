@@ -4,6 +4,7 @@
             {
                 "Email": "trufanovan@gmail.com",
                 "Name": "Alexander Trufanov",
+                "Name[ar]": "الكسندر تروفانوف",
                 "Name[bg]": "Alexander Trufanov",
                 "Name[ca@valencia]": "Alexander Trufanov",
                 "Name[ca]": "Alexander Trufanov",
@@ -40,6 +41,7 @@
             }
         ],
         "Description": "Display files in the selected folder that don't belong to any torrent",
+        "Description[ar]": "عرض الملفات الموجودة في المجلد المحدد والتي لا تنتمي إلى أي ملف سيول",
         "Description[bg]": "Показване на файлове в избраната папка, които не принадлежат на нито един торент",
         "Description[ca@valencia]": "Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent",
         "Description[ca]": "Mostra els fitxers de la carpeta seleccionada que no pertanyen a cap torrent",
@@ -77,6 +79,7 @@
         "Icon": "edit-find",
         "License": "GPL",
         "Name": "Scan for lost files",
+        "Name[ar]": "البحث عن الملفات المفقودة",
         "Name[bg]": "Сканиране за изгубени файлове",
         "Name[ca@valencia]": "Explora els fitxers perduts",
         "Name[ca]": "Explora els fitxers perduts",
