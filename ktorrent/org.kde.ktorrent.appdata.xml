@@ -394,6 +394,7 @@
       <li xml:lang="zh-CN">多文件种子设定文件优先级</li>
       <li xml:lang="zh-TW">多檔 torrent 的檔案優先權安排</li>
       <li>Selective downloading for multi-file torrents</li>
+      <li xml:lang="ar">التنزيل الانتقائي لملفات السيول المتعددة</li>
       <li xml:lang="bg">Избирателно изтегляне при многофайлови торенти</li>
       <li xml:lang="ca">Descàrrega selectiva per als torrents amb múltiples fitxers</li>
       <li xml:lang="ca-valencia">Descàrrega selectiva per als torrent amb múltiples fitxers</li>
@@ -434,6 +435,7 @@
       <li xml:lang="zh-CN">多文件种子可选下载指定文件</li>
       <li xml:lang="zh-TW">選擇下載多檔 torrent 的一部分</li>
       <li>Kick/ban peers with an additional IP Filter dialog for list/edit purposes</li>
+      <li xml:lang="ar">طرد/حظر النظراء باستخدام مربع حوار مرشح عنوان الإنترنت إضافي لأغراض القائمة/التحرير</li>
       <li xml:lang="bg">Изгонвяне/изхвърляне на потребители с допълнителен диалогов прозорец за филтриране по IP, за целите на показване/редактиране</li>
       <li xml:lang="ca">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a finalitats de llista/edició</li>
       <li xml:lang="ca-valencia">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a finalitats de llista/edició</li>
@@ -474,6 +476,7 @@
       <li xml:lang="zh-CN">踢掉/屏蔽对等点，并可以用 IP 过滤器查看和编辑列表</li>
       <li xml:lang="zh-TW">用清單/編輯用的 IP 位址過濾對話框來踢出/封鎖端點</li>
       <li>UDP tracker support</li>
+      <li xml:lang="ar">دعم متتبع UDP</li>
       <li xml:lang="bg">Поддръжка на UDP координиращи сървъри</li>
       <li xml:lang="ca">Suport del seguidor UDP</li>
       <li xml:lang="ca-valencia">Suport del seguidor UDP</li>
@@ -516,6 +519,7 @@
       <li xml:lang="zh-CN">支持 UDP tracker</li>
       <li xml:lang="zh-TW">支援 UDP tracker</li>
       <li>Support for private trackers and torrents</li>
+      <li xml:lang="ar">دعم المتتبعات الخاصة والتورنت</li>
       <li xml:lang="bg">Поддръжка на лични координиращи сървъри и торенти</li>
       <li xml:lang="ca">Suport per als seguidors i torrents privats</li>
       <li xml:lang="ca-valencia">Suport per als seguidors i torrent privats</li>
@@ -557,6 +561,7 @@
       <li xml:lang="zh-CN">支持私有 tracker 和种子</li>
       <li xml:lang="zh-TW">支援私密 tracker 和種子檔</li>
       <li>Support for µTorrent's peer exchange</li>
+      <li xml:lang="ar">دعم تبادل الأقران في µTorrent</li>
       <li xml:lang="bg">Поддръжка на обмена на потребители на µTorrent.</li>
       <li xml:lang="ca">Suport per a l'intercanvi entre parells de µTorrent</li>
       <li xml:lang="ca-valencia">Suport per a l'intercanvi entre parells de µTorrent</li>
@@ -598,6 +603,7 @@
       <li xml:lang="zh-CN">支持 µTorrent 对等点交换</li>
       <li xml:lang="zh-TW">支援 µTorrent 的端點交換</li>
       <li>Support for protocol encryption (compatible with Azureus)</li>
+      <li xml:lang="ar">دعم ميفاق التعمية (متوافق مع Azureus)</li>
       <li xml:lang="bg">Поддръжка на криптиране на протоколи (съвместимо с Azureus)</li>
       <li xml:lang="ca">Suport per a l'encriptatge del protocol (compatible amb Azureus)</li>
       <li xml:lang="ca-valencia">Suport per a l'encriptació del protocol (compatible amb Azureus)</li>
@@ -639,6 +645,7 @@
       <li xml:lang="zh-CN">支持协议加密 (兼容 Azureus)</li>
       <li xml:lang="zh-TW">支援協定加密（與 Azureus 相容）</li>
       <li>Support for creating trackerless torrents</li>
+      <li xml:lang="ar">دعم لإنشاء ملفات تورنت بدون تعقب</li>
       <li xml:lang="bg">Възможност за създаване на торенти без координиращи сървъри</li>
       <li xml:lang="ca">Suport per a la creació de torrents sense seguidors</li>
       <li xml:lang="ca-valencia">Suport per a la creació de torrent sense seguidors</li>
@@ -680,6 +687,7 @@
       <li xml:lang="zh-CN">支持创建无 tracker 种子</li>
       <li xml:lang="zh-TW">支援建立無 tracker 的 torrent</li>
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
+      <li xml:lang="ar">دعم جداول تلبيدة الموزعة (DHT، الإصدار الرئيس)</li>
       <li xml:lang="bg">Поддръжка на разпределени хеш-таблици (DHT, версия Mainline)</li>
       <li xml:lang="ca">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
       <li xml:lang="ca-valencia">Suport per a taules de resum distribuïdes (DHT, la versió de la línia principal)</li>
@@ -721,6 +729,7 @@
       <li xml:lang="zh-CN">支持分布式哈希表 (DHT，主线版本)</li>
       <li xml:lang="zh-TW">支援分散式雜湊表（DHT，Mainline 版本）</li>
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
+      <li xml:lang="ar">دعم UPnP لإعادة توجيه المنافذ تلقائيًا على شبكة LAN مع مضيفين معينين ديناميكيًا</li>
       <li xml:lang="bg">Поддръжка на UPnP за автоматично пренасочване на портове в локална мрежа с динамично зададени хостове</li>
       <li xml:lang="ca">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
       <li xml:lang="ca-valencia">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica d'amfitrions</li>
@@ -762,6 +771,7 @@
       <li xml:lang="zh-CN">支持 UPnP 局域网自动转发端口的动态主机名</li>
       <li xml:lang="zh-TW">支援 UPnP 來在動態指派主機的區域網路中自動轉遞連接埠</li>
       <li>Support for webseeds</li>
+      <li xml:lang="ar">دعم موزعي الويب</li>
       <li xml:lang="bg">Поддръжка на webseeds</li>
       <li xml:lang="ca">Suport per a sembradors web</li>
       <li xml:lang="ca-valencia">Suport per a sembradors web</li>
@@ -804,6 +814,7 @@
       <li xml:lang="zh-CN">支持 Webseed</li>
       <li xml:lang="zh-TW">支援 webseed 網路種子</li>
       <li>System tray integration</li>
+      <li xml:lang="ar">تكامل مع صينية النظام</li>
       <li xml:lang="bg">Интеграция в системния панел</li>
       <li xml:lang="ca">Integració amb la safata del sistema</li>
       <li xml:lang="ca-valencia">Integració amb la safata del sistema</li>
@@ -846,6 +857,7 @@
       <li xml:lang="zh-CN">系统托盘整合</li>
       <li xml:lang="zh-TW">系統匣整合</li>
       <li>Tracker authentication support</li>
+      <li xml:lang="ar">دعم مصادقة المتتبع</li>
       <li xml:lang="bg">Поддръжка на удостоверяване пред разпределящ сървър</li>
       <li xml:lang="ca">Suport d'autenticació del seguidor</li>
       <li xml:lang="ca-valencia">Suport d'autenticació del seguidor</li>
@@ -887,6 +899,7 @@
       <li xml:lang="zh-CN">支持 tracker 认证</li>
       <li xml:lang="zh-TW">tracker 認證支援</li>
       <li>Connection through a proxy</li>
+      <li xml:lang="ar">الاتصال عبر الوكيل</li>
       <li xml:lang="bg">Свързване посредством сървър-посредник</li>
       <li xml:lang="ca">Connexió a través d'un servidor intermediari</li>
       <li xml:lang="ca-valencia">Connexió a través d'un servidor intermediari</li>
@@ -930,6 +943,7 @@
       <li xml:lang="zh-TW">透過網路代理伺服器的連線</li>
     </ul>
     <p>In addition to the built-in functionalities, there are some plugins available for KTorrent.</p>
+    <p xml:lang="ar">بالإضافة إلى الوظائف المضمنة، هناك بعض المحلقات الإضافية المتوفرة لسيولك.</p>
     <p xml:lang="bg">В допълнение към вградените функционалности за KTorrent са налични и някои приставки.</p>
     <p xml:lang="ca">Addicionalment a les funcionalitats integrades en construir, hi ha alguns connectors disponibles per al KTorrent.</p>
     <p xml:lang="ca-valencia">De manera addicional a les funcionalitats integrades en construir, hi ha alguns connectors disponibles per a KTorrent.</p>
