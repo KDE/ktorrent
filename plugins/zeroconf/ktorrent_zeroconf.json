@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com",
                 "Name": "Lesly Weyts, Kevin Andre and Joris Guisson",
+                "Name[ar]": "ليزلي ويتس وكيفن أندريه وجوريس غيسون",
                 "Name[bg]": "Lesly Weyts, Kevin Andre and Joris Guisson",
                 "Name[ca@valencia]": "Lesly Weyts, Kevin Andre i Joris Guisson",
                 "Name[ca]": "Lesly Weyts, Kevin Andre i Joris Guisson",
@@ -39,6 +40,7 @@
             }
         ],
         "Description": "Discover peers on the local network using the Zeroconf protocol",
+        "Description[ar]": "اكتشف النظراء على الشبكة المحلية باستخدام ميفاق Zeroconf",
         "Description[bg]": "Откриване на потребители в локалната мрежа чрез протокола \"Zeroconf\"",
         "Description[ca@valencia]": "Descobrix els parells a la xarxa local utilitzant el protocol Zeroconf",
         "Description[ca]": "Descobreix els parells a la xarxa local usant el protocol Zeroconf",

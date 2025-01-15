@@ -40,6 +40,7 @@
             }
         ],
         "Description": "Specify the download order of a multi-file torrent",
+        "Description[ar]": "حدّد ترتيب التّنزيل لسيل فيه عدّة ملفّات",
         "Description[bg]": "Задаване реда на изтегляне за многофайлов торент",
         "Description[ca@valencia]": "Especifica l'ordre de baixada d'un torrent amb múltiples fitxers",
         "Description[ca]": "Especifica l'ordre de baixada d'un torrent amb múltiples fitxers",

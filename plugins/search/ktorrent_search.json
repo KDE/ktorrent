@@ -4,6 +4,7 @@
             {
                 "Email": "joris.guisson@gmail.com, ivasic@gmail.com",
                 "Name": "Joris Guisson, Ivan Vasic",
+                "Name[ar]": "جوريس جيسون، إيفان فاسيتش",
                 "Name[bg]": "Joris Guisson, Ivan Vasic",
                 "Name[ca@valencia]": "Joris Guisson, Ivan Vasic",
                 "Name[ca]": "Joris Guisson, Ivan Vasic",
@@ -39,6 +40,7 @@
             }
         ],
         "Description": "Search for torrents",
+        "Description[ar]": "ابحث عن سيول",
         "Description[bg]": "Търсене на торенти",
         "Description[ca@valencia]": "Busca de torrent",
         "Description[ca]": "Cerca de torrents",

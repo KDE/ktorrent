@@ -40,6 +40,7 @@
             }
         ],
         "Description": "Phonon-based media player",
+        "Description[ar]": "مشغّل وسائط يعتمد «فنون»",
         "Description[bg]": "Мултимедиен плейър на базата на Phonon",
         "Description[ca@valencia]": "Reproductor multimèdia basat en Phonon",
         "Description[ca]": "Reproductor multimèdia basat en el Phonon",
