@@ -110,7 +110,7 @@ FilterEditor::FilterEditor(Filter *filter, FilterList *filters, FeedList *feeds,
     connect(m_word_matches, &KEditListWidget::added, this, &FilterEditor::checkOKButton);
     connect(m_word_matches, &KEditListWidget::changed, this, &FilterEditor::checkOKButton);
     connect(m_word_matches, &KEditListWidget::removed, this, &FilterEditor::checkOKButton);
-    connect(m_use_se_matching, &QCheckBox::stateChanged, this, &FilterEditor::checkOKButton);
+    connect(m_use_se_matching, &QCheckBox::checkStateChanged, this, &FilterEditor::checkOKButton);
     okButton->setEnabled(okIsPossible());
 
     m_feed->setModel(feeds);

@@ -37,7 +37,7 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, Q
 
     m_proxy = new FSProxyModel(this);
 
-    connect(cbShowAllFiles, &QCheckBox::stateChanged, [=](int val) {
+    connect(cbShowAllFiles, &QCheckBox::checkStateChanged, [=](Qt::CheckState val) {
         m_proxy->setFiltered(!val);
         setupModels();
     });
