@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2025-01-12 15:44+0100\n"
+"PO-Revision-Date: 2025-01-19 12:50+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -1173,7 +1173,7 @@ msgid ""
 msgstr ""
 "Lugar de descarga predeterminado para os torrents deste grupo.<br/><br/> Iso "
 "só se usa no diálogo de selección de ficheiros, onde ao cambiar o grupo o "
-"lugar de descarga do diálogo actualizarase con este valor. Pero despois de "
+"lugar de descarga do diálogo definirase con este valor. Pero despois de "
 "escoller o grupo aínda pode cambiar o lugar de descarga, se quere."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_location_enabled)
@@ -1201,8 +1201,8 @@ msgstr ""
 "Lugar predeterminado ao que mover os torrents deste grupo unha vez "
 "descargados. <br/><br/>Iso só se usa no diálogo de selección de ficheiros, "
 "onde ao cambiar o grupo o lugar ao que mover os datos unha vez descargados "
-"do diálogo actualizarase con este valor. Pero despois de escoller o grupo "
-"aínda pode cambiar o lugar de descarga, se quere."
+"do diálogo definirase con este valor. Pero despois de escoller o grupo aínda "
+"pode cambiar o lugar de descarga, se quere."
 
 #. i18n: ectx: property (toolTip), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:63
@@ -8555,8 +8555,8 @@ msgid ""
 "By default strings will use wildcard matching. If you want to use regular "
 "expressions, this needs to be enabled."
 msgstr ""
-"O texto só admitirá caracteres de substitución de maneira predeterminada, "
-"para usar expresión regulares terá que activar esta opción."
+"O texto interpretarase como caracteres de substitución de maneira "
+"predeterminada, para usar expresión regulares terá que activar esta opción."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_reg_exp_syntax)
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_reg_exp)
