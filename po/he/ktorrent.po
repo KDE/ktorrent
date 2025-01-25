@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2025-01-10 23:00+0200\n"
+"PO-Revision-Date: 2025-01-24 09:26+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6763,7 +6763,7 @@ msgstr "רענון"
 #: plugins/mediaplayer/mediaview.cpp:90
 #, kde-format
 msgid "Refresh media files"
-msgstr "רענון קובצי מדיה"
+msgstr "ריענון קובצי מדיה"
 
 #: plugins/mediaplayer/mediaview.cpp:94
 #, kde-format
@@ -8219,7 +8219,7 @@ msgstr "מסננים פעילים:"
 #: plugins/syndication/feedwidget.ui:131
 #, kde-format
 msgid "Refresh every:"
-msgstr "רענון כל:"
+msgstr "ריענון כל:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:138
