@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-14 00:39+0000\n"
-"PO-Revision-Date: 2025-01-19 12:50+0100\n"
+"PO-Revision-Date: 2025-01-26 21:11+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -82,7 +82,7 @@ msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
 "they need to be mounted."
 msgstr ""
-"Un ou máis dispositivos de almacenamento non están montados. Para iniciar o "
+"Un ou máis volumes de almacenamento non están montados. Para iniciar o "
 "torrent é necesario montalos."
 
 #: ktorrent/core.cpp:1032
@@ -327,6 +327,7 @@ msgctxt "@action:button"
 msgid "Keep the Files"
 msgstr "Manter os ficheiros"
 
+# skip-rule: trasno-download_reverse
 #: ktorrent/dialogs/fileselectdlg.cpp:315
 #, kde-format
 msgid ""
@@ -438,6 +439,7 @@ msgid ""
 msgstr ""
 "A localización onde mover os ficheiros ao rematar a descarga do torrent."
 
+# skip-rule: trasno-download_reverse
 #. i18n: ectx: property (text), widget (QCheckBox, move_on_completion_enabled)
 #. i18n: ectx: property (text), widget (QCheckBox, m_moveCompleted)
 #. i18n: ectx: property (text), widget (QCheckBox, m_move_on_completion)
@@ -447,6 +449,7 @@ msgstr ""
 msgid "Move when completed to:"
 msgstr "Mover as descargas completadas a:"
 
+# skip-rule: trasno-download_reverse
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_move_when_completed_history)
 #: ktorrent/dialogs/fileselectdlg.ui:74
 #, kde-format
@@ -1189,6 +1192,7 @@ msgstr "Lugar predeterminado no que gardar:"
 msgid "Default move when completed location:"
 msgstr "Mover as recepcións completadas de maneira predeterminada a:"
 
+# skip-rule: trasno-download_reverse
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, m_default_move_on_completion_location)
 #: ktorrent/groups/grouppolicydlg.ui:56
 #, kde-format
@@ -4272,7 +4276,7 @@ msgstr "Comprobar os datos"
 #: ktorrent/view/view.cpp:229
 #, kde-format
 msgid "Check all the data of a torrent"
-msgstr "Comprobar os datos descargados do torrent."
+msgstr "Comprobar os datos dun torrent."
 
 #: ktorrent/view/view.cpp:249
 #, kde-format
@@ -4482,7 +4486,9 @@ msgstr ""
 msgid ""
 "The percentage of data we have of the whole torrent, not including excluded "
 "files"
-msgstr "A porcentaxe do torrent descargada, sen contar os ficheiros excluídos."
+msgstr ""
+"A porcentaxe de datos do torrent que se teñen, sen contar os ficheiros "
+"excluídos."
 
 #: ktorrent/view/viewmodel.cpp:497
 #, kde-format
@@ -8719,7 +8725,7 @@ msgstr "Non se atopou o ficheiro."
 #: plugins/syndication/ktfeed.cpp:456
 #, kde-format
 msgid "Unknown retriever error"
-msgstr "Erro de descarga descoñecido."
+msgstr "Erro de obtención descoñecido."
 
 #: plugins/syndication/ktfeed.cpp:460
 #, kde-format
