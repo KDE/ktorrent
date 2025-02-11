@@ -101,9 +101,9 @@ void TrayIcon::show()
 
     ac = mwnd->actionCollection();
     menu->addAction(ac->action(QStringLiteral("paste_url")));
-    menu->addAction(ac->action(KStandardAction::name(KStandardAction::Open)));
+    menu->addAction(ac->action(KStandardActions::name(KStandardActions::Open)));
     menu->addSeparator();
-    menu->addAction(ac->action(KStandardAction::name(KStandardAction::Preferences)));
+    menu->addAction(ac->action(KStandardActions::name(KStandardActions::Preferences)));
     menu->addSeparator();
 
     status_notifier_item->setIconByName(QStringLiteral("ktorrent-symbolic"));

@@ -23,7 +23,6 @@
 #include <KMainWindow>
 #include <KMessageBox>
 #include <KNotification>
-#include <KStandardAction>
 
 #include "searchactivity.h"
 #include "searchenginelist.h"

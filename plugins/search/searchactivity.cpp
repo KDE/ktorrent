@@ -16,7 +16,7 @@
 #include <KActionCollection>
 #include <KConfigGroup>
 #include <KLocalizedString>
-#include <KStandardAction>
+#include <KStandardActions>
 
 #include <bcodec/bdecoder.h>
 #include <bcodec/bencoder.h>
@@ -66,10 +66,10 @@ void SearchActivity::setupActions()
     connect(search_action, &QAction::triggered, this, qOverload<>(&SearchActivity::search));
     ac->addAction(QStringLiteral("search_tab_search"), search_action);
 
-    find_action = KStandardAction::find(this, &SearchActivity::find, this);
+    find_action = KStandardActions::find(this, &SearchActivity::find, this);
     ac->addAction(QStringLiteral("search_tab_find"), find_action);
 
-    home_action = KStandardAction::home(this, &SearchActivity::home, this);
+    home_action = KStandardActions::home(this, &SearchActivity::home, this);
     ac->addAction(QStringLiteral("search_home"), home_action);
 }
 

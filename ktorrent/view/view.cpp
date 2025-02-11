@@ -24,7 +24,7 @@
 #include <KMessageBox>
 #include <KRecentDirs>
 #include <KSharedConfig>
-#include <KStandardAction>
+#include <KStandardActions>
 
 #include "core.h"
 #include "dialogs/addpeersdlg.h"
@@ -128,7 +128,7 @@ View::~View()
 
 void View::setupActions(KActionCollection *ac)
 {
-    KStandardAction::selectAll(this, &View::selectAll, ac);
+    KStandardActions::selectAll(this, &View::selectAll, ac);
 
     start_torrent = new QAction(QIcon::fromTheme(QStringLiteral("kt-start")), i18nc("@action Start all selected torrents in the current tab", "Start"), this);
     start_torrent->setToolTip(i18n("Start all selected torrents in the current tab"));
