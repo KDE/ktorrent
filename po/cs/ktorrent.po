@@ -8786,6 +8786,3 @@ msgstr "Znovu projít"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Text encoding:"
-#~ msgstr "Kódování textu:"
