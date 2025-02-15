@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:40+0000\n"
+"POT-Creation-Date: 2025-02-15 00:42+0000\n"
 "PO-Revision-Date: 2024-11-16 20:21+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -7343,28 +7343,28 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "%1 - a hivatkozás nem tartalmazza a {searchTerms} karaktersort."
 
-#: plugins/search/searchwidget.cpp:80
+#: plugins/search/searchwidget.cpp:79
 #, kde-format
 msgid " Engine: "
 msgstr " Szolgáltató: "
 
-#: plugins/search/searchwidget.cpp:221
+#: plugins/search/searchwidget.cpp:220
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Letöltés:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:229
+#: plugins/search/searchwidget.cpp:228
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Le szeretné tölteni, vagy menteni a torrentet?"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Download Torrent"
 msgstr "Torrent letöltése"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:230 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Letöltés"

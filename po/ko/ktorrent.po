@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:40+0000\n"
+"POT-Creation-Date: 2025-02-15 00:42+0000\n"
 "PO-Revision-Date: 2024-12-10 01:08+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -7255,28 +7255,28 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1에는 {searchTerms} 문자열이 없습니다."
 
-#: plugins/search/searchwidget.cpp:80
+#: plugins/search/searchwidget.cpp:79
 #, kde-format
 msgid " Engine: "
 msgstr " 엔진: "
 
-#: plugins/search/searchwidget.cpp:221
+#: plugins/search/searchwidget.cpp:220
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "다운로드 중:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:229
+#: plugins/search/searchwidget.cpp:228
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "토렌트를 다운로드하거나 저장하시겠습니까?"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Download Torrent"
 msgstr "토렌트 다운로드"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:230 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "다운로드"

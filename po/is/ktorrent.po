@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:40+0000\n"
+"POT-Creation-Date: 2025-02-15 00:42+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -7095,30 +7095,30 @@ msgstr "er ekki til Slóð Slóð innihalda fyrir."
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "Slóð ekki innihalda."
 
-#: plugins/search/searchwidget.cpp:80
+#: plugins/search/searchwidget.cpp:79
 #, kde-format
 msgid " Engine: "
 msgstr " Vél: "
 
-#: plugins/search/searchwidget.cpp:221
+#: plugins/search/searchwidget.cpp:220
 #, fuzzy, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr ""
 "Copy text   \t\n"
 "<b>Niðurhal</b>"
 
-#: plugins/search/searchwidget.cpp:229
+#: plugins/search/searchwidget.cpp:228
 #, fuzzy, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Framkvæma til eða?"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Download Torrent"
 msgstr "Hlaða niður Torrent straumi"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:230 plugins/syndication/feedwidget.ui:117
 #, fuzzy, kde-format
 msgid "Download"
 msgstr "Hlaða niður"

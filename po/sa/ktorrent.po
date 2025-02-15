@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:40+0000\n"
+"POT-Creation-Date: 2025-02-15 00:42+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -7270,28 +7270,28 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1 इत्यत्र {searchTerms} नास्ति ।"
 
-#: plugins/search/searchwidget.cpp:80
+#: plugins/search/searchwidget.cpp:79
 #, kde-format
 msgid " Engine: "
 msgstr " यन्त्र: "
 
-#: plugins/search/searchwidget.cpp:221
+#: plugins/search/searchwidget.cpp:220
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "डाउनलोड् करणम् : १.<br/> <b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:229
+#: plugins/search/searchwidget.cpp:228
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "किं भवन्तः टोरेण्ट् डाउनलोड् कर्तुम् इच्छन्ति वा सेव् कर्तुम् इच्छन्ति वा?"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Download Torrent"
 msgstr "Torrent डाउनलोड् कुर्वन्तु"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:230 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "अवाहरन"

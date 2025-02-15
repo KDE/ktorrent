@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:40+0000\n"
+"POT-Creation-Date: 2025-02-15 00:42+0000\n"
 "PO-Revision-Date: 2024-10-18 11:13+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -7278,28 +7278,28 @@ msgstr ""
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1 neobsahuje {searchTerms}."
 
-#: plugins/search/searchwidget.cpp:80
+#: plugins/search/searchwidget.cpp:79
 #, kde-format
 msgid " Engine: "
 msgstr " Vyhledávač: "
 
-#: plugins/search/searchwidget.cpp:221
+#: plugins/search/searchwidget.cpp:220
 #, kde-format
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "Stahuje se:<br/><b>%1</b>"
 
-#: plugins/search/searchwidget.cpp:229
+#: plugins/search/searchwidget.cpp:228
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "Přejete si stáhnout nebo uložit torrent?"
 
-#: plugins/search/searchwidget.cpp:230
+#: plugins/search/searchwidget.cpp:229
 #, kde-format
 msgid "Download Torrent"
 msgstr "Stáhnout torrent"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:231 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:230 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "Stahování"
