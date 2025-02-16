@@ -8928,6 +8928,3 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Text encoding:"
-#~ msgstr "Codificació del text:"
