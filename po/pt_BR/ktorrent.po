@@ -12,20 +12,21 @@
 # Aracele Torres <araceletorres@gmail.com>, 2010, 2011.
 # Marcus Gama <marcus.gama@gmail.com>, 2011, 2012.
 # SPDX-FileCopyrightText: 2023, 2024 Geraldo Simiao <geraldosimiao@fedoraproject.org>
+# SPDX-FileCopyrightText: 2025 Guilherme Marçal Silva <guimarcalsilva@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-15 00:42+0000\n"
-"PO-Revision-Date: 2024-11-22 23:20-0300\n"
-"Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
+"PO-Revision-Date: 2025-02-23 19:21-0300\n"
+"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2723,13 +2724,13 @@ msgstr "Sempre minimizar para a área de notificação ao iniciar"
 #: ktorrent/pref/generalpref.ui:110
 #, kde-format
 msgid "Whether or not to show system tray popup messages."
-msgstr "Mostrar mensagens popup na área de notificação."
+msgstr "Mostrar mensagens pop-up na área de notificação."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:113
 #, kde-format
 msgid "Show system tray popup messages"
-msgstr "Mostrar mensagens popup na área de notificação"
+msgstr "Mostrar mensagens pop-up na área de notificação"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_openMultipleTorrentsSilently)
 #: ktorrent/pref/generalpref.ui:129
@@ -4785,7 +4786,7 @@ msgstr "Sempre minimizar para a área de notificação ao iniciar."
 #: libktcore/ktorrent.kcfg:94
 #, kde-format
 msgid "Show popup messages when torrent is finished."
-msgstr "Mostrar mensagens popup quando o torrent for concluído."
+msgstr "Mostrar mensagens pop-up quando o torrent for concluído."
 
 #. i18n: ectx: label, entry (keepSeeding), group (downloads)
 #: libktcore/ktorrent.kcfg:98
