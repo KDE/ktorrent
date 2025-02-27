@@ -126,8 +126,10 @@ int main(int argc, char **argv)
     about.addCredit(i18n("Felipe Sateler"), QString(), QStringLiteral("fsateler@gmail.com"));
     about.addCredit(
         i18n("DB-IP.com"),
-        i18n("Provider of the IP-Country database used in the InfoWidget plugin. The data is licensed under the Creative Commons Attribution 4.0 International "
-             "License https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."),
+        i18n("Provider of the IP-Country database used in the InfoWidget plugin.\n"
+             "The data is licensed under the Creative Commons Attribution 4.0\n"
+             "International License https://creativecommons.org/licenses/by/4.0/.\n"
+             "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."),
         QString(),
         QStringLiteral("https://db-ip.com/"));
     about.addCredit(i18n("Maxmind"), i18n("The maxminddb library used for the InfoWidget plugin."), QString(), QStringLiteral("https://www.maxmind.com/"));
