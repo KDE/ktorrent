@@ -3375,7 +3375,7 @@ msgid ""
 "upload to simultaneously for one torrent."
 msgstr ""
 "O número de rañuras de envío, isto determina o número de parceiros aos que "
-"lles pode enviar cada torrent á vez."
+"lles pode subir cada torrent á vez."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/qmpref.ui:198
@@ -6038,7 +6038,7 @@ msgstr "Indica se o parceiro ten o DHT activado ou non."
 #: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
-msgstr "A puntuación do parceiro, KTorrent úsaa para determinar a quen enviar."
+msgstr "A puntuación do parceiro, KTorrent úsaa para determinar a quen subir."
 
 #: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
