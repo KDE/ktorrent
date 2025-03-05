@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-15 00:42+0000\n"
+"POT-Creation-Date: 2025-03-05 00:43+0000\n"
 "PO-Revision-Date: 2025-01-24 09:27+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -1617,416 +1617,421 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
+#| "data is licensed under the Creative Commons Attribution 4.0 International "
+#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
+#| "from http://flags.blogpotato.de/ so thanks to them too."
 msgid ""
-"Provider of the IP-Country database used in the InfoWidget plugin. The data "
-"is licensed under the Creative Commons Attribution 4.0 International License "
-"https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
-"flags.blogpotato.de/ so thanks to them too."
+"Provider of the IP-Country database used in the InfoWidget plugin.\n"
+"The data is licensed under the Creative Commons Attribution 4.0\n"
+"International License https://creativecommons.org/licenses/by/4.0/.\n"
+"Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
 "ספק למסד נתוני התאמה בין IP למדינה שמשמש את תוסף וידג׳ט המידע. הנתונים "
 "כפופים לרישיון הבינלאומי קריאייטיב קומונז ייחוס 4.0 https://creativecommons."
 "org/licenses/by/4.0/. הדגלים נלקחו מ־http://flags.blogpotato.de/ ואנו מודים "
 "להם על כך בנוסף."
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr "ספריית maxminddb משמשת את תוסף InfoWidget."
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "אדם פורסיית׳"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "תיעדוף קבצים וכל מיני טלאים נוספים"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:137
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "תומס ברנרד"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:138
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "נעשה שימוש ב־Miniupnp כדוגמה למימוש ה־UPnP שלנו"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "לזלי וייטס"
 
-#: ktorrent/main.cpp:139 ktorrent/main.cpp:140
+#: ktorrent/main.cpp:141 ktorrent/main.cpp:142
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "שיפורים ל־Zeroconf (זיהוי ברשת)"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Kevin Andre"
 msgstr "קוון אנדרה"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "דאגור ולברג ג׳והנסון"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "ממשק האתר הפנימי Coldmilk (חלב קר)"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "אלכסנדר דיימו"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "קוד IDEAl מ־KDevelop"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "סקוט וולצ׳וק"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "שיפור במהירות המרה בתוסף ipfilter"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "בראיין ברנס מ־Jupyter Networks"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "גילה שתי פרצות אבטחת מידע (שתיהן תוקנו)"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Goten Xiao"
 msgstr "גוטן צ׳או"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "טלאי לטעינה שקטה עם מקום שמירה"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "תיקונים בקוד ה־PHP של ממשק האתר הפנימי"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "הקצאה טרומית נקודתית בכוני XFS"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "טלאי לא להציג מהירויות נמוכות במיוחד"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "טלאי להצגת מצב הגנה אפשרית בחומת אש"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "מודסטאס ואיניוס"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Several patches"
 msgstr "מגוון טלאים"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Stefan Monov"
 msgstr "סטפן מונוב"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "טלאי להסתרת סרגל התפריטים"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "טלעי לשינוי עדיפויות הקבצים בממשק האתר"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "רפאו מיווצקי"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Several webgui patches"
 msgstr "מגוון טלאים בממשק האתר הפנימי"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "תיקונים למספר אזהרות"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "מרקוס ברויפר"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "טלאי לתיקון חישוב המקום בכונן ב־FreeBSD"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "לוקאס אפלהאנס"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "טלאי לתיקון ב־ChunkDownloadView (תצוגת הורדת חלקים)"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Rickard Närström"
 msgstr "ריקארד ניירשטרום"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "כמה תיקוני תקלות"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "טלאי לטעינת טורנטים בשקט משורת הפקודה"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Lee Olson"
 msgstr "לי אולסון"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "New set of icons"
 msgstr "ערכת סמלים חדשה"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "אהרון ג׳. סייגו"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "תמיכה בגרירה ליישומון פלזמה"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Ian Higginson"
 msgstr "איאן היגינסון"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "טלאי לניקוי רשימת התוספים"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "עמיחי רוטמן"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "טלאי להפיכת יישומון פלזמה לישומון קופץ"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Leo Trubach"
 msgstr "לאו טרובאק"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "טלאי להוספת תמיכה בטווחי IP בחלונית סינון ה־IP"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "אנדריי בארבו"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "יכולת שמוסיפה את התאריך שבה נוסף הטורנט"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "יונאס לונדקוויסט"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "יכולת להשבתת האימות בממשק האתר"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "ירוסלב שוירצ׳ינסקי"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "תבניות החרגה בתוסף העדכון"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "אלכסיי שילדיאקוב "
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "טלאי לשינוי שם של טורנטים עם קובץ אחד לשם הקובץ שבפנים"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "מארטן דה מייר"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "תיקון תקלה 305397"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Rex Dieter"
 msgstr "רקס דיטר"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "הוספת תמיכה בסוג התוכן/MIME‏ x-scheme-handler/magnet"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "לסק לסנר"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "תיקון תקלה 339584"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "אנדריוס שטיקונאס"
 
-#: ktorrent/main.cpp:171 ktorrent/main.cpp:172
+#: ktorrent/main.cpp:173 ktorrent/main.cpp:174
 #, kde-format
 msgid "KF5 porting"
 msgstr "הסבה ל־KF5"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "ניק שפורוסטוף"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr "אלכסנדר טרופנוב"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr "תיקון תקלות, ניקיון קוד ומיטובים"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:176
 #, kde-format
 msgid "Jack Hill"
 msgstr "ג׳ק היל"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:176
 #, kde-format
 msgid "KF6 porting"
 msgstr "הסבה ל־KF6"
 
-#: ktorrent/main.cpp:178
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid "Enable logging"
 msgstr "הפעלת תיעוד"
 
-#: ktorrent/main.cpp:180
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr "הפעלת רישום לפלט התקני (stdout). דורש לציין גם את ‎--enable-logging."
 
-#: ktorrent/main.cpp:181
+#: ktorrent/main.cpp:183
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "לפתוח בשקט טורנט שסופק דרך כתובת"
 
-#: ktorrent/main.cpp:182
+#: ktorrent/main.cpp:184
 #, kde-format
 msgid "Document to open"
 msgstr "מסמך לפתיחה"

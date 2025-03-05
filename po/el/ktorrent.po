@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-15 00:42+0000\n"
+"POT-Creation-Date: 2025-03-05 00:43+0000\n"
 "PO-Revision-Date: 2024-09-19 17:43+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1669,420 +1669,420 @@ msgstr ""
 #: ktorrent/main.cpp:129
 #, kde-format
 msgid ""
-"Provider of the IP-Country database used in the InfoWidget plugin. The data "
-"is licensed under the Creative Commons Attribution 4.0 International License "
-"https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
-"flags.blogpotato.de/ so thanks to them too."
+"Provider of the IP-Country database used in the InfoWidget plugin.\n"
+"The data is licensed under the Creative Commons Attribution 4.0\n"
+"International License https://creativecommons.org/licenses/by/4.0/.\n"
+"Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "Προτεραιότητα αρχείων και κάποιες άλλες διορθώσεις"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:137
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:138
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr ""
 "Το Miniupnp χρησιμοποιήθηκε ως παράδειγμα της δικής μας υλοποίησης UPnP"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:139 ktorrent/main.cpp:140
+#: ktorrent/main.cpp:141 ktorrent/main.cpp:142
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Βελτιώσεις του Zeroconf"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Περιβάλλον ιστού Coldmilk"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "Κώδικας IDEAl από το KDevelop"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "Βελτίωση ταχύτητας μετατροπής στο πρόσθετο ipfilter"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Bryan Burns των Juniper Networks"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "Ανακάλυψη 2 κενών ασφαλείας (έχουν ήδη διορθωθεί)"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "Διόρθωση για τη σιωπηλή φόρτωση με μια τοποθεσία αποθήκευσης"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "Διορθώσεις στον κώδικα PHP του περιβάλλοντος ιστού"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "Προδέσμευση δίσκου ειδικά για το XFS"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "Διόρθωση ώστε να μην εμφανίζει πολύ χαμηλές ταχύτητες"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr ""
 "Διόρθωση ώστε να εμφανίζεται πιθανή φραγή λόγω λειτουργίας τείχους προστασίας"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Several patches"
 msgstr "Διάφορες διορθώσεις"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "Διόρθωση για την απόκρυψη της γραμμής μενού"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "Διόρθωση για αλλαγή των ιδιοτήτων των αρχείων σε περιβάλλον ιστού"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Several webgui patches"
 msgstr "Διάφορες διορθώσεις"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "Διορθώσεις για διάφορες προειδοποιήσεις"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "Διόρθωση του υπολογισμού ελεύθερου χώρου στο δίσκο στο FreeBSD"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "Διόρθωση μιας κατάρρευσης στο ChunkDownloadView"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "Πλήθος διορθώσεων σφαλμάτων"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "Διόρθωση για τη σιωπηλή φόρτωση από τη γραμμή εντολών"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "New set of icons"
 msgstr "Νέο σύνολο εικονιδίων"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Υποστήριξη έλξης και εναπόθεσης στην μικροεφαρμογή plasma"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "Διόρθωση καθαρισμού της λίστας προσθέτων"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr ""
 "Διόρθωση για τη μετατροπή της μικροεφαρμογής Plasma σε αναδυόμενη "
 "μικροεφαρμογή"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Leo Trubach"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr ""
 "Διόρθωση για την προσθήκη υποστήριξης για διαστήματα IP στο διάλογο IP "
 "φίλτρων"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrei Barbu"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "Χαρακτηριστικό που φορτώνει την ημερομηνία προσθήκης του torrent"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundqvist"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr ""
 "Χαρακτηριστικό για την απενεργοποίηση ταυτοποίησης στο περιβάλλον ιστού"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslaw Swierczynski"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "Μοτίβα αποκλεισμού στο πρόσθετο φορέα"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Alexey Shildyakov "
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr ""
 "Διόρθωση για μετονομασία των torrent μεμονωμένων αρχείων στο αρχείο εντός"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "Maarten De Meyer"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "Διόρθωση σφάλματος 305379"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Rex Dieter"
 msgstr "Rex Dieter"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "Προσθήκη υποστήριξης για x-scheme-handler/magnet mimetype"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "Leszek Lesner"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "Διόρθωση σφάλματος 339584"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "Andrius Štikonas"
 
-#: ktorrent/main.cpp:171 ktorrent/main.cpp:172
+#: ktorrent/main.cpp:173 ktorrent/main.cpp:174
 #, kde-format
 msgid "KF5 porting"
 msgstr "Μεταφορά στο KF5"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr "Alexander Trufanov"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr "Διορθώσεις, καθαρισμοί και βελτιστοποιήσεις"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:176
 #, kde-format
 msgid "Jack Hill"
 msgstr ""
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:176
 #, fuzzy, kde-format
 #| msgid "KF5 porting"
 msgid "KF6 porting"
 msgstr "Μεταφορά στο KF5"
 
-#: ktorrent/main.cpp:178
+#: ktorrent/main.cpp:180
 #, fuzzy, kde-format
 #| msgid "Enable All"
 msgid "Enable logging"
 msgstr "Ενεργοποίηση όλων"
 
-#: ktorrent/main.cpp:180
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
 
-#: ktorrent/main.cpp:181
+#: ktorrent/main.cpp:183
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "Σιωπηλό άνοιγμα torrent με δοσμένο το URL"
 
-#: ktorrent/main.cpp:182
+#: ktorrent/main.cpp:184
 #, kde-format
 msgid "Document to open"
 msgstr "Έγγραφο για άνοιγμα"

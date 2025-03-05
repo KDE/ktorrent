@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-15 00:42+0000\n"
+"POT-Creation-Date: 2025-03-05 00:43+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1630,404 +1630,409 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com इति"
 
 #: ktorrent/main.cpp:129
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
+#| "data is licensed under the Creative Commons Attribution 4.0 International "
+#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
+#| "from http://flags.blogpotato.de/ so thanks to them too."
 msgid ""
-"Provider of the IP-Country database used in the InfoWidget plugin. The data "
-"is licensed under the Creative Commons Attribution 4.0 International License "
-"https://creativecommons.org/licenses/by/4.0/. Flags are taken from http://"
-"flags.blogpotato.de/ so thanks to them too."
+"Provider of the IP-Country database used in the InfoWidget plugin.\n"
+"The data is licensed under the Creative Commons Attribution 4.0\n"
+"International License https://creativecommons.org/licenses/by/4.0/.\n"
+"Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
 "InfoWidget प्लगिन् मध्ये प्रयुक्तस्य IP-Country दत्तांशकोशस्य प्रदाता । आँकडा क्रिएटिव "
 "कॉमन्स एट्रिब्यूशन ४.० अन्तर्राष्ट्रीय अनुज्ञापत्र https://creativecommons.org/licenses/"
 "by/4.0/ इत्यस्य अन्तर्गतं अनुज्ञापत्रं प्राप्तवान् अस्ति । ध्वजाः http://flags.blogpotato."
 "de/ इत्यस्मात् गृहीताः अतः तेभ्यः अपि धन्यवादः।"
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Maxmind"
 msgstr "मैक्समाइण्ड्"
 
-#: ktorrent/main.cpp:133
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr "InfoWidget प्लगिन् कृते प्रयुक्तं maxminddb पुस्तकालयम् ।"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "एडम् फोर्साइथ"
 
-#: ktorrent/main.cpp:134
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "सञ्चिकाप्राथमिकता अन्ये च केचन पट्टिकाः"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:137
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "थोमस बर्नार्ड"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:138
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "अस्माकं स्वस्य UPnP कार्यान्वयनस्य उदाहरणरूपेण Miniupnp इत्यस्य उपयोगः कृतः"
 
-#: ktorrent/main.cpp:139
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "लेस्ली वेयट्स"
 
-#: ktorrent/main.cpp:139 ktorrent/main.cpp:140
+#: ktorrent/main.cpp:141 ktorrent/main.cpp:142
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "शून्यकॉन्फवर्धनम्"
 
-#: ktorrent/main.cpp:140
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Kevin Andre"
 msgstr "केविन् आन्द्रे"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "वालबर्ग् जोहानसनस्य दिवसः"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "शीतदुग्ध webgui"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "अलेक्जेण्डर डायमो"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "KDevelop इत्यस्मात् IDEAl कोडः"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "स्कॉट् वोल्चोक्"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "ipfilter प्लगिन् मध्ये रूपान्तरणवेगसुधारः"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "जुनिपर नेटवर्क्स् इत्यस्य ब्रायन बर्न्स्"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "२ सुरक्षादुर्बलताः आविष्कृताः (उभौ अपि नियतौ स्तः)"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Goten Xiao"
 msgstr "गोटेन् जिओ"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "रक्षणस्थानेन सह मौनरूपेण लोड् कर्तुं पैच कुर्वन्तु"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Rapsys"
 msgstr "रप्सीस्"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "webinterface इत्यस्य PHP कोड् इत्यस्मिन् निश्चयः"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Athantor"
 msgstr "अथन्तोर्"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "XFS विशिष्टं डिस्क पूर्वविनियोगः"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "twisted_fall"
 msgstr "विकृष्य_पतन"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "अत्यन्तं न्यूनवेगः न दर्शयितुं पैच् कुर्वन्तु"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Lucke"
 msgstr "अंतर"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "सम्भाव्यं अग्निप्रावरणस्थितिं दर्शयितुं पैच कुर्वन्तु"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "विनयशील वैनियुः"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Several patches"
 msgstr "अनेकाः पटलाः"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Stefan Monov"
 msgstr "स्टीफन मोनोव"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "मेनूपट्टिकां गोपयितुं पैच कुर्वन्तु"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "The_Kernel"
 msgstr "द_कर्नेल्"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "webgui मध्ये सञ्चिकाप्राथमिकता परिवर्तयितुं पैच् कुर्वन्तु"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Several webgui patches"
 msgstr "अनेक वेबगुई पैच"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Ozzi"
 msgstr "ओज्जी"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "अनेक चेतावनीनां निराकरणम्"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "मार्क ब्रुफर"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "FreeBSD इत्यत्र मुक्तडिस्कस्पेस् गणनां निवारयितुं पैच् कुर्वन्तु"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "लुकास एप्पलहान्स"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "ChunkDownloadView इत्यस्मिन् दुर्घटनां निवारयितुं पैच् कुर्वन्तु"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Rickard Närström"
 msgstr "रिचर्ड नार्स्ट्रॉम्"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "द्वे द्वे दोषनिराकरणे"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "caruccio"
 msgstr "आकर्षकः"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "आदेशपङ्क्तौ मौनेन टोरेण्ट् लोड् कर्तुं पैच् कुर्वन्तु"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Lee Olson"
 msgstr "ली ओल्सन"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "New set of icons"
 msgstr "चिह्नानां नूतनसमूहः"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "एरोन जे सेइगो"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Plasma applet कृते समर्थनं कर्षयन्तु, पातयन्तु च"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Ian Higginson"
 msgstr "इयान् हिगिन्सन्"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "प्लगिन् सूचीं स्वच्छं कर्तुं पैच् कुर्वन्तु"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "अमिचै रोथमैन्"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "Plasma applet इत्येतत् popup applet इत्येतत् कर्तुं patch कुर्वन्तु"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Leo Trubach"
 msgstr "लियो त्रुबच्"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "IP फ़िल्टर संवादे IP श्रेणीनां समर्थनं योजयितुं पैच् कुर्वन्तु"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "आन्द्रेई बार्बु"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "विशेषता यत् एकं टोरेण्ट् योजितस्य तिथिं योजयति"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "जोनास लुण्डक्विस्ट"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "जालपुटे प्रमाणीकरणं निष्क्रियं कर्तुं विशेषता"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "जारोस्लाव स्वियर्चिन्स्की"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "सिण्डिकेशनप्लगिन् मध्ये बहिष्कारप्रतिमानाः"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "अलेक्सी शिल्ड्याकोव "
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "एकसञ्चिका-टोरेण्ट्-इत्यस्य नामान्तरणं अन्तः सञ्चिकायां स्थापयितुं पैच् कुर्वन्तु"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "मार्टेन डी मेयर"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "305379 इति दोषस्य निवारणं कुर्वन्तु"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Rex Dieter"
 msgstr "रेक्स डायटर"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "x-scheme-handler/magnet mimetype इत्यस्य समर्थनं योजयन्तु"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "अहं लेस्नर् भविष्यामि"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "339584 इति दोषस्य निवारणं कुर्वन्तु"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "आन्द्रियः ष्टिकोनसः"
 
-#: ktorrent/main.cpp:171 ktorrent/main.cpp:172
+#: ktorrent/main.cpp:173 ktorrent/main.cpp:174
 #, kde-format
 msgid "KF5 porting"
 msgstr "KF5 पोर्टिंग्"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "निक शाफोरोस्टोफ्"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr "अलेक्जेण्डर ट्रुफानोव"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr "दोषनिवारणं, सफाई, अनुकूलनं च"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:176
 #, kde-format
 msgid "Jack Hill"
 msgstr "जैक हिल्"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:176
 #, kde-format
 msgid "KF6 porting"
 msgstr "KF6 पोर्टिंग्"
 
-#: ktorrent/main.cpp:178
+#: ktorrent/main.cpp:180
 #, kde-format
 msgid "Enable logging"
 msgstr "लॉगिंग् सक्षमं कुर्वन्तु"
 
-#: ktorrent/main.cpp:180
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
@@ -2036,12 +2041,12 @@ msgstr ""
 "मानकनिर्गमं प्रति लॉगिंग् सक्षमं कुर्वन्तु । --enable-logging इत्यस्य अपि निर्दिष्टीकरणम् "
 "आवश्यकम् ।"
 
-#: ktorrent/main.cpp:181
+#: ktorrent/main.cpp:183
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "URL इत्यत्र दत्तं टोरेण्ट् मौनेन उद्घाटयन्तु"
 
-#: ktorrent/main.cpp:182
+#: ktorrent/main.cpp:184
 #, kde-format
 msgid "Document to open"
 msgstr "दस्तावेजं उद्घाटयितुं"
