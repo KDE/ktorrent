@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-12-31 08:02+0100\n"
+"PO-Revision-Date: 2025-03-05 06:45+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -1641,22 +1641,18 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"Ponudnik baze podatkov IP-držav, ki se uporablja v vtičniku InfoWidget. "
+"Ponudnik baze podatkov IP-držav, ki se uporablja v vtičniku InfoWidget.\n"
 "Podatki so licencirani pod mednarodno licenco Creative Commons Attribution "
-"4.0 https://creativecommons.org/licenses/by/4.0/. Zastave so vzete iz http://"
-"flags.blogpotato.de/, tako da zahhvala tudi njim."
+"4.0\n"
+"https://creativecommons.org/licenses/by/4.0/.\n"
+"Zastave so vzete iz http://flags.blogpotato.de/, tako da zahvala tudi njim."
 
 #: ktorrent/main.cpp:135
 #, kde-format

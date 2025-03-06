@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2025-01-11 17:10+0300\n"
+"PO-Revision-Date: 2025-03-05 12:18+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1651,22 +1651,17 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"InfoWidget eklentisinde kullanılan IP–Ülke veritabanının sağlayıcısı. Veri, "
-"Creative Commons Atıf 4.0 Uluslararası Lisansı https://creativecommons.org/"
-"licenses/by/4.0/. altında lisanslıdır. Bayraklar ise http://flags.blogpotato."
-"de/ sitesinden alınmıştır, çok teşekkürler."
+"InfoWidget eklentisinde kullanılan IP–Ülke veritabanının sağlayıcısı.\n"
+"Veri, Creative Commons Atıf 4.0 Uluslararası Lisansı altında\n"
+"(https://creativecommons.org/licenses/by/4.0/) lisanslıdır.\n"
+"Bayraklar ise http://flags.blogpotato.de/ sitesinden alınmıştır."
 
 #: ktorrent/main.cpp:135
 #, kde-format

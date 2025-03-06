@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-10-14 07:21+0200\n"
+"PO-Revision-Date: 2025-03-05 06:16+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1641,22 +1641,18 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"InfoWidget დამატების მიერ გამოყენებული IP-ქვეყნის ბაზის მომწოდებელი. "
-"მონაცემების ლიცენზიაა Creative Commons Attribution 4.0 International License "
-"https://creativecommons.org/licenses/by/4.0/. ალმები ავიღეთ საიტიდან http://"
-"flags.blogpotato.de/ , ასე რომ მათაც მადლობა."
+"InfoWidget დამატების მიერ გამოყენებული IP-ქვეყნის ბაზის მომწოდებელი.\n"
+"მონაცემების ლიცენზიაა\n"
+"Creative Commons Attribution 4.0 International License https://"
+"creativecommons.org/licenses/by/4.0/. \n"
+"ალმები ავიღეთ საიტიდან http://flags.blogpotato.de/ , ასე რომ მათაც მადლობა."
 
 #: ktorrent/main.cpp:135
 #, kde-format

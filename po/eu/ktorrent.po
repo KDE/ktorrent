@@ -1,26 +1,26 @@
 # Translation for ktorrent.po to Euskara/Basque (eu).
-# Copyright (C) 2010-2024 This file is copyright:
+# Copyright (C) 2010-2025 This file is copyright:
 # This file is distributed under the same license as de ktorrent package.
-# SPDX-FileCopyrightText: 2023, 2024 KDE euskaratzeko proiekuko arduraduna <xalba@ni.eus>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 KDE euskaratzeko proiekuko arduraduna <xalba@ni.eus>
 #
 # Translators:
 # Marcos  <marcos@euskalgnu.org>, 2006.
 # Ion Gaztañaga <igaztanaga@gmail.com>, 2006.
-# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2009, 2013, 2022, 2023, 2024.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2009, 2013, 2022, 2023, 2024, 2025.
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-10-14 16:36+0200\n"
+"PO-Revision-Date: 2025-03-05 18:56+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.1\n"
+"X-Generator: Lokalize 24.12.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -1656,22 +1656,17 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"«InfoWidget» pluginean erabilitako «IP-Country» datu-basearen hornitzailea. "
-"Datuak «Creative Commons Attribution 4.0 International License»  « https://"
-"creativecommons.org/licenses/by/4.0/ » lizentziapean dago.Banderak hemendik, "
-"« http://flags.blogpotato.de/ », hartzen dira, beraz eskerrak beraiei ere."
+"InfoWidget pluginean erabilitako IP-Country datu-basearen hornitzailea.\n"
+"Datuak «Creative Commons Attribution 4.0 International License»\n"
+"https://creativecommons.org/licenses/by/4.0/  lizentziapean dago. Banderak\n"
+"«http://flags.blogpotato.de/»etik hartu dira, beraz eskerrak beraiei ere."
 
 #: ktorrent/main.cpp:135
 #, kde-format
