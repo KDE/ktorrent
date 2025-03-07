@@ -11,15 +11,15 @@
 # Marcus Vinícius de Andrade Gama <marcus.gama@gmail.com>, 2010.
 # Aracele Torres <araceletorres@gmail.com>, 2010, 2011.
 # Marcus Gama <marcus.gama@gmail.com>, 2011, 2012.
-# SPDX-FileCopyrightText: 2023, 2024 Geraldo Simiao <geraldosimiao@fedoraproject.org>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Geraldo Simiao <geraldosimiao@fedoraproject.org>
 # SPDX-FileCopyrightText: 2025 Guilherme Marçal Silva <guimarcalsilva@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2025-02-23 19:21-0300\n"
-"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
+"PO-Revision-Date: 2025-03-06 17:24-0300\n"
+"Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -1661,21 +1661,17 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"Provedor do banco de dados IP-país utilizado no plugin InfoWidget. Os dados "
-"são licenciados sob a Licença Internacional Creative Commons Attribution 4.0 "
-"https://creativecommons.org/licenses/by/4.0/. As bandeiras foram retiradas "
+"Provedor do banco de dados IP-país utilizado no plugin InfoWidget. Os dados\n"
+"são licenciados sob a Licença Internacional Creative Commons Attribution "
+"4.0\n"
+"https://creativecommons.org/licenses/by/4.0/. As bandeiras foram retiradas\n"
 "de http://flags.blogpotato.de/, então obrigado a eles também."
 
 #: ktorrent/main.cpp:135

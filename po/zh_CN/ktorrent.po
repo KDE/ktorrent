@@ -1613,6 +1613,10 @@ msgid ""
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
+"InfoWidget 插件使用的 IP-Country (IP 国家) 数据库。\n"
+"数据许可证为 Creative Commons Attribution 4.0 International\n"
+"https://creativecommons.org/licenses/by/4.0/。\n"
+"国旗图像由 http://flags.blogpotato.de/ 提供。"
 
 #: ktorrent/main.cpp:135
 #, kde-format

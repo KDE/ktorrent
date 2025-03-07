@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2025-01-13 17:39+0400\n"
+"PO-Revision-Date: 2025-03-06 09:00+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1622,22 +1622,17 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"مقدم قاعدة بيانات IP-Country المستخدمة في البرنامج المساعد InfoWidget. تم "
-"ترخيص البيانات بموجب الترخيص الدولي للمشاع الإبداعي 4.0 https://"
-"creativecommons.org/licenses/by/4.0/. الأعلام مأخوذة من http://flags."
-"blogpotato.de/ لذا شكرًا لهم أيضًا."
+"مقدم قاعدة بيانات IP-Country المستخدمة في ملحقة InfoWidget.\n"
+"رُخصت البيانات بموجب الترخيص الدولي  للمشاع الإبداعي  4.0  https://"
+"creativecommons.org/licenses/by/4.0/.\n"
+"الأعلام مأخوذة من http://flags.blogpotato.de/ لذا شكرًا لهم أيضًا."
 
 #: ktorrent/main.cpp:135
 #, kde-format
