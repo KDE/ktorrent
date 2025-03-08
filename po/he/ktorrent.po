@@ -3,13 +3,13 @@
 #
 # Elkana Bardugo <ttv200@gmail.com>, 2016.
 # Elkana Bardugo <ttv200@gmail.com>, 2017. #zanata
-# SPDX-FileCopyrightText: 2023, 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2025-01-24 09:27+0200\n"
+"PO-Revision-Date: 2025-03-05 07:55+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1617,22 +1617,17 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"ספק למסד נתוני התאמה בין IP למדינה שמשמש את תוסף וידג׳ט המידע. הנתונים "
-"כפופים לרישיון הבינלאומי קריאייטיב קומונז ייחוס 4.0 https://creativecommons."
-"org/licenses/by/4.0/. הדגלים נלקחו מ־http://flags.blogpotato.de/ ואנו מודים "
-"להם על כך בנוסף."
+"ספק למסד נתוני התאמה בין IP למדינה שמשמש את תוסף וידג׳ט המידע.\n"
+"הנתונים כפופים לרישיון הבינלאומי קריאייטיב קומונז ייחוס 4.0\n"
+"https://creativecommons.org/licenses/by/4.0/.\n"
+" הדגלים נלקחו מ־http://flags.blogpotato.de/‎ ואנו מודים להם על כך בנוסף."
 
 #: ktorrent/main.cpp:135
 #, kde-format
