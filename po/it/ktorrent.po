@@ -1,6 +1,6 @@
 # translation of ktorrent.po to Italian
 #
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Vincenzo Reale <smart2128vr@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Vincenzo Reale <smart2128vr@gmail.com>
 # Nicola Ruggero <nixprog.adsl@tiscali.it>, 2005, 2006.
 # Nicola Ruggero <nicola@nxnt.org>, 2006, 2007, 2008, 2009, 2010.
 # Pino Toscano <toscano.pino@tiscali.it>, 2013, 2014, 2016, 2017, 2018, 2019, 2020.
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-10-14 21:44+0200\n"
+"PO-Revision-Date: 2025-03-05 16:57+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1650,22 +1650,17 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"Fornitore del database IP-Country utilizzato nell'estensione InfoWidget. I "
-"dati sono concessi in licenza secondo la licenza internazionale Creative "
-"Commons Attribution 4.0 https://creativecommons.org/licenses/by/4.0/. Le "
-"bandiere sono prese da http://flags.blogpotato.de/ quindi grazie anche a "
+"Fornitore del database IP-Country utilizzato nell'estensione InfoWidget.\n"
+"I dati sono concessi in licenza secondo la licenza internazionale Creative\n"
+"Commons Attribution 4.0 https://creativecommons.org/licenses/by/4.0/.\n"
+"Le bandiere sono prese da http://flags.blogpotato.de/, quindi grazie anche a "
 "loro."
 
 #: ktorrent/main.cpp:135

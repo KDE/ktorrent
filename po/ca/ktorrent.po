@@ -8916,10 +8916,3 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Text encoding:"
-#~ msgstr "Codificació del text:"
-
-#~ msgctxt "@title:window"
-#~ msgid "Display"
-#~ msgstr "Pantalla"
