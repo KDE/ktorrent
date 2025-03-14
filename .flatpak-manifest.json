@@ -108,6 +108,7 @@
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [
+                "-DENABLE_TESTING=OFF",
                 "-DWITH_SYSTEM_GEOIP=ON"
             ],
             "sources": [
