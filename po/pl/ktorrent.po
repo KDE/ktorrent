@@ -1,16 +1,16 @@
 # translation of ktorrent.po to Polish
 # Copyright (C) 2007 This_file_is_part_of_KDE
 # This file is distributed under the same license as the KTorrent package.
-#
 # Jerzy Trzeciak <artusek@wp.pl>, 2007, 2008, 2009, 2010.
 # Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008, 2009, 2013.
-# SPDX-FileCopyrightText: 2012, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2012, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-10-19 12:41+0200\n"
+"PO-Revision-Date: 2025-03-15 10:53+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1645,22 +1645,17 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"Dostawca bazy danych IP-Kraj używanej we wtyczce InfoWidget. Dane tesą na "
-"licencji Creative Commons Attribution 4.0 International License https://"
-"creativecommons.org/licenses/by/4.0/. Flagi są wzięte z http://flags."
-"blogpotato.de/ więc im także dzięki."
+"Dostawca bazy danych IP-Kraj używanej we wtyczce InfoWidget.\n"
+"Dane tesą na licencji Creative Commons Attribution 4.0\n"
+"International License https://creativecommons.org/licenses/by/4.0/.\n"
+"Flagi są wzięte z http://flags.blogpotato.de/ więc im także dzięki."
 
 #: ktorrent/main.cpp:135
 #, kde-format

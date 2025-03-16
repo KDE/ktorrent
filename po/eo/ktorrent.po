@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-12-27 17:40+0100\n"
+"PO-Revision-Date: 2025-03-15 10:38+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -1642,12 +1642,7 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
@@ -1657,7 +1652,7 @@ msgstr ""
 "Provizanto de la IP-Country datumbazo uzata en la InfoWidget-kromaĵo. La "
 "datumoj estas licencitaj laŭ la Creative Commons Attribution 4.0 Internacia "
 "Licenco https://creativecommons.org/licenses/by/4.0/. Flagoj estas prenitaj "
-"de http://flags.blogpotato.de/ do ankaŭ dankon al ili."
+"de http://flags.blogpotato.de/, do ankaŭ dankon al ili."
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -8858,10 +8853,3 @@ msgstr "Reserĉi"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Text encoding:"
-#~ msgstr "Tekstokodado:"
-
-#~ msgctxt "@title:window"
-#~ msgid "Display"
-#~ msgstr "Montrado"
