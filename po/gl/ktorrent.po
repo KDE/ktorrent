@@ -17,15 +17,15 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2025-01-26 21:11+0100\n"
-"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
+"PO-Revision-Date: 2025-03-20 08:03+0100\n"
+"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1660,23 +1660,18 @@ msgstr "DB-IP.com"
 
 # skip-rule: trasno-widget_reverse
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"Fornecedor da base de datos de enderezos IP e países que se usa no "
-"complemento de trebello de información. Os datos teñen licenza Creative "
-"Commons Recoñecemento 4.0 Internacional (https://creativecommons.org/"
-"licenses/by/4.0/). As bandeiras veñen de http://flags.blogpotato.de/ a quen "
-"tamén damos as grazas."
+"Fornecedor da base de datos de enderezos IP e países que se usa\n"
+"no complemento de trebello de información. Os datos teñen licenza\n"
+"Creative Commons Recoñecemento 4.0 Internacional\n"
+"(https://creativecommons.org/licenses/by/4.0/). As bandeiras veñen\n"
+"de http://flags.blogpotato.de/ a quen tamén damos as grazas."
 
 #: ktorrent/main.cpp:135
 #, kde-format
