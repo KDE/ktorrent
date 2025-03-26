@@ -11,13 +11,13 @@
 # Alexander Lakhin <exclusion@gmail.com>, 2013.
 # Мария Шикунова <translation-team@basealt.ru>, 2021, 2023.
 # Alexander Yavorsky <kekcuha@gmail.com>, 2024.
-# SPDX-FileCopyrightText: 2024 Olesya Gerasimenko <translation-team@basealt.ru>
+# SPDX-FileCopyrightText: 2024, 2025 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-10-29 12:29+0300\n"
+"PO-Revision-Date: 2025-03-25 14:29+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1657,12 +1657,7 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
@@ -1670,10 +1665,11 @@ msgid ""
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
 "Данные о принадлежности IP-адресов различным странам используются в модуле "
-"«сведения». Исходная база данных предоставляется по лицензии Creative Common "
-"Attribution версии 4.0, доступной по адресу https://creativecommons.org/"
-"licenses/by/4.0/. Используемые значки флагов получены с сайта http://flags."
-"blogpotato.de/."
+"«сведения».\n"
+"Исходная база данных предоставляется по лицензии Creative Common Attribution "
+"версии 4.0,\n"
+"доступной по адресу https://creativecommons.org/licenses/by/4.0/.\n"
+"Используемые значки флагов получены с сайта http://flags.blogpotato.de/."
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -7797,7 +7793,7 @@ msgstr "Среднее число сидов на запущенный торр�
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7842,7 +7838,7 @@ msgid "(plugin reload is needed after change)"
 msgstr "(после изменений необходима перезагрузка модуля)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
