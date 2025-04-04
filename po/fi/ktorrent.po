@@ -1,6 +1,6 @@
 # Copyright © 2010, 2011, 2012 This_file_is_part_of_KDE
 # This file is distributed under the same license as the ktorrent package.
-# SPDX-FileCopyrightText: 2010, 2015, 2019, 2020, 2021, 2023, 2024 Tommi Nieminen <translator@legisign.org>
+# SPDX-FileCopyrightText: 2010, 2015, 2019, 2020, 2021, 2023, 2024, 2025 Tommi Nieminen <translator@legisign.org>
 # Lasse Liehu <lasse.liehu@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 # KDE Finnish translation sprint participants:
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-11-07 16:54+0200\n"
+"PO-Revision-Date: 2025-03-15 09:27+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -1648,22 +1648,17 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"Tietosovelmaliitännäisen käyttämän IP-maatietokannan tarjoaja. Tiedot on "
-"lisensoitu Creative Common Attribution 4.0 International -lisenssillä "
-"https://creativecommons.org/licences/by/4.0/. Lippujen alkuperä on https://"
-"flags.blogpotato.de/, joten kiitetään heitäkin."
+"Tietosovelmaliitännäisen käyttämän IP-maatietokannan tarjoaja.\n"
+"Tiedot on lisensoitu Creative Common Attribution 4.0 International\n"
+"-lisenssillä https://creativecommons.org/licences/by/4.0/. Liput ovat\n"
+"sivustolta https://flags.blogpotato.de/, joten kiitokset sinnekin."
 
 #: ktorrent/main.cpp:135
 #, kde-format
