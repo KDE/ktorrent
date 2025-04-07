@@ -1,6 +1,6 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# SPDX-FileCopyrightText: 2014, 2015, 2019, 2020, 2021, 2022, 2023, 2024 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2014, 2015, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Shinjo Park <kde@peremen.name>
 #
 # C6H6, 2014.
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-12-10 01:08+0100\n"
+"PO-Revision-Date: 2025-04-06 23:41+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -1627,22 +1627,18 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
-"InfoWidget 플러그인의 IP-국가 대응 데이터베이스 공급자입니다. 데이터는 크리에"
-"이티브 커먼즈 저작자표시 4.0 국제 라이선스(CC BY)로 배포됩니다. https://"
-"creativecommons.org/licenses/by/4.0/. 깃발은 http://flags.blogpotato.de/ 사이"
-"트에서 제공했습니다."
+"InfoWidget 플러그인의 IP-국가 대응 데이터베이스 공급자입니다.\n"
+"데이터는 크리에이티브 커먼즈 저작자표시 4.0 국제 라이선스(CC BY)로 배포됩니"
+"다.\n"
+"https://creativecommons.org/licenses/by/4.0/.\n"
+"깃발은 http://flags.blogpotato.de/ 사이트에서 제공했습니다."
 
 #: ktorrent/main.cpp:135
 #, kde-format
