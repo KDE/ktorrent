@@ -77,20 +77,6 @@
             ]
         },
         {
-            "name": "qca",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DENABLE_TESTING=OFF",
-                "-DBUILD_WITH_QT6=ON"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://invent.kde.org/libraries/qca.git"
-                }
-            ]
-        },
-        {
             "name": "libktorrent",
             "buildsystem": "cmake-ninja",
             "config-opts": [
