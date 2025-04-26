@@ -139,10 +139,10 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
             return TStringToQString(tag->album());
         case 3:
             if (role == Qt::UserRole) {
-                return ref->audioProperties()->length();
+                return ref->audioProperties()->lengthInSeconds();
             } else {
                 QTime t(0, 0);
-                t = t.addSecs(ref->audioProperties()->length());
+                t = t.addSecs(ref->audioProperties()->lengthInSeconds());
                 return t.toString(QStringLiteral("m:ss"));
             }
         case 4:
