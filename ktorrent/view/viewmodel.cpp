@@ -40,8 +40,10 @@ ViewModel::Item::Item(bt::TorrentInterface *tc)
     const TorrentStats &s = tc->getStats();
     status = s.status;
     bytes_downloaded = s.bytes_downloaded;
+    session_bytes_downloaded = 0;
     total_bytes_to_download = s.total_bytes_to_download;
     bytes_uploaded = s.bytes_uploaded;
+    session_bytes_uploaded = 0;
     bytes_left = s.bytes_left_to_download;
     download_rate = s.download_rate;
     upload_rate = s.upload_rate;
@@ -82,8 +84,10 @@ bool ViewModel::Item::update(int row, int sort_column, QModelIndexList &to_updat
 
     update_if_differs(status, s.status, NAME);
     update_if_differs(bytes_downloaded, s.bytes_downloaded, BYTES_DOWNLOADED);
+    update_if_differs(session_bytes_downloaded, s.session_bytes_downloaded, SESSION_BYTES_DOWNLOADED);
     update_if_differs(total_bytes_to_download, s.total_bytes_to_download, TOTAL_BYTES_TO_DOWNLOAD);
     update_if_differs(bytes_uploaded, s.bytes_uploaded, BYTES_UPLOADED);
+    update_if_differs(session_bytes_uploaded, s.session_bytes_uploaded, SESSION_BYTES_UPLOADED);
     update_if_differs(bytes_left, s.bytes_left, BYTES_LEFT);
     update_if_differs(download_rate, s.download_rate, DOWNLOAD_RATE);
     update_if_differs(upload_rate, s.upload_rate, UPLOAD_RATE);
@@ -116,10 +120,14 @@ QVariant ViewModel::Item::data(int col) const
         return tc->getDisplayName();
     case BYTES_DOWNLOADED:
         return BytesToString(bytes_downloaded);
+    case SESSION_BYTES_DOWNLOADED:
+        return BytesToString(session_bytes_downloaded);
     case TOTAL_BYTES_TO_DOWNLOAD:
         return BytesToString(total_bytes_to_download);
     case BYTES_UPLOADED:
         return BytesToString(bytes_uploaded);
+    case SESSION_BYTES_UPLOADED:
+        return BytesToString(session_bytes_uploaded);
     case BYTES_LEFT:
         return bytes_left > 0 ? BytesToString(bytes_left) : QVariant();
     case DOWNLOAD_RATE:
@@ -168,10 +176,14 @@ bool ViewModel::Item::lessThan(int col, const Item *other) const
         return QString::localeAwareCompare(tc->getDisplayName(), other->tc->getDisplayName()) < 0;
     case BYTES_DOWNLOADED:
         return bytes_downloaded < other->bytes_downloaded;
+    case SESSION_BYTES_DOWNLOADED:
+        return session_bytes_downloaded < other->session_bytes_downloaded;
     case TOTAL_BYTES_TO_DOWNLOAD:
         return total_bytes_to_download < other->total_bytes_to_download;
     case BYTES_UPLOADED:
         return bytes_uploaded < other->bytes_uploaded;
+    case SESSION_BYTES_UPLOADED:
+        return session_bytes_uploaded < other->session_bytes_uploaded;
     case BYTES_LEFT:
         return bytes_left < other->bytes_left;
     case DOWNLOAD_RATE:
@@ -438,10 +450,14 @@ QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int rol
             return i18n("Name");
         case BYTES_DOWNLOADED:
             return i18n("Downloaded");
+        case SESSION_BYTES_DOWNLOADED:
+            return i18nc("Bytes downloaded this session", "Session Downloaded");
         case TOTAL_BYTES_TO_DOWNLOAD:
             return i18n("Size");
         case BYTES_UPLOADED:
             return i18n("Uploaded");
+        case SESSION_BYTES_UPLOADED:
+            return i18nc("Bytes uploaded this session", "Session Uploaded");
         case BYTES_LEFT:
             return i18nc("Bytes left to downloaded", "Left");
         case DOWNLOAD_RATE:
@@ -474,10 +490,14 @@ QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int rol
         switch (section) {
         case BYTES_DOWNLOADED:
             return i18n("How much data we have downloaded of the torrent");
+        case SESSION_BYTES_DOWNLOADED:
+            return i18n("How much data we have downloaded of the torrent this session");
         case TOTAL_BYTES_TO_DOWNLOAD:
             return i18n("Total size of the torrent, excluded files are not included");
         case BYTES_UPLOADED:
             return i18n("How much data we have uploaded");
+        case SESSION_BYTES_UPLOADED:
+            return i18n("How much data we have uploaded this session");
         case BYTES_LEFT:
             return i18n("How much data left to download");
         case DOWNLOAD_RATE:

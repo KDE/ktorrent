@@ -137,9 +137,11 @@ public:
     enum Column {
         NAME = 0,
         BYTES_DOWNLOADED,
+        SESSION_BYTES_DOWNLOADED,
         TOTAL_BYTES_TO_DOWNLOAD,
         BYTES_LEFT,
         BYTES_UPLOADED,
+        SESSION_BYTES_UPLOADED,
         DOWNLOAD_RATE,
         UPLOAD_RATE,
         ETA,
@@ -159,7 +161,9 @@ public:
         // cached values to avoid unneeded updates
         bt::TorrentStatus status;
         bt::Uint64 bytes_downloaded;
+        bt::Uint64 session_bytes_downloaded;
         bt::Uint64 bytes_uploaded;
+        bt::Uint64 session_bytes_uploaded;
         bt::Uint64 total_bytes_to_download;
         bt::Uint64 bytes_left;
         bt::Uint32 download_rate;
