@@ -6,13 +6,13 @@
 # Tóth Csanád <toth.csanad@kde.hu>, 2009, 2010.
 # Kristóf Kiszel <ulysses@kubuntu.org>, 2010, 2011, 2012, 2021.
 # Balázs Úr <urbalazs@gmail.com>, 2012, 2013, 2014.
-# SPDX-FileCopyrightText: 2021, 2024 Kristof Kiszel <kiszel.kristof@gmail.com>
+# SPDX-FileCopyrightText: 2021, 2024, 2025 Kristof Kiszel <kiszel.kristof@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2024-11-16 20:21+0100\n"
+"PO-Revision-Date: 2025-04-26 22:24+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1647,12 +1647,7 @@ msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
-#, fuzzy, kde-format
-#| msgid ""
-#| "Provider of the IP-Country database used in the InfoWidget plugin. The "
-#| "data is licensed under the Creative Commons Attribution 4.0 International "
-#| "License https://creativecommons.org/licenses/by/4.0/. Flags are taken "
-#| "from http://flags.blogpotato.de/ so thanks to them too."
+#, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
 "The data is licensed under the Creative Commons Attribution 4.0\n"
@@ -1660,9 +1655,11 @@ msgid ""
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
 "Az Információs kisalkalmazás bővítményben használt IP-ország adatbázis "
-"szolgáltatója. Az adatok a Creative Commons Attribution 4.0 nemzetközi "
-"licenc alatt érhetők el (https://creativecommons.org/licenses/by/4.0/). A "
-"zászlók a http://flags.blogpotato.de/ oldalról származnak, nekik is köszönet."
+"szolgáltatója.\n"
+"Az adatok a Creative Commons Attribution 4.0 nemzetközi licenc alatt érhetők "
+"el (https://creativecommons.org/licenses/by/4.0/).\n"
+"A zászlók a http://flags.blogpotato.de/ oldalról származnak, nekik is "
+"köszönet."
 
 #: ktorrent/main.cpp:135
 #, kde-format
