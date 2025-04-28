@@ -30,6 +30,8 @@
 #include "view.h"
 #include "viewdelegate.h"
 
+using namespace Qt::StringLiterals;
+
 using namespace bt;
 
 namespace kt
@@ -57,6 +59,7 @@ ViewModel::Item::Item(bt::TorrentInterface *tc)
     hidden = false;
     time_added = s.time_added;
     highlight = false;
+    last_activity = std::max(s.last_download_activity_time, s.last_upload_activity_time);
 }
 
 bool ViewModel::Item::update(int row, int sort_column, QModelIndexList &to_update, kt::ViewModel *model)
@@ -92,6 +95,13 @@ bool ViewModel::Item::update(int row, int sort_column, QModelIndexList &to_updat
     update_if_differs(seeders_total, s.seeders_total, SEEDERS);
     update_if_differs(leechers_connected_to, s.leechers_connected_to, LEECHERS);
     update_if_differs(leechers_total, s.leechers_total, LEECHERS);
+
+    auto la = std::max(s.last_download_activity_time, s.last_upload_activity_time);
+    if (last_activity < la) {
+        last_activity = la;
+        to_update.append(model->index(row, LAST_ACTIVITY));
+        ret |= (sort_column == LAST_ACTIVITY);
+    }
 
     update_if_differs_float(percentage, Percentage(s), PERCENTAGE);
     update_if_differs_float(share_ratio, s.shareRatio(), SHARE_RATIO);
@@ -156,6 +166,28 @@ QVariant ViewModel::Item::data(int col) const
         return tc->getStats().output_path;
     case TIME_ADDED:
         return locale.toString(time_added, QLocale::ShortFormat);
+    case LAST_ACTIVITY: {
+        auto formatSeconds = [](Uint32 seconds) {
+            int minutes = (seconds / 60) % 60;
+            int hours = (seconds / 60 / 60) % 24;
+            int days = (seconds / 60 / 60 / 24) % 365;
+            int years = (seconds / 60 / 60 / 24 / 365);
+            if (years > 0) {
+                return u"%1y %2d"_s.arg(years).arg(days);
+            }
+            if (days > 0) {
+                return u"%1d %2h"_s.arg(days).arg(hours);
+            }
+            if (hours > 0) {
+                return u"%1h %2m"_s.arg(hours).arg(minutes);
+            }
+            if (minutes > 0) {
+                return u"%1m"_s.arg(minutes);
+            }
+            return u"< 1m"_s;
+        };
+        return i18nc("1h 20m ago", "%1 ago", formatSeconds((QDateTime::currentMSecsSinceEpoch() - last_activity) / 1000));
+    }
     default:
         return QVariant();
     }
@@ -202,6 +234,10 @@ bool ViewModel::Item::lessThan(int col, const Item *other) const
         return tc->getStats().output_path < other->tc->getStats().output_path;
     case TIME_ADDED:
         return time_added < other->time_added;
+    case LAST_ACTIVITY:
+        // last_activity the timestamp for 1 minute is bigger than the timestamp for 1 hour
+        // but when sorting descending 1 hour should come before 1 minute
+        return last_activity > other->last_activity;
     default:
         return false;
     }
@@ -467,6 +503,8 @@ QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int rol
             return i18n("Location");
         case TIME_ADDED:
             return i18n("Added");
+        case LAST_ACTIVITY:
+            return i18n("Last Activity");
         default:
             return QVariant();
         }
@@ -503,6 +541,8 @@ QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int rol
             return i18n("The location of the torrent's data on disk");
         case TIME_ADDED:
             return i18n("When this torrent was added");
+        case LAST_ACTIVITY:
+            return i18n("Time since last download or upload activity");
         default:
             return QVariant();
         }
