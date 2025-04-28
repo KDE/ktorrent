@@ -153,6 +153,7 @@ public:
         SEED_TIME,
         DOWNLOAD_LOCATION,
         TIME_ADDED,
+        LAST_ACTIVITY,
         _NUMBER_OF_COLUMNS,
     };
 
@@ -180,6 +181,7 @@ public:
         bool hidden;
         QDateTime time_added;
         bool highlight;
+        bt::TimeStamp last_activity;
 
         Item(bt::TorrentInterface *tc);
 
