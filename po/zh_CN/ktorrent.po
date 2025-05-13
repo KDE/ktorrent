@@ -3770,7 +3770,7 @@ msgstr "磁盘空间不足。"
 msgid ""
 "Your disk is running out of space.<br /><b>%1</b> is being downloaded to "
 "'%2'."
-msgstr "您的磁盘空间不足。<br /><b>%1</b> 将被下载至 \"%2\"。"
+msgstr "本机的磁盘空间即将用尽。<br /><b>%1</b> 将被下载至“%2“。"
 
 #: ktorrent/trayicon.cpp:310
 #, kde-format
