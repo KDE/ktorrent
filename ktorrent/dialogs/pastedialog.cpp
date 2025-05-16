@@ -112,7 +112,7 @@ void PasteDialog::accept()
             } else {
                 QMessageBox::warning(this,
                                      i18n("Error fetching tracker list"),
-                                     i18n("Please check if the URL in Settings > Advanced > Tracker list URL is reachable."));
+                                     i18n("Please check if the URL in Settings → Advanced → Tracker list URL is reachable."));
             }
 
             delete manager;
