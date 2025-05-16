@@ -104,7 +104,7 @@
       <item row="5" column="2">
        <widget class="KColorButton" name="kcfg_noTrackerConnectionColor">
         <property name="toolTip">
-         <string>Color to use when all trackers reply the errors or not found.</string>
+         <string>Color to use when all trackers reply with errors or are not found.</string>
         </property>
        </widget>
       </item>
