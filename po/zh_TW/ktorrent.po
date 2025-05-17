@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-16 00:42+0000\n"
-"PO-Revision-Date: 2025-03-10 19:00+0900\n"
+"PO-Revision-Date: 2025-05-16 15:41+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4186,11 +4186,11 @@ msgid "Downloaded"
 msgstr "已下載"
 
 #: ktorrent/view/viewmodel.cpp:454
-#, fuzzy, kde-format
+#, kde-format
 #| msgid "Times Downloaded"
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "下載已用時間"
+msgstr "工作階段下載量"
 
 #: ktorrent/view/viewmodel.cpp:456
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4205,11 +4205,11 @@ msgid "Uploaded"
 msgstr "已上傳"
 
 #: ktorrent/view/viewmodel.cpp:460
-#, fuzzy, kde-format
+#, kde-format
 #| msgid "Uploaded"
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "已上傳"
+msgstr "工作階段上傳量"
 
 #: ktorrent/view/viewmodel.cpp:462
 #, kde-format
@@ -4280,10 +4280,10 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "對此 torrent 我們已經下載了多少資料"
 
 #: ktorrent/view/viewmodel.cpp:494
-#, fuzzy, kde-format
+#, kde-format
 #| msgid "How much data we have downloaded of the torrent"
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "對此 torrent 我們已經下載了多少資料"
+msgstr "這個工作階段當中我們為此 torrent 下載了多少資料"
 
 #: ktorrent/view/viewmodel.cpp:496
 #, kde-format
@@ -4296,10 +4296,10 @@ msgid "How much data we have uploaded"
 msgstr "我們已上傳了多少資料"
 
 #: ktorrent/view/viewmodel.cpp:500
-#, fuzzy, kde-format
+#, kde-format
 #| msgid "How much data we have uploaded to this peer"
 msgid "How much data we have uploaded this session"
-msgstr "我們對此端點上傳了多少資料"
+msgstr "這個工作階段當中我們上傳了多少資料"
 
 #: ktorrent/view/viewmodel.cpp:502
 #, kde-format

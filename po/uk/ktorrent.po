@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-16 00:42+0000\n"
-"PO-Revision-Date: 2025-03-05 08:45+0200\n"
+"PO-Revision-Date: 2025-05-16 09:13+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4360,11 +4360,10 @@ msgid "Downloaded"
 msgstr "Отримано"
 
 #: ktorrent/view/viewmodel.cpp:454
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "Повторних отримань"
+msgstr "Отримано у сеансі"
 
 #: ktorrent/view/viewmodel.cpp:456
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4379,11 +4378,10 @@ msgid "Uploaded"
 msgstr "Вивантажено"
 
 #: ktorrent/view/viewmodel.cpp:460
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "Вивантажено"
+msgstr "Вивантажено у сеансі"
 
 #: ktorrent/view/viewmodel.cpp:462
 #, kde-format
@@ -4454,10 +4452,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "Об’єм отриманих даних торента"
 
 #: ktorrent/view/viewmodel.cpp:494
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "Об’єм отриманих даних торента"
+msgstr "Об’єм отриманих даних торента протягом цього сеансу"
 
 #: ktorrent/view/viewmodel.cpp:496
 #, kde-format
@@ -4470,10 +4467,9 @@ msgid "How much data we have uploaded"
 msgstr "Об’єм вивантажених даних"
 
 #: ktorrent/view/viewmodel.cpp:500
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "Об’єм даних, вивантажених на цей вузол"
+msgstr "Об’єм даних, вивантажених протягом цього сеансу"
 
 #: ktorrent/view/viewmodel.cpp:502
 #, kde-format

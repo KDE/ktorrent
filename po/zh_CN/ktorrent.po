@@ -4172,11 +4172,10 @@ msgid "Downloaded"
 msgstr "已下载"
 
 #: ktorrent/view/viewmodel.cpp:454
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "已下载次数"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:456
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4191,11 +4190,10 @@ msgid "Uploaded"
 msgstr "已上传"
 
 #: ktorrent/view/viewmodel.cpp:460
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "已上传"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:462
 #, kde-format
@@ -4266,10 +4264,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "种子已下载部分的数据量"
 
 #: ktorrent/view/viewmodel.cpp:494
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "种子已下载部分的数据量"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:496
 #, kde-format
@@ -4282,10 +4279,9 @@ msgid "How much data we have uploaded"
 msgstr "已上传的数据量"
 
 #: ktorrent/view/viewmodel.cpp:500
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "已向此对等点上传的数据量"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:502
 #, kde-format

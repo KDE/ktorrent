@@ -17,15 +17,15 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-16 00:42+0000\n"
-"PO-Revision-Date: 2025-03-09 22:59+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"PO-Revision-Date: 2025-05-16 19:52+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4310,11 +4310,10 @@ msgid "Downloaded"
 msgstr "İndirilen"
 
 #: ktorrent/view/viewmodel.cpp:454
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "İndirilme Sayısı"
+msgstr "Oturumda İndirilen"
 
 #: ktorrent/view/viewmodel.cpp:456
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4329,11 +4328,10 @@ msgid "Uploaded"
 msgstr "Yüklenen"
 
 #: ktorrent/view/viewmodel.cpp:460
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "Yüklenen"
+msgstr "Oturumda Yüklenen"
 
 #: ktorrent/view/viewmodel.cpp:462
 #, kde-format
@@ -4404,10 +4402,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "Karşıdan ne kadar veri yükledik"
 
 #: ktorrent/view/viewmodel.cpp:494
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "Karşıdan ne kadar veri yükledik"
+msgstr "Bu oturumda torrentten ne kadar veri indirdiğimiz"
 
 #: ktorrent/view/viewmodel.cpp:496
 #, kde-format
@@ -4420,10 +4417,9 @@ msgid "How much data we have uploaded"
 msgstr "Karşıya ne kadar veri yükledik"
 
 #: ktorrent/view/viewmodel.cpp:500
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "Bu eşe ne kadar veri yüklediğimiz"
+msgstr "Bu oturumda ne kadar veri yüklediğimiz"
 
 #: ktorrent/view/viewmodel.cpp:502
 #, kde-format
