@@ -8,6 +8,7 @@
 #define KTFEEDWIDGET_H
 
 #include <KConfigGroup>
+#include <KLocalizedString>
 #include <QWidget>
 
 #include "ui_feedwidget.h"
@@ -59,7 +60,7 @@ private:
     FilterList *filters;
     SyndicationActivity *act;
 
-    static QString item_template;
+    static KLocalizedString item_template;
 };
 
 }

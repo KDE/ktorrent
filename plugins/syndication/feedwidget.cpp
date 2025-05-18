@@ -10,6 +10,8 @@
 #include <QInputDialog>
 #include <QLocale>
 #include <QPalette>
+#include <QStyleHints>
+#include <QWebEngineSettings>
 
 #include "feedwidget.h"
 #include "feedwidgetmodel.h"
@@ -23,10 +25,17 @@ using namespace bt;
 
 namespace kt
 {
-QString FeedWidget::item_template = i18n(
-    "\
-    <html>\
-    <body style=\"color:%4\">\
+KLocalizedString FeedWidget::item_template = ki18nc(
+    /* Context */
+    "Given string needs to be HTML parseable."
+    "%1 is title of RSS feed item."
+    "%2 is publishing date of RSS feed item."
+    "%3 is description given in RSS feed item."
+    "%4 is CSS Hex RGB formatted text color."
+    "%5 is CSS Hex RGB formatted background color.",
+    /* Template Text */
+    "<html>\
+    <body style=\"color:%4; background-color:%5\">\
     <div style=\"border-style:solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">\
     <b>Title:</b> %1<br/>\
     <b>Date:</b> %2<br/>\
@@ -71,7 +80,11 @@ FeedWidget::FeedWidget(FilterList *filters, SyndicationActivity *act, QWidget *p
     m_refresh_rate->clear();
     m_active_filters->clear();
 
+    // Having this empty html container enables background colour being set by theme
+    m_item_view->setHtml(QStringLiteral("<html></html>"));
     m_item_view->setEnabled(false);
+    // An easy dark mode for most links that might open
+    m_item_view->settings()->setAttribute(QWebEngineSettings::ForceDarkMode, (QApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark));
 
     setEnabled(false);
 }
@@ -185,10 +198,13 @@ void FeedWidget::selectionChanged(const QItemSelection &sel, const QItemSelectio
     if (sel.count() > 0 && feed) {
         Syndication::ItemPtr item = model->itemForIndex(m_item_list->selectionModel()->selectedRows().front());
         if (item) {
-            m_item_view->setHtml(item_template.arg(item->title())
-                                     .arg(QLocale().toString(QDateTime::fromSecsSinceEpoch(item->datePublished()), QLocale::ShortFormat))
-                                     .arg(item->description())
-                                     .arg(QApplication::palette().text().color().name(QColor::NameFormat::HexRgb)),
+            m_item_view->setHtml(item_template.subs(item->title())
+                                     .subs(QLocale().toString(QDateTime::fromSecsSinceEpoch(item->datePublished()), QLocale::ShortFormat))
+                                     .subs(item->description())
+                                     .subs(QApplication::palette().text().color().name(QColor::NameFormat::HexRgb))
+                                     .subs(QApplication::palette().window().color().name(QColor::NameFormat::HexRgb))
+                                     // Making sure KLocalizedString doesn't process any of the tags
+                                     .toString(Kuit::PlainText),
                                  QUrl(feed->feedData()->link()));
         }
     }
@@ -221,7 +237,6 @@ void FeedWidget::onFeedRenamed(kt::Feed *f)
 {
     Q_EMIT updateCaption(this, f->displayName());
 }
-
 }
 
 #include "moc_feedwidget.cpp"
