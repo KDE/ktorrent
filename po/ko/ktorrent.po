@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-18 00:42+0000\n"
 "PO-Revision-Date: 2025-04-06 23:41+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -725,9 +725,12 @@ msgid "Error fetching tracker list"
 msgstr "트래커 목록을 가져오는 중 오류 발생"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
+#| "reachable."
 msgid ""
-"Please check if the URL in Settings > Advanced > Tracker list URL is "
+"Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
 "설정 > 고급 > 트래커 목록 URL에 있는 URL에 접근할 수 있는지 확인하십시오."
@@ -2521,8 +2524,9 @@ msgstr "접근할 수 있는 트래커에서 경고를 반환했을 때:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, kde-format
-msgid "Color to use when all trackers reply the errors or not found."
+#, fuzzy, kde-format
+#| msgid "Color to use when all trackers reply the errors or not found."
+msgid "Color to use when all trackers reply with errors or are not found."
 msgstr "모든 트래커에서 오류를 반환했거나 찾을 수 없을 때 사용할 색상입니다."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)

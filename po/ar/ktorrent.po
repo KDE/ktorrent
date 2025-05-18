@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-16 00:42+0000\n"
-"PO-Revision-Date: 2025-03-06 09:00+0400\n"
+"POT-Creation-Date: 2025-05-18 00:42+0000\n"
+"PO-Revision-Date: 2025-05-17 17:58+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -522,7 +522,7 @@ msgstr ""
 #: ktorrent/dialogs/fileselectdlg.ui:260
 #, kde-format
 msgid "Skip data check if existing files are found"
-msgstr "تخطَّ اختبار البينات إن عُثر على الملفات الموجودة"
+msgstr "تخطَّ اختبار البيانات إن عُثر على الملفات الموجودة"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: ktorrent/dialogs/fileselectdlg.ui:270
@@ -587,7 +587,7 @@ msgstr "البيانات:"
 #: ktorrent/dialogs/importdialog.ui:70
 #, kde-format
 msgid "Select the torrent file and the data which belongs with it."
-msgstr "اختر ملف السيل والبينات العائدة إليه."
+msgstr "اختر ملف السيل والبيانات العائدة إليه."
 
 #. i18n: ectx: property (format), widget (QProgressBar, progress_bar)
 #. i18n: ectx: property (format), widget (QProgressBar, m_progress)
@@ -720,9 +720,12 @@ msgid "Error fetching tracker list"
 msgstr "خطأ في جلب قائمة المتتبعين"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
+#| "reachable."
 msgid ""
-"Please check if the URL in Settings > Advanced > Tracker list URL is "
+"Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
 "يرجى التحقق مما إذا كان الرابط في الإعدادات> خيارات متقدمة> رابط قائمة "
@@ -2340,7 +2343,7 @@ msgstr "عندما ينتهي تنزيل سيل، قُم بعمل اختبار �
 #: ktorrent/pref/btpref.ui:84
 #, kde-format
 msgid "Check data when download is finished"
-msgstr "اختبر البينات عند انتهاء التنزيل"
+msgstr "اختبر البيانات عند انتهاء التنزيل"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
 #: ktorrent/pref/btpref.ui:94
@@ -2514,8 +2517,9 @@ msgstr "حين يصدر المتتبعون الذين يمكن الوصول إل
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, kde-format
-msgid "Color to use when all trackers reply the errors or not found."
+#, fuzzy, kde-format
+#| msgid "Color to use when all trackers reply the errors or not found."
+msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
 "اللون الذي سيستخدم عندما يقوم كافة المتتبعين بالرد على الأخطاء أو عدم العثور "
 "عليها."
@@ -4255,11 +4259,10 @@ msgid "Downloaded"
 msgstr "المُنزّل"
 
 #: ktorrent/view/viewmodel.cpp:454
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "عدد مرات التنزيل"
+msgstr "المنزلة في هذه الجلسة"
 
 #: ktorrent/view/viewmodel.cpp:456
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4274,11 +4277,10 @@ msgid "Uploaded"
 msgstr "المرفوع"
 
 #: ktorrent/view/viewmodel.cpp:460
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "المرفوع"
+msgstr "المرفوعة في هذه الجلسة"
 
 #: ktorrent/view/viewmodel.cpp:462
 #, kde-format
@@ -4346,13 +4348,12 @@ msgstr "أضيف في"
 #: ktorrent/view/viewmodel.cpp:492
 #, kde-format
 msgid "How much data we have downloaded of the torrent"
-msgstr "كم من البينات نزَّلنا من السيل"
+msgstr "كم من البيانات نزَّلنا من السيل"
 
 #: ktorrent/view/viewmodel.cpp:494
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "كم من البينات نزَّلنا من السيل"
+msgstr "كمية البيانات المنزلة من السيل في هذه الجلسة"
 
 #: ktorrent/view/viewmodel.cpp:496
 #, kde-format
@@ -4362,13 +4363,12 @@ msgstr "حجم السيل الكلي، الملفات المُستثناة غي�
 #: ktorrent/view/viewmodel.cpp:498
 #, kde-format
 msgid "How much data we have uploaded"
-msgstr "كم من البينات رفعنا"
+msgstr "كم من البيانات رفعنا"
 
 #: ktorrent/view/viewmodel.cpp:500
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "كم من البينات رفعنا إلى الندّ"
+msgstr "كمية البيانات المرفوعة في هذه الجلسة"
 
 #: ktorrent/view/viewmodel.cpp:502
 #, kde-format
@@ -5961,12 +5961,12 @@ msgstr "عدد طلبات التنزيل والرفع"
 #: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "How much data we have downloaded from this peer"
-msgstr "كم من البينات نزَّلنا من الندّ"
+msgstr "كم من البيانات نزَّلنا من الندّ"
 
 #: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "How much data we have uploaded to this peer"
-msgstr "كم من البينات رفعنا إلى الندّ"
+msgstr "كم من البيانات رفعنا إلى الندّ"
 
 #: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
@@ -7374,7 +7374,7 @@ msgstr "أوصِد"
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
-msgstr "نَم (علّق إلى الذاكرة العشوائية)"
+msgstr "علّق إلى الذاكرة العشوائية"
 
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
 #: plugins/shutdown/shutdownruleset.cpp:251

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-18 00:42+0000\n"
 "PO-Revision-Date: 2025-05-16 12:45+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -744,9 +744,12 @@ msgid "Error fetching tracker list"
 msgstr "Fout bij het ophalen van de trackerlijst"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
+#| "reachable."
 msgid ""
-"Please check if the URL in Settings > Advanced > Tracker list URL is "
+"Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
 "Controleren of de URL in Instellingen > Geavanceerd > URL van trackerlijst "
@@ -2579,8 +2582,9 @@ msgstr "Bereikbare trackers rapporteren waarschuwingen:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, kde-format
-msgid "Color to use when all trackers reply the errors or not found."
+#, fuzzy, kde-format
+#| msgid "Color to use when all trackers reply the errors or not found."
+msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
 "Te gebruiken kleur wanneer alle trackers de fouten rapporteren of niet "
 "gevonden."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-18 00:42+0000\n"
 "PO-Revision-Date: 2025-03-06 19:33+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -735,9 +735,12 @@ msgid "Error fetching tracker list"
 msgstr "Грешка при получаването на списъка със сървъри"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
+#| "reachable."
 msgid ""
-"Please check if the URL in Settings > Advanced > Tracker list URL is "
+"Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
 "Моля, проверете дали URL адресът в Настройки > Разширени > Адрес на списъка "
@@ -2570,8 +2573,9 @@ msgstr "Наличните сървъри съобщават за предупр
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, kde-format
-msgid "Color to use when all trackers reply the errors or not found."
+#, fuzzy, kde-format
+#| msgid "Color to use when all trackers reply the errors or not found."
+msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
 "Цвят, който да се използва, когато всички сървъри връщат грешки или е "
 "невъзможно да бъдат открити."

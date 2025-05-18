@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-18 00:42+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -699,7 +699,7 @@ msgstr ""
 #: ktorrent/dialogs/pastedialog.cpp:115
 #, kde-format
 msgid ""
-"Please check if the URL in Settings > Advanced > Tracker list URL is "
+"Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
 
@@ -2456,9 +2456,10 @@ msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, kde-format
-msgid "Color to use when all trackers reply the errors or not found."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Folder to store temporary files"
+msgid "Color to use when all trackers reply with errors or are not found."
+msgstr "තාවකාලික ගොනු ගබඩාකරන බහලුම"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114

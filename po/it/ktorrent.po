@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-18 00:42+0000\n"
 "PO-Revision-Date: 2025-03-05 16:57+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -737,9 +737,12 @@ msgid "Error fetching tracker list"
 msgstr "Errore nel recupero della lista dei server traccia"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
+#| "reachable."
 msgid ""
-"Please check if the URL in Settings > Advanced > Tracker list URL is "
+"Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
 "Controlla se l'URL in Impostazioni -> Avanzate -> URL della lista dei server "
@@ -2571,8 +2574,9 @@ msgstr "I server traccia raggiungibili segnalano avvisi:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, kde-format
-msgid "Color to use when all trackers reply the errors or not found."
+#, fuzzy, kde-format
+#| msgid "Color to use when all trackers reply the errors or not found."
+msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
 "Colore da usare quando tutti i server traccia segnalano errori oppure non "
 "sono raggiungibili."

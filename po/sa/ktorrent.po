@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-18 00:42+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -728,9 +728,12 @@ msgid "Error fetching tracker list"
 msgstr "ट्रैकरसूचीं आनयन् त्रुटिः"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
+#| "reachable."
 msgid ""
-"Please check if the URL in Settings > Advanced > Tracker list URL is "
+"Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr "कृपया सेटिंग्स् > उन्नत > ट्रैकर सूची URL मध्ये URL प्राप्तुं शक्यते वा इति पश्यन्तु ।"
 
@@ -2532,8 +2535,9 @@ msgstr "गम्यमानाः अनुसरणकर्तारः च�
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, kde-format
-msgid "Color to use when all trackers reply the errors or not found."
+#, fuzzy, kde-format
+#| msgid "Color to use when all trackers reply the errors or not found."
+msgid "Color to use when all trackers reply with errors or are not found."
 msgstr "यदा सर्वे अनुसरणकर्तारः दोषाणां उत्तरं ददति अथवा न प्राप्यते तदा उपयोक्तुं वर्णः ।"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)

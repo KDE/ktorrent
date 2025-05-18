@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-18 00:42+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -706,9 +706,12 @@ msgid "Error fetching tracker list"
 msgstr "获取 tracker 列表时出错"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
+#| "reachable."
 msgid ""
-"Please check if the URL in Settings > Advanced > Tracker list URL is "
+"Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
 "请在设置 > 高级选项 > Tracker 列表中查看列表上的 URL 是否能够正常访问。"
@@ -2480,8 +2483,9 @@ msgstr "可连接的 tracker 有报错："
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, kde-format
-msgid "Color to use when all trackers reply the errors or not found."
+#, fuzzy, kde-format
+#| msgid "Color to use when all trackers reply the errors or not found."
+msgid "Color to use when all trackers reply with errors or are not found."
 msgstr "当全部 tracker 都报错或无法找到时使用的颜色。"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
@@ -4175,7 +4179,7 @@ msgstr "已下载"
 #, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr ""
+msgstr "本会话已下载"
 
 #: ktorrent/view/viewmodel.cpp:456
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4193,7 +4197,7 @@ msgstr "已上传"
 #, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr ""
+msgstr "本会话已上传"
 
 #: ktorrent/view/viewmodel.cpp:462
 #, kde-format
@@ -4266,7 +4270,7 @@ msgstr "种子已下载部分的数据量"
 #: ktorrent/view/viewmodel.cpp:494
 #, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr ""
+msgstr "该种子在本次会话中已下载的数据量"
 
 #: ktorrent/view/viewmodel.cpp:496
 #, kde-format
@@ -4281,7 +4285,7 @@ msgstr "已上传的数据量"
 #: ktorrent/view/viewmodel.cpp:500
 #, kde-format
 msgid "How much data we have uploaded this session"
-msgstr ""
+msgstr "该种子在本次会话中已上传的数据量"
 
 #: ktorrent/view/viewmodel.cpp:502
 #, kde-format
