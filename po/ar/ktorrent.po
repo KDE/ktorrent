@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2025-03-06 09:00+0400\n"
+"PO-Revision-Date: 2025-05-17 17:58+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -522,7 +522,7 @@ msgstr ""
 #: ktorrent/dialogs/fileselectdlg.ui:260
 #, kde-format
 msgid "Skip data check if existing files are found"
-msgstr "تخطَّ اختبار البينات إن عُثر على الملفات الموجودة"
+msgstr "تخطَّ اختبار البيانات إن عُثر على الملفات الموجودة"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: ktorrent/dialogs/fileselectdlg.ui:270
@@ -587,7 +587,7 @@ msgstr "البيانات:"
 #: ktorrent/dialogs/importdialog.ui:70
 #, kde-format
 msgid "Select the torrent file and the data which belongs with it."
-msgstr "اختر ملف السيل والبينات العائدة إليه."
+msgstr "اختر ملف السيل والبيانات العائدة إليه."
 
 #. i18n: ectx: property (format), widget (QProgressBar, progress_bar)
 #. i18n: ectx: property (format), widget (QProgressBar, m_progress)
@@ -2340,7 +2340,7 @@ msgstr "عندما ينتهي تنزيل سيل، قُم بعمل اختبار �
 #: ktorrent/pref/btpref.ui:84
 #, kde-format
 msgid "Check data when download is finished"
-msgstr "اختبر البينات عند انتهاء التنزيل"
+msgstr "اختبر البيانات عند انتهاء التنزيل"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
 #: ktorrent/pref/btpref.ui:94
@@ -4332,7 +4332,7 @@ msgstr "أضيف في"
 #: ktorrent/view/viewmodel.cpp:476
 #, kde-format
 msgid "How much data we have downloaded of the torrent"
-msgstr "كم من البينات نزَّلنا من السيل"
+msgstr "كم من البيانات نزَّلنا من السيل"
 
 #: ktorrent/view/viewmodel.cpp:478
 #, kde-format
@@ -4342,7 +4342,7 @@ msgstr "حجم السيل الكلي، الملفات المُستثناة غي�
 #: ktorrent/view/viewmodel.cpp:480
 #, kde-format
 msgid "How much data we have uploaded"
-msgstr "كم من البينات رفعنا"
+msgstr "كم من البيانات رفعنا"
 
 #: ktorrent/view/viewmodel.cpp:482
 #, kde-format
@@ -5935,12 +5935,12 @@ msgstr "عدد طلبات التنزيل والرفع"
 #: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "How much data we have downloaded from this peer"
-msgstr "كم من البينات نزَّلنا من الندّ"
+msgstr "كم من البيانات نزَّلنا من الندّ"
 
 #: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "How much data we have uploaded to this peer"
-msgstr "كم من البينات رفعنا إلى الندّ"
+msgstr "كم من البيانات رفعنا إلى الندّ"
 
 #: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
@@ -7348,7 +7348,7 @@ msgstr "أوصِد"
 #: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Sleep (suspend to RAM)"
-msgstr "نَم (علّق إلى الذاكرة العشوائية)"
+msgstr "علّق إلى الذاكرة العشوائية"
 
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
 #: plugins/shutdown/shutdownruleset.cpp:251
