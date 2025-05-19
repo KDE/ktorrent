@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-18 00:42+0000\n"
-"PO-Revision-Date: 2025-03-06 19:33+0100\n"
+"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"PO-Revision-Date: 2025-05-18 12:01+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 25.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -735,10 +735,7 @@ msgid "Error fetching tracker list"
 msgstr "Грешка при получаването на списъка със сървъри"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
-#| "reachable."
+#, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
@@ -2573,8 +2570,7 @@ msgstr "Наличните сървъри съобщават за предупр
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use when all trackers reply the errors or not found."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
 "Цвят, който да се използва, когато всички сървъри връщат грешки или е "
@@ -4351,11 +4347,10 @@ msgid "Downloaded"
 msgstr "Изтеглени"
 
 #: ktorrent/view/viewmodel.cpp:454
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "Време за изтегляне"
+msgstr "Сесия Изтеглени"
 
 #: ktorrent/view/viewmodel.cpp:456
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4370,11 +4365,10 @@ msgid "Uploaded"
 msgstr "Качени"
 
 #: ktorrent/view/viewmodel.cpp:460
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "Качени"
+msgstr "Сесия Качени"
 
 #: ktorrent/view/viewmodel.cpp:462
 #, kde-format
@@ -4445,10 +4439,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "Колко данни са изтеглени от торента"
 
 #: ktorrent/view/viewmodel.cpp:494
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "Колко данни са изтеглени от торента"
+msgstr "Колко данни са изтеглени от торента в тази сесия"
 
 #: ktorrent/view/viewmodel.cpp:496
 #, kde-format
@@ -4461,10 +4454,9 @@ msgid "How much data we have uploaded"
 msgstr "Колко данни са качени"
 
 #: ktorrent/view/viewmodel.cpp:500
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "Колко данни са качени към този потребител"
+msgstr "Колко данни са качени в тази сесия"
 
 #: ktorrent/view/viewmodel.cpp:502
 #, kde-format
@@ -8342,45 +8334,55 @@ msgstr "<b>%1</b><br/><br/>Изтеглянето е неуспешно: <b>%2</
 msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
 
-#: plugins/syndication/feedwidget.cpp:27
-#, kde-format
+#: plugins/syndication/feedwidget.cpp:37
+#, fuzzy, kde-format
+#| msgid ""
+#| "    <html>    <body style=\"color:%4\">    <div style=\"border-style:"
+#| "solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
+#| "<b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </"
+#| "body>    </html>    "
+msgctxt ""
+"Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
+"publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
+"is CSS Hex RGB formatted text color.%5 is CSS Hex RGB formatted background "
+"color."
 msgid ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Title:</"
-"b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
-"html>    "
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
+"<p>%3</p>    </body>    </html>    "
 msgstr ""
 "    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
 "border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Заглавие:"
 "</b> %1<br/>    <b>Дата:</b> %2<br/>    </div>    <p>%3</p>   </body>    </"
 "html>    "
 
-#: plugins/syndication/feedwidget.cpp:173
+#: plugins/syndication/feedwidget.cpp:186
 #, kde-format
 msgid "Authentication Cookie"
 msgstr "Удостоверяваща бисквитка"
 
-#: plugins/syndication/feedwidget.cpp:173
+#: plugins/syndication/feedwidget.cpp:186
 #, kde-format
 msgid "Enter the new authentication cookie"
 msgstr "Въведете новата удостоверяваща бисквитка"
 
-#: plugins/syndication/feedwidget.cpp:204
+#: plugins/syndication/feedwidget.cpp:220
 #, kde-format
 msgid "<b>OK</b>"
 msgstr "<b>Добре</b>"
 
-#: plugins/syndication/feedwidget.cpp:207
+#: plugins/syndication/feedwidget.cpp:223
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr "<b>Не е зареден</b>"
 
-#: plugins/syndication/feedwidget.cpp:210
+#: plugins/syndication/feedwidget.cpp:226
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr "<b>Изтеглянето е неуспешно: %1</b>"
 
-#: plugins/syndication/feedwidget.cpp:213
+#: plugins/syndication/feedwidget.cpp:229
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr "<b>Изтегляне</b>"

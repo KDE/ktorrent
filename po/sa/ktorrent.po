@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-18 00:42+0000\n"
+"POT-Creation-Date: 2025-05-19 00:42+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -8225,44 +8225,54 @@ msgstr "<b>%1</b><br/><br/> डाउनलोड् विफलम्: <b>%2</
 msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/> %2"
 
-#: plugins/syndication/feedwidget.cpp:27
-#, kde-format
+#: plugins/syndication/feedwidget.cpp:37
+#, fuzzy, kde-format
+#| msgid ""
+#| "    <html>    <body style=\"color:%4\">    <div style=\"border-style:"
+#| "solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
+#| "<b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </"
+#| "body>    </html>    "
+msgctxt ""
+"Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
+"publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
+"is CSS Hex RGB formatted text color.%5 is CSS Hex RGB formatted background "
+"color."
 msgid ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Title:</"
-"b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
-"html>    "
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
+"<p>%3</p>    </body>    </html>    "
 msgstr ""
 "    <html><body style=\"color:%4\"><div style=\"border-style:solid; border-"
 "width:1px; border-color:%4; margin:5px; padding:5px\"> <b>शीर्षकम् :</b> %1<br/"
 "> <b>तिथिः</b> %2<br/></div><p> %3</p></body></html>    "
 
-#: plugins/syndication/feedwidget.cpp:173
+#: plugins/syndication/feedwidget.cpp:186
 #, kde-format
 msgid "Authentication Cookie"
 msgstr "प्रमाणीकरण कुकी"
 
-#: plugins/syndication/feedwidget.cpp:173
+#: plugins/syndication/feedwidget.cpp:186
 #, kde-format
 msgid "Enter the new authentication cookie"
 msgstr "नूतनं प्रमाणीकरणकुकीं प्रविशन्तु"
 
-#: plugins/syndication/feedwidget.cpp:204
+#: plugins/syndication/feedwidget.cpp:220
 #, kde-format
 msgid "<b>OK</b>"
 msgstr "<b>अस्तु</b>"
 
-#: plugins/syndication/feedwidget.cpp:207
+#: plugins/syndication/feedwidget.cpp:223
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr "<b>न लोड् कृतम्</b>"
 
-#: plugins/syndication/feedwidget.cpp:210
+#: plugins/syndication/feedwidget.cpp:226
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr "<b>डाउनलोड् विफलम्: %1</b>"
 
-#: plugins/syndication/feedwidget.cpp:213
+#: plugins/syndication/feedwidget.cpp:229
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr "<b>डाउनलोड् करणम्</b>"

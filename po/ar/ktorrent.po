@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-18 00:42+0000\n"
-"PO-Revision-Date: 2025-05-17 17:58+0400\n"
+"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"PO-Revision-Date: 2025-05-18 21:15+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -720,15 +720,12 @@ msgid "Error fetching tracker list"
 msgstr "خطأ في جلب قائمة المتتبعين"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
-#| "reachable."
+#, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
-"يرجى التحقق مما إذا كان الرابط في الإعدادات> خيارات متقدمة> رابط قائمة "
+"يرجى التحقق مما إذا كان الرابط في الإعدادات ← خيارات متقدمة ← رابط قائمة "
 "المتتبّعين يمكن الوصول إليه."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
@@ -2517,12 +2514,9 @@ msgstr "حين يصدر المتتبعون الذين يمكن الوصول إل
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use when all trackers reply the errors or not found."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
-msgstr ""
-"اللون الذي سيستخدم عندما يقوم كافة المتتبعين بالرد على الأخطاء أو عدم العثور "
-"عليها."
+msgstr "اللون الذي سيستخدم عندما يرد كافة المتتبعين أخطاء أو عدم العثور عليها."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
@@ -8224,45 +8218,55 @@ msgstr "<b>%1</b><br/><br/>فشل التنزيل: <b>%2</b>"
 msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
 
-#: plugins/syndication/feedwidget.cpp:27
-#, kde-format
+#: plugins/syndication/feedwidget.cpp:37
+#, fuzzy, kde-format
+#| msgid ""
+#| "    <html>    <body style=\"color:%4\">    <div style=\"border-style:"
+#| "solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
+#| "<b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </"
+#| "body>    </html>    "
+msgctxt ""
+"Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
+"publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
+"is CSS Hex RGB formatted text color.%5 is CSS Hex RGB formatted background "
+"color."
 msgid ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Title:</"
-"b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
-"html>    "
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
+"<p>%3</p>    </body>    </html>    "
 msgstr ""
 "    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
 "border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>العنوان:"
 "</b> %1<br/>    <b>التاريخ:</b> %2<br/>    </div>    <p>%3</p>    </body>    "
 "</html>    "
 
-#: plugins/syndication/feedwidget.cpp:173
+#: plugins/syndication/feedwidget.cpp:186
 #, kde-format
 msgid "Authentication Cookie"
 msgstr "كعكة الاستيثاق"
 
-#: plugins/syndication/feedwidget.cpp:173
+#: plugins/syndication/feedwidget.cpp:186
 #, kde-format
 msgid "Enter the new authentication cookie"
 msgstr "أدخِل كعكة استيثاق جديدة"
 
-#: plugins/syndication/feedwidget.cpp:204
+#: plugins/syndication/feedwidget.cpp:220
 #, kde-format
 msgid "<b>OK</b>"
 msgstr "<b>حسنًا</b>"
 
-#: plugins/syndication/feedwidget.cpp:207
+#: plugins/syndication/feedwidget.cpp:223
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr "<b>غير محمّل</b>"
 
-#: plugins/syndication/feedwidget.cpp:210
+#: plugins/syndication/feedwidget.cpp:226
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr "<b>فشل التنزيل: %1</b>"
 
-#: plugins/syndication/feedwidget.cpp:213
+#: plugins/syndication/feedwidget.cpp:229
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr "<b>ينزّل</b>"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-18 00:42+0000\n"
+"POT-Creation-Date: 2025-05-19 00:42+0000\n"
 "PO-Revision-Date: 2011-06-28 12:49+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -7969,41 +7969,46 @@ msgstr ""
 msgid "<b>%1</b><br/><br/>%2"
 msgstr ""
 
-#: plugins/syndication/feedwidget.cpp:27
+#: plugins/syndication/feedwidget.cpp:37
 #, kde-format
+msgctxt ""
+"Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
+"publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
+"is CSS Hex RGB formatted text color.%5 is CSS Hex RGB formatted background "
+"color."
 msgid ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Title:</"
-"b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
-"html>    "
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
+"<p>%3</p>    </body>    </html>    "
 msgstr ""
 
-#: plugins/syndication/feedwidget.cpp:173
+#: plugins/syndication/feedwidget.cpp:186
 #, kde-format
 msgid "Authentication Cookie"
 msgstr ""
 
-#: plugins/syndication/feedwidget.cpp:173
+#: plugins/syndication/feedwidget.cpp:186
 #, kde-format
 msgid "Enter the new authentication cookie"
 msgstr ""
 
-#: plugins/syndication/feedwidget.cpp:204
+#: plugins/syndication/feedwidget.cpp:220
 #, kde-format
 msgid "<b>OK</b>"
 msgstr ""
 
-#: plugins/syndication/feedwidget.cpp:207
+#: plugins/syndication/feedwidget.cpp:223
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr ""
 
-#: plugins/syndication/feedwidget.cpp:210
+#: plugins/syndication/feedwidget.cpp:226
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr ""
 
-#: plugins/syndication/feedwidget.cpp:213
+#: plugins/syndication/feedwidget.cpp:229
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr ""
