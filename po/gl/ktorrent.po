@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-19 00:42+0000\n"
-"PO-Revision-Date: 2025-05-17 13:10+0200\n"
+"PO-Revision-Date: 2025-05-19 10:22+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -747,10 +747,7 @@ msgid "Error fetching tracker list"
 msgstr "Erro ao obter a lista de localizadores"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
-#| "reachable."
+#, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
@@ -2581,8 +2578,7 @@ msgstr "Os localizadores aos que se pode acceder devolven avisos:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use when all trackers reply the errors or not found."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
 msgstr "Cor cando os localizadores devolvan erros ou non se atopen."
 
