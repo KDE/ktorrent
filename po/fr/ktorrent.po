@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-19 00:42+0000\n"
-"PO-Revision-Date: 2025-05-17 09:49+0200\n"
+"PO-Revision-Date: 2025-05-19 10:08+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -798,16 +798,13 @@ msgid "Error fetching tracker list"
 msgstr "Erreur durant la recherche de la liste des traqueurs"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
-#| "reachable."
+#, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
-"Veuillez vérifier si l'« URL » dans la liste de « Paramètres / Avancés / "
-"Liste des traqueurs » est disponible."
+"Veuillez vérifier si l'URL présente dans « Configuration / Avancé / Liste "
+"des URL de traqueurs » est disponible."
 
 # unreviewed-context
 #: ktorrent/dialogs/pastedialog.cpp:137
@@ -2667,11 +2664,10 @@ msgstr "Les traqueurs joignables signalent des alarmes :"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use when all trackers reply the errors or not found."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
-"Couleur à utiliser quand tous les traqueurs signalent des erreurs ou sont "
+"Couleur à utiliser lorsque tous les traqueurs signalent des erreurs ou sont "
 "absents."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)

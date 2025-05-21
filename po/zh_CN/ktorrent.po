@@ -710,7 +710,7 @@ msgstr "获取 tracker 列表时出错"
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
-msgstr ""
+msgstr "请在设置 → 高级选项 → Tracker 列表中检查 URL 是否能够正常访问。"
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
@@ -2481,7 +2481,7 @@ msgstr "可连接的 tracker 有报错："
 #: ktorrent/pref/colorpref.ui:107
 #, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
-msgstr ""
+msgstr "当所有 tracker 全部报错或无法找到时使用的颜色。"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
@@ -8103,6 +8103,10 @@ msgid ""
 "padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
 "<p>%3</p>    </body>    </html>    "
 msgstr ""
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>标题：</b> %1<br/>    <b>日期：</b> %2<br/>    </"
+"div>    <p>%3</p>    </body>    </html>    "
 
 #: plugins/syndication/feedwidget.cpp:186
 #, kde-format
