@@ -3079,8 +3079,7 @@ msgstr "Servidor intermediari:"
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
 msgstr ""
-"Adreça IP o nom de l'amfitrió del servidor intermediari HTTP que "
-"s'utilitzarà."
+"Adreça IP o nom d'amfitrió del servidor intermediari HTTP que s'utilitzarà."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
@@ -3150,7 +3149,7 @@ msgstr "Servidor:"
 #: ktorrent/pref/proxypref.ui:123
 #, kde-format
 msgid "IP address or hostname of the SOCKS server."
-msgstr "Adreça IP o nom de l'amfitrió del servidor SOCKS."
+msgstr "Adreça IP o nom d'amfitrió del servidor SOCKS."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_socksPort)
 #: ktorrent/pref/proxypref.ui:137
