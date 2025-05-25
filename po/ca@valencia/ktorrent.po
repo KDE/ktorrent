@@ -460,7 +460,8 @@ msgstr ""
 msgid ""
 "All files in the torrent, you can change them by double clicking on them."
 msgstr ""
-"Tots els fitxers del torrent, els podeu canviar fent doble clic en ells."
+"Tots els fitxers del torrent, els podeu canviar fent doble clic damunt "
+"d'ells."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_all)
 #: ktorrent/dialogs/fileselectdlg.ui:134
@@ -1399,7 +1400,7 @@ msgstr ""
 #: ktorrent/ipfilterwidget.cpp:118
 #, kde-format
 msgid "Choose a file"
-msgstr "Escolliu un fitxer"
+msgstr "Trieu un fitxer"
 
 #: ktorrent/ipfilterwidget.cpp:118 ktorrent/ipfilterwidget.cpp:130
 #, kde-format
@@ -1409,7 +1410,7 @@ msgstr "Fitxers de text"
 #: ktorrent/ipfilterwidget.cpp:130
 #, kde-format
 msgid "Choose a filename to save under"
-msgstr "Escolliu un nom de fitxer per a guardar-lo"
+msgstr "Trieu un nom de fitxer per a guardar-lo"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, IPFilterWidget)
 #: ktorrent/ipfilterwidget.ui:14
@@ -3078,8 +3079,7 @@ msgstr "Servidor intermediari:"
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
 msgstr ""
-"Adreça IP o nom de l'amfitrió del servidor intermediari HTTP que "
-"s'utilitzarà."
+"Adreça IP o nom d'amfitrió del servidor intermediari HTTP que s'utilitzarà."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
@@ -3149,7 +3149,7 @@ msgstr "Servidor:"
 #: ktorrent/pref/proxypref.ui:123
 #, kde-format
 msgid "IP address or hostname of the SOCKS server."
-msgstr "Adreça IP o nom de l'amfitrió del servidor SOCKS."
+msgstr "Adreça IP o nom d'amfitrió del servidor SOCKS."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_socksPort)
 #: ktorrent/pref/proxypref.ui:137
@@ -4505,12 +4505,12 @@ msgstr ""
 #: ktorrent/view/viewmodel.cpp:499
 #, kde-format
 msgid "How long we have been downloading the torrent"
-msgstr "Quant temps heu estat baixant el torrent"
+msgstr "Quant temps heu sigut baixant el torrent"
 
 #: ktorrent/view/viewmodel.cpp:501
 #, kde-format
 msgid "How long we have been seeding the torrent"
-msgstr "Quant temps heu estat sembrant el torrent"
+msgstr "Quant temps heu sigut sembrant el torrent"
 
 #: ktorrent/view/viewmodel.cpp:503
 #, kde-format
@@ -6593,7 +6593,7 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p>"
 msgstr ""
-"Feu doble clic en el nivell de registre per a canviar-lo. Els possibles "
+"Feu doble clic damunt del nivell de registre per a canviar-lo. Els possibles "
 "nivells són:\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
