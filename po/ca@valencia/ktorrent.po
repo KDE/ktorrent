@@ -4527,12 +4527,12 @@ msgstr ""
 #: ktorrent/view/viewmodel.cpp:519
 #, kde-format
 msgid "How long we have been downloading the torrent"
-msgstr "Quant temps heu estat baixant el torrent"
+msgstr "Quant temps heu sigut baixant el torrent"
 
 #: ktorrent/view/viewmodel.cpp:521
 #, kde-format
 msgid "How long we have been seeding the torrent"
-msgstr "Quant temps heu estat sembrant el torrent"
+msgstr "Quant temps heu sigut sembrant el torrent"
 
 #: ktorrent/view/viewmodel.cpp:523
 #, kde-format
